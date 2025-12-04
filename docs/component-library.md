@@ -1,8 +1,8 @@
 # Component Library Documentation
 
-**Version:** 1.0
+**Version:** 2.0
 **Last Updated:** 2025-12-04
-**Status:** Phase 01 Complete
+**Status:** Phase 03 Complete - Guides Components Added
 
 ## Table of Contents
 
@@ -12,6 +12,11 @@
 4. [Input](#input)
 5. [Logo](#logo)
 6. [MainLayout](#mainlayout)
+7. [TabNavigation](#tabnavigation)
+8. [CLIGuide](#cliguide)
+9. [WorkflowsGuide](#workflowsguide)
+10. [CommandsGuide](#commandsguide)
+11. [UIUXGuide](#uiuxguide)
 
 ---
 
@@ -739,5 +744,257 @@ PUBLIC_SITE_URL=https://vividkit.com
 
 ---
 
-**Document Status:** Complete for Phase 01
-**Next Update:** Phase 02 - Additional components
+## TabNavigation
+
+Sticky tab navigation component with Alpine.js integration for the guides page.
+
+**Location:** `src/components/guides/TabNavigation.astro`
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `activeTab` | `string` | `'cli'` | Initial active tab identifier |
+
+### Features
+
+**Sticky Navigation:**
+- Position: `sticky top-[73px]` (below main header)
+- Glassmorphism design with backdrop blur
+- Horizontal scroll on mobile devices
+
+**Tab Configuration:**
+```typescript
+const tabs = [
+  { id: 'cli', label: '🚀 CLI Getting Started' },
+  { id: 'workflows', label: '🔄 Recommended Workflows' },
+  { id: 'commands', label: '⚡ Slash Commands Reference' },
+  { id: 'uiux', label: '🎨 UI/UX Pro Max' }
+];
+```
+
+**Alpine.js Integration:**
+- Dispatches `tab-changed` events
+- Manages active tab state
+- Smooth transition animations
+
+**Styling:**
+- Active tab: Gradient underline, colored background
+- Inactive tabs: Hover effects with background change
+- Emoji icons for visual identification
+
+### Usage
+
+```astro
+---
+import TabNavigation from '@/components/guides/TabNavigation.astro';
+---
+
+<TabNavigation activeTab="cli" />
+```
+
+### CSS Classes
+
+- Container: `sticky top-[73px] z-40 glass-card border-b`
+- Tabs wrapper: `flex gap-2 py-3 overflow-x-auto scrollbar-hide`
+- Tab button: `tab-btn whitespace-nowrap px-4 py-2 rounded-lg`
+
+---
+
+## CLIGuide
+
+Three-step CLI installation and setup guide component.
+
+**Location:** `src/components/guides/CLIGuide.astro`
+
+### Data Source
+
+Uses `cliSteps` from `@/data/guides/cli-guide.ts`
+
+### Content Structure
+
+1. **Step 1:** Install ClaudeKit CLI
+2. **Step 2:** Initialize Your Project
+3. **Step 3:** Start Building
+
+### Features
+
+**Visual Design:**
+- Color-coded steps (blue, green, purple)
+- Numbered circular badges
+- Command display in monospace font
+- Optional notes with info icon
+
+**Color Mapping:**
+```typescript
+const colorMap = {
+  blue: 'bg-blue-500/10 text-blue-600 dark:text-blue-400',
+  green: 'bg-green-500/10 text-green-600 dark:text-green-400',
+  purple: 'bg-purple-500/10 text-purple-600 dark:text-purple-400'
+};
+```
+
+### Usage
+
+```astro
+---
+import CLIGuide from '@/components/guides/CLIGuide.astro';
+---
+
+<div class="tab-content">
+  <CLIGuide />
+</div>
+```
+
+---
+
+## WorkflowsGuide
+
+Showcases recommended development workflows organized by skill level.
+
+**Location:** `src/components/guides/WorkflowsGuide.astro`
+
+### Data Source
+
+Uses `workflows` from `@/data/guides/workflows.ts`
+
+### Workflows
+
+1. **Build a New Feature** (Beginner, 15-30 min)
+2. **Debug Production Issues** (Intermediate, 10-20 min)
+3. **Optimize Performance** (Advanced, 20-40 min)
+4. **Create Documentation** (Beginner, 10-15 min)
+
+### Features
+
+**Skill Level Indicators:**
+- Beginner: Green badges
+- Intermediate: Yellow badges
+- Advanced: Red badges
+
+**Information Display:**
+- Duration estimates with clock icons
+- Step count indicators
+- Command highlights for each step
+- Grid layout on desktop
+
+**Level Colors:**
+```typescript
+const levelColors = {
+  beginner: 'bg-green-500/10 text-green-600 dark:text-green-400',
+  intermediate: 'bg-yellow-500/10 text-yellow-600 dark:text-yellow-400',
+  advanced: 'bg-red-500/10 text-red-600 dark:text-red-400'
+};
+```
+
+---
+
+## CommandsGuide
+
+Reference component for slash commands organized by category.
+
+**Location:** `src/components/guides/CommandsGuide.astro`
+
+### Data Source
+
+Uses `commandCategories` from `@/data/guides/commands.ts`
+
+### Categories
+
+1. **Planning** 📋 - Brainstorm, plan, research
+2. **Development** 💻 - Code, fix, refactor
+3. **Testing** 🧪 - Test, debug, validate
+4. **UI/UX** 🎨 - Design, ui, ux
+5. **DevOps** 🚀 - Deploy, ci, docker
+6. **Documentation** 📚 - Docs, api-docs, readme
+
+### Features
+
+**Visual Organization:**
+- Color-coded category cards
+- Icon identification
+- Command syntax display
+- Links to full documentation
+
+**Color Mapping:**
+```typescript
+const colorMap = {
+  purple: 'bg-purple-500/10 text-purple-600 dark:text-purple-400',
+  blue: 'bg-blue-500/10 text-blue-600 dark:text-blue-400',
+  green: 'bg-green-500/10 text-green-600 dark:text-green-400',
+  pink: 'bg-pink-500/10 text-pink-600 dark:text-pink-400',
+  orange: 'bg-orange-500/10 text-orange-600 dark:text-orange-400',
+  indigo: 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400'
+};
+```
+
+**Pro Tip Section:**
+- Keyboard shortcut reminder
+- Tab completion hint
+- Styled callout box
+
+---
+
+## UIUXGuide
+
+Documentation component for UI/UX Pro Max skill with examples and statistics.
+
+**Location:** `src/components/guides/UIUXGuide.astro`
+
+### Data Sources
+
+- `uiuxExamples` from `@/data/guides/uiux-guide.ts`
+- `uiuxStats` from `@/data/guides/uiux-guide.ts`
+
+### Content Sections
+
+1. **Magic Phrase:** "Using ui-ux-pro-max skill, create..."
+2. **Example Prompts:** By skill level (beginner, intermediate, advanced)
+3. **Statistics:** 50 UI styles, 21 color palettes, 50 font pairings, 20 chart types
+4. **Supported Styles:** Glassmorphism, Minimalism, Brutalism, etc.
+5. **Frameworks:** React, Vue, Svelte, SwiftUI, React Native
+
+### Features
+
+**Magic Phrase Highlight:**
+- Gradient background styling
+- Large, centered display
+- Usage instructions
+
+**Skill Level Examples:**
+- Beginner: Yoga studio landing page
+- Intermediate: Analytics dashboard
+- Advanced: E-commerce checkout flow
+
+**Statistics Display:**
+- Grid layout with large numbers
+- Labels and sublabels
+- Gradient background container
+
+**Style & Framework Lists:**
+- Two-column grid layout
+- Icon indicators
+- Categorized information
+
+---
+
+## Component Variants Summary
+
+| Component | Variants | Sizes | Key Feature |
+|-----------|----------|-------|-------------|
+| Button | primary, secondary, outline | sm, md, lg | Link or button capability |
+| GlassCard | default, light, hover, glow | - | Padding control |
+| Badge | success, warning, danger, info | sm, md | Optional pulse animation |
+| Input | text, email, password, number | - | Focus ring styling |
+| Logo | - | sm, md, lg | Optional text display |
+| MainLayout | - | - | SEO + theme support |
+| TabNavigation | - | - | Alpine.js tab switching |
+| CLIGuide | color-coded steps | - | 3-step installation |
+| WorkflowsGuide | skill levels | - | 4 recommended workflows |
+| CommandsGuide | 6 categories | - | Color-coded command cards |
+| UIUXGuide | skill examples | - | Magic phrase + statistics |
+
+---
+
+**Document Status:** Complete for Phase 03
+**Next Update:** Phase 04 - Additional components and optimizations

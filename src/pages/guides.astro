@@ -1,0 +1,71 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+import TabNavigation from '@/components/guides/TabNavigation.astro';
+import CLIGuide from '@/components/guides/CLIGuide.astro';
+import WorkflowsGuide from '@/components/guides/WorkflowsGuide.astro';
+import CommandsGuide from '@/components/guides/CommandsGuide.astro';
+import UIUXGuide from '@/components/guides/UIUXGuide.astro';
+---
+
+<MainLayout
+  title="VividKit Guides - ClaudeKit Documentation"
+  description="Complete guides for using ClaudeKit effectively: CLI setup, workflows, slash commands, and UI/UX Pro Max skill."
+  canonical="/guides"
+>
+  <Header />
+
+  <TabNavigation />
+
+  <main class="max-w-6xl mx-auto px-6 py-8">
+    <div
+      x-data="{ activeTab: 'cli' }"
+      @tab-changed.window="activeTab = $event.detail.tab"
+      class="space-y-8"
+    >
+      <!-- CLI Guide Tab -->
+      <div x-show="activeTab === 'cli'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform translate-y-4" x-transition:enter-end="opacity-100 transform translate-y-0" class="tab-content">
+        <CLIGuide />
+      </div>
+
+      <!-- Workflows Tab -->
+      <div x-show="activeTab === 'workflows'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform translate-y-4" x-transition:enter-end="opacity-100 transform translate-y-0" class="tab-content">
+        <WorkflowsGuide />
+      </div>
+
+      <!-- Commands Tab -->
+      <div x-show="activeTab === 'commands'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform translate-y-4" x-transition:enter-end="opacity-100 transform translate-y-0" class="tab-content">
+        <CommandsGuide />
+      </div>
+
+      <!-- UI/UX Tab -->
+      <div x-show="activeTab === 'uiux'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform translate-y-4" x-transition:enter-end="opacity-100 transform translate-y-0" class="tab-content">
+        <UIUXGuide />
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+
+  <!-- Alpine.js -->
+  <script>
+    import Alpine from 'alpinejs';
+
+    window.Alpine = Alpine;
+
+    // Start Alpine
+    Alpine.start();
+  </script>
+</MainLayout>
+
+<style>
+  /* Hide scrollbar for tab navigation */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+</style>

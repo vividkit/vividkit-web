@@ -1,7 +1,7 @@
 export function initSmoothScroll() {
   // Handle anchor links
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener('click', function (e) {
+    anchor.addEventListener('click', function (this: HTMLAnchorElement, e) {
       e.preventDefault();
 
       const targetId = this.getAttribute('href');
@@ -32,7 +32,7 @@ export function initSmoothScroll() {
 
   // Handle scroll to top
   document.querySelectorAll('a[href="#"]').forEach((anchor) => {
-    anchor.addEventListener('click', function (e) {
+    anchor.addEventListener('click', function (this: HTMLAnchorElement, e) {
       e.preventDefault();
       window.scrollTo({ top: 0, behavior: 'smooth' });
       if (history.pushState) {

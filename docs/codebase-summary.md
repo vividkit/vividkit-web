@@ -1,7 +1,7 @@
 # VividKit Codebase Summary
 
 **Last Updated:** 2025-12-04
-**Phase:** 02 Complete - Landing Page Implementation
+**Phase:** 03 Complete - Guides Page Implementation
 **Repository:** VividKit Marketing Website
 
 ## Overview
@@ -17,6 +17,7 @@ VividKit is a modern marketing website built with Astro 5.x and Tailwind CSS v4,
 - **Deployment:** Vercel with Web Analytics
 - **Icons:** lucide-astro 0.555.0
 - **Fonts:** Space Grotesk, DM Sans, Fira Code (via @fontsource)
+- **Interactivity:** Alpine.js 3.15.2 (for tab navigation)
 
 ### Project Structure
 
@@ -36,18 +37,25 @@ vividkit-web/
 │   │   │   ├── Header.astro
 │   │   │   ├── Footer.astro
 │   │   │   └── AmbientBackground.astro
-│   │   └── sections/           # Page sections
-│   │       ├── Hero.astro
-│   │       ├── Problem.astro
-│   │       ├── Features.astro
-│   │       ├── Pricing.astro
-│   │       ├── ClaudeKit.astro
-│   │       ├── Commands.astro
-│   │       └── WaitlistForm.astro
+│   │   ├── sections/           # Landing page sections
+│   │   │   ├── Hero.astro
+│   │   │   ├── Problem.astro
+│   │   │   ├── Features.astro
+│   │   │   ├── Pricing.astro
+│   │   │   ├── ClaudeKit.astro
+│   │   │   ├── Commands.astro
+│   │   │   └── WaitlistForm.astro
+│   │   └── guides/             # Guides page components
+│   │       ├── TabNavigation.astro
+│   │       ├── CLIGuide.astro
+│   │       ├── WorkflowsGuide.astro
+│   │       ├── CommandsGuide.astro
+│   │       └── UIUXGuide.astro
 │   ├── layouts/
 │   │   └── MainLayout.astro
 │   ├── pages/
-│   │   └── index.astro
+│   │   ├── index.astro
+│   │   └── guides.astro
 │   ├── scripts/
 │   │   ├── theme-toggle.ts
 │   │   ├── form-handler.ts
@@ -62,7 +70,12 @@ vividkit-web/
 │       ├── navigation.ts
 │       ├── features.ts
 │       ├── pricing.ts
-│       └── commands.ts
+│       ├── commands.ts
+│       └── guides/
+│           ├── cli-guide.ts
+│           ├── workflows.ts
+│           ├── commands.ts
+│           └── uiux-guide.ts
 ├── public/
 ├── docs/
 └── Configuration files
@@ -157,6 +170,38 @@ vividkit-web/
 - **Implementation:** Client-side validation, AJAX submission
 - **Success:** Thank you message on submission
 
+### Guides Components
+
+#### TabNavigation.astro
+- **Features:** Sticky tab navigation with Alpine.js integration
+- **Tabs:** CLI Getting Started, Workflows, Commands, UI/UX Pro Max
+- **Props:** activeTab (default: 'cli')
+- **Behavior:** Dispatches tab-changed events, smooth transitions
+
+#### CLIGuide.astro
+- **Content:** 3-step CLI installation and setup guide
+- **Data:** Uses cliSteps from @/data/guides/cli-guide
+- **Features:** Color-coded steps, command display, notes
+- **Colors:** Blue, green, purple for visual hierarchy
+
+#### WorkflowsGuide.astro
+- **Content:** 4 recommended workflows by skill level
+- **Data:** Uses workflows from @/data/guides/workflows
+- **Features:** Duration badges, step counts, command highlights
+- **Levels:** Beginner, intermediate, advanced
+
+#### CommandsGuide.astro
+- **Content:** 6 command categories with examples
+- **Data:** Uses commandCategories from @/data/guides/commands
+- **Categories:** Planning, Development, Testing, UI/UX, DevOps, Documentation
+- **Features:** Color-coded cards, expandable command lists
+
+#### UIUXGuide.astro
+- **Content:** UI/UX Pro Max skill documentation
+- **Data:** Uses uiuxExamples and uiuxStats from @/data/guides/uiux-guide
+- **Features:** Magic phrase highlight, skill level examples, statistics
+- **Styles:** 50 UI styles, 21 color palettes, 50 font pairings
+
 ## Scripts
 
 ### theme-toggle.ts
@@ -212,6 +257,53 @@ commandCategories: {
   title: string;
   description: string;
   commands: { name: string; description: string }[];
+}[]
+```
+
+### CLI Guide (guides/cli-guide.ts)
+```typescript
+cliSteps: {
+  number: number;
+  title: string;
+  command: string;
+  note?: string;
+  color: 'blue' | 'green' | 'purple';
+}[]
+```
+
+### Workflows (guides/workflows.ts)
+```typescript
+workflows: {
+  title: string;
+  level: 'beginner' | 'intermediate' | 'advanced';
+  duration: string;
+  stepCount: number;
+  steps: { command: string; description: string }[];
+  borderColor: string;
+}[]
+```
+
+### Commands Guide (guides/commands.ts)
+```typescript
+commandCategories: {
+  name: string;
+  icon: string;
+  color: 'purple' | 'blue' | 'green' | 'pink' | 'orange' | 'indigo';
+  commands: { command: string; description: string }[];
+}[]
+```
+
+### UI/UX Guide (guides/uiux-guide.ts)
+```typescript
+uiuxExamples: {
+  level: 'beginner' | 'intermediate' | 'advanced';
+  prompt: string;
+}[]
+
+uiuxStats: {
+  value: string;
+  label: string;
+  sublabel: string;
 }[]
 ```
 
@@ -305,6 +397,7 @@ npm run astro        # Access Astro CLI
 
 ## Key Features Implemented
 
+### Core Features
 1. **Responsive Design:** Mobile-first approach with breakpoints
 2. **Dark Mode:** System preference detection with manual toggle
 3. **Accessibility:** ARIA labels, focus states, reduced motion
@@ -313,6 +406,17 @@ npm run astro        # Access Astro CLI
 6. **Forms:** Client validation with Web3Forms integration
 7. **Animations:** Scroll-triggered with intersection observer
 8. **Navigation:** Smooth scrolling between sections
+
+### Phase 03 Features
+1. **Guides Page:** Multi-tab documentation page
+2. **Alpine.js Integration:** Client-side tab navigation
+3. **Sticky Navigation:** Tabs remain visible while scrolling
+4. **Tab Transitions:** Smooth fade-in animations
+5. **Code Display:** Syntax-highlighted command examples
+6. **Workflow Documentation:** 4 recommended workflows
+7. **CLI Documentation:** 3-step quick start guide
+8. **Command Reference:** 6 categories with examples
+9. **UI/UX Guide:** Magic phrase and skill examples
 
 ## Browser Support
 

@@ -1,0 +1,71 @@
+---
+import { workflows } from '@/data/guides/workflows';
+
+const levelColors: Record<string, string> = {
+  beginner: 'bg-green-500/10 text-green-600 dark:text-green-400',
+  intermediate: 'bg-yellow-500/10 text-yellow-600 dark:text-yellow-400',
+  advanced: 'bg-red-500/10 text-red-600 dark:text-red-400'
+};
+---
+
+<div class="space-y-8">
+  <div class="text-center space-y-4">
+    <h2 class="text-3xl font-bold text-slate-900 dark:text-white">
+      Recommended Workflows
+    </h2>
+    <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+      Follow these proven workflows to maximize your productivity with ClaudeKit. Each workflow includes specific commands and estimated completion times.
+    </p>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-6">
+    {workflows.map((workflow) => (
+      <div class={`p-6 rounded-xl border ${workflow.borderColor} bg-white dark:bg-slate-900/50 hover:shadow-lg transition-shadow`}>
+        <div class="space-y-4">
+          <div class="flex items-start justify-between">
+            <h3 class="text-xl font-semibold text-slate-900 dark:text-white">
+              {workflow.title}
+            </h3>
+            <span class={`px-2 py-1 rounded-full text-xs font-medium ${levelColors[workflow.level]}`}>
+              {workflow.level}
+            </span>
+          </div>
+
+          <div class="flex items-center gap-4 text-sm text-slate-600 dark:text-slate-400">
+            <span class="flex items-center gap-1">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              {workflow.duration}
+            </span>
+            <span class="flex items-center gap-1">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+              {workflow.stepCount} steps
+            </span>
+          </div>
+
+          <ol class="space-y-2">
+            {workflow.steps.map((step) => (
+              <li class="flex items-start gap-3">
+                <span class="flex-shrink-0 px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-xs font-mono text-slate-700 dark:text-slate-300">
+                  {step.command}
+                </span>
+                <span class="text-slate-600 dark:text-slate-400">
+                  {step.description}
+                </span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <div class="text-center pt-8">
+    <p class="text-slate-600 dark:text-slate-400">
+      Need a custom workflow? <a href="/contact" class="text-primary hover:underline">Let us know</a>
+    </p>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+---
+import { cliSteps } from '@/data/guides/cli-guide';
+
+const colorMap: Record<string, string> = {
+  blue: 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20',
+  green: 'bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/20',
+  purple: 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20'
+};
+---
+
+<div class="space-y-8">
+  <div class="text-center space-y-4">
+    <h2 class="text-3xl font-bold text-slate-900 dark:text-white">
+      CLI Getting Started
+    </h2>
+    <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+      Get up and running with ClaudeKit CLI in just 3 simple steps. Install, initialize, and start building amazing projects.
+    </p>
+  </div>
+
+  <div class="grid gap-6 max-w-3xl mx-auto">
+    {cliSteps.map((step) => (
+      <div class={`p-6 rounded-xl border ${colorMap[step.color]} bg-white dark:bg-slate-900/50`}>
+        <div class="flex items-start gap-4">
+          <div class={`flex-shrink-0 w-10 h-10 rounded-full ${colorMap[step.color]} flex items-center justify-center font-bold`}>
+            {step.number}
+          </div>
+
+          <div class="flex-1 space-y-3">
+            <h3 class="text-lg font-semibold text-slate-900 dark:text-white">
+              {step.title}
+            </h3>
+
+            <div class="bg-slate-100 dark:bg-slate-800 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+              <code class="text-emerald-600 dark:text-emerald-400">
+                {step.command}
+              </code>
+            </div>
+
+            {step.note && (
+              <p class="text-sm text-slate-600 dark:text-slate-400 flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                {step.note}
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <div class="text-center pt-8">
+    <a
+      href="/docs"
+      class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 transition-colors"
+    >
+      View Full Documentation
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </a>
+  </div>
+</div>

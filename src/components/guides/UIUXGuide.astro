@@ -1,0 +1,119 @@
+---
+import { uiuxExamples, uiuxStats } from '@/data/guides/uiux-guide';
+
+const levelColors: Record<string, string> = {
+  beginner: 'bg-green-500/10 text-green-600 dark:text-green-400',
+  intermediate: 'bg-yellow-500/10 text-yellow-600 dark:text-yellow-400',
+  advanced: 'bg-red-500/10 text-red-600 dark:text-red-400'
+};
+---
+
+<div class="space-y-8">
+  <div class="text-center space-y-4">
+    <h2 class="text-3xl font-bold text-slate-900 dark:text-white">
+      UI/UX Pro Max
+    </h2>
+    <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+      Unlock the full potential of our UI/UX Pro Max skill. Create stunning, modern interfaces with intelligent design suggestions and best practices built-in.
+    </p>
+  </div>
+
+  <div class="bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-xl p-8 border border-purple-500/20 text-center">
+    <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">
+      ✨ The Magic Phrase
+    </h3>
+    <div class="bg-white dark:bg-slate-900/50 rounded-lg p-6 border border-purple-500/20 max-w-2xl mx-auto">
+      <p class="text-lg font-medium text-slate-800 dark:text-slate-200">
+        "Using ui-ux-pro-max skill, create..."
+      </p>
+      <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">
+        Start your prompt with this phrase to activate the UI/UX Pro Max skill
+      </p>
+    </div>
+  </div>
+
+  <div class="space-y-6">
+    <h3 class="text-xl font-semibold text-slate-900 dark:text-white text-center">
+      Example Prompts by Skill Level
+    </h3>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      {uiuxExamples.map((example) => (
+        <div class={`p-6 rounded-xl border ${levelColors[example.level]} bg-white dark:bg-slate-900/50`}>
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <h4 class="font-semibold text-slate-900 dark:text-white capitalize">
+                {example.level}
+              </h4>
+              <span class={`px-2 py-1 rounded-full text-xs font-medium ${levelColors[example.level]}`}>
+                {example.level}
+              </span>
+            </div>
+
+            <div class="bg-slate-100 dark:bg-slate-800 rounded-lg p-4">
+              <p class="text-sm text-slate-700 dark:text-slate-300 italic">
+                "{example.prompt}"
+              </p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div class="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-8 border border-slate-200 dark:border-slate-800">
+    <h3 class="text-xl font-semibold text-slate-900 dark:text-white text-center mb-6">
+      What's Included
+    </h3>
+
+    <div class="grid md:grid-cols-4 gap-6">
+      {uiuxStats.map((stat) => (
+        <div class="text-center space-y-2">
+          <div class="text-3xl font-bold text-primary">
+            {stat.value}
+          </div>
+          <div class="font-medium text-slate-900 dark:text-white">
+            {stat.label}
+          </div>
+          <p class="text-sm text-slate-600 dark:text-slate-400">
+            {stat.sublabel}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-6">
+    <div class="bg-blue-500/5 rounded-xl p-6 border border-blue-500/20">
+      <h4 class="font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+        <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+        </svg>
+        Design Styles
+      </h4>
+      <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+        <li>Glassmorphism</li>
+        <li>Minimalism</li>
+        <li>Brutalism</li>
+        <li>Neumorphism</li>
+        <li>Bento Grid</li>
+      </ul>
+    </div>
+
+    <div class="bg-purple-500/5 rounded-xl p-6 border border-purple-500/20">
+      <h4 class="font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+        <svg class="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z" />
+        </svg>
+        Frameworks
+      </h4>
+      <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+        <li>React & Next.js</li>
+        <li>Vue & Nuxt</li>
+        <li>Svelte & SvelteKit</li>
+        <li>SwiftUI</li>
+        <li>React Native</li>
+      </ul>
+    </div>
+  </div>
+</div>
