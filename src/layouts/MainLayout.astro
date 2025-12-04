@@ -65,13 +65,27 @@ const fullOgImage = `${siteUrl}${ogImage}`;
 
     <!-- Initialize scripts -->
     <script>
-      import { initThemeToggle } from '@/scripts/theme-toggle';
-      import { initScrollAnimations } from '@/scripts/intersection-observer';
-      import { initNavScrollHighlight } from '@/scripts/nav-scroll-highlight';
+      import { initThemeToggle } from '../scripts/theme-toggle';
+      import { initScrollAnimations } from '../scripts/intersection-observer';
+      import { initNavScrollHighlight } from '../scripts/nav-scroll-highlight';
 
+      // Initialize theme toggle immediately to prevent FOUC
       initThemeToggle();
-      initScrollAnimations();
-      initNavScrollHighlight();
+
+      // Initialize other scripts after Alpine.js loads
+      const initOtherScripts = () => {
+        initScrollAnimations();
+        initNavScrollHighlight();
+      };
+
+      if (window.Alpine) {
+        initOtherScripts();
+      } else {
+        window.addEventListener('alpine:init', initOtherScripts);
+      }
+
+      // Fallback: initialize after a short delay if Alpine doesn't load
+      setTimeout(initOtherScripts, 100);
     </script>
   </body>
 </html>

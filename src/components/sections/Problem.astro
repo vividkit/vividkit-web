@@ -1,7 +1,4 @@
 ---
-import GlassCard from '@/components/ui/GlassCard.astro';
-import { problems } from '@/data/features';
-
 interface Props {
   class?: string;
 }
@@ -9,44 +6,46 @@ interface Props {
 const { class: className = '' } = Astro.props;
 ---
 
-<section id="problem" class={`section py-20 ${className}`}>
-  <div class="max-w-7xl mx-auto px-4">
+<section id="problem" class={`section py-24 relative ${className}`}>
+  <div class="max-w-6xl mx-auto px-6">
     <div class="text-center mb-16">
-      <h2 class="text-4xl md:text-5xl font-heading font-bold mb-6">
-        Terminal Commands Are
-        <span class="block bg-gradient-to-r from-red-600 to-orange-600 dark:from-red-400 dark:to-orange-400 bg-clip-text text-transparent">
-          Holding You Back
-        </span>
-      </h2>
+      <h2 class="font-heading text-4xl md:text-5xl font-bold mb-4">The CLI Barrier</h2>
       <p class="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
-        Traditional AI coding tools create barriers that prevent many from accessing their power.
+        ClaudeKit is incredibly powerful for everyone — but the CLI interface creates unnecessary friction for non-tech users
       </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      {problems.map((problem) => (
-        <GlassCard variant="hover" class="p-8 text-center">
-          <div class="w-16 h-16 bg-gradient-to-br from-red-100 to-orange-100 dark:from-red-900/30 dark:to-orange-900/30 rounded-2xl flex items-center justify-center mx-auto mb-6">
-            {problem.icon === 'terminal' && (
-              <svg class="w-8 h-8 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-            )}
-            {problem.icon === 'code' && (
-              <svg class="w-8 h-8 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-              </svg>
-            )}
-            {problem.icon === 'lock' && (
-              <svg class="w-8 h-8 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-              </svg>
-            )}
-          </div>
-          <h3 class="text-xl font-semibold mb-4">{problem.title}</h3>
-          <p class="text-slate-600 dark:text-slate-400">{problem.description}</p>
-        </GlassCard>
-      ))}
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="feature-card glass-card rounded-2xl p-8 border border-red-500/20 hover:border-red-500/40 cursor-pointer">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-red-500/20 to-orange-500/20 flex items-center justify-center mb-6">
+          <svg class="w-6 h-6 text-red-500 dark:text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><polyline points="8 7 12 12 8 17"/>
+          </svg>
+        </div>
+        <h3 class="font-heading text-xl font-bold mb-3 text-red-500 dark:text-red-400">Terminal Interface</h3>
+        <p class="text-slate-600 dark:text-slate-600 dark:text-slate-400">60+ slash commands to memorize. Terminal commands feel intimidating if you're not a developer.</p>
+      </div>
+
+      <div class="feature-card glass-card rounded-2xl p-8 border border-orange-500/20 hover:border-orange-500/40 cursor-pointer">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500/20 to-amber-500/20 flex items-center justify-center mb-6">
+          <svg class="w-6 h-6 text-orange-500 dark:text-orange-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+        </div>
+        <h3 class="font-heading text-xl font-bold mb-3 text-orange-500 dark:text-orange-400">Learning Curve</h3>
+        <p class="text-slate-600 dark:text-slate-600 dark:text-slate-400">Which workflow? Which command sequence? How do I combine them? Takes time to master the CLI patterns.</p>
+      </div>
+
+      <div class="feature-card glass-card rounded-2xl p-8 border border-amber-500/20 hover:border-amber-500/40 cursor-pointer">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500/20 to-yellow-500/20 flex items-center justify-center mb-6">
+          <svg class="w-6 h-6 text-amber-500 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </div>
+        <h3 class="font-heading text-xl font-bold mb-3 text-amber-500 dark:text-amber-400">No Safety Net</h3>
+        <p class="text-slate-600 dark:text-slate-600 dark:text-slate-400">One wrong command can lose progress. No undo button. No visual feedback on what's happening.</p>
+      </div>
     </div>
   </div>
 </section>

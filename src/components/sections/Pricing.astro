@@ -1,9 +1,4 @@
 ---
-import GlassCard from '@/components/ui/GlassCard.astro';
-import Button from '@/components/ui/Button.astro';
-import Badge from '@/components/ui/Badge.astro';
-import { pricingTiers } from '@/data/pricing';
-
 interface Props {
   class?: string;
 }
@@ -11,68 +6,92 @@ interface Props {
 const { class: className = '' } = Astro.props;
 ---
 
-<section id="pricing" class={`section py-20 ${className}`}>
-  <div class="max-w-7xl mx-auto px-4">
+<section id="pricing" class={`section py-24 relative ${className}`}>
+  <div class="max-w-6xl mx-auto px-6">
     <div class="text-center mb-16">
-      <h2 class="text-4xl md:text-5xl font-heading font-bold mb-6">
-        Simple, Transparent
-        <span class="block bg-gradient-to-r from-green-600 to-blue-600 dark:from-green-400 dark:to-blue-400 bg-clip-text text-transparent">
-          Pricing
-        </span>
-      </h2>
+      <h2 class="font-heading text-4xl md:text-5xl font-bold mb-4">Simple, Transparent Pricing</h2>
       <p class="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
-        Start free, upgrade when you need. No hidden fees. Cancel anytime.
+        Start for free, upgrade for power.
       </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-      {pricingTiers.map((tier) => (
-        <GlassCard
-          variant={tier.popular ? 'glow' : 'hover'}
-          class={`relative p-8 ${tier.popular ? 'md:scale-105' : ''}`}
-        >
-          {tier.popular && (
-            <div class="absolute -top-4 left-1/2 -translate-x-1/2">
-              <Badge variant="success">Most Popular</Badge>
-            </div>
-          )}
-
-          <div class="text-center mb-8">
-            <h3 class="text-2xl font-bold mb-2">{tier.name}</h3>
-            <div class="mb-4">
-              <span class="text-5xl font-bold">${tier.price}</span>
-              <span class="text-slate-600 dark:text-slate-400">/month</span>
-            </div>
-            <p class="text-slate-600 dark:text-slate-400">{tier.description}</p>
+    <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      <!-- Free Tier -->
+      <div class="glass-card rounded-3xl p-8 border border-slate-200 dark:border-slate-700 relative hover:border-slate-300 dark:hover:border-slate-600 transition-colors">
+        <div class="mb-8">
+          <h3 class="font-heading text-2xl font-bold mb-2">Free Starter</h3>
+          <div class="flex items-baseline gap-1">
+            <span class="text-4xl font-bold">$0</span>
           </div>
+          <p class="text-slate-600 dark:text-slate-400 mt-4">Perfect for trying out VividKit and building your first AI apps.</p>
+        </div>
 
-          <!-- Features list -->
-          <ul class="space-y-4 mb-8">
-            {tier.features.map((feature) => (
-              <li class="flex items-center gap-3">
-                <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
-                <span class="text-slate-700 dark:text-slate-300">{feature}</span>
-              </li>
-            ))}
-          </ul>
+        <ul class="space-y-4 mb-8">
+          <li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+            <svg class="w-5 h-5 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            1 Terminal Session
+          </li>
+          <li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+            <svg class="w-5 h-5 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            Basic Token Tracking
+          </li>
+          <li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+            <svg class="w-5 h-5 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            Project Management
+          </li>
+          <li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+            <svg class="w-5 h-5 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            Dark/Light Mode
+          </li>
+          <li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+            <svg class="w-5 h-5 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            Community Support
+          </li>
+        </ul>
 
-          <!-- CTA -->
-          <Button
-            href={tier.name === 'Free' ? '#waitlist' : '#waitlist'}
-            variant={tier.popular ? 'primary' : 'outline'}
-            class="w-full"
-          >
-            {tier.cta}
-          </Button>
-        </GlassCard>
-      ))}
-    </div>
+        <a href="#waitlist" class="block w-full py-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-center font-bold">
+          Get Free Early Access
+        </a>
+      </div>
 
-    <!-- FAQ note -->
-    <div class="text-center mt-16">
-      <p class="text-slate-600 dark:text-slate-400">
-        Have questions about pricing? <a href="/contact" class="text-blue-600 dark:text-blue-400 hover:underline">Contact us</a>
-      </p>
+      <!-- Pro Tier -->
+      <div class="glass-card rounded-3xl p-8 border border-blue-500/30 relative overflow-hidden hover:border-blue-500/50 transition-colors">
+        <div class="absolute top-0 right-0 bg-blue-600/20 text-blue-600 dark:text-blue-400 text-xs font-bold px-3 py-1 rounded-bl-xl border-l border-b border-blue-500/20">COMING SOON</div>
+        <div class="mb-8">
+          <h3 class="font-heading text-2xl font-bold mb-2 text-blue-600 dark:text-blue-400">Pro Power</h3>
+          <div class="flex items-baseline gap-1">
+            <span class="text-4xl font-bold">TBD</span>
+          </div>
+          <p class="text-slate-600 dark:text-slate-400 mt-4">We're exploring premium features. Help us decide what to build next.</p>
+        </div>
+
+        <ul class="space-y-4 mb-8">
+          <li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+            <svg class="w-5 h-5 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            <strong>Multi-terminal Support</strong> (Planned)
+          </li>
+          <li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+            <svg class="w-5 h-5 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            <strong>Session Persistence</strong> (Planned)
+          </li>
+          <li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+            <svg class="w-5 h-5 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            Advanced Analytics (Planned)
+          </li>
+          <li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+            <svg class="w-5 h-5 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            Project Workspaces (Planned)
+          </li>
+          <li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+            <svg class="w-5 h-5 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            Priority Support
+          </li>
+        </ul>
+
+        <a href="#waitlist" class="block w-full py-4 rounded-xl bg-blue-600/10 hover:bg-blue-600/20 text-blue-600 dark:text-blue-400 border border-blue-600/20 transition-colors text-center font-bold">
+          Join Waitlist & Give Feedback
+        </a>
+      </div>
     </div>
   </div>
 </section>
