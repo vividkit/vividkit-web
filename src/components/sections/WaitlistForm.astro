@@ -1,222 +1,55 @@
 ---
-import GlassCard from '@/components/ui/GlassCard.astro';
-import Button from '@/components/ui/Button.astro';
-import Input from '@/components/ui/Input.astro';
-import Select from '@/components/ui/Select.astro';
-import Textarea from '@/components/ui/Textarea.astro';
-import Badge from '@/components/ui/Badge.astro';
-
 interface Props {
   class?: string;
 }
 
 const { class: className = '' } = Astro.props;
-
-const roleOptions = [
-  { value: 'developer', label: 'Developer' },
-  { value: 'designer', label: 'Designer' },
-  { value: 'product-manager', label: 'Product Manager' },
-  { value: 'startup-founder', label: 'Startup Founder' },
-  { value: 'student', label: 'Student' },
-  { value: 'other', label: 'Other' }
-];
 ---
 
-<section id="waitlist" class={`section py-20 ${className}`}>
-  <div class="max-w-4xl mx-auto px-4">
-    <div class="text-center mb-16">
-      <Badge variant="success" pulse={true}>
-        🎉 Join 2,000+ on the waitlist
-      </Badge>
-      <h2 class="text-4xl md:text-5xl font-heading font-bold mt-4 mb-6">
-        Get Early Access
-      </h2>
-      <p class="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-        Be among the first to experience VividKit. No spam, just updates on our progress and early access invites.
-      </p>
+<section id="waitlist" class={`section py-24 relative ${className}`}>
+  <div class="max-w-2xl mx-auto px-6 text-center">
+    <h2 class="font-heading text-4xl md:text-5xl font-bold mb-6">Join the VividKit Waitlist</h2>
+    <p class="text-xl text-slate-600 dark:text-slate-400 mb-12">
+      Be among the first to experience AI development without barriers. Free early access for waitlist members.
+    </p>
+
+    <div class="glass-card glow-border rounded-3xl p-8">
+      <form class="space-y-4" id="waitlist-form">
+        <input type="text" placeholder="Your name" required
+          class="w-full px-5 py-4 rounded-xl bg-white dark:bg-surface-950 border border-slate-200 dark:border-slate-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500">
+        <input type="email" placeholder="Your email" required
+          class="w-full px-5 py-4 rounded-xl bg-white dark:bg-surface-950 border border-slate-200 dark:border-slate-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500">
+        <select class="w-full px-5 py-4 rounded-xl bg-white dark:bg-surface-950 border border-slate-200 dark:border-slate-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-slate-900 dark:text-white cursor-pointer">
+          <option value="" class="text-slate-400 dark:text-slate-500">I'm a...</option>
+          <option value="founder">Non-tech founder</option>
+          <option value="designer">Designer</option>
+          <option value="developer">Developer</option>
+          <option value="other">Other</option>
+        </select>
+        <textarea placeholder="What would you like to build with VividKit? (optional)" rows="3"
+          class="w-full px-5 py-4 rounded-xl bg-white dark:bg-surface-950 border border-slate-200 dark:border-slate-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 resize-none"></textarea>
+        <button type="submit" class="w-full cta-button px-6 py-4 rounded-xl font-bold text-lg text-white cursor-pointer">
+          Join Waitlist
+        </button>
+      </form>
+      <p class="text-xs text-slate-500 mt-4">Free early access. No credit card. No spam.</p>
     </div>
 
-    <GlassCard variant="glow" class="p-8 md:p-12">
-      <form id="waitlist-form" class="space-y-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div id="name">
-            <label for="name" class="block text-sm font-medium mb-2">Name *</label>
-            <Input
-              name="name"
-              type="text"
-              placeholder="Your full name"
-              required
-            />
-            <p id="name-error" class="text-red-500 dark:text-red-400 text-sm mt-1 hidden"></p>
-          </div>
-
-          <div id="email">
-            <label for="email" class="block text-sm font-medium mb-2">Email *</label>
-            <Input
-              name="email"
-              type="email"
-              placeholder="your@email.com"
-              required
-            />
-            <p id="email-error" class="text-red-500 dark:text-red-400 text-sm mt-1 hidden"></p>
-          </div>
-        </div>
-
-        <div>
-          <label for="role" class="block text-sm font-medium mb-2">Your Role *</label>
-          <Select
-            id="role"
-            name="role"
-            placeholder="Select your role"
-            required
-            options={roleOptions}
-          />
-          <p id="role-error" class="text-red-500 dark:text-red-400 text-sm mt-1 hidden"></p>
-        </div>
-
-        <div>
-          <label for="message" class="block text-sm font-medium mb-2">What would you like to build? (Optional)</label>
-          <Textarea
-            id="message"
-            name="message"
-            placeholder="Tell us about your project or what you'd like to create..."
-            rows={4}
-          />
-          <p id="message-error" class="text-red-500 dark:text-red-400 text-sm mt-1 hidden"></p>
-        </div>
-
-        <div class="pt-4" id="submit-button">
-          <Button type="submit" size="lg" class="w-full">
-            <span id="submit-text">Join Waitlist</span>
-            <span id="submit-loading" class="hidden">Joining...</span>
-          </Button>
-        </div>
-
-        <!-- Status messages -->
-        <div id="form-success" class="hidden mt-4 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
-          <p class="text-green-800 dark:text-green-400 font-medium">🎉 Welcome aboard!</p>
-          <p class="text-green-700 dark:text-green-300 text-sm mt-1">We've added you to the waitlist. Check your email for confirmation!</p>
-        </div>
-
-        <div id="form-error" class="hidden mt-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-          <p id="error-message" class="text-red-800 dark:text-red-400"></p>
-        </div>
-      </form>
-    </GlassCard>
-
-    <!-- Privacy note -->
-    <p class="text-center text-sm text-slate-500 dark:text-slate-400 mt-6">
-      We respect your privacy. Unsubscribe at any time. <a href="/privacy" class="text-blue-600 dark:text-blue-400 hover:underline">Privacy Policy</a>
-    </p>
+    <div class="mt-12">
+      <p class="text-sm text-slate-600 dark:text-slate-500 mb-4">While you wait, get ClaudeKit ready:</p>
+      <a href="#claudekit-referral" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass-card hover:bg-slate-100 dark:hover:bg-slate-800/60 font-medium transition-all cursor-pointer">
+        Get ClaudeKit (20% OFF)
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </a>
+    </div>
   </div>
 </section>
 
 <script>
-  import { submitWaitlistForm, validateForm } from '@/scripts/form-handler';
-
-  const form = document.getElementById('waitlist-form') as HTMLFormElement;
-  const submitButton = document.getElementById('submit-button') as HTMLButtonElement;
-  const submitText = document.getElementById('submit-text') as HTMLSpanElement;
-  const submitLoading = document.getElementById('submit-loading') as HTMLSpanElement;
-  const successMessage = document.getElementById('form-success') as HTMLDivElement;
-  const errorMessage = document.getElementById('form-error') as HTMLDivElement;
-  const errorText = document.getElementById('error-message') as HTMLParagraphElement;
-
-  function showError(fieldId: string, message: string) {
-    const errorElement = document.getElementById(`${fieldId}-error`);
-    const fieldElement = document.getElementById(fieldId);
-
-    if (errorElement) {
-      errorElement.textContent = message;
-      errorElement.classList.remove('hidden');
-    }
-
-    if (fieldElement) {
-      fieldElement.classList.add('border-red-500', 'dark:border-red-400');
-      fieldElement.classList.remove('border-slate-200', 'dark:border-slate-700');
-    }
-  }
-
-  function clearError(fieldId: string) {
-    const errorElement = document.getElementById(`${fieldId}-error`);
-    const fieldElement = document.getElementById(fieldId);
-
-    if (errorElement) {
-      errorElement.classList.add('hidden');
-    }
-
-    if (fieldElement) {
-      fieldElement.classList.remove('border-red-500', 'dark:border-red-400');
-      fieldElement.classList.add('border-slate-200', 'dark:border-slate-700');
-    }
-  }
-
-  function clearAllErrors() {
-    ['name', 'email', 'role', 'message'].forEach(clearError);
-    errorMessage.classList.add('hidden');
-  }
-
-  form?.addEventListener('submit', async (e) => {
+  document.getElementById('waitlist-form')?.addEventListener('submit', (e) => {
     e.preventDefault();
-
-    clearAllErrors();
-
-    const formData = new FormData(form);
-    const data = {
-      name: formData.get('name') as string,
-      email: formData.get('email') as string,
-      role: formData.get('role') as string,
-      message: formData.get('message') as string
-    };
-
-    const validation = validateForm(data);
-
-    if (!validation.valid) {
-      Object.entries(validation.errors).forEach(([field, message]) => {
-        if (message) showError(field, message);
-      });
-      return;
-    }
-
-    // Show loading state
-    submitButton.disabled = true;
-    submitText.classList.add('hidden');
-    submitLoading.classList.remove('hidden');
-
-    try {
-      await submitWaitlistForm(data);
-
-      // Show success message
-      form.classList.add('hidden');
-      successMessage.classList.remove('hidden');
-
-      // Reset form after delay
-      setTimeout(() => {
-        form.reset();
-        form.classList.remove('hidden');
-        successMessage.classList.add('hidden');
-      }, 5000);
-
-    } catch (error) {
-      console.error('Form submission error:', error);
-
-      // Show error message
-      errorText.textContent = error instanceof Error
-        ? error.message
-        : 'Something went wrong. Please try again.';
-      errorMessage.classList.remove('hidden');
-
-    } finally {
-      // Reset button state
-      submitButton.disabled = false;
-      submitText.classList.remove('hidden');
-      submitLoading.classList.add('hidden');
-    }
-  });
-
-  // Clear errors on input
-  ['name', 'email', 'role', 'message'].forEach(fieldId => {
-    const field = document.getElementById(fieldId);
-    field?.addEventListener('input', () => clearError(fieldId));
+    alert('Thanks for joining the waitlist! We\'ll be in touch soon.');
   });
 </script>

@@ -10,114 +10,86 @@ interface Props {
 const { class: className = '' } = Astro.props;
 ---
 
-<header class={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-full max-w-6xl px-4 ${className}`}>
-  <div class="glass-card rounded-2xl p-4 flex items-center justify-between">
-    <a href="#hero" class="flex items-center">
-      <Logo size="sm" />
-    </a>
-
-    <nav class="hidden md:flex items-center gap-8">
-      {navLinks.map((link) => (
-        <a
-          href={link.href}
-          class="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200 font-medium px-3 py-1 rounded-lg"
-        >
-          {link.label}
+<header class="fixed top-4 left-4 right-4 z-50 transition-all duration-300" id="main-header">
+  <div class="glass-card rounded-2xl max-w-6xl mx-auto shadow-sm">
+    <div class="px-6 py-4">
+      <div class="flex items-center justify-between">
+        <a href="#hero" class="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
+          <Logo size="md" />
         </a>
-      ))}
-    </nav>
 
-    <div class="flex items-center gap-4">
-      <!-- Language Selector -->
-      <div class="relative hidden sm:block" x-data="{ open: false }">
-        <button
-          @click="open = !open"
-          class="glass-card px-3 py-2 rounded-xl flex items-center gap-2 hover:bg-white dark:hover:bg-slate-800/60 transition-all duration-200"
-          aria-label="Select language"
-        >
-          <span class="text-lg">🌐</span>
-          <span class="text-sm font-medium">EN</span>
-          <svg class="w-4 h-4 transition-transform" :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
+        <nav class="hidden md:flex items-center gap-1">
+          <a href="#hero" class="nav-link active px-4 py-2 rounded-lg text-sm font-medium">Home</a>
+          <a href="#features" class="nav-link px-4 py-2 rounded-lg text-sm font-medium">Features</a>
+          <a href="#pricing" class="nav-link px-4 py-2 rounded-lg text-sm font-medium">Pricing</a>
+          <a href="#claudekit" class="nav-link px-4 py-2 rounded-lg text-sm font-medium">ClaudeKit</a>
+          <a href="#commands" class="nav-link px-4 py-2 rounded-lg text-sm font-medium">Commands</a>
+        </nav>
 
-        <!-- Dropdown Menu -->
-        <div
-          x-show="open"
-          @click.away="open = false"
-          x-transition:enter="transition ease-out duration-200"
-          x-transition:enter-start="opacity-0 transform -translate-y-2"
-          x-transition:enter-end="opacity-100 transform translate-y-0"
-          x-transition:leave="transition ease-in duration-150"
-          x-transition:leave-start="opacity-100 transform translate-y-0"
-          x-transition:leave-end="opacity-0 transform -translate-y-2"
-          class="absolute top-full right-0 mt-2 glass-card rounded-xl p-2 min-w-[140px] z-50"
-        >
-          <a
-            href="#"
-            @click="open = false"
-            class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-500/10 text-sm font-medium text-slate-700 dark:text-slate-300"
-          >
-            <span>🇺🇸</span>
-            <span>English</span>
+        <div class="flex items-center gap-3">
+          <!-- Language Selector -->
+          <div class="relative group hidden sm:block">
+            <button class="flex items-center gap-1 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer">
+              <span>EN</span>
+              <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="absolute right-0 top-full mt-2 w-24 py-1 bg-white dark:bg-surface-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-right">
+              <a href="?lang=en" class="block px-4 py-2 text-sm text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20">English</a>
+              <a href="?lang=vi" class="block px-4 py-2 text-sm text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800">Tiếng Việt</a>
+            </div>
+          </div>
+
+          <!-- Theme Toggle Button -->
+          <button id="theme-toggle" class="p-2 rounded-xl text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer" aria-label="Toggle theme">
+            <!-- Sun icon (shown in dark mode) -->
+            <svg class="w-5 h-5 text-slate-700 dark:text-yellow-400 hidden dark:block sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="5"/>
+              <line x1="12" y1="1" x2="12" y2="3"/>
+              <line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="1" y1="12" x2="3" y2="12"/>
+              <line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+            <!-- Moon icon (shown in light mode) -->
+            <svg class="w-5 h-5 text-slate-700 dark:hidden moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </button>
+
+          <a href="#waitlist" class="hidden md:flex items-center gap-2 px-5 py-2.5 rounded-xl cta-button font-medium text-sm text-white shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40 cursor-pointer">
+            <span>Get Early Access</span>
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </svg>
           </a>
-          <a
-            href="#"
-            @click="open = false"
-            class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-500/10 text-sm font-medium text-slate-700 dark:text-slate-300"
-          >
-            <span>🇻🇳</span>
-            <span>Tiếng Việt</span>
-          </a>
+
+          <!-- Mobile Menu Button -->
+          <button id="mobile-menu-toggle" class="md:hidden p-2 text-slate-600 dark:text-slate-300 cursor-pointer">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/></svg>
+          </button>
         </div>
       </div>
-
-      <button
-        id="theme-toggle"
-        class="p-2 rounded-lg glass-card hover:bg-white dark:hover:bg-slate-800/60 transition-colors"
-        aria-label="Toggle theme"
-      >
-        <!-- Sun icon for dark mode (visible when dark) -->
-        <svg class="w-5 h-5 hidden dark:block" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
-        </svg>
-        <!-- Moon icon for light mode (visible when not dark) -->
-        <svg class="w-5 h-5 block dark:hidden" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-        </svg>
-      </button>
-
-      <Button href="#waitlist" size="sm">Join Waitlist</Button>
-
-      <button
-        id="mobile-menu-toggle"
-        class="md:hidden p-2 rounded-lg glass-card hover:bg-white dark:hover:bg-slate-800/60 transition-colors"
-        aria-label="Toggle menu"
-      >
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-        </svg>
-      </button>
     </div>
   </div>
 
   <!-- Mobile Menu -->
-  <div id="mobile-menu" class="md:hidden hidden mt-2 glass-card rounded-xl p-4">
-    <nav class="flex flex-col gap-4">
-      {navLinks.map((link) => (
-        <a
-          href={link.href}
-          class="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200 font-medium px-3 py-2 rounded-lg"
-        >
-          {link.label}
-        </a>
-      ))}
+  <div id="mobile-menu" class="hidden md:hidden absolute top-full left-4 right-4 mt-2 glass-card rounded-2xl p-4 shadow-xl">
+    <nav class="flex flex-col gap-2">
+      <a href="#hero" class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors">Home</a>
+      <a href="#features" class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors">Features</a>
+      <a href="#pricing" class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors">Pricing</a>
+      <a href="#claudekit" class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors">ClaudeKit</a>
+      <a href="#commands" class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors">Commands</a>
+      <div class="h-px bg-slate-200 dark:bg-slate-700 my-2"></div>
+      <a href="#waitlist" class="px-4 py-3 rounded-xl bg-blue-600 text-white font-medium text-center">Get Early Access</a>
     </nav>
   </div>
 </header>
 
-<script>
+<script is:inline>
   const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
 

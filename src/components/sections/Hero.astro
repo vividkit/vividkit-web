@@ -1,7 +1,4 @@
 ---
-import Button from '@/components/ui/Button.astro';
-import Badge from '@/components/ui/Badge.astro';
-
 interface Props {
   class?: string;
 }
@@ -9,68 +6,54 @@ interface Props {
 const { class: className = '' } = Astro.props;
 ---
 
-<section id="hero" class={`section min-h-screen flex items-center justify-center relative overflow-hidden ${className}`}>
-  <div class="max-w-7xl mx-auto px-4 text-center">
-    <!-- Status badge -->
-    <div class="mb-8 flex justify-center">
-      <Badge variant="success" pulse={true}>
-        🚀 Beta Launch - Join the Waitlist
-      </Badge>
+<section id="hero" class={`relative min-h-screen flex items-center justify-center pt-24 pb-16 ${className}`}>
+  <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
+    <div class="fade-in-up mb-6 inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full glass-card text-sm font-medium">
+      <span class="w-2 h-2 rounded-full bg-green-400 pulse-glow"></span>
+      <span class="text-slate-600 dark:text-slate-300">Desktop App Coming Soon</span>
     </div>
 
-    <!-- Main headline -->
-    <h1 class="text-5xl md:text-7xl font-heading font-bold mb-6 bg-gradient-to-r from-slate-900 via-blue-600 to-purple-600 dark:from-white dark:via-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
-      Build Anything Without
-      <span class="block">Terminal Friction</span>
+    <h1 class="font-heading text-5xl md:text-7xl font-bold mb-6 leading-tight fade-in-up" style="animation-delay: 0.1s;">
+      <span class="block text-slate-900 dark:text-white mb-2">Build Anything</span>
+      <span class="block bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent mb-2">Without Terminal</span>
+      <span class="block bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">Friction</span>
     </h1>
 
-    <!-- Subheadline -->
-    <p class="text-xl md:text-2xl text-slate-600 dark:text-slate-300 mb-10 max-w-3xl mx-auto">
-      VividKit brings the power of AI coding to everyone. No terminal commands. No technical barriers.
+    <p class="text-xl md:text-2xl text-slate-600 dark:text-slate-300 mb-8 max-w-3xl mx-auto leading-relaxed fade-in-up" style="animation-delay: 0.2s;">
+      VividKit brings the power of AI coding to everyone. No terminal commands. No technical barriers. Just describe what you want, and watch it come to life.
     </p>
 
-    <!-- CTAs -->
-    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-      <Button href="#waitlist" size="lg">
-        Join the Waitlist
-      </Button>
-      <Button href="#features" variant="outline" size="lg">
-        See How It Works
-      </Button>
+    <div class="fade-in-up mb-10 glass-card-light p-5 rounded-2xl max-w-2xl mx-auto" style="animation-delay: 0.3s;">
+      <p class="text-sm text-slate-600 dark:text-slate-300">
+        <strong class="text-slate-900 dark:text-white">Built on ClaudeKit:</strong> The industry-leading AI development framework — now accessible to everyone through VividKit's visual interface.
+      </p>
     </div>
 
-    <!-- Feature checkmarks -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-      <div class="flex items-center gap-3 justify-center">
-        <div class="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-          <svg class="w-4 h-4 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
-        </div>
-        <span class="text-slate-700 dark:text-slate-300">No coding experience required</span>
-      </div>
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 fade-in-up" style="animation-delay: 0.4s;">
+      <a href="#waitlist" class="cta-button px-8 py-4 rounded-2xl font-bold text-lg text-white flex items-center gap-3 cursor-pointer">
+        Join Waitlist (Free Early Access)
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </a>
+      <a href="#claudekit" class="px-8 py-4 rounded-2xl glass-card hover:bg-white dark:hover:bg-slate-800/60 font-semibold text-lg transition-all cursor-pointer">
+        Learn About ClaudeKit
+      </a>
+    </div>
 
-      <div class="flex items-center gap-3 justify-center">
-        <div class="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-          <svg class="w-4 h-4 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
-        </div>
-        <span class="text-slate-700 dark:text-slate-300">Works with any project</span>
+    <div class="mt-14 flex flex-wrap items-center justify-center gap-8 text-sm text-slate-500 dark:text-slate-400 fade-in-up" style="animation-delay: 0.5s;">
+      <div class="flex items-center gap-2">
+        <svg class="w-5 h-5 text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        No coding required
       </div>
-
-      <div class="flex items-center gap-3 justify-center">
-        <div class="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-          <svg class="w-4 h-4 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
-        </div>
-        <span class="text-slate-700 dark:text-slate-300">100% free to start</span>
+      <div class="flex items-center gap-2">
+        <svg class="w-5 h-5 text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        Visual workflows
+      </div>
+      <div class="flex items-center gap-2">
+        <svg class="w-5 h-5 text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        Production-ready code
       </div>
     </div>
   </div>
-
-  <!-- Decorative gradient orb -->
-  <div class="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
-  <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-tr from-purple-500/20 to-pink-500/20 rounded-full blur-3xl animate-pulse animation-delay-2000"></div>
 </section>
-
-<style>
-  .animation-delay-2000 {
-    animation-delay: 2s;
-  }
-</style>

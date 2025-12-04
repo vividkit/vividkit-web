@@ -11,27 +11,45 @@ export function initThemeToggle(): void {
     document.documentElement.classList.remove('dark');
   }
 
-  // Toggle button handler
-  const toggleButton = document.getElementById('theme-toggle');
-  if (!toggleButton) {
-    console.warn('Theme toggle button not found');
-    return;
-  }
-
-  toggleButton.addEventListener('click', () => {
+  // Update sun/moon icons based on current theme
+  const updateIcons = () => {
     const isDark = document.documentElement.classList.contains('dark');
+    const sunIcon = document.querySelector('#theme-toggle .sun-icon');
+    const moonIcon = document.querySelector('#theme-toggle .moon-icon');
 
-    // Toggle dark class
-    if (isDark) {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-      console.log('Switched to light mode');
-    } else {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-      console.log('Switched to dark mode');
+    if (sunIcon && moonIcon) {
+      if (isDark) {
+        sunIcon.classList.remove('hidden');
+        moonIcon.classList.add('hidden');
+      } else {
+        sunIcon.classList.add('hidden');
+        moonIcon.classList.remove('hidden');
+      }
     }
-  });
+  };
+
+  // Initial icon update after a small delay to ensure DOM is ready
+  setTimeout(updateIcons, 50);
+
+  // Add click handler to theme toggle button
+  const themeToggle = document.getElementById('theme-toggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const html = document.documentElement;
+      const isDark = html.classList.contains('dark');
+
+      if (isDark) {
+        html.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      } else {
+        html.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      }
+
+      // Update icons immediately
+      updateIcons();
+    });
+  }
 
   // Listen for system theme changes
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
@@ -42,13 +60,8 @@ export function initThemeToggle(): void {
       } else {
         document.documentElement.classList.remove('dark');
       }
+      // Update icons
+      setTimeout(updateIcons, 10);
     }
-  });
-
-  // Debug current theme state
-  console.log('Theme initialized:', {
-    stored: storedTheme,
-    prefersDark,
-    current: document.documentElement.classList.contains('dark') ? 'dark' : 'light'
   });
 }
