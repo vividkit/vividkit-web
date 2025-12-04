@@ -39,10 +39,9 @@ const roleOptions = [
     <GlassCard variant="glow" class="p-8 md:p-12">
       <form id="waitlist-form" class="space-y-6">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
+          <div id="name">
             <label for="name" class="block text-sm font-medium mb-2">Name *</label>
             <Input
-              id="name"
               name="name"
               type="text"
               placeholder="Your full name"
@@ -51,10 +50,9 @@ const roleOptions = [
             <p id="name-error" class="text-red-500 dark:text-red-400 text-sm mt-1 hidden"></p>
           </div>
 
-          <div>
+          <div id="email">
             <label for="email" class="block text-sm font-medium mb-2">Email *</label>
             <Input
-              id="email"
               name="email"
               type="email"
               placeholder="your@email.com"
@@ -87,8 +85,8 @@ const roleOptions = [
           <p id="message-error" class="text-red-500 dark:text-red-400 text-sm mt-1 hidden"></p>
         </div>
 
-        <div class="pt-4">
-          <Button type="submit" size="lg" class="w-full" id="submit-button">
+        <div class="pt-4" id="submit-button">
+          <Button type="submit" size="lg" class="w-full">
             <span id="submit-text">Join Waitlist</span>
             <span id="submit-loading" class="hidden">Joining...</span>
           </Button>

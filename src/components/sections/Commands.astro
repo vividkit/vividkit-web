@@ -33,7 +33,7 @@ const { class: className = '' } = Astro.props;
 
           <div class="space-y-4">
             {category.commands.map((command) => (
-              <div key={command.name} class="flex items-start gap-3">
+              <div class="flex items-start gap-3">
                 <code class="text-sm font-mono bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-lg text-blue-600 dark:text-blue-400 flex-shrink-0">
                   {command.name}
                 </code>
