@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VividKit - Recommended Workflows</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Fira+Sans:wght@300;400;500;600;700&display=swap">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            mono: ['Fira Code', 'monospace'],
+            sans: ['Fira Sans', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @keyframes flow {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+    .flow-arrow {
+      animation: flow 2s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased bg-[#0F172A] text-slate-100 h-screen overflow-hidden flex">
+
+  <!-- Sidebar (Collapsed) -->
+  <div class="w-16 bg-slate-900/50 backdrop-blur-sm border-r border-slate-800 flex flex-col items-center py-4 gap-4">
+    <button class="p-2 rounded hover:bg-slate-800 transition-colors duration-200 cursor-pointer">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 18l6-6-6-6"/>
+      </svg>
+    </button>
+    <button class="p-2 rounded bg-[#3B82F6]/10 text-[#3B82F6]">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+      </svg>
+    </button>
+    <div class="h-px w-8 bg-slate-700 my-2"></div>
+    <button class="p-2 rounded hover:bg-slate-800 transition-colors duration-200 cursor-pointer relative">
+      <svg class="w-5 h-5 text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+        <path d="M2 17l10 5 10-5"/>
+        <path d="M2 12l10 5 10-5"/>
+      </svg>
+      <span class="absolute top-0 right-0 w-2 h-2 bg-green-400 rounded-full"></span>
+    </button>
+  </div>
+
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+
+    <!-- Header -->
+    <div class="h-16 bg-slate-900/30 backdrop-blur-sm border-b border-slate-800 flex items-center justify-between px-8">
+      <div>
+        <h1 class="text-2xl font-bold flex items-center gap-3">
+          <svg class="w-8 h-8 text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5"/>
+            <path d="M2 12l10 5 10-5"/>
+          </svg>
+          Recommended Workflows
+        </h1>
+        <p class="text-sm text-slate-400 mt-1">Step-by-step guides to help you get started with common tasks</p>
+      </div>
+      <button class="p-2 rounded-lg hover:bg-slate-800 transition-colors duration-200 cursor-pointer">
+        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Content -->
+    <div class="flex-1 overflow-y-auto bg-slate-950 p-8">
+      <div class="max-w-6xl mx-auto space-y-8">
+
+        <!-- Info Banner -->
+        <div class="flex items-start gap-3 p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
+          <svg class="w-5 h-5 text-purple-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="16" x2="12" y2="12"/>
+            <line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+          <div class="flex-1">
+            <div class="font-medium text-purple-400 mb-1">New to ClaudeKit?</div>
+            <div class="text-sm text-slate-400">These workflows help you use AI to build software without knowing how to code. Each workflow is a sequence of commands that work together to accomplish common tasks.</div>
+          </div>
+        </div>
+
+        <!-- Workflow Cards Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+          <!-- Workflow 1: New Feature (Beginner) -->
+          <div class="bg-slate-900/50 rounded-xl border border-slate-800 overflow-hidden hover:border-purple-500/50 transition-colors duration-200">
+            <!-- Card Header -->
+            <div class="p-6 bg-gradient-to-r from-purple-500/10 to-blue-500/10 border-b border-slate-800">
+              <div class="flex items-start justify-between mb-3">
+                <div>
+                  <div class="flex items-center gap-2 mb-2">
+                    <h3 class="text-xl font-bold">Build a New Feature</h3>
+                    <span class="px-2 py-0.5 text-xs rounded-full bg-green-500/20 text-green-400 border border-green-500/20">Beginner</span>
+                  </div>
+                  <p class="text-sm text-slate-400">Best for: Adding new functionality to your app</p>
+                </div>
+                <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-purple-500/20 flex-shrink-0">
+                  <svg class="w-7 h-7 text-purple-400" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M13 3L4 14h7l-1 7 9-11h-7l1-7z"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="flex items-center gap-4 text-xs text-slate-500">
+                <span class="flex items-center gap-1">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                  ~15-30 min
+                </span>
+                <span class="flex items-center gap-1">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                  </svg>
+                  4 steps
+                </span>
+              </div>
+            </div>
+
+            <!-- Workflow Steps -->
+            <div class="p-6 space-y-4">
+              <!-- Step 1 -->
+              <div class="flex items-start gap-3">
+                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 font-bold text-sm flex-shrink-0">
+                  1
+                </div>
+                <div class="flex-1">
+                  <div class="flex items-center gap-2 mb-1">
+                    <code class="px-2 py-1 text-xs rounded bg-slate-800 text-purple-400 font-mono">/brainstorm</code>
+                    <span class="text-xs text-slate-500">Explore ideas</span>
+                  </div>
+                  <p class="text-sm text-slate-400">Discuss your feature idea with AI to explore possibilities and get feedback</p>
+                </div>
+              </div>
+
+              <!-- Arrow -->
+              <div class="flex justify-center">
+                <svg class="w-5 h-5 text-slate-600 flow-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19"/>
+                  <polyline points="19 12 12 19 5 12"/>
+                </svg>
+              </div>
+
+              <!-- Step 2 -->
+              <div class="flex items-start gap-3">
+                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">
+                  2
+                </div>
+                <div class="flex-1">
+                  <div class="flex items-center gap-2 mb-1">
+                    <code class="px-2 py-1 text-xs rounded bg-slate-800 text-blue-400 font-mono">/plan</code>
+                    <span class="text-xs text-slate-500">Create implementation plan</span>
+                  </div>
+                  <p class="text-sm text-slate-400">AI creates a detailed step-by-step plan for building your feature</p>
+                </div>
+              </div>
+
+              <!-- Arrow -->
+              <div class="flex justify-center">
+                <svg class="w-5 h-5 text-slate-600 flow-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation-delay: 0.3s">
+                  <line x1="12" y1="5" x2="12" y2="19"/>
+                  <polyline points="19 12 12 19 5 12"/>
+                </svg>
+              </div>
+
+              <!-- Step 3 -->
+              <div class="flex items-start gap-3">
+                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-amber-500/20 text-amber-400 font-bold text-sm flex-shrink-0">
+                  3
+                </div>
+                <div class="flex-1">
+                  <div class="flex items-center gap-2 mb-1">
+                    <svg class="w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                      <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                    <span class="text-xs text-slate-500">Review & adjust the plan</span>
+                  </div>
+                  <p class="text-sm text-slate-400">Look through the plan, ask questions, and request changes if needed</p>
+                </div>
+              </div>
+
+              <!-- Arrow -->
+              <div class="flex justify-center">
+                <svg class="w-5 h-5 text-slate-600 flow-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation-delay: 0.6s">
+                  <line x1="12" y1="5" x2="12" y2="19"/>
+                  <polyline points="19 12 12 19 5 12"/>
+                </svg>
+              </div>
+
+              <!-- Step 4 -->
+              <div class="flex items-start gap-3">
+                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-green-500/20 text-green-400 font-bold text-sm flex-shrink-0">
+                  4
+                </div>
+                <div class="flex-1">
+                  <div class="flex items-center gap-2 mb-1">
+                    <code class="px-2 py-1 text-xs rounded bg-slate-800 text-green-400 font-mono">/code @plan.md</code>
+                    <span class="text-xs text-slate-500">Implement the plan</span>
+                  </div>
+                  <p class="text-sm text-slate-400">AI writes the code following the plan, runs tests, and reviews the work</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Footer -->
+            <div class="p-4 bg-slate-900/50 border-t border-slate-800 flex items-center justify-between">
+              <div class="text-xs text-slate-500">
+                💡 Tip: Use <code class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono">/clear</code> before <code class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono">/code</code> to save tokens
+              </div>
+              <button class="px-4 py-2 rounded-lg bg-purple-500 hover:bg-purple-600 transition-colors duration-200 cursor-pointer font-medium text-sm flex items-center gap-2">
+                Start Workflow
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="9 18 15 12 9 6"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Workflow 2: Fix a Bug -->
+          <div class="bg-slate-900/50 rounded-xl border border-slate-800 overflow-hidden hover:border-red-500/50 transition-colors duration-200">
+            <div class="p-6 bg-gradient-to-r from-red-500/10 to-orange-500/10 border-b border-slate-800">
+              <div class="flex items-start justify-between mb-3">
+                <div>
+                  <div class="flex items-center gap-2 mb-2">
+                    <h3 class="text-xl font-bold">Fix a Bug</h3>
+                    <span class="px-2 py-0.5 text-xs rounded-full bg-green-500/20 text-green-400 border border-green-500/20">Beginner</span>
+                  </div>
+                  <p class="text-sm text-slate-400">Best for: Fixing errors and unexpected behavior</p>
+                </div>
+                <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-red-500/20 flex-shrink-0">
+                  <svg class="w-7 h-7 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="flex items-center gap-4 text-xs text-slate-500">
+                <span class="flex items-center gap-1">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                  ~5-15 min
+                </span>
+                <span class="flex items-center gap-1">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                  </svg>
+                  3 steps
+                </span>
+              </div>
+            </div>
+
+            <div class="p-6 space-y-4">
+              <div class="flex items-start gap-3">
+                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-red-500/20 text-red-400 font-bold text-sm flex-shrink-0">1</div>
+                <div class="flex-1">
+                  <div class="flex items-center gap-2 mb-1">
+                    <code class="px-2 py-1 text-xs rounded bg-slate-800 text-red-400 font-mono">/debug</code>
+                    <span class="text-xs text-slate-500">Investigate the issue</span>
+                  </div>
+                  <p class="text-sm text-slate-400">AI analyzes your code to find the root cause of the problem</p>
+                </div>
+              </div>
+
+              <div class="flex justify-center">
+                <svg class="w-5 h-5 text-slate-600 flow-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19"/>
+                  <polyline points="19 12 12 19 5 12"/>
+                </svg>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-orange-500/20 text-orange-400 font-bold text-sm flex-shrink-0">2</div>
+                <div class="flex-1">
+                  <div class="flex items-center gap-2 mb-1">
+                    <code class="px-2 py-1 text-xs rounded bg-slate-800 text-orange-400 font-mono">/fix</code>
+                    <span class="text-xs text-slate-500">Apply the fix</span>
+                  </div>
+                  <p class="text-sm text-slate-400">AI fixes the bug and explains what was wrong and how it was fixed</p>
+                </div>
+              </div>
+
+              <div class="flex justify-center">
+                <svg class="w-5 h-5 text-slate-600 flow-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation-delay: 0.3s">
+                  <line x1="12" y1="5" x2="12" y2="19"/>
+                  <polyline points="19 12 12 19 5 12"/>
+                </svg>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-green-500/20 text-green-400 font-bold text-sm flex-shrink-0">3</div>
+                <div class="flex-1">
+                  <div class="flex items-center gap-2 mb-1">
+                    <code class="px-2 py-1 text-xs rounded bg-slate-800 text-green-400 font-mono">/test</code>
+                    <span class="text-xs text-slate-500">Verify the fix</span>
+                  </div>
+                  <p class="text-sm text-slate-400">Run tests to make sure the bug is fixed and nothing else broke</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-4 bg-slate-900/50 border-t border-slate-800 flex items-center justify-between">
+              <div class="text-xs text-slate-500">
+                💡 Tip: <code class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono">/fix</code> automatically routes to specialized fix commands
+              </div>
+              <button class="px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 transition-colors duration-200 cursor-pointer font-medium text-sm flex items-center gap-2">
+                Start Workflow
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="9 18 15 12 9 6"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Workflow 3: Quick Implementation -->
+          <div class="bg-slate-900/50 rounded-xl border border-slate-800 overflow-hidden hover:border-blue-500/50 transition-colors duration-200">
+            <div class="p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border-b border-slate-800">
+              <div class="flex items-start justify-between mb-3">
+                <div>
+                  <div class="flex items-center gap-2 mb-2">
+                    <h3 class="text-xl font-bold">Quick Implementation</h3>
+                    <span class="px-2 py-0.5 text-xs rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/20">Intermediate</span>
+                  </div>
+                  <p class="text-sm text-slate-400">Best for: Small features when you know what you want</p>
+                </div>
+                <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-blue-500/20 flex-shrink-0">
+                  <svg class="w-7 h-7 text-blue-400" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M13 3L4 14h7l-1 7 9-11h-7l1-7z"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="flex items-center gap-4 text-xs text-slate-500">
+                <span class="flex items-center gap-1">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                  ~10-20 min
+                </span>
+                <span class="flex items-center gap-1">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                  </svg>
+                  1 step
+                </span>
+              </div>
+            </div>
+
+            <div class="p-6 space-y-4">
+              <div class="flex items-start gap-3">
+                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">1</div>
+                <div class="flex-1">
+                  <div class="flex items-center gap-2 mb-1">
+                    <code class="px-2 py-1 text-xs rounded bg-slate-800 text-blue-400 font-mono">/cook "your task"</code>
+                    <span class="text-xs text-slate-500">All-in-one command</span>
+                  </div>
+                  <p class="text-sm text-slate-400">AI researches, plans, implements, tests, and reviews the feature automatically</p>
+                </div>
+              </div>
+
+              <div class="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                <div class="text-xs font-medium text-blue-400 mb-2">What /cook does automatically:</div>
+                <ul class="space-y-1.5 text-xs text-slate-400">
+                  <li class="flex items-center gap-2">
+                    <svg class="w-3.5 h-3.5 text-green-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    Research best approaches and technologies
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <svg class="w-3.5 h-3.5 text-green-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    Create and execute implementation plan
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <svg class="w-3.5 h-3.5 text-green-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    Write and test the code
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <svg class="w-3.5 h-3.5 text-green-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    Review for quality and best practices
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="p-4 bg-slate-900/50 border-t border-slate-800 flex items-center justify-between">
+              <div class="text-xs text-slate-500">
+                💡 Tip: Skip planning steps for faster results
+              </div>
+              <button class="px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 transition-colors duration-200 cursor-pointer font-medium text-sm flex items-center gap-2">
+                Start Workflow
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="9 18 15 12 9 6"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Workflow 4: Complete Project -->
+          <div class="bg-slate-900/50 rounded-xl border border-slate-800 overflow-hidden hover:border-green-500/50 transition-colors duration-200">
+            <div class="p-6 bg-gradient-to-r from-green-500/10 to-emerald-500/10 border-b border-slate-800">
+              <div class="flex items-start justify-between mb-3">
+                <div>
+                  <div class="flex items-center gap-2 mb-2">
+                    <h3 class="text-xl font-bold">Start New Project</h3>
+                    <span class="px-2 py-0.5 text-xs rounded-full bg-red-500/20 text-red-400 border border-red-500/20">Advanced</span>
+                  </div>
+                  <p class="text-sm text-slate-400">Best for: Creating a complete app from scratch</p>
+                </div>
+                <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-green-500/20 flex-shrink-0">
+                  <svg class="w-7 h-7 text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                    <path d="M2 17l10 5 10-5"/>
+                    <path d="M2 12l10 5 10-5"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="flex items-center gap-4 text-xs text-slate-500">
+                <span class="flex items-center gap-1">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                  ~1-2 hours
+                </span>
+                <span class="flex items-center gap-1">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                  </svg>
+                  1 step
+                </span>
+              </div>
+            </div>
+
+            <div class="p-6 space-y-4">
+              <div class="flex items-start gap-3">
+                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-green-500/20 text-green-400 font-bold text-sm flex-shrink-0">1</div>
+                <div class="flex-1">
+                  <div class="flex items-center gap-2 mb-1">
+                    <code class="px-2 py-1 text-xs rounded bg-slate-800 text-green-400 font-mono">/bootstrap "describe your app"</code>
+                    <span class="text-xs text-slate-500">Complete project setup</span>
+                  </div>
+                  <p class="text-sm text-slate-400">AI builds your entire project: research, architecture, design, implementation, and documentation</p>
+                </div>
+              </div>
+
+              <div class="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
+                <div class="text-xs font-medium text-green-400 mb-2">Full project lifecycle:</div>
+                <ul class="space-y-1.5 text-xs text-slate-400">
+                  <li class="flex items-center gap-2">
+                    <svg class="w-3.5 h-3.5 text-green-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    Research and tech stack selection
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <svg class="w-3.5 h-3.5 text-green-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    Project structure and architecture
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <svg class="w-3.5 h-3.5 text-green-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    UI/UX design and wireframes
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <svg class="w-3.5 h-3.5 text-green-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    Complete implementation with tests
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <svg class="w-3.5 h-3.5 text-green-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    Comprehensive documentation
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="p-4 bg-slate-900/50 border-t border-slate-800 flex items-center justify-between">
+              <div class="text-xs text-slate-500">
+                ⚠️ Warning: This uses significant AI tokens
+              </div>
+              <button class="px-4 py-2 rounded-lg bg-green-500 hover:bg-green-600 transition-colors duration-200 cursor-pointer font-medium text-sm flex items-center gap-2">
+                Start Workflow
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="9 18 15 12 9 6"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Additional Tips Section -->
+        <div class="mt-8 p-6 rounded-lg bg-slate-900/50 border border-slate-800">
+          <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+            <svg class="w-5 h-5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            Pro Tips
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              <div>
+                <div class="text-sm font-medium text-slate-200 mb-1">Save tokens with /clear</div>
+                <div class="text-xs text-slate-400">Use <code class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono">/clear</code> to clear conversation history before starting implementation</div>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-purple-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              <div>
+                <div class="text-sm font-medium text-slate-200 mb-1">Reference files with @</div>
+                <div class="text-xs text-slate-400">Use <code class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono">@plan.md</code> to reference specific files in commands</div>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              <div>
+                <div class="text-sm font-medium text-slate-200 mb-1">Create save points often</div>
+                <div class="text-xs text-slate-400">Save your progress regularly so you can restore if something goes wrong</div>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              <div>
+                <div class="text-sm font-medium text-slate-200 mb-1">Ask questions anytime</div>
+                <div class="text-xs text-slate-400">Use <code class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono">/ask</code> to get technical explanations or architectural guidance</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Common Commands Reference -->
+        <div class="mt-6 p-6 rounded-lg bg-slate-900/50 border border-slate-800">
+          <h3 class="text-lg font-semibold mb-4">Common Commands Reference</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            <div class="p-3 rounded-lg bg-slate-950 border border-slate-800">
+              <code class="text-sm text-purple-400 font-mono">/brainstorm</code>
+              <p class="text-xs text-slate-500 mt-1">Explore ideas and possibilities</p>
+            </div>
+            <div class="p-3 rounded-lg bg-slate-950 border border-slate-800">
+              <code class="text-sm text-blue-400 font-mono">/plan</code>
+              <p class="text-xs text-slate-500 mt-1">Create implementation plans</p>
+            </div>
+            <div class="p-3 rounded-lg bg-slate-950 border border-slate-800">
+              <code class="text-sm text-green-400 font-mono">/cook</code>
+              <p class="text-xs text-slate-500 mt-1">Implement features end-to-end</p>
+            </div>
+            <div class="p-3 rounded-lg bg-slate-950 border border-slate-800">
+              <code class="text-sm text-amber-400 font-mono">/code</code>
+              <p class="text-xs text-slate-500 mt-1">Implement existing plans</p>
+            </div>
+            <div class="p-3 rounded-lg bg-slate-950 border border-slate-800">
+              <code class="text-sm text-red-400 font-mono">/fix</code>
+              <p class="text-xs text-slate-500 mt-1">Fix bugs and issues</p>
+            </div>
+            <div class="p-3 rounded-lg bg-slate-950 border border-slate-800">
+              <code class="text-sm text-cyan-400 font-mono">/test</code>
+              <p class="text-xs text-slate-500 mt-1">Run and analyze tests</p>
+            </div>
+            <div class="p-3 rounded-lg bg-slate-950 border border-slate-800">
+              <code class="text-sm text-orange-400 font-mono">/debug</code>
+              <p class="text-xs text-slate-500 mt-1">Investigate issues</p>
+            </div>
+            <div class="p-3 rounded-lg bg-slate-950 border border-slate-800">
+              <code class="text-sm text-pink-400 font-mono">/ask</code>
+              <p class="text-xs text-slate-500 mt-1">Get technical guidance</p>
+            </div>
+            <div class="p-3 rounded-lg bg-slate-950 border border-slate-800">
+              <code class="text-sm text-slate-400 font-mono">/clear</code>
+              <p class="text-xs text-slate-500 mt-1">Clear conversation history</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

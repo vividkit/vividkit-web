@@ -1,0 +1,201 @@
+/* Font imports */
+@import '@fontsource/space-grotesk/400.css';
+@import '@fontsource/space-grotesk/500.css';
+@import '@fontsource/space-grotesk/600.css';
+@import '@fontsource/space-grotesk/700.css';
+@import '@fontsource/dm-sans/300.css';
+@import '@fontsource/dm-sans/400.css';
+@import '@fontsource/dm-sans/500.css';
+@import '@fontsource/dm-sans/600.css';
+@import '@fontsource/dm-sans/700.css';
+@import '@fontsource/fira-code/400.css';
+@import '@fontsource/fira-code/500.css';
+
+/* Tailwind directives */
+@import 'tailwindcss';
+
+@theme {
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-sans: 'DM Sans', sans-serif;
+  --font-mono: 'Fira Code', monospace;
+
+  --color-surface-50: #f8fafc;
+  --color-surface-100: #f1f5f9;
+  --color-surface-800: #1e293b;
+  --color-surface-900: #0f172a;
+  --color-surface-950: #020617;
+}
+
+/* Base styles */
+@layer base {
+  * {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply antialiased;
+  }
+}
+
+/* Glassmorphism components */
+@layer components {
+  .glass-card {
+    @apply bg-white/80 dark:bg-surface-900/60;
+    @apply border border-slate-200 dark:border-white/10;
+    @apply backdrop-blur-2xl;
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+
+  .glass-card-light {
+    @apply bg-surface-50/90 dark:bg-surface-800/40;
+    @apply border border-slate-200 dark:border-white/5;
+    @apply backdrop-blur-xl;
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .glass-card-hover {
+    @apply cursor-pointer transition-all duration-300 ease-out;
+  }
+
+  .glass-card-hover:hover {
+    @apply border-slate-300 dark:border-white/20;
+    @apply bg-white dark:bg-white/10;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  }
+
+  .glow-border {
+    @apply relative;
+  }
+
+  .glow-border::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.5), rgba(59, 130, 246, 0.5), rgba(249, 115, 22, 0.3));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  .nav-link {
+    @apply transition-all duration-200 ease-out;
+    @apply text-slate-600 dark:text-slate-400;
+  }
+
+  .nav-link:hover {
+    @apply text-blue-600 bg-blue-500/5;
+  }
+
+  .dark .nav-link:hover {
+    @apply text-blue-400 bg-blue-500/10;
+  }
+
+  .nav-link.active {
+    @apply text-blue-600 bg-blue-500/10;
+  }
+
+  .dark .nav-link.active {
+    @apply text-blue-400 bg-blue-500/15;
+  }
+
+  .cta-button {
+    background: linear-gradient(to right, #2563EB, #3B82F6);
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .cta-button:hover {
+    @apply -translate-y-0.5;
+    box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3), 0 4px 6px -4px rgba(37, 99, 235, 0.3);
+  }
+
+  .feature-card {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .feature-card:hover {
+    @apply -translate-y-1;
+    @apply border-blue-500/40;
+    box-shadow: 0 20px 40px -12px rgba(37, 99, 235, 0.2);
+  }
+}
+
+/* Keyframe animations */
+@keyframes gradient-flow {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Utility classes */
+@layer utilities {
+  .gradient-animate {
+    background-size: 200% 200%;
+    animation: gradient-flow 8s ease infinite;
+  }
+
+  .float-animation {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .pulse-glow {
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+
+  .fade-in-up {
+    animation: fade-in-up 0.6s ease-out forwards;
+  }
+
+  .section {
+    @apply opacity-0 translate-y-8 transition-all duration-600 ease-out;
+  }
+
+  .section.visible {
+    @apply opacity-100 translate-y-0;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
