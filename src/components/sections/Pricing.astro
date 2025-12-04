@@ -1,0 +1,78 @@
+---
+import GlassCard from '@/components/ui/GlassCard.astro';
+import Button from '@/components/ui/Button.astro';
+import Badge from '@/components/ui/Badge.astro';
+import { pricingTiers } from '@/data/pricing';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<section id="pricing" class={`section py-20 ${className}`}>
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-heading font-bold mb-6">
+        Simple, Transparent
+        <span class="block bg-gradient-to-r from-green-600 to-blue-600 dark:from-green-400 dark:to-blue-400 bg-clip-text text-transparent">
+          Pricing
+        </span>
+      </h2>
+      <p class="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
+        Start free, upgrade when you need. No hidden fees. Cancel anytime.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      {pricingTiers.map((tier) => (
+        <GlassCard
+          variant={tier.popular ? 'glow' : 'hover'}
+          class={`relative p-8 ${tier.popular ? 'md:scale-105' : ''}`}
+        >
+          {tier.popular && (
+            <div class="absolute -top-4 left-1/2 -translate-x-1/2">
+              <Badge variant="success">Most Popular</Badge>
+            </div>
+          )}
+
+          <div class="text-center mb-8">
+            <h3 class="text-2xl font-bold mb-2">{tier.name}</h3>
+            <div class="mb-4">
+              <span class="text-5xl font-bold">${tier.price}</span>
+              <span class="text-slate-600 dark:text-slate-400">/month</span>
+            </div>
+            <p class="text-slate-600 dark:text-slate-400">{tier.description}</p>
+          </div>
+
+          <!-- Features list -->
+          <ul class="space-y-4 mb-8">
+            {tier.features.map((feature) => (
+              <li key={feature} class="flex items-center gap-3">
+                <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                <span class="text-slate-700 dark:text-slate-300">{feature}</span>
+              </li>
+            ))}
+          </ul>
+
+          <!-- CTA -->
+          <Button
+            href={tier.name === 'Free' ? '#waitlist' : '#waitlist'}
+            variant={tier.popular ? 'primary' : 'outline'}
+            class="w-full"
+          >
+            {tier.cta}
+          </Button>
+        </GlassCard>
+      ))}
+    </div>
+
+    <!-- FAQ note -->
+    <div class="text-center mt-16">
+      <p class="text-slate-600 dark:text-slate-400">
+        Have questions about pricing? <a href="/contact" class="text-blue-600 dark:text-blue-400 hover:underline">Contact us</a>
+      </p>
+    </div>
+  </div>
+</section>

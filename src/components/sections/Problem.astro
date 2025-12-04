@@ -1,0 +1,52 @@
+---
+import GlassCard from '@/components/ui/GlassCard.astro';
+import { problems } from '@/data/features';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<section id="problem" class={`section py-20 ${className}`}>
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-heading font-bold mb-6">
+        Terminal Commands Are
+        <span class="block bg-gradient-to-r from-red-600 to-orange-600 dark:from-red-400 dark:to-orange-400 bg-clip-text text-transparent">
+          Holding You Back
+        </span>
+      </h2>
+      <p class="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
+        Traditional AI coding tools create barriers that prevent many from accessing their power.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {problems.map((problem) => (
+        <GlassCard variant="hover" class="p-8 text-center">
+          <div class="w-16 h-16 bg-gradient-to-br from-red-100 to-orange-100 dark:from-red-900/30 dark:to-orange-900/30 rounded-2xl flex items-center justify-center mx-auto mb-6">
+            {problem.icon === 'terminal' && (
+              <svg class="w-8 h-8 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            )}
+            {problem.icon === 'code' && (
+              <svg class="w-8 h-8 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+              </svg>
+            )}
+            {problem.icon === 'lock' && (
+              <svg class="w-8 h-8 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+            )}
+          </div>
+          <h3 class="text-xl font-semibold mb-4">{problem.title}</h3>
+          <p class="text-slate-600 dark:text-slate-400">{problem.description}</p>
+        </GlassCard>
+      ))}
+    </div>
+  </div>
+</section>

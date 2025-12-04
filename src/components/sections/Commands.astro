@@ -1,0 +1,58 @@
+---
+import GlassCard from '@/components/ui/GlassCard.astro';
+import { commandCategories } from '@/data/commands';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<section id="commands" class={`section py-20 ${className}`}>
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-heading font-bold mb-6">
+        Commands That
+        <span class="block bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+          Just Make Sense
+        </span>
+      </h2>
+      <p class="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
+        Natural language commands organized by skill level. No memorization required.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {commandCategories.map((category) => (
+        <GlassCard variant="hover" class="p-8">
+          <div class="mb-6">
+            <h3 class="text-2xl font-bold mb-2">{category.title}</h3>
+            <p class="text-slate-600 dark:text-slate-400">{category.description}</p>
+          </div>
+
+          <div class="space-y-4">
+            {category.commands.map((command) => (
+              <div key={command.name} class="flex items-start gap-3">
+                <code class="text-sm font-mono bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-lg text-blue-600 dark:text-blue-400 flex-shrink-0">
+                  {command.name}
+                </code>
+                <span class="text-slate-600 dark:text-slate-400">{command.description}</span>
+              </div>
+            ))}
+          </div>
+        </GlassCard>
+      ))}
+    </div>
+
+    <!-- Pro tip -->
+    <div class="mt-16 text-center">
+      <GlassCard variant="light" class="inline-block p-6">
+        <p class="text-slate-600 dark:text-slate-400">
+          <span class="font-semibold text-slate-900 dark:text-white">Pro tip:</span>
+          Just describe what you want to build in plain English. VividKit will suggest the right commands automatically.
+        </p>
+      </GlassCard>
+    </div>
+  </div>
+</section>
