@@ -19,8 +19,15 @@
   --font-sans: 'DM Sans', sans-serif;
   --font-mono: 'Fira Code', monospace;
 
+  /* Light mode surface colors */
   --color-surface-50: #f8fafc;
   --color-surface-100: #f1f5f9;
+  --color-surface-200: #e2e8f0;
+  --color-surface-300: #cbd5e1;
+  --color-surface-400: #94a3b8;
+  --color-surface-500: #64748b;
+  --color-surface-600: #475569;
+  --color-surface-700: #334155;
   --color-surface-800: #1e293b;
   --color-surface-900: #0f172a;
   --color-surface-950: #020617;
@@ -60,7 +67,7 @@
 
   .glass-card-hover:hover {
     @apply border-slate-300 dark:border-white/20;
-    @apply bg-white dark:bg-white/10;
+    @apply bg-white/90 dark:bg-white/10;
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
   }
 

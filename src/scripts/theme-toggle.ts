@@ -3,14 +3,20 @@ export function initThemeToggle(): void {
   const storedTheme = localStorage.getItem('theme');
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-  // Apply initial theme
+  // Apply initial theme - ensure it's consistent with FOUC script
   if (storedTheme === 'dark' || (!storedTheme && prefersDark)) {
     document.documentElement.classList.add('dark');
+  } else {
+    // Explicitly remove dark class for light mode
+    document.documentElement.classList.remove('dark');
   }
 
   // Toggle button handler
   const toggleButton = document.getElementById('theme-toggle');
-  if (!toggleButton) return;
+  if (!toggleButton) {
+    console.warn('Theme toggle button not found');
+    return;
+  }
 
   toggleButton.addEventListener('click', () => {
     const isDark = document.documentElement.classList.contains('dark');
@@ -19,9 +25,11 @@ export function initThemeToggle(): void {
     if (isDark) {
       document.documentElement.classList.remove('dark');
       localStorage.setItem('theme', 'light');
+      console.log('Switched to light mode');
     } else {
       document.documentElement.classList.add('dark');
       localStorage.setItem('theme', 'dark');
+      console.log('Switched to dark mode');
     }
   });
 
@@ -35,5 +43,12 @@ export function initThemeToggle(): void {
         document.documentElement.classList.remove('dark');
       }
     }
+  });
+
+  // Debug current theme state
+  console.log('Theme initialized:', {
+    stored: storedTheme,
+    prefersDark,
+    current: document.documentElement.classList.contains('dark') ? 'dark' : 'light'
   });
 }

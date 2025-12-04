@@ -48,20 +48,30 @@ const fullOgImage = `${siteUrl}${ogImage}`;
 
     <!-- Theme toggle FOUC prevention -->
     <script is:inline>
-      const theme = localStorage.getItem('theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if (theme === 'dark' || (!theme && prefersDark)) {
-        document.documentElement.classList.add('dark');
-      }
+      (function() {
+        const theme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        // Only add dark class if theme is explicitly dark or no theme is stored and system prefers dark
+        if (theme === 'dark' || (!theme && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        }
+        // Ensure light mode works by NOT adding dark class when theme is 'light'
+      })();
     </script>
   </head>
   <body class="font-sans antialiased bg-surface-50 dark:bg-surface-950 text-slate-900 dark:text-slate-100 min-h-screen overflow-x-hidden transition-colors duration-300">
     <slot />
 
-    <!-- Initialize theme toggle -->
+    <!-- Initialize scripts -->
     <script>
       import { initThemeToggle } from '@/scripts/theme-toggle';
+      import { initScrollAnimations } from '@/scripts/intersection-observer';
+      import { initNavScrollHighlight } from '@/scripts/nav-scroll-highlight';
+
       initThemeToggle();
+      initScrollAnimations();
+      initNavScrollHighlight();
     </script>
   </body>
 </html>
