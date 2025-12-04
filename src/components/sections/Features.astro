@@ -1,0 +1,89 @@
+---
+import GlassCard from '@/components/ui/GlassCard.astro';
+import { solutions } from '@/data/features';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<section id="features" class={`section py-20 ${className}`}>
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <!-- Left: Content -->
+      <div>
+        <div class="mb-8">
+          <h2 class="text-4xl md:text-5xl font-heading font-bold mb-6">
+            Simple, Powerful,
+            <span class="block bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
+              Accessible
+            </span>
+          </h2>
+          <p class="text-xl text-slate-600 dark:text-slate-400">
+            VividKit removes all barriers between you and AI-powered coding. Just describe what you want to build.
+          </p>
+        </div>
+
+        <!-- Feature list -->
+        <div class="space-y-6">
+          {solutions.map((solution) => (
+            <GlassCard variant="light" class="p-6 flex items-start gap-4">
+              <div class="w-12 h-12 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 rounded-xl flex items-center justify-center flex-shrink-0">
+                {solution.icon === 'zap' && (
+                  <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                )}
+                {solution.icon === 'eye' && (
+                  <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                )}
+                {solution.icon === 'puzzle' && (
+                  <svg class="w-6 h-6 text-pink-600 dark:text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" />
+                  </svg>
+                )}
+                {solution.icon === 'users' && (
+                  <svg class="w-6 h-6 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                  </svg>
+                )}
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold mb-2">{solution.title}</h3>
+                <p class="text-slate-600 dark:text-slate-400">{solution.description}</p>
+              </div>
+            </GlassCard>
+          ))}
+        </div>
+      </div>
+
+      <!-- Right: App preview -->
+      <div class="relative">
+        <GlassCard variant="glow" class="p-8">
+          <div class="space-y-4">
+            <div class="h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
+            <div class="space-y-3">
+              <div class="h-4 bg-slate-200 dark:bg-slate-700 rounded"></div>
+              <div class="h-4 bg-slate-200 dark:bg-slate-700 rounded w-4/5"></div>
+              <div class="h-4 bg-slate-200 dark:bg-slate-700 rounded w-3/5"></div>
+            </div>
+            <div class="mt-6 p-4 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-lg">
+              <p class="text-sm font-mono text-blue-600 dark:text-blue-400">
+                <span class="text-green-600 dark:text-green-400">✓</span> Project created successfully!
+              </p>
+            </div>
+          </div>
+        </GlassCard>
+
+        <!-- Floating elements -->
+        <div class="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-yellow-400/20 to-orange-400/20 rounded-full blur-xl"></div>
+        <div class="absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-to-br from-green-400/20 to-blue-400/20 rounded-full blur-xl"></div>
+      </div>
+    </div>
+  </div>
+</section>

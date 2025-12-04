@@ -1,0 +1,33 @@
+---
+interface Props {
+  id?: string;
+  name?: string;
+  value?: string;
+  placeholder?: string;
+  rows?: number;
+  required?: boolean;
+  class?: string;
+}
+
+const {
+  id,
+  name,
+  value,
+  placeholder,
+  rows = 4,
+  required = false,
+  class: className = ''
+} = Astro.props;
+---
+
+<textarea
+  id={id}
+  name={name}
+  rows={rows}
+  placeholder={placeholder}
+  required={required}
+  class={`w-full px-4 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg
+          text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400
+          focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400
+          focus:border-transparent transition-all duration-200 resize-vertical ${className}`}
+>{value}</textarea>

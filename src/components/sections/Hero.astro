@@ -1,0 +1,76 @@
+---
+import Button from '@/components/ui/Button.astro';
+import Badge from '@/components/ui/Badge.astro';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<section id="hero" class={`section min-h-screen flex items-center justify-center relative overflow-hidden ${className}`}>
+  <div class="max-w-7xl mx-auto px-4 text-center">
+    <!-- Status badge -->
+    <div class="mb-8 flex justify-center">
+      <Badge variant="success" pulse={true}>
+        🚀 Beta Launch - Join the Waitlist
+      </Badge>
+    </div>
+
+    <!-- Main headline -->
+    <h1 class="text-5xl md:text-7xl font-heading font-bold mb-6 bg-gradient-to-r from-slate-900 via-blue-600 to-purple-600 dark:from-white dark:via-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
+      Build Anything Without
+      <span class="block">Terminal Friction</span>
+    </h1>
+
+    <!-- Subheadline -->
+    <p class="text-xl md:text-2xl text-slate-600 dark:text-slate-300 mb-10 max-w-3xl mx-auto">
+      VividKit brings the power of AI coding to everyone. No terminal commands. No technical barriers.
+    </p>
+
+    <!-- CTAs -->
+    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+      <Button href="#waitlist" size="lg">
+        Join the Waitlist
+      </Button>
+      <Button href="#features" variant="outline" size="lg">
+        See How It Works
+      </Button>
+    </div>
+
+    <!-- Feature checkmarks -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+      <div class="flex items-center gap-3 justify-center">
+        <div class="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+          <svg class="w-4 h-4 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+        </div>
+        <span class="text-slate-700 dark:text-slate-300">No coding experience required</span>
+      </div>
+
+      <div class="flex items-center gap-3 justify-center">
+        <div class="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+          <svg class="w-4 h-4 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+        </div>
+        <span class="text-slate-700 dark:text-slate-300">Works with any project</span>
+      </div>
+
+      <div class="flex items-center gap-3 justify-center">
+        <div class="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+          <svg class="w-4 h-4 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+        </div>
+        <span class="text-slate-700 dark:text-slate-300">100% free to start</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Decorative gradient orb -->
+  <div class="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
+  <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-tr from-purple-500/20 to-pink-500/20 rounded-full blur-3xl animate-pulse animation-delay-2000"></div>
+</section>
+
+<style>
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+</style>

@@ -1,0 +1,52 @@
+---
+interface Props {
+  id?: string;
+  name?: string;
+  value?: string;
+  placeholder?: string;
+  required?: boolean;
+  class?: string;
+  options: Array<{
+    value: string;
+    label: string;
+  }>;
+}
+
+const {
+  id,
+  name,
+  value,
+  placeholder,
+  required = false,
+  class: className = '',
+  options
+} = Astro.props;
+---
+
+<div class={`relative ${className}`}>
+  <select
+    id={id}
+    name={name}
+    required={required}
+    class="w-full px-4 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg
+           text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400
+           focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400
+           focus:border-transparent transition-all duration-200 appearance-none cursor-pointer"
+  >
+    {placeholder && (
+      <option value="" disabled selected>{placeholder}</option>
+    )}
+    {options.map((option) => (
+      <option value={option.value} selected={value === option.value}>
+        {option.label}
+      </option>
+    ))}
+  </select>
+
+  <!-- Dropdown arrow -->
+  <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+    <svg class="w-5 h-5 text-slate-400 dark:text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+    </svg>
+  </div>
+</div>
