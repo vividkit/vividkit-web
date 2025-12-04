@@ -1,0 +1,36 @@
+---
+interface Props {
+  variant: 'success' | 'warning' | 'danger' | 'info';
+  size?: 'sm' | 'md';
+  pulse?: boolean;
+  class?: string;
+}
+
+const {
+  variant,
+  size = 'sm',
+  pulse = false,
+  class: className = ''
+} = Astro.props;
+
+const variantClasses = {
+  success: 'bg-green-500/20 text-green-600 dark:text-green-400 border-green-500/30',
+  warning: 'bg-amber-500/20 text-amber-600 dark:text-amber-400 border-amber-500/30',
+  danger: 'bg-red-500/20 text-red-600 dark:text-red-400 border-red-500/30',
+  info: 'bg-blue-500/20 text-blue-600 dark:text-blue-400 border-blue-500/30'
+};
+
+const sizeClasses = {
+  sm: 'px-2 py-0.5 text-xs',
+  md: 'px-3 py-1 text-sm'
+};
+
+const pulseClass = pulse ? 'pulse-glow' : '';
+
+const classes = `inline-flex items-center gap-2 rounded-full border font-medium ${variantClasses[variant]} ${sizeClasses[size]} ${pulseClass} ${className}`;
+---
+
+<span class={classes}>
+  {pulse && <span class="w-2 h-2 rounded-full bg-current"></span>}
+  <slot />
+</span>

@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClaudeKit CLI - Getting Started Guide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            mono: ['JetBrains Mono', 'monospace'],
+            sans: ['IBM Plex Sans', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+    .cursor-blink {
+      animation: blink 1s infinite;
+    }
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    .terminal-line {
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased bg-[#0D0D0D] text-slate-100 min-h-screen overflow-x-hidden">
+
+  <!-- Main Container -->
+  <div class="flex flex-col min-h-screen">
+
+    <!-- Header -->
+    <div class="bg-slate-900/30 backdrop-blur-sm border-b border-slate-800">
+      <div class="max-w-6xl mx-auto px-8 py-6">
+        <div class="flex items-center justify-between">
+          <div class="flex-1">
+            <h1 class="text-3xl font-bold font-sans flex items-center gap-3">
+              <svg class="w-10 h-10 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="4 17 10 11 4 5"/>
+                <line x1="12" y1="19" x2="20" y2="19"/>
+              </svg>
+              ClaudeKit CLI Guide
+            </h1>
+            <p class="text-sm text-slate-400 mt-2">Command line interface for power users ⚡</p>
+          </div>
+          <button class="p-2 rounded-lg hover:bg-slate-800 transition-colors duration-200 cursor-pointer">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="flex-1 bg-slate-950 py-8">
+      <div class="max-w-6xl mx-auto px-8 space-y-8">
+
+        <!-- Hero Banner -->
+        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500/20 via-green-500/20 to-teal-500/20 border border-emerald-500/30 p-8">
+          <div class="relative z-10">
+            <div class="flex items-start gap-4">
+              <div class="flex items-center justify-center w-16 h-16 rounded-2xl bg-emerald-500/20 flex-shrink-0">
+                <svg class="w-9 h-9 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2"/>
+                  <line x1="9" y1="9" x2="15" y2="9"/>
+                  <line x1="9" y1="15" x2="15" y2="15"/>
+                </svg>
+              </div>
+              <div class="flex-1">
+                <h2 class="text-2xl font-bold font-sans text-emerald-400 mb-2">What is ClaudeKit CLI?</h2>
+                <p class="text-slate-300 text-lg leading-relaxed">
+                  <strong>ClaudeKit CLI</strong> helps you set up ClaudeKit in your projects, then you use
+                  <strong>Claude Code</strong> to get AI assistance. Install ClaudeKit, run <code class="px-2 py-0.5 bg-slate-800 rounded font-mono text-emerald-400">claude</code>,
+                  and leverage powerful skills like UI/UX Pro Max — all from your terminal!
+                </p>
+                <div class="mt-4 p-4 rounded-lg bg-slate-900/50 border border-slate-700">
+                  <p class="text-sm text-slate-400 mb-2"><strong class="text-slate-300">Quick Workflow:</strong></p>
+                  <div class="bg-[#0D0D0D] rounded-lg p-3 font-mono text-sm space-y-1">
+                    <div class="flex items-start gap-2">
+                      <span class="text-emerald-400">$</span>
+                      <span class="text-slate-300">ck init</span>
+                      <span class="text-slate-500 text-xs"># Set up ClaudeKit in your project</span>
+                    </div>
+                    <div class="flex items-start gap-2">
+                      <span class="text-emerald-400">$</span>
+                      <span class="text-slate-300">claude</span>
+                      <span class="text-slate-500 text-xs"># Start Claude Code CLI</span>
+                    </div>
+                  </div>
+                  <p class="text-xs text-slate-500 mt-2">→ Then chat with AI to build beautiful UIs instantly! 🎨</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl"></div>
+          <div class="absolute bottom-0 left-0 w-64 h-64 bg-green-500/10 rounded-full blur-3xl"></div>
+        </div>
+
+        <!-- Terminal Mockup Section -->
+        <div class="bg-slate-900/50 rounded-xl border border-slate-800 overflow-hidden">
+          <div class="p-6 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border-b border-slate-800">
+            <h2 class="text-2xl font-bold font-sans text-cyan-400 flex items-center gap-3">
+              <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <polyline points="8 7 12 12 8 17"/>
+                <line x1="12" y1="17" x2="16" y2="17"/>
+              </svg>
+              What It Looks Like in Your Terminal
+            </h2>
+            <p class="text-sm text-slate-400 mt-2">Here's exactly what you'll see when using ClaudeKit CLI</p>
+          </div>
+
+          <div class="p-8">
+            <!-- Terminal Window -->
+            <div class="bg-[#0D0D0D] rounded-xl border-2 border-slate-700 overflow-hidden shadow-2xl">
+              <!-- Terminal Header -->
+              <div class="bg-slate-800 px-4 py-2 flex items-center gap-2 border-b border-slate-700">
+                <div class="flex gap-2">
+                  <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                  <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                  <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                </div>
+                <div class="flex-1 text-center">
+                  <span class="text-xs text-slate-400 font-mono">Terminal — bash — 80×24</span>
+                </div>
+              </div>
+
+              <!-- Terminal Content -->
+              <div class="p-6 font-mono text-sm space-y-3 min-h-[600px]">
+
+                <!-- Command 1: Start Claude Code -->
+                <div class="space-y-2">
+                  <div class="flex items-start gap-2">
+                    <span class="text-emerald-400">➜</span>
+                    <span class="text-cyan-400">~/projects</span>
+                    <span class="text-slate-300">claude</span>
+                  </div>
+
+                  <!-- CLI starts -->
+                  <div class="pl-4 text-cyan-400 text-xs">
+                    <div>Starting Claude Code CLI...</div>
+                    <div class="text-slate-500 mt-1">Type your message (or /help for commands)</div>
+                  </div>
+
+                  <!-- User prompt -->
+                  <div class="pl-4 mt-2">
+                    <div class="flex items-start gap-2">
+                      <span class="text-emerald-400">You:</span>
+                      <span class="text-slate-300">Using ui-ux-pro-max skill, create a yoga studio landing page</span>
+                    </div>
+                  </div>
+
+                  <!-- AI response -->
+                  <div class="pl-4 space-y-2 text-slate-400">
+                    <div class="flex items-center gap-2 text-cyan-400">
+                      <svg class="w-4 h-4 animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                      </svg>
+                      <span>ClaudeKit AI is thinking...</span>
+                    </div>
+
+                    <div class="space-y-1 pl-6 text-xs">
+                      <div class="flex items-center gap-2">
+                        <span class="text-emerald-400">✓</span>
+                        <span>Searching product domain: <span class="text-slate-300">beauty/wellness</span></span>
+                      </div>
+                      <div class="flex items-center gap-2">
+                        <span class="text-emerald-400">✓</span>
+                        <span>Style guide: <span class="text-slate-300">minimalist + elegant</span></span>
+                      </div>
+                      <div class="flex items-center gap-2">
+                        <span class="text-emerald-400">✓</span>
+                        <span>Typography: <span class="text-slate-300">Playfair Display + Inter</span></span>
+                      </div>
+                      <div class="flex items-center gap-2">
+                        <span class="text-emerald-400">✓</span>
+                        <span>Color palette: <span class="text-slate-300">soft pastels (#E8E5F2)</span></span>
+                      </div>
+                    </div>
+
+                    <div class="mt-3 p-3 bg-slate-900/50 border border-slate-700 rounded">
+                      <div class="text-emerald-400 text-sm mb-2">✓ Design Complete!</div>
+                      <div class="text-slate-300 text-xs space-y-1">
+                        <div>Created: <span class="text-cyan-400">yoga-studio-landing.html</span></div>
+                        <div>- Calming lavender color palette</div>
+                        <div>- Elegant Playfair Display typography</div>
+                        <div>- Responsive mobile-first design</div>
+                        <div>- WCAG AA accessible</div>
+                      </div>
+                    </div>
+
+                    <div class="flex items-center gap-2 text-amber-400 text-xs mt-2">
+                      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                      </svg>
+                      <span>Files created in current directory</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Separator -->
+                <div class="border-t border-slate-800 my-4"></div>
+
+                <!-- Command 2: Check what was created -->
+                <div class="space-y-2">
+                  <div class="flex items-start gap-2">
+                    <span class="text-emerald-400">➜</span>
+                    <span class="text-cyan-400">~/projects</span>
+                    <span class="text-slate-300">ls -la</span>
+                  </div>
+                  <div class="pl-4 text-slate-400 text-xs space-y-1">
+                    <div>drwxr-xr-x  5 user  staff   160 Dec  3 15:20 .</div>
+                    <div>drwxr-xr-x 12 user  staff   384 Dec  3 15:15 ..</div>
+                    <div class="text-emerald-400">-rw-r--r--  1 user  staff  8420 Dec  3 15:20 yoga-studio-landing.html</div>
+                  </div>
+                </div>
+
+                <!-- Separator -->
+                <div class="border-t border-slate-800 my-4"></div>
+
+                <!-- Command 3: Open in browser -->
+                <div class="space-y-2">
+                  <div class="flex items-start gap-2">
+                    <span class="text-emerald-400">➜</span>
+                    <span class="text-cyan-400">~/projects</span>
+                    <span class="text-slate-300">open yoga-studio-landing.html</span>
+                  </div>
+                  <div class="pl-4 text-slate-400 text-xs">
+                    <div class="flex items-center gap-2 text-emerald-400">
+                      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20 6 9 17 4 12"/>
+                      </svg>
+                      <span>Opening in default browser...</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Separator -->
+                <div class="border-t border-slate-800 my-4"></div>
+
+                <!-- Command 4: Continue in same session -->
+                <div class="space-y-2">
+                  <div class="pl-4 space-y-2 text-slate-400">
+                    <div class="text-purple-400 text-xs">→ You're already in Claude Code CLI. Just keep chatting!</div>
+
+                    <div class="mt-2 space-y-3">
+                      <div>
+                        <div class="flex gap-2 items-center mb-1">
+                          <span class="text-emerald-400 text-xs">You:</span>
+                        </div>
+                        <div class="pl-4 text-slate-300 text-xs">
+                          Using ui-ux-pro-max skill, make the buttons more prominent with hover effects
+                        </div>
+                      </div>
+
+                      <div>
+                        <div class="flex gap-2 items-center mb-1">
+                          <svg class="w-3 h-3 text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                          </svg>
+                          <span class="text-purple-400 text-xs">AI:</span>
+                        </div>
+                        <div class="pl-4 text-slate-300 text-xs space-y-1">
+                          <div>I'll enhance the button styles with:</div>
+                          <div class="pl-2">
+                            <div>• Smooth hover transitions (200ms)</div>
+                            <div>• Scale effect (hover:scale-105)</div>
+                            <div>• Shadow elevation on hover</div>
+                            <div>• Clear cursor-pointer indication</div>
+                          </div>
+                          <div class="mt-2 text-emerald-400">✓ Updated yoga-studio-landing.html</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Current prompt -->
+                <div class="flex items-start gap-2 pt-4">
+                  <span class="text-emerald-400">➜</span>
+                  <span class="text-cyan-400">~/projects</span>
+                  <span class="text-slate-300 cursor-blink">▊</span>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Command Reference Cards -->
+            <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="p-4 rounded-lg bg-slate-900/50 border border-slate-800">
+                <div class="flex items-center gap-2 mb-3">
+                  <div class="w-8 h-8 rounded bg-emerald-500/20 flex items-center justify-center">
+                    <span class="text-sm font-bold text-emerald-400">1</span>
+                  </div>
+                  <h3 class="text-sm font-bold font-sans text-slate-300">Setup Project</h3>
+                </div>
+                <code class="text-xs text-emerald-400 font-mono block bg-[#0D0D0D] p-2 rounded mb-2">ck init</code>
+                <p class="text-xs text-slate-400">Initialize ClaudeKit in your project (one-time setup)</p>
+              </div>
+
+              <div class="p-4 rounded-lg bg-slate-900/50 border border-slate-800">
+                <div class="flex items-center gap-2 mb-3">
+                  <div class="w-8 h-8 rounded bg-purple-500/20 flex items-center justify-center">
+                    <span class="text-sm font-bold text-purple-400">2</span>
+                  </div>
+                  <h3 class="text-sm font-bold font-sans text-slate-300">Start Claude Code</h3>
+                </div>
+                <code class="text-xs text-purple-400 font-mono block bg-[#0D0D0D] p-2 rounded mb-2">claude</code>
+                <p class="text-xs text-slate-400">Open interactive AI assistant - chat and iterate</p>
+              </div>
+
+              <div class="p-4 rounded-lg bg-slate-900/50 border border-slate-800">
+                <div class="flex items-center gap-2 mb-3">
+                  <div class="w-8 h-8 rounded bg-cyan-500/20 flex items-center justify-center">
+                    <span class="text-sm font-bold text-cyan-400">3</span>
+                  </div>
+                  <h3 class="text-sm font-bold font-sans text-slate-300">Use Skills</h3>
+                </div>
+                <code class="text-xs text-cyan-400 font-mono block bg-[#0D0D0D] p-2 rounded mb-2">Using ui-ux-pro-max skill...</code>
+                <p class="text-xs text-slate-400">Inside Claude, activate powerful design intelligence</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Installation & Setup -->
+        <div class="bg-slate-900/50 rounded-xl border border-slate-800 overflow-hidden">
+          <div class="p-6 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border-b border-slate-800">
+            <h2 class="text-2xl font-bold font-sans text-indigo-400 flex items-center gap-3">
+              <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                <line x1="12" y1="22.08" x2="12" y2="12"/>
+              </svg>
+              Quick Start Guide
+            </h2>
+            <p class="text-sm text-slate-400 mt-2">Get ClaudeKit CLI running in 3 easy steps</p>
+          </div>
+
+          <div class="p-8 space-y-6">
+            <!-- Step 1 -->
+            <div class="flex items-start gap-4">
+              <div class="flex-shrink-0 w-10 h-10 rounded-full bg-indigo-500/20 text-indigo-400 font-bold text-lg border-2 border-indigo-500/50 flex items-center justify-center">
+                1
+              </div>
+              <div class="flex-1">
+                <h3 class="text-lg font-bold font-sans text-indigo-400 mb-2">Install ClaudeKit CLI</h3>
+                <p class="text-sm text-slate-400 mb-3">Install the ClaudeKit CLI tool globally:</p>
+                <div class="bg-[#0D0D0D] rounded-lg p-4 border border-slate-700 font-mono text-sm">
+                  <div class="flex items-start gap-2 text-slate-300">
+                    <span class="text-emerald-400">$</span>
+                    <div class="flex-1">
+                      <div>npm install -g claudekit-cli</div>
+                      <div class="text-slate-500 text-xs mt-1"># or with bun</div>
+                      <div class="mt-1">bun add -g claudekit-cli</div>
+                      <div class="text-slate-500 text-xs mt-3"># Verify installation</div>
+                      <div class="mt-1">ck --version</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="flex items-start gap-4">
+              <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 text-purple-400 font-bold text-lg border-2 border-purple-500/50 flex items-center justify-center">
+                2
+              </div>
+              <div class="flex-1">
+                <h3 class="text-lg font-bold font-sans text-purple-400 mb-2">Initialize ClaudeKit in Your Project</h3>
+                <p class="text-sm text-slate-400 mb-3">Navigate to your project and set up ClaudeKit:</p>
+                <div class="bg-[#0D0D0D] rounded-lg p-4 border border-slate-700 font-mono text-sm">
+                  <div class="flex items-start gap-2 text-slate-300">
+                    <span class="text-emerald-400">$</span>
+                    <div class="flex-1">
+                      <div>cd ~/projects/my-project</div>
+                      <div class="mt-2">ck init</div>
+                      <div class="text-slate-500 text-xs mt-2"># Interactive mode - follow the prompts</div>
+                      <div class="text-slate-500 text-xs mt-1"># This creates .claude/ directory with ClaudeKit files</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-3 p-3 bg-purple-500/10 rounded border border-purple-500/20">
+                  <div class="text-xs text-purple-400 mb-2 font-medium">⚙️ Authentication Required:</div>
+                  <div class="text-xs text-slate-400 space-y-1">
+                    <div>ClaudeKit requires <strong class="text-purple-300">GitHub CLI authentication</strong> to download ClaudeKit Engineer kit.</div>
+                    <div class="mt-2 bg-[#0D0D0D] rounded p-2 border border-purple-500/20 font-mono">
+                      <code class="text-purple-300">gh auth login</code>
+                      <span class="text-slate-500 ml-2"># Authenticate before ck init</span>
+                    </div>
+                    <div class="mt-2 text-slate-500">📝 Note: Personal Access Tokens (PAT) are no longer supported</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="flex items-start gap-4">
+              <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-lg border-2 border-emerald-500/50 flex items-center justify-center">
+                3
+              </div>
+              <div class="flex-1">
+                <h3 class="text-lg font-bold font-sans text-emerald-400 mb-2">Start Claude Code & Create!</h3>
+                <p class="text-sm text-slate-400 mb-3">Launch Claude Code CLI and chat with AI:</p>
+                <div class="bg-[#0D0D0D] rounded-lg p-4 border border-slate-700 font-mono text-sm space-y-2">
+                  <div class="flex items-start gap-2 text-slate-300">
+                    <span class="text-emerald-400">$</span>
+                    <div class="flex-1">
+                      <div>claude</div>
+                      <div class="text-slate-500 text-xs mt-1"># Starts interactive Claude Code CLI</div>
+                    </div>
+                  </div>
+                  <div class="pl-4 text-cyan-400 text-xs">Starting Claude Code CLI...</div>
+                  <div class="pl-4 flex items-start gap-2">
+                    <span class="text-emerald-400">You:</span>
+                    <span class="text-slate-300">Using ui-ux-pro-max skill, create a landing page for my coffee shop</span>
+                  </div>
+                </div>
+                <div class="mt-3 p-3 bg-emerald-500/10 rounded border border-emerald-500/20">
+                  <div class="flex items-center gap-2 text-xs text-emerald-400">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                    <span>That's it! AI will search design databases and create beautiful code for you.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Optional Tool: CCS -->
+        <div class="bg-slate-900/50 rounded-xl border-2 border-amber-500/30 overflow-hidden">
+          <div class="p-6 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border-b border-slate-800">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="px-3 py-1 text-xs rounded-full bg-amber-500/20 text-amber-400 font-bold border border-amber-500/40">OPTIONAL</span>
+              <h2 class="text-2xl font-bold font-sans text-amber-400 flex items-center gap-3">
+                <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                  <path d="M2 12h20"/>
+                </svg>
+                CCS - Claude Code Switch
+              </h2>
+            </div>
+            <p class="text-sm text-slate-400 mt-2">Power user tool for multi-account management & cost optimization (Install after basic setup)</p>
+          </div>
+
+          <div class="p-8 space-y-6">
+            <!-- What is CCS -->
+            <div class="p-5 rounded-lg bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20">
+              <h3 class="text-lg font-bold font-sans text-amber-400 mb-2 flex items-center gap-2">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M12 16v-4M12 8h.01"/>
+                </svg>
+                What is CCS?
+              </h3>
+              <p class="text-sm text-slate-300 mb-3">
+                <strong>CCS (Claude Code Switch)</strong> is a wrapper around Claude Code that lets you:
+              </p>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-400">
+                <div class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                  <span>Switch between multiple Claude accounts</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                  <span>Use cost-optimized models (GLM - 81% cheaper)</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                  <span>Quick task delegation with -p flag</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                  <span>Run parallel workflows in multiple terminals</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Installation -->
+            <div class="flex items-start gap-4">
+              <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 text-amber-400 font-bold text-lg border-2 border-amber-500/50 flex items-center justify-center">
+                1
+              </div>
+              <div class="flex-1">
+                <h3 class="text-lg font-bold font-sans text-amber-400 mb-2">Install CCS</h3>
+                <p class="text-sm text-slate-400 mb-3">Install globally after you've set up ClaudeKit:</p>
+                <div class="bg-[#0D0D0D] rounded-lg p-4 border border-slate-700 font-mono text-sm">
+                  <div class="flex items-start gap-2 text-slate-300">
+                    <span class="text-emerald-400">$</span>
+                    <div class="flex-1">
+                      <div>npm install -g @kaitranntt/ccs</div>
+                      <div class="text-slate-500 text-xs mt-2"># Verify installation</div>
+                      <div class="mt-1">ccs --version</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Usage -->
+            <div class="flex items-start gap-4">
+              <div class="flex-shrink-0 w-10 h-10 rounded-full bg-orange-500/20 text-orange-400 font-bold text-lg border-2 border-orange-500/50 flex items-center justify-center">
+                2
+              </div>
+              <div class="flex-1">
+                <h3 class="text-lg font-bold font-sans text-orange-400 mb-2">Use CCS Instead of claude</h3>
+                <p class="text-sm text-slate-400 mb-3">Now use <code class="px-1 py-0.5 bg-slate-800 rounded font-mono text-orange-400">ccs</code> commands instead of <code class="px-1 py-0.5 bg-slate-800 rounded font-mono">claude</code>:</p>
+
+                <!-- Basic usage -->
+                <div class="space-y-3">
+                  <div class="bg-slate-950 rounded-lg p-4 border border-slate-700">
+                    <div class="text-xs font-medium text-orange-400 mb-2">Interactive Mode:</div>
+                    <div class="bg-[#0D0D0D] rounded p-2 border border-slate-700 font-mono text-xs">
+                      <code class="text-slate-300">ccs</code>
+                      <div class="text-slate-500 mt-1"># Start interactive Claude Code with your default account</div>
+                    </div>
+                  </div>
+
+                  <div class="bg-slate-950 rounded-lg p-4 border border-slate-700">
+                    <div class="text-xs font-medium text-orange-400 mb-2">Quick Delegation (Power Feature!):</div>
+                    <div class="bg-[#0D0D0D] rounded p-2 border border-slate-700 font-mono text-xs space-y-2">
+                      <div>
+                        <code class="text-slate-300">ccs -p "Using ui-ux-pro-max skill, create yoga landing page"</code>
+                        <div class="text-slate-500 text-xs mt-1"># One-shot: AI does the task and exits</div>
+                      </div>
+                      <div class="pt-2 border-t border-slate-700">
+                        <code class="text-slate-300">ccs glm -p "add tests for all components"</code>
+                        <div class="text-slate-500 text-xs mt-1"># Use GLM (81% cheaper) for simple tasks</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="bg-slate-950 rounded-lg p-4 border border-slate-700">
+                    <div class="text-xs font-medium text-orange-400 mb-2">Multi-Account Setup:</div>
+                    <div class="bg-[#0D0D0D] rounded p-2 border border-slate-700 font-mono text-xs space-y-1">
+                      <div><code class="text-slate-300">ccs auth create work</code></div>
+                      <div><code class="text-slate-300">ccs auth create personal</code></div>
+                      <div class="text-slate-500 text-xs mt-2"># Then use: ccs work or ccs personal</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pro Tips -->
+            <div class="p-5 rounded-lg bg-gradient-to-r from-amber-500/10 to-yellow-500/10 border border-amber-500/20">
+              <h3 class="text-sm font-bold font-sans text-amber-400 mb-3 flex items-center gap-2">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+                Why Use CCS?
+              </h3>
+              <div class="space-y-2 text-xs text-slate-400">
+                <div class="flex items-start gap-2">
+                  <span class="text-amber-400 mt-0.5">💰</span>
+                  <div>
+                    <strong class="text-slate-300">Save Money:</strong> Use GLM for simple tasks (tests, linting, documentation) - 81% cheaper than Claude
+                  </div>
+                </div>
+                <div class="flex items-start gap-2">
+                  <span class="text-amber-400 mt-0.5">⚡</span>
+                  <div>
+                    <strong class="text-slate-300">Work/Personal Split:</strong> Keep separate contexts for work and personal projects
+                  </div>
+                </div>
+                <div class="flex items-start gap-2">
+                  <span class="text-amber-400 mt-0.5">🚀</span>
+                  <div>
+                    <strong class="text-slate-300">Quick Delegation:</strong> Use <code class="px-1 py-0.5 bg-slate-800 rounded font-mono">-p</code> flag for fire-and-forget tasks
+                  </div>
+                </div>
+                <div class="flex items-start gap-2">
+                  <span class="text-amber-400 mt-0.5">🔄</span>
+                  <div>
+                    <strong class="text-slate-300">No Usage Limits:</strong> Hit your limit? Switch to another account instantly
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Common Commands -->
+        <div class="bg-slate-900/50 rounded-xl border border-slate-800 overflow-hidden">
+          <div class="p-6 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border-b border-slate-800">
+            <h2 class="text-2xl font-bold font-sans text-amber-400 flex items-center gap-3">
+              <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="4 17 10 11 4 5"/>
+                <line x1="12" y1="19" x2="20" y2="19"/>
+              </svg>
+              Common Commands & Examples
+            </h2>
+            <p class="text-sm text-slate-500 mt-2">Copy-paste ready commands for different use cases</p>
+          </div>
+
+          <div class="p-6 space-y-4">
+            <!-- Example 1 -->
+            <div class="p-4 rounded-lg bg-slate-950 border border-slate-800">
+              <div class="flex items-start gap-2 mb-2">
+                <span class="px-2 py-0.5 text-xs rounded-full bg-emerald-500/20 text-emerald-400 font-medium">Beginner</span>
+                <span class="text-xs text-slate-500">Create Landing Page</span>
+              </div>
+              <div class="bg-[#0D0D0D] rounded p-3 border border-slate-700 font-mono text-xs">
+                <code class="text-slate-300">
+                  ccs "Using ui-ux-pro-max skill, create a landing page for my yoga studio with calming colors"
+                </code>
+              </div>
+            </div>
+
+            <!-- Example 2 -->
+            <div class="p-4 rounded-lg bg-slate-950 border border-slate-800">
+              <div class="flex items-start gap-2 mb-2">
+                <span class="px-2 py-0.5 text-xs rounded-full bg-amber-500/20 text-amber-400 font-medium">Intermediate</span>
+                <span class="text-xs text-slate-500">Build Dashboard</span>
+              </div>
+              <div class="bg-[#0D0D0D] rounded p-3 border border-slate-700 font-mono text-xs">
+                <code class="text-slate-300">
+                  ccs "Using ui-ux-pro-max skill, build a SaaS dashboard with glassmorphism and dark mode. Include trend charts"
+                </code>
+              </div>
+            </div>
+
+            <!-- Example 3 -->
+            <div class="p-4 rounded-lg bg-slate-950 border border-slate-800">
+              <div class="flex items-start gap-2 mb-2">
+                <span class="px-2 py-0.5 text-xs rounded-full bg-purple-500/20 text-purple-400 font-medium">Interactive</span>
+                <span class="text-xs text-slate-500">Iterate on Design</span>
+              </div>
+              <div class="space-y-2">
+                <div class="bg-[#0D0D0D] rounded p-3 border border-slate-700 font-mono text-xs">
+                  <code class="text-slate-300">ccs</code>
+                  <div class="text-slate-500 text-xs mt-1"># Then chat with AI:</div>
+                </div>
+                <div class="pl-4 space-y-2 text-xs text-slate-400">
+                  <div>→ "Using ui-ux-pro-max skill, create portfolio page"</div>
+                  <div>→ "Make the colors more vibrant"</div>
+                  <div>→ "Add smooth scroll animations"</div>
+                  <div>→ "exit"</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Example 4 -->
+            <div class="p-4 rounded-lg bg-slate-950 border border-slate-800">
+              <div class="flex items-start gap-2 mb-2">
+                <span class="px-2 py-0.5 text-xs rounded-full bg-cyan-500/20 text-cyan-400 font-medium">With Context</span>
+                <span class="text-xs text-slate-500">Fix Existing File</span>
+              </div>
+              <div class="bg-[#0D0D0D] rounded p-3 border border-slate-700 font-mono text-xs">
+                <code class="text-slate-300">
+                  ccs @landing.html "Using ui-ux-pro-max skill, improve the color contrast and add hover effects"
+                </code>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tips for CLI Users -->
+        <div class="bg-gradient-to-br from-teal-500/10 via-cyan-500/10 to-blue-500/10 rounded-xl border border-teal-500/30 p-8">
+          <h2 class="text-2xl font-bold font-sans text-teal-400 mb-4 flex items-center gap-3">
+            <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            Pro Tips for CLI Power Users
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="flex items-start gap-3 p-4 rounded-lg bg-slate-900/50 border border-slate-700">
+              <svg class="w-6 h-6 text-teal-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="16 18 22 12 16 6"/>
+                <polyline points="8 6 2 12 8 18"/>
+              </svg>
+              <div>
+                <div class="text-sm font-medium text-slate-200 mb-1">Use Quotes for Multi-word Requests</div>
+                <div class="text-xs text-slate-400">Always wrap your requests in double quotes: <code class="px-1 py-0.5 bg-slate-800 rounded font-mono">"your request here"</code></div>
+              </div>
+            </div>
+            <div class="flex items-start gap-3 p-4 rounded-lg bg-slate-900/50 border border-slate-700">
+              <svg class="w-6 h-6 text-cyan-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+              <div>
+                <div class="text-sm font-medium text-slate-200 mb-1">Interactive Mode = Better Iteration</div>
+                <div class="text-xs text-slate-400">Use <code class="px-1 py-0.5 bg-slate-800 rounded font-mono">ccs</code> without arguments for back-and-forth refinement</div>
+              </div>
+            </div>
+            <div class="flex items-start gap-3 p-4 rounded-lg bg-slate-900/50 border border-slate-700">
+              <svg class="w-6 h-6 text-blue-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+              </svg>
+              <div>
+                <div class="text-sm font-medium text-slate-200 mb-1">Reference Files with @</div>
+                <div class="text-xs text-slate-400">Use <code class="px-1 py-0.5 bg-slate-800 rounded font-mono">@filename</code> to tell AI which files to modify</div>
+              </div>
+            </div>
+            <div class="flex items-start gap-3 p-4 rounded-lg bg-slate-900/50 border border-slate-700">
+              <svg class="w-6 h-6 text-purple-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+              <div>
+                <div class="text-sm font-medium text-slate-200 mb-1">Always Use "Using ui-ux-pro-max skill"</div>
+                <div class="text-xs text-slate-400">This activates the design intelligence system for professional results</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="bg-slate-900/30 backdrop-blur-sm border-t border-slate-800 py-4">
+      <div class="max-w-6xl mx-auto px-8 text-center">
+        <p class="text-sm text-slate-400">
+          ⚡ <strong>ClaudeKit CLI</strong> — Your terminal-based AI design assistant<br>
+          Type <code class="px-2 py-1 rounded bg-slate-800 text-emerald-400 font-mono">ccs --help</code> for all available commands
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

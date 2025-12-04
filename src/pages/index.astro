@@ -1,16 +1,160 @@
 ---
-
+import MainLayout from '@/layouts/MainLayout.astro';
+import Logo from '@/components/ui/Logo.astro';
+import Button from '@/components/ui/Button.astro';
+import GlassCard from '@/components/ui/GlassCard.astro';
+import Badge from '@/components/ui/Badge.astro';
+import Input from '@/components/ui/Input.astro';
+import { Moon, Sun } from 'lucide-astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<MainLayout
+  title="Home"
+  description="VividKit - Crystal clear AI coding with ClaudeKit"
+  canonical="/"
+>
+  <div class="min-h-screen">
+    <!-- Header with theme toggle -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-card">
+      <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <Logo size="sm" />
+
+        <button
+          id="theme-toggle"
+          class="p-2 rounded-lg glass-card-light hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          aria-label="Toggle theme"
+        >
+          <Sun class="w-5 h-5 dark:hidden" />
+          <Moon class="w-5 h-5 hidden dark:block" />
+        </button>
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="pt-32 pb-20 px-6">
+      <div class="max-w-6xl mx-auto space-y-16">
+        <!-- Hero Section -->
+        <section class="text-center space-y-6">
+          <h1 class="text-5xl md:text-6xl font-heading font-bold">
+            <span class="bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+              VividKit
+            </span>
+            <br />
+            Foundation Test Page
+          </h1>
+          <p class="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+            Testing all base components with light and dark mode support
+          </p>
+        </section>
+
+        <!-- Button Components -->
+        <GlassCard variant="default">
+          <h2 class="text-2xl font-heading font-bold mb-6">Button Components</h2>
+          <div class="flex flex-wrap gap-4">
+            <Button variant="primary" size="lg">Primary Large</Button>
+            <Button variant="primary" size="md">Primary Medium</Button>
+            <Button variant="primary" size="sm">Primary Small</Button>
+            <Button variant="secondary" size="md">Secondary</Button>
+            <Button variant="outline" size="md">Outline</Button>
+            <Button variant="primary" size="md" href="#">Link Button</Button>
+          </div>
+        </GlassCard>
+
+        <!-- GlassCard Variants -->
+        <section class="space-y-4">
+          <h2 class="text-2xl font-heading font-bold">GlassCard Variants</h2>
+          <div class="grid md:grid-cols-2 gap-4">
+            <GlassCard variant="default" padding="md">
+              <h3 class="font-semibold mb-2">Default Glass Card</h3>
+              <p class="text-slate-600 dark:text-slate-400">
+                Standard glassmorphism effect with medium padding
+              </p>
+            </GlassCard>
+
+            <GlassCard variant="light" padding="md">
+              <h3 class="font-semibold mb-2">Light Glass Card</h3>
+              <p class="text-slate-600 dark:text-slate-400">
+                Lighter variant for subtle backgrounds
+              </p>
+            </GlassCard>
+
+            <GlassCard variant="hover" padding="md">
+              <h3 class="font-semibold mb-2">Hover Glass Card</h3>
+              <p class="text-slate-600 dark:text-slate-400">
+                Hover me for interactive effect
+              </p>
+            </GlassCard>
+
+            <GlassCard variant="glow" padding="md">
+              <h3 class="font-semibold mb-2">Glow Glass Card</h3>
+              <p class="text-slate-600 dark:text-slate-400">
+                Glass card with gradient border glow
+              </p>
+            </GlassCard>
+          </div>
+        </section>
+
+        <!-- Badge Components -->
+        <GlassCard variant="default">
+          <h2 class="text-2xl font-heading font-bold mb-6">Badge Components</h2>
+          <div class="flex flex-wrap gap-4">
+            <Badge variant="success" size="sm">Success</Badge>
+            <Badge variant="warning" size="sm">Warning</Badge>
+            <Badge variant="danger" size="sm">Danger</Badge>
+            <Badge variant="info" size="sm">Info</Badge>
+            <Badge variant="success" size="md">Medium Badge</Badge>
+            <Badge variant="info" size="sm" pulse>Live Status</Badge>
+          </div>
+        </GlassCard>
+
+        <!-- Input Component -->
+        <GlassCard variant="default">
+          <h2 class="text-2xl font-heading font-bold mb-6">Input Component</h2>
+          <form class="space-y-4 max-w-md">
+            <Input type="text" name="name" placeholder="Your name" />
+            <Input type="email" name="email" placeholder="your@email.com" required />
+            <Input type="password" name="password" placeholder="Password" />
+            <Button variant="primary" size="md" type="submit">Submit</Button>
+          </form>
+        </GlassCard>
+
+        <!-- Logo Variants -->
+        <GlassCard variant="default">
+          <h2 class="text-2xl font-heading font-bold mb-6">Logo Variants</h2>
+          <div class="space-y-6">
+            <div>
+              <p class="text-sm text-slate-600 dark:text-slate-400 mb-2">Large with text</p>
+              <Logo size="lg" showText={true} />
+            </div>
+            <div>
+              <p class="text-sm text-slate-600 dark:text-slate-400 mb-2">Medium with text</p>
+              <Logo size="md" showText={true} />
+            </div>
+            <div>
+              <p class="text-sm text-slate-600 dark:text-slate-400 mb-2">Small without text</p>
+              <Logo size="sm" showText={false} />
+            </div>
+          </div>
+        </GlassCard>
+
+        <!-- Theme Instructions -->
+        <GlassCard variant="glow">
+          <h2 class="text-2xl font-heading font-bold mb-4">Theme Toggle Test</h2>
+          <div class="space-y-4">
+            <Badge variant="info" pulse>Live Testing</Badge>
+            <p class="text-slate-600 dark:text-slate-400">
+              Click the theme toggle button in the header to switch between light and dark modes.
+              The theme preference will persist across page reloads.
+            </p>
+            <ul class="list-disc list-inside space-y-2 text-slate-600 dark:text-slate-400">
+              <li>Toggle should switch dark class on html element</li>
+              <li>Refresh page - theme should persist</li>
+              <li>All components should render properly in both modes</li>
+              <li>Glassmorphism effects should be visible</li>
+            </ul>
+          </div>
+        </GlassCard>
+      </div>
+    </main>
+  </div>
+</MainLayout>

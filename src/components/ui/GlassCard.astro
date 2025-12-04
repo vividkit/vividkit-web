@@ -1,0 +1,33 @@
+---
+interface Props {
+  variant?: 'default' | 'light' | 'hover' | 'glow';
+  padding?: 'none' | 'sm' | 'md' | 'lg';
+  class?: string;
+}
+
+const {
+  variant = 'default',
+  padding = 'md',
+  class: className = ''
+} = Astro.props;
+
+const variantClasses = {
+  default: 'glass-card',
+  light: 'glass-card-light',
+  hover: 'glass-card glass-card-hover',
+  glow: 'glass-card glow-border'
+};
+
+const paddingClasses = {
+  none: '',
+  sm: 'p-4',
+  md: 'p-6',
+  lg: 'p-8'
+};
+
+const classes = `${variantClasses[variant]} ${paddingClasses[padding]} rounded-2xl ${className}`;
+---
+
+<div class={classes}>
+  <slot />
+</div>

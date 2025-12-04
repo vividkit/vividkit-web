@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI/UX Pro Max - Your AI Design Assistant</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            heading: ['Poppins', 'sans-serif'],
+            sans: ['Open Sans', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @keyframes pulse-slow {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+    .pulse-icon {
+      animation: pulse-slow 3s ease-in-out infinite;
+    }
+    @keyframes flow {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+    .flow-arrow {
+      animation: flow 2s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased bg-[#0F172A] text-slate-100 min-h-screen overflow-x-hidden">
+
+  <!-- Main Container -->
+  <div class="flex flex-col min-h-screen">
+
+    <!-- Header -->
+    <div class="bg-slate-900/30 backdrop-blur-sm border-b border-slate-800">
+      <div class="max-w-6xl mx-auto px-8 py-6">
+        <div class="flex items-center justify-between">
+          <div class="flex-1">
+            <h1 class="text-3xl font-bold font-heading flex items-center gap-3">
+              <svg class="w-10 h-10 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7" rx="1"/>
+                <rect x="14" y="3" width="7" height="7" rx="1"/>
+                <rect x="14" y="14" width="7" height="7" rx="1"/>
+                <rect x="3" y="14" width="7" height="7" rx="1"/>
+              </svg>
+              UI/UX Pro Max
+            </h1>
+            <p class="text-sm text-slate-400 mt-2">Your AI-Powered Design Intelligence System ✨</p>
+          </div>
+          <button class="p-2 rounded-lg hover:bg-slate-800 transition-colors duration-200 cursor-pointer">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="flex-1 bg-slate-950 py-8">
+      <div class="max-w-6xl mx-auto px-8 space-y-8">
+
+        <!-- Hero Banner -->
+        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-500/20 via-purple-500/20 to-pink-500/20 border border-indigo-500/30 p-8">
+          <div class="relative z-10">
+            <div class="flex items-start gap-4">
+              <div class="flex items-center justify-center w-16 h-16 rounded-2xl bg-indigo-500/20 flex-shrink-0 float-animation">
+                <svg class="w-9 h-9 text-indigo-400 pulse-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+              </div>
+              <div class="flex-1">
+                <h2 class="text-2xl font-bold font-heading text-indigo-400 mb-2">What is UI/UX Pro Max?</h2>
+                <p class="text-slate-300 text-lg leading-relaxed">
+                  Think of it as your <strong>personal design expert</strong> 🎨 — instantly get professional color palettes, font pairings, UI styles, and best practices.
+                  No design degree needed, just ask and AI creates beautiful interfaces for you!
+                </p>
+                <div class="mt-4 p-4 rounded-lg bg-slate-900/50 border border-slate-700">
+                  <p class="text-sm text-slate-400 mb-2"><strong class="text-slate-300">What's Inside:</strong></p>
+                  <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs text-slate-400">
+                    <div class="flex items-center gap-2">
+                      <span class="text-indigo-400">•</span>
+                      <span>50 UI Styles</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <span class="text-purple-400">•</span>
+                      <span>21 Color Palettes</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <span class="text-pink-400">•</span>
+                      <span>50 Font Pairings</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <span class="text-cyan-400">•</span>
+                      <span>20 Chart Types</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl"></div>
+          <div class="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl"></div>
+        </div>
+
+        <!-- For Whom Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Non-Tech Users -->
+          <div class="bg-slate-900/50 rounded-xl border border-emerald-500/30 overflow-hidden hover:border-emerald-500/50 transition-colors duration-200 cursor-pointer">
+            <div class="p-6 bg-gradient-to-br from-emerald-500/10 to-green-500/10 border-b border-slate-800">
+              <div class="flex items-center gap-3 mb-2">
+                <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-emerald-500/20">
+                  <svg class="w-6 h-6 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold font-heading text-emerald-400">For Everyone</h3>
+                  <p class="text-xs text-slate-500">No coding needed!</p>
+                </div>
+              </div>
+              <p class="text-sm text-slate-400">Perfect if you're building landing pages, portfolios, or want beautiful designs without technical knowledge</p>
+            </div>
+            <div class="p-4 space-y-2">
+              <div class="p-3 rounded-lg bg-slate-950 border border-slate-800">
+                <p class="text-xs text-emerald-400 font-medium mb-1">✓ Business Owners</p>
+                <p class="text-xs text-slate-500">Create stunning websites easily</p>
+              </div>
+              <div class="p-3 rounded-lg bg-slate-950 border border-slate-800">
+                <p class="text-xs text-emerald-400 font-medium mb-1">✓ Content Creators</p>
+                <p class="text-xs text-slate-500">Design beautiful landing pages</p>
+              </div>
+              <div class="p-3 rounded-lg bg-slate-950 border border-slate-800">
+                <p class="text-xs text-emerald-400 font-medium mb-1">✓ Entrepreneurs</p>
+                <p class="text-xs text-slate-500">Launch professional products fast</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Developers -->
+          <div class="bg-slate-900/50 rounded-xl border border-blue-500/30 overflow-hidden hover:border-blue-500/50 transition-colors duration-200 cursor-pointer">
+            <div class="p-6 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border-b border-slate-800">
+              <div class="flex items-center gap-3 mb-2">
+                <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-blue-500/20">
+                  <svg class="w-6 h-6 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="16 18 22 12 16 6"/>
+                    <polyline points="8 6 2 12 8 18"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold font-heading text-blue-400">For Developers</h3>
+                  <p class="text-xs text-slate-500">Speed up your workflow!</p>
+                </div>
+              </div>
+              <p class="text-sm text-slate-400">Get design systems, code-ready color palettes, and stack-specific best practices instantly</p>
+            </div>
+            <div class="p-4 space-y-2">
+              <div class="p-3 rounded-lg bg-slate-950 border border-slate-800">
+                <p class="text-xs text-blue-400 font-medium mb-1">✓ Frontend Devs</p>
+                <p class="text-xs text-slate-500">Skip design research, copy code</p>
+              </div>
+              <div class="p-3 rounded-lg bg-slate-950 border border-slate-800">
+                <p class="text-xs text-blue-400 font-medium mb-1">✓ Fullstack Devs</p>
+                <p class="text-xs text-slate-500">Focus on logic, not design</p>
+              </div>
+              <div class="p-3 rounded-lg bg-slate-950 border border-slate-800">
+                <p class="text-xs text-blue-400 font-medium mb-1">✓ Indie Hackers</p>
+                <p class="text-xs text-slate-500">Ship MVPs 10x faster</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Designers -->
+          <div class="bg-slate-900/50 rounded-xl border border-purple-500/30 overflow-hidden hover:border-purple-500/50 transition-colors duration-200 cursor-pointer">
+            <div class="p-6 bg-gradient-to-br from-purple-500/10 to-pink-500/10 border-b border-slate-800">
+              <div class="flex items-center gap-3 mb-2">
+                <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-purple-500/20">
+                  <svg class="w-6 h-6 text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M12 1v6m0 6v6"/>
+                    <path d="M17 7l-5 5-5-5"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold font-heading text-purple-400">For Designers</h3>
+                  <p class="text-xs text-slate-500">Get inspiration fast!</p>
+                </div>
+              </div>
+              <p class="text-sm text-slate-400">Discover curated design systems, explore trending styles, and maintain consistency across projects</p>
+            </div>
+            <div class="p-4 space-y-2">
+              <div class="p-3 rounded-lg bg-slate-950 border border-slate-800">
+                <p class="text-xs text-purple-400 font-medium mb-1">✓ UI Designers</p>
+                <p class="text-xs text-slate-500">Find perfect color + font combos</p>
+              </div>
+              <div class="p-3 rounded-lg bg-slate-950 border border-slate-800">
+                <p class="text-xs text-purple-400 font-medium mb-1">✓ UX Designers</p>
+                <p class="text-xs text-slate-500">Access best practice guidelines</p>
+              </div>
+              <div class="p-3 rounded-lg bg-slate-950 border border-slate-800">
+                <p class="text-xs text-purple-400 font-medium mb-1">✓ Product Designers</p>
+                <p class="text-xs text-slate-500">Industry-specific recommendations</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- How It Works Section -->
+        <div class="bg-slate-900/50 rounded-xl border border-slate-800 overflow-hidden">
+          <div class="p-6 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border-b border-slate-800">
+            <h2 class="text-2xl font-bold font-heading flex items-center gap-3">
+              <svg class="w-7 h-7 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+              How It Works (3 Simple Steps)
+            </h2>
+            <p class="text-sm text-slate-400 mt-2">From zero to professional design in minutes — no design skills required!</p>
+          </div>
+
+          <div class="p-8">
+            <div class="space-y-6">
+              <!-- Step 1: Tell AI What You Want -->
+              <div class="flex items-start gap-4">
+                <div class="flex flex-col items-center flex-shrink-0">
+                  <div class="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-500/20 text-cyan-400 font-bold text-lg border-2 border-cyan-500/50">
+                    1
+                  </div>
+                  <div class="w-0.5 h-full bg-gradient-to-b from-cyan-500/50 to-blue-500/50 mt-3"></div>
+                </div>
+                <div class="flex-1 pb-6">
+                  <div class="bg-slate-950 rounded-xl border border-cyan-500/30 p-6">
+                    <h3 class="text-xl font-bold font-heading text-cyan-400 mb-3 flex items-center gap-2">
+                      <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                      </svg>
+                      Tell AI What You Want
+                    </h3>
+                    <p class="text-slate-300 mb-4">Just describe your project in plain English! No technical jargon needed.</p>
+                    <div class="space-y-3">
+                      <div class="bg-slate-900/50 rounded-lg p-4 border border-slate-700">
+                        <div class="flex items-start gap-3">
+                          <code class="px-3 py-1.5 rounded bg-cyan-500/20 text-cyan-400 font-mono text-sm">You say:</code>
+                          <div class="flex-1">
+                            <p class="text-sm text-slate-400">"I need a landing page for my luxury spa business"</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="text-xs text-slate-500 flex items-center gap-2">
+                        <svg class="w-4 h-4 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        AI understands: product type (spa), industry (beauty/wellness), style needed (elegant)
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Step 2: AI Searches Design Database -->
+              <div class="flex items-start gap-4">
+                <div class="flex flex-col items-center flex-shrink-0">
+                  <div class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-lg border-2 border-blue-500/50">
+                    2
+                  </div>
+                  <div class="w-0.5 h-full bg-gradient-to-b from-blue-500/50 to-indigo-500/50 mt-3"></div>
+                </div>
+                <div class="flex-1 pb-6">
+                  <div class="bg-slate-950 rounded-xl border border-blue-500/30 p-6">
+                    <h3 class="text-xl font-bold font-heading text-blue-400 mb-3 flex items-center gap-2">
+                      <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/>
+                        <path d="m21 21-4.35-4.35"/>
+                      </svg>
+                      AI Searches Design Database
+                    </h3>
+                    <p class="text-slate-300 mb-4">Behind the scenes, AI searches 8 design domains to build your perfect design system</p>
+                    <div class="bg-blue-500/10 rounded-lg p-4 border border-blue-500/20">
+                      <div class="text-xs font-medium text-blue-400 mb-3">Searching for you:</div>
+                      <div class="grid grid-cols-2 gap-2 text-xs text-slate-400">
+                        <div class="flex items-center gap-2">
+                          <svg class="w-3 h-3 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                          </svg>
+                          <span><strong>Style Guide</strong> (elegant, soft)</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                          <svg class="w-3 h-3 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                          </svg>
+                          <span><strong>Colors</strong> (spa palette)</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                          <svg class="w-3 h-3 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                          </svg>
+                          <span><strong>Typography</strong> (luxury fonts)</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                          <svg class="w-3 h-3 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                          </svg>
+                          <span><strong>Layout</strong> (landing page)</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                          <svg class="w-3 h-3 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                          </svg>
+                          <span><strong>UX Rules</strong> (best practices)</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                          <svg class="w-3 h-3 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                          </svg>
+                          <span><strong>Accessibility</strong> (standards)</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Step 3: Get Beautiful Code -->
+              <div class="flex items-start gap-4">
+                <div class="flex flex-col items-center flex-shrink-0">
+                  <div class="flex items-center justify-center w-12 h-12 rounded-full bg-indigo-500/20 text-indigo-400 font-bold text-lg border-2 border-indigo-500/50">
+                    3
+                  </div>
+                </div>
+                <div class="flex-1">
+                  <div class="bg-slate-950 rounded-xl border border-indigo-500/30 p-6">
+                    <h3 class="text-xl font-bold font-heading text-indigo-400 mb-3 flex items-center gap-2">
+                      <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="16 18 22 12 16 6"/>
+                        <polyline points="8 6 2 12 8 18"/>
+                      </svg>
+                      Get Beautiful, Production-Ready Code
+                    </h3>
+                    <p class="text-slate-300 mb-4">AI creates complete HTML/CSS with all design choices perfectly implemented</p>
+                    <div class="space-y-3">
+                      <div class="bg-indigo-500/10 rounded-lg p-4 border border-indigo-500/20">
+                        <div class="text-xs font-medium text-indigo-400 mb-2">What you receive:</div>
+                        <ul class="space-y-1 text-xs text-slate-400">
+                          <li class="flex items-center gap-2">
+                            <svg class="w-3 h-3 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                              <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Professional color scheme applied
+                          </li>
+                          <li class="flex items-center gap-2">
+                            <svg class="w-3 h-3 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                              <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Beautiful fonts with Google Fonts links
+                          </li>
+                          <li class="flex items-center gap-2">
+                            <svg class="w-3 h-3 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                              <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Responsive design (works on all devices)
+                          </li>
+                          <li class="flex items-center gap-2">
+                            <svg class="w-3 h-3 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                              <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Smooth animations and interactions
+                          </li>
+                          <li class="flex items-center gap-2">
+                            <svg class="w-3 h-3 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                              <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Accessibility compliant (WCAG AA)
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Result callout -->
+            <div class="mt-6 p-6 rounded-lg bg-gradient-to-r from-emerald-500/10 to-green-500/10 border border-emerald-500/30">
+              <div class="flex items-start gap-4">
+                <svg class="w-8 h-8 text-emerald-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                  <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+                <div>
+                  <h4 class="text-lg font-bold font-heading text-emerald-400 mb-2">🎉 Result: Professional Design in Minutes!</h4>
+                  <p class="text-slate-300 mb-3">What used to take hours of research and design work is done in seconds. Just copy the code and you're ready to launch!</p>
+                  <div class="bg-slate-900/50 rounded-lg p-4 border border-emerald-500/20">
+                    <p class="text-xs text-slate-500 mb-2"><strong class="text-slate-300">Time Saved:</strong></p>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                      <div>
+                        <span class="text-slate-500">Traditional way:</span>
+                        <span class="text-red-400 font-medium ml-2">6-8 hours</span>
+                      </div>
+                      <div>
+                        <span class="text-slate-500">With UI/UX Pro Max:</span>
+                        <span class="text-emerald-400 font-medium ml-2">2-5 minutes</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- What You Can Build Section -->
+        <div class="space-y-6">
+          <h2 class="text-2xl font-bold font-heading flex items-center gap-3">
+            <svg class="w-7 h-7 text-pink-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2v20M2 12h20"/>
+              <circle cx="12" cy="12" r="4"/>
+            </svg>
+            What You Can Build
+          </h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Landing Pages -->
+            <div class="bg-slate-900/50 rounded-xl border border-slate-800 overflow-hidden hover:border-pink-500/30 transition-colors cursor-pointer">
+              <div class="p-5 bg-gradient-to-r from-pink-500/10 to-rose-500/10 border-b border-slate-800">
+                <div class="flex items-center gap-3">
+                  <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-pink-500/20">
+                    <svg class="w-6 h-6 text-pink-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="3" y="3" width="18" height="18" rx="2"/>
+                      <path d="M3 9h18"/>
+                    </svg>
+                  </div>
+                  <h3 class="text-lg font-bold font-heading text-pink-400">Landing Pages</h3>
+                </div>
+              </div>
+              <div class="p-4 space-y-2">
+                <p class="text-sm text-slate-400 mb-3">Create stunning landing pages for any business</p>
+                <div class="space-y-1 text-xs text-slate-500">
+                  <div class="flex items-center gap-2">
+                    <span class="text-pink-400">•</span>
+                    <span>SaaS Products</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-pink-400">•</span>
+                    <span>E-commerce Stores</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-pink-400">•</span>
+                    <span>Healthcare Services</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-pink-400">•</span>
+                    <span>Beauty & Wellness</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dashboards -->
+            <div class="bg-slate-900/50 rounded-xl border border-slate-800 overflow-hidden hover:border-cyan-500/30 transition-colors cursor-pointer">
+              <div class="p-5 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border-b border-slate-800">
+                <div class="flex items-center gap-3">
+                  <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-cyan-500/20">
+                    <svg class="w-6 h-6 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="3" y="3" width="7" height="9"/>
+                      <rect x="14" y="3" width="7" height="5"/>
+                      <rect x="14" y="12" width="7" height="9"/>
+                      <rect x="3" y="16" width="7" height="5"/>
+                    </svg>
+                  </div>
+                  <h3 class="text-lg font-bold font-heading text-cyan-400">Dashboards</h3>
+                </div>
+              </div>
+              <div class="p-4 space-y-2">
+                <p class="text-sm text-slate-400 mb-3">Build data-rich dashboards with perfect charts</p>
+                <div class="space-y-1 text-xs text-slate-500">
+                  <div class="flex items-center gap-2">
+                    <span class="text-cyan-400">•</span>
+                    <span>Analytics Dashboards</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-cyan-400">•</span>
+                    <span>Admin Panels</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-cyan-400">•</span>
+                    <span>Business Intelligence</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-cyan-400">•</span>
+                    <span>Monitoring Tools</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Portfolios -->
+            <div class="bg-slate-900/50 rounded-xl border border-slate-800 overflow-hidden hover:border-purple-500/30 transition-colors cursor-pointer">
+              <div class="p-5 bg-gradient-to-r from-purple-500/10 to-indigo-500/10 border-b border-slate-800">
+                <div class="flex items-center gap-3">
+                  <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-purple-500/20">
+                    <svg class="w-6 h-6 text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                    </svg>
+                  </div>
+                  <h3 class="text-lg font-bold font-heading text-purple-400">Portfolios</h3>
+                </div>
+              </div>
+              <div class="p-4 space-y-2">
+                <p class="text-sm text-slate-400 mb-3">Showcase your work with beautiful portfolios</p>
+                <div class="space-y-1 text-xs text-slate-500">
+                  <div class="flex items-center gap-2">
+                    <span class="text-purple-400">•</span>
+                    <span>Designer Portfolios</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-purple-400">•</span>
+                    <span>Developer Showcases</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-purple-400">•</span>
+                    <span>Creative Work</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-purple-400">•</span>
+                    <span>Photography Sites</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mobile Apps -->
+            <div class="bg-slate-900/50 rounded-xl border border-slate-800 overflow-hidden hover:border-orange-500/30 transition-colors cursor-pointer">
+              <div class="p-5 bg-gradient-to-r from-orange-500/10 to-amber-500/10 border-b border-slate-800">
+                <div class="flex items-center gap-3">
+                  <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-orange-500/20">
+                    <svg class="w-6 h-6 text-orange-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+                      <line x1="12" y1="18" x2="12.01" y2="18"/>
+                    </svg>
+                  </div>
+                  <h3 class="text-lg font-bold font-heading text-orange-400">Mobile Apps</h3>
+                </div>
+              </div>
+              <div class="p-4 space-y-2">
+                <p class="text-sm text-slate-400 mb-3">Design mobile apps for any platform</p>
+                <div class="space-y-1 text-xs text-slate-500">
+                  <div class="flex items-center gap-2">
+                    <span class="text-orange-400">•</span>
+                    <span>React Native Apps</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-orange-400">•</span>
+                    <span>Flutter Apps</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-orange-400">•</span>
+                    <span>SwiftUI (iOS)</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-orange-400">•</span>
+                    <span>Progressive Web Apps</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Design Styles Showcase -->
+        <div class="bg-slate-900/50 rounded-xl border border-slate-800 overflow-hidden">
+          <div class="p-6 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border-b border-slate-800">
+            <h2 class="text-2xl font-bold font-heading text-amber-400 flex items-center gap-3">
+              <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+              50 UI Styles to Choose From
+            </h2>
+            <p class="text-sm text-slate-500 mt-2">From minimalist to glassmorphism — find the perfect style for your project</p>
+          </div>
+          <div class="p-6 grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div class="p-3 rounded-lg bg-slate-950 border border-slate-800 hover:border-indigo-500/30 transition-colors cursor-pointer">
+              <div class="text-sm font-medium text-indigo-400 mb-1">Glassmorphism</div>
+              <div class="text-xs text-slate-500">Frosted glass effect</div>
+            </div>
+            <div class="p-3 rounded-lg bg-slate-950 border border-slate-800 hover:border-purple-500/30 transition-colors cursor-pointer">
+              <div class="text-sm font-medium text-purple-400 mb-1">Minimalism</div>
+              <div class="text-xs text-slate-500">Clean & simple</div>
+            </div>
+            <div class="p-3 rounded-lg bg-slate-950 border border-slate-800 hover:border-pink-500/30 transition-colors cursor-pointer">
+              <div class="text-sm font-medium text-pink-400 mb-1">Aurora UI</div>
+              <div class="text-xs text-slate-500">Vibrant gradients</div>
+            </div>
+            <div class="p-3 rounded-lg bg-slate-950 border border-slate-800 hover:border-cyan-500/30 transition-colors cursor-pointer">
+              <div class="text-sm font-medium text-cyan-400 mb-1">Dark Mode</div>
+              <div class="text-xs text-slate-500">Professional darkness</div>
+            </div>
+            <div class="p-3 rounded-lg bg-slate-950 border border-slate-800 hover:border-emerald-500/30 transition-colors cursor-pointer">
+              <div class="text-sm font-medium text-emerald-400 mb-1">Neumorphism</div>
+              <div class="text-xs text-slate-500">Soft shadows</div>
+            </div>
+            <div class="p-3 rounded-lg bg-slate-950 border border-slate-800 hover:border-amber-500/30 transition-colors cursor-pointer">
+              <div class="text-sm font-medium text-amber-400 mb-1">Brutalism</div>
+              <div class="text-xs text-slate-500">Raw & bold</div>
+            </div>
+            <div class="p-3 rounded-lg bg-slate-950 border border-slate-800 hover:border-rose-500/30 transition-colors cursor-pointer">
+              <div class="text-sm font-medium text-rose-400 mb-1">Claymorphism</div>
+              <div class="text-xs text-slate-500">3D clay effect</div>
+            </div>
+            <div class="p-3 rounded-lg bg-slate-950 border border-slate-800 hover:border-blue-500/30 transition-colors cursor-pointer">
+              <div class="text-sm font-medium text-blue-400 mb-1">...and 43 more!</div>
+              <div class="text-xs text-slate-500">Explore all styles</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tips for Non-Tech Users -->
+        <div class="bg-gradient-to-br from-emerald-500/10 via-green-500/10 to-teal-500/10 rounded-xl border border-emerald-500/30 p-8">
+          <h2 class="text-2xl font-bold font-heading text-emerald-400 mb-4 flex items-center gap-3">
+            <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+            </svg>
+            Tips for Beginners & Non-Tech Users
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="flex items-start gap-3 p-4 rounded-lg bg-slate-900/50 border border-slate-700">
+              <svg class="w-6 h-6 text-emerald-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+              <div>
+                <div class="text-sm font-medium text-slate-200 mb-1">💬 Use Plain English</div>
+                <div class="text-xs text-slate-400">No coding terms needed! Just say "I want a spa website" or "Make it look elegant"</div>
+              </div>
+            </div>
+            <div class="flex items-start gap-3 p-4 rounded-lg bg-slate-900/50 border border-slate-700">
+              <svg class="w-6 h-6 text-green-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+              </svg>
+              <div>
+                <div class="text-sm font-medium text-slate-200 mb-1">🎨 Describe Your Vision</div>
+                <div class="text-xs text-slate-400">Talk about colors (soft, vibrant), mood (calm, energetic), or industry (healthcare, beauty)</div>
+              </div>
+            </div>
+            <div class="flex items-start gap-3 p-4 rounded-lg bg-slate-900/50 border border-slate-700">
+              <svg class="w-6 h-6 text-teal-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+              <div>
+                <div class="text-sm font-medium text-slate-200 mb-1">⚡ Start Simple</div>
+                <div class="text-xs text-slate-400">Begin with a single page. See something you like? Ask AI to create more pages in the same style!</div>
+              </div>
+            </div>
+            <div class="flex items-start gap-3 p-4 rounded-lg bg-slate-900/50 border border-slate-700">
+              <svg class="w-6 h-6 text-cyan-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+              <div>
+                <div class="text-sm font-medium text-slate-200 mb-1">🔄 Iterate & Refine</div>
+                <div class="text-xs text-slate-400">Not happy? Just say "make it more colorful" or "use different fonts" — AI adjusts instantly!</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ClaudeKit Integration -->
+        <div class="relative overflow-hidden bg-slate-900/50 rounded-xl border-2 border-indigo-500/40 shadow-lg shadow-indigo-500/20">
+          <!-- Floating background elements -->
+          <div class="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl"></div>
+          <div class="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
+
+          <div class="relative z-10 p-8">
+            <div class="flex items-start gap-4 mb-6">
+              <div class="flex items-center justify-center w-14 h-14 rounded-2xl bg-indigo-500/20 flex-shrink-0 float-animation">
+                <svg class="w-8 h-8 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                </svg>
+              </div>
+              <div class="flex-1">
+                <h2 class="text-3xl font-bold font-heading text-indigo-400 mb-2">How to Use with ClaudeKit</h2>
+                <p class="text-slate-300 text-lg">Just add this magic phrase to activate the design intelligence system!</p>
+              </div>
+            </div>
+
+            <!-- The Magic Syntax -->
+            <div class="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-xl border border-indigo-500/30 p-6 mb-6">
+              <div class="flex items-center gap-3 mb-4">
+                <svg class="w-6 h-6 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+                <h3 class="text-xl font-bold font-heading text-indigo-300">The Magic Phrase:</h3>
+              </div>
+              <div class="bg-slate-950 rounded-lg p-5 border border-indigo-500/20">
+                <code class="text-lg text-indigo-300 font-mono block mb-2">Using ui-ux-pro-max skill, &lt;your request&gt;</code>
+                <p class="text-xs text-slate-500">That's it! AI will automatically search design databases and create beautiful code for you.</p>
+              </div>
+            </div>
+
+            <!-- Step by Step -->
+            <div class="space-y-4 mb-6">
+              <h3 class="text-lg font-bold font-heading text-purple-400 flex items-center gap-2">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="9 11 12 14 22 4"/>
+                  <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                </svg>
+                Step-by-Step Guide:
+              </h3>
+
+              <!-- Step 1 -->
+              <div class="flex items-start gap-3">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-500/20 flex items-center justify-center text-sm text-indigo-400 font-bold border-2 border-indigo-500/40">1</div>
+                <div class="flex-1">
+                  <div class="bg-slate-950 rounded-lg p-4 border border-slate-800">
+                    <p class="text-sm text-slate-300 mb-2"><strong>Start your prompt with:</strong></p>
+                    <code class="px-3 py-2 rounded bg-indigo-500/10 text-indigo-300 font-mono text-sm inline-block">Using ui-ux-pro-max skill,</code>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Step 2 -->
+              <div class="flex items-start gap-3">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center text-sm text-purple-400 font-bold border-2 border-purple-500/40">2</div>
+                <div class="flex-1">
+                  <div class="bg-slate-950 rounded-lg p-4 border border-slate-800">
+                    <p class="text-sm text-slate-300 mb-2"><strong>Describe what you want:</strong></p>
+                    <p class="text-xs text-slate-400">Talk naturally about your project, industry, style preferences, colors, mood, etc.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Step 3 -->
+              <div class="flex items-start gap-3">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-pink-500/20 flex items-center justify-center text-sm text-pink-400 font-bold border-2 border-pink-500/40">3</div>
+                <div class="flex-1">
+                  <div class="bg-slate-950 rounded-lg p-4 border border-slate-800">
+                    <p class="text-sm text-slate-300 mb-2"><strong>Press Enter & Watch the Magic!</strong></p>
+                    <p class="text-xs text-slate-400">AI searches design databases, creates your design system, and delivers production-ready code.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Real Examples -->
+            <div class="bg-slate-950/50 rounded-xl border border-indigo-500/20 p-6">
+              <h3 class="text-lg font-bold font-heading text-indigo-300 mb-4 flex items-center gap-2">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+                Real ClaudeKit Prompts (Copy & Try!):
+              </h3>
+
+              <div class="space-y-3">
+                <!-- Example 1 -->
+                <div class="p-4 rounded-lg bg-slate-900 border border-slate-800 hover:border-indigo-500/30 transition-colors cursor-pointer">
+                  <div class="flex items-start gap-2 mb-2">
+                    <span class="px-2 py-0.5 text-xs rounded-full bg-emerald-500/20 text-emerald-400 font-medium">Beginner</span>
+                    <span class="text-xs text-slate-500">Landing Page</span>
+                  </div>
+                  <div class="bg-indigo-500/5 rounded p-3 border border-indigo-500/10">
+                    <code class="text-sm text-indigo-300 font-mono block leading-relaxed">
+                      Using ui-ux-pro-max skill, create a beautiful landing page for my yoga studio. I want calming, peaceful colors and elegant fonts. Make it look professional but welcoming.
+                    </code>
+                  </div>
+                  <div class="mt-2 flex items-start gap-2 text-xs text-slate-500">
+                    <svg class="w-4 h-4 text-indigo-400 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="9 11 12 14 22 4"/>
+                    </svg>
+                    <span>AI will search beauty/wellness colors, elegant typography, minimalist style, and create complete HTML</span>
+                  </div>
+                </div>
+
+                <!-- Example 2 -->
+                <div class="p-4 rounded-lg bg-slate-900 border border-slate-800 hover:border-purple-500/30 transition-colors cursor-pointer">
+                  <div class="flex items-start gap-2 mb-2">
+                    <span class="px-2 py-0.5 text-xs rounded-full bg-amber-500/20 text-amber-400 font-medium">Intermediate</span>
+                    <span class="text-xs text-slate-500">Dashboard</span>
+                  </div>
+                  <div class="bg-purple-500/5 rounded p-3 border border-purple-500/10">
+                    <code class="text-sm text-purple-300 font-mono block leading-relaxed">
+                      Using ui-ux-pro-max skill, build a modern SaaS dashboard with glassmorphism style and dark mode. Include analytics charts for trend analysis. Use React.
+                    </code>
+                  </div>
+                  <div class="mt-2 flex items-start gap-2 text-xs text-slate-500">
+                    <svg class="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="9 11 12 14 22 4"/>
+                    </svg>
+                    <span>AI will search glassmorphism style, SaaS colors, dark mode patterns, chart types, and React best practices</span>
+                  </div>
+                </div>
+
+                <!-- Example 3 -->
+                <div class="p-4 rounded-lg bg-slate-900 border border-slate-800 hover:border-pink-500/30 transition-colors cursor-pointer">
+                  <div class="flex items-start gap-2 mb-2">
+                    <span class="px-2 py-0.5 text-xs rounded-full bg-red-500/20 text-red-400 font-medium">Advanced</span>
+                    <span class="text-xs text-slate-500">E-commerce</span>
+                  </div>
+                  <div class="bg-pink-500/5 rounded p-3 border border-pink-500/10">
+                    <code class="text-sm text-pink-300 font-mono block leading-relaxed">
+                      Using ui-ux-pro-max skill, design a luxury e-commerce product page for high-end watches. Premium feel with elegant typography. Include product showcase layout with zoom feature. Build with Next.js.
+                    </code>
+                  </div>
+                  <div class="mt-2 flex items-start gap-2 text-xs text-slate-500">
+                    <svg class="w-4 h-4 text-pink-400 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="9 11 12 14 22 4"/>
+                    </svg>
+                    <span>AI will search luxury e-commerce, premium colors, elegant typography, product showcase layout, and Next.js patterns</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pro Tips -->
+            <div class="mt-6 p-5 rounded-lg bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20">
+              <div class="flex items-start gap-3">
+                <svg class="w-6 h-6 text-cyan-400 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+                <div class="flex-1">
+                  <h4 class="text-sm font-bold text-cyan-400 mb-2">💡 Pro Tips for Better Results:</h4>
+                  <ul class="space-y-1 text-xs text-slate-400">
+                    <li class="flex items-start gap-2">
+                      <span class="text-cyan-400 mt-0.5">•</span>
+                      <span>Mention your industry (healthcare, beauty, fintech) for better color/style recommendations</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-cyan-400 mt-0.5">•</span>
+                      <span>Be specific about style (elegant, playful, minimal, modern) for accurate design matching</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-cyan-400 mt-0.5">•</span>
+                      <span>Add tech stack (React, Vue, Next.js) for framework-specific best practices</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span class="text-cyan-400 mt-0.5">•</span>
+                      <span>Request specific features (dark mode, charts, animations) for complete implementations</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Example Prompts -->
+        <div class="bg-slate-900/50 rounded-xl border border-slate-800 overflow-hidden">
+          <div class="p-6 bg-gradient-to-r from-violet-500/10 to-purple-500/10 border-b border-slate-800">
+            <h2 class="text-2xl font-bold font-heading text-violet-400 flex items-center gap-3">
+              <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                <path d="M13 8H7"/>
+                <path d="M17 12H7"/>
+              </svg>
+              Example Prompts to Try
+            </h2>
+            <p class="text-sm text-slate-500 mt-2">Copy these examples and customize them for your project!</p>
+          </div>
+          <div class="p-6 space-y-3">
+            <div class="p-4 rounded-lg bg-slate-950 border border-slate-800 hover:border-violet-500/30 transition-colors cursor-pointer">
+              <div class="flex items-start gap-3">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-violet-500/20 flex items-center justify-center text-xs text-violet-400 font-bold">1</div>
+                <div class="flex-1">
+                  <code class="text-sm text-violet-400 font-mono">"Create a landing page for my yoga studio. Use calming colors and elegant fonts."</code>
+                  <p class="text-xs text-slate-500 mt-2">→ AI will search: beauty/wellness colors + elegant typography + minimalist style</p>
+                </div>
+              </div>
+            </div>
+            <div class="p-4 rounded-lg bg-slate-950 border border-slate-800 hover:border-purple-500/30 transition-colors cursor-pointer">
+              <div class="flex items-start gap-3">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center text-xs text-purple-400 font-bold">2</div>
+                <div class="flex-1">
+                  <code class="text-sm text-purple-400 font-mono">"Build a modern SaaS dashboard with dark mode and glassmorphism style."</code>
+                  <p class="text-xs text-slate-500 mt-2">→ AI will search: glassmorphism style + SaaS colors + dark mode patterns + chart types</p>
+                </div>
+              </div>
+            </div>
+            <div class="p-4 rounded-lg bg-slate-950 border border-slate-800 hover:border-fuchsia-500/30 transition-colors cursor-pointer">
+              <div class="flex items-start gap-3">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-fuchsia-500/20 flex items-center justify-center text-xs text-fuchsia-400 font-bold">3</div>
+                <div class="flex-1">
+                  <code class="text-sm text-fuchsia-400 font-mono">"Design a portfolio for a photographer. Make it minimal, clean, and showcase-focused."</code>
+                  <p class="text-xs text-slate-500 mt-2">→ AI will search: minimalism style + portfolio layout + elegant typography</p>
+                </div>
+              </div>
+            </div>
+            <div class="p-4 rounded-lg bg-slate-950 border border-slate-800 hover:border-pink-500/30 transition-colors cursor-pointer">
+              <div class="flex items-start gap-3">
+                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-pink-500/20 flex items-center justify-center text-xs text-pink-400 font-bold">4</div>
+                <div class="flex-1">
+                  <code class="text-sm text-pink-400 font-mono">"Create an e-commerce homepage for luxury watches with premium feel."</code>
+                  <p class="text-xs text-slate-500 mt-2">→ AI will search: luxury e-commerce + elegant colors + premium typography + product showcase layout</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quality Checklist -->
+        <div class="bg-slate-900/50 rounded-xl border border-slate-800 overflow-hidden">
+          <div class="p-6 bg-gradient-to-r from-green-500/10 to-emerald-500/10 border-b border-slate-800">
+            <h2 class="text-2xl font-bold font-heading text-green-400 flex items-center gap-3">
+              <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+              What AI Checks Before Delivery
+            </h2>
+            <p class="text-sm text-slate-500 mt-2">Every design is automatically validated for quality and accessibility</p>
+          </div>
+          <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-4 rounded-lg bg-slate-950 border border-slate-800">
+              <div class="flex items-center gap-2 mb-3">
+                <svg class="w-5 h-5 text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <h3 class="text-sm font-bold font-heading text-slate-300">Visual Quality</h3>
+              </div>
+              <ul class="space-y-2 text-xs text-slate-500">
+                <li class="flex items-start gap-2">
+                  <span class="text-green-400 mt-0.5">✓</span>
+                  <span>No emoji icons (uses professional SVG icons)</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-green-400 mt-0.5">✓</span>
+                  <span>Consistent icon sizes and styles</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-green-400 mt-0.5">✓</span>
+                  <span>Brand-correct logos from official sources</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-green-400 mt-0.5">✓</span>
+                  <span>Hover effects don't cause layout shifts</span>
+                </li>
+              </ul>
+            </div>
+            <div class="p-4 rounded-lg bg-slate-950 border border-slate-800">
+              <div class="flex items-center gap-2 mb-3">
+                <svg class="w-5 h-5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <h3 class="text-sm font-bold font-heading text-slate-300">Interactions</h3>
+              </div>
+              <ul class="space-y-2 text-xs text-slate-500">
+                <li class="flex items-start gap-2">
+                  <span class="text-emerald-400 mt-0.5">✓</span>
+                  <span>Clickable elements have cursor-pointer</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-emerald-400 mt-0.5">✓</span>
+                  <span>Clear visual feedback on hover/click</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-emerald-400 mt-0.5">✓</span>
+                  <span>Smooth transitions (150-300ms)</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-emerald-400 mt-0.5">✓</span>
+                  <span>Keyboard navigation works perfectly</span>
+                </li>
+              </ul>
+            </div>
+            <div class="p-4 rounded-lg bg-slate-950 border border-slate-800">
+              <div class="flex items-center gap-2 mb-3">
+                <svg class="w-5 h-5 text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <h3 class="text-sm font-bold font-heading text-slate-300">Accessibility</h3>
+              </div>
+              <ul class="space-y-2 text-xs text-slate-500">
+                <li class="flex items-start gap-2">
+                  <span class="text-teal-400 mt-0.5">✓</span>
+                  <span>Text contrast meets WCAG AA (4.5:1)</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-teal-400 mt-0.5">✓</span>
+                  <span>All images have descriptive alt text</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-teal-400 mt-0.5">✓</span>
+                  <span>Form inputs have proper labels</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-teal-400 mt-0.5">✓</span>
+                  <span>Respects prefers-reduced-motion</span>
+                </li>
+              </ul>
+            </div>
+            <div class="p-4 rounded-lg bg-slate-950 border border-slate-800">
+              <div class="flex items-center gap-2 mb-3">
+                <svg class="w-5 h-5 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <h3 class="text-sm font-bold font-heading text-slate-300">Responsive</h3>
+              </div>
+              <ul class="space-y-2 text-xs text-slate-500">
+                <li class="flex items-start gap-2">
+                  <span class="text-cyan-400 mt-0.5">✓</span>
+                  <span>Works on mobile (320px+)</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-cyan-400 mt-0.5">✓</span>
+                  <span>Tablet optimized (768px+)</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-cyan-400 mt-0.5">✓</span>
+                  <span>Desktop perfect (1024px+)</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-cyan-400 mt-0.5">✓</span>
+                  <span>No horizontal scroll on any device</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="bg-slate-900/30 backdrop-blur-sm border-t border-slate-800 py-4">
+      <div class="max-w-6xl mx-auto px-8 text-center">
+        <p class="text-sm text-slate-400">
+          🎨 <strong>50 Styles</strong> • 🌈 <strong>21 Color Palettes</strong> • ✍️ <strong>50 Font Pairings</strong> • 📊 <strong>20 Chart Types</strong><br>
+          Ready to create beautiful designs? Just ask ClaudeKit with <code class="px-2 py-1 rounded bg-slate-800 text-indigo-400 font-mono">Using ui-ux-pro-max skill...</code>
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

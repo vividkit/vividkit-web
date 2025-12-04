@@ -1,0 +1,67 @@
+---
+import type { SEOMeta } from '@/types';
+import '@/styles/global.css';
+
+interface Props extends SEOMeta {}
+
+const {
+  title,
+  description,
+  canonical,
+  ogImage = '/og-image.png',
+  ogType = 'website'
+} = Astro.props;
+
+const fullTitle = `${title} | VividKit`;
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://vividkit.com';
+const fullCanonical = `${siteUrl}${canonical}`;
+const fullOgImage = `${siteUrl}${ogImage}`;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary Meta Tags -->
+    <title>{fullTitle}</title>
+    <meta name="title" content={fullTitle} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={fullCanonical} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={fullCanonical} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={fullOgImage} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={fullCanonical} />
+    <meta property="twitter:title" content={fullTitle} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={fullOgImage} />
+
+    <!-- Theme toggle FOUC prevention -->
+    <script is:inline>
+      const theme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (theme === 'dark' || (!theme && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      }
+    </script>
+  </head>
+  <body class="font-sans antialiased bg-surface-50 dark:bg-surface-950 text-slate-900 dark:text-slate-100 min-h-screen overflow-x-hidden transition-colors duration-300">
+    <slot />
+
+    <!-- Initialize theme toggle -->
+    <script>
+      import { initThemeToggle } from '@/scripts/theme-toggle';
+      initThemeToggle();
+    </script>
+  </body>
+</html>

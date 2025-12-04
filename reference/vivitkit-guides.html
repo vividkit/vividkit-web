@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VividKit Guides - ClaudeKit Documentation</title>
+  <meta name="description" content="Complete guides for using ClaudeKit effectively: CLI setup, workflows, slash commands, and UI/UX Pro Max skill.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap">
+  <script>
+    if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    }
+  </script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            heading: ['Space Grotesk', 'sans-serif'],
+            sans: ['DM Sans', 'sans-serif'],
+            mono: ['Fira Code', 'monospace']
+          },
+          colors: {
+            surface: { 50: '#f8fafc', 100: '#f1f5f9', 800: '#1e293b', 900: '#0f172a', 950: '#020617' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { scroll-behavior: smooth; }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(226, 232, 240, 1);
+    }
+    .dark .glass-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .tab-btn.active { border-color: #2563EB; color: #2563EB; background: rgba(37, 99, 235, 0.1); }
+    .dark .tab-btn.active { border-color: #3B82F6; color: #3B82F6; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    @keyframes flow { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+    .flow-arrow { animation: flow 2s ease-in-out infinite; }
+  </style>
+</head>
+<body class="font-sans antialiased bg-surface-50 dark:bg-surface-950 text-slate-900 dark:text-slate-100 min-h-screen">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 glass-card border-b border-slate-200 dark:border-slate-800">
+    <div class="max-w-6xl mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <a href="vividkit-app.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+          <svg class="w-12 h-12 flex-shrink-0" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="vkGradientGuides" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1"/>
+                <stop offset="50%" style="stop-color:#A855F7;stop-opacity:1"/>
+                <stop offset="100%" style="stop-color:#EC4899;stop-opacity:1"/>
+              </linearGradient>
+            </defs>
+            <path d="M6 8 L14 28 L22 8" stroke="url(#vkGradientGuides)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <path d="M26 8 L26 28 M26 18 L34 8 M26 18 L34 28" stroke="url(#vkGradientGuides)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <circle cx="14" cy="32" r="2" fill="url(#vkGradientGuides)" opacity="0.7"/>
+            <circle cx="26" cy="32" r="2" fill="url(#vkGradientGuides)" opacity="0.7"/>
+          </svg>
+          <div class="flex flex-col">
+            <span class="text-xl font-heading font-bold bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">VividKit</span>
+            <span class="text-xs text-slate-500 font-medium tracking-wide">Crystal clear AI coding</span>
+          </div>
+
+        </a>
+        <div class="flex items-center gap-3">
+          <button id="theme-toggle" class="p-2.5 rounded-xl bg-slate-100 dark:bg-white/10 hover:bg-slate-200 dark:hover:bg-white/20 transition-colors cursor-pointer">
+            <svg class="w-5 h-5 text-slate-700 dark:text-yellow-400 hidden dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+            <svg class="w-5 h-5 text-slate-700 dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </button>
+          <a href="vividkit-app.html#waitlist" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 font-semibold text-sm text-white">
+            Join Waitlist
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Tab Navigation -->
+  <div class="sticky top-[73px] z-40 glass-card border-b border-slate-200 dark:border-slate-800">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="flex gap-2 py-3 overflow-x-auto">
+        <button class="tab-btn active px-4 py-2 rounded-lg border-2 border-transparent font-medium text-sm whitespace-nowrap cursor-pointer transition-all" data-tab="cli">
+          🚀 CLI Getting Started
+        </button>
+        <button class="tab-btn px-4 py-2 rounded-lg border-2 border-transparent font-medium text-sm whitespace-nowrap cursor-pointer transition-all text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5" data-tab="workflows">
+          📋 Recommended Workflows
+        </button>
+        <button class="tab-btn px-4 py-2 rounded-lg border-2 border-transparent font-medium text-sm whitespace-nowrap cursor-pointer transition-all text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5" data-tab="commands">
+          ⚡ Slash Commands
+        </button>
+        <button class="tab-btn px-4 py-2 rounded-lg border-2 border-transparent font-medium text-sm whitespace-nowrap cursor-pointer transition-all text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5" data-tab="uiux">
+          🎨 UI/UX Pro Max
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <main class="max-w-6xl mx-auto px-6 py-8">
+
+    <!-- TAB 1: CLI Getting Started -->
+    <div id="cli" class="tab-content active space-y-8">
+      <div class="rounded-2xl p-8 bg-gradient-to-br from-emerald-500/10 to-green-500/10 border border-emerald-500/30">
+        <div class="flex items-start gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+            <svg class="w-8 h-8 text-emerald-500 dark:text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>
+            </svg>
+          </div>
+          <div>
+            <h1 class="font-heading text-3xl font-bold text-emerald-600 dark:text-emerald-400 mb-2">ClaudeKit CLI Guide</h1>
+            <p class="text-slate-600 dark:text-slate-300 text-lg">Install ClaudeKit, run <code class="px-2 py-0.5 bg-slate-200 dark:bg-slate-800 rounded font-mono text-emerald-600 dark:text-emerald-400">claude</code>, and leverage powerful AI skills from your terminal!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Start Steps -->
+      <div class="glass-card rounded-2xl overflow-hidden">
+        <div class="p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border-b border-slate-200 dark:border-slate-700">
+          <h2 class="font-heading text-2xl font-bold text-blue-600 dark:text-blue-400">Quick Start (3 Steps)</h2>
+        </div>
+        <div class="p-8 space-y-6">
+          <!-- Step 1 -->
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-full bg-blue-500/20 text-blue-600 dark:text-blue-400 font-bold flex items-center justify-center flex-shrink-0 border-2 border-blue-500/50">1</div>
+            <div class="flex-1">
+              <h3 class="text-lg font-bold text-blue-600 dark:text-blue-400 mb-2">Install ClaudeKit CLI</h3>
+              <div class="bg-slate-100 dark:bg-slate-900 rounded-lg p-4 font-mono text-sm">
+                <div class="text-emerald-600 dark:text-emerald-400">$ npm install -g claudekit-cli</div>
+                <div class="text-slate-500 mt-2"># Verify: ck --version</div>
+              </div>
+            </div>
+          </div>
+          <!-- Step 2 -->
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-full bg-purple-500/20 text-purple-600 dark:text-purple-400 font-bold flex items-center justify-center flex-shrink-0 border-2 border-purple-500/50">2</div>
+            <div class="flex-1">
+              <h3 class="text-lg font-bold text-purple-600 dark:text-purple-400 mb-2">Initialize in Your Project</h3>
+              <div class="bg-slate-100 dark:bg-slate-900 rounded-lg p-4 font-mono text-sm">
+                <div class="text-emerald-600 dark:text-emerald-400">$ cd ~/my-project</div>
+                <div class="text-emerald-600 dark:text-emerald-400">$ ck init</div>
+              </div>
+              <p class="text-sm text-slate-500 mt-2">💡 Requires GitHub CLI auth: <code class="text-purple-600 dark:text-purple-400">gh auth login</code></p>
+            </div>
+          </div>
+          <!-- Step 3 -->
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold flex items-center justify-center flex-shrink-0 border-2 border-emerald-500/50">3</div>
+            <div class="flex-1">
+              <h3 class="text-lg font-bold text-emerald-600 dark:text-emerald-400 mb-2">Start Claude Code & Create!</h3>
+              <div class="bg-slate-100 dark:bg-slate-900 rounded-lg p-4 font-mono text-sm">
+                <div class="text-emerald-600 dark:text-emerald-400">$ claude</div>
+                <div class="text-slate-500 mt-2"># Then: "Using ui-ux-pro-max skill, create a landing page"</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: Recommended Workflows -->
+    <div id="workflows" class="tab-content space-y-8">
+      <div class="rounded-2xl p-8 bg-gradient-to-br from-purple-500/10 to-blue-500/10 border border-purple-500/30">
+        <h1 class="font-heading text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2">Recommended Workflows</h1>
+        <p class="text-slate-600 dark:text-slate-300 text-lg">Step-by-step guides to help you accomplish common tasks with ClaudeKit.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Workflow 1: Build Feature -->
+        <div class="glass-card rounded-2xl overflow-hidden border border-purple-500/20">
+          <div class="p-5 bg-gradient-to-r from-purple-500/10 to-blue-500/10 border-b border-slate-200 dark:border-slate-700">
+            <div class="flex items-center gap-3">
+              <span class="px-2 py-0.5 text-xs rounded-full bg-green-500/20 text-green-600 dark:text-green-400 border border-green-500/30">Beginner</span>
+              <h3 class="font-heading text-lg font-bold">Build a New Feature</h3>
+            </div>
+            <p class="text-xs text-slate-500 mt-1">~15-30 min • 4 steps</p>
+          </div>
+          <div class="p-5 space-y-3">
+            <div class="flex items-center gap-2"><code class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 text-purple-600 dark:text-purple-400 font-mono text-xs">/brainstorm</code><span class="text-xs text-slate-500">→ Explore ideas</span></div>
+            <div class="flex items-center gap-2"><code class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 text-blue-600 dark:text-blue-400 font-mono text-xs">/plan</code><span class="text-xs text-slate-500">→ Create plan</span></div>
+            <div class="flex items-center gap-2"><span class="text-xs text-slate-500">Review & adjust</span></div>
+            <div class="flex items-center gap-2"><code class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 text-green-600 dark:text-green-400 font-mono text-xs">/code @plan.md</code><span class="text-xs text-slate-500">→ Implement</span></div>
+          </div>
+        </div>
+
+        <!-- Workflow 2: Fix Bug -->
+        <div class="glass-card rounded-2xl overflow-hidden border border-red-500/20">
+          <div class="p-5 bg-gradient-to-r from-red-500/10 to-orange-500/10 border-b border-slate-200 dark:border-slate-700">
+            <div class="flex items-center gap-3">
+              <span class="px-2 py-0.5 text-xs rounded-full bg-green-500/20 text-green-600 dark:text-green-400 border border-green-500/30">Beginner</span>
+              <h3 class="font-heading text-lg font-bold">Fix a Bug</h3>
+            </div>
+            <p class="text-xs text-slate-500 mt-1">~5-15 min • 3 steps</p>
+          </div>
+          <div class="p-5 space-y-3">
+            <div class="flex items-center gap-2"><code class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 text-red-600 dark:text-red-400 font-mono text-xs">/debug</code><span class="text-xs text-slate-500">→ Investigate</span></div>
+            <div class="flex items-center gap-2"><code class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 text-orange-600 dark:text-orange-400 font-mono text-xs">/fix</code><span class="text-xs text-slate-500">→ Apply fix</span></div>
+            <div class="flex items-center gap-2"><code class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 text-green-600 dark:text-green-400 font-mono text-xs">/test</code><span class="text-xs text-slate-500">→ Verify</span></div>
+          </div>
+        </div>
+
+        <!-- Workflow 3: Quick Implementation -->
+        <div class="glass-card rounded-2xl overflow-hidden border border-blue-500/20">
+          <div class="p-5 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border-b border-slate-200 dark:border-slate-700">
+            <div class="flex items-center gap-3">
+              <span class="px-2 py-0.5 text-xs rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30">Intermediate</span>
+              <h3 class="font-heading text-lg font-bold">Quick Implementation</h3>
+            </div>
+            <p class="text-xs text-slate-500 mt-1">~10-20 min • 1 step</p>
+          </div>
+          <div class="p-5">
+            <div class="flex items-center gap-2 mb-3"><code class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 text-blue-600 dark:text-blue-400 font-mono text-xs">/cook "your task"</code></div>
+            <p class="text-xs text-slate-500">AI researches, plans, implements, tests, and reviews automatically!</p>
+          </div>
+        </div>
+
+        <!-- Workflow 4: New Project -->
+        <div class="glass-card rounded-2xl overflow-hidden border border-green-500/20">
+          <div class="p-5 bg-gradient-to-r from-green-500/10 to-emerald-500/10 border-b border-slate-200 dark:border-slate-700">
+            <div class="flex items-center gap-3">
+              <span class="px-2 py-0.5 text-xs rounded-full bg-red-500/20 text-red-600 dark:text-red-400 border border-red-500/30">Advanced</span>
+              <h3 class="font-heading text-lg font-bold">Start New Project</h3>
+            </div>
+            <p class="text-xs text-slate-500 mt-1">~1-2 hours • 1 step</p>
+          </div>
+          <div class="p-5">
+            <div class="flex items-center gap-2 mb-3"><code class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 text-green-600 dark:text-green-400 font-mono text-xs">/bootstrap "describe app"</code></div>
+            <p class="text-xs text-slate-500">Full project: research, architecture, design, implementation, docs!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: Slash Commands -->
+    <div id="commands" class="tab-content space-y-8">
+      <div class="rounded-2xl p-8 bg-gradient-to-br from-blue-500/10 to-purple-500/10 border border-blue-500/30">
+        <h1 class="font-heading text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">Slash Commands Reference</h1>
+        <p class="text-slate-600 dark:text-slate-300 text-lg">Type <code class="px-2 py-0.5 bg-slate-200 dark:bg-slate-800 rounded font-mono">/command</code> and let AI do the heavy lifting!</p>
+      </div>
+
+      <!-- Command Categories -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Planning -->
+        <div class="glass-card rounded-xl p-5">
+          <h3 class="font-heading font-bold text-purple-600 dark:text-purple-400 mb-3 flex items-center gap-2">
+            <span class="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center text-sm">📋</span>
+            Planning
+          </h3>
+          <div class="space-y-2">
+            <div class="p-2 rounded bg-slate-100 dark:bg-slate-800"><code class="text-purple-600 dark:text-purple-400 font-mono text-sm">/brainstorm</code><p class="text-xs text-slate-500">Explore ideas</p></div>
+            <div class="p-2 rounded bg-slate-100 dark:bg-slate-800"><code class="text-purple-600 dark:text-purple-400 font-mono text-sm">/plan</code><p class="text-xs text-slate-500">Create implementation plan</p></div>
+            <div class="p-2 rounded bg-slate-100 dark:bg-slate-800"><code class="text-purple-600 dark:text-purple-400 font-mono text-sm">/ask</code><p class="text-xs text-slate-500">Get technical guidance</p></div>
+          </div>
+        </div>
+
+        <!-- Implementation -->
+        <div class="glass-card rounded-xl p-5">
+          <h3 class="font-heading font-bold text-blue-600 dark:text-blue-400 mb-3 flex items-center gap-2">
+            <span class="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center text-sm">⚡</span>
+            Implementation
+          </h3>
+          <div class="space-y-2">
+            <div class="p-2 rounded bg-slate-100 dark:bg-slate-800"><code class="text-blue-600 dark:text-blue-400 font-mono text-sm">/code</code><p class="text-xs text-slate-500">Implement from plan</p></div>
+            <div class="p-2 rounded bg-slate-100 dark:bg-slate-800"><code class="text-blue-600 dark:text-blue-400 font-mono text-sm">/cook</code><p class="text-xs text-slate-500">All-in-one feature</p></div>
+            <div class="p-2 rounded bg-slate-100 dark:bg-slate-800"><code class="text-blue-600 dark:text-blue-400 font-mono text-sm">/bootstrap</code><p class="text-xs text-slate-500">Create full project</p></div>
+          </div>
+        </div>
+
+        <!-- Quality -->
+        <div class="glass-card rounded-xl p-5">
+          <h3 class="font-heading font-bold text-green-600 dark:text-green-400 mb-3 flex items-center gap-2">
+            <span class="w-8 h-8 rounded-lg bg-green-500/20 flex items-center justify-center text-sm">✅</span>
+            Quality
+          </h3>
+          <div class="space-y-2">
+            <div class="p-2 rounded bg-slate-100 dark:bg-slate-800"><code class="text-green-600 dark:text-green-400 font-mono text-sm">/test</code><p class="text-xs text-slate-500">Run tests</p></div>
+            <div class="p-2 rounded bg-slate-100 dark:bg-slate-800"><code class="text-green-600 dark:text-green-400 font-mono text-sm">/review</code><p class="text-xs text-slate-500">Code review</p></div>
+            <div class="p-2 rounded bg-slate-100 dark:bg-slate-800"><code class="text-green-600 dark:text-green-400 font-mono text-sm">/lint</code><p class="text-xs text-slate-500">Fix lint errors</p></div>
+          </div>
+        </div>
+
+        <!-- Debugging -->
+        <div class="glass-card rounded-xl p-5">
+          <h3 class="font-heading font-bold text-red-600 dark:text-red-400 mb-3 flex items-center gap-2">
+            <span class="w-8 h-8 rounded-lg bg-red-500/20 flex items-center justify-center text-sm">🐛</span>
+            Debugging
+          </h3>
+          <div class="space-y-2">
+            <div class="p-2 rounded bg-slate-100 dark:bg-slate-800"><code class="text-red-600 dark:text-red-400 font-mono text-sm">/debug</code><p class="text-xs text-slate-500">Investigate issues</p></div>
+            <div class="p-2 rounded bg-slate-100 dark:bg-slate-800"><code class="text-red-600 dark:text-red-400 font-mono text-sm">/fix</code><p class="text-xs text-slate-500">Fix bugs</p></div>
+            <div class="p-2 rounded bg-slate-100 dark:bg-slate-800"><code class="text-red-600 dark:text-red-400 font-mono text-sm">/fix-lint</code><p class="text-xs text-slate-500">Fix lint issues</p></div>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="glass-card rounded-xl p-5">
+          <h3 class="font-heading font-bold text-amber-600 dark:text-amber-400 mb-3 flex items-center gap-2">
+            <span class="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center text-sm">🧭</span>
+            Navigation
+          </h3>
+          <div class="space-y-2">
+            <div class="p-2 rounded bg-slate-100 dark:bg-slate-800"><code class="text-amber-600 dark:text-amber-400 font-mono text-sm">/scout</code><p class="text-xs text-slate-500">Explore codebase</p></div>
+            <div class="p-2 rounded bg-slate-100 dark:bg-slate-800"><code class="text-amber-600 dark:text-amber-400 font-mono text-sm">/watzup</code><p class="text-xs text-slate-500">Recent changes</p></div>
+            <div class="p-2 rounded bg-slate-100 dark:bg-slate-800"><code class="text-amber-600 dark:text-amber-400 font-mono text-sm">/clear</code><p class="text-xs text-slate-500">Clear context</p></div>
+          </div>
+        </div>
+
+        <!-- Utilities -->
+        <div class="glass-card rounded-xl p-5">
+          <h3 class="font-heading font-bold text-cyan-600 dark:text-cyan-400 mb-3 flex items-center gap-2">
+            <span class="w-8 h-8 rounded-lg bg-cyan-500/20 flex items-center justify-center text-sm">🛠️</span>
+            Utilities
+          </h3>
+          <div class="space-y-2">
+            <div class="p-2 rounded bg-slate-100 dark:bg-slate-800"><code class="text-cyan-600 dark:text-cyan-400 font-mono text-sm">/doc</code><p class="text-xs text-slate-500">Generate docs</p></div>
+            <div class="p-2 rounded bg-slate-100 dark:bg-slate-800"><code class="text-cyan-600 dark:text-cyan-400 font-mono text-sm">/commit</code><p class="text-xs text-slate-500">Smart commits</p></div>
+            <div class="p-2 rounded bg-slate-100 dark:bg-slate-800"><code class="text-cyan-600 dark:text-cyan-400 font-mono text-sm">/help</code><p class="text-xs text-slate-500">Show all commands</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: UI/UX Pro Max -->
+    <div id="uiux" class="tab-content space-y-8">
+      <div class="rounded-2xl p-8 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/30">
+        <div class="flex items-start gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-indigo-500/20 flex items-center justify-center flex-shrink-0">
+            <svg class="w-8 h-8 text-indigo-500 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+          </div>
+          <div>
+            <h1 class="font-heading text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-2">UI/UX Pro Max</h1>
+            <p class="text-slate-600 dark:text-slate-300 text-lg">Your AI-powered design intelligence system — 50 UI styles, 21 color palettes, 50 font pairings!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- The Magic Phrase -->
+      <div class="glass-card rounded-2xl p-6 border-2 border-indigo-500/30">
+        <h2 class="font-heading text-xl font-bold text-indigo-600 dark:text-indigo-400 mb-4">✨ The Magic Phrase</h2>
+        <div class="bg-slate-100 dark:bg-slate-900 rounded-lg p-5 font-mono">
+          <code class="text-lg text-indigo-600 dark:text-indigo-400">Using ui-ux-pro-max skill, &lt;your request&gt;</code>
+        </div>
+        <p class="text-sm text-slate-500 mt-3">AI automatically searches design databases and creates beautiful, production-ready code!</p>
+      </div>
+
+      <!-- Examples -->
+      <div class="glass-card rounded-2xl overflow-hidden">
+        <div class="p-6 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border-b border-slate-200 dark:border-slate-700">
+          <h2 class="font-heading text-xl font-bold">Real Examples (Copy & Try!)</h2>
+        </div>
+        <div class="p-6 space-y-4">
+          <div class="p-4 rounded-lg bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+            <span class="px-2 py-0.5 text-xs rounded-full bg-green-500/20 text-green-600 dark:text-green-400">Beginner</span>
+            <code class="block mt-2 text-sm text-indigo-600 dark:text-indigo-400 font-mono">Using ui-ux-pro-max skill, create a landing page for my yoga studio with calming colors</code>
+          </div>
+          <div class="p-4 rounded-lg bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+            <span class="px-2 py-0.5 text-xs rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-400">Intermediate</span>
+            <code class="block mt-2 text-sm text-indigo-600 dark:text-indigo-400 font-mono">Using ui-ux-pro-max skill, build a SaaS dashboard with glassmorphism and dark mode</code>
+          </div>
+          <div class="p-4 rounded-lg bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+            <span class="px-2 py-0.5 text-xs rounded-full bg-red-500/20 text-red-600 dark:text-red-400">Advanced</span>
+            <code class="block mt-2 text-sm text-indigo-600 dark:text-indigo-400 font-mono">Using ui-ux-pro-max skill, create an e-commerce product page with aurora gradients</code>
+          </div>
+        </div>
+      </div>
+
+      <!-- What's Included -->
+      <div class="grid md:grid-cols-4 gap-4">
+        <div class="glass-card rounded-xl p-5 text-center">
+          <div class="text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-1">50</div>
+          <div class="text-sm text-slate-600 dark:text-slate-400">UI Styles</div>
+          <div class="text-xs text-slate-500">Glassmorphism, Minimalism, etc.</div>
+        </div>
+        <div class="glass-card rounded-xl p-5 text-center">
+          <div class="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-1">21</div>
+          <div class="text-sm text-slate-600 dark:text-slate-400">Color Palettes</div>
+          <div class="text-xs text-slate-500">For every industry</div>
+        </div>
+        <div class="glass-card rounded-xl p-5 text-center">
+          <div class="text-3xl font-bold text-pink-600 dark:text-pink-400 mb-1">50</div>
+          <div class="text-sm text-slate-600 dark:text-slate-400">Font Pairings</div>
+          <div class="text-xs text-slate-500">Professional typography</div>
+        </div>
+        <div class="glass-card rounded-xl p-5 text-center">
+          <div class="text-3xl font-bold text-cyan-600 dark:text-cyan-400 mb-1">20</div>
+          <div class="text-sm text-slate-600 dark:text-slate-400">Chart Types</div>
+          <div class="text-xs text-slate-500">Data visualization</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="glass-card border-t border-slate-200 dark:border-slate-800 py-8 mt-12">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <p class="text-sm text-slate-500">© 2025 VividKit. Powered by ClaudeKit Framework.</p>
+      <a href="vividkit-app.html" class="text-blue-600 dark:text-blue-400 text-sm hover:underline mt-2 inline-block">← Back to Home</a>
+    </div>
+  </footer>
+
+  <script>
+    // Tab functionality
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.tab).classList.add('active');
+      });
+    });
+
+    // Theme toggle
+    document.getElementById('theme-toggle')?.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      document.documentElement.classList.toggle('dark', !isDark);
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+    });
+  </script>
+</body>
+</html>
