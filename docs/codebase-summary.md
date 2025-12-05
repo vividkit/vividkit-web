@@ -1,7 +1,7 @@
 # VividKit Codebase Summary
 
 **Last Updated:** 2025-12-05
-**Phase:** 04 Complete - Slash Commands Integration
+**Phase:** 05 Complete - UI/UX Pro Max Integration
 **Repository:** VividKit Marketing Website
 
 ## Overview
@@ -47,7 +47,8 @@ vividkit-web/
 │   │   │   ├── Commands.astro
 │   │   │   ├── RecommendedWorkflows.astro
 │   │   │   ├── WaitlistForm.astro
-│   │   │   └── SlashCommandsGuide.astro
+│   │   │   ├── SlashCommandsGuide.astro
+│   │   │   └── UIUXProMax.astro
 │   │   └── guides/             # Guides page components
 │   │       ├── TabNavigation.astro
 │   │       ├── CLIGuide.astro
@@ -81,7 +82,8 @@ vividkit-web/
 │           ├── workflows-landing.ts
 │           ├── commands.ts
 │           ├── uiux-guide.ts
-│           └── commands-landing.ts
+│           ├── commands-landing.ts
+│           └── uiux-landing.ts
 ├── public/
 ├── docs/
 └── Configuration files
@@ -188,7 +190,7 @@ vividkit-web/
 - **Implementation:** Client-side validation, AJAX submission
 - **Success:** Thank you message on submission
 
-#### SlashCommandsGuide.astro (NEW)
+#### SlashCommandsGuide.astro
 - **Content:** Interactive slash commands guide for ClaudeKit
 - **Features:**
   - Hero section with example command
@@ -206,6 +208,28 @@ vividkit-web/
   - Dark/light mode support
   - Scroll-triggered animations
 - **Icons:** Uses lucide-astro icons (Layers, ArrowRight, MessageSquare, etc.)
+
+#### UIUXProMax.astro (NEW)
+- **Content:** UI/UX Pro Max design intelligence showcase section
+- **Features:**
+  - Hero section with design intelligence tagline
+  - 4 key stats (50 UI Styles, 21 Color Palettes, 50 Font Pairings, 20 Chart Types)
+  - 3 audience cards (Everyone, Developers, Designers) with detailed features
+  - 3-step process visualization with connectors
+  - 4 build type cards (Landing Pages, Dashboards, Portfolios, Mobile Apps)
+  - 8 design style previews with color coding
+  - ClaudeKit magic phrase integration with example
+  - Time saved comparison (Traditional vs UI/UX Pro Max)
+- **Data:** Uses uiuxHeroContent, uiuxStats, audiences, processSteps, buildTypes, designStyles, magicPhrase, timeSaved from @/data/guides/uiux-landing
+- **Styling:**
+  - Glassmorphism cards with gradient borders
+  - Color-coded elements (emerald, blue, purple, cyan, indigo, pink, orange, amber, rose)
+  - Floating animation for magic phrase icon
+  - Step indicators with connectors
+  - Responsive grid layouts
+  - Dark/light mode support
+  - Scroll-triggered animations
+- **Icons:** Uses lucide-astro icons (Sparkles, ArrowRight, Users, Video, Rocket, Code, Layers, Zap, Palette, Target, Package, Check, Layout, BarChart3, Briefcase, Smartphone)
 
 ### Guides Components
 
@@ -359,7 +383,7 @@ uiuxStats: {
 }[]
 ```
 
-### Commands Landing (guides/commands-landing.ts) (NEW)
+### Commands Landing (guides/commands-landing.ts)
 ```typescript
 commandsHeroContent: {
   title: string;
@@ -406,6 +430,65 @@ beginnerTips: BeginnerTip[] {
   description: string;
   color: string;
 }[]
+```
+
+### UI/UX Landing (guides/uiux-landing.ts) (NEW)
+```typescript
+uiuxHeroContent: {
+  title: string;
+  subtitle: string;
+  description: string;
+}
+
+uiuxStats: Stat[] {
+  value: string;
+  label: string;
+  color: string;
+}[]
+
+audiences: Audience[] {
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  color: string;
+  gradient: string;
+  borderColor: string;
+  items: AudienceItem[];
+}[]
+
+processSteps: ProcessStep[] {
+  number: number;
+  title: string;
+  description: string;
+  color: string;
+  details: string[];
+}[]
+
+buildTypes: BuildType[] {
+  id: string;
+  title: string;
+  description: string;
+  examples: string[];
+  color: string;
+  gradient: string;
+}[]
+
+designStyles: DesignStyle[] {
+  name: string;
+  description: string;
+  color: string;
+}[]
+
+magicPhrase: {
+  syntax: string;
+  example: string;
+}
+
+timeSaved: {
+  traditional: string;
+  withSkill: string;
+}
 ```
 
 ### Constants (constants.ts)
@@ -566,6 +649,18 @@ UIUXExample { level, prompt, searchTerms }
 9. **Dark/Light Mode:** Full theme support throughout
 10. **Test Coverage:** 10/10 tests passing
 
+### Phase 05 Features (UI/UX Pro Max Integration)
+1. **UIUXProMax Component:** Complete design intelligence showcase section
+2. **UI/UX Landing Data:** Comprehensive data structure for design features
+3. **Design Intelligence Stats:** 4 key metrics (50 UI Styles, 21 Color Palettes, 50 Font Pairings, 20 Chart Types)
+4. **Audience Targeting:** 3 audience segments (Everyone, Developers, Designers) with specific benefits
+5. **Process Visualization:** 3-step design process with color-coded connectors
+6. **Build Type Showcase:** 4 project types (Landing Pages, Dashboards, Portfolios, Mobile Apps)
+7. **Design Styles Preview:** 8 design style examples with color coding
+8. **ClaudeKit Integration:** Magic phrase for activating UI/UX Pro Max skill
+9. **Time Savings Display:** Visual comparison (6-8 hours vs 2-5 minutes)
+10. **Test Page:** Isolated component testing at /test-uiux-landing
+
 ## Browser Support
 
 - **Modern Browsers:** Chrome 88+, Firefox 85+, Safari 14+, Edge 88+
@@ -581,6 +676,6 @@ UIUXExample { level, prompt, searchTerms }
 
 ---
 
-**Document Status:** Updated for Phase 04 (Slash Commands Integration)
+**Document Status:** Updated for Phase 05 (UI/UX Pro Max Integration)
 **Last Updated:** 2025-12-05
-**Next Update:** Phase 05 - Additional pages and features
+**Next Update:** Phase 06 - Additional pages and features

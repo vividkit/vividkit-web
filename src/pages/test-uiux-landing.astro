@@ -1,0 +1,30 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import UIUXProMax from '@/components/sections/UIUXProMax.astro';
+import AmbientBackground from '@/components/layout/AmbientBackground.astro';
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+import { SITE_CONFIG } from '@/data/constants';
+---
+
+<MainLayout
+  title={`${SITE_CONFIG.name} - UI/UX Pro Max Test`}
+  description="Testing UI/UX Pro Max component"
+  canonical="/test-uiux-landing"
+>
+  <AmbientBackground />
+  <Header />
+
+  <main>
+    <div class="min-h-screen flex items-center justify-center py-24">
+      <div class="text-center mb-8">
+        <h1 class="text-4xl font-bold mb-4">UI/UX Pro Max Component Test</h1>
+        <p class="text-xl text-slate-600 dark:text-slate-400">Testing the component in isolation</p>
+      </div>
+    </div>
+
+    <UIUXProMax />
+  </main>
+
+  <Footer />
+</MainLayout>
