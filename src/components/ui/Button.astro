@@ -12,7 +12,8 @@ const {
   size = 'md',
   href,
   type = 'button',
-  class: className = ''
+  class: className = '',
+  ...rest
 } = Astro.props;
 
 const baseClasses = 'inline-flex items-center justify-center gap-2 font-semibold rounded-xl transition-all duration-300';
@@ -33,11 +34,11 @@ const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} 
 ---
 
 {href ? (
-  <a href={href} class={classes}>
+  <a href={href} class={classes} {...rest}>
     <slot />
   </a>
 ) : (
-  <button type={type} class={classes}>
+  <button type={type} class={classes} {...rest}>
     <slot />
   </button>
 )}

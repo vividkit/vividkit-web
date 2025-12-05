@@ -1,9 +1,48 @@
 ---
+import { commandCategories } from '@/data/commands';
+
 interface Props {
   class?: string;
 }
 
 const { class: className = '' } = Astro.props;
+
+const categoryStyles = {
+  'Beginner': {
+    border: 'border-green-500/30 hover:border-green-500/50',
+    headerBg: 'bg-gradient-to-br from-green-500/10 to-emerald-500/10',
+    iconBg: 'bg-green-500/20',
+    iconColor: 'text-green-500 dark:text-green-400',
+    titleColor: 'text-green-600 dark:text-green-400',
+    codeColor: 'text-green-600 dark:text-green-400',
+    hoverBorder: 'hover:border-green-500/40'
+  },
+  'Intermediate': {
+    border: 'border-amber-500/30 hover:border-amber-500/50',
+    headerBg: 'bg-gradient-to-br from-amber-500/10 to-orange-500/10',
+    iconBg: 'bg-amber-500/20',
+    iconColor: 'text-amber-500 dark:text-amber-400',
+    titleColor: 'text-amber-600 dark:text-amber-400',
+    codeColor: 'text-amber-600 dark:text-amber-400',
+    hoverBorder: 'hover:border-amber-500/40'
+  },
+  'Advanced': {
+    border: 'border-red-500/30 hover:border-red-500/50',
+    headerBg: 'bg-gradient-to-br from-red-500/10 to-pink-500/10',
+    iconBg: 'bg-red-500/20',
+    iconColor: 'text-red-500 dark:text-red-400',
+    titleColor: 'text-red-600 dark:text-red-400',
+    codeColor: 'text-red-600 dark:text-red-400',
+    hoverBorder: 'hover:border-red-500/40'
+  }
+};
+
+const getStyle = (title: string) => {
+  if (title.includes('Beginner')) return categoryStyles['Beginner'];
+  if (title.includes('Intermediate')) return categoryStyles['Intermediate'];
+  if (title.includes('Advanced')) return categoryStyles['Advanced'];
+  return categoryStyles['Beginner'];
+};
 ---
 
 <section id="commands" class={`section py-24 relative ${className}`}>
@@ -15,134 +54,131 @@ const { class: className = '' } = Astro.props;
           at a Glance
         </span>
       </h2>
-      <p class="text-xl text-slate-600 dark:text-slate-400">Your AI assistant speaks slash — here's your quick reference</p>
+      <p class="text-xl text-slate-600 dark:text-slate-400 mb-4">
+        ClaudeKit's 60+ AI commands, organized by skill level.
+      </p>
+      <div class="max-w-3xl mx-auto space-y-3">
+        <p class="text-lg font-semibold text-slate-700 dark:text-slate-300">
+          <strong>In VividKit:</strong> These commands become visual, point-and-click actions.
+        </p>
+        <p class="text-base text-slate-600 dark:text-slate-400">
+          No memorization. No syntax errors. Just browse and execute.
+        </p>
+        <p class="text-sm italic text-slate-500 dark:text-slate-500 mt-4">
+          While you wait for VividKit, here's your terminal reference:
+        </p>
+      </div>
     </div>
 
     <!-- Quick Start Cards -->
     <div class="grid md:grid-cols-3 gap-6 mb-12">
-      <!-- Beginner -->
-      <div class="feature-card glass-card rounded-2xl overflow-hidden border border-green-500/30 hover:border-green-500/50 cursor-pointer">
-        <div class="p-6 bg-gradient-to-br from-green-500/10 to-emerald-500/10 border-b border-slate-200 dark:border-slate-700/50">
-          <div class="flex items-center gap-3 mb-2">
-            <div class="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center">
-              <svg class="w-5 h-5 text-green-500 dark:text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
-              </svg>
+      {commandCategories.map((category) => {
+        const style = getStyle(category.title);
+        return (
+          <div class={`feature-card glass-card rounded-2xl overflow-hidden border ${style.border} cursor-pointer`}>
+            <div class={`p-6 ${style.headerBg} border-b border-slate-200 dark:border-slate-700/50`}>
+              <div class="flex items-center gap-3 mb-2">
+                <div class={`w-10 h-10 rounded-xl ${style.iconBg} flex items-center justify-center`}>
+                  {category.title.includes('Beginner') && (
+                    <svg class={`w-5 h-5 ${style.iconColor}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                  )}
+                  {category.title.includes('Intermediate') && (
+                    <svg class={`w-5 h-5 ${style.iconColor}`} viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M13 3L4 14h7l-1 7 9-11h-7l1-7z"></path>
+                    </svg>
+                  )}
+                  {category.title.includes('Advanced') && (
+                    <svg class={`w-5 h-5 ${style.iconColor}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    </svg>
+                  )}
+                </div>
+                <div>
+                  <h3 class={`font-heading text-lg font-bold ${style.titleColor}`}>
+                    {category.title}
+                  </h3>
+                  <p class="text-xs text-slate-500">{category.description}</p>
+                </div>
+              </div>
             </div>
-            <div>
-              <h3 class="font-heading text-lg font-bold text-green-600 dark:text-green-400">Beginner</h3>
-              <p class="text-xs text-slate-500">Start here!</p>
-            </div>
-          </div>
-        </div>
-        <div class="p-4 space-y-2">
-          <div class="p-3 rounded-lg bg-slate-100 dark:bg-surface-950 border border-slate-200 dark:border-slate-800 hover:border-green-500/40 transition-colors cursor-pointer">
-            <code class="text-sm text-green-600 dark:text-green-400 font-mono">/ask</code>
-            <p class="text-xs text-slate-500 mt-1">Ask technical questions</p>
-          </div>
-          <div class="p-3 rounded-lg bg-slate-100 dark:bg-surface-950 border border-slate-200 dark:border-slate-800 hover:border-green-500/40 transition-colors cursor-pointer">
-            <code class="text-sm text-green-600 dark:text-green-400 font-mono">/brainstorm</code>
-            <p class="text-xs text-slate-500 mt-1">Explore ideas together</p>
-          </div>
-          <div class="p-3 rounded-lg bg-slate-100 dark:bg-surface-950 border border-slate-200 dark:border-slate-800 hover:border-green-500/40 transition-colors cursor-pointer">
-            <code class="text-sm text-green-600 dark:text-green-400 font-mono">/fix</code>
-            <p class="text-xs text-slate-500 mt-1">Fix bugs automatically</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Intermediate -->
-      <div class="feature-card glass-card rounded-2xl overflow-hidden border border-amber-500/30 hover:border-amber-500/50 cursor-pointer">
-        <div class="p-6 bg-gradient-to-br from-amber-500/10 to-orange-500/10 border-b border-slate-200 dark:border-slate-700/50">
-          <div class="flex items-center gap-3 mb-2">
-            <div class="w-10 h-10 rounded-xl bg-amber-500/20 flex items-center justify-center">
-              <svg class="w-5 h-5 text-amber-500 dark:text-amber-400" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M13 3L4 14h7l-1 7 9-11h-7l1-7z"/>
-              </svg>
-            </div>
-            <div>
-              <h3 class="font-heading text-lg font-bold text-amber-600 dark:text-amber-400">Intermediate</h3>
-              <p class="text-xs text-slate-500">Level up!</p>
+            <div class="p-4 space-y-2">
+              {category.commands.map((command) => (
+                <div class={`p-3 rounded-lg bg-slate-100 dark:bg-surface-950 border border-slate-200 dark:border-slate-800 ${style.hoverBorder} transition-colors cursor-pointer`}>
+                  <code class={`text-sm ${style.codeColor} font-mono block truncate`}>{command.name}</code>
+                  <p class="text-xs text-slate-500 mt-1">{command.description}</p>
+                </div>
+              ))}
             </div>
           </div>
-        </div>
-        <div class="p-4 space-y-2">
-          <div class="p-3 rounded-lg bg-slate-100 dark:bg-surface-950 border border-slate-200 dark:border-slate-800 hover:border-amber-500/40 transition-colors cursor-pointer">
-            <code class="text-sm text-amber-600 dark:text-amber-400 font-mono">/plan</code>
-            <p class="text-xs text-slate-500 mt-1">Create step-by-step plans</p>
-          </div>
-          <div class="p-3 rounded-lg bg-slate-100 dark:bg-surface-950 border border-slate-200 dark:border-slate-800 hover:border-amber-500/40 transition-colors cursor-pointer">
-            <code class="text-sm text-amber-600 dark:text-amber-400 font-mono">/code</code>
-            <p class="text-xs text-slate-500 mt-1">Implement your plans</p>
-          </div>
-          <div class="p-3 rounded-lg bg-slate-100 dark:bg-surface-950 border border-slate-200 dark:border-slate-800 hover:border-amber-500/40 transition-colors cursor-pointer">
-            <code class="text-sm text-amber-600 dark:text-amber-400 font-mono">/cook</code>
-            <p class="text-xs text-slate-500 mt-1">All-in-one feature builder</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Advanced -->
-      <div class="feature-card glass-card rounded-2xl overflow-hidden border border-red-500/30 hover:border-red-500/50 cursor-pointer">
-        <div class="p-6 bg-gradient-to-br from-red-500/10 to-pink-500/10 border-b border-slate-200 dark:border-slate-700/50">
-          <div class="flex items-center gap-3 mb-2">
-            <div class="w-10 h-10 rounded-xl bg-red-500/20 flex items-center justify-center">
-              <svg class="w-5 h-5 text-red-500 dark:text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-              </svg>
-            </div>
-            <div>
-              <h3 class="font-heading text-lg font-bold text-red-600 dark:text-red-400">Advanced</h3>
-              <p class="text-xs text-slate-500">Pro mode!</p>
-            </div>
-          </div>
-        </div>
-        <div class="p-4 space-y-2">
-          <div class="p-3 rounded-lg bg-slate-100 dark:bg-surface-950 border border-slate-200 dark:border-slate-800 hover:border-red-500/40 transition-colors cursor-pointer">
-            <code class="text-sm text-red-600 dark:text-red-400 font-mono">/bootstrap</code>
-            <p class="text-xs text-slate-500 mt-1">Create complete projects</p>
-          </div>
-          <div class="p-3 rounded-lg bg-slate-100 dark:bg-surface-950 border border-slate-200 dark:border-slate-800 hover:border-red-500/40 transition-colors cursor-pointer">
-            <code class="text-sm text-red-600 dark:text-red-400 font-mono">/scout</code>
-            <p class="text-xs text-slate-500 mt-1">Explore your codebase</p>
-          </div>
-          <div class="p-3 rounded-lg bg-slate-100 dark:bg-surface-950 border border-slate-200 dark:border-slate-800 hover:border-red-500/40 transition-colors cursor-pointer">
-            <code class="text-sm text-red-600 dark:text-red-400 font-mono">/watzup</code>
-            <p class="text-xs text-slate-500 mt-1">Review recent changes</p>
-          </div>
-        </div>
-      </div>
+        );
+      })}
     </div>
 
-    <!-- Pro Tip -->
-    <div class="glass-card rounded-2xl p-6 bg-gradient-to-r from-amber-500/5 to-orange-500/5 border border-amber-500/30">
-      <div class="flex items-start gap-4">
-        <div class="w-12 h-12 rounded-xl bg-amber-500/20 flex items-center justify-center flex-shrink-0">
-          <svg class="w-6 h-6 text-amber-500 dark:text-amber-400" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M13 3L4 14h7l-1 7 9-11h-7l1-7z"/>
+    <!-- Pro Tips -->
+    <div class="glass-card rounded-2xl p-8 border border-slate-200 dark:border-slate-800">
+      <h3 class="text-lg font-semibold mb-6 flex items-center gap-2">
+        <svg class="w-5 h-5 text-amber-500 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+          <line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+        Pro Tips
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="flex items-start gap-3">
+          <svg class="w-5 h-5 text-blue-500 dark:text-blue-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"/>
           </svg>
+          <div>
+            <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">Save tokens with /clear</div>
+            <div class="text-xs text-slate-600 dark:text-slate-400">Use <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/clear</code> to clear conversation history before starting implementation</div>
+          </div>
         </div>
-        <div>
-          <h4 class="font-heading text-lg font-bold text-amber-600 dark:text-amber-400 mb-2">Pro Tip: Skip Steps with /cook</h4>
-          <p class="text-slate-600 dark:text-slate-300 mb-3">Want it even faster? Use <code class="px-2 py-1 rounded bg-slate-100 dark:bg-surface-950 text-amber-600 dark:text-amber-400 font-mono text-sm">/cook</code> to do all 3 steps at once!</p>
-          <div class="rounded-lg p-4 bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
-            <code class="text-sm text-amber-600 dark:text-amber-400 font-mono">/cook "add dark mode toggle"</code>
-            <p class="text-xs text-slate-500 mt-2">→ AI brainstorms, plans, and implements everything automatically!</p>
+        <div class="flex items-start gap-3">
+          <svg class="w-5 h-5 text-purple-500 dark:text-purple-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          <div>
+            <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">Reference files with @</div>
+            <div class="text-xs text-slate-600 dark:text-slate-400">Use <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">@plan.md</code> to reference specific files in commands</div>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <svg class="w-5 h-5 text-green-500 dark:text-green-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          <div>
+            <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">Create save points often</div>
+            <div class="text-xs text-slate-600 dark:text-slate-400">Use <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/git:cm</code> to commit your progress regularly so you can restore if something goes wrong</div>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <svg class="w-5 h-5 text-amber-500 dark:text-amber-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          <div>
+            <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">Ask questions anytime</div>
+            <div class="text-xs text-slate-600 dark:text-slate-400">Use <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/ask</code> to get technical explanations or architectural guidance</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- View Full Guides Link -->
+    <!-- Learn More -->
     <div class="text-center mt-12">
-      <a href="guides.html" class="inline-flex items-center gap-3 px-8 py-4 rounded-2xl glass-card hover:border-blue-500/50 font-semibold text-lg transition-all cursor-pointer">
+      <h3 class="text-2xl font-heading font-bold text-slate-800 dark:text-slate-200 mb-6">📚 Learn More</h3>
+      <a href="/guides" class="inline-flex items-center gap-3 px-8 py-4 rounded-2xl glass-card hover:border-blue-500/50 font-semibold text-lg transition-all cursor-pointer">
         <svg class="w-6 h-6 text-blue-500 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
         </svg>
-        View Complete Guides & Documentation
-        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-        </svg>
+        <span>
+          <div class="text-left">
+            <div class="font-bold">Getting Started with ClaudeKit →</div>
+            <div class="text-xs text-slate-500">Useful tips and tutorials for new users</div>
+          </div>
+        </span>
       </a>
     </div>
   </div>
