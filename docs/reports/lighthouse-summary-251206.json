@@ -1,0 +1,65 @@
+{
+  "summary": {
+    "date": "2025-12-06",
+    "url": "http://localhost:4321",
+    "overallGrade": "B",
+    "criticalIssues": 2
+  },
+  "scores": {
+    "mobile": {
+      "performance": "Not Measured",
+      "accessibility": "C (81/100)",
+      "bestPractices": "A (95/100)",
+      "seo": "A (96/100)"
+    },
+    "desktop": {
+      "performance": "Not Measured",
+      "accessibility": "A (94/100)",
+      "bestPractices": "A (95/100)",
+      "seo": "A (99/100)"
+    }
+  },
+  "keyMetrics": {
+    "bundleSize": "2.16MB (High)",
+    "firstPaint": "~2.1s (Needs improvement)",
+    "resources": 59,
+    "coreWebVitals": {
+      "LCP": "Poor (Not measured)",
+      "FID": "Poor (Not measured)",
+      "CLS": "Good (0)"
+    }
+  },
+  "topIssues": [
+    {
+      "priority": "High",
+      "category": "Performance",
+      "issue": "JavaScript bundle too large (2.16MB)",
+      "impact": "Slow load times, poor UX"
+    },
+    {
+      "priority": "High",
+      "category": "Visibility",
+      "issue": "ClaudeKit sections not visible on page load",
+      "impact": "Critical content hidden from users"
+    },
+    {
+      "priority": "Medium",
+      "category": "Accessibility",
+      "issue": "WCAG AA compliance issues (Mobile: 81/100)",
+      "impact": "Limited accessibility for some users"
+    }
+  ],
+  "quickWins": [
+    "Remove development tools in production",
+    "Implement lazy loading for ClaudeKit sections",
+    "Optimize font loading strategy",
+    "Clean up unused CSS selectors"
+  ],
+  "nextSteps": [
+    "1. Fix ClaudeKit section visibility",
+    "2. Optimize bundle size by removing dev tools",
+    "3. Implement proper performance monitoring",
+    "4. Address accessibility issues",
+    "5. Add structured data for SEO"
+  ]
+}

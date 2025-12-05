@@ -63,11 +63,11 @@ const cardColors: Record<string, { bg: string; text: string; border: string }> =
             <div class="flex items-start gap-2" role="listitem">
               <span class="text-emerald-400" aria-hidden="true">$</span>
               <kbd class="text-slate-300">{item.command}</kbd>
-              <span class="text-slate-500 text-xs ml-auto" aria-label={`Comment: ${item.comment}`} role="comment">#{item.comment}</span>
+              <span class="text-slate-600 dark:text-slate-400 text-xs ml-auto" aria-label={`Comment: ${item.comment}`}>#{item.comment}</span>
             </div>
           ))}
         </div>
-        <p class="text-sm text-slate-500 mt-3 flex items-center gap-2">
+        <p class="text-sm text-slate-600 dark:text-slate-400 mt-3 flex items-center gap-2">
           <ArrowRight class="w-4 h-4 text-emerald-400" aria-hidden="true" />
           Then chat with AI to build beautiful UIs instantly!
         </p>
@@ -98,7 +98,7 @@ const cardColors: Record<string, { bg: string; text: string; border: string }> =
 
         <div class="pl-4 text-cyan-400 text-xs mt-2">
           <div>Starting Claude Code CLI...</div>
-          <div class="text-slate-500 mt-1">Type your message (or /help for commands)</div>
+          <div class="text-slate-600 dark:text-slate-400 mt-1">Type your message (or /help for commands)</div>
         </div>
 
         <div class="pl-4 mt-3">
