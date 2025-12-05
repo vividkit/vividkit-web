@@ -1,8 +1,8 @@
 # Code Standards & Development Guidelines
 
-**Document Version:** 1.0
-**Last Updated:** 2025-12-04
-**Status:** Phase 01 Complete
+**Document Version:** 1.1
+**Last Updated:** 2025-12-05
+**Status:** Phase 01 Complete (ClaudeKit Setup & Preparation)
 
 ## Table of Contents
 
@@ -61,6 +61,62 @@ export interface FeatureCard {
 // Discriminated unions for variants
 export type ButtonVariant = 'primary' | 'secondary' | 'outline';
 export type ButtonSize = 'sm' | 'md' | 'lg';
+
+// Phase 01 ClaudeKit Interfaces
+export interface CLIStep {
+  number: number;
+  title: string;
+  command: string;
+  note?: string;
+  color: 'blue' | 'purple' | 'green' | 'emerald' | 'indigo';
+}
+
+export interface WorkflowStep {
+  command: string;
+  description: string;
+}
+
+export interface LandingWorkflow {
+  id: string;
+  title: string;
+  level: 'beginner' | 'intermediate' | 'advanced';
+  duration: string;
+  stepCount: number;
+  description: string;
+  steps: WorkflowStep[];
+  gradient: string;
+  iconColor: string;
+  buttonColor: string;
+}
+
+export interface CommandCategory {
+  name: string;
+  description: string;
+  gradient: string;
+  iconColor: string;
+  borderColor: string;
+  commands: SlashCommand[];
+}
+
+export interface SlashCommand {
+  command: string;
+  description: string;
+  difficulty: 'easy' | 'medium' | 'advanced';
+  complexity?: number; // 1-5 bolt icons
+}
+
+export interface UIUXFeature {
+  title: string;
+  description: string;
+  items: string[];
+  color: string;
+}
+
+export interface UIUXExample {
+  level: 'beginner' | 'intermediate' | 'advanced';
+  prompt: string;
+  searchTerms: string;
+}
 ```
 
 ### Error Handling
@@ -408,6 +464,15 @@ function _internalHelper() {}
 .component { }
 .component__element { }
 .component--modifier { }
+
+/* ClaudeKit Phase 01 - New CSS Components */
+.terminal-window { }           /* Terminal emulator container */
+.terminal-header { }           /* Terminal top bar with dots */
+.terminal-content { }          /* Terminal display area */
+.step-indicator { }            /* Step numbers (8 color variants) */
+.workflow-card { }             /* Workflow documentation cards */
+.workflow-card-header { }      /* Card header with gradient (9 variants) */
+.skill-badge { }               /* Difficulty badges (6 variants) */
 ```
 
 ## Performance Best Practices

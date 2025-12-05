@@ -53,3 +53,59 @@ export interface SEOMeta {
   ogImage?: string;
   ogType?: 'website' | 'article';
 }
+
+// Landing Page Guide Data Types
+export interface CLIStep {
+  number: number;
+  title: string;
+  command: string;
+  note?: string;
+  color: 'blue' | 'purple' | 'green' | 'emerald' | 'indigo';
+}
+
+export interface WorkflowStep {
+  command: string;
+  description: string;
+}
+
+export interface LandingWorkflow {
+  id: string;
+  title: string;
+  level: 'beginner' | 'intermediate' | 'advanced';
+  duration: string;
+  stepCount: number;
+  description: string;
+  steps: WorkflowStep[];
+  gradient: string;
+  iconColor: string;
+  buttonColor: string;
+}
+
+export interface CommandCategory {
+  name: string;
+  description: string;
+  gradient: string;
+  iconColor: string;
+  borderColor: string;
+  commands: SlashCommand[];
+}
+
+export interface SlashCommand {
+  command: string;
+  description: string;
+  difficulty: 'easy' | 'medium' | 'advanced';
+  complexity?: number; // 1-5 bolt icons
+}
+
+export interface UIUXFeature {
+  title: string;
+  description: string;
+  items: string[];
+  color: string;
+}
+
+export interface UIUXExample {
+  level: 'beginner' | 'intermediate' | 'advanced';
+  prompt: string;
+  searchTerms: string;
+}

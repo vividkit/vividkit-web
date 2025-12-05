@@ -1,8 +1,8 @@
 # Design Guidelines - VividKit Marketing Website
 
-**Version:** 1.0
-**Created:** 2025-12-04
-**Status:** Initial Documentation
+**Version:** 1.1
+**Last Updated:** 2025-12-05
+**Status:** Phase 01 Complete (ClaudeKit Setup & Preparation)
 
 ## Design System Overview
 
@@ -305,6 +305,69 @@ sections.forEach(section => observer.observe(section));
 - Provide alternative states for animations
 - Ensure content is accessible without motion
 
+### ClaudeKit Phase 01 - New Component Patterns
+
+#### Terminal Window Component
+```css
+.terminal-window { }              /* Dark background container */
+.terminal-header { }              /* Header bar with macOS-style dots */
+.terminal-dots { }                /* Flex container for dots */
+.terminal-dot--red/yellow/green   /* Individual status dots */
+.terminal-content { }             /* Monospace content area */
+.terminal-prompt { }              /* Emerald green prompt text */
+.terminal-path { }                /* Cyan path text */
+```
+
+#### Step Indicator Variants
+```css
+.step-indicator { }               /* Base 10x10 flex circle */
+.step-indicator--blue { }
+.step-indicator--purple { }
+.step-indicator--green { }
+.step-indicator--emerald { }
+.step-indicator--amber { }
+.step-indicator--indigo { }
+.step-indicator--red { }
+.step-indicator--cyan { }
+.step-connector { }               /* Vertical line between steps */
+```
+
+#### Workflow Card System
+```css
+.workflow-card { }                /* Glass container with interactive border */
+.workflow-card-header { }         /* Header area with gradient */
+.workflow-card-header--purple { }
+.workflow-card-header--red { }
+.workflow-card-header--blue { }
+.workflow-card-header--green { }
+.workflow-card-header--indigo { }
+.workflow-card-header--amber { }
+.workflow-card-header--emerald { }
+.workflow-card-header--pink { }
+.workflow-card-header--cyan { }
+.workflow-card-body { }           /* Content padding area */
+.workflow-card-footer { }         /* Bottom section with subtle background */
+```
+
+#### Skill Level Badge System
+```css
+.skill-badge { }                  /* Base badge styling */
+.skill-badge--beginner { }        /* Green - Easy */
+.skill-badge--intermediate { }    /* Amber - Medium */
+.skill-badge--advanced { }        /* Red - Hard */
+.skill-badge--easy { }            /* Alias for beginner */
+.skill-badge--medium { }          /* Alias for intermediate */
+.skill-badge--hard { }            /* Alias for advanced */
+```
+
+#### New Animations
+```css
+@keyframes flow { }               /* Flow opacity pulsing */
+@keyframes blink { }              /* Terminal cursor blink */
+.flow-arrow { }                   /* Animated flow indicators */
+.cursor-blink { }                 /* Terminal cursor effect */
+```
+
 ### Implementation Notes
 
 1. **Vietnamese Support**: All fonts support Vietnamese characters
@@ -312,6 +375,8 @@ sections.forEach(section => observer.observe(section));
 3. **Progressive Enhancement**: Base styles work without JavaScript
 4. **SEO**: Semantic HTML5 structure
 5. **Theme Persistence**: localStorage for dark mode
+6. **Terminal Styling**: Uses dark theme (#0D0D0D) with neon accents for guides
+7. **Color Consistency**: Step indicators and badges use semantic color mapping
 
 ### Design Tokens Summary
 
