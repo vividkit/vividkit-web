@@ -1,7 +1,7 @@
 # VividKit Codebase Summary
 
 **Last Updated:** 2025-12-05
-**Phase:** 02 Complete - CLI Guide Integration
+**Phase:** 03 Complete - Workflows Integration
 **Repository:** VividKit Marketing Website
 
 ## Overview
@@ -45,6 +45,7 @@ vividkit-web/
 │   │   │   ├── ClaudeKit.astro
 │   │   │   ├── ClaudeKitCLIGuide.astro
 │   │   │   ├── Commands.astro
+│   │   │   ├── RecommendedWorkflows.astro
 │   │   │   └── WaitlistForm.astro
 │   │   └── guides/             # Guides page components
 │   │       ├── TabNavigation.astro
@@ -76,6 +77,7 @@ vividkit-web/
 │           ├── cli-steps-landing.ts
 │           ├── cli-guide.ts
 │           ├── workflows.ts
+│           ├── workflows-landing.ts
 │           ├── commands.ts
 │           └── uiux-guide.ts
 ├── public/
@@ -172,6 +174,12 @@ vividkit-web/
 - **Content:** Command categories and examples
 - **Data:** Uses commandCategories from @/data/commands
 - **Layout:** Three-column grid, expandable sections
+
+#### RecommendedWorkflows.astro
+- **Content:** Recommended development workflows showcase
+- **Data:** Uses landingWorkflows and workflowsHeroContent from @/data/guides/workflows-landing
+- **Features:** 4 workflow types (Feature Dev, Bug Fixing, Project Setup, Design Implementation)
+- **Styling:** Gradient headers, level badges, visual flow diagram, CTA button
 
 #### WaitlistForm.astro
 - **Features:** Email input, form validation, Web3Forms integration
