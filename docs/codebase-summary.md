@@ -1,12 +1,12 @@
 # VividKit Codebase Summary
 
 **Last Updated:** 2025-12-05
-**Phase:** 05 Complete - UI/UX Pro Max Integration
+**Phase:** 06 Complete - Landing Page Integration
 **Repository:** VividKit Marketing Website
 
 ## Overview
 
-VividKit is a modern marketing website built with Astro 5.x and Tailwind CSS v4, featuring a sophisticated glassmorphism design system. The codebase implements a complete landing page with multiple sections, interactive components, and a comprehensive design system.
+VividKit is a modern marketing website built with Astro 5.x and Tailwind CSS v4, featuring a sophisticated glassmorphism design system. The codebase implements a complete landing page with ClaudeKit integration sections, interactive components, and a comprehensive design system.
 
 ## Architecture
 
@@ -163,21 +163,11 @@ vividkit-web/
 - **Data:** Uses pricingTiers from @/data/pricing
 - **Features:** Popular badge, feature lists, CTA buttons
 
-#### ClaudeKit.astro
-- **Content:** ClaudeKit integration explanation
-- **Features:** Referral link, feature highlights
-- **CTA:** External link to ClaudeKit
-
 #### ClaudeKitCLIGuide.astro
 - **Content:** Interactive CLI quick start guide section
 - **Features:** 3-step installation process, terminal UI, command examples
 - **Data:** Uses cliStepsLanding from @/data/guides/cli-steps-landing
 - **Styling:** Terminal window with dark theme, pulsing flow animation
-
-#### Commands.astro
-- **Content:** Command categories and examples
-- **Data:** Uses commandCategories from @/data/commands
-- **Layout:** Three-column grid, expandable sections
 
 #### RecommendedWorkflows.astro
 - **Content:** Recommended development workflows showcase
@@ -661,6 +651,15 @@ UIUXExample { level, prompt, searchTerms }
 9. **Time Savings Display:** Visual comparison (6-8 hours vs 2-5 minutes)
 10. **Test Page:** Isolated component testing at /test-uiux-landing
 
+### Phase 06 Features (Landing Page Integration)
+1. **Section Integration:** All 4 ClaudeKit guide sections integrated into index.astro
+2. **Navigation Updates:** Added links to CLI Guide, Workflows, Commands, UI/UX Pro sections
+3. **Content Restructuring:** Removed redundant ClaudeKit and Commands sections
+4. **Smooth Scrolling:** Navigation links properly scroll to integrated sections
+5. **Mobile Optimization:** Mobile navigation updated with new section links
+6. **Content Flow:** Logical progression from CLI setup to advanced features
+7. **Performance:** Optimized rendering with scroll-triggered animations
+
 ## Browser Support
 
 - **Modern Browsers:** Chrome 88+, Firefox 85+, Safari 14+, Edge 88+
@@ -676,6 +675,6 @@ UIUXExample { level, prompt, searchTerms }
 
 ---
 
-**Document Status:** Updated for Phase 05 (UI/UX Pro Max Integration)
+**Document Status:** Updated for Phase 06 (Landing Page Integration)
 **Last Updated:** 2025-12-05
-**Next Update:** Phase 06 - Additional pages and features
+**Next Update:** Phase 07 - Testing & Refinement
