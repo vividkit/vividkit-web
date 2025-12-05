@@ -6,9 +6,13 @@ import AmbientBackground from '@/components/layout/AmbientBackground.astro';
 import Hero from '@/components/sections/Hero.astro';
 import Problem from '@/components/sections/Problem.astro';
 import Features from '@/components/sections/Features.astro';
+// ClaudeKit Guide Sections (NEW)
+import ClaudeKitCLIGuide from '@/components/sections/ClaudeKitCLIGuide.astro';
+import RecommendedWorkflows from '@/components/sections/RecommendedWorkflows.astro';
+import SlashCommandsGuide from '@/components/sections/SlashCommandsGuide.astro';
+import UIUXProMax from '@/components/sections/UIUXProMax.astro';
+// EXISTING
 import Pricing from '@/components/sections/Pricing.astro';
-import ClaudeKit from '@/components/sections/ClaudeKit.astro';
-import Commands from '@/components/sections/Commands.astro';
 import WaitlistForm from '@/components/sections/WaitlistForm.astro';
 import { SITE_CONFIG } from '@/data/constants';
 ---
@@ -25,9 +29,15 @@ import { SITE_CONFIG } from '@/data/constants';
     <Hero />
     <Problem />
     <Features />
+
+    <!-- ClaudeKit Guide Sections -->
+    <ClaudeKitCLIGuide />
+    <RecommendedWorkflows />
+    <SlashCommandsGuide />
+    <UIUXProMax />
+
+    <!-- Conversion Sections -->
     <Pricing />
-    <ClaudeKit />
-    <Commands />
     <WaitlistForm />
   </main>
 

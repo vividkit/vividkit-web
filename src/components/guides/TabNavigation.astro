@@ -3,12 +3,12 @@ export interface Props {
   activeTab?: string;
 }
 
-const { activeTab = 'cli-guide' } = Astro.props;
+const { activeTab = 'cli' } = Astro.props;
 
 const tabs = [
-  { id: 'cli-guide', label: '🚀 CLI Getting Started' },
-  { id: 'workflows', label: '🔄 Recommended Workflows' },
-  { id: 'commands', label: '⚡ Slash Commands Reference' },
+  { id: 'cli', label: '🚀 CLI Getting Started' },
+  { id: 'workflows', label: '� Recommended Workflows' },
+  { id: 'commands', label: '⚡ Slash Commands' },
   { id: 'uiux', label: '🎨 UI/UX Pro Max' }
 ];
 ---
@@ -25,10 +25,10 @@ const tabs = [
           @click={`activeTab = '${tab.id}'; $dispatch('tab-changed', { tab: activeTab })`}
           :class={`{
             'active': activeTab === '${tab.id}',
-            'bg-primary/10 text-primary border-primary/20': activeTab === '${tab.id}',
-            'bg-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border-transparent': activeTab !== '${tab.id}'
+            'border-blue-600 text-blue-600 bg-blue-600/10 dark:text-blue-400 dark:border-blue-400 dark:bg-blue-400/10': activeTab === '${tab.id}',
+            'border-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5': activeTab !== '${tab.id}'
           }`}
-          class="tab-btn whitespace-nowrap px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 border"
+          class="tab-btn whitespace-nowrap px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 border-2"
           data-tab={tab.id}
         >
           {tab.label}
@@ -45,20 +45,5 @@ const tabs = [
   }
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
-  }
-
-  .tab-btn.active {
-    position: relative;
-  }
-
-  .tab-btn.active::after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-    border-radius: 2px;
   }
 </style>
