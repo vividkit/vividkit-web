@@ -3,10 +3,10 @@ export interface Props {
   activeTab?: string;
 }
 
-const { activeTab = 'cli' } = Astro.props;
+const { activeTab = 'cli-guide' } = Astro.props;
 
 const tabs = [
-  { id: 'cli', label: '🚀 CLI Getting Started' },
+  { id: 'cli-guide', label: '🚀 CLI Getting Started' },
   { id: 'workflows', label: '🔄 Recommended Workflows' },
   { id: 'commands', label: '⚡ Slash Commands Reference' },
   { id: 'uiux', label: '🎨 UI/UX Pro Max' }
