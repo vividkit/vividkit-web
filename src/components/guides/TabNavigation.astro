@@ -14,7 +14,7 @@ const tabs = [
 ---
 
 <div
-  x-data="{ activeTab: '${activeTab}' }"
+  x-data={`{ activeTab: '${activeTab}' }`}
   x-init="$dispatch('tab-changed', { tab: activeTab })"
   class="sticky top-[73px] z-40 glass-card border-b border-slate-200 dark:border-slate-800"
 >
@@ -22,12 +22,12 @@ const tabs = [
     <div class="flex gap-2 py-3 overflow-x-auto scrollbar-hide">
       {tabs.map((tab) => (
         <button
-          @click="activeTab = '${tab.id}'; $dispatch('tab-changed', { tab: activeTab })"
-          :class="{
+          @click={`activeTab = '${tab.id}'; $dispatch('tab-changed', { tab: activeTab })`}
+          :class={`{
             'active': activeTab === '${tab.id}',
             'bg-primary/10 text-primary border-primary/20': activeTab === '${tab.id}',
             'bg-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border-transparent': activeTab !== '${tab.id}'
-          }"
+          }`}
           class="tab-btn whitespace-nowrap px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 border"
           data-tab={tab.id}
         >

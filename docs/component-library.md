@@ -1,8 +1,8 @@
 # Component Library Documentation
 
-**Version:** 2.0
-**Last Updated:** 2025-12-04
-**Status:** Phase 03 Complete - Guides Components Added
+**Version:** 2.1
+**Last Updated:** 2025-12-05
+**Status:** Phase 03 Complete - Workflows Integration Added
 
 ## Table of Contents
 
@@ -17,6 +17,7 @@
 9. [WorkflowsGuide](#workflowsguide)
 10. [CommandsGuide](#commandsguide)
 11. [UIUXGuide](#uiuxguide)
+12. [RecommendedWorkflows](#recommendedworkflows)
 
 ---
 
@@ -978,6 +979,123 @@ Documentation component for UI/UX Pro Max skill with examples and statistics.
 
 ---
 
+## RecommendedWorkflows
+
+Landing page section component showcasing recommended development workflows with visual cards and step-by-step instructions.
+
+**Location:** `src/components/sections/RecommendedWorkflows.astro`
+
+### Data Sources
+
+- `landingWorkflows` from `@/data/guides/workflows-landing.ts`
+- `workflowsHeroContent` from `@/data/guides/workflows-landing.ts`
+
+### Workflow Types
+
+1. **Feature Development** (Intermediate, 15-30 min, 4 steps)
+   - Build complete features from planning to implementation
+   - Commands: `/brainstorm`, `/plan`, `/code`, `/test`
+   - Visual: Purple gradient, Zap icon
+
+2. **Bug Fixing** (Beginner, 5-15 min, 3 steps)
+   - Diagnose and fix issues quickly with intelligent debugging
+   - Commands: `/debug`, `/fix`, `/test`
+   - Visual: Red gradient, Bug icon
+
+3. **Project Setup** (Advanced, 30-60 min, 4 steps)
+   - Create complete projects from scratch with best practices
+   - Commands: `ck init`, `/bootstrap`, `/docs:init`, `/cook`
+   - Visual: Blue gradient, Rocket icon
+
+4. **Design Implementation** (Intermediate, 10-20 min, 3 steps)
+   - Transform ideas into beautiful, production-ready UI components
+   - Commands: `/design:good`, `/cook:auto`, `/fix:ui`
+   - Visual: Pink gradient, Palette icon
+
+### Features
+
+**Hero Section:**
+- Proven patterns badge with Workflow icon
+- Title and description
+- Pro tip banner with amber accent
+- Fade-in animations
+
+**Workflow Cards:**
+- Gradient headers with workflow-specific colors
+- Level badges (beginner/intermediate/advanced)
+- Meta information (duration and step count)
+- Numbered step lists with command highlighting
+- Border colors matching workflow theme
+
+**Visual Flow Diagram:**
+- Simplified 3-step process visualization
+- Animated arrows between stages
+- Icon representations (Idea → Plan → Code)
+- Glass card container
+
+**Call-to-Action:**
+- "Explore All Workflows" button
+- Links to guides page workflows section
+- ArrowRight icon for direction
+
+### TypeScript Interfaces
+
+```typescript
+interface WorkflowStep {
+  command: string;
+  description: string;
+}
+
+interface LandingWorkflow {
+  id: string;
+  title: string;
+  level: 'beginner' | 'intermediate' | 'advanced';
+  duration: string;
+  stepCount: number;
+  description: string;
+  steps: WorkflowStep[];
+  gradient: string;
+  iconColor: string;
+  borderColor: string;
+}
+```
+
+### CSS Classes
+
+- Section: `section py-24 bg-gradient-to-b from-transparent to-purple-500/5`
+- Workflow card: `workflow-card border {borderColor}`
+- Card header: `workflow-card-header {gradient}`
+- Level badges: Uses `skill-badge--*` classes
+- Flow arrows: Animated with staggered delays
+- CTA button: `cta-button` with gradient
+
+### Animations
+
+- Fade-in-up effect on all elements
+- Staggered delays (0.1s increments)
+- Arrow flow animation (0.3s delay)
+- Duration: Based on element position
+
+### Usage
+
+```astro
+---
+import RecommendedWorkflows from '@/components/sections/RecommendedWorkflows.astro';
+---
+
+<RecommendedWorkflows />
+```
+
+### Accessibility
+
+- Semantic section structure
+- Proper heading hierarchy
+- Icon accessibility through Lucide Astro
+- Keyboard accessible CTA button
+- Clear visual indicators for levels
+
+---
+
 ## Component Variants Summary
 
 | Component | Variants | Sizes | Key Feature |
@@ -993,6 +1111,7 @@ Documentation component for UI/UX Pro Max skill with examples and statistics.
 | WorkflowsGuide | skill levels | - | 4 recommended workflows |
 | CommandsGuide | 6 categories | - | Color-coded command cards |
 | UIUXGuide | skill examples | - | Magic phrase + statistics |
+| RecommendedWorkflows | 4 workflow types | - | Visual flow diagram + CTA |
 
 ---
 
