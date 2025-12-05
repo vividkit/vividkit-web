@@ -2,7 +2,7 @@
 
 **Last Updated:** 2025-12-05
 **Version:** 1.1
-**Status:** Phase 04 In Progress + ClaudeKit Integration (Phase 01 Complete)
+**Status:** Phase 04 In Progress + ClaudeKit Integration (Phase 02 Complete)
 
 ## Project Overview
 
@@ -16,6 +16,7 @@ VividKit is a modern marketing website built with Astro 5.x, TypeScript, and Tai
 |-------|-------------|----------|--------|-----------------|
 | Phase 01 | Foundation Setup | Days 1-2 | ✅ Complete | 2025-12-04 |
 | Phase 02 | Landing Page | Days 3-5 | ✅ Complete | 2025-12-04 |
+| Phase 02.1 | CLI Guide Integration | Day 5.5 | ✅ Complete | 2025-12-05 |
 | Phase 03 | Guides Page | Days 6-7 | ✅ Complete | 2025-12-04 |
 | Phase 04 | Polish & Deploy | Days 8-10 | ⏳ Pending | - |
 | Phase 05 | Vietnamese Version | Days 11-13 | ⏳ Pending | - |
@@ -43,8 +44,6 @@ VividKit is a modern marketing website built with Astro 5.x, TypeScript, and Tai
 - Zero TypeScript errors
 - Zero security issues
 
----
-
 ### Phase 02: Landing Page (✅ Complete - 2025-12-04)
 **Duration:** 3 days
 **Goal:** Complete landing page with all sections and interactive features
@@ -70,6 +69,28 @@ VividKit is a modern marketing website built with Astro 5.x, TypeScript, and Tai
 - Commands showcase by skill level
 - Form validation and submission handling
 - Mobile-first responsive design
+
+---
+
+### Phase 02.1: CLI Guide Integration (✅ Complete - 2025-12-05)
+**Duration:** 1 day
+**Goal:** Add CLI Guide integration to landing page
+
+**Deliverables:**
+- ClaudeKitCLIGuide section component
+- CLI steps data structure (cli-steps-landing.ts)
+- Interactive terminal UI with command examples
+- 3-step installation process
+- Color-coded visual hierarchy
+- Responsive command display
+
+**Key Features:**
+- Dark-themed terminal window component
+- Flow animation for activity indicator
+- 3-step quick start guide
+- Command display with syntax highlighting
+- Mobile-optimized layout
+- Glass-morphism design integration
 
 ---
 
@@ -140,9 +161,10 @@ VividKit is a modern marketing website built with Astro 5.x, TypeScript, and Tai
 
 ## Milestone Tracking
 
-### Current Progress: 85% Complete
+### Current Progress: 90% Complete
 - **Phase 01:** 100% Complete
 - **Phase 02:** 100% Complete
+- **Phase 02.1:** 100% Complete
 - **Phase 03:** 100% Complete
 - **Phase 04:** 0% Complete (In Progress)
 - **Phase 05:** 0% Complete
@@ -248,13 +270,22 @@ VividKit is a modern marketing website built with Astro 5.x, TypeScript, and Tai
 ## Change Log
 
 ### 2025-12-05
+- ✅ Phase 02.1: CLI Guide Integration COMPLETED
+- ✅ Added ClaudeKitCLIGuide.astro section component
+- ✅ Added cli-steps-landing.ts data structure
+- ✅ Implemented interactive terminal UI with 3-step CLI guide
+- ✅ Added flow animation for terminal activity indicator
+- ✅ Integrated color-coded visual hierarchy (blue, green, purple)
+- ✅ Updated project progress to 90% complete
+- 📝 Next: Continue Phase 04 - Polish & Deploy
+
+### 2025-12-05 (Earlier)
 - ✅ ClaudeKit Integration Project - Phase 01 COMPLETED
 - ✅ Added 26 CSS classes to global.css (terminal, step indicators, workflow cards, badges)
 - ✅ Added 2 keyframe animations (flow, blink) for terminal and flow effects
 - ✅ Added 6 TypeScript interfaces for landing page data structures
 - ✅ Build successful (824ms, 0 errors, zero TypeScript errors)
 - ✅ Code review passed (0 critical issues, user approved)
-- 📝 Next: Phase 02 - CLI Guide Integration
 
 ### 2025-12-04
 - ✅ Phase 03 marked as DONE
