@@ -130,6 +130,164 @@
     @apply border-blue-500/40;
     box-shadow: 0 20px 40px -12px rgba(37, 99, 235, 0.2);
   }
+
+  /* Terminal Window Component */
+  .terminal-window {
+    @apply bg-[#0D0D0D] rounded-xl border-2 border-slate-700 overflow-hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
+
+  .terminal-header {
+    @apply bg-slate-800 px-4 py-2 flex items-center gap-2 border-b border-slate-700;
+  }
+
+  .terminal-dots {
+    @apply flex gap-2;
+  }
+
+  .terminal-dot {
+    @apply w-3 h-3 rounded-full;
+  }
+
+  .terminal-dot--red { @apply bg-red-500/80; }
+  .terminal-dot--yellow { @apply bg-yellow-500/80; }
+  .terminal-dot--green { @apply bg-green-500/80; }
+
+  .terminal-content {
+    @apply p-6 font-mono text-sm space-y-3 min-h-[300px] text-slate-300;
+  }
+
+  .terminal-prompt {
+    @apply text-emerald-400;
+  }
+
+  .terminal-path {
+    @apply text-cyan-400;
+  }
+
+  /* Step Indicator Component */
+  .step-indicator {
+    @apply flex-shrink-0 w-10 h-10 rounded-full font-bold text-lg flex items-center justify-center border-2;
+  }
+
+  .step-indicator--blue {
+    @apply bg-blue-500/20 text-blue-400 border-blue-500/50;
+  }
+
+  .step-indicator--purple {
+    @apply bg-purple-500/20 text-purple-400 border-purple-500/50;
+  }
+
+  .step-indicator--green {
+    @apply bg-green-500/20 text-green-400 border-green-500/50;
+  }
+
+  .step-indicator--emerald {
+    @apply bg-emerald-500/20 text-emerald-400 border-emerald-500/50;
+  }
+
+  .step-indicator--amber {
+    @apply bg-amber-500/20 text-amber-400 border-amber-500/50;
+  }
+
+  .step-indicator--indigo {
+    @apply bg-indigo-500/20 text-indigo-400 border-indigo-500/50;
+  }
+
+  .step-indicator--red {
+    @apply bg-red-500/20 text-red-400 border-red-500/50;
+  }
+
+  .step-indicator--cyan {
+    @apply bg-cyan-500/20 text-cyan-400 border-cyan-500/50;
+  }
+
+  .step-connector {
+    @apply w-0.5 h-full bg-gradient-to-b mt-3;
+  }
+
+  /* Workflow Card with Gradient Header */
+  .workflow-card {
+    @apply bg-white/80 dark:bg-surface-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden;
+    @apply hover:border-blue-500/50 transition-colors duration-200;
+  }
+
+  .workflow-card-header {
+    @apply p-6 border-b border-slate-200 dark:border-slate-800;
+  }
+
+  .workflow-card-header--purple {
+    @apply bg-gradient-to-r from-purple-500/10 to-blue-500/10;
+  }
+
+  .workflow-card-header--red {
+    @apply bg-gradient-to-r from-red-500/10 to-orange-500/10;
+  }
+
+  .workflow-card-header--blue {
+    @apply bg-gradient-to-r from-blue-500/10 to-cyan-500/10;
+  }
+
+  .workflow-card-header--green {
+    @apply bg-gradient-to-r from-green-500/10 to-emerald-500/10;
+  }
+
+  .workflow-card-header--indigo {
+    @apply bg-gradient-to-r from-indigo-500/10 to-purple-500/10;
+  }
+
+  .workflow-card-header--amber {
+    @apply bg-gradient-to-r from-amber-500/10 to-orange-500/10;
+  }
+
+  .workflow-card-header--emerald {
+    @apply bg-gradient-to-r from-emerald-500/10 to-green-500/10;
+  }
+
+  .workflow-card-header--pink {
+    @apply bg-gradient-to-r from-pink-500/10 to-rose-500/10;
+  }
+
+  .workflow-card-header--cyan {
+    @apply bg-gradient-to-r from-cyan-500/10 to-blue-500/10;
+  }
+
+  .workflow-card-body {
+    @apply p-6 space-y-4;
+  }
+
+  .workflow-card-footer {
+    @apply p-4 bg-slate-50/50 dark:bg-slate-900/50 border-t border-slate-200 dark:border-slate-800;
+  }
+
+  /* Skill Level Badges */
+  .skill-badge {
+    @apply px-2 py-0.5 text-xs rounded-full font-medium border;
+  }
+
+  .skill-badge--beginner {
+    @apply bg-green-500/20 text-green-600 dark:text-green-400 border-green-500/20;
+  }
+
+  .skill-badge--intermediate {
+    @apply bg-amber-500/20 text-amber-600 dark:text-amber-400 border-amber-500/20;
+  }
+
+  .skill-badge--advanced {
+    @apply bg-red-500/20 text-red-600 dark:text-red-400 border-red-500/20;
+  }
+
+  .skill-badge--easy {
+    @apply bg-green-500/20 text-green-600 dark:text-green-400 border-green-500/20;
+  }
+
+  .skill-badge--medium {
+    @apply bg-amber-500/20 text-amber-600 dark:text-amber-400 border-amber-500/20;
+  }
+
+  .skill-badge--hard {
+    @apply bg-red-500/20 text-red-600 dark:text-red-400 border-red-500/20;
+  }
 }
 
 /* Keyframe animations */
@@ -171,6 +329,16 @@
   }
 }
 
+@keyframes flow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
 /* Utility classes */
 @layer utilities {
   .gradient-animate {
@@ -188,6 +356,14 @@
 
   .fade-in-up {
     animation: fade-in-up 0.6s ease-out forwards;
+  }
+
+  .flow-arrow {
+    animation: flow 2s ease-in-out infinite;
+  }
+
+  .cursor-blink {
+    animation: blink 1s infinite;
   }
 
   .section {

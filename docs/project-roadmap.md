@@ -1,8 +1,8 @@
 # VividKit Project Roadmap
 
-**Last Updated:** 2025-12-04
-**Version:** 1.0
-**Status:** Phase 04 In Progress
+**Last Updated:** 2025-12-05
+**Version:** 1.1
+**Status:** Phase 04 In Progress + ClaudeKit Integration (Phase 01 Complete)
 
 ## Project Overview
 
@@ -246,6 +246,15 @@ VividKit is a modern marketing website built with Astro 5.x, TypeScript, and Tai
 ---
 
 ## Change Log
+
+### 2025-12-05
+- ✅ ClaudeKit Integration Project - Phase 01 COMPLETED
+- ✅ Added 26 CSS classes to global.css (terminal, step indicators, workflow cards, badges)
+- ✅ Added 2 keyframe animations (flow, blink) for terminal and flow effects
+- ✅ Added 6 TypeScript interfaces for landing page data structures
+- ✅ Build successful (824ms, 0 errors, zero TypeScript errors)
+- ✅ Code review passed (0 critical issues, user approved)
+- 📝 Next: Phase 02 - CLI Guide Integration
 
 ### 2025-12-04
 - ✅ Phase 03 marked as DONE

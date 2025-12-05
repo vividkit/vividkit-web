@@ -395,6 +395,24 @@ npm run astro        # Access Astro CLI
 - **Paths:** Aliases configured (@/ prefix)
 - **Target:** ES2020+
 
+## Type System - Phase 01 (CLaudeKit Integration)
+
+### Core Data Types
+```typescript
+// CLI Guide Types
+CLIStep { number, title, command, note?, color }
+WorkflowStep { command, description }
+LandingWorkflow { id, title, level, duration, stepCount, description, steps[], gradient, iconColor, buttonColor }
+
+// Command System Types
+CommandCategory { name, description, gradient, iconColor, borderColor, commands[] }
+SlashCommand { command, description, difficulty, complexity? }
+
+// UI/UX Types
+UIUXFeature { title, description, items[], color }
+UIUXExample { level, prompt, searchTerms }
+```
+
 ## Key Features Implemented
 
 ### Core Features
@@ -406,6 +424,15 @@ npm run astro        # Access Astro CLI
 6. **Forms:** Client validation with Web3Forms integration
 7. **Animations:** Scroll-triggered with intersection observer
 8. **Navigation:** Smooth scrolling between sections
+
+### Phase 01 Features (ClaudeKit Setup & Preparation)
+1. **Terminal Window Component:** Dark-themed terminal UI with status dots
+2. **Step Indicators:** 8 color-coded step badges for visual hierarchy
+3. **Workflow Cards:** Glass-morphism cards with 9 gradient header variants
+4. **Skill Badges:** 6 difficulty level badges (easy/medium/hard variants)
+5. **Animation System:** Flow pulsing and cursor blink effects
+6. **TypeScript Interfaces:** 6 new interfaces for guides and commands
+7. **CSS Classes:** 26 new component classes (terminal, steps, workflows, badges)
 
 ### Phase 03 Features
 1. **Guides Page:** Multi-tab documentation page
@@ -433,5 +460,6 @@ npm run astro        # Access Astro CLI
 
 ---
 
-**Document Status:** Complete for Phase 02
-**Next Update:** Phase 03 - Additional pages and features
+**Document Status:** Updated for Phase 01 (ClaudeKit Setup)
+**Last Updated:** 2025-12-05
+**Next Update:** Phase 02 - Component development
