@@ -1,8 +1,8 @@
 # Code Standards & Development Guidelines
 
-**Document Version:** 1.1
+**Document Version:** 1.2
 **Last Updated:** 2025-12-05
-**Status:** Phase 01 Complete (ClaudeKit Setup & Preparation)
+**Status:** Phase 04 Complete (Slash Commands Integration)
 
 ## Table of Contents
 
@@ -116,6 +116,50 @@ export interface UIUXExample {
   level: 'beginner' | 'intermediate' | 'advanced';
   prompt: string;
   searchTerms: string;
+}
+
+// Phase 04 - Slash Commands Interfaces
+export interface SlashCommand {
+  command: string;
+  description: string;
+  difficulty: 'easy' | 'medium' | 'advanced';
+  complexity?: number; // 1-5 bolt icons
+}
+
+export interface SkillLevel {
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  color: string;
+  gradient: string;
+  borderColor: string;
+  commands: SlashCommand[];
+}
+
+export interface CommandCategory {
+  name: string;
+  description: string;
+  gradient: string;
+  iconColor: string;
+  borderColor: string;
+  commands: SlashCommand[];
+}
+
+export interface JourneyStep {
+  number: number;
+  title: string;
+  description: string;
+  color: string;
+  command: string;
+  result: string;
+}
+
+export interface BeginnerTip {
+  icon: string;
+  title: string;
+  description: string;
+  color: string;
 }
 ```
 
@@ -473,6 +517,10 @@ function _internalHelper() {}
 .workflow-card { }             /* Workflow documentation cards */
 .workflow-card-header { }      /* Card header with gradient (9 variants) */
 .skill-badge { }               /* Difficulty badges (6 variants) */
+
+/* Phase 04 - Slash Commands CSS Classes */
+.step-connector { }            /* Visual connector between journey steps */
+.feature-card { }              /* Enhanced glass card for features */
 ```
 
 ## Performance Best Practices
@@ -681,5 +729,5 @@ const isDevelopment = import.meta.env.DEV;
 
 ---
 
-**Document Status:** Complete for Phase 01
-**Next Review:** Phase 02 completion
+**Document Status:** Updated for Phase 04
+**Next Review:** Phase 05 completion

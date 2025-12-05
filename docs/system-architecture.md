@@ -1,8 +1,8 @@
 # System Architecture
 
 **Version:** 1.0
-**Last Updated:** 2025-12-04
-**Status:** Phase 01 Complete
+**Last Updated:** 2025-12-05
+**Status:** Phase 04 Complete - Slash Commands Integration
 
 ## Table of Contents
 
@@ -29,9 +29,22 @@ VividKit follows a **Static Site Generation (SSG)** architecture with the Astro 
 ├─────────────────────────────────────────────────────────┤
 │  Source Files (Astro, TypeScript, CSS)                  │
 │  ├── Pages (.astro)                                      │
+│  │   ├── index.astro (Landing page)                     │
+│  │   └── guides.astro (Multi-tab documentation)         │
 │  ├── Components (.astro)                                │
+│  │   ├── ui/ (Base components)                          │
+│  │   ├── layout/ (Header, Footer)                       │
+│  │   ├── sections/ (Landing sections)                   │
+│  │   │   └── SlashCommandsGuide.astro (NEW)             │
+│  │   └── guides/ (Guide components)                     │
 │  ├── Layouts (.astro)                                    │
 │  ├── Scripts (TypeScript)                               │
+│  │   ├── theme-toggle.ts                                 │
+│  │   ├── form-handler.ts                                │
+│  │   ├── intersection-observer.ts                       │
+│  │   └── smooth-scroll.ts                               │
+│  ├── Data Files                                         │
+│  │   └── guides/commands-landing.ts (NEW)               │
 │  └── Styles (Tailwind CSS v4)                          │
 └───────────────────┬─────────────────────────────────────┘
                     │ Build Process (Astro)
@@ -591,25 +604,53 @@ const config = {
 
 ---
 
+## Recent Architecture Enhancements (Phase 04 Complete)
+
+### SlashCommandsGuide Component
+- **Location:** `/src/components/sections/SlashCommandsGuide.astro`
+- **Purpose:** Interactive guide for ClaudeKit slash commands
+- **Features:**
+  - 4 command categories with icons
+  - 3 skill levels (Beginner, Intermediate, Advanced)
+  - Journey steps visualization
+  - Beginner tips section
+  - Fully responsive design
+  - Dark/light mode support
+  - Scroll-triggered animations
+
+### Commands Landing Data Structure
+- **Location:** `/src/data/guides/commands-landing.ts`
+- **Exports:**
+  - `SlashCommand` interface
+  - `SkillLevel` interface
+  - `CommandCategory` interface
+  - `JourneyStep` interface
+  - `BeginnerTip` interface
+  - Pre-populated data for all sections
+
+### Test Results
+- **Total Tests:** 10
+- **Passed:** 10
+- **Failed:** 0
+- **Coverage:** 100%
+
 ## Future Architecture Enhancements
 
-### Phase 2 (Planned)
-- Dynamic content routes
-- API integration
-- Form submission handling
-- Enhanced analytics
+### Phase 5 (Planned)
+- Additional pages (About, Blog, Documentation)
+- Blog system with MDX support
+- Sitemap and robots.txt
+- Enhanced SEO with structured data
+- Performance optimization (Core Web Vitals)
+- Loading states and skeletons
+- Error pages (404, 500)
 
-### Phase 3 (Planned)
-- Headless CMS integration
-- Blog system with ISR
-- Search functionality
-- Comments system
-
-### Phase 4 (Planned)
-- User authentication
-- Database persistence
-- Admin dashboard
-- Advanced caching
+### Phase 6 (Planned)
+- A/B testing framework
+- Admin dashboard for content management
+- User authentication system
+- Advanced analytics and tracking
+- Multi-language support (i18n)
 
 ---
 
@@ -623,5 +664,5 @@ For more details, see:
 
 ---
 
-**Document Status:** Complete for Phase 01
-**Next Update:** Phase 02 - Dynamic routes and backend services
+**Document Status:** Updated for Phase 04
+**Next Update:** Phase 05 - Additional pages and features

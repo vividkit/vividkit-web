@@ -1,7 +1,7 @@
 # VividKit Codebase Summary
 
 **Last Updated:** 2025-12-05
-**Phase:** 03 Complete - Workflows Integration
+**Phase:** 04 Complete - Slash Commands Integration
 **Repository:** VividKit Marketing Website
 
 ## Overview
@@ -46,7 +46,8 @@ vividkit-web/
 │   │   │   ├── ClaudeKitCLIGuide.astro
 │   │   │   ├── Commands.astro
 │   │   │   ├── RecommendedWorkflows.astro
-│   │   │   └── WaitlistForm.astro
+│   │   │   ├── WaitlistForm.astro
+│   │   │   └── SlashCommandsGuide.astro
 │   │   └── guides/             # Guides page components
 │   │       ├── TabNavigation.astro
 │   │       ├── CLIGuide.astro
@@ -79,7 +80,8 @@ vividkit-web/
 │           ├── workflows.ts
 │           ├── workflows-landing.ts
 │           ├── commands.ts
-│           └── uiux-guide.ts
+│           ├── uiux-guide.ts
+│           └── commands-landing.ts
 ├── public/
 ├── docs/
 └── Configuration files
@@ -185,6 +187,25 @@ vividkit-web/
 - **Features:** Email input, form validation, Web3Forms integration
 - **Implementation:** Client-side validation, AJAX submission
 - **Success:** Thank you message on submission
+
+#### SlashCommandsGuide.astro (NEW)
+- **Content:** Interactive slash commands guide for ClaudeKit
+- **Features:**
+  - Hero section with example command
+  - 3 skill level cards (Beginner, Intermediate, Advanced)
+  - 4 command categories with icons
+  - Journey steps visualization (3-step process)
+  - Beginner tips section (4 tips)
+  - CTA to explore all commands
+- **Data:** Uses commandsHeroContent, skillLevels, commandCategories, journeySteps, beginnerTips from @/data/guides/commands-landing
+- **Styling:**
+  - Glassmorphism cards with gradients
+  - Color-coded difficulty badges
+  - Complexity indicators (bolt icons)
+  - Responsive grid layouts
+  - Dark/light mode support
+  - Scroll-triggered animations
+- **Icons:** Uses lucide-astro icons (Layers, ArrowRight, MessageSquare, etc.)
 
 ### Guides Components
 
@@ -338,6 +359,55 @@ uiuxStats: {
 }[]
 ```
 
+### Commands Landing (guides/commands-landing.ts) (NEW)
+```typescript
+commandsHeroContent: {
+  title: string;
+  subtitle: string;
+  description: string;
+  example: {
+    command: string;
+    result: string;
+  };
+}
+
+skillLevels: SkillLevel[] {
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  color: string;
+  gradient: string;
+  borderColor: string;
+  commands: SlashCommand[];
+}[]
+
+commandCategories: CommandCategory[] {
+  name: string;
+  description: string;
+  gradient: string;
+  iconColor: string;
+  borderColor: string;
+  commands: SlashCommand[];
+}[]
+
+journeySteps: JourneyStep[] {
+  number: number;
+  title: string;
+  description: string;
+  color: string;
+  command: string;
+  result: string;
+}[]
+
+beginnerTips: BeginnerTip[] {
+  icon: string;
+  title: string;
+  description: string;
+  color: string;
+}[]
+```
+
 ### Constants (constants.ts)
 ```typescript
 SITE_CONFIG: {
@@ -484,6 +554,18 @@ UIUXExample { level, prompt, searchTerms }
 8. **Command Reference:** 6 categories with examples
 9. **UI/UX Guide:** Magic phrase and skill examples
 
+### Phase 04 Features (Slash Commands Integration)
+1. **SlashCommandsGuide Component:** Interactive slash commands guide section
+2. **Commands Landing Data:** Comprehensive data structure for slash commands
+3. **Skill Level System:** 3 levels (Beginner, Intermediate, Advanced) with top commands
+4. **Command Categories:** 4 categories (Planning & Development, Fixing & Debugging, Testing & Quality, Design & Content)
+5. **Journey Visualization:** 3-step coding journey with visual connectors
+6. **Beginner Tips:** 4 helpful tips for getting started
+7. **Complexity Indicators:** Bolt icons (1-5) for command complexity
+8. **Responsive Design:** Mobile-first approach with grid layouts
+9. **Dark/Light Mode:** Full theme support throughout
+10. **Test Coverage:** 10/10 tests passing
+
 ## Browser Support
 
 - **Modern Browsers:** Chrome 88+, Firefox 85+, Safari 14+, Edge 88+
@@ -499,6 +581,6 @@ UIUXExample { level, prompt, searchTerms }
 
 ---
 
-**Document Status:** Updated for Phase 02 (CLI Guide Integration)
+**Document Status:** Updated for Phase 04 (Slash Commands Integration)
 **Last Updated:** 2025-12-05
-**Next Update:** Phase 03 - Component development
+**Next Update:** Phase 05 - Additional pages and features
