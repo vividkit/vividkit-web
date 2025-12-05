@@ -1,7 +1,7 @@
 # VividKit Codebase Summary
 
-**Last Updated:** 2025-12-04
-**Phase:** 03 Complete - Guides Page Implementation
+**Last Updated:** 2025-12-05
+**Phase:** 02 Complete - CLI Guide Integration
 **Repository:** VividKit Marketing Website
 
 ## Overview
@@ -43,6 +43,7 @@ vividkit-web/
 │   │   │   ├── Features.astro
 │   │   │   ├── Pricing.astro
 │   │   │   ├── ClaudeKit.astro
+│   │   │   ├── ClaudeKitCLIGuide.astro
 │   │   │   ├── Commands.astro
 │   │   │   └── WaitlistForm.astro
 │   │   └── guides/             # Guides page components
@@ -72,6 +73,7 @@ vividkit-web/
 │       ├── pricing.ts
 │       ├── commands.ts
 │       └── guides/
+│           ├── cli-steps-landing.ts
 │           ├── cli-guide.ts
 │           ├── workflows.ts
 │           ├── commands.ts
@@ -159,6 +161,12 @@ vividkit-web/
 - **Content:** ClaudeKit integration explanation
 - **Features:** Referral link, feature highlights
 - **CTA:** External link to ClaudeKit
+
+#### ClaudeKitCLIGuide.astro
+- **Content:** Interactive CLI quick start guide section
+- **Features:** 3-step installation process, terminal UI, command examples
+- **Data:** Uses cliStepsLanding from @/data/guides/cli-steps-landing
+- **Styling:** Terminal window with dark theme, pulsing flow animation
 
 #### Commands.astro
 - **Content:** Command categories and examples
@@ -258,6 +266,21 @@ commandCategories: {
   description: string;
   commands: { name: string; description: string }[];
 }[]
+```
+
+### CLI Steps Landing (guides/cli-steps-landing.ts)
+```typescript
+cliStepsLanding: {
+  title: string;
+  subtitle: string;
+  steps: {
+    number: number;
+    title: string;
+    command: string;
+    description: string;
+    color: 'blue' | 'green' | 'purple';
+  }[];
+}
 ```
 
 ### CLI Guide (guides/cli-guide.ts)
@@ -434,6 +457,14 @@ UIUXExample { level, prompt, searchTerms }
 6. **TypeScript Interfaces:** 6 new interfaces for guides and commands
 7. **CSS Classes:** 26 new component classes (terminal, steps, workflows, badges)
 
+### Phase 02 Features (CLI Guide Integration)
+1. **ClaudeKitCLIGuide Component:** Interactive CLI quick start section
+2. **CLI Steps Data Structure:** Organized 3-step installation process
+3. **Terminal UI Integration:** Dark-themed terminal with command display
+4. **Flow Animation:** Pulsing animation for terminal activity indicator
+5. **Responsive CLI Display:** Mobile-optimized command examples
+6. **Color-Coded Steps:** Blue, green, purple visual hierarchy
+
 ### Phase 03 Features
 1. **Guides Page:** Multi-tab documentation page
 2. **Alpine.js Integration:** Client-side tab navigation
@@ -460,6 +491,6 @@ UIUXExample { level, prompt, searchTerms }
 
 ---
 
-**Document Status:** Updated for Phase 01 (ClaudeKit Setup)
+**Document Status:** Updated for Phase 02 (CLI Guide Integration)
 **Last Updated:** 2025-12-05
-**Next Update:** Phase 02 - Component development
+**Next Update:** Phase 03 - Component development

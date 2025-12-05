@@ -33,7 +33,7 @@ Integrate 4 ClaudeKit reference HTML mockups into the VividKit landing page as n
 | Phase | Name | Status | Progress | Est. Time | Completed |
 |-------|------|--------|----------|-----------|-----------|
 | 1 | Setup & Preparation | ✅ Completed | 100% | 30 min | 2025-12-05 |
-| 2 | CLI Guide Integration | pending | 0% | 45 min | - |
+| 2 | CLI Guide Integration | ✅ Completed | 100% | 45 min | 2025-12-05 |
 | 3 | Workflows Integration | pending | 0% | 45 min | - |
 | 4 | Slash Commands Integration | pending | 0% | 60 min | - |
 | 5 | UI/UX Guide Integration | pending | 0% | 60 min | - |
@@ -145,6 +145,7 @@ src/
 ## Success Criteria
 
 - [x] Phase 01: Foundation setup complete (CSS classes, TypeScript interfaces) - ✅ DONE 2025-12-05
+- [x] Phase 02: CLI Guide Integration - ✅ DONE 2025-12-05
 - [ ] All 4 new sections render correctly
 - [ ] Responsive on mobile/tablet/desktop
 - [ ] Dark mode compatible
