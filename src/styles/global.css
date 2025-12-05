@@ -13,6 +13,7 @@
 
 /* Tailwind directives */
 @import 'tailwindcss';
+@config "../../tailwind.config.mjs";
 
 @theme {
   --font-heading: 'Space Grotesk', sans-serif;

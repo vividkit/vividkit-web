@@ -9,7 +9,12 @@ const { class: className = '' } = Astro.props;
 <section id="pricing" class={`section py-24 relative ${className}`}>
   <div class="max-w-6xl mx-auto px-6">
     <div class="text-center mb-16">
-      <h2 class="font-heading text-4xl md:text-5xl font-bold mb-4">Simple, Transparent Pricing</h2>
+      <h2 class="text-4xl md:text-5xl font-heading font-bold mb-6">
+        Simple, Transparent
+        <span class="block bg-gradient-to-r from-green-600 to-blue-600 dark:from-green-400 dark:to-blue-400 bg-clip-text text-transparent">
+          Pricing
+        </span>
+      </h2>
       <p class="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
         Start for free, upgrade for power.
       </p>

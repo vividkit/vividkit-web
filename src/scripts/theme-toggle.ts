@@ -34,21 +34,35 @@ export function initThemeToggle(): void {
   // Add click handler to theme toggle button
   const themeToggle = document.getElementById('theme-toggle');
   if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-      const html = document.documentElement;
-      const isDark = html.classList.contains('dark');
+    // Remove existing listeners if any (though not possible with module script usually)
+    const newThemeToggle = themeToggle.cloneNode(true);
+    if (themeToggle.parentNode) {
+      themeToggle.parentNode.replaceChild(newThemeToggle, themeToggle);
+    }
 
-      if (isDark) {
-        html.classList.remove('dark');
-        localStorage.setItem('theme', 'light');
-      } else {
-        html.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
-      }
+    // Re-select the button after replacement
+    const button = document.getElementById('theme-toggle');
+    if (button) {
+      button.addEventListener('click', () => {
+        const html = document.documentElement;
+        const isDark = html.classList.contains('dark');
 
-      // Update icons immediately
-      updateIcons();
-    });
+        if (isDark) {
+          html.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+          console.log('Theme switched to light');
+        } else {
+          html.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+          console.log('Theme switched to dark');
+        }
+
+        // Update icons immediately
+        updateIcons();
+      });
+    }
+  } else {
+    console.warn('Theme toggle button not found');
   }
 
   // Listen for system theme changes
