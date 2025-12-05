@@ -9,7 +9,12 @@ const { class: className = '' } = Astro.props;
 <section id="commands" class={`section py-24 relative ${className}`}>
   <div class="max-w-6xl mx-auto px-6">
     <div class="text-center mb-12">
-      <h2 class="font-heading text-4xl md:text-5xl font-bold mb-4">Slash Commands at a Glance</h2>
+      <h2 class="text-4xl md:text-5xl font-heading font-bold mb-6">
+        Slash Commands
+        <span class="block bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+          at a Glance
+        </span>
+      </h2>
       <p class="text-xl text-slate-600 dark:text-slate-400">Your AI assistant speaks slash — here's your quick reference</p>
     </div>
 

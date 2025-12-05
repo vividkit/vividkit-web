@@ -9,7 +9,12 @@ const { class: className = '' } = Astro.props;
 <section id="problem" class={`section py-24 relative ${className}`}>
   <div class="max-w-6xl mx-auto px-6">
     <div class="text-center mb-16">
-      <h2 class="font-heading text-4xl md:text-5xl font-bold mb-4">The CLI Barrier</h2>
+      <h2 class="text-4xl md:text-5xl font-heading font-bold mb-6">
+        The CLI
+        <span class="block bg-gradient-to-r from-red-600 to-orange-600 dark:from-red-400 dark:to-orange-400 bg-clip-text text-transparent">
+          Barrier
+        </span>
+      </h2>
       <p class="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
         ClaudeKit is incredibly powerful for everyone — but the CLI interface creates unnecessary friction for non-tech users
       </p>
