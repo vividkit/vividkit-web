@@ -1,0 +1,95 @@
+---
+---
+
+<div class="toc-wrapper hidden xl:block w-64 shrink-0 order-2">
+  <div class="sticky top-32 max-h-[calc(100vh-10rem)] overflow-y-auto pr-4">
+    <h3 class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-4 pl-3">
+      On This Page
+    </h3>
+    <nav id="toc-nav" class="space-y-0.5 border-l border-slate-200 dark:border-slate-800">
+      <!-- Links injected by JS -->
+    </nav>
+  </div>
+</div>
+
+<script>
+  function generateTOC() {
+    const nav = document.getElementById('toc-nav');
+    // Using main or specific content ID if available to narrow down
+    const main = document.querySelector('main');
+
+    if (!nav || !main) return;
+
+    // Find all h2 and h3 with IDs
+    const headings = main.querySelectorAll('h2[id], h3[id]');
+
+    // Clear existing to avoid duplicates on re-renders if standard script
+    nav.innerHTML = '';
+
+    if (headings.length === 0) {
+      nav.innerHTML = '<p class="text-xs text-slate-400 pl-3 py-1">No sections</p>';
+      return;
+    }
+
+    // Scroll Observer for Active State
+    const observerOptions = {
+      root: null,
+      rootMargin: '-100px 0px -66% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      // Find the entry that intersects
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            setActive(entry.target.id);
+        }
+      });
+    }, observerOptions);
+
+    function setActive(id) {
+        document.querySelectorAll('.toc-link').forEach(link => {
+            const isActive = link.getAttribute('href') === `#${id}`;
+            if (isActive) {
+                link.classList.add('text-blue-600', 'dark:text-blue-400', 'font-medium', 'border-blue-600', 'dark:border-blue-400');
+                link.classList.remove('text-slate-500', 'dark:text-slate-400', 'border-transparent');
+            } else {
+                link.classList.remove('text-blue-600', 'dark:text-blue-400', 'font-medium', 'border-blue-600', 'dark:border-blue-400');
+                link.classList.add('text-slate-500', 'dark:text-slate-400', 'border-transparent');
+            }
+        });
+    }
+
+    headings.forEach((heading, index) => {
+      const link = document.createElement('a');
+      link.href = `#${heading.id}`;
+      link.textContent = heading.innerText;
+      // Style
+      link.className = `toc-link block text-xs py-1.5 border-l-2 transition-colors hover:text-slate-900 dark:hover:text-slate-200 hover:border-slate-300 ${
+        heading.tagName === 'H3' ? 'pl-6' : 'pl-3'
+      } ${
+        index === 0 ? 'text-blue-600 dark:text-blue-400 font-medium border-blue-600 dark:border-blue-400' : 'text-slate-500 dark:text-slate-400 border-transparent'
+      }`;
+
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        // Adjust for sticky header offset
+        const yOffset = -140;
+        const y = heading.getBoundingClientRect().top + window.scrollY + yOffset;
+        window.scrollTo({top: y, behavior: 'smooth'});
+
+        // Update URL
+        history.pushState(null, null, `#${heading.id}`);
+        // Manually set active since scroll might not trigger quickly enough or for last item
+        setActive(heading.id);
+      });
+
+      nav.appendChild(link);
+      observer.observe(heading);
+    });
+  }
+
+  // Support for View Transitions if enabled, else just load
+  document.addEventListener('astro:page-load', generateTOC);
+  document.addEventListener('DOMContentLoaded', generateTOC);
+</script>
