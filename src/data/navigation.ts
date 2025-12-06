@@ -15,7 +15,7 @@ export const footerLinks = {
   ],
   resources: [
     { label: 'Documentation', href: '/docs' },
-    { label: 'Guides', href: '/guides' },
+    { label: 'Guides', href: '/ck-guides' },
     { label: 'API Reference', href: '/api' },
     { label: 'Examples', href: '/examples' }
   ],
