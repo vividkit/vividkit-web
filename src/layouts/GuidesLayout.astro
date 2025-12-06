@@ -1,0 +1,49 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+
+
+interface Props {
+  title: string;
+  description: string;
+  activeTab: 'cli' | 'workflows' | 'commands' | 'uiux';
+}
+
+const { title, description, activeTab } = Astro.props;
+---
+
+<MainLayout
+  title={title}
+  description={description}
+  canonical={`/ck-guides${activeTab !== 'cli' ? '/' + activeTab : ''}`}
+>
+  <Header />
+
+  <!-- Spacer for fixed header -->
+  <div class="h-24"></div>
+
+  <!-- Page Header -->
+  <div class="max-w-6xl mx-auto px-6 py-8">
+    <div class="rounded-2xl p-8 bg-gradient-to-br from-emerald-500/10 to-green-500/10 border border-emerald-500/30">
+      <div class="flex items-start gap-4">
+        <div class="w-14 h-14 rounded-2xl bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+          <svg class="w-8 h-8 text-emerald-500 dark:text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="4 17 10 11 4 5"/>
+            <line x1="12" y1="19" x2="20" y2="19"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="font-heading text-3xl font-bold text-emerald-600 dark:text-emerald-400 mb-2">ClaudeKit CLI Guide</h1>
+          <p class="text-slate-600 dark:text-slate-300 text-lg">Install ClaudeKit, run <code class="px-2 py-0.5 bg-slate-200 dark:bg-slate-800 rounded font-mono text-emerald-600 dark:text-emerald-400">claude</code>, and leverage powerful AI skills from your terminal!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="max-w-6xl mx-auto px-6 py-8 min-h-screen">
+    <slot />
+  </main>
+
+  <Footer />
+</MainLayout>
