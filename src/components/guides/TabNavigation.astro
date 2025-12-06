@@ -1,0 +1,113 @@
+---
+interface Props {
+  activeTab: 'cli' | 'workflows' | 'commands' | 'uiux';
+}
+
+const { activeTab } = Astro.props;
+
+const navItems = [
+  {
+    id: 'cli',
+    label: 'CLI Getting Started',
+    icon: '🚀',
+    href: '/guides',
+  },
+  {
+    id: 'workflows',
+    label: 'Recommended Workflows',
+    icon: '📋',
+    href: '/guides/workflows',
+  },
+  {
+    id: 'commands',
+    label: 'Slash Commands',
+    icon: '⚡',
+    href: '/guides/commands',
+  },
+  {
+    id: 'uiux',
+    label: 'UI/UX Pro Max',
+    icon: '🎨',
+    href: '/guides/uiux',
+  },
+];
+---
+
+<style>
+  /* Custom scrollbar for sidebar */
+  aside::-webkit-scrollbar {
+    width: 5px;
+  }
+  aside::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  aside::-webkit-scrollbar-thumb {
+    background: rgba(156, 163, 175, 0.3);
+    border-radius: 20px;
+  }
+
+  /* Hide scrollbar for mobile nav */
+  .mobile-nav-scroll::-webkit-scrollbar {
+    display: none;
+  }
+  .mobile-nav-scroll {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>
+
+<!-- Sidebar Navigation (Desktop) -->
+<aside class="hidden lg:block sticky top-32 self-start max-h-[calc(100vh-10rem)] overflow-y-auto rounded-2xl glass-card border border-slate-200/50 dark:border-slate-800/50 backdrop-blur-md">
+  <div class="p-4">
+    <!-- Sidebar Header -->
+    <div class="px-4 mb-4 mt-2">
+      <h2 class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
+        Documentation
+      </h2>
+    </div>
+
+    <!-- Navigation Items -->
+    <nav class="space-y-1">
+      {navItems.map((item) => (
+        <a
+          href={item.href}
+          class={`group flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 ${
+            activeTab === item.id
+              ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 shadow-sm'
+              : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-slate-200'
+          }`}
+        >
+          <span class={`text-lg transition-transform duration-200 ${activeTab === item.id ? 'scale-110' : 'group-hover:scale-110'}`}>
+            {item.icon}
+          </span>
+          <span>
+            {item.label}
+          </span>
+          {activeTab === item.id && (
+            <div class="ml-auto w-1.5 h-1.5 rounded-full bg-blue-500 dark:bg-blue-400 shadow-[0_0_8px_rgba(59,130,246,0.6)]"></div>
+          )}
+        </a>
+      ))}
+    </nav>
+  </div>
+</aside>
+
+<!-- Mobile Navigation (Sticky Top) -->
+<!-- Optimized for placement inside main container -->
+<div class="lg:hidden sticky top-20 z-40 -mx-4 sm:-mx-6 mb-8 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-y border-slate-200/50 dark:border-slate-800/50 px-4 sm:px-6 py-3">
+  <div class="mobile-nav-scroll flex gap-2 overflow-x-auto no-scrollbar">
+    {navItems.map((item) => (
+      <a
+        href={item.href}
+        class={`flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
+          activeTab === item.id
+            ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
+            : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
+        }`}
+      >
+        <span>{item.icon}</span>
+        {item.label}
+      </a>
+    ))}
+  </div>
+</div>
