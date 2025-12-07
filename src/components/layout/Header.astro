@@ -25,7 +25,7 @@ const { class: className = '' } = Astro.props;
             <li><a href="/#hero" class="nav-link text-xs font-semibold uppercase tracking-wide px-2 py-1">Home</a></li>
             <li><a href="/#features" class="nav-link text-xs font-semibold uppercase tracking-wide px-2 py-1">Features</a></li>
             <li><a href="/#pricing" class="nav-link text-xs font-semibold uppercase tracking-wide px-2 py-1">Pricing</a></li>
-            <li><a href="/guides" class="nav-link text-xs font-semibold uppercase tracking-wide px-2 py-1 text-blue-600 dark:text-blue-400">Claudekit Guides</a></li>
+            <li><a href="/guides" class="nav-link text-xs font-semibold uppercase tracking-wide px-2 py-1">Claudekit Guides</a></li>
           </ul>
         </nav>
 
@@ -109,4 +109,103 @@ const { class: className = '' } = Astro.props;
       });
     });
   }
+
+  // Active Navigation Highlighting
+  const navLinks = document.querySelectorAll('.nav-link');
+  const clearActive = () => navLinks.forEach(l => l.classList.remove('active'));
+
+  function setActiveByHash(hash) {
+    if (!hash) return;
+    clearActive();
+    // Try exact match first
+    let link = document.querySelector(`.nav-link[href="${hash}"]`);
+    // Then try contains
+    if (!link) link = document.querySelector(`.nav-link[href*="${hash}"]`);
+
+    if (link) {
+      link.classList.add('active');
+    }
+  }
+
+  // Logic for highlighting based on current page/section
+  function updateActiveNav() {
+    const path = window.location.pathname;
+    const hash = window.location.hash;
+
+    // 1. Guides Page
+    if (path.startsWith('/guides') || path.startsWith('/ck-guides')) {
+      clearActive();
+      navLinks.forEach(link => {
+        if (link.getAttribute('href').includes('/guides')) {
+          link.classList.add('active');
+        }
+      });
+      return;
+    }
+
+    // 2. Landing Page (Home)
+    if (path === '/' || path === '/index.html') {
+      // If there is a hash on load, use it immediately
+      if (hash) {
+        setActiveByHash(hash);
+      }
+
+      // Scroll Spy
+      const sections = document.querySelectorAll('section[id]');
+
+      const observerCallback = (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            // Only update if we're not currently clicking (optional, but observer is usually trusted)
+            clearActive();
+            const activeLink = document.querySelector(`.nav-link[href*="#${id}"]`);
+            if (activeLink) {
+              activeLink.classList.add('active');
+            }
+          }
+        });
+      };
+
+      // Adjust rootMargin to trigger when section enters the top-middle area
+      const observer = new IntersectionObserver(observerCallback, {
+        rootMargin: '-20% 0px -80% 0px'
+      });
+
+      sections.forEach(section => {
+        observer.observe(section);
+      });
+
+      // Immediate active state on click
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          // Identify if it's a hash link
+          const href = link.getAttribute('href');
+          if (href.includes('#')) {
+             setTimeout(() => {
+                clearActive();
+                link.classList.add('active');
+             }, 10);
+          }
+        });
+      });
+    }
+  }
+
+  // Run on load
+  updateActiveNav();
+
+  // Handle back/forward navigation
+  window.addEventListener('popstate', () => {
+    updateActiveNav();
+  });
+
+  // Handle hash changes (manual or otherwise)
+  window.addEventListener('hashchange', () => {
+    if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+       setActiveByHash(window.location.hash);
+    }
+  });
+
 </script>
+```
