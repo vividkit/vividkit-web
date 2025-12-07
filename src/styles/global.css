@@ -91,7 +91,7 @@
   }
 
   .nav-link {
-    @apply transition-all duration-200 ease-out;
+    @apply block transition-all duration-300 ease-out rounded-full border border-transparent px-3 py-1.5;
     @apply text-slate-600 dark:text-slate-400;
   }
 
@@ -99,16 +99,20 @@
     @apply text-blue-600 bg-blue-500/5;
   }
 
+                .nav-link:focus-visible {
+                  @apply outline-none ring-2 ring-blue-500 text-blue-600 bg-blue-500/5 rounded-full;
+                }
   .dark .nav-link:hover {
     @apply text-blue-400 bg-blue-500/10;
   }
 
-  .nav-link.active {
-    @apply text-blue-600 bg-blue-500/10;
+                .dark .nav-link:focus-visible {
+                  @apply text-blue-400 bg-blue-500/10;
   }
 
-  .dark .nav-link.active {
-    @apply text-blue-400 bg-blue-500/15;
+                .nav-link.active {
+                  @apply bg-white dark:bg-white/10 text-blue-600 dark:text-blue-400 shadow-md shadow-black/5;
+                  @apply border-slate-200 dark:border-white/10;
   }
 
   .cta-button {
