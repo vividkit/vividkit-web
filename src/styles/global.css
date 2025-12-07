@@ -112,8 +112,8 @@
   }
 
   .cta-button {
-    background: linear-gradient(to right, #2563EB, #3B82F6);
-    @apply transition-all duration-300 ease-out;
+    background: linear-gradient(135deg, #2563eb, #06b6d4);
+      @apply transition-all duration-300 ease-out text-white shadow-lg shadow-blue-500/20;
   }
 
   .cta-button:hover {
