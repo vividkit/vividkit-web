@@ -10,40 +10,42 @@ interface Props {
 const { class: className = '' } = Astro.props;
 ---
 
-<header class="fixed top-4 left-4 right-4 z-50 transition-all duration-300" id="main-header">
-  <div class="glass-card bg-white/90 dark:bg-surface-900/90 rounded-2xl max-w-6xl mx-auto shadow-sm">
-    <div class="px-6 py-4">
+<header class="fixed top-6 left-6 right-6 z-50 transition-all duration-300" id="main-header">
+  <div class="glass-card bg-white/70 dark:bg-slate-950/70 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-full max-w-5xl mx-auto shadow-2xl shadow-black/5 ring-1 ring-black/5 dark:ring-white/10">
+    <div class="px-6 py-3 relative">
       <div class="flex items-center justify-between">
-        <a href="/#hero" class="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
+        <!-- Logo -->
+        <a href="/#hero" class="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer z-10">
           <Logo size="md" />
         </a>
 
-        <nav class="hidden md:flex items-center gap-1">
-          <a href="/#hero" class="nav-link active px-4 py-2 rounded-lg text-sm font-medium">Home</a>
-          <a href="/#features" class="nav-link px-4 py-2 rounded-lg text-sm font-medium">Features</a>
-          <a href="/#pricing" class="nav-link px-4 py-2 rounded-lg text-sm font-medium">Pricing</a>
-          <a href="/#claudekit" class="nav-link px-4 py-2 rounded-lg text-sm font-medium">ClaudeKit</a>
-          <a href="/#commands" class="nav-link px-4 py-2 rounded-lg text-sm font-medium">Commands</a>
-          <a href="/guides" class="nav-link px-4 py-2 rounded-lg text-sm font-medium">Guides</a>
+        <!-- Centered Navigation -->
+        <nav class="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-1">
+          <ul class="flex items-center gap-6 px-4 py-1.5 rounded-full bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 shadow-inner">
+            <li><a href="/#hero" class="nav-link text-xs font-semibold uppercase tracking-wide px-2 py-1">Home</a></li>
+            <li><a href="/#features" class="nav-link text-xs font-semibold uppercase tracking-wide px-2 py-1">Features</a></li>
+            <li><a href="/#pricing" class="nav-link text-xs font-semibold uppercase tracking-wide px-2 py-1">Pricing</a></li>
+            <li><a href="/guides" class="nav-link text-xs font-semibold uppercase tracking-wide px-2 py-1 text-blue-600 dark:text-blue-400">Claudekit Guides</a></li>
+          </ul>
         </nav>
 
-        <div class="flex items-center gap-3">
+        <!-- Right Actions -->
+        <div class="flex items-center gap-3 z-10">
           <!-- Language Selector -->
           <div class="relative group hidden sm:block">
-            <button class="flex items-center gap-1 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer">
-              <span>EN</span>
-              <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            <button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer text-slate-600 dark:text-slate-300">
+              <span class="text-xs font-bold">EN</span>
             </button>
-            <div class="absolute right-0 top-full mt-2 w-24 py-1 bg-white dark:bg-surface-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-right">
-              <a href="?lang=en" class="block px-4 py-2 text-sm text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20">English</a>
+            <div class="absolute right-0 top-full mt-4 w-32 py-2 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-right">
+              <a href="?lang=en" class="block px-4 py-2 text-sm text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/20">English</a>
               <a href="?lang=vi" class="block px-4 py-2 text-sm text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800">Tiếng Việt</a>
             </div>
           </div>
 
           <!-- Theme Toggle Button -->
-          <button id="theme-toggle" class="p-2 rounded-xl glass-card text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer" aria-label="Toggle theme">
-            <!-- Sun icon (shown in dark mode) -->
-            <svg class="w-5 h-5 text-slate-700 dark:text-yellow-400 hidden dark:block sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <button id="theme-toggle" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer text-slate-600 dark:text-slate-300" aria-label="Toggle theme">
+            <!-- Sun icon -->
+            <svg class="w-4 h-4 hidden dark:block sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="12" cy="12" r="5"/>
               <line x1="12" y1="1" x2="12" y2="3"/>
               <line x1="12" y1="21" x2="12" y2="23"/>
@@ -54,15 +56,15 @@ const { class: className = '' } = Astro.props;
               <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
               <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
             </svg>
-            <!-- Moon icon (shown in light mode) -->
-            <svg class="w-5 h-5 text-slate-700 dark:hidden moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <!-- Moon icon -->
+            <svg class="w-4 h-4 dark:hidden moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
             </svg>
           </button>
 
-          <a href="/#waitlist" class="hidden md:flex items-center gap-2 px-5 py-2.5 rounded-xl cta-button font-medium text-sm text-white shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40 cursor-pointer">
+          <a href="/#waitlist" class="hidden md:flex items-center gap-2 px-5 py-2 rounded-full cta-button font-bold text-xs cursor-pointer">
             <span>Get Early Access</span>
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
             </svg>
           </a>

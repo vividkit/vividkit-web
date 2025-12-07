@@ -93,8 +93,7 @@ const navItems = [
 </aside>
 
 <!-- Mobile Navigation (Sticky Top) -->
-<!-- Optimized for placement inside main container -->
-<div class="lg:hidden sticky top-20 z-40 -mx-4 sm:-mx-6 mb-8 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-y border-slate-200/50 dark:border-slate-800/50 px-4 sm:px-6 py-3">
+<div class="lg:hidden sticky top-20 z-40 -mx-4 sm:-mx-6 lg:-mx-8 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-y border-slate-200/50 dark:border-slate-800/50 px-4 sm:px-6 lg:px-8 py-3 mb-8">
   <div class="mobile-nav-scroll flex gap-2 overflow-x-auto no-scrollbar">
     {navItems.map((item) => (
       <a
@@ -111,3 +110,17 @@ const navItems = [
     ))}
   </div>
 </div>
+
+<style>
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .mask-gradient {
+    -webkit-mask-image: linear-gradient(to right, black 95%, transparent 100%);
+    mask-image: linear-gradient(to right, black 95%, transparent 100%);
+  }
+</style>
