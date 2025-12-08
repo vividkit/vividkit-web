@@ -422,7 +422,7 @@ export default {
   'claudekit.feature2.title': '60+ Commands & 40+ Skills',
   'claudekit.feature2.description': 'Bootstrap, plan, code, fix, test, design — complete toolkit from idea to deployment.',
   'claudekit.feature3.title': 'UI/UX Pro Max Skill',
-  'claudekit.feature3.description': '50 UI styles, 21 color palettes, 50 font pairings — instant professional designs.',
+  'claudekit.feature3.description': '50+ UI styles, 21+ color, 50+ font — instant professional designs.',
   'claudekit.cta_title': 'Get ClaudeKit with 20% Discount',
   'claudekit.cta_description': 'You\'ll need ClaudeKit to use VividKit. Purchase through our referral link to get an exclusive 20% discount.',
   'claudekit.cta_button': 'Get ClaudeKit (20% OFF)',
