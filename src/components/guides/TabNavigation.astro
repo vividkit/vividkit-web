@@ -1,6 +1,6 @@
 ---
 interface Props {
-  activeTab: 'cli' | 'workflows' | 'commands' | 'uiux';
+  activeTab: 'cli' | 'workflows' | 'commands' | 'uiux' | 'resume';
 }
 
 const { activeTab } = Astro.props;
@@ -25,10 +25,17 @@ const navItems = [
     href: '/guides/commands',
   },
   {
+
     id: 'uiux',
     label: 'UI/UX Pro Max',
     icon: '🎨',
     href: '/guides/uiux',
+  },
+  {
+    id: 'resume',
+    label: 'Resume Session',
+    icon: '🔄',
+    href: '/guides/resume',
   },
 ];
 ---
@@ -62,7 +69,7 @@ const navItems = [
     <!-- Sidebar Header -->
     <div class="px-4 mb-4 mt-2">
       <h2 class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
-        Documentation
+        GUIDES & TIPS
       </h2>
     </div>
 
