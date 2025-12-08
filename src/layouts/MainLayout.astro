@@ -1,15 +1,19 @@
 ---
 import type { SEOMeta } from '@/types';
 import '@/styles/global.css';
+import type { Language } from '@/i18n';
 
-interface Props extends SEOMeta {}
+interface Props extends SEOMeta {
+  lang?: Language;
+}
 
 const {
   title,
   description,
   canonical,
   ogImage = '/og-image.png',
-  ogType = 'website'
+  ogType = 'website',
+  lang = 'en'
 } = Astro.props;
 
 const fullTitle = `${title} | VividKit`;
@@ -19,7 +23,7 @@ const fullOgImage = `${siteUrl}${ogImage}`;
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -35,6 +39,11 @@ const fullOgImage = `${siteUrl}${ogImage}`;
     <meta name="title" content={fullTitle} />
     <meta name="description" content={description} />
     <link rel="canonical" href={fullCanonical} />
+
+    <!-- hreflang tags for all pages -->
+    <link rel="alternate" hreflang="en" href={`${siteUrl}${canonical?.replace('/vi', '') || '/'}`} />
+    <link rel="alternate" hreflang="vi" href={`${siteUrl}/vi${canonical?.replace('/vi', '') || '/'}`} />
+    <link rel="alternate" hreflang="x-default" href={`${siteUrl}${canonical?.replace('/vi', '') || '/'}`} />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content={ogType} />

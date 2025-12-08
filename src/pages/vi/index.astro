@@ -10,32 +10,33 @@ import Pricing from '@/components/sections/Pricing.astro';
 import ClaudeKit from '@/components/sections/ClaudeKit.astro';
 import Commands from '@/components/sections/Commands.astro';
 import WaitlistForm from '@/components/sections/WaitlistForm.astro';
-import { SITE_CONFIG } from '@/data/constants';
+import { useTranslations } from '@/i18n/utils';
 import type { Language } from '@/i18n';
 
-const lang: Language = 'en';
+const lang: Language = 'vi';
+const t = useTranslations(lang);
 ---
 
 <MainLayout
-  title={`${SITE_CONFIG.name} - ${SITE_CONFIG.tagline}`}
-  description={SITE_CONFIG.description}
-  canonical="/"
-  lang="en"
+  title={t('site.title')}
+  description={t('site.description')}
+  canonical="/vi/"
+  lang="vi"
 >
   <AmbientBackground />
-  <Header lang="en" />
+  <Header lang="vi" />
 
   <main>
-    <Hero lang="en" />
+    <Hero lang="vi" />
     <Problem />
     <Features />
     <Pricing />
     <ClaudeKit />
     <Commands />
-    <WaitlistForm lang="en" />
+    <WaitlistForm lang="vi" />
   </main>
 
-  <Footer lang="en" />
+  <Footer lang="vi" />
 
   <script>
     import { initScrollAnimations } from '@/scripts/intersection-observer';

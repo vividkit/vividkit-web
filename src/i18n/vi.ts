@@ -1,0 +1,137 @@
+export default {
+  // Site metadata
+  'site.title': 'VividKit - Giao Diện Trực Quan Cho ClaudeKit',
+  'site.description': 'Giao diện trực quan cho các lệnh và skill AI của ClaudeKit. Không cần ghi nhớ. Không cần chuyên môn terminal. Chỉ cần duyệt và nhấp.',
+
+  // Navigation
+  'nav.home': 'Trang Chủ',
+  'nav.features': 'Tính Năng',
+  'nav.pricing': 'Bảng Giá',
+  'nav.claudekit': 'ClaudeKit',
+  'nav.commands': 'Lệnh',
+  'nav.guides': 'Hướng Dẫn',
+
+  // Hero section
+  'hero.badge': 'Ứng Dụng Desktop Sắp Ra Mắt',
+  'hero.headline.line1': 'ClaudeKit,',
+  'hero.headline.line2': 'Trở Nên Trực Quan',
+  'hero.subtitle': 'Giao diện trực quan cho các lệnh và skill AI của ClaudeKit. Không cần ghi nhớ. Không cần chuyên môn terminal. Chỉ cần duyệt và nhấp.',
+  'hero.cta.primary': 'Tham Gia Danh Sách Chờ',
+  'hero.cta.secondary': 'Xem Cách Hoạt Động',
+  'hero.claudekit.info': 'Dành cho người dùng ClaudeKit: Biến các quy trình CLI thành trải nghiệm trực quan, dễ tiếp cận. Dành cho cả developer và non-developer.',
+
+  // Features
+  'feature.problems.terminal.title': 'Lệnh Terminal',
+  'feature.problems.terminal.description': 'Ghi nhớ cú pháp và flag CLI phức tạp làm giảm sự sáng tạo',
+  'feature.problems.code.title': 'Tích Hợp Code',
+  'feature.problems.code.description': 'Thiết lập và cấu hình thủ công lãng phí thời gian phát triển quý giá',
+  'feature.problems.lock.title': 'Rào Cản Truy Cập',
+  'feature.problems.lock.description': 'Yêu cầu kỹ thuật loại trừ người không phải developer khỏi AI coding',
+  'feature.solutions.zap.title': 'Không Cần Thiết Lập',
+  'feature.solutions.zap.description': 'Bắt đầu coding ngay lập tức mà không cần cài đặt hay cấu hình',
+  'feature.solutions.eye.title': 'Giao Diện Trực Quan',
+  'feature.solutions.eye.description': 'GUI trực quan thay thế cho giao diện dòng lệnh đáng sợ',
+  'feature.solutions.puzzle.title': 'Tích Hợp Liền Mạch',
+  'feature.solutions.puzzle.description': 'Hoạt động với các công cụ và quy trình hiện có của bạn',
+  'feature.solutions.users.title': 'Truy Cập Phổ Quát',
+  'feature.solutions.users.description': 'Thiết kế cho cả developer và người dùng không chuyên kỹ thuật',
+
+  // Features highlights
+  'feature.highlight1.title': 'Năng Suất Tăng Cường',
+  'feature.highlight1.description': 'Các tính năng nâng cao giúp khuếch đại quy trình coding của bạn',
+  'feature.highlight2.title': 'Hỗ Trợ Ưu Tiên',
+  'feature.highlight2.description': 'Nhận trợ giúp khi bạn cần với hỗ trợ chuyên dụng',
+  'feature.highlight3.title': 'Truy Cập Sớm',
+  'feature.highlight3.description': 'Thử các tính năng mới trước khi phát hành công khai',
+
+  // Waitlist form
+  'form.name': 'Tên của bạn',
+  'form.email': 'Email của bạn',
+  'form.role.label': 'Tôi là...',
+  'form.role.founder': 'Founder không chuyên kỹ thuật',
+  'form.role.designer': 'Designer',
+  'form.role.developer': 'Developer',
+  'form.role.other': 'Khác',
+  'form.message': 'Bạn muốn xây dựng gì với VividKit? (tùy chọn)',
+  'form.submit': 'Tham Gia Danh Sách Chờ',
+  'form.assurance': 'Truy cập sớm miễn phí. Không cần thẻ tín dụng. Không spam.',
+  'form.success': 'Cảm ơn bạn đã tham gia! Chúng tôi sẽ liên hệ sớm.',
+  'form.error': 'Đã xảy ra lỗi. Vui lòng thử lại.',
+
+  // Pricing
+  'pricing.title': 'Giá Cả Đơn Giản, Minh Bạch',
+  'pricing.subtitle': 'Chọn gói phù hợp với bạn',
+  'pricing.free.title': 'Miễn Phí',
+  'pricing.free.price': '0₫',
+  'pricing.free.description': 'Hoàn hảo để bắt đầu',
+  'pricing.pro.title': 'Pro',
+  'pricing.pro.price': '$29',
+  'pricing.pro.description': 'Dành cho developer nghiêm túc',
+  'pricing.button.get_started': 'Bắt Đầu',
+  'pricing.button.join_waitlist': 'Tham Gia Danh Sách Chờ',
+
+  // Footer
+  'footer.tagline': 'Xây dựng mọi thứ mà không cần terminal friction. Được hỗ trợ bởi ClaudeKit Framework.',
+  'footer.copyright': '© 2025 VividKit. Đã đăng ký bản quyền.',
+
+  // Footer links
+  'footer.product': 'Sản Phẩm',
+  'footer.resources': 'Tài Nguyên',
+  'footer.company': 'Công Ty',
+  'footer.legal': 'Pháp Lý',
+  'footer.links.features': 'Tính Năng',
+  'footer.links.pricing': 'Bảng Giá',
+  'footer.links.commands': 'Lệnh',
+  'footer.links.waitlist': 'Danh Sách Chờ',
+  'footer.links.documentation': 'Tài Liệu',
+  'footer.links.guides': 'Hướng Dẫn',
+  'footer.links.api': 'API Reference',
+  'footer.links.examples': 'Ví Dụ',
+  'footer.links.about': 'Về Chúng Tôi',
+  'footer.links.blog': 'Blog',
+  'footer.links.careers': 'Tuyển Dụng',
+  'footer.links.contact': 'Liên Hệ',
+  'footer.links.privacy': 'Quyền Riêng Tư',
+  'footer.links.terms': 'Điều Khoản',
+  'footer.links.cookies': 'Cookies',
+  'footer.links.license': 'Giấy Phép',
+
+  // Guides
+  'guides.title': 'Hướng Dẫn ClaudeKit',
+  'guides.subtitle': 'Học cách sử dụng ClaudeKit hiệu quả',
+  'guides.cli.title': 'Hướng Dẫn CLI',
+  'guides.cli.description': 'Hướng dẫn đầy đủ về các lệnh CLI của ClaudeKit',
+  'guides.commands.title': 'Tham Khảo Lệnh',
+  'guides.commands.description': 'Danh sách đầy đủ tất cả các lệnh có sẵn',
+  'guides.workflows.title': 'Quy Trình',
+  'guides.workflows.description': 'Thực tiễn tốt và quy trình phổ biến',
+  'guides.uiux.title': 'Hướng Dẫn UI/UX',
+  'guides.uiux.description': 'Hướng dẫn thiết kế và triển khai',
+  'guides.ccs.title': 'Custom Components',
+  'guides.ccs.description': 'Xây dựng custom components và skills',
+  'guides.permissions.title': 'Quyền',
+  'guides.permissions.description': 'Bảo mật và kiểm soát truy cập',
+  'guides.fix_logs.title': 'Hướng Dẫn Fix Logs',
+  'guides.fix_logs.description': 'Gỡ lỗi và giải quyết lỗi',
+  'guides.resume.title': 'Hướng Dẫn Resume',
+  'guides.resume.description': 'Quy trình tiếp tục dự án',
+
+  // Common
+  'common.loading': 'Đang tải...',
+  'common.error': 'Lỗi',
+  'common.back': 'Quay lại',
+  'common.next': 'Tiếp theo',
+  'common.previous': 'Trước đó',
+  'common.close': 'Đóng',
+  'common.save': 'Lưu',
+  'common.cancel': 'Hủy',
+  'common.submit': 'Gửi',
+
+  // Section titles
+  'section.features': 'Tính Năng',
+  'section.claudekit': 'ClaudeKit',
+  'section.commands': 'Lệnh',
+  'section.pricing': 'Bảng Giá',
+  'section.waitlist': 'Tham Gia Danh Sách Chờ',
+
+} as const;

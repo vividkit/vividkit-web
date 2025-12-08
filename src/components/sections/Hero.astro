@@ -1,42 +1,51 @@
 ---
+import { useTranslations } from '@/i18n/utils';
+import { useTranslatedPath, getLangFromUrl, type Language } from '@/i18n';
+
 interface Props {
   class?: string;
+  lang?: Language;
 }
 
-const { class: className = '' } = Astro.props;
+const { class: className = '', lang } = Astro.props;
+
+// Get language from URL if not provided
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+const translatePath = useTranslatedPath(currentLang);
 ---
 
 <section id="hero" class={`relative min-h-screen flex items-center justify-center pt-24 pb-16 ${className}`}>
   <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
     <div class="fade-in-up mb-6 mt-10 inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full glass-card text-sm font-medium">
       <span class="w-2 h-2 rounded-full bg-green-400 pulse-glow"></span>
-      <span class="text-slate-600 dark:text-slate-300">Desktop App Coming Soon</span>
+      <span class="text-slate-600 dark:text-slate-300">{t('hero.badge')}</span>
     </div>
 
     <h1 class="font-heading text-5xl md:text-7xl font-bold mb-6 leading-tight fade-in-up" style="animation-delay: 0.1s;">
-      <span class="block text-slate-900 dark:text-white mb-2">ClaudeKit,</span>
-      <span class="block bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(6,182,212,0.4)]">Made Visual</span>
+      <span class="block text-slate-900 dark:text-white mb-2">{t('hero.headline.line1')}</span>
+      <span class="block bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(6,182,212,0.4)]">{t('hero.headline.line2')}</span>
     </h1>
 
     <p class="text-xl md:text-2xl text-slate-600 dark:text-slate-300 mb-8 max-w-3xl mx-auto leading-relaxed fade-in-up" style="animation-delay: 0.2s;">
-      Visual interface for ClaudeKit's AI commands and skills. No memorization. No terminal expertise. Just browse and click.
+      {t('hero.subtitle')}
     </p>
 
     <div class="fade-in-up mb-10 glass-card-light p-5 rounded-2xl max-w-2xl mx-auto" style="animation-delay: 0.3s;">
       <p class="text-sm text-slate-600 dark:text-slate-300">
-        <strong class="text-slate-900 dark:text-white">Built for ClaudeKit users:</strong> Transform CLI workflows into visual, accessible experiences. Developers and non-developers alike.
+        <strong class="text-slate-900 dark:text-white">{t('hero.claudekit.info')}</strong>
       </p>
     </div>
 
     <div class="flex flex-col sm:flex-row items-center justify-center gap-4 fade-in-up" style="animation-delay: 0.4s;">
-      <a href="#waitlist" class="cta-button px-8 py-4 rounded-2xl font-bold text-lg text-white flex items-center gap-3 cursor-pointer">
-        Join the Waitlist
+      <a href={translatePath('#waitlist')} class="cta-button px-8 py-4 rounded-2xl font-bold text-lg text-white flex items-center gap-3 cursor-pointer">
+        {t('hero.cta.primary')}
         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
         </svg>
       </a>
-      <a href="#features" class="px-8 py-4 rounded-2xl glass-card hover:bg-white dark:hover:bg-slate-800/60 font-semibold text-lg transition-all cursor-pointer">
-        See How It Works
+      <a href={translatePath('#features')} class="px-8 py-4 rounded-2xl glass-card hover:bg-white dark:hover:bg-slate-800/60 font-semibold text-lg transition-all cursor-pointer">
+        {t('hero.cta.secondary')}
       </a>
     </div>
 

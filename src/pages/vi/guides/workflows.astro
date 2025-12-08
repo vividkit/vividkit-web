@@ -1,0 +1,18 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import WorkflowsGuide from '@/components/guides/WorkflowsGuide.astro';
+import { useTranslations } from '@/i18n/utils';
+import type { Language } from '@/i18n';
+
+const lang: Language = 'vi';
+const t = useTranslations(lang);
+---
+
+<GuidesLayout
+  title={`${t('guides.workflows.title')} - ${t('site.title')}`}
+  description={t('guides.workflows.description')}
+  activeTab="workflows"
+  lang="vi"
+>
+  <WorkflowsGuide lang="vi" />
+</GuidesLayout>
