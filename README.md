@@ -6,13 +6,51 @@ VividKit transforms AI coding commands into an intuitive GUI, making ClaudeKit a
 
 ## 🖥️ VividKit Desktop App (Coming Soon)
 
-VividKit Desktop will be a native application that brings the power of ClaudeKit to your desktop:
+**Visual Intelligence Layer for ClaudeKit CLI**
 
-- **Visual Command Builder**: Construct complex commands with drag-and-drop simplicity
-- **One-Click Workflows**: Execute multi-step operations with a single click
-- **Real-Time Previews**: See command outputs and previews instantly
-- **Cross-Platform**: Available for macOS, Windows, and Linux
-- **Offline Support**: Work without internet connectivity
+VividKit Desktop transforms the ClaudeKit CLI experience with persistent visual dashboards and GUI-driven interactions.
+
+### Key Features (MVP)
+
+#### 1. Visual Catalog & Discovery
+- Browse all agents, skills, and commands in a visual interface
+- No more digging through markdown files
+- Searchable, filterable capability explorer
+
+#### 2. Persistent Visual Dashboards
+- Live execution monitoring with graphs and timelines
+- Token usage visualization across runs
+- Agent performance metrics and trends
+- Progress tracking that persists after terminal closes
+
+#### 3. Run History & Comparison
+- Archive of all past agent executions
+- Side-by-side run comparisons
+- Pattern recognition across multiple sessions
+- Execution timeline visualization
+
+#### 4. Syntax-Free Interaction
+- GUI-driven agent launching (no command memorization)
+- Visual parameter configuration
+- Point-and-click workflow building
+
+#### 5. Non-Technical Accessibility
+- Stakeholder-friendly interface for PMs/designers
+- Read-only views for team members
+- Visual summaries of agent capabilities and results
+
+#### 6. Auto-Update ClaudeKit Projects
+- Automatic sync with latest ClaudeKit updates
+- No manual `update/init` commands required daily
+- Background updates with changelog notifications
+
+#### 7. Integrated CCS Delegation
+- Built-in [CCS (Claude Code Switcher)](https://github.com/kaitranntt/ccs) integration
+- Switch between Claude, Gemini, Codex & custom AI profiles instantly
+- Multi-account management with visual profile selector
+- One-click task delegation to save Claude API costs
+
+*"ClaudeKit's power, now with eyes."*
 
 **[→ Join the Waiting List](https://vividkit.dev)**
 
@@ -20,125 +58,18 @@ VividKit Desktop will be a native application that brings the power of ClaudeKit
 
 ## 📚 ClaudeKit with Claude Code CLI
 
-While waiting for VividKit Desktop, master ClaudeKit through our comprehensive documentation. ClaudeKit extends Claude Code CLI with 60+ commands and 40+ specialized skills.
+While waiting for VividKit Desktop, master ClaudeKit through our comprehensive documentation:
 
-### Quick Start
-
-```bash
-# Install Claude Code CLI
-npm install -g @anthropic/claude-code
-
-# Navigate to your project
-cd your-project
-
-# Start Claude Code
-claude
-```
-
-### Essential Commands
-
-| Command | Description | Use Case |
-|---------|-------------|----------|
-| `/cook [task]` | Implement features step-by-step | Building new functionality |
-| `/plan [task]` | Create implementation plans | Complex feature planning |
-| `/fix [issue]` | Analyze and fix issues | Debugging and error resolution |
-| `/ask [question]` | Answer technical questions | Quick clarifications |
-| `/scout [prompt]` | Search codebase quickly | Finding files and patterns |
-| `/test` | Run and analyze tests | Quality assurance |
-
-### Best Practices
-
-#### 1. Start with Planning
-```bash
-# For complex features, always plan first
-/plan:hard implement user authentication with OAuth2
-
-# For simpler tasks, use fast planning
-/plan:fast add loading spinner to submit button
-```
-
-#### 2. Use the Right Command Variant
-- `/cook` - Standard implementation with testing
-- `/cook:auto` - Autonomous implementation ("trust me bro")
-- `/cook:auto:fast` - Quick implementation without research
-- `/cook:auto:parallel` - Parallel execution for large features
-
-#### 3. Fix Issues Intelligently
-```bash
-# Standard fix
-/fix the login form isn't validating emails
-
-# Hard issues requiring investigation
-/fix:hard memory leak in websocket connection
-
-# Fix and run tests
-/fix:test failing integration tests
-```
-
-#### 4. Leverage Specialized Skills
-ClaudeKit includes 40+ skills that auto-activate based on context:
-
-| Skill | Triggers On |
+| Guide | Description |
 |-------|-------------|
-| `ui-ux-pro-max` | UI/UX design, styling, components |
-| `backend-development` | APIs, databases, authentication |
-| `debugging` | Bug fixes, error investigation |
-| `frontend-development` | React, TypeScript, components |
-| `devops` | Docker, CI/CD, cloud deployment |
-
-#### 5. Efficient Workflow Patterns
-
-**Feature Development:**
-```bash
-/plan [feature]           # Create plan
-/code [plan]              # Implement from plan
-/test                     # Verify implementation
-/git:cm                   # Commit changes
-```
-
-**Bug Fixing:**
-```bash
-/fix:logs [error]         # Analyze logs first
-/fix [issue]              # Fix the issue
-/test                     # Verify fix
-```
-
-**Code Review:**
-```bash
-/review:codebase          # Comprehensive review
-/git:pr                   # Create pull request
-```
-
-### Pro Tips
-
-1. **Use Context Efficiently**
-   - Keep prompts concise but specific
-   - Reference file paths when possible: `fix the bug in src/utils/auth.ts:45`
-
-2. **Parallel Execution**
-   - Use `/cook:auto:parallel` for features spanning multiple files
-   - Agents work concurrently, reducing total time
-
-3. **Leverage CCS Delegation**
-   - Use `/ccs [task]` to delegate to external AI tools
-   - Great for deterministic, repetitive tasks
-
-4. **Documentation Generation**
-   - `/docs:init` - Create initial documentation
-   - `/docs:update` - Update docs after changes
-
-5. **Git Workflow Integration**
-   - `/git:cm` - Stage and commit with conventional commits
-   - `/git:pr` - Create pull requests with proper descriptions
-
-### Command Reference Links
-
-Explore our detailed guides:
-- [CLI Guide](https://vividkit.dev/guides) - Installation and setup
-- [Commands Guide](https://vividkit.dev/guides/commands) - All 60+ commands
-- [Workflows Guide](https://vividkit.dev/guides/workflows) - Best practices
-- [CCS Guide](https://vividkit.dev/guides/ccs) - Custom delegation
-- [Fix Logs Guide](https://vividkit.dev/guides/fix-logs) - Debugging strategies
+| [CLI Guide](https://vividkit.dev/guides) | Installation and setup |
+| [Commands](https://vividkit.dev/guides/commands) | All 60+ commands reference |
+| [Workflows](https://vividkit.dev/guides/workflows) | Best practices and patterns |
+| [CCS](https://vividkit.dev/guides/ccs) | Claude Code Switcher for multi-model delegation |
+| [UI/UX](https://vividkit.dev/guides/uiux) | Design skills and styling |
+| [Resume](https://vividkit.dev/guides/resume) | Session recovery and continuation |
+| [Permissions](https://vividkit.dev/guides/permissions) | Permissions settings |
+| [Fix Logs](https://vividkit.dev/guides/fix-logs) | Debugging strategies |
 
 ---
 
