@@ -40,6 +40,17 @@
     scroll-behavior: smooth;
   }
 
+  /* Global focus-visible styles for accessibility */
+  :focus-visible {
+    outline: 2px solid #3B82F6;
+    outline-offset: 2px;
+  }
+
+  /* Skip focus-visible ring for elements with custom focus handling */
+  .focus-custom:focus-visible {
+    outline: none;
+  }
+
     /* Add scroll margin to handle fixed header overlap */
     section[id],
     h1[id],
