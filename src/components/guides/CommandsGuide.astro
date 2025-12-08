@@ -1,79 +1,614 @@
 ---
-import { commandCategories } from '@/data/guides/commands';
+const categories = [
+  {
+    name: 'Planning & Development',
+    description: 'Build features from scratch',
+    color: 'blue',
+    icon: `<path d="M9 5H2v7l6.29 6.29c.94.94 2.48.94 3.42 0l3.58-3.58c.94-.94.94-2.48 0-3.42L9 5z"/>`,
+    commands: [
+      { command: '/plan', complexity: '⚡⚡⚡', label: 'Medium', desc: 'Create detailed implementation plans' },
+      { command: '/code', complexity: '⚡', label: 'Easy', desc: 'Implement existing plans with tests' },
+      { command: '/cook', complexity: '⚡⚡⚡', label: 'Medium', desc: 'All-in-one: plan + code + test' },
+      { command: '/bootstrap', complexity: '⚡⚡⚡⚡⚡', label: 'Advanced', desc: 'Create complete projects from scratch' },
+      { command: '/brainstorm', complexity: '⚡⚡', label: 'Easy', desc: 'Explore ideas and possibilities' }
+    ]
+  },
+  {
+    name: 'Fixing & Debugging',
+    description: 'Solve problems and fix bugs',
+    color: 'red',
+    icon: `<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>`,
+    commands: [
+      { command: '/fix', complexity: '⚡⚡', label: 'Medium', desc: 'Smart auto-fix for any issue' },
+      { command: '/debug', complexity: '⚡⚡', label: 'Medium', desc: 'Find the root cause of issues' },
+      { command: '/fix:test', complexity: '⚡', label: 'Easy', desc: 'Fix failing tests' },
+      { command: '/fix:ui', complexity: '⚡', label: 'Easy', desc: 'Fix UI/design issues' },
+      { command: '/fix:types', complexity: '⚡', label: 'Easy', desc: 'Fix TypeScript errors' },
+      { command: '/fix:ci', complexity: '⚡', label: 'Medium', desc: 'Fix CI/CD pipeline issues' }
+    ]
+  },
+  {
+    name: 'Testing & Quality',
+    description: 'Ensure your code works perfectly',
+    color: 'green',
+    icon: `<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>`,
+    commands: [
+      { command: '/test', complexity: '⚡', label: 'Easy', desc: 'Run tests and analyze results' },
+      { command: '/review:codebase', complexity: '⚡⚡', label: 'Medium', desc: 'Comprehensive code review' },
+      { command: '/watzup', complexity: '⚡', label: 'Easy', desc: 'Review recent changes' }
+    ]
+  },
+  {
+    name: 'Navigation & Help',
+    description: 'Get answers and explore your code',
+    color: 'purple',
+    icon: `<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>`,
+    commands: [
+      { command: '/ask', complexity: '⚡', label: 'Easy', desc: 'Ask technical questions' },
+      { command: '/scout', complexity: '⚡⚡', label: 'Medium', desc: 'Search and explore codebase' },
+      { command: '/ck-help', complexity: '⚡', label: 'Easy', desc: 'Interactive ClaudeKit guide' }
+    ]
+  },
+  {
+    name: 'Design & Content',
+    description: 'Create beautiful designs and content',
+    color: 'pink',
+    icon: `<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>`,
+    commands: [
+      { command: '/design:fast', complexity: '⚡', label: 'Easy', desc: 'Quick design generation' },
+      { command: '/design:good', complexity: '⚡⚡', label: 'Medium', desc: 'High-quality designs' },
+      { command: '/content:enhance', complexity: '⚡', label: 'Easy', desc: 'Improve existing content' }
+    ]
+  },
+  {
+    name: 'Git & Version Control',
+    description: 'Manage your code versions',
+    color: 'orange',
+    icon: `<circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><line x1="6" y1="9" x2="6" y2="21"/>`,
+    commands: [
+      { command: '/git:cm', complexity: '⚡', label: 'Easy', desc: 'Smart commit messages' },
+      { command: '/git:pr', complexity: '⚡', label: 'Easy', desc: 'Create pull requests' },
+      { command: '/git:merge', complexity: '⚡⚡', label: 'Medium', desc: 'Merge with conflict resolution' }
+    ]
+  }
+];
 
-const colorMap: Record<string, string> = {
-  purple: 'group-hover:border-purple-500/30 group-hover:bg-purple-500/5',
-  blue: 'group-hover:border-blue-500/30 group-hover:bg-blue-500/5',
-  green: 'group-hover:border-green-500/30 group-hover:bg-green-500/5',
-  pink: 'group-hover:border-pink-500/30 group-hover:bg-pink-500/5',
-  orange: 'group-hover:border-orange-500/30 group-hover:bg-orange-500/5',
-  indigo: 'group-hover:border-indigo-500/30 group-hover:bg-indigo-500/5'
+const styles = {
+  blue: {
+    border: 'border-blue-500/30 group-hover:border-blue-500/50',
+    bg: 'bg-gradient-to-r from-blue-500/10 to-cyan-500/10',
+    text: 'text-blue-600 dark:text-blue-400',
+    hover: 'hover:border-blue-500/30',
+    badge: 'bg-amber-500/20 text-amber-600 dark:text-amber-400'
+  },
+  red: {
+    border: 'border-red-500/30 group-hover:border-red-500/50',
+    bg: 'bg-gradient-to-r from-red-500/10 to-orange-500/10',
+    text: 'text-red-600 dark:text-red-400',
+    hover: 'hover:border-red-500/30',
+    badge: 'bg-amber-500/20 text-amber-600 dark:text-amber-400'
+  },
+  green: {
+    border: 'border-green-500/30 group-hover:border-green-500/50',
+    bg: 'bg-gradient-to-r from-green-500/10 to-emerald-500/10',
+    text: 'text-green-600 dark:text-green-400',
+    hover: 'hover:border-green-500/30',
+    badge: 'bg-green-500/20 text-green-600 dark:text-green-400'
+  },
+  purple: {
+    border: 'border-purple-500/30 group-hover:border-purple-500/50',
+    bg: 'bg-gradient-to-r from-purple-500/10 to-pink-500/10',
+    text: 'text-purple-600 dark:text-purple-400',
+    hover: 'hover:border-purple-500/30',
+    badge: 'bg-green-500/20 text-green-600 dark:text-green-400'
+  },
+  pink: {
+    border: 'border-pink-500/30 group-hover:border-pink-500/50',
+    bg: 'bg-gradient-to-r from-pink-500/10 to-rose-500/10',
+    text: 'text-pink-600 dark:text-pink-400',
+    hover: 'hover:border-pink-500/30',
+    badge: 'bg-green-500/20 text-green-600 dark:text-green-400'
+  },
+  orange: {
+    border: 'border-orange-500/30 group-hover:border-orange-500/50',
+    bg: 'bg-gradient-to-r from-orange-500/10 to-amber-500/10',
+    text: 'text-orange-600 dark:text-orange-400',
+    hover: 'hover:border-orange-500/30',
+    badge: 'bg-green-500/20 text-green-600 dark:text-green-400'
+  }
 };
 
-const iconColorMap: Record<string, string> = {
-  purple: 'text-purple-600 dark:text-purple-400',
-  blue: 'text-blue-600 dark:text-blue-400',
-  green: 'text-green-600 dark:text-green-400',
-  pink: 'text-pink-600 dark:text-pink-400',
-  orange: 'text-orange-600 dark:text-orange-400',
-  indigo: 'text-indigo-600 dark:text-indigo-400'
+const complexityColors: Record<string, string> = {
+  Easy: 'bg-green-500/20 text-green-700 dark:text-green-400',
+  Medium: 'bg-amber-500/20 text-amber-700 dark:text-amber-400',
+  Advanced: 'bg-red-500/20 text-red-700 dark:text-red-400'
 };
 ---
 
-<div class="space-y-12">
+<style>
+  @keyframes pulse-slow {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+  .pulse-icon {
+    animation: pulse-slow 3s ease-in-out infinite;
+  }
+  @keyframes flow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+  .flow-arrow {
+    animation: flow 2s ease-in-out infinite;
+  }
+</style>
+
+<div class="space-y-8 mt-6">
+
+  <!-- Page Header -->
   <div class="text-center space-y-4">
-    <h2 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
-      Slash Commands Reference
+    <h2 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight flex items-center justify-center gap-3">
+      <svg class="w-10 h-10 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+        <path d="M2 17l10 5 10-5"/>
+        <path d="M2 12l10 5 10-5"/>
+      </svg>
+      Slash Commands Guide
     </h2>
     <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-      Discover all available slash commands organized by category. Each command is designed to solve specific development challenges efficiently.
+      Your AI assistant speaks slash — here's your dictionary 🚀
     </p>
   </div>
 
-  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-    {commandCategories.map((category) => (
-      <div class={`group relative p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${colorMap[category.color] || ''}`}>
-        <div class="space-y-6">
-          <div class="flex items-center gap-4 border-b border-slate-100 dark:border-slate-800/50 pb-4">
-            <span class={`text-3xl ${iconColorMap[category.color] || 'text-slate-600'}`}>{category.icon}</span>
-            <h3 id={category.name.toLowerCase()} class="text-xl font-bold text-slate-900 dark:text-white scroll-mt-32">
-              {category.name}
-            </h3>
-          </div>
+  <!-- Hero Banner -->
+  <div class="flex items-start gap-4 p-6 rounded-xl bg-purple-500/5 dark:bg-purple-500/10 border border-purple-200 dark:border-purple-500/20">
+    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-500/20 flex items-center justify-center">
+      <svg class="w-5 h-5 text-purple-600 dark:text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-1 1.5-2.4 1.5-3.8 0-3.3-2.7-6-6-6-3.3 0-6 2.7-6 6 0 1.4.5 2.8 1.5 3.8.8.8 1.3 1.5 1.5 2.5"/>
+        <path d="M9 18h6"/>
+        <path d="M10 22h4"/>
+      </svg>
+    </div>
+    <div class="flex-1">
+      <div class="font-bold text-purple-700 dark:text-purple-400 mb-1 text-lg">What are Slash Commands?</div>
+      <div class="text-slate-600 dark:text-slate-400 leading-relaxed">
+        Think of slash commands as <strong>magic shortcuts</strong> 🪄 — just type <code class="px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 font-mono text-sm">/command</code> and let AI do the heavy lifting!
+        No coding required, just tell ClaudeKit what you want.
+      </div>
+      <div class="mt-4 p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-purple-100 dark:border-purple-500/10">
+        <p class="text-xs font-bold text-purple-700 dark:text-purple-400 mb-2 uppercase tracking-wide">Example</p>
+        <div class="flex items-center gap-3 flex-wrap">
+          <code class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-950 text-slate-700 dark:text-slate-300 font-mono text-sm border border-slate-200 dark:border-slate-800">/cook "add a login button"</code>
+          <span class="text-slate-400 text-sm">→</span>
+          <span class="text-sm text-slate-600 dark:text-slate-400">AI builds the entire feature for you! 🎉</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
-          <ul class="space-y-5">
-            {category.commands.map((cmd) => (
-              <li class="space-y-2">
-                <div class="flex items-start justify-between gap-2">
-                  <code class="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/50 rounded-md text-sm font-mono font-semibold text-blue-600 dark:text-blue-400 shadow-sm">
-                    {cmd.command}
-                  </code>
+  <!-- Quick Start Section -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Beginner -->
+    <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-green-500/30 overflow-hidden hover:border-green-500/50 transition-colors duration-200 cursor-pointer group">
+      <div class="p-6 bg-gradient-to-br from-green-500/10 to-emerald-500/10 border-b border-slate-100 dark:border-slate-800">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-green-500/20">
+            <svg class="w-6 h-6 text-green-600 dark:text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-green-600 dark:text-green-400">Beginner</h3>
+            <p class="text-xs text-slate-500">Start here!</p>
+          </div>
+        </div>
+        <p class="text-sm text-slate-600 dark:text-slate-400">Perfect for your first steps with AI coding</p>
+      </div>
+      <div class="p-4 space-y-2">
+        <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 group-hover:border-green-500/30 transition-colors">
+          <code class="text-sm text-green-600 dark:text-green-400 font-mono">/ask</code>
+          <p class="text-xs text-slate-500 mt-1">Ask technical questions</p>
+        </div>
+        <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 group-hover:border-green-500/30 transition-colors">
+          <code class="text-sm text-green-600 dark:text-green-400 font-mono">/brainstorm</code>
+          <p class="text-xs text-slate-500 mt-1">Explore ideas together</p>
+        </div>
+        <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 group-hover:border-green-500/30 transition-colors">
+          <code class="text-sm text-green-600 dark:text-green-400 font-mono">/fix</code>
+          <p class="text-xs text-slate-500 mt-1">Fix bugs automatically</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Intermediate -->
+    <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-amber-500/30 overflow-hidden hover:border-amber-500/50 transition-colors duration-200 cursor-pointer group">
+      <div class="p-6 bg-gradient-to-br from-amber-500/10 to-orange-500/10 border-b border-slate-100 dark:border-slate-800">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-amber-500/20">
+            <svg class="w-6 h-6 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M13 3L4 14h7l-1 7 9-11h-7l1-7z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-amber-600 dark:text-amber-400">Intermediate</h3>
+            <p class="text-xs text-slate-500">Level up!</p>
+          </div>
+        </div>
+        <p class="text-sm text-slate-600 dark:text-slate-400">Build complete features with ease</p>
+      </div>
+      <div class="p-4 space-y-2">
+        <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 group-hover:border-amber-500/30 transition-colors">
+          <code class="text-sm text-amber-600 dark:text-amber-400 font-mono">/plan</code>
+          <p class="text-xs text-slate-500 mt-1">Create step-by-step plans</p>
+        </div>
+        <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 group-hover:border-amber-500/30 transition-colors">
+          <code class="text-sm text-amber-600 dark:text-amber-400 font-mono">/code</code>
+          <p class="text-xs text-slate-500 mt-1">Implement your plans</p>
+        </div>
+        <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 group-hover:border-amber-500/30 transition-colors">
+          <code class="text-sm text-amber-600 dark:text-amber-400 font-mono">/cook</code>
+          <p class="text-xs text-slate-500 mt-1">All-in-one feature builder</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Advanced -->
+    <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-red-500/30 overflow-hidden hover:border-red-500/50 transition-colors duration-200 cursor-pointer group">
+      <div class="p-6 bg-gradient-to-br from-red-500/10 to-pink-500/10 border-b border-slate-100 dark:border-slate-800">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-red-500/20">
+            <svg class="w-6 h-6 text-red-600 dark:text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-red-600 dark:text-red-400">Advanced</h3>
+            <p class="text-xs text-slate-500">Pro mode!</p>
+          </div>
+        </div>
+        <p class="text-sm text-slate-600 dark:text-slate-400">Build entire projects from scratch</p>
+      </div>
+      <div class="p-4 space-y-2">
+        <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 group-hover:border-red-500/30 transition-colors">
+          <code class="text-sm text-red-600 dark:text-red-400 font-mono">/bootstrap</code>
+          <p class="text-xs text-slate-500 mt-1">Create complete projects</p>
+        </div>
+        <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 group-hover:border-red-500/30 transition-colors">
+          <code class="text-sm text-red-600 dark:text-red-400 font-mono">/scout</code>
+          <p class="text-xs text-slate-500 mt-1">Explore your codebase</p>
+        </div>
+        <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 group-hover:border-red-500/30 transition-colors">
+          <code class="text-sm text-red-600 dark:text-red-400 font-mono">/watzup</code>
+          <p class="text-xs text-slate-500 mt-1">Review recent changes</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Visual Journey Section -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-purple-500/10 to-blue-500/10 border-b border-slate-100 dark:border-slate-800">
+      <h2 class="text-2xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+        <svg class="w-7 h-7 text-purple-600 dark:text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="8 12 12 16 16 12"/>
+          <line x1="12" y1="8" x2="12" y2="16"/>
+        </svg>
+        Your Coding Journey in 3 Simple Steps
+      </h2>
+      <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">From idea to working code — no programming knowledge needed!</p>
+    </div>
+
+    <div class="p-8">
+      <div class="space-y-6">
+        <!-- Step 1: Idea -->
+        <div class="flex items-start gap-4">
+          <div class="flex flex-col items-center flex-shrink-0">
+            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-600 dark:text-purple-400 font-bold text-lg border-2 border-purple-500/50">
+              1
+            </div>
+            <div class="w-0.5 h-full bg-gradient-to-b from-purple-500/50 to-blue-500/50 mt-3"></div>
+          </div>
+          <div class="flex-1 pb-6">
+            <div class="bg-slate-50 dark:bg-slate-950 rounded-xl border border-purple-500/30 p-6">
+              <h3 class="text-xl font-bold text-purple-600 dark:text-purple-400 mb-3 flex items-center gap-2">
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+                Start with an Idea
+              </h3>
+              <p class="text-slate-700 dark:text-slate-300 mb-4">Have an idea? Just talk to ClaudeKit like you would to a friend!</p>
+              <div class="space-y-3">
+                <div class="bg-white dark:bg-slate-900/50 rounded-lg p-4 border border-slate-200 dark:border-slate-700">
+                  <div class="flex items-start gap-3">
+                    <code class="px-3 py-1.5 rounded bg-purple-500/20 text-purple-600 dark:text-purple-400 font-mono text-sm">/brainstorm</code>
+                    <div class="flex-1">
+                      <p class="text-sm text-slate-600 dark:text-slate-400">"I want to add a dark mode toggle to my website"</p>
+                    </div>
+                  </div>
                 </div>
-                <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                  {cmd.description}
-                </p>
-              </li>
-            ))}
-          </ul>
+                <div class="text-xs text-slate-500 flex items-center gap-2">
+                  <svg class="w-4 h-4 text-purple-600 dark:text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                  AI helps you explore different approaches and possibilities
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Plan -->
+        <div class="flex items-start gap-4">
+          <div class="flex flex-col items-center flex-shrink-0">
+            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-600 dark:text-blue-400 font-bold text-lg border-2 border-blue-500/50">
+              2
+            </div>
+            <div class="w-0.5 h-full bg-gradient-to-b from-blue-500/50 to-green-500/50 mt-3"></div>
+          </div>
+          <div class="flex-1 pb-6">
+            <div class="bg-slate-50 dark:bg-slate-950 rounded-xl border border-blue-500/30 p-6">
+              <h3 class="text-xl font-bold text-blue-600 dark:text-blue-400 mb-3 flex items-center gap-2">
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9 5H2v7l6.29 6.29c.94.94 2.48.94 3.42 0l3.58-3.58c.94-.94.94-2.48 0-3.42L9 5z"/>
+                  <path d="M6 9.01V9"/>
+                </svg>
+                Create a Plan
+              </h3>
+              <p class="text-slate-700 dark:text-slate-300 mb-4">AI creates a detailed roadmap for building your feature</p>
+              <div class="space-y-3">
+                <div class="bg-white dark:bg-slate-900/50 rounded-lg p-4 border border-slate-200 dark:border-slate-700">
+                  <div class="flex items-start gap-3">
+                    <code class="px-3 py-1.5 rounded bg-blue-500/20 text-blue-600 dark:text-blue-400 font-mono text-sm">/plan</code>
+                    <div class="flex-1">
+                      <p class="text-sm text-slate-600 dark:text-slate-400">"Create dark mode toggle"</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="bg-blue-500/10 rounded-lg p-4 border border-blue-500/20">
+                  <div class="text-xs font-medium text-blue-600 dark:text-blue-400 mb-2">Plan includes:</div>
+                  <ul class="space-y-1 text-xs text-slate-600 dark:text-slate-400">
+                    <li class="flex items-center gap-2">
+                      <svg class="w-3 h-3 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20 6 9 17 4 12"/>
+                      </svg>
+                      What files to create/modify
+                    </li>
+                    <li class="flex items-center gap-2">
+                      <svg class="w-3 h-3 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20 6 9 17 4 12"/>
+                      </svg>
+                      Step-by-step instructions
+                    </li>
+                    <li class="flex items-center gap-2">
+                      <svg class="w-3 h-3 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20 6 9 17 4 12"/>
+                      </svg>
+                      How to test everything works
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Build -->
+        <div class="flex items-start gap-4">
+          <div class="flex flex-col items-center flex-shrink-0">
+            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-green-500/20 text-green-600 dark:text-green-400 font-bold text-lg border-2 border-green-500/50">
+              3
+            </div>
+          </div>
+          <div class="flex-1">
+            <div class="bg-slate-50 dark:bg-slate-950 rounded-xl border border-green-500/30 p-6">
+              <h3 class="text-xl font-bold text-green-600 dark:text-green-400 mb-3 flex items-center gap-2">
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                  <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+                AI Builds It!
+              </h3>
+              <p class="text-slate-700 dark:text-slate-300 mb-4">Sit back and watch AI write the code, test it, and make it perfect!</p>
+              <div class="space-y-3">
+                <div class="bg-white dark:bg-slate-900/50 rounded-lg p-4 border border-slate-200 dark:border-slate-700">
+                  <div class="flex items-start gap-3">
+                    <code class="px-3 py-1.5 rounded bg-green-500/20 text-green-600 dark:text-green-400 font-mono text-sm">/code @plan.md</code>
+                    <div class="flex-1">
+                      <p class="text-sm text-slate-600 dark:text-slate-400">AI implements the entire plan</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="bg-green-500/10 rounded-lg p-4 border border-green-500/20">
+                  <div class="text-xs font-medium text-green-600 dark:text-green-400 mb-2">AI automatically:</div>
+                  <ul class="space-y-1 text-xs text-slate-600 dark:text-slate-400">
+                    <li class="flex items-center gap-2">
+                      <svg class="w-3 h-3 text-green-600 dark:text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20 6 9 17 4 12"/>
+                      </svg>
+                      Writes all the code
+                    </li>
+                    <li class="flex items-center gap-2">
+                      <svg class="w-3 h-3 text-green-600 dark:text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20 6 9 17 4 12"/>
+                      </svg>
+                      Runs tests to verify it works
+                    </li>
+                    <li class="flex items-center gap-2">
+                      <svg class="w-3 h-3 text-green-600 dark:text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20 6 9 17 4 12"/>
+                      </svg>
+                      Reviews code quality
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shortcut callout -->
+      <div class="mt-6 p-6 rounded-lg bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/30">
+        <div class="flex items-start gap-4">
+          <svg class="w-8 h-8 text-amber-600 dark:text-amber-400 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M13 3L4 14h7l-1 7 9-11h-7l1-7z"/>
+          </svg>
+          <div>
+            <h4 class="text-lg font-bold text-amber-600 dark:text-amber-400 mb-2">⚡ Pro Tip: Skip Steps with /cook</h4>
+            <p class="text-slate-700 dark:text-slate-300 mb-3">Want it even faster? Use <code class="px-2 py-1 rounded bg-white dark:bg-slate-900/50 text-amber-600 dark:text-amber-400 font-mono">/cook</code> to do all 3 steps at once!</p>
+            <div class="bg-white dark:bg-slate-900/50 rounded-lg p-4 border border-amber-500/20">
+              <code class="text-sm text-amber-600 dark:text-amber-400 font-mono">/cook "add dark mode toggle"</code>
+              <p class="text-xs text-slate-500 mt-2">→ AI brainstorms, plans, and implements everything automatically! 🚀</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Command Categories Grid -->
+  <div class="space-y-6">
+    <h2 class="text-2xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+      <svg class="w-7 h-7 text-cyan-600 dark:text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="7" height="7"/>
+        <rect x="14" y="3" width="7" height="7"/>
+        <rect x="14" y="14" width="7" height="7"/>
+        <rect x="3" y="14" width="7" height="7"/>
+      </svg>
+      All Commands by Category
+    </h2>
+
+    {categories.map((category) => (
+      <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden group">
+        <div class={`p-4 border-b border-slate-100 dark:border-slate-800 ${styles[category.color].bg}`}>
+          <h3 class={`text-lg font-bold flex items-center gap-2 ${styles[category.color].text}`}>
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <Fragment set:html={category.icon} />
+            </svg>
+            {category.name}
+          </h3>
+          <p class="text-xs text-slate-500 mt-1">{category.description}</p>
+        </div>
+        <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+          {category.commands.map((cmd) => (
+            <div class={`p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 transition-colors cursor-pointer ${styles[category.color].hover}`}>
+              <div class="flex items-start justify-between mb-2">
+                <code class={`text-sm font-mono ${styles[category.color].text}`}>{cmd.command} {cmd.complexity}</code>
+                <span class={`px-2 py-0.5 text-xs rounded-full ${complexityColors[cmd.label]}`}>{cmd.label}</span>
+              </div>
+              <p class="text-xs text-slate-600 dark:text-slate-400">{cmd.desc}</p>
+            </div>
+          ))}
         </div>
       </div>
     ))}
   </div>
 
-  <div class="relative overflow-hidden rounded-2xl glass-card border border-blue-200/50 dark:border-blue-800/30 p-8">
-    <div class="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5"></div>
-    <div class="relative flex items-start gap-6">
-      <div class="flex-shrink-0 p-3 bg-blue-100 dark:bg-blue-900/30 rounded-xl text-blue-600 dark:text-blue-400">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+  <!-- Tips for Non-Tech Users -->
+  <div class="bg-gradient-to-br from-cyan-500/10 via-blue-500/10 to-purple-500/10 rounded-xl border border-cyan-500/30 p-8">
+    <h2 class="text-2xl font-bold text-cyan-600 dark:text-cyan-400 mb-4 flex items-center gap-3">
+      <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+        <line x1="12" y1="17" x2="12.01" y2="17"/>
+      </svg>
+      Tips for Beginners
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="flex items-start gap-3 p-4 rounded-lg bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700">
+        <svg class="w-6 h-6 text-cyan-600 dark:text-cyan-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
         </svg>
+        <div>
+          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">Talk Like a Human</div>
+          <div class="text-xs text-slate-600 dark:text-slate-400">No need for technical jargon! Explain what you want in plain English. AI understands you!</div>
+        </div>
       </div>
-      <div class="flex-1">
-        <h4 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Pro Tip</h4>
-        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
-          Type <code class="px-1.5 py-0.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded text-sm font-semibold shadow-sm">/</code> in any conversation to see available commands directly in your input. Use <code class="px-1.5 py-0.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded text-sm font-semibold shadow-sm">Tab</code> to autocomplete instantly.
-        </p>
+      <div class="flex items-start gap-3 p-4 rounded-lg bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700">
+        <svg class="w-6 h-6 text-purple-600 dark:text-purple-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="16" x2="12" y2="12"/>
+          <line x1="12" y1="8" x2="12.01" y2="8"/>
+        </svg>
+        <div>
+          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">Use @ to Reference Files</div>
+          <div class="text-xs text-slate-600 dark:text-slate-400">Type <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">@filename</code> to tell AI which files to work with</div>
+        </div>
+      </div>
+      <div class="flex items-start gap-3 p-4 rounded-lg bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700">
+        <svg class="w-6 h-6 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+        <div>
+          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">Start Small</div>
+          <div class="text-xs text-slate-600 dark:text-slate-400">Begin with simple commands like <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/ask</code> or <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/brainstorm</code> to get comfortable</div>
+        </div>
+      </div>
+      <div class="flex items-start gap-3 p-4 rounded-lg bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700">
+        <svg class="w-6 h-6 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+          <polyline points="22 4 12 14.01 9 11.01"/>
+        </svg>
+        <div>
+          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">Don't Be Afraid to Experiment</div>
+          <div class="text-xs text-slate-600 dark:text-slate-400">AI helps you learn as you go. Try different commands and see what happens!</div>
+        </div>
       </div>
     </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
+    <h3 class="text-lg font-semibold mb-4 flex items-center gap-2 text-slate-900 dark:text-white">
+      <svg class="w-5 h-5 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+      </svg>
+      Understanding the Symbols
+    </h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="space-y-2">
+        <h4 class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">Difficulty Levels:</h4>
+        <div class="flex items-center gap-3 text-sm">
+          <span class="px-3 py-1 rounded-full bg-green-500/20 text-green-700 dark:text-green-400 border border-green-500/20 text-xs font-medium">Easy</span>
+          <span class="text-slate-600 dark:text-slate-400">Great for beginners</span>
+        </div>
+        <div class="flex items-center gap-3 text-sm">
+          <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-700 dark:text-amber-400 border border-amber-500/20 text-xs font-medium">Medium</span>
+          <span class="text-slate-600 dark:text-slate-400">Some AI coordination needed</span>
+        </div>
+        <div class="flex items-center gap-3 text-sm">
+          <span class="px-3 py-1 rounded-full bg-red-500/20 text-red-700 dark:text-red-400 border border-red-500/20 text-xs font-medium">Advanced</span>
+          <span class="text-slate-600 dark:text-slate-400">Full project workflows</span>
+        </div>
+      </div>
+      <div class="space-y-2">
+        <h4 class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">Token Consumption:</h4>
+        <div class="flex items-center gap-3 text-sm">
+          <span class="text-slate-500 dark:text-slate-400 font-mono">⚡</span>
+          <span class="text-slate-600 dark:text-slate-400">Low token usage</span>
+        </div>
+        <div class="flex items-center gap-3 text-sm">
+          <span class="text-slate-500 dark:text-slate-400 font-mono">⚡⚡</span>
+          <span class="text-slate-600 dark:text-slate-400">Medium token usage</span>
+        </div>
+        <div class="flex items-center gap-3 text-sm">
+          <span class="text-slate-500 dark:text-slate-400 font-mono">⚡⚡⚡</span>
+          <span class="text-slate-600 dark:text-slate-400">High token usage</span>
+        </div>
+        <div class="flex items-center gap-3 text-sm">
+          <span class="text-slate-500 dark:text-slate-400 font-mono">⚡⚡⚡⚡⚡</span>
+          <span class="text-slate-600 dark:text-slate-400">Maximum token usage</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Official Docs Note -->
+  <div class="text-center pt-4">
+    <p class="text-sm text-slate-500 dark:text-slate-400">
+      Need more commands? <a href="https://docs.claudekit.cc/docs/commands" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline font-medium">See full docs from official Claudekit site.</a>
+    </p>
   </div>
 </div>
