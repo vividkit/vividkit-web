@@ -1,6 +1,6 @@
 ---
 interface Props {
-  activeTab: 'cli' | 'workflows' | 'commands' | 'uiux' | 'resume';
+  activeTab: 'cli' | 'workflows' | 'commands' | 'uiux' | 'resume' | 'permissions';
 }
 
 const { activeTab } = Astro.props;
@@ -36,6 +36,12 @@ const navItems = [
     label: 'Resume Session',
     icon: '🔄',
     href: '/guides/resume',
+  },
+  {
+    id: 'permissions',
+    label: 'Bypass Permissions',
+    icon: '🔓',
+    href: '/guides/permissions',
   },
 ];
 ---
