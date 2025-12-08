@@ -33,4 +33,6 @@ pnpm-debug.log*
 .claude/
 .agent/
 .shared/
-.git-worktree/*
+.reference/
+plans/**/*
+!plans/templates/*

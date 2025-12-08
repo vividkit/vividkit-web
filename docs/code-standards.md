@@ -1,8 +1,8 @@
 # Code Standards & Development Guidelines
 
-**Document Version:** 1.2
-**Last Updated:** 2025-12-05
-**Status:** Phase 04 Complete (Slash Commands Integration)
+**Document Version:** 1.3
+**Last Updated:** 2025-12-08
+**Status:** Phase 06 Complete (Landing Page Integration with PWA Support)
 
 ## Table of Contents
 
@@ -161,6 +161,46 @@ export interface BeginnerTip {
   description: string;
   color: string;
 }
+
+// Phase 06 - Guide Pages Interfaces
+export interface GuideSection {
+  id: string;
+  title: string;
+  icon: string;
+  description: string;
+}
+
+export interface DailyRoutine {
+  time: string;
+  tasks: string[];
+  commands: string[];
+}
+
+export interface CommandExample {
+  command: string;
+  description: string;
+  output?: string;
+}
+
+export interface WorkflowStep {
+  id: string;
+  title: string;
+  description: string;
+  command?: string;
+  code?: string;
+}
+
+export interface UIUXStyle {
+  name: string;
+  description: string;
+  preview: string;
+}
+
+export interface DesignToken {
+  name: string;
+  value: string;
+  description: string;
+}
 ```
 
 ### Error Handling
@@ -283,6 +323,35 @@ import GlassCard from '@/components/ui/GlassCard.astro';
 </GlassCard>
 ```
 
+### Alpine.js Integration
+
+```astro
+---
+// Guide page with tab navigation
+interface Props {
+  sections: GuideSection[];
+}
+---
+
+<div x-data="{ activeTab: 'cli' }" x-init="$watch('activeTab', value => window.location.hash = value)">
+  <!-- Tab navigation -->
+  <nav class="sticky top-0 z-10">
+    <template x-for="section in sections" :key="section.id">
+      <button
+        @click="activeTab = section.id"
+        :class="{ 'active': activeTab === section.id }"
+        x-text="section.title">
+      </button>
+    </template>
+  </nav>
+
+  <!-- Tab content -->
+  <div x-show="activeTab === 'cli'">
+    <slot name="cli-content" />
+  </div>
+</div>
+```
+
 ## Styling Guidelines
 
 ### Tailwind CSS v4
@@ -396,10 +465,29 @@ src/
 │   │   ├── Badge.astro
 │   │   └── Input.astro
 │   ├── layout/          # Layout components
-│   │   └── Navigation.astro
-│   └── features/        # Feature-specific components
-│       ├── HeroSection.astro
-│       └── PricingCard.astro
+│   │   ├── Header.astro
+│   │   ├── Footer.astro
+│   │   └── AmbientBackground.astro
+│   ├── sections/        # Landing page sections
+│   │   ├── Hero.astro
+│   │   ├── Problem.astro
+│   │   ├── Features.astro
+│   │   ├── Pricing.astro
+│   │   ├── ClaudeKitCLIGuide.astro
+│   │   ├── RecommendedWorkflows.astro
+│   │   ├── SlashCommandsGuide.astro
+│   │   ├── UIUXProMax.astro
+│   │   └── WaitlistForm.astro
+│   └── guides/          # Guide page components
+│       ├── TabNavigation.astro
+│       ├── CLIGuide.astro
+│       ├── CommandsGuide.astro
+│       ├── WorkflowsGuide.astro
+│       ├── UIUXGuide.astro
+│       ├── CCSGuide.astro
+│       ├── FixLogsGuide.astro
+│       ├── PermissionsGuide.astro
+│       └── ResumeGuide.astro
 ├── layouts/
 │   ├── MainLayout.astro
 │   └── BlogLayout.astro
@@ -410,7 +498,10 @@ src/
 │       └── [slug].astro
 ├── scripts/
 │   ├── theme-toggle.ts
-│   └── analytics.ts
+│   ├── form-handler.ts
+│   ├── intersection-observer.ts
+│   ├── smooth-scroll.ts
+│   └── nav-scroll-highlight.ts
 ├── styles/
 │   ├── global.css
 │   └── components.css
@@ -434,9 +525,16 @@ layouts/
 
 pages/
   index.astro               # Root page
-  features.astro            # Top-level route
-  blog/
-    [slug].astro            # Dynamic route
+  guides/                   # Guide pages
+    index.astro            # Guides overview
+    cli.astro              # CLI guide
+    commands.astro         # Commands guide
+    workflows.astro        # Workflows guide
+    uiux.astro             # UI/UX guide
+    ccs.astro              # CCS guide
+    fix-logs.astro         # Fix logs guide
+    permissions.astro      # Permissions guide
+    resume.astro           # Resume guide
 
 scripts/
   theme-toggle.ts           # kebab-case for files
@@ -639,6 +737,49 @@ color: #f1f5f9;        /* 100 on dark background */
 }
 ```
 
+## Progressive Web App (PWA) Standards
+
+### Web Manifest
+```json
+{
+  "name": "VividKit",
+  "short_name": "VividKit",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone"
+}
+```
+
+### Icon Requirements
+- Provide multiple sizes: 192x192, 512x512
+- Use PNG format for better compatibility
+- Ensure icons work on both light and dark backgrounds
+- Test on various devices and platforms
+
+### Service Worker Guidelines
+- Cache static assets for offline functionality
+- Implement cache-first strategy for HTML/CSS/JS
+- Use network-first for API calls when online
+- Provide offline fallback page
+
+### App-like Experience
+- Use standalone display mode
+- Implement smooth transitions between pages
+- Add loading states for better perceived performance
+- Ensure touch-friendly interface elements
+
 ## Testing Standards
 
 ### Component Testing
@@ -729,5 +870,5 @@ const isDevelopment = import.meta.env.DEV;
 
 ---
 
-**Document Status:** Updated for Phase 04
-**Next Review:** Phase 05 completion
+**Document Status:** Updated for Phase 06 (PWA Support and Guide Pages)
+**Next Review:** Phase 07 completion

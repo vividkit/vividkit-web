@@ -1,8 +1,8 @@
 # System Architecture
 
-**Version:** 1.0
-**Last Updated:** 2025-12-05
-**Status:** Phase 05 Complete - UI/UX Pro Max Integration
+**Version:** 1.1
+**Last Updated:** 2025-12-08
+**Status:** Phase 06 Complete - Landing Page Integration with PWA Support
 
 ## Table of Contents
 
@@ -30,24 +30,47 @@ VividKit follows a **Static Site Generation (SSG)** architecture with the Astro 
 │  Source Files (Astro, TypeScript, CSS)                  │
 │  ├── Pages (.astro)                                      │
 │  │   ├── index.astro (Landing page)                     │
-│  │   └── guides.astro (Multi-tab documentation)         │
+│  │   └── guides/ (Guide pages)                          │
+│  │       ├── index.astro (Guides overview)              │
+│  │       ├── cli.astro (CLI documentation)              │
+│  │       ├── commands.astro (Command reference)         │
+│  │       ├── workflows.astro (Workflow guide)           │
+│  │       ├── uiux.astro (UI/UX guide)                   │
+│  │       ├── ccs.astro (Custom components guide)        │
+│  │       ├── fix-logs.astro (Debugging guide)           │
+│  │       ├── permissions.astro (Security guide)         │
+│  │       └── resume.astro (Project resumption)          │
 │  ├── Components (.astro)                                │
 │  │   ├── ui/ (Base components)                          │
 │  │   ├── layout/ (Header, Footer)                       │
 │  │   ├── sections/ (Landing sections)                   │
 │  │   │   ├── SlashCommandsGuide.astro                   │
-│  │   │   └── UIUXProMax.astro (NEW)                     │
+│  │   │   └── UIUXProMax.astro                           │
 │  │   └── guides/ (Guide components)                     │
+│  │       ├── TabNavigation.astro (Multi-tab nav)        │
+│  │       ├── CLIGuide.astro (CLI docs)                  │
+│  │       ├── CommandsGuide.astro (Command ref)          │
+│  │       ├── WorkflowsGuide.astro (Workflows)           │
+│  │       ├── UIUXGuide.astro (UI/UX docs)               │
+│  │       ├── CCSGuide.astro (CCS docs)                  │
+│  │       ├── FixLogsGuide.astro (Debug docs)            │
+│  │       ├── PermissionsGuide.astro (Security)          │
+│  │       └── ResumeGuide.astro (Resumption)             │
 │  ├── Layouts (.astro)                                    │
+│  │   ├── MainLayout.astro (Base layout)                 │
+│  │   └── GuidesLayout.astro (Guide layout)              │
 │  ├── Scripts (TypeScript)                               │
-│  │   ├── theme-toggle.ts                                 │
-│  │   ├── form-handler.ts                                │
-│  │   ├── intersection-observer.ts                       │
-│  │   └── smooth-scroll.ts                               │
+│  │   ├── theme-toggle.ts (Theme switching)              │
+│  │   ├── form-handler.ts (Form validation)              │
+│  │   ├── intersection-observer.ts (Scroll animations)   │
+│  │   ├── smooth-scroll.ts (Smooth navigation)          │
+│  │   └── nav-scroll-highlight.ts (Active nav)           │
 │  ├── Data Files                                         │
 │  │   └── guides/                                         │
+│  │       ├── cli-steps-landing.ts                       │
 │  │       ├── commands-landing.ts                        │
-│  │       └── uiux-landing.ts (NEW)                      │
+│  │       ├── workflows-landing.ts                       │
+│  │       └── uiux-landing.ts                            │
 │  └── Styles (Tailwind CSS v4)                          │
 └───────────────────┬─────────────────────────────────────┘
                     │ Build Process (Astro)
@@ -76,6 +99,8 @@ VividKit follows a **Static Site Generation (SSG)** architecture with the Astro 
 4. **Performance-First:** Minimal JavaScript, optimized assets
 5. **Dark Mode Support:** System preference detection + manual toggle
 6. **Responsive Design:** Mobile-first CSS approach
+7. **Progressive Web App:** Installable with offline support
+8. **Multi-page Guides:** 8 comprehensive guide pages with tab navigation
 
 ---
 
@@ -159,35 +184,94 @@ VividKit follows a **Static Site Generation (SSG)** architecture with the Astro 
 vividkit-web/
 ├── src/
 │   ├── components/
-│   │   └── ui/
-│   │       ├── Button.astro
-│   │       ├── GlassCard.astro
-│   │       ├── Badge.astro
-│   │       ├── Input.astro
-│   │       └── Logo.astro
+│   │   ├── ui/
+│   │   │   ├── Button.astro
+│   │   │   ├── GlassCard.astro
+│   │   │   ├── Badge.astro
+│   │   │   ├── Input.astro
+│   │   │   ├── Textarea.astro
+│   │   │   ├── Select.astro
+│   │   │   └── Logo.astro
+│   │   ├── layout/
+│   │   │   ├── Header.astro
+│   │   │   ├── Footer.astro
+│   │   │   └── AmbientBackground.astro
+│   │   ├── sections/
+│   │   │   ├── Hero.astro
+│   │   │   ├── Problem.astro
+│   │   │   ├── Features.astro
+│   │   │   ├── Pricing.astro
+│   │   │   ├── ClaudeKitCLIGuide.astro
+│   │   │   ├── RecommendedWorkflows.astro
+│   │   │   ├── SlashCommandsGuide.astro
+│   │   │   ├── UIUXProMax.astro
+│   │   │   └── WaitlistForm.astro
+│   │   └── guides/
+│   │       ├── TabNavigation.astro
+│   │       ├── CLIGuide.astro
+│   │       ├── CommandsGuide.astro
+│   │       ├── WorkflowsGuide.astro
+│   │       ├── UIUXGuide.astro
+│   │       ├── CCSGuide.astro
+│   │       ├── FixLogsGuide.astro
+│   │       ├── PermissionsGuide.astro
+│   │       └── ResumeGuide.astro
 │   ├── layouts/
-│   │   └── MainLayout.astro
+│   │   ├── MainLayout.astro
+│   │   └── GuidesLayout.astro
 │   ├── pages/
 │   │   ├── index.astro
-│   │   └── [route].astro (future)
+│   │   └── guides/
+│   │       ├── index.astro
+│   │       ├── cli.astro
+│   │       ├── commands.astro
+│   │       ├── workflows.astro
+│   │       ├── uiux.astro
+│   │       ├── ccs.astro
+│   │       ├── fix-logs.astro
+│   │       ├── permissions.astro
+│   │       └── resume.astro
 │   ├── scripts/
-│   │   └── theme-toggle.ts
+│   │   ├── theme-toggle.ts
+│   │   ├── form-handler.ts
+│   │   ├── intersection-observer.ts
+│   │   ├── smooth-scroll.ts
+│   │   └── nav-scroll-highlight.ts
 │   ├── styles/
 │   │   └── global.css
 │   ├── types/
 │   │   └── index.ts
 │   └── data/
-│       └── (future content)
+│       ├── constants.ts
+│       ├── navigation.ts
+│       ├── features.ts
+│       ├── pricing.ts
+│       ├── commands.ts
+│       └── guides/
+│           ├── cli-steps-landing.ts
+│           ├── workflows-landing.ts
+│           ├── commands-landing.ts
+│           └── uiux-landing.ts
 ├── public/
 │   ├── favicon.svg
-│   └── og-image.png
+│   ├── favicon-16x16.png
+│   ├── favicon-32x32.png
+│   ├── apple-touch-icon.png
+│   ├── android-chrome-192x192.png
+│   ├── android-chrome-512x512.png
+│   ├── site.webmanifest (PWA manifest)
+│   ├── logo.png
+│   └── logo-1024.png
 ├── dist/
 │   └── (generated build output)
 ├── docs/
 │   ├── project-overview-pdr.md
 │   ├── code-standards.md
 │   ├── component-library.md
-│   └── system-architecture.md
+│   ├── system-architecture.md
+│   ├── codebase-summary.md
+│   ├── deployment-guide.md
+│   └── ...
 ├── astro.config.mjs
 ├── tailwind.config.mjs
 ├── tsconfig.json
@@ -370,6 +454,33 @@ Local Development
       │
       └─→ Live at https://vividkit.vercel.app
 ```
+
+### Progressive Web App (PWA) Architecture
+
+#### Web Manifest Configuration
+- **File**: `public/site.webmanifest`
+- **Icons**: Multiple sizes (192x192, 512x512) in PNG format
+- **Display Mode**: Standalone for app-like experience
+- **Theme Colors**: Adapt to light/dark mode
+
+#### Service Worker Strategy
+```
+┌─────────────────────────────────┐
+│         Service Worker          │
+├─────────────────────────────────┤
+│ 1. Cache Static Assets          │
+│ 2. Network-First for API Calls  │
+│ 3. Offline Fallback Page        │
+│ 4. Background Sync (Future)     │
+└─────────────────────────────────┘
+```
+
+#### PWA Features Implementation
+1. **Installable**: Web manifest enables "Add to Home Screen"
+2. **Offline Ready**: Service worker caches critical assets
+3. **App-like UI**: Standalone display removes browser chrome
+4. **Responsive**: Adapts to mobile, tablet, and desktop
+5. **Fast Loading**: Pre-cached assets for instant startup
 
 ### Environment Configuration
 
