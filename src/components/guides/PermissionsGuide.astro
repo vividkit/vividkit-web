@@ -1,0 +1,129 @@
+---
+---
+
+<div class="space-y-8 mt-6">
+  <!-- Page Header -->
+  <div class="text-center space-y-4">
+    <h2 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
+      Permissions & Security
+    </h2>
+    <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+      Configure Claude Code to run tools automatically without constant prompting.
+    </p>
+  </div>
+
+  <!-- Warning Banner -->
+  <div class="flex items-start gap-4 p-6 rounded-xl bg-amber-500/5 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20">
+    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-500/20 flex items-center justify-center">
+      <svg class="w-5 h-5 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+        <line x1="12" y1="9" x2="12" y2="13"/>
+        <line x1="12" y1="17" x2="12.01" y2="17"/>
+      </svg>
+    </div>
+    <div class="flex-1">
+      <div class="font-bold text-amber-700 dark:text-amber-400 mb-1 text-lg">Power User Feature</div>
+      <div class="text-slate-600 dark:text-slate-400 leading-relaxed">
+        These settings allow Claude to execute commands on your machine without your explicit approval for every step.
+        <strong>Use with caution.</strong> You are placing significant trust in the AI.
+      </div>
+    </div>
+  </div>
+
+  <div class="space-y-8">
+    <!-- Option 1: Full Bypass -->
+    <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+      <div class="p-6 bg-gradient-to-r from-red-500/10 to-orange-500/10 border-b border-slate-100 dark:border-slate-800">
+        <div class="flex items-center gap-3">
+          <div class="flex items-center justify-center w-8 h-8 rounded-full bg-red-500/20 text-red-600 dark:text-red-400 font-bold text-sm">1</div>
+          <h4 class="text-lg font-bold text-slate-900 dark:text-slate-100">Fastest Way (Full Bypass)</h4>
+        </div>
+      </div>
+      <div class="p-6">
+        <p class="text-slate-600 dark:text-slate-400 mb-4">
+          Add this to your project's local settings to allow <strong>ALL</strong> tools to run automatically.
+        </p>
+
+        <div class="mb-2 text-xs font-mono text-slate-500 dark:text-slate-400">
+          File: <code class="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">.claude/settings.local.json</code>
+        </div>
+        <div class="bg-slate-50 dark:bg-slate-950 rounded-lg p-4 font-mono text-sm text-slate-800 dark:text-slate-300 overflow-x-auto border border-slate-200 dark:border-slate-800">
+          <pre><code>{`{
+  "permissions": {
+    "defaultMode": "bypassPermissions"
+  }
+}`}</code></pre>
+        </div>
+
+        <div class="mt-4 p-3 bg-red-500/10 rounded-lg border border-red-200 dark:border-red-500/20">
+          <div class="flex gap-2 text-red-600 dark:text-red-400 text-sm font-bold items-center mb-1">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            CRITICAL WARNING
+          </div>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            This gives the AI full autonomy. In rare cases, it could theoretically run destructive commands like <code>rm -rf ...</code> if it hallucinates or misinterprets a task.
+            <strong>Only use this in isolated environments or if you have good backups (git).</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Option 2: Granular Allow/Deny -->
+    <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+      <div class="p-6 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border-b border-slate-100 dark:border-slate-800">
+        <div class="flex items-center gap-3">
+          <div class="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold text-sm">2</div>
+          <h4 class="text-lg font-bold text-slate-900 dark:text-slate-100">Safer Approach (Allow/Deny Lists)</h4>
+        </div>
+      </div>
+      <div class="p-6">
+        <p class="text-slate-600 dark:text-slate-400 mb-4">
+          Explicitly define which commands are safe to run and which should be blocked or prompt for approval.
+        </p>
+
+        <div class="mb-2 text-xs font-mono text-slate-500 dark:text-slate-400">
+          File: <code class="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">.claude/settings.local.json</code>
+        </div>
+        <div class="bg-slate-50 dark:bg-slate-950 rounded-lg p-4 font-mono text-sm text-slate-800 dark:text-slate-300 overflow-x-auto border border-slate-200 dark:border-slate-800">
+<pre><code>{`{
+  "permissions": {
+    "allow": [
+      "Bash(npm run lint)",
+      "Bash(npm run test:*)",
+      "Read(~/.zshrc)"
+    ],
+    "deny": [
+      "Bash(curl:*)",
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)"
+    ]
+  }
+}`}</code></pre>
+        </div>
+        <p class="mt-4 text-sm text-slate-600 dark:text-slate-400">
+          This configuration allows linting and testing to run automatically, but strictly blocks access to environment files and secrets.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Official Docs Link -->
+  <div class="text-center pt-8 border-t border-slate-200 dark:border-slate-800">
+    <p class="text-slate-600 dark:text-slate-400 text-sm">
+      For comprehensive documentation on permission scopes and syntax, visit the
+      <a href="https://code.claude.com/docs/en/settings#permission-settings" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline font-medium inline-flex items-center gap-1">
+        Official Claude Code Documentation
+        <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+          <polyline points="15 3 21 3 21 9"/>
+          <line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+      </a>
+    </p>
+  </div>
+</div>
