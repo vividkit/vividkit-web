@@ -204,7 +204,7 @@ export default {
   'claudekit.feature2.title': '60+ Lệnh & 40+ Skill',
   'claudekit.feature2.description': 'Bootstrap, plan, code, fix, test, design — bộ công cụ hoàn chỉnh từ ý tưởng đến triển khai.',
   'claudekit.feature3.title': 'Skill UI/UX Pro Max',
-  'claudekit.feature3.description': '50 phong cách UI, 21 bảng màu, 50 cặp phông chữ — thiết kế chuyên nghiệp tức thì.',
+  'claudekit.feature3.description': '50+ phong cách UI, 21+ màu sắc, 50+ phông chữ — thiết kế chuyên nghiệp tức thì.',
   'claudekit.cta_title': 'Nhận ClaudeKit với Giảm Giá 20%',
   'claudekit.cta_description': 'Bạn sẽ cần ClaudeKit để sử dụng VividKit. Mua qua link giới thiệu của chúng tôi để nhận giảm giá độc quyền 20%.',
   'claudekit.cta_button': 'Nhận ClaudeKit (Giảm 20%)',
