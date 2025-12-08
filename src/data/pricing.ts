@@ -1,33 +1,30 @@
 export const pricingTiers = [
   {
-    name: 'Free',
+    name: 'ClaudeKit Wrapper',
     price: 0,
-    description: 'Perfect for getting started',
+    description: 'Free for all ClaudeKit users',
     features: [
-      'Basic commands',
-      'Community support',
-      '5 projects limit',
-      'Standard templates',
-      'Basic analytics'
+      'Visual Interface for ClaudeKit',
+      'Auto-update CK Projects',
+      'CCS Built-in (Multi-account)',
+      'Browse Commands & Skills Visually',
+      'Dark/Light Mode'
     ],
-    cta: 'Get Started',
-    popular: false
+    cta: 'Join Waitlist',
+    popular: true
   },
   {
-    name: 'Pro',
-    price: 29,
-    description: 'For serious developers',
+    name: 'Pro Features',
+    price: null, // TBD
+    description: 'Premium features shaped by community',
     features: [
-      'All commands unlocked',
-      'Priority support',
-      'Unlimited projects',
-      'Premium templates',
-      'Advanced analytics',
-      'Team collaboration',
-      'Custom integrations',
-      'API access'
+      'Multi-terminal Sessions (Planned)',
+      'Session Persistence (Planned)',
+      'Advanced Analytics (Planned)',
+      'Project Workspaces (Planned)',
+      'Priority Support'
     ],
-    cta: 'Start Pro Trial',
-    popular: true
+    cta: 'Vote for Features',
+    popular: false
   }
 ];
