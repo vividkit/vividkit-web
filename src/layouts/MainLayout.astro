@@ -20,6 +20,27 @@ const fullTitle = `${title} | VividKit`;
 const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://vividkit.com';
 const fullCanonical = `${siteUrl}${canonical}`;
 const fullOgImage = `${siteUrl}${ogImage}`;
+
+// Structured data for SEO (JSON-LD)
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'VividKit',
+  description: description,
+  url: siteUrl,
+  applicationCategory: 'DeveloperApplication',
+  operatingSystem: 'Windows, macOS, Linux',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+  author: {
+    '@type': 'Organization',
+    name: 'VividKit',
+    url: siteUrl,
+  },
+};
 ---
 
 <!DOCTYPE html>
@@ -41,9 +62,9 @@ const fullOgImage = `${siteUrl}${ogImage}`;
     <link rel="canonical" href={fullCanonical} />
 
     <!-- hreflang tags for all pages -->
-    <link rel="alternate" hreflang="en" href={`${siteUrl}${canonical?.replace('/vi', '') || '/'}`} />
-    <link rel="alternate" hreflang="vi" href={`${siteUrl}/vi${canonical?.replace('/vi', '') || '/'}`} />
-    <link rel="alternate" hreflang="x-default" href={`${siteUrl}${canonical?.replace('/vi', '') || '/'}`} />
+    <link rel="alternate" hreflang="en" href={`${siteUrl}${canonical?.replace(/^\/vi/, '') || '/'}`} />
+    <link rel="alternate" hreflang="vi" href={`${siteUrl}/vi${canonical?.replace(/^\/vi/, '') || '/'}`} />
+    <link rel="alternate" hreflang="x-default" href={`${siteUrl}${canonical?.replace(/^\/vi/, '') || '/'}`} />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content={ogType} />
@@ -58,6 +79,9 @@ const fullOgImage = `${siteUrl}${ogImage}`;
     <meta property="twitter:title" content={fullTitle} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={fullOgImage} />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 
     <!-- Theme toggle FOUC prevention -->
     <script is:inline>
