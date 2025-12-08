@@ -1,10 +1,10 @@
 export const workflows = [
   {
-    title: 'Xây Dựng Tính Năng Mới',
+    title: 'Xây Dựng Feature Mới',
     level: 'Beginner',
     duration: '~15-30 phút',
     stepCount: 4,
-    bestFor: 'Thêm chức năng mới vào ứng dụng của bạn',
+    bestFor: 'Thêm feature mới vào app của bạn',
     gradientHeader: 'from-purple-500/10 to-blue-500/10',
     hoverBorderColor: 'hover:border-purple-500/50',
     buttonColor: 'bg-purple-500 hover:bg-purple-600',
@@ -13,21 +13,21 @@ export const workflows = [
     steps: [
       {
         command: '/brainstorm',
-        typeLabel: 'Khám phá ý tưởng',
-        description: 'Thảo luận ý tưởng tính năng của bạn với AI để khám phá các khả năng và nhận phản hồi',
+        typeLabel: 'Brainstorm ý tưởng',
+        description: 'Thảo luận feature với AI để khám phá các khả năng và nhận feedback',
         color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
         number: 1
       },
       {
         command: '/plan',
-        typeLabel: 'Tạo kế hoạch triển khai',
-        description: 'AI tạo một kế hoạch chi tiết từng bước để xây dựng tính năng của bạn',
+        typeLabel: 'Tạo implementation plan',
+        description: 'AI tạo plan chi tiết từng bước để build feature',
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
         number: 2
       },
       {
-        typeLabel: 'Xem xét & điều chỉnh kế hoạch',
-        description: 'Xem qua kế hoạch, đặt câu hỏi và yêu cầu thay đổi nếu cần',
+        typeLabel: 'Review & điều chỉnh plan',
+        description: 'Xem plan, đặt câu hỏi và yêu cầu thay đổi nếu cần',
         color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
         number: 3,
         hasIcon: true,
@@ -35,8 +35,8 @@ export const workflows = [
       },
       {
         command: '/code @plan.md',
-        typeLabel: 'Triển khai kế hoạch',
-        description: 'AI viết code theo kế hoạch, chạy tests và xem xét công việc',
+        typeLabel: 'Implement plan',
+        description: 'AI viết code theo plan, chạy tests và review công việc',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 4
       }
@@ -58,35 +58,35 @@ export const workflows = [
     steps: [
       {
         command: '/debug',
-        typeLabel: 'Điều tra vấn đề',
-        description: 'AI phân tích code của bạn để tìm nguyên nhân gốc rễ của vấn đề',
+        typeLabel: 'Debug vấn đề',
+        description: 'AI phân tích code để tìm root cause',
         color: 'bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400',
         number: 1
       },
       {
         command: '/fix',
-        typeLabel: 'Áp dụng bản sửa lỗi',
-        description: 'AI sửa lỗi và giải thích những gì đã sai và cách khắc phục',
+        typeLabel: 'Apply fix',
+        description: 'AI sửa bug và giải thích gì sai và cách fix',
         color: 'bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400',
         number: 2
       },
       {
         command: '/test',
-        typeLabel: 'Xác minh bản sửa lỗi',
-        description: 'Chạy tests để đảm bảo lỗi đã được sửa và không có gì khác bị hỏng',
+        typeLabel: 'Verify fix',
+        description: 'Chạy tests để đảm bảo bug đã được sửa và không break gì khác',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 3
       }
     ],
-    tip: '💡 Mẹo: /fix tự động định tuyến đến các lệnh sửa lỗi chuyên biệt',
+    tip: '💡 Tip: /fix tự động route đến specialized fix commands',
     borderColor: 'border-red-500/20'
   },
   {
-    title: 'Triển Khai Nhanh',
+    title: 'Quick Implementation',
     level: 'Intermediate',
     duration: '~10-20 phút',
     stepCount: 1,
-    bestFor: 'Các tính năng nhỏ khi bạn biết mình muốn gì',
+    bestFor: 'Features nhỏ khi bạn biết mình muốn gì',
     gradientHeader: 'from-blue-500/10 to-cyan-500/10',
     hoverBorderColor: 'hover:border-blue-500/50',
     buttonColor: 'bg-blue-500 hover:bg-blue-600',
@@ -95,27 +95,27 @@ export const workflows = [
     steps: [
       {
         command: '/cook "nhiệm vụ của bạn"',
-        typeLabel: 'Lệnh tất cả trong một',
-        description: 'AI tự động nghiên cứu, lập kế hoạch, triển khai, kiểm thử và xem xét tính năng',
+        typeLabel: 'All-in-one command',
+        description: 'AI tự động research, plan, implement, test và review feature',
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
         number: 1
       }
     ],
-    tip: '💡 Mẹo: Bỏ qua các bước lập kế hoạch để có kết quả nhanh hơn',
+    tip: '💡 Tip: Skip planning steps để có kết quả nhanh hơn',
     features: [
-      'Nghiên cứu các phương pháp và công nghệ tốt nhất',
-      'Tạo và thực hiện kế hoạch triển khai',
-      'Viết và kiểm thử code',
-      'Xem xét chất lượng và các thực tiễn tốt nhất'
+      'Research best practices và technologies',
+      'Tạo và execute implementation plan',
+      'Viết và test code',
+      'Review quality và best practices'
     ],
     borderColor: 'border-blue-500/20'
   },
   {
-    title: 'Bắt Đầu Dự Án Mới',
+    title: 'Bootstrap Project Mới',
     level: 'Advanced',
     duration: '~1-2 giờ',
     stepCount: 1,
-    bestFor: 'Tạo ứng dụng hoàn chỉnh từ đầu',
+    bestFor: 'Tạo app hoàn chỉnh từ đầu',
     gradientHeader: 'from-green-500/10 to-emerald-500/10',
     hoverBorderColor: 'hover:border-green-500/50',
     buttonColor: 'bg-green-500 hover:bg-green-600',
@@ -124,19 +124,19 @@ export const workflows = [
     steps: [
       {
         command: '/bootstrap "mô tả ứng dụng của bạn"',
-        typeLabel: 'Thiết lập dự án hoàn chỉnh',
-        description: 'AI xây dựng toàn bộ dự án của bạn: nghiên cứu, kiến trúc, thiết kế, triển khai và tài liệu',
+        typeLabel: 'Full project setup',
+        description: 'AI build toàn bộ project: research, architecture, design, implementation và docs',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 1
       }
     ],
-    tip: '⚠️ Cảnh báo: Lệnh này sử dụng lượng token AI đáng kể',
+    tip: '⚠️ Warning: Command này dùng nhiều AI tokens',
     features: [
-      'Nghiên cứu và lựa chọn tech stack',
-      'Cấu trúc và kiến trúc dự án',
-      'Thiết kế UI/UX và wireframes',
-      'Triển khai hoàn chỉnh với tests',
-      'Tài liệu toàn diện'
+      'Research và chọn tech stack',
+      'Project structure và architecture',
+      'UI/UX design và wireframes',
+      'Full implementation với tests',
+      'Comprehensive documentation'
     ],
     borderColor: 'border-green-500/20'
   }
