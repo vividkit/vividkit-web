@@ -1,11 +1,19 @@
 ---
 import Logo from '@/components/ui/Logo.astro';
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
 
 interface Props {
   class?: string;
+  lang?: Language;
 }
 
-const { class: className = '' } = Astro.props;
+const { class: className = '', lang } = Astro.props;
+
+// Get language from URL if not provided
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+const translatePath = useTranslatedPath(currentLang);
 ---
 
 <footer class={`relative z-10 w-full bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border-t border-slate-200 dark:border-white/10 ${className}`}>
@@ -15,23 +23,23 @@ const { class: className = '' } = Astro.props;
         <div class="mb-4">
           <Logo size="md" />
         </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400">Build anything without terminal friction. Powered by ClaudeKit Framework.</p>
+        <p class="text-sm text-slate-600 dark:text-slate-400">{t('footer.tagline')}</p>
       </div>
 
       <div>
-        <h4 class="font-heading font-semibold mb-4">Product</h4>
+        <h4 class="font-heading font-semibold mb-4">{t('footer.product')}</h4>
         <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
-          <li><a href="/#hero" class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">Home</a></li>
-          <li><a href="/#pricing" class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">Pricing</a></li>
-          <li><a href="/#waitlist" class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">Waitlist</a></li>
+          <li><a href={translatePath('/#hero')} class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">{t('footer.links.features')}</a></li>
+          <li><a href={translatePath('/#pricing')} class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">{t('footer.links.pricing')}</a></li>
+          <li><a href={translatePath('/#waitlist')} class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">{t('footer.links.waitlist')}</a></li>
         </ul>
       </div>
 
       <div>
-        <h4 class="font-heading font-semibold mb-4">Resources</h4>
+        <h4 class="font-heading font-semibold mb-4">{t('footer.resources')}</h4>
         <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
-          <li><a href="/guides" class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">ClaudeKit Guides</a></li>
-          <li><a href="https://docs.claudekit.cc/docs" target="_blank" class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">ClaudeKit Documentation</a></li>
+          <li><a href={translatePath('/guides')} class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">{t('footer.links.guides')}</a></li>
+          <li><a href="https://docs.claudekit.cc/docs" target="_blank" class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">{t('footer.links.documentation')}</a></li>
           <li><a href="https://claudekit.cc/discord" target="_blank" class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">ClaudeKit Discord</a></li>
         </ul>
       </div>
@@ -46,7 +54,7 @@ const { class: className = '' } = Astro.props;
     </div>
 
     <div class="pt-8 border-t border-slate-200 dark:border-slate-800/50 text-center text-sm text-slate-500">
-      © 2025 VividKit. Powered by ClaudeKit Framework.
+      {t('footer.copyright')}
     </div>
   </div>
 </footer>

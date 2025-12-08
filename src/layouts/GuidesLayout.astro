@@ -4,29 +4,35 @@ import Header from '@/components/layout/Header.astro';
 import Link from '@/components/ui/Link.astro';
 import Footer from '@/components/layout/Footer.astro';
 import TabNavigation from '@/components/guides/TabNavigation.astro';
-
+import { useTranslatedPath, getLangFromUrl, type Language } from '@/i18n';
 
 interface Props {
   title: string;
   description: string;
   activeTab: 'cli' | 'ccs' | 'workflows' | 'commands' | 'uiux' | 'resume' | 'permissions';
+  lang?: Language;
 }
 
-const { title, description, activeTab } = Astro.props;
+const { title, description, activeTab, lang } = Astro.props;
+
+// Get language from URL if not provided
+const currentLang = lang || getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(currentLang);
 ---
 
 <MainLayout
   title={title}
   description={description}
   canonical={`/guides${activeTab !== 'cli' ? '/' + activeTab : ''}`}
+  lang={currentLang}
 >
-  <Header />
+  <Header lang={currentLang} />
 
   <div class="max-w-6xl mx-auto px-4 lg:px-0 pt-28 pb-12 min-h-screen">
     <div class="lg:flex lg:gap-12">
       <!-- Sidebar Navigation -->
       <div class="lg:w-64 lg:shrink-0 z-30">
-        <TabNavigation activeTab={activeTab} />
+        <TabNavigation activeTab={activeTab} lang={currentLang} />
       </div>
 
       <!-- Main Content -->
@@ -36,5 +42,5 @@ const { title, description, activeTab } = Astro.props;
     </div>
   </div>
 
-  <Footer />
+  <Footer lang={currentLang} />
 </MainLayout>

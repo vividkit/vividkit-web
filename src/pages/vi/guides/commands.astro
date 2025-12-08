@@ -1,0 +1,18 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import CommandsGuide from '@/components/guides/CommandsGuide.astro';
+import { useTranslations } from '@/i18n/utils';
+import type { Language } from '@/i18n';
+
+const lang: Language = 'vi';
+const t = useTranslations(lang);
+---
+
+<GuidesLayout
+  title={`${t('guides.commands.title')} - ${t('site.title')}`}
+  description={t('guides.commands.description')}
+  activeTab="commands"
+  lang="vi"
+>
+  <CommandsGuide lang="vi" />
+</GuidesLayout>

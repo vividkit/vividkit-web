@@ -5,25 +5,33 @@ import Input from '@/components/ui/Input.astro';
 import Select from '@/components/ui/Select.astro';
 import Textarea from '@/components/ui/Textarea.astro';
 import Badge from '@/components/ui/Badge.astro';
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
 
 interface Props {
   class?: string;
   roles?: Array<{ value: string; label: string; }>;
+  lang?: Language;
 }
 
 const {
   class: className = '',
-  roles
+  roles,
+  lang
 } = Astro.props;
 
+// Get language from URL if not provided
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
 const defaultRoles = [
-  { value: 'developer', label: 'Developer' },
-  { value: 'designer', label: 'Designer' },
+  { value: 'developer', label: t('form.role.developer') },
+  { value: 'designer', label: t('form.role.designer') },
   { value: 'product-manager', label: 'Product Manager' },
-  { value: 'startup-founder', label: 'Startup Founder' },
+  { value: 'startup-founder', label: t('form.role.founder') },
   { value: 'marketer', label: 'Marketer' },
   { value: 'student', label: 'Student' },
-  { value: 'other', label: 'Other' }
+  { value: 'other', label: t('form.role.other') }
 ];
 
 const roleOptions = roles || defaultRoles;
@@ -36,10 +44,10 @@ const roleOptions = roles || defaultRoles;
         🎉 Join 2,000+ on the waitlist
       </Badge>
       <h2 class="text-4xl md:text-5xl font-heading font-bold mt-4 mb-6">
-        Get Early Access
+        {t('form.submit')} Early Access
       </h2>
       <p class="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-        Be among the first to experience VividKit. No spam, just updates on our progress and early access invites.
+        {t('form.assurance')}. {t('form.success')}.
       </p>
     </div>
 
@@ -47,24 +55,24 @@ const roleOptions = roles || defaultRoles;
       <form id="waitlist-form" class="space-y-6">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div id="name-wrapper">
-            <label for="name" class="block text-sm font-medium mb-2">Name *</label>
+            <label for="name" class="block text-sm font-medium mb-2">{t('form.name')} *</label>
             <Input
               id="name"
               name="name"
               type="text"
-              placeholder="Your full name"
+              placeholder={t('form.name')}
               required
             />
             <p id="name-error" class="text-red-500 dark:text-red-400 text-sm mt-1 hidden"></p>
           </div>
 
           <div id="email-wrapper">
-            <label for="email" class="block text-sm font-medium mb-2">Email *</label>
+            <label for="email" class="block text-sm font-medium mb-2">{t('form.email')} *</label>
             <Input
               id="email"
               name="email"
               type="email"
-              placeholder="your@email.com"
+              placeholder={t('form.email')}
               required
             />
             <p id="email-error" class="text-red-500 dark:text-red-400 text-sm mt-1 hidden"></p>
@@ -72,11 +80,11 @@ const roleOptions = roles || defaultRoles;
         </div>
 
         <div>
-          <label for="role" class="block text-sm font-medium mb-2">Your Role *</label>
+          <label for="role" class="block text-sm font-medium mb-2">{t('form.role.label')} *</label>
           <Select
             id="role"
             name="role"
-            placeholder="Select your role"
+            placeholder={t('form.role.label')}
             required
             options={roleOptions}
           />
@@ -84,11 +92,11 @@ const roleOptions = roles || defaultRoles;
         </div>
 
         <div>
-          <label for="message" class="block text-sm font-medium mb-2">What would you like to build? (Optional)</label>
+          <label for="message" class="block text-sm font-medium mb-2">{t('form.message')}</label>
           <Textarea
             id="message"
             name="message"
-            placeholder="Tell us about your project or what you'd like to create..."
+            placeholder={t('form.message')}
             rows={4}
           />
           <p id="message-error" class="text-red-500 dark:text-red-400 text-sm mt-1 hidden"></p>
@@ -96,7 +104,7 @@ const roleOptions = roles || defaultRoles;
 
         <div class="pt-4">
           <Button id="submit-button" type="submit" size="lg" class="w-full">
-            <span id="submit-text">Join Waitlist</span>
+            <span id="submit-text">{t('form.submit')}</span>
             <span id="submit-loading" class="hidden">Joining...</span>
           </Button>
         </div>

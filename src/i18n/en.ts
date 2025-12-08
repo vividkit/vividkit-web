@@ -1,0 +1,137 @@
+export default {
+  // Site metadata
+  'site.title': 'VividKit - Visual Interface for ClaudeKit',
+  'site.description': 'Visual interface for ClaudeKit\'s AI commands and skills. No memorization. No terminal expertise. Just browse and click.',
+
+  // Navigation
+  'nav.home': 'Home',
+  'nav.features': 'Features',
+  'nav.pricing': 'Pricing',
+  'nav.claudekit': 'ClaudeKit',
+  'nav.commands': 'Commands',
+  'nav.guides': 'Guides',
+
+  // Hero section
+  'hero.badge': 'Desktop App Coming Soon',
+  'hero.headline.line1': 'ClaudeKit,',
+  'hero.headline.line2': 'Made Visual',
+  'hero.subtitle': 'Visual interface for ClaudeKit\'s AI commands and skills. No memorization. No terminal expertise. Just browse and click.',
+  'hero.cta.primary': 'Join the Waitlist',
+  'hero.cta.secondary': 'See How It Works',
+  'hero.claudekit.info': 'Built for ClaudeKit users: Transform CLI workflows into visual, accessible experiences. Developers and non-developers alike.',
+
+  // Features
+  'feature.problems.terminal.title': 'Terminal Commands',
+  'feature.problems.terminal.description': 'Memorizing complex CLI syntax and flags blocks creativity',
+  'feature.problems.code.title': 'Code Integration',
+  'feature.problems.code.description': 'Manual setup and configuration wastes valuable development time',
+  'feature.problems.lock.title': 'Access Barriers',
+  'feature.problems.lock.description': 'Technical requirements exclude non-developers from AI coding',
+  'feature.solutions.zap.title': 'Zero Setup',
+  'feature.solutions.zap.description': 'Start coding instantly without installation or configuration',
+  'feature.solutions.eye.title': 'Visual Interface',
+  'feature.solutions.eye.description': 'Intuitive GUI replaces intimidating command-line interfaces',
+  'feature.solutions.puzzle.title': 'Seamless Integration',
+  'feature.solutions.puzzle.description': 'Works with your existing tools and workflows',
+  'feature.solutions.users.title': 'Universal Access',
+  'feature.solutions.users.description': 'Designed for developers and non-technical users alike',
+
+  // Features highlights
+  'feature.highlight1.title': 'Enhanced Productivity',
+  'feature.highlight1.description': 'Advanced features that amplify your coding workflow',
+  'feature.highlight2.title': 'Priority Support',
+  'feature.highlight2.description': 'Get help when you need it with dedicated support',
+  'feature.highlight3.title': 'Early Access',
+  'feature.highlight3.description': 'Try new features before they\'re publicly released',
+
+  // Waitlist form
+  'form.name': 'Your name',
+  'form.email': 'Your email',
+  'form.role.label': 'I\'m a...',
+  'form.role.founder': 'Non-tech founder',
+  'form.role.designer': 'Designer',
+  'form.role.developer': 'Developer',
+  'form.role.other': 'Other',
+  'form.message': 'What would you like to build with VividKit? (optional)',
+  'form.submit': 'Join Waitlist',
+  'form.assurance': 'Free early access. No credit card. No spam.',
+  'form.success': 'Thanks for joining! We\'ll be in touch soon.',
+  'form.error': 'Something went wrong. Please try again.',
+
+  // Pricing
+  'pricing.title': 'Simple, Transparent Pricing',
+  'pricing.subtitle': 'Choose the plan that works for you',
+  'pricing.free.title': 'Free',
+  'pricing.free.price': '$0',
+  'pricing.free.description': 'Perfect for getting started',
+  'pricing.pro.title': 'Pro',
+  'pricing.pro.price': '$29',
+  'pricing.pro.description': 'For serious developers',
+  'pricing.button.get_started': 'Get Started',
+  'pricing.button.join_waitlist': 'Join Waitlist',
+
+  // Footer
+  'footer.tagline': 'Build anything without terminal friction. Powered by ClaudeKit Framework.',
+  'footer.copyright': '© 2025 VividKit. All rights reserved.',
+
+  // Footer links
+  'footer.product': 'Product',
+  'footer.resources': 'Resources',
+  'footer.company': 'Company',
+  'footer.legal': 'Legal',
+  'footer.links.features': 'Features',
+  'footer.links.pricing': 'Pricing',
+  'footer.links.commands': 'Commands',
+  'footer.links.waitlist': 'Waitlist',
+  'footer.links.documentation': 'Documentation',
+  'footer.links.guides': 'Guides',
+  'footer.links.api': 'API Reference',
+  'footer.links.examples': 'Examples',
+  'footer.links.about': 'About',
+  'footer.links.blog': 'Blog',
+  'footer.links.careers': 'Careers',
+  'footer.links.contact': 'Contact',
+  'footer.links.privacy': 'Privacy',
+  'footer.links.terms': 'Terms',
+  'footer.links.cookies': 'Cookies',
+  'footer.links.license': 'License',
+
+  // Guides
+  'guides.title': 'ClaudeKit Guides',
+  'guides.subtitle': 'Learn how to use ClaudeKit effectively',
+  'guides.cli.title': 'CLI Guide',
+  'guides.cli.description': 'Complete guide to ClaudeKit CLI commands',
+  'guides.commands.title': 'Commands Reference',
+  'guides.commands.description': 'Comprehensive list of all available commands',
+  'guides.workflows.title': 'Workflows',
+  'guides.workflows.description': 'Best practices and common workflows',
+  'guides.uiux.title': 'UI/UX Guide',
+  'guides.uiux.description': 'Design and implementation guidelines',
+  'guides.ccs.title': 'Custom Components',
+  'guides.ccs.description': 'Building custom components and skills',
+  'guides.permissions.title': 'Permissions',
+  'guides.permissions.description': 'Security and access control',
+  'guides.fix_logs.title': 'Fix Logs Guide',
+  'guides.fix_logs.description': 'Debugging and error resolution',
+  'guides.resume.title': 'Resume Guide',
+  'guides.resume.description': 'Project resumption workflows',
+
+  // Common
+  'common.loading': 'Loading...',
+  'common.error': 'Error',
+  'common.back': 'Back',
+  'common.next': 'Next',
+  'common.previous': 'Previous',
+  'common.close': 'Close',
+  'common.save': 'Save',
+  'common.cancel': 'Cancel',
+  'common.submit': 'Submit',
+
+  // Section titles
+  'section.features': 'Features',
+  'section.claudekit': 'ClaudeKit',
+  'section.commands': 'Commands',
+  'section.pricing': 'Pricing',
+  'section.waitlist': 'Join the Waitlist',
+
+} as const;

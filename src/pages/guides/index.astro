@@ -1,12 +1,16 @@
 ---
 import GuidesLayout from '@/layouts/GuidesLayout.astro';
 import CLIGuide from '@/components/guides/CLIGuide.astro';
+import type { Language } from '@/i18n';
+
+const lang: Language = 'en';
 ---
 
 <GuidesLayout
   title="ClaudeKit CLI Guide - VividKit Documentation"
   description="Learn how to install and use the ClaudeKit CLI to supercharge your development workflow."
   activeTab="cli"
+  lang="en"
 >
   <CLIGuide />
 </GuidesLayout>
