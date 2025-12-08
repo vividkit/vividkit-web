@@ -1,22 +1,30 @@
 ---
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
 interface Props {
   class?: string;
+  lang?: Language;
 }
 
-const { class: className = '' } = Astro.props;
+const { class: className = '', lang } = Astro.props;
+
+// Get language from URL if not provided
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
 ---
 
 <section id="pricing" class={`section py-24 relative ${className}`}>
   <div class="max-w-6xl mx-auto px-6">
     <div class="text-center mb-16">
       <h2 class="text-4xl md:text-5xl font-heading font-bold mb-6">
-        Simple, Transparent
+        {t('pricing.section_title')}
         <span class="block bg-gradient-to-r from-green-600 to-blue-600 dark:from-green-400 dark:to-blue-400 bg-clip-text text-transparent">
-          Pricing
+          {t('pricing.section_subtitle')}
         </span>
       </h2>
       <p class="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
-        Start for free, upgrade for power.
+        {t('pricing.section_description')}
       </p>
     </div>
 
@@ -24,77 +32,77 @@ const { class: className = '' } = Astro.props;
       <!-- Free Tier -->
       <div class="glass-card rounded-3xl p-8 border border-slate-200 dark:border-slate-700 relative hover:border-slate-300 dark:hover:border-slate-600 transition-colors">
         <div class="mb-8">
-          <h3 class="font-heading text-2xl font-bold mb-2">Free Starter</h3>
+          <h3 class="font-heading text-2xl font-bold mb-2">{t('pricing.free.title_alt')}</h3>
           <div class="flex items-baseline gap-1">
-            <span class="text-4xl font-bold">$0</span>
+            <span class="text-4xl font-bold">{t('pricing.free.price')}</span>
           </div>
-          <p class="text-slate-600 dark:text-slate-400 mt-4">Perfect for trying out VividKit and building your first AI apps.</p>
+          <p class="text-slate-600 dark:text-slate-400 mt-4">{t('pricing.free.description_alt')}</p>
         </div>
 
         <ul class="space-y-4 mb-8">
           <li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
             <svg class="w-5 h-5 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-            1 Terminal Session
+            {t('pricing.free.feature1')}
           </li>
           <li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
             <svg class="w-5 h-5 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-            Basic Token Tracking
+            {t('pricing.free.feature2')}
           </li>
           <li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
             <svg class="w-5 h-5 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-            Project Management
+            {t('pricing.free.feature3')}
           </li>
           <li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
             <svg class="w-5 h-5 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-            Dark/Light Mode
+            {t('pricing.free.feature4')}
           </li>
           <li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
             <svg class="w-5 h-5 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-            Community Support
+            {t('pricing.free.feature5')}
           </li>
         </ul>
 
         <a href="#waitlist" class="block w-full py-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-center font-bold">
-          Get Free Early Access
+          {t('pricing.free.cta')}
         </a>
       </div>
 
       <!-- Pro Tier -->
       <div class="glass-card rounded-3xl p-8 border border-blue-500/30 relative overflow-hidden hover:border-blue-500/50 transition-colors">
-        <div class="absolute top-0 right-0 bg-blue-600/20 text-blue-600 dark:text-blue-400 text-xs font-bold px-3 py-1 rounded-bl-xl border-l border-b border-blue-500/20">COMING SOON</div>
+        <div class="absolute top-0 right-0 bg-blue-600/20 text-blue-600 dark:text-blue-400 text-xs font-bold px-3 py-1 rounded-bl-xl border-l border-b border-blue-500/20">{t('pricing.pro.coming_soon')}</div>
         <div class="mb-8">
-          <h3 class="font-heading text-2xl font-bold mb-2 text-blue-600 dark:text-blue-400">Pro Power</h3>
+          <h3 class="font-heading text-2xl font-bold mb-2 text-blue-600 dark:text-blue-400">{t('pricing.pro.title_alt')}</h3>
           <div class="flex items-baseline gap-1">
-            <span class="text-4xl font-bold">TBD</span>
+            <span class="text-4xl font-bold">{t('pricing.pro.price_tbd')}</span>
           </div>
-          <p class="text-slate-600 dark:text-slate-400 mt-4">We're exploring premium features. Help us decide what to build next.</p>
+          <p class="text-slate-600 dark:text-slate-400 mt-4">{t('pricing.pro.description_alt')}</p>
         </div>
 
         <ul class="space-y-4 mb-8">
           <li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
             <svg class="w-5 h-5 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-            <strong>Multi-terminal Support</strong> (Planned)
+            <strong>{t('pricing.pro.feature1')}</strong>
           </li>
           <li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
             <svg class="w-5 h-5 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-            <strong>Session Persistence</strong> (Planned)
+            <strong>{t('pricing.pro.feature2')}</strong>
           </li>
           <li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
             <svg class="w-5 h-5 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-            Advanced Analytics (Planned)
+            {t('pricing.pro.feature3')}
           </li>
           <li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
             <svg class="w-5 h-5 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-            Project Workspaces (Planned)
+            {t('pricing.pro.feature4')}
           </li>
           <li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
             <svg class="w-5 h-5 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-            Priority Support
+            {t('pricing.pro.feature5')}
           </li>
         </ul>
 
         <a href="#waitlist" class="block w-full py-4 rounded-xl bg-blue-600/10 hover:bg-blue-600/20 text-blue-600 dark:text-blue-400 border border-blue-600/20 transition-colors text-center font-bold">
-          Join Waitlist & Give Feedback
+          {t('pricing.pro.cta')}
         </a>
       </div>
     </div>

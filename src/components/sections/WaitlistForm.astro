@@ -27,10 +27,10 @@ const t = useTranslations(currentLang);
 const defaultRoles = [
   { value: 'developer', label: t('form.role.developer') },
   { value: 'designer', label: t('form.role.designer') },
-  { value: 'product-manager', label: 'Product Manager' },
+  { value: 'product-manager', label: t('form.role.pm') },
   { value: 'startup-founder', label: t('form.role.founder') },
-  { value: 'marketer', label: 'Marketer' },
-  { value: 'student', label: 'Student' },
+  { value: 'marketer', label: t('form.role.marketer') },
+  { value: 'student', label: t('form.role.student') },
   { value: 'other', label: t('form.role.other') }
 ];
 
@@ -41,7 +41,7 @@ const roleOptions = roles || defaultRoles;
   <div class="max-w-4xl mx-auto px-4">
     <div class="text-center mb-16">
       <Badge variant="success" pulse={true}>
-        🎉 Join 2,000+ on the waitlist
+        {t('form.badge')}
       </Badge>
       <h2 class="text-4xl md:text-5xl font-heading font-bold mt-4 mb-6">
         {t('form.submit')} Early Access
@@ -105,25 +105,25 @@ const roleOptions = roles || defaultRoles;
         <div class="pt-4">
           <Button id="submit-button" type="submit" size="lg" class="w-full">
             <span id="submit-text">{t('form.submit')}</span>
-            <span id="submit-loading" class="hidden">Joining...</span>
+            <span id="submit-loading" class="hidden">{t('form.joining')}</span>
           </Button>
         </div>
 
         <!-- Status messages -->
         <div id="form-success" class="hidden mt-4 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
-          <p class="text-green-800 dark:text-green-400 font-medium">🎉 Welcome aboard!</p>
-          <p class="text-green-700 dark:text-green-300 text-sm mt-1">We've added you to the waitlist. Check your email for confirmation!</p>
+          <p class="text-green-800 dark:text-green-400 font-medium">{t('form.success_title')}</p>
+          <p class="text-green-700 dark:text-green-300 text-sm mt-1">{t('form.success_message')}</p>
         </div>
 
         <div id="form-error" class="hidden mt-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-          <p id="error-message" class="text-red-800 dark:text-red-400"></p>
+          <p id="error-message" class="text-red-800 dark:text-red-400" data-error-message={t('form.error_message')}></p>
         </div>
       </form>
     </GlassCard>
 
     <!-- Privacy note -->
     <p class="text-center text-sm text-slate-500 dark:text-slate-400 mt-6">
-      We respect your privacy. Unsubscribe at any time. <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline">Privacy Policy</a>
+      {t('form.privacy_note')}
     </p>
   </div>
 </section>
@@ -220,7 +220,7 @@ const roleOptions = roles || defaultRoles;
       // Show error message
       errorText.textContent = error instanceof Error
         ? error.message
-        : 'Something went wrong. Please try again.';
+        : errorText.dataset.errorMessage || 'Something went wrong. Please try again.';
       errorMessage.classList.remove('hidden');
 
     } finally {

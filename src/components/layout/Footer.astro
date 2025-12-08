@@ -40,16 +40,16 @@ const translatePath = useTranslatedPath(currentLang);
         <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
           <li><a href={translatePath('/guides')} class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">{t('footer.links.guides')}</a></li>
           <li><a href="https://docs.claudekit.cc/docs" target="_blank" class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">{t('footer.links.documentation')}</a></li>
-          <li><a href="https://claudekit.cc/discord" target="_blank" class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">ClaudeKit Discord</a></li>
+          <li><a href="https://claudekit.cc/discord" target="_blank" class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">{t('footer.claudekit_discord')}</a></li>
         </ul>
       </div>
 
       <div>
-        <h4 class="font-heading font-semibold mb-4">Get Started</h4>
+        <h4 class="font-heading font-semibold mb-4">{t('footer.get_started')}</h4>
         <a href="https://claudekit.cc/?ref=OMG49S8R" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl cta-button font-medium text-sm text-white mb-3 cursor-pointer">
-          ClaudeKit (20% OFF)
+          {t('footer.claudekit_discount')}
         </a>
-        <p class="text-xs text-slate-500">Required for VividKit</p>
+        <p class="text-xs text-slate-500">{t('footer.required_for_vividkit')}</p>
       </div>
     </div>
 

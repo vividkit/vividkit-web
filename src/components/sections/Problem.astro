@@ -1,34 +1,41 @@
 ---
 import GlassCard from '@/components/ui/GlassCard.astro';
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
 
 interface Props {
   class?: string;
+  lang?: Language;
 }
 
-const { class: className = '' } = Astro.props;
+const { class: className = '', lang } = Astro.props;
+
+// Get language from URL if not provided
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
 
 const problems = [
   {
-    title: "Hard to Discover",
-    description: "Capabilities are buried in markdown files. No visual catalog to explore what's truly possible.",
+    title: t('problem.discover.title'),
+    description: t('problem.discover.description'),
     icon: "search",
     color: "blue"
   },
   {
-    title: "Hard to Remember",
-    description: "Even experts forget syntax. Constant context switching between docs and terminal breaks your flow.",
+    title: t('problem.remember.title'),
+    description: t('problem.remember.description'),
     icon: "brain",
     color: "purple"
   },
   {
-    title: "Zero Visibility",
-    description: "Agents run in the dark. No dashboards, no progress bars, no real-time insight into execution.",
+    title: t('problem.visibility.title'),
+    description: t('problem.visibility.description'),
     icon: "eye",
     color: "amber"
   },
   {
-    title: "High Barrier",
-    description: "The terminal excludes non-technical team members. PMs and designers are left out of the AI workflow.",
+    title: t('problem.barrier.title'),
+    description: t('problem.barrier.description'),
     icon: "users",
     color: "green"
   }
@@ -39,13 +46,13 @@ const problems = [
   <div class="max-w-6xl mx-auto px-6">
     <div class="text-center mb-16">
       <h2 class="text-4xl md:text-5xl font-heading font-bold mb-6">
-        The Problem: Power Locked
+        {t('problem.title')}
         <span class="block bg-gradient-to-r from-red-600 to-orange-600 dark:from-red-400 dark:to-orange-400 bg-clip-text text-transparent">
-          Behind the Terminal
+          {t('problem.subtitle')}
         </span>
       </h2>
       <p class="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
-        ClaudeKit is incredible, but its CLI interface creates unnecessary friction for everyone.
+        {t('problem.description')}
       </p>
     </div>
 

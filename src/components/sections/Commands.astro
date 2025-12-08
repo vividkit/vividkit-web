@@ -1,11 +1,18 @@
 ---
 import { commandCategories } from '@/data/commands';
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
 
 interface Props {
   class?: string;
+  lang?: Language;
 }
 
-const { class: className = '' } = Astro.props;
+const { class: className = '', lang } = Astro.props;
+
+// Get language from URL if not provided
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
 
 const categoryStyles = {
   'Beginner': {
@@ -38,55 +45,103 @@ const categoryStyles = {
 };
 
 const getStyle = (title: string) => {
-  if (title.includes('Beginner')) return categoryStyles['Beginner'];
-  if (title.includes('Intermediate')) return categoryStyles['Intermediate'];
-  if (title.includes('Advanced')) return categoryStyles['Advanced'];
+  if (title.includes('Beginner') || title.includes('New')) return categoryStyles['Beginner'];
+  if (title.includes('Intermediate') || title.includes('Experienced')) return categoryStyles['Intermediate'];
+  if (title.includes('Advanced') || title.includes('Pro')) return categoryStyles['Advanced'];
   return categoryStyles['Beginner'];
 };
+
+// Translated categories
+const translatedCategories = commandCategories.map(category => {
+  let translatedTitle = category.title;
+  let translatedDescription = category.description;
+  let translatedCommands = category.commands;
+
+  if (category.title === 'Beginner') {
+    translatedTitle = t('commands.category_beginner');
+    translatedDescription = t('commands.desc.beginner');
+    translatedCommands = category.commands.map(cmd => {
+      if (cmd.name.includes('/ask')) return { ...cmd, description: t('commands.ask.desc') };
+      if (cmd.name.includes('/brainstorm')) return { ...cmd, description: t('commands.brainstorm.desc') };
+      if (cmd.name.includes('/fix')) return { ...cmd, description: t('commands.fix.desc') };
+      return cmd;
+    });
+  }
+
+  if (category.title === 'Intermediate') {
+    translatedTitle = t('commands.category_intermediate');
+    translatedDescription = t('commands.desc.intermediate');
+    translatedCommands = category.commands.map(cmd => {
+      if (cmd.name.includes('/plan')) return { ...cmd, description: t('commands.plan.desc') };
+      if (cmd.name.includes('/code')) return { ...cmd, description: t('commands.code.desc') };
+      if (cmd.name.includes('/cook')) return { ...cmd, description: t('commands.cook.desc') };
+      return cmd;
+    });
+  }
+
+  if (category.title === 'Advanced') {
+    translatedTitle = t('commands.category_advanced');
+    translatedDescription = t('commands.desc.advanced');
+    translatedCommands = category.commands.map(cmd => {
+      if (cmd.name.includes('/bootstrap')) return { ...cmd, description: t('commands.bootstrap.desc') };
+      if (cmd.name.includes('/scout')) return { ...cmd, description: t('commands.scout.desc') };
+      if (cmd.name.includes('/watzup')) return { ...cmd, description: t('commands.watzup.desc') };
+      return cmd;
+    });
+  }
+
+  return {
+    ...category,
+    title: translatedTitle,
+    description: translatedDescription,
+    commands: translatedCommands,
+    originalTitle: category.title
+  };
+});
 ---
 
 <section id="commands" class={`section py-24 relative ${className}`}>
   <div class="max-w-6xl mx-auto px-6">
     <div class="text-center mb-12">
       <h2 class="text-4xl md:text-5xl font-heading font-bold mb-6">
-        Slash Commands
+        {t('commands.title')}
         <span class="block bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
-          at a Glance
+          {t('commands.subtitle')}
         </span>
       </h2>
       <p class="text-xl text-slate-600 dark:text-slate-400 mb-4">
-        ClaudeKit's 60+ AI commands, organized by skill level.
+        {t('commands.description')}
       </p>
       <div class="max-w-3xl mx-auto space-y-3">
         <p class="text-lg font-semibold text-slate-700 dark:text-slate-300">
-          <strong>In VividKit:</strong> These commands become visual, point-and-click actions.
+          <strong>{t('commands.in_vividkit')}</strong> {t('commands.in_vividkit_description')}
         </p>
         <p class="text-sm italic text-slate-500 dark:text-slate-500 mt-4">
-          While you wait for VividKit, here's your terminal reference:
+          {t('commands.terminal_reference')}
         </p>
       </div>
     </div>
 
     <!-- Quick Start Cards -->
     <div class="grid md:grid-cols-3 gap-6 mb-12">
-      {commandCategories.map((category) => {
-        const style = getStyle(category.title);
+      {translatedCategories.map((category) => {
+        const style = getStyle(category.originalTitle);
         return (
           <div class={`feature-card glass-card rounded-2xl overflow-hidden border ${style.border} cursor-pointer`}>
             <div class={`p-6 ${style.headerBg} border-b border-slate-200 dark:border-slate-700/50`}>
               <div class="flex items-center gap-3 mb-2">
                 <div class={`w-10 h-10 rounded-xl ${style.iconBg} flex items-center justify-center`}>
-                  {category.title.includes('Beginner') && (
+                  {category.originalTitle.includes('Beginner') && (
                     <svg class={`w-5 h-5 ${style.iconColor}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                       <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>
                     </svg>
                   )}
-                  {category.title.includes('Intermediate') && (
+                  {category.originalTitle.includes('Intermediate') && (
                     <svg class={`w-5 h-5 ${style.iconColor}`} viewBox="0 0 24 24" fill="currentColor">
                       <path d="M13 3L4 14h7l-1 7 9-11h-7l1-7z"></path>
                     </svg>
                   )}
-                  {category.title.includes('Advanced') && (
+                  {category.originalTitle.includes('Advanced') && (
                     <svg class={`w-5 h-5 ${style.iconColor}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                       <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
                     </svg>
@@ -121,7 +176,7 @@ const getStyle = (title: string) => {
             <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
           </svg>
         </div>
-        <h3 class="text-lg font-semibold">Pro Tips</h3>
+        <h3 class="text-lg font-semibold">{t('commands.pro_tips')}</h3>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="flex items-start gap-3">
@@ -129,8 +184,8 @@ const getStyle = (title: string) => {
             <polyline points="20 6 9 17 4 12"/>
           </svg>
           <div>
-            <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">Save tokens with /clear</div>
-            <div class="text-xs text-slate-600 dark:text-slate-400">Use <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/clear</code> to clear conversation history before starting implementation</div>
+            <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">{t('commands.tip1.title')}</div>
+            <div class="text-xs text-slate-600 dark:text-slate-400" set:html={t('commands.tip1.description').replace('/clear', '<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/clear</code>')}></div>
           </div>
         </div>
         <div class="flex items-start gap-3">
@@ -138,8 +193,8 @@ const getStyle = (title: string) => {
             <polyline points="20 6 9 17 4 12"/>
           </svg>
           <div>
-            <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">Reference files with @</div>
-            <div class="text-xs text-slate-600 dark:text-slate-400">Use <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">@plan.md</code> to reference specific files in commands</div>
+            <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">{t('commands.tip2.title')}</div>
+            <div class="text-xs text-slate-600 dark:text-slate-400" set:html={t('commands.tip2.description').replace('@plan.md', '<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">@plan.md</code>')}></div>
           </div>
         </div>
         <div class="flex items-start gap-3">
@@ -147,8 +202,8 @@ const getStyle = (title: string) => {
             <polyline points="20 6 9 17 4 12"/>
           </svg>
           <div>
-            <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">Create save points often</div>
-            <div class="text-xs text-slate-600 dark:text-slate-400">Use <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/git:cm</code> to commit your progress regularly so you can restore if something goes wrong</div>
+            <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">{t('commands.tip3.title')}</div>
+            <div class="text-xs text-slate-600 dark:text-slate-400" set:html={t('commands.tip3.description').replace('/git:cm', '<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/git:cm</code>')}></div>
           </div>
         </div>
         <div class="flex items-start gap-3">
@@ -156,8 +211,8 @@ const getStyle = (title: string) => {
             <polyline points="20 6 9 17 4 12"/>
           </svg>
           <div>
-            <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">Ask questions anytime</div>
-            <div class="text-xs text-slate-600 dark:text-slate-400">Use <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/ask</code> to get technical explanations or architectural guidance</div>
+            <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">{t('commands.tip4.title')}</div>
+            <div class="text-xs text-slate-600 dark:text-slate-400" set:html={t('commands.tip4.description').replace('/ask', '<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/ask</code>')}></div>
           </div>
         </div>
       </div>
@@ -165,15 +220,15 @@ const getStyle = (title: string) => {
 
     <!-- Learn More -->
     <div class="text-center mt-12">
-      <h3 class="text-2xl font-heading font-bold text-slate-800 dark:text-slate-200 mb-6">📚 Learn More</h3>
+      <h3 class="text-2xl font-heading font-bold text-slate-800 dark:text-slate-200 mb-6">{t('commands.learn_more')}</h3>
       <a href="/guides" class="inline-flex items-center gap-3 px-8 py-4 rounded-2xl glass-card hover:border-blue-500/50 font-semibold text-lg transition-all cursor-pointer">
         <svg class="w-6 h-6 text-blue-500 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
         </svg>
         <span>
           <div class="text-left">
-            <div class="font-bold">Getting Started with ClaudeKit →</div>
-            <div class="text-xs text-slate-500">Useful tips and tutorials for new users</div>
+            <div class="font-bold">{t('commands.getting_started')}</div>
+            <div class="text-xs text-slate-500">{t('commands.getting_started_description')}</div>
           </div>
         </span>
       </a>

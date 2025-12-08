@@ -1,22 +1,30 @@
 ---
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
 interface Props {
   class?: string;
+  lang?: Language;
 }
 
-const { class: className = '' } = Astro.props;
+const { class: className = '', lang } = Astro.props;
+
+// Get language from URL if not provided
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
 ---
 
 <section id="claudekit" class={`section py-24 relative ${className}`}>
   <div class="max-w-6xl mx-auto px-6">
     <div class="text-center mb-12">
       <h2 class="text-4xl md:text-5xl font-heading font-bold mb-6">
-        Powered by
+        {t('claudekit.powered_by')}
         <span class="block bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
           ClaudeKit
         </span>
       </h2>
       <p class="text-xl text-slate-400 max-w-3xl mx-auto">
-        VividKit requires ClaudeKit to work. Here's why it's worth it.
+        {t('claudekit.section_description')}
       </p>
     </div>
 
@@ -27,8 +35,8 @@ const { class: className = '' } = Astro.props;
             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
           </svg>
         </div>
-        <h3 class="font-heading text-xl font-bold mb-2">17 Specialized Agents</h3>
-        <p class="text-sm text-slate-600 dark:text-slate-400">Planner, code-reviewer, debugger, tester, UI designer, and 12 more specialized AI personas.</p>
+        <h3 class="font-heading text-xl font-bold mb-2">{t('claudekit.feature1.title')}</h3>
+        <p class="text-sm text-slate-600 dark:text-slate-400">{t('claudekit.feature1.description')}</p>
       </div>
 
       <div class="feature-card glass-card rounded-2xl p-6 cursor-pointer">
@@ -37,8 +45,8 @@ const { class: className = '' } = Astro.props;
             <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
           </svg>
         </div>
-        <h3 class="font-heading text-xl font-bold mb-2">60+ Commands & 40+ Skills</h3>
-        <p class="text-sm text-slate-600 dark:text-slate-400">Bootstrap, plan, code, fix, test, design — complete toolkit from idea to deployment.</p>
+        <h3 class="font-heading text-xl font-bold mb-2">{t('claudekit.feature2.title')}</h3>
+        <p class="text-sm text-slate-600 dark:text-slate-400">{t('claudekit.feature2.description')}</p>
       </div>
 
       <div class="feature-card glass-card rounded-2xl p-6 cursor-pointer">
@@ -47,19 +55,19 @@ const { class: className = '' } = Astro.props;
             <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
           </svg>
         </div>
-        <h3 class="font-heading text-xl font-bold mb-2">UI/UX Pro Max Skill</h3>
-        <p class="text-sm text-slate-600 dark:text-slate-400">50 UI styles, 21 color palettes, 50 font pairings — instant professional designs.</p>
+        <h3 class="font-heading text-xl font-bold mb-2">{t('claudekit.feature3.title')}</h3>
+        <p class="text-sm text-slate-600 dark:text-slate-400">{t('claudekit.feature3.description')}</p>
       </div>
     </div>
 
     <a href="https://claudekit.cc/?ref=OMG49S8R" target="_blank" class="block glass-card glow-border rounded-2xl p-8 text-center hover:scale-[1.01] transition-transform duration-300 cursor-pointer group">
-      <h3 class="font-heading text-2xl font-bold mb-3 text-slate-900 dark:text-white">Get ClaudeKit with 20% Discount</h3>
+      <h3 class="font-heading text-2xl font-bold mb-3 text-slate-900 dark:text-white">{t('claudekit.cta_title')}</h3>
       <p class="text-slate-400 mb-6 max-w-2xl mx-auto">
-        You'll need ClaudeKit to use VividKit. Purchase through our referral link to get an exclusive 20% discount.
+        {t('claudekit.cta_description')}
       </p>
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
         <span class="cta-button px-6 py-3 rounded-xl font-semibold text-white flex items-center gap-2 group-hover:shadow-lg group-hover:-translate-y-0.5 transition-all duration-300">
-          Get ClaudeKit (20% OFF)
+          {t('claudekit.cta_button')}
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
           </svg>
