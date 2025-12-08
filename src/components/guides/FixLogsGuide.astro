@@ -1,0 +1,104 @@
+---
+---
+<div class="space-y-8 mt-6">
+  <!-- Page Header -->
+  <div class="text-center space-y-4">
+    <h2 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight flex items-center justify-center gap-3">
+      Fix Logs Guide
+    </h2>
+    <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+      Master the art of debugging with /fix:logs
+    </p>
+  </div>
+
+  <!-- Hero Banner -->
+  <div class="flex items-start gap-4 p-6 rounded-xl bg-orange-500/5 dark:bg-orange-500/10 border border-orange-200 dark:border-orange-500/20">
+    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-500/20 flex items-center justify-center">
+       <svg class="w-5 h-5 text-orange-600 dark:text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+       </svg>
+    </div>
+    <div class="flex-1">
+      <div class="font-bold text-orange-700 dark:text-orange-400 mb-1 text-lg">Why /fix:logs?</div>
+      <div class="text-slate-600 dark:text-slate-400 leading-relaxed">
+         The <code class="px-1.5 py-0.5 rounded bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 font-mono text-sm">/fix:logs</code> command is your intelligent debugging assistant. It reads your error logs and automatically proposes fixes!
+      </div>
+    </div>
+  </div>
+
+  <!-- Steps Section -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+     <div class="p-6 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 border-b border-slate-100 dark:border-slate-800">
+      <h2 class="text-2xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+        <svg class="w-7 h-7 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+           <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+        </svg>
+        How to use it right
+      </h2>
+    </div>
+
+    <div class="p-8">
+      <div class="space-y-6">
+        <!-- Step 1 -->
+        <div class="flex items-start gap-4">
+           <div class="flex flex-col items-center flex-shrink-0">
+            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-600 dark:text-blue-400 font-bold text-lg border-2 border-blue-500/50">
+              1
+            </div>
+             <div class="w-0.5 h-full bg-gradient-to-b from-blue-500/50 to-indigo-500/50 mt-3"></div>
+           </div>
+           <div class="flex-1 pb-6">
+             <div class="bg-slate-50 dark:bg-slate-950 rounded-xl border border-blue-500/30 p-6">
+               <h3 class="text-xl font-bold text-blue-600 dark:text-blue-400 mb-3">Pipe logs to file</h3>
+               <p class="text-slate-700 dark:text-slate-300 mb-4">
+                 Redirect your application's output to a file named <code class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-sm">logs.txt</code>. This allows the AI to read the errors.
+               </p>
+                <div class="bg-white dark:bg-slate-900/50 rounded-lg p-4 border border-slate-200 dark:border-slate-700">
+                  <code class="text-sm font-mono text-slate-800 dark:text-slate-200">npm run dev > logs.txt 2>&1</code>
+                </div>
+             </div>
+           </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="flex items-start gap-4">
+           <div class="flex flex-col items-center flex-shrink-0">
+            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-bold text-lg border-2 border-indigo-500/50">
+              2
+            </div>
+             <div class="w-0.5 h-full bg-gradient-to-b from-indigo-500/50 to-purple-500/50 mt-3"></div>
+           </div>
+           <div class="flex-1 pb-6">
+             <div class="bg-slate-50 dark:bg-slate-950 rounded-xl border border-indigo-500/30 p-6">
+               <h3 class="text-xl font-bold text-indigo-600 dark:text-indigo-400 mb-3">Start Development Environment</h3>
+               <p class="text-slate-700 dark:text-slate-300 mb-4">
+                 Run your application and reproduce the issue or error you are facing. Ensure the error logs are captured in <code class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-sm">logs.txt</code>.
+               </p>
+             </div>
+           </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="flex items-start gap-4">
+           <div class="flex flex-col items-center flex-shrink-0">
+            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-600 dark:text-purple-400 font-bold text-lg border-2 border-purple-500/50">
+              3
+            </div>
+           </div>
+           <div class="flex-1">
+             <div class="bg-slate-50 dark:bg-slate-950 rounded-xl border border-purple-500/30 p-6">
+               <h3 class="text-xl font-bold text-purple-600 dark:text-purple-400 mb-3">Analyze and Fix</h3>
+               <p class="text-slate-700 dark:text-slate-300 mb-4">
+                 If there are errors, simply run the command:
+               </p>
+               <div class="bg-white dark:bg-slate-900/50 rounded-lg p-4 border border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                  <code class="px-3 py-1.5 rounded bg-purple-500/20 text-purple-600 dark:text-purple-400 font-mono text-sm">/fix:logs</code>
+                  <span class="text-sm text-slate-500 italic">Analyzes logs.txt & fixes errors!</span>
+               </div>
+             </div>
+           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
