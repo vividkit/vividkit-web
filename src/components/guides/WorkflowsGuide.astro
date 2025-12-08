@@ -1,5 +1,18 @@
 ---
-import { workflows } from '@/data/guides/workflows';
+import { workflows as workflowsEn } from '@/data/guides/workflows';
+import { workflows as workflowsVi } from '@/data/vi/guides/workflows';
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+const workflows = currentLang === 'vi' ? workflowsVi : workflowsEn;
 
 const levelColors: Record<string, string> = {
   Beginner: 'bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20',
@@ -22,10 +35,10 @@ const levelColors: Record<string, string> = {
   <!-- Page Header -->
   <div class="text-center space-y-4">
     <h2 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
-      Recommended Workflows
+      {t('workflows.guide.title')}
     </h2>
     <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-      Step-by-step guides helping you use AI to build software without knowing how to code.
+      {t('workflows.guide.subtitle')}
     </p>
   </div>
 
@@ -39,9 +52,9 @@ const levelColors: Record<string, string> = {
       </svg>
     </div>
     <div class="flex-1">
-      <div class="font-bold text-purple-700 dark:text-purple-400 mb-1 text-lg">New to ClaudeKit?</div>
+      <div class="font-bold text-purple-700 dark:text-purple-400 mb-1 text-lg">{t('workflows.guide.banner.title')}</div>
       <div class="text-slate-600 dark:text-slate-400 leading-relaxed">
-        These workflows consist of sequences of commands that work together to accomplish common tasks. Perfect for getting started!
+        {t('workflows.guide.banner.description')}
       </div>
     </div>
   </div>
@@ -57,7 +70,7 @@ const levelColors: Record<string, string> = {
                 <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">{workflow.title}</h3>
                 <span class={`px-2 py-0.5 text-xs rounded-full font-medium ${levelColors[workflow.level]}`}>{workflow.level}</span>
               </div>
-              <p class="text-sm text-slate-500 dark:text-slate-400">Best for: {workflow.bestFor}</p>
+              <p class="text-sm text-slate-500 dark:text-slate-400">{t('workflows.guide.best_for')} {workflow.bestFor}</p>
             </div>
             <div class={`flex items-center justify-center w-12 h-12 rounded-xl bg-white/50 dark:bg-slate-800/50 border border-white/50 dark:border-slate-700/50 flex-shrink-0 shadow-sm`}>
               <svg class={`w-6 h-6 ${workflow.iconColor}`} viewBox="0 0 24 24" fill="currentColor">
@@ -78,7 +91,7 @@ const levelColors: Record<string, string> = {
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
                 <polyline points="22 4 12 14.01 9 11.01"/>
               </svg>
-              {workflow.stepCount} steps
+              {workflow.stepCount} {t('workflows.guide.steps')}
             </span>
           </div>
         </div>
@@ -120,7 +133,7 @@ const levelColors: Record<string, string> = {
           {workflow.features && (
             <div class={`mt-4 p-4 rounded-lg bg-surface-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800`}>
               <div class={`text-xs font-bold mb-3 ${workflow.iconColor} uppercase tracking-wider`}>
-                What {workflow.steps[0].command} does automatically:
+                {t('workflows.guide.auto_features').replace('{command}', workflow.steps[0].command)}
               </div>
               <ul class="space-y-2 text-xs text-slate-600 dark:text-slate-400">
                 {workflow.features.map((feature: string) => (
@@ -154,7 +167,7 @@ const levelColors: Record<string, string> = {
             <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
         </svg>
       </div>
-      <h3 class="text-lg font-semibold">Pro Tips</h3>
+      <h3 class="text-lg font-semibold">{t('workflows.guide.pro_tips.title')}</h3>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div class="flex items-start gap-3 p-4 rounded-lg bg-surface-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700">
@@ -162,8 +175,8 @@ const levelColors: Record<string, string> = {
           <polyline points="20 6 9 17 4 12"/>
         </svg>
         <div>
-          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">Save tokens with /clear</div>
-          <div class="text-xs text-slate-600 dark:text-slate-400">Use <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/clear</code> to clear conversation history before starting implementation</div>
+          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">{t('commands.tip1.title')}</div>
+          <div class="text-xs text-slate-600 dark:text-slate-400"><Fragment set:html={t('commands.tip1.description').replace('/clear', '<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/clear</code>')} /></div>
         </div>
       </div>
       <div class="flex items-start gap-3 p-4 rounded-lg bg-surface-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700">
@@ -171,8 +184,8 @@ const levelColors: Record<string, string> = {
           <polyline points="20 6 9 17 4 12"/>
         </svg>
         <div>
-          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">Reference files with @</div>
-          <div class="text-xs text-slate-600 dark:text-slate-400">Use <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">@plan.md</code> to reference specific files in commands</div>
+          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">{t('commands.tip2.title')}</div>
+          <div class="text-xs text-slate-600 dark:text-slate-400"><Fragment set:html={t('commands.tip2.description').replace('@plan.md', '<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">@plan.md</code>')} /></div>
         </div>
       </div>
       <div class="flex items-start gap-3 p-4 rounded-lg bg-surface-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700">
@@ -180,8 +193,8 @@ const levelColors: Record<string, string> = {
           <polyline points="20 6 9 17 4 12"/>
         </svg>
         <div>
-          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">Create save points often</div>
-          <div class="text-xs text-slate-600 dark:text-slate-400">Use <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/git:cm</code> to commit your progress regularly so you can restore if something goes wrong</div>
+          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">{t('commands.tip3.title')}</div>
+          <div class="text-xs text-slate-600 dark:text-slate-400"><Fragment set:html={t('commands.tip3.description').replace('/git:cm', '<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/git:cm</code>')} /></div>
         </div>
       </div>
       <div class="flex items-start gap-3 p-4 rounded-lg bg-surface-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700">
@@ -189,8 +202,8 @@ const levelColors: Record<string, string> = {
           <polyline points="20 6 9 17 4 12"/>
         </svg>
         <div>
-          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">Ask questions anytime</div>
-          <div class="text-xs text-slate-600 dark:text-slate-400">Use <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/ask</code> to get technical explanations or architectural guidance</div>
+          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">{t('commands.tip4.title')}</div>
+          <div class="text-xs text-slate-600 dark:text-slate-400"><Fragment set:html={t('commands.tip4.description').replace('/ask', '<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/ask</code>')} /></div>
         </div>
       </div>
       <div class="flex items-start gap-3 p-4 rounded-lg bg-surface-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700">
@@ -198,8 +211,8 @@ const levelColors: Record<string, string> = {
           <polyline points="20 6 9 17 4 12"/>
         </svg>
         <div>
-          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">Scout before coding</div>
-          <div class="text-xs text-slate-600 dark:text-slate-400">Use <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/scout</code> to quickly find relevant files in your codebase</div>
+          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">{t('workflows.tip.scout.title')}</div>
+          <div class="text-xs text-slate-600 dark:text-slate-400"><Fragment set:html={t('workflows.tip.scout.desc').replace('`/scout`', '<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/scout</code>')} /></div>
         </div>
       </div>
       <div class="flex items-start gap-3 p-4 rounded-lg bg-surface-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700">
@@ -207,8 +220,8 @@ const levelColors: Record<string, string> = {
           <polyline points="20 6 9 17 4 12"/>
         </svg>
         <div>
-          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">Debug before fixing</div>
-          <div class="text-xs text-slate-600 dark:text-slate-400">Use <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/debug</code> first to find root cause, then <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/fix</code> when ready</div>
+          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">{t('workflows.tip.debug.title')}</div>
+          <div class="text-xs text-slate-600 dark:text-slate-400"><Fragment set:html={t('workflows.tip.debug.desc').replace('`/debug`', '<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/debug</code>').replace('`/fix`', '<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/fix</code>')} /></div>
         </div>
       </div>
       <div class="flex items-start gap-3 p-4 rounded-lg bg-surface-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700">
@@ -216,8 +229,8 @@ const levelColors: Record<string, string> = {
           <polyline points="20 6 9 17 4 12"/>
         </svg>
         <div>
-          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">Discover commands with /ck-help</div>
-          <div class="text-xs text-slate-600 dark:text-slate-400">Type <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/ck-help</code> to see all 60+ commands organized by category</div>
+          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">{t('workflows.tip.help.title')}</div>
+          <div class="text-xs text-slate-600 dark:text-slate-400"><Fragment set:html={t('workflows.tip.help.desc').replace('`/ck-help`', '<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/ck-help</code>')} /></div>
         </div>
       </div>
       <div class="flex items-start gap-3 p-4 rounded-lg bg-surface-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700">
@@ -225,8 +238,8 @@ const levelColors: Record<string, string> = {
           <polyline points="20 6 9 17 4 12"/>
         </svg>
         <div>
-          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">Always start with /plan</div>
-          <div class="text-xs text-slate-600 dark:text-slate-400">Create a structured plan first, then use <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/code</code> to execute it step-by-step</div>
+          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">{t('workflows.tip.plan.title')}</div>
+          <div class="text-xs text-slate-600 dark:text-slate-400"><Fragment set:html={t('workflows.tip.plan.desc').replace('`/code`', '<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/code</code>')} /></div>
         </div>
       </div>
     </div>
@@ -234,50 +247,50 @@ const levelColors: Record<string, string> = {
 
   <!-- Common Commands Reference -->
   <div class="mt-6 p-8 rounded-2xl bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 shadow-sm">
-    <h3 class="text-xl font-bold mb-6 text-slate-900 dark:text-slate-100">Common Commands Reference</h3>
+    <h3 class="text-xl font-bold mb-6 text-slate-900 dark:text-slate-100">{t('workflows.common.title')}</h3>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-purple-300 dark:hover:border-purple-500/30 transition-colors">
         <code class="text-sm text-purple-600 dark:text-purple-400 font-mono font-bold">/brainstorm</code>
-        <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">Explore ideas and possibilities</p>
+        <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">{t('workflows.cmd.brainstorm')}</p>
       </div>
       <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-blue-300 dark:hover:border-blue-500/30 transition-colors">
         <code class="text-sm text-blue-600 dark:text-blue-400 font-mono font-bold">/plan</code>
-        <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">Create implementation plans</p>
+        <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">{t('workflows.cmd.plan')}</p>
       </div>
       <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-green-300 dark:hover:border-green-500/30 transition-colors">
         <code class="text-sm text-green-600 dark:text-green-400 font-mono font-bold">/cook</code>
-        <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">Implement features end-to-end</p>
+        <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">{t('workflows.cmd.cook')}</p>
       </div>
       <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-amber-300 dark:hover:border-amber-500/30 transition-colors">
         <code class="text-sm text-amber-600 dark:text-amber-400 font-mono font-bold">/code</code>
-        <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">Implement existing plans</p>
+        <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">{t('workflows.cmd.code')}</p>
       </div>
       <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-red-300 dark:hover:border-red-500/30 transition-colors">
         <code class="text-sm text-red-600 dark:text-red-400 font-mono font-bold">/fix</code>
-        <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">Fix bugs and issues</p>
+        <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">{t('workflows.cmd.fix')}</p>
       </div>
       <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-cyan-300 dark:hover:border-cyan-500/30 transition-colors">
         <code class="text-sm text-cyan-600 dark:text-cyan-400 font-mono font-bold">/test</code>
-        <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">Run and analyze tests</p>
+        <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">{t('workflows.cmd.test')}</p>
       </div>
       <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-orange-300 dark:hover:border-orange-500/30 transition-colors">
         <code class="text-sm text-orange-600 dark:text-orange-400 font-mono font-bold">/debug</code>
-        <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">Investigate issues</p>
+        <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">{t('workflows.cmd.debug')}</p>
       </div>
       <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-pink-300 dark:hover:border-pink-500/30 transition-colors">
         <code class="text-sm text-pink-600 dark:text-pink-400 font-mono font-bold">/ask</code>
-        <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">Get technical guidance</p>
+        <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">{t('workflows.cmd.ask')}</p>
       </div>
       <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-600 transition-colors">
         <code class="text-sm text-slate-600 dark:text-slate-400 font-mono font-bold">/clear</code>
-        <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">Clear conversation history</p>
+        <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">{t('workflows.cmd.clear')}</p>
       </div>
     </div>
   </div>
 
   <div class="text-center pt-8">
     <p class="text-slate-600 dark:text-slate-400 text-sm">
-      Need more workflows? See <a href="https://docs.claudekit.cc/docs/workflows" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline font-medium">full docs from official Claudekit site</a>.
+      {t('workflows.more.text')} <a href="https://docs.claudekit.cc/docs/workflows" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline font-medium">{t('workflows.more.link')}</a>.
     </p>
   </div>
 </div>

@@ -1,13 +1,20 @@
 ---
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+---
 ---
 <div class="space-y-8 mt-6">
   <!-- Page Header -->
   <div class="text-center space-y-4">
     <h2 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight flex items-center justify-center gap-3">
-      Fix Logs Guide
+      {t('fix_logs.guide.title')}
     </h2>
     <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-      Master the art of debugging with /fix:logs
+      {t('fix_logs.guide.subtitle')}
     </p>
   </div>
 
@@ -19,9 +26,8 @@
        </svg>
     </div>
     <div class="flex-1">
-      <div class="font-bold text-orange-700 dark:text-orange-400 mb-1 text-lg">Why /fix:logs?</div>
-      <div class="text-slate-600 dark:text-slate-400 leading-relaxed">
-         The <code class="px-1.5 py-0.5 rounded bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 font-mono text-sm">/fix:logs</code> command is your intelligent debugging assistant. It reads your error logs and automatically proposes fixes!
+      <div class="font-bold text-orange-700 dark:text-orange-400 mb-1 text-lg">{t('fix_logs.guide.why.title')}</div>
+      <div class="text-slate-600 dark:text-slate-400 leading-relaxed" set:html={t('fix_logs.guide.why.description')}>
       </div>
     </div>
   </div>
@@ -33,7 +39,7 @@
         <svg class="w-7 h-7 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
         </svg>
-        How to use it right
+        {t('fix_logs.guide.how_to.title')}
       </h2>
     </div>
 
@@ -49,9 +55,8 @@
            </div>
            <div class="flex-1 pb-6">
              <div class="bg-slate-50 dark:bg-slate-950 rounded-xl border border-blue-500/30 p-6">
-               <h3 class="text-xl font-bold text-blue-600 dark:text-blue-400 mb-3">Pipe logs to file</h3>
-               <p class="text-slate-700 dark:text-slate-300 mb-4">
-                 Redirect your application's output to a file named <code class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-sm">logs.txt</code>. This allows the AI to read the errors.
+               <h3 class="text-xl font-bold text-blue-600 dark:text-blue-400 mb-3">{t('fix_logs.guide.step1.title')}</h3>
+               <p class="text-slate-700 dark:text-slate-300 mb-4" set:html={t('fix_logs.guide.step1.description')}>
                </p>
                 <div class="bg-white dark:bg-slate-900/50 rounded-lg p-4 border border-slate-200 dark:border-slate-700">
                   <code class="text-sm font-mono text-slate-800 dark:text-slate-200">npm run dev > logs.txt 2>&1</code>
@@ -70,9 +75,8 @@
            </div>
            <div class="flex-1 pb-6">
              <div class="bg-slate-50 dark:bg-slate-950 rounded-xl border border-indigo-500/30 p-6">
-               <h3 class="text-xl font-bold text-indigo-600 dark:text-indigo-400 mb-3">Start Development Environment</h3>
-               <p class="text-slate-700 dark:text-slate-300 mb-4">
-                 Run your application and reproduce the issue or error you are facing. Ensure the error logs are captured in <code class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-sm">logs.txt</code>.
+               <h3 class="text-xl font-bold text-indigo-600 dark:text-indigo-400 mb-3">{t('fix_logs.guide.step2.title')}</h3>
+               <p class="text-slate-700 dark:text-slate-300 mb-4" set:html={t('fix_logs.guide.step2.description')}>
                </p>
              </div>
            </div>
@@ -87,13 +91,13 @@
            </div>
            <div class="flex-1">
              <div class="bg-slate-50 dark:bg-slate-950 rounded-xl border border-purple-500/30 p-6">
-               <h3 class="text-xl font-bold text-purple-600 dark:text-purple-400 mb-3">Analyze and Fix</h3>
+               <h3 class="text-xl font-bold text-purple-600 dark:text-purple-400 mb-3">{t('fix_logs.guide.step3.title')}</h3>
                <p class="text-slate-700 dark:text-slate-300 mb-4">
-                 If there are errors, simply run the command:
+                 {t('fix_logs.guide.step3.description')}
                </p>
                <div class="bg-white dark:bg-slate-900/50 rounded-lg p-4 border border-slate-200 dark:border-slate-700 flex items-center justify-between">
                   <code class="px-3 py-1.5 rounded bg-purple-500/20 text-purple-600 dark:text-purple-400 font-mono text-sm">/fix:logs</code>
-                  <span class="text-sm text-slate-500 italic">Analyzes logs.txt & fixes errors!</span>
+                  <span class="text-sm text-slate-500 italic">{t('fix_logs.guide.step3.note')}</span>
                </div>
              </div>
            </div>

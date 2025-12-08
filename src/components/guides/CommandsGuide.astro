@@ -1,53 +1,64 @@
 ---
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
 const categories = [
   {
-    name: 'Planning & Development',
-    description: 'Build features from scratch',
+    name: t('commands.guide.planning_development'),
+    description: t('commands.guide.planning_development_desc'),
     color: 'blue',
     icon: `<path d="M9 5H2v7l6.29 6.29c.94.94 2.48.94 3.42 0l3.58-3.58c.94-.94.94-2.48 0-3.42L9 5z"/>`,
     commands: [
-      { command: '/plan', complexity: '⚡⚡⚡', label: 'Medium', desc: 'Create detailed implementation plans' },
-      { command: '/code', complexity: '⚡', label: 'Easy', desc: 'Implement existing plans with tests' },
-      { command: '/cook', complexity: '⚡⚡⚡', label: 'Medium', desc: 'All-in-one: plan + code + test' },
-      { command: '/bootstrap', complexity: '⚡⚡⚡⚡⚡', label: 'Advanced', desc: 'Create complete projects from scratch' },
-      { command: '/brainstorm', complexity: '⚡⚡', label: 'Easy', desc: 'Explore ideas and possibilities' }
+      { command: '/plan', complexity: '⚡⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.plan') },
+      { command: '/code', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.code') },
+      { command: '/cook', complexity: '⚡⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.cook') },
+      { command: '/bootstrap', complexity: '⚡⚡⚡⚡⚡', label: t('commands.label.advanced'), desc: t('commands.desc.bootstrap') },
+      { command: '/brainstorm', complexity: '⚡⚡', label: t('commands.label.easy'), desc: t('commands.desc.brainstorm') }
     ]
   },
   {
-    name: 'Fixing & Debugging',
-    description: 'Solve problems and fix bugs',
+    name: t('commands.guide.fixing_debugging'),
+    description: t('commands.guide.fixing_debugging_desc'),
     color: 'red',
     icon: `<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>`,
     commands: [
-      { command: '/fix', complexity: '⚡⚡', label: 'Medium', desc: 'Smart auto-fix for any issue' },
-      { command: '/debug', complexity: '⚡⚡', label: 'Medium', desc: 'Find the root cause of issues' },
-      { command: '/fix:test', complexity: '⚡', label: 'Easy', desc: 'Fix failing tests' },
-      { command: '/fix:ui', complexity: '⚡', label: 'Easy', desc: 'Fix UI/design issues' },
-      { command: '/fix:types', complexity: '⚡', label: 'Easy', desc: 'Fix TypeScript errors' },
-      { command: '/fix:ci', complexity: '⚡', label: 'Medium', desc: 'Fix CI/CD pipeline issues' }
+      { command: '/fix', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.fix') },
+      { command: '/debug', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.debug') },
+      { command: '/fix:test', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.fix_test') },
+      { command: '/fix:ui', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.fix_ui') },
+      { command: '/fix:types', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.fix_types') },
+      { command: '/fix:ci', complexity: '⚡', label: t('commands.label.medium'), desc: t('commands.desc.fix_ci') }
     ]
   },
   {
-    name: 'Testing & Quality',
-    description: 'Ensure your code works perfectly',
+    name: t('commands.guide.testing_quality'),
+    description: t('commands.guide.testing_quality_desc'),
     color: 'green',
     icon: `<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>`,
     commands: [
-      { command: '/test', complexity: '⚡', label: 'Easy', desc: 'Run tests and analyze results' },
-      { command: '/review:codebase', complexity: '⚡⚡', label: 'Medium', desc: 'Comprehensive code review' },
-      { command: '/watzup', complexity: '⚡', label: 'Easy', desc: 'Review recent changes' }
+      { command: '/test', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.test') },
+      { command: '/review:codebase', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.review_codebase') },
+      { command: '/watzup', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.watzup') }
     ]
   },
   {
-    name: 'Navigation & Help',
-    description: 'Get answers and explore your code',
+    name: t('commands.guide.navigation_help'),
+    description: t('commands.guide.navigation_help_desc'),
     color: 'purple',
     icon: `<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>`,
     commands: [
-      { command: '/ask', complexity: '⚡', label: 'Easy', desc: 'Ask technical questions' },
-      { command: '/scout', complexity: '⚡⚡', label: 'Medium', desc: 'Search and explore codebase' },
-      { command: '/ck-help', complexity: '⚡', label: 'Easy', desc: 'Interactive ClaudeKit guide' },
-      { command: '/resume', complexity: '⚡', label: 'Advanced', desc: 'Resume session from ID' }
+      { command: '/ask', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.ask') },
+      { command: '/scout', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.scout') },
+      { command: '/ck-help', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.ck_help') },
+      { command: '/resume', complexity: '⚡', label: t('commands.label.advanced'), desc: t('commands.desc.resume') }
     ]
   },
   {
@@ -56,9 +67,9 @@ const categories = [
     color: 'pink',
     icon: `<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>`,
     commands: [
-      { command: '/design:fast', complexity: '⚡', label: 'Easy', desc: 'Quick design generation' },
-      { command: '/design:good', complexity: '⚡⚡', label: 'Medium', desc: 'High-quality designs' },
-      { command: '/content:enhance', complexity: '⚡', label: 'Easy', desc: 'Improve existing content' }
+      { command: '/design:fast', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.design_fast') },
+      { command: '/design:good', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.design_good') },
+      { command: '/content:enhance', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.content_enhance') }
     ]
   },
   {
@@ -67,9 +78,9 @@ const categories = [
     color: 'orange',
     icon: `<circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><line x1="6" y1="9" x2="6" y2="21"/>`,
     commands: [
-      { command: '/git:cm', complexity: '⚡', label: 'Easy', desc: 'Smart commit messages' },
-      { command: '/git:pr', complexity: '⚡', label: 'Easy', desc: 'Create pull requests' },
-      { command: '/git:merge', complexity: '⚡⚡', label: 'Medium', desc: 'Merge with conflict resolution' }
+      { command: '/git:cm', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.git_cm') },
+      { command: '/git:pr', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.git_pr') },
+      { command: '/git:merge', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.git_merge') }
     ]
   }
 ];
@@ -120,10 +131,14 @@ const styles = {
 };
 
 const complexityColors: Record<string, string> = {
-  Easy: 'bg-green-500/20 text-green-700 dark:text-green-400',
-  Medium: 'bg-amber-500/20 text-amber-700 dark:text-amber-400',
-  Advanced: 'bg-red-500/20 text-red-700 dark:text-red-400'
+  [t('commands.label.easy')]: 'bg-green-500/20 text-green-700 dark:text-green-400',
+  [t('commands.label.medium')]: 'bg-amber-500/20 text-amber-700 dark:text-amber-400',
+  [t('commands.label.advanced')]: 'bg-red-500/20 text-red-700 dark:text-red-400'
 };
+// Add fallback for direct string matching just in case
+complexityColors['Easy'] = complexityColors[t('commands.label.easy')];
+complexityColors['Medium'] = complexityColors[t('commands.label.medium')];
+complexityColors['Advanced'] = complexityColors[t('commands.label.advanced')];
 ---
 
 <style>
@@ -148,10 +163,10 @@ const complexityColors: Record<string, string> = {
   <!-- Page Header -->
   <div class="text-center space-y-4">
     <h2 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight flex items-center justify-center gap-3">
-      Slash Commands Guide
+      {t('guides.commands.title')}
     </h2>
     <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-      Your AI assistant speaks slash — here's your dictionary 🚀
+      {t('guides.commands.description')}
     </p>
   </div>
 
@@ -165,17 +180,16 @@ const complexityColors: Record<string, string> = {
       </svg>
     </div>
     <div class="flex-1">
-      <div class="font-bold text-purple-700 dark:text-purple-400 mb-1 text-lg">What are Slash Commands?</div>
+      <div class="font-bold text-purple-700 dark:text-purple-400 mb-1 text-lg">{t('commands.hero.title')}</div>
       <div class="text-slate-600 dark:text-slate-400 leading-relaxed">
-        Think of slash commands as <strong>magic shortcuts</strong> 🪄 — just type <code class="px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 font-mono text-sm">/command</code> and let AI do the heavy lifting!
-        No coding required, just tell ClaudeKit what you want.
+        <Fragment set:html={t('commands.hero.description')} />
       </div>
       <div class="mt-4 p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-purple-100 dark:border-purple-500/10">
-        <p class="text-xs font-bold text-purple-700 dark:text-purple-400 mb-2 uppercase tracking-wide">Example</p>
+        <p class="text-xs font-bold text-purple-700 dark:text-purple-400 mb-2 uppercase tracking-wide">{t('commands.hero.example_label')}</p>
         <div class="flex items-center gap-3 flex-wrap">
           <code class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-950 text-slate-700 dark:text-slate-300 font-mono text-sm border border-slate-200 dark:border-slate-800">/cook "add a login button"</code>
           <span class="text-slate-400 text-sm">→</span>
-          <span class="text-sm text-slate-600 dark:text-slate-400">AI builds the entire feature for you! 🎉</span>
+          <span class="text-sm text-slate-600 dark:text-slate-400">{t('commands.hero.example_outcome')}</span>
         </div>
       </div>
     </div>
@@ -194,24 +208,24 @@ const complexityColors: Record<string, string> = {
             </svg>
           </div>
           <div>
-            <h3 class="text-lg font-bold text-green-600 dark:text-green-400">Beginner</h3>
-            <p class="text-xs text-slate-500">Start here!</p>
+            <h3 class="text-lg font-bold text-green-600 dark:text-green-400">{t('commands.qs.beginner.title')}</h3>
+            <p class="text-xs text-slate-500">{t('commands.qs.beginner.subtitle')}</p>
           </div>
         </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400">Perfect for your first steps with AI coding</p>
+        <p class="text-sm text-slate-600 dark:text-slate-400">{t('commands.qs.beginner.desc')}</p>
       </div>
       <div class="p-4 space-y-2">
         <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 group-hover:border-green-500/30 transition-colors">
           <code class="text-sm text-green-600 dark:text-green-400 font-mono">/ask</code>
-          <p class="text-xs text-slate-500 mt-1">Ask technical questions</p>
+          <p class="text-xs text-slate-500 mt-1">{t('commands.cmd.ask.desc')}</p>
         </div>
         <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 group-hover:border-green-500/30 transition-colors">
           <code class="text-sm text-green-600 dark:text-green-400 font-mono">/brainstorm</code>
-          <p class="text-xs text-slate-500 mt-1">Explore ideas together</p>
+          <p class="text-xs text-slate-500 mt-1">{t('commands.cmd.brainstorm.desc')}</p>
         </div>
         <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 group-hover:border-green-500/30 transition-colors">
           <code class="text-sm text-green-600 dark:text-green-400 font-mono">/fix</code>
-          <p class="text-xs text-slate-500 mt-1">Fix bugs automatically</p>
+          <p class="text-xs text-slate-500 mt-1">{t('commands.cmd.fix.desc')}</p>
         </div>
       </div>
     </div>
@@ -226,24 +240,24 @@ const complexityColors: Record<string, string> = {
             </svg>
           </div>
           <div>
-            <h3 class="text-lg font-bold text-amber-600 dark:text-amber-400">Intermediate</h3>
-            <p class="text-xs text-slate-500">Level up!</p>
+            <h3 class="text-lg font-bold text-amber-600 dark:text-amber-400">{t('commands.qs.intermediate.title')}</h3>
+            <p class="text-xs text-slate-500">{t('commands.qs.intermediate.subtitle')}</p>
           </div>
         </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400">Build complete features with ease</p>
+        <p class="text-sm text-slate-600 dark:text-slate-400">{t('commands.qs.intermediate.desc')}</p>
       </div>
       <div class="p-4 space-y-2">
         <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 group-hover:border-amber-500/30 transition-colors">
           <code class="text-sm text-amber-600 dark:text-amber-400 font-mono">/plan</code>
-          <p class="text-xs text-slate-500 mt-1">Create step-by-step plans</p>
+          <p class="text-xs text-slate-500 mt-1">{t('commands.cmd.plan.desc')}</p>
         </div>
         <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 group-hover:border-amber-500/30 transition-colors">
           <code class="text-sm text-amber-600 dark:text-amber-400 font-mono">/code</code>
-          <p class="text-xs text-slate-500 mt-1">Implement your plans</p>
+          <p class="text-xs text-slate-500 mt-1">{t('commands.cmd.code.desc')}</p>
         </div>
         <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 group-hover:border-amber-500/30 transition-colors">
           <code class="text-sm text-amber-600 dark:text-amber-400 font-mono">/cook</code>
-          <p class="text-xs text-slate-500 mt-1">All-in-one feature builder</p>
+          <p class="text-xs text-slate-500 mt-1">{t('commands.cmd.cook.desc')}</p>
         </div>
       </div>
     </div>
@@ -258,24 +272,24 @@ const complexityColors: Record<string, string> = {
             </svg>
           </div>
           <div>
-            <h3 class="text-lg font-bold text-red-600 dark:text-red-400">Advanced</h3>
-            <p class="text-xs text-slate-500">Pro mode!</p>
+            <h3 class="text-lg font-bold text-red-600 dark:text-red-400">{t('commands.qs.advanced.title')}</h3>
+            <p class="text-xs text-slate-500">{t('commands.qs.advanced.subtitle')}</p>
           </div>
         </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400">Build entire projects from scratch</p>
+        <p class="text-sm text-slate-600 dark:text-slate-400">{t('commands.qs.advanced.desc')}</p>
       </div>
       <div class="p-4 space-y-2">
         <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 group-hover:border-red-500/30 transition-colors">
           <code class="text-sm text-red-600 dark:text-red-400 font-mono">/bootstrap</code>
-          <p class="text-xs text-slate-500 mt-1">Create complete projects</p>
+          <p class="text-xs text-slate-500 mt-1">{t('commands.cmd.bootstrap.desc')}</p>
         </div>
         <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 group-hover:border-red-500/30 transition-colors">
           <code class="text-sm text-red-600 dark:text-red-400 font-mono">/scout</code>
-          <p class="text-xs text-slate-500 mt-1">Explore your codebase</p>
+          <p class="text-xs text-slate-500 mt-1">{t('commands.cmd.scout.desc')}</p>
         </div>
         <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 group-hover:border-red-500/30 transition-colors">
           <code class="text-sm text-red-600 dark:text-red-400 font-mono">/watzup</code>
-          <p class="text-xs text-slate-500 mt-1">Review recent changes</p>
+          <p class="text-xs text-slate-500 mt-1">{t('commands.cmd.watzup.desc')}</p>
         </div>
       </div>
     </div>
@@ -290,9 +304,9 @@ const complexityColors: Record<string, string> = {
           <polyline points="8 12 12 16 16 12"/>
           <line x1="12" y1="8" x2="12" y2="16"/>
         </svg>
-        Your Coding Journey in 3 Simple Steps
+        {t('commands.journey.title')}
       </h2>
-      <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">From idea to working code — no programming knowledge needed!</p>
+      <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">{t('commands.journey.subtitle')}</p>
     </div>
 
     <div class="p-8">
@@ -311,15 +325,15 @@ const complexityColors: Record<string, string> = {
                 <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
                 </svg>
-                Start with an Idea
+                {t('commands.journey.step1.title')}
               </h3>
-              <p class="text-slate-700 dark:text-slate-300 mb-4">Have an idea? Just talk to ClaudeKit like you would to a friend!</p>
+              <p class="text-slate-700 dark:text-slate-300 mb-4">{t('commands.journey.step1.desc')}</p>
               <div class="space-y-3">
                 <div class="bg-white dark:bg-slate-900/50 rounded-lg p-4 border border-slate-200 dark:border-slate-700">
                   <div class="flex items-start gap-3">
                     <code class="px-3 py-1.5 rounded bg-purple-500/20 text-purple-600 dark:text-purple-400 font-mono text-sm">/brainstorm</code>
                     <div class="flex-1">
-                      <p class="text-sm text-slate-600 dark:text-slate-400">"I want to add a dark mode toggle to my website"</p>
+                      <p class="text-sm text-slate-600 dark:text-slate-400">{t('commands.journey.step1.example')}</p>
                     </div>
                   </div>
                 </div>
@@ -327,7 +341,7 @@ const complexityColors: Record<string, string> = {
                   <svg class="w-4 h-4 text-purple-600 dark:text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="20 6 9 17 4 12"/>
                   </svg>
-                  AI helps you explore different approaches and possibilities
+                  {t('commands.journey.step1.status')}
                 </div>
               </div>
             </div>
@@ -349,38 +363,38 @@ const complexityColors: Record<string, string> = {
                   <path d="M9 5H2v7l6.29 6.29c.94.94 2.48.94 3.42 0l3.58-3.58c.94-.94.94-2.48 0-3.42L9 5z"/>
                   <path d="M6 9.01V9"/>
                 </svg>
-                Create a Plan
+                {t('commands.journey.step2.title')}
               </h3>
-              <p class="text-slate-700 dark:text-slate-300 mb-4">AI creates a detailed roadmap for building your feature</p>
+              <p class="text-slate-700 dark:text-slate-300 mb-4">{t('commands.journey.step2.desc')}</p>
               <div class="space-y-3">
                 <div class="bg-white dark:bg-slate-900/50 rounded-lg p-4 border border-slate-200 dark:border-slate-700">
                   <div class="flex items-start gap-3">
                     <code class="px-3 py-1.5 rounded bg-blue-500/20 text-blue-600 dark:text-blue-400 font-mono text-sm">/plan</code>
                     <div class="flex-1">
-                      <p class="text-sm text-slate-600 dark:text-slate-400">"Create dark mode toggle"</p>
+                      <p class="text-sm text-slate-600 dark:text-slate-400">{t('commands.journey.step2.example')}</p>
                     </div>
                   </div>
                 </div>
                 <div class="bg-blue-500/10 rounded-lg p-4 border border-blue-500/20">
-                  <div class="text-xs font-medium text-blue-600 dark:text-blue-400 mb-2">Plan includes:</div>
+                  <div class="text-xs font-medium text-blue-600 dark:text-blue-400 mb-2">{t('commands.journey.step2.plan_includes')}</div>
                   <ul class="space-y-1 text-xs text-slate-600 dark:text-slate-400">
                     <li class="flex items-center gap-2">
                       <svg class="w-3 h-3 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <polyline points="20 6 9 17 4 12"/>
                       </svg>
-                      What files to create/modify
+                      {t('commands.journey.step2.item1')}
                     </li>
                     <li class="flex items-center gap-2">
                       <svg class="w-3 h-3 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <polyline points="20 6 9 17 4 12"/>
                       </svg>
-                      Step-by-step instructions
+                      {t('commands.journey.step2.item2')}
                     </li>
                     <li class="flex items-center gap-2">
                       <svg class="w-3 h-3 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <polyline points="20 6 9 17 4 12"/>
                       </svg>
-                      How to test everything works
+                      {t('commands.journey.step2.item3')}
                     </li>
                   </ul>
                 </div>
@@ -390,8 +404,8 @@ const complexityColors: Record<string, string> = {
                     <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                   </svg>
                   <div class="text-xs text-slate-700 dark:text-slate-300">
-                    <strong class="text-amber-700 dark:text-amber-400 block mb-1">Important Context Tip:</strong>
-                    Run <code class="px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 font-mono">/clear</code> before starting the build to ensure the AI focuses only on the approved plan.
+                    <strong class="text-amber-700 dark:text-amber-400 block mb-1">{t('commands.journey.step2.tip_title')}</strong>
+                    <Fragment set:html={t('commands.journey.step2.tip_desc')} />
                   </div>
                 </div>
               </div>
@@ -413,38 +427,38 @@ const complexityColors: Record<string, string> = {
                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
                   <polyline points="22 4 12 14.01 9 11.01"/>
                 </svg>
-                AI Builds It!
+                {t('commands.journey.step3.title')}
               </h3>
-              <p class="text-slate-700 dark:text-slate-300 mb-4">Sit back and watch AI write the code, test it, and make it perfect!</p>
+              <p class="text-slate-700 dark:text-slate-300 mb-4">{t('commands.journey.step3.desc')}</p>
               <div class="space-y-3">
                 <div class="bg-white dark:bg-slate-900/50 rounded-lg p-4 border border-slate-200 dark:border-slate-700">
                   <div class="flex items-start gap-3">
                     <code class="px-3 py-1.5 rounded bg-green-500/20 text-green-600 dark:text-green-400 font-mono text-sm">/code @plan.md</code>
                     <div class="flex-1">
-                      <p class="text-sm text-slate-600 dark:text-slate-400">AI implements the entire plan</p>
+                      <p class="text-sm text-slate-600 dark:text-slate-400">{t('commands.journey.step3.example')}</p>
                     </div>
                   </div>
                 </div>
                 <div class="bg-green-500/10 rounded-lg p-4 border border-green-500/20">
-                  <div class="text-xs font-medium text-green-600 dark:text-green-400 mb-2">AI automatically:</div>
+                  <div class="text-xs font-medium text-green-600 dark:text-green-400 mb-2">{t('commands.journey.step3.auto_title')}</div>
                   <ul class="space-y-1 text-xs text-slate-600 dark:text-slate-400">
                     <li class="flex items-center gap-2">
                       <svg class="w-3 h-3 text-green-600 dark:text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <polyline points="20 6 9 17 4 12"/>
                       </svg>
-                      Writes all the code
+                      {t('commands.journey.step3.auto_item1')}
                     </li>
                     <li class="flex items-center gap-2">
                       <svg class="w-3 h-3 text-green-600 dark:text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <polyline points="20 6 9 17 4 12"/>
                       </svg>
-                      Runs tests to verify it works
+                      {t('commands.journey.step3.auto_item2')}
                     </li>
                     <li class="flex items-center gap-2">
                       <svg class="w-3 h-3 text-green-600 dark:text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <polyline points="20 6 9 17 4 12"/>
                       </svg>
-                      Reviews code quality
+                      {t('commands.journey.step3.auto_item3')}
                     </li>
                   </ul>
                 </div>
@@ -461,11 +475,11 @@ const complexityColors: Record<string, string> = {
             <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
           </svg>
           <div>
-            <h4 class="text-lg font-bold text-amber-600 dark:text-amber-400 mb-2">Pro Tip: Skip Steps with /cook</h4>
-            <p class="text-slate-700 dark:text-slate-300 mb-3">Want it even faster? Use <code class="px-2 py-1 rounded bg-white dark:bg-slate-900/50 text-amber-600 dark:text-amber-400 font-mono">/cook</code> to do all 3 steps at once!</p>
+            <h4 class="text-lg font-bold text-amber-600 dark:text-amber-400 mb-2">{t('commands.pro_tip.title')}</h4>
+            <p class="text-slate-700 dark:text-slate-300 mb-3"><Fragment set:html={t('commands.pro_tip.desc')} /></p>
             <div class="bg-white dark:bg-slate-900/50 rounded-lg p-4 border border-amber-500/20">
               <code class="text-sm text-amber-600 dark:text-amber-400 font-mono">/cook "add dark mode toggle"</code>
-              <p class="text-xs text-slate-500 mt-2">→ AI brainstorms, plans, and implements everything automatically! 🚀</p>
+              <p class="text-xs text-slate-500 mt-2">{t('commands.pro_tip.example')}</p>
             </div>
           </div>
         </div>
@@ -482,7 +496,7 @@ const complexityColors: Record<string, string> = {
         <rect x="14" y="14" width="7" height="7"/>
         <rect x="3" y="14" width="7" height="7"/>
       </svg>
-      All Commands by Category
+      {t('commands.categories.title')}
     </h2>
 
     {categories.map((category) => (
@@ -517,7 +531,7 @@ const complexityColors: Record<string, string> = {
       <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
       </svg>
-      Tips for Beginners
+      {t('commands.tips.title')}
     </h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div class="flex items-start gap-3 p-4 rounded-lg bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700">
@@ -525,8 +539,8 @@ const complexityColors: Record<string, string> = {
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
         </svg>
         <div>
-          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">Talk Like a Human</div>
-          <div class="text-xs text-slate-600 dark:text-slate-400">No need for technical jargon! Explain what you want in plain English. AI understands you!</div>
+          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">{t('commands.tips.1.title')}</div>
+          <div class="text-xs text-slate-600 dark:text-slate-400">{t('commands.tips.1.desc')}</div>
         </div>
       </div>
       <div class="flex items-start gap-3 p-4 rounded-lg bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700">
@@ -536,8 +550,8 @@ const complexityColors: Record<string, string> = {
           <line x1="12" y1="8" x2="12.01" y2="8"/>
         </svg>
         <div>
-          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">Use @ to Reference Files</div>
-          <div class="text-xs text-slate-600 dark:text-slate-400">Type <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">@filename</code> to tell AI which files to work with</div>
+          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">{t('commands.tips.2.title')}</div>
+          <div class="text-xs text-slate-600 dark:text-slate-400"><Fragment set:html={t('commands.tips.2.desc')} /></div>
         </div>
       </div>
       <div class="flex items-start gap-3 p-4 rounded-lg bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700">
@@ -545,8 +559,8 @@ const complexityColors: Record<string, string> = {
           <polyline points="20 6 9 17 4 12"/>
         </svg>
         <div>
-          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">Start Small</div>
-          <div class="text-xs text-slate-600 dark:text-slate-400">Begin with simple commands like <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/ask</code> or <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/brainstorm</code> to get comfortable</div>
+          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">{t('commands.tips.3.title')}</div>
+          <div class="text-xs text-slate-600 dark:text-slate-400"><Fragment set:html={t('commands.tips.3.desc')} /></div>
         </div>
       </div>
       <div class="flex items-start gap-3 p-4 rounded-lg bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700">
@@ -555,8 +569,8 @@ const complexityColors: Record<string, string> = {
           <polyline points="22 4 12 14.01 9 11.01"/>
         </svg>
         <div>
-          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">Don't Be Afraid to Experiment</div>
-          <div class="text-xs text-slate-600 dark:text-slate-400">AI helps you learn as you go. Try different commands and see what happens!</div>
+          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">{t('commands.tips.4.title')}</div>
+          <div class="text-xs text-slate-600 dark:text-slate-400">{t('commands.tips.4.desc')}</div>
         </div>
       </div>
     </div>
@@ -569,41 +583,41 @@ const complexityColors: Record<string, string> = {
         <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
         <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
       </svg>
-      Understanding the Symbols
+      {t('commands.legend.title')}
     </h3>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div class="space-y-2">
-        <h4 class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">Difficulty Levels:</h4>
+        <h4 class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">{t('commands.legend.difficulty')}</h4>
         <div class="flex items-center gap-3 text-sm">
-          <span class="px-3 py-1 rounded-full bg-green-500/20 text-green-700 dark:text-green-400 border border-green-500/20 text-xs font-medium">Easy</span>
-          <span class="text-slate-600 dark:text-slate-400">Great for beginners</span>
+          <span class="px-3 py-1 rounded-full bg-green-500/20 text-green-700 dark:text-green-400 border border-green-500/20 text-xs font-medium">{t('commands.legend.easy')}</span>
+          <span class="text-slate-600 dark:text-slate-400">{t('commands.legend.easy_desc')}</span>
         </div>
         <div class="flex items-center gap-3 text-sm">
-          <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-700 dark:text-amber-400 border border-amber-500/20 text-xs font-medium">Medium</span>
-          <span class="text-slate-600 dark:text-slate-400">Some AI coordination needed</span>
+          <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-700 dark:text-amber-400 border border-amber-500/20 text-xs font-medium">{t('commands.legend.medium')}</span>
+          <span class="text-slate-600 dark:text-slate-400">{t('commands.legend.medium_desc')}</span>
         </div>
         <div class="flex items-center gap-3 text-sm">
-          <span class="px-3 py-1 rounded-full bg-red-500/20 text-red-700 dark:text-red-400 border border-red-500/20 text-xs font-medium">Advanced</span>
-          <span class="text-slate-600 dark:text-slate-400">Full project workflows</span>
+          <span class="px-3 py-1 rounded-full bg-red-500/20 text-red-700 dark:text-red-400 border border-red-500/20 text-xs font-medium">{t('commands.legend.advanced')}</span>
+          <span class="text-slate-600 dark:text-slate-400">{t('commands.legend.advanced_desc')}</span>
         </div>
       </div>
       <div class="space-y-2">
-        <h4 class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">Token Consumption:</h4>
+        <h4 class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">{t('commands.legend.token')}</h4>
         <div class="flex items-center gap-3 text-sm">
           <span class="text-slate-500 dark:text-slate-400 font-mono">⚡</span>
-          <span class="text-slate-600 dark:text-slate-400">Low token usage</span>
+          <span class="text-slate-600 dark:text-slate-400">{t('commands.legend.token_low')}</span>
         </div>
         <div class="flex items-center gap-3 text-sm">
           <span class="text-slate-500 dark:text-slate-400 font-mono">⚡⚡</span>
-          <span class="text-slate-600 dark:text-slate-400">Medium token usage</span>
+          <span class="text-slate-600 dark:text-slate-400">{t('commands.legend.token_med')}</span>
         </div>
         <div class="flex items-center gap-3 text-sm">
           <span class="text-slate-500 dark:text-slate-400 font-mono">⚡⚡⚡</span>
-          <span class="text-slate-600 dark:text-slate-400">High token usage</span>
+          <span class="text-slate-600 dark:text-slate-400">{t('commands.legend.token_high')}</span>
         </div>
         <div class="flex items-center gap-3 text-sm">
           <span class="text-slate-500 dark:text-slate-400 font-mono">⚡⚡⚡⚡⚡</span>
-          <span class="text-slate-600 dark:text-slate-400">Maximum token usage</span>
+          <span class="text-slate-600 dark:text-slate-400">{t('commands.legend.token_max')}</span>
         </div>
       </div>
     </div>
@@ -612,7 +626,7 @@ const complexityColors: Record<string, string> = {
   <!-- Official Docs Note -->
   <div class="text-center pt-4">
     <p class="text-sm text-slate-500 dark:text-slate-400">
-      Need more commands? <a href="https://docs.claudekit.cc/docs/commands" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline font-medium">See full docs from official Claudekit site.</a>
+      {t('commands.docs.text')} <a href="https://docs.claudekit.cc/docs/commands" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline font-medium">{t('commands.docs.link')}</a>
     </p>
   </div>
 </div>

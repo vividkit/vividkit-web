@@ -1,4 +1,14 @@
 ---
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
 ---
 
 <style>
@@ -16,10 +26,10 @@
   <!-- Page Header -->
   <div class="text-center space-y-4">
     <h2 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
-      ClaudeKit CLI Guide
+      {t('cli.guide.title')}
     </h2>
     <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-      Install ClaudeKit, run <code class="px-2 py-0.5 bg-slate-100 dark:bg-slate-800 rounded font-mono text-blue-600 dark:text-blue-400 font-semibold">claude</code>, and leverage powerful AI skills from your terminal!
+      {t('cli.guide.subtitle')}
     </p>
   </div>
 
@@ -34,27 +44,25 @@
       </svg>
     </div>
     <div class="flex-1">
-      <div class="font-bold text-purple-700 dark:text-purple-400 mb-1 text-lg">What is ClaudeKit CLI?</div>
+      <div class="font-bold text-purple-700 dark:text-purple-400 mb-1 text-lg">{t('cli.guide.what_is')}</div>
       <div class="text-slate-600 dark:text-slate-400 leading-relaxed">
-        <strong>ClaudeKit CLI</strong> helps you set up ClaudeKit in your projects, then you use
-        <strong>Claude Code</strong> to get AI assistance. Install ClaudeKit, run <code class="px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 font-mono text-sm">claude</code>,
-        and leverage powerful skills like UI/UX Pro Max — all from your terminal!
+        {t('cli.guide.what_is_description')}
       </div>
       <div class="mt-4 p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-purple-100 dark:border-purple-500/10">
-        <p class="text-xs font-bold text-purple-700 dark:text-purple-400 mb-2 uppercase tracking-wide">Quick Workflow</p>
+        <p class="text-xs font-bold text-purple-700 dark:text-purple-400 mb-2 uppercase tracking-wide">{t('cli.guide.quick_workflow')}</p>
         <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-3 font-mono text-sm space-y-1 border border-slate-200 dark:border-transparent">
           <div class="flex items-start gap-2">
             <span class="text-purple-600 dark:text-purple-400">$</span>
             <span class="text-slate-700 dark:text-slate-300">ck init</span>
-            <span class="text-slate-500 text-xs"># Set up ClaudeKit in your project</span>
+            <span class="text-slate-500 text-xs">{t('cli.terminal.setup_comment')}</span>
           </div>
           <div class="flex items-start gap-2">
             <span class="text-purple-600 dark:text-purple-400">$</span>
             <span class="text-slate-700 dark:text-slate-300">claude</span>
-            <span class="text-slate-500 text-xs"># Start Claude Code CLI</span>
+            <span class="text-slate-500 text-xs">{t('cli.terminal.start_comment')}</span>
           </div>
         </div>
-        <p class="text-xs text-slate-500 dark:text-slate-500 mt-2">→ Then chat with AI to build beautiful UIs instantly! 🎨</p>
+        <p class="text-xs text-slate-500 dark:text-slate-500 mt-2">{t('cli.terminal.then_chat')}</p>
       </div>
     </div>
   </div>
@@ -68,9 +76,9 @@
           <polyline points="8 7 12 12 8 17"/>
           <line x1="12" y1="17" x2="16" y2="17"/>
         </svg>
-        What It Looks Like in Your Terminal
+        {t('cli.guide.terminal_preview')}
       </h2>
-      <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Here's exactly what you'll see when using ClaudeKit CLI</p>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">{t('cli.guide.terminal_description')}</p>
     </div>
 
     <div class="p-8">
@@ -84,7 +92,7 @@
             <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
           </div>
           <div class="flex-1 text-center">
-            <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">Terminal — bash — 80×24</span>
+            <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">{t('cli.terminal.window_title')}</span>
           </div>
         </div>
 
@@ -101,15 +109,15 @@
 
             <!-- CLI starts -->
             <div class="pl-4 text-cyan-600 dark:text-cyan-400 text-xs">
-              <div>Starting Claude Code CLI...</div>
-              <div class="text-slate-500 mt-1">Type your message (or /help for commands)</div>
+              <div>{t('cli.terminal.starting')}</div>
+              <div class="text-slate-500 mt-1">{t('cli.terminal.type_message')}</div>
             </div>
 
             <!-- User prompt -->
             <div class="pl-4 mt-2">
               <div class="flex items-start gap-2">
                 <span class="text-emerald-600 dark:text-emerald-400">You:</span>
-                <span class="text-slate-800 dark:text-slate-300">Using ui-ux-pro-max skill, create a yoga studio landing page</span>
+                <span class="text-slate-800 dark:text-slate-300">{t('cli.terminal.user_prompt_1')}</span>
               </div>
             </div>
 
@@ -119,36 +127,36 @@
                 <svg class="w-4 h-4 animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <circle cx="12" cy="12" r="10"/>
                 </svg>
-                <span>ClaudeKit AI is thinking...</span>
+                <span>{t('cli.terminal.thinking')}</span>
               </div>
 
               <div class="space-y-1 pl-6 text-xs">
                 <div class="flex items-center gap-2">
                   <span class="text-emerald-600 dark:text-emerald-400">✓</span>
-                  <span>Searching product domain: <span class="text-slate-700 dark:text-slate-300">beauty/wellness</span></span>
+                  <span>{t('cli.terminal.search_domain')} <span class="text-slate-700 dark:text-slate-300">{t('cli.terminal.domain_beauty')}</span></span>
                 </div>
                 <div class="flex items-center gap-2">
                   <span class="text-emerald-600 dark:text-emerald-400">✓</span>
-                  <span>Style guide: <span class="text-slate-700 dark:text-slate-300">minimalist + elegant</span></span>
+                  <span>{t('cli.terminal.style_guide')} <span class="text-slate-700 dark:text-slate-300">{t('cli.terminal.style_minimal')}</span></span>
                 </div>
                 <div class="flex items-center gap-2">
                   <span class="text-emerald-600 dark:text-emerald-400">✓</span>
-                  <span>Typography: <span class="text-slate-700 dark:text-slate-300">Playfair Display + Inter</span></span>
+                  <span>{t('cli.terminal.typography')} <span class="text-slate-700 dark:text-slate-300">Playfair Display + Inter</span></span>
                 </div>
                 <div class="flex items-center gap-2">
                   <span class="text-emerald-600 dark:text-emerald-400">✓</span>
-                  <span>Color palette: <span class="text-slate-700 dark:text-slate-300">soft pastels (#E8E5F2)</span></span>
+                  <span>{t('cli.terminal.color_palette')} <span class="text-slate-700 dark:text-slate-300">{t('cli.terminal.color_pastel')}</span></span>
                 </div>
               </div>
 
               <div class="mt-3 p-3 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded">
-                <div class="text-emerald-600 dark:text-emerald-400 text-sm mb-2">✓ Design Complete!</div>
+                <div class="text-emerald-600 dark:text-emerald-400 text-sm mb-2">{t('cli.terminal.design_complete')}</div>
                 <div class="text-slate-700 dark:text-slate-300 text-xs space-y-1">
-                  <div>Created: <span class="text-cyan-600 dark:text-cyan-400">yoga-studio-landing.html</span></div>
-                  <div>- Calming lavender color palette</div>
-                  <div>- Elegant Playfair Display typography</div>
-                  <div>- Responsive mobile-first design</div>
-                  <div>- WCAG AA accessible</div>
+                  <div>{t('cli.terminal.created_file')} <span class="text-cyan-600 dark:text-cyan-400">yoga-studio-landing.html</span></div>
+                  <div>{t('cli.terminal.palette_desc')}</div>
+                  <div>{t('cli.terminal.typography_desc')}</div>
+                  <div>{t('cli.terminal.mobile_desc')}</div>
+                  <div>{t('cli.terminal.a11y_desc')}</div>
                 </div>
               </div>
 
@@ -156,7 +164,7 @@
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                 </svg>
-                <span>Files created in current directory</span>
+                <span>{t('cli.terminal.files_created')}</span>
               </div>
             </div>
           </div>
@@ -193,7 +201,7 @@
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <polyline points="20 6 9 17 4 12"/>
                 </svg>
-                <span>Opening in default browser...</span>
+                <span>{t('cli.terminal.opening')}</span>
               </div>
             </div>
           </div>
@@ -204,7 +212,7 @@
           <!-- Command 4: Continue in same session -->
           <div class="space-y-2">
             <div class="pl-4 space-y-2 text-slate-600 dark:text-slate-400">
-              <div class="text-purple-600 dark:text-purple-400 text-xs">→ You're already in Claude Code CLI. Just keep chatting!</div>
+              <div class="text-purple-600 dark:text-purple-400 text-xs">{t('cli.terminal.already_in')}</div>
 
               <div class="mt-2 space-y-3">
                 <div>
@@ -212,7 +220,7 @@
                     <span class="text-emerald-600 dark:text-emerald-400 text-xs">You:</span>
                   </div>
                   <div class="pl-4 text-slate-700 dark:text-slate-300 text-xs">
-                    Using ui-ux-pro-max skill, make the buttons more prominent with hover effects
+                    {t('cli.terminal.user_prompt_2')}
                   </div>
                 </div>
 
@@ -224,14 +232,14 @@
                     <span class="text-purple-600 dark:text-purple-400 text-xs">AI:</span>
                   </div>
                   <div class="pl-4 text-slate-700 dark:text-slate-300 text-xs space-y-1">
-                    <div>I'll enhance the button styles with:</div>
+                    <div>{t('cli.terminal.ai_response_2')}</div>
                     <div class="pl-2">
-                      <div>• Smooth hover transitions (200ms)</div>
-                      <div>• Scale effect (hover:scale-105)</div>
-                      <div>• Shadow elevation on hover</div>
-                      <div>• Clear cursor-pointer indication</div>
+                      <div>{t('cli.terminal.hover_transition')}</div>
+                      <div>{t('cli.terminal.hover_scale')}</div>
+                      <div>{t('cli.terminal.hover_shadow')}</div>
+                      <div>{t('cli.terminal.cursor_pointer')}</div>
                     </div>
-                    <div class="mt-2 text-emerald-600 dark:text-emerald-400">✓ Updated yoga-studio-landing.html</div>
+                    <div class="mt-2 text-emerald-600 dark:text-emerald-400">{t('cli.terminal.updated_file')}</div>
                   </div>
                 </div>
               </div>
@@ -255,10 +263,10 @@
             <div class="w-8 h-8 rounded bg-emerald-500/20 flex items-center justify-center">
               <span class="text-sm font-bold text-emerald-600 dark:text-emerald-400">1</span>
             </div>
-            <h3 class="text-sm font-bold font-sans text-slate-700 dark:text-slate-300">Setup Project</h3>
+            <h3 class="text-sm font-bold font-sans text-slate-700 dark:text-slate-300">{t('cli.card.setup.title')}</h3>
           </div>
           <code class="text-xs text-emerald-600 dark:text-emerald-400 font-mono block bg-white dark:bg-[#0D0D0D] p-2 rounded mb-2 border border-slate-200 dark:border-transparent">ck init</code>
-          <p class="text-xs text-slate-600 dark:text-slate-400">Initialize ClaudeKit in your project (one-time setup)</p>
+          <p class="text-xs text-slate-600 dark:text-slate-400">{t('cli.card.setup.desc')}</p>
         </div>
 
         <div class="p-4 rounded-lg bg-surface-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
@@ -266,10 +274,10 @@
             <div class="w-8 h-8 rounded bg-purple-500/20 flex items-center justify-center">
               <span class="text-sm font-bold text-purple-600 dark:text-purple-400">2</span>
             </div>
-            <h3 class="text-sm font-bold font-sans text-slate-700 dark:text-slate-300">Start Claude Code</h3>
+            <h3 class="text-sm font-bold font-sans text-slate-700 dark:text-slate-300">{t('cli.card.start.title')}</h3>
           </div>
           <code class="text-xs text-purple-600 dark:text-purple-400 font-mono block bg-white dark:bg-[#0D0D0D] p-2 rounded mb-2 border border-slate-200 dark:border-transparent">claude</code>
-          <p class="text-xs text-slate-600 dark:text-slate-400">Open interactive AI assistant - chat and iterate</p>
+          <p class="text-xs text-slate-600 dark:text-slate-400">{t('cli.card.start.desc')}</p>
         </div>
 
         <div class="p-4 rounded-lg bg-surface-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
@@ -277,10 +285,10 @@
             <div class="w-8 h-8 rounded bg-cyan-500/20 flex items-center justify-center">
               <span class="text-sm font-bold text-cyan-600 dark:text-cyan-400">3</span>
             </div>
-            <h3 class="text-sm font-bold font-sans text-slate-700 dark:text-slate-300">Use Skills</h3>
+            <h3 class="text-sm font-bold font-sans text-slate-700 dark:text-slate-300">{t('cli.card.skills.title')}</h3>
           </div>
           <code class="text-xs text-cyan-600 dark:text-cyan-400 font-mono block bg-white dark:bg-[#0D0D0D] p-2 rounded mb-2 border border-slate-200 dark:border-transparent">Using ui-ux-pro-max skill...</code>
-          <p class="text-xs text-slate-600 dark:text-slate-400">Inside Claude, activate powerful design intelligence</p>
+          <p class="text-xs text-slate-600 dark:text-slate-400">{t('cli.card.skills.desc')}</p>
         </div>
       </div>
     </div>
@@ -295,9 +303,9 @@
           <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
           <line x1="12" y1="22.08" x2="12" y2="12"/>
         </svg>
-        Quick Start Guide
+        {t('cli.guide.quick_start')}
       </h2>
-      <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Get ClaudeKit CLI running in 3 easy steps</p>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">{t('cli.guide.quick_start_description')}</p>
     </div>
 
     <div class="p-8 space-y-6">
@@ -307,16 +315,16 @@
           1
         </div>
         <div class="flex-1">
-          <h3 class="text-lg font-bold font-sans text-indigo-600 dark:text-indigo-400 mb-2">Install ClaudeKit CLI</h3>
-          <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">Install the ClaudeKit CLI tool globally:</p>
+          <h3 class="text-lg font-bold font-sans text-indigo-600 dark:text-indigo-400 mb-2">{t('cli.guide.step1_title')}</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">{t('cli.guide.step1_description')}</p>
           <div class="bg-surface-100 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm">
             <div class="flex items-start gap-2 text-slate-700 dark:text-slate-300">
               <span class="text-emerald-600 dark:text-emerald-400">$</span>
               <div class="flex-1">
                 <div>npm install -g claudekit-cli</div>
-                <div class="text-slate-500 mt-1"># or with bun</div>
+                <div class="text-slate-500 mt-1">{t('cli.step.bun_comment')}</div>
                 <div class="mt-1">bun add -g claudekit-cli</div>
-                <div class="text-slate-500 mt-3"># Verify installation</div>
+                <div class="text-slate-500 mt-3">{t('cli.step.verify_comment')}</div>
                 <div class="mt-1">ck --version</div>
               </div>
             </div>
@@ -330,40 +338,40 @@
           2
         </div>
         <div class="flex-1">
-          <h3 class="text-lg font-bold font-sans text-purple-600 dark:text-purple-400 mb-2">Initialize ClaudeKit in Your Project</h3>
-          <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">Navigate to your project and set up ClaudeKit:</p>
+          <h3 class="text-lg font-bold font-sans text-purple-600 dark:text-purple-400 mb-2">{t('cli.guide.step2_title')}</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">{t('cli.guide.step2_description')}</p>
           <div class="bg-surface-100 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm">
             <div class="flex items-start gap-2 text-slate-700 dark:text-slate-300">
               <span class="text-emerald-600 dark:text-emerald-400">$</span>
               <div class="flex-1">
                 <div>cd ~/projects/my-project</div>
                 <div class="mt-2">ck init</div>
-                <div class="text-slate-500 mt-2"># Interactive mode - follow the prompts</div>
-                <div class="text-slate-500 mt-1"># This creates .claude/ directory with ClaudeKit files</div>
+                <div class="text-slate-500 mt-2">{t('cli.step.interactive_comment')}</div>
+                <div class="text-slate-500 mt-1">{t('cli.step.creates_dir_comment')}</div>
               </div>
             </div>
           </div>
           <div class="mt-3 p-3 bg-blue-500/10 rounded border border-blue-500/20">
-            <div class="text-xs text-blue-600 dark:text-blue-400 mb-2 font-medium">💡 Choose Your Setup:</div>
+            <div class="text-xs text-blue-600 dark:text-blue-400 mb-2 font-medium">{t('cli.step.choose_setup')}</div>
             <div class="text-xs text-slate-600 dark:text-slate-400 space-y-1">
-              <div>When running <code class="px-1 py-0.5 bg-white dark:bg-slate-800 rounded font-mono text-blue-600 dark:text-blue-400">ck init</code>, you'll see two options:</div>
+              <div>{t('cli.step.two_options')}</div>
               <ul class="list-disc pl-4 space-y-1 mt-1">
-                <li><strong>Global (Recommended):</strong> Installs for your user account. Works everywhere.</li>
-                <li><strong>Local:</strong> Installs just for this specific project folder.</li>
+                <li><strong>{t('cli.step.global_option')}</strong> {t('cli.step.global_desc')}</li>
+                <li><strong>{t('cli.step.local_option')}</strong> {t('cli.step.local_desc')}</li>
               </ul>
-              <div class="mt-2 text-slate-500">Choosing "Global" is usually easiest!</div>
+              <div class="mt-2 text-slate-500">{t('cli.step.global_easiest')}</div>
             </div>
           </div>
 
           <div class="mt-3 p-3 bg-purple-500/10 rounded border border-purple-500/20">
-            <div class="text-xs text-purple-600 dark:text-purple-400 mb-2 font-medium">⚙️ Authentication Required:</div>
+            <div class="text-xs text-purple-600 dark:text-purple-400 mb-2 font-medium">{t('cli.step.auth_required')}</div>
             <div class="text-xs text-slate-600 dark:text-slate-400 space-y-1">
-              <div>ClaudeKit requires <strong class="text-purple-700 dark:text-purple-300">GitHub CLI authentication</strong> to download ClaudeKit Engineer kit.</div>
+              <div>{t('cli.step.auth_desc')}</div>
               <div class="mt-2 bg-white dark:bg-[#0D0D0D] rounded p-2 border border-purple-500/20 font-mono">
                 <code class="text-purple-700 dark:text-purple-300">gh auth login</code>
-                <span class="text-slate-500 ml-2"># Authenticate before ck init</span>
+                <span class="text-slate-500 ml-2">{t('cli.step.auth_comment')}</span>
               </div>
-              <div class="mt-2 text-slate-500">📝 Note: Personal Access Tokens (PAT) are no longer supported</div>
+              <div class="mt-2 text-slate-500">{t('cli.step.pat_note')}</div>
             </div>
           </div>
         </div>
@@ -375,20 +383,20 @@
           3
         </div>
         <div class="flex-1">
-          <h3 class="text-lg font-bold font-sans text-emerald-600 dark:text-emerald-400 mb-2">Start Claude Code & Create!</h3>
-          <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">Launch Claude Code CLI and chat with AI:</p>
+          <h3 class="text-lg font-bold font-sans text-emerald-600 dark:text-emerald-400 mb-2">{t('cli.guide.step3_title')}</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">{t('cli.guide.step3_description')}</p>
           <div class="bg-surface-100 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm space-y-2">
             <div class="flex items-start gap-2 text-slate-700 dark:text-slate-300">
               <span class="text-emerald-600 dark:text-emerald-400">$</span>
               <div class="flex-1">
                 <div>claude</div>
-                <div class="text-slate-500 mt-1"># Starts interactive Claude Code CLI</div>
+                <div class="text-slate-500 mt-1">{t('cli.step.start_cli_comment')}</div>
               </div>
             </div>
-            <div class="pl-4 text-cyan-600 dark:text-cyan-400 text-xs">Starting Claude Code CLI...</div>
+            <div class="pl-4 text-cyan-600 dark:text-cyan-400 text-xs">{t('cli.terminal.starting')}</div>
             <div class="pl-4 flex items-start gap-2">
               <span class="text-emerald-600 dark:text-emerald-400">You:</span>
-              <span class="text-slate-700 dark:text-slate-300">Using ui-ux-pro-max skill, create a landing page for my coffee shop</span>
+              <span class="text-slate-700 dark:text-slate-300">{t('cli.step.user_prompt_3')}</span>
             </div>
           </div>
           <div class="mt-3 p-3 bg-emerald-500/10 rounded border border-emerald-500/20">
@@ -396,7 +404,7 @@
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
               </svg>
-              <span>That's it! AI will search design databases and create beautiful code for you.</span>
+              <span>{t('cli.step.thats_it')}</span>
             </div>
           </div>
         </div>
@@ -411,10 +419,10 @@
         <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
         </svg>
-        Best Practice: Daily Routine
+        {t('cli.guide.daily_routine')}
       </h2>
       <p class="text-sm text-emerald-700 dark:text-emerald-300 mt-2 font-medium">
-        💡 Pro Tip: Run these commands before starting your work to ensure you always have the latest intelligent capabilities.
+        💡 {t('cli.guide.daily_routine_description')}
       </p>
     </div>
 
@@ -425,7 +433,7 @@
         <div class="relative">
           <h3 class="flex items-center gap-2 text-lg font-bold text-slate-800 dark:text-slate-200 mb-3">
             <span class="flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 text-xs text-center border border-emerald-200 dark:border-emerald-800">1</span>
-            Update CLI Tool
+            {t('cli.update.tool_title')}
           </h3>
           <div class="bg-surface-100 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm mb-2 group-hover:border-emerald-500/30 transition-colors">
             <div class="flex items-center gap-2 text-slate-700 dark:text-slate-300">
@@ -434,7 +442,7 @@
             </div>
           </div>
           <p class="text-xs text-slate-500 dark:text-slate-400">
-            Ensures your <code class="px-1 py-0.5 bg-slate-100 dark:bg-slate-800/50 rounded font-mono text-emerald-600 dark:text-emerald-400">claudekit-cli</code> has the latest features and bug fixes.
+            {t('cli.update.tool_desc')}
           </p>
         </div>
       </div>
@@ -445,7 +453,7 @@
         <div class="relative">
           <h3 class="flex items-center gap-2 text-lg font-bold text-slate-800 dark:text-slate-200 mb-3">
             <span class="flex items-center justify-center w-6 h-6 rounded-full bg-teal-100 dark:bg-teal-900/50 text-teal-600 dark:text-teal-400 text-xs text-center border border-teal-200 dark:border-teal-800">2</span>
-            Update Engineer Kit
+            {t('cli.update.kit_title')}
           </h3>
           <div class="bg-surface-100 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm mb-2 group-hover:border-teal-500/30 transition-colors">
             <div class="flex items-center gap-2 text-slate-700 dark:text-slate-300">
@@ -453,7 +461,7 @@
               <span>ck init --kit engineer</span>
             </div>
              <div class="mt-2 pt-2 border-t border-slate-200 dark:border-slate-800/50">
-                <span class="text-xs text-slate-400 block mb-1">Or via global flag:</span>
+                <span class="text-xs text-slate-400 block mb-1">{t('cli.update.global_flag')}</span>
                 <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400">
                   <span class="text-emerald-600 dark:text-emerald-400">$</span>
                   <span>ck init -g --kit engineer</span>
@@ -461,7 +469,7 @@
              </div>
           </div>
           <p class="text-xs text-slate-500 dark:text-slate-400">
-            Updates the <code class="px-1 py-0.5 bg-slate-100 dark:bg-slate-800/50 rounded font-mono text-teal-600 dark:text-teal-400">engineer</code> kit to fetch the latest AI prompts and capabilities.
+            {t('cli.update.kit_desc')}
           </p>
         </div>
       </div>
@@ -473,24 +481,23 @@
     <div class="p-6 bg-gradient-to-r from-amber-500/10 to-orange-500/10 flex flex-col md:flex-row items-center justify-between gap-6">
       <div class="flex-1">
         <div class="flex items-center gap-3 mb-2">
-          <span class="px-3 py-1 text-xs rounded-full bg-amber-500/20 text-amber-700 dark:text-amber-400 font-bold border border-amber-500/40">POWER TOOL</span>
+          <span class="px-3 py-1 text-xs rounded-full bg-amber-500/20 text-amber-700 dark:text-amber-400 font-bold border border-amber-500/40">{t('cli.ccs.power_tool')}</span>
           <h2 class="text-xl font-bold font-sans text-amber-600 dark:text-amber-400 flex items-center gap-2">
-            CCS - Claude Code Switch
+            {t('cli.guide.ccs_title')}
           </h2>
         </div>
         <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4">
-          Need to switch between work/personal accounts or use cheaper models like Gemini/GLM?
-          <strong>CCS</strong> is a powerful wrapper for Claude Code that saves you money and streamlines your workflow.
+          {t('cli.guide.ccs_description')}
         </p>
         <div class="flex flex-wrap gap-2 text-xs text-slate-500 dark:text-slate-500">
-          <span class="flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Save ~80% costs</span>
-          <span class="flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg> Multi-account</span>
-          <span class="flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7l-1 7l9-11h-7z"></path></svg> Fast delegation</span>
+          <span class="flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> {t('cli.ccs.save_costs')}</span>
+          <span class="flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg> {t('cli.ccs.multi_account')}</span>
+          <span class="flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7l-1 7l9-11h-7z"></path></svg> {t('cli.ccs.fast_delegation')}</span>
         </div>
       </div>
 
       <a href="/guides/ccs" class="shrink-0 px-6 py-3 bg-white dark:bg-slate-900 text-amber-600 dark:text-amber-400 font-bold rounded-lg shadow-sm border border-amber-200 dark:border-amber-500/30 flex items-center gap-2 group-hover:scale-105 transition-transform">
-        View CCS Guide
+        {t('cli.ccs.view_guide')}
         <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M5 12h14M12 5l7 7-7 7"/>
         </svg>
@@ -507,7 +514,7 @@
             <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
         </svg>
       </div>
-      <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">Pro Tips for CLI Power Users</h3>
+      <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">{t('cli.guide.pro_tips')}</h3>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -517,8 +524,8 @@
           <polyline points="8 6 2 12 8 18"/>
         </svg>
         <div>
-          <div class="text-sm font-medium text-slate-800 dark:text-slate-200 mb-1">Use Quotes for Multi-word Requests</div>
-          <div class="text-xs text-slate-600 dark:text-slate-400">Always wrap your requests in double quotes: <code class="px-1 py-0.5 bg-white dark:bg-slate-800 rounded font-mono">"your request here"</code></div>
+          <div class="text-sm font-medium text-slate-800 dark:text-slate-200 mb-1">{t('cli.guide.tip1_title')}</div>
+          <div class="text-xs text-slate-600 dark:text-slate-400">{t('cli.guide.tip1_description')}</div>
         </div>
       </div>
 
@@ -527,8 +534,8 @@
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
         </svg>
         <div>
-          <div class="text-sm font-medium text-slate-800 dark:text-slate-200 mb-1">Interactive Mode = Better Iteration</div>
-          <div class="text-xs text-slate-600 dark:text-slate-400">Use <code class="px-1 py-0.5 bg-white dark:bg-slate-800 rounded font-mono">ccs</code> without arguments for back-and-forth refinement</div>
+          <div class="text-sm font-medium text-slate-800 dark:text-slate-200 mb-1">{t('cli.guide.tip2_title')}</div>
+          <div class="text-xs text-slate-600 dark:text-slate-400">{t('cli.guide.tip2_description')}</div>
         </div>
       </div>
 
@@ -538,8 +545,8 @@
           <polyline points="14 2 14 8 20 8"/>
         </svg>
         <div>
-          <div class="text-sm font-medium text-slate-800 dark:text-slate-200 mb-1">Reference Files with @</div>
-          <div class="text-xs text-slate-600 dark:text-slate-400">Use <code class="px-1 py-0.5 bg-white dark:bg-slate-800 rounded font-mono">@filename</code> to tell AI which files to modify</div>
+          <div class="text-sm font-medium text-slate-800 dark:text-slate-200 mb-1">{t('cli.guide.tip3_title')}</div>
+          <div class="text-xs text-slate-600 dark:text-slate-400">{t('cli.guide.tip3_description')}</div>
         </div>
       </div>
 
@@ -548,8 +555,8 @@
           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
         </svg>
         <div>
-          <div class="text-sm font-medium text-slate-800 dark:text-slate-200 mb-1">Always Use "Using ui-ux-pro-max skill"</div>
-          <div class="text-xs text-slate-600 dark:text-slate-400">This activates the design intelligence system for professional results</div>
+          <div class="text-sm font-medium text-slate-800 dark:text-slate-200 mb-1">{t('cli.guide.tip4_title')}</div>
+          <div class="text-xs text-slate-600 dark:text-slate-400">{t('cli.guide.tip4_description')}</div>
         </div>
       </div>
     </div>
