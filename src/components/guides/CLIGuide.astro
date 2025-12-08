@@ -24,44 +24,39 @@
   </div>
 
   <!-- Hero Banner -->
-  <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-sky-500/20 via-blue-500/20 to-indigo-500/20 border border-sky-500/30 p-8">
-    <div class="relative z-10">
-      <div class="flex items-start gap-4">
-        <div class="flex items-center justify-center w-16 h-16 rounded-2xl bg-sky-500/20 flex-shrink-0">
-          <svg class="w-9 h-9 text-sky-500 dark:text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="18" height="18" rx="2"/>
-            <line x1="9" y1="9" x2="15" y2="9"/>
-            <line x1="9" y1="15" x2="15" y2="15"/>
-          </svg>
-        </div>
-        <div class="flex-1">
-          <h2 id="intro" class="text-2xl font-bold font-sans text-sky-600 dark:text-sky-400 mb-2">What is ClaudeKit CLI?</h2>
-          <p class="text-slate-600 dark:text-slate-300 text-lg leading-relaxed">
-            <strong>ClaudeKit CLI</strong> helps you set up ClaudeKit in your projects, then you use
-            <strong>Claude Code</strong> to get AI assistance. Install ClaudeKit, run <code class="px-2 py-0.5 bg-white dark:bg-slate-800 rounded font-mono text-sky-600 dark:text-sky-400">claude</code>,
-            and leverage powerful skills like UI/UX Pro Max — all from your terminal!
-          </p>
-          <div class="mt-4 p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-sky-100 dark:border-slate-700">
-            <p class="text-sm text-slate-500 dark:text-slate-400 mb-2"><strong class="text-slate-700 dark:text-slate-300">Quick Workflow:</strong></p>
-            <div class="bg-slate-900 dark:bg-[#0D0D0D] rounded-lg p-3 font-mono text-sm space-y-1">
-              <div class="flex items-start gap-2">
-                <span class="text-sky-400">$</span>
-                <span class="text-slate-300">ck init</span>
-                <span class="text-slate-500 text-xs"># Set up ClaudeKit in your project</span>
-              </div>
-              <div class="flex items-start gap-2">
-                <span class="text-sky-400">$</span>
-                <span class="text-slate-300">claude</span>
-                <span class="text-slate-500 text-xs"># Start Claude Code CLI</span>
-              </div>
-            </div>
-            <p class="text-xs text-slate-500 dark:text-slate-500 mt-2">→ Then chat with AI to build beautiful UIs instantly! 🎨</p>
+  <!-- Hero Banner -->
+  <div class="flex items-start gap-4 p-6 rounded-xl bg-purple-500/5 dark:bg-purple-500/10 border border-purple-200 dark:border-purple-500/20">
+    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-500/20 flex items-center justify-center">
+      <svg class="w-5 h-5 text-purple-600 dark:text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-1 1.5-2.4 1.5-3.8 0-3.3-2.7-6-6-6-3.3 0-6 2.7-6 6 0 1.4.5 2.8 1.5 3.8.8.8 1.3 1.5 1.5 2.5"/>
+        <path d="M9 18h6"/>
+        <path d="M10 22h4"/>
+      </svg>
+    </div>
+    <div class="flex-1">
+      <div class="font-bold text-purple-700 dark:text-purple-400 mb-1 text-lg">What is ClaudeKit CLI?</div>
+      <div class="text-slate-600 dark:text-slate-400 leading-relaxed">
+        <strong>ClaudeKit CLI</strong> helps you set up ClaudeKit in your projects, then you use
+        <strong>Claude Code</strong> to get AI assistance. Install ClaudeKit, run <code class="px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 font-mono text-sm">claude</code>,
+        and leverage powerful skills like UI/UX Pro Max — all from your terminal!
+      </div>
+      <div class="mt-4 p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-purple-100 dark:border-purple-500/10">
+        <p class="text-xs font-bold text-purple-700 dark:text-purple-400 mb-2 uppercase tracking-wide">Quick Workflow</p>
+        <div class="bg-slate-900 dark:bg-[#0D0D0D] rounded-lg p-3 font-mono text-sm space-y-1">
+          <div class="flex items-start gap-2">
+            <span class="text-purple-400">$</span>
+            <span class="text-slate-300">ck init</span>
+            <span class="text-slate-500 text-xs"># Set up ClaudeKit in your project</span>
+          </div>
+          <div class="flex items-start gap-2">
+            <span class="text-purple-400">$</span>
+            <span class="text-slate-300">claude</span>
+            <span class="text-slate-500 text-xs"># Start Claude Code CLI</span>
           </div>
         </div>
+        <p class="text-xs text-slate-500 dark:text-slate-500 mt-2">→ Then chat with AI to build beautiful UIs instantly! 🎨</p>
       </div>
     </div>
-    <div class="absolute top-0 right-0 w-64 h-64 bg-sky-500/10 rounded-full blur-3xl"></div>
-    <div class="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"></div>
   </div>
 
   <!-- Terminal Mockup Section -->
