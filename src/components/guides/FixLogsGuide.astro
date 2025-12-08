@@ -6,7 +6,6 @@ const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
 ---
----
 <div class="space-y-8 mt-6">
   <!-- Page Header -->
   <div class="text-center space-y-4">
