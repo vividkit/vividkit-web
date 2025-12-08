@@ -28,8 +28,7 @@ const t = useTranslations(currentLang);
     <h2 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
       {t('cli.guide.title')}
     </h2>
-    <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-      {t('cli.guide.subtitle')}
+    <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed" set:html={t('cli.guide.subtitle')}>
     </p>
   </div>
 
@@ -45,8 +44,7 @@ const t = useTranslations(currentLang);
     </div>
     <div class="flex-1">
       <div class="font-bold text-purple-700 dark:text-purple-400 mb-1 text-lg">{t('cli.guide.what_is')}</div>
-      <div class="text-slate-600 dark:text-slate-400 leading-relaxed">
-        {t('cli.guide.what_is_description')}
+      <div class="text-slate-600 dark:text-slate-400 leading-relaxed" set:html={t('cli.guide.what_is_description')}>
       </div>
       <div class="mt-4 p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-purple-100 dark:border-purple-500/10">
         <p class="text-xs font-bold text-purple-700 dark:text-purple-400 mb-2 uppercase tracking-wide">{t('cli.guide.quick_workflow')}</p>
