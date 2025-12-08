@@ -1,4 +1,14 @@
 ---
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
 ---
 
 <style>
@@ -23,10 +33,10 @@
   <!-- Page Header -->
   <div class="text-center space-y-4">
     <h2 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight flex items-center justify-center gap-3">
-      UI/UX Pro Max
+      {t('uiux.guide.title')}
     </h2>
     <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-      Your AI-Powered Design Intelligence System ✨. Create stunning, modern interfaces with intelligent design suggestions and best practices built-in!
+      {t('uiux.guide.subtitle')}
     </p>
   </div>
 
@@ -44,38 +54,37 @@
             </svg>
             </div>
             <div class="flex-1 text-center md:text-left">
-            <h2 class="text-lg font-bold font-sans text-indigo-600 dark:text-indigo-400 mb-3">What is UI/UX Pro Max?</h2>
+            <h2 class="text-lg font-bold font-sans text-indigo-600 dark:text-indigo-400 mb-3">{t('uiux.guide.what_is_title')}</h2>
             <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
-                Think of it as your <strong>personal design expert</strong> 🎨 — instantly get professional color palettes, font pairings, UI styles, and best practices.
-                No design degree needed, just ask and AI creates beautiful interfaces for you!
+                {t('uiux.guide.what_is_description')}
             </p>
             <div class="mb-6">
                  <a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-xs font-medium text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
                     </svg>
-                    Source code on GitHub
+                    {t('uiux.guide.source_code')}
                  </a>
             </div>
 
             <div class="p-5 rounded-xl bg-surface-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
-                <p class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3 uppercase tracking-wider">What's Inside:</p>
+                <p class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3 uppercase tracking-wider">{t('uiux.guide.whats_inside')}</p>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-slate-600 dark:text-slate-400">
                 <div class="flex items-center gap-2">
                     <span class="text-indigo-500 dark:text-indigo-400">•</span>
-                    <span>50+ UI Styles</span>
+                    <span>{t('uiux.guide.whats_inside.styles')}</span>
                 </div>
                 <div class="flex items-center gap-2">
                     <span class="text-purple-500 dark:text-purple-400">•</span>
-                    <span>21+ Color Palettes</span>
+                    <span>{t('uiux.guide.whats_inside.palettes')}</span>
                 </div>
                 <div class="flex items-center gap-2">
                     <span class="text-pink-500 dark:text-pink-400">•</span>
-                    <span>50+ Font Pairings</span>
+                    <span>{t('uiux.guide.whats_inside.fonts')}</span>
                 </div>
                 <div class="flex items-center gap-2">
                     <span class="text-cyan-500 dark:text-cyan-400">•</span>
-                    <span>20+ Chart Types</span>
+                    <span>{t('uiux.guide.whats_inside.charts')}</span>
                 </div>
                 </div>
             </div>
@@ -98,20 +107,20 @@
                 </svg>
             </div>
             <div>
-                <h3 class="text-lg font-bold text-emerald-700 dark:text-emerald-400">For Everyone</h3>
-                <p class="text-xs text-slate-500 dark:text-slate-400">No coding needed!</p>
+                <h3 class="text-lg font-bold text-emerald-700 dark:text-emerald-400">{t('uiux.guide.audience.everyone.title')}</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400">{t('uiux.guide.audience.everyone.subtitle')}</p>
             </div>
         </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Perfect if you're building landing pages, portfolios, or want beautiful designs without technical knowledge.</p>
+        <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">{t('uiux.guide.audience.everyone.desc')}</p>
         <ul class="space-y-2 text-xs">
             <li class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-                <span class="text-emerald-500">✓</span> Business Owners
+                <span class="text-emerald-500">✓</span> {t('uiux.guide.audience.everyone.list1')}
             </li>
             <li class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-                <span class="text-emerald-500">✓</span> Content Creators
+                <span class="text-emerald-500">✓</span> {t('uiux.guide.audience.everyone.list2')}
             </li>
             <li class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-                <span class="text-emerald-500">✓</span> Entrepreneurs
+                <span class="text-emerald-500">✓</span> {t('uiux.guide.audience.everyone.list3')}
             </li>
         </ul>
     </div>
@@ -126,20 +135,20 @@
                 </svg>
             </div>
             <div>
-                <h3 class="text-lg font-bold text-blue-700 dark:text-blue-400">For Developers</h3>
-                <p class="text-xs text-slate-500 dark:text-slate-400">Speed up workflow!</p>
+                <h3 class="text-lg font-bold text-blue-700 dark:text-blue-400">{t('uiux.guide.audience.developers.title')}</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400">{t('uiux.guide.audience.developers.subtitle')}</p>
             </div>
         </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Get design systems, code-ready color palettes, and stack-specific best practices instantly.</p>
+        <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">{t('uiux.guide.audience.developers.desc')}</p>
         <ul class="space-y-2 text-xs">
             <li class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-                <span class="text-blue-500">✓</span> Frontend Devs
+                <span class="text-blue-500">✓</span> {t('uiux.guide.audience.developers.list1')}
             </li>
             <li class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-                <span class="text-blue-500">✓</span> Fullstack Devs
+                <span class="text-blue-500">✓</span> {t('uiux.guide.audience.developers.list2')}
             </li>
             <li class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-                <span class="text-blue-500">✓</span> Indie Hackers
+                <span class="text-blue-500">✓</span> {t('uiux.guide.audience.developers.list3')}
             </li>
         </ul>
     </div>
@@ -155,20 +164,20 @@
                 </svg>
             </div>
             <div>
-                <h3 class="text-lg font-bold text-purple-700 dark:text-purple-400">For Designers</h3>
-                <p class="text-xs text-slate-500 dark:text-slate-400">Inspiration fast!</p>
+                <h3 class="text-lg font-bold text-purple-700 dark:text-purple-400">{t('uiux.guide.audience.designers.title')}</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400">{t('uiux.guide.audience.designers.subtitle')}</p>
             </div>
         </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Discover curated design systems, explore trending styles, and maintain consistency.</p>
+        <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">{t('uiux.guide.audience.designers.desc')}</p>
         <ul class="space-y-2 text-xs">
             <li class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-                <span class="text-purple-500">✓</span> UI Designers
+                <span class="text-purple-500">✓</span> {t('uiux.guide.audience.designers.list1')}
             </li>
             <li class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-                <span class="text-purple-500">✓</span> UX Designers
+                <span class="text-purple-500">✓</span> {t('uiux.guide.audience.designers.list2')}
             </li>
             <li class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-                <span class="text-purple-500">✓</span> Product Designers
+                <span class="text-purple-500">✓</span> {t('uiux.guide.audience.designers.list3')}
             </li>
         </ul>
     </div>
@@ -182,9 +191,9 @@
             <circle cx="12" cy="12" r="10"/>
             <polyline points="12 6 12 12 16 14"/>
           </svg>
-          How It Works (3 Simple Steps)
+          {t('uiux.guide.how_it_works.title')}
         </h2>
-        <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">From zero to professional design in minutes — no design skills required!</p>
+        <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">{t('uiux.guide.how_it_works.subtitle')}</p>
       </div>
 
       <div class="p-8 space-y-8">
@@ -200,15 +209,15 @@
                     <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                       <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2-2z"/>
                     </svg>
-                    Tell AI What You Want
+                    {t('uiux.guide.step1.title')}
                 </h3>
-                <p class="text-slate-500 dark:text-slate-300 mb-4">Just describe your project in plain English! No technical jargon needed.</p>
+                <p class="text-slate-500 dark:text-slate-300 mb-4">{t('uiux.guide.step1.desc')}</p>
                 <div class="space-y-3">
                 <div class="bg-white dark:bg-slate-900 rounded-lg p-4 border border-cyan-500/20">
                     <div class="flex items-center gap-3">
-                        <code class="px-3 py-1.5 rounded bg-cyan-100 dark:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 font-mono text-sm">You say:</code>
+                        <code class="px-3 py-1.5 rounded bg-cyan-100 dark:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 font-mono text-sm">{t('uiux.guide.step1.example_label')}</code>
                         <div class="flex-1">
-                          <p class="text-sm text-slate-600 dark:text-slate-400">"I need a landing page for my luxury spa business"</p>
+                          <p class="text-sm text-slate-600 dark:text-slate-400">{t('uiux.guide.step1.example_text')}</p>
                         </div>
                     </div>
                 </div>
@@ -216,7 +225,7 @@
                     <svg class="w-4 h-4 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                       <polyline points="20 6 9 17 4 12"/>
                     </svg>
-                    AI understands: product type (spa), industry (beauty/wellness), style needed (elegant)
+                    {t('uiux.guide.step1.ai_understands')}
                 </div>
                 </div>
              </div>
@@ -236,36 +245,36 @@
                       <circle cx="11" cy="11" r="8"/>
                       <path d="m21 21-4.35-4.35"/>
                     </svg>
-                    AI Searches Design Database
+                    {t('uiux.guide.step2.title')}
                   </h3>
-                  <p class="text-slate-600 dark:text-slate-300 mb-4 text-sm">Behind the scenes, AI searches 8 design domains to build your perfect design system</p>
+                  <p class="text-slate-600 dark:text-slate-300 mb-4 text-sm">{t('uiux.guide.step2.desc')}</p>
 
                   <div class="bg-blue-100 dark:bg-blue-500/10 rounded-lg p-4 border border-blue-200 dark:border-blue-500/20">
-                    <div class="text-xs font-medium text-blue-600 dark:text-blue-400 mb-3">Searching for you:</div>
+                    <div class="text-xs font-medium text-blue-600 dark:text-blue-400 mb-3">{t('uiux.guide.step2.searching_for')}</div>
                     <div class="grid grid-cols-2 gap-2 text-xs text-slate-600 dark:text-slate-400">
                         <div class="flex items-center gap-2">
                           <svg class="w-3 h-3 text-blue-500 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                          <span><strong>Style Guide</strong> (elegant, soft)</span>
+                          <span><strong>{t('uiux.guide.step2.item1')}</strong> {t('uiux.guide.step2.item1_desc')}</span>
                         </div>
                         <div class="flex items-center gap-2">
                           <svg class="w-3 h-3 text-blue-500 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                          <span><strong>Colors</strong> (spa palette)</span>
+                          <span><strong>{t('uiux.guide.step2.item2')}</strong> {t('uiux.guide.step2.item2_desc')}</span>
                         </div>
                         <div class="flex items-center gap-2">
                           <svg class="w-3 h-3 text-blue-500 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                          <span><strong>Typography</strong> (luxury fonts)</span>
+                          <span><strong>{t('uiux.guide.step2.item3')}</strong> {t('uiux.guide.step2.item3_desc')}</span>
                         </div>
                         <div class="flex items-center gap-2">
                           <svg class="w-3 h-3 text-blue-500 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                          <span><strong>Layout</strong> (landing page)</span>
+                          <span><strong>{t('uiux.guide.step2.item4')}</strong> {t('uiux.guide.step2.item4_desc')}</span>
                         </div>
                         <div class="flex items-center gap-2">
                           <svg class="w-3 h-3 text-blue-500 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                          <span><strong>UX Rules</strong> (best practices)</span>
+                          <span><strong>{t('uiux.guide.step2.item5')}</strong> {t('uiux.guide.step2.item5_desc')}</span>
                         </div>
                         <div class="flex items-center gap-2">
                           <svg class="w-3 h-3 text-blue-500 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                          <span><strong>Accessibility</strong> (standards)</span>
+                          <span><strong>{t('uiux.guide.step2.item6')}</strong> {t('uiux.guide.step2.item6_desc')}</span>
                         </div>
                     </div>
                   </div>
@@ -285,34 +294,34 @@
                         <polyline points="16 18 22 12 16 6"/>
                         <polyline points="8 6 2 12 8 18"/>
                       </svg>
-                      Get Beautiful, Production-Ready Code
+                      {t('uiux.guide.step3.title')}
                   </h3>
                   <p class="text-slate-600 dark:text-slate-300 text-sm mb-3">
-                      AI creates complete HTML/CSS with all design choices perfectly implemented.
+                      {t('uiux.guide.step3.desc')}
                   </p>
 
                   <div class="bg-indigo-100 dark:bg-indigo-500/10 rounded-lg p-4 border border-indigo-200 dark:border-indigo-500/20">
-                    <div class="text-xs font-medium text-indigo-600 dark:text-indigo-400 mb-2">What you receive:</div>
+                    <div class="text-xs font-medium text-indigo-600 dark:text-indigo-400 mb-2">{t('uiux.guide.step3.receive_label')}</div>
                     <ul class="space-y-1 text-xs text-slate-600 dark:text-slate-400">
                       <li class="flex items-center gap-2">
                         <svg class="w-3 h-3 text-indigo-500 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                        Professional color scheme applied
+                        {t('uiux.guide.step3.item1')}
                       </li>
                       <li class="flex items-center gap-2">
                         <svg class="w-3 h-3 text-indigo-500 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                        Beautiful fonts with Google Fonts links
+                        {t('uiux.guide.step3.item2')}
                       </li>
                       <li class="flex items-center gap-2">
                         <svg class="w-3 h-3 text-indigo-500 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                        Responsive design (works on all devices)
+                        {t('uiux.guide.step3.item3')}
                       </li>
                       <li class="flex items-center gap-2">
                         <svg class="w-3 h-3 text-indigo-500 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                        Smooth animations and interactions
+                        {t('uiux.guide.step3.item4')}
                       </li>
                       <li class="flex items-center gap-2">
                         <svg class="w-3 h-3 text-indigo-500 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                        Accessibility compliant (WCAG AA)
+                        {t('uiux.guide.step3.item5')}
                       </li>
                     </ul>
                   </div>
@@ -328,18 +337,18 @@
                 <polyline points="22 4 12 14.01 9 11.01"/>
             </svg>
             <div>
-                <h4 class="text-lg font-bold text-emerald-600 dark:text-emerald-400 mb-2">Result: Professional Design in Minutes!</h4>
-                <p class="text-slate-600 dark:text-slate-300 mb-3 text-sm">What used to take hours of research and design work is done in seconds. Just copy the code and you're ready to launch!</p>
+                <h4 class="text-lg font-bold text-emerald-600 dark:text-emerald-400 mb-2">{t('uiux.guide.result.title')}</h4>
+                <p class="text-slate-600 dark:text-slate-300 mb-3 text-sm">{t('uiux.guide.result.desc')}</p>
                 <div class="bg-white/50 dark:bg-slate-900/50 rounded-lg p-4 border border-emerald-500/20">
-                <p class="text-xs text-slate-500 mb-2"><strong class="text-slate-600 dark:text-slate-300">Time Saved:</strong></p>
+                <p class="text-xs text-slate-500 mb-2"><strong class="text-slate-600 dark:text-slate-300">{t('uiux.guide.result.time_saved')}</strong></p>
                 <div class="grid grid-cols-2 gap-2 text-xs">
                     <div>
-                    <span class="text-slate-500">Traditional way:</span>
-                    <span class="text-red-500 dark:text-red-400 font-medium ml-2">6-8 hours</span>
+                    <span class="text-slate-500">{t('uiux.guide.result.traditional')}</span>
+                    <span class="text-red-500 dark:text-red-400 font-medium ml-2">{t('uiux.guide.result.traditional_time')}</span>
                     </div>
                     <div>
-                    <span class="text-slate-500">With UI/UX Pro Max:</span>
-                    <span class="text-emerald-600 dark:text-emerald-400 font-medium ml-2">2-5 minutes</span>
+                    <span class="text-slate-500">{t('uiux.guide.result.with_tool')}</span>
+                    <span class="text-emerald-600 dark:text-emerald-400 font-medium ml-2">{t('uiux.guide.result.tool_time')}</span>
                     </div>
                 </div>
                 </div>
@@ -357,7 +366,7 @@
           <path d="M12 2v20M2 12h20"/>
           <circle cx="12" cy="12" r="4"/>
         </svg>
-        What You Can Build
+        {t('uiux.guide.build.title')}
     </h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- Landing Pages -->
@@ -369,14 +378,14 @@
                     <path d="M3 9h18"/>
                 </svg>
                 </div>
-                <h3 class="text-lg font-bold text-pink-600 dark:text-pink-400">Landing Pages</h3>
+                <h3 class="text-lg font-bold text-pink-600 dark:text-pink-400">{t('uiux.guide.build.landing.title')}</h3>
             </div>
-            <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">Create stunning landing pages for any business</p>
+            <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">{t('uiux.guide.build.landing.desc')}</p>
             <div class="space-y-1 text-xs text-slate-500 dark:text-slate-400">
-                <div class="flex items-center gap-2"><span class="text-pink-400">•</span> SaaS Products</div>
-                <div class="flex items-center gap-2"><span class="text-pink-400">•</span> E-commerce Stores</div>
-                <div class="flex items-center gap-2"><span class="text-pink-400">•</span> Healthcare Services</div>
-                <div class="flex items-center gap-2"><span class="text-pink-400">•</span> Beauty & Wellness</div>
+                <div class="flex items-center gap-2"><span class="text-pink-400">•</span> {t('uiux.guide.build.landing.list1')}</div>
+                <div class="flex items-center gap-2"><span class="text-pink-400">•</span> {t('uiux.guide.build.landing.list2')}</div>
+                <div class="flex items-center gap-2"><span class="text-pink-400">•</span> {t('uiux.guide.build.landing.list3')}</div>
+                <div class="flex items-center gap-2"><span class="text-pink-400">•</span> {t('uiux.guide.build.landing.list4')}</div>
             </div>
         </div>
 
@@ -391,14 +400,14 @@
                     <rect x="3" y="16" width="7" height="5"/>
                 </svg>
                 </div>
-                <h3 class="text-lg font-bold text-cyan-600 dark:text-cyan-400">Dashboards</h3>
+                <h3 class="text-lg font-bold text-cyan-600 dark:text-cyan-400">{t('uiux.guide.build.dashboard.title')}</h3>
             </div>
-            <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">Build data-rich dashboards with perfect charts</p>
+            <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">{t('uiux.guide.build.dashboard.desc')}</p>
             <div class="space-y-1 text-xs text-slate-500 dark:text-slate-400">
-                <div class="flex items-center gap-2"><span class="text-cyan-400">•</span> Analytics Dashboards</div>
-                <div class="flex items-center gap-2"><span class="text-cyan-400">•</span> Admin Panels</div>
-                <div class="flex items-center gap-2"><span class="text-cyan-400">•</span> Business Intelligence</div>
-                <div class="flex items-center gap-2"><span class="text-cyan-400">•</span> Monitoring Tools</div>
+                <div class="flex items-center gap-2"><span class="text-cyan-400">•</span> {t('uiux.guide.build.dashboard.list1')}</div>
+                <div class="flex items-center gap-2"><span class="text-cyan-400">•</span> {t('uiux.guide.build.dashboard.list2')}</div>
+                <div class="flex items-center gap-2"><span class="text-cyan-400">•</span> {t('uiux.guide.build.dashboard.list3')}</div>
+                <div class="flex items-center gap-2"><span class="text-cyan-400">•</span> {t('uiux.guide.build.dashboard.list4')}</div>
             </div>
         </div>
 
@@ -411,14 +420,14 @@
                     <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
                 </svg>
                 </div>
-                <h3 class="text-lg font-bold text-purple-600 dark:text-purple-400">Portfolios</h3>
+                <h3 class="text-lg font-bold text-purple-600 dark:text-purple-400">{t('uiux.guide.build.portfolio.title')}</h3>
             </div>
-            <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">Showcase your work with beautiful portfolios</p>
+            <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">{t('uiux.guide.build.portfolio.desc')}</p>
             <div class="space-y-1 text-xs text-slate-500 dark:text-slate-400">
-                <div class="flex items-center gap-2"><span class="text-purple-400">•</span> Designer Portfolios</div>
-                <div class="flex items-center gap-2"><span class="text-purple-400">•</span> Developer Showcases</div>
-                <div class="flex items-center gap-2"><span class="text-purple-400">•</span> Creative Work</div>
-                <div class="flex items-center gap-2"><span class="text-purple-400">•</span> Photography Sites</div>
+                <div class="flex items-center gap-2"><span class="text-purple-400">•</span> {t('uiux.guide.build.portfolio.list1')}</div>
+                <div class="flex items-center gap-2"><span class="text-purple-400">•</span> {t('uiux.guide.build.portfolio.list2')}</div>
+                <div class="flex items-center gap-2"><span class="text-purple-400">•</span> {t('uiux.guide.build.portfolio.list3')}</div>
+                <div class="flex items-center gap-2"><span class="text-purple-400">•</span> {t('uiux.guide.build.portfolio.list4')}</div>
             </div>
         </div>
 
@@ -431,14 +440,14 @@
                     <line x1="12" y1="18" x2="12.01" y2="18"/>
                 </svg>
                 </div>
-                <h3 class="text-lg font-bold text-orange-600 dark:text-orange-400">Mobile Apps</h3>
+                <h3 class="text-lg font-bold text-orange-600 dark:text-orange-400">{t('uiux.guide.build.mobile.title')}</h3>
             </div>
-            <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">Design mobile apps for any platform</p>
+            <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">{t('uiux.guide.build.mobile.desc')}</p>
             <div class="space-y-1 text-xs text-slate-500 dark:text-slate-400">
-                <div class="flex items-center gap-2"><span class="text-orange-400">•</span> React Native Apps</div>
-                <div class="flex items-center gap-2"><span class="text-orange-400">•</span> Flutter Apps</div>
-                <div class="flex items-center gap-2"><span class="text-orange-400">•</span> SwiftUI (iOS)</div>
-                <div class="flex items-center gap-2"><span class="text-orange-400">•</span> Progressive Web Apps</div>
+                <div class="flex items-center gap-2"><span class="text-orange-400">•</span> {t('uiux.guide.build.mobile.list1')}</div>
+                <div class="flex items-center gap-2"><span class="text-orange-400">•</span> {t('uiux.guide.build.mobile.list2')}</div>
+                <div class="flex items-center gap-2"><span class="text-orange-400">•</span> {t('uiux.guide.build.mobile.list3')}</div>
+                <div class="flex items-center gap-2"><span class="text-orange-400">•</span> {t('uiux.guide.build.mobile.list4')}</div>
             </div>
         </div>
     </div>
@@ -451,50 +460,50 @@
         <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
         </svg>
-        50+ UI Styles to Choose From
+        {t('uiux.guide.styles.title')}
       </h2>
-      <p class="text-sm text-slate-600 dark:text-slate-500 mt-2">From minimalist to glassmorphism — find the perfect style for your project</p>
+      <p class="text-sm text-slate-600 dark:text-slate-500 mt-2">{t('uiux.guide.styles.subtitle')}</p>
     </div>
     <div class="p-6 grid grid-cols-2 md:grid-cols-4 gap-3">
         <!-- Glassmorphism -->
         <div class="p-3 rounded-lg bg-surface-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-indigo-500/30 transition-colors cursor-pointer">
-            <div class="text-sm font-medium text-indigo-600 dark:text-indigo-400 mb-1">Glassmorphism</div>
-            <div class="text-xs text-slate-500">Frosted glass effect</div>
+            <div class="text-sm font-medium text-indigo-600 dark:text-indigo-400 mb-1">{t('uiux.guide.style.glassmorphism')}</div>
+            <div class="text-xs text-slate-500">{t('uiux.guide.style.glassmorphism_desc')}</div>
         </div>
         <!-- Minimalism -->
         <div class="p-3 rounded-lg bg-surface-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-purple-500/30 transition-colors cursor-pointer">
-            <div class="text-sm font-medium text-purple-600 dark:text-purple-400 mb-1">Minimalism</div>
-            <div class="text-xs text-slate-500">Clean & simple</div>
+            <div class="text-sm font-medium text-purple-600 dark:text-purple-400 mb-1">{t('uiux.guide.style.minimalism')}</div>
+            <div class="text-xs text-slate-500">{t('uiux.guide.style.minimalism_desc')}</div>
         </div>
         <!-- Aurora UI -->
         <div class="p-3 rounded-lg bg-surface-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-pink-500/30 transition-colors cursor-pointer">
-            <div class="text-sm font-medium text-pink-600 dark:text-pink-400 mb-1">Aurora UI</div>
-            <div class="text-xs text-slate-500">Vibrant gradients</div>
+            <div class="text-sm font-medium text-pink-600 dark:text-pink-400 mb-1">{t('uiux.guide.style.aurora')}</div>
+            <div class="text-xs text-slate-500">{t('uiux.guide.style.aurora_desc')}</div>
         </div>
         <!-- Dark Mode -->
         <div class="p-3 rounded-lg bg-surface-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/30 transition-colors cursor-pointer">
-            <div class="text-sm font-medium text-cyan-600 dark:text-cyan-400 mb-1">Dark Mode</div>
-            <div class="text-xs text-slate-500">Professional darkness</div>
+            <div class="text-sm font-medium text-cyan-600 dark:text-cyan-400 mb-1">{t('uiux.guide.style.dark_mode')}</div>
+            <div class="text-xs text-slate-500">{t('uiux.guide.style.dark_mode_desc')}</div>
         </div>
         <!-- Neumorphism -->
         <div class="p-3 rounded-lg bg-surface-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/30 transition-colors cursor-pointer">
-            <div class="text-sm font-medium text-emerald-600 dark:text-emerald-400 mb-1">Neumorphism</div>
-            <div class="text-xs text-slate-500">Soft shadows</div>
+            <div class="text-sm font-medium text-emerald-600 dark:text-emerald-400 mb-1">{t('uiux.guide.style.neumorphism')}</div>
+            <div class="text-xs text-slate-500">{t('uiux.guide.style.neumorphism_desc')}</div>
         </div>
         <!-- Brutalism -->
         <div class="p-3 rounded-lg bg-surface-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-amber-500/30 transition-colors cursor-pointer">
-            <div class="text-sm font-medium text-amber-600 dark:text-amber-400 mb-1">Brutalism</div>
-            <div class="text-xs text-slate-500">Raw & bold</div>
+            <div class="text-sm font-medium text-amber-600 dark:text-amber-400 mb-1">{t('uiux.guide.style.brutalism')}</div>
+            <div class="text-xs text-slate-500">{t('uiux.guide.style.brutalism_desc')}</div>
         </div>
         <!-- Claymorphism -->
         <div class="p-3 rounded-lg bg-surface-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-rose-500/30 transition-colors cursor-pointer">
-            <div class="text-sm font-medium text-rose-600 dark:text-rose-400 mb-1">Claymorphism</div>
-            <div class="text-xs text-slate-500">3D clay effect</div>
+            <div class="text-sm font-medium text-rose-600 dark:text-rose-400 mb-1">{t('uiux.guide.style.claymorphism')}</div>
+            <div class="text-xs text-slate-500">{t('uiux.guide.style.claymorphism_desc')}</div>
         </div>
         <!-- More -->
         <div class="p-3 rounded-lg bg-surface-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-blue-500/30 transition-colors cursor-pointer">
-            <div class="text-sm font-medium text-blue-600 dark:text-blue-400 mb-1">...and more!</div>
-            <div class="text-xs text-slate-500">Explore all styles</div>
+            <div class="text-sm font-medium text-blue-600 dark:text-blue-400 mb-1">{t('uiux.guide.style.more')}</div>
+            <div class="text-xs text-slate-500">{t('uiux.guide.style.more_desc')}</div>
         </div>
     </div>
   </div>
@@ -505,35 +514,35 @@
         <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
         </svg>
-        Tips for Beginners
+        {t('uiux.guide.tips.title')}
      </h2>
      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="bg-white/50 dark:bg-slate-900/50 p-4 rounded-lg border border-emerald-500/10 flex items-start gap-3">
             <svg class="w-6 h-6 text-emerald-500 dark:text-emerald-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
             <div>
-              <div class="font-bold text-emerald-700 dark:text-emerald-300 mb-1">Use Plain English</div>
-              <p class="text-xs text-slate-600 dark:text-slate-400">Just say "I want a spa website". No technical terms needed.</p>
+              <div class="font-bold text-emerald-700 dark:text-emerald-300 mb-1">{t('uiux.guide.tips.1.title')}</div>
+              <p class="text-xs text-slate-600 dark:text-slate-400">{t('uiux.guide.tips.1.desc')}</p>
             </div>
         </div>
         <div class="bg-white/50 dark:bg-slate-900/50 p-4 rounded-lg border border-emerald-500/10 flex items-start gap-3">
             <svg class="w-6 h-6 text-green-500 dark:text-green-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
             <div>
-              <div class="font-bold text-emerald-700 dark:text-emerald-300 mb-1">Describe Mood</div>
-              <p class="text-xs text-slate-600 dark:text-slate-400">Mention if you want it "calm", "energetic", "professional", or "fun".</p>
+              <div class="font-bold text-emerald-700 dark:text-emerald-300 mb-1">{t('uiux.guide.tips.2.title')}</div>
+              <p class="text-xs text-slate-600 dark:text-slate-400">{t('uiux.guide.tips.2.desc')}</p>
             </div>
         </div>
         <div class="bg-white/50 dark:bg-slate-900/50 p-4 rounded-lg border border-emerald-500/10 flex items-start gap-3">
             <svg class="w-6 h-6 text-teal-500 dark:text-teal-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             <div>
-              <div class="font-bold text-emerald-700 dark:text-emerald-300 mb-1">Start Simple</div>
-              <p class="text-xs text-slate-600 dark:text-slate-400">Start with one page. Like it? Ask AI to make more in the same style.</p>
+              <div class="font-bold text-emerald-700 dark:text-emerald-300 mb-1">{t('uiux.guide.tips.3.title')}</div>
+              <p class="text-xs text-slate-600 dark:text-slate-400">{t('uiux.guide.tips.3.desc')}</p>
             </div>
         </div>
         <div class="bg-white/50 dark:bg-slate-900/50 p-4 rounded-lg border border-emerald-500/10 flex items-start gap-3">
             <svg class="w-6 h-6 text-cyan-500 dark:text-cyan-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
             <div>
-              <div class="font-bold text-emerald-700 dark:text-emerald-300 mb-1">Iterate Instantly</div>
-              <p class="text-xs text-slate-600 dark:text-slate-400">"Make it more colorful!" - AI updates the design in seconds.</p>
+              <div class="font-bold text-emerald-700 dark:text-emerald-300 mb-1">{t('uiux.guide.tips.4.title')}</div>
+              <p class="text-xs text-slate-600 dark:text-slate-400">{t('uiux.guide.tips.4.desc')}</p>
             </div>
         </div>
      </div>
@@ -553,8 +562,8 @@
             </svg>
           </div>
           <div class="flex-1">
-            <h2 class="text-3xl font-bold font-heading text-indigo-700 dark:text-indigo-400 mb-2">How to Use with ClaudeKit</h2>
-            <p class="text-slate-600 dark:text-slate-300 text-lg">Just add this magic phrase to activate the design intelligence system!</p>
+            <h2 class="text-3xl font-bold font-heading text-indigo-700 dark:text-indigo-400 mb-2">{t('uiux.guide.integration.title')}</h2>
+            <p class="text-slate-600 dark:text-slate-300 text-lg">{t('uiux.guide.integration.subtitle')}</p>
           </div>
         </div>
 
@@ -564,11 +573,11 @@
             <svg class="w-6 h-6 text-indigo-600 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
             </svg>
-            <h3 class="text-xl font-bold font-heading text-indigo-700 dark:text-indigo-300">The Magic Phrase:</h3>
+            <h3 class="text-xl font-bold font-heading text-indigo-700 dark:text-indigo-300">{t('uiux.guide.integration.magic_phrase_label')}</h3>
           </div>
           <div class="bg-white dark:bg-slate-950 rounded-lg p-5 border border-indigo-200 dark:border-indigo-500/20">
-            <code class="text-lg text-indigo-700 dark:text-indigo-300 font-mono block mb-2">Using ui-ux-pro-max skill, &lt;your request&gt;</code>
-            <p class="text-xs text-slate-500">That's it! AI will automatically search design databases and create beautiful code for you.</p>
+            <code class="text-lg text-indigo-700 dark:text-indigo-300 font-mono block mb-2">{t('uiux.guide.integration.magic_phrase_syntax')}</code>
+            <p class="text-xs text-slate-500">{t('uiux.guide.integration.syntax_note')}</p>
           </div>
         </div>
 
@@ -579,15 +588,15 @@
               <polyline points="9 11 12 14 22 4"/>
               <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
             </svg>
-            Step-by-Step Guide:
+            {t('uiux.guide.integration.step_title')}
           </h3>
 
           <div class="flex items-start gap-3">
             <div class="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-500/20 flex items-center justify-center text-sm text-indigo-600 dark:text-indigo-400 font-bold border-2 border-indigo-200 dark:border-indigo-500/40">1</div>
             <div class="flex-1">
               <div class="bg-surface-100 dark:bg-slate-950 rounded-lg p-4 border border-slate-200 dark:border-slate-800">
-                <p class="text-sm text-slate-700 dark:text-slate-300 mb-2"><strong>Start your prompt with:</strong></p>
-                <code class="px-3 py-2 rounded bg-indigo-100 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 font-mono text-sm inline-block">Using ui-ux-pro-max skill,</code>
+                <p class="text-sm text-slate-700 dark:text-slate-300 mb-2"><strong>{t('uiux.guide.step.1.title')}</strong></p>
+                <code class="px-3 py-2 rounded bg-indigo-100 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 font-mono text-sm inline-block">{t('uiux.guide.step.1.code')}</code>
               </div>
             </div>
           </div>
@@ -596,8 +605,8 @@
             <div class="flex-shrink-0 w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-500/20 flex items-center justify-center text-sm text-purple-600 dark:text-purple-400 font-bold border-2 border-purple-200 dark:border-purple-500/40">2</div>
             <div class="flex-1">
               <div class="bg-surface-100 dark:bg-slate-950 rounded-lg p-4 border border-slate-200 dark:border-slate-800">
-                <p class="text-sm text-slate-700 dark:text-slate-300 mb-2"><strong>Describe what you want:</strong></p>
-                <p class="text-xs text-slate-500 dark:text-slate-400">Talk naturally about your project, industry, style preferences, colors, mood, etc.</p>
+                <p class="text-sm text-slate-700 dark:text-slate-300 mb-2"><strong>{t('uiux.guide.step.2.title')}</strong></p>
+                <p class="text-xs text-slate-500 dark:text-slate-400">{t('uiux.guide.step.2.desc')}</p>
               </div>
             </div>
           </div>
@@ -606,8 +615,8 @@
             <div class="flex-shrink-0 w-8 h-8 rounded-full bg-pink-100 dark:bg-pink-500/20 flex items-center justify-center text-sm text-pink-600 dark:text-pink-400 font-bold border-2 border-pink-200 dark:border-pink-500/40">3</div>
             <div class="flex-1">
               <div class="bg-surface-100 dark:bg-slate-950 rounded-lg p-4 border border-slate-200 dark:border-slate-800">
-                <p class="text-sm text-slate-700 dark:text-slate-300 mb-2"><strong>Press Enter & Watch the Magic!</strong></p>
-                <p class="text-xs text-slate-500 dark:text-slate-400">AI searches design databases, creates your design system, and delivers production-ready code.</p>
+                <p class="text-sm text-slate-700 dark:text-slate-300 mb-2"><strong>{t('uiux.guide.step.3.title')}</strong></p>
+                <p class="text-xs text-slate-500 dark:text-slate-400">{t('uiux.guide.step.3.desc')}</p>
               </div>
             </div>
           </div>
@@ -619,61 +628,61 @@
                 <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
                 </svg>
-                Real ClaudeKit Prompts (Copy & Try!):
+                {t('uiux.guide.real_prompts.title')}
             </h3>
 
             <div class="space-y-3">
                 <div class="p-4 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500/30 transition-colors cursor-pointer">
                     <div class="flex items-start gap-2 mb-2">
-                    <span class="px-2 py-0.5 text-xs rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 font-medium">Beginner</span>
-                    <span class="text-xs text-slate-500">Landing Page</span>
+                    <span class="px-2 py-0.5 text-xs rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 font-medium">{t('uiux.guide.label.beginner')}</span>
+                    <span class="text-xs text-slate-500">{t('uiux.guide.label.landing')}</span>
                     </div>
                     <div class="bg-indigo-50 dark:bg-indigo-500/5 rounded p-3 border border-indigo-100 dark:border-indigo-500/10">
                     <code class="text-sm text-indigo-700 dark:text-indigo-300 font-mono block leading-relaxed">
-                        Using ui-ux-pro-max skill, create a beautiful landing page for my yoga studio. I want calming, peaceful colors and elegant fonts. Make it look professional but welcoming.
+                        {t('uiux.guide.prompt.beginner')}
                     </code>
                     </div>
                     <div class="mt-2 flex items-start gap-2 text-xs text-slate-500">
                     <svg class="w-4 h-4 text-indigo-500 dark:text-indigo-400 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <polyline points="9 11 12 14 22 4"/>
                     </svg>
-                    <span>AI will search beauty/wellness colors, elegant typography, minimalist style, and create complete HTML</span>
+                    <span>{t('uiux.guide.outcome.beginner')}</span>
                     </div>
                 </div>
 
                 <div class="p-4 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-purple-500/30 transition-colors cursor-pointer">
                     <div class="flex items-start gap-2 mb-2">
-                    <span class="px-2 py-0.5 text-xs rounded-full bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400 font-medium">Intermediate</span>
-                    <span class="text-xs text-slate-500">Dashboard</span>
+                    <span class="px-2 py-0.5 text-xs rounded-full bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400 font-medium">{t('uiux.guide.label.intermediate')}</span>
+                    <span class="text-xs text-slate-500">{t('uiux.guide.label.dashboard')}</span>
                     </div>
                     <div class="bg-purple-50 dark:bg-purple-500/5 rounded p-3 border border-purple-100 dark:border-purple-500/10">
                         <code class="text-sm text-purple-700 dark:text-purple-300 font-mono block leading-relaxed">
-                            Using ui-ux-pro-max skill, build a SaaS analytics dashboard with glassmorphism style and dark mode. Include data charts.
+                            {t('uiux.guide.prompt.intermediate')}
                         </code>
                     </div>
                     <div class="mt-2 flex items-start gap-2 text-xs text-slate-500">
                     <svg class="w-4 h-4 text-purple-600 dark:text-purple-400 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <polyline points="9 11 12 14 22 4"/>
                     </svg>
-                    <span>AI will search glassmorphism style, SaaS colors, dark mode patterns, chart types, and React best practices</span>
+                    <span>{t('uiux.guide.outcome.intermediate')}</span>
                     </div>
                 </div>
 
                 <div class="p-4 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-pink-500/30 transition-colors cursor-pointer">
                     <div class="flex items-start gap-2 mb-2">
-                    <span class="px-2 py-0.5 text-xs rounded-full bg-rose-100 dark:bg-red-500/20 text-rose-700 dark:text-red-400 font-medium">Advanced</span>
-                    <span class="text-xs text-slate-500">E-commerce</span>
+                    <span class="px-2 py-0.5 text-xs rounded-full bg-rose-100 dark:bg-red-500/20 text-rose-700 dark:text-red-400 font-medium">{t('uiux.guide.label.advanced')}</span>
+                    <span class="text-xs text-slate-500">{t('uiux.guide.label.ecommerce')}</span>
                     </div>
                     <div class="bg-pink-50 dark:bg-pink-500/5 rounded p-3 border border-pink-200 dark:border-pink-500/10">
                     <code class="text-sm text-pink-700 dark:text-pink-300 font-mono block leading-relaxed">
-                        Using ui-ux-pro-max skill, design a luxury e-commerce product page for high-end watches. Premium feel with elegant typography. Include product showcase layout with zoom feature. Build with Next.js.
+                        {t('uiux.guide.prompt.advanced')}
                     </code>
                     </div>
                     <div class="mt-2 flex items-start gap-2 text-xs text-slate-500">
                     <svg class="w-4 h-4 text-pink-600 dark:text-pink-400 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <polyline points="9 11 12 14 22 4"/>
                     </svg>
-                    <span>AI will search luxury e-commerce, premium colors, elegant typography, product showcase layout, and Next.js patterns</span>
+                    <span>{t('uiux.guide.outcome.advanced')}</span>
                     </div>
                 </div>
             </div>
@@ -685,19 +694,19 @@
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                 </svg>
                 <div class="flex-1">
-                  <h4 class="text-sm font-bold text-cyan-700 dark:text-cyan-400 mb-2">💡 Pro Tips for Better Results:</h4>
+                  <h4 class="text-sm font-bold text-cyan-700 dark:text-cyan-400 mb-2">{t('uiux.guide.pro_tips.title')}</h4>
                   <ul class="space-y-1 text-xs text-slate-600 dark:text-slate-400">
                     <li class="flex items-start gap-2">
                       <span class="text-cyan-500 dark:text-cyan-400 mt-0.5">•</span>
-                      <span>Mention your industry (healthcare, beauty, fintech) for better color/style recommendations</span>
+                      <span>{t('uiux.guide.pro_tips.1')}</span>
                     </li>
                     <li class="flex items-start gap-2">
                       <span class="text-cyan-500 dark:text-cyan-400 mt-0.5">•</span>
-                      <span>Be specific about style (elegant, playful, minimal, modern) for accurate design matching</span>
+                      <span>{t('uiux.guide.pro_tips.2')}</span>
                     </li>
                     <li class="flex items-start gap-2">
                       <span class="text-cyan-500 dark:text-cyan-400 mt-0.5">•</span>
-                      <span>Ask for specific frameworks if needed ("Using Tailwind", "Using React")</span>
+                      <span>{t('uiux.guide.pro_tips.3')}</span>
                     </li>
                   </ul>
                 </div>
@@ -714,17 +723,17 @@
                 <path d="M13 8H7"/>
                 <path d="M17 12H7"/>
               </svg>
-              Example Prompts to Try
+              {t('uiux.guide.examples.title')}
             </h2>
-            <p class="text-sm text-slate-600 dark:text-slate-500 mt-2">Copy these examples and customize them for your project!</p>
+            <p class="text-sm text-slate-600 dark:text-slate-500 mt-2">{t('uiux.guide.examples.subtitle')}</p>
           </div>
           <div class="p-6 space-y-3">
             <div class="p-4 rounded-lg bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-violet-500/30 transition-colors cursor-pointer">
               <div class="flex items-start gap-3">
                 <div class="flex-shrink-0 w-6 h-6 rounded-full bg-violet-100 dark:bg-violet-500/20 flex items-center justify-center text-xs text-violet-700 dark:text-violet-400 font-bold">1</div>
                 <div class="flex-1">
-                  <code class="text-sm text-violet-600 dark:text-violet-400 font-mono">"Create a landing page for my yoga studio. Use calming colors and elegant fonts."</code>
-                  <p class="text-xs text-slate-500 mt-2">→ AI will search: beauty/wellness colors + elegant typography + minimalist style</p>
+                  <code class="text-sm text-violet-600 dark:text-violet-400 font-mono">{t('uiux.guide.example.1.code')}</code>
+                  <p class="text-xs text-slate-500 mt-2">{t('uiux.guide.example.1.desc')}</p>
                 </div>
               </div>
             </div>
@@ -732,8 +741,8 @@
               <div class="flex items-start gap-3">
                 <div class="flex-shrink-0 w-6 h-6 rounded-full bg-purple-100 dark:bg-purple-500/20 flex items-center justify-center text-xs text-purple-700 dark:text-purple-400 font-bold">2</div>
                 <div class="flex-1">
-                  <code class="text-sm text-purple-600 dark:text-purple-400 font-mono">"Build a modern SaaS dashboard with dark mode and glassmorphism style."</code>
-                  <p class="text-xs text-slate-500 mt-2">→ AI will search: glassmorphism style + SaaS colors + dark mode patterns + chart types</p>
+                  <code class="text-sm text-purple-600 dark:text-purple-400 font-mono">{t('uiux.guide.example.2.code')}</code>
+                  <p class="text-xs text-slate-500 mt-2">{t('uiux.guide.example.2.desc')}</p>
                 </div>
               </div>
             </div>
@@ -741,8 +750,8 @@
               <div class="flex items-start gap-3">
                 <div class="flex-shrink-0 w-6 h-6 rounded-full bg-fuchsia-100 dark:bg-fuchsia-500/20 flex items-center justify-center text-xs text-fuchsia-700 dark:text-fuchsia-400 font-bold">3</div>
                 <div class="flex-1">
-                  <code class="text-sm text-fuchsia-600 dark:text-fuchsia-400 font-mono">"Design a portfolio for a photographer. Make it minimal, clean, and showcase-focused."</code>
-                  <p class="text-xs text-slate-500 mt-2">→ AI will search: minimalism style + portfolio layout + elegant typography</p>
+                  <code class="text-sm text-fuchsia-600 dark:text-fuchsia-400 font-mono">{t('uiux.guide.example.3.code')}</code>
+                  <p class="text-xs text-slate-500 mt-2">{t('uiux.guide.example.3.desc')}</p>
                 </div>
               </div>
             </div>
@@ -750,8 +759,8 @@
               <div class="flex items-start gap-3">
                 <div class="flex-shrink-0 w-6 h-6 rounded-full bg-pink-100 dark:bg-pink-500/20 flex items-center justify-center text-xs text-pink-700 dark:text-pink-400 font-bold">4</div>
                 <div class="flex-1">
-                  <code class="text-sm text-pink-600 dark:text-pink-400 font-mono">"Create an e-commerce homepage for luxury watches with premium feel."</code>
-                  <p class="text-xs text-slate-500 mt-2">→ AI will search: luxury e-commerce + elegant colors + premium typography + product showcase layout</p>
+                  <code class="text-sm text-pink-600 dark:text-pink-400 font-mono">{t('uiux.guide.example.4.code')}</code>
+                  <p class="text-xs text-slate-500 mt-2">{t('uiux.guide.example.4.desc')}</p>
                 </div>
               </div>
             </div>
@@ -766,9 +775,9 @@
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
                 <polyline points="22 4 12 14.01 9 11.01"/>
               </svg>
-              What AI Checks Before Delivery
+              {t('uiux.guide.quality.title')}
             </h2>
-            <p class="text-sm text-slate-600 dark:text-slate-500 mt-2">Every design is automatically validated for quality and accessibility</p>
+            <p class="text-sm text-slate-600 dark:text-slate-500 mt-2">{t('uiux.guide.quality.subtitle')}</p>
           </div>
           <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="p-4 rounded-lg bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
@@ -776,24 +785,24 @@
                 <svg class="w-5 h-5 text-green-600 dark:text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <polyline points="20 6 9 17 4 12"/>
                 </svg>
-                <h3 class="text-sm font-bold font-heading text-slate-700 dark:text-slate-300">Visual Quality</h3>
+                <h3 class="text-sm font-bold font-heading text-slate-700 dark:text-slate-300">{t('uiux.guide.quality.visual.title')}</h3>
               </div>
               <ul class="space-y-2 text-xs text-slate-600 dark:text-slate-500">
                 <li class="flex items-start gap-2">
                   <span class="text-green-500 dark:text-green-400 mt-0.5">✓</span>
-                  <span>No emoji icons (uses professional SVG icons)</span>
+                  <span>{t('uiux.guide.quality.visual.1')}</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-green-500 dark:text-green-400 mt-0.5">✓</span>
-                  <span>Consistent icon sizes and styles</span>
+                  <span>{t('uiux.guide.quality.visual.2')}</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-green-500 dark:text-green-400 mt-0.5">✓</span>
-                  <span>Brand-correct logos from official sources</span>
+                  <span>{t('uiux.guide.quality.visual.3')}</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-green-500 dark:text-green-400 mt-0.5">✓</span>
-                  <span>Hover effects don't cause layout shifts</span>
+                  <span>{t('uiux.guide.quality.visual.4')}</span>
                 </li>
               </ul>
             </div>
@@ -802,24 +811,24 @@
                 <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <polyline points="20 6 9 17 4 12"/>
                 </svg>
-                <h3 class="text-sm font-bold font-heading text-slate-700 dark:text-slate-300">Interactions</h3>
+                <h3 class="text-sm font-bold font-heading text-slate-700 dark:text-slate-300">{t('uiux.guide.quality.interaction.title')}</h3>
               </div>
               <ul class="space-y-2 text-xs text-slate-600 dark:text-slate-500">
                 <li class="flex items-start gap-2">
                   <span class="text-emerald-500 dark:text-emerald-400 mt-0.5">✓</span>
-                  <span>Clickable elements have cursor-pointer</span>
+                  <span>{t('uiux.guide.quality.interaction.1')}</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-emerald-500 dark:text-emerald-400 mt-0.5">✓</span>
-                  <span>Clear visual feedback on hover/click</span>
+                  <span>{t('uiux.guide.quality.interaction.2')}</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-emerald-500 dark:text-emerald-400 mt-0.5">✓</span>
-                  <span>Smooth transitions (150-300ms)</span>
+                  <span>{t('uiux.guide.quality.interaction.3')}</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-emerald-500 dark:text-emerald-400 mt-0.5">✓</span>
-                  <span>Keyboard navigation works perfectly</span>
+                  <span>{t('uiux.guide.quality.interaction.4')}</span>
                 </li>
               </ul>
             </div>
@@ -828,24 +837,24 @@
                 <svg class="w-5 h-5 text-teal-600 dark:text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <polyline points="20 6 9 17 4 12"/>
                 </svg>
-                <h3 class="text-sm font-bold font-heading text-slate-700 dark:text-slate-300">Accessibility</h3>
+                <h3 class="text-sm font-bold font-heading text-slate-700 dark:text-slate-300">{t('uiux.guide.quality.accessibility.title')}</h3>
               </div>
               <ul class="space-y-2 text-xs text-slate-600 dark:text-slate-500">
                 <li class="flex items-start gap-2">
                   <span class="text-teal-500 dark:text-teal-400 mt-0.5">✓</span>
-                  <span>Text contrast meets WCAG AA (4.5:1)</span>
+                  <span>{t('uiux.guide.quality.accessibility.1')}</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-teal-500 dark:text-teal-400 mt-0.5">✓</span>
-                  <span>All images have descriptive alt text</span>
+                  <span>{t('uiux.guide.quality.accessibility.2')}</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-teal-500 dark:text-teal-400 mt-0.5">✓</span>
-                  <span>Form inputs have proper labels</span>
+                  <span>{t('uiux.guide.quality.accessibility.3')}</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-teal-500 dark:text-teal-400 mt-0.5">✓</span>
-                  <span>Respects prefers-reduced-motion</span>
+                  <span>{t('uiux.guide.quality.accessibility.4')}</span>
                 </li>
               </ul>
             </div>
@@ -854,24 +863,24 @@
                 <svg class="w-5 h-5 text-cyan-600 dark:text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <polyline points="20 6 9 17 4 12"/>
                 </svg>
-                <h3 class="text-sm font-bold font-heading text-slate-700 dark:text-slate-300">Responsive</h3>
+                <h3 class="text-sm font-bold font-heading text-slate-700 dark:text-slate-300">{t('uiux.guide.quality.responsive.title')}</h3>
               </div>
               <ul class="space-y-2 text-xs text-slate-600 dark:text-slate-500">
                 <li class="flex items-start gap-2">
                   <span class="text-cyan-500 dark:text-cyan-400 mt-0.5">✓</span>
-                  <span>Works on mobile (320px+)</span>
+                  <span>{t('uiux.guide.quality.responsive.1')}</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-cyan-500 dark:text-cyan-400 mt-0.5">✓</span>
-                  <span>Tablet optimized (768px+)</span>
+                  <span>{t('uiux.guide.quality.responsive.2')}</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-cyan-500 dark:text-cyan-400 mt-0.5">✓</span>
-                  <span>Desktop perfect (1024px+)</span>
+                  <span>{t('uiux.guide.quality.responsive.3')}</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="text-cyan-500 dark:text-cyan-400 mt-0.5">✓</span>
-                  <span>No horizontal scroll on any device</span>
+                  <span>{t('uiux.guide.quality.responsive.4')}</span>
                 </li>
               </ul>
             </div>
