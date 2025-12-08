@@ -9,44 +9,43 @@ const navItems = [
   {
     id: 'cli',
     label: 'CLI Getting Started',
-    icon: '🚀',
+    icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z" /></svg>`,
     href: '/guides',
   },
   {
     id: 'ccs',
     label: 'Accounts Switcher',
-    icon: '🔀',
+    icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" /></svg>`,
     href: '/guides/ccs',
   },
   {
     id: 'workflows',
     label: 'Recommended Workflows',
-    icon: '📋',
+    icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z" /></svg>`,
     href: '/guides/workflows',
   },
   {
     id: 'commands',
     label: 'Slash Commands',
-    icon: '⚡',
+    icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>`,
     href: '/guides/commands',
   },
   {
-
     id: 'uiux',
     label: 'UI/UX Pro Max',
-    icon: '🎨',
+    icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.396 3.395c.98-.18 1.933-.414 2.855-.693l1.955-1.956a8.827 8.827 0 01-4.186-3.416 19.584 19.584 0 00-4.218 4.218l-1.956 1.956a2.625 2.625 0 002.394 2.883l.003-.003h-.002z" /></svg>`,
     href: '/guides/uiux',
   },
   {
     id: 'resume',
     label: 'Resume Session',
-    icon: '🔄',
+    icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" /></svg>`,
     href: '/guides/resume',
   },
   {
     id: 'permissions',
     label: 'Bypass Permissions',
-    icon: '🔓',
+    icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg>`,
     href: '/guides/permissions',
   },
 ];
@@ -97,7 +96,7 @@ const navItems = [
           }`}
         >
           <span class={`text-lg transition-transform duration-200 ${activeTab === item.id ? 'scale-110' : 'group-hover:scale-110'}`}>
-            {item.icon}
+            <Fragment set:html={item.icon} />
           </span>
           <span>
             {item.label}
@@ -123,7 +122,7 @@ const navItems = [
             : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
         }`}
       >
-        <span>{item.icon}</span>
+        <span><Fragment set:html={item.icon} /></span>
         {item.label}
       </a>
     ))}
