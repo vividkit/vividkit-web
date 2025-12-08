@@ -1,6 +1,6 @@
 ---
 interface Props {
-  activeTab: 'cli' | 'workflows' | 'commands' | 'uiux' | 'resume' | 'permissions';
+  activeTab: 'cli' | 'ccs' | 'workflows' | 'commands' | 'uiux' | 'resume' | 'permissions';
 }
 
 const { activeTab } = Astro.props;
@@ -11,6 +11,12 @@ const navItems = [
     label: 'CLI Getting Started',
     icon: '🚀',
     href: '/guides',
+  },
+  {
+    id: 'ccs',
+    label: 'Accounts Switcher',
+    icon: '🔀',
+    href: '/guides/ccs',
   },
   {
     id: 'workflows',
