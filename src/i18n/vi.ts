@@ -721,7 +721,7 @@ export default {
   'ccs.guide.glm_config_title': 'Cấu Hình GLM',
   'ccs.guide.glm_config_desc': 'Cấu hình GLM-4.6 qua API cho các tác vụ phát triển tối ưu chi phí.',
   'ccs.guide.glm_update_notice': '🚀 <strong>Cập Nhật Mới</strong>: Z.AI đã giới thiệu GLM-4.6V (8 tháng 12 năm 2025) - model mới nhất và tiên tiến nhất! Xem thông báo chính thức: <a href="https://z.ai/blog/glm-4.6v" class="text-emerald-600 dark:text-emerald-400 underline" target="_blank" rel="noopener noreferrer">https://z.ai/blog/glm-4.6v</a>',
-  'ccs.guide.glm_verify_note': 'Nếu bạn thấy model GLM-4.6V trong phản hồi, cấu hình đã hoạt động. Nếu không, hãy kiểm tra lại file cài đặt và API key của bạn.',
+  'ccs.guide.glm_verify_note': 'Nếu bạn thấy model GLM-4.6 trong phản hồi, cấu hình đã hoạt động. Nếu không, hãy kiểm tra lại file cài đặt và API key của bạn.',
   'ccs.guide.glm_step1_title': 'Bước 1: Tạo File Cài Đặt',
   'ccs.guide.glm_step1_desc': 'Mở hoặc tạo file cài đặt GLM:',
   'ccs.guide.glm_add_content': 'Thêm nội dung sau:',
