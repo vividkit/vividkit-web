@@ -74,7 +74,7 @@ const t = useTranslations(currentLang);
       <p class="text-slate-700 dark:text-slate-300">
         {t('ccs.guide.solution_desc')}
       </p>
-      <div class="bg-surface-100 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm space-y-3">
+      <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm space-y-3">
         <div class="text-slate-500 text-xs mb-2">{t('ccs.guide.solution_example_label')}</div>
         <div class="flex items-start gap-2">
           <span class="text-slate-500">#</span>
@@ -128,7 +128,7 @@ const t = useTranslations(currentLang);
       </div>
     </div>
     <div class="p-6">
-      <div class="bg-surface-100 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm">
+      <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm">
         <div class="flex items-start gap-2 text-slate-700 dark:text-slate-300">
           <span class="text-emerald-600 dark:text-emerald-400">$</span>
           <div class="flex-1">
@@ -163,7 +163,7 @@ const t = useTranslations(currentLang);
           </svg>
           {t('ccs.guide.basic_usage_title')}
         </h4>
-        <div class="bg-surface-100 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm space-y-2">
+        <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm space-y-2">
           <div class="flex items-center gap-4">
             <code class="text-slate-700 dark:text-slate-300">ccs</code>
             <span class="text-slate-500 text-xs"># {t('ccs.guide.basic_claude')}</span>
@@ -190,7 +190,7 @@ const t = useTranslations(currentLang);
         <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">
           {t('ccs.guide.delegation_desc')}
         </p>
-        <div class="bg-surface-100 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm space-y-3">
+        <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm space-y-3">
           <div>
             <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.delegation_example1_label')}</div>
             <code class="text-amber-600 dark:text-amber-400">ccs glm -p "fix linting errors in src/"</code>
@@ -216,16 +216,65 @@ const t = useTranslations(currentLang);
           </svg>
           {t('ccs.guide.multiacccount_title')}
         </h4>
-        <div class="bg-surface-100 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm space-y-3">
+        <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm space-y-3">
           <div class="text-slate-500 text-xs"># {t('ccs.guide.multiaccount_create')}</div>
           <div>ccs auth create work</div>
           <div>ccs auth create personal</div>
-          <div class="border-t border-slate-200 dark:border-slate-700 pt-3 mt-3">
-            <div class="text-slate-500 text-xs mb-2"># {t('ccs.guide.multiaccount_run')}</div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-              <div class="text-emerald-600 dark:text-emerald-400">ccs work "implement feature"</div>
-              <div class="text-amber-600 dark:text-amber-400">ccs personal "review code"</div>
+          <div class="border-t border-slate-200 dark:border-slate-700 pt-4 mt-4">
+            <div class="text-slate-500 text-xs mb-3 font-medium flex items-center gap-2">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 17l6-6-6-6"/>
+                <path d="M12 19h8"/>
+              </svg>
+              {t('ccs.guide.multiaccount_run')}
             </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <!-- Terminal 1 -->
+              <div class="rounded-lg bg-slate-50 dark:bg-[#0D0D0D] border border-slate-200 dark:border-slate-800 p-3 font-mono text-xs shadow-sm hover:border-emerald-500/30 transition-colors group">
+                <div class="text-slate-500 mb-2 flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-2">
+                  <span class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-slate-200 dark:bg-slate-700 group-hover:bg-emerald-500/50 transition-colors"></span>
+                    terminal-1
+                  </span>
+                  <span class="text-[10px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 px-1.5 rounded-sm border border-emerald-500/20">work</span>
+                </div>
+                <div class="text-emerald-600 dark:text-emerald-400 break-all">
+                  <span class="text-slate-400 dark:text-slate-600 select-none">$</span> ccs work "implement feature"
+                </div>
+              </div>
+
+              <!-- Terminal 2 -->
+              <div class="rounded-lg bg-slate-50 dark:bg-[#0D0D0D] border border-slate-200 dark:border-slate-800 p-3 font-mono text-xs shadow-sm hover:border-amber-500/30 transition-colors group">
+                <div class="text-slate-500 mb-2 flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-2">
+                   <span class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-slate-200 dark:bg-slate-700 group-hover:bg-amber-500/50 transition-colors"></span>
+                    terminal-2
+                  </span>
+                  <span class="text-[10px] bg-amber-500/10 text-amber-600 dark:text-amber-400 px-1.5 rounded-sm border border-amber-500/20">personal</span>
+                </div>
+                <div class="text-amber-600 dark:text-amber-400 break-all">
+                  <span class="text-slate-400 dark:text-slate-600 select-none">$</span> ccs personal "review code"
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sync Shared Data -->
+      <div>
+        <h4 class="text-sm font-bold text-blue-600 dark:text-blue-400 mb-3 flex items-center gap-2">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+            <path d="M3.51 9a9 9 0 1 1 2.12 9.36L1 14"/>
+          </svg>
+          {t('ccs.guide.sync_title')}
+        </h4>
+        <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm space-y-2">
+          <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.sync_desc')}</div>
+          <div class="flex items-center gap-4">
+            <code class="text-emerald-600 dark:text-emerald-400">ccs sync</code>
           </div>
         </div>
       </div>
@@ -258,7 +307,7 @@ const t = useTranslations(currentLang);
             </div>
             <h4 class="font-bold text-purple-600 dark:text-purple-400">{t('ccs.guide.feature1_title')}</h4>
           </div>
-          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs space-y-1">
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs space-y-1">
             <div><span class="text-slate-500">ccs</span> <span class="text-slate-400"># Claude</span></div>
             <div><span class="text-slate-500">ccs glm</span> <span class="text-slate-400"># GLM-4.6</span></div>
             <div><span class="text-slate-500">ccs kimi</span> <span class="text-slate-400"># Kimi</span></div>
@@ -280,7 +329,7 @@ const t = useTranslations(currentLang);
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">
             {t('ccs.guide.feature2_desc')}
           </p>
-          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs">
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs">
             <code class="text-amber-600 dark:text-amber-400">ccs glm -p "add tests"</code>
           </div>
         </div>
@@ -299,7 +348,7 @@ const t = useTranslations(currentLang);
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">
             {t('ccs.guide.feature3_desc')}
           </p>
-          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs">
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs">
             <code class="text-emerald-600 dark:text-emerald-400">ccs glm -p "/cook create landing page"</code>
           </div>
         </div>
@@ -318,7 +367,7 @@ const t = useTranslations(currentLang);
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">
             {t('ccs.guide.feature4_desc')}
           </p>
-          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs space-y-1">
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs space-y-1">
             <div><code class="text-blue-600 dark:text-blue-400">ccs gemini</code> <span class="text-slate-400"># {t('ccs.guide.feature4_auto')}</span></div>
             <div><code class="text-blue-600 dark:text-blue-400">ccs gemini --auth</code> <span class="text-slate-400"># {t('ccs.guide.feature4_save')}</span></div>
           </div>
@@ -345,7 +394,7 @@ const t = useTranslations(currentLang);
       </p>
 
       <!-- Recommended Workflow -->
-      <div class="bg-surface-100 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700">
+      <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700">
         <h4 class="text-sm font-bold text-orange-600 dark:text-orange-400 mb-4">
           {t('ccs.guide.workflow_title')}
         </h4>
@@ -464,31 +513,31 @@ const t = useTranslations(currentLang);
               <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
             </svg>
           </div>
-          <h4 class="font-bold text-indigo-600 dark:text-indigo-400">{t('ccs.guide.agy_config_title')}</h4>
+          <h4 class="font-bold text-indigo-600 dark:text-indigo-400 text-lg">{t('ccs.guide.agy_config_title')}</h4>
           <span class="px-2 py-0.5 text-xs rounded-full bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-medium">{t('ccs.guide.recommended')}</span>
         </div>
         <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">
           {t('ccs.guide.agy_config_desc')}
         </p>
-        <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+        <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
           <code class="text-indigo-600 dark:text-indigo-400">ccs agy --config</code>
         </div>
 
         <!-- CLI Output Preview -->
-        <div class="bg-slate-900 dark:bg-black rounded-lg p-4 border border-slate-700 font-mono text-xs text-slate-300 overflow-x-auto">
-          <div class="text-emerald-400 mb-2">[OK] CLIProxy binary ready (0.5s)</div>
-          <div class="text-white font-bold mb-2">{t('ccs.guide.agy_config_header')}</div>
-          <div class="text-slate-400 text-[11px] mb-3">
+        <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto shadow-sm">
+          <div class="text-emerald-600 dark:text-emerald-400 mb-2">[OK] CLIProxy binary ready (0.5s)</div>
+          <div class="text-slate-800 dark:text-white font-bold mb-2">{t('ccs.guide.agy_config_header')}</div>
+          <div class="text-slate-500 dark:text-slate-400 text-[11px] mb-3">
             {t('ccs.guide.agy_config_note')}
           </div>
-          <div class="text-slate-400 mb-2">{t('ccs.guide.select_model')}:</div>
+          <div class="text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.select_model')}:</div>
           <div class="space-y-1 ml-4">
             <div><span class="inline-block w-4"></span>1. Claude Sonnet 4.5</div>
             <div><span class="inline-block w-4"></span>2. Gemini 3 Pro</div>
-            <div class="text-emerald-400">* 3. Claude Opus 4.5 Thinking <span class="text-yellow-500">[DEPRECATED]</span></div>
-            <div><span class="inline-block w-4"></span>4. Claude Sonnet 4.5 Thinking <span class="text-yellow-500">[DEPRECATED]</span></div>
+            <div class="text-emerald-600 dark:text-emerald-400">* 3. Claude Opus 4.5 Thinking <span class="text-yellow-600 dark:text-yellow-500">[DEPRECATED]</span></div>
+            <div><span class="inline-block w-4"></span>4. Claude Sonnet 4.5 Thinking <span class="text-yellow-600 dark:text-yellow-500">[DEPRECATED]</span></div>
           </div>
-          <div class="mt-3 text-slate-400">
+          <div class="mt-3 text-slate-500 dark:text-slate-400">
             {t('ccs.guide.enter_choice')} [1-4] (default: 3): <span class="animate-pulse">_</span>
           </div>
         </div>
@@ -497,13 +546,13 @@ const t = useTranslations(currentLang);
         <div class="mt-4">
           <h5 class="text-sm font-bold text-indigo-600 dark:text-indigo-400 mb-2">{t('ccs.guide.agy_verify_title')}</h5>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.agy_verify_desc')}</p>
-          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
             <code class="text-indigo-600 dark:text-indigo-400">ccs agy "What model are you using?"</code>
           </div>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.agy_verify_output')}</p>
-          <div class="bg-slate-900 dark:bg-black rounded-lg p-4 border border-slate-700 font-mono text-xs text-slate-300 overflow-x-auto">
-            <div class="text-slate-400 mb-2">&gt; What model are you using?</div>
-            <div class="text-cyan-400">⏺ I'm powered by <span class="text-white font-bold">Gemini Claude Opus 4.5</span> (model ID: <span class="text-emerald-400">gemini-claude-opus-4-5-thinking</span>).</div>
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto shadow-sm">
+            <div class="text-slate-500 dark:text-slate-400 mb-2">&gt; What model are you using?</div>
+            <div class="text-cyan-600 dark:text-cyan-400">⏺ I'm powered by <span class="text-slate-800 dark:text-white font-bold">Gemini Claude Opus 4.5</span> (model ID: <span class="text-emerald-600 dark:text-emerald-400">gemini-claude-opus-4-5-thinking</span>).</div>
           </div>
         </div>
 
@@ -511,12 +560,12 @@ const t = useTranslations(currentLang);
         <div class="mt-4">
           <h5 class="text-sm font-bold text-indigo-600 dark:text-indigo-400 mb-2">{t('ccs.guide.agy_logout_title')}</h5>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.agy_logout_desc')}</p>
-          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
             <code class="text-indigo-600 dark:text-indigo-400">ccs agy --logout</code>
           </div>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.agy_logout_output')}</p>
-          <div class="bg-slate-900 dark:bg-black rounded-lg p-4 border border-slate-700 font-mono text-xs text-slate-300 overflow-x-auto">
-            <div class="text-emerald-400">[OK] Logged out from Antigravity</div>
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto shadow-sm">
+            <div class="text-emerald-600 dark:text-emerald-400">[OK] Logged out from Antigravity</div>
           </div>
         </div>
 
@@ -543,13 +592,13 @@ const t = useTranslations(currentLang);
                 <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
               </svg>
             </div>
-            <h5 class="font-bold text-blue-600 dark:text-blue-400 text-sm">{t('ccs.guide.gemini_config_title')}</h5>
+            <h4 class="font-bold text-blue-600 dark:text-blue-400 text-lg">{t('ccs.guide.gemini_config_title')}</h4>
           </div>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.gemini_config_desc')}</p>
 
           <!-- Step 1: Auth Command -->
-          <h6 class="text-xs font-bold text-blue-600 dark:text-blue-400 mb-2">{t('ccs.guide.gemini_step1_title')}</h6>
-          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+          <h5 class="text-sm font-bold text-blue-600 dark:text-blue-400 mb-2">{t('ccs.guide.gemini_step1_title')}</h5>
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
             <code class="text-blue-600 dark:text-blue-400">ccs gemini --auth</code>
           </div>
 
@@ -566,59 +615,59 @@ const t = useTranslations(currentLang);
 
           <!-- Auth Expected Output -->
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.gemini_output_label')}</p>
-          <div class="bg-slate-900 dark:bg-black rounded-lg p-4 border border-slate-700 font-mono text-xs text-slate-300 overflow-x-auto mb-4">
-            <div class="text-emerald-400">[OK] CLIProxy binary ready (0.0s)</div>
-            <div class="text-cyan-400 mt-2">[i] Opening browser for Google Gemini authentication...</div>
-            <div class="text-cyan-400">[i] Complete the login in your browser.</div>
-            <div class="text-emerald-400 mt-2">[OK] Authenticated with Google Gemini (14.8s)</div>
-            <div class="text-emerald-400">[OK] Authentication successful</div>
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+            <div class="text-emerald-600 dark:text-emerald-400">[OK] CLIProxy binary ready (0.0s)</div>
+            <div class="text-cyan-600 dark:text-cyan-400 mt-2">[i] Opening browser for Google Gemini authentication...</div>
+            <div class="text-cyan-600 dark:text-cyan-400">[i] Complete the login in your browser.</div>
+            <div class="text-emerald-600 dark:text-emerald-400 mt-2">[OK] Authenticated with Google Gemini (14.8s)</div>
+            <div class="text-emerald-600 dark:text-emerald-400">[OK] Authentication successful</div>
           </div>
 
           <!-- Step 2: Config Command -->
-          <h6 class="text-xs font-bold text-blue-600 dark:text-blue-400 mb-2">{t('ccs.guide.gemini_step2_title')}</h6>
-          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+          <h5 class="text-sm font-bold text-blue-600 dark:text-blue-400 mb-2">{t('ccs.guide.gemini_step2_title')}</h5>
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
             <code class="text-blue-600 dark:text-blue-400">ccs gemini --config</code>
           </div>
 
           <!-- Config CLI Output -->
-          <div class="bg-slate-900 dark:bg-black rounded-lg p-4 border border-slate-700 font-mono text-xs text-slate-300 overflow-x-auto mb-3">
-            <div class="text-emerald-400 mb-2">[OK] CLIProxy binary ready (0.0s)</div>
-            <div class="text-white font-bold mb-2">{t('ccs.guide.gemini_config_header')}</div>
-            <div class="text-slate-400 text-[11px] mb-3">
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-3 shadow-sm">
+            <div class="text-emerald-600 dark:text-emerald-400 mb-2">[OK] CLIProxy binary ready (0.0s)</div>
+            <div class="text-slate-800 dark:text-white font-bold mb-2">{t('ccs.guide.gemini_config_header')}</div>
+            <div class="text-slate-500 dark:text-slate-400 text-[11px] mb-3">
               {t('ccs.guide.gemini_config_note')}
             </div>
-            <div class="text-slate-400 mb-2">{t('ccs.guide.select_model')}:</div>
+            <div class="text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.select_model')}:</div>
             <div class="space-y-1 ml-4">
-              <div class="text-emerald-400">* 1. Gemini 3 Pro <span class="text-yellow-500">[Paid Tier]</span></div>
+              <div class="text-emerald-600 dark:text-emerald-400">* 1. Gemini 3 Pro <span class="text-yellow-600 dark:text-yellow-500">[Paid Tier]</span></div>
               <div><span class="inline-block w-4"></span>2. Gemini 2.5 Pro</div>
             </div>
-            <div class="mt-3 text-slate-400">
+            <div class="mt-3 text-slate-500 dark:text-slate-400">
               {t('ccs.guide.enter_choice')} [1-2] (default: 1): <span class="animate-pulse">_</span>
             </div>
           </div>
 
           <!-- Config Success Output -->
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.gemini_config_success')}</p>
-          <div class="bg-slate-900 dark:bg-black rounded-lg p-4 border border-slate-700 font-mono text-xs text-slate-300 overflow-x-auto mb-4">
-            <div class="text-emerald-400">[OK] Model set to: Gemini 3 Pro</div>
-            <div class="text-slate-400 ml-5">Config saved: /Users/you/.ccs/gemini.settings.json</div>
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+            <div class="text-emerald-600 dark:text-emerald-400">[OK] Model set to: Gemini 3 Pro</div>
+            <div class="text-slate-500 dark:text-slate-400 ml-5">Config saved: /Users/you/.ccs/gemini.settings.json</div>
           </div>
 
           <!-- Verification -->
-          <h6 class="text-xs font-bold text-blue-600 dark:text-blue-400 mb-2">{t('ccs.guide.gemini_verify_title')}</h6>
+          <h5 class="text-sm font-bold text-blue-600 dark:text-blue-400 mb-2">{t('ccs.guide.gemini_verify_title')}</h5>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.gemini_verify_desc')}</p>
-          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
             <code class="text-blue-600 dark:text-blue-400">ccs gemini "Which model are you using?"</code>
           </div>
-          <div class="bg-slate-900 dark:bg-black rounded-lg p-4 border border-slate-700 font-mono text-xs text-slate-300 overflow-x-auto mb-4">
-            <div class="text-slate-400 mb-2">&gt; Which model are you using?</div>
-            <div class="text-cyan-400">⏺ I am currently using the <span class="text-white font-bold">gemini-3-pro-preview</span> model.</div>
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+            <div class="text-slate-500 dark:text-slate-400 mb-2">&gt; Which model are you using?</div>
+            <div class="text-cyan-600 dark:text-cyan-400">⏺ I am currently using the <span class="text-slate-800 dark:text-white font-bold">gemini-3-pro-preview</span> model.</div>
           </div>
 
           <!-- Logout Option -->
-          <h6 class="text-xs font-bold text-blue-600 dark:text-blue-400 mb-2">{t('ccs.guide.gemini_logout_title')}</h6>
+          <h5 class="text-sm font-bold text-blue-600 dark:text-blue-400 mb-2">{t('ccs.guide.gemini_logout_title')}</h5>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.gemini_logout_desc')}</p>
-          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs">
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs">
             <code class="text-blue-600 dark:text-blue-400">ccs gemini --logout</code>
           </div>
         </div>
@@ -631,7 +680,7 @@ const t = useTranslations(currentLang);
                 <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.8956zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.5047-2.6067-1.4998z"/>
               </svg>
             </div>
-            <h5 class="font-bold text-cyan-600 dark:text-cyan-400 text-sm">{t('ccs.guide.codex_config_title')}</h5>
+            <h4 class="font-bold text-cyan-600 dark:text-cyan-400 text-lg">{t('ccs.guide.codex_config_title')}</h4>
           </div>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.codex_config_desc')}</p>
 
@@ -646,8 +695,8 @@ const t = useTranslations(currentLang);
           </div>
 
           <!-- Step 1: Auth Command -->
-          <h6 class="text-xs font-bold text-cyan-600 dark:text-cyan-400 mb-2">{t('ccs.guide.codex_step1_title')}</h6>
-          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+          <h5 class="text-sm font-bold text-cyan-600 dark:text-cyan-400 mb-2">{t('ccs.guide.codex_step1_title')}</h5>
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
             <code class="text-cyan-600 dark:text-cyan-400">ccs codex --auth</code>
           </div>
 
@@ -664,29 +713,29 @@ const t = useTranslations(currentLang);
 
           <!-- Auth Expected Output -->
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.codex_output_label')}</p>
-          <div class="bg-slate-900 dark:bg-black rounded-lg p-4 border border-slate-700 font-mono text-xs text-slate-300 overflow-x-auto mb-4">
-            <div class="text-emerald-400">[OK] CLIProxy binary ready (0.0s)</div>
-            <div class="text-cyan-400 mt-2">[i] Opening browser for OpenAI authentication...</div>
-            <div class="text-cyan-400">[i] Complete the login in your browser.</div>
-            <div class="text-emerald-400 mt-2">[OK] Authenticated with OpenAI (12.5s)</div>
-            <div class="text-emerald-400">[OK] Authentication successful</div>
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+            <div class="text-emerald-600 dark:text-emerald-400">[OK] CLIProxy binary ready (0.0s)</div>
+            <div class="text-cyan-600 dark:text-cyan-400 mt-2">[i] Opening browser for OpenAI authentication...</div>
+            <div class="text-cyan-600 dark:text-cyan-400">[i] Complete the login in your browser.</div>
+            <div class="text-emerald-600 dark:text-emerald-400 mt-2">[OK] Authenticated with OpenAI (12.5s)</div>
+            <div class="text-emerald-600 dark:text-emerald-400">[OK] Authentication successful</div>
           </div>
 
           <!-- Verification -->
-          <h6 class="text-xs font-bold text-cyan-600 dark:text-cyan-400 mb-2">{t('ccs.guide.codex_verify_title')}</h6>
+          <h5 class="text-sm font-bold text-cyan-600 dark:text-cyan-400 mb-2">{t('ccs.guide.codex_verify_title')}</h5>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.codex_verify_desc')}</p>
-          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
             <code class="text-cyan-600 dark:text-cyan-400">ccs codex "Hello, which model are you using?"</code>
           </div>
-          <div class="bg-slate-900 dark:bg-black rounded-lg p-4 border border-slate-700 font-mono text-xs text-slate-300 overflow-x-auto mb-4">
-            <div class="text-slate-400 mb-2">&gt; Hello, which model are you using?</div>
-            <div class="text-cyan-400">⏺ I'm running as <span class="text-white font-bold">GPT-5.1-Codex-Max-High</span> (model ID: <span class="text-emerald-400">opus</span>).</div>
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+            <div class="text-slate-500 dark:text-slate-400 mb-2">&gt; Hello, which model are you using?</div>
+            <div class="text-cyan-600 dark:text-cyan-400">⏺ I'm running as <span class="text-slate-800 dark:text-white font-bold">GPT-5.1-Codex-Max-High</span> (model ID: <span class="text-emerald-600 dark:text-emerald-400">opus</span>).</div>
           </div>
 
           <!-- Logout Option -->
-          <h6 class="text-xs font-bold text-cyan-600 dark:text-cyan-400 mb-2">{t('ccs.guide.codex_logout_title')}</h6>
+          <h5 class="text-sm font-bold text-cyan-600 dark:text-cyan-400 mb-2">{t('ccs.guide.codex_logout_title')}</h5>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.codex_logout_desc')}</p>
-          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs">
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs">
             <code class="text-cyan-600 dark:text-cyan-400">ccs codex --logout</code>
           </div>
         </div>
@@ -700,57 +749,57 @@ const t = useTranslations(currentLang);
             <div class="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
               <span class="text-sm font-bold text-emerald-600 dark:text-emerald-400">Z</span>
             </div>
-            <h5 class="font-bold text-emerald-600 dark:text-emerald-400 text-sm">{t('ccs.guide.glm_config_title')}</h5>
+            <h4 class="font-bold text-emerald-600 dark:text-emerald-400 text-lg">{t('ccs.guide.glm_config_title')}</h4>
             <span class="px-2 py-0.5 text-[10px] rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-medium">Z.AI</span>
           </div>
           <p class="text-xs text-emerald-600 dark:text-emerald-400 mb-2 font-medium" set:html={t('ccs.guide.glm_update_notice')}></p>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.glm_config_desc')}</p>
 
           <!-- Step 1: Create Settings File -->
-          <h6 class="text-xs font-bold text-emerald-600 dark:text-emerald-400 mb-2">{t('ccs.guide.glm_step1_title')}</h6>
+          <h5 class="text-sm font-bold text-emerald-600 dark:text-emerald-400 mb-2">{t('ccs.guide.glm_step1_title')}</h5>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.glm_step1_desc')}</p>
-          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
             <code class="text-emerald-600 dark:text-emerald-400">~/.ccs/glm.settings.json</code>
           </div>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.glm_add_content')}</p>
-          <div class="bg-slate-900 dark:bg-black rounded-lg p-4 border border-slate-700 font-mono text-xs text-slate-300 overflow-x-auto mb-4">
-            <div class="text-slate-400">{"{"}</div>
-            <div class="ml-4"><span class="text-cyan-400">"alwaysThinkingEnabled"</span>: <span class="text-amber-400">true</span>,</div>
-            <div class="ml-4"><span class="text-cyan-400">"env"</span>: {"{"}</div>
-            <div class="ml-8"><span class="text-cyan-400">"ANTHROPIC_BASE_URL"</span>: <span class="text-emerald-400">"https://api.z.ai/api/anthropic"</span>,</div>
-            <div class="ml-8"><span class="text-cyan-400">"ANTHROPIC_AUTH_TOKEN"</span>: <span class="text-emerald-400">"&lt;your_api_key&gt;"</span>,</div>
-            <div class="ml-8"><span class="text-cyan-400">"ANTHROPIC_MODEL"</span>: <span class="text-emerald-400">"glm-4.6v"</span>,</div>
-            <div class="ml-8"><span class="text-cyan-400">"ANTHROPIC_DEFAULT_OPUS_MODEL"</span>: <span class="text-emerald-400">"glm-4.6v"</span>,</div>
-            <div class="ml-8"><span class="text-cyan-400">"ANTHROPIC_DEFAULT_SONNET_MODEL"</span>: <span class="text-emerald-400">"glm-4.6v"</span>,</div>
-            <div class="ml-8"><span class="text-cyan-400">"ANTHROPIC_DEFAULT_HAIKU_MODEL"</span>: <span class="text-emerald-400">"glm-4.6v"</span></div>
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+            <div class="text-slate-500 dark:text-slate-400">{"{"}</div>
+            <div class="ml-4"><span class="text-cyan-600 dark:text-cyan-400">"alwaysThinkingEnabled"</span>: <span class="text-amber-600 dark:text-amber-400">true</span>,</div>
+            <div class="ml-4"><span class="text-cyan-600 dark:text-cyan-400">"env"</span>: {"{"}</div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"ANTHROPIC_BASE_URL"</span>: <span class="text-emerald-600 dark:text-emerald-400">"https://api.z.ai/api/anthropic"</span>,</div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"ANTHROPIC_AUTH_TOKEN"</span>: <span class="text-emerald-600 dark:text-emerald-400">"&lt;your_api_key&gt;"</span>,</div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"ANTHROPIC_MODEL"</span>: <span class="text-emerald-600 dark:text-emerald-400">"glm-4.6v"</span>,</div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"ANTHROPIC_DEFAULT_OPUS_MODEL"</span>: <span class="text-emerald-600 dark:text-emerald-400">"glm-4.6v"</span>,</div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"ANTHROPIC_DEFAULT_SONNET_MODEL"</span>: <span class="text-emerald-600 dark:text-emerald-400">"glm-4.6v"</span>,</div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"ANTHROPIC_DEFAULT_HAIKU_MODEL"</span>: <span class="text-emerald-600 dark:text-emerald-400">"glm-4.6v"</span></div>
             <div class="ml-4">{"}"}</div>
-            <div class="text-slate-400">{"}"}</div>
+            <div class="text-slate-500 dark:text-slate-400">{"}"}</div>
           </div>
 
           <!-- Step 2: Add to Config -->
-          <h6 class="text-xs font-bold text-emerald-600 dark:text-emerald-400 mb-2">{t('ccs.guide.glm_step2_title')}</h6>
+          <h5 class="text-sm font-bold text-emerald-600 dark:text-emerald-400 mb-2">{t('ccs.guide.glm_step2_title')}</h5>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.glm_step2_desc')}</p>
-          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
             <code class="text-emerald-600 dark:text-emerald-400">~/.ccs/config.json</code>
           </div>
-          <div class="bg-slate-900 dark:bg-black rounded-lg p-4 border border-slate-700 font-mono text-xs text-slate-300 overflow-x-auto mb-4">
-            <div class="text-slate-400">{"{"}</div>
-            <div class="ml-4"><span class="text-cyan-400">"profiles"</span>: {"{"}</div>
-            <div class="ml-8"><span class="text-cyan-400">"glm"</span>: <span class="text-emerald-400">"~/.ccs/glm.settings.json"</span>, <span class="text-amber-400">&lt;-- {t('ccs.guide.add_this_line')}</span></div>
-            <div class="ml-8"><span class="text-cyan-400">"default"</span>: <span class="text-emerald-400">"~/.claude/settings.json"</span></div>
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+            <div class="text-slate-500 dark:text-slate-400">{"{"}</div>
+            <div class="ml-4"><span class="text-cyan-600 dark:text-cyan-400">"profiles"</span>: {"{"}</div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"glm"</span>: <span class="text-emerald-600 dark:text-emerald-400">"~/.ccs/glm.settings.json"</span>, <span class="text-amber-600 dark:text-amber-400">&lt;-- {t('ccs.guide.add_this_line')}</span></div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"default"</span>: <span class="text-emerald-600 dark:text-emerald-400">"~/.claude/settings.json"</span></div>
             <div class="ml-4">{"}"}</div>
-            <div class="text-slate-400">{"}"}</div>
+            <div class="text-slate-500 dark:text-slate-400">{"}"}</div>
           </div>
 
           <!-- Step 3: Verification -->
-          <h6 class="text-xs font-bold text-emerald-600 dark:text-emerald-400 mb-2">{t('ccs.guide.glm_verify_title')}</h6>
+          <h5 class="text-sm font-bold text-emerald-600 dark:text-emerald-400 mb-2">{t('ccs.guide.glm_verify_title')}</h5>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.glm_verify_desc')}</p>
-          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
             <code class="text-emerald-600 dark:text-emerald-400">ccs glm "Which model are you using?"</code>
           </div>
-          <div class="bg-slate-900 dark:bg-black rounded-lg p-4 border border-slate-700 font-mono text-xs text-slate-300 overflow-x-auto">
-            <div class="text-slate-400 mb-2">&gt; Which model are you using?</div>
-            <div class="text-cyan-400">⏺ I'm using the <span class="text-white font-bold">GLM-4.6V</span> model.</div>
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto shadow-sm">
+            <div class="text-slate-500 dark:text-slate-400 mb-2">&gt; Which model are you using?</div>
+            <div class="text-cyan-600 dark:text-cyan-400">⏺ I'm using the <span class="text-slate-800 dark:text-white font-bold">GLM-4.6V</span> model.</div>
           </div>
 
           <!-- GLM-4.6V Model Verification -->
@@ -772,53 +821,53 @@ const t = useTranslations(currentLang);
             <div class="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center">
               <span class="text-sm font-bold text-purple-600 dark:text-purple-400">K</span>
             </div>
-            <h5 class="font-bold text-purple-600 dark:text-purple-400 text-sm">{t('ccs.guide.kimi_config_title')}</h5>
+            <h4 class="font-bold text-purple-600 dark:text-purple-400 text-lg">{t('ccs.guide.kimi_config_title')}</h4>
             <span class="px-2 py-0.5 text-[10px] rounded-full bg-purple-500/20 text-purple-600 dark:text-purple-400 font-medium">Moonshot AI</span>
           </div>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.kimi_config_desc')}</p>
 
           <!-- Step 1: Create Settings File -->
-          <h6 class="text-xs font-bold text-purple-600 dark:text-purple-400 mb-2">{t('ccs.guide.kimi_step1_title')}</h6>
+          <h5 class="text-sm font-bold text-purple-600 dark:text-purple-400 mb-2">{t('ccs.guide.kimi_step1_title')}</h5>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.kimi_step1_desc')}</p>
-          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
             <code class="text-purple-600 dark:text-purple-400">~/.ccs/kimi.settings.json</code>
           </div>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.kimi_add_content')}</p>
-          <div class="bg-slate-900 dark:bg-black rounded-lg p-4 border border-slate-700 font-mono text-xs text-slate-300 overflow-x-auto mb-4">
-            <div class="text-slate-400">{"{"}</div>
-            <div class="ml-4"><span class="text-cyan-400">"env"</span>: {"{"}</div>
-            <div class="ml-8"><span class="text-cyan-400">"ANTHROPIC_BASE_URL"</span>: <span class="text-purple-400">"https://api.kimi.com/coding/"</span>,</div>
-            <div class="ml-8"><span class="text-cyan-400">"ANTHROPIC_AUTH_TOKEN"</span>: <span class="text-purple-400">"&lt;your_api_key&gt;"</span>,</div>
-            <div class="ml-8"><span class="text-cyan-400">"ANTHROPIC_MODEL"</span>: <span class="text-purple-400">"kimi-k2-thinking-turbo"</span></div>
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+            <div class="text-slate-500 dark:text-slate-400">{"{"}</div>
+            <div class="ml-4"><span class="text-cyan-600 dark:text-cyan-400">"env"</span>: {"{"}</div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"ANTHROPIC_BASE_URL"</span>: <span class="text-purple-600 dark:text-purple-400">"https://api.kimi.com/coding/"</span>,</div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"ANTHROPIC_AUTH_TOKEN"</span>: <span class="text-purple-600 dark:text-purple-400">"&lt;your_api_key&gt;"</span>,</div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"ANTHROPIC_MODEL"</span>: <span class="text-purple-600 dark:text-purple-400">"kimi-k2-thinking-turbo"</span></div>
             <div class="ml-4">{"}"},</div>
-            <div class="ml-4"><span class="text-cyan-400">"alwaysThinkingEnabled"</span>: <span class="text-amber-400">true</span></div>
-            <div class="text-slate-400">{"}"}</div>
+            <div class="ml-4"><span class="text-cyan-600 dark:text-cyan-400">"alwaysThinkingEnabled"</span>: <span class="text-amber-600 dark:text-amber-400">true</span></div>
+            <div class="text-slate-500 dark:text-slate-400">{"}"}</div>
           </div>
 
           <!-- Step 2: Add to Config -->
-          <h6 class="text-xs font-bold text-purple-600 dark:text-purple-400 mb-2">{t('ccs.guide.kimi_step2_title')}</h6>
+          <h5 class="text-sm font-bold text-purple-600 dark:text-purple-400 mb-2">{t('ccs.guide.kimi_step2_title')}</h5>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.kimi_step2_desc')}</p>
-          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
             <code class="text-purple-600 dark:text-purple-400">~/.ccs/config.json</code>
           </div>
-          <div class="bg-slate-900 dark:bg-black rounded-lg p-4 border border-slate-700 font-mono text-xs text-slate-300 overflow-x-auto mb-4">
-            <div class="text-slate-400">{"{"}</div>
-            <div class="ml-4"><span class="text-cyan-400">"profiles"</span>: {"{"}</div>
-            <div class="ml-8"><span class="text-cyan-400">"kimi"</span>: <span class="text-purple-400">"~/.ccs/kimi.settings.json"</span>, <span class="text-amber-400">&lt;-- {t('ccs.guide.add_this_line')}</span></div>
-            <div class="ml-8"><span class="text-cyan-400">"default"</span>: <span class="text-purple-400">"~/.claude/settings.json"</span></div>
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+            <div class="text-slate-500 dark:text-slate-400">{"{"}</div>
+            <div class="ml-4"><span class="text-cyan-600 dark:text-cyan-400">"profiles"</span>: {"{"}</div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"kimi"</span>: <span class="text-purple-600 dark:text-purple-400">"~/.ccs/kimi.settings.json"</span>, <span class="text-amber-600 dark:text-amber-400">&lt;-- {t('ccs.guide.add_this_line')}</span></div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"default"</span>: <span class="text-purple-600 dark:text-purple-400">"~/.claude/settings.json"</span></div>
             <div class="ml-4">{"}"}</div>
-            <div class="text-slate-400">{"}"}</div>
+            <div class="text-slate-500 dark:text-slate-400">{"}"}</div>
           </div>
 
           <!-- Step 3: Verification -->
-          <h6 class="text-xs font-bold text-purple-600 dark:text-purple-400 mb-2">{t('ccs.guide.kimi_verify_title')}</h6>
+          <h5 class="text-sm font-bold text-purple-600 dark:text-purple-400 mb-2">{t('ccs.guide.kimi_verify_title')}</h5>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.kimi_verify_desc')}</p>
-          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
             <code class="text-purple-600 dark:text-purple-400">ccs kimi "Which model are you using?"</code>
           </div>
-          <div class="bg-slate-900 dark:bg-black rounded-lg p-4 border border-slate-700 font-mono text-xs text-slate-300 overflow-x-auto mb-3">
-            <div class="text-slate-400 mb-2">&gt; Which model are you using?</div>
-            <div class="text-cyan-400">⏺ I'm using the <span class="text-white font-bold">Kimi K2 Thinking Turbo</span> model.</div>
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-3 shadow-sm">
+            <div class="text-slate-500 dark:text-slate-400 mb-2">&gt; Which model are you using?</div>
+            <div class="text-cyan-600 dark:text-cyan-400">⏺ I'm using the <span class="text-slate-800 dark:text-white font-bold">Kimi K2 Thinking Turbo</span> model.</div>
           </div>
           <div class="p-3 rounded-lg bg-purple-500/10 border border-purple-500/20">
             <p class="text-xs text-purple-700 dark:text-purple-300 flex items-start gap-2">
@@ -833,6 +882,8 @@ const t = useTranslations(currentLang);
       </div>
     </div>
   </div>
+
+
 
   <!-- Troubleshooting Section -->
   <div class="glass-card rounded-xl border-slate-200 dark:border-slate-700 overflow-hidden">
@@ -850,14 +901,14 @@ const t = useTranslations(currentLang);
         <!-- Issue 1 -->
         <div class="p-4 rounded-lg bg-surface-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
           <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.issue1_title')}</h4>
-          <div class="bg-white dark:bg-[#0D0D0D] rounded p-2 border border-slate-200 dark:border-slate-700 font-mono text-xs">
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-2 border border-slate-200 dark:border-slate-700 font-mono text-xs">
             <code>ccs gemini --auth --headless</code>
           </div>
         </div>
         <!-- Issue 2 -->
         <div class="p-4 rounded-lg bg-surface-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
           <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.issue2_title')}</h4>
-          <div class="bg-white dark:bg-[#0D0D0D] rounded p-2 border border-slate-200 dark:border-slate-700 font-mono text-xs space-y-1">
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-2 border border-slate-200 dark:border-slate-700 font-mono text-xs space-y-1">
             <div><code>ccs doctor</code></div>
             <div class="text-slate-500"># {t('ccs.guide.issue2_kill')}</div>
             <div><code>lsof -ti:8317 | xargs kill</code></div>
@@ -866,14 +917,14 @@ const t = useTranslations(currentLang);
         <!-- Issue 3 -->
         <div class="p-4 rounded-lg bg-surface-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
           <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.issue3_title')}</h4>
-          <div class="bg-white dark:bg-[#0D0D0D] rounded p-2 border border-slate-200 dark:border-slate-700 font-mono text-xs">
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-2 border border-slate-200 dark:border-slate-700 font-mono text-xs">
             <code>ccs glm:continue -p "next task"</code>
           </div>
         </div>
         <!-- Health Check -->
         <div class="p-4 rounded-lg bg-surface-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
           <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.health_check_title')}</h4>
-          <div class="bg-white dark:bg-[#0D0D0D] rounded p-2 border border-slate-200 dark:border-slate-700 font-mono text-xs">
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-2 border border-slate-200 dark:border-slate-700 font-mono text-xs">
             <code>ccs doctor</code>
           </div>
         </div>
@@ -931,13 +982,5 @@ const t = useTranslations(currentLang);
     </div>
   </div>
 
-  <!-- Key Takeaway -->
-  <div class="p-6 rounded-xl bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 text-center">
-    <p class="text-lg font-medium text-slate-800 dark:text-slate-200">
-      <strong class="text-amber-600 dark:text-amber-400">{t('ccs.guide.takeaway_title')}</strong>
-      <span class="block mt-2 text-base text-slate-600 dark:text-slate-400">
-        {t('ccs.guide.takeaway_desc')}
-      </span>
-    </p>
-  </div>
+
 </div>

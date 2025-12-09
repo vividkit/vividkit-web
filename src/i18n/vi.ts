@@ -685,6 +685,11 @@ export default {
   'ccs.guide.issue3_title': 'Phiên Không Tiếp Tục',
   'ccs.guide.health_check_title': 'Kiểm Tra Sức Khỏe',
 
+  // Maintenance Section
+  'ccs.guide.maintenance_title': 'Bảo Trì',
+  'ccs.guide.sync_title': 'Đồng Bộ Dữ Liệu Chia Sẻ',
+  'ccs.guide.sync_desc': 'Đồng bộ các cập nhật delegation commands và skills mới nhất từ ClaudeKit sang CCS:',
+
   // Resources Section
   'ccs.guide.resources_title': 'Tài Nguyên',
   'ccs.guide.documentation': 'Tài Liệu',

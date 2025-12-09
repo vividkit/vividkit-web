@@ -59,14 +59,14 @@ const t = useTranslations(currentLang);
         <p class="text-slate-600 dark:text-slate-400 mb-4">
           {t('resume.guide.step1.desc')}
         </p>
-        <div class="bg-slate-950 rounded-lg p-4 font-mono text-sm text-slate-300 overflow-x-auto">
-          <div class="flex items-center gap-2 mb-2 text-slate-300">
+        <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 font-mono text-sm text-slate-700 dark:text-slate-300 overflow-x-auto">
+          <div class="flex items-center gap-2 mb-2 text-slate-700 dark:text-slate-300">
             <span class="text-slate-500 select-none">$</span>
             <span class="select-all">cat ~/.claude/history.jsonl</span>
           </div>
           <div class="text-slate-500 italic">{t('resume.guide.step1.comment')}</div>
-          <div class="mt-2 text-green-400 font-mono text-xs break-all">
-            {`{"display":"/clear ","timestamp":1765163522956,"project":"...","sessionId":"`}<span class="bg-yellow-500/30 text-yellow-200 px-1 rounded">74f292c0-49fa-41c0-a2d8-dd2c3ef9c4be</span>{`"}`}
+          <div class="mt-2 text-emerald-600 dark:text-green-400 font-mono text-xs break-all">
+            {`{"display":"/clear ","timestamp":1765163522956,"project":"...","sessionId":"`}<span class="bg-yellow-500/20 text-yellow-700 dark:text-yellow-200 px-1 rounded">74f292c0-49fa-41c0-a2d8-dd2c3ef9c4be</span>{`"}`}
           </div>
         </div>
         <div class="mt-4 text-sm text-slate-500 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-lg border border-slate-200 dark:border-slate-800">
@@ -86,17 +86,17 @@ const t = useTranslations(currentLang);
       <div class="p-6">
         <p class="text-slate-600 dark:text-slate-400 mb-4" set:html={t('resume.guide.step2.desc')}>
         </p>
-        <div class="bg-slate-950 rounded-lg p-4 font-mono text-sm text-slate-300 overflow-x-auto">
-          <div class="flex items-center gap-2 mb-2 text-slate-300">
+        <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 font-mono text-sm text-slate-700 dark:text-slate-300 overflow-x-auto">
+          <div class="flex items-center gap-2 mb-2 text-slate-700 dark:text-slate-300">
             <span class="text-slate-500 select-none">$</span>
             <div>
               <span class="select-all">ccs glm</span>
               <span class="text-slate-500 ml-2">{t('resume.guide.step2.comment_start')}</span>
             </div>
           </div>
-          <div class="flex items-center gap-2 mb-2 text-slate-300">
+          <div class="flex items-center gap-2 mb-2 text-slate-700 dark:text-slate-300">
             <span class="text-slate-500 select-none">&gt;</span>
-            <span class="select-all">/resume <span class="text-yellow-400">74f292c0-49fa-41c0-a2d8-dd2c3ef9c4be</span></span>
+            <span class="select-all">/resume <span class="text-amber-600 dark:text-yellow-400">74f292c0-49fa-41c0-a2d8-dd2c3ef9c4be</span></span>
           </div>
           <div class="text-slate-500 italic pl-4 mt-2">
             {t('resume.guide.step2.comment_context')}
@@ -117,13 +117,13 @@ const t = useTranslations(currentLang);
         <p class="text-slate-600 dark:text-slate-400 mb-4">
           {t('resume.guide.step3.desc')}
         </p>
-        <div class="bg-slate-950 rounded-lg p-4 font-mono text-sm text-slate-300 overflow-x-auto">
-          <div class="flex items-center gap-2 text-slate-300">
+        <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 font-mono text-sm text-slate-700 dark:text-slate-300 overflow-x-auto">
+          <div class="flex items-center gap-2 text-slate-700 dark:text-slate-300">
             <span class="text-slate-500 select-none">&gt;</span>
             <span class="select-all">continue</span>
           </div>
-          <div class="pl-4 mt-2 border-l-2 border-slate-700">
-            <div class="text-purple-400 text-xs mb-1">GLM Model</div>
+          <div class="pl-4 mt-2 border-l-2 border-slate-200 dark:border-slate-700">
+            <div class="text-purple-600 dark:text-purple-400 text-xs mb-1">GLM Model</div>
             <p>{t('resume.guide.step3.ai_response')}</p>
           </div>
         </div>
