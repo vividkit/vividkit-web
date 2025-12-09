@@ -714,7 +714,7 @@ export default {
   'ccs.guide.glm_config_title': 'GLM Configuration',
   'ccs.guide.glm_config_desc': 'Configure GLM-4.6 via API for cost-optimized development tasks.',
   'ccs.guide.glm_update_notice': '🚀 <strong>New Update</strong>: Z.AI has introduced GLM-4.6V (8 December 2025) - the latest and most advanced model! Check the official announcement: <a href="https://z.ai/blog/glm-4.6v" class="text-emerald-600 dark:text-emerald-400 underline" target="_blank" rel="noopener noreferrer">https://z.ai/blog/glm-4.6v</a>',
-  'ccs.guide.glm_verify_note': 'If you see GLM-4.6V model in the response, the configuration works. Otherwise, recheck your settings file and API key.',
+  'ccs.guide.glm_verify_note': 'If you see GLM-4.6 model in the response, the configuration works. Otherwise, recheck your settings file and API key.',
   'ccs.guide.glm_step1_title': 'Step 1: Create Settings File',
   'ccs.guide.glm_step1_desc': 'Open or create the GLM settings file:',
   'ccs.guide.glm_add_content': 'Add the following content:',
