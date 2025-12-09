@@ -9,6 +9,28 @@ interface Props {
 const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
+
+// Code blocks for copy functionality
+const glmSettingsCode = `{
+  "alwaysThinkingEnabled": true,
+  "env": {
+    "ANTHROPIC_BASE_URL": "https://api.z.ai/api/anthropic",
+    "ANTHROPIC_AUTH_TOKEN": "<your_api_key>",
+    "ANTHROPIC_MODEL": "glm-4.6",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-4.6",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-4.6",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "glm-4.6"
+  }
+}`;
+
+const kimiSettingsCode = `{
+  "env": {
+    "ANTHROPIC_BASE_URL": "https://api.kimi.com/coding/",
+    "ANTHROPIC_AUTH_TOKEN": "<your_api_key>",
+    "ANTHROPIC_MODEL": "kimi-k2-thinking-turbo"
+  },
+  "alwaysThinkingEnabled": true
+}`;
 ---
 
 <div class="space-y-8 mt-6">
@@ -307,12 +329,31 @@ const t = useTranslations(currentLang);
             </div>
             <h4 class="font-bold text-purple-600 dark:text-purple-400">{t('ccs.guide.feature1_title')}</h4>
           </div>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs space-y-1">
-            <div><span class="text-slate-500">ccs</span> <span class="text-slate-400"># Claude</span></div>
-            <div><span class="text-slate-500">ccs glm</span> <span class="text-slate-400"># GLM-4.6</span></div>
-            <div><span class="text-slate-500">ccs kimi</span> <span class="text-slate-400"># Kimi</span></div>
-            <div><span class="text-slate-500">ccs gemini</span> <span class="text-slate-400"># Gemini 2.5 Pro</span></div>
-            <div><span class="text-slate-500">ccs codex</span> <span class="text-slate-400"># GPT-5.1 Codex Max</span></div>
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs space-y-2">
+            <div class="flex items-center justify-between">
+              <code class="text-amber-600 dark:text-amber-400 font-semibold">ccs</code>
+              <span class="text-slate-400 text-[10px]"># Claude</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <code class="text-indigo-600 dark:text-indigo-400 font-semibold">ccs agy</code>
+              <span class="text-slate-400 text-[10px]"># Antigravity</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <code class="text-emerald-600 dark:text-emerald-400 font-semibold">ccs glm</code>
+              <span class="text-slate-400 text-[10px]"># GLM-4.6</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <code class="text-purple-600 dark:text-purple-400 font-semibold">ccs kimi</code>
+              <span class="text-slate-400 text-[10px]"># Kimi</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <code class="text-blue-600 dark:text-blue-400 font-semibold">ccs gemini</code>
+              <span class="text-slate-400 text-[10px]"># Gemini 2.5 Pro</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <code class="text-cyan-600 dark:text-cyan-400 font-semibold">ccs codex</code>
+              <span class="text-slate-400 text-[10px]"># GPT-5.1 Codex Max</span>
+            </div>
           </div>
         </div>
 
@@ -762,18 +803,43 @@ const t = useTranslations(currentLang);
             <code class="text-emerald-600 dark:text-emerald-400">~/.ccs/glm.settings.json</code>
           </div>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.glm_add_content')}</p>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
-            <div class="text-slate-500 dark:text-slate-400">{"{"}</div>
-            <div class="ml-4"><span class="text-cyan-600 dark:text-cyan-400">"alwaysThinkingEnabled"</span>: <span class="text-amber-600 dark:text-amber-400">true</span>,</div>
-            <div class="ml-4"><span class="text-cyan-600 dark:text-cyan-400">"env"</span>: {"{"}</div>
-            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"ANTHROPIC_BASE_URL"</span>: <span class="text-emerald-600 dark:text-emerald-400">"https://api.z.ai/api/anthropic"</span>,</div>
-            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"ANTHROPIC_AUTH_TOKEN"</span>: <span class="text-emerald-600 dark:text-emerald-400">"&lt;your_api_key&gt;"</span>,</div>
-            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"ANTHROPIC_MODEL"</span>: <span class="text-emerald-600 dark:text-emerald-400">"glm-4.6"</span>,</div>
-            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"ANTHROPIC_DEFAULT_OPUS_MODEL"</span>: <span class="text-emerald-600 dark:text-emerald-400">"glm-4.6"</span>,</div>
-            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"ANTHROPIC_DEFAULT_SONNET_MODEL"</span>: <span class="text-emerald-600 dark:text-emerald-400">"glm-4.6"</span>,</div>
-            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"ANTHROPIC_DEFAULT_HAIKU_MODEL"</span>: <span class="text-emerald-600 dark:text-emerald-400">"glm-4.6"</span></div>
-            <div class="ml-4">{"}"}</div>
-            <div class="text-slate-500 dark:text-slate-400">{"}"}</div>
+          <div class="relative group">
+            <button
+              class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+              data-code={`{
+    "alwaysThinkingEnabled": true,
+    "env": {
+        "ANTHROPIC_BASE_URL": "https://api.z.ai/api/anthropic",
+        "ANTHROPIC_AUTH_TOKEN": "<your_api_key>",
+        "ANTHROPIC_MODEL": "glm-4.6",
+        "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-4.6",
+        "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-4.6",
+        "ANTHROPIC_DEFAULT_HAIKU_MODEL": "glm-4.6"
+    }
+}`}
+              title="Copy to clipboard"
+            >
+              <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <svg class="w-4 h-4 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </button>
+            <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+              <pre><code>{`{
+    "alwaysThinkingEnabled": true,
+    "env": {
+        "ANTHROPIC_BASE_URL": "https://api.z.ai/api/anthropic",
+        "ANTHROPIC_AUTH_TOKEN": "<your_api_key>",
+        "ANTHROPIC_MODEL": "glm-4.6",
+        "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-4.6",
+        "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-4.6",
+        "ANTHROPIC_DEFAULT_HAIKU_MODEL": "glm-4.6"
+    }
+}`}</code></pre>
+            </div>
           </div>
 
           <!-- Step 2: Add to Config -->
@@ -833,15 +899,37 @@ const t = useTranslations(currentLang);
             <code class="text-purple-600 dark:text-purple-400">~/.ccs/kimi.settings.json</code>
           </div>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.kimi_add_content')}</p>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
-            <div class="text-slate-500 dark:text-slate-400">{"{"}</div>
-            <div class="ml-4"><span class="text-cyan-600 dark:text-cyan-400">"env"</span>: {"{"}</div>
-            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"ANTHROPIC_BASE_URL"</span>: <span class="text-purple-600 dark:text-purple-400">"https://api.kimi.com/coding/"</span>,</div>
-            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"ANTHROPIC_AUTH_TOKEN"</span>: <span class="text-purple-600 dark:text-purple-400">"&lt;your_api_key&gt;"</span>,</div>
-            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"ANTHROPIC_MODEL"</span>: <span class="text-purple-600 dark:text-purple-400">"kimi-k2-thinking-turbo"</span></div>
-            <div class="ml-4">{"}"},</div>
-            <div class="ml-4"><span class="text-cyan-600 dark:text-cyan-400">"alwaysThinkingEnabled"</span>: <span class="text-amber-600 dark:text-amber-400">true</span></div>
-            <div class="text-slate-500 dark:text-slate-400">{"}"}</div>
+          <div class="relative group">
+            <button
+              class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+              data-code={`{
+    "env": {
+        "ANTHROPIC_BASE_URL": "https://api.kimi.com/coding/",
+        "ANTHROPIC_AUTH_TOKEN": "<your_api_key>",
+        "ANTHROPIC_MODEL": "kimi-k2-thinking-turbo"
+    },
+    "alwaysThinkingEnabled": true
+}`}
+              title="Copy to clipboard"
+            >
+              <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <svg class="w-4 h-4 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </button>
+            <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+              <pre><code>{`{
+    "env": {
+        "ANTHROPIC_BASE_URL": "https://api.kimi.com/coding/",
+        "ANTHROPIC_AUTH_TOKEN": "<your_api_key>",
+        "ANTHROPIC_MODEL": "kimi-k2-thinking-turbo"
+    },
+    "alwaysThinkingEnabled": true
+}`}</code></pre>
+            </div>
           </div>
 
           <!-- Step 2: Add to Config -->
@@ -984,3 +1072,33 @@ const t = useTranslations(currentLang);
 
 
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const code = btn.getAttribute('data-code');
+        if (!code) return;
+
+        try {
+          await navigator.clipboard.writeText(code);
+
+          // Show check icon
+          const copyIcon = btn.querySelector('.copy-icon');
+          const checkIcon = btn.querySelector('.check-icon');
+
+          copyIcon?.classList.add('hidden');
+          checkIcon?.classList.remove('hidden');
+
+          // Reset after 2 seconds
+          setTimeout(() => {
+            copyIcon?.classList.remove('hidden');
+            checkIcon?.classList.add('hidden');
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy:', err);
+        }
+      });
+    });
+  });
+</script>

@@ -5,6 +5,59 @@ import { getLangFromUrl, type Language } from '@/i18n';
 const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
+
+const option1Code = `{
+  "permissions": {
+    "defaultMode": "bypassPermissions"
+  }
+}`;
+
+const option2Code = `{
+  "permissions": {
+    "allow": [
+      "Bash(*)",
+      "Read(*)",
+      "Write(*)"
+    ],
+    "deny": [
+      "Bash(rm ~/)",
+      "Bash(rm /)",
+      "Bash(rm -rf /:*)",
+      "Bash(rm -rf ~:*)",
+      "Bash(sudo rm -rf *:*)",
+      "Bash(shred:*)",
+      "Bash(dd if=/dev/zero of=/dev/sd*:*)",
+      "Bash(dd if=/dev/zero of=/dev/disk*:*)",
+      "Bash(mkfs.*:*)",
+      "Bash(fdisk:*)",
+      "Bash(parted:*)",
+      "Bash(diskutil eraseDisk:*)",
+      "Bash(chown -R /:*)",
+      "Bash(chmod -R 0 /:*)",
+      "Bash(shutdown:*)",
+      "Bash(reboot:*)",
+      "Bash(systemctl poweroff:*)",
+      "Bash(kill -9:*)",
+      "Bash(killall:*)",
+      "Bash(git reset --hard:*)",
+      "Bash(git clean -fdx:*)",
+      "Bash(git push --force:*)",
+      "Bash(git push origin --delete:*)",
+      "Bash(docker system prune -af:*)",
+      "Bash(docker volume rm -f *:*)",
+      "Bash(prisma db push)",
+      "Bash(npx prisma db push)",
+      "Bash(prisma migrate reset:*)",
+      "Bash(npm run db:push)",
+      "Bash(bun run db:push)",
+      "Bash(pnpm run db:push)",
+      "Bash(npm publish:*)",
+      "Bash(pnpm publish:*)",
+      "Bash(curl*|*sh:*)",
+      "Bash(wget*|*sh:*)"
+    ]
+  }
+}`;
 ---
 
 <div class="space-y-8 mt-6">
@@ -52,12 +105,23 @@ const t = useTranslations(currentLang);
         <div class="mb-2 text-xs font-mono text-slate-500 dark:text-slate-400">
           File: <code class="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">.claude/settings.local.json</code>
         </div>
-        <div class="bg-slate-50 dark:bg-slate-950 rounded-lg p-4 font-mono text-sm text-slate-800 dark:text-slate-300 overflow-x-auto border border-slate-200 dark:border-slate-800">
-          <pre><code>{`{
-  "permissions": {
-    "defaultMode": "bypassPermissions"
-  }
-}`}</code></pre>
+        <div class="relative group">
+          <button
+            class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+            data-code={option1Code}
+            title="Copy to clipboard"
+          >
+            <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <svg class="w-4 h-4 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <div class="bg-slate-50 dark:bg-slate-950 rounded-lg p-4 font-mono text-sm text-slate-800 dark:text-slate-300 overflow-x-auto border border-slate-200 dark:border-slate-800">
+            <pre><code>{option1Code}</code></pre>
+          </div>
         </div>
 
         <div class="mt-4 p-3 bg-red-500/10 rounded-lg border border-red-200 dark:border-red-500/20">
@@ -93,43 +157,23 @@ const t = useTranslations(currentLang);
         <div class="mb-2 text-xs font-mono text-slate-500 dark:text-slate-400">
           File: <code class="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">.claude/settings.local.json</code>
         </div>
-        <div class="bg-slate-50 dark:bg-slate-950 rounded-lg p-4 font-mono text-sm text-slate-800 dark:text-slate-300 overflow-x-auto border border-slate-200 dark:border-slate-800">
-<pre><code>{`{
-  "permissions": {
-    "allow": [
-      "Bash(npm run lint)",
-      "Bash(npm run test:*)",
-      "Read(~/.zshrc)"
-    ],
-    "deny": [
-      "Bash(rm ~/)",
-      "Bash(rm /)",
-      "Bash(prisma db push)",
-      "Bash(npx prisma db push)",
-      "Bash(npm run db:push)",
-      "Bash(bun run db:push)",
-      "Bash(pnpm run db:push)",
-      "Bash(rm -rf /:*)",
-      "Bash(rm -rf ~:*)",
-      "Bash(sudo rm -rf *:*)",
-      "Bash(dd if=/dev/zero of=/dev/sd*:*)",
-      "Bash(mkfs.*:*)",
-      "Bash(fdisk:*)",
-      "Bash(parted:*)",
-      "Bash(chown -R /:*)",
-      "Bash(chmod -R 0 /:*)",
-      "Bash(shutdown:*)",
-      "Bash(reboot:*)",
-      "Bash(systemctl poweroff:*)",
-      "Bash(git reset --hard:*)",
-      "Bash(git clean -fdx:*)",
-      "Bash(git push --force:*)",
-      "Bash(docker system prune -af:*)",
-      "Bash(docker volume rm -f *:*)",
-      "Bash(prisma migrate reset:*)"
-    ]
-  }
-}`}</code></pre>
+        <div class="relative group">
+          <button
+            class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+            data-code={option2Code}
+            title="Copy to clipboard"
+          >
+            <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <svg class="w-4 h-4 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <div class="bg-slate-50 dark:bg-slate-950 rounded-lg p-4 font-mono text-sm text-slate-800 dark:text-slate-300 overflow-x-auto border border-slate-200 dark:border-slate-800">
+            <pre><code>{option2Code}</code></pre>
+          </div>
         </div>
         <p class="mt-4 text-sm text-slate-600 dark:text-slate-400">
           {t('permissions.guide.option2.explanation')}
@@ -142,7 +186,7 @@ const t = useTranslations(currentLang);
   <div class="text-center pt-8 border-t border-slate-200 dark:border-slate-800">
     <p class="text-slate-600 dark:text-slate-400 text-sm">
       {t('permissions.guide.docs.text')}
-      <a href="https://code.claude.com/docs/en/settings#permission-settings" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline font-medium inline-flex items-center gap-1">
+      <a href="https://docs.anthropic.com/en/docs/claude-code/settings#permissions" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline font-medium inline-flex items-center gap-1">
         {t('permissions.guide.docs.link')}
         <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
@@ -152,4 +196,35 @@ const t = useTranslations(currentLang);
       </a>
     </p>
   </div>
+
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const code = btn.getAttribute('data-code');
+        if (!code) return;
+
+        try {
+          await navigator.clipboard.writeText(code);
+
+          // Show check icon
+          const copyIcon = btn.querySelector('.copy-icon');
+          const checkIcon = btn.querySelector('.check-icon');
+
+          copyIcon?.classList.add('hidden');
+          checkIcon?.classList.remove('hidden');
+
+          // Reset after 2 seconds
+          setTimeout(() => {
+            copyIcon?.classList.remove('hidden');
+            checkIcon?.classList.add('hidden');
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy:', err);
+        }
+      });
+    });
+  });
+</script>

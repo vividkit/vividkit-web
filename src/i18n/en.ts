@@ -348,8 +348,8 @@ export default {
   'guides.uiux.description': 'Design and implementation guidelines',
   'guides.ccs.title': 'Accounts Switcher',
   'guides.ccs.description': 'Building custom components and skills',
-  'guides.permissions.title': 'Permissions',
-  'guides.permissions.description': 'Security and access control',
+  'guides.permissions.title': 'YOLO Mode',
+  'guides.permissions.description': 'Auto-run commands without prompts',
   'guides.fix_logs.title': 'Fix Logs Guide',
   'guides.fix_logs.description': 'Debugging and error resolution',
   'guides.resume.title': 'Resume Guide',
@@ -964,7 +964,7 @@ export default {
   'fix_logs.guide.step3.note': 'Analyzes logs.txt & fixes errors!',
 
   // Permissions Guide
-  'permissions.guide.title': 'Permissions & Security',
+  'permissions.guide.title': 'YOLO Mode',
   'permissions.guide.subtitle': 'Configure Claude Code to run tools automatically without constant prompting.',
   'permissions.guide.warning.title': 'Power User Feature',
   'permissions.guide.warning.text': 'These settings allow Claude to execute commands on your machine without your explicit approval for every step.',
@@ -974,9 +974,9 @@ export default {
   'permissions.guide.option1.critical.title': 'CRITICAL WARNING',
   'permissions.guide.option1.critical.text': 'This gives the AI full autonomy. In rare cases, it could theoretically run destructive commands like <code>rm -rf ...</code> if it hallucinates or misinterprets a task.',
   'permissions.guide.option1.critical.advice': 'Only use this in isolated environments or if you have good backups (git).',
-  'permissions.guide.option2.title': 'Safer Approach (Allow/Deny Lists)',
-  'permissions.guide.option2.desc': 'Explicitly define which commands are safe to run and which should be blocked or prompt for approval.',
-  'permissions.guide.option2.explanation': 'This configuration allows linting and testing to run automatically, but strictly blocks access to environment files and secrets.',
+  'permissions.guide.option2.title': 'Recommended Configuration (Safer Approach)',
+  'permissions.guide.option2.desc': 'Allow all commands by default, but block dangerous operations that could cause irreversible damage.',
+  'permissions.guide.option2.explanation': 'This configuration uses wildcards to allow all Bash, Read, and Write operations, while the deny list blocks destructive commands like database drops, force pushes, and system modifications.',
   'permissions.guide.docs.text': 'For comprehensive documentation on permission scopes and syntax, visit the',
   'permissions.guide.docs.link': 'Official Claude Code Documentation',
 } as const;

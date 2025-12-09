@@ -130,8 +130,8 @@ export default {
   'guides.uiux.description': 'Tạo giao diện đẹp với AI',
   'guides.ccs.title': 'Chuyển Đổi Tài Khoản',
   'guides.ccs.description': 'Tiết kiệm chi phí với CCS',
-  'guides.permissions.title': 'Quyền Truy Cập',
-  'guides.permissions.description': 'Cấu hình bảo mật và quyền hạn',
+  'guides.permissions.title': 'Chế Độ YOLO',
+  'guides.permissions.description': 'Tự động chạy lệnh không cần xác nhận',
   'guides.fix_logs.title': 'Sửa Lỗi Từ Log',
   'guides.fix_logs.description': 'Debug và xử lý lỗi nhanh chóng',
   'guides.resume.title': 'Tiếp Tục Phiên',
@@ -970,7 +970,7 @@ export default {
   'fix_logs.guide.step3.note': 'Phân tích logs.txt & sửa lỗi!',
 
   // Permissions Guide
-  'permissions.guide.title': 'Quyền & Bảo Mật',
+  'permissions.guide.title': 'Chế Độ YOLO',
   'permissions.guide.subtitle': 'Cấu hình Claude Code để chạy công cụ tự động mà không cần nhắc nhở liên tục.',
   'permissions.guide.warning.title': 'Tính Năng Cho Power User',
   'permissions.guide.warning.text': 'Các cài đặt này cho phép Claude thực thi lệnh trên máy của bạn mà không cần sự chấp thuận rõ ràng của bạn cho mỗi bước.',
@@ -980,9 +980,9 @@ export default {
   'permissions.guide.option1.critical.title': 'CẢNH BÁO',
   'permissions.guide.option1.critical.text': 'Điều này trao cho AI quyền tự chủ hoàn toàn. Trong trường hợp hiếm hoi, nó có thể chạy các lệnh phá hủy như <code>rm -rf ...</code> nếu nó bị ảo giác hoặc hiểu sai tác vụ.',
   'permissions.guide.option1.critical.advice': 'Chỉ làm điều này trong các môi trường cô lập hoặc nếu bạn có bản sao lưu tốt (git).',
-  'permissions.guide.option2.title': 'Cách An Toàn Hơn (Danh sách Allow/Deny)',
-  'permissions.guide.option2.desc': 'Xác định rõ ràng lệnh nào an toàn để chạy và lệnh nào nên bị chặn hoặc nhắc chấp thuận.',
-  'permissions.guide.option2.explanation': 'Cấu hình này cho phép linting và testing chạy tự động, nhưng chặn truy cập vào các file môi trường và bí mật một cách nghiêm ngặt.',
+  'permissions.guide.option2.title': 'Cấu Hình Được Đề Xuất (Cách An Toàn Hơn)',
+  'permissions.guide.option2.desc': 'Cho phép tất cả lệnh theo mặc định, nhưng chặn các thao tác nguy hiểm có thể gây thiệt hại không thể khôi phục.',
+  'permissions.guide.option2.explanation': 'Cấu hình này sử dụng wildcard để cho phép tất cả thao tác Bash, Read và Write, trong khi danh sách deny chặn các lệnh phá hủy như xóa database, force push và thay đổi hệ thống.',
   'permissions.guide.docs.text': 'Để xem tài liệu đầy đủ về phạm vi quyền và cú pháp, hãy truy cập',
   'permissions.guide.docs.link': 'Tài liệu Chính thức của Claude Code',
 } as const;
