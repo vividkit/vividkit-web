@@ -297,9 +297,9 @@ export default {
   'cli.guide.tip1_title': 'Sử Dụng Dấu Ngoặc Kép cho Yêu Cầu Nhiều Từ',
   'cli.guide.tip1_description': 'Luôn bọc yêu cầu của bạn trong dấu ngoặc kép: "yêu cầu của bạn ở đây"',
   'cli.guide.tip2_title': 'Chế Độ Tương Tác = Tốt Hơn cho Việc Lặp Lại',
-  'cli.guide.tip2_description': 'Sử dụng ccs không có đối số để tinh chỉnh qua lại',
+  'cli.guide.tip2_description': 'Sử dụng <code class="font-mono text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-900/20 px-1 rounded">ccs</code> không có đối số để tinh chỉnh qua lại',
   'cli.guide.tip3_title': 'Tham Chiếu File với @',
-  'cli.guide.tip3_description': 'Sử dụng @tên_file để cho AI biết những file nào cần sửa đổi',
+  'cli.guide.tip3_description': 'Sử dụng <code class="font-mono text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 px-1 rounded">@tên_file</code> để cho AI biết những file nào cần sửa đổi',
   'cli.guide.tip4_title': 'Luôn Sử Dụng "Using ui-ux-pro-max skill"',
   'cli.guide.tip4_description': 'Điều này kích hoạt hệ thống thiết kế thông minh để có kết quả chuyên nghiệp',
 
@@ -350,7 +350,7 @@ export default {
   'cli.step.interactive_comment': '# Chế độ tương tác - làm theo hướng dẫn',
   'cli.step.creates_dir_comment': '# Tạo thư mục .claude/ chứa các file ClaudeKit',
   'cli.step.choose_setup': '💡 Chọn Cách Thiết Lập:',
-  'cli.step.two_options': 'Khi chạy `ck init`, bạn sẽ thấy hai tùy chọn:',
+  'cli.step.two_options': 'Khi chạy <code class="font-mono text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 px-1 rounded">ck init</code>, bạn sẽ thấy hai tùy chọn:',
   'cli.step.global_option': 'Global (Khuyên dùng):',
   'cli.step.global_desc': 'Cài đặt cho tài khoản người dùng của bạn. Hoạt động mọi nơi.',
   'cli.step.local_option': 'Local:',
@@ -366,9 +366,9 @@ export default {
 
   // CLI Guide Updates & CCS
   'cli.update.tool_title': 'Cập Nhật Công Cụ CLI',
-  'cli.update.tool_desc': 'Đảm bảo `claudekit-cli` của bạn có các tính năng và bản sửa lỗi mới nhất.',
+  'cli.update.tool_desc': 'Đảm bảo <code class="font-mono text-emerald-600 dark:text-emerald-400 font-medium">claudekit-cli</code> của bạn có các tính năng và bản sửa lỗi mới nhất.',
   'cli.update.kit_title': 'Cập Nhật Engineer Kit',
-  'cli.update.kit_desc': 'Cập nhật bộ kit `engineer` để lấy các prompt và khả năng AI mới nhất.',
+  'cli.update.kit_desc': 'Cập nhật bộ kit <code class="font-mono text-teal-600 dark:text-teal-400 font-medium">engineer</code> để lấy các prompt và khả năng AI mới nhất.',
   'cli.update.global_flag': 'Hoặc qua cờ global:',
   'cli.ccs.power_tool': 'CÔNG CỤ MẠNH MẼ',
   'cli.ccs.save_costs': 'Tiết kiệm ~80% chi phí',
@@ -854,7 +854,7 @@ export default {
   'commands.journey.step2.item2': 'Hướng dẫn từng bước',
   'commands.journey.step2.item3': 'Cách kiểm tra mọi thứ hoạt động',
   'commands.journey.step2.tip_title': 'Mẹo Ngữ Cảnh Quan Trọng:',
-  'commands.journey.step2.tip_desc': 'Chạy `/clear` trước khi bắt đầu xây dựng để đảm bảo AI chỉ tập trung vào kế hoạch đã được phê duyệt.',
+  'commands.journey.step2.tip_desc': 'Chạy <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono text-xs">/clear</code> trước khi bắt đầu xây dựng để đảm bảo AI chỉ tập trung vào kế hoạch đã được phê duyệt.',
 
   'commands.journey.step3.title': 'AI Xây Dựng Nó!',
   'commands.journey.step3.desc': 'Ngồi lại và xem AI viết code, kiểm tra nó và làm cho nó hoàn hảo!',
@@ -865,7 +865,7 @@ export default {
   'commands.journey.step3.auto_item3': 'Xem xét chất lượng code',
 
   'commands.pro_tip.title': 'Mẹo Pro: Bỏ Qua Các Bước Với /cook',
-  'commands.pro_tip.desc': 'Muốn nhanh hơn nữa? Sử dụng `/cook` để thực hiện cả 3 bước cùng một lúc!',
+  'commands.pro_tip.desc': 'Muốn nhanh hơn nữa? Sử dụng <code class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-600 dark:text-amber-400 font-mono text-sm border border-amber-500/30">/cook</code> để thực hiện cả 3 bước cùng một lúc!',
   'commands.pro_tip.example': '→ AI brainstorms, lên kế hoạch và triển khai mọi thứ tự động! 🚀',
 
   // Categories & Tips
@@ -875,9 +875,9 @@ export default {
   'commands.tips.1.title': 'Nói Chuyện Như Con Người',
   'commands.tips.1.desc': 'Không cần thuật ngữ kỹ thuật! Giải thích những gì bạn muốn bằng ngôn ngữ đơn giản. AI hiểu bạn!',
   'commands.tips.2.title': 'Sử Dụng @ Để Tham Chiếu File',
-  'commands.tips.2.desc': 'Gõ `@filename` để cho AI biết file nào cần làm việc',
+  'commands.tips.2.desc': 'Gõ <code class="px-1.5 py-0.5 rounded bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-mono text-xs">@filename</code> để cho AI biết file nào cần làm việc',
   'commands.tips.3.title': 'Bắt Đầu Nhỏ',
-  'commands.tips.3.desc': 'Bắt đầu với các lệnh đơn giản như `/ask` hoặc `/brainstorm` để làm quen',
+  'commands.tips.3.desc': 'Bắt đầu với các lệnh đơn giản như <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono text-xs">/ask</code> hoặc <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono text-xs">/brainstorm</code> để làm quen',
   'commands.tips.4.title': 'Đừng Ngại Thử Nghiệm',
   'commands.tips.4.desc': 'AI giúp bạn học hỏi khi bạn làm. Thử các lệnh khác nhau và xem điều gì xảy ra!',
 

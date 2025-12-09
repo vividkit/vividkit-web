@@ -352,7 +352,7 @@ const t = useTranslations(currentLang);
           <div class="mt-3 p-3 bg-blue-500/10 rounded border border-blue-500/20">
             <div class="text-xs text-blue-600 dark:text-blue-400 mb-2 font-medium">{t('cli.step.choose_setup')}</div>
             <div class="text-xs text-slate-600 dark:text-slate-400 space-y-1">
-              <div>{t('cli.step.two_options')}</div>
+              <div set:html={t('cli.step.two_options')}></div>
               <ul class="list-disc pl-4 space-y-1 mt-1">
                 <li><strong>{t('cli.step.global_option')}</strong> {t('cli.step.global_desc')}</li>
                 <li><strong>{t('cli.step.local_option')}</strong> {t('cli.step.local_desc')}</li>
@@ -439,8 +439,7 @@ const t = useTranslations(currentLang);
               <span>ck update</span>
             </div>
           </div>
-          <p class="text-xs text-slate-500 dark:text-slate-400">
-            {t('cli.update.tool_desc')}
+          <p class="text-xs text-slate-500 dark:text-slate-400" set:html={t('cli.update.tool_desc')}>
           </p>
         </div>
       </div>
@@ -466,8 +465,7 @@ const t = useTranslations(currentLang);
                 </div>
              </div>
           </div>
-          <p class="text-xs text-slate-500 dark:text-slate-400">
-            {t('cli.update.kit_desc')}
+          <p class="text-xs text-slate-500 dark:text-slate-400" set:html={t('cli.update.kit_desc')}>
           </p>
         </div>
       </div>
@@ -533,7 +531,8 @@ const t = useTranslations(currentLang);
         </svg>
         <div>
           <div class="text-sm font-medium text-slate-800 dark:text-slate-200 mb-1">{t('cli.guide.tip2_title')}</div>
-          <div class="text-xs text-slate-600 dark:text-slate-400">{t('cli.guide.tip2_description')}</div>
+          <div class="text-xs text-slate-600 dark:text-slate-400" set:html={t('cli.guide.tip2_description')}>
+          </div>
         </div>
       </div>
 
@@ -544,7 +543,8 @@ const t = useTranslations(currentLang);
         </svg>
         <div>
           <div class="text-sm font-medium text-slate-800 dark:text-slate-200 mb-1">{t('cli.guide.tip3_title')}</div>
-          <div class="text-xs text-slate-600 dark:text-slate-400">{t('cli.guide.tip3_description')}</div>
+          <div class="text-xs text-slate-600 dark:text-slate-400" set:html={t('cli.guide.tip3_description')}>
+          </div>
         </div>
       </div>
 

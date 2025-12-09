@@ -468,9 +468,9 @@ export default {
   'cli.guide.tip1_title': 'Use Quotes for Multi-word Requests',
   'cli.guide.tip1_description': 'Always wrap your requests in double quotes: "your request here"',
   'cli.guide.tip2_title': 'Interactive Mode = Better Iteration',
-  'cli.guide.tip2_description': 'Use `ccs` without arguments for back-and-forth refinement',
+  'cli.guide.tip2_description': 'Use <code class="font-mono text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-900/20 px-1 rounded">ccs</code> without arguments for back-and-forth refinement',
   'cli.guide.tip3_title': 'Reference Files with @',
-  'cli.guide.tip3_description': 'Use `@filename` to tell AI which files to modify',
+  'cli.guide.tip3_description': 'Use <code class="font-mono text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 px-1 rounded">@filename</code> to tell AI which files to modify',
   'cli.guide.tip4_title': 'Always Use "Using ui-ux-pro-max skill"',
   'cli.guide.tip4_description': 'This activates the design intelligence system for professional results',
 
@@ -521,7 +521,7 @@ export default {
   'cli.step.interactive_comment': '# Interactive mode - follow the prompts',
   'cli.step.creates_dir_comment': '# This creates .claude/ directory with ClaudeKit files',
   'cli.step.choose_setup': '💡 Choose Your Setup:',
-  'cli.step.two_options': 'When running `ck init`, you\'ll see two options:',
+  'cli.step.two_options': 'When running <code class="font-mono text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 px-1 rounded">ck init</code>, you\'ll see two options:',
   'cli.step.global_option': 'Global (Recommended):',
   'cli.step.global_desc': 'Installs for your user account. Works everywhere.',
   'cli.step.local_option': 'Local:',
@@ -537,9 +537,9 @@ export default {
 
   // CLI Guide Updates & CCS
   'cli.update.tool_title': 'Update CLI Tool',
-  'cli.update.tool_desc': 'Ensures your `claudekit-cli` has the latest features and bug fixes.',
+  'cli.update.tool_desc': 'Ensures your <code class="font-mono text-emerald-600 dark:text-emerald-400 font-medium">claudekit-cli</code> has the latest features and bug fixes.',
   'cli.update.kit_title': 'Update Engineer Kit',
-  'cli.update.kit_desc': 'Updates the `engineer` kit to fetch the latest AI prompts and capabilities.',
+  'cli.update.kit_desc': 'Updates the <code class="font-mono text-teal-600 dark:text-teal-400 font-medium">engineer</code> kit to fetch the latest AI prompts and capabilities.',
   'cli.update.global_flag': 'Or via global flag:',
   'cli.ccs.power_tool': 'POWER TOOL',
   'cli.ccs.save_costs': 'Save ~80% costs',
@@ -847,7 +847,7 @@ export default {
   'commands.journey.step2.item2': 'Step-by-step instructions',
   'commands.journey.step2.item3': 'How to test everything works',
   'commands.journey.step2.tip_title': 'Important Context Tip:',
-  'commands.journey.step2.tip_desc': 'Run `/clear` before starting the build to ensure the AI focuses only on the approved plan.',
+  'commands.journey.step2.tip_desc': 'Run <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono text-xs">/clear</code> before starting the build to ensure the AI focuses only on the approved plan.',
 
   'commands.journey.step3.title': 'AI Builds It!',
   'commands.journey.step3.desc': 'Sit back and watch AI write the code, test it, and make it perfect!',
@@ -858,7 +858,7 @@ export default {
   'commands.journey.step3.auto_item3': 'Reviews code quality',
 
   'commands.pro_tip.title': 'Pro Tip: Skip Steps with /cook',
-  'commands.pro_tip.desc': 'Want it even faster? Use `/cook` to do all 3 steps at once!',
+  'commands.pro_tip.desc': 'Want it even faster? Use <code class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-600 dark:text-amber-400 font-mono text-sm border border-amber-500/30">/cook</code> to do all 3 steps at once!',
   'commands.pro_tip.example': '→ AI brainstorms, plans, and implements everything automatically! 🚀',
 
   // Categories & Tips
@@ -868,9 +868,9 @@ export default {
   'commands.tips.1.title': 'Talk Like a Human',
   'commands.tips.1.desc': 'No need for technical jargon! Explain what you want in plain English. AI understands you!',
   'commands.tips.2.title': 'Use @ to Reference Files',
-  'commands.tips.2.desc': 'Type `@filename` to tell AI which files to work with',
+  'commands.tips.2.desc': 'Type <code class="px-1.5 py-0.5 rounded bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-mono text-xs">@filename</code> to tell AI which files to work with',
   'commands.tips.3.title': 'Start Small',
-  'commands.tips.3.desc': 'Begin with simple commands like `/ask` or `/brainstorm` to get comfortable',
+  'commands.tips.3.desc': 'Begin with simple commands like <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono text-xs">/ask</code> or <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono text-xs">/brainstorm</code> to get comfortable',
   'commands.tips.4.title': 'Don\'t Be Afraid to Experiment',
   'commands.tips.4.desc': 'AI helps you learn as you go. Try different commands and see what happens!',
 
