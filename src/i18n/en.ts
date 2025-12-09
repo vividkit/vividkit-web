@@ -678,6 +678,11 @@ export default {
   'ccs.guide.issue3_title': 'Session Not Continuing',
   'ccs.guide.health_check_title': 'Health Check',
 
+  // Maintenance Section
+  'ccs.guide.maintenance_title': 'Maintenance',
+  'ccs.guide.sync_title': 'Sync Shared Data',
+  'ccs.guide.sync_desc': 'Sync latest delegation commands and skills from ClaudeKit to CCS:',
+
   // Resources Section
   'ccs.guide.resources_title': 'Resources',
   'ccs.guide.documentation': 'Documentation',
