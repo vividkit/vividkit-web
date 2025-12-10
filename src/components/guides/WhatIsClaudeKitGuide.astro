@@ -1,0 +1,435 @@
+---
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+import { SITE_CONFIG } from '@/data/constants';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+// Language-specific image suffixes and URLs
+const imgSuffix = currentLang === 'vi' ? '-vi' : '';
+const workflowsUrl = currentLang === 'vi' ? '/vi/guides/workflows' : '/guides/workflows';
+
+// SVG Icons as template literals
+const icons = {
+  rocket: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" /></svg>`,
+  home: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>`,
+  users: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" /></svg>`,
+  bolt: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>`,
+  brain: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" /></svg>`,
+  arrow_path: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" /></svg>`,
+  link: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" /></svg>`,
+  building: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" /></svg>`,
+  cog: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12a7.5 7.5 0 0015 0m-15 0a7.5 7.5 0 1115 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.457 3.077l1.41-.513m14.095-5.13l1.41-.513M5.106 17.785l1.15-.964m11.49-9.642l1.149-.964M7.501 19.795l.75-1.3m7.5-12.99l.75-1.3m-6.063 16.658l.26-1.477m2.605-14.772l.26-1.477m0 17.726l-.26-1.477M10.698 4.614l-.26-1.477M16.5 19.794l-.75-1.299M7.5 4.205L12 12m6.894 5.785l-1.149-.964M6.256 7.178l-1.15-.964m15.352 8.864l-1.41-.513M4.954 9.435l-1.41-.514M12.002 12l-3.75 6.495" /></svg>`,
+  scale: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971z" /></svg>`,
+  clipboard: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" /></svg>`,
+  // Metaphor icons
+  compass: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 0v4m0 12v4M2 12h4m12 0h4m-5.636-6.364l-2.829 2.829m-2.071 2.071l-2.829 2.829m8.485 0l-2.829-2.829m-2.071-2.071l-2.829-2.829" /></svg>`,
+  paint: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" /></svg>`,
+  hammer: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 01.607 6.364M10.75 8.478l6.364-6.364a2.032 2.032 0 012.873 2.873l-6.364 6.364" /></svg>`,
+  magnify: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>`,
+  wrench: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75a4.5 4.5 0 01-4.884 4.484c-1.076-.091-2.264.071-2.95.904l-7.152 8.684a2.548 2.548 0 11-3.586-3.586l8.684-7.152c.833-.686.995-1.874.904-2.95a4.5 4.5 0 016.336-4.486l-3.276 3.276a3.004 3.004 0 002.25 2.25l3.276-3.276c.256.565.398 1.192.398 1.852z" /></svg>`,
+  // Process icons
+  keyboard: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z" /></svg>`,
+  light_bulb: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" /></svg>`,
+  cpu: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25zm.75-12h9v9h-9v-9z" /></svg>`,
+  check_badge: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" /></svg>`,
+  // Comparison icons
+  x_mark: `<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>`,
+  check: `<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>`,
+  arrow_right: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>`,
+  arrow_link: `<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>`,
+  // Quick start icons
+  academic: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" /></svg>`,
+  code_bracket: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" /></svg>`,
+  // Info icon
+  info: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg>`,
+};
+
+const pillars = [
+  { key: 'agents', icon: icons.users, color: 'purple' },
+  { key: 'commands', icon: icons.bolt, color: 'blue' },
+  { key: 'skills', icon: icons.brain, color: 'emerald' },
+  { key: 'workflows', icon: icons.arrow_path, color: 'amber' },
+  { key: 'hooks', icon: icons.link, color: 'rose' },
+];
+
+const processSteps = [
+  { step: 1, icon: icons.keyboard, color: 'blue' },
+  { step: 2, icon: icons.light_bulb, color: 'purple' },
+  { step: 3, icon: icons.cpu, color: 'emerald' },
+  { step: 4, icon: icons.check_badge, color: 'amber' },
+];
+
+const metaphorItems = [
+  { icon: icons.compass, key: 'architect', color: 'blue' },
+  { icon: icons.paint, key: 'designer', color: 'fuchsia' },
+  { icon: icons.hammer, key: 'builder', color: 'amber' },
+  { icon: icons.magnify, key: 'inspector', color: 'emerald' },
+  { icon: icons.wrench, key: 'maintenance', color: 'violet' },
+];
+
+const beginnerCommands = [
+  { cmd: '/ask', desc: 'Get answers to any question' },
+  { cmd: '/brainstorm', desc: 'Explore ideas together' },
+  { cmd: '/fix', desc: 'Fix errors automatically' },
+];
+
+const buildingCommands = [
+  { cmd: '/plan', desc: 'Create step-by-step plans' },
+  { cmd: '/code', desc: 'Implement your plans' },
+  { cmd: '/cook', desc: 'All-in-one feature builder' },
+];
+
+const gitCommands = [
+  { cmd: '/git:cm', desc: 'Smart commit messages' },
+  { cmd: '/git:pr', desc: 'Create pull requests' },
+  { cmd: '/docs:update', desc: 'Update documentation' },
+];
+
+const summaryItems = [
+  { icon: icons.users, label: 'Agents' },
+  { icon: icons.bolt, label: 'Commands' },
+  { icon: icons.brain, label: 'Skills' },
+  { icon: icons.arrow_path, label: 'Workflows' },
+  { icon: icons.link, label: 'Hooks' },
+];
+
+const comparisonItems = [
+  { without: t('guides.what_is_claudekit.compare_1_without'), with: t('guides.what_is_claudekit.compare_1_with') },
+  { without: t('guides.what_is_claudekit.compare_2_without'), with: t('guides.what_is_claudekit.compare_2_with') },
+  { without: t('guides.what_is_claudekit.compare_3_without'), with: t('guides.what_is_claudekit.compare_3_with') },
+  { without: t('guides.what_is_claudekit.compare_4_without'), with: t('guides.what_is_claudekit.compare_4_with') },
+  { without: t('guides.what_is_claudekit.compare_5_without'), with: t('guides.what_is_claudekit.compare_5_with') },
+];
+---
+
+<div class="space-y-8 mt-6">
+
+  <!-- Page Header -->
+  <div class="text-center space-y-4">
+    <h2 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
+      {t('guides.what_is_claudekit.intro_title')}
+    </h2>
+    <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+      {t('guides.what_is_claudekit.subtitle')}
+    </p>
+  </div>
+
+  <!-- Introduction Banner -->
+  <div class="flex items-start gap-4 p-6 rounded-xl bg-gradient-to-br from-purple-500/5 to-blue-500/5 dark:from-purple-500/10 dark:to-blue-500/10 border border-purple-200 dark:border-purple-500/20">
+    <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-100 dark:bg-purple-500/20 flex items-center justify-center text-purple-600 dark:text-purple-400">
+      <Fragment set:html={icons.rocket} />
+    </div>
+    <div class="flex-1">
+      <div class="font-bold text-purple-700 dark:text-purple-400 mb-2 text-lg">{t('guides.what_is_claudekit.intro_title')}</div>
+      <div class="text-slate-600 dark:text-slate-400 leading-relaxed" set:html={t('guides.what_is_claudekit.intro_desc')}>
+      </div>
+    </div>
+  </div>
+
+  <!-- House Building Metaphor -->
+  <div class="glass-card rounded-2xl overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border-b border-slate-200 dark:border-slate-800">
+      <h3 class="text-2xl font-bold text-amber-600 dark:text-amber-400 flex items-center gap-3">
+        <span class="text-amber-600 dark:text-amber-400"><Fragment set:html={icons.home} /></span>
+        {t('guides.what_is_claudekit.metaphor_title')}
+      </h3>
+    </div>
+    <div class="p-6 space-y-4">
+      <p class="text-slate-600 dark:text-slate-400">{t('guides.what_is_claudekit.metaphor_desc')}</p>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        {metaphorItems.map((item) => (
+          <div class="flex items-center gap-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+            <div class={`w-8 h-8 rounded-lg bg-${item.color}-100 dark:bg-${item.color}-500/20 flex items-center justify-center text-${item.color}-600 dark:text-${item.color}-400`}>
+              <Fragment set:html={item.icon} />
+            </div>
+            <span class="text-slate-700 dark:text-slate-300 text-sm" set:html={t(`guides.what_is_claudekit.metaphor_${item.key}`)}></span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Team Metaphor Image Section -->
+  <div class="glass-card rounded-2xl overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border-b border-slate-200 dark:border-slate-800">
+      <h3 class="text-2xl font-bold text-cyan-600 dark:text-cyan-400 flex items-center gap-3">
+        <span class="text-cyan-600 dark:text-cyan-400"><Fragment set:html={icons.users} /></span>
+        {t('guides.what_is_claudekit.team_title')}
+      </h3>
+    </div>
+    <div class="p-6 space-y-4">
+      <p class="text-slate-600 dark:text-slate-400" set:html={t('guides.what_is_claudekit.team_desc')}></p>
+      <div class="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700">
+        <img
+          src={`/guides/claudekit-team-metaphor${imgSuffix}.png`}
+          alt="ClaudeKit Construction Team Metaphor"
+          class="w-full h-auto"
+          loading="lazy"
+        />
+      </div>
+      <div class="p-4 rounded-lg bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20">
+        <p class="text-blue-700 dark:text-blue-300 text-sm" set:html={t('guides.what_is_claudekit.team_key_idea')}></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 Pillars Section -->
+  <div class="glass-card rounded-2xl overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-purple-500/10 to-pink-500/10 border-b border-slate-200 dark:border-slate-800">
+      <h3 class="text-2xl font-bold text-purple-600 dark:text-purple-400 flex items-center gap-3">
+        <span class="text-purple-600 dark:text-purple-400"><Fragment set:html={icons.building} /></span>
+        {t('guides.what_is_claudekit.pillars_title')}
+      </h3>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-2" set:html={t('guides.what_is_claudekit.pillars_desc')}></p>
+    </div>
+    <div class="p-6">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        {pillars.map((pillar) => (
+          <div class={`text-center p-4 rounded-xl bg-${pillar.color}-50 dark:bg-${pillar.color}-500/10 border border-${pillar.color}-200 dark:border-${pillar.color}-500/20 hover:scale-105 transition-transform`}>
+            <div class={`flex justify-center mb-2 text-${pillar.color}-600 dark:text-${pillar.color}-400`}>
+              <Fragment set:html={pillar.icon} />
+            </div>
+            <div class={`font-bold text-${pillar.color}-700 dark:text-${pillar.color}-400`}>
+              {t(`guides.what_is_claudekit.pillar_${pillar.key}`)}
+            </div>
+            <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+              {t(`guides.what_is_claudekit.pillar_${pillar.key}_desc`)}
+            </div>
+          </div>
+        ))}
+      </div>
+      <!-- Pillars Image -->
+      <div class="mt-6 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700">
+        <img
+          src={`/guides/claudekit-5-pillars${imgSuffix}.png`}
+          alt="ClaudeKit 5 Pillars"
+          class="w-full h-auto"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Process Flow Section -->
+  <div class="glass-card rounded-2xl overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border-b border-slate-200 dark:border-slate-800">
+      <h3 class="text-2xl font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-3">
+        <span class="text-emerald-600 dark:text-emerald-400"><Fragment set:html={icons.cog} /></span>
+        {t('guides.what_is_claudekit.process_title')}
+      </h3>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">{t('guides.what_is_claudekit.process_desc')}</p>
+    </div>
+    <div class="p-6">
+      <div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-center gap-4 lg:gap-0">
+        {processSteps.map((step, index) => (
+          <>
+            <div class={`flex-1 text-center p-5 rounded-xl bg-${step.color}-50 dark:bg-${step.color}-500/10 border border-${step.color}-200 dark:border-${step.color}-500/20`}>
+              <div class={`w-10 h-10 rounded-full bg-${step.color}-500 text-white flex items-center justify-center mx-auto mb-3 font-bold text-lg`}>
+                {step.step}
+              </div>
+              <div class={`flex justify-center mb-2 text-${step.color}-600 dark:text-${step.color}-400`}>
+                <Fragment set:html={step.icon} />
+              </div>
+              <div class="text-sm text-slate-700 dark:text-slate-300 font-medium">
+                {t(`guides.what_is_claudekit.process_step${step.step}`)}
+              </div>
+            </div>
+            {index < processSteps.length - 1 && (
+              <div class="hidden lg:flex items-center justify-center w-12 text-slate-400 dark:text-slate-500">
+                <Fragment set:html={icons.arrow_right} />
+              </div>
+            )}
+          </>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Before/After Comparison - Premium Redesign -->
+  <div class="glass-card rounded-2xl overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-slate-500/5 to-slate-600/5 dark:from-slate-400/5 dark:to-slate-500/5 border-b border-slate-200 dark:border-slate-800">
+      <h3 class="text-2xl font-bold text-slate-700 dark:text-slate-300 flex items-center gap-3">
+        <span class="text-slate-600 dark:text-slate-400"><Fragment set:html={icons.scale} /></span>
+        {t('guides.what_is_claudekit.comparison_title')}
+      </h3>
+    </div>
+    <div class="p-6">
+      <!-- Comparison Table -->
+      <div class="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700">
+        <!-- Header -->
+        <div class="grid grid-cols-[1fr_auto_1fr] bg-slate-100 dark:bg-slate-800/80">
+          <div class="p-4 text-center border-r border-slate-200 dark:border-slate-700">
+            <div class="flex items-center justify-center gap-2">
+              <div class="w-6 h-6 rounded-full bg-red-100 dark:bg-red-500/20 flex items-center justify-center text-red-600 dark:text-red-400">
+                <Fragment set:html={icons.x_mark} />
+              </div>
+              <span class="font-bold text-red-600 dark:text-red-400">{t('guides.what_is_claudekit.without')}</span>
+            </div>
+          </div>
+          <div class="w-px bg-slate-200 dark:bg-slate-700"></div>
+          <div class="p-4 text-center">
+            <div class="flex items-center justify-center gap-2">
+              <div class="w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+                <Fragment set:html={icons.check} />
+              </div>
+              <span class="font-bold text-emerald-600 dark:text-emerald-400">{t('guides.what_is_claudekit.with')}</span>
+            </div>
+          </div>
+        </div>
+        <!-- Rows -->
+        {comparisonItems.map((item, index) => (
+          <div class={`grid grid-cols-[1fr_auto_1fr] ${index % 2 === 0 ? 'bg-white dark:bg-slate-900/50' : 'bg-slate-50/50 dark:bg-slate-800/30'}`}>
+            <div class="p-4 border-r border-slate-200 dark:border-slate-700 flex items-center gap-3">
+              <span class="w-5 h-5 rounded-full bg-red-100 dark:bg-red-500/20 flex items-center justify-center flex-shrink-0">
+                <span class="w-2 h-2 rounded-full bg-red-500"></span>
+              </span>
+              <span class="text-sm text-slate-600 dark:text-slate-400">{item.without}</span>
+            </div>
+            <div class="w-px bg-slate-200 dark:bg-slate-700"></div>
+            <div class="p-4 flex items-center gap-3">
+              <span class="w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              </span>
+              <span class="text-sm text-slate-700 dark:text-slate-300 font-medium">{item.with}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Start Commands -->
+  <div class="glass-card rounded-2xl overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 border-b border-slate-200 dark:border-slate-800">
+      <div class="flex items-center justify-between flex-wrap gap-4">
+        <h3 class="text-2xl font-bold text-blue-600 dark:text-blue-400 flex items-center gap-3">
+          <span class="text-blue-600 dark:text-blue-400"><Fragment set:html={icons.rocket} /></span>
+          {t('guides.what_is_claudekit.quick_start_title')}
+        </h3>
+        <a
+          href={workflowsUrl}
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-100 dark:bg-blue-500/20 text-blue-700 dark:text-blue-300 text-sm font-medium hover:bg-blue-200 dark:hover:bg-blue-500/30 transition-colors"
+        >
+          {t('guides.what_is_claudekit.view_all_commands')}
+          <Fragment set:html={icons.arrow_link} />
+        </a>
+      </div>
+    </div>
+    <div class="p-6">
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- For Beginners -->
+        <div class="rounded-xl bg-purple-50 dark:bg-purple-500/10 border border-purple-200 dark:border-purple-500/20 p-4">
+          <h4 class="font-bold text-purple-700 dark:text-purple-400 mb-3 flex items-center gap-2">
+            <span class="text-purple-600 dark:text-purple-400"><Fragment set:html={icons.academic} /></span>
+            {t('guides.what_is_claudekit.for_beginners')}
+          </h4>
+          <div class="space-y-2">
+            {beginnerCommands.map((cmd) => (
+              <div class="flex items-center gap-2">
+                <code class="px-2 py-1 rounded bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-300 text-sm font-mono">
+                  {cmd.cmd}
+                </code>
+                <span class="text-xs text-slate-500 dark:text-slate-400">{cmd.desc}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <!-- For Building -->
+        <div class="rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 p-4">
+          <h4 class="font-bold text-emerald-700 dark:text-emerald-400 mb-3 flex items-center gap-2">
+            <span class="text-emerald-600 dark:text-emerald-400"><Fragment set:html={icons.hammer} /></span>
+            {t('guides.what_is_claudekit.for_building')}
+          </h4>
+          <div class="space-y-2">
+            {buildingCommands.map((cmd) => (
+              <div class="flex items-center gap-2">
+                <code class="px-2 py-1 rounded bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-sm font-mono">
+                  {cmd.cmd}
+                </code>
+                <span class="text-xs text-slate-500 dark:text-slate-400">{cmd.desc}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <!-- For Git -->
+        <div class="rounded-xl bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 p-4">
+          <h4 class="font-bold text-amber-700 dark:text-amber-400 mb-3 flex items-center gap-2">
+            <span class="text-amber-600 dark:text-amber-400"><Fragment set:html={icons.code_bracket} /></span>
+            {t('guides.what_is_claudekit.for_git')}
+          </h4>
+          <div class="space-y-2">
+            {gitCommands.map((cmd) => (
+              <div class="flex items-center gap-2">
+                <code class="px-2 py-1 rounded bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300 text-sm font-mono">
+                  {cmd.cmd}
+                </code>
+                <span class="text-xs text-slate-500 dark:text-slate-400">{cmd.desc}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary Section -->
+  <div class="glass-card rounded-2xl overflow-hidden bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-500/5 dark:to-blue-500/5">
+    <div class="p-6 border-b border-purple-200 dark:border-purple-500/20">
+      <h3 class="text-2xl font-bold text-purple-600 dark:text-purple-400 flex items-center gap-3">
+        <span class="text-purple-600 dark:text-purple-400"><Fragment set:html={icons.clipboard} /></span>
+        {t('guides.what_is_claudekit.summary_title')}
+      </h3>
+    </div>
+    <div class="p-6 space-y-4">
+      <div class="text-center">
+        <div class="inline-block px-6 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-bold text-xl mb-4">
+          {t('guides.what_is_claudekit.summary_tagline')}
+        </div>
+        <p class="text-slate-600 dark:text-slate-400 mb-4">{t('guides.what_is_claudekit.summary_desc')}</p>
+        <div class="flex flex-wrap justify-center gap-3">
+          {summaryItems.map((item) => (
+            <span class="px-4 py-2 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium text-slate-700 dark:text-slate-300 flex items-center gap-2">
+              <span class="text-purple-600 dark:text-purple-400"><Fragment set:html={item.icon} /></span>
+              {item.label}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <!-- ClaudeKit Purchase Notice -->
+      <div class="mt-6 p-5 rounded-xl bg-gradient-to-r from-purple-100 via-blue-100 to-purple-100 dark:from-purple-500/20 dark:via-blue-500/20 dark:to-purple-500/20 border-2 border-purple-300 dark:border-purple-500/40 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-purple-200/50 to-transparent dark:from-purple-500/10 rounded-bl-full"></div>
+        <div class="relative flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-purple-600 dark:text-purple-400"><Fragment set:html={icons.info} /></span>
+              <span class="font-bold text-purple-800 dark:text-purple-300">{t('guides.what_is_claudekit.subscription_notice_title')}</span>
+            </div>
+            <p class="text-purple-700 dark:text-purple-300 text-sm leading-relaxed">
+              {t('guides.what_is_claudekit.subscription_notice_desc')}
+            </p>
+          </div>
+          <a
+            href={SITE_CONFIG.claudekitReferralUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="cta-button flex-shrink-0 inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm"
+          >
+            {t('guides.what_is_claudekit.get_claudekit_discount')}
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
