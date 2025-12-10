@@ -166,26 +166,3 @@ const t = useTranslations(currentLang);
     </div>
   </div>
 </div>
-
-<script>
-  function initResumeGuide() {
-    // Auto-update platform-specific command
-    function detectPlatform(): 'macos' | 'linux' | 'windows' {
-      const userAgent = navigator.userAgent.toLowerCase();
-      if (userAgent.includes('win')) return 'windows';
-      if (userAgent.includes('mac')) return 'macos';
-      return 'linux';
-    }
-
-    const platform = detectPlatform();
-    document.querySelectorAll('.platform-cat-cmd').forEach(el => {
-      const cmd = el.getAttribute(`data-${platform}`);
-      if (cmd) {
-        el.textContent = cmd;
-      }
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', initResumeGuide);
-  document.addEventListener('astro:page-load', initResumeGuide);
-</script>
