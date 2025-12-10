@@ -1,7 +1,6 @@
 ---
 import { useTranslations } from '@/i18n/utils';
 import { getLangFromUrl, type Language } from '@/i18n';
-import PlatformPathSwitcher from './PlatformPathSwitcher.astro';
 
 interface Props {
   lang?: Language;
@@ -130,19 +129,6 @@ const option2Code = `{
     </div>
   </div>
 
-  <!-- Platform Selector -->
-  <div class="flex items-center justify-between p-4 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
-    <div class="text-sm text-slate-600 dark:text-slate-400">
-      <span class="font-medium">{t('permissions.guide.select_platform') || 'Select your platform'}:</span>
-    </div>
-    <PlatformPathSwitcher
-      lang={currentLang}
-      pathAfterHome=".claude/settings.json"
-      id="permissions-platform-selector"
-      color="slate"
-    />
-  </div>
-
   <div class="space-y-8">
     <!-- Option 1: Full Bypass -->
     <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
@@ -156,11 +142,61 @@ const option2Code = `{
         <p class="text-slate-600 dark:text-slate-400 mb-4" set:html={t('permissions.guide.option1.desc')}>
         </p>
 
-        <div class="mb-2 text-xs font-mono text-slate-500 dark:text-slate-400 flex items-center gap-2 flex-wrap">
-          <span>File:</span>
-          <code class="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded platform-path-display" data-macos="<project>/.claude/settings.local.json" data-linux="<project>/.claude/settings.local.json" data-windows="<project>\\.claude\\settings.local.json">&lt;project&gt;/.claude/settings.local.json</code>
-          <span class="text-slate-400 dark:text-slate-500 text-[10px]">({t('permissions.guide.project_local') || 'project-local'})</span>
+        <!-- File path with platform switcher -->
+        <div class="platform-path-switcher mb-4" data-id="permissions-option1-path" data-active-bg="bg-slate-200 dark:bg-slate-700" data-hover-bg="hover:bg-slate-100 dark:hover:bg-slate-800" data-active-text="text-slate-700 dark:text-slate-300">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-xs font-mono text-slate-500 dark:text-slate-400">File:</span>
+            <div class="flex gap-1 ml-auto">
+              <button
+                class="platform-tab px-2 py-1 text-[10px] font-medium rounded transition-colors bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300"
+                data-platform="macos"
+                data-active="true"
+              >
+                <span class="flex items-center gap-1">
+                  <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/>
+                    <path d="M14.5 8.5l-5 3 5 3v-6z"/>
+                  </svg>
+                  macOS
+                </span>
+              </button>
+              <button
+                class="platform-tab px-2 py-1 text-[10px] font-medium rounded transition-colors text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+                data-platform="linux"
+                data-active="false"
+              >
+                <span class="flex items-center gap-1">
+                  <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.003 1.23-.269 2.26-.334.699-.058 1.574.267 2.577.2.025.134.063.198.114.333l.003.003c.391.778 1.113 1.132 1.884 1.071.771-.06 1.592-.536 2.257-1.306.631-.765 1.683-1.084 2.378-1.503.348-.199.629-.469.649-.853.023-.4-.2-.811-.714-1.376v-.097l-.003-.003c-.17-.2-.25-.535-.338-.926-.085-.401-.182-.786-.492-1.046h-.003c-.059-.054-.123-.067-.188-.135a.357.357 0 00-.19-.064c.431-1.278.264-2.55-.173-3.694-.533-1.41-1.465-2.638-2.175-3.483-.796-1.005-1.576-1.957-1.56-3.368.026-2.152.236-6.133-3.544-6.139z"/>
+                  </svg>
+                  Linux
+                </span>
+              </button>
+              <button
+                class="platform-tab px-2 py-1 text-[10px] font-medium rounded transition-colors text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+                data-platform="windows"
+                data-active="false"
+              >
+                <span class="flex items-center gap-1">
+                  <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/>
+                  </svg>
+                  Windows
+                </span>
+              </button>
+            </div>
+          </div>
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-3 border border-slate-200 dark:border-slate-700 font-mono text-sm">
+            <code
+              class="platform-path text-slate-700 dark:text-slate-300"
+              data-macos="<project>/.claude/settings.local.json"
+              data-linux="<project>/.claude/settings.local.json"
+              data-windows="<project>\.claude\settings.local.json"
+            >&lt;project&gt;/.claude/settings.local.json</code>
+            <span class="text-slate-400 dark:text-slate-500 text-[10px] ml-2">({t('permissions.guide.project_local') || 'project-local'})</span>
+          </div>
         </div>
+
         <div class="relative group">
           <button
             class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
@@ -210,11 +246,61 @@ const option2Code = `{
           {t('permissions.guide.option2.desc')}
         </p>
 
-        <div class="mb-2 text-xs font-mono text-slate-500 dark:text-slate-400 flex items-center gap-2 flex-wrap">
-          <span>File:</span>
-          <code class="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded platform-path-display" data-macos="<project>/.claude/settings.local.json" data-linux="<project>/.claude/settings.local.json" data-windows="<project>\\.claude\\settings.local.json">&lt;project&gt;/.claude/settings.local.json</code>
-          <span class="text-slate-400 dark:text-slate-500 text-[10px]">({t('permissions.guide.project_local') || 'project-local'})</span>
+        <!-- File path with platform switcher -->
+        <div class="platform-path-switcher mb-4" data-id="permissions-option2-path" data-active-bg="bg-emerald-500/20" data-hover-bg="hover:bg-emerald-500/10" data-active-text="text-emerald-600 dark:text-emerald-400">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-xs font-mono text-slate-500 dark:text-slate-400">File:</span>
+            <div class="flex gap-1 ml-auto">
+              <button
+                class="platform-tab px-2 py-1 text-[10px] font-medium rounded transition-colors bg-emerald-500/20 text-emerald-600 dark:text-emerald-400"
+                data-platform="macos"
+                data-active="true"
+              >
+                <span class="flex items-center gap-1">
+                  <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/>
+                    <path d="M14.5 8.5l-5 3 5 3v-6z"/>
+                  </svg>
+                  macOS
+                </span>
+              </button>
+              <button
+                class="platform-tab px-2 py-1 text-[10px] font-medium rounded transition-colors text-slate-500 dark:text-slate-400 hover:bg-emerald-500/10"
+                data-platform="linux"
+                data-active="false"
+              >
+                <span class="flex items-center gap-1">
+                  <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.003 1.23-.269 2.26-.334.699-.058 1.574.267 2.577.2.025.134.063.198.114.333l.003.003c.391.778 1.113 1.132 1.884 1.071.771-.06 1.592-.536 2.257-1.306.631-.765 1.683-1.084 2.378-1.503.348-.199.629-.469.649-.853.023-.4-.2-.811-.714-1.376v-.097l-.003-.003c-.17-.2-.25-.535-.338-.926-.085-.401-.182-.786-.492-1.046h-.003c-.059-.054-.123-.067-.188-.135a.357.357 0 00-.19-.064c.431-1.278.264-2.55-.173-3.694-.533-1.41-1.465-2.638-2.175-3.483-.796-1.005-1.576-1.957-1.56-3.368.026-2.152.236-6.133-3.544-6.139z"/>
+                  </svg>
+                  Linux
+                </span>
+              </button>
+              <button
+                class="platform-tab px-2 py-1 text-[10px] font-medium rounded transition-colors text-slate-500 dark:text-slate-400 hover:bg-emerald-500/10"
+                data-platform="windows"
+                data-active="false"
+              >
+                <span class="flex items-center gap-1">
+                  <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/>
+                  </svg>
+                  Windows
+                </span>
+              </button>
+            </div>
+          </div>
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-3 border border-slate-200 dark:border-slate-700 font-mono text-sm">
+            <code
+              class="platform-path text-emerald-600 dark:text-emerald-400"
+              data-macos="<project>/.claude/settings.local.json"
+              data-linux="<project>/.claude/settings.local.json"
+              data-windows="<project>\.claude\settings.local.json"
+            >&lt;project&gt;/.claude/settings.local.json</code>
+            <span class="text-slate-400 dark:text-slate-500 text-[10px] ml-2">({t('permissions.guide.project_local') || 'project-local'})</span>
+          </div>
         </div>
+
         <div class="relative group">
           <button
             class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
