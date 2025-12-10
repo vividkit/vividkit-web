@@ -31,53 +31,101 @@ const option2Code = `{
       "Write(*)"
     ],
     "deny": [
+      // ====== FORK BOMB & DOS ======
+      "Bash(:(){:|:&};:)",
+      "Bash(:(){ :|:& };:)",
+      "Bash(bomb(){ bomb|bomb& };bomb)",
+
+      // ====== DISK DESTRUCTION ======
+      "Bash(dd if=/dev/zero of=/dev/sd*:*)",
+      "Bash(dd if=/dev/zero of=/dev/disk*:*)",
+      "Bash(dd if=/dev/random of=/dev/sd*:*)",
+      "Bash(dd if=/dev/urandom of=/dev/sd*:*)",
+      "Bash(cat /dev/zero > /dev/sd*:*)",
+      "Bash(cat /dev/urandom > /dev/sd*:*)",
+      "Bash(shred /dev/sd*:*)",
+      "Bash(shred -vfz -n *:*)",
+      "Bash(> /dev/sda:*)",
+      "Bash(mkfs.:*::*)",
+      "Bash(fdisk:*)",
+      "Bash(parted:*)",
+      "Bash(diskutil eraseDisk:*)",
+
+      // ====== FILE DESTRUCTION ======
       "Bash(rm ~/)",
       "Bash(rm /)",
       "Bash(rm -rf /:*)",
       "Bash(rm -rf ~:*)",
-      "Bash(sudo rm -rf *:*)",
+      "Bash(rm -rf /*:*)",
+      "Bash(rm -rf .*:*)",
+      "Bash(sudo rm -rf :*::*)",
       "Bash(shred:*)",
-      "Bash(dd if=/dev/zero of=/dev/sd*:*)",
-      "Bash(dd if=/dev/zero of=/dev/disk*:*)",
-      "Bash(mkfs.*:*)",
-      "Bash(fdisk:*)",
-      "Bash(parted:*)",
-      "Bash(diskutil eraseDisk:*)",
+      "Bash(mv * /dev/null:*)",
+      "Bash(mv ~/* /dev/null:*)",
+      "Bash(mv /* /dev/null:*)",
+      "Bash(find / -delete:*)",
+      "Bash(find / -exec rm -rf {} \\;:*)",
+
+      // ====== PERMISSION ATTACKS ======
       "Bash(chown -R /:*)",
+      "Bash(chown -R root:root /:*)",
       "Bash(chmod -R 0 /:*)",
-      "Bash(shutdown:*)",
-      "Bash(reboot:*)",
-      "Bash(systemctl poweroff:*)",
-      "Bash(kill -9:*)",
-      "Bash(killall:*)",
-      "Bash(git reset --hard:*)",
-      "Bash(git clean -fdx:*)",
-      "Bash(git push --force:*)",
-      "Bash(git push origin --delete:*)",
-      "Bash(docker system prune -af:*)",
-      "Bash(docker volume rm -f *:*)",
-      "Bash(docker rm -f $(docker ps -aq):*)",
-      "Bash(docker rmi -f $(docker images -aq):*)",
-      "Bash(docker stop $(docker ps -aq):*)",
-      "Bash(docker kill $(docker ps -aq):*)",
-      "Bash(docker network prune -f:*)",
-      "Bash(docker volume prune -f:*)",
-      "Bash(docker image prune -af:*)",
-      "Bash(docker container prune -f:*)",
-      "Bash(docker-compose down -v:*)",
-      "Bash(docker compose down -v:*)",
-      "Bash(docker run --privileged:*)",
-      "Bash(docker run -v /:/host:*)",
+      "Bash(chmod -R 777 /:*)",
+      "Bash(chmod 777 -R /:*)",
+      "Bash(chmod -R 000 /:*)",
+      "Bash(chmod 000 -R /:*)",
+
+      // ====== REMOTE CODE EXECUTION ======
+      "Bash(curl*|*sh:*)",
+      "Bash(wget*|*sh:*)",
+      "Bash(curl * | bash:*)",
+      "Bash(curl * | sh:*)",
+      "Bash(wget * | bash:*)",
+      "Bash(wget * | sh:*)",
+      "Bash(curl -s * | bash:*)",
+      "Bash(wget -q * | bash:*)",
+      "Bash(curl -fsSL * | bash:*)",
+      "Bash(wget -qO- * | bash:*)",
+      "Bash(eval $*:*)",
+
+      // ====== DATABASE DESTRUCTION - MySQL ======
+      "Bash(mysql * DROP DATABASE:*)",
+      "Bash(mysql * DROP TABLE:*)",
+      "Bash(mysql * TRUNCATE:*)",
+      "Bash(mysqladmin drop:*)",
+
+      // ====== DATABASE DESTRUCTION - PostgreSQL ======
+      "Bash(psql * DROP DATABASE:*)",
+      "Bash(psql * DROP TABLE:*)",
+      "Bash(psql * TRUNCATE:*)",
+      "Bash(dropdb:*)",
+
+      // ====== DATABASE DESTRUCTION - MongoDB ======
+      "Bash(mongo * --eval *dropDatabase*:*)",
+      "Bash(mongosh * --eval *dropDatabase*:*)",
+      "Bash(mongo * dropDatabase:*)",
+
+      // ====== DATABASE DESTRUCTION - Redis ======
+      "Bash(redis-cli FLUSHALL:*)",
+      "Bash(redis-cli FLUSHDB:*)",
+
+      // ====== DATABASE DESTRUCTION - ORM Tools ======
       "Bash(prisma db push)",
       "Bash(npx prisma db push)",
       "Bash(prisma migrate reset:*)",
       "Bash(npm run db:push)",
       "Bash(bun run db:push)",
       "Bash(pnpm run db:push)",
-      "Bash(npm publish:*)",
-      "Bash(pnpm publish:*)",
-      "Bash(curl*|*sh:*)",
-      "Bash(wget*|*sh:*)",
+      "Bash(yarn db:push:*)",
+      "Bash(yarn prisma db push:*)",
+      "Bash(yarn prisma migrate reset:*)",
+      "Bash(pnpm prisma migrate reset:*)",
+      "Bash(drizzle-kit drop:*)",
+      "Bash(npm run db:drop:*)",
+      "Bash(typeorm schema:drop:*)",
+      "Bash(sequelize db:drop:*)",
+
+      // ====== DATABASE DESTRUCTION - Rails ======
       "Bash(rails db:drop:*)",
       "Bash(rails db:reset:*)",
       "Bash(rails db:migrate:reset:*)",
@@ -94,7 +142,138 @@ const option2Code = `{
       "Bash(ruby -e*exec*:*)",
       "Bash(irb -e*:*)",
       "Bash(gem uninstall -aIx:*)",
-      "Bash(bundle exec rails destroy:*)"
+      "Bash(bundle exec rails destroy:*)",
+
+      // ====== KUBERNETES DESTRUCTION ======
+      "Bash(kubectl delete namespace --all:*)",
+      "Bash(kubectl delete ns --all:*)",
+      "Bash(kubectl delete all --all:*)",
+      "Bash(kubectl delete all --all-namespaces:*)",
+      "Bash(kubectl delete pods --all:*)",
+      "Bash(kubectl delete deployments --all:*)",
+      "Bash(kubectl delete pvc --all:*)",
+      "Bash(kubectl delete pv --all:*)",
+      "Bash(kubectl delete secrets --all:*)",
+      "Bash(kubectl delete configmaps --all:*)",
+      "Bash(helm uninstall --all:*)",
+      "Bash(helm delete --purge:*)",
+
+      // ====== DOCKER DESTRUCTION ======
+      "Bash(docker system prune -af:*)",
+      "Bash(docker volume rm -f :*::*)",
+      "Bash(docker rm -f $(docker ps -aq):*)",
+      "Bash(docker rmi -f $(docker images -aq):*)",
+      "Bash(docker stop $(docker ps -aq):*)",
+      "Bash(docker kill $(docker ps -aq):*)",
+      "Bash(docker stop $(docker ps -q):*)",
+      "Bash(docker kill $(docker ps -q):*)",
+      "Bash(docker network prune -f:*)",
+      "Bash(docker volume prune -f:*)",
+      "Bash(docker image prune -af:*)",
+      "Bash(docker container prune -f:*)",
+      "Bash(docker-compose down -v:*)",
+      "Bash(docker compose down -v:*)",
+      "Bash(docker-compose down -v --rmi all:*)",
+      "Bash(docker run --privileged:*)",
+      "Bash(docker run -v /:/host:*)",
+
+      // ====== GIT DESTRUCTIVE ======
+      "Bash(git reset --hard:*)",
+      "Bash(git clean -fdx:*)",
+      "Bash(git push --force:*)",
+      "Bash(git push origin --delete:*)",
+      "Bash(git push --force-with-lease:*)",
+      "Bash(git branch -D:*)",
+      "Bash(git reflog expire --expire=now --all:*)",
+      "Bash(git gc --prune=now:*)",
+      "Bash(git filter-branch:*)",
+      "Bash(git rebase -i --root:*)",
+
+      // ====== SYSTEM MANIPULATION ======
+      "Bash(shutdown:*)",
+      "Bash(reboot:*)",
+      "Bash(systemctl poweroff:*)",
+      "Bash(init 0:*)",
+      "Bash(init 6:*)",
+      "Bash(telinit 0:*)",
+      "Bash(halt:*)",
+      "Bash(poweroff:*)",
+      "Bash(echo b > /proc/sysrq-trigger:*)",
+      "Bash(echo c > /proc/sysrq-trigger:*)",
+      "Bash(echo o > /proc/sysrq-trigger:*)",
+      "Bash(crontab -r:*)",
+      "Bash(rm /var/spool/cron/*:*)",
+
+      // ====== NETWORK/FIREWALL ======
+      "Bash(iptables -F:*)",
+      "Bash(iptables --flush:*)",
+      "Bash(iptables -X:*)",
+      "Bash(ip6tables -F:*)",
+      "Bash(ip6tables --flush:*)",
+      "Bash(ufw disable:*)",
+      "Bash(firewall-cmd --panic-on:*)",
+      "Bash(nft flush ruleset:*)",
+
+      // ====== CREDENTIAL EXPOSURE ======
+      "Bash(cat /etc/shadow:*)",
+      "Bash(cat ~/.ssh/id_rsa:*)",
+      "Bash(cat ~/.aws/credentials:*)",
+      "Bash(cat ~/.git-credentials:*)",
+
+      // ====== LOG TAMPERING ======
+      "Bash(rm -rf /var/log/*:*)",
+      "Bash(> /var/log/*:*)",
+      "Bash(truncate -s 0 /var/log/*:*)",
+      "Bash(shred /var/log/*:*)",
+      "Bash(history -c:*)",
+      "Bash(cat /dev/null > ~/.bash_history:*)",
+
+      // ====== PACKAGE MANAGER ABUSE ======
+      "Bash(apt-get remove --purge *:*)",
+      "Bash(apt remove --purge *:*)",
+      "Bash(yum remove *:*)",
+      "Bash(dnf remove *:*)",
+      "Bash(pacman -Rns *:*)",
+
+      // ====== PROCESS CONTROL ======
+      "Bash(kill -9:*)",
+      "Bash(killall:*)",
+      "Bash(kill -9 -1:*)",
+      "Bash(killall -9 *:*)",
+      "Bash(pkill -9 *:*)",
+      "Bash(kill -SIGKILL -1:*)",
+
+      // ====== CLOUD DESTRUCTIVE - AWS ======
+      "Bash(aws s3 rm --recursive s3://*:*)",
+      "Bash(aws ec2 terminate-instances:*)",
+      "Bash(aws rds delete-db-instance:*)",
+      "Bash(aws cloudformation delete-stack:*)",
+
+      // ====== CLOUD DESTRUCTIVE - GCP ======
+      "Bash(gcloud compute instances delete:*)",
+      "Bash(gsutil rm -r gs://*:*)",
+      "Bash(gcloud sql instances delete:*)",
+
+      // ====== CLOUD DESTRUCTIVE - Azure ======
+      "Bash(az group delete:*)",
+      "Bash(az vm delete:*)",
+      "Bash(az storage blob delete-batch:*)",
+
+      // ====== TERRAFORM ======
+      "Bash(terraform destroy -auto-approve:*)",
+      "Bash(terraform apply -destroy:*)",
+
+      // ====== PUBLISHING ======
+      "Bash(npm publish:*)",
+      "Bash(pnpm publish:*)",
+
+      // ====== MISC DANGEROUS ======
+      "Bash(export HISTSIZE=0:*)",
+      "Bash(unset HISTFILE:*)",
+      "Bash(set +o history:*)",
+      "Bash(ln -sf /dev/null /etc/*:*)",
+      "Bash(swapoff -a:*)",
+      "Bash(mkswap /dev/sd*:*)"
     ]
   }
 }`;
@@ -321,6 +500,12 @@ const option2Code = `{
         </div>
         <p class="mt-4 text-sm text-slate-600 dark:text-slate-400">
           {t('permissions.guide.option2.explanation')}
+        </p>
+        <p class="mt-2 text-xs text-slate-500 dark:text-slate-500">
+          {t('permissions.guide.option2.reference') || 'Reference:'}
+          <a href="https://claude.ai/public/artifacts/0581ae4f-52f7-4c11-8944-de2b9b8a6d90" target="_blank" rel="noopener noreferrer" class="text-purple-600 dark:text-purple-400 hover:underline">
+            {t('permissions.guide.option2.source_link') || 'Additional Commands Reference'}
+          </a>
         </p>
       </div>
     </div>
