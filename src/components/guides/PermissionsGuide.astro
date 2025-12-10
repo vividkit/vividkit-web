@@ -2,9 +2,20 @@
 import { useTranslations } from '@/i18n/utils';
 import { getLangFromUrl, type Language } from '@/i18n';
 
+interface Props {
+  lang?: Language;
+}
+
 const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
+
+// Platform-specific path examples for global config
+const globalConfigPaths = {
+  macos: '~/.claude/settings.json',
+  linux: '~/.claude/settings.json',
+  windows: '%USERPROFILE%\\.claude\\settings.json',
+};
 
 const option1Code = `{
   "permissions": {
@@ -131,8 +142,10 @@ const option2Code = `{
         <p class="text-slate-600 dark:text-slate-400 mb-4" set:html={t('permissions.guide.option1.desc')}>
         </p>
 
-        <div class="mb-2 text-xs font-mono text-slate-500 dark:text-slate-400">
-          File: <code class="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">.claude/settings.local.json</code>
+        <div class="mb-2 text-xs font-mono text-slate-500 dark:text-slate-400 flex items-center gap-2 flex-wrap">
+          <span>File:</span>
+          <code class="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">&lt;project&gt;/.claude/settings.local.json</code>
+          <span class="text-slate-400 dark:text-slate-500 text-[10px]">({t('permissions.guide.project_local') || 'project-local, same on all platforms'})</span>
         </div>
         <div class="relative group">
           <button
@@ -183,8 +196,10 @@ const option2Code = `{
           {t('permissions.guide.option2.desc')}
         </p>
 
-        <div class="mb-2 text-xs font-mono text-slate-500 dark:text-slate-400">
-          File: <code class="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">.claude/settings.local.json</code>
+        <div class="mb-2 text-xs font-mono text-slate-500 dark:text-slate-400 flex items-center gap-2 flex-wrap">
+          <span>File:</span>
+          <code class="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">&lt;project&gt;/.claude/settings.local.json</code>
+          <span class="text-slate-400 dark:text-slate-500 text-[10px]">({t('permissions.guide.project_local') || 'project-local, same on all platforms'})</span>
         </div>
         <div class="relative group">
           <button
