@@ -983,6 +983,8 @@ export default {
   'permissions.guide.option2.title': 'Cấu Hình Được Đề Xuất (Cách An Toàn Hơn)',
   'permissions.guide.option2.desc': 'Cho phép tất cả lệnh theo mặc định, nhưng chặn các thao tác nguy hiểm có thể gây thiệt hại không thể khôi phục.',
   'permissions.guide.option2.explanation': 'Cấu hình này sử dụng wildcard để cho phép tất cả thao tác Bash, Read và Write, trong khi danh sách deny chặn các lệnh phá hủy như xóa database, force push và thay đổi hệ thống.',
+  'permissions.guide.option2.reference': 'Tham khảo:',
+  'permissions.guide.option2.source_link': 'Danh Sách Lệnh Bổ Sung',
   'permissions.guide.docs.text': 'Để xem tài liệu đầy đủ về phạm vi quyền và cú pháp, hãy truy cập',
   'permissions.guide.docs.link': 'Tài liệu Chính thức của Claude Code',
 } as const;

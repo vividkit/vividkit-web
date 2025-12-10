@@ -977,6 +977,8 @@ export default {
   'permissions.guide.option2.title': 'Recommended Configuration (Safer Approach)',
   'permissions.guide.option2.desc': 'Allow all commands by default, but block dangerous operations that could cause irreversible damage.',
   'permissions.guide.option2.explanation': 'This configuration uses wildcards to allow all Bash, Read, and Write operations, while the deny list blocks destructive commands like database drops, force pushes, and system modifications.',
+  'permissions.guide.option2.reference': 'Reference:',
+  'permissions.guide.option2.source_link': 'Additional Commands List',
   'permissions.guide.docs.text': 'For comprehensive documentation on permission scopes and syntax, visit the',
   'permissions.guide.docs.link': 'Official Claude Code Documentation',
 } as const;
