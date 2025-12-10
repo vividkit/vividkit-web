@@ -1,0 +1,298 @@
+---
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+import { subscriptionPromotions, tips } from '@/data/promotions';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+// Color mapping for promotion cards
+const colorClasses = {
+  amber: {
+    gradient: 'bg-gradient-to-r from-amber-50/50 to-orange-50/50 dark:from-amber-900/10 dark:to-orange-900/10',
+    border: 'border-slate-200 dark:border-slate-800 hover:border-amber-500/30',
+    iconBg: 'bg-amber-100 dark:bg-amber-500/20',
+    text: 'text-amber-600 dark:text-amber-400',
+    bullet: 'text-amber-400',
+    link: 'text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300',
+  },
+  emerald: {
+    gradient: 'bg-gradient-to-r from-emerald-50/50 to-green-50/50 dark:from-emerald-900/10 dark:to-green-900/10',
+    border: 'border-slate-200 dark:border-slate-800 hover:border-emerald-500/30',
+    iconBg: 'bg-emerald-100 dark:bg-emerald-500/20',
+    text: 'text-emerald-600 dark:text-emerald-400',
+    bullet: 'text-emerald-400',
+    link: 'text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300',
+  },
+  purple: {
+    gradient: 'bg-gradient-to-r from-purple-50/50 to-violet-50/50 dark:from-purple-900/10 dark:to-violet-900/10',
+    border: 'border-slate-200 dark:border-slate-800 hover:border-purple-500/30',
+    iconBg: 'bg-purple-100 dark:bg-purple-500/20',
+    text: 'text-purple-600 dark:text-purple-400',
+    bullet: 'text-purple-400',
+    link: 'text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300',
+  },
+  blue: {
+    gradient: 'bg-gradient-to-r from-blue-50/50 to-sky-50/50 dark:from-blue-900/10 dark:to-sky-900/10',
+    border: 'border-slate-200 dark:border-slate-800 hover:border-blue-500/30',
+    iconBg: 'bg-blue-100 dark:bg-blue-500/20',
+    text: 'text-blue-600 dark:text-blue-400',
+    bullet: 'text-blue-400',
+    link: 'text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300',
+  },
+  cyan: {
+    gradient: 'bg-gradient-to-r from-cyan-50/50 to-teal-50/50 dark:from-cyan-900/10 dark:to-teal-900/10',
+    border: 'border-slate-200 dark:border-slate-800 hover:border-cyan-500/30',
+    iconBg: 'bg-cyan-100 dark:bg-cyan-500/20',
+    text: 'text-cyan-600 dark:text-cyan-400',
+    bullet: 'text-cyan-400',
+    link: 'text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300',
+  },
+  indigo: {
+    gradient: 'bg-gradient-to-r from-indigo-50/50 to-violet-50/50 dark:from-indigo-900/10 dark:to-violet-900/10',
+    border: 'border-slate-200 dark:border-slate-800 hover:border-indigo-500/30',
+    iconBg: 'bg-indigo-100 dark:bg-indigo-500/20',
+    text: 'text-indigo-600 dark:text-indigo-400',
+    bullet: 'text-indigo-400',
+    link: 'text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300',
+  },
+};
+---
+
+<div class="space-y-8 mt-6">
+  <!-- Hero Section -->
+  <div class="text-center space-y-4">
+    <h2 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
+      {t('guides.promotions.page_title')}
+    </h2>
+    <p class="text-xl font-medium text-amber-600 dark:text-amber-400">
+      {t('guides.promotions.tagline')}
+    </p>
+    <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+      {t('guides.promotions.description_text')}
+    </p>
+
+  </div>
+
+  <!-- Budget Note -->
+  <div class="flex items-start gap-4 p-6 rounded-xl bg-purple-500/5 dark:bg-purple-500/10 border border-purple-200 dark:border-purple-500/20 text-left">
+    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-500/20 flex items-center justify-center">
+      <svg class="w-5 h-5 text-purple-600 dark:text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 3h12l4 6-10 13L2 9z"/>
+        <path d="M11 3v6"/>
+        <path d="M15.5 9L11 3"/>
+      </svg>
+    </div>
+    <div class="flex-1">
+      <div class="font-bold text-purple-700 dark:text-purple-400 mb-1 text-lg">{t('promotions.budget_note.title')}</div>
+      <div class="text-slate-600 dark:text-slate-400 leading-relaxed">
+        {t('promotions.budget_note.desc')}
+      </div>
+    </div>
+  </div>
+
+  <!-- Why Upgrade Section -->
+  <div class="glass-card rounded-xl border-amber-200 dark:border-amber-500/30 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border-b border-amber-200 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400">
+          {t('guides.promotions.why_title')}
+        </h3>
+      </div>
+    </div>
+    <div class="p-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
+          <div class="flex items-center gap-2 mb-2">
+            <svg class="w-5 h-5 text-red-600 dark:text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 8v4M12 16h.01"/>
+            </svg>
+            <span class="font-bold text-red-600 dark:text-red-400 text-sm">{t('guides.promotions.limit_problem')}</span>
+          </div>
+          <p class="text-sm text-slate-600 dark:text-slate-400">{t('guides.promotions.limit_problem_desc')}</p>
+        </div>
+        <div class="p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/30">
+          <div class="flex items-center gap-2 mb-2">
+            <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+            <span class="font-bold text-emerald-600 dark:text-emerald-400 text-sm">{t('guides.promotions.solution')}</span>
+          </div>
+          <p class="text-sm text-slate-600 dark:text-slate-400">{t('guides.promotions.solution_desc')}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CCS Cross-Link Callout -->
+  <div class="glass-card rounded-xl border-blue-200 dark:border-blue-500/30 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10">
+      <div class="flex items-start gap-4">
+        <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center shrink-0">
+          <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/>
+          </svg>
+        </div>
+        <div class="flex-1">
+          <h3 class="text-lg font-bold text-blue-600 dark:text-blue-400 mb-2">
+            {t('guides.promotions.ccs_tip_title')}
+          </h3>
+          <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">
+            {t('guides.promotions.ccs_tip_desc')}
+          </p>
+          <a
+            href="/guides/ccs"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors"
+          >
+            {t('guides.promotions.learn_ccs')}
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Current Promotions -->
+  <div class="glass-card rounded-xl border-amber-200 dark:border-amber-500/30 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border-b border-amber-200 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/>
+            <path d="M12 6v2m0 8v2"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400">
+          {t('guides.promotions.options_title')}
+        </h3>
+      </div>
+    </div>
+    <div class="p-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {subscriptionPromotions.map((promo) => {
+          const colors = colorClasses[promo.color];
+          return (
+            <div class={`p-4 rounded-lg ${colors.gradient} border ${colors.border} transition-colors`}>
+              <!-- Header -->
+              <div class="flex items-center gap-2 mb-2">
+                <div class={`flex items-center justify-center w-8 h-8 rounded-lg ${colors.iconBg}`}>
+                  {promo.id === 'claude-pro' ? (
+                    <!-- Anthropic Claude Icon -->
+                    <svg class={`w-5 h-5 ${colors.text}`} viewBox="0 0 46 32" fill="currentColor">
+                      <path d="M28.826.014 18.322 32h8.16l10.49-31.986zM17.19.014 6.717 31.986h8.16L25.38.014z"/>
+                    </svg>
+                  ) : promo.id === 'zai-subscription' ? (
+                    <!-- Z.AI Icon - Z letter -->
+                    <span class={`text-sm font-black ${colors.text}`}>Z</span>
+                  ) : (
+                    <!-- Default Tag Icon -->
+                    <svg class={`w-5 h-5 ${colors.text}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+                      <line x1="7" y1="7" x2="7.01" y2="7"/>
+                    </svg>
+                  )}
+                </div>
+                <span class={`font-bold ${colors.text} text-sm`}>{promo.name}</span>
+                {promo.recommended && (
+                  <span class="px-2 py-0.5 rounded text-xs font-bold bg-amber-500 text-white">
+                    HOT
+                  </span>
+                )}
+              </div>
+
+              <!-- Tagline -->
+              <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">
+                {promo.id === 'claude-pro' ? t('promotions.claude_pro.tagline') :
+                 promo.id === 'zai-subscription' ? t('promotions.zai.tagline') :
+                 promo.tagline}
+              </p>
+
+              <!-- Links -->
+              <div class="space-y-1 text-xs text-slate-500 dark:text-slate-400">
+                {promo.promoLinks.map((link) => (
+                  <div class="flex items-center gap-2">
+                    <span class={colors.bullet}>•</span>
+                    <a
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class={`font-medium ${colors.link} transition-colors hover:underline`}
+                    >
+                      {link.label}
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <!-- New Account Note -->
+      <p class="text-center text-xs text-slate-500 dark:text-slate-500 mt-4">
+        {t('guides.promotions.new_account_note')}
+      </p>
+    </div>
+  </div>
+
+  <!-- Tips Section -->
+  <div class="glass-card rounded-xl border-emerald-200 dark:border-emerald-500/30 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-emerald-500/10 to-green-500/10 border-b border-emerald-200 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-emerald-600 dark:text-emerald-400">
+          {t('guides.promotions.tips_title')}
+        </h3>
+      </div>
+    </div>
+    <div class="p-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {tips.map((tip) => (
+          <div class="p-4 rounded-lg bg-surface-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+            <h4 class="font-bold text-slate-800 dark:text-slate-200 mb-2">
+              {tip.id === 'use-ccs' ? t('promotions.tips.use_ccs.title') :
+               tip.id === 'stack-discounts' ? t('promotions.tips.stack.title') :
+               tip.id === 'use-promo-links' ? t('promotions.tips.links.title') :
+               tip.id === 'free-tiers' ? t('promotions.tips.free.title') :
+               tip.title}
+            </h4>
+            <p class="text-sm text-slate-600 dark:text-slate-400">
+              {tip.id === 'use-ccs' ? t('promotions.tips.use_ccs.desc') :
+               tip.id === 'stack-discounts' ? t('promotions.tips.stack.desc') :
+               tip.id === 'use-promo-links' ? t('promotions.tips.links.desc') :
+               tip.id === 'free-tiers' ? t('promotions.tips.free.desc') :
+               tip.description}
+            </p>
+            {tip.link && (
+              <a href={tip.link} class="inline-flex items-center gap-1 mt-2 text-sm font-medium text-emerald-600 dark:text-emerald-400 hover:underline">
+                {t('guides.promotions.learn_more')}
+                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
