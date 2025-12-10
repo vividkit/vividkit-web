@@ -75,12 +75,14 @@ While waiting for VividKit Desktop, master ClaudeKit through our comprehensive d
 
 ## 🛠️ Tech Stack (This Website)
 
-- **Framework**: Astro 5.x with Static Site Generation
-- **Styling**: Tailwind CSS v4
-- **Type Safety**: TypeScript with strict mode
-- **Interactivity**: Alpine.js
-- **i18n**: English & Vietnamese
-- **Deployment**: Vercel
+- **Framework**: Astro 5.x with Static Site Generation (SSG)
+- **Styling**: Tailwind CSS v4 with custom glassmorphism design system
+- **Type Safety**: TypeScript with strict mode and comprehensive path aliasing
+- **Interactivity**: Alpine.js 3.15.2 for lightweight client-side interactions
+- **i18n**: Built-in Astro i18n with English (default) and Vietnamese support
+- **Deployment**: Vercel with integrated analytics
+- **Performance**: Sharp for image optimization, LightningCSS for CSS minification
+- **Design System**: Custom glassmorphism UI with three-font typography system
 
 ## 🧞 Development Commands
 
@@ -90,6 +92,24 @@ While waiting for VividKit Desktop, master ClaudeKit through our comprehensive d
 | `npm run dev` | Start local dev server at `localhost:4321` |
 | `npm run build` | Build production site to `./dist/` |
 | `npm run preview` | Preview build locally |
+
+## 📁 Project Structure
+
+```
+vividkit-web/
+├── src/                    # Source code
+│   ├── components/         # Astro components (UI, sections, layouts, guides)
+│   ├── layouts/           # Page layouts (MainLayout, GuidesLayout)
+│   ├── pages/             # File-based routing (English + Vietnamese)
+│   ├── data/              # Content data (guides, features, navigation)
+│   ├── i18n/              # Translation utilities (en, vi)
+│   ├── scripts/           # JavaScript utilities
+│   ├── styles/            # Global styles and design system
+│   └── types/             # TypeScript type definitions
+├── docs/                  # Documentation files
+├── public/                # Static assets
+└── dist/                  # Build output
+```
 
 ## 🔗 Links
 

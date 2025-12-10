@@ -1,6 +1,6 @@
 ---
 import { useTranslations } from '@/i18n/utils';
-import { getLangFromUrl, type Language } from '@/i18n';
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
 import { subscriptionPromotions, tips } from '@/data/promotions';
 
 interface Props {
@@ -10,6 +10,7 @@ interface Props {
 const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
+const translatePath = useTranslatedPath(currentLang);
 
 // Color mapping for promotion cards
 const colorClasses = {
@@ -153,7 +154,7 @@ const colorClasses = {
             {t('guides.promotions.ccs_tip_desc')}
           </p>
           <a
-            href="/guides/ccs"
+            href={translatePath('/guides/ccs')}
             class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors"
           >
             {t('guides.promotions.learn_ccs')}
@@ -283,7 +284,7 @@ const colorClasses = {
                tip.description}
             </p>
             {tip.link && (
-              <a href={tip.link} class="inline-flex items-center gap-1 mt-2 text-sm font-medium text-emerald-600 dark:text-emerald-400 hover:underline">
+              <a href={translatePath(tip.link)} class="inline-flex items-center gap-1 mt-2 text-sm font-medium text-emerald-600 dark:text-emerald-400 hover:underline">
                 {t('guides.promotions.learn_more')}
                 <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M5 12h14M12 5l7 7-7 7"/>

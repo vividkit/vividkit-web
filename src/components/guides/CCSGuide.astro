@@ -1,6 +1,6 @@
 ---
 import { useTranslations } from '@/i18n/utils';
-import { getLangFromUrl, type Language } from '@/i18n';
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
 import PlatformPathSwitcher from './PlatformPathSwitcher.astro';
 
 interface Props {
@@ -10,6 +10,7 @@ interface Props {
 const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
+const translatePath = useTranslatedPath(currentLang);
 
 // Code blocks for copy functionality
 const glmSettingsCode = `{
@@ -1054,7 +1055,7 @@ const kimiSettingsCode = `{
             {t('ccs.guide.subscriptions_desc')}
           </p>
           <a
-            href="/guides/promotions"
+            href={translatePath('/guides/promotions')}
             class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-600 text-white text-sm font-medium hover:bg-amber-700 transition-colors"
           >
             {t('ccs.guide.view_subscriptions')}

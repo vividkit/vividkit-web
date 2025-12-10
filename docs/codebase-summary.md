@@ -1,6 +1,6 @@
 # VividKit Web - Codebase Summary
 
-**Last Updated:** December 9, 2025
+**Last Updated:** December 10, 2025
 **Build Tool:** Astro 5.16.4
 **Language:** TypeScript 5.9.3 (strict mode)
 **Generated from:** repomix-output.xml
@@ -17,26 +17,30 @@ vividkit-web/
 │   │   │   ├── Header.astro
 │   │   │   ├── Footer.astro
 │   │   │   └── AmbientBackground.astro
-│   │   ├── sections/               # Page section components (11)
+│   │   ├── sections/               # Page section components (12)
 │   │   │   ├── Hero.astro
 │   │   │   ├── Features.astro
 │   │   │   ├── Pricing.astro
 │   │   │   ├── WaitlistForm.astro
 │   │   │   ├── Commands.astro
 │   │   │   ├── ClaudeKit.astro
+│   │   │   ├── Promotions.astro
 │   │   │   └── ... (5 more)
-│   │   ├── guides/                 # Guide page components (10)
+│   │   ├── guides/                 # Guide page components (14)
 │   │   │   ├── CLIGuide.astro
 │   │   │   ├── CommandsGuide.astro
 │   │   │   ├── WorkflowsGuide.astro
-│   │   │   └── ... (7 more)
-│   │   └── ui/                     # Reusable UI components (6)
+│   │   │   ├── PromotionsGuide.astro
+│   │   │   └── ... (9 more)
+│   │   └── ui/                     # Reusable UI components (8)
 │   │       ├── Button.astro
 │   │       ├── Badge.astro
 │   │       ├── GlassCard.astro
 │   │       ├── Logo.astro
 │   │       ├── Input.astro
-│   │       └── Select.astro
+│   │       ├── Select.astro
+│   │       ├── Textarea.astro
+│   │       └── ThemeToggle.astro
 │   │
 │   ├── data/
 │   │   ├── constants.ts            # Site config (name, email, social)
@@ -44,12 +48,13 @@ vividkit-web/
 │   │   ├── navigation.ts           # Nav links, footer categories
 │   │   ├── pricing.ts              # 2 pricing tiers
 │   │   ├── commands.ts             # 3 command categories (60+ commands)
-│   │   ├── guides/                 # Guide content data (5)
-│   │   │   ├── cli-guide.ts
-│   │   │   ├── commands.ts
-│   │   │   ├── workflows.ts
-│   │   │   └── ... more guides
-│   │   └── vi/                     # Vietnamese translations
+│   │   ├── guides/
+│   │   │   ├── index.astro         # CLI Guide landing
+│   │   │   ├── commands.astro      # Commands reference
+│   │   │   ├── workflows.astro     # Workflows guide
+│   │   │   ├── promotions.astro    # Promotions guide
+│   │   │   └── ... (5 more routes)
+│   │   └── vi/                     # Vietnamese routes
 │   │       └── ... (all data files in Vietnamese)
 │   │
 │   ├── i18n/
@@ -61,7 +66,8 @@ vividkit-web/
 │   │
 │   ├── layouts/
 │   │   ├── MainLayout.astro        # Root HTML wrapper
-│   │   └── GuidesLayout.astro      # 2-column guide layout
+│   │   ├── GuidesLayout.astro      # 2-column guide layout
+│   │   └── GuideLayout.astro       # Single column guide layout
 │   │
 │   ├── pages/
 │   │   ├── index.astro             # Homepage
@@ -166,7 +172,7 @@ pages/ (Astro route rendering)
 browser (Static HTML/CSS/JS)
 ```
 
-### Type System (13 Core Interfaces)
+### Type System (15 Core Interfaces)
 
 | Interface | File | Purpose | Fields |
 |---|---|---|---|
@@ -183,6 +189,8 @@ browser (Static HTML/CSS/JS)
 | **SlashCommand** | types/index.ts | Slash command | command, description, difficulty, complexity |
 | **UIUXFeature** | types/index.ts | Design feature | title, description, items, color |
 | **UIUXExample** | types/index.ts | Example content | level, prompt, searchTerms |
+| **Promotion** | types/index.ts | Subscription deal | title, description, discount, url, code, badge |
+| **PromotionTip** | types/index.ts | Money-saving tip | title, content, category |
 
 ---
 
@@ -450,16 +458,16 @@ Each page defines:
 
 ### Content Volume
 - **Pages:** 21 (9 English + 9 Vietnamese + 3 special)
-- **Components:** 32 (2 layouts, 3 layout UI, 6 reusable UI, 11 sections, 10 guides)
-- **Data files:** 14 (5 core + 9 guides, bilingual)
+- **Components:** 33 (3 layouts, 3 layout UI, 8 reusable UI, 12 sections, 14 guides)
+- **Data files:** 16 (6 core + 10 guides, bilingual)
 - **Translation keys:** 866 (English) + Vietnamese variants
 - **CLI commands:** 60+ organized in 3 categories
 - **Workflows:** 5+ recommended patterns (beginner→advanced)
 
 ### Code Statistics
 - **TypeScript files:** 40+ (.ts, .tsx, .astro)
-- **Data modules:** 14 (structured objects)
-- **Type definitions:** 13 core interfaces
+- **Data modules:** 16 (structured objects)
+- **Type definitions:** 15 core interfaces
 - **Lines of code:** ~5,000 (excluding node_modules)
 
 ### Performance Baseline

@@ -1,7 +1,7 @@
 # VividKit Web - Code Standards & Development Guidelines
 
-**Last Updated:** December 9, 2025
-**Version:** 1.0.0
+**Last Updated:** December 10, 2025
+**Version:** 1.1.0
 **Enforced by:** TypeScript strict mode + Astro type checking
 
 ---
@@ -30,7 +30,7 @@ src/
 │   ├── layout/         # Header, Footer, global UI
 │   ├── sections/       # Homepage sections (Hero, Features, etc.)
 │   ├── guides/         # Guide page components
-│   └── ui/             # Atomic UI components (Button, Badge, etc.)
+│   └── ui/             # Atomic UI components (Button, Badge, ThemeToggle, etc.)
 ├── data/               # Content & configuration
 │   ├── constants.ts    # Site config
 │   ├── navigation.ts   # Nav structure
@@ -41,7 +41,7 @@ src/
 │   ├── index.ts        # i18n setup
 │   ├── utils.ts        # Helper functions
 │   └── locales/        # en.ts, vi.ts
-├── layouts/            # Page layouts (MainLayout, GuidesLayout)
+├── layouts/            # Page layouts (MainLayout, GuidesLayout, GuideLayout)
 ├── pages/              # Astro routes (auto-routed)
 │   ├── index.astro     # / route
 │   ├── guides/         # /guides/* routes
@@ -832,3 +832,35 @@ astro check          # Type check all files
 3. Should component documentation be auto-generated?
 4. What test framework would be preferred (Vitest, Jest)?
 5. Are there branch protection rules needed?
+
+---
+
+## Design System Guidelines
+
+### Glassmorphism UI
+
+**Core Principles:**
+- Semi-transparent backgrounds with backdrop blur
+- Subtle borders and shadows for depth
+- Consistent use of transparency across components
+- Gradient accents for visual interest
+
+**Implementation:**
+```astro
+<!-- ✓ CORRECT: Glassmorphism card -->
+<GlassCard variant="default" size="lg">
+  <h3>Content Title</h3>
+  <p>Content description</p>
+</GlassCard>
+```
+
+**Surface Colors:**
+- Light mode: rgba(255, 255, 255, 0.1) with backdrop-blur
+- Dark mode: rgba(0, 0, 0, 0.2) with backdrop-blur
+- Border: rgba(255, 255, 255, 0.2) for light, rgba(255, 255, 255, 0.1) for dark
+
+**Theme Toggle Component:**
+- Integrated with localStorage for persistence
+- System preference detection
+- Smooth transitions between themes
+- Accessible via keyboard navigation
