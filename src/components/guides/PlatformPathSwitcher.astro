@@ -254,6 +254,9 @@ const colors = colorConfig[color] || colorConfig.slate;
               inactiveTextClasses.forEach(cls => t.classList.add(cls));
             }
           });
+
+          // Dispatch custom event for other elements to react to platform change
+          document.dispatchEvent(new CustomEvent('platform-change', { detail: { platform } }));
         });
       });
 
@@ -264,6 +267,22 @@ const colors = colorConfig[color] || colorConfig.slate;
         platformTab.click();
       }
     });
+
+    // Listen for platform changes and update all platform-aware elements
+    document.addEventListener('platform-change', ((e: CustomEvent) => {
+      const platform = e.detail.platform;
+
+      // Update elements with data-macos/data-linux/data-windows attributes
+      document.querySelectorAll('[data-macos][data-linux][data-windows]').forEach(el => {
+        // Skip elements that are part of PlatformPathSwitcher (already handled)
+        if (el.classList.contains('platform-path')) return;
+
+        const value = el.getAttribute(`data-${platform}`);
+        if (value) {
+          el.textContent = value;
+        }
+      });
+    }) as EventListener);
   }
 
   function detectPlatform(): 'macos' | 'linux' | 'windows' {
