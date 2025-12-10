@@ -102,7 +102,13 @@ const colorConfig: Record<string, { bg: string; border: string; text: string; ac
 const colors = colorConfig[color] || colorConfig.slate;
 ---
 
-<div class={`platform-path-switcher ${variant === 'inline' ? 'inline-flex items-center gap-2' : ''}`} data-id={id}>
+<div
+  class={`platform-path-switcher ${variant === 'inline' ? 'inline-flex items-center gap-2' : ''}`}
+  data-id={id}
+  data-active-bg={colors.activeBg}
+  data-hover-bg={colors.hoverBg}
+  data-active-text={colors.text}
+>
   {variant === 'block' && (
     <div class="flex items-center gap-2 mb-2">
       {label && (
@@ -208,24 +214,13 @@ const colors = colorConfig[color] || colorConfig.slate;
 
       if (!pathElement) return;
 
-      // Get color classes from the first active tab (set in template)
-      const activeTab = switcher.querySelector('.platform-tab[data-active="true"]');
-      const activeClasses: string[] = [];
-      if (activeTab) {
-        activeTab.classList.forEach(cls => {
-          if (cls.includes('/20') || cls.includes('/10')) {
-            activeClasses.push(cls);
-          }
-        });
-      }
+      // Get color config from data attributes
+      const activeBgClasses = (switcher.getAttribute('data-active-bg') || '').split(' ').filter(Boolean);
+      const hoverBgClasses = (switcher.getAttribute('data-hover-bg') || '').split(' ').filter(Boolean);
+      const activeTextClasses = (switcher.getAttribute('data-active-text') || '').split(' ').filter(Boolean);
 
-      // Get text color from path element
-      const textColorClasses: string[] = [];
-      pathElement.classList.forEach(cls => {
-        if (cls.startsWith('text-') && !cls.includes('slate')) {
-          textColorClasses.push(cls);
-        }
-      });
+      // Inactive text classes
+      const inactiveTextClasses = ['text-slate-500', 'dark:text-slate-400'];
 
       tabs.forEach(tab => {
         tab.addEventListener('click', () => {
@@ -243,25 +238,20 @@ const colors = colorConfig[color] || colorConfig.slate;
             const isActive = t === tab;
             t.setAttribute('data-active', isActive.toString());
 
-            // Toggle active styling - remove all active-related classes first
-            t.classList.remove('text-slate-500', 'dark:text-slate-400', 'text-slate-400');
-            activeClasses.forEach(cls => t.classList.remove(cls));
-            textColorClasses.forEach(cls => t.classList.remove(cls));
+            // Remove all background and text color classes
+            activeBgClasses.forEach(cls => t.classList.remove(cls));
+            hoverBgClasses.forEach(cls => t.classList.remove(cls.replace('hover:', '')));
+            activeTextClasses.forEach(cls => t.classList.remove(cls));
+            inactiveTextClasses.forEach(cls => t.classList.remove(cls));
+            t.classList.remove('text-slate-400'); // inline variant
 
             if (isActive) {
               // Add active background and text color
-              activeClasses.forEach(cls => {
-                // Convert hover class to active class if needed
-                if (cls.includes('/10')) {
-                  t.classList.add(cls.replace('/10', '/20'));
-                } else {
-                  t.classList.add(cls);
-                }
-              });
-              textColorClasses.forEach(cls => t.classList.add(cls));
+              activeBgClasses.forEach(cls => t.classList.add(cls));
+              activeTextClasses.forEach(cls => t.classList.add(cls));
             } else {
               // Add inactive styling
-              t.classList.add('text-slate-500', 'dark:text-slate-400');
+              inactiveTextClasses.forEach(cls => t.classList.add(cls));
             }
           });
         });
