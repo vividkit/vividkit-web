@@ -1,6 +1,6 @@
 # VividKit Web - System Architecture Documentation
 
-**Last Updated:** December 9, 2025
+**Last Updated:** December 10, 2025
 **Architecture Type:** Static Site Generation (SSG)
 **Deployment:** Vercel Edge Network
 
@@ -120,6 +120,7 @@ Semantic:     Green (success), Red (error), Amber (warning)
 - Badge (4 variants × 2 sizes)
 - GlassCard (glassmorphism, 4 padding levels)
 - Input, Select, Textarea (form primitives)
+- ThemeToggle (dark/light mode switcher)
 - Logo (3 sizes)
 
 ---
@@ -402,34 +403,17 @@ window.addEventListener('scroll', () => {
 
 ---
 
-## Data Management
-
-### Data Layer (No Database)
-
-**Approach:**
-- Content stored in TypeScript files
-- Static generation at build time
-- Type safety via TypeScript interfaces
-- Version controlled with code
-
-**Data Files:**
-```
-src/data/
-├── constants.ts       → Site config, API keys
-├── features.ts        → Problem/solution content
-├── navigation.ts      → Nav structure
-├── pricing.ts         → Pricing tiers
-├── commands.ts        → Command categories
 ├── guides/
 │   ├── cli-guide.ts
 │   ├── commands.ts
 │   ├── workflows.ts
 │   ├── uiux-guide.ts
+│   ├── promotions.ts  → Subscription deals
 │   └── ...
 └── vi/               → Vietnamese content
 ```
 
-### Type System (13 Interfaces)
+### Type System (15 Interfaces)
 
 ```typescript
 // src/types/index.ts
@@ -452,6 +436,34 @@ export interface Command {
   description: string;
   category: 'planning' | 'implementation' | ...;
   color: string;
+}
+
+export interface UIUXFeature {
+  title: string;
+  description: string;
+  items: string[];
+  color: string;
+}
+
+export interface UIUXExample {
+  level: 'basic' | 'intermediate' | 'advanced';
+  prompt: string;
+  searchTerms: string[];
+}
+
+export interface Promotion {
+  title: string;
+  description: string;
+  discount: string;
+  url: string;
+  code: string;
+  badge: string;
+}
+
+export interface PromotionTip {
+  title: string;
+  content: string;
+  category: 'subscription' | 'workflow' | 'tool';
 }
 
 // ... 10 more interfaces
@@ -591,12 +603,13 @@ Images: 31536000 seconds (1 year)
 
 ```
 Atomic Level
-├── UI Elements (6 reusable)
+├── UI Elements (8 reusable)
 │   ├── Button (3 variants, 3 sizes)
 │   ├── Badge (4 variants, 2 sizes)
 │   ├── GlassCard (4 padding levels)
 │   ├── Logo (3 sizes)
 │   ├── Input, Select, Textarea
+│   ├── ThemeToggle (dark/light mode)
 │   └── ...
 
 Molecular Level
@@ -606,22 +619,27 @@ Molecular Level
 │   └── AmbientBackground (animated)
 
 Organism Level
-├── Section Components (11)
+├── Section Components (12)
 │   ├── Hero
 │   ├── Features
 │   ├── Pricing
 │   ├── WaitlistForm
+│   ├── Promotions
 │   └── ...
 
-├── Guide Components (10)
+├── Guide Components (14)
 │   ├── CLIGuide
 │   ├── CommandsGuide
 │   ├── WorkflowsGuide
+│   ├── PromotionsGuide
+│   ├── GuideHeader
+│   ├── GuideSection
 │   └── ...
 
 Template Level
 ├── MainLayout
 ├── GuidesLayout
+├── GuideLayout
 └── [individual pages]
 
 Page Level
@@ -629,6 +647,34 @@ Page Level
 ├── Guide pages
 └── [all routes]
 ```
+
+### Glassmorphism Design System
+
+**Glassmorphism Architecture:**
+- Semi-transparent surfaces with backdrop blur
+- Consistent opacity values across components
+- Gradient borders for depth and visual interest
+- Surface color tokens for light/dark themes
+
+**Implementation Pattern:**
+```css
+/* Glass surface */
+background: rgba(255, 255, 255, 0.1);
+backdrop-filter: blur(10px);
+border: 1px solid rgba(255, 255, 255, 0.2);
+
+/* Hover state */
+&:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+```
+
+**Theme Toggle Architecture:**
+- System preference detection
+- localStorage persistence
+- Smooth transitions with CSS
+- Keyboard accessible implementation
 
 ### Design Tokens
 

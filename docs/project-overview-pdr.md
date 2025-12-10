@@ -1,7 +1,7 @@
 # VividKit Web - Project Overview & Product Development Requirements
 
-**Last Updated:** December 9, 2025
-**Version:** 1.0.0
+**Last Updated:** December 10, 2025
+**Version:** 1.1.0
 **Status:** Active Development
 
 ---
@@ -14,6 +14,8 @@ Currently, the website serves as:
 1. **Product landing page** for the VividKit Desktop (currently in development)
 2. **Educational hub** with 60+ documented CLI commands and workflows
 3. **Skill guide repository** for ClaudeKit users
+4. **Glassmorphism design showcase** with custom UI components
+5. **Performance-optimized static site** with Core Web Vitals optimization
 
 ---
 
@@ -42,6 +44,8 @@ Make AI coding accessible to developers of all skill levels by providing intuiti
 - **Homepage** (`/`): Product showcase with hero, features, pricing, waitlist
 - **Vietnamese homepage** (`/vi/`): Full localized experience
 - **Responsive design:** Mobile-first across all screen sizes
+- **Glassmorphism design:** Custom UI with transparency and blur effects
+- **Performance optimized:** <2.5s LCP on 3G networks
 
 ### 2. Comprehensive CLI Documentation
 - **CLI Guide** (`/guides`): Installation, setup, basic concepts
@@ -53,6 +57,7 @@ Make AI coding accessible to developers of all skill levels by providing intuiti
   - Session Resume (`/guides/resume`)
   - Debugging Tips (`/guides/fix-logs`)
   - Permissions Management (`/guides/permissions`)
+  - Promotions Guide (`/guides/promotions`) - Subscription deals and tips
 
 ### 3. Internationalization (i18n)
 - **Supported languages:** English (default), Vietnamese
@@ -176,7 +181,7 @@ Make AI coding accessible to developers of all skill levels by providing intuiti
 - **Fonts:** DM Sans (body), Fira Code (monospace), Space Grotesk (display)
 - **Icons:** lucide-astro for consistent SVG icons
 - **Dark Mode:** Selector-based (manual toggle + system preference)
-- **Components:** 32 reusable components (6 UI, 11 sections, 10 guides, 2 layouts)
+- **Components:** 33 reusable components (8 UI, 12 sections, 14 guides, 3 layouts)
 
 ### Data Layer
 - **Source:** TypeScript data files (no database)
@@ -199,11 +204,12 @@ Make AI coding accessible to developers of all skill levels by providing intuiti
 
 ## Component Architecture
 
-### Layout Components (2)
+### Layout Components (3)
 | Component | Purpose | Key Props |
 |---|---|---|
 | **MainLayout** | Root HTML wrapper, navigation, footer | children, title, description |
 | **GuidesLayout** | 2-column guide layout (sidebar + content) | children, sidebar, currentPage |
+| **GuideLayout** | Single column guide layout | children, title, description |
 
 ### Layout UI (3)
 | Component | Purpose | Features |
@@ -212,7 +218,7 @@ Make AI coding accessible to developers of all skill levels by providing intuiti
 | **Footer** | Links, social, legal | Multi-column layout, dark mode aware |
 | **AmbientBackground** | Animated gradient backgrounds | Performance-optimized, parallax effect |
 
-### UI Components (6, Reusable)
+### UI Components (8, Reusable)
 | Component | Variants | Sizes | Usage |
 |---|---|---|---|
 | **Button** | primary, secondary, ghost | sm, md, lg | CTAs, form actions |
@@ -221,12 +227,14 @@ Make AI coding accessible to developers of all skill levels by providing intuiti
 | **Logo** | icon-only, with-text, full | sm, md, lg | Branding throughout |
 | **Input** | text, email, password | — | Form fields |
 | **Select** | — | — | Dropdown selections |
+| **Textarea** | — | — | Multi-line form fields |
+| **ThemeToggle** | — | — | Dark/light mode switcher |
 
-### Section Components (11)
-Hero, Features, Pricing, WaitlistForm, Commands, ClaudeKit, Problem, RecommendedWorkflows, SlashCommandsGuide, UIUXProMax, ClaudeKitCLIGuide
+### Section Components (12)
+Hero, Features, Pricing, WaitlistForm, Commands, ClaudeKit, Problem, RecommendedWorkflows, SlashCommandsGuide, UIUXProMax, ClaudeKitCLIGuide, Promotions
 
-### Guide Components (10)
-TabNavigation, TableOfContents, CLIGuide, CommandsGuide, WorkflowsGuide, UIUXGuide, CCSGuide, ResumeGuide, PermissionsGuide, FixLogsGuide
+### Guide Components (14)
+TabNavigation, TableOfContents, CLIGuide, CommandsGuide, WorkflowsGuide, UIUXGuide, CCSGuide, ResumeGuide, PermissionsGuide, FixLogsGuide, PromotionsGuide, GuideHeader, GuideSection, GuideStep
 
 ---
 
@@ -318,10 +326,14 @@ All pages duplicated with `/vi/` prefix for full localization.
 ### Current Phase (Q4 2024)
 - [x] Landing page with hero, features, pricing
 - [x] 60+ CLI commands reference
-- [x] 5+ comprehensive skill guides
+- [x] 6+ comprehensive skill guides
 - [x] English/Vietnamese i18n support
 - [x] Dark mode toggle
 - [x] Waitlist form integration
+- [x] Promotions guide for subscription deals
+- [x] Glassmorphism design system implementation
+- [x] Performance optimization (LCP <2.5s)
+- [x] Vercel Analytics integration
 
 ### Next Phase (Q1 2025)
 - [ ] VividKit Desktop MVP launch
