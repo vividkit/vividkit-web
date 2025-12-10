@@ -12,6 +12,7 @@
     "@fontsource/dm-sans": "^5.2.8",
     "@fontsource/fira-code": "^5.2.7",
     "@fontsource/space-grotesk": "^5.2.10",
+    "@vercel/analytics": "^1.6.1",
     "alpinejs": "^3.15.2",
     "astro": "^5.16.4",
     "lucide-astro": "^0.555.0",

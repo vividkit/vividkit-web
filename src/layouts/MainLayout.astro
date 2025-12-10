@@ -2,6 +2,7 @@
 import type { SEOMeta } from '@/types';
 import '@/styles/global.css';
 import type { Language } from '@/i18n';
+import Analytics from '@vercel/analytics/astro';
 
 interface Props extends SEOMeta {
   lang?: Language;
@@ -124,5 +125,6 @@ const structuredData = {
       // Fallback: initialize after a short delay if Alpine doesn't load
       setTimeout(initOtherScripts, 100);
     </script>
+    <Analytics mode="production" />
   </body>
 </html>
