@@ -1,0 +1,257 @@
+---
+/**
+ * PlatformPathSwitcher - A reusable component for displaying platform-specific paths
+ * Supports macOS, Linux, and Windows with tabbed UI for switching between platforms
+ */
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+  /** The path segment after home directory (e.g., ".claude/settings.json") */
+  pathAfterHome: string;
+  /** Optional custom label for the path */
+  label?: string;
+  /** Whether to show as inline code or block */
+  variant?: 'inline' | 'block';
+  /** Unique ID for this path switcher (for multiple instances on same page) */
+  id: string;
+  /** Color theme */
+  color?: 'emerald' | 'purple' | 'blue' | 'amber' | 'slate' | 'fuchsia' | 'cyan' | 'indigo';
+}
+
+const {
+  lang,
+  pathAfterHome,
+  label,
+  variant = 'block',
+  id,
+  color = 'slate'
+} = Astro.props;
+
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+// Generate platform-specific paths
+const paths = {
+  macos: `~/${pathAfterHome}`,
+  linux: `~/${pathAfterHome}`,
+  windows: `%USERPROFILE%\\${pathAfterHome.replace(/\//g, '\\')}`,
+};
+
+// Color configurations for different themes
+const colorConfig: Record<string, { bg: string; border: string; text: string; activeBg: string; hoverBg: string }> = {
+  emerald: {
+    bg: 'bg-emerald-500/10',
+    border: 'border-emerald-500/20',
+    text: 'text-emerald-600 dark:text-emerald-400',
+    activeBg: 'bg-emerald-500/20',
+    hoverBg: 'hover:bg-emerald-500/10',
+  },
+  purple: {
+    bg: 'bg-purple-500/10',
+    border: 'border-purple-500/20',
+    text: 'text-purple-600 dark:text-purple-400',
+    activeBg: 'bg-purple-500/20',
+    hoverBg: 'hover:bg-purple-500/10',
+  },
+  blue: {
+    bg: 'bg-blue-500/10',
+    border: 'border-blue-500/20',
+    text: 'text-blue-600 dark:text-blue-400',
+    activeBg: 'bg-blue-500/20',
+    hoverBg: 'hover:bg-blue-500/10',
+  },
+  amber: {
+    bg: 'bg-amber-500/10',
+    border: 'border-amber-500/20',
+    text: 'text-amber-600 dark:text-amber-400',
+    activeBg: 'bg-amber-500/20',
+    hoverBg: 'hover:bg-amber-500/10',
+  },
+  slate: {
+    bg: 'bg-slate-100 dark:bg-slate-800',
+    border: 'border-slate-200 dark:border-slate-700',
+    text: 'text-slate-700 dark:text-slate-300',
+    activeBg: 'bg-slate-200 dark:bg-slate-700',
+    hoverBg: 'hover:bg-slate-100 dark:hover:bg-slate-800',
+  },
+  fuchsia: {
+    bg: 'bg-fuchsia-500/10',
+    border: 'border-fuchsia-500/20',
+    text: 'text-fuchsia-600 dark:text-fuchsia-400',
+    activeBg: 'bg-fuchsia-500/20',
+    hoverBg: 'hover:bg-fuchsia-500/10',
+  },
+  cyan: {
+    bg: 'bg-cyan-500/10',
+    border: 'border-cyan-500/20',
+    text: 'text-cyan-600 dark:text-cyan-400',
+    activeBg: 'bg-cyan-500/20',
+    hoverBg: 'hover:bg-cyan-500/10',
+  },
+  indigo: {
+    bg: 'bg-indigo-500/10',
+    border: 'border-indigo-500/20',
+    text: 'text-indigo-600 dark:text-indigo-400',
+    activeBg: 'bg-indigo-500/20',
+    hoverBg: 'hover:bg-indigo-500/10',
+  },
+};
+
+const colors = colorConfig[color] || colorConfig.slate;
+---
+
+<div class={`platform-path-switcher ${variant === 'inline' ? 'inline-flex items-center gap-2' : ''}`} data-id={id}>
+  {variant === 'block' && (
+    <div class="flex items-center gap-2 mb-2">
+      {label && (
+        <span class="text-xs font-mono text-slate-500 dark:text-slate-400">
+          {label}
+        </span>
+      )}
+      <div class="flex gap-1 ml-auto">
+        <button
+          class={`platform-tab px-2 py-1 text-[10px] font-medium rounded transition-colors ${colors.activeBg} ${colors.text}`}
+          data-platform="macos"
+          data-active="true"
+        >
+          <span class="flex items-center gap-1">
+            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/>
+              <path d="M14.5 8.5l-5 3 5 3v-6z"/>
+            </svg>
+            macOS
+          </span>
+        </button>
+        <button
+          class={`platform-tab px-2 py-1 text-[10px] font-medium rounded transition-colors text-slate-500 dark:text-slate-400 ${colors.hoverBg}`}
+          data-platform="linux"
+          data-active="false"
+        >
+          <span class="flex items-center gap-1">
+            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.003 1.23-.269 2.26-.334.699-.058 1.574.267 2.577.2.025.134.063.198.114.333l.003.003c.391.778 1.113 1.132 1.884 1.071.771-.06 1.592-.536 2.257-1.306.631-.765 1.683-1.084 2.378-1.503.348-.199.629-.469.649-.853.023-.4-.2-.811-.714-1.376v-.097l-.003-.003c-.17-.2-.25-.535-.338-.926-.085-.401-.182-.786-.492-1.046h-.003c-.059-.054-.123-.067-.188-.135a.357.357 0 00-.19-.064c.431-1.278.264-2.55-.173-3.694-.533-1.41-1.465-2.638-2.175-3.483-.796-1.005-1.576-1.957-1.56-3.368.026-2.152.236-6.133-3.544-6.139zm.529 3.405h.013c.213 0 .396.062.584.198.19.135.33.332.438.533.105.259.158.459.166.724 0-.02.006-.04.006-.06v.105c.003.135-.034.273-.062.39-.058.22-.15.413-.257.59-.067.11-.135.21-.22.3-.09.083-.19.163-.297.223-.18.1-.38.162-.59.166h-.017l-.018.001c-.135-.003-.27-.027-.393-.063-.22-.052-.413-.15-.59-.257-.14-.1-.267-.21-.37-.34l-.062-.065-.06-.053a.595.595 0 01-.063-.097c-.073-.14-.12-.293-.141-.448-.023-.128-.034-.258-.026-.39v-.074c.01-.17.04-.332.093-.484.058-.169.142-.327.257-.456.228-.27.533-.402.857-.406zm-3.43.31c.267-.002.535.06.768.174.143.067.278.156.393.265.12.116.224.252.296.402.072.144.118.304.135.457.012.135.003.27-.025.395-.014.063-.027.124-.04.183-.03.113-.063.22-.11.32-.08.17-.189.32-.322.446-.13.12-.278.222-.44.29-.163.067-.34.106-.524.117h-.075c-.166-.006-.334-.03-.495-.084-.197-.067-.383-.168-.543-.296a.987.987 0 01-.29-.346c-.09-.16-.12-.34-.13-.513 0-.07.004-.133.01-.2.012-.12.034-.24.066-.357.07-.254.176-.506.323-.714.15-.22.34-.414.565-.554a1.2 1.2 0 01.438-.18c.126-.023.256-.034.39-.034zm5.163 1.675c.04 0 .083.004.124.013.18.036.334.145.444.32.05.07.09.146.12.223.03.085.05.175.06.267 0 .02.002.04.002.058 0 .02-.002.04-.004.06-.01.14-.045.274-.106.4a.843.843 0 01-.256.313c-.12.1-.26.165-.41.188-.15.03-.308.02-.45-.03a.64.64 0 01-.315-.21c-.07-.08-.12-.17-.15-.26-.04-.085-.05-.18-.05-.27v-.08c.01-.15.04-.297.11-.43a.67.67 0 01.245-.31c.1-.07.21-.12.33-.143.057-.01.116-.017.174-.017zm-3.73 2.755c.015 0 .027.003.04.008.08.017.163.06.232.12.067.057.124.127.166.203.04.07.065.15.075.23 0 .023.003.04.003.063v.04c-.01.09-.03.18-.07.257-.036.085-.09.157-.153.22-.07.057-.145.103-.23.13-.09.03-.18.04-.276.03a.426.426 0 01-.233-.09.532.532 0 01-.152-.17c-.04-.07-.063-.15-.073-.23 0-.023-.002-.05-.002-.073 0-.023.002-.047.005-.07.01-.13.05-.254.116-.36.06-.11.15-.2.256-.265.08-.043.17-.068.263-.073h.033zm3.03.22a.418.418 0 01.284.133c.073.063.13.14.164.22.04.087.06.18.056.273 0 .02-.003.04-.005.06-.01.08-.04.16-.076.23a.544.544 0 01-.15.19c-.06.05-.13.087-.2.11-.08.024-.16.033-.24.025-.08-.01-.16-.03-.23-.07a.51.51 0 01-.18-.14c-.05-.06-.08-.13-.11-.2a.504.504 0 01-.033-.23c.003-.02.005-.04.01-.06.01-.08.04-.16.08-.23.04-.08.1-.146.166-.2.063-.054.135-.096.214-.12a.437.437 0 01.25-.02z"/>
+            </svg>
+            Linux
+          </span>
+        </button>
+        <button
+          class={`platform-tab px-2 py-1 text-[10px] font-medium rounded transition-colors text-slate-500 dark:text-slate-400 ${colors.hoverBg}`}
+          data-platform="windows"
+          data-active="false"
+        >
+          <span class="flex items-center gap-1">
+            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/>
+            </svg>
+            Windows
+          </span>
+        </button>
+      </div>
+    </div>
+  )}
+
+  <div class={`bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-3 border border-slate-200 dark:border-slate-700 font-mono text-sm ${variant === 'inline' ? 'py-1 px-2' : ''}`}>
+    <code
+      class={`platform-path ${colors.text}`}
+      data-macos={paths.macos}
+      data-linux={paths.linux}
+      data-windows={paths.windows}
+    >
+      {paths.macos}
+    </code>
+  </div>
+
+  {variant === 'inline' && (
+    <div class="flex gap-1">
+      <button
+        class={`platform-tab px-1.5 py-0.5 text-[9px] font-medium rounded transition-colors ${colors.activeBg} ${colors.text}`}
+        data-platform="macos"
+        data-active="true"
+        title="macOS"
+      >
+        <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2z"/>
+        </svg>
+      </button>
+      <button
+        class={`platform-tab px-1.5 py-0.5 text-[9px] font-medium rounded transition-colors text-slate-400 ${colors.hoverBg}`}
+        data-platform="linux"
+        data-active="false"
+        title="Linux"
+      >
+        <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2z"/>
+        </svg>
+      </button>
+      <button
+        class={`platform-tab px-1.5 py-0.5 text-[9px] font-medium rounded transition-colors text-slate-400 ${colors.hoverBg}`}
+        data-platform="windows"
+        data-active="false"
+        title="Windows"
+      >
+        <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/>
+        </svg>
+      </button>
+    </div>
+  )}
+</div>
+
+<script>
+  // Initialize platform path switchers
+  function initPlatformSwitchers() {
+    document.querySelectorAll('.platform-path-switcher').forEach(switcher => {
+      const tabs = switcher.querySelectorAll('.platform-tab');
+      const pathElement = switcher.querySelector('.platform-path');
+
+      if (!pathElement) return;
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const platform = tab.getAttribute('data-platform');
+          if (!platform) return;
+
+          // Update path display
+          const newPath = pathElement.getAttribute(`data-${platform}`);
+          if (newPath) {
+            pathElement.textContent = newPath;
+          }
+
+          // Update tab states
+          tabs.forEach(t => {
+            const isActive = t === tab;
+            t.setAttribute('data-active', isActive.toString());
+
+            // Toggle active styling
+            if (isActive) {
+              t.classList.remove('text-slate-500', 'dark:text-slate-400');
+            } else {
+              t.classList.add('text-slate-500', 'dark:text-slate-400');
+            }
+          });
+        });
+      });
+
+      // Auto-detect platform on load
+      const platform = detectPlatform();
+      const platformTab = switcher.querySelector(`[data-platform="${platform}"]`) as HTMLElement;
+      if (platformTab) {
+        platformTab.click();
+      }
+    });
+  }
+
+  function detectPlatform(): 'macos' | 'linux' | 'windows' {
+    const userAgent = navigator.userAgent.toLowerCase();
+    if (userAgent.includes('win')) return 'windows';
+    if (userAgent.includes('mac')) return 'macos';
+    return 'linux';
+  }
+
+  // Run on page load
+  document.addEventListener('DOMContentLoaded', initPlatformSwitchers);
+  // Also run on Astro page transitions
+  document.addEventListener('astro:page-load', initPlatformSwitchers);
+</script>

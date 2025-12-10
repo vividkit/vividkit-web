@@ -1,6 +1,7 @@
 ---
 import { useTranslations } from '@/i18n/utils';
 import { getLangFromUrl, type Language } from '@/i18n';
+import PlatformPathSwitcher from './PlatformPathSwitcher.astro';
 
 const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
@@ -59,10 +60,17 @@ const t = useTranslations(currentLang);
         <p class="text-slate-600 dark:text-slate-400 mb-4">
           {t('resume.guide.step1.desc')}
         </p>
-        <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 font-mono text-sm text-slate-700 dark:text-slate-300 overflow-x-auto">
+        <PlatformPathSwitcher
+          lang={currentLang}
+          pathAfterHome=".claude/history.jsonl"
+          label={t('resume.guide.step1.file_label') || 'File:'}
+          id="resume-history-path"
+          color="slate"
+        />
+        <div class="mt-3 bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 font-mono text-sm text-slate-700 dark:text-slate-300 overflow-x-auto">
           <div class="flex items-center gap-2 mb-2 text-slate-700 dark:text-slate-300">
             <span class="text-slate-500 select-none">$</span>
-            <span class="select-all">cat ~/.claude/history.jsonl</span>
+            <span class="select-all platform-cat-cmd" data-macos="cat ~/.claude/history.jsonl" data-linux="cat ~/.claude/history.jsonl" data-windows="type %USERPROFILE%\.claude\history.jsonl">cat ~/.claude/history.jsonl</span>
           </div>
           <div class="text-slate-500 italic">{t('resume.guide.step1.comment')}</div>
           <div class="mt-2 text-emerald-600 dark:text-green-400 font-mono text-xs break-all">
@@ -158,3 +166,26 @@ const t = useTranslations(currentLang);
     </div>
   </div>
 </div>
+
+<script>
+  function initResumeGuide() {
+    // Auto-update platform-specific command
+    function detectPlatform(): 'macos' | 'linux' | 'windows' {
+      const userAgent = navigator.userAgent.toLowerCase();
+      if (userAgent.includes('win')) return 'windows';
+      if (userAgent.includes('mac')) return 'macos';
+      return 'linux';
+    }
+
+    const platform = detectPlatform();
+    document.querySelectorAll('.platform-cat-cmd').forEach(el => {
+      const cmd = el.getAttribute(`data-${platform}`);
+      if (cmd) {
+        el.textContent = cmd;
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initResumeGuide);
+  document.addEventListener('astro:page-load', initResumeGuide);
+</script>
