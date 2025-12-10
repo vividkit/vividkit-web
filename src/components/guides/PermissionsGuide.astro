@@ -344,7 +344,72 @@ const option2Code = `{
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
+  // Initialize platform path switchers
+  function initPermissionsPlatformSwitchers() {
+    document.querySelectorAll('.platform-path-switcher').forEach(switcher => {
+      const tabs = switcher.querySelectorAll('.platform-tab');
+      const pathElement = switcher.querySelector('.platform-path');
+
+      if (!pathElement) return;
+
+      // Get color config from data attributes
+      const activeBgClasses = (switcher.getAttribute('data-active-bg') || '').split(' ').filter(Boolean);
+      const activeTextClasses = (switcher.getAttribute('data-active-text') || '').split(' ').filter(Boolean);
+
+      // Inactive text classes
+      const inactiveTextClasses = ['text-slate-500', 'dark:text-slate-400'];
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const platform = tab.getAttribute('data-platform');
+          if (!platform) return;
+
+          // Update path display
+          const newPath = pathElement.getAttribute(`data-${platform}`);
+          if (newPath) {
+            pathElement.textContent = newPath;
+          }
+
+          // Update tab states
+          tabs.forEach(t => {
+            const isActive = t === tab;
+            t.setAttribute('data-active', isActive.toString());
+
+            // Remove all background and text color classes
+            activeBgClasses.forEach(cls => t.classList.remove(cls));
+            activeTextClasses.forEach(cls => t.classList.remove(cls));
+            inactiveTextClasses.forEach(cls => t.classList.remove(cls));
+
+            if (isActive) {
+              // Add active background and text color
+              activeBgClasses.forEach(cls => t.classList.add(cls));
+              activeTextClasses.forEach(cls => t.classList.add(cls));
+            } else {
+              // Add inactive styling
+              inactiveTextClasses.forEach(cls => t.classList.add(cls));
+            }
+          });
+        });
+      });
+
+      // Auto-detect platform on load
+      const platform = detectPlatform();
+      const platformTab = switcher.querySelector(`[data-platform="${platform}"]`) as HTMLElement;
+      if (platformTab) {
+        platformTab.click();
+      }
+    });
+  }
+
+  function detectPlatform(): 'macos' | 'linux' | 'windows' {
+    const userAgent = navigator.userAgent.toLowerCase();
+    if (userAgent.includes('win')) return 'windows';
+    if (userAgent.includes('mac')) return 'macos';
+    return 'linux';
+  }
+
+  // Copy button functionality
+  function initCopyButtons() {
     document.querySelectorAll('.copy-btn').forEach(btn => {
       btn.addEventListener('click', async () => {
         const code = btn.getAttribute('data-code');
@@ -370,5 +435,15 @@ const option2Code = `{
         }
       });
     });
+  }
+
+  // Initialize all on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    initPermissionsPlatformSwitchers();
+    initCopyButtons();
+  });
+  document.addEventListener('astro:page-load', () => {
+    initPermissionsPlatformSwitchers();
+    initCopyButtons();
   });
 </script>
