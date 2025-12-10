@@ -354,6 +354,40 @@ export default {
   'guides.fix_logs.description': 'Debugging and error resolution',
   'guides.resume.title': 'Resume Guide',
   'guides.resume.description': 'Project resumption workflows',
+  'guides.promotions.title': 'Promotions',
+  'guides.promotions.description': 'AI service deals and promotions',
+
+  // Promotions Guide
+  'guides.promotions.page_title': 'AI Promotions & Deals',
+  'guides.promotions.tagline': 'Save money, maximize your AI coding limits',
+  'guides.promotions.description_text': 'We curate the best deals and promotions from AI providers. Subscribe smart, code more, pay less.',
+  'guides.promotions.why_title': 'Why Check These Deals?',
+  'guides.promotions.limit_problem': 'Usage Limits Hurt',
+  'guides.promotions.limit_problem_desc': 'With just one Pro account, you\'ll hit rate limits mid-task and lose your flow. Nothing kills productivity like waiting for limits to reset while your mental context fades.',
+  'guides.promotions.solution': 'Subscribe Smart',
+  'guides.promotions.solution_desc': 'Grab these limited-time deals to get premium AI access at discount prices. Stack with CCS to switch providers when one hits limits.',
+  'guides.promotions.ccs_tip_title': 'Pro Tip: Use CCS to Switch Providers',
+  'guides.promotions.ccs_tip_desc': 'With CCS (Claude Code Switch), you can instantly switch between Claude, GLM, Kimi, Gemini, and more. When one service hits limits, just switch to another!',
+  'guides.promotions.learn_ccs': 'Learn about CCS',
+  'guides.promotions.options_title': 'Current Promotions',
+  'guides.promotions.recommended': 'HOT DEAL',
+  'guides.promotions.learn_more': 'Learn more',
+  'guides.promotions.new_account_note': '* Promotional prices only available for new accounts',
+  'guides.promotions.tips_title': 'Maximize Your Savings',
+
+  // Promotions Data
+  'promotions.claude_pro.tagline': '50% off for the first 3 months ($10/month instead of $20)',
+  'promotions.zai.tagline': 'Christmas 2025: 50% first-purchase + extra 10-20% off + 10% referral bonus',
+  'promotions.tips.use_ccs.title': 'Use CCS to switch between providers',
+  'promotions.tips.use_ccs.desc': 'Maximize your usage limits by switching between Claude, GLM, Kimi, and other providers using CCS.',
+  'promotions.tips.stack.title': 'Stack multiple discounts',
+  'promotions.tips.stack.desc': 'Z.AI Christmas deal stacks: 50% first purchase + extra 10-20% + 10% referral = massive savings!',
+  'promotions.tips.links.title': 'Use promotion signup links',
+  'promotions.tips.links.desc': 'Claude Pro has special signup links that give you $10/month for the first 3 months.',
+  'promotions.tips.free.title': 'Maximize free tiers first',
+  'promotions.tips.free.desc': 'Start with free tiers on each platform before subscribing. Many offer generous free usage.',
+  'promotions.budget_note.title': 'Budget Note',
+  'promotions.budget_note.desc': 'This guide is optimized for developers with a limited budget who want to maximize their AI coding limits. If budget isn\'t an issue, we recommend upgrading to Claude Max Plan (5x, 20x), Team Plan, or Enterprise Plan for higher limits.',
 
   // Common
   'common.loading': 'Loading...',
@@ -688,6 +722,11 @@ export default {
   'ccs.guide.documentation': 'Documentation',
   'ccs.guide.report_issues': 'Report Issues',
   'ccs.guide.troubleshooting': 'Troubleshooting',
+
+  // CCS Promotions Cross-Link
+  'ccs.guide.subscriptions_title': 'Hot Deals Available!',
+  'ccs.guide.subscriptions_desc': 'Get Claude Pro at 50% off ($10/month) and Z.AI Christmas deals with stacking discounts. Limited time offers to maximize your AI coding limits.',
+  'ccs.guide.view_subscriptions': 'View Current Deals',
 
   // Key Takeaway
   'ccs.guide.takeaway_title': 'Key Takeaway:',

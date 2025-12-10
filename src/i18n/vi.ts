@@ -136,6 +136,40 @@ export default {
   'guides.fix_logs.description': 'Debug và xử lý lỗi nhanh chóng',
   'guides.resume.title': 'Tiếp Tục Phiên',
   'guides.resume.description': 'Khôi phục context từ phiên trước',
+  'guides.promotions.title': 'Khuyến Mãi',
+  'guides.promotions.description': 'Ưu đãi và khuyến mãi dịch vụ AI',
+
+  // Promotions Guide
+  'guides.promotions.page_title': 'Khuyến Mãi & Ưu Đãi AI',
+  'guides.promotions.tagline': 'Tiết kiệm chi phí, tối đa giới hạn AI',
+  'guides.promotions.description_text': 'Chúng tôi tổng hợp các deal và khuyến mãi tốt nhất từ các nhà cung cấp AI. Đăng ký thông minh, code nhiều hơn, trả ít hơn.',
+  'guides.promotions.why_title': 'Tại Sao Nên Xem Các Deal Này?',
+  'guides.promotions.limit_problem': 'Giới Hạn Gây Khó Chịu',
+  'guides.promotions.limit_problem_desc': 'Chỉ với một tài khoản Pro, bạn sẽ gặp rate limit giữa chừng và mất mạch làm việc (flow). Không gì giết chết năng suất bằng việc phải chờ reset limit trong khi context trong đầu dần biến mất.',
+  'guides.promotions.solution': 'Đăng Ký Thông Minh',
+  'guides.promotions.solution_desc': 'Chớp các deal giới hạn thời gian để có quyền truy cập AI cao cấp với giá ưu đãi. Kết hợp CCS để chuyển provider khi một cái hết limit.',
+  'guides.promotions.ccs_tip_title': 'Pro Tip: Dùng CCS Để Chuyển Provider',
+  'guides.promotions.ccs_tip_desc': 'Với CCS (Claude Code Switch), bạn có thể chuyển tức thì giữa Claude, GLM, Kimi, Gemini và hơn thế. Khi một dịch vụ hết limit, chỉ cần chuyển sang dịch vụ khác!',
+  'guides.promotions.learn_ccs': 'Tìm hiểu về CCS',
+  'guides.promotions.options_title': 'Khuyến Mãi Hiện Có',
+  'guides.promotions.recommended': 'DEAL HOT',
+  'guides.promotions.learn_more': 'Tìm hiểu thêm',
+  'guides.promotions.new_account_note': '* Giá khuyến mãi chỉ áp dụng cho tài khoản mới',
+  'guides.promotions.tips_title': 'Tối Đa Hóa Tiết Kiệm',
+
+  // Promotions Data
+  'promotions.claude_pro.tagline': 'Giảm 50% cho 3 tháng đầu ($10/tháng thay vì $20)',
+  'promotions.zai.tagline': 'Giáng sinh 2025: 50% lần đầu mua + giảm thêm 10-20% + 10% thưởng giới thiệu',
+  'promotions.tips.use_ccs.title': 'Dùng CCS để chuyển đổi nhà cung cấp',
+  'promotions.tips.use_ccs.desc': 'Tối đa hóa giới hạn sử dụng bằng cách chuyển đổi giữa Claude, GLM, Kimi, và các nhà cung cấp khác sử dụng CCS.',
+  'promotions.tips.stack.title': 'Cộng dồn nhiều ưu đãi',
+  'promotions.tips.stack.desc': 'Deal Giáng sinh Z.AI cộng dồn: 50% lần đầu + thêm 10-20% + 10% giới thiệu = tiết kiệm cực lớn!',
+  'promotions.tips.links.title': 'Sử dụng link đăng ký khuyến mãi',
+  'promotions.tips.links.desc': 'Claude Pro có các link đăng ký đặc biệt giúp bạn chỉ phải trả $10/tháng trong 3 tháng đầu.',
+  'promotions.tips.free.title': 'Tận dụng các gói miễn phí trước',
+  'promotions.tips.free.desc': 'Bắt đầu với các gói miễn phí trên từng nền tảng trước khi đăng ký trả phí. Nhiều nơi cung cấp lượng dùng miễn phí hào phóng.',
+  'promotions.budget_note.title': 'Lưu Ý Về Ngân Sách',
+  'promotions.budget_note.desc': 'Hướng dẫn này được tối ưu cho các developer có ngân sách hạn chế nhưng muốn tối đa hóa giới hạn coding AI. Nếu ngân sách không phải là vấn đề, chúng tôi khuyên bạn nên nâng cấp lên Claude Max Plan (5x, 20x), Team Plan, hoặc Enterprise Plan để có giới hạn cao hơn.',
 
   // Common
   'common.loading': 'Đang tải...',
@@ -695,6 +729,11 @@ export default {
   'ccs.guide.documentation': 'Tài Liệu',
   'ccs.guide.report_issues': 'Báo Lỗi',
   'ccs.guide.troubleshooting': 'Khắc Phục',
+
+  // CCS Promotions Cross-Link
+  'ccs.guide.subscriptions_title': 'Deal Hot Đang Có!',
+  'ccs.guide.subscriptions_desc': 'Claude Pro giảm 50% ($10/tháng) và Z.AI deal Giáng sinh với nhiều ưu đãi chồng. Khuyến mãi có hạn để tối đa giới hạn AI coding.',
+  'ccs.guide.view_subscriptions': 'Xem Các Deal',
 
   // Key Takeaway
   'ccs.guide.takeaway_title': 'Điểm Mấu Chốt:',
