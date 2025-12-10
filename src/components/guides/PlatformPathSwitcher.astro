@@ -208,6 +208,25 @@ const colors = colorConfig[color] || colorConfig.slate;
 
       if (!pathElement) return;
 
+      // Get color classes from the first active tab (set in template)
+      const activeTab = switcher.querySelector('.platform-tab[data-active="true"]');
+      const activeClasses: string[] = [];
+      if (activeTab) {
+        activeTab.classList.forEach(cls => {
+          if (cls.includes('/20') || cls.includes('/10')) {
+            activeClasses.push(cls);
+          }
+        });
+      }
+
+      // Get text color from path element
+      const textColorClasses: string[] = [];
+      pathElement.classList.forEach(cls => {
+        if (cls.startsWith('text-') && !cls.includes('slate')) {
+          textColorClasses.push(cls);
+        }
+      });
+
       tabs.forEach(tab => {
         tab.addEventListener('click', () => {
           const platform = tab.getAttribute('data-platform');
@@ -224,10 +243,24 @@ const colors = colorConfig[color] || colorConfig.slate;
             const isActive = t === tab;
             t.setAttribute('data-active', isActive.toString());
 
-            // Toggle active styling
+            // Toggle active styling - remove all active-related classes first
+            t.classList.remove('text-slate-500', 'dark:text-slate-400', 'text-slate-400');
+            activeClasses.forEach(cls => t.classList.remove(cls));
+            textColorClasses.forEach(cls => t.classList.remove(cls));
+
             if (isActive) {
-              t.classList.remove('text-slate-500', 'dark:text-slate-400');
+              // Add active background and text color
+              activeClasses.forEach(cls => {
+                // Convert hover class to active class if needed
+                if (cls.includes('/10')) {
+                  t.classList.add(cls.replace('/10', '/20'));
+                } else {
+                  t.classList.add(cls);
+                }
+              });
+              textColorClasses.forEach(cls => t.classList.add(cls));
             } else {
+              // Add inactive styling
               t.classList.add('text-slate-500', 'dark:text-slate-400');
             }
           });
