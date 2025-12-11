@@ -144,6 +144,16 @@
     box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3), 0 4px 6px -4px rgba(37, 99, 235, 0.3);
   }
 
+  .cta-button-emerald {
+    background: linear-gradient(135deg, #059669, #14b8a6);
+    @apply transition-all duration-300 ease-out text-white shadow-lg shadow-emerald-500/20;
+  }
+
+  .cta-button-emerald:hover {
+    @apply -translate-y-0.5;
+    box-shadow: 0 10px 15px -3px rgba(5, 150, 105, 0.3), 0 4px 6px -4px rgba(5, 150, 105, 0.3);
+  }
+
   .feature-card {
     @apply transition-all duration-300 ease-out;
   }

@@ -13,6 +13,14 @@ export default {
 
   // Guides Sidebar
   'guides.sidebar.title': 'HƯỚNG DẪN & MẸO',
+  'guides.sidebar.purchase_notice.title': 'Cần Mua ClaudeKit',
+  'guides.sidebar.purchase_notice.desc': 'Mua ClaudeKit để sử dụng các tính năng trong hướng dẫn này.',
+  'guides.sidebar.purchase_notice.cta': 'Mua ClaudeKit',
+
+  // CLI Guide Purchase Notice
+  'guides.cli.purchase_notice.title': 'Cần Mua ClaudeKit',
+  'guides.cli.purchase_notice.desc': 'Lưu ý: ClaudeKit CLI là công cụ miễn phí giúp cài đặt các kit. Engineer Kit và Marketing Kit là sản phẩm trả phí cần mua riêng.',
+  'guides.cli.purchase_notice.cta': 'Mua ClaudeKit (Giảm 20%)',
 
   // What is ClaudeKit Guide
   'guides.what_is_claudekit.title': 'Giới Thiệu ClaudeKit',
@@ -74,6 +82,9 @@ export default {
   'guides.what_is_claudekit.subscription_notice_title': 'Quan trọng:',
   'guides.what_is_claudekit.subscription_notice_desc': 'ClaudeKit là sản phẩm trả phí và KHÔNG bao gồm AI models. Bạn cần mua ClaudeKit riêng VÀ đăng ký gói Claude (từ Anthropic) để sử dụng các tính năng AI.',
   'guides.what_is_claudekit.get_claudekit_discount': 'Mua ClaudeKit (Giảm 20%)',
+  'guides.what_is_claudekit.cli_setup_title': 'Sẵn Sàng Bắt Đầu?',
+  'guides.what_is_claudekit.cli_setup_desc': 'Sau khi mua ClaudeKit, bạn có thể cài đặt qua công cụ CLI. Hướng dẫn chi tiết của chúng tôi sẽ dẫn bạn qua từng bước.',
+  'guides.what_is_claudekit.cli_setup_cta': 'Xem Hướng Dẫn Cài Đặt CLI',
 
   // Hero section
   'hero.badge': 'Desktop App Sắp Ra Mắt',
