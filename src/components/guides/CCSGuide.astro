@@ -98,7 +98,7 @@ const kimiSettingsCode = `{
       <p class="text-slate-700 dark:text-slate-300">
         {t('ccs.guide.solution_desc')}
       </p>
-      <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm space-y-3">
+      <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm space-y-3">
         <div class="text-slate-500 text-xs mb-2">{t('ccs.guide.solution_example_label')}</div>
         <div class="flex items-start gap-2">
           <span class="text-slate-500">#</span>
@@ -123,15 +123,15 @@ const kimiSettingsCode = `{
   </div>
 
   <!-- Installation Section -->
-  <div class="glass-card rounded-xl border-amber-200 dark:border-amber-500/30 overflow-hidden">
-    <div class="p-6 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border-b border-amber-200 dark:border-slate-800">
+  <div class="glass-card rounded-xl border-slate-200 dark:border-slate-700 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border-b border-slate-200 dark:border-slate-800">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div class="flex items-center gap-3 mb-2">
-            <div class="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center font-bold text-amber-600 dark:text-amber-400 border-2 border-amber-500/50">
+            <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center font-bold text-blue-600 dark:text-blue-400 border-2 border-blue-500/50">
               1
             </div>
-            <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400">
+            <h3 class="text-xl font-bold text-slate-800 dark:text-slate-200">
               {t('ccs.guide.install_title')}
             </h3>
           </div>
@@ -140,19 +140,19 @@ const kimiSettingsCode = `{
           </p>
         </div>
         <a href="https://github.com/kaitranntt/ccs" target="_blank" rel="noopener noreferrer"
-           class="flex items-center gap-3 px-4 py-2 rounded-xl bg-white/60 dark:bg-black/20 border border-amber-200/50 dark:border-amber-900/30 hover:bg-white/80 dark:hover:bg-black/30 hover:scale-105 transition-all group shadow-sm shrink-0">
-           <svg class="w-5 h-5 text-slate-600 dark:text-slate-400 group-hover:text-black dark:group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="currentColor">
+           class="flex items-center gap-3 px-4 py-2 rounded-xl bg-white/60 dark:bg-black/20 border border-slate-200/50 dark:border-slate-700/30 hover:bg-white/80 dark:hover:bg-black/30 hover:scale-105 transition-all group shadow-sm shrink-0">
+           <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 group-hover:text-black dark:group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="currentColor">
               <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path>
            </svg>
            <div class="flex flex-col">
-             <span class="text-[10px] uppercase tracking-wider font-bold text-amber-600/60 dark:text-amber-400/60 leading-none mb-0.5">{t('ccs.guide.created_by')}</span>
-             <span class="text-sm font-bold text-slate-800 dark:text-slate-200 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors leading-none">@kaitranntt</span>
+             <span class="text-[10px] uppercase tracking-wider font-bold text-slate-500/60 dark:text-slate-400/60 leading-none mb-0.5">{t('ccs.guide.created_by')}</span>
+             <span class="text-sm font-bold text-slate-800 dark:text-slate-200 group-hover:text-slate-600 dark:group-hover:text-slate-300 transition-colors leading-none">@kaitranntt</span>
            </div>
         </a>
       </div>
     </div>
     <div class="p-6">
-      <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm">
+      <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm">
         <div class="flex items-start gap-2 text-slate-700 dark:text-slate-300">
           <span class="text-emerald-600 dark:text-emerald-400">$</span>
           <div class="flex-1">
@@ -166,13 +166,13 @@ const kimiSettingsCode = `{
   </div>
 
   <!-- Quick Start Section -->
-  <div class="glass-card rounded-xl border-blue-200 dark:border-blue-500/30 overflow-hidden">
-    <div class="p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border-b border-blue-200 dark:border-slate-800">
+  <div class="glass-card rounded-xl border-slate-200 dark:border-slate-700 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border-b border-slate-200 dark:border-slate-800">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center font-bold text-blue-600 dark:text-blue-400 border-2 border-blue-500/50">
           2
         </div>
-        <h3 class="text-xl font-bold text-blue-600 dark:text-blue-400">
+        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-200">
           {t('ccs.guide.quickstart_title')}
         </h3>
       </div>
@@ -180,14 +180,14 @@ const kimiSettingsCode = `{
     <div class="p-6 space-y-6">
       <!-- Basic Usage -->
       <div>
-        <h4 class="text-sm font-bold text-blue-600 dark:text-blue-400 mb-3 flex items-center gap-2">
+        <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3 flex items-center gap-2">
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polyline points="4 17 10 11 4 5"/>
             <line x1="12" y1="19" x2="20" y2="19"/>
           </svg>
           {t('ccs.guide.basic_usage_title')}
         </h4>
-        <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm space-y-2">
+        <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm space-y-2">
           <div class="flex items-center gap-4">
             <code class="text-slate-700 dark:text-slate-300">ccs</code>
             <span class="text-slate-500 text-xs"># {t('ccs.guide.basic_claude')}</span>
@@ -205,7 +205,7 @@ const kimiSettingsCode = `{
 
       <!-- Delegation with -p flag -->
       <div>
-        <h4 class="text-sm font-bold text-blue-600 dark:text-blue-400 mb-3 flex items-center gap-2">
+        <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3 flex items-center gap-2">
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
           </svg>
@@ -214,7 +214,7 @@ const kimiSettingsCode = `{
         <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">
           {t('ccs.guide.delegation_desc')}
         </p>
-        <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm space-y-3">
+        <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm space-y-3">
           <div>
             <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.delegation_example1_label')}</div>
             <code class="text-amber-600 dark:text-amber-400">ccs glm -p "fix linting errors in src/"</code>
@@ -232,7 +232,7 @@ const kimiSettingsCode = `{
 
       <!-- Multi-Account Setup for OAuth Providers -->
       <div>
-        <h4 class="text-sm font-bold text-blue-600 dark:text-blue-400 mb-3 flex items-center gap-2">
+        <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3 flex items-center gap-2">
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
             <circle cx="9" cy="7" r="4"/>
@@ -243,7 +243,7 @@ const kimiSettingsCode = `{
         <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">
           {t('ccs.guide.multiaccount_oauth_desc')}
         </p>
-        <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm space-y-3">
+        <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm space-y-3">
           <div class="text-slate-500 text-xs"># {t('ccs.guide.multiaccount_first_account')}</div>
           <div>ccs gemini --auth</div>
           <div class="border-t border-slate-200 dark:border-slate-700 pt-3 mt-3">
@@ -266,7 +266,7 @@ const kimiSettingsCode = `{
 
         <!-- Account Storage Note -->
         <div class="mt-4 p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
-          <p class="text-xs text-blue-700 dark:text-blue-300 flex items-start gap-2">
+          <p class="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
             <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="12" cy="12" r="10"/>
               <path d="M12 16v-4M12 8h.01"/>
@@ -286,7 +286,7 @@ const kimiSettingsCode = `{
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
             <!-- Terminal 1 -->
-            <div class="rounded-lg bg-slate-50 dark:bg-[#0D0D0D] border border-slate-200 dark:border-slate-800 p-3 font-mono text-xs shadow-sm hover:border-emerald-500/30 transition-colors group">
+            <div class="rounded-lg bg-white dark:bg-[#0D0D0D] border border-slate-200 dark:border-slate-800 p-3 font-mono text-xs shadow-sm hover:border-emerald-500/30 transition-colors group">
               <div class="text-slate-500 mb-2 flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-2">
                 <span class="flex items-center gap-1.5">
                   <span class="w-2 h-2 rounded-full bg-slate-200 dark:bg-slate-700 group-hover:bg-emerald-500/50 transition-colors"></span>
@@ -300,7 +300,7 @@ const kimiSettingsCode = `{
             </div>
 
             <!-- Terminal 2 -->
-            <div class="rounded-lg bg-slate-50 dark:bg-[#0D0D0D] border border-slate-200 dark:border-slate-800 p-3 font-mono text-xs shadow-sm hover:border-amber-500/30 transition-colors group">
+            <div class="rounded-lg bg-white dark:bg-[#0D0D0D] border border-slate-200 dark:border-slate-800 p-3 font-mono text-xs shadow-sm hover:border-amber-500/30 transition-colors group">
               <div class="text-slate-500 mb-2 flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-2">
                  <span class="flex items-center gap-1.5">
                   <span class="w-2 h-2 rounded-full bg-slate-200 dark:bg-slate-700 group-hover:bg-amber-500/50 transition-colors"></span>
@@ -318,7 +318,7 @@ const kimiSettingsCode = `{
 
       <!-- Sync Shared Data -->
       <div>
-        <h4 class="text-sm font-bold text-blue-600 dark:text-blue-400 mb-3 flex items-center gap-2">
+        <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3 flex items-center gap-2">
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/>
             <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
@@ -326,7 +326,7 @@ const kimiSettingsCode = `{
           </svg>
           {t('ccs.guide.sync_title')}
         </h4>
-        <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm space-y-2">
+        <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm space-y-2">
           <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.sync_desc')}</div>
           <div class="flex items-center gap-4">
             <code class="text-emerald-600 dark:text-emerald-400">ccs sync</code>
@@ -337,13 +337,13 @@ const kimiSettingsCode = `{
   </div>
 
   <!-- Core Features Section -->
-  <div class="glass-card rounded-xl border-purple-200 dark:border-purple-500/30 overflow-hidden">
-    <div class="p-6 bg-gradient-to-r from-purple-500/10 to-pink-500/10 border-b border-purple-200 dark:border-slate-800">
+  <div class="glass-card rounded-xl border-slate-200 dark:border-slate-700 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border-b border-slate-200 dark:border-slate-800">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center font-bold text-purple-600 dark:text-purple-400 border-2 border-purple-500/50">
+        <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center font-bold text-blue-600 dark:text-blue-400 border-2 border-blue-500/50">
           3
         </div>
-        <h3 class="text-xl font-bold text-purple-600 dark:text-purple-400">
+        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-200">
           {t('ccs.guide.features_title')}
         </h3>
       </div>
@@ -351,18 +351,18 @@ const kimiSettingsCode = `{
     <div class="p-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- Feature 1: Model Switching -->
-        <div class="p-4 rounded-lg bg-surface-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+        <div class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50 hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-colors">
           <div class="flex items-center gap-2 mb-3">
-            <div class="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center">
-              <svg class="w-4 h-4 text-purple-600 dark:text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
+              <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="12" r="10"/>
                 <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
                 <path d="M2 12h20"/>
               </svg>
             </div>
-            <h4 class="font-bold text-purple-600 dark:text-purple-400">{t('ccs.guide.feature1_title')}</h4>
+            <h4 class="font-bold text-slate-700 dark:text-slate-300">{t('ccs.guide.feature1_title')}</h4>
           </div>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs space-y-2">
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs space-y-2">
             <div class="flex items-center justify-between">
               <code class="text-amber-600 dark:text-amber-400 font-semibold">ccs</code>
               <span class="text-slate-400 text-[10px]"># Claude</span>
@@ -391,44 +391,44 @@ const kimiSettingsCode = `{
         </div>
 
         <!-- Feature 2: AI-Powered Delegation -->
-        <div class="p-4 rounded-lg bg-surface-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+        <div class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50 hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-colors">
           <div class="flex items-center gap-2 mb-3">
-            <div class="w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center">
-              <svg class="w-4 h-4 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
+              <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
               </svg>
             </div>
-            <h4 class="font-bold text-amber-600 dark:text-amber-400">{t('ccs.guide.feature2_title')}</h4>
+            <h4 class="font-bold text-slate-700 dark:text-slate-300">{t('ccs.guide.feature2_title')}</h4>
           </div>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">
             {t('ccs.guide.feature2_desc')}
           </p>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs">
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs">
             <code class="text-amber-600 dark:text-amber-400">ccs glm -p "add tests"</code>
           </div>
         </div>
 
         <!-- Feature 3: Slash Command Support -->
-        <div class="p-4 rounded-lg bg-surface-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+        <div class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50 hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-colors">
           <div class="flex items-center gap-2 mb-3">
-            <div class="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
-              <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
+              <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline points="4 17 10 11 4 5"/>
                 <line x1="12" y1="19" x2="20" y2="19"/>
               </svg>
             </div>
-            <h4 class="font-bold text-emerald-600 dark:text-emerald-400">{t('ccs.guide.feature3_title')}</h4>
+            <h4 class="font-bold text-slate-700 dark:text-slate-300">{t('ccs.guide.feature3_title')}</h4>
           </div>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">
             {t('ccs.guide.feature3_desc')}
           </p>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs">
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs">
             <code class="text-emerald-600 dark:text-emerald-400">ccs glm -p "/cook create landing page"</code>
           </div>
         </div>
 
         <!-- Feature 4: OAuth Authentication -->
-        <div class="p-4 rounded-lg bg-surface-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+        <div class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50 hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-colors">
           <div class="flex items-center gap-2 mb-3">
             <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
               <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -436,12 +436,12 @@ const kimiSettingsCode = `{
                 <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
               </svg>
             </div>
-            <h4 class="font-bold text-blue-600 dark:text-blue-400">{t('ccs.guide.feature4_title')}</h4>
+            <h4 class="font-bold text-slate-700 dark:text-slate-300">{t('ccs.guide.feature4_title')}</h4>
           </div>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">
             {t('ccs.guide.feature4_desc')}
           </p>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs space-y-1">
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs space-y-1">
             <div><code class="text-blue-600 dark:text-blue-400">ccs gemini</code> <span class="text-slate-400"># {t('ccs.guide.feature4_auto')}</span></div>
             <div><code class="text-blue-600 dark:text-blue-400">ccs gemini --auth</code> <span class="text-slate-400"># {t('ccs.guide.feature4_save')}</span></div>
           </div>
@@ -451,13 +451,13 @@ const kimiSettingsCode = `{
   </div>
 
   <!-- ClaudeKit Integration Section -->
-  <div class="glass-card rounded-xl border-orange-200 dark:border-orange-500/30 overflow-hidden">
-    <div class="p-6 bg-gradient-to-r from-orange-500/10 to-amber-500/10 border-b border-orange-200 dark:border-slate-800">
+  <div class="glass-card rounded-xl border-slate-200 dark:border-slate-700 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border-b border-slate-200 dark:border-slate-800">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-full bg-orange-500/20 flex items-center justify-center font-bold text-orange-600 dark:text-orange-400 border-2 border-orange-500/50">
+        <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center font-bold text-blue-600 dark:text-blue-400 border-2 border-blue-500/50">
           4
         </div>
-        <h3 class="text-xl font-bold text-orange-600 dark:text-orange-400">
+        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-200">
           {t('ccs.guide.claudekit_title')}
         </h3>
       </div>
@@ -468,34 +468,34 @@ const kimiSettingsCode = `{
       </p>
 
       <!-- Recommended Workflow -->
-      <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700">
-        <h4 class="text-sm font-bold text-orange-600 dark:text-orange-400 mb-4">
+      <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700">
+        <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-4">
           {t('ccs.guide.workflow_title')}
         </h4>
         <div class="space-y-3 font-mono text-sm">
           <div class="flex items-start gap-3">
-            <span class="w-6 h-6 rounded-full bg-orange-500/20 flex items-center justify-center text-xs font-bold text-orange-600 dark:text-orange-400 shrink-0">1</span>
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center text-xs font-bold text-blue-600 dark:text-blue-400 shrink-0">1</span>
             <div>
               <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.workflow_step1')}</div>
               <code class="text-slate-700 dark:text-slate-300">ccs "/plan add payment integration"</code>
             </div>
           </div>
           <div class="flex items-start gap-3">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 flex items-center justify-center text-xs font-bold text-amber-600 dark:text-amber-400 shrink-0">2</span>
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center text-xs font-bold text-blue-600 dark:text-blue-400 shrink-0">2</span>
             <div>
               <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.workflow_step2')}</div>
               <code class="text-amber-600 dark:text-amber-400">ccs glm -p "/cook implement Stripe payment flow"</code>
             </div>
           </div>
           <div class="flex items-start gap-3">
-            <span class="w-6 h-6 rounded-full bg-amber-500/20 flex items-center justify-center text-xs font-bold text-amber-600 dark:text-amber-400 shrink-0">3</span>
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center text-xs font-bold text-blue-600 dark:text-blue-400 shrink-0">3</span>
             <div>
               <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.workflow_step3')}</div>
               <code class="text-amber-600 dark:text-amber-400">ccs glm -p "/fix:test run payment tests"</code>
             </div>
           </div>
           <div class="flex items-start gap-3">
-            <span class="w-6 h-6 rounded-full bg-orange-500/20 flex items-center justify-center text-xs font-bold text-orange-600 dark:text-orange-400 shrink-0">4</span>
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center text-xs font-bold text-blue-600 dark:text-blue-400 shrink-0">4</span>
             <div>
               <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.workflow_step4')}</div>
               <code class="text-slate-700 dark:text-slate-300">ccs "/review check payment implementation"</code>
@@ -506,53 +506,53 @@ const kimiSettingsCode = `{
 
       <!-- Cost Optimization Strategy -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div class="p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
-          <h5 class="font-bold text-amber-600 dark:text-amber-400 mb-2 text-sm">{t('ccs.guide.use_claude_for')}</h5>
+        <div class="p-4 rounded-lg bg-blue-500/5 border border-blue-200/50 dark:border-blue-500/20">
+          <h5 class="font-bold text-slate-700 dark:text-slate-300 mb-2 text-sm">{t('ccs.guide.use_claude_for')}</h5>
           <ul class="text-xs text-slate-600 dark:text-slate-400 space-y-1">
             <li class="flex items-center gap-2">
-              <svg class="w-3 h-3 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              <svg class="w-3 h-3 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
               {t('ccs.guide.claude_use1')}
             </li>
             <li class="flex items-center gap-2">
-              <svg class="w-3 h-3 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              <svg class="w-3 h-3 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
               {t('ccs.guide.claude_use2')}
             </li>
             <li class="flex items-center gap-2">
-              <svg class="w-3 h-3 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              <svg class="w-3 h-3 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
               {t('ccs.guide.claude_use3')}
             </li>
           </ul>
         </div>
-        <div class="p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/30">
-          <h5 class="font-bold text-emerald-600 dark:text-emerald-400 mb-2 text-sm">{t('ccs.guide.use_glm_for')}</h5>
+        <div class="p-4 rounded-lg bg-blue-500/5 border border-blue-200/50 dark:border-blue-500/20">
+          <h5 class="font-bold text-slate-700 dark:text-slate-300 mb-2 text-sm">{t('ccs.guide.use_glm_for')}</h5>
           <ul class="text-xs text-slate-600 dark:text-slate-400 space-y-1">
             <li class="flex items-center gap-2">
-              <svg class="w-3 h-3 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              <svg class="w-3 h-3 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
               {t('ccs.guide.glm_use1')}
             </li>
             <li class="flex items-center gap-2">
-              <svg class="w-3 h-3 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              <svg class="w-3 h-3 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
               {t('ccs.guide.glm_use2')}
             </li>
             <li class="flex items-center gap-2">
-              <svg class="w-3 h-3 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              <svg class="w-3 h-3 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
               {t('ccs.guide.glm_use3')}
             </li>
           </ul>
         </div>
-        <div class="p-4 rounded-lg bg-purple-500/10 border border-purple-500/30">
-          <h5 class="font-bold text-purple-600 dark:text-purple-400 mb-2 text-sm">{t('ccs.guide.use_kimi_for')}</h5>
+        <div class="p-4 rounded-lg bg-blue-500/5 border border-blue-200/50 dark:border-blue-500/20">
+          <h5 class="font-bold text-slate-700 dark:text-slate-300 mb-2 text-sm">{t('ccs.guide.use_kimi_for')}</h5>
           <ul class="text-xs text-slate-600 dark:text-slate-400 space-y-1">
             <li class="flex items-center gap-2">
-              <svg class="w-3 h-3 text-purple-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              <svg class="w-3 h-3 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
               {t('ccs.guide.kimi_use1')}
             </li>
             <li class="flex items-center gap-2">
-              <svg class="w-3 h-3 text-purple-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              <svg class="w-3 h-3 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
               {t('ccs.guide.kimi_use2')}
             </li>
             <li class="flex items-center gap-2">
-              <svg class="w-3 h-3 text-purple-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              <svg class="w-3 h-3 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
               {t('ccs.guide.kimi_use3')}
             </li>
           </ul>
@@ -562,13 +562,13 @@ const kimiSettingsCode = `{
   </div>
 
   <!-- Provider Configuration Section -->
-  <div class="glass-card rounded-xl border-indigo-200 dark:border-indigo-500/30 overflow-hidden">
-    <div class="p-6 bg-gradient-to-r from-indigo-500/10 to-violet-500/10 border-b border-indigo-200 dark:border-slate-800">
+  <div class="glass-card rounded-xl border-slate-200 dark:border-slate-700 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border-b border-slate-200 dark:border-slate-800">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-full bg-indigo-500/20 flex items-center justify-center font-bold text-indigo-600 dark:text-indigo-400 border-2 border-indigo-500/50">
+        <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center font-bold text-blue-600 dark:text-blue-400 border-2 border-blue-500/50">
           5
         </div>
-        <h3 class="text-xl font-bold text-indigo-600 dark:text-indigo-400">
+        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-200">
           {t('ccs.guide.provider_config_title')}
         </h3>
       </div>
@@ -579,26 +579,26 @@ const kimiSettingsCode = `{
       </p>
 
       <!-- Antigravity Configuration -->
-      <div class="p-4 rounded-lg bg-surface-100 dark:bg-slate-950 border border-indigo-200 dark:border-slate-800">
+      <div class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50 hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-colors">
         <div class="flex items-center gap-2 mb-3">
-          <div class="w-8 h-8 rounded-full bg-indigo-500/20 flex items-center justify-center">
-            <svg class="w-4 h-4 text-indigo-600 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
+            <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="12" cy="12" r="10"/>
               <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
             </svg>
           </div>
-          <h4 class="font-bold text-indigo-600 dark:text-indigo-400 text-lg">{t('ccs.guide.agy_config_title')}</h4>
-          <span class="px-2 py-0.5 text-xs rounded-full bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-medium">{t('ccs.guide.recommended')}</span>
+          <h4 class="font-bold text-slate-700 dark:text-slate-300 text-lg">{t('ccs.guide.agy_config_title')}</h4>
+          <span class="px-2 py-0.5 text-xs rounded-full bg-blue-500/20 text-blue-600 dark:text-blue-400 font-medium">{t('ccs.guide.recommended')}</span>
         </div>
         <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">
           {t('ccs.guide.agy_config_desc')}
         </p>
-        <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
-          <code class="text-indigo-600 dark:text-indigo-400">ccs agy --config</code>
+        <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+          <code class="text-slate-700 dark:text-slate-300">ccs agy --config</code>
         </div>
 
         <!-- CLI Output Preview -->
-        <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto shadow-sm">
+        <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto shadow-sm">
           <div class="text-emerald-600 dark:text-emerald-400 mb-2">[OK] CLIProxy binary ready (0.5s)</div>
           <div class="text-slate-800 dark:text-white font-bold mb-2">{t('ccs.guide.agy_config_header')}</div>
           <div class="text-slate-500 dark:text-slate-400 text-[11px] mb-3">
@@ -617,8 +617,8 @@ const kimiSettingsCode = `{
         </div>
 
         <!-- Pro Tip -->
-        <div class="mt-4 p-3 rounded-lg bg-indigo-500/10 border border-indigo-500/20">
-          <p class="text-xs text-indigo-700 dark:text-indigo-300 flex items-start gap-2">
+        <div class="mt-4 p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
+          <p class="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
             <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
             </svg>
@@ -628,13 +628,13 @@ const kimiSettingsCode = `{
 
         <!-- Verification After Selection -->
         <div class="mt-4">
-          <h5 class="text-sm font-bold text-indigo-600 dark:text-indigo-400 mb-2">{t('ccs.guide.agy_verify_title')}</h5>
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.agy_verify_title')}</h5>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.agy_verify_desc')}</p>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
-            <code class="text-indigo-600 dark:text-indigo-400">ccs agy "What model are you using?"</code>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+            <code class="text-slate-700 dark:text-slate-300">ccs agy "What model are you using?"</code>
           </div>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.agy_verify_output')}</p>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto shadow-sm">
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto shadow-sm">
             <div class="text-slate-500 dark:text-slate-400 mb-2">&gt; What model are you using?</div>
             <div class="text-cyan-600 dark:text-cyan-400">⏺ I'm powered by <span class="text-slate-800 dark:text-white font-bold">Gemini Claude Opus 4.5</span> (model ID: <span class="text-emerald-600 dark:text-emerald-400">gemini-claude-opus-4-5-thinking</span>).</div>
           </div>
@@ -642,20 +642,20 @@ const kimiSettingsCode = `{
 
         <!-- Logout Option -->
         <div class="mt-4">
-          <h5 class="text-sm font-bold text-indigo-600 dark:text-indigo-400 mb-2">{t('ccs.guide.agy_logout_title')}</h5>
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.agy_logout_title')}</h5>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.agy_logout_desc')}</p>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
-            <code class="text-indigo-600 dark:text-indigo-400">ccs agy --logout</code>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+            <code class="text-slate-700 dark:text-slate-300">ccs agy --logout</code>
           </div>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.agy_logout_output')}</p>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto shadow-sm">
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto shadow-sm">
             <div class="text-emerald-600 dark:text-emerald-400">[OK] Logged out from Antigravity</div>
           </div>
         </div>
 
         <!-- Multi-Account Management for Antigravity -->
         <div class="mt-6">
-          <h5 class="text-sm font-bold text-indigo-600 dark:text-indigo-400 mb-2 flex items-center gap-2">
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 flex items-center gap-2">
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
               <circle cx="9" cy="7" r="4"/>
@@ -664,26 +664,26 @@ const kimiSettingsCode = `{
             {t('ccs.guide.agy_multiaccount_title')}
           </h5>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.agy_multiaccount_desc')}</p>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs space-y-3">
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs space-y-3">
             <div>
               <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_first_account')}</div>
-              <code class="text-indigo-600 dark:text-indigo-400">ccs agy --auth</code>
+              <code class="text-slate-700 dark:text-slate-300">ccs agy --auth</code>
             </div>
             <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
               <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_add_nickname')}</div>
-              <code class="text-indigo-600 dark:text-indigo-400">ccs agy --auth --add --nickname work</code>
+              <code class="text-slate-700 dark:text-slate-300">ccs agy --auth --add --nickname work</code>
             </div>
             <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
               <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_list_accounts')}</div>
-              <code class="text-indigo-600 dark:text-indigo-400">ccs agy --accounts</code>
+              <code class="text-slate-700 dark:text-slate-300">ccs agy --accounts</code>
             </div>
             <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
               <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_switch_account')}</div>
-              <code class="text-indigo-600 dark:text-indigo-400">ccs agy --use work</code>
+              <code class="text-slate-700 dark:text-slate-300">ccs agy --use work</code>
             </div>
             <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
               <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_config_selected')}</div>
-              <code class="text-indigo-600 dark:text-indigo-400">ccs agy --config</code>
+              <code class="text-slate-700 dark:text-slate-300">ccs agy --config</code>
             </div>
           </div>
         </div>
@@ -692,7 +692,7 @@ const kimiSettingsCode = `{
       <!-- OAuth Providers Grid -->
       <div class="grid grid-cols-1 gap-4">
         <!-- Gemini Config -->
-        <div class="p-4 rounded-lg bg-surface-100 dark:bg-slate-950 border border-blue-200 dark:border-blue-800">
+        <div class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50 hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-colors">
           <div class="flex items-center gap-2 mb-3">
             <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
               <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="currentColor">
@@ -702,19 +702,19 @@ const kimiSettingsCode = `{
                 <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
               </svg>
             </div>
-            <h4 class="font-bold text-blue-600 dark:text-blue-400 text-lg">{t('ccs.guide.gemini_config_title')}</h4>
+            <h4 class="font-bold text-slate-700 dark:text-slate-300 text-lg">{t('ccs.guide.gemini_config_title')}</h4>
           </div>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.gemini_config_desc')}</p>
 
           <!-- Step 1: Auth Command -->
-          <h5 class="text-sm font-bold text-blue-600 dark:text-blue-400 mb-2">{t('ccs.guide.gemini_step1_title')}</h5>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
-            <code class="text-blue-600 dark:text-blue-400">ccs gemini --auth</code>
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.gemini_step1_title')}</h5>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+            <code class="text-slate-700 dark:text-slate-300">ccs gemini --auth</code>
           </div>
 
           <!-- Browser Auth Note -->
           <div class="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20 mb-3">
-            <p class="text-xs text-blue-700 dark:text-blue-300 flex items-start gap-2">
+            <p class="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
               <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="12" r="10"/>
                 <path d="M12 16v-4M12 8h.01"/>
@@ -725,7 +725,7 @@ const kimiSettingsCode = `{
 
           <!-- Auth Expected Output -->
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.gemini_output_label')}</p>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
             <div class="text-emerald-600 dark:text-emerald-400">[OK] CLIProxy binary ready (0.0s)</div>
             <div class="text-cyan-600 dark:text-cyan-400 mt-2">[i] Opening browser for Google Gemini authentication...</div>
             <div class="text-cyan-600 dark:text-cyan-400">[i] Complete the login in your browser.</div>
@@ -734,13 +734,13 @@ const kimiSettingsCode = `{
           </div>
 
           <!-- Step 2: Config Command -->
-          <h5 class="text-sm font-bold text-blue-600 dark:text-blue-400 mb-2">{t('ccs.guide.gemini_step2_title')}</h5>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
-            <code class="text-blue-600 dark:text-blue-400">ccs gemini --config</code>
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.gemini_step2_title')}</h5>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+            <code class="text-slate-700 dark:text-slate-300">ccs gemini --config</code>
           </div>
 
           <!-- Config CLI Output -->
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-3 shadow-sm">
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-3 shadow-sm">
             <div class="text-emerald-600 dark:text-emerald-400 mb-2">[OK] CLIProxy binary ready (0.0s)</div>
             <div class="text-slate-800 dark:text-white font-bold mb-2">{t('ccs.guide.gemini_config_header')}</div>
             <div class="text-slate-500 dark:text-slate-400 text-[11px] mb-3">
@@ -758,32 +758,32 @@ const kimiSettingsCode = `{
 
           <!-- Config Success Output -->
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.gemini_config_success')}</p>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
             <div class="text-emerald-600 dark:text-emerald-400">[OK] Model set to: Gemini 3 Pro</div>
             <div class="text-slate-500 dark:text-slate-400 ml-5">Config saved: <span class="platform-path-display" data-macos="~/.ccs/gemini.settings.json" data-linux="~/.ccs/gemini.settings.json" data-windows="%USERPROFILE%\.ccs\gemini.settings.json">~/.ccs/gemini.settings.json</span></div>
           </div>
 
           <!-- Verification -->
-          <h5 class="text-sm font-bold text-blue-600 dark:text-blue-400 mb-2">{t('ccs.guide.gemini_verify_title')}</h5>
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.gemini_verify_title')}</h5>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.gemini_verify_desc')}</p>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
-            <code class="text-blue-600 dark:text-blue-400">ccs gemini "Which model are you using?"</code>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+            <code class="text-slate-700 dark:text-slate-300">ccs gemini "Which model are you using?"</code>
           </div>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
             <div class="text-slate-500 dark:text-slate-400 mb-2">&gt; Which model are you using?</div>
             <div class="text-cyan-600 dark:text-cyan-400">⏺ I am currently using the <span class="text-slate-800 dark:text-white font-bold">gemini-3-pro-preview</span> model.</div>
           </div>
 
           <!-- Logout Option -->
-          <h5 class="text-sm font-bold text-blue-600 dark:text-blue-400 mb-2">{t('ccs.guide.gemini_logout_title')}</h5>
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.gemini_logout_title')}</h5>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.gemini_logout_desc')}</p>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs">
-            <code class="text-blue-600 dark:text-blue-400">ccs gemini --logout</code>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs">
+            <code class="text-slate-700 dark:text-slate-300">ccs gemini --logout</code>
           </div>
 
           <!-- Multi-Account Management for Gemini -->
-          <div class="mt-6 pt-6 border-t border-blue-200 dark:border-slate-700">
-            <h5 class="text-sm font-bold text-blue-600 dark:text-blue-400 mb-2 flex items-center gap-2">
+          <div class="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700">
+            <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 flex items-center gap-2">
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
                 <circle cx="9" cy="7" r="4"/>
@@ -792,46 +792,46 @@ const kimiSettingsCode = `{
               {t('ccs.guide.gemini_multiaccount_title')}
             </h5>
             <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.gemini_multiaccount_desc')}</p>
-            <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs space-y-3">
+            <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs space-y-3">
               <div>
                 <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_first_account')}</div>
-                <code class="text-blue-600 dark:text-blue-400">ccs gemini --auth</code>
+                <code class="text-slate-700 dark:text-slate-300">ccs gemini --auth</code>
               </div>
               <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
                 <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_add_nickname')}</div>
-                <code class="text-blue-600 dark:text-blue-400">ccs gemini --auth --add --nickname work</code>
+                <code class="text-slate-700 dark:text-slate-300">ccs gemini --auth --add --nickname work</code>
               </div>
               <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
                 <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_list_accounts')}</div>
-                <code class="text-blue-600 dark:text-blue-400">ccs gemini --accounts</code>
+                <code class="text-slate-700 dark:text-slate-300">ccs gemini --accounts</code>
               </div>
               <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
                 <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_switch_account')}</div>
-                <code class="text-blue-600 dark:text-blue-400">ccs gemini --use work</code>
+                <code class="text-slate-700 dark:text-slate-300">ccs gemini --use work</code>
               </div>
               <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
                 <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_config_selected')}</div>
-                <code class="text-blue-600 dark:text-blue-400">ccs gemini --config</code>
+                <code class="text-slate-700 dark:text-slate-300">ccs gemini --config</code>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Codex Config -->
-        <div class="p-4 rounded-lg bg-surface-100 dark:bg-slate-950 border border-cyan-200 dark:border-cyan-800">
+        <div class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50 hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-colors">
           <div class="flex items-center gap-2 mb-3">
-            <div class="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center">
-              <svg class="w-4 h-4 text-cyan-600 dark:text-cyan-400" viewBox="0 0 24 24" fill="currentColor">
+            <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
+              <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.8956zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.5047-2.6067-1.4998z"/>
               </svg>
             </div>
-            <h4 class="font-bold text-cyan-600 dark:text-cyan-400 text-lg">{t('ccs.guide.codex_config_title')}</h4>
+            <h4 class="font-bold text-slate-700 dark:text-slate-300 text-lg">{t('ccs.guide.codex_config_title')}</h4>
           </div>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.codex_config_desc')}</p>
 
           <!-- Paid Account Note -->
-          <div class="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 mb-3">
-            <p class="text-xs text-amber-700 dark:text-amber-300 flex items-start gap-2">
+          <div class="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20 mb-3">
+            <p class="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
               <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
               </svg>
@@ -840,14 +840,14 @@ const kimiSettingsCode = `{
           </div>
 
           <!-- Step 1: Auth Command -->
-          <h5 class="text-sm font-bold text-cyan-600 dark:text-cyan-400 mb-2">{t('ccs.guide.codex_step1_title')}</h5>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
-            <code class="text-cyan-600 dark:text-cyan-400">ccs codex --auth</code>
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.codex_step1_title')}</h5>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+            <code class="text-slate-700 dark:text-slate-300">ccs codex --auth</code>
           </div>
 
           <!-- Browser Auth Note -->
-          <div class="p-3 rounded-lg bg-cyan-500/10 border border-cyan-500/20 mb-3">
-            <p class="text-xs text-cyan-700 dark:text-cyan-300 flex items-start gap-2">
+          <div class="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20 mb-3">
+            <p class="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
               <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="12" r="10"/>
                 <path d="M12 16v-4M12 8h.01"/>
@@ -858,7 +858,7 @@ const kimiSettingsCode = `{
 
           <!-- Auth Expected Output -->
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.codex_output_label')}</p>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
             <div class="text-emerald-600 dark:text-emerald-400">[OK] CLIProxy binary ready (0.0s)</div>
             <div class="text-cyan-600 dark:text-cyan-400 mt-2">[i] Opening browser for OpenAI authentication...</div>
             <div class="text-cyan-600 dark:text-cyan-400">[i] Complete the login in your browser.</div>
@@ -867,21 +867,21 @@ const kimiSettingsCode = `{
           </div>
 
           <!-- Verification -->
-          <h5 class="text-sm font-bold text-cyan-600 dark:text-cyan-400 mb-2">{t('ccs.guide.codex_verify_title')}</h5>
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.codex_verify_title')}</h5>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.codex_verify_desc')}</p>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
-            <code class="text-cyan-600 dark:text-cyan-400">ccs codex "Hello, which model are you using?"</code>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+            <code class="text-slate-700 dark:text-slate-300">ccs codex "Hello, which model are you using?"</code>
           </div>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
             <div class="text-slate-500 dark:text-slate-400 mb-2">&gt; Hello, which model are you using?</div>
             <div class="text-cyan-600 dark:text-cyan-400">⏺ I'm running as <span class="text-slate-800 dark:text-white font-bold">GPT-5.1-Codex-Max-High</span> (model ID: <span class="text-emerald-600 dark:text-emerald-400">opus</span>).</div>
           </div>
 
           <!-- Logout Option -->
-          <h5 class="text-sm font-bold text-cyan-600 dark:text-cyan-400 mb-2">{t('ccs.guide.codex_logout_title')}</h5>
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.codex_logout_title')}</h5>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.codex_logout_desc')}</p>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs">
-            <code class="text-cyan-600 dark:text-cyan-400">ccs codex --logout</code>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs">
+            <code class="text-slate-700 dark:text-slate-300">ccs codex --logout</code>
           </div>
         </div>
       </div>
@@ -889,26 +889,26 @@ const kimiSettingsCode = `{
       <!-- API-Based Providers (GLM & Kimi) -->
       <div class="grid grid-cols-1 gap-4">
         <!-- GLM Config (Detailed) -->
-        <div class="p-4 rounded-lg bg-surface-100 dark:bg-slate-950 border border-emerald-200 dark:border-emerald-800">
+        <div class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50 hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-colors">
           <div class="flex items-center gap-2 mb-3">
-            <div class="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
-              <span class="text-sm font-bold text-emerald-600 dark:text-emerald-400">Z</span>
+            <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
+              <span class="text-sm font-bold text-slate-600 dark:text-slate-400">Z</span>
             </div>
-            <h4 class="font-bold text-emerald-600 dark:text-emerald-400 text-lg">{t('ccs.guide.glm_config_title')}</h4>
-            <span class="px-2 py-0.5 text-[10px] rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-medium">Z.AI</span>
+            <h4 class="font-bold text-slate-700 dark:text-slate-300 text-lg">{t('ccs.guide.glm_config_title')}</h4>
+            <span class="px-2 py-0.5 text-[10px] rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 font-medium">Z.AI</span>
           </div>
-          <p class="text-xs text-emerald-600 dark:text-emerald-400 mb-2 font-medium" set:html={t('ccs.guide.glm_update_notice')}></p>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2 font-medium" set:html={t('ccs.guide.glm_update_notice')}></p>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.glm_config_desc')}</p>
 
           <!-- Step 1: Create Settings File -->
-          <h5 class="text-sm font-bold text-emerald-600 dark:text-emerald-400 mb-2">{t('ccs.guide.glm_step1_title')}</h5>
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.glm_step1_title')}</h5>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.glm_step1_desc')}</p>
           <PlatformPathSwitcher
             lang={currentLang}
             pathAfterHome=".ccs/glm.settings.json"
             label="File:"
             id="glm-settings-path"
-            color="emerald"
+            color="slate"
           />
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.glm_add_content')}</p>
           <div class="relative group">
@@ -935,7 +935,7 @@ const kimiSettingsCode = `{
                 <polyline points="20 6 9 17 4 12"></polyline>
               </svg>
             </button>
-            <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+            <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
               <pre><code>{`{
     "alwaysThinkingEnabled": true,
     "env": {
@@ -951,16 +951,16 @@ const kimiSettingsCode = `{
           </div>
 
           <!-- Step 2: Add to Config -->
-          <h5 class="text-sm font-bold text-emerald-600 dark:text-emerald-400 mb-2">{t('ccs.guide.glm_step2_title')}</h5>
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.glm_step2_title')}</h5>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.glm_step2_desc')}</p>
           <PlatformPathSwitcher
             lang={currentLang}
             pathAfterHome=".ccs/config.json"
             label="File:"
             id="ccs-config-path-glm"
-            color="emerald"
+            color="slate"
           />
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
             <div class="text-slate-500 dark:text-slate-400">{"{"}</div>
             <div class="ml-4"><span class="text-cyan-600 dark:text-cyan-400">"profiles"</span>: {"{"}</div>
             <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"glm"</span>: <span class="text-emerald-600 dark:text-emerald-400">"~/.ccs/glm.settings.json"</span>, <span class="text-amber-600 dark:text-amber-400">&lt;-- {t('ccs.guide.add_this_line')}</span></div>
@@ -970,19 +970,19 @@ const kimiSettingsCode = `{
           </div>
 
           <!-- Step 3: Verification -->
-          <h5 class="text-sm font-bold text-emerald-600 dark:text-emerald-400 mb-2">{t('ccs.guide.glm_verify_title')}</h5>
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.glm_verify_title')}</h5>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.glm_verify_desc')}</p>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
-            <code class="text-emerald-600 dark:text-emerald-400">ccs glm "Which model are you using?"</code>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+            <code class="text-slate-700 dark:text-slate-300">ccs glm "Which model are you using?"</code>
           </div>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto shadow-sm">
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto shadow-sm">
             <div class="text-slate-500 dark:text-slate-400 mb-2">&gt; Which model are you using?</div>
             <div class="text-cyan-600 dark:text-cyan-400">⏺ I'm using the <span class="text-slate-800 dark:text-white font-bold">GLM-4.6</span> model.</div>
           </div>
 
           <!-- GLM-4.6V Model Verification -->
-          <div class="mt-4 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
-            <p class="text-xs text-emerald-700 dark:text-emerald-300 flex items-start gap-2">
+          <div class="mt-4 p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
+            <p class="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
               <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="12" r="10"/>
                 <path d="M12 16v-4M12 8h.01"/>
@@ -994,25 +994,25 @@ const kimiSettingsCode = `{
                   </div>
 
         <!-- Kimi Config (Detailed) -->
-        <div class="p-4 rounded-lg bg-surface-100 dark:bg-slate-950 border border-purple-200 dark:border-purple-800">
+        <div class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50 hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-colors">
           <div class="flex items-center gap-2 mb-3">
-            <div class="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center">
-              <span class="text-sm font-bold text-purple-600 dark:text-purple-400">K</span>
+            <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
+              <span class="text-sm font-bold text-slate-600 dark:text-slate-400">K</span>
             </div>
-            <h4 class="font-bold text-purple-600 dark:text-purple-400 text-lg">{t('ccs.guide.kimi_config_title')}</h4>
-            <span class="px-2 py-0.5 text-[10px] rounded-full bg-purple-500/20 text-purple-600 dark:text-purple-400 font-medium">Moonshot AI</span>
+            <h4 class="font-bold text-slate-700 dark:text-slate-300 text-lg">{t('ccs.guide.kimi_config_title')}</h4>
+            <span class="px-2 py-0.5 text-[10px] rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 font-medium">Moonshot AI</span>
           </div>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.kimi_config_desc')}</p>
 
           <!-- Step 1: Create Settings File -->
-          <h5 class="text-sm font-bold text-purple-600 dark:text-purple-400 mb-2">{t('ccs.guide.kimi_step1_title')}</h5>
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.kimi_step1_title')}</h5>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.kimi_step1_desc')}</p>
           <PlatformPathSwitcher
             lang={currentLang}
             pathAfterHome=".ccs/kimi.settings.json"
             label="File:"
             id="kimi-settings-path"
-            color="purple"
+            color="slate"
           />
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.kimi_add_content')}</p>
           <div class="relative group">
@@ -1036,7 +1036,7 @@ const kimiSettingsCode = `{
                 <polyline points="20 6 9 17 4 12"></polyline>
               </svg>
             </button>
-            <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+            <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
               <pre><code>{`{
     "env": {
         "ANTHROPIC_BASE_URL": "https://api.kimi.com/coding/",
@@ -1049,36 +1049,36 @@ const kimiSettingsCode = `{
           </div>
 
           <!-- Step 2: Add to Config -->
-          <h5 class="text-sm font-bold text-purple-600 dark:text-purple-400 mb-2">{t('ccs.guide.kimi_step2_title')}</h5>
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.kimi_step2_title')}</h5>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.kimi_step2_desc')}</p>
           <PlatformPathSwitcher
             lang={currentLang}
             pathAfterHome=".ccs/config.json"
             label="File:"
             id="ccs-config-path-kimi"
-            color="purple"
+            color="slate"
           />
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
             <div class="text-slate-500 dark:text-slate-400">{"{"}</div>
             <div class="ml-4"><span class="text-cyan-600 dark:text-cyan-400">"profiles"</span>: {"{"}</div>
-            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"kimi"</span>: <span class="text-purple-600 dark:text-purple-400">"~/.ccs/kimi.settings.json"</span>, <span class="text-amber-600 dark:text-amber-400">&lt;-- {t('ccs.guide.add_this_line')}</span></div>
-            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"default"</span>: <span class="text-purple-600 dark:text-purple-400">"~/.claude/settings.json"</span></div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"kimi"</span>: <span class="text-emerald-600 dark:text-emerald-400">"~/.ccs/kimi.settings.json"</span>, <span class="text-amber-600 dark:text-amber-400">&lt;-- {t('ccs.guide.add_this_line')}</span></div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"default"</span>: <span class="text-emerald-600 dark:text-emerald-400">"~/.claude/settings.json"</span></div>
             <div class="ml-4">{"}"}</div>
             <div class="text-slate-500 dark:text-slate-400">{"}"}</div>
           </div>
 
           <!-- Step 3: Verification -->
-          <h5 class="text-sm font-bold text-purple-600 dark:text-purple-400 mb-2">{t('ccs.guide.kimi_verify_title')}</h5>
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.kimi_verify_title')}</h5>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.kimi_verify_desc')}</p>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
-            <code class="text-purple-600 dark:text-purple-400">ccs kimi "Which model are you using?"</code>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+            <code class="text-slate-700 dark:text-slate-300">ccs kimi "Which model are you using?"</code>
           </div>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-3 shadow-sm">
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-3 shadow-sm">
             <div class="text-slate-500 dark:text-slate-400 mb-2">&gt; Which model are you using?</div>
             <div class="text-cyan-600 dark:text-cyan-400">⏺ I'm using the <span class="text-slate-800 dark:text-white font-bold">Kimi K2 Thinking Turbo</span> model.</div>
           </div>
-          <div class="p-3 rounded-lg bg-purple-500/10 border border-purple-500/20">
-            <p class="text-xs text-purple-700 dark:text-purple-300 flex items-start gap-2">
+          <div class="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
+            <p class="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
               <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="12" r="10"/>
                 <path d="M12 16v-4M12 8h.01"/>
@@ -1094,16 +1094,16 @@ const kimiSettingsCode = `{
 
 
   <!-- Web Dashboard Section -->
-  <div class="glass-card rounded-xl border-teal-200 dark:border-teal-500/30 overflow-hidden">
-    <div class="p-6 bg-gradient-to-r from-teal-500/10 to-cyan-500/10 border-b border-teal-200 dark:border-slate-800">
+  <div class="glass-card rounded-xl border-slate-200 dark:border-slate-700 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border-b border-slate-200 dark:border-slate-800">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-full bg-teal-500/20 flex items-center justify-center font-bold text-teal-600 dark:text-teal-400 border-2 border-teal-500/50">
+        <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center font-bold text-blue-600 dark:text-blue-400 border-2 border-blue-500/50">
           6
         </div>
-        <h3 class="text-xl font-bold text-teal-600 dark:text-teal-400">
+        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-200">
           {t('ccs.guide.dashboard_title')}
         </h3>
-        <span class="px-2 py-0.5 text-xs rounded-full bg-teal-500/20 text-teal-600 dark:text-teal-400 font-medium">{t('ccs.guide.new_badge')}</span>
+        <span class="px-2 py-0.5 text-xs rounded-full bg-blue-500/20 text-blue-600 dark:text-blue-400 font-medium">{t('ccs.guide.new_badge')}</span>
       </div>
     </div>
     <div class="p-6 space-y-6">
@@ -1113,73 +1113,73 @@ const kimiSettingsCode = `{
 
       <!-- Dashboard Features Grid -->
       <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
-        <div class="p-3 rounded-lg bg-teal-500/10 border border-teal-500/20 text-center">
-          <svg class="w-5 h-5 mx-auto mb-2 text-teal-600 dark:text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <div class="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20 text-center">
+          <svg class="w-5 h-5 mx-auto mb-2 text-slate-600 dark:text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
             <path d="M3 9h18M9 21V9"/>
           </svg>
-          <span class="text-xs font-medium text-teal-700 dark:text-teal-300">{t('ccs.guide.dashboard_feature1')}</span>
+          <span class="text-xs font-medium text-slate-700 dark:text-slate-300">{t('ccs.guide.dashboard_feature1')}</span>
         </div>
-        <div class="p-3 rounded-lg bg-teal-500/10 border border-teal-500/20 text-center">
-          <svg class="w-5 h-5 mx-auto mb-2 text-teal-600 dark:text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <div class="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20 text-center">
+          <svg class="w-5 h-5 mx-auto mb-2 text-slate-600 dark:text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M23 4v6h-6M1 20v-6h6"/>
             <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
           </svg>
-          <span class="text-xs font-medium text-teal-700 dark:text-teal-300">{t('ccs.guide.dashboard_feature2')}</span>
+          <span class="text-xs font-medium text-slate-700 dark:text-slate-300">{t('ccs.guide.dashboard_feature2')}</span>
         </div>
-        <div class="p-3 rounded-lg bg-teal-500/10 border border-teal-500/20 text-center">
-          <svg class="w-5 h-5 mx-auto mb-2 text-teal-600 dark:text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <div class="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20 text-center">
+          <svg class="w-5 h-5 mx-auto mb-2 text-slate-600 dark:text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
             <circle cx="9" cy="7" r="4"/>
             <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
           </svg>
-          <span class="text-xs font-medium text-teal-700 dark:text-teal-300">{t('ccs.guide.dashboard_feature3')}</span>
+          <span class="text-xs font-medium text-slate-700 dark:text-slate-300">{t('ccs.guide.dashboard_feature3')}</span>
         </div>
-        <div class="p-3 rounded-lg bg-teal-500/10 border border-teal-500/20 text-center">
-          <svg class="w-5 h-5 mx-auto mb-2 text-teal-600 dark:text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <div class="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20 text-center">
+          <svg class="w-5 h-5 mx-auto mb-2 text-slate-600 dark:text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
           </svg>
-          <span class="text-xs font-medium text-teal-700 dark:text-teal-300">{t('ccs.guide.dashboard_feature4')}</span>
+          <span class="text-xs font-medium text-slate-700 dark:text-slate-300">{t('ccs.guide.dashboard_feature4')}</span>
         </div>
-        <div class="p-3 rounded-lg bg-teal-500/10 border border-teal-500/20 text-center">
-          <svg class="w-5 h-5 mx-auto mb-2 text-teal-600 dark:text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <div class="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20 text-center">
+          <svg class="w-5 h-5 mx-auto mb-2 text-slate-600 dark:text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
           </svg>
-          <span class="text-xs font-medium text-teal-700 dark:text-teal-300">{t('ccs.guide.dashboard_feature5')}</span>
+          <span class="text-xs font-medium text-slate-700 dark:text-slate-300">{t('ccs.guide.dashboard_feature5')}</span>
         </div>
-        <div class="p-3 rounded-lg bg-teal-500/10 border border-teal-500/20 text-center">
-          <svg class="w-5 h-5 mx-auto mb-2 text-teal-600 dark:text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <div class="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20 text-center">
+          <svg class="w-5 h-5 mx-auto mb-2 text-slate-600 dark:text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
             <line x1="12" y1="18" x2="12.01" y2="18"/>
           </svg>
-          <span class="text-xs font-medium text-teal-700 dark:text-teal-300">{t('ccs.guide.dashboard_feature6')}</span>
+          <span class="text-xs font-medium text-slate-700 dark:text-slate-300">{t('ccs.guide.dashboard_feature6')}</span>
         </div>
       </div>
 
       <!-- Launch Command -->
       <div>
-        <h4 class="text-sm font-bold text-teal-600 dark:text-teal-400 mb-3 flex items-center gap-2">
+        <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3 flex items-center gap-2">
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polyline points="4 17 10 11 4 5"/>
             <line x1="12" y1="19" x2="20" y2="19"/>
           </svg>
           {t('ccs.guide.dashboard_launch_title')}
         </h4>
-        <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm space-y-3">
+        <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm space-y-3">
           <div class="flex items-center gap-4">
-            <code class="text-teal-600 dark:text-teal-400">ccs config</code>
+            <code class="text-slate-700 dark:text-slate-300">ccs config</code>
             <span class="text-slate-500 text-xs"># {t('ccs.guide.dashboard_launch_default')}</span>
           </div>
           <div class="flex items-center gap-4">
-            <code class="text-teal-600 dark:text-teal-400">ccs config --port 3000</code>
+            <code class="text-slate-700 dark:text-slate-300">ccs config --port 3000</code>
             <span class="text-slate-500 text-xs"># {t('ccs.guide.dashboard_launch_custom')}</span>
           </div>
         </div>
       </div>
 
       <!-- Access Info -->
-      <div class="p-4 rounded-lg bg-teal-500/10 border border-teal-500/20">
-        <p class="text-sm text-teal-700 dark:text-teal-300 flex items-start gap-2">
+      <div class="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
+        <p class="text-sm text-slate-700 dark:text-slate-300 flex items-start gap-2">
           <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="10"/>
             <path d="M12 16v-4M12 8h.01"/>
@@ -1190,7 +1190,7 @@ const kimiSettingsCode = `{
 
       <!-- Dashboard Screenshot (Theme-aware) -->
       <div>
-        <h4 class="text-sm font-bold text-teal-600 dark:text-teal-400 mb-3 flex items-center gap-2">
+        <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3 flex items-center gap-2">
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
             <circle cx="8.5" cy="8.5" r="1.5"/>
@@ -1241,8 +1241,8 @@ const kimiSettingsCode = `{
       </div>
 
       <!-- Account Management Note -->
-      <div class="p-4 rounded-lg bg-surface-100 dark:bg-slate-950 border border-teal-200 dark:border-slate-800">
-        <h5 class="text-sm font-bold text-teal-600 dark:text-teal-400 mb-2">{t('ccs.guide.dashboard_manage_title')}</h5>
+      <div class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50 hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-colors">
+        <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.dashboard_manage_title')}</h5>
         <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">
           {t('ccs.guide.dashboard_manage_desc')}
         </p>
@@ -1251,7 +1251,7 @@ const kimiSettingsCode = `{
           pathAfterHome=".ccs/cliproxy/accounts.json"
           label="File:"
           id="ccs-accounts-path"
-          color="teal"
+          color="slate"
         />
       </div>
     </div>
@@ -1259,7 +1259,7 @@ const kimiSettingsCode = `{
 
   <!-- Troubleshooting Section -->
   <div class="glass-card rounded-xl border-slate-200 dark:border-slate-700 overflow-hidden">
-    <div class="p-6 bg-gradient-to-r from-slate-500/10 to-slate-400/10 border-b border-slate-200 dark:border-slate-800">
+    <div class="p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border-b border-slate-200 dark:border-slate-800">
       <h3 class="text-xl font-bold text-slate-700 dark:text-slate-300 flex items-center gap-3">
         <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="10"/>
@@ -1271,32 +1271,32 @@ const kimiSettingsCode = `{
     <div class="p-6 space-y-4">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- Issue 1 -->
-        <div class="p-4 rounded-lg bg-surface-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+        <div class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50 hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-colors">
           <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.issue1_title')}</h4>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-2 border border-slate-200 dark:border-slate-700 font-mono text-xs">
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-2 border border-slate-200 dark:border-slate-700 font-mono text-xs">
             <code>ccs gemini --auth --headless</code>
           </div>
         </div>
         <!-- Issue 2 -->
-        <div class="p-4 rounded-lg bg-surface-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+        <div class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50 hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-colors">
           <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.issue2_title')}</h4>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-2 border border-slate-200 dark:border-slate-700 font-mono text-xs space-y-1">
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-2 border border-slate-200 dark:border-slate-700 font-mono text-xs space-y-1">
             <div><code>ccs doctor</code></div>
             <div class="text-slate-500"># {t('ccs.guide.issue2_kill')}</div>
             <div><code>lsof -ti:8317 | xargs kill</code></div>
           </div>
         </div>
         <!-- Issue 3 -->
-        <div class="p-4 rounded-lg bg-surface-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+        <div class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50 hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-colors">
           <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.issue3_title')}</h4>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-2 border border-slate-200 dark:border-slate-700 font-mono text-xs">
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-2 border border-slate-200 dark:border-slate-700 font-mono text-xs">
             <code>ccs glm:continue -p "next task"</code>
           </div>
         </div>
         <!-- Health Check -->
-        <div class="p-4 rounded-lg bg-surface-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+        <div class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50 hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-colors">
           <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.health_check_title')}</h4>
-          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-2 border border-slate-200 dark:border-slate-700 font-mono text-xs">
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-2 border border-slate-200 dark:border-slate-700 font-mono text-xs">
             <code>ccs doctor</code>
           </div>
         </div>
@@ -1305,16 +1305,16 @@ const kimiSettingsCode = `{
   </div>
 
   <!-- Subscriptions Cross-Link -->
-  <div class="glass-card rounded-xl border-amber-200 dark:border-amber-500/30 overflow-hidden">
-    <div class="p-6 bg-gradient-to-r from-amber-500/10 to-orange-500/10">
+  <div class="glass-card rounded-xl border-slate-200 dark:border-slate-700 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10">
       <div class="flex items-start gap-4">
-        <div class="w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center shrink-0">
-          <svg class="w-6 h-6 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center shrink-0">
+          <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"/>
           </svg>
         </div>
         <div class="flex-1">
-          <h3 class="text-lg font-bold text-amber-600 dark:text-amber-400 mb-2">
+          <h3 class="text-lg font-bold text-slate-800 dark:text-slate-200 mb-2">
             {t('ccs.guide.subscriptions_title')}
           </h3>
           <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">
@@ -1322,7 +1322,7 @@ const kimiSettingsCode = `{
           </p>
           <a
             href={translatePath('/guides/promotions')}
-            class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-600 text-white text-sm font-medium hover:bg-amber-700 transition-colors"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-500 text-white text-sm font-medium hover:from-blue-700 hover:to-cyan-600 transition-all shadow-lg shadow-blue-500/20"
           >
             {t('ccs.guide.view_subscriptions')}
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1335,9 +1335,9 @@ const kimiSettingsCode = `{
   </div>
 
   <!-- Resources Section -->
-  <div class="glass-card rounded-xl border-cyan-200 dark:border-cyan-500/30 overflow-hidden">
-    <div class="p-6 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border-b border-cyan-200 dark:border-slate-800">
-      <h3 class="text-xl font-bold text-cyan-600 dark:text-cyan-400 flex items-center gap-3">
+  <div class="glass-card rounded-xl border-slate-200 dark:border-slate-700 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border-b border-slate-200 dark:border-slate-800">
+      <h3 class="text-xl font-bold text-slate-800 dark:text-slate-200 flex items-center gap-3">
         <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
           <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
@@ -1348,37 +1348,37 @@ const kimiSettingsCode = `{
     <div class="p-6">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <a href="https://github.com/kaitranntt/ccs" target="_blank" rel="noopener noreferrer"
-           class="p-4 rounded-lg bg-surface-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/50 hover:bg-cyan-500/5 transition-all text-center group">
-          <svg class="w-6 h-6 mx-auto mb-2 text-slate-600 dark:text-slate-400 group-hover:text-cyan-600 dark:group-hover:text-cyan-400" viewBox="0 0 24 24" fill="currentColor">
+           class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50 hover:border-blue-500/50 dark:hover:border-blue-500/40 hover:bg-blue-500/5 transition-all text-center group">
+          <svg class="w-6 h-6 mx-auto mb-2 text-slate-600 dark:text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400" viewBox="0 0 24 24" fill="currentColor">
             <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path>
           </svg>
-          <span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-cyan-600 dark:group-hover:text-cyan-400">GitHub</span>
+          <span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-slate-200">GitHub</span>
         </a>
         <a href="https://github.com/kaitranntt/ccs#readme" target="_blank" rel="noopener noreferrer"
-           class="p-4 rounded-lg bg-surface-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/50 hover:bg-cyan-500/5 transition-all text-center group">
-          <svg class="w-6 h-6 mx-auto mb-2 text-slate-600 dark:text-slate-400 group-hover:text-cyan-600 dark:group-hover:text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+           class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50 hover:border-blue-500/50 dark:hover:border-blue-500/40 hover:bg-blue-500/5 transition-all text-center group">
+          <svg class="w-6 h-6 mx-auto mb-2 text-slate-600 dark:text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
             <polyline points="14 2 14 8 20 8"/>
             <line x1="16" y1="13" x2="8" y2="13"/>
             <line x1="16" y1="17" x2="8" y2="17"/>
             <polyline points="10 9 9 9 8 9"/>
           </svg>
-          <span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-cyan-600 dark:group-hover:text-cyan-400">{t('ccs.guide.documentation')}</span>
+          <span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-slate-200">{t('ccs.guide.documentation')}</span>
         </a>
         <a href="https://github.com/kaitranntt/ccs/issues" target="_blank" rel="noopener noreferrer"
-           class="p-4 rounded-lg bg-surface-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/50 hover:bg-cyan-500/5 transition-all text-center group">
-          <svg class="w-6 h-6 mx-auto mb-2 text-slate-600 dark:text-slate-400 group-hover:text-cyan-600 dark:group-hover:text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+           class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50 hover:border-blue-500/50 dark:hover:border-blue-500/40 hover:bg-blue-500/5 transition-all text-center group">
+          <svg class="w-6 h-6 mx-auto mb-2 text-slate-600 dark:text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="10"/>
             <path d="M12 16v-4M12 8h.01"/>
           </svg>
-          <span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-cyan-600 dark:group-hover:text-cyan-400">{t('ccs.guide.report_issues')}</span>
+          <span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-slate-200">{t('ccs.guide.report_issues')}</span>
         </a>
         <a href="https://github.com/kaitranntt/ccs/blob/main/docs/en/troubleshooting.md" target="_blank" rel="noopener noreferrer"
-           class="p-4 rounded-lg bg-surface-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/50 hover:bg-cyan-500/5 transition-all text-center group">
-          <svg class="w-6 h-6 mx-auto mb-2 text-slate-600 dark:text-slate-400 group-hover:text-cyan-600 dark:group-hover:text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+           class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50 hover:border-blue-500/50 dark:hover:border-blue-500/40 hover:bg-blue-500/5 transition-all text-center group">
+          <svg class="w-6 h-6 mx-auto mb-2 text-slate-600 dark:text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
           </svg>
-          <span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-cyan-600 dark:group-hover:text-cyan-400">{t('ccs.guide.troubleshooting')}</span>
+          <span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-slate-200">{t('ccs.guide.troubleshooting')}</span>
         </a>
       </div>
     </div>
