@@ -730,7 +730,7 @@ export default {
   'ccs.guide.basic_kimi': 'Kimi (with thinking support)',
 
   // Delegation Section
-  'ccs.guide.delegation_title': 'Delegation with -p Flag',
+  'ccs.guide.delegation_title': 'Delegation with -p flag',
   'ccs.guide.delegation_desc': 'Use the -p flag to delegate tasks to cost-optimized models:',
   'ccs.guide.delegation_example1_label': 'Delegate task to GLM',
   'ccs.guide.delegation_example2_label': 'Delegate to Kimi for analysis',
@@ -740,6 +740,14 @@ export default {
   'ccs.guide.multiacccount_title': 'Multi-Account Setup',
   'ccs.guide.multiaccount_create': 'Create account profiles',
   'ccs.guide.multiaccount_run': 'Run concurrently in separate terminals',
+  'ccs.guide.multiaccount_oauth_desc': 'Manage multiple accounts for OAuth providers like Gemini, Antigravity, and more:',
+  'ccs.guide.multiaccount_first_account': 'First account (default)',
+  'ccs.guide.multiaccount_add_another': 'Add another account',
+  'ccs.guide.multiaccount_add_nickname': 'Add with nickname for easy identification',
+  'ccs.guide.multiaccount_list_accounts': 'List all accounts',
+  'ccs.guide.multiaccount_switch_account': 'Switch to a different account',
+  'ccs.guide.multiaccount_config_selected': 'Configure the selected account',
+  'ccs.guide.multiaccount_storage_note': 'Accounts are stored in <code>~/.ccs/cliproxy/accounts.json</code> and can be managed via web dashboard.',
 
   // Core Features Section
   'ccs.guide.features_title': 'Core Features',
@@ -775,6 +783,26 @@ export default {
   'ccs.guide.kimi_use1': 'Long-context analysis',
   'ccs.guide.kimi_use2': 'Codebase reviews',
   'ccs.guide.kimi_use3': 'Multi-file refactoring',
+
+  // Web Dashboard Section
+  'ccs.guide.dashboard_title': 'Web Dashboard',
+  'ccs.guide.new_badge': 'New',
+  'ccs.guide.dashboard_desc': 'CCS features a modern React 19 dashboard with real-time updates for managing your profiles and monitoring account health.',
+  'ccs.guide.dashboard_feature1': 'Modern UI',
+  'ccs.guide.dashboard_feature2': 'Real-time Updates',
+  'ccs.guide.dashboard_feature3': 'Profile Management',
+  'ccs.guide.dashboard_feature4': 'Health Monitoring',
+  'ccs.guide.dashboard_feature5': 'Dark Mode',
+  'ccs.guide.dashboard_feature6': 'Responsive',
+  'ccs.guide.dashboard_launch_title': 'Launch Dashboard',
+  'ccs.guide.dashboard_launch_default': 'Open dashboard (auto-opens browser)',
+  'ccs.guide.dashboard_launch_custom': 'Specify custom port',
+  'ccs.guide.dashboard_access_note': 'The dashboard will automatically open in your browser. If not, access it manually at http://localhost:PORT',
+  'ccs.guide.dashboard_preview_title': 'Dashboard Preview',
+  'ccs.guide.dashboard_light_mode': 'Light Mode',
+  'ccs.guide.dashboard_dark_mode': 'Dark Mode',
+  'ccs.guide.dashboard_manage_title': 'Account Management',
+  'ccs.guide.dashboard_manage_desc': 'Accounts are stored locally and can be managed via the web dashboard. Add, edit, or remove profiles directly from the UI.',
 
   // Troubleshooting Section
   'ccs.guide.troubleshooting_title': 'Troubleshooting',
@@ -820,8 +848,10 @@ export default {
   'ccs.guide.agy_verify_desc': 'After selecting a model, verify it by running a simple command:',
   'ccs.guide.agy_verify_output': 'Expected output showing your selected model:',
   'ccs.guide.agy_logout_title': 'Logout from Antigravity',
-  'ccs.guide.agy_logout_desc': 'When you need to switch Antigravity accounts or log out:',
+  'ccs.guide.agy_logout_desc': 'Clear your Antigravity session:',
   'ccs.guide.agy_logout_output': 'Expected output:',
+  'ccs.guide.agy_multiaccount_title': 'Multi-Account Management',
+  'ccs.guide.agy_multiaccount_desc': 'Manage and switch between multiple Antigravity accounts:',
   'ccs.guide.glm_config_title': 'GLM Configuration',
   'ccs.guide.glm_config_desc': 'Configure GLM-4.6 via API for cost-optimized development tasks.',
   'ccs.guide.glm_update_notice': '🚀 <strong>New Update</strong>: Z.AI has introduced GLM-4.6V (8 December 2025) - the latest and most advanced model! Check the official announcement: <a href="https://z.ai/blog/glm-4.6v" class="text-emerald-600 dark:text-emerald-400 underline" target="_blank" rel="noopener noreferrer">https://z.ai/blog/glm-4.6v</a>',
@@ -859,6 +889,8 @@ export default {
   'ccs.guide.gemini_verify_desc': 'After configuration, verify the selected model:',
   'ccs.guide.gemini_logout_title': 'Switch Google Account',
   'ccs.guide.gemini_logout_desc': 'To switch to a different Google account:',
+  'ccs.guide.gemini_multiaccount_title': 'Multi-Account Management',
+  'ccs.guide.gemini_multiaccount_desc': 'Manage multiple Google accounts for Gemini:',
   'ccs.guide.codex_config_title': 'Codex Configuration',
   'ccs.guide.codex_config_desc': 'Authenticate with OpenAI OAuth.',
   'ccs.guide.codex_paid_note':
