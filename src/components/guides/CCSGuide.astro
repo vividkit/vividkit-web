@@ -203,7 +203,7 @@ const kimiSettingsCode = `{
         </div>
       </div>
 
-      <!-- Delegation with -p Flag -->
+      <!-- Delegation with -p flag -->
       <div>
         <h4 class="text-sm font-bold text-blue-600 dark:text-blue-400 mb-3 flex items-center gap-2">
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -230,7 +230,7 @@ const kimiSettingsCode = `{
         </div>
       </div>
 
-      <!-- Multi-Account Setup -->
+      <!-- Multi-Account Setup for OAuth Providers -->
       <div>
         <h4 class="text-sm font-bold text-blue-600 dark:text-blue-400 mb-3 flex items-center gap-2">
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -240,45 +240,76 @@ const kimiSettingsCode = `{
           </svg>
           {t('ccs.guide.multiacccount_title')}
         </h4>
+        <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">
+          {t('ccs.guide.multiaccount_oauth_desc')}
+        </p>
         <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm space-y-3">
-          <div class="text-slate-500 text-xs"># {t('ccs.guide.multiaccount_create')}</div>
-          <div>ccs auth create work</div>
-          <div>ccs auth create personal</div>
-          <div class="border-t border-slate-200 dark:border-slate-700 pt-4 mt-4">
-            <div class="text-slate-500 text-xs mb-3 font-medium flex items-center gap-2">
-              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M4 17l6-6-6-6"/>
-                <path d="M12 19h8"/>
-              </svg>
-              {t('ccs.guide.multiaccount_run')}
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <!-- Terminal 1 -->
-              <div class="rounded-lg bg-slate-50 dark:bg-[#0D0D0D] border border-slate-200 dark:border-slate-800 p-3 font-mono text-xs shadow-sm hover:border-emerald-500/30 transition-colors group">
-                <div class="text-slate-500 mb-2 flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-2">
-                  <span class="flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-slate-200 dark:bg-slate-700 group-hover:bg-emerald-500/50 transition-colors"></span>
-                    terminal-1
-                  </span>
-                  <span class="text-[10px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 px-1.5 rounded-sm border border-emerald-500/20">work</span>
-                </div>
-                <div class="text-emerald-600 dark:text-emerald-400 break-all">
-                  <span class="text-slate-400 dark:text-slate-600 select-none">$</span> ccs work "implement feature"
-                </div>
-              </div>
+          <div class="text-slate-500 text-xs"># {t('ccs.guide.multiaccount_first_account')}</div>
+          <div>ccs gemini --auth</div>
+          <div class="border-t border-slate-200 dark:border-slate-700 pt-3 mt-3">
+            <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_add_another')}</div>
+            <div>ccs gemini --auth --add</div>
+          </div>
+          <div class="border-t border-slate-200 dark:border-slate-700 pt-3 mt-3">
+            <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_add_nickname')}</div>
+            <div>ccs gemini --auth --add --nickname work</div>
+          </div>
+          <div class="border-t border-slate-200 dark:border-slate-700 pt-3 mt-3">
+            <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_list_accounts')}</div>
+            <div>ccs agy --accounts</div>
+          </div>
+          <div class="border-t border-slate-200 dark:border-slate-700 pt-3 mt-3">
+            <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_switch_account')}</div>
+            <div>ccs agy --use work</div>
+          </div>
+        </div>
 
-              <!-- Terminal 2 -->
-              <div class="rounded-lg bg-slate-50 dark:bg-[#0D0D0D] border border-slate-200 dark:border-slate-800 p-3 font-mono text-xs shadow-sm hover:border-amber-500/30 transition-colors group">
-                <div class="text-slate-500 mb-2 flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-2">
-                   <span class="flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-slate-200 dark:bg-slate-700 group-hover:bg-amber-500/50 transition-colors"></span>
-                    terminal-2
-                  </span>
-                  <span class="text-[10px] bg-amber-500/10 text-amber-600 dark:text-amber-400 px-1.5 rounded-sm border border-amber-500/20">personal</span>
-                </div>
-                <div class="text-amber-600 dark:text-amber-400 break-all">
-                  <span class="text-slate-400 dark:text-slate-600 select-none">$</span> ccs personal "review code"
-                </div>
+        <!-- Account Storage Note -->
+        <div class="mt-4 p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
+          <p class="text-xs text-blue-700 dark:text-blue-300 flex items-start gap-2">
+            <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 16v-4M12 8h.01"/>
+            </svg>
+            <span>{t('ccs.guide.multiaccount_storage_note')}</span>
+          </p>
+        </div>
+
+        <!-- Usage Example -->
+        <div class="mt-4">
+          <div class="text-slate-500 text-xs mb-3 font-medium flex items-center gap-2">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 17l6-6-6-6"/>
+              <path d="M12 19h8"/>
+            </svg>
+            {t('ccs.guide.multiaccount_run')}
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <!-- Terminal 1 -->
+            <div class="rounded-lg bg-slate-50 dark:bg-[#0D0D0D] border border-slate-200 dark:border-slate-800 p-3 font-mono text-xs shadow-sm hover:border-emerald-500/30 transition-colors group">
+              <div class="text-slate-500 mb-2 flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-2">
+                <span class="flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-slate-200 dark:bg-slate-700 group-hover:bg-emerald-500/50 transition-colors"></span>
+                  terminal-1
+                </span>
+                <span class="text-[10px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 px-1.5 rounded-sm border border-emerald-500/20">work</span>
+              </div>
+              <div class="text-emerald-600 dark:text-emerald-400 break-all">
+                <span class="text-slate-400 dark:text-slate-600 select-none">$</span> ccs work "implement feature"
+              </div>
+            </div>
+
+            <!-- Terminal 2 -->
+            <div class="rounded-lg bg-slate-50 dark:bg-[#0D0D0D] border border-slate-200 dark:border-slate-800 p-3 font-mono text-xs shadow-sm hover:border-amber-500/30 transition-colors group">
+              <div class="text-slate-500 mb-2 flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-2">
+                 <span class="flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-slate-200 dark:bg-slate-700 group-hover:bg-amber-500/50 transition-colors"></span>
+                  terminal-2
+                </span>
+                <span class="text-[10px] bg-amber-500/10 text-amber-600 dark:text-amber-400 px-1.5 rounded-sm border border-amber-500/20">personal</span>
+              </div>
+              <div class="text-amber-600 dark:text-amber-400 break-all">
+                <span class="text-slate-400 dark:text-slate-600 select-none">$</span> ccs personal "review code"
               </div>
             </div>
           </div>
@@ -585,6 +616,16 @@ const kimiSettingsCode = `{
           </div>
         </div>
 
+        <!-- Pro Tip -->
+        <div class="mt-4 p-3 rounded-lg bg-indigo-500/10 border border-indigo-500/20">
+          <p class="text-xs text-indigo-700 dark:text-indigo-300 flex items-start gap-2">
+            <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+            <span><strong>{t('ccs.guide.pro_tip')}:</strong> {t('ccs.guide.agy_pro_tip')}</span>
+          </p>
+        </div>
+
         <!-- Verification After Selection -->
         <div class="mt-4">
           <h5 class="text-sm font-bold text-indigo-600 dark:text-indigo-400 mb-2">{t('ccs.guide.agy_verify_title')}</h5>
@@ -612,13 +653,39 @@ const kimiSettingsCode = `{
           </div>
         </div>
 
-        <div class="mt-4 p-3 rounded-lg bg-indigo-500/10 border border-indigo-500/20">
-          <p class="text-xs text-indigo-700 dark:text-indigo-300 flex items-start gap-2">
-            <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        <!-- Multi-Account Management for Antigravity -->
+        <div class="mt-6">
+          <h5 class="text-sm font-bold text-indigo-600 dark:text-indigo-400 mb-2 flex items-center gap-2">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
             </svg>
-            <span><strong>{t('ccs.guide.pro_tip')}:</strong> {t('ccs.guide.agy_pro_tip')}</span>
-          </p>
+            {t('ccs.guide.agy_multiaccount_title')}
+          </h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.agy_multiaccount_desc')}</p>
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs space-y-3">
+            <div>
+              <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_first_account')}</div>
+              <code class="text-indigo-600 dark:text-indigo-400">ccs agy --auth</code>
+            </div>
+            <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
+              <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_add_nickname')}</div>
+              <code class="text-indigo-600 dark:text-indigo-400">ccs agy --auth --add --nickname work</code>
+            </div>
+            <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
+              <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_list_accounts')}</div>
+              <code class="text-indigo-600 dark:text-indigo-400">ccs agy --accounts</code>
+            </div>
+            <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
+              <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_switch_account')}</div>
+              <code class="text-indigo-600 dark:text-indigo-400">ccs agy --use work</code>
+            </div>
+            <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
+              <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_config_selected')}</div>
+              <code class="text-indigo-600 dark:text-indigo-400">ccs agy --config</code>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -712,6 +779,41 @@ const kimiSettingsCode = `{
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.gemini_logout_desc')}</p>
           <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs">
             <code class="text-blue-600 dark:text-blue-400">ccs gemini --logout</code>
+          </div>
+
+          <!-- Multi-Account Management for Gemini -->
+          <div class="mt-6 pt-6 border-t border-blue-200 dark:border-slate-700">
+            <h5 class="text-sm font-bold text-blue-600 dark:text-blue-400 mb-2 flex items-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+              {t('ccs.guide.gemini_multiaccount_title')}
+            </h5>
+            <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.gemini_multiaccount_desc')}</p>
+            <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs space-y-3">
+              <div>
+                <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_first_account')}</div>
+                <code class="text-blue-600 dark:text-blue-400">ccs gemini --auth</code>
+              </div>
+              <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
+                <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_add_nickname')}</div>
+                <code class="text-blue-600 dark:text-blue-400">ccs gemini --auth --add --nickname work</code>
+              </div>
+              <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
+                <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_list_accounts')}</div>
+                <code class="text-blue-600 dark:text-blue-400">ccs gemini --accounts</code>
+              </div>
+              <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
+                <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_switch_account')}</div>
+                <code class="text-blue-600 dark:text-blue-400">ccs gemini --use work</code>
+              </div>
+              <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
+                <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_config_selected')}</div>
+                <code class="text-blue-600 dark:text-blue-400">ccs gemini --config</code>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -990,6 +1092,170 @@ const kimiSettingsCode = `{
   </div>
 
 
+
+  <!-- Web Dashboard Section -->
+  <div class="glass-card rounded-xl border-teal-200 dark:border-teal-500/30 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-teal-500/10 to-cyan-500/10 border-b border-teal-200 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-teal-500/20 flex items-center justify-center font-bold text-teal-600 dark:text-teal-400 border-2 border-teal-500/50">
+          6
+        </div>
+        <h3 class="text-xl font-bold text-teal-600 dark:text-teal-400">
+          {t('ccs.guide.dashboard_title')}
+        </h3>
+        <span class="px-2 py-0.5 text-xs rounded-full bg-teal-500/20 text-teal-600 dark:text-teal-400 font-medium">{t('ccs.guide.new_badge')}</span>
+      </div>
+    </div>
+    <div class="p-6 space-y-6">
+      <p class="text-slate-700 dark:text-slate-300">
+        {t('ccs.guide.dashboard_desc')}
+      </p>
+
+      <!-- Dashboard Features Grid -->
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+        <div class="p-3 rounded-lg bg-teal-500/10 border border-teal-500/20 text-center">
+          <svg class="w-5 h-5 mx-auto mb-2 text-teal-600 dark:text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+            <path d="M3 9h18M9 21V9"/>
+          </svg>
+          <span class="text-xs font-medium text-teal-700 dark:text-teal-300">{t('ccs.guide.dashboard_feature1')}</span>
+        </div>
+        <div class="p-3 rounded-lg bg-teal-500/10 border border-teal-500/20 text-center">
+          <svg class="w-5 h-5 mx-auto mb-2 text-teal-600 dark:text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M23 4v6h-6M1 20v-6h6"/>
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+          </svg>
+          <span class="text-xs font-medium text-teal-700 dark:text-teal-300">{t('ccs.guide.dashboard_feature2')}</span>
+        </div>
+        <div class="p-3 rounded-lg bg-teal-500/10 border border-teal-500/20 text-center">
+          <svg class="w-5 h-5 mx-auto mb-2 text-teal-600 dark:text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          <span class="text-xs font-medium text-teal-700 dark:text-teal-300">{t('ccs.guide.dashboard_feature3')}</span>
+        </div>
+        <div class="p-3 rounded-lg bg-teal-500/10 border border-teal-500/20 text-center">
+          <svg class="w-5 h-5 mx-auto mb-2 text-teal-600 dark:text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+          <span class="text-xs font-medium text-teal-700 dark:text-teal-300">{t('ccs.guide.dashboard_feature4')}</span>
+        </div>
+        <div class="p-3 rounded-lg bg-teal-500/10 border border-teal-500/20 text-center">
+          <svg class="w-5 h-5 mx-auto mb-2 text-teal-600 dark:text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+          <span class="text-xs font-medium text-teal-700 dark:text-teal-300">{t('ccs.guide.dashboard_feature5')}</span>
+        </div>
+        <div class="p-3 rounded-lg bg-teal-500/10 border border-teal-500/20 text-center">
+          <svg class="w-5 h-5 mx-auto mb-2 text-teal-600 dark:text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+            <line x1="12" y1="18" x2="12.01" y2="18"/>
+          </svg>
+          <span class="text-xs font-medium text-teal-700 dark:text-teal-300">{t('ccs.guide.dashboard_feature6')}</span>
+        </div>
+      </div>
+
+      <!-- Launch Command -->
+      <div>
+        <h4 class="text-sm font-bold text-teal-600 dark:text-teal-400 mb-3 flex items-center gap-2">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="4 17 10 11 4 5"/>
+            <line x1="12" y1="19" x2="20" y2="19"/>
+          </svg>
+          {t('ccs.guide.dashboard_launch_title')}
+        </h4>
+        <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm space-y-3">
+          <div class="flex items-center gap-4">
+            <code class="text-teal-600 dark:text-teal-400">ccs config</code>
+            <span class="text-slate-500 text-xs"># {t('ccs.guide.dashboard_launch_default')}</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <code class="text-teal-600 dark:text-teal-400">ccs config --port 3000</code>
+            <span class="text-slate-500 text-xs"># {t('ccs.guide.dashboard_launch_custom')}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Access Info -->
+      <div class="p-4 rounded-lg bg-teal-500/10 border border-teal-500/20">
+        <p class="text-sm text-teal-700 dark:text-teal-300 flex items-start gap-2">
+          <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 16v-4M12 8h.01"/>
+          </svg>
+          <span>{t('ccs.guide.dashboard_access_note')}</span>
+        </p>
+      </div>
+
+      <!-- Dashboard Screenshot (Theme-aware) -->
+      <div>
+        <h4 class="text-sm font-bold text-teal-600 dark:text-teal-400 mb-3 flex items-center gap-2">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          {t('ccs.guide.dashboard_preview_title')}
+        </h4>
+        <div class="rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+          <!-- Light Mode Screenshot (visible in light mode) -->
+          <div class="block dark:hidden">
+            <div class="p-2 bg-slate-100 border-b border-slate-200 flex items-center gap-2">
+              <svg class="w-4 h-4 text-amber-500" viewBox="0 0 24 24" fill="currentColor">
+                <circle cx="12" cy="12" r="5"/>
+                <line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" stroke-width="2"/>
+                <line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" stroke-width="2"/>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="currentColor" stroke-width="2"/>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="2"/>
+                <line x1="1" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2"/>
+                <line x1="21" y1="12" x2="23" y2="12" stroke="currentColor" stroke-width="2"/>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="currentColor" stroke-width="2"/>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              <span class="text-xs font-medium text-slate-600">{t('ccs.guide.dashboard_light_mode')}</span>
+            </div>
+            <img
+              src="/guides/ccs_dashboard_light.png"
+              alt="CCS Dashboard - Light Mode"
+              class="w-full h-auto"
+              loading="lazy"
+            />
+          </div>
+          <!-- Dark Mode Screenshot (visible in dark mode) -->
+          <div class="hidden dark:block">
+            <div class="p-2 bg-slate-800 border-b border-slate-700 flex items-center gap-2">
+              <svg class="w-4 h-4 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+              </svg>
+              <span class="text-xs font-medium text-slate-300">{t('ccs.guide.dashboard_dark_mode')}</span>
+            </div>
+            <img
+              src="/guides/ccs_dashboard_dark.png"
+              alt="CCS Dashboard - Dark Mode"
+              class="w-full h-auto"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Account Management Note -->
+      <div class="p-4 rounded-lg bg-surface-100 dark:bg-slate-950 border border-teal-200 dark:border-slate-800">
+        <h5 class="text-sm font-bold text-teal-600 dark:text-teal-400 mb-2">{t('ccs.guide.dashboard_manage_title')}</h5>
+        <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">
+          {t('ccs.guide.dashboard_manage_desc')}
+        </p>
+        <PlatformPathSwitcher
+          lang={currentLang}
+          pathAfterHome=".ccs/cliproxy/accounts.json"
+          label="File:"
+          id="ccs-accounts-path"
+          color="teal"
+        />
+      </div>
+    </div>
+  </div>
 
   <!-- Troubleshooting Section -->
   <div class="glass-card rounded-xl border-slate-200 dark:border-slate-700 overflow-hidden">
