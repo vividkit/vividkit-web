@@ -1,6 +1,7 @@
 ---
 import { useTranslations } from '@/i18n/utils';
 import { getLangFromUrl, type Language } from '@/i18n';
+import { SITE_CONFIG } from '@/data/constants';
 
 interface Props {
   lang?: Language;
@@ -9,6 +10,9 @@ interface Props {
 const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
+
+// Language-specific URLs
+const ccsGuideUrl = currentLang === 'vi' ? '/vi/guides/ccs' : '/guides/ccs';
 ---
 
 <style>
@@ -62,6 +66,10 @@ const t = useTranslations(currentLang);
         </div>
         <p class="text-xs text-slate-500 dark:text-slate-500 mt-2">{t('cli.terminal.then_chat')}</p>
       </div>
+      <!-- Simple purchase note -->
+      <p class="text-xs text-slate-500 dark:text-slate-400 mt-4 italic">
+        {t('guides.cli.purchase_notice.desc')} <a href={SITE_CONFIG.claudekitReferralUrl} target="_blank" rel="noopener noreferrer" class="text-purple-600 dark:text-purple-400 hover:underline font-medium">{t('guides.cli.purchase_notice.cta')}</a>
+      </p>
     </div>
   </div>
 
@@ -492,7 +500,7 @@ const t = useTranslations(currentLang);
         </div>
       </div>
 
-      <a href="/guides/ccs" class="shrink-0 px-6 py-3 bg-white dark:bg-slate-900 text-amber-600 dark:text-amber-400 font-bold rounded-lg shadow-sm border border-amber-200 dark:border-amber-500/30 flex items-center gap-2 group-hover:scale-105 transition-transform">
+      <a href={ccsGuideUrl} class="shrink-0 px-6 py-3 bg-white dark:bg-slate-900 text-amber-600 dark:text-amber-400 font-bold rounded-lg shadow-sm border border-amber-200 dark:border-amber-500/30 flex items-center gap-2 group-hover:scale-105 transition-transform">
         {t('cli.ccs.view_guide')}
         <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M5 12h14M12 5l7 7-7 7"/>

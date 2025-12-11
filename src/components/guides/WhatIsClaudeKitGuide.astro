@@ -14,6 +14,7 @@ const t = useTranslations(currentLang);
 // Language-specific image suffixes and URLs
 const imgSuffix = currentLang === 'vi' ? '-vi' : '';
 const workflowsUrl = currentLang === 'vi' ? '/vi/guides/workflows' : '/guides/workflows';
+const cliGuideUrl = currentLang === 'vi' ? '/vi/guides/cli' : '/guides/cli';
 
 // SVG Icons as template literals
 const icons = {
@@ -52,11 +53,11 @@ const icons = {
 };
 
 const pillars = [
-  { key: 'agents', icon: icons.users, color: 'purple' },
-  { key: 'commands', icon: icons.bolt, color: 'blue' },
-  { key: 'skills', icon: icons.brain, color: 'emerald' },
-  { key: 'workflows', icon: icons.arrow_path, color: 'amber' },
-  { key: 'hooks', icon: icons.link, color: 'rose' },
+  { key: 'agents', icon: icons.users, bgClass: 'bg-purple-50 dark:bg-purple-500/10', borderClass: 'border-purple-200 dark:border-purple-500/20', textClass: 'text-purple-600 dark:text-purple-400', titleClass: 'text-purple-700 dark:text-purple-400' },
+  { key: 'commands', icon: icons.bolt, bgClass: 'bg-blue-50 dark:bg-blue-500/10', borderClass: 'border-blue-200 dark:border-blue-500/20', textClass: 'text-blue-600 dark:text-blue-400', titleClass: 'text-blue-700 dark:text-blue-400' },
+  { key: 'skills', icon: icons.brain, bgClass: 'bg-emerald-50 dark:bg-emerald-500/10', borderClass: 'border-emerald-200 dark:border-emerald-500/20', textClass: 'text-emerald-600 dark:text-emerald-400', titleClass: 'text-emerald-700 dark:text-emerald-400' },
+  { key: 'workflows', icon: icons.arrow_path, bgClass: 'bg-amber-50 dark:bg-amber-500/10', borderClass: 'border-amber-200 dark:border-amber-500/20', textClass: 'text-amber-600 dark:text-amber-400', titleClass: 'text-amber-700 dark:text-amber-400' },
+  { key: 'hooks', icon: icons.link, bgClass: 'bg-rose-50 dark:bg-rose-500/10', borderClass: 'border-rose-200 dark:border-rose-500/20', textClass: 'text-rose-600 dark:text-rose-400', titleClass: 'text-rose-700 dark:text-rose-400' },
 ];
 
 const processSteps = [
@@ -172,6 +173,7 @@ const comparisonItems = [
           alt="ClaudeKit Construction Team Metaphor"
           class="w-full h-auto"
           loading="lazy"
+          decoding="async"
         />
       </div>
       <div class="p-4 rounded-lg bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20">
@@ -192,11 +194,11 @@ const comparisonItems = [
     <div class="p-6">
       <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
         {pillars.map((pillar) => (
-          <div class={`text-center p-4 rounded-xl bg-${pillar.color}-50 dark:bg-${pillar.color}-500/10 border border-${pillar.color}-200 dark:border-${pillar.color}-500/20 hover:scale-105 transition-transform`}>
-            <div class={`flex justify-center mb-2 text-${pillar.color}-600 dark:text-${pillar.color}-400`}>
+          <div class={`text-center p-4 rounded-xl ${pillar.bgClass} border ${pillar.borderClass} hover:scale-105 transition-transform`}>
+            <div class={`flex justify-center mb-2 ${pillar.textClass}`}>
               <Fragment set:html={pillar.icon} />
             </div>
-            <div class={`font-bold text-${pillar.color}-700 dark:text-${pillar.color}-400`}>
+            <div class={`font-bold ${pillar.titleClass}`}>
               {t(`guides.what_is_claudekit.pillar_${pillar.key}`)}
             </div>
             <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">
@@ -212,6 +214,7 @@ const comparisonItems = [
           alt="ClaudeKit 5 Pillars"
           class="w-full h-auto"
           loading="lazy"
+          decoding="async"
         />
       </div>
     </div>
@@ -227,17 +230,17 @@ const comparisonItems = [
       <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">{t('guides.what_is_claudekit.process_desc')}</p>
     </div>
     <div class="p-6">
-      <div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-center gap-4 lg:gap-0">
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] items-stretch gap-4 lg:gap-0">
         {processSteps.map((step, index) => (
           <>
-            <div class={`flex-1 text-center p-5 rounded-xl bg-${step.color}-50 dark:bg-${step.color}-500/10 border border-${step.color}-200 dark:border-${step.color}-500/20`}>
-              <div class={`w-10 h-10 rounded-full bg-${step.color}-500 text-white flex items-center justify-center mx-auto mb-3 font-bold text-lg`}>
+            <div class={`flex flex-col items-center text-center p-5 rounded-xl bg-${step.color}-50 dark:bg-${step.color}-500/10 border border-${step.color}-200 dark:border-${step.color}-500/20 min-h-[180px]`}>
+              <div class={`w-10 h-10 rounded-full bg-${step.color}-500 text-white flex items-center justify-center mx-auto mb-3 font-bold text-lg flex-shrink-0`}>
                 {step.step}
               </div>
-              <div class={`flex justify-center mb-2 text-${step.color}-600 dark:text-${step.color}-400`}>
+              <div class={`flex justify-center mb-2 text-${step.color}-600 dark:text-${step.color}-400 flex-shrink-0`}>
                 <Fragment set:html={step.icon} />
               </div>
-              <div class="text-sm text-slate-700 dark:text-slate-300 font-medium">
+              <div class="text-sm text-slate-700 dark:text-slate-300 font-medium flex-1 flex items-center">
                 {t(`guides.what_is_claudekit.process_step${step.step}`)}
               </div>
             </div>
@@ -248,6 +251,16 @@ const comparisonItems = [
             )}
           </>
         ))}
+      </div>
+      <!-- Workflow Image -->
+      <div class="mt-6 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700">
+        <img
+          src={`/guides/claudekit-workflow${imgSuffix}.png`}
+          alt="ClaudeKit Workflow"
+          class="w-full h-auto"
+          loading="lazy"
+          decoding="async"
+        />
       </div>
     </div>
   </div>
@@ -301,6 +314,16 @@ const comparisonItems = [
             </div>
           </div>
         ))}
+      </div>
+      <!-- Comparison Image -->
+      <div class="mt-6 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700">
+        <img
+          src={`/guides/claudekit-comparison${imgSuffix}.png`}
+          alt="ClaudeKit Before vs After Comparison"
+          class="w-full h-auto"
+          loading="lazy"
+          decoding="async"
+        />
       </div>
     </div>
   </div>
@@ -425,6 +448,31 @@ const comparisonItems = [
             {t('guides.what_is_claudekit.get_claudekit_discount')}
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- CLI Setup Section -->
+      <div class="mt-6 p-5 rounded-xl bg-gradient-to-r from-emerald-100 via-teal-100 to-emerald-100 dark:from-emerald-500/20 dark:via-teal-500/20 dark:to-emerald-500/20 border-2 border-emerald-300 dark:border-emerald-500/40 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-emerald-200/50 to-transparent dark:from-emerald-500/10 rounded-bl-full"></div>
+        <div class="relative flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-emerald-600 dark:text-emerald-400"><Fragment set:html={icons.rocket} /></span>
+              <span class="font-bold text-emerald-800 dark:text-emerald-300">{t('guides.what_is_claudekit.cli_setup_title')}</span>
+            </div>
+            <p class="text-emerald-700 dark:text-emerald-300 text-sm leading-relaxed">
+              {t('guides.what_is_claudekit.cli_setup_desc')}
+            </p>
+          </div>
+          <a
+            href={cliGuideUrl}
+            class="cta-button-emerald flex-shrink-0 inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm"
+          >
+            {t('guides.what_is_claudekit.cli_setup_cta')}
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
             </svg>
           </a>
         </div>

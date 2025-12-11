@@ -1,18 +1,3 @@
 ---
-import GuidesLayout from '@/layouts/GuidesLayout.astro';
-import CLIGuide from '@/components/guides/CLIGuide.astro';
-import { useTranslations } from '@/i18n/utils';
-import type { Language } from '@/i18n';
-
-const lang: Language = 'vi';
-const t = useTranslations(lang);
+return Astro.redirect('/vi/guides/what-is-claudekit');
 ---
-
-<GuidesLayout
-  title={`${t('guides.cli.title')} - ${t('site.title')}`}
-  description={t('guides.cli.description')}
-  activeTab="cli"
-  lang="vi"
->
-  <CLIGuide />
-</GuidesLayout>
