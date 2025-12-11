@@ -1,3 +1,12 @@
 ---
-return Astro.redirect('/guides/what-is-claudekit');
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import WhatIsClaudeKitGuide from '@/components/guides/WhatIsClaudeKitGuide.astro';
 ---
+
+<GuidesLayout
+  title="What is ClaudeKit? - VividKit Documentation"
+  description="A simple introduction to ClaudeKit for beginners. Learn how ClaudeKit transforms Claude into a professional coding assistant."
+  activeTab="what-is-claudekit"
+>
+  <WhatIsClaudeKitGuide />
+</GuidesLayout>
