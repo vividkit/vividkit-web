@@ -31,12 +31,10 @@ const option2Code = `{
       "Write(*)"
     ],
     "deny": [
-      // ====== FORK BOMB & DOS ======
       "Bash(:(){:|:&};:)",
       "Bash(:(){ :|:& };:)",
       "Bash(bomb(){ bomb|bomb& };bomb)",
 
-      // ====== DISK DESTRUCTION ======
       "Bash(dd if=/dev/zero of=/dev/sd*:*)",
       "Bash(dd if=/dev/zero of=/dev/disk*:*)",
       "Bash(dd if=/dev/random of=/dev/sd*:*)",
@@ -51,7 +49,6 @@ const option2Code = `{
       "Bash(parted:*)",
       "Bash(diskutil eraseDisk:*)",
 
-      // ====== FILE DESTRUCTION ======
       "Bash(rm ~/)",
       "Bash(rm /)",
       "Bash(rm -rf /:*)",
@@ -66,7 +63,6 @@ const option2Code = `{
       "Bash(find / -delete:*)",
       "Bash(find / -exec rm -rf {} \\;:*)",
 
-      // ====== PERMISSION ATTACKS ======
       "Bash(chown -R /:*)",
       "Bash(chown -R root:root /:*)",
       "Bash(chmod -R 0 /:*)",
@@ -75,7 +71,6 @@ const option2Code = `{
       "Bash(chmod -R 000 /:*)",
       "Bash(chmod 000 -R /:*)",
 
-      // ====== REMOTE CODE EXECUTION ======
       "Bash(curl*|*sh:*)",
       "Bash(wget*|*sh:*)",
       "Bash(curl * | bash:*)",
@@ -88,28 +83,23 @@ const option2Code = `{
       "Bash(wget -qO- * | bash:*)",
       "Bash(eval $*:*)",
 
-      // ====== DATABASE DESTRUCTION - MySQL ======
       "Bash(mysql * DROP DATABASE:*)",
       "Bash(mysql * DROP TABLE:*)",
       "Bash(mysql * TRUNCATE:*)",
       "Bash(mysqladmin drop:*)",
 
-      // ====== DATABASE DESTRUCTION - PostgreSQL ======
       "Bash(psql * DROP DATABASE:*)",
       "Bash(psql * DROP TABLE:*)",
       "Bash(psql * TRUNCATE:*)",
       "Bash(dropdb:*)",
 
-      // ====== DATABASE DESTRUCTION - MongoDB ======
       "Bash(mongo * --eval *dropDatabase*:*)",
       "Bash(mongosh * --eval *dropDatabase*:*)",
       "Bash(mongo * dropDatabase:*)",
 
-      // ====== DATABASE DESTRUCTION - Redis ======
       "Bash(redis-cli FLUSHALL:*)",
       "Bash(redis-cli FLUSHDB:*)",
 
-      // ====== DATABASE DESTRUCTION - ORM Tools ======
       "Bash(prisma db push)",
       "Bash(npx prisma db push)",
       "Bash(prisma migrate reset:*)",
@@ -125,7 +115,6 @@ const option2Code = `{
       "Bash(typeorm schema:drop:*)",
       "Bash(sequelize db:drop:*)",
 
-      // ====== DATABASE DESTRUCTION - Rails ======
       "Bash(rails db:drop:*)",
       "Bash(rails db:reset:*)",
       "Bash(rails db:migrate:reset:*)",
@@ -144,7 +133,6 @@ const option2Code = `{
       "Bash(gem uninstall -aIx:*)",
       "Bash(bundle exec rails destroy:*)",
 
-      // ====== KUBERNETES DESTRUCTION ======
       "Bash(kubectl delete namespace --all:*)",
       "Bash(kubectl delete ns --all:*)",
       "Bash(kubectl delete all --all:*)",
@@ -158,7 +146,6 @@ const option2Code = `{
       "Bash(helm uninstall --all:*)",
       "Bash(helm delete --purge:*)",
 
-      // ====== DOCKER DESTRUCTION ======
       "Bash(docker system prune -af:*)",
       "Bash(docker volume rm -f :*::*)",
       "Bash(docker rm -f $(docker ps -aq):*)",
@@ -177,7 +164,6 @@ const option2Code = `{
       "Bash(docker run --privileged:*)",
       "Bash(docker run -v /:/host:*)",
 
-      // ====== GIT DESTRUCTIVE ======
       "Bash(git reset --hard:*)",
       "Bash(git clean -fdx:*)",
       "Bash(git push --force:*)",
@@ -189,7 +175,6 @@ const option2Code = `{
       "Bash(git filter-branch:*)",
       "Bash(git rebase -i --root:*)",
 
-      // ====== SYSTEM MANIPULATION ======
       "Bash(shutdown:*)",
       "Bash(reboot:*)",
       "Bash(systemctl poweroff:*)",
@@ -204,7 +189,6 @@ const option2Code = `{
       "Bash(crontab -r:*)",
       "Bash(rm /var/spool/cron/*:*)",
 
-      // ====== NETWORK/FIREWALL ======
       "Bash(iptables -F:*)",
       "Bash(iptables --flush:*)",
       "Bash(iptables -X:*)",
@@ -214,13 +198,11 @@ const option2Code = `{
       "Bash(firewall-cmd --panic-on:*)",
       "Bash(nft flush ruleset:*)",
 
-      // ====== CREDENTIAL EXPOSURE ======
       "Bash(cat /etc/shadow:*)",
       "Bash(cat ~/.ssh/id_rsa:*)",
       "Bash(cat ~/.aws/credentials:*)",
       "Bash(cat ~/.git-credentials:*)",
 
-      // ====== LOG TAMPERING ======
       "Bash(rm -rf /var/log/*:*)",
       "Bash(> /var/log/*:*)",
       "Bash(truncate -s 0 /var/log/*:*)",
@@ -228,14 +210,12 @@ const option2Code = `{
       "Bash(history -c:*)",
       "Bash(cat /dev/null > ~/.bash_history:*)",
 
-      // ====== PACKAGE MANAGER ABUSE ======
       "Bash(apt-get remove --purge *:*)",
       "Bash(apt remove --purge *:*)",
       "Bash(yum remove *:*)",
       "Bash(dnf remove *:*)",
       "Bash(pacman -Rns *:*)",
 
-      // ====== PROCESS CONTROL ======
       "Bash(kill -9:*)",
       "Bash(killall:*)",
       "Bash(kill -9 -1:*)",
@@ -243,31 +223,25 @@ const option2Code = `{
       "Bash(pkill -9 *:*)",
       "Bash(kill -SIGKILL -1:*)",
 
-      // ====== CLOUD DESTRUCTIVE - AWS ======
       "Bash(aws s3 rm --recursive s3://*:*)",
       "Bash(aws ec2 terminate-instances:*)",
       "Bash(aws rds delete-db-instance:*)",
       "Bash(aws cloudformation delete-stack:*)",
 
-      // ====== CLOUD DESTRUCTIVE - GCP ======
       "Bash(gcloud compute instances delete:*)",
       "Bash(gsutil rm -r gs://*:*)",
       "Bash(gcloud sql instances delete:*)",
 
-      // ====== CLOUD DESTRUCTIVE - Azure ======
       "Bash(az group delete:*)",
       "Bash(az vm delete:*)",
       "Bash(az storage blob delete-batch:*)",
 
-      // ====== TERRAFORM ======
       "Bash(terraform destroy -auto-approve:*)",
       "Bash(terraform apply -destroy:*)",
 
-      // ====== PUBLISHING ======
       "Bash(npm publish:*)",
       "Bash(pnpm publish:*)",
 
-      // ====== MISC DANGEROUS ======
       "Bash(export HISTSIZE=0:*)",
       "Bash(unset HISTFILE:*)",
       "Bash(set +o history:*)",
