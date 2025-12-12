@@ -887,8 +887,8 @@ export default {
   'ccs.guide.gemini_config_success': 'After selecting a model:',
   'ccs.guide.gemini_verify_title': 'Verify Your Selection',
   'ccs.guide.gemini_verify_desc': 'After configuration, verify the selected model:',
-  'ccs.guide.gemini_logout_title': 'Switch Google Account',
-  'ccs.guide.gemini_logout_desc': 'To switch to a different Google account:',
+  'ccs.guide.gemini_logout_title': 'Logout from Gemini',
+  'ccs.guide.gemini_logout_desc': 'Clear your Gemini session:',
   'ccs.guide.gemini_multiaccount_title': 'Multi-Account Management',
   'ccs.guide.gemini_multiaccount_desc': 'Manage multiple Google accounts for Gemini:',
   'ccs.guide.codex_config_title': 'Codex Configuration',
@@ -901,8 +901,10 @@ export default {
   'ccs.guide.codex_output_label': 'Expected output:',
   'ccs.guide.codex_verify_title': 'Step 2: Verify Your Setup',
   'ccs.guide.codex_verify_desc': 'After authentication, verify the setup:',
-  'ccs.guide.codex_logout_title': 'Switch OpenAI Account',
-  'ccs.guide.codex_logout_desc': 'To switch to a different OpenAI account:',
+  'ccs.guide.codex_logout_title': 'Logout from Codex',
+  'ccs.guide.codex_logout_desc': 'Clear your Codex session:',
+  'ccs.guide.codex_multiaccount_title': 'Multi-Account Management',
+  'ccs.guide.codex_multiaccount_desc': 'Manage multiple OpenAI accounts for Codex:',
   'ccs.guide.edit_settings': 'Edit settings file:',
 
   // Workflows Guide

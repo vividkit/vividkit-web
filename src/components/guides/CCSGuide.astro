@@ -203,33 +203,6 @@ const kimiSettingsCode = `{
         </div>
       </div>
 
-      <!-- Delegation with -p flag -->
-      <div>
-        <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3 flex items-center gap-2">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
-          </svg>
-          {t('ccs.guide.delegation_title')}
-        </h4>
-        <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">
-          {t('ccs.guide.delegation_desc')}
-        </p>
-        <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm space-y-3">
-          <div>
-            <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.delegation_example1_label')}</div>
-            <code class="text-amber-600 dark:text-amber-400">ccs glm -p "fix linting errors in src/"</code>
-          </div>
-          <div>
-            <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.delegation_example2_label')}</div>
-            <code class="text-purple-600 dark:text-purple-400">ccs kimi -p "analyze project structure and document"</code>
-          </div>
-          <div>
-            <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.delegation_example3_label')}</div>
-            <code class="text-emerald-600 dark:text-emerald-400">ccs glm:continue -p "run the tests and fix failures"</code>
-          </div>
-        </div>
-      </div>
-
       <!-- Multi-Account Setup for OAuth Providers -->
       <div>
         <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3 flex items-center gap-2">
@@ -390,25 +363,7 @@ const kimiSettingsCode = `{
           </div>
         </div>
 
-        <!-- Feature 2: AI-Powered Delegation -->
-        <div class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50 hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-colors">
-          <div class="flex items-center gap-2 mb-3">
-            <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
-              <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
-              </svg>
-            </div>
-            <h4 class="font-bold text-slate-700 dark:text-slate-300">{t('ccs.guide.feature2_title')}</h4>
-          </div>
-          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">
-            {t('ccs.guide.feature2_desc')}
-          </p>
-          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs">
-            <code class="text-amber-600 dark:text-amber-400">ccs glm -p "add tests"</code>
-          </div>
-        </div>
-
-        <!-- Feature 3: Slash Command Support -->
+        <!-- Feature 2: Slash Command Support -->
         <div class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50 hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-colors">
           <div class="flex items-center gap-2 mb-3">
             <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
@@ -423,7 +378,7 @@ const kimiSettingsCode = `{
             {t('ccs.guide.feature3_desc')}
           </p>
           <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs">
-            <code class="text-emerald-600 dark:text-emerald-400">ccs glm -p "/cook create landing page"</code>
+            <code class="text-emerald-600 dark:text-emerald-400">ccs glm "/cook create landing page"</code>
           </div>
         </div>
 
@@ -484,14 +439,14 @@ const kimiSettingsCode = `{
             <span class="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center text-xs font-bold text-blue-600 dark:text-blue-400 shrink-0">2</span>
             <div>
               <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.workflow_step2')}</div>
-              <code class="text-amber-600 dark:text-amber-400">ccs glm -p "/cook implement Stripe payment flow"</code>
+              <code class="text-amber-600 dark:text-amber-400">ccs glm "/cook implement Stripe payment flow"</code>
             </div>
           </div>
           <div class="flex items-start gap-3">
             <span class="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center text-xs font-bold text-blue-600 dark:text-blue-400 shrink-0">3</span>
             <div>
               <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.workflow_step3')}</div>
-              <code class="text-amber-600 dark:text-amber-400">ccs glm -p "/fix:test run payment tests"</code>
+              <code class="text-amber-600 dark:text-amber-400">ccs glm "/fix:test run payment tests"</code>
             </div>
           </div>
           <div class="flex items-start gap-3">
@@ -882,6 +837,37 @@ const kimiSettingsCode = `{
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.codex_logout_desc')}</p>
           <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs">
             <code class="text-slate-700 dark:text-slate-300">ccs codex --logout</code>
+          </div>
+
+          <!-- Multi-Account Management for Codex -->
+          <div class="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700">
+            <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 flex items-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+              {t('ccs.guide.codex_multiaccount_title')}
+            </h5>
+            <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.codex_multiaccount_desc')}</p>
+            <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs space-y-3">
+              <div>
+                <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_first_account')}</div>
+                <code class="text-slate-700 dark:text-slate-300">ccs codex --auth</code>
+              </div>
+              <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
+                <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_add_another')}</div>
+                <code class="text-slate-700 dark:text-slate-300">ccs codex --auth --add</code>
+              </div>
+              <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
+                <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_add_nickname')}</div>
+                <code class="text-slate-700 dark:text-slate-300">ccs codex --auth --add --nickname work</code>
+              </div>
+              <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
+                <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_list_accounts')}</div>
+                <code class="text-slate-700 dark:text-slate-300">ccs codex --accounts</code>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1290,7 +1276,7 @@ const kimiSettingsCode = `{
         <div class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50 hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-colors">
           <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.issue3_title')}</h4>
           <div class="bg-white dark:bg-[#0D0D0D] rounded p-2 border border-slate-200 dark:border-slate-700 font-mono text-xs">
-            <code>ccs glm:continue -p "next task"</code>
+            <code>ccs glm:continue "next task"</code>
           </div>
         </div>
         <!-- Health Check -->
