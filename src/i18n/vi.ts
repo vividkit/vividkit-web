@@ -894,8 +894,8 @@ export default {
   'ccs.guide.gemini_config_success': 'Sau khi chọn model:',
   'ccs.guide.gemini_verify_title': 'Xác Minh Lựa Chọn',
   'ccs.guide.gemini_verify_desc': 'Sau khi cấu hình, xác minh model đã chọn:',
-  'ccs.guide.gemini_logout_title': 'Chuyển Tài Khoản Google',
-  'ccs.guide.gemini_logout_desc': 'Để chuyển sang tài khoản Google khác:',
+  'ccs.guide.gemini_logout_title': 'Đăng Xuất khỏi Gemini',
+  'ccs.guide.gemini_logout_desc': 'Xóa phiên Gemini của bạn:',
   'ccs.guide.gemini_multiaccount_title': 'Quản Lý Nhiều Tài Khoản',
   'ccs.guide.gemini_multiaccount_desc': 'Quản lý nhiều tài khoản Google cho Gemini:',
   'ccs.guide.codex_config_title': 'Cấu Hình Codex',
@@ -908,8 +908,10 @@ export default {
   'ccs.guide.codex_output_label': 'Kết quả mong đợi:',
   'ccs.guide.codex_verify_title': 'Bước 2: Xác Minh Cài Đặt',
   'ccs.guide.codex_verify_desc': 'Sau khi xác thực, xác minh cài đặt:',
-  'ccs.guide.codex_logout_title': 'Chuyển Tài Khoản OpenAI',
-  'ccs.guide.codex_logout_desc': 'Để chuyển sang tài khoản OpenAI khác:',
+  'ccs.guide.codex_logout_title': 'Đăng Xuất khỏi Codex',
+  'ccs.guide.codex_logout_desc': 'Xóa phiên Codex của bạn:',
+  'ccs.guide.codex_multiaccount_title': 'Quản Lý Nhiều Tài Khoản',
+  'ccs.guide.codex_multiaccount_desc': 'Quản lý nhiều tài khoản OpenAI cho Codex:',
   'ccs.guide.edit_settings': 'Chỉnh sửa file cài đặt:',
 
   // Workflows Guide
