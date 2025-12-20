@@ -12,18 +12,15 @@ const translatePath = useTranslatedPath(currentLang);
 // Read the actual script from the user's machine for the guide
 const scriptCode = `#!/usr/bin/env node
 /**
- * Discord Phase Notification Hook
+ * Discord Phase Notification Hook (Minimal Version)
  *
- * Detects plan phase completion, user approval requests, and finalization steps.
- * Sends Discord notifications so user can start next phase.
+ * Only notifies on high-signal events:
+ * 1. /plan command - ExitPlanMode when planning phase completes
+ * 2. /code command - Step 5 blocking gate waiting for user approval
+ * 3. /code command - Step 6 finalize when phase workflow finishes
  *
  * Location: ~/.claude/custom/hooks/ (survives CK updates)
- * Events: SubagentStop, Stop
- *
- * Detection keywords:
- * - Plan completion: "plan complete", "plan ready", "phase complete", "phase done"
- * - User approval: "awaiting approval", "user approval", "please review", "ready for review"
- * - Finalization: "finalize complete", "implementation complete", "task complete", "all phases complete"
+ * Events: Stop (main session only, not SubagentStop to reduce noise)
  */
 
 const fs = require('fs');
@@ -31,42 +28,35 @@ const path = require('path');
 const https = require('https');
 const os = require('os');
 
-// Detection patterns (case insensitive)
+// Strict detection patterns - only high-signal events
 const PATTERNS = {
-  planComplete: [
-    /plan\\s+(is\\s+)?complete/i,
-    /plan\\s+ready/i,
-    /phase\\s+\\d*\\s*(is\\s+)?complete/i,
-    /phase\\s+\\d*\\s*(is\\s+)?done/i,
-    /completed?\\s+phase/i,
-    /finished?\\s+planning/i,
-    /plan\\s+created/i,
-  ],
-  userApproval: [
-    /awaiting\\s+(your\\s+)?approval/i,
-    /user\\s+approval/i,
-    /please\\s+review/i,
-    /ready\\s+for\\s+(your\\s+)?review/i,
-    /approval\\s+needed/i,
-    /waiting\\s+for\\s+(your\\s+)?(input|approval|confirmation)/i,
-    /exitplanmode/i,
+  // /plan command: Plan ready for approval (ExitPlanMode tool called)
+  planReady: [
+    /ExitPlanMode/,
     /exiting\\s+plan\\s+mode/i,
   ],
-  finalization: [
-    /finalize?\\s+(is\\s+)?complete/i,
-    /implementation\\s+(is\\s+)?complete/i,
-    /task\\s+(is\\s+)?complete/i,
-    /all\\s+phases?\\s+(are\\s+)?complete/i,
-    /successfully\\s+implemented/i,
-    /feature\\s+(is\\s+)?complete/i,
-    /all\\s+tasks?\\s+(are\\s+)?done/i,
-    /finished\\s+implement/i,
+  // /code command: Step 5 blocking gate - waiting for user approval
+  codeApproval: [
+    /⏸\\s*Step\\s*5/,
+    /Step\\s*5.*WAITING.*user\\s*approval/i,
+    /WAITING\\s+for\\s+user\\s+approval/i,
+  ],
+  // /code command: Step 6 finalize - phase workflow finished
+  codeFinalize: [
+    /✓\\s*Step\\s*6.*Finalize/,
+    /Step\\s*6.*Git\\s*committed/i,
+    /Phase\\s+workflow\\s+finished/i,
   ],
 };
 
-// Load environment variables
+// Load environment variables (project scope first, then global)
 function loadEnv() {
+  const cwd = process.cwd();
   const envPaths = [
+    // Project scope first
+    path.join(cwd, '.claude', '.env'),
+    path.join(cwd, '.claude', 'hooks', '.env'),
+    // Global scope fallback
     path.join(os.homedir(), '.claude', 'custom', 'hooks', '.env'),
     path.join(os.homedir(), '.claude', 'hooks', '.env'),
     path.join(os.homedir(), '.claude', '.env'),
@@ -152,28 +142,28 @@ function sendDiscord(title, message, color = 5763719) {
   });
 }
 
-// Detect notification type from text
+// Detect notification type from text - strict matching
 function detectType(text) {
   if (!text) return null;
 
-  // Check finalization first (highest priority)
-  for (const pattern of PATTERNS.finalization) {
+  // /plan command: ExitPlanMode (plan ready for review)
+  for (const pattern of PATTERNS.planReady) {
     if (pattern.test(text)) {
-      return { type: 'finalization', title: '✅ Implementation Complete', color: 3066993 }; // Green
+      return { type: 'planReady', title: '📋 /plan Complete', color: 3447003 }; // Blue
     }
   }
 
-  // Check user approval next
-  for (const pattern of PATTERNS.userApproval) {
+  // /code command: Step 6 finalize (phase workflow finished) - check before Step 5
+  for (const pattern of PATTERNS.codeFinalize) {
     if (pattern.test(text)) {
-      return { type: 'approval', title: '⏳ Awaiting Your Approval', color: 15844367 }; // Yellow
+      return { type: 'codeFinalize', title: '✅ /code Phase Complete', color: 5763719 }; // Green
     }
   }
 
-  // Check plan/phase completion
-  for (const pattern of PATTERNS.planComplete) {
+  // /code command: Step 5 blocking gate
+  for (const pattern of PATTERNS.codeApproval) {
     if (pattern.test(text)) {
-      return { type: 'planComplete', title: '📋 Phase Complete', color: 3447003 }; // Blue
+      return { type: 'codeApproval', title: '⏸ /code Step 5: Approval Needed', color: 15844367 }; // Yellow
     }
   }
 
@@ -184,28 +174,11 @@ function detectType(text) {
 function extractContext(payload) {
   const parts = [];
 
-  if (payload.subagent_type) {
-    parts.push(\`Agent: \${payload.subagent_type}\`);
-  }
-
   if (payload.stop_reason) {
-    parts.push(\`Reason: \${payload.stop_reason}\`);
+    parts.push(payload.stop_reason.slice(0, 300));
   }
 
-  if (payload.transcript_path && fs.existsSync(payload.transcript_path)) {
-    try {
-      const transcript = fs.readFileSync(payload.transcript_path, 'utf-8');
-      const lastPart = transcript.slice(-2000);
-      const match = lastPart.match(/assistant[:\\s]+([\\s\\S]{50,500}?)(?=\\n\\n|\\n[a-z]+:|$)/i);
-      if (match) {
-        parts.push(\`Summary: \${match[1].slice(0, 200).trim()}...\`);
-      }
-    } catch (e) {
-      // Ignore transcript read errors
-    }
-  }
-
-  return parts.join('\\n') || 'Claude Code session event';
+  return parts.join('\\n') || 'Claude needs your attention';
 }
 
 // Main execution
@@ -256,17 +229,6 @@ main();`;
 
 const settingsJsonCode = `{
   "hooks": {
-    "SubagentStop": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node $HOME/.claude/custom/hooks/discord-phase-notify.cjs"
-          }
-        ]
-      }
-    ],
     "Stop": [
       {
         "hooks": [
@@ -282,19 +244,19 @@ const settingsJsonCode = `{
 
 const envExampleCode = `DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/YOUR_ID/YOUR_TOKEN`;
 
-// Test case 1: ⏳ Awaiting Your Approval (SubagentStop)
-const testApproval = `echo '{"subagent_type": "planner", "stop_reason": "Phase 1 is complete and ready for review"}' | node ~/.claude/custom/hooks/discord-phase-notify.cjs`;
-const testApprovalWindows = `'{"subagent_type": "planner", "stop_reason": "Phase 1 is complete and ready for review"}' | node $env:USERPROFILE\\.claude\\custom\\hooks\\discord-phase-notify.cjs`;
+// Test case 1: 📋 /plan Complete (ExitPlanMode)
+const testPlanReady = `echo '{"stop_reason": "ExitPlanMode - plan is ready for your review"}' | node ~/.claude/custom/hooks/discord-phase-notify.cjs`;
+const testPlanReadyWindows = `'{"stop_reason": "ExitPlanMode - plan is ready for your review"}' | node $env:USERPROFILE\\.claude\\custom\\hooks\\discord-phase-notify.cjs`;
 
-// Test case 2: ✅ Implementation Complete (Stop)
-const testComplete = `echo '{"stop_reason": "Implementation complete - all tests passing"}' | node ~/.claude/custom/hooks/discord-phase-notify.cjs`;
-const testCompleteWindows = `'{"stop_reason": "Implementation complete - all tests passing"}' | node $env:USERPROFILE\\.claude\\custom\\hooks\\discord-phase-notify.cjs`;
+// Test case 2: ⏸ /code Step 5 Blocking Gate
+const testCodeApproval = `echo '{"stop_reason": "⏸ Step 5: WAITING for user approval"}' | node ~/.claude/custom/hooks/discord-phase-notify.cjs`;
+const testCodeApprovalWindows = `'{"stop_reason": "⏸ Step 5: WAITING for user approval"}' | node $env:USERPROFILE\\.claude\\custom\\hooks\\discord-phase-notify.cjs`;
 
-// Test case 3: 📋 Phase Complete (Stop)
-const testPhase = `echo '{"stop_reason": "Phase 2 done, moving to next phase"}' | node ~/.claude/custom/hooks/discord-phase-notify.cjs`;
-const testPhaseWindows = `'{"stop_reason": "Phase 2 done, moving to next phase"}' | node $env:USERPROFILE\\.claude\\custom\\hooks\\discord-phase-notify.cjs`;
+// Test case 3: ✅ /code Step 6 Finalize
+const testCodeFinalize = `echo '{"stop_reason": "✓ Step 6: Finalize - Status updated - Git committed"}' | node ~/.claude/custom/hooks/discord-phase-notify.cjs`;
+const testCodeFinalizeWindows = `'{"stop_reason": "✓ Step 6: Finalize - Status updated - Git committed"}' | node $env:USERPROFILE\\.claude\\custom\\hooks\\discord-phase-notify.cjs`;
 
-const llmPrompt = `Set up Discord notifications for Claude Code phase completion.
+const llmPrompt = `Set up Discord notifications for Claude Code /plan and /code commands.
 
 Platform: Detect my OS and use appropriate paths/commands.
 
@@ -305,20 +267,28 @@ Requirements:
 
 2. Create \`discord-phase-notify.cjs\` - a Node.js script that:
    - Uses native \`https\` module (no external dependencies)
-   - Uses \`os.homedir()\` for cross-platform home directory
+   - Uses \`os.homedir()\` and \`process.cwd()\` for cross-platform paths
    - Reads hook payload from stdin (JSON with stop_reason, result, output, message fields)
-   - Detects patterns: "phase complete", "awaiting approval", "please review", "implementation complete", "exitplanmode"
+   - Only detects these specific patterns (no generic patterns):
+     * /plan command: "ExitPlanMode", "exiting plan mode" → Blue notification
+     * /code command: "⏸ Step 5", "WAITING for user approval" → Yellow notification
+     * /code command: "✓ Step 6: Finalize", "Git committed", "Phase workflow finished" → Green notification
    - Sends Discord embed with title, project name, directory, timestamp
-   - Loads DISCORD_WEBHOOK_URL from multiple locations: ~/.claude/custom/hooks/.env, ~/.claude/.env
+   - Loads DISCORD_WEBHOOK_URL from project scope first, then global:
+     * Project: ./.claude/.env, ./.claude/hooks/.env
+     * Global: ~/.claude/custom/hooks/.env, ~/.claude/hooks/.env, ~/.claude/.env
    - Always exits 0 (non-blocking)
 
-3. Update settings.json:
+3. Update settings.json (only Stop event, not SubagentStop):
    - macOS/Linux: ~/.claude/settings.json with \`node $HOME/.claude/custom/hooks/discord-phase-notify.cjs\`
    - Windows: %USERPROFILE%\\.claude\\settings.json with full path
 
 4. Create .env file with DISCORD_WEBHOOK_URL=<webhook_url_placeholder>
 
-5. Test the hook with a simulated payload appropriate for the platform
+5. Test with these payloads:
+   - /plan: {"stop_reason": "ExitPlanMode - plan is ready"}
+   - /code Step 5: {"stop_reason": "⏸ Step 5: WAITING for user approval"}
+   - /code Step 6: {"stop_reason": "✓ Step 6: Finalize - Git committed"}
 
 The custom/ directory ensures the hook survives ClaudeKit updates.`;
 
@@ -348,18 +318,18 @@ const translations = {
     ],
     detectionPatternsTitle: 'Detection Patterns',
     tableHeaders: ['Type', 'Emoji', 'Color', 'Trigger Phrases'],
-    patternPhaseComplete: 'Phase Complete',
-    patternPhaseCompletePhrases: '"phase complete", "phase done", "plan ready"',
-    patternAwaitingApproval: 'Awaiting Approval',
-    patternAwaitingApprovalPhrases: '"awaiting approval", "please review", "ready for review"',
-    patternFinalization: 'Finalization',
-    patternFinalizationPhrases: '"implementation complete", "task complete", "all phases complete"',
+    patternPlanReady: '/plan Complete',
+    patternPlanReadyPhrases: '"ExitPlanMode", "exiting plan mode"',
+    patternCodeApproval: '/code Step 5',
+    patternCodeApprovalPhrases: '"⏸ Step 5", "WAITING for user approval"',
+    patternCodeFinalize: '/code Phase Complete',
+    patternCodeFinalizePhrases: '"✓ Step 6: Finalize", "Git committed", "Phase workflow finished"',
     setupStepsTitle: 'Setup Steps',
     step1Title: 'Create a Discord Webhook',
     step1Items: [
       'Open Discord, go to your server',
-      'Right-click a channel → Edit Channel → Integrations → Webhooks',
-      'Create a new webhook, name it "Claude Code"',
+      'Right-click a channel → Edit Channel → Integrations → Webhooks → New Webhook',
+      'Name it "Claude Code" or anything you like',
       'Copy the webhook URL (keep it secret!)',
     ],
     step2Title: 'Create the Custom Hooks Directory',
@@ -375,15 +345,77 @@ const translations = {
     step5Title: 'Set Your Webhook URL',
     step5AddTo: 'Add to',
     step6Title: 'Test',
-    testApprovalTitle: 'Awaiting Your Approval',
-    testApprovalDesc: 'Triggers when a subagent completes and needs review:',
-    testCompleteTitle: 'Implementation Complete',
-    testCompleteDesc: 'Triggers when implementation finishes successfully:',
-    testPhaseTitle: 'Phase Complete',
-    testPhaseDesc: 'Triggers when a phase finishes and moves to next:',
+    testPlanReadyTitle: '/plan Complete',
+    testPlanReadyDesc: 'Triggers when /plan command completes (ExitPlanMode):',
+    testCodeApprovalTitle: '/code Step 5',
+    testCodeApprovalDesc: 'Triggers when /code command reaches Step 5 blocking gate:',
+    testCodeFinalizeTitle: '/code Step 6',
+    testCodeFinalizeDesc: 'Triggers when /code command completes Step 6 finalization:',
     testNote: 'Each test should trigger a different Discord notification with the corresponding emoji and color.',
     llmAlternativeTitle: 'Alternative: Let LLMs Do Everything',
     llmAlternativeDesc: 'Copy this prompt and let Claude Code set everything up for you:',
+    customizeTipsTitle: 'Customize for Other Events',
+    customizeTipsDesc: 'The hook listens to the <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs">Stop</code> event. You can extend it or add more hook events:',
+    availableEventsTitle: 'Available Hook Events',
+    availableEvents: [
+      { event: 'PreToolUse', desc: 'Before a tool is executed' },
+      { event: 'PostToolUse', desc: 'After a tool completes' },
+      { event: 'Stop', desc: 'When Claude stops (main session)' },
+      { event: 'SubagentStop', desc: 'When a subagent completes (can be noisy)' },
+      { event: 'Notification', desc: 'When Claude sends a notification' },
+    ],
+    customPatternsTitle: 'Adding Custom Patterns',
+    customPatternsDesc: 'Edit the <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs">PATTERNS</code> object in the script:',
+    customPatternsExample: `// Add your custom patterns
+const PATTERNS = {
+  // Existing patterns...
+  planReady: [/ExitPlanMode/, /exiting\\s+plan\\s+mode/i],
+  codeApproval: [/⏸\\s*Step\\s*5/, /WAITING\\s+for\\s+user\\s+approval/i],
+  codeFinalize: [/✓\\s*Step\\s*6.*Finalize/, /Phase\\s+workflow\\s+finished/i],
+
+  // Custom: Notify when tests complete
+  testsComplete: [
+    /All tests passed/i,
+    /\\d+ passed, 0 failed/,
+  ],
+
+  // Custom: Notify on errors
+  errorOccurred: [
+    /Error:/i,
+    /Failed to/i,
+    /Exception/i,
+  ],
+};
+
+// Update detectType() to handle new patterns
+function detectType(text) {
+  // ... existing checks ...
+
+  for (const pattern of PATTERNS.testsComplete) {
+    if (pattern.test(text)) {
+      return { type: 'testsComplete', title: '✅ Tests Passed', color: 5763719 }; // Green
+    }
+  }
+
+  for (const pattern of PATTERNS.errorOccurred) {
+    if (pattern.test(text)) {
+      return { type: 'error', title: '❌ Error Detected', color: 15548997 }; // Red
+    }
+  }
+
+  return null;
+}`,
+    multipleEventsTitle: 'Listen to Multiple Events',
+    multipleEventsDesc: 'Add more events in <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs">settings.json</code>:',
+    multipleEventsExample: `{
+  "hooks": {
+    "Stop": [{ "hooks": [{ "type": "command", "command": "node $HOME/.claude/custom/hooks/discord-phase-notify.cjs" }] }],
+    "SubagentStop": [{ "hooks": [{ "type": "command", "command": "node $HOME/.claude/custom/hooks/discord-phase-notify.cjs" }] }],
+    "Notification": [{ "hooks": [{ "type": "command", "command": "node $HOME/.claude/custom/hooks/discord-phase-notify.cjs" }] }]
+  }
+}`,
+    tipNoisy: 'SubagentStop fires frequently - use specific patterns to filter noise.',
+    tipColors: 'Discord embed colors are decimal values. Common: Green=5763719, Red=15548997, Blue=3447003, Yellow=15844367, Purple=10181046.',
     backToHooks: 'Back to Custom Hooks',
   },
   vi: {
@@ -410,17 +442,17 @@ const translations = {
     ],
     detectionPatternsTitle: 'Detection Patterns',
     tableHeaders: ['Loại', 'Emoji', 'Màu', 'Trigger Phrases'],
-    patternPhaseComplete: 'Phase Complete',
-    patternPhaseCompletePhrases: '"phase complete", "phase done", "plan ready"',
-    patternAwaitingApproval: 'Awaiting Approval',
-    patternAwaitingApprovalPhrases: '"awaiting approval", "please review", "ready for review"',
-    patternFinalization: 'Finalization',
-    patternFinalizationPhrases: '"implementation complete", "task complete", "all phases complete"',
+    patternPlanReady: '/plan Complete',
+    patternPlanReadyPhrases: '"ExitPlanMode", "exiting plan mode"',
+    patternCodeApproval: '/code Step 5',
+    patternCodeApprovalPhrases: '"⏸ Step 5", "WAITING for user approval"',
+    patternCodeFinalize: '/code Phase Complete',
+    patternCodeFinalizePhrases: '"✓ Step 6: Finalize", "Git committed", "Phase workflow finished"',
     setupStepsTitle: 'Các Bước Setup',
     step1Title: 'Tạo Discord Webhook',
     step1Items: [
       'Mở Discord và vào server của bạn',
-      'Right-click channel → Server Settings → Integrations → Webhooks → New Webhook',
+      'Right-click a channel → Edit Channel → Integrations → Webhooks → New Webhook',
       'Đặt tên webhook tuỳ ý (ví dụ: "Claude Code")',
       'Copy webhook URL (giữ bí mật, đừng cho người khác biết!)',
     ],
@@ -437,15 +469,77 @@ const translations = {
     step5Title: 'Set Webhook URL',
     step5AddTo: 'Thêm vào',
     step6Title: 'Test',
-    testApprovalTitle: 'Awaiting Approval',
-    testApprovalDesc: 'Trigger khi subagent xong và cần review:',
-    testCompleteTitle: 'Implementation Complete',
-    testCompleteDesc: 'Trigger khi implementation xong:',
-    testPhaseTitle: 'Phase Complete',
-    testPhaseDesc: 'Trigger khi phase xong và chuyển phase tiếp:',
+    testPlanReadyTitle: '/plan Complete',
+    testPlanReadyDesc: 'Trigger khi /plan command hoàn thành (ExitPlanMode):',
+    testCodeApprovalTitle: '/code Step 5',
+    testCodeApprovalDesc: 'Trigger khi /code command đến Step 5 blocking gate:',
+    testCodeFinalizeTitle: '/code Step 6',
+    testCodeFinalizeDesc: 'Trigger khi /code command hoàn thành Step 6 finalization:',
     testNote: 'Mỗi test sẽ trigger notification khác nhau với emoji và màu tương ứng.',
     llmAlternativeTitle: 'Hoặc: Để LLM Setup Hết',
     llmAlternativeDesc: 'Copy prompt này và để Claude Code setup cho bạn:',
+    customizeTipsTitle: 'Tuỳ Chỉnh Cho Các Event Khác',
+    customizeTipsDesc: 'Hook này lắng nghe event <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs">Stop</code>. Bạn có thể mở rộng hoặc thêm các hook event khác:',
+    availableEventsTitle: 'Các Hook Event Có Sẵn',
+    availableEvents: [
+      { event: 'PreToolUse', desc: 'Trước khi tool được thực thi' },
+      { event: 'PostToolUse', desc: 'Sau khi tool hoàn thành' },
+      { event: 'Stop', desc: 'Khi Claude dừng (session chính)' },
+      { event: 'SubagentStop', desc: 'Khi subagent hoàn thành (hay bị trigger liên tục)' },
+      { event: 'Notification', desc: 'Khi Claude gửi notification' },
+    ],
+    customPatternsTitle: 'Thêm Pattern Tuỳ Chỉnh',
+    customPatternsDesc: 'Chỉnh sửa object <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs">PATTERNS</code> trong script:',
+    customPatternsExample: `// Thêm pattern tuỳ chỉnh
+const PATTERNS = {
+  // Pattern có sẵn...
+  planReady: [/ExitPlanMode/, /exiting\\s+plan\\s+mode/i],
+  codeApproval: [/⏸\\s*Step\\s*5/, /WAITING\\s+for\\s+user\\s+approval/i],
+  codeFinalize: [/✓\\s*Step\\s*6.*Finalize/, /Phase\\s+workflow\\s+finished/i],
+
+  // Tuỳ chỉnh: Thông báo khi test hoàn thành
+  testsComplete: [
+    /All tests passed/i,
+    /\\d+ passed, 0 failed/,
+  ],
+
+  // Tuỳ chỉnh: Thông báo khi có lỗi
+  errorOccurred: [
+    /Error:/i,
+    /Failed to/i,
+    /Exception/i,
+  ],
+};
+
+// Cập nhật detectType() để xử lý pattern mới
+function detectType(text) {
+  // ... các check có sẵn ...
+
+  for (const pattern of PATTERNS.testsComplete) {
+    if (pattern.test(text)) {
+      return { type: 'testsComplete', title: '✅ Tests Passed', color: 5763719 }; // Green
+    }
+  }
+
+  for (const pattern of PATTERNS.errorOccurred) {
+    if (pattern.test(text)) {
+      return { type: 'error', title: '❌ Error Detected', color: 15548997 }; // Red
+    }
+  }
+
+  return null;
+}`,
+    multipleEventsTitle: 'Lắng Nghe Nhiều Event',
+    multipleEventsDesc: 'Thêm nhiều event trong <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs">settings.json</code>:',
+    multipleEventsExample: `{
+  "hooks": {
+    "Stop": [{ "hooks": [{ "type": "command", "command": "node $HOME/.claude/custom/hooks/discord-phase-notify.cjs" }] }],
+    "SubagentStop": [{ "hooks": [{ "type": "command", "command": "node $HOME/.claude/custom/hooks/discord-phase-notify.cjs" }] }],
+    "Notification": [{ "hooks": [{ "type": "command", "command": "node $HOME/.claude/custom/hooks/discord-phase-notify.cjs" }] }]
+  }
+}`,
+    tipNoisy: 'SubagentStop trigger thường xuyên - dùng pattern cụ thể để lọc bớt noise.',
+    tipColors: 'Màu embed Discord là giá trị decimal. Phổ biến: Green=5763719, Red=15548997, Blue=3447003, Yellow=15844367, Purple=10181046.',
     backToHooks: 'Quay lại Custom Hooks',
   }
 };
@@ -548,22 +642,22 @@ const t = translations[currentLang] || translations.en;
         </thead>
         <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
           <tr>
-            <td class="px-6 py-4 font-medium text-slate-900 dark:text-slate-100">{t.patternPhaseComplete}</td>
+            <td class="px-6 py-4 font-medium text-slate-900 dark:text-slate-100">{t.patternPlanReady}</td>
             <td class="px-6 py-4 text-2xl">📋</td>
             <td class="px-6 py-4"><span class="inline-flex items-center gap-2"><span class="w-4 h-4 rounded" style="background-color: #3498db;"></span><code class="text-xs">#3498db</code></span></td>
-            <td class="px-6 py-4 text-slate-600 dark:text-slate-400">{t.patternPhaseCompletePhrases}</td>
+            <td class="px-6 py-4 text-slate-600 dark:text-slate-400">{t.patternPlanReadyPhrases}</td>
           </tr>
           <tr>
-            <td class="px-6 py-4 font-medium text-slate-900 dark:text-slate-100">{t.patternAwaitingApproval}</td>
-            <td class="px-6 py-4 text-2xl">⏳</td>
+            <td class="px-6 py-4 font-medium text-slate-900 dark:text-slate-100">{t.patternCodeApproval}</td>
+            <td class="px-6 py-4 text-2xl">⏸</td>
             <td class="px-6 py-4"><span class="inline-flex items-center gap-2"><span class="w-4 h-4 rounded" style="background-color: #f1c40f;"></span><code class="text-xs">#f1c40f</code></span></td>
-            <td class="px-6 py-4 text-slate-600 dark:text-slate-400">{t.patternAwaitingApprovalPhrases}</td>
+            <td class="px-6 py-4 text-slate-600 dark:text-slate-400">{t.patternCodeApprovalPhrases}</td>
           </tr>
           <tr>
-            <td class="px-6 py-4 font-medium text-slate-900 dark:text-slate-100">{t.patternFinalization}</td>
+            <td class="px-6 py-4 font-medium text-slate-900 dark:text-slate-100">{t.patternCodeFinalize}</td>
             <td class="px-6 py-4 text-2xl">✅</td>
             <td class="px-6 py-4"><span class="inline-flex items-center gap-2"><span class="w-4 h-4 rounded" style="background-color: #2ecc71;"></span><code class="text-xs">#2ecc71</code></span></td>
-            <td class="px-6 py-4 text-slate-600 dark:text-slate-400">{t.patternFinalizationPhrases}</td>
+            <td class="px-6 py-4 text-slate-600 dark:text-slate-400">{t.patternCodeFinalizePhrases}</td>
           </tr>
         </tbody>
       </table>
@@ -745,103 +839,23 @@ const t = translations[currentLang] || translations.en;
         </div>
       </div>
       <div class="p-6 space-y-6">
-        <!-- Test Case 1: Awaiting Approval -->
-        <div class="space-y-3">
-          <div class="flex items-center gap-2">
-            <span class="text-xl">⏳</span>
-            <h5 class="text-sm font-semibold text-slate-700 dark:text-slate-300">{t.testApprovalTitle}</h5>
-          </div>
-          <p class="text-xs text-slate-500 dark:text-slate-500">{t.testApprovalDesc}</p>
-          <!-- macOS/Linux -->
-          <div>
-            <p class="text-slate-600 dark:text-slate-400 text-xs mb-2">macOS / Linux:</p>
-            <div class="relative group">
-              <button class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200" data-code={testApproval} title="Copy to clipboard">
-                <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                <svg class="w-4 h-4 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              </button>
-              <div class="bg-slate-50 dark:bg-slate-950 rounded-lg p-3 font-mono text-xs text-slate-800 dark:text-slate-300 overflow-x-auto border border-slate-200 dark:border-slate-800">
-                <pre><code>{testApproval}</code></pre>
-              </div>
-            </div>
-          </div>
-          <!-- Windows -->
-          <div class="p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-500/30">
-            <div class="flex items-center gap-2 mb-2">
-              <svg class="w-3 h-3 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/>
-              </svg>
-              <span class="text-xs font-semibold text-blue-700 dark:text-blue-300">Windows (PowerShell)</span>
-            </div>
-            <div class="relative group">
-              <button class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200" data-code={testApprovalWindows} title="Copy to clipboard">
-                <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                <svg class="w-4 h-4 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              </button>
-              <div class="bg-white dark:bg-slate-950 rounded-lg p-2 font-mono text-xs text-slate-800 dark:text-slate-300 overflow-x-auto border border-slate-200 dark:border-slate-800">
-                <pre><code>{testApprovalWindows}</code></pre>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Test Case 2: Implementation Complete -->
-        <div class="space-y-3">
-          <div class="flex items-center gap-2">
-            <span class="text-xl">✅</span>
-            <h5 class="text-sm font-semibold text-slate-700 dark:text-slate-300">{t.testCompleteTitle}</h5>
-          </div>
-          <p class="text-xs text-slate-500 dark:text-slate-500">{t.testCompleteDesc}</p>
-          <!-- macOS/Linux -->
-          <div>
-            <p class="text-slate-600 dark:text-slate-400 text-xs mb-2">macOS / Linux:</p>
-            <div class="relative group">
-              <button class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200" data-code={testComplete} title="Copy to clipboard">
-                <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                <svg class="w-4 h-4 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              </button>
-              <div class="bg-slate-50 dark:bg-slate-950 rounded-lg p-3 font-mono text-xs text-slate-800 dark:text-slate-300 overflow-x-auto border border-slate-200 dark:border-slate-800">
-                <pre><code>{testComplete}</code></pre>
-              </div>
-            </div>
-          </div>
-          <!-- Windows -->
-          <div class="p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-500/30">
-            <div class="flex items-center gap-2 mb-2">
-              <svg class="w-3 h-3 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/>
-              </svg>
-              <span class="text-xs font-semibold text-blue-700 dark:text-blue-300">Windows (PowerShell)</span>
-            </div>
-            <div class="relative group">
-              <button class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200" data-code={testCompleteWindows} title="Copy to clipboard">
-                <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                <svg class="w-4 h-4 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              </button>
-              <div class="bg-white dark:bg-slate-950 rounded-lg p-2 font-mono text-xs text-slate-800 dark:text-slate-300 overflow-x-auto border border-slate-200 dark:border-slate-800">
-                <pre><code>{testCompleteWindows}</code></pre>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Test Case 3: Phase Complete -->
+        <!-- Test Case 1: Plan Ready -->
         <div class="space-y-3">
           <div class="flex items-center gap-2">
             <span class="text-xl">📋</span>
-            <h5 class="text-sm font-semibold text-slate-700 dark:text-slate-300">{t.testPhaseTitle}</h5>
+            <h5 class="text-sm font-semibold text-slate-700 dark:text-slate-300">{t.testPlanReadyTitle}</h5>
           </div>
-          <p class="text-xs text-slate-500 dark:text-slate-500">{t.testPhaseDesc}</p>
+          <p class="text-xs text-slate-500 dark:text-slate-500">{t.testPlanReadyDesc}</p>
           <!-- macOS/Linux -->
           <div>
             <p class="text-slate-600 dark:text-slate-400 text-xs mb-2">macOS / Linux:</p>
             <div class="relative group">
-              <button class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200" data-code={testPhase} title="Copy to clipboard">
+              <button class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200" data-code={testPlanReady} title="Copy to clipboard">
                 <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                 <svg class="w-4 h-4 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
               </button>
               <div class="bg-slate-50 dark:bg-slate-950 rounded-lg p-3 font-mono text-xs text-slate-800 dark:text-slate-300 overflow-x-auto border border-slate-200 dark:border-slate-800">
-                <pre><code>{testPhase}</code></pre>
+                <pre><code>{testPlanReady}</code></pre>
               </div>
             </div>
           </div>
@@ -854,12 +868,92 @@ const t = translations[currentLang] || translations.en;
               <span class="text-xs font-semibold text-blue-700 dark:text-blue-300">Windows (PowerShell)</span>
             </div>
             <div class="relative group">
-              <button class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200" data-code={testPhaseWindows} title="Copy to clipboard">
+              <button class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200" data-code={testPlanReadyWindows} title="Copy to clipboard">
                 <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                 <svg class="w-4 h-4 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
               </button>
               <div class="bg-white dark:bg-slate-950 rounded-lg p-2 font-mono text-xs text-slate-800 dark:text-slate-300 overflow-x-auto border border-slate-200 dark:border-slate-800">
-                <pre><code>{testPhaseWindows}</code></pre>
+                <pre><code>{testPlanReadyWindows}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Test Case 2: /code Step 5 -->
+        <div class="space-y-3">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">⏸</span>
+            <h5 class="text-sm font-semibold text-slate-700 dark:text-slate-300">{t.testCodeApprovalTitle}</h5>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-500">{t.testCodeApprovalDesc}</p>
+          <!-- macOS/Linux -->
+          <div>
+            <p class="text-slate-600 dark:text-slate-400 text-xs mb-2">macOS / Linux:</p>
+            <div class="relative group">
+              <button class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200" data-code={testCodeApproval} title="Copy to clipboard">
+                <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <svg class="w-4 h-4 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </button>
+              <div class="bg-slate-50 dark:bg-slate-950 rounded-lg p-3 font-mono text-xs text-slate-800 dark:text-slate-300 overflow-x-auto border border-slate-200 dark:border-slate-800">
+                <pre><code>{testCodeApproval}</code></pre>
+              </div>
+            </div>
+          </div>
+          <!-- Windows -->
+          <div class="p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-500/30">
+            <div class="flex items-center gap-2 mb-2">
+              <svg class="w-3 h-3 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/>
+              </svg>
+              <span class="text-xs font-semibold text-blue-700 dark:text-blue-300">Windows (PowerShell)</span>
+            </div>
+            <div class="relative group">
+              <button class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200" data-code={testCodeApprovalWindows} title="Copy to clipboard">
+                <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <svg class="w-4 h-4 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </button>
+              <div class="bg-white dark:bg-slate-950 rounded-lg p-2 font-mono text-xs text-slate-800 dark:text-slate-300 overflow-x-auto border border-slate-200 dark:border-slate-800">
+                <pre><code>{testCodeApprovalWindows}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Test Case 3: /code Step 6 Finalize -->
+        <div class="space-y-3">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">✅</span>
+            <h5 class="text-sm font-semibold text-slate-700 dark:text-slate-300">{t.testCodeFinalizeTitle}</h5>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-500">{t.testCodeFinalizeDesc}</p>
+          <!-- macOS/Linux -->
+          <div>
+            <p class="text-slate-600 dark:text-slate-400 text-xs mb-2">macOS / Linux:</p>
+            <div class="relative group">
+              <button class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200" data-code={testCodeFinalize} title="Copy to clipboard">
+                <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <svg class="w-4 h-4 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </button>
+              <div class="bg-slate-50 dark:bg-slate-950 rounded-lg p-3 font-mono text-xs text-slate-800 dark:text-slate-300 overflow-x-auto border border-slate-200 dark:border-slate-800">
+                <pre><code>{testCodeFinalize}</code></pre>
+              </div>
+            </div>
+          </div>
+          <!-- Windows -->
+          <div class="p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-500/30">
+            <div class="flex items-center gap-2 mb-2">
+              <svg class="w-3 h-3 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/>
+              </svg>
+              <span class="text-xs font-semibold text-blue-700 dark:text-blue-300">Windows (PowerShell)</span>
+            </div>
+            <div class="relative group">
+              <button class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200" data-code={testCodeFinalizeWindows} title="Copy to clipboard">
+                <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <svg class="w-4 h-4 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </button>
+              <div class="bg-white dark:bg-slate-950 rounded-lg p-2 font-mono text-xs text-slate-800 dark:text-slate-300 overflow-x-auto border border-slate-200 dark:border-slate-800">
+                <pre><code>{testCodeFinalizeWindows}</code></pre>
               </div>
             </div>
           </div>
@@ -892,6 +986,90 @@ const t = translations[currentLang] || translations.en;
           <svg class="w-4 h-4 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
         </button>
         <div class="bg-white dark:bg-slate-900 rounded-lg p-4 font-mono text-xs text-slate-800 dark:text-slate-300 overflow-x-auto border border-slate-200 dark:border-slate-800 whitespace-pre-wrap">{llmPrompt}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Customize for Other Events -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border-b border-slate-100 dark:border-slate-800">
+      <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+        <svg class="w-5 h-5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+        {t.customizeTipsTitle}
+      </h3>
+      <p class="text-sm text-slate-600 dark:text-slate-400 mt-2" set:html={t.customizeTipsDesc} />
+    </div>
+    <div class="p-6 space-y-6">
+      <!-- Available Events Table -->
+      <div>
+        <h4 class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">{t.availableEventsTitle}</h4>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="bg-slate-50 dark:bg-slate-800/50">
+              <tr>
+                <th class="px-4 py-2 text-left font-semibold text-slate-900 dark:text-slate-100">Event</th>
+                <th class="px-4 py-2 text-left font-semibold text-slate-900 dark:text-slate-100">Description</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+              {t.availableEvents.map((item: { event: string; desc: string }) => (
+                <tr>
+                  <td class="px-4 py-2 font-mono text-xs text-amber-600 dark:text-amber-400">{item.event}</td>
+                  <td class="px-4 py-2 text-slate-600 dark:text-slate-400">{item.desc}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Custom Patterns -->
+      <div>
+        <h4 class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">{t.customPatternsTitle}</h4>
+        <p class="text-xs text-slate-500 dark:text-slate-500 mb-3" set:html={t.customPatternsDesc} />
+        <div class="relative group">
+          <button class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10" data-code={t.customPatternsExample} title="Copy to clipboard">
+            <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <svg class="w-4 h-4 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </button>
+          <div class="bg-slate-50 dark:bg-slate-950 rounded-lg p-4 font-mono text-xs text-slate-800 dark:text-slate-300 overflow-x-auto border border-slate-200 dark:border-slate-800 max-h-72">
+            <pre><code>{t.customPatternsExample}</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Multiple Events -->
+      <div>
+        <h4 class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">{t.multipleEventsTitle}</h4>
+        <p class="text-xs text-slate-500 dark:text-slate-500 mb-3" set:html={t.multipleEventsDesc} />
+        <div class="relative group">
+          <button class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10" data-code={t.multipleEventsExample} title="Copy to clipboard">
+            <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <svg class="w-4 h-4 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </button>
+          <div class="bg-slate-50 dark:bg-slate-950 rounded-lg p-4 font-mono text-xs text-slate-800 dark:text-slate-300 overflow-x-auto border border-slate-200 dark:border-slate-800">
+            <pre><code>{t.multipleEventsExample}</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tips -->
+      <div class="space-y-2">
+        <div class="flex items-start gap-2 p-3 rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-500/20">
+          <svg class="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          <p class="text-xs text-amber-700 dark:text-amber-300">{t.tipNoisy}</p>
+        </div>
+        <div class="flex items-start gap-2 p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-500/20">
+          <svg class="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <p class="text-xs text-blue-700 dark:text-blue-300">{t.tipColors}</p>
+        </div>
       </div>
     </div>
   </div>
