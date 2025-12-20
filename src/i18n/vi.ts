@@ -210,6 +210,8 @@ export default {
   'guides.resume.description': 'Khôi phục context từ phiên trước',
   'guides.promotions.title': 'Khuyến Mãi',
   'guides.promotions.description': 'Ưu đãi và khuyến mãi dịch vụ AI',
+  'guides.custom_hooks.title': 'Custom Hooks',
+  'guides.custom_hooks.description': 'Tùy chỉnh workflow coding của bạn',
 
   // Promotions Guide
   'guides.promotions.page_title': 'Khuyến Mãi & Ưu Đãi AI',

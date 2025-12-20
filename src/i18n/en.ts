@@ -428,6 +428,8 @@ export default {
   'guides.resume.description': 'Project resumption workflows',
   'guides.promotions.title': 'Promotions',
   'guides.promotions.description': 'AI service deals and promotions',
+  'guides.custom_hooks.title': 'Custom Hooks',
+  'guides.custom_hooks.description': 'Customize your vibe coding workflow',
 
   // Promotions Guide
   'guides.promotions.page_title': 'AI Promotions & Deals',
