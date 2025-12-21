@@ -22,10 +22,55 @@ const colorsJson = JSON.stringify(pathColors);
     activePaths: [],
     hoveredNode: null,
     scale: 0.5,
-    minScale: 0.5,
+    minScale: 0.2,
     maxScale: 2,
+    isFullscreen: false,
+    showCommandList: true,
     paths: ${pathsJson},
     colors: ${colorsJson},
+    rootEl: null,
+    placeholder: null,
+
+    init() {
+      this.rootEl = this.$el;
+    },
+
+    toggleFullscreen() {
+      if (!this.isFullscreen) {
+        // Entering fullscreen
+        this.placeholder = document.createElement('div');
+        this.placeholder.style.display = 'none';
+        this.rootEl.parentNode.insertBefore(this.placeholder, this.rootEl);
+        document.body.appendChild(this.rootEl);
+
+        this.isFullscreen = true;
+        document.body.style.overflow = 'hidden';
+
+        // Auto-scale to fit viewport logic
+        // Reset scale nicely for fullscreen view
+        const viewportWidth = window.innerWidth * 0.7;
+        const baseWidth = 1500;
+        this.scale = Math.min(1.2, Math.max(0.4, viewportWidth / baseWidth));
+        this.showCommandList = true;
+      } else {
+        this.exitFullscreen();
+      }
+    },
+
+    exitFullscreen() {
+      if (this.isFullscreen) {
+        // Exiting fullscreen
+        if (this.placeholder && this.placeholder.parentNode) {
+          this.placeholder.parentNode.insertBefore(this.rootEl, this.placeholder);
+          this.placeholder.remove();
+          this.placeholder = null;
+        }
+
+        this.isFullscreen = false;
+        document.body.style.overflow = '';
+        this.scale = 0.5;
+      }
+    },
 
     selectPath(pathId) {
       const idx = this.activePaths.indexOf(pathId);
@@ -57,11 +102,13 @@ const colorsJson = JSON.stringify(pathColors);
     },
 
     resetZoom() {
-      this.scale = 0.5;
+      this.scale = this.isFullscreen ? 0.8 : 0.5;
     },
 
     handleWheel(e) {
-      if (e.ctrlKey || e.metaKey) {
+      // Allow zoom without modifier key only in fullscreen
+      // In embed mode, require modifier to avoid scroll hijacking
+      if (this.isFullscreen || e.ctrlKey || e.metaKey) {
         e.preventDefault();
         if (e.deltaY < 0) {
           this.zoomIn();
@@ -116,292 +163,238 @@ const colorsJson = JSON.stringify(pathColors);
     }
   }`}
   class:list={['flowchart-container relative', className]}
-  x-on:keydown.escape.window="clearPath()"
+  x-bind:class="{ 'flowchart-fullscreen': isFullscreen }"
+  x-on:keydown.escape.window="exitFullscreen(); clearPath()"
 >
-  <!-- Legend / Path Selector -->
-  <div class="mb-6 flex flex-wrap gap-2 justify-center">
-    {paths.map((path: FlowchartPath) => (
-      <button
-        x-on:click={`selectPath('${path.id}')`}
-        x-bind:class={`activePaths.includes('${path.id}') ? 'ring-2 ring-offset-2 ring-offset-white dark:ring-offset-surface-900' : 'opacity-70 hover:opacity-100'`}
-        class="px-3 py-1.5 text-sm font-medium rounded-full transition-all duration-200 flex items-center gap-1.5"
-        style={`background-color: ${pathColors[path.color].bg}; color: ${pathColors[path.color].text}; --ring-color: ${pathColors[path.color].text}`}
-      >
-        <code class="font-mono text-xs">{path.command}</code>
-      </button>
-    ))}
-  </div>
+  <!-- Fullscreen Layout Container -->
+  <div class="flex flex-col h-full w-full" x-bind:class="isFullscreen ? 'max-h-screen' : ''">
 
-  <!-- Zoom Controls -->
-  <div class="flex items-center justify-center gap-2 mb-4">
-    <button
-      x-on:click="zoomOut()"
-      x-bind:disabled="scale <= minScale"
-      class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-      aria-label="Zoom out"
-    >
-      <svg class="w-4 h-4 text-slate-600 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
-      </svg>
-    </button>
-    <button
-      x-on:click="resetZoom()"
-      class="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-400 transition-colors min-w-[60px]"
-      aria-label="Reset zoom"
-    >
-      <span x-text="Math.round(scale * 100) + '%'"></span>
-    </button>
-    <button
-      x-on:click="zoomIn()"
-      x-bind:disabled="scale >= maxScale"
-      class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-      aria-label="Zoom in"
-    >
-      <svg class="w-4 h-4 text-slate-600 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-      </svg>
-    </button>
-  </div>
-
-  <!-- SVG Flowchart -->
-  <div
-    class="flowchart-scroll overflow-auto pb-4 max-h-[600px]"
-    x-on:wheel="handleWheel($event)"
-  >
-    <div
-      class="transition-all duration-150 origin-top-left"
-      x-bind:style="`width: ${1500 * scale}px; height: ${720 * scale}px`"
-    >
-      <svg
-        viewBox={viewBox}
-        class="w-full h-full"
-        role="img"
-        aria-label="ClaudeKit command decision flowchart - click on any path to highlight it"
-      >
-      <defs>
-        <!-- Arrow marker -->
-        <marker
-          id="arrowhead"
-          markerWidth="10"
-          markerHeight="7"
-          refX="9"
-          refY="3.5"
-          orient="auto"
-        >
-          <polygon
-            points="0 0, 10 3.5, 0 7"
-            class="fill-slate-400 dark:fill-slate-500"
-          />
-        </marker>
-
-        <!-- Active arrow marker -->
-        <marker
-          id="arrowhead-active"
-          markerWidth="10"
-          markerHeight="7"
-          refX="9"
-          refY="3.5"
-          orient="auto"
-        >
-          <polygon
-            points="0 0, 10 3.5, 0 7"
-            class="fill-blue-500"
-          />
-        </marker>
-
-        <!-- Glow filter for active nodes -->
-        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
-          <feMerge>
-            <feMergeNode in="coloredBlur"/>
-            <feMergeNode in="SourceGraphic"/>
-          </feMerge>
-        </filter>
-      </defs>
-
-      <!-- Edges (rendered first so nodes appear on top) -->
-      <g class="edges">
-        {edges.map(edge => (
-          <g
-            class="flowchart-edge cursor-pointer"
-            x-bind:class={`getEdgeClass('${edge.id}')`}
-            x-on:click={`selectEdgePath('${edge.id}')`}
-            role="button"
-            tabindex="0"
-            aria-label={`Edge from ${edge.from} to ${edge.to}${edge.label ? `, labeled ${edge.label}` : ''}`}
+    <!-- Top Bar (Fullscreen Only or Mobile) -->
+    <div class="flex items-center justify-between gap-4 mb-4 shrink-0 p-2" x-show="!isFullscreen">
+       <!-- Legend / Path Selector (Standard Mode) -->
+      <div class="flex flex-wrap gap-2 justify-center flex-1">
+        {paths.map((path: FlowchartPath) => (
+          <button
+            x-on:click={`selectPath('${path.id}')`}
+            x-bind:class={`activePaths.includes('${path.id}') ? 'ring-2 ring-offset-2 ring-offset-white dark:ring-offset-surface-900' : 'opacity-70 hover:opacity-100'`}
+            class="px-3 py-1.5 text-sm font-medium rounded-full transition-all duration-200 flex items-center gap-1.5"
+            style={`background-color: ${pathColors[path.color].bg}; color: ${pathColors[path.color].text}; --ring-color: ${pathColors[path.color].text}`}
           >
-            <path
-              d={edge.path}
-              fill="none"
-              class="stroke-slate-300 dark:stroke-slate-600 transition-all duration-300"
-              stroke-width="2"
-              marker-end="url(#arrowhead)"
-            />
-            {edge.label && edge.labelX && edge.labelY && (() => {
-              const labelWidth = Math.max(28, edge.label.length * 7 + 10);
-              return (
-              <g>
-                <rect
-                  x={edge.labelX - labelWidth / 2}
-                  y={edge.labelY - 10}
-                  width={labelWidth}
-                  height="16"
-                  rx="4"
-                  class="fill-white dark:fill-surface-800 stroke-slate-200 dark:stroke-slate-700"
-                  stroke-width="1"
-                />
-                <text
-                  x={edge.labelX}
-                  y={edge.labelY}
-                  text-anchor="middle"
-                  dominant-baseline="middle"
-                  class="text-[10px] font-medium fill-slate-500 dark:fill-slate-400"
-                >
-                  {edge.label}
-                </text>
-              </g>
-            )})()}
-          </g>
+            <code class="font-mono text-xs">{path.command}</code>
+          </button>
         ))}
-      </g>
+      </div>
+    </div>
 
-      <!-- Nodes -->
-      <g class="nodes">
-        {nodes.map(node => (
-          <g
-            class="flowchart-node cursor-pointer"
-            x-bind:class={`getNodeClass('${node.id}')`}
-            x-on:click={`selectNodePath('${node.id}')`}
-            role="button"
-            tabindex="0"
-            aria-label={`${node.type === 'decision' ? 'Decision: ' : node.type === 'command' ? 'Command: ' : ''}${node.label}`}
-            x-on:keydown.enter={`selectNodePath('${node.id}')`}
-            x-on:keydown.space.prevent={`selectNodePath('${node.id}')`}
+    <!-- Toolbar: Zoom & View Controls -->
+    <div class="flex items-center justify-center gap-2 mb-4 shrink-0 z-10 relative">
+      <div class="flex items-center bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-slate-200 dark:border-slate-800 p-1">
+        <button
+          x-on:click="zoomOut()"
+          x-bind:disabled="scale <= minScale"
+          class="p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-40 transition-colors"
+          aria-label="Zoom out"
+        >
+          <svg class="w-4 h-4 text-slate-600 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" /></svg>
+        </button>
+        <button
+          x-on:click="resetZoom()"
+          class="px-3 text-xs font-medium text-slate-600 dark:text-slate-400 min-w-[60px] text-center"
+        >
+          <span x-text="Math.round(scale * 100) + '%'"></span>
+        </button>
+        <button
+          x-on:click="zoomIn()"
+          x-bind:disabled="scale >= maxScale"
+          class="p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-40 transition-colors"
+          aria-label="Zoom in"
+        >
+          <svg class="w-4 h-4 text-slate-600 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+        </button>
+      </div>
+
+      <div class="flex items-center bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-slate-200 dark:border-slate-800 p-1">
+         <button
+          x-on:click="toggleFullscreen()"
+          class="p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-600 dark:text-slate-400"
+          x-bind:aria-label="isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'"
+        >
+          <svg x-show="!isFullscreen" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" /></svg>
+          <svg x-show="isFullscreen" x-cloak class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+      </div>
+
+      <div x-show="isFullscreen" class="flex items-center bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-slate-200 dark:border-slate-800 p-1 ml-2">
+        <button
+            x-on:click="showCommandList = !showCommandList"
+            class="px-3 py-1.5 text-xs font-medium rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center gap-2"
+            x-bind:class="showCommandList ? 'bg-slate-100 dark:bg-slate-800 text-blue-600 dark:text-blue-400' : 'text-slate-600 dark:text-slate-400'"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+          <span x-text="showCommandList ? 'Hide List' : 'Show Commands'"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex overflow-hidden relative min-h-0">
+
+      <!-- Flowchart Area -->
+      <div
+        class="flex-1 flowchart-scroll overflow-auto relative bg-slate-50/50 dark:bg-slate-900/50 rounded-xl border border-slate-200/50 dark:border-slate-800/50"
+        x-on:wheel="handleWheel($event)"
+      >
+        <div
+          class="min-w-full min-h-full flex p-8"
+        >
+          <!-- Switch to percentage-based width/height for wrapper to behave more like 'zoom' -->
+          <!-- Or revert to transform if preferred. Let's stick to layout scaling but use percentages of base size? No, px is better for SVG viewBox matchup -->
+          <!-- Actually, let's keep the CSS transform approach if we want 'like before' feel. -->
+
+          <div
+            class="origin-center transition-all duration-150 shrink-0 m-auto"
+            x-bind:style="`width: ${1500 * scale}px; height: ${720 * scale}px`"
           >
-            {node.type === 'decision' ? (
-              /* Diamond shape for decisions */
-              <polygon
-                points={`${node.position.x},${node.position.y - 35} ${node.position.x + 65},${node.position.y} ${node.position.x},${node.position.y + 35} ${node.position.x - 65},${node.position.y}`}
-                class="fill-white/90 dark:fill-surface-800/90 stroke-slate-300 dark:stroke-slate-600 transition-all duration-300"
-                stroke-width="2"
-              />
-            ) : node.type === 'command' ? (() => {
-              /* Rounded rectangle with colored left border for commands */
-              const boxWidth = Math.max(100, node.label.length * 9 + 20);
-              const halfWidth = boxWidth / 2;
-              return (
-              <g>
-                <rect
-                  x={node.position.x - halfWidth}
-                  y={node.position.y - 22}
-                  width={boxWidth}
-                  height="44"
-                  rx="8"
-                  class="fill-white/90 dark:fill-surface-800/90 stroke-slate-300 dark:stroke-slate-600 transition-all duration-300"
-                  stroke-width="2"
-                />
-                <rect
-                  x={node.position.x - halfWidth}
-                  y={node.position.y - 22}
-                  width="4"
-                  height="44"
-                  rx="2"
-                  class="fill-blue-500 dark:fill-blue-400"
-                />
-              </g>
-            )})() : (
-              /* Rounded rectangle for start node */
-              <rect
-                x={node.position.x - 100}
-                y={node.position.y - 25}
-                width="200"
-                height="50"
-                rx="25"
-                class="fill-gradient-to-r from-blue-500 to-cyan-500 stroke-blue-400 dark:stroke-blue-500 transition-all duration-300"
-                stroke-width="2"
-                style="fill: url(#startGradient)"
-              />
-            )}
-
-            {/* Start gradient definition */}
-            {node.type === 'start' && (
-              <defs>
-                <linearGradient id="startGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:0.9" />
-                  <stop offset="100%" style="stop-color:#06B6D4;stop-opacity:0.9" />
-                </linearGradient>
-              </defs>
-            )}
-
-            <text
-              x={node.position.x}
-              y={node.position.y + (node.type === 'start' ? 1 : 0)}
-              text-anchor="middle"
-              dominant-baseline="middle"
-              class:list={[
-                'transition-all duration-300 pointer-events-none',
-                node.type === 'start'
-                  ? 'text-sm font-semibold fill-white'
-                  : node.type === 'command'
-                    ? 'text-sm font-mono font-semibold fill-slate-700 dark:fill-slate-200'
-                    : 'text-xs font-medium fill-slate-600 dark:fill-slate-300'
-              ]}
+            <svg
+                viewBox={viewBox}
+                class="w-full h-full drop-shadow-sm"
+                role="img"
+                aria-label="ClaudeKit command decision flowchart"
             >
-              {node.label}
-            </text>
-          </g>
-        ))}
-      </g>
-    </svg>
+            <defs>
+                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" class="fill-slate-400 dark:fill-slate-500" />
+                </marker>
+                <marker id="arrowhead-active" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" class="fill-blue-500" />
+                </marker>
+            </defs>
+
+            <g class="edges">
+                {edges.map(edge => (
+                <g
+                    class="flowchart-edge cursor-pointer"
+                    x-bind:class={`getEdgeClass('${edge.id}')`}
+                    x-on:click={`selectEdgePath('${edge.id}')`}
+                >
+                    <path d={edge.path} fill="none" class="stroke-slate-300 dark:stroke-slate-600" stroke-width="2" marker-end="url(#arrowhead)" />
+                    {edge.label && edge.labelX && edge.labelY && (
+                    <g>
+                        <rect x={edge.labelX - (Math.max(28, edge.label.length * 7 + 10))/2} y={edge.labelY - 10} width={Math.max(28, edge.label.length * 7 + 10)} height="16" rx="4" class="fill-white dark:fill-surface-800 stroke-slate-200 dark:stroke-slate-700" stroke-width="1" />
+                        <text x={edge.labelX} y={edge.labelY} text-anchor="middle" dominant-baseline="middle" class="text-[10px] font-medium fill-slate-500 dark:fill-slate-400">{edge.label}</text>
+                    </g>
+                    )}
+                </g>
+                ))}
+            </g>
+
+            <g class="nodes">
+                {nodes.map(node => (
+                <g
+                    class="flowchart-node cursor-pointer"
+                    x-bind:class={`getNodeClass('${node.id}')`}
+                    x-on:click={`selectNodePath('${node.id}')`}
+                >
+                    {node.type === 'decision' ? (
+                    <polygon points={`${node.position.x},${node.position.y - 35} ${node.position.x + 65},${node.position.y} ${node.position.x},${node.position.y + 35} ${node.position.x - 65},${node.position.y}`} class="fill-white/95 dark:fill-surface-800/95 stroke-slate-300 dark:stroke-slate-600" stroke-width="2" />
+                    ) : node.type === 'command' ? (
+                    <g>
+                        <rect x={node.position.x - (Math.max(100, node.label.length * 9 + 20))/2} y={node.position.y - 22} width={Math.max(100, node.label.length * 9 + 20)} height="44" rx="8" class="fill-white/95 dark:fill-surface-800/95 stroke-slate-300 dark:stroke-slate-600" stroke-width="2" />
+                        <rect x={node.position.x - (Math.max(100, node.label.length * 9 + 20))/2} y={node.position.y - 22} width="4" height="44" rx="2" class="fill-blue-500 dark:fill-blue-400" />
+                    </g>
+                    ) : (
+                    <rect x={node.position.x - 100} y={node.position.y - 25} width="200" height="50" rx="25" class="fill-blue-500 stroke-blue-400 dark:stroke-blue-500" stroke-width="2" />
+                    )}
+                    <text x={node.position.x} y={node.position.y} text-anchor="middle" dominant-baseline="middle" class:list={['pointer-events-none', node.type === 'start' ? 'text-sm font-semibold fill-white' : node.type === 'command' ? 'text-sm font-mono font-semibold fill-slate-700 dark:fill-slate-200' : 'text-xs font-medium fill-slate-600 dark:fill-slate-300']}>{node.label}</text>
+                </g>
+                ))}
+            </g>
+            </svg>
+            </div>
+        </div>
+      </div>
+
+      <!-- Command List Sidebar (Visible in Fullscreen) -->
+      <div
+        x-show="isFullscreen && showCommandList"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="translate-x-full opacity-0"
+        x-transition:enter-end="translate-x-0 opacity-100"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="translate-x-0 opacity-100"
+        x-transition:leave-end="translate-x-full opacity-0"
+        class="w-80 border-l border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 backdrop-blur overflow-y-auto shrink-0 flex flex-col"
+      >
+        <div class="p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50">
+            <h3 class="font-bold text-slate-900 dark:text-white">{currentLang === 'vi' ? 'Danh sách Commands' : 'Command Reference'}</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">{currentLang === 'vi' ? 'Chọn để xem đường dẫn' : 'Select to trace path'}</p>
+        </div>
+        <div class="p-2 space-y-1">
+            <template x-for="path in paths" :key="path.id">
+                <button
+                    x-on:click="selectPath(path.id)"
+                    class="w-full text-left p-3 rounded-lg transition-all border border-transparent hover:bg-slate-100 dark:hover:bg-slate-800"
+                    x-bind:class="activePaths.includes(path.id) ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800' : ''"
+                >
+                    <div class="flex items-center gap-2 mb-1">
+                        <code class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-mono text-xs font-bold" x-text="path.command"></code>
+                        <span class="text-xs font-medium text-slate-500 dark:text-slate-400 capitalize" x-text="path.name"></span>
+                    </div>
+                    <p class="text-xs text-slate-600 dark:text-slate-400 leading-snug" x-text="path.description"></p>
+                </button>
+            </template>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Description Panel (Standard Mode & Fullscreen Overlay) -->
+    <div
+      x-show="activePaths.length > 0"
+      x-transition:enter="transition ease-out duration-200"
+      x-transition:enter-start="opacity-0 translate-y-2"
+      x-transition:enter-end="opacity-100 translate-y-0"
+      x-transition:leave="transition ease-in duration-150"
+      x-transition:leave-start="opacity-100 translate-y-0"
+      x-transition:leave-end="opacity-0 translate-y-2"
+      x-bind:class="isFullscreen ? 'absolute bottom-6 left-6 right-6 max-w-2xl mx-auto z-20 shadow-2xl' : 'mt-6'"
+      class="p-5 glass-card rounded-xl border-l-4 bg-white dark:bg-slate-900 shadow-xl"
+      x-bind:style="getActiveColor() ? `border-left-color: ${getActiveColor().text}` : ''"
+    >
+      <template x-if="getActivePathData()">
+        <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+          <div class="flex-1">
+            <div class="flex items-center gap-3 mb-2">
+              <code
+                class="px-3 py-1.5 rounded-lg font-mono font-bold text-lg"
+                x-bind:style="getActiveColor() ? `background-color: ${getActiveColor().bg}; color: ${getActiveColor().text}` : ''"
+                x-text="getActivePathData()?.command"
+              ></code>
+              <h3
+                class="font-semibold text-slate-800 dark:text-slate-200"
+                x-text="getActivePathData()?.name"
+              ></h3>
+            </div>
+            <p
+              class="text-slate-600 dark:text-slate-400"
+              x-text="getActivePathData()?.description"
+            ></p>
+          </div>
+          <button
+            x-on:click="activePaths = []"
+            class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors self-start"
+            aria-label="Close path details"
+          >
+            <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </template>
     </div>
   </div>
 
-  <!-- Command description panel -->
-  <div
-    x-show="activePaths.length > 0"
-    x-transition:enter="transition ease-out duration-200"
-    x-transition:enter-start="opacity-0 translate-y-2"
-    x-transition:enter-end="opacity-100 translate-y-0"
-    x-transition:leave="transition ease-in duration-150"
-    x-transition:leave-start="opacity-100 translate-y-0"
-    x-transition:leave-end="opacity-0 translate-y-2"
-    class="mt-6 p-5 glass-card rounded-xl border-l-4"
-    x-bind:style="getActiveColor() ? `border-left-color: ${getActiveColor().text}` : ''"
-  >
-    <template x-if="getActivePathData()">
-      <div class="flex flex-col sm:flex-row sm:items-start gap-4">
-        <div class="flex-1">
-          <div class="flex items-center gap-3 mb-2">
-            <code
-              class="px-3 py-1.5 rounded-lg font-mono font-bold text-lg"
-              x-bind:style="getActiveColor() ? `background-color: ${getActiveColor().bg}; color: ${getActiveColor().text}` : ''"
-              x-text="getActivePathData()?.command"
-            ></code>
-            <h3
-              class="font-semibold text-slate-800 dark:text-slate-200"
-              x-text="getActivePathData()?.name"
-            ></h3>
-          </div>
-          <p
-            class="text-slate-600 dark:text-slate-400"
-            x-text="getActivePathData()?.description"
-          ></p>
-        </div>
-        <button
-          x-on:click="activePaths = []"
-          class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors self-start"
-          aria-label="Close path details"
-        >
-          <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
-    </template>
-  </div>
-
-  <!-- Instructions -->
-  <p class="mt-4 text-center text-sm text-slate-500 dark:text-slate-400">
+  <p x-show="!isFullscreen" class="mt-4 text-center text-sm text-slate-500 dark:text-slate-400">
     {currentLang === 'vi'
       ? 'Click vào nút hoặc đường path để highlight lộ trình. Click vào command ở trên để xem path.'
       : 'Click on any node or edge to highlight a path. Click commands above to see their paths.'}
@@ -409,97 +402,75 @@ const colorsJson = JSON.stringify(pathColors);
 </div>
 
 <style>
-  /* Custom scrollbar for flowchart container - Light mode */
+  /* Custom scrollbar matching TabNavigation/Sidebar style */
   .flowchart-scroll::-webkit-scrollbar {
-    height: 8px;
-    width: 8px;
+    height: 5px;
+    width: 5px;
   }
   .flowchart-scroll::-webkit-scrollbar-track {
-    background: #f1f5f9;
-    border-radius: 4px;
+    background: transparent;
   }
   .flowchart-scroll::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 4px;
+    background: rgba(156, 163, 175, 0.3);
+    border-radius: 20px;
   }
   .flowchart-scroll::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
-  }
-  .flowchart-scroll::-webkit-scrollbar-corner {
-    background: #f1f5f9;
+    background: rgba(156, 163, 175, 0.5);
   }
 
-  /* Dark mode scrollbar */
-  :global(.dark) .flowchart-scroll::-webkit-scrollbar-track {
-    background: #0f172a;
-  }
   :global(.dark) .flowchart-scroll::-webkit-scrollbar-thumb {
-    background: #334155;
+    background: rgba(156, 163, 175, 0.3);
   }
   :global(.dark) .flowchart-scroll::-webkit-scrollbar-thumb:hover {
-    background: #475569;
-  }
-  :global(.dark) .flowchart-scroll::-webkit-scrollbar-corner {
-    background: #0f172a;
+    background: rgba(156, 163, 175, 0.5);
   }
 
-  .flowchart-node {
-    transition: all 0.3s ease;
+  /* Command list sidebar scrollbar */
+  .overflow-y-auto::-webkit-scrollbar {
+    width: 5px;
+  }
+  .overflow-y-auto::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .overflow-y-auto::-webkit-scrollbar-thumb {
+    background: rgba(156, 163, 175, 0.3);
+    border-radius: 20px;
+  }
+  .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+    background: rgba(156, 163, 175, 0.5);
   }
 
-  .flowchart-node:hover polygon,
-  .flowchart-node:hover rect {
-    filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.4));
+  /* Node styles */
+  .flowchart-node { transition: all 0.3s ease; }
+  .flowchart-node:hover polygon, .flowchart-node:hover rect { filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.4)); }
+  .flowchart-node.active polygon, .flowchart-node.active rect:not([width="4"]) { filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.6)); stroke: #3B82F6; stroke-width: 2.5; }
+  .flowchart-node.faded, .flowchart-edge.faded { opacity: 0.2; pointer-events: none; }
+
+  .flowchart-edge { transition: all 0.3s ease; }
+  .flowchart-edge:hover path { stroke: #64748b; stroke-width: 3; }
+  .flowchart-edge.active path { stroke: #3B82F6; stroke-width: 3; marker-end: url(#arrowhead-active); }
+
+  /* Fullscreen mode */
+  .flowchart-fullscreen {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    z-index: 9999 !important;
+    background: rgb(255 255 255) !important;
+    padding: 1rem !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
 
-  .flowchart-node:focus-visible {
-    outline: none;
+  :global(.dark) .flowchart-fullscreen {
+    background: rgb(15 23 42) !important;
   }
 
-  .flowchart-node:focus-visible polygon,
-  .flowchart-node:focus-visible rect {
-    stroke: #3B82F6;
-    stroke-width: 3;
-  }
-
-  .flowchart-node.active polygon,
-  .flowchart-node.active rect:not([width="4"]) {
-    filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.6));
-    stroke: #3B82F6;
-    stroke-width: 2.5;
-  }
-
-  .flowchart-node.faded,
-  .flowchart-edge.faded {
-    opacity: 0.2;
-    pointer-events: none;
-  }
-
-  .flowchart-edge {
-    transition: all 0.3s ease;
-  }
-
-  .flowchart-edge:hover path {
-    stroke: #64748b;
-    stroke-width: 3;
-  }
-
-  .flowchart-edge.active path {
-    stroke: #3B82F6;
-    stroke-width: 3;
-    marker-end: url(#arrowhead-active);
-  }
-
-  /* Reduced motion support */
-  @media (prefers-reduced-motion: reduce) {
-    .flowchart-node,
-    .flowchart-edge {
-      transition: none;
-    }
-  }
+  [x-cloak] { display: none !important; }
 </style>
 
-<!-- Alpine.js initialization -->
 <script>
   import Alpine from 'alpinejs';
 
