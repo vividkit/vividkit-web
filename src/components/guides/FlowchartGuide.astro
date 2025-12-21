@@ -1,0 +1,830 @@
+---
+import { getLangFromUrl, type Language } from '@/i18n';
+import FlowchartInteractive from './FlowchartInteractive.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === 'vi';
+---
+
+<div class="space-y-10 mt-6">
+  <!-- Page Header -->
+  <div class="text-center space-y-4">
+    <h2 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
+      ClaudeKit Command Workflow Guide
+    </h2>
+    <p class="text-lg text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
+      {isVi
+        ? <>Hướng dẫn toàn diện để chọn command phù hợp dựa trên use case của bạn. Nếu không chắc chắn, gõ <code class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-600 dark:text-blue-400 font-mono">/ck-help</code> để được hỗ trợ!</>
+        : <>A comprehensive decision tree for ClaudeKit newcomers. If you're ever unsure, just type <code class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-600 dark:text-blue-400 font-mono">/ck-help</code> for interactive assistance!</>}
+    </p>
+  </div>
+
+  <!-- Quick Reference Decision Tree (Interactive SVG) -->
+  <div class="glass-card rounded-2xl p-6 sm:p-8">
+    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
+      <svg class="w-5 h-5 text-cyan-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M4 6h16M4 12h10M4 18h16" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="18" cy="12" r="3"/>
+      </svg>
+      {isVi ? 'Sơ Đồ Quyết Định Tương Tác' : 'Interactive Decision Tree'}
+    </h3>
+    <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">
+      {isVi
+        ? 'Click vào bất kỳ node hoặc đường path nào để highlight lộ trình đến command. Hoặc click vào các command button ở trên để xem đường đi tương ứng.'
+        : 'Click on any node or path to highlight the route to that command. Or click the command buttons above to see their corresponding paths.'}
+    </p>
+    <FlowchartInteractive lang={currentLang} />
+  </div>
+
+  <!-- Command Categories -->
+  <div class="space-y-8">
+    <!-- 1. New Project Setup -->
+    <div class="glass-card rounded-2xl p-6 sm:p-8">
+      <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+        <svg class="w-5 h-5 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        {isVi ? 'Khởi Tạo Dự Án Mới' : 'New Project Setup'}
+      </h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="border-b border-slate-200 dark:border-slate-700">
+            <tr>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white min-w-[180px] whitespace-nowrap">Command</th>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Mô tả' : 'Description'}</th>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Khi nào dùng' : 'When to Use'}</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+            <tr>
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-amber-500/20 text-amber-600 dark:text-amber-400 font-mono font-bold">/bootstrap</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Khởi tạo dự án đầy đủ với research, tech stack, planning, design, implementation' : 'Full project initialization with research, tech stack, planning, design, implementation'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Bắt đầu dự án hoàn toàn mới' : 'Starting a brand new project from scratch'}</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 font-mono font-bold">/docs:init</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Phân tích codebase và tạo documentation' : 'Analyze existing codebase and create documentation'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Tham gia dự án có sẵn hoặc setup docs' : 'Joining an existing project or setting up docs'}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-4 p-4 rounded-lg bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20">
+        <p class="text-sm text-emerald-700 dark:text-emerald-400">
+          <strong class="flex items-center gap-1"><svg class="w-4 h-4 text-emerald-500 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg> {isVi ? 'Mẹo:' : 'Tip:'}</strong> {isVi ? 'New Project Flow: /bootstrap → tự động xử lý mọi thứ bao gồm Git init, tech stack research, wireframes và initial implementation.' : 'New Project Flow: /bootstrap → automatically handles everything including Git initialization, tech stack research, wireframes, and initial implementation.'}
+        </p>
+      </div>
+    </div>
+
+    <!-- 2. Feature Building -->
+    <div class="glass-card rounded-2xl p-6 sm:p-8">
+      <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+        <svg class="w-5 h-5 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        {isVi ? 'Xây Dựng Feature' : 'Feature Building'}
+      </h3>
+
+      <!-- Don't Know What You Want Yet -->
+      <h4 class="font-semibold text-slate-800 dark:text-slate-200 mb-3">
+        {isVi ? 'Chưa biết muốn gì' : "Don't Know What You Want Yet"}
+      </h4>
+      <div class="overflow-x-auto mb-6">
+        <table class="w-full text-sm">
+          <thead class="border-b border-slate-200 dark:border-slate-700">
+            <tr>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white min-w-[180px] whitespace-nowrap">Command</th>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Mô tả' : 'Description'}</th>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Khi nào dùng' : 'When to Use'}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-violet-500/20 text-violet-600 dark:text-violet-400 font-mono font-bold">/brainstorm</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Ideation với lời khuyên chuyên gia' : 'Collaborative ideation with expert advice'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Khám phá ý tưởng, validate approaches, xem pros/cons' : 'Exploring ideas, validating approaches, getting pros/cons'}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="mb-6 p-4 rounded-lg bg-amber-500/10 border border-amber-200 dark:border-amber-500/20">
+        <p class="text-sm text-amber-700 dark:text-amber-400">
+          <strong class="flex items-center gap-1"><svg class="w-4 h-4 text-amber-500 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg> {isVi ? 'Quan trọng:' : 'Important:'}</strong> {isVi ? '/brainstorm KHÔNG implement - chỉ tư vấn. Sau khi brainstorm, dùng /plan hoặc /cook để implement.' : '/brainstorm DOES NOT implement - it only advises. After brainstorming, use /plan or /cook to implement.'}
+        </p>
+      </div>
+
+      <!-- Know What You Want -->
+      <h4 class="font-semibold text-slate-800 dark:text-slate-200 mb-3">
+        {isVi ? 'Biết muốn gì' : 'Know What You Want'}
+      </h4>
+      <div class="overflow-x-auto mb-4">
+        <table class="w-full text-sm">
+          <thead class="border-b border-slate-200 dark:border-slate-700">
+            <tr>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white min-w-[180px] whitespace-nowrap">Command</th>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Mô tả' : 'Description'}</th>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Khi nào dùng' : 'When to Use'}</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+            <tr>
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-mono font-bold">/cook</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">⚡⚡⚡ All-in-one: research → plan → implement → test → review</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400"><strong>FAST mode</strong> - {isVi ? 'Quick iterations, features đơn giản' : 'Quick iterations, simpler features'}</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-purple-500/20 text-purple-600 dark:text-purple-400 font-mono font-bold">/plan</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Tạo plan chi tiết không code' : 'Create detailed implementation plan without coding'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400"><strong>SAFE mode</strong> - {isVi ? 'Features phức tạp, cần approval trước' : 'Complex features, need approval first'}</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-blue-500/20 text-blue-600 dark:text-blue-400 font-mono font-bold">/code @plan.md</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Execute plan có sẵn từng bước' : 'Execute an existing plan step by step'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Sau khi /plan được approved' : 'After /plan is approved'}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="p-4 rounded-lg bg-blue-500/10 border border-blue-200 dark:border-blue-500/20">
+        <p class="text-sm text-blue-700 dark:text-blue-400">
+          <strong class="flex items-center gap-1"><svg class="w-4 h-4 text-blue-500 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" /></svg> {isVi ? 'Sự khác biệt chính:' : 'Key Difference:'}</strong><br/>
+          • <code class="bg-blue-200 dark:bg-blue-800 px-1 rounded">/cook</code> = {isVi ? 'Tốc độ, plan nội bộ, straight to implementation' : 'Speed-focused, plans internally, goes straight to implementation'}<br/>
+          • <code class="bg-blue-200 dark:bg-blue-800 px-1 rounded">/plan</code> → <code class="bg-blue-200 dark:bg-blue-800 px-1 rounded">/code</code> = {isVi ? 'An toàn, tạo plan có thể review trước' : 'Safety-focused, creates reviewable plan first'}
+        </p>
+      </div>
+    </div>
+
+    <!-- 3. Fixing Issues -->
+    <div class="glass-card rounded-2xl p-6 sm:p-8">
+      <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+        <svg class="w-5 h-5 text-orange-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M10 2v7.31M14 2v7.31M8 9.28l8-2.62M16 9.28l-8-2.62M12 17v5M12 22l-3-3M12 22l3-3M5 16l.88-.88a1.5 1.5 0 0 1 2.12 0l.88.88a1.5 1.5 0 0 0 2.12 0l.88-.88a1.5 1.5 0 0 1 2.12 0l.88.88a1.5 1.5 0 0 0 2.12 0L19 16" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        {isVi ? 'Sửa Lỗi' : 'Fixing Issues'}
+      </h3>
+
+      <!-- Diagnostic First -->
+      <h4 class="font-semibold text-slate-800 dark:text-slate-200 mb-3">
+        {isVi ? 'Chẩn đoán trước' : 'Diagnostic First'}
+      </h4>
+      <div class="overflow-x-auto mb-6">
+        <table class="w-full text-sm">
+          <thead class="border-b border-slate-200 dark:border-slate-700">
+            <tr>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white min-w-[180px] whitespace-nowrap">Command</th>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Mô tả' : 'Description'}</th>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Khi nào dùng' : 'When to Use'}</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+            <tr>
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-orange-500/20 text-orange-600 dark:text-orange-400 font-mono font-bold">/debug</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Phân tích và tìm root cause' : 'Analyze and find root cause'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Không biết lỗi gì' : "Don't know what's wrong"}</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-red-500/20 text-red-600 dark:text-red-400 font-mono font-bold">/fix</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Router thông minh tới các fix commands chuyên biệt' : 'Intelligent router to specialized fix commands'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Biết issue, muốn fix nhanh' : 'Know the issue, want quick fix'}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Specialized Fix Commands -->
+      <h4 class="font-semibold text-slate-800 dark:text-slate-200 mb-3">
+        {isVi ? 'Fix Commands chuyên biệt' : 'Specialized Fix Commands'}
+      </h4>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="border-b border-slate-200 dark:border-slate-700">
+            <tr>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white min-w-[180px] whitespace-nowrap">Command</th>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Mô tả' : 'Description'}</th>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Khi nào dùng' : 'When to Use'}</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+            <tr>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono">/fix:types</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Fix TypeScript/type errors' : 'Fix TypeScript/type errors'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">tsc errors, type mismatches</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono">/fix:ui</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Fix UI/UX issues' : 'Fix UI/UX issues'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">Layout, styling, component bugs</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono">/fix:ci</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Fix CI/CD pipeline issues' : 'Fix CI/CD pipeline issues'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">GitHub Actions, deployment failures</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono">/fix:test</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Fix failing tests' : 'Fix failing tests'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">Jest, Vitest test failures</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono">/fix:logs</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Phân tích error logs' : 'Analyze error logs'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">Stack traces, runtime errors</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono">/fix:fast</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Quick fix cho issues đơn giản' : 'Quick fix for simple issues'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">Single file, straightforward bugs</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono">/fix:hard</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Complex multi-component fixes' : 'Complex multi-component fixes'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">Architecture, refactoring issues</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono">/fix:parallel</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Fix nhiều issues độc lập' : 'Fix multiple independent issues'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">2+ unrelated bugs at once</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-4 p-4 rounded-lg bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20">
+        <p class="text-sm text-emerald-700 dark:text-emerald-400">
+          <strong class="flex items-center gap-1"><svg class="w-4 h-4 text-emerald-500 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg> {isVi ? 'Smart Routing:' : 'Smart Routing:'}</strong> {isVi ? 'Chỉ cần dùng /fix <mô tả issue> và nó sẽ tự động route tới command chuyên biệt phù hợp!' : 'Just use /fix <describe issue> and it will automatically route to the right specialized command!'}
+        </p>
+      </div>
+    </div>
+
+    <!-- 4. Git Operations -->
+    <div class="glass-card rounded-2xl p-6 sm:p-8">
+      <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+        <svg class="w-5 h-5 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"/>
+          <line x1="12" y1="3" x2="12" y2="9"/>
+          <line x1="12" y1="15" x2="12" y2="21"/>
+          <path d="M5.64 5.64L9.17 9.17M14.83 14.83l3.53 3.53M5.64 18.36l3.53-3.53M14.83 9.17l3.53-3.53" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        {isVi ? 'Git Operations' : 'Git Operations'}
+      </h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="border-b border-slate-200 dark:border-slate-700">
+            <tr>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white min-w-[180px] whitespace-nowrap">Command</th>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Mô tả' : 'Description'}</th>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Khi nào dùng' : 'When to Use'}</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+            <tr>
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-mono font-bold">/git:cm</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">Stage all + commit ({isVi ? 'không push' : 'no push'})</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Lưu work locally' : 'Save work locally'}</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-mono font-bold">/git:cp</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">Stage + commit + push</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Sẵn sàng share changes' : 'Ready to share changes'}</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-mono font-bold">/git:merge</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Merge branches' : 'Merge branches'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Combine feature branch to main' : 'Combine feature branch to main'}</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-mono font-bold">/git:pr</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Tạo pull request' : 'Create pull request'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Request code review' : 'Request code review'}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 5. Documentation -->
+    <div class="glass-card rounded-2xl p-6 sm:p-8">
+      <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+        <svg class="w-5 h-5 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/>
+          <line x1="16" y1="17" x2="8" y2="17"/>
+          <polyline points="10 9 9 9 8 9"/>
+        </svg>
+        {isVi ? 'Documentation' : 'Documentation'}
+      </h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="border-b border-slate-200 dark:border-slate-700">
+            <tr>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white min-w-[180px] whitespace-nowrap">Command</th>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Mô tả' : 'Description'}</th>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Khi nào dùng' : 'When to Use'}</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+            <tr>
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-amber-500/20 text-amber-600 dark:text-amber-400 font-mono font-bold">/docs:init</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Tạo documentation ban đầu cho dự án' : 'Create initial project documentation'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Dự án mới/chưa có docs' : 'New/undocumented project'}</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-amber-500/20 text-amber-600 dark:text-amber-400 font-mono font-bold">/docs:summarize</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Tóm tắt các thay đổi codebase' : 'Summarize codebase changes'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Sau major changes' : 'After major changes'}</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-amber-500/20 text-amber-600 dark:text-amber-400 font-mono font-bold">/docs:update</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Cập nhật documentation hiện có' : 'Update existing documentation'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Giữ docs đồng bộ' : 'Keep docs in sync'}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 6. Exploration & Research -->
+    <div class="glass-card rounded-2xl p-6 sm:p-8">
+      <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+        <svg class="w-5 h-5 text-cyan-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          <line x1="11" y1="8" x2="11" y2="14"/>
+          <line x1="8" y1="11" x2="14" y2="11"/>
+        </svg>
+        {isVi ? 'Khám phá & Nghiên cứu' : 'Exploration & Research'}
+      </h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="border-b border-slate-200 dark:border-slate-700">
+            <tr>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white min-w-[180px] whitespace-nowrap">Command</th>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Mô tả' : 'Description'}</th>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Khi nào dùng' : 'When to Use'}</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+            <tr>
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 font-mono font-bold">/scout</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Tìm kiếm codebase song song nhanh' : 'Fast parallel codebase search'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Tìm files liên quan cho task' : 'Find relevant files for a task'}</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 font-mono font-bold">/scout:ext</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Tìm kiếm mở rộng với Gemini 2M context' : 'Extended search with Gemini 2M context'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Khám phá codebase sâu' : 'Deep codebase exploration'}</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 font-mono font-bold">/watzup</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Review các thay đổi gần đây trong branch hiện tại' : 'Review recent changes in current branch'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Wrap up work, hiểu recent commits' : 'Wrap up work, understand recent commits'}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 7. Questions & Learning -->
+    <div class="glass-card rounded-2xl p-6 sm:p-8">
+      <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+        <svg class="w-5 h-5 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+          <line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+        {isVi ? 'Hỏi đáp & Học tập' : 'Questions & Learning'}
+      </h3>
+      <div class="overflow-x-auto mb-4">
+        <table class="w-full text-sm">
+          <thead class="border-b border-slate-200 dark:border-slate-700">
+            <tr>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white min-w-[180px] whitespace-nowrap">Command</th>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Mô tả' : 'Description'}</th>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Khi nào dùng' : 'When to Use'}</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+            <tr>
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-blue-500/20 text-blue-600 dark:text-blue-400 font-mono font-bold">/ask</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Tư vấn kỹ thuật & kiến trúc' : 'Technical & architectural consultation'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Cần advice về architecture, trade-offs' : 'Need expert advice on architecture, trade-offs'}</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-blue-500/20 text-blue-600 dark:text-blue-400 font-mono font-bold">/coding-level [0-5]</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Đặt độ sâu giải thích' : 'Set explanation depth'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Tùy chỉnh responses theo experience' : "Tailor Claude's responses to your experience"}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="p-4 rounded-lg bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20">
+        <p class="text-sm text-emerald-700 dark:text-emerald-400">
+          <strong class="flex items-center gap-1"><svg class="w-4 h-4 text-emerald-500 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg> Coding Levels:</strong><br/>
+          • <code class="bg-emerald-200 dark:bg-emerald-800 px-1 rounded">0</code> = ELI5 ({isVi ? 'không biết code' : 'zero coding experience'})<br/>
+          • <code class="bg-emerald-200 dark:bg-emerald-800 px-1 rounded">1</code> = Junior (0-2 {isVi ? 'năm' : 'years'})<br/>
+          • <code class="bg-emerald-200 dark:bg-emerald-800 px-1 rounded">2</code> = Mid-Level (3-5 {isVi ? 'năm' : 'years'})<br/>
+          • <code class="bg-emerald-200 dark:bg-emerald-800 px-1 rounded">3</code> = Senior (5-8 {isVi ? 'năm' : 'years'})<br/>
+          • <code class="bg-emerald-200 dark:bg-emerald-800 px-1 rounded">4</code> = Tech Lead (8-10 {isVi ? 'năm' : 'years'})<br/>
+          • <code class="bg-emerald-200 dark:bg-emerald-800 px-1 rounded">5</code> = God Mode ({isVi ? 'mặc định, hiệu quả tối đa' : 'default, maximum efficiency'})
+        </p>
+      </div>
+    </div>
+
+    <!-- 8. Project Management -->
+    <div class="glass-card rounded-2xl p-6 sm:p-8">
+      <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+        <svg class="w-5 h-5 text-pink-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7" rx="1" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="14" y="3" width="7" height="7" rx="1" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="3" y="14" width="7" height="7" rx="1" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="14" y="14" width="7" height="7" rx="1" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        {isVi ? 'Quản lý dự án' : 'Project Management'}
+      </h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="border-b border-slate-200 dark:border-slate-700">
+            <tr>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white min-w-[180px] whitespace-nowrap">Command</th>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Mô tả' : 'Description'}</th>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Khi nào dùng' : 'When to Use'}</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+            <tr>
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-pink-500/20 text-pink-600 dark:text-pink-400 font-mono font-bold">/kanban</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Dashboard trực quan cho plans' : 'Visual dashboard for plans'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Xem tiến độ plan, timeline visualization' : 'View plan progress, timeline visualization'}</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-pink-500/20 text-pink-600 dark:text-pink-400 font-mono font-bold">/preview</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Universal markdown/directory viewer' : 'Universal markdown/directory viewer'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Xem plans, docs dễ đọc' : 'View plans, docs in readable format'}</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-green-500/20 text-green-600 dark:text-green-400 font-mono font-bold">/test</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Chạy tests và phân tích kết quả' : 'Run tests and analyze results'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Verify code changes work' : 'Verify code changes work'}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 9. Design Commands -->
+    <div class="glass-card rounded-2xl p-6 sm:p-8">
+      <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+        <svg class="w-5 h-5 text-pink-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 19l7-7 3 3-7 7-3-3z" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M2 2l7.586 7.586" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="11" cy="11" r="2"/>
+        </svg>
+        {isVi ? 'Design Commands' : 'Design Commands'}
+      </h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="border-b border-slate-200 dark:border-slate-700">
+            <tr>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white min-w-[180px] whitespace-nowrap">Command</th>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Mô tả' : 'Description'}</th>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Khi nào dùng' : 'When to Use'}</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+            <tr>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-pink-500/10 text-pink-600 dark:text-pink-400 font-mono">/design:describe</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Mô tả design từ image' : 'Describe design from image'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Hiểu UI designs có sẵn' : 'Understand existing UI designs'}</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-pink-500/10 text-pink-600 dark:text-pink-400 font-mono">/design:screenshot</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Chụp screenshot của UI' : 'Take screenshot of UI'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Capture trạng thái hiện tại' : 'Capture current state'}</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-pink-500/10 text-pink-600 dark:text-pink-400 font-mono">/design:video</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Quay video UI flow' : 'Record video of UI flow'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Document interactions' : 'Document interactions'}</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-pink-500/10 text-pink-600 dark:text-pink-400 font-mono">/design:3d</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Tạo 3D assets' : 'Generate 3D assets'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Tạo visuals 3D' : 'Create 3D visuals'}</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-pink-500/10 text-pink-600 dark:text-pink-400 font-mono">/design:fast</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Quick design iteration' : 'Quick design iteration'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Fast UI prototyping' : 'Fast UI prototyping'}</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-pink-500/10 text-pink-600 dark:text-pink-400 font-mono">/design:good</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'High-quality design' : 'High-quality design'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Premium UI work' : 'Premium UI work'}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 10. Code Review -->
+    <div class="glass-card rounded-2xl p-6 sm:p-8">
+      <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+        <svg class="w-5 h-5 text-violet-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M16 18l2-2-2-2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M8 18l-2-2 2-2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M14.5 4h-5l-2 16h5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        {isVi ? 'Code Review' : 'Code Review'}
+      </h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="border-b border-slate-200 dark:border-slate-700">
+            <tr>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white min-w-[180px] whitespace-nowrap">Command</th>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Mô tả' : 'Description'}</th>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Khi nào dùng' : 'When to Use'}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-violet-500/20 text-violet-600 dark:text-violet-400 font-mono font-bold">/review:codebase</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Comprehensive codebase review' : 'Comprehensive codebase review'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Quality assessment, tìm issues' : 'Quality assessment, find issues'}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 11. Planning Variations -->
+    <div class="glass-card rounded-2xl p-6 sm:p-8">
+      <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+        <svg class="w-5 h-5 text-purple-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="9" y="3" width="6" height="4" rx="1" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M9 12h6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M9 16h6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        {isVi ? 'Các biến thể Planning' : 'Planning Variations'}
+      </h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="border-b border-slate-200 dark:border-slate-700">
+            <tr>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white min-w-[180px] whitespace-nowrap">Command</th>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Mô tả' : 'Description'}</th>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Khi nào dùng' : 'When to Use'}</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+            <tr>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 font-mono">/plan</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Auto-detect complexity' : 'Auto-detect complexity'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Planning chung' : 'General planning'}</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 font-mono">/plan:fast</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Quick planning cho tasks đơn giản' : 'Quick planning for simple tasks'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Small features, quick fixes' : 'Small features, quick fixes'}</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 font-mono">/plan:hard</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Deep planning với extensive research' : 'Deep planning with extensive research'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Complex, multi-phase features' : 'Complex, multi-phase features'}</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 font-mono">/plan:parallel</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Plan nhiều tasks độc lập' : 'Plan multiple independent tasks'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Nhiều features không liên quan' : 'Several unrelated features'}</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 font-mono">/plan:validate</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Validate và review plan có sẵn' : 'Validate and review existing plan'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Trước khi execution' : 'Before execution'}</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 font-mono">/plan:archive</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Archive plan đã hoàn thành' : 'Archive completed plan'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Clean up finished work' : 'Clean up finished work'}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Common Workflows -->
+  <div class="glass-card rounded-2xl p-6 sm:p-8">
+    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+      <svg class="w-5 h-5 text-teal-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      {isVi ? 'Common Workflows' : 'Common Workflows'}
+    </h3>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <!-- Workflow 1: Safe Approach -->
+      <div class="p-5 rounded-xl bg-purple-500/5 border border-purple-200 dark:border-purple-500/20">
+        <h4 class="font-bold text-purple-700 dark:text-purple-400 mb-3">{isVi ? 'Workflow 1: Build Feature (Safe)' : 'Workflow 1: Building a New Feature (Safe)'}</h4>
+        <div class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono">
+          <p>1. <code class="text-purple-600 dark:text-purple-400">/brainstorm</code> → {isVi ? 'Khám phá options' : 'Explore options'}</p>
+          <p>2. <code class="text-purple-600 dark:text-purple-400">/plan</code> → {isVi ? 'Review plan' : 'Review plan'}</p>
+          <p>3. <code class="text-slate-500">/clear</code> {isVi ? 'hoặc' : 'or'} <code class="text-slate-500">/compact</code></p>
+          <p>4. <code class="text-purple-600 dark:text-purple-400">/code @plan.md</code> → {isVi ? 'Implement' : 'Implementation'}</p>
+          <p>5. <code class="text-indigo-600 dark:text-indigo-400">/git:cp</code> → Push</p>
+          <p>6. <code class="text-indigo-600 dark:text-indigo-400">/git:pr</code> → PR</p>
+        </div>
+      </div>
+
+      <!-- Workflow 2: Fast Approach -->
+      <div class="p-5 rounded-xl bg-emerald-500/5 border border-emerald-200 dark:border-emerald-500/20">
+        <h4 class="font-bold text-emerald-700 dark:text-emerald-400 mb-3">{isVi ? 'Workflow 2: Build Feature (Fast)' : 'Workflow 2: Building a Feature (Fast)'}</h4>
+        <div class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono">
+          <p>1. <code class="text-emerald-600 dark:text-emerald-400">/cook</code> → {isVi ? 'Research → Plan → Implement → Test → Review' : 'Research → Plan → Implement → Test → Review'}</p>
+          <p>2. <code class="text-indigo-600 dark:text-indigo-400">/git:cp</code> → {isVi ? 'Commit và push khi approved' : 'Commit and push when approved'}</p>
+        </div>
+      </div>
+
+      <!-- Workflow 3: Debugging -->
+      <div class="p-5 rounded-xl bg-orange-500/5 border border-orange-200 dark:border-orange-500/20">
+        <h4 class="font-bold text-orange-700 dark:text-orange-400 mb-3">{isVi ? 'Workflow 3: Debugging & Fixing' : 'Workflow 3: Debugging & Fixing'}</h4>
+        <div class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono">
+          <p>1. <code class="text-orange-600 dark:text-orange-400">/debug</code> → {isVi ? 'Tìm root cause' : 'Find root cause'}</p>
+          <p>2. <code class="text-red-600 dark:text-red-400">/fix</code> → {isVi ? 'Smart routing' : 'Smart routing'}</p>
+          <p>3. <code class="text-indigo-600 dark:text-indigo-400">/git:cm</code> → {isVi ? 'Commit fix locally' : 'Commit fix locally'}</p>
+        </div>
+      </div>
+
+      <!-- Workflow 4: New Project -->
+      <div class="p-5 rounded-xl bg-amber-500/5 border border-amber-200 dark:border-amber-500/20">
+        <h4 class="font-bold text-amber-700 dark:text-amber-400 mb-3">{isVi ? 'Workflow 4: New Project Setup' : 'Workflow 4: New Project Setup'}</h4>
+        <div class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono">
+          <p>1. <code class="text-amber-600 dark:text-amber-400">/bootstrap</code> → {isVi ? 'Full setup' : 'Full setup'}</p>
+          <p>2. {isVi ? 'Follow onboarding' : 'Follow onboarding instructions'}</p>
+        </div>
+      </div>
+
+      <!-- Workflow 5: Join Existing -->
+      <div class="p-5 rounded-xl bg-cyan-500/5 border border-cyan-200 dark:border-cyan-500/20">
+        <h4 class="font-bold text-cyan-700 dark:text-cyan-400 mb-3">{isVi ? 'Workflow 5: Tham gia dự án' : 'Workflow 5: Joining Existing Project'}</h4>
+        <div class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono">
+          <p>1. <code class="text-cyan-600 dark:text-cyan-400">/docs:init</code> → {isVi ? 'Analyze codebase' : 'Analyze codebase, create docs'}</p>
+          <p>2. <code class="text-cyan-600 dark:text-cyan-400">/scout</code> → {isVi ? 'Explore structure' : 'Explore codebase structure'}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pro Tips -->
+  <div class="glass-card rounded-2xl p-6 sm:p-8">
+    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+      <svg class="w-5 h-5 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      {isVi ? 'Pro Tips' : 'Pro Tips'}
+    </h3>
+
+    <div class="space-y-4">
+      <div class="p-4 rounded-lg bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20">
+        <p class="text-sm text-emerald-700 dark:text-emerald-400">
+          <strong class="flex items-center gap-1"><svg class="w-4 h-4 text-emerald-500 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg> {isVi ? 'Speed vs Safety Trade-off:' : 'Speed vs Safety Trade-off:'}</strong><br/>
+          • {isVi ? 'Dùng /cook khi confident và muốn speed' : 'Use /cook when you\'re confident and want speed'}<br/>
+          • {isVi ? 'Dùng /plan → /code khi precision và review quan trọng' : 'Use /plan → /code when precision and review matter'}
+        </p>
+      </div>
+
+      <div class="p-4 rounded-lg bg-amber-500/10 border border-amber-200 dark:border-amber-500/20">
+        <p class="text-sm text-amber-700 dark:text-amber-400">
+          <strong class="flex items-center gap-1"><svg class="w-4 h-4 text-amber-500 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg> {isVi ? 'Không mix workflows:' : 'Never mix these workflows:'}</strong><br/>
+          • ❌ <code>/plan</code> → <code>/cook</code> ({isVi ? 'cook có planning riêng' : 'cook has its own planning'})<br/>
+          • ✅ <code>/plan</code> → <code>/code</code> ({isVi ? 'flow đúng' : 'correct flow'})<br/>
+          • ✅ <code>/cook</code> standalone ({isVi ? 'có internal planning' : 'has internal planning'})
+        </p>
+      </div>
+
+      <div class="p-4 rounded-lg bg-red-500/10 border border-red-200 dark:border-red-500/20">
+        <p class="text-sm text-red-700 dark:text-red-400">
+          <strong class="flex items-center gap-1"><svg class="w-4 h-4 text-red-500 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg> {isVi ? 'Git safety:' : 'Git safety:'}</strong><br/>
+          • <code>/git:cm</code> = {isVi ? 'commit only (safe cho experimentation)' : 'commit only (safe for experimentation)'}<br/>
+          • <code>/git:cp</code> = {isVi ? 'commits VÀ pushes (không thể undo dễ dàng)' : 'commits AND pushes (can\'t undo easily)'}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Command Complexity Ratings -->
+  <div class="glass-card rounded-2xl p-6 sm:p-8">
+    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+      <svg class="w-5 h-5 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      {isVi ? 'Độ phức tạp Commands' : 'Command Complexity Ratings'}
+    </h3>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="border-b border-slate-200 dark:border-slate-700">
+          <tr>
+            <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">Rating</th>
+            <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Ý nghĩa' : 'Meaning'}</th>
+            <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Ví dụ Commands' : 'Example Commands'}</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+          <tr>
+            <td class="py-3 px-4 text-amber-500">⚡</td>
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400">Simple, quick</td>
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400"><code>/debug</code>, <code>/test</code></td>
+          </tr>
+          <tr>
+            <td class="py-3 px-4 text-amber-500">⚡⚡</td>
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400">Moderate</td>
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400"><code>/brainstorm</code>, <code>/fix</code>, <code>/scout</code></td>
+          </tr>
+          <tr>
+            <td class="py-3 px-4 text-amber-500">⚡⚡⚡</td>
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400">Complex, thorough</td>
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400"><code>/cook</code>, <code>/code</code>, <code>/plan</code></td>
+          </tr>
+          <tr>
+            <td class="py-3 px-4 text-amber-500">⚡⚡⚡⚡</td>
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400">Extended workflow</td>
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400"><code>/docs:init</code></td>
+          </tr>
+          <tr>
+            <td class="py-3 px-4 text-amber-500">⚡⚡⚡⚡⚡</td>
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400">Full project scope</td>
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400"><code>/bootstrap</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Summary Cheat Sheet -->
+  <div class="glass-card rounded-2xl p-6 sm:p-8">
+    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+      <svg class="w-5 h-5 text-rose-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke-linecap="round" stroke-linejoin="round"/>
+        <polyline points="22,6 12,13 2,6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      {isVi ? 'Cheat Sheet Tóm tắt' : 'Summary Cheat Sheet'}
+    </h3>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="border-b border-slate-200 dark:border-slate-700">
+          <tr>
+            <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Tình huống' : 'Scenario'}</th>
+            <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">Command</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+          <tr><td class="py-2 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Build something mới hoàn toàn' : '"I need to build something new from scratch"'}</td><td class="py-2 px-4"><code class="text-amber-600 dark:text-amber-400">/bootstrap</code></td></tr>
+          <tr><td class="py-2 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Có ý tưởng nhưng chưa biết approach' : '"I have an idea but not sure how to approach it"'}</td><td class="py-2 px-4"><code class="text-violet-600 dark:text-violet-400">/brainstorm</code></td></tr>
+          <tr><td class="py-2 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Biết chính xác muốn gì, làm nhanh' : '"I know exactly what I want, do it fast"'}</td><td class="py-2 px-4"><code class="text-emerald-600 dark:text-emerald-400">/cook</code></td></tr>
+          <tr><td class="py-2 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Muốn plan kỹ trước khi code' : '"I want to plan carefully before coding"'}</td><td class="py-2 px-4"><code class="text-purple-600 dark:text-purple-400">/plan → /code</code></td></tr>
+          <tr><td class="py-2 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Có lỗi, không biết tại sao' : '"Something\'s broken, I don\'t know why"'}</td><td class="py-2 px-4"><code class="text-orange-600 dark:text-orange-400">/debug → /fix</code></td></tr>
+          <tr><td class="py-2 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Có lỗi, biết nguyên nhân' : '"Something\'s broken, I know what it is"'}</td><td class="py-2 px-4"><code class="text-red-600 dark:text-red-400">/fix</code></td></tr>
+          <tr><td class="py-2 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Cần lưu work' : '"I need to save my work"'}</td><td class="py-2 px-4"><code class="text-indigo-600 dark:text-indigo-400">/git:cm</code> {isVi ? 'hoặc' : 'or'} <code class="text-indigo-600 dark:text-indigo-400">/git:cp</code></td></tr>
+          <tr><td class="py-2 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Cần hiểu codebase' : '"I need to understand this codebase"'}</td><td class="py-2 px-4"><code class="text-cyan-600 dark:text-cyan-400">/docs:init</code></td></tr>
+          <tr><td class="py-2 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Cần advice kiến trúc' : '"I need architectural advice"'}</td><td class="py-2 px-4"><code class="text-blue-600 dark:text-blue-400">/ask</code></td></tr>
+          <tr><td class="py-2 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Có gì thay đổi gần đây?' : '"What changed recently?"'}</td><td class="py-2 px-4"><code class="text-cyan-600 dark:text-cyan-400">/watzup</code></td></tr>
+          <tr><td class="py-2 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Xem plans trực quan' : '"View my plans visually"'}</td><td class="py-2 px-4"><code class="text-pink-600 dark:text-pink-400">/kanban</code> {isVi ? 'hoặc' : 'or'} <code class="text-pink-600 dark:text-pink-400">/preview</code></td></tr>
+          <tr><td class="py-2 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Mới, chậm lại giải thích' : '"I\'m new, slow down explanations"'}</td><td class="py-2 px-4"><code class="text-blue-600 dark:text-blue-400">/coding-level 1</code></td></tr>
+          <tr><td class="py-2 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Cần help với ClaudeKit' : '"I need help with ClaudeKit"'}</td><td class="py-2 px-4"><code class="text-blue-600 dark:text-blue-400">/ck-help</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Not Sure? -->
+  <div class="flex items-start gap-4 p-6 rounded-xl bg-blue-500/5 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20">
+    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center">
+      <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+    </div>
+    <div class="flex-1">
+      <div class="font-bold text-blue-700 dark:text-blue-400 mb-1 text-lg">
+        {isVi ? 'Không chắc? Dùng /ck-help' : 'Not Sure? Use /ck-help'}
+      </div>
+      <div class="text-slate-600 dark:text-slate-400 leading-relaxed font-mono text-sm">
+        <code>/ck-help</code> → {isVi ? 'Full documentation' : 'Full documentation'}<br/>
+        <code>/ck-help fix</code> → {isVi ? 'Category guide cho fix commands' : 'Category guide for fix commands'}<br/>
+        <code>/ck-help plan:hard</code> → {isVi ? 'Chi tiết specific command' : 'Details on specific command'}<br/>
+        <code>/ck-help how to debug</code> → {isVi ? 'Task-based recommendations' : 'Task-based recommendations'}
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="text-center py-6">
+    <p class="text-lg font-semibold text-slate-600 dark:text-slate-400">
+      {isVi ? 'Chúc bạn Vibe Coding vui vẻ!' : 'Happy Vibe Coding!'}
+    </p>
+  </div>
+</div>
+

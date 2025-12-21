@@ -1,0 +1,511 @@
+---
+import { flowchartData, pathColors, type FlowchartPath } from '@/data/guides/flowchart';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+  class?: string;
+}
+
+const { lang, class: className = '' } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+
+const { nodes, edges, paths, viewBox } = flowchartData;
+
+// Serialize paths for Alpine.js
+const pathsJson = JSON.stringify(paths);
+const colorsJson = JSON.stringify(pathColors);
+---
+
+<div
+  x-data={`{
+    activePaths: [],
+    hoveredNode: null,
+    scale: 0.5,
+    minScale: 0.5,
+    maxScale: 2,
+    paths: ${pathsJson},
+    colors: ${colorsJson},
+
+    selectPath(pathId) {
+      const idx = this.activePaths.indexOf(pathId);
+      if (idx > -1) {
+        this.activePaths = [];
+      } else {
+        this.activePaths = [pathId];
+      }
+    },
+
+    selectMultiplePaths(pathIds) {
+      if (this.activePaths.length === pathIds.length && pathIds.every(id => this.activePaths.includes(id))) {
+        this.activePaths = [];
+      } else {
+        this.activePaths = [...pathIds];
+      }
+    },
+
+    clearPath() {
+      this.activePaths = [];
+    },
+
+    zoomIn() {
+      this.scale = Math.min(this.maxScale, this.scale + 0.1);
+    },
+
+    zoomOut() {
+      this.scale = Math.max(this.minScale, this.scale - 0.1);
+    },
+
+    resetZoom() {
+      this.scale = 0.5;
+    },
+
+    handleWheel(e) {
+      if (e.ctrlKey || e.metaKey) {
+        e.preventDefault();
+        if (e.deltaY < 0) {
+          this.zoomIn();
+        } else {
+          this.zoomOut();
+        }
+      }
+    },
+
+    selectNodePath(nodeId) {
+      const matchingPaths = this.paths.filter(p => p.nodes.includes(nodeId));
+      if (matchingPaths.length > 0) {
+        this.selectMultiplePaths(matchingPaths.map(p => p.id));
+      }
+    },
+
+    selectEdgePath(edgeId) {
+      const matchingPaths = this.paths.filter(p => p.edges.includes(edgeId));
+      if (matchingPaths.length > 0) {
+        this.selectMultiplePaths(matchingPaths.map(p => p.id));
+      }
+    },
+
+    isInActivePath(itemId, type) {
+      if (this.activePaths.length === 0) return false;
+      return this.activePaths.some(pathId => {
+        const path = this.paths.find(p => p.id === pathId);
+        if (!path) return false;
+        return type === 'node' ? path.nodes.includes(itemId) : path.edges.includes(itemId);
+      });
+    },
+
+    getNodeClass(nodeId) {
+      if (this.activePaths.length === 0) return '';
+      return this.isInActivePath(nodeId, 'node') ? 'active' : 'faded';
+    },
+
+    getEdgeClass(edgeId) {
+      if (this.activePaths.length === 0) return '';
+      return this.isInActivePath(edgeId, 'edge') ? 'active' : 'faded';
+    },
+
+    getActivePathData() {
+      if (this.activePaths.length === 0) return null;
+      return this.paths.find(p => p.id === this.activePaths[0]);
+    },
+
+    getActiveColor() {
+      const path = this.getActivePathData();
+      if (!path) return null;
+      return this.colors[path.color];
+    }
+  }`}
+  class:list={['flowchart-container relative', className]}
+  x-on:keydown.escape.window="clearPath()"
+>
+  <!-- Legend / Path Selector -->
+  <div class="mb-6 flex flex-wrap gap-2 justify-center">
+    {paths.map((path: FlowchartPath) => (
+      <button
+        x-on:click={`selectPath('${path.id}')`}
+        x-bind:class={`activePaths.includes('${path.id}') ? 'ring-2 ring-offset-2 ring-offset-white dark:ring-offset-surface-900' : 'opacity-70 hover:opacity-100'`}
+        class="px-3 py-1.5 text-sm font-medium rounded-full transition-all duration-200 flex items-center gap-1.5"
+        style={`background-color: ${pathColors[path.color].bg}; color: ${pathColors[path.color].text}; --ring-color: ${pathColors[path.color].text}`}
+      >
+        <code class="font-mono text-xs">{path.command}</code>
+      </button>
+    ))}
+  </div>
+
+  <!-- Zoom Controls -->
+  <div class="flex items-center justify-center gap-2 mb-4">
+    <button
+      x-on:click="zoomOut()"
+      x-bind:disabled="scale <= minScale"
+      class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+      aria-label="Zoom out"
+    >
+      <svg class="w-4 h-4 text-slate-600 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+      </svg>
+    </button>
+    <button
+      x-on:click="resetZoom()"
+      class="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-400 transition-colors min-w-[60px]"
+      aria-label="Reset zoom"
+    >
+      <span x-text="Math.round(scale * 100) + '%'"></span>
+    </button>
+    <button
+      x-on:click="zoomIn()"
+      x-bind:disabled="scale >= maxScale"
+      class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+      aria-label="Zoom in"
+    >
+      <svg class="w-4 h-4 text-slate-600 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- SVG Flowchart -->
+  <div
+    class="flowchart-scroll overflow-auto pb-4 max-h-[600px]"
+    x-on:wheel="handleWheel($event)"
+  >
+    <div
+      class="transition-all duration-150 origin-top-left"
+      x-bind:style="`width: ${1500 * scale}px; height: ${720 * scale}px`"
+    >
+      <svg
+        viewBox={viewBox}
+        class="w-full h-full"
+        role="img"
+        aria-label="ClaudeKit command decision flowchart - click on any path to highlight it"
+      >
+      <defs>
+        <!-- Arrow marker -->
+        <marker
+          id="arrowhead"
+          markerWidth="10"
+          markerHeight="7"
+          refX="9"
+          refY="3.5"
+          orient="auto"
+        >
+          <polygon
+            points="0 0, 10 3.5, 0 7"
+            class="fill-slate-400 dark:fill-slate-500"
+          />
+        </marker>
+
+        <!-- Active arrow marker -->
+        <marker
+          id="arrowhead-active"
+          markerWidth="10"
+          markerHeight="7"
+          refX="9"
+          refY="3.5"
+          orient="auto"
+        >
+          <polygon
+            points="0 0, 10 3.5, 0 7"
+            class="fill-blue-500"
+          />
+        </marker>
+
+        <!-- Glow filter for active nodes -->
+        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+          <feMerge>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+
+      <!-- Edges (rendered first so nodes appear on top) -->
+      <g class="edges">
+        {edges.map(edge => (
+          <g
+            class="flowchart-edge cursor-pointer"
+            x-bind:class={`getEdgeClass('${edge.id}')`}
+            x-on:click={`selectEdgePath('${edge.id}')`}
+            role="button"
+            tabindex="0"
+            aria-label={`Edge from ${edge.from} to ${edge.to}${edge.label ? `, labeled ${edge.label}` : ''}`}
+          >
+            <path
+              d={edge.path}
+              fill="none"
+              class="stroke-slate-300 dark:stroke-slate-600 transition-all duration-300"
+              stroke-width="2"
+              marker-end="url(#arrowhead)"
+            />
+            {edge.label && edge.labelX && edge.labelY && (() => {
+              const labelWidth = Math.max(28, edge.label.length * 7 + 10);
+              return (
+              <g>
+                <rect
+                  x={edge.labelX - labelWidth / 2}
+                  y={edge.labelY - 10}
+                  width={labelWidth}
+                  height="16"
+                  rx="4"
+                  class="fill-white dark:fill-surface-800 stroke-slate-200 dark:stroke-slate-700"
+                  stroke-width="1"
+                />
+                <text
+                  x={edge.labelX}
+                  y={edge.labelY}
+                  text-anchor="middle"
+                  dominant-baseline="middle"
+                  class="text-[10px] font-medium fill-slate-500 dark:fill-slate-400"
+                >
+                  {edge.label}
+                </text>
+              </g>
+            )})()}
+          </g>
+        ))}
+      </g>
+
+      <!-- Nodes -->
+      <g class="nodes">
+        {nodes.map(node => (
+          <g
+            class="flowchart-node cursor-pointer"
+            x-bind:class={`getNodeClass('${node.id}')`}
+            x-on:click={`selectNodePath('${node.id}')`}
+            role="button"
+            tabindex="0"
+            aria-label={`${node.type === 'decision' ? 'Decision: ' : node.type === 'command' ? 'Command: ' : ''}${node.label}`}
+            x-on:keydown.enter={`selectNodePath('${node.id}')`}
+            x-on:keydown.space.prevent={`selectNodePath('${node.id}')`}
+          >
+            {node.type === 'decision' ? (
+              /* Diamond shape for decisions */
+              <polygon
+                points={`${node.position.x},${node.position.y - 35} ${node.position.x + 65},${node.position.y} ${node.position.x},${node.position.y + 35} ${node.position.x - 65},${node.position.y}`}
+                class="fill-white/90 dark:fill-surface-800/90 stroke-slate-300 dark:stroke-slate-600 transition-all duration-300"
+                stroke-width="2"
+              />
+            ) : node.type === 'command' ? (() => {
+              /* Rounded rectangle with colored left border for commands */
+              const boxWidth = Math.max(100, node.label.length * 9 + 20);
+              const halfWidth = boxWidth / 2;
+              return (
+              <g>
+                <rect
+                  x={node.position.x - halfWidth}
+                  y={node.position.y - 22}
+                  width={boxWidth}
+                  height="44"
+                  rx="8"
+                  class="fill-white/90 dark:fill-surface-800/90 stroke-slate-300 dark:stroke-slate-600 transition-all duration-300"
+                  stroke-width="2"
+                />
+                <rect
+                  x={node.position.x - halfWidth}
+                  y={node.position.y - 22}
+                  width="4"
+                  height="44"
+                  rx="2"
+                  class="fill-blue-500 dark:fill-blue-400"
+                />
+              </g>
+            )})() : (
+              /* Rounded rectangle for start node */
+              <rect
+                x={node.position.x - 100}
+                y={node.position.y - 25}
+                width="200"
+                height="50"
+                rx="25"
+                class="fill-gradient-to-r from-blue-500 to-cyan-500 stroke-blue-400 dark:stroke-blue-500 transition-all duration-300"
+                stroke-width="2"
+                style="fill: url(#startGradient)"
+              />
+            )}
+
+            {/* Start gradient definition */}
+            {node.type === 'start' && (
+              <defs>
+                <linearGradient id="startGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:0.9" />
+                  <stop offset="100%" style="stop-color:#06B6D4;stop-opacity:0.9" />
+                </linearGradient>
+              </defs>
+            )}
+
+            <text
+              x={node.position.x}
+              y={node.position.y + (node.type === 'start' ? 1 : 0)}
+              text-anchor="middle"
+              dominant-baseline="middle"
+              class:list={[
+                'transition-all duration-300 pointer-events-none',
+                node.type === 'start'
+                  ? 'text-sm font-semibold fill-white'
+                  : node.type === 'command'
+                    ? 'text-sm font-mono font-semibold fill-slate-700 dark:fill-slate-200'
+                    : 'text-xs font-medium fill-slate-600 dark:fill-slate-300'
+              ]}
+            >
+              {node.label}
+            </text>
+          </g>
+        ))}
+      </g>
+    </svg>
+    </div>
+  </div>
+
+  <!-- Command description panel -->
+  <div
+    x-show="activePaths.length > 0"
+    x-transition:enter="transition ease-out duration-200"
+    x-transition:enter-start="opacity-0 translate-y-2"
+    x-transition:enter-end="opacity-100 translate-y-0"
+    x-transition:leave="transition ease-in duration-150"
+    x-transition:leave-start="opacity-100 translate-y-0"
+    x-transition:leave-end="opacity-0 translate-y-2"
+    class="mt-6 p-5 glass-card rounded-xl border-l-4"
+    x-bind:style="getActiveColor() ? `border-left-color: ${getActiveColor().text}` : ''"
+  >
+    <template x-if="getActivePathData()">
+      <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+        <div class="flex-1">
+          <div class="flex items-center gap-3 mb-2">
+            <code
+              class="px-3 py-1.5 rounded-lg font-mono font-bold text-lg"
+              x-bind:style="getActiveColor() ? `background-color: ${getActiveColor().bg}; color: ${getActiveColor().text}` : ''"
+              x-text="getActivePathData()?.command"
+            ></code>
+            <h3
+              class="font-semibold text-slate-800 dark:text-slate-200"
+              x-text="getActivePathData()?.name"
+            ></h3>
+          </div>
+          <p
+            class="text-slate-600 dark:text-slate-400"
+            x-text="getActivePathData()?.description"
+          ></p>
+        </div>
+        <button
+          x-on:click="activePaths = []"
+          class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors self-start"
+          aria-label="Close path details"
+        >
+          <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </template>
+  </div>
+
+  <!-- Instructions -->
+  <p class="mt-4 text-center text-sm text-slate-500 dark:text-slate-400">
+    {currentLang === 'vi'
+      ? 'Click vào nút hoặc đường path để highlight lộ trình. Click vào command ở trên để xem path.'
+      : 'Click on any node or edge to highlight a path. Click commands above to see their paths.'}
+  </p>
+</div>
+
+<style>
+  /* Custom scrollbar for flowchart container - Light mode */
+  .flowchart-scroll::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+  }
+  .flowchart-scroll::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 4px;
+  }
+  .flowchart-scroll::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+  }
+  .flowchart-scroll::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+  .flowchart-scroll::-webkit-scrollbar-corner {
+    background: #f1f5f9;
+  }
+
+  /* Dark mode scrollbar */
+  :global(.dark) .flowchart-scroll::-webkit-scrollbar-track {
+    background: #0f172a;
+  }
+  :global(.dark) .flowchart-scroll::-webkit-scrollbar-thumb {
+    background: #334155;
+  }
+  :global(.dark) .flowchart-scroll::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+  }
+  :global(.dark) .flowchart-scroll::-webkit-scrollbar-corner {
+    background: #0f172a;
+  }
+
+  .flowchart-node {
+    transition: all 0.3s ease;
+  }
+
+  .flowchart-node:hover polygon,
+  .flowchart-node:hover rect {
+    filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.4));
+  }
+
+  .flowchart-node:focus-visible {
+    outline: none;
+  }
+
+  .flowchart-node:focus-visible polygon,
+  .flowchart-node:focus-visible rect {
+    stroke: #3B82F6;
+    stroke-width: 3;
+  }
+
+  .flowchart-node.active polygon,
+  .flowchart-node.active rect:not([width="4"]) {
+    filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.6));
+    stroke: #3B82F6;
+    stroke-width: 2.5;
+  }
+
+  .flowchart-node.faded,
+  .flowchart-edge.faded {
+    opacity: 0.2;
+    pointer-events: none;
+  }
+
+  .flowchart-edge {
+    transition: all 0.3s ease;
+  }
+
+  .flowchart-edge:hover path {
+    stroke: #64748b;
+    stroke-width: 3;
+  }
+
+  .flowchart-edge.active path {
+    stroke: #3B82F6;
+    stroke-width: 3;
+    marker-end: url(#arrowhead-active);
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .flowchart-node,
+    .flowchart-edge {
+      transition: none;
+    }
+  }
+</style>
+
+<!-- Alpine.js initialization -->
+<script>
+  import Alpine from 'alpinejs';
+
+  // Only initialize if not already done
+  if (!window.Alpine) {
+    window.Alpine = Alpine;
+    Alpine.start();
+  }
+</script>
