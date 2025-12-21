@@ -163,7 +163,7 @@ const isVi = currentLang === 'vi';
     <div class="glass-card rounded-2xl p-6 sm:p-8">
       <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
         <svg class="w-5 h-5 text-orange-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M10 2v7.31M14 2v7.31M8 9.28l8-2.62M16 9.28l-8-2.62M12 17v5M12 22l-3-3M12 22l3-3M5 16l.88-.88a1.5 1.5 0 0 1 2.12 0l.88.88a1.5 1.5 0 0 0 2.12 0l.88-.88a1.5 1.5 0 0 1 2.12 0l.88.88a1.5 1.5 0 0 0 2.12 0L19 16" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         {isVi ? 'Sửa Lỗi' : 'Fixing Issues'}
       </h3>
@@ -211,42 +211,42 @@ const isVi = currentLang === 'vi';
           </thead>
           <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
             <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono">/fix:types</code></td>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono font-bold">/fix:types</code></td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Fix TypeScript/type errors' : 'Fix TypeScript/type errors'}</td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">tsc errors, type mismatches</td>
             </tr>
             <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono">/fix:ui</code></td>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono font-bold">/fix:ui</code></td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Fix UI/UX issues' : 'Fix UI/UX issues'}</td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">Layout, styling, component bugs</td>
             </tr>
             <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono">/fix:ci</code></td>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono font-bold">/fix:ci</code></td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Fix CI/CD pipeline issues' : 'Fix CI/CD pipeline issues'}</td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">GitHub Actions, deployment failures</td>
             </tr>
             <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono">/fix:test</code></td>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono font-bold">/fix:test</code></td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Fix failing tests' : 'Fix failing tests'}</td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">Jest, Vitest test failures</td>
             </tr>
             <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono">/fix:logs</code></td>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono font-bold">/fix:logs</code></td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Phân tích error logs' : 'Analyze error logs'}</td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">Stack traces, runtime errors</td>
             </tr>
             <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono">/fix:fast</code></td>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono font-bold">/fix:fast</code></td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Quick fix cho issues đơn giản' : 'Quick fix for simple issues'}</td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">Single file, straightforward bugs</td>
             </tr>
             <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono">/fix:hard</code></td>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono font-bold">/fix:hard</code></td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Complex multi-component fixes' : 'Complex multi-component fixes'}</td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">Architecture, refactoring issues</td>
             </tr>
             <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono">/fix:parallel</code></td>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono font-bold">/fix:parallel</code></td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Fix nhiều issues độc lập' : 'Fix multiple independent issues'}</td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">2+ unrelated bugs at once</td>
             </tr>
@@ -264,10 +264,9 @@ const isVi = currentLang === 'vi';
     <div class="glass-card rounded-2xl p-6 sm:p-8">
       <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
         <svg class="w-5 h-5 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="3"/>
-          <line x1="12" y1="3" x2="12" y2="9"/>
-          <line x1="12" y1="15" x2="12" y2="21"/>
-          <path d="M5.64 5.64L9.17 9.17M14.83 14.83l3.53 3.53M5.64 18.36l3.53-3.53M14.83 9.17l3.53-3.53" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="18" cy="18" r="3"/>
+          <circle cx="6" cy="6" r="3"/>
+          <path d="M6 21V9a9 9 0 0 0 9 9" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         {isVi ? 'Git Operations' : 'Git Operations'}
       </h3>
@@ -480,10 +479,11 @@ const isVi = currentLang === 'vi';
     <div class="glass-card rounded-2xl p-6 sm:p-8">
       <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
         <svg class="w-5 h-5 text-pink-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M12 19l7-7 3 3-7 7-3-3z" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M2 2l7.586 7.586" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="11" cy="11" r="2"/>
+          <circle cx="13.5" cy="6.5" r="2.5"/>
+          <circle cx="19" cy="17" r="2"/>
+          <circle cx="6" cy="12" r="2.5"/>
+          <circle cx="10" cy="18.5" r="1.5"/>
+          <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.563-2.512 5.563-5.563C22 6.5 17.5 2 12 2Z" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         {isVi ? 'Design Commands' : 'Design Commands'}
       </h3>
@@ -498,32 +498,32 @@ const isVi = currentLang === 'vi';
           </thead>
           <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
             <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-pink-500/10 text-pink-600 dark:text-pink-400 font-mono">/design:describe</code></td>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-pink-500/10 text-pink-600 dark:text-pink-400 font-mono font-bold">/design:describe</code></td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Mô tả design từ image' : 'Describe design from image'}</td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Hiểu UI designs có sẵn' : 'Understand existing UI designs'}</td>
             </tr>
             <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-pink-500/10 text-pink-600 dark:text-pink-400 font-mono">/design:screenshot</code></td>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-pink-500/10 text-pink-600 dark:text-pink-400 font-mono font-bold">/design:screenshot</code></td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Chụp screenshot của UI' : 'Take screenshot of UI'}</td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Capture trạng thái hiện tại' : 'Capture current state'}</td>
             </tr>
             <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-pink-500/10 text-pink-600 dark:text-pink-400 font-mono">/design:video</code></td>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-pink-500/10 text-pink-600 dark:text-pink-400 font-mono font-bold">/design:video</code></td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Quay video UI flow' : 'Record video of UI flow'}</td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Document interactions' : 'Document interactions'}</td>
             </tr>
             <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-pink-500/10 text-pink-600 dark:text-pink-400 font-mono">/design:3d</code></td>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-pink-500/10 text-pink-600 dark:text-pink-400 font-mono font-bold">/design:3d</code></td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Tạo 3D assets' : 'Generate 3D assets'}</td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Tạo visuals 3D' : 'Create 3D visuals'}</td>
             </tr>
             <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-pink-500/10 text-pink-600 dark:text-pink-400 font-mono">/design:fast</code></td>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-pink-500/10 text-pink-600 dark:text-pink-400 font-mono font-bold">/design:fast</code></td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Quick design iteration' : 'Quick design iteration'}</td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Fast UI prototyping' : 'Fast UI prototyping'}</td>
             </tr>
             <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-pink-500/10 text-pink-600 dark:text-pink-400 font-mono">/design:good</code></td>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-pink-500/10 text-pink-600 dark:text-pink-400 font-mono font-bold">/design:good</code></td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'High-quality design' : 'High-quality design'}</td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Premium UI work' : 'Premium UI work'}</td>
             </tr>
@@ -536,9 +536,10 @@ const isVi = currentLang === 'vi';
     <div class="glass-card rounded-2xl p-6 sm:p-8">
       <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
         <svg class="w-5 h-5 text-violet-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M16 18l2-2-2-2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M8 18l-2-2 2-2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M14.5 4h-5l-2 16h5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M10 12.5L8.5 14 5 10.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="m14 7 2 2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="17" cy="4" r="3"/>
+          <path d="M21 11v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         {isVi ? 'Code Review' : 'Code Review'}
       </h3>
@@ -553,7 +554,7 @@ const isVi = currentLang === 'vi';
           </thead>
           <tbody>
             <tr>
-              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-violet-500/20 text-violet-600 dark:text-violet-400 font-mono font-bold">/review:codebase</code></td>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-violet-500/10 text-violet-600 dark:text-violet-400 font-mono font-bold">/review:codebase</code></td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Comprehensive codebase review' : 'Comprehensive codebase review'}</td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Quality assessment, tìm issues' : 'Quality assessment, find issues'}</td>
             </tr>
@@ -584,32 +585,32 @@ const isVi = currentLang === 'vi';
           </thead>
           <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
             <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 font-mono">/plan</code></td>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 font-mono font-bold">/plan</code></td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Auto-detect complexity' : 'Auto-detect complexity'}</td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Planning chung' : 'General planning'}</td>
             </tr>
             <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 font-mono">/plan:fast</code></td>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 font-mono font-bold">/plan:fast</code></td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Quick planning cho tasks đơn giản' : 'Quick planning for simple tasks'}</td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Small features, quick fixes' : 'Small features, quick fixes'}</td>
             </tr>
             <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 font-mono">/plan:hard</code></td>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 font-mono font-bold">/plan:hard</code></td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Deep planning với extensive research' : 'Deep planning with extensive research'}</td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Complex, multi-phase features' : 'Complex, multi-phase features'}</td>
             </tr>
             <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 font-mono">/plan:parallel</code></td>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 font-mono font-bold">/plan:parallel</code></td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Plan nhiều tasks độc lập' : 'Plan multiple independent tasks'}</td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Nhiều features không liên quan' : 'Several unrelated features'}</td>
             </tr>
             <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 font-mono">/plan:validate</code></td>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 font-mono font-bold">/plan:validate</code></td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Validate và review plan có sẵn' : 'Validate and review existing plan'}</td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Trước khi execution' : 'Before execution'}</td>
             </tr>
             <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 font-mono">/plan:archive</code></td>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 font-mono font-bold">/plan:archive</code></td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Archive plan đã hoàn thành' : 'Archive completed plan'}</td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Clean up finished work' : 'Clean up finished work'}</td>
             </tr>
@@ -770,8 +771,9 @@ const isVi = currentLang === 'vi';
   <div class="glass-card rounded-2xl p-6 sm:p-8">
     <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
       <svg class="w-5 h-5 text-rose-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke-linecap="round" stroke-linejoin="round"/>
-        <polyline points="22,6 12,13 2,6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M8 7h8M8 11h8M8 15h5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       {isVi ? 'Cheat Sheet Tóm tắt' : 'Summary Cheat Sheet'}
     </h3>
@@ -819,12 +821,4 @@ const isVi = currentLang === 'vi';
       </div>
     </div>
   </div>
-
-  <!-- Footer -->
-  <div class="text-center py-6">
-    <p class="text-lg font-semibold text-slate-600 dark:text-slate-400">
-      {isVi ? 'Chúc bạn Vibe Coding vui vẻ!' : 'Happy Vibe Coding!'}
-    </p>
-  </div>
 </div>
-
