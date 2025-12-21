@@ -430,6 +430,8 @@ export default {
   'guides.promotions.description': 'AI service deals and promotions',
   'guides.custom_hooks.title': 'Custom Hooks',
   'guides.custom_hooks.description': 'Customize your vibe coding workflow',
+  'guides.flowchart.title': 'Decision Tree',
+  'guides.flowchart.description': 'Interactive guide to find the right command',
 
   // Promotions Guide
   'guides.promotions.page_title': 'AI Promotions & Deals',
