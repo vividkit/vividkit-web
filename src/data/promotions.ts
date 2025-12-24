@@ -36,6 +36,13 @@ export const subscriptionPromotions: SubscriptionPromotion[] = [
     promoLinks: [{ label: 'z.ai/subscribe (referral)', url: 'https://z.ai/subscribe?ic=NEYH1LGAKE' }],
     color: 'emerald',
   },
+  {
+    id: 'lovable',
+    name: 'Lovable',
+    tagline: 'Free Pro Plan for 2 months (new accounts only) - Save $50',
+    promoLinks: [{ label: 'lovable.dev/invite (referral)', url: 'https://lovable.dev/invite/ZNB6JQC' }],
+    color: 'purple',
+  },
 ];
 
 export const tips = [
