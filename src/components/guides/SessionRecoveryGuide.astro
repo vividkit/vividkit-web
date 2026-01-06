@@ -1,0 +1,538 @@
+---
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+import PlatformPathSwitcher from './PlatformPathSwitcher.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+// Code examples
+const findSessionId = `# Find your session ID from history
+cat <span class="text-slate-900 dark:text-slate-100 font-semibold" data-macos="~/.claude/history.jsonl" data-linux="~/.claude/history.jsonl" data-windows="%USERPROFILE%\\.claude\\history.jsonl">~/.claude/history.jsonl</span> | tail -5
+
+# Look for sessionId in the JSON object
+# Example output:
+{"display":"/clear","timestamp":1765163522956,"project":"...","sessionId":"74f292c0-49fa-41c0-a2d8-dd2c3ef9c4be"}
+
+# Sessions are stored per-project in:
+# <span class="text-slate-900 dark:text-slate-100 font-semibold" data-macos="~/.claude/projects/{project-path-encoded}/{session-id}.jsonl" data-linux="~/.claude/projects/{project-path-encoded}/{session-id}.jsonl" data-windows="%USERPROFILE%\\.claude\\projects\\{project-path-encoded}\\{session-id}.jsonl">~/.claude/projects/{project-path-encoded}/{session-id}.jsonl</span>`;
+
+const resumeOptions = [
+  {
+    title: "Option 1: Interactive resume",
+    desc: "Shows recent sessions list to pick from",
+    cmd: `> <span class="text-purple-600 dark:text-purple-400 font-bold">/resume</span>`
+  },
+  {
+    title: "Option 2: Specific session ID",
+    desc: "Resume with specific session ID",
+    cmd: `> <span class="text-purple-600 dark:text-purple-400 font-bold">/resume</span> 74f292c0-49fa-41c0-a2d8-dd2c3ef9c4be`
+  },
+  {
+    title: "Option 3: Command line",
+    desc: "Resume directly when starting CCS",
+    cmd: `<span class="text-blue-600 dark:text-blue-400 font-bold">ccs</span> glm <span class="text-purple-600 dark:text-purple-400 font-bold">--resume</span>
+<span class="text-blue-600 dark:text-blue-400 font-bold">ccs</span> agy <span class="text-purple-600 dark:text-purple-400 font-bold">--resume</span> 74f292c0-49fa-41c0-a2d8-dd2c3ef9c4be`
+  }
+];
+
+const exportSteps = [
+  {
+    title: "Step 1: Export",
+    cmd: `<span class="text-purple-600 dark:text-purple-400 font-bold">/export</span>                    <span class="text-slate-400 italic"># Creates conversation.txt in current dir</span>
+<span class="text-purple-600 dark:text-purple-400 font-bold">/export</span> ~/backup/session   <span class="text-slate-400 italic"># Custom path</span>`,
+    desc: "Export current conversation to a text file"
+  },
+  {
+    title: "Step 2: Start Fresh",
+    cmd: `<span class="text-blue-600 dark:text-blue-400 font-bold">ccs</span> glm`,
+    desc: "Start a new session with a cheaper provider"
+  },
+  {
+    title: "Step 3: Paste Context",
+    cmd: `> "Here's my previous context: [paste key parts of export]"
+> "Continue implementing the auth handler"`,
+    desc: "Manually transfer the essential context"
+  }
+];
+
+const exportUseCases = [
+  {
+    title: "Context Bloated",
+    desc: "Session > 100K tokens, /resume just moves the problem",
+    icon: "warning"
+  },
+  {
+    title: "Fresh Start",
+    desc: "Keep only essential context, discard noise",
+    icon: "refresh"
+  },
+  {
+    title: "Share Externally",
+    desc: "Teammates, documentation, backup",
+    icon: "share"
+  }
+];
+
+const crossProviderWorkflow = `# ✅ Cross-provider resume WORKS!
+# Sessions are stored locally per project, not per provider
+
+# Example: Start with Claude, continue with GLM
+# Terminal 1 (Claude):
+ccs work
+> "Help me implement auth..."
+# Note session ID or just exit
+
+# Terminal 2 (GLM):
+ccs glm --resume
+# OR inside Claude Code:
+> /resume
+# All previous context is loaded!
+
+# How it works:
+# 1. Claude Code stores sessions in ~/.claude/projects/{project}/
+# 2. When you /resume, it replays history to the new provider
+# 3. The new model sees the FULL conversation context`;
+
+const fallbackSteps = [
+  {
+    title: "Setup",
+    desc: "Multiple terminals ready",
+    cmd: `<span class="text-slate-400 italic"># Terminal 1:</span> <span class="text-blue-600 dark:text-blue-400 font-bold">ccs</span> work     <span class="text-slate-400 italic">(Claude - primary)</span>
+<span class="text-slate-400 italic"># Terminal 2:</span> <span class="text-blue-600 dark:text-blue-400 font-bold">ccs</span> agy      <span class="text-slate-400 italic">(Antigravity - backup)</span>
+<span class="text-slate-400 italic"># Terminal 3:</span> <span class="text-blue-600 dark:text-blue-400 font-bold">ccs</span> glm      <span class="text-slate-400 italic">(GLM - cost-optimized)</span>`
+  },
+  {
+    title: "Decision Logic",
+    desc: "When Claude hits limit:",
+    cmd: `<span class="text-slate-400 italic"># Context healthy? →</span> <span class="text-purple-600 dark:text-purple-400 font-bold">/resume</span> <span class="text-slate-400 italic">in another terminal</span>
+<span class="text-slate-400 italic"># Context bloated? →</span> <span class="text-purple-600 dark:text-purple-400 font-bold">/export</span><span class="text-slate-400 italic">, then fresh session</span>`
+  },
+  {
+    title: "Quick Switch",
+    desc: "Resume with full context",
+    cmd: `<span class="text-blue-600 dark:text-blue-400 font-bold">ccs</span> glm <span class="text-purple-600 dark:text-purple-400 font-bold">--resume</span>`
+  }
+];
+
+
+
+const proTips = [
+  {
+    title: "--continue trick",
+    desc: "Auto-continue last session when kicked out unexpectedly",
+    cmd: `<span class="text-slate-400 italic"># If you got kicked out of a session for any reason:</span>
+<span class="text-blue-600 dark:text-blue-400 font-bold">ccs</span> <span class="text-slate-400 italic">glm/agy/work</span> <span class="text-purple-600 dark:text-purple-400 font-bold">--continue</span> continue
+
+<span class="text-slate-400 italic"># This automatically resumes and continues your last session</span>`,
+    icon: "lightning"
+  },
+  {
+    title: "/login account switch",
+    desc: "Switch Claude accounts when one hits rate limit",
+    cmd: `<span class="text-slate-400 italic"># Inside your current session, when you hit rate limit:</span>
+<span class="text-purple-600 dark:text-purple-400 font-bold">/login</span>
+
+<span class="text-slate-400 italic"># Select a different Claude sub-account</span>
+<span class="text-slate-400 italic"># Then type "continue" to resume your work</span>
+<span class="text-emerald-600 dark:text-emerald-400 font-bold">continue</span>`,
+    icon: "switch"
+  }
+];
+
+const emergencySteps = [
+  {
+    step: 1,
+    title: "DON'T PANIC",
+    desc: "Your work isn't lost. Sessions are saved locally.",
+    color: "text-slate-600 dark:text-slate-400"
+  },
+  {
+    step: 2,
+    title: "ASSESS CONTEXT SIZE",
+    desc: "Check if session is bloated (slow responses = likely bloated)",
+    color: "text-amber-600 dark:text-amber-400"
+  },
+  {
+    step: 3,
+    title: "IF CONTEXT HEALTHY → /RESUME",
+    desc: "Use /resume in another provider",
+    cmd: `<span class="text-blue-600 dark:text-blue-400 font-bold">ccs</span> glm <span class="text-purple-600 dark:text-purple-400 font-bold">--resume</span>
+<span class="text-slate-400 italic"># Or inside Claude Code:</span> <span class="text-purple-600 dark:text-purple-400 font-bold">/resume</span>`,
+    color: "text-emerald-600 dark:text-emerald-400"
+  },
+  {
+    step: 4,
+    title: "IF CONTEXT BLOATED → /EXPORT",
+    desc: "Export and start fresh",
+    cmd: `<span class="text-purple-600 dark:text-purple-400 font-bold">/export</span> ~/backup/session.txt
+<span class="text-blue-600 dark:text-blue-400 font-bold">ccs</span> glm
+> "Context from previous session: [paste key parts]"`,
+    color: "text-blue-600 dark:text-blue-400"
+  },
+  {
+    step: 5,
+    title: "CONTINUE WORKING!",
+    desc: "You're back in action.",
+    color: "text-fuchsia-600 dark:text-fuchsia-400"
+  }
+];
+---
+
+<style>
+  @keyframes flow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+  .flow-arrow {
+    animation: flow 2s ease-in-out infinite;
+  }
+</style>
+
+<div class="space-y-8 mt-6">
+  <!-- Hero Section -->
+  <div class="text-center space-y-4">
+    <h2 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
+      {t('session_recovery.guide.title')}
+    </h2>
+    <p class="text-xl font-medium text-fuchsia-600 dark:text-fuchsia-400">
+      {t('session_recovery.guide.tagline')}
+    </p>
+    <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+      {t('session_recovery.guide.description')}
+    </p>
+  </div>
+
+
+
+  <!-- Section 1: Understanding Sessions -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-slate-500/10 to-slate-600/10 border-b border-slate-100 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-slate-500/20 text-slate-600 dark:text-slate-400 font-bold text-sm">1</div>
+        <h4 class="text-lg font-bold text-slate-900 dark:text-slate-100">{t('session_recovery.guide.understand.title')}</h4>
+      </div>
+    </div>
+    <div class="p-6 space-y-4">
+      <p class="text-slate-600 dark:text-slate-400">
+        {t('session_recovery.guide.understand.desc')}
+      </p>
+
+      <PlatformPathSwitcher
+        lang={currentLang}
+        pathAfterHome=".claude/history.jsonl"
+        label={t('session_recovery.guide.understand.file_label') || 'File path:'}
+        id="session-history-path"
+        color="slate"
+      />
+
+      <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 font-mono text-sm overflow-x-auto">
+        <pre class="text-slate-700 dark:text-slate-300 whitespace-pre-wrap" set:html={findSessionId}></pre>
+      </div>
+
+      <!-- Important Warning -->
+      <div class="flex items-start gap-3 p-4 rounded-lg bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/30">
+        <svg class="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+          <line x1="12" y1="9" x2="12" y2="13"/>
+          <line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+        <div>
+          <div class="font-medium text-amber-700 dark:text-amber-400">{t('session_recovery.guide.understand.warning_title')}</div>
+          <div class="text-sm text-slate-600 dark:text-slate-400 mt-1">{t('session_recovery.guide.understand.warning_desc')}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: Universal Resume -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border-2 border-fuchsia-200 dark:border-fuchsia-500/30 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-fuchsia-500/10 to-pink-500/10 border-b border-fuchsia-200 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-fuchsia-500/20 text-fuchsia-600 dark:text-fuchsia-400 font-bold text-sm">2</div>
+        <h4 class="text-lg font-bold text-slate-900 dark:text-slate-100">{t('session_recovery.guide.same_provider.title')}</h4>
+      </div>
+    </div>
+    <div class="p-6 space-y-6">
+      <p class="text-slate-600 dark:text-slate-400">
+        {t('session_recovery.guide.same_provider.desc')}
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {resumeOptions.map((opt) => (
+          <div class="flex flex-col h-full bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="p-3 border-b border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800">
+              <div class="font-bold text-slate-700 dark:text-slate-200 text-sm">{opt.title}</div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{opt.desc}</div>
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-[#0D0D0D] flex-1 flex items-center">
+              <pre class="text-slate-700 dark:text-slate-300 font-mono text-xs whitespace-pre-wrap break-all" set:html={opt.cmd}></pre>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="flex items-start gap-3 p-4 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30">
+        <svg class="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+          <polyline points="22 4 12 14.01 9 11.01"/>
+        </svg>
+        <div>
+          <div class="font-medium text-emerald-700 dark:text-emerald-400">{t('session_recovery.guide.same_provider.result')}</div>
+          <div class="text-sm text-slate-600 dark:text-slate-400">{t('session_recovery.guide.same_provider.result_desc')}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: Export Context -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border-2 border-amber-200 dark:border-amber-500/30 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border-b border-amber-200 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-400 font-bold text-sm">3</div>
+        <h4 class="text-lg font-bold text-slate-900 dark:text-slate-100">{t('session_recovery.guide.export.title')}</h4>
+        <span class="px-2 py-0.5 text-xs font-semibold bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400 rounded-full">
+          {t('session_recovery.guide.export.badge')}
+        </span>
+      </div>
+    </div>
+    <div class="p-6 space-y-6">
+      <p class="text-slate-600 dark:text-slate-400">
+        {t('session_recovery.guide.export.desc')}
+      </p>
+
+      <!-- When to use /export -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {exportUseCases.map((useCase) => (
+          <div class="p-4 rounded-lg bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/30">
+            <div class="font-bold text-amber-700 dark:text-amber-400 text-sm mb-1">{useCase.title}</div>
+            <div class="text-xs text-slate-600 dark:text-slate-400">{useCase.desc}</div>
+          </div>
+        ))}
+      </div>
+
+      <div class="space-y-4">
+        {exportSteps.map((step) => (
+          <div class="relative pl-8">
+            <div class="absolute left-0 top-0 bottom-0 w-px bg-slate-200 dark:bg-slate-800"></div>
+            <div class="absolute left-[-4px] top-2 w-2 h-2 rounded-full bg-amber-400 border border-white dark:border-slate-900"></div>
+
+            <div class="mb-1">
+              <span class="font-bold text-slate-900 dark:text-slate-100 text-sm">{step.title}</span>
+              <span class="text-slate-500 dark:text-slate-500 text-xs ml-2">— {step.desc}</span>
+            </div>
+            <div class="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-3 border border-slate-100 dark:border-slate-700 font-mono text-sm text-slate-700 dark:text-slate-300 whitespace-pre-wrap" set:html={step.cmd}>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Decision guide -->
+      <div class="flex items-start gap-3 p-4 rounded-lg bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/30">
+        <svg class="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="16" x2="12" y2="12"/>
+          <line x1="12" y1="8" x2="12.01" y2="8"/>
+        </svg>
+        <div>
+          <div class="font-medium text-blue-700 dark:text-blue-400">{t('session_recovery.guide.export.decision_title')}</div>
+          <div class="text-sm text-slate-600 dark:text-slate-400 mt-1" set:html={t('session_recovery.guide.export.decision_desc')}></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Section 4: Model Fallback Strategies -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-violet-500/10 to-purple-500/10 border-b border-slate-100 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-violet-500/20 text-violet-600 dark:text-violet-400 font-bold text-sm">4</div>
+        <h4 class="text-lg font-bold text-slate-900 dark:text-slate-100">{t('session_recovery.guide.fallback.title')}</h4>
+      </div>
+    </div>
+    <div class="p-6 space-y-4">
+      <p class="text-slate-600 dark:text-slate-400">
+        {t('session_recovery.guide.fallback.desc')}
+      </p>
+
+      <div class="grid grid-cols-1 gap-4">
+        {fallbackSteps.map((step) => (
+          <div class="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-4 border border-slate-200 dark:border-slate-700">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="font-bold text-slate-700 dark:text-slate-200 text-sm">{step.title}</span>
+              <span class="h-1 w-1 rounded-full bg-slate-300 dark:bg-slate-600"></span>
+              <span class="text-xs text-slate-500 dark:text-slate-400">{step.desc}</span>
+            </div>
+            <div class="bg-white dark:bg-slate-900 rounded p-3 font-mono text-xs text-slate-600 dark:text-slate-300 whitespace-pre-wrap border border-slate-100 dark:border-slate-800" set:html={step.cmd}>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div class="p-3 rounded-lg bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/30 text-center">
+          <div class="text-blue-600 dark:text-blue-400 font-bold">Claude</div>
+          <div class="text-xs text-slate-500 mt-1">{t('session_recovery.guide.fallback.claude_use')}</div>
+        </div>
+        <div class="p-3 rounded-lg bg-purple-50 dark:bg-purple-500/10 border border-purple-200 dark:border-purple-500/30 text-center">
+          <div class="text-purple-600 dark:text-purple-400 font-bold">Antigravity</div>
+          <div class="text-xs text-slate-500 mt-1">{t('session_recovery.guide.fallback.agy_use')}</div>
+        </div>
+        <div class="p-3 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30 text-center">
+          <div class="text-emerald-600 dark:text-emerald-400 font-bold">GLM</div>
+          <div class="text-xs text-slate-500 mt-1">{t('session_recovery.guide.fallback.glm_use')}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 5: Pro Tips -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border-2 border-cyan-200 dark:border-cyan-500/30 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-cyan-500/10 to-teal-500/10 border-b border-cyan-200 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 font-bold text-sm">5</div>
+        <h4 class="text-lg font-bold text-slate-900 dark:text-slate-100">{t('session_recovery.guide.protips.title')}</h4>
+        <span class="px-2 py-0.5 text-xs font-semibold bg-cyan-100 dark:bg-cyan-500/20 text-cyan-700 dark:text-cyan-400 rounded-full">
+          {t('session_recovery.guide.protips.badge')}
+        </span>
+      </div>
+    </div>
+    <div class="p-6 space-y-6">
+      <p class="text-slate-600 dark:text-slate-400">
+        {t('session_recovery.guide.protips.desc')}
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {proTips.map((tip) => (
+          <div class="bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="p-3 border-b border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800">
+              <div class="flex items-center gap-2">
+                {tip.icon === "lightning" && (
+                  <svg class="w-4 h-4 text-cyan-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                  </svg>
+                )}
+                {tip.icon === "switch" && (
+                  <svg class="w-4 h-4 text-cyan-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="16 3 21 3 21 8"/>
+                    <line x1="4" y1="20" x2="21" y2="3"/>
+                    <polyline points="21 16 21 21 16 21"/>
+                    <line x1="15" y1="15" x2="21" y2="21"/>
+                    <line x1="4" y1="4" x2="9" y2="9"/>
+                  </svg>
+                )}
+                <span class="font-bold text-slate-700 dark:text-slate-200 text-sm">{tip.title}</span>
+              </div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">{tip.desc}</div>
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-[#0D0D0D]">
+              <pre class="text-slate-700 dark:text-slate-300 font-mono text-xs whitespace-pre-wrap" set:html={tip.cmd}></pre>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="flex items-start gap-3 p-4 rounded-lg bg-cyan-50 dark:bg-cyan-500/10 border border-cyan-200 dark:border-cyan-500/30">
+        <svg class="w-5 h-5 text-cyan-500 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="16" x2="12" y2="12"/>
+          <line x1="12" y1="8" x2="12.01" y2="8"/>
+        </svg>
+        <div>
+          <div class="font-medium text-cyan-700 dark:text-cyan-400">{t('session_recovery.guide.protips.note_title')}</div>
+          <div class="text-sm text-slate-600 dark:text-slate-400 mt-1">{t('session_recovery.guide.protips.note_desc')}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 6: Emergency Checklist -->
+  <div class="glass-card rounded-xl border-2 border-red-200 dark:border-red-500/30 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-red-500/10 to-orange-500/10 border-b border-red-200 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-red-600 dark:text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-red-600 dark:text-red-400">
+          {t('session_recovery.guide.emergency.title')}
+        </h3>
+      </div>
+    </div>
+    <div class="p-6">
+      <p class="text-slate-600 dark:text-slate-400 mb-4">
+        {t('session_recovery.guide.emergency.desc')}
+      </p>
+      <div class="space-y-4">
+        {emergencySteps.map((step) => (
+          <div class="flex gap-4">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center font-bold text-sm text-slate-500">
+              {step.step}
+            </div>
+            <div class="flex-1 pt-1">
+              <h4 class={`font-bold text-sm ${step.color}`}>{step.title}</h4>
+              <p class="text-sm text-slate-600 dark:text-slate-400 mb-2">{step.desc}</p>
+              {step.cmd && (
+                 <div class="bg-slate-50 dark:bg-slate-900/50 rounded p-2 font-mono text-xs text-slate-600 dark:text-slate-300 whitespace-pre-wrap border border-slate-100 dark:border-slate-800" set:html={step.cmd}>
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Benefits Section -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="p-4 rounded-xl bg-green-500/5 dark:bg-green-500/10 border border-green-200 dark:border-green-500/20">
+      <h4 class="font-bold text-green-700 dark:text-green-400 mb-2 flex items-center gap-2">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+        </svg>
+        {t('session_recovery.guide.benefit1.title')}
+      </h4>
+      <p class="text-sm text-slate-600 dark:text-slate-400">
+        {t('session_recovery.guide.benefit1.desc')}
+      </p>
+    </div>
+    <div class="p-4 rounded-xl bg-blue-500/5 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20">
+      <h4 class="font-bold text-blue-700 dark:text-blue-400 mb-2 flex items-center gap-2">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+        {t('session_recovery.guide.benefit2.title')}
+      </h4>
+      <p class="text-sm text-slate-600 dark:text-slate-400">
+        {t('session_recovery.guide.benefit2.desc')}
+      </p>
+    </div>
+  </div>
+
+  <!-- Related Guides -->
+  <div class="p-6 rounded-xl bg-gradient-to-r from-slate-500/5 via-slate-500/10 to-slate-500/5 border border-slate-200 dark:border-slate-700">
+    <h3 class="text-lg font-bold text-slate-700 dark:text-slate-300 mb-4">{t('session_recovery.guide.related_title')}</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+      <a href={currentLang === 'vi' ? '/vi/guides/ccs' : '/guides/ccs'} class="p-3 rounded-lg bg-white/50 dark:bg-black/20 hover:bg-white dark:hover:bg-black/40 transition-colors">
+        <div class="text-emerald-600 dark:text-emerald-400 font-mono font-bold">CCS Guide</div>
+        <div class="text-xs text-slate-500 mt-1">{t('session_recovery.guide.related_ccs')}</div>
+      </a>
+
+      <a href={currentLang === 'vi' ? '/vi/guides/commands' : '/guides/commands'} class="p-3 rounded-lg bg-white/50 dark:bg-black/20 hover:bg-white dark:hover:bg-black/40 transition-colors">
+        <div class="text-blue-600 dark:text-blue-400 font-mono font-bold">Commands</div>
+        <div class="text-xs text-slate-500 mt-1">{t('session_recovery.guide.related_commands')}</div>
+      </a>
+    </div>
+  </div>
+</div>
