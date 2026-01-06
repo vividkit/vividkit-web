@@ -12,75 +12,171 @@ const t = useTranslations(currentLang);
 
 const categories = [
   {
-    name: t('commands.guide.planning_development'),
-    description: t('commands.guide.planning_development_desc'),
+    name: 'Getting Started',
+    description: 'Bootstrap new projects quickly',
+    color: 'green',
+    icon: `<path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>`,
+    commands: [
+      { command: '/bootstrap', complexity: '⚡⚡⚡⚡⚡', label: t('commands.label.advanced'), desc: t('commands.desc.bootstrap'), detail: t('commands.detail.bootstrap') },
+      { command: '/bootstrap:auto', complexity: '⚡⚡⚡⚡', label: t('commands.label.advanced'), desc: t('commands.desc.bootstrap_auto'), detail: t('commands.detail.bootstrap_auto') },
+      { command: '/bootstrap:auto:fast', complexity: '⚡⚡⚡', label: t('commands.label.advanced'), desc: t('commands.desc.bootstrap_auto_fast'), detail: t('commands.detail.bootstrap_auto_fast') },
+      { command: '/bootstrap:auto:parallel', complexity: '⚡⚡⚡⚡⚡', label: t('commands.label.advanced'), desc: t('commands.desc.bootstrap_auto_parallel'), detail: t('commands.detail.bootstrap_auto_parallel') }
+    ]
+  },
+  {
+    name: 'Planning & Research',
+    description: 'Plan, research and brainstorm',
     color: 'blue',
     icon: `<path d="M9 5H2v7l6.29 6.29c.94.94 2.48.94 3.42 0l3.58-3.58c.94-.94.94-2.48 0-3.42L9 5z"/>`,
     commands: [
-      { command: '/plan', complexity: '⚡⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.plan') },
-      { command: '/code', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.code') },
-      { command: '/cook', complexity: '⚡⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.cook') },
-      { command: '/bootstrap', complexity: '⚡⚡⚡⚡⚡', label: t('commands.label.advanced'), desc: t('commands.desc.bootstrap') },
-      { command: '/brainstorm', complexity: '⚡⚡', label: t('commands.label.easy'), desc: t('commands.desc.brainstorm') }
+      { command: '/plan', complexity: '⚡⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.plan'), detail: t('commands.detail.plan') },
+      { command: '/plan:fast', complexity: '⚡⚡', label: t('commands.label.easy'), desc: t('commands.desc.plan_fast'), detail: t('commands.detail.plan_fast') },
+      { command: '/plan:hard', complexity: '⚡⚡⚡', label: t('commands.label.advanced'), desc: t('commands.desc.plan_hard'), detail: t('commands.detail.plan_hard') },
+      { command: '/plan:two', complexity: '⚡⚡⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.plan_two'), detail: t('commands.detail.plan_two') },
+      { command: '/plan:parallel', complexity: '⚡⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.plan_parallel'), detail: t('commands.detail.plan_parallel') },
+      { command: '/plan:validate', complexity: '', label: t('commands.label.easy'), desc: t('commands.desc.plan_validate'), detail: t('commands.detail.plan_validate') },
+      { command: '/plan:ci', complexity: '', label: t('commands.label.medium'), desc: t('commands.desc.plan_ci'), detail: t('commands.detail.plan_ci') },
+      { command: '/plan:cro', complexity: '', label: t('commands.label.medium'), desc: t('commands.desc.plan_cro'), detail: t('commands.detail.plan_cro') },
+      { command: '/plan:archive', complexity: '', label: t('commands.label.easy'), desc: t('commands.desc.plan_archive'), detail: t('commands.detail.plan_archive') },
+      { command: '/scout', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.scout'), detail: t('commands.detail.scout') },
+      { command: '/ask', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.ask'), detail: t('commands.detail.ask') },
+      { command: '/brainstorm', complexity: '⚡⚡', label: t('commands.label.easy'), desc: t('commands.desc.brainstorm'), detail: t('commands.detail.brainstorm') }
     ]
   },
   {
-    name: t('commands.guide.fixing_debugging'),
-    description: t('commands.guide.fixing_debugging_desc'),
+    name: 'Implementation',
+    description: 'Write codes and implementation',
+    color: 'purple',
+    icon: `<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>`,
+    commands: [
+      { command: '/code', complexity: '⚡⚡⚡', label: t('commands.label.easy'), desc: t('commands.desc.code'), detail: t('commands.detail.code') },
+      { command: '/code:auto', complexity: '⚡⚡⚡', label: t('commands.label.advanced'), desc: t('commands.desc.code_auto'), detail: t('commands.detail.code_auto') },
+      { command: '/code:no-test', complexity: '⚡⚡', label: t('commands.label.easy'), desc: t('commands.desc.code_no_test'), detail: t('commands.detail.code_no_test') },
+      { command: '/code:parallel', complexity: '⚡', label: t('commands.label.medium'), desc: t('commands.desc.code_parallel'), detail: t('commands.detail.code_parallel') },
+
+      { command: '/cook', complexity: '⚡⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.cook'), detail: t('commands.detail.cook') },
+      { command: '/cook:auto', complexity: '⚡⚡', label: t('commands.label.advanced'), desc: t('commands.desc.cook_auto'), detail: t('commands.detail.cook_auto') },
+      { command: '/cook:auto:fast', complexity: '⚡', label: t('commands.label.medium'), desc: t('commands.desc.cook_auto_fast'), detail: t('commands.detail.cook_auto_fast') },
+      { command: '/cook:auto:parallel', complexity: '⚡⚡⚡', label: t('commands.label.advanced'), desc: t('commands.desc.cook_auto_parallel'), detail: t('commands.detail.cook_auto_parallel') }
+    ]
+  },
+  {
+    name: 'Debugging & Testing',
+    description: 'Fix bugs and run tests',
     color: 'red',
     icon: `<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>`,
     commands: [
-      { command: '/fix', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.fix') },
-      { command: '/debug', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.debug') },
-      { command: '/fix:test', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.fix_test') },
-      { command: '/fix:ui', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.fix_ui') },
-      { command: '/fix:types', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.fix_types') },
-      { command: '/fix:ci', complexity: '⚡', label: t('commands.label.medium'), desc: t('commands.desc.fix_ci') }
+      { command: '/fix', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.fix'), detail: t('commands.detail.fix') },
+      { command: '/fix:fast', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.fix_fast'), detail: t('commands.detail.fix_fast') },
+      { command: '/fix:hard', complexity: '⚡⚡⚡', label: t('commands.label.advanced'), desc: t('commands.desc.fix_hard'), detail: t('commands.detail.fix_hard') },
+      { command: '/fix:parallel', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.fix_parallel'), detail: t('commands.detail.fix_parallel') },
+      { command: '/fix:ci', complexity: '⚡', label: t('commands.label.medium'), desc: t('commands.desc.fix_ci'), detail: t('commands.detail.fix_ci') },
+      { command: '/fix:logs', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.fix_logs'), detail: t('commands.detail.fix_logs') },
+      { command: '/fix:test', complexity: '⚡⚡', label: t('commands.label.easy'), desc: t('commands.desc.fix_test'), detail: t('commands.detail.fix_test') },
+      { command: '/fix:types', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.fix_types'), detail: t('commands.detail.fix_types') },
+      { command: '/fix:ui', complexity: '⚡⚡', label: t('commands.label.easy'), desc: t('commands.desc.fix_ui'), detail: t('commands.detail.fix_ui') },
+      { command: '/debug', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.debug'), detail: t('commands.detail.debug') },
+      { command: '/test', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.test'), detail: t('commands.detail.test') },
+      { command: '/test:ui', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.test_ui'), detail: t('commands.detail.test_ui') }
     ]
   },
   {
-    name: t('commands.guide.testing_quality'),
-    description: t('commands.guide.testing_quality_desc'),
-    color: 'green',
-    icon: `<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>`,
-    commands: [
-      { command: '/test', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.test') },
-      { command: '/review:codebase', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.review_codebase') },
-      { command: '/watzup', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.watzup') }
-    ]
-  },
-  {
-    name: t('commands.guide.navigation_help'),
-    description: t('commands.guide.navigation_help_desc'),
-    color: 'purple',
-    icon: `<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>`,
-    commands: [
-      { command: '/ask', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.ask') },
-      { command: '/scout', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.scout') },
-      { command: '/ck-help', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.ck_help') },
-      { command: '/resume', complexity: '⚡', label: t('commands.label.advanced'), desc: t('commands.desc.resume') }
-    ]
-  },
-  {
-    name: 'Design & Content',
-    description: 'Create beautiful designs and content',
-    color: 'pink',
-    icon: `<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>`,
-    commands: [
-      { command: '/design:fast', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.design_fast') },
-      { command: '/design:good', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.design_good') },
-      { command: '/content:enhance', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.content_enhance') }
-    ]
-  },
-  {
-    name: 'Git & Version Control',
-    description: 'Manage your code versions',
+    name: 'Git Workflow',
+    description: 'Version control workflow',
     color: 'orange',
     icon: `<circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><line x1="6" y1="9" x2="6" y2="21"/>`,
     commands: [
-      { command: '/git:cm', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.git_cm') },
-      { command: '/git:pr', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.git_pr') },
-      { command: '/git:merge', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.git_merge') }
+      { command: '/git:cm', complexity: '', label: t('commands.label.easy'), desc: t('commands.desc.git_cm'), detail: t('commands.detail.git_cm') },
+      { command: '/git:cp', complexity: '', label: t('commands.label.easy'), desc: t('commands.desc.git_cp'), detail: t('commands.detail.git_cp') },
+      { command: '/git:pr', complexity: '', label: t('commands.label.easy'), desc: t('commands.desc.git_pr'), detail: t('commands.detail.git_pr') },
+      { command: '/git:merge', complexity: '', label: t('commands.label.medium'), desc: t('commands.desc.git_merge'), detail: t('commands.detail.git_merge') },
+      { command: '/worktree', complexity: '', label: t('commands.label.medium'), desc: t('commands.desc.worktree'), detail: t('commands.detail.worktree') }
+    ]
+  },
+  {
+    name: 'Documentation',
+    description: 'Manage project documentation',
+    color: 'amber',
+    icon: `<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>`,
+    commands: [
+      { command: '/docs:init', complexity: '⚡⚡⚡⚡', label: t('commands.label.easy'), desc: t('commands.desc.docs_init'), detail: t('commands.detail.docs_init') },
+      { command: '/docs:update', complexity: '⚡⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.docs_update'), detail: t('commands.detail.docs_update') },
+      { command: '/docs:summarize', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.docs_summarize'), detail: t('commands.detail.docs_summarize') }
+    ]
+  },
+  {
+    name: 'Design',
+    description: 'Create beautiful designs',
+    color: 'pink',
+    icon: `<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>`,
+    commands: [
+      { command: '/design:fast', complexity: '', label: t('commands.label.easy'), desc: t('commands.desc.design_fast'), detail: t('commands.detail.design_fast') },
+      { command: '/design:good', complexity: '', label: t('commands.label.medium'), desc: t('commands.desc.design_good'), detail: t('commands.detail.design_good') },
+      { command: '/design:screenshot', complexity: '', label: t('commands.label.medium'), desc: t('commands.desc.design_screenshot'), detail: t('commands.detail.design_screenshot') },
+      { command: '/design:video', complexity: '', label: t('commands.label.advanced'), desc: t('commands.desc.design_video'), detail: t('commands.detail.design_video') },
+      { command: '/design:describe', complexity: '', label: t('commands.label.easy'), desc: t('commands.desc.design_describe'), detail: t('commands.detail.design_describe') },
+      { command: '/design:3d', complexity: '', label: t('commands.label.medium'), desc: t('commands.desc.design_3d'), detail: t('commands.detail.design_3d') }
+    ]
+  },
+  {
+    name: 'Content Creation',
+    description: 'Content generation',
+    color: 'pink',
+    icon: `<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>`,
+    commands: [
+      { command: '/content:fast', complexity: '', label: t('commands.label.easy'), desc: t('commands.desc.content_fast'), detail: t('commands.detail.content_fast') },
+      { command: '/content:good', complexity: '', label: t('commands.label.medium'), desc: t('commands.desc.content_good'), detail: t('commands.detail.content_good') },
+      { command: '/content:cro', complexity: '', label: t('commands.label.medium'), desc: t('commands.desc.content_cro'), detail: t('commands.detail.content_cro') },
+      { command: '/content:enhance', complexity: '', label: t('commands.label.easy'), desc: t('commands.desc.content_enhance'), detail: t('commands.detail.content_enhance') }
+    ]
+  },
+  {
+    name: 'Integration',
+    description: 'Connect with 3rd party services',
+    color: 'teal',
+    icon: `<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>`,
+    commands: [
+      { command: '/integrate:polar', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.integrate_polar'), detail: t('commands.detail.integrate_polar') },
+      { command: '/integrate:sepay', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.integrate_sepay'), detail: t('commands.detail.integrate_sepay') }
+    ]
+  },
+  {
+    name: 'Code Quality',
+    description: 'Review and improve code quality',
+    color: 'green',
+    icon: `<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>`,
+    commands: [
+      { command: '/review:codebase', complexity: '⚡⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.review_codebase'), detail: t('commands.detail.review_codebase') },
+      { command: '/review:codebase:parallel', complexity: '⚡⚡⚡', label: t('commands.label.advanced'), desc: t('commands.desc.review_codebase_parallel'), detail: t('commands.detail.review_codebase_parallel') }
+    ]
+  },
+  {
+    name: 'Skills & Tools',
+    description: 'Extend Claude\'s capabilities',
+    color: 'purple',
+    icon: `<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>`,
+    commands: [
+      { command: '/skill:create', complexity: '', label: t('commands.label.medium'), desc: t('commands.desc.skill_create'), detail: t('commands.detail.skill_create') },
+      { command: '/skill:plan', complexity: '', label: t('commands.label.medium'), desc: t('commands.desc.skill_plan'), detail: t('commands.detail.skill_plan') },
+      { command: '/skill:optimize', complexity: '', label: t('commands.label.medium'), desc: t('commands.desc.skill_optimize'), detail: t('commands.detail.skill_optimize') },
+      { command: '/skill:optimize:auto', complexity: '', label: t('commands.label.medium'), desc: t('commands.desc.skill_optimize_auto'), detail: t('commands.detail.skill_optimize_auto') },
+      { command: '/skill:add', complexity: '', label: t('commands.label.easy'), desc: t('commands.desc.skill_add'), detail: t('commands.detail.skill_add') },
+      { command: '/skill:fix-logs', complexity: '', label: t('commands.label.easy'), desc: t('commands.desc.skill_fix_logs'), detail: t('commands.detail.skill_fix_logs') },
+      { command: '/ccs', complexity: '', label: t('commands.label.easy'), desc: t('commands.desc.ccs'), detail: t('commands.detail.ccs') }
+    ]
+  },
+  {
+    name: 'Utilities',
+    description: 'Miscellaneous tools and helpers',
+    color: 'cyan',
+    icon: `<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>`,
+    commands: [
+      { command: '/ck-help', complexity: '', label: t('commands.label.easy'), desc: t('commands.desc.ck_help'), detail: t('commands.detail.ck_help') },
+      { command: '/journal', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.journal'), detail: t('commands.detail.journal') },
+      { command: '/kanban', complexity: '', label: t('commands.label.easy'), desc: t('commands.desc.kanban'), detail: t('commands.detail.kanban') },
+      { command: '/preview', complexity: '', label: t('commands.label.easy'), desc: t('commands.desc.preview'), detail: t('commands.detail.preview') },
+      { command: '/watzup', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.watzup'), detail: t('commands.detail.watzup') },
+      { command: '/use-mcp', complexity: '', label: t('commands.label.medium'), desc: t('commands.desc.use_mcp'), detail: t('commands.detail.use_mcp') }
     ]
   }
 ];
@@ -127,6 +223,27 @@ const styles = {
     text: 'text-orange-600 dark:text-orange-400',
     hover: 'hover:border-orange-500/30',
     badge: 'bg-green-500/20 text-green-600 dark:text-green-400'
+  },
+  amber: {
+    border: 'border-amber-500/30 group-hover:border-amber-500/50',
+    bg: 'bg-gradient-to-r from-amber-500/10 to-yellow-500/10',
+    text: 'text-amber-600 dark:text-amber-400',
+    hover: 'hover:border-amber-500/30',
+    badge: 'bg-green-500/20 text-green-600 dark:text-green-400'
+  },
+  cyan: {
+    border: 'border-cyan-500/30 group-hover:border-cyan-500/50',
+    bg: 'bg-gradient-to-r from-cyan-500/10 to-sky-500/10',
+    text: 'text-cyan-600 dark:text-cyan-400',
+    hover: 'hover:border-cyan-500/30',
+    badge: 'bg-cyan-500/20 text-cyan-600 dark:text-cyan-400'
+  },
+  teal: {
+    border: 'border-teal-500/30 group-hover:border-teal-500/50',
+    bg: 'bg-gradient-to-r from-teal-500/10 to-emerald-500/10',
+    text: 'text-teal-600 dark:text-teal-400',
+    hover: 'hover:border-teal-500/30',
+    badge: 'bg-teal-500/20 text-teal-600 dark:text-teal-400'
   }
 };
 
@@ -139,6 +256,39 @@ const complexityColors: Record<string, string> = {
 complexityColors['Easy'] = complexityColors[t('commands.label.easy')];
 complexityColors['Medium'] = complexityColors[t('commands.label.medium')];
 complexityColors['Advanced'] = complexityColors[t('commands.label.advanced')];
+
+const definitions = [
+  { term: t('commands.tips.def.command'), desc: t('commands.tips.def.command_desc') },
+  { term: t('commands.tips.def.git'), desc: t('commands.tips.def.git_desc') },
+  { term: t('commands.tips.def.deployment'), desc: t('commands.tips.def.deployment_desc') },
+  { term: t('commands.tips.def.integration'), desc: t('commands.tips.def.integration_desc') },
+  { term: t('commands.tips.def.testing'), desc: t('commands.tips.def.testing_desc') },
+  { term: t('commands.tips.def.token'), desc: t('commands.tips.def.token_desc') }
+];
+
+const qa = [
+  { q: t('commands.tips.qa.q1'), a: t('commands.tips.qa.a1') },
+  { q: t('commands.tips.qa.q2'), a: t('commands.tips.qa.a2') },
+  { q: t('commands.tips.qa.q3'), a: t('commands.tips.qa.a3') },
+  { q: t('commands.tips.qa.q4'), a: t('commands.tips.qa.a4') },
+  { q: t('commands.tips.qa.q5'), a: t('commands.tips.qa.a5') }
+];
+
+const modifiers = [
+  { mod: ':fast', meaning: t('commands.modifiers.fast_meaning'), impact: t('commands.modifiers.fast_impact'), example: '/plan:fast, /cook:auto:fast' },
+  { mod: ':hard', meaning: t('commands.modifiers.hard_meaning'), impact: t('commands.modifiers.hard_impact'), example: '/fix:hard, /plan:hard' },
+  { mod: ':auto', meaning: t('commands.modifiers.auto_meaning'), impact: t('commands.modifiers.auto_impact'), example: '/cook:auto, /code:auto' },
+  { mod: ':parallel', meaning: t('commands.modifiers.parallel_meaning'), impact: t('commands.modifiers.parallel_impact'), example: '/fix:parallel, /code:parallel' },
+  { mod: ':two', meaning: t('commands.modifiers.two_meaning'), impact: t('commands.modifiers.two_impact'), example: '/plan:two' }
+];
+
+const helpItems = [
+  t('commands.help.stuck'),
+  t('commands.help.ideas'),
+  t('commands.help.progress'),
+  t('commands.help.broken'),
+  t('commands.help.tokens')
+];
 ---
 
 <style>
@@ -196,110 +346,13 @@ complexityColors['Advanced'] = complexityColors[t('commands.label.advanced')];
   </div>
 
   <!-- Quick Start Section -->
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-    <!-- Beginner -->
-    <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-green-500/30 overflow-hidden hover:border-green-500/50 transition-colors duration-200 cursor-pointer group">
-      <div class="p-6 bg-gradient-to-br from-green-500/10 to-emerald-500/10 border-b border-slate-100 dark:border-slate-800">
-        <div class="flex items-center gap-3 mb-2">
-          <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-green-500/20">
-            <svg class="w-6 h-6 text-green-600 dark:text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-              <polyline points="22 4 12 14.01 9 11.01"/>
-            </svg>
-          </div>
-          <div>
-            <h3 class="text-lg font-bold text-green-600 dark:text-green-400">{t('commands.qs.beginner.title')}</h3>
-            <p class="text-xs text-slate-500">{t('commands.qs.beginner.subtitle')}</p>
-          </div>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400">{t('commands.qs.beginner.desc')}</p>
-      </div>
-      <div class="p-4 space-y-2">
-        <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 group-hover:border-green-500/30 transition-colors">
-          <code class="text-sm text-green-600 dark:text-green-400 font-mono">/ask</code>
-          <p class="text-xs text-slate-500 mt-1">{t('commands.cmd.ask.desc')}</p>
-        </div>
-        <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 group-hover:border-green-500/30 transition-colors">
-          <code class="text-sm text-green-600 dark:text-green-400 font-mono">/brainstorm</code>
-          <p class="text-xs text-slate-500 mt-1">{t('commands.cmd.brainstorm.desc')}</p>
-        </div>
-        <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 group-hover:border-green-500/30 transition-colors">
-          <code class="text-sm text-green-600 dark:text-green-400 font-mono">/fix</code>
-          <p class="text-xs text-slate-500 mt-1">{t('commands.cmd.fix.desc')}</p>
-        </div>
-      </div>
-    </div>
 
-    <!-- Intermediate -->
-    <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-amber-500/30 overflow-hidden hover:border-amber-500/50 transition-colors duration-200 cursor-pointer group">
-      <div class="p-6 bg-gradient-to-br from-amber-500/10 to-orange-500/10 border-b border-slate-100 dark:border-slate-800">
-        <div class="flex items-center gap-3 mb-2">
-          <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-amber-500/20">
-            <svg class="w-6 h-6 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M13 3L4 14h7l-1 7 9-11h-7l1-7z"/>
-            </svg>
-          </div>
-          <div>
-            <h3 class="text-lg font-bold text-amber-600 dark:text-amber-400">{t('commands.qs.intermediate.title')}</h3>
-            <p class="text-xs text-slate-500">{t('commands.qs.intermediate.subtitle')}</p>
-          </div>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400">{t('commands.qs.intermediate.desc')}</p>
-      </div>
-      <div class="p-4 space-y-2">
-        <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 group-hover:border-amber-500/30 transition-colors">
-          <code class="text-sm text-amber-600 dark:text-amber-400 font-mono">/plan</code>
-          <p class="text-xs text-slate-500 mt-1">{t('commands.cmd.plan.desc')}</p>
-        </div>
-        <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 group-hover:border-amber-500/30 transition-colors">
-          <code class="text-sm text-amber-600 dark:text-amber-400 font-mono">/code</code>
-          <p class="text-xs text-slate-500 mt-1">{t('commands.cmd.code.desc')}</p>
-        </div>
-        <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 group-hover:border-amber-500/30 transition-colors">
-          <code class="text-sm text-amber-600 dark:text-amber-400 font-mono">/cook</code>
-          <p class="text-xs text-slate-500 mt-1">{t('commands.cmd.cook.desc')}</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Advanced -->
-    <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-red-500/30 overflow-hidden hover:border-red-500/50 transition-colors duration-200 cursor-pointer group">
-      <div class="p-6 bg-gradient-to-br from-red-500/10 to-pink-500/10 border-b border-slate-100 dark:border-slate-800">
-        <div class="flex items-center gap-3 mb-2">
-          <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-red-500/20">
-            <svg class="w-6 h-6 text-red-600 dark:text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-            </svg>
-          </div>
-          <div>
-            <h3 class="text-lg font-bold text-red-600 dark:text-red-400">{t('commands.qs.advanced.title')}</h3>
-            <p class="text-xs text-slate-500">{t('commands.qs.advanced.subtitle')}</p>
-          </div>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400">{t('commands.qs.advanced.desc')}</p>
-      </div>
-      <div class="p-4 space-y-2">
-        <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 group-hover:border-red-500/30 transition-colors">
-          <code class="text-sm text-red-600 dark:text-red-400 font-mono">/bootstrap</code>
-          <p class="text-xs text-slate-500 mt-1">{t('commands.cmd.bootstrap.desc')}</p>
-        </div>
-        <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 group-hover:border-red-500/30 transition-colors">
-          <code class="text-sm text-red-600 dark:text-red-400 font-mono">/scout</code>
-          <p class="text-xs text-slate-500 mt-1">{t('commands.cmd.scout.desc')}</p>
-        </div>
-        <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 group-hover:border-red-500/30 transition-colors">
-          <code class="text-sm text-red-600 dark:text-red-400 font-mono">/watzup</code>
-          <p class="text-xs text-slate-500 mt-1">{t('commands.cmd.watzup.desc')}</p>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- Visual Journey Section -->
   <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
-    <div class="p-6 bg-gradient-to-r from-purple-500/10 to-blue-500/10 border-b border-slate-100 dark:border-slate-800">
+    <div class="p-6 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border-b border-slate-100 dark:border-slate-800">
       <h2 class="text-2xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
-        <svg class="w-7 h-7 text-purple-600 dark:text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <svg class="w-7 h-7 text-cyan-600 dark:text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="10"/>
           <polyline points="8 12 12 16 16 12"/>
           <line x1="12" y1="8" x2="12" y2="16"/>
@@ -369,7 +422,7 @@ complexityColors['Advanced'] = complexityColors[t('commands.label.advanced')];
                 <div class="bg-white dark:bg-slate-900/50 rounded-lg p-4 border border-slate-200 dark:border-slate-700">
                   <div class="w-full">
                     <code class="px-3 py-1.5 rounded bg-blue-500/20 text-blue-600 dark:text-blue-400 font-mono text-sm block">
-                      /plan <span class="text-slate-600 dark:text-slate-400">{t('commands.journey.step2.example')}</span>
+                      /plan <span class="text-slate-600 dark:text-slate-400">@brainstorm_report.md</span>
                     </code>
                   </div>
                 </div>
@@ -487,15 +540,18 @@ complexityColors['Advanced'] = complexityColors[t('commands.label.advanced')];
 
   <!-- Command Categories Grid -->
   <div class="space-y-6">
-    <h2 class="text-2xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
-      <svg class="w-7 h-7 text-cyan-600 dark:text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="3" y="3" width="7" height="7"/>
-        <rect x="14" y="3" width="7" height="7"/>
-        <rect x="14" y="14" width="7" height="7"/>
-        <rect x="3" y="14" width="7" height="7"/>
-      </svg>
-      {t('commands.categories.title')}
-    </h2>
+    <div class="flex items-center justify-between">
+      <h2 class="text-2xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+        <svg class="w-7 h-7 text-cyan-600 dark:text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"/>
+          <rect x="14" y="3" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/>
+          <rect x="3" y="14" width="7" height="7"/>
+        </svg>
+        {t('commands.categories.title')}
+      </h2>
+      <span class="text-xs font-mono px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700">engineer@v2.2.0-beta.14</span>
+    </div>
 
     {categories.map((category) => (
       <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden group">
@@ -510,12 +566,17 @@ complexityColors['Advanced'] = complexityColors[t('commands.label.advanced')];
         </div>
         <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {category.commands.map((cmd) => (
-            <div class={`p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 transition-colors cursor-pointer ${styles[category.color].hover}`}>
-              <div class="flex items-start justify-between mb-2">
-                <code class={`text-sm font-mono ${styles[category.color].text}`}>{cmd.command} {cmd.complexity}</code>
-                <span class={`px-2 py-0.5 text-xs rounded-full ${complexityColors[cmd.label]}`}>{cmd.label}</span>
+            <div class={`p-3 rounded-lg bg-slate-50 dark:bg-slate-900/50 border ${styles[category.color].border} transition-all duration-200 hover:shadow-sm h-full flex flex-col`}>
+              <div class="flex items-center justify-between mb-1.5">
+                <code class={`text-sm font-bold font-mono ${styles[category.color].text}`}>{cmd.command}</code>
+                <span class="text-[10px] opacity-70" title={cmd.label}>{cmd.complexity}</span>
               </div>
-              <p class="text-xs text-slate-600 dark:text-slate-400">{cmd.desc}</p>
+              <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">{cmd.desc}</p>
+              {cmd.detail && (
+                <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">
+                  {cmd.detail}
+                </p>
+              )}
             </div>
           ))}
         </div>
@@ -523,54 +584,43 @@ complexityColors['Advanced'] = complexityColors[t('commands.label.advanced')];
     ))}
   </div>
 
-  <!-- Tips for Non-Tech Users -->
-  <div class="bg-gradient-to-br from-cyan-500/10 via-blue-500/10 to-purple-500/10 rounded-xl border border-cyan-500/30 p-8">
-    <h2 class="text-2xl font-bold text-cyan-600 dark:text-cyan-400 mb-4 flex items-center gap-3">
-      <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
-      </svg>
-      {t('commands.tips.title')}
-    </h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div class="flex items-start gap-3 p-4 rounded-lg bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700">
-        <svg class="w-6 h-6 text-cyan-600 dark:text-cyan-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  <!-- Command Modifiers -->
+  <!-- Command Modifiers -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 p-8 mb-16 shadow-sm">
+    <div class="flex items-center gap-3 mb-6">
+      <div class="p-2.5 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl">
+        <svg class="w-6 h-6 text-indigo-600 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 14a1 1 0 1 1 1-1 1 1 0 0 1-1 1zm1-4.32a3 3 0 1 0-2 0V13"/>
         </svg>
-        <div>
-          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">{t('commands.tips.1.title')}</div>
-          <div class="text-xs text-slate-600 dark:text-slate-400">{t('commands.tips.1.desc')}</div>
-        </div>
       </div>
-      <div class="flex items-start gap-3 p-4 rounded-lg bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700">
-        <svg class="w-6 h-6 text-purple-600 dark:text-purple-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"/>
-          <line x1="12" y1="16" x2="12" y2="12"/>
-          <line x1="12" y1="8" x2="12.01" y2="8"/>
-        </svg>
-        <div>
-          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">{t('commands.tips.2.title')}</div>
-          <div class="text-xs text-slate-600 dark:text-slate-400"><Fragment set:html={t('commands.tips.2.desc')} /></div>
-        </div>
+      <div>
+        <h2 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-violet-600 dark:from-indigo-400 dark:to-violet-400">
+          {t('commands.modifiers.title')}
+        </h2>
       </div>
-      <div class="flex items-start gap-3 p-4 rounded-lg bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700">
-        <svg class="w-6 h-6 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="20 6 9 17 4 12"/>
-        </svg>
-        <div>
-          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">{t('commands.tips.3.title')}</div>
-          <div class="text-xs text-slate-600 dark:text-slate-400"><Fragment set:html={t('commands.tips.3.desc')} /></div>
-        </div>
-      </div>
-      <div class="flex items-start gap-3 p-4 rounded-lg bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700">
-        <svg class="w-6 h-6 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-          <polyline points="22 4 12 14.01 9 11.01"/>
-        </svg>
-        <div>
-          <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">{t('commands.tips.4.title')}</div>
-          <div class="text-xs text-slate-600 dark:text-slate-400">{t('commands.tips.4.desc')}</div>
-        </div>
-      </div>
+    </div>
+
+    <div class="overflow-x-auto bg-white/60 dark:bg-white/5 rounded-xl border border-indigo-50 dark:border-white/5">
+      <table class="w-full text-left border-collapse">
+        <thead class="bg-indigo-50/50 dark:bg-white/5">
+          <tr>
+            <th class="py-4 px-6 font-semibold text-slate-900 dark:text-white border-b border-indigo-100 dark:border-white/10">{t('commands.modifiers.col_modifier')}</th>
+            <th class="py-4 px-6 font-semibold text-slate-900 dark:text-white border-b border-indigo-100 dark:border-white/10">{t('commands.modifiers.col_meaning')}</th>
+            <th class="py-4 px-6 font-semibold text-slate-900 dark:text-white border-b border-indigo-100 dark:border-white/10">{t('commands.modifiers.col_impact')}</th>
+            <th class="py-4 px-6 font-semibold text-slate-900 dark:text-white border-b border-indigo-100 dark:border-white/10">{t('commands.modifiers.col_example')}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {modifiers.map((item, index) => (
+            <tr class={`border-b border-indigo-50 dark:border-white/5 last:border-0 ${index % 2 === 0 ? '' : 'bg-indigo-50/30 dark:bg-white/5'}`}>
+              <td class="py-4 px-6 font-mono text-pink-600 dark:text-pink-400 font-medium">{item.mod}</td>
+              <td class="py-4 px-6 text-slate-600 dark:text-slate-400">{item.meaning}</td>
+              <td class="py-4 px-6 text-slate-600 dark:text-slate-400">{item.impact}</td>
+              <td class="py-4 px-6 font-mono text-xs text-slate-500 dark:text-slate-500">{item.example}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   </div>
 
@@ -583,22 +633,7 @@ complexityColors['Advanced'] = complexityColors[t('commands.label.advanced')];
       </svg>
       {t('commands.legend.title')}
     </h3>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div class="space-y-2">
-        <h4 class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">{t('commands.legend.difficulty')}</h4>
-        <div class="flex items-center gap-3 text-sm">
-          <span class="px-3 py-1 rounded-full bg-green-500/20 text-green-700 dark:text-green-400 border border-green-500/20 text-xs font-medium">{t('commands.legend.easy')}</span>
-          <span class="text-slate-600 dark:text-slate-400">{t('commands.legend.easy_desc')}</span>
-        </div>
-        <div class="flex items-center gap-3 text-sm">
-          <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-700 dark:text-amber-400 border border-amber-500/20 text-xs font-medium">{t('commands.legend.medium')}</span>
-          <span class="text-slate-600 dark:text-slate-400">{t('commands.legend.medium_desc')}</span>
-        </div>
-        <div class="flex items-center gap-3 text-sm">
-          <span class="px-3 py-1 rounded-full bg-red-500/20 text-red-700 dark:text-red-400 border border-red-500/20 text-xs font-medium">{t('commands.legend.advanced')}</span>
-          <span class="text-slate-600 dark:text-slate-400">{t('commands.legend.advanced_desc')}</span>
-        </div>
-      </div>
+    <div class="grid grid-cols-1 gap-4">
       <div class="space-y-2">
         <h4 class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">{t('commands.legend.token')}</h4>
         <div class="flex items-center gap-3 text-sm">
@@ -614,6 +649,10 @@ complexityColors['Advanced'] = complexityColors[t('commands.label.advanced')];
           <span class="text-slate-600 dark:text-slate-400">{t('commands.legend.token_high')}</span>
         </div>
         <div class="flex items-center gap-3 text-sm">
+          <span class="text-slate-500 dark:text-slate-400 font-mono">⚡⚡⚡⚡</span>
+          <span class="text-slate-600 dark:text-slate-400">{t('commands.legend.token_very_high')}</span>
+        </div>
+        <div class="flex items-center gap-3 text-sm">
           <span class="text-slate-500 dark:text-slate-400 font-mono">⚡⚡⚡⚡⚡</span>
           <span class="text-slate-600 dark:text-slate-400">{t('commands.legend.token_max')}</span>
         </div>
@@ -624,7 +663,7 @@ complexityColors['Advanced'] = complexityColors[t('commands.label.advanced')];
   <!-- Official Docs Note -->
   <div class="text-center pt-4">
     <p class="text-sm text-slate-500 dark:text-slate-400">
-      {t('commands.docs.text')} <a href="https://docs.claudekit.cc/docs/commands" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline font-medium">{t('commands.docs.link')}</a>
+      {t('commands.docs.text')} <a href="https://docs.claudekit.cc/docs/engineer/commands" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline font-medium">{t('commands.docs.link')}</a>
     </p>
   </div>
 </div>

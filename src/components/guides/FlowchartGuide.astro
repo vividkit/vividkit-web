@@ -1,5 +1,6 @@
 ---
 import { getLangFromUrl, type Language } from '@/i18n';
+import { useTranslations } from '@/i18n/utils';
 import FlowchartInteractive from './FlowchartInteractive.astro';
 
 interface Props {
@@ -9,13 +10,14 @@ interface Props {
 const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const isVi = currentLang === 'vi';
+const t = useTranslations(currentLang);
 ---
 
 <div class="space-y-10 mt-6">
   <!-- Page Header -->
   <div class="text-center space-y-4">
     <h2 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
-      ClaudeKit Command Workflow Guide
+      {t('guides.flowchart.title')}
     </h2>
     <p class="text-lg text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
       {isVi
