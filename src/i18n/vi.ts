@@ -1497,9 +1497,40 @@ export default {
   'session_recovery.guide.protips.note_title': 'Nhiều Tài Khoản Claude',
   'session_recovery.guide.protips.note_desc': 'Nếu bạn có nhiều sub-account Claude, bạn có thể rotate giữa chúng khi bị rate limit. Sử dụng /login để switch account mà không mất session context.',
 
+  'session_recovery.guide.protips.rename_title': '/rename để dễ resume',
+  'session_recovery.guide.protips.rename_desc': 'Đặt tên dễ nhớ cho session thay vì dùng UUID',
+  'session_recovery.guide.protips.rename_cmd_1': '# Trong session, đổi thành tên dễ nhớ:',
+  'session_recovery.guide.protips.rename_cmd_2': '# Sau đó resume bằng tên hoặc UUID (cả 2 đều được):',
+  'session_recovery.guide.protips.rename_cmd_3': '# ✅ Dễ nhớ',
+  'session_recovery.guide.protips.rename_cmd_4': '# ✅ Vẫn hoạt động tốt',
+  'session_recovery.guide.protips.rename_cmd_5': '# Hoặc chạy ngay từ terminal:',
+
+  'session_recovery.guide.protips.continue_title': '--continue trick',
+  'session_recovery.guide.protips.continue_desc': 'Tự động tiếp tục session cuối khi bị out bất ngờ',
+  'session_recovery.guide.protips.continue_cmd_1': '# Nếu bạn bị đá khỏi session vì lý do nào đó:',
+  'session_recovery.guide.protips.continue_cmd_2': '# Tự động resume và tiếp tục session cuối của bạn',
+
+  'session_recovery.guide.protips.login_title': '/login account switch',
+  'session_recovery.guide.protips.login_desc': 'Switch account Claude khi bị rate limit',
+  'session_recovery.guide.protips.login_cmd_1': '# Trong session hiện tại, khi dính rate limit:',
+  'session_recovery.guide.protips.login_cmd_2': '# Chọn sub-account Claude khác',
+  'session_recovery.guide.protips.login_cmd_3': '# Sau đó gõ "continue" để tiếp tục làm việc',
+
   // Emergency Checklist
   'session_recovery.guide.emergency.title': 'Checklist Khôi Phục Khẩn Cấp',
-  'session_recovery.guide.emergency.desc': 'Bookmark cái này. Khi có vấn đề giữa task, làm theo các bước sau:',
+  'session_recovery.guide.emergency.desc': 'Bookmark cái này. Khi gặp sự cố giữa chừng, làm theo các bước sau:',
+  'session_recovery.guide.emergency.step1.title': "BÌNH TĨNH (DON'T PANIC)",
+  'session_recovery.guide.emergency.step1.desc': "Công việc của bạn chưa mất đâu. Session được lưu an toàn trên máy.",
+  'session_recovery.guide.emergency.step2.title': "ĐÁNH GIÁ CONTEXT SIZE",
+  'session_recovery.guide.emergency.step2.desc': "Check xem session có bị phình to không (phản hồi chậm = khả năng cao bị đầy)",
+  'session_recovery.guide.emergency.step3.title': "NẾU CONTEXT OK → /RESUME",
+  'session_recovery.guide.emergency.step3.desc': "Dùng /resume ở provider khác",
+  'session_recovery.guide.emergency.step3.cmd_note': "# Hoặc bên trong Claude Code:",
+  'session_recovery.guide.emergency.step4.title': "NẾU CONTEXT QUÁ TẢI → /EXPORT",
+  'session_recovery.guide.emergency.step4.desc': "Export ra file và bắt đầu session mới",
+  'session_recovery.guide.emergency.step4.cmd_input': '"Context từ session trước: [dán phần quan trọng vào đây]"',
+  'session_recovery.guide.emergency.step5.title': "TIẾP TỤC CODE THÔI!",
+  'session_recovery.guide.emergency.step5.desc': "Bạn đã quay trở lại guồng công việc.",
 
   // Benefits
   'session_recovery.guide.benefit1.title': 'Tiết Kiệm 80%+ Chi Phí',

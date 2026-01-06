@@ -1491,9 +1491,40 @@ export default {
   'session_recovery.guide.protips.note_title': 'Multiple Claude Accounts',
   'session_recovery.guide.protips.note_desc': 'If you have multiple Claude sub-accounts, you can rotate between them when hitting rate limits. Use /login to switch accounts without losing your session context.',
 
+  'session_recovery.guide.protips.rename_title': '/rename for easy resume',
+  'session_recovery.guide.protips.rename_desc': 'Give your session a memorable name instead of using UUID',
+  'session_recovery.guide.protips.rename_cmd_1': '# During your session, rename it:',
+  'session_recovery.guide.protips.rename_cmd_2': '# Later resume by name OR UUID (both work):',
+  'session_recovery.guide.protips.rename_cmd_3': '# ✅ Easy to remember',
+  'session_recovery.guide.protips.rename_cmd_4': '# ✅ Still works',
+  'session_recovery.guide.protips.rename_cmd_5': '# Or run directly from terminal:',
+
+  'session_recovery.guide.protips.continue_title': '--continue trick',
+  'session_recovery.guide.protips.continue_desc': 'Auto-continue last session when kicked out unexpectedly',
+  'session_recovery.guide.protips.continue_cmd_1': '# If you got kicked out of a session for any reason:',
+  'session_recovery.guide.protips.continue_cmd_2': '# This automatically resumes and continues your last session',
+
+  'session_recovery.guide.protips.login_title': '/login account switch',
+  'session_recovery.guide.protips.login_desc': 'Switch Claude accounts when one hits rate limit',
+  'session_recovery.guide.protips.login_cmd_1': '# Inside your current session, when you hit rate limit:',
+  'session_recovery.guide.protips.login_cmd_2': '# Select a different Claude sub-account',
+  'session_recovery.guide.protips.login_cmd_3': '# Then type "continue" to resume your work',
+
   // Emergency Checklist
   'session_recovery.guide.emergency.title': 'Emergency Recovery Checklist',
   'session_recovery.guide.emergency.desc': 'Bookmark this. When things go wrong mid-task, follow these steps:',
+  'session_recovery.guide.emergency.step1.title': "DON'T PANIC",
+  'session_recovery.guide.emergency.step1.desc': "Your work isn't lost. Sessions are saved locally.",
+  'session_recovery.guide.emergency.step2.title': "ASSESS CONTEXT SIZE",
+  'session_recovery.guide.emergency.step2.desc': "Check if session is bloated (slow responses = likely bloated)",
+  'session_recovery.guide.emergency.step3.title': "IF CONTEXT HEALTHY → /RESUME",
+  'session_recovery.guide.emergency.step3.desc': "Use /resume in another provider",
+  'session_recovery.guide.emergency.step3.cmd_note': "# Or inside Claude Code:",
+  'session_recovery.guide.emergency.step4.title': "IF CONTEXT BLOATED → /EXPORT",
+  'session_recovery.guide.emergency.step4.desc': "Export and start fresh",
+  'session_recovery.guide.emergency.step4.cmd_input': '"Context from previous session: [paste key parts]"',
+  'session_recovery.guide.emergency.step5.title': "CONTINUE WORKING!",
+  'session_recovery.guide.emergency.step5.desc': "You're back in action.",
 
   // Benefits
   'session_recovery.guide.benefit1.title': 'Save 80%+ on Costs',
