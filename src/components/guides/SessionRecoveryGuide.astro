@@ -124,22 +124,36 @@ const fallbackSteps = [
 
 const proTips = [
   {
-    title: "--continue trick",
-    desc: "Auto-continue last session when kicked out unexpectedly",
-    cmd: `<span class="text-slate-400 italic"># If you got kicked out of a session for any reason:</span>
+    title: t('session_recovery.guide.protips.rename_title'),
+    desc: t('session_recovery.guide.protips.rename_desc'),
+    cmd: `<span class="text-slate-400 italic">${t('session_recovery.guide.protips.rename_cmd_1')}</span>
+<span class="text-purple-600 dark:text-purple-400 font-bold">/rename</span> auth-feature
+
+<span class="text-slate-400 italic">${t('session_recovery.guide.protips.rename_cmd_2')}</span>
+<span class="text-purple-600 dark:text-purple-400 font-bold">/resume</span> auth-feature <span class="text-slate-400 italic">${t('session_recovery.guide.protips.rename_cmd_3')}</span>
+<span class="text-purple-600 dark:text-purple-400 font-bold">/resume</span> 74f292c0...  <span class="text-slate-400 italic">${t('session_recovery.guide.protips.rename_cmd_4')}</span>
+
+<span class="text-slate-400 italic">${t('session_recovery.guide.protips.rename_cmd_5')}</span>
+<span class="text-blue-600 dark:text-blue-400 font-bold">ccs</span> <span class="text-slate-400 italic">glm/agy</span> <span class="text-purple-600 dark:text-purple-400 font-bold">"/resume auth-feature"</span>`,
+    icon: "tag"
+  },
+  {
+    title: t('session_recovery.guide.protips.continue_title'),
+    desc: t('session_recovery.guide.protips.continue_desc'),
+    cmd: `<span class="text-slate-400 italic">${t('session_recovery.guide.protips.continue_cmd_1')}</span>
 <span class="text-blue-600 dark:text-blue-400 font-bold">ccs</span> <span class="text-slate-400 italic">glm/agy/work</span> <span class="text-purple-600 dark:text-purple-400 font-bold">--continue</span> continue
 
-<span class="text-slate-400 italic"># This automatically resumes and continues your last session</span>`,
+<span class="text-slate-400 italic">${t('session_recovery.guide.protips.continue_cmd_2')}</span>`,
     icon: "lightning"
   },
   {
-    title: "/login account switch",
-    desc: "Switch Claude accounts when one hits rate limit",
-    cmd: `<span class="text-slate-400 italic"># Inside your current session, when you hit rate limit:</span>
+    title: t('session_recovery.guide.protips.login_title'),
+    desc: t('session_recovery.guide.protips.login_desc'),
+    cmd: `<span class="text-slate-400 italic">${t('session_recovery.guide.protips.login_cmd_1')}</span>
 <span class="text-purple-600 dark:text-purple-400 font-bold">/login</span>
 
-<span class="text-slate-400 italic"># Select a different Claude sub-account</span>
-<span class="text-slate-400 italic"># Then type "continue" to resume your work</span>
+<span class="text-slate-400 italic">${t('session_recovery.guide.protips.login_cmd_2')}</span>
+<span class="text-slate-400 italic">${t('session_recovery.guide.protips.login_cmd_3')}</span>
 <span class="text-emerald-600 dark:text-emerald-400 font-bold">continue</span>`,
     icon: "switch"
   }
@@ -148,37 +162,37 @@ const proTips = [
 const emergencySteps = [
   {
     step: 1,
-    title: "DON'T PANIC",
-    desc: "Your work isn't lost. Sessions are saved locally.",
+    title: t('session_recovery.guide.emergency.step1.title'),
+    desc: t('session_recovery.guide.emergency.step1.desc'),
     color: "text-slate-600 dark:text-slate-400"
   },
   {
     step: 2,
-    title: "ASSESS CONTEXT SIZE",
-    desc: "Check if session is bloated (slow responses = likely bloated)",
+    title: t('session_recovery.guide.emergency.step2.title'),
+    desc: t('session_recovery.guide.emergency.step2.desc'),
     color: "text-amber-600 dark:text-amber-400"
   },
   {
     step: 3,
-    title: "IF CONTEXT HEALTHY → /RESUME",
-    desc: "Use /resume in another provider",
+    title: t('session_recovery.guide.emergency.step3.title'),
+    desc: t('session_recovery.guide.emergency.step3.desc'),
     cmd: `<span class="text-blue-600 dark:text-blue-400 font-bold">ccs</span> glm <span class="text-purple-600 dark:text-purple-400 font-bold">--resume</span>
-<span class="text-slate-400 italic"># Or inside Claude Code:</span> <span class="text-purple-600 dark:text-purple-400 font-bold">/resume</span>`,
+<span class="text-slate-400 italic">${t('session_recovery.guide.emergency.step3.cmd_note')}</span> <span class="text-purple-600 dark:text-purple-400 font-bold">/resume</span>`,
     color: "text-emerald-600 dark:text-emerald-400"
   },
   {
     step: 4,
-    title: "IF CONTEXT BLOATED → /EXPORT",
-    desc: "Export and start fresh",
+    title: t('session_recovery.guide.emergency.step4.title'),
+    desc: t('session_recovery.guide.emergency.step4.desc'),
     cmd: `<span class="text-purple-600 dark:text-purple-400 font-bold">/export</span> ~/backup/session.txt
 <span class="text-blue-600 dark:text-blue-400 font-bold">ccs</span> glm
-> "Context from previous session: [paste key parts]"`,
+> ${t('session_recovery.guide.emergency.step4.cmd_input')}`,
     color: "text-blue-600 dark:text-blue-400"
   },
   {
     step: 5,
-    title: "CONTINUE WORKING!",
-    desc: "You're back in action.",
+    title: t('session_recovery.guide.emergency.step5.title'),
+    desc: t('session_recovery.guide.emergency.step5.desc'),
     color: "text-fuchsia-600 dark:text-fuchsia-400"
   }
 ];
@@ -409,18 +423,24 @@ const emergencySteps = [
         {t('session_recovery.guide.protips.desc')}
       </p>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 gap-4">
         {proTips.map((tip) => (
           <div class="bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
-            <div class="p-3 border-b border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800">
-              <div class="flex items-center gap-2">
+            <div class="p-4 border-b border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800">
+              <div class="flex items-center gap-2.5">
+                {tip.icon === "tag" && (
+                  <svg class="w-5 h-5 text-cyan-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+                    <line x1="7" y1="7" x2="7.01" y2="7"/>
+                  </svg>
+                )}
                 {tip.icon === "lightning" && (
-                  <svg class="w-4 h-4 text-cyan-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <svg class="w-5 h-5 text-cyan-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
                   </svg>
                 )}
                 {tip.icon === "switch" && (
-                  <svg class="w-4 h-4 text-cyan-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <svg class="w-5 h-5 text-cyan-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="16 3 21 3 21 8"/>
                     <line x1="4" y1="20" x2="21" y2="3"/>
                     <polyline points="21 16 21 21 16 21"/>
@@ -428,12 +448,12 @@ const emergencySteps = [
                     <line x1="4" y1="4" x2="9" y2="9"/>
                   </svg>
                 )}
-                <span class="font-bold text-slate-700 dark:text-slate-200 text-sm">{tip.title}</span>
+                <span class="font-bold text-slate-700 dark:text-slate-200 text-base">{tip.title}</span>
               </div>
-              <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">{tip.desc}</div>
+              <div class="text-sm text-slate-500 dark:text-slate-400 mt-1">{tip.desc}</div>
             </div>
-            <div class="p-3 bg-slate-50 dark:bg-[#0D0D0D]">
-              <pre class="text-slate-700 dark:text-slate-300 font-mono text-xs whitespace-pre-wrap" set:html={tip.cmd}></pre>
+            <div class="p-4 bg-slate-50 dark:bg-[#0D0D0D]">
+              <pre class="text-slate-700 dark:text-slate-300 font-mono text-sm whitespace-pre-wrap" set:html={tip.cmd}></pre>
             </div>
           </div>
         ))}
