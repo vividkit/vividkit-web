@@ -13,6 +13,17 @@ export default {
 
   // Guides Sidebar
   'guides.sidebar.title': 'HƯỚNG DẪN & MẸO',
+
+  // Guides Navigation Sections
+  'guides.sections.getting_started': 'Bắt Đầu',
+  'guides.sections.core_features': 'Tính Năng',
+  'guides.sections.multi_provider': 'IDE & Providers',
+  'guides.sections.session_management': 'Session',
+  'guides.sections.optimization': 'Tối Ưu',
+  'guides.sections.configuration': 'Cấu Hình',
+  'guides.sections.troubleshooting': 'Xử Lý Lỗi',
+  'guides.sections.resources': 'Tài Nguyên',
+
   'guides.sidebar.purchase_notice.title': 'Cần Mua ClaudeKit',
   'guides.sidebar.purchase_notice.desc': 'Mua ClaudeKit để sử dụng các tính năng trong hướng dẫn này.',
   'guides.sidebar.purchase_notice.cta': 'Mua ClaudeKit',
@@ -192,11 +203,11 @@ export default {
   // Guides
   'guides.title': 'Hướng Dẫn ClaudeKit',
   'guides.subtitle': 'Học cách dùng ClaudeKit hiệu quả',
-  'guides.cli.title': 'Hướng Dẫn CLI',
+  'guides.cli.title': 'Hướng Dẫn ClaudeKit CLI',
   'guides.cli.description': 'Cài đặt và sử dụng ClaudeKit CLI',
-  'guides.commands.title': 'Tham Khảo Lệnh',
+  'guides.commands.title': 'Bảng Lệnh Nhanh',
   'guides.commands.description': 'Danh sách đầy đủ các slash commands',
-  'guides.workflows.title': 'Quy Trình Làm Việc',
+  'guides.workflows.title': 'Quy Trình Mẫu',
   'guides.workflows.description': 'Các workflow thường dùng cho người mới',
   'guides.uiux.title': 'Thiết Kế UI/UX',
   'guides.uiux.description': 'Tạo giao diện đẹp với AI',
@@ -212,8 +223,8 @@ export default {
   'guides.promotions.description': 'Ưu đãi và khuyến mãi dịch vụ AI',
   'guides.custom_hooks.title': 'Custom Hooks',
   'guides.custom_hooks.description': 'Tùy chỉnh workflow coding của bạn',
-  'guides.flowchart.title': 'Sơ Đồ Quyết Định',
-  'guides.flowchart.description': 'Hướng dẫn tương tác để tìm command phù hợp',
+  'guides.flowchart.title': 'Tìm Lệnh Phù Hợp',
+  'guides.flowchart.description': 'Sơ đồ tương tác để tìm command phù hợp',
 
   // Promotions Guide
   'guides.promotions.page_title': 'Khuyến Mãi & Ưu Đãi AI',
@@ -236,8 +247,7 @@ export default {
   // Promotions Data
   'promotions.claude_pro.tagline': 'Giảm 50% cho 3 tháng đầu ($10/tháng thay vì $20)',
   'promotions.zai.tagline': 'Giáng sinh 2025: 50% lần đầu mua + giảm thêm 10-20% + 10% thưởng giới thiệu',
-  'promotions.lovable.tagline': 'Free Pro Plan 2 tháng (chỉ tài khoản mới) - Tiết kiệm $50',
-  'promotions.lovable.note': 'Lưu ý: Nhớ hủy tự động gia hạn trước khi hết trial. Đăng ký bằng email mới qua link invite.',
+
   'promotions.tips.use_ccs.title': 'Dùng CCS để chuyển đổi nhà cung cấp',
   'promotions.tips.use_ccs.desc': 'Tối đa hóa giới hạn sử dụng bằng cách chuyển đổi giữa Claude, GLM, Kimi, và các nhà cung cấp khác sử dụng CCS.',
   'promotions.tips.stack.title': 'Cộng dồn nhiều ưu đãi',
@@ -324,13 +334,182 @@ export default {
   // Commands section
   'commands.title': 'Slash Commands',
   'commands.subtitle': 'Tổng Quan',
-  'commands.description': '60+ lệnh AI của ClaudeKit, được tổ chức theo cấp độ kỹ năng.',
+  'commands.description': '74+ lệnh AI của ClaudeKit, được tổ chức theo cấp độ kỹ năng.',
   'commands.in_vividkit': 'Trong VividKit:',
   'commands.in_vividkit_description': 'Các lệnh này trở thành hành động trực quan, chỉ cần nhấp chuột.',
   'commands.terminal_reference': 'Trong khi chờ VividKit, đây là tài liệu tham khảo terminal của bạn:',
-  'commands.category_beginner': 'Lệnh Dành Cho Người Mới',
-  'commands.category_intermediate': 'Lệnh Dành Cho Người Có Kinh Nghiệm',
-  'commands.category_advanced': 'Lệnh Nâng Cao',
+  // Command Labels
+  'commands.label.easy': 'Cơ Bản',
+  'commands.label.medium': 'Trung Bình',
+  'commands.label.advanced': 'Nâng Cao',
+
+  // Getting Started
+  'commands.desc.bootstrap': 'Khởi tạo dự án mới từng bước có hướng dẫn',
+  'commands.detail.bootstrap': 'Bạn muốn tạo dự án và thích được hướng dẫn tương tác',
+  'commands.desc.bootstrap_auto': 'Khởi tạo dự án mới tự động',
+  'commands.detail.bootstrap_auto': 'Bạn tin tưởng Claude thiết lập dự án chuẩn cho bạn',
+  'commands.desc.bootstrap_auto_fast': 'Thiết lập nhanh, không cần nghiên cứu',
+  'commands.detail.bootstrap_auto_fast': 'Bạn cần cấu trúc dự án cơ bản thật nhanh',
+  'commands.desc.bootstrap_auto_parallel': 'Thiết lập với thực thi song song (nhanh hơn, tốn token hơn)',
+  'commands.detail.bootstrap_auto_parallel': 'Dự án lớn, bạn muốn tốc độ và có dư dả token',
+
+  // Planning & Research
+  'commands.desc.plan': 'Tạo kế hoạch triển khai với cải tiến thông minh',
+  'commands.detail.plan': 'Tính năng phức tạp, cần tìm ra cách xây dựng',
+  'commands.desc.plan_fast': 'Kế hoạch nhanh, không nghiên cứu (chỉ phân tích code hiện tại)',
+  'commands.detail.plan_fast': 'Tính năng đơn giản, bạn đã hiểu rõ codebase',
+  'commands.desc.plan_hard': 'Nghiên cứu sâu + kế hoạch chi tiết',
+  'commands.detail.plan_hard': 'Tính năng phức tạp, công nghệ mới hoặc codebase lạ',
+  'commands.desc.plan_two': 'Nhận 2 cách tiếp cận khác nhau với đánh đổi',
+  'commands.detail.plan_two': 'Bạn muốn có các lựa chọn trước khi quyết định',
+  'commands.desc.plan_parallel': 'Lập kế hoạch với các giai đoạn thực thi song song',
+  'commands.detail.plan_parallel': 'Tính năng lớn có thể chia thành các phần độc lập',
+  'commands.desc.plan_validate': 'Phỏng vấn bạn để xác nhận quyết định kế hoạch',
+  'commands.detail.plan_validate': 'Trước khi code, đảm bảo các giả định là chính xác',
+  'commands.desc.plan_ci': 'Sửa chữa lỗi GitHub Actions',
+  'commands.detail.plan_ci': 'CI/CD bị hỏng, cần kế hoạch sửa chữa',
+  'commands.desc.plan_cro': 'Tạo kế hoạch tối ưu hóa tỷ lệ chuyển đổi',
+  'commands.detail.plan_cro': 'Muốn cải thiện nội dung để chuyển đổi tốt hơn',
+  'commands.desc.plan_archive': 'Viết nhật ký + lưu trữ kế hoạch cũ',
+  'commands.detail.plan_archive': 'Dự án xong, muốn tài liệu hóa các bài học',
+  'commands.desc.scout': 'Tìm file/code trong codebase của bạn',
+  'commands.detail.scout': '"X nằm ở đâu?" hoặc "Cho tôi xem tất cả file Y"',
+  'commands.desc.ask': 'Nhận câu trả lời kỹ thuật/kiến trúc',
+  'commands.detail.ask': '"Z hoạt động thế nào?" hoặc "Best practice cho W?"',
+  'commands.desc.brainstorm': 'Khám phá ý tưởng cho một tính năng',
+  'commands.detail.brainstorm': 'Giai đoạn đầu, muốn các lựa chọn sáng tạo',
+
+  // Implementation
+  'commands.desc.code': 'Thực thi kế hoạch hiện có (có kiểm thử)',
+  'commands.detail.code': 'Bạn có kế hoạch trong thư mục plans/, sẵn sàng để build',
+  'commands.desc.code_auto': 'Thực thi kế hoạch tự động ("tin tôi đi")',
+  'commands.detail.code_auto': 'Bạn có kế hoạch, muốn Claude cứ thế mà build',
+  'commands.desc.code_no_test': 'Thực thi kế hoạch mà không chạy test',
+  'commands.detail.code_no_test': 'Bạn sẽ test thủ công sau',
+  'commands.desc.code_parallel': 'Thực thi các giai đoạn song song từ kế hoạch',
+  'commands.detail.code_parallel': 'Kế hoạch có các giai đoạn song song, muốn tốc độ',
+  'commands.desc.code_session': 'Tiếp tục một phiên làm việc cụ thể',
+  'commands.detail.code_session': 'Công việc bị tạm dừng, muốn tiếp tục từ session-breakdown.md',
+  'commands.desc.cook': 'Triển khai tính năng từng bước (một lệnh)',
+  'commands.detail.cook': 'Muốn lập kế hoạch + code trong một luồng (độc lập)',
+  'commands.desc.cook_auto': 'Triển khai tính năng tự động',
+  'commands.detail.cook_auto': 'Tin tưởng Claude xử lý mọi thứ',
+  'commands.desc.cook_auto_fast': 'Triển khai nhanh, không nghiên cứu',
+  'commands.detail.cook_auto_fast': 'Tính năng đơn giản, cứ build thôi',
+  'commands.desc.cook_auto_parallel': 'Lập kế hoạch song song + thực thi với agents',
+  'commands.detail.cook_auto_parallel': 'Tính năng phức tạp, muốn thực thi song song',
+
+  // Debugging & Testing
+  'commands.desc.fix': 'Phân tích và sửa lỗi (định tuyến thông minh)',
+  'commands.detail.fix': 'Có gì đó bị hỏng, cần chẩn đoán và sửa',
+  'commands.desc.fix_fast': 'Sửa nhanh cho các vấn đề nhỏ',
+  'commands.detail.fix_fast': 'Lỗi nhỏ, vấn đề rõ ràng',
+  'commands.desc.fix_hard': 'Sử dụng subagents cho các vấn đề phức tạp',
+  'commands.detail.fix_hard': 'Lỗi khó, cần điều tra sâu',
+  'commands.desc.fix_parallel': 'Sửa lỗi với các fullstack agent song song',
+  'commands.detail.fix_parallel': 'Nhiều vấn đề hoặc hệ thống phức tạp',
+  'commands.desc.fix_ci': 'Sửa lỗi GitHub Actions',
+  'commands.detail.fix_ci': 'Pipeline CI/CD bị hỏng',
+  'commands.desc.fix_logs': 'Phân tích log và sửa lỗi',
+  'commands.detail.fix_logs': 'Có log lỗi, cần tìm nguyên nhân gốc rễ',
+  'commands.desc.fix_test': 'Chạy test và sửa các lỗi thất bại',
+  'commands.detail.fix_test': 'Test đang fail, cần làm cho chúng pass',
+  'commands.desc.fix_types': 'Sửa lỗi TypeScript/type',
+  'commands.detail.fix_types': 'Lỗi kiểm tra kiểu ở khắp nơi',
+  'commands.desc.fix_ui': 'Sửa lỗi UI/giao diện',
+  'commands.detail.fix_ui': 'Có gì đó sai sai trên màn hình',
+  'commands.desc.debug': 'Gỡ lỗi kỹ thuật (phân tích sâu hơn)',
+  'commands.detail.debug': 'Bị kẹt với một lỗi, cần điều tra chi tiết',
+  'commands.desc.test': 'Chạy test và phân tích kết quả',
+  'commands.detail.test': 'Muốn kiểm tra xem mọi thứ có hoạt động không',
+  'commands.desc.test_ui': 'Chạy test UI trên website',
+  'commands.detail.test_ui': 'Cần test tương tác người dùng/hình ảnh',
+
+  // Git Workflow
+  'commands.desc.git_cm': 'Stage tất cả file + tạo commit',
+  'commands.detail.git_cm': 'Bạn đã thay đổi, sẵn sàng lưu cục bộ',
+  'commands.desc.git_cp': 'Stage + commit + push tất cả cùng lúc',
+  'commands.detail.git_cp': 'Sẵn sàng lưu VÀ tải lên remote',
+  'commands.desc.git_pr': 'Tạo pull request',
+  'commands.detail.git_pr': 'Sẵn sàng để review code và merge',
+  'commands.desc.git_merge': 'Merge một nhánh vào nhánh khác',
+  'commands.detail.git_merge': 'Kết hợp công việc từ các nhánh khác nhau',
+  'commands.desc.worktree': 'Tạo git worktree cô lập',
+  'commands.detail.worktree': 'Làm việc trên nhiều tính năng cùng lúc mà không cần stash',
+
+  // Documentation
+  'commands.desc.docs_init': 'Phân tích codebase + tạo tài liệu ban đầu',
+  'commands.detail.docs_init': 'Dự án mới hoặc chưa có tài liệu',
+  'commands.desc.docs_update': 'Phân tích codebase + cập nhật tài liệu hiện có',
+  'commands.detail.docs_update': 'Code thay đổi, tài liệu cần cập nhật theo',
+  'commands.desc.docs_summarize': 'Phân tích + tóm tắt trong tài liệu',
+  'commands.detail.docs_summarize': 'Muốn tài liệu tổng quan cấp cao',
+
+  // Design
+  'commands.desc.design_fast': 'Tạo thiết kế nhanh',
+  'commands.detail.design_fast': 'Cần UI nhanh, prototype hoặc trang đơn giản',
+  'commands.desc.design_good': 'Tạo thiết kế sống động/được trau chuốt',
+  'commands.detail.design_good': 'UI sẵn sàng cho production, muốn chất lượng cao',
+  'commands.desc.design_screenshot': 'Tạo lại thiết kế từ ảnh chụp màn hình',
+  'commands.detail.design_screenshot': 'Có ảnh tham khảo, muốn làm giống vậy',
+  'commands.desc.design_video': 'Tạo lại thiết kế từ video',
+  'commands.detail.design_video': 'Có video tham khảo, muốn bắt chước luồng',
+  'commands.desc.design_describe': 'Mô tả những gì trong ảnh/video',
+  'commands.detail.design_describe': 'Muốn hiểu thiết kế trước khi xây dựng',
+  'commands.desc.design_3d': 'Tạo thiết kế 3D tương tác (Three.js)',
+  'commands.detail.design_3d': 'Cần đồ họa/trực quan hóa 3D',
+
+  // Content
+  'commands.desc.content_fast': 'Viết nội dung quảng cáo nhanh',
+  'commands.detail.content_fast': 'Cần nội dung gấp, bài blog/social',
+  'commands.desc.content_good': 'Viết nội dung quảng cáo chất lượng cao',
+  'commands.detail.content_good': 'Nội dung quan trọng, muốn trau chuốt và tác động',
+  'commands.desc.content_cro': 'Tối ưu hóa nội dung để chuyển đổi',
+  'commands.detail.content_cro': 'Landing page hoặc bài bán hàng, cải thiện kết quả',
+  'commands.desc.content_enhance': 'Sửa và cải thiện nội dung hiện có',
+  'commands.detail.content_enhance': 'Nội dung đã có nhưng hiệu quả kém',
+
+  // Integration
+  'commands.desc.integrate_polar': 'Thêm tích hợp thanh toán Polar.sh',
+  'commands.detail.integrate_polar': 'Sản phẩm SaaS, cần đăng ký/thanh toán',
+  'commands.desc.integrate_sepay': 'Thêm tích hợp thanh toán SePay.vn',
+  'commands.detail.integrate_sepay': 'Thị trường Việt Nam, thanh toán QR/chuyển khoản',
+
+  // Code Quality
+  'commands.desc.review_codebase': 'Quét và phân tích toàn bộ codebase',
+  'commands.detail.review_codebase': 'Muốn kiểm tra sức khỏe code hoặc review kiến trúc',
+  'commands.desc.review_codebase_parallel': 'Phân tích sâu với kiểm tra song song',
+  'commands.detail.review_codebase_parallel': 'Codebase lớn, cần review kỹ lưỡng',
+
+  // Skills & Tools
+  'commands.desc.skill_create': 'Tạo một agent skill mới',
+  'commands.detail.skill_create': 'Muốn agent AI tùy chỉnh với kiến thức chuyên biệt',
+  'commands.desc.skill_plan': 'Lập kế hoạch tạo skill mới',
+  'commands.detail.skill_plan': 'Skill phức tạp, cần thiết kế trước',
+  'commands.desc.skill_optimize': 'Cải thiện skill hiện có',
+  'commands.detail.skill_optimize': 'Skill hoạt động chưa tốt, muốn nâng cao',
+  'commands.desc.skill_optimize_auto': 'Tự động tối ưu hóa skill hiện có',
+  'commands.detail.skill_optimize_auto': 'Cải thiện nhanh, để Claude tự xử lý',
+  'commands.desc.skill_add': 'Thêm file/script vào skill hiện có',
+  'commands.detail.skill_add': 'Skill đã có, muốn thêm tài liệu tham khảo',
+  'commands.desc.skill_fix_logs': 'Sửa skill dựa trên logs.txt',
+  'commands.detail.skill_fix_logs': 'Skill bị lỗi, có log lỗi để chẩn đoán',
+  'commands.desc.ccs': 'Ủy quyền task với lựa chọn agent thông minh',
+  'commands.detail.ccs': 'Muốn Claude chọn agent phù hợp cho công việc',
+
+  // Utilities
+  'commands.desc.ck_help': 'Hiển thị hướng dẫn trợ giúp này',
+  'commands.detail.ck_help': 'Cần tham khảo lệnh hoặc quên thứ gì đó',
+  'commands.desc.journal': 'Viết nhật ký kỹ thuật',
+  'commands.detail.journal': 'Tài liệu hóa các thất bại, bài học, tổng kết dự án',
+  'commands.desc.kanban': 'Mở dashboard điều phối AI',
+  'commands.detail.kanban': 'Trực quan hóa tiến độ kế hoạch, hoạt động của agent',
+  'commands.desc.preview': 'Xem markdown/file trong trình đọc đẹp mắt',
+  'commands.detail.preview': 'Muốn đọc kế hoạch/tài liệu trong giao diện đẹp',
+  'commands.desc.watzup': 'Xem lại thay đổi gần đây + tổng kết',
+  'commands.detail.watzup': 'Cuối phiên làm việc, xem những gì đã làm được',
+  'commands.desc.use_mcp': 'Sử dụng công cụ từ MCP servers',
+  'commands.detail.use_mcp': 'Đã cấu hình MCP server, muốn dùng tool của chúng',
   'commands.pro_tips': 'Mẹo Chuyên Nghiệp',
   'commands.tip1.title': 'Tiết kiệm token với /clear',
   'commands.tip1.description': 'Sử dụng /clear để xóa lịch sử cuộc trò chuyện trước khi bắt đầu triển khai',
@@ -468,10 +647,14 @@ export default {
   'cli.step.local_option': 'Local:',
   'cli.step.local_desc': 'Chỉ cài đặt cho thư mục dự án cụ thể này.',
   'cli.step.global_easiest': 'Chọn "Global" thường là dễ nhất!',
-  'cli.step.auth_required': '⚙️ Yêu Cầu Xác Thực:',
-  'cli.step.auth_desc': 'ClaudeKit yêu cầu xác thực GitHub CLI để tải xuống bộ kit ClaudeKit Engineer.',
-  'cli.step.auth_comment': '# Xác thực trước khi ck init',
-  'cli.step.pat_note': '📝 Lưu ý: Personal Access Tokens (PAT) không còn được hỗ trợ',
+  'cli.step.auth_required': '⚙️ Xác Thực Thông Minh (v3.16.0+):',
+  'cli.step.auth_desc': 'ClaudeKit sử dụng xác thực đa lớp để tải kit từ private repository. Kiểm tra theo thứ tự:',
+  'cli.step.auth_method1': '<strong>1. Biến môi trường</strong> - GITHUB_TOKEN hoặc GH_TOKEN (tốt nhất cho CI/CD)',
+  'cli.step.auth_method2': '<strong>2. GitHub CLI</strong> - Nếu <code class="font-mono text-purple-600 dark:text-purple-400">gh</code> đã đăng nhập (khuyến nghị cho local)',
+  'cli.step.auth_method3': '<strong>3. OS Keychain</strong> - Token đã lưu từ lần đăng nhập trước',
+  'cli.step.auth_method4': '<strong>4. Prompt Tương Tác</strong> - Hướng dẫn bạn tạo và lưu token',
+  'cli.step.auth_comment': '# Khuyến nghị: Đăng nhập GitHub CLI trước',
+  'cli.step.auth_git_mode': '💡 <strong>Git Clone Mode:</strong> Dùng <code class="font-mono text-purple-600 dark:text-purple-400">ck init --use-git</code> để sử dụng git credentials có sẵn thay thế.',
   'cli.step.start_cli_comment': '# Khởi động Claude Code CLI tương tác',
   'cli.step.user_prompt_3': 'Using ui-ux-pro-max skill, tạo một landing page cho quán cà phê của tôi',
   'cli.step.thats_it': 'Vậy đó! AI sẽ tìm kiếm cơ sở dữ liệu thiết kế và tạo code đẹp mắt cho bạn.',
@@ -921,8 +1104,8 @@ export default {
   'ccs.guide.edit_settings': 'Chỉnh sửa file cài đặt:',
 
   // Workflows Guide
-  'workflows.guide.title': 'Quy Trình Được Đề Xuất',
-  'workflows.guide.subtitle': 'Các hướng dẫn từng bước giúp bạn sử dụng AI để xây dựng phần mềm mà không cần biết code.',
+  'workflows.guide.title': 'Quy Trình Mẫu',
+  'workflows.guide.subtitle': 'Chuỗi lệnh sẵn dùng cho các tác vụ phát triển thông dụng.',
   'workflows.guide.banner.title': 'Mới với ClaudeKit?',
   'workflows.guide.banner.description': 'Các quy trình này bao gồm các chuỗi lệnh hoạt động cùng nhau để hoàn thành các tác vụ phổ biến. Hoàn hảo để bắt đầu!',
   'workflows.guide.best_for': 'Tốt nhất cho:',
@@ -937,16 +1120,9 @@ export default {
   'workflows.tip.help.desc': 'Gõ `/ck-help` để xem tất cả 60+ lệnh được tổ chức theo danh mục',
   'workflows.tip.plan.title': 'Luôn bắt đầu với /plan',
   'workflows.tip.plan.desc': 'Tạo một kế hoạch có cấu trúc trước, sau đó sử dụng `/code` để thực hiện từng bước',
-  'workflows.common.title': 'Tham Khảo Lệnh Phổ Biến',
-  'workflows.cmd.brainstorm': 'Khám phá ý tưởng và khả năng',
-  'workflows.cmd.plan': 'Tạo kế hoạch triển khai',
-  'workflows.cmd.cook': 'Triển khai tính năng từ đầu đến cuối',
-  'workflows.cmd.code': 'Triển khai các kế hoạch có sẵn',
-  'workflows.cmd.fix': 'Sửa lỗi và vấn đề',
-  'workflows.cmd.test': 'Chạy và phân tích tests',
-  'workflows.cmd.debug': 'Điều tra vấn đề',
-  'workflows.cmd.ask': 'Nhận hướng dẫn kỹ thuật',
-  'workflows.cmd.clear': 'Xóa lịch sử cuộc trò chuyện',
+  'workflows.related.title': 'Hướng Dẫn Liên Quan',
+  'workflows.related.commands_desc': 'Tham khảo đầy đủ các commands với mức độ phức tạp',
+  'workflows.related.flowchart_desc': 'Sơ đồ quyết định tương tác để chọn command',
   'workflows.more.text': 'Cần thêm quy trình? Xem',
   'workflows.more.link': 'tài liệu đầy đủ từ trang web chính thức của Claudekit',
 
@@ -1022,15 +1198,69 @@ export default {
   // Categories & Tips
   'commands.categories.title': 'Tất Cả Lệnh Theo Danh Mục',
 
-  'commands.tips.title': 'Mẹo Cho Người Mới Bắt Đầu',
-  'commands.tips.1.title': 'Nói Chuyện Như Con Người',
-  'commands.tips.1.desc': 'Không cần thuật ngữ kỹ thuật! Giải thích những gì bạn muốn bằng ngôn ngữ đơn giản. AI hiểu bạn!',
-  'commands.tips.2.title': 'Sử Dụng @ Để Tham Chiếu File',
-  'commands.tips.2.desc': 'Gõ <code class="px-1.5 py-0.5 rounded bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-mono text-xs">@filename</code> để cho AI biết file nào cần làm việc',
-  'commands.tips.3.title': 'Bắt Đầu Nhỏ',
-  'commands.tips.3.desc': 'Bắt đầu với các lệnh đơn giản như <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono text-xs">/ask</code> hoặc <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono text-xs">/brainstorm</code> để làm quen',
-  'commands.tips.4.title': 'Đừng Ngại Thử Nghiệm',
-  'commands.tips.4.desc': 'AI giúp bạn học hỏi khi bạn làm. Thử các lệnh khác nhau và xem điều gì xảy ra!',
+  // Tips for Non-Developers
+  'commands.tips.title': 'Mẹo Cho Người Không Phải Lập Trình Viên',
+  'commands.tips.intro': 'Mới làm quen với code? Đây là những gì bạn cần biết.',
+
+  'commands.tips.def.command': '"Command" là gì?',
+  'commands.tips.def.command_desc': 'Hãy nghĩ nó như một khẩu lệnh cho trợ lý siêu thông minh. Gõ <code>/something</code> và Claude thực hiện một tác vụ phức tạp cho bạn.',
+
+  'commands.tips.def.git': '"Git" là gì?',
+  'commands.tips.def.git_desc': 'Git giống như cỗ máy thời gian cho code của bạn. Nó lưu mọi phiên bản để bạn có thể quay lại nếu có gì đó bị hỏng.',
+
+  'commands.tips.def.deployment': '"Deployment" là gì?',
+  'commands.tips.def.deployment_desc': 'Đưa code của bạn lên internet để người khác có thể sử dụng.',
+
+  'commands.tips.def.integration': '"Integration" là gì?',
+  'commands.tips.def.integration_desc': 'Kết nối ứng dụng của bạn với các dịch vụ khác (như cổng thanh toán, API, cơ sở dữ liệu).',
+
+  'commands.tips.def.testing': '"Testing" là gì?',
+  'commands.tips.def.testing_desc': 'Kiểm tra xem code của bạn có hoạt động đúng không trước khi hiển thị cho người dùng.',
+
+  'commands.tips.def.token': '"Token Consumption" là gì?',
+  'commands.tips.def.token_desc': 'Hãy nghĩ về token như "tín dụng" mà Claude sử dụng để suy nghĩ và viết. Tác vụ càng phức tạp = cần càng nhiều token.',
+
+  'commands.tips.qa.title': 'Câu Hỏi Thường Gặp',
+  'commands.tips.qa.q1': 'Tôi nên dùng lệnh nào trước?',
+  'commands.tips.qa.a1': 'Nếu bắt đầu mới → <code>/bootstrap</code>. Nếu thêm tính năng → <code>/plan</code> hoặc <code>/cook</code>. Nếu sửa lỗi → <code>/fix</code>.',
+
+  'commands.tips.qa.q2': 'Khác biệt giữa /plan và /cook?',
+  'commands.tips.qa.a2': '<code>/plan</code> tạo bản thiết kế trước (bạn duyệt, sau đó <code>/code</code> thực thi). <code>/cook</code> làm cả hai trong một lần (nhanh hơn nhưng ít kiểm soát hơn).',
+
+  'commands.tips.qa.q3': 'Tôi có cần phải là lập trình viên không?',
+  'commands.tips.qa.a3': 'Không, nhưng bối cảnh kỹ thuật sẽ giúp ích. Claude sẽ hướng dẫn bạn qua từng bước.',
+
+  'commands.tips.qa.q4': 'Tôi có thể hoàn tác sai lầm không?',
+  'commands.tips.qa.a4': 'Có! Sử dụng Git (<code>/git:cm</code> lưu công việc của bạn) và Claude sẽ cảnh báo trước các hành động phá hủy.',
+
+  'commands.tips.qa.q5': 'Làm sao để tiết kiệm token?',
+  'commands.tips.qa.a5': 'Sử dụng các biến thể <code>:fast</code> khi bạn biết mình đang làm gì. Sử dụng <code>:parallel</code> chỉ cho các dự án lớn nơi tốc độ quan trọng hơn chi phí.',
+
+  // Command Modifiers
+  'commands.modifiers.title': 'Giải Thích Về Command Modifiers',
+  'commands.modifiers.col_modifier': 'Modifier',
+  'commands.modifiers.col_meaning': 'Ý Nghĩa',
+  'commands.modifiers.col_impact': 'Tác Động Token',
+  'commands.modifiers.col_example': 'Ví Dụ',
+
+  'commands.modifiers.fast_meaning': 'Bỏ qua nghiên cứu, thực thi nhanh',
+  'commands.modifiers.fast_impact': 'Thấp hơn',
+  'commands.modifiers.hard_meaning': 'Phân tích sâu, kỹ lưỡng',
+  'commands.modifiers.hard_impact': 'Cao hơn',
+  'commands.modifiers.auto_meaning': 'Tin tưởng Claude, ít tương tác',
+  'commands.modifiers.auto_impact': 'Như nhau',
+  'commands.modifiers.parallel_meaning': 'Sử dụng nhiều agent (nhanh hơn)',
+  'commands.modifiers.parallel_impact': 'Cao hơn',
+  'commands.modifiers.two_meaning': 'Nhận 2 tùy chọn/cách tiếp cận',
+  'commands.modifiers.two_impact': 'Cao hơn',
+
+  // Getting Help
+  'commands.help.title': 'Nhận Trợ Giúp',
+  'commands.help.stuck': 'Bị kẹt? Gõ <code>/ck-help</code> bất cứ lúc nào',
+  'commands.help.ideas': 'Cần ý tưởng? Thử <code>/brainstorm</code> trước khi lập kế hoạch',
+  'commands.help.progress': 'Xem tiến độ? Chạy <code>/watzup</code> để xem những gì đã xong',
+  'commands.help.broken': 'Có gì đó hỏng? Bắt đầu với <code>/debug</code> hoặc <code>/fix</code>',
+  'commands.help.tokens': 'Theo dõi token? Kiểm tra cột ⚡',
 
   // Legend
   'commands.legend.title': 'Hiểu Các Ký Hiệu',
@@ -1045,41 +1275,12 @@ export default {
   'commands.legend.token_low': 'Sử dụng ít token',
   'commands.legend.token_med': 'Sử dụng token trung bình',
   'commands.legend.token_high': 'Sử dụng nhiều token',
-  'commands.legend.token_max': 'Sử dụng token tối đa',
+  'commands.legend.token_very_high': 'Sử dụng rất nhiều token',
+  'commands.legend.token_max': 'Sử dụng token cực cao',
 
-  // Complexity Labels
-  'commands.label.easy': 'Dễ',
-  'commands.label.medium': 'Trung Bình',
-  'commands.label.advanced': 'Nâng Cao',
 
-  // New translations for commands array in component
-  'commands.desc.plan': 'Tạo kế hoạch triển khai chi tiết',
-  'commands.desc.code': 'Triển khai các kế hoạch có sẵn với kiểm thử',
-  'commands.desc.cook': 'Tất cả trong một: plan + code + test',
-  'commands.desc.bootstrap': 'Tạo dự án hoàn chỉnh từ đầu',
-  'commands.desc.brainstorm': 'Khám phá ý tưởng và khả năng',
-  'commands.desc.fix': 'Sửa lỗi tự động thông minh cho mọi vấn đề',
-  'commands.desc.debug': 'Tìm nguyên nhân gốc rễ của vấn đề',
-  'commands.desc.fix_test': 'Sửa các bài kiểm thử bị lỗi',
-  'commands.desc.fix_ui': 'Sửa các vấn đề UI/thiết kế',
-  'commands.desc.fix_types': 'Sửa các lỗi TypeScript',
-  'commands.desc.fix_ci': 'Sửa các vấn đề đường ống CI/CD',
-  'commands.desc.test': 'Chạy kiểm thử và phân tích kết quả',
-  'commands.desc.review_codebase': 'Đánh giá mã toàn diện',
-  'commands.desc.watzup': 'Xem xét các thay đổi gần đây',
-  'commands.desc.ask': 'Đặt câu hỏi kỹ thuật',
-  'commands.desc.scout': 'Tìm kiếm và khám phá codebase',
-  'commands.desc.ck_help': 'Hướng dẫn ClaudeKit tương tác',
-  'commands.desc.resume': 'Tiếp tục phiên làm việc từ ID',
-  'commands.desc.design_fast': 'Tạo thiết kế nhanh',
-  'commands.desc.design_good': 'Thiết kế chất lượng cao',
-  'commands.desc.content_enhance': 'Cải thiện nội dung hiện có',
-  'commands.desc.git_cm': 'Thông điệp commit thông minh',
-  'commands.desc.git_pr': 'Tạo pull requests',
-  'commands.desc.git_merge': 'Gộp code và giải quyết xung đột',
-
-  'commands.docs.text': 'Cần thêm lệnh?',
-  'commands.docs.link': 'Xem tài liệu đầy đủ từ trang web chính thức của Claudekit.',
+  'commands.docs.text': 'Truy cập',
+  'commands.docs.link': 'trang tài liệu chính thức của ClaudeKit để xem hướng dẫn đầy đủ.',
 
 
   // Resume Guide
@@ -1138,4 +1339,177 @@ export default {
   'permissions.guide.option2.source_link': 'Danh Sách Lệnh Bổ Sung',
   'permissions.guide.docs.text': 'Để xem tài liệu đầy đủ về phạm vi quyền và cú pháp, hãy truy cập',
   'permissions.guide.docs.link': 'Tài liệu Chính thức của Claude Code',
+
+  // Token Tips Guide
+  'guides.token_tips.title': 'Tiết Kiệm Token',
+  'guides.token_tips.description': 'Tiết kiệm token và giảm chi phí',
+  'token_tips.guide.title': 'Mẹo Tiết Kiệm Token',
+  'token_tips.guide.tagline': 'Giảm 50%+ lượng token với những thủ thuật này',
+  'token_tips.guide.description': 'Mỗi token đều có giá trị. Học các kỹ thuật thực tế để giữ context sạch, delegate hiệu quả, và tiết kiệm tiền trong khi làm việc năng suất hơn.',
+
+  'token_tips.guide.why_title': 'Tại Sao Hiệu Quả Token Quan Trọng',
+  'token_tips.guide.why_desc': 'Token ảnh hưởng trực tiếp đến chi phí, tốc độ và chất lượng context. Context phình to dẫn đến phản hồi chậm, chi phí cao và output lộn xộn. Thành thạo các mẹo này để làm việc thông minh hơn.',
+
+  'token_tips.guide.quick_win_title': 'Thắng Nhanh: Lệnh /clear',
+  'token_tips.guide.quick_win_desc': 'Lệnh có tác động lớn nhất cho quản lý token. Dùng sau khi hoàn thành task hoặc khi context bị rối.',
+  'token_tips.guide.quick_win_label': 'Reset context ngay lập tức:',
+  'token_tips.guide.quick_win_result': 'Xóa toàn bộ conversation, bắt đầu mới với token tối thiểu.',
+
+  // Tip 1
+  'token_tips.guide.tip1.title': 'Thành Thạo Quản Lý Context',
+  'token_tips.guide.tip1.desc': 'Hai lệnh cần thiết để giữ context gọn gàng và hiệu quả:',
+  'token_tips.guide.tip1.clear_desc': 'Reset hoàn toàn',
+  'token_tips.guide.tip1.clear_when': 'Dùng sau khi hoàn thành task, đổi project, hoặc khi bị stuck',
+  'token_tips.guide.tip1.compact_desc': 'Nén thông minh',
+  'token_tips.guide.tip1.compact_when': 'Giữ context quan trọng trong khi giảm token. Dùng giữa task.',
+  'token_tips.guide.tip1.pro_tip': 'Pro tip: Dùng /clear giữa các task không liên quan. Đừng mang context code authentication vào task UI.',
+
+  // Tip 2
+  'token_tips.guide.tip2.title': 'Tận Dụng Subagent Delegation',
+  'token_tips.guide.tip2.desc': 'Subagent chạy trong context riêng biệt. Chúng tiêu thụ token của riêng mình mà không làm phình conversation chính.',
+  'token_tips.guide.tip2.benefit1_title': 'Context Riêng Biệt',
+  'token_tips.guide.tip2.benefit1_desc': 'Mỗi agent có 200K token - độc lập với main',
+  'token_tips.guide.tip2.benefit2_title': 'Thực Thi Song Song',
+  'token_tips.guide.tip2.benefit2_desc': 'Nhiều agent làm việc đồng thời',
+
+  // Tip 3
+  'token_tips.guide.tip3.title': 'Dùng Scout Để Khám Phá',
+  'token_tips.guide.tip3.desc': 'Không bao giờ khám phá codebase trực tiếp trong context chính. Scout agent chỉ trả về kết quả liên quan.',
+  'token_tips.guide.tip3.key': 'Lợi ích chính:',
+  'token_tips.guide.tip3.key_desc': 'Scout tìm kiếm hàng ngàn file nhưng chỉ trả về những gì quan trọng - không có nội dung file làm phình context.',
+
+  // Tip 4
+  'token_tips.guide.tip4.title': 'Kích Hoạt Skill Có Chọn Lọc',
+  'token_tips.guide.tip4.desc': 'Skill thêm instruction vào context. Load skill không cần thiết lãng phí token.',
+  'token_tips.guide.tip4.rule': 'Quy tắc: Chỉ kích hoạt skill bạn thực sự dùng trong session này.',
+
+  // Tip 5
+  'token_tips.guide.tip5.title': 'Dùng CCS Để Tối Ưu Chi Phí',
+  'token_tips.guide.tip5.desc': 'Delegate task nặng token cho model rẻ hơn. Giữ Claude cho suy luận phức tạp.',
+  'token_tips.guide.tip5.glm_savings': 'Tiết kiệm GLM so với Claude',
+  'token_tips.guide.tip5.kimi_use': 'Phân tích & suy nghĩ',
+  'token_tips.guide.tip5.claude_use': 'Suy luận phức tạp',
+
+  // Common Mistakes
+  'token_tips.guide.mistakes_title': 'Những Lỗi Thường Gặp',
+  'token_tips.guide.mistake1.title': 'Không bao giờ clear context',
+  'token_tips.guide.mistake1.desc': 'Context cũ làm rối task mới. Clear giữa các công việc không liên quan.',
+  'token_tips.guide.mistake2.title': 'Đọc toàn bộ file',
+  'token_tips.guide.mistake2.desc': 'Dùng grep/scout để tìm phần liên quan thay vì load toàn bộ file.',
+  'token_tips.guide.mistake3.title': 'Chuỗi conversation dài',
+  'token_tips.guide.mistake3.desc': 'Chia task phức tạp thành các session riêng. Dùng /resume để tiếp tục.',
+  'token_tips.guide.mistake4.title': 'Load tất cả skill',
+  'token_tips.guide.mistake4.desc': 'Mỗi skill thêm vào context. Chỉ kích hoạt những gì bạn cần.',
+
+  // Pro Tips
+  'token_tips.guide.pro_tips_title': 'Pro Tips',
+  'token_tips.guide.pro1.title': 'Dùng /cook cho features',
+  'token_tips.guide.pro1.desc': 'Tự động delegate cho subagent, giữ context chính sạch.',
+  'token_tips.guide.pro2.title': 'Session checkpoints',
+  'token_tips.guide.pro2.desc': 'Ghi lại session ID sau các milestone quan trọng. Resume đúng nơi bạn dừng.',
+  'token_tips.guide.pro3.title': 'Gom task tương tự',
+  'token_tips.guide.pro3.desc': 'Nhóm công việc liên quan trong một session, sau đó /clear trước khi đổi context.',
+
+  // Summary
+  'token_tips.guide.summary_title': 'TL;DR - Cheatsheet Tiết Kiệm Token',
+  'token_tips.guide.summary1': 'Reset context',
+  'token_tips.guide.summary2': 'Auto-delegate',
+  'token_tips.guide.summary3': 'Tìm kiếm riêng biệt',
+  'token_tips.guide.summary4': 'Load theo nhu cầu',
+  'token_tips.guide.summary5': 'Model rẻ hơn',
+
+  // Case Study 1: Rate Limit Mid-Task
+  'token_tips.guide.case1.title': 'Tình Huống: Bị Limit Giữa Chừng',
+  'token_tips.guide.case1.subtitle': 'Kịch bản thực tế với giải pháp',
+  'token_tips.guide.case1.problem': 'Vấn Đề',
+  'token_tips.guide.case1.problem_desc': 'Bạn đang implement authentication, hoàn thành 70%, rồi Claude bị rate limit. Mất hết context?',
+  'token_tips.guide.case1.result': 'Giải Pháp',
+  'token_tips.guide.case1.result_desc': 'Export context, chuyển sang GLM với CCS, resume với session ID. Không mất context, tiếp tục rẻ hơn 81%.',
+
+  // Tip 6: /export Command
+  'token_tips.guide.export.title': '/export - Lưu Context',
+  'token_tips.guide.export.desc': 'Export conversation ra markdown trước khi làm việc rủi ro hoặc khi đổi provider. Lưới an toàn cho việc bảo toàn context.',
+  'token_tips.guide.export.benefit1': 'Backup Trước Rủi Ro',
+  'token_tips.guide.export.benefit1_desc': 'Lưu context trước khi refactor lớn hoặc thử nghiệm',
+  'token_tips.guide.export.benefit2': 'Resume Xuyên Provider',
+  'token_tips.guide.export.benefit2_desc': 'Tiếp tục trên model khác (GLM, Kimi) với đầy đủ context',
+
+  // Tip 7: Context Engineering Skill
+  'token_tips.guide.context_eng.title': 'Context Engineering Skill',
+  'token_tips.guide.context_eng.badge': 'MỚI',
+  'token_tips.guide.context_eng.desc': 'Kích hoạt skill này để tự động tối ưu context. Sử dụng Chiến Lược Bốn Nhóm để quản lý token thông minh.',
+  'token_tips.guide.context_eng.bucket1': 'File ngoài',
+  'token_tips.guide.context_eng.bucket2': 'Chọn lọc liên quan',
+  'token_tips.guide.context_eng.bucket3': 'Tóm tắt thông minh',
+  'token_tips.guide.context_eng.bucket4': 'Sub-agents',
+  'token_tips.guide.context_eng.tip': 'Pro tip: Skill tự động trigger /compact ở 70-80% context. Dùng anchored iterative compression (nén 98.6%, chất lượng 3.7/5).',
+
+  // Case Study 2: Long Session Optimization
+  'token_tips.guide.case2.title': 'Tình Huống: Session Dài',
+  'token_tips.guide.case2.subtitle': 'Ngăn chặn context quá tải',
+  'token_tips.guide.case2.desc': 'Khi session chạy lâu, context đầy lên. Context-engineering skill theo dõi mức sử dụng và tự động tối ưu.',
+  'token_tips.guide.case2.metric1': 'Mức cảnh báo',
+  'token_tips.guide.case2.metric2': 'Trigger tối ưu',
+  'token_tips.guide.case2.metric3': 'Nén đạt được',
+
+  // Session Recovery Guide (đã gộp với Resume Guide)
+  'guides.session_recovery.title': 'Khôi Phục Session',
+  'guides.session_recovery.description': 'Khôi phục session, tiếp tục công việc và chuyển context giữa các provider',
+  'session_recovery.guide.title': 'Khôi Phục Session & Resume',
+  'session_recovery.guide.tagline': 'Không bao giờ mất tiến độ khi đổi model',
+  'session_recovery.guide.description': 'Bị rate limit? Lỗi model? Học cách resume session, export context và tiếp tục công việc một cách liền mạch.',
+
+  'session_recovery.guide.problem_title': 'Nỗi Bực Bội',
+  'session_recovery.guide.problem_desc': 'Bạn đang implement sâu, context đã load, giải pháp đang hình thành... rồi "Bạn đã đạt giới hạn sử dụng." Mất hết động lực? Không còn nữa.',
+
+  // Understanding Sessions
+  'session_recovery.guide.understand.title': 'Hiểu Về Session',
+  'session_recovery.guide.understand.desc': 'Mỗi cuộc hội thoại với Claude Code tạo ra một session với ID duy nhất. Các session được lưu trữ cục bộ theo project và có thể resume với bất kỳ provider nào.',
+  'session_recovery.guide.understand.file_label': 'Đường dẫn file:',
+  'session_recovery.guide.understand.warning_title': 'Điểm Quan Trọng',
+  'session_recovery.guide.understand.warning_desc': 'Session dựa trên project, không phải provider. Bạn có thể bắt đầu với Claude, rồi /resume với GLM hoặc bất kỳ provider nào khác.',
+
+  // Same-Provider Resume (Works)
+  'session_recovery.guide.same_provider.title': 'Resume Session',
+  'session_recovery.guide.same_provider.works_badge': 'Hoạt Động',
+  'session_recovery.guide.same_provider.desc': 'Resume các session trước đó từ bất kỳ provider nào. Hoàn hảo để tiếp tục công việc sau khi nghỉ, trong terminal mới, hoặc đổi sang model khác.',
+  'session_recovery.guide.same_provider.result': 'Tiếp Tục Liền Mạch',
+  'session_recovery.guide.same_provider.result_desc': 'Tất cả context từ session trước được khôi phục. Tiếp tục đúng chỗ bạn dừng lại.',
+
+  // Export Context
+  'session_recovery.guide.export.title': 'Export Context',
+  'session_recovery.guide.export.badge': 'Cho Session Quá Lớn',
+  'session_recovery.guide.export.desc': 'Khi context session quá lớn (100K+ tokens), /resume chỉ chuyển vấn đề sang nơi khác. Dùng /export để bắt đầu mới chỉ với context thiết yếu.',
+  'session_recovery.guide.export.decision_title': 'Khi Nào Dùng Cái Nào?',
+  'session_recovery.guide.export.decision_desc': '<strong>Dùng /resume</strong> khi context còn healthy và chỉ cần đổi provider.<br/><strong>Dùng /export</strong> khi context quá lớn và cần bắt đầu mới chỉ với thông tin quan trọng.',
+
+  // Fallback Strategies
+  'session_recovery.guide.fallback.title': 'Chiến Lược Fallback Model',
+  'session_recovery.guide.fallback.desc': 'Setup nhiều terminal với các provider khác nhau sẵn sàng. Khi một cái bị limit, chỉ cần /resume trong terminal khác.',
+  'session_recovery.guide.fallback.claude_use': 'Chính: Task phức tạp',
+  'session_recovery.guide.fallback.agy_use': 'Backup: Full sức mạnh Claude',
+  'session_recovery.guide.fallback.glm_use': 'Rẻ hơn 81%: Implementation',
+
+  // Pro Tips
+  'session_recovery.guide.protips.title': 'Pro Tips',
+  'session_recovery.guide.protips.badge': 'Power User',
+  'session_recovery.guide.protips.desc': 'Các trick nâng cao để khôi phục session một cách mượt mà khi cần.',
+  'session_recovery.guide.protips.note_title': 'Nhiều Tài Khoản Claude',
+  'session_recovery.guide.protips.note_desc': 'Nếu bạn có nhiều sub-account Claude, bạn có thể rotate giữa chúng khi bị rate limit. Sử dụng /login để switch account mà không mất session context.',
+
+  // Emergency Checklist
+  'session_recovery.guide.emergency.title': 'Checklist Khôi Phục Khẩn Cấp',
+  'session_recovery.guide.emergency.desc': 'Bookmark cái này. Khi có vấn đề giữa task, làm theo các bước sau:',
+
+  // Benefits
+  'session_recovery.guide.benefit1.title': 'Tiết Kiệm 80%+ Chi Phí',
+  'session_recovery.guide.benefit1.desc': 'Bắt đầu task phức tạp với Claude, rồi /resume với GLM cho implementation với chi phí rẻ hơn 81%.',
+  'session_recovery.guide.benefit2.title': 'Không Thời Gian Chết',
+  'session_recovery.guide.benefit2.desc': 'Đừng để rate limit ngăn cản dòng làm việc. Chỉ cần /resume trong provider khác và tiếp tục làm việc.',
+
+  // Related Guides
+  'session_recovery.guide.related_title': 'Các Guide Liên Quan',
+  'session_recovery.guide.related_ccs': 'Multi-account & đổi model',
+  'session_recovery.guide.related_token': 'Giảm tiêu thụ token',
+  'session_recovery.guide.related_commands': 'Tất cả lệnh có sẵn',
 } as const;

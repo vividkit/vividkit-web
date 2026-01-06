@@ -1,0 +1,454 @@
+---
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+// Code examples for copy functionality
+const clearCommand = `/clear`;
+const compactCommand = `/compact`;
+const subagentExample = `# Instead of doing everything in main context
+# Delegate to specialized subagents
+
+/cook "implement user authentication"
+# Automatically uses planner, coder, tester agents
+# Each has isolated context, main stays clean`;
+
+const skillActivation = `# Only activate skills you need
+# Skills consume tokens when loaded
+
+# Bad: Loading everything
+"use all skills"
+
+# Good: Targeted activation
+"use frontend-development skill"`;
+
+const scoutExample = `# Use scout for exploration (isolated context)
+/scout "find all authentication files"
+
+# Instead of manual searching in main context
+# (which adds results to your context)`;
+
+const resumeExample = `# End session cleanly
+/clear
+
+# Resume later with context
+/resume <session-id>`;
+
+
+
+// Case Study examples
+const caseStudy2 = `# Long session, context getting heavy (70%+ tokens)
+# Context-engineering skill helps
+
+"activate context-engineering skill"
+
+# AI will now:
+# 1. Trigger /compact at 70-80% utilization
+# 2. Use anchored iterative compression
+# 3. Keep critical info at beginning/end
+# 4. Partition work to sub-agents automatically`;
+
+const contextEngExample = `# Activate context-engineering skill
+"use context-engineering skill"
+
+# Four-Bucket Strategy for token optimization:
+# 1. WRITE - Save to external files (scratchpads)
+# 2. SELECT - Pull only relevant context
+# 3. COMPRESS - Summarize while preserving info
+# 4. ISOLATE - Split across sub-agents
+
+# Key metrics to watch:
+# - 70% utilization = warning
+# - 80% utilization = trigger optimization
+# - Sub-agents = ~15x cost but isolated context`;
+---
+
+<div class="space-y-8 mt-6">
+  <!-- Hero Section -->
+  <div class="text-center space-y-4">
+    <h2 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
+      {t('token_tips.guide.title')}
+    </h2>
+    <p class="text-xl font-medium text-emerald-600 dark:text-emerald-400">
+      {t('token_tips.guide.tagline')}
+    </p>
+    <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+      {t('token_tips.guide.description')}
+    </p>
+  </div>
+
+  <!-- Why This Matters -->
+  <div class="flex items-start gap-4 p-6 rounded-xl bg-amber-500/5 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20">
+    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-500/20 flex items-center justify-center">
+      <svg class="w-5 h-5 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+      </svg>
+    </div>
+    <div class="flex-1">
+      <div class="font-bold text-amber-700 dark:text-amber-400 mb-1 text-lg">{t('token_tips.guide.why_title')}</div>
+      <div class="text-slate-600 dark:text-slate-400 leading-relaxed">
+        {t('token_tips.guide.why_desc')}
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Win Section -->
+  <div class="glass-card rounded-xl border-emerald-200 dark:border-emerald-500/30 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-emerald-500/10 to-green-500/10 border-b border-emerald-200 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-emerald-600 dark:text-emerald-400">
+          {t('token_tips.guide.quick_win_title')}
+        </h3>
+      </div>
+    </div>
+    <div class="p-6">
+      <p class="text-slate-700 dark:text-slate-300 mb-4">
+        {t('token_tips.guide.quick_win_desc')}
+      </p>
+      <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm">
+        <div class="text-slate-500 text-xs mb-2">{t('token_tips.guide.quick_win_label')}</div>
+        <div class="text-emerald-600 dark:text-emerald-400">/clear</div>
+        <div class="text-slate-500 mt-2 text-xs">{t('token_tips.guide.quick_win_result')}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tip 1: Context Management -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border-b border-slate-100 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-600 dark:text-blue-400 font-bold text-sm">1</div>
+        <h4 class="text-lg font-bold text-slate-900 dark:text-slate-100">{t('token_tips.guide.tip1.title')}</h4>
+      </div>
+    </div>
+    <div class="p-6 space-y-4">
+      <p class="text-slate-600 dark:text-slate-400">
+        {t('token_tips.guide.tip1.desc')}
+      </p>
+
+      <!-- /clear -->
+      <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 font-mono text-sm">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-blue-600 dark:text-blue-400 font-bold">/clear</span>
+          <span class="text-xs text-slate-500">{t('token_tips.guide.tip1.clear_desc')}</span>
+        </div>
+        <div class="text-slate-500 text-xs">{t('token_tips.guide.tip1.clear_when')}</div>
+      </div>
+
+      <!-- /compact -->
+      <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 font-mono text-sm">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-purple-600 dark:text-purple-400 font-bold">/compact</span>
+          <span class="text-xs text-slate-500">{t('token_tips.guide.tip1.compact_desc')}</span>
+        </div>
+        <div class="text-slate-500 text-xs">{t('token_tips.guide.tip1.compact_when')}</div>
+      </div>
+
+      <div class="flex items-start gap-2 text-sm text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-500/10 p-3 rounded-lg">
+        <svg class="w-5 h-5 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M12 16v-4M12 8h.01"/>
+        </svg>
+        <span>{t('token_tips.guide.tip1.pro_tip')}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tip 2: Subagent Delegation -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-purple-500/10 to-pink-500/10 border-b border-slate-100 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-purple-500/20 text-purple-600 dark:text-purple-400 font-bold text-sm">2</div>
+        <h4 class="text-lg font-bold text-slate-900 dark:text-slate-100">{t('token_tips.guide.tip2.title')}</h4>
+      </div>
+    </div>
+    <div class="p-6 space-y-4">
+      <p class="text-slate-600 dark:text-slate-400">
+        {t('token_tips.guide.tip2.desc')}
+      </p>
+
+      <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 font-mono text-sm overflow-x-auto">
+        <pre class="text-slate-700 dark:text-slate-300 whitespace-pre-wrap">{subagentExample}</pre>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div class="p-3 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30">
+          <div class="text-emerald-700 dark:text-emerald-400 font-medium text-sm">{t('token_tips.guide.tip2.benefit1_title')}</div>
+          <div class="text-slate-600 dark:text-slate-400 text-xs mt-1">{t('token_tips.guide.tip2.benefit1_desc')}</div>
+        </div>
+        <div class="p-3 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30">
+          <div class="text-emerald-700 dark:text-emerald-400 font-medium text-sm">{t('token_tips.guide.tip2.benefit2_title')}</div>
+          <div class="text-slate-600 dark:text-slate-400 text-xs mt-1">{t('token_tips.guide.tip2.benefit2_desc')}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tip 3: Scout for Exploration -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-orange-500/10 to-amber-500/10 border-b border-slate-100 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-orange-500/20 text-orange-600 dark:text-orange-400 font-bold text-sm">3</div>
+        <h4 class="text-lg font-bold text-slate-900 dark:text-slate-100">{t('token_tips.guide.tip3.title')}</h4>
+      </div>
+    </div>
+    <div class="p-6 space-y-4">
+      <p class="text-slate-600 dark:text-slate-400">
+        {t('token_tips.guide.tip3.desc')}
+      </p>
+
+      <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 font-mono text-sm overflow-x-auto">
+        <pre class="text-slate-700 dark:text-slate-300 whitespace-pre-wrap">{scoutExample}</pre>
+      </div>
+
+      <div class="text-sm text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-500/10 p-3 rounded-lg">
+        <strong>{t('token_tips.guide.tip3.key')}</strong> {t('token_tips.guide.tip3.key_desc')}
+      </div>
+    </div>
+  </div>
+
+  <!-- Tip 4: Skills Activation Strategy -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-cyan-500/10 to-teal-500/10 border-b border-slate-100 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 font-bold text-sm">4</div>
+        <h4 class="text-lg font-bold text-slate-900 dark:text-slate-100">{t('token_tips.guide.tip4.title')}</h4>
+      </div>
+    </div>
+    <div class="p-6 space-y-4">
+      <p class="text-slate-600 dark:text-slate-400">
+        {t('token_tips.guide.tip4.desc')}
+      </p>
+
+      <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 font-mono text-sm overflow-x-auto">
+        <pre class="text-slate-700 dark:text-slate-300 whitespace-pre-wrap">{skillActivation}</pre>
+      </div>
+
+      <div class="p-3 rounded-lg bg-cyan-50 dark:bg-cyan-500/10 border border-cyan-200 dark:border-cyan-500/30">
+        <div class="text-cyan-700 dark:text-cyan-400 font-medium text-sm">{t('token_tips.guide.tip4.rule')}</div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Context Engineering Skill -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border-2 border-violet-200 dark:border-violet-500/30 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-violet-500/10 to-purple-500/10 border-b border-violet-200 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-violet-500/20 text-violet-600 dark:text-violet-400 font-bold text-sm">5</div>
+        <div>
+          <h4 class="text-lg font-bold text-slate-900 dark:text-slate-100">{t('token_tips.guide.context_eng.title')}</h4>
+          <span class="text-xs px-2 py-0.5 rounded-full bg-violet-500/20 text-violet-600 dark:text-violet-400">{t('token_tips.guide.context_eng.badge')}</span>
+        </div>
+      </div>
+    </div>
+    <div class="p-6 space-y-4">
+      <p class="text-slate-600 dark:text-slate-400">
+        {t('token_tips.guide.context_eng.desc')}
+      </p>
+
+      <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 font-mono text-sm overflow-x-auto">
+        <pre class="text-slate-700 dark:text-slate-300 whitespace-pre-wrap">{contextEngExample}</pre>
+      </div>
+
+      <!-- Four Bucket Strategy -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+        <div class="p-3 rounded-lg bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/30 text-center">
+          <div class="text-blue-600 dark:text-blue-400 font-bold text-sm">WRITE</div>
+          <div class="text-xs text-slate-500 mt-1">{t('token_tips.guide.context_eng.bucket1')}</div>
+        </div>
+        <div class="p-3 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30 text-center">
+          <div class="text-emerald-600 dark:text-emerald-400 font-bold text-sm">SELECT</div>
+          <div class="text-xs text-slate-500 mt-1">{t('token_tips.guide.context_eng.bucket2')}</div>
+        </div>
+        <div class="p-3 rounded-lg bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/30 text-center">
+          <div class="text-amber-600 dark:text-amber-400 font-bold text-sm">COMPRESS</div>
+          <div class="text-xs text-slate-500 mt-1">{t('token_tips.guide.context_eng.bucket3')}</div>
+        </div>
+        <div class="p-3 rounded-lg bg-purple-50 dark:bg-purple-500/10 border border-purple-200 dark:border-purple-500/30 text-center">
+          <div class="text-purple-600 dark:text-purple-400 font-bold text-sm">ISOLATE</div>
+          <div class="text-xs text-slate-500 mt-1">{t('token_tips.guide.context_eng.bucket4')}</div>
+        </div>
+      </div>
+
+      <div class="flex items-start gap-2 text-sm text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-500/10 p-3 rounded-lg">
+        <svg class="w-5 h-5 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M12 16v-4M12 8h.01"/>
+        </svg>
+        <span>{t('token_tips.guide.context_eng.tip')}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Case Study 2: Long Session Optimization -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border-2 border-amber-200 dark:border-amber-500/30 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border-b border-amber-200 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400">
+            {t('token_tips.guide.case2.title')}
+          </h3>
+          <p class="text-sm text-slate-500">{t('token_tips.guide.case2.subtitle')}</p>
+        </div>
+      </div>
+    </div>
+    <div class="p-6 space-y-4">
+      <p class="text-slate-600 dark:text-slate-400">
+        {t('token_tips.guide.case2.desc')}
+      </p>
+
+      <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 font-mono text-sm overflow-x-auto">
+        <pre class="text-slate-700 dark:text-slate-300 whitespace-pre-wrap">{caseStudy2}</pre>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 text-center">
+          <div class="text-2xl font-bold text-amber-600 dark:text-amber-400">70%</div>
+          <div class="text-xs text-slate-500">{t('token_tips.guide.case2.metric1')}</div>
+        </div>
+        <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 text-center">
+          <div class="text-2xl font-bold text-orange-600 dark:text-orange-400">80%</div>
+          <div class="text-xs text-slate-500">{t('token_tips.guide.case2.metric2')}</div>
+        </div>
+        <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 text-center">
+          <div class="text-2xl font-bold text-red-600 dark:text-red-400">98%</div>
+          <div class="text-xs text-slate-500">{t('token_tips.guide.case2.metric3')}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Common Mistakes Section -->
+  <div class="glass-card rounded-xl border-red-200 dark:border-red-500/30 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-red-500/10 to-orange-500/10 border-b border-red-200 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-red-600 dark:text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M15 9l-6 6M9 9l6 6"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-red-600 dark:text-red-400">
+          {t('token_tips.guide.mistakes_title')}
+        </h3>
+      </div>
+    </div>
+    <div class="p-6">
+      <div class="space-y-4">
+        <div class="flex items-start gap-3">
+          <span class="text-red-500 font-bold">✗</span>
+          <div>
+            <div class="font-medium text-slate-700 dark:text-slate-300">{t('token_tips.guide.mistake1.title')}</div>
+            <div class="text-sm text-slate-500">{t('token_tips.guide.mistake1.desc')}</div>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="text-red-500 font-bold">✗</span>
+          <div>
+            <div class="font-medium text-slate-700 dark:text-slate-300">{t('token_tips.guide.mistake2.title')}</div>
+            <div class="text-sm text-slate-500">{t('token_tips.guide.mistake2.desc')}</div>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="text-red-500 font-bold">✗</span>
+          <div>
+            <div class="font-medium text-slate-700 dark:text-slate-300">{t('token_tips.guide.mistake3.title')}</div>
+            <div class="text-sm text-slate-500">{t('token_tips.guide.mistake3.desc')}</div>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="text-red-500 font-bold">✗</span>
+          <div>
+            <div class="font-medium text-slate-700 dark:text-slate-300">{t('token_tips.guide.mistake4.title')}</div>
+            <div class="text-sm text-slate-500">{t('token_tips.guide.mistake4.desc')}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pro Tips Section -->
+  <div class="glass-card rounded-xl border-purple-200 dark:border-purple-500/30 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-purple-500/10 to-pink-500/10 border-b border-purple-200 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-purple-600 dark:text-purple-400">
+          {t('token_tips.guide.pro_tips_title')}
+        </h3>
+      </div>
+    </div>
+    <div class="p-6">
+      <div class="space-y-4">
+        <div class="flex items-start gap-3">
+          <span class="text-purple-500 font-bold">★</span>
+          <div>
+            <div class="font-medium text-slate-700 dark:text-slate-300">{t('token_tips.guide.pro1.title')}</div>
+            <div class="text-sm text-slate-500">{t('token_tips.guide.pro1.desc')}</div>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="text-purple-500 font-bold">★</span>
+          <div>
+            <div class="font-medium text-slate-700 dark:text-slate-300">{t('token_tips.guide.pro2.title')}</div>
+            <div class="text-sm text-slate-500">{t('token_tips.guide.pro2.desc')}</div>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="text-purple-500 font-bold">★</span>
+          <div>
+            <div class="font-medium text-slate-700 dark:text-slate-300">{t('token_tips.guide.pro3.title')}</div>
+            <div class="text-sm text-slate-500">{t('token_tips.guide.pro3.desc')}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary Card -->
+  <div class="p-6 rounded-xl bg-gradient-to-r from-emerald-500/10 via-green-500/10 to-teal-500/10 border border-emerald-200 dark:border-emerald-500/20">
+    <h3 class="text-lg font-bold text-emerald-700 dark:text-emerald-400 mb-4">{t('token_tips.guide.summary_title')}</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
+      <div class="p-3 rounded-lg bg-white/50 dark:bg-black/20 text-center">
+        <div class="text-emerald-600 dark:text-emerald-400 font-mono font-bold">/clear</div>
+        <div class="text-xs text-slate-500 mt-1">{t('token_tips.guide.summary1')}</div>
+      </div>
+      <div class="p-3 rounded-lg bg-white/50 dark:bg-black/20 text-center">
+        <div class="text-purple-600 dark:text-purple-400 font-mono font-bold">/cook</div>
+        <div class="text-xs text-slate-500 mt-1">{t('token_tips.guide.summary2')}</div>
+      </div>
+      <div class="p-3 rounded-lg bg-white/50 dark:bg-black/20 text-center">
+        <div class="text-orange-600 dark:text-orange-400 font-mono font-bold">/scout</div>
+        <div class="text-xs text-slate-500 mt-1">{t('token_tips.guide.summary3')}</div>
+      </div>
+      <div class="p-3 rounded-lg bg-white/50 dark:bg-black/20 text-center">
+        <div class="text-cyan-600 dark:text-cyan-400 font-mono font-bold">skills</div>
+        <div class="text-xs text-slate-500 mt-1">{t('token_tips.guide.summary4')}</div>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -13,6 +13,16 @@ export default {
 
   // Guides Sidebar
   'guides.sidebar.title': 'GUIDES & TIPS',
+
+  // Guides Navigation Sections
+  'guides.sections.getting_started': 'Getting Started',
+  'guides.sections.core_features': 'Core Features',
+  'guides.sections.multi_provider': 'IDE & Providers',
+  'guides.sections.session_management': 'Session',
+  'guides.sections.optimization': 'Optimization',
+  'guides.sections.configuration': 'Configuration',
+  'guides.sections.troubleshooting': 'Troubleshooting',
+  'guides.sections.resources': 'Resources',
   'guides.sidebar.purchase_notice.title': 'ClaudeKit Required',
   'guides.sidebar.purchase_notice.desc': 'Purchase ClaudeKit to unlock all features in these guides.',
   'guides.sidebar.purchase_notice.cta': 'Get ClaudeKit',
@@ -410,11 +420,11 @@ export default {
   // Guides
   'guides.title': 'ClaudeKit Guides',
   'guides.subtitle': 'Learn how to use ClaudeKit effectively',
-  'guides.cli.title': 'CLI Guide',
+  'guides.cli.title': 'ClaudeKit CLI Guide',
   'guides.cli.description': 'Complete guide to ClaudeKit CLI commands',
-  'guides.commands.title': 'Commands Reference',
+  'guides.commands.title': 'Commands Cheat Sheet',
   'guides.commands.description': 'Comprehensive list of all available commands',
-  'guides.workflows.title': 'Workflows',
+  'guides.workflows.title': 'Workflow Recipes',
   'guides.workflows.description': 'Best practices and common workflows',
   'guides.uiux.title': 'UI/UX Guide',
   'guides.uiux.description': 'Design and implementation guidelines',
@@ -430,8 +440,8 @@ export default {
   'guides.promotions.description': 'AI service deals and promotions',
   'guides.custom_hooks.title': 'Custom Hooks',
   'guides.custom_hooks.description': 'Customize your vibe coding workflow',
-  'guides.flowchart.title': 'Decision Tree',
-  'guides.flowchart.description': 'Interactive guide to find the right command',
+  'guides.flowchart.title': 'Command Finder',
+  'guides.flowchart.description': 'Interactive decision tree to find the right command',
 
   // Promotions Guide
   'guides.promotions.page_title': 'AI Promotions & Deals',
@@ -454,8 +464,7 @@ export default {
   // Promotions Data
   'promotions.claude_pro.tagline': '50% off for the first 3 months ($10/month instead of $20)',
   'promotions.zai.tagline': 'Christmas 2025: 50% first-purchase + extra 10-20% off + 10% referral bonus',
-  'promotions.lovable.tagline': 'Free Pro Plan for 2 months (new accounts only) - Save $50',
-  'promotions.lovable.note': 'Important: Remember to cancel auto-renewal before the trial ends. Register with a new email via the invite link.',
+
   'promotions.tips.use_ccs.title': 'Use CCS to switch between providers',
   'promotions.tips.use_ccs.desc': 'Maximize your usage limits by switching between Claude, GLM, Kimi, and other providers using CCS.',
   'promotions.tips.stack.title': 'Stack multiple discounts',
@@ -542,13 +551,183 @@ export default {
   // Commands section
   'commands.title': 'Slash Commands',
   'commands.subtitle': 'at a Glance',
-  'commands.description': 'ClaudeKit\'s 60+ AI commands, organized by skill level.',
+  'commands.description': 'ClaudeKit\'s 74+ AI commands, organized by skill level.',
   'commands.in_vividkit': 'In VividKit:',
   'commands.in_vividkit_description': 'These commands become visual, point-and-click actions.',
   'commands.terminal_reference': 'While you wait for VividKit, here\'s your terminal reference:',
-  'commands.category_beginner': 'Beginner Commands',
-  'commands.category_intermediate': 'Intermediate Commands',
-  'commands.category_advanced': 'Advanced Commands',
+
+  // Command Labels
+  'commands.label.easy': 'Beginner',
+  'commands.label.medium': 'Intermediate',
+  'commands.label.advanced': 'Advanced',
+
+  // Getting Started
+  'commands.desc.bootstrap': 'Start a new project step-by-step with guidance',
+  'commands.detail.bootstrap': 'You want to create a project and prefer interactive guidance',
+  'commands.desc.bootstrap_auto': 'Start a new project automatically',
+  'commands.detail.bootstrap_auto': 'You trust Claude to set up a standard project for you',
+  'commands.desc.bootstrap_auto_fast': 'Quick setup, no research',
+  'commands.detail.bootstrap_auto_fast': 'You need a basic project structure fast',
+  'commands.desc.bootstrap_auto_parallel': 'Setup with parallel execution (faster, more tokens)',
+  'commands.detail.bootstrap_auto_parallel': 'Large project, you want speed and have token quota',
+
+  // Planning & Research
+  'commands.desc.plan': 'Create an implementation plan with smart enhancement',
+  'commands.detail.plan': 'Complex feature, need to figure out how to build it',
+  'commands.desc.plan_fast': 'Quick plan, no research (analyze existing code only)',
+  'commands.detail.plan_fast': 'Simple feature, you know the codebase well',
+  'commands.desc.plan_hard': 'Deep research + detailed plan',
+  'commands.detail.plan_hard': 'Complex feature, new tech, or unfamiliar codebase',
+  'commands.desc.plan_two': 'Get 2 different approaches with trade-offs',
+  'commands.detail.plan_two': 'You want options before deciding',
+  'commands.desc.plan_parallel': 'Plan with parallel-executable phases',
+  'commands.detail.plan_parallel': 'Large feature that can be split into independent parts',
+  'commands.desc.plan_validate': 'Interview you to confirm plan decisions',
+  'commands.detail.plan_validate': 'Before coding, make sure assumptions are correct',
+  'commands.desc.plan_ci': 'Fix GitHub Actions failures',
+  'commands.detail.plan_ci': 'CI/CD is broken, need a fix plan',
+  'commands.desc.plan_cro': 'Create conversion rate optimization plan',
+  'commands.detail.plan_cro': 'Want to improve content for better conversions',
+  'commands.desc.plan_archive': 'Write journal + archive old plans',
+  'commands.detail.plan_archive': 'Project done, want to document learnings',
+  'commands.desc.scout': 'Find files/code in your codebase',
+  'commands.detail.scout': '"Where is X located?" or "Show me all Y files"',
+  'commands.desc.ask': 'Get technical/architectural answers',
+  'commands.detail.ask': '"How does Z work?" or "Best practice for W?"',
+  'commands.desc.brainstorm': 'Explore ideas for a feature',
+  'commands.detail.brainstorm': 'Early stage, want creative options',
+
+  // Implementation
+  'commands.desc.code': 'Execute an existing plan (with testing)',
+  'commands.detail.code': 'You have a plan in plans/ folder, ready to build',
+  'commands.desc.code_auto': 'Execute plan automatically ("trust me")',
+  'commands.detail.code_auto': 'You have a plan, want Claude to just build it',
+  'commands.desc.code_no_test': 'Execute plan without running tests',
+  'commands.detail.code_no_test': 'You\'ll test manually later',
+  'commands.desc.code_parallel': 'Execute parallel phases from plan',
+  'commands.detail.code_parallel': 'Plan has parallel phases, want speed',
+  'commands.desc.code_session': 'Resume a specific session',
+  'commands.detail.code_session': 'Paused work, want to continue from session-breakdown.md',
+  'commands.desc.cook': 'Implement feature step-by-step (one command)',
+  'commands.detail.cook': 'Want planning + coding in one flow (standalone)',
+  'commands.desc.cook_auto': 'Implement feature automatically',
+  'commands.detail.cook_auto': 'Trust Claude to handle everything',
+  'commands.desc.cook_auto_fast': 'Quick implement, no research',
+  'commands.detail.cook_auto_fast': 'Simple feature, just build it',
+  'commands.desc.cook_auto_parallel': 'Plan parallel + execute with agents',
+  'commands.detail.cook_auto_parallel': 'Complex feature, want parallel execution',
+
+  // Debugging & Testing
+  'commands.desc.fix': 'Analyze and fix issues (smart routing)',
+  'commands.detail.fix': 'Something\'s broken, need to diagnose and fix',
+  'commands.desc.fix_fast': 'Quick fix for small issues',
+  'commands.detail.fix_fast': 'Minor bug, obvious problem',
+  'commands.desc.fix_hard': 'Use subagents for complex issues',
+  'commands.detail.fix_hard': 'Tough bug, need deep investigation',
+  'commands.desc.fix_parallel': 'Fix with parallel fullstack agents',
+  'commands.detail.fix_parallel': 'Multiple issues or complex system',
+  'commands.desc.fix_ci': 'Fix GitHub Actions failures',
+  'commands.detail.fix_ci': 'CI/CD pipeline broken',
+  'commands.desc.fix_logs': 'Analyze logs and fix issues',
+  'commands.detail.fix_logs': 'Have error logs, need to find root cause',
+  'commands.desc.fix_test': 'Run tests and fix failures',
+  'commands.detail.fix_test': 'Tests failing, make them pass',
+  'commands.desc.fix_types': 'Fix TypeScript/type errors',
+  'commands.detail.fix_types': 'Type checking errors everywhere',
+  'commands.desc.fix_ui': 'Fix UI/visual issues',
+  'commands.detail.fix_ui': 'Something looks wrong on screen',
+  'commands.desc.debug': 'Debug technical issues (deeper analysis)',
+  'commands.detail.debug': 'Stuck on a bug, need detailed investigation',
+  'commands.desc.test': 'Run tests and analyze results',
+  'commands.detail.test': 'Want to check if everything works',
+  'commands.desc.test_ui': 'Run UI tests on website',
+  'commands.detail.test_ui': 'Need to test visual/user interactions',
+
+  // Git Workflow
+  'commands.desc.git_cm': 'Stage all files + create commit',
+  'commands.detail.git_cm': 'You made changes, ready to save locally',
+  'commands.desc.git_cp': 'Stage + commit + push all at once',
+  'commands.detail.git_cp': 'Ready to save AND upload to remote',
+  'commands.desc.git_pr': 'Create a pull request',
+  'commands.detail.git_pr': 'Ready for code review and merge',
+  'commands.desc.git_merge': 'Merge one branch into another',
+  'commands.detail.git_merge': 'Combine work from different branches',
+  'commands.desc.worktree': 'Create isolated git worktree',
+  'commands.detail.worktree': 'Work on multiple features simultaneously without stashing',
+
+  // Documentation
+  'commands.desc.docs_init': 'Analyze codebase + create initial docs',
+  'commands.detail.docs_init': 'New project or no docs exist yet',
+  'commands.desc.docs_update': 'Analyze codebase + update existing docs',
+  'commands.detail.docs_update': 'Code changed, docs need to catch up',
+  'commands.desc.docs_summarize': 'Analyze + summarize in docs',
+  'commands.detail.docs_summarize': 'Want high-level overview documentation',
+
+  // Design
+  'commands.desc.design_fast': 'Create a quick design',
+  'commands.detail.design_fast': 'Need UI fast, prototype or simple page',
+  'commands.desc.design_good': 'Create an immersive/polished design',
+  'commands.detail.design_good': 'Production-ready UI, want high quality',
+  'commands.desc.design_screenshot': 'Recreate design from screenshot',
+  'commands.detail.design_screenshot': 'Have reference image, want to replicate',
+  'commands.desc.design_video': 'Recreate design from video',
+  'commands.detail.design_video': 'Have video reference, want to capture flow',
+  'commands.desc.design_describe': 'Describe what\'s in a screenshot/video',
+  'commands.detail.design_describe': 'Want to understand a design before building',
+  'commands.desc.design_3d': 'Create interactive 3D designs (Three.js)',
+  'commands.detail.design_3d': 'Need 3D graphics/visualizations',
+
+  // Content
+  'commands.desc.content_fast': 'Write creative copy quickly',
+  'commands.detail.content_fast': 'Need content ASAP, blog/social post',
+  'commands.desc.content_good': 'Write high-quality creative copy',
+  'commands.detail.content_good': 'Important content, want polish and impact',
+  'commands.desc.content_cro': 'Optimize content for conversions',
+  'commands.detail.content_cro': 'Landing page or sales copy, improve results',
+  'commands.desc.content_enhance': 'Fix and improve existing copy',
+  'commands.detail.content_enhance': 'Content exists but underperforming',
+
+  // Integration
+  'commands.desc.integrate_polar': 'Add Polar.sh payment integration',
+  'commands.detail.integrate_polar': 'SaaS product, need subscriptions/payments',
+  'commands.desc.integrate_sepay': 'Add SePay.vn payment integration',
+  'commands.detail.integrate_sepay': 'Vietnam market, QR/bank transfer payments',
+
+  // Code Quality
+  'commands.desc.review_codebase': 'Scan and analyze entire codebase',
+  'commands.detail.review_codebase': 'Want code health check or architectural review',
+  'commands.desc.review_codebase_parallel': 'Deep analysis with parallel verification',
+  'commands.detail.review_codebase_parallel': 'Large codebase, thorough review needed',
+
+  // Skills & Tools
+  'commands.desc.skill_create': 'Create a new agent skill',
+  'commands.detail.skill_create': 'Want custom AI agent with specialized knowledge',
+  'commands.desc.skill_plan': 'Plan to create a new skill',
+  'commands.detail.skill_plan': 'Complex skill, need to design it first',
+  'commands.desc.skill_optimize': 'Improve existing skill',
+  'commands.detail.skill_optimize': 'Skill not working well, want to enhance it',
+  'commands.desc.skill_optimize_auto': 'Auto-optimize existing skill',
+  'commands.detail.skill_optimize_auto': 'Quick improvement, let Claude handle it',
+  'commands.desc.skill_add': 'Add files/scripts to existing skill',
+  'commands.detail.skill_add': 'Skill exists, want to add more references',
+  'commands.desc.skill_fix_logs': 'Fix skill based on logs.txt',
+  'commands.detail.skill_fix_logs': 'Skill failed, have error logs to diagnose',
+  'commands.desc.ccs': 'Delegate task with intelligent agent selection',
+  'commands.detail.ccs': 'Want Claude to pick the right agent for the job',
+
+  // Utilities
+  'commands.desc.ck_help': 'Show this help guide',
+  'commands.detail.ck_help': 'Need command reference or forgot something',
+  'commands.desc.journal': 'Write technical journal entries',
+  'commands.detail.journal': 'Document failures, lessons learned, project wrap-up',
+  'commands.desc.kanban': 'Open AI orchestration dashboard',
+  'commands.detail.kanban': 'Visualize plan progress, agent activity',
+  'commands.desc.preview': 'View markdown/files in beautiful reader',
+  'commands.detail.preview': 'Want to read plans/docs in nice UI',
+  'commands.desc.watzup': 'Review recent changes + wrap up',
+  'commands.detail.watzup': 'End of session, see what was done',
+  'commands.desc.use_mcp': 'Use tools from MCP servers',
+  'commands.detail.use_mcp': 'Have MCP servers configured, want to use their tools',
   'commands.pro_tips': 'Pro Tips',
   'commands.tip1.title': 'Save tokens with /clear',
   'commands.tip1.description': 'Use /clear to clear conversation history before starting implementation',
@@ -639,10 +818,14 @@ export default {
   'cli.step.local_option': 'Local:',
   'cli.step.local_desc': 'Installs just for this specific project folder.',
   'cli.step.global_easiest': 'Choosing "Global" is usually easiest!',
-  'cli.step.auth_required': '⚙️ Authentication Required:',
-  'cli.step.auth_desc': 'ClaudeKit requires GitHub CLI authentication to download ClaudeKit Engineer kit.',
-  'cli.step.auth_comment': '# Authenticate before ck init',
-  'cli.step.pat_note': '📝 Note: Personal Access Tokens (PAT) are no longer supported',
+  'cli.step.auth_required': '⚙️ Smart Authentication (v3.16.0+):',
+  'cli.step.auth_desc': 'ClaudeKit uses multi-tier authentication to download kits from private repository. It checks in order:',
+  'cli.step.auth_method1': '<strong>1. Environment Variables</strong> - GITHUB_TOKEN or GH_TOKEN (best for CI/CD)',
+  'cli.step.auth_method2': '<strong>2. GitHub CLI</strong> - If <code class="font-mono text-purple-600 dark:text-purple-400">gh</code> is logged in (recommended for local)',
+  'cli.step.auth_method3': '<strong>3. OS Keychain</strong> - Token saved from previous login',
+  'cli.step.auth_method4': '<strong>4. Interactive Prompt</strong> - Guides you to create and save token',
+  'cli.step.auth_comment': '# Recommended: Login with GitHub CLI first',
+  'cli.step.auth_git_mode': '💡 <strong>Git Clone Mode:</strong> Use <code class="font-mono text-purple-600 dark:text-purple-400">ck init --use-git</code> to use your native git credentials instead.',
   'cli.step.start_cli_comment': '# Starts interactive Claude Code CLI',
   'cli.step.user_prompt_3': 'Using ui-ux-pro-max skill, create a landing page for my coffee shop',
   'cli.step.thats_it': 'That\'s it! AI will search design databases and create beautiful code for you.',
@@ -914,8 +1097,8 @@ export default {
   'ccs.guide.edit_settings': 'Edit settings file:',
 
   // Workflows Guide
-  'workflows.guide.title': 'Recommended Workflows',
-  'workflows.guide.subtitle': 'Step-by-step guides helping you use AI to build software without knowing how to code.',
+  'workflows.guide.title': 'Workflow Recipes',
+  'workflows.guide.subtitle': 'Ready-to-use command sequences for common development tasks.',
   'workflows.guide.banner.title': 'New to ClaudeKit?',
   'workflows.guide.banner.description': 'These workflows consist of sequences of commands that work together to accomplish common tasks. Perfect for getting started!',
   'workflows.guide.best_for': 'Best for:',
@@ -930,16 +1113,9 @@ export default {
   'workflows.tip.help.desc': 'Type `/ck-help` to see all 60+ commands organized by category',
   'workflows.tip.plan.title': 'Always start with /plan',
   'workflows.tip.plan.desc': 'Create a structured plan first, then use `/code` to execute it step-by-step',
-  'workflows.common.title': 'Common Commands Reference',
-  'workflows.cmd.brainstorm': 'Explore ideas and possibilities',
-  'workflows.cmd.plan': 'Create implementation plans',
-  'workflows.cmd.cook': 'Implement features end-to-end',
-  'workflows.cmd.code': 'Implement existing plans',
-  'workflows.cmd.fix': 'Fix bugs and issues',
-  'workflows.cmd.test': 'Run and analyze tests',
-  'workflows.cmd.debug': 'Investigate issues',
-  'workflows.cmd.ask': 'Get technical guidance',
-  'workflows.cmd.clear': 'Clear conversation history',
+  'workflows.related.title': 'Related Guides',
+  'workflows.related.commands_desc': 'Full command reference with complexity ratings',
+  'workflows.related.flowchart_desc': 'Interactive decision tree for command selection',
   'workflows.more.text': 'Need more workflows? See',
   'workflows.more.link': 'full docs from official Claudekit site',
 
@@ -1015,15 +1191,69 @@ export default {
   // Categories & Tips
   'commands.categories.title': 'All Commands by Category',
 
-  'commands.tips.title': 'Tips for Beginners',
-  'commands.tips.1.title': 'Talk Like a Human',
-  'commands.tips.1.desc': 'No need for technical jargon! Explain what you want in plain English. AI understands you!',
-  'commands.tips.2.title': 'Use @ to Reference Files',
-  'commands.tips.2.desc': 'Type <code class="px-1.5 py-0.5 rounded bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-mono text-xs">@filename</code> to tell AI which files to work with',
-  'commands.tips.3.title': 'Start Small',
-  'commands.tips.3.desc': 'Begin with simple commands like <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono text-xs">/ask</code> or <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono text-xs">/brainstorm</code> to get comfortable',
-  'commands.tips.4.title': 'Don\'t Be Afraid to Experiment',
-  'commands.tips.4.desc': 'AI helps you learn as you go. Try different commands and see what happens!',
+  // Tips for Non-Developers
+  'commands.tips.title': 'Tips for Non-Developers',
+  'commands.tips.intro': 'New to coding? Here is what you need to know.',
+
+  'commands.tips.def.command': 'What\'s a "command"?',
+  'commands.tips.def.command_desc': 'Think of it like a voice command to a super-smart assistant. Type <code>/something</code> and Claude does a complex task for you.',
+
+  'commands.tips.def.git': 'What\'s "Git"?',
+  'commands.tips.def.git_desc': 'Git is like a time machine for your code. It saves every version so you can go back if something breaks.',
+
+  'commands.tips.def.deployment': 'What\'s "Deployment"?',
+  'commands.tips.def.deployment_desc': 'Putting your code on the internet so others can use it.',
+
+  'commands.tips.def.integration': 'What\'s "Integration"?',
+  'commands.tips.def.integration_desc': 'Connecting your app to other services (like payment processors, APIs, databases).',
+
+  'commands.tips.def.testing': 'What\'s "Testing"?',
+  'commands.tips.def.testing_desc': 'Checking if your code works correctly before showing it to users.',
+
+  'commands.tips.def.token': 'What\'s "Token Consumption"?',
+  'commands.tips.def.token_desc': 'Think of tokens like "credits" that Claude uses to think and write. More complex tasks = more tokens needed.',
+
+  'commands.tips.qa.title': 'Common Questions',
+  'commands.tips.qa.q1': 'Which command should I use first?',
+  'commands.tips.qa.a1': 'If starting new → <code>/bootstrap</code>. If adding feature → <code>/plan</code> or <code>/cook</code>. If fixing bug → <code>/fix</code>.',
+
+  'commands.tips.qa.q2': 'Difference between /plan and /cook?',
+  'commands.tips.qa.a2': '<code>/plan</code> creates a blueprint first (you review it, then <code>/code</code> executes it). <code>/cook</code> does both in one go (faster but less control).',
+
+  'commands.tips.qa.q3': 'Do I need to be a developer?',
+  'commands.tips.qa.a3': 'No, but technical context helps. Claude will guide you through each step.',
+
+  'commands.tips.qa.q4': 'Can I undo mistakes?',
+  'commands.tips.qa.a4': 'Yes! Use Git (<code>/git:cm</code> saves your work) and Claude will warn before destructive actions.',
+
+  'commands.tips.qa.q5': 'How do I save tokens?',
+  'commands.tips.qa.a5': 'Use <code>:fast</code> variants when you know what you are doing. Use <code>:parallel</code> only for large projects where speed matters more than cost.',
+
+  // Command Modifiers
+  'commands.modifiers.title': 'Command Modifiers Explained',
+  'commands.modifiers.col_modifier': 'Modifier',
+  'commands.modifiers.col_meaning': 'Meaning',
+  'commands.modifiers.col_impact': 'Token Impact',
+  'commands.modifiers.col_example': 'Example',
+
+  'commands.modifiers.fast_meaning': 'Skip research, quick execution',
+  'commands.modifiers.fast_impact': 'Lower',
+  'commands.modifiers.hard_meaning': 'Deep analysis, thorough',
+  'commands.modifiers.hard_impact': 'Higher',
+  'commands.modifiers.auto_meaning': 'Trust Claude, less interaction',
+  'commands.modifiers.auto_impact': 'Same',
+  'commands.modifiers.parallel_meaning': 'Use multiple agents (faster)',
+  'commands.modifiers.parallel_impact': 'Higher',
+  'commands.modifiers.two_meaning': 'Get 2 options/approaches',
+  'commands.modifiers.two_impact': 'Higher',
+
+  // Getting Help
+  'commands.help.title': 'Getting Help',
+  'commands.help.stuck': 'Stuck? Type <code>/ck-help</code> anytime',
+  'commands.help.ideas': 'Need ideas? Try <code>/brainstorm</code> before planning',
+  'commands.help.progress': 'Review progress? Run <code>/watzup</code> to see what is done',
+  'commands.help.broken': 'Something broken? Start with <code>/debug</code> or <code>/fix</code>',
+  'commands.help.tokens': 'Watch your tokens? Check the ⚡ column',
 
   // Legend
   'commands.legend.title': 'Understanding the Symbols',
@@ -1038,41 +1268,12 @@ export default {
   'commands.legend.token_low': 'Low token usage',
   'commands.legend.token_med': 'Medium token usage',
   'commands.legend.token_high': 'High token usage',
-  'commands.legend.token_max': 'Maximum token usage',
+  'commands.legend.token_very_high': 'Very High token usage',
+  'commands.legend.token_max': 'Ultra High token usage',
 
-  // Complexity Labels
-  'commands.label.easy': 'Easy',
-  'commands.label.medium': 'Medium',
-  'commands.label.advanced': 'Advanced',
 
-  // New translations for commands array in component
-  'commands.desc.plan': 'Create detailed implementation plans',
-  'commands.desc.code': 'Implement existing plans with tests',
-  'commands.desc.cook': 'All-in-one: plan + code + test',
-  'commands.desc.bootstrap': 'Create complete projects from scratch',
-  'commands.desc.brainstorm': 'Explore ideas and possibilities',
-  'commands.desc.fix': 'Smart auto-fix for any issue',
-  'commands.desc.debug': 'Find the root cause of issues',
-  'commands.desc.fix_test': 'Fix failing tests',
-  'commands.desc.fix_ui': 'Fix UI/design issues',
-  'commands.desc.fix_types': 'Fix TypeScript errors',
-  'commands.desc.fix_ci': 'Fix CI/CD pipeline issues',
-  'commands.desc.test': 'Run tests and analyze results',
-  'commands.desc.review_codebase': 'Comprehensive code review',
-  'commands.desc.watzup': 'Review recent changes',
-  'commands.desc.ask': 'Ask technical questions',
-  'commands.desc.scout': 'Search and explore codebase',
-  'commands.desc.ck_help': 'Interactive ClaudeKit guide',
-  'commands.desc.resume': 'Resume session from ID',
-  'commands.desc.design_fast': 'Quick design generation',
-  'commands.desc.design_good': 'High-quality designs',
-  'commands.desc.content_enhance': 'Improve existing content',
-  'commands.desc.git_cm': 'Smart commit messages',
-  'commands.desc.git_pr': 'Create pull requests',
-  'commands.desc.git_merge': 'Merge with conflict resolution',
-
-  'commands.docs.text': 'Need more commands?',
-  'commands.docs.link': 'See full docs from official Claudekit site.',
+  'commands.docs.text': 'Visit',
+  'commands.docs.link': 'official ClaudeKit documentation site to see comprehensive docs.',
 
 
   // Resume Guide
@@ -1132,4 +1333,177 @@ export default {
   'permissions.guide.option2.source_link': 'Additional Commands List',
   'permissions.guide.docs.text': 'For comprehensive documentation on permission scopes and syntax, visit the',
   'permissions.guide.docs.link': 'Official Claude Code Documentation',
+
+  // Token Tips Guide
+  'guides.token_tips.title': 'Token Tips',
+  'guides.token_tips.description': 'Save tokens and reduce costs',
+  'token_tips.guide.title': 'Token Saving Tips',
+  'token_tips.guide.tagline': 'Reduce token usage by 50%+ with these tricks',
+  'token_tips.guide.description': 'Every token counts. Learn practical techniques to keep your context clean, delegate efficiently, and save money while being more productive.',
+
+  'token_tips.guide.why_title': 'Why Token Efficiency Matters',
+  'token_tips.guide.why_desc': 'Tokens directly impact cost, speed, and context quality. A bloated context leads to slower responses, higher costs, and confused outputs. Master these tips to work smarter.',
+
+  'token_tips.guide.quick_win_title': 'Quick Win: The /clear Command',
+  'token_tips.guide.quick_win_desc': 'The single most impactful command for token management. Use it after completing a task or when context becomes cluttered.',
+  'token_tips.guide.quick_win_label': 'Reset context instantly:',
+  'token_tips.guide.quick_win_result': 'Clears entire conversation, starts fresh with minimal tokens.',
+
+  // Tip 1
+  'token_tips.guide.tip1.title': 'Master Context Management',
+  'token_tips.guide.tip1.desc': 'Two essential commands for keeping your context lean and efficient:',
+  'token_tips.guide.tip1.clear_desc': 'Full reset',
+  'token_tips.guide.tip1.clear_when': 'Use after task completion, switching projects, or when stuck',
+  'token_tips.guide.tip1.compact_desc': 'Smart compression',
+  'token_tips.guide.tip1.compact_when': 'Preserves key context while reducing tokens. Use mid-task.',
+  'token_tips.guide.tip1.pro_tip': 'Pro tip: Use /clear between unrelated tasks. Don\'t carry authentication code context into a UI task.',
+
+  // Tip 2
+  'token_tips.guide.tip2.title': 'Leverage Subagent Delegation',
+  'token_tips.guide.tip2.desc': 'Subagents run in isolated contexts. They consume their own tokens without bloating your main conversation.',
+  'token_tips.guide.tip2.benefit1_title': 'Isolated Context',
+  'token_tips.guide.tip2.benefit1_desc': 'Each agent has 200K tokens - independent from main',
+  'token_tips.guide.tip2.benefit2_title': 'Parallel Execution',
+  'token_tips.guide.tip2.benefit2_desc': 'Multiple agents work simultaneously',
+
+  // Tip 3
+  'token_tips.guide.tip3.title': 'Use Scout for Exploration',
+  'token_tips.guide.tip3.desc': 'Never explore codebases directly in your main context. Scout agents return only relevant results.',
+  'token_tips.guide.tip3.key': 'Key benefit:',
+  'token_tips.guide.tip3.key_desc': 'Scout searches thousands of files but only returns what matters - no file contents bloating your context.',
+
+  // Tip 4
+  'token_tips.guide.tip4.title': 'Targeted Skill Activation',
+  'token_tips.guide.tip4.desc': 'Skills add instructions to context. Loading unnecessary skills wastes tokens.',
+  'token_tips.guide.tip4.rule': 'Rule: Only activate skills you\'ll actually use in this session.',
+
+  // Tip 5
+  'token_tips.guide.tip5.title': 'Use CCS for Cost Optimization',
+  'token_tips.guide.tip5.desc': 'Delegate token-heavy tasks to cheaper models. Reserve Claude for complex reasoning.',
+  'token_tips.guide.tip5.glm_savings': 'GLM savings vs Claude',
+  'token_tips.guide.tip5.kimi_use': 'Analysis & thinking',
+  'token_tips.guide.tip5.claude_use': 'Complex reasoning',
+
+  // Common Mistakes
+  'token_tips.guide.mistakes_title': 'Common Mistakes to Avoid',
+  'token_tips.guide.mistake1.title': 'Never clearing context',
+  'token_tips.guide.mistake1.desc': 'Old context confuses new tasks. Clear between unrelated work.',
+  'token_tips.guide.mistake2.title': 'Reading entire files',
+  'token_tips.guide.mistake2.desc': 'Use grep/scout to find relevant sections instead of loading full files.',
+  'token_tips.guide.mistake3.title': 'Long conversation chains',
+  'token_tips.guide.mistake3.desc': 'Break complex tasks into separate sessions. Use /resume to continue.',
+  'token_tips.guide.mistake4.title': 'Loading all skills',
+  'token_tips.guide.mistake4.desc': 'Each skill adds to context. Only activate what you need.',
+
+  // Pro Tips
+  'token_tips.guide.pro_tips_title': 'Pro Tips',
+  'token_tips.guide.pro1.title': 'Use /cook for features',
+  'token_tips.guide.pro1.desc': 'It automatically delegates to subagents, keeping main context clean.',
+  'token_tips.guide.pro2.title': 'Session checkpoints',
+  'token_tips.guide.pro2.desc': 'Note session IDs after key milestones. Resume exactly where you left off.',
+  'token_tips.guide.pro3.title': 'Batch similar tasks',
+  'token_tips.guide.pro3.desc': 'Group related work in one session, then /clear before switching context.',
+
+  // Summary
+  'token_tips.guide.summary_title': 'TL;DR - Token Saving Cheatsheet',
+  'token_tips.guide.summary1': 'Reset context',
+  'token_tips.guide.summary2': 'Auto-delegate',
+  'token_tips.guide.summary3': 'Isolated search',
+  'token_tips.guide.summary4': 'Load on demand',
+  'token_tips.guide.summary5': 'Cheaper models',
+
+  // Case Study 1: Rate Limit Mid-Task
+  'token_tips.guide.case1.title': 'Case Study: Hit Rate Limit Mid-Task',
+  'token_tips.guide.case1.subtitle': 'Real scenario with solution',
+  'token_tips.guide.case1.problem': 'The Problem',
+  'token_tips.guide.case1.problem_desc': 'You\'re implementing authentication, 70% done, then Claude hits rate limit. All context lost?',
+  'token_tips.guide.case1.result': 'The Solution',
+  'token_tips.guide.case1.result_desc': 'Export context, switch to GLM with CCS, resume with session ID. Zero context loss, 81% cheaper to continue.',
+
+  // Tip 6: /export Command
+  'token_tips.guide.export.title': '/export - Save Your Context',
+  'token_tips.guide.export.desc': 'Export your conversation to markdown before risky operations or when switching providers. Your safety net for context preservation.',
+  'token_tips.guide.export.benefit1': 'Backup Before Risk',
+  'token_tips.guide.export.benefit1_desc': 'Save context before major refactors or experiments',
+  'token_tips.guide.export.benefit2': 'Cross-Provider Resume',
+  'token_tips.guide.export.benefit2_desc': 'Continue on different model (GLM, Kimi) with full context',
+
+  // Tip 7: Context Engineering Skill
+  'token_tips.guide.context_eng.title': 'Context Engineering Skill',
+  'token_tips.guide.context_eng.badge': 'NEW',
+  'token_tips.guide.context_eng.desc': 'Activate this skill for automatic context optimization. Uses the Four-Bucket Strategy to intelligently manage your token usage.',
+  'token_tips.guide.context_eng.bucket1': 'External files',
+  'token_tips.guide.context_eng.bucket2': 'Pull relevant only',
+  'token_tips.guide.context_eng.bucket3': 'Smart summarize',
+  'token_tips.guide.context_eng.bucket4': 'Sub-agents',
+  'token_tips.guide.context_eng.tip': 'Pro tip: Skill auto-triggers /compact at 70-80% context utilization. Uses anchored iterative compression (98.6% compression, 3.7/5 quality).',
+
+  // Case Study 2: Long Session Optimization
+  'token_tips.guide.case2.title': 'Case Study: Long Session Optimization',
+  'token_tips.guide.case2.subtitle': 'Prevent context overload',
+  'token_tips.guide.case2.desc': 'When sessions run long, context fills up. The context-engineering skill watches utilization and optimizes automatically.',
+  'token_tips.guide.case2.metric1': 'Warning level',
+  'token_tips.guide.case2.metric2': 'Trigger optimization',
+  'token_tips.guide.case2.metric3': 'Compression achieved',
+
+  // Session Recovery Guide (merged with Resume Guide)
+  'guides.session_recovery.title': 'Session Recovery',
+  'guides.session_recovery.description': 'Recover sessions, resume work, and transfer context between providers',
+  'session_recovery.guide.title': 'Session Recovery & Resume',
+  'session_recovery.guide.tagline': 'Never lose progress when switching models',
+  'session_recovery.guide.description': 'Hit a rate limit? Model error? Learn how to resume sessions, export context, and seamlessly continue your work.',
+
+  'session_recovery.guide.problem_title': 'The Frustration',
+  'session_recovery.guide.problem_desc': 'You\'re deep in implementation, context loaded, solution forming... then "You\'ve reached your usage limit." All momentum lost? Not anymore.',
+
+  // Understanding Sessions
+  'session_recovery.guide.understand.title': 'Understanding Sessions',
+  'session_recovery.guide.understand.desc': 'Every conversation with Claude Code creates a session with a unique ID. Sessions are stored locally per project and can be resumed across any provider.',
+  'session_recovery.guide.understand.file_label': 'File path:',
+  'session_recovery.guide.understand.warning_title': 'Key Insight',
+  'session_recovery.guide.understand.warning_desc': 'Sessions are project-based, not provider-specific. You can start with Claude, then /resume with GLM or any other provider.',
+
+  // Same-Provider Resume (Works)
+  'session_recovery.guide.same_provider.title': 'Resume Sessions',
+  'session_recovery.guide.same_provider.works_badge': 'Works',
+  'session_recovery.guide.same_provider.desc': 'Resume previous sessions from any provider. Perfect for continuing work after a break, in a new terminal, or switching to a different model.',
+  'session_recovery.guide.same_provider.result': 'Seamless Continuation',
+  'session_recovery.guide.same_provider.result_desc': 'All context from the previous session is restored. Continue exactly where you left off.',
+
+  // Export Context
+  'session_recovery.guide.export.title': 'Export Context',
+  'session_recovery.guide.export.badge': 'For Bloated Sessions',
+  'session_recovery.guide.export.desc': 'When your session context is too large (100K+ tokens), /resume just moves the problem. Use /export to start fresh with only the essential context.',
+  'session_recovery.guide.export.decision_title': 'When to Use Which?',
+  'session_recovery.guide.export.decision_desc': '<strong>Use /resume</strong> when context is healthy and you just need to switch providers.<br/><strong>Use /export</strong> when context is bloated and you need a fresh start with key information only.',
+
+  // Fallback Strategies
+  'session_recovery.guide.fallback.title': 'Model Fallback Strategies',
+  'session_recovery.guide.fallback.desc': 'Set up multiple terminals with different providers ready. When one hits limits, just /resume in another terminal.',
+  'session_recovery.guide.fallback.claude_use': 'Primary: Complex tasks',
+  'session_recovery.guide.fallback.agy_use': 'Backup: Full Claude power',
+  'session_recovery.guide.fallback.glm_use': '81% cheaper: Implementation',
+
+  // Pro Tips
+  'session_recovery.guide.protips.title': 'Pro Tips',
+  'session_recovery.guide.protips.badge': 'Power User',
+  'session_recovery.guide.protips.desc': 'Advanced tricks for seamless session recovery when you need them most.',
+  'session_recovery.guide.protips.note_title': 'Multiple Claude Accounts',
+  'session_recovery.guide.protips.note_desc': 'If you have multiple Claude sub-accounts, you can rotate between them when hitting rate limits. Use /login to switch accounts without losing your session context.',
+
+  // Emergency Checklist
+  'session_recovery.guide.emergency.title': 'Emergency Recovery Checklist',
+  'session_recovery.guide.emergency.desc': 'Bookmark this. When things go wrong mid-task, follow these steps:',
+
+  // Benefits
+  'session_recovery.guide.benefit1.title': 'Save 80%+ on Costs',
+  'session_recovery.guide.benefit1.desc': 'Start complex tasks with Claude, then /resume with GLM for routine implementation at 81% lower cost.',
+  'session_recovery.guide.benefit2.title': 'No Downtime',
+  'session_recovery.guide.benefit2.desc': 'Don\'t let rate limits stop your flow. Just /resume in a different provider and continue working.',
+
+  // Related Guides
+  'session_recovery.guide.related_title': 'Related Guides',
+  'session_recovery.guide.related_ccs': 'Multi-account & model switching',
+  'session_recovery.guide.related_token': 'Reduce token consumption',
+  'session_recovery.guide.related_commands': 'All available commands',
 } as const;

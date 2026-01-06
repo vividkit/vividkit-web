@@ -245,46 +245,35 @@ const levelColors: Record<string, string> = {
     </div>
   </div>
 
-  <!-- Common Commands Reference -->
-  <div class="mt-6 p-8 rounded-2xl bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 shadow-sm">
-    <h3 class="text-xl font-bold mb-6 text-slate-900 dark:text-slate-100">{t('workflows.common.title')}</h3>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-purple-300 dark:hover:border-purple-500/30 transition-colors">
-        <code class="text-sm text-purple-600 dark:text-purple-400 font-mono font-bold">/brainstorm</code>
-        <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">{t('workflows.cmd.brainstorm')}</p>
-      </div>
-      <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-blue-300 dark:hover:border-blue-500/30 transition-colors">
-        <code class="text-sm text-blue-600 dark:text-blue-400 font-mono font-bold">/plan</code>
-        <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">{t('workflows.cmd.plan')}</p>
-      </div>
-      <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-green-300 dark:hover:border-green-500/30 transition-colors">
-        <code class="text-sm text-green-600 dark:text-green-400 font-mono font-bold">/cook</code>
-        <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">{t('workflows.cmd.cook')}</p>
-      </div>
-      <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-amber-300 dark:hover:border-amber-500/30 transition-colors">
-        <code class="text-sm text-amber-600 dark:text-amber-400 font-mono font-bold">/code</code>
-        <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">{t('workflows.cmd.code')}</p>
-      </div>
-      <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-red-300 dark:hover:border-red-500/30 transition-colors">
-        <code class="text-sm text-red-600 dark:text-red-400 font-mono font-bold">/fix</code>
-        <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">{t('workflows.cmd.fix')}</p>
-      </div>
-      <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-cyan-300 dark:hover:border-cyan-500/30 transition-colors">
-        <code class="text-sm text-cyan-600 dark:text-cyan-400 font-mono font-bold">/test</code>
-        <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">{t('workflows.cmd.test')}</p>
-      </div>
-      <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-orange-300 dark:hover:border-orange-500/30 transition-colors">
-        <code class="text-sm text-orange-600 dark:text-orange-400 font-mono font-bold">/debug</code>
-        <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">{t('workflows.cmd.debug')}</p>
-      </div>
-      <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-pink-300 dark:hover:border-pink-500/30 transition-colors">
-        <code class="text-sm text-pink-600 dark:text-pink-400 font-mono font-bold">/ask</code>
-        <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">{t('workflows.cmd.ask')}</p>
-      </div>
-      <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-600 transition-colors">
-        <code class="text-sm text-slate-600 dark:text-slate-400 font-mono font-bold">/clear</code>
-        <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">{t('workflows.cmd.clear')}</p>
-      </div>
+  <!-- Cross-page Navigation -->
+  <div class="mt-6 p-6 rounded-2xl bg-gradient-to-r from-cyan-500/5 to-purple-500/5 border border-slate-200 dark:border-slate-800">
+    <div class="flex items-center gap-3 mb-3">
+      <svg class="w-5 h-5 text-cyan-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" stroke-linecap="round" stroke-linejoin="round"/>
+        <polyline points="15 3 21 3 21 9" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="10" y1="14" x2="21" y2="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100">{t('workflows.related.title')}</h3>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <a href={currentLang === 'vi' ? '/vi/guides/commands' : '/guides/commands'} class="p-4 rounded-xl bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 hover:border-purple-300 dark:hover:border-purple-500/30 transition-colors group">
+        <div class="flex items-center gap-2 mb-1">
+          <code class="text-sm text-purple-600 dark:text-purple-400 font-mono font-bold">{t('guides.commands.title')}</code>
+          <svg class="w-4 h-4 text-slate-400 group-hover:text-purple-500 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 18 15 12 9 6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <p class="text-xs text-slate-600 dark:text-slate-400">{t('workflows.related.commands_desc')}</p>
+      </a>
+      <a href={currentLang === 'vi' ? '/vi/guides/flowchart' : '/guides/flowchart'} class="p-4 rounded-xl bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 hover:border-cyan-300 dark:hover:border-cyan-500/30 transition-colors group">
+        <div class="flex items-center gap-2 mb-1">
+          <code class="text-sm text-cyan-600 dark:text-cyan-400 font-mono font-bold">{t('guides.flowchart.title')}</code>
+          <svg class="w-4 h-4 text-slate-400 group-hover:text-cyan-500 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 18 15 12 9 6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <p class="text-xs text-slate-600 dark:text-slate-400">{t('workflows.related.flowchart_desc')}</p>
+      </a>
     </div>
   </div>
 

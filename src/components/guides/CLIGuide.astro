@@ -373,11 +373,17 @@ const ccsGuideUrl = currentLang === 'vi' ? '/vi/guides/ccs' : '/guides/ccs';
             <div class="text-xs text-purple-600 dark:text-purple-400 mb-2 font-medium">{t('cli.step.auth_required')}</div>
             <div class="text-xs text-slate-600 dark:text-slate-400 space-y-1">
               <div>{t('cli.step.auth_desc')}</div>
+              <ul class="list-none pl-0 space-y-1 mt-2">
+                <li set:html={t('cli.step.auth_method1')}></li>
+                <li set:html={t('cli.step.auth_method2')}></li>
+                <li set:html={t('cli.step.auth_method3')}></li>
+                <li set:html={t('cli.step.auth_method4')}></li>
+              </ul>
               <div class="mt-2 bg-white dark:bg-[#0D0D0D] rounded p-2 border border-purple-500/20 font-mono">
                 <code class="text-purple-700 dark:text-purple-300">gh auth login</code>
                 <span class="text-slate-500 ml-2">{t('cli.step.auth_comment')}</span>
               </div>
-              <div class="mt-2 text-slate-500">{t('cli.step.pat_note')}</div>
+              <div class="mt-2 text-slate-500" set:html={t('cli.step.auth_git_mode')}></div>
             </div>
           </div>
         </div>
