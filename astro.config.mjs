@@ -33,5 +33,9 @@ export default defineConfig({
     service: {
       entrypoint: 'astro/assets/services/sharp'
     }
+  },
+  redirects: {
+    '/guides/resume': '/guides/session-recovery',
+    '/vi/guides/resume': '/vi/guides/session-recovery'
   }
 });
