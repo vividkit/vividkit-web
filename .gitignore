@@ -30,7 +30,7 @@ pnpm-debug.log*
 # VSCode
 .vscode/
 
-.claude/
+# .claude/
 .agent/
 .shared/
 .reference/
