@@ -1458,15 +1458,28 @@ export default {
 
   // Understanding Sessions
   'session_recovery.guide.understand.title': 'Understanding Sessions',
-  'session_recovery.guide.understand.desc': 'Every conversation with Claude Code creates a session with a unique ID. Sessions are stored locally per project and can be resumed across any provider.',
+  'session_recovery.guide.understand.desc': 'Every conversation with Claude Code creates a session with a unique ID. Sessions are stored locally per project.',
   'session_recovery.guide.understand.file_label': 'File path:',
   'session_recovery.guide.understand.warning_title': 'Key Insight',
-  'session_recovery.guide.understand.warning_desc': 'Sessions are project-based, not provider-specific. You can start with Claude, then /resume with GLM or any other provider.',
+  'session_recovery.guide.understand.warning_desc': 'Sessions are project-based. Resume works within same provider type (API profiles share sessions, CLIProxy has separate session layer).',
+
+  // CLIProxy Limitation
+  'session_recovery.guide.cliproxy.title': 'Session Isolation',
+  'session_recovery.guide.cliproxy.badge': 'Important',
+  'session_recovery.guide.cliproxy.desc': '/resume does NOT work when switching between different provider types or account instances due to session storage isolation.',
+  'session_recovery.guide.cliproxy.works_title': '✅ Resume Works',
+  'session_recovery.guide.cliproxy.works_items': 'Default Claude ↔ API profiles (GLM, Kimi, MiniMax)|API profiles ↔ API profiles|CLIProxy ↔ CLIProxy (agy, gemini, codex)|CCS sub-account ↔ same sub-account',
+  'session_recovery.guide.cliproxy.fails_title': '❌ Resume Fails',
+  'session_recovery.guide.cliproxy.fails_items': 'Default Claude ↔ CCS sub-accounts (different ~/.ccs/instances/)|Claude/API profiles ↔ CLIProxy providers|CLIProxy ↔ Claude/API profiles|Between different CCS sub-accounts',
+  'session_recovery.guide.cliproxy.reason_title': 'Why?',
+  'session_recovery.guide.cliproxy.reason_desc': 'Sessions are stored per config directory. Default Claude uses ~/.claude/, CCS sub-accounts use ~/.ccs/instances/{name}/, and CLIProxy has its own layer in ~/.ccs/cliproxy/.',
+  'session_recovery.guide.cliproxy.workaround_title': 'Workarounds',
+  'session_recovery.guide.cliproxy.workaround_desc': '<strong>Option 1:</strong> Use /export before switching, then paste key context in new session.<br/><strong>Option 2:</strong> Copy session .jsonl file to target config directory (e.g., ~/.claude/projects/{project}/ → ~/.ccs/instances/{name}/projects/{project}/).',
 
   // Same-Provider Resume (Works)
   'session_recovery.guide.same_provider.title': 'Resume Sessions',
-  'session_recovery.guide.same_provider.works_badge': 'Works',
-  'session_recovery.guide.same_provider.desc': 'Resume previous sessions from any provider. Perfect for continuing work after a break, in a new terminal, or switching to a different model.',
+  'session_recovery.guide.same_provider.works_badge': 'Same Provider Type',
+  'session_recovery.guide.same_provider.desc': 'Resume previous sessions within the same provider type. See Session Isolation above for full compatibility matrix.',
   'session_recovery.guide.same_provider.result': 'Seamless Continuation',
   'session_recovery.guide.same_provider.result_desc': 'All context from the previous session is restored. Continue exactly where you left off.',
 
@@ -1475,11 +1488,11 @@ export default {
   'session_recovery.guide.export.badge': 'For Bloated Sessions',
   'session_recovery.guide.export.desc': 'When your session context is too large (100K+ tokens), /resume just moves the problem. Use /export to start fresh with only the essential context.',
   'session_recovery.guide.export.decision_title': 'When to Use Which?',
-  'session_recovery.guide.export.decision_desc': '<strong>Use /resume</strong> when context is healthy and you just need to switch providers.<br/><strong>Use /export</strong> when context is bloated and you need a fresh start with key information only.',
+  'session_recovery.guide.export.decision_desc': '<strong>Use /resume</strong> when context is healthy AND staying within same provider type (see Session Isolation above).<br/><strong>Use /export</strong> when context is bloated, OR when switching between isolated provider types (e.g., Claude → CLIProxy, Default → CCS sub-account).',
 
   // Fallback Strategies
   'session_recovery.guide.fallback.title': 'Model Fallback Strategies',
-  'session_recovery.guide.fallback.desc': 'Set up multiple terminals with different providers ready. When one hits limits, just /resume in another terminal.',
+  'session_recovery.guide.fallback.desc': 'Set up multiple terminals with compatible providers ready. When one hits limits, /resume in another (respecting Session Isolation rules).',
   'session_recovery.guide.fallback.claude_use': 'Primary: Complex tasks',
   'session_recovery.guide.fallback.agy_use': 'Backup: Full Claude power',
   'session_recovery.guide.fallback.glm_use': '81% cheaper: Implementation',
@@ -1489,7 +1502,7 @@ export default {
   'session_recovery.guide.protips.badge': 'Power User',
   'session_recovery.guide.protips.desc': 'Advanced tricks for seamless session recovery when you need them most.',
   'session_recovery.guide.protips.note_title': 'Multiple Claude Accounts',
-  'session_recovery.guide.protips.note_desc': 'If you have multiple Claude sub-accounts, you can rotate between them when hitting rate limits. Use /login to switch accounts without losing your session context.',
+  'session_recovery.guide.protips.note_desc': "If you have multiple Claude sub-accounts, you can rotate between them when hitting rate limits. Use /login to switch accounts within the same session (context stays in memory). Note: /resume from another terminal won't work cross-account due to Session Isolation.",
 
   'session_recovery.guide.protips.rename_title': '/rename for easy resume',
   'session_recovery.guide.protips.rename_desc': 'Give your session a memorable name instead of using UUID',
@@ -1518,7 +1531,7 @@ export default {
   'session_recovery.guide.emergency.step2.title': "ASSESS CONTEXT SIZE",
   'session_recovery.guide.emergency.step2.desc': "Check if session is bloated (slow responses = likely bloated)",
   'session_recovery.guide.emergency.step3.title': "IF CONTEXT HEALTHY → /RESUME",
-  'session_recovery.guide.emergency.step3.desc': "Use /resume in another provider",
+  'session_recovery.guide.emergency.step3.desc': "Use /resume in a compatible provider (check Session Isolation)",
   'session_recovery.guide.emergency.step3.cmd_note': "# Or inside Claude Code:",
   'session_recovery.guide.emergency.step4.title': "IF CONTEXT BLOATED → /EXPORT",
   'session_recovery.guide.emergency.step4.desc': "Export and start fresh",
@@ -1528,9 +1541,9 @@ export default {
 
   // Benefits
   'session_recovery.guide.benefit1.title': 'Save 80%+ on Costs',
-  'session_recovery.guide.benefit1.desc': 'Start complex tasks with Claude, then /resume with GLM for routine implementation at 81% lower cost.',
+  'session_recovery.guide.benefit1.desc': 'Start complex tasks with Claude, then /resume with GLM (API profile) for routine implementation at 81% lower cost.',
   'session_recovery.guide.benefit2.title': 'No Downtime',
-  'session_recovery.guide.benefit2.desc': 'Don\'t let rate limits stop your flow. Just /resume in a different provider and continue working.',
+  'session_recovery.guide.benefit2.desc': 'Don\'t let rate limits stop your flow. /resume in a compatible provider and continue working.',
 
   // Related Guides
   'session_recovery.guide.related_title': 'Related Guides',

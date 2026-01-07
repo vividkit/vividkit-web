@@ -79,26 +79,6 @@ const exportUseCases = [
   }
 ];
 
-const crossProviderWorkflow = `# ✅ Cross-provider resume WORKS!
-# Sessions are stored locally per project, not per provider
-
-# Example: Start with Claude, continue with GLM
-# Terminal 1 (Claude):
-ccs work
-> "Help me implement auth..."
-# Note session ID or just exit
-
-# Terminal 2 (GLM):
-ccs glm --resume
-# OR inside Claude Code:
-> /resume
-# All previous context is loaded!
-
-# How it works:
-# 1. Claude Code stores sessions in ~/.claude/projects/{project}/
-# 2. When you /resume, it replays history to the new provider
-# 3. The new model sees the FULL conversation context`;
-
 const fallbackSteps = [
   {
     title: "Setup",
@@ -264,11 +244,81 @@ const emergencySteps = [
     </div>
   </div>
 
-  <!-- Section 2: Universal Resume -->
+  <!-- Section 2: CLIProxy Limitation -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border-2 border-red-200 dark:border-red-500/30 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-red-500/10 to-orange-500/10 border-b border-red-200 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-red-500/20 text-red-600 dark:text-red-400 font-bold text-sm">2</div>
+        <h4 class="text-lg font-bold text-slate-900 dark:text-slate-100">{t('session_recovery.guide.cliproxy.title')}</h4>
+        <span class="px-2 py-0.5 text-xs font-semibold bg-red-100 dark:bg-red-500/20 text-red-700 dark:text-red-400 rounded-full">
+          {t('session_recovery.guide.cliproxy.badge')}
+        </span>
+      </div>
+    </div>
+    <div class="p-6 space-y-4">
+      <p class="text-slate-600 dark:text-slate-400">
+        {t('session_recovery.guide.cliproxy.desc')}
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Works -->
+        <div class="p-4 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30">
+          <div class="font-bold text-emerald-700 dark:text-emerald-400 text-sm mb-2">{t('session_recovery.guide.cliproxy.works_title')}</div>
+          <ul class="text-xs text-slate-600 dark:text-slate-400 space-y-1">
+            {t('session_recovery.guide.cliproxy.works_items').split('|').map((item: string) => (
+              <li class="flex items-start gap-2">
+                <span class="text-emerald-500 mt-0.5">•</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Fails -->
+        <div class="p-4 rounded-lg bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/30">
+          <div class="font-bold text-red-700 dark:text-red-400 text-sm mb-2">{t('session_recovery.guide.cliproxy.fails_title')}</div>
+          <ul class="text-xs text-slate-600 dark:text-slate-400 space-y-1">
+            {t('session_recovery.guide.cliproxy.fails_items').split('|').map((item: string) => (
+              <li class="flex items-start gap-2">
+                <span class="text-red-500 mt-0.5">•</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Why -->
+      <div class="flex items-start gap-3 p-4 rounded-lg bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/30">
+        <svg class="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="16" x2="12" y2="12"/>
+          <line x1="12" y1="8" x2="12.01" y2="8"/>
+        </svg>
+        <div>
+          <div class="font-medium text-amber-700 dark:text-amber-400">{t('session_recovery.guide.cliproxy.reason_title')}</div>
+          <div class="text-sm text-slate-600 dark:text-slate-400 mt-1">{t('session_recovery.guide.cliproxy.reason_desc')}</div>
+        </div>
+      </div>
+
+      <!-- Workaround -->
+      <div class="flex items-start gap-3 p-4 rounded-lg bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/30">
+        <svg class="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+        </svg>
+        <div>
+          <div class="font-medium text-blue-700 dark:text-blue-400">{t('session_recovery.guide.cliproxy.workaround_title')}</div>
+          <div class="text-sm text-slate-600 dark:text-slate-400 mt-1" set:html={t('session_recovery.guide.cliproxy.workaround_desc')}></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: Resume Sessions -->
   <div class="bg-white dark:bg-slate-900/50 rounded-xl border-2 border-fuchsia-200 dark:border-fuchsia-500/30 overflow-hidden">
     <div class="p-6 bg-gradient-to-r from-fuchsia-500/10 to-pink-500/10 border-b border-fuchsia-200 dark:border-slate-800">
       <div class="flex items-center gap-3">
-        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-fuchsia-500/20 text-fuchsia-600 dark:text-fuchsia-400 font-bold text-sm">2</div>
+        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-fuchsia-500/20 text-fuchsia-600 dark:text-fuchsia-400 font-bold text-sm">3</div>
         <h4 class="text-lg font-bold text-slate-900 dark:text-slate-100">{t('session_recovery.guide.same_provider.title')}</h4>
       </div>
     </div>
@@ -304,11 +354,11 @@ const emergencySteps = [
     </div>
   </div>
 
-  <!-- Section 3: Export Context -->
+  <!-- Section 4: Export Context -->
   <div class="bg-white dark:bg-slate-900/50 rounded-xl border-2 border-amber-200 dark:border-amber-500/30 overflow-hidden">
     <div class="p-6 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border-b border-amber-200 dark:border-slate-800">
       <div class="flex items-center gap-3">
-        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-400 font-bold text-sm">3</div>
+        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-400 font-bold text-sm">4</div>
         <h4 class="text-lg font-bold text-slate-900 dark:text-slate-100">{t('session_recovery.guide.export.title')}</h4>
         <span class="px-2 py-0.5 text-xs font-semibold bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400 rounded-full">
           {t('session_recovery.guide.export.badge')}
@@ -363,11 +413,11 @@ const emergencySteps = [
 
 
 
-  <!-- Section 4: Model Fallback Strategies -->
+  <!-- Section 5: Model Fallback Strategies -->
   <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
     <div class="p-6 bg-gradient-to-r from-violet-500/10 to-purple-500/10 border-b border-slate-100 dark:border-slate-800">
       <div class="flex items-center gap-3">
-        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-violet-500/20 text-violet-600 dark:text-violet-400 font-bold text-sm">4</div>
+        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-violet-500/20 text-violet-600 dark:text-violet-400 font-bold text-sm">5</div>
         <h4 class="text-lg font-bold text-slate-900 dark:text-slate-100">{t('session_recovery.guide.fallback.title')}</h4>
       </div>
     </div>
@@ -407,11 +457,11 @@ const emergencySteps = [
     </div>
   </div>
 
-  <!-- Section 5: Pro Tips -->
+  <!-- Section 6: Pro Tips -->
   <div class="bg-white dark:bg-slate-900/50 rounded-xl border-2 border-cyan-200 dark:border-cyan-500/30 overflow-hidden">
     <div class="p-6 bg-gradient-to-r from-cyan-500/10 to-teal-500/10 border-b border-cyan-200 dark:border-slate-800">
       <div class="flex items-center gap-3">
-        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 font-bold text-sm">5</div>
+        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 font-bold text-sm">6</div>
         <h4 class="text-lg font-bold text-slate-900 dark:text-slate-100">{t('session_recovery.guide.protips.title')}</h4>
         <span class="px-2 py-0.5 text-xs font-semibold bg-cyan-100 dark:bg-cyan-500/20 text-cyan-700 dark:text-cyan-400 rounded-full">
           {t('session_recovery.guide.protips.badge')}
