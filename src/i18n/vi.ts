@@ -1464,15 +1464,28 @@ export default {
 
   // Understanding Sessions
   'session_recovery.guide.understand.title': 'Hiểu Về Session',
-  'session_recovery.guide.understand.desc': 'Mỗi cuộc hội thoại với Claude Code tạo ra một session với ID duy nhất. Các session được lưu trữ cục bộ theo project và có thể resume với bất kỳ provider nào.',
+  'session_recovery.guide.understand.desc': 'Mỗi cuộc hội thoại với Claude Code tạo ra một session với ID duy nhất. Các session được lưu trữ cục bộ theo project.',
   'session_recovery.guide.understand.file_label': 'Đường dẫn file:',
   'session_recovery.guide.understand.warning_title': 'Điểm Quan Trọng',
-  'session_recovery.guide.understand.warning_desc': 'Session dựa trên project, không phải provider. Bạn có thể bắt đầu với Claude, rồi /resume với GLM hoặc bất kỳ provider nào khác.',
+  'session_recovery.guide.understand.warning_desc': 'Session dựa trên project. Resume hoạt động trong cùng loại provider (API profiles chia sẻ session, CLIProxy có session layer riêng).',
+
+  // CLIProxy Limitation
+  'session_recovery.guide.cliproxy.title': 'Session Cô Lập',
+  'session_recovery.guide.cliproxy.badge': 'Quan Trọng',
+  'session_recovery.guide.cliproxy.desc': '/resume KHÔNG hoạt động khi chuyển đổi giữa các loại provider hoặc account instance khác nhau do session storage bị cô lập.',
+  'session_recovery.guide.cliproxy.works_title': '✅ Resume Hoạt Động',
+  'session_recovery.guide.cliproxy.works_items': 'Default Claude ↔ API profiles (GLM, Kimi, MiniMax)|API profiles ↔ API profiles|CLIProxy ↔ CLIProxy (agy, gemini, codex)|CCS sub-account ↔ cùng sub-account đó',
+  'session_recovery.guide.cliproxy.fails_title': '❌ Resume Không Hoạt Động',
+  'session_recovery.guide.cliproxy.fails_items': 'Default Claude ↔ CCS sub-accounts (khác ~/.ccs/instances/)|Claude/API profiles ↔ CLIProxy providers|CLIProxy ↔ Claude/API profiles|Giữa các CCS sub-accounts khác nhau',
+  'session_recovery.guide.cliproxy.reason_title': 'Tại sao?',
+  'session_recovery.guide.cliproxy.reason_desc': 'Sessions lưu theo config directory. Default Claude dùng ~/.claude/, CCS sub-accounts dùng ~/.ccs/instances/{name}/, và CLIProxy có layer riêng trong ~/.ccs/cliproxy/.',
+  'session_recovery.guide.cliproxy.workaround_title': 'Cách Giải Quyết',
+  'session_recovery.guide.cliproxy.workaround_desc': '<strong>Cách 1:</strong> Dùng /export trước khi chuyển, sau đó paste context quan trọng vào session mới.<br/><strong>Cách 2:</strong> Copy file session .jsonl sang target config directory (vd: ~/.claude/projects/{project}/ → ~/.ccs/instances/{name}/projects/{project}/).',
 
   // Same-Provider Resume (Works)
   'session_recovery.guide.same_provider.title': 'Resume Session',
-  'session_recovery.guide.same_provider.works_badge': 'Hoạt Động',
-  'session_recovery.guide.same_provider.desc': 'Resume các session trước đó từ bất kỳ provider nào. Hoàn hảo để tiếp tục công việc sau khi nghỉ, trong terminal mới, hoặc đổi sang model khác.',
+  'session_recovery.guide.same_provider.works_badge': 'Cùng Loại Provider',
+  'session_recovery.guide.same_provider.desc': 'Resume các session trước đó trong cùng loại provider. Xem Session Cô Lập ở trên để biết đầy đủ các trường hợp tương thích.',
   'session_recovery.guide.same_provider.result': 'Tiếp Tục Liền Mạch',
   'session_recovery.guide.same_provider.result_desc': 'Tất cả context từ session trước được khôi phục. Tiếp tục đúng chỗ bạn dừng lại.',
 
@@ -1481,11 +1494,11 @@ export default {
   'session_recovery.guide.export.badge': 'Cho Session Quá Lớn',
   'session_recovery.guide.export.desc': 'Khi context session quá lớn (100K+ tokens), /resume chỉ chuyển vấn đề sang nơi khác. Dùng /export để bắt đầu mới chỉ với context thiết yếu.',
   'session_recovery.guide.export.decision_title': 'Khi Nào Dùng Cái Nào?',
-  'session_recovery.guide.export.decision_desc': '<strong>Dùng /resume</strong> khi context còn healthy và chỉ cần đổi provider.<br/><strong>Dùng /export</strong> khi context quá lớn và cần bắt đầu mới chỉ với thông tin quan trọng.',
+  'session_recovery.guide.export.decision_desc': '<strong>Dùng /resume</strong> khi context còn healthy VÀ ở trong cùng loại provider (xem Session Cô Lập ở trên).<br/><strong>Dùng /export</strong> khi context quá lớn, HOẶC khi chuyển giữa các loại provider bị cô lập (vd: Claude → CLIProxy, Default → CCS sub-account).',
 
   // Fallback Strategies
   'session_recovery.guide.fallback.title': 'Chiến Lược Fallback Model',
-  'session_recovery.guide.fallback.desc': 'Setup nhiều terminal với các provider khác nhau sẵn sàng. Khi một cái bị limit, chỉ cần /resume trong terminal khác.',
+  'session_recovery.guide.fallback.desc': 'Setup nhiều terminal với các provider tương thích sẵn sàng. Khi một cái bị limit, /resume trong terminal khác (tuân theo quy tắc Session Cô Lập).',
   'session_recovery.guide.fallback.claude_use': 'Chính: Task phức tạp',
   'session_recovery.guide.fallback.agy_use': 'Backup: Full sức mạnh Claude',
   'session_recovery.guide.fallback.glm_use': 'Rẻ hơn 81%: Implementation',
@@ -1495,7 +1508,7 @@ export default {
   'session_recovery.guide.protips.badge': 'Power User',
   'session_recovery.guide.protips.desc': 'Các trick nâng cao để khôi phục session một cách mượt mà khi cần.',
   'session_recovery.guide.protips.note_title': 'Nhiều Tài Khoản Claude',
-  'session_recovery.guide.protips.note_desc': 'Nếu bạn có nhiều sub-account Claude, bạn có thể rotate giữa chúng khi bị rate limit. Sử dụng /login để switch account mà không mất session context.',
+  'session_recovery.guide.protips.note_desc': 'Nếu bạn có nhiều sub-account Claude, bạn có thể rotate giữa chúng khi bị rate limit. Dùng /login để switch account trong cùng session (context vẫn trong memory). Lưu ý: /resume từ terminal khác sẽ không work cross-account do Session Cô Lập.',
 
   'session_recovery.guide.protips.rename_title': '/rename để dễ resume',
   'session_recovery.guide.protips.rename_desc': 'Đặt tên dễ nhớ cho session thay vì dùng UUID',
@@ -1524,7 +1537,7 @@ export default {
   'session_recovery.guide.emergency.step2.title': "ĐÁNH GIÁ CONTEXT SIZE",
   'session_recovery.guide.emergency.step2.desc': "Check xem session có bị phình to không (phản hồi chậm = khả năng cao bị đầy)",
   'session_recovery.guide.emergency.step3.title': "NẾU CONTEXT OK → /RESUME",
-  'session_recovery.guide.emergency.step3.desc': "Dùng /resume ở provider khác",
+  'session_recovery.guide.emergency.step3.desc': "Dùng /resume ở provider tương thích (xem Session Cô Lập)",
   'session_recovery.guide.emergency.step3.cmd_note': "# Hoặc bên trong Claude Code:",
   'session_recovery.guide.emergency.step4.title': "NẾU CONTEXT QUÁ TẢI → /EXPORT",
   'session_recovery.guide.emergency.step4.desc': "Export ra file và bắt đầu session mới",
@@ -1534,9 +1547,9 @@ export default {
 
   // Benefits
   'session_recovery.guide.benefit1.title': 'Tiết Kiệm 80%+ Chi Phí',
-  'session_recovery.guide.benefit1.desc': 'Bắt đầu task phức tạp với Claude, rồi /resume với GLM cho implementation với chi phí rẻ hơn 81%.',
+  'session_recovery.guide.benefit1.desc': 'Bắt đầu task phức tạp với Claude, rồi /resume với GLM (API profile) cho implementation với chi phí rẻ hơn 81%.',
   'session_recovery.guide.benefit2.title': 'Không Thời Gian Chết',
-  'session_recovery.guide.benefit2.desc': 'Đừng để rate limit ngăn cản dòng làm việc. Chỉ cần /resume trong provider khác và tiếp tục làm việc.',
+  'session_recovery.guide.benefit2.desc': 'Đừng để rate limit ngăn cản dòng làm việc. /resume trong provider tương thích và tiếp tục làm việc.',
 
   // Related Guides
   'session_recovery.guide.related_title': 'Các Guide Liên Quan',
