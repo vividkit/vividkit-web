@@ -36,6 +36,13 @@ export const subscriptionPromotions: SubscriptionPromotion[] = [
     promoLinks: [{ label: 'z.ai/subscribe (referral)', url: 'https://z.ai/subscribe?ic=NEYH1LGAKE' }],
     color: 'emerald',
   },
+  {
+    id: 'minimax-subscription',
+    name: 'MiniMax',
+    tagline: 'Starter plan: $2 for first month (reg. $10) + 10% referral discount',
+    promoLinks: [{ label: 'platform.minimax.io (referral)', url: 'https://platform.minimax.io/subscribe/coding-plan?code=D3YHMfEe2x&source=link' }],
+    color: 'purple',
+  },
 
 ];
 

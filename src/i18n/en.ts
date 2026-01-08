@@ -464,6 +464,10 @@ export default {
   // Promotions Data
   'promotions.claude_pro.tagline': '50% off for the first 3 months ($10/month instead of $20)',
   'promotions.zai.tagline': 'Christmas 2025: 50% first-purchase + extra 10-20% off + 10% referral bonus',
+  'promotions.minimax.tagline': 'Starter plan: $2 for first month (reg. $10) + 10% referral discount',
+  'promotions.minimax.compatible': 'Compatible with all major coding tools (Claude Code, Cursor, Open Code, Kilo Code, ...)',
+  'promotions.minimax.performance': 'Performance: Strong in UI generation, rated between Sonnet 4.0 and 4.5, slightly better than GLM',
+  'promotions.minimax.cancel_note': '⚠️ Remember to cancel auto-renewal after purchase to avoid $10 charge for month 2',
 
   'promotions.tips.use_ccs.title': 'Use CCS to switch between providers',
   'promotions.tips.use_ccs.desc': 'Maximize your usage limits by switching between Claude, GLM, Kimi, and other providers using CCS.',
