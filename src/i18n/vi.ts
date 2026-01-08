@@ -247,6 +247,10 @@ export default {
   // Promotions Data
   'promotions.claude_pro.tagline': 'Giảm 50% cho 3 tháng đầu ($10/tháng thay vì $20)',
   'promotions.zai.tagline': 'Giáng sinh 2025: 50% lần đầu mua + giảm thêm 10-20% + 10% thưởng giới thiệu',
+  'promotions.minimax.tagline': 'Gói Starter: $2 cho tháng đầu (thường $10) + giảm thêm 10% giới thiệu',
+  'promotions.minimax.compatible': 'Tương thích với tất cả công cụ coding chính (Claude Code, Cursor, Open Code, Kilo Code, ...)',
+  'promotions.minimax.performance': 'Hiệu năng: Mạnh về gen UI, được đánh giá ngang Sonnet 4.0-4.5, nhỉnh hơn GLM',
+  'promotions.minimax.cancel_note': '⚠️ Nhớ hủy tự động gia hạn sau khi mua để tránh bị charge $10 từ tháng thứ 2',
 
   'promotions.tips.use_ccs.title': 'Dùng CCS để chuyển đổi nhà cung cấp',
   'promotions.tips.use_ccs.desc': 'Tối đa hóa giới hạn sử dụng bằng cách chuyển đổi giữa Claude, GLM, Kimi, và các nhà cung cấp khác sử dụng CCS.',
