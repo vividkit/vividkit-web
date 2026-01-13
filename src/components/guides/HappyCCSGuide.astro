@@ -1,0 +1,379 @@
+---
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+const translatePath = useTranslatedPath(currentLang);
+
+// Code examples
+const installCommand = `# Clone repository
+git clone https://github.com/thieung/dev-toolbox.git
+cd dev-toolbox/happy-ccs
+
+# Mac/Linux
+./install.sh
+
+# Windows PowerShell
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+.\\install.ps1`;
+
+const authCommand = `# First time - scan QR code with phone
+happy auth login
+
+# Re-authenticate if needed
+happy auth login --force`;
+
+const usageExamples = `# List all available profiles
+happy-ccs --list
+
+# Start with specific provider
+happy-ccs gemini
+
+# Resume previous session
+happy-ccs glm --resume
+
+# Daemon mode (run in background, control from phone)
+happy-ccs kimi daemon start
+
+# Test command (dry-run)
+happy-ccs gemini --dry-run`;
+---
+
+<div class="space-y-8 mt-6">
+  <!-- Hero Section -->
+  <div class="text-center space-y-4">
+    <h2 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
+      {t('happy_ccs.guide.title')}
+    </h2>
+    <p class="text-xl font-medium text-purple-600 dark:text-purple-400">
+      {t('happy_ccs.guide.tagline')}
+    </p>
+    <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+      {t('happy_ccs.guide.description')}
+    </p>
+  </div>
+
+  <!-- Mobile Vibe Coding Highlight -->
+  <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-600 to-pink-600 p-8 text-white">
+    <div class="absolute top-0 right-0 -mt-4 -mr-4 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+    <div class="absolute bottom-0 left-0 -mb-4 -ml-4 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
+    <div class="relative z-10 flex flex-col md:flex-row items-center gap-6">
+      <div class="flex-shrink-0">
+        <div class="w-20 h-20 rounded-2xl bg-white/20 backdrop-blur flex items-center justify-center">
+          <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+            <line x1="12" y1="18" x2="12" y2="18"/>
+          </svg>
+        </div>
+      </div>
+      <div class="text-center md:text-left">
+        <h3 class="text-2xl font-bold mb-2">{t('happy_ccs.guide.mobile_title')}</h3>
+        <p class="text-white/90 leading-relaxed">
+          {t('happy_ccs.guide.mobile_desc')}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key Features Grid -->
+  <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="p-5 rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
+      <div class="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center mb-3">
+        <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="5" y="2" width="14" height="20" rx="2"/>
+          <line x1="12" y1="18" x2="12" y2="18"/>
+        </svg>
+      </div>
+      <h4 class="font-bold text-slate-900 dark:text-slate-100 mb-1">{t('happy_ccs.guide.feature1_title')}</h4>
+      <p class="text-sm text-slate-600 dark:text-slate-400">{t('happy_ccs.guide.feature1_desc')}</p>
+    </div>
+
+    <div class="p-5 rounded-xl bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
+      <div class="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center mb-3">
+        <svg class="w-5 h-5 text-green-600 dark:text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+          <line x1="12" y1="19" x2="12" y2="22"/>
+        </svg>
+      </div>
+      <h4 class="font-bold text-slate-900 dark:text-slate-100 mb-1">{t('happy_ccs.guide.feature2_title')}</h4>
+      <p class="text-sm text-slate-600 dark:text-slate-400">{t('happy_ccs.guide.feature2_desc')}</p>
+    </div>
+
+    <div class="p-5 rounded-xl bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800">
+      <div class="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center mb-3">
+        <svg class="w-5 h-5 text-purple-600 dark:text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="3" width="20" height="14" rx="2"/>
+          <line x1="8" y1="21" x2="16" y2="21"/>
+          <line x1="12" y1="17" x2="12" y2="21"/>
+        </svg>
+      </div>
+      <h4 class="font-bold text-slate-900 dark:text-slate-100 mb-1">{t('happy_ccs.guide.feature3_title')}</h4>
+      <p class="text-sm text-slate-600 dark:text-slate-400">{t('happy_ccs.guide.feature3_desc')}</p>
+    </div>
+
+    <div class="p-5 rounded-xl bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800">
+      <div class="w-10 h-10 rounded-lg bg-orange-500/20 flex items-center justify-center mb-3">
+        <svg class="w-5 h-5 text-orange-600 dark:text-orange-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+        </svg>
+      </div>
+      <h4 class="font-bold text-slate-900 dark:text-slate-100 mb-1">{t('happy_ccs.guide.feature4_title')}</h4>
+      <p class="text-sm text-slate-600 dark:text-slate-400">{t('happy_ccs.guide.feature4_desc')}</p>
+    </div>
+  </div>
+
+  <!-- What is Happy-CCS -->
+  <div class="space-y-4">
+    <div class="flex items-start gap-4 p-6 rounded-xl bg-purple-500/5 dark:bg-purple-500/10 border border-purple-200 dark:border-purple-500/20">
+      <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-500/20 flex items-center justify-center">
+        <svg class="w-5 h-5 text-purple-600 dark:text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+          <path d="M2 17l10 5 10-5"/>
+          <path d="M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+      <div class="flex-1">
+        <div class="font-bold text-purple-700 dark:text-purple-400 mb-1 text-lg">{t('happy_ccs.guide.what_title')}</div>
+        <div class="text-slate-600 dark:text-slate-400 leading-relaxed mb-3">
+          {t('happy_ccs.guide.what_desc')}
+        </div>
+        <a
+          href={currentLang === 'vi' ? 'https://github.com/thieung/dev-toolbox/blob/main/happy-ccs/README-VN.md' : 'https://github.com/thieung/dev-toolbox/tree/main/happy-ccs'}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 text-sm text-purple-600 dark:text-purple-400 hover:underline"
+        >
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          {t('happy_ccs.guide.github_repo')}
+        </a>
+      </div>
+    </div>
+
+    <!-- Happy CLI Limitation -->
+    <div class="flex items-start gap-4 p-5 rounded-xl bg-amber-500/5 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20">
+      <div class="flex-shrink-0 w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-500/20 flex items-center justify-center">
+        <svg class="w-4 h-4 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+        </svg>
+      </div>
+      <div class="flex-1">
+        <div class="font-semibold text-amber-700 dark:text-amber-400 mb-1">{t('happy_ccs.guide.limitation_title')}</div>
+        <div class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+          {t('happy_ccs.guide.limitation_desc')}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Prerequisites -->
+  <div class="glass-card rounded-xl border-amber-200 dark:border-amber-500/30 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border-b border-amber-200 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400">
+          {t('happy_ccs.guide.prerequisites_title')}
+        </h3>
+      </div>
+    </div>
+    <div class="p-6">
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="space-y-2">
+          <div class="font-semibold text-slate-700 dark:text-slate-300">{t('happy_ccs.guide.required')}</div>
+          <ul class="space-y-1 text-slate-600 dark:text-slate-400">
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              Git
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              Node.js (npm)
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              Claude Code
+            </li>
+          </ul>
+        </div>
+        <div class="space-y-2">
+          <div class="font-semibold text-slate-700 dark:text-slate-300">{t('happy_ccs.guide.auto_installed')}</div>
+          <ul class="space-y-1 text-slate-600 dark:text-slate-400">
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <a href={translatePath('/guides/ccs')} class="text-blue-600 dark:text-blue-400 hover:underline">CCS (Claude Code Switch)</a>
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <a href="https://happy.engineering/docs/" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">Happy CLI</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 1: Installation -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border-b border-slate-100 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-600 dark:text-blue-400 font-bold text-sm">1</div>
+        <h4 class="text-lg font-bold text-slate-900 dark:text-slate-100">{t('happy_ccs.guide.step1_title')}</h4>
+      </div>
+    </div>
+    <div class="p-6">
+      <p class="text-slate-600 dark:text-slate-400 mb-4">
+        {t('happy_ccs.guide.step1_desc')}
+      </p>
+      <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 font-mono text-sm overflow-x-auto">
+        <pre class="text-slate-700 dark:text-slate-300">{installCommand}</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2: Authentication -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-green-500/10 to-emerald-500/10 border-b border-slate-100 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-green-500/20 text-green-600 dark:text-green-400 font-bold text-sm">2</div>
+        <h4 class="text-lg font-bold text-slate-900 dark:text-slate-100">{t('happy_ccs.guide.step2_title')}</h4>
+      </div>
+    </div>
+    <div class="p-6">
+      <p class="text-slate-600 dark:text-slate-400 mb-4">
+        {t('happy_ccs.guide.step2_desc')}
+      </p>
+      <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 font-mono text-sm overflow-x-auto">
+        <pre class="text-slate-700 dark:text-slate-300">{authCommand}</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3: Usage -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-purple-500/10 to-pink-500/10 border-b border-slate-100 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-purple-500/20 text-purple-600 dark:text-purple-400 font-bold text-sm">3</div>
+        <h4 class="text-lg font-bold text-slate-900 dark:text-slate-100">{t('happy_ccs.guide.step3_title')}</h4>
+      </div>
+    </div>
+    <div class="p-6">
+      <p class="text-slate-600 dark:text-slate-400 mb-4">
+        {t('happy_ccs.guide.step3_desc')}
+      </p>
+      <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-4 font-mono text-sm overflow-x-auto">
+        <pre class="text-slate-700 dark:text-slate-300">{usageExamples}</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Supported Providers -->
+  <div class="glass-card rounded-xl overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-indigo-500/10 to-violet-500/10 border-b border-slate-200 dark:border-slate-800">
+      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">
+        {t('happy_ccs.guide.providers_title')}
+      </h3>
+    </div>
+    <div class="p-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="flex items-center gap-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50">
+          <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-xs">G</div>
+          <span class="font-medium text-slate-700 dark:text-slate-300">Gemini</span>
+        </div>
+        <div class="flex items-center gap-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50">
+          <div class="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center text-green-600 dark:text-green-400 font-bold text-xs">GLM</div>
+          <span class="font-medium text-slate-700 dark:text-slate-300">GLM</span>
+        </div>
+        <div class="flex items-center gap-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50">
+          <div class="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-600 dark:text-purple-400 font-bold text-xs">K</div>
+          <span class="font-medium text-slate-700 dark:text-slate-300">Kimi</span>
+        </div>
+        <div class="flex items-center gap-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50">
+          <div class="w-8 h-8 rounded-full bg-orange-500/20 flex items-center justify-center text-orange-600 dark:text-orange-400 font-bold text-xs">M</div>
+          <span class="font-medium text-slate-700 dark:text-slate-300">MiniMax</span>
+        </div>
+      </div>
+      <p class="text-sm text-slate-500 dark:text-slate-500 mt-4">
+        {t('happy_ccs.guide.providers_note')}
+      </p>
+    </div>
+  </div>
+
+  <!-- Tips -->
+  <div class="flex items-start gap-4 p-6 rounded-xl bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20">
+    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center">
+      <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+      </svg>
+    </div>
+    <div class="flex-1">
+      <div class="font-bold text-emerald-700 dark:text-emerald-400 mb-2 text-lg">{t('happy_ccs.guide.tips_title')}</div>
+      <ul class="space-y-2 text-slate-600 dark:text-slate-400">
+        <li class="flex items-start gap-2">
+          <span class="text-emerald-500 mt-1">•</span>
+          {t('happy_ccs.guide.tip1')}
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="text-emerald-500 mt-1">•</span>
+          {t('happy_ccs.guide.tip2')}
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="text-emerald-500 mt-1">•</span>
+          {t('happy_ccs.guide.tip3')}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Learn More with Cross-page Navigation -->
+  <div class="p-6 rounded-2xl bg-gradient-to-r from-purple-500/5 to-pink-500/5 border border-slate-200 dark:border-slate-800">
+    <div class="flex items-center gap-3 mb-4">
+      <svg class="w-5 h-5 text-purple-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" stroke-linecap="round" stroke-linejoin="round"/>
+        <polyline points="15 3 21 3 21 9" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="10" y1="14" x2="21" y2="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100">{t('happy_ccs.guide.learn_more')}</h3>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <a href={translatePath('/guides/ccs')} class="p-4 rounded-xl bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 hover:border-purple-300 dark:hover:border-purple-500/30 transition-colors group">
+        <div class="flex items-center gap-2 mb-1">
+          <code class="text-sm text-purple-600 dark:text-purple-400 font-mono font-bold">{t('guides.ccs.title')}</code>
+          <svg class="w-4 h-4 text-slate-400 group-hover:text-purple-500 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 18 15 12 9 6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <p class="text-xs text-slate-600 dark:text-slate-400">{t('happy_ccs.guide.related_ccs_desc')}</p>
+      </a>
+      <a href="https://happy.engineering/docs/" target="_blank" rel="noopener noreferrer" class="p-4 rounded-xl bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 hover:border-pink-300 dark:hover:border-pink-500/30 transition-colors group">
+        <div class="flex items-center gap-2 mb-1">
+          <code class="text-sm text-pink-600 dark:text-pink-400 font-mono font-bold">Happy CLI Docs</code>
+          <svg class="w-4 h-4 text-slate-400 group-hover:text-pink-500 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+            <polyline points="15 3 21 3 21 9"/>
+            <line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+        </div>
+        <p class="text-xs text-slate-600 dark:text-slate-400">{t('happy_ccs.guide.related_happy_desc')}</p>
+      </a>
+    </div>
+  </div>
+
+  <!-- Uninstall -->
+  <div class="bg-slate-50 dark:bg-slate-800/30 rounded-xl p-6 border border-slate-200 dark:border-slate-700">
+    <h4 class="font-bold text-slate-700 dark:text-slate-300 mb-3">{t('happy_ccs.guide.uninstall_title')}</h4>
+    <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 font-mono text-sm">
+      <code class="text-red-600 dark:text-red-400">npm uninstall -g happy-ccs</code>
+    </div>
+  </div>
+</div>
