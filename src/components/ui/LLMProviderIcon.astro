@@ -1,0 +1,65 @@
+---
+/**
+ * LLMProviderIcon - Display AI/LLM provider icons from lobe-icons
+ * Uses static SVGs from unpkg CDN for optimal performance
+ * @see https://github.com/lobehub/lobe-icons
+ */
+
+interface Props {
+  provider: 'gemini' | 'google' | 'zhipu' | 'zai' | 'glm' | 'kimi' | 'moonshot' | 'minimax' | 'openai' | 'claude' | 'openrouter' | 'deepseek' | 'grok' | 'mistral';
+  size?: number;
+  variant?: 'color' | 'mono' | 'text';
+  class?: string;
+}
+
+const { provider, size = 24, variant = 'color', class: className = '' } = Astro.props;
+
+// Map provider names to lobe-icons icon names
+const iconMap: Record<string, string> = {
+  gemini: 'gemini',
+  google: 'google',
+  zhipu: 'zhipu',
+  zai: 'zai',
+  glm: 'zai',
+  chatglm: 'chatglm',
+  kimi: 'kimi',
+  moonshot: 'moonshot',
+  minimax: 'minimax',
+  openai: 'openai',
+  claude: 'claude',
+  anthropic: 'anthropic',
+  openrouter: 'openrouter',
+  deepseek: 'deepseek',
+  grok: 'grok',
+  mistral: 'mistral',
+};
+
+const iconName = iconMap[provider] || provider;
+
+// Icons that don't have a -color variant (use mono instead)
+const noColorVariant = ['zai', 'moonshot'];
+
+// Build icon URL based on variant
+const getIconUrl = (name: string, variant: string): string => {
+  const base = 'https://unpkg.com/@lobehub/icons-static-svg@latest/icons';
+  // Fallback to mono if icon doesn't have color variant
+  if (variant === 'color' && noColorVariant.includes(name)) {
+    return `${base}/${name}.svg`;
+  }
+  if (variant === 'color') return `${base}/${name}-color.svg`;
+  if (variant === 'text') return `${base}/${name}-text.svg`;
+  return `${base}/${name}.svg`;
+};
+
+const iconUrl = getIconUrl(iconName, variant);
+---
+
+<img
+  src={iconUrl}
+  alt={`${provider} icon`}
+  width={size}
+  height={size}
+  class:list={['inline-block', className]}
+  loading="lazy"
+  decoding="async"
+/>
