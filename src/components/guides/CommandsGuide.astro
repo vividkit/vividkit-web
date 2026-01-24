@@ -762,7 +762,7 @@ const helpItems = [
           </thead>
           <tbody class="text-slate-600 dark:text-slate-400">
             <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-2 px-3"><code class="text-red-500 line-through">/git:cm, /git:cp, /git:pr</code></td>
+              <td class="py-2 px-3"><code class="text-red-500 line-through">/git:cm, /git:cp, /git:merge, /git:pr</code></td>
               <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">/git</code></td>
               <td class="py-2 px-3"><code>/git commit</code> or "commit changes"</td>
             </tr>
@@ -777,9 +777,14 @@ const helpItems = [
               <td class="py-2 px-3"><code>/scout [directory]</code></td>
             </tr>
             <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-2 px-3"><code class="text-slate-400 line-through">/cook:* (cmds)</code></td>
+              <td class="py-2 px-3"><code class="text-slate-400 line-through">/cook:*, /code:* (cmds)</code></td>
               <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">/cook</code></td>
               <td class="py-2 px-3"><code>/cook [task]</code></td>
+            </tr>
+            <tr class="border-b border-slate-100 dark:border-slate-800">
+              <td class="py-2 px-3"><code class="text-slate-400 line-through">/fix:* (8 cmds)</code></td>
+              <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">/fix</code></td>
+              <td class="py-2 px-3"><code>/fix [issue]</code> (intelligent routing)</td>
             </tr>
             <tr class="border-b border-slate-100 dark:border-slate-800">
               <td class="py-2 px-3"><code class="text-slate-400 line-through">/design:video</code></td>
@@ -790,6 +795,21 @@ const helpItems = [
               <td class="py-2 px-3"><code class="text-slate-400 line-through">/design:3d</code></td>
               <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">/threejs</code></td>
               <td class="py-2 px-3"><code>/threejs [scene]</code></td>
+            </tr>
+            <tr class="border-b border-slate-100 dark:border-slate-800">
+              <td class="py-2 px-3"><code class="text-slate-400 line-through">/design:describe, :fast, :good, :screenshot</code></td>
+              <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">frontend-design</code> skill</td>
+              <td class="py-2 px-3">"design a [component]"</td>
+            </tr>
+            <tr class="border-b border-slate-100 dark:border-slate-800">
+              <td class="py-2 px-3"><code class="text-slate-400 line-through">/content:* (4 cmds)</code></td>
+              <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">copywriting</code> skill</td>
+              <td class="py-2 px-3">"write copy for [page]"</td>
+            </tr>
+            <tr class="border-b border-slate-100 dark:border-slate-800">
+              <td class="py-2 px-3"><code class="text-slate-400 line-through">/skill:* (7 cmds)</code></td>
+              <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">skill-creator</code> skill</td>
+              <td class="py-2 px-3">"create a skill for [topic]"</td>
             </tr>
             <tr>
               <td class="py-2 px-3"><code class="text-red-500 line-through">/integrate:*</code></td>
