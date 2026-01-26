@@ -10,6 +10,7 @@ const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
 
+
 // Status: 'active' | 'archived' | 'new' | 'enhanced' | 'removed'
 // archived: moved to commands-archived/, still functional but deprecated
 // new: added in v2.5.0
@@ -24,8 +25,8 @@ const v25Highlights = [
     color: 'green',
     icon: `<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>`,
     commands: [
-      { command: '/cook', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.v25.desc.cook'), detail: t('commands.v25.detail.cook'), isSkill: true },
-      { command: '/scout', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.v25.desc.scout'), detail: t('commands.v25.detail.scout'), isSkill: true },
+      { command: '/cook', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.v25.desc.cook'), detail: t('commands.v25.detail.cook'), isSkill: true, flags: ['--fast', '--parallel', '--no-test', '--auto'] },
+      { command: '/scout', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.v25.desc.scout'), detail: t('commands.v25.detail.scout'), isSkill: true, flags: ['ext'] },
       { command: '/fix', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.v25.desc.fix'), detail: t('commands.v25.detail.fix'), isSkill: true },
       { command: '/web-testing', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.v25.desc.webTesting'), detail: t('commands.v25.detail.webTesting'), isSkill: true },
       { command: '/git', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.v25.desc.git'), detail: t('commands.v25.detail.git'), isSkill: true },
@@ -87,7 +88,7 @@ const v25Categories = [
       { command: '/plan:fast', complexity: '⚡⚡', label: t('commands.label.easy'), desc: t('commands.desc.plan_fast'), detail: t('commands.detail.plan_fast') },
       { command: '/plan:hard', complexity: '⚡⚡⚡', label: t('commands.label.advanced'), desc: t('commands.desc.plan_hard'), detail: t('commands.detail.plan_hard') },
       { command: '/ask', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.ask'), detail: t('commands.detail.ask') },
-      { command: '/scout', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.v25.desc.scout'), detail: t('commands.v25.detail.scout'), isSkill: true },
+      { command: '/scout', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.v25.desc.scout'), detail: t('commands.v25.detail.scout'), isSkill: true, flags: ['ext'] },
       { command: '/brainstorm', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.v25.desc.brainstorm'), detail: t('commands.v25.detail.brainstorm'), isSkill: true }
     ]
   },
@@ -97,7 +98,7 @@ const v25Categories = [
     color: 'purple',
     icon: `<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>`,
     commands: [
-      { command: '/cook', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.v25.desc.cook'), detail: t('commands.v25.detail.cook'), isSkill: true }
+      { command: '/cook', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.v25.desc.cook'), detail: t('commands.v25.detail.cook'), isSkill: true, flags: ['--fast', '--parallel', '--no-test', '--auto'] }
     ]
   },
   {
@@ -106,7 +107,6 @@ const v25Categories = [
     color: 'red',
     icon: `<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>`,
     commands: [
-      { command: '/fix', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.fix'), detail: t('commands.v25.detail.fix_routes') },
       { command: '/fix', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.v25.desc.fix'), detail: t('commands.v25.detail.fix'), isSkill: true },
       { command: '/web-testing', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.v25.desc.webTesting'), detail: t('commands.v25.detail.webTesting'), isSkill: true },
       { command: '/debug', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.debug'), detail: t('commands.detail.debug') },
@@ -119,8 +119,8 @@ const v25Categories = [
     color: 'orange',
     icon: `<circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><line x1="6" y1="9" x2="6" y2="21"/>`,
     commands: [
-      { command: '/git', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.v25.desc.git'), detail: t('commands.v25.detail.git'), isSkill: true },
-      { command: '/worktree', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.v25.desc.worktree'), detail: t('commands.v25.detail.worktree') }
+      { command: '/git', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.v25.desc.git'), detail: t('commands.v25.detail.git'), isSkill: true, flags: ['cm', 'cp', 'pr', 'merge'] },
+      { command: '/worktree', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.v25.desc.worktree'), detail: t('commands.v25.detail.worktree'), flags: ['--prefix', '--json', '--dry-run'] }
     ]
   },
   {
@@ -474,10 +474,9 @@ const qa = [
 ];
 
 const modifiers = [
-  { mod: ':fast', meaning: t('commands.modifiers.fast_meaning'), impact: t('commands.modifiers.fast_impact'), example: '/plan:fast, /cook:auto:fast' },
-  { mod: ':hard', meaning: t('commands.modifiers.hard_meaning'), impact: t('commands.modifiers.hard_impact'), example: '/fix:hard, /plan:hard' },
-  { mod: ':auto', meaning: t('commands.modifiers.auto_meaning'), impact: t('commands.modifiers.auto_impact'), example: '/cook:auto, /code:auto' },
-  { mod: ':parallel', meaning: t('commands.modifiers.parallel_meaning'), impact: t('commands.modifiers.parallel_impact'), example: '/fix:parallel, /code:parallel' },
+  { mod: ':fast', meaning: t('commands.modifiers.fast_meaning'), impact: t('commands.modifiers.fast_impact'), example: '/plan:fast, /bootstrap:auto:fast' },
+  { mod: ':hard', meaning: t('commands.modifiers.hard_meaning'), impact: t('commands.modifiers.hard_impact'), example: '/plan:hard' },
+  { mod: ':parallel', meaning: t('commands.modifiers.parallel_meaning'), impact: t('commands.modifiers.parallel_impact'), example: '/plan:parallel, /bootstrap:auto:parallel' },
   { mod: ':two', meaning: t('commands.modifiers.two_meaning'), impact: t('commands.modifiers.two_impact'), example: '/plan:two' }
 ];
 
@@ -680,14 +679,32 @@ const helpItems = [
               </h3>
               <p class="text-slate-700 dark:text-slate-300 mb-4">{t('commands.journey.step3.desc')}</p>
               <div class="space-y-3">
-                <div class="bg-white dark:bg-slate-900/50 rounded-lg p-4 border border-slate-200 dark:border-slate-700">
-                  <div class="flex items-center justify-between gap-3 flex-wrap">
-                    <code class="px-3 py-1.5 rounded bg-green-500/20 text-green-600 dark:text-green-400 font-mono text-sm">/cook @plan.md</code>
-                    <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase">skill</span>
+                <!-- Version Comparison Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <!-- v2.5+ Box (Recommended) -->
+                  <div class="relative bg-gradient-to-br from-teal-500/10 to-green-500/10 rounded-lg p-4 border-2 border-teal-500/50">
+                    <div class="absolute -top-2.5 left-3 px-2 py-0.5 bg-teal-500 text-white text-[10px] font-bold rounded uppercase tracking-wide">
+                      {t('commands.journey.step3.v25_badge')}
+                    </div>
+                    <div class="flex items-center gap-2 mt-1 mb-2">
+                      <span class="px-2 py-0.5 bg-teal-500/20 text-teal-600 dark:text-teal-400 text-xs font-semibold rounded">{t('commands.journey.step3.v25_version')}</span>
+                    </div>
+                    <code class="block px-3 py-2 rounded bg-slate-900/80 text-teal-400 font-mono text-sm mb-2">/cook @plan.md</code>
+                    <p class="text-xs text-slate-600 dark:text-slate-400" set:html={t('commands.journey.step3.v25_desc')}></p>
+                    <p class="text-[10px] text-slate-500 mt-1 italic">{t('commands.journey.step3.v25_alt')}</p>
                   </div>
-                  <p class="text-xs text-slate-500 mt-2">Or: "implement @plan.md" (natural language)</p>
-                  <p class="text-[10px] text-teal-600 dark:text-teal-400 mt-1 italic">* engineer@v2.5.0+</p>
-                  <p class="text-[10px] text-slate-400 mt-0.5 italic">* engineer@v2.4.0: /code @plan.md</p>
+                  <!-- v2.4 Box (Legacy) -->
+                  <div class="relative bg-slate-100 dark:bg-slate-800/50 rounded-lg p-4 border border-slate-300 dark:border-slate-600">
+                    <div class="absolute -top-2.5 left-3 px-2 py-0.5 bg-slate-500 text-white text-[10px] font-bold rounded uppercase tracking-wide">
+                      {t('commands.journey.step3.v24_badge')}
+                    </div>
+                    <div class="flex items-center gap-2 mt-1 mb-2">
+                      <span class="px-2 py-0.5 bg-slate-500/20 text-slate-600 dark:text-slate-400 text-xs font-semibold rounded">{t('commands.journey.step3.v24_version')}</span>
+                    </div>
+                    <code class="block px-3 py-2 rounded bg-slate-900/80 text-slate-400 font-mono text-sm mb-2">/code @plan.md</code>
+                    <p class="text-xs text-slate-600 dark:text-slate-400">{t('commands.journey.step3.v24_desc')}</p>
+                    <p class="text-[10px] text-slate-500 mt-1 italic">{t('commands.journey.step3.v24_note')}</p>
+                  </div>
                 </div>
                 <div class="bg-green-500/10 rounded-lg p-4 border border-green-500/20">
                   <div class="text-xs font-medium text-green-600 dark:text-green-400 mb-2">{t('commands.journey.step3.auto_title')}</div>
@@ -762,71 +779,127 @@ const helpItems = [
           </thead>
           <tbody class="text-slate-600 dark:text-slate-400">
             <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-2 px-3"><code class="text-red-500 line-through">/git:cm, /git:cp, /git:merge, /git:pr</code></td>
-              <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">/git</code></td>
-              <td class="py-2 px-3"><code>/git commit</code> or "commit changes"</td>
+              <td class="py-2 px-3">
+                <code class="text-slate-600 dark:text-slate-400">/git:cm, /git:cp, /git:merge, /git:pr</code>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium uppercase ml-1">command</span>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 font-medium uppercase ml-1">deprecated</span>
+              </td>
+              <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">/git</code> <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span></td>
+              <td class="py-2 px-3"><code>/git commit</code></td>
             </tr>
             <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-2 px-3"><code class="text-slate-400 line-through">/brainstorm (cmd)</code></td>
-              <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">/brainstorm</code></td>
+              <td class="py-2 px-3">
+                <code class="text-slate-600 dark:text-slate-400">/brainstorm</code>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium uppercase ml-1">command</span>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium uppercase ml-1">rename</span>
+              </td>
+              <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">/brainstorm</code> <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span></td>
               <td class="py-2 px-3"><code>/brainstorm [feature]</code></td>
             </tr>
             <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-2 px-3"><code class="text-slate-400 line-through">/scout (cmd)</code></td>
-              <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">/scout</code></td>
+              <td class="py-2 px-3">
+                <code class="text-slate-600 dark:text-slate-400">/scout</code>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium uppercase ml-1">command</span>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium uppercase ml-1">rename</span>
+              </td>
+              <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">/scout</code> <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span></td>
               <td class="py-2 px-3"><code>/scout [directory]</code></td>
             </tr>
             <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-2 px-3"><code class="text-slate-400 line-through">/cook:*, /code:* (cmds)</code></td>
-              <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">/cook</code></td>
+              <td class="py-2 px-3">
+                <code class="text-slate-600 dark:text-slate-400">/cook:*, /code:*</code>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium uppercase ml-1">command</span>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 font-medium uppercase ml-1">deprecated</span>
+              </td>
+              <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">/cook</code> <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span></td>
               <td class="py-2 px-3"><code>/cook [task]</code></td>
             </tr>
             <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-2 px-3"><code class="text-slate-400 line-through">/fix:* (8 cmds)</code></td>
-              <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">/fix</code></td>
-              <td class="py-2 px-3"><code>/fix [issue]</code> (intelligent routing)</td>
+              <td class="py-2 px-3">
+                <code class="text-slate-600 dark:text-slate-400">/fix:*</code>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium uppercase ml-1">command</span>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 font-medium uppercase ml-1">deprecated</span>
+              </td>
+              <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">/fix</code> <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span></td>
+              <td class="py-2 px-3"><code>/fix [issue]</code></td>
             </tr>
             <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-2 px-3"><code class="text-slate-400 line-through">/design:video</code></td>
-              <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">/remotion</code></td>
+              <td class="py-2 px-3">
+                <code class="text-slate-600 dark:text-slate-400">/design:video</code>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium uppercase ml-1">command</span>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium uppercase ml-1">rename</span>
+              </td>
+              <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">/remotion</code> <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span></td>
               <td class="py-2 px-3"><code>/remotion [description]</code></td>
             </tr>
             <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-2 px-3"><code class="text-slate-400 line-through">/design:3d</code></td>
-              <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">/threejs</code></td>
+              <td class="py-2 px-3">
+                <code class="text-slate-600 dark:text-slate-400">/design:3d</code>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium uppercase ml-1">command</span>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium uppercase ml-1">rename</span>
+              </td>
+              <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">/threejs</code> <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span></td>
               <td class="py-2 px-3"><code>/threejs [scene]</code></td>
             </tr>
             <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-2 px-3"><code class="text-slate-400 line-through">/design:describe, :fast, :good, :screenshot</code></td>
-              <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">frontend-design</code> skill</td>
-              <td class="py-2 px-3">"design a [component]"</td>
+              <td class="py-2 px-3">
+                <code class="text-slate-600 dark:text-slate-400">/design:describe, :fast, :good, :screenshot</code>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium uppercase ml-1">command</span>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 font-medium uppercase ml-1">deprecated</span>
+              </td>
+              <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">/frontend-design</code> <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span></td>
+              <td class="py-2 px-3"><code>/frontend-design [component]</code></td>
             </tr>
             <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-2 px-3"><code class="text-slate-400 line-through">/content:* (4 cmds)</code></td>
-              <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">copywriting</code> skill</td>
-              <td class="py-2 px-3">"write copy for [page]"</td>
+              <td class="py-2 px-3">
+                <code class="text-slate-600 dark:text-slate-400">/content:*</code>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium uppercase ml-1">command</span>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 font-medium uppercase ml-1">deprecated</span>
+              </td>
+              <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">/copywriting</code> <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span></td>
+              <td class="py-2 px-3"><code>/copywriting [page]</code></td>
             </tr>
             <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-2 px-3"><code class="text-slate-400 line-through">/skill:* (7 cmds)</code></td>
-              <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">skill-creator</code> skill</td>
-              <td class="py-2 px-3">"create a skill for [topic]"</td>
+              <td class="py-2 px-3">
+                <code class="text-slate-600 dark:text-slate-400">/skill:*</code>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium uppercase ml-1">command</span>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 font-medium uppercase ml-1">deprecated</span>
+              </td>
+              <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">/skill-creator</code> <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span></td>
+              <td class="py-2 px-3"><code>/skill-creator [topic]</code></td>
+            </tr>
+            <tr class="border-b border-slate-100 dark:border-slate-800">
+              <td class="py-2 px-3">
+                <code class="text-slate-600 dark:text-slate-400">/integrate:*</code>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium uppercase ml-1">command</span>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 font-medium uppercase ml-1">deprecated</span>
+              </td>
+              <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">/payment-integration</code> <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span></td>
+              <td class="py-2 px-3"><code>/payment-integration polar</code></td>
+            </tr>
+            <tr class="border-b border-slate-100 dark:border-slate-800">
+              <td class="py-2 px-3">
+                <code class="text-slate-600 dark:text-slate-400">brainstorming</code>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium uppercase ml-1">rename</span>
+              </td>
+              <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">/brainstorm</code> <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span></td>
+              <td class="py-2 px-3"><code>/brainstorm [idea]</code></td>
             </tr>
             <tr>
-              <td class="py-2 px-3"><code class="text-red-500 line-through">/integrate:*</code></td>
-              <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">/payment-integration</code></td>
-              <td class="py-2 px-3"><code>/payment-integration polar</code></td>
+              <td class="py-2 px-3">
+                <code class="text-slate-600 dark:text-slate-400">fixing</code>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium uppercase ml-1">rename</span>
+              </td>
+              <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400">/fix</code> <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span></td>
+              <td class="py-2 px-3"><code>/fix [issue]</code></td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <div class="mt-4 space-y-2">
-        <div class="flex flex-wrap items-center gap-2">
-          <span class="text-[10px] px-2 py-1 rounded bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 font-medium uppercase">new</span>
-          <span class="text-slate-500 text-xs">= {t('commands.v25.badge_new')}</span>
-          <span class="text-[10px] px-2 py-1 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium uppercase ml-3">enhanced</span>
-          <span class="text-slate-500 text-xs">= {t('commands.v25.badge_enhanced')}</span>
-        </div>
+      <div class="mt-4">
         <p class="text-[10px] text-slate-500"><strong>Claude Code v2.1.1+:</strong> <Fragment set:html={t('commands.v25.skills_note')} /></p>
       </div>
     </div>
@@ -911,13 +984,20 @@ const helpItems = [
                     <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase">skill</span>
                   )}
                 </div>
-                <span class="text-[10px] opacity-70" title={cmd.label}>{cmd.complexity}</span>
+                <span class="text-[10px] opacity-70">{cmd.complexity}</span>
               </div>
               <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">{cmd.desc}</p>
               {cmd.detail && (
                 <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">
                   {cmd.detail}
                 </p>
+              )}
+              {cmd.flags && cmd.flags.length > 0 && (
+                <div class="flex flex-wrap gap-1 mt-1.5">
+                  {cmd.flags.map((flag: string) => (
+                    <code class="text-[9px] px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400 font-mono">{flag}</code>
+                  ))}
+                </div>
               )}
             </div>
           ))}
@@ -1010,13 +1090,20 @@ const helpItems = [
                       <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase">skill</span>
                     )}
                   </div>
-                  <span class="text-[10px] opacity-70" title={cmd.label}>{cmd.complexity}</span>
+                  <span class="text-[10px] opacity-70">{cmd.complexity}</span>
                 </div>
                 <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">{cmd.desc}</p>
                 {cmd.detail && (
                   <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">
                     {cmd.detail}
                   </p>
+                )}
+                {cmd.flags && cmd.flags.length > 0 && (
+                  <div class="flex flex-wrap gap-1 mt-1.5">
+                    {cmd.flags.map((flag: string) => (
+                      <code class="text-[9px] px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400 font-mono">{flag}</code>
+                    ))}
+                  </div>
                 )}
                 {cmd.replacedCommand && (
                   <p class="text-[10px] text-slate-500 mt-1 flex items-center gap-1">
@@ -1078,7 +1165,7 @@ const helpItems = [
                       <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium uppercase">enhanced</span>
                     )}
                   </div>
-                  <span class="text-[10px] opacity-70" title={cmd.label}>{cmd.complexity}</span>
+                  <span class="text-[10px] opacity-70">{cmd.complexity}</span>
                 </div>
                 <p class={`text-xs font-medium text-slate-700 dark:text-slate-300 mb-1 ${cmd.status === 'archived' ? 'line-through' : ''}`}>{cmd.desc}</p>
                 {cmd.detail && (
