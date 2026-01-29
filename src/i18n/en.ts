@@ -1410,6 +1410,7 @@ export default {
   'commands.v25.detail.threejs': '550+ examples, shaders, materials',
   'commands.v25.desc.aiArtist': 'AI prompt crafting (Nano Banana)',
   'commands.v25.detail.aiArtist': '3500+ prompts database, styles, techniques',
+  'commands.v25.flags.aiArtist': '--mode, --skip, --dry-run, --aspect-ratio',
   'commands.v25.desc.skillCreator': 'Create/update skills',
   'commands.v25.detail.skillCreator': 'Quality criteria validation',
   'commands.v25.desc.devops': 'K8s documentation',
@@ -1428,6 +1429,10 @@ export default {
   'commands.v26.detail.hooksConfig': 'Toggle hooks via config file',
   'commands.v26.desc.statuslineModes': 'Display modes',
   'commands.v26.detail.statuslineModes': 'Configurable statusline display',
+
+  // v2.8 Platform Features
+  'commands.v28.desc.pythonVenv': 'Python venv support',
+  'commands.v28.detail.pythonVenv': 'Hooks now allow venv creation - no longer blocked',
 
   'commands.v25.desc.copywriting': 'Conversion copywriting',
   'commands.v25.detail.copywriting': 'Headlines, email, landing pages',
@@ -1487,7 +1492,20 @@ export default {
   'commands.v24.desc.integrate_polar': 'Integrate Polar payments',
   'commands.v24.detail.integrate_polar': 'SaaS subscriptions, checkout, webhooks',
   'commands.v24.desc.integrate_sepay': 'Integrate SePay (VietQR)',
+
+  // Utilities - /coding-level
+  'commands.desc.coding_level': 'Set coding experience level (0-5)',
+  'commands.detail.coding_level': '0=ELI5, 1=Junior (0-2y), 2=Mid (3-5y), 3=Senior (5-8y), 4=Lead (8-10y), 5=God (default)',
   'commands.v24.detail.integrate_sepay': 'Vietnamese bank transfers, QR codes',
+
+  // v2.9.0+ Features
+  'commands.v29.desc.findSkills': 'Discover and install skills',
+  'commands.v29.detail.findSkills': 'Search open agent skills ecosystem, install packages, check updates',
+  'commands.v29.interactive_desc': '<code class="px-1 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 text-xs">--interactive</code> is now the <strong>default mode</strong> in v2.9.0+. Full workflow with user input at each step. Uses native Claude Tasks API for task management.',
+  'commands.v29.nativeTasks': 'Uses native Claude Tasks (TaskCreate, TaskUpdate, TaskGet, TaskList)',
+  'commands.v29.findSkills_note': 'Use when user asks "how do I do X", "find a skill for X", or wants to extend agent capabilities. Skills CLI is the package manager for open agent skills ecosystem.',
+  'commands.v29.browseSkills': 'Browse skills',
+  'commands.v29.planValidate_note': 'Post-Plan gate now includes a "Validate" option to run /plan:validate before implementation. Interview-style confirmation of plan decisions.',
 
   'commands.docs.text': 'Visit',
   'commands.docs.link': 'official ClaudeKit documentation site to see comprehensive docs.',
