@@ -25,7 +25,7 @@ const v25Highlights = [
     color: 'green',
     icon: `<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>`,
     commands: [
-      { command: '/cook', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.v25.desc.cook'), detail: t('commands.v25.detail.cook'), isSkill: true, flags: ['--fast', '--parallel', '--no-test', '--auto'] },
+      { command: '/cook', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.v25.desc.cook'), detail: t('commands.v25.detail.cook'), isSkill: true, flags: ['--interactive', '--fast', '--parallel', '--no-test', '--auto'] },
       { command: '/scout', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.v25.desc.scout'), detail: t('commands.v25.detail.scout'), isSkill: true, flags: ['ext'] },
       { command: '/fix', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.v25.desc.fix'), detail: t('commands.v25.detail.fix'), isSkill: true },
       { command: '/web-testing', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.v25.desc.webTesting'), detail: t('commands.v25.detail.webTesting'), isSkill: true },
@@ -36,7 +36,8 @@ const v25Highlights = [
       { command: '/brainstorm', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.v25.desc.brainstorm'), detail: t('commands.v25.detail.brainstorm'), isSkill: true },
       { command: '/chrome-devtools', complexity: '⚡⚡', label: t('commands.label.medium'), desc: 'Browser automation with Puppeteer', detail: 'AI-optimized browser automation for screenshots, testing, and web scraping', isSkill: true },
       { command: '/agent-browser', complexity: '⚡⚡', label: t('commands.label.medium'), desc: 'AI browser agent automation', detail: 'AI-optimized browser agent for complex web interactions', isSkill: true },
-      { command: '/shader', complexity: '⚡⚡⚡', label: t('commands.label.advanced'), desc: 'GLSL fragment shaders', detail: 'Write GLSL fragment shaders. Works with Three.js, WebGL, and 3D graphics projects. Use with /threejs for full 3D workflow.', isSkill: true }
+      { command: '/shader', complexity: '⚡⚡⚡', label: t('commands.label.advanced'), desc: 'GLSL fragment shaders', detail: 'Write GLSL fragment shaders. Works with Three.js, WebGL, and 3D graphics projects. Use with /threejs for full 3D workflow.', isSkill: true },
+      { command: '/find-skills', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.v29.desc.findSkills'), detail: t('commands.v29.detail.findSkills'), isSkill: true, flags: ['find', 'add', 'check', 'update'] }
     ]
   },
   {
@@ -47,10 +48,9 @@ const v25Highlights = [
     commands: [
       { command: '/frontend-design', complexity: '⚡⚡⚡', label: t('commands.label.medium'), desc: t('commands.v25.desc.frontendDesign'), detail: t('commands.v25.detail.frontendDesign'), isSkill: true },
       { command: '/threejs', complexity: '⚡⚡⚡', label: t('commands.label.advanced'), desc: t('commands.v25.desc.threejs'), detail: t('commands.v25.detail.threejs'), isSkill: true },
-      { command: '/ai-artist', complexity: '⚡⚡⚡⚡', label: t('commands.label.advanced'), desc: t('commands.v25.desc.aiArtist'), detail: t('commands.v25.detail.aiArtist'), isSkill: true },
+      { command: '/ai-artist', complexity: '⚡⚡⚡⚡', label: t('commands.label.advanced'), desc: t('commands.v25.desc.aiArtist'), detail: t('commands.v25.detail.aiArtist'), isSkill: true, flags: ['--mode', '--skip', '--dry-run', '--aspect-ratio'] },
       { command: '/skill-creator', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.v25.desc.skillCreator'), detail: t('commands.v25.detail.skillCreator'), isSkill: true },
-      { command: '/devops', complexity: '⚡⚡⚡', label: t('commands.label.advanced'), desc: t('commands.v25.desc.devops'), detail: t('commands.v25.detail.devops'), isSkill: true },
-      { command: '/worktree', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.v25.desc.worktree'), detail: t('commands.v25.detail.worktree') }
+      { command: '/devops', complexity: '⚡⚡⚡', label: t('commands.label.advanced'), desc: t('commands.v25.desc.devops'), detail: t('commands.v25.detail.devops'), isSkill: true }
     ]
   },
   {
@@ -63,7 +63,8 @@ const v25Highlights = [
       { command: 'Chrome DevTools Auth', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.v25.desc.chromeAuth'), detail: t('commands.v25.detail.chromeAuth') },
       { command: 'OpenCode Compat', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.v25.desc.opencode'), detail: t('commands.v25.detail.opencode') },
       { command: 'Hooks Config Toggle', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.v26.desc.hooksConfig'), detail: t('commands.v26.detail.hooksConfig') },
-      { command: 'Statusline Modes', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.v26.desc.statuslineModes'), detail: t('commands.v26.detail.statuslineModes') }
+      { command: 'Statusline Modes', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.v26.desc.statuslineModes'), detail: t('commands.v26.detail.statuslineModes') },
+      { command: 'Python Venv Support', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.v28.desc.pythonVenv'), detail: t('commands.v28.detail.pythonVenv') }
     ]
   }
 ];
@@ -108,7 +109,7 @@ const v25Categories = [
     color: 'purple',
     icon: `<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>`,
     commands: [
-      { command: '/cook', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.v25.desc.cook'), detail: t('commands.v25.detail.cook'), isSkill: true, flags: ['--fast', '--parallel', '--no-test', '--auto'] }
+      { command: '/cook', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.v25.desc.cook'), detail: t('commands.v25.detail.cook'), isSkill: true, flags: ['--interactive', '--fast', '--parallel', '--no-test', '--auto'] }
     ]
   },
   {
@@ -131,7 +132,7 @@ const v25Categories = [
     icon: `<circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><line x1="6" y1="9" x2="6" y2="21"/>`,
     commands: [
       { command: '/git', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.v25.desc.git'), detail: t('commands.v25.detail.git'), isSkill: true, flags: ['cm', 'cp', 'pr', 'merge'] },
-      { command: '/worktree', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.v25.desc.worktree'), detail: t('commands.v25.detail.worktree'), flags: ['--prefix', '--json', '--dry-run'] }
+      { command: '/worktree', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.v25.desc.worktree'), detail: t('commands.v25.detail.worktree') }
     ]
   },
   {
@@ -194,6 +195,7 @@ const v25Categories = [
     icon: `<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>`,
     commands: [
       { command: '/skill-creator', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.v25.desc.skillCreator'), detail: t('commands.v25.detail.skillCreator'), isSkill: true },
+      { command: '/find-skills', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.v29.desc.findSkills'), detail: t('commands.v29.detail.findSkills'), isSkill: true, flags: ['find', 'add', 'check', 'update'] },
       { command: '/ccs', complexity: '', label: t('commands.label.easy'), desc: t('commands.desc.ccs'), detail: t('commands.detail.ccs') }
     ]
   },
@@ -208,7 +210,8 @@ const v25Categories = [
       { command: '/kanban', complexity: '', label: t('commands.label.easy'), desc: t('commands.desc.kanban'), detail: t('commands.detail.kanban') },
       { command: '/preview', complexity: '', label: t('commands.label.easy'), desc: t('commands.desc.preview'), detail: t('commands.detail.preview') },
       { command: '/watzup', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.watzup'), detail: t('commands.detail.watzup') },
-      { command: '/use-mcp', complexity: '', label: t('commands.label.medium'), desc: t('commands.desc.use_mcp'), detail: t('commands.detail.use_mcp') }
+      { command: '/use-mcp', complexity: '', label: t('commands.label.medium'), desc: t('commands.desc.use_mcp'), detail: t('commands.detail.use_mcp') },
+      { command: '/coding-level', complexity: '', label: t('commands.label.easy'), desc: t('commands.desc.coding_level'), detail: t('commands.detail.coding_level') }
     ]
   }
 ];
@@ -293,7 +296,7 @@ const v24Categories = [
       { command: '/git:cp', complexity: '', label: t('commands.label.easy'), desc: t('commands.v24.desc.git_cp'), detail: t('commands.v24.detail.git_cp') },
       { command: '/git:pr', complexity: '', label: t('commands.label.medium'), desc: t('commands.v24.desc.git_pr'), detail: t('commands.v24.detail.git_pr') },
       { command: '/git:merge', complexity: '', label: t('commands.label.medium'), desc: t('commands.v24.desc.git_merge'), detail: t('commands.v24.detail.git_merge') },
-      { command: '/worktree', complexity: '', label: t('commands.label.medium'), desc: t('commands.desc.worktree'), detail: t('commands.detail.worktree') }
+      { command: '/worktree', complexity: '', label: t('commands.label.medium'), desc: t('commands.desc.worktree'), detail: t('commands.detail.worktree'), flags: ['--prefix', '--json', '--dry-run'] }
     ]
   },
   {
@@ -379,7 +382,8 @@ const v24Categories = [
       { command: '/kanban', complexity: '', label: t('commands.label.easy'), desc: t('commands.desc.kanban'), detail: t('commands.detail.kanban') },
       { command: '/preview', complexity: '', label: t('commands.label.easy'), desc: t('commands.desc.preview'), detail: t('commands.detail.preview') },
       { command: '/watzup', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.watzup'), detail: t('commands.detail.watzup') },
-      { command: '/use-mcp', complexity: '', label: t('commands.label.medium'), desc: t('commands.desc.use_mcp'), detail: t('commands.detail.use_mcp') }
+      { command: '/use-mcp', complexity: '', label: t('commands.label.medium'), desc: t('commands.desc.use_mcp'), detail: t('commands.detail.use_mcp') },
+      { command: '/coding-level', complexity: '', label: t('commands.label.easy'), desc: t('commands.desc.coding_level'), detail: t('commands.detail.coding_level') }
     ]
   }
 ];
@@ -876,6 +880,45 @@ const helpItems = [
           <code class="text-[10px] px-2 py-1 rounded bg-teal-50 dark:bg-teal-900/20 text-teal-600 dark:text-teal-400">v2.7.x: manual</code>
           <span class="text-[9px] text-slate-400">(add <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 font-mono text-[9px]">--auto</code> {t('commands.v27.if_want_auto')})</span>
         </div>
+      </div>
+
+      <!-- v2.9.0+ Updates -->
+      <div class="mt-4 p-3 rounded-lg bg-teal-50 dark:bg-teal-900/20 border border-teal-200 dark:border-teal-500/20">
+        <div class="flex items-center gap-2 mb-2">
+          <code class="px-2 py-1 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-mono text-xs font-bold">/cook --interactive</code>
+          <span class="text-[10px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium">v2.9.0+</span>
+        </div>
+        <p class="text-[10px] text-slate-500 dark:text-slate-500 mb-2"><Fragment set:html={t('commands.v29.interactive_desc')} /></p>
+        <div class="flex flex-wrap items-center gap-1.5">
+          <code class="text-[10px] px-2 py-1 rounded bg-teal-50 dark:bg-teal-900/20 text-teal-600 dark:text-teal-400">v2.9.0: --interactive (default)</code>
+          <span class="text-[9px] text-slate-400">{t('commands.v29.nativeTasks')}</span>
+        </div>
+      </div>
+
+      <!-- find-skills skill (v2.9.0+) -->
+      <div class="mt-4 p-3 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-500/20">
+        <div class="flex items-center gap-2 mb-2">
+          <code class="px-2 py-1 rounded bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 font-mono text-xs font-bold">/find-skills</code>
+          <span class="text-[10px] px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 font-medium">v2.9.0+</span>
+          <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase">skill</span>
+        </div>
+        <p class="text-[10px] text-slate-500 dark:text-slate-500 mb-2">{t('commands.v29.findSkills_note')}</p>
+        <div class="flex flex-wrap gap-1.5 text-[9px] font-mono">
+          <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">npx skills find [query]</code>
+          <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">npx skills add &lt;package&gt;</code>
+          <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">npx skills check</code>
+          <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">npx skills update</code>
+        </div>
+        <p class="text-[9px] text-slate-400 mt-1.5">{t('commands.v29.browseSkills')}: <a href="https://skills.sh/" target="_blank" rel="noopener noreferrer" class="text-green-600 dark:text-green-400 hover:underline">skills.sh</a></p>
+      </div>
+
+      <!-- /plan:validate highlight (v2.9.0+) -->
+      <div class="mt-4 p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-500/20">
+        <div class="flex items-center gap-2 mb-2">
+          <code class="px-2 py-1 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-mono text-xs font-bold">/plan → Validate</code>
+          <span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium">v2.9.0+</span>
+        </div>
+        <p class="text-[10px] text-slate-500 dark:text-slate-500">{t('commands.v29.planValidate_note')}</p>
       </div>
 
       <div class="mt-4">

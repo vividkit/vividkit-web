@@ -1417,6 +1417,7 @@ export default {
   'commands.v25.detail.threejs': '550+ ví dụ, shaders, materials',
   'commands.v25.desc.aiArtist': 'AI prompt crafting (Nano Banana)',
   'commands.v25.detail.aiArtist': 'Database 3500+ prompts, styles, techniques',
+  'commands.v25.flags.aiArtist': '--mode, --skip, --dry-run, --aspect-ratio',
   'commands.v25.desc.skillCreator': 'Tạo/cập nhật skills',
   'commands.v25.detail.skillCreator': 'Quality criteria validation',
   'commands.v25.desc.devops': 'Tài liệu K8s',
@@ -1435,6 +1436,10 @@ export default {
   'commands.v26.detail.hooksConfig': 'Toggle hooks qua file config',
   'commands.v26.desc.statuslineModes': 'Chế độ hiển thị',
   'commands.v26.detail.statuslineModes': 'Statusline tùy chỉnh được',
+
+  // v2.8 Platform Features
+  'commands.v28.desc.pythonVenv': 'Hỗ trợ Python venv',
+  'commands.v28.detail.pythonVenv': 'Hooks cho phép tạo venv - không còn bị chặn',
 
   'commands.v25.desc.copywriting': 'Conversion copywriting',
   'commands.v25.detail.copywriting': 'Tiêu đề, email, landing page',
@@ -1494,7 +1499,20 @@ export default {
   'commands.v24.desc.integrate_polar': 'Tích hợp Polar payments',
   'commands.v24.detail.integrate_polar': 'SaaS subscriptions, checkout, webhooks',
   'commands.v24.desc.integrate_sepay': 'Tích hợp SePay (VietQR)',
+
+  // Utilities - /coding-level
+  'commands.desc.coding_level': 'Đặt cấp độ coding (0-5)',
+  'commands.detail.coding_level': '0=ELI5, 1=Junior (0-2y), 2=Mid (3-5y), 3=Senior (5-8y), 4=Lead (8-10y), 5=God (mặc định)',
   'commands.v24.detail.integrate_sepay': 'Chuyển khoản ngân hàng VN, QR codes',
+
+  // v2.9.0+ Features
+  'commands.v29.desc.findSkills': 'Tìm và cài đặt skills',
+  'commands.v29.detail.findSkills': 'Tìm kiếm hệ sinh thái open agent skills, cài đặt gói, kiểm tra cập nhật',
+  'commands.v29.interactive_desc': '<code class="px-1 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 text-xs">--interactive</code> giờ là <strong>chế độ mặc định</strong> trong v2.9.0+. Workflow đầy đủ với user input ở mỗi bước. Sử dụng Claude Tasks API native để quản lý task.',
+  'commands.v29.nativeTasks': 'Sử dụng Claude Tasks native (TaskCreate, TaskUpdate, TaskGet, TaskList)',
+  'commands.v29.findSkills_note': 'Dùng khi user hỏi "làm sao để X", "tìm skill cho X", hoặc muốn mở rộng khả năng agent. Skills CLI là package manager cho hệ sinh thái open agent skills.',
+  'commands.v29.browseSkills': 'Duyệt skills',
+  'commands.v29.planValidate_note': 'Post-Plan gate giờ có option "Validate" để chạy /plan:validate trước khi implement. Xác nhận các quyết định kế hoạch theo kiểu phỏng vấn.',
 
   'commands.docs.text': 'Truy cập',
   'commands.docs.link': 'trang tài liệu chính thức của ClaudeKit để xem hướng dẫn đầy đủ.',
