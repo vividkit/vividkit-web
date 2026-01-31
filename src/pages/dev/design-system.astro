@@ -1,0 +1,551 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+import { Palette, Type, Square, Sparkles, Layout, Eye, Moon, Sun, Check, ArrowRight, Menu, X, Terminal, Layers, Zap, Code } from 'lucide-astro';
+
+// Only allow access in development mode
+if (!import.meta.env.DEV) {
+  return Astro.redirect('/');
+}
+
+const title = 'Design System Preview - VividKit';
+const description = 'Preview all design system components, colors, typography, and UI elements.';
+---
+
+<MainLayout {title} {description} lang="en">
+  <Header lang="en" />
+
+  <div class="max-w-7xl mx-auto px-4 lg:px-8 pt-28 pb-16">
+    <!-- Header -->
+    <div class="mb-12">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 text-sm font-medium mb-4">
+        <Eye class="w-4 h-4" />
+        Development Only
+      </div>
+      <h1 class="text-4xl md:text-5xl font-bold font-heading text-slate-900 dark:text-white mb-4">
+        Design System Preview
+      </h1>
+      <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl">
+        A comprehensive preview of VividKit's design system components, colors, typography, and UI patterns.
+      </p>
+    </div>
+
+    <!-- Quick Navigation -->
+    <nav class="glass-card rounded-2xl p-4 mb-12 overflow-x-auto">
+      <div class="flex gap-2 min-w-max">
+        {[
+          { id: 'colors', label: 'Colors', icon: Palette },
+          { id: 'typography', label: 'Typography', icon: Type },
+          { id: 'components', label: 'Components', icon: Square },
+          { id: 'animations', label: 'Animations', icon: Sparkles },
+          { id: 'layout', label: 'Layout', icon: Layout },
+        ].map(({ id, label, icon: Icon }) => (
+          <a
+            href={`#${id}`}
+            class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors"
+          >
+            <Icon class="w-4 h-4" />
+            {label}
+          </a>
+        ))}
+      </div>
+    </nav>
+
+    <!-- Color System -->
+    <section id="colors" class="mb-16">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="p-2 rounded-lg bg-blue-500/10">
+          <Palette class="w-6 h-6 text-blue-500" />
+        </div>
+        <h2 class="text-2xl font-bold font-heading text-slate-900 dark:text-white">Color System</h2>
+      </div>
+
+      <!-- Brand Colors -->
+      <div class="glass-card rounded-2xl p-6 mb-6">
+        <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-4">Brand Colors</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="space-y-2">
+            <div class="h-20 rounded-xl bg-blue-600 flex items-end p-3">
+              <span class="text-white text-sm font-mono">#2563EB</span>
+            </div>
+            <p class="text-sm font-medium text-slate-900 dark:text-white">Primary (blue-600)</p>
+            <p class="text-xs text-slate-500">CTAs, links, primary actions</p>
+          </div>
+          <div class="space-y-2">
+            <div class="h-20 rounded-xl bg-cyan-500 flex items-end p-3">
+              <span class="text-white text-sm font-mono">#06B6D4</span>
+            </div>
+            <p class="text-sm font-medium text-slate-900 dark:text-white">Secondary (cyan-500)</p>
+            <p class="text-xs text-slate-500">Accents, highlights</p>
+          </div>
+          <div class="space-y-2">
+            <div class="h-20 rounded-xl bg-orange-500 flex items-end p-3">
+              <span class="text-white text-sm font-mono">#F97316</span>
+            </div>
+            <p class="text-sm font-medium text-slate-900 dark:text-white">CTA (orange-500)</p>
+            <p class="text-xs text-slate-500">Call-to-action emphasis</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Surface Colors -->
+      <div class="glass-card rounded-2xl p-6 mb-6">
+        <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-4">Surface Colors (Slate Scale)</h3>
+        <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-11 gap-2">
+          {[
+            { name: '50', hex: '#f8fafc', bg: 'bg-surface-50' },
+            { name: '100', hex: '#f1f5f9', bg: 'bg-surface-100' },
+            { name: '200', hex: '#e2e8f0', bg: 'bg-surface-200' },
+            { name: '300', hex: '#cbd5e1', bg: 'bg-surface-300' },
+            { name: '400', hex: '#94a3b8', bg: 'bg-surface-400' },
+            { name: '500', hex: '#64748b', bg: 'bg-surface-500' },
+            { name: '600', hex: '#475569', bg: 'bg-surface-600' },
+            { name: '700', hex: '#334155', bg: 'bg-surface-700' },
+            { name: '800', hex: '#1e293b', bg: 'bg-surface-800' },
+            { name: '900', hex: '#0f172a', bg: 'bg-surface-900' },
+            { name: '950', hex: '#020617', bg: 'bg-surface-950' },
+          ].map((color) => (
+            <div class="space-y-1">
+              <div class={`h-12 rounded-lg ${color.bg} border border-slate-200 dark:border-slate-700`}></div>
+              <p class="text-xs font-medium text-slate-900 dark:text-white">{color.name}</p>
+              <p class="text-[10px] text-slate-500 font-mono">{color.hex}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Gradients -->
+      <div class="glass-card rounded-2xl p-6">
+        <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-4">Brand Gradients</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="space-y-2">
+            <div class="h-20 rounded-xl" style="background: linear-gradient(135deg, #2563eb, #06b6d4);"></div>
+            <p class="text-sm font-medium text-slate-900 dark:text-white">Primary CTA</p>
+            <p class="text-xs text-slate-500 font-mono">blue-600 → cyan-500</p>
+          </div>
+          <div class="space-y-2">
+            <div class="h-20 rounded-xl" style="background: linear-gradient(135deg, #059669, #14b8a6);"></div>
+            <p class="text-sm font-medium text-slate-900 dark:text-white">Emerald</p>
+            <p class="text-xs text-slate-500 font-mono">emerald-600 → teal-500</p>
+          </div>
+          <div class="space-y-2">
+            <div class="h-20 rounded-xl glow-border" style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.5), rgba(59, 130, 246, 0.5), rgba(249, 115, 22, 0.3));"></div>
+            <p class="text-sm font-medium text-slate-900 dark:text-white">Glow Border</p>
+            <p class="text-xs text-slate-500 font-mono">blue → orange</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Typography -->
+    <section id="typography" class="mb-16">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="p-2 rounded-lg bg-purple-500/10">
+          <Type class="w-6 h-6 text-purple-500" />
+        </div>
+        <h2 class="text-2xl font-bold font-heading text-slate-900 dark:text-white">Typography</h2>
+      </div>
+
+      <!-- Font Families -->
+      <div class="glass-card rounded-2xl p-6 mb-6">
+        <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-4">Font Families</h3>
+        <div class="space-y-6">
+          <div>
+            <p class="text-xs text-slate-500 uppercase tracking-wider mb-2">Heading: Space Grotesk</p>
+            <p class="text-3xl font-heading font-bold text-slate-900 dark:text-white">The quick brown fox jumps over the lazy dog</p>
+          </div>
+          <div>
+            <p class="text-xs text-slate-500 uppercase tracking-wider mb-2">Body: DM Sans</p>
+            <p class="text-lg text-slate-900 dark:text-white">The quick brown fox jumps over the lazy dog</p>
+          </div>
+          <div>
+            <p class="text-xs text-slate-500 uppercase tracking-wider mb-2">Mono: Fira Code</p>
+            <p class="text-lg font-mono text-slate-900 dark:text-white">const hello = "world";</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Type Scale -->
+      <div class="glass-card rounded-2xl p-6">
+        <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-4">Type Scale</h3>
+        <div class="space-y-4">
+          <div class="flex items-baseline gap-4">
+            <span class="text-xs text-slate-500 w-16">6xl</span>
+            <h1 class="text-6xl font-bold font-heading text-slate-900 dark:text-white">Heading 1</h1>
+          </div>
+          <div class="flex items-baseline gap-4">
+            <span class="text-xs text-slate-500 w-16">5xl</span>
+            <h2 class="text-5xl font-bold font-heading text-slate-900 dark:text-white">Heading 2</h2>
+          </div>
+          <div class="flex items-baseline gap-4">
+            <span class="text-xs text-slate-500 w-16">4xl</span>
+            <h3 class="text-4xl font-bold font-heading text-slate-900 dark:text-white">Heading 3</h3>
+          </div>
+          <div class="flex items-baseline gap-4">
+            <span class="text-xs text-slate-500 w-16">3xl</span>
+            <h4 class="text-3xl font-bold font-heading text-slate-900 dark:text-white">Heading 4</h4>
+          </div>
+          <div class="flex items-baseline gap-4">
+            <span class="text-xs text-slate-500 w-16">2xl</span>
+            <h5 class="text-2xl font-bold font-heading text-slate-900 dark:text-white">Heading 5</h5>
+          </div>
+          <div class="flex items-baseline gap-4">
+            <span class="text-xs text-slate-500 w-16">xl</span>
+            <h6 class="text-xl font-bold font-heading text-slate-900 dark:text-white">Heading 6</h6>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Components -->
+    <section id="components" class="mb-16">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="p-2 rounded-lg bg-emerald-500/10">
+          <Square class="w-6 h-6 text-emerald-500" />
+        </div>
+        <h2 class="text-2xl font-bold font-heading text-slate-900 dark:text-white">Components</h2>
+      </div>
+
+      <!-- Buttons -->
+      <div class="glass-card rounded-2xl p-6 mb-6">
+        <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-4">Buttons</h3>
+        <div class="flex flex-wrap gap-4">
+          <button class="cta-button px-6 py-3 rounded-xl font-semibold">
+            Primary CTA
+          </button>
+          <button class="cta-button-emerald px-6 py-3 rounded-xl font-semibold">
+            Emerald CTA
+          </button>
+          <button class="px-6 py-3 rounded-xl font-semibold border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+            Secondary
+          </button>
+          <button class="px-6 py-3 rounded-xl font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-500/10 transition-colors">
+            Ghost
+          </button>
+        </div>
+      </div>
+
+      <!-- Glass Cards -->
+      <div class="glass-card rounded-2xl p-6 mb-6">
+        <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-4">Glass Cards</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="glass-card p-6 rounded-2xl">
+            <p class="font-semibold text-slate-900 dark:text-white mb-2">Standard Card</p>
+            <p class="text-sm text-slate-600 dark:text-slate-400">.glass-card</p>
+          </div>
+          <div class="glass-card glass-card-hover p-6 rounded-2xl">
+            <p class="font-semibold text-slate-900 dark:text-white mb-2">Hover Card</p>
+            <p class="text-sm text-slate-600 dark:text-slate-400">.glass-card-hover</p>
+          </div>
+          <div class="glass-card-light p-6 rounded-2xl">
+            <p class="font-semibold text-slate-900 dark:text-white mb-2">Light Card</p>
+            <p class="text-sm text-slate-600 dark:text-slate-400">.glass-card-light</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Glow Border -->
+      <div class="glass-card rounded-2xl p-6 mb-6">
+        <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-4">Glow Border</h3>
+        <div class="glass-card glow-border p-6 rounded-2xl">
+          <p class="font-semibold text-slate-900 dark:text-white mb-2">Card with Glow Border</p>
+          <p class="text-sm text-slate-600 dark:text-slate-400">.glow-border</p>
+        </div>
+      </div>
+
+      <!-- Terminal Window -->
+      <div class="glass-card rounded-2xl p-6 mb-6">
+        <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-4">Terminal Window</h3>
+        <div class="terminal-window">
+          <div class="terminal-header">
+            <div class="terminal-dots">
+              <div class="terminal-dot terminal-dot--red"></div>
+              <div class="terminal-dot terminal-dot--yellow"></div>
+              <div class="terminal-dot terminal-dot--green"></div>
+            </div>
+            <div class="text-xs text-slate-400 font-mono ml-2">bash</div>
+          </div>
+          <div class="terminal-content">
+            <div class="flex gap-2">
+              <span class="terminal-prompt">$</span>
+              <span class="terminal-path">~/vividkit</span>
+              <span>npm run dev</span>
+            </div>
+            <div class="text-emerald-400 mt-2">
+              <span class="cursor-blink">▊</span> Server running at localhost:4321
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step Indicators -->
+      <div class="glass-card rounded-2xl p-6 mb-6">
+        <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-4">Step Indicators</h3>
+        <div class="flex flex-wrap gap-3">
+          {['blue', 'purple', 'green', 'emerald', 'amber', 'red', 'cyan', 'indigo'].map((color, i) => (
+            <div class={`step-indicator step-indicator--${color}`}>
+              {i + 1}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Skill Badges -->
+      <div class="glass-card rounded-2xl p-6 mb-6">
+        <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-4">Skill Badges</h3>
+        <div class="flex flex-wrap gap-3">
+          <span class="skill-badge skill-badge--beginner">Beginner</span>
+          <span class="skill-badge skill-badge--intermediate">Intermediate</span>
+          <span class="skill-badge skill-badge--advanced">Advanced</span>
+          <span class="skill-badge skill-badge--easy">Easy</span>
+          <span class="skill-badge skill-badge--medium">Medium</span>
+          <span class="skill-badge skill-badge--hard">Hard</span>
+        </div>
+      </div>
+
+      <!-- Workflow Cards -->
+      <div class="glass-card rounded-2xl p-6 mb-6">
+        <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-4">Workflow Cards</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {['purple', 'blue', 'green', 'amber', 'red', 'cyan'].map((color) => (
+            <div class="workflow-card">
+              <div class={`workflow-card-header workflow-card-header--${color}`}>
+                <p class="font-semibold text-slate-900 dark:text-white">{color.charAt(0).toUpperCase() + color.slice(1)} Header</p>
+              </div>
+              <div class="workflow-card-body">
+                <p class="text-sm text-slate-600 dark:text-slate-400">Card body content goes here.</p>
+              </div>
+              <div class="workflow-card-footer">
+                <p class="text-xs text-slate-500">Footer</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <div class="glass-card rounded-2xl p-6">
+        <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-4">Navigation Links</h3>
+        <div class="flex flex-wrap gap-2">
+          <a href="#" class="nav-link">Default Link</a>
+          <a href="#" class="nav-link active">Active Link</a>
+          <a href="#" class="nav-link">Another Link</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Animations -->
+    <section id="animations" class="mb-16">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="p-2 rounded-lg bg-amber-500/10">
+          <Sparkles class="w-6 h-6 text-amber-500" />
+        </div>
+        <h2 class="text-2xl font-bold font-heading text-slate-900 dark:text-white">Animations</h2>
+      </div>
+
+      <div class="glass-card rounded-2xl p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Float Animation -->
+          <div class="text-center">
+            <div class="h-24 flex items-center justify-center">
+              <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 float-animation"></div>
+            </div>
+            <p class="text-sm font-medium text-slate-900 dark:text-white mt-2">.float-animation</p>
+            <p class="text-xs text-slate-500">6s ease-in-out infinite</p>
+          </div>
+
+          <!-- Pulse Glow -->
+          <div class="text-center">
+            <div class="h-24 flex items-center justify-center">
+              <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 pulse-glow"></div>
+            </div>
+            <p class="text-sm font-medium text-slate-900 dark:text-white mt-2">.pulse-glow</p>
+            <p class="text-xs text-slate-500">3s ease-in-out infinite</p>
+          </div>
+
+          <!-- Gradient Animate -->
+          <div class="text-center">
+            <div class="h-24 flex items-center justify-center">
+              <div class="w-16 h-16 rounded-xl gradient-animate" style="background: linear-gradient(135deg, #2563eb, #06b6d4, #f97316); background-size: 200% 200%;"></div>
+            </div>
+            <p class="text-sm font-medium text-slate-900 dark:text-white mt-2">.gradient-animate</p>
+            <p class="text-xs text-slate-500">8s ease infinite</p>
+          </div>
+
+          <!-- Fade In Up -->
+          <div class="text-center">
+            <div class="h-24 flex items-center justify-center">
+              <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 fade-in-up"></div>
+            </div>
+            <p class="text-sm font-medium text-slate-900 dark:text-white mt-2">.fade-in-up</p>
+            <p class="text-xs text-slate-500">0.6s ease-out forwards</p>
+          </div>
+
+          <!-- Flow Arrow -->
+          <div class="text-center">
+            <div class="h-24 flex items-center justify-center">
+              <ArrowRight class="w-16 h-16 text-blue-500 flow-arrow" />
+            </div>
+            <p class="text-sm font-medium text-slate-900 dark:text-white mt-2">.flow-arrow</p>
+            <p class="text-xs text-slate-500">2s ease-in-out infinite</p>
+          </div>
+
+          <!-- Cursor Blink -->
+          <div class="text-center">
+            <div class="h-24 flex items-center justify-center">
+              <span class="text-4xl font-mono text-emerald-400 cursor-blink">▊</span>
+            </div>
+            <p class="text-sm font-medium text-slate-900 dark:text-white mt-2">.cursor-blink</p>
+            <p class="text-xs text-slate-500">1s infinite</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Layout -->
+    <section id="layout" class="mb-16">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="p-2 rounded-lg bg-cyan-500/10">
+          <Layout class="w-6 h-6 text-cyan-500" />
+        </div>
+        <h2 class="text-2xl font-bold font-heading text-slate-900 dark:text-white">Layout</h2>
+      </div>
+
+      <!-- Spacing Scale -->
+      <div class="glass-card rounded-2xl p-6 mb-6">
+        <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-4">Spacing Scale (Base: 4px)</h3>
+        <div class="space-y-3">
+          {[
+            { class: 'p-1', size: '4px' },
+            { class: 'p-2', size: '8px' },
+            { class: 'p-4', size: '16px' },
+            { class: 'p-6', size: '24px' },
+            { class: 'p-8', size: '32px' },
+            { class: 'p-12', size: '48px' },
+          ].map(({ class: cls, size }) => (
+            <div class="flex items-center gap-4">
+              <span class="text-xs text-slate-500 font-mono w-12">{cls}</span>
+              <div class={`bg-blue-500/20 border border-blue-500/50 rounded ${cls}`}>
+                <div class="h-4 bg-blue-500 rounded"></div>
+              </div>
+              <span class="text-xs text-slate-500">{size}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Border Radius -->
+      <div class="glass-card rounded-2xl p-6 mb-6">
+        <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-4">Border Radius</h3>
+        <div class="flex flex-wrap gap-4">
+          {[
+            { class: 'rounded', size: '4px' },
+            { class: 'rounded-lg', size: '8px' },
+            { class: 'rounded-xl', size: '12px' },
+            { class: 'rounded-2xl', size: '16px' },
+            { class: 'rounded-full', size: '9999px' },
+          ].map(({ class: cls, size }) => (
+            <div class="text-center">
+              <div class={`w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 ${cls}`}></div>
+              <p class="text-xs font-mono text-slate-500 mt-2">{cls}</p>
+              <p class="text-[10px] text-slate-400">{size}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Container Widths -->
+      <div class="glass-card rounded-2xl p-6">
+        <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-4">Container Widths</h3>
+        <div class="space-y-4">
+          {[
+            { class: 'max-w-5xl', size: '1024px', usage: 'Default content' },
+            { class: 'max-w-6xl', size: '1152px', usage: 'Wide content' },
+            { class: 'max-w-7xl', size: '1280px', usage: 'Full layout' },
+          ].map(({ class: cls, size, usage }) => (
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-sm font-mono text-slate-900 dark:text-white">{cls}</span>
+                <span class="text-xs text-slate-500">({size})</span>
+              </div>
+              <div class={`h-4 bg-gradient-to-r from-blue-500 to-cyan-500 rounded ${cls}`}></div>
+              <p class="text-xs text-slate-500 mt-1">{usage}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Icons -->
+    <section id="icons" class="mb-16">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="p-2 rounded-lg bg-pink-500/10">
+          <Layers class="w-6 h-6 text-pink-500" />
+        </div>
+        <h2 class="text-2xl font-bold font-heading text-slate-900 dark:text-white">Icons (Lucide)</h2>
+      </div>
+
+      <div class="glass-card rounded-2xl p-6">
+        <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-4">Icon Sizing</h3>
+        <div class="flex flex-wrap items-end gap-6">
+          <div class="text-center">
+            <Zap class="w-4 h-4 text-blue-500 mx-auto" />
+            <p class="text-xs text-slate-500 mt-2">w-4 h-4</p>
+            <p class="text-[10px] text-slate-400">16px</p>
+          </div>
+          <div class="text-center">
+            <Zap class="w-5 h-5 text-blue-500 mx-auto" />
+            <p class="text-xs text-slate-500 mt-2">w-5 h-5</p>
+            <p class="text-[10px] text-slate-400">20px</p>
+          </div>
+          <div class="text-center">
+            <Zap class="w-6 h-6 text-blue-500 mx-auto" />
+            <p class="text-xs text-slate-500 mt-2">w-6 h-6</p>
+            <p class="text-[10px] text-slate-400">24px</p>
+          </div>
+          <div class="text-center">
+            <Zap class="w-8 h-8 text-blue-500 mx-auto" />
+            <p class="text-xs text-slate-500 mt-2">w-8 h-8</p>
+            <p class="text-[10px] text-slate-400">32px</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dark Mode Toggle Preview -->
+    <section id="dark-mode" class="mb-16">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="p-2 rounded-lg bg-indigo-500/10">
+          <Moon class="w-6 h-6 text-indigo-500" />
+        </div>
+        <h2 class="text-2xl font-bold font-heading text-slate-900 dark:text-white">Dark Mode</h2>
+      </div>
+
+      <div class="glass-card rounded-2xl p-6">
+        <p class="text-slate-600 dark:text-slate-400 mb-4">
+          Toggle dark mode using the theme switch in the header. All components are designed dark-first and adapt to light mode.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-4 rounded-xl bg-white border border-slate-200">
+            <div class="flex items-center gap-2 mb-2">
+              <Sun class="w-5 h-5 text-amber-500" />
+              <span class="font-medium text-slate-900">Light Mode</span>
+            </div>
+            <p class="text-sm text-slate-600">bg-white/80, text-slate-900, border-slate-200</p>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-900 border border-white/10">
+            <div class="flex items-center gap-2 mb-2">
+              <Moon class="w-5 h-5 text-blue-400" />
+              <span class="font-medium text-white">Dark Mode</span>
+            </div>
+            <p class="text-sm text-slate-400">bg-surface-900/60, text-white, border-white/10</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <Footer lang="en" />
+</MainLayout>
