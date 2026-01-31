@@ -1,0 +1,528 @@
+---
+/**
+ * AnimatedTerminalDemo - Interactive terminal with typing animations
+ * Features:
+ * - Progressive line-by-line reveal with typing effect
+ * - Intersection Observer to start when visible
+ * - Replay button for user interaction
+ * - Blinking cursor that follows the typing
+ */
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+---
+
+<style>
+  @keyframes blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+  }
+
+  @keyframes cursor-blink {
+    0%, 49% { border-right-color: #22d3ee; }
+    50%, 100% { border-right-color: transparent; }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { filter: drop-shadow(0 0 0 rgba(34, 211, 238, 0.4)); }
+    50% { filter: drop-shadow(0 0 4px rgba(34, 211, 238, 0.8)); }
+  }
+
+  .cursor-blink {
+    animation: blink 1s infinite;
+  }
+
+  .terminal-line {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  [data-wait-for-stagger] {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  [data-final-prompt] {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  .terminal-line.visible,
+  [data-wait-for-stagger].visible,
+  [data-final-prompt].visible {
+    animation: fadeInUp 0.3s ease-out forwards;
+  }
+
+  .typing-text {
+    border-right: 2px solid transparent;
+  }
+
+  .typing-text.typing {
+    border-right-color: #22d3ee;
+    animation: cursor-blink 0.7s step-end infinite;
+  }
+
+  .thinking-dot {
+    animation: pulse-glow 1.5s ease-in-out infinite;
+  }
+
+  .progress-item {
+    opacity: 0;
+  }
+
+  .progress-item.visible {
+    animation: fadeInUp 0.25s ease-out forwards;
+  }
+
+  .replay-btn {
+    transition: all 0.2s ease;
+  }
+
+  .replay-btn:hover {
+    transform: scale(1.05);
+  }
+
+  .replay-btn:active {
+    transform: scale(0.95);
+  }
+</style>
+
+<div class="relative" id="animated-terminal-container">
+  <!-- Terminal Window -->
+  <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-xl border-2 border-slate-200 dark:border-slate-700 overflow-hidden shadow-2xl">
+    <!-- Terminal Header -->
+    <div class="bg-slate-200 dark:bg-slate-800 px-4 py-2 flex items-center border-b border-slate-300 dark:border-slate-700">
+      <div class="flex gap-2 w-20">
+        <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+        <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+        <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+      </div>
+      <div class="flex-1 text-center">
+        <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">{t('cli.terminal.window_title')}</span>
+      </div>
+      <!-- Replay Button -->
+      <button
+        id="replay-btn"
+        class="replay-btn w-20 flex items-center justify-end gap-1.5 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-400 opacity-0 transition-all duration-300"
+        title={t('cli.terminal.replay')}
+      >
+        <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M1 4v6h6M23 20v-6h-6"/>
+          <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+        </svg>
+        <span class="hidden sm:inline">{t('cli.terminal.replay') || 'Replay'}</span>
+      </button>
+    </div>
+
+    <!-- Terminal Content -->
+    <div class="p-6 font-mono text-sm space-y-3 min-h-[600px] text-slate-700 dark:text-slate-300" id="terminal-content">
+
+      <!-- Command 1: Start Claude Code -->
+      <div class="space-y-2">
+        <div class="terminal-line flex items-start gap-2" data-delay="0">
+          <span class="text-emerald-600 dark:text-emerald-400">➜</span>
+          <span class="text-cyan-600 dark:text-cyan-400">~/projects</span>
+          <span class="typing-text text-slate-800 dark:text-slate-300" data-text="claude">claude</span>
+        </div>
+
+        <!-- CLI starts -->
+        <div class="terminal-line pl-4 text-cyan-600 dark:text-cyan-400 text-xs" data-delay="800">
+          <div>{t('cli.terminal.starting')}</div>
+          <div class="text-slate-500 mt-1">{t('cli.terminal.type_message')}</div>
+        </div>
+
+        <!-- User prompt -->
+        <div class="terminal-line pl-4 mt-2" data-delay="1200" data-typing-trigger="user-prompt-1">
+          <div class="flex items-start gap-2">
+            <span class="text-emerald-600 dark:text-emerald-400">You:</span>
+            <span class="typing-text text-slate-800 dark:text-slate-300" data-text={t('cli.terminal.user_prompt_1')} data-typing-id="user-prompt-1">{t('cli.terminal.user_prompt_1')}</span>
+          </div>
+        </div>
+
+        <!-- AI thinking - waits for user-prompt-1 typing to finish -->
+        <div class="terminal-line pl-4 space-y-2 text-slate-600 dark:text-slate-400" data-wait-for="user-prompt-1" data-delay-after="300">
+          <div class="flex items-center gap-2 text-cyan-600 dark:text-cyan-400" id="thinking-indicator">
+            <svg class="w-4 h-4 thinking-dot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+            </svg>
+            <span>{t('cli.terminal.thinking')}</span>
+          </div>
+
+          <!-- Progress items - sequential after thinking appears -->
+          <div class="space-y-1 pl-6 text-xs" id="progress-list">
+            <div class="progress-item flex items-center gap-2" data-stagger="0">
+              <span class="text-emerald-600 dark:text-emerald-400">✓</span>
+              <span>{t('cli.terminal.search_domain')} <span class="text-slate-700 dark:text-slate-300">{t('cli.terminal.domain_beauty')}</span></span>
+            </div>
+            <div class="progress-item flex items-center gap-2" data-stagger="400">
+              <span class="text-emerald-600 dark:text-emerald-400">✓</span>
+              <span>{t('cli.terminal.style_guide')} <span class="text-slate-700 dark:text-slate-300">{t('cli.terminal.style_minimal')}</span></span>
+            </div>
+            <div class="progress-item flex items-center gap-2" data-stagger="800">
+              <span class="text-emerald-600 dark:text-emerald-400">✓</span>
+              <span>{t('cli.terminal.typography')} <span class="text-slate-700 dark:text-slate-300">Playfair Display + Inter</span></span>
+            </div>
+            <div class="progress-item flex items-center gap-2" data-stagger="1200">
+              <span class="text-emerald-600 dark:text-emerald-400">✓</span>
+              <span>{t('cli.terminal.color_palette')} <span class="text-slate-700 dark:text-slate-300">{t('cli.terminal.color_pastel')}</span></span>
+            </div>
+          </div>
+
+          <!-- Result box - after all progress items -->
+          <div class="terminal-line mt-3 p-3 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded" data-stagger="1800">
+            <div class="text-emerald-600 dark:text-emerald-400 text-sm mb-2">{t('cli.terminal.design_complete')}</div>
+            <div class="text-slate-700 dark:text-slate-300 text-xs space-y-1">
+              <div>{t('cli.terminal.created_file')} <span class="text-cyan-600 dark:text-cyan-400">yoga-studio-landing.html</span></div>
+              <div>{t('cli.terminal.palette_desc')}</div>
+              <div>{t('cli.terminal.typography_desc')}</div>
+              <div>{t('cli.terminal.mobile_desc')}</div>
+              <div>{t('cli.terminal.a11y_desc')}</div>
+            </div>
+          </div>
+
+          <div class="terminal-line flex items-center gap-2 text-amber-600 dark:text-amber-400 text-xs mt-2" data-stagger="2200">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+            <span>{t('cli.terminal.files_created')}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Separator -->
+      <div class="terminal-line border-t border-slate-200 dark:border-slate-800 my-4" data-stagger="2600"></div>
+
+      <!-- Command 2: Check files -->
+      <div class="space-y-2">
+        <div class="terminal-line flex items-start gap-2" data-stagger="2800">
+          <span class="text-emerald-600 dark:text-emerald-400">➜</span>
+          <span class="text-cyan-600 dark:text-cyan-400">~/projects</span>
+          <span class="typing-text text-slate-700 dark:text-slate-300" data-text="ls -la">ls -la</span>
+        </div>
+        <div class="terminal-line pl-4 text-slate-600 dark:text-slate-400 text-xs space-y-1" data-stagger="3200">
+          <div>drwxr-xr-x  5 user  staff   160 Dec  3 15:20 .</div>
+          <div>drwxr-xr-x 12 user  staff   384 Dec  3 15:15 ..</div>
+          <div class="text-emerald-600 dark:text-emerald-400">-rw-r--r--  1 user  staff  8420 Dec  3 15:20 yoga-studio-landing.html</div>
+        </div>
+      </div>
+
+      <!-- Separator -->
+      <div class="terminal-line border-t border-slate-200 dark:border-slate-800 my-4" data-stagger="3600"></div>
+
+      <!-- Command 3: Open in browser -->
+      <div class="space-y-2">
+        <div class="terminal-line flex items-start gap-2" data-stagger="3800">
+          <span class="text-emerald-600 dark:text-emerald-400">➜</span>
+          <span class="text-cyan-600 dark:text-cyan-400">~/projects</span>
+          <span class="typing-text text-slate-700 dark:text-slate-300" data-text="open yoga-studio-landing.html">open yoga-studio-landing.html</span>
+        </div>
+        <div class="terminal-line pl-4 text-slate-600 dark:text-slate-400 text-xs" data-stagger="4400">
+          <div class="flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span>{t('cli.terminal.opening')}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Separator -->
+      <div class="terminal-line border-t border-slate-200 dark:border-slate-800 my-4" data-stagger="4800"></div>
+
+      <!-- Command 4: Continue session -->
+      <div class="space-y-2">
+        <div class="terminal-line pl-4 space-y-2 text-slate-600 dark:text-slate-400" data-stagger="5000">
+          <div class="text-purple-600 dark:text-purple-400 text-xs">{t('cli.terminal.already_in')}</div>
+
+          <div class="mt-2 space-y-3">
+            <div>
+              <div class="flex gap-2 items-center mb-1">
+                <span class="text-emerald-600 dark:text-emerald-400 text-xs">You:</span>
+              </div>
+              <div class="pl-4 text-slate-700 dark:text-slate-300 text-xs">
+                <span class="typing-text" data-text={t('cli.terminal.user_prompt_2')} data-typing-id="user-prompt-2">{t('cli.terminal.user_prompt_2')}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Response - waits for user-prompt-2 -->
+        <div class="terminal-line pl-8 text-slate-600 dark:text-slate-400" data-wait-for-stagger="user-prompt-2">
+          <div class="flex gap-2 items-center mb-1">
+            <svg class="w-3 h-3 text-purple-600 dark:text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+            <span class="text-purple-600 dark:text-purple-400 text-xs">AI:</span>
+          </div>
+          <div class="pl-4 text-slate-700 dark:text-slate-300 text-xs space-y-1">
+            <div>{t('cli.terminal.ai_response_2')}</div>
+            <div class="pl-2">
+              <div>{t('cli.terminal.hover_transition')}</div>
+              <div>{t('cli.terminal.hover_scale')}</div>
+              <div>{t('cli.terminal.hover_shadow')}</div>
+              <div>{t('cli.terminal.cursor_pointer')}</div>
+            </div>
+            <div class="mt-2 text-emerald-600 dark:text-emerald-400">{t('cli.terminal.updated_file')}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Current prompt with blinking cursor - waits for AI response to complete -->
+      <div class="terminal-line flex items-start gap-2 pt-4" data-final-prompt id="final-prompt">
+        <span class="text-emerald-600 dark:text-emerald-400">➜</span>
+        <span class="text-cyan-600 dark:text-cyan-400">~/projects</span>
+        <span class="text-slate-800 dark:text-slate-300 cursor-blink" id="final-cursor">▊</span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // Animation controller for the terminal demo
+  class TerminalAnimator {
+    private container: HTMLElement;
+    private lines: NodeListOf<HTMLElement>;
+    private progressItems: NodeListOf<HTMLElement>;
+    private staggeredItems: NodeListOf<HTMLElement>;
+    private replayBtn: HTMLElement;
+    private isAnimating = false;
+    private timeouts: number[] = [];
+    private hasPlayed = false;
+    private typingCallbacks: Map<string, () => void> = new Map();
+
+    constructor(containerId: string) {
+      this.container = document.getElementById(containerId) as HTMLElement;
+      this.lines = this.container.querySelectorAll('.terminal-line');
+      this.progressItems = this.container.querySelectorAll('.progress-item');
+      this.staggeredItems = this.container.querySelectorAll('[data-stagger]');
+      this.replayBtn = document.getElementById('replay-btn') as HTMLElement;
+
+      this.init();
+    }
+
+    private init() {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && !this.hasPlayed) {
+              this.play();
+              this.hasPlayed = true;
+            }
+          });
+        },
+        { threshold: 0.2 }
+      );
+
+      observer.observe(this.container);
+
+      this.replayBtn.addEventListener('click', () => {
+        this.replay();
+      });
+    }
+
+    private play() {
+      if (this.isAnimating) return;
+      this.isAnimating = true;
+
+      // Animate terminal lines with delay (skip staggered and wait-for-stagger items)
+      this.lines.forEach((line) => {
+        // Skip elements that have data-stagger or data-wait-for-stagger or data-final-prompt - they're handled separately
+        if (line.dataset.stagger !== undefined) return;
+        if (line.dataset.waitForStagger !== undefined) return;
+        if (line.dataset.finalPrompt !== undefined) return;
+
+        const delay = parseInt(line.dataset.delay || '0', 10);
+        const waitFor = line.dataset.waitFor;
+        const delayAfter = parseInt(line.dataset.delayAfter || '0', 10);
+
+        // If this line waits for typing to complete
+        if (waitFor) {
+          this.typingCallbacks.set(waitFor, () => {
+            const timeout = setTimeout(() => {
+              line.classList.add('visible');
+              // After thinking line appears, start staggered items
+              this.animateStaggeredItems();
+            }, delayAfter);
+            this.timeouts.push(timeout);
+          });
+        } else {
+          const timeout = setTimeout(() => {
+            line.classList.add('visible');
+
+            // Handle typing effect
+            const typingEl = line.querySelector('.typing-text') as HTMLElement;
+            if (typingEl) {
+              const typingId = typingEl.dataset.typingId;
+              this.animateTyping(typingEl, () => {
+                // Callback when typing finishes
+                if (typingId && this.typingCallbacks.has(typingId)) {
+                  this.typingCallbacks.get(typingId)!();
+                }
+              });
+            }
+          }, delay);
+          this.timeouts.push(timeout);
+        }
+      });
+
+      // Calculate max delay for replay button
+      this.scheduleReplayButton();
+    }
+
+    private animateStaggeredItems() {
+      // Animate progress items and other staggered elements
+      this.staggeredItems.forEach((item) => {
+        const stagger = parseInt(item.dataset.stagger || '0', 10);
+        const timeout = setTimeout(() => {
+          item.classList.add('visible');
+
+          // Handle typing effect for staggered items
+          const typingEl = item.querySelector('.typing-text') as HTMLElement;
+          if (typingEl) {
+            const typingId = typingEl.dataset.typingId;
+            this.animateTyping(typingEl, () => {
+              // Trigger waiting items when typing completes
+              if (typingId) {
+                this.showWaitingItems(typingId);
+              }
+            });
+          }
+        }, stagger);
+        this.timeouts.push(timeout);
+      });
+    }
+
+    private showWaitingItems(typingId: string) {
+      // Show items waiting for this typing to complete
+      const waitingItems = this.container.querySelectorAll(`[data-wait-for-stagger="${typingId}"]`);
+      waitingItems.forEach((item) => {
+        const timeout = setTimeout(() => {
+          (item as HTMLElement).classList.add('visible');
+
+          // After AI response is shown, show final prompt with delay
+          if (typingId === 'user-prompt-2') {
+            this.showFinalPrompt();
+          }
+        }, 300); // Small delay after typing
+        this.timeouts.push(timeout);
+      });
+    }
+
+    private showFinalPrompt() {
+      const finalPrompt = this.container.querySelector('[data-final-prompt]') as HTMLElement;
+      if (finalPrompt) {
+        // Wait for AI response content to be visible, then show final prompt
+        const timeout = setTimeout(() => {
+          finalPrompt.classList.add('visible');
+        }, 800); // Delay after AI response is shown
+        this.timeouts.push(timeout);
+      }
+    }
+
+    private scheduleReplayButton() {
+      // Show replay button after ~10s (enough for all animations)
+      const showReplayTimeout = setTimeout(() => {
+        this.replayBtn.style.opacity = '1';
+        this.isAnimating = false;
+      }, 10000);
+      this.timeouts.push(showReplayTimeout);
+    }
+
+    private animateTyping(element: HTMLElement, onComplete?: () => void) {
+      const text = element.dataset.text || element.textContent || '';
+      element.textContent = '';
+      element.classList.add('typing');
+
+      let i = 0;
+      const typeChar = () => {
+        if (i < text.length) {
+          element.textContent += text.charAt(i);
+          i++;
+          const timeout = setTimeout(typeChar, 25 + Math.random() * 25);
+          this.timeouts.push(timeout);
+        } else {
+          element.classList.remove('typing');
+          if (onComplete) onComplete();
+        }
+      };
+
+      typeChar();
+    }
+
+    private reset() {
+      this.timeouts.forEach(t => clearTimeout(t));
+      this.timeouts = [];
+      this.typingCallbacks.clear();
+
+      this.lines.forEach((line) => {
+        line.classList.remove('visible');
+        const typingEl = line.querySelector('.typing-text');
+        if (typingEl) {
+          const text = (typingEl as HTMLElement).dataset.text || '';
+          typingEl.textContent = text;
+          typingEl.classList.remove('typing');
+        }
+      });
+
+      this.progressItems.forEach((item) => {
+        item.classList.remove('visible');
+      });
+
+      this.staggeredItems.forEach((item) => {
+        item.classList.remove('visible');
+      });
+
+      // Reset final prompt
+      const finalPrompt = this.container.querySelector('[data-final-prompt]');
+      if (finalPrompt) {
+        finalPrompt.classList.remove('visible');
+      }
+
+      // Reset data-wait-for-stagger items
+      const waitForStaggerItems = this.container.querySelectorAll('[data-wait-for-stagger]');
+      waitForStaggerItems.forEach((item) => {
+        (item as HTMLElement).classList.remove('visible');
+      });
+
+      this.replayBtn.style.opacity = '0';
+    }
+
+    private replay() {
+      this.reset();
+      setTimeout(() => {
+        this.play();
+      }, 100);
+    }
+  }
+
+  // Initialize
+  document.addEventListener('DOMContentLoaded', () => {
+    new TerminalAnimator('animated-terminal-container');
+  });
+
+  document.addEventListener('astro:page-load', () => {
+    const container = document.getElementById('animated-terminal-container');
+    if (container) {
+      new TerminalAnimator('animated-terminal-container');
+    }
+  });
+</script>
