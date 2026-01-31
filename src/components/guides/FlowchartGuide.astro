@@ -13,7 +13,7 @@ const isVi = currentLang === 'vi';
 const t = useTranslations(currentLang);
 ---
 
-<div class="space-y-10 mt-6">
+<div class="space-y-10 mt-6" id="flowchart-guide">
   <!-- Page Header -->
   <div class="text-center space-y-4">
     <h2 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
@@ -24,6 +24,44 @@ const t = useTranslations(currentLang);
         ? <>Hướng dẫn toàn diện để chọn command phù hợp dựa trên use case của bạn. Nếu không chắc chắn, gõ <code class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-600 dark:text-blue-400 font-mono">/ck-help</code> để được hỗ trợ!</>
         : <>A comprehensive decision tree for ClaudeKit newcomers. If you're ever unsure, just type <code class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-600 dark:text-blue-400 font-mono">/ck-help</code> for interactive assistance!</>}
     </p>
+  </div>
+
+  <!-- Version Toggle -->
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <h2 class="text-2xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+      <svg class="w-7 h-7 text-cyan-600 dark:text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+        <polyline points="22 4 12 14.01 9 11.01"/>
+      </svg>
+      {isVi ? 'Phiên Bản ClaudeKit' : 'ClaudeKit Version'}
+    </h2>
+
+    <div class="flex items-center gap-2 p-1 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+      <button
+        id="fc-btn-v25"
+        class="fc-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 bg-teal-500 text-white shadow-sm"
+        data-version="v25"
+      >
+        <span class="flex items-center gap-1.5">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+          {t('commands.v25.tab_v25')}
+        </span>
+      </button>
+      <button
+        id="fc-btn-v24"
+        class="fc-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700"
+        data-version="v24"
+      >
+        <span class="flex items-center gap-1.5">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          {t('commands.v25.tab_v24')}
+        </span>
+      </button>
+    </div>
   </div>
 
   <!-- Quick Reference Decision Tree (Interactive SVG) -->
@@ -114,7 +152,12 @@ const t = useTranslations(currentLang);
           </tbody>
         </table>
       </div>
-      <div class="mb-6 p-4 rounded-lg bg-amber-500/10 border border-amber-200 dark:border-amber-500/20">
+      <div class="mb-6 p-4 rounded-lg bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 fc-v25-content">
+        <p class="text-sm text-amber-700 dark:text-amber-400">
+          <strong class="flex items-center gap-1"><svg class="w-4 h-4 text-amber-500 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg> {isVi ? 'Quan trọng:' : 'Important:'}</strong> {isVi ? '/brainstorm KHÔNG implement - chỉ tư vấn. Sau khi brainstorm, dùng /plan hoặc /cook để implement.' : '/brainstorm DOES NOT implement - it only advises. After brainstorming, use /plan or /cook to implement.'}
+        </p>
+      </div>
+      <div class="mb-6 p-4 rounded-lg bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 fc-v24-content hidden">
         <p class="text-sm text-amber-700 dark:text-amber-400">
           <strong class="flex items-center gap-1"><svg class="w-4 h-4 text-amber-500 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg> {isVi ? 'Quan trọng:' : 'Important:'}</strong> {isVi ? '/brainstorm KHÔNG implement - chỉ tư vấn. Sau khi brainstorm, dùng /plan hoặc /cook để implement.' : '/brainstorm DOES NOT implement - it only advises. After brainstorming, use /plan or /cook to implement.'}
         </p>
@@ -134,7 +177,12 @@ const t = useTranslations(currentLang);
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
-            <tr>
+            <tr class="fc-v25-content">
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-mono font-bold">/cook</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">⚡⚡⚡ All-in-one: research → plan → implement → test → review</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400"><strong>FAST mode</strong> - {isVi ? 'Quick iterations, features đơn giản' : 'Quick iterations, simpler features'}</td>
+            </tr>
+            <tr class="fc-v24-content hidden">
               <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-mono font-bold">/cook</code></td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">⚡⚡⚡ All-in-one: research → plan → implement → test → review</td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"><strong>FAST mode</strong> - {isVi ? 'Quick iterations, features đơn giản' : 'Quick iterations, simpler features'}</td>
@@ -144,7 +192,12 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Tạo plan chi tiết không code' : 'Create detailed implementation plan without coding'}</td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"><strong>SAFE mode</strong> - {isVi ? 'Features phức tạp, cần approval trước' : 'Complex features, need approval first'}</td>
             </tr>
-            <tr>
+            <tr class="fc-v25-content">
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-blue-500/20 text-blue-600 dark:text-blue-400 font-mono font-bold">/cook @plan.md</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Implement plan có sẵn từng bước' : 'Implement an existing plan step by step'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Sau khi /plan được approved' : 'After /plan is approved'}</td>
+            </tr>
+            <tr class="fc-v24-content hidden">
               <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-blue-500/20 text-blue-600 dark:text-blue-400 font-mono font-bold">/code @plan.md</code></td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Execute plan có sẵn từng bước' : 'Execute an existing plan step by step'}</td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Sau khi /plan được approved' : 'After /plan is approved'}</td>
@@ -152,7 +205,14 @@ const t = useTranslations(currentLang);
           </tbody>
         </table>
       </div>
-      <div class="p-4 rounded-lg bg-blue-500/10 border border-blue-200 dark:border-blue-500/20">
+      <div class="p-4 rounded-lg bg-blue-500/10 border border-blue-200 dark:border-blue-500/20 fc-v25-content">
+        <p class="text-sm text-blue-700 dark:text-blue-400">
+          <strong class="flex items-center gap-1"><svg class="w-4 h-4 text-blue-500 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" /></svg> {isVi ? 'Sự khác biệt chính:' : 'Key Difference:'}</strong><br/>
+          • <code class="bg-blue-200 dark:bg-blue-800 px-1 rounded">/cook</code> = {isVi ? 'Tốc độ, plan nội bộ, straight to implementation' : 'Speed-focused, plans internally, goes straight to implementation'}<br/>
+          • <code class="bg-blue-200 dark:bg-blue-800 px-1 rounded">/plan</code> → <code class="bg-blue-200 dark:bg-blue-800 px-1 rounded">/cook</code> = {isVi ? 'An toàn, tạo plan có thể review trước' : 'Safety-focused, creates reviewable plan first'}
+        </p>
+      </div>
+      <div class="p-4 rounded-lg bg-blue-500/10 border border-blue-200 dark:border-blue-500/20 fc-v24-content hidden">
         <p class="text-sm text-blue-700 dark:text-blue-400">
           <strong class="flex items-center gap-1"><svg class="w-4 h-4 text-blue-500 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" /></svg> {isVi ? 'Sự khác biệt chính:' : 'Key Difference:'}</strong><br/>
           • <code class="bg-blue-200 dark:bg-blue-800 px-1 rounded">/cook</code> = {isVi ? 'Tốc độ, plan nội bộ, straight to implementation' : 'Speed-focused, plans internally, goes straight to implementation'}<br/>
@@ -191,70 +251,13 @@ const t = useTranslations(currentLang);
             </tr>
             <tr>
               <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-red-500/20 text-red-600 dark:text-red-400 font-mono font-bold">/fix</code></td>
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Router thông minh tới các fix commands chuyên biệt' : 'Intelligent router to specialized fix commands'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Smart fix routing - tự động route theo loại issue' : 'Smart fix routing - auto routes by issue type'}</td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Biết issue, muốn fix nhanh' : 'Know the issue, want quick fix'}</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <!-- Specialized Fix Commands -->
-      <h4 class="font-semibold text-slate-800 dark:text-slate-200 mb-3">
-        {isVi ? 'Fix Commands chuyên biệt' : 'Specialized Fix Commands'}
-      </h4>
-      <div class="overflow-x-auto">
-        <table class="w-full text-sm">
-          <thead class="border-b border-slate-200 dark:border-slate-700">
-            <tr>
-              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white min-w-[180px] whitespace-nowrap">Command</th>
-              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Mô tả' : 'Description'}</th>
-              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Khi nào dùng' : 'When to Use'}</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
-            <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono font-bold">/fix:types</code></td>
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Fix TypeScript/type errors' : 'Fix TypeScript/type errors'}</td>
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">tsc errors, type mismatches</td>
-            </tr>
-            <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono font-bold">/fix:ui</code></td>
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Fix UI/UX issues' : 'Fix UI/UX issues'}</td>
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">Layout, styling, component bugs</td>
-            </tr>
-            <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono font-bold">/fix:ci</code></td>
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Fix CI/CD pipeline issues' : 'Fix CI/CD pipeline issues'}</td>
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">GitHub Actions, deployment failures</td>
-            </tr>
-            <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono font-bold">/fix:test</code></td>
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Fix failing tests' : 'Fix failing tests'}</td>
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">Jest, Vitest test failures</td>
-            </tr>
-            <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono font-bold">/fix:logs</code></td>
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Phân tích error logs' : 'Analyze error logs'}</td>
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">Stack traces, runtime errors</td>
-            </tr>
-            <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono font-bold">/fix:fast</code></td>
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Quick fix cho issues đơn giản' : 'Quick fix for simple issues'}</td>
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">Single file, straightforward bugs</td>
-            </tr>
-            <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono font-bold">/fix:hard</code></td>
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Complex multi-component fixes' : 'Complex multi-component fixes'}</td>
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">Architecture, refactoring issues</td>
-            </tr>
-            <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-mono font-bold">/fix:parallel</code></td>
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Fix nhiều issues độc lập' : 'Fix multiple independent issues'}</td>
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">2+ unrelated bugs at once</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
       <div class="mt-4 p-4 rounded-lg bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20">
         <p class="text-sm text-emerald-700 dark:text-emerald-400">
           <strong class="flex items-center gap-1"><svg class="w-4 h-4 text-emerald-500 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg> {isVi ? 'Smart Routing:' : 'Smart Routing:'}</strong> {isVi ? 'Chỉ cần dùng /fix <mô tả issue> và nó sẽ tự động route tới command chuyên biệt phù hợp!' : 'Just use /fix <describe issue> and it will automatically route to the right specialized command!'}
@@ -263,7 +266,8 @@ const t = useTranslations(currentLang);
     </div>
 
     <!-- 4. Git Operations -->
-    <div class="glass-card rounded-2xl p-6 sm:p-8">
+    <!-- v2.5.0+ Git Operations (git skill) -->
+    <div class="glass-card rounded-2xl p-6 sm:p-8 fc-v25-content">
       <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
         <svg class="w-5 h-5 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="18" cy="18" r="3"/>
@@ -271,6 +275,53 @@ const t = useTranslations(currentLang);
           <path d="M6 21V9a9 9 0 0 0 9 9" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         {isVi ? 'Git Operations' : 'Git Operations'}
+        <span class="ml-2 px-2 py-0.5 text-xs font-medium rounded-full bg-teal-500/20 text-teal-600 dark:text-teal-400">v2.5.0+</span>
+      </h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="border-b border-slate-200 dark:border-slate-700">
+            <tr>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white min-w-[180px] whitespace-nowrap">Command</th>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Mô tả' : 'Description'}</th>
+              <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? 'Options' : 'Options'}</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+            <tr>
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-mono font-bold">/git</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Git operations với natural language' : 'Git operations with natural language'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">
+                <code class="text-xs px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800">cm</code>
+                <code class="text-xs px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 ml-1">cp</code>
+                <code class="text-xs px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 ml-1">pr</code>
+                <code class="text-xs px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 ml-1">merge</code>
+              </td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-mono font-bold">/worktree</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Tạo isolated worktree' : 'Create isolated worktree'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Làm việc song song nhiều features' : 'Work on multiple features in parallel'}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-4 p-4 rounded-lg bg-teal-500/10 border border-teal-200 dark:border-teal-500/20">
+        <p class="text-sm text-teal-700 dark:text-teal-400">
+          <strong class="flex items-center gap-1"><svg class="w-4 h-4 text-teal-500 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> {isVi ? 'v2.5.0 Mới:' : 'New in v2.5.0:'}</strong> {isVi ? 'Sử dụng ngôn ngữ tự nhiên thay vì commands cố định. Chỉ cần nói "commit my changes" hoặc "create a PR for this feature"!' : 'Use natural language instead of fixed commands. Just say "commit my changes" or "create a PR for this feature"!'}
+        </p>
+      </div>
+    </div>
+
+    <!-- v2.4.0 Git Operations (/git:* commands) -->
+    <div class="glass-card rounded-2xl p-6 sm:p-8 fc-v24-content hidden">
+      <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+        <svg class="w-5 h-5 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="18" cy="18" r="3"/>
+          <circle cx="6" cy="6" r="3"/>
+          <path d="M6 21V9a9 9 0 0 0 9 9" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        {isVi ? 'Git Operations' : 'Git Operations'}
+        <span class="ml-2 px-2 py-0.5 text-xs font-medium rounded-full bg-blue-500/20 text-blue-600 dark:text-blue-400">v2.4.0</span>
       </h3>
       <div class="overflow-x-auto">
         <table class="w-full text-sm">
@@ -488,6 +539,7 @@ const t = useTranslations(currentLang);
           <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.563-2.512 5.563-5.563C22 6.5 17.5 2 12 2Z" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         {isVi ? 'Design Commands' : 'Design Commands'}
+        <span class="ml-2 px-2 py-0.5 text-xs font-medium rounded-full bg-teal-500/20 text-teal-600 dark:text-teal-400">v2.5.0+</span>
       </h3>
       <div class="overflow-x-auto">
         <table class="w-full text-sm">
@@ -500,34 +552,24 @@ const t = useTranslations(currentLang);
           </thead>
           <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
             <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-pink-500/10 text-pink-600 dark:text-pink-400 font-mono font-bold">/design:describe</code></td>
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Mô tả design từ image' : 'Describe design from image'}</td>
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Hiểu UI designs có sẵn' : 'Understand existing UI designs'}</td>
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-pink-500/20 text-pink-600 dark:text-pink-400 font-mono font-bold">/frontend-design</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'UI/UX design với screenshot analysis' : 'UI/UX design with screenshot analysis'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Tạo/cải thiện UI components' : 'Create/improve UI components'}</td>
             </tr>
             <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-pink-500/10 text-pink-600 dark:text-pink-400 font-mono font-bold">/design:screenshot</code></td>
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Chụp screenshot của UI' : 'Take screenshot of UI'}</td>
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Capture trạng thái hiện tại' : 'Capture current state'}</td>
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-pink-500/20 text-pink-600 dark:text-pink-400 font-mono font-bold">/remotion</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Video design với React' : 'Video design with React'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Tạo video animations' : 'Create video animations'}</td>
             </tr>
             <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-pink-500/10 text-pink-600 dark:text-pink-400 font-mono font-bold">/design:video</code></td>
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Quay video UI flow' : 'Record video of UI flow'}</td>
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Document interactions' : 'Document interactions'}</td>
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-pink-500/20 text-pink-600 dark:text-pink-400 font-mono font-bold">/threejs</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? '3D graphics với Three.js' : '3D graphics with Three.js'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Tạo 3D visualizations' : 'Create 3D visualizations'}</td>
             </tr>
             <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-pink-500/10 text-pink-600 dark:text-pink-400 font-mono font-bold">/design:3d</code></td>
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Tạo 3D assets' : 'Generate 3D assets'}</td>
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Tạo visuals 3D' : 'Create 3D visuals'}</td>
-            </tr>
-            <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-pink-500/10 text-pink-600 dark:text-pink-400 font-mono font-bold">/design:fast</code></td>
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Quick design iteration' : 'Quick design iteration'}</td>
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Fast UI prototyping' : 'Fast UI prototyping'}</td>
-            </tr>
-            <tr>
-              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-pink-500/10 text-pink-600 dark:text-pink-400 font-mono font-bold">/design:good</code></td>
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'High-quality design' : 'High-quality design'}</td>
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Premium UI work' : 'Premium UI work'}</td>
+              <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-pink-500/20 text-pink-600 dark:text-pink-400 font-mono font-bold">/ai-artist</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'AI image generation' : 'AI image generation'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Tạo artwork, assets' : 'Create artwork, assets'}</td>
             </tr>
           </tbody>
         </table>
@@ -559,6 +601,11 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-violet-500/10 text-violet-600 dark:text-violet-400 font-mono font-bold">/review:codebase</code></td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Comprehensive codebase review' : 'Comprehensive codebase review'}</td>
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Quality assessment, tìm issues' : 'Quality assessment, find issues'}</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"><code class="text-xs px-2 py-1 rounded bg-violet-500/10 text-violet-600 dark:text-violet-400 font-mono font-bold">/review:codebase:parallel</code></td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Parallel review với nhiều agents' : 'Parallel review with multiple agents'}</td>
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Large codebase, cần speed' : 'Large codebase, need speed'}</td>
             </tr>
           </tbody>
         </table>
@@ -632,8 +679,21 @@ const t = useTranslations(currentLang);
     </h3>
 
     <div class="grid md:grid-cols-2 gap-6">
-      <!-- Workflow 1: Safe Approach -->
-      <div class="p-5 rounded-xl bg-purple-500/5 border border-purple-200 dark:border-purple-500/20">
+      <!-- Workflow 1: Safe Approach (v2.5.0+) -->
+      <div class="p-5 rounded-xl bg-purple-500/5 border border-purple-200 dark:border-purple-500/20 fc-v25-content">
+        <h4 class="font-bold text-purple-700 dark:text-purple-400 mb-3">{isVi ? 'Workflow 1: Build Feature (Safe)' : 'Workflow 1: Building a New Feature (Safe)'}</h4>
+        <div class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono">
+          <p>1. <code class="text-purple-600 dark:text-purple-400">/brainstorm</code> → {isVi ? 'Khám phá options' : 'Explore options'}</p>
+          <p>2. <code class="text-purple-600 dark:text-purple-400">/plan</code> → {isVi ? 'Review plan' : 'Review plan'}</p>
+          <p>3. <code class="text-slate-500">/clear</code> {isVi ? 'hoặc' : 'or'} <code class="text-slate-500">/compact</code></p>
+          <p>4. <code class="text-purple-600 dark:text-purple-400">/cook @plan.md</code> → {isVi ? 'Implement' : 'Implementation'}</p>
+          <p>5. <code class="text-indigo-600 dark:text-indigo-400">/git cp</code> → Push</p>
+          <p>6. <code class="text-indigo-600 dark:text-indigo-400">/git pr</code> → PR</p>
+        </div>
+      </div>
+
+      <!-- Workflow 1: Safe Approach (v2.4.x) -->
+      <div class="p-5 rounded-xl bg-purple-500/5 border border-purple-200 dark:border-purple-500/20 fc-v24-content hidden">
         <h4 class="font-bold text-purple-700 dark:text-purple-400 mb-3">{isVi ? 'Workflow 1: Build Feature (Safe)' : 'Workflow 1: Building a New Feature (Safe)'}</h4>
         <div class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono">
           <p>1. <code class="text-purple-600 dark:text-purple-400">/brainstorm</code> → {isVi ? 'Khám phá options' : 'Explore options'}</p>
@@ -646,7 +706,14 @@ const t = useTranslations(currentLang);
       </div>
 
       <!-- Workflow 2: Fast Approach -->
-      <div class="p-5 rounded-xl bg-emerald-500/5 border border-emerald-200 dark:border-emerald-500/20">
+      <div class="p-5 rounded-xl bg-emerald-500/5 border border-emerald-200 dark:border-emerald-500/20 fc-v25-content">
+        <h4 class="font-bold text-emerald-700 dark:text-emerald-400 mb-3">{isVi ? 'Workflow 2: Build Feature (Fast)' : 'Workflow 2: Building a Feature (Fast)'}</h4>
+        <div class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono">
+          <p>1. <code class="text-emerald-600 dark:text-emerald-400">/cook</code> → {isVi ? 'Research → Plan → Implement → Test → Review' : 'Research → Plan → Implement → Test → Review'}</p>
+          <p>2. <code class="text-indigo-600 dark:text-indigo-400">/git cp</code> → {isVi ? 'Commit và push khi approved' : 'Commit and push when approved'}</p>
+        </div>
+      </div>
+      <div class="p-5 rounded-xl bg-emerald-500/5 border border-emerald-200 dark:border-emerald-500/20 fc-v24-content hidden">
         <h4 class="font-bold text-emerald-700 dark:text-emerald-400 mb-3">{isVi ? 'Workflow 2: Build Feature (Fast)' : 'Workflow 2: Building a Feature (Fast)'}</h4>
         <div class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono">
           <p>1. <code class="text-emerald-600 dark:text-emerald-400">/cook</code> → {isVi ? 'Research → Plan → Implement → Test → Review' : 'Research → Plan → Implement → Test → Review'}</p>
@@ -655,7 +722,15 @@ const t = useTranslations(currentLang);
       </div>
 
       <!-- Workflow 3: Debugging -->
-      <div class="p-5 rounded-xl bg-orange-500/5 border border-orange-200 dark:border-orange-500/20">
+      <div class="p-5 rounded-xl bg-orange-500/5 border border-orange-200 dark:border-orange-500/20 fc-v25-content">
+        <h4 class="font-bold text-orange-700 dark:text-orange-400 mb-3">{isVi ? 'Workflow 3: Debugging & Fixing' : 'Workflow 3: Debugging & Fixing'}</h4>
+        <div class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono">
+          <p>1. <code class="text-orange-600 dark:text-orange-400">/debug</code> → {isVi ? 'Tìm root cause' : 'Find root cause'}</p>
+          <p>2. <code class="text-red-600 dark:text-red-400">/fix</code> → {isVi ? 'Smart routing' : 'Smart routing'}</p>
+          <p>3. <code class="text-indigo-600 dark:text-indigo-400">/git cm</code> → {isVi ? 'Commit fix locally' : 'Commit fix locally'}</p>
+        </div>
+      </div>
+      <div class="p-5 rounded-xl bg-orange-500/5 border border-orange-200 dark:border-orange-500/20 fc-v24-content hidden">
         <h4 class="font-bold text-orange-700 dark:text-orange-400 mb-3">{isVi ? 'Workflow 3: Debugging & Fixing' : 'Workflow 3: Debugging & Fixing'}</h4>
         <div class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono">
           <p>1. <code class="text-orange-600 dark:text-orange-400">/debug</code> → {isVi ? 'Tìm root cause' : 'Find root cause'}</p>
@@ -694,7 +769,14 @@ const t = useTranslations(currentLang);
     </h3>
 
     <div class="space-y-4">
-      <div class="p-4 rounded-lg bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20">
+      <div class="p-4 rounded-lg bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 fc-v25-content">
+        <p class="text-sm text-emerald-700 dark:text-emerald-400">
+          <strong class="flex items-center gap-1"><svg class="w-4 h-4 text-emerald-500 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg> {isVi ? 'Speed vs Safety Trade-off:' : 'Speed vs Safety Trade-off:'}</strong><br/>
+          • {isVi ? 'Dùng /cook khi confident và muốn speed' : 'Use /cook when you\'re confident and want speed'}<br/>
+          • {isVi ? 'Dùng /plan → /cook @plan.md khi precision và review quan trọng' : 'Use /plan → /cook @plan.md when precision and review matter'}
+        </p>
+      </div>
+      <div class="p-4 rounded-lg bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 fc-v24-content hidden">
         <p class="text-sm text-emerald-700 dark:text-emerald-400">
           <strong class="flex items-center gap-1"><svg class="w-4 h-4 text-emerald-500 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg> {isVi ? 'Speed vs Safety Trade-off:' : 'Speed vs Safety Trade-off:'}</strong><br/>
           • {isVi ? 'Dùng /cook khi confident và muốn speed' : 'Use /cook when you\'re confident and want speed'}<br/>
@@ -702,7 +784,14 @@ const t = useTranslations(currentLang);
         </p>
       </div>
 
-      <div class="p-4 rounded-lg bg-amber-500/10 border border-amber-200 dark:border-amber-500/20">
+      <div class="p-4 rounded-lg bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 fc-v25-content">
+        <p class="text-sm text-amber-700 dark:text-amber-400">
+          <strong class="flex items-center gap-1"><svg class="w-4 h-4 text-amber-500 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg> {isVi ? 'Best Practice:' : 'Best Practice:'}</strong><br/>
+          • {isVi ? 'Dùng /cook cho hầu hết tasks - có internal planning' : 'Use /cook for most tasks - has internal planning'}<br/>
+          • {isVi ? 'Dùng /plan trước khi /cook @plan.md cho tasks phức tạp cần review' : 'Use /plan before /cook @plan.md for complex tasks needing review'}
+        </p>
+      </div>
+      <div class="p-4 rounded-lg bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 fc-v24-content hidden">
         <p class="text-sm text-amber-700 dark:text-amber-400">
           <strong class="flex items-center gap-1"><svg class="w-4 h-4 text-amber-500 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg> {isVi ? 'Không mix workflows:' : 'Never mix these workflows:'}</strong><br/>
           • ❌ <code>/plan</code> → <code>/cook</code> ({isVi ? 'cook có planning riêng' : 'cook has its own planning'})<br/>
@@ -711,7 +800,14 @@ const t = useTranslations(currentLang);
         </p>
       </div>
 
-      <div class="p-4 rounded-lg bg-red-500/10 border border-red-200 dark:border-red-500/20">
+      <div class="p-4 rounded-lg bg-red-500/10 border border-red-200 dark:border-red-500/20 fc-v25-content">
+        <p class="text-sm text-red-700 dark:text-red-400">
+          <strong class="flex items-center gap-1"><svg class="w-4 h-4 text-red-500 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg> {isVi ? 'Git safety:' : 'Git safety:'}</strong><br/>
+          • <code>/git cm</code> = {isVi ? 'commit only (safe cho experimentation)' : 'commit only (safe for experimentation)'}<br/>
+          • <code>/git cp</code> = {isVi ? 'commits VÀ pushes (không thể undo dễ dàng)' : 'commits AND pushes (can\'t undo easily)'}
+        </p>
+      </div>
+      <div class="p-4 rounded-lg bg-red-500/10 border border-red-200 dark:border-red-500/20 fc-v24-content hidden">
         <p class="text-sm text-red-700 dark:text-red-400">
           <strong class="flex items-center gap-1"><svg class="w-4 h-4 text-red-500 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg> {isVi ? 'Git safety:' : 'Git safety:'}</strong><br/>
           • <code>/git:cm</code> = {isVi ? 'commit only (safe cho experimentation)' : 'commit only (safe for experimentation)'}<br/>
@@ -749,7 +845,12 @@ const t = useTranslations(currentLang);
             <td class="py-3 px-4 text-slate-600 dark:text-slate-400">Moderate</td>
             <td class="py-3 px-4 text-slate-600 dark:text-slate-400"><code>/brainstorm</code>, <code>/fix</code>, <code>/scout</code></td>
           </tr>
-          <tr>
+          <tr class="fc-v25-content">
+            <td class="py-3 px-4 text-amber-500">⚡⚡⚡</td>
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400">Complex, thorough</td>
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400"><code>/cook</code>, <code>/plan</code></td>
+          </tr>
+          <tr class="fc-v24-content hidden">
             <td class="py-3 px-4 text-amber-500">⚡⚡⚡</td>
             <td class="py-3 px-4 text-slate-600 dark:text-slate-400">Complex, thorough</td>
             <td class="py-3 px-4 text-slate-600 dark:text-slate-400"><code>/cook</code>, <code>/code</code>, <code>/plan</code></td>
@@ -790,11 +891,14 @@ const t = useTranslations(currentLang);
         <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
           <tr><td class="py-2 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Build something mới hoàn toàn' : '"I need to build something new from scratch"'}</td><td class="py-2 px-4"><code class="text-amber-600 dark:text-amber-400">/bootstrap</code></td></tr>
           <tr><td class="py-2 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Có ý tưởng nhưng chưa biết approach' : '"I have an idea but not sure how to approach it"'}</td><td class="py-2 px-4"><code class="text-violet-600 dark:text-violet-400">/brainstorm</code></td></tr>
-          <tr><td class="py-2 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Biết chính xác muốn gì, làm nhanh' : '"I know exactly what I want, do it fast"'}</td><td class="py-2 px-4"><code class="text-emerald-600 dark:text-emerald-400">/cook</code></td></tr>
-          <tr><td class="py-2 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Muốn plan kỹ trước khi code' : '"I want to plan carefully before coding"'}</td><td class="py-2 px-4"><code class="text-purple-600 dark:text-purple-400">/plan → /code</code></td></tr>
+          <tr class="fc-v25-content"><td class="py-2 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Biết chính xác muốn gì, làm nhanh' : '"I know exactly what I want, do it fast"'}</td><td class="py-2 px-4"><code class="text-emerald-600 dark:text-emerald-400">/cook</code></td></tr>
+          <tr class="fc-v24-content hidden"><td class="py-2 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Biết chính xác muốn gì, làm nhanh' : '"I know exactly what I want, do it fast"'}</td><td class="py-2 px-4"><code class="text-emerald-600 dark:text-emerald-400">/cook</code></td></tr>
+          <tr class="fc-v25-content"><td class="py-2 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Muốn plan kỹ trước khi code' : '"I want to plan carefully before coding"'}</td><td class="py-2 px-4"><code class="text-purple-600 dark:text-purple-400">/plan → /cook</code></td></tr>
+          <tr class="fc-v24-content hidden"><td class="py-2 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Muốn plan kỹ trước khi code' : '"I want to plan carefully before coding"'}</td><td class="py-2 px-4"><code class="text-purple-600 dark:text-purple-400">/plan → /code</code></td></tr>
           <tr><td class="py-2 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Có lỗi, không biết tại sao' : '"Something\'s broken, I don\'t know why"'}</td><td class="py-2 px-4"><code class="text-orange-600 dark:text-orange-400">/debug → /fix</code></td></tr>
           <tr><td class="py-2 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Có lỗi, biết nguyên nhân' : '"Something\'s broken, I know what it is"'}</td><td class="py-2 px-4"><code class="text-red-600 dark:text-red-400">/fix</code></td></tr>
-          <tr><td class="py-2 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Cần lưu work' : '"I need to save my work"'}</td><td class="py-2 px-4"><code class="text-indigo-600 dark:text-indigo-400">/git:cm</code> {isVi ? 'hoặc' : 'or'} <code class="text-indigo-600 dark:text-indigo-400">/git:cp</code></td></tr>
+          <tr class="fc-v25-content"><td class="py-2 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Cần lưu work' : '"I need to save my work"'}</td><td class="py-2 px-4"><code class="text-indigo-600 dark:text-indigo-400">git skill</code> <span class="text-xs text-slate-400">({isVi ? '"commit", "push"' : '"commit", "push"'})</span></td></tr>
+          <tr class="fc-v24-content hidden"><td class="py-2 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Cần lưu work' : '"I need to save my work"'}</td><td class="py-2 px-4"><code class="text-indigo-600 dark:text-indigo-400">/git:cm</code> {isVi ? 'hoặc' : 'or'} <code class="text-indigo-600 dark:text-indigo-400">/git:cp</code></td></tr>
           <tr><td class="py-2 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Cần hiểu codebase' : '"I need to understand this codebase"'}</td><td class="py-2 px-4"><code class="text-cyan-600 dark:text-cyan-400">/docs:init</code></td></tr>
           <tr><td class="py-2 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Cần advice kiến trúc' : '"I need architectural advice"'}</td><td class="py-2 px-4"><code class="text-blue-600 dark:text-blue-400">/ask</code></td></tr>
           <tr><td class="py-2 px-4 text-slate-600 dark:text-slate-400">{isVi ? 'Có gì thay đổi gần đây?' : '"What changed recently?"'}</td><td class="py-2 px-4"><code class="text-cyan-600 dark:text-cyan-400">/watzup</code></td></tr>
@@ -824,3 +928,48 @@ const t = useTranslations(currentLang);
     </div>
   </div>
 </div>
+
+<script>
+  // Version toggle functionality for flowchart guide
+  document.addEventListener('DOMContentLoaded', () => {
+    const btnV25 = document.getElementById('fc-btn-v25');
+    const btnV24 = document.getElementById('fc-btn-v24');
+    const v25Contents = document.querySelectorAll('.fc-v25-content');
+    const v24Contents = document.querySelectorAll('.fc-v24-content');
+
+    if (!btnV25 || !btnV24 || v25Contents.length === 0) return;
+
+    const activeClasses = 'bg-teal-500 text-white shadow-sm';
+    const inactiveClasses = 'text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700';
+    const activeV24Classes = 'bg-blue-500 text-white shadow-sm';
+
+    function setVersion(version: 'v25' | 'v24') {
+      if (version === 'v25') {
+        v25Contents.forEach(el => el.classList.remove('hidden'));
+        v24Contents.forEach(el => el.classList.add('hidden'));
+        btnV25.className = `fc-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${activeClasses}`;
+        btnV24.className = `fc-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${inactiveClasses}`;
+      } else {
+        v25Contents.forEach(el => el.classList.add('hidden'));
+        v24Contents.forEach(el => el.classList.remove('hidden'));
+        btnV24.className = `fc-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${activeV24Classes}`;
+        btnV25.className = `fc-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${inactiveClasses}`;
+      }
+
+      // Save preference
+      localStorage.setItem('flowchart-version', version);
+
+      // Dispatch custom event for FlowchartInteractive to listen
+      document.dispatchEvent(new CustomEvent('flowchart-version-change', { detail: version }));
+    }
+
+    // Load saved preference
+    const savedVersion = localStorage.getItem('flowchart-version') as 'v25' | 'v24' | null;
+    if (savedVersion) {
+      setVersion(savedVersion);
+    }
+
+    btnV25.addEventListener('click', () => setVersion('v25'));
+    btnV24.addEventListener('click', () => setVersion('v24'));
+  });
+</script>

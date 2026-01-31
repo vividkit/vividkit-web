@@ -1,5 +1,5 @@
 ---
-import { flowchartData, pathColors, type FlowchartPath } from '@/data/guides/flowchart';
+import { v25FlowchartData, v24FlowchartData, pathColors, type FlowchartPath } from '@/data/guides/flowchart';
 import { getLangFromUrl, type Language } from '@/i18n';
 
 interface Props {
@@ -10,10 +10,14 @@ interface Props {
 const { lang, class: className = '' } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 
-const { nodes, edges, paths, viewBox } = flowchartData;
+// Both versions for rendering
+const v25Data = v25FlowchartData;
+const v24Data = v24FlowchartData;
+const { viewBox } = v25Data;
 
 // Serialize paths for Alpine.js
-const pathsJson = JSON.stringify(paths);
+const v25PathsJson = JSON.stringify(v25Data.paths);
+const v24PathsJson = JSON.stringify(v24Data.paths);
 const colorsJson = JSON.stringify(pathColors);
 ---
 
@@ -26,13 +30,36 @@ const colorsJson = JSON.stringify(pathColors);
     maxScale: 2,
     isFullscreen: false,
     showCommandList: true,
-    paths: ${pathsJson},
+    currentVersion: 'v25',
+    v25Paths: ${v25PathsJson},
+    v24Paths: ${v24PathsJson},
     colors: ${colorsJson},
     rootEl: null,
     placeholder: null,
 
+    get paths() {
+      return this.currentVersion === 'v25' ? this.v25Paths : this.v24Paths;
+    },
+
     init() {
       this.rootEl = this.$el;
+      // Listen for version changes from parent
+      const savedVersion = localStorage.getItem('flowchart-version');
+      if (savedVersion === 'v24' || savedVersion === 'v25') {
+        this.currentVersion = savedVersion;
+      }
+      // Watch for version toggle clicks
+      window.addEventListener('storage', (e) => {
+        if (e.key === 'flowchart-version' && (e.newValue === 'v25' || e.newValue === 'v24')) {
+          this.currentVersion = e.newValue;
+          this.activePaths = [];
+        }
+      });
+      // Also listen for custom event from same page
+      document.addEventListener('flowchart-version-change', (e) => {
+        this.currentVersion = e.detail;
+        this.activePaths = [];
+      });
     },
 
     toggleFullscreen() {
@@ -171,18 +198,18 @@ const colorsJson = JSON.stringify(pathColors);
 
     <!-- Top Bar (Fullscreen Only or Mobile) -->
     <div class="flex items-center justify-between gap-4 mb-4 shrink-0 p-2" x-show="!isFullscreen">
-       <!-- Legend / Path Selector (Standard Mode) -->
+       <!-- Legend / Path Selector (Standard Mode) - Dynamic based on version -->
       <div class="flex flex-wrap gap-2 justify-center flex-1">
-        {paths.map((path: FlowchartPath) => (
+        <template x-for="path in paths" :key="path.id">
           <button
-            x-on:click={`selectPath('${path.id}')`}
-            x-bind:class={`activePaths.includes('${path.id}') ? 'ring-2 ring-offset-2 ring-offset-white dark:ring-offset-surface-900' : 'opacity-70 hover:opacity-100'`}
+            x-on:click="selectPath(path.id)"
+            x-bind:class="activePaths.includes(path.id) ? 'ring-2 ring-offset-2 ring-offset-white dark:ring-offset-surface-900' : 'opacity-70 hover:opacity-100'"
             class="px-3 py-1.5 text-sm font-medium rounded-full transition-all duration-200 flex items-center gap-1.5"
-            style={`background-color: ${pathColors[path.color].bg}; color: ${pathColors[path.color].text}; --ring-color: ${pathColors[path.color].text}`}
+            x-bind:style="`background-color: ${colors[path.color].bg}; color: ${colors[path.color].text}; --ring-color: ${colors[path.color].text}`"
           >
-            <code class="font-mono text-xs">{path.command}</code>
+            <code class="font-mono text-xs" x-text="path.command"></code>
           </button>
-        ))}
+        </template>
       </div>
     </div>
 
@@ -270,8 +297,9 @@ const colorsJson = JSON.stringify(pathColors);
                 </marker>
             </defs>
 
-            <g class="edges">
-                {edges.map(edge => (
+            <!-- v2.5.0+ Edges -->
+            <g class="edges" x-show="currentVersion === 'v25'">
+                {v25Data.edges.map(edge => (
                 <g
                     class="flowchart-edge cursor-pointer"
                     x-bind:class={`getEdgeClass('${edge.id}')`}
@@ -288,8 +316,51 @@ const colorsJson = JSON.stringify(pathColors);
                 ))}
             </g>
 
-            <g class="nodes">
-                {nodes.map(node => (
+            <!-- v2.4.0 Edges -->
+            <g class="edges" x-show="currentVersion === 'v24'" x-cloak>
+                {v24Data.edges.map(edge => (
+                <g
+                    class="flowchart-edge cursor-pointer"
+                    x-bind:class={`getEdgeClass('${edge.id}')`}
+                    x-on:click={`selectEdgePath('${edge.id}')`}
+                >
+                    <path d={edge.path} fill="none" class="stroke-slate-300 dark:stroke-slate-600" stroke-width="2" marker-end="url(#arrowhead)" />
+                    {edge.label && edge.labelX && edge.labelY && (
+                    <g>
+                        <rect x={edge.labelX - (Math.max(28, edge.label.length * 7 + 10))/2} y={edge.labelY - 10} width={Math.max(28, edge.label.length * 7 + 10)} height="16" rx="4" class="fill-white dark:fill-surface-800 stroke-slate-200 dark:stroke-slate-700" stroke-width="1" />
+                        <text x={edge.labelX} y={edge.labelY} text-anchor="middle" dominant-baseline="middle" class="text-[10px] font-medium fill-slate-500 dark:fill-slate-400">{edge.label}</text>
+                    </g>
+                    )}
+                </g>
+                ))}
+            </g>
+
+            <!-- v2.5.0+ Nodes -->
+            <g class="nodes" x-show="currentVersion === 'v25'">
+                {v25Data.nodes.map(node => (
+                <g
+                    class="flowchart-node cursor-pointer"
+                    x-bind:class={`getNodeClass('${node.id}')`}
+                    x-on:click={`selectNodePath('${node.id}')`}
+                >
+                    {node.type === 'decision' ? (
+                    <polygon points={`${node.position.x},${node.position.y - 35} ${node.position.x + 65},${node.position.y} ${node.position.x},${node.position.y + 35} ${node.position.x - 65},${node.position.y}`} class="fill-white/95 dark:fill-surface-800/95 stroke-slate-300 dark:stroke-slate-600" stroke-width="2" />
+                    ) : node.type === 'command' ? (
+                    <g>
+                        <rect x={node.position.x - (Math.max(100, node.label.length * 9 + 20))/2} y={node.position.y - 22} width={Math.max(100, node.label.length * 9 + 20)} height="44" rx="8" class="fill-white/95 dark:fill-surface-800/95 stroke-slate-300 dark:stroke-slate-600" stroke-width="2" />
+                        <rect x={node.position.x - (Math.max(100, node.label.length * 9 + 20))/2} y={node.position.y - 22} width="4" height="44" rx="2" class="fill-blue-500 dark:fill-blue-400" />
+                    </g>
+                    ) : (
+                    <rect x={node.position.x - 100} y={node.position.y - 25} width="200" height="50" rx="25" class="fill-blue-500 stroke-blue-400 dark:stroke-blue-500" stroke-width="2" />
+                    )}
+                    <text x={node.position.x} y={node.position.y} text-anchor="middle" dominant-baseline="middle" class:list={['pointer-events-none', node.type === 'start' ? 'text-sm font-semibold fill-white' : node.type === 'command' ? 'text-sm font-mono font-semibold fill-slate-700 dark:fill-slate-200' : 'text-xs font-medium fill-slate-600 dark:fill-slate-300']}>{node.label}</text>
+                </g>
+                ))}
+            </g>
+
+            <!-- v2.4.0 Nodes -->
+            <g class="nodes" x-show="currentVersion === 'v24'" x-cloak>
+                {v24Data.nodes.map(node => (
                 <g
                     class="flowchart-node cursor-pointer"
                     x-bind:class={`getNodeClass('${node.id}')`}
