@@ -73,7 +73,7 @@ const translatedCategories = commandCategories.map(category => {
     translatedDescription = t('commands.desc.intermediate');
     translatedCommands = category.commands.map(cmd => {
       if (cmd.name.includes('/plan')) return { ...cmd, description: t('commands.plan.desc') };
-      if (cmd.name.includes('/code')) return { ...cmd, description: t('commands.code.desc') };
+      if (cmd.name.includes('/cook @plan')) return { ...cmd, description: t('commands.cook_plan.desc') };
       if (cmd.name.includes('/cook')) return { ...cmd, description: t('commands.cook.desc') };
       return cmd;
     });

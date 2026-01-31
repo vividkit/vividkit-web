@@ -15,7 +15,7 @@ export const cliTerminalPreview = {
     { type: 'output', content: 'Starting Claude Code CLI...' },
     { type: 'hint', content: 'Type your message (or /help for commands)' },
     { type: 'user', content: 'Using ui-ux-pro-max skill, create a yoga studio landing page' },
-    { type: 'thinking', content: 'ClaudeKit AI is thinking...' },
+    { type: 'thinking', content: 'AI is thinking...' },
     { type: 'search', items: [
       { label: 'Searching product domain:', value: 'beauty/wellness' },
       { label: 'Style guide:', value: 'minimalist + elegant' },

@@ -14,6 +14,7 @@ const t = useTranslations(currentLang);
 // Language-specific image suffixes and URLs
 const imgSuffix = currentLang === 'vi' ? '-vi' : '';
 const workflowsUrl = currentLang === 'vi' ? '/vi/guides/workflows' : '/guides/workflows';
+const commandsUrl = currentLang === 'vi' ? '/vi/guides/commands' : '/guides/commands';
 const cliGuideUrl = currentLang === 'vi' ? '/vi/guides/cli' : '/guides/cli';
 
 // SVG Icons as template literals
@@ -75,22 +76,42 @@ const metaphorItems = [
   { icon: icons.wrench, key: 'maintenance', color: 'violet' },
 ];
 
-const beginnerCommands = [
-  { cmd: '/ask', desc: 'Get answers to any question' },
-  { cmd: '/brainstorm', desc: 'Explore ideas together' },
-  { cmd: '/fix', desc: 'Fix errors automatically' },
+// v2.5.0+ commands - skill-based architecture
+const v25BeginnerCommands = [
+  { cmd: '/ask', desc: t('guides.what_is_claudekit.cmd_ask') },
+  { cmd: '/brainstorm', desc: t('guides.what_is_claudekit.cmd_brainstorm') },
+  { cmd: '/fix', desc: t('guides.what_is_claudekit.cmd_fix') },
 ];
 
-const buildingCommands = [
-  { cmd: '/plan', desc: 'Create step-by-step plans' },
-  { cmd: '/code', desc: 'Implement your plans' },
-  { cmd: '/cook', desc: 'All-in-one feature builder' },
+const v25BuildingCommands = [
+  { cmd: '/plan', desc: t('guides.what_is_claudekit.cmd_plan') },
+  { cmd: '/cook', desc: t('guides.what_is_claudekit.cmd_cook') },
+  { cmd: '/cook @plan.md', desc: t('guides.what_is_claudekit.cmd_cook_plan') },
 ];
 
-const gitCommands = [
-  { cmd: '/git:cm', desc: 'Smart commit messages' },
-  { cmd: '/git:pr', desc: 'Create pull requests' },
-  { cmd: '/docs:update', desc: 'Update documentation' },
+const v25GitCommands = [
+  { cmd: '/git', desc: t('guides.what_is_claudekit.cmd_git') },
+  { cmd: '/docs:update', desc: t('guides.what_is_claudekit.cmd_docs') },
+  { cmd: '/watzup', desc: t('guides.what_is_claudekit.cmd_watzup') },
+];
+
+// v2.4.x commands - command-based architecture
+const v24BeginnerCommands = [
+  { cmd: '/ask', desc: t('guides.what_is_claudekit.cmd_ask') },
+  { cmd: '/brainstorm', desc: t('guides.what_is_claudekit.cmd_brainstorm') },
+  { cmd: '/fix', desc: t('guides.what_is_claudekit.cmd_fix') },
+];
+
+const v24BuildingCommands = [
+  { cmd: '/plan', desc: t('guides.what_is_claudekit.cmd_plan') },
+  { cmd: '/code', desc: t('guides.what_is_claudekit.cmd_code') },
+  { cmd: '/review:codebase', desc: t('guides.what_is_claudekit.cmd_review') },
+];
+
+const v24GitCommands = [
+  { cmd: '/git:cm', desc: t('guides.what_is_claudekit.cmd_git_cm') },
+  { cmd: '/git:pr', desc: t('guides.what_is_claudekit.cmd_git_pr') },
+  { cmd: '/docs:update', desc: t('guides.what_is_claudekit.cmd_docs') },
 ];
 
 const summaryItems = [
@@ -331,22 +352,45 @@ const comparisonItems = [
   <!-- Quick Start Commands -->
   <div class="glass-card rounded-2xl overflow-hidden">
     <div class="p-6 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 border-b border-slate-200 dark:border-slate-800">
-      <div class="flex items-center justify-between flex-wrap gap-4">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <h3 class="text-2xl font-bold text-blue-600 dark:text-blue-400 flex items-center gap-3">
           <span class="text-blue-600 dark:text-blue-400"><Fragment set:html={icons.rocket} /></span>
           {t('guides.what_is_claudekit.quick_start_title')}
         </h3>
-        <a
-          href={workflowsUrl}
-          class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-100 dark:bg-blue-500/20 text-blue-700 dark:text-blue-300 text-sm font-medium hover:bg-blue-200 dark:hover:bg-blue-500/30 transition-colors"
-        >
-          {t('guides.what_is_claudekit.view_all_commands')}
-          <Fragment set:html={icons.arrow_link} />
-        </a>
+        <div class="flex items-center gap-3 flex-wrap">
+          <!-- Version Toggle -->
+          <div class="flex items-center gap-2 p-1 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+            <button
+              id="qs-btn-v25"
+              class="qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 bg-teal-500 text-white shadow-sm"
+              data-version="v25"
+            >
+              <span class="flex items-center gap-1.5">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+                {t('guides.what_is_claudekit.qs_tab_v25')}
+              </span>
+            </button>
+            <button
+              id="qs-btn-v24"
+              class="qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700"
+              data-version="v24"
+            >
+              <span class="flex items-center gap-1.5">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                {t('guides.what_is_claudekit.qs_tab_v24')}
+              </span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
     <div class="p-6">
-      <div class="grid md:grid-cols-3 gap-6">
+      <!-- v2.5.0+ Commands -->
+      <div id="qs-commands-v25" class="grid md:grid-cols-3 gap-6">
         <!-- For Beginners -->
         <div class="rounded-xl bg-purple-50 dark:bg-purple-500/10 border border-purple-200 dark:border-purple-500/20 p-4">
           <h4 class="font-bold text-purple-700 dark:text-purple-400 mb-3 flex items-center gap-2">
@@ -354,7 +398,7 @@ const comparisonItems = [
             {t('guides.what_is_claudekit.for_beginners')}
           </h4>
           <div class="space-y-2">
-            {beginnerCommands.map((cmd) => (
+            {v25BeginnerCommands.map((cmd) => (
               <div class="flex items-center gap-2">
                 <code class="px-2 py-1 rounded bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-300 text-sm font-mono">
                   {cmd.cmd}
@@ -371,7 +415,7 @@ const comparisonItems = [
             {t('guides.what_is_claudekit.for_building')}
           </h4>
           <div class="space-y-2">
-            {buildingCommands.map((cmd) => (
+            {v25BuildingCommands.map((cmd) => (
               <div class="flex items-center gap-2">
                 <code class="px-2 py-1 rounded bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-sm font-mono">
                   {cmd.cmd}
@@ -388,7 +432,7 @@ const comparisonItems = [
             {t('guides.what_is_claudekit.for_git')}
           </h4>
           <div class="space-y-2">
-            {gitCommands.map((cmd) => (
+            {v25GitCommands.map((cmd) => (
               <div class="flex items-center gap-2">
                 <code class="px-2 py-1 rounded bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300 text-sm font-mono">
                   {cmd.cmd}
@@ -398,6 +442,72 @@ const comparisonItems = [
             ))}
           </div>
         </div>
+      </div>
+
+      <!-- v2.4.x Commands (hidden by default) -->
+      <div id="qs-commands-v24" class="grid md:grid-cols-3 gap-6 hidden">
+        <!-- For Beginners -->
+        <div class="rounded-xl bg-purple-50 dark:bg-purple-500/10 border border-purple-200 dark:border-purple-500/20 p-4">
+          <h4 class="font-bold text-purple-700 dark:text-purple-400 mb-3 flex items-center gap-2">
+            <span class="text-purple-600 dark:text-purple-400"><Fragment set:html={icons.academic} /></span>
+            {t('guides.what_is_claudekit.for_beginners')}
+          </h4>
+          <div class="space-y-2">
+            {v24BeginnerCommands.map((cmd) => (
+              <div class="flex items-center gap-2">
+                <code class="px-2 py-1 rounded bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-300 text-sm font-mono">
+                  {cmd.cmd}
+                </code>
+                <span class="text-xs text-slate-500 dark:text-slate-400">{cmd.desc}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <!-- For Building -->
+        <div class="rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 p-4">
+          <h4 class="font-bold text-emerald-700 dark:text-emerald-400 mb-3 flex items-center gap-2">
+            <span class="text-emerald-600 dark:text-emerald-400"><Fragment set:html={icons.hammer} /></span>
+            {t('guides.what_is_claudekit.for_building')}
+          </h4>
+          <div class="space-y-2">
+            {v24BuildingCommands.map((cmd) => (
+              <div class="flex items-center gap-2">
+                <code class="px-2 py-1 rounded bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-sm font-mono">
+                  {cmd.cmd}
+                </code>
+                <span class="text-xs text-slate-500 dark:text-slate-400">{cmd.desc}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <!-- For Git -->
+        <div class="rounded-xl bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 p-4">
+          <h4 class="font-bold text-amber-700 dark:text-amber-400 mb-3 flex items-center gap-2">
+            <span class="text-amber-600 dark:text-amber-400"><Fragment set:html={icons.code_bracket} /></span>
+            {t('guides.what_is_claudekit.for_git')}
+          </h4>
+          <div class="space-y-2">
+            {v24GitCommands.map((cmd) => (
+              <div class="flex items-center gap-2">
+                <code class="px-2 py-1 rounded bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300 text-sm font-mono">
+                  {cmd.cmd}
+                </code>
+                <span class="text-xs text-slate-500 dark:text-slate-400">{cmd.desc}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- View All Commands Link -->
+      <div class="mt-6 text-center">
+        <a
+          href={commandsUrl}
+          class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-blue-100 dark:bg-blue-500/20 text-blue-700 dark:text-blue-300 text-sm font-medium hover:bg-blue-200 dark:hover:bg-blue-500/30 transition-colors"
+        >
+          {t('guides.what_is_claudekit.view_all_commands')}
+          <Fragment set:html={icons.arrow_link} />
+        </a>
       </div>
     </div>
   </div>
@@ -481,3 +591,46 @@ const comparisonItems = [
   </div>
 
 </div>
+
+<script>
+  // Quick Start version toggle functionality
+  document.addEventListener('DOMContentLoaded', () => {
+    const btnV25 = document.getElementById('qs-btn-v25');
+    const btnV24 = document.getElementById('qs-btn-v24');
+    const commandsV25 = document.getElementById('qs-commands-v25');
+    const commandsV24 = document.getElementById('qs-commands-v24');
+
+    if (!btnV25 || !btnV24 || !commandsV25 || !commandsV24) return;
+
+    const activeClasses = 'bg-teal-500 text-white shadow-sm';
+    const activeV24Classes = 'bg-blue-500 text-white shadow-sm';
+    const inactiveClasses = 'text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700';
+
+    function setVersion(version: 'v25' | 'v24') {
+      if (version === 'v25') {
+        commandsV25.classList.remove('hidden');
+        commandsV24.classList.add('hidden');
+        btnV25.className = `qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${activeClasses}`;
+        btnV24.className = `qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${inactiveClasses}`;
+      } else {
+        commandsV25.classList.add('hidden');
+        commandsV24.classList.remove('hidden');
+        btnV24.className = `qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${activeV24Classes}`;
+        btnV25.className = `qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${inactiveClasses}`;
+      }
+
+      // Save preference
+      localStorage.setItem('what-is-claudekit-qs-version', version);
+    }
+
+    // Restore saved preference
+    const savedVersion = localStorage.getItem('what-is-claudekit-qs-version') as 'v25' | 'v24' | null;
+    if (savedVersion) {
+      setVersion(savedVersion);
+    }
+
+    // Event listeners
+    btnV25.addEventListener('click', () => setVersion('v25'));
+    btnV24.addEventListener('click', () => setVersion('v24'));
+  });
+</script>
