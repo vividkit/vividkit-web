@@ -61,10 +61,11 @@ export const v25Workflows = [
     steps: [
       {
         command: '/debug',
-        typeLabel: 'Investigate the issue',
+        typeLabel: 'Investigate the issue (skill)',
         description: 'AI analyzes your code to find the root cause of the problem',
         color: 'bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400',
-        number: 1
+        number: 1,
+        isSkill: true
       },
       {
         command: '/fix',
@@ -82,7 +83,7 @@ export const v25Workflows = [
         number: 3
       }
     ],
-    tip: '💡 /fix skill: intelligent routing to types, ui, ci, test, logs fixes',
+    tip: '💡 /debug & /fix skills: intelligent routing to debug/fix issues',
     borderColor: 'border-red-500/20'
   },
   {
@@ -180,7 +181,7 @@ export const v25Workflows = [
         number: 2
       }
     ],
-    tip: '💡 New in v2.5: Replaces /design:video command',
+    tip: '💡 New in v2.5.0+: Replaces /design:video command',
     features: [
       'Animations and transitions',
       'Text animations and captions',
