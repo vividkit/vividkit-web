@@ -13,7 +13,7 @@ export const commandCategories = [
     description: 'Level up!',
     commands: [
       { name: '/plan "add user auth"', description: 'Create step-by-step implementation plans' },
-      { name: '/code plan.md', description: 'Implement your plans with AI-generated code' },
+      { name: '/cook @plan.md', description: 'Implement your plans with AI-generated code' },
       { name: '/cook "add dark mode"', description: 'All-in-one: brainstorm → plan → implement' }
     ]
   },
