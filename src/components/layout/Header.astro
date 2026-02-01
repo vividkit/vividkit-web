@@ -37,26 +37,14 @@ const translatePath = useTranslatedPath(currentLang);
 
         <!-- Right Actions -->
         <div class="flex items-center gap-2 lg:gap-3 shrink-0">
-          <!-- Language Selector -->
-          <div class="relative group hidden sm:block z-50">
-            <button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer text-slate-600 dark:text-slate-300">
-              <span class="text-xs font-bold">{currentLang === 'en' ? t('header.lang.en') : t('header.lang.vi')}</span>
-            </button>
-            <div class="absolute right-0 top-full mt-2 w-40 py-1 rounded-xl glass-card shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-white/20 dark:border-white/10">
-              <a
-                href={translatePath(Astro.url.pathname, 'en')}
-                class={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium transition-colors whitespace-nowrap ${currentLang === 'en' ? 'text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/20' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50'}`}
-              >
-                <span>🇺🇸</span> {t('header.lang.english')}
-              </a>
-              <a
-                href={translatePath(Astro.url.pathname, 'vi')}
-                class={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium transition-colors whitespace-nowrap ${currentLang === 'vi' ? 'text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/20' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50'}`}
-              >
-                <span>🇻🇳</span> {t('header.lang.vietnamese')}
-              </a>
-            </div>
-          </div>
+          <!-- Language Toggle -->
+          <a
+            href={translatePath(Astro.url.pathname, currentLang === 'en' ? 'vi' : 'en')}
+            class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer text-slate-600 dark:text-slate-300"
+            title={currentLang === 'en' ? 'Chuyển sang Tiếng Việt' : 'Switch to English'}
+          >
+            <span class="text-xs font-bold">{currentLang === 'en' ? 'VI' : 'EN'}</span>
+          </a>
 
           <!-- Theme Toggle Button -->
           <button id="theme-toggle" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer text-slate-600 dark:text-slate-300" aria-label={t('header.toggle_theme')}>
@@ -103,6 +91,14 @@ const translatePath = useTranslatedPath(currentLang);
       <a href={translatePath('/#claudekit')} class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors">{t('nav.claudekit')}</a>
       <a href={translatePath('/#commands')} class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors">{t('nav.commands')}</a>
       <a href={translatePath('/guides')} class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors">{t('nav.guides')}</a>
+      <div class="h-px bg-slate-200 dark:bg-slate-700 my-2"></div>
+      <a
+        href={translatePath(Astro.url.pathname, currentLang === 'en' ? 'vi' : 'en')}
+        class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors flex items-center gap-2"
+      >
+        <span class="font-bold">{currentLang === 'en' ? 'VI' : 'EN'}</span>
+        <span>{currentLang === 'en' ? 'Tiếng Việt' : 'English'}</span>
+      </a>
       <div class="h-px bg-slate-200 dark:bg-slate-700 my-2"></div>
       <a href={translatePath('/#waitlist')} class="px-4 py-3 rounded-xl bg-blue-600 text-white font-medium text-center">{t('hero.cta.primary')}</a>
     </nav>
