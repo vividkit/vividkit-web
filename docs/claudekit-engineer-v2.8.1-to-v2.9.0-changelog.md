@@ -1,161 +1,212 @@
-# ClaudeKit Engineer Changelog: v2.8.1 → v2.9.0-beta.1
+# ClaudeKit Engineer Changelog: v2.8.1 → v2.9.0-beta.9
 
-> **Phân tích:** So sánh chi tiết các thay đổi giữa v2.8.1 (2026-01-27) và v2.9.0-beta.1 (2026-01-28)
+> **Phân tích:** So sánh chi tiết các thay đổi giữa v2.8.1 (2026-01-27) và v2.9.0-beta.9 (2026-01-31)
 
 ---
 
 ## Tóm tắt
 
-| Phiên bản | Ngày phát hành | Thay đổi chính |
-|-----------|----------------|----------------|
-| v2.8.1 | 2026-01-27 | Python venv fixes, path-extractor improvements |
-| v2.9.0-beta.1 | 2026-01-28 | Native Claude Tasks, find-skills skill, Stripe references |
+| Phiên bản | Ngày | Thay đổi chính |
+|-----------|------|----------------|
+| v2.8.1 | 01-27 | Python venv fixes, path-extractor improvements |
+| v2.9.0-beta.1 | 01-28 | Native Claude Tasks, find-skills skill, Stripe refs |
+| v2.9.0-beta.2 | 01-29 | Debug skill cleanup |
+| v2.9.0-beta.3 | 01-29 | Stale refs cleanup (#391) |
+| v2.9.0-beta.4 | 01-29 | Skill-creator plugin marketplace |
+| v2.9.0-beta.5 | 01-29 | Gemini model ID fix |
+| v2.9.0-beta.6 | 01-29 | Google ADK Python v1.0.0+ |
+| v2.9.0-beta.7 | 01-30 | `/fix --parallel` flag |
+| v2.9.0-beta.8 | 01-31 | debug.md metadata cleanup |
+| v2.9.0-beta.9 | 01-31 | plan:validate log template |
 
 ---
 
-## v2.9.0-beta.1 (2026-01-28)
+## 🚀 Features
 
-### 🚀 Features
-
-| Scope | Thay đổi | Commit |
-|-------|----------|--------|
-| **find-skills** | New skill to discover and install skills from ecosystem | `c08b276` |
-| **payment-integration** | Add Stripe references for best practices and API upgrades | `57b3379` |
-
-### ⚡ Performance Improvements
-
-| Scope | Thay đổi | Commit |
-|-------|----------|--------|
-| **cook** | Enhance skill with native Claude Tasks integration | `85de5b6` |
-
-### 👷 CI
-
-| Scope | Thay đổi | Commit |
-|-------|----------|--------|
-| - | Add workflow to sync dev to main after release | `b93f548` |
+| Scope | Thay đổi | Beta | Issue |
+|-------|----------|------|-------|
+| **find-skills** | New skill to discover/install skills from ecosystem | 1 | - |
+| **payment-integration** | Add Stripe best practices & API upgrade refs | 1 | - |
+| **google-adk-python** | Update to v1.0.0+ with 7 reference files | 6 | #396 |
+| **fix** | Add `--parallel` flag for explicit parallel mode | 7 | #400 |
 
 ---
 
-## Features mới đáng chú ý
+## ⚡ Performance
 
-### 1. Native Claude Tasks trong `/cook` Skill (v2.9.0)
+| Scope | Thay đổi | Beta |
+|-------|----------|------|
+| **cook** | Native Claude Tasks integration (`TaskCreate/Update/Get/List`) | 1 |
+| **skill-creator** | Plugin marketplace support | 4 |
 
-Cải tiến lớn nhất: `/cook` skill giờ sử dụng native Claude Tasks (`TaskCreate`, `TaskUpdate`, `TaskGet`, `TaskList`).
+---
 
-**Thay đổi chính:**
-- Sử dụng `TaskCreate` để tạo tasks cho mỗi unchecked item với priority order và dependencies
-- Sử dụng `TaskUpdate` để mark tasks `in_progress` khi pick up task
-- Sử dụng `TaskUpdate` để mark tasks `complete` ngay sau khi finalize
-- Parallel mode: Agents assign task ownership qua `TaskUpdate`
+## 🐞 Bug Fixes
 
-**Workflow modes clarified:**
-- `--interactive`: Full workflow với user input (**default**)
+| Scope | Thay đổi | Beta | Issue |
+|-------|----------|------|-------|
+| **deletions** | Add `skills/debugging/**` for renamed debug skill | 2 | - |
+| **ck-help** | Remove stale CATEGORY_GUIDES for deleted commands | 3 | #391 |
+| **refs** | Clean up stale agent/skill references (brainstorming→brainstorm, aesthetic→ui-ux-pro-max, copywriter→fullstack-developer) | 3 | #391 |
+| **gemini** | Replace invalid `gemini-3.0-flash` with `gemini-3-flash-preview` | 5 | #394 |
+| **google-adk-python** | Correct API inaccuracies (LongRunningFunctionTool, ExampleTool, load_artifact) | 6 | - |
+| **gemini** | Update refs to `gemini-2.5-flash`, add gemini-3 preview | 6 | - |
+| **fix** | Update `/fix:parallel` syntax to `/fix --parallel` | 7 | #400 |
+| **metadata** | Add deprecated debug.md to deletions and archive | 8 | #403 |
+| **plan:validate** | Enrich Step 5 with detailed validation log template | 9 | #402 |
+
+---
+
+## 📚 Documentation
+
+| Thay đổi | Beta | Issue |
+|----------|------|-------|
+| Update stale agent, command, and skill references | 3 | #391 |
+| Mintlify skill update to v2.0.0 with 4 new refs | 6-7 | - |
+
+---
+
+## Features Chi tiết
+
+### 1. Native Claude Tasks trong `/cook` (beta.1)
+
+`/cook` giờ sử dụng native Claude Tasks thay vì custom tracking.
+
+**API sử dụng:**
+- `TaskCreate` - tạo tasks với priority và dependencies
+- `TaskUpdate` - mark `in_progress` khi pick up, `complete` khi done
+- `TaskGet/TaskList` - query task status
+
+**Workflow modes:**
+- `--interactive` (default): Full workflow với user input
 - `--fast`: Skip research, scout→plan→code
 - `--parallel`: Multi-agent execution
-- `--no-test`: Skip testing step
+- `--no-test`: Skip testing
 - `--auto`: Auto-approve all steps
 
-**Review Gates cải tiến:**
-- Post-Plan gate: Thêm option "Validate" để run `/plan:validate`
-- Tất cả modes (trừ auto) đều có "**User approval at each step**"
+### 2. Google ADK Python v1.0.0+ (beta.6)
 
-### 2. Find-Skills Skill (v2.9.0)
+Rebuild từ official sources với 7 reference files:
+- Agent types (LlmAgent, BaseAgent, workflow agents)
+- Tools/MCP integration
+- Multi-agent/A2A patterns
+- Sessions/state/memory
+- Callbacks/plugins
+- Evaluation/CLI
+- Deployment options
 
-Skill mới giúp discover và install skills từ ecosystem.
+**Gemini model updates:**
+- Default: `gemini-2.5-flash`
+- Preview: `gemini-3-flash-preview`, `gemini-3-pro-preview`
+- Sunset: `gemini-2.0-flash` (Mar 2026)
 
-**Use when:**
-- User hỏi "how do I do X"
-- User nói "find a skill for X" hoặc "is there a skill for X"
-- User hỏi "can you do X" với specialized capability
-- User muốn extend agent capabilities
+### 3. `/fix --parallel` Flag (beta.7)
 
-**Key commands:**
+Explicit parallel mode cho `/fix` skill:
 ```bash
-npx skills find [query]     # Search skills
-npx skills add <package>    # Install skill
-npx skills check            # Check for updates
-npx skills update           # Update all skills
+/fix --parallel "fix all linting errors"
 ```
 
-**Browse skills:** https://skills.sh/
+Skips complexity assessment, directly spawns parallel fullstack-developer agents.
 
-### 3. Stripe References (v2.9.0)
+### 4. plan:validate Template (beta.9)
 
-Thêm 2 reference docs cho payment-integration skill:
+Enhanced validation log capturing:
+- Full question text và all options
+- Verbatim custom "Other" responses
+- Rationale per decision
+- Phase impact analysis
+- Session history (re-validations append as Session N blocks)
 
-**stripe-best-practices.md:**
-- Prefer CheckoutSessions API over PaymentIntents for on-session payments
-- Never recommend Charges API, Sources API, or legacy Card Element
-- Use dynamic payment methods instead of specific payment_method_types
-- Platform/Connect integration recommendations
+### 5. Skill-Creator Plugin Marketplace (beta.4)
 
-**stripe-upgrade.md:**
-- API versioning guide (date-based: `2025-12-15.clover`, etc.)
-- Server-side SDK versioning (dynamically vs strongly-typed)
-- Stripe.js versioning (evergreen model)
-- Mobile SDK versioning (semantic versioning)
-- Upgrade checklist
+Thêm plugin marketplace support cho skill creation workflow.
 
 ---
 
-## Files Changed
+## Renamed Skills/Agents
 
-```
-added       .agents/skills/find-skills/SKILL.md
-added       .claude/skills/find-skills/SKILL.md
-added       .claude/skills/payment-integration/references/stripe/stripe-best-practices.md
-added       .claude/skills/payment-integration/references/stripe/stripe-upgrade.md
-added       .github/workflows/sync-dev-after-release.yml
-modified    .claude/metadata.json
-modified    .claude/skills/cook/SKILL.md (+14/-6)
-modified    .claude/skills/cook/references/workflow-steps.md (+28/-12)
-modified    .claude/skills/payment-integration/README.md (+43/-11)
-modified    .claude/skills/payment-integration/SKILL.md (+31/-3)
-modified    CHANGELOG.md
-modified    package.json
-modified    package-lock.json
-```
+| Old | New | Cleaned in |
+|-----|-----|------------|
+| `brainstorming` | `brainstorm` | v2.6.0 |
+| `aesthetic` | `ui-ux-pro-max` | beta.3 |
+| `copywriter` | `fullstack-developer` | beta.3 |
+| `debugging` | `debug` | beta.2 |
+| `scout` agent | removed | v2.6.0 |
 
 ---
 
 ## Migration Guide
 
-### Từ v2.8.1 lên v2.9.0-beta.1
+### Từ v2.8.1 → v2.9.0
 
-1. **`/cook` skill:** Giờ sử dụng native Claude Tasks
-   - Nếu dùng custom task tracking → migrate sang TaskCreate/TaskUpdate
-   - Default mode giờ là `--interactive` (không phải auto)
+1. **`/cook` skill:** Migrate custom task tracking → native TaskCreate/TaskUpdate
 
-2. **Find-skills skill:** Skill mới để discover skills
-   - Sử dụng khi user hỏi về capabilities hoặc muốn extend functions
-   - CLI: `npx skills find [query]`
+2. **Gemini models:** Update model IDs
+   - `gemini-2.0-flash` → `gemini-2.5-flash`
+   - `gemini-3.0-flash` → `gemini-3-flash-preview`
 
-3. **Stripe integration:** Có thêm best practices và upgrade guides
-   - Tham khảo khi implement payment features
-   - Follow CheckoutSessions API over Charges/PaymentIntents
+3. **`/fix` skill:** Use `--parallel` flag thay vì `:parallel` suffix
+   ```bash
+   # Old (không hợp lệ)
+   /fix:parallel "..."
+
+   # New
+   /fix --parallel "..."
+   ```
+
+4. **Stale refs:** Cập nhật nếu dùng:
+   - `brainstorming` → `brainstorm`
+   - `aesthetic` → `ui-ux-pro-max`
+   - `copywriter` → `fullstack-developer`
 
 ---
 
 ## Related Issues/PRs
 
-- #390 - feat: enhance skills and hooks with native tasks and improvements
+| Issue | Description |
+|-------|-------------|
+| #390 | Enhance skills/hooks with native tasks |
+| #391 | Clean up stale references |
+| #394 | Invalid Gemini model ID |
+| #396 | Update google-adk-python skill |
+| #400 | `/fix --parallel` syntax |
+| #402 | plan:validate log template |
+| #403 | debug.md metadata cleanup |
 
 ---
 
 ## Full Commit History
 
-### v2.8.1 → v2.9.0-beta.1
-
 ```
-b93f548 ci: add workflow to sync dev to main after release
-57b3379 feat(payment-integration): add Stripe references for best practices and API upgrades
+c810d9a chore(release): 2.9.0-beta.9
+58ce22b fix: enrich plan:validate Step 5 with detailed validation log template
+177821c chore(release): 2.9.0-beta.8
+2abf65c fix: add deprecated debug.md to metadata deletions and archive
+0d3f238 chore(release): 2.9.0-beta.7
+3b7ae4f feat: add --parallel flag to /fix skill
+074ac52 fix: update /fix:parallel syntax to /fix --parallel
+ac710eb chore(release): 2.9.0-beta.6
+8bef76d fix(skills): update gemini model refs to 2.5-flash
+a81b756 fix(skills): correct API inaccuracies in google-adk-python
+2effa64 feat(skills): update google-adk-python skill with v1.0.0+
+8a5081f Merge: update mintlify skill to v2.0.0
+0d78b8a chore(release): 2.9.0-beta.5
+44cf1e1 fix: replace invalid gemini-3.0-flash model ID
+0b74fab chore(release): 2.9.0-beta.4
+aeee285 perf(skills): enhance skill-creator with plugin marketplace
+ea24fff chore(release): 2.9.0-beta.3
+888b856 fix(ck-help): remove stale CATEGORY_GUIDES
+ef45c04 fix: clean up stale references to deleted agents/skills
+1405364 chore(release): 2.9.0-beta.2
+b2a2558 fix(deletions): add skills/debugging/**
+fabc944 chore(release): 2.9.0-beta.1
+85de5b6 perf(skills): enhance cook skill with native claude tasks
+57b3379 feat(payment-integration): add Stripe references
 c08b276 feat: added new find-skill skill
-85de5b6 perf(skills): enhance `cook` skill with native claude tasks
-e98a0d9 fix: resolve merge conflict in CHANGELOG.md
-e7156f0 Merge pull request #390 from claudekit/goon
-fabc944 chore(release): 2.9.0-beta.1 [skip ci]
+b93f548 ci: add workflow to sync dev to main after release
 ```
 
 ---
 
-*Được tạo: 2026-01-29*
+*Cập nhật: 2026-02-01*

@@ -170,7 +170,11 @@ const levelColors: Record<string, string> = {
             <span class="font-bold text-slate-900 dark:text-slate-100 text-sm">{t('workflows.v25.cook_flags_title')}</span>
             <span class="text-xs text-slate-500">{t('workflows.v25.cook_flags_desc')}</span>
           </div>
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+          <div class="grid grid-cols-2 md:grid-cols-5 gap-2">
+            <div class="p-2 rounded bg-teal-50 dark:bg-teal-900/30 border border-teal-200 dark:border-teal-500/30">
+              <code class="text-xs font-mono text-teal-600 dark:text-teal-400 font-bold">--interactive</code>
+              <p class="text-[10px] text-slate-500 mt-1">{t('workflows.v25.flag_interactive')}</p>
+            </div>
             <div class="p-2 rounded bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
               <code class="text-xs font-mono text-purple-600 dark:text-purple-400 font-bold">--fast</code>
               <p class="text-[10px] text-slate-500 mt-1">{t('workflows.v25.flag_fast')}</p>
@@ -186,6 +190,46 @@ const levelColors: Record<string, string> = {
             <div class="p-2 rounded bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
               <code class="text-xs font-mono text-orange-600 dark:text-orange-400 font-bold">--no-test</code>
               <p class="text-[10px] text-slate-500 mt-1">{t('workflows.v25.flag_notest')}</p>
+            </div>
+          </div>
+          <!-- v2.9.0 --interactive note -->
+          <div class="mt-3 flex items-center gap-2 p-2 rounded bg-teal-500/10 border border-teal-500/20">
+            <svg class="w-4 h-4 text-teal-600 dark:text-teal-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 16v-4"/>
+              <path d="M12 8h.01"/>
+            </svg>
+            <span class="text-[10px] text-teal-700 dark:text-teal-400">
+              <strong>v2.9.0+:</strong> {t('workflows.v25.interactive_note')}
+            </span>
+          </div>
+        </div>
+
+        <!-- /fix flags highlight (v2.9.0) -->
+        <div class="bg-white dark:bg-slate-900/50 rounded-lg border border-red-200 dark:border-red-500/20 p-4">
+          <div class="flex items-center gap-2 mb-3">
+            <svg class="w-5 h-5 text-red-600 dark:text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <span class="font-bold text-slate-900 dark:text-slate-100 text-sm">/fix Flags</span>
+            <span class="text-xs text-slate-500">Control fix behavior (v2.9.0)</span>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+            <div class="p-2 rounded bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+              <code class="text-xs font-mono text-green-600 dark:text-green-400 font-bold">--auto</code>
+              <p class="text-[10px] text-slate-500 mt-1">Autonomous mode (default)</p>
+            </div>
+            <div class="p-2 rounded bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+              <code class="text-xs font-mono text-amber-600 dark:text-amber-400 font-bold">--review</code>
+              <p class="text-[10px] text-slate-500 mt-1">Human-in-the-loop mode</p>
+            </div>
+            <div class="p-2 rounded bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+              <code class="text-xs font-mono text-purple-600 dark:text-purple-400 font-bold">--quick</code>
+              <p class="text-[10px] text-slate-500 mt-1">Fast fix for trivial bugs</p>
+            </div>
+            <div class="p-2 rounded bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+              <code class="text-xs font-mono text-blue-600 dark:text-blue-400 font-bold">--parallel</code>
+              <p class="text-[10px] text-slate-500 mt-1">Parallel fullstack agents</p>
             </div>
           </div>
         </div>
@@ -301,19 +345,70 @@ const levelColors: Record<string, string> = {
                   <svg class="w-4 h-4 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                   </svg>
-                  <span class="text-xs font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider">v2.4 → v2.5 Migration</span>
+                  <span class="text-xs font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider">/cook Migration (v2.4 → v2.5)</span>
                 </div>
                 <div class="overflow-x-auto">
                   <table class="w-full text-xs">
                     <thead>
                       <tr class="border-b border-amber-200 dark:border-amber-500/20">
                         <th class="text-left py-1.5 px-2 font-semibold text-slate-600 dark:text-slate-400">v2.4.0</th>
-                        <th class="text-left py-1.5 px-2 font-semibold text-slate-600 dark:text-slate-400">v2.5.0+</th>
+                        <th class="text-left py-1.5 px-2 font-semibold text-slate-600 dark:text-slate-400">v2.9.0+</th>
                         <th class="text-left py-1.5 px-2 font-semibold text-slate-600 dark:text-slate-400 hidden sm:table-cell">Description</th>
                       </tr>
                     </thead>
                     <tbody class="divide-y divide-amber-100 dark:divide-amber-500/10">
                       {workflow.cookMappings.map((mapping: { old: string; new: string; desc: string }) => (
+                        <tr>
+                          <td class="py-1.5 px-2"><code class="px-1 py-0.5 rounded bg-red-100 dark:bg-red-900/30 font-mono text-red-600 dark:text-red-400 text-[10px] line-through">{mapping.old}</code></td>
+                          <td class="py-1.5 px-2"><code class="px-1 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 font-mono text-teal-600 dark:text-teal-400 text-[10px]">{mapping.new}</code></td>
+                          <td class="py-1.5 px-2 text-slate-500 hidden sm:table-cell">{mapping.desc}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
+            {workflow.fixFlags && (
+              <div class="mt-4 p-4 rounded-lg bg-white dark:bg-slate-900/50 border border-red-200 dark:border-red-500/20">
+                <div class="flex items-center gap-2 mb-3">
+                  <svg class="w-5 h-5 text-red-600 dark:text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  </svg>
+                  <span class="font-bold text-slate-900 dark:text-slate-100 text-sm">/fix Flags</span>
+                  <span class="text-xs text-slate-500">Control fix behavior (v2.9.0)</span>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                  {workflow.fixFlags.map((f: { flag: string; desc: string; color: string }) => (
+                    <div class="p-2 rounded bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                      <code class={`text-xs font-mono font-bold ${f.color === 'green' ? 'text-green-600 dark:text-green-400' : f.color === 'amber' ? 'text-amber-600 dark:text-amber-400' : f.color === 'purple' ? 'text-purple-600 dark:text-purple-400' : 'text-blue-600 dark:text-blue-400'}`}>{f.flag}</code>
+                      <p class="text-[10px] text-slate-500 mt-1">{f.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {workflow.fixMappings && (
+              <div class="mt-4 p-4 rounded-lg bg-red-500/5 border border-red-200 dark:border-red-500/20">
+                <div class="flex items-center gap-2 mb-3">
+                  <svg class="w-4 h-4 text-red-600 dark:text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  </svg>
+                  <span class="text-xs font-bold text-red-700 dark:text-red-400 uppercase tracking-wider">/fix Migration (v2.4 → v2.9)</span>
+                </div>
+                <div class="overflow-x-auto">
+                  <table class="w-full text-xs">
+                    <thead>
+                      <tr class="border-b border-red-200 dark:border-red-500/20">
+                        <th class="text-left py-1.5 px-2 font-semibold text-slate-600 dark:text-slate-400">v2.4.0</th>
+                        <th class="text-left py-1.5 px-2 font-semibold text-slate-600 dark:text-slate-400">v2.9.0+</th>
+                        <th class="text-left py-1.5 px-2 font-semibold text-slate-600 dark:text-slate-400 hidden sm:table-cell">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-red-100 dark:divide-red-500/10">
+                      {workflow.fixMappings.map((mapping: { old: string; new: string; desc: string }) => (
                         <tr>
                           <td class="py-1.5 px-2"><code class="px-1 py-0.5 rounded bg-red-100 dark:bg-red-900/30 font-mono text-red-600 dark:text-red-400 text-[10px] line-through">{mapping.old}</code></td>
                           <td class="py-1.5 px-2"><code class="px-1 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 font-mono text-teal-600 dark:text-teal-400 text-[10px]">{mapping.new}</code></td>
@@ -475,19 +570,70 @@ const levelColors: Record<string, string> = {
                   <svg class="w-4 h-4 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                   </svg>
-                  <span class="text-xs font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider">v2.4 → v2.5 Migration</span>
+                  <span class="text-xs font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider">/cook Migration (v2.4 → v2.5)</span>
                 </div>
                 <div class="overflow-x-auto">
                   <table class="w-full text-xs">
                     <thead>
                       <tr class="border-b border-amber-200 dark:border-amber-500/20">
                         <th class="text-left py-1.5 px-2 font-semibold text-slate-600 dark:text-slate-400">v2.4.0</th>
-                        <th class="text-left py-1.5 px-2 font-semibold text-slate-600 dark:text-slate-400">v2.5.0+</th>
+                        <th class="text-left py-1.5 px-2 font-semibold text-slate-600 dark:text-slate-400">v2.9.0+</th>
                         <th class="text-left py-1.5 px-2 font-semibold text-slate-600 dark:text-slate-400 hidden sm:table-cell">Description</th>
                       </tr>
                     </thead>
                     <tbody class="divide-y divide-amber-100 dark:divide-amber-500/10">
                       {workflow.cookMappings.map((mapping: { old: string; new: string; desc: string }) => (
+                        <tr>
+                          <td class="py-1.5 px-2"><code class="px-1 py-0.5 rounded bg-red-100 dark:bg-red-900/30 font-mono text-red-600 dark:text-red-400 text-[10px] line-through">{mapping.old}</code></td>
+                          <td class="py-1.5 px-2"><code class="px-1 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 font-mono text-teal-600 dark:text-teal-400 text-[10px]">{mapping.new}</code></td>
+                          <td class="py-1.5 px-2 text-slate-500 hidden sm:table-cell">{mapping.desc}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
+            {workflow.fixFlags && (
+              <div class="mt-4 p-4 rounded-lg bg-white dark:bg-slate-900/50 border border-red-200 dark:border-red-500/20">
+                <div class="flex items-center gap-2 mb-3">
+                  <svg class="w-5 h-5 text-red-600 dark:text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  </svg>
+                  <span class="font-bold text-slate-900 dark:text-slate-100 text-sm">/fix Flags</span>
+                  <span class="text-xs text-slate-500">Control fix behavior (v2.9.0)</span>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                  {workflow.fixFlags.map((f: { flag: string; desc: string; color: string }) => (
+                    <div class="p-2 rounded bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                      <code class={`text-xs font-mono font-bold ${f.color === 'green' ? 'text-green-600 dark:text-green-400' : f.color === 'amber' ? 'text-amber-600 dark:text-amber-400' : f.color === 'purple' ? 'text-purple-600 dark:text-purple-400' : 'text-blue-600 dark:text-blue-400'}`}>{f.flag}</code>
+                      <p class="text-[10px] text-slate-500 mt-1">{f.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {workflow.fixMappings && (
+              <div class="mt-4 p-4 rounded-lg bg-red-500/5 border border-red-200 dark:border-red-500/20">
+                <div class="flex items-center gap-2 mb-3">
+                  <svg class="w-4 h-4 text-red-600 dark:text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  </svg>
+                  <span class="text-xs font-bold text-red-700 dark:text-red-400 uppercase tracking-wider">/fix Migration (v2.4 → v2.9)</span>
+                </div>
+                <div class="overflow-x-auto">
+                  <table class="w-full text-xs">
+                    <thead>
+                      <tr class="border-b border-red-200 dark:border-red-500/20">
+                        <th class="text-left py-1.5 px-2 font-semibold text-slate-600 dark:text-slate-400">v2.4.0</th>
+                        <th class="text-left py-1.5 px-2 font-semibold text-slate-600 dark:text-slate-400">v2.9.0+</th>
+                        <th class="text-left py-1.5 px-2 font-semibold text-slate-600 dark:text-slate-400 hidden sm:table-cell">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-red-100 dark:divide-red-500/10">
+                      {workflow.fixMappings.map((mapping: { old: string; new: string; desc: string }) => (
                         <tr>
                           <td class="py-1.5 px-2"><code class="px-1 py-0.5 rounded bg-red-100 dark:bg-red-900/30 font-mono text-red-600 dark:text-red-400 text-[10px] line-through">{mapping.old}</code></td>
                           <td class="py-1.5 px-2"><code class="px-1 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 font-mono text-teal-600 dark:text-teal-400 text-[10px]">{mapping.new}</code></td>

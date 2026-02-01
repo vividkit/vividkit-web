@@ -27,7 +27,7 @@ const v25Highlights = [
     commands: [
       { command: '/cook', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.v25.desc.cook'), detail: t('commands.v25.detail.cook'), isSkill: true, flags: ['--interactive', '--fast', '--parallel', '--no-test', '--auto'] },
       { command: '/scout', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.v25.desc.scout'), detail: t('commands.v25.detail.scout'), isSkill: true, flags: ['ext'] },
-      { command: '/fix', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.v25.desc.fix'), detail: t('commands.v25.detail.fix'), isSkill: true },
+      { command: '/fix', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.v25.desc.fix'), detail: t('commands.v25.detail.fix'), isSkill: true, flags: ['--auto', '--review', '--quick', '--parallel'] },
       { command: '/web-testing', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.v25.desc.webTesting'), detail: t('commands.v25.detail.webTesting'), isSkill: true },
       { command: '/git', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.v25.desc.git'), detail: t('commands.v25.detail.git'), isSkill: true },
       { command: '/remotion', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.v25.desc.remotion'), detail: t('commands.v25.detail.remotion'), isSkill: true },
@@ -118,9 +118,9 @@ const v25Categories = [
     color: 'red',
     icon: `<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>`,
     commands: [
-      { command: '/fix', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.v25.desc.fix'), detail: t('commands.v25.detail.fix'), isSkill: true },
+      { command: '/fix', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.v25.desc.fix'), detail: t('commands.v25.detail.fix'), isSkill: true, flags: ['--auto', '--review', '--quick', '--parallel'] },
       { command: '/web-testing', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.v25.desc.webTesting'), detail: t('commands.v25.detail.webTesting'), isSkill: true },
-      { command: '/debug', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.debug'), detail: t('commands.detail.debug') },
+      { command: '/debug', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.debug'), detail: t('commands.detail.debug'), isSkill: true },
       { command: '/test', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.test'), detail: t('commands.detail.test') },
       { command: '/test:ui', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.test_ui'), detail: t('commands.detail.test_ui') }
     ]
@@ -281,7 +281,7 @@ const v24Categories = [
       { command: '/fix:test', complexity: '⚡⚡', label: t('commands.label.easy'), desc: t('commands.desc.fix_test'), detail: t('commands.detail.fix_test') },
       { command: '/fix:types', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.fix_types'), detail: t('commands.detail.fix_types') },
       { command: '/fix:ui', complexity: '⚡⚡', label: t('commands.label.easy'), desc: t('commands.desc.fix_ui'), detail: t('commands.detail.fix_ui') },
-      { command: '/debug', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.debug'), detail: t('commands.detail.debug') },
+      { command: '/debug', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.debug'), detail: t('commands.detail.debug'), isSkill: true },
       { command: '/test', complexity: '⚡', label: t('commands.label.easy'), desc: t('commands.desc.test'), detail: t('commands.detail.test') },
       { command: '/test:ui', complexity: '⚡⚡', label: t('commands.label.medium'), desc: t('commands.desc.test_ui'), detail: t('commands.detail.test_ui') }
     ]

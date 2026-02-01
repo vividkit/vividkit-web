@@ -1199,10 +1199,12 @@ export default {
   'workflows.v25.table_notes': 'Notes',
   'workflows.v25.cook_flags_title': '/cook Flags',
   'workflows.v25.cook_flags_desc': 'Control implementation behavior:',
+  'workflows.v25.flag_interactive': 'Step-by-step with approval (default)',
   'workflows.v25.flag_fast': 'Skip research, quick implementation',
   'workflows.v25.flag_parallel': 'Run phases in parallel',
   'workflows.v25.flag_auto': 'Auto-approve all steps ("trust me")',
   'workflows.v25.flag_notest': 'Skip test runs after coding',
+  'workflows.v25.interactive_note': '--interactive is default. Uses native Claude Tasks API for task tracking.',
   'workflows.v25.important_clear': 'IMPORTANT: Always /clear after /plan',
 
   // Commands Guide

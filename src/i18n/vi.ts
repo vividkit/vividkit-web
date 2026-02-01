@@ -1206,10 +1206,12 @@ export default {
   'workflows.v25.table_notes': 'Ghi chú',
   'workflows.v25.cook_flags_title': 'Flags của /cook',
   'workflows.v25.cook_flags_desc': 'Điều khiển hành vi triển khai:',
+  'workflows.v25.flag_interactive': 'Từng bước với xác nhận (mặc định)',
   'workflows.v25.flag_fast': 'Bỏ qua research, triển khai nhanh',
   'workflows.v25.flag_parallel': 'Chạy các phase song song',
   'workflows.v25.flag_auto': 'Tự động duyệt tất cả bước',
   'workflows.v25.flag_notest': 'Bỏ qua chạy test sau khi code',
+  'workflows.v25.interactive_note': '--interactive là mặc định. Dùng Claude Tasks API native để tracking.',
   'workflows.v25.important_clear': 'QUAN TRỌNG: Luôn /clear sau /plan',
 
   // Commands Guide
