@@ -1,4 +1,5 @@
 // v2.5.0 workflows - skill-based approach
+// Updated for v2.9.0: /cook uses native Claude Tasks, /fix supports flags
 export const v25Workflows = [
   {
     title: 'Build a New Feature',
@@ -83,7 +84,18 @@ export const v25Workflows = [
         number: 3
       }
     ],
-    tip: '💡 /debug & /fix skills: intelligent routing to debug/fix issues',
+    tip: '💡 /debug & /fix skills: intelligent routing with flags --auto, --review, --quick, --parallel (v2.9.0)',
+    fixFlags: [
+      { flag: '--auto', desc: 'Autonomous mode (default)', color: 'green' },
+      { flag: '--review', desc: 'Human-in-the-loop mode', color: 'amber' },
+      { flag: '--quick', desc: 'Fast fix for trivial bugs', color: 'purple' },
+      { flag: '--parallel', desc: 'Parallel fullstack agents', color: 'blue' }
+    ],
+    fixMappings: [
+      { old: '/fix:fast', new: '/fix --quick', desc: 'Quick mode for trivial bugs' },
+      { old: '/fix:hard', new: '/fix --review', desc: 'Human-in-the-loop mode' },
+      { old: '/fix:parallel', new: '/fix --parallel', desc: 'Parallel fullstack agents' }
+    ],
     borderColor: 'border-red-500/20'
   },
   {
@@ -107,7 +119,7 @@ export const v25Workflows = [
         isSkill: true
       }
     ],
-    tip: '💡 See mapping table above for migrating from v2.4 variants',
+    tip: '💡 See mapping table above for migrating from v2.4 variants. v2.9.0+: --interactive is default, uses native Claude Tasks API.',
     cookMappings: [
       { old: '/cook:auto', new: '/cook --auto', desc: 'Auto-approve all steps' },
       { old: '/cook:auto:fast', new: '/cook --auto --fast', desc: 'Fast + auto-approve' },

@@ -1,4 +1,5 @@
 // v2.5.0 workflows - skill-based approach
+// Updated for v2.9.0: /cook uses native Claude Tasks, /fix supports flags
 export const v25Workflows = [
   {
     title: 'Xây Dựng Feature Mới',
@@ -83,7 +84,18 @@ export const v25Workflows = [
         number: 3
       }
     ],
-    tip: '💡 /debug & /fix skills: intelligent routing đến debug/fix issues',
+    tip: '💡 /debug & /fix skills: intelligent routing với flags --auto, --review, --quick, --parallel (v2.9.0)',
+    fixFlags: [
+      { flag: '--auto', desc: 'Tự động hoàn toàn (mặc định)', color: 'green' },
+      { flag: '--review', desc: 'Human-in-the-loop mode', color: 'amber' },
+      { flag: '--quick', desc: 'Sửa nhanh bug đơn giản', color: 'purple' },
+      { flag: '--parallel', desc: 'Parallel fullstack agents', color: 'blue' }
+    ],
+    fixMappings: [
+      { old: '/fix:fast', new: '/fix --quick', desc: 'Quick mode cho bug đơn giản' },
+      { old: '/fix:hard', new: '/fix --review', desc: 'Human-in-the-loop mode' },
+      { old: '/fix:parallel', new: '/fix --parallel', desc: 'Parallel fullstack agents' }
+    ],
     borderColor: 'border-red-500/20'
   },
   {
@@ -107,7 +119,7 @@ export const v25Workflows = [
         isSkill: true
       }
     ],
-    tip: '💡 Xem bảng mapping ở trên để chuyển đổi từ v2.4 variants',
+    tip: '💡 Xem bảng mapping ở trên để chuyển đổi từ v2.4 variants. v2.9.0+: --interactive là default, dùng native Claude Tasks API.',
     cookMappings: [
       { old: '/cook:auto', new: '/cook --auto', desc: 'Tự động duyệt tất cả bước' },
       { old: '/cook:auto:fast', new: '/cook --auto --fast', desc: 'Nhanh + tự động duyệt' },

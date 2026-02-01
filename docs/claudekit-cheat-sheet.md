@@ -1,7 +1,7 @@
 # ClaudeKit Commands Cheat Sheet
 
 > Complete guide for everyone - developers and non-developers alike.
-> Last updated: 2026-01-03 | Total: 74 commands (excluding `ct:` prefix)
+> Last updated: 2026-02-01 | Total: 74 commands (excluding `ct:` prefix) | ClaudeKit v2.9.0
 
 ---
 
@@ -74,9 +74,13 @@ Code Review:   /scout → /review → /watzup
 | `/code:parallel` | ⚡ | Execute parallel phases from plan | Plan has parallel phases, want speed |
 | `/code:session` | ⚡ | Resume a specific session | Paused work, want to continue from session-breakdown.md |
 | `/cook` | ⚡⚡⚡ | Implement feature step-by-step (one command) | Want planning + coding in one flow (standalone) |
-| `/cook:auto` | ⚡⚡ | Implement feature automatically | Trust Claude to handle everything |
-| `/cook:auto:fast` | ⚡ | Quick implement, no research | Simple feature, just build it |
-| `/cook:auto:parallel` | ⚡⚡⚡ | Plan parallel + execute with agents | Complex feature, want parallel execution |
+| `/cook --interactive` | ⚡⚡⚡ | Full workflow với user input (default) | Need clarification, complex features |
+| `/cook --fast` | ⚡⚡ | Skip research, scout→plan→code | Simple feature, just build it |
+| `/cook --parallel` | ⚡⚡⚡ | Multi-agent execution | Complex feature, want parallel execution |
+| `/cook --no-test` | ⚡⚡ | Skip testing step | Prototyping, will test manually |
+| `/cook --auto` | ⚡⚡ | Auto-approve all steps | Trust Claude to handle everything |
+
+> **Note (v2.9.0):** `/cook` giờ sử dụng native Claude Tasks (`TaskCreate/TaskUpdate/TaskGet/TaskList`) thay vì custom tracking.
 
 ---
 
@@ -87,9 +91,10 @@ Code Review:   /scout → /review → /watzup
 | Command | ⚡ Tokens | What It Does | When to Use |
 |---------|----------|--------------|-------------|
 | `/fix` | ⚡⚡ | Analyze and fix issues (smart routing) | Something's broken, need to diagnose and fix |
-| `/fix:fast` | ⚡ | Quick fix for small issues | Minor bug, obvious problem |
-| `/fix:hard` | ⚡⚡⚡ | Use subagents for complex issues | Tough bug, need deep investigation |
-| `/fix:parallel` | ⚡⚡ | Fix with parallel fullstack agents | Multiple issues or complex system |
+| `/fix --auto` | ⚡⚡ | Autonomous mode (default) | Auto-approve if score >= 9.5 & 0 critical |
+| `/fix --review` | ⚡⚡ | Human-in-the-loop mode | Critical/production code, pause for approval |
+| `/fix --quick` | ⚡ | Quick mode for trivial bugs | Type errors, lint, obvious bugs |
+| `/fix --parallel` | ⚡⚡ | Parallel fullstack agents | 2+ independent issues (v2.9.0) |
 | `/fix:ci` | ⚡ | Fix GitHub Actions failures | CI/CD pipeline broken |
 | `/fix:logs` | ⚡ | Analyze logs and fix issues | Have error logs, need to find root cause |
 | `/fix:test` | ⚡⚡ | Run tests and fix failures | Tests failing, make them pass |

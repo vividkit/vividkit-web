@@ -1,9 +1,9 @@
 # ClaudeKit Skills & Commands Catalog
 
-Complete reference for ClaudeKit v2.8.1 skills and commands with complexity indicators.
+Complete reference for ClaudeKit v2.9.0 skills and commands with complexity indicators.
 
-**Source:** `https://github.com/claudekit/claudekit-engineer/tree/v2.8.1`
-**Version:** 2.8.1 | **Updated:** 2026-01-28
+**Source:** `https://github.com/claudekit/claudekit-engineer/tree/v2.9.0-beta.9`
+**Version:** 2.9.0-beta.9 | **Updated:** 2026-02-01
 
 ---
 
@@ -146,7 +146,7 @@ Complete reference for ClaudeKit v2.8.1 skills and commands with complexity indi
 | `skill-creator` | 7K | Create/update Claude skills |
 | `shader` | ~7K | GLSL fragment shaders |
 | `problem-solving` | 6K | Systematic problem techniques |
-| `fix` | 6K | Bug fixing utilities |
+| `fix` | 6K | Bug fixing with flags: --auto, --review, --quick, --parallel |
 | `sequential-thinking` | 6K | Step-by-step analysis |
 | `mcp-management` | 6K | MCP server discovery |
 | `repomix` | 5K | Pack repos for LLM context |
@@ -158,14 +158,14 @@ Complete reference for ClaudeKit v2.8.1 skills and commands with complexity indi
 |-------|--------|----------|
 | `planning` | 5K | Implementation planning |
 | `code-review` | 5K | Code quality review |
-| `cook` | 4K | Feature implementation workflow |
+| `cook` | 4K | Feature implementation workflow (v2.9: native Claude Tasks) |
 | `git` | 4K | Git operations, commits |
 | `docs-seeker` | 4K | Search docs via llms.txt |
 | `ui-ux-pro-max` | 3K | 50 styles, 21 palettes |
 | `gkg` | 2K | GitLab Knowledge Graph |
 | `scout` | 2K | Codebase file search |
 | `markdown-novel-viewer` | 2K | Book-like markdown viewer |
-| `google-adk-python` | 2K | Google ADK agents |
+| `google-adk-python` | 2K | Google ADK agents (v2.9: updated to v1.0.0+) |
 | `research` | 2K | Technical research |
 | `brainstorm` | 1K | Ideation, trade-offs |
 | `plans-kanban` | 1K | Plans dashboard |
@@ -176,6 +176,17 @@ Complete reference for ClaudeKit v2.8.1 skills and commands with complexity indi
 ---
 
 ## Version Changes Summary
+
+### v2.9.0 (2026-01-31)
+- **Feature:** `/cook` uses native Claude Tasks (`TaskCreate/TaskUpdate/TaskGet/TaskList`)
+- **Feature:** `/fix --parallel` flag for explicit parallel mode
+- **Feature:** `google-adk-python` skill update to v1.0.0+ with 7 reference files
+- **Feature:** `find-skills` skill to discover/install skills from ecosystem
+- **Feature:** `skill-creator` plugin marketplace support
+- **Feature:** Stripe best practices & API upgrade references
+- **Fix:** Gemini model IDs (`gemini-2.5-flash` default, `gemini-3-flash-preview`)
+- **Fix:** `/fix` syntax change: `/fix:parallel` → `/fix --parallel`
+- **Fix:** `plan:validate` enriched validation log template
 
 ### v2.8.1 (2026-01-27)
 - **Fix:** Allow Python venv creation in hooks

@@ -19,15 +19,26 @@ Comprehensive guide to all built-in slash commands. Commands are organized by ca
 
 Full-featured command for implementing tasks with complete workflow.
 
+**Arguments (v2.9.0):**
+- `--interactive` - Full workflow với user input (default)
+- `--fast` - Skip research, scout→plan→code
+- `--parallel` - Multi-agent execution
+- `--no-test` - Skip testing step
+- `--auto` - Auto-approve all steps
+
 | Variant | Description | Use When |
 |---------|-------------|----------|
 | `/cook [tasks]` | ⚡⚡⚡ Step-by-step with Q&A | Need clarification, complex features |
-| `/cook:auto [tasks]` | ⚡⚡ "Trust me bro" mode | Simple features, trust the AI |
-| `/cook:auto:fast [tasks]` | ⚡ Scout + plan + implement | Fast, no research needed |
-| `/cook:auto:parallel [tasks]` | ⚡⚡⚡ Parallel agent execution | Multiple independent components |
+| `/cook --interactive` | ⚡⚡⚡ Full workflow (default) | Need user input at each step |
+| `/cook --fast` | ⚡⚡ Skip research | Simple feature, just build it |
+| `/cook --parallel` | ⚡⚡⚡ Parallel agent execution | Multiple independent components |
+| `/cook --no-test` | ⚡⚡ Skip testing | Prototyping, will test manually |
+| `/cook --auto` | ⚡⚡ Auto-approve all | Trust Claude to handle everything |
 
 **Workflow:**
 1. Questions → Research → Plan → Implement → Test → Review → Docs → Git
+
+> **Note (v2.9.0):** Sử dụng native Claude Tasks (`TaskCreate/TaskUpdate/TaskGet/TaskList`) thay vì custom tracking. Post-Plan gate có thêm option "Validate" để run `/plan:validate`.
 
 ---
 
@@ -92,17 +103,27 @@ Fast project setup with auto-detection.
 
 Routes to specialized fix commands based on issue type.
 
+**Arguments (v2.9.0):**
+- `--auto` - Autonomous mode (default) - auto-approve if score >= 9.5 & 0 critical
+- `--review` - Human-in-the-loop review mode - pause for approval at each step
+- `--quick` - Quick mode for type errors, lint, trivial bugs
+- `--parallel` - Spawn parallel fullstack-developer agents for 2+ independent issues
+
 | Variant | Description | Keywords |
 |---------|-------------|----------|
 | `/fix [issues]` | ⚡⚡ Smart routing | Auto-detects type |
-| `/fix:fast [issues]` | ⚡ Quick fix | Simple bugs |
-| `/fix:hard [issues]` | ⚡⚡⚡ Full investigation | Complex issues |
+| `/fix --auto` | ⚡⚡ Autonomous mode | Simple/moderate issues |
+| `/fix --review` | ⚡⚡ HITL mode | Critical/production code |
+| `/fix --quick` | ⚡ Quick fix | Type errors, lint |
+| `/fix --parallel` | ⚡⚡ Parallel agents | 2+ independent issues |
 | `/fix:types` | ⚡ TypeScript errors | tsc, type errors |
 | `/fix:ui [issue]` | ⚡⚡ UI/UX issues | layout, style, responsive |
 | `/fix:ci [github-url]` | ⚡ CI/CD failures | github actions, pipeline |
 | `/fix:test [issues]` | ⚡⚡ Test failures | jest, vitest, spec |
 | `/fix:logs [issue]` | ⚡ Log analysis | stack trace, error logs |
-| `/fix:parallel [issues]` | ⚡⚡ Multiple issues | Independent bugs |
+
+**Workflow:**
+1. Mode Selection → Debug → Complexity Assessment → Fix Implementation → Verification → Finalize
 
 ### `/debug [issues]`
 ⚡⚡ Analyze issues without implementing fix. Uses `debugger` subagent to find root cause.
