@@ -1,0 +1,18 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import IDEConfigGuide from '@/components/guides/IDEConfigGuide.astro';
+import { useTranslations } from '@/i18n/utils';
+import type { Language } from '@/i18n';
+
+const lang: Language = 'vi';
+const t = useTranslations(lang);
+---
+
+<GuidesLayout
+  title={`${t('guides.ide_config.title')} - ${t('site.title')}`}
+  description={t('guides.ide_config.description')}
+  activeTab="ide-config"
+  lang="vi"
+>
+  <IDEConfigGuide lang="vi" />
+</GuidesLayout>
