@@ -3,7 +3,7 @@ import { useTranslations } from '@/i18n/utils';
 import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
 
 interface Props {
-  activeTab: 'what-is-claudekit' | 'cli' | 'ccs' | 'happy-ccs' | 'token-tips' | 'workflows' | 'flowchart' | 'commands' | 'uiux' | 'session-recovery' | 'permissions' | 'fix-logs' | 'hooks' | 'promotions';
+  activeTab: 'what-is-claudekit' | 'cli' | 'ccs' | 'happy-ccs' | 'ide-config' | 'token-tips' | 'workflows' | 'flowchart' | 'commands' | 'uiux' | 'session-recovery' | 'permissions' | 'fix-logs' | 'hooks' | 'promotions';
   lang?: Language;
 }
 
@@ -73,6 +73,12 @@ const navSections = [
         label: t('guides.happy_ccs.title'),
         icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>`,
         href: '/guides/happy-ccs',
+      },
+      {
+        id: 'ide-config',
+        label: t('guides.ide_config.title'),
+        icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><path d="M8 21h8M12 17v4"/><path d="M8 9l3 3-3 3"/><path d="M13 15h4"/></svg>`,
+        href: '/guides/ide-config',
       },
     ],
   },
