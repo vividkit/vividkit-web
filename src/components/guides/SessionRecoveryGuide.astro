@@ -136,6 +136,16 @@ const proTips = [
 <span class="text-slate-400 italic">${t('session_recovery.guide.protips.login_cmd_3')}</span>
 <span class="text-emerald-600 dark:text-emerald-400 font-bold">continue</span>`,
     icon: "switch"
+  },
+  {
+    title: t('session_recovery.guide.protips.compact_title'),
+    desc: t('session_recovery.guide.protips.compact_desc'),
+    cmd: `<span class="text-slate-400 italic">${t('session_recovery.guide.protips.compact_cmd_1')}</span>
+<span class="text-purple-600 dark:text-purple-400 font-bold">/compact</span> keep the original plan, user's request, key changes & todo tasks
+
+<span class="text-slate-400 italic">${t('session_recovery.guide.protips.compact_cmd_2')}</span>
+<span class="text-red-500 dark:text-red-400 line-through">/compact</span>  <span class="text-slate-400 italic">${t('session_recovery.guide.protips.compact_cmd_3')}</span>`,
+    icon: "compress"
   }
 ];
 
@@ -496,6 +506,14 @@ const emergencySteps = [
                     <polyline points="21 16 21 21 16 21"/>
                     <line x1="15" y1="15" x2="21" y2="21"/>
                     <line x1="4" y1="4" x2="9" y2="9"/>
+                  </svg>
+                )}
+                {tip.icon === "compress" && (
+                  <svg class="w-5 h-5 text-cyan-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="4 14 10 14 10 20"/>
+                    <polyline points="20 10 14 10 14 4"/>
+                    <line x1="14" y1="10" x2="21" y2="3"/>
+                    <line x1="3" y1="21" x2="10" y2="14"/>
                   </svg>
                 )}
                 <span class="font-bold text-slate-700 dark:text-slate-200 text-base">{tip.title}</span>
