@@ -1788,6 +1788,12 @@ export default {
   'session_recovery.guide.protips.login_cmd_2': '# Chọn sub-account Claude khác',
   'session_recovery.guide.protips.login_cmd_3': '# Sau đó gõ "continue" để tiếp tục làm việc',
 
+  'session_recovery.guide.protips.compact_title': '/compact chủ động',
+  'session_recovery.guide.protips.compact_desc': 'Nén context thông minh khi token sắp hết — giữ lại đúng thông tin cần thiết',
+  'session_recovery.guide.protips.compact_cmd_1': '# Khi thấy token đã cao, % usage sắp reach limit:',
+  'session_recovery.guide.protips.compact_cmd_2': '# ⚠️ Tránh dùng /compact không có yêu cầu cụ thể:',
+  'session_recovery.guide.protips.compact_cmd_3': '# ❌ Dễ mất thông tin quan trọng!',
+
   // Emergency Checklist
   'session_recovery.guide.emergency.title': 'Checklist Khôi Phục Khẩn Cấp',
   'session_recovery.guide.emergency.desc': 'Bookmark cái này. Khi gặp sự cố giữa chừng, làm theo các bước sau:',

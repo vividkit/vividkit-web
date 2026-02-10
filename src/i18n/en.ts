@@ -1782,6 +1782,12 @@ export default {
   'session_recovery.guide.protips.login_cmd_2': '# Select a different Claude sub-account',
   'session_recovery.guide.protips.login_cmd_3': '# Then type "continue" to resume your work',
 
+  'session_recovery.guide.protips.compact_title': 'Proactive /compact',
+  'session_recovery.guide.protips.compact_desc': 'Smart context compression when tokens are running low — keep only what matters',
+  'session_recovery.guide.protips.compact_cmd_1': '# When token consumption is high, % usage nearing limit:',
+  'session_recovery.guide.protips.compact_cmd_2': '# ⚠️ Avoid using /compact without specific instructions:',
+  'session_recovery.guide.protips.compact_cmd_3': '# ❌ Important info may be lost!',
+
   // Emergency Checklist
   'session_recovery.guide.emergency.title': 'Emergency Recovery Checklist',
   'session_recovery.guide.emergency.desc': 'Bookmark this. When things go wrong mid-task, follow these steps:',
