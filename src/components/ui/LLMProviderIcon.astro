@@ -6,7 +6,7 @@
  */
 
 interface Props {
-  provider: 'gemini' | 'google' | 'zhipu' | 'zai' | 'glm' | 'kimi' | 'moonshot' | 'minimax' | 'openai' | 'claude' | 'openrouter' | 'deepseek' | 'grok' | 'mistral';
+  provider: 'gemini' | 'google' | 'zhipu' | 'zai' | 'glm' | 'kimi' | 'moonshot' | 'minimax' | 'openai' | 'claude' | 'openrouter' | 'deepseek' | 'grok' | 'mistral' | 'cursor' | 'windsurf';
   size?: number;
   variant?: 'color' | 'mono' | 'text';
   class?: string;
@@ -32,12 +32,14 @@ const iconMap: Record<string, string> = {
   deepseek: 'deepseek',
   grok: 'grok',
   mistral: 'mistral',
+  cursor: 'cursor',
+  windsurf: 'windsurf',
 };
 
 const iconName = iconMap[provider] || provider;
 
 // Icons that don't have a -color variant (use mono instead)
-const noColorVariant = ['zai', 'moonshot'];
+const noColorVariant = ['zai', 'moonshot', 'cursor', 'windsurf'];
 
 // Build icon URL based on variant
 const getIconUrl = (name: string, variant: string): string => {
