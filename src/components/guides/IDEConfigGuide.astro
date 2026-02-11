@@ -448,14 +448,15 @@ const fullExample = `"claudeCode.environmentVariables": [
     <div class="p-6 bg-gradient-to-r from-rose-500/10 to-pink-500/10 border-b border-rose-200 dark:border-slate-800">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-full bg-rose-500/20 flex items-center justify-center">
-          <svg class="w-6 h-6 text-rose-600 dark:text-rose-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 8V4H8"/>
-            <rect width="16" height="12" x="4" y="8" rx="2"/>
-            <path d="M2 14h2"/>
-            <path d="M20 14h2"/>
-            <path d="M15 13v2"/>
-            <path d="M9 13v2"/>
-          </svg>
+          <img
+            src="https://unpkg.com/@lobehub/icons-static-svg@latest/icons/claude-color.svg"
+            alt="Claude"
+            width="24"
+            height="24"
+            class="w-6 h-6"
+            loading="lazy"
+            decoding="async"
+          />
         </div>
         <h3 class="text-xl font-bold text-rose-600 dark:text-rose-400">
           {t('ide_config.guide.model_selection_title')}
@@ -493,9 +494,15 @@ const fullExample = `"claudeCode.environmentVariables": [
       <div class="border border-rose-200 dark:border-rose-800/50 rounded-lg overflow-hidden">
         <div class="px-4 py-3 bg-rose-50 dark:bg-rose-900/20 border-b border-rose-200 dark:border-rose-800/50">
           <div class="flex items-center gap-2">
-            <svg class="w-5 h-5 text-rose-600 dark:text-rose-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/>
-            </svg>
+            <img
+              src="https://unpkg.com/@lobehub/icons-static-svg@latest/icons/claude-color.svg"
+              alt="Claude"
+              width="20"
+              height="20"
+              class="w-5 h-5"
+              loading="lazy"
+              decoding="async"
+            />
             <h4 class="font-bold text-rose-700 dark:text-rose-400">Claude Opus 4.6</h4>
             <span class="text-[10px] px-1.5 py-0.5 rounded bg-rose-100 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 font-mono">Latest</span>
             <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 font-mono">{t('ide_config.guide.opus_46_default')}</span>
@@ -514,9 +521,15 @@ const fullExample = `"claudeCode.environmentVariables": [
       <div class="border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden">
         <div class="px-4 py-3 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700">
           <div class="flex items-center gap-2">
-            <svg class="w-5 h-5 text-slate-600 dark:text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/>
-            </svg>
+            <img
+              src="https://unpkg.com/@lobehub/icons-static-svg@latest/icons/claude-color.svg"
+              alt="Claude"
+              width="20"
+              height="20"
+              class="w-5 h-5 grayscale opacity-70"
+              loading="lazy"
+              decoding="async"
+            />
             <h4 class="font-bold text-slate-700 dark:text-slate-400">Claude Opus 4.5</h4>
             <span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400 font-mono">Token Efficient</span>
           </div>
