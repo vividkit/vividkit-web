@@ -291,6 +291,26 @@ export default {
   'ide_config.guide.claude_sub_title': 'Mặc định: Claude Subscription',
   'ide_config.guide.claude_sub_note': 'Claude Code mặc định sẽ sử dụng Claude subscription của bạn (đã OAuth với claude.ai). Nếu đã config các provider bên dưới và muốn quay lại dùng Claude sub, hãy xóa (hoặc comment) tất cả các config đã set đi.',
 
+  // Model Selection
+  'ide_config.guide.model_selection_title': 'Chọn Model',
+  'ide_config.guide.model_selection_desc': 'Chọn giữa các phiên bản Claude Opus. Phiên bản mới hơn có thể cải tiến nhưng có thể tiêu tốn nhiều token hơn cho cùng một tác vụ.',
+  'ide_config.guide.model_who_title': 'Chỉ Dành Cho NgườI Dùng Claude Subscription',
+  'ide_config.guide.model_who_note': 'Config này chỉ dành cho ngườI dùng có Claude subscription chính chủ (qua claude.ai). Thêm vào file settings.json của IDE (cùng vị trí với các config provider ở trên).',
+  'ide_config.guide.model_token_usage_title': 'Lưu ý Token Usage',
+  'ide_config.guide.model_token_usage_note': 'Opus 4.6 (mới nhất) có thể tiêu tốn nhiều token hơn Opus 4.5 cho cùng một tác vụ. Nếu muốn giảm token usage, hãy cân nhắc chuyển về Opus 4.5.',
+  'ide_config.guide.opus_46_note': 'Model mới nhất với khả năng tối đa. Có thể dùng nhiều token hơn 4.5.',
+  'ide_config.guide.opus_46_default': 'Mặc định',
+  'ide_config.guide.opus_46_no_config': 'Không cần config - comment out hoặc xóa "claudeCode.selectedModel" để dùng model mới nhất',
+  'ide_config.guide.opus_45_note': 'Phiên bản trước với token consumption thấp hơn cho chất lượng tương đương.',
+
+  // Advanced Config
+  'ide_config.guide.advanced_title': 'Config Nâng Cao',
+  'ide_config.guide.advanced_desc': 'Các cài đặt bổ sung cho power user. Chỉ dùng khi hiểu rõ rủi ro.',
+  'ide_config.guide.permissions_warning_title': 'Cảnh Báo Bảo Mật',
+  'ide_config.guide.permissions_warning_note': 'Config này bỏ qua các prompt xin quyền. Chỉ dùng nếu bạn hoàn toàn tin tưởng AI và hiểu rõ rủi ro. Code và hệ thống của bạn có thể bị ảnh hưởng.',
+  'ide_config.guide.permissions_config_title': 'Bypass Permissions',
+  'ide_config.guide.permissions_config_note': 'Bỏ qua tất cả permission prompts và cho phép Claude tự động thực thi lệnh. Thêm vào file settings.json của IDE.',
+
   // Promotions Guide
   'guides.promotions.page_title': 'Khuyến Mãi & Ưu Đãi AI',
   'guides.promotions.tagline': 'Tiết kiệm chi phí, tối đa giới hạn AI',

@@ -508,6 +508,26 @@ export default {
   'ide_config.guide.claude_sub_title': 'Default: Claude Subscription',
   'ide_config.guide.claude_sub_note': 'By default, Claude Code will use your Claude subscription (already OAuth with claude.ai). If you have configured the providers below and want to switch back to Claude sub, remove (or comment out) all the configs set above.',
 
+  // Model Selection
+  'ide_config.guide.model_selection_title': 'Model Selection',
+  'ide_config.guide.model_selection_desc': 'Choose between Claude Opus model versions. Newer versions may offer improvements but can consume more tokens for the same tasks.',
+  'ide_config.guide.model_who_title': 'For Claude Subscription Users Only',
+  'ide_config.guide.model_who_note': 'This config is only for users with an official Claude subscription (via claude.ai). Add this to your IDE settings.json file (same location as the provider configs above).',
+  'ide_config.guide.model_token_usage_title': 'Token Usage Notice',
+  'ide_config.guide.model_token_usage_note': 'Opus 4.6 (latest) may consume more tokens than Opus 4.5 for the same tasks. If you want to reduce token usage, consider switching back to Opus 4.5.',
+  'ide_config.guide.opus_46_note': 'Latest model with maximum capability. May use more tokens than 4.5.',
+  'ide_config.guide.opus_46_default': 'Default',
+  'ide_config.guide.opus_46_no_config': 'No config needed - comment out or remove "claudeCode.selectedModel" to use latest model',
+  'ide_config.guide.opus_45_note': 'Previous version with lower token consumption for similar quality.',
+
+  // Advanced Config
+  'ide_config.guide.advanced_title': 'Advanced Config',
+  'ide_config.guide.advanced_desc': 'Additional settings for power users. Use with caution as these can affect security and behavior.',
+  'ide_config.guide.permissions_warning_title': 'Security Warning',
+  'ide_config.guide.permissions_warning_note': 'This config bypasses permission prompts. Only use if you fully trust the AI and understand the risks. Your code and system could be affected.',
+  'ide_config.guide.permissions_config_title': 'Bypass Permissions',
+  'ide_config.guide.permissions_config_note': 'Skip all permission prompts and allow Claude to execute commands automatically. Add to your IDE settings.json.',
+
   // Promotions Guide
   'guides.promotions.page_title': 'AI Promotions & Deals',
   'guides.promotions.tagline': 'Save money, maximize your AI coding limits',
