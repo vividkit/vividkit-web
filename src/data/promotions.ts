@@ -23,7 +23,6 @@ export const subscriptionPromotions: SubscriptionPromotion[] = [
       { label: 'claude.ai/alex', url: 'https://claude.ai/alex' },
       { label: 'claude.ai/will', url: 'http://claude.ai/will' },
       { label: 'claude.ai/mac', url: 'http://claude.ai/mac' },
-      { label: 'claude.ai/jade', url: 'http://claude.ai/jade' },
       { label: 'claude.ai/acquired', url: 'https://claude.ai/acquired' },
     ],
     color: 'amber',
@@ -32,14 +31,14 @@ export const subscriptionPromotions: SubscriptionPromotion[] = [
   {
     id: 'zai-subscription',
     name: 'Z.AI GLM',
-    tagline: 'Christmas 2025: 50% first-purchase + extra 10-20% off + 10% referral bonus',
+    tagline: '10% off quarterly, 30% off yearly + 10% referral bonus',
     promoLinks: [{ label: 'z.ai/subscribe (referral)', url: 'https://z.ai/subscribe?ic=NEYH1LGAKE' }],
     color: 'emerald',
   },
   {
     id: 'minimax-subscription',
     name: 'MiniMax',
-    tagline: 'Starter plan: $2 for first month (reg. $10) + 10% referral discount',
+    tagline: '10% referral discount',
     promoLinks: [{ label: 'platform.minimax.io (referral)', url: 'https://platform.minimax.io/subscribe/coding-plan?code=D3YHMfEe2x&source=link' }],
     color: 'purple',
   },
@@ -56,7 +55,7 @@ export const tips = [
   {
     id: 'stack-discounts',
     title: 'Stack multiple discounts',
-    description: 'Z.AI Christmas deal stacks: 50% first purchase + extra 10-20% + 10% referral = massive savings!',
+    description: 'Z.AI deal stacks: 10-30% subscription discount + 10% referral bonus = extra savings!',
   },
   {
     id: 'use-promo-links',

@@ -548,8 +548,8 @@ export default {
 
   // Promotions Data
   'promotions.claude_pro.tagline': '50% off for the first 3 months ($10/month instead of $20)',
-  'promotions.zai.tagline': 'Christmas 2025: 50% first-purchase + extra 10-20% off + 10% referral bonus',
-  'promotions.minimax.tagline': 'Starter plan: $2 for first month (reg. $10) + 10% referral discount',
+  'promotions.zai.tagline': '10% off quarterly, 30% off yearly + 10% referral bonus',
+  'promotions.minimax.tagline': '10% referral discount',
   'promotions.minimax.compatible': 'Compatible with all major coding tools (Claude Code, Cursor, Open Code, Kilo Code, ...)',
   'promotions.minimax.performance': 'Performance: Strong in UI generation, rated between Sonnet 4.0 and 4.5, slightly better than GLM',
   'promotions.minimax.cancel_note': '⚠️ Remember to cancel auto-renewal after purchase to avoid $10 charge for month 2',
@@ -557,7 +557,7 @@ export default {
   'promotions.tips.use_ccs.title': 'Use CCS to switch between providers',
   'promotions.tips.use_ccs.desc': 'Maximize your usage limits by switching between Claude, GLM, Kimi, and other providers using CCS.',
   'promotions.tips.stack.title': 'Stack multiple discounts',
-  'promotions.tips.stack.desc': 'Z.AI Christmas deal stacks: 50% first purchase + extra 10-20% + 10% referral = massive savings!',
+  'promotions.tips.stack.desc': 'Z.AI deal stacks: 10-30% subscription discount + 10% referral bonus = extra savings!',
   'promotions.tips.links.title': 'Use promotion signup links',
   'promotions.tips.links.desc': 'Claude Pro has special signup links that give you $10/month for the first 3 months.',
   'promotions.tips.free.title': 'Maximize free tiers first',
@@ -1147,7 +1147,7 @@ export default {
 
   // CCS Promotions Cross-Link
   'ccs.guide.subscriptions_title': 'Hot Deals Available!',
-  'ccs.guide.subscriptions_desc': 'Get Claude Pro at 50% off ($10/month) and Z.AI Christmas deals with stacking discounts. Limited time offers to maximize your AI coding limits.',
+  'ccs.guide.subscriptions_desc': 'Get Claude Pro at 50% off ($10/month) and Z.AI quarterly/yearly discounts with stacking referral bonus. Limited time offers to maximize your AI coding limits.',
   'ccs.guide.view_subscriptions': 'View Current Deals',
 
   // Key Takeaway
