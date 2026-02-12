@@ -2,6 +2,7 @@
 import { useTranslations } from '@/i18n/utils';
 import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
 import { subscriptionPromotions, tips } from '@/data/promotions';
+import LLMProviderIcon from '@/components/ui/LLMProviderIcon.astro';
 
 interface Props {
   lang?: Language;
@@ -193,18 +194,12 @@ const colorClasses = {
               <div class="flex items-center gap-2 mb-2">
                 <div class={`flex items-center justify-center w-8 h-8 rounded-lg ${colors.iconBg}`}>
                   {promo.id === 'claude-pro' ? (
-                    <!-- Anthropic Claude Icon -->
-                    <svg class={`w-5 h-5 ${colors.text}`} viewBox="0 0 46 32" fill="currentColor">
-                      <path d="M28.826.014 18.322 32h8.16l10.49-31.986zM17.19.014 6.717 31.986h8.16L25.38.014z"/>
-                    </svg>
+                    <LLMProviderIcon provider="claude" size={20} />
                   ) : promo.id === 'zai-subscription' ? (
-                    <!-- Z.AI Icon - Z letter -->
-                    <span class={`text-sm font-black ${colors.text}`}>Z</span>
+                    <LLMProviderIcon provider="zai" size={20} class="dark:invert" />
                   ) : promo.id === 'minimax-subscription' ? (
-                    <!-- MiniMax Icon - MM monogram -->
-                    <span class={`text-xs font-black ${colors.text}`}>MM</span>
+                    <LLMProviderIcon provider="minimax" size={20} />
                   ) : (
-                    <!-- Default Tag Icon -->
                     <svg class={`w-5 h-5 ${colors.text}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                       <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
                       <line x1="7" y1="7" x2="7.01" y2="7"/>
@@ -240,9 +235,6 @@ const colorClasses = {
                       {t('promotions.minimax.performance')}
                     </p>
                   </div>
-                  <p class="text-xs font-semibold text-orange-600 dark:text-orange-400 mt-2">
-                    {t('promotions.minimax.cancel_note')}
-                  </p>
                 </div>
               )}
 
