@@ -533,6 +533,17 @@ const kimiSettingsCode = `{
         {t('ccs.guide.provider_config_desc')}
       </p>
 
+      <!-- Google Ban Warning -->
+      <div class="flex items-start gap-3 p-4 rounded-xl bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-800/30">
+        <svg class="w-5 h-5 text-red-500 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/>
+        </svg>
+        <div class="text-sm text-red-800 dark:text-red-300">
+          <p class="font-medium mb-1">{t('ccs.guide.google_ban_warning_title')}</p>
+          <p>{t('ccs.guide.google_ban_warning_desc')}</p>
+        </div>
+      </div>
+
       <!-- Antigravity Configuration -->
       <div class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50 hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-colors">
         <div class="flex items-center gap-2 mb-3">
