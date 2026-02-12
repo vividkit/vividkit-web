@@ -2,6 +2,7 @@
 import { useTranslations } from '@/i18n/utils';
 import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
 import PlatformPathSwitcher from './PlatformPathSwitcher.astro';
+import LLMProviderIcon from '@/components/ui/LLMProviderIcon.astro';
 
 interface Props {
   lang?: Language;
@@ -18,10 +19,10 @@ const glmSettingsCode = `{
   "env": {
     "ANTHROPIC_BASE_URL": "https://api.z.ai/api/anthropic",
     "ANTHROPIC_AUTH_TOKEN": "<your_api_key>",
-    "ANTHROPIC_MODEL": "glm-4.7",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-4.7",
-    "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-4.7",
-    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "glm-4.7"
+    "ANTHROPIC_MODEL": "glm-5",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-5",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-5",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "glm-5"
   }
 }`;
 
@@ -29,7 +30,7 @@ const kimiSettingsCode = `{
   "env": {
     "ANTHROPIC_BASE_URL": "https://api.kimi.com/coding/",
     "ANTHROPIC_AUTH_TOKEN": "<your_api_key>",
-    "ANTHROPIC_MODEL": "kimi-k2-thinking-turbo"
+    "ANTHROPIC_MODEL": "kimi-k2.5"
   },
   "alwaysThinkingEnabled": true
 }`;
@@ -346,7 +347,7 @@ const kimiSettingsCode = `{
             </div>
             <div class="flex items-center justify-between">
               <code class="text-emerald-600 dark:text-emerald-400 font-semibold">ccs glm</code>
-              <span class="text-slate-400 text-[10px]"># GLM-4.7</span>
+              <span class="text-slate-400 text-[10px]"># GLM-5</span>
             </div>
             <div class="flex items-center justify-between">
               <code class="text-purple-600 dark:text-purple-400 font-semibold">ccs kimi</code>
@@ -545,17 +546,16 @@ const kimiSettingsCode = `{
       </div>
 
       <!-- Antigravity Configuration -->
-      <div class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50 hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-colors">
-        <div class="flex items-center gap-2 mb-3">
-          <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
-            <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="10"/>
-              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-            </svg>
-          </div>
-          <h4 class="font-bold text-slate-700 dark:text-slate-300 text-lg">{t('ccs.guide.agy_config_title')}</h4>
-          <span class="px-2 py-0.5 text-xs rounded-full bg-blue-500/20 text-blue-600 dark:text-blue-400 font-medium">{t('ccs.guide.recommended')}</span>
-        </div>
+      <details class="p-4 rounded-lg bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300/80 dark:border-slate-600/50 group">
+        <summary class="flex items-center gap-2 cursor-pointer list-none">
+          <LLMProviderIcon provider="google" size={24} />
+          <h4 class="font-bold text-slate-600 dark:text-slate-400 text-lg">{t('ccs.guide.agy_config_title')}</h4>
+          <span class="px-2 py-0.5 text-xs rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-400 font-medium">⚠️ High Risk</span>
+          <svg class="w-4 h-4 text-slate-400 ml-auto group-open:rotate-180 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 9l-7 7-7-7"/>
+          </svg>
+        </summary>
+        <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
         <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">
           {t('ccs.guide.agy_config_desc')}
         </p>
@@ -653,23 +653,21 @@ const kimiSettingsCode = `{
             </div>
           </div>
         </div>
-      </div>
+      </details>
 
       <!-- OAuth Providers Grid -->
       <div class="grid grid-cols-1 gap-4">
         <!-- Gemini Config -->
-        <div class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50 hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-colors">
-          <div class="flex items-center gap-2 mb-3">
-            <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
-              <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-              </svg>
-            </div>
-            <h4 class="font-bold text-slate-700 dark:text-slate-300 text-lg">{t('ccs.guide.gemini_config_title')}</h4>
-          </div>
+        <details class="p-4 rounded-lg bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300/80 dark:border-slate-600/50 group">
+          <summary class="flex items-center gap-2 cursor-pointer list-none">
+            <LLMProviderIcon provider="gemini" size={24} />
+            <h4 class="font-bold text-slate-600 dark:text-slate-400 text-lg">{t('ccs.guide.gemini_config_title')}</h4>
+            <span class="px-2 py-0.5 text-xs rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-400 font-medium">⚠️ High Risk</span>
+            <svg class="w-4 h-4 text-slate-400 ml-auto group-open:rotate-180 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 9l-7 7-7-7"/>
+            </svg>
+          </summary>
+          <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.gemini_config_desc')}</p>
 
           <!-- Step 1: Auth Command -->
@@ -782,17 +780,19 @@ const kimiSettingsCode = `{
             </div>
           </div>
         </div>
+      </details>
 
         <!-- Codex Config -->
-        <div class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50 hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-colors">
-          <div class="flex items-center gap-2 mb-3">
-            <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
-              <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.8956zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.5047-2.6067-1.4998z"/>
-              </svg>
-            </div>
-            <h4 class="font-bold text-slate-700 dark:text-slate-300 text-lg">{t('ccs.guide.codex_config_title')}</h4>
-          </div>
+        <details class="p-4 rounded-lg bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300/80 dark:border-slate-600/50 group">
+          <summary class="flex items-center gap-2 cursor-pointer list-none">
+            <LLMProviderIcon provider="openai" size={24} variant="mono" class="dark:invert" />
+            <h4 class="font-bold text-slate-600 dark:text-slate-400 text-lg">{t('ccs.guide.codex_config_title')}</h4>
+            <span class="px-2 py-0.5 text-[10px] rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-medium">OpenAI</span>
+            <svg class="w-4 h-4 text-slate-400 ml-auto group-open:rotate-180 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 9l-7 7-7-7"/>
+            </svg>
+          </summary>
+          <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.codex_config_desc')}</p>
 
           <!-- Paid Account Note -->
@@ -881,19 +881,21 @@ const kimiSettingsCode = `{
             </div>
           </div>
         </div>
-      </div>
+      </details>
 
       <!-- API-Based Providers (GLM & Kimi) -->
       <div class="grid grid-cols-1 gap-4">
         <!-- GLM Config (Detailed) -->
-        <div class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50 hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-colors">
-          <div class="flex items-center gap-2 mb-3">
-            <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
-              <span class="text-sm font-bold text-slate-600 dark:text-slate-400">Z</span>
-            </div>
-            <h4 class="font-bold text-slate-700 dark:text-slate-300 text-lg">{t('ccs.guide.glm_config_title')}</h4>
+        <details class="p-4 rounded-lg bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300/80 dark:border-slate-600/50 group">
+          <summary class="flex items-center gap-2 cursor-pointer list-none">
+            <LLMProviderIcon provider="zai" size={24} class="dark:invert" />
+            <h4 class="font-bold text-slate-600 dark:text-slate-400 text-lg">{t('ccs.guide.glm_config_title')}</h4>
             <span class="px-2 py-0.5 text-[10px] rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 font-medium">Z.AI</span>
-          </div>
+            <svg class="w-4 h-4 text-slate-400 ml-auto group-open:rotate-180 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 9l-7 7-7-7"/>
+            </svg>
+          </summary>
+          <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2 font-medium" set:html={t('ccs.guide.glm_update_notice')}></p>
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.glm_config_desc')}</p>
 
@@ -916,10 +918,10 @@ const kimiSettingsCode = `{
     "env": {
         "ANTHROPIC_BASE_URL": "https://api.z.ai/api/anthropic",
         "ANTHROPIC_AUTH_TOKEN": "<your_api_key>",
-        "ANTHROPIC_MODEL": "glm-4.7",
-        "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-4.7",
-        "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-4.7",
-        "ANTHROPIC_DEFAULT_HAIKU_MODEL": "glm-4.7"
+        "ANTHROPIC_MODEL": "glm-5",
+        "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-5",
+        "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-5",
+        "ANTHROPIC_DEFAULT_HAIKU_MODEL": "glm-5"
     }
 }`}
               title="Copy to clipboard"
@@ -938,10 +940,10 @@ const kimiSettingsCode = `{
     "env": {
         "ANTHROPIC_BASE_URL": "https://api.z.ai/api/anthropic",
         "ANTHROPIC_AUTH_TOKEN": "<your_api_key>",
-        "ANTHROPIC_MODEL": "glm-4.7",
-        "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-4.7",
-        "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-4.7",
-        "ANTHROPIC_DEFAULT_HAIKU_MODEL": "glm-4.7"
+        "ANTHROPIC_MODEL": "glm-5",
+        "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-5",
+        "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-5",
+        "ANTHROPIC_DEFAULT_HAIKU_MODEL": "glm-5"
     }
 }`}</code></pre>
             </div>
@@ -952,19 +954,16 @@ const kimiSettingsCode = `{
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.glm_step2_desc')}</p>
           <PlatformPathSwitcher
             lang={currentLang}
-            pathAfterHome=".ccs/config.json"
+            pathAfterHome=".ccs/config.yaml"
             label="File:"
             id="ccs-config-path-glm"
             color="slate"
           />
           <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
-            <div class="text-slate-500 dark:text-slate-400">{"{"}</div>
-            <div class="ml-4"><span class="text-cyan-600 dark:text-cyan-400">"profiles"</span>: {"{"}</div>
-            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"glm"</span>: <span class="text-emerald-600 dark:text-emerald-400">"~/.ccs/glm.settings.json"</span>, <span class="text-amber-600 dark:text-amber-400">&lt;-- {t('ccs.guide.add_this_line')}</span></div>
-            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"default"</span>: <span class="text-emerald-600 dark:text-emerald-400">"~/.claude/settings.json"</span></div>
-            <div class="ml-4">{"}"}</div>
-            <div class="text-slate-500 dark:text-slate-400">{"}"}</div>
-          </div>
+            <div><span class="text-cyan-600 dark:text-cyan-400">profiles</span>:</div>
+            <div class="ml-4"><span class="text-cyan-600 dark:text-cyan-400">glm</span>:</div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">type</span>: <span class="text-emerald-600 dark:text-emerald-400">api</span></div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">settings</span>: <span class="text-emerald-600 dark:text-emerald-400">~/.ccs/glm.settings.json</span> <span class="text-amber-600 dark:text-amber-400">&lt;-- {t('ccs.guide.add_this_line')}</span></div>
 
           <!-- Step 3: Verification -->
           <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.glm_verify_title')}</h5>
@@ -974,10 +973,10 @@ const kimiSettingsCode = `{
           </div>
           <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto shadow-sm">
             <div class="text-slate-500 dark:text-slate-400 mb-2">&gt; Which model are you using?</div>
-            <div class="text-cyan-600 dark:text-cyan-400">⏺ I'm using the <span class="text-slate-800 dark:text-white font-bold">GLM-4.7</span> model.</div>
+            <div class="text-cyan-600 dark:text-cyan-400">⏺ I'm using the <span class="text-slate-800 dark:text-white font-bold">GLM-5</span> model.</div>
           </div>
 
-          <!-- GLM-4.7 Model Verification -->
+          <!-- GLM-5 Model Verification -->
           <div class="mt-4 p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
             <p class="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
               <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -989,16 +988,19 @@ const kimiSettingsCode = `{
           </div>
 
                   </div>
+        </details>
 
         <!-- Kimi Config (Detailed) -->
-        <div class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50 hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-colors">
-          <div class="flex items-center gap-2 mb-3">
-            <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
-              <span class="text-sm font-bold text-slate-600 dark:text-slate-400">K</span>
-            </div>
-            <h4 class="font-bold text-slate-700 dark:text-slate-300 text-lg">{t('ccs.guide.kimi_config_title')}</h4>
+        <details class="p-4 rounded-lg bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300/80 dark:border-slate-600/50 group">
+          <summary class="flex items-center gap-2 cursor-pointer list-none">
+            <LLMProviderIcon provider="kimi" size={24} variant="mono" class="shrink-0 dark:invert" />
+            <h4 class="font-bold text-slate-600 dark:text-slate-400 text-lg">{t('ccs.guide.kimi_config_title')}</h4>
             <span class="px-2 py-0.5 text-[10px] rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 font-medium">Moonshot AI</span>
-          </div>
+            <svg class="w-4 h-4 text-slate-400 ml-auto group-open:rotate-180 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 9l-7 7-7-7"/>
+            </svg>
+          </summary>
+          <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.kimi_config_desc')}</p>
 
           <!-- Step 1: Create Settings File -->
@@ -1019,7 +1021,7 @@ const kimiSettingsCode = `{
     "env": {
         "ANTHROPIC_BASE_URL": "https://api.kimi.com/coding/",
         "ANTHROPIC_AUTH_TOKEN": "<your_api_key>",
-        "ANTHROPIC_MODEL": "kimi-k2-thinking-turbo"
+        "ANTHROPIC_MODEL": "kimi-k2.5"
     },
     "alwaysThinkingEnabled": true
 }`}
@@ -1038,7 +1040,7 @@ const kimiSettingsCode = `{
     "env": {
         "ANTHROPIC_BASE_URL": "https://api.kimi.com/coding/",
         "ANTHROPIC_AUTH_TOKEN": "<your_api_key>",
-        "ANTHROPIC_MODEL": "kimi-k2-thinking-turbo"
+        "ANTHROPIC_MODEL": "kimi-k2.5"
     },
     "alwaysThinkingEnabled": true
 }`}</code></pre>
@@ -1050,18 +1052,16 @@ const kimiSettingsCode = `{
           <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.kimi_step2_desc')}</p>
           <PlatformPathSwitcher
             lang={currentLang}
-            pathAfterHome=".ccs/config.json"
+            pathAfterHome=".ccs/config.yaml"
             label="File:"
             id="ccs-config-path-kimi"
             color="slate"
           />
           <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
-            <div class="text-slate-500 dark:text-slate-400">{"{"}</div>
-            <div class="ml-4"><span class="text-cyan-600 dark:text-cyan-400">"profiles"</span>: {"{"}</div>
-            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"kimi"</span>: <span class="text-emerald-600 dark:text-emerald-400">"~/.ccs/kimi.settings.json"</span>, <span class="text-amber-600 dark:text-amber-400">&lt;-- {t('ccs.guide.add_this_line')}</span></div>
-            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">"default"</span>: <span class="text-emerald-600 dark:text-emerald-400">"~/.claude/settings.json"</span></div>
-            <div class="ml-4">{"}"}</div>
-            <div class="text-slate-500 dark:text-slate-400">{"}"}</div>
+            <div><span class="text-cyan-600 dark:text-cyan-400">profiles</span>:</div>
+            <div class="ml-4"><span class="text-cyan-600 dark:text-cyan-400">kimi</span>:</div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">type</span>: <span class="text-emerald-600 dark:text-emerald-400">api</span></div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">settings</span>: <span class="text-emerald-600 dark:text-emerald-400">~/.ccs/kimi.settings.json</span> <span class="text-amber-600 dark:text-amber-400">&lt;-- {t('ccs.guide.add_this_line')}</span></div>
           </div>
 
           <!-- Step 3: Verification -->
@@ -1072,7 +1072,7 @@ const kimiSettingsCode = `{
           </div>
           <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-3 shadow-sm">
             <div class="text-slate-500 dark:text-slate-400 mb-2">&gt; Which model are you using?</div>
-            <div class="text-cyan-600 dark:text-cyan-400">⏺ I'm using the <span class="text-slate-800 dark:text-white font-bold">Kimi K2 Thinking Turbo</span> model.</div>
+            <div class="text-cyan-600 dark:text-cyan-400">⏺ I'm using the <span class="text-slate-800 dark:text-white font-bold">Kimi K2.5</span> model.</div>
           </div>
           <div class="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
             <p class="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
@@ -1086,9 +1086,91 @@ const kimiSettingsCode = `{
         </div>
       </div>
     </div>
-  </div>
+  </details>
 
 
+        <!-- MiniMax Config (Detailed) -->
+        <details class="p-4 rounded-lg bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300/80 dark:border-slate-600/50 group">
+          <summary class="flex items-center gap-2 cursor-pointer list-none">
+            <LLMProviderIcon provider="minimax" size={24} />
+            <h4 class="font-bold text-slate-600 dark:text-slate-400 text-lg">{t('ccs.guide.minimax_config_title')}</h4>
+            <span class="px-2 py-0.5 text-[10px] rounded-full bg-purple-500/10 text-purple-600 dark:text-purple-400 font-medium">MiniMax AI</span>
+            <svg class="w-4 h-4 text-slate-400 ml-auto group-open:rotate-180 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 9l-7 7-7-7"/>
+            </svg>
+          </summary>
+          <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.minimax_config_desc')}</p>
+
+          <!-- Step 1: Create Settings File -->
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.minimax_step1_title')}</h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.minimax_step1_desc')}</p>
+          <PlatformPathSwitcher
+            lang={currentLang}
+            pathAfterHome=".ccs/minimax.settings.json"
+            label="File:"
+            id="minimax-settings-path"
+            color="slate"
+          />
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.minimax_add_content')}</p>
+          <div class="relative group">
+            <button
+              class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+              data-code={`{\n    "env": {\n        "ANTHROPIC_BASE_URL": "https://api.minimax.com/coding/",\n        "ANTHROPIC_AUTH_TOKEN": "<your_api_key>",\n        "ANTHROPIC_MODEL": "MiniMax-M2.1"\n    },\n    "alwaysThinkingEnabled": true\n}`}
+            >
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+            </button>
+            <pre class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto shadow-sm"><code>{`{
+    "env": {
+        "ANTHROPIC_BASE_URL": "https://api.minimax.com/coding/",
+        "ANTHROPIC_AUTH_TOKEN": "<your_api_key>",
+        "ANTHROPIC_MODEL": "MiniMax-M2.1"
+    },
+    "alwaysThinkingEnabled": true
+}`}</code></pre>
+          </div>
+
+          <!-- Step 2: Add to Config -->
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.minimax_step2_title')}</h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.minimax_step2_desc')}</p>
+          <PlatformPathSwitcher
+            lang={currentLang}
+            pathAfterHome=".ccs/config.yaml"
+            label="File:"
+            id="ccs-config-path-minimax"
+            color="slate"
+          />
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+            <div><span class="text-cyan-600 dark:text-cyan-400">profiles</span>:</div>
+            <div class="ml-4"><span class="text-cyan-600 dark:text-cyan-400">minimax</span>:</div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">type</span>: <span class="text-emerald-600 dark:text-emerald-400">api</span></div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">settings</span>: <span class="text-emerald-600 dark:text-emerald-400">~/.ccs/minimax.settings.json</span> <span class="text-amber-600 dark:text-amber-400">&lt;-- add this line</span></div>
+          </div>
+
+          <!-- Step 3: Verification -->
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.minimax_verify_title')}</h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.minimax_verify_desc')}</p>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+            <code class="text-slate-700 dark:text-slate-300">ccs minimax "Which model are you using?"</code>
+          </div>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-3 shadow-sm">
+            <div class="text-slate-500 dark:text-slate-400 mb-2">&gt; Which model are you using?</div>
+            <div class="text-cyan-600 dark:text-cyan-400">⏺ I'm using the <span class="text-slate-800 dark:text-white font-bold">MiniMax-M2.1</span> model.</div>
+          </div>
+          <div class="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
+            <p class="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
+              <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 16v-4M12 8h.01"/>
+              </svg>
+              <span>{t('ccs.guide.minimax_verify_note')}</span>
+            </p>
+          </div>
+        </div>
+        </details>
 
   <!-- Web Dashboard Section -->
   <div class="glass-card rounded-xl border-slate-200 dark:border-slate-700 overflow-hidden">
