@@ -19,10 +19,6 @@ export const subscriptionPromotions: SubscriptionPromotion[] = [
     name: 'Claude Pro',
     tagline: '50% off for the first 3 months ($10/month instead of $20)',
     promoLinks: [
-      { label: 'claude.ai/purpose', url: 'http://claude.ai/purpose' },
-      { label: 'claude.ai/alex', url: 'https://claude.ai/alex' },
-      { label: 'claude.ai/will', url: 'http://claude.ai/will' },
-      { label: 'claude.ai/mac', url: 'http://claude.ai/mac' },
       { label: 'claude.ai/acquired', url: 'https://claude.ai/acquired' },
     ],
     color: 'amber',
