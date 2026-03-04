@@ -6,50 +6,75 @@
  */
 
 interface Props {
-  provider: 'gemini' | 'google' | 'zhipu' | 'zai' | 'glm' | 'kimi' | 'moonshot' | 'minimax' | 'openai' | 'claude' | 'openrouter' | 'deepseek' | 'grok' | 'mistral' | 'cursor' | 'windsurf';
+  provider:
+    | "gemini"
+    | "google"
+    | "zhipu"
+    | "zai"
+    | "glm"
+    | "kimi"
+    | "moonshot"
+    | "minimax"
+    | "openai"
+    | "claude"
+    | "openrouter"
+    | "deepseek"
+    | "grok"
+    | "mistral"
+    | "cursor"
+    | "windsurf"
+    | "alibabacloud"
+    | "qwen";
   size?: number;
-  variant?: 'color' | 'mono' | 'text';
+  variant?: "color" | "mono" | "text";
   class?: string;
 }
 
-const { provider, size = 24, variant = 'color', class: className = '' } = Astro.props;
+const {
+  provider,
+  size = 24,
+  variant = "color",
+  class: className = "",
+} = Astro.props;
 
 // Map provider names to lobe-icons icon names
 const iconMap: Record<string, string> = {
-  gemini: 'gemini',
-  google: 'google',
-  zhipu: 'zhipu',
-  zai: 'zai',
-  glm: 'zai',
-  chatglm: 'chatglm',
-  kimi: 'kimi',
-  moonshot: 'moonshot',
-  minimax: 'minimax',
-  openai: 'openai',
-  claude: 'claude',
-  anthropic: 'anthropic',
-  openrouter: 'openrouter',
-  deepseek: 'deepseek',
-  grok: 'grok',
-  mistral: 'mistral',
-  cursor: 'cursor',
-  windsurf: 'windsurf',
+  gemini: "gemini",
+  google: "google",
+  zhipu: "zhipu",
+  zai: "zai",
+  glm: "zai",
+  chatglm: "chatglm",
+  kimi: "kimi",
+  moonshot: "moonshot",
+  minimax: "minimax",
+  openai: "openai",
+  claude: "claude",
+  anthropic: "anthropic",
+  openrouter: "openrouter",
+  deepseek: "deepseek",
+  grok: "grok",
+  mistral: "mistral",
+  cursor: "cursor",
+  windsurf: "windsurf",
+  alibabacloud: "alibabacloud",
+  qwen: "qwen",
 };
 
 const iconName = iconMap[provider] || provider;
 
 // Icons that don't have a -color variant (use mono instead)
-const noColorVariant = ['zai', 'moonshot', 'cursor', 'windsurf', 'openai'];
+const noColorVariant = ["zai", "moonshot", "cursor", "windsurf", "openai"];
 
 // Build icon URL based on variant
 const getIconUrl = (name: string, variant: string): string => {
-  const base = 'https://unpkg.com/@lobehub/icons-static-svg@latest/icons';
+  const base = "https://unpkg.com/@lobehub/icons-static-svg@latest/icons";
   // Fallback to mono if icon doesn't have color variant
-  if (variant === 'color' && noColorVariant.includes(name)) {
+  if (variant === "color" && noColorVariant.includes(name)) {
     return `${base}/${name}.svg`;
   }
-  if (variant === 'color') return `${base}/${name}-color.svg`;
-  if (variant === 'text') return `${base}/${name}-text.svg`;
+  if (variant === "color") return `${base}/${name}-color.svg`;
+  if (variant === "text") return `${base}/${name}-text.svg`;
   return `${base}/${name}.svg`;
 };
 
@@ -61,7 +86,7 @@ const iconUrl = getIconUrl(iconName, variant);
   alt={`${provider} icon`}
   width={size}
   height={size}
-  class:list={['inline-block', className]}
+  class:list={["inline-block", className]}
   loading="lazy"
   decoding="async"
 />
