@@ -3,11 +3,31 @@ interface Props {
   class?: string;
 }
 
-const { class: className = '' } = Astro.props;
+const { class: className = "" } = Astro.props;
+import PixelBlast from "@/components/PixelBlast";
 ---
 
-<div class={`fixed inset-0 pointer-events-none overflow-hidden aurora-bg ${className}`}>
-  <div class="absolute top-0 left-1/4 w-[600px] h-[600px] bg-blue-600/30 dark:bg-blue-600/10 rounded-full blur-[120px] gradient-animate"></div>
-  <div class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-blue-500/20 dark:bg-blue-500/10 rounded-full blur-[100px] gradient-animate" style="animation-delay: -4s;"></div>
-  <div class="absolute top-1/2 left-0 w-[400px] h-[400px] bg-orange-500/15 dark:bg-orange-500/5 rounded-full blur-[80px]"></div>
+<div
+  class={`fixed inset-0 pointer-events-none overflow-hidden aurora-bg ${className}`}
+>
+  <PixelBlast
+    client:only="react"
+    variant="square"
+    pixelSize={4}
+    color="#2070e7"
+    patternScale={2}
+    patternDensity={1}
+    pixelSizeJitter={0}
+    enableRipples
+    rippleSpeed={0.4}
+    rippleThickness={0.12}
+    rippleIntensityScale={1.5}
+    liquid={false}
+    liquidStrength={0.12}
+    liquidRadius={1.2}
+    liquidWobbleSpeed={5}
+    speed={0.5}
+    edgeFade={0.25}
+    transparent
+  />
 </div>

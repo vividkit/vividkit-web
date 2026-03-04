@@ -1,15 +1,29 @@
 ---
-import MainLayout from '@/layouts/MainLayout.astro';
-import Header from '@/components/layout/Header.astro';
-import Link from '@/components/ui/Link.astro';
-import Footer from '@/components/layout/Footer.astro';
-import TabNavigation from '@/components/guides/TabNavigation.astro';
-import { useTranslatedPath, getLangFromUrl, type Language } from '@/i18n';
+import MainLayout from "@/layouts/MainLayout.astro";
+import Header from "@/components/layout/Header.astro";
+import Link from "@/components/ui/Link.astro";
+import Footer from "@/components/layout/Footer.astro";
+import TabNavigation from "@/components/guides/TabNavigation.astro";
+import { useTranslatedPath, getLangFromUrl, type Language } from "@/i18n";
 
 interface Props {
   title: string;
   description: string;
-  activeTab: 'cli' | 'ccs' | 'happy-ccs' | 'ide-config' | 'workflows' | 'flowchart' | 'commands' | 'uiux' | 'resume' | 'permissions' | 'hooks' | 'promotions' | 'what-is-claudekit' | 'fix-logs';
+  activeTab:
+    | "cli"
+    | "ccs"
+    | "happy-ccs"
+    | "ide-config"
+    | "workflows"
+    | "flowchart"
+    | "commands"
+    | "uiux"
+    | "resume"
+    | "permissions"
+    | "hooks"
+    | "promotions"
+    | "what-is-claudekit"
+    | "fix-logs";
   lang?: Language;
 }
 
@@ -23,7 +37,7 @@ const translatePath = useTranslatedPath(currentLang);
 <MainLayout
   title={title}
   description={description}
-  canonical={`/guides${activeTab !== 'cli' ? '/' + activeTab : ''}`}
+  canonical={`/guides${activeTab !== "cli" ? "/" + activeTab : ""}`}
   lang={currentLang}
 >
   <Header lang={currentLang} />
