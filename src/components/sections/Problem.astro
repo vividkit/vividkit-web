@@ -1,14 +1,15 @@
 ---
-import GlassCard from '@/components/ui/GlassCard.astro';
-import { useTranslations } from '@/i18n/utils';
-import { getLangFromUrl, type Language } from '@/i18n';
+import SpotlightCard from "@/components/SpotlightCard";
+import ShinyText from "@/components/ShinyText";
+import { useTranslations } from "@/i18n/utils";
+import { getLangFromUrl, type Language } from "@/i18n";
 
 interface Props {
   class?: string;
   lang?: Language;
 }
 
-const { class: className = '', lang } = Astro.props;
+const { class: className = "", lang } = Astro.props;
 
 // Get language from URL if not provided
 const currentLang = lang || getLangFromUrl(Astro.url);
@@ -16,29 +17,33 @@ const t = useTranslations(currentLang);
 
 const problems = [
   {
-    title: t('problem.discover.title'),
-    description: t('problem.discover.description'),
+    title: t("problem.discover.title"),
+    description: t("problem.discover.description"),
     icon: "search",
-    color: "blue"
+    color: "blue",
+    spotlight: "rgba(59, 130, 246, 0.15)" as const,
   },
   {
-    title: t('problem.remember.title'),
-    description: t('problem.remember.description'),
+    title: t("problem.remember.title"),
+    description: t("problem.remember.description"),
     icon: "brain",
-    color: "purple"
+    color: "purple",
+    spotlight: "rgba(168, 85, 247, 0.15)" as const,
   },
   {
-    title: t('problem.visibility.title'),
-    description: t('problem.visibility.description'),
+    title: t("problem.visibility.title"),
+    description: t("problem.visibility.description"),
     icon: "eye",
-    color: "amber"
+    color: "amber",
+    spotlight: "rgba(245, 158, 11, 0.15)" as const,
   },
   {
-    title: t('problem.barrier.title'),
-    description: t('problem.barrier.description'),
+    title: t("problem.barrier.title"),
+    description: t("problem.barrier.description"),
     icon: "users",
-    color: "green"
-  }
+    color: "green",
+    spotlight: "rgba(34, 197, 94, 0.15)" as const,
+  },
 ];
 ---
 
@@ -46,51 +51,126 @@ const problems = [
   <div class="max-w-6xl mx-auto px-6">
     <div class="text-center mb-16">
       <h2 class="text-4xl md:text-5xl font-heading font-bold mb-6">
-        {t('problem.title')}
-        <span class="block bg-gradient-to-r from-red-600 to-orange-600 dark:from-red-400 dark:to-orange-400 bg-clip-text text-transparent">
-          {t('problem.subtitle')}
-        </span>
+        <div class="mb-2">
+          <ShinyText
+            text={t("problem.title")}
+            className="text-slate-900 dark:text-white"
+            speed={3}
+            color="currentColor"
+            shineColor="#94a3b8"
+            client:load
+          />
+        </div>
+        <div
+          class="bg-gradient-to-r from-red-600 to-orange-600 dark:from-red-400 dark:to-orange-400 bg-clip-text text-transparent"
+        >
+          <ShinyText
+            text={t("problem.subtitle")}
+            speed={3}
+            color="inherit"
+            shineColor="#ffffff"
+            client:load
+          />
+        </div>
       </h2>
       <p class="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
-        {t('problem.description')}
+        {t("problem.description")}
       </p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      {problems.map((problem) => (
-        <GlassCard variant="hover" class="p-8 text-center h-full">
-          <div class={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 bg-gradient-to-br ${
-            problem.color === 'blue' ? 'from-blue-100 to-cyan-100 dark:from-blue-900/30 dark:to-cyan-900/30' :
-            problem.color === 'purple' ? 'from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30' :
-            problem.color === 'amber' ? 'from-amber-100 to-orange-100 dark:from-amber-900/30 dark:to-orange-900/30' :
-            'from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30'
-          }`}>
-            {problem.icon === 'search' && (
-              <svg class={`w-8 h-8 ${problem.color === 'blue' ? 'text-blue-600 dark:text-blue-400' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-            )}
-            {problem.icon === 'brain' && (
-              <svg class={`w-8 h-8 ${problem.color === 'purple' ? 'text-purple-600 dark:text-purple-400' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-              </svg>
-            )}
-            {problem.icon === 'eye' && (
-              <svg class={`w-8 h-8 ${problem.color === 'amber' ? 'text-amber-600 dark:text-amber-400' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-              </svg>
-            )}
-            {problem.icon === 'users' && (
-              <svg class={`w-8 h-8 ${problem.color === 'green' ? 'text-green-600 dark:text-green-400' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-              </svg>
-            )}
-          </div>
-          <h3 class="text-xl font-semibold mb-4">{problem.title}</h3>
-          <p class="text-slate-600 dark:text-slate-400">{problem.description}</p>
-        </GlassCard>
-      ))}
+      {
+        problems.map((problem) => (
+          <SpotlightCard
+            client:load
+            spotlightColor={problem.spotlight}
+            className="glass-card p-8 text-center h-full rounded-2xl transition-all duration-300 hover:border-slate-300 dark:hover:border-white/20"
+          >
+            <div
+              class={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 bg-gradient-to-br ${
+                problem.color === "blue"
+                  ? "from-blue-100 to-cyan-100 dark:from-blue-900/30 dark:to-cyan-900/30"
+                  : problem.color === "purple"
+                    ? "from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30"
+                    : problem.color === "amber"
+                      ? "from-amber-100 to-orange-100 dark:from-amber-900/30 dark:to-orange-900/30"
+                      : "from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30"
+              }`}
+            >
+              {problem.icon === "search" && (
+                <svg
+                  class={`w-8 h-8 ${problem.color === "blue" ? "text-blue-600 dark:text-blue-400" : ""}`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+              )}
+              {problem.icon === "brain" && (
+                <svg
+                  class={`w-8 h-8 ${problem.color === "purple" ? "text-purple-600 dark:text-purple-400" : ""}`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                  />
+                </svg>
+              )}
+              {problem.icon === "eye" && (
+                <svg
+                  class={`w-8 h-8 ${problem.color === "amber" ? "text-amber-600 dark:text-amber-400" : ""}`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                  />
+                </svg>
+              )}
+              {problem.icon === "users" && (
+                <svg
+                  class={`w-8 h-8 ${problem.color === "green" ? "text-green-600 dark:text-green-400" : ""}`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                  />
+                </svg>
+              )}
+            </div>
+            <h3 class="text-xl font-semibold mb-4">{problem.title}</h3>
+            <p class="text-slate-600 dark:text-slate-400">
+              {problem.description}
+            </p>
+          </SpotlightCard>
+        ))
+      }
     </div>
   </div>
 </section>

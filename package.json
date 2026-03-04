@@ -9,14 +9,27 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/react": "^4.4.2",
     "@fontsource/dm-sans": "^5.2.8",
     "@fontsource/fira-code": "^5.2.7",
     "@fontsource/space-grotesk": "^5.2.10",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
     "@vercel/analytics": "^1.6.1",
     "alpinejs": "^3.15.2",
     "astro": "^5.16.4",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "lucide-astro": "^0.555.0",
-    "puppeteer": "^24.32.0"
+    "lucide-react": "^0.576.0",
+    "motion": "^12.34.5",
+    "postprocessing": "^6.38.3",
+    "puppeteer": "^24.32.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "tailwind-merge": "^3.5.0",
+    "tailwindcss-animate": "^1.0.7",
+    "three": "^0.167.1"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.6",
