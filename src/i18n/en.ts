@@ -555,6 +555,12 @@ export default {
   'promotions.minimax.compatible': 'Compatible with all major coding tools (Claude Code, Cursor, Open Code, Kilo Code, ...)',
   'promotions.minimax.performance': 'Performance: Strong in UI generation, rated between Sonnet 4.0 and 4.5, slightly better than GLM',
   'promotions.minimax.cancel_note': '⚠️ Remember to cancel auto-renewal after purchase to avoid $10 charge for month 2',
+  'promotions.alibaba.tagline': 'AI Coding Plan - Only $3! Perfect for agentic bots (OpenClaw, GoClaw, ...)',
+  'promotions.alibaba.agentic': '🤖 Ideal for agentic coding bots: OpenClaw, GoClaw, and other AI agents that need affordable, high-quality API access',
+  'promotions.alibaba.value': '💰 Unbeatable value: Full AI coding capabilities at just $3/month — cheapest option for running multiple agents',
+  'promotions.alibaba_sas.tagline': '2vCPU 1GiB VPS — From $0.99/month or $9.90/year! Deploy lightweight agentic bots (GoClaw, ZeroClaw)',
+  'promotions.alibaba_sas.specs': '📦 30 GiB System Disk · 200 Mbit/s Bandwidth · Alibaba Cloud Linux',
+  'promotions.alibaba_sas.suitable': '🤖 Perfect for deploying lightweight agentic bots like GoClaw, ZeroClaw that need minimal resources',
 
   'promotions.tips.use_ccs.title': 'Use CCS to switch between providers',
   'promotions.tips.use_ccs.desc': 'Maximize your usage limits by switching between Claude, GLM, Kimi, and other providers using CCS.',

@@ -338,6 +338,12 @@ export default {
   'promotions.minimax.compatible': 'Tương thích với tất cả công cụ coding chính (Claude Code, Cursor, Open Code, Kilo Code, ...)',
   'promotions.minimax.performance': 'Hiệu năng: Mạnh về gen UI, được đánh giá ngang Sonnet 4.0-4.5, nhỉnh hơn GLM',
   'promotions.minimax.cancel_note': '⚠️ Nhớ hủy tự động gia hạn sau khi mua để tránh bị charge $10 từ tháng thứ 2',
+  'promotions.alibaba.tagline': 'Gói AI Coding Plan - Chỉ $3! Hoàn hảo cho các agentic bot (OpenClaw, GoClaw, ...)',
+  'promotions.alibaba.agentic': '🤖 Lý tưởng cho các agentic coding bot: OpenClaw, GoClaw, và các AI agent khác cần truy cập API chất lượng cao với giá rẻ',
+  'promotions.alibaba.value': '💰 Vô địch về giá: Đầy đủ tính năng AI coding chỉ với $3/tháng — rẻ nhất để chạy nhiều agent cùng lúc',
+  'promotions.alibaba_sas.tagline': 'VPS 2vCPU 1GiB — Từ $0.99/tháng hoặc $9.90/năm! Deploy agentic bot nhẹ (GoClaw, ZeroClaw)',
+  'promotions.alibaba_sas.specs': '📦 30 GiB SSD · 200 Mbit/s Bandwidth · Alibaba Cloud Linux',
+  'promotions.alibaba_sas.suitable': '🤖 Hoàn hảo để deploy các agentic bot nhẹ như GoClaw, ZeroClaw — tiêu tốn rất ít tài nguyên',
 
   'promotions.tips.use_ccs.title': 'Dùng CCS để chuyển đổi nhà cung cấp',
   'promotions.tips.use_ccs.desc': 'Tối đa hóa giới hạn sử dụng bằng cách chuyển đổi giữa Claude, GLM, Kimi, và các nhà cung cấp khác sử dụng CCS.',

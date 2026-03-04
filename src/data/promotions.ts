@@ -15,16 +15,6 @@ export interface SubscriptionPromotion {
 
 export const subscriptionPromotions: SubscriptionPromotion[] = [
   {
-    id: 'claude-pro',
-    name: 'Claude Pro',
-    tagline: '50% off for the first 3 months ($10/month instead of $20)',
-    promoLinks: [
-      { label: 'claude.ai/acquired', url: 'https://claude.ai/acquired' },
-    ],
-    color: 'amber',
-    recommended: true,
-  },
-  {
     id: 'zai-subscription',
     name: 'Z.AI GLM',
     tagline: '10% off quarterly, 30% off yearly + 10% referral bonus',
@@ -37,6 +27,22 @@ export const subscriptionPromotions: SubscriptionPromotion[] = [
     tagline: '10% referral discount',
     promoLinks: [{ label: 'platform.minimax.io (referral)', url: 'https://platform.minimax.io/subscribe/coding-plan?code=D3YHMfEe2x&source=link' }],
     color: 'purple',
+  },
+  {
+    id: 'alibaba-cloud-ai-coding',
+    name: 'Alibaba Coding Plan',
+    tagline: 'AI Coding Plan - Only $3! Perfect for agentic bots (OpenClaw, GoClaw, ...)',
+    promoLinks: [{ label: 'alibabacloud.com/ai-coding (referral)', url: 'https://www.alibabacloud.com/campaign/ai-scene-coding?referral_code=A92LZF' }],
+    color: 'cyan',
+    recommended: true,
+  },
+  {
+    id: 'alibaba-sas-instance',
+    name: 'Alibaba Cloud SAS',
+    tagline: '2vCPU 1GiB VPS — From $0.99/month or $9.90/year! Deploy lightweight agentic bots (GoClaw, ZeroClaw)',
+    promoLinks: [{ label: 'alibabacloud.com/benefits (referral)', url: 'https://www.alibabacloud.com/campaign/benefits?_p_lc=1&referral_code=A92LZF#J_7789915720' }],
+    color: 'cyan',
+    recommended: true,
   },
 
 ];
