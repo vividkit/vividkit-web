@@ -1,7 +1,7 @@
 ---
-import { useTranslations } from '@/i18n/utils';
-import { getLangFromUrl, type Language } from '@/i18n';
-import { SITE_CONFIG } from '@/data/constants';
+import { useTranslations } from "@/i18n/utils";
+import { getLangFromUrl, type Language } from "@/i18n";
+import { SITE_CONFIG } from "@/data/constants";
 
 interface Props {
   lang?: Language;
@@ -12,10 +12,12 @@ const currentLang = lang || getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
 
 // Language-specific image suffixes and URLs
-const imgSuffix = currentLang === 'vi' ? '-vi' : '';
-const workflowsUrl = currentLang === 'vi' ? '/vi/guides/workflows' : '/guides/workflows';
-const commandsUrl = currentLang === 'vi' ? '/vi/guides/commands' : '/guides/commands';
-const cliGuideUrl = currentLang === 'vi' ? '/vi/guides/cli' : '/guides/cli';
+const imgSuffix = currentLang === "vi" ? "-vi" : "";
+const workflowsUrl =
+  currentLang === "vi" ? "/vi/guides/workflows" : "/guides/workflows";
+const commandsUrl =
+  currentLang === "vi" ? "/vi/guides/commands" : "/guides/commands";
+const cliGuideUrl = currentLang === "vi" ? "/vi/guides/cli" : "/guides/cli";
 
 // SVG Icons as template literals
 const icons = {
@@ -54,141 +56,228 @@ const icons = {
 };
 
 const pillars = [
-  { key: 'agents', icon: icons.users, bgClass: 'bg-purple-50 dark:bg-purple-500/10', borderClass: 'border-purple-200 dark:border-purple-500/20', textClass: 'text-purple-600 dark:text-purple-400', titleClass: 'text-purple-700 dark:text-purple-400' },
-  { key: 'commands', icon: icons.bolt, bgClass: 'bg-blue-50 dark:bg-blue-500/10', borderClass: 'border-blue-200 dark:border-blue-500/20', textClass: 'text-blue-600 dark:text-blue-400', titleClass: 'text-blue-700 dark:text-blue-400' },
-  { key: 'skills', icon: icons.brain, bgClass: 'bg-emerald-50 dark:bg-emerald-500/10', borderClass: 'border-emerald-200 dark:border-emerald-500/20', textClass: 'text-emerald-600 dark:text-emerald-400', titleClass: 'text-emerald-700 dark:text-emerald-400' },
-  { key: 'workflows', icon: icons.arrow_path, bgClass: 'bg-amber-50 dark:bg-amber-500/10', borderClass: 'border-amber-200 dark:border-amber-500/20', textClass: 'text-amber-600 dark:text-amber-400', titleClass: 'text-amber-700 dark:text-amber-400' },
-  { key: 'hooks', icon: icons.link, bgClass: 'bg-rose-50 dark:bg-rose-500/10', borderClass: 'border-rose-200 dark:border-rose-500/20', textClass: 'text-rose-600 dark:text-rose-400', titleClass: 'text-rose-700 dark:text-rose-400' },
+  {
+    key: "agents",
+    icon: icons.users,
+    bgClass: "bg-purple-50 dark:bg-purple-500/10",
+    borderClass: "border-purple-200 dark:border-purple-500/20",
+    textClass: "text-purple-600 dark:text-purple-400",
+    titleClass: "text-purple-700 dark:text-purple-400",
+  },
+  {
+    key: "commands",
+    icon: icons.bolt,
+    bgClass: "bg-blue-50 dark:bg-blue-500/10",
+    borderClass: "border-blue-200 dark:border-blue-500/20",
+    textClass: "text-blue-600 dark:text-blue-400",
+    titleClass: "text-blue-700 dark:text-blue-400",
+  },
+  {
+    key: "skills",
+    icon: icons.brain,
+    bgClass: "bg-emerald-50 dark:bg-emerald-500/10",
+    borderClass: "border-emerald-200 dark:border-emerald-500/20",
+    textClass: "text-emerald-600 dark:text-emerald-400",
+    titleClass: "text-emerald-700 dark:text-emerald-400",
+  },
+  {
+    key: "workflows",
+    icon: icons.arrow_path,
+    bgClass: "bg-amber-50 dark:bg-amber-500/10",
+    borderClass: "border-amber-200 dark:border-amber-500/20",
+    textClass: "text-amber-600 dark:text-amber-400",
+    titleClass: "text-amber-700 dark:text-amber-400",
+  },
+  {
+    key: "hooks",
+    icon: icons.link,
+    bgClass: "bg-rose-50 dark:bg-rose-500/10",
+    borderClass: "border-rose-200 dark:border-rose-500/20",
+    textClass: "text-rose-600 dark:text-rose-400",
+    titleClass: "text-rose-700 dark:text-rose-400",
+  },
 ];
 
 const processSteps = [
-  { step: 1, icon: icons.keyboard, color: 'blue' },
-  { step: 2, icon: icons.light_bulb, color: 'purple' },
-  { step: 3, icon: icons.cpu, color: 'emerald' },
-  { step: 4, icon: icons.check_badge, color: 'amber' },
+  { step: 1, icon: icons.keyboard, color: "blue" },
+  { step: 2, icon: icons.light_bulb, color: "purple" },
+  { step: 3, icon: icons.cpu, color: "emerald" },
+  { step: 4, icon: icons.check_badge, color: "amber" },
 ];
 
 const metaphorItems = [
-  { icon: icons.compass, key: 'architect', color: 'blue' },
-  { icon: icons.paint, key: 'designer', color: 'fuchsia' },
-  { icon: icons.hammer, key: 'builder', color: 'amber' },
-  { icon: icons.magnify, key: 'inspector', color: 'emerald' },
-  { icon: icons.wrench, key: 'maintenance', color: 'violet' },
+  { icon: icons.compass, key: "architect", color: "blue" },
+  { icon: icons.paint, key: "designer", color: "fuchsia" },
+  { icon: icons.hammer, key: "builder", color: "amber" },
+  { icon: icons.magnify, key: "inspector", color: "emerald" },
+  { icon: icons.wrench, key: "maintenance", color: "violet" },
 ];
 
-// v2.5.0+ commands - skill-based architecture
-const v25BeginnerCommands = [
-  { cmd: '/ask', desc: t('guides.what_is_claudekit.cmd_ask') },
-  { cmd: '/brainstorm', desc: t('guides.what_is_claudekit.cmd_brainstorm') },
-  { cmd: '/fix', desc: t('guides.what_is_claudekit.cmd_fix') },
+// Stable (v2.13.0) commands - skill-based architecture
+const stableBeginnerCommands = [
+  { cmd: "/ask", desc: t("guides.what_is_claudekit.cmd_ask") },
+  { cmd: "/brainstorm", desc: t("guides.what_is_claudekit.cmd_brainstorm") },
+  { cmd: "/fix", desc: t("guides.what_is_claudekit.cmd_fix") },
 ];
 
-const v25BuildingCommands = [
-  { cmd: '/plan', desc: t('guides.what_is_claudekit.cmd_plan') },
-  { cmd: '/cook', desc: t('guides.what_is_claudekit.cmd_cook') },
-  { cmd: '/cook @plan.md', desc: t('guides.what_is_claudekit.cmd_cook_plan') },
+const stableBuildingCommands = [
+  { cmd: "/plan", desc: t("guides.what_is_claudekit.cmd_plan") },
+  { cmd: "/cook", desc: t("guides.what_is_claudekit.cmd_cook") },
+  { cmd: "/cook @plan.md", desc: t("guides.what_is_claudekit.cmd_cook_plan") },
 ];
 
-const v25GitCommands = [
-  { cmd: '/git', desc: t('guides.what_is_claudekit.cmd_git') },
-  { cmd: '/docs:update', desc: t('guides.what_is_claudekit.cmd_docs') },
-  { cmd: '/watzup', desc: t('guides.what_is_claudekit.cmd_watzup') },
+const stableGitCommands = [
+  { cmd: "/git", desc: t("guides.what_is_claudekit.cmd_git") },
+  { cmd: "/docs:update", desc: t("guides.what_is_claudekit.cmd_docs") },
+  { cmd: "/watzup", desc: t("guides.what_is_claudekit.cmd_watzup") },
 ];
 
-// v2.4.x commands - command-based architecture
-const v24BeginnerCommands = [
-  { cmd: '/ask', desc: t('guides.what_is_claudekit.cmd_ask') },
-  { cmd: '/brainstorm', desc: t('guides.what_is_claudekit.cmd_brainstorm') },
-  { cmd: '/fix', desc: t('guides.what_is_claudekit.cmd_fix') },
+// Beta (v2.14.0) commands - command-based architecture
+const betaBeginnerCommands = [
+  { cmd: "/ask", desc: t("guides.what_is_claudekit.cmd_ask") },
+  { cmd: "/brainstorm", desc: t("guides.what_is_claudekit.cmd_brainstorm") },
+  { cmd: "/fix", desc: t("guides.what_is_claudekit.cmd_fix") },
 ];
 
-const v24BuildingCommands = [
-  { cmd: '/plan', desc: t('guides.what_is_claudekit.cmd_plan') },
-  { cmd: '/code', desc: t('guides.what_is_claudekit.cmd_code') },
-  { cmd: '/review:codebase', desc: t('guides.what_is_claudekit.cmd_review') },
+const betaBuildingCommands = [
+  { cmd: "/plan", desc: t("guides.what_is_claudekit.cmd_plan") },
+  { cmd: "/code", desc: t("guides.what_is_claudekit.cmd_code") },
+  { cmd: "/review:codebase", desc: t("guides.what_is_claudekit.cmd_review") },
 ];
 
-const v24GitCommands = [
-  { cmd: '/git:cm', desc: t('guides.what_is_claudekit.cmd_git_cm') },
-  { cmd: '/git:pr', desc: t('guides.what_is_claudekit.cmd_git_pr') },
-  { cmd: '/docs:update', desc: t('guides.what_is_claudekit.cmd_docs') },
+const betaGitCommands = [
+  { cmd: "/git:cm", desc: t("guides.what_is_claudekit.cmd_git_cm") },
+  { cmd: "/git:pr", desc: t("guides.what_is_claudekit.cmd_git_pr") },
+  { cmd: "/docs:update", desc: t("guides.what_is_claudekit.cmd_docs") },
 ];
 
 const summaryItems = [
-  { icon: icons.users, label: 'Agents' },
-  { icon: icons.bolt, label: 'Commands' },
-  { icon: icons.brain, label: 'Skills' },
-  { icon: icons.arrow_path, label: 'Workflows' },
-  { icon: icons.link, label: 'Hooks' },
+  { icon: icons.users, label: "Agents" },
+  { icon: icons.bolt, label: "Commands" },
+  { icon: icons.brain, label: "Skills" },
+  { icon: icons.arrow_path, label: "Workflows" },
+  { icon: icons.link, label: "Hooks" },
 ];
 
 const comparisonItems = [
-  { without: t('guides.what_is_claudekit.compare_1_without'), with: t('guides.what_is_claudekit.compare_1_with') },
-  { without: t('guides.what_is_claudekit.compare_2_without'), with: t('guides.what_is_claudekit.compare_2_with') },
-  { without: t('guides.what_is_claudekit.compare_3_without'), with: t('guides.what_is_claudekit.compare_3_with') },
-  { without: t('guides.what_is_claudekit.compare_4_without'), with: t('guides.what_is_claudekit.compare_4_with') },
-  { without: t('guides.what_is_claudekit.compare_5_without'), with: t('guides.what_is_claudekit.compare_5_with') },
+  {
+    without: t("guides.what_is_claudekit.compare_1_without"),
+    with: t("guides.what_is_claudekit.compare_1_with"),
+  },
+  {
+    without: t("guides.what_is_claudekit.compare_2_without"),
+    with: t("guides.what_is_claudekit.compare_2_with"),
+  },
+  {
+    without: t("guides.what_is_claudekit.compare_3_without"),
+    with: t("guides.what_is_claudekit.compare_3_with"),
+  },
+  {
+    without: t("guides.what_is_claudekit.compare_4_without"),
+    with: t("guides.what_is_claudekit.compare_4_with"),
+  },
+  {
+    without: t("guides.what_is_claudekit.compare_5_without"),
+    with: t("guides.what_is_claudekit.compare_5_with"),
+  },
 ];
 ---
 
 <div class="space-y-8 mt-6">
-
   <!-- Page Header -->
   <div class="text-center space-y-4">
-    <h2 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
-      {t('guides.what_is_claudekit.intro_title')}
+    <h2
+      class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight"
+    >
+      {t("guides.what_is_claudekit.intro_title")}
     </h2>
-    <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-      {t('guides.what_is_claudekit.subtitle')}
+    <p
+      class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed"
+    >
+      {t("guides.what_is_claudekit.subtitle")}
     </p>
   </div>
 
   <!-- Introduction Banner -->
-  <div class="flex items-start gap-4 p-6 rounded-xl bg-gradient-to-br from-purple-500/5 to-blue-500/5 dark:from-purple-500/10 dark:to-blue-500/10 border border-purple-200 dark:border-purple-500/20">
-    <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-100 dark:bg-purple-500/20 flex items-center justify-center text-purple-600 dark:text-purple-400">
+  <div
+    class="flex items-start gap-4 p-6 rounded-xl bg-gradient-to-br from-purple-500/5 to-blue-500/5 dark:from-purple-500/10 dark:to-blue-500/10 border border-purple-200 dark:border-purple-500/20"
+  >
+    <div
+      class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-100 dark:bg-purple-500/20 flex items-center justify-center text-purple-600 dark:text-purple-400"
+    >
       <Fragment set:html={icons.rocket} />
     </div>
     <div class="flex-1">
-      <div class="font-bold text-purple-700 dark:text-purple-400 mb-2 text-lg">{t('guides.what_is_claudekit.intro_title')}</div>
-      <div class="text-slate-600 dark:text-slate-400 leading-relaxed" set:html={t('guides.what_is_claudekit.intro_desc')}>
+      <div class="font-bold text-purple-700 dark:text-purple-400 mb-2 text-lg">
+        {t("guides.what_is_claudekit.intro_title")}
       </div>
+      <div
+        class="text-slate-600 dark:text-slate-400 leading-relaxed"
+        set:html={t("guides.what_is_claudekit.intro_desc")}
+      />
     </div>
   </div>
 
   <!-- House Building Metaphor -->
   <div class="glass-card rounded-2xl overflow-hidden">
-    <div class="p-6 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border-b border-slate-200 dark:border-slate-800">
-      <h3 class="text-2xl font-bold text-amber-600 dark:text-amber-400 flex items-center gap-3">
-        <span class="text-amber-600 dark:text-amber-400"><Fragment set:html={icons.home} /></span>
-        {t('guides.what_is_claudekit.metaphor_title')}
+    <div
+      class="p-6 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border-b border-slate-200 dark:border-slate-800"
+    >
+      <h3
+        class="text-2xl font-bold text-amber-600 dark:text-amber-400 flex items-center gap-3"
+      >
+        <span class="text-amber-600 dark:text-amber-400"
+          ><Fragment set:html={icons.home} /></span
+        >
+        {t("guides.what_is_claudekit.metaphor_title")}
       </h3>
     </div>
     <div class="p-6 space-y-4">
-      <p class="text-slate-600 dark:text-slate-400">{t('guides.what_is_claudekit.metaphor_desc')}</p>
+      <p class="text-slate-600 dark:text-slate-400">
+        {t("guides.what_is_claudekit.metaphor_desc")}
+      </p>
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-        {metaphorItems.map((item) => (
-          <div class="flex items-center gap-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
-            <div class={`w-8 h-8 rounded-lg bg-${item.color}-100 dark:bg-${item.color}-500/20 flex items-center justify-center text-${item.color}-600 dark:text-${item.color}-400`}>
-              <Fragment set:html={item.icon} />
+        {
+          metaphorItems.map((item) => (
+            <div class="flex items-center gap-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+              <div
+                class={`w-8 h-8 rounded-lg bg-${item.color}-100 dark:bg-${item.color}-500/20 flex items-center justify-center text-${item.color}-600 dark:text-${item.color}-400`}
+              >
+                <Fragment set:html={item.icon} />
+              </div>
+              <span
+                class="text-slate-700 dark:text-slate-300 text-sm"
+                set:html={t(`guides.what_is_claudekit.metaphor_${item.key}`)}
+              />
             </div>
-            <span class="text-slate-700 dark:text-slate-300 text-sm" set:html={t(`guides.what_is_claudekit.metaphor_${item.key}`)}></span>
-          </div>
-        ))}
+          ))
+        }
       </div>
     </div>
   </div>
 
   <!-- Team Metaphor Image Section -->
   <div class="glass-card rounded-2xl overflow-hidden">
-    <div class="p-6 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border-b border-slate-200 dark:border-slate-800">
-      <h3 class="text-2xl font-bold text-cyan-600 dark:text-cyan-400 flex items-center gap-3">
-        <span class="text-cyan-600 dark:text-cyan-400"><Fragment set:html={icons.users} /></span>
-        {t('guides.what_is_claudekit.team_title')}
+    <div
+      class="p-6 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border-b border-slate-200 dark:border-slate-800"
+    >
+      <h3
+        class="text-2xl font-bold text-cyan-600 dark:text-cyan-400 flex items-center gap-3"
+      >
+        <span class="text-cyan-600 dark:text-cyan-400"
+          ><Fragment set:html={icons.users} /></span
+        >
+        {t("guides.what_is_claudekit.team_title")}
       </h3>
     </div>
     <div class="p-6 space-y-4">
-      <p class="text-slate-600 dark:text-slate-400" set:html={t('guides.what_is_claudekit.team_desc')}></p>
-      <div class="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700">
+      <p
+        class="text-slate-600 dark:text-slate-400"
+        set:html={t("guides.what_is_claudekit.team_desc")}
+      />
+      <div
+        class="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700"
+      >
         <img
           src={`/guides/claudekit-team-metaphor${imgSuffix}.png`}
           alt="ClaudeKit Construction Team Metaphor"
@@ -197,39 +286,59 @@ const comparisonItems = [
           decoding="async"
         />
       </div>
-      <div class="p-4 rounded-lg bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20">
-        <p class="text-blue-700 dark:text-blue-300 text-sm" set:html={t('guides.what_is_claudekit.team_key_idea')}></p>
+      <div
+        class="p-4 rounded-lg bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20"
+      >
+        <p
+          class="text-blue-700 dark:text-blue-300 text-sm"
+          set:html={t("guides.what_is_claudekit.team_key_idea")}
+        />
       </div>
     </div>
   </div>
 
   <!-- 5 Pillars Section -->
   <div class="glass-card rounded-2xl overflow-hidden">
-    <div class="p-6 bg-gradient-to-r from-purple-500/10 to-pink-500/10 border-b border-slate-200 dark:border-slate-800">
-      <h3 class="text-2xl font-bold text-purple-600 dark:text-purple-400 flex items-center gap-3">
-        <span class="text-purple-600 dark:text-purple-400"><Fragment set:html={icons.building} /></span>
-        {t('guides.what_is_claudekit.pillars_title')}
+    <div
+      class="p-6 bg-gradient-to-r from-purple-500/10 to-pink-500/10 border-b border-slate-200 dark:border-slate-800"
+    >
+      <h3
+        class="text-2xl font-bold text-purple-600 dark:text-purple-400 flex items-center gap-3"
+      >
+        <span class="text-purple-600 dark:text-purple-400"
+          ><Fragment set:html={icons.building} /></span
+        >
+        {t("guides.what_is_claudekit.pillars_title")}
       </h3>
-      <p class="text-sm text-slate-500 dark:text-slate-400 mt-2" set:html={t('guides.what_is_claudekit.pillars_desc')}></p>
+      <p
+        class="text-sm text-slate-500 dark:text-slate-400 mt-2"
+        set:html={t("guides.what_is_claudekit.pillars_desc")}
+      />
     </div>
     <div class="p-6">
       <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
-        {pillars.map((pillar) => (
-          <div class={`text-center p-4 rounded-xl ${pillar.bgClass} border ${pillar.borderClass} hover:scale-105 transition-transform`}>
-            <div class={`flex justify-center mb-2 ${pillar.textClass}`}>
-              <Fragment set:html={pillar.icon} />
+        {
+          pillars.map((pillar) => (
+            <div
+              class={`text-center p-4 rounded-xl ${pillar.bgClass} border ${pillar.borderClass} hover:scale-105 transition-transform`}
+            >
+              <div class={`flex justify-center mb-2 ${pillar.textClass}`}>
+                <Fragment set:html={pillar.icon} />
+              </div>
+              <div class={`font-bold ${pillar.titleClass}`}>
+                {t(`guides.what_is_claudekit.pillar_${pillar.key}`)}
+              </div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                {t(`guides.what_is_claudekit.pillar_${pillar.key}_desc`)}
+              </div>
             </div>
-            <div class={`font-bold ${pillar.titleClass}`}>
-              {t(`guides.what_is_claudekit.pillar_${pillar.key}`)}
-            </div>
-            <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">
-              {t(`guides.what_is_claudekit.pillar_${pillar.key}_desc`)}
-            </div>
-          </div>
-        ))}
+          ))
+        }
       </div>
       <!-- Pillars Image -->
-      <div class="mt-6 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700">
+      <div
+        class="mt-6 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700"
+      >
         <img
           src={`/guides/claudekit-5-pillars${imgSuffix}.png`}
           alt="ClaudeKit 5 Pillars"
@@ -243,38 +352,58 @@ const comparisonItems = [
 
   <!-- Process Flow Section -->
   <div class="glass-card rounded-2xl overflow-hidden">
-    <div class="p-6 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border-b border-slate-200 dark:border-slate-800">
-      <h3 class="text-2xl font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-3">
-        <span class="text-emerald-600 dark:text-emerald-400"><Fragment set:html={icons.cog} /></span>
-        {t('guides.what_is_claudekit.process_title')}
+    <div
+      class="p-6 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border-b border-slate-200 dark:border-slate-800"
+    >
+      <h3
+        class="text-2xl font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-3"
+      >
+        <span class="text-emerald-600 dark:text-emerald-400"
+          ><Fragment set:html={icons.cog} /></span
+        >
+        {t("guides.what_is_claudekit.process_title")}
       </h3>
-      <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">{t('guides.what_is_claudekit.process_desc')}</p>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">
+        {t("guides.what_is_claudekit.process_desc")}
+      </p>
     </div>
     <div class="p-6">
-      <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] items-stretch gap-4 lg:gap-0">
-        {processSteps.map((step, index) => (
-          <>
-            <div class={`flex flex-col items-center text-center p-5 rounded-xl bg-${step.color}-50 dark:bg-${step.color}-500/10 border border-${step.color}-200 dark:border-${step.color}-500/20 min-h-[180px]`}>
-              <div class={`w-10 h-10 rounded-full bg-${step.color}-500 text-white flex items-center justify-center mx-auto mb-3 font-bold text-lg flex-shrink-0`}>
-                {step.step}
+      <div
+        class="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] items-stretch gap-4 lg:gap-0"
+      >
+        {
+          processSteps.map((step, index) => (
+            <>
+              <div
+                class={`flex flex-col items-center text-center p-5 rounded-xl bg-${step.color}-50 dark:bg-${step.color}-500/10 border border-${step.color}-200 dark:border-${step.color}-500/20 min-h-[180px]`}
+              >
+                <div
+                  class={`w-10 h-10 rounded-full bg-${step.color}-500 text-white flex items-center justify-center mx-auto mb-3 font-bold text-lg flex-shrink-0`}
+                >
+                  {step.step}
+                </div>
+                <div
+                  class={`flex justify-center mb-2 text-${step.color}-600 dark:text-${step.color}-400 flex-shrink-0`}
+                >
+                  <Fragment set:html={step.icon} />
+                </div>
+                <div class="text-sm text-slate-700 dark:text-slate-300 font-medium flex-1 flex items-center">
+                  {t(`guides.what_is_claudekit.process_step${step.step}`)}
+                </div>
               </div>
-              <div class={`flex justify-center mb-2 text-${step.color}-600 dark:text-${step.color}-400 flex-shrink-0`}>
-                <Fragment set:html={step.icon} />
-              </div>
-              <div class="text-sm text-slate-700 dark:text-slate-300 font-medium flex-1 flex items-center">
-                {t(`guides.what_is_claudekit.process_step${step.step}`)}
-              </div>
-            </div>
-            {index < processSteps.length - 1 && (
-              <div class="hidden lg:flex items-center justify-center w-12 text-slate-400 dark:text-slate-500">
-                <Fragment set:html={icons.arrow_right} />
-              </div>
-            )}
-          </>
-        ))}
+              {index < processSteps.length - 1 && (
+                <div class="hidden lg:flex items-center justify-center w-12 text-slate-400 dark:text-slate-500">
+                  <Fragment set:html={icons.arrow_right} />
+                </div>
+              )}
+            </>
+          ))
+        }
       </div>
       <!-- Workflow Image -->
-      <div class="mt-6 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700">
+      <div
+        class="mt-6 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700"
+      >
         <img
           src={`/guides/claudekit-workflow${imgSuffix}.png`}
           alt="ClaudeKit Workflow"
@@ -288,56 +417,86 @@ const comparisonItems = [
 
   <!-- Before/After Comparison - Premium Redesign -->
   <div class="glass-card rounded-2xl overflow-hidden">
-    <div class="p-6 bg-gradient-to-r from-slate-500/5 to-slate-600/5 dark:from-slate-400/5 dark:to-slate-500/5 border-b border-slate-200 dark:border-slate-800">
-      <h3 class="text-2xl font-bold text-slate-700 dark:text-slate-300 flex items-center gap-3">
-        <span class="text-slate-600 dark:text-slate-400"><Fragment set:html={icons.scale} /></span>
-        {t('guides.what_is_claudekit.comparison_title')}
+    <div
+      class="p-6 bg-gradient-to-r from-slate-500/5 to-slate-600/5 dark:from-slate-400/5 dark:to-slate-500/5 border-b border-slate-200 dark:border-slate-800"
+    >
+      <h3
+        class="text-2xl font-bold text-slate-700 dark:text-slate-300 flex items-center gap-3"
+      >
+        <span class="text-slate-600 dark:text-slate-400"
+          ><Fragment set:html={icons.scale} /></span
+        >
+        {t("guides.what_is_claudekit.comparison_title")}
       </h3>
     </div>
     <div class="p-6">
       <!-- Comparison Table -->
-      <div class="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700">
+      <div
+        class="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700"
+      >
         <!-- Header -->
-        <div class="grid grid-cols-[1fr_auto_1fr] bg-slate-100 dark:bg-slate-800/80">
-          <div class="p-4 text-center border-r border-slate-200 dark:border-slate-700">
+        <div
+          class="grid grid-cols-[1fr_auto_1fr] bg-slate-100 dark:bg-slate-800/80"
+        >
+          <div
+            class="p-4 text-center border-r border-slate-200 dark:border-slate-700"
+          >
             <div class="flex items-center justify-center gap-2">
-              <div class="w-6 h-6 rounded-full bg-red-100 dark:bg-red-500/20 flex items-center justify-center text-red-600 dark:text-red-400">
+              <div
+                class="w-6 h-6 rounded-full bg-red-100 dark:bg-red-500/20 flex items-center justify-center text-red-600 dark:text-red-400"
+              >
                 <Fragment set:html={icons.x_mark} />
               </div>
-              <span class="font-bold text-red-600 dark:text-red-400">{t('guides.what_is_claudekit.without')}</span>
+              <span class="font-bold text-red-600 dark:text-red-400"
+                >{t("guides.what_is_claudekit.without")}</span
+              >
             </div>
           </div>
           <div class="w-px bg-slate-200 dark:bg-slate-700"></div>
           <div class="p-4 text-center">
             <div class="flex items-center justify-center gap-2">
-              <div class="w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+              <div
+                class="w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400"
+              >
                 <Fragment set:html={icons.check} />
               </div>
-              <span class="font-bold text-emerald-600 dark:text-emerald-400">{t('guides.what_is_claudekit.with')}</span>
+              <span class="font-bold text-emerald-600 dark:text-emerald-400"
+                >{t("guides.what_is_claudekit.with")}</span
+              >
             </div>
           </div>
         </div>
         <!-- Rows -->
-        {comparisonItems.map((item, index) => (
-          <div class={`grid grid-cols-[1fr_auto_1fr] ${index % 2 === 0 ? 'bg-white dark:bg-slate-900/50' : 'bg-slate-50/50 dark:bg-slate-800/30'}`}>
-            <div class="p-4 border-r border-slate-200 dark:border-slate-700 flex items-center gap-3">
-              <span class="w-5 h-5 rounded-full bg-red-100 dark:bg-red-500/20 flex items-center justify-center flex-shrink-0">
-                <span class="w-2 h-2 rounded-full bg-red-500"></span>
-              </span>
-              <span class="text-sm text-slate-600 dark:text-slate-400">{item.without}</span>
+        {
+          comparisonItems.map((item, index) => (
+            <div
+              class={`grid grid-cols-[1fr_auto_1fr] ${index % 2 === 0 ? "bg-white dark:bg-slate-900/50" : "bg-slate-50/50 dark:bg-slate-800/30"}`}
+            >
+              <div class="p-4 border-r border-slate-200 dark:border-slate-700 flex items-center gap-3">
+                <span class="w-5 h-5 rounded-full bg-red-100 dark:bg-red-500/20 flex items-center justify-center flex-shrink-0">
+                  <span class="w-2 h-2 rounded-full bg-red-500" />
+                </span>
+                <span class="text-sm text-slate-600 dark:text-slate-400">
+                  {item.without}
+                </span>
+              </div>
+              <div class="w-px bg-slate-200 dark:bg-slate-700" />
+              <div class="p-4 flex items-center gap-3">
+                <span class="w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500" />
+                </span>
+                <span class="text-sm text-slate-700 dark:text-slate-300 font-medium">
+                  {item.with}
+                </span>
+              </div>
             </div>
-            <div class="w-px bg-slate-200 dark:bg-slate-700"></div>
-            <div class="p-4 flex items-center gap-3">
-              <span class="w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
-                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-              </span>
-              <span class="text-sm text-slate-700 dark:text-slate-300 font-medium">{item.with}</span>
-            </div>
-          </div>
-        ))}
+          ))
+        }
       </div>
       <!-- Comparison Image -->
-      <div class="mt-6 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700">
+      <div
+        class="mt-6 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700"
+      >
         <img
           src={`/guides/claudekit-comparison${imgSuffix}.png`}
           alt="ClaudeKit Before vs After Comparison"
@@ -351,37 +510,64 @@ const comparisonItems = [
 
   <!-- Quick Start Commands -->
   <div class="glass-card rounded-2xl overflow-hidden">
-    <div class="p-6 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 border-b border-slate-200 dark:border-slate-800">
-      <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <h3 class="text-2xl font-bold text-blue-600 dark:text-blue-400 flex items-center gap-3">
-          <span class="text-blue-600 dark:text-blue-400"><Fragment set:html={icons.rocket} /></span>
-          {t('guides.what_is_claudekit.quick_start_title')}
+    <div
+      class="p-6 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 border-b border-slate-200 dark:border-slate-800"
+    >
+      <div
+        class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+      >
+        <h3
+          class="text-2xl font-bold text-blue-600 dark:text-blue-400 flex items-center gap-3"
+        >
+          <span class="text-blue-600 dark:text-blue-400"
+            ><Fragment set:html={icons.rocket} /></span
+          >
+          {t("guides.what_is_claudekit.quick_start_title")}
         </h3>
         <div class="flex items-center gap-3 flex-wrap">
           <!-- Version Toggle -->
-          <div class="flex items-center gap-2 p-1 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+          <div
+            class="flex items-center gap-2 p-1 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700"
+          >
             <button
-              id="qs-btn-v25"
+              id="qs-btn-stable"
               class="qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 bg-teal-500 text-white shadow-sm"
-              data-version="v25"
+              data-version="stable"
             >
               <span class="flex items-center gap-1.5">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                <svg
+                  class="w-4 h-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polygon
+                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                  ></polygon>
                 </svg>
-                {t('guides.what_is_claudekit.qs_tab_v25')}
+                {t("guides.what_is_claudekit.qs_tab_v25")}
               </span>
             </button>
             <button
-              id="qs-btn-v24"
+              id="qs-btn-beta"
               class="qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700"
-              data-version="v24"
+              data-version="beta"
             >
               <span class="flex items-center gap-1.5">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <svg
+                  class="w-4 h-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M9 3h6v2.5A5.5 5.5 0 0 1 20.5 11v4.5a5.5 5.5 0 0 1-5.5 5.5h-6a5.5 5.5 0 0 1-5.5-5.5V11A5.5 5.5 0 0 1 9 5.5V3z"
+                  ></path>
+                  <path d="M9 3h6" stroke-linecap="round"></path>
                 </svg>
-                {t('guides.what_is_claudekit.qs_tab_v24')}
+                {t("guides.what_is_claudekit.qs_tab_v24")}
               </span>
             </button>
           </div>
@@ -389,112 +575,172 @@ const comparisonItems = [
       </div>
     </div>
     <div class="p-6">
-      <!-- v2.5.0+ Commands -->
-      <div id="qs-commands-v25" class="grid md:grid-cols-3 gap-6">
+      <!-- Stable (v2.13.0) Commands -->
+      <div id="qs-commands-stable" class="grid md:grid-cols-3 gap-6">
         <!-- For Beginners -->
-        <div class="rounded-xl bg-purple-50 dark:bg-purple-500/10 border border-purple-200 dark:border-purple-500/20 p-4">
-          <h4 class="font-bold text-purple-700 dark:text-purple-400 mb-3 flex items-center gap-2">
-            <span class="text-purple-600 dark:text-purple-400"><Fragment set:html={icons.academic} /></span>
-            {t('guides.what_is_claudekit.for_beginners')}
+        <div
+          class="rounded-xl bg-purple-50 dark:bg-purple-500/10 border border-purple-200 dark:border-purple-500/20 p-4"
+        >
+          <h4
+            class="font-bold text-purple-700 dark:text-purple-400 mb-3 flex items-center gap-2"
+          >
+            <span class="text-purple-600 dark:text-purple-400"
+              ><Fragment set:html={icons.academic} /></span
+            >
+            {t("guides.what_is_claudekit.for_beginners")}
           </h4>
           <div class="space-y-2">
-            {v25BeginnerCommands.map((cmd) => (
-              <div class="flex items-center gap-2">
-                <code class="px-2 py-1 rounded bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-300 text-sm font-mono">
-                  {cmd.cmd}
-                </code>
-                <span class="text-xs text-slate-500 dark:text-slate-400">{cmd.desc}</span>
-              </div>
-            ))}
+            {
+              stableBeginnerCommands.map((cmd) => (
+                <div class="flex items-center gap-2">
+                  <code class="px-2 py-1 rounded bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-300 text-sm font-mono">
+                    {cmd.cmd}
+                  </code>
+                  <span class="text-xs text-slate-500 dark:text-slate-400">
+                    {cmd.desc}
+                  </span>
+                </div>
+              ))
+            }
           </div>
         </div>
         <!-- For Building -->
-        <div class="rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 p-4">
-          <h4 class="font-bold text-emerald-700 dark:text-emerald-400 mb-3 flex items-center gap-2">
-            <span class="text-emerald-600 dark:text-emerald-400"><Fragment set:html={icons.hammer} /></span>
-            {t('guides.what_is_claudekit.for_building')}
+        <div
+          class="rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 p-4"
+        >
+          <h4
+            class="font-bold text-emerald-700 dark:text-emerald-400 mb-3 flex items-center gap-2"
+          >
+            <span class="text-emerald-600 dark:text-emerald-400"
+              ><Fragment set:html={icons.hammer} /></span
+            >
+            {t("guides.what_is_claudekit.for_building")}
           </h4>
           <div class="space-y-2">
-            {v25BuildingCommands.map((cmd) => (
-              <div class="flex items-center gap-2">
-                <code class="px-2 py-1 rounded bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-sm font-mono">
-                  {cmd.cmd}
-                </code>
-                <span class="text-xs text-slate-500 dark:text-slate-400">{cmd.desc}</span>
-              </div>
-            ))}
+            {
+              stableBuildingCommands.map((cmd) => (
+                <div class="flex items-center gap-2">
+                  <code class="px-2 py-1 rounded bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-sm font-mono">
+                    {cmd.cmd}
+                  </code>
+                  <span class="text-xs text-slate-500 dark:text-slate-400">
+                    {cmd.desc}
+                  </span>
+                </div>
+              ))
+            }
           </div>
         </div>
         <!-- For Git -->
-        <div class="rounded-xl bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 p-4">
-          <h4 class="font-bold text-amber-700 dark:text-amber-400 mb-3 flex items-center gap-2">
-            <span class="text-amber-600 dark:text-amber-400"><Fragment set:html={icons.code_bracket} /></span>
-            {t('guides.what_is_claudekit.for_git')}
+        <div
+          class="rounded-xl bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 p-4"
+        >
+          <h4
+            class="font-bold text-amber-700 dark:text-amber-400 mb-3 flex items-center gap-2"
+          >
+            <span class="text-amber-600 dark:text-amber-400"
+              ><Fragment set:html={icons.code_bracket} /></span
+            >
+            {t("guides.what_is_claudekit.for_git")}
           </h4>
           <div class="space-y-2">
-            {v25GitCommands.map((cmd) => (
-              <div class="flex items-center gap-2">
-                <code class="px-2 py-1 rounded bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300 text-sm font-mono">
-                  {cmd.cmd}
-                </code>
-                <span class="text-xs text-slate-500 dark:text-slate-400">{cmd.desc}</span>
-              </div>
-            ))}
+            {
+              stableGitCommands.map((cmd) => (
+                <div class="flex items-center gap-2">
+                  <code class="px-2 py-1 rounded bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300 text-sm font-mono">
+                    {cmd.cmd}
+                  </code>
+                  <span class="text-xs text-slate-500 dark:text-slate-400">
+                    {cmd.desc}
+                  </span>
+                </div>
+              ))
+            }
           </div>
         </div>
       </div>
 
-      <!-- v2.4.x Commands (hidden by default) -->
-      <div id="qs-commands-v24" class="grid md:grid-cols-3 gap-6 hidden">
+      <!-- Beta (v2.14.0) Commands (hidden by default) -->
+      <div id="qs-commands-beta" class="grid md:grid-cols-3 gap-6 hidden">
         <!-- For Beginners -->
-        <div class="rounded-xl bg-purple-50 dark:bg-purple-500/10 border border-purple-200 dark:border-purple-500/20 p-4">
-          <h4 class="font-bold text-purple-700 dark:text-purple-400 mb-3 flex items-center gap-2">
-            <span class="text-purple-600 dark:text-purple-400"><Fragment set:html={icons.academic} /></span>
-            {t('guides.what_is_claudekit.for_beginners')}
+        <div
+          class="rounded-xl bg-purple-50 dark:bg-purple-500/10 border border-purple-200 dark:border-purple-500/20 p-4"
+        >
+          <h4
+            class="font-bold text-purple-700 dark:text-purple-400 mb-3 flex items-center gap-2"
+          >
+            <span class="text-purple-600 dark:text-purple-400"
+              ><Fragment set:html={icons.academic} /></span
+            >
+            {t("guides.what_is_claudekit.for_beginners")}
           </h4>
           <div class="space-y-2">
-            {v24BeginnerCommands.map((cmd) => (
-              <div class="flex items-center gap-2">
-                <code class="px-2 py-1 rounded bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-300 text-sm font-mono">
-                  {cmd.cmd}
-                </code>
-                <span class="text-xs text-slate-500 dark:text-slate-400">{cmd.desc}</span>
-              </div>
-            ))}
+            {
+              betaBeginnerCommands.map((cmd) => (
+                <div class="flex items-center gap-2">
+                  <code class="px-2 py-1 rounded bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-300 text-sm font-mono">
+                    {cmd.cmd}
+                  </code>
+                  <span class="text-xs text-slate-500 dark:text-slate-400">
+                    {cmd.desc}
+                  </span>
+                </div>
+              ))
+            }
           </div>
         </div>
         <!-- For Building -->
-        <div class="rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 p-4">
-          <h4 class="font-bold text-emerald-700 dark:text-emerald-400 mb-3 flex items-center gap-2">
-            <span class="text-emerald-600 dark:text-emerald-400"><Fragment set:html={icons.hammer} /></span>
-            {t('guides.what_is_claudekit.for_building')}
+        <div
+          class="rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 p-4"
+        >
+          <h4
+            class="font-bold text-emerald-700 dark:text-emerald-400 mb-3 flex items-center gap-2"
+          >
+            <span class="text-emerald-600 dark:text-emerald-400"
+              ><Fragment set:html={icons.hammer} /></span
+            >
+            {t("guides.what_is_claudekit.for_building")}
           </h4>
           <div class="space-y-2">
-            {v24BuildingCommands.map((cmd) => (
-              <div class="flex items-center gap-2">
-                <code class="px-2 py-1 rounded bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-sm font-mono">
-                  {cmd.cmd}
-                </code>
-                <span class="text-xs text-slate-500 dark:text-slate-400">{cmd.desc}</span>
-              </div>
-            ))}
+            {
+              betaBuildingCommands.map((cmd) => (
+                <div class="flex items-center gap-2">
+                  <code class="px-2 py-1 rounded bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-sm font-mono">
+                    {cmd.cmd}
+                  </code>
+                  <span class="text-xs text-slate-500 dark:text-slate-400">
+                    {cmd.desc}
+                  </span>
+                </div>
+              ))
+            }
           </div>
         </div>
         <!-- For Git -->
-        <div class="rounded-xl bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 p-4">
-          <h4 class="font-bold text-amber-700 dark:text-amber-400 mb-3 flex items-center gap-2">
-            <span class="text-amber-600 dark:text-amber-400"><Fragment set:html={icons.code_bracket} /></span>
-            {t('guides.what_is_claudekit.for_git')}
+        <div
+          class="rounded-xl bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 p-4"
+        >
+          <h4
+            class="font-bold text-amber-700 dark:text-amber-400 mb-3 flex items-center gap-2"
+          >
+            <span class="text-amber-600 dark:text-amber-400"
+              ><Fragment set:html={icons.code_bracket} /></span
+            >
+            {t("guides.what_is_claudekit.for_git")}
           </h4>
           <div class="space-y-2">
-            {v24GitCommands.map((cmd) => (
-              <div class="flex items-center gap-2">
-                <code class="px-2 py-1 rounded bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300 text-sm font-mono">
-                  {cmd.cmd}
-                </code>
-                <span class="text-xs text-slate-500 dark:text-slate-400">{cmd.desc}</span>
-              </div>
-            ))}
+            {
+              betaGitCommands.map((cmd) => (
+                <div class="flex items-center gap-2">
+                  <code class="px-2 py-1 rounded bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300 text-sm font-mono">
+                    {cmd.cmd}
+                  </code>
+                  <span class="text-xs text-slate-500 dark:text-slate-400">
+                    {cmd.desc}
+                  </span>
+                </div>
+              ))
+            }
           </div>
         </div>
       </div>
@@ -505,7 +751,7 @@ const comparisonItems = [
           href={commandsUrl}
           class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-blue-100 dark:bg-blue-500/20 text-blue-700 dark:text-blue-300 text-sm font-medium hover:bg-blue-200 dark:hover:bg-blue-500/30 transition-colors"
         >
-          {t('guides.what_is_claudekit.view_all_commands')}
+          {t("guides.what_is_claudekit.view_all_commands")}
           <Fragment set:html={icons.arrow_link} />
         </a>
       </div>
@@ -513,40 +759,67 @@ const comparisonItems = [
   </div>
 
   <!-- Summary Section -->
-  <div class="glass-card rounded-2xl overflow-hidden bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-500/5 dark:to-blue-500/5">
+  <div
+    class="glass-card rounded-2xl overflow-hidden bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-500/5 dark:to-blue-500/5"
+  >
     <div class="p-6 border-b border-purple-200 dark:border-purple-500/20">
-      <h3 class="text-2xl font-bold text-purple-600 dark:text-purple-400 flex items-center gap-3">
-        <span class="text-purple-600 dark:text-purple-400"><Fragment set:html={icons.clipboard} /></span>
-        {t('guides.what_is_claudekit.summary_title')}
+      <h3
+        class="text-2xl font-bold text-purple-600 dark:text-purple-400 flex items-center gap-3"
+      >
+        <span class="text-purple-600 dark:text-purple-400"
+          ><Fragment set:html={icons.clipboard} /></span
+        >
+        {t("guides.what_is_claudekit.summary_title")}
       </h3>
     </div>
     <div class="p-6 space-y-4">
       <div class="text-center">
-        <div class="inline-block px-6 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-bold text-xl mb-4">
-          {t('guides.what_is_claudekit.summary_tagline')}
+        <div
+          class="inline-block px-6 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-bold text-xl mb-4"
+        >
+          {t("guides.what_is_claudekit.summary_tagline")}
         </div>
-        <p class="text-slate-600 dark:text-slate-400 mb-4">{t('guides.what_is_claudekit.summary_desc')}</p>
+        <p class="text-slate-600 dark:text-slate-400 mb-4">
+          {t("guides.what_is_claudekit.summary_desc")}
+        </p>
         <div class="flex flex-wrap justify-center gap-3">
-          {summaryItems.map((item) => (
-            <span class="px-4 py-2 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium text-slate-700 dark:text-slate-300 flex items-center gap-2">
-              <span class="text-purple-600 dark:text-purple-400"><Fragment set:html={item.icon} /></span>
-              {item.label}
-            </span>
-          ))}
+          {
+            summaryItems.map((item) => (
+              <span class="px-4 py-2 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                <span class="text-purple-600 dark:text-purple-400">
+                  <Fragment set:html={item.icon} />
+                </span>
+                {item.label}
+              </span>
+            ))
+          }
         </div>
       </div>
 
       <!-- ClaudeKit Purchase Notice -->
-      <div class="mt-6 p-5 rounded-xl bg-gradient-to-r from-purple-100 via-blue-100 to-purple-100 dark:from-purple-500/20 dark:via-blue-500/20 dark:to-purple-500/20 border-2 border-purple-300 dark:border-purple-500/40 relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-purple-200/50 to-transparent dark:from-purple-500/10 rounded-bl-full"></div>
-        <div class="relative flex flex-col sm:flex-row items-start sm:items-center gap-4">
+      <div
+        class="mt-6 p-5 rounded-xl bg-gradient-to-r from-purple-100 via-blue-100 to-purple-100 dark:from-purple-500/20 dark:via-blue-500/20 dark:to-purple-500/20 border-2 border-purple-300 dark:border-purple-500/40 relative overflow-hidden"
+      >
+        <div
+          class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-purple-200/50 to-transparent dark:from-purple-500/10 rounded-bl-full"
+        >
+        </div>
+        <div
+          class="relative flex flex-col sm:flex-row items-start sm:items-center gap-4"
+        >
           <div class="flex-1">
             <div class="flex items-center gap-2 mb-2">
-              <span class="text-purple-600 dark:text-purple-400"><Fragment set:html={icons.info} /></span>
-              <span class="font-bold text-purple-800 dark:text-purple-300">{t('guides.what_is_claudekit.subscription_notice_title')}</span>
+              <span class="text-purple-600 dark:text-purple-400"
+                ><Fragment set:html={icons.info} /></span
+              >
+              <span class="font-bold text-purple-800 dark:text-purple-300"
+                >{t("guides.what_is_claudekit.subscription_notice_title")}</span
+              >
             </div>
-            <p class="text-purple-700 dark:text-purple-300 text-sm leading-relaxed">
-              {t('guides.what_is_claudekit.subscription_notice_desc')}
+            <p
+              class="text-purple-700 dark:text-purple-300 text-sm leading-relaxed"
+            >
+              {t("guides.what_is_claudekit.subscription_notice_desc")}
             </p>
           </div>
           <a
@@ -555,82 +828,118 @@ const comparisonItems = [
             rel="noopener noreferrer"
             class="cta-button flex-shrink-0 inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm"
           >
-            {t('guides.what_is_claudekit.get_claudekit_discount')}
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+            {t("guides.what_is_claudekit.get_claudekit_discount")}
+            <svg
+              class="w-4 h-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+              ></path>
             </svg>
           </a>
         </div>
       </div>
 
       <!-- CLI Setup Section -->
-      <div class="mt-6 p-5 rounded-xl bg-gradient-to-r from-emerald-100 via-teal-100 to-emerald-100 dark:from-emerald-500/20 dark:via-teal-500/20 dark:to-emerald-500/20 border-2 border-emerald-300 dark:border-emerald-500/40 relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-emerald-200/50 to-transparent dark:from-emerald-500/10 rounded-bl-full"></div>
-        <div class="relative flex flex-col sm:flex-row items-start sm:items-center gap-4">
+      <div
+        class="mt-6 p-5 rounded-xl bg-gradient-to-r from-emerald-100 via-teal-100 to-emerald-100 dark:from-emerald-500/20 dark:via-teal-500/20 dark:to-emerald-500/20 border-2 border-emerald-300 dark:border-emerald-500/40 relative overflow-hidden"
+      >
+        <div
+          class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-emerald-200/50 to-transparent dark:from-emerald-500/10 rounded-bl-full"
+        >
+        </div>
+        <div
+          class="relative flex flex-col sm:flex-row items-start sm:items-center gap-4"
+        >
           <div class="flex-1">
             <div class="flex items-center gap-2 mb-2">
-              <span class="text-emerald-600 dark:text-emerald-400"><Fragment set:html={icons.rocket} /></span>
-              <span class="font-bold text-emerald-800 dark:text-emerald-300">{t('guides.what_is_claudekit.cli_setup_title')}</span>
+              <span class="text-emerald-600 dark:text-emerald-400"
+                ><Fragment set:html={icons.rocket} /></span
+              >
+              <span class="font-bold text-emerald-800 dark:text-emerald-300"
+                >{t("guides.what_is_claudekit.cli_setup_title")}</span
+              >
             </div>
-            <p class="text-emerald-700 dark:text-emerald-300 text-sm leading-relaxed">
-              {t('guides.what_is_claudekit.cli_setup_desc')}
+            <p
+              class="text-emerald-700 dark:text-emerald-300 text-sm leading-relaxed"
+            >
+              {t("guides.what_is_claudekit.cli_setup_desc")}
             </p>
           </div>
           <a
             href={cliGuideUrl}
             class="cta-button-emerald flex-shrink-0 inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm"
           >
-            {t('guides.what_is_claudekit.cli_setup_cta')}
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            {t("guides.what_is_claudekit.cli_setup_cta")}
+            <svg
+              class="w-4 h-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path>
             </svg>
           </a>
         </div>
       </div>
     </div>
   </div>
-
 </div>
 
 <script>
   // Quick Start version toggle functionality
-  document.addEventListener('DOMContentLoaded', () => {
-    const btnV25 = document.getElementById('qs-btn-v25');
-    const btnV24 = document.getElementById('qs-btn-v24');
-    const commandsV25 = document.getElementById('qs-commands-v25');
-    const commandsV24 = document.getElementById('qs-commands-v24');
+  document.addEventListener("DOMContentLoaded", () => {
+    const btnStable = document.getElementById("qs-btn-stable");
+    const btnBeta = document.getElementById("qs-btn-beta");
+    const commandsStable = document.getElementById("qs-commands-stable");
+    const commandsBeta = document.getElementById("qs-commands-beta");
 
-    if (!btnV25 || !btnV24 || !commandsV25 || !commandsV24) return;
+    if (!btnStable || !btnBeta || !commandsStable || !commandsBeta) return;
 
-    const activeClasses = 'bg-teal-500 text-white shadow-sm';
-    const activeV24Classes = 'bg-blue-500 text-white shadow-sm';
-    const inactiveClasses = 'text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700';
+    const activeClasses = "bg-teal-500 text-white shadow-sm";
+    const activeBetaClasses = "bg-purple-500 text-white shadow-sm";
+    const inactiveClasses =
+      "text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700";
 
-    function setVersion(version: 'v25' | 'v24') {
-      if (version === 'v25') {
-        commandsV25.classList.remove('hidden');
-        commandsV24.classList.add('hidden');
-        btnV25.className = `qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${activeClasses}`;
-        btnV24.className = `qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${inactiveClasses}`;
+    function setVersion(version: "stable" | "beta") {
+      if (version === "stable") {
+        commandsStable.classList.remove("hidden");
+        commandsBeta.classList.add("hidden");
+        btnStable.className = `qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${activeClasses}`;
+        btnBeta.className = `qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${inactiveClasses}`;
       } else {
-        commandsV25.classList.add('hidden');
-        commandsV24.classList.remove('hidden');
-        btnV24.className = `qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${activeV24Classes}`;
-        btnV25.className = `qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${inactiveClasses}`;
+        commandsStable.classList.add("hidden");
+        commandsBeta.classList.remove("hidden");
+        btnBeta.className = `qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${activeBetaClasses}`;
+        btnStable.className = `qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${inactiveClasses}`;
       }
 
       // Save preference
-      localStorage.setItem('what-is-claudekit-qs-version', version);
+      localStorage.setItem("what-is-claudekit-qs-version", version);
     }
 
-    // Restore saved preference
-    const savedVersion = localStorage.getItem('what-is-claudekit-qs-version') as 'v25' | 'v24' | null;
-    if (savedVersion) {
-      setVersion(savedVersion);
+    // Restore saved preference (migrate old keys)
+    const savedVersion = localStorage.getItem(
+      "what-is-claudekit-qs-version",
+    ) as "stable" | "beta" | "v25" | "v24" | null;
+    if (savedVersion === "v25" || savedVersion === "stable") {
+      setVersion("stable");
+    } else if (savedVersion === "v24" || savedVersion === "beta") {
+      setVersion("beta");
     }
 
     // Event listeners
-    btnV25.addEventListener('click', () => setVersion('v25'));
-    btnV24.addEventListener('click', () => setVersion('v24'));
+    btnStable.addEventListener("click", () => setVersion("stable"));
+    btnBeta.addEventListener("click", () => setVersion("beta"));
   });
 </script>

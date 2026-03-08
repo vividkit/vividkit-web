@@ -18,11 +18,27 @@ const translations = {
     infoBannerDesc: 'Claude Code hooks are shell commands that execute in response to events like tool calls, session start, or agent completion.',
     infoBannerNote: 'These hooks live in',
     infoBannerNoteEnd: 'and can automate your workflow.',
+    hookCountTitle: 'Hook Coverage',
+    hookCountDesc: 'ClaudeKit ships with 13 hooks in stable (v2.13.0) and 15 hooks in beta (v2.14.0). All hooks are composable via a shared utility library.',
+    hookCountStable: '13 hooks — stable',
+    hookCountBeta: '15 hooks — beta',
+    hookLibTitle: 'Hook Utility Library',
+    hookLibDesc: 'All hooks share a set of utility modules under hooks/lib/. These handle common concerns so each hook stays focused.',
     availableHooksTitle: 'Available Custom Hooks',
     hookDiscordTitle: 'Discord Notification',
     hookDiscordDesc: 'Get notified on Discord when Claude needs your attention during multi-phase sessions.',
     moreComingSoon: 'More hooks coming soon...',
     moreComingSoonDesc: 'Slack notifications, Telegram alerts, auto-commit, and more!',
+    betaHooksTitle: 'Beta Hooks (v2.14.0)',
+    betaHooksDesc: 'Two new hooks ship in v2.14.0-beta along with a new Stop lifecycle event.',
+    betaSessionStateTitle: 'session-state.cjs',
+    betaSessionStateDesc: 'Persist and restore session progress across compactions. Saves last active plan, todo items, subagent outputs, and branch/commit status to .claude/session-state/.last-state.md. Triggers: SessionStart (load), Stop/SubagentStop (persist). 159 lines.',
+    betaPlanFormatTitle: 'plan-format-kanban.cjs',
+    betaPlanFormatDesc: 'Validate plan.md link formatting. Triggers: PostToolUse on Write/Edit operations. 61 lines.',
+    betaStopEventTitle: 'New: Stop lifecycle event',
+    betaStopEventDesc: 'v2.14.0 adds a Stop trigger that fires when a session ends. Used by session-state.cjs to persist state before shutdown.',
+    testMigrationTitle: 'Test Structure',
+    testMigrationDesc: 'Tests migrated from hooks/tests/ → hooks/__tests__/ (Jest-like pattern) for better tooling compatibility.',
     officialDocsText: 'Learn more about ClaudeKit built-in hooks at',
     officialDocsLink: 'ClaudeKit Documentation',
   },
@@ -33,11 +49,27 @@ const translations = {
     infoBannerDesc: 'Claude Code hooks là shell commands chạy khi có events như tool calls, session start, hoặc agent completion.',
     infoBannerNote: 'Hooks nằm trong',
     infoBannerNoteEnd: 'và có thể tự động hóa workflow của bạn.',
+    hookCountTitle: 'Số lượng Hooks',
+    hookCountDesc: 'ClaudeKit có 13 hooks trong bản stable (v2.13.0) và 15 hooks trong bản beta (v2.14.0). Tất cả hooks dùng chung một thư viện utility.',
+    hookCountStable: '13 hooks — stable',
+    hookCountBeta: '15 hooks — beta',
+    hookLibTitle: 'Hook Utility Library',
+    hookLibDesc: 'Tất cả hooks dùng chung các utility modules trong hooks/lib/. Các module này xử lý các concerns chung để mỗi hook tập trung vào nhiệm vụ của mình.',
     availableHooksTitle: 'Các Custom Hooks',
     hookDiscordTitle: 'Discord Notification',
     hookDiscordDesc: 'Nhận thông báo trên Discord khi Claude cần bạn trong các session multi-phase.',
     moreComingSoon: 'Thêm hooks sắp ra mắt...',
     moreComingSoonDesc: 'Slack notifications, Telegram alerts, auto-commit, và nhiều hơn!',
+    betaHooksTitle: 'Beta Hooks (v2.14.0)',
+    betaHooksDesc: 'Hai hooks mới ra mắt trong v2.14.0-beta cùng với lifecycle event Stop mới.',
+    betaSessionStateTitle: 'session-state.cjs',
+    betaSessionStateDesc: 'Lưu và khôi phục tiến trình session qua các lần compact. Lưu plan hiện tại, todo items, subagent outputs, và trạng thái branch/commit vào .claude/session-state/.last-state.md. Triggers: SessionStart (load), Stop/SubagentStop (persist). 159 dòng.',
+    betaPlanFormatTitle: 'plan-format-kanban.cjs',
+    betaPlanFormatDesc: 'Kiểm tra định dạng link trong plan.md. Triggers: PostToolUse trên các thao tác Write/Edit. 61 dòng.',
+    betaStopEventTitle: 'Mới: Stop lifecycle event',
+    betaStopEventDesc: 'v2.14.0 thêm trigger Stop khi session kết thúc. Được dùng bởi session-state.cjs để lưu state trước khi tắt.',
+    testMigrationTitle: 'Cấu trúc Test',
+    testMigrationDesc: 'Tests được di chuyển từ hooks/tests/ → hooks/__tests__/ (theo pattern Jest) để tương thích tốt hơn với tooling.',
     officialDocsText: 'Tìm hiểu thêm các built-in hooks của ClaudeKit tại',
     officialDocsLink: 'ClaudeKit Documentation',
   }
@@ -134,6 +166,95 @@ const hooks = [
     </div>
     <p class="text-slate-500 dark:text-slate-400 font-medium">{t.moreComingSoon}</p>
     <p class="text-slate-400 dark:text-slate-500 text-sm mt-1">{t.moreComingSoonDesc}</p>
+  </div>
+
+  <!-- Hook Count Overview -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 border-b border-slate-100 dark:border-slate-800">
+      <h3 class="text-lg font-bold text-slate-900 dark:text-white">{t.hookCountTitle}</h3>
+    </div>
+    <div class="p-6 space-y-4">
+      <p class="text-slate-600 dark:text-slate-400">{t.hookCountDesc}</p>
+      <div class="flex flex-wrap gap-3">
+        <span class="px-3 py-1.5 rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-sm font-semibold">{t.hookCountStable}</span>
+        <span class="px-3 py-1.5 rounded-full bg-violet-100 dark:bg-violet-500/20 text-violet-700 dark:text-violet-400 text-sm font-semibold">{t.hookCountBeta}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hook Utility Library -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-slate-500/10 to-slate-600/10 border-b border-slate-100 dark:border-slate-800">
+      <h3 class="text-lg font-bold text-slate-900 dark:text-white">{t.hookLibTitle}</h3>
+    </div>
+    <div class="p-6 space-y-4">
+      <p class="text-slate-600 dark:text-slate-400 text-sm">{t.hookLibDesc}</p>
+      <div class="grid gap-2 sm:grid-cols-2">
+        {[
+          { name: 'ck-config-utils', desc: 'Read/validate .ck.json configuration' },
+          { name: 'colors', desc: 'ANSI color formatting for terminal output' },
+          { name: 'config-counter', desc: 'Track skills, hooks, agents counts' },
+          { name: 'context-builder', desc: 'Build session context with WARN 70%/CRITICAL 90% thresholds' },
+          { name: 'git-info-cache', desc: 'Cache git status for performance' },
+          { name: 'hook-logger', desc: 'Structured logging for hooks' },
+          { name: 'privacy-checker', desc: 'Block access to sensitive files (.env, credentials)' },
+          { name: 'project-detector', desc: 'Detect project type and package manager' },
+          { name: 'scout-checker', desc: 'Check if scout agents are available' },
+          { name: 'transcript-parser', desc: 'Parse Claude conversation transcripts' },
+        ].map((mod) => (
+          <div class="flex items-start gap-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700">
+            <code class="text-xs font-mono text-indigo-600 dark:text-indigo-400 shrink-0 mt-0.5">{mod.name}</code>
+            <span class="text-xs text-slate-500 dark:text-slate-400">{mod.desc}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Beta Hooks (v2.14.0) -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border-2 border-violet-200 dark:border-violet-500/30 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-violet-500/10 to-indigo-500/10 border-b border-violet-200 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <h3 class="text-lg font-bold text-slate-900 dark:text-white">{t.betaHooksTitle}</h3>
+        <span class="px-2 py-0.5 text-xs font-semibold bg-violet-100 dark:bg-violet-500/20 text-violet-700 dark:text-violet-400 rounded-full">v2.14.0-beta</span>
+      </div>
+    </div>
+    <div class="p-6 space-y-4">
+      <p class="text-slate-600 dark:text-slate-400 text-sm">{t.betaHooksDesc}</p>
+
+      <div class="space-y-3">
+        <!-- session-state.cjs -->
+        <div class="p-4 rounded-lg bg-violet-50 dark:bg-violet-500/10 border border-violet-200 dark:border-violet-500/30">
+          <div class="font-mono text-sm font-bold text-violet-700 dark:text-violet-400 mb-1">{t.betaSessionStateTitle}</div>
+          <p class="text-sm text-slate-600 dark:text-slate-400">{t.betaSessionStateDesc}</p>
+        </div>
+
+        <!-- plan-format-kanban.cjs -->
+        <div class="p-4 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/30">
+          <div class="font-mono text-sm font-bold text-indigo-700 dark:text-indigo-400 mb-1">{t.betaPlanFormatTitle}</div>
+          <p class="text-sm text-slate-600 dark:text-slate-400">{t.betaPlanFormatDesc}</p>
+        </div>
+
+        <!-- Stop event -->
+        <div class="p-4 rounded-lg bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/30">
+          <div class="text-sm font-bold text-amber-700 dark:text-amber-400 mb-1">{t.betaStopEventTitle}</div>
+          <p class="text-sm text-slate-600 dark:text-slate-400">{t.betaStopEventDesc}</p>
+        </div>
+      </div>
+
+      <!-- Test migration note -->
+      <div class="flex items-start gap-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+        <svg class="w-4 h-4 text-slate-400 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="16" x2="12" y2="12"/>
+          <line x1="12" y1="8" x2="12.01" y2="8"/>
+        </svg>
+        <div>
+          <span class="text-sm font-medium text-slate-700 dark:text-slate-300">{t.testMigrationTitle}: </span>
+          <span class="text-sm text-slate-500 dark:text-slate-400">{t.testMigrationDesc}</span>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Official Docs Link -->

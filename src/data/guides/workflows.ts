@@ -1,6 +1,6 @@
-// v2.5.0 workflows - skill-based approach
-// Updated for v2.9.0: /cook uses native Claude Tasks, /fix supports flags
-export const v25Workflows = [
+// v2.13.0 Stable workflows - skill-based approach
+// /cook uses native Claude Tasks, /fix supports flags
+export const stableWorkflows = [
   {
     title: 'Build a New Feature',
     level: 'Beginner',
@@ -30,7 +30,7 @@ export const v25Workflows = [
       },
       {
         typeLabel: 'Review → /clear → Implement',
-        description: 'Review plan, run /clear to free context (mandatory in CK engineer@v2.5.0+), then implement',
+        description: 'Review plan, run /clear to free context (mandatory in CK engineer@v2.13.0), then implement',
         color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
         number: 3,
         hasIcon: true,
@@ -45,7 +45,7 @@ export const v25Workflows = [
         isSkill: true
       }
     ],
-    tip: '⚠️ CK engineer@v2.5.0+: /clear is mandatory after /plan before /cook',
+    tip: '⚠️ CK engineer@v2.13.0: /clear is mandatory after /plan before /cook',
     borderColor: 'border-purple-500/20'
   },
   {
@@ -84,7 +84,7 @@ export const v25Workflows = [
         number: 3
       }
     ],
-    tip: '💡 /debug & /fix skills: intelligent routing with flags --auto, --review, --quick, --parallel (v2.9.0)',
+    tip: '💡 /debug & /fix skills: intelligent routing with flags --auto, --review, --quick, --parallel',
     fixFlags: [
       { flag: '--auto', desc: 'Autonomous mode (default)', color: 'green' },
       { flag: '--review', desc: 'Human-in-the-loop mode', color: 'amber' },
@@ -119,7 +119,7 @@ export const v25Workflows = [
         isSkill: true
       }
     ],
-    tip: '💡 See mapping table above for migrating from v2.4 variants. v2.9.0+: --interactive is default, uses native Claude Tasks API.',
+    tip: '💡 See mapping table above for migrating from v2.4 variants. --interactive is default, uses native Claude Tasks API.',
     cookMappings: [
       { old: '/cook:auto', new: '/cook --auto', desc: 'Auto-approve all steps' },
       { old: '/cook:auto:fast', new: '/cook --auto --fast', desc: 'Fast + auto-approve' },
@@ -193,7 +193,7 @@ export const v25Workflows = [
         number: 2
       }
     ],
-    tip: '💡 New in v2.5.0+: Replaces /design:video command',
+    tip: '💡 New in v2.13.0: Replaces /design:video command',
     features: [
       'Animations and transitions',
       'Text animations and captions',
@@ -201,11 +201,243 @@ export const v25Workflows = [
       'Audio synchronization'
     ],
     borderColor: 'border-pink-500/20'
+  },
+  {
+    title: 'Visual Documentation',
+    level: 'Beginner',
+    duration: '~10-20 min',
+    stepCount: 3,
+    bestFor: 'Creating visual explanations and diagrams for your plan',
+    gradientHeader: 'from-indigo-500/10 to-violet-500/10',
+    hoverBorderColor: 'hover:border-indigo-500/50',
+    buttonColor: 'bg-indigo-500 hover:bg-indigo-600',
+    icon: '<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/>',
+    iconColor: 'text-indigo-600 dark:text-indigo-400',
+    steps: [
+      {
+        command: '/plan',
+        typeLabel: 'Create plan first',
+        description: 'Create a structured plan — visuals are saved into the plan directory',
+        color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
+        number: 1
+      },
+      {
+        command: '/preview --explain "topic"',
+        typeLabel: 'Generate explanation (skill)',
+        description: 'Create ASCII + Mermaid diagrams with prose explanation for your topic',
+        color: 'bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400',
+        number: 2,
+        isSkill: true
+      },
+      {
+        command: '/preview --diagram "topic"',
+        typeLabel: 'Generate focused diagram (skill)',
+        description: 'Create a focused Mermaid + ASCII diagram for a specific data flow or architecture',
+        color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
+        number: 3,
+        isSkill: true
+      }
+    ],
+    featureCommand: '/preview',
+    tip: '💡 New in engineer@2.10+: /preview now generates visual content. Also: --slides, --ascii',
+    features: [
+      'ASCII + Mermaid diagrams (--explain)',
+      'Presentation format (--slides)',
+      'Focused diagrams (--diagram)',
+      'Terminal-friendly output (--ascii)'
+    ],
+    borderColor: 'border-indigo-500/20'
+  },
+  {
+    title: 'Code Review with Edge Cases',
+    level: 'Intermediate',
+    duration: '~20-30 min',
+    stepCount: 4,
+    bestFor: 'Thorough code review with edge case scouting',
+    gradientHeader: 'from-emerald-500/10 to-teal-500/10',
+    hoverBorderColor: 'hover:border-emerald-500/50',
+    buttonColor: 'bg-emerald-500 hover:bg-emerald-600',
+    icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
+    iconColor: 'text-emerald-600 dark:text-emerald-400',
+    steps: [
+      {
+        command: '/cook @plan.md',
+        typeLabel: 'Implement the plan (skill)',
+        description: 'AI writes the code following the plan with auto test & review cycles',
+        color: 'bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
+        number: 1,
+        isSkill: true
+      },
+      {
+        command: '/scout',
+        typeLabel: 'Scout edge cases (skill)',
+        description: 'AI scouts affected files, data flows, error paths, and boundary conditions',
+        color: 'bg-teal-500/10 dark:bg-teal-500/20 text-teal-600 dark:text-teal-400',
+        number: 2,
+        isSkill: true
+      },
+      {
+        typeLabel: 'Code-reviewer review',
+        description: 'Code-reviewer subagent reviews findings from scout and evaluates code quality',
+        color: 'bg-cyan-500/10 dark:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400',
+        number: 3,
+        hasIcon: true,
+        icon: '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>'
+      },
+      {
+        command: '/git cm',
+        typeLabel: 'Merge & commit',
+        description: 'Commit the reviewed code with conventional commit message',
+        color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
+        number: 4
+      }
+    ],
+    featureCommand: '/scout',
+    tip: '💡 engineer@2.10+: /scout now integrates with code-reviewer for edge case detection before review',
+    features: [
+      'Edge case detection via /scout',
+      'Boundary condition analysis',
+      'Data flow & error path scouting',
+      'Automated code-reviewer integration'
+    ],
+    borderColor: 'border-emerald-500/20'
+  },
+  {
+    title: 'Plan + Validate + Implement',
+    level: 'Intermediate',
+    duration: '~20-40 min',
+    stepCount: 4,
+    bestFor: 'Validated plans with auto-propagated decisions',
+    gradientHeader: 'from-sky-500/10 to-blue-500/10',
+    hoverBorderColor: 'hover:border-sky-500/50',
+    buttonColor: 'bg-sky-500 hover:bg-sky-600',
+    icon: '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',
+    iconColor: 'text-sky-600 dark:text-sky-400',
+    steps: [
+      {
+        command: '/plan',
+        typeLabel: 'Create plan',
+        description: 'AI creates a detailed implementation plan with phases',
+        color: 'bg-sky-500/10 dark:bg-sky-500/20 text-sky-600 dark:text-sky-400',
+        number: 1
+      },
+      {
+        command: '/plan:validate',
+        typeLabel: 'Validate plan decisions',
+        description: 'Interview-style validation gate. Decisions auto-propagate to phase files',
+        color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
+        number: 2
+      },
+      {
+        typeLabel: '/clear (mandatory)',
+        description: 'Free context before implementation — mandatory in engineer@v2.13.0',
+        color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
+        number: 3,
+        hasIcon: true,
+        icon: '<path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>'
+      },
+      {
+        command: '/cook @plan.md',
+        typeLabel: 'Implement validated plan (skill)',
+        description: 'AI implements with validated decisions already propagated to each phase',
+        color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
+        number: 4,
+        isSkill: true
+      }
+    ],
+    featureCommand: '/plan:validate',
+    tip: '💡 engineer@2.10+: /plan:validate decisions auto-propagate to phase files — no manual updates needed',
+    features: [
+      'Interview-style plan validation',
+      'Auto-propagation to phase files',
+      'Validated decisions guide implementation',
+      'Reduced rework from unclear plan decisions'
+    ],
+    borderColor: 'border-sky-500/20'
+  },
+  {
+    title: 'Agent Teams (Parallel)',
+    level: 'Advanced',
+    duration: '~30-60 min',
+    stepCount: 2,
+    bestFor: 'Large tasks with multiple parallel agents',
+    gradientHeader: 'from-cyan-500/10 to-teal-500/10',
+    hoverBorderColor: 'hover:border-cyan-500/50',
+    buttonColor: 'bg-cyan-500 hover:bg-cyan-600',
+    icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+    iconColor: 'text-cyan-600 dark:text-cyan-400',
+    steps: [
+      {
+        command: '/plan --hard "feature"',
+        typeLabel: 'Create plan with phases',
+        description: 'Create a detailed plan with parallelizable phases for team execution',
+        color: 'bg-cyan-500/10 dark:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400',
+        number: 1
+      },
+      {
+        command: '/team cook @plan',
+        typeLabel: 'Parallel team execution (skill)',
+        description: 'Spawn parallel dev agents, each handling a phase. Auto test → review → merge',
+        color: 'bg-teal-500/10 dark:bg-teal-500/20 text-teal-600 dark:text-teal-400',
+        number: 2,
+        isSkill: true
+      }
+    ],
+    tip: '⚠️ Requires CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 in settings.json. New in engineer@v2.11.0+',
+    features: [
+      'Parallel dev agents (--devs N)',
+      'Auto test → review → merge pipeline',
+      'Event-driven hooks + agent memory',
+      'Also: /team research, /team review, /team debug'
+    ],
+    borderColor: 'border-cyan-500/20'
+  },
+  {
+    title: 'Adversarial Plan Review',
+    level: 'Advanced',
+    duration: '~10-20 min',
+    stepCount: 2,
+    bestFor: 'Finding flaws in plans before implementation',
+    gradientHeader: 'from-amber-500/10 to-red-500/10',
+    hoverBorderColor: 'hover:border-amber-500/50',
+    buttonColor: 'bg-amber-500 hover:bg-amber-600',
+    icon: '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
+    iconColor: 'text-amber-600 dark:text-amber-400',
+    steps: [
+      {
+        command: '/plan --hard "feature"',
+        typeLabel: 'Create plan',
+        description: 'Create a detailed plan. Hard/parallel/two modes auto-run red-team after creation',
+        color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
+        number: 1
+      },
+      {
+        command: '/plan:red-team plans/',
+        typeLabel: 'Adversarial review (skill)',
+        description: 'Spawn hostile reviewers: Security, Failure Mode, Assumption Destroyer, Scope Critic',
+        color: 'bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400',
+        number: 2,
+        isSkill: true
+      }
+    ],
+    tip: '💡 New in engineer@v2.11.0+: Auto-scales reviewers based on plan complexity (2-4 adversarial lenses)',
+    features: [
+      'Security Adversary (auth bypass, injection, OWASP)',
+      'Failure Mode Analyst (race conditions, data loss)',
+      'Assumption Destroyer (unstated deps, false claims)',
+      'Scope & Complexity Critic (over-engineering, YAGNI)'
+    ],
+    borderColor: 'border-amber-500/20'
   }
 ];
 
-// v2.4.0 workflows - command-based approach (stable)
-export const v24Workflows = [
+// v2.14.0 Beta workflows - identical to stable + beta-specific notes
+// Beta v2.14.0-beta.5 is a superset of stable v2.13.0 (adds ck:llms skill, minor refinements)
+export const betaWorkflows = stableWorkflows;
+
+// Legacy v2.4.x workflows - kept in source for reference, NOT rendered
+// These use old command syntax: /code, /git:cm, /design:screenshot, /fix:types
+export const legacyWorkflows = [
   {
     title: 'Build a New Feature',
     level: 'Beginner',
@@ -388,4 +620,4 @@ export const v24Workflows = [
 ];
 
 // Legacy export for backwards compatibility
-export const workflows = v24Workflows;
+export const workflows = legacyWorkflows;

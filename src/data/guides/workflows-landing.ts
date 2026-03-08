@@ -27,7 +27,7 @@ export const landingWorkflows: LandingWorkflow[] = [
     steps: [
       { command: '/brainstorm', description: 'Explore feature ideas' },
       { command: '/plan', description: 'Create implementation plan' },
-      { command: '/code', description: 'Implement the plan' },
+      { command: '/cook', description: 'Implement the plan' },
       { command: '/test', description: 'Verify implementation' }
     ],
     gradient: 'workflow-card-header--purple',
@@ -75,7 +75,7 @@ export const landingWorkflows: LandingWorkflow[] = [
     stepCount: 3,
     description: 'Transform ideas into beautiful, production-ready UI components.',
     steps: [
-      { command: '/design:good', description: 'Create design system' },
+      { command: '/frontend-design', description: 'Create design system' },
       { command: '/cook:auto', description: 'Implement design' },
       { command: '/fix:ui', description: 'Polish interactions' }
     ],
