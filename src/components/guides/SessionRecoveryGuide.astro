@@ -212,6 +212,51 @@ const emergencySteps = [
     </p>
   </div>
 
+  <!-- Beta: Auto Session State (v2.14.0) -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border-2 border-indigo-200 dark:border-indigo-500/30 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-indigo-500/10 to-violet-500/10 border-b border-indigo-200 dark:border-slate-800">
+      <div class="flex items-center gap-3 flex-wrap">
+        <div class="w-9 h-9 rounded-full bg-indigo-500/20 flex items-center justify-center">
+          <svg class="w-5 h-5 text-indigo-600 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75M3.75 13.5v3.75" />
+          </svg>
+        </div>
+        <h4 class="text-lg font-bold text-slate-900 dark:text-slate-100">{t('session_recovery.guide.auto_state.title')}</h4>
+        <span class="px-2 py-0.5 text-xs font-semibold bg-indigo-100 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-400 rounded-full">
+          {t('session_recovery.guide.auto_state.badge')}
+        </span>
+      </div>
+    </div>
+    <div class="p-6 space-y-4">
+      <p class="text-slate-600 dark:text-slate-400">{t('session_recovery.guide.auto_state.desc')}</p>
+
+      <ul class="space-y-2">
+        {[
+          t('session_recovery.guide.auto_state.point1'),
+          t('session_recovery.guide.auto_state.point2'),
+          t('session_recovery.guide.auto_state.point3'),
+          t('session_recovery.guide.auto_state.point4'),
+          t('session_recovery.guide.auto_state.point5'),
+          t('session_recovery.guide.auto_state.point6'),
+        ].map((point) => (
+          <li class="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-400">
+            <span class="text-indigo-500 mt-0.5 shrink-0">•</span>
+            <span>{point}</span>
+          </li>
+        ))}
+      </ul>
+
+      <div class="flex items-start gap-3 p-3 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/30">
+        <svg class="w-4 h-4 text-indigo-500 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="16" x2="12" y2="12"/>
+          <line x1="12" y1="8" x2="12.01" y2="8"/>
+        </svg>
+        <p class="text-sm text-slate-600 dark:text-slate-400">{t('session_recovery.guide.auto_state.migration')}</p>
+      </div>
+    </div>
+  </div>
+
   <!-- Google Ban Warning -->
   <div class="flex items-start gap-3 p-4 rounded-xl bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-800/30">
     <svg class="w-5 h-5 text-red-500 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

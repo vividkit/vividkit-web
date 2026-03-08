@@ -91,8 +91,8 @@ export default {
   'guides.what_is_claudekit.bottom_line_desc': 'Bạn chỉ cần gõ lệnh đơn giản, ClaudeKit lo phần phức tạp!',
   'guides.what_is_claudekit.view_all_commands': 'Xem Tất Cả Lệnh',
   // Quick Start version tabs
-  'guides.what_is_claudekit.qs_tab_v25': 'v2.5.0+',
-  'guides.what_is_claudekit.qs_tab_v24': 'v2.4.x-',
+  'guides.what_is_claudekit.qs_tab_v25': 'v2.13.0 Stable',
+  'guides.what_is_claudekit.qs_tab_v24': 'v2.14.0 Beta',
   // Command descriptions
   'guides.what_is_claudekit.cmd_ask': 'Trả lời mọi câu hỏi',
   'guides.what_is_claudekit.cmd_brainstorm': 'Cùng khám phá ý tưởng',
@@ -426,7 +426,7 @@ export default {
   'features.description': 'Biến hệ thống agent mạnh mẽ của ClaudeKit thành trải nghiệm trực quan, dễ tiếp cận. Không cần chuyên môn về terminal.',
   'features.prerequisites': 'Điều kiện tiên quyết: Đã cài đặt ClaudeKit CLI',
   'features.setup': 'Thiết lập: 30 giây cho người dùng hiện tại',
-  'features.item1': 'Khiến 73 lệnh & skills của ClaudeKit trở nên dễ tiếp cận qua GUI trực quan',
+  'features.item1': 'Khiến 66 lệnh & skills của ClaudeKit trở nên dễ tiếp cận qua GUI trực quan',
   'features.item2': 'Duyệt 40+ skill của ClaudeKit một cách trực quan (không cần lội vào thư mục)',
   'features.item3': 'Xem các agent của ClaudeKit điều phối trong thời gian thực',
   'features.item4': 'Theo dõi việc sử dụng và chi phí token qua dashboard trực quan',
@@ -642,8 +642,8 @@ export default {
   'commands.detail.journal': 'Tài liệu hóa các thất bại, bài học, tổng kết dự án',
   'commands.desc.kanban': 'Mở dashboard điều phối AI',
   'commands.detail.kanban': 'Trực quan hóa tiến độ kế hoạch, hoạt động của agent',
-  'commands.desc.preview': 'Xem markdown/file trong trình đọc đẹp mắt',
-  'commands.detail.preview': 'Muốn đọc kế hoạch/tài liệu trong giao diện đẹp',
+  'commands.desc.preview': 'Xem markdown + tạo visual với nhiều modes hỗ trợ',
+  'commands.detail.preview': '*phần tạo visual chỉ available từ version engineer@2.10+',
   'commands.desc.watzup': 'Xem lại thay đổi gần đây + tổng kết',
   'commands.detail.watzup': 'Cuối phiên làm việc, xem những gì đã làm được',
   'commands.desc.use_mcp': 'Sử dụng công cụ từ MCP servers',
@@ -734,6 +734,8 @@ export default {
   'cli.guide.tip3_description': 'Sử dụng <code class="font-mono text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 px-1 rounded">@tên_file</code> để cho AI biết những file nào cần sửa đổi',
   'cli.guide.tip4_title': 'Luôn Sử Dụng "Using ui-ux-pro-max skill"',
   'cli.guide.tip4_description': 'Điều này kích hoạt hệ thống thiết kế thông minh để có kết quả chuyên nghiệp',
+  'cli.guide.tip5_title': 'Cấu Hình Statusline & Gemini Model',
+  'cli.guide.tip5_description': 'Trong <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">.ck.json</code>, đặt <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">statusline</code> thành <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">"minimal"</code> (mặc định stable) hoặc <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">"full"</code> (mặc định beta). Model Gemini mặc định là <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">gemini-3-flash-preview</code> (cấu hình qua <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">gemini.model</code>). Beta cũng tạo thư mục <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">.claude/session-state/</code> để lưu trữ phiên.',
 
   // CLI Guide Terminal Mockup
   'cli.terminal.setup_comment': '# Thiết lập ClaudeKit trong dự án của bạn',
@@ -1160,6 +1162,13 @@ export default {
   'ccs.guide.sync_title': 'Đồng Bộ Dữ Liệu Chia Sẻ',
   'ccs.guide.sync_desc': 'Đồng bộ các cập nhật delegation commands và skills mới nhất từ ClaudeKit sang CCS:',
 
+  // .ck.json Configuration Section
+  'ccs.guide.ck_json_title': 'Cấu Hình .ck.json',
+  'ccs.guide.ck_json_desc': 'Tất cả các cài đặt có sẵn cho file cấu hình <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">.ck.json</code>.',
+  'ccs.guide.ck_json_setting': 'Cài đặt',
+  'ccs.guide.ck_json_default': 'Mặc định',
+  'ccs.guide.ck_json_description': 'Mô tả',
+
   // Resources Section
   'ccs.guide.resources_title': 'Tài Nguyên',
   'ccs.guide.documentation': 'Tài Liệu',
@@ -1276,7 +1285,7 @@ export default {
   'workflows.tip.debug.title': 'Debug trước khi sửa',
   'workflows.tip.debug.desc': 'Sử dụng `/debug` trước để tìm nguyên nhân gốc rễ, sau đó dùng `/fix` khi đã sẵn sàng',
   'workflows.tip.help.title': 'Khám phá lệnh với /ck-help',
-  'workflows.tip.help.desc': 'Gõ `/ck-help` để xem tất cả 73 lệnh & skills được tổ chức theo danh mục',
+  'workflows.tip.help.desc': 'Gõ `/ck-help` để xem tất cả 66 lệnh & skills được tổ chức theo danh mục',
   'workflows.tip.plan.title': 'Luôn bắt đầu với /plan',
   'workflows.tip.plan.desc': 'Tạo một kế hoạch có cấu trúc trước, sau đó sử dụng `/code` để thực hiện từng bước',
   'workflows.related.title': 'Hướng Dẫn Liên Quan',
@@ -1509,7 +1518,7 @@ export default {
 
   // v2.5 Skill descs
   'commands.v25.desc.cook': 'Điều phối tác vụ',
-  'commands.v25.detail.cook': 'Intent detection, subagent patterns, review cycles',
+  'commands.v25.detail.cook': 'Intent detection, subagent patterns, review cycles. v2.9.1+: Steps 4/5/6 bắt buộc delegate subagent (tester → reviewer → finalize)',
   'commands.v25.desc.scout': 'Khám phá file codebase',
   'commands.v25.detail.scout': 'Internal và external scouting',
   'commands.v25.desc.fix': 'Smart fix routing',
@@ -1576,14 +1585,14 @@ export default {
   'commands.v25.flags.json': 'Output JSON cho LLM parsing',
   'commands.v25.flags.dryRun': 'Preview mà không thực thi',
 
-  // v2.5 UI strings
-  'commands.v25.mandatory_title': 'CK engineer@v2.5.0+ Bắt buộc: /clear sau /plan',
-  'commands.v25.mandatory_desc': 'Chạy <code class="px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 font-mono">/clear</code> sau khi xem plan và trước khi triển khai để giải phóng context. Bắt buộc từ v2.5.0+.',
-  'commands.v25.breaking_title': '<code class="px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 font-mono text-sm">engineer@v2.5.0+</code> Breaking Changes',
-  'commands.v25.breaking_commands_skills': '<strong>Commands → Skills:</strong> Nhiều lệnh giờ là skills. Gọi qua <code class="px-1 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 text-xs">/skill-name</code> (Claude Code v2.1.1+) hoặc ngôn ngữ tự nhiên.',
+  // Version UI strings (Stable = v2.13.0, Beta = v2.14.0)
+  'commands.v25.mandatory_title': 'CK engineer@v2.13.0 Bắt buộc: /clear sau /plan',
+  'commands.v25.mandatory_desc': 'Chạy <code class="px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 font-mono">/clear</code> sau khi xem plan và trước khi triển khai để giải phóng context.',
+  'commands.v25.breaking_title': '<code class="px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 font-mono text-sm">engineer@v2.13.0</code> Có Gì Mới',
+  'commands.v25.breaking_commands_skills': '<strong>Tất cả Commands → Skills:</strong> Toàn bộ 19 commands đã chuyển sang skills với prefix <code class="px-1 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 text-xs">ck:</code>. Cả <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-xs">/cook</code> và <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-xs">ck:cook</code> đều hoạt động như nhau.',
   'commands.v25.breaking_mandatory': '<strong class="text-red-600 dark:text-red-400">Bắt buộc:</strong> Chạy <code class="px-1 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-xs">/clear</code> sau <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-xs">/plan</code> trước khi triển khai để giải phóng context.',
-  'commands.v25.breaking_cook_auto': '<strong class="text-purple-600 dark:text-purple-400">/cook --auto:</strong> <code class="px-1 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 text-xs">v2.6.x</code> mặc định chế độ auto. <code class="px-1 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 text-xs">v2.7.x</code> quay lại manual — thêm flag <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-xs">--auto</code> nếu muốn tự động approve.',
-  'commands.v25.breaking_cook_auto_desc': 'Skill <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 font-mono text-xs">/cook</code> đã thay đổi hành vi mặc định giữa các phiên bản.',
+  'commands.v25.breaking_cook_auto': '<strong class="text-purple-600 dark:text-purple-400">CC Plugin Format:</strong> Skills giờ dùng Claude Code plugin directories với đường dẫn <code class="px-1 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 text-xs">${CLAUDE_PLUGIN_ROOT}</code> và metadata <code class="px-1 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 text-xs">argument-hint</code> để auto-discovery.',
+  'commands.v25.breaking_cook_auto_desc': 'Skills dùng Claude Code plugin format với auto-discovery qua metadata argument-hint.',
   'commands.v25.migration_title': 'Hướng Dẫn Chuyển Đổi',
   'commands.v25.migration_old': 'Trước đây',
   'commands.v25.migration_new': 'Thay thế bằng',
@@ -1591,17 +1600,17 @@ export default {
   'commands.v26.removed_agents_title': 'Agents Đã Xoá (v2.6.0)',
   'commands.v26.removed_agents_desc': 'Các agents này đã bị xoá trong engineer@v2.6.0. Sử dụng Task tool với subagent_type phù hợp hoặc skills thay thế.',
   'commands.v27.if_want_auto': 'nếu muốn tự động approve',
-  'commands.v25.badge_new': 'Thêm mới trong v2.5.0',
-  'commands.v25.badge_enhanced': 'Cải thiện trong v2.5.0',
+  'commands.v25.badge_new': 'Mới trong v2.13.0',
+  'commands.v25.badge_enhanced': 'Cải thiện trong v2.13.0',
   'commands.v25.badge_archived': 'Vẫn hoạt động, nên dùng skill thay thế',
-  'commands.v25.skills_note': 'Skills gọi qua <code class="px-1 py-0.5 rounded bg-teal-50 dark:bg-teal-900/20 text-teal-600 dark:text-teal-400">/skill-name [args]</code> hoặc ngôn ngữ tự nhiên',
-  'commands.v25.tab_v25': 'engineer@v2.5.0+',
-  'commands.v25.tab_v24': 'engineer@v2.4.x-',
-  'commands.v25.v24_label': 'engineer@v2.4.x-',
-  'commands.v25.banner_intro': 'giới thiệu skills-first architecture. Commands giờ route qua skills để dễ mở rộng hơn.',
-  'commands.v25.banner_legacy': 'Xem v2.4 trở về trước cho các lệnh cũ.',
-  'commands.v25.v24_banner': 'commands. Vẫn hoạt động nhưng một số đã archived trong engineer@v2.5.0+.',
-  'commands.v25.v24_banner_note': 'Xem engineer@v2.5.0+ Stable cho skills-based architecture mới.',
+  'commands.v25.skills_note': 'Skills gọi qua <code class="px-1 py-0.5 rounded bg-teal-50 dark:bg-teal-900/20 text-teal-600 dark:text-teal-400">/skill-name [args]</code> hoặc <code class="px-1 py-0.5 rounded bg-teal-50 dark:bg-teal-900/20 text-teal-600 dark:text-teal-400">ck:skill-name</code> — cả hai đều hoạt động như nhau',
+  'commands.v25.tab_v25': 'v2.13.0 Stable',
+  'commands.v25.tab_v24': 'v2.14.0 Beta',
+  'commands.v25.v24_label': 'v2.14.0 Beta',
+  'commands.v25.banner_intro': '— toàn bộ commands đã chuyển sang skills với namespace ck:. Cả /cook và ck:cook đều hoạt động như nhau.',
+  'commands.v25.banner_legacy': 'Xem tab v2.14.0 Beta để xem các tính năng mới nhất.',
+  'commands.v25.v24_banner': 'tính năng beta. Đây là phiên bản thử nghiệm và có thể thay đổi trước khi ra bản stable.',
+  'commands.v25.v24_banner_note': 'Xem v2.13.0 Stable cho các lệnh ổn định.',
 
   // v2.4 specific commands
   'commands.v24.desc.git_cm': 'Stage all files và tạo commit',
@@ -1628,7 +1637,7 @@ export default {
   'commands.v29.nativeTasks': 'Sử dụng Claude Tasks native (TaskCreate, TaskUpdate, TaskGet, TaskList)',
   'commands.v29.findSkills_note': 'Dùng khi user hỏi "làm sao để X", "tìm skill cho X", hoặc muốn mở rộng khả năng agent. Skills CLI là package manager cho hệ sinh thái open agent skills.',
   'commands.v29.browseSkills': 'Duyệt skills',
-  'commands.v29.planValidate_note': 'Post-Plan gate giờ có option "Validate" để chạy /plan:validate trước khi implement. Xác nhận các quyết định kế hoạch theo kiểu phỏng vấn.',
+  'commands.v29.planValidate_note': 'Post-Plan gate giờ có option "Validate" để chạy /plan:validate trước khi implement. Xác nhận các quyết định kế hoạch theo kiểu phỏng vấn.<br/>engineer@2.10+: validation decisions tự động propagate xuống phase files.',
 
   'commands.docs.text': 'Truy cập',
   'commands.docs.link': 'trang tài liệu chính thức của ClaudeKit để xem hướng dẫn đầy đủ.',
@@ -1690,6 +1699,8 @@ export default {
   'permissions.guide.option2.source_link': 'Danh Sách Lệnh Bổ Sung',
   'permissions.guide.docs.text': 'Để xem tài liệu đầy đủ về phạm vi quyền và cú pháp, hãy truy cập',
   'permissions.guide.docs.link': 'Tài liệu Chính thức của Claude Code',
+  'permissions.guide.hooks_note_title': 'Hooks format:',
+  'permissions.guide.hooks_note_desc': 'Tất cả ClaudeKit hooks dùng .cjs (CommonJS Node.js) — tương thích cross-platform trên macOS, Linux, và Windows. Không cần shell scripts.',
 
   // Token Tips Guide
   'guides.token_tips.title': 'Tiết Kiệm Token',
@@ -1760,6 +1771,8 @@ export default {
   'token_tips.guide.pro2.desc': 'Ghi lại session ID sau các milestone quan trọng. Resume đúng nơi bạn dừng.',
   'token_tips.guide.pro3.title': 'Gom task tương tự',
   'token_tips.guide.pro3.desc': 'Nhóm công việc liên quan trong một session, sau đó /clear trước khi đổi context.',
+  'token_tips.guide.pro4.title': 'Dùng --fast variants',
+  'token_tips.guide.pro4.desc': 'Các command như /cook --fast và /fix --quick bỏ qua research phase, giảm đáng kể token consumption.',
 
   // Summary
   'token_tips.guide.summary_title': 'TL;DR - Cheatsheet Tiết Kiệm Token',
@@ -1801,7 +1814,7 @@ export default {
   'token_tips.guide.case2.desc': 'Khi session chạy lâu, context đầy lên. Context-engineering skill theo dõi mức sử dụng và tự động tối ưu.',
   'token_tips.guide.case2.metric1': 'Mức cảnh báo',
   'token_tips.guide.case2.metric2': 'Trigger tối ưu',
-  'token_tips.guide.case2.metric3': 'Nén đạt được',
+  'token_tips.guide.case2.metric3': 'Ngưỡng CRITICAL',
 
   // Session Recovery Guide (đã gộp với Resume Guide)
   'guides.session_recovery.title': 'Khôi Phục Session',
@@ -1915,4 +1928,16 @@ export default {
   'session_recovery.guide.related_ccs': 'Multi-account & đổi model',
   'session_recovery.guide.related_token': 'Giảm tiêu thụ token',
   'session_recovery.guide.related_commands': 'Tất cả lệnh có sẵn',
+
+  // Beta: Auto Session State (v2.14.0)
+  'session_recovery.guide.auto_state.badge': 'v2.14.0-beta',
+  'session_recovery.guide.auto_state.title': 'Session State Tự động',
+  'session_recovery.guide.auto_state.desc': 'v2.14.0-beta giới thiệu session-state.cjs — một hook tự động lưu và khôi phục tiến trình session qua các lần compact và khởi động lại.',
+  'session_recovery.guide.auto_state.point1': 'State được lưu vào .claude/session-state/.last-state.md',
+  'session_recovery.guide.auto_state.point2': 'Tự động load khi SessionStart (khởi động hoặc sau compact)',
+  'session_recovery.guide.auto_state.point3': 'Tự động lưu khi có sự kiện Stop và SubagentStop',
+  'session_recovery.guide.auto_state.point4': 'State bao gồm: plan hiện tại, todo items, subagent outputs, trạng thái branch/commit',
+  'session_recovery.guide.auto_state.point5': 'Lưu trữ state cũ — xoay vòng sau 10 sessions',
+  'session_recovery.guide.auto_state.point6': 'Thiết kế fail-open: không chặn nếu hook gặp lỗi',
+  'session_recovery.guide.auto_state.migration': 'v2.14.0+ tự động lưu session state. Recovery thủ công (/resume, /export) vẫn hoạt động như fallback.',
 } as const;

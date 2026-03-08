@@ -506,6 +506,17 @@ const ccsGuideUrl = currentLang === 'vi' ? '/vi/guides/ccs' : '/guides/ccs';
           <div class="text-xs text-slate-600 dark:text-slate-400">{t('cli.guide.tip4_description')}</div>
         </div>
       </div>
+
+      <div class="flex items-start gap-3 p-4 rounded-lg bg-surface-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 md:col-span-2">
+        <svg class="w-6 h-6 text-amber-500 dark:text-amber-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+        </svg>
+        <div>
+          <div class="text-sm font-medium text-slate-800 dark:text-slate-200 mb-1">{t('cli.guide.tip5_title')}</div>
+          <div class="text-xs text-slate-600 dark:text-slate-400" set:html={t('cli.guide.tip5_description')}></div>
+        </div>
+      </div>
     </div>
   </div>
 

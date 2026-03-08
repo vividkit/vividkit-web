@@ -47,7 +47,7 @@ function generatePath(from: { x: number; y: number }, to: { x: number; y: number
 // This is the ORIGINAL state before v2.5.0+ changes - kept AS IS
 // ============================================================================
 
-const v24Nodes: FlowchartNode[] = [
+const betaNodes: FlowchartNode[] = [
   // Start node (centered)
   {
     id: 'start',
@@ -268,7 +268,7 @@ const v24Nodes: FlowchartNode[] = [
   }
 ];
 
-const v24Edges: FlowchartEdge[] = [
+const betaEdges: FlowchartEdge[] = [
   // From start to level 1 decisions
   {
     id: 'e-start-new-project',
@@ -514,7 +514,7 @@ const v24Edges: FlowchartEdge[] = [
   }
 ];
 
-const v24Paths: FlowchartPath[] = [
+const betaPaths: FlowchartPath[] = [
   // New Project path
   {
     id: 'path-bootstrap',
@@ -687,7 +687,7 @@ const v24Paths: FlowchartPath[] = [
 // v2.5.0+ FLOWCHART DATA - Uses /git skill, /worktree, separated Docs/Designs, /cook @plan.md
 // ============================================================================
 
-const v25Nodes: FlowchartNode[] = [
+const stableNodes: FlowchartNode[] = [
   // Start node (centered)
   {
     id: 'start',
@@ -923,7 +923,7 @@ const v25Nodes: FlowchartNode[] = [
   }
 ];
 
-const v25Edges: FlowchartEdge[] = [
+const stableEdges: FlowchartEdge[] = [
   // From start to level 1 decisions
   {
     id: 'e-start-new-project',
@@ -1183,7 +1183,7 @@ const v25Edges: FlowchartEdge[] = [
   }
 ];
 
-const v25Paths: FlowchartPath[] = [
+const stablePaths: FlowchartPath[] = [
   // New Project path
   {
     id: 'path-bootstrap',
@@ -1369,41 +1369,88 @@ const viewBox = '0 0 1500 720';
 // EXPORTS
 // ============================================================================
 
-// v2.5.0+ flowchart data (git skill)
-export const v25FlowchartData: FlowchartData = {
-  nodes: v25Nodes,
-  edges: v25Edges,
-  paths: v25Paths,
+// Stable (v2.13.0) flowchart data (skill-based approach)
+export const stableFlowchartData: FlowchartData = {
+  nodes: stableNodes,
+  edges: stableEdges,
+  paths: stablePaths,
   viewBox
 };
 
-// v2.4.x flowchart data (/git:* commands) - ORIGINAL state preserved
-export const v24FlowchartData: FlowchartData = {
-  nodes: v24Nodes,
-  edges: v24Edges,
-  paths: v24Paths,
+// Beta (v2.14.0) flowchart data - superset of stable with /llms node added
+const betaOnlyNodes: FlowchartNode[] = [
+  ...stableNodes,
+  // Beta-only: /llms skill node (ck:llms - Generate llms.txt files following llmstxt.org spec)
+  {
+    id: 'cmd-llms',
+    type: 'command',
+    label: '/llms',
+    description: 'Generate llms.txt files (llmstxt.org)',
+    position: { x: 1000, y: 280 }
+  }
+];
+
+const betaOnlyEdges: FlowchartEdge[] = [
+  ...stableEdges,
+  // Beta-only: edge from docs-design to /llms
+  {
+    id: 'e-docs-llms',
+    from: 'docs-design',
+    to: 'cmd-llms',
+    label: 'AI index?',
+    path: generatePath({ x: 900, y: 160 }, { x: 1000, y: 280 }),
+    labelX: 965,
+    labelY: 215
+  }
+];
+
+const betaOnlyPaths: FlowchartPath[] = [
+  ...stablePaths,
+  // Beta-only: /llms path
+  {
+    id: 'path-llms',
+    name: 'Docs Index (Beta)',
+    nodes: ['start', 'docs-design', 'cmd-llms'],
+    edges: ['e-start-docs-design', 'e-docs-llms'],
+    command: '/llms',
+    description: 'Generate llms.txt files following llmstxt.org spec for AI-readable documentation',
+    color: 'amber'
+  }
+];
+
+export const betaFlowchartData: FlowchartData = {
+  nodes: betaOnlyNodes,
+  edges: betaOnlyEdges,
+  paths: betaOnlyPaths,
+  viewBox
+};
+
+// Legacy v2.4.x flowchart data - kept in source for reference, NOT rendered
+// Uses old command syntax: /git:cm, /git:pr, /design:*, /code @plan.md
+export const legacyFlowchartData: FlowchartData = {
+  nodes: betaNodes,
+  edges: betaEdges,
+  paths: betaPaths,
   viewBox
 };
 
 // Default export for backward compatibility
-export const flowchartData = v25FlowchartData;
+export const flowchartData = stableFlowchartData;
 
 // Helper to get path by command
-export function getPathByCommand(command: string, version: 'v25' | 'v24' = 'v25'): FlowchartPath | undefined {
-  const paths = version === 'v25' ? v25Paths : v24Paths;
-  return paths.find(p => p.command === command);
+export function getPathByCommand(command: string, version: 'stable' | 'beta' = 'stable'): FlowchartPath | undefined {
+  // Both stable and beta use the same stable paths (beta is superset)
+  return stablePaths.find(p => p.command === command);
 }
 
 // Helper to get all paths containing a node
-export function getPathsContainingNode(nodeId: string, version: 'v25' | 'v24' = 'v25'): FlowchartPath[] {
-  const paths = version === 'v25' ? v25Paths : v24Paths;
-  return paths.filter(p => p.nodes.includes(nodeId));
+export function getPathsContainingNode(nodeId: string, version: 'stable' | 'beta' = 'stable'): FlowchartPath[] {
+  return stablePaths.filter(p => p.nodes.includes(nodeId));
 }
 
 // Helper to get all paths containing an edge
-export function getPathsContainingEdge(edgeId: string, version: 'v25' | 'v24' = 'v25'): FlowchartPath[] {
-  const paths = version === 'v25' ? v25Paths : v24Paths;
-  return paths.filter(p => p.edges.includes(edgeId));
+export function getPathsContainingEdge(edgeId: string, version: 'stable' | 'beta' = 'stable'): FlowchartPath[] {
+  return stablePaths.filter(p => p.edges.includes(edgeId));
 }
 
 // Color mapping for path colors

@@ -90,8 +90,8 @@ export default {
   'guides.what_is_claudekit.bottom_line_desc': 'All you need to do is type simple commands, and ClaudeKit handles the complexity!',
   'guides.what_is_claudekit.view_all_commands': 'View All Commands',
   // Quick Start version tabs
-  'guides.what_is_claudekit.qs_tab_v25': 'v2.5.0+',
-  'guides.what_is_claudekit.qs_tab_v24': 'v2.4.x-',
+  'guides.what_is_claudekit.qs_tab_v25': 'v2.13.0 Stable',
+  'guides.what_is_claudekit.qs_tab_v24': 'v2.14.0 Beta',
   // Command descriptions
   'guides.what_is_claudekit.cmd_ask': 'Get answers to any question',
   'guides.what_is_claudekit.cmd_brainstorm': 'Explore ideas together',
@@ -643,7 +643,7 @@ export default {
   'features.description': 'Transform ClaudeKit\'s powerful agent system into an accessible, visual experience. No terminal expertise required.',
   'features.prerequisites': 'Prerequisites: ClaudeKit CLI installed',
   'features.setup': 'Setup: 30s for existing users',
-  'features.item1': 'Makes ClaudeKit\'s 73 commands & skills accessible through visual GUI',
+  'features.item1': 'Makes ClaudeKit\'s 66 commands & skills accessible through visual GUI',
   'features.item2': 'Browse ClaudeKit\'s 40+ skills visually (no more directory diving)',
   'features.item3': 'Watch ClaudeKit agents orchestrate in real-time',
   'features.item4': 'Track token usage and costs with visual dashboards',
@@ -860,8 +860,8 @@ export default {
   'commands.detail.journal': 'Document failures, lessons learned, project wrap-up',
   'commands.desc.kanban': 'Open AI orchestration dashboard',
   'commands.detail.kanban': 'Visualize plan progress, agent activity',
-  'commands.desc.preview': 'View markdown/files in beautiful reader',
-  'commands.detail.preview': 'Want to read plans/docs in nice UI',
+  'commands.desc.preview': 'View markdown + generate visuals with multiple modes',
+  'commands.detail.preview': '*visual generation only available from version engineer@2.10+',
   'commands.desc.watzup': 'Review recent changes + wrap up',
   'commands.detail.watzup': 'End of session, see what was done',
   'commands.desc.use_mcp': 'Use tools from MCP servers',
@@ -904,6 +904,8 @@ export default {
   'cli.guide.tip3_description': 'Use <code class="font-mono text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 px-1 rounded">@filename</code> to tell AI which files to modify',
   'cli.guide.tip4_title': 'Always Use "Using ui-ux-pro-max skill"',
   'cli.guide.tip4_description': 'This activates the design intelligence system for professional results',
+  'cli.guide.tip5_title': 'Statusline & Gemini Model Config',
+  'cli.guide.tip5_description': 'In <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">.ck.json</code>, set <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">statusline</code> to <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">"minimal"</code> (stable default) or <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">"full"</code> (beta default). Default Gemini model is <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">gemini-3-flash-preview</code> (configurable via <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">gemini.model</code>). Beta also creates <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">.claude/session-state/</code> for session persistence.',
 
   // CLI Guide Terminal Mockup
   'cli.terminal.setup_comment': '# Set up ClaudeKit in your project',
@@ -1153,6 +1155,13 @@ export default {
   'ccs.guide.sync_title': 'Sync Shared Data',
   'ccs.guide.sync_desc': 'Sync latest delegation commands and skills from ClaudeKit to CCS:',
 
+  // .ck.json Configuration Section
+  'ccs.guide.ck_json_title': '.ck.json Configuration',
+  'ccs.guide.ck_json_desc': 'All available settings for your <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">.ck.json</code> configuration file.',
+  'ccs.guide.ck_json_setting': 'Setting',
+  'ccs.guide.ck_json_default': 'Default',
+  'ccs.guide.ck_json_description': 'Description',
+
   // Resources Section
   'ccs.guide.resources_title': 'Resources',
   'ccs.guide.documentation': 'Documentation',
@@ -1269,7 +1278,7 @@ export default {
   'workflows.tip.debug.title': 'Debug before fixing',
   'workflows.tip.debug.desc': 'Use `/debug` first to find root cause, then `/fix` when ready',
   'workflows.tip.help.title': 'Discover commands with /ck-help',
-  'workflows.tip.help.desc': 'Type `/ck-help` to see all 73 commands & skills organized by category',
+  'workflows.tip.help.desc': 'Type `/ck-help` to see all 66 commands & skills organized by category',
   'workflows.tip.plan.title': 'Always start with /plan',
   'workflows.tip.plan.desc': 'Create a structured plan first, then use `/code` to execute it step-by-step',
   'workflows.related.title': 'Related Guides',
@@ -1502,7 +1511,7 @@ export default {
 
   // v2.5 Skill descs
   'commands.v25.desc.cook': 'Task orchestration',
-  'commands.v25.detail.cook': 'Intent detection, subagent patterns, review cycles',
+  'commands.v25.detail.cook': 'Intent detection, subagent patterns, review cycles. v2.9.1+: Steps 4/5/6 enforce subagent delegation (tester → reviewer → finalize)',
   'commands.v25.desc.scout': 'Codebase file discovery',
   'commands.v25.detail.scout': 'Internal and external scouting',
   'commands.v25.desc.fix': 'Intelligent fix routing',
@@ -1569,14 +1578,14 @@ export default {
   'commands.v25.flags.json': 'Output JSON for LLM parsing',
   'commands.v25.flags.dryRun': 'Preview without executing',
 
-  // v2.5 UI strings
-  'commands.v25.mandatory_title': 'CK engineer@v2.5.0+ Mandatory: /clear after /plan',
-  'commands.v25.mandatory_desc': 'Run <code class="px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 font-mono">/clear</code> after reviewing your plan and before implementing to free up context. This is now mandatory in v2.5.0+.',
-  'commands.v25.breaking_title': '<code class="px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 font-mono text-sm">engineer@v2.5.0+</code> Breaking Changes',
-  'commands.v25.breaking_commands_skills': '<strong>Commands → Skills:</strong> Many commands are now skills. Invoke via <code class="px-1 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 text-xs">/skill-name</code> (Claude Code v2.1.1+) or natural language.',
+  // Version UI strings (Stable = v2.13.0, Beta = v2.14.0)
+  'commands.v25.mandatory_title': 'CK engineer@v2.13.0 Mandatory: /clear after /plan',
+  'commands.v25.mandatory_desc': 'Run <code class="px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 font-mono">/clear</code> after reviewing your plan and before implementing to free up context.',
+  'commands.v25.breaking_title': '<code class="px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 font-mono text-sm">engineer@v2.13.0</code> What\'s New',
+  'commands.v25.breaking_commands_skills': '<strong>All Commands → Skills:</strong> All 19 commands migrated to skills with <code class="px-1 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 text-xs">ck:</code> namespace prefix. Both <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-xs">/cook</code> and <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-xs">ck:cook</code> work identically.',
   'commands.v25.breaking_mandatory': '<strong class="text-red-600 dark:text-red-400">Mandatory:</strong> Run <code class="px-1 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-xs">/clear</code> after <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-xs">/plan</code> before implementing to free context.',
-  'commands.v25.breaking_cook_auto': '<strong class="text-purple-600 dark:text-purple-400">/cook --auto:</strong> <code class="px-1 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 text-xs">v2.6.x</code> forced auto mode by default. <code class="px-1 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 text-xs">v2.7.x</code> reverts to manual mode — add <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-xs">--auto</code> flag if you want auto-approval.',
-  'commands.v25.breaking_cook_auto_desc': 'The <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 font-mono text-xs">/cook</code> skill changed its default approval behavior between versions.',
+  'commands.v25.breaking_cook_auto': '<strong class="text-purple-600 dark:text-purple-400">CC Plugin Format:</strong> Skills now use Claude Code plugin directories with <code class="px-1 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 text-xs">${CLAUDE_PLUGIN_ROOT}</code> paths and <code class="px-1 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 text-xs">argument-hint</code> frontmatter for auto-discovery.',
+  'commands.v25.breaking_cook_auto_desc': 'Skills use Claude Code plugin format with automatic discovery via argument-hint metadata.',
   'commands.v25.migration_title': 'Migration Reference',
   'commands.v25.migration_old': 'Previous',
   'commands.v25.migration_new': 'Use Instead',
@@ -1584,17 +1593,17 @@ export default {
   'commands.v26.removed_agents_title': 'Removed Agents (v2.6.0)',
   'commands.v26.removed_agents_desc': 'These agents were removed in engineer@v2.6.0. Use Task tool with appropriate subagent_type or skills instead.',
   'commands.v27.if_want_auto': 'if you want auto-approval',
-  'commands.v25.badge_new': 'Added in v2.5.0',
-  'commands.v25.badge_enhanced': 'Improved in v2.5.0',
+  'commands.v25.badge_new': 'New in v2.13.0',
+  'commands.v25.badge_enhanced': 'Enhanced in v2.13.0',
   'commands.v25.badge_archived': 'Still works, use skill instead',
-  'commands.v25.skills_note': 'Skills invocable via <code class="px-1 py-0.5 rounded bg-teal-50 dark:bg-teal-900/20 text-teal-600 dark:text-teal-400">/skill-name [args]</code> or natural language',
-  'commands.v25.tab_v25': 'engineer@v2.5.0+',
-  'commands.v25.tab_v24': 'engineer@v2.4.x-',
-  'commands.v25.v24_label': 'engineer@v2.4.x-',
-  'commands.v25.banner_intro': 'introduces skills-first architecture. Commands now route through skills for better extensibility.',
-  'commands.v25.banner_legacy': 'View engineer@v2.4.x- for legacy commands.',
-  'commands.v25.v24_banner': 'commands. These are still functional but some are archived in engineer@v2.5.0+.',
-  'commands.v25.v24_banner_note': 'View engineer@v2.5.0+ for new skills-based architecture.',
+  'commands.v25.skills_note': 'Skills invocable via <code class="px-1 py-0.5 rounded bg-teal-50 dark:bg-teal-900/20 text-teal-600 dark:text-teal-400">/skill-name [args]</code> or <code class="px-1 py-0.5 rounded bg-teal-50 dark:bg-teal-900/20 text-teal-600 dark:text-teal-400">ck:skill-name</code> — both work identically',
+  'commands.v25.tab_v25': 'v2.13.0 Stable',
+  'commands.v25.tab_v24': 'v2.14.0 Beta',
+  'commands.v25.v24_label': 'v2.14.0 Beta',
+  'commands.v25.banner_intro': '— all commands migrated to skills with ck: namespace. Both /cook and ck:cook work identically.',
+  'commands.v25.banner_legacy': 'View v2.14.0 Beta tab for cutting-edge features.',
+  'commands.v25.v24_banner': 'beta features. These are pre-release and may change before stable.',
+  'commands.v25.v24_banner_note': 'View v2.13.0 Stable for production-ready commands.',
 
   // v2.4 specific commands
   'commands.v24.desc.git_cm': 'Stage all files and create a commit',
@@ -1621,7 +1630,7 @@ export default {
   'commands.v29.nativeTasks': 'Uses native Claude Tasks (TaskCreate, TaskUpdate, TaskGet, TaskList)',
   'commands.v29.findSkills_note': 'Use when user asks "how do I do X", "find a skill for X", or wants to extend agent capabilities. Skills CLI is the package manager for open agent skills ecosystem.',
   'commands.v29.browseSkills': 'Browse skills',
-  'commands.v29.planValidate_note': 'Post-Plan gate now includes a "Validate" option to run /plan:validate before implementation. Interview-style confirmation of plan decisions.',
+  'commands.v29.planValidate_note': 'Post-Plan gate now includes a "Validate" option to run /plan:validate before implementation. Interview-style confirmation of plan decisions.<br/>engineer@2.10+: validation decisions auto-propagate to phase files.',
 
   'commands.docs.text': 'Visit',
   'commands.docs.link': 'official ClaudeKit documentation site to see comprehensive docs.',
@@ -1684,6 +1693,8 @@ export default {
   'permissions.guide.option2.source_link': 'Additional Commands List',
   'permissions.guide.docs.text': 'For comprehensive documentation on permission scopes and syntax, visit the',
   'permissions.guide.docs.link': 'Official Claude Code Documentation',
+  'permissions.guide.hooks_note_title': 'Hooks format:',
+  'permissions.guide.hooks_note_desc': 'All ClaudeKit hooks use .cjs (CommonJS Node.js) format — cross-platform compatible on macOS, Linux, and Windows. No shell scripts required.',
 
   // Token Tips Guide
   'guides.token_tips.title': 'Token Tips',
@@ -1754,6 +1765,8 @@ export default {
   'token_tips.guide.pro2.desc': 'Note session IDs after key milestones. Resume exactly where you left off.',
   'token_tips.guide.pro3.title': 'Batch similar tasks',
   'token_tips.guide.pro3.desc': 'Group related work in one session, then /clear before switching context.',
+  'token_tips.guide.pro4.title': 'Use --fast variants',
+  'token_tips.guide.pro4.desc': 'Commands like /cook --fast and /fix --quick skip research phases, reducing token consumption significantly.',
 
   // Summary
   'token_tips.guide.summary_title': 'TL;DR - Token Saving Cheatsheet',
@@ -1795,7 +1808,7 @@ export default {
   'token_tips.guide.case2.desc': 'When sessions run long, context fills up. The context-engineering skill watches utilization and optimizes automatically.',
   'token_tips.guide.case2.metric1': 'Warning level',
   'token_tips.guide.case2.metric2': 'Trigger optimization',
-  'token_tips.guide.case2.metric3': 'Compression achieved',
+  'token_tips.guide.case2.metric3': 'CRITICAL threshold',
 
   // Session Recovery Guide (merged with Resume Guide)
   'guides.session_recovery.title': 'Session Recovery',
@@ -1909,4 +1922,16 @@ export default {
   'session_recovery.guide.related_ccs': 'Multi-account & model switching',
   'session_recovery.guide.related_token': 'Reduce token consumption',
   'session_recovery.guide.related_commands': 'All available commands',
+
+  // Beta: Auto Session State (v2.14.0)
+  'session_recovery.guide.auto_state.badge': 'v2.14.0-beta',
+  'session_recovery.guide.auto_state.title': 'Auto Session State',
+  'session_recovery.guide.auto_state.desc': 'v2.14.0-beta introduces session-state.cjs — a hook that automatically persists and restores session progress across compactions and restarts.',
+  'session_recovery.guide.auto_state.point1': 'State saved to .claude/session-state/.last-state.md',
+  'session_recovery.guide.auto_state.point2': 'Auto-loads on SessionStart (startup or after compact)',
+  'session_recovery.guide.auto_state.point3': 'Auto-saves on Stop and SubagentStop events',
+  'session_recovery.guide.auto_state.point4': 'State includes: last active plan, todo items, subagent outputs, branch/commit status',
+  'session_recovery.guide.auto_state.point5': 'Archives old state — rotates after 10 sessions',
+  'session_recovery.guide.auto_state.point6': 'Fail-open design: non-blocking if hook errors',
+  'session_recovery.guide.auto_state.migration': 'v2.14.0+ auto-persists session state. Manual recovery (/resume, /export) still works as fallback.',
 } as const;

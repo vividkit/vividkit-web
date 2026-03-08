@@ -1,5 +1,5 @@
 ---
-import { v25FlowchartData, v24FlowchartData, pathColors, type FlowchartPath } from '@/data/guides/flowchart';
+import { stableFlowchartData, betaFlowchartData, pathColors, type FlowchartPath } from '@/data/guides/flowchart';
 import { getLangFromUrl, type Language } from '@/i18n';
 
 interface Props {
@@ -11,13 +11,13 @@ const { lang, class: className = '' } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 
 // Both versions for rendering
-const v25Data = v25FlowchartData;
-const v24Data = v24FlowchartData;
-const { viewBox } = v25Data;
+const stableData = stableFlowchartData;
+const betaData = betaFlowchartData;
+const { viewBox } = stableData;
 
 // Serialize paths for Alpine.js
-const v25PathsJson = JSON.stringify(v25Data.paths);
-const v24PathsJson = JSON.stringify(v24Data.paths);
+const v25PathsJson = JSON.stringify(stableData.paths);
+const v24PathsJson = JSON.stringify(betaData.paths);
 const colorsJson = JSON.stringify(pathColors);
 ---
 
@@ -299,7 +299,7 @@ const colorsJson = JSON.stringify(pathColors);
 
             <!-- v2.5.0+ Edges -->
             <g class="edges" x-show="currentVersion === 'v25'">
-                {v25Data.edges.map(edge => (
+                {stableData.edges.map(edge => (
                 <g
                     class="flowchart-edge cursor-pointer"
                     x-bind:class={`getEdgeClass('${edge.id}')`}
@@ -318,7 +318,7 @@ const colorsJson = JSON.stringify(pathColors);
 
             <!-- v2.4.0 Edges -->
             <g class="edges" x-show="currentVersion === 'v24'" x-cloak>
-                {v24Data.edges.map(edge => (
+                {betaData.edges.map(edge => (
                 <g
                     class="flowchart-edge cursor-pointer"
                     x-bind:class={`getEdgeClass('${edge.id}')`}
@@ -337,7 +337,7 @@ const colorsJson = JSON.stringify(pathColors);
 
             <!-- v2.5.0+ Nodes -->
             <g class="nodes" x-show="currentVersion === 'v25'">
-                {v25Data.nodes.map(node => (
+                {stableData.nodes.map(node => (
                 <g
                     class="flowchart-node cursor-pointer"
                     x-bind:class={`getNodeClass('${node.id}')`}
@@ -360,7 +360,7 @@ const colorsJson = JSON.stringify(pathColors);
 
             <!-- v2.4.0 Nodes -->
             <g class="nodes" x-show="currentVersion === 'v24'" x-cloak>
-                {v24Data.nodes.map(node => (
+                {betaData.nodes.map(node => (
                 <g
                     class="flowchart-node cursor-pointer"
                     x-bind:class={`getNodeClass('${node.id}')`}
