@@ -248,6 +248,7 @@ const stableCategories = [
         desc: "Trả lời câu hỏi kỹ thuật và kiến trúc",
         detail: "Tư vấn chuyên gia cho quyết định công nghệ.",
         isSkill: true,
+        flags: ["[question]"],
       },
       {
         command: "/bootstrap",
@@ -256,6 +257,7 @@ const stableCategories = [
         desc: "Khởi tạo dự án đầy đủ từ đầu",
         detail: "Cài đặt tech stack, lập kế hoạch, thiết kế, và triển khai.",
         isSkill: true,
+        flags: ["--full", "--auto", "--fast", "--parallel"],
       },
       {
         command: "/ck-help",
@@ -279,7 +281,7 @@ const stableCategories = [
     name: t("commands.cat.planResearch"),
     description: t("commands.cat.planResearch_desc"),
     color: "blue",
-    icon: `<path d="M9 5H2v7l6.29 6.29c.94.94 2.48.94 3.42 0l3.58-3.58c.94-.94.94-2.48 0-3.42L9 5z"/>`,
+    icon: `<circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>`,
     commands: [
       {
         command: "/brainstorm",
@@ -296,6 +298,7 @@ const stableCategories = [
         desc: "Nghiên cứu kỹ thuật và đánh giá công nghệ",
         detail: "Best practices, thiết kế giải pháp.",
         isSkill: true,
+        flags: ["[topic]"],
       },
       {
         command: "/scout",
@@ -313,7 +316,23 @@ const stableCategories = [
         desc: "Tạo kế hoạch triển khai chi tiết",
         detail: "Chế độ research, validation, và archival. Dùng subcommand archive, red-team, validate.",
         isSkill: true,
-        flags: ["archive", "red-team", "validate"],
+        flags: ["--fast", "--hard", "archive", "red-team", "validate"],
+      },
+      {
+        command: "/sequential-thinking",
+        complexity: "⚡⚡",
+        label: t("commands.label.medium"),
+        desc: "Suy luận từng bước với khả năng tự điều chỉnh",
+        detail: "Phân tích đa bước, kiểm chứng giả thuyết, lập kế hoạch thích ứng.",
+        isSkill: true,
+      },
+      {
+        command: "/problem-solving",
+        complexity: "⚡⚡",
+        label: t("commands.label.medium"),
+        desc: "Gỡ bế tắc khi giải quyết vấn đề phức tạp",
+        detail: "Phá vỡ vòng lặp phức tạp, thử nghiệm giả định, đơn giản hóa bài toán.",
+        isSkill: true,
       },
     ],
   },
@@ -402,7 +421,7 @@ const stableCategories = [
     name: t("commands.cat.aiMultimodal"),
     description: t("commands.cat.aiMultimodal_desc"),
     color: "amber",
-    icon: `<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>`,
+    icon: `<path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/>`,
     commands: [
       {
         command: "/ai-multimodal",
@@ -443,7 +462,7 @@ const stableCategories = [
     name: t("commands.cat.buildShip"),
     description: t("commands.cat.buildShip_desc"),
     color: "teal",
-    icon: `<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>`,
+    icon: `<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>`,
     commands: [
       {
         command: "/backend-development",
@@ -508,7 +527,7 @@ const stableCategories = [
         desc: "Điều phối Agent Teams",
         detail: "Cộng tác đa phiên song song. Template: research, implement, review, debug.",
         isSkill: true,
-        flags: ["--devs N", "--researchers N", "--reviewers N", "--delegate"],
+        flags: ["<template> <context>", "--devs N", "--researchers N", "--reviewers N", "--delegate"],
       },
       {
         command: "/deploy",
@@ -524,8 +543,8 @@ const stableCategories = [
   {
     name: t("commands.cat.gitVersionControl"),
     description: t("commands.cat.gitVersionControl_desc"),
-    color: "slate",
-    icon: `<circle cx="12" cy="12" r="3"/><line x1="3" y1="12" x2="9" y2="12"/><line x1="15" y1="12" x2="21" y2="12"/>`,
+    color: "orange",
+    icon: `<line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/>`,
     commands: [
       {
         command: "/git",
@@ -643,6 +662,7 @@ const stableCategories = [
         desc: "Tiêu đề, CTA, landing page",
         detail: "Email copy, phong cách viết, copy tập trung vào chuyển đổi.",
         isSkill: true,
+        flags: ["[copy-type] [context]"],
       },
       {
         command: "/mintlify",
@@ -807,30 +827,23 @@ const stableCategories = [
         detail: "Trực quan hóa timeline và tiến độ.",
         isSkill: true,
       },
+      {
+        command: "/project-organization",
+        complexity: "⚡⚡",
+        label: t("commands.label.medium"),
+        desc: "Tổ chức cấu trúc dự án và bố cục file",
+        detail: "Phân tích và tái cấu trúc thư mục dự án để dễ bảo trì.",
+        isSkill: true,
+        isBeta: true,
+      },
     ],
   },
   {
     name: t("commands.cat.utilities"),
     description: t("commands.cat.utilities_desc"),
-    color: "slate",
-    icon: `<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>`,
+    color: "purple",
+    icon: `<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>`,
     commands: [
-      {
-        command: "/sequential-thinking",
-        complexity: "⚡⚡",
-        label: t("commands.label.medium"),
-        desc: "Phân tích từng bước cho vấn đề phức tạp",
-        detail: "Khả năng sửa đổi cho giải quyết vấn đề lặp.",
-        isSkill: true,
-      },
-      {
-        command: "/problem-solving",
-        complexity: "⚡⚡",
-        label: t("commands.label.medium"),
-        desc: "Kỹ thuật giải quyết vấn đề có hệ thống",
-        detail: "Cho các vòng xoáy phức tạp và điểm bị chặn.",
-        isSkill: true,
-      },
       {
         command: "/skill-creator",
         complexity: "⚡⚡",
@@ -863,15 +876,6 @@ const stableCategories = [
         desc: "Phân tích code ngữ nghĩa",
         detail: "Tích hợp GitLab Knowledge Graph.",
         isSkill: true,
-      },
-      {
-        command: "/project-organization",
-        complexity: "⚡⚡",
-        label: t("commands.label.medium"),
-        desc: "Tổ chức cấu trúc dự án và bố cục file",
-        detail: "Phân tích và tái cấu trúc thư mục dự án để dễ bảo trì.",
-        isSkill: true,
-        isBeta: true,
       },
     ],
   },
@@ -2240,7 +2244,7 @@ const helpItems = [
             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
             </svg>
-            Beta Preview
+            Bản Beta
             <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-purple-500 text-white font-medium uppercase">new</span>
           </h3>
           <p class="text-xs text-slate-500 mt-1">Tính năng xem trước từ bản phát hành sắp tới</p>
@@ -2251,61 +2255,63 @@ const helpItems = [
             <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
               <div class="flex items-center gap-1.5 flex-wrap">
                 <code class="text-sm font-bold font-mono text-purple-600 dark:text-purple-400">/deploy</code>
-                <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">beta</span>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">skill</span>
               </div>
             </div>
             <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Tự động phát hiện và triển khai lên 15+ nền tảng</p>
-            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">Vercel, Netlify, Cloudflare, AWS, GCP, Railway, Fly.io, and more.</p>
+            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">Vercel, Netlify, Cloudflare, AWS, GCP, Railway, Fly.io, và nhiều hơn.</p>
           </div>
           <div class="p-3 rounded-lg bg-white/60 dark:bg-slate-900/50 border border-purple-500/30 transition-all duration-200 hover:shadow-sm h-full flex flex-col">
             <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
               <div class="flex items-center gap-1.5 flex-wrap">
                 <code class="text-sm font-bold font-mono text-purple-600 dark:text-purple-400">/llms</code>
-                <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">beta</span>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">skill</span>
               </div>
             </div>
             <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Tạo llms.txt cho codebase thân thiện với AI</p>
-            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">Follows llmstxt.org spec for LLM context optimization.</p>
+            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">Theo chuẩn llmstxt.org để tối ưu context cho LLM.</p>
           </div>
           <div class="p-3 rounded-lg bg-white/60 dark:bg-slate-900/50 border border-purple-500/30 transition-all duration-200 hover:shadow-sm h-full flex flex-col">
             <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
               <div class="flex items-center gap-1.5 flex-wrap">
                 <code class="text-sm font-bold font-mono text-purple-600 dark:text-purple-400">/project-organization</code>
-                <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">beta</span>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">skill</span>
               </div>
             </div>
             <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Chuẩn hóa vị trí file và đặt tên</p>
-            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">Analyze and restructure project directories.</p>
+            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">Phân tích và tái cấu trúc thư mục dự án.</p>
           </div>
           <div class="p-3 rounded-lg bg-white/60 dark:bg-slate-900/50 border border-purple-500/30 transition-all duration-200 hover:shadow-sm h-full flex flex-col">
             <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
               <div class="flex items-center gap-1.5 flex-wrap">
                 <code class="text-sm font-bold font-mono text-purple-600 dark:text-purple-400">/security-scan</code>
-                <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">beta</span>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">skill</span>
               </div>
             </div>
             <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Quét lỗ hổng và secret bị lộ</p>
-            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">OWASP patterns, hardcoded API keys, dependency issues.</p>
+            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">OWASP patterns, API key hardcode, vấn đề dependency.</p>
           </div>
           <div class="p-3 rounded-lg bg-white/60 dark:bg-slate-900/50 border border-purple-500/30 transition-all duration-200 hover:shadow-sm h-full flex flex-col">
             <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
               <div class="flex items-center gap-1.5 flex-wrap">
                 <code class="text-sm font-bold font-mono text-purple-600 dark:text-purple-400">/design</code>
-                <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">beta</span>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">skill</span>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 font-medium uppercase">new</span>
               </div>
             </div>
             <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Nhận diện thương hiệu, logo, CIP, banner, icon</p>
-            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">55 logo styles, 50 CIP deliverables, social photos. Gemini AI.</p>
+            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">55 kiểu logo, 50 sản phẩm CIP, ảnh mạng xã hội. Gemini AI.</p>
           </div>
           <div class="p-3 rounded-lg bg-white/60 dark:bg-slate-900/50 border border-purple-500/30 transition-all duration-200 hover:shadow-sm h-full flex flex-col">
             <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
               <div class="flex items-center gap-1.5 flex-wrap">
                 <code class="text-sm font-bold font-mono text-purple-600 dark:text-purple-400">/ui-ux-pro-max</code>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">skill</span>
                 <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium uppercase">enhanced</span>
               </div>
             </div>
             <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">161 palettes, 57 font pairings, 25 charts</p>
-            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">161 product types, 99 UX guidelines. Removed per-stack CSVs.</p>
+            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">161 loại sản phẩm, 99 hướng dẫn UX. Gỡ bỏ CSV theo stack.</p>
           </div>
           <!-- Hooks -->
           <div class="p-3 rounded-lg bg-white/60 dark:bg-slate-900/50 border border-violet-500/30 transition-all duration-200 hover:shadow-sm h-full flex flex-col">
@@ -2316,7 +2322,7 @@ const helpItems = [
               </div>
             </div>
             <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Tự động lưu tiến trình phiên</p>
-            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">Saves/restores state on Stop, SubagentStop, SessionStart.</p>
+            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">Lưu/khôi phục trạng thái khi Stop, SubagentStop, SessionStart.</p>
           </div>
           <div class="p-3 rounded-lg bg-white/60 dark:bg-slate-900/50 border border-violet-500/30 transition-all duration-200 hover:shadow-sm h-full flex flex-col">
             <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
@@ -2325,19 +2331,19 @@ const helpItems = [
                 <span class="text-[9px] px-1.5 py-0.5 rounded bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 font-medium uppercase">hook</span>
               </div>
             </div>
-            <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Validate plan.md link formatting</p>
-            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">Enforces human-readable link text in plan files.</p>
+            <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Kiểm tra định dạng link trong plan.md</p>
+            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">Bắt buộc link text dễ đọc trong file plan.</p>
           </div>
           <!-- System Changes -->
           <div class="p-3 rounded-lg bg-white/60 dark:bg-slate-900/50 border border-slate-400/30 transition-all duration-200 hover:shadow-sm h-full flex flex-col">
             <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
               <div class="flex items-center gap-1.5 flex-wrap">
-                <span class="text-sm font-bold text-slate-500 dark:text-slate-400">System Changes</span>
+                <span class="text-sm font-bold text-slate-500 dark:text-slate-400">Thay đổi hệ thống</span>
                 <span class="text-[9px] px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-400 font-medium uppercase">config</span>
               </div>
             </div>
-            <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Statusline, Stop event, Notifications</p>
-            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">Statusline default changed to 'full'. Stop lifecycle event added. Notification providers modularized. MiniMax API support.</p>
+            <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Statusline, sự kiện Stop, Notifications</p>
+            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">Statusline mặc định đổi thành 'full'. Thêm sự kiện Stop lifecycle. Module hóa notification providers. Hỗ trợ MiniMax API.</p>
           </div>
         </div>
       </div>
