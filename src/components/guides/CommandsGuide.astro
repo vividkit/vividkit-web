@@ -16,8 +16,9 @@ const t = useTranslations(currentLang);
 // enhanced: significantly improved in v2.5.0
 // removed: no longer available in v2.5.0
 
-// v2.13.0 highlights - migration notice + core workflow skills
-const v25Highlights = [
+// v2.13.0 highlights - REMOVED (merged into stableCategories with isBeta flag)
+// const v25Highlights = [
+const _v25HighlightsRemoved = [
   {
     name: "v2.13.0: All Commands → Skills",
     description: "0 active commands — all 19 legacy commands migrated. Both /cook and ck:cook work identically.",
@@ -213,6 +214,7 @@ const v25Highlights = [
 ];
 
 // v2.13.0 stable categories - organized by skills taxonomy from catalog
+// Note: _v25HighlightsRemoved is unused, kept for historical reference
 // All commands migrated to skills. Both /cook and ck:cook work identically.
 const stableCategories = [
   {
@@ -264,6 +266,15 @@ const stableCategories = [
         detail: "Run full suite, specific module, or visual UI tests on live websites.",
         isSkill: true,
         flags: ["[context]", "ui [url]"],
+      },
+      {
+        command: "/security-scan",
+        complexity: "⚡⚡",
+        label: t("commands.label.medium"),
+        desc: "Scan codebase for security vulnerabilities",
+        detail: "Automated security analysis with remediation suggestions.",
+        isSkill: true,
+        isBeta: true,
       },
       {
         command: "/code-review",
@@ -332,6 +343,15 @@ const stableCategories = [
         detail: "Generate reports, coordinate docs. Tasks: status, hydrate, sync, report.",
         isSkill: true,
         flags: ["status", "hydrate", "sync", "report"],
+      },
+      {
+        command: "/llms",
+        complexity: "⚡⚡",
+        label: t("commands.label.medium"),
+        desc: "Generate llms.txt files from docs or codebase",
+        detail: "Follows llmstxt.org spec. Includes reference files and generation script.",
+        isSkill: true,
+        isBeta: true,
       },
     ],
   },
@@ -591,6 +611,15 @@ const stableCategories = [
         detail: "From Vercel Engineering patterns.",
         isSkill: true,
       },
+      {
+        command: "/deploy",
+        complexity: "⚡⚡",
+        label: t("commands.label.medium"),
+        desc: "Deploy applications to cloud providers",
+        detail: "Streamlined deployment workflows for major cloud platforms.",
+        isSkill: true,
+        isBeta: true,
+      },
     ],
   },
   {
@@ -777,6 +806,15 @@ const stableCategories = [
         detail: "Screenshots, performance, network monitoring, scraping.",
         isSkill: true,
       },
+      {
+        command: "/project-organization",
+        complexity: "⚡⚡",
+        label: t("commands.label.medium"),
+        desc: "Organize project structure and file layout",
+        detail: "Analyze and restructure project directories for maintainability.",
+        isSkill: true,
+        isBeta: true,
+      },
     ],
   },
   {
@@ -822,8 +860,9 @@ const stableCategories = [
   },
 ];
 
-// v2.4 stable categories - AS IS (original commands without archived status)
-const betaCategories = [
+// v2.4 (Marketing Kit) categories - removed, replaced with Coming Soon placeholder
+// const betaCategories = [
+const _betaCategoriesRemoved = [
   {
     name: t("commands.v25.cat.gettingStarted"),
     description: t("commands.v25.cat.gettingStarted_desc"),
@@ -1624,15 +1663,6 @@ const helpItems = [
       >
         {t("guides.commands.description")}
       </p>
-      <!-- Skills count badges (stable vs beta) -->
-      <span id="stable-skills-badge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-bold bg-teal-500/20 text-teal-700 dark:text-teal-300 border border-teal-500/30">
-        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        66 Skills · Stable
-      </span>
-      <span id="beta-skills-badge" class="hidden inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-bold bg-purple-500/20 text-purple-700 dark:text-purple-300 border border-purple-500/30">
-        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6v2.5A5.5 5.5 0 0 1 20.5 11v4.5a5.5 5.5 0 0 1-5.5 5.5h-6a5.5 5.5 0 0 1-5.5-5.5V11A5.5 5.5 0 0 1 9 5.5V3z"/></svg>
-        67 Skills · Beta (+1: ck:llms)
-      </span>
     </div>
   </div>
 
@@ -1688,375 +1718,8 @@ const helpItems = [
     </div>
   </div>
 
+
   <!-- Quick Start Section -->
-
-  <!-- Visual Journey Section -->
-  <div
-    class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden"
-  >
-    <div
-      class="p-6 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border-b border-slate-100 dark:border-slate-800"
-    >
-      <h2
-        class="text-2xl font-bold flex items-center gap-3 text-slate-900 dark:text-white"
-      >
-        <svg
-          class="w-7 h-7 text-cyan-600 dark:text-cyan-400"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <circle cx="12" cy="12" r="10"></circle>
-          <polyline points="8 12 12 16 16 12"></polyline>
-          <line x1="12" y1="8" x2="12" y2="16"></line>
-        </svg>
-        {t("commands.journey.title")}
-      </h2>
-      <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">
-        {t("commands.journey.subtitle")}
-      </p>
-    </div>
-
-    <div class="p-8">
-      <div class="space-y-6">
-        <!-- Step 1: Idea -->
-        <div class="flex items-start gap-4">
-          <div class="flex flex-col items-center flex-shrink-0">
-            <div
-              class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-600 dark:text-purple-400 font-bold text-lg border-2 border-purple-500/50"
-            >
-              1
-            </div>
-            <div
-              class="w-0.5 h-full bg-gradient-to-b from-purple-500/50 to-blue-500/50 mt-3"
-            >
-            </div>
-          </div>
-          <div class="flex-1 pb-6">
-            <div
-              class="bg-slate-50 dark:bg-slate-950 rounded-xl border border-purple-500/30 p-6"
-            >
-              <h3
-                class="text-xl font-bold text-purple-600 dark:text-purple-400 mb-3 flex items-center gap-2"
-              >
-                <svg
-                  class="w-6 h-6"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path
-                    d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
-                  ></path>
-                </svg>
-                {t("commands.journey.step1.title")}
-              </h3>
-              <p class="text-slate-700 dark:text-slate-300 mb-4">
-                {t("commands.journey.step1.desc")}
-              </p>
-              <div class="space-y-3">
-                <div
-                  class="bg-white dark:bg-slate-900/50 rounded-lg p-4 border border-slate-200 dark:border-slate-700"
-                >
-                  <div class="w-full space-y-2">
-                    <code
-                      class="px-3 py-1.5 rounded bg-purple-500/20 text-purple-600 dark:text-purple-400 font-mono text-sm block"
-                    >
-                      /brainstorm <span
-                        class="text-slate-600 dark:text-slate-400"
-                        >{t("commands.journey.step1.example")}</span
-                      >
-                    </code>
-                    <p class="text-[10px] text-slate-500">
-                      Or natural language: "brainstorm ideas for [feature]"
-                    </p>
-                  </div>
-                </div>
-                <div class="text-xs text-slate-500 flex items-center gap-2">
-                  <span
-                    class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase"
-                    >skill</span
-                  >
-                  Claude Code v2.1.1+: Skills invocable via /skill-name
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 2: Plan -->
-        <div class="flex items-start gap-4">
-          <div class="flex flex-col items-center flex-shrink-0">
-            <div
-              class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-600 dark:text-blue-400 font-bold text-lg border-2 border-blue-500/50"
-            >
-              2
-            </div>
-            <div
-              class="w-0.5 h-full bg-gradient-to-b from-blue-500/50 to-green-500/50 mt-3"
-            >
-            </div>
-          </div>
-          <div class="flex-1 pb-6">
-            <div
-              class="bg-slate-50 dark:bg-slate-950 rounded-xl border border-blue-500/30 p-6"
-            >
-              <h3
-                class="text-xl font-bold text-blue-600 dark:text-blue-400 mb-3 flex items-center gap-2"
-              >
-                <svg
-                  class="w-6 h-6"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path
-                    d="M9 5H2v7l6.29 6.29c.94.94 2.48.94 3.42 0l3.58-3.58c.94-.94.94-2.48 0-3.42L9 5z"
-                  ></path>
-                  <path d="M6 9.01V9"></path>
-                </svg>
-                {t("commands.journey.step2.title")}
-              </h3>
-              <p class="text-slate-700 dark:text-slate-300 mb-4">
-                {t("commands.journey.step2.desc")}
-              </p>
-              <div class="space-y-3">
-                <div
-                  class="bg-white dark:bg-slate-900/50 rounded-lg p-4 border border-slate-200 dark:border-slate-700"
-                >
-                  <div class="w-full">
-                    <code
-                      class="px-3 py-1.5 rounded bg-blue-500/20 text-blue-600 dark:text-blue-400 font-mono text-sm block"
-                    >
-                      /plan <span class="text-slate-600 dark:text-slate-400"
-                        >@brainstorm_report.md</span
-                      >
-                    </code>
-                  </div>
-                </div>
-                <div
-                  class="bg-blue-500/10 rounded-lg p-4 border border-blue-500/20"
-                >
-                  <div
-                    class="text-xs font-medium text-blue-600 dark:text-blue-400 mb-2"
-                  >
-                    {t("commands.journey.step2.plan_includes")}
-                  </div>
-                  <ul
-                    class="space-y-1 text-xs text-slate-600 dark:text-slate-400"
-                  >
-                    <li class="flex items-center gap-2">
-                      <svg
-                        class="w-3 h-3 text-blue-600 dark:text-blue-400"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                      >
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                      {t("commands.journey.step2.item1")}
-                    </li>
-                    <li class="flex items-center gap-2">
-                      <svg
-                        class="w-3 h-3 text-blue-600 dark:text-blue-400"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                      >
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                      {t("commands.journey.step2.item2")}
-                    </li>
-                    <li class="flex items-center gap-2">
-                      <svg
-                        class="w-3 h-3 text-blue-600 dark:text-blue-400"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                      >
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                      {t("commands.journey.step2.item3")}
-                    </li>
-                  </ul>
-                </div>
-
-                <div
-                  class="bg-red-500/10 rounded-lg p-4 border border-red-500/20 flex items-start gap-3"
-                >
-                  <svg
-                    class="w-5 h-5 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-                    <path
-                      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                    ></path>
-                  </svg>
-                  <div class="text-xs text-slate-700 dark:text-slate-300">
-                    <strong class="text-red-700 dark:text-red-400 block mb-1"
-                      >{t("commands.v25.mandatory_title")}</strong
-                    >
-                    <Fragment set:html={t("commands.v25.mandatory_desc")} />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 3: Build -->
-        <div class="flex items-start gap-4">
-          <div class="flex flex-col items-center flex-shrink-0">
-            <div
-              class="flex items-center justify-center w-12 h-12 rounded-full bg-green-500/20 text-green-600 dark:text-green-400 font-bold text-lg border-2 border-green-500/50"
-            >
-              3
-            </div>
-          </div>
-          <div class="flex-1">
-            <div
-              class="bg-slate-50 dark:bg-slate-950 rounded-xl border border-green-500/30 p-6"
-            >
-              <h3
-                class="text-xl font-bold text-green-600 dark:text-green-400 mb-3 flex items-center gap-2"
-              >
-                <svg
-                  class="w-6 h-6"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
-                {t("commands.journey.step3.title")}
-              </h3>
-              <p class="text-slate-700 dark:text-slate-300 mb-4">
-                {t("commands.journey.step3.desc")}
-              </p>
-              <div class="space-y-3">
-                <!-- Version Comparison Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <!-- v2.5+ Box (Recommended) -->
-                  <div
-                    class="relative bg-gradient-to-br from-teal-500/10 to-green-500/10 rounded-lg p-4 border-2 border-teal-500/50"
-                  >
-                    <div
-                      class="absolute -top-2.5 left-3 px-2 py-0.5 bg-teal-500 text-white text-[10px] font-bold rounded uppercase tracking-wide"
-                    >
-                      {t("commands.journey.step3.v25_badge")}
-                    </div>
-                    <div class="flex items-center gap-2 mt-1 mb-2">
-                      <span
-                        class="px-2 py-0.5 bg-teal-500/20 text-teal-600 dark:text-teal-400 text-xs font-semibold rounded"
-                        >{t("commands.journey.step3.v25_version")}</span
-                      >
-                    </div>
-                    <code
-                      class="block px-3 py-2 rounded bg-slate-900/80 text-teal-400 font-mono text-sm mb-2"
-                      >/cook @plan.md</code
-                    >
-                    <p
-                      class="text-xs text-slate-600 dark:text-slate-400"
-                      set:html={t("commands.journey.step3.v25_desc")}
-                    />
-                    <p class="text-[10px] text-slate-500 mt-1 italic">
-                      {t("commands.journey.step3.v25_alt")}
-                    </p>
-                  </div>
-                  <!-- v2.4 Box (Legacy) -->
-                  <div
-                    class="relative bg-slate-100 dark:bg-slate-800/50 rounded-lg p-4 border border-slate-300 dark:border-slate-600"
-                  >
-                    <div
-                      class="absolute -top-2.5 left-3 px-2 py-0.5 bg-slate-500 text-white text-[10px] font-bold rounded uppercase tracking-wide"
-                    >
-                      {t("commands.journey.step3.v24_badge")}
-                    </div>
-                    <div class="flex items-center gap-2 mt-1 mb-2">
-                      <span
-                        class="px-2 py-0.5 bg-slate-500/20 text-slate-600 dark:text-slate-400 text-xs font-semibold rounded"
-                        >{t("commands.journey.step3.v24_version")}</span
-                      >
-                    </div>
-                    <code
-                      class="block px-3 py-2 rounded bg-slate-900/80 text-slate-400 font-mono text-sm mb-2"
-                      >/code @plan.md</code
-                    >
-                    <p class="text-xs text-slate-600 dark:text-slate-400">
-                      {t("commands.journey.step3.v24_desc")}
-                    </p>
-                    <p class="text-[10px] text-slate-500 mt-1 italic">
-                      {t("commands.journey.step3.v24_note")}
-                    </p>
-                  </div>
-                </div>
-                <div
-                  class="bg-green-500/10 rounded-lg p-4 border border-green-500/20"
-                >
-                  <div
-                    class="text-xs font-medium text-green-600 dark:text-green-400 mb-2"
-                  >
-                    {t("commands.journey.step3.auto_title")}
-                  </div>
-                  <ul
-                    class="space-y-1 text-xs text-slate-600 dark:text-slate-400"
-                  >
-                    <li class="flex items-center gap-2">
-                      <svg
-                        class="w-3 h-3 text-green-600 dark:text-green-400"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                      >
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                      {t("commands.journey.step3.auto_item1")}
-                    </li>
-                    <li class="flex items-center gap-2">
-                      <svg
-                        class="w-3 h-3 text-green-600 dark:text-green-400"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                      >
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                      {t("commands.journey.step3.auto_item2")}
-                    </li>
-                    <li class="flex items-center gap-2">
-                      <svg
-                        class="w-3 h-3 text-green-600 dark:text-green-400"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                      >
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                      {t("commands.journey.step3.auto_item3")}
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- What's New in v2.5.0+ Section -->
   <div class="space-y-4">
@@ -2324,184 +1987,96 @@ const helpItems = [
                   ><code>/integrate:*</code></td
                 >
               </tr>
+
+              <tr class="border-b border-slate-100 dark:border-slate-800">
+                <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400 font-medium">/plan</code> <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span></td>
+                <td class="py-2 px-3"><code>/plan [task]</code></td>
+                <td class="py-2 px-3 text-slate-400 dark:text-slate-600 text-[10px]"><code>/plan:fast, /plan:hard, /plan:parallel, /plan:ci, /plan:cro, /plan:two</code></td>
+              </tr>
+              <tr class="border-b border-slate-100 dark:border-slate-800">
+                <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400 font-medium">/plan archive</code> <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span></td>
+                <td class="py-2 px-3"><code>/plan archive</code></td>
+                <td class="py-2 px-3 text-slate-400 dark:text-slate-600 text-[10px]"><code>/plan:archive</code></td>
+              </tr>
+              <tr class="border-b border-slate-100 dark:border-slate-800">
+                <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400 font-medium">/fix</code> <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span></td>
+                <td class="py-2 px-3"><code>/fix [issue]</code></td>
+                <td class="py-2 px-3 text-slate-400 dark:text-slate-600 text-[10px]"><code>/fix:ci, /fix:test, /fix:types, /fix:ui, /fix:logs, /fix:fast, /fix:hard, /fix:parallel</code></td>
+              </tr>
+              <tr class="border-b border-slate-100 dark:border-slate-800">
+                <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400 font-medium">/code-review</code> <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span></td>
+                <td class="py-2 px-3"><code>/code-review [context]</code></td>
+                <td class="py-2 px-3 text-slate-400 dark:text-slate-600 text-[10px]"><code>/review:codebase, /review:codebase:parallel</code></td>
+              </tr>
+              <tr class="border-b border-slate-100 dark:border-slate-800">
+                <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400 font-medium">/bootstrap</code> <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span></td>
+                <td class="py-2 px-3"><code>/bootstrap</code></td>
+                <td class="py-2 px-3 text-slate-400 dark:text-slate-600 text-[10px]"><code>/bootstrap, /bootstrap:auto, /bootstrap:auto:fast, /bootstrap:auto:parallel</code></td>
+              </tr>
+              <tr class="border-b border-slate-100 dark:border-slate-800">
+                <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400 font-medium">/skill-creator</code> <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span></td>
+                <td class="py-2 px-3"><code>/skill-creator [topic]</code></td>
+                <td class="py-2 px-3 text-slate-400 dark:text-slate-600 text-[10px]"><code>/skill:add, /skill:create, /skill:fix-logs, /skill:optimize, /skill:update</code></td>
+              </tr>
+              <tr class="border-b border-slate-100 dark:border-slate-800">
+                <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400 font-medium">/debug</code> <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span></td>
+                <td class="py-2 px-3"><code>/debug [issue]</code></td>
+                <td class="py-2 px-3 text-slate-400 dark:text-slate-600 text-[10px]"><code>/debug</code> <span class="text-[8px] text-amber-500">cmd→skill</span></td>
+              </tr>
+              <tr class="border-b border-slate-100 dark:border-slate-800">
+                <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400 font-medium">/test</code> <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span></td>
+                <td class="py-2 px-3"><code>/test [context]</code></td>
+                <td class="py-2 px-3 text-slate-400 dark:text-slate-600 text-[10px]"><code>/test, /test:ui</code></td>
+              </tr>
+              <tr class="border-b border-slate-100 dark:border-slate-800">
+                <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400 font-medium">/docs</code> <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span></td>
+                <td class="py-2 px-3"><code>/docs init|update|summarize</code></td>
+                <td class="py-2 px-3 text-slate-400 dark:text-slate-600 text-[10px]"><code>/docs:init, /docs:summarize, /docs:update</code></td>
+              </tr>
+              <tr class="border-b border-slate-100 dark:border-slate-800">
+                <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400 font-medium">/ask</code> <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span></td>
+                <td class="py-2 px-3"><code>/ask [question]</code></td>
+                <td class="py-2 px-3 text-slate-400 dark:text-slate-600 text-[10px]"><code>/ask</code> <span class="text-[8px] text-amber-500">cmd→skill</span></td>
+              </tr>
+              <tr class="border-b border-slate-100 dark:border-slate-800">
+                <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400 font-medium">/journal</code> <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span></td>
+                <td class="py-2 px-3"><code>/journal</code></td>
+                <td class="py-2 px-3 text-slate-400 dark:text-slate-600 text-[10px]"><code>/journal</code> <span class="text-[8px] text-amber-500">cmd→skill</span></td>
+              </tr>
+              <tr class="border-b border-slate-100 dark:border-slate-800">
+                <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400 font-medium">/kanban</code> <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span></td>
+                <td class="py-2 px-3"><code>/kanban</code></td>
+                <td class="py-2 px-3 text-slate-400 dark:text-slate-600 text-[10px]"><code>/kanban</code> <span class="text-[8px] text-amber-500">cmd→skill</span></td>
+              </tr>
+              <tr class="border-b border-slate-100 dark:border-slate-800">
+                <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400 font-medium">/watzup</code> <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span></td>
+                <td class="py-2 px-3"><code>/watzup</code></td>
+                <td class="py-2 px-3 text-slate-400 dark:text-slate-600 text-[10px]"><code>/watzup</code> <span class="text-[8px] text-amber-500">cmd→skill</span></td>
+              </tr>
+              <tr class="border-b border-slate-100 dark:border-slate-800">
+                <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400 font-medium">/worktree</code> <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span></td>
+                <td class="py-2 px-3"><code>/worktree [feature]</code></td>
+                <td class="py-2 px-3 text-slate-400 dark:text-slate-600 text-[10px]"><code>/worktree</code> <span class="text-[8px] text-amber-500">cmd→skill</span></td>
+              </tr>
+              <tr class="border-b border-slate-100 dark:border-slate-800">
+                <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400 font-medium">/preview</code> <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span></td>
+                <td class="py-2 px-3"><code>/preview [file|dir]</code></td>
+                <td class="py-2 px-3 text-slate-400 dark:text-slate-600 text-[10px]"><code>/preview</code> <span class="text-[8px] text-amber-500">cmd→skill</span></td>
+              </tr>
+              <tr class="border-b border-slate-100 dark:border-slate-800">
+                <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400 font-medium">/use-mcp</code> <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span></td>
+                <td class="py-2 px-3"><code>/use-mcp [tool]</code></td>
+                <td class="py-2 px-3 text-slate-400 dark:text-slate-600 text-[10px]"><code>/use-mcp</code> <span class="text-[8px] text-amber-500">cmd→skill</span></td>
+              </tr>
+              <tr>
+                <td class="py-2 px-3"><code class="text-teal-600 dark:text-teal-400 font-medium">/coding-level</code> <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase ml-1">skill</span></td>
+                <td class="py-2 px-3"><code>/coding-level [0-5]</code></td>
+                <td class="py-2 px-3 text-slate-400 dark:text-slate-600 text-[10px]"><code>/coding-level</code> <span class="text-[8px] text-amber-500">cmd→skill</span></td>
+              </tr>
             </tbody>
           </table>
         </div>
 
-        <!-- Removed Agents Section -->
-        <div
-          class="mt-4 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700"
-        >
-          <h5
-            class="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-2"
-          >
-            {t("commands.v26.removed_agents_title")}
-          </h5>
-          <p class="text-[10px] text-slate-500 dark:text-slate-500 mb-2">
-            {t("commands.v26.removed_agents_desc")}
-          </p>
-          <div class="flex flex-wrap gap-1.5">
-            <code
-              class="text-[10px] px-2 py-1 rounded bg-red-50 dark:bg-red-900/20 text-red-500 dark:text-red-400 line-through"
-              >copywriter</code
-            >
-            <code
-              class="text-[10px] px-2 py-1 rounded bg-red-50 dark:bg-red-900/20 text-red-500 dark:text-red-400 line-through"
-              >database-admin</code
-            >
-            <code
-              class="text-[10px] px-2 py-1 rounded bg-red-50 dark:bg-red-900/20 text-red-500 dark:text-red-400 line-through"
-              >scout</code
-            >
-            <span class="text-[8px] text-slate-400">(skill: /scout ✓)</span>
-            <code
-              class="text-[10px] px-2 py-1 rounded bg-red-50 dark:bg-red-900/20 text-red-500 dark:text-red-400 line-through"
-              >scout-external</code
-            >
-          </div>
-        </div>
-
-        <!-- /cook --auto behavior change (v2.7.x) -->
-        <div
-          class="mt-4 p-3 rounded-lg bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-500/20"
-        >
-          <div class="flex items-center gap-2 mb-2">
-            <code
-              class="px-2 py-1 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-mono text-xs font-bold"
-              >/cook --auto</code
-            >
-            <span
-              class="text-[10px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium"
-              >v2.7.x</span
-            >
-          </div>
-          <p class="text-[10px] text-slate-500 dark:text-slate-500 mb-2">
-            <Fragment set:html={t("commands.v25.breaking_cook_auto_desc")} />
-          </p>
-          <div class="flex flex-wrap items-center gap-1.5">
-            <code
-              class="text-[10px] px-2 py-1 rounded bg-red-50 dark:bg-red-900/20 text-red-500 dark:text-red-400 line-through"
-              >v2.6.x: auto</code
-            >
-            <svg
-              class="w-3 h-3 text-slate-400"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path d="M5 12h14M12 5l7 7-7 7"></path>
-            </svg>
-            <code
-              class="text-[10px] px-2 py-1 rounded bg-teal-50 dark:bg-teal-900/20 text-teal-600 dark:text-teal-400"
-              >v2.7.x: manual</code
-            >
-            <span class="text-[9px] text-slate-400"
-              >(add <code
-                class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 font-mono text-[9px]"
-                >--auto</code
-              >
-              {t("commands.v27.if_want_auto")})</span
-            >
-          </div>
-        </div>
-
-        <!-- v2.9.0+ Updates -->
-        <div
-          class="mt-4 p-3 rounded-lg bg-teal-50 dark:bg-teal-900/20 border border-teal-200 dark:border-teal-500/20"
-        >
-          <div class="flex items-center gap-2 mb-2">
-            <code
-              class="px-2 py-1 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-mono text-xs font-bold"
-              >/cook --interactive</code
-            >
-            <span
-              class="text-[10px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium"
-              >v2.9.0+</span
-            >
-          </div>
-          <p class="text-[10px] text-slate-500 dark:text-slate-500 mb-2">
-            <Fragment set:html={t("commands.v29.interactive_desc")} />
-          </p>
-          <div class="flex flex-wrap items-center gap-1.5">
-            <code
-              class="text-[10px] px-2 py-1 rounded bg-teal-50 dark:bg-teal-900/20 text-teal-600 dark:text-teal-400"
-              >v2.9.0: --interactive (default)</code
-            >
-            <span class="text-[9px] text-slate-400"
-              >{t("commands.v29.nativeTasks")}</span
-            >
-          </div>
-        </div>
-
-        <!-- find-skills skill (v2.9.0+) -->
-        <div
-          class="mt-4 p-3 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-500/20"
-        >
-          <div class="flex items-center gap-2 mb-2">
-            <code
-              class="px-2 py-1 rounded bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 font-mono text-xs font-bold"
-              >/find-skills</code
-            >
-            <span
-              class="text-[10px] px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 font-medium"
-              >v2.9.0+</span
-            >
-            <span
-              class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase"
-              >skill</span
-            >
-          </div>
-          <p class="text-[10px] text-slate-500 dark:text-slate-500 mb-2">
-            {t("commands.v29.findSkills_note")}
-          </p>
-          <div class="flex flex-wrap gap-1.5 text-[9px] font-mono">
-            <code
-              class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400"
-              >npx skills find [query]</code
-            >
-            <code
-              class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400"
-              >npx skills add &lt;package&gt;</code
-            >
-            <code
-              class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400"
-              >npx skills check</code
-            >
-            <code
-              class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400"
-              >npx skills update</code
-            >
-          </div>
-          <p class="text-[9px] text-slate-400 mt-1.5">
-            {t("commands.v29.browseSkills")}: <a
-              href="https://skills.sh/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-green-600 dark:text-green-400 hover:underline"
-              >skills.sh</a>
-          </p>
-        </div>
-
-        <!-- /plan:validate highlight (v2.9.0+) -->
-        <div
-          class="mt-4 p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-500/20"
-        >
-          <div class="flex items-center gap-2 mb-2">
-            <code
-              class="px-2 py-1 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-mono text-xs font-bold"
-              >/plan → Validate</code
-            >
-            <span
-              class="text-[10px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium"
-              >v2.9.0+</span
-            >
-          </div>
-          <p
-            class="text-[10px] text-slate-500 dark:text-slate-500"
-            set:html={t("commands.v29.planValidate_note")}
-          />
-        </div>
 
         <div class="mt-4">
           <p class="text-[10px] text-slate-500">
@@ -2542,6 +2117,9 @@ const helpItems = [
           <span class="text-slate-500 dark:text-slate-400 italic ml-1"
             >{t("commands.legend.skillTokenNote")}</span
           >
+        </p>
+        <p class="text-slate-500 dark:text-slate-400 mt-1">
+          <strong>Weight-based</strong> means the token cost scales with the skill's SKILL.md prompt size. A ⚡ skill loads &lt;5K tokens into context, while ⚡⚡⚡⚡ loads 50K-100K — directly reducing your remaining conversation budget.
         </p>
       </div>
 
@@ -2602,85 +2180,6 @@ const helpItems = [
       </div>
     </div>
 
-    <!-- What's New Highlights -->
-    <div class="space-y-4">
-      {
-        v25Highlights.map((category) => (
-          <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden group">
-            <div
-              class={`p-4 border-b border-slate-100 dark:border-slate-800 ${styles[category.color].bg}`}
-            >
-              <h3
-                class={`text-lg font-bold flex items-center gap-2 ${styles[category.color].text}`}
-              >
-                <svg
-                  class="w-5 h-5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <Fragment set:html={category.icon} />
-                </svg>
-                {category.name}
-              </h3>
-              <p class="text-xs text-slate-500 mt-1">{category.description}</p>
-            </div>
-            <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-              {category.commands.map((cmd) => (
-                <div
-                  class={`p-3 rounded-lg bg-slate-50 dark:bg-slate-900/50 border ${styles[category.color].border} transition-all duration-200 hover:shadow-sm h-full flex flex-col ${cmd.isSkill ? "border-dashed" : ""}`}
-                >
-                  <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
-                    <div class="flex items-center gap-1.5 flex-wrap">
-                      {cmd.isSkill ? (
-                        <code
-                          class={`text-sm font-bold font-mono ${styles[category.color].text}`}
-                        >
-                          {cmd.command}
-                        </code>
-                      ) : (
-                        <code
-                          class={`text-sm font-bold font-mono ${styles[category.color].text}`}
-                        >
-                          {cmd.command}
-                        </code>
-                      )}
-                      {cmd.isSkill && (
-                        <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase">
-                          skill
-                        </span>
-                      )}
-                    </div>
-                    <span class="text-[10px] opacity-70">{cmd.complexity}</span>
-                  </div>
-                  <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
-                    {cmd.desc}
-                  </p>
-                  {cmd.detail && (
-                    <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">
-                      {cmd.detail}
-                    </p>
-                  )}
-                  {cmd.flags && cmd.flags.length > 0 && (
-                    <div class="flex flex-wrap gap-1 mt-1.5">
-                      {cmd.flags.map((flag: string) => (
-                        <code class="text-[9px] px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400 font-mono">
-                          {flag}
-                        </code>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        ))
-      }
-    </div>
-  </div>
-  <!-- End What's New in v2.5.0+ Section -->
-
   <!-- Command Categories Grid -->
   <div class="space-y-6">
     <div
@@ -2709,9 +2208,9 @@ const helpItems = [
         class="flex items-center gap-2 p-1 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700"
       >
         <button
-          id="btn-stable"
+          id="btn-engineer"
           class="version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 bg-teal-500 text-white shadow-sm"
-          data-version="stable"
+          data-version="engineer"
         >
           <span class="flex items-center gap-1.5">
             <svg
@@ -2729,9 +2228,9 @@ const helpItems = [
           </span>
         </button>
         <button
-          id="btn-beta"
+          id="btn-marketing"
           class="version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700"
-          data-version="beta"
+          data-version="marketing"
         >
           <span class="flex items-center gap-1.5">
             <svg
@@ -2752,8 +2251,375 @@ const helpItems = [
       </div>
     </div>
 
-    <!-- Stable (v2.13.0) Categories -->
-    <div id="categories-stable" class="space-y-6">
+    <!-- Engineer Kit (v2.13.0) Categories -->
+    <div id="categories-engineer" class="space-y-6">
+      <!-- Visual Journey Section (moved inside Engineer Kit tab) -->
+      <div
+        class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden"
+      >
+        <div
+          class="p-6 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border-b border-slate-100 dark:border-slate-800"
+        >
+          <h2
+            class="text-2xl font-bold flex items-center gap-3 text-slate-900 dark:text-white"
+          >
+            <svg
+              class="w-7 h-7 text-cyan-600 dark:text-cyan-400"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="8 12 12 16 16 12"></polyline>
+              <line x1="12" y1="8" x2="12" y2="16"></line>
+            </svg>
+            {t("commands.journey.title")}
+          </h2>
+          <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">
+            {t("commands.journey.subtitle")}
+          </p>
+        </div>
+
+        <div class="p-8">
+          <div class="space-y-6">
+            <!-- Step 1: Idea -->
+            <div class="flex items-start gap-4">
+              <div class="flex flex-col items-center flex-shrink-0">
+                <div
+                  class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-600 dark:text-purple-400 font-bold text-lg border-2 border-purple-500/50"
+                >
+                  1
+                </div>
+                <div
+                  class="w-0.5 h-full bg-gradient-to-b from-purple-500/50 to-blue-500/50 mt-3"
+                >
+                </div>
+              </div>
+              <div class="flex-1 pb-6">
+                <div
+                  class="bg-slate-50 dark:bg-slate-950 rounded-xl border border-purple-500/30 p-6"
+                >
+                  <h3
+                    class="text-xl font-bold text-purple-600 dark:text-purple-400 mb-3 flex items-center gap-2"
+                  >
+                    <svg
+                      class="w-6 h-6"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+                      ></path>
+                    </svg>
+                    {t("commands.journey.step1.title")}
+                  </h3>
+                  <p class="text-slate-700 dark:text-slate-300 mb-4">
+                    {t("commands.journey.step1.desc")}
+                  </p>
+                  <div class="space-y-3">
+                    <div
+                      class="bg-white dark:bg-slate-900/50 rounded-lg p-4 border border-slate-200 dark:border-slate-700"
+                    >
+                      <div class="w-full space-y-2">
+                        <code
+                          class="px-3 py-1.5 rounded bg-purple-500/20 text-purple-600 dark:text-purple-400 font-mono text-sm block"
+                        >
+                          /brainstorm <span
+                            class="text-slate-600 dark:text-slate-400"
+                            >{t("commands.journey.step1.example")}</span
+                          >
+                        </code>
+                        <p class="text-[10px] text-slate-500">
+                          Or natural language: "brainstorm ideas for [feature]"
+                        </p>
+                      </div>
+                    </div>
+                    <div class="text-xs text-slate-500 flex items-center gap-2">
+                      <span
+                        class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase"
+                        >skill</span
+                      >
+                      Claude Code v2.1.1+: Skills invocable via /skill-name
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 2: Plan -->
+            <div class="flex items-start gap-4">
+              <div class="flex flex-col items-center flex-shrink-0">
+                <div
+                  class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-600 dark:text-blue-400 font-bold text-lg border-2 border-blue-500/50"
+                >
+                  2
+                </div>
+                <div
+                  class="w-0.5 h-full bg-gradient-to-b from-blue-500/50 to-green-500/50 mt-3"
+                ></div>
+              </div>
+              <div class="flex-1 pb-6">
+                <div
+                  class="bg-slate-50 dark:bg-slate-950 rounded-xl border border-blue-500/30 p-6"
+                >
+                  <h3
+                    class="text-xl font-bold text-blue-600 dark:text-blue-400 mb-3 flex items-center gap-2"
+                  >
+                    <svg
+                      class="w-6 h-6"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        d="M9 5H2v7l6.29 6.29c.94.94 2.48.94 3.42 0l3.58-3.58c.94-.94.94-2.48 0-3.42L9 5z"
+                      ></path>
+                      <path d="M6 9.01V9"></path>
+                    </svg>
+                    {t("commands.journey.step2.title")}
+                  </h3>
+                  <p class="text-slate-700 dark:text-slate-300 mb-4">
+                    {t("commands.journey.step2.desc")}
+                  </p>
+                  <div class="space-y-3">
+                    <div
+                      class="bg-white dark:bg-slate-900/50 rounded-lg p-4 border border-slate-200 dark:border-slate-700"
+                    >
+                      <div class="w-full">
+                        <code
+                          class="px-3 py-1.5 rounded bg-blue-500/20 text-blue-600 dark:text-blue-400 font-mono text-sm block"
+                        >
+                          /plan <span class="text-slate-600 dark:text-slate-400"
+                            >@brainstorm_report.md</span
+                          >
+                        </code>
+                      </div>
+                    </div>
+                    <div
+                      class="bg-blue-500/10 rounded-lg p-4 border border-blue-500/20"
+                    >
+                      <div
+                        class="text-xs font-medium text-blue-600 dark:text-blue-400 mb-2"
+                      >
+                        {t("commands.journey.step2.plan_includes")}
+                      </div>
+                      <ul
+                        class="space-y-1 text-xs text-slate-600 dark:text-slate-400"
+                      >
+                        <li class="flex items-center gap-2">
+                          <svg
+                            class="w-3 h-3 text-blue-600 dark:text-blue-400"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                          >
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                          </svg>
+                          {t("commands.journey.step2.item1")}
+                        </li>
+                        <li class="flex items-center gap-2">
+                          <svg
+                            class="w-3 h-3 text-blue-600 dark:text-blue-400"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                          >
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                          </svg>
+                          {t("commands.journey.step2.item2")}
+                        </li>
+                        <li class="flex items-center gap-2">
+                          <svg
+                            class="w-3 h-3 text-blue-600 dark:text-blue-400"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                          >
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                          </svg>
+                          {t("commands.journey.step2.item3")}
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div
+                      class="bg-red-500/10 rounded-lg p-4 border border-red-500/20 flex items-start gap-3"
+                    >
+                      <svg
+                        class="w-5 h-5 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                        ></path>
+                      </svg>
+                      <div class="text-xs text-slate-700 dark:text-slate-300">
+                        <strong class="text-red-700 dark:text-red-400 block mb-1"
+                          >{t("commands.v25.mandatory_title")}</strong
+                        >
+                        <Fragment set:html={t("commands.v25.mandatory_desc")} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 3: Build -->
+            <div class="flex items-start gap-4">
+              <div class="flex flex-col items-center flex-shrink-0">
+                <div
+                  class="flex items-center justify-center w-12 h-12 rounded-full bg-green-500/20 text-green-600 dark:text-green-400 font-bold text-lg border-2 border-green-500/50"
+                >
+                  3
+                </div>
+              </div>
+              <div class="flex-1">
+                <div
+                  class="bg-slate-50 dark:bg-slate-950 rounded-xl border border-green-500/30 p-6"
+                >
+                  <h3
+                    class="text-xl font-bold text-green-600 dark:text-green-400 mb-3 flex items-center gap-2"
+                  >
+                    <svg
+                      class="w-6 h-6"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                      <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    {t("commands.journey.step3.title")}
+                  </h3>
+                  <p class="text-slate-700 dark:text-slate-300 mb-4">
+                    {t("commands.journey.step3.desc")}
+                  </p>
+                  <div class="space-y-3">
+                    <!-- Version Comparison Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <!-- v2.5+ Box (Recommended) -->
+                      <div
+                        class="relative bg-gradient-to-br from-teal-500/10 to-green-500/10 rounded-lg p-4 border-2 border-teal-500/50"
+                      >
+                        <div
+                          class="absolute -top-2.5 left-3 px-2 py-0.5 bg-teal-500 text-white text-[10px] font-bold rounded uppercase tracking-wide"
+                        >
+                          {t("commands.journey.step3.v25_badge")}
+                        </div>
+                        <div class="flex items-center gap-2 mt-1 mb-2">
+                          <span
+                            class="px-2 py-0.5 bg-teal-500/20 text-teal-600 dark:text-teal-400 text-xs font-semibold rounded"
+                            >{t("commands.journey.step3.v25_version")}</span
+                          >
+                        </div>
+                        <code
+                          class="block px-3 py-2 rounded bg-slate-900/80 text-teal-400 font-mono text-sm mb-2"
+                          >/cook @plan.md</code
+                        >
+                        <p
+                          class="text-xs text-slate-600 dark:text-slate-400"
+                          set:html={t("commands.journey.step3.v25_desc")}
+                        />
+                        <p class="text-[10px] text-slate-500 mt-1 italic">
+                          {t("commands.journey.step3.v25_alt")}
+                        </p>
+                      </div>
+                      <!-- v2.4 Box (Legacy) -->
+                      <div
+                        class="relative bg-slate-100 dark:bg-slate-800/50 rounded-lg p-4 border border-slate-300 dark:border-slate-600"
+                      >
+                        <div
+                          class="absolute -top-2.5 left-3 px-2 py-0.5 bg-slate-500 text-white text-[10px] font-bold rounded uppercase tracking-wide"
+                        >
+                          {t("commands.journey.step3.v24_badge")}
+                        </div>
+                        <div class="flex items-center gap-2 mt-1 mb-2">
+                          <span
+                            class="px-2 py-0.5 bg-slate-500/20 text-slate-600 dark:text-slate-400 text-xs font-semibold rounded"
+                            >{t("commands.journey.step3.v24_version")}</span
+                          >
+                        </div>
+                        <code
+                          class="block px-3 py-2 rounded bg-slate-900/80 text-slate-400 font-mono text-sm mb-2"
+                          >/code @plan.md</code
+                        >
+                        <p class="text-xs text-slate-600 dark:text-slate-400">
+                          {t("commands.journey.step3.v24_desc")}
+                        </p>
+                        <p class="text-[10px] text-slate-500 mt-1 italic">
+                          {t("commands.journey.step3.v24_note")}
+                        </p>
+                      </div>
+                    </div>
+                    <div
+                      class="bg-green-500/10 rounded-lg p-4 border border-green-500/20"
+                    >
+                      <div
+                        class="text-xs font-medium text-green-600 dark:text-green-400 mb-2"
+                      >
+                        {t("commands.journey.step3.auto_title")}
+                      </div>
+                      <ul
+                        class="space-y-1 text-xs text-slate-600 dark:text-slate-400"
+                      >
+                        <li class="flex items-center gap-2">
+                          <svg
+                            class="w-3 h-3 text-green-600 dark:text-green-400"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                          >
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                          </svg>
+                          {t("commands.journey.step3.auto_item1")}
+                        </li>
+                        <li class="flex items-center gap-2">
+                          <svg
+                            class="w-3 h-3 text-green-600 dark:text-green-400"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                          >
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                          </svg>
+                          {t("commands.journey.step3.auto_item2")}
+                        </li>
+                        <li class="flex items-center gap-2">
+                          <svg
+                            class="w-3 h-3 text-green-600 dark:text-green-400"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                          >
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                          </svg>
+                          {t("commands.journey.step3.auto_item3")}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Version info banner -->
       <div
         class="flex items-start gap-3 p-4 rounded-lg bg-teal-500/10 border border-teal-500/30"
@@ -2771,12 +2637,60 @@ const helpItems = [
         </svg>
         <div class="text-sm text-slate-700 dark:text-slate-300">
           <strong class="text-teal-600 dark:text-teal-400"
-            >engineer@v2.13.0</strong
+            >ClaudeKit Engineer@v2.13.0</strong
           >
           {t("commands.v25.banner_intro")}
           <span class="text-slate-500 ml-1"
             >{t("commands.v25.banner_legacy")}</span
           >
+        </div>
+      </div>
+
+      <!-- Beta Preview -->
+      <div class="rounded-xl border-2 border-purple-400/60 dark:border-purple-500/40 overflow-hidden bg-gradient-to-br from-purple-500/10 via-violet-500/5 to-pink-500/10">
+        <div class="p-4 border-b border-purple-300/30 dark:border-purple-600/30 bg-gradient-to-r from-purple-600/10 to-violet-500/10">
+          <h3 class="text-lg font-bold flex items-center gap-2 text-purple-600 dark:text-purple-400">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+            Beta Preview
+            <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-purple-500 text-white font-medium uppercase">new</span>
+          </h3>
+          <p class="text-xs text-slate-500 mt-1">Preview features from upcoming release</p>
+        </div>
+        <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+          <!-- Hooks -->
+          <div class="p-3 rounded-lg bg-white/60 dark:bg-slate-900/50 border border-violet-500/30 transition-all duration-200 hover:shadow-sm h-full flex flex-col">
+            <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <code class="text-sm font-bold font-mono text-violet-600 dark:text-violet-400">session-state.cjs</code>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 font-medium uppercase">hook</span>
+              </div>
+            </div>
+            <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Auto-persist session progress</p>
+            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">Saves/restores state on Stop, SubagentStop, SessionStart.</p>
+          </div>
+          <div class="p-3 rounded-lg bg-white/60 dark:bg-slate-900/50 border border-violet-500/30 transition-all duration-200 hover:shadow-sm h-full flex flex-col">
+            <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <code class="text-sm font-bold font-mono text-violet-600 dark:text-violet-400">plan-format-kanban.cjs</code>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 font-medium uppercase">hook</span>
+              </div>
+            </div>
+            <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Validate plan.md link formatting</p>
+            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">Enforces human-readable link text in plan files.</p>
+          </div>
+          <!-- System Changes -->
+          <div class="p-3 rounded-lg bg-white/60 dark:bg-slate-900/50 border border-slate-400/30 transition-all duration-200 hover:shadow-sm h-full flex flex-col">
+            <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="text-sm font-bold text-slate-500 dark:text-slate-400">System Changes</span>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-400 font-medium uppercase">config</span>
+              </div>
+            </div>
+            <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Statusline, Stop event, Notifications</p>
+            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">Statusline default changed to 'full'. Stop lifecycle event added. Notification providers modularized. MiniMax API support.</p>
+          </div>
         </div>
       </div>
 
@@ -2827,6 +2741,9 @@ const helpItems = [
                           skill
                         </span>
                       )}
+                      {(cmd as any).isBeta && (
+                        <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">beta</span>
+                      )}
                     </div>
                     <span class="text-[10px] opacity-70">{cmd.complexity}</span>
                   </div>
@@ -2872,154 +2789,23 @@ const helpItems = [
       }
     </div>
 
-    <!-- Beta (v2.14.0) Categories -->
-    <div id="categories-beta" class="space-y-6 hidden">
-      <!-- Version info banner -->
-      <div
-        class="flex items-start gap-3 p-4 rounded-lg bg-purple-500/10 border border-purple-500/30"
-      >
-        <svg
-          class="w-5 h-5 text-purple-600 dark:text-purple-400 flex-shrink-0 mt-0.5"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <path
-            d="M9 3h6v2.5A5.5 5.5 0 0 1 20.5 11v4.5a5.5 5.5 0 0 1-5.5 5.5h-6a5.5 5.5 0 0 1-5.5-5.5V11A5.5 5.5 0 0 1 9 5.5V3z"
-          ></path>
-          <path d="M9 3h6" stroke-linecap="round"></path>
-        </svg>
-        <div class="text-sm text-slate-700 dark:text-slate-300">
-          <strong class="text-purple-600 dark:text-purple-400"
-            >{t("commands.v25.v24_label")}</strong
-          >
-          {t("commands.v25.v24_banner")}
-          <span class="text-slate-500 ml-1"
-            >{t("commands.v25.v24_banner_note")}</span
-          >
+    <!-- Marketing Kit Categories -->
+    <div id="categories-marketing" class="space-y-6 hidden">
+      <!-- Coming Soon placeholder -->
+      <div class="flex flex-col items-center justify-center py-16 px-8">
+        <div class="w-16 h-16 rounded-full bg-purple-100 dark:bg-purple-500/20 flex items-center justify-center mb-4">
+          <svg class="w-8 h-8 text-purple-600 dark:text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+            <path d="M2 17l10 5 10-5"></path>
+            <path d="M2 12l10 5 10-5"></path>
+          </svg>
         </div>
+        <h3 class="text-xl font-bold text-purple-700 dark:text-purple-400 mb-2">Marketing Kit is available</h3>
+        <p class="text-sm text-slate-600 dark:text-slate-400 text-center max-w-md">
+          Marketing Kit skills are live and ready to use. Full documentation page is coming soon.
+        </p>
       </div>
 
-      {
-        betaCategories.map((category) => (
-          <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden group">
-            <div
-              class={`p-4 border-b border-slate-100 dark:border-slate-800 ${styles[category.color].bg}`}
-            >
-              <h3
-                class={`text-lg font-bold flex items-center gap-2 ${styles[category.color].text}`}
-              >
-                <svg
-                  class="w-5 h-5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <Fragment set:html={category.icon} />
-                </svg>
-                {category.name}
-              </h3>
-              <p class="text-xs text-slate-500 mt-1">{category.description}</p>
-            </div>
-            <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-              {category.commands.map((cmd) => (
-                <div
-                  class={`p-3 rounded-lg bg-slate-50 dark:bg-slate-900/50 border ${styles[category.color].border} transition-all duration-200 hover:shadow-sm h-full flex flex-col ${cmd.isSkill ? "border-dashed" : ""} ${cmd.status === "archived" ? "opacity-60" : ""}`}
-                >
-                  <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
-                    <div class="flex items-center gap-1.5 flex-wrap">
-                      {cmd.isSkill ? (
-                        <span
-                          class={`text-sm font-medium ${styles[category.color].text} ${cmd.status === "archived" ? "line-through" : ""}`}
-                        >
-                          {cmd.command}
-                        </span>
-                      ) : (
-                        <code
-                          class={`text-sm font-bold font-mono ${styles[category.color].text} ${cmd.status === "archived" ? "line-through" : ""}`}
-                        >
-                          {cmd.command}
-                        </code>
-                      )}
-                      {cmd.isSkill && (
-                        <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase">
-                          skill
-                        </span>
-                      )}
-                      {cmd.status === "archived" && (
-                        <span class="text-[9px] px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-400 font-medium uppercase">
-                          archived
-                        </span>
-                      )}
-                      {cmd.status === "new" && (
-                        <span class="text-[9px] px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 font-medium uppercase">
-                          new
-                        </span>
-                      )}
-                      {cmd.status === "enhanced" && (
-                        <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium uppercase">
-                          enhanced
-                        </span>
-                      )}
-                    </div>
-                    <span class="text-[10px] opacity-70">{cmd.complexity}</span>
-                  </div>
-                  <p
-                    class={`text-xs font-medium text-slate-700 dark:text-slate-300 mb-1 ${cmd.status === "archived" ? "line-through" : ""}`}
-                  >
-                    {cmd.desc}
-                  </p>
-                  {cmd.detail && (
-                    <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">
-                      {cmd.detail}
-                    </p>
-                  )}
-                  {cmd.replacedBy && (
-                    <p class="text-[10px] text-teal-600 dark:text-teal-400 mt-1 flex items-center gap-1">
-                      <svg
-                        class="w-3 h-3"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                      >
-                        <path d="M5 12h14M12 5l7 7-7 7" />
-                      </svg>
-                      Use: {cmd.replacedBy}
-                    </p>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        ))
-      }
-
-      <!-- Beta-only: ck:llms -->
-      <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-purple-300 dark:border-purple-500/30 overflow-hidden">
-        <div class="p-4 border-b border-purple-100 dark:border-purple-500/20 bg-gradient-to-r from-purple-500/10 to-pink-500/10">
-          <h3 class="text-lg font-bold flex items-center gap-2 text-purple-600 dark:text-purple-400">
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M9 3h6v2.5A5.5 5.5 0 0 1 20.5 11v4.5a5.5 5.5 0 0 1-5.5 5.5h-6a5.5 5.5 0 0 1-5.5-5.5V11A5.5 5.5 0 0 1 9 5.5V3z"/>
-            </svg>
-            Beta-Only Skills
-          </h3>
-          <p class="text-xs text-slate-500 mt-1">Skills available only in v2.14.0-beta.5 — not yet in stable</p>
-        </div>
-        <div class="p-4">
-          <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-900/50 border border-dashed border-purple-500/30">
-            <div class="flex items-center gap-1.5 mb-1.5 flex-wrap">
-              <span class="text-sm font-medium text-purple-600 dark:text-purple-400">/llms</span>
-              <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase">skill</span>
-              <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">beta</span>
-            </div>
-            <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Generate llms.txt files from docs or codebase</p>
-            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">Follows llmstxt.org spec. Includes reference files and generation script.</p>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -3186,56 +2972,45 @@ const helpItems = [
 <script>
   // Version toggle functionality
   document.addEventListener("DOMContentLoaded", () => {
-    const btnStable = document.getElementById("btn-stable");
-    const btnBeta = document.getElementById("btn-beta");
-    const categoriesStable = document.getElementById("categories-stable");
-    const categoriesBeta = document.getElementById("categories-beta");
+    const btnEngineer = document.getElementById("btn-engineer");
+    const btnMarketing = document.getElementById("btn-marketing");
+    const categoriesEngineer = document.getElementById("categories-engineer");
+    const categoriesMarketing = document.getElementById("categories-marketing");
 
-    if (!btnStable || !btnBeta || !categoriesStable || !categoriesBeta) return;
+    if (!btnEngineer || !btnMarketing || !categoriesEngineer || !categoriesMarketing) return;
 
     const activeClasses = "bg-teal-500 text-white shadow-sm";
     const inactiveClasses =
       "text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700";
-    const activeBetaClasses = "bg-purple-500 text-white shadow-sm";
+    const activeMarketingClasses = "bg-purple-500 text-white shadow-sm";
 
-    const stableSkillsBadge = document.getElementById("stable-skills-badge");
-    const betaSkillsBadge = document.getElementById("beta-skills-badge");
-
-    function setVersion(version: "stable" | "beta") {
-      if (version === "stable") {
-        categoriesStable.classList.remove("hidden");
-        categoriesBeta.classList.add("hidden");
-        btnStable.className = `version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${activeClasses}`;
-        btnBeta.className = `version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${inactiveClasses}`;
-        stableSkillsBadge?.classList.remove("hidden");
-        betaSkillsBadge?.classList.add("hidden");
+    function setVersion(version: "engineer" | "marketing") {
+      if (version === "engineer") {
+        categoriesEngineer.classList.remove("hidden");
+        categoriesMarketing.classList.add("hidden");
+        btnEngineer.className = `version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${activeClasses}`;
+        btnMarketing.className = `version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${inactiveClasses}`;
       } else {
-        categoriesStable.classList.add("hidden");
-        categoriesBeta.classList.remove("hidden");
-        btnBeta.className = `version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${activeBetaClasses}`;
-        btnStable.className = `version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${inactiveClasses}`;
-        stableSkillsBadge?.classList.add("hidden");
-        betaSkillsBadge?.classList.remove("hidden");
+        categoriesEngineer.classList.add("hidden");
+        categoriesMarketing.classList.remove("hidden");
+        btnMarketing.className = `version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${activeMarketingClasses}`;
+        btnEngineer.className = `version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${inactiveClasses}`;
       }
 
       // Save preference
-      localStorage.setItem("commands-version", version);
+      localStorage.setItem("commands-kit", version);
     }
 
-    // Load saved preference (migrate old keys)
-    const savedVersion = localStorage.getItem("commands-version") as
-      | "stable"
-      | "beta"
-      | "v25"
-      | "v24"
-      | null;
-    if (savedVersion === "v25" || savedVersion === "stable") {
-      setVersion("stable");
-    } else if (savedVersion === "v24" || savedVersion === "beta") {
-      setVersion("beta");
+    // Load saved preference (migrate old keys: stable→engineer, beta→marketing)
+    const savedVersion = localStorage.getItem("commands-kit") ||
+      localStorage.getItem("commands-version");
+    if (savedVersion === "engineer" || savedVersion === "v25" || savedVersion === "stable") {
+      setVersion("engineer");
+    } else if (savedVersion === "marketing" || savedVersion === "v24" || savedVersion === "beta") {
+      setVersion("marketing");
     }
 
-    btnStable.addEventListener("click", () => setVersion("stable"));
-    btnBeta.addEventListener("click", () => setVersion("beta"));
+    btnEngineer.addEventListener("click", () => setVersion("engineer"));
+    btnMarketing.addEventListener("click", () => setVersion("marketing"));
   });
 </script>

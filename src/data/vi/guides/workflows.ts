@@ -30,7 +30,7 @@ export const stableWorkflows = [
       },
       {
         typeLabel: 'Review → /clear → Implement',
-        description: 'Review plan, chạy /clear để giải phóng context (bắt buộc từ CK engineer@v2.13.0), rồi implement',
+        description: 'Review plan, chạy /clear để giải phóng context (bắt buộc), rồi implement',
         color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
         number: 3,
         hasIcon: true,
@@ -45,7 +45,7 @@ export const stableWorkflows = [
         isSkill: true
       }
     ],
-    tip: '⚠️ CK engineer@v2.13.0: /clear bắt buộc sau /plan trước /cook',
+    tip: '⚠️ /clear bắt buộc sau /plan trước /cook',
     borderColor: 'border-purple-500/20'
   },
   {
@@ -119,7 +119,7 @@ export const stableWorkflows = [
         isSkill: true
       }
     ],
-    tip: '💡 Xem bảng mapping ở trên để chuyển đổi từ v2.4 variants. --interactive là default, dùng native Claude Tasks API.',
+    tip: '💡 Xem bảng mapping ở trên để chuyển đổi từ legacy variants. --interactive là default, dùng native Claude Tasks API.',
     cookMappings: [
       { old: '/cook:auto', new: '/cook --auto', desc: 'Tự động duyệt tất cả bước' },
       { old: '/cook:auto:fast', new: '/cook --auto --fast', desc: 'Nhanh + tự động duyệt' },
@@ -193,7 +193,7 @@ export const stableWorkflows = [
         number: 2
       }
     ],
-    tip: '💡 Mới trong v2.13.0: Thay thế /design:video command',
+    tip: '💡 Thay thế /design:video command',
     features: [
       'Animations và transitions',
       'Text animations và captions',
@@ -239,7 +239,7 @@ export const stableWorkflows = [
       }
     ],
     featureCommand: '/preview',
-    tip: '💡 Mới trong engineer@2.10+: /preview giờ tạo visual content. Cũng có: --slides, --ascii',
+    tip: '💡 /preview giờ tạo visual content. Cũng có: --slides, --ascii',
     features: [
       'Sơ đồ ASCII + Mermaid (--explain)',
       'Định dạng trình bày (--slides)',
@@ -293,7 +293,7 @@ export const stableWorkflows = [
       }
     ],
     featureCommand: '/scout',
-    tip: '💡 engineer@2.10+: /scout tích hợp code-reviewer để phát hiện edge cases trước review',
+    tip: '💡 /scout tích hợp code-reviewer để phát hiện edge cases trước review',
     features: [
       'Phát hiện edge case qua /scout',
       'Phân tích boundary conditions',
@@ -330,7 +330,7 @@ export const stableWorkflows = [
       },
       {
         typeLabel: '/clear (bắt buộc)',
-        description: 'Giải phóng context trước khi implement — bắt buộc từ engineer@v2.13.0',
+        description: 'Giải phóng context trước khi implement — bắt buộc',
         color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
         number: 3,
         hasIcon: true,
@@ -346,7 +346,7 @@ export const stableWorkflows = [
       }
     ],
     featureCommand: '/plan:validate',
-    tip: '💡 engineer@2.10+: /plan:validate decisions tự propagate xuống phase files — không cần update thủ công',
+    tip: '💡 /plan:validate decisions tự propagate xuống phase files — không cần update thủ công',
     features: [
       'Validate plan kiểu phỏng vấn',
       'Tự động propagate xuống phase files',
@@ -383,7 +383,7 @@ export const stableWorkflows = [
         isSkill: true
       }
     ],
-    tip: '⚠️ Cần CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 trong settings.json. Mới trong engineer@v2.11.0+',
+    tip: '⚠️ Cần CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 trong settings.json.',
     features: [
       'Nhiều dev agent song song (--devs N)',
       'Pipeline tự động test → review → merge',
@@ -420,7 +420,7 @@ export const stableWorkflows = [
         isSkill: true
       }
     ],
-    tip: '💡 Mới trong engineer@v2.11.0+: Tự scale reviewers theo độ phức tạp plan (2-4 adversarial lenses)',
+    tip: '💡 Tự scale reviewers theo độ phức tạp plan (2-4 adversarial lenses)',
     features: [
       'Security Adversary (auth bypass, injection, OWASP)',
       'Failure Mode Analyst (race conditions, mất dữ liệu)',
@@ -431,9 +431,100 @@ export const stableWorkflows = [
   }
 ];
 
-// v2.14.0 Beta workflows - identical to stable + beta-specific notes
-// Beta v2.14.0-beta.5 is a superset of stable v2.13.0 (adds ck:llms skill, minor refinements)
-export const betaWorkflows = stableWorkflows;
+// Beta workflows - superset of stable + new skills (deploy, security-scan, llms, project-organization)
+export const betaWorkflows = [
+  ...stableWorkflows,
+  {
+    title: 'Deploy Ứng Dụng',
+    level: 'Intermediate',
+    duration: '~5-15 phút',
+    stepCount: 1,
+    bestFor: 'Deploy lên Vercel, Netlify, Railway, Fly.io, AWS, GCP và nhiều hơn',
+    gradientHeader: 'from-orange-500/10 to-amber-500/10',
+    hoverBorderColor: 'hover:border-orange-500/50',
+    buttonColor: 'bg-orange-500 hover:bg-orange-600',
+    icon: '<path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>',
+    iconColor: 'text-orange-600 dark:text-orange-400',
+    steps: [
+      {
+        command: '/deploy [platform]',
+        typeLabel: 'Auto-deploy (skill)',
+        description: 'AI tự nhận diện project type và deploy lên 15+ nền tảng mà không cần cấu hình thủ công',
+        color: 'bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400',
+        number: 1,
+        isSkill: true
+      }
+    ],
+    tip: '✨ Beta: /deploy tự nhận diện stack và xử lý biến môi trường, build steps, và cấu hình platform',
+    features: [
+      'Tự nhận diện project type (Next.js, Astro, Express, ...)',
+      'Hỗ trợ 15+ nền tảng sẵn có',
+      'Xử lý env vars và cấu hình build',
+      'Vercel, Netlify, Railway, Fly.io, AWS, GCP, Azure'
+    ],
+    borderColor: 'border-orange-500/20'
+  },
+  {
+    title: 'Kiểm Tra Bảo Mật',
+    level: 'Intermediate',
+    duration: '~10-20 phút',
+    stepCount: 1,
+    bestFor: 'Tìm lỗ hổng bảo mật và secret bị lộ trước khi ship',
+    gradientHeader: 'from-rose-500/10 to-red-500/10',
+    hoverBorderColor: 'hover:border-rose-500/50',
+    buttonColor: 'bg-rose-500 hover:bg-rose-600',
+    icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+    iconColor: 'text-rose-600 dark:text-rose-400',
+    steps: [
+      {
+        command: '/security-scan --full',
+        typeLabel: 'Kiểm tra bảo mật (skill)',
+        description: 'Quét sâu tìm lỗ hổng OWASP, API key bị lộ và các pattern không an toàn',
+        color: 'bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400',
+        number: 1,
+        isSkill: true
+      }
+    ],
+    tip: '✨ Beta: /security-scan kiểm tra OWASP top 10, lộ secrets, lỗ hổng authentication và dependency',
+    features: [
+      'Kiểm tra lỗ hổng OWASP Top 10',
+      'Phát hiện API key và secret bị lộ',
+      'Lỗ hổng xác thực và phân quyền',
+      'Quét dependency vulnerabilities'
+    ],
+    borderColor: 'border-rose-500/20'
+  },
+  {
+    title: 'Tạo LLMs.txt',
+    level: 'Beginner',
+    duration: '~5-10 phút',
+    stepCount: 1,
+    bestFor: 'Làm cho project dễ đọc với các AI/LLM tools',
+    gradientHeader: 'from-violet-500/10 to-purple-500/10',
+    hoverBorderColor: 'hover:border-violet-500/50',
+    buttonColor: 'bg-violet-500 hover:bg-violet-600',
+    icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>',
+    iconColor: 'text-violet-600 dark:text-violet-400',
+    steps: [
+      {
+        command: '/llms [path]',
+        typeLabel: 'Tạo index (skill)',
+        description: 'Tạo llms.txt theo chuẩn llmstxt.org — giúp AI đọc hiểu docs của bạn dễ dàng',
+        color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
+        number: 1,
+        isSkill: true
+      }
+    ],
+    tip: '✨ Beta: /llms tạo llms.txt chuẩn hóa để AI tools có thể hiểu nhanh codebase của bạn',
+    features: [
+      'Tuân theo chuẩn llmstxt.org',
+      'Tạo từ docs, README hoặc codebase',
+      'Bao gồm reference files và cấu trúc',
+      'Hoạt động với mọi loại project'
+    ],
+    borderColor: 'border-violet-500/20'
+  }
+];
 
 // Legacy v2.4.x workflows - kept in source for reference, NOT rendered
 // These use old command syntax: /code, /git:cm, /design:screenshot, /fix:types

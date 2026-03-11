@@ -90,8 +90,8 @@ export default {
   'guides.what_is_claudekit.bottom_line_desc': 'All you need to do is type simple commands, and ClaudeKit handles the complexity!',
   'guides.what_is_claudekit.view_all_commands': 'View All Commands',
   // Quick Start version tabs
-  'guides.what_is_claudekit.qs_tab_v25': 'v2.13.0 Stable',
-  'guides.what_is_claudekit.qs_tab_v24': 'v2.14.0 Beta',
+  'guides.what_is_claudekit.qs_tab_v25': 'Stable',
+  'guides.what_is_claudekit.qs_tab_v24': 'Beta',
   // Command descriptions
   'guides.what_is_claudekit.cmd_ask': 'Get answers to any question',
   'guides.what_is_claudekit.cmd_brainstorm': 'Explore ideas together',
@@ -1579,9 +1579,9 @@ export default {
   'commands.v25.flags.dryRun': 'Preview without executing',
 
   // Version UI strings (Stable = v2.13.0, Beta = v2.14.0)
-  'commands.v25.mandatory_title': 'CK engineer@v2.13.0 Mandatory: /clear after /plan',
+  'commands.v25.mandatory_title': 'Mandatory: /clear after /plan',
   'commands.v25.mandatory_desc': 'Run <code class="px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 font-mono">/clear</code> after reviewing your plan and before implementing to free up context.',
-  'commands.v25.breaking_title': '<code class="px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 font-mono text-sm">engineer@v2.13.0</code> What\'s New',
+  'commands.v25.breaking_title': 'What\'s New in Stable',
   'commands.v25.breaking_commands_skills': '<strong>All Commands → Skills:</strong> All 19 commands migrated to skills with <code class="px-1 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 text-xs">ck:</code> namespace prefix. Both <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-xs">/cook</code> and <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-xs">ck:cook</code> work identically.',
   'commands.v25.breaking_mandatory': '<strong class="text-red-600 dark:text-red-400">Mandatory:</strong> Run <code class="px-1 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-xs">/clear</code> after <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-xs">/plan</code> before implementing to free context.',
   'commands.v25.breaking_cook_auto': '<strong class="text-purple-600 dark:text-purple-400">CC Plugin Format:</strong> Skills now use Claude Code plugin directories with <code class="px-1 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 text-xs">${CLAUDE_PLUGIN_ROOT}</code> paths and <code class="px-1 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 text-xs">argument-hint</code> frontmatter for auto-discovery.',
@@ -1593,17 +1593,17 @@ export default {
   'commands.v26.removed_agents_title': 'Removed Agents (v2.6.0)',
   'commands.v26.removed_agents_desc': 'These agents were removed in engineer@v2.6.0. Use Task tool with appropriate subagent_type or skills instead.',
   'commands.v27.if_want_auto': 'if you want auto-approval',
-  'commands.v25.badge_new': 'New in v2.13.0',
-  'commands.v25.badge_enhanced': 'Enhanced in v2.13.0',
+  'commands.v25.badge_new': 'New',
+  'commands.v25.badge_enhanced': 'Enhanced',
   'commands.v25.badge_archived': 'Still works, use skill instead',
   'commands.v25.skills_note': 'Skills invocable via <code class="px-1 py-0.5 rounded bg-teal-50 dark:bg-teal-900/20 text-teal-600 dark:text-teal-400">/skill-name [args]</code> or <code class="px-1 py-0.5 rounded bg-teal-50 dark:bg-teal-900/20 text-teal-600 dark:text-teal-400">ck:skill-name</code> — both work identically',
-  'commands.v25.tab_v25': 'v2.13.0 Stable',
-  'commands.v25.tab_v24': 'v2.14.0 Beta',
-  'commands.v25.v24_label': 'v2.14.0 Beta',
+  'commands.v25.tab_v25': 'Engineer Kit',
+  'commands.v25.tab_v24': 'Marketing Kit',
+  'commands.v25.v24_label': 'Beta',
   'commands.v25.banner_intro': '— all commands migrated to skills with ck: namespace. Both /cook and ck:cook work identically.',
-  'commands.v25.banner_legacy': 'View v2.14.0 Beta tab for cutting-edge features.',
+  'commands.v25.banner_legacy': 'View Beta tab for cutting-edge features.',
   'commands.v25.v24_banner': 'beta features. These are pre-release and may change before stable.',
-  'commands.v25.v24_banner_note': 'View v2.13.0 Stable for production-ready commands.',
+  'commands.v25.v24_banner_note': 'View Stable for production-ready commands.',
 
   // v2.4 specific commands
   'commands.v24.desc.git_cm': 'Stage all files and create a commit',
@@ -1924,14 +1924,14 @@ export default {
   'session_recovery.guide.related_commands': 'All available commands',
 
   // Beta: Auto Session State (v2.14.0)
-  'session_recovery.guide.auto_state.badge': 'v2.14.0-beta',
+  'session_recovery.guide.auto_state.badge': 'Beta',
   'session_recovery.guide.auto_state.title': 'Auto Session State',
-  'session_recovery.guide.auto_state.desc': 'v2.14.0-beta introduces session-state.cjs — a hook that automatically persists and restores session progress across compactions and restarts.',
+  'session_recovery.guide.auto_state.desc': 'Beta introduces session-state.cjs — a hook that automatically persists and restores session progress across compactions and restarts.',
   'session_recovery.guide.auto_state.point1': 'State saved to .claude/session-state/.last-state.md',
   'session_recovery.guide.auto_state.point2': 'Auto-loads on SessionStart (startup or after compact)',
   'session_recovery.guide.auto_state.point3': 'Auto-saves on Stop and SubagentStop events',
   'session_recovery.guide.auto_state.point4': 'State includes: last active plan, todo items, subagent outputs, branch/commit status',
   'session_recovery.guide.auto_state.point5': 'Archives old state — rotates after 10 sessions',
   'session_recovery.guide.auto_state.point6': 'Fail-open design: non-blocking if hook errors',
-  'session_recovery.guide.auto_state.migration': 'v2.14.0+ auto-persists session state. Manual recovery (/resume, /export) still works as fallback.',
+  'session_recovery.guide.auto_state.migration': 'Beta auto-persists session state. Manual recovery (/resume, /export) still works as fallback.',
 } as const;
