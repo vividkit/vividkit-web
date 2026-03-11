@@ -91,8 +91,8 @@ export default {
   'guides.what_is_claudekit.bottom_line_desc': 'Bạn chỉ cần gõ lệnh đơn giản, ClaudeKit lo phần phức tạp!',
   'guides.what_is_claudekit.view_all_commands': 'Xem Tất Cả Lệnh',
   // Quick Start version tabs
-  'guides.what_is_claudekit.qs_tab_v25': 'v2.13.0 Stable',
-  'guides.what_is_claudekit.qs_tab_v24': 'v2.14.0 Beta',
+  'guides.what_is_claudekit.qs_tab_v25': 'Stable',
+  'guides.what_is_claudekit.qs_tab_v24': 'Beta',
   // Command descriptions
   'guides.what_is_claudekit.cmd_ask': 'Trả lời mọi câu hỏi',
   'guides.what_is_claudekit.cmd_brainstorm': 'Cùng khám phá ý tưởng',
@@ -1586,9 +1586,9 @@ export default {
   'commands.v25.flags.dryRun': 'Preview mà không thực thi',
 
   // Version UI strings (Stable = v2.13.0, Beta = v2.14.0)
-  'commands.v25.mandatory_title': 'CK engineer@v2.13.0 Bắt buộc: /clear sau /plan',
+  'commands.v25.mandatory_title': 'Bắt buộc: /clear sau /plan',
   'commands.v25.mandatory_desc': 'Chạy <code class="px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 font-mono">/clear</code> sau khi xem plan và trước khi triển khai để giải phóng context.',
-  'commands.v25.breaking_title': '<code class="px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 font-mono text-sm">engineer@v2.13.0</code> Có Gì Mới',
+  'commands.v25.breaking_title': 'Có Gì Mới trong Stable',
   'commands.v25.breaking_commands_skills': '<strong>Tất cả Commands → Skills:</strong> Toàn bộ 19 commands đã chuyển sang skills với prefix <code class="px-1 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 text-xs">ck:</code>. Cả <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-xs">/cook</code> và <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-xs">ck:cook</code> đều hoạt động như nhau.',
   'commands.v25.breaking_mandatory': '<strong class="text-red-600 dark:text-red-400">Bắt buộc:</strong> Chạy <code class="px-1 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-xs">/clear</code> sau <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-xs">/plan</code> trước khi triển khai để giải phóng context.',
   'commands.v25.breaking_cook_auto': '<strong class="text-purple-600 dark:text-purple-400">CC Plugin Format:</strong> Skills giờ dùng Claude Code plugin directories với đường dẫn <code class="px-1 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 text-xs">${CLAUDE_PLUGIN_ROOT}</code> và metadata <code class="px-1 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 text-xs">argument-hint</code> để auto-discovery.',
@@ -1600,17 +1600,17 @@ export default {
   'commands.v26.removed_agents_title': 'Agents Đã Xoá (v2.6.0)',
   'commands.v26.removed_agents_desc': 'Các agents này đã bị xoá trong engineer@v2.6.0. Sử dụng Task tool với subagent_type phù hợp hoặc skills thay thế.',
   'commands.v27.if_want_auto': 'nếu muốn tự động approve',
-  'commands.v25.badge_new': 'Mới trong v2.13.0',
-  'commands.v25.badge_enhanced': 'Cải thiện trong v2.13.0',
+  'commands.v25.badge_new': 'Mới',
+  'commands.v25.badge_enhanced': 'Cải thiện',
   'commands.v25.badge_archived': 'Vẫn hoạt động, nên dùng skill thay thế',
   'commands.v25.skills_note': 'Skills gọi qua <code class="px-1 py-0.5 rounded bg-teal-50 dark:bg-teal-900/20 text-teal-600 dark:text-teal-400">/skill-name [args]</code> hoặc <code class="px-1 py-0.5 rounded bg-teal-50 dark:bg-teal-900/20 text-teal-600 dark:text-teal-400">ck:skill-name</code> — cả hai đều hoạt động như nhau',
-  'commands.v25.tab_v25': 'v2.13.0 Stable',
-  'commands.v25.tab_v24': 'v2.14.0 Beta',
-  'commands.v25.v24_label': 'v2.14.0 Beta',
+  'commands.v25.tab_v25': 'Engineer Kit',
+  'commands.v25.tab_v24': 'Marketing Kit',
+  'commands.v25.v24_label': 'Beta',
   'commands.v25.banner_intro': '— toàn bộ commands đã chuyển sang skills với namespace ck:. Cả /cook và ck:cook đều hoạt động như nhau.',
-  'commands.v25.banner_legacy': 'Xem tab v2.14.0 Beta để xem các tính năng mới nhất.',
+  'commands.v25.banner_legacy': 'Xem tab Beta để xem các tính năng mới nhất.',
   'commands.v25.v24_banner': 'tính năng beta. Đây là phiên bản thử nghiệm và có thể thay đổi trước khi ra bản stable.',
-  'commands.v25.v24_banner_note': 'Xem v2.13.0 Stable cho các lệnh ổn định.',
+  'commands.v25.v24_banner_note': 'Xem Stable cho các lệnh ổn định.',
 
   // v2.4 specific commands
   'commands.v24.desc.git_cm': 'Stage all files và tạo commit',
@@ -1930,14 +1930,14 @@ export default {
   'session_recovery.guide.related_commands': 'Tất cả lệnh có sẵn',
 
   // Beta: Auto Session State (v2.14.0)
-  'session_recovery.guide.auto_state.badge': 'v2.14.0-beta',
+  'session_recovery.guide.auto_state.badge': 'Beta',
   'session_recovery.guide.auto_state.title': 'Session State Tự động',
-  'session_recovery.guide.auto_state.desc': 'v2.14.0-beta giới thiệu session-state.cjs — một hook tự động lưu và khôi phục tiến trình session qua các lần compact và khởi động lại.',
+  'session_recovery.guide.auto_state.desc': 'Beta giới thiệu session-state.cjs — một hook tự động lưu và khôi phục tiến trình session qua các lần compact và khởi động lại.',
   'session_recovery.guide.auto_state.point1': 'State được lưu vào .claude/session-state/.last-state.md',
   'session_recovery.guide.auto_state.point2': 'Tự động load khi SessionStart (khởi động hoặc sau compact)',
   'session_recovery.guide.auto_state.point3': 'Tự động lưu khi có sự kiện Stop và SubagentStop',
   'session_recovery.guide.auto_state.point4': 'State bao gồm: plan hiện tại, todo items, subagent outputs, trạng thái branch/commit',
   'session_recovery.guide.auto_state.point5': 'Lưu trữ state cũ — xoay vòng sau 10 sessions',
   'session_recovery.guide.auto_state.point6': 'Thiết kế fail-open: không chặn nếu hook gặp lỗi',
-  'session_recovery.guide.auto_state.migration': 'v2.14.0+ tự động lưu session state. Recovery thủ công (/resume, /export) vẫn hoạt động như fallback.',
+  'session_recovery.guide.auto_state.migration': 'Beta tự động lưu session state. Recovery thủ công (/resume, /export) vẫn hoạt động như fallback.',
 } as const;

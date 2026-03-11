@@ -113,7 +113,7 @@ const metaphorItems = [
   { icon: icons.wrench, key: "maintenance", color: "violet" },
 ];
 
-// Stable (v2.13.0) commands - skill-based architecture
+// Stable commands - skill-based architecture
 const stableBeginnerCommands = [
   { cmd: "/ask", desc: t("guides.what_is_claudekit.cmd_ask") },
   { cmd: "/brainstorm", desc: t("guides.what_is_claudekit.cmd_brainstorm") },
@@ -132,7 +132,7 @@ const stableGitCommands = [
   { cmd: "/watzup", desc: t("guides.what_is_claudekit.cmd_watzup") },
 ];
 
-// Beta (v2.14.0) commands - command-based architecture
+// Beta (v2.14.0) commands - superset of stable + new skills
 const betaBeginnerCommands = [
   { cmd: "/ask", desc: t("guides.what_is_claudekit.cmd_ask") },
   { cmd: "/brainstorm", desc: t("guides.what_is_claudekit.cmd_brainstorm") },
@@ -141,14 +141,14 @@ const betaBeginnerCommands = [
 
 const betaBuildingCommands = [
   { cmd: "/plan", desc: t("guides.what_is_claudekit.cmd_plan") },
-  { cmd: "/code", desc: t("guides.what_is_claudekit.cmd_code") },
-  { cmd: "/review:codebase", desc: t("guides.what_is_claudekit.cmd_review") },
+  { cmd: "/cook", desc: t("guides.what_is_claudekit.cmd_cook") },
+  { cmd: "/deploy [platform]", desc: "Auto-detect & deploy to 15+ platforms" },
 ];
 
 const betaGitCommands = [
-  { cmd: "/git:cm", desc: t("guides.what_is_claudekit.cmd_git_cm") },
-  { cmd: "/git:pr", desc: t("guides.what_is_claudekit.cmd_git_pr") },
-  { cmd: "/docs:update", desc: t("guides.what_is_claudekit.cmd_docs") },
+  { cmd: "/git", desc: t("guides.what_is_claudekit.cmd_git") },
+  { cmd: "/security-scan", desc: "Scan for vulnerabilities & secrets" },
+  { cmd: "/llms [path]", desc: "Generate LLM-friendly docs index" },
 ];
 
 const summaryItems = [
@@ -575,7 +575,7 @@ const comparisonItems = [
       </div>
     </div>
     <div class="p-6">
-      <!-- Stable (v2.13.0) Commands -->
+      <!-- Stable Commands -->
       <div id="qs-commands-stable" class="grid md:grid-cols-3 gap-6">
         <!-- For Beginners -->
         <div
@@ -660,7 +660,7 @@ const comparisonItems = [
         </div>
       </div>
 
-      <!-- Beta (v2.14.0) Commands (hidden by default) -->
+      <!-- Beta Commands (hidden by default) -->
       <div id="qs-commands-beta" class="grid md:grid-cols-3 gap-6 hidden">
         <!-- For Beginners -->
         <div

@@ -30,7 +30,7 @@ export const stableWorkflows = [
       },
       {
         typeLabel: 'Review → /clear → Implement',
-        description: 'Review plan, run /clear to free context (mandatory in CK engineer@v2.13.0), then implement',
+        description: 'Review plan, run /clear to free context (mandatory), then implement',
         color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
         number: 3,
         hasIcon: true,
@@ -45,7 +45,7 @@ export const stableWorkflows = [
         isSkill: true
       }
     ],
-    tip: '⚠️ CK engineer@v2.13.0: /clear is mandatory after /plan before /cook',
+    tip: '⚠️ /clear is mandatory after /plan before /cook',
     borderColor: 'border-purple-500/20'
   },
   {
@@ -119,7 +119,7 @@ export const stableWorkflows = [
         isSkill: true
       }
     ],
-    tip: '💡 See mapping table above for migrating from v2.4 variants. --interactive is default, uses native Claude Tasks API.',
+    tip: '💡 See mapping table above for migrating from legacy variants. --interactive is default, uses native Claude Tasks API.',
     cookMappings: [
       { old: '/cook:auto', new: '/cook --auto', desc: 'Auto-approve all steps' },
       { old: '/cook:auto:fast', new: '/cook --auto --fast', desc: 'Fast + auto-approve' },
@@ -193,7 +193,7 @@ export const stableWorkflows = [
         number: 2
       }
     ],
-    tip: '💡 New in v2.13.0: Replaces /design:video command',
+    tip: '💡 Replaces /design:video command',
     features: [
       'Animations and transitions',
       'Text animations and captions',
@@ -239,7 +239,7 @@ export const stableWorkflows = [
       }
     ],
     featureCommand: '/preview',
-    tip: '💡 New in engineer@2.10+: /preview now generates visual content. Also: --slides, --ascii',
+    tip: '💡 /preview generates visual content. Also: --slides, --ascii',
     features: [
       'ASCII + Mermaid diagrams (--explain)',
       'Presentation format (--slides)',
@@ -293,7 +293,7 @@ export const stableWorkflows = [
       }
     ],
     featureCommand: '/scout',
-    tip: '💡 engineer@2.10+: /scout now integrates with code-reviewer for edge case detection before review',
+    tip: '💡 /scout integrates with code-reviewer for edge case detection before review',
     features: [
       'Edge case detection via /scout',
       'Boundary condition analysis',
@@ -330,7 +330,7 @@ export const stableWorkflows = [
       },
       {
         typeLabel: '/clear (mandatory)',
-        description: 'Free context before implementation — mandatory in engineer@v2.13.0',
+        description: 'Free context before implementation — mandatory',
         color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
         number: 3,
         hasIcon: true,
@@ -346,7 +346,7 @@ export const stableWorkflows = [
       }
     ],
     featureCommand: '/plan:validate',
-    tip: '💡 engineer@2.10+: /plan:validate decisions auto-propagate to phase files — no manual updates needed',
+    tip: '💡 /plan:validate decisions auto-propagate to phase files — no manual updates needed',
     features: [
       'Interview-style plan validation',
       'Auto-propagation to phase files',
@@ -383,7 +383,7 @@ export const stableWorkflows = [
         isSkill: true
       }
     ],
-    tip: '⚠️ Requires CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 in settings.json. New in engineer@v2.11.0+',
+    tip: '⚠️ Requires CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 in settings.json.',
     features: [
       'Parallel dev agents (--devs N)',
       'Auto test → review → merge pipeline',
@@ -420,7 +420,7 @@ export const stableWorkflows = [
         isSkill: true
       }
     ],
-    tip: '💡 New in engineer@v2.11.0+: Auto-scales reviewers based on plan complexity (2-4 adversarial lenses)',
+    tip: '💡 Auto-scales reviewers based on plan complexity (2-4 adversarial lenses)',
     features: [
       'Security Adversary (auth bypass, injection, OWASP)',
       'Failure Mode Analyst (race conditions, data loss)',
@@ -431,9 +431,100 @@ export const stableWorkflows = [
   }
 ];
 
-// v2.14.0 Beta workflows - identical to stable + beta-specific notes
-// Beta v2.14.0-beta.5 is a superset of stable v2.13.0 (adds ck:llms skill, minor refinements)
-export const betaWorkflows = stableWorkflows;
+// Beta workflows - superset of stable + new skills (deploy, security-scan, llms, project-organization)
+export const betaWorkflows = [
+  ...stableWorkflows,
+  {
+    title: 'Deploy Your App',
+    level: 'Intermediate',
+    duration: '~5-15 min',
+    stepCount: 1,
+    bestFor: 'Deploying to Vercel, Netlify, Railway, Fly.io, AWS, GCP and more',
+    gradientHeader: 'from-orange-500/10 to-amber-500/10',
+    hoverBorderColor: 'hover:border-orange-500/50',
+    buttonColor: 'bg-orange-500 hover:bg-orange-600',
+    icon: '<path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>',
+    iconColor: 'text-orange-600 dark:text-orange-400',
+    steps: [
+      {
+        command: '/deploy [platform]',
+        typeLabel: 'Auto-deploy (skill)',
+        description: 'AI detects your project type and deploys to 15+ platforms with zero manual config',
+        color: 'bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400',
+        number: 1,
+        isSkill: true
+      }
+    ],
+    tip: '✨ Beta: /deploy auto-detects your stack and handles environment variables, build steps, and platform config',
+    features: [
+      'Auto-detects project type (Next.js, Astro, Express, etc.)',
+      'Supports 15+ platforms out of the box',
+      'Handles env vars and build configuration',
+      'Vercel, Netlify, Railway, Fly.io, AWS, GCP, Azure'
+    ],
+    borderColor: 'border-orange-500/20'
+  },
+  {
+    title: 'Security Audit',
+    level: 'Intermediate',
+    duration: '~10-20 min',
+    stepCount: 1,
+    bestFor: 'Finding vulnerabilities and exposed secrets before shipping',
+    gradientHeader: 'from-rose-500/10 to-red-500/10',
+    hoverBorderColor: 'hover:border-rose-500/50',
+    buttonColor: 'bg-rose-500 hover:bg-rose-600',
+    icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+    iconColor: 'text-rose-600 dark:text-rose-400',
+    steps: [
+      {
+        command: '/security-scan --full',
+        typeLabel: 'Security audit (skill)',
+        description: 'Deep scan for OWASP vulnerabilities, leaked API keys, and insecure patterns',
+        color: 'bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400',
+        number: 1,
+        isSkill: true
+      }
+    ],
+    tip: '✨ Beta: /security-scan checks OWASP top 10, secrets exposure, auth flaws, and dependency vulnerabilities',
+    features: [
+      'OWASP Top 10 vulnerability checks',
+      'Leaked API keys and secret detection',
+      'Authentication and authorization flaws',
+      'Dependency vulnerability scanning'
+    ],
+    borderColor: 'border-rose-500/20'
+  },
+  {
+    title: 'LLMs.txt Generation',
+    level: 'Beginner',
+    duration: '~5-10 min',
+    stepCount: 1,
+    bestFor: 'Making your project AI-friendly for LLM consumption',
+    gradientHeader: 'from-violet-500/10 to-purple-500/10',
+    hoverBorderColor: 'hover:border-violet-500/50',
+    buttonColor: 'bg-violet-500 hover:bg-violet-600',
+    icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>',
+    iconColor: 'text-violet-600 dark:text-violet-400',
+    steps: [
+      {
+        command: '/llms [path]',
+        typeLabel: 'Generate index (skill)',
+        description: 'Create llms.txt following llmstxt.org spec — makes your docs AI-readable',
+        color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
+        number: 1,
+        isSkill: true
+      }
+    ],
+    tip: '✨ Beta: /llms generates standardized llms.txt so AI tools can quickly understand your codebase',
+    features: [
+      'Follows llmstxt.org specification',
+      'Generates from docs, README, or codebase',
+      'Includes reference files and structure overview',
+      'Works with any project type'
+    ],
+    borderColor: 'border-violet-500/20'
+  }
+];
 
 // Legacy v2.4.x workflows - kept in source for reference, NOT rendered
 // These use old command syntax: /code, /git:cm, /design:screenshot, /fix:types
