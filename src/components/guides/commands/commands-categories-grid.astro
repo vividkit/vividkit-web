@@ -1,0 +1,284 @@
+---
+// Version toggle + Engineer Kit / Marketing Kit category cards grid
+import { useTranslations } from "@/i18n/utils";
+import { getLangFromUrl, type Language } from "@/i18n";
+import { getEngineerKitCategories } from "@/data/guides/commands-engineer-kit";
+import { getMarketingKitCategories } from "@/data/guides/commands-marketing-kit";
+import { styles } from "@/data/guides/commands-styles";
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+const stableCategories = getEngineerKitCategories(t);
+const marketingCategories = getMarketingKitCategories(t);
+---
+
+<div class="space-y-6">
+  <!-- Section header + version toggle buttons -->
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <h2 class="text-2xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+      <svg
+        class="w-7 h-7 text-cyan-600 dark:text-cyan-400"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <rect x="3" y="3" width="7" height="7"></rect>
+        <rect x="14" y="3" width="7" height="7"></rect>
+        <rect x="14" y="14" width="7" height="7"></rect>
+        <rect x="3" y="14" width="7" height="7"></rect>
+      </svg>
+      {t("commands.categories.title")}
+    </h2>
+
+    <div
+      class="flex items-center gap-2 p-1 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700"
+    >
+      <button
+        id="btn-engineer"
+        class="version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 bg-teal-500 text-white shadow-sm"
+        data-version="engineer"
+      >
+        <span class="flex items-center gap-1.5">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+          {t("commands.v25.tab_v25")}
+        </span>
+      </button>
+      <button
+        id="btn-marketing"
+        class="version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700"
+        data-version="marketing"
+      >
+        <span class="flex items-center gap-1.5">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+          </svg>
+          {t("commands.v25.tab_v24")}
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Engineer Kit (v2.13.0) categories panel -->
+  <div id="categories-engineer" class="space-y-6">
+    <!-- Stable version badge -->
+    <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+      <span class="px-2 py-0.5 rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 font-semibold"
+        >Stable v2.13.0</span
+      >
+      <span>{t("commands.engineer_stable_note")}</span>
+    </div>
+
+    <!-- Beta preview card -->
+    <div
+      class="rounded-xl border-2 border-purple-400/60 dark:border-purple-500/40 overflow-hidden bg-gradient-to-br from-purple-500/10 via-violet-500/5 to-pink-500/10"
+    >
+      <div
+        class="p-4 border-b border-purple-300/30 dark:border-purple-600/30 bg-gradient-to-r from-purple-600/10 to-violet-500/10"
+      >
+        <h3 class="text-lg font-bold flex items-center gap-2 text-purple-600 dark:text-purple-400">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+            ></polygon>
+          </svg>
+          {t("commands.beta_preview.title")}
+          <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-purple-500 text-white font-medium uppercase"
+            >new</span
+          >
+        </h3>
+        <p class="text-xs text-slate-500 mt-1">{t("commands.beta_preview.subtitle")}</p>
+      </div>
+      <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        <!-- Beta skill cards -->
+        {[
+          { cmd: "/deploy", labelKey: "commands.beta_deploy.desc", detailKey: "commands.beta_deploy.detail", type: "skill" },
+          { cmd: "/llms", labelKey: "commands.beta_llms.desc", detailKey: "commands.beta_llms.detail", type: "skill" },
+          { cmd: "/project-organization", labelKey: "commands.beta_project_organization.desc", detailKey: "commands.beta_project_organization.detail", type: "skill" },
+          { cmd: "/security-scan", labelKey: "commands.beta_security_scan.desc", detailKey: "commands.beta_security_scan.detail", type: "skill" },
+          { cmd: "/design", labelKey: "commands.beta_design.desc", detailKey: "commands.beta_design.detail", type: "skill", badge: "new" },
+          { cmd: "/ui-ux-pro-max", labelKey: "commands.beta_ui_ux_pro_max.desc", detailKey: "commands.beta_ui_ux_pro_max.detail", type: "skill", badge: "enhanced" },
+        ].map((item) => (
+          <div class="p-3 rounded-lg bg-white/60 dark:bg-slate-900/50 border border-purple-500/30 transition-all duration-200 hover:shadow-sm h-full flex flex-col">
+            <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <code class="text-sm font-bold font-mono text-purple-600 dark:text-purple-400">{item.cmd}</code>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">skill</span>
+                {item.badge === "new" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 font-medium uppercase">new</span>}
+                {item.badge === "enhanced" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium uppercase">enhanced</span>}
+              </div>
+            </div>
+            <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">{t(item.labelKey)}</p>
+            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">{t(item.detailKey)}</p>
+          </div>
+        ))}
+        <!-- Hook cards -->
+        {[
+          { cmd: "session-state.cjs", labelKey: "commands.beta_session_state.desc", detailKey: "commands.beta_session_state.detail" },
+          { cmd: "plan-format-kanban.cjs", labelKey: "commands.beta_plan_format_kanban.desc", detailKey: "commands.beta_plan_format_kanban.detail" },
+        ].map((item) => (
+          <div class="p-3 rounded-lg bg-white/60 dark:bg-slate-900/50 border border-violet-500/30 transition-all duration-200 hover:shadow-sm h-full flex flex-col">
+            <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <code class="text-sm font-bold font-mono text-violet-600 dark:text-violet-400">{item.cmd}</code>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 font-medium uppercase">hook</span>
+              </div>
+            </div>
+            <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">{t(item.labelKey)}</p>
+            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">{t(item.detailKey)}</p>
+          </div>
+        ))}
+        <!-- System changes card -->
+        <div class="p-3 rounded-lg bg-white/60 dark:bg-slate-900/50 border border-slate-400/30 transition-all duration-200 hover:shadow-sm h-full flex flex-col">
+          <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <span class="text-sm font-bold text-slate-500 dark:text-slate-400">{t("commands.beta_system_changes.label")}</span>
+              <span class="text-[9px] px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-400 font-medium uppercase">config</span>
+            </div>
+          </div>
+          <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">{t("commands.beta_system_changes.desc")}</p>
+          <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">{t("commands.beta_system_changes.detail")}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stable category cards -->
+    {stableCategories.map((category) => (
+      <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden group">
+        <div class={`p-4 border-b border-slate-100 dark:border-slate-800 ${styles[category.color].bg}`}>
+          <h3 class={`text-lg font-bold flex items-center gap-2 ${styles[category.color].text}`}>
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <Fragment set:html={category.icon} />
+            </svg>
+            {category.name}
+          </h3>
+          <p class="text-xs text-slate-500 mt-1">{category.description}</p>
+        </div>
+        <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+          {category.commands.map((cmd) => (
+            <div
+              class={`p-3 rounded-lg bg-slate-50 dark:bg-slate-900/50 border ${styles[category.color].border} transition-all duration-200 hover:shadow-sm h-full flex flex-col ${cmd.isSkill ? "border-dashed" : ""}`}
+            >
+              <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  {cmd.isSkill ? (
+                    <span class={`text-sm font-medium ${styles[category.color].text}`}>{cmd.command}</span>
+                  ) : (
+                    <code class={`text-sm font-bold font-mono ${styles[category.color].text}`}>{cmd.command}</code>
+                  )}
+                  {cmd.isSkill && (
+                    <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase">
+                      skill
+                    </span>
+                  )}
+                  {cmd.isBeta && (
+                    <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">beta</span>
+                  )}
+                </div>
+                <span class="text-[10px] opacity-70">{cmd.complexity}</span>
+              </div>
+              <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">{cmd.desc}</p>
+              {cmd.detail && (
+                <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">
+                  {cmd.detail}
+                </p>
+              )}
+              {cmd.flags && cmd.flags.length > 0 && (
+                <div class="flex flex-wrap gap-1 mt-1.5">
+                  {cmd.flags.map((flag: string) => (
+                    <code class="text-[9px] px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400 font-mono">
+                      {flag}
+                    </code>
+                  ))}
+                </div>
+              )}
+              {cmd.replacedCommand && (
+                <p class="text-[10px] text-slate-500 mt-1 flex items-center gap-1">
+                  <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 5l-7 7 7 7" />
+                  </svg>
+                  Replaces: <code class="text-red-500 line-through">{cmd.replacedCommand}</code>
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- Marketing Kit categories panel -->
+  <div id="categories-marketing" class="space-y-6 hidden">
+    <!-- Stable version badge -->
+    <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+      <span class="px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 font-semibold"
+        >Stable v1.2.1</span
+      >
+      <span>{t("commands.engineer_stable_note")}</span>
+    </div>
+
+    <!-- Marketing category cards -->
+    {marketingCategories.map((category) => (
+      <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden group">
+        <div class={`p-4 border-b border-slate-100 dark:border-slate-800 ${styles[category.color].bg}`}>
+          <h3 class={`text-lg font-bold flex items-center gap-2 ${styles[category.color].text}`}>
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <Fragment set:html={category.icon} />
+            </svg>
+            {category.name}
+          </h3>
+          <p class="text-xs text-slate-500 mt-1">{category.description}</p>
+        </div>
+        <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+          {category.commands.map((cmd) => (
+            <div
+              class={`p-3 rounded-lg bg-slate-50 dark:bg-slate-900/50 border ${styles[category.color].border} transition-all duration-200 hover:shadow-sm h-full flex flex-col ${cmd.isSkill ? "border-dashed" : ""}`}
+            >
+              <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  {cmd.isSkill ? (
+                    <span class={`text-sm font-medium ${styles[category.color].text}`}>{cmd.command}</span>
+                  ) : (
+                    <code class={`text-sm font-bold font-mono ${styles[category.color].text}`}>{cmd.command}</code>
+                  )}
+                  {cmd.isSkill && (
+                    <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">
+                      skill
+                    </span>
+                  )}
+                  {cmd.isBeta && (
+                    <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">beta</span>
+                  )}
+                </div>
+                <span class="text-[10px] opacity-70">{cmd.complexity}</span>
+              </div>
+              <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">{cmd.desc}</p>
+              {cmd.detail && (
+                <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">
+                  {cmd.detail}
+                </p>
+              )}
+              {cmd.flags && cmd.flags.length > 0 && (
+                <div class="flex flex-wrap gap-1 mt-1.5">
+                  {cmd.flags.map((flag: string) => (
+                    <code class="text-[9px] px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400 font-mono">
+                      {flag}
+                    </code>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
