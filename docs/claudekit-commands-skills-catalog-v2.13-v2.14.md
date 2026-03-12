@@ -1,6 +1,6 @@
 # ClaudeKit Engineer — Commands & Skills Catalog
 
-> **Stable:** v2.13.0 · **Beta:** v2.14.0-beta.5 · **Updated:** 2026-03-04
+> **Stable:** v2.13.0 · **Beta:** v2.14.0-beta.14 · **Updated:** 2026-03-12
 
 All commands use `ck:` namespace as Claude Code plugins. Both `/cook` and `ck:cook` work identically.
 
@@ -20,7 +20,7 @@ Token estimates based on SKILL.md file size (~4 chars/token). Higher complexity 
 
 ---
 
-## Skills (66 in Stable · 67 in Beta)
+## Skills (66 in Stable · 71 in Beta)
 
 ### 🔧 Core Workflow Skills
 
@@ -51,11 +51,12 @@ Token estimates based on SKILL.md file size (~4 chars/token). Higher complexity 
 | `ck:frontend-design` | `/frontend-design` | Create polished frontend interfaces from designs/screenshots/videos |
 | `ck:frontend-development` | `/frontend-development [component or feature]` | Build React/TypeScript frontends with modern patterns, MUI v7, TanStack |
 | `ck:ui-styling` | `/ui-styling [component or layout]` | Style UIs with shadcn/ui (Radix UI + Tailwind CSS). Dark mode, design systems |
-| `ck:ui-ux-pro-max` | `/ui-ux-pro-max` | 50 styles, 21 palettes, 50 font pairings, 20 charts, 9 stacks |
+| `ck:ui-ux-pro-max` | `/ui-ux-pro-max` | 50+ styles, 161 palettes, 57 font pairings, 161 product types, 99 UX guidelines, 25 charts, 10 stacks |
 | `ck:web-design-guidelines` | `/web-design-guidelines [file-or-pattern]` | Review UI code for Web Interface Guidelines compliance |
 | `ck:threejs` | `/threejs [3D scene or feature]` | Build 3D web apps with Three.js (WebGL/WebGPU). 556 examples, 60 API classes |
 | `ck:remotion` | `/remotion [video or component]` | Programmatic video creation in React |
 | `ck:shader` | `/shader [effect or pattern]` | Write GLSL fragment shaders for procedural graphics, generative art |
+| `ckm:design` | `/design [design-type] [context]` | **[NEW]** Comprehensive design: logo (55 styles), CIP (50 deliverables), slides (Chart.js), banners (22 styles), icons (15 styles, SVG), social photos. Gemini AI powered |
 
 ### 🔗 Git & Version Control
 
@@ -80,7 +81,7 @@ Token estimates based on SKILL.md file size (~4 chars/token). Higher complexity 
 | Skill | Usage | Description |
 |-------|-------|-------------|
 | `ck:ai-artist` | `/ai-artist [concept] [--mode search\|creative\|wild\|all] [--skip]` | Generate images via Nano Banana with 129 curated prompts. Mandatory validation |
-| `ck:ai-multimodal` | `/ai-multimodal [file-path] [prompt]` | Analyze images/audio/video with Gemini API. Generate images (Imagen 4), videos (Veo 3) |
+| `ck:ai-multimodal` | `/ai-multimodal [file-path] [prompt]` | Analyze images/audio/video with Gemini API. Generate images (Imagen 4, Nano Banana 2, MiniMax), videos (Veo 3, Hailuo), speech (MiniMax TTS), music (MiniMax) |
 | `ck:media-processing` | `/media-processing [input-file] [operation]` | FFmpeg (video/audio), ImageMagick (images), RMBG (AI background removal) |
 
 ### 🌐 Web & Backend
@@ -91,6 +92,7 @@ Token estimates based on SKILL.md file size (~4 chars/token). Higher complexity 
 | `ck:web-testing` | `/web-testing [test-type] [target]` | Playwright, Vitest, k6. E2E/unit/integration/load/security/visual/a11y |
 | `ck:backend-development` | `/backend-development` | Node.js, Python, Go APIs (NestJS, FastAPI, Django). REST/GraphQL/gRPC |
 | `ck:databases` | `/databases [query or schema task]` | MongoDB, PostgreSQL, SQL/NoSQL queries, aggregation, indexes, migrations |
+| `ck:deploy` | `/deploy [platform] [environment]` | **[NEW]** Deploy to 15 platforms with auto-detection: Vercel, Netlify, Cloudflare, Railway, Fly.io, Render, Heroku, TOSE, GitHub Pages, AWS, GCP, DigitalOcean, Vultr, Coolify, Dokploy |
 | `ck:devops` | `/devops` | Cloudflare (Workers, R2, D1), Docker, GCP (Cloud Run), Kubernetes |
 | `ck:better-auth` | `/better-auth [auth-method or feature]` | Better Auth (TypeScript): OAuth, 2FA/MFA, passkeys/WebAuthn, RBAC |
 | `ck:tanstack` | `/tanstack [framework] [feature]` | TanStack Start, TanStack Form, TanStack AI (streaming/chat) |
@@ -126,6 +128,8 @@ Token estimates based on SKILL.md file size (~4 chars/token). Higher complexity 
 | `ck:repomix` | `/repomix [path] [--style xml\|markdown\|plain\|json]` | Pack repositories into AI-friendly files for LLM context |
 | `ck:markdown-novel-viewer` | `/markdown-novel-viewer [file-or-directory]` | Calm, book-like reading experience via HTTP server |
 | `ck:mermaidjs-v11` | `/mermaidjs-v11 [diagram-type or description]` | Flowcharts, sequence/class/ER/state diagrams, Gantt, timelines |
+| `ck:security-scan` | `/security-scan [scope] [--secrets-only\|--deps-only\|--full]` | **[NEW]** Scan for vulnerabilities, hardcoded secrets, dependency issues, OWASP patterns. No external deps |
+| `ck:project-organization` | `/project-organization [directories or files]` | **[NEW]** Organize files, directories, naming conventions, markdown templates for any project type |
 | `ck:copywriting` | `/copywriting [copy-type] [context]` | Headlines, email copy, CTAs, landing pages, writing styles |
 | `ck:google-adk-python` | `/google-adk-python [agent or feature]` | Build AI agents with Google ADK Python. A2A protocol, MCP tools |
 | `ck:agent-browser` | `/agent-browser [url or task]` | AI-optimized browser automation CLI with context-efficient snapshots |
@@ -266,6 +270,30 @@ Detailed breakdown of arguments and flags for each skill. Use this section to un
 | `--style plain` | `/repomix --style plain` | Plain text — minimal overhead |
 | `--style json` | `/repomix --style json` | JSON format — structured/parseable |
 
+### `/deploy`
+
+| Argument | Example | When to Use |
+|----------|---------|-------------|
+| `[platform]` | `/deploy vercel` | Specify target platform directly |
+| `[environment]` | `/deploy vercel production` | Specify environment (staging, production) |
+| *(no args)* | `/deploy` | Auto-detect platform from config files and project structure |
+
+### `/security-scan`
+
+| Argument | Example | When to Use |
+|----------|---------|-------------|
+| `[scope]` | `/security-scan src/` | Scan specific directory only |
+| `--secrets-only` | `/security-scan --secrets-only` | Only check for hardcoded secrets/API keys |
+| `--deps-only` | `/security-scan --deps-only` | Only check dependency vulnerabilities |
+| `--full` | `/security-scan --full` | Full scan: secrets + deps + OWASP patterns |
+
+### `/design`
+
+| Argument | Example | When to Use |
+|----------|---------|-------------|
+| `[design-type]` | `/design logo` | Types: `logo`, `cip`, `slides`, `banner`, `icon`, `social-photos` |
+| `[context]` | `/design logo tech startup` | Describe brand/project context |
+
 ### Other Skills — Quick Reference
 
 | Skill | Usage | Notes |
@@ -285,6 +313,11 @@ Detailed breakdown of arguments and flags for each skill. Use this section to un
 | `/threejs [scene]` | `/threejs spinning globe with markers` | Describe 3D scene to build |
 | `/skill-creator [name]` | `/skill-creator vue-testing` | Skill name or description |
 | `/find-skills [capability]` | `/find-skills database migration` | Describe capability you need |
+| `/deploy [platform]` | `/deploy vercel` | Auto-detect or specify platform |
+| `/security-scan [scope]` | `/security-scan --full` | Scan for secrets, vulns, deps |
+| `/design [type] [context]` | `/design logo fintech app` | Logo, CIP, slides, banner, icon, social |
+| `/project-organization [paths]` | `/project-organization src/` | Standardize file structure and naming |
+| `/llms [path\|url]` | `/llms docs/ --full` | Generate llms.txt for LLM-friendly index |
 
 ---
 
@@ -309,32 +342,46 @@ Detailed breakdown of arguments and flags for each skill. Use this section to un
 
 ---
 
-## Beta Changes (v2.14.0-beta.5 vs v2.13.0 Stable)
+## Beta Changes (v2.14.0-beta.14 vs v2.13.0 Stable)
 
-### 🆕 New in Beta
+### 🆕 New in Beta (5 skills)
 
 | Item | Type | Description |
 |------|------|-------------|
-| `ck:llms` | New Skill | Generate `llms.txt` files from docs or codebase. Follows llmstxt.org spec. Includes reference files and generation script |
-| `magicui-components.md` | New Reference | Magic UI component library reference added to `frontend-design` skill |
+| `ck:deploy` | New Skill | Deploy to 15 platforms with auto-detection (Vercel, Netlify, Cloudflare, Railway, Fly.io, Render, Heroku, TOSE, GitHub Pages, AWS, GCP, DigitalOcean, Vultr, Coolify, Dokploy). Cost-optimized recommendations |
+| `ckm:design` | New Skill | Comprehensive design: logo gen (55 styles, Gemini AI), CIP (50 deliverables + mockups), HTML slides (Chart.js), banners (22 styles), icons (15 styles, SVG, Gemini 3.1 Pro), social photos. Uses `ckm:` namespace |
+| `ck:security-scan` | New Skill | Lightweight security scanner: vulnerabilities, hardcoded secrets, dependency issues, OWASP patterns. No external deps. Flags: `--secrets-only`, `--deps-only`, `--full` |
+| `ck:project-organization` | New Skill | Organize files, directories, naming conventions, markdown body templates. Reference files for directory patterns and conventions |
+| `ck:llms` | New Skill | Generate `llms.txt` files from docs or codebase. Follows llmstxt.org spec. Flags: `--full`, `--output` |
 
-### 📝 Modified in Beta
+### 📝 Major Modifications
 
-Nearly all 66 skills received updates in beta. Major modification areas:
+| Category | Changes | Details |
+|----------|---------|---------|
+| **ai-multimodal** | +38/-36 lines | Added MiniMax integration: TTS speech, music gen, video gen, image gen. New `minimax-generation.md` reference + Python scripts |
+| **ui-ux-pro-max** | Data expansion | 161 color palettes (was ~21), 57 font pairings (was ~50), 161 product types, 99 UX guidelines, 25 chart types, 10 stacks. New CSV data files |
+| **skill-creator** | +84/-53 lines | 3 new sub-agents (analyzer, comparator, grader). Eval infrastructure: run_eval, run_loop, aggregate_benchmark, improve_description scripts. HTML eval viewer |
+| **frontend-design** | +81/-77 lines | Added `magicui-components.md` reference for Magic UI component library |
+| **plan** | +37/-7 lines | Enhanced planning workflow, new shared `plan-table-parser.cjs` utility |
+| **cook** | +9/-6 lines | Workflow step refinements, intent detection updates |
+| **project-management** | +15/-1 lines | Expanded task management capabilities |
+| **copywriting** | +8/-1 lines | New references: `workflow-cro.md`, `writing-styles.md` |
+| **scout** | +8/-3 lines | Enhanced parallel agent scouting |
+| **plans-kanban** | +9/-5 lines | New `plan-format-kanban.cjs` hook for plan table formatting |
+| **Agents** | Minor updates | `brainstormer`, `code-reviewer`, `debugger`, `fullstack-developer` — minor definition refinements |
 
-| Category | Skills Updated | Notable Changes |
-|----------|---------------|-----------------|
-| **Core Workflow** | `cook`, `plan`, `fix`, `debug`, `test`, `code-review` | Workflow steps, intent detection, task orchestration, activation matrix refinements |
-| **Design** | `frontend-design`, `frontend-development`, `ui-styling`, `ui-ux-pro-max`, `threejs`, `remotion`, `shader` | New Magic UI components reference |
-| **AI & Generation** | `ai-artist`, `ai-multimodal`, `media-processing` | Provider and capability updates |
-| **MCP & Integration** | `mcp-builder`, `mcp-management`, `use-mcp`, `payment-integration` | Integration improvements |
-| **Git & Docs** | `git`, `worktree`, `docs`, `docs-seeker`, `document-skills/*` | Document generation refinements |
-| **Utilities** | `skill-creator` (8 references updated), `plan` (5 references updated), `cook` (2 references updated) | Extensive reference file updates |
-| **Agents** | `brainstormer`, `code-reviewer`, `debugger`, `docs-manager`, `fullstack-developer`, `planner` | Agent definition refinements |
+### 🏗️ Infrastructure Changes
+
+| Item | Description |
+|------|-------------|
+| Session state management | New `session-state-manager.cjs`, `session-state.cjs` hooks + `.claude/session-state/` directory |
+| Plan format kanban hook | `plan-format-kanban.cjs` — auto-format plan tables as kanban boards |
+| Shared utilities | `_shared/lib/plan-table-parser.cjs` — reusable plan table parsing |
+| Statusline tests | New `statusline-scenarios.test.cjs`, `statusline-suite.cjs` test infrastructure |
 
 ### ⚠️ No Breaking Changes
 
-Beta maintains full backward compatibility with stable. No skills removed, no arguments changed.
+Beta maintains full backward compatibility with stable. No skills removed, no arguments changed. Note: `design` skill uses `ckm:` namespace (not `ck:`).
 
 ---
 
@@ -345,7 +392,7 @@ Beta maintains full backward compatibility with stable. No skills removed, no ar
 ```
 .claude/
 ├── agents/             # 14 agent definitions (.md)
-├── skills/             # 66 skill directories (SKILL.md + references/ + scripts/)
+├── skills/             # 71 skill directories (SKILL.md + references/ + scripts/)
 ├── command-archive/    # Deprecated commands preserved
 ├── hooks/              # Event hooks
 ├── output-styles/      # 8 output format definitions
