@@ -105,6 +105,35 @@ const t = useTranslations(currentLang);
     btnEngineer.addEventListener("click", () => setVersion("engineer"));
     btnMarketing.addEventListener("click", () => setVersion("marketing"));
 
+    // Migration Guide: Engineer/Marketing tab switching
+    const migrationTabEngineer = document.getElementById("migration-tab-engineer");
+    const migrationTabMarketing = document.getElementById("migration-tab-marketing");
+    const migrationPanelEngineer = document.getElementById("migration-panel-engineer");
+    const migrationPanelMarketing = document.getElementById("migration-panel-marketing");
+
+    if (migrationTabEngineer && migrationTabMarketing && migrationPanelEngineer && migrationPanelMarketing) {
+      const activeMigTabClasses = "bg-teal-500 text-white shadow-sm";
+      const activeMigTabMktClasses = "bg-purple-500 text-white shadow-sm";
+      const inactiveMigTabClasses = "text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700";
+
+      function setMigrationTab(tab: "engineer" | "marketing") {
+        if (tab === "engineer") {
+          migrationPanelEngineer.classList.remove("hidden");
+          migrationPanelMarketing.classList.add("hidden");
+          migrationTabEngineer.className = `migration-tab px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200 ${activeMigTabClasses}`;
+          migrationTabMarketing.className = `migration-tab px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200 ${inactiveMigTabClasses}`;
+        } else {
+          migrationPanelEngineer.classList.add("hidden");
+          migrationPanelMarketing.classList.remove("hidden");
+          migrationTabMarketing.className = `migration-tab px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200 ${activeMigTabMktClasses}`;
+          migrationTabEngineer.className = `migration-tab px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200 ${inactiveMigTabClasses}`;
+        }
+      }
+
+      migrationTabEngineer.addEventListener("click", () => setMigrationTab("engineer"));
+      migrationTabMarketing.addEventListener("click", () => setMigrationTab("marketing"));
+    }
+
     // Migration table expand/collapse
     const migrationToggle = document.getElementById("migration-toggle-btn");
     const migrationRows = document.getElementById("migration-extra-rows");
@@ -127,7 +156,7 @@ const t = useTranslations(currentLang);
           setTimeout(() => {
             migrationRows.style.display = "none";
             migrationIcon.style.transform = "";
-            migrationText.textContent = "Show all migrations (15 more)";
+            migrationText.textContent = "Show all migrations (28 more)";
             const whatsNewSection = document.getElementById("whats-new-section");
             if (whatsNewSection) {
               whatsNewSection.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -138,6 +167,41 @@ const t = useTranslations(currentLang);
       });
 
       migrationIcon.style.transition = "transform 0.3s ease";
+    }
+
+    // Marketing Kit migration table expand/collapse
+    const migrationMktToggle = document.getElementById("migration-mkt-toggle-btn");
+    const migrationMktRows = document.getElementById("migration-mkt-extra-rows");
+    const migrationMktIcon = document.getElementById("migration-mkt-toggle-icon");
+    const migrationMktText = document.getElementById("migration-mkt-toggle-text");
+
+    if (migrationMktToggle && migrationMktRows && migrationMktIcon && migrationMktText) {
+      let isMktExpanded = false;
+
+      migrationMktToggle.addEventListener("click", () => {
+        if (!isMktExpanded) {
+          migrationMktRows.style.display = "";
+          migrationMktRows.style.opacity = "0";
+          migrationMktRows.style.transition = "opacity 0.3s ease";
+          requestAnimationFrame(() => { migrationMktRows.style.opacity = "1"; });
+          migrationMktIcon.style.transform = "rotate(180deg)";
+          migrationMktText.textContent = "Show less";
+        } else {
+          migrationMktRows.style.opacity = "0";
+          setTimeout(() => {
+            migrationMktRows.style.display = "none";
+            migrationMktIcon.style.transform = "";
+            migrationMktText.textContent = "Show all migrations (10 more)";
+            const whatsNewSection = document.getElementById("whats-new-section");
+            if (whatsNewSection) {
+              whatsNewSection.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+          }, 250);
+        }
+        isMktExpanded = !isMktExpanded;
+      });
+
+      migrationMktIcon.style.transition = "transform 0.3s ease";
     }
   });
 </script>
