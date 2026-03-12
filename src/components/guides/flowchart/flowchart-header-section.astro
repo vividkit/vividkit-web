@@ -1,0 +1,146 @@
+---
+// FlowchartGuide header: page title, version toggle buttons, and interactive decision tree
+import { getLangFromUrl, type Language } from "@/i18n";
+import { useTranslations } from "@/i18n/utils";
+import FlowchartInteractive from "../FlowchartInteractive.astro";
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === "vi";
+const t = useTranslations(currentLang);
+---
+
+<!-- Page Header -->
+<div class="text-center space-y-4">
+  <h2
+    class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight"
+  >
+    {t("guides.flowchart.title")}
+  </h2>
+  <p
+    class="text-lg text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed"
+  >
+    {
+      isVi ? (
+        <>
+          Hướng dẫn toàn diện để chọn command phù hợp dựa trên use case của
+          bạn. Nếu không chắc chắn, gõ{" "}
+          <code class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-600 dark:text-blue-400 font-mono">
+            /ck-help
+          </code>{" "}
+          để được hỗ trợ!
+        </>
+      ) : (
+        <>
+          A comprehensive decision tree for ClaudeKit newcomers. If you're
+          ever unsure, just type{" "}
+          <code class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-600 dark:text-blue-400 font-mono">
+            /ck-help
+          </code>{" "}
+          for interactive assistance!
+        </>
+      )
+    }
+  </p>
+</div>
+
+<!-- Version Toggle -->
+<div
+  class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+>
+  <h2
+    class="text-2xl font-bold flex items-center gap-3 text-slate-900 dark:text-white"
+  >
+    <svg
+      class="w-7 h-7 text-cyan-600 dark:text-cyan-400"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+      <polyline points="22 4 12 14.01 9 11.01"></polyline>
+    </svg>
+    {isVi ? "Phiên Bản ClaudeKit" : "ClaudeKit Version"}
+  </h2>
+
+  <div
+    class="flex items-center gap-2 p-1 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700"
+  >
+    <button
+      id="fc-btn-stable"
+      class="fc-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 bg-teal-500 text-white shadow-sm"
+      data-version="stable"
+    >
+      <span class="flex items-center gap-1.5">
+        <svg
+          class="w-4 h-4"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <polygon
+            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+          ></polygon>
+        </svg>
+        {t("commands.v25.tab_v25")}
+      </span>
+    </button>
+    <button
+      id="fc-btn-beta"
+      class="fc-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700"
+      data-version="beta"
+    >
+      <span class="flex items-center gap-1.5">
+        <svg
+          class="w-4 h-4"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            d="M9 3h6v2.5A5.5 5.5 0 0 1 20.5 11v4.5a5.5 5.5 0 0 1-5.5 5.5h-6a5.5 5.5 0 0 1-5.5-5.5V11A5.5 5.5 0 0 1 9 5.5V3z"
+          ></path>
+          <path d="M9 3h6" stroke-linecap="round"></path>
+        </svg>
+        {t("commands.v25.tab_v24")}
+      </span>
+    </button>
+  </div>
+</div>
+
+<!-- Quick Reference Decision Tree (Interactive SVG) -->
+<div class="glass-card rounded-2xl p-6 sm:p-8">
+  <h3
+    class="text-xl font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-2"
+  >
+    <svg
+      class="w-5 h-5 text-cyan-500"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path
+        d="M4 6h16M4 12h10M4 18h16"
+        stroke-linecap="round"
+        stroke-linejoin="round"></path>
+      <circle cx="18" cy="12" r="3"></circle>
+    </svg>
+    {isVi ? "Sơ Đồ Quyết Định Tương Tác" : "Interactive Decision Tree"}
+  </h3>
+  <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">
+    {
+      isVi
+        ? "Click vào bất kỳ node hoặc đường path nào để highlight lộ trình đến command. Hoặc click vào các command button ở trên để xem đường đi tương ứng."
+        : "Click on any node or path to highlight the route to that command. Or click the command buttons above to see their corresponding paths."
+    }
+  </p>
+  <FlowchartInteractive lang={currentLang} />
+</div>

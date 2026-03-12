@@ -1,0 +1,100 @@
+---
+// CCSGuide overview: hero, problem statement, solution demo
+import { getLangFromUrl, type Language } from "@/i18n";
+import { useTranslations } from "@/i18n/utils";
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+---
+
+  <!-- Hero Section -->
+  <div class="text-center space-y-4">
+    <h2 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
+      {t('ccs.guide.title')}
+    </h2>
+    <p class="text-xl font-medium text-amber-600 dark:text-amber-400">
+      {t('ccs.guide.tagline')}
+    </p>
+    <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+      {t('ccs.guide.description')}
+    </p>
+  </div>
+
+  <!-- The Problem Section -->
+  <div class="glass-card rounded-xl border-red-200 dark:border-red-500/30 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-red-500/10 to-orange-500/10 border-b border-red-200 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-red-600 dark:text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 8v4M12 16h.01"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-red-600 dark:text-red-400">
+          {t('ccs.guide.problem_title')}
+        </h3>
+      </div>
+    </div>
+    <div class="p-6">
+      <p class="text-slate-700 dark:text-slate-300 mb-4">
+        {t('ccs.guide.problem_scenario')}
+      </p>
+      <div class="bg-red-500/10 border border-red-500/30 rounded-lg p-4 text-center">
+        <span class="text-red-600 dark:text-red-400 font-bold text-lg">
+          {t('ccs.guide.problem_error')}
+        </span>
+      </div>
+      <p class="text-sm text-slate-500 dark:text-slate-500 mt-4 text-center italic">
+        {t('ccs.guide.problem_impact')}
+      </p>
+    </div>
+  </div>
+
+  <!-- The Solution Section -->
+  <div class="glass-card rounded-xl border-emerald-200 dark:border-emerald-500/30 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-emerald-500/10 to-green-500/10 border-b border-emerald-200 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-emerald-600 dark:text-emerald-400">
+          {t('ccs.guide.solution_title')}
+        </h3>
+      </div>
+    </div>
+    <div class="p-6 space-y-4">
+      <p class="text-slate-700 dark:text-slate-300">
+        {t('ccs.guide.solution_desc')}
+      </p>
+      <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm space-y-3">
+        <div class="text-slate-500 text-xs mb-2">{t('ccs.guide.solution_example_label')}</div>
+        <div class="flex items-start gap-2">
+          <span class="text-slate-500">#</span>
+          <span class="text-slate-500">{t('ccs.guide.solution_terminal1')}</span>
+        </div>
+        <div class="text-emerald-600 dark:text-emerald-400">ccs work "implement authentication system"</div>
+        <div class="flex items-start gap-2 mt-4">
+          <span class="text-slate-500">#</span>
+          <span class="text-slate-500">{t('ccs.guide.solution_terminal2')}</span>
+        </div>
+        <div class="text-amber-600 dark:text-amber-400">ccs personal "review PR #123"</div>
+        <div class="flex items-start gap-2 mt-4">
+          <span class="text-slate-500">#</span>
+          <span class="text-slate-500">{t('ccs.guide.solution_terminal3')}</span>
+        </div>
+        <div class="text-purple-600 dark:text-purple-400">ccs glm "add tests for all service files"</div>
+      </div>
+      <p class="text-sm text-emerald-600 dark:text-emerald-400 font-medium text-center">
+        {t('ccs.guide.solution_benefit')}
+      </p>
+    </div>
+  </div>
+
