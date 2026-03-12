@@ -1,0 +1,289 @@
+---
+// FlowchartGuide summary cheat sheet and "not sure" help section
+import { getLangFromUrl, type Language } from "@/i18n";
+import { useTranslations } from "@/i18n/utils";
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === "vi";
+const t = useTranslations(currentLang);
+---
+
+  <!-- Summary Cheat Sheet -->
+  <div class="glass-card rounded-2xl p-6 sm:p-8">
+    <h3
+      class="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2"
+    >
+      <svg
+        class="w-5 h-5 text-rose-500"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+        <path
+          d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+        <path
+          d="M8 7h8M8 11h8M8 15h5"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+      </svg>
+      {isVi ? "Cheat Sheet Tóm tắt" : "Summary Cheat Sheet"}
+    </h3>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="border-b border-slate-200 dark:border-slate-700">
+          <tr>
+            <th
+              class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white"
+              >{isVi ? "Tình huống" : "Scenario"}</th
+            >
+            <th
+              class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white"
+              >Command</th
+            >
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+          <tr
+            ><td class="py-2 px-4 text-slate-600 dark:text-slate-400"
+              >{
+                isVi
+                  ? "Build something mới hoàn toàn"
+                  : '"I need to build something new from scratch"'
+              }</td
+            ><td class="py-2 px-4"
+              ><code class="text-amber-600 dark:text-amber-400">/bootstrap</code
+              ></td
+            ></tr
+          >
+          <tr
+            ><td class="py-2 px-4 text-slate-600 dark:text-slate-400"
+              >{
+                isVi
+                  ? "Có ý tưởng nhưng chưa biết approach"
+                  : '"I have an idea but not sure how to approach it"'
+              }</td
+            ><td class="py-2 px-4"
+              ><code class="text-violet-600 dark:text-violet-400"
+                >/brainstorm</code
+              ></td
+            ></tr
+          >
+          <tr class="fc-stable-content"
+            ><td class="py-2 px-4 text-slate-600 dark:text-slate-400"
+              >{
+                isVi
+                  ? "Biết chính xác muốn gì, làm nhanh"
+                  : '"I know exactly what I want, do it fast"'
+              }</td
+            ><td class="py-2 px-4"
+              ><code class="text-emerald-600 dark:text-emerald-400">/cook</code
+              ></td
+            ></tr
+          >
+          <tr class="fc-beta-content hidden"
+            ><td class="py-2 px-4 text-slate-600 dark:text-slate-400"
+              >{
+                isVi
+                  ? "Biết chính xác muốn gì, làm nhanh"
+                  : '"I know exactly what I want, do it fast"'
+              }</td
+            ><td class="py-2 px-4"
+              ><code class="text-emerald-600 dark:text-emerald-400">/cook</code
+              ></td
+            ></tr
+          >
+          <tr class="fc-stable-content"
+            ><td class="py-2 px-4 text-slate-600 dark:text-slate-400"
+              >{
+                isVi
+                  ? "Muốn plan kỹ trước khi code"
+                  : '"I want to plan carefully before coding"'
+              }</td
+            ><td class="py-2 px-4"
+              ><code class="text-purple-600 dark:text-purple-400"
+                >/plan → /cook</code
+              ></td
+            ></tr
+          >
+          <tr class="fc-beta-content hidden"
+            ><td class="py-2 px-4 text-slate-600 dark:text-slate-400"
+              >{
+                isVi
+                  ? "Muốn plan kỹ trước khi code"
+                  : '"I want to plan carefully before coding"'
+              }</td
+            ><td class="py-2 px-4"
+              ><code class="text-purple-600 dark:text-purple-400"
+                >/plan → /code</code
+              ></td
+            ></tr
+          >
+          <tr
+            ><td class="py-2 px-4 text-slate-600 dark:text-slate-400"
+              >{
+                isVi
+                  ? "Có lỗi, không biết tại sao"
+                  : "\"Something's broken, I don't know why\""
+              }</td
+            ><td class="py-2 px-4"
+              ><code class="text-orange-600 dark:text-orange-400"
+                >/debug → /fix</code
+              ></td
+            ></tr
+          >
+          <tr
+            ><td class="py-2 px-4 text-slate-600 dark:text-slate-400"
+              >{
+                isVi
+                  ? "Có lỗi, biết nguyên nhân"
+                  : '"Something\'s broken, I know what it is"'
+              }</td
+            ><td class="py-2 px-4"
+              ><code class="text-red-600 dark:text-red-400">/fix</code></td
+            ></tr
+          >
+          <tr class="fc-stable-content"
+            ><td class="py-2 px-4 text-slate-600 dark:text-slate-400"
+              >{isVi ? "Cần lưu work" : '"I need to save my work"'}</td
+            ><td class="py-2 px-4"
+              ><code class="text-indigo-600 dark:text-indigo-400"
+                >git skill</code
+              >
+              <span class="text-xs text-slate-400"
+                >({isVi ? '"commit", "push"' : '"commit", "push"'})</span
+              ></td
+            ></tr
+          >
+          <tr class="fc-beta-content hidden"
+            ><td class="py-2 px-4 text-slate-600 dark:text-slate-400"
+              >{isVi ? "Cần lưu work" : '"I need to save my work"'}</td
+            ><td class="py-2 px-4"
+              ><code class="text-indigo-600 dark:text-indigo-400">/git:cm</code>
+              {isVi ? "hoặc" : "or"}
+              <code class="text-indigo-600 dark:text-indigo-400">/git:cp</code
+              ></td
+            ></tr
+          >
+          <tr
+            ><td class="py-2 px-4 text-slate-600 dark:text-slate-400"
+              >{
+                isVi
+                  ? "Cần hiểu codebase"
+                  : '"I need to understand this codebase"'
+              }</td
+            ><td class="py-2 px-4"
+              ><code class="text-cyan-600 dark:text-cyan-400">/docs:init</code
+              ></td
+            ></tr
+          >
+          <tr
+            ><td class="py-2 px-4 text-slate-600 dark:text-slate-400"
+              >{
+                isVi ? "Cần advice kiến trúc" : '"I need architectural advice"'
+              }</td
+            ><td class="py-2 px-4"
+              ><code class="text-blue-600 dark:text-blue-400">/ask</code></td
+            ></tr
+          >
+          <tr
+            ><td class="py-2 px-4 text-slate-600 dark:text-slate-400"
+              >{
+                isVi ? "Có gì thay đổi gần đây?" : '"What changed recently?"'
+              }</td
+            ><td class="py-2 px-4"
+              ><code class="text-cyan-600 dark:text-cyan-400">/watzup</code></td
+            ></tr
+          >
+          <tr
+            ><td class="py-2 px-4 text-slate-600 dark:text-slate-400"
+              >{isVi ? "Xem plans trực quan" : '"View my plans visually"'}</td
+            ><td class="py-2 px-4"
+              ><code class="text-pink-600 dark:text-pink-400">/kanban</code>
+              {isVi ? "hoặc" : "or"}
+              <code class="text-pink-600 dark:text-pink-400">/preview</code></td
+            ></tr
+          >
+          <tr
+            ><td class="py-2 px-4 text-slate-600 dark:text-slate-400"
+              >{
+                isVi
+                  ? "Mình mới học, giải thích dùng từ ngữ dễ hiểu chút nhé"
+                  : '"I\'m new, slow down explanations"'
+              }</td
+            ><td class="py-2 px-4"
+              ><code class="text-blue-600 dark:text-blue-400"
+                >/coding-level 1</code
+              ></td
+            ></tr
+          >
+          <tr
+            ><td class="py-2 px-4 text-slate-600 dark:text-slate-400"
+              >{
+                isVi ? "Cần help với ClaudeKit" : '"I need help with ClaudeKit"'
+              }</td
+            ><td class="py-2 px-4"
+              ><code class="text-blue-600 dark:text-blue-400">/ck-help</code
+              ></td
+            ></tr
+          >
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Not Sure? -->
+  <div
+    class="flex items-start gap-4 p-6 rounded-xl bg-blue-500/5 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20"
+  >
+    <div
+      class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center"
+    >
+      <svg
+        class="w-5 h-5 text-blue-500"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        ><path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        ></path></svg
+      >
+    </div>
+    <div class="flex-1">
+      <div class="font-bold text-blue-700 dark:text-blue-400 mb-1 text-lg">
+        {isVi ? "Không chắc? Dùng /ck-help" : "Not Sure? Use /ck-help"}
+      </div>
+      <div
+        class="text-slate-600 dark:text-slate-400 leading-relaxed font-mono text-sm"
+      >
+        <code>/ck-help</code> → {
+          isVi ? "Full documentation" : "Full documentation"
+        }<br />
+        <code>/ck-help fix</code> → {
+          isVi
+            ? "Category guide cho fix commands"
+            : "Category guide for fix commands"
+        }<br />
+        <code>/ck-help plan:hard</code> → {
+          isVi ? "Chi tiết specific command" : "Details on specific command"
+        }<br />
+        <code>/ck-help how to debug</code> → {
+          isVi ? "Task-based recommendations" : "Task-based recommendations"
+        }
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,35 @@
+---
+// Workflows Guide - Beta (v2.4) section: version banner and workflow cards
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+import WorkflowsWorkflowCard from './workflows-workflow-card.astro';
+
+interface Props {
+  workflows: any[];
+  lang?: Language;
+}
+
+const { workflows, lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+---
+
+<div id="wf-categories-beta" class="space-y-6 hidden">
+  <!-- Version info banner -->
+  <div class="flex items-start gap-3 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
+    <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+    </svg>
+    <div class="text-sm text-slate-700 dark:text-slate-300">
+      <strong class="text-blue-600 dark:text-blue-400">{t('commands.v25.v24_label')}</strong> {t('workflows.v24.banner_intro')}
+      <span class="text-slate-500 ml-1">{t('workflows.v24.banner_note')}</span>
+    </div>
+  </div>
+
+  <!-- Workflow Cards -->
+  <div class="grid grid-cols-1 gap-6">
+    {workflows.map((workflow) => (
+      <WorkflowsWorkflowCard workflow={workflow} lang={currentLang} />
+    ))}
+  </div>
+</div>

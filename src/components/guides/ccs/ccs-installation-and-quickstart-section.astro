@@ -1,0 +1,295 @@
+---
+// CCSGuide installation steps and quick start guide (sections 1-3)
+import { getLangFromUrl, type Language } from "@/i18n";
+import { useTranslations } from "@/i18n/utils";
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+---
+
+  <!-- Installation Section -->
+  <div class="glass-card rounded-xl border-slate-200 dark:border-slate-700 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border-b border-slate-200 dark:border-slate-800">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center font-bold text-blue-600 dark:text-blue-400 border-2 border-blue-500/50">
+              1
+            </div>
+            <h3 class="text-xl font-bold text-slate-800 dark:text-slate-200">
+              {t('ccs.guide.install_title')}
+            </h3>
+          </div>
+          <p class="text-sm text-slate-600 dark:text-slate-400">
+            {t('ccs.guide.install_desc')}
+          </p>
+        </div>
+        <a href="https://github.com/kaitranntt/ccs" target="_blank" rel="noopener noreferrer"
+           class="flex items-center gap-3 px-4 py-2 rounded-xl bg-white/60 dark:bg-black/20 border border-slate-200/50 dark:border-slate-700/30 hover:bg-white/80 dark:hover:bg-black/30 hover:scale-105 transition-all group shadow-sm shrink-0">
+           <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 group-hover:text-black dark:group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="currentColor">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path>
+           </svg>
+           <div class="flex flex-col">
+             <span class="text-[10px] uppercase tracking-wider font-bold text-slate-500/60 dark:text-slate-400/60 leading-none mb-0.5">{t('ccs.guide.created_by')}</span>
+             <span class="text-sm font-bold text-slate-800 dark:text-slate-200 group-hover:text-slate-600 dark:group-hover:text-slate-300 transition-colors leading-none">@kaitranntt</span>
+           </div>
+        </a>
+      </div>
+    </div>
+    <div class="p-6">
+      <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm">
+        <div class="flex items-start gap-2 text-slate-700 dark:text-slate-300">
+          <span class="text-emerald-600 dark:text-emerald-400">$</span>
+          <div class="flex-1">
+            <div>npm install -g @kaitranntt/ccs</div>
+            <div class="text-slate-500 mt-3"># {t('ccs.guide.verify_installation')}</div>
+            <div class="mt-1">ccs --version</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Start Section -->
+  <div class="glass-card rounded-xl border-slate-200 dark:border-slate-700 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border-b border-slate-200 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center font-bold text-blue-600 dark:text-blue-400 border-2 border-blue-500/50">
+          2
+        </div>
+        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-200">
+          {t('ccs.guide.quickstart_title')}
+        </h3>
+      </div>
+    </div>
+    <div class="p-6 space-y-6">
+      <!-- Basic Usage -->
+      <div>
+        <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3 flex items-center gap-2">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="4 17 10 11 4 5"/>
+            <line x1="12" y1="19" x2="20" y2="19"/>
+          </svg>
+          {t('ccs.guide.basic_usage_title')}
+        </h4>
+        <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm space-y-2">
+          <div class="flex items-center gap-4">
+            <code class="text-slate-700 dark:text-slate-300">ccs</code>
+            <span class="text-slate-500 text-xs"># {t('ccs.guide.basic_claude')}</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <code class="text-slate-700 dark:text-slate-300">ccs glm</code>
+            <span class="text-slate-500 text-xs"># {t('ccs.guide.basic_glm')}</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <code class="text-slate-700 dark:text-slate-300">ccs kimi</code>
+            <span class="text-slate-500 text-xs"># {t('ccs.guide.basic_kimi')}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Multi-Account Setup for OAuth Providers -->
+      <div>
+        <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3 flex items-center gap-2">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          {t('ccs.guide.multiacccount_title')}
+        </h4>
+        <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">
+          {t('ccs.guide.multiaccount_oauth_desc')}
+        </p>
+        <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm space-y-3">
+          <div class="text-slate-500 text-xs"># {t('ccs.guide.multiaccount_first_account')}</div>
+          <div>ccs gemini --auth</div>
+          <div class="border-t border-slate-200 dark:border-slate-700 pt-3 mt-3">
+            <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_add_another')}</div>
+            <div>ccs gemini --auth --add</div>
+          </div>
+          <div class="border-t border-slate-200 dark:border-slate-700 pt-3 mt-3">
+            <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_add_nickname')}</div>
+            <div>ccs gemini --auth --add --nickname work</div>
+          </div>
+          <div class="border-t border-slate-200 dark:border-slate-700 pt-3 mt-3">
+            <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_list_accounts')}</div>
+            <div>ccs agy --accounts</div>
+          </div>
+          <div class="border-t border-slate-200 dark:border-slate-700 pt-3 mt-3">
+            <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_switch_account')}</div>
+            <div>ccs agy --use work</div>
+          </div>
+        </div>
+
+        <!-- Account Storage Note -->
+        <div class="mt-4 p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
+          <p class="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
+            <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 16v-4M12 8h.01"/>
+            </svg>
+            <span>{t('ccs.guide.multiaccount_storage_note')}</span>
+          </p>
+        </div>
+
+        <!-- Usage Example -->
+        <div class="mt-4">
+          <div class="text-slate-500 text-xs mb-3 font-medium flex items-center gap-2">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 17l6-6-6-6"/>
+              <path d="M12 19h8"/>
+            </svg>
+            {t('ccs.guide.multiaccount_run')}
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <!-- Terminal 1 -->
+            <div class="rounded-lg bg-white dark:bg-[#0D0D0D] border border-slate-200 dark:border-slate-800 p-3 font-mono text-xs shadow-sm hover:border-emerald-500/30 transition-colors group">
+              <div class="text-slate-500 mb-2 flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-2">
+                <span class="flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-slate-200 dark:bg-slate-700 group-hover:bg-emerald-500/50 transition-colors"></span>
+                  terminal-1
+                </span>
+                <span class="text-[10px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 px-1.5 rounded-sm border border-emerald-500/20">work</span>
+              </div>
+              <div class="text-emerald-600 dark:text-emerald-400 break-all">
+                <span class="text-slate-400 dark:text-slate-600 select-none">$</span> ccs work "implement feature"
+              </div>
+            </div>
+
+            <!-- Terminal 2 -->
+            <div class="rounded-lg bg-white dark:bg-[#0D0D0D] border border-slate-200 dark:border-slate-800 p-3 font-mono text-xs shadow-sm hover:border-amber-500/30 transition-colors group">
+              <div class="text-slate-500 mb-2 flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-2">
+                 <span class="flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-slate-200 dark:bg-slate-700 group-hover:bg-amber-500/50 transition-colors"></span>
+                  terminal-2
+                </span>
+                <span class="text-[10px] bg-amber-500/10 text-amber-600 dark:text-amber-400 px-1.5 rounded-sm border border-amber-500/20">personal</span>
+              </div>
+              <div class="text-amber-600 dark:text-amber-400 break-all">
+                <span class="text-slate-400 dark:text-slate-600 select-none">$</span> ccs personal "review code"
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sync Shared Data -->
+      <div>
+        <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3 flex items-center gap-2">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+            <path d="M3.51 9a9 9 0 1 1 2.12 9.36L1 14"/>
+          </svg>
+          {t('ccs.guide.sync_title')}
+        </h4>
+        <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm space-y-2">
+          <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.sync_desc')}</div>
+          <div class="flex items-center gap-4">
+            <code class="text-emerald-600 dark:text-emerald-400">ccs sync</code>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Core Features Section -->
+  <div class="glass-card rounded-xl border-slate-200 dark:border-slate-700 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border-b border-slate-200 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center font-bold text-blue-600 dark:text-blue-400 border-2 border-blue-500/50">
+          3
+        </div>
+        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-200">
+          {t('ccs.guide.features_title')}
+        </h3>
+      </div>
+    </div>
+    <div class="p-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Feature 1: Model Switching -->
+        <div class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50 hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-colors">
+          <div class="flex items-center gap-2 mb-3">
+            <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
+              <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                <path d="M2 12h20"/>
+              </svg>
+            </div>
+            <h4 class="font-bold text-slate-700 dark:text-slate-300">{t('ccs.guide.feature1_title')}</h4>
+          </div>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs space-y-2">
+            <div class="flex items-center justify-between">
+              <code class="text-amber-600 dark:text-amber-400 font-semibold">ccs</code>
+              <span class="text-slate-400 text-[10px]"># Claude</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <code class="text-indigo-600 dark:text-indigo-400 font-semibold">ccs agy</code>
+              <span class="text-slate-400 text-[10px]"># Antigravity</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <code class="text-emerald-600 dark:text-emerald-400 font-semibold">ccs glm</code>
+              <span class="text-slate-400 text-[10px]"># GLM-5</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <code class="text-purple-600 dark:text-purple-400 font-semibold">ccs kimi</code>
+              <span class="text-slate-400 text-[10px]"># Kimi</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <code class="text-blue-600 dark:text-blue-400 font-semibold">ccs gemini</code>
+              <span class="text-slate-400 text-[10px]"># Gemini 2.5 Pro</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <code class="text-cyan-600 dark:text-cyan-400 font-semibold">ccs codex</code>
+              <span class="text-slate-400 text-[10px]"># GPT-5.1 Codex Max</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature 2: Slash Command Support -->
+        <div class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50 hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-colors">
+          <div class="flex items-center gap-2 mb-3">
+            <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
+              <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="4 17 10 11 4 5"/>
+                <line x1="12" y1="19" x2="20" y2="19"/>
+              </svg>
+            </div>
+            <h4 class="font-bold text-slate-700 dark:text-slate-300">{t('ccs.guide.feature3_title')}</h4>
+          </div>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">
+            {t('ccs.guide.feature3_desc')}
+          </p>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs">
+            <code class="text-emerald-600 dark:text-emerald-400">ccs glm "/cook create landing page"</code>
+          </div>
+        </div>
+
+        <!-- Feature 4: OAuth Authentication -->
+        <div class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50 hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-colors">
+          <div class="flex items-center gap-2 mb-3">
+            <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
+              <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+            </div>
+            <h4 class="font-bold text-slate-700 dark:text-slate-300">{t('ccs.guide.feature4_title')}</h4>
+          </div>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">
+            {t('ccs.guide.feature4_desc')}
+          </p>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs space-y-1">
+            <div><code class="text-blue-600 dark:text-blue-400">ccs gemini</code> <span class="text-slate-400"># {t('ccs.guide.feature4_auto')}</span></div>
+            <div><code class="text-blue-600 dark:text-blue-400">ccs gemini --auth</code> <span class="text-slate-400"># {t('ccs.guide.feature4_save')}</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

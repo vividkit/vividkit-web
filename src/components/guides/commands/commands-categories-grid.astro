@@ -222,7 +222,73 @@ const marketingCategories = getMarketingKitCategories(t);
       <span class="px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 font-semibold"
         >Stable v1.2.1</span
       >
-      <span>{t("commands.engineer_stable_note")}</span>
+      <span>{t("commands.marketing_stable_note")}</span>
+    </div>
+
+    <!-- Beta preview card -->
+    <div
+      class="rounded-xl border-2 border-purple-400/60 dark:border-purple-500/40 overflow-hidden bg-gradient-to-br from-purple-500/10 via-violet-500/5 to-pink-500/10"
+    >
+      <div
+        class="p-4 border-b border-purple-300/30 dark:border-purple-600/30 bg-gradient-to-r from-purple-600/10 to-violet-500/10"
+      >
+        <h3 class="text-lg font-bold flex items-center gap-2 text-purple-600 dark:text-purple-400">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+            ></polygon>
+          </svg>
+          {t("commands.mkt_beta_preview.title")}
+          <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-purple-500 text-white font-medium uppercase"
+            >new</span
+          >
+        </h3>
+        <p class="text-xs text-slate-500 mt-1">{t("commands.mkt_beta_preview.subtitle")}</p>
+      </div>
+      <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        {/* Beta skill cards */}
+        {[
+          { cmd: "/ckm:elevenlabs", labelKey: "commands.mkt_beta.elevenlabs.desc", detailKey: "commands.mkt_beta.elevenlabs.detail", type: "skill", badge: "new" },
+          { cmd: "/ckm:minimax", labelKey: "commands.mkt_beta.minimax.desc", detailKey: "commands.mkt_beta.minimax.detail", type: "skill", badge: "new" },
+          { cmd: "/ckm:storage", labelKey: "commands.mkt_beta.ckm_storage.desc", detailKey: "commands.mkt_beta.ckm_storage.detail", type: "skill", badge: "new" },
+          { cmd: "/ckm:design", labelKey: "commands.mkt_beta.design_consolidated.desc", detailKey: "commands.mkt_beta.design_consolidated.detail", type: "skill", badge: "enhanced" },
+          { cmd: "/ckm:ads", labelKey: "commands.mkt_beta.ads_management.desc", detailKey: "commands.mkt_beta.ads_management.detail", type: "skill", badge: "enhanced" },
+          { cmd: "/ck:payment", labelKey: "commands.mkt_beta.payment.desc", detailKey: "commands.mkt_beta.payment.detail", type: "skill", badge: "enhanced" },
+        ].map((item) => (
+          <div class="p-3 rounded-lg bg-white/60 dark:bg-slate-900/50 border border-purple-500/30 transition-all duration-200 hover:shadow-sm h-full flex flex-col">
+            <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <code class="text-sm font-bold font-mono text-purple-600 dark:text-purple-400">{item.cmd}</code>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">skill</span>
+                {item.badge === "new" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 font-medium uppercase">new</span>}
+                {item.badge === "enhanced" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium uppercase">enhanced</span>}
+              </div>
+            </div>
+            <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">{t(item.labelKey)}</p>
+            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">{t(item.detailKey)}</p>
+          </div>
+        ))}
+        {/* Prefix migration card */}
+        <div class="p-3 rounded-lg bg-white/60 dark:bg-slate-900/50 border border-slate-400/30 transition-all duration-200 hover:shadow-sm h-full flex flex-col">
+          <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <span class="text-sm font-bold text-slate-500 dark:text-slate-400">{t("commands.mkt_beta.prefix_migration.label")}</span>
+              <span class="text-[9px] px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-400 font-medium uppercase">config</span>
+            </div>
+          </div>
+          <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">{t("commands.mkt_beta.prefix_migration.desc")}</p>
+          <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">{t("commands.mkt_beta.prefix_migration.detail")}</p>
+        </div>
+      </div>
+      <!-- Skill merges guide -->
+      <div class="px-4 pb-4">
+        <p class="text-xs font-semibold text-violet-600 dark:text-violet-400 mb-2">{t("commands.mkt_beta.skill_merges.title")}</p>
+        <ul class="space-y-1 text-[11px] text-slate-500 dark:text-slate-400">
+          <li class="flex items-start gap-1.5"><span class="text-violet-400 mt-0.5">→</span>{t("commands.mkt_beta.skill_merges.item1")}</li>
+          <li class="flex items-start gap-1.5"><span class="text-violet-400 mt-0.5">→</span>{t("commands.mkt_beta.skill_merges.item2")}</li>
+          <li class="flex items-start gap-1.5"><span class="text-violet-400 mt-0.5">→</span>{t("commands.mkt_beta.skill_merges.item3")}</li>
+          <li class="flex items-start gap-1.5"><span class="text-violet-400 mt-0.5">→</span>{t("commands.mkt_beta.skill_merges.item4")}</li>
+        </ul>
+      </div>
     </div>
 
     <!-- Marketing category cards -->

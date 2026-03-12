@@ -1,0 +1,254 @@
+---
+// Session Recovery Guide - Section 6 (pro tips), emergency checklist, benefits, related guides
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+const proTips = [
+  {
+    title: t('session_recovery.guide.protips.rename_title'),
+    desc: t('session_recovery.guide.protips.rename_desc'),
+    cmd: `<span class="text-slate-400 italic">${t('session_recovery.guide.protips.rename_cmd_1')}</span>
+<span class="text-purple-600 dark:text-purple-400 font-bold">/rename</span> auth-feature
+
+<span class="text-slate-400 italic">${t('session_recovery.guide.protips.rename_cmd_2')}</span>
+<span class="text-purple-600 dark:text-purple-400 font-bold">/resume</span> auth-feature <span class="text-slate-400 italic">${t('session_recovery.guide.protips.rename_cmd_3')}</span>
+<span class="text-purple-600 dark:text-purple-400 font-bold">/resume</span> 74f292c0...  <span class="text-slate-400 italic">${t('session_recovery.guide.protips.rename_cmd_4')}</span>
+
+<span class="text-slate-400 italic">${t('session_recovery.guide.protips.rename_cmd_5')}</span>
+<span class="text-blue-600 dark:text-blue-400 font-bold">ccs</span> <span class="text-slate-400 italic">glm/agy</span> <span class="text-purple-600 dark:text-purple-400 font-bold">"/resume auth-feature"</span>`,
+    icon: "tag"
+  },
+  {
+    title: t('session_recovery.guide.protips.continue_title'),
+    desc: t('session_recovery.guide.protips.continue_desc'),
+    cmd: `<span class="text-slate-400 italic">${t('session_recovery.guide.protips.continue_cmd_1')}</span>
+<span class="text-blue-600 dark:text-blue-400 font-bold">ccs</span> <span class="text-slate-400 italic">glm/agy/work</span> <span class="text-purple-600 dark:text-purple-400 font-bold">--continue</span> continue
+
+<span class="text-slate-400 italic">${t('session_recovery.guide.protips.continue_cmd_2')}</span>`,
+    icon: "lightning"
+  },
+  {
+    title: t('session_recovery.guide.protips.login_title'),
+    desc: t('session_recovery.guide.protips.login_desc'),
+    cmd: `<span class="text-slate-400 italic">${t('session_recovery.guide.protips.login_cmd_1')}</span>
+<span class="text-purple-600 dark:text-purple-400 font-bold">/login</span>
+
+<span class="text-slate-400 italic">${t('session_recovery.guide.protips.login_cmd_2')}</span>
+<span class="text-slate-400 italic">${t('session_recovery.guide.protips.login_cmd_3')}</span>
+<span class="text-emerald-600 dark:text-emerald-400 font-bold">continue</span>`,
+    icon: "switch"
+  },
+  {
+    title: t('session_recovery.guide.protips.compact_title'),
+    desc: t('session_recovery.guide.protips.compact_desc'),
+    cmd: `<span class="text-slate-400 italic">${t('session_recovery.guide.protips.compact_cmd_1')}</span>
+<span class="text-purple-600 dark:text-purple-400 font-bold">/compact</span> keep the original plan, user's request, key changes & todo tasks
+
+<span class="text-slate-400 italic">${t('session_recovery.guide.protips.compact_cmd_2')}</span>
+<span class="text-red-500 dark:text-red-400 line-through">/compact</span>  <span class="text-slate-400 italic">${t('session_recovery.guide.protips.compact_cmd_3')}</span>`,
+    icon: "compress"
+  }
+];
+
+const emergencySteps = [
+  {
+    step: 1,
+    title: t('session_recovery.guide.emergency.step1.title'),
+    desc: t('session_recovery.guide.emergency.step1.desc'),
+    color: "text-slate-600 dark:text-slate-400"
+  },
+  {
+    step: 2,
+    title: t('session_recovery.guide.emergency.step2.title'),
+    desc: t('session_recovery.guide.emergency.step2.desc'),
+    color: "text-amber-600 dark:text-amber-400"
+  },
+  {
+    step: 3,
+    title: t('session_recovery.guide.emergency.step3.title'),
+    desc: t('session_recovery.guide.emergency.step3.desc'),
+    cmd: `<span class="text-blue-600 dark:text-blue-400 font-bold">ccs</span> glm <span class="text-purple-600 dark:text-purple-400 font-bold">--resume</span>
+<span class="text-slate-400 italic">${t('session_recovery.guide.emergency.step3.cmd_note')}</span> <span class="text-purple-600 dark:text-purple-400 font-bold">/resume</span>`,
+    color: "text-emerald-600 dark:text-emerald-400"
+  },
+  {
+    step: 4,
+    title: t('session_recovery.guide.emergency.step4.title'),
+    desc: t('session_recovery.guide.emergency.step4.desc'),
+    cmd: `<span class="text-purple-600 dark:text-purple-400 font-bold">/export</span> ~/backup/session.txt
+<span class="text-blue-600 dark:text-blue-400 font-bold">ccs</span> glm
+> ${t('session_recovery.guide.emergency.step4.cmd_input')}`,
+    color: "text-blue-600 dark:text-blue-400"
+  },
+  {
+    step: 5,
+    title: t('session_recovery.guide.emergency.step5.title'),
+    desc: t('session_recovery.guide.emergency.step5.desc'),
+    color: "text-fuchsia-600 dark:text-fuchsia-400"
+  }
+];
+---
+
+<!-- Section 6: Pro Tips -->
+<div class="bg-white dark:bg-slate-900/50 rounded-xl border-2 border-cyan-200 dark:border-cyan-500/30 overflow-hidden">
+  <div class="p-6 bg-gradient-to-r from-cyan-500/10 to-teal-500/10 border-b border-cyan-200 dark:border-slate-800">
+    <div class="flex items-center gap-3">
+      <div class="flex items-center justify-center w-8 h-8 rounded-full bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 font-bold text-sm">6</div>
+      <h4 class="text-lg font-bold text-slate-900 dark:text-slate-100">{t('session_recovery.guide.protips.title')}</h4>
+      <span class="px-2 py-0.5 text-xs font-semibold bg-cyan-100 dark:bg-cyan-500/20 text-cyan-700 dark:text-cyan-400 rounded-full">
+        {t('session_recovery.guide.protips.badge')}
+      </span>
+    </div>
+  </div>
+  <div class="p-6 space-y-6">
+    <p class="text-slate-600 dark:text-slate-400">
+      {t('session_recovery.guide.protips.desc')}
+    </p>
+
+    <div class="grid grid-cols-1 gap-4">
+      {proTips.map((tip) => (
+        <div class="bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+          <div class="p-4 border-b border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800">
+            <div class="flex items-center gap-2.5">
+              {tip.icon === "tag" && (
+                <svg class="w-5 h-5 text-cyan-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+                  <line x1="7" y1="7" x2="7.01" y2="7"/>
+                </svg>
+              )}
+              {tip.icon === "lightning" && (
+                <svg class="w-5 h-5 text-cyan-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                </svg>
+              )}
+              {tip.icon === "switch" && (
+                <svg class="w-5 h-5 text-cyan-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="16 3 21 3 21 8"/>
+                  <line x1="4" y1="20" x2="21" y2="3"/>
+                  <polyline points="21 16 21 21 16 21"/>
+                  <line x1="15" y1="15" x2="21" y2="21"/>
+                  <line x1="4" y1="4" x2="9" y2="9"/>
+                </svg>
+              )}
+              {tip.icon === "compress" && (
+                <svg class="w-5 h-5 text-cyan-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="4 14 10 14 10 20"/>
+                  <polyline points="20 10 14 10 14 4"/>
+                  <line x1="14" y1="10" x2="21" y2="3"/>
+                  <line x1="3" y1="21" x2="10" y2="14"/>
+                </svg>
+              )}
+              <span class="font-bold text-slate-700 dark:text-slate-200 text-base">{tip.title}</span>
+            </div>
+            <div class="text-sm text-slate-500 dark:text-slate-400 mt-1">{tip.desc}</div>
+          </div>
+          <div class="p-4 bg-slate-50 dark:bg-[#0D0D0D]">
+            <pre class="text-slate-700 dark:text-slate-300 font-mono text-sm whitespace-pre-wrap" set:html={tip.cmd}></pre>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="flex items-start gap-3 p-4 rounded-lg bg-cyan-50 dark:bg-cyan-500/10 border border-cyan-200 dark:border-cyan-500/30">
+      <svg class="w-5 h-5 text-cyan-500 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="16" x2="12" y2="12"/>
+        <line x1="12" y1="8" x2="12.01" y2="8"/>
+      </svg>
+      <div>
+        <div class="font-medium text-cyan-700 dark:text-cyan-400">{t('session_recovery.guide.protips.note_title')}</div>
+        <div class="text-sm text-slate-600 dark:text-slate-400 mt-1">{t('session_recovery.guide.protips.note_desc')}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Emergency Checklist -->
+<div class="glass-card rounded-xl border-2 border-red-200 dark:border-red-500/30 overflow-hidden">
+  <div class="p-6 bg-gradient-to-r from-red-500/10 to-orange-500/10 border-b border-red-200 dark:border-slate-800">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center">
+        <svg class="w-6 h-6 text-red-600 dark:text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+          <line x1="12" y1="9" x2="12" y2="13"/>
+          <line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+      </div>
+      <h3 class="text-xl font-bold text-red-600 dark:text-red-400">
+        {t('session_recovery.guide.emergency.title')}
+      </h3>
+    </div>
+  </div>
+  <div class="p-6">
+    <p class="text-slate-600 dark:text-slate-400 mb-4">
+      {t('session_recovery.guide.emergency.desc')}
+    </p>
+    <div class="space-y-4">
+      {emergencySteps.map((step) => (
+        <div class="flex gap-4">
+          <div class="flex-shrink-0 w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center font-bold text-sm text-slate-500">
+            {step.step}
+          </div>
+          <div class="flex-1 pt-1">
+            <h4 class={`font-bold text-sm ${step.color}`}>{step.title}</h4>
+            <p class="text-sm text-slate-600 dark:text-slate-400 mb-2">{step.desc}</p>
+            {step.cmd && (
+              <div class="bg-slate-50 dark:bg-slate-900/50 rounded p-2 font-mono text-xs text-slate-600 dark:text-slate-300 whitespace-pre-wrap border border-slate-100 dark:border-slate-800" set:html={step.cmd}>
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<!-- Benefits Section -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+  <div class="p-4 rounded-xl bg-green-500/5 dark:bg-green-500/10 border border-green-200 dark:border-green-500/20">
+    <h4 class="font-bold text-green-700 dark:text-green-400 mb-2 flex items-center gap-2">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+      </svg>
+      {t('session_recovery.guide.benefit1.title')}
+    </h4>
+    <p class="text-sm text-slate-600 dark:text-slate-400">
+      {t('session_recovery.guide.benefit1.desc')}
+    </p>
+  </div>
+  <div class="p-4 rounded-xl bg-blue-500/5 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20">
+    <h4 class="font-bold text-blue-700 dark:text-blue-400 mb-2 flex items-center gap-2">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <polyline points="12 6 12 12 16 14"/>
+      </svg>
+      {t('session_recovery.guide.benefit2.title')}
+    </h4>
+    <p class="text-sm text-slate-600 dark:text-slate-400">
+      {t('session_recovery.guide.benefit2.desc')}
+    </p>
+  </div>
+</div>
+
+<!-- Related Guides -->
+<div class="p-6 rounded-xl bg-gradient-to-r from-slate-500/5 via-slate-500/10 to-slate-500/5 border border-slate-200 dark:border-slate-700">
+  <h3 class="text-lg font-bold text-slate-700 dark:text-slate-300 mb-4">{t('session_recovery.guide.related_title')}</h3>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+    <a href={currentLang === 'vi' ? '/vi/guides/ccs' : '/guides/ccs'} class="p-3 rounded-lg bg-white/50 dark:bg-black/20 hover:bg-white dark:hover:bg-black/40 transition-colors">
+      <div class="text-emerald-600 dark:text-emerald-400 font-mono font-bold">CCS Guide</div>
+      <div class="text-xs text-slate-500 mt-1">{t('session_recovery.guide.related_ccs')}</div>
+    </a>
+    <a href={currentLang === 'vi' ? '/vi/guides/commands' : '/guides/commands'} class="p-3 rounded-lg bg-white/50 dark:bg-black/20 hover:bg-white dark:hover:bg-black/40 transition-colors">
+      <div class="text-blue-600 dark:text-blue-400 font-mono font-bold">Commands</div>
+      <div class="text-xs text-slate-500 mt-1">{t('session_recovery.guide.related_commands')}</div>
+    </a>
+  </div>
+</div>

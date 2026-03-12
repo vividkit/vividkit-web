@@ -1,0 +1,330 @@
+---
+// FlowchartGuide pro tips and command complexity ratings sections
+import { getLangFromUrl, type Language } from "@/i18n";
+import { useTranslations } from "@/i18n/utils";
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === "vi";
+const t = useTranslations(currentLang);
+---
+
+  <!-- Pro Tips -->
+  <div class="glass-card rounded-2xl p-6 sm:p-8">
+    <h3
+      class="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2"
+    >
+      <svg
+        class="w-5 h-5 text-emerald-500"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+      </svg>
+      {isVi ? "Pro Tips" : "Pro Tips"}
+    </h3>
+
+    <div class="space-y-4">
+      <div
+        class="p-4 rounded-lg bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 fc-stable-content"
+      >
+        <p class="text-sm text-emerald-700 dark:text-emerald-400">
+          <strong class="flex items-center gap-1"
+            ><svg
+              class="w-4 h-4 text-emerald-500 inline"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              ><path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+              ></path></svg
+            >
+            {
+              isVi ? "Speed vs Safety Trade-off:" : "Speed vs Safety Trade-off:"
+            }</strong
+          ><br />
+          • {
+            isVi
+              ? "Dùng /cook khi confident và muốn speed"
+              : "Use /cook when you're confident and want speed"
+          }<br />
+          • {
+            isVi
+              ? "Dùng /plan → /cook @plan.md khi precision và review quan trọng"
+              : "Use /plan → /cook @plan.md when precision and review matter"
+          }
+        </p>
+      </div>
+      <div
+        class="p-4 rounded-lg bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 fc-beta-content hidden"
+      >
+        <p class="text-sm text-emerald-700 dark:text-emerald-400">
+          <strong class="flex items-center gap-1"
+            ><svg
+              class="w-4 h-4 text-emerald-500 inline"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              ><path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+              ></path></svg
+            >
+            {
+              isVi ? "Speed vs Safety Trade-off:" : "Speed vs Safety Trade-off:"
+            }</strong
+          ><br />
+          • {
+            isVi
+              ? "Dùng /cook khi confident và muốn speed"
+              : "Use /cook when you're confident and want speed"
+          }<br />
+          • {
+            isVi
+              ? "Dùng /plan → /code khi precision và review quan trọng"
+              : "Use /plan → /code when precision and review matter"
+          }
+        </p>
+      </div>
+
+      <div
+        class="p-4 rounded-lg bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 fc-stable-content"
+      >
+        <p class="text-sm text-amber-700 dark:text-amber-400">
+          <strong class="flex items-center gap-1"
+            ><svg
+              class="w-4 h-4 text-amber-500 inline"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              ><path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+              ></path></svg
+            >
+            {isVi ? "Best Practice:" : "Best Practice:"}</strong
+          ><br />
+          • {
+            isVi
+              ? "Dùng /cook cho hầu hết tasks - có internal planning"
+              : "Use /cook for most tasks - has internal planning"
+          }<br />
+          • {
+            isVi
+              ? "Dùng /plan trước khi /cook @plan.md cho tasks phức tạp cần review"
+              : "Use /plan before /cook @plan.md for complex tasks needing review"
+          }
+        </p>
+      </div>
+      <div
+        class="p-4 rounded-lg bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 fc-beta-content hidden"
+      >
+        <p class="text-sm text-amber-700 dark:text-amber-400">
+          <strong class="flex items-center gap-1"
+            ><svg
+              class="w-4 h-4 text-amber-500 inline"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              ><path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+              ></path></svg
+            >
+            {
+              isVi ? "Không mix workflows:" : "Never mix these workflows:"
+            }</strong
+          ><br />
+          • ❌ <code>/plan</code> → <code>/cook</code> ({
+            isVi ? "cook có planning riêng" : "cook has its own planning"
+          })<br />
+          • ✅ <code>/plan</code> → <code>/code</code> ({
+            isVi ? "flow đúng" : "correct flow"
+          })<br />
+          • ✅ <code>/cook</code> standalone ({
+            isVi ? "có internal planning" : "has internal planning"
+          })
+        </p>
+      </div>
+
+      <div
+        class="p-4 rounded-lg bg-red-500/10 border border-red-200 dark:border-red-500/20 fc-stable-content"
+      >
+        <p class="text-sm text-red-700 dark:text-red-400">
+          <strong class="flex items-center gap-1"
+            ><svg
+              class="w-4 h-4 text-red-500 inline"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              ><path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+              ></path></svg
+            >
+            {isVi ? "Git safety:" : "Git safety:"}</strong
+          ><br />
+          • <code>/git cm</code> = {
+            isVi
+              ? "commit only (safe cho experimentation)"
+              : "commit only (safe for experimentation)"
+          }<br />
+          • <code>/git cp</code> = {
+            isVi
+              ? "commits VÀ pushes (không thể undo dễ dàng)"
+              : "commits AND pushes (can't undo easily)"
+          }
+        </p>
+      </div>
+      <div
+        class="p-4 rounded-lg bg-red-500/10 border border-red-200 dark:border-red-500/20 fc-beta-content hidden"
+      >
+        <p class="text-sm text-red-700 dark:text-red-400">
+          <strong class="flex items-center gap-1"
+            ><svg
+              class="w-4 h-4 text-red-500 inline"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              ><path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+              ></path></svg
+            >
+            {isVi ? "Git safety:" : "Git safety:"}</strong
+          ><br />
+          • <code>/git:cm</code> = {
+            isVi
+              ? "commit only (safe cho experimentation)"
+              : "commit only (safe for experimentation)"
+          }<br />
+          • <code>/git:cp</code> = {
+            isVi
+              ? "commits VÀ pushes (không thể undo dễ dàng)"
+              : "commits AND pushes (can't undo easily)"
+          }
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Command Complexity Ratings -->
+  <div class="glass-card rounded-2xl p-6 sm:p-8">
+    <h3
+      class="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2"
+    >
+      <svg
+        class="w-5 h-5 text-amber-500"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <polygon
+          points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"
+          stroke-linecap="round"
+          stroke-linejoin="round"></polygon>
+      </svg>
+      {isVi ? "Độ phức tạp Commands" : "Command Complexity Ratings"}
+    </h3>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="border-b border-slate-200 dark:border-slate-700">
+          <tr>
+            <th
+              class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white"
+              >Rating</th
+            >
+            <th
+              class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white"
+              >{isVi ? "Ý nghĩa" : "Meaning"}</th
+            >
+            <th
+              class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white"
+              >{isVi ? "Ví dụ Commands" : "Example Commands"}</th
+            >
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+          <tr>
+            <td class="py-3 px-4 text-amber-500">⚡</td>
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
+              >Simple, quick</td
+            >
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
+              ><code>/debug</code>, <code>/test</code></td
+            >
+          </tr>
+          <tr>
+            <td class="py-3 px-4 text-amber-500">⚡⚡</td>
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
+              >Moderate</td
+            >
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
+              ><code>/brainstorm</code>, <code>/fix</code>, <code>/scout</code
+              ></td
+            >
+          </tr>
+          <tr class="fc-stable-content">
+            <td class="py-3 px-4 text-amber-500">⚡⚡⚡</td>
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
+              >Complex, thorough</td
+            >
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
+              ><code>/cook</code>, <code>/plan</code></td
+            >
+          </tr>
+          <tr class="fc-beta-content hidden">
+            <td class="py-3 px-4 text-amber-500">⚡⚡⚡</td>
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
+              >Complex, thorough</td
+            >
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
+              ><code>/cook</code>, <code>/code</code>, <code>/plan</code></td
+            >
+          </tr>
+          <tr>
+            <td class="py-3 px-4 text-amber-500">⚡⚡⚡⚡</td>
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
+              >Extended workflow</td
+            >
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
+              ><code>/docs:init</code></td
+            >
+          </tr>
+          <tr>
+            <td class="py-3 px-4 text-amber-500">⚡⚡⚡⚡⚡</td>
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
+              >Full project scope</td
+            >
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
+              ><code>/bootstrap</code></td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
