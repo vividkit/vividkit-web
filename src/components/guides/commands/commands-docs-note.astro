@@ -1,0 +1,26 @@
+---
+// Official docs link note shown at the bottom of the commands guide
+import { useTranslations } from "@/i18n/utils";
+import { getLangFromUrl, type Language } from "@/i18n";
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+---
+
+<div class="text-center pt-4">
+  <p class="text-sm text-slate-500 dark:text-slate-400">
+    {t("commands.docs.text")}
+    <a
+      href="https://docs.claudekit.cc/docs/engineer/commands"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+      >{t("commands.docs.link")}</a
+    >
+  </p>
+</div>
