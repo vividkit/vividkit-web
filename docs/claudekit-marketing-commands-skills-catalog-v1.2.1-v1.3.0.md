@@ -46,6 +46,233 @@ Token estimates based on SKILL.md file size (~4 chars/token). Higher complexity 
 | ⚡⚡⚡⚡⚡ | Very High | 10K+ | Significant context, avoid stacking |
 
 ---
+## Độ Phức Tạp Commands
+
+Bảng dưới liệt kê tất cả Stable commands (từ `commands-marketing-kit.ts`) theo thứ tự độ phức tạp tăng dần.
+
+**Chú thích mức độ:** ⚡ Tối thiểu · ⚡⚡ Thấp · ⚡⚡⚡ Trung bình · ⚡⚡⚡⚡ Cao
+
+### ⚡ Tối thiểu
+
+| Command | Complexity | Category |
+|---------|-----------|----------|
+| `ck:brainstorm` | ⚡ | Essentials |
+| `/mkt:ask` | ⚡ | Essentials |
+| `/mkt:ck-help` | ⚡ | Essentials |
+| `/mkt:campaign status` | ⚡ | Campaign |
+| `/mkt:test` | ⚡ | Dev & Integration |
+| `ck:git` | ⚡ | Dev & Integration |
+| `/mkt:use-mcp` | ⚡ | Skills & Utilities |
+| `/mkt:journal` | ⚡ | Skills & Utilities |
+| `/mkt:kanban` | ⚡ | Skills & Utilities |
+| `/mkt:watzup` | ⚡ | Skills & Utilities |
+| `/mkt:preview` | ⚡ | Skills & Utilities |
+| `/mkt:hub` | ⚡ | Skills & Utilities |
+| `/mkt:storage` | ⚡ | Skills & Utilities |
+| `ckm:assets-organizing` | ⚡ | Skills & Utilities |
+
+### ⚡⚡ Thấp
+
+| Command | Complexity | Category |
+|---------|-----------|----------|
+| `/mkt:init` | ⚡⚡ | Essentials |
+| `/mkt:write fast` | ⚡⚡ | Content & Copy |
+| `/mkt:write enhance` | ⚡⚡ | Content & Copy |
+| `/mkt:write blog` | ⚡⚡ | Content & Copy |
+| `/mkt:write audit` | ⚡⚡ | Content & Copy |
+| `/mkt:write publish` | ⚡⚡ | Content & Copy |
+| `ckm:creativity` | ⚡⚡ | Content & Copy |
+| `ck:copywriting` | ⚡⚡ | Content & Copy |
+| `/mkt:seo keywords` | ⚡⚡ | SEO & Analytics |
+| `/mkt:analyze` | ⚡⚡ | SEO & Analytics |
+| `ckm:analytics` | ⚡⚡ | SEO & Analytics |
+| `ckm:banner-design` | ⚡⚡ | Design & Visual |
+| `ckm:slides-design` | ⚡⚡ | Design & Visual |
+| `/mkt:social schedule` | ⚡⚡ | Email & Social |
+| `/mkt:plan fast` | ⚡⚡ | Strategy & Research |
+| `/mkt:persona` | ⚡⚡ | Strategy & Research |
+| `ckm:marketing-ideas` | ⚡⚡ | Strategy & Research |
+| `/mkt:video script` | ⚡⚡ | Video & Media |
+| `/mkt:youtube` | ⚡⚡ | Video & Media |
+| `/mkt:youtube blog` | ⚡⚡ | Video & Media |
+| `/mkt:slides` | ⚡⚡ | Video & Media |
+| `ckm:form-cro` | ⚡⚡ | Growth & CRO |
+| `/mkt:fix` | ⚡⚡ | Dev & Integration |
+| `/mkt:debug` | ⚡⚡ | Dev & Integration |
+| `/mkt:worktree` | ⚡⚡ | Dev & Integration |
+| `/mkt:skill create` | ⚡⚡ | Skills & Utilities |
+| `/mkt:dashboard` | ⚡⚡ | Skills & Utilities |
+| `/mkt:brand` | ⚡⚡ | Skills & Utilities |
+| `/mkt:docs` | ⚡⚡ | Skills & Utilities |
+| `ckm:content-hub` | ⚡⚡ | Skills & Utilities |
+| `ckm:kit-builder` | ⚡⚡ | Skills & Utilities |
+
+### ⚡⚡⚡ Trung bình
+
+| Command | Complexity | Category |
+|---------|-----------|----------|
+| `/mkt:plan` | ⚡⚡⚡ | Essentials |
+| `/mkt:write good` | ⚡⚡⚡ | Essentials |
+| `/mkt:write cro` | ⚡⚡⚡ | Content & Copy |
+| `ckm:content-marketing` | ⚡⚡⚡ | Content & Copy |
+| `/mkt:campaign create` | ⚡⚡⚡ | Campaign |
+| `/mkt:campaign analyze` | ⚡⚡⚡ | Campaign |
+| `/mkt:campaign email` | ⚡⚡⚡ | Campaign |
+| `/mkt:seo audit` | ⚡⚡⚡ | SEO & Analytics |
+| `/mkt:seo pseo` | ⚡⚡⚡ | SEO & Analytics |
+| `ckm:ab-test-setup` | ⚡⚡⚡ | SEO & Analytics |
+| `ckm:paid-ads` | ⚡⚡⚡ | SEO & Analytics |
+| `ckm:logo-design` | ⚡⚡⚡ | Design & Visual |
+| `ckm:cip-design` | ⚡⚡⚡ | Design & Visual |
+| `ckm:design-system` | ⚡⚡⚡ | Design & Visual |
+| `/mkt:email flow` | ⚡⚡⚡ | Email & Social |
+| `/mkt:email sequence` | ⚡⚡⚡ | Email & Social |
+| `ckm:email-marketing` | ⚡⚡⚡ | Email & Social |
+| `ckm:social-media` | ⚡⚡⚡ | Email & Social |
+| `/mkt:plan cro` | ⚡⚡⚡ | Strategy & Research |
+| `/mkt:competitor` | ⚡⚡⚡ | Strategy & Research |
+| `/mkt:funnel` | ⚡⚡⚡ | Strategy & Research |
+| `ckm:marketing-planning` | ⚡⚡⚡ | Strategy & Research |
+| `ckm:marketing-research` | ⚡⚡⚡ | Strategy & Research |
+| `ckm:marketing-psychology` | ⚡⚡⚡ | Strategy & Research |
+| `/mkt:video` | ⚡⚡⚡ | Video & Media |
+| `/mkt:video create` | ⚡⚡⚡ | Video & Media |
+| `ckm:pricing-strategy` | ⚡⚡⚡ | Growth & CRO |
+| `ckm:free-tool-strategy` | ⚡⚡⚡ | Growth & CRO |
+| `ckm:gamification-marketing` | ⚡⚡⚡ | Growth & CRO |
+| `ckm:affiliate-marketing` | ⚡⚡⚡ | Growth & CRO |
+| `ckm:referral-program-building` | ⚡⚡⚡ | Growth & CRO |
+| `ckm:onboarding-cro` | ⚡⚡⚡ | Growth & CRO |
+| `ck:code-review` | ⚡⚡⚡ | Dev & Integration |
+
+### ⚡⚡⚡⚡ Cao
+
+| Command | Complexity | Category |
+|---------|-----------|----------|
+| `/mkt:campaign` | ⚡⚡⚡⚡ | Campaign |
+| `/mkt:plan hard` | ⚡⚡⚡⚡ | Strategy & Research |
+| `ckm:ads-management` | ⚡⚡⚡⚡ | SEO & Analytics |
+| `ckm:design` | ⚡⚡⚡⚡ | Design & Visual |
+| `ckm:launch-strategy` | ⚡⚡⚡⚡ | Growth & CRO |
+
+---
+
+## Sơ Đồ Quyết Định Tương Tác
+
+Dùng sơ đồ này để chọn command/skill phù hợp dựa trên mục tiêu.
+
+```mermaid
+flowchart TD
+    START(["Ban muon lam gi?"]) --> A{"Chu de chinh"}
+
+    A --> W["Viet noi dung"]
+    A --> C["Chien dich"]
+    A --> S["SEO va Ads"]
+    A --> E["Email va Social"]
+    A --> D["Thiet ke"]
+    A --> V["Video"]
+    A --> ST["Chien luoc"]
+    A --> G["Tang truong va CRO"]
+    A --> U["Tien ich"]
+
+    W --> W1{"Loai noi dung?"}
+    W1 --> CMD_WFAST["mkt:write fast"]
+    W1 --> CMD_WGOOD["mkt:write good"]
+    W1 --> CMD_WCRO["mkt:write cro"]
+    W1 --> CMD_WBLOG["mkt:write blog"]
+    W1 --> CMD_WAUDIT["mkt:write audit"]
+    W1 --> CMD_WENH["mkt:write enhance"]
+    W1 --> CMD_WPUB["mkt:write publish"]
+    W1 --> SKL_CREAT["ck:copywriting\nckm:creativity"]
+
+    C --> C1{"Giai doan?"}
+    C1 --> CMD_CC["mkt:campaign create"]
+    C1 --> CMD_CS["mkt:campaign status"]
+    C1 --> CMD_CA["mkt:campaign analyze"]
+    C1 --> CMD_CE["mkt:campaign email"]
+    C1 --> SKL_CAMP["ckm:campaign-management"]
+
+    S --> S1{"Muc tieu?"}
+    S1 --> CMD_SKEY["mkt:seo keywords"]
+    S1 --> CMD_SAUD["mkt:seo audit"]
+    S1 --> CMD_SPEO["mkt:seo pseo"]
+    S1 --> SKL_ADS["ckm:ads-management\nckm:paid-ads"]
+    S1 --> CMD_ANL["mkt:analyze report"]
+    S1 --> SKL_AB["ckm:ab-test-setup"]
+
+    E --> E1{"Kenh?"}
+    E1 --> CMD_EF["mkt:email flow"]
+    E1 --> CMD_ES["mkt:email sequence"]
+    E1 --> SKL_EM["ckm:email-marketing"]
+    E1 --> CMD_SS["mkt:social schedule"]
+    E1 --> SKL_SM["ckm:social-media"]
+
+    D --> D1{"Loai thiet ke?"}
+    D1 --> SKL_LOGO["ckm:logo-design"]
+    D1 --> SKL_CIP["ckm:cip-design"]
+    D1 --> SKL_DS["ckm:design-system"]
+    D1 --> SKL_SLD["ckm:slides-design"]
+    D1 --> SKL_DES["ckm:design"]
+
+    V --> V1{"Nhu cau?"}
+    V1 --> CMD_VC["mkt:video create"]
+    V1 --> CMD_VS["mkt:video script"]
+    V1 --> CMD_YTB["mkt:youtube blog"]
+    V1 --> SKL_VP["ckm:video-production"]
+
+    ST --> ST1{"Loai chien luoc?"}
+    ST1 --> CMD_PLAN["mkt:plan\nfast / hard / cro"]
+    ST1 --> SKL_MR["ckm:marketing-research"]
+    ST1 --> CMD_COMP["mkt:competitor"]
+    ST1 --> CMD_PER["mkt:persona"]
+    ST1 --> CMD_FUN["mkt:funnel"]
+    ST1 --> SKL_MI["ckm:marketing-ideas"]
+    ST1 --> SKL_MP["ckm:marketing-psychology"]
+
+    G --> G1{"Muc tieu tang truong?"}
+    G1 --> SKL_LS["ckm:launch-strategy"]
+    G1 --> SKL_PS["ckm:pricing-strategy"]
+    G1 --> SKL_FC["ckm:form-cro"]
+    G1 --> SKL_OC["ckm:onboarding-cro"]
+    G1 --> SKL_AF["ckm:affiliate-marketing\nreferral-program-building"]
+    G1 --> SKL_GM["ckm:gamification-marketing"]
+    G1 --> SKL_FT["ckm:free-tool-strategy"]
+
+    U --> U1{"Cong cu ho tro?"}
+    U1 --> CMD_INIT["mkt:init"]
+    U1 --> SKL_BS["ck:brainstorm"]
+    U1 --> CMD_ASK["mkt:ask"]
+    U1 --> CMD_HUB["mkt:hub\nmkt:dashboard"]
+    U1 --> CMD_STR["mkt:storage"]
+    U1 --> SKL_AO["ckm:assets-organizing"]
+    U1 --> CMD_PRV["mkt:preview"]
+    U1 --> SKL_GIT["ck:git\nmkt:worktree"]
+
+    classDef cmd fill:#dbeafe,stroke:#3b82f6,color:#1e3a5f
+    classDef skill fill:#dcfce7,stroke:#22c55e,color:#14532d
+    classDef category fill:#f3e8ff,stroke:#a855f7,color:#4a044e
+
+    class CMD_WFAST,CMD_WGOOD,CMD_WCRO,CMD_WBLOG,CMD_WAUDIT,CMD_WENH,CMD_WPUB cmd
+    class CMD_CC,CMD_CS,CMD_CA,CMD_CE cmd
+    class CMD_SKEY,CMD_SAUD,CMD_SPEO,CMD_ANL cmd
+    class CMD_EF,CMD_ES,CMD_SS cmd
+    class CMD_VC,CMD_VS,CMD_YTB cmd
+    class CMD_PLAN,CMD_COMP,CMD_PER,CMD_FUN cmd
+    class CMD_INIT,CMD_ASK,CMD_HUB,CMD_STR,CMD_PRV cmd
+    class SKL_CREAT,SKL_CAMP,SKL_ADS,SKL_AB,SKL_EM,SKL_SM skill
+    class SKL_LOGO,SKL_CIP,SKL_DS,SKL_SLD,SKL_DES skill
+    class SKL_VP,SKL_MR,SKL_MI,SKL_MP skill
+    class SKL_LS,SKL_PS,SKL_FC,SKL_OC,SKL_AF,SKL_GM,SKL_FT skill
+    class SKL_BS,SKL_AO,SKL_GIT skill
+    class W,C,S,E,D,V,ST,G,U category
+```
+
+> **Chú thích màu sắc:**
+> - Nền xanh dương = `/mkt:` Commands (lightweight, invoke trực tiếp)
+> - Nền xanh lá = Skills (`ck:` / `ckm:`, plugin đầy đủ với references & scripts)
+> - Nền tím = Danh mục chính
+
+---
 
 ## Commands (29 in Stable)
 
@@ -292,140 +519,140 @@ Commands live in `.claude/commands/mkt/`. Single-file (`.md`) commands handle si
 
 ## Skill Arguments & Flags Reference
 
-### `/write` (Marketing-Exclusive)
+### `/mkt:write` (Marketing-Exclusive)
 
 | Subcommand | Example | When to Use |
 |------------|---------|-------------|
-| `audit` | `/write audit` | Audit existing content for quality & conversions |
-| `blog` | `/write blog [topic]` | Write a blog post from scratch |
-| `blog-youtube` | `/write blog-youtube [youtube-url]` | Convert YouTube video into blog post |
-| `cro` | `/write cro [page-url]` | Write CRO-focused content for landing pages |
-| `enhance` | `/write enhance [file]` | Improve existing content |
-| `fast` | `/write fast [topic]` | Quick draft — minimal research |
-| `good` | `/write good [topic]` | High-quality content with research |
-| `publish` | `/write publish [file]` | Finalize and publish-ready content |
+| `audit` | `/mkt:write audit` | Audit existing content for quality & conversions |
+| `blog` | `/mkt:write blog [topic]` | Write a blog post from scratch |
+| `blog-youtube` | `/mkt:write blog-youtube [youtube-url]` | Convert YouTube video into blog post |
+| `cro` | `/mkt:write cro [page-url]` | Write CRO-focused content for landing pages |
+| `enhance` | `/mkt:write enhance [file]` | Improve existing content |
+| `fast` | `/mkt:write fast [topic]` | Quick draft — minimal research |
+| `good` | `/mkt:write good [topic]` | High-quality content with research |
+| `publish` | `/mkt:write publish [file]` | Finalize and publish-ready content |
 
-### `/campaign`
-
-| Subcommand | Example | When to Use |
-|------------|---------|-------------|
-| `create` | `/campaign create summer-sale` | Create new campaign with goals & timeline |
-| `status` | `/campaign status` | Check all active campaign statuses |
-| `analyze` | `/campaign analyze Q1` | Analyze campaign performance |
-| `email` | `/campaign email welcome-series` | Create email component of campaign |
-
-### `/seo`
+### `/mkt:campaign`
 
 | Subcommand | Example | When to Use |
 |------------|---------|-------------|
-| `audit` | `/seo audit https://example.com` | Full SEO audit of a URL |
-| `keywords` | `/seo keywords "marketing automation"` | Keyword research via ReviewWeb.site API |
-| `pseo` | `/seo pseo [template]` | Programmatic SEO page generation |
-| `optimize` | `/seo optimize [page]` | On-page optimization recommendations |
-| `schema` | `/seo schema [page]` | Generate JSON+LD structured data |
+| `create` | `/mkt:campaign create summer-sale` | Create new campaign with goals & timeline |
+| `status` | `/mkt:campaign status` | Check all active campaign statuses |
+| `analyze` | `/mkt:campaign analyze Q1` | Analyze campaign performance |
+| `email` | `/mkt:campaign email welcome-series` | Create email component of campaign |
 
-### `/competitor`
-
-| Subcommand | Example | When to Use |
-|------------|---------|-------------|
-| `analyze` | `/competitor analyze competitor.com` | Deep competitive analysis |
-| `content` | `/competitor content competitor.com` | Analyze competitor's content strategy |
-| `seo` | `/competitor seo competitor.com` | SEO gap analysis |
-| `alternatives` | `/competitor alternatives` | Generate alternatives page content |
-| `list` | `/competitor list` | List known competitors |
-
-### `/email`
+### `/mkt:seo`
 
 | Subcommand | Example | When to Use |
 |------------|---------|-------------|
-| `flow` | `/email flow onboarding` | Design email automation flow |
-| `sequence` | `/email sequence nurture` | Build multi-email sequence |
-| `newsletter` | `/email newsletter march` | Create newsletter edition |
-| `cold` | `/email cold outreach` | Cold email templates |
-| `launch` | `/email launch product-v2` | Launch announcement emails |
-| `nurture` | `/email nurture trial-users` | Nurture sequence for leads |
+| `audit` | `/mkt:seo audit https://example.com` | Full SEO audit of a URL |
+| `keywords` | `/mkt:seo keywords "marketing automation"` | Keyword research via ReviewWeb.site API |
+| `pseo` | `/mkt:seo pseo [template]` | Programmatic SEO page generation |
+| `optimize` | `/mkt:seo optimize [page]` | On-page optimization recommendations |
+| `schema` | `/mkt:seo schema [page]` | Generate JSON+LD structured data |
 
-### `/social`
+### `/mkt:competitor`
+
+| Subcommand | Example | When to Use |
+|------------|---------|-------------|
+| `analyze` | `/mkt:competitor analyze competitor.com` | Deep competitive analysis |
+| `content` | `/mkt:competitor content competitor.com` | Analyze competitor's content strategy |
+| `seo` | `/mkt:competitor seo competitor.com` | SEO gap analysis |
+| `alternatives` | `/mkt:competitor alternatives` | Generate alternatives page content |
+| `list` | `/mkt:competitor list` | List known competitors |
+
+### `/mkt:email`
+
+| Subcommand | Example | When to Use |
+|------------|---------|-------------|
+| `flow` | `/mkt:email flow onboarding` | Design email automation flow |
+| `sequence` | `/mkt:email sequence nurture` | Build multi-email sequence |
+| `newsletter` | `/mkt:email newsletter march` | Create newsletter edition |
+| `cold` | `/mkt:email cold outreach` | Cold email templates |
+| `launch` | `/mkt:email launch product-v2` | Launch announcement emails |
+| `nurture` | `/mkt:email nurture trial-users` | Nurture sequence for leads |
+
+### `/mkt:social`
 
 | Argument | Example | When to Use |
 |----------|---------|-------------|
-| `[platform] [type]` | `/social twitter thread` | Create platform-specific content |
-| `schedule` | `/social schedule` | Plan content calendar |
+| `[platform] [type]` | `/mkt:social twitter thread` | Create platform-specific content |
+| `schedule` | `/mkt:social schedule` | Plan content calendar |
 | Platforms | `twitter`, `facebook`, `linkedin`, `tiktok`, `youtube`, `instagram`, `threads` | All major platforms supported |
 
-### `/brand`
+### `/mkt:brand`
 
 | Subcommand | Example | When to Use |
 |------------|---------|-------------|
-| `update` | `/brand update voice` | Update brand guidelines |
-| `review` | `/brand review content.md` | Review content for brand compliance |
-| `create` | `/brand create style-guide` | Create new brand assets |
+| `update` | `/mkt:brand update voice` | Update brand guidelines |
+| `review` | `/mkt:brand review content.md` | Review content for brand compliance |
+| `create` | `/mkt:brand create style-guide` | Create new brand assets |
 
-### `/video`
-
-| Subcommand | Example | When to Use |
-|------------|---------|-------------|
-| `create` | `/video create product-demo` | Full video production workflow |
-| `script-create` | `/video script-create explainer` | Write video script |
-| `storyboard-create` | `/video storyboard-create ad` | Generate visual storyboard |
-
-### `/youtube`
+### `/mkt:video`
 
 | Subcommand | Example | When to Use |
 |------------|---------|-------------|
-| `blog` | `/youtube blog https://youtu.be/xxx` | Convert video → blog post |
-| `infographic` | `/youtube infographic [url]` | Convert video → infographic |
-| `social` | `/youtube social [url]` | Convert video → social posts |
+| `create` | `/mkt:video create product-demo` | Full video production workflow |
+| `script-create` | `/mkt:video script-create explainer` | Write video script |
+| `storyboard-create` | `/mkt:video storyboard-create ad` | Generate visual storyboard |
 
-### `/elevenlabs` 🆕
+### `/mkt:youtube`
 
 | Subcommand | Example | When to Use |
 |------------|---------|-------------|
-| `speak` | `/elevenlabs speak "Hello world"` | Text-to-speech generation |
-| `clone` | `/elevenlabs clone voice.mp3` | Clone a voice from audio sample |
-| `sfx` | `/elevenlabs sfx "ocean waves"` | Generate sound effects |
+| `blog` | `/mkt:youtube blog https://youtu.be/xxx` | Convert video → blog post |
+| `infographic` | `/mkt:youtube infographic [url]` | Convert video → infographic |
+| `social` | `/mkt:youtube social [url]` | Convert video → social posts |
 
-### `/ads-management`
+### `/ckm:elevenlabs` 🆕
+
+| Subcommand | Example | When to Use |
+|------------|---------|-------------|
+| `speak` | `/ckm:elevenlabs speak "Hello world"` | Text-to-speech generation |
+| `clone` | `/ckm:elevenlabs clone voice.mp3` | Clone a voice from audio sample |
+| `sfx` | `/ckm:elevenlabs sfx "ocean waves"` | Generate sound effects |
+
+### `/ckm:ads-management`
 
 | Argument | Example | When to Use |
 |----------|---------|-------------|
-| `[platform]` | `/ads-management google search` | Platform: `google`, `meta`, `linkedin`, `tiktok` |
-| `[campaign-type]` | `/ads-management meta retargeting` | Type: `search`, `display`, `video`, `retargeting`, `awareness` |
+| `[platform]` | `/ckm:ads-management google search` | Platform: `google`, `meta`, `linkedin`, `tiktok` |
+| `[campaign-type]` | `/ckm:ads-management meta retargeting` | Type: `search`, `display`, `video`, `retargeting`, `awareness` |
 
-### `/design`
+### `/ckm:design`
 
 | Argument | Example | When to Use |
 |----------|---------|-------------|
-| `logo` | `/design logo TechBrand` | Logo generation (55 styles) |
-| `cip` | `/design cip business-card` | Corporate identity deliverables |
-| `banner` | `/design banner facebook` | Banner for any platform |
-| `icon` | `/design icon settings` | SVG icon design (15 styles) |
-| `social` | `/design social instagram-post` | Social media images |
+| `logo` | `/ckm:design logo TechBrand` | Logo generation (55 styles) |
+| `cip` | `/ckm:design cip business-card` | Corporate identity deliverables |
+| `banner` | `/ckm:design banner facebook` | Banner for any platform |
+| `icon` | `/ckm:design icon settings` | SVG icon design (15 styles) |
+| `social` | `/ckm:design social instagram-post` | Social media images |
 
 ### Other Skills — Quick Reference
 
 | Skill | Usage | Notes |
 |-------|-------|-------|
-| `/cook [task] --fast` | `/cook fix typos --fast` | Skip research, go straight to code |
-| `/plan cro [page]` | `/plan cro landing-page` | Marketing-specific CRO planning mode |
-| `/hub --scan` | `/hub --scan` | Scan and index all marketing assets |
-| `/dashboard` | `/dashboard` | Launch local marketing dashboard |
-| `/init` | `/init "SaaS product"` | Bootstrap marketing project structure |
-| `/kit-builder skill seo-tools` | `/kit-builder skill seo-tools` | Create new marketing skill |
-| `/assets-organizing` | `/assets-organizing images/` | Organize output assets by topic/date |
-| `/funnel [action] [type]` | `/funnel design saas-trial` | Funnel design & optimization |
-| `/form-cro [url]` | `/form-cro /contact` | Optimize non-signup forms |
-| `/onboarding-cro [url]` | `/onboarding-cro /welcome` | Optimize post-signup activation |
-| `/marketing-psychology` | `/marketing-psychology scarcity` | Apply behavioral science to copy |
-| `/gamification-marketing` | `/gamification-marketing loyalty` | Design gamified campaigns |
-| `/referral-program-building` | `/referral-program-building saas` | Build viral referral loops |
-| `/affiliate-marketing` | `/affiliate-marketing program` | Design affiliate programs |
-| `/pricing-strategy` | `/pricing-strategy freemium` | Pricing tiers & packaging |
-| `/free-tool-strategy` | `/free-tool-strategy calculator` | Build free tools for leads |
-| `/launch-strategy` | `/launch-strategy beta` | Plan product launch |
-| `/content-marketing` | `/content-marketing blog seo` | Content strategy & calendars |
-| `/ab-test-setup` | `/ab-test-setup pricing-page` | Plan & implement A/B tests |
-| `/analytics` | `/analytics campaign-roi` | KPI dashboards & attribution |
+| `/ck:cook [task] --fast` | `/ck:cook fix typos --fast` | Skip research, go straight to code |
+| `/mkt:plan cro [page]` | `/mkt:plan cro landing-page` | Marketing-specific CRO planning mode |
+| `/mkt:hub --scan` | `/mkt:hub --scan` | Scan and index all marketing assets |
+| `/mkt:dashboard` | `/mkt:dashboard` | Launch local marketing dashboard |
+| `/mkt:init` | `/mkt:init "SaaS product"` | Bootstrap marketing project structure |
+| `/ckm:kit-builder skill seo-tools` | `/ckm:kit-builder skill seo-tools` | Create new marketing skill |
+| `/ckm:assets-organizing` | `/ckm:assets-organizing images/` | Organize output assets by topic/date |
+| `/mkt:funnel [action] [type]` | `/mkt:funnel design saas-trial` | Funnel design & optimization |
+| `/ckm:form-cro [url]` | `/ckm:form-cro /contact` | Optimize non-signup forms |
+| `/ckm:onboarding-cro [url]` | `/ckm:onboarding-cro /welcome` | Optimize post-signup activation |
+| `/ckm:marketing-psychology` | `/ckm:marketing-psychology scarcity` | Apply behavioral science to copy |
+| `/ckm:gamification-marketing` | `/ckm:gamification-marketing loyalty` | Design gamified campaigns |
+| `/ckm:referral-program-building` | `/ckm:referral-program-building saas` | Build viral referral loops |
+| `/ckm:affiliate-marketing` | `/ckm:affiliate-marketing program` | Design affiliate programs |
+| `/ckm:pricing-strategy` | `/ckm:pricing-strategy freemium` | Pricing tiers & packaging |
+| `/ckm:free-tool-strategy` | `/ckm:free-tool-strategy calculator` | Build free tools for leads |
+| `/ckm:launch-strategy` | `/ckm:launch-strategy beta` | Plan product launch |
+| `/ckm:content-marketing` | `/ckm:content-marketing blog seo` | Content strategy & calendars |
+| `/ckm:ab-test-setup` | `/ckm:ab-test-setup pricing-page` | Plan & implement A/B tests |
+| `/ckm:analytics` | `/ckm:analytics campaign-roi` | KPI dashboards & attribution |
 
 ---
 
@@ -517,6 +744,185 @@ Commands live in `.claude/commands/mkt/`. Single-file (`.md`) commands handle si
 ### ✅ No Breaking Changes
 
 Beta maintains full backward compatibility. No skills removed, no arguments changed.
+
+---
+
+## Stable Inventory (v1.2.1) — Migration Reference
+
+> Flat listing of ALL stable commands and skills. Use this section as the single source of truth when building migration guide tables from Stable → Beta.
+
+### All Stable Commands (29 commands, 45 subcommands)
+
+| # | Command | Subcommands | Total Files |
+|---|---------|-------------|-------------|
+| 1 | `/mkt:analyze` | `report` | 2 |
+| 2 | `/mkt:ask` | — | 1 |
+| 3 | `/mkt:brand` | `update` | 2 |
+| 4 | `/mkt:campaign` | `create`, `status`, `analyze`, `email` | 5 |
+| 5 | `/mkt:ck-help` | — | 1 |
+| 6 | `/mkt:competitor` | — | 1 |
+| 7 | `/mkt:dashboard` | `check` | 2 |
+| 8 | `/mkt:docs` | `init`, `llms`, `summarize`, `update` | 5 |
+| 9 | `/mkt:email` | `flow`, `sequence` | 3 |
+| 10 | `/mkt:funnel` | — | 1 |
+| 11 | `/mkt:hub` | — | 1 |
+| 12 | `/mkt:init` | — | 1 |
+| 13 | `/mkt:journal` | — | 1 |
+| 14 | `/mkt:kanban` | — | 1 |
+| 15 | `/mkt:persona` | — | 1 |
+| 16 | `/mkt:plan` | `archive`, `ci`, `cro`, `fast`, `hard`, `parallel`, `two`, `validate` | 9 |
+| 17 | `/mkt:preview` | — | 1 |
+| 18 | `/mkt:seo` | `audit`, `keywords`, `pseo` | 4 |
+| 19 | `/mkt:skill` | `add`, `create`, `fix-logs`, `optimize` (`auto`), `plan`, `update` | 7 |
+| 20 | `/mkt:slides` | `create` | 2 |
+| 21 | `/mkt:social` | `schedule` | 2 |
+| 22 | `/mkt:storage` | `list`, `sync`, `upload`, `url` | 5 |
+| 23 | `/mkt:test` | `ui`, `workflow` | 3 |
+| 24 | `/mkt:use-mcp` | — | 1 |
+| 25 | `/mkt:video` | `create`, `script`, `storyboard` | 4 |
+| 26 | `/mkt:watzup` | — | 1 |
+| 27 | `/mkt:worktree` | — | 1 |
+| 28 | `/mkt:write` | `audit`, `blog`, `cro`, `enhance`, `fast`, `formula`, `good`, `publish` | 9 |
+| 29 | `/mkt:youtube` | `blog`, `infographic`, `social` | 4 |
+
+### All Stable Skills (82 skills: 78 top-level + 4 document sub-skills)
+
+> **Columns explained:**
+> - **Folder**: Directory name under `.claude/skills/`
+> - **Registered Name**: `name:` field in `SKILL.md` YAML frontmatter (what Claude Code sees)
+> - **Type**: `ck` = shared with Engineer Kit, `ckm` = marketing-exclusive, `internal` = template/utility
+> - **Beta Name**: Corresponding skill name in v1.3.0-beta (📝 = renamed, 🟰 = unchanged, ❌ = removed/merged)
+
+#### Marketing-Exclusive Skills (37)
+
+| # | Folder | Registered Name | Beta Name (ckm:) | Notes |
+|---|--------|----------------|-------------------|-------|
+| 1 | `ab-test-setup` | `ab-test-setup` | 🟰 `ckm:ab-test-setup` | |
+| 2 | `ads-management` | `ads-management` | 🟰 `ckm:ads-management` | |
+| 3 | `affiliate-marketing` | `affiliate-marketing` | 🟰 `ckm:affiliate-marketing` | |
+| 4 | `analytics` | `analytics` | 🟰 `ckm:analytics` | |
+| 5 | `assets-organizing` | `assets-organizing` | 🟰 `ckm:assets-organizing` | |
+| 6 | `brand-guidelines` | `brand-guidelines` | 📝 `ckm:brand` | Shorter name + subcommands |
+| 7 | `campaign-management` | `campaign-management` | 📝 `ckm:campaign` | Shorter name |
+| 8 | `cip-design` | `cip-design` | 🟰 `ckm:cip-design` | |
+| 9 | `claude-code` | `claude-code` | 🟰 `ckm:claude-code` | Marketing-customized |
+| 10 | `competitor-alternatives` | `competitor-alternatives` | 📝 `ckm:competitor` | Shorter, 5 subcommands |
+| 11 | `content-hub` | `content-hub` | 🟰 `ckm:content-hub` | |
+| 12 | `content-marketing` | `content-marketing` | 🟰 `ckm:content-marketing` | |
+| 13 | `creativity` | `creativity` | 🟰 `ckm:creativity` | |
+| 14 | `debugging` | `Debugging` | 📝 `ckm:debugging` | Lowercase in beta |
+| 15 | `design` | `design` | 🟰 `ckm:design` | Umbrella skill |
+| 16 | `design-system` | `design-system` | 🟰 `ckm:design-system` | |
+| 17 | `email-marketing` | `email-marketing` | 📝 `ckm:email` | Shorter, 6 subcommands |
+| 18 | `form-cro` | `form-cro` | 🟰 `ckm:form-cro` | |
+| 19 | `free-tool-strategy` | `free-tool-strategy` | 🟰 `ckm:free-tool-strategy` | |
+| 20 | `gamification-marketing` | `gamification-marketing` | 🟰 `ckm:gamification-marketing` | |
+| 21 | `kit-builder` | `kit-builder` | 🟰 `ckm:kit-builder` | |
+| 22 | `launch-strategy` | `launch-strategy` | 🟰 `ckm:launch-strategy` | |
+| 23 | `logo-design` | `logo-design` | 🟰 `ckm:logo-design` | |
+| 24 | `marketing-dashboard` | *(no frontmatter)* | 🟰 `ckm:marketing-dashboard` | |
+| 25 | `marketing-ideas` | `marketing-ideas` | 🟰 `ckm:marketing-ideas` | |
+| 26 | `marketing-planning` | `marketing-planning` | 🟰 `ckm:marketing-planning` | |
+| 27 | `marketing-psychology` | `marketing-psychology` | 🟰 `ckm:marketing-psychology` | |
+| 28 | `marketing-research` | `marketing-research` | 🟰 `ckm:marketing-research` | |
+| 29 | `onboarding-cro` | `onboarding-cro` | 🟰 `ckm:onboarding-cro` | |
+| 30 | `paid-ads` | `paid-ads` | 🟰 `ckm:paid-ads` | |
+| 31 | `pricing-strategy` | `pricing-strategy` | 🟰 `ckm:pricing-strategy` | |
+| 32 | `referral-program-building` | `referral-program-building` | 🟰 `ckm:referral-program-building` | |
+| 33 | `seo-optimization` | `seo-optimization` | 📝 `ckm:seo` | Shorter, 5 subcommands |
+| 34 | `slides-design` | `slides-design` | 📝 `ckm:slides` | Shorter |
+| 35 | `social-media` | `social-media` | 📝 `ckm:social` | Shorter |
+| 36 | `video-production` | `video-production` | 📝 `ckm:video` | Shorter, 3 subcommands |
+| 37 | `youtube-handling` | `youtube-handling` | 📝 `ckm:youtube` | Shorter, 3 subcommands |
+
+#### Shared Skills with Engineer Kit (37)
+
+| # | Folder | Registered Name | Beta Name (ck:) | Notes |
+|---|--------|----------------|-----------------|-------|
+| 1 | `ai-artist` | `ai-artist` | 🟰 `ck:ai-artist` | |
+| 2 | `ai-multimodal` | `ai-multimodal` | 🟰 `ck:ai-multimodal` | |
+| 3 | `backend-development` | `backend-development` | 🟰 `ck:backend-development` | |
+| 4 | `better-auth` | `better-auth` | 🟰 `ck:better-auth` | |
+| 5 | `brainstorm` | `brainstorm` | 🟰 `ck:brainstorm` | |
+| 6 | `chrome-devtools` | `chrome-devtools` | 🟰 `ck:chrome-devtools` | |
+| 7 | `code-review` | `code-review` | 🟰 `ck:code-review` | |
+| 8 | `context-engineering` | `context-engineering` | 🟰 `ck:context-engineering` | |
+| 9 | `cook` | `cook` | 🟰 `ck:cook` | |
+| 10 | `copywriting` | `copywriting` | 🟰 `ck:copywriting` | Also used internally |
+| 11 | `databases` | `databases` | 🟰 `ck:databases` | |
+| 12 | `devops` | `devops` | 🟰 `ck:devops` | |
+| 13 | `docs-seeker` | `docs-seeker` | 🟰 `ck:docs-seeker` | |
+| 14 | `fix` | `fixing` | 📝 `ck:fix` | Name: `fixing` → `fix` |
+| 15 | `frontend-design` | `frontend-design` | 🟰 `ck:frontend-design` | |
+| 16 | `frontend-development` | `frontend-dev-guidelines` | 📝 `ck:frontend-development` | Name standardized |
+| 17 | `git` | `git` | 🟰 `ck:git` | |
+| 18 | `google-adk-python` | `google-adk-python` | 🟰 `ck:google-adk-python` | |
+| 19 | `markdown-novel-viewer` | `markdown-novel-viewer` | 🟰 `ck:markdown-novel-viewer` | |
+| 20 | `mcp-builder` | `mcp-builder` | 🟰 `ck:mcp-builder` | |
+| 21 | `mcp-management` | `mcp-management` | 🟰 `ck:mcp-management` | |
+| 22 | `media-processing` | `media-processing` | 🟰 `ck:media-processing` | |
+| 23 | `mermaidjs-v11` | `mermaidjs-v11` | 🟰 `ck:mermaidjs-v11` | |
+| 24 | `payment-integration` | `payment-integration` | 🟰 `ck:payment-integration` | |
+| 25 | `plans-kanban` | `plans-kanban` | 🟰 `ck:plans-kanban` | |
+| 26 | `problem-solving` | `Problem-Solving Techniques` | 📝 `ck:problem-solving` | Name standardized |
+| 27 | `remotion` | `remotion-best-practices` | 📝 `ck:remotion` | Name shortened |
+| 28 | `repomix` | `repomix` | 🟰 `ck:repomix` | |
+| 29 | `scout` | `scout` | 🟰 `ck:scout` | |
+| 30 | `sequential-thinking` | `sequential-thinking` | 🟰 `ck:sequential-thinking` | |
+| 31 | `shader` | `shader` | 🟰 `ck:shader` | |
+| 32 | `shopify` | `shopify` | 🟰 `ck:shopify` | |
+| 33 | `skill-creator` | `skill-creator` | 🟰 `ck:skill-creator` | |
+| 34 | `test-orchestrator` | `test-orchestrator` | 📝 `ck:test` | Name: `test-orchestrator` → `test` |
+| 35 | `threejs` | `threejs` | 🟰 `ck:threejs` | |
+| 36 | `ui-styling` | `ui-styling` | 🟰 `ck:ui-styling` | |
+| 37 | `ui-ux-pro-max` | `ui-ux-pro-max` | 🟰 `ck:ui-ux-pro-max` | |
+
+#### Infrastructure & Utility Skills (4)
+
+| # | Folder | Registered Name | Beta Name | Notes |
+|---|--------|----------------|-----------|-------|
+| 1 | `storage` | *(no frontmatter)* | `ckm:storage` | No YAML in stable |
+| 2 | `template-skill` | `template-skill` | `ck:template-skill` | Internal template |
+| 3 | `web-design-guidelines` | `web-design-guidelines` | `ck:web-design-guidelines` | |
+| 4 | `web-frameworks` | `web-frameworks` | `ck:web-frameworks` | |
+
+#### Document Generation Sub-skills (4)
+
+| # | Folder | Registered Name | Beta Name | Notes |
+|---|--------|----------------|-----------|-------|
+| 1 | `document-skills/docx` | `docx` | `ck:document-skills/docx` | |
+| 2 | `document-skills/pdf` | `pdf` | `ck:document-skills/pdf` | |
+| 3 | `document-skills/pptx` | `pptx` | `ck:document-skills/pptx` | |
+| 4 | `document-skills/xlsx` | `xlsx` | `ck:document-skills/xlsx` | |
+
+### Skills Only in Beta (New — not in Stable)
+
+| # | Beta Skill | Type | Notes |
+|---|-----------|------|-------|
+| 1 | `ckm:analyze` | ckm | Analytics reports |
+| 2 | `ckm:banner-design` | ckm | Multi-platform banners |
+| 3 | `ckm:ckm-storage` | ckm | S3 storage shortcut |
+| 4 | `ckm:dashboard` | ckm | Dashboard launcher |
+| 5 | `ckm:elevenlabs` | ckm | TTS, voice cloning, SFX |
+| 6 | `ckm:funnel` | ckm | Funnel design & optimization |
+| 7 | `ckm:hub` | ckm | Content Hub + Dashboard combo |
+| 8 | `ckm:init` | ckm | Marketing project init |
+| 9 | `ckm:persona` | ckm | Customer persona management |
+| 10 | `ckm:write` | ckm | Writing with 8 subcommands |
+| 11 | `ck:docs` (enhanced) | ck | Added `llms` subcommand |
+| 12 | `ck:plan` (enhanced) | ck | Added `cro` subcommand |
+
+### Migration Summary
+
+| Metric | Stable (v1.2.1) | Beta (v1.3.0) |
+|--------|-----------------|---------------|
+| Total Skills | 82 | 96 |
+| Marketing-exclusive (`ckm:`) | 37 | 48 |
+| Shared (`ck:`) | 41 | 48 |
+| Commands (`mkt:`) | 29 | 29 |
+| Renamed skills | — | 14 |
+| New skills | — | 12 |
+| Removed skills | — | 0 |
 
 ---
 
