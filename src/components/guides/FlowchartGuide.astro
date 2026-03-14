@@ -69,17 +69,13 @@ const currentLang = lang || getLangFromUrl(Astro.url);
       );
     }
 
-    // Load saved preference (migrate old keys)
+    // Load saved preference
     const savedVersion = localStorage.getItem("flowchart-version") as
       | "stable"
       | "beta"
-      | "v25"
-      | "v24"
       | null;
-    if (savedVersion === "v25" || savedVersion === "stable") {
-      setVersion("stable");
-    } else if (savedVersion === "v24" || savedVersion === "beta") {
-      setVersion("beta");
+    if (savedVersion === "stable" || savedVersion === "beta") {
+      setVersion(savedVersion);
     }
 
     btnStable.addEventListener("click", () => setVersion("stable"));
