@@ -98,5 +98,10 @@ export const pathColors: Record<string, { bg: string; text: string; glow: string
     bg: 'rgba(139, 92, 246, 0.2)',
     text: '#8B5CF6',
     glow: 'rgba(139, 92, 246, 0.6)'
+  },
+  teal: {
+    bg: 'rgba(20, 184, 166, 0.2)',
+    text: '#14B8A6',
+    glow: 'rgba(20, 184, 166, 0.6)'
   }
 };

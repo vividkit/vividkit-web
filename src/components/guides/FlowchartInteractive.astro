@@ -30,27 +30,34 @@ const colorsJson = JSON.stringify(pathColors);
     maxScale: 2,
     isFullscreen: false,
     showCommandList: true,
-    currentVersion: 'v25',
-    v25Paths: ${v25PathsJson},
-    v24Paths: ${v24PathsJson},
+    currentVersion: 'stable',
+    stablePaths: ${v25PathsJson},
+    betaPaths: ${v24PathsJson},
     colors: ${colorsJson},
     rootEl: null,
     placeholder: null,
 
     get paths() {
-      return this.currentVersion === 'v25' ? this.v25Paths : this.v24Paths;
+      return this.currentVersion === 'stable' ? this.stablePaths : this.betaPaths;
     },
 
     init() {
       this.rootEl = this.$el;
       // Listen for version changes from parent
+      // Migrate old localStorage keys to new naming
       const savedVersion = localStorage.getItem('flowchart-version');
-      if (savedVersion === 'v24' || savedVersion === 'v25') {
+      if (savedVersion === 'v25') {
+        this.currentVersion = 'stable';
+        localStorage.setItem('flowchart-version', 'stable');
+      } else if (savedVersion === 'v24') {
+        this.currentVersion = 'beta';
+        localStorage.setItem('flowchart-version', 'beta');
+      } else if (savedVersion === 'stable' || savedVersion === 'beta') {
         this.currentVersion = savedVersion;
       }
-      // Watch for version toggle clicks
+      // Watch for version toggle clicks from other tabs
       window.addEventListener('storage', (e) => {
-        if (e.key === 'flowchart-version' && (e.newValue === 'v25' || e.newValue === 'v24')) {
+        if (e.key === 'flowchart-version' && (e.newValue === 'stable' || e.newValue === 'beta')) {
           this.currentVersion = e.newValue;
           this.activePaths = [];
         }
@@ -298,7 +305,7 @@ const colorsJson = JSON.stringify(pathColors);
             </defs>
 
             <!-- v2.5.0+ Edges -->
-            <g class="edges" x-show="currentVersion === 'v25'">
+            <g class="edges" x-show="currentVersion === 'stable'">
                 {stableData.edges.map(edge => (
                 <g
                     class="flowchart-edge cursor-pointer"
@@ -317,7 +324,7 @@ const colorsJson = JSON.stringify(pathColors);
             </g>
 
             <!-- v2.4.0 Edges -->
-            <g class="edges" x-show="currentVersion === 'v24'" x-cloak>
+            <g class="edges" x-show="currentVersion === 'beta'" x-cloak>
                 {betaData.edges.map(edge => (
                 <g
                     class="flowchart-edge cursor-pointer"
@@ -336,7 +343,7 @@ const colorsJson = JSON.stringify(pathColors);
             </g>
 
             <!-- v2.5.0+ Nodes -->
-            <g class="nodes" x-show="currentVersion === 'v25'">
+            <g class="nodes" x-show="currentVersion === 'stable'">
                 {stableData.nodes.map(node => (
                 <g
                     class="flowchart-node cursor-pointer"
@@ -359,7 +366,7 @@ const colorsJson = JSON.stringify(pathColors);
             </g>
 
             <!-- v2.4.0 Nodes -->
-            <g class="nodes" x-show="currentVersion === 'v24'" x-cloak>
+            <g class="nodes" x-show="currentVersion === 'beta'" x-cloak>
                 {betaData.nodes.map(node => (
                 <g
                     class="flowchart-node cursor-pointer"
