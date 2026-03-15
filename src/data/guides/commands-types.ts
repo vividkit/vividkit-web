@@ -10,6 +10,10 @@ export interface CommandItem {
   isBeta?: boolean;
   flags?: string[];
   replacedCommand?: string;
+  // Beta syntax annotation (for Marketing Kit)
+  betaSyntax?: string;
+  // Step indicator for ordered workflows (1-based)
+  step?: number;
 }
 
 export interface CommandCategory {
