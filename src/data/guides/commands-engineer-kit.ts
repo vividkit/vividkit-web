@@ -38,7 +38,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.ask.desc"),
           detail: t("commands.stable.ask.detail"),
           isSkill: true,
-          flags: ["[question]"],
+          args: ["[question]"],
           step: 3,
         },
         // Step 4: Brainstorm ideas
@@ -59,7 +59,8 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.plan.desc"),
           detail: t("commands.stable.plan.detail"),
           isSkill: true,
-          flags: ["--fast", "--hard", "archive", "red-team", "validate"],
+          subcommands: ["archive", "red-team", "validate"],
+          flags: ["--fast", "--hard"],
           step: 5,
         },
         // Step 6: Execute plan
@@ -96,7 +97,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.research.desc"),
           detail: t("commands.stable.research.detail"),
           isSkill: true,
-          flags: ["[topic]"],
+          args: ["[topic]"],
         },
         {
           command: "/ck:scout",
@@ -105,7 +106,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.scout.desc"),
           detail: t("commands.stable.scout.detail"),
           isSkill: true,
-          flags: ["[search-target]", "[ext]"],
+          args: ["[search-target]", "[ext]"],
         },
         {
           command: "/ck:plan",
@@ -114,7 +115,8 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.plan.desc"),
           detail: t("commands.stable.plan.detail"),
           isSkill: true,
-          flags: ["--fast", "--hard", "archive", "red-team", "validate"],
+          subcommands: ["archive", "red-team", "validate"],
+          flags: ["--fast", "--hard"],
         },
         {
           command: "/ck:sequential-thinking",
