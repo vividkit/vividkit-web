@@ -21,64 +21,88 @@ const currentLang = lang || getLangFromUrl(Astro.url);
 <div class="space-y-10 mt-6" id="flowchart-guide">
   <FlowchartHeaderSection lang={currentLang} />
 
-  <!-- Command Categories -->
-  <div class="space-y-8">
-    <FlowchartCommandCategoriesNewProjectToGitOps lang={currentLang} />
-    <FlowchartCommandCategoriesDocsToPlanning lang={currentLang} />
+  <!-- Engineer Kit Content -->
+  <div id="fc-engineer-content" class="space-y-8">
+    <!-- Command Categories -->
+    <div class="space-y-8">
+      <FlowchartCommandCategoriesNewProjectToGitOps lang={currentLang} />
+      <FlowchartCommandCategoriesDocsToPlanning lang={currentLang} />
+    </div>
+
+    <FlowchartCommonWorkflowsSection lang={currentLang} />
+    <FlowchartProTipsAndComplexitySection lang={currentLang} />
+    <FlowchartSummaryAndHelpSection lang={currentLang} />
   </div>
 
-  <FlowchartCommonWorkflowsSection lang={currentLang} />
-  <FlowchartProTipsAndComplexitySection lang={currentLang} />
-  <FlowchartSummaryAndHelpSection lang={currentLang} />
+  <!-- Marketing Kit Content (Coming Soon Placeholder) -->
+  <div id="fc-marketing-content" class="hidden">
+    <div class="rounded-2xl border-2 border-dashed border-purple-300 dark:border-purple-700 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 p-12 text-center">
+      <div class="max-w-md mx-auto space-y-4">
+        <div class="w-16 h-16 mx-auto rounded-full bg-purple-100 dark:bg-purple-900/50 flex items-center justify-center">
+          <svg class="w-8 h-8 text-purple-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-bold text-purple-700 dark:text-purple-300">
+          {currentLang === 'vi' ? 'Marketing Kit - Sắp Ra Mắt' : 'Marketing Kit - Coming Soon'}
+        </h3>
+        <p class="text-slate-600 dark:text-slate-400">
+          {currentLang === 'vi'
+            ? 'Sơ đồ quyết định cho Marketing Kit đang được xây dựng. Trong khi chờ đợi, hãy xem Commands Guide để khám phá tất cả marketing commands.'
+            : 'The decision tree for Marketing Kit is under construction. In the meantime, check out the Commands Guide to explore all marketing commands.'}
+        </p>
+        <a
+          href={currentLang === 'vi' ? '/vi/guides/commands' : '/guides/commands'}
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500 hover:bg-purple-600 text-white font-medium transition-colors"
+        >
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+          {currentLang === 'vi' ? 'Xem Commands Guide' : 'View Commands Guide'}
+        </a>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-  // Version toggle functionality for flowchart guide
+  // Kit toggle functionality for flowchart guide (Engineer / Marketing)
   document.addEventListener("DOMContentLoaded", () => {
-    const btnStable = document.getElementById("fc-btn-stable");
-    const btnBeta = document.getElementById("fc-btn-beta");
-    const stableContents = document.querySelectorAll(".fc-stable-content");
-    const betaContents = document.querySelectorAll(".fc-beta-content");
+    const btnEngineer = document.getElementById("fc-btn-engineer");
+    const btnMarketing = document.getElementById("fc-btn-marketing");
+    const engineerContent = document.getElementById("fc-engineer-content");
+    const marketingContent = document.getElementById("fc-marketing-content");
 
-    if (!btnStable || !btnBeta || stableContents.length === 0) return;
+    if (!btnEngineer || !btnMarketing || !engineerContent || !marketingContent) return;
 
     const activeClasses = "bg-teal-500 text-white shadow-sm";
-    const inactiveClasses =
-      "text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700";
-    const activeBetaClasses = "bg-purple-500 text-white shadow-sm";
+    const inactiveClasses = "text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700";
+    const activeMarketingClasses = "bg-purple-500 text-white shadow-sm";
 
-    function setVersion(version: "stable" | "beta") {
-      if (version === "stable") {
-        stableContents.forEach((el) => el.classList.remove("hidden"));
-        betaContents.forEach((el) => el.classList.add("hidden"));
-        btnStable.className = `fc-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${activeClasses}`;
-        btnBeta.className = `fc-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${inactiveClasses}`;
+    function setKit(kit: "engineer" | "marketing") {
+      if (kit === "engineer") {
+        engineerContent.classList.remove("hidden");
+        marketingContent.classList.add("hidden");
+        btnEngineer.className = `fc-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${activeClasses}`;
+        btnMarketing.className = `fc-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${inactiveClasses}`;
       } else {
-        stableContents.forEach((el) => el.classList.add("hidden"));
-        betaContents.forEach((el) => el.classList.remove("hidden"));
-        btnBeta.className = `fc-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${activeBetaClasses}`;
-        btnStable.className = `fc-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${inactiveClasses}`;
+        engineerContent.classList.add("hidden");
+        marketingContent.classList.remove("hidden");
+        btnMarketing.className = `fc-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${activeMarketingClasses}`;
+        btnEngineer.className = `fc-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${inactiveClasses}`;
       }
 
       // Save preference
-      localStorage.setItem("flowchart-version", version);
-
-      // Dispatch custom event for FlowchartInteractive to listen
-      document.dispatchEvent(
-        new CustomEvent("flowchart-version-change", { detail: version }),
-      );
+      localStorage.setItem("flowchart-kit", kit);
     }
 
     // Load saved preference
-    const savedVersion = localStorage.getItem("flowchart-version") as
-      | "stable"
-      | "beta"
-      | null;
-    if (savedVersion === "stable" || savedVersion === "beta") {
-      setVersion(savedVersion);
+    const savedKit = localStorage.getItem("flowchart-kit") as "engineer" | "marketing" | null;
+    if (savedKit === "engineer" || savedKit === "marketing") {
+      setKit(savedKit);
     }
 
-    btnStable.addEventListener("click", () => setVersion("stable"));
-    btnBeta.addEventListener("click", () => setVersion("beta"));
+    btnEngineer.addEventListener("click", () => setKit("engineer"));
+    btnMarketing.addEventListener("click", () => setKit("marketing"));
   });
 </script>
