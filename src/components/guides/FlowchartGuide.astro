@@ -72,6 +72,7 @@ const currentLang = lang || getLangFromUrl(Astro.url);
     const btnMarketing = document.getElementById("fc-btn-marketing");
     const engineerContent = document.getElementById("fc-engineer-content");
     const marketingContent = document.getElementById("fc-marketing-content");
+    const decisionTree = document.getElementById("fc-decision-tree");
 
     if (!btnEngineer || !btnMarketing || !engineerContent || !marketingContent) return;
 
@@ -83,11 +84,15 @@ const currentLang = lang || getLangFromUrl(Astro.url);
       if (kit === "engineer") {
         engineerContent.classList.remove("hidden");
         marketingContent.classList.add("hidden");
+        // Show decision tree for Engineer Kit
+        if (decisionTree) decisionTree.classList.remove("hidden");
         btnEngineer.className = `fc-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${activeClasses}`;
         btnMarketing.className = `fc-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${inactiveClasses}`;
       } else {
         engineerContent.classList.add("hidden");
         marketingContent.classList.remove("hidden");
+        // Hide decision tree for Marketing Kit (coming soon)
+        if (decisionTree) decisionTree.classList.add("hidden");
         btnMarketing.className = `fc-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${activeMarketingClasses}`;
         btnEngineer.className = `fc-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${inactiveClasses}`;
       }
