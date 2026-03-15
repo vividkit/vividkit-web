@@ -281,8 +281,8 @@ export const commands = {
   'commands.mkt_beta.changes.skills_migration_title': 'Tất Cả Command → Skill',
   'commands.mkt_beta.changes.skills_migration_desc': 'Tất cả command /mkt: cũ được chuyển thành plugin skill của Claude Code. Cả cú pháp cũ và mới đều hoạt động trong giai đoạn chuyển đổi.',
   'commands.mkt_beta.changes.prefix_title': 'Namespace Prefix Mới',
-  'commands.mkt_beta.changes.prefix_desc': '48 skill dùng chung chuyển sang prefix /ck:. Skill riêng marketing dùng prefix /ckm:.',
-  'commands.mkt_beta.changes.prefix_shared': '48 skill chia sẻ với Engineer Kit',
+  'commands.mkt_beta.changes.prefix_desc': '49 skill dùng chung chuyển sang prefix /ck:. Skill riêng marketing dùng prefix /ckm:.',
+  'commands.mkt_beta.changes.prefix_shared': '49 skill chia sẻ với Engineer Kit',
   'commands.mkt_beta.changes.prefix_marketing': '48 skill riêng marketing',
   'commands.mkt_beta.changes.merges_title': 'Gộp Skill',
   'commands.mkt_beta.changes.merges_desc': 'Các skill riêng lẻ được gộp thành command ngắn hơn, truyền action qua argument đầu tiên:',
@@ -936,4 +936,16 @@ export const commands = {
   'commands.mkt.assets.detail': 'Sắp xếp output theo chủ đề, định dạng ngày và slug.',
   'commands.mkt.kit_builder.desc': 'Xây dựng component Marketing Kit',
   'commands.mkt.kit_builder.detail': 'Tạo skill, agent và workflow tùy chỉnh cho Marketing Kit.',
+  // Added: consolidated write command
+  'commands.mkt.write.desc': 'Trung tâm viết content',
+  'commands.mkt.write.detail': 'Viết nhanh, CRO copy, blog, audit, enhance — tất cả chế độ viết.',
+  // Added: elevenlabs skill
+  'commands.mkt.elevenlabs.desc': 'ElevenLabs TTS & giọng nói',
+  'commands.mkt.elevenlabs.detail': 'Chuyển văn bản thành giọng nói, clone giọng, và tạo hiệu ứng âm thanh.',
+  // Added: debugging skill
+  'commands.mkt.debugging.desc': 'Framework debug marketing',
+  'commands.mkt.debugging.detail': 'Debug vấn đề campaign, tracking pixel, UTM, và analytics.',
+  // Added: claude-code guide
+  'commands.mkt.claude_code.desc': 'Hướng dẫn Claude Code (marketing)',
+  'commands.mkt.claude_code.detail': 'Hướng dẫn tập trung marketing cho các tính năng và workflow của Claude Code.',
 } as const;
