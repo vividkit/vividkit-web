@@ -57,13 +57,13 @@ const t = useTranslations(currentLang);
           ><br />
           • {
             isVi
-              ? "Dùng /cook khi confident và muốn speed"
-              : "Use /cook when you're confident and want speed"
+              ? "Dùng /ck:cook khi confident và muốn speed"
+              : "Use /ck:cook when you're confident and want speed"
           }<br />
           • {
             isVi
-              ? "Dùng /plan → /cook @plan.md khi precision và review quan trọng"
-              : "Use /plan → /cook @plan.md when precision and review matter"
+              ? "Dùng /ck:plan → /ck:cook @plan.md khi precision và review quan trọng"
+              : "Use /ck:plan → /ck:cook @plan.md when precision and review matter"
           }
         </p>
       </div>
@@ -90,13 +90,13 @@ const t = useTranslations(currentLang);
           ><br />
           • {
             isVi
-              ? "Dùng /cook khi confident và muốn speed"
-              : "Use /cook when you're confident and want speed"
+              ? "Dùng /ck:cook khi confident và muốn speed"
+              : "Use /ck:cook when you're confident and want speed"
           }<br />
           • {
             isVi
-              ? "Dùng /plan → /code khi precision và review quan trọng"
-              : "Use /plan → /code when precision and review matter"
+              ? "Dùng /ck:plan → /code khi precision và review quan trọng"
+              : "Use /ck:plan → /code when precision and review matter"
           }
         </p>
       </div>
@@ -122,13 +122,13 @@ const t = useTranslations(currentLang);
           ><br />
           • {
             isVi
-              ? "Dùng /cook cho hầu hết tasks - có internal planning"
-              : "Use /cook for most tasks - has internal planning"
+              ? "Dùng /ck:cook cho hầu hết tasks - có internal planning"
+              : "Use /ck:cook for most tasks - has internal planning"
           }<br />
           • {
             isVi
-              ? "Dùng /plan trước khi /cook @plan.md cho tasks phức tạp cần review"
-              : "Use /plan before /cook @plan.md for complex tasks needing review"
+              ? "Dùng /ck:plan trước khi /ck:cook @plan.md cho tasks phức tạp cần review"
+              : "Use /ck:plan before /ck:cook @plan.md for complex tasks needing review"
           }
         </p>
       </div>
@@ -153,13 +153,13 @@ const t = useTranslations(currentLang);
               isVi ? "Không mix workflows:" : "Never mix these workflows:"
             }</strong
           ><br />
-          • ❌ <code>/plan</code> → <code>/cook</code> ({
+          • ❌ <code>/ck:plan</code> → <code>/ck:cook</code> ({
             isVi ? "cook có planning riêng" : "cook has its own planning"
           })<br />
-          • ✅ <code>/plan</code> → <code>/code</code> ({
+          • ✅ <code>/ck:plan</code> → <code>/code</code> ({
             isVi ? "flow đúng" : "correct flow"
           })<br />
-          • ✅ <code>/cook</code> standalone ({
+          • ✅ <code>/ck:cook</code> standalone ({
             isVi ? "có internal planning" : "has internal planning"
           })
         </p>
@@ -184,12 +184,12 @@ const t = useTranslations(currentLang);
             >
             {isVi ? "Git safety:" : "Git safety:"}</strong
           ><br />
-          • <code>/git cm</code> = {
+          • <code>/ck:git cm</code> = {
             isVi
               ? "commit only (safe cho experimentation)"
               : "commit only (safe for experimentation)"
           }<br />
-          • <code>/git cp</code> = {
+          • <code>/ck:git cp</code> = {
             isVi
               ? "commits VÀ pushes (không thể undo dễ dàng)"
               : "commits AND pushes (can't undo easily)"
@@ -230,101 +230,4 @@ const t = useTranslations(currentLang);
     </div>
   </div>
 
-  <!-- Command Complexity Ratings -->
-  <div class="glass-card rounded-2xl p-6 sm:p-8">
-    <h3
-      class="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2"
-    >
-      <svg
-        class="w-5 h-5 text-amber-500"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-      >
-        <polygon
-          points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"
-          stroke-linecap="round"
-          stroke-linejoin="round"></polygon>
-      </svg>
-      {isVi ? "Độ phức tạp Commands" : "Command Complexity Ratings"}
-    </h3>
-    <div class="overflow-x-auto">
-      <table class="w-full text-sm">
-        <thead class="border-b border-slate-200 dark:border-slate-700">
-          <tr>
-            <th
-              class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white"
-              >Rating</th
-            >
-            <th
-              class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white"
-              >{isVi ? "Ý nghĩa" : "Meaning"}</th
-            >
-            <th
-              class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white"
-              >{isVi ? "Ví dụ Commands" : "Example Commands"}</th
-            >
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
-          <tr>
-            <td class="py-3 px-4 text-amber-500">⚡</td>
-            <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
-              >Simple, quick</td
-            >
-            <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
-              ><code>/debug</code>, <code>/test</code></td
-            >
-          </tr>
-          <tr>
-            <td class="py-3 px-4 text-amber-500">⚡⚡</td>
-            <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
-              >Moderate</td
-            >
-            <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
-              ><code>/brainstorm</code>, <code>/fix</code>, <code>/scout</code
-              ></td
-            >
-          </tr>
-          <tr class="fc-stable-content">
-            <td class="py-3 px-4 text-amber-500">⚡⚡⚡</td>
-            <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
-              >Complex, thorough</td
-            >
-            <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
-              ><code>/cook</code>, <code>/plan</code></td
-            >
-          </tr>
-          <tr class="fc-beta-content hidden">
-            <td class="py-3 px-4 text-amber-500">⚡⚡⚡</td>
-            <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
-              >Complex, thorough</td
-            >
-            <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
-              ><code>/cook</code>, <code>/code</code>, <code>/plan</code></td
-            >
-          </tr>
-          <tr>
-            <td class="py-3 px-4 text-amber-500">⚡⚡⚡⚡</td>
-            <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
-              >Extended workflow</td
-            >
-            <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
-              ><code>/docs:init</code></td
-            >
-          </tr>
-          <tr>
-            <td class="py-3 px-4 text-amber-500">⚡⚡⚡⚡⚡</td>
-            <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
-              >Full project scope</td
-            >
-            <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
-              ><code>/bootstrap</code></td
-            >
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
 

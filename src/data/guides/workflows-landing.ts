@@ -60,7 +60,7 @@ export const landingWorkflows: LandingWorkflow[] = [
     steps: [
       { command: 'ck init', description: 'Initialize ClaudeKit' },
       { command: '/bootstrap', description: 'Create project structure' },
-      { command: '/docs:init', description: 'Generate documentation' },
+      { command: '/docs init', description: 'Generate documentation' },
       { command: '/cook', description: 'Build first feature' }
     ],
     gradient: 'workflow-card-header--blue',
@@ -76,8 +76,8 @@ export const landingWorkflows: LandingWorkflow[] = [
     description: 'Transform ideas into beautiful, production-ready UI components.',
     steps: [
       { command: '/frontend-design', description: 'Create design system' },
-      { command: '/cook:auto', description: 'Implement design' },
-      { command: '/fix:ui', description: 'Polish interactions' }
+      { command: '/cook --auto', description: 'Implement design' },
+      { command: '/fix ui', description: 'Polish interactions' }
     ],
     gradient: 'workflow-card-header--pink',
     iconColor: 'text-pink-400',

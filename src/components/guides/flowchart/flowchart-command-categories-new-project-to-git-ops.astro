@@ -56,7 +56,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="px-2 py-1 rounded bg-amber-500/20 text-amber-600 dark:text-amber-400 font-mono font-bold"
-                  >/bootstrap</code
+                  >/ck:bootstrap</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -78,7 +78,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="px-2 py-1 rounded bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 font-mono font-bold"
-                  >/docs:init</code
+                  >/ck:docs init</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -174,7 +174,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="px-2 py-1 rounded bg-violet-500/20 text-violet-600 dark:text-violet-400 font-mono font-bold"
-                  >/brainstorm</code
+                  >/ck:brainstorm</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -216,8 +216,8 @@ const t = useTranslations(currentLang);
           >
           {
             isVi
-              ? "/brainstorm KHÔNG implement - chỉ tư vấn. Sau khi brainstorm, dùng /plan hoặc /cook để implement."
-              : "/brainstorm DOES NOT implement - it only advises. After brainstorming, use /plan or /cook to implement."
+              ? "/brainstorm KHÔNG implement - chỉ tư vấn. Sau khi brainstorm, dùng /ck:plan hoặc /ck:cook để implement."
+              : "/brainstorm DOES NOT implement - it only advises. After brainstorming, use /ck:plan or /ck:cook to implement."
           }
         </p>
       </div>
@@ -242,8 +242,8 @@ const t = useTranslations(currentLang);
           >
           {
             isVi
-              ? "/brainstorm KHÔNG implement - chỉ tư vấn. Sau khi brainstorm, dùng /plan hoặc /cook để implement."
-              : "/brainstorm DOES NOT implement - it only advises. After brainstorming, use /plan or /cook to implement."
+              ? "/brainstorm KHÔNG implement - chỉ tư vấn. Sau khi brainstorm, dùng /ck:plan hoặc /ck:cook để implement."
+              : "/brainstorm DOES NOT implement - it only advises. After brainstorming, use /ck:plan or /ck:cook to implement."
           }
         </p>
       </div>
@@ -275,7 +275,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="px-2 py-1 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-mono font-bold"
-                  >/cook</code
+                  >/ck:cook</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -293,7 +293,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="px-2 py-1 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-mono font-bold"
-                  >/cook</code
+                  >/ck:cook</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -311,7 +311,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="px-2 py-1 rounded bg-purple-500/20 text-purple-600 dark:text-purple-400 font-mono font-bold"
-                  >/plan</code
+                  >/ck:plan</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -333,7 +333,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="px-2 py-1 rounded bg-blue-500/20 text-blue-600 dark:text-blue-400 font-mono font-bold"
-                  >/cook @plan.md</code
+                  >/ck:cook @plan.md</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -346,8 +346,8 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
                 >{
                   isVi
-                    ? "Sau khi /plan được approved"
-                    : "After /plan is approved"
+                    ? "Sau khi /ck:plan được approved"
+                    : "After /ck:plan is approved"
                 }</td
               >
             </tr>
@@ -368,8 +368,8 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
                 >{
                   isVi
-                    ? "Sau khi /plan được approved"
-                    : "After /plan is approved"
+                    ? "Sau khi /ck:plan được approved"
+                    : "After /ck:plan is approved"
                 }</td
               >
             </tr>
@@ -395,14 +395,14 @@ const t = useTranslations(currentLang);
             >
             {isVi ? "Sự khác biệt chính:" : "Key Difference:"}</strong
           ><br />
-          • <code class="bg-blue-200 dark:bg-blue-800 px-1 rounded">/cook</code> =
+          • <code class="bg-blue-200 dark:bg-blue-800 px-1 rounded">/ck:cook</code> =
           {
             isVi
               ? "Tốc độ, plan nội bộ, straight to implementation"
               : "Speed-focused, plans internally, goes straight to implementation"
           }<br />
-          • <code class="bg-blue-200 dark:bg-blue-800 px-1 rounded">/plan</code> →
-          <code class="bg-blue-200 dark:bg-blue-800 px-1 rounded">/cook</code> = {
+          • <code class="bg-blue-200 dark:bg-blue-800 px-1 rounded">/ck:plan</code> →
+          <code class="bg-blue-200 dark:bg-blue-800 px-1 rounded">/ck:cook</code> = {
             isVi
               ? "An toàn, tạo plan có thể review trước"
               : "Safety-focused, creates reviewable plan first"
@@ -428,13 +428,13 @@ const t = useTranslations(currentLang);
             >
             {isVi ? "Sự khác biệt chính:" : "Key Difference:"}</strong
           ><br />
-          • <code class="bg-blue-200 dark:bg-blue-800 px-1 rounded">/cook</code> =
+          • <code class="bg-blue-200 dark:bg-blue-800 px-1 rounded">/ck:cook</code> =
           {
             isVi
               ? "Tốc độ, plan nội bộ, straight to implementation"
               : "Speed-focused, plans internally, goes straight to implementation"
           }<br />
-          • <code class="bg-blue-200 dark:bg-blue-800 px-1 rounded">/plan</code> →
+          • <code class="bg-blue-200 dark:bg-blue-800 px-1 rounded">/ck:plan</code> →
           <code class="bg-blue-200 dark:bg-blue-800 px-1 rounded">/code</code> = {
             isVi
               ? "An toàn, tạo plan có thể review trước"
@@ -491,7 +491,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="px-2 py-1 rounded bg-orange-500/20 text-orange-600 dark:text-orange-400 font-mono font-bold"
-                  >/debug</code
+                  >/ck:debug</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -509,7 +509,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="px-2 py-1 rounded bg-red-500/20 text-red-600 dark:text-red-400 font-mono font-bold"
-                  >/fix</code
+                  >/ck:fix</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -580,10 +580,6 @@ const t = useTranslations(currentLang);
             stroke-linejoin="round"></path>
         </svg>
         {isVi ? "Git Operations" : "Git Operations"}
-        <span
-          class="ml-2 px-2 py-0.5 text-xs font-medium rounded-full bg-teal-500/20 text-teal-600 dark:text-teal-400"
-          >Stable</span
-        >
       </h3>
       <div class="overflow-x-auto">
         <table class="w-full text-sm">
@@ -608,7 +604,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="px-2 py-1 rounded bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-mono font-bold"
-                  >/git</code
+                  >/ck:git</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -641,7 +637,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="px-2 py-1 rounded bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-mono font-bold"
-                  >/worktree</code
+                  >/ck:worktree</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -676,7 +672,7 @@ const t = useTranslations(currentLang);
                 stroke-width="2"
                 d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg
             >
-            {isVi ? "Stable:" : "Stable:"}</strong
+            {isVi ? "Mẹo:" : "Tip:"}</strong
           >
           {
             isVi
@@ -735,7 +731,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="px-2 py-1 rounded bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-mono font-bold"
-                  >/git:cm</code
+                  >/ck:git cm</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -749,7 +745,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="px-2 py-1 rounded bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-mono font-bold"
-                  >/git:cp</code
+                  >/ck:git cp</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -765,7 +761,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="px-2 py-1 rounded bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-mono font-bold"
-                  >/git:merge</code
+                  >/ck:git merge</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -783,7 +779,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="px-2 py-1 rounded bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-mono font-bold"
-                  >/git:pr</code
+                  >/ck:git pr</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"

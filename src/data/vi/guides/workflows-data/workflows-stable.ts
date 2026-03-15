@@ -1,5 +1,5 @@
-// v2.13.0 Stable workflows - skill-based approach
-// /cook uses native Claude Tasks, /fix supports flags
+// v2.14.0 Stable workflows - skill-based approach với prefix /ck:
+// /ck:cook dùng native Claude Tasks, /ck:fix hỗ trợ flags
 export const stableWorkflows = [
   {
     title: 'Xây Dựng Feature Mới',
@@ -14,15 +14,15 @@ export const stableWorkflows = [
     iconColor: 'text-purple-600 dark:text-purple-400',
     steps: [
       {
-        command: '/brainstorm',
+        command: '/ck:brainstorm',
         typeLabel: 'Brainstorm ý tưởng (skill)',
-        description: 'Dùng /brainstorm hoặc nói "brainstorm ideas for [feature]" để khám phá',
+        description: 'Dùng /ck:brainstorm hoặc nói "brainstorm ideas for [feature]" để khám phá',
         color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
         number: 1,
         isSkill: true
       },
       {
-        command: '/plan',
+        command: '/ck:plan',
         typeLabel: 'Tạo implementation plan',
         description: 'AI tạo plan chi tiết từng bước để build feature',
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
@@ -37,7 +37,7 @@ export const stableWorkflows = [
         icon: '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>'
       },
       {
-        command: '/cook @plan.md',
+        command: '/ck:cook @plan.md',
         typeLabel: 'Implement plan (skill)',
         description: 'AI viết code theo plan, chạy tests và review công việc',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
@@ -45,7 +45,7 @@ export const stableWorkflows = [
         isSkill: true
       }
     ],
-    tip: '⚠️ /clear bắt buộc sau /plan trước /cook',
+    tip: '/clear bắt buộc sau /ck:plan trước /ck:cook',
     borderColor: 'border-purple-500/20'
   },
   {
@@ -61,7 +61,7 @@ export const stableWorkflows = [
     iconColor: 'text-red-600 dark:text-red-400',
     steps: [
       {
-        command: '/debug',
+        command: '/ck:debug',
         typeLabel: 'Debug vấn đề (skill)',
         description: 'AI phân tích code để tìm root cause',
         color: 'bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400',
@@ -69,7 +69,7 @@ export const stableWorkflows = [
         isSkill: true
       },
       {
-        command: '/fix',
+        command: '/ck:fix',
         typeLabel: 'Apply fix (skill)',
         description: 'AI tự động route đến specialized fix và áp dụng giải pháp',
         color: 'bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400',
@@ -77,24 +77,19 @@ export const stableWorkflows = [
         isSkill: true
       },
       {
-        command: '/test',
+        command: '/ck:test',
         typeLabel: 'Verify fix',
         description: 'Chạy tests để đảm bảo bug đã được sửa và không break gì khác',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 3
       }
     ],
-    tip: '💡 /debug & /fix skills: intelligent routing với flags --auto, --review, --quick, --parallel',
+    tip: '/ck:debug & /ck:fix: intelligent routing với flags --auto, --review, --quick, --parallel',
     fixFlags: [
-      { flag: '--auto', desc: 'Tự động hoàn toàn (mặc định)', color: 'green' },
-      { flag: '--review', desc: 'Human-in-the-loop mode', color: 'amber' },
-      { flag: '--quick', desc: 'Sửa nhanh bug đơn giản', color: 'purple' },
-      { flag: '--parallel', desc: 'Parallel fullstack agents', color: 'blue' }
-    ],
-    fixMappings: [
-      { old: '/fix:fast', new: '/fix --quick', desc: 'Quick mode cho bug đơn giản' },
-      { old: '/fix:hard', new: '/fix --review', desc: 'Human-in-the-loop mode' },
-      { old: '/fix:parallel', new: '/fix --parallel', desc: 'Parallel fullstack agents' }
+      { flag: '--auto', desc: 'Tự động apply fix không cần xác nhận', color: 'green' },
+      { flag: '--review', desc: 'Review fix trước khi apply', color: 'purple' },
+      { flag: '--quick', desc: 'Fix nhanh không phân tích sâu', color: 'orange' },
+      { flag: '--parallel', desc: 'Fix nhiều issues song song', color: 'blue' }
     ],
     borderColor: 'border-red-500/20'
   },
@@ -111,7 +106,7 @@ export const stableWorkflows = [
     iconColor: 'text-blue-600 dark:text-blue-400',
     steps: [
       {
-        command: '/cook "nhiệm vụ của bạn"',
+        command: '/ck:cook "nhiệm vụ của bạn"',
         typeLabel: 'All-in-one skill',
         description: 'AI tự động research, plan, implement, test và review feature',
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
@@ -119,13 +114,13 @@ export const stableWorkflows = [
         isSkill: true
       }
     ],
-    tip: '💡 Xem bảng mapping ở trên để chuyển đổi từ legacy variants. --interactive là default, dùng native Claude Tasks API.',
-    cookMappings: [
-      { old: '/cook:auto', new: '/cook --auto', desc: 'Tự động duyệt tất cả bước' },
-      { old: '/cook:auto:fast', new: '/cook --auto --fast', desc: 'Nhanh + tự động duyệt' },
-      { old: '/cook:auto:parallel', new: '/cook --auto --parallel', desc: 'Chạy song song + tự động' },
-      { old: '/code:no-test', new: '/cook --no-test', desc: 'Bỏ qua chạy test' },
-      { old: '/code:parallel', new: '/cook --parallel', desc: 'Chạy các phase song song' }
+    tip: '--interactive là mặc định, dùng native Claude Tasks API.',
+    cookFlags: [
+      { flag: '--interactive', desc: 'Từng bước với approval (mặc định)', color: 'teal' },
+      { flag: '--fast', desc: 'Bỏ qua research, implement nhanh', color: 'purple' },
+      { flag: '--parallel', desc: 'Chạy phases song song', color: 'blue' },
+      { flag: '--auto', desc: 'Tự động approve tất cả steps', color: 'green' },
+      { flag: '--no-test', desc: 'Bỏ qua test sau khi code', color: 'orange' }
     ],
     features: [
       'Research best practices và technologies',
@@ -148,14 +143,14 @@ export const stableWorkflows = [
     iconColor: 'text-green-600 dark:text-green-400',
     steps: [
       {
-        command: '/bootstrap "mô tả ứng dụng của bạn"',
+        command: '/ck:bootstrap "mô tả ứng dụng của bạn"',
         typeLabel: 'Full project setup',
         description: 'AI build toàn bộ project: research, architecture, design, implementation và docs',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 1
       }
     ],
-    tip: '⚠️ Warning: Command này dùng nhiều AI tokens',
+    tip: 'Warning: Command này dùng nhiều AI tokens',
     features: [
       'Research và chọn tech stack',
       'Project structure và architecture',
@@ -178,7 +173,7 @@ export const stableWorkflows = [
     iconColor: 'text-pink-600 dark:text-pink-400',
     steps: [
       {
-        command: '/remotion',
+        command: '/ck:remotion',
         typeLabel: 'Video creation (skill)',
         description: 'Tạo video lập trình với React và Remotion',
         color: 'bg-pink-500/10 dark:bg-pink-500/20 text-pink-600 dark:text-pink-400',
@@ -193,7 +188,7 @@ export const stableWorkflows = [
         number: 2
       }
     ],
-    tip: '💡 Thay thế /design:video command',
+    tip: 'Tạo video compositions dựa trên React',
     features: [
       'Animations và transitions',
       'Text animations và captions',
@@ -215,14 +210,14 @@ export const stableWorkflows = [
     iconColor: 'text-indigo-600 dark:text-indigo-400',
     steps: [
       {
-        command: '/plan',
+        command: '/ck:plan',
         typeLabel: 'Tạo plan trước',
-        description: 'Tạo plan có cấu trúc — visuals sẽ được lưu vào thư mục plan',
+        description: 'Tạo plan có cấu trúc. Visuals được lưu vào thư mục plan',
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
         number: 1
       },
       {
-        command: '/preview --explain "chủ đề"',
+        command: '/ck:preview --explain "chủ đề"',
         typeLabel: 'Tạo giải thích (skill)',
         description: 'Tạo sơ đồ ASCII + Mermaid kèm giải thích văn bản cho chủ đề',
         color: 'bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400',
@@ -230,7 +225,7 @@ export const stableWorkflows = [
         isSkill: true
       },
       {
-        command: '/preview --diagram "chủ đề"',
+        command: '/ck:preview --diagram "chủ đề"',
         typeLabel: 'Tạo sơ đồ tập trung (skill)',
         description: 'Tạo sơ đồ Mermaid + ASCII tập trung cho luồng dữ liệu hoặc kiến trúc cụ thể',
         color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
@@ -238,8 +233,8 @@ export const stableWorkflows = [
         isSkill: true
       }
     ],
-    featureCommand: '/preview',
-    tip: '💡 /preview giờ tạo visual content. Cũng có: --slides, --ascii',
+    featureCommand: '/ck:preview',
+    tip: '/ck:preview tạo visual content. Còn có: --slides, --ascii',
     features: [
       'Sơ đồ ASCII + Mermaid (--explain)',
       'Định dạng trình bày (--slides)',
@@ -261,7 +256,7 @@ export const stableWorkflows = [
     iconColor: 'text-emerald-600 dark:text-emerald-400',
     steps: [
       {
-        command: '/cook @plan.md',
+        command: '/ck:cook @plan.md',
         typeLabel: 'Implement plan (skill)',
         description: 'AI viết code theo plan với auto test & review cycles',
         color: 'bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
@@ -269,7 +264,7 @@ export const stableWorkflows = [
         isSkill: true
       },
       {
-        command: '/scout',
+        command: '/ck:scout',
         typeLabel: 'Scout edge cases (skill)',
         description: 'AI scout các file bị ảnh hưởng, luồng dữ liệu, error paths và boundary conditions',
         color: 'bg-teal-500/10 dark:bg-teal-500/20 text-teal-600 dark:text-teal-400',
@@ -285,17 +280,17 @@ export const stableWorkflows = [
         icon: '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>'
       },
       {
-        command: '/git cm',
+        command: '/ck:git cm',
         typeLabel: 'Merge & commit',
         description: 'Commit code đã review với conventional commit message',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 4
       }
     ],
-    featureCommand: '/scout',
-    tip: '💡 /scout tích hợp code-reviewer để phát hiện edge cases trước review',
+    featureCommand: '/ck:scout',
+    tip: '/ck:scout tích hợp code-reviewer để phát hiện edge cases trước review',
     features: [
-      'Phát hiện edge case qua /scout',
+      'Phát hiện edge case qua /ck:scout',
       'Phân tích boundary conditions',
       'Scout luồng dữ liệu & error paths',
       'Tích hợp code-reviewer tự động'
@@ -315,14 +310,14 @@ export const stableWorkflows = [
     iconColor: 'text-sky-600 dark:text-sky-400',
     steps: [
       {
-        command: '/plan',
+        command: '/ck:plan',
         typeLabel: 'Tạo plan',
         description: 'AI tạo plan triển khai chi tiết với các phases',
         color: 'bg-sky-500/10 dark:bg-sky-500/20 text-sky-600 dark:text-sky-400',
         number: 1
       },
       {
-        command: '/plan:validate',
+        command: '/ck:plan validate',
         typeLabel: 'Validate quyết định plan',
         description: 'Validation gate kiểu phỏng vấn. Quyết định tự động propagate xuống phase files',
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
@@ -330,14 +325,14 @@ export const stableWorkflows = [
       },
       {
         typeLabel: '/clear (bắt buộc)',
-        description: 'Giải phóng context trước khi implement — bắt buộc',
+        description: 'Giải phóng context trước khi implement. Bước bắt buộc',
         color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
         number: 3,
         hasIcon: true,
         icon: '<path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>'
       },
       {
-        command: '/cook @plan.md',
+        command: '/ck:cook @plan.md',
         typeLabel: 'Implement plan đã validate (skill)',
         description: 'AI implement với decisions đã validate sẵn propagate vào mỗi phase',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
@@ -345,8 +340,15 @@ export const stableWorkflows = [
         isSkill: true
       }
     ],
-    featureCommand: '/plan:validate',
-    tip: '💡 /plan:validate decisions tự propagate xuống phase files — không cần update thủ công',
+    featureCommand: '/ck:plan validate',
+    tip: '/ck:plan validate decisions tự propagate xuống phase files',
+    planFlags: [
+      { flag: '--hard', desc: 'Plan phức tạp nhiều phase với red-team review', color: 'red' },
+      { flag: '--parallel', desc: 'Plan thiết kế cho agent chạy song song', color: 'blue' },
+      { flag: '--two', desc: 'Plan 2 phase (plan → implement)', color: 'teal' },
+      { flag: 'validate', desc: 'Cổng validation kiểu phỏng vấn', color: 'purple' },
+      { flag: 'red-team', desc: 'Spawn adversarial reviewers', color: 'orange' }
+    ],
     features: [
       'Validate plan kiểu phỏng vấn',
       'Tự động propagate xuống phase files',
@@ -368,14 +370,14 @@ export const stableWorkflows = [
     iconColor: 'text-cyan-600 dark:text-cyan-400',
     steps: [
       {
-        command: '/plan --hard "feature"',
+        command: '/ck:plan --hard "feature"',
         typeLabel: 'Tạo plan với phases',
         description: 'Tạo plan chi tiết với các phase có thể chạy song song cho team execution',
         color: 'bg-cyan-500/10 dark:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400',
         number: 1
       },
       {
-        command: '/team cook @plan',
+        command: '/ck:team cook @plan',
         typeLabel: 'Team chạy song song (skill)',
         description: 'Spawn nhiều dev agent song song, mỗi agent xử lý một phase. Auto test → review → merge',
         color: 'bg-teal-500/10 dark:bg-teal-500/20 text-teal-600 dark:text-teal-400',
@@ -383,12 +385,18 @@ export const stableWorkflows = [
         isSkill: true
       }
     ],
-    tip: '⚠️ Cần CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 trong settings.json.',
+    tip: 'Cần CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 trong settings.json',
+    teamFlags: [
+      { flag: '--devs N', desc: 'Số lượng dev agent song song (mặc định: 2)', color: 'cyan' },
+      { flag: '--tester', desc: 'Thêm tester agent riêng', color: 'green' },
+      { flag: '--reviewer', desc: 'Thêm code reviewer agent', color: 'purple' },
+      { flag: '--worktree', desc: 'Mỗi agent chạy trong git worktree riêng', color: 'blue' }
+    ],
     features: [
       'Nhiều dev agent song song (--devs N)',
       'Pipeline tự động test → review → merge',
       'Event-driven hooks + agent memory',
-      'Cũng có: /team research, /team review, /team debug'
+      'Còn có: /ck:team research, /ck:team review, /ck:team debug'
     ],
     borderColor: 'border-cyan-500/20'
   },
@@ -405,14 +413,14 @@ export const stableWorkflows = [
     iconColor: 'text-amber-600 dark:text-amber-400',
     steps: [
       {
-        command: '/plan --hard "feature"',
+        command: '/ck:plan --hard "feature"',
         typeLabel: 'Tạo plan',
         description: 'Tạo plan chi tiết. Hard/parallel/two modes tự động chạy red-team sau khi tạo',
         color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
         number: 1
       },
       {
-        command: '/plan:red-team plans/',
+        command: '/ck:plan red-team plans/',
         typeLabel: 'Review đối kháng (skill)',
         description: 'Spawn hostile reviewers: Bảo mật, Failure Mode, Phá giả định, Phê bình Scope',
         color: 'bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400',
@@ -420,7 +428,7 @@ export const stableWorkflows = [
         isSkill: true
       }
     ],
-    tip: '💡 Tự scale reviewers theo độ phức tạp plan (2-4 adversarial lenses)',
+    tip: 'Tự scale reviewers theo độ phức tạp plan (2-4 adversarial lenses)',
     features: [
       'Security Adversary (auth bypass, injection, OWASP)',
       'Failure Mode Analyst (race conditions, mất dữ liệu)',
@@ -428,5 +436,193 @@ export const stableWorkflows = [
       'Scope & Complexity Critic (over-engineering, YAGNI)'
     ],
     borderColor: 'border-amber-500/20'
+  },
+  {
+    title: 'Research & Documentation',
+    level: 'Beginner',
+    duration: '~10-20 phút',
+    stepCount: 3,
+    bestFor: 'Nghiên cứu topic và tạo tài liệu kỹ thuật',
+    gradientHeader: 'from-orange-500/10 to-yellow-500/10',
+    hoverBorderColor: 'hover:border-orange-500/50',
+    buttonColor: 'bg-orange-500 hover:bg-orange-600',
+    icon: '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',
+    iconColor: 'text-orange-600 dark:text-orange-400',
+    steps: [
+      {
+        command: '/ck:research "topic"',
+        typeLabel: 'Deep research (skill)',
+        description: 'AI nghiên cứu topic kỹ lưỡng bằng web search và documentation',
+        color: 'bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400',
+        number: 1,
+        isSkill: true
+      },
+      {
+        command: '/ck:docs-seeker "library"',
+        typeLabel: 'Tìm docs thư viện (skill)',
+        description: 'Tìm kiếm documentation chính thức qua llms.txt để lấy API info mới nhất',
+        color: 'bg-yellow-500/10 dark:bg-yellow-500/20 text-yellow-600 dark:text-yellow-400',
+        number: 2,
+        isSkill: true
+      },
+      {
+        command: '/ck:docs',
+        typeLabel: 'Tạo docs project',
+        description: 'Tạo hoặc cập nhật documentation dựa trên phân tích codebase',
+        color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
+        number: 3,
+        isSkill: true
+      }
+    ],
+    featureCommand: '/ck:research',
+    tip: '/ck:docs-seeker dùng context7 để lấy docs thư viện mới nhất',
+    features: [
+      'Web search và tổng hợp',
+      'Tra cứu documentation thư viện',
+      'Tạo documentation project',
+      'Hỗ trợ viết technical docs'
+    ],
+    borderColor: 'border-orange-500/20'
+  },
+  {
+    title: 'Security Audit',
+    level: 'Intermediate',
+    duration: '~15-25 phút',
+    stepCount: 3,
+    bestFor: 'Tìm lỗ hổng bảo mật và secrets',
+    gradientHeader: 'from-rose-500/10 to-red-500/10',
+    hoverBorderColor: 'hover:border-rose-500/50',
+    buttonColor: 'bg-rose-500 hover:bg-rose-600',
+    icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/>',
+    iconColor: 'text-rose-600 dark:text-rose-400',
+    steps: [
+      {
+        command: '/ck:security-scan',
+        typeLabel: 'Quét lỗ hổng (skill)',
+        description: 'Quét codebase tìm OWASP issues, hardcoded secrets và dependency vulnerabilities',
+        color: 'bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      },
+      {
+        command: '/ck:code-review --security',
+        typeLabel: 'Review bảo mật chi tiết',
+        description: 'Review code sâu tập trung vào authentication, authorization và data handling',
+        color: 'bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400',
+        number: 2,
+        isSkill: true
+      },
+      {
+        command: '/ck:fix --security',
+        typeLabel: 'Apply security fixes',
+        description: 'AI áp dụng các fix bảo mật được đề xuất với giải thích chi tiết',
+        color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
+        number: 3,
+        isSkill: true
+      }
+    ],
+    featureCommand: '/ck:security-scan',
+    tip: 'Phát hiện SQL injection, XSS, CSRF và các OWASP Top 10 issues',
+    features: [
+      'Phát hiện hardcoded secrets',
+      'Quét dependency vulnerability',
+      'Bao phủ OWASP Top 10',
+      'Đề xuất security fixes'
+    ],
+    borderColor: 'border-rose-500/20'
+  },
+  {
+    title: 'Database Operations',
+    level: 'Intermediate',
+    duration: '~15-30 phút',
+    stepCount: 3,
+    bestFor: 'Thiết kế schema database và migrations',
+    gradientHeader: 'from-violet-500/10 to-purple-500/10',
+    hoverBorderColor: 'hover:border-violet-500/50',
+    buttonColor: 'bg-violet-500 hover:bg-violet-600',
+    icon: '<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>',
+    iconColor: 'text-violet-600 dark:text-violet-400',
+    steps: [
+      {
+        command: '/ck:databases "schema design"',
+        typeLabel: 'Thiết kế schema (skill)',
+        description: 'Thiết kế schema database với relationships, indexes và constraints',
+        color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
+        number: 1,
+        isSkill: true
+      },
+      {
+        command: '/ck:plan "migration"',
+        typeLabel: 'Plan migration',
+        description: 'Tạo plan migration an toàn với rollback strategy',
+        color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
+        number: 2
+      },
+      {
+        command: '/ck:cook @plan.md',
+        typeLabel: 'Execute migration',
+        description: 'Implement migration với proper error handling và validation',
+        color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
+        number: 3,
+        isSkill: true
+      }
+    ],
+    featureCommand: '/ck:databases',
+    tip: 'Hỗ trợ MongoDB, PostgreSQL, MySQL và SQLite',
+    features: [
+      'Thiết kế schema với relationships',
+      'Tối ưu hóa index',
+      'Tạo migration script',
+      'Phân tích query performance'
+    ],
+    borderColor: 'border-violet-500/20'
+  },
+  {
+    title: 'DevOps & Deployment',
+    level: 'Advanced',
+    duration: '~20-40 phút',
+    stepCount: 3,
+    bestFor: 'Thiết lập CI/CD và deployment pipelines',
+    gradientHeader: 'from-slate-500/10 to-zinc-500/10',
+    hoverBorderColor: 'hover:border-slate-500/50',
+    buttonColor: 'bg-slate-500 hover:bg-slate-600',
+    icon: '<rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/>',
+    iconColor: 'text-slate-600 dark:text-slate-400',
+    steps: [
+      {
+        command: '/ck:devops "setup CI/CD"',
+        typeLabel: 'Cấu hình DevOps (skill)',
+        description: 'Thiết lập CI/CD pipelines cho GitHub Actions, GitLab CI hoặc platforms khác',
+        color: 'bg-slate-500/10 dark:bg-slate-500/20 text-slate-600 dark:text-slate-400',
+        number: 1,
+        isSkill: true
+      },
+      {
+        command: '/ck:deploy',
+        typeLabel: 'Deploy lên platform (skill)',
+        description: 'Deploy lên Cloudflare, Vercel, GCP hoặc Kubernetes với auto-detection',
+        color: 'bg-zinc-500/10 dark:bg-zinc-500/20 text-zinc-600 dark:text-zinc-400',
+        number: 2,
+        isSkill: true,
+        isBeta: true
+      },
+      {
+        command: '/ck:test --e2e',
+        typeLabel: 'Chạy E2E tests',
+        description: 'Verify deployment với end-to-end tests',
+        color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
+        number: 3
+      }
+    ],
+    featureCommand: '/ck:devops',
+    tip: 'Hỗ trợ Docker, Kubernetes, serverless và container deployments',
+    features: [
+      'Tạo CI/CD pipeline',
+      'Deploy đa platform',
+      'Cấu hình environment',
+      'Setup rollback và monitoring'
+    ],
+    borderColor: 'border-slate-500/20'
   }
 ];

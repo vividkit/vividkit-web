@@ -107,7 +107,7 @@ const stableNodes: FlowchartNode[] = [
   {
     id: 'cmd-docs-init',
     type: 'command',
-    label: '/docs:init',
+    label: '/docs init',
     description: 'Analyze codebase, create docs ⚡⚡⚡⚡',
     position: { x: 160, y: 400 }
   },
@@ -515,7 +515,7 @@ const stablePaths: FlowchartPath[] = [
     name: 'Join Undocumented Project',
     nodes: ['start', 'existing-project', 'has-docs', 'cmd-docs-init'],
     edges: ['e-start-existing-project', 'e-existing-project-hasdocs', 'e-hasdocs-docsinit'],
-    command: '/docs:init',
+    command: '/docs init',
     description: 'Analyze existing codebase and create documentation',
     color: 'cyan'
   },
