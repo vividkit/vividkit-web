@@ -8,6 +8,11 @@ export interface CommandItem {
   detail: string;
   isSkill?: boolean;
   isBeta?: boolean;
+  // Colon-separated subcommands: /mkt:plan:cro → subcommands: ["cro"]
+  subcommands?: string[];
+  // Space-separated arguments: /mkt:ask [question] → args: ["[question]"]
+  args?: string[];
+  // Dash flags: --fast, --verbose → flags: ["--fast"]
   flags?: string[];
   replacedCommand?: string;
   // Beta syntax annotation (for Marketing Kit)
