@@ -39,7 +39,7 @@ const t = useTranslations(currentLang);
   </div>
 </div>
 
-<!-- Version Toggle -->
+<!-- Kit Toggle (Engineer / Marketing) -->
 <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
   <h2 class="text-2xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
     <svg class="w-7 h-7 text-cyan-600 dark:text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -51,26 +51,26 @@ const t = useTranslations(currentLang);
 
   <div class="flex items-center gap-2 p-1 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
     <button
-      id="wf-btn-stable"
+      id="wf-btn-engineer"
       class="wf-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 bg-teal-500 text-white shadow-sm"
-      data-version="stable"
+      data-version="engineer"
     >
       <span class="flex items-center gap-1.5">
         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          <polyline points="16 18 22 12 16 6"></polyline>
+          <polyline points="8 6 2 12 8 18"></polyline>
         </svg>
         {t('commands.v25.tab_v25')}
       </span>
     </button>
     <button
-      id="wf-btn-beta"
+      id="wf-btn-marketing"
       class="wf-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700"
-      data-version="beta"
+      data-version="marketing"
     >
       <span class="flex items-center gap-1.5">
         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M9 3h6v2.5A5.5 5.5 0 0 1 20.5 11v4.5a5.5 5.5 0 0 1-5.5 5.5h-6a5.5 5.5 0 0 1-5.5-5.5V11A5.5 5.5 0 0 1 9 5.5V3z"/>
-          <path d="M9 3h6" stroke-linecap="round"/>
+          <path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
         </svg>
         {t('commands.v25.tab_v24')}
       </span>
