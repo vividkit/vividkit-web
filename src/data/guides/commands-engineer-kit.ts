@@ -325,6 +325,16 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
+          command: "/ck:ship",
+          complexity: "⚡⚡⚡",
+          label: t("commands.label.medium"),
+          desc: t("commands.stable.ship.desc"),
+          detail: t("commands.stable.ship.detail"),
+          isSkill: true,
+          isBeta: true,
+          flags: ["--skip-tests", "--skip-review", "--dry-run"],
+        },
+        {
           command: "/ck:mobile-development",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),

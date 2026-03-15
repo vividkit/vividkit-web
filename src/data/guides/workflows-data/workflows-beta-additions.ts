@@ -1,8 +1,39 @@
 // Beta-only workflow additions (v2.14.0)
 // These are combined with stableWorkflows in the index to form betaWorkflows
-// New skills: /deploy, /security-scan, /llms
+// New skills: /ship, /deploy, /security-scan, /llms
 
 export const betaOnlyWorkflows = [
+  {
+    title: 'Ship a Feature',
+    level: 'Intermediate',
+    duration: '~5-10 min',
+    stepCount: 1,
+    bestFor: 'Shipping feature branches with automated test, review, and PR creation',
+    gradientHeader: 'from-emerald-500/10 to-teal-500/10',
+    hoverBorderColor: 'hover:border-emerald-500/50',
+    buttonColor: 'bg-emerald-500 hover:bg-emerald-600',
+    icon: '<path d="M5 12h14M12 5l7 7-7 7"/>',
+    iconColor: 'text-emerald-600 dark:text-emerald-400',
+    steps: [
+      {
+        command: '/ship [--skip-tests] [--skip-review]',
+        typeLabel: 'Ship pipeline (skill)',
+        description: 'Merge main, run tests, pre-landing review, bump version, update changelog, push, create PR',
+        color: 'bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
+        number: 1,
+        isSkill: true
+      }
+    ],
+    tip: '✨ Beta: /ship auto-detects test runner, version file format, and changelog style. Only stops for failures.',
+    features: [
+      'Merges origin/main before testing',
+      'Auto-detects npm/pytest/cargo/go test',
+      'Two-pass code review (critical + informational)',
+      'Bumps version and updates CHANGELOG.md',
+      'Creates PR with summary and test results'
+    ],
+    borderColor: 'border-emerald-500/20'
+  },
   {
     title: 'Deploy Your App',
     level: 'Intermediate',

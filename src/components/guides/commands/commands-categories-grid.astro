@@ -107,11 +107,14 @@ const marketingCategories = getMarketingKitCategories(t);
       <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         <!-- Beta skill cards -->
         {[
+          { cmd: "/ck:ship", labelKey: "commands.beta_ship.desc", detailKey: "commands.beta_ship.detail", type: "skill", badge: "new" },
           { cmd: "/ck:deploy", labelKey: "commands.beta_deploy.desc", detailKey: "commands.beta_deploy.detail", type: "skill", badge: "new" },
           { cmd: "/ck:llms", labelKey: "commands.beta_llms.desc", detailKey: "commands.beta_llms.detail", type: "skill", badge: "new" },
           { cmd: "/ck:project-organization", labelKey: "commands.beta_project_organization.desc", detailKey: "commands.beta_project_organization.detail", type: "skill", badge: "new" },
           { cmd: "/ck:security-scan", labelKey: "commands.beta_security_scan.desc", detailKey: "commands.beta_security_scan.detail", type: "skill", badge: "new" },
           { cmd: "/ckm:design", labelKey: "commands.beta_design.desc", detailKey: "commands.beta_design.detail", type: "skill", badge: "new" },
+          { cmd: "/ck:code-review", labelKey: "commands.beta_code_review.desc", detailKey: "commands.beta_code_review.detail", type: "skill", badge: "enhanced" },
+          { cmd: "/ck:plan", labelKey: "commands.beta_plan.desc", detailKey: "commands.beta_plan.detail", type: "skill", badge: "enhanced" },
           { cmd: "/ck:ui-ux-pro-max", labelKey: "commands.beta_ui_ux_pro_max.desc", detailKey: "commands.beta_ui_ux_pro_max.detail", type: "skill", badge: "enhanced" },
           { cmd: "/ck:ai-multimodal", labelKey: "commands.beta_ai_multimodal.desc", detailKey: "commands.beta_ai_multimodal.detail", type: "skill", badge: "enhanced" },
           { cmd: "/ck:frontend-design", labelKey: "commands.beta_frontend_design.desc", detailKey: "commands.beta_frontend_design.detail", type: "skill", badge: "enhanced" },
@@ -342,6 +345,12 @@ const marketingCategories = getMarketingKitCategories(t);
             >
               <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
                 <div class="flex items-center gap-1.5 flex-wrap">
+                  {/* Step indicator */}
+                  {cmd.step && (
+                    <span class={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${styles[category.color].bg} ${styles[category.color].text}`}>
+                      {cmd.step}
+                    </span>
+                  )}
                   {cmd.isSkill ? (
                     <span class={`text-sm font-medium ${styles[category.color].text}`}>{cmd.command}</span>
                   ) : (
@@ -371,6 +380,15 @@ const marketingCategories = getMarketingKitCategories(t);
                       {flag}
                     </code>
                   ))}
+                </div>
+              )}
+              {/* Beta syntax footer note */}
+              {cmd.betaSyntax && (
+                <div class="mt-1.5 pt-1.5 border-t border-purple-200/50 dark:border-purple-800/30 text-[10px] flex items-center gap-1">
+                  <span class="font-semibold text-purple-600 dark:text-purple-400">Beta:</span>
+                  <code class="px-1 py-0.5 rounded bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-mono">
+                    {cmd.betaSyntax}
+                  </code>
                 </div>
               )}
             </div>

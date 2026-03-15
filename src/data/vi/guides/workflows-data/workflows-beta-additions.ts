@@ -3,6 +3,37 @@
 
 export const betaOnlyWorkflows = [
   {
+    title: 'Ship Feature',
+    level: 'Intermediate',
+    duration: '~5-10 phút',
+    stepCount: 1,
+    bestFor: 'Ship feature branch với test, review và tạo PR tự động',
+    gradientHeader: 'from-emerald-500/10 to-teal-500/10',
+    hoverBorderColor: 'hover:border-emerald-500/50',
+    buttonColor: 'bg-emerald-500 hover:bg-emerald-600',
+    icon: '<path d="M5 12h14M12 5l7 7-7 7"/>',
+    iconColor: 'text-emerald-600 dark:text-emerald-400',
+    steps: [
+      {
+        command: '/ship [--skip-tests] [--skip-review]',
+        typeLabel: 'Ship pipeline (skill)',
+        description: 'Merge main, chạy test, review pre-landing, bump version, cập nhật changelog, push, tạo PR',
+        color: 'bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
+        number: 1,
+        isSkill: true
+      }
+    ],
+    tip: '✨ Beta: /ship tự nhận diện test runner, format version file, và changelog style. Chỉ dừng khi có lỗi.',
+    features: [
+      'Merge origin/main trước khi test',
+      'Tự nhận diện npm/pytest/cargo/go test',
+      'Review code 2 pass (critical + informational)',
+      'Bump version và cập nhật CHANGELOG.md',
+      'Tạo PR với summary và kết quả test'
+    ],
+    borderColor: 'border-emerald-500/20'
+  },
+  {
     title: 'Deploy Ứng Dụng',
     level: 'Intermediate',
     duration: '~5-15 phút',
