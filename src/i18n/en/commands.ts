@@ -281,8 +281,8 @@ export const commands = {
   'commands.mkt_beta.changes.skills_migration_title': 'All Commands → Skills',
   'commands.mkt_beta.changes.skills_migration_desc': 'All legacy /mkt: commands are converted to Claude Code plugin skills. Both old and new syntax work during transition.',
   'commands.mkt_beta.changes.prefix_title': 'New Namespace Prefixes',
-  'commands.mkt_beta.changes.prefix_desc': '48 shared skills move to /ck: prefix. Marketing-exclusive skills use /ckm: prefix.',
-  'commands.mkt_beta.changes.prefix_shared': '48 shared with Engineer Kit',
+  'commands.mkt_beta.changes.prefix_desc': '49 shared skills move to /ck: prefix. Marketing-exclusive skills use /ckm: prefix.',
+  'commands.mkt_beta.changes.prefix_shared': '49 shared with Engineer Kit',
   'commands.mkt_beta.changes.prefix_marketing': '48 marketing-exclusive',
   'commands.mkt_beta.changes.merges_title': 'Skill Merges',
   'commands.mkt_beta.changes.merges_desc': 'Standalone skills are merged into shorter commands, pass action as first argument:',
@@ -936,4 +936,16 @@ export const commands = {
   'commands.mkt.assets.detail': 'Organize outputs by topics, date format, and slugs.',
   'commands.mkt.kit_builder.desc': 'Build Marketing Kit components',
   'commands.mkt.kit_builder.detail': 'Create custom skills, agents, and workflows for Marketing Kit.',
+  // Added: consolidated write command
+  'commands.mkt.write.desc': 'Content writing hub',
+  'commands.mkt.write.detail': 'Fast drafts, CRO copy, blogs, audits, enhancements — all writing modes.',
+  // Added: elevenlabs skill
+  'commands.mkt.elevenlabs.desc': 'ElevenLabs TTS & voice',
+  'commands.mkt.elevenlabs.detail': 'Text-to-speech, voice cloning, and sound effects generation.',
+  // Added: debugging skill
+  'commands.mkt.debugging.desc': 'Marketing debugging framework',
+  'commands.mkt.debugging.detail': 'Debug campaign issues, tracking pixels, UTMs, and analytics problems.',
+  // Added: claude-code guide
+  'commands.mkt.claude_code.desc': 'Claude Code guide (marketing)',
+  'commands.mkt.claude_code.detail': 'Marketing-focused guide for Claude Code features and workflows.',
 } as const;
