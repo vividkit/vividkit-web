@@ -31,7 +31,7 @@ export const subscriptionPromotions: SubscriptionPromotion[] = [
   {
     id: 'alibaba-cloud-ai-coding',
     name: 'Alibaba Coding Plan',
-    tagline: 'AI Coding Plan - Only $3! Perfect for agentic bots (OpenClaw, GoClaw, ...)',
+    tagline: 'Lite $10/mo · Pro $50/mo — First renewal 50% off!',
     promoLinks: [{ label: 'alibabacloud.com/ai-coding (referral)', url: 'https://www.alibabacloud.com/campaign/ai-scene-coding?referral_code=A92LZF' }],
     color: 'cyan',
     recommended: true,
@@ -58,11 +58,6 @@ export const tips = [
     id: 'stack-discounts',
     title: 'Stack multiple discounts',
     description: 'Z.AI deal stacks: 10-30% subscription discount + 10% referral bonus = extra savings!',
-  },
-  {
-    id: 'use-promo-links',
-    title: 'Use promotion signup links',
-    description: 'Claude Pro has special signup links that give you $10/month for the first 3 months.',
   },
   {
     id: 'free-tiers',

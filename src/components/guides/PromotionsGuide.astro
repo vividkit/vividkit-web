@@ -244,6 +244,15 @@ const colorClasses = {
               {/* Alibaba Cloud Additional Info */}
               {promo.id === 'alibaba-cloud-ai-coding' && (
                 <div class="mb-3 space-y-2">
+                  <div class="p-2 rounded bg-amber-50/50 dark:bg-amber-900/10 border border-amber-200/50 dark:border-amber-500/20">
+                    <p class="text-xs text-amber-700 dark:text-amber-400 leading-relaxed font-medium">
+                      {t('promotions.alibaba.stock_info')}
+                    </p>
+                    <div class="mt-1 flex items-center gap-2">
+                      <span class="text-xs text-slate-600 dark:text-slate-400">{t('promotions.alibaba.restock_countdown')}</span>
+                      <span id="alibaba-countdown" class="text-xs font-mono font-bold text-cyan-600 dark:text-cyan-400">--:--:--</span>
+                    </div>
+                  </div>
                   <div class="p-2 rounded bg-cyan-50/50 dark:bg-cyan-900/10 border border-cyan-200/50 dark:border-cyan-500/20">
                     <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                       {t('promotions.alibaba.agentic')}
@@ -322,14 +331,12 @@ const colorClasses = {
             <h4 class="font-bold text-slate-800 dark:text-slate-200 mb-2">
               {tip.id === 'use-ccs' ? t('promotions.tips.use_ccs.title') :
                tip.id === 'stack-discounts' ? t('promotions.tips.stack.title') :
-               tip.id === 'use-promo-links' ? t('promotions.tips.links.title') :
                tip.id === 'free-tiers' ? t('promotions.tips.free.title') :
                tip.title}
             </h4>
             <p class="text-sm text-slate-600 dark:text-slate-400">
               {tip.id === 'use-ccs' ? t('promotions.tips.use_ccs.desc') :
                tip.id === 'stack-discounts' ? t('promotions.tips.stack.desc') :
-               tip.id === 'use-promo-links' ? t('promotions.tips.links.desc') :
                tip.id === 'free-tiers' ? t('promotions.tips.free.desc') :
                tip.description}
             </p>
@@ -347,3 +354,44 @@ const colorClasses = {
     </div>
   </div>
 </div>
+
+<script>
+  // Countdown to 9:30 AM GMT+8 daily
+  function updateAlibabaCountdown() {
+    const countdownEl = document.getElementById('alibaba-countdown');
+    if (!countdownEl) return;
+
+    const now = new Date();
+    // Convert to GMT+8
+    const gmt8Offset = 8 * 60; // GMT+8 in minutes
+    const localOffset = now.getTimezoneOffset();
+    const gmt8Now = new Date(now.getTime() + (gmt8Offset + localOffset) * 60000);
+
+    // Target: 9:30 AM GMT+8
+    let target = new Date(gmt8Now);
+    target.setHours(9, 30, 0, 0);
+
+    // If past 9:30 AM today, target tomorrow
+    if (gmt8Now >= target) {
+      target.setDate(target.getDate() + 1);
+    }
+
+    // Calculate diff in local time
+    const targetLocal = new Date(target.getTime() - (gmt8Offset + localOffset) * 60000);
+    const diff = targetLocal.getTime() - now.getTime();
+
+    if (diff <= 0) {
+      countdownEl.textContent = '00:00:00';
+      return;
+    }
+
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    countdownEl.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  }
+
+  updateAlibabaCountdown();
+  setInterval(updateAlibabaCountdown, 1000);
+</script>
