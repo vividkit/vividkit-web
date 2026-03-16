@@ -612,15 +612,6 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           betaSyntax: "/ckm:docs",
         },
         {
-          command: "/mkt:preview",
-          complexity: "⚡",
-          label: t("commands.label.easy"),
-          desc: t("commands.mkt.preview.desc"),
-          detail: t("commands.mkt.preview.detail"),
-          flags: ["--explain", "--slides", "--diagram", "--ascii"],
-          betaSyntax: "/ckm:preview [path]",
-        },
-        {
           command: "/mkt:hub",
           complexity: "⚡",
           label: t("commands.label.easy"),
@@ -661,6 +652,15 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.mkt.use_mcp.desc"),
           detail: t("commands.mkt.use_mcp.detail"),
           betaSyntax: "/ck:use-mcp",
+        },
+        {
+          command: "/mkt:preview",
+          complexity: "⚡",
+          label: t("commands.label.easy"),
+          desc: t("commands.mkt.preview.desc"),
+          detail: t("commands.mkt.preview.detail"),
+          flags: ["--explain", "--slides", "--diagram", "--ascii"],
+          betaSyntax: "/ckm:preview [path]",
         },
         {
           command: "/ckm:content-hub",
