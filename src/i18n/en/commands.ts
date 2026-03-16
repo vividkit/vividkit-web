@@ -297,7 +297,7 @@ export const commands = {
   'commands.marketing_available_desc': 'Marketing Kit skills are live and ready to use. Full documentation page is coming soon.',
   // Stable category names & descriptions
   'commands.cat.essentials': 'Start Here (Essentials)',
-  'commands.cat.essentials_desc': 'The most important skills to get started',
+  'commands.cat.essentials_desc': 'Start with a basic workflow: Learn → Level → Ask → Brainstorm → Plan → Execute',
   'commands.cat.planResearch': 'Plan & Research',
   'commands.cat.planResearch_desc': 'Brainstorming, planning, and codebase exploration',
   'commands.cat.designFrontend': 'Design & Frontend',
@@ -732,7 +732,7 @@ export const commands = {
   'commands.beta_system_changes.detail': 'Statusline defaults to full. Added Stop lifecycle event. Modular notification providers. MiniMax API support.',
   // Marketing Kit categories
   'commands.mkt.cat.essentials': 'Start Here (Step by Step)',
-  'commands.mkt.cat.essentials_desc': 'Follow the numbered steps: Learn → Init → Ask → Brainstorm → Plan → Write',
+  'commands.mkt.cat.essentials_desc': 'Start with a basic workflow: Learn → Init → Ask → Brainstorm → Plan → Write',
   'commands.mkt.cat.contentCopy': 'Content & Copy',
   'commands.mkt.cat.contentCopy_desc': 'Content creation, copywriting, and writing tools',
   'commands.mkt.cat.campaign': 'Campaign Management',

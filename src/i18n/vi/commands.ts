@@ -297,7 +297,7 @@ export const commands = {
   'commands.marketing_available_desc': 'Các skill Marketing Kit đã hoạt động. Trang tài liệu đầy đủ sẽ sớm ra mắt.',
   // Tên và mô tả danh mục Stable
   'commands.cat.essentials': 'Bắt Đầu (Cơ Bản)',
-  'commands.cat.essentials_desc': 'Các skill quan trọng nhất để bắt đầu',
+  'commands.cat.essentials_desc': 'Bắt đầu với quy trình cơ bản: Hướng dẫn → Cấp độ → Hỏi → Brainstorm → Lập kế hoạch → Thực thi',
   'commands.cat.planResearch': 'Lập Kế Hoạch & Nghiên Cứu',
   'commands.cat.planResearch_desc': 'Brainstorm, lập kế hoạch và khám phá codebase',
   'commands.cat.designFrontend': 'Thiết Kế & Frontend',
@@ -732,7 +732,7 @@ export const commands = {
   'commands.beta_system_changes.detail': 'Statusline mặc định đổi thành \'full\'. Thêm sự kiện Stop lifecycle. Module hóa notification providers. Hỗ trợ MiniMax API.',
   // Marketing Kit categories
   'commands.mkt.cat.essentials': 'Bắt Đầu (Theo Từng Bước)',
-  'commands.mkt.cat.essentials_desc': 'Làm theo số thứ tự: Hướng dẫn → Khởi tạo → Hỏi → Brainstorm → Lập kế hoạch → Viết',
+  'commands.mkt.cat.essentials_desc': 'Bắt đầu với quy trình cơ bản: Hướng dẫn → Khởi tạo → Hỏi → Brainstorm → Lập kế hoạch → Viết',
   'commands.mkt.cat.contentCopy': 'Nội Dung & Copywriting',
   'commands.mkt.cat.contentCopy_desc': 'Công cụ tạo nội dung, viết copy và bài viết',
   'commands.mkt.cat.campaign': 'Quản Lý Chiến Dịch',
