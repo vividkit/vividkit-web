@@ -190,12 +190,12 @@ const marketingCategories = getMarketingKitCategories(t);
                   {cmd.detail}
                 </p>
               )}
-              {/* Subcommands (colon-separated) */}
+              {/* Subcommands (space-separated) */}
               {cmd.subcommands && cmd.subcommands.length > 0 && (
                 <div class="flex flex-wrap gap-1 mt-1.5">
                   {cmd.subcommands.map((sub: string) => (
                     <code class="text-[9px] px-1 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-mono">
-                      :{sub}
+                      {sub}
                     </code>
                   ))}
                 </div>
@@ -400,12 +400,12 @@ const marketingCategories = getMarketingKitCategories(t);
                   {cmd.detail}
                 </p>
               )}
-              {/* Subcommands (colon-separated) */}
+              {/* Subcommands (space-separated) */}
               {cmd.subcommands && cmd.subcommands.length > 0 && (
                 <div class="flex flex-wrap gap-1 mt-1.5">
                   {cmd.subcommands.map((sub: string) => (
                     <code class="text-[9px] px-1 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-mono">
-                      :{sub}
+                      {sub}
                     </code>
                   ))}
                 </div>
