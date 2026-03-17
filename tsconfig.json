@@ -1,6 +1,7 @@
 {
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
+    "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],

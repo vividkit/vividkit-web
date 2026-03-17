@@ -1,11 +1,11 @@
 ---
 // WorkflowsGuide - composition parent, delegates to sub-components
-import { stableWorkflows as stableWorkflowsEn, betaWorkflows as betaWorkflowsEn } from '@/data/guides/workflows';
-import { stableWorkflows as stableWorkflowsVi, betaWorkflows as betaWorkflowsVi } from '@/data/vi/guides/workflows';
+import { engineerKitWorkflows as engineerWorkflowsEn, marketingKitWorkflows as marketingWorkflowsEn } from '@/data/guides/workflows';
+import { engineerKitWorkflows as engineerWorkflowsVi, marketingKitWorkflows as marketingWorkflowsVi } from '@/data/vi/guides/workflows';
 import { getLangFromUrl, type Language } from '@/i18n';
 import WorkflowsHeaderAndVersionToggle from './workflows/workflows-header-and-version-toggle.astro';
-import WorkflowsStableSection from './workflows/workflows-stable-section.astro';
-import WorkflowsBetaSection from './workflows/workflows-beta-section.astro';
+import WorkflowsEngineerSection from './workflows/workflows-engineer-section.astro';
+import WorkflowsMarketingSection from './workflows/workflows-marketing-section.astro';
 import WorkflowsProTipsAndNavigation from './workflows/workflows-pro-tips-and-navigation.astro';
 
 interface Props {
@@ -15,8 +15,8 @@ interface Props {
 const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 
-const stableWorkflows = currentLang === 'vi' ? stableWorkflowsVi : stableWorkflowsEn;
-const betaWorkflows = currentLang === 'vi' ? betaWorkflowsVi : betaWorkflowsEn;
+const engineerWorkflows = currentLang === 'vi' ? (engineerWorkflowsVi || engineerWorkflowsEn) : engineerWorkflowsEn;
+const marketingWorkflows = currentLang === 'vi' ? (marketingWorkflowsVi || marketingWorkflowsEn) : marketingWorkflowsEn;
 ---
 
 <style>
@@ -34,39 +34,14 @@ const betaWorkflows = currentLang === 'vi' ? betaWorkflowsVi : betaWorkflowsEn;
 
   <!-- Engineer Kit Content -->
   <div id="wf-engineer-content">
-    <WorkflowsStableSection workflows={stableWorkflows} lang={currentLang} />
-    <WorkflowsBetaSection workflows={betaWorkflows} lang={currentLang} />
+    <WorkflowsEngineerSection workflows={engineerWorkflows} lang={currentLang} />
     <WorkflowsProTipsAndNavigation lang={currentLang} />
   </div>
 
-  <!-- Marketing Kit Content (Coming Soon Placeholder) -->
+  <!-- Marketing Kit Content -->
   <div id="wf-marketing-content" class="hidden">
-    <div class="rounded-2xl border-2 border-dashed border-purple-300 dark:border-purple-700 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 p-12 text-center">
-      <div class="max-w-md mx-auto space-y-4">
-        <div class="w-16 h-16 mx-auto rounded-full bg-purple-100 dark:bg-purple-900/50 flex items-center justify-center">
-          <svg class="w-8 h-8 text-purple-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
-          </svg>
-        </div>
-        <h3 class="text-2xl font-bold text-purple-700 dark:text-purple-300">
-          {currentLang === 'vi' ? 'Marketing Kit - Sắp Ra Mắt' : 'Marketing Kit - Coming Soon'}
-        </h3>
-        <p class="text-slate-600 dark:text-slate-400">
-          {currentLang === 'vi'
-            ? 'Các quy trình mẫu cho Marketing Kit đang được xây dựng. Trong khi chờ đợi, hãy xem Commands Guide để khám phá tất cả marketing commands.'
-            : 'Sample workflows for Marketing Kit are under construction. In the meantime, check out the Commands Guide to explore all marketing commands.'}
-        </p>
-        <a
-          href={currentLang === 'vi' ? '/vi/guides/commands' : '/guides/commands'}
-          class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500 hover:bg-purple-600 text-white font-medium transition-colors"
-        >
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M5 12h14M12 5l7 7-7 7"/>
-          </svg>
-          {currentLang === 'vi' ? 'Xem Commands Guide' : 'View Commands Guide'}
-        </a>
-      </div>
-    </div>
+    <WorkflowsMarketingSection workflows={marketingWorkflows} lang={currentLang} />
+    <WorkflowsProTipsAndNavigation lang={currentLang} />
   </div>
 </div>
 
