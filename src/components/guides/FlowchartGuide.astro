@@ -9,6 +9,12 @@ import FlowchartCommandCategoriesDocsToPlanning from "./flowchart/flowchart-comm
 import FlowchartCommonWorkflowsSection from "./flowchart/flowchart-common-workflows-section.astro";
 import FlowchartProTipsAndComplexitySection from "./flowchart/flowchart-pro-tips-and-complexity-section.astro";
 import FlowchartSummaryAndHelpSection from "./flowchart/flowchart-summary-and-help-section.astro";
+import FlowchartInteractiveMarketing from "./FlowchartInteractiveMarketing.astro";
+// Marketing Kit sections
+import FlowchartMarketingCommandCategories from "./flowchart/flowchart-marketing-command-categories.astro";
+import FlowchartMarketingWorkflowsSection from "./flowchart/flowchart-marketing-workflows-section.astro";
+import FlowchartMarketingProTipsSection from "./flowchart/flowchart-marketing-pro-tips-section.astro";
+import FlowchartMarketingSummarySection from "./flowchart/flowchart-marketing-summary-section.astro";
 
 interface Props {
   lang?: Language;
@@ -34,34 +40,36 @@ const currentLang = lang || getLangFromUrl(Astro.url);
     <FlowchartSummaryAndHelpSection lang={currentLang} />
   </div>
 
-  <!-- Marketing Kit Content (Coming Soon Placeholder) -->
-  <div id="fc-marketing-content" class="hidden">
-    <div class="rounded-2xl border-2 border-dashed border-purple-300 dark:border-purple-700 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 p-12 text-center">
-      <div class="max-w-md mx-auto space-y-4">
-        <div class="w-16 h-16 mx-auto rounded-full bg-purple-100 dark:bg-purple-900/50 flex items-center justify-center">
-          <svg class="w-8 h-8 text-purple-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
-          </svg>
-        </div>
-        <h3 class="text-2xl font-bold text-purple-700 dark:text-purple-300">
-          {currentLang === 'vi' ? 'Marketing Kit - Sắp Ra Mắt' : 'Marketing Kit - Coming Soon'}
-        </h3>
-        <p class="text-slate-600 dark:text-slate-400">
-          {currentLang === 'vi'
-            ? 'Sơ đồ quyết định cho Marketing Kit đang được xây dựng. Trong khi chờ đợi, hãy xem Commands Guide để khám phá tất cả marketing commands.'
-            : 'The decision tree for Marketing Kit is under construction. In the meantime, check out the Commands Guide to explore all marketing commands.'}
-        </p>
-        <a
-          href={currentLang === 'vi' ? '/vi/guides/commands' : '/guides/commands'}
-          class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500 hover:bg-purple-600 text-white font-medium transition-colors"
-        >
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M5 12h14M12 5l7 7-7 7"/>
-          </svg>
-          {currentLang === 'vi' ? 'Xem Commands Guide' : 'View Commands Guide'}
-        </a>
-      </div>
+  <!-- Marketing Kit Content -->
+  <div id="fc-marketing-content" class="hidden space-y-8">
+    <!-- Marketing Kit Decision Tree -->
+    <div id="fc-marketing-decision-tree" class="glass-card rounded-2xl p-6 sm:p-8">
+      <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
+        <svg class="w-5 h-5 text-cyan-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 6h16M4 12h10M4 18h16" stroke-linecap="round" stroke-linejoin="round"></path>
+          <circle cx="18" cy="12" r="3"></circle>
+        </svg>
+        {currentLang === 'vi' ? 'Sơ Đồ Quyết Định Tương Tác' : 'Interactive Decision Tree'}
+      </h3>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">
+        {currentLang === 'vi'
+          ? 'Click vào bất kỳ node hoặc đường path nào để highlight lộ trình đến command. Hoặc click vào các command button ở trên để xem đường đi tương ứng.'
+          : 'Click on any node or path to highlight the route to that command. Or click the command buttons above to see their corresponding paths.'}
+      </p>
+      <FlowchartInteractiveMarketing lang={currentLang} />
     </div>
+
+    <!-- Marketing Command Categories -->
+    <FlowchartMarketingCommandCategories lang={currentLang} />
+
+    <!-- Marketing Workflows -->
+    <FlowchartMarketingWorkflowsSection lang={currentLang} />
+
+    <!-- Marketing Pro Tips -->
+    <FlowchartMarketingProTipsSection lang={currentLang} />
+
+    <!-- Marketing Summary & Help -->
+    <FlowchartMarketingSummarySection lang={currentLang} />
   </div>
 </div>
 
@@ -91,7 +99,7 @@ const currentLang = lang || getLangFromUrl(Astro.url);
       } else {
         engineerContent.classList.add("hidden");
         marketingContent.classList.remove("hidden");
-        // Hide decision tree for Marketing Kit (coming soon)
+        // Hide Engineer decision tree when Marketing Kit is active (Marketing has its own)
         if (decisionTree) decisionTree.classList.add("hidden");
         btnMarketing.className = `fc-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${activeMarketingClasses}`;
         btnEngineer.className = `fc-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${inactiveClasses}`;
