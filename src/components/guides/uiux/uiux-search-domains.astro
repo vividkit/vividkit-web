@@ -1,0 +1,112 @@
+---
+// UIUX Search Domains - Available domains and stacks for AI search
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+import { uiuxStats } from '@/data/generated/uiux-stats';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+// Search domains with stats from generated data
+const searchDomains = [
+  { name: 'product', icon: 'package', color: 'pink', count: uiuxStats.products, desc: 'Product type recommendations' },
+  { name: 'style', icon: 'palette', color: 'indigo', count: uiuxStats.styles, desc: 'UI styles, colors, effects' },
+  { name: 'typography', icon: 'type', color: 'purple', count: uiuxStats.typography, desc: 'Font pairings, Google Fonts' },
+  { name: 'color', icon: 'droplet', color: 'cyan', count: uiuxStats.colors, desc: 'Color palettes by industry' },
+  { name: 'landing', icon: 'layout', color: 'emerald', count: uiuxStats.landing, desc: 'Page structure, CTA strategies' },
+  { name: 'chart', icon: 'bar-chart', color: 'amber', count: uiuxStats.charts, desc: 'Chart types, visualization' },
+  { name: 'ux', icon: 'users', color: 'rose', count: uiuxStats.uxGuidelines, desc: 'Best practices, anti-patterns' },
+  { name: 'stack', icon: 'layers', color: 'blue', count: uiuxStats.stackGuidelines, desc: 'Framework-specific guidelines' },
+];
+
+const availableStacks = [
+  { name: 'html-tailwind', label: 'HTML + Tailwind', desc: 'Utilities, responsive, a11y', default: true },
+  { name: 'react', label: 'React', desc: 'Hooks, state, patterns' },
+  { name: 'nextjs', label: 'Next.js', desc: 'SSR, routing, images' },
+  { name: 'vue', label: 'Vue', desc: 'Composition API, Pinia' },
+  { name: 'svelte', label: 'Svelte', desc: 'Runes, stores, SvelteKit' },
+  { name: 'swiftui', label: 'SwiftUI', desc: 'Views, State, Navigation' },
+  { name: 'react-native', label: 'React Native', desc: 'Components, Navigation' },
+  { name: 'flutter', label: 'Flutter', desc: 'Widgets, State, Layout' },
+];
+
+const colorClasses: Record<string, { text: string; bg: string; border: string }> = {
+  pink: { text: 'text-pink-600 dark:text-pink-400', bg: 'bg-pink-100 dark:bg-pink-500/20', border: 'border-pink-200 dark:border-pink-500/30' },
+  indigo: { text: 'text-indigo-600 dark:text-indigo-400', bg: 'bg-indigo-100 dark:bg-indigo-500/20', border: 'border-indigo-200 dark:border-indigo-500/30' },
+  purple: { text: 'text-purple-600 dark:text-purple-400', bg: 'bg-purple-100 dark:bg-purple-500/20', border: 'border-purple-200 dark:border-purple-500/30' },
+  cyan: { text: 'text-cyan-600 dark:text-cyan-400', bg: 'bg-cyan-100 dark:bg-cyan-500/20', border: 'border-cyan-200 dark:border-cyan-500/30' },
+  emerald: { text: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-100 dark:bg-emerald-500/20', border: 'border-emerald-200 dark:border-emerald-500/30' },
+  amber: { text: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-100 dark:bg-amber-500/20', border: 'border-amber-200 dark:border-amber-500/30' },
+  rose: { text: 'text-rose-600 dark:text-rose-400', bg: 'bg-rose-100 dark:bg-rose-500/20', border: 'border-rose-200 dark:border-rose-500/30' },
+  blue: { text: 'text-blue-600 dark:text-blue-400', bg: 'bg-blue-100 dark:bg-blue-500/20', border: 'border-blue-200 dark:border-blue-500/30' },
+};
+---
+
+<!-- Search Domains Section -->
+<div class="glass-card rounded-xl overflow-hidden">
+  <div class="p-6 bg-gradient-to-r from-violet-50/50 to-purple-50/50 dark:from-violet-500/10 dark:to-purple-500/10 border-b border-slate-200 dark:border-slate-800">
+    <h2 class="text-2xl font-bold font-heading text-violet-700 dark:text-violet-400 flex items-center gap-3">
+      <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/>
+        <path d="m21 21-4.35-4.35"/>
+      </svg>
+      {t('uiux.guide.domains.title')}
+    </h2>
+    <p class="text-sm text-slate-600 dark:text-slate-500 mt-2">{t('uiux.guide.domains.subtitle')}</p>
+  </div>
+
+  <div class="p-6">
+    <!-- Domains Grid -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+      {searchDomains.map((domain) => (
+        <div class={`p-4 rounded-lg border ${colorClasses[domain.color].border} bg-white/50 dark:bg-slate-900/50 hover:shadow-md transition-shadow cursor-pointer`}>
+          <div class="flex items-center gap-2 mb-2">
+            <div class={`w-8 h-8 rounded-lg ${colorClasses[domain.color].bg} flex items-center justify-center`}>
+              <span class={`text-lg font-bold ${colorClasses[domain.color].text}`}>{domain.count}</span>
+            </div>
+            <code class={`text-sm font-mono ${colorClasses[domain.color].text}`}>{domain.name}</code>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400">{domain.desc}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Available Stacks -->
+    <div class="mt-6 p-5 rounded-lg bg-blue-50/50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20">
+      <h3 class="text-lg font-bold text-blue-700 dark:text-blue-400 mb-4 flex items-center gap-2">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+          <polyline points="2 17 12 22 22 17"></polyline>
+          <polyline points="2 12 12 17 22 12"></polyline>
+        </svg>
+        {t('uiux.guide.stacks.title')}
+      </h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+        {availableStacks.map((stack) => (
+          <div class={`p-3 rounded-lg bg-white dark:bg-slate-900 border ${stack.default ? 'border-blue-400 dark:border-blue-500' : 'border-slate-200 dark:border-slate-700'}`}>
+            <div class="flex items-center gap-2 mb-1">
+              <code class="text-sm font-mono text-blue-600 dark:text-blue-400">{stack.name}</code>
+              {stack.default && (
+                <span class="px-1.5 py-0.5 text-[10px] rounded bg-blue-100 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400 uppercase">default</span>
+              )}
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400">{stack.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Usage Example -->
+    <div class="mt-4 p-4 rounded-lg bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+      <p class="text-xs text-slate-500 dark:text-slate-400 mb-2">{t('uiux.guide.domains.usage')}</p>
+      <code class="text-sm text-slate-700 dark:text-slate-300 font-mono block">
+        python3 search.py "glassmorphism" --domain style --stack react
+      </code>
+    </div>
+  </div>
+</div>

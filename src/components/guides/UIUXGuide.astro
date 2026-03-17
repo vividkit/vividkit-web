@@ -4,7 +4,10 @@ import { getLangFromUrl, type Language } from '@/i18n';
 import UiuxHeaderAndHero from './uiux/uiux-header-and-hero.astro';
 import UiuxHowItWorks from './uiux/uiux-how-it-works.astro';
 import UiuxBuildShowcaseAndTips from './uiux/uiux-build-showcase-and-tips.astro';
-import UiuxClaudekitIntegration from './uiux/uiux-claudekit-integration.astro';
+import UiuxIntegrationGuide from './uiux/uiux-integration-guide.astro';
+import UiuxQualityChecklist from './uiux/uiux-quality-checklist.astro';
+import UiuxSearchDomains from './uiux/uiux-search-domains.astro';
+import UiuxWorkflows from './uiux/uiux-workflows.astro';
 
 interface Props {
   lang?: Language;
@@ -34,6 +37,9 @@ const currentLang = lang || getLangFromUrl(Astro.url);
 <div class="space-y-8 mt-6">
   <UiuxHeaderAndHero lang={currentLang} />
   <UiuxHowItWorks lang={currentLang} />
+  <UiuxSearchDomains lang={currentLang} />
   <UiuxBuildShowcaseAndTips lang={currentLang} />
-  <UiuxClaudekitIntegration lang={currentLang} />
+  <UiuxIntegrationGuide lang={currentLang} />
+  <UiuxWorkflows lang={currentLang} />
+  <UiuxQualityChecklist lang={currentLang} />
 </div>

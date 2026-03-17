@@ -98,7 +98,7 @@ const stableNodes: FlowchartNode[] = [
   {
     id: 'cmd-bootstrap',
     type: 'command',
-    label: '/bootstrap',
+    label: '/ck:bootstrap',
     description: 'Full project initialization ⚡⚡⚡⚡⚡',
     position: { x: 90, y: 280 }
   },
@@ -107,14 +107,14 @@ const stableNodes: FlowchartNode[] = [
   {
     id: 'cmd-docs-init',
     type: 'command',
-    label: '/docs init',
+    label: '/ck:docs init',
     description: 'Analyze codebase, create docs ⚡⚡⚡⚡',
     position: { x: 160, y: 400 }
   },
   {
     id: 'cmd-scout',
     type: 'command',
-    label: '/scout',
+    label: '/ck:scout',
     description: 'Explore codebase structure',
     position: { x: 270, y: 400 }
   },
@@ -123,28 +123,28 @@ const stableNodes: FlowchartNode[] = [
   {
     id: 'cmd-brainstorm',
     type: 'command',
-    label: '/brainstorm',
+    label: '/ck:brainstorm',
     description: 'Collaborative ideation ⚡⚡',
     position: { x: 380, y: 400 }
   },
   {
     id: 'cmd-cook',
     type: 'command',
-    label: '/cook',
+    label: '/ck:cook',
     description: 'All-in-one: research → implement ⚡⚡⚡',
     position: { x: 610, y: 600 }
   },
   {
     id: 'cmd-plan',
     type: 'command',
-    label: '/plan',
+    label: '/ck:plan',
     description: 'Create detailed plan ⚡⚡⚡',
     position: { x: 500, y: 520 }
   },
   {
     id: 'cmd-cook-plan',
     type: 'command',
-    label: '/cook @plan.md',
+    label: '/ck:cook @plan.md',
     description: 'Implement plan step by step ⚡⚡⚡',
     position: { x: 500, y: 640 }
   },
@@ -153,39 +153,53 @@ const stableNodes: FlowchartNode[] = [
   {
     id: 'cmd-debug',
     type: 'command',
-    label: '/debug',
+    label: '/ck:debug',
     description: 'Find root cause ⚡',
     position: { x: 720, y: 400 }
   },
   {
     id: 'cmd-fix',
     type: 'command',
-    label: '/fix',
+    label: '/ck:fix',
     description: 'Smart routing to fix commands ⚡⚡',
     position: { x: 650, y: 500 }
   },
+  {
+    id: 'cmd-test',
+    type: 'command',
+    label: '/ck:test',
+    description: 'Run tests to verify fix ⚡⚡',
+    position: { x: 650, y: 600 }
+  },
 
-  // Command nodes - Git Ops (v2.5.0+ uses /git skill)
+  // Command nodes - Git Ops (v2.5.0+ uses /ck:git skill)
   {
     id: 'cmd-git-skill',
     type: 'command',
-    label: '/git',
+    label: '/ck:git',
     description: 'Support arguments: cm, cp, pr, merge',
     position: { x: 790, y: 280 }
   },
   {
     id: 'cmd-worktree',
     type: 'command',
-    label: '/worktree',
+    label: '/ck:worktree',
     description: 'Create isolated worktree',
     position: { x: 870, y: 360 }
+  },
+  {
+    id: 'cmd-review-pr',
+    type: 'command',
+    label: '/ck:review-pr',
+    description: 'Review pull request code',
+    position: { x: 790, y: 440 }
   },
 
   // Command nodes - Docs (v2.5.0+ separated)
   {
     id: 'cmd-docs',
     type: 'command',
-    label: '/docs:*',
+    label: '/ck:docs:*',
     description: 'Documentation commands',
     position: { x: 900, y: 280 }
   },
@@ -194,21 +208,21 @@ const stableNodes: FlowchartNode[] = [
   {
     id: 'cmd-frontend-design',
     type: 'command',
-    label: '/frontend-design',
+    label: '/ck:frontend-design',
     description: 'UI/UX design skill',
     position: { x: 990, y: 280 }
   },
   {
     id: 'cmd-remotion',
     type: 'command',
-    label: '/remotion',
+    label: '/ck:remotion',
     description: 'Video design & animation',
     position: { x: 1100, y: 280 }
   },
   {
     id: 'cmd-threejs',
     type: 'command',
-    label: '/threejs',
+    label: '/ck:threejs',
     description: '3D design & visualization',
     position: { x: 1100, y: 360 }
   },
@@ -217,23 +231,39 @@ const stableNodes: FlowchartNode[] = [
   {
     id: 'cmd-ck-help',
     type: 'command',
-    label: '/ck-help',
+    label: '/ck:help',
     description: 'General ClaudeKit help',
     position: { x: 1170, y: 400 }
   },
   {
     id: 'cmd-ask',
     type: 'command',
-    label: '/ask',
+    label: '/ck:ask',
     description: 'Architectural advice',
     position: { x: 1280, y: 400 }
   },
   {
     id: 'cmd-coding-level',
     type: 'command',
-    label: '/coding-level',
+    label: '/ck:coding-level',
     description: 'Slow down explanations',
     position: { x: 1440, y: 400 }
+  },
+  {
+    id: 'cmd-security-scan',
+    type: 'command',
+    label: '/ck:security-scan',
+    description: 'Security vulnerability audit',
+    position: { x: 1340, y: 500 }
+  },
+
+  // Command nodes - Post-implementation
+  {
+    id: 'cmd-simplify',
+    type: 'command',
+    label: '/ck:simplify',
+    description: 'Clean up and refactor code ⚡⚡',
+    position: { x: 610, y: 720 }
   }
 ];
 
@@ -418,6 +448,15 @@ const stableEdges: FlowchartEdge[] = [
     labelX: 700,
     labelY: 450
   },
+  {
+    id: 'e-fix-test',
+    from: 'cmd-fix',
+    to: 'cmd-test',
+    label: 'Verify',
+    path: generatePath({ x: 650, y: 500 }, { x: 650, y: 600 }),
+    labelX: 670,
+    labelY: 550
+  },
 
   // Git ops branch
   {
@@ -431,6 +470,12 @@ const stableEdges: FlowchartEdge[] = [
     from: 'git-ops',
     to: 'cmd-worktree',
     path: generatePath({ x: 790, y: 160 }, { x: 870, y: 360 })
+  },
+  {
+    id: 'e-git-review-pr',
+    from: 'git-ops',
+    to: 'cmd-review-pr',
+    path: generatePath({ x: 790, y: 160 }, { x: 790, y: 440 })
   },
 
   // Docs branch
@@ -494,6 +539,26 @@ const stableEdges: FlowchartEdge[] = [
     path: generatePath({ x: 1340, y: 280 }, { x: 1440, y: 400 }),
     labelX: 1410,
     labelY: 340
+  },
+  {
+    id: 'e-help-security',
+    from: 'help-type',
+    to: 'cmd-security-scan',
+    label: 'Sec',
+    path: generatePath({ x: 1340, y: 280 }, { x: 1340, y: 500 }),
+    labelX: 1360,
+    labelY: 390
+  },
+
+  // Post-implementation flow
+  {
+    id: 'e-cook-simplify',
+    from: 'cmd-cook',
+    to: 'cmd-simplify',
+    label: 'Clean',
+    path: generatePath({ x: 610, y: 600 }, { x: 610, y: 720 }),
+    labelX: 630,
+    labelY: 660
   }
 ];
 
@@ -504,7 +569,7 @@ const stablePaths: FlowchartPath[] = [
     name: 'Start New Project',
     nodes: ['start', 'new-project', 'cmd-bootstrap'],
     edges: ['e-start-new-project', 'e-new-project-bootstrap'],
-    command: '/bootstrap',
+    command: '/ck:bootstrap',
     description: 'Full project initialization: git, tech stack, planning, design, implementation',
     color: 'amber'
   },
@@ -515,7 +580,7 @@ const stablePaths: FlowchartPath[] = [
     name: 'Join Undocumented Project',
     nodes: ['start', 'existing-project', 'has-docs', 'cmd-docs-init'],
     edges: ['e-start-existing-project', 'e-existing-project-hasdocs', 'e-hasdocs-docsinit'],
-    command: '/docs init',
+    command: '/ck:docs init',
     description: 'Analyze existing codebase and create documentation',
     color: 'cyan'
   },
@@ -524,7 +589,7 @@ const stablePaths: FlowchartPath[] = [
     name: 'Explore Documented Project',
     nodes: ['start', 'existing-project', 'has-docs', 'cmd-scout'],
     edges: ['e-start-existing-project', 'e-existing-project-hasdocs', 'e-hasdocs-scout'],
-    command: '/scout',
+    command: '/ck:scout',
     description: 'Fast parallel codebase search to find relevant files',
     color: 'cyan'
   },
@@ -535,7 +600,7 @@ const stablePaths: FlowchartPath[] = [
     name: 'Fast Implementation',
     nodes: ['start', 'build-feature', 'know-what', 'speed-safety', 'cmd-cook'],
     edges: ['e-start-build-feature', 'e-build-feature-know', 'e-know-speed-safety', 'e-speed-cook'],
-    command: '/cook',
+    command: '/ck:cook',
     description: 'All-in-one: research → plan → implement → test → review (speed focus)',
     color: 'emerald'
   },
@@ -544,8 +609,8 @@ const stablePaths: FlowchartPath[] = [
     name: 'Safe Planning',
     nodes: ['start', 'build-feature', 'know-what', 'speed-safety', 'cmd-plan'],
     edges: ['e-start-build-feature', 'e-build-feature-know', 'e-know-speed-safety', 'e-safety-plan'],
-    command: '/plan',
-    description: 'Plan → Refine & Approve → /clear → /cook @plan.md (safety focus)',
+    command: '/ck:plan',
+    description: 'Plan → Refine & Approve → /clear → /ck:cook @plan.md (safety focus)',
     color: 'purple'
   },
   {
@@ -553,7 +618,7 @@ const stablePaths: FlowchartPath[] = [
     name: 'Implement Plan',
     nodes: ['cmd-plan', 'cmd-cook-plan'],
     edges: ['e-plan-cook-plan'],
-    command: '/cook @plan.md',
+    command: '/ck:cook @plan.md',
     description: 'Implement an approved plan step by step (after /clear)',
     color: 'blue'
   },
@@ -562,8 +627,8 @@ const stablePaths: FlowchartPath[] = [
     name: 'Brainstorm Ideas',
     nodes: ['start', 'build-feature', 'know-what', 'cmd-brainstorm', 'cmd-plan'],
     edges: ['e-start-build-feature', 'e-build-feature-know', 'e-know-brainstorm', 'e-brainstorm-plan'],
-    command: '/brainstorm',
-    description: 'Ideation when you don\'t know what to build (then → /plan → /clear → /cook @plan.md)',
+    command: '/ck:brainstorm',
+    description: 'Ideation when you don\'t know what to build (then → /ck:plan → /clear → /ck:cook @plan.md)',
     color: 'violet'
   },
 
@@ -573,7 +638,7 @@ const stablePaths: FlowchartPath[] = [
     name: 'Debug Issue',
     nodes: ['start', 'fix-something', 'know-issue', 'cmd-debug'],
     edges: ['e-start-fix-something', 'e-fix-something-know', 'e-know-debug'],
-    command: '/debug',
+    command: '/ck:debug',
     description: 'Analyze → Find root cause (when you don\'t know what\'s wrong)',
     color: 'orange'
   },
@@ -582,9 +647,18 @@ const stablePaths: FlowchartPath[] = [
     name: 'Fix Known Issue',
     nodes: ['start', 'fix-something', 'know-issue', 'cmd-fix'],
     edges: ['e-start-fix-something', 'e-fix-something-know', 'e-know-fix'],
-    command: '/fix',
+    command: '/ck:fix',
     description: 'Intelligent router to specialized fix commands (when you know the issue)',
     color: 'red'
+  },
+  {
+    id: 'path-test',
+    name: 'Fix & Test',
+    nodes: ['start', 'fix-something', 'know-issue', 'cmd-fix', 'cmd-test'],
+    edges: ['e-start-fix-something', 'e-fix-something-know', 'e-know-fix', 'e-fix-test'],
+    command: '/ck:fix → /ck:test',
+    description: 'Fix issue then verify with tests',
+    color: 'green'
   },
 
   // Git Ops paths
@@ -593,7 +667,7 @@ const stablePaths: FlowchartPath[] = [
     name: 'Git Operations',
     nodes: ['start', 'git-ops', 'cmd-git-skill'],
     edges: ['e-start-git-ops', 'e-git-skill'],
-    command: '/git',
+    command: '/ck:git',
     description: 'Support arguments: cm, cp, pr, merge',
     color: 'indigo'
   },
@@ -602,8 +676,17 @@ const stablePaths: FlowchartPath[] = [
     name: 'Parallel Development',
     nodes: ['start', 'git-ops', 'cmd-worktree'],
     edges: ['e-start-git-ops', 'e-git-worktree'],
-    command: '/worktree',
+    command: '/ck:worktree',
     description: 'Create isolated worktree for working on multiple features simultaneously',
+    color: 'indigo'
+  },
+  {
+    id: 'path-review-pr',
+    name: 'PR Code Review',
+    nodes: ['start', 'git-ops', 'cmd-review-pr'],
+    edges: ['e-start-git-ops', 'e-git-review-pr'],
+    command: '/ck:review-pr',
+    description: 'Review pull request with scout-based edge case detection',
     color: 'indigo'
   },
 
@@ -613,7 +696,7 @@ const stablePaths: FlowchartPath[] = [
     name: 'Documentation',
     nodes: ['start', 'docs-design', 'cmd-docs'],
     edges: ['e-start-docs-design', 'e-docs-design-docs'],
-    command: '/docs:*',
+    command: '/ck:docs:*',
     description: 'Documentation commands: init, summarize, update',
     color: 'amber'
   },
@@ -624,7 +707,7 @@ const stablePaths: FlowchartPath[] = [
     name: 'UI/UX Design',
     nodes: ['start', 'designs', 'cmd-frontend-design'],
     edges: ['e-start-designs', 'e-designs-frontend'],
-    command: '/frontend-design',
+    command: '/ck:frontend-design',
     description: 'Create beautiful UI/UX designs with modern patterns',
     color: 'pink'
   },
@@ -633,7 +716,7 @@ const stablePaths: FlowchartPath[] = [
     name: 'Video Design',
     nodes: ['start', 'designs', 'cmd-remotion'],
     edges: ['e-start-designs', 'e-designs-remotion'],
-    command: '/remotion',
+    command: '/ck:remotion',
     description: 'Create video animations and motion graphics',
     color: 'pink'
   },
@@ -642,7 +725,7 @@ const stablePaths: FlowchartPath[] = [
     name: '3D Design',
     nodes: ['start', 'designs', 'cmd-threejs'],
     edges: ['e-start-designs', 'e-designs-threejs'],
-    command: '/threejs',
+    command: '/ck:threejs',
     description: 'Create 3D visualizations and interactive experiences',
     color: 'pink'
   },
@@ -653,7 +736,7 @@ const stablePaths: FlowchartPath[] = [
     name: 'ClaudeKit Help',
     nodes: ['start', 'need-help', 'help-type', 'cmd-ck-help'],
     edges: ['e-start-need-help', 'e-help-type', 'e-help-ck'],
-    command: '/ck-help',
+    command: '/ck:help',
     description: 'General ClaudeKit documentation and command help',
     color: 'blue'
   },
@@ -662,7 +745,7 @@ const stablePaths: FlowchartPath[] = [
     name: 'Architectural Advice',
     nodes: ['start', 'need-help', 'help-type', 'cmd-ask'],
     edges: ['e-start-need-help', 'e-help-type', 'e-help-ask'],
-    command: '/ask',
+    command: '/ck:ask',
     description: 'Technical and architectural consultation from expert',
     color: 'blue'
   },
@@ -671,9 +754,29 @@ const stablePaths: FlowchartPath[] = [
     name: 'Learning Mode',
     nodes: ['start', 'need-help', 'help-type', 'cmd-coding-level'],
     edges: ['e-start-need-help', 'e-help-type', 'e-help-coding'],
-    command: '/coding-level',
+    command: '/ck:coding-level',
     description: 'Slow down explanations for learning and understanding',
     color: 'cyan'
+  },
+  {
+    id: 'path-security-scan',
+    name: 'Security Audit',
+    nodes: ['start', 'need-help', 'help-type', 'cmd-security-scan'],
+    edges: ['e-start-need-help', 'e-help-type', 'e-help-security'],
+    command: '/ck:security-scan',
+    description: 'Scan for vulnerabilities, secrets, and OWASP patterns',
+    color: 'red'
+  },
+
+  // Post-implementation path
+  {
+    id: 'path-simplify',
+    name: 'Cook & Simplify',
+    nodes: ['start', 'build-feature', 'know-what', 'speed-safety', 'cmd-cook', 'cmd-simplify'],
+    edges: ['e-start-build-feature', 'e-build-feature-know', 'e-know-speed-safety', 'e-speed-cook', 'e-cook-simplify'],
+    command: '/ck:cook → /ck:simplify',
+    description: 'Fast implementation then code cleanup',
+    color: 'teal'
   }
 ];
 

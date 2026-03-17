@@ -16,7 +16,7 @@ export type { FlowchartNode, FlowchartEdge, FlowchartPath, FlowchartData };
 export { pathColors };
 
 // Engineer Kit uses 1500 width (start at x:700)
-const engineerViewBox = '0 0 1500 720';
+const engineerViewBox = '0 0 1500 800';
 // Marketing Kit uses 1600 width (start at x:800, 9 branches need more space)
 const marketingViewBox = '0 0 1600 720';
 

@@ -3,7 +3,9 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
+    "generate:stats": "npx tsx scripts/generate-uiux-stats.ts",
     "dev": "astro dev",
+    "prebuild": "npm run generate:stats",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
