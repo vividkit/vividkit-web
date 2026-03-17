@@ -10,18 +10,22 @@ import {
 } from './flowchart-types';
 import { stableNodes, stableEdges, stablePaths } from './flowchart-stable-v25-data';
 import { betaNodes, betaEdges, betaPaths } from './flowchart-legacy-v24-data';
+import { marketingNodes, marketingEdges, marketingPaths } from './flowchart-marketing-v12-data';
 
 export type { FlowchartNode, FlowchartEdge, FlowchartPath, FlowchartData };
 export { pathColors };
 
-const viewBox = '0 0 1500 720';
+// Engineer Kit uses 1500 width (start at x:700)
+const engineerViewBox = '0 0 1500 720';
+// Marketing Kit uses 1600 width (start at x:800, 9 branches need more space)
+const marketingViewBox = '0 0 1600 720';
 
 // Stable (v2.13.0) flowchart data (skill-based approach)
 export const stableFlowchartData: FlowchartData = {
   nodes: stableNodes,
   edges: stableEdges,
   paths: stablePaths,
-  viewBox
+  viewBox: engineerViewBox
 };
 
 // Beta flowchart data - superset of stable with new skill nodes
@@ -153,7 +157,7 @@ export const betaFlowchartData: FlowchartData = {
   nodes: betaOnlyNodes,
   edges: betaOnlyEdges,
   paths: betaOnlyPaths,
-  viewBox
+  viewBox: engineerViewBox
 };
 
 // Legacy v2.4.x flowchart data - kept for reference, NOT rendered
@@ -162,23 +166,43 @@ export const legacyFlowchartData: FlowchartData = {
   nodes: betaNodes,
   edges: betaEdges,
   paths: betaPaths,
-  viewBox
+  viewBox: engineerViewBox
+};
+
+// Marketing Kit v1.2.1 flowchart data (purpose-driven for marketers)
+// Includes both stable (/mkt:*) and beta (/ckm:*) commands
+export const marketingFlowchartData: FlowchartData = {
+  nodes: marketingNodes,
+  edges: marketingEdges,
+  paths: marketingPaths,
+  viewBox: marketingViewBox
 };
 
 // Default export for backward compatibility
 export const flowchartData = stableFlowchartData;
 
+// Kit type for type safety
+export type FlowchartKit = 'engineer' | 'marketing';
+
+// Helper to get flowchart data by kit type
+export function getFlowchartDataByKit(kit: FlowchartKit): FlowchartData {
+  return kit === 'marketing' ? marketingFlowchartData : stableFlowchartData;
+}
+
 // Helper to get path by command name
-export function getPathByCommand(command: string, _version: 'stable' | 'beta' = 'stable'): FlowchartPath | undefined {
-  return stablePaths.find(p => p.command === command);
+export function getPathByCommand(command: string, kit: FlowchartKit = 'engineer'): FlowchartPath | undefined {
+  const paths = kit === 'marketing' ? marketingPaths : stablePaths;
+  return paths.find(p => p.command === command || p.command.includes(command));
 }
 
 // Helper to get all paths that pass through a node
-export function getPathsContainingNode(nodeId: string, _version: 'stable' | 'beta' = 'stable'): FlowchartPath[] {
-  return stablePaths.filter(p => p.nodes.includes(nodeId));
+export function getPathsContainingNode(nodeId: string, kit: FlowchartKit = 'engineer'): FlowchartPath[] {
+  const paths = kit === 'marketing' ? marketingPaths : stablePaths;
+  return paths.filter(p => p.nodes.includes(nodeId));
 }
 
 // Helper to get all paths that traverse an edge
-export function getPathsContainingEdge(edgeId: string, _version: 'stable' | 'beta' = 'stable'): FlowchartPath[] {
-  return stablePaths.filter(p => p.edges.includes(edgeId));
+export function getPathsContainingEdge(edgeId: string, kit: FlowchartKit = 'engineer'): FlowchartPath[] {
+  const paths = kit === 'marketing' ? marketingPaths : stablePaths;
+  return paths.filter(p => p.edges.includes(edgeId));
 }
