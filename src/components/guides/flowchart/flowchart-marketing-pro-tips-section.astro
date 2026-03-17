@@ -1,0 +1,101 @@
+---
+// FlowchartGuide Marketing Kit pro tips section
+import { getLangFromUrl, type Language } from "@/i18n";
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === "vi";
+---
+
+<!-- Marketing Pro Tips -->
+<div class="glass-card rounded-2xl p-6 sm:p-8">
+  <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+    <svg class="w-5 h-5 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+    {isVi ? "Marketing Pro Tips" : "Marketing Pro Tips"}
+  </h3>
+
+  <div class="grid md:grid-cols-2 gap-6">
+    <!-- Tip 1: Start with Research -->
+    <div class="p-4 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
+      <h4 class="font-semibold text-blue-700 dark:text-blue-400 mb-2 flex items-center gap-2">
+        <span class="text-lg">1</span>
+        {isVi ? "Luôn bắt đầu với Research" : "Always Start with Research"}
+      </h4>
+      <p class="text-sm text-slate-600 dark:text-slate-400">
+        {isVi
+          ? "Chạy /mkt:competitor và /mkt:seo trước khi tạo content để hiểu market positioning."
+          : "Run /mkt:competitor and /mkt:seo before creating content to understand market positioning."}
+      </p>
+    </div>
+
+    <!-- Tip 2: Use Brainstorm for Ideas -->
+    <div class="p-4 rounded-lg bg-violet-50 dark:bg-violet-900/20 border border-violet-200 dark:border-violet-800">
+      <h4 class="font-semibold text-violet-700 dark:text-violet-400 mb-2 flex items-center gap-2">
+        <span class="text-lg">2</span>
+        {isVi ? "Brainstorm trước khi Plan" : "Brainstorm Before Planning"}
+      </h4>
+      <p class="text-sm text-slate-600 dark:text-slate-400">
+        {isVi
+          ? "Dùng /ck:brainstorm để khám phá campaign angles trước khi commit vào plan."
+          : "Use /ck:brainstorm to explore campaign angles before committing to a plan."}
+      </p>
+    </div>
+
+    <!-- Tip 3: Quality over Speed -->
+    <div class="p-4 rounded-lg bg-pink-50 dark:bg-pink-900/20 border border-pink-200 dark:border-pink-800">
+      <h4 class="font-semibold text-pink-700 dark:text-pink-400 mb-2 flex items-center gap-2">
+        <span class="text-lg">3</span>
+        {isVi ? "Chọn đúng Write Mode" : "Choose the Right Write Mode"}
+      </h4>
+      <p class="text-sm text-slate-600 dark:text-slate-400">
+        {isVi
+          ? "/mkt:write:fast cho drafts, :good cho quality, :cro cho conversion-focused."
+          : "/mkt:write:fast for drafts, :good for quality content, :cro for conversion-focused copy."}
+      </p>
+    </div>
+
+    <!-- Tip 4: Iterate with Data -->
+    <div class="p-4 rounded-lg bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800">
+      <h4 class="font-semibold text-emerald-700 dark:text-emerald-400 mb-2 flex items-center gap-2">
+        <span class="text-lg">4</span>
+        {isVi ? "Optimize dựa trên Data" : "Optimize Based on Data"}
+      </h4>
+      <p class="text-sm text-slate-600 dark:text-slate-400">
+        {isVi
+          ? "Sau launch, dùng /mkt:analyze và /ckm:form-cro để cải thiện conversion."
+          : "After launch, use /mkt:analyze and /ckm:form-cro to improve conversion rates."}
+      </p>
+    </div>
+  </div>
+
+  <!-- Complexity Guide -->
+  <div class="mt-8 p-4 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+    <h4 class="font-semibold text-slate-900 dark:text-white mb-3">
+      {isVi ? "Độ phức tạp Commands" : "Command Complexity Guide"}
+    </h4>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+      <div class="flex items-center gap-2">
+        <span class="text-amber-500">⚡</span>
+        <span class="text-slate-600 dark:text-slate-400">{isVi ? "Đơn giản, nhanh" : "Simple, quick"}</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-amber-500">⚡⚡</span>
+        <span class="text-slate-600 dark:text-slate-400">{isVi ? "Trung bình" : "Medium effort"}</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-amber-500">⚡⚡⚡</span>
+        <span class="text-slate-600 dark:text-slate-400">{isVi ? "Phức tạp" : "Complex tasks"}</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-amber-500">⚡⚡⚡⚡</span>
+        <span class="text-slate-600 dark:text-slate-400">{isVi ? "Nâng cao" : "Advanced"}</span>
+      </div>
+    </div>
+  </div>
+</div>
