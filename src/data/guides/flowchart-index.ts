@@ -1,5 +1,5 @@
-// Flowchart data index - assembles stable, beta, and legacy FlowchartData objects
-// Re-exports all public APIs for consumers (FlowchartInteractive.astro etc.)
+// Flowchart data index - assembles unified Engineer Kit and Marketing Kit data
+// Beta nodes/edges/paths are merged into stable with isBeta flag for UI badges
 import {
   type FlowchartNode,
   type FlowchartEdge,
@@ -20,148 +20,144 @@ const engineerViewBox = '0 0 1500 800';
 // Marketing Kit uses 1600 width (start at x:800, 9 branches need more space)
 const marketingViewBox = '0 0 1600 720';
 
-// Stable (v2.13.0) flowchart data (skill-based approach)
-export const stableFlowchartData: FlowchartData = {
-  nodes: stableNodes,
-  edges: stableEdges,
-  paths: stablePaths,
-  viewBox: engineerViewBox
-};
-
-// Beta flowchart data - superset of stable with new skill nodes
-const betaOnlyNodes: FlowchartNode[] = [
-  ...stableNodes,
-  // Beta-only: /llms skill node
+// Beta-only nodes (merged into unified data with isBeta flag)
+const betaExtraNodes: FlowchartNode[] = [
   {
     id: 'cmd-llms',
     type: 'command',
-    label: '/llms',
+    label: '/ck:llms',
     description: 'Generate llms.txt files (llmstxt.org)',
-    position: { x: 1000, y: 280 }
+    position: { x: 900, y: 440 },
+    isBeta: true
   },
-  // Beta-only: /deploy skill node
   {
     id: 'cmd-deploy',
     type: 'command',
-    label: '/deploy',
+    label: '/ck:deploy',
     description: 'Auto-detect & deploy to 15+ platforms ⚡⚡',
-    position: { x: 790, y: 280 }
+    position: { x: 790, y: 520 },
+    isBeta: true
   },
-  // Beta-only: /security-scan skill node
   {
-    id: 'cmd-security-scan',
+    id: 'cmd-security-scan-beta',
     type: 'command',
-    label: '/security-scan',
+    label: '/ck:security-scan',
     description: 'Scan for vulnerabilities & secrets ⚡⚡',
-    position: { x: 615, y: 520 }
+    position: { x: 615, y: 440 },
+    isBeta: true
   },
-  // Beta-only: /project-organization skill node
   {
     id: 'cmd-project-org',
     type: 'command',
-    label: '/project-organization',
+    label: '/ck:project-organization',
     description: 'Standardize file locations & naming ⚡',
-    position: { x: 265, y: 520 }
+    position: { x: 130, y: 520 },
+    isBeta: true
   }
 ];
 
-const betaOnlyEdges: FlowchartEdge[] = [
-  ...stableEdges,
-  // Beta-only: edge from docs-design to /llms
+// Beta-only edges
+const betaExtraEdges: FlowchartEdge[] = [
   {
     id: 'e-docs-llms',
     from: 'docs-design',
     to: 'cmd-llms',
     label: 'AI index?',
-    path: generatePath({ x: 900, y: 160 }, { x: 1000, y: 280 }),
-    labelX: 965,
-    labelY: 215
+    path: generatePath({ x: 900, y: 160 }, { x: 900, y: 440 }),
+    labelX: 920,
+    labelY: 300
   },
-  // Beta-only: edge from git-ops to /deploy
   {
     id: 'e-git-deploy',
     from: 'git-ops',
     to: 'cmd-deploy',
     label: 'deploy?',
-    path: generatePath({ x: 790, y: 160 }, { x: 790, y: 280 }),
+    path: generatePath({ x: 790, y: 160 }, { x: 790, y: 520 }),
     labelX: 810,
-    labelY: 215
+    labelY: 340
   },
-  // Beta-only: edge from fix-something to /security-scan
   {
     id: 'e-fix-security',
     from: 'fix-something',
-    to: 'cmd-security-scan',
+    to: 'cmd-security-scan-beta',
     label: 'audit?',
-    path: generatePath({ x: 615, y: 160 }, { x: 615, y: 520 }),
+    path: generatePath({ x: 615, y: 160 }, { x: 615, y: 440 }),
     labelX: 635,
-    labelY: 340
+    labelY: 300
   },
-  // Beta-only: edge from existing-project to /project-organization
   {
     id: 'e-existing-project-org',
     from: 'existing-project',
     to: 'cmd-project-org',
     label: 'organize?',
-    path: generatePath({ x: 265, y: 160 }, { x: 265, y: 520 }),
-    labelX: 285,
-    labelY: 340
+    path: generatePath({ x: 265, y: 160 }, { x: 130, y: 520 }),
+    labelX: 140,
+    labelY: 440
   }
 ];
 
-const betaOnlyPaths: FlowchartPath[] = [
-  ...stablePaths,
-  // Beta-only: /llms path
+// Beta-only paths
+const betaExtraPaths: FlowchartPath[] = [
   {
     id: 'path-llms',
-    name: 'Docs Index (Beta)',
+    name: 'Docs Index',
     nodes: ['start', 'docs-design', 'cmd-llms'],
     edges: ['e-start-docs-design', 'e-docs-llms'],
-    command: '/llms',
+    command: '/ck:llms',
     description: 'Generate llms.txt files following llmstxt.org spec for AI-readable documentation',
-    color: 'amber'
+    color: 'amber',
+    isBeta: true
   },
-  // Beta-only: /deploy path
   {
     id: 'path-deploy',
-    name: 'Deploy App (Beta)',
+    name: 'Deploy App',
     nodes: ['start', 'git-ops', 'cmd-deploy'],
     edges: ['e-start-git-ops', 'e-git-deploy'],
-    command: '/deploy',
+    command: '/ck:deploy',
     description: 'Auto-detect project type and deploy to 15+ cloud platforms',
-    color: 'orange'
+    color: 'orange',
+    isBeta: true
   },
-  // Beta-only: /security-scan path
   {
-    id: 'path-security-scan',
-    name: 'Security Audit (Beta)',
-    nodes: ['start', 'fix-something', 'cmd-security-scan'],
+    id: 'path-security-scan-beta',
+    name: 'Security Audit',
+    nodes: ['start', 'fix-something', 'cmd-security-scan-beta'],
     edges: ['e-start-fix-something', 'e-fix-security'],
-    command: '/security-scan',
+    command: '/ck:security-scan',
     description: 'Scan for OWASP vulnerabilities, leaked secrets, and insecure patterns',
-    color: 'red'
+    color: 'red',
+    isBeta: true
   },
-  // Beta-only: /project-organization path
   {
     id: 'path-project-org',
-    name: 'Organize Project (Beta)',
+    name: 'Organize Project',
     nodes: ['start', 'existing-project', 'cmd-project-org'],
     edges: ['e-start-existing-project', 'e-existing-project-org'],
-    command: '/project-organization',
+    command: '/ck:project-organization',
     description: 'Standardize file locations, naming conventions, and project structure',
-    color: 'teal'
+    color: 'teal',
+    isBeta: true
   }
 ];
 
-export const betaFlowchartData: FlowchartData = {
-  nodes: betaOnlyNodes,
-  edges: betaOnlyEdges,
-  paths: betaOnlyPaths,
+// Unified Engineer Kit data (stable + beta merged, beta items flagged with isBeta)
+const unifiedNodes: FlowchartNode[] = [...stableNodes, ...betaExtraNodes];
+const unifiedEdges: FlowchartEdge[] = [...stableEdges, ...betaExtraEdges];
+const unifiedPaths: FlowchartPath[] = [...stablePaths, ...betaExtraPaths];
+
+// Engineer Kit unified flowchart data (v2.13.0 stable + v2.14.0 beta)
+export const engineerFlowchartData: FlowchartData = {
+  nodes: unifiedNodes,
+  edges: unifiedEdges,
+  paths: unifiedPaths,
   viewBox: engineerViewBox
 };
 
+// Backward compat aliases
+export const stableFlowchartData = engineerFlowchartData;
+export const betaFlowchartData = engineerFlowchartData;
+
 // Legacy v2.4.x flowchart data - kept for reference, NOT rendered
-// Uses old command syntax: /git:cm, /git:pr, /design:*, /code @plan.md
 export const legacyFlowchartData: FlowchartData = {
   nodes: betaNodes,
   edges: betaEdges,
@@ -169,8 +165,7 @@ export const legacyFlowchartData: FlowchartData = {
   viewBox: engineerViewBox
 };
 
-// Marketing Kit v1.2.1 flowchart data (purpose-driven for marketers)
-// Includes both stable (/mkt:*) and beta (/ckm:*) commands
+// Marketing Kit v1.2.1 flowchart data
 export const marketingFlowchartData: FlowchartData = {
   nodes: marketingNodes,
   edges: marketingEdges,
@@ -179,30 +174,30 @@ export const marketingFlowchartData: FlowchartData = {
 };
 
 // Default export for backward compatibility
-export const flowchartData = stableFlowchartData;
+export const flowchartData = engineerFlowchartData;
 
 // Kit type for type safety
 export type FlowchartKit = 'engineer' | 'marketing';
 
 // Helper to get flowchart data by kit type
 export function getFlowchartDataByKit(kit: FlowchartKit): FlowchartData {
-  return kit === 'marketing' ? marketingFlowchartData : stableFlowchartData;
+  return kit === 'marketing' ? marketingFlowchartData : engineerFlowchartData;
 }
 
 // Helper to get path by command name
 export function getPathByCommand(command: string, kit: FlowchartKit = 'engineer'): FlowchartPath | undefined {
-  const paths = kit === 'marketing' ? marketingPaths : stablePaths;
+  const paths = kit === 'marketing' ? marketingPaths : unifiedPaths;
   return paths.find(p => p.command === command || p.command.includes(command));
 }
 
 // Helper to get all paths that pass through a node
 export function getPathsContainingNode(nodeId: string, kit: FlowchartKit = 'engineer'): FlowchartPath[] {
-  const paths = kit === 'marketing' ? marketingPaths : stablePaths;
+  const paths = kit === 'marketing' ? marketingPaths : unifiedPaths;
   return paths.filter(p => p.nodes.includes(nodeId));
 }
 
 // Helper to get all paths that traverse an edge
 export function getPathsContainingEdge(edgeId: string, kit: FlowchartKit = 'engineer'): FlowchartPath[] {
-  const paths = kit === 'marketing' ? marketingPaths : stablePaths;
+  const paths = kit === 'marketing' ? marketingPaths : unifiedPaths;
   return paths.filter(p => p.edges.includes(edgeId));
 }

@@ -7,6 +7,7 @@ export interface FlowchartNode {
   label: string;
   description?: string;
   position: { x: number; y: number };
+  isBeta?: boolean;
 }
 
 export interface FlowchartEdge {
@@ -27,6 +28,7 @@ export interface FlowchartPath {
   command: string;
   description: string;
   color: string;
+  isBeta?: boolean;
 }
 
 export interface FlowchartData {

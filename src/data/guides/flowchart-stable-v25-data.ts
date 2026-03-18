@@ -109,14 +109,14 @@ const stableNodes: FlowchartNode[] = [
     type: 'command',
     label: '/ck:docs init',
     description: 'Analyze codebase, create docs ⚡⚡⚡⚡',
-    position: { x: 160, y: 400 }
+    position: { x: 120, y: 400 }
   },
   {
     id: 'cmd-scout',
     type: 'command',
     label: '/ck:scout',
     description: 'Explore codebase structure',
-    position: { x: 270, y: 400 }
+    position: { x: 240, y: 400 }
   },
 
   // Command nodes - Build Feature
@@ -132,21 +132,21 @@ const stableNodes: FlowchartNode[] = [
     type: 'command',
     label: '/ck:cook',
     description: 'All-in-one: research → implement ⚡⚡⚡',
-    position: { x: 610, y: 600 }
+    position: { x: 520, y: 600 }
   },
   {
     id: 'cmd-plan',
     type: 'command',
     label: '/ck:plan',
     description: 'Create detailed plan ⚡⚡⚡',
-    position: { x: 500, y: 520 }
+    position: { x: 380, y: 520 }
   },
   {
     id: 'cmd-cook-plan',
     type: 'command',
     label: '/ck:cook @plan.md',
     description: 'Implement plan step by step ⚡⚡⚡',
-    position: { x: 500, y: 640 }
+    position: { x: 380, y: 640 }
   },
 
   // Command nodes - Fix Something
@@ -199,8 +199,8 @@ const stableNodes: FlowchartNode[] = [
   {
     id: 'cmd-docs',
     type: 'command',
-    label: '/ck:docs:*',
-    description: 'Documentation commands',
+    label: '/ck:docs',
+    description: 'init | update | summarize',
     position: { x: 900, y: 280 }
   },
 
@@ -249,21 +249,13 @@ const stableNodes: FlowchartNode[] = [
     description: 'Slow down explanations',
     position: { x: 1440, y: 400 }
   },
-  {
-    id: 'cmd-security-scan',
-    type: 'command',
-    label: '/ck:security-scan',
-    description: 'Security vulnerability audit',
-    position: { x: 1340, y: 500 }
-  },
-
   // Command nodes - Post-implementation
   {
     id: 'cmd-simplify',
     type: 'command',
     label: '/ck:simplify',
     description: 'Clean up and refactor code ⚡⚡',
-    position: { x: 610, y: 720 }
+    position: { x: 520, y: 720 }
   }
 ];
 
@@ -338,8 +330,8 @@ const stableEdges: FlowchartEdge[] = [
     from: 'has-docs',
     to: 'cmd-docs-init',
     label: 'No',
-    path: generatePath({ x: 265, y: 280 }, { x: 160, y: 400 }),
-    labelX: 195,
+    path: generatePath({ x: 265, y: 280 }, { x: 120, y: 400 }),
+    labelX: 175,
     labelY: 340
   },
   {
@@ -347,7 +339,7 @@ const stableEdges: FlowchartEdge[] = [
     from: 'has-docs',
     to: 'cmd-scout',
     label: 'Yes',
-    path: generatePath({ x: 265, y: 280 }, { x: 270, y: 400 }),
+    path: generatePath({ x: 265, y: 280 }, { x: 240, y: 400 }),
     labelX: 280,
     labelY: 340
   },
@@ -373,8 +365,8 @@ const stableEdges: FlowchartEdge[] = [
     from: 'cmd-brainstorm',
     to: 'cmd-plan',
     label: 'Ready',
-    path: generatePath({ x: 380, y: 400 }, { x: 500, y: 520 }),
-    labelX: 440,
+    path: generatePath({ x: 380, y: 400 }, { x: 380, y: 520 }),
+    labelX: 400,
     labelY: 460
   },
   {
@@ -391,8 +383,8 @@ const stableEdges: FlowchartEdge[] = [
     from: 'speed-safety',
     to: 'cmd-cook',
     label: 'Speed',
-    path: generatePath({ x: 520, y: 400 }, { x: 610, y: 600 }),
-    labelX: 580,
+    path: generatePath({ x: 520, y: 400 }, { x: 520, y: 600 }),
+    labelX: 540,
     labelY: 500
   },
   {
@@ -400,8 +392,8 @@ const stableEdges: FlowchartEdge[] = [
     from: 'speed-safety',
     to: 'cmd-plan',
     label: 'Safety',
-    path: generatePath({ x: 520, y: 400 }, { x: 500, y: 520 }),
-    labelX: 525,
+    path: generatePath({ x: 520, y: 400 }, { x: 380, y: 520 }),
+    labelX: 430,
     labelY: 460
   },
   {
@@ -409,8 +401,8 @@ const stableEdges: FlowchartEdge[] = [
     from: 'cmd-plan',
     to: 'cmd-cook-plan',
     label: 'Approve',
-    path: generatePath({ x: 500, y: 520 }, { x: 500, y: 640 }),
-    labelX: 520,
+    path: generatePath({ x: 380, y: 520 }, { x: 380, y: 640 }),
+    labelX: 400,
     labelY: 580
   },
 
@@ -540,24 +532,14 @@ const stableEdges: FlowchartEdge[] = [
     labelX: 1410,
     labelY: 340
   },
-  {
-    id: 'e-help-security',
-    from: 'help-type',
-    to: 'cmd-security-scan',
-    label: 'Sec',
-    path: generatePath({ x: 1340, y: 280 }, { x: 1340, y: 500 }),
-    labelX: 1360,
-    labelY: 390
-  },
-
   // Post-implementation flow
   {
     id: 'e-cook-simplify',
     from: 'cmd-cook',
     to: 'cmd-simplify',
     label: 'Clean',
-    path: generatePath({ x: 610, y: 600 }, { x: 610, y: 720 }),
-    labelX: 630,
+    path: generatePath({ x: 520, y: 600 }, { x: 520, y: 720 }),
+    labelX: 540,
     labelY: 660
   }
 ];
@@ -696,8 +678,8 @@ const stablePaths: FlowchartPath[] = [
     name: 'Documentation',
     nodes: ['start', 'docs-design', 'cmd-docs'],
     edges: ['e-start-docs-design', 'e-docs-design-docs'],
-    command: '/ck:docs:*',
-    description: 'Documentation commands: init, summarize, update',
+    command: '/ck:docs',
+    description: 'Documentation commands: init, update, summarize',
     color: 'amber'
   },
 
@@ -758,16 +740,6 @@ const stablePaths: FlowchartPath[] = [
     description: 'Slow down explanations for learning and understanding',
     color: 'cyan'
   },
-  {
-    id: 'path-security-scan',
-    name: 'Security Audit',
-    nodes: ['start', 'need-help', 'help-type', 'cmd-security-scan'],
-    edges: ['e-start-need-help', 'e-help-type', 'e-help-security'],
-    command: '/ck:security-scan',
-    description: 'Scan for vulnerabilities, secrets, and OWASP patterns',
-    color: 'red'
-  },
-
   // Post-implementation path
   {
     id: 'path-simplify',
