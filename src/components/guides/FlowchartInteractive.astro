@@ -1,5 +1,7 @@
 ---
-import { stableFlowchartData, betaFlowchartData, pathColors, type FlowchartPath } from '@/data/guides/flowchart';
+// Interactive Decision Tree for Engineer Kit (unified stable + beta)
+// Beta nodes/paths are visually marked with BETA badges
+import { engineerFlowchartData, pathColors } from '@/data/guides/flowchart';
 import { getLangFromUrl, type Language } from '@/i18n';
 
 interface Props {
@@ -10,14 +12,11 @@ interface Props {
 const { lang, class: className = '' } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 
-// Both versions for rendering
-const stableData = stableFlowchartData;
-const betaData = betaFlowchartData;
-const { viewBox } = stableData;
+const data = engineerFlowchartData;
+const { viewBox } = data;
 
 // Serialize paths for Alpine.js
-const v25PathsJson = JSON.stringify(stableData.paths);
-const v24PathsJson = JSON.stringify(betaData.paths);
+const pathsJson = JSON.stringify(data.paths);
 const colorsJson = JSON.stringify(pathColors);
 ---
 
@@ -30,58 +29,23 @@ const colorsJson = JSON.stringify(pathColors);
     maxScale: 2,
     isFullscreen: false,
     showCommandList: true,
-    currentVersion: 'stable',
-    stablePaths: ${v25PathsJson},
-    betaPaths: ${v24PathsJson},
+    paths: ${pathsJson},
     colors: ${colorsJson},
     rootEl: null,
     placeholder: null,
 
-    get paths() {
-      return this.currentVersion === 'stable' ? this.stablePaths : this.betaPaths;
-    },
-
     init() {
       this.rootEl = this.$el;
-      // Listen for version changes from parent
-      // Migrate old localStorage keys to new naming
-      const savedVersion = localStorage.getItem('flowchart-version');
-      if (savedVersion === 'v25') {
-        this.currentVersion = 'stable';
-        localStorage.setItem('flowchart-version', 'stable');
-      } else if (savedVersion === 'v24') {
-        this.currentVersion = 'beta';
-        localStorage.setItem('flowchart-version', 'beta');
-      } else if (savedVersion === 'stable' || savedVersion === 'beta') {
-        this.currentVersion = savedVersion;
-      }
-      // Watch for version toggle clicks from other tabs
-      window.addEventListener('storage', (e) => {
-        if (e.key === 'flowchart-version' && (e.newValue === 'stable' || e.newValue === 'beta')) {
-          this.currentVersion = e.newValue;
-          this.activePaths = [];
-        }
-      });
-      // Also listen for custom event from same page
-      document.addEventListener('flowchart-version-change', (e) => {
-        this.currentVersion = e.detail;
-        this.activePaths = [];
-      });
     },
 
     toggleFullscreen() {
       if (!this.isFullscreen) {
-        // Entering fullscreen
         this.placeholder = document.createElement('div');
         this.placeholder.style.display = 'none';
         this.rootEl.parentNode.insertBefore(this.placeholder, this.rootEl);
         document.body.appendChild(this.rootEl);
-
         this.isFullscreen = true;
         document.body.style.overflow = 'hidden';
-
-        // Auto-scale to fit viewport logic
-        // Reset scale nicely for fullscreen view
         const viewportWidth = window.innerWidth * 0.7;
         const baseWidth = 1500;
         this.scale = Math.min(1.2, Math.max(0.4, viewportWidth / baseWidth));
@@ -93,13 +57,11 @@ const colorsJson = JSON.stringify(pathColors);
 
     exitFullscreen() {
       if (this.isFullscreen) {
-        // Exiting fullscreen
         if (this.placeholder && this.placeholder.parentNode) {
           this.placeholder.parentNode.insertBefore(this.rootEl, this.placeholder);
           this.placeholder.remove();
           this.placeholder = null;
         }
-
         this.isFullscreen = false;
         document.body.style.overflow = '';
         this.scale = 0.5;
@@ -140,15 +102,9 @@ const colorsJson = JSON.stringify(pathColors);
     },
 
     handleWheel(e) {
-      // Allow zoom without modifier key only in fullscreen
-      // In embed mode, require modifier to avoid scroll hijacking
       if (this.isFullscreen || e.ctrlKey || e.metaKey) {
         e.preventDefault();
-        if (e.deltaY < 0) {
-          this.zoomIn();
-        } else {
-          this.zoomOut();
-        }
+        if (e.deltaY < 0) { this.zoomIn(); } else { this.zoomOut(); }
       }
     },
 
@@ -203,9 +159,8 @@ const colorsJson = JSON.stringify(pathColors);
   <!-- Fullscreen Layout Container -->
   <div class="flex flex-col h-full w-full" x-bind:class="isFullscreen ? 'max-h-screen' : ''">
 
-    <!-- Top Bar (Fullscreen Only or Mobile) -->
+    <!-- Top Bar: Path Selector Buttons -->
     <div class="flex items-center justify-between gap-4 mb-4 shrink-0 p-2" x-show="!isFullscreen">
-       <!-- Legend / Path Selector (Standard Mode) - Dynamic based on version -->
       <div class="flex flex-wrap gap-2 justify-center flex-1">
         <template x-for="path in paths" :key="path.id">
           <button
@@ -215,6 +170,7 @@ const colorsJson = JSON.stringify(pathColors);
             x-bind:style="`background-color: ${colors[path.color].bg}; color: ${colors[path.color].text}; --ring-color: ${colors[path.color].text}`"
           >
             <code class="font-mono text-xs" x-text="path.command"></code>
+            <span x-show="path.isBeta" class="text-[8px] px-1 py-0.5 rounded bg-purple-500/20 text-purple-400 font-bold uppercase leading-none">BETA</span>
           </button>
         </template>
       </div>
@@ -278,13 +234,7 @@ const colorsJson = JSON.stringify(pathColors);
         class="flex-1 flowchart-scroll overflow-auto relative bg-slate-50/50 dark:bg-slate-900/50 rounded-xl border border-slate-200/50 dark:border-slate-800/50"
         x-on:wheel="handleWheel($event)"
       >
-        <div
-          class="min-w-full min-h-full flex p-8"
-        >
-          <!-- Switch to percentage-based width/height for wrapper to behave more like 'zoom' -->
-          <!-- Or revert to transform if preferred. Let's stick to layout scaling but use percentages of base size? No, px is better for SVG viewBox matchup -->
-          <!-- Actually, let's keep the CSS transform approach if we want 'like before' feel. -->
-
+        <div class="min-w-full min-h-full flex p-8">
           <div
             class="origin-center transition-all duration-150 shrink-0 m-auto"
             x-bind:style="`width: ${1500 * scale}px; height: ${800 * scale}px`"
@@ -304,9 +254,9 @@ const colorsJson = JSON.stringify(pathColors);
                 </marker>
             </defs>
 
-            <!-- v2.5.0+ Edges -->
-            <g class="edges" x-show="currentVersion === 'stable'">
-                {stableData.edges.map(edge => (
+            <!-- Edges (unified) -->
+            <g class="edges">
+                {data.edges.map(edge => (
                 <g
                     class="flowchart-edge cursor-pointer"
                     x-bind:class={`getEdgeClass('${edge.id}')`}
@@ -323,28 +273,9 @@ const colorsJson = JSON.stringify(pathColors);
                 ))}
             </g>
 
-            <!-- v2.4.0 Edges -->
-            <g class="edges" x-show="currentVersion === 'beta'" x-cloak>
-                {betaData.edges.map(edge => (
-                <g
-                    class="flowchart-edge cursor-pointer"
-                    x-bind:class={`getEdgeClass('${edge.id}')`}
-                    x-on:click={`selectEdgePath('${edge.id}')`}
-                >
-                    <path d={edge.path} fill="none" class="stroke-slate-300 dark:stroke-slate-600" stroke-width="2" marker-end="url(#arrowhead)" />
-                    {edge.label && edge.labelX && edge.labelY && (
-                    <g>
-                        <rect x={edge.labelX - (Math.max(28, edge.label.length * 7 + 10))/2} y={edge.labelY - 10} width={Math.max(28, edge.label.length * 7 + 10)} height="16" rx="4" class="fill-white dark:fill-surface-800 stroke-slate-200 dark:stroke-slate-700" stroke-width="1" />
-                        <text x={edge.labelX} y={edge.labelY} text-anchor="middle" dominant-baseline="middle" class="text-[10px] font-medium fill-slate-500 dark:fill-slate-400">{edge.label}</text>
-                    </g>
-                    )}
-                </g>
-                ))}
-            </g>
-
-            <!-- v2.5.0+ Nodes -->
-            <g class="nodes" x-show="currentVersion === 'stable'">
-                {stableData.nodes.map(node => (
+            <!-- Nodes (unified with BETA badges) -->
+            <g class="nodes">
+                {data.nodes.map(node => (
                 <g
                     class="flowchart-node cursor-pointer"
                     x-bind:class={`getNodeClass('${node.id}')`}
@@ -354,31 +285,14 @@ const colorsJson = JSON.stringify(pathColors);
                     <polygon points={`${node.position.x},${node.position.y - 35} ${node.position.x + 65},${node.position.y} ${node.position.x},${node.position.y + 35} ${node.position.x - 65},${node.position.y}`} class="fill-white/95 dark:fill-surface-800/95 stroke-slate-300 dark:stroke-slate-600" stroke-width="2" />
                     ) : node.type === 'command' ? (
                     <g>
-                        <rect x={node.position.x - (Math.max(100, node.label.length * 9 + 20))/2} y={node.position.y - 22} width={Math.max(100, node.label.length * 9 + 20)} height="44" rx="8" class="fill-white/95 dark:fill-surface-800/95 stroke-slate-300 dark:stroke-slate-600" stroke-width="2" />
-                        <rect x={node.position.x - (Math.max(100, node.label.length * 9 + 20))/2} y={node.position.y - 22} width="4" height="44" rx="2" class="fill-blue-500 dark:fill-blue-400" />
-                    </g>
-                    ) : (
-                    <rect x={node.position.x - 100} y={node.position.y - 25} width="200" height="50" rx="25" class="fill-blue-500 stroke-blue-400 dark:stroke-blue-500" stroke-width="2" />
-                    )}
-                    <text x={node.position.x} y={node.position.y} text-anchor="middle" dominant-baseline="middle" class:list={['pointer-events-none', node.type === 'start' ? 'text-sm font-semibold fill-white' : node.type === 'command' ? 'text-sm font-mono font-semibold fill-slate-700 dark:fill-slate-200' : 'text-xs font-medium fill-slate-600 dark:fill-slate-300']}>{node.label}</text>
-                </g>
-                ))}
-            </g>
-
-            <!-- v2.4.0 Nodes -->
-            <g class="nodes" x-show="currentVersion === 'beta'" x-cloak>
-                {betaData.nodes.map(node => (
-                <g
-                    class="flowchart-node cursor-pointer"
-                    x-bind:class={`getNodeClass('${node.id}')`}
-                    x-on:click={`selectNodePath('${node.id}')`}
-                >
-                    {node.type === 'decision' ? (
-                    <polygon points={`${node.position.x},${node.position.y - 35} ${node.position.x + 65},${node.position.y} ${node.position.x},${node.position.y + 35} ${node.position.x - 65},${node.position.y}`} class="fill-white/95 dark:fill-surface-800/95 stroke-slate-300 dark:stroke-slate-600" stroke-width="2" />
-                    ) : node.type === 'command' ? (
-                    <g>
-                        <rect x={node.position.x - (Math.max(100, node.label.length * 9 + 20))/2} y={node.position.y - 22} width={Math.max(100, node.label.length * 9 + 20)} height="44" rx="8" class="fill-white/95 dark:fill-surface-800/95 stroke-slate-300 dark:stroke-slate-600" stroke-width="2" />
-                        <rect x={node.position.x - (Math.max(100, node.label.length * 9 + 20))/2} y={node.position.y - 22} width="4" height="44" rx="2" class="fill-blue-500 dark:fill-blue-400" />
+                        <rect x={node.position.x - (Math.max(100, node.label.length * 9 + 20))/2} y={node.position.y - 22} width={Math.max(100, node.label.length * 9 + 20)} height="44" rx="8" class={node.isBeta ? 'fill-purple-50/95 dark:fill-purple-900/30 stroke-purple-300 dark:stroke-purple-600' : 'fill-white/95 dark:fill-surface-800/95 stroke-slate-300 dark:stroke-slate-600'} stroke-width="2" />
+                        <rect x={node.position.x - (Math.max(100, node.label.length * 9 + 20))/2} y={node.position.y - 22} width="4" height="44" rx="2" class={node.isBeta ? 'fill-purple-500 dark:fill-purple-400' : 'fill-blue-500 dark:fill-blue-400'} />
+                        {node.isBeta && (
+                        <g>
+                            <rect x={node.position.x + (Math.max(100, node.label.length * 9 + 20))/2 - 32} y={node.position.y - 22} width="32" height="14" rx="3" class="fill-purple-500" />
+                            <text x={node.position.x + (Math.max(100, node.label.length * 9 + 20))/2 - 16} y={node.position.y - 13} text-anchor="middle" dominant-baseline="middle" class="text-[7px] font-bold fill-white">BETA</text>
+                        </g>
+                        )}
                     </g>
                     ) : (
                     <rect x={node.position.x - 100} y={node.position.y - 25} width="200" height="50" rx="25" class="fill-blue-500 stroke-blue-400 dark:stroke-blue-500" stroke-width="2" />
@@ -416,6 +330,7 @@ const colorsJson = JSON.stringify(pathColors);
                 >
                     <div class="flex items-center gap-2 mb-1">
                         <code class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-mono text-xs font-bold" x-text="path.command"></code>
+                        <span x-show="path.isBeta" class="text-[8px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-bold uppercase">BETA</span>
                         <span class="text-xs font-medium text-slate-500 dark:text-slate-400 capitalize" x-text="path.name"></span>
                     </div>
                     <p class="text-xs text-slate-600 dark:text-slate-400 leading-snug" x-text="path.description"></p>
@@ -452,6 +367,7 @@ const colorsJson = JSON.stringify(pathColors);
                 class="font-semibold text-slate-800 dark:text-slate-200"
                 x-text="getActivePathData()?.name"
               ></h3>
+              <span x-show="getActivePathData()?.isBeta" class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-bold uppercase">BETA</span>
             </div>
             <p
               class="text-slate-600 dark:text-slate-400"
@@ -480,79 +396,43 @@ const colorsJson = JSON.stringify(pathColors);
 </div>
 
 <style>
-  /* Custom scrollbar matching TabNavigation/Sidebar style */
-  .flowchart-scroll::-webkit-scrollbar {
-    height: 5px;
-    width: 5px;
-  }
-  .flowchart-scroll::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  .flowchart-scroll::-webkit-scrollbar-thumb {
-    background: rgba(156, 163, 175, 0.3);
-    border-radius: 20px;
-  }
-  .flowchart-scroll::-webkit-scrollbar-thumb:hover {
-    background: rgba(156, 163, 175, 0.5);
-  }
+  .flowchart-scroll::-webkit-scrollbar { height: 5px; width: 5px; }
+  .flowchart-scroll::-webkit-scrollbar-track { background: transparent; }
+  .flowchart-scroll::-webkit-scrollbar-thumb { background: rgba(156, 163, 175, 0.3); border-radius: 20px; }
+  .flowchart-scroll::-webkit-scrollbar-thumb:hover { background: rgba(156, 163, 175, 0.5); }
+  :global(.dark) .flowchart-scroll::-webkit-scrollbar-thumb { background: rgba(156, 163, 175, 0.3); }
+  :global(.dark) .flowchart-scroll::-webkit-scrollbar-thumb:hover { background: rgba(156, 163, 175, 0.5); }
 
-  :global(.dark) .flowchart-scroll::-webkit-scrollbar-thumb {
-    background: rgba(156, 163, 175, 0.3);
-  }
-  :global(.dark) .flowchart-scroll::-webkit-scrollbar-thumb:hover {
-    background: rgba(156, 163, 175, 0.5);
-  }
+  .overflow-y-auto::-webkit-scrollbar { width: 5px; }
+  .overflow-y-auto::-webkit-scrollbar-track { background: transparent; }
+  .overflow-y-auto::-webkit-scrollbar-thumb { background: rgba(156, 163, 175, 0.3); border-radius: 20px; }
+  .overflow-y-auto::-webkit-scrollbar-thumb:hover { background: rgba(156, 163, 175, 0.5); }
 
-  /* Command list sidebar scrollbar */
-  .overflow-y-auto::-webkit-scrollbar {
-    width: 5px;
-  }
-  .overflow-y-auto::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  .overflow-y-auto::-webkit-scrollbar-thumb {
-    background: rgba(156, 163, 175, 0.3);
-    border-radius: 20px;
-  }
-  .overflow-y-auto::-webkit-scrollbar-thumb:hover {
-    background: rgba(156, 163, 175, 0.5);
-  }
-
-  /* Node styles */
   .flowchart-node { transition: all 0.3s ease; }
   .flowchart-node:hover polygon, .flowchart-node:hover rect { filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.4)); }
-  .flowchart-node.active polygon, .flowchart-node.active rect:not([width="4"]) { filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.6)); stroke: #3B82F6; stroke-width: 2.5; }
+  .flowchart-node.active polygon, .flowchart-node.active rect:not([width="4"]):not([width="32"]) { filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.6)); stroke: #3B82F6; stroke-width: 2.5; }
   .flowchart-node.faded, .flowchart-edge.faded { opacity: 0.2; pointer-events: none; }
 
   .flowchart-edge { transition: all 0.3s ease; }
   .flowchart-edge:hover path { stroke: #64748b; stroke-width: 3; }
   .flowchart-edge.active path { stroke: #3B82F6; stroke-width: 3; marker-end: url(#arrowhead-active); }
 
-  /* Fullscreen mode */
   .flowchart-fullscreen {
     position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
+    top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
     z-index: 9999 !important;
     background: rgb(255 255 255) !important;
     padding: 1rem !important;
     display: flex !important;
     flex-direction: column !important;
   }
-
-  :global(.dark) .flowchart-fullscreen {
-    background: rgb(15 23 42) !important;
-  }
-
+  :global(.dark) .flowchart-fullscreen { background: rgb(15 23 42) !important; }
   [x-cloak] { display: none !important; }
 </style>
 
 <script>
   import Alpine from 'alpinejs';
 
-  // Only initialize if not already done
   if (!window.Alpine) {
     window.Alpine = Alpine;
     Alpine.start();

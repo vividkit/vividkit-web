@@ -8,6 +8,7 @@ export {
   type FlowchartData,
   type FlowchartKit,
   pathColors,
+  engineerFlowchartData,
   stableFlowchartData,
   betaFlowchartData,
   legacyFlowchartData,
