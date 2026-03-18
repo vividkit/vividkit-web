@@ -2,8 +2,6 @@
 // UIUX Search Domains - Available domains and stacks for AI search
 import { useTranslations } from '@/i18n/utils';
 import { getLangFromUrl, type Language } from '@/i18n';
-import { uiuxStats } from '@/data/generated/uiux-stats';
-
 interface Props {
   lang?: Language;
 }
@@ -12,16 +10,15 @@ const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
 
-// Search domains with stats from generated data
 const searchDomains = [
-  { name: 'product', icon: 'package', color: 'pink', count: uiuxStats.products, desc: 'Product type recommendations' },
-  { name: 'style', icon: 'palette', color: 'indigo', count: uiuxStats.styles, desc: 'UI styles, colors, effects' },
-  { name: 'typography', icon: 'type', color: 'purple', count: uiuxStats.typography, desc: 'Font pairings, Google Fonts' },
-  { name: 'color', icon: 'droplet', color: 'cyan', count: uiuxStats.colors, desc: 'Color palettes by industry' },
-  { name: 'landing', icon: 'layout', color: 'emerald', count: uiuxStats.landing, desc: 'Page structure, CTA strategies' },
-  { name: 'chart', icon: 'bar-chart', color: 'amber', count: uiuxStats.charts, desc: 'Chart types, visualization' },
-  { name: 'ux', icon: 'users', color: 'rose', count: uiuxStats.uxGuidelines, desc: 'Best practices, anti-patterns' },
-  { name: 'stack', icon: 'layers', color: 'blue', count: uiuxStats.stackGuidelines, desc: 'Framework-specific guidelines' },
+  { name: 'product', icon: 'package', color: 'pink', count: 161, desc: 'Product type recommendations' },
+  { name: 'style', icon: 'palette', color: 'indigo', count: 50, desc: 'UI styles, colors, effects' },
+  { name: 'typography', icon: 'type', color: 'purple', count: 57, desc: 'Font pairings, Google Fonts' },
+  { name: 'color', icon: 'droplet', color: 'cyan', count: 161, desc: 'Color palettes by industry' },
+  { name: 'landing', icon: 'layout', color: 'emerald', count: 30, desc: 'Page structure, CTA strategies' },
+  { name: 'chart', icon: 'bar-chart', color: 'amber', count: 25, desc: 'Chart types, visualization' },
+  { name: 'ux', icon: 'users', color: 'rose', count: 99, desc: 'Best practices, anti-patterns' },
+  { name: 'stack', icon: 'layers', color: 'blue', count: 10, desc: 'Framework-specific guidelines' },
 ];
 
 const availableStacks = [
