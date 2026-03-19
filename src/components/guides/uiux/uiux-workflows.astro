@@ -29,6 +29,8 @@ const workflows = [
     color: 'cyan',
     icon: 'copy',
     hasSteps: true,
+    hasNote: true,
+    step2Optional: true,
   },
   {
     id: 'pencil',
@@ -120,9 +122,12 @@ const colorClasses: Record<string, { text: string; bg: string; border: string; g
                   <span class={`px-2 py-0.5 text-xs rounded ${colorClasses[wf.color].bg} ${colorClasses[wf.color].text} font-medium`}>1</span>
                   <code class="text-xs text-slate-700 dark:text-slate-300 font-mono bg-white/50 dark:bg-slate-800/50 px-2 py-1 rounded">{t(`uiux.guide.workflow.${wf.id}.step1`)}</code>
                 </div>
+                {wf.hasNote && (
+                  <p class="text-xs text-slate-500 dark:text-slate-400 italic ml-8">{t(`uiux.guide.workflow.${wf.id}.note`)}</p>
+                )}
                 <div class="flex items-start gap-2">
-                  <span class={`px-2 py-0.5 text-xs rounded ${colorClasses[wf.color].bg} ${colorClasses[wf.color].text} font-medium`}>2</span>
-                  <code class="text-xs text-slate-700 dark:text-slate-300 font-mono bg-white/50 dark:bg-slate-800/50 px-2 py-1 rounded">{t(`uiux.guide.workflow.${wf.id}.step2`)}</code>
+                  <span class={`px-2 py-0.5 text-xs rounded ${wf.step2Optional ? 'bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400' : `${colorClasses[wf.color].bg} ${colorClasses[wf.color].text}`} font-medium`}>{wf.step2Optional ? '?' : '2'}</span>
+                  <code class={`text-xs font-mono bg-white/50 dark:bg-slate-800/50 px-2 py-1 rounded ${wf.step2Optional ? 'text-slate-500 dark:text-slate-400' : 'text-slate-700 dark:text-slate-300'}`}>{t(`uiux.guide.workflow.${wf.id}.step2`)}</code>
                 </div>
               </div>
             )}
