@@ -17,7 +17,7 @@ export const betaOnlyWorkflows = [
     iconColor: 'text-emerald-600 dark:text-emerald-400',
     steps: [
       {
-        command: '/ck:ship [--skip-tests] [--skip-review]',
+        command: '/ck:ship [--official|--beta] [--skip-tests] [--skip-review]',
         typeLabel: 'Ship pipeline (skill)',
         description: 'Merge main, run tests, pre-landing review, bump version, update changelog, push, create PR',
         color: 'bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
@@ -28,11 +28,12 @@ export const betaOnlyWorkflows = [
     ],
     tip: '/ck:ship auto-detects test runner, version file format, and changelog style',
     features: [
-      'Merges origin/main before testing',
+      'Supports official (→main) and beta (→dev) ship modes',
+      'Merges origin/main (or dev for beta) before testing',
       'Auto-detects npm/pytest/cargo/go test',
-      'Two-pass code review (critical + informational)',
+      'Two-pass code review + adversarial review (stage 3)',
       'Bumps version and updates CHANGELOG.md',
-      'Creates PR with summary and test results'
+      'Creates PR with summary, test results, and linked issues'
     ],
     borderColor: 'border-emerald-500/20'
   },
@@ -99,5 +100,38 @@ export const betaOnlyWorkflows = [
       'Works with any project type'
     ],
     borderColor: 'border-violet-500/20'
+  },
+  {
+    title: 'Visual Explanation',
+    category: 'Docs & Communication',
+    level: 'Beginner',
+    duration: '~2-5 min',
+    stepCount: 1,
+    bestFor: 'Creating publication-quality visual explanations, diagrams, and slide decks as HTML',
+    gradientHeader: 'from-rose-500/10 to-pink-500/10',
+    hoverBorderColor: 'hover:border-rose-500/50',
+    buttonColor: 'bg-rose-500 hover:bg-rose-600',
+    icon: '<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>',
+    iconColor: 'text-rose-600 dark:text-rose-400',
+    steps: [
+      {
+        command: '/ck:preview --html --explain <topic>',
+        typeLabel: 'Generate HTML (skill)',
+        description: 'Self-contained HTML with theme toggle, Mermaid diagrams, and Chart.js — opens directly in browser',
+        color: 'bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      }
+    ],
+    tip: 'Use --slides for decks, --diagram for architecture, --diff for visual code review, --recap for project snapshots',
+    features: [
+      'Publication-quality self-contained HTML output',
+      'Modes: --explain, --diagram, --slides, --diff, --plan-review, --recap',
+      'Theme toggle (light/dark) built into every page',
+      'Mermaid v11 diagrams with deep custom theming',
+      'Chart.js data visualizations'
+    ],
+    borderColor: 'border-rose-500/20'
   }
 ];
