@@ -248,9 +248,10 @@ const colorClasses = {
                     <p class="text-xs text-amber-700 dark:text-amber-400 leading-relaxed font-medium">
                       {t('promotions.alibaba.stock_info')}
                     </p>
-                    <div class="mt-1 flex items-center gap-2">
+                    <div class="mt-1 flex items-center gap-2 flex-wrap">
                       <span class="text-xs text-slate-600 dark:text-slate-400">{t('promotions.alibaba.restock_countdown')}</span>
                       <span id="alibaba-countdown" class="text-xs font-mono font-bold text-cyan-600 dark:text-cyan-400">--:--:--</span>
+                      <span id="alibaba-local-time" class="text-xs text-slate-500 dark:text-slate-500"></span>
                     </div>
                   </div>
                   <div class="p-2 rounded bg-cyan-50/50 dark:bg-cyan-900/10 border border-cyan-200/50 dark:border-cyan-500/20">
@@ -356,27 +357,22 @@ const colorClasses = {
 </div>
 
 <script>
-  // Countdown to 9:30 AM GMT+8 daily
+  // Countdown to 00:00 AM GMT+8 daily (Pro plan restock)
   function updateAlibabaCountdown() {
     const countdownEl = document.getElementById('alibaba-countdown');
     if (!countdownEl) return;
 
     const now = new Date();
-    // Convert to GMT+8
-    const gmt8Offset = 8 * 60; // GMT+8 in minutes
+    const gmt8Offset = 8 * 60;
     const localOffset = now.getTimezoneOffset();
     const gmt8Now = new Date(now.getTime() + (gmt8Offset + localOffset) * 60000);
 
-    // Target: 9:30 AM GMT+8
+    // Target: 00:00 AM GMT+8 (next midnight)
     let target = new Date(gmt8Now);
-    target.setHours(9, 30, 0, 0);
+    target.setHours(0, 0, 0, 0);
+    target.setDate(target.getDate() + 1);
 
-    // If past 9:30 AM today, target tomorrow
-    if (gmt8Now >= target) {
-      target.setDate(target.getDate() + 1);
-    }
-
-    // Calculate diff in local time
+    // Convert back to local time
     const targetLocal = new Date(target.getTime() - (gmt8Offset + localOffset) * 60000);
     const diff = targetLocal.getTime() - now.getTime();
 
@@ -388,8 +384,15 @@ const colorClasses = {
     const hours = Math.floor(diff / (1000 * 60 * 60));
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
     countdownEl.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+    // Show user's local restock time once
+    const localTimeEl = document.getElementById('alibaba-local-time');
+    if (localTimeEl && !localTimeEl.textContent) {
+      const localRestockTime = targetLocal.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+      const localTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      localTimeEl.textContent = `(${localRestockTime} ${localTz})`;
+    }
   }
 
   updateAlibabaCountdown();
