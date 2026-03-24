@@ -31,7 +31,7 @@ export const subscriptionPromotions: SubscriptionPromotion[] = [
   {
     id: 'alibaba-cloud-ai-coding',
     name: 'Alibaba Coding Plan',
-    tagline: 'Lite $10/mo · Pro $50/mo — First renewal 50% off!',
+    tagline: 'Pro $50/mo — Only plan available',
     promoLinks: [{ label: 'alibabacloud.com/ai-coding (referral)', url: 'https://www.alibabacloud.com/campaign/ai-scene-coding?referral_code=A92LZF' }],
     color: 'cyan',
     recommended: true,
