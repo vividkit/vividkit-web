@@ -285,6 +285,15 @@ const option2Code = `{
             {t('permissions.guide.option2.source_link') || 'Additional Commands Reference'}
           </a>
         </p>
+        <!-- JSON Schema tip -->
+        <div class="mt-4 flex items-start gap-2 p-3 rounded-lg bg-blue-50 dark:bg-blue-500/10 border border-blue-200/50 dark:border-blue-500/20">
+          <svg class="w-4 h-4 text-blue-500 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+          <p class="text-xs text-slate-600 dark:text-slate-400">
+            <span class="font-semibold text-blue-600 dark:text-blue-400">Tip (Beta):</span> settings.json now supports a <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-[10px]">"$schema"</code> field for IDE autocompletion and validation.
+          </p>
+        </div>
       </div>
     </div>
   </div>

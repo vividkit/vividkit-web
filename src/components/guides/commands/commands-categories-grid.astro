@@ -113,8 +113,12 @@ const marketingCategories = getMarketingKitCategories(t);
           { cmd: "/ck:project-organization", labelKey: "commands.beta_project_organization.desc", detailKey: "commands.beta_project_organization.detail", type: "skill", badge: "new" },
           { cmd: "/ck:security-scan", labelKey: "commands.beta_security_scan.desc", detailKey: "commands.beta_security_scan.detail", type: "skill", badge: "new" },
           { cmd: "/ckm:design", labelKey: "commands.beta_design.desc", detailKey: "commands.beta_design.detail", type: "skill", badge: "new" },
+          { cmd: "/ck:preview", labelKey: "commands.beta_preview.desc", detailKey: "commands.beta_preview.detail", type: "skill", badge: "enhanced" },
           { cmd: "/ck:code-review", labelKey: "commands.beta_code_review.desc", detailKey: "commands.beta_code_review.detail", type: "skill", badge: "enhanced" },
-          { cmd: "/ck:plan", labelKey: "commands.beta_plan.desc", detailKey: "commands.beta_plan.detail", type: "skill", badge: "enhanced" },
+          { cmd: "/ck:team", labelKey: "commands.beta_team.desc", detailKey: "commands.beta_team.detail", type: "skill", badge: "enhanced" },
+          { cmd: "/ck:ck-plan", labelKey: "commands.beta_plan.desc", detailKey: "commands.beta_plan.detail", type: "skill", badge: "renamed" },
+          { cmd: "/ck:ck-debug", labelKey: "commands.beta_debug.desc", detailKey: "commands.beta_debug.detail", type: "skill", badge: "renamed" },
+          { cmd: "/ck:ck-help", labelKey: "commands.beta_ck_help.desc", detailKey: "commands.beta_ck_help.detail", type: "skill", badge: "removed" },
           { cmd: "/ck:ui-ux-pro-max", labelKey: "commands.beta_ui_ux_pro_max.desc", detailKey: "commands.beta_ui_ux_pro_max.detail", type: "skill", badge: "enhanced" },
           { cmd: "/ck:ai-multimodal", labelKey: "commands.beta_ai_multimodal.desc", detailKey: "commands.beta_ai_multimodal.detail", type: "skill", badge: "enhanced" },
           { cmd: "/ck:frontend-design", labelKey: "commands.beta_frontend_design.desc", detailKey: "commands.beta_frontend_design.detail", type: "skill", badge: "enhanced" },
@@ -127,10 +131,12 @@ const marketingCategories = getMarketingKitCategories(t);
                 <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">skill</span>
                 {item.badge === "new" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 font-medium uppercase">new</span>}
                 {item.badge === "enhanced" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium uppercase">enhanced</span>}
+                {item.badge === "renamed" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium uppercase">renamed</span>}
+                {item.badge === "removed" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-500 dark:text-red-400 font-medium uppercase">removed</span>}
               </div>
             </div>
             <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">{t(item.labelKey)}</p>
-            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">{t(item.detailKey)}</p>
+            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50" set:html={t(item.detailKey)} />
           </div>
         ))}
         <!-- Hook cards -->
@@ -146,7 +152,7 @@ const marketingCategories = getMarketingKitCategories(t);
               </div>
             </div>
             <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">{t(item.labelKey)}</p>
-            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">{t(item.detailKey)}</p>
+            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50" set:html={t(item.detailKey)} />
           </div>
         ))}
       </div>
@@ -177,18 +183,27 @@ const marketingCategories = getMarketingKitCategories(t);
                       {cmd.step}
                     </span>
                   )}
-                  <code class={`text-sm font-bold font-mono ${styles[category.color].text}`}>{cmd.command}</code>
+                  <code class={`text-sm font-bold font-mono ${cmd.deprecated ? 'line-through opacity-60' : ''} ${styles[category.color].text}`}>{cmd.command}</code>
                   {cmd.isBeta && (
                     <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">beta</span>
+                  )}
+                  {cmd.deprecated && (
+                    <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium uppercase">deprecated</span>
                   )}
                 </div>
                 <span class="text-[10px] opacity-70">{cmd.complexity}</span>
               </div>
-              <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">{cmd.desc}</p>
+              <p class={`text-xs font-medium text-slate-700 dark:text-slate-300 mb-1 ${cmd.deprecated ? 'opacity-60' : ''}`}>{cmd.desc}</p>
               {cmd.detail && (
                 <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">
                   {cmd.detail}
                 </p>
+              )}
+              {cmd.betaNote && (
+                <div class="mt-1 text-[10px] flex items-center gap-1">
+                  <span class="font-semibold text-purple-600 dark:text-purple-400">Beta:</span>
+                  <span class="text-purple-500 dark:text-purple-400">{cmd.betaNote}</span>
+                </div>
               )}
               {/* Subcommands (space-separated) */}
               {cmd.subcommands && cmd.subcommands.length > 0 && (
@@ -330,6 +345,8 @@ const marketingCategories = getMarketingKitCategories(t);
       <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         {/* Beta skill cards */}
         {[
+          { cmd: "/ckm:play", labelKey: "commands.mkt_beta.play.desc", detailKey: "commands.mkt_beta.play.detail", type: "skill", badge: "new" },
+          { cmd: "/ckm:youtube-thumbnail-design", labelKey: "commands.mkt_beta.youtube_thumbnail_design.desc", detailKey: "commands.mkt_beta.youtube_thumbnail_design.detail", type: "skill", badge: "new" },
           { cmd: "/ckm:elevenlabs", labelKey: "commands.mkt_beta.elevenlabs.desc", detailKey: "commands.mkt_beta.elevenlabs.detail", type: "skill", badge: "new" },
           { cmd: "/ckm:storage", labelKey: "commands.mkt_beta.ckm_storage.desc", detailKey: "commands.mkt_beta.ckm_storage.detail", type: "skill", badge: "new" },
           { cmd: "/ckm:marketing-dashboard", labelKey: "commands.mkt_beta.marketing_dashboard.desc", detailKey: "commands.mkt_beta.marketing_dashboard.detail", type: "skill", badge: "new" },
@@ -344,10 +361,12 @@ const marketingCategories = getMarketingKitCategories(t);
                 <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">skill</span>
                 {item.badge === "new" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 font-medium uppercase">new</span>}
                 {item.badge === "enhanced" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium uppercase">enhanced</span>}
+                {item.badge === "renamed" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium uppercase">renamed</span>}
+                {item.badge === "removed" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-500 dark:text-red-400 font-medium uppercase">removed</span>}
               </div>
             </div>
             <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">{t(item.labelKey)}</p>
-            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">{t(item.detailKey)}</p>
+            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50" set:html={t(item.detailKey)} />
           </div>
         ))}
       </div>
@@ -379,9 +398,9 @@ const marketingCategories = getMarketingKitCategories(t);
                     </span>
                   )}
                   {cmd.isSkill ? (
-                    <span class={`text-sm font-medium ${styles[category.color].text}`}>{cmd.command}</span>
+                    <span class={`text-sm font-medium ${cmd.deprecated ? 'line-through opacity-60' : ''} ${styles[category.color].text}`}>{cmd.command}</span>
                   ) : (
-                    <code class={`text-sm font-bold font-mono ${styles[category.color].text}`}>{cmd.command}</code>
+                    <code class={`text-sm font-bold font-mono ${cmd.deprecated ? 'line-through opacity-60' : ''} ${styles[category.color].text}`}>{cmd.command}</code>
                   )}
                   {cmd.isSkill && (
                     <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">
@@ -391,14 +410,23 @@ const marketingCategories = getMarketingKitCategories(t);
                   {cmd.isBeta && (
                     <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">beta</span>
                   )}
+                  {cmd.deprecated && (
+                    <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium uppercase">deprecated</span>
+                  )}
                 </div>
                 <span class="text-[10px] opacity-70">{cmd.complexity}</span>
               </div>
-              <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">{cmd.desc}</p>
+              <p class={`text-xs font-medium text-slate-700 dark:text-slate-300 mb-1 ${cmd.deprecated ? 'opacity-60' : ''}`}>{cmd.desc}</p>
               {cmd.detail && (
                 <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">
                   {cmd.detail}
                 </p>
+              )}
+              {cmd.betaNote && (
+                <div class="mt-1 text-[10px] flex items-center gap-1">
+                  <span class="font-semibold text-purple-600 dark:text-purple-400">Beta:</span>
+                  <span class="text-purple-500 dark:text-purple-400">{cmd.betaNote}</span>
+                </div>
               )}
               {/* Subcommands (space-separated) */}
               {cmd.subcommands && cmd.subcommands.length > 0 && (

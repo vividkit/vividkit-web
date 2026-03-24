@@ -19,6 +19,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           detail: t("commands.stable.ck_help.detail"),
           isSkill: true,
           step: 1,
+          betaNote: t("commands.stable.ck_help.beta_note"),
         },
         // Step 2: Set experience level
         {
@@ -62,6 +63,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           subcommands: ["archive", "red-team", "validate"],
           flags: ["--auto", "--fast", "--hard", "--parallel", "--two", "--no-tasks"],
           step: 5,
+          betaNote: t("commands.stable.plan.beta_note"),
         },
         // Step 6: Execute plan
         {
@@ -117,6 +119,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
           subcommands: ["archive", "red-team", "validate"],
           flags: ["--auto", "--fast", "--hard", "--parallel", "--two", "--no-tasks"],
+          betaNote: t("commands.stable.plan.beta_note"),
         },
         {
           command: "/ck:sequential-thinking",
@@ -329,7 +332,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           detail: t("commands.stable.ship.detail"),
           isSkill: true,
           isBeta: true,
-          flags: ["--skip-tests", "--skip-review", "--dry-run"],
+          flags: ["--official", "--beta", "--skip-tests", "--skip-review"],
         },
         {
           command: "/ck:mobile-development",
@@ -347,6 +350,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           detail: t("commands.stable.team.detail"),
           isSkill: true,
           flags: ["<template> <context>", "--devs N", "--researchers N", "--reviewers N", "--delegate"],
+          betaNote: t("commands.stable.team.beta_note"),
         },
         {
           command: "/ck:deploy",
@@ -416,7 +420,8 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.code_review.desc"),
           detail: t("commands.stable.code_review.detail"),
           isSkill: true,
-          flags: ["[context]", "codebase", "codebase parallel"],
+          flags: ["[context]", "#PR", "COMMIT", "--pending", "codebase", "codebase parallel"],
+          betaNote: t("commands.stable.code_review.beta_note"),
         },
         {
           command: "/ck:fix",
@@ -434,6 +439,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.debug.desc"),
           detail: t("commands.stable.debug.detail"),
           isSkill: true,
+          betaNote: t("commands.stable.debug.beta_note"),
         },
         {
           command: "/ck:web-testing",
@@ -519,7 +525,8 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.preview.desc"),
           detail: t("commands.stable.preview.detail"),
           isSkill: true,
-          flags: ["--explain", "--slides", "--diagram", "--ascii"],
+          flags: ["--explain", "--slides", "--diagram", "--ascii", "--html", "--diff", "--plan-review", "--recap"],
+          betaNote: t("commands.stable.preview.beta_note"),
         },
         {
           command: "/ck:markdown-novel-viewer",

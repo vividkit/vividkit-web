@@ -21,6 +21,7 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           detail: t("commands.mkt.ck_help.detail"),
           betaSyntax: "/ck:ck-help",
           step: 1,
+          betaNote: t("commands.mkt.ck_help.beta_note"),
         },
         // Step 2: Initialize project
         {
@@ -357,6 +358,16 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
           isBeta: true,
         },
+        {
+          command: "/ckm:play",
+          complexity: "⚡⚡⚡",
+          label: t("commands.label.medium"),
+          desc: t("commands.mkt.play.desc"),
+          detail: t("commands.mkt.play.detail"),
+          isSkill: true,
+          isBeta: true,
+          subcommands: ["create", "goals", "next", "status"],
+        },
       ],
     },
     {
@@ -394,6 +405,16 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           subcommands: ["create"],
           args: ["[topic]"],
           betaSyntax: "/ckm:slides",
+        },
+        {
+          command: "/ckm:youtube-thumbnail-design",
+          complexity: "⚡⚡⚡",
+          label: t("commands.label.medium"),
+          desc: t("commands.mkt.youtube_thumbnail_design.desc"),
+          detail: t("commands.mkt.youtube_thumbnail_design.detail"),
+          isSkill: true,
+          isBeta: true,
+          args: ["[niche]", "[style]"],
         },
       ],
     },
