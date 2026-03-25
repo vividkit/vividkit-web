@@ -59,20 +59,7 @@ export const common = {
   'features.item3': 'Watch ClaudeKit agents orchestrate in real-time',
   'features.item4': 'Track token usage and costs with visual dashboards',
   'features.window_title': 'VividKit - Visual Interface',
-  // fix_logs
-  // Fix Logs Guide
-  'fix_logs.guide.title': 'Fix Logs Guide',
-  'fix_logs.guide.subtitle': 'Master the art of debugging with /fix:logs',
-  'fix_logs.guide.why.title': 'Why /fix:logs?',
-  'fix_logs.guide.why.description': 'The <code class="px-1.5 py-0.5 rounded bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 font-mono text-sm">/fix:logs</code> command is your intelligent debugging assistant. It reads your error logs and automatically proposes fixes!',
-  'fix_logs.guide.how_to.title': 'How to use it right',
-  'fix_logs.guide.step1.title': 'Pipe logs to file',
-  'fix_logs.guide.step1.description': 'Redirect your application\'s output to a file named <code class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-sm">logs.txt</code>. This allows the AI to read the errors.',
-  'fix_logs.guide.step2.title': 'Start Development Environment',
-  'fix_logs.guide.step2.description': 'Run your application and reproduce the issue or error you are facing. Ensure the error logs are captured in <code class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-sm">logs.txt</code>.',
-  'fix_logs.guide.step3.title': 'Analyze and Fix',
-  'fix_logs.guide.step3.description': 'If there are errors, simply run the command:',
-  'fix_logs.guide.step3.note': 'Analyzes logs.txt & fixes errors!',
+  // fix_logs — translations moved to inline in FixLogsGuide.astro
   // footer
   // Footer
   'footer.tagline': 'Build anything without terminal friction. Powered by ClaudeKit Framework.',
