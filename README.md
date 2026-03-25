@@ -68,7 +68,7 @@ While waiting for VividKit Desktop, master ClaudeKit through our comprehensive d
 | [CCS](https://vividkit.dev/guides/ccs) | Claude Code Switcher for multi-model delegation |
 | [UI/UX](https://vividkit.dev/guides/uiux) | Design skills and styling |
 | [Resume](https://vividkit.dev/guides/resume) | Session recovery and continuation |
-| [Permissions](https://vividkit.dev/guides/permissions) | Permissions settings |
+| [Permissions](https://vividkit.dev/guides/permissions) | Permission modes (auto, bypass, granular rules) |
 | [Fix Logs](https://vividkit.dev/guides/fix-logs) | Debugging strategies |
 
 ---
