@@ -59,20 +59,7 @@ export const common = {
   'features.item3': 'Xem các agent của ClaudeKit điều phối trong thời gian thực',
   'features.item4': 'Theo dõi việc sử dụng và chi phí token qua dashboard trực quan',
   'features.window_title': 'VividKit - Giao Diện Trực Quan',
-  // fix_logs
-  // Fix Logs Guide
-  'fix_logs.guide.title': 'Hướng Dẫn Sửa Lỗi Qua Log',
-  'fix_logs.guide.subtitle': 'Làm chủ nghệ thuật gỡ lỗi với /fix:logs',
-  'fix_logs.guide.why.title': 'Tại sao dùng /fix:logs?',
-  'fix_logs.guide.why.description': 'Lệnh <code class="px-1.5 py-0.5 rounded bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 font-mono text-sm">/fix:logs</code> là trợ lý gỡ lỗi thông minh của bạn. Nó đọc log lỗi và tự động đề xuất giải pháp sửa chữa!',
-  'fix_logs.guide.how_to.title': 'Sử dụng đúng cách',
-  'fix_logs.guide.step1.title': 'Ghi log ra file',
-  'fix_logs.guide.step1.description': 'Chuyển hướng đầu ra ứng dụng của bạn vào một file tên là <code class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-sm">logs.txt</code>. Điều này cho phép AI đọc được các lỗi.',
-  'fix_logs.guide.step2.title': 'Khởi động Môi trường Phát triển',
-  'fix_logs.guide.step2.description': 'Chạy ứng dụng của bạn và tái hiện vấn đề hoặc lỗi bạn đang gặp phải. Đảm bảo rằng log lỗi được ghi lại trong <code class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-sm">logs.txt</code>.',
-  'fix_logs.guide.step3.title': 'Phân tích và Sửa chữa',
-  'fix_logs.guide.step3.description': 'Nếu có lỗi xảy ra, chỉ cần chạy lệnh:',
-  'fix_logs.guide.step3.note': 'Phân tích logs.txt & sửa lỗi!',
+  // fix_logs — translations moved to inline in FixLogsGuide.astro
   // footer
   // Footer
   'footer.tagline': 'Xây dựng mọi thứ không cần terminal friction. Powered by ClaudeKit Framework.',

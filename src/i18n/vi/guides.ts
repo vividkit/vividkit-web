@@ -118,7 +118,7 @@ export const guides = {
   'guides.permissions.title': 'Chế Độ YOLO',
   'guides.permissions.description': 'Tự động chạy lệnh không cần xác nhận',
   'guides.fix_logs.title': 'Sửa Lỗi Từ Log',
-  'guides.fix_logs.description': 'Debug và xử lý lỗi nhanh chóng',
+  'guides.fix_logs.description': 'Debug thông minh với /ck:fix phân tích log',
   'guides.resume.title': 'Tiếp Tục Phiên',
   'guides.resume.description': 'Khôi phục context từ phiên trước',
   'guides.promotions.title': 'Khuyến Mãi',
