@@ -549,7 +549,119 @@ export const marketingKitWorkflows = [
     borderColor: 'border-indigo-500/20'
   },
 
+  // === PLAYBOOK & ORCHESTRATION ===
+  {
+    title: 'Run Marketing Playbook',
+    category: 'Playbook & Orchestration',
+    level: 'Intermediate',
+    duration: '~30-60 min',
+    stepCount: 4,
+    bestFor: 'Orchestrating end-to-end marketing campaigns with templates, goals, and smart suggestions',
+    gradientHeader: 'from-violet-500/10 to-fuchsia-500/10',
+    hoverBorderColor: 'hover:border-violet-500/50',
+    buttonColor: 'bg-violet-500 hover:bg-violet-600',
+    icon: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
+    iconColor: 'text-violet-600 dark:text-violet-400',
+    steps: [
+      {
+        command: '/ckm:play create --template saas-launch',
+        typeLabel: 'Create playbook (skill)',
+        description: 'Choose from templates: saas-launch, product-hunt-launch, content-engine, campaign-sprint',
+        color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      },
+      {
+        command: '/ckm:play goals set',
+        typeLabel: 'Set goals (skill)',
+        description: 'Define KPIs and targets — integrates with GA4, GSC, Stripe metrics',
+        color: 'bg-fuchsia-500/10 dark:bg-fuchsia-500/20 text-fuchsia-600 dark:text-fuchsia-400',
+        number: 2,
+        isSkill: true,
+        isBeta: true
+      },
+      {
+        command: '/ckm:play next',
+        typeLabel: 'Smart next step (skill)',
+        description: 'AI suggests highest-impact action based on goal gaps and step readiness',
+        color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
+        number: 3,
+        isSkill: true,
+        isBeta: true
+      },
+      {
+        command: '/ckm:play status',
+        typeLabel: 'Track progress (skill)',
+        description: 'Dashboard view of all steps, goals, and blockers',
+        color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
+        number: 4,
+        isSkill: true,
+        isBeta: true
+      }
+    ],
+    tip: 'Use /ckm:play learn to capture insights after completing each step',
+    features: [
+      'Dependency-graph routing between steps',
+      'Quality gates for human approval checkpoints',
+      'Goal tracking with GA4/GSC/Stripe integration',
+      'Smart suggestions based on goal gaps',
+      '4 bundled templates: SaaS launch, Product Hunt, content engine, campaign sprint'
+    ],
+    borderColor: 'border-violet-500/20'
+  },
+
   // === VIDEO & MEDIA ===
+  {
+    title: 'Design YouTube Thumbnails',
+    category: 'Video & Media',
+    level: 'Beginner',
+    duration: '~10-20 min',
+    stepCount: 3,
+    bestFor: 'Creating CTR-optimized YouTube thumbnails with AI generation',
+    gradientHeader: 'from-red-500/10 to-orange-500/10',
+    hoverBorderColor: 'hover:border-red-500/50',
+    buttonColor: 'bg-red-500 hover:bg-red-600',
+    icon: '<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>',
+    iconColor: 'text-red-600 dark:text-red-400',
+    steps: [
+      {
+        command: '/ckm:youtube-thumbnail-design',
+        typeLabel: 'Design thumbnails (skill)',
+        description: 'AI generates complete thumbnails with text baked in via Gemini Pro (up to 4K)',
+        color: 'bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      },
+      {
+        command: '/ck:ai-multimodal',
+        typeLabel: 'Review & iterate (skill)',
+        description: 'Analyze generated thumbnails and refine with feedback',
+        color: 'bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400',
+        number: 2,
+        isSkill: true
+      },
+      {
+        command: '/ckm:assets-organizing',
+        typeLabel: 'Organize exports (skill)',
+        description: 'Structure thumbnails by video slug with variant naming',
+        color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
+        number: 3,
+        isSkill: true,
+        isBeta: true
+      }
+    ],
+    tip: '17 art direction styles available: facecam, mystery, bold-text, before-after, and more',
+    features: [
+      '17 art direction styles with CTR impact ratings',
+      'Niche-specific guides: tech, gaming, education, cooking, fitness, business',
+      'Batch variant generation for A/B testing',
+      'Reference face support for consistent branding',
+      'Google Font support and arrow overlays'
+    ],
+    borderColor: 'border-red-500/20'
+  },
   {
     title: 'Script & Storyboard Video',
     category: 'Video & Media',

@@ -179,6 +179,17 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isBeta: true,
         },
         {
+          command: "/ck:stitch",
+          complexity: "⚡⚡⚡",
+          label: t("commands.label.medium"),
+          desc: t("commands.stable.stitch.desc"),
+          detail: t("commands.stable.stitch.detail"),
+          isSkill: true,
+          isBeta: true,
+          subcommands: ["generate", "export"],
+          flags: ["--format all", "--format html", "--device mobile"],
+        },
+        {
           command: "/ck:ui-ux-pro-max",
           complexity: "⚡⚡⚡⚡",
           label: t("commands.label.advanced"),
