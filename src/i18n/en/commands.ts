@@ -595,6 +595,8 @@ export const commands = {
   'commands.stable.ui_styling.detail': 'Radix UI + Tailwind CSS. Dark mode, design system.',
   'commands.stable.design.desc': 'Brand identity, logo, CIP, slides, banner, icon',
   'commands.stable.design.detail': '55 logo styles, 50 CIP deliverables, social media images. Generate images with Gemini AI.',
+  'commands.stable.stitch.desc': 'AI design generation via Google Stitch',
+  'commands.stable.stitch.detail': 'Generate high-fidelity UI from text prompts. Export Tailwind/HTML. Design-to-code pipeline.',
   'commands.stable.ui_ux_pro_max.desc': '50+ styles, 161 color palettes, 57 font pairings',
   'commands.stable.ui_ux_pro_max.detail': '161 product types, 99 UX guidelines, 25 chart types, 10 stacks.',
   'commands.stable.web_design_guidelines.desc': 'Evaluate UI against Web Interface Guidelines',
@@ -741,6 +743,8 @@ export const commands = {
   // Renamed/removed skills in beta
   'commands.beta_preview.desc': '+HTML mode with theme toggle and publication-quality output',
   'commands.beta_preview.detail': 'Self-contained HTML: --html --explain, --diff, --plan-review, --recap. Mermaid v11, Chart.js, custom themes.',
+  'commands.beta_stitch.desc': 'AI design generation via Google Stitch',
+  'commands.beta_stitch.detail': 'Text-to-UI with Google Stitch API. Export Tailwind/HTML. MCP server integration. 200 credits/day (Flash).',
   'commands.beta_team.desc': 'v3.0.0 — current Claude Code Agent API',
   'commands.beta_team.detail': 'Major rewrite: updated controls, modes, and best practices for Agent Teams.',
   'commands.beta_debug.desc': 'Renamed from /ck:debug to avoid CC built-in collision',
