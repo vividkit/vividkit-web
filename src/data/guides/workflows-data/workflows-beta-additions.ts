@@ -133,5 +133,55 @@ export const betaOnlyWorkflows = [
       'Chart.js data visualizations'
     ],
     borderColor: 'border-rose-500/20'
+  },
+  {
+    title: 'AI Design Generation (Stitch)',
+    category: 'Design & Frontend',
+    level: 'Intermediate',
+    duration: '~5-15 min',
+    stepCount: 3,
+    bestFor: 'Generating high-fidelity UI designs from text prompts via Google Stitch',
+    gradientHeader: 'from-sky-500/10 to-indigo-500/10',
+    hoverBorderColor: 'hover:border-sky-500/50',
+    buttonColor: 'bg-sky-500 hover:bg-sky-600',
+    icon: '<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>',
+    iconColor: 'text-sky-600 dark:text-sky-400',
+    steps: [
+      {
+        command: '/ck:stitch generate "prompt"',
+        typeLabel: 'Generate design (skill)',
+        description: 'Create UI designs from text prompts using Google Stitch AI',
+        color: 'bg-sky-500/10 dark:bg-sky-500/20 text-sky-600 dark:text-sky-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      },
+      {
+        command: '/ck:stitch export --format all',
+        typeLabel: 'Export assets (skill)',
+        description: 'Export as Tailwind/HTML + DESIGN.md spec for implementation',
+        color: 'bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400',
+        number: 2,
+        isSkill: true,
+        isBeta: true
+      },
+      {
+        command: '/ck:frontend-design',
+        typeLabel: 'Implement components (skill)',
+        description: 'Build React components from the exported design spec',
+        color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
+        number: 3,
+        isSkill: true
+      }
+    ],
+    tip: 'Set up Stitch MCP server in .claude/.mcp.json for direct tool integration',
+    features: [
+      'Text-to-UI design via Google Stitch API',
+      'Export to Tailwind/HTML and DESIGN.md',
+      'Design-to-code pipeline with existing skills',
+      'Supports mobile, desktop, and tablet layouts',
+      'Quota: 200 credits/day (Flash), 50/day (Pro)'
+    ],
+    borderColor: 'border-sky-500/20'
   }
 ];
