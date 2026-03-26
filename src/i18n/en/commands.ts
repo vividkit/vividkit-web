@@ -708,7 +708,11 @@ export const commands = {
   'commands.stable.repomix.detail': 'Output in XML, markdown, plain, or JSON format.',
   'commands.stable.gkg.desc': 'Semantic code analysis',
   'commands.stable.gkg.detail': 'GitLab Knowledge Graph integration.',
+  'commands.stable.retro.desc': 'Data-driven sprint retrospective',
+  'commands.stable.retro.detail': 'Git metrics, health indicators, and actionable recommendations.',
   // Beta Preview section
+  'commands.beta_retro.desc': 'Data-driven sprint retrospective with git metrics',
+  'commands.beta_retro.detail': 'Commits, LOC, hotspots, churn rate, test ratio. --compare for period deltas. --team for per-author breakdown. HTML/MD output.',
   'commands.beta_preview.title': 'Beta Preview',
   'commands.beta_preview.subtitle': 'New skills and major enhancements coming in v2.14.0 Beta',
   'commands.beta_ship.desc': 'Unified shipping pipeline with official/beta modes',

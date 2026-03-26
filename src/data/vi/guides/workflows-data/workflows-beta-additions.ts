@@ -122,5 +122,38 @@ export const betaOnlyWorkflows = [
       'Hoạt động với mọi loại project'
     ],
     borderColor: 'border-violet-500/20'
+  },
+  {
+    title: 'Sprint Retrospective',
+    category: 'Session & Management',
+    level: 'Beginner',
+    duration: '~2-5 phút',
+    stepCount: 1,
+    bestFor: 'Review sprint dựa trên dữ liệu git metrics, chỉ số sức khỏe và đề xuất hành động',
+    gradientHeader: 'from-amber-500/10 to-yellow-500/10',
+    hoverBorderColor: 'hover:border-amber-500/50',
+    buttonColor: 'bg-amber-500 hover:bg-amber-600',
+    icon: '<path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/>',
+    iconColor: 'text-amber-600 dark:text-amber-400',
+    steps: [
+      {
+        command: '/ck:retro [timeframe] [--compare] [--team] [--format html|md]',
+        typeLabel: 'Phân tích sprint (skill)',
+        description: 'Thu thập git metrics (commits, LOC, hotspots, churn), tính chỉ số sức khỏe, tạo báo cáo retrospective',
+        color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      }
+    ],
+    tip: '/ck:retro 2w --compare --team tạo retro 2 tuần với so sánh kỳ trước và phân tích theo tác giả',
+    features: [
+      'Git metrics: commits/ngày, LOC thêm/xóa, file hotspots',
+      'Chỉ số sức khỏe: churn rate, test ratio, active day ratio',
+      'So sánh với kỳ trước bằng --compare',
+      'Phân tích theo tác giả với --team',
+      'Xuất định dạng HTML hoặc Markdown'
+    ],
+    borderColor: 'border-amber-500/20'
   }
 ];
