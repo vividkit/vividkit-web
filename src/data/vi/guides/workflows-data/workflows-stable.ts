@@ -3,6 +3,7 @@
 export const stableWorkflows = [
   {
     title: 'Xây Dựng Feature Mới',
+    category: 'Getting Started',
     level: 'Beginner',
     duration: '~15-30 phút',
     stepCount: 4,
@@ -50,6 +51,7 @@ export const stableWorkflows = [
   },
   {
     title: 'Sửa Lỗi (Bug Fix)',
+    category: 'Debugging & Fixes',
     level: 'Beginner',
     duration: '~5-15 phút',
     stepCount: 3,
@@ -95,6 +97,7 @@ export const stableWorkflows = [
   },
   {
     title: 'Quick Implementation',
+    category: 'Getting Started',
     level: 'Intermediate',
     duration: '~10-20 phút',
     stepCount: 1,
@@ -132,6 +135,7 @@ export const stableWorkflows = [
   },
   {
     title: 'Bootstrap Project Mới',
+    category: 'Getting Started',
     level: 'Advanced',
     duration: '~1-2 giờ',
     stepCount: 1,
@@ -162,6 +166,7 @@ export const stableWorkflows = [
   },
   {
     title: 'Tạo Video Content',
+    category: 'Media & Creative',
     level: 'Intermediate',
     duration: '~20-40 phút',
     stepCount: 2,
@@ -199,6 +204,7 @@ export const stableWorkflows = [
   },
   {
     title: 'Visual Documentation',
+    category: 'Research & Docs',
     level: 'Beginner',
     duration: '~10-20 phút',
     stepCount: 3,
@@ -245,6 +251,7 @@ export const stableWorkflows = [
   },
   {
     title: 'Code Review với Edge Cases',
+    category: 'Planning & Review',
     level: 'Intermediate',
     duration: '~20-30 phút',
     stepCount: 4,
@@ -299,6 +306,7 @@ export const stableWorkflows = [
   },
   {
     title: 'Plan + Validate + Implement',
+    category: 'Planning & Review',
     level: 'Intermediate',
     duration: '~20-40 phút',
     stepCount: 4,
@@ -359,6 +367,7 @@ export const stableWorkflows = [
   },
   {
     title: 'Agent Teams (Song Song)',
+    category: 'Advanced',
     level: 'Advanced',
     duration: '~30-60 phút',
     stepCount: 2,
@@ -402,6 +411,7 @@ export const stableWorkflows = [
   },
   {
     title: 'Red-Team Plan Review',
+    category: 'Planning & Review',
     level: 'Advanced',
     duration: '~10-20 phút',
     stepCount: 2,
@@ -439,6 +449,7 @@ export const stableWorkflows = [
   },
   {
     title: 'Research & Documentation',
+    category: 'Research & Docs',
     level: 'Beginner',
     duration: '~10-20 phút',
     stepCount: 3,
@@ -486,6 +497,7 @@ export const stableWorkflows = [
   },
   {
     title: 'Security Audit',
+    category: 'Debugging & Fixes',
     level: 'Intermediate',
     duration: '~15-25 phút',
     stepCount: 3,
@@ -534,6 +546,7 @@ export const stableWorkflows = [
   },
   {
     title: 'Database Operations',
+    category: 'Backend & Infra',
     level: 'Intermediate',
     duration: '~15-30 phút',
     stepCount: 3,
@@ -580,6 +593,7 @@ export const stableWorkflows = [
   },
   {
     title: 'DevOps & Deployment',
+    category: 'Shipping',
     level: 'Advanced',
     duration: '~20-40 phút',
     stepCount: 3,

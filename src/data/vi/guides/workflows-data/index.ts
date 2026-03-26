@@ -7,11 +7,11 @@ export { betaOnlyWorkflows } from './workflows-beta-additions';
 export { marketingKitWorkflows } from './workflows-marketing-kit';
 export { legacyWorkflows, workflows } from './workflows-legacy';
 
-// Re-export engineerKitWorkflows from EN (has category field for grouping)
-export { engineerKitWorkflows } from '@/data/guides/workflows-data/index';
-
 import { stableWorkflows } from './workflows-stable';
 import { betaOnlyWorkflows } from './workflows-beta-additions';
 
 // betaWorkflows = stable + beta-only additions (mirrors original behavior)
 export const betaWorkflows = [...stableWorkflows, ...betaOnlyWorkflows];
+
+// engineerKitWorkflows built from VI data (stable + beta-only)
+export const engineerKitWorkflows = [...stableWorkflows, ...betaOnlyWorkflows];
