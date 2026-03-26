@@ -708,7 +708,11 @@ export const commands = {
   'commands.stable.repomix.detail': 'Đầu ra định dạng XML, markdown, plain, hoặc JSON.',
   'commands.stable.gkg.desc': 'Phân tích code ngữ nghĩa',
   'commands.stable.gkg.detail': 'Tích hợp GitLab Knowledge Graph.',
+  'commands.stable.retro.desc': 'Retrospective sprint dựa trên dữ liệu',
+  'commands.stable.retro.detail': 'Git metrics, chỉ số sức khỏe, và đề xuất hành động.',
   // Beta Preview section
+  'commands.beta_retro.desc': 'Retrospective sprint dựa trên git metrics',
+  'commands.beta_retro.detail': 'Commits, LOC, hotspots, churn rate, test ratio. --compare so sánh kỳ trước. --team phân tích theo tác giả. HTML/MD output.',
   'commands.beta_preview.title': 'Beta Preview',
   'commands.beta_preview.subtitle': 'Skill mới và cải tiến lớn trong phiên bản v2.14.0 Beta',
   'commands.beta_ship.desc': 'Ship pipeline với chế độ official/beta',

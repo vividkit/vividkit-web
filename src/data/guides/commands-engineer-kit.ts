@@ -652,6 +652,17 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           detail: t("commands.stable.context_engineering.detail"),
           isSkill: true,
         },
+        {
+          command: "/ck:retro",
+          complexity: "⚡⚡",
+          label: t("commands.label.medium"),
+          desc: t("commands.stable.retro.desc"),
+          detail: t("commands.stable.retro.detail"),
+          isSkill: true,
+          isBeta: true,
+          args: ["[timeframe]"],
+          flags: ["--compare", "--team", "--format html|md"],
+        },
       ],
     },
     {

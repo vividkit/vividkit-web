@@ -1,6 +1,6 @@
 // Beta-only workflow additions (v2.14.0)
 // These are combined with stableWorkflows in the index to form betaWorkflows
-// New skills: /ck:ship, /ck:deploy, /ck:llms
+// New skills: /ck:ship, /ck:deploy, /ck:llms, /ck:retro
 
 export const betaOnlyWorkflows = [
   {
@@ -133,6 +133,39 @@ export const betaOnlyWorkflows = [
       'Chart.js data visualizations'
     ],
     borderColor: 'border-rose-500/20'
+  },
+  {
+    title: 'Sprint Retrospective',
+    category: 'Session & Management',
+    level: 'Beginner',
+    duration: '~2-5 min',
+    stepCount: 1,
+    bestFor: 'Data-driven sprint reviews with git metrics, health indicators, and actionable recommendations',
+    gradientHeader: 'from-amber-500/10 to-yellow-500/10',
+    hoverBorderColor: 'hover:border-amber-500/50',
+    buttonColor: 'bg-amber-500 hover:bg-amber-600',
+    icon: '<path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/>',
+    iconColor: 'text-amber-600 dark:text-amber-400',
+    steps: [
+      {
+        command: '/ck:retro [timeframe] [--compare] [--team] [--format html|md]',
+        typeLabel: 'Analyze sprint (skill)',
+        description: 'Gather git metrics (commits, LOC, hotspots, churn), compute health indicators, generate retrospective report',
+        color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      }
+    ],
+    tip: '/ck:retro 2w --compare --team generates a two-week retro with period comparison and per-author breakdown',
+    features: [
+      'Git metrics: commits/day, LOC added/removed, file hotspots',
+      'Health indicators: churn rate, test ratio, active day ratio',
+      'Period comparison with --compare flag',
+      'Per-author breakdown with --team flag',
+      'HTML or Markdown output format'
+    ],
+    borderColor: 'border-amber-500/20'
   },
   {
     title: 'AI Design Generation (Stitch)',
