@@ -53,9 +53,9 @@ export const stableWorkflows = [
     title: 'Fix a Bug',
     category: 'Debugging & Fixes',
     level: 'Beginner',
-    duration: '~5-15 min',
-    stepCount: 3,
-    bestFor: 'Fixing errors and unexpected behavior',
+    duration: '~10-20 min',
+    stepCount: 6,
+    bestFor: 'Structured diagnosis and repair of bugs',
     gradientHeader: 'from-red-500/10 to-orange-500/10',
     hoverBorderColor: 'hover:border-red-500/50',
     buttonColor: 'bg-red-500 hover:bg-red-600',
@@ -63,30 +63,55 @@ export const stableWorkflows = [
     iconColor: 'text-red-600 dark:text-red-400',
     steps: [
       {
-        command: '/ck:debug',
-        typeLabel: 'Investigate the issue (skill)',
-        description: 'AI analyzes your code to find the root cause of the problem',
+        command: '/ck:fix',
+        typeLabel: '6-step pipeline (skill)',
+        description: 'Runs the full pipeline: Scout → Diagnose → Assess → Fix → Verify → Prevent',
         color: 'bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400',
         number: 1,
         isSkill: true
       },
       {
-        command: '/ck:fix',
-        typeLabel: 'Apply the fix (skill)',
-        description: 'AI intelligently routes to specialized fix and applies the solution',
+        typeLabel: '① Scout',
+        description: 'Gather evidence — logs, stack traces, affected files',
         color: 'bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400',
         number: 2,
-        isSkill: true
+        hasIcon: true,
+        icon: '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>'
       },
       {
-        command: '/ck:test',
-        typeLabel: 'Verify the fix',
-        description: 'Run tests to make sure the bug is fixed and nothing else broke',
+        typeLabel: '② Diagnose → ③ Assess',
+        description: 'Root-cause analysis based on evidence, then severity/impact assessment',
+        color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
+        number: 3,
+        hasIcon: true,
+        icon: '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>'
+      },
+      {
+        typeLabel: '④ Fix',
+        description: 'Apply targeted fix based on diagnosed root cause',
+        color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
+        number: 4,
+        hasIcon: true,
+        icon: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>'
+      },
+      {
+        typeLabel: '⑤ Verify',
+        description: 'Run tests to confirm fix works and no regressions',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
-        number: 3
+        number: 5,
+        hasIcon: true,
+        icon: '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>'
+      },
+      {
+        typeLabel: '⑥ Prevent',
+        description: 'Add guards, tests, or documentation to prevent recurrence',
+        color: 'bg-teal-500/10 dark:bg-teal-500/20 text-teal-600 dark:text-teal-400',
+        number: 6,
+        hasIcon: true,
+        icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>'
       }
     ],
-    tip: '/ck:debug & /ck:fix: intelligent routing with flags --auto, --review, --quick, --parallel',
+    tip: '/ck:fix v2.0: evidence-based RCA, no guessing. Flags: --auto, --review, --quick, --parallel',
     fixFlags: [
       { flag: '--auto', desc: 'Auto-apply fix without confirmation', color: 'green' },
       { flag: '--review', desc: 'Review fix before applying', color: 'purple' },
@@ -514,8 +539,7 @@ export const stableWorkflows = [
         description: 'Scan codebase for OWASP issues, hardcoded secrets, and dependency vulnerabilities',
         color: 'bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400',
         number: 1,
-        isSkill: true,
-        isBeta: true
+        isSkill: true
       },
       {
         command: '/ck:code-review --security',
@@ -618,8 +642,7 @@ export const stableWorkflows = [
         description: 'Deploy to Cloudflare, Vercel, GCP, or Kubernetes with auto-detection',
         color: 'bg-zinc-500/10 dark:bg-zinc-500/20 text-zinc-600 dark:text-zinc-400',
         number: 2,
-        isSkill: true,
-        isBeta: true
+        isSkill: true
       },
       {
         command: '/ck:test --e2e',
@@ -638,5 +661,100 @@ export const stableWorkflows = [
       'Rollback and monitoring setup'
     ],
     borderColor: 'border-slate-500/20'
+  },
+  {
+    title: 'Ship a Feature',
+    category: 'Shipping',
+    level: 'Intermediate',
+    duration: '~5-10 min',
+    stepCount: 1,
+    bestFor: 'Shipping feature branches with automated test, review, and PR creation',
+    gradientHeader: 'from-emerald-500/10 to-teal-500/10',
+    hoverBorderColor: 'hover:border-emerald-500/50',
+    buttonColor: 'bg-emerald-500 hover:bg-emerald-600',
+    icon: '<path d="M5 12h14M12 5l7 7-7 7"/>',
+    iconColor: 'text-emerald-600 dark:text-emerald-400',
+    steps: [
+      {
+        command: '/ck:ship [--official|--beta] [--skip-tests] [--skip-review]',
+        typeLabel: 'Ship pipeline (skill)',
+        description: 'Merge main, run tests, pre-landing review, bump version, update changelog, push, create PR',
+        color: 'bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
+        number: 1,
+        isSkill: true
+      }
+    ],
+    tip: '/ck:ship auto-detects test runner, version file format, and changelog style',
+    features: [
+      'Supports official (→main) and beta (→dev) ship modes',
+      'Merges origin/main (or dev for beta) before testing',
+      'Auto-detects npm/pytest/cargo/go test',
+      'Two-pass code review + adversarial review (stage 3)',
+      'Bumps version and updates CHANGELOG.md',
+      'Creates PR with summary, test results, and linked issues'
+    ],
+    borderColor: 'border-emerald-500/20'
+  },
+  {
+    title: 'Deploy Your App',
+    category: 'Shipping',
+    level: 'Intermediate',
+    duration: '~5-15 min',
+    stepCount: 1,
+    bestFor: 'Deploying to Vercel, Netlify, Railway, Fly.io, AWS, GCP and more',
+    gradientHeader: 'from-orange-500/10 to-amber-500/10',
+    hoverBorderColor: 'hover:border-orange-500/50',
+    buttonColor: 'bg-orange-500 hover:bg-orange-600',
+    icon: '<path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>',
+    iconColor: 'text-orange-600 dark:text-orange-400',
+    steps: [
+      {
+        command: '/ck:deploy [platform]',
+        typeLabel: 'Auto-deploy (skill)',
+        description: 'AI detects your project type and deploys to 15+ platforms with zero manual config',
+        color: 'bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400',
+        number: 1,
+        isSkill: true
+      }
+    ],
+    tip: '/ck:deploy auto-detects your stack and handles environment variables, build steps, and platform config',
+    features: [
+      'Auto-detects project type (Next.js, Astro, Express, etc.)',
+      'Supports 15+ platforms out of the box',
+      'Handles env vars and build configuration',
+      'Vercel, Netlify, Railway, Fly.io, AWS, GCP, Azure'
+    ],
+    borderColor: 'border-orange-500/20'
+  },
+  {
+    title: 'LLMs.txt Generation',
+    category: 'Research & Docs',
+    level: 'Beginner',
+    duration: '~5-10 min',
+    stepCount: 1,
+    bestFor: 'Making your project AI-friendly for LLM consumption',
+    gradientHeader: 'from-violet-500/10 to-purple-500/10',
+    hoverBorderColor: 'hover:border-violet-500/50',
+    buttonColor: 'bg-violet-500 hover:bg-violet-600',
+    icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>',
+    iconColor: 'text-violet-600 dark:text-violet-400',
+    steps: [
+      {
+        command: '/ck:llms [path]',
+        typeLabel: 'Generate index (skill)',
+        description: 'Create llms.txt following llmstxt.org spec — makes your docs AI-readable',
+        color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
+        number: 1,
+        isSkill: true
+      }
+    ],
+    tip: '/ck:llms generates standardized llms.txt so AI tools can quickly understand your codebase',
+    features: [
+      'Follows llmstxt.org specification',
+      'Generates from docs, README, or codebase',
+      'Includes reference files and structure overview',
+      'Works with any project type'
+    ],
+    borderColor: 'border-violet-500/20'
   }
 ];

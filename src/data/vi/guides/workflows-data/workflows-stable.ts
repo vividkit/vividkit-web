@@ -53,9 +53,9 @@ export const stableWorkflows = [
     title: 'Sửa Lỗi (Bug Fix)',
     category: 'Debugging & Fixes',
     level: 'Beginner',
-    duration: '~5-15 phút',
-    stepCount: 3,
-    bestFor: 'Sửa lỗi và hành vi không mong muốn',
+    duration: '~10-20 phút',
+    stepCount: 6,
+    bestFor: 'Chẩn đoán và sửa lỗi có cấu trúc',
     gradientHeader: 'from-red-500/10 to-orange-500/10',
     hoverBorderColor: 'hover:border-red-500/50',
     buttonColor: 'bg-red-500 hover:bg-red-600',
@@ -63,30 +63,55 @@ export const stableWorkflows = [
     iconColor: 'text-red-600 dark:text-red-400',
     steps: [
       {
-        command: '/ck:debug',
-        typeLabel: 'Debug vấn đề (skill)',
-        description: 'AI phân tích code để tìm root cause',
+        command: '/ck:fix',
+        typeLabel: 'Pipeline 6 bước (skill)',
+        description: 'Chạy pipeline đầy đủ: Scout → Chẩn đoán → Đánh giá → Sửa → Xác minh → Phòng ngừa',
         color: 'bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400',
         number: 1,
         isSkill: true
       },
       {
-        command: '/ck:fix',
-        typeLabel: 'Apply fix (skill)',
-        description: 'AI tự động route đến specialized fix và áp dụng giải pháp',
+        typeLabel: '① Scout',
+        description: 'Thu thập bằng chứng — logs, stack traces, files bị ảnh hưởng',
         color: 'bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400',
         number: 2,
-        isSkill: true
+        hasIcon: true,
+        icon: '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>'
       },
       {
-        command: '/ck:test',
-        typeLabel: 'Verify fix',
-        description: 'Chạy tests để đảm bảo bug đã được sửa và không break gì khác',
+        typeLabel: '② Chẩn đoán → ③ Đánh giá',
+        description: 'Phân tích root cause dựa trên bằng chứng, sau đó đánh giá mức độ nghiêm trọng',
+        color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
+        number: 3,
+        hasIcon: true,
+        icon: '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>'
+      },
+      {
+        typeLabel: '④ Sửa lỗi',
+        description: 'Áp dụng fix có mục tiêu dựa trên root cause đã chẩn đoán',
+        color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
+        number: 4,
+        hasIcon: true,
+        icon: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>'
+      },
+      {
+        typeLabel: '⑤ Xác minh',
+        description: 'Chạy tests để xác nhận fix hoạt động và không có regression',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
-        number: 3
+        number: 5,
+        hasIcon: true,
+        icon: '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>'
+      },
+      {
+        typeLabel: '⑥ Phòng ngừa',
+        description: 'Thêm guards, tests, hoặc documentation để ngăn tái phát',
+        color: 'bg-teal-500/10 dark:bg-teal-500/20 text-teal-600 dark:text-teal-400',
+        number: 6,
+        hasIcon: true,
+        icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>'
       }
     ],
-    tip: '/ck:debug & /ck:fix: intelligent routing với flags --auto, --review, --quick, --parallel',
+    tip: '/ck:fix v2.0: RCA dựa trên bằng chứng. Flags: --auto, --review, --quick, --parallel',
     fixFlags: [
       { flag: '--auto', desc: 'Tự động apply fix không cần xác nhận', color: 'green' },
       { flag: '--review', desc: 'Review fix trước khi apply', color: 'purple' },
@@ -514,8 +539,7 @@ export const stableWorkflows = [
         description: 'Quét codebase tìm OWASP issues, hardcoded secrets và dependency vulnerabilities',
         color: 'bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400',
         number: 1,
-        isSkill: true,
-        isBeta: true
+        isSkill: true
       },
       {
         command: '/ck:code-review --security',
@@ -618,8 +642,7 @@ export const stableWorkflows = [
         description: 'Deploy lên Cloudflare, Vercel, GCP hoặc Kubernetes với auto-detection',
         color: 'bg-zinc-500/10 dark:bg-zinc-500/20 text-zinc-600 dark:text-zinc-400',
         number: 2,
-        isSkill: true,
-        isBeta: true
+        isSkill: true
       },
       {
         command: '/ck:test --e2e',
@@ -638,5 +661,100 @@ export const stableWorkflows = [
       'Setup rollback và monitoring'
     ],
     borderColor: 'border-slate-500/20'
+  },
+  {
+    title: 'Ship Feature',
+    category: 'Shipping',
+    level: 'Intermediate',
+    duration: '~5-10 phút',
+    stepCount: 1,
+    bestFor: 'Ship feature branch với test, review và tạo PR tự động',
+    gradientHeader: 'from-emerald-500/10 to-teal-500/10',
+    hoverBorderColor: 'hover:border-emerald-500/50',
+    buttonColor: 'bg-emerald-500 hover:bg-emerald-600',
+    icon: '<path d="M5 12h14M12 5l7 7-7 7"/>',
+    iconColor: 'text-emerald-600 dark:text-emerald-400',
+    steps: [
+      {
+        command: '/ck:ship [--official|--beta] [--skip-tests] [--skip-review]',
+        typeLabel: 'Ship pipeline (skill)',
+        description: 'Merge main, chạy test, review pre-landing, bump version, cập nhật changelog, push, tạo PR',
+        color: 'bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
+        number: 1,
+        isSkill: true
+      }
+    ],
+    tip: '/ck:ship tự nhận diện test runner, format version file và changelog style',
+    features: [
+      'Hỗ trợ chế độ official (→main) và beta (→dev)',
+      'Merge origin/main (hoặc dev cho beta) trước khi test',
+      'Tự nhận diện npm/pytest/cargo/go test',
+      'Review code 2 pass + adversarial review (giai đoạn 3)',
+      'Bump version và cập nhật CHANGELOG.md',
+      'Tạo PR với summary, kết quả test và linked issues'
+    ],
+    borderColor: 'border-emerald-500/20'
+  },
+  {
+    title: 'Deploy Ứng Dụng',
+    category: 'Shipping',
+    level: 'Intermediate',
+    duration: '~5-15 phút',
+    stepCount: 1,
+    bestFor: 'Deploy lên Vercel, Netlify, Railway, Fly.io, AWS, GCP và nhiều hơn',
+    gradientHeader: 'from-orange-500/10 to-amber-500/10',
+    hoverBorderColor: 'hover:border-orange-500/50',
+    buttonColor: 'bg-orange-500 hover:bg-orange-600',
+    icon: '<path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>',
+    iconColor: 'text-orange-600 dark:text-orange-400',
+    steps: [
+      {
+        command: '/ck:deploy [platform]',
+        typeLabel: 'Auto-deploy (skill)',
+        description: 'AI tự nhận diện project type và deploy lên 15+ nền tảng mà không cần cấu hình thủ công',
+        color: 'bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400',
+        number: 1,
+        isSkill: true
+      }
+    ],
+    tip: '/ck:deploy tự nhận diện stack và xử lý biến môi trường, build steps và cấu hình platform',
+    features: [
+      'Tự nhận diện project type (Next.js, Astro, Express, ...)',
+      'Hỗ trợ 15+ nền tảng sẵn có',
+      'Xử lý env vars và cấu hình build',
+      'Vercel, Netlify, Railway, Fly.io, AWS, GCP, Azure'
+    ],
+    borderColor: 'border-orange-500/20'
+  },
+  {
+    title: 'Tạo LLMs.txt',
+    category: 'Research & Docs',
+    level: 'Beginner',
+    duration: '~5-10 phút',
+    stepCount: 1,
+    bestFor: 'Làm cho project dễ đọc với các AI/LLM tools',
+    gradientHeader: 'from-violet-500/10 to-purple-500/10',
+    hoverBorderColor: 'hover:border-violet-500/50',
+    buttonColor: 'bg-violet-500 hover:bg-violet-600',
+    icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>',
+    iconColor: 'text-violet-600 dark:text-violet-400',
+    steps: [
+      {
+        command: '/ck:llms [path]',
+        typeLabel: 'Tạo index (skill)',
+        description: 'Tạo llms.txt theo chuẩn llmstxt.org — giúp AI đọc hiểu docs của bạn dễ dàng',
+        color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
+        number: 1,
+        isSkill: true
+      }
+    ],
+    tip: '/ck:llms tạo llms.txt chuẩn hóa để AI tools có thể hiểu nhanh codebase của bạn',
+    features: [
+      'Tuân theo chuẩn llmstxt.org',
+      'Tạo từ docs, README hoặc codebase',
+      'Bao gồm reference files và cấu trúc tổng quan',
+      'Hoạt động với mọi loại project'
+    ],
+    borderColor: 'border-violet-500/20'
   }
 ];

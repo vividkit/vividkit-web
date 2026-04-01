@@ -1,5 +1,5 @@
-// Marketing Kit (v1.2.1) stable command categories
-// Beta syntax annotations show v1.3.0 equivalents
+// Marketing Kit (v1.3.1) — prefix migration complete: /mkt: → /ckm:
+// All commands now use /ckm: as stable prefix
 // Consolidated: parent commands with subcommands in flags (no duplicate variant cards)
 import type { CommandCategory, TranslationFn } from "./commands-types";
 
@@ -12,39 +12,35 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
       color: "green",
       icon: `<path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>`,
       commands: [
-        // Step 1: Learn the tool
+        // Deprecated: use skill discovery instead
         {
-          command: "/mkt:ck-help",
+          command: "/ckm:ck-help",
           complexity: "⚡",
           label: t("commands.label.easy"),
           desc: t("commands.mkt.ck_help.desc"),
           detail: t("commands.mkt.ck_help.detail"),
-          betaSyntax: "/ck:ck-help",
-          step: 1,
-          betaNote: t("commands.mkt.ck_help.beta_note"),
+          deprecated: true,
         },
-        // Step 2: Initialize project
+        // Step 1: Initialize project
         {
-          command: "/mkt:init",
+          command: "/ckm:init",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.mkt.init.desc"),
           detail: t("commands.mkt.init.detail"),
-          betaSyntax: "/ckm:init",
-          step: 2,
+          step: 1,
         },
-        // Step 3: Quick Q&A
+        // Step 2: Quick Q&A
         {
-          command: "/mkt:ask",
+          command: "/ckm:ask",
           complexity: "⚡",
           label: t("commands.label.easy"),
           desc: t("commands.mkt.ask.desc"),
           detail: t("commands.mkt.ask.detail"),
           args: ["[question]"],
-          betaSyntax: "/ckm:ask [question]",
-          step: 3,
+          step: 2,
         },
-        // Step 4: Brainstorm ideas
+        // Step 3: Brainstorm ideas
         {
           command: "/ck:brainstorm",
           complexity: "⚡",
@@ -52,28 +48,26 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.mkt.brainstorm.desc"),
           detail: t("commands.mkt.brainstorm.detail"),
           isSkill: true,
-          step: 4,
+          step: 3,
         },
-        // Step 5: Create plan
+        // Step 4: Create plan
         {
-          command: "/mkt:plan",
+          command: "/ckm:plan:*",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.mkt.plan.desc"),
           detail: t("commands.mkt.plan.detail"),
-          subcommands: ["cro", "fast", "hard", "parallel", "archive", "ci", "two", "validate"],
-          betaSyntax: "/ckm:plan [task]",
-          step: 5,
+          subcommands: [":cro", ":fast", ":hard", ":parallel", ":archive", ":ci", ":two", ":validate"],
+          step: 4,
         },
-        // Step 6: Write content
+        // Step 5: Write content
         {
-          command: "/mkt:write:good",
+          command: "/ckm:write:good",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.mkt.write_good.desc"),
           detail: t("commands.mkt.write_good.detail"),
-          betaSyntax: "/ckm:write:good [topic]",
-          step: 6,
+          step: 5,
         },
       ],
     },
@@ -83,15 +77,14 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
       color: "pink",
       icon: `<path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>`,
       commands: [
-        // Consolidated: /mkt:write with all subcommands
+        // Consolidated: /ckm:write with all subcommands
         {
-          command: "/mkt:write",
+          command: "/ckm:write:*",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.mkt.write.desc"),
           detail: t("commands.mkt.write.detail"),
-          subcommands: ["fast", "good", "cro", "blog", "audit", "enhance", "publish", "formula"],
-          betaSyntax: "/ckm:write [subcommand] [topic]",
+          subcommands: [":fast", ":good", ":cro", ":blog", ":audit", ":enhance", ":publish", ":formula"],
         },
         {
           command: "/ckm:content-marketing",
@@ -100,7 +93,6 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.mkt.content_marketing.desc"),
           detail: t("commands.mkt.content_marketing.detail"),
           isSkill: true,
-          isBeta: true,
         },
         {
           command: "/ckm:creativity",
@@ -109,7 +101,6 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.mkt.creativity.desc"),
           detail: t("commands.mkt.creativity.detail"),
           isSkill: true,
-          isBeta: true,
         },
         {
           command: "/ck:copywriting",
@@ -127,15 +118,14 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
       color: "purple",
       icon: `<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>`,
       commands: [
-        // Consolidated: /mkt:campaign with all subcommands
+        // Consolidated: /ckm:campaign with all subcommands
         {
-          command: "/mkt:campaign",
+          command: "/ckm:campaign:*",
           complexity: "⚡⚡⚡⚡",
           label: t("commands.label.advanced"),
           desc: t("commands.mkt.campaign.desc"),
           detail: t("commands.mkt.campaign.detail"),
-          subcommands: ["create", "status", "analyze", "email"],
-          betaSyntax: "/ckm:campaign [subcommand] [args]",
+          subcommands: [":create", ":status", ":analyze", ":email"],
         },
       ],
     },
@@ -145,24 +135,22 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
       color: "amber",
       icon: `<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>`,
       commands: [
-        // Consolidated: /mkt:seo with all subcommands
+        // Consolidated: /ckm:seo with all subcommands
         {
-          command: "/mkt:seo",
+          command: "/ckm:seo:*",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.mkt.seo.desc"),
           detail: t("commands.mkt.seo.detail"),
-          subcommands: ["audit", "keywords", "pseo"],
-          betaSyntax: "/ckm:seo [subcommand] [target]",
+          subcommands: [":audit", ":keywords", ":pseo"],
         },
         {
-          command: "/mkt:analyze",
+          command: "/ckm:analyze:*",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.mkt.analyze.desc"),
           detail: t("commands.mkt.analyze.detail"),
-          subcommands: ["report"],
-          betaSyntax: "/ckm:analyze",
+          subcommands: [":report"],
         },
         {
           command: "/ckm:ab-test-setup",
@@ -171,7 +159,6 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.mkt.ab_test.desc"),
           detail: t("commands.mkt.ab_test.detail"),
           isSkill: true,
-          isBeta: true,
         },
         {
           command: "/ckm:analytics",
@@ -180,7 +167,6 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.mkt.analytics.desc"),
           detail: t("commands.mkt.analytics.detail"),
           isSkill: true,
-          isBeta: true,
         },
         {
           command: "/ckm:ads-management",
@@ -189,9 +175,7 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.mkt.ads.desc"),
           detail: t("commands.mkt.ads.detail"),
           isSkill: true,
-          isBeta: true,
           args: ["[platform]", "[campaign-type]"],
-          betaSyntax: "/ckm:ads",
         },
         {
           command: "/ckm:paid-ads",
@@ -200,7 +184,6 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.mkt.paid_ads.desc"),
           detail: t("commands.mkt.paid_ads.detail"),
           isSkill: true,
-          isBeta: true,
           args: ["[platform]", "[campaign-type]"],
         },
       ],
@@ -219,7 +202,6 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.mkt.design.desc"),
           detail: t("commands.mkt.design.detail"),
           isSkill: true,
-          isBeta: true,
           subcommands: ["logo", "cip", "banner", "icon", "social", "slides"],
         },
         {
@@ -229,7 +211,6 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.mkt.design_system.desc"),
           detail: t("commands.mkt.design_system.detail"),
           isSkill: true,
-          isBeta: true,
         },
       ],
     },
@@ -239,26 +220,24 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
       color: "cyan",
       icon: `<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>`,
       commands: [
-        // Consolidated: /mkt:email with all subcommands
+        // Consolidated: /ckm:email with all subcommands
         {
-          command: "/mkt:email",
+          command: "/ckm:email:*",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.mkt.email.desc"),
           detail: t("commands.mkt.email.detail"),
-          subcommands: ["flow", "sequence"],
-          betaSyntax: "/ckm:email [subcommand] [type]",
+          subcommands: [":flow", ":sequence"],
         },
-        // Consolidated: /mkt:social with all subcommands
+        // Consolidated: /ckm:social with all subcommands
         {
-          command: "/mkt:social",
+          command: "/ckm:social:*",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.mkt.social.desc"),
           detail: t("commands.mkt.social.detail"),
-          subcommands: ["schedule"],
+          subcommands: [":schedule"],
           args: ["[platform]", "[type]"],
-          betaSyntax: "/ckm:social [subcommand] [args]",
         },
         {
           command: "/ckm:elevenlabs",
@@ -267,7 +246,6 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.mkt.elevenlabs.desc"),
           detail: t("commands.mkt.elevenlabs.detail"),
           isSkill: true,
-          isBeta: true,
           subcommands: ["speak", "clone", "sfx"],
         },
       ],
@@ -288,39 +266,35 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/mkt:plan",
+          command: "/ckm:plan:*",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.mkt.plan.desc"),
           detail: t("commands.mkt.plan.detail"),
-          subcommands: ["cro", "fast", "hard", "parallel", "archive", "ci", "two", "validate"],
-          betaSyntax: "/ckm:plan [task]",
+          subcommands: [":cro", ":fast", ":hard", ":parallel", ":archive", ":ci", ":two", ":validate"],
         },
         {
-          command: "/mkt:competitor",
+          command: "/ckm:competitor",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.mkt.competitor.desc"),
           detail: t("commands.mkt.competitor.detail"),
           subcommands: ["analyze", "content", "seo", "alternatives", "list"],
-          betaSyntax: "/ckm:competitor [subcommand] [url]",
         },
         {
-          command: "/mkt:persona",
+          command: "/ckm:persona",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.mkt.persona.desc"),
           detail: t("commands.mkt.persona.detail"),
-          betaSyntax: "/ckm:persona",
         },
         {
-          command: "/mkt:funnel",
+          command: "/ckm:funnel",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.mkt.funnel.desc"),
           detail: t("commands.mkt.funnel.detail"),
           subcommands: ["design", "analyze", "optimize"],
-          betaSyntax: "/ckm:funnel",
         },
         {
           command: "/ckm:marketing-planning",
@@ -329,7 +303,6 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.mkt.marketing_planning.desc"),
           detail: t("commands.mkt.marketing_planning.detail"),
           isSkill: true,
-          isBeta: true,
         },
         {
           command: "/ckm:marketing-research",
@@ -338,7 +311,6 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.mkt.market_research.desc"),
           detail: t("commands.mkt.market_research.detail"),
           isSkill: true,
-          isBeta: true,
         },
         {
           command: "/ckm:marketing-ideas",
@@ -347,7 +319,6 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.mkt.market_ideas.desc"),
           detail: t("commands.mkt.market_ideas.detail"),
           isSkill: true,
-          isBeta: true,
         },
         {
           command: "/ckm:marketing-psychology",
@@ -356,17 +327,15 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.mkt.market_psychology.desc"),
           detail: t("commands.mkt.market_psychology.detail"),
           isSkill: true,
-          isBeta: true,
         },
         {
-          command: "/ckm:play",
+          command: "/ckm:play:*",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.mkt.play.desc"),
           detail: t("commands.mkt.play.detail"),
           isSkill: true,
-          isBeta: true,
-          subcommands: ["create", "goals", "next", "status"],
+          subcommands: [":create", ":next", ":status", ":list", ":blocked", ":learn", ":reset", ":gate", ":templates", ":goals"],
         },
       ],
     },
@@ -376,35 +345,32 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
       color: "orange",
       icon: `<polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>`,
       commands: [
-        // Consolidated: /mkt:video with all subcommands
+        // Consolidated: /ckm:video with all subcommands
         {
-          command: "/mkt:video",
+          command: "/ckm:video:*",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.mkt.video.desc"),
           detail: t("commands.mkt.video.detail"),
-          subcommands: ["create", "script", "storyboard"],
-          betaSyntax: "/ckm:video [subcommand] [topic]",
+          subcommands: [":create", ":script", ":storyboard"],
         },
-        // Consolidated: /mkt:youtube with all subcommands
+        // Consolidated: /ckm:youtube with all subcommands
         {
-          command: "/mkt:youtube",
+          command: "/ckm:youtube:*",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.mkt.youtube.desc"),
           detail: t("commands.mkt.youtube.detail"),
-          subcommands: ["blog", "infographic", "social"],
-          betaSyntax: "/ckm:youtube [subcommand] [url]",
+          subcommands: [":blog", ":infographic", ":social"],
         },
         {
-          command: "/mkt:slides",
+          command: "/ckm:slides:*",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.mkt.slides.desc"),
           detail: t("commands.mkt.slides.detail"),
-          subcommands: ["create"],
+          subcommands: [":create"],
           args: ["[topic]"],
-          betaSyntax: "/ckm:slides",
         },
         {
           command: "/ckm:youtube-thumbnail-design",
@@ -413,7 +379,6 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.mkt.youtube_thumbnail_design.desc"),
           detail: t("commands.mkt.youtube_thumbnail_design.detail"),
           isSkill: true,
-          isBeta: true,
           args: ["[niche]", "[style]"],
         },
       ],
@@ -431,7 +396,6 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.mkt.launch_strategy.desc"),
           detail: t("commands.mkt.launch_strategy.detail"),
           isSkill: true,
-          isBeta: true,
           args: ["[product]"],
         },
         {
@@ -441,7 +405,6 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.mkt.pricing_strategy.desc"),
           detail: t("commands.mkt.pricing_strategy.detail"),
           isSkill: true,
-          isBeta: true,
           args: ["[product]", "[tier]"],
         },
         {
@@ -451,7 +414,6 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.mkt.free_tool.desc"),
           detail: t("commands.mkt.free_tool.detail"),
           isSkill: true,
-          isBeta: true,
           args: ["[tool-idea]", "[niche]"],
         },
         {
@@ -461,7 +423,6 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.mkt.gamification.desc"),
           detail: t("commands.mkt.gamification.detail"),
           isSkill: true,
-          isBeta: true,
           args: ["[mechanic]", "[campaign]"],
         },
         {
@@ -471,7 +432,6 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.mkt.affiliate.desc"),
           detail: t("commands.mkt.affiliate.detail"),
           isSkill: true,
-          isBeta: true,
           args: ["[program]", "[strategy]"],
         },
         {
@@ -481,7 +441,6 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.mkt.referral.desc"),
           detail: t("commands.mkt.referral.detail"),
           isSkill: true,
-          isBeta: true,
           args: ["[product]", "[program-type]"],
         },
         {
@@ -491,7 +450,6 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.mkt.form_cro.desc"),
           detail: t("commands.mkt.form_cro.detail"),
           isSkill: true,
-          isBeta: true,
           args: ["[form-url]"],
         },
         {
@@ -501,7 +459,6 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.mkt.onboarding_cro.desc"),
           detail: t("commands.mkt.onboarding_cro.detail"),
           isSkill: true,
-          isBeta: true,
           args: ["[flow-url]"],
         },
       ],
@@ -513,13 +470,12 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
       icon: `<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>`,
       commands: [
         {
-          command: "/mkt:test",
+          command: "/ckm:test:*",
           complexity: "⚡",
           label: t("commands.label.easy"),
           desc: t("commands.mkt.test.desc"),
           detail: t("commands.mkt.test.detail"),
-          subcommands: ["ui", "workflow"],
-          betaSyntax: "/ck:test",
+          subcommands: [":ui", ":workflow"],
         },
         {
           command: "/ck:code-review",
@@ -538,7 +494,6 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.mkt.debugging.desc"),
           detail: t("commands.mkt.debugging.detail"),
           isSkill: true,
-          isBeta: true,
         },
       ],
     },
@@ -558,12 +513,11 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           subcommands: ["cm", "cp", "pr"],
         },
         {
-          command: "/mkt:worktree",
+          command: "/ckm:worktree",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.mkt.worktree.desc"),
           detail: t("commands.mkt.worktree.detail"),
-          betaSyntax: "/ck:worktree",
         },
       ],
     },
@@ -574,20 +528,19 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
       icon: `<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>`,
       commands: [
         {
-          command: "/mkt:watzup",
+          command: "/ckm:watzup",
           complexity: "⚡",
           label: t("commands.label.easy"),
           desc: t("commands.mkt.watzup.desc"),
           detail: t("commands.mkt.watzup.detail"),
-          betaSyntax: "/ck:watzup",
         },
         {
-          command: "/mkt:journal",
+          command: "/ckm:journal",
           complexity: "⚡",
           label: t("commands.label.easy"),
           desc: t("commands.mkt.journal.desc"),
           detail: t("commands.mkt.journal.detail"),
-          betaSyntax: "/ck:journal",
+          isSkill: true,
         },
       ],
     },
@@ -598,57 +551,51 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
       icon: `<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>`,
       commands: [
         {
-          command: "/mkt:kanban",
+          command: "/ckm:kanban",
           complexity: "⚡",
           label: t("commands.label.easy"),
           desc: t("commands.mkt.kanban.desc"),
           detail: t("commands.mkt.kanban.detail"),
-          betaSyntax: "/ck:kanban",
         },
         {
-          command: "/mkt:dashboard",
+          command: "/ckm:dashboard:*",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.mkt.dashboard.desc"),
           detail: t("commands.mkt.dashboard.detail"),
-          subcommands: ["check"],
-          betaSyntax: "/ckm:dashboard",
+          subcommands: [":check"],
         },
         {
-          command: "/mkt:brand",
+          command: "/ckm:brand",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.mkt.brand.desc"),
           detail: t("commands.mkt.brand.detail"),
-          subcommands: ["update", "review", "create"],
-          betaSyntax: "/ckm:brand",
+          subcommands: [":update"],
         },
         {
-          command: "/mkt:docs",
+          command: "/ckm:docs:*",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.mkt.docs.desc"),
           detail: t("commands.mkt.docs.detail"),
-          subcommands: ["init", "llms", "summarize", "update"],
-          betaSyntax: "/ckm:docs",
+          subcommands: [":init", ":llms", ":summarize", ":update"],
         },
         {
-          command: "/mkt:hub",
+          command: "/ckm:hub",
           complexity: "⚡",
           label: t("commands.label.easy"),
           desc: t("commands.mkt.hub.desc"),
           detail: t("commands.mkt.hub.detail"),
           flags: ["--stop", "--scan"],
-          betaSyntax: "/ckm:hub",
         },
         {
-          command: "/mkt:storage",
+          command: "/ckm:storage:*",
           complexity: "⚡",
           label: t("commands.label.easy"),
           desc: t("commands.mkt.storage.desc"),
           detail: t("commands.mkt.storage.detail"),
-          subcommands: ["list", "sync", "upload", "url"],
-          betaSyntax: "/ckm:storage",
+          subcommands: [":list", ":sync", ":upload", ":url"],
         },
       ],
     },
@@ -659,29 +606,27 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
       icon: `<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>`,
       commands: [
         {
-          command: "/mkt:skill:create",
+          command: "/ckm:skill:*",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.mkt.skill_create.desc"),
           detail: t("commands.mkt.skill_create.detail"),
-          betaSyntax: "/ck:skill-creator [name]",
+          subcommands: [":add", ":create", ":fix-logs", ":optimize", ":plan", ":update"],
         },
         {
-          command: "/mkt:use-mcp",
+          command: "/ckm:use-mcp",
           complexity: "⚡",
           label: t("commands.label.easy"),
           desc: t("commands.mkt.use_mcp.desc"),
           detail: t("commands.mkt.use_mcp.detail"),
-          betaSyntax: "/ck:use-mcp",
         },
         {
-          command: "/mkt:preview",
+          command: "/ckm:preview",
           complexity: "⚡",
           label: t("commands.label.easy"),
           desc: t("commands.mkt.preview.desc"),
           detail: t("commands.mkt.preview.detail"),
           flags: ["--explain", "--slides", "--diagram", "--ascii"],
-          betaSyntax: "/ckm:preview [path]",
         },
         {
           command: "/ckm:content-hub",
@@ -690,7 +635,6 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.mkt.content_hub.desc"),
           detail: t("commands.mkt.content_hub.detail"),
           isSkill: true,
-          isBeta: true,
           subcommands: ["open", "browse", "search"],
         },
         {
@@ -700,7 +644,6 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.mkt.assets.desc"),
           detail: t("commands.mkt.assets.detail"),
           isSkill: true,
-          isBeta: true,
           args: ["[directory]", "[asset-type]"],
         },
         {
@@ -710,7 +653,6 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.mkt.kit_builder.desc"),
           detail: t("commands.mkt.kit_builder.detail"),
           isSkill: true,
-          isBeta: true,
           args: ["[component-type]", "[name]"],
         },
         {
@@ -720,7 +662,6 @@ export function getMarketingKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.mkt.claude_code.desc"),
           detail: t("commands.mkt.claude_code.detail"),
           isSkill: true,
-          isBeta: true,
         },
       ],
     },

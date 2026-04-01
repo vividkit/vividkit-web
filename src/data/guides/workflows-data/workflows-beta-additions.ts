@@ -1,105 +1,135 @@
-// Beta-only workflow additions (v2.14.0)
+// Beta-only workflow additions (v2.14.0+)
 // These are combined with stableWorkflows in the index to form betaWorkflows
-// New skills: /ck:ship, /ck:deploy, /ck:llms, /ck:retro
+// New beta skills: /ck:autoresearch, /ck:predict, /ck:scenario, /ck:security
 
 export const betaOnlyWorkflows = [
   {
-    title: 'Ship a Feature',
-    category: 'Shipping',
+    title: 'Automated Research Loop',
+    category: 'Planning & Review',
+    level: 'Intermediate',
+    duration: '~10-30 min',
+    stepCount: 1,
+    bestFor: 'Iterative metric optimization with automated experiments',
+    gradientHeader: 'from-blue-500/10 to-cyan-500/10',
+    hoverBorderColor: 'hover:border-blue-500/50',
+    buttonColor: 'bg-blue-500 hover:bg-blue-600',
+    icon: '<path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>',
+    iconColor: 'text-blue-600 dark:text-blue-400',
+    steps: [
+      {
+        command: '/ck:autoresearch',
+        typeLabel: 'Research loop (skill)',
+        description: 'Run N iterations against a metric, auto-keep/discard changes based on results',
+        color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      }
+    ],
+    tip: 'Set a clear, measurable metric (coverage %, bundle size, latency) for best results',
+    features: [
+      'Autonomous iteration loop',
+      'Git history learning between rounds',
+      'Auto-keep/discard based on metric delta',
+      'Works with any measurable metric'
+    ],
+    borderColor: 'border-blue-500/20'
+  },
+  {
+    title: 'Predict Impact Before Coding',
+    category: 'Planning & Review',
     level: 'Intermediate',
     duration: '~5-10 min',
     stepCount: 1,
-    bestFor: 'Shipping feature branches with automated test, review, and PR creation',
-    gradientHeader: 'from-emerald-500/10 to-teal-500/10',
-    hoverBorderColor: 'hover:border-emerald-500/50',
-    buttonColor: 'bg-emerald-500 hover:bg-emerald-600',
-    icon: '<path d="M5 12h14M12 5l7 7-7 7"/>',
-    iconColor: 'text-emerald-600 dark:text-emerald-400',
+    bestFor: 'Catching architectural, security, and performance issues before implementation',
+    gradientHeader: 'from-amber-500/10 to-orange-500/10',
+    hoverBorderColor: 'hover:border-amber-500/50',
+    buttonColor: 'bg-amber-500 hover:bg-amber-600',
+    icon: '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>',
+    iconColor: 'text-amber-600 dark:text-amber-400',
     steps: [
       {
-        command: '/ck:ship [--official|--beta] [--skip-tests] [--skip-review]',
-        typeLabel: 'Ship pipeline (skill)',
-        description: 'Merge main, run tests, pre-landing review, bump version, update changelog, push, create PR',
-        color: 'bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
+        command: '/ck:predict',
+        typeLabel: '5-persona debate (skill)',
+        description: '5 expert personas debate proposed changes — architect, security, performance, UX, ops',
+        color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
         number: 1,
         isSkill: true,
         isBeta: true
       }
     ],
-    tip: '/ck:ship auto-detects test runner, version file format, and changelog style',
+    tip: 'Run before major features or risky refactors to catch issues early',
     features: [
-      'Supports official (→main) and beta (→dev) ship modes',
-      'Merges origin/main (or dev for beta) before testing',
-      'Auto-detects npm/pytest/cargo/go test',
-      'Two-pass code review + adversarial review (stage 3)',
-      'Bumps version and updates CHANGELOG.md',
-      'Creates PR with summary, test results, and linked issues'
+      '5 expert personas with distinct viewpoints',
+      'Architecture, security, performance analysis',
+      'UX and ops impact assessment',
+      'Consensus report with risk ratings'
     ],
-    borderColor: 'border-emerald-500/20'
+    borderColor: 'border-amber-500/20'
   },
   {
-    title: 'Deploy Your App',
-    category: 'Shipping',
-    level: 'Intermediate',
-    duration: '~5-15 min',
-    stepCount: 1,
-    bestFor: 'Deploying to Vercel, Netlify, Railway, Fly.io, AWS, GCP and more',
-    gradientHeader: 'from-orange-500/10 to-amber-500/10',
-    hoverBorderColor: 'hover:border-orange-500/50',
-    buttonColor: 'bg-orange-500 hover:bg-orange-600',
-    icon: '<path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>',
-    iconColor: 'text-orange-600 dark:text-orange-400',
-    steps: [
-      {
-        command: '/ck:deploy [platform]',
-        typeLabel: 'Auto-deploy (skill)',
-        description: 'AI detects your project type and deploys to 15+ platforms with zero manual config',
-        color: 'bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400',
-        number: 1,
-        isSkill: true,
-        isBeta: true
-      }
-    ],
-    tip: '/ck:deploy auto-detects your stack and handles environment variables, build steps, and platform config',
-    features: [
-      'Auto-detects project type (Next.js, Astro, Express, etc.)',
-      'Supports 15+ platforms out of the box',
-      'Handles env vars and build configuration',
-      'Vercel, Netlify, Railway, Fly.io, AWS, GCP, Azure'
-    ],
-    borderColor: 'border-orange-500/20'
-  },
-  {
-    title: 'LLMs.txt Generation',
-    category: 'Research & Docs',
+    title: 'Generate Test Scenarios',
+    category: 'Debugging & Fixes',
     level: 'Beginner',
     duration: '~5-10 min',
     stepCount: 1,
-    bestFor: 'Making your project AI-friendly for LLM consumption',
-    gradientHeader: 'from-violet-500/10 to-purple-500/10',
-    hoverBorderColor: 'hover:border-violet-500/50',
-    buttonColor: 'bg-violet-500 hover:bg-violet-600',
-    icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>',
-    iconColor: 'text-violet-600 dark:text-violet-400',
+    bestFor: 'Comprehensive edge case discovery before implementation or testing',
+    gradientHeader: 'from-purple-500/10 to-violet-500/10',
+    hoverBorderColor: 'hover:border-purple-500/50',
+    buttonColor: 'bg-purple-500 hover:bg-purple-600',
+    icon: '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
+    iconColor: 'text-purple-600 dark:text-purple-400',
     steps: [
       {
-        command: '/ck:llms [path]',
-        typeLabel: 'Generate index (skill)',
-        description: 'Create llms.txt following llmstxt.org spec — makes your docs AI-readable',
-        color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
+        command: '/ck:scenario',
+        typeLabel: '12-dimension analysis (skill)',
+        description: 'Decompose features across 12 dimensions to generate comprehensive test scenarios',
+        color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
         number: 1,
         isSkill: true,
         isBeta: true
       }
     ],
-    tip: '/ck:llms generates standardized llms.txt so AI tools can quickly understand your codebase',
+    tip: 'Use before writing tests to ensure complete coverage of edge cases',
     features: [
-      'Follows llmstxt.org specification',
-      'Generates from docs, README, or codebase',
-      'Includes reference files and structure overview',
-      'Works with any project type'
+      '12-dimension feature decomposition',
+      'Edge case and boundary condition discovery',
+      'Test scenario generation with priorities',
+      'Integration with /ck:test for execution'
     ],
-    borderColor: 'border-violet-500/20'
+    borderColor: 'border-purple-500/20'
+  },
+  {
+    title: 'STRIDE Security Audit',
+    category: 'Debugging & Fixes',
+    level: 'Intermediate',
+    duration: '~10-20 min',
+    stepCount: 1,
+    bestFor: 'Comprehensive STRIDE + OWASP security analysis with optional auto-fix',
+    gradientHeader: 'from-red-500/10 to-rose-500/10',
+    hoverBorderColor: 'hover:border-red-500/50',
+    buttonColor: 'bg-red-500 hover:bg-red-600',
+    icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/>',
+    iconColor: 'text-red-600 dark:text-red-400',
+    steps: [
+      {
+        command: '/ck:security',
+        typeLabel: 'STRIDE audit (skill)',
+        description: 'STRIDE threat modeling + OWASP scan with severity categorization and optional auto-fix',
+        color: 'bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      }
+    ],
+    tip: 'Combine with /ck:security-scan for comprehensive vulnerability + threat coverage',
+    features: [
+      'STRIDE threat modeling framework',
+      'OWASP vulnerability pattern matching',
+      'Severity categorization and prioritization',
+      'Optional iterative auto-fix using autoresearch pattern'
+    ],
+    borderColor: 'border-red-500/20'
   },
   {
     title: 'Visual Explanation',
@@ -153,8 +183,7 @@ export const betaOnlyWorkflows = [
         description: 'Gather git metrics (commits, LOC, hotspots, churn), compute health indicators, generate retrospective report',
         color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
         number: 1,
-        isSkill: true,
-        isBeta: true
+        isSkill: true
       }
     ],
     tip: '/ck:retro 2w --compare --team generates a two-week retro with period comparison and per-author breakdown',

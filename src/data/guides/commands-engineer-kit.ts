@@ -1,4 +1,4 @@
-// Engineer Kit (v2.13.0) stable command categories
+// Engineer Kit (v2.15.1) stable command categories
 import type { CommandCategory, TranslationFn } from "./commands-types";
 
 // Returns all stable Engineer Kit categories with translated labels/descriptions
@@ -10,7 +10,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
       color: "green",
       icon: `<path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>`,
       commands: [
-        // Step 1: Learn the tool
+        // Deprecated: Learn the tool (archived in v2.14.0)
         {
           command: "/ck:ck-help",
           complexity: "⚡",
@@ -18,10 +18,9 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.ck_help.desc"),
           detail: t("commands.stable.ck_help.detail"),
           isSkill: true,
-          step: 1,
-          betaNote: t("commands.stable.ck_help.beta_note"),
+          deprecated: true,
         },
-        // Step 2: Set experience level
+        // Step 1: Set experience level
         {
           command: "/ck:coding-level",
           complexity: "⚡",
@@ -29,9 +28,9 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.coding_level.desc"),
           detail: t("commands.stable.coding_level.detail"),
           isSkill: true,
-          step: 2,
+          step: 1,
         },
-        // Step 3: Quick Q&A
+        // Step 2: Quick Q&A
         {
           command: "/ck:ask",
           complexity: "⚡",
@@ -40,9 +39,9 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           detail: t("commands.stable.ask.detail"),
           isSkill: true,
           args: ["[question]"],
-          step: 3,
+          step: 2,
         },
-        // Step 4: Brainstorm ideas
+        // Step 3: Brainstorm ideas
         {
           command: "/ck:brainstorm",
           complexity: "⚡",
@@ -50,9 +49,9 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.brainstorm.desc"),
           detail: t("commands.stable.brainstorm.detail"),
           isSkill: true,
-          step: 4,
+          step: 3,
         },
-        // Step 5: Create plan
+        // Step 4: Create plan
         {
           command: "/ck:plan",
           complexity: "⚡⚡⚡",
@@ -62,10 +61,9 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
           subcommands: ["archive", "red-team", "validate"],
           flags: ["--auto", "--fast", "--hard", "--parallel", "--two", "--no-tasks"],
-          step: 5,
-          betaNote: t("commands.stable.plan.beta_note"),
+          step: 4,
         },
-        // Step 6: Execute plan
+        // Step 5: Execute plan
         {
           command: "/ck:cook",
           complexity: "⚡⚡⚡",
@@ -74,7 +72,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           detail: t("commands.stable.cook.detail"),
           isSkill: true,
           flags: ["--interactive", "--fast", "--parallel", "--auto", "--no-test"],
-          step: 6,
+          step: 5,
         },
       ],
     },
@@ -119,7 +117,6 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
           subcommands: ["archive", "red-team", "validate"],
           flags: ["--auto", "--fast", "--hard", "--parallel", "--two", "--no-tasks"],
-          betaNote: t("commands.stable.plan.beta_note"),
         },
         {
           command: "/ck:sequential-thinking",
@@ -136,6 +133,24 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.problem_solving.desc"),
           detail: t("commands.stable.problem_solving.detail"),
           isSkill: true,
+        },
+        {
+          command: "/ck:autoresearch",
+          complexity: "⚡⚡⚡",
+          label: t("commands.label.medium"),
+          desc: t("commands.stable.autoresearch.desc"),
+          detail: t("commands.stable.autoresearch.detail"),
+          isSkill: true,
+          isBeta: true,
+        },
+        {
+          command: "/ck:predict",
+          complexity: "⚡⚡",
+          label: t("commands.label.medium"),
+          desc: t("commands.stable.predict.desc"),
+          detail: t("commands.stable.predict.detail"),
+          isSkill: true,
+          isBeta: true,
         },
       ],
     },
@@ -176,7 +191,6 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.design.desc"),
           detail: t("commands.stable.design.detail"),
           isSkill: true,
-          isBeta: true,
         },
         {
           command: "/ck:stitch",
@@ -185,7 +199,6 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.stitch.desc"),
           detail: t("commands.stable.stitch.detail"),
           isSkill: true,
-          isBeta: true,
           subcommands: ["generate", "export"],
           flags: ["--format all", "--format html", "--device mobile"],
         },
@@ -342,7 +355,6 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.ship.desc"),
           detail: t("commands.stable.ship.detail"),
           isSkill: true,
-          isBeta: true,
           flags: ["--official", "--beta", "--skip-tests", "--skip-review"],
         },
         {
@@ -361,7 +373,6 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           detail: t("commands.stable.team.detail"),
           isSkill: true,
           flags: ["<template> <context>", "--devs N", "--researchers N", "--reviewers N", "--delegate"],
-          betaNote: t("commands.stable.team.beta_note"),
         },
         {
           command: "/ck:deploy",
@@ -370,7 +381,6 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.deploy.desc"),
           detail: t("commands.stable.deploy.detail"),
           isSkill: true,
-          isBeta: true,
           args: ["[platform]", "[environment]"],
         },
         {
@@ -432,7 +442,6 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           detail: t("commands.stable.code_review.detail"),
           isSkill: true,
           flags: ["[context]", "#PR", "COMMIT", "--pending", "codebase", "codebase parallel"],
-          betaNote: t("commands.stable.code_review.beta_note"),
         },
         {
           command: "/ck:fix",
@@ -450,7 +459,6 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.debug.desc"),
           detail: t("commands.stable.debug.detail"),
           isSkill: true,
-          betaNote: t("commands.stable.debug.beta_note"),
         },
         {
           command: "/ck:web-testing",
@@ -483,9 +491,26 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.security_scan.desc"),
           detail: t("commands.stable.security_scan.detail"),
           isSkill: true,
-          isBeta: true,
           args: ["[scope]"],
           flags: ["--secrets-only", "--deps-only", "--full"],
+        },
+        {
+          command: "/ck:scenario",
+          complexity: "⚡⚡",
+          label: t("commands.label.medium"),
+          desc: t("commands.stable.scenario.desc"),
+          detail: t("commands.stable.scenario.detail"),
+          isSkill: true,
+          isBeta: true,
+        },
+        {
+          command: "/ck:security",
+          complexity: "⚡⚡⚡",
+          label: t("commands.label.medium"),
+          desc: t("commands.stable.security.desc"),
+          detail: t("commands.stable.security.detail"),
+          isSkill: true,
+          isBeta: true,
         },
       ],
     },
@@ -537,7 +562,6 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           detail: t("commands.stable.preview.detail"),
           isSkill: true,
           flags: ["--explain", "--slides", "--diagram", "--ascii", "--html", "--diff", "--plan-review", "--recap"],
-          betaNote: t("commands.stable.preview.beta_note"),
         },
         {
           command: "/ck:markdown-novel-viewer",
@@ -554,7 +578,6 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.llms.desc"),
           detail: t("commands.stable.llms.detail"),
           isSkill: true,
-          isBeta: true,
         },
       ],
     },
@@ -659,7 +682,6 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.retro.desc"),
           detail: t("commands.stable.retro.detail"),
           isSkill: true,
-          isBeta: true,
           args: ["[timeframe]"],
           flags: ["--compare", "--team", "--format html|md"],
         },
@@ -703,7 +725,6 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.project_organization.desc"),
           detail: t("commands.stable.project_organization.detail"),
           isSkill: true,
-          isBeta: true,
         },
       ],
     },

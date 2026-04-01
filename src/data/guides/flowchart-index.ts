@@ -28,7 +28,7 @@ const betaExtraNodes: FlowchartNode[] = [
     label: '/ck:llms',
     description: 'Generate llms.txt files (llmstxt.org)',
     position: { x: 900, y: 440 },
-    isBeta: true
+
   },
   {
     id: 'cmd-deploy',
@@ -36,7 +36,7 @@ const betaExtraNodes: FlowchartNode[] = [
     label: '/ck:deploy',
     description: 'Auto-detect & deploy to 15+ platforms ⚡⚡',
     position: { x: 790, y: 520 },
-    isBeta: true
+
   },
   {
     id: 'cmd-security-scan-beta',
@@ -44,7 +44,7 @@ const betaExtraNodes: FlowchartNode[] = [
     label: '/ck:security-scan',
     description: 'Scan for vulnerabilities & secrets ⚡⚡',
     position: { x: 615, y: 440 },
-    isBeta: true
+
   },
   {
     id: 'cmd-project-org',
@@ -52,7 +52,7 @@ const betaExtraNodes: FlowchartNode[] = [
     label: '/ck:project-organization',
     description: 'Standardize file locations & naming ⚡',
     position: { x: 130, y: 520 },
-    isBeta: true
+
   }
 ];
 
@@ -106,7 +106,7 @@ const betaExtraPaths: FlowchartPath[] = [
     command: '/ck:llms',
     description: 'Generate llms.txt files following llmstxt.org spec for AI-readable documentation',
     color: 'amber',
-    isBeta: true
+
   },
   {
     id: 'path-deploy',
@@ -116,7 +116,7 @@ const betaExtraPaths: FlowchartPath[] = [
     command: '/ck:deploy',
     description: 'Auto-detect project type and deploy to 15+ cloud platforms',
     color: 'orange',
-    isBeta: true
+
   },
   {
     id: 'path-security-scan-beta',
@@ -126,7 +126,7 @@ const betaExtraPaths: FlowchartPath[] = [
     command: '/ck:security-scan',
     description: 'Scan for OWASP vulnerabilities, leaked secrets, and insecure patterns',
     color: 'red',
-    isBeta: true
+
   },
   {
     id: 'path-project-org',
@@ -136,7 +136,7 @@ const betaExtraPaths: FlowchartPath[] = [
     command: '/ck:project-organization',
     description: 'Standardize file locations, naming conventions, and project structure',
     color: 'teal',
-    isBeta: true
+
   }
 ];
 

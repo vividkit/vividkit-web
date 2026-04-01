@@ -34,4 +34,6 @@ export const workflows = {
   'workflows.v25.flag_parallel': 'Run phases in parallel',
   'workflows.v25.flag_auto': 'Auto-approve all steps ("trust me")',
   'workflows.v25.flag_notest': 'Skip test runs after coding',
+  'workflows.tip.checklists.title': 'Agent behavioral checklists',
+  'workflows.tip.checklists.desc': 'Skills include behavioral checklists that guide agent decision-making — check skill docs for details',
 } as const;

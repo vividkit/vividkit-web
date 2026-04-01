@@ -17,35 +17,35 @@ export const marketingKitWorkflows = [
     iconColor: 'text-pink-600 dark:text-pink-400',
     steps: [
       {
-        command: '/mkt:write:good "topic"',
+        command: '/ckm:write:good "topic"',
         typeLabel: 'Nghiên cứu & soạn thảo',
         description: 'AI nghiên cứu chủ đề, phân tích đối thủ, và soạn nội dung tối ưu SEO',
         color: 'bg-pink-500/10 dark:bg-pink-500/20 text-pink-600 dark:text-pink-400',
         number: 1
       },
       {
-        command: '/mkt:seo audit',
+        command: '/ckm:seo audit',
         typeLabel: 'Tối ưu SEO',
         description: 'Kiểm tra mật độ keyword, meta tags, và tối ưu tìm kiếm',
         color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
         number: 2
       },
       {
-        command: '/mkt:write:enhance',
+        command: '/ckm:write:enhance',
         typeLabel: 'Nâng cấp & hoàn thiện',
         description: 'Cải thiện khả năng đọc, thêm CTA, và tối ưu engagement',
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
         number: 3
       },
       {
-        command: '/mkt:write:publish',
+        command: '/ckm:write:publish',
         typeLabel: 'Đăng nội dung',
         description: 'Định dạng cho CMS, thêm hình ảnh, và chuẩn bị xuất bản',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 4
       }
     ],
-    tip: 'Dùng /mkt:write:good cho nội dung chất lượng cao; /mkt:write:fast cho bản nháp nhanh',
+    tip: 'Dùng /ckm:write:good cho nội dung chất lượng cao; /ckm:write:fast cho bản nháp nhanh',
     features: [
       'Phân tích nội dung đối thủ',
       'Tích hợp keyword SEO',
@@ -68,14 +68,14 @@ export const marketingKitWorkflows = [
     iconColor: 'text-cyan-600 dark:text-cyan-400',
     steps: [
       {
-        command: '/mkt:persona',
+        command: '/ckm:persona',
         typeLabel: 'Xác định đối tượng',
         description: 'Tạo buyer persona để nhắm mục tiêu thông điệp hiệu quả',
         color: 'bg-cyan-500/10 dark:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400',
         number: 1
       },
       {
-        command: '/mkt:email flow "welcome"',
+        command: '/ckm:email flow "welcome"',
         typeLabel: 'Thiết kế email flow',
         description: 'Tạo chuỗi tự động với timing và trigger phù hợp',
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
@@ -90,7 +90,7 @@ export const marketingKitWorkflows = [
         isSkill: true
       },
       {
-        command: '/mkt:email sequence',
+        command: '/ckm:email sequence',
         typeLabel: 'Tạo chuỗi',
         description: 'Xuất chuỗi email hoàn chỉnh với các biến thể A/B',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
@@ -131,7 +131,7 @@ export const marketingKitWorkflows = [
         isBeta: true
       },
       {
-        command: '/mkt:campaign create',
+        command: '/ckm:campaign create',
         typeLabel: 'Tạo campaign',
         description: 'Thiết lập cấu trúc campaign với các kênh và thông điệp',
         color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
@@ -147,7 +147,7 @@ export const marketingKitWorkflows = [
         isBeta: true
       },
       {
-        command: '/mkt:social schedule',
+        command: '/ckm:social schedule',
         typeLabel: 'Lên lịch phân phối',
         description: 'Lập kế hoạch và lên lịch nội dung trên các nền tảng social',
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
@@ -163,7 +163,7 @@ export const marketingKitWorkflows = [
         isBeta: true
       }
     ],
-    tip: 'Dùng /mkt:campaign status để theo dõi hiệu suất trong quá trình chạy campaign',
+    tip: 'Dùng /ckm:campaign status để theo dõi hiệu suất trong quá trình chạy campaign',
     features: [
       'Phối hợp đa kênh',
       'Lập kế hoạch phân bổ ngân sách',
@@ -186,7 +186,7 @@ export const marketingKitWorkflows = [
     iconColor: 'text-amber-600 dark:text-amber-400',
     steps: [
       {
-        command: '/mkt:funnel analyze',
+        command: '/ckm:funnel analyze',
         typeLabel: 'Xác định điểm nghẽn',
         description: 'Phân tích funnel hiện tại để tìm cơ hội tối ưu',
         color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
@@ -202,14 +202,14 @@ export const marketingKitWorkflows = [
         isBeta: true
       },
       {
-        command: '/mkt:plan cro',
+        command: '/ckm:plan cro',
         typeLabel: 'Kế hoạch triển khai',
         description: 'Tạo kế hoạch chi tiết để thực thi bài test',
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
         number: 3
       },
       {
-        command: '/mkt:analyze report',
+        command: '/ckm:analyze report',
         typeLabel: 'Phân tích kết quả',
         description: 'Phân tích thống kê và đưa ra khuyến nghị',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
@@ -241,21 +241,21 @@ export const marketingKitWorkflows = [
     iconColor: 'text-amber-600 dark:text-amber-400',
     steps: [
       {
-        command: '/mkt:seo audit "url"',
+        command: '/ckm:seo audit "url"',
         typeLabel: 'Audit kỹ thuật',
         description: 'Phân tích cấu trúc site, tốc độ, thân thiện mobile, và khả năng crawl',
         color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
         number: 1
       },
       {
-        command: '/mkt:seo keywords "niche"',
+        command: '/ckm:seo keywords "niche"',
         typeLabel: 'Nghiên cứu keyword',
         description: 'Khám phá keyword giá trị cao và content gap',
         color: 'bg-yellow-500/10 dark:bg-yellow-500/20 text-yellow-600 dark:text-yellow-400',
         number: 2
       },
       {
-        command: '/mkt:competitor seo "url"',
+        command: '/ckm:competitor seo "url"',
         typeLabel: 'Phân tích đối thủ',
         description: 'Phân tích thứ hạng và hồ sơ backlink của đối thủ',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
@@ -285,7 +285,7 @@ export const marketingKitWorkflows = [
     iconColor: 'text-emerald-600 dark:text-emerald-400',
     steps: [
       {
-        command: '/mkt:funnel analyze "url"',
+        command: '/ckm:funnel analyze "url"',
         typeLabel: 'Phân tích hiệu suất',
         description: 'Xem xét chỉ số hiện tại, bounce rate, và luồng người dùng',
         color: 'bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
@@ -309,7 +309,7 @@ export const marketingKitWorkflows = [
         isSkill: true
       },
       {
-        command: '/mkt:plan cro',
+        command: '/ckm:plan cro',
         typeLabel: 'Tạo kế hoạch CRO',
         description: 'Ghi lại thay đổi và thiết lập tracking cho các cải tiến',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
@@ -341,7 +341,7 @@ export const marketingKitWorkflows = [
     iconColor: 'text-teal-600 dark:text-teal-400',
     steps: [
       {
-        command: '/mkt:brand review',
+        command: '/ckm:brand review',
         typeLabel: 'Xem xét brand guidelines',
         description: 'Tải màu sắc, font chữ, và hướng dẫn phong cách brand',
         color: 'bg-teal-500/10 dark:bg-teal-500/20 text-teal-600 dark:text-teal-400',
@@ -375,7 +375,7 @@ export const marketingKitWorkflows = [
         isBeta: true
       }
     ],
-    tip: 'Dùng /mkt:brand create để thiết lập brand guidelines trước nếu chưa có',
+    tip: 'Dùng /ckm:brand create để thiết lập brand guidelines trước nếu chưa có',
     features: [
       'Thiết kế nhất quán với brand',
       'Xuất nhiều kích thước',
@@ -415,7 +415,7 @@ export const marketingKitWorkflows = [
         isSkill: true
       },
       {
-        command: '/mkt:social schedule',
+        command: '/ckm:social schedule',
         typeLabel: 'Lên lịch đăng bài',
         description: 'Lập lịch đăng bài để tối ưu engagement',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
@@ -447,21 +447,21 @@ export const marketingKitWorkflows = [
     iconColor: 'text-blue-600 dark:text-blue-400',
     steps: [
       {
-        command: '/mkt:competitor list',
+        command: '/ckm:competitor list',
         typeLabel: 'Xác định đối thủ',
         description: 'Khám phá đối thủ trực tiếp và gián tiếp trong lĩnh vực',
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
         number: 1
       },
       {
-        command: '/mkt:competitor analyze "url"',
+        command: '/ckm:competitor analyze "url"',
         typeLabel: 'Phân tích chuyên sâu',
         description: 'Phân tích định vị, thông điệp, và giá trị độc đáo',
         color: 'bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400',
         number: 2
       },
       {
-        command: '/mkt:competitor content',
+        command: '/ckm:competitor content',
         typeLabel: 'Audit nội dung',
         description: 'Phân tích chiến lược content, chủ đề, và engagement',
         color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
@@ -500,7 +500,7 @@ export const marketingKitWorkflows = [
     iconColor: 'text-indigo-600 dark:text-indigo-400',
     steps: [
       {
-        command: '/mkt:persona',
+        command: '/ckm:persona',
         typeLabel: 'Xác định persona',
         description: 'Tạo buyer persona chi tiết và phân khúc khách hàng',
         color: 'bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400',
@@ -516,7 +516,7 @@ export const marketingKitWorkflows = [
         isBeta: true
       },
       {
-        command: '/mkt:funnel design',
+        command: '/ckm:funnel design',
         typeLabel: 'Thiết kế funnel',
         description: 'Vẽ bản đồ hành trình khách hàng và các điểm conversion',
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
@@ -532,7 +532,7 @@ export const marketingKitWorkflows = [
         isBeta: true
       },
       {
-        command: '/mkt:dashboard',
+        command: '/ckm:dashboard',
         typeLabel: 'Thiết lập tracking',
         description: 'Cấu hình dashboard KPI và báo cáo',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
@@ -676,14 +676,14 @@ export const marketingKitWorkflows = [
     iconColor: 'text-orange-600 dark:text-orange-400',
     steps: [
       {
-        command: '/mkt:video script "topic"',
+        command: '/ckm:video script "topic"',
         typeLabel: 'Viết script',
         description: 'Tạo script video với hook, nội dung chính, và CTA',
         color: 'bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400',
         number: 1
       },
       {
-        command: '/mkt:video storyboard',
+        command: '/ckm:video storyboard',
         typeLabel: 'Tạo storyboard',
         description: 'Phân cảnh chi tiết từng shot kèm thời lượng',
         color: 'bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400',
@@ -722,35 +722,35 @@ export const marketingKitWorkflows = [
     iconColor: 'text-red-600 dark:text-red-400',
     steps: [
       {
-        command: '/mkt:video script',
+        command: '/ckm:video script',
         typeLabel: 'Script & lập kế hoạch',
         description: 'Tạo script và kế hoạch sản xuất',
         color: 'bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400',
         number: 1
       },
       {
-        command: '/mkt:video create',
+        command: '/ckm:video create',
         typeLabel: 'Tạo video',
         description: 'Tạo video với sự hỗ trợ AI hoặc hướng dẫn chỉnh sửa',
         color: 'bg-pink-500/10 dark:bg-pink-500/20 text-pink-600 dark:text-pink-400',
         number: 2
       },
       {
-        command: '/mkt:youtube social',
+        command: '/ckm:youtube social',
         typeLabel: 'Cắt clip',
         description: 'Tạo clip social media từ nội dung dài',
         color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
         number: 3
       },
       {
-        command: '/mkt:seo keywords "video"',
+        command: '/ckm:seo keywords "video"',
         typeLabel: 'Tối ưu metadata',
         description: 'Tạo tiêu đề, mô tả, và tag SEO',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 4
       }
     ],
-    tip: 'Dùng /mkt:youtube blog để chuyển đổi video thành bài blog',
+    tip: 'Dùng /ckm:youtube blog để chuyển đổi video thành bài blog',
     features: [
       'Quy trình sản xuất đầy đủ',
       'Tạo clip social',

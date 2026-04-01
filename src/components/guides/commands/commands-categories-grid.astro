@@ -68,12 +68,12 @@ const marketingCategories = getMarketingKitCategories(t);
     </div>
   </div>
 
-  <!-- Engineer Kit (v2.13.0) categories panel -->
+  <!-- Engineer Kit (v2.15.1) categories panel -->
   <div id="categories-engineer" class="space-y-6">
     <!-- Stable version badge -->
     <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
       <span class="px-2 py-0.5 rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 font-semibold"
-        >v2.13.0 Stable · v2.14.0 Beta</span
+        >v2.15.1 Stable</span
       >
       <span>{t("commands.engineer_stable_note")}</span>
     </div>
@@ -95,36 +95,14 @@ const marketingCategories = getMarketingKitCategories(t);
         </h3>
         <p class="text-xs text-slate-500 mt-1">{t("commands.beta_preview.subtitle")}</p>
       </div>
-      <!-- System changes notice -->
-      <div class="mx-4 mt-4 p-3 rounded-lg bg-amber-50/80 dark:bg-amber-900/20 border border-amber-300/50 dark:border-amber-600/30 space-y-1.5">
-        <div class="flex items-center gap-1.5">
-          <span class="text-sm font-bold text-slate-700 dark:text-slate-300">{t("commands.beta_system_changes.label")}</span>
-          <span class="text-[9px] px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-400 font-medium uppercase">config</span>
-        </div>
-        <p class="text-xs font-medium text-slate-700 dark:text-slate-300">{t("commands.beta_system_changes.desc")}</p>
-        <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">{t("commands.beta_system_changes.detail")}</p>
-      </div>
       <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         <!-- Beta skill cards -->
         {[
-          { cmd: "/ck:ship", labelKey: "commands.beta_ship.desc", detailKey: "commands.beta_ship.detail", type: "skill", badge: "new" },
-          { cmd: "/ck:deploy", labelKey: "commands.beta_deploy.desc", detailKey: "commands.beta_deploy.detail", type: "skill", badge: "new" },
-          { cmd: "/ck:llms", labelKey: "commands.beta_llms.desc", detailKey: "commands.beta_llms.detail", type: "skill", badge: "new" },
-          { cmd: "/ck:project-organization", labelKey: "commands.beta_project_organization.desc", detailKey: "commands.beta_project_organization.detail", type: "skill", badge: "new" },
-          { cmd: "/ck:security-scan", labelKey: "commands.beta_security_scan.desc", detailKey: "commands.beta_security_scan.detail", type: "skill", badge: "new" },
-          { cmd: "/ckm:design", labelKey: "commands.beta_design.desc", detailKey: "commands.beta_design.detail", type: "skill", badge: "new" },
-          { cmd: "/ck:stitch", labelKey: "commands.beta_stitch.desc", detailKey: "commands.beta_stitch.detail", type: "skill", badge: "new" },
-          { cmd: "/ck:retro", labelKey: "commands.beta_retro.desc", detailKey: "commands.beta_retro.detail", type: "skill", badge: "new" },
-          { cmd: "/ck:preview", labelKey: "commands.beta_preview.desc", detailKey: "commands.beta_preview.detail", type: "skill", badge: "enhanced" },
-          { cmd: "/ck:code-review", labelKey: "commands.beta_code_review.desc", detailKey: "commands.beta_code_review.detail", type: "skill", badge: "enhanced" },
-          { cmd: "/ck:team", labelKey: "commands.beta_team.desc", detailKey: "commands.beta_team.detail", type: "skill", badge: "enhanced" },
-          { cmd: "/ck:ck-plan", labelKey: "commands.beta_plan.desc", detailKey: "commands.beta_plan.detail", type: "skill", badge: "renamed" },
-          { cmd: "/ck:ck-debug", labelKey: "commands.beta_debug.desc", detailKey: "commands.beta_debug.detail", type: "skill", badge: "renamed" },
-          { cmd: "/ck:ck-help", labelKey: "commands.beta_ck_help.desc", detailKey: "commands.beta_ck_help.detail", type: "skill", badge: "removed" },
-          { cmd: "/ck:ui-ux-pro-max", labelKey: "commands.beta_ui_ux_pro_max.desc", detailKey: "commands.beta_ui_ux_pro_max.detail", type: "skill", badge: "enhanced" },
-          { cmd: "/ck:ai-multimodal", labelKey: "commands.beta_ai_multimodal.desc", detailKey: "commands.beta_ai_multimodal.detail", type: "skill", badge: "enhanced" },
-          { cmd: "/ck:frontend-design", labelKey: "commands.beta_frontend_design.desc", detailKey: "commands.beta_frontend_design.detail", type: "skill", badge: "enhanced" },
-          { cmd: "/ck:skill-creator", labelKey: "commands.beta_skill_creator.desc", detailKey: "commands.beta_skill_creator.detail", type: "skill", badge: "enhanced" },
+          // Beta-only skills (not yet in stable)
+          { cmd: "/ck:autoresearch", labelKey: "commands.beta_autoresearch.desc", detailKey: "commands.beta_autoresearch.detail", type: "skill", badge: "new" },
+          { cmd: "/ck:predict", labelKey: "commands.beta_predict.desc", detailKey: "commands.beta_predict.detail", type: "skill", badge: "new" },
+          { cmd: "/ck:scenario", labelKey: "commands.beta_scenario.desc", detailKey: "commands.beta_scenario.detail", type: "skill", badge: "new" },
+          { cmd: "/ck:security", labelKey: "commands.beta_security.desc", detailKey: "commands.beta_security.detail", type: "skill", badge: "new" },
         ].map((item) => (
           <div class="p-3 rounded-lg bg-white/60 dark:bg-slate-900/50 border border-purple-500/30 transition-all duration-200 hover:shadow-sm h-full flex flex-col">
             <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
@@ -135,22 +113,6 @@ const marketingCategories = getMarketingKitCategories(t);
                 {item.badge === "enhanced" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium uppercase">enhanced</span>}
                 {item.badge === "renamed" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium uppercase">renamed</span>}
                 {item.badge === "removed" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-500 dark:text-red-400 font-medium uppercase">removed</span>}
-              </div>
-            </div>
-            <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">{t(item.labelKey)}</p>
-            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50" set:html={t(item.detailKey)} />
-          </div>
-        ))}
-        <!-- Hook cards -->
-        {[
-          { cmd: "session-state.cjs", labelKey: "commands.beta_session_state.desc", detailKey: "commands.beta_session_state.detail" },
-          { cmd: "plan-format-kanban.cjs", labelKey: "commands.beta_plan_format_kanban.desc", detailKey: "commands.beta_plan_format_kanban.detail" },
-        ].map((item) => (
-          <div class="p-3 rounded-lg bg-white/60 dark:bg-slate-900/50 border border-violet-500/30 transition-all duration-200 hover:shadow-sm h-full flex flex-col">
-            <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
-              <div class="flex items-center gap-1.5 flex-wrap">
-                <code class="text-sm font-bold font-mono text-violet-600 dark:text-violet-400">{item.cmd}</code>
-                <span class="text-[9px] px-1.5 py-0.5 rounded bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 font-medium uppercase">hook</span>
               </div>
             </div>
             <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">{t(item.labelKey)}</p>
@@ -175,17 +137,17 @@ const marketingCategories = getMarketingKitCategories(t);
         <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {category.commands.map((cmd) => (
             <div
-              class={`p-3 rounded-lg bg-slate-50 dark:bg-slate-900/50 border ${styles[category.color].border} transition-all duration-200 hover:shadow-sm h-full flex flex-col`}
+              class={`p-3 rounded-lg border transition-all duration-200 hover:shadow-sm h-full flex flex-col ${cmd.deprecated ? 'bg-slate-100 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 opacity-70' : `bg-slate-50 dark:bg-slate-900/50 ${styles[category.color].border}`}`}
             >
               <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
                 <div class="flex items-center gap-1.5 flex-wrap">
                   {/* Step indicator */}
                   {cmd.step && (
-                    <span class={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${styles[category.color].bg} ${styles[category.color].text}`}>
+                    <span class={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${cmd.deprecated ? 'bg-slate-200 dark:bg-slate-700 text-slate-400 dark:text-slate-500' : `${styles[category.color].bg} ${styles[category.color].text}`}`}>
                       {cmd.step}
                     </span>
                   )}
-                  <code class={`text-sm font-bold font-mono ${cmd.deprecated ? 'line-through opacity-60' : ''} ${styles[category.color].text}`}>{cmd.command}</code>
+                  <code class={`text-sm font-bold font-mono ${cmd.deprecated ? 'line-through text-slate-400 dark:text-slate-500' : styles[category.color].text}`}>{cmd.command}</code>
                   {cmd.isBeta && (
                     <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">beta</span>
                   )}
@@ -257,7 +219,7 @@ const marketingCategories = getMarketingKitCategories(t);
     <!-- Stable version badge -->
     <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
       <span class="px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 font-semibold"
-        >v1.2.1 Stable · v1.3.0 Beta</span
+        >v1.3.1 Stable</span
       >
       <span>{t("commands.marketing_stable_note")}</span>
     </div>
@@ -279,98 +241,9 @@ const marketingCategories = getMarketingKitCategories(t);
         </h3>
         <p class="text-xs text-slate-500 mt-1">{t("commands.mkt_beta_preview.subtitle")}</p>
       </div>
-      <!-- Major changes box - styled like migration section -->
-      <div class="mx-4 mt-4 p-4 rounded-lg bg-white/60 dark:bg-slate-900/50 border border-amber-200 dark:border-amber-500/20 space-y-3">
-        <div class="flex items-start gap-3">
-          <div class="flex-shrink-0 w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-500/20 flex items-center justify-center">
-            <svg class="w-4 h-4 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M8 3 4 7l4 4"></path><path d="M4 7h16"></path><path d="m16 21 4-4-4-4"></path><path d="M20 17H4"></path>
-            </svg>
-          </div>
-          <div class="flex-1">
-            <p class="text-xs font-bold text-amber-700 dark:text-amber-400 mb-1">{t("commands.mkt_beta.changes.breaking_title")}</p>
-            <p class="text-[11px] text-slate-500 dark:text-slate-400 mb-3">{t("commands.mkt_beta.changes.skills_migration_desc")}</p>
-          </div>
-        </div>
-        <!-- Prefix reference -->
-        <div class="p-3 rounded-lg bg-purple-50/50 dark:bg-purple-900/10 border border-purple-200 dark:border-purple-800/50">
-          <p class="text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-2">{t("commands.mkt_beta.changes.prefix_title")}</p>
-          <div class="flex flex-wrap gap-2 text-[10px]">
-            <span class="px-2 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 font-mono font-semibold">/ck:*</span>
-            <span class="text-slate-400">=</span>
-            <span class="text-slate-500 dark:text-slate-400">{t("commands.mkt_beta.changes.prefix_shared")}</span>
-            <span class="text-slate-300 dark:text-slate-600 mx-1">|</span>
-            <span class="px-2 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 font-mono font-semibold">/ckm:*</span>
-            <span class="text-slate-400">=</span>
-            <span class="text-slate-500 dark:text-slate-400">{t("commands.mkt_beta.changes.prefix_marketing")}</span>
-          </div>
-        </div>
-        <!-- Skill merges compact table -->
-        <div>
-          <p class="text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1.5">{t("commands.mkt_beta.changes.merges_title")}</p>
-          <p class="text-[11px] text-slate-500 dark:text-slate-400 mb-2">{t("commands.mkt_beta.changes.merges_desc")}</p>
-          <div class="overflow-x-auto">
-            <table class="w-full text-[11px] border-collapse">
-              <thead>
-                <tr class="border-b border-slate-200 dark:border-slate-700">
-                  <th class="text-left py-1 pr-3 text-xs font-semibold text-slate-500 dark:text-slate-500">{t("commands.mkt_beta.changes.col_old")}</th>
-                  <th class="text-left py-1 pr-3 text-xs font-semibold text-purple-700 dark:text-purple-300">{t("commands.mkt_beta.changes.col_new")}</th>
-                  <th class="text-left py-1 text-xs font-semibold text-slate-500 dark:text-slate-500">{t("commands.mkt_beta.changes.col_args")}</th>
-                </tr>
-              </thead>
-              <tbody class="text-slate-600 dark:text-slate-400">
-                <tr class="border-b border-slate-100 dark:border-slate-800">
-                  <td class="py-1.5 pr-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/brand-guidelines</code></td>
-                  <td class="py-1.5 pr-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:brand</code></td>
-                  <td class="py-1.5"><code class="text-[10px] text-slate-500">update</code></td>
-                </tr>
-                <tr class="border-b border-slate-100 dark:border-slate-800">
-                  <td class="py-1.5 pr-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/campaign-management</code></td>
-                  <td class="py-1.5 pr-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:campaign</code></td>
-                  <td class="py-1.5"><code class="text-[10px] text-slate-500">create</code> <code class="text-[10px] text-slate-500">analyze</code> <code class="text-[10px] text-slate-500">email</code> <code class="text-[10px] text-slate-500">status</code></td>
-                </tr>
-                <tr class="border-b border-slate-100 dark:border-slate-800">
-                  <td class="py-1.5 pr-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/email-marketing</code></td>
-                  <td class="py-1.5 pr-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:email</code></td>
-                  <td class="py-1.5"><code class="text-[10px] text-slate-500">flow</code> <code class="text-[10px] text-slate-500">sequence</code></td>
-                </tr>
-                <tr>
-                  <td class="py-1.5 pr-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/competitor-alternatives</code></td>
-                  <td class="py-1.5 pr-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:competitor</code></td>
-                  <td class="py-1.5"><code class="text-[10px] text-slate-500">analyze</code> <code class="text-[10px] text-slate-500">content</code> <code class="text-[10px] text-slate-500">seo</code> <code class="text-[10px] text-slate-500">alternatives</code> <code class="text-[10px] text-slate-500">list</code></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-        {/* Beta skill cards */}
-        {[
-          { cmd: "/ckm:play", labelKey: "commands.mkt_beta.play.desc", detailKey: "commands.mkt_beta.play.detail", type: "skill", badge: "new" },
-          { cmd: "/ckm:youtube-thumbnail-design", labelKey: "commands.mkt_beta.youtube_thumbnail_design.desc", detailKey: "commands.mkt_beta.youtube_thumbnail_design.detail", type: "skill", badge: "new" },
-          { cmd: "/ckm:elevenlabs", labelKey: "commands.mkt_beta.elevenlabs.desc", detailKey: "commands.mkt_beta.elevenlabs.detail", type: "skill", badge: "new" },
-          { cmd: "/ckm:storage", labelKey: "commands.mkt_beta.ckm_storage.desc", detailKey: "commands.mkt_beta.ckm_storage.detail", type: "skill", badge: "new" },
-          { cmd: "/ckm:marketing-dashboard", labelKey: "commands.mkt_beta.marketing_dashboard.desc", detailKey: "commands.mkt_beta.marketing_dashboard.detail", type: "skill", badge: "new" },
-          { cmd: "/ckm:design", labelKey: "commands.mkt_beta.design_consolidated.desc", detailKey: "commands.mkt_beta.design_consolidated.detail", type: "skill", badge: "enhanced" },
-          { cmd: "/ckm:ads", labelKey: "commands.mkt_beta.ads_management.desc", detailKey: "commands.mkt_beta.ads_management.detail", type: "skill", badge: "enhanced" },
-          { cmd: "/ck:payment", labelKey: "commands.mkt_beta.payment.desc", detailKey: "commands.mkt_beta.payment.detail", type: "skill", badge: "enhanced" },
-        ].map((item) => (
-          <div class="p-3 rounded-lg bg-white/60 dark:bg-slate-900/50 border border-purple-500/30 transition-all duration-200 hover:shadow-sm h-full flex flex-col">
-            <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
-              <div class="flex items-center gap-1.5 flex-wrap">
-                <code class="text-sm font-bold font-mono text-purple-600 dark:text-purple-400">{item.cmd}</code>
-                <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">skill</span>
-                {item.badge === "new" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 font-medium uppercase">new</span>}
-                {item.badge === "enhanced" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium uppercase">enhanced</span>}
-                {item.badge === "renamed" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium uppercase">renamed</span>}
-                {item.badge === "removed" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-500 dark:text-red-400 font-medium uppercase">removed</span>}
-              </div>
-            </div>
-            <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">{t(item.labelKey)}</p>
-            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50" set:html={t(item.detailKey)} />
-          </div>
-        ))}
+      <!-- No beta-only features at this time -->
+      <div class="p-4">
+        <p class="text-xs text-slate-400 dark:text-slate-500 italic text-center">No beta-only features at this time. Check back later.</p>
       </div>
     </div>
 
@@ -389,20 +262,20 @@ const marketingCategories = getMarketingKitCategories(t);
         <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {category.commands.map((cmd) => (
             <div
-              class={`p-3 rounded-lg bg-slate-50 dark:bg-slate-900/50 border ${styles[category.color].border} transition-all duration-200 hover:shadow-sm h-full flex flex-col ${cmd.isSkill ? "border-dashed" : ""}`}
+              class={`p-3 rounded-lg border transition-all duration-200 hover:shadow-sm h-full flex flex-col ${cmd.deprecated ? 'bg-slate-100 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 opacity-70' : `bg-slate-50 dark:bg-slate-900/50 ${styles[category.color].border}`} ${cmd.isSkill && !cmd.deprecated ? "border-dashed" : ""}`}
             >
               <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
                 <div class="flex items-center gap-1.5 flex-wrap">
                   {/* Step indicator */}
                   {cmd.step && (
-                    <span class={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${styles[category.color].bg} ${styles[category.color].text}`}>
+                    <span class={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${cmd.deprecated ? 'bg-slate-200 dark:bg-slate-700 text-slate-400 dark:text-slate-500' : `${styles[category.color].bg} ${styles[category.color].text}`}`}>
                       {cmd.step}
                     </span>
                   )}
                   {cmd.isSkill ? (
-                    <span class={`text-sm font-medium ${cmd.deprecated ? 'line-through opacity-60' : ''} ${styles[category.color].text}`}>{cmd.command}</span>
+                    <span class={`text-sm font-medium ${cmd.deprecated ? 'line-through text-slate-400 dark:text-slate-500' : styles[category.color].text}`}>{cmd.command}</span>
                   ) : (
-                    <code class={`text-sm font-bold font-mono ${cmd.deprecated ? 'line-through opacity-60' : ''} ${styles[category.color].text}`}>{cmd.command}</code>
+                    <code class={`text-sm font-bold font-mono ${cmd.deprecated ? 'line-through text-slate-400 dark:text-slate-500' : styles[category.color].text}`}>{cmd.command}</code>
                   )}
                   {cmd.isSkill && (
                     <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">

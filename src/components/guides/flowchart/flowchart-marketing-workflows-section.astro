@@ -28,10 +28,10 @@ const isVi = currentLang === "vi";
       </h4>
       <div class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono">
         <p>1. <code class="text-violet-600 dark:text-violet-400">/ck:brainstorm</code> → {isVi ? "Tìm ideas" : "Find ideas"}</p>
-        <p>2. <code class="text-purple-600 dark:text-purple-400">/mkt:plan</code> → {isVi ? "Lên kế hoạch" : "Create plan"}</p>
-        <p>3. <code class="text-pink-600 dark:text-pink-400">/mkt:write:good</code> → {isVi ? "Viết content" : "Write content"}</p>
-        <p>4. <code class="text-purple-600 dark:text-purple-400">/mkt:social</code> → {isVi ? "Schedule posts" : "Schedule posts"}</p>
-        <p>5. <code class="text-blue-600 dark:text-blue-400">/mkt:analyze</code> → {isVi ? "Đo lường" : "Measure results"}</p>
+        <p>2. <code class="text-purple-600 dark:text-purple-400">/ckm:plan</code> → {isVi ? "Lên kế hoạch" : "Create plan"}</p>
+        <p>3. <code class="text-pink-600 dark:text-pink-400">/ckm:write:good</code> → {isVi ? "Viết content" : "Write content"}</p>
+        <p>4. <code class="text-purple-600 dark:text-purple-400">/ckm:social</code> → {isVi ? "Schedule posts" : "Schedule posts"}</p>
+        <p>5. <code class="text-blue-600 dark:text-blue-400">/ckm:analyze</code> → {isVi ? "Đo lường" : "Measure results"}</p>
       </div>
     </div>
 
@@ -41,10 +41,10 @@ const isVi = currentLang === "vi";
         {isVi ? "Workflow 2: Email Campaign" : "Workflow 2: Email Campaign"}
       </h4>
       <div class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono">
-        <p>1. <code class="text-blue-600 dark:text-blue-400">/mkt:persona</code> → {isVi ? "Xác định audience" : "Define audience"}</p>
-        <p>2. <code class="text-purple-600 dark:text-purple-400">/mkt:email</code> → {isVi ? "Design flow" : "Design email flow"}</p>
-        <p>3. <code class="text-pink-600 dark:text-pink-400">/mkt:write:cro</code> → {isVi ? "Viết copy" : "Write CRO copy"}</p>
-        <p>4. <code class="text-purple-600 dark:text-purple-400">/mkt:campaign</code> → {isVi ? "Launch" : "Launch campaign"}</p>
+        <p>1. <code class="text-blue-600 dark:text-blue-400">/ckm:persona</code> → {isVi ? "Xác định audience" : "Define audience"}</p>
+        <p>2. <code class="text-purple-600 dark:text-purple-400">/ckm:email</code> → {isVi ? "Design flow" : "Design email flow"}</p>
+        <p>3. <code class="text-pink-600 dark:text-pink-400">/ckm:write:cro</code> → {isVi ? "Viết copy" : "Write CRO copy"}</p>
+        <p>4. <code class="text-purple-600 dark:text-purple-400">/ckm:campaign</code> → {isVi ? "Launch" : "Launch campaign"}</p>
         <p>5. <code class="text-emerald-600 dark:text-emerald-400">/ckm:form-cro</code> → {isVi ? "Optimize" : "Optimize forms"}</p>
       </div>
     </div>
@@ -53,14 +53,13 @@ const isVi = currentLang === "vi";
     <div class="p-5 rounded-xl bg-emerald-500/5 border border-emerald-200 dark:border-emerald-500/20">
       <h4 class="font-bold text-emerald-700 dark:text-emerald-400 mb-3">
         {isVi ? "Workflow 3: Product Launch" : "Workflow 3: Product Launch"}
-        <span class="ml-2 px-1.5 py-0.5 text-xs rounded bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400">Beta</span>
       </h4>
       <div class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono">
-        <p>1. <code class="text-blue-600 dark:text-blue-400">/mkt:competitor</code> → {isVi ? "Research market" : "Research market"}</p>
+        <p>1. <code class="text-blue-600 dark:text-blue-400">/ckm:competitor</code> → {isVi ? "Research market" : "Research market"}</p>
         <p>2. <code class="text-emerald-600 dark:text-emerald-400">/ckm:launch-strategy</code> → {isVi ? "Plan launch" : "Plan launch"}</p>
         <p>3. <code class="text-emerald-600 dark:text-emerald-400">/ckm:pricing-strategy</code> → {isVi ? "Set pricing" : "Set pricing"}</p>
-        <p>4. <code class="text-pink-600 dark:text-pink-400">/mkt:write</code> → {isVi ? "Create assets" : "Create content"}</p>
-        <p>5. <code class="text-purple-600 dark:text-purple-400">/mkt:campaign</code> → {isVi ? "Execute launch" : "Execute launch"}</p>
+        <p>4. <code class="text-pink-600 dark:text-pink-400">/ckm:write</code> → {isVi ? "Create assets" : "Create content"}</p>
+        <p>5. <code class="text-purple-600 dark:text-purple-400">/ckm:campaign</code> → {isVi ? "Execute launch" : "Execute launch"}</p>
       </div>
     </div>
 
@@ -70,11 +69,11 @@ const isVi = currentLang === "vi";
         {isVi ? "Workflow 4: SEO Content" : "Workflow 4: SEO Content Strategy"}
       </h4>
       <div class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono">
-        <p>1. <code class="text-blue-600 dark:text-blue-400">/mkt:seo</code> → {isVi ? "Keyword research" : "Keyword research"}</p>
-        <p>2. <code class="text-blue-600 dark:text-blue-400">/mkt:competitor</code> → {isVi ? "Content gaps" : "Find content gaps"}</p>
-        <p>3. <code class="text-purple-600 dark:text-purple-400">/mkt:plan</code> → {isVi ? "Content calendar" : "Content calendar"}</p>
-        <p>4. <code class="text-pink-600 dark:text-pink-400">/mkt:write:blog</code> → {isVi ? "Write articles" : "Write articles"}</p>
-        <p>5. <code class="text-blue-600 dark:text-blue-400">/mkt:funnel</code> → {isVi ? "Optimize flow" : "Optimize conversion"}</p>
+        <p>1. <code class="text-blue-600 dark:text-blue-400">/ckm:seo</code> → {isVi ? "Keyword research" : "Keyword research"}</p>
+        <p>2. <code class="text-blue-600 dark:text-blue-400">/ckm:competitor</code> → {isVi ? "Content gaps" : "Find content gaps"}</p>
+        <p>3. <code class="text-purple-600 dark:text-purple-400">/ckm:plan</code> → {isVi ? "Content calendar" : "Content calendar"}</p>
+        <p>4. <code class="text-pink-600 dark:text-pink-400">/ckm:write:blog</code> → {isVi ? "Write articles" : "Write articles"}</p>
+        <p>5. <code class="text-blue-600 dark:text-blue-400">/ckm:funnel</code> → {isVi ? "Optimize flow" : "Optimize conversion"}</p>
       </div>
     </div>
   </div>

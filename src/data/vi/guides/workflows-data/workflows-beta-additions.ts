@@ -3,104 +3,6 @@
 
 export const betaOnlyWorkflows = [
   {
-    title: 'Ship Feature',
-    category: 'Shipping',
-    level: 'Intermediate',
-    duration: '~5-10 phút',
-    stepCount: 1,
-    bestFor: 'Ship feature branch với test, review và tạo PR tự động',
-    gradientHeader: 'from-emerald-500/10 to-teal-500/10',
-    hoverBorderColor: 'hover:border-emerald-500/50',
-    buttonColor: 'bg-emerald-500 hover:bg-emerald-600',
-    icon: '<path d="M5 12h14M12 5l7 7-7 7"/>',
-    iconColor: 'text-emerald-600 dark:text-emerald-400',
-    steps: [
-      {
-        command: '/ck:ship [--official|--beta] [--skip-tests] [--skip-review]',
-        typeLabel: 'Ship pipeline (skill)',
-        description: 'Merge main, chạy test, review pre-landing, bump version, cập nhật changelog, push, tạo PR',
-        color: 'bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
-        number: 1,
-        isSkill: true,
-        isBeta: true
-      }
-    ],
-    tip: '/ck:ship tự nhận diện test runner, format version file và changelog style',
-    features: [
-      'Hỗ trợ chế độ official (→main) và beta (→dev)',
-      'Merge origin/main (hoặc dev cho beta) trước khi test',
-      'Tự nhận diện npm/pytest/cargo/go test',
-      'Review code 2 pass + adversarial review (giai đoạn 3)',
-      'Bump version và cập nhật CHANGELOG.md',
-      'Tạo PR với summary, kết quả test và linked issues'
-    ],
-    borderColor: 'border-emerald-500/20'
-  },
-  {
-    title: 'Deploy Ứng Dụng',
-    category: 'Shipping',
-    level: 'Intermediate',
-    duration: '~5-15 phút',
-    stepCount: 1,
-    bestFor: 'Deploy lên Vercel, Netlify, Railway, Fly.io, AWS, GCP và nhiều hơn',
-    gradientHeader: 'from-orange-500/10 to-amber-500/10',
-    hoverBorderColor: 'hover:border-orange-500/50',
-    buttonColor: 'bg-orange-500 hover:bg-orange-600',
-    icon: '<path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>',
-    iconColor: 'text-orange-600 dark:text-orange-400',
-    steps: [
-      {
-        command: '/ck:deploy [platform]',
-        typeLabel: 'Auto-deploy (skill)',
-        description: 'AI tự nhận diện project type và deploy lên 15+ nền tảng mà không cần cấu hình thủ công',
-        color: 'bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400',
-        number: 1,
-        isSkill: true,
-        isBeta: true
-      }
-    ],
-    tip: '/ck:deploy tự nhận diện stack và xử lý biến môi trường, build steps và cấu hình platform',
-    features: [
-      'Tự nhận diện project type (Next.js, Astro, Express, ...)',
-      'Hỗ trợ 15+ nền tảng sẵn có',
-      'Xử lý env vars và cấu hình build',
-      'Vercel, Netlify, Railway, Fly.io, AWS, GCP, Azure'
-    ],
-    borderColor: 'border-orange-500/20'
-  },
-  {
-    title: 'Tạo LLMs.txt',
-    category: 'Research & Docs',
-    level: 'Beginner',
-    duration: '~5-10 phút',
-    stepCount: 1,
-    bestFor: 'Làm cho project dễ đọc với các AI/LLM tools',
-    gradientHeader: 'from-violet-500/10 to-purple-500/10',
-    hoverBorderColor: 'hover:border-violet-500/50',
-    buttonColor: 'bg-violet-500 hover:bg-violet-600',
-    icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>',
-    iconColor: 'text-violet-600 dark:text-violet-400',
-    steps: [
-      {
-        command: '/ck:llms [path]',
-        typeLabel: 'Tạo index (skill)',
-        description: 'Tạo llms.txt theo chuẩn llmstxt.org — giúp AI đọc hiểu docs của bạn dễ dàng',
-        color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
-        number: 1,
-        isSkill: true,
-        isBeta: true
-      }
-    ],
-    tip: '/ck:llms tạo llms.txt chuẩn hóa để AI tools có thể hiểu nhanh codebase của bạn',
-    features: [
-      'Tuân theo chuẩn llmstxt.org',
-      'Tạo từ docs, README hoặc codebase',
-      'Bao gồm reference files và cấu trúc tổng quan',
-      'Hoạt động với mọi loại project'
-    ],
-    borderColor: 'border-violet-500/20'
-  },
-  {
     title: 'Giải Thích Trực Quan',
     category: 'Docs & Communication',
     level: 'Beginner',
@@ -152,8 +54,7 @@ export const betaOnlyWorkflows = [
         description: 'Thu thập git metrics (commits, LOC, hotspots, churn), tính chỉ số sức khỏe, tạo báo cáo retrospective',
         color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
         number: 1,
-        isSkill: true,
-        isBeta: true
+        isSkill: true
       }
     ],
     tip: '/ck:retro 2w --compare --team tạo retro 2 tuần với so sánh kỳ trước và phân tích theo tác giả',
@@ -215,5 +116,133 @@ export const betaOnlyWorkflows = [
       'Hạn mức: 200 credits/ngày (Flash), 50/ngày (Pro)'
     ],
     borderColor: 'border-sky-500/20'
+  },
+  {
+    title: 'Automated Research Loop',
+    category: 'Planning & Review',
+    level: 'Intermediate',
+    duration: '~10-30 phút',
+    stepCount: 1,
+    bestFor: 'Tối ưu metric lặp đi lặp lại với thử nghiệm tự động',
+    gradientHeader: 'from-blue-500/10 to-cyan-500/10',
+    hoverBorderColor: 'hover:border-blue-500/50',
+    buttonColor: 'bg-blue-500 hover:bg-blue-600',
+    icon: '<path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>',
+    iconColor: 'text-blue-600 dark:text-blue-400',
+    steps: [
+      {
+        command: '/ck:autoresearch',
+        typeLabel: 'Research loop (skill)',
+        description: 'Chạy N vòng lặp với metric, tự giữ/bỏ thay đổi dựa trên kết quả',
+        color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      }
+    ],
+    tip: 'Đặt metric rõ ràng, đo lường được (coverage %, bundle size, latency) để có kết quả tốt nhất',
+    features: [
+      'Vòng lặp lặp đi lặp lại tự động',
+      'Học từ git history giữa các vòng',
+      'Tự giữ/bỏ dựa trên metric delta',
+      'Hoạt động với mọi metric đo lường được'
+    ],
+    borderColor: 'border-blue-500/20'
+  },
+  {
+    title: 'Dự Đoán Impact Trước Khi Code',
+    category: 'Planning & Review',
+    level: 'Intermediate',
+    duration: '~5-10 phút',
+    stepCount: 1,
+    bestFor: 'Phát hiện vấn đề architecture, security, performance trước khi implement',
+    gradientHeader: 'from-amber-500/10 to-orange-500/10',
+    hoverBorderColor: 'hover:border-amber-500/50',
+    buttonColor: 'bg-amber-500 hover:bg-amber-600',
+    icon: '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>',
+    iconColor: 'text-amber-600 dark:text-amber-400',
+    steps: [
+      {
+        command: '/ck:predict',
+        typeLabel: '5 chuyên gia tranh luận (skill)',
+        description: '5 persona chuyên gia tranh luận về thay đổi — architect, security, performance, UX, ops',
+        color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      }
+    ],
+    tip: 'Chạy trước feature lớn hoặc refactor rủi ro để phát hiện vấn đề sớm',
+    features: [
+      '5 persona chuyên gia với góc nhìn riêng',
+      'Phân tích architecture, security, performance',
+      'Đánh giá tác động UX và ops',
+      'Báo cáo đồng thuận với xếp hạng rủi ro'
+    ],
+    borderColor: 'border-amber-500/20'
+  },
+  {
+    title: 'Tạo Test Scenarios',
+    category: 'Debugging & Fixes',
+    level: 'Beginner',
+    duration: '~5-10 phút',
+    stepCount: 1,
+    bestFor: 'Khám phá edge case toàn diện trước khi implement hoặc test',
+    gradientHeader: 'from-purple-500/10 to-violet-500/10',
+    hoverBorderColor: 'hover:border-purple-500/50',
+    buttonColor: 'bg-purple-500 hover:bg-purple-600',
+    icon: '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
+    iconColor: 'text-purple-600 dark:text-purple-400',
+    steps: [
+      {
+        command: '/ck:scenario',
+        typeLabel: 'Phân tích 12 chiều (skill)',
+        description: 'Phân tách feature theo 12 chiều để tạo test scenarios toàn diện',
+        color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      }
+    ],
+    tip: 'Dùng trước khi viết test để đảm bảo coverage đầy đủ edge cases',
+    features: [
+      'Phân tách feature theo 12 chiều',
+      'Khám phá edge case và boundary condition',
+      'Tạo test scenarios với độ ưu tiên',
+      'Tích hợp với /ck:test để thực thi'
+    ],
+    borderColor: 'border-purple-500/20'
+  },
+  {
+    title: 'STRIDE Security Audit',
+    category: 'Debugging & Fixes',
+    level: 'Intermediate',
+    duration: '~10-20 phút',
+    stepCount: 1,
+    bestFor: 'Phân tích bảo mật STRIDE + OWASP toàn diện với auto-fix tùy chọn',
+    gradientHeader: 'from-red-500/10 to-rose-500/10',
+    hoverBorderColor: 'hover:border-red-500/50',
+    buttonColor: 'bg-red-500 hover:bg-red-600',
+    icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/>',
+    iconColor: 'text-red-600 dark:text-red-400',
+    steps: [
+      {
+        command: '/ck:security',
+        typeLabel: 'STRIDE audit (skill)',
+        description: 'STRIDE threat modeling + OWASP scan với phân loại severity và auto-fix tùy chọn',
+        color: 'bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      }
+    ],
+    tip: 'Kết hợp với /ck:security-scan để coverage vulnerability + threat toàn diện',
+    features: [
+      'STRIDE threat modeling framework',
+      'OWASP vulnerability pattern matching',
+      'Phân loại severity và ưu tiên',
+      'Auto-fix lặp đi lặp lại tùy chọn theo pattern autoresearch'
+    ],
+    borderColor: 'border-red-500/20'
   }
 ];
