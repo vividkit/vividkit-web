@@ -34,4 +34,6 @@ export const workflows = {
   'workflows.v25.flag_parallel': 'Chạy các phase song song',
   'workflows.v25.flag_auto': 'Tự động duyệt tất cả bước',
   'workflows.v25.flag_notest': 'Bỏ qua chạy test sau khi code',
+  'workflows.tip.checklists.title': 'Agent behavioral checklists',
+  'workflows.tip.checklists.desc': 'Các skill bao gồm behavioral checklists hướng dẫn agent ra quyết định — xem docs của skill để biết thêm',
 } as const;

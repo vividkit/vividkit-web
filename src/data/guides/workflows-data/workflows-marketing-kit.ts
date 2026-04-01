@@ -1,5 +1,5 @@
 // Marketing Kit workflows - organized by category
-// Uses /mkt: prefix for stable commands, /ckm: for beta skills
+// All commands use /ckm: prefix (migration from /ckm: complete)
 
 export const marketingKitWorkflows = [
   // === CONTENT & COPY ===
@@ -17,35 +17,35 @@ export const marketingKitWorkflows = [
     iconColor: 'text-pink-600 dark:text-pink-400',
     steps: [
       {
-        command: '/mkt:write:good "topic"',
+        command: '/ckm:write:good "topic"',
         typeLabel: 'Research & draft',
         description: 'AI researches topic, analyzes competitors, and drafts SEO-optimized content',
         color: 'bg-pink-500/10 dark:bg-pink-500/20 text-pink-600 dark:text-pink-400',
         number: 1
       },
       {
-        command: '/mkt:seo audit',
+        command: '/ckm:seo audit',
         typeLabel: 'SEO optimization',
         description: 'Audit content for keyword density, meta tags, and search optimization',
         color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
         number: 2
       },
       {
-        command: '/mkt:write:enhance',
+        command: '/ckm:write:enhance',
         typeLabel: 'Enhance & polish',
         description: 'Improve readability, add CTAs, and optimize for engagement',
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
         number: 3
       },
       {
-        command: '/mkt:write:publish',
+        command: '/ckm:write:publish',
         typeLabel: 'Publish content',
         description: 'Format for CMS, add images, and prepare for publication',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 4
       }
     ],
-    tip: 'Use /mkt:write:good for quality content; /mkt:write:fast for quick drafts',
+    tip: 'Use /ckm:write:good for quality content; /ckm:write:fast for quick drafts',
     features: [
       'Competitor content analysis',
       'SEO keyword integration',
@@ -68,14 +68,14 @@ export const marketingKitWorkflows = [
     iconColor: 'text-cyan-600 dark:text-cyan-400',
     steps: [
       {
-        command: '/mkt:persona',
+        command: '/ckm:persona',
         typeLabel: 'Define audience',
         description: 'Create buyer persona to target messaging effectively',
         color: 'bg-cyan-500/10 dark:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400',
         number: 1
       },
       {
-        command: '/mkt:email flow "welcome"',
+        command: '/ckm:email flow "welcome"',
         typeLabel: 'Design email flow',
         description: 'Create automated sequence with timing and triggers',
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
@@ -90,7 +90,7 @@ export const marketingKitWorkflows = [
         isSkill: true
       },
       {
-        command: '/mkt:email sequence',
+        command: '/ckm:email sequence',
         typeLabel: 'Generate sequence',
         description: 'Output complete email sequence with A/B variants',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
@@ -131,7 +131,7 @@ export const marketingKitWorkflows = [
         isBeta: true
       },
       {
-        command: '/mkt:campaign create',
+        command: '/ckm:campaign create',
         typeLabel: 'Create campaign',
         description: 'Set up campaign structure with channels and messaging',
         color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
@@ -147,7 +147,7 @@ export const marketingKitWorkflows = [
         isBeta: true
       },
       {
-        command: '/mkt:social schedule',
+        command: '/ckm:social schedule',
         typeLabel: 'Schedule distribution',
         description: 'Plan and schedule content across social platforms',
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
@@ -163,7 +163,7 @@ export const marketingKitWorkflows = [
         isBeta: true
       }
     ],
-    tip: 'Use /mkt:campaign status to monitor performance during campaign',
+    tip: 'Use /ckm:campaign status to monitor performance during campaign',
     features: [
       'Multi-channel coordination',
       'Budget allocation planning',
@@ -186,7 +186,7 @@ export const marketingKitWorkflows = [
     iconColor: 'text-amber-600 dark:text-amber-400',
     steps: [
       {
-        command: '/mkt:funnel analyze',
+        command: '/ckm:funnel analyze',
         typeLabel: 'Identify bottlenecks',
         description: 'Analyze current funnel to find optimization opportunities',
         color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
@@ -202,14 +202,14 @@ export const marketingKitWorkflows = [
         isBeta: true
       },
       {
-        command: '/mkt:plan cro',
+        command: '/ckm:plan cro',
         typeLabel: 'Implementation plan',
         description: 'Create detailed plan for test implementation',
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
         number: 3
       },
       {
-        command: '/mkt:analyze report',
+        command: '/ckm:analyze report',
         typeLabel: 'Analyze results',
         description: 'Statistical analysis and recommendations',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
@@ -241,21 +241,21 @@ export const marketingKitWorkflows = [
     iconColor: 'text-amber-600 dark:text-amber-400',
     steps: [
       {
-        command: '/mkt:seo audit "url"',
+        command: '/ckm:seo audit "url"',
         typeLabel: 'Technical audit',
         description: 'Analyze site structure, speed, mobile-friendliness, and crawlability',
         color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
         number: 1
       },
       {
-        command: '/mkt:seo keywords "niche"',
+        command: '/ckm:seo keywords "niche"',
         typeLabel: 'Keyword research',
         description: 'Discover high-value keywords and content gaps',
         color: 'bg-yellow-500/10 dark:bg-yellow-500/20 text-yellow-600 dark:text-yellow-400',
         number: 2
       },
       {
-        command: '/mkt:competitor seo "url"',
+        command: '/ckm:competitor seo "url"',
         typeLabel: 'Competitor analysis',
         description: 'Analyze competitor rankings and backlink profiles',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
@@ -285,7 +285,7 @@ export const marketingKitWorkflows = [
     iconColor: 'text-emerald-600 dark:text-emerald-400',
     steps: [
       {
-        command: '/mkt:funnel analyze "url"',
+        command: '/ckm:funnel analyze "url"',
         typeLabel: 'Analyze performance',
         description: 'Review current metrics, bounce rate, and user flow',
         color: 'bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
@@ -309,7 +309,7 @@ export const marketingKitWorkflows = [
         isSkill: true
       },
       {
-        command: '/mkt:plan cro',
+        command: '/ckm:plan cro',
         typeLabel: 'Create CRO plan',
         description: 'Document changes and set up tracking for improvements',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
@@ -341,7 +341,7 @@ export const marketingKitWorkflows = [
     iconColor: 'text-teal-600 dark:text-teal-400',
     steps: [
       {
-        command: '/mkt:brand review',
+        command: '/ckm:brand review',
         typeLabel: 'Review brand guidelines',
         description: 'Load brand colors, fonts, and style guidelines',
         color: 'bg-teal-500/10 dark:bg-teal-500/20 text-teal-600 dark:text-teal-400',
@@ -375,7 +375,7 @@ export const marketingKitWorkflows = [
         isBeta: true
       }
     ],
-    tip: 'Use /mkt:brand create to set up brand guidelines first if not exists',
+    tip: 'Use /ckm:brand create to set up brand guidelines first if not exists',
     features: [
       'Brand-consistent design',
       'Multi-size exports',
@@ -415,7 +415,7 @@ export const marketingKitWorkflows = [
         isSkill: true
       },
       {
-        command: '/mkt:social schedule',
+        command: '/ckm:social schedule',
         typeLabel: 'Schedule posts',
         description: 'Plan posting schedule for optimal engagement',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
@@ -447,21 +447,21 @@ export const marketingKitWorkflows = [
     iconColor: 'text-blue-600 dark:text-blue-400',
     steps: [
       {
-        command: '/mkt:competitor list',
+        command: '/ckm:competitor list',
         typeLabel: 'Identify competitors',
         description: 'Discover direct and indirect competitors in your space',
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
         number: 1
       },
       {
-        command: '/mkt:competitor analyze "url"',
+        command: '/ckm:competitor analyze "url"',
         typeLabel: 'Deep analysis',
         description: 'Analyze positioning, messaging, and unique value props',
         color: 'bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400',
         number: 2
       },
       {
-        command: '/mkt:competitor content',
+        command: '/ckm:competitor content',
         typeLabel: 'Content audit',
         description: 'Analyze content strategy, topics, and engagement',
         color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
@@ -500,7 +500,7 @@ export const marketingKitWorkflows = [
     iconColor: 'text-indigo-600 dark:text-indigo-400',
     steps: [
       {
-        command: '/mkt:persona',
+        command: '/ckm:persona',
         typeLabel: 'Define personas',
         description: 'Create detailed buyer personas and segments',
         color: 'bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400',
@@ -516,7 +516,7 @@ export const marketingKitWorkflows = [
         isBeta: true
       },
       {
-        command: '/mkt:funnel design',
+        command: '/ckm:funnel design',
         typeLabel: 'Design funnel',
         description: 'Map customer journey and conversion points',
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
@@ -532,7 +532,7 @@ export const marketingKitWorkflows = [
         isBeta: true
       },
       {
-        command: '/mkt:dashboard',
+        command: '/ckm:dashboard',
         typeLabel: 'Set up tracking',
         description: 'Configure KPI dashboard and reporting',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
@@ -676,14 +676,14 @@ export const marketingKitWorkflows = [
     iconColor: 'text-orange-600 dark:text-orange-400',
     steps: [
       {
-        command: '/mkt:video script "topic"',
+        command: '/ckm:video script "topic"',
         typeLabel: 'Write script',
         description: 'Generate video script with hooks, body, and CTA',
         color: 'bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400',
         number: 1
       },
       {
-        command: '/mkt:video storyboard',
+        command: '/ckm:video storyboard',
         typeLabel: 'Create storyboard',
         description: 'Visual shot-by-shot breakdown with timing',
         color: 'bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400',
@@ -722,35 +722,35 @@ export const marketingKitWorkflows = [
     iconColor: 'text-red-600 dark:text-red-400',
     steps: [
       {
-        command: '/mkt:video script',
+        command: '/ckm:video script',
         typeLabel: 'Script & plan',
         description: 'Create script and production plan',
         color: 'bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400',
         number: 1
       },
       {
-        command: '/mkt:video create',
+        command: '/ckm:video create',
         typeLabel: 'Generate video',
         description: 'Create video with AI assistance or edit guidance',
         color: 'bg-pink-500/10 dark:bg-pink-500/20 text-pink-600 dark:text-pink-400',
         number: 2
       },
       {
-        command: '/mkt:youtube social',
+        command: '/ckm:youtube social',
         typeLabel: 'Create clips',
         description: 'Generate social media clips from long-form content',
         color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
         number: 3
       },
       {
-        command: '/mkt:seo keywords "video"',
+        command: '/ckm:seo keywords "video"',
         typeLabel: 'Optimize metadata',
         description: 'Create SEO titles, descriptions, and tags',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 4
       }
     ],
-    tip: 'Use /mkt:youtube blog to repurpose video into blog content',
+    tip: 'Use /ckm:youtube blog to repurpose video into blog content',
     features: [
       'Full production workflow',
       'Social clip generation',
