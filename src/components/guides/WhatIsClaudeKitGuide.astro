@@ -29,12 +29,12 @@ const currentLang = lang || getLangFromUrl(Astro.url);
 </div>
 
 <script>
-  // Quick Start version toggle: stable vs beta commands
+  // Quick Start version toggle: ek vs mk commands
   document.addEventListener("DOMContentLoaded", () => {
-    const btnStable = document.getElementById("qs-btn-stable");
-    const btnBeta = document.getElementById("qs-btn-beta");
-    const commandsStable = document.getElementById("qs-commands-stable");
-    const commandsBeta = document.getElementById("qs-commands-beta");
+    const btnStable = document.getElementById("qs-btn-ek");
+    const btnBeta = document.getElementById("qs-btn-mk");
+    const commandsStable = document.getElementById("qs-commands-ek");
+    const commandsBeta = document.getElementById("qs-commands-mk");
 
     if (!btnStable || !btnBeta || !commandsStable || !commandsBeta) return;
 
@@ -42,8 +42,8 @@ const currentLang = lang || getLangFromUrl(Astro.url);
     const activeBetaClasses = "bg-purple-500 text-white shadow-sm";
     const inactiveClasses = "text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700";
 
-    function setVersion(version: "stable" | "beta") {
-      if (version === "stable") {
+    function setVersion(version: "ek" | "mk") {
+      if (version === "ek") {
         commandsStable.classList.remove("hidden");
         commandsBeta.classList.add("hidden");
         btnStable.className = `qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${activeClasses}`;
@@ -58,11 +58,11 @@ const currentLang = lang || getLangFromUrl(Astro.url);
     }
 
     // Restore saved preference (migrate old keys)
-    const savedVersion = localStorage.getItem("what-is-claudekit-qs-version") as "stable" | "beta" | "v25" | "v24" | null;
-    if (savedVersion === "v25" || savedVersion === "stable") setVersion("stable");
-    else if (savedVersion === "v24" || savedVersion === "beta") setVersion("beta");
+    const savedVersion = localStorage.getItem("what-is-claudekit-qs-version") as "stable" | "beta" | "v25" | "v24" | "ek" | "mk" | null;
+    if (savedVersion === "v25" || savedVersion === "stable" || savedVersion === "ek") setVersion("ek");
+    else if (savedVersion === "v24" || savedVersion === "beta" || savedVersion === "mk") setVersion("mk");
 
-    btnStable.addEventListener("click", () => setVersion("stable"));
-    btnBeta.addEventListener("click", () => setVersion("beta"));
+    btnStable.addEventListener("click", () => setVersion("ek"));
+    btnBeta.addEventListener("click", () => setVersion("mk"));
   });
 </script>

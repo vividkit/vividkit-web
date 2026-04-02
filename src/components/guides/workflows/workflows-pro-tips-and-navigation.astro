@@ -69,12 +69,21 @@ const t = useTranslations(currentLang);
       </div>
     </div>
     <div class="flex items-start gap-3 p-4 rounded-lg bg-surface-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700">
-      <svg class="w-6 h-6 text-indigo-500 dark:text-indigo-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <svg class="w-6 h-6 text-orange-500 dark:text-orange-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <polyline points="20 6 9 17 4 12"/>
       </svg>
       <div>
-        <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">{t('workflows.tip.help.title')}</div>
-        <div class="text-xs text-slate-600 dark:text-slate-400"><Fragment set:html={t('workflows.tip.help.desc').replace('`/ck:ck-help`', '<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/ck:ck-help</code>')} /></div>
+        <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">{t('workflows.tip.plan.title')}</div>
+        <div class="text-xs text-slate-600 dark:text-slate-400"><Fragment set:html={t('workflows.tip.plan.desc').replace('`/ck:plan`', '<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/ck:plan</code>').replace('`/ck:cook`', '<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/ck:cook</code>')} /></div>
+      </div>
+    </div>
+    <div class="flex items-start gap-3 p-4 rounded-lg bg-surface-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 md:col-span-2">
+      <svg class="w-6 h-6 text-amber-500 dark:text-amber-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+      <div>
+        <div class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1">{t('workflows.tip.checklists.title')}</div>
+        <div class="text-xs text-slate-600 dark:text-slate-400"><Fragment set:html={t('workflows.tip.checklists.desc')} /></div>
       </div>
     </div>
   </div>

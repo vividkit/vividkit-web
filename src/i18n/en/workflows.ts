@@ -13,8 +13,7 @@ export const workflows = {
   'workflows.tip.scout.desc': 'Use `/ck:scout` to quickly find relevant files in your codebase',
   'workflows.tip.debug.title': 'Debug before fixing',
   'workflows.tip.debug.desc': 'Use `/ck:debug` first to find root cause, then `/ck:fix` when ready',
-  'workflows.tip.help.title': 'Discover commands with /ck:ck-help',
-  'workflows.tip.help.desc': 'Type `/ck:ck-help` to see all commands & skills organized by category',
+
   'workflows.tip.plan.title': 'Always start with /ck:plan',
   'workflows.tip.plan.desc': 'Create a structured plan first, then use `/ck:cook` to execute it',
   'workflows.related.title': 'Related Guides',
