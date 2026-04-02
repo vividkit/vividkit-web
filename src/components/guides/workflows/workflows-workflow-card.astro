@@ -27,9 +27,7 @@ const levelColors: Record<string, string> = {
         <div class="flex items-center gap-2 mb-2 flex-wrap">
           <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">{workflow.title}</h3>
           <span class={`px-2 py-0.5 text-xs rounded-full font-medium ${levelColors[workflow.level]}`}>{workflow.level}</span>
-          {workflow.isBeta && (
-            <span class="px-1.5 py-0.5 text-[9px] font-bold uppercase rounded bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-500/30">BETA</span>
-          )}
+
         </div>
         <p class="text-sm text-slate-500 dark:text-slate-400">{t('workflows.guide.best_for')} {workflow.bestFor}</p>
       </div>
@@ -75,11 +73,8 @@ const levelColors: Record<string, string> = {
               ) : (
                 <code class="px-2 py-1 text-xs rounded bg-slate-100 dark:bg-slate-800 font-mono text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-transparent">{step.command}</code>
               )}
-              {step.isSkill && (
-                <span class="text-[9px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-medium uppercase">skill</span>
-              )}
               {step.isBeta && (
-                <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400 font-bold uppercase border border-amber-200 dark:border-amber-500/30">BETA</span>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">beta</span>
               )}
               <span class="text-xs font-medium text-slate-500 dark:text-slate-500">{step.typeLabel}</span>
             </div>
