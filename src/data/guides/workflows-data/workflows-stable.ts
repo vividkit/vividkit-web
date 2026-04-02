@@ -16,7 +16,7 @@ export const stableWorkflows = [
     steps: [
       {
         command: '/ck:brainstorm',
-        typeLabel: 'Explore ideas (skill)',
+        typeLabel: 'Explore ideas',
         description: 'Use /ck:brainstorm or say "brainstorm ideas for [feature]" to explore possibilities',
         color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
         number: 1,
@@ -39,7 +39,7 @@ export const stableWorkflows = [
       },
       {
         command: '/ck:cook @plan.md',
-        typeLabel: 'Implement the plan (skill)',
+        typeLabel: 'Implement the plan',
         description: 'AI writes the code following the plan, runs tests, and reviews the work',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 4,
@@ -64,7 +64,7 @@ export const stableWorkflows = [
     steps: [
       {
         command: '/ck:fix',
-        typeLabel: '6-step pipeline (skill)',
+        typeLabel: '6-step pipeline',
         description: 'Runs the full pipeline: Scout → Diagnose → Assess → Fix → Verify → Prevent',
         color: 'bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400',
         number: 1,
@@ -204,7 +204,7 @@ export const stableWorkflows = [
     steps: [
       {
         command: '/ck:remotion',
-        typeLabel: 'Video creation (skill)',
+        typeLabel: 'Video creation',
         description: 'Create videos programmatically with React and Remotion',
         color: 'bg-pink-500/10 dark:bg-pink-500/20 text-pink-600 dark:text-pink-400',
         number: 1,
@@ -249,7 +249,7 @@ export const stableWorkflows = [
       },
       {
         command: '/ck:preview --explain "topic"',
-        typeLabel: 'Generate explanation (skill)',
+        typeLabel: 'Generate explanation',
         description: 'Create ASCII + Mermaid diagrams with prose explanation for your topic',
         color: 'bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400',
         number: 2,
@@ -257,7 +257,7 @@ export const stableWorkflows = [
       },
       {
         command: '/ck:preview --diagram "topic"',
-        typeLabel: 'Generate focused diagram (skill)',
+        typeLabel: 'Generate focused diagram',
         description: 'Create a focused Mermaid + ASCII diagram for a specific data flow or architecture',
         color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
         number: 3,
@@ -289,7 +289,7 @@ export const stableWorkflows = [
     steps: [
       {
         command: '/ck:cook @plan.md',
-        typeLabel: 'Implement the plan (skill)',
+        typeLabel: 'Implement the plan',
         description: 'AI writes the code following the plan with auto test & review cycles',
         color: 'bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
         number: 1,
@@ -297,7 +297,7 @@ export const stableWorkflows = [
       },
       {
         command: '/ck:scout',
-        typeLabel: 'Scout edge cases (skill)',
+        typeLabel: 'Scout edge cases',
         description: 'AI scouts affected files, data flows, error paths, and boundary conditions',
         color: 'bg-teal-500/10 dark:bg-teal-500/20 text-teal-600 dark:text-teal-400',
         number: 2,
@@ -366,7 +366,7 @@ export const stableWorkflows = [
       },
       {
         command: '/ck:cook @plan.md',
-        typeLabel: 'Implement validated plan (skill)',
+        typeLabel: 'Implement validated plan',
         description: 'AI implements with validated decisions already propagated to each phase',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 4,
@@ -412,7 +412,7 @@ export const stableWorkflows = [
       },
       {
         command: '/ck:team cook @plan',
-        typeLabel: 'Parallel team execution (skill)',
+        typeLabel: 'Parallel team execution',
         description: 'Spawn parallel dev agents, each handling a phase. Auto test → review → merge',
         color: 'bg-teal-500/10 dark:bg-teal-500/20 text-teal-600 dark:text-teal-400',
         number: 2,
@@ -456,7 +456,7 @@ export const stableWorkflows = [
       },
       {
         command: '/ck:plan red-team plans/',
-        typeLabel: 'Adversarial review (skill)',
+        typeLabel: 'Adversarial review',
         description: 'Spawn hostile reviewers: Security, Failure Mode, Assumption Destroyer, Scope Critic',
         color: 'bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400',
         number: 2,
@@ -487,7 +487,7 @@ export const stableWorkflows = [
     steps: [
       {
         command: '/ck:research "topic"',
-        typeLabel: 'Deep research (skill)',
+        typeLabel: 'Deep research',
         description: 'AI researches the topic thoroughly using web search and documentation',
         color: 'bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400',
         number: 1,
@@ -495,7 +495,7 @@ export const stableWorkflows = [
       },
       {
         command: '/ck:docs-seeker "library"',
-        typeLabel: 'Search library docs (skill)',
+        typeLabel: 'Search library docs',
         description: 'Search official documentation via llms.txt for up-to-date API info',
         color: 'bg-yellow-500/10 dark:bg-yellow-500/20 text-yellow-600 dark:text-yellow-400',
         number: 2,
@@ -535,7 +535,7 @@ export const stableWorkflows = [
     steps: [
       {
         command: '/ck:security-scan',
-        typeLabel: 'Scan for vulnerabilities (skill)',
+        typeLabel: 'Scan for vulnerabilities',
         description: 'Scan codebase for OWASP issues, hardcoded secrets, and dependency vulnerabilities',
         color: 'bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400',
         number: 1,
@@ -583,7 +583,7 @@ export const stableWorkflows = [
     steps: [
       {
         command: '/ck:databases "schema design"',
-        typeLabel: 'Design schema (skill)',
+        typeLabel: 'Design schema',
         description: 'Design database schema with relationships, indexes, and constraints',
         color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
         number: 1,
@@ -630,7 +630,7 @@ export const stableWorkflows = [
     steps: [
       {
         command: '/ck:devops "setup CI/CD"',
-        typeLabel: 'Configure DevOps (skill)',
+        typeLabel: 'Configure DevOps',
         description: 'Set up CI/CD pipelines for GitHub Actions, GitLab CI, or other platforms',
         color: 'bg-slate-500/10 dark:bg-slate-500/20 text-slate-600 dark:text-slate-400',
         number: 1,
@@ -638,7 +638,7 @@ export const stableWorkflows = [
       },
       {
         command: '/ck:deploy',
-        typeLabel: 'Deploy to platform (skill)',
+        typeLabel: 'Deploy to platform',
         description: 'Deploy to Cloudflare, Vercel, GCP, or Kubernetes with auto-detection',
         color: 'bg-zinc-500/10 dark:bg-zinc-500/20 text-zinc-600 dark:text-zinc-400',
         number: 2,
@@ -677,7 +677,7 @@ export const stableWorkflows = [
     steps: [
       {
         command: '/ck:ship [--official|--beta] [--skip-tests] [--skip-review]',
-        typeLabel: 'Ship pipeline (skill)',
+        typeLabel: 'Ship pipeline',
         description: 'Merge main, run tests, pre-landing review, bump version, update changelog, push, create PR',
         color: 'bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
         number: 1,
@@ -710,7 +710,7 @@ export const stableWorkflows = [
     steps: [
       {
         command: '/ck:deploy [platform]',
-        typeLabel: 'Auto-deploy (skill)',
+        typeLabel: 'Auto-deploy',
         description: 'AI detects your project type and deploys to 15+ platforms with zero manual config',
         color: 'bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400',
         number: 1,
@@ -741,7 +741,7 @@ export const stableWorkflows = [
     steps: [
       {
         command: '/ck:llms [path]',
-        typeLabel: 'Generate index (skill)',
+        typeLabel: 'Generate index',
         description: 'Create llms.txt following llmstxt.org spec — makes your docs AI-readable',
         color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
         number: 1,

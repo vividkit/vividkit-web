@@ -18,7 +18,7 @@ export const betaOnlyWorkflows = [
     steps: [
       {
         command: '/ck:autoresearch',
-        typeLabel: 'Research loop (skill)',
+        typeLabel: 'Research loop',
         description: 'Run N iterations against a metric, auto-keep/discard changes based on results',
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
         number: 1,
@@ -50,7 +50,7 @@ export const betaOnlyWorkflows = [
     steps: [
       {
         command: '/ck:predict',
-        typeLabel: '5-persona debate (skill)',
+        typeLabel: '5-persona debate',
         description: '5 expert personas debate proposed changes — architect, security, performance, UX, ops',
         color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
         number: 1,
@@ -82,7 +82,7 @@ export const betaOnlyWorkflows = [
     steps: [
       {
         command: '/ck:scenario',
-        typeLabel: '12-dimension analysis (skill)',
+        typeLabel: '12-dimension analysis',
         description: 'Decompose features across 12 dimensions to generate comprehensive test scenarios',
         color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
         number: 1,
@@ -114,7 +114,7 @@ export const betaOnlyWorkflows = [
     steps: [
       {
         command: '/ck:security',
-        typeLabel: 'STRIDE audit (skill)',
+        typeLabel: 'STRIDE audit',
         description: 'STRIDE threat modeling + OWASP scan with severity categorization and optional auto-fix',
         color: 'bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400',
         number: 1,
@@ -146,12 +146,11 @@ export const betaOnlyWorkflows = [
     steps: [
       {
         command: '/ck:preview --html --explain <topic>',
-        typeLabel: 'Generate HTML (skill)',
+        typeLabel: 'Generate HTML',
         description: 'Self-contained HTML with theme toggle, Mermaid diagrams, and Chart.js — opens directly in browser',
         color: 'bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400',
         number: 1,
-        isSkill: true,
-        isBeta: true
+        isSkill: true
       }
     ],
     tip: 'Use --slides for decks, --diagram for architecture, --diff for visual code review, --recap for project snapshots',
@@ -179,7 +178,7 @@ export const betaOnlyWorkflows = [
     steps: [
       {
         command: '/ck:retro [timeframe] [--compare] [--team] [--format html|md]',
-        typeLabel: 'Analyze sprint (skill)',
+        typeLabel: 'Analyze sprint',
         description: 'Gather git metrics (commits, LOC, hotspots, churn), compute health indicators, generate retrospective report',
         color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
         number: 1,
@@ -211,25 +210,23 @@ export const betaOnlyWorkflows = [
     steps: [
       {
         command: '/ck:stitch generate "prompt"',
-        typeLabel: 'Generate design (skill)',
+        typeLabel: 'Generate design',
         description: 'Create UI designs from text prompts using Google Stitch AI',
         color: 'bg-sky-500/10 dark:bg-sky-500/20 text-sky-600 dark:text-sky-400',
         number: 1,
-        isSkill: true,
-        isBeta: true
+        isSkill: true
       },
       {
         command: '/ck:stitch export --format all',
-        typeLabel: 'Export assets (skill)',
+        typeLabel: 'Export assets',
         description: 'Export as Tailwind/HTML + DESIGN.md spec for implementation',
         color: 'bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400',
         number: 2,
-        isSkill: true,
-        isBeta: true
+        isSkill: true
       },
       {
         command: '/ck:frontend-design',
-        typeLabel: 'Implement components (skill)',
+        typeLabel: 'Implement components',
         description: 'Build React components from the exported design spec',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 3,

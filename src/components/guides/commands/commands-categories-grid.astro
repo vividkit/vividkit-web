@@ -14,8 +14,8 @@ const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
 
-const stableCategories = getEngineerKitCategories(t);
-const marketingCategories = getMarketingKitCategories(t);
+const stableCategories = getEngineerKitCategories(t as any);
+const marketingCategories = getMarketingKitCategories(t as any);
 ---
 
 <div class="space-y-6">
@@ -108,15 +108,15 @@ const marketingCategories = getMarketingKitCategories(t);
             <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
               <div class="flex items-center gap-1.5 flex-wrap">
                 <code class="text-sm font-bold font-mono text-purple-600 dark:text-purple-400">{item.cmd}</code>
-                <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">skill</span>
+
                 {item.badge === "new" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 font-medium uppercase">new</span>}
                 {item.badge === "enhanced" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium uppercase">enhanced</span>}
                 {item.badge === "renamed" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium uppercase">renamed</span>}
                 {item.badge === "removed" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-500 dark:text-red-400 font-medium uppercase">removed</span>}
               </div>
             </div>
-            <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">{t(item.labelKey)}</p>
-            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50" set:html={t(item.detailKey)} />
+            <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">{t(item.labelKey as any)}</p>
+            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50" set:html={t(item.detailKey as any)} />
           </div>
         ))}
       </div>
@@ -262,7 +262,7 @@ const marketingCategories = getMarketingKitCategories(t);
         <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {category.commands.map((cmd) => (
             <div
-              class={`p-3 rounded-lg border transition-all duration-200 hover:shadow-sm h-full flex flex-col ${cmd.deprecated ? 'bg-slate-100 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 opacity-70' : `bg-slate-50 dark:bg-slate-900/50 ${styles[category.color].border}`} ${cmd.isSkill && !cmd.deprecated ? "border-dashed" : ""}`}
+              class={`p-3 rounded-lg border transition-all duration-200 hover:shadow-sm h-full flex flex-col ${cmd.deprecated ? 'bg-slate-100 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 opacity-70' : `bg-slate-50 dark:bg-slate-900/50 ${styles[category.color].border}`}`}
             >
               <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
                 <div class="flex items-center gap-1.5 flex-wrap">
@@ -272,16 +272,7 @@ const marketingCategories = getMarketingKitCategories(t);
                       {cmd.step}
                     </span>
                   )}
-                  {cmd.isSkill ? (
-                    <span class={`text-sm font-medium ${cmd.deprecated ? 'line-through text-slate-400 dark:text-slate-500' : styles[category.color].text}`}>{cmd.command}</span>
-                  ) : (
                     <code class={`text-sm font-bold font-mono ${cmd.deprecated ? 'line-through text-slate-400 dark:text-slate-500' : styles[category.color].text}`}>{cmd.command}</code>
-                  )}
-                  {cmd.isSkill && (
-                    <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">
-                      skill
-                    </span>
-                  )}
                   {cmd.isBeta && (
                     <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">beta</span>
                   )}
