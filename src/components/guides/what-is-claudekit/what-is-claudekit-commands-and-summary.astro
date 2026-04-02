@@ -31,34 +31,34 @@ const icons = {
 };
 
 const stableBeginnerCommands = [
-  { cmd: "/ask", desc: t("guides.what_is_claudekit.cmd_ask") },
-  { cmd: "/brainstorm", desc: t("guides.what_is_claudekit.cmd_brainstorm") },
-  { cmd: "/fix", desc: t("guides.what_is_claudekit.cmd_fix") },
+  { cmd: "/ck:ask", desc: t("guides.what_is_claudekit.cmd_ask") },
+  { cmd: "/ck:brainstorm", desc: t("guides.what_is_claudekit.cmd_brainstorm") },
+  { cmd: "/ck:fix", desc: t("guides.what_is_claudekit.cmd_fix") },
 ];
 const stableBuildingCommands = [
-  { cmd: "/plan", desc: t("guides.what_is_claudekit.cmd_plan") },
-  { cmd: "/cook", desc: t("guides.what_is_claudekit.cmd_cook") },
-  { cmd: "/cook @plan.md", desc: t("guides.what_is_claudekit.cmd_cook_plan") },
+  { cmd: "/ck:plan", desc: t("guides.what_is_claudekit.cmd_plan") },
+  { cmd: "/ck:cook", desc: t("guides.what_is_claudekit.cmd_cook") },
+  { cmd: "/ck:cook @plan.md", desc: t("guides.what_is_claudekit.cmd_cook_plan") },
 ];
 const stableGitCommands = [
-  { cmd: "/git", desc: t("guides.what_is_claudekit.cmd_git") },
-  { cmd: "/docs:update", desc: t("guides.what_is_claudekit.cmd_docs") },
-  { cmd: "/watzup", desc: t("guides.what_is_claudekit.cmd_watzup") },
+  { cmd: "/ck:git", desc: t("guides.what_is_claudekit.cmd_git") },
+  { cmd: "/ck:docs update", desc: t("guides.what_is_claudekit.cmd_docs") },
+  { cmd: "/ck:watzup", desc: t("guides.what_is_claudekit.cmd_watzup") },
 ];
-const betaBeginnerCommands = [
-  { cmd: "/ask", desc: t("guides.what_is_claudekit.cmd_ask") },
-  { cmd: "/brainstorm", desc: t("guides.what_is_claudekit.cmd_brainstorm") },
-  { cmd: "/fix", desc: t("guides.what_is_claudekit.cmd_fix") },
+const mkCopyCommands = [
+  { cmd: "/ckm:write:*", desc: t("commands.mkt.write.desc") || "Write high-converting copy" },
+  { cmd: "/ckm:social:*", desc: t("commands.mkt.social.desc") || "Social media center" },
+  { cmd: "/ck:copywriting", desc: t("commands.mkt.copywriting.desc") || "Conversion copywriting" },
 ];
-const betaBuildingCommands = [
-  { cmd: "/plan", desc: t("guides.what_is_claudekit.cmd_plan") },
-  { cmd: "/cook", desc: t("guides.what_is_claudekit.cmd_cook") },
-  { cmd: "/deploy [platform]", desc: "Auto-detect & deploy to 15+ platforms" },
+const mkStrategyCommands = [
+  { cmd: "/ckm:play:*", desc: t("commands.mkt.play.desc") || "Playbook orchestrator" },
+  { cmd: "/ckm:plan:*", desc: t("commands.mkt.plan.desc") || "Marketing planning" },
+  { cmd: "/ckm:campaign:*", desc: t("commands.mkt.campaign.desc") || "Campaign orchestration" },
 ];
-const betaGitCommands = [
-  { cmd: "/git", desc: t("guides.what_is_claudekit.cmd_git") },
-  { cmd: "/security-scan", desc: "Scan for vulnerabilities & secrets" },
-  { cmd: "/llms [path]", desc: "Generate LLM-friendly docs index" },
+const mkSeoCommands = [
+  { cmd: "/ckm:seo:*", desc: t("commands.mkt.seo.desc") || "SEO center" },
+  { cmd: "/ckm:analyze:*", desc: t("commands.mkt.analyze.desc") || "Analyze performance" },
+  { cmd: "/ckm:ads-management", desc: t("commands.mkt.ads.desc") || "Ads management" },
 ];
 const summaryItems = [
   { icon: icons.users, label: "Agents" },
@@ -78,8 +78,17 @@ function makeGroups(beginner: CommandItem[], building: CommandItem[], git: Comma
     { label: t("guides.what_is_claudekit.for_git"), icon: icons.code_bracket, color: "amber", items: git },
   ];
 }
+
+function makeMkGroups(content: CommandItem[], strategy: CommandItem[], seo: CommandItem[]): CommandGroup[] {
+  return [
+    { label: t("commands.mkt.cat.contentCopy"), icon: icons.academic, color: "purple", items: content },
+    { label: t("commands.mkt.cat.strategyResearch"), icon: icons.hammer, color: "emerald", items: strategy },
+    { label: t("commands.mkt.cat.seoAnalytics"), icon: icons.code_bracket, color: "amber", items: seo },
+  ];
+}
+
 const stableGroups = makeGroups(stableBeginnerCommands, stableBuildingCommands, stableGitCommands);
-const betaGroups = makeGroups(betaBeginnerCommands, betaBuildingCommands, betaGitCommands);
+const mkGroups = makeMkGroups(mkCopyCommands, mkStrategyCommands, mkSeoCommands);
 ---
 
 <!-- Quick Start Commands -->
@@ -92,24 +101,29 @@ const betaGroups = makeGroups(betaBeginnerCommands, betaBuildingCommands, betaGi
       </h3>
       <!-- Version Toggle -->
       <div class="flex items-center gap-2 p-1 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-        <button id="qs-btn-stable" class="qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 bg-teal-500 text-white shadow-sm" data-version="stable">
+        <button id="qs-btn-ek" class="qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 bg-teal-500 text-white shadow-sm" data-version="ek">
           <span class="flex items-center gap-1.5">
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-            {t("guides.what_is_claudekit.qs_tab_v25")}
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="16 18 22 12 16 6"></polyline>
+              <polyline points="8 6 2 12 8 18"></polyline>
+            </svg>
+            {t("guides.what_is_claudekit.qs_tab_ek")}
           </span>
         </button>
-        <button id="qs-btn-beta" class="qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700" data-version="beta">
+        <button id="qs-btn-mk" class="qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700" data-version="mk">
           <span class="flex items-center gap-1.5">
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6v2.5A5.5 5.5 0 0 1 20.5 11v4.5a5.5 5.5 0 0 1-5.5 5.5h-6a5.5 5.5 0 0 1-5.5-5.5V11A5.5 5.5 0 0 1 9 5.5V3z"></path><path d="M9 3h6" stroke-linecap="round"></path></svg>
-            {t("guides.what_is_claudekit.qs_tab_v24")}
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+            </svg>
+            {t("guides.what_is_claudekit.qs_tab_mk")}
           </span>
         </button>
       </div>
     </div>
   </div>
   <div class="p-6">
-    <!-- Stable Commands -->
-    <div id="qs-commands-stable" class="grid md:grid-cols-3 gap-6">
+    <!-- EK Commands -->
+    <div id="qs-commands-ek" class="grid md:grid-cols-3 gap-6">
       {stableGroups.map((group) => (
         <div class={`rounded-xl bg-${group.color}-50 dark:bg-${group.color}-500/10 border border-${group.color}-200 dark:border-${group.color}-500/20 p-4`}>
           <h4 class={`font-bold text-${group.color}-700 dark:text-${group.color}-400 mb-3 flex items-center gap-2`}>
@@ -127,9 +141,9 @@ const betaGroups = makeGroups(betaBeginnerCommands, betaBuildingCommands, betaGi
         </div>
       ))}
     </div>
-    <!-- Beta Commands (hidden by default) -->
-    <div id="qs-commands-beta" class="grid md:grid-cols-3 gap-6 hidden">
-      {betaGroups.map((group) => (
+    <!-- MK Commands (hidden by default) -->
+    <div id="qs-commands-mk" class="grid md:grid-cols-3 gap-6 hidden">
+      {mkGroups.map((group) => (
         <div class={`rounded-xl bg-${group.color}-50 dark:bg-${group.color}-500/10 border border-${group.color}-200 dark:border-${group.color}-500/20 p-4`}>
           <h4 class={`font-bold text-${group.color}-700 dark:text-${group.color}-400 mb-3 flex items-center gap-2`}>
             <span class={`text-${group.color}-600 dark:text-${group.color}-400`}><Fragment set:html={group.icon} /></span>

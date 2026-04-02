@@ -13,8 +13,7 @@ export const workflows = {
   'workflows.tip.scout.desc': 'Sử dụng `/ck:scout` để tìm nhanh các file liên quan trong codebase của bạn',
   'workflows.tip.debug.title': 'Debug trước khi sửa',
   'workflows.tip.debug.desc': 'Sử dụng `/ck:debug` trước để tìm nguyên nhân gốc rễ, sau đó dùng `/ck:fix` khi đã sẵn sàng',
-  'workflows.tip.help.title': 'Khám phá lệnh với /ck:ck-help',
-  'workflows.tip.help.desc': 'Gõ `/ck:ck-help` để xem tất cả commands & skills được tổ chức theo danh mục',
+
   'workflows.tip.plan.title': 'Luôn bắt đầu với /ck:plan',
   'workflows.tip.plan.desc': 'Tạo một kế hoạch có cấu trúc trước, sau đó sử dụng `/ck:cook` để triển khai',
   'workflows.related.title': 'Hướng Dẫn Liên Quan',
