@@ -19,23 +19,26 @@ const translations = {
     infoBannerNote: 'These hooks live in',
     infoBannerNoteEnd: 'and can automate your workflow.',
     hookCountTitle: 'Hook Coverage',
-    hookCountDesc: 'ClaudeKit ships with 9 hooks in stable and 15 hooks in beta. All hooks are composable via a shared utility library.',
-    hookCountStable: '9 hooks — stable',
-    hookCountBeta: '15 hooks — beta',
+    hookCountDesc: 'ClaudeKit ships with 16 built-in hooks. All hooks are composable via a shared utility library.',
+    hookCountTotal: '16 hooks — stable',
     hookLibTitle: 'Hook Utility Library',
     hookLibDesc: 'All hooks share a set of utility modules under hooks/lib/. These handle common concerns so each hook stays focused.',
     moreComingSoon: 'More hooks coming soon...',
     moreComingSoonDesc: 'Slack notifications, auto-commit, and more!',
-    betaHooksTitle: 'Beta Hooks',
-    betaHooksDesc: 'Two new hooks ship in beta along with a new Stop lifecycle event. All 15 hooks received hardening and structured diagnostics.',
-    betaSessionStateTitle: 'session-state.cjs',
-    betaSessionStateDesc: 'Persist and restore session progress across compactions. Saves last active plan, todo items, subagent outputs, and branch/commit status to .claude/session-state/.last-state.md. Triggers: SessionStart (load), Prompt, Stop/SubagentStop (persist). 159 lines.',
-    betaPlanFormatTitle: 'plan-format-kanban.cjs',
-    betaPlanFormatDesc: 'Kanban statusline rendering. Triggers: PostToolUse on Write/Edit operations.',
-    betaStopEventTitle: 'New: Stop lifecycle event',
-    betaStopEventDesc: 'Beta adds a Stop trigger that fires when a session ends. Used by session-state.cjs to persist state before shutdown.',
+    recentHooksTitle: 'Recently Added Hooks',
+    recentHooksDesc: 'These hooks were added in recent releases. All are now stable and ship with both stable and beta channels.',
+    usageQuotaTitle: 'usage-quota-cache-refresh.cjs',
+    usageQuotaDesc: 'Keep usage quota cache warm for statusline display. Refreshes at 60s (prompt events) or 300s (tool events) intervals. Triggers: SessionStart, UserPromptSubmit, PostToolUse. 100 lines.',
+    usageContextTitle: 'usage-context-awareness.cjs',
+    usageContextDesc: 'Config gate wrapper for usage-quota-cache-refresh. Delegates cache logic with alternate userAgent. Gated via ck-config flag. 39 lines.',
+    sessionStateTitle: 'session-state.cjs',
+    sessionStateDesc: 'Persist and restore session progress across compactions. Saves last active plan, todo items, subagent outputs, and branch/commit status to .claude/session-state/.last-state.md. Triggers: SessionStart (load), Prompt, Stop/SubagentStop (persist). 159 lines.',
+    planFormatTitle: 'plan-format-kanban.cjs',
+    planFormatDesc: 'Kanban statusline rendering. Triggers: PostToolUse on Write/Edit operations.',
+    stopEventTitle: 'Stop lifecycle event',
+    stopEventDesc: 'Stop trigger fires when a session ends. Used by session-state.cjs to persist state before shutdown.',
     testMigrationTitle: 'Test Structure',
-    testMigrationDesc: 'Tests migrated from hooks/tests/ → hooks/__tests__/ (Jest-like pattern) for better tooling compatibility.',
+    testMigrationDesc: 'Tests located in hooks/__tests__/ (Jest-like pattern) for tooling compatibility.',
     officialDocsText: 'Learn more about ClaudeKit built-in hooks at',
     officialDocsLink: 'ClaudeKit Documentation',
   },
@@ -47,23 +50,26 @@ const translations = {
     infoBannerNote: 'Hooks nằm trong',
     infoBannerNoteEnd: 'và có thể tự động hóa workflow của bạn.',
     hookCountTitle: 'Số lượng Hooks',
-    hookCountDesc: 'ClaudeKit có 9 hooks trong bản stable và 15 hooks trong bản beta. Tất cả hooks dùng chung một thư viện utility.',
-    hookCountStable: '9 hooks — stable',
-    hookCountBeta: '15 hooks — beta',
+    hookCountDesc: 'ClaudeKit có 16 built-in hooks. Tất cả hooks dùng chung một thư viện utility.',
+    hookCountTotal: '16 hooks — stable',
     hookLibTitle: 'Hook Utility Library',
     hookLibDesc: 'Tất cả hooks dùng chung các utility modules trong hooks/lib/. Các module này xử lý các concerns chung để mỗi hook tập trung vào nhiệm vụ của mình.',
     moreComingSoon: 'Thêm hooks sắp ra mắt...',
     moreComingSoonDesc: 'Slack notifications, auto-commit, và nhiều hơn!',
-    betaHooksTitle: 'Beta Hooks',
-    betaHooksDesc: 'Hai hooks mới ra mắt trong bản beta cùng với lifecycle event Stop mới. Tất cả 15 hooks được cải thiện độ ổn định và structured diagnostics.',
-    betaSessionStateTitle: 'session-state.cjs',
-    betaSessionStateDesc: 'Lưu và khôi phục tiến trình session qua các lần compact. Lưu plan hiện tại, todo items, subagent outputs, và trạng thái branch/commit vào .claude/session-state/.last-state.md. Triggers: SessionStart (load), Prompt, Stop/SubagentStop (persist). 159 dòng.',
-    betaPlanFormatTitle: 'plan-format-kanban.cjs',
-    betaPlanFormatDesc: 'Hiển thị kanban statusline. Triggers: PostToolUse trên các thao tác Write/Edit.',
-    betaStopEventTitle: 'Mới: Stop lifecycle event',
-    betaStopEventDesc: 'Beta thêm trigger Stop khi session kết thúc. Được dùng bởi session-state.cjs để lưu state trước khi tắt.',
+    recentHooksTitle: 'Hooks mới thêm gần đây',
+    recentHooksDesc: 'Các hooks được thêm trong các bản release gần đây. Tất cả đã stable và có trong cả hai channel stable/beta.',
+    usageQuotaTitle: 'usage-quota-cache-refresh.cjs',
+    usageQuotaDesc: 'Giữ cache usage quota cho statusline. Refresh mỗi 60s (prompt events) hoặc 300s (tool events). Triggers: SessionStart, UserPromptSubmit, PostToolUse. 100 dòng.',
+    usageContextTitle: 'usage-context-awareness.cjs',
+    usageContextDesc: 'Config gate wrapper cho usage-quota-cache-refresh. Delegate cache logic với userAgent riêng. Gated qua ck-config flag. 39 dòng.',
+    sessionStateTitle: 'session-state.cjs',
+    sessionStateDesc: 'Lưu và khôi phục tiến trình session qua các lần compact. Lưu plan hiện tại, todo items, subagent outputs, và trạng thái branch/commit vào .claude/session-state/.last-state.md. Triggers: SessionStart (load), Prompt, Stop/SubagentStop (persist). 159 dòng.',
+    planFormatTitle: 'plan-format-kanban.cjs',
+    planFormatDesc: 'Hiển thị kanban statusline. Triggers: PostToolUse trên các thao tác Write/Edit.',
+    stopEventTitle: 'Stop lifecycle event',
+    stopEventDesc: 'Trigger Stop khi session kết thúc. Được dùng bởi session-state.cjs để lưu state trước khi tắt.',
     testMigrationTitle: 'Cấu trúc Test',
-    testMigrationDesc: 'Tests được di chuyển từ hooks/tests/ → hooks/__tests__/ (theo pattern Jest) để tương thích tốt hơn với tooling.',
+    testMigrationDesc: 'Tests nằm trong hooks/__tests__/ (theo pattern Jest) để tương thích tốt hơn với tooling.',
     officialDocsText: 'Tìm hiểu thêm các built-in hooks của ClaudeKit tại',
     officialDocsLink: 'ClaudeKit Documentation',
   }
@@ -124,8 +130,7 @@ const t = translations[currentLang] || translations.en;
     <div class="p-6 space-y-4">
       <p class="text-slate-600 dark:text-slate-400">{t.hookCountDesc}</p>
       <div class="flex flex-wrap gap-3">
-        <span class="px-3 py-1.5 rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-sm font-semibold">{t.hookCountStable}</span>
-        <span class="px-3 py-1.5 rounded-full bg-violet-100 dark:bg-violet-500/20 text-violet-700 dark:text-violet-400 text-sm font-semibold">{t.hookCountBeta}</span>
+        <span class="px-3 py-1.5 rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-sm font-semibold">{t.hookCountTotal}</span>
       </div>
     </div>
   </div>
@@ -159,38 +164,47 @@ const t = translations[currentLang] || translations.en;
     </div>
   </div>
 
-  <!-- Beta Hooks (v2.14.0) -->
-  <div class="bg-white dark:bg-slate-900/50 rounded-xl border-2 border-violet-200 dark:border-violet-500/30 overflow-hidden">
-    <div class="p-6 bg-gradient-to-r from-violet-500/10 to-indigo-500/10 border-b border-violet-200 dark:border-slate-800">
-      <div class="flex items-center gap-3">
-        <h3 class="text-lg font-bold text-slate-900 dark:text-white">{t.betaHooksTitle}</h3>
-        <span class="px-2 py-0.5 text-xs font-semibold bg-violet-100 dark:bg-violet-500/20 text-violet-700 dark:text-violet-400 rounded-full">Beta</span>
-      </div>
+  <!-- Recently Added Hooks -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border-b border-slate-100 dark:border-slate-800">
+      <h3 class="text-lg font-bold text-slate-900 dark:text-white">{t.recentHooksTitle}</h3>
     </div>
     <div class="p-6 space-y-4">
-      <p class="text-slate-600 dark:text-slate-400 text-sm">{t.betaHooksDesc}</p>
+      <p class="text-slate-600 dark:text-slate-400 text-sm">{t.recentHooksDesc}</p>
 
       <div class="space-y-3">
+        <!-- usage-quota-cache-refresh.cjs -->
+        <div class="p-4 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30">
+          <div class="font-mono text-sm font-bold text-emerald-700 dark:text-emerald-400 mb-1">{t.usageQuotaTitle}</div>
+          <p class="text-sm text-slate-600 dark:text-slate-400">{t.usageQuotaDesc}</p>
+        </div>
+
+        <!-- usage-context-awareness.cjs -->
+        <div class="p-4 rounded-lg bg-teal-50 dark:bg-teal-500/10 border border-teal-200 dark:border-teal-500/30">
+          <div class="font-mono text-sm font-bold text-teal-700 dark:text-teal-400 mb-1">{t.usageContextTitle}</div>
+          <p class="text-sm text-slate-600 dark:text-slate-400">{t.usageContextDesc}</p>
+        </div>
+
         <!-- session-state.cjs -->
         <div class="p-4 rounded-lg bg-violet-50 dark:bg-violet-500/10 border border-violet-200 dark:border-violet-500/30">
-          <div class="font-mono text-sm font-bold text-violet-700 dark:text-violet-400 mb-1">{t.betaSessionStateTitle}</div>
-          <p class="text-sm text-slate-600 dark:text-slate-400">{t.betaSessionStateDesc}</p>
+          <div class="font-mono text-sm font-bold text-violet-700 dark:text-violet-400 mb-1">{t.sessionStateTitle}</div>
+          <p class="text-sm text-slate-600 dark:text-slate-400">{t.sessionStateDesc}</p>
         </div>
 
         <!-- plan-format-kanban.cjs -->
         <div class="p-4 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/30">
-          <div class="font-mono text-sm font-bold text-indigo-700 dark:text-indigo-400 mb-1">{t.betaPlanFormatTitle}</div>
-          <p class="text-sm text-slate-600 dark:text-slate-400">{t.betaPlanFormatDesc}</p>
+          <div class="font-mono text-sm font-bold text-indigo-700 dark:text-indigo-400 mb-1">{t.planFormatTitle}</div>
+          <p class="text-sm text-slate-600 dark:text-slate-400">{t.planFormatDesc}</p>
         </div>
 
         <!-- Stop event -->
         <div class="p-4 rounded-lg bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/30">
-          <div class="text-sm font-bold text-amber-700 dark:text-amber-400 mb-1">{t.betaStopEventTitle}</div>
-          <p class="text-sm text-slate-600 dark:text-slate-400">{t.betaStopEventDesc}</p>
+          <div class="text-sm font-bold text-amber-700 dark:text-amber-400 mb-1">{t.stopEventTitle}</div>
+          <p class="text-sm text-slate-600 dark:text-slate-400">{t.stopEventDesc}</p>
         </div>
       </div>
 
-      <!-- Test migration note -->
+      <!-- Test structure note -->
       <div class="flex items-start gap-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
         <svg class="w-4 h-4 text-slate-400 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="10"/>
