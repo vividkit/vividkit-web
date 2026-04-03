@@ -2,6 +2,14 @@
 // Migration Guide section: tabbed view for Engineer Kit & Marketing Kit migration references
 import { useTranslations } from "@/i18n/utils";
 import { getLangFromUrl, type Language } from "@/i18n";
+import {
+  engineerMigrationAlways,
+  engineerMigrationExtra,
+  marketingMigrationAlways,
+  marketingMigrationExtra,
+  marketingRenamedMkt,
+  marketingRenamedShared,
+} from "@/data/guides/commands-migration";
 
 interface Props {
   lang?: Language;
@@ -97,153 +105,21 @@ const t = useTranslations(currentLang);
           </thead>
           <!-- Always-visible rows -->
           <tbody class="text-slate-600 dark:text-slate-400">
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/debug</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:debug</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/plan</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:plan</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/code @plan.md</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:cook @plan.md</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/code:no-test</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:cook add footer --no-test</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/code:parallel</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:cook refactor api --parallel</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/code:auto</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:cook add pagination --auto</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/plan:fast</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:plan --fast add auth</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/plan:hard</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:plan --hard migrate to microservices</code></td>
-            </tr>
+            {engineerMigrationAlways.map((row) => (
+              <tr class="border-b border-slate-100 dark:border-slate-800">
+                <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">{row.old}</code></td>
+                <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">{row.new}</code></td>
+              </tr>
+            ))}
           </tbody>
           <!-- Expandable extra rows (hidden by default) -->
           <tbody id="migration-extra-rows" class="text-slate-600 dark:text-slate-400" style="display: none;">
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/plan:archive</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:plan archive</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/plan:ci</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:fix CI build failing --auto</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/fix:ci</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:fix deploy pipeline error --auto</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/fix:test</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:fix auth tests failing --review</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/fix:types</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:fix type errors in utils --quick</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/fix:ui</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:fix layout broken on mobile --parallel</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/git:cm</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:git cm</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/git:cp</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:git cp</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/git:pr</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:git pr</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/git:merge</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:git merge</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/design:video</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:remotion [video or component]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/design:3d</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:threejs spinning globe with markers</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/design:screenshot</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:frontend-design</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/design:describe</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:frontend-design</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/review:codebase</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:code-review codebase</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/review:codebase:parallel</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:code-review codebase parallel</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/docs:init</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:docs init</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/docs:update</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:docs update</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/docs:summarize</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:docs summarize</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/content:blog</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:copywriting blog [context]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/content:landing</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:copywriting landing [context]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/skill:create foo</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:skill-creator foo</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/integrate:stripe</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:payment-integration stripe checkout</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/integrate:sepay</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:payment-integration sepay webhook</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/bootstrap:auto</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:bootstrap --auto</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/bootstrap:auto:fast</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:bootstrap --fast</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/bootstrap:auto:parallel</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:bootstrap --parallel</code></td>
-            </tr>
-            <tr>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/test:ui</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:test ui [url]</code></td>
-            </tr>
+            {engineerMigrationExtra.map((row, i) => (
+              <tr class={i < engineerMigrationExtra.length - 1 ? "border-b border-slate-100 dark:border-slate-800" : ""}>
+                <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">{row.old}</code></td>
+                <td class="py-1.5 px-3"><code class={`text-[10px] ${row.prefixType === 'purple' ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400' : 'bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400'} px-1 py-0.5 rounded`}>{row.new}</code></td>
+              </tr>
+            ))}
           </tbody>
         </table>
 
@@ -255,7 +131,7 @@ const t = useTranslations(currentLang);
           <svg id="migration-toggle-icon" class="w-3.5 h-3.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polyline points="6 9 12 15 18 9"></polyline>
           </svg>
-          <span id="migration-toggle-text">Show all migrations (28 more)</span>
+          <span id="migration-toggle-text">Show all migrations ({engineerMigrationExtra.length} more)</span>
         </button>
       </div>
 
@@ -313,357 +189,41 @@ const t = useTranslations(currentLang);
           </thead>
           <!-- Always-visible rows -->
           <tbody class="text-slate-600 dark:text-slate-400">
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:plan</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:plan [task]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:plan:fast</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:plan --fast [task]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:plan:hard</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:plan --hard [task]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:plan:cro</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:plan --cro landing-page</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:write:good</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:write:good [topic]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:write:fast</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:write:fast [topic]</code></td>
-            </tr>
+            {marketingMigrationAlways.map((row) => (
+              <tr class="border-b border-slate-100 dark:border-slate-800">
+                <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">{row.old}</code></td>
+                <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">{row.new}</code></td>
+              </tr>
+            ))}
           </tbody>
           <!-- Expandable extra rows (hidden by default) -->
           <tbody id="migration-mkt-extra-rows" class="text-slate-600 dark:text-slate-400" style="display: none;">
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:write:cro</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:write:cro [page-url]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:write:enhance</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:write:enhance [file]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:write:blog</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:write:blog [topic]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:write:audit</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:write:audit</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:write:publish</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:write:publish [file]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:campaign:create</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:campaign:create [name]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:campaign:status</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:campaign:status</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:campaign:analyze</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:campaign:analyze [period]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:campaign:email</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:campaign:email [series]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:seo:keywords</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:seo:keywords [query]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:seo:audit</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:seo:audit [url]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:seo:pseo</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:seo:pseo [template]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:email:flow</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:email:flow [type]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:email:sequence</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:email:sequence [type]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:social:schedule</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:social:schedule</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:competitor</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:competitor [url]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:video:create</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:video:create [topic]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:video:script</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:video:script [topic]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:youtube:blog</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:youtube:blog [url]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:brand:update</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:brand:update [element]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:docs:init</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:docs:init</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:docs:update</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:docs:update</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/fixing</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:fix [issue] --auto|--review|--quick</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/test-orchestrator</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:test [ui|workflow] [target]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:preview</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:preview [path] --explain|--slides|--diagram|--ascii</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:storage</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:storage</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:storage:list</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:storage:list</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:storage:sync</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:storage:sync</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:storage:upload</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:storage:upload</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:storage:url</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:storage:url</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:dashboard</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:dashboard</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:dashboard:check</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:dashboard:check</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:analyze:report</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:analyze:report</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:init</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:init</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:ask [question]</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:ask [question]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:funnel [action]</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:funnel [action] [type]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:persona [action]</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:persona [action]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:plan:parallel</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:plan --parallel [task]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:plan:archive</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:plan archive</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:plan:validate</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:plan validate</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:write:formula [type]</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:copywriting formula [type]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:video:storyboard</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:video:storyboard [topic]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:youtube:infographic</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:youtube:infographic [url]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:youtube:social</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:youtube:social [url]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:docs:summarize</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:docs:summarize</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:docs:llms</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:docs:llms</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:hub</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:hub [--stop|--scan]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:slides:create</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:slides:create [topic]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:skill:create</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:skill:create [name]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:use-mcp</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:use-mcp</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:journal</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:journal</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:kanban</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:kanban</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:watzup</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:watzup</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:worktree</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:worktree</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:plan:two</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:plan --two [task]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:plan:ci</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:fix ci [url]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:ck-help</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:ck-help</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:write:blog-youtube</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:write:blog-youtube [url]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:skill:add</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:skill:add [file]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:skill:fix-logs</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:skill:fix-logs</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:skill:optimize</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:skill:optimize [name]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:skill:optimize:auto</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:skill:optimize:auto [name]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:skill:plan</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:skill:plan [name]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:skill:update</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:skill:update [name]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:test:ui</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:test:ui [url]</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/mkt:test:workflow</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:test:workflow [name]</code></td>
-            </tr>
+            {marketingMigrationExtra.map((row) => (
+              <tr class="border-b border-slate-100 dark:border-slate-800">
+                <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">{row.old}</code></td>
+                <td class="py-1.5 px-3"><code class={`text-[10px] ${row.prefixType === 'purple' ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400' : 'bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400'} px-1 py-0.5 rounded`}>{row.new}</code></td>
+              </tr>
+            ))}
             <!-- Renamed skills (ckm: marketing-exclusive) -->
             <tr class="border-b border-purple-100 dark:border-purple-900/30 bg-purple-50/30 dark:bg-purple-900/5">
               <td class="py-1.5 px-3 text-[10px] font-semibold text-purple-600 dark:text-purple-400" colspan="2">📝 Renamed Skills — Marketing-exclusive (ckm:)</td>
             </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/brand-guidelines</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:brand</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/campaign-management</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:campaign</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/competitor-alternatives</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:competitor</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/Debugging</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:debugging</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/email-marketing</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:email</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/seo-optimization</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:seo</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/slides-design</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:slides</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/social-media</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:social</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/video-production</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:video</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/youtube-handling</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">/ckm:youtube</code></td>
-            </tr>
+            {marketingRenamedMkt.map((row) => (
+              <tr class="border-b border-slate-100 dark:border-slate-800">
+                <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">{row.old}</code></td>
+                <td class="py-1.5 px-3"><code class="text-[10px] bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded">{row.new}</code></td>
+              </tr>
+            ))}
             <!-- Renamed skills (ck: shared) -->
             <tr class="border-b border-teal-100 dark:border-teal-900/30 bg-teal-50/30 dark:bg-teal-900/5">
               <td class="py-1.5 px-3 text-[10px] font-semibold text-teal-600 dark:text-teal-400" colspan="2">📝 Renamed Skills — Shared with Engineer Kit (ck:)</td>
             </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/frontend-dev-guidelines</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:frontend-development</code></td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/Problem-Solving Techniques</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:problem-solving</code></td>
-            </tr>
-            <tr>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">/remotion-best-practices</code></td>
-              <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">/ck:remotion</code></td>
-            </tr>
+            {marketingRenamedShared.map((row, i) => (
+              <tr class={i < marketingRenamedShared.length - 1 ? "border-b border-slate-100 dark:border-slate-800" : ""}>
+                <td class="py-1.5 px-3"><code class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">{row.old}</code></td>
+                <td class="py-1.5 px-3"><code class="text-[10px] bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 px-1 py-0.5 rounded">{row.new}</code></td>
+              </tr>
+            ))}
           </tbody>
         </table>
 
@@ -675,7 +235,7 @@ const t = useTranslations(currentLang);
           <svg id="migration-mkt-toggle-icon" class="w-3.5 h-3.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polyline points="6 9 12 15 18 9"></polyline>
           </svg>
-          <span id="migration-mkt-toggle-text">Show all migrations (82 more)</span>
+          <span id="migration-mkt-toggle-text">Show all migrations ({marketingMigrationExtra.length + marketingRenamedMkt.length + marketingRenamedShared.length} more)</span>
         </button>
       </div>
     </div>
