@@ -72,3 +72,13 @@ export const permissionsConfig = `"claudeCode.allowDangerouslySkipPermissions": 
 "claudeCode.initialPermissionMode": "bypassPermissions"`;
 
 export const opus45Config = `"claudeCode.selectedModel": "claude-opus-4-5-20251101"`;
+
+export const schemaConfig = `"json.schemas": [
+  {
+    "fileMatch": [
+      ".ck.json",
+      ".claude/settings.local.json"
+    ],
+    "url": "https://claudekit.cc/schemas/ck-config.schema.json"
+  }
+]`;

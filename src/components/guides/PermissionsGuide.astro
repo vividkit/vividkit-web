@@ -14,12 +14,14 @@ const t = useTranslations(currentLang);
 const autoModeStartCode = `claude --enable-auto-mode`;
 
 const autoModeSettingsCode = `{
+  "$schema": "https://claudekit.cc/schemas/ck-config.schema.json",
   "permissions": {
     "defaultMode": "auto"
   }
 }`;
 
 const autoModeConfigCode = `{
+  "$schema": "https://claudekit.cc/schemas/ck-config.schema.json",
   "autoMode": {
     "environment": [
       "Source control: github.com/your-org and all repos under it",
@@ -37,12 +39,14 @@ const bypassCLICode1 = `claude --dangerously-skip-permissions`;
 const bypassCLICode2 = `claude --permission-mode bypassPermissions`;
 
 const bypassCode = `{
+  "$schema": "https://claudekit.cc/schemas/ck-config.schema.json",
   "permissions": {
     "defaultMode": "bypassPermissions"
   }
 }`;
 
 const granularCode = `{
+  "$schema": "https://claudekit.cc/schemas/ck-config.schema.json",
   "permissions": {
     "allow": [
       "Bash(npm run *)",
@@ -548,7 +552,7 @@ const modes = [
             <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
           </svg>
           <p class="text-xs text-slate-600 dark:text-slate-400">
-            <span class="font-semibold text-blue-600 dark:text-blue-400">Tip:</span> settings.json supports a <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-[10px]">"$schema"</code> field for IDE autocompletion. Add <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-[10px]">"$schema": "https://json.schemastore.org/claude-code-settings.json"</code>
+            <span class="font-semibold text-blue-600 dark:text-blue-400">Tip:</span> settings.json supports a <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-[10px]">"$schema"</code> field for IDE autocompletion. Add <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-[10px]">"$schema": "https://claudekit.cc/schemas/ck-config.schema.json"</code>
           </p>
         </div>
       </div>

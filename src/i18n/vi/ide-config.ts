@@ -63,4 +63,6 @@ export const ide_config = {
   'ide_config.guide.permissions_warning_note': 'Config này bỏ qua các prompt xin quyền. Chỉ dùng nếu bạn hoàn toàn tin tưởng AI và hiểu rõ rủi ro. Code và hệ thống của bạn có thể bị ảnh hưởng.',
   'ide_config.guide.permissions_config_title': 'Bypass Permissions',
   'ide_config.guide.permissions_config_note': 'Bỏ qua tất cả permission prompts và cho phép Claude tự động thực thi lệnh. Thêm vào file settings.json của IDE.',
+  'ide_config.guide.schema_config_title': 'Settings JSON Schema',
+  'ide_config.guide.schema_config_note': 'Kích hoạt tính năng tự động hoàn thành và xác thực cho file cấu hình Claude Code. Đã được nâng cấp lên 139 dòng với schema bổ sung cho watch và content. Thêm vào file settings.json của IDE.',
 } as const;
