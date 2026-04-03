@@ -7,6 +7,12 @@ import CommandsMigrationTable from "./commands/commands-migration-table.astro";
 import CommandsSymbolsLegend from "./commands/commands-symbols-legend.astro";
 import CommandsCategoriesGrid from "./commands/commands-categories-grid.astro";
 import CommandsDocsNote from "./commands/commands-docs-note.astro";
+import {
+  engineerMigrationExtra,
+  marketingMigrationExtra,
+  marketingRenamedMkt,
+  marketingRenamedShared,
+} from "@/data/guides/commands-migration";
 
 interface Props {
   lang?: Language;
@@ -15,6 +21,8 @@ interface Props {
 const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
+const engineerExtraCount = engineerMigrationExtra.length;
+const marketingExtraCount = marketingMigrationExtra.length + marketingRenamedMkt.length + marketingRenamedShared.length;
 ---
 
 <style>
@@ -156,7 +164,7 @@ const t = useTranslations(currentLang);
           setTimeout(() => {
             migrationRows.style.display = "none";
             migrationIcon.style.transform = "";
-            migrationText.textContent = "Show all migrations (28 more)";
+            migrationText.textContent = `Show all migrations (${engineerExtraCount} more)`;
             const whatsNewSection = document.getElementById("whats-new-section");
             if (whatsNewSection) {
               whatsNewSection.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -191,7 +199,7 @@ const t = useTranslations(currentLang);
           setTimeout(() => {
             migrationMktRows.style.display = "none";
             migrationMktIcon.style.transform = "";
-            migrationMktText.textContent = "Show all migrations (76 more)";
+            migrationMktText.textContent = `Show all migrations (${marketingExtraCount} more)`;
             const whatsNewSection = document.getElementById("whats-new-section");
             if (whatsNewSection) {
               whatsNewSection.scrollIntoView({ behavior: "smooth", block: "start" });

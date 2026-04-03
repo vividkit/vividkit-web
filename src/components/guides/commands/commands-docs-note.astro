@@ -16,7 +16,10 @@ const t = useTranslations(currentLang);
   <p class="text-sm text-slate-500 dark:text-slate-400">
     {t("commands.docs.text")}
     <a
-      href="https://docs.claudekit.cc/docs/engineer/commands"
+      id="commands-docs-link"
+      href="https://docs.claudekit.cc/docs/engineer/skills"
+      data-ek-href="https://docs.claudekit.cc/docs/engineer/skills"
+      data-mk-href="https://docs.claudekit.cc/docs/marketing/skills"
       target="_blank"
       rel="noopener noreferrer"
       class="text-blue-600 dark:text-blue-400 hover:underline font-medium"
@@ -24,3 +27,31 @@ const t = useTranslations(currentLang);
     >
   </p>
 </div>
+
+<script>
+  function initDocsLink() {
+    const link = document.getElementById("commands-docs-link") as HTMLAnchorElement | null;
+    const categoriesMarketing = document.getElementById("categories-marketing");
+    if (!link || !categoriesMarketing) return;
+
+    function updateLink() {
+      const isMkt = !categoriesMarketing!.classList.contains("hidden");
+      link!.href = isMkt
+        ? (link!.dataset.mkHref ?? link!.href)
+        : (link!.dataset.ekHref ?? link!.href);
+    }
+
+    // Sync on kit toggle via MutationObserver
+    const observer = new MutationObserver(updateLink);
+    observer.observe(categoriesMarketing, { attributes: true, attributeFilter: ["class"] });
+
+    // Restore saved preference on initial load
+    const saved = localStorage.getItem("commands-kit");
+    if (saved === "marketing") {
+      link.href = link.dataset.mkHref ?? link.href;
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", initDocsLink);
+  document.addEventListener("astro:page-load", initDocsLink);
+</script>
