@@ -25,14 +25,10 @@ export const cli = {
   'cli.guide.pro_tips': 'Pro Tips for CLI Power Users',
   'cli.guide.tip1_title': 'Use Quotes for Multi-word Requests',
   'cli.guide.tip1_description': 'Always wrap your requests in double quotes: "your request here"',
-  'cli.guide.tip2_title': 'Interactive Mode = Better Iteration',
-  'cli.guide.tip2_description': 'Use <code class="font-mono text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-900/20 px-1 rounded">ccs</code> without arguments for back-and-forth refinement',
   'cli.guide.tip3_title': 'Reference Files with @',
   'cli.guide.tip3_description': 'Use <code class="font-mono text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 px-1 rounded">@filename</code> to tell AI which files to modify',
-  'cli.guide.tip4_title': 'Always Use "Using ui-ux-pro-max skill"',
-  'cli.guide.tip4_description': 'This activates the design intelligence system for professional results',
-  'cli.guide.tip5_title': 'Statusline & Gemini Model Config',
-  'cli.guide.tip5_description': '<ul class="list-disc list-inside space-y-1 mt-1"><li><code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">statusline</code>: set to <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">"minimal"</code> (stable default) or <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">"full"</code> (beta default)</li><li><code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">gemini.model</code>: default is <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">gemini-3-flash-preview</code></li><li>Beta creates <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">.claude/session-state/</code> for session persistence</li></ul>Configure in <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">.ck.json</code>.',
+  'cli.guide.tip5_title': 'Configure Statusline & Gemini Model',
+  'cli.guide.tip5_description': '<ul class="list-disc list-inside space-y-1 mt-1"><li><code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">statusline</code>: set to <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">"minimal"</code> (stable default) or <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">"full"</code> (beta default)</li><li><code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">gemini.model</code>: defaults to <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">gemini-3-flash-preview</code></li><li>Automatically creates <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">.claude/session-state/</code> for session persistence</li></ul>Configure in <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">.ck.json</code>.',
   // CLI Guide Terminal Mockup
   'cli.terminal.setup_comment': '# Set up ClaudeKit in your project',
   'cli.terminal.start_comment': '# Start Claude Code CLI',
@@ -112,4 +108,15 @@ export const cli = {
   'cli.ccs.multi_account': 'Multi-account',
   'cli.ccs.fast_delegation': 'Fast delegation',
   'cli.ccs.view_guide': 'View CCS Guide',
+
+  // Advanced Configurations & Namespaces
+  'cli.guide.settings_title': 'Advanced: settings.json configuration',
+  'cli.guide.settings_description': 'Customize Claude Code globally or locally by creating a <code class="font-mono text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-900/20 px-1 rounded">settings.json</code> file (e.g., <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">~/.claude/settings.json</code>).',
+  'cli.guide.settings_schema': 'Always include the <code class="font-mono text-xs text-blue-600 dark:text-blue-400">"$schema"</code> reference to enable auto-completion and validation in your editor:',
+  'cli.guide.settings_migration': '<strong>Migration Note:</strong> If you previously used <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">includeCoAuthoredBy</code>, it has been replaced by the <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">attribution</code> configuration:',
+  'cli.guide.namespace_title': 'Namespace Changes',
+  'cli.guide.namespace_description': 'Core skills have been moved to the <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">ck:</code> namespace for better organization.',
+  'cli.guide.namespace_example': 'Instead of <code class="font-mono text-xs line-through text-slate-500 px-1">/debug</code> or <code class="font-mono text-xs line-through text-slate-500 px-1">/plan</code>, you should now use <code class="font-mono text-xs bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 px-1 rounded">/ck:debug</code> and <code class="font-mono text-xs bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 px-1 rounded">/ck:plan</code>.',
+  'cli.guide.session_state_title': 'Session State Persistence',
+  'cli.guide.session_state_description': 'Claude Code now auto-saves your session state across restarts. The state is stored in <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">.claude/session-state/</code> directory.',
 } as const;
