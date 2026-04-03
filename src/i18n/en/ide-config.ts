@@ -63,4 +63,6 @@ export const ide_config = {
   'ide_config.guide.permissions_warning_note': 'This config bypasses permission prompts. Only use if you fully trust the AI and understand the risks. Your code and system could be affected.',
   'ide_config.guide.permissions_config_title': 'Bypass Permissions',
   'ide_config.guide.permissions_config_note': 'Skip all permission prompts and allow Claude to execute commands automatically. Add to your IDE settings.json.',
+  'ide_config.guide.schema_config_title': 'Settings JSON Schema',
+  'ide_config.guide.schema_config_note': 'Enable auto-completion and validation for Claude Code settings. Now enhanced to 139 lines with schema definitions for watch and content daemons. Add to your IDE settings.json.',
 } as const;
