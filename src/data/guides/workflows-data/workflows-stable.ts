@@ -727,6 +727,52 @@ export const stableWorkflows = [
     borderColor: 'border-orange-500/20'
   },
   {
+    title: 'Isolated Feature Branching',
+    category: 'Advanced',
+    level: 'Intermediate',
+    duration: '~2-5 min',
+    stepCount: 3,
+    bestFor: 'Parallel development in monorepos using git worktrees',
+    gradientHeader: 'from-orange-500/10 to-amber-500/10',
+    hoverBorderColor: 'hover:border-orange-500/50',
+    buttonColor: 'bg-orange-500 hover:bg-orange-600',
+    icon: '<path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3zm-6 3a3 3 0 0 0-3 3v6a3 3 0 0 0 3 3 3 3 0 0 0 3-3V9a3 3 0 0 0-3-3zM6 9a3 3 0 0 0-3 3v6a3 3 0 0 0 3 3 3 3 0 0 0 3-3v-6a3 3 0 0 0-3-3z"/>',
+    iconColor: 'text-orange-600 dark:text-orange-400',
+    steps: [
+      {
+        command: '/ck:worktree info',
+        typeLabel: 'Step 1: Get Repo Info',
+        description: 'Parse repo type, base branch, and existing projects',
+        color: 'bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400',
+        number: 1,
+        isSkill: true
+      },
+      {
+        typeLabel: 'Step 2: Detect Branch Naming Mode',
+        description: 'Detect conventional prefix or use --no-prefix for exact Jira keys',
+        color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
+        number: 2
+      },
+      {
+        typeLabel: 'Step 3: Convert to Slug',
+        description: 'Format branch name to kebab-case (skipped if --no-prefix is active)',
+        color: 'bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400',
+        number: 3,
+        hasIcon: true,
+        icon: '<path d="M16 3h5v5M4 20L21 3M4 14l7 7M14 4l7 7"/>'
+      }
+    ],
+    featureCommand: '/ck:worktree',
+    tip: 'Use --no-prefix to preserve exact branch names for Jira keys (like ND-1377-cleanup-docs).',
+    features: [
+      'Isolated git worktrees per feature',
+      'Preserve exact issue keys (--no-prefix)',
+      'Auto-detect branch prefix conventions',
+      'Monorepo project scoping support'
+    ],
+    borderColor: 'border-orange-500/20'
+  },
+  {
     title: 'LLMs.txt Generation',
     category: 'Research & Docs',
     level: 'Beginner',

@@ -16,7 +16,7 @@ export const stableWorkflows = [
     steps: [
       {
         command: '/ck:brainstorm',
-        typeLabel: 'Brainstorm ý tưởng (skill)',
+        typeLabel: 'Brainstorm ý tưởng',
         description: 'Dùng /ck:brainstorm hoặc nói "brainstorm ideas for [feature]" để khám phá',
         color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
         number: 1,
@@ -39,7 +39,7 @@ export const stableWorkflows = [
       },
       {
         command: '/ck:cook @plan.md',
-        typeLabel: 'Implement plan (skill)',
+        typeLabel: 'Implement plan',
         description: 'AI viết code theo plan, chạy tests và review công việc',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 4,
@@ -64,7 +64,7 @@ export const stableWorkflows = [
     steps: [
       {
         command: '/ck:fix',
-        typeLabel: 'Pipeline 6 bước (skill)',
+        typeLabel: 'Pipeline 6 bước',
         description: 'Chạy pipeline đầy đủ: Scout → Chẩn đoán → Đánh giá → Sửa → Xác minh → Phòng ngừa',
         color: 'bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400',
         number: 1,
@@ -204,7 +204,7 @@ export const stableWorkflows = [
     steps: [
       {
         command: '/ck:remotion',
-        typeLabel: 'Video creation (skill)',
+        typeLabel: 'Video creation',
         description: 'Tạo video lập trình với React và Remotion',
         color: 'bg-pink-500/10 dark:bg-pink-500/20 text-pink-600 dark:text-pink-400',
         number: 1,
@@ -249,7 +249,7 @@ export const stableWorkflows = [
       },
       {
         command: '/ck:preview --explain "chủ đề"',
-        typeLabel: 'Tạo giải thích (skill)',
+        typeLabel: 'Tạo giải thích',
         description: 'Tạo sơ đồ ASCII + Mermaid kèm giải thích văn bản cho chủ đề',
         color: 'bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400',
         number: 2,
@@ -257,7 +257,7 @@ export const stableWorkflows = [
       },
       {
         command: '/ck:preview --diagram "chủ đề"',
-        typeLabel: 'Tạo sơ đồ tập trung (skill)',
+        typeLabel: 'Tạo sơ đồ tập trung',
         description: 'Tạo sơ đồ Mermaid + ASCII tập trung cho luồng dữ liệu hoặc kiến trúc cụ thể',
         color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
         number: 3,
@@ -289,7 +289,7 @@ export const stableWorkflows = [
     steps: [
       {
         command: '/ck:cook @plan.md',
-        typeLabel: 'Implement plan (skill)',
+        typeLabel: 'Implement plan',
         description: 'AI viết code theo plan với auto test & review cycles',
         color: 'bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
         number: 1,
@@ -297,7 +297,7 @@ export const stableWorkflows = [
       },
       {
         command: '/ck:scout',
-        typeLabel: 'Scout edge cases (skill)',
+        typeLabel: 'Scout edge cases',
         description: 'AI scout các file bị ảnh hưởng, luồng dữ liệu, error paths và boundary conditions',
         color: 'bg-teal-500/10 dark:bg-teal-500/20 text-teal-600 dark:text-teal-400',
         number: 2,
@@ -366,7 +366,7 @@ export const stableWorkflows = [
       },
       {
         command: '/ck:cook @plan.md',
-        typeLabel: 'Implement plan đã validate (skill)',
+        typeLabel: 'Implement plan đã validate',
         description: 'AI implement với decisions đã validate sẵn propagate vào mỗi phase',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 4,
@@ -412,7 +412,7 @@ export const stableWorkflows = [
       },
       {
         command: '/ck:team cook @plan',
-        typeLabel: 'Team chạy song song (skill)',
+        typeLabel: 'Team chạy song song',
         description: 'Spawn nhiều dev agent song song, mỗi agent xử lý một phase. Auto test → review → merge',
         color: 'bg-teal-500/10 dark:bg-teal-500/20 text-teal-600 dark:text-teal-400',
         number: 2,
@@ -456,7 +456,7 @@ export const stableWorkflows = [
       },
       {
         command: '/ck:plan red-team plans/',
-        typeLabel: 'Review đối kháng (skill)',
+        typeLabel: 'Review đối kháng',
         description: 'Spawn hostile reviewers: Bảo mật, Failure Mode, Phá giả định, Phê bình Scope',
         color: 'bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400',
         number: 2,
@@ -487,7 +487,7 @@ export const stableWorkflows = [
     steps: [
       {
         command: '/ck:research "topic"',
-        typeLabel: 'Deep research (skill)',
+        typeLabel: 'Deep research',
         description: 'AI nghiên cứu topic kỹ lưỡng bằng web search và documentation',
         color: 'bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400',
         number: 1,
@@ -495,7 +495,7 @@ export const stableWorkflows = [
       },
       {
         command: '/ck:docs-seeker "library"',
-        typeLabel: 'Tìm docs thư viện (skill)',
+        typeLabel: 'Tìm docs thư viện',
         description: 'Tìm kiếm documentation chính thức qua llms.txt để lấy API info mới nhất',
         color: 'bg-yellow-500/10 dark:bg-yellow-500/20 text-yellow-600 dark:text-yellow-400',
         number: 2,
@@ -535,7 +535,7 @@ export const stableWorkflows = [
     steps: [
       {
         command: '/ck:security-scan',
-        typeLabel: 'Quét lỗ hổng (skill)',
+        typeLabel: 'Quét lỗ hổng',
         description: 'Quét codebase tìm OWASP issues, hardcoded secrets và dependency vulnerabilities',
         color: 'bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400',
         number: 1,
@@ -583,7 +583,7 @@ export const stableWorkflows = [
     steps: [
       {
         command: '/ck:databases "schema design"',
-        typeLabel: 'Thiết kế schema (skill)',
+        typeLabel: 'Thiết kế schema',
         description: 'Thiết kế schema database với relationships, indexes và constraints',
         color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
         number: 1,
@@ -630,7 +630,7 @@ export const stableWorkflows = [
     steps: [
       {
         command: '/ck:devops "setup CI/CD"',
-        typeLabel: 'Cấu hình DevOps (skill)',
+        typeLabel: 'Cấu hình DevOps',
         description: 'Thiết lập CI/CD pipelines cho GitHub Actions, GitLab CI hoặc platforms khác',
         color: 'bg-slate-500/10 dark:bg-slate-500/20 text-slate-600 dark:text-slate-400',
         number: 1,
@@ -638,7 +638,7 @@ export const stableWorkflows = [
       },
       {
         command: '/ck:deploy',
-        typeLabel: 'Deploy lên platform (skill)',
+        typeLabel: 'Deploy lên platform',
         description: 'Deploy lên Cloudflare, Vercel, GCP hoặc Kubernetes với auto-detection',
         color: 'bg-zinc-500/10 dark:bg-zinc-500/20 text-zinc-600 dark:text-zinc-400',
         number: 2,
@@ -677,7 +677,7 @@ export const stableWorkflows = [
     steps: [
       {
         command: '/ck:ship [--official|--beta] [--skip-tests] [--skip-review]',
-        typeLabel: 'Ship pipeline (skill)',
+        typeLabel: 'Ship pipeline',
         description: 'Merge main, chạy test, review pre-landing, bump version, cập nhật changelog, push, tạo PR',
         color: 'bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
         number: 1,
@@ -710,7 +710,7 @@ export const stableWorkflows = [
     steps: [
       {
         command: '/ck:deploy [platform]',
-        typeLabel: 'Auto-deploy (skill)',
+        typeLabel: 'Auto-deploy',
         description: 'AI tự nhận diện project type và deploy lên 15+ nền tảng mà không cần cấu hình thủ công',
         color: 'bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400',
         number: 1,
@@ -723,6 +723,52 @@ export const stableWorkflows = [
       'Hỗ trợ 15+ nền tảng sẵn có',
       'Xử lý env vars và cấu hình build',
       'Vercel, Netlify, Railway, Fly.io, AWS, GCP, Azure'
+    ],
+    borderColor: 'border-orange-500/20'
+  },
+  {
+    title: 'Isolated Feature Branching',
+    category: 'Advanced',
+    level: 'Intermediate',
+    duration: '~2-5 phút',
+    stepCount: 3,
+    bestFor: 'Phát triển song song trong các monorepos sử dụng git worktrees',
+    gradientHeader: 'from-orange-500/10 to-amber-500/10',
+    hoverBorderColor: 'hover:border-orange-500/50',
+    buttonColor: 'bg-orange-500 hover:bg-orange-600',
+    icon: '<path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3zm-6 3a3 3 0 0 0-3 3v6a3 3 0 0 0 3 3 3 3 0 0 0 3-3V9a3 3 0 0 0-3-3zM6 9a3 3 0 0 0-3 3v6a3 3 0 0 0 3 3 3 3 0 0 0 3-3v-6a3 3 0 0 0-3-3z"/>',
+    iconColor: 'text-orange-600 dark:text-orange-400',
+    steps: [
+      {
+        command: '/ck:worktree info',
+        typeLabel: 'Bước 1: Lấy thông tin Repo',
+        description: 'Phân tích loại repo, base branch và các projects hiện có',
+        color: 'bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400',
+        number: 1,
+        isSkill: true
+      },
+      {
+        typeLabel: 'Bước 2: Detect Branch Naming Mode',
+        description: 'Nhận diện theo quy ước thông thường hoặc dùng --no-prefix cho key Jira chính xác',
+        color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
+        number: 2
+      },
+      {
+        typeLabel: 'Bước 3: Chuyển đổi thành Slug',
+        description: 'Định dạng branch name thành kebab-case (hoặc bỏ qua nếu bật cờ --no-prefix)',
+        color: 'bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400',
+        number: 3,
+        hasIcon: true,
+        icon: '<path d="M16 3h5v5M4 20L21 3M4 14l7 7M14 4l7 7"/>'
+      }
+    ],
+    featureCommand: '/ck:worktree',
+    tip: 'Sử dụng cờ --no-prefix để giữ nguyên tên branch chính xác cho các Jira key (như ND-1377-cleanup-docs).',
+    features: [
+      'Git worktrees độc lập cho từng tính năng',
+      'Giữ nguyên chính xác issue keys (--no-prefix)',
+      'Khả năng tự động nhận diện branch prefix',
+      'Hỗ trợ dự án có cấu trúc monorepo'
     ],
     borderColor: 'border-orange-500/20'
   },
@@ -741,7 +787,7 @@ export const stableWorkflows = [
     steps: [
       {
         command: '/ck:llms [path]',
-        typeLabel: 'Tạo index (skill)',
+        typeLabel: 'Tạo index',
         description: 'Tạo llms.txt theo chuẩn llmstxt.org — giúp AI đọc hiểu docs của bạn dễ dàng',
         color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
         number: 1,
