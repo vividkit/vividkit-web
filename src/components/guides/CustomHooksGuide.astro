@@ -19,22 +19,19 @@ const translations = {
     infoBannerNote: 'These hooks live in',
     infoBannerNoteEnd: 'and can automate your workflow.',
     hookCountTitle: 'Hook Coverage',
-    hookCountDesc: 'ClaudeKit ships with 13 hooks in stable and 15 hooks in beta. All hooks are composable via a shared utility library.',
-    hookCountStable: '13 hooks — stable',
+    hookCountDesc: 'ClaudeKit ships with 9 hooks in stable and 15 hooks in beta. All hooks are composable via a shared utility library.',
+    hookCountStable: '9 hooks — stable',
     hookCountBeta: '15 hooks — beta',
     hookLibTitle: 'Hook Utility Library',
     hookLibDesc: 'All hooks share a set of utility modules under hooks/lib/. These handle common concerns so each hook stays focused.',
-    availableHooksTitle: 'Available Custom Hooks',
-    hookDiscordTitle: 'Discord Notification',
-    hookDiscordDesc: 'Get notified on Discord when Claude needs your attention during multi-phase sessions.',
     moreComingSoon: 'More hooks coming soon...',
-    moreComingSoonDesc: 'Slack notifications, Telegram alerts, auto-commit, and more!',
+    moreComingSoonDesc: 'Slack notifications, auto-commit, and more!',
     betaHooksTitle: 'Beta Hooks',
     betaHooksDesc: 'Two new hooks ship in beta along with a new Stop lifecycle event. All 15 hooks received hardening and structured diagnostics.',
     betaSessionStateTitle: 'session-state.cjs',
-    betaSessionStateDesc: 'Persist and restore session progress across compactions. Saves last active plan, todo items, subagent outputs, and branch/commit status to .claude/session-state/.last-state.md. Triggers: SessionStart (load), Stop/SubagentStop (persist). 159 lines.',
+    betaSessionStateDesc: 'Persist and restore session progress across compactions. Saves last active plan, todo items, subagent outputs, and branch/commit status to .claude/session-state/.last-state.md. Triggers: SessionStart (load), Prompt, Stop/SubagentStop (persist). 159 lines.',
     betaPlanFormatTitle: 'plan-format-kanban.cjs',
-    betaPlanFormatDesc: 'Validate plan.md link formatting. Triggers: PostToolUse on Write/Edit operations. 61 lines.',
+    betaPlanFormatDesc: 'Kanban statusline rendering. Triggers: PostToolUse on Write/Edit operations.',
     betaStopEventTitle: 'New: Stop lifecycle event',
     betaStopEventDesc: 'Beta adds a Stop trigger that fires when a session ends. Used by session-state.cjs to persist state before shutdown.',
     testMigrationTitle: 'Test Structure',
@@ -50,22 +47,19 @@ const translations = {
     infoBannerNote: 'Hooks nằm trong',
     infoBannerNoteEnd: 'và có thể tự động hóa workflow của bạn.',
     hookCountTitle: 'Số lượng Hooks',
-    hookCountDesc: 'ClaudeKit có 13 hooks trong bản stable và 15 hooks trong bản beta. Tất cả hooks dùng chung một thư viện utility.',
-    hookCountStable: '13 hooks — stable',
+    hookCountDesc: 'ClaudeKit có 9 hooks trong bản stable và 15 hooks trong bản beta. Tất cả hooks dùng chung một thư viện utility.',
+    hookCountStable: '9 hooks — stable',
     hookCountBeta: '15 hooks — beta',
     hookLibTitle: 'Hook Utility Library',
     hookLibDesc: 'Tất cả hooks dùng chung các utility modules trong hooks/lib/. Các module này xử lý các concerns chung để mỗi hook tập trung vào nhiệm vụ của mình.',
-    availableHooksTitle: 'Các Custom Hooks',
-    hookDiscordTitle: 'Discord Notification',
-    hookDiscordDesc: 'Nhận thông báo trên Discord khi Claude cần bạn trong các session multi-phase.',
     moreComingSoon: 'Thêm hooks sắp ra mắt...',
-    moreComingSoonDesc: 'Slack notifications, Telegram alerts, auto-commit, và nhiều hơn!',
+    moreComingSoonDesc: 'Slack notifications, auto-commit, và nhiều hơn!',
     betaHooksTitle: 'Beta Hooks',
     betaHooksDesc: 'Hai hooks mới ra mắt trong bản beta cùng với lifecycle event Stop mới. Tất cả 15 hooks được cải thiện độ ổn định và structured diagnostics.',
     betaSessionStateTitle: 'session-state.cjs',
-    betaSessionStateDesc: 'Lưu và khôi phục tiến trình session qua các lần compact. Lưu plan hiện tại, todo items, subagent outputs, và trạng thái branch/commit vào .claude/session-state/.last-state.md. Triggers: SessionStart (load), Stop/SubagentStop (persist). 159 dòng.',
+    betaSessionStateDesc: 'Lưu và khôi phục tiến trình session qua các lần compact. Lưu plan hiện tại, todo items, subagent outputs, và trạng thái branch/commit vào .claude/session-state/.last-state.md. Triggers: SessionStart (load), Prompt, Stop/SubagentStop (persist). 159 dòng.',
     betaPlanFormatTitle: 'plan-format-kanban.cjs',
-    betaPlanFormatDesc: 'Kiểm tra định dạng link trong plan.md. Triggers: PostToolUse trên các thao tác Write/Edit. 61 dòng.',
+    betaPlanFormatDesc: 'Hiển thị kanban statusline. Triggers: PostToolUse trên các thao tác Write/Edit.',
     betaStopEventTitle: 'Mới: Stop lifecycle event',
     betaStopEventDesc: 'Beta thêm trigger Stop khi session kết thúc. Được dùng bởi session-state.cjs để lưu state trước khi tắt.',
     testMigrationTitle: 'Cấu trúc Test',
@@ -77,15 +71,7 @@ const translations = {
 
 const t = translations[currentLang] || translations.en;
 
-const hooks = [
-  {
-    title: t.hookDiscordTitle,
-    description: t.hookDiscordDesc,
-    icon: `<svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>`,
-    href: '/guides/hooks/discord-notification',
-    tags: ['productivity', 'notifications'],
-  },
-];
+
 ---
 
 <div class="space-y-8 mt-6">
@@ -117,45 +103,7 @@ const hooks = [
     </div>
   </div>
 
-  <!-- Available Hooks Grid -->
-  <div class="space-y-4">
-    <h3 class="text-xl font-bold text-slate-900 dark:text-white">{t.availableHooksTitle}</h3>
 
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
-      {hooks.map((hook) => (
-        <a
-          href={translatePath(hook.href)}
-          class="group block p-6 bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-blue-300 dark:hover:border-blue-500/50 transition-all duration-200 hover:shadow-lg hover:shadow-blue-500/5"
-        >
-          <div class="flex items-start gap-4">
-            <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20">
-              <Fragment set:html={hook.icon} />
-            </div>
-            <div class="flex-1 min-w-0">
-              <div class="flex items-center gap-2 mb-1">
-                <h4 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                  {hook.title}
-                </h4>
-                <svg class="w-4 h-4 text-slate-400 group-hover:text-blue-500 group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                </svg>
-              </div>
-              <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                {hook.description}
-              </p>
-              <div class="flex gap-2 mt-3">
-                {hook.tags.map((tag) => (
-                  <span class="px-2 py-1 text-xs font-medium rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </a>
-      ))}
-    </div>
-  </div>
 
   <!-- More Coming Soon -->
   <div class="text-center py-8 border border-dashed border-slate-200 dark:border-slate-700 rounded-xl">
@@ -192,7 +140,7 @@ const hooks = [
       <div class="grid gap-2 sm:grid-cols-2">
         {[
           { name: 'ck-config-utils', desc: 'Read/validate .ck.json configuration' },
-          { name: 'colors', desc: 'ANSI color formatting + statusline color support' },
+          { name: 'colors', desc: 'ANSI color formatting' },
           { name: 'config-counter', desc: 'Track skills, hooks, agents counts' },
           { name: 'context-builder', desc: 'Build session context with WARN 70%/CRITICAL 90% thresholds' },
           { name: 'git-info-cache', desc: 'Cache git status for performance' },

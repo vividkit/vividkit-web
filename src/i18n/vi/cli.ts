@@ -28,14 +28,10 @@ export const cli = {
   'cli.guide.pro_tips': 'Mẹo Chuyên Nghiệp cho Người Dùng CLI Nâng Cao',
   'cli.guide.tip1_title': 'Sử Dụng Dấu Ngoặc Kép cho Yêu Cầu Nhiều Từ',
   'cli.guide.tip1_description': 'Luôn bọc yêu cầu của bạn trong dấu ngoặc kép: "yêu cầu của bạn ở đây"',
-  'cli.guide.tip2_title': 'Chế Độ Tương Tác = Tốt Hơn cho Việc Lặp Lại',
-  'cli.guide.tip2_description': 'Sử dụng <code class="font-mono text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-900/20 px-1 rounded">ccs</code> không có đối số để tinh chỉnh qua lại',
   'cli.guide.tip3_title': 'Tham Chiếu File với @',
   'cli.guide.tip3_description': 'Sử dụng <code class="font-mono text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 px-1 rounded">@tên_file</code> để cho AI biết những file nào cần sửa đổi',
-  'cli.guide.tip4_title': 'Luôn Sử Dụng "Using ui-ux-pro-max skill"',
-  'cli.guide.tip4_description': 'Điều này kích hoạt hệ thống thiết kế thông minh để có kết quả chuyên nghiệp',
   'cli.guide.tip5_title': 'Cấu Hình Statusline & Gemini Model',
-  'cli.guide.tip5_description': '<ul class="list-disc list-inside space-y-1 mt-1"><li><code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">statusline</code>: đặt thành <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">"minimal"</code> (mặc định stable) hoặc <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">"full"</code> (mặc định beta)</li><li><code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">gemini.model</code>: mặc định là <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">gemini-3-flash-preview</code></li><li>Beta tạo thư mục <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">.claude/session-state/</code> để lưu trữ phiên</li></ul>Cấu hình trong <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">.ck.json</code>.',
+  'cli.guide.tip5_description': '<ul class="list-disc list-inside space-y-1 mt-1"><li><code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">statusline</code>: đặt thành <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">"minimal"</code> (mặc định stable) hoặc <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">"full"</code> (mặc định beta)</li><li><code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">gemini.model</code>: mặc định là <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">gemini-3-flash-preview</code></li><li>Tự động lưu lại ngữ cảnh đang làm việc vào thư mục <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">.claude/session-state/</code> để không bị mất khi bạn tắt terminal</li></ul>Cấu hình trong <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">.ck.json</code>.',
   // CLI Guide Terminal Mockup
   'cli.terminal.setup_comment': '# Thiết lập ClaudeKit trong dự án của bạn',
   'cli.terminal.start_comment': '# Bắt đầu Claude Code CLI',
@@ -115,4 +111,15 @@ export const cli = {
   'cli.ccs.multi_account': 'Đa tài khoản',
   'cli.ccs.fast_delegation': 'Ủy quyền nhanh',
   'cli.ccs.view_guide': 'Xem Hướng Dẫn CCS',
+
+  // Advanced Configurations & Namespaces
+  'cli.guide.settings_title': 'Nâng cao: Cấu hình settings.json',
+  'cli.guide.settings_description': 'Tùy chỉnh Claude Code toàn cục hoặc cục bộ bằng cách tạo một file <code class="font-mono text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-900/20 px-1 rounded">settings.json</code> (ví dụ: <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">~/.claude/settings.json</code>).',
+  'cli.guide.settings_schema': 'Luôn bao gồm tham chiếu <code class="font-mono text-xs text-blue-600 dark:text-blue-400">"$schema"</code> để kích hoạt tính năng tự động hoàn thành và xác thực trong trình soạn thảo của bạn:',
+  'cli.guide.settings_migration': '<strong>Lưu ý Chuyển đổi:</strong> Nếu trước đây bạn đã sử dụng <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">includeCoAuthoredBy</code>, tính năng này hiện đã được thay thế bằng cấu hình <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">attribution</code>:',
+  'cli.guide.namespace_title': 'Thay Đổi Namespace',
+  'cli.guide.namespace_description': 'Các kỹ năng cốt lõi đã được chuyển qua namespace <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">ck:</code> để dễ dàng sử dụng và tổ chức gọn gàng hơn.',
+  'cli.guide.namespace_example': 'Thay vì dùng lệnh <code class="font-mono text-xs line-through text-slate-500 px-1">/debug</code> hoặc <code class="font-mono text-xs line-through text-slate-500 px-1">/plan</code>, hiện tại bạn nên dùng <code class="font-mono text-xs bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 px-1 rounded">/ck:debug</code> và <code class="font-mono text-xs bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 px-1 rounded">/ck:plan</code>.',
+  'cli.guide.session_state_title': 'Lưu Trữ Trạng Thái Phiên (Session State)',
+  'cli.guide.session_state_description': 'Claude Code hiện tự động lưu trạng thái phiên của bạn qua các lần khởi động lại. Trạng thái này được lưu tại thư mục <code class="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-1 rounded">.claude/session-state/</code>.',
 } as const;

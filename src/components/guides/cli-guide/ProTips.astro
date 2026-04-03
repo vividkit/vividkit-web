@@ -1,0 +1,59 @@
+---
+import { useTranslations } from '@/i18n/utils';
+import type { Language } from '@/i18n';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<div class="glass-card rounded-2xl p-8 border border-slate-200 dark:border-slate-800">
+  <div class="flex items-center gap-4 mb-6">
+    <div class="flex-shrink-0 p-3 bg-blue-100 dark:bg-blue-900/30 rounded-xl text-blue-600 dark:text-blue-400">
+      <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+      </svg>
+    </div>
+    <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">{t('cli.guide.pro_tips')}</h3>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="flex items-start gap-3 p-4 rounded-lg bg-surface-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700">
+      <svg class="w-6 h-6 text-teal-500 dark:text-teal-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="16 18 22 12 16 6"/>
+        <polyline points="8 6 2 12 8 18"/>
+      </svg>
+      <div>
+        <div class="text-sm font-medium text-slate-800 dark:text-slate-200 mb-1">{t('cli.guide.tip1_title')}</div>
+        <div class="text-xs text-slate-600 dark:text-slate-400">{t('cli.guide.tip1_description')}</div>
+      </div>
+    </div>
+
+    <div class="flex items-start gap-3 p-4 rounded-lg bg-surface-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700">
+      <svg class="w-6 h-6 text-blue-500 dark:text-blue-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+      </svg>
+      <div>
+        <div class="text-sm font-medium text-slate-800 dark:text-slate-200 mb-1">{t('cli.guide.tip3_title')}</div>
+        <div class="text-xs text-slate-600 dark:text-slate-400" set:html={t('cli.guide.tip3_description')}>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="flex items-start gap-3 p-4 rounded-lg bg-surface-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 md:col-span-2">
+      <svg class="w-6 h-6 text-amber-500 dark:text-amber-400 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+      </svg>
+      <div>
+        <div class="text-sm font-medium text-slate-800 dark:text-slate-200 mb-1">{t('cli.guide.tip5_title')}</div>
+        <div class="text-xs text-slate-600 dark:text-slate-400" set:html={t('cli.guide.tip5_description')}></div>
+      </div>
+    </div>
+  </div>
+</div>
