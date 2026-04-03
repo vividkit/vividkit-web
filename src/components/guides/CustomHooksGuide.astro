@@ -1,5 +1,7 @@
 ---
-import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
+import { getLangFromUrl, type Language } from '@/i18n';
+import { hookCategories, libModules } from '@/data/guides/custom-hooks/custom-hooks-data';
+import { customHooksTranslations } from '@/data/guides/custom-hooks/custom-hooks-translations';
 
 interface Props {
   lang?: Language;
@@ -7,77 +9,31 @@ interface Props {
 
 const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
-const translatePath = useTranslatedPath(currentLang);
+const t = customHooksTranslations[currentLang] || customHooksTranslations.en;
+const isVi = currentLang === 'vi';
 
-// Translations
-const translations = {
-  en: {
-    pageTitle: 'Custom Hooks',
-    pageSubtitle: 'Customize your vibe coding workflow with powerful hooks for Claude Code. Automate notifications, actions, and integrations.',
-    infoBannerTitle: 'What are Custom Hooks?',
-    infoBannerDesc: 'Claude Code hooks are shell commands that execute in response to events like tool calls, session start, or agent completion.',
-    infoBannerNote: 'These hooks live in',
-    infoBannerNoteEnd: 'and can automate your workflow.',
-    hookCountTitle: 'Hook Coverage',
-    hookCountDesc: 'ClaudeKit ships with 16 built-in hooks. All hooks are composable via a shared utility library.',
-    hookCountTotal: '16 hooks — stable',
-    hookLibTitle: 'Hook Utility Library',
-    hookLibDesc: 'All hooks share a set of utility modules under hooks/lib/. These handle common concerns so each hook stays focused.',
-    moreComingSoon: 'More hooks coming soon...',
-    moreComingSoonDesc: 'Slack notifications, auto-commit, and more!',
-    recentHooksTitle: 'Recently Added Hooks',
-    recentHooksDesc: 'These hooks were added in recent releases. All are now stable and ship with both stable and beta channels.',
-    usageQuotaTitle: 'usage-quota-cache-refresh.cjs',
-    usageQuotaDesc: 'Keep usage quota cache warm for statusline display. Refreshes at 60s (prompt events) or 300s (tool events) intervals. Triggers: SessionStart, UserPromptSubmit, PostToolUse. 100 lines.',
-    usageContextTitle: 'usage-context-awareness.cjs',
-    usageContextDesc: 'Config gate wrapper for usage-quota-cache-refresh. Delegates cache logic with alternate userAgent. Gated via ck-config flag. 39 lines.',
-    sessionStateTitle: 'session-state.cjs',
-    sessionStateDesc: 'Persist and restore session progress across compactions. Saves last active plan, todo items, subagent outputs, and branch/commit status to .claude/session-state/.last-state.md. Triggers: SessionStart (load), Prompt, Stop/SubagentStop (persist). 159 lines.',
-    planFormatTitle: 'plan-format-kanban.cjs',
-    planFormatDesc: 'Kanban statusline rendering. Triggers: PostToolUse on Write/Edit operations.',
-    stopEventTitle: 'Stop lifecycle event',
-    stopEventDesc: 'Stop trigger fires when a session ends. Used by session-state.cjs to persist state before shutdown.',
-    testMigrationTitle: 'Test Structure',
-    testMigrationDesc: 'Tests located in hooks/__tests__/ (Jest-like pattern) for tooling compatibility.',
-    officialDocsText: 'Learn more about ClaudeKit built-in hooks at',
-    officialDocsLink: 'ClaudeKit Documentation',
-  },
-  vi: {
-    pageTitle: 'Custom Hooks',
-    pageSubtitle: 'Tùy chỉnh workflow vibe coding với hooks cho Claude Code. Tự động notifications, actions, và integrations.',
-    infoBannerTitle: 'Custom Hooks là gì?',
-    infoBannerDesc: 'Claude Code hooks là shell commands chạy khi có events như tool calls, session start, hoặc agent completion.',
-    infoBannerNote: 'Hooks nằm trong',
-    infoBannerNoteEnd: 'và có thể tự động hóa workflow của bạn.',
-    hookCountTitle: 'Số lượng Hooks',
-    hookCountDesc: 'ClaudeKit có 16 built-in hooks. Tất cả hooks dùng chung một thư viện utility.',
-    hookCountTotal: '16 hooks — stable',
-    hookLibTitle: 'Hook Utility Library',
-    hookLibDesc: 'Tất cả hooks dùng chung các utility modules trong hooks/lib/. Các module này xử lý các concerns chung để mỗi hook tập trung vào nhiệm vụ của mình.',
-    moreComingSoon: 'Thêm hooks sắp ra mắt...',
-    moreComingSoonDesc: 'Slack notifications, auto-commit, và nhiều hơn!',
-    recentHooksTitle: 'Hooks mới thêm gần đây',
-    recentHooksDesc: 'Các hooks được thêm trong các bản release gần đây. Tất cả đã stable và có trong cả hai channel stable/beta.',
-    usageQuotaTitle: 'usage-quota-cache-refresh.cjs',
-    usageQuotaDesc: 'Giữ cache usage quota cho statusline. Refresh mỗi 60s (prompt events) hoặc 300s (tool events). Triggers: SessionStart, UserPromptSubmit, PostToolUse. 100 dòng.',
-    usageContextTitle: 'usage-context-awareness.cjs',
-    usageContextDesc: 'Config gate wrapper cho usage-quota-cache-refresh. Delegate cache logic với userAgent riêng. Gated qua ck-config flag. 39 dòng.',
-    sessionStateTitle: 'session-state.cjs',
-    sessionStateDesc: 'Lưu và khôi phục tiến trình session qua các lần compact. Lưu plan hiện tại, todo items, subagent outputs, và trạng thái branch/commit vào .claude/session-state/.last-state.md. Triggers: SessionStart (load), Prompt, Stop/SubagentStop (persist). 159 dòng.',
-    planFormatTitle: 'plan-format-kanban.cjs',
-    planFormatDesc: 'Hiển thị kanban statusline. Triggers: PostToolUse trên các thao tác Write/Edit.',
-    stopEventTitle: 'Stop lifecycle event',
-    stopEventDesc: 'Trigger Stop khi session kết thúc. Được dùng bởi session-state.cjs để lưu state trước khi tắt.',
-    testMigrationTitle: 'Cấu trúc Test',
-    testMigrationDesc: 'Tests nằm trong hooks/__tests__/ (theo pattern Jest) để tương thích tốt hơn với tooling.',
-    officialDocsText: 'Tìm hiểu thêm các built-in hooks của ClaudeKit tại',
-    officialDocsLink: 'ClaudeKit Documentation',
-  }
+// Color mappings for category accents
+const colorMap: Record<string, { bg: string; border: string; text: string; badgeBg: string; badgeText: string }> = {
+  blue:    { bg: 'bg-blue-500/5 dark:bg-blue-500/10', border: 'border-blue-200 dark:border-blue-500/20', text: 'text-blue-700 dark:text-blue-400', badgeBg: 'bg-blue-100 dark:bg-blue-500/20', badgeText: 'text-blue-700 dark:text-blue-400' },
+  violet:  { bg: 'bg-violet-500/5 dark:bg-violet-500/10', border: 'border-violet-200 dark:border-violet-500/20', text: 'text-violet-700 dark:text-violet-400', badgeBg: 'bg-violet-100 dark:bg-violet-500/20', badgeText: 'text-violet-700 dark:text-violet-400' },
+  emerald: { bg: 'bg-emerald-500/5 dark:bg-emerald-500/10', border: 'border-emerald-200 dark:border-emerald-500/20', text: 'text-emerald-700 dark:text-emerald-400', badgeBg: 'bg-emerald-100 dark:bg-emerald-500/20', badgeText: 'text-emerald-700 dark:text-emerald-400' },
+  red:     { bg: 'bg-red-500/5 dark:bg-red-500/10', border: 'border-red-200 dark:border-red-500/20', text: 'text-red-700 dark:text-red-400', badgeBg: 'bg-red-100 dark:bg-red-500/20', badgeText: 'text-red-700 dark:text-red-400' },
+  amber:   { bg: 'bg-amber-500/5 dark:bg-amber-500/10', border: 'border-amber-200 dark:border-amber-500/20', text: 'text-amber-700 dark:text-amber-400', badgeBg: 'bg-amber-100 dark:bg-amber-500/20', badgeText: 'text-amber-700 dark:text-amber-400' },
+  slate:   { bg: 'bg-slate-500/5 dark:bg-slate-500/10', border: 'border-slate-200 dark:border-slate-500/20', text: 'text-slate-500 dark:text-slate-400', badgeBg: 'bg-slate-100 dark:bg-slate-500/20', badgeText: 'text-slate-500 dark:text-slate-400' },
 };
 
-const t = translations[currentLang] || translations.en;
-
-
+// Lifecycle events for the visual diagram
+const lifecycleEvents = [
+  { name: 'SessionStart', descEn: 'startup, resume, clear, compact', descVi: 'startup, resume, clear, compact', color: 'blue' },
+  { name: 'UserPromptSubmit', descEn: 'every user prompt', descVi: 'mỗi user prompt', color: 'violet' },
+  { name: 'PreToolUse', descEn: 'before tool execution', descVi: 'trước khi chạy tool', color: 'red' },
+  { name: 'PostToolUse', descEn: 'after tool execution', descVi: 'sau khi chạy tool', color: 'emerald' },
+  { name: 'SubagentStart', descEn: 'subagent spawned', descVi: 'subagent được spawn', color: 'violet' },
+  { name: 'SubagentStop', descEn: 'subagent finished', descVi: 'subagent hoàn thành', color: 'violet' },
+  { name: 'Stop', descEn: 'session ends', descVi: 'session kết thúc', color: 'blue' },
+  { name: 'TaskCompleted', descEn: 'task marked done', descVi: 'task hoàn thành', color: 'amber' },
+  { name: 'TeammateIdle', descEn: 'teammate about to idle', descVi: 'teammate sắp idle', color: 'amber' },
+];
 ---
 
 <div class="space-y-8 mt-6">
@@ -95,21 +51,107 @@ const t = translations[currentLang] || translations.en;
   <div class="flex items-start gap-4 p-6 rounded-xl bg-blue-500/5 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20">
     <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center">
       <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="10"/>
-        <line x1="12" y1="16" x2="12" y2="12"/>
-        <line x1="12" y1="8" x2="12.01" y2="8"/>
+        <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
       </svg>
     </div>
     <div class="flex-1">
       <div class="font-bold text-blue-700 dark:text-blue-400 mb-1 text-lg">{t.infoBannerTitle}</div>
       <div class="text-slate-600 dark:text-slate-400 leading-relaxed">
-        {t.infoBannerDesc}
-        {t.infoBannerNote} <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-sm">~/.claude/settings.json</code> {t.infoBannerNoteEnd}
+        {t.infoBannerDesc} <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-sm">~/.claude/settings.json</code> {t.infoBannerDescEnd}
       </div>
     </div>
   </div>
 
+  <!-- Stats Bar -->
+  <div class="flex flex-wrap gap-3 justify-center">
+    <span class="px-4 py-2 rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-sm font-semibold">
+      {t.hookCountLabel}
+    </span>
+    <span class="px-4 py-2 rounded-full bg-indigo-100 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-400 text-sm font-semibold">
+      {t.libCountLabel}
+    </span>
+  </div>
 
+  <!-- Lifecycle Events -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+    <div class="p-5 bg-gradient-to-r from-slate-500/10 to-slate-600/10 border-b border-slate-100 dark:border-slate-800">
+      <h3 class="text-lg font-bold text-slate-900 dark:text-white">{t.lifecycleTitle}</h3>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">{t.lifecycleDesc}</p>
+    </div>
+    <div class="p-5">
+      <div class="flex flex-wrap gap-2">
+        {lifecycleEvents.map((evt) => {
+          const c = colorMap[evt.color] || colorMap.slate;
+          return (
+            <div class={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg ${c.bg} border ${c.border}`}>
+              <code class={`text-xs font-mono font-bold ${c.text}`}>{evt.name}</code>
+              <span class="text-xs text-slate-500 dark:text-slate-400">{isVi ? evt.descVi : evt.descEn}</span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </div>
+
+  <!-- Hook Categories -->
+  {hookCategories.map((cat) => {
+    const c = colorMap[cat.color] || colorMap.slate;
+    return (
+      <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+        <div class={`p-5 ${c.bg} border-b border-slate-100 dark:border-slate-800`}>
+          <div class="flex items-center gap-3">
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white">{isVi ? cat.titleVi : cat.titleEn}</h3>
+            <span class={`px-2 py-0.5 text-xs font-semibold rounded-full ${c.badgeBg} ${c.badgeText}`}>
+              {cat.hooks.length} {cat.hooks.length === 1 ? 'hook' : 'hooks'}
+            </span>
+          </div>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">{isVi ? cat.descVi : cat.descEn}</p>
+        </div>
+        <div class="p-5 space-y-3">
+          {cat.hooks.map((hook) => (
+            <div class={`p-4 rounded-lg border ${hook.deprecated ? 'bg-slate-50 dark:bg-slate-800/30 border-slate-200 dark:border-slate-700 opacity-70' : `${c.bg} ${c.border}`}`}>
+              <div class="flex items-start justify-between gap-3 mb-2">
+                <div class="flex items-center gap-2 min-w-0">
+                  <code class={`text-sm font-mono font-bold ${hook.deprecated ? 'text-slate-500 dark:text-slate-400 line-through' : c.text} shrink-0`}>{hook.name}</code>
+                  {hook.deprecated && (
+                    <span class="px-1.5 py-0.5 text-[10px] font-semibold bg-red-100 dark:bg-red-500/20 text-red-600 dark:text-red-400 rounded">{t.deprecatedLabel}</span>
+                  )}
+                </div>
+                <span class="text-xs text-slate-400 dark:text-slate-500 shrink-0">{hook.lines} {t.linesLabel}</span>
+              </div>
+              <p class="text-sm text-slate-600 dark:text-slate-400 mb-2">{isVi ? hook.descVi : hook.descEn}</p>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="text-[10px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mr-1 self-center">{t.triggerLabel}:</span>
+                {hook.triggers.map((trigger) => (
+                  <span class="px-2 py-0.5 text-[11px] font-mono rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
+                    {trigger}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  })}
+
+  <!-- Utility Library -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+    <div class="p-5 bg-gradient-to-r from-indigo-500/10 to-violet-500/10 border-b border-slate-100 dark:border-slate-800">
+      <h3 class="text-lg font-bold text-slate-900 dark:text-white">{t.libTitle}</h3>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">{t.libDesc}</p>
+    </div>
+    <div class="p-5">
+      <div class="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+        {libModules.map((mod) => (
+          <div class="flex items-start gap-2 p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700">
+            <code class="text-[11px] font-mono text-indigo-600 dark:text-indigo-400 shrink-0 mt-0.5">{mod.name}</code>
+            <span class="text-[11px] text-slate-500 dark:text-slate-400">{isVi ? mod.descVi : mod.descEn}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
 
   <!-- More Coming Soon -->
   <div class="text-center py-8 border border-dashed border-slate-200 dark:border-slate-700 rounded-xl">
@@ -122,103 +164,6 @@ const t = translations[currentLang] || translations.en;
     <p class="text-slate-400 dark:text-slate-500 text-sm mt-1">{t.moreComingSoonDesc}</p>
   </div>
 
-  <!-- Hook Count Overview -->
-  <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
-    <div class="p-6 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 border-b border-slate-100 dark:border-slate-800">
-      <h3 class="text-lg font-bold text-slate-900 dark:text-white">{t.hookCountTitle}</h3>
-    </div>
-    <div class="p-6 space-y-4">
-      <p class="text-slate-600 dark:text-slate-400">{t.hookCountDesc}</p>
-      <div class="flex flex-wrap gap-3">
-        <span class="px-3 py-1.5 rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-sm font-semibold">{t.hookCountTotal}</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Hook Utility Library -->
-  <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
-    <div class="p-6 bg-gradient-to-r from-slate-500/10 to-slate-600/10 border-b border-slate-100 dark:border-slate-800">
-      <h3 class="text-lg font-bold text-slate-900 dark:text-white">{t.hookLibTitle}</h3>
-    </div>
-    <div class="p-6 space-y-4">
-      <p class="text-slate-600 dark:text-slate-400 text-sm">{t.hookLibDesc}</p>
-      <div class="grid gap-2 sm:grid-cols-2">
-        {[
-          { name: 'ck-config-utils', desc: 'Read/validate .ck.json configuration' },
-          { name: 'colors', desc: 'ANSI color formatting' },
-          { name: 'config-counter', desc: 'Track skills, hooks, agents counts' },
-          { name: 'context-builder', desc: 'Build session context with WARN 70%/CRITICAL 90% thresholds' },
-          { name: 'git-info-cache', desc: 'Cache git status for performance' },
-          { name: 'hook-logger', desc: 'Structured diagnostics logging with performance tracking' },
-          { name: 'privacy-checker', desc: 'Block access to sensitive files (.env, credentials)' },
-          { name: 'project-detector', desc: 'Detect project type and package manager' },
-          { name: 'scout-checker', desc: 'Check if scout agents are available' },
-          { name: 'transcript-parser', desc: 'Parse Claude conversation transcripts' },
-        ].map((mod) => (
-          <div class="flex items-start gap-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700">
-            <code class="text-xs font-mono text-indigo-600 dark:text-indigo-400 shrink-0 mt-0.5">{mod.name}</code>
-            <span class="text-xs text-slate-500 dark:text-slate-400">{mod.desc}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
-
-  <!-- Recently Added Hooks -->
-  <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
-    <div class="p-6 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border-b border-slate-100 dark:border-slate-800">
-      <h3 class="text-lg font-bold text-slate-900 dark:text-white">{t.recentHooksTitle}</h3>
-    </div>
-    <div class="p-6 space-y-4">
-      <p class="text-slate-600 dark:text-slate-400 text-sm">{t.recentHooksDesc}</p>
-
-      <div class="space-y-3">
-        <!-- usage-quota-cache-refresh.cjs -->
-        <div class="p-4 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30">
-          <div class="font-mono text-sm font-bold text-emerald-700 dark:text-emerald-400 mb-1">{t.usageQuotaTitle}</div>
-          <p class="text-sm text-slate-600 dark:text-slate-400">{t.usageQuotaDesc}</p>
-        </div>
-
-        <!-- usage-context-awareness.cjs -->
-        <div class="p-4 rounded-lg bg-teal-50 dark:bg-teal-500/10 border border-teal-200 dark:border-teal-500/30">
-          <div class="font-mono text-sm font-bold text-teal-700 dark:text-teal-400 mb-1">{t.usageContextTitle}</div>
-          <p class="text-sm text-slate-600 dark:text-slate-400">{t.usageContextDesc}</p>
-        </div>
-
-        <!-- session-state.cjs -->
-        <div class="p-4 rounded-lg bg-violet-50 dark:bg-violet-500/10 border border-violet-200 dark:border-violet-500/30">
-          <div class="font-mono text-sm font-bold text-violet-700 dark:text-violet-400 mb-1">{t.sessionStateTitle}</div>
-          <p class="text-sm text-slate-600 dark:text-slate-400">{t.sessionStateDesc}</p>
-        </div>
-
-        <!-- plan-format-kanban.cjs -->
-        <div class="p-4 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/30">
-          <div class="font-mono text-sm font-bold text-indigo-700 dark:text-indigo-400 mb-1">{t.planFormatTitle}</div>
-          <p class="text-sm text-slate-600 dark:text-slate-400">{t.planFormatDesc}</p>
-        </div>
-
-        <!-- Stop event -->
-        <div class="p-4 rounded-lg bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/30">
-          <div class="text-sm font-bold text-amber-700 dark:text-amber-400 mb-1">{t.stopEventTitle}</div>
-          <p class="text-sm text-slate-600 dark:text-slate-400">{t.stopEventDesc}</p>
-        </div>
-      </div>
-
-      <!-- Test structure note -->
-      <div class="flex items-start gap-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
-        <svg class="w-4 h-4 text-slate-400 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"/>
-          <line x1="12" y1="16" x2="12" y2="12"/>
-          <line x1="12" y1="8" x2="12.01" y2="8"/>
-        </svg>
-        <div>
-          <span class="text-sm font-medium text-slate-700 dark:text-slate-300">{t.testMigrationTitle}: </span>
-          <span class="text-sm text-slate-500 dark:text-slate-400">{t.testMigrationDesc}</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- Official Docs Link -->
   <div class="text-center pt-8 border-t border-slate-200 dark:border-slate-800">
     <p class="text-slate-600 dark:text-slate-400 text-sm">
@@ -226,9 +171,7 @@ const t = translations[currentLang] || translations.en;
       <a href="https://docs.claudekit.cc/docs/configuration/hooks#built-in-hooks" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline font-medium inline-flex items-center gap-1">
         {t.officialDocsLink}
         <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-          <polyline points="15 3 21 3 21 9"/>
-          <line x1="10" y1="14" x2="21" y2="3"/>
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
         </svg>
       </a>
     </p>
