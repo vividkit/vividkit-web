@@ -267,7 +267,7 @@ export const commands = {
   'commands.marketing_stable_note': 'Current stable & beta releases of Marketing Kit',
   // Marketing Kit Beta Preview
   'commands.mkt_beta_preview.title': 'Beta Preview',
-  'commands.mkt_beta_preview.subtitle': 'Upcoming skills and commands in Marketing Kit beta',
+  'commands.mkt_beta_preview.subtitle': 'Upcoming skills and enhancements in Marketing Kit Beta',
   'commands.mkt_beta.play.desc': 'Playbook orchestrator with smart suggestions',
   'commands.mkt_beta.play.detail': 'Create marketing playbooks from templates with goals, milestones, and smart next-step suggestions.',
   'commands.mkt_beta.youtube_thumbnail_design.desc': 'YouTube thumbnails with CTR optimization',
@@ -725,7 +725,7 @@ export const commands = {
   'commands.beta_retro.desc': 'Data-driven sprint retrospective with git metrics',
   'commands.beta_retro.detail': 'Commits, LOC, hotspots, churn rate, test ratio. --compare for period deltas. --team for per-author breakdown. HTML/MD output.',
   'commands.beta_preview.title': 'Beta Preview',
-  'commands.beta_preview.subtitle': 'New skills and major enhancements in v2.15.1 Beta',
+  'commands.beta_preview.subtitle': 'New skills and enhancements in Engineer Kit Beta',
   // New beta-only skills (not yet in stable)
   'commands.beta_autoresearch.desc': 'Automated multi-source research with parallel agents',
   'commands.beta_autoresearch.detail': 'Parallel research across web, docs, and codebase. Synthesizes findings into structured reports.',
