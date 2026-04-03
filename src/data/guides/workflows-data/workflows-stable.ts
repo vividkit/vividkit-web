@@ -231,9 +231,9 @@ export const stableWorkflows = [
     title: 'Visual Documentation',
     category: 'Research & Docs',
     level: 'Beginner',
-    duration: '~10-20 min',
+    duration: '~2-10 min',
     stepCount: 3,
-    bestFor: 'Creating visual explanations and diagrams for your plan',
+    bestFor: 'Creating visual explanations, diagrams, and slide decks as Markdown or self-contained HTML',
     gradientHeader: 'from-indigo-500/10 to-violet-500/10',
     hoverBorderColor: 'hover:border-indigo-500/50',
     buttonColor: 'bg-indigo-500 hover:bg-indigo-600',
@@ -241,36 +241,38 @@ export const stableWorkflows = [
     iconColor: 'text-indigo-600 dark:text-indigo-400',
     steps: [
       {
-        command: '/ck:plan',
-        typeLabel: 'Create plan first',
-        description: 'Create a structured plan. Visuals are saved into the plan directory',
-        color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
-        number: 1
+        command: '/ck:preview --explain "topic"',
+        typeLabel: 'Markdown explanation',
+        description: 'Create ASCII + Mermaid diagrams with prose explanation (opens in novel-reader UI)',
+        color: 'bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400',
+        number: 1,
+        isSkill: true
       },
       {
-        command: '/ck:preview --explain "topic"',
-        typeLabel: 'Generate explanation',
-        description: 'Create ASCII + Mermaid diagrams with prose explanation for your topic',
-        color: 'bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400',
+        command: '/ck:preview --html --explain "topic"',
+        typeLabel: 'HTML explanation',
+        description: 'Self-contained HTML with theme toggle, Mermaid v11, and Chart.js — opens directly in browser',
+        color: 'bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400',
         number: 2,
         isSkill: true
       },
       {
-        command: '/ck:preview --diagram "topic"',
-        typeLabel: 'Generate focused diagram',
-        description: 'Create a focused Mermaid + ASCII diagram for a specific data flow or architecture',
+        command: '/ck:preview --html --slides "topic"',
+        typeLabel: 'HTML slide deck',
+        description: 'Magazine-quality presentation slides as self-contained HTML',
         color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
         number: 3,
         isSkill: true
       }
     ],
     featureCommand: '/ck:preview',
-    tip: '/ck:preview generates visual content. Also: --slides, --ascii',
+    tip: 'Add --html to any mode for publication-quality HTML output. Also: --diagram, --diff, --plan-review, --recap',
     features: [
-      'ASCII + Mermaid diagrams (--explain)',
-      'Presentation format (--slides)',
-      'Focused diagrams (--diagram)',
-      'Terminal-friendly output (--ascii)'
+      'Markdown modes: --explain, --slides, --diagram, --ascii',
+      'HTML modes: --html --explain, --html --slides, --html --diagram',
+      'HTML-only: --diff, --plan-review, --recap',
+      'Theme toggle (light/dark) in every HTML page',
+      'Mermaid v11 diagrams + Chart.js data visualizations'
     ],
     borderColor: 'border-indigo-500/20'
   },

@@ -68,12 +68,12 @@ const marketingCategories = getMarketingKitCategories(t as any);
     </div>
   </div>
 
-  <!-- Engineer Kit (v2.15.1) categories panel -->
+  <!-- Engineer Kit (v2.16.0) categories panel -->
   <div id="categories-engineer" class="space-y-6">
     <!-- Stable version badge -->
     <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
       <span class="px-2 py-0.5 rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 font-semibold"
-        >v2.15.1 Stable</span
+        >v2.16.0 Stable</span
       >
       <span>{t("commands.engineer_stable_note")}</span>
     </div>
@@ -99,10 +99,7 @@ const marketingCategories = getMarketingKitCategories(t as any);
         <!-- Beta skill cards -->
         {[
           // Beta-only skills (not yet in stable)
-          { cmd: "/ck:autoresearch", labelKey: "commands.beta_autoresearch.desc", detailKey: "commands.beta_autoresearch.detail", type: "skill", badge: "new" },
-          { cmd: "/ck:predict", labelKey: "commands.beta_predict.desc", detailKey: "commands.beta_predict.detail", type: "skill", badge: "new" },
-          { cmd: "/ck:scenario", labelKey: "commands.beta_scenario.desc", detailKey: "commands.beta_scenario.detail", type: "skill", badge: "new" },
-          { cmd: "/ck:security", labelKey: "commands.beta_security.desc", detailKey: "commands.beta_security.detail", type: "skill", badge: "new" },
+          { cmd: "/ck:excalidraw", labelKey: "commands.beta_excalidraw.desc", detailKey: "commands.beta_excalidraw.detail", type: "skill", badge: "new" },
         ].map((item) => (
           <div class="p-3 rounded-lg bg-white/60 dark:bg-slate-900/50 border border-purple-500/30 transition-all duration-200 hover:shadow-sm h-full flex flex-col">
             <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">

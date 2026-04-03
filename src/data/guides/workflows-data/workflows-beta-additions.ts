@@ -1,6 +1,6 @@
 // Beta-only workflow additions (v2.14.0+)
 // These are combined with stableWorkflows in the index to form betaWorkflows
-// New beta skills: /ck:autoresearch, /ck:predict, /ck:scenario, /ck:security
+// New beta skills: /ck:autoresearch, /ck:predict, /ck:scenario, /ck:security, /ck:excalidraw
 
 export const betaOnlyWorkflows = [
   {
@@ -81,7 +81,7 @@ export const betaOnlyWorkflows = [
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
         number: 1,
         isSkill: true,
-        isBeta: true
+
       }
     ],
     tip: 'Set a clear, measurable metric (coverage %, bundle size, latency) for best results',
@@ -113,7 +113,7 @@ export const betaOnlyWorkflows = [
         color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
         number: 1,
         isSkill: true,
-        isBeta: true
+
       }
     ],
     tip: 'Run before major features or risky refactors to catch issues early',
@@ -145,7 +145,7 @@ export const betaOnlyWorkflows = [
         color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
         number: 1,
         isSkill: true,
-        isBeta: true
+
       }
     ],
     tip: 'Use before writing tests to ensure complete coverage of edge cases',
@@ -177,7 +177,7 @@ export const betaOnlyWorkflows = [
         color: 'bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400',
         number: 1,
         isSkill: true,
-        isBeta: true
+
       }
     ],
     tip: 'Combine with /ck:security-scan for comprehensive vulnerability + threat coverage',
@@ -188,38 +188,6 @@ export const betaOnlyWorkflows = [
       'Optional iterative auto-fix using autoresearch pattern'
     ],
     borderColor: 'border-red-500/20'
-  },
-  {
-    title: 'Visual Explanation',
-    category: 'Docs & Communication',
-    level: 'Beginner',
-    duration: '~2-5 min',
-    stepCount: 1,
-    bestFor: 'Creating publication-quality visual explanations, diagrams, and slide decks as HTML',
-    gradientHeader: 'from-rose-500/10 to-pink-500/10',
-    hoverBorderColor: 'hover:border-rose-500/50',
-    buttonColor: 'bg-rose-500 hover:bg-rose-600',
-    icon: '<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>',
-    iconColor: 'text-rose-600 dark:text-rose-400',
-    steps: [
-      {
-        command: '/ck:preview --html --explain <topic>',
-        typeLabel: 'Generate HTML',
-        description: 'Self-contained HTML with theme toggle, Mermaid diagrams, and Chart.js — opens directly in browser',
-        color: 'bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400',
-        number: 1,
-        isSkill: true
-      }
-    ],
-    tip: 'Use --slides for decks, --diagram for architecture, --diff for visual code review, --recap for project snapshots',
-    features: [
-      'Publication-quality self-contained HTML output',
-      'Modes: --explain, --diagram, --slides, --diff, --plan-review, --recap',
-      'Theme toggle (light/dark) built into every page',
-      'Mermaid v11 diagrams with deep custom theming',
-      'Chart.js data visualizations'
-    ],
-    borderColor: 'border-rose-500/20'
   },
   {
     title: 'Sprint Retrospective',
@@ -300,5 +268,36 @@ export const betaOnlyWorkflows = [
       'Quota: 200 credits/day (Flash), 50/day (Pro)'
     ],
     borderColor: 'border-sky-500/20'
+  },
+  {
+    title: 'Excalidraw Diagram Generation',
+    category: 'Design & Frontend',
+    level: 'Intermediate',
+    duration: '~5-15 min',
+    stepCount: 1,
+    bestFor: 'Creating hand-drawn style diagrams that argue visually — shapes mirror meaning',
+    gradientHeader: 'from-violet-500/10 to-indigo-500/10',
+    hoverBorderColor: 'hover:border-violet-500/50',
+    buttonColor: 'bg-violet-500 hover:bg-violet-600',
+    icon: '<path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/>',
+    iconColor: 'text-violet-600 dark:text-violet-400',
+    steps: [
+      {
+        command: '/ck:excalidraw',
+        typeLabel: 'Generate diagram',
+        description: 'Generate hand-drawn Excalidraw diagrams from text prompts — architecture, flowcharts, system designs',
+        color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
+        number: 1,
+        isSkill: true
+      }
+    ],
+    tip: 'Supports auto-diagram mode: analyze any codebase and generate architecture diagram automatically',
+    features: [
+      'Hand-drawn style with semantic color palettes',
+      'Auto-diagram: zero-config codebase visualization',
+      'File-based workflow with Playwright rendering',
+      'MCP canvas workflow for live editing'
+    ],
+    borderColor: 'border-violet-500/20'
   }
 ];

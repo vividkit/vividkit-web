@@ -231,9 +231,9 @@ export const stableWorkflows = [
     title: 'Visual Documentation',
     category: 'Research & Docs',
     level: 'Beginner',
-    duration: '~10-20 phút',
+    duration: '~2-10 phút',
     stepCount: 3,
-    bestFor: 'Tạo giải thích trực quan và sơ đồ cho plan',
+    bestFor: 'Tạo giải thích trực quan, sơ đồ và slide deck dạng Markdown hoặc HTML độc lập',
     gradientHeader: 'from-indigo-500/10 to-violet-500/10',
     hoverBorderColor: 'hover:border-indigo-500/50',
     buttonColor: 'bg-indigo-500 hover:bg-indigo-600',
@@ -241,36 +241,38 @@ export const stableWorkflows = [
     iconColor: 'text-indigo-600 dark:text-indigo-400',
     steps: [
       {
-        command: '/ck:plan',
-        typeLabel: 'Tạo plan trước',
-        description: 'Tạo plan có cấu trúc. Visuals được lưu vào thư mục plan',
-        color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
-        number: 1
+        command: '/ck:preview --explain "chủ đề"',
+        typeLabel: 'Giải thích Markdown',
+        description: 'Tạo sơ đồ ASCII + Mermaid kèm giải thích (mở trong novel-reader UI)',
+        color: 'bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400',
+        number: 1,
+        isSkill: true
       },
       {
-        command: '/ck:preview --explain "chủ đề"',
-        typeLabel: 'Tạo giải thích',
-        description: 'Tạo sơ đồ ASCII + Mermaid kèm giải thích văn bản cho chủ đề',
-        color: 'bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400',
+        command: '/ck:preview --html --explain "chủ đề"',
+        typeLabel: 'Giải thích HTML',
+        description: 'HTML độc lập với theme toggle, Mermaid v11 và Chart.js — mở thẳng trên trình duyệt',
+        color: 'bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400',
         number: 2,
         isSkill: true
       },
       {
-        command: '/ck:preview --diagram "chủ đề"',
-        typeLabel: 'Tạo sơ đồ tập trung',
-        description: 'Tạo sơ đồ Mermaid + ASCII tập trung cho luồng dữ liệu hoặc kiến trúc cụ thể',
+        command: '/ck:preview --html --slides "chủ đề"',
+        typeLabel: 'Slide deck HTML',
+        description: 'Slide trình bày chất lượng cao dạng HTML độc lập',
         color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
         number: 3,
         isSkill: true
       }
     ],
     featureCommand: '/ck:preview',
-    tip: '/ck:preview tạo visual content. Còn có: --slides, --ascii',
+    tip: 'Thêm --html vào bất kỳ mode nào để có output HTML chất lượng cao. Còn có: --diagram, --diff, --plan-review, --recap',
     features: [
-      'Sơ đồ ASCII + Mermaid (--explain)',
-      'Định dạng trình bày (--slides)',
-      'Sơ đồ tập trung (--diagram)',
-      'Output thân thiện terminal (--ascii)'
+      'Markdown: --explain, --slides, --diagram, --ascii',
+      'HTML: --html --explain, --html --slides, --html --diagram',
+      'HTML-only: --diff, --plan-review, --recap',
+      'Theme toggle (sáng/tối) trong mọi trang HTML',
+      'Sơ đồ Mermaid v11 + biểu đồ dữ liệu Chart.js'
     ],
     borderColor: 'border-indigo-500/20'
   },

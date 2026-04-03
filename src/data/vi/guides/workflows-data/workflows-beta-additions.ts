@@ -61,39 +61,6 @@ export const betaOnlyWorkflows = [
     borderColor: 'border-fuchsia-500/20'
   },
   {
-    title: 'Giải Thích Trực Quan',
-    category: 'Docs & Communication',
-    level: 'Beginner',
-    duration: '~2-5 phút',
-    stepCount: 1,
-    bestFor: 'Tạo giải thích trực quan, sơ đồ và slide deck chất lượng cao dạng HTML',
-    gradientHeader: 'from-rose-500/10 to-pink-500/10',
-    hoverBorderColor: 'hover:border-rose-500/50',
-    buttonColor: 'bg-rose-500 hover:bg-rose-600',
-    icon: '<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>',
-    iconColor: 'text-rose-600 dark:text-rose-400',
-    steps: [
-      {
-        command: '/ck:preview --html --explain <topic>',
-        typeLabel: 'Tạo HTML',
-        description: 'HTML độc lập với theme toggle, sơ đồ Mermaid và Chart.js — mở thẳng trên trình duyệt',
-        color: 'bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400',
-        number: 1,
-        isSkill: true,
-        isBeta: true
-      }
-    ],
-    tip: 'Dùng --slides cho slide deck, --diagram cho kiến trúc, --diff cho visual code review, --recap cho snapshot project',
-    features: [
-      'Output HTML độc lập chất lượng cao',
-      'Chế độ: --explain, --diagram, --slides, --diff, --plan-review, --recap',
-      'Theme toggle (sáng/tối) tích hợp sẵn',
-      'Sơ đồ Mermaid v11 với custom theming',
-      'Biểu đồ dữ liệu Chart.js'
-    ],
-    borderColor: 'border-rose-500/20'
-  },
-  {
     title: 'Sprint Retrospective',
     category: 'Session & Management',
     level: 'Beginner',
@@ -193,7 +160,7 @@ export const betaOnlyWorkflows = [
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
         number: 1,
         isSkill: true,
-        isBeta: true
+
       }
     ],
     tip: 'Đặt metric rõ ràng, đo lường được (coverage %, bundle size, latency) để có kết quả tốt nhất',
@@ -225,7 +192,7 @@ export const betaOnlyWorkflows = [
         color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
         number: 1,
         isSkill: true,
-        isBeta: true
+
       }
     ],
     tip: 'Chạy trước feature lớn hoặc refactor rủi ro để phát hiện vấn đề sớm',
@@ -257,7 +224,7 @@ export const betaOnlyWorkflows = [
         color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
         number: 1,
         isSkill: true,
-        isBeta: true
+
       }
     ],
     tip: 'Dùng trước khi viết test để đảm bảo coverage đầy đủ edge cases',
@@ -289,7 +256,7 @@ export const betaOnlyWorkflows = [
         color: 'bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400',
         number: 1,
         isSkill: true,
-        isBeta: true
+
       }
     ],
     tip: 'Kết hợp với /ck:security-scan để coverage vulnerability + threat toàn diện',
@@ -300,5 +267,36 @@ export const betaOnlyWorkflows = [
       'Auto-fix lặp đi lặp lại tùy chọn theo pattern autoresearch'
     ],
     borderColor: 'border-red-500/20'
+  },
+  {
+    title: 'Tạo Diagram Excalidraw',
+    category: 'Design & Frontend',
+    level: 'Intermediate',
+    duration: '~5-15 phút',
+    stepCount: 1,
+    bestFor: 'Tạo diagram phong cách hand-drawn với hình dạng phản ánh ý nghĩa thực sự',
+    gradientHeader: 'from-violet-500/10 to-indigo-500/10',
+    hoverBorderColor: 'hover:border-violet-500/50',
+    buttonColor: 'bg-violet-500 hover:bg-violet-600',
+    icon: '<path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/>',
+    iconColor: 'text-violet-600 dark:text-violet-400',
+    steps: [
+      {
+        command: '/ck:excalidraw',
+        typeLabel: 'Tạo diagram',
+        description: 'Tạo diagram Excalidraw hand-drawn từ text prompt — architecture, flowcharts, system designs',
+        color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
+        number: 1,
+        isSkill: true
+      }
+    ],
+    tip: 'Hỗ trợ auto-diagram: phân tích codebase bất kỳ và tự động tạo architecture diagram',
+    features: [
+      'Phong cách hand-drawn với bảng màu semantic',
+      'Auto-diagram: visualization codebase không cần config',
+      'File-based workflow với Playwright rendering',
+      'MCP canvas workflow để chỉnh sửa trực tiếp'
+    ],
+    borderColor: 'border-violet-500/20'
   }
 ];
