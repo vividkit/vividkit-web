@@ -4,6 +4,64 @@
 
 export const betaOnlyWorkflows = [
   {
+    title: 'Frontend Design Aesthetics',
+    category: 'Design & Frontend',
+    level: 'Advanced',
+    duration: '~30-60 min',
+    stepCount: 4,
+    bestFor: 'Creating distinctive, production-grade frontend interfaces that avoid generic AI slop',
+    gradientHeader: 'from-fuchsia-500/10 to-pink-500/10',
+    hoverBorderColor: 'hover:border-fuchsia-500/50',
+    buttonColor: 'bg-fuchsia-500 hover:bg-fuchsia-600',
+    icon: '<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>',
+    iconColor: 'text-fuchsia-600 dark:text-fuchsia-400',
+    steps: [
+      {
+        command: '/ck:ui-ux-pro-max',
+        typeLabel: 'Design Intelligence',
+        description: 'Activate ui-ux-pro-max logic to formulate styling references',
+        color: 'bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400',
+        number: 1,
+        isSkill: true
+      },
+      {
+        command: 'Design Thinking',
+        typeLabel: 'Mandatory Gate',
+        description: 'Commit to a BOLD direction. Define Purpose, Tone, Constraints, and Differentiation.',
+        color: 'bg-fuchsia-500/10 dark:bg-fuchsia-500/20 text-fuchsia-600 dark:text-fuchsia-400',
+        number: 2,
+        hasIcon: true,
+        icon: '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>'
+      },
+      {
+        command: 'Frontend Aesthetics',
+        typeLabel: 'Design Rules',
+        description: 'Ensure font size >= 16px for inputs, mobile-first layouts, and Anti-slop Google Fonts.',
+        color: 'bg-pink-500/10 dark:bg-pink-500/20 text-pink-600 dark:text-pink-400',
+        number: 3,
+        hasIcon: true,
+        icon: '<path d="M20 7h-7L10 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>'
+      },
+      {
+        command: '/ck:frontend-design',
+        typeLabel: 'Implement Interface',
+        description: 'Execute the spec following the design dials: Motion, Variance, Density.',
+        color: 'bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400',
+        number: 4,
+        isSkill: true
+      }
+    ],
+    featureCommand: '/ck:frontend-design',
+    tip: 'Anti-slop typography demands trending Google Fonts with Vietnamese coverage (e.g. Satoshi, Inter)',
+    features: [
+      'Design Dials: Variance, Density, Motion Intensity',
+      'Mandatory strict Design Thinking gates',
+      'Motion rules: CSS for HTML, Motion for React',
+      'Production-ready aesthetic choices'
+    ],
+    borderColor: 'border-fuchsia-500/20'
+  },
+  {
     title: 'Automated Research Loop',
     category: 'Planning & Review',
     level: 'Intermediate',

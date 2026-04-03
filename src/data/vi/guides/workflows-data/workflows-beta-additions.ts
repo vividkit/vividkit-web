@@ -3,6 +3,64 @@
 
 export const betaOnlyWorkflows = [
   {
+    title: 'Frontend Design Aesthetics',
+    category: 'Design & Frontend',
+    level: 'Advanced',
+    duration: '~30-60 phút',
+    stepCount: 4,
+    bestFor: 'Tạo các giao diện frontend nổi bật, chuẩn production, tránh phong cách AI chung chung',
+    gradientHeader: 'from-fuchsia-500/10 to-pink-500/10',
+    hoverBorderColor: 'hover:border-fuchsia-500/50',
+    buttonColor: 'bg-fuchsia-500 hover:bg-fuchsia-600',
+    icon: '<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>',
+    iconColor: 'text-fuchsia-600 dark:text-fuchsia-400',
+    steps: [
+      {
+        command: '/ck:ui-ux-pro-max',
+        typeLabel: 'Design Intelligence',
+        description: 'Phân tích tham chiếu thiết kế và system styling với kiến thức chuyên môn UX/UI',
+        color: 'bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400',
+        number: 1,
+        isSkill: true
+      },
+      {
+        command: 'Design Thinking',
+        typeLabel: 'Cổng Bắt Buộc',
+        description: 'Xác định Purpose, Tone, Constraints và Differentiation trước khi code để có phong cách BOLD.',
+        color: 'bg-fuchsia-500/10 dark:bg-fuchsia-500/20 text-fuchsia-600 dark:text-fuchsia-400',
+        number: 2,
+        hasIcon: true,
+        icon: '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>'
+      },
+      {
+        command: 'Frontend Aesthetics',
+        typeLabel: 'Kiểm Soát Thẩm Mỹ',
+        description: 'Cỡ chữ >= 16px cho inputs, thiết kế mobile-first và dùng Google Fonts chuẩn hỗ trợ Tiếng Việt.',
+        color: 'bg-pink-500/10 dark:bg-pink-500/20 text-pink-600 dark:text-pink-400',
+        number: 3,
+        hasIcon: true,
+        icon: '<path d="M20 7h-7L10 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>'
+      },
+      {
+        command: '/ck:frontend-design',
+        typeLabel: 'Triển Khai Giao Diện',
+        description: 'Code UI với cá tính mạnh thông qua điều chỉnh các thông số Design Dials.',
+        color: 'bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400',
+        number: 4,
+        isSkill: true
+      }
+    ],
+    featureCommand: '/ck:frontend-design',
+    tip: 'Anti-slop typography yêu cầu các Google Fonts đang trending hỗ trợ tiếng Việt tốt (như Inter, Outfit).',
+    features: [
+      'Kiểm soát Design Dials (Sự biến đổi, mật độ, motion)',
+      'Tuân thủ chặt chẽ cổng ràng buộc Design Thinking',
+      'Quy tắc Motion: CSS-only (HTML) hoặc Motion (React)',
+      'Thiết kế thẩm mỹ vượt trên chuẩn mặc định chung'
+    ],
+    borderColor: 'border-fuchsia-500/20'
+  },
+  {
     title: 'Giải Thích Trực Quan',
     category: 'Docs & Communication',
     level: 'Beginner',
@@ -17,7 +75,7 @@ export const betaOnlyWorkflows = [
     steps: [
       {
         command: '/ck:preview --html --explain <topic>',
-        typeLabel: 'Tạo HTML (skill)',
+        typeLabel: 'Tạo HTML',
         description: 'HTML độc lập với theme toggle, sơ đồ Mermaid và Chart.js — mở thẳng trên trình duyệt',
         color: 'bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400',
         number: 1,
@@ -50,7 +108,7 @@ export const betaOnlyWorkflows = [
     steps: [
       {
         command: '/ck:retro [timeframe] [--compare] [--team] [--format html|md]',
-        typeLabel: 'Phân tích sprint (skill)',
+        typeLabel: 'Phân tích sprint',
         description: 'Thu thập git metrics (commits, LOC, hotspots, churn), tính chỉ số sức khỏe, tạo báo cáo retrospective',
         color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
         number: 1,
@@ -82,25 +140,23 @@ export const betaOnlyWorkflows = [
     steps: [
       {
         command: '/ck:stitch generate "prompt"',
-        typeLabel: 'Tạo thiết kế (skill)',
+        typeLabel: 'Tạo thiết kế',
         description: 'Tạo thiết kế UI từ text prompt bằng Google Stitch AI',
         color: 'bg-sky-500/10 dark:bg-sky-500/20 text-sky-600 dark:text-sky-400',
         number: 1,
-        isSkill: true,
-        isBeta: true
+        isSkill: true
       },
       {
         command: '/ck:stitch export --format all',
-        typeLabel: 'Export assets (skill)',
+        typeLabel: 'Export assets',
         description: 'Export dạng Tailwind/HTML + DESIGN.md spec để implement',
         color: 'bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400',
         number: 2,
-        isSkill: true,
-        isBeta: true
+        isSkill: true
       },
       {
         command: '/ck:frontend-design',
-        typeLabel: 'Implement components (skill)',
+        typeLabel: 'Implement components',
         description: 'Xây dựng React components từ design spec đã export',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 3,
@@ -132,7 +188,7 @@ export const betaOnlyWorkflows = [
     steps: [
       {
         command: '/ck:autoresearch',
-        typeLabel: 'Research loop (skill)',
+        typeLabel: 'Research loop',
         description: 'Chạy N vòng lặp với metric, tự giữ/bỏ thay đổi dựa trên kết quả',
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
         number: 1,
@@ -164,7 +220,7 @@ export const betaOnlyWorkflows = [
     steps: [
       {
         command: '/ck:predict',
-        typeLabel: '5 chuyên gia tranh luận (skill)',
+        typeLabel: '5 chuyên gia tranh luận',
         description: '5 persona chuyên gia tranh luận về thay đổi — architect, security, performance, UX, ops',
         color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
         number: 1,
@@ -196,7 +252,7 @@ export const betaOnlyWorkflows = [
     steps: [
       {
         command: '/ck:scenario',
-        typeLabel: 'Phân tích 12 chiều (skill)',
+        typeLabel: 'Phân tích 12 chiều',
         description: 'Phân tách feature theo 12 chiều để tạo test scenarios toàn diện',
         color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
         number: 1,
@@ -228,7 +284,7 @@ export const betaOnlyWorkflows = [
     steps: [
       {
         command: '/ck:security',
-        typeLabel: 'STRIDE audit (skill)',
+        typeLabel: 'STRIDE audit',
         description: 'STRIDE threat modeling + OWASP scan với phân loại severity và auto-fix tùy chọn',
         color: 'bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400',
         number: 1,

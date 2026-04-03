@@ -83,7 +83,7 @@ export const marketingKitWorkflows = [
       },
       {
         command: '/ck:copywriting',
-        typeLabel: 'Viết copy (skill)',
+        typeLabel: 'Viết copy',
         description: 'Tạo subject line hấp dẫn và nội dung email thuyết phục',
         color: 'bg-pink-500/10 dark:bg-pink-500/20 text-pink-600 dark:text-pink-400',
         number: 3,
@@ -123,7 +123,7 @@ export const marketingKitWorkflows = [
     steps: [
       {
         command: '/ckm:marketing-planning',
-        typeLabel: 'Lập chiến lược (skill)',
+        typeLabel: 'Lập chiến lược',
         description: 'Xác định mục tiêu campaign, KPI, timeline, và phân bổ ngân sách',
         color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
         number: 1,
@@ -139,7 +139,7 @@ export const marketingKitWorkflows = [
       },
       {
         command: '/ckm:content-marketing',
-        typeLabel: 'Tạo nội dung (skill)',
+        typeLabel: 'Tạo nội dung',
         description: 'Tạo tài nguyên campaign trên tất cả các kênh',
         color: 'bg-pink-500/10 dark:bg-pink-500/20 text-pink-600 dark:text-pink-400',
         number: 3,
@@ -155,7 +155,7 @@ export const marketingKitWorkflows = [
       },
       {
         command: '/ckm:analytics',
-        typeLabel: 'Thiết lập tracking (skill)',
+        typeLabel: 'Thiết lập tracking',
         description: 'Cấu hình analytics và theo dõi conversion',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 5,
@@ -194,7 +194,7 @@ export const marketingKitWorkflows = [
       },
       {
         command: '/ckm:ab-test-setup',
-        typeLabel: 'Thiết kế test (skill)',
+        typeLabel: 'Thiết kế test',
         description: 'Tạo hypothesis, biến thể, và chỉ số đánh giá',
         color: 'bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400',
         number: 2,
@@ -293,7 +293,7 @@ export const marketingKitWorkflows = [
       },
       {
         command: '/ckm:form-cro "url"',
-        typeLabel: 'Tối ưu form (skill)',
+        typeLabel: 'Tối ưu form',
         description: 'Tối ưu trường form, CTA, và các điểm gây ma sát',
         color: 'bg-teal-500/10 dark:bg-teal-500/20 text-teal-600 dark:text-teal-400',
         number: 2,
@@ -302,7 +302,7 @@ export const marketingKitWorkflows = [
       },
       {
         command: '/ck:copywriting',
-        typeLabel: 'Tối ưu copy (skill)',
+        typeLabel: 'Tối ưu copy',
         description: 'Cải thiện headlines, value proposition, và yếu tố thuyết phục',
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
         number: 3,
@@ -349,7 +349,7 @@ export const marketingKitWorkflows = [
       },
       {
         command: '/ckm:design-system',
-        typeLabel: 'Hệ thống thiết kế (skill)',
+        typeLabel: 'Hệ thống thiết kế',
         description: 'Tạo thư viện component phù hợp với brand',
         color: 'bg-cyan-500/10 dark:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400',
         number: 2,
@@ -358,7 +358,7 @@ export const marketingKitWorkflows = [
       },
       {
         command: '/ckm:design banner',
-        typeLabel: 'Tạo assets (skill)',
+        typeLabel: 'Tạo assets',
         description: 'Tạo banner, quảng cáo, và đồ họa khuyến mãi',
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
         number: 3,
@@ -367,7 +367,7 @@ export const marketingKitWorkflows = [
       },
       {
         command: '/ckm:assets-organizing',
-        typeLabel: 'Tổ chức assets (skill)',
+        typeLabel: 'Tổ chức assets',
         description: 'Sắp xếp và xuất assets cho các nền tảng khác nhau',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 4,
@@ -399,7 +399,7 @@ export const marketingKitWorkflows = [
     steps: [
       {
         command: '/ckm:design social',
-        typeLabel: 'Tạo đồ họa (skill)',
+        typeLabel: 'Tạo đồ họa',
         description: 'Tạo đồ họa social media tối ưu cho từng nền tảng',
         color: 'bg-pink-500/10 dark:bg-pink-500/20 text-pink-600 dark:text-pink-400',
         number: 1,
@@ -408,7 +408,7 @@ export const marketingKitWorkflows = [
       },
       {
         command: '/ck:copywriting',
-        typeLabel: 'Viết caption (skill)',
+        typeLabel: 'Viết caption',
         description: 'Tạo caption hấp dẫn kèm hashtag phù hợp',
         color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
         number: 2,
@@ -469,7 +469,7 @@ export const marketingKitWorkflows = [
       },
       {
         command: '/ckm:marketing-research',
-        typeLabel: 'Insight thị trường (skill)',
+        typeLabel: 'Insight thị trường',
         description: 'Tổng hợp kết quả thành các insight có thể hành động',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 4,
@@ -508,7 +508,7 @@ export const marketingKitWorkflows = [
       },
       {
         command: '/ckm:marketing-research',
-        typeLabel: 'Nghiên cứu thị trường (skill)',
+        typeLabel: 'Nghiên cứu thị trường',
         description: 'Phân tích xu hướng thị trường, quy mô, và cơ hội',
         color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
         number: 2,
@@ -524,7 +524,7 @@ export const marketingKitWorkflows = [
       },
       {
         command: '/ckm:marketing-planning',
-        typeLabel: 'Kế hoạch chiến lược (skill)',
+        typeLabel: 'Kế hoạch chiến lược',
         description: 'Tạo tài liệu chiến lược marketing toàn diện',
         color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
         number: 4,
@@ -565,7 +565,7 @@ export const marketingKitWorkflows = [
     steps: [
       {
         command: '/ckm:play create --template saas-launch',
-        typeLabel: 'Tạo playbook (skill)',
+        typeLabel: 'Tạo playbook',
         description: 'Chọn từ các template: saas-launch, product-hunt-launch, content-engine, campaign-sprint',
         color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
         number: 1,
@@ -574,7 +574,7 @@ export const marketingKitWorkflows = [
       },
       {
         command: '/ckm:play goals set',
-        typeLabel: 'Đặt mục tiêu (skill)',
+        typeLabel: 'Đặt mục tiêu',
         description: 'Xác định KPI và target — tích hợp với chỉ số GA4, GSC, Stripe',
         color: 'bg-fuchsia-500/10 dark:bg-fuchsia-500/20 text-fuchsia-600 dark:text-fuchsia-400',
         number: 2,
@@ -583,7 +583,7 @@ export const marketingKitWorkflows = [
       },
       {
         command: '/ckm:play next',
-        typeLabel: 'Bước tiếp theo thông minh (skill)',
+        typeLabel: 'Bước tiếp theo thông minh',
         description: 'AI gợi ý hành động có tác động cao nhất dựa trên khoảng cách mục tiêu và trạng thái bước',
         color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
         number: 3,
@@ -592,7 +592,7 @@ export const marketingKitWorkflows = [
       },
       {
         command: '/ckm:play status',
-        typeLabel: 'Theo dõi tiến độ (skill)',
+        typeLabel: 'Theo dõi tiến độ',
         description: 'Dashboard tổng quan tất cả bước, mục tiêu, và điểm nghẽn',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 4,
@@ -627,7 +627,7 @@ export const marketingKitWorkflows = [
     steps: [
       {
         command: '/ckm:youtube-thumbnail-design',
-        typeLabel: 'Thiết kế thumbnail (skill)',
+        typeLabel: 'Thiết kế thumbnail',
         description: 'AI tạo thumbnail hoàn chỉnh có text qua Gemini Pro (lên đến 4K)',
         color: 'bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400',
         number: 1,
@@ -636,7 +636,7 @@ export const marketingKitWorkflows = [
       },
       {
         command: '/ck:ai-multimodal',
-        typeLabel: 'Xem xét & tinh chỉnh (skill)',
+        typeLabel: 'Xem xét & tinh chỉnh',
         description: 'Phân tích thumbnail đã tạo và cải thiện theo phản hồi',
         color: 'bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400',
         number: 2,
@@ -644,7 +644,7 @@ export const marketingKitWorkflows = [
       },
       {
         command: '/ckm:assets-organizing',
-        typeLabel: 'Tổ chức file xuất (skill)',
+        typeLabel: 'Tổ chức file xuất',
         description: 'Sắp xếp thumbnail theo video slug với quy tắc đặt tên biến thể',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 3,
@@ -691,7 +691,7 @@ export const marketingKitWorkflows = [
       },
       {
         command: '/ckm:elevenlabs speak',
-        typeLabel: 'Tạo voiceover (skill)',
+        typeLabel: 'Tạo voiceover',
         description: 'Tạo giọng đọc AI từ script',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 3,

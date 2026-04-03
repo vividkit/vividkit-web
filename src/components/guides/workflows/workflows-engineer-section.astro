@@ -31,11 +31,12 @@ const categoryMeta: Record<string, { icon: string; color: string }> = {
   'Shipping': { icon: '<path d="M5 12h14M12 5l7 7-7 7"/>', color: 'emerald' },
   'Media & Creative': { icon: '<polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>', color: 'pink' },
   'Advanced': { icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>', color: 'cyan' },
-  'Session & Management': { icon: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>', color: 'amber' }
+  'Session & Management': { icon: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>', color: 'amber' },
+  'Design & Frontend': { icon: '<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>', color: 'fuchsia' }
 };
 
 // Category display order
-const categoryOrder = ['Getting Started', 'Debugging & Fixes', 'Planning & Review', 'Research & Docs', 'Shipping', 'Backend & Infra', 'Media & Creative', 'Session & Management', 'Advanced'];
+const categoryOrder = ['Getting Started', 'Design & Frontend', 'Debugging & Fixes', 'Planning & Review', 'Research & Docs', 'Shipping', 'Backend & Infra', 'Media & Creative', 'Session & Management', 'Advanced'];
 ---
 
 <div id="wf-categories-engineer" class="space-y-8">
