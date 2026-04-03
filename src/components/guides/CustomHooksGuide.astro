@@ -111,10 +111,17 @@ const lifecycleEvents = [
           {cat.hooks.map((hook) => (
             <div class={`p-4 rounded-lg border ${hook.deprecated ? 'bg-slate-50 dark:bg-slate-800/30 border-slate-200 dark:border-slate-700 opacity-70' : `${c.bg} ${c.border}`}`}>
               <div class="flex items-start justify-between gap-3 mb-2">
-                <div class="flex items-center gap-2 min-w-0">
+                <div class="flex items-center gap-2 min-w-0 flex-wrap">
                   <code class={`text-sm font-mono font-bold ${hook.deprecated ? 'text-slate-500 dark:text-slate-400 line-through' : c.text} shrink-0`}>{hook.name}</code>
                   {hook.deprecated && (
                     <span class="px-1.5 py-0.5 text-[10px] font-semibold bg-red-100 dark:bg-red-500/20 text-red-600 dark:text-red-400 rounded">{t.deprecatedLabel}</span>
+                  )}
+                  {hook.kits.includes('ek') && hook.kits.includes('mk') ? (
+                    <span class="px-1.5 py-0.5 text-[10px] font-semibold bg-sky-100 dark:bg-sky-500/20 text-sky-700 dark:text-sky-400 rounded">EK + MK</span>
+                  ) : hook.kits.includes('ek') ? (
+                    <span class="px-1.5 py-0.5 text-[10px] font-semibold bg-orange-100 dark:bg-orange-500/20 text-orange-700 dark:text-orange-400 rounded">EK only</span>
+                  ) : (
+                    <span class="px-1.5 py-0.5 text-[10px] font-semibold bg-pink-100 dark:bg-pink-500/20 text-pink-700 dark:text-pink-400 rounded">MK only</span>
                   )}
                 </div>
                 <span class="text-xs text-slate-400 dark:text-slate-500 shrink-0">{hook.lines} {t.linesLabel}</span>
