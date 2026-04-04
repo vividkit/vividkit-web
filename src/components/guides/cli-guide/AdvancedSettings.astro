@@ -1,12 +1,14 @@
 ---
 import { useTranslations } from '@/i18n/utils';
 import type { Language } from '@/i18n';
+import PlatformPathSwitcher from '../PlatformPathSwitcher.astro';
 
 interface Props {
   lang: Language;
 }
 
 const { lang } = Astro.props;
+const currentLang = lang;
 const t = useTranslations(lang);
 ---
 
@@ -112,6 +114,168 @@ const t = useTranslations(lang);
         <p class="text-sm text-slate-600 dark:text-slate-400 mb-3" set:html={t('cli.guide.namespace_description')}></p>
         <p class="text-sm text-slate-700 dark:text-slate-300" set:html={t('cli.guide.namespace_example')}></p>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- .ck.json Configuration Reference -->
+<div class="glass-card rounded-xl border-violet-200 dark:border-violet-500/30 overflow-hidden mt-8">
+  <div class="p-6 bg-gradient-to-r from-violet-500/10 to-purple-500/10 border-b border-violet-200 dark:border-slate-800">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-full bg-violet-500/20 flex items-center justify-center">
+        <svg class="w-6 h-6 text-violet-600 dark:text-violet-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/>
+          <line x1="16" y1="17" x2="8" y2="17"/>
+          <polyline points="10 9 9 9 8 9"/>
+        </svg>
+      </div>
+      <div>
+        <h3 class="text-xl font-bold text-violet-700 dark:text-violet-400">{t('ccs.guide.ck_json_title')}</h3>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1" set:html={t('ccs.guide.ck_json_desc')}></p>
+      </div>
+    </div>
+  </div>
+  <div class="p-6 space-y-4">
+
+    <!-- File Location -->
+    <div class="p-4 rounded-lg bg-violet-50 dark:bg-violet-900/10 border border-violet-200 dark:border-violet-800/30">
+      <p class="text-xs font-semibold text-violet-700 dark:text-violet-400 mb-3 flex items-center gap-2">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+        </svg>
+        {t('ide_config.guide.ck_json_location_title')}
+      </p>
+      <div class="space-y-2">
+        <div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mb-1">{t('ide_config.guide.ck_json_project_location')}</p>
+          <div class="bg-violet-50 dark:bg-violet-900/10 rounded-md px-3 py-2 border border-violet-200 dark:border-violet-700/50 font-mono text-xs text-violet-700 dark:text-violet-300">
+            .claude/.ck.json <span class="text-slate-400 dark:text-slate-500 font-sans">(project)</span>
+          </div>
+        </div>
+        <div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mb-1">{t('ide_config.guide.ck_json_global_location')}</p>
+          <PlatformPathSwitcher
+            lang={currentLang}
+            pathAfterHome=".claude/.ck.json"
+            label=""
+            id="ck-json-global-path"
+            color="indigo"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Default Example -->
+    <div class="bg-[#1E1E1E] rounded-lg p-5 font-mono text-sm shadow-inner relative group/code mt-2">
+      <div class="mb-3 text-slate-400 text-xs">Default .ck.json Configuration</div>
+      <button class="copy-btn absolute top-4 right-4 p-1.5 rounded-md bg-white/10 hover:bg-white/20 text-white opacity-0 group-hover/code:opacity-100 transition-opacity duration-200" 
+        data-code={JSON.stringify({
+          $schema: "https://claudekit.cc/schemas/ck-config.schema.json",
+          theme: "dark",
+          codingLevel: -1,
+          statusline: "full",
+          privacyBlock: true,
+          docs: {
+            maxLoc: 800
+          },
+          plan: {
+            namingFormat: "{date}-{slug}",
+            dateFormat: "YYMMDD",
+            validation: {
+              mode: "prompt",
+              questions: "3-8"
+            }
+          },
+          locale: {
+            responseLanguage: null
+          },
+          project: {
+            type: "auto",
+            packageManager: "auto"
+          },
+          gemini: {
+            model: "gemini-3-flash-preview"
+          },
+          skills: {
+            research: {
+              useGemini: true
+            }
+          }
+        }, null, 2)}
+        title="Copy to clipboard">
+        <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+        <svg class="w-4 h-4 check-icon hidden text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </button>
+
+      <pre class="text-[#E6E6E6] overflow-x-auto"><span class="text-[#888888]">&#123;</span>
+  <span class="text-[#9CDCFE]">"codingLevel"</span>: <span class="text-[#B5CEA8]">-1</span>,
+  <span class="text-[#9CDCFE]">"statusline"</span>: <span class="text-[#CE9178]">"full"</span>,
+  <span class="text-[#9CDCFE]">"privacyBlock"</span>: <span class="text-[#569CD6]">true</span>,
+  <span class="text-[#9CDCFE]">"docs"</span>: <span class="text-[#888888]">&#123;</span>
+    <span class="text-[#9CDCFE]">"maxLoc"</span>: <span class="text-[#B5CEA8]">800</span>
+  <span class="text-[#888888]">&#125;</span>,
+  <span class="text-[#9CDCFE]">"plan"</span>: <span class="text-[#888888]">&#123;</span>
+    <span class="text-[#9CDCFE]">"namingFormat"</span>: <span class="text-[#CE9178]">&quot;&#123;date&#125;-&#123;slug&#125;&quot;</span>,
+    <span class="text-[#9CDCFE]">"dateFormat"</span>: <span class="text-[#CE9178]">"YYMMDD"</span>,
+    <span class="text-[#9CDCFE]">"validation"</span>: <span class="text-[#888888]">&#123;</span>
+      <span class="text-[#9CDCFE]">"mode"</span>: <span class="text-[#CE9178]">"prompt"</span>,
+      <span class="text-[#9CDCFE]">"questions"</span>: <span class="text-[#CE9178]">"3-8"</span>
+    <span class="text-[#888888]">&#125;</span>
+  <span class="text-[#888888]">&#125;</span>,
+  <span class="text-[#9CDCFE]">"locale"</span>: <span class="text-[#888888]">&#123;</span>
+    <span class="text-[#9CDCFE]">"responseLanguage"</span>: <span class="text-[#569CD6]">null</span>
+  <span class="text-[#888888]">&#125;</span>,
+  <span class="text-[#9CDCFE]">"project"</span>: <span class="text-[#888888]">&#123;</span>
+    <span class="text-[#9CDCFE]">"type"</span>: <span class="text-[#CE9178]">"auto"</span>,
+    <span class="text-[#9CDCFE]">"packageManager"</span>: <span class="text-[#CE9178]">"auto"</span>
+  <span class="text-[#888888]">&#125;</span>,
+  <span class="text-[#9CDCFE]">"gemini"</span>: <span class="text-[#888888]">&#123;</span>
+    <span class="text-[#9CDCFE]">"model"</span>: <span class="text-[#CE9178]">"gemini-3-flash-preview"</span>
+  <span class="text-[#888888]">&#125;</span>,
+  <span class="text-[#9CDCFE]">"skills"</span>: <span class="text-[#888888]">&#123;</span>
+    <span class="text-[#9CDCFE]">"research"</span>: <span class="text-[#888888]">&#123;</span>
+      <span class="text-[#9CDCFE]">"useGemini"</span>: <span class="text-[#569CD6]">true</span>
+    <span class="text-[#888888]">&#125;</span>
+  <span class="text-[#888888]">&#125;</span>
+<span class="text-[#888888]">&#125;</span></pre>
+    </div>
+
+    <!-- Settings Table -->
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm font-mono">
+        <thead>
+          <tr class="border-b border-slate-200 dark:border-slate-700">
+            <th class="text-left py-2 pr-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{t('ccs.guide.ck_json_setting')}</th>
+            <th class="text-left py-2 pr-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{t('ccs.guide.ck_json_default')}</th>
+            <th class="text-left py-2 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider font-sans">{t('ccs.guide.ck_json_description')}</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+          {[
+            { key: 'codingLevel', default: '-1 (auto)', desc: 'Experience level for tailored output (-1=auto, 0-5)' },
+            { key: 'statusline', default: '"full" (Beta) / "minimal" (Stable)', desc: 'Status bar display mode ("minimal" or "full")' },
+            { key: 'privacyBlock', default: 'true', desc: 'Block access to .env and sensitive files' },
+            { key: 'docs.maxLoc', default: '800', desc: 'Max lines of code for doc generation' },
+            { key: 'plan.namingFormat', default: '"{date}-{slug}"', desc: 'Plan directory naming pattern' },
+            { key: 'plan.dateFormat', default: '"YYMMDD"', desc: 'Date format in plan names' },
+            { key: 'plan.validation.mode', default: '"prompt"', desc: 'Plan validation mode' },
+            { key: 'plan.validation.questions', default: '"3-8"', desc: 'Number of validation questions' },
+            { key: 'locale.responseLanguage', default: 'null', desc: 'Response language (null = English)' },
+            { key: 'project.type', default: '"auto"', desc: 'Project type detection' },
+            { key: 'project.packageManager', default: '"auto"', desc: 'Package manager detection' },
+            { key: 'gemini.model', default: '"gemini-3-flash-preview"', desc: 'Default Gemini model for research' },
+            { key: 'skills.research.useGemini', default: 'true', desc: 'Use Gemini for research tasks' },
+          ].map(row => (
+            <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+              <td class="py-2.5 pr-4 text-violet-600 dark:text-violet-400 text-xs whitespace-nowrap">{row.key}</td>
+              <td class="py-2.5 pr-4 text-amber-600 dark:text-amber-400 text-xs whitespace-nowrap">{row.default}</td>
+              <td class="py-2.5 text-slate-600 dark:text-slate-400 text-xs font-sans">{row.desc}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
