@@ -68,4 +68,8 @@ export const ide_config = {
   'ide_config.guide.permissions_config_note': 'Bỏ qua tất cả permission prompts và cho phép Claude tự động thực thi lệnh. Thêm vào file settings.json của IDE.',
   'ide_config.guide.schema_config_title': 'Settings JSON Schema',
   'ide_config.guide.schema_config_note': 'Kích hoạt tính năng tự động hoàn thành và xác thực cho file cấu hình Claude Code. Đã được nâng cấp lên 139 dòng với schema bổ sung cho watch và content. Thêm vào file settings.json của IDE.',
+  // .ck.json location keys
+  'ide_config.guide.ck_json_location_title': 'Vị Trí File',
+  'ide_config.guide.ck_json_project_location': 'Cấp dự án (ưu tiên hơn global, được khuyên dùng):',
+  'ide_config.guide.ck_json_global_location': 'Toàn cầu (áp dụng cho tất cả dự án):',
 } as const;

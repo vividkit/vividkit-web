@@ -68,4 +68,8 @@ export const ide_config = {
   'ide_config.guide.permissions_config_note': 'Skip all permission prompts and allow Claude to execute commands automatically. Add to your IDE settings.json.',
   'ide_config.guide.schema_config_title': 'Settings JSON Schema',
   'ide_config.guide.schema_config_note': 'Enable auto-completion and validation for Claude Code settings. Now enhanced to 139 lines with schema definitions for watch and content daemons. Add to your IDE settings.json.',
+  // .ck.json location keys
+  'ide_config.guide.ck_json_location_title': 'File Location',
+  'ide_config.guide.ck_json_project_location': 'Project-level (overrides global, recommended):',
+  'ide_config.guide.ck_json_global_location': 'Global (applies to all projects):',
 } as const;

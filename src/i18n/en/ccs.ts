@@ -116,6 +116,7 @@ export const ccs = {
   'ccs.guide.ck_json_setting': 'Setting',
   'ccs.guide.ck_json_default': 'Default',
   'ccs.guide.ck_json_description': 'Description',
+  'ccs.guide.view_ck_json_guide': 'View Configuration Guide',
   // Resources Section
   'ccs.guide.resources_title': 'Resources',
   'ccs.guide.documentation': 'Documentation',
