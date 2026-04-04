@@ -116,6 +116,7 @@ export const ccs = {
   'ccs.guide.ck_json_setting': 'Cài đặt',
   'ccs.guide.ck_json_default': 'Mặc định',
   'ccs.guide.ck_json_description': 'Mô tả',
+  'ccs.guide.view_ck_json_guide': 'Xem Hướng Dẫn Cấu Hình',
   // Resources Section
   'ccs.guide.resources_title': 'Tài Nguyên',
   'ccs.guide.documentation': 'Tài Liệu',
