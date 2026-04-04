@@ -32,6 +32,7 @@ export const ide_config = {
   'ide_config.guide.glm_note': 'Get API key from z.ai/manage-apikey',
   'ide_config.guide.kimi_note': 'Get API key from kimi.com/code/console',
   'ide_config.guide.minimax_note': 'Get API key from platform.minimaxi.com',
+  'ide_config.guide.alibaba_note': 'Get API key from Alibaba Cloud Coding Plan (Apsara DevOps)',
   'ide_config.guide.tips_title': 'Pro Tips',
   'ide_config.guide.tip_one_provider_title': 'One Provider at a Time',
   'ide_config.guide.tip_one_provider': 'Only activate ONE provider block at a time. Comment out the rest to avoid conflicts.',
@@ -56,6 +57,8 @@ export const ide_config = {
   'ide_config.guide.opus_46_default': 'Default',
   'ide_config.guide.opus_46_no_config': 'No config needed - comment out or remove "claudeCode.selectedModel" to use latest model',
   'ide_config.guide.opus_45_note': 'Previous version with lower token consumption for similar quality.',
+  'ide_config.guide.sonnet_46_note': 'Newer, lighter model — great for everyday tasks and lower token usage.',
+  'ide_config.guide.sonnet_46_new': 'New',
   // Advanced Config
   'ide_config.guide.advanced_title': 'Advanced Config',
   'ide_config.guide.advanced_desc': 'Additional settings for power users. Use with caution as these can affect security and behavior.',

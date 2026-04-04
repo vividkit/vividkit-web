@@ -61,6 +61,29 @@ happy-ccs kimi daemon start
 
 # Test command (dry-run)
 happy-ccs gemini --dry-run`;
+
+const remoteControlCmds = [
+  {
+    label: currentLang === 'vi' ? 'Cách 1: Server mode (nhiều session)' : 'Method 1: Server mode (multi-session)',
+    cmd: 'claude remote-control',
+    desc: currentLang === 'vi' ? 'Chạy server, hiển thị URL + QR code để kết nối' : 'Runs server, shows URL + QR code to connect from any device'
+  },
+  {
+    label: currentLang === 'vi' ? 'Cách 2: Bắt đầu session với remote' : 'Method 2: Start session with remote',
+    cmd: 'claude --remote-control "My Project"',
+    desc: currentLang === 'vi' ? 'Mở session Claude Code kèm remote control ngay' : 'Start Claude Code session with remote control enabled'
+  },
+  {
+    label: currentLang === 'vi' ? 'Cách 3: Trong session đang chạy' : 'Method 3: From within an active session',
+    cmd: '/remote-control\n# or shorthand:\n/rc',
+    desc: currentLang === 'vi' ? 'Gõ lệnh này trong Claude Code đang chạy để bật remote' : 'Type this inside an active Claude Code session to enable remote'
+  },
+  {
+    label: currentLang === 'vi' ? 'Bật vĩnh viễn (mọi session)' : 'Enable permanently (all sessions)',
+    cmd: '/config\n# Set: remoteControl: true',
+    desc: currentLang === 'vi' ? 'Dùng /config để bật remote control cho tất cả session tương lai' : 'Use /config to always enable remote control for future sessions'
+  }
+];
 ---
 
 <div class="space-y-8 mt-6">
@@ -345,6 +368,7 @@ happy-ccs gemini --dry-run`;
       </div>
     </div>
   </div>
+
 
   <!-- Google Ban Warning -->
   <div class="flex items-start gap-3 p-4 rounded-xl bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-800/30">

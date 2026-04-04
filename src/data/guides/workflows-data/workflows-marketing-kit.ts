@@ -423,6 +423,39 @@ export const marketingKitWorkflows = [
     borderColor: 'border-pink-500/20'
   },
 
+  {
+    title: 'Excalidraw Diagram Generation',
+    category: 'Design & Creative',
+    level: 'Beginner',
+    duration: '~5-15 min',
+    stepCount: 1,
+    bestFor: 'Visualizing marketing funnels, campaign flows, and content strategies in hand-drawn style',
+    gradientHeader: 'from-violet-500/10 to-indigo-500/10',
+    hoverBorderColor: 'hover:border-violet-500/50',
+    buttonColor: 'bg-violet-500 hover:bg-violet-600',
+    icon: '<path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/>',
+    iconColor: 'text-violet-600 dark:text-violet-400',
+    steps: [
+      {
+        command: '/ck:excalidraw',
+        typeLabel: 'Generate diagram',
+        description: 'Generate hand-drawn Excalidraw diagrams — marketing funnels, campaign flows, content calendars, competitor maps',
+        color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      }
+    ],
+    tip: 'Auto-diagram mode can analyze your project structure and generate architecture/flow diagrams automatically',
+    features: [
+      'Hand-drawn style with semantic color palettes',
+      'Marketing funnels, campaign flows, content maps',
+      'Auto-diagram: zero-config codebase visualization',
+      'File-based workflow with Playwright rendering'
+    ],
+    borderColor: 'border-violet-500/20'
+  },
+
   // === STRATEGY & RESEARCH ===
   {
     title: 'Competitor Analysis',

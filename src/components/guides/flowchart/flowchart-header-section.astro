@@ -16,9 +16,7 @@ const t = useTranslations(currentLang);
 
 <!-- Page Header -->
 <div class="text-center space-y-4">
-  <h2
-    class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight"
-  >
+  <h2 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
     {t("guides.flowchart.title")}
   </h2>
   <p
@@ -27,31 +25,17 @@ const t = useTranslations(currentLang);
     {
       isVi ? (
         <>
-          Hướng dẫn toàn diện để chọn command phù hợp dựa trên use case của
-          bạn. Nếu không chắc chắn, gõ{" "}
-          <code class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-600 dark:text-blue-400 font-mono">
-            /ck-help
-          </code>{" "}
-          để được hỗ trợ!
+          Hướng dẫn toàn diện để chọn command phù hợp dựa trên use case của bạn.
         </>
       ) : (
-        <>
-          A comprehensive decision tree for ClaudeKit newcomers. If you're
-          ever unsure, just type{" "}
-          <code class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-600 dark:text-blue-400 font-mono">
-            /ck-help
-          </code>{" "}
-          for interactive assistance!
-        </>
+        <>A comprehensive decision tree for ClaudeKit newcomers.</>
       )
     }
   </p>
 </div>
 
 <!-- Kit Toggle (Engineer / Marketing) -->
-<div
-  class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
->
+<div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
   <h2
     class="text-2xl font-bold flex items-center gap-3 text-slate-900 dark:text-white"
   >
@@ -103,7 +87,8 @@ const t = useTranslations(currentLang);
           stroke="currentColor"
           stroke-width="2"
         >
-          <path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+          <path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"
+          ></path>
         </svg>
         {t("commands.v25.tab_v24")}
       </span>

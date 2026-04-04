@@ -432,7 +432,41 @@ export const marketingKitWorkflows = [
     borderColor: 'border-pink-500/20'
   },
 
+  {
+    title: 'Tạo Diagram Excalidraw',
+    category: 'Design & Creative',
+    level: 'Beginner',
+    duration: '~5-15 phút',
+    stepCount: 1,
+    bestFor: 'Trực quan hóa marketing funnel, campaign flow, và chiến lược nội dung theo phong cách hand-drawn',
+    gradientHeader: 'from-violet-500/10 to-indigo-500/10',
+    hoverBorderColor: 'hover:border-violet-500/50',
+    buttonColor: 'bg-violet-500 hover:bg-violet-600',
+    icon: '<path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/>',
+    iconColor: 'text-violet-600 dark:text-violet-400',
+    steps: [
+      {
+        command: '/ck:excalidraw',
+        typeLabel: 'Tạo diagram',
+        description: 'Tạo diagram Excalidraw hand-drawn — marketing funnel, campaign flow, lịch content, bản đồ đối thủ',
+        color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      }
+    ],
+    tip: 'Chế độ auto-diagram có thể phân tích cấu trúc project và tự động tạo diagram kiến trúc',
+    features: [
+      'Phong cách hand-drawn với bảng màu semantic',
+      'Marketing funnel, campaign flow, content map',
+      'Auto-diagram: visualization codebase không cần config',
+      'File-based workflow với Playwright rendering'
+    ],
+    borderColor: 'border-violet-500/20'
+  },
+
   // === STRATEGY & RESEARCH ===
+
   {
     title: 'Phân Tích Đối Thủ',
     category: 'Strategy & Research',

@@ -288,7 +288,8 @@ export const betaOnlyWorkflows = [
         description: 'Generate hand-drawn Excalidraw diagrams from text prompts — architecture, flowcharts, system designs',
         color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
         number: 1,
-        isSkill: true
+        isSkill: true,
+        isBeta: true
       }
     ],
     tip: 'Supports auto-diagram mode: analyze any codebase and generate architecture diagram automatically',

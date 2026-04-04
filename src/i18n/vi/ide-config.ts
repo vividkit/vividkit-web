@@ -32,6 +32,7 @@ export const ide_config = {
   'ide_config.guide.glm_note': 'Lấy API key từ z.ai/manage-apikey',
   'ide_config.guide.kimi_note': 'Lấy API key từ kimi.com/code/console',
   'ide_config.guide.minimax_note': 'Lấy API key từ platform.minimaxi.com',
+  'ide_config.guide.alibaba_note': 'Lấy API key từ Alibaba Cloud Coding Plan (Apsara DevOps)',
   'ide_config.guide.tips_title': 'Mẹo Chuyên Nghiệp',
   'ide_config.guide.tip_one_provider_title': 'Chỉ Một Provider',
   'ide_config.guide.tip_one_provider': 'Chỉ kích hoạt MỘT provider block tại một thời điểm. Comment các block khác để tránh xung đột.',
@@ -56,6 +57,8 @@ export const ide_config = {
   'ide_config.guide.opus_46_default': 'Mặc định',
   'ide_config.guide.opus_46_no_config': 'Không cần config - comment out hoặc xóa "claudeCode.selectedModel" để dùng model mới nhất',
   'ide_config.guide.opus_45_note': 'Phiên bản trước với token consumption thấp hơn cho chất lượng tương đương.',
+  'ide_config.guide.sonnet_46_note': 'Model nhẹ hơn, mới hơn — phù hợp cho các tác vụ hàng ngày với token usage thấp hơn.',
+  'ide_config.guide.sonnet_46_new': 'Mới',
   // Advanced Config
   'ide_config.guide.advanced_title': 'Config Nâng Cao',
   'ide_config.guide.advanced_desc': 'Các cài đặt bổ sung cho power user. Chỉ dùng khi hiểu rõ rủi ro.',

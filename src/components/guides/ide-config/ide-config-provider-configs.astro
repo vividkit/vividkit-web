@@ -1,9 +1,9 @@
 ---
-// IDE Config Guide - Provider configuration snippets (AGY, GLM, Kimi, MiniMax)
+// IDE Config Guide - Provider configuration snippets (AGY, GLM, Kimi, MiniMax, Alibaba)
 import { useTranslations } from '@/i18n/utils';
 import { getLangFromUrl, type Language } from '@/i18n';
 import LLMProviderIcon from '@/components/ui/LLMProviderIcon.astro';
-import { agyConfig, glmConfig, kimiConfig, minimaxConfig } from '@/data/guides/ide-config/ide-config-provider-code-snippets';
+import { agyConfig, glmConfig, kimiConfig, minimaxConfig, alibabaConfig } from '@/data/guides/ide-config/ide-config-provider-code-snippets';
 
 interface Props {
   lang?: Language;
@@ -12,12 +12,69 @@ interface Props {
 const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
+
+// Provider data — collapsed by default, AGY expanded so users see a working example
+const providers = [
+  {
+    id: 'agy',
+    name: 'Antigravity (AGY) via CCS',
+    type: 'CLIProxy',
+    typeColor: 'purple',
+    note: t('ide_config.guide.agy_note'),
+    badge: { label: '⚠️ High Risk', color: 'amber' },
+    config: agyConfig,
+    expanded: true, // show first one open as example
+    icon: 'gemini' as const,
+    iconVariant: undefined,
+    iconClass: 'shrink-0',
+  },
+  {
+    id: 'glm',
+    name: 'GLM (z.ai)',
+    type: 'APIProxy',
+    typeColor: 'blue',
+    note: t('ide_config.guide.glm_note'),
+    badge: null,
+    config: glmConfig,
+    expanded: false,
+    icon: 'zai' as const,
+    iconVariant: undefined,
+    iconClass: 'shrink-0 dark:invert',
+  },
+  {
+    id: 'kimi',
+    name: 'Kimi (Moonshot AI)',
+    type: 'APIProxy',
+    typeColor: 'violet',
+    note: t('ide_config.guide.kimi_note'),
+    badge: null,
+    config: kimiConfig,
+    expanded: false,
+    icon: 'kimi' as const,
+    iconVariant: 'mono' as const,
+    iconClass: 'shrink-0 dark:invert',
+  },
+  {
+    id: 'minimax',
+    name: 'MiniMax',
+    type: 'APIProxy',
+    typeColor: 'orange',
+    note: t('ide_config.guide.minimax_note'),
+    badge: null,
+    config: minimaxConfig,
+    expanded: false,
+    icon: 'minimax' as const,
+    iconVariant: undefined,
+    iconClass: 'shrink-0',
+  },
+];
 ---
 
-<div class="glass-card rounded-xl border-amber-200 dark:border-amber-500/30 overflow-hidden">
+<div class="glass-card rounded-xl border-amber-200 dark:border-amber-500/30 overflow-hidden" id="provider-configs-section">
+  <!-- Section Header (always visible, non-collapsible) -->
   <div class="p-6 bg-gradient-to-r from-amber-500/10 to-yellow-500/10 border-b border-amber-200 dark:border-slate-800">
     <div class="flex items-center gap-3">
-      <div class="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center">
+      <div class="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0">
         <svg class="w-6 h-6 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/>
         </svg>
@@ -25,9 +82,11 @@ const t = useTranslations(currentLang);
       <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400">
         {t('ide_config.guide.providers_title')}
       </h3>
+      <span class="text-xs px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-mono">5 providers</span>
     </div>
   </div>
-  <div class="p-6 space-y-6">
+
+  <div class="p-6 space-y-5">
     <p class="text-slate-700 dark:text-slate-300">
       {t('ide_config.guide.providers_desc')}
     </p>
@@ -61,129 +120,141 @@ const t = useTranslations(currentLang);
       </div>
     </div>
 
-    <!-- AGY via CCS -->
-    <div class="border border-purple-200 dark:border-purple-800/50 rounded-lg overflow-hidden">
-      <div class="px-4 py-3 bg-purple-50 dark:bg-purple-900/20 border-b border-purple-200 dark:border-purple-800/50">
-        <div class="flex items-center gap-2">
-          <LLMProviderIcon provider="gemini" size={20} class="shrink-0" />
-          <h4 class="font-bold text-purple-700 dark:text-purple-400">Antigravity (AGY) via CCS</h4>
-          <span class="text-[10px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-mono">CLIProxy</span>
-          <span class="px-2 py-0.5 text-xs rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-400 font-medium">⚠️ High Risk</span>
-        </div>
-        <p class="text-xs text-purple-600/70 dark:text-purple-400/70 mt-1">{t('ide_config.guide.agy_note')}</p>
-      </div>
-      <div class="relative group">
-        <div class="bg-slate-900 p-4 overflow-x-auto">
-          <pre class="text-sm text-green-400 whitespace-pre">{agyConfig}</pre>
-        </div>
-        <button
-          type="button"
-          class="copy-btn absolute top-2 right-2 p-1.5 rounded-md bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
-          data-code={agyConfig}
-          title="Copy to clipboard"
+    <!-- Provider cards (each individually collapsible) -->
+    <div class="space-y-2">
+      {providers.map((p) => (
+        <div
+          class={`provider-card border rounded-lg overflow-hidden border-${p.typeColor}-200 dark:border-${p.typeColor}-800/50`}
+          data-provider={p.id}
         >
-          <svg class="w-3.5 h-3.5 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
-          </svg>
-          <svg class="w-3.5 h-3.5 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="20 6 9 17 4 12"></polyline>
-          </svg>
-        </button>
-      </div>
-    </div>
+          <!-- Clickable header to toggle code snippet -->
+          <button
+            type="button"
+            class={`provider-toggle w-full px-4 py-3 bg-${p.typeColor}-50 dark:bg-${p.typeColor}-900/20 text-left hover:bg-${p.typeColor}-100/50 dark:hover:bg-${p.typeColor}-900/30 transition-colors cursor-pointer flex items-center justify-between gap-3`}
+            aria-expanded={p.expanded ? 'true' : 'false'}
+          >
+            <div class="flex items-center gap-2 min-w-0">
+              {p.id === 'glm' && <LLMProviderIcon provider="zai" size={20} class="shrink-0 dark:invert" />}
+              {p.id === 'kimi' && <LLMProviderIcon provider="kimi" size={20} variant="mono" class="shrink-0 dark:invert" />}
+              {p.id === 'minimax' && <LLMProviderIcon provider="minimax" size={20} class="shrink-0" />}
+              {p.id === 'agy' && <LLMProviderIcon provider="gemini" size={20} class="shrink-0" />}
+              <h4 class={`font-bold text-${p.typeColor}-700 dark:text-${p.typeColor}-400 truncate`}>{p.name}</h4>
+              <span class={`text-[10px] px-1.5 py-0.5 rounded bg-${p.typeColor}-100 dark:bg-${p.typeColor}-900/30 text-${p.typeColor}-600 dark:text-${p.typeColor}-400 font-mono shrink-0`}>{p.type}</span>
+              {p.badge && (
+                <span class="px-2 py-0.5 text-xs rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-400 font-medium shrink-0">{p.badge.label}</span>
+              )}
+              <span class={`text-xs text-${p.typeColor}-500/70 dark:text-${p.typeColor}-400/60 truncate hidden sm:block`}>{p.note}</span>
+            </div>
+            <!-- Chevron -->
+            <svg
+              class={`provider-chevron w-4 h-4 text-${p.typeColor}-400 transition-transform duration-200 flex-shrink-0 ${p.expanded ? 'rotate-180' : ''}`}
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            >
+              <polyline points="6 9 12 15 18 9" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
 
-    <!-- GLM -->
-    <div class="border border-blue-200 dark:border-blue-800/50 rounded-lg overflow-hidden">
-      <div class="px-4 py-3 bg-blue-50 dark:bg-blue-900/20 border-b border-blue-200 dark:border-blue-800/50">
-        <div class="flex items-center gap-2">
-          <LLMProviderIcon provider="zai" size={20} class="shrink-0 dark:invert" />
-          <h4 class="font-bold text-blue-700 dark:text-blue-400">GLM (z.ai)</h4>
-          <span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-mono">APIProxy</span>
-        </div>
-        <p class="text-xs text-blue-600/70 dark:text-blue-400/70 mt-1">{t('ide_config.guide.glm_note')}</p>
-      </div>
-      <div class="relative group">
-        <div class="bg-slate-900 p-4 overflow-x-auto">
-          <pre class="text-sm text-green-400 whitespace-pre">{glmConfig}</pre>
-        </div>
-        <button
-          type="button"
-          class="copy-btn absolute top-2 right-2 p-1.5 rounded-md bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
-          data-code={glmConfig}
-          title="Copy to clipboard"
-        >
-          <svg class="w-3.5 h-3.5 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
-          </svg>
-          <svg class="w-3.5 h-3.5 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="20 6 9 17 4 12"></polyline>
-          </svg>
-        </button>
-      </div>
-    </div>
+          <!-- Note (visible on mobile below header when collapsed) -->
+          <div class={`provider-note px-4 py-1.5 text-xs text-${p.typeColor}-600/70 dark:text-${p.typeColor}-400/60 bg-${p.typeColor}-50/50 dark:bg-${p.typeColor}-900/10 sm:hidden ${p.expanded ? '' : ''}`}>
+            {p.note}
+          </div>
 
-    <!-- Kimi -->
-    <div class="border border-violet-200 dark:border-violet-800/50 rounded-lg overflow-hidden">
-      <div class="px-4 py-3 bg-violet-50 dark:bg-violet-900/20 border-b border-violet-200 dark:border-violet-800/50">
-        <div class="flex items-center gap-2">
-          <LLMProviderIcon provider="kimi" size={20} variant="mono" class="shrink-0 dark:invert" />
-          <h4 class="font-bold text-violet-700 dark:text-violet-400">Kimi (Moonshot AI)</h4>
-          <span class="text-[10px] px-1.5 py-0.5 rounded bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 font-mono">APIProxy</span>
+          <!-- Code block (toggleable) -->
+          <div class={`provider-body ${p.expanded ? '' : 'hidden'}`}>
+            <div class="relative group">
+              <div class="bg-slate-900 p-4 overflow-x-auto">
+                <pre class="text-sm text-green-400 whitespace-pre">{p.config}</pre>
+              </div>
+              <button
+                type="button"
+                class="copy-btn absolute top-2 right-2 p-1.5 rounded-md bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+                data-code={p.config}
+                title="Copy to clipboard"
+              >
+                <svg class="w-3.5 h-3.5 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
+                </svg>
+                <svg class="w-3.5 h-3.5 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </button>
+            </div>
+          </div>
         </div>
-        <p class="text-xs text-violet-600/70 dark:text-violet-400/70 mt-1">{t('ide_config.guide.kimi_note')}</p>
-      </div>
-      <div class="relative group">
-        <div class="bg-slate-900 p-4 overflow-x-auto">
-          <pre class="text-sm text-green-400 whitespace-pre">{kimiConfig}</pre>
-        </div>
-        <button
-          type="button"
-          class="copy-btn absolute top-2 right-2 p-1.5 rounded-md bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
-          data-code={kimiConfig}
-          title="Copy to clipboard"
-        >
-          <svg class="w-3.5 h-3.5 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
-          </svg>
-          <svg class="w-3.5 h-3.5 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="20 6 9 17 4 12"></polyline>
-          </svg>
-        </button>
-      </div>
-    </div>
+      ))}
 
-    <!-- MiniMax -->
-    <div class="border border-orange-200 dark:border-orange-800/50 rounded-lg overflow-hidden">
-      <div class="px-4 py-3 bg-orange-50 dark:bg-orange-900/20 border-b border-orange-200 dark:border-orange-800/50">
-        <div class="flex items-center gap-2">
-          <LLMProviderIcon provider="minimax" size={20} class="shrink-0" />
-          <h4 class="font-bold text-orange-700 dark:text-orange-400">MiniMax</h4>
-          <span class="text-[10px] px-1.5 py-0.5 rounded bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 font-mono">APIProxy</span>
-        </div>
-        <p class="text-xs text-orange-600/70 dark:text-orange-400/70 mt-1">{t('ide_config.guide.minimax_note')}</p>
-      </div>
-      <div class="relative group">
-        <div class="bg-slate-900 p-4 overflow-x-auto">
-          <pre class="text-sm text-green-400 whitespace-pre">{minimaxConfig}</pre>
-        </div>
+      <!-- Alibaba (separate — uses img icon not LLMProviderIcon) -->
+      <div class="provider-card border border-teal-200 dark:border-teal-800/50 rounded-lg overflow-hidden" data-provider="alibaba">
         <button
           type="button"
-          class="copy-btn absolute top-2 right-2 p-1.5 rounded-md bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
-          data-code={minimaxConfig}
-          title="Copy to clipboard"
+          class="provider-toggle w-full px-4 py-3 bg-teal-50 dark:bg-teal-900/20 text-left hover:bg-teal-100/50 dark:hover:bg-teal-900/30 transition-colors cursor-pointer flex items-center justify-between gap-3"
+          aria-expanded="false"
         >
-          <svg class="w-3.5 h-3.5 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
-          </svg>
-          <svg class="w-3.5 h-3.5 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="20 6 9 17 4 12"></polyline>
+          <div class="flex items-center gap-2 min-w-0">
+            <img
+              src="https://unpkg.com/@lobehub/icons-static-svg@latest/icons/qwen-color.svg"
+              alt="qwen icon"
+              width="20"
+              height="20"
+              class="inline-block shrink-0"
+              loading="lazy"
+              decoding="async"
+            />
+            <h4 class="font-bold text-teal-700 dark:text-teal-400 truncate">Alibaba Cloud Coding Plan</h4>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-mono shrink-0">APIProxy</span>
+            <span class="text-xs text-teal-500/70 dark:text-teal-400/60 truncate hidden sm:block">{t('ide_config.guide.alibaba_note')}</span>
+          </div>
+          <svg
+            class="provider-chevron w-4 h-4 text-teal-400 transition-transform duration-200 flex-shrink-0"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          >
+            <polyline points="6 9 12 15 18 9" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </button>
+        <div class="provider-note px-4 py-1.5 text-xs text-teal-600/70 dark:text-teal-400/60 bg-teal-50/50 dark:bg-teal-900/10 sm:hidden">
+          {t('ide_config.guide.alibaba_note')}
+        </div>
+        <div class="provider-body hidden">
+          <div class="relative group">
+            <div class="bg-slate-900 p-4 overflow-x-auto">
+              <pre class="text-sm text-green-400 whitespace-pre">{alibabaConfig}</pre>
+            </div>
+            <button
+              type="button"
+              class="copy-btn absolute top-2 right-2 p-1.5 rounded-md bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+              data-code={alibabaConfig}
+              title="Copy to clipboard"
+            >
+              <svg class="w-3.5 h-3.5 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
+              </svg>
+              <svg class="w-3.5 h-3.5 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  // Toggle individual provider code blocks
+  document.querySelectorAll('.provider-toggle').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const card = btn.closest('.provider-card');
+      if (!card) return;
+      const body = card.querySelector('.provider-body');
+      const chevron = btn.querySelector('.provider-chevron');
+      if (!body || !chevron) return;
+
+      const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!isExpanded));
+      body.classList.toggle('hidden', isExpanded);
+      (chevron as HTMLElement).style.transform = isExpanded ? '' : 'rotate(180deg)';
+    });
+  });
+</script>
