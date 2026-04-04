@@ -199,7 +199,7 @@ export const ccs = {
   'ccs.guide.qwen_step2_desc': 'Add Qwen profile to your CCS config:',
   'ccs.guide.qwen_verify_title': 'Step 3: Verify Configuration',
   'ccs.guide.qwen_verify_desc': 'Test that Qwen is configured correctly:',
-  'ccs.guide.qwen_verify_note': 'If you see Qwen3.5-Plus in the response, the configuration works. Make sure you are using the Coding Plan API key (sk-sp-xxxxx) and not the general Model Studio key.',
+  'ccs.guide.qwen_verify_note': 'If you see qwen3.5-plus in the response, the configuration works. Make sure you are using the Coding Plan API key (sk-sp-xxxxx) and not the general Model Studio key.',
   'ccs.guide.gemini_config_title': 'Gemini Configuration',
   'ccs.guide.gemini_config_desc': 'Authenticate with Google OAuth to use Gemini models.',
   'ccs.guide.gemini_step1_title': 'Step 1: Authenticate with Google',

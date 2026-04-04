@@ -200,7 +200,7 @@ export const ccs = {
   'ccs.guide.qwen_step2_desc': 'Thêm profile Qwen vào file cấu hình CCS của bạn:',
   'ccs.guide.qwen_verify_title': 'Bước 3: Xác Minh Cấu Hình',
   'ccs.guide.qwen_verify_desc': 'Kiểm tra Qwen đã được cấu hình đúng:',
-  'ccs.guide.qwen_verify_note': 'Nếu bạn thấy Qwen3.5-Plus trong phản hồi, cấu hình đã hoạt động. Đảm bảo bạn đang dùng API key Coding Plan (sk-sp-xxxxx) chứ không phải key Model Studio thông thường.',
+  'ccs.guide.qwen_verify_note': 'Nếu bạn thấy qwen3.5-plus trong phản hồi, cấu hình đã hoạt động. Đảm bảo bạn đang dùng API key Coding Plan (sk-sp-xxxxx) chứ không phải key Model Studio thông thường.',
 
   'ccs.guide.gemini_config_title': 'Cấu Hình Gemini',
   'ccs.guide.gemini_config_desc': 'Xác thực bằng Google OAuth để sử dụng các model Gemini.',
