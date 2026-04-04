@@ -119,7 +119,7 @@ export const ccs = {
   'ccs.guide.view_ck_json_guide': 'Xem Hướng Dẫn Cấu Hình',
   // Resources Section
   'ccs.guide.resources_title': 'Tài Nguyên',
-  'ccs.guide.documentation': 'Tài Liệu',
+  'ccs.guide.documentation': 'Official Page',
   'ccs.guide.resources_docs_desc': 'Trang tài liệu chính thức của CCS',
   'ccs.guide.report_issues': 'Báo Lỗi',
   'ccs.guide.resources_issues_desc': 'Bạn gặp lỗi hoặc cần trợ giúp? Hãy tạo một issue để báo cho chúng tôi',

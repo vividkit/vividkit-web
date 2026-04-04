@@ -119,7 +119,7 @@ export const ccs = {
   'ccs.guide.view_ck_json_guide': 'View Configuration Guide',
   // Resources Section
   'ccs.guide.resources_title': 'Resources',
-  'ccs.guide.documentation': 'Documentation',
+  'ccs.guide.documentation': 'Official Page',
   'ccs.guide.resources_docs_desc': 'Official documentation website for CCS',
   'ccs.guide.report_issues': 'Report Issues',
   'ccs.guide.resources_issues_desc': 'Found a bug or need help? Please open an issue to let us know',
