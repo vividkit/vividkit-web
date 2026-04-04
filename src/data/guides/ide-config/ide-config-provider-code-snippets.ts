@@ -87,7 +87,7 @@ export const permissionsConfig = `"claudeCode.allowDangerouslySkipPermissions": 
 
 export const opus45Config = `"claudeCode.selectedModel": "claude-opus-4-5-20251101"`;
 
-export const sonnet46Config = `"claudeCode.selectedModel": "claude-sonnet-4-6-20260101"`;
+export const sonnet46Config = `"claudeCode.selectedModel": "claude-sonnet-4-6"`;
 
 export const schemaConfig = `"json.schemas": [
   {
