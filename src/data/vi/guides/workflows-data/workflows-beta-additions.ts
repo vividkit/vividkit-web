@@ -287,7 +287,8 @@ export const betaOnlyWorkflows = [
         description: 'Tạo diagram Excalidraw hand-drawn từ text prompt — architecture, flowcharts, system designs',
         color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
         number: 1,
-        isSkill: true
+        isSkill: true,
+        isBeta: true
       }
     ],
     tip: 'Hỗ trợ auto-diagram: phân tích codebase bất kỳ và tự động tạo architecture diagram',

@@ -2,7 +2,7 @@
 // IDE Config Guide - Model selection and pro tips
 import { useTranslations } from '@/i18n/utils';
 import { getLangFromUrl, type Language } from '@/i18n';
-import { opus45Config } from '@/data/guides/ide-config/ide-config-provider-code-snippets';
+import { opus45Config, sonnet46Config } from '@/data/guides/ide-config/ide-config-provider-code-snippets';
 
 interface Props {
   lang?: Language;
@@ -84,6 +84,45 @@ const t = useTranslations(currentLang);
           <pre class="text-sm text-slate-500 whitespace-pre">// {t('ide_config.guide.opus_46_no_config')}
 // "claudeCode.selectedModel": "claude-opus-4-6"</pre>
         </div>
+      </div>
+    </div>
+
+    <!-- Sonnet 4.6 (New) -->
+    <div class="border border-blue-200 dark:border-blue-800/50 rounded-lg overflow-hidden">
+      <div class="px-4 py-3 bg-blue-50 dark:bg-blue-900/20 border-b border-blue-200 dark:border-blue-800/50">
+        <div class="flex items-center gap-2">
+          <img
+            src="https://unpkg.com/@lobehub/icons-static-svg@latest/icons/claude-color.svg"
+            alt="Claude"
+            width="20"
+            height="20"
+            class="w-5 h-5"
+            loading="lazy"
+            decoding="async"
+          />
+          <h4 class="font-bold text-blue-700 dark:text-blue-400">Claude Sonnet 4.6</h4>
+          <span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-mono">{t('ide_config.guide.sonnet_46_new')}</span>
+        </div>
+        <p class="text-xs text-blue-600/70 dark:text-blue-400/70 mt-1">{t('ide_config.guide.sonnet_46_note')}</p>
+      </div>
+      <div class="relative group">
+        <div class="bg-slate-900 p-4 overflow-x-auto">
+          <pre class="text-sm text-green-400 whitespace-pre">{sonnet46Config}</pre>
+        </div>
+        <button
+          type="button"
+          class="copy-btn absolute top-2 right-2 p-1.5 rounded-md bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+          data-code={sonnet46Config}
+          title="Copy to clipboard"
+        >
+          <svg class="w-3.5 h-3.5 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
+          </svg>
+          <svg class="w-3.5 h-3.5 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </button>
       </div>
     </div>
 

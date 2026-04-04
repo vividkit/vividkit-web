@@ -1,0 +1,17 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import MigrateGuide from '@/components/guides/MigrateGuide.astro';
+import type { Language } from '@/i18n';
+
+const lang: Language = 'vi';
+
+---
+
+<GuidesLayout
+  title="Migrate ClaudeKit sang Công cụ AI Khác - VividKit Documentation"
+  description="Migrate agents, commands, skills, config, rules và hooks của ClaudeKit sang Cursor, Windsurf, Antigravity, GitHub Copilot và 12+ công cụ AI coding khác chỉ với một lệnh."
+  activeTab="migrate"
+  lang="vi"
+>
+  <MigrateGuide lang="vi" />
+</GuidesLayout>

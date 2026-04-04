@@ -1,0 +1,186 @@
+---
+// RemoteControlGuide — Claude Code /remote-control dedicated page
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(currentLang);
+const isVi = currentLang === 'vi';
+const t = (en: string, vi: string) => isVi ? vi : en;
+
+const methods = [
+  {
+    label: t('Method 1: Server mode (multi-session)', 'Cách 1: Server mode (nhiều session)'),
+    cmd: 'claude remote-control',
+    desc: t('Runs server, shows URL + QR code to connect from any device', 'Chạy server, hiển thị URL + QR code để kết nối'),
+  },
+  {
+    label: t('Method 2: Start session with remote', 'Cách 2: Bắt đầu session với remote'),
+    cmd: 'claude --remote-control "My Project"',
+    desc: t('Start Claude Code session with remote control enabled', 'Mở session Claude Code kèm remote control ngay'),
+  },
+  {
+    label: t('Method 3: From within an active session', 'Cách 3: Trong session đang chạy'),
+    cmd: '/remote-control\n# or shorthand:\n/rc',
+    desc: t('Type this inside an active Claude Code session to enable remote', 'Gõ lệnh này trong Claude Code đang chạy để bật remote'),
+  },
+  {
+    label: t('Enable permanently (all sessions)', 'Bật vĩnh viễn (mọi session)'),
+    cmd: '/config\n# Set: remoteControl: true',
+    desc: t('Use /config to always enable remote control for future sessions', 'Dùng /config để bật remote control cho tất cả session tương lai'),
+  },
+];
+---
+
+<div class="space-y-8 mt-6">
+  <!-- Hero -->
+  <div class="text-center space-y-4">
+    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 text-sm font-medium mb-2">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+        <line x1="12" y1="18" x2="12.01" y2="18"/>
+      </svg>
+      /remote-control
+    </div>
+    <h2 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
+      {t('Remote Control', 'Remote Control — Điều khiển từ xa')}
+    </h2>
+    <p class="text-xl font-medium text-indigo-600 dark:text-indigo-400">
+      {t('Code from your phone. Continue on your laptop. Switch instantly.', 'Code trên điện thoại. Tiếp tục trên laptop. Chuyển đổi tức thì.')}
+    </p>
+    <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+      {t('Official Claude Code feature to continue a local terminal session from your phone, tablet, or any browser via claude.ai/code or the Claude mobile app.', 'Tính năng chính thức của Claude Code cho phép bạn tiếp tục session đang chạy trên máy tính từ điện thoại, tablet hoặc bất kỳ trình duyệt nào.')}
+    </p>
+  </div>
+
+  <!-- Requirements -->
+  <div class="glass-card rounded-xl border-amber-200 dark:border-amber-500/30 overflow-hidden">
+    <div class="p-5 bg-gradient-to-r from-amber-500/10 to-yellow-500/10 border-b border-amber-200 dark:border-slate-800 flex items-center gap-3">
+      <svg class="w-5 h-5 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/>
+      </svg>
+      <h3 class="font-bold text-amber-700 dark:text-amber-400">{t('Requirements', 'Yêu cầu')}</h3>
+    </div>
+    <div class="p-5 grid sm:grid-cols-3 gap-4">
+      {[
+        { icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/></svg>`, title: t('Paid subscription', 'Tài khoản trả phí'), desc: t('Pro / Max / Team / Enterprise', 'Pro / Max / Team / Enterprise') },
+        { icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672Zm-7.518-.267A8.25 8.25 0 1 1 20.25 10.5M8.288 14.212A5.25 5.25 0 1 1 17.25 10.5"/></svg>`, title: t('claude.ai login', 'Đăng nhập claude.ai'), desc: t('API key is NOT supported', 'Không hỗ trợ API key') },
+        { icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0 0 21 18V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v12a2.25 2.25 0 0 0 2.25 2.25Z"/></svg>`, title: t('Run claude first', 'Chạy claude trước'), desc: t('Accept workspace trust once per project', 'Chấp nhận workspace trust 1 lần trong project') },
+      ].map(req => (
+        <div class="flex items-start gap-3 p-4 rounded-xl bg-amber-50/60 dark:bg-amber-900/10 border border-amber-200/60 dark:border-amber-800/30">
+          <span class="text-amber-500 mt-0.5 shrink-0" set:html={req.icon} />
+          <div>
+            <div class="font-semibold text-amber-800 dark:text-amber-300 text-sm">{req.title}</div>
+            <div class="text-xs text-amber-700/70 dark:text-amber-400/60 mt-0.5">{req.desc}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- Enable methods -->
+  <div class="glass-card rounded-xl border-indigo-200 dark:border-indigo-500/30 overflow-hidden">
+    <div class="p-5 bg-gradient-to-r from-indigo-500/10 to-sky-500/10 border-b border-indigo-200 dark:border-slate-800 flex items-center gap-3">
+      <svg class="w-5 h-5 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+      </svg>
+      <h3 class="font-bold text-indigo-700 dark:text-indigo-400">{t('How to Enable', 'Cách bật Remote Control')}</h3>
+    </div>
+    <div class="p-5 space-y-4">
+      {methods.map((item, i) => (
+        <div class="relative pl-9">
+          <div class="absolute left-0 top-0 w-6 h-6 rounded-full bg-indigo-500 text-white flex items-center justify-center font-bold text-xs flex-shrink-0">{i + 1}</div>
+          <div class="mb-1.5">
+            <span class="font-semibold text-slate-900 dark:text-slate-100 text-sm">{item.label}</span>
+            <span class="text-slate-500 dark:text-slate-500 text-xs ml-2">— {item.desc}</span>
+          </div>
+          <div class="bg-slate-900 rounded-lg p-3 font-mono text-sm text-green-400 whitespace-pre overflow-x-auto">{item.cmd}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- Connect from device -->
+  <div class="glass-card rounded-xl overflow-hidden">
+    <div class="p-5 bg-gradient-to-r from-slate-500/5 to-slate-500/10 border-b border-slate-200 dark:border-slate-800 flex items-center gap-3">
+      <svg class="w-5 h-5 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+        <line x1="12" y1="18" x2="12.01" y2="18"/>
+      </svg>
+      <h3 class="font-bold text-slate-800 dark:text-slate-200">{t('Connect from Another Device', 'Kết nối từ thiết bị khác')}</h3>
+    </div>
+    <div class="p-5">
+      <ol class="space-y-4">
+        {[
+          t('Run any enable command above — a URL and QR code will appear in your terminal.', 'Chạy một trong các lệnh bật ở trên — URL và QR code sẽ xuất hiện trong terminal.'),
+          t('On your phone/tablet: scan the QR code or open the URL directly.', 'Trên điện thoại/tablet: scan QR code hoặc mở URL trực tiếp.'),
+          t('Or go to claude.ai/code → find the session by name (look for the green computer icon).', 'Hoặc mở claude.ai/code → tìm session theo tên (icon máy tính màu xanh).'),
+          t('Press Spacebar to toggle the QR code on/off when using claude remote-control.', 'Nhấn Spacebar để hiện/ẩn QR code khi dùng claude remote-control.'),
+        ].map((step, i) => (
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xs font-bold">{i + 1}</span>
+            <span class="text-sm text-slate-600 dark:text-slate-400 pt-0.5">{step}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+
+  <!-- Limitations -->
+  <div class="glass-card rounded-xl border-red-200 dark:border-red-500/20 overflow-hidden">
+    <div class="p-5 bg-gradient-to-r from-red-500/5 to-orange-500/5 border-b border-red-200 dark:border-slate-800 flex items-center gap-3">
+      <svg class="w-5 h-5 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/>
+      </svg>
+      <h3 class="font-bold text-red-700 dark:text-red-400">{t('Known Limitations', 'Giới hạn cần biết')}</h3>
+    </div>
+    <div class="p-5">
+      <ul class="space-y-2">
+        {[
+          t('No API key support — must authenticate via claude.ai', 'Không hỗ trợ API key — phải đăng nhập qua claude.ai'),
+          t('Terminal must stay open — closing it ends the remote session', 'Terminal phải chạy liên tục — đóng terminal = kết thúc session'),
+          t('Network loss > ~10 min causes automatic session timeout', 'Mất mạng > 10 phút → session timeout tự động'),
+          t('Ultraplan and Remote Control cannot run simultaneously', 'Ultraplan và Remote Control không thể chạy cùng lúc'),
+        ].map(item => (
+          <li class="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-400">
+            <svg class="w-4 h-4 text-red-400 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.9 4.9 19.1 19.1"/>
+            </svg>
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <!-- Official docs + back link -->
+  <div class="flex flex-col sm:flex-row gap-3">
+    <a
+      href="https://code.claude.com/docs/en/remote-control"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors text-sm"
+    >
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+        <polyline points="15 3 21 3 21 9"/>
+        <line x1="10" y1="14" x2="21" y2="3"/>
+      </svg>
+      {t('Official Remote Control Docs', 'Tài liệu chính thức Remote Control')}
+    </a>
+    <a
+      href={translatePath('/guides/mobile-coding')}
+      class="flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/30 font-medium transition-colors text-sm"
+    >
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="15 18 9 12 15 6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      {t('Back to Mobile Coding', 'Về Mobile Coding')}
+    </a>
+  </div>
+</div>

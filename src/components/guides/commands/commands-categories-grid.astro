@@ -221,28 +221,7 @@ const marketingCategories = getMarketingKitCategories(t as any);
       <span>{t("commands.marketing_stable_note")}</span>
     </div>
 
-    <!-- Beta preview card -->
-    <div
-      class="rounded-xl border-2 border-purple-400/60 dark:border-purple-500/40 overflow-hidden bg-gradient-to-br from-purple-500/10 via-violet-500/5 to-pink-500/10"
-    >
-      <div
-        class="p-4 border-b border-purple-300/30 dark:border-purple-600/30 bg-gradient-to-r from-purple-600/10 to-violet-500/10"
-      >
-        <h3 class="text-lg font-bold flex items-center gap-2 text-purple-600 dark:text-purple-400">
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path>
-            <path d="M20 3v4"></path>
-            <path d="M22 5h-4"></path>
-          </svg>
-          {t("commands.mkt_beta_preview.title")}
-        </h3>
-        <p class="text-xs text-slate-500 mt-1">{t("commands.mkt_beta_preview.subtitle")}</p>
-      </div>
-      <!-- No beta-only features at this time -->
-      <div class="p-4">
-        <p class="text-xs text-slate-400 dark:text-slate-500 italic text-center">No beta-only features at this time. Check back later.</p>
-      </div>
-    </div>
+
 
     <!-- Marketing category cards -->
     {marketingCategories.map((category) => (

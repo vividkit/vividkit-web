@@ -17,7 +17,7 @@ export const happy_ccs = {
   'happy_ccs.guide.feature4_title': 'Push Notifications',
   'happy_ccs.guide.feature4_desc': 'Get notified when Claude needs input or finishes tasks.',
   'happy_ccs.guide.what_title': 'What is Happy-CCS?',
-  'happy_ccs.guide.what_desc': 'Happy-CCS bridges CCS profiles with Happy CLI, letting you switch AI providers (Gemini, GLM, Kimi, etc.) while keeping mobile control, voice coding, and all Happy CLI features.',
+  'happy_ccs.guide.what_desc': 'Happy-CCS bridges CCS profiles with Happy CLI, letting you switch AI providers (Qwen, Minimax, GLM, Kimi, etc.) while keeping mobile control, voice coding, and all Happy CLI features.',
   'happy_ccs.guide.github_repo': 'View on GitHub',
   'happy_ccs.guide.limitation_title': 'Why Happy-CCS?',
   'happy_ccs.guide.limitation_desc': "Happy CLI alone doesn't support seamless provider switching. You'd need to manually configure API keys each time. Happy-CCS solves this by integrating with CCS profiles - switch providers with a single command while keeping all mobile features.",

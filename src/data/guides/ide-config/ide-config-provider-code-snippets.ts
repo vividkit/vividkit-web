@@ -68,10 +68,26 @@ export const minimaxConfig = `// MiniMax API Proxy
   "value": "MiniMax-M2.5"
 }`;
 
+export const alibabaConfig = `// Alibaba Cloud Coding Plan (APIProxy)
+{
+  "name": "ANTHROPIC_BASE_URL",
+  "value": "https://coding-intl.dashscope.aliyuncs.com/apps/anthropic"
+},
+{
+  "name": "ANTHROPIC_AUTH_TOKEN",
+  "value": "<your_alibaba_api_key>"
+},
+{
+  "name": "ANTHROPIC_MODEL",
+  "value": "qwen3.5-plus"
+}`;
+
 export const permissionsConfig = `"claudeCode.allowDangerouslySkipPermissions": true,
 "claudeCode.initialPermissionMode": "bypassPermissions"`;
 
 export const opus45Config = `"claudeCode.selectedModel": "claude-opus-4-5-20251101"`;
+
+export const sonnet46Config = `"claudeCode.selectedModel": "claude-sonnet-4-6-20260101"`;
 
 export const schemaConfig = `"json.schemas": [
   {
