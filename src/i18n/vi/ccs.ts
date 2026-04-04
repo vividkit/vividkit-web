@@ -182,6 +182,22 @@ export const ccs = {
   'ccs.guide.minimax_verify_title': 'Bước 3: Xác Minh Cấu Hình',
   'ccs.guide.minimax_verify_desc': 'Kiểm tra MiniMax đã được cấu hình đúng:',
   'ccs.guide.minimax_verify_note': 'Nếu bạn thấy MiniMax-M2.5 trong phản hồi, cấu hình đã hoạt động. Nếu không, hãy kiểm tra lại file cài đặt và API key.',
+
+  // Alibaba Qwen Coding Plan
+  'ccs.guide.qwen_config_title': 'Cấu Hình Alibaba Coding Plan',
+  'ccs.guide.qwen_config_desc': 'Cấu hình Qwen3.5-Plus qua Alibaba Cloud Coding Plan — gói đăng ký hàng tháng với quota riêng cho công cụ AI coding.',
+  'ccs.guide.qwen_coding_plan_title': 'Alibaba Cloud Coding Plan',
+  'ccs.guide.qwen_coding_plan_desc': 'Coding Plan là gói đăng ký hàng tháng ($50/tháng Pro) cung cấp 90.000 request/tháng với API key riêng cho các công cụ AI coding như Claude Code. Lấy API key theo plan (dạng <code class="text-orange-600 dark:text-orange-400">sk-sp-xxxxx</code>) từ <a href="https://www.alibabacloud.com/help/en/model-studio/coding-plan" class="text-orange-600 dark:text-orange-400 underline" target="_blank" rel="noopener noreferrer">trang Coding Plan</a>.',
+  'ccs.guide.qwen_step1_title': 'Bước 1: Tạo File Cài Đặt',
+  'ccs.guide.qwen_step1_desc': 'Mở hoặc tạo file cài đặt Qwen:',
+  'ccs.guide.qwen_add_content': 'Thêm cấu hình sau:',
+  'ccs.guide.qwen_api_key_note': 'Lấy API key Coding Plan (bắt đầu bằng <code class="text-orange-600 dark:text-orange-400">sk-sp-</code>) từ <a href="https://modelstudio.console.alibabacloud.com/ap-southeast-1/?tab=globalset#/efm/coding_plan" class="text-blue-600 dark:text-blue-400 underline" target="_blank" rel="noopener noreferrer">Alibaba Model Studio Console</a>. KHÔNG dùng API key Model Studio thông thường (sk-xxxxx).',
+  'ccs.guide.qwen_step2_title': 'Bước 2: Thêm vào Config CCS',
+  'ccs.guide.qwen_step2_desc': 'Thêm profile Qwen vào file cấu hình CCS của bạn:',
+  'ccs.guide.qwen_verify_title': 'Bước 3: Xác Minh Cấu Hình',
+  'ccs.guide.qwen_verify_desc': 'Kiểm tra Qwen đã được cấu hình đúng:',
+  'ccs.guide.qwen_verify_note': 'Nếu bạn thấy Qwen3.5-Plus trong phản hồi, cấu hình đã hoạt động. Đảm bảo bạn đang dùng API key Coding Plan (sk-sp-xxxxx) chứ không phải key Model Studio thông thường.',
+
   'ccs.guide.gemini_config_title': 'Cấu Hình Gemini',
   'ccs.guide.gemini_config_desc': 'Xác thực bằng Google OAuth để sử dụng các model Gemini.',
   'ccs.guide.gemini_step1_title': 'Bước 1: Xác thực với Google',

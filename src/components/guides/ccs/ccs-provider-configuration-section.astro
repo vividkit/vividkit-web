@@ -682,4 +682,118 @@ const t = useTranslations(currentLang);
           </div>
         </div>
         </details>
+        <!-- Alibaba Qwen Coding Plan Config -->
+        <details class="p-4 rounded-lg bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300/80 dark:border-slate-600/50 group">
+          <summary class="flex items-center gap-2 cursor-pointer list-none">
+            <!-- Alibaba "无穷大" icon approximated with a simple SVG -->
+            <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" class="hidden"/>
+              <text x="2" y="17" font-size="13" font-weight="bold" fill="#FF6400" font-family="Arial">阿</text>
+            </svg>
+            <h4 class="font-bold text-slate-600 dark:text-slate-400 text-lg">{t('ccs.guide.qwen_config_title')}</h4>
+            <span class="px-2 py-0.5 text-[10px] rounded-full bg-orange-500/10 text-orange-600 dark:text-orange-400 font-medium">Alibaba Cloud</span>
+            <svg class="w-4 h-4 text-slate-400 ml-auto group-open:rotate-180 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 9l-7 7-7-7"/>
+            </svg>
+          </summary>
+          <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.qwen_config_desc')}</p>
+
+          <!-- Coding Plan Info -->
+          <div class="p-4 rounded-lg bg-orange-50 dark:bg-orange-900/10 border border-orange-200 dark:border-orange-800/30 mb-4">
+            <div class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-orange-500 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 16v-4M12 8h.01"/>
+              </svg>
+              <div class="text-sm text-orange-800 dark:text-orange-300">
+                <p class="font-medium mb-1">{t('ccs.guide.qwen_coding_plan_title')}</p>
+                <p class="text-xs" set:html={t('ccs.guide.qwen_coding_plan_desc')}></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 1: Create Settings File -->
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.qwen_step1_title')}</h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.qwen_step1_desc')}</p>
+          <PlatformPathSwitcher
+            lang={currentLang}
+            pathAfterHome=".ccs/qwen.settings.json"
+            label="File:"
+            id="qwen-settings-path"
+            color="slate"
+          />
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.qwen_add_content')}</p>
+          <div class="relative group">
+            <button
+              class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+              data-code={`{\n    "env": {\n        "ANTHROPIC_BASE_URL": "https://coding-intl.dashscope.aliyuncs.com/apps/anthropic",\n        "ANTHROPIC_AUTH_TOKEN": "<your_api_key>",\n        "ANTHROPIC_MODEL": "qwen3.5-plus"\n    }\n}`}
+              title="Copy to clipboard"
+            >
+              <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+              <svg class="w-4 h-4 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </button>
+            <pre class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto shadow-sm"><code>{`{
+    "env": {
+        "ANTHROPIC_BASE_URL": "https://coding-intl.dashscope.aliyuncs.com/apps/anthropic",
+        "ANTHROPIC_AUTH_TOKEN": "<your_api_key>",
+        "ANTHROPIC_MODEL": "qwen3.5-plus"
+    }
+}`}</code></pre>
+          </div>
+
+          <!-- API Key note -->
+          <div class="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20 mt-3 mb-4">
+            <p class="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
+              <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 16v-4M12 8h.01"/>
+              </svg>
+              <span set:html={t('ccs.guide.qwen_api_key_note')}></span>
+            </p>
+          </div>
+
+          <!-- Step 2: Add to Config -->
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.qwen_step2_title')}</h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.qwen_step2_desc')}</p>
+          <PlatformPathSwitcher
+            lang={currentLang}
+            pathAfterHome=".ccs/config.yaml"
+            label="File:"
+            id="ccs-config-path-qwen"
+            color="slate"
+          />
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+            <div><span class="text-cyan-600 dark:text-cyan-400">profiles</span>:</div>
+            <div class="ml-4"><span class="text-cyan-600 dark:text-cyan-400">qwen</span>:</div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">type</span>: <span class="text-emerald-600 dark:text-emerald-400">api</span></div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">settings</span>: <span class="text-emerald-600 dark:text-emerald-400">~/.ccs/qwen.settings.json</span> <span class="text-amber-600 dark:text-amber-400">&lt;-- {t('ccs.guide.add_this_line')}</span></div>
+          </div>
+
+          <!-- Step 3: Verification -->
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.qwen_verify_title')}</h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.qwen_verify_desc')}</p>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+            <code class="text-slate-700 dark:text-slate-300">ccs qwen "Which model are you using?"</code>
+          </div>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-3 shadow-sm">
+            <div class="text-slate-500 dark:text-slate-400 mb-2">&gt; Which model are you using?</div>
+            <div class="text-cyan-600 dark:text-cyan-400">⏺ I'm using the <span class="text-slate-800 dark:text-white font-bold">Qwen3.5-Plus</span> model (via Alibaba Cloud Coding Plan).</div>
+          </div>
+          <div class="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
+            <p class="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
+              <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 16v-4M12 8h.01"/>
+              </svg>
+              <span>{t('ccs.guide.qwen_verify_note')}</span>
+            </p>
+          </div>
+        </div>
+        </details>
 
