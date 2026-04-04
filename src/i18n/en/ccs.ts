@@ -120,8 +120,11 @@ export const ccs = {
   // Resources Section
   'ccs.guide.resources_title': 'Resources',
   'ccs.guide.documentation': 'Documentation',
+  'ccs.guide.resources_docs_desc': 'Official documentation website for CCS',
   'ccs.guide.report_issues': 'Report Issues',
+  'ccs.guide.resources_issues_desc': 'Found a bug or need help? Please open an issue to let us know',
   'ccs.guide.troubleshooting': 'Troubleshooting',
+  'ccs.guide.resources_github_desc': 'Source code, releases, and open source contributions',
   // CCS Promotions Cross-Link
   'ccs.guide.subscriptions_title': 'Hot Deals Available!',
   'ccs.guide.subscriptions_desc': 'Get Claude Pro at 50% off ($10/month) and Z.AI quarterly/yearly discounts with stacking referral bonus. Limited time offers to maximize your AI coding limits.',

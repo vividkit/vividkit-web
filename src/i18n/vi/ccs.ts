@@ -120,8 +120,11 @@ export const ccs = {
   // Resources Section
   'ccs.guide.resources_title': 'Tài Nguyên',
   'ccs.guide.documentation': 'Tài Liệu',
+  'ccs.guide.resources_docs_desc': 'Trang tài liệu chính thức của CCS',
   'ccs.guide.report_issues': 'Báo Lỗi',
+  'ccs.guide.resources_issues_desc': 'Bạn gặp lỗi hoặc cần trợ giúp? Hãy tạo một issue để báo cho chúng tôi',
   'ccs.guide.troubleshooting': 'Khắc Phục',
+  'ccs.guide.resources_github_desc': 'Mã nguồn, các bản phát hành và đóng góp mã nguồn mở',
   // CCS Promotions Cross-Link
   'ccs.guide.subscriptions_title': 'Deal Hot Đang Có!',
   'ccs.guide.subscriptions_desc': 'Claude Pro giảm 50% ($10/tháng) và Z.AI deal Giáng sinh với nhiều ưu đãi chồng. Khuyến mãi có hạn để tối đa giới hạn AI coding.',
