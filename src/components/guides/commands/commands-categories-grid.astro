@@ -121,7 +121,7 @@ const marketingCategories = getMarketingKitCategories(t as any);
 
     <!-- Stable category cards -->
     {stableCategories.map((category) => (
-      <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden group">
+      <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
         <div class={`p-4 border-b border-slate-100 dark:border-slate-800 ${styles[category.color].bg}`}>
           <h3 class={`text-lg font-bold flex items-center gap-2 ${styles[category.color].text}`}>
             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -225,7 +225,7 @@ const marketingCategories = getMarketingKitCategories(t as any);
 
     <!-- Marketing category cards -->
     {marketingCategories.map((category) => (
-      <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden group">
+      <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
         <div class={`p-4 border-b border-slate-100 dark:border-slate-800 ${styles[category.color].bg}`}>
           <h3 class={`text-lg font-bold flex items-center gap-2 ${styles[category.color].text}`}>
             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
