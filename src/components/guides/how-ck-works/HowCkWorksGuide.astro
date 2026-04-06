@@ -24,6 +24,33 @@ const typeColorsJson = JSON.stringify(stepTypeColors);
 <script is:inline define:vars={{ scenariosJson, typeColorsJson }}>
   window.__wfScenarios = JSON.parse(scenariosJson);
   window.__wfTypeColors = JSON.parse(typeColorsJson);
+  // Format explain text: paragraphs on \n\n, bullet lines (•/-/*) as indented <ul><li>
+  window.__formatExplain = function(text) {
+    if (!text) return '';
+    var esc = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    var paragraphs = esc.split(/\n\n+/);
+    return paragraphs.map(function(p) {
+      var lines = p.split(/\n/);
+      var hasBullets = lines.some(function(l) { return /^\s*[•\-\*]\s/.test(l); });
+      if (hasBullets) {
+        var html = '', inList = false;
+        for (var i = 0; i < lines.length; i++) {
+          var line = lines[i];
+          if (/^\s*[•\-\*]\s/.test(line)) {
+            if (!inList) { html += '<ul>'; inList = true; }
+            var content = line.replace(/^\s*[•\-\*]\s*/, '').replace(/^(\S[^—–]+)[—–]\s*/, '<strong>$1</strong>— ');
+            html += '<li>' + content + '</li>';
+          } else {
+            if (inList) { html += '</ul>'; inList = false; }
+            if (line.trim()) html += '<p>' + line + '</p>';
+          }
+        }
+        if (inList) html += '</ul>';
+        return html;
+      }
+      return '<p>' + p.replace(/\n/g, '<br>') + '</p>';
+    }).join('');
+  };
 </script>
 
 <div
@@ -57,6 +84,7 @@ const typeColorsJson = JSON.stringify(stepTypeColors);
     getColorClass(color, prop) {
       return this.colorMap[color]?.[prop] || '';
     },
+    formatExplain(text) { return window.__formatExplain?.(text) || text || ''; },
     get steps() {
       return this.currentScenario?.steps || [];
     },
