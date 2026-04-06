@@ -1,0 +1,84 @@
+---
+// Drill-down detail panel — Explain + Code tabs for the active step
+// Appears below the pipeline when a step is selected
+// Uses colorMap from parent pipeline-view for Tailwind-safe dynamic classes
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === 'vi';
+---
+
+<div
+  x-show="expandedStep !== null && currentScenario"
+  x-transition:enter="transition ease-out duration-300"
+  x-transition:enter-start="opacity-0 -translate-y-2"
+  x-transition:enter-end="opacity-100 translate-y-0"
+  x-transition:leave="transition ease-in duration-200"
+  x-transition:leave-start="opacity-100 translate-y-0"
+  x-transition:leave-end="opacity-0 -translate-y-2"
+  class="mt-6 rounded-xl border border-gray-200 dark:border-white/10 backdrop-blur-md bg-white dark:bg-[#0d1117] overflow-hidden shadow-lg dark:shadow-2xl"
+  x-cloak
+>
+  {/* Terminal Header */}
+  <div class="flex items-center px-4 py-2.5 border-b border-gray-100 dark:border-white/5 bg-gray-50/50 dark:bg-white/5">
+    <div class="flex gap-1.5 shrink-0">
+      <div class="w-2.5 h-2.5 rounded-full bg-red-500/60"></div>
+      <div class="w-2.5 h-2.5 rounded-full bg-amber-500/60"></div>
+      <div class="w-2.5 h-2.5 rounded-full bg-green-500/60"></div>
+    </div>
+    <div class="flex-1 flex justify-center">
+      <span class="text-[10px] font-mono text-gray-500 dark:text-white/30" x-text="currentScenario?.command + ' — Pipeline'"></span>
+    </div>
+  </div>
+
+  {/* Panel content */}
+  <div class="p-5 flex flex-col gap-5">
+    <template x-if="getActiveStep()">
+      <div class="flex items-start gap-4">
+        {/* Step icon */}
+        <div
+          x-bind:class="'shrink-0 w-10 h-10 rounded-lg flex items-center justify-center ' + (colorMap[getActiveStep().color]?.iconBg || '')"
+        >
+          <svg
+            x-bind:class="'w-5 h-5 ' + (colorMap[getActiveStep().color]?.iconText || '')"
+            fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+            x-html="getActiveStep().icon"
+          ></svg>
+        </div>
+
+        <div class="min-w-0">
+          {/* Step name + type */}
+          <div class="flex items-center gap-2 mb-2">
+            <h4 class="text-sm font-semibold text-gray-900 dark:text-white/90" x-text="getActiveStep().name"></h4>
+            <span
+              x-bind:class="'text-[10px] font-medium px-2 py-0.5 rounded-full ' + (colorMap[getActiveStep().color]?.iconBg || '') + ' ' + (colorMap[getActiveStep().color]?.iconText || '')"
+              x-text={`'${isVi}' === 'true' ? typeColors[getActiveStep().type]?.labelVi : typeColors[getActiveStep().type]?.label`}
+            ></span>
+          </div>
+
+          {/* Detailed explanation */}
+          <p class="text-sm text-gray-600 dark:text-white/60 leading-relaxed" x-text={`'${isVi}' === 'true' ? getActiveStep().explainVi : getActiveStep().explainEn`}></p>
+        </div>
+      </div>
+    </template>
+
+    {/* Terminal Code Snippet */}
+    <template x-if="getActiveStep()?.codeSnippet">
+      <div class="mt-2 pl-14">
+        <div class="relative bg-gray-900 dark:bg-black/40 rounded-lg border border-gray-800 dark:border-white/5 overflow-hidden shadow-inner">
+          <div class="absolute left-0 top-0 bottom-0 w-8 bg-gray-800/80 dark:bg-white/5 border-r border-gray-700/50 dark:border-white/5 flex flex-col items-center pt-3 gap-1">
+            <span class="text-[9px] text-gray-500 dark:text-white/20 font-mono">1</span>
+            <span class="text-[9px] text-gray-500 dark:text-white/20 font-mono">2</span>
+            <span class="text-[9px] text-gray-500 dark:text-white/20 font-mono">3</span>
+          </div>
+          <pre class="text-xs font-mono text-green-400 pl-12 pr-4 py-3 overflow-x-auto leading-relaxed whitespace-pre-wrap"><code x-text="getActiveStep().codeSnippet"></code></pre>
+        </div>
+      </div>
+    </template>
+  </div>
+</div>

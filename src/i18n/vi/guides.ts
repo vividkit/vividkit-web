@@ -18,6 +18,8 @@ export const guides = {
   'guides.cli.purchase_notice.title': 'Cần Mua ClaudeKit',
   'guides.cli.purchase_notice.desc': 'Lưu ý: ClaudeKit CLI là công cụ miễn phí giúp cài đặt các kit. Engineer Kit và Marketing Kit là sản phẩm trả phí cần mua riêng.',
   'guides.cli.purchase_notice.cta': 'Mua ClaudeKit (Giảm 20%)',
+  // How It Works Guide
+  'guides.how_ck_works.title': 'Cách ClaudeKit Hoạt Động',
   // What is ClaudeKit Guide
   'guides.what_is_claudekit.title': 'Giới Thiệu ClaudeKit',
   'guides.what_is_claudekit.description': 'Giới thiệu ClaudeKit cho người mới bắt đầu',
