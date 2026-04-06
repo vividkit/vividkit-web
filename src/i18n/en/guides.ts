@@ -18,6 +18,8 @@ export const guides = {
   'guides.cli.purchase_notice.title': 'ClaudeKit Required',
   'guides.cli.purchase_notice.desc': 'Note: ClaudeKit CLI is a free tool that helps install kits. The Engineer Kit and Marketing Kit are paid products that you need to purchase separately.',
   'guides.cli.purchase_notice.cta': 'Get ClaudeKit (20% OFF)',
+  // How It Works Guide
+  'guides.how_ck_works.title': 'How ClaudeKit Works',
   // What is ClaudeKit Guide
   'guides.what_is_claudekit.title': 'What is ClaudeKit?',
   'guides.what_is_claudekit.description': 'Introduction to ClaudeKit for beginners',
