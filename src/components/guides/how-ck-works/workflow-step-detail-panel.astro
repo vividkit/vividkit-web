@@ -1,7 +1,7 @@
 ---
-// Drill-down detail panel — Explain + Code tabs for the active step
-// Appears below the pipeline when a step is selected
-// Uses colorMap from parent pipeline-view for Tailwind-safe dynamic classes
+// Drill-down detail panel — Explain + Code for the active step
+// Includes prev/next navigation so users don't need to scroll back to pipeline
+// Content formatted with bullet indentation for readability
 import { getLangFromUrl, type Language } from '@/i18n';
 
 interface Props {
@@ -24,15 +24,39 @@ const isVi = currentLang === 'vi';
   class="mt-6 rounded-xl border border-gray-200 dark:border-white/10 backdrop-blur-md bg-white dark:bg-[#0d1117] overflow-hidden shadow-lg dark:shadow-2xl"
   x-cloak
 >
-  {/* Terminal Header */}
+  {/* Terminal Header with prev/next navigation */}
   <div class="flex items-center px-4 py-2.5 border-b border-gray-100 dark:border-white/5 bg-gray-50/50 dark:bg-white/5">
     <div class="flex gap-1.5 shrink-0">
       <div class="w-2.5 h-2.5 rounded-full bg-red-500/60"></div>
       <div class="w-2.5 h-2.5 rounded-full bg-amber-500/60"></div>
       <div class="w-2.5 h-2.5 rounded-full bg-green-500/60"></div>
     </div>
-    <div class="flex-1 flex justify-center">
-      <span class="text-[10px] font-mono text-gray-500 dark:text-white/30" x-text="currentScenario?.command + ' — Pipeline'"></span>
+
+    {/* Center: command + step counter */}
+    <div class="flex-1 flex justify-center items-center gap-2">
+      <span class="text-[10px] font-mono text-gray-500 dark:text-white/30" x-text="currentScenario?.command + ' — Step ' + (expandedStep + 1) + '/' + steps.length"></span>
+    </div>
+
+    {/* Prev / Next buttons */}
+    <div class="flex items-center gap-1 shrink-0">
+      <button
+        x-on:click="expandedStep > 0 && selectStep(expandedStep - 1)"
+        x-bind:disabled="expandedStep <= 0"
+        class="p-1.5 rounded-md hover:bg-gray-200 dark:hover:bg-white/10 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+        type="button"
+        aria-label="Previous step"
+      >
+        <svg class="w-3.5 h-3.5 text-gray-500 dark:text-white/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>
+      </button>
+      <button
+        x-on:click="expandedStep < steps.length - 1 && selectStep(expandedStep + 1)"
+        x-bind:disabled="expandedStep >= steps.length - 1"
+        class="p-1.5 rounded-md hover:bg-gray-200 dark:hover:bg-white/10 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+        type="button"
+        aria-label="Next step"
+      >
+        <svg class="w-3.5 h-3.5 text-gray-500 dark:text-white/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
     </div>
   </div>
 
@@ -51,18 +75,18 @@ const isVi = currentLang === 'vi';
           ></svg>
         </div>
 
-        <div class="min-w-0">
-          {/* Step name + type */}
-          <div class="flex items-center gap-2 mb-2">
+        <div class="min-w-0 flex-1">
+          {/* Step name + type badge */}
+          <div class="flex items-center gap-2 mb-3">
             <h4 class="text-sm font-semibold text-gray-900 dark:text-white/90" x-text="getActiveStep().name"></h4>
             <span
               x-bind:class="'text-[10px] font-medium px-2 py-0.5 rounded-full ' + (colorMap[getActiveStep().color]?.iconBg || '') + ' ' + (colorMap[getActiveStep().color]?.iconText || '')"
-              x-text={`'${isVi}' === 'true' ? typeColors[getActiveStep().type]?.labelVi : typeColors[getActiveStep().type]?.label`}
+              x-text={`getActiveStep().type === 'agent' ? (getActiveStep().isSubAgent ? 'Sub-Agent' : 'Main Agent') : ('${isVi}' === 'true' ? typeColors[getActiveStep().type]?.labelVi : typeColors[getActiveStep().type]?.label)`}
             ></span>
           </div>
 
-          {/* Detailed explanation */}
-          <p class="text-sm text-gray-600 dark:text-white/60 leading-relaxed" x-text={`'${isVi}' === 'true' ? getActiveStep().explainVi : getActiveStep().explainEn`}></p>
+          {/* Formatted explanation — paragraphs + indented bullets */}
+          <div class="explain-content text-sm text-gray-600 dark:text-white/60 leading-relaxed" x-html={`formatExplain('${isVi}' === 'true' ? getActiveStep().explainVi : getActiveStep().explainEn)`}></div>
         </div>
       </div>
     </template>
@@ -82,3 +106,36 @@ const isVi = currentLang === 'vi';
     </template>
   </div>
 </div>
+
+<style>
+  /* Formatted explanation content styles */
+  .explain-content p {
+    margin-bottom: 0.75rem;
+  }
+  .explain-content p:last-child {
+    margin-bottom: 0;
+  }
+  .explain-content ul {
+    list-style: none;
+    padding-left: 1rem;
+    margin: 0.25rem 0 0.75rem;
+  }
+  .explain-content li {
+    position: relative;
+    padding-left: 0.75rem;
+    margin-bottom: 0.25rem;
+  }
+  .explain-content li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    opacity: 0.5;
+  }
+  .explain-content strong {
+    font-weight: 600;
+    color: var(--explain-strong, inherit);
+  }
+  :global(.dark) .explain-content strong {
+    color: rgba(255, 255, 255, 0.8);
+  }
+</style>
