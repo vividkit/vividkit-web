@@ -1,6 +1,6 @@
-// Beta-only workflow additions (v2.14.0+)
+// Beta-only workflow additions
 // These are combined with stableWorkflows in the index to form betaWorkflows
-// New beta skills: /ck:autoresearch, /ck:predict, /ck:scenario, /ck:security, /ck:excalidraw
+// Beta skills: /ck:autoresearch, /ck:predict, /ck:scenario, /ck:security, /ck:excalidraw, /ck:xia
 
 export const betaOnlyWorkflows = [
   {
@@ -300,5 +300,64 @@ export const betaOnlyWorkflows = [
       'MCP canvas workflow for live editing'
     ],
     borderColor: 'border-violet-500/20'
+  },
+  {
+    title: 'Extract & Port Features (Xia)',
+    category: 'Planning & Review',
+    level: 'Advanced',
+    duration: '~10-30 min',
+    stepCount: 3,
+    bestFor: 'Analyzing and porting features from external GitHub repos into your project',
+    gradientHeader: 'from-emerald-500/10 to-teal-500/10',
+    hoverBorderColor: 'hover:border-emerald-500/50',
+    buttonColor: 'bg-emerald-500 hover:bg-emerald-600',
+    icon: '<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>',
+    iconColor: 'text-emerald-600 dark:text-emerald-400',
+    steps: [
+      {
+        command: '/ck:xia <repo> --compare',
+        typeLabel: 'Analyze source',
+        description: 'Compare source repo architecture, patterns, and feature implementation side-by-side',
+        color: 'bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      },
+      {
+        command: '/ck:xia <repo> [feature] --improve',
+        typeLabel: 'Port & refactor',
+        description: 'Copy feature from source and refactor to fit local codebase patterns',
+        color: 'bg-teal-500/10 dark:bg-teal-500/20 text-teal-600 dark:text-teal-400',
+        number: 2,
+        isSkill: true,
+        isBeta: true
+      },
+      {
+        command: '/ck:test',
+        typeLabel: 'Validate port',
+        description: 'Run tests to verify ported feature works correctly in local context',
+        color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
+        number: 3,
+        isSkill: true
+      }
+    ],
+    tip: 'Use --compare first to assess architecture compatibility before porting',
+    features: [
+      'Analyze any GitHub repo or local path',
+      'Challenge framework stress-tests decisions',
+      'AI auto-generates trade-off matrix and risk scores before coding'
+    ],
+    xiaModeFlags: [
+      { flag: '--compare', desc: 'Side-by-side architectural and pattern analysis only', color: 'blue' },
+      { flag: '--copy', desc: 'Code transplant with absolute minimal modifications', color: 'emerald' },
+      { flag: '--improve', desc: 'Bring codebase over but refactor to clean up anti-patterns', color: 'teal' },
+      { flag: '--port', desc: 'Extract core logic and rewrite idiomatically for local stack (Default)', color: 'purple' }
+    ],
+    xiaSpeedFlags: [
+      { flag: '--fast', desc: 'Skip research and challenge phases, auto-approve immediately', color: 'orange' },
+      { flag: '--auto', desc: 'Keep the full workflow, but auto-approve gates', color: 'cyan' },
+      { flag: 'Default', desc: 'Full workflow with approval gates', color: 'slate' }
+    ],
+    borderColor: 'border-emerald-500/20'
   }
 ];

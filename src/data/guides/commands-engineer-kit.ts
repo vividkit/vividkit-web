@@ -1,4 +1,4 @@
-// Engineer Kit (v2.15.1) stable command categories
+// Engineer Kit (Stable) command categories
 import type { CommandCategory, TranslationFn } from "./commands-types";
 
 // Returns all stable Engineer Kit categories with translated labels/descriptions
@@ -149,6 +149,17 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.predict.desc"),
           detail: t("commands.stable.predict.detail"),
           isSkill: true,
+        },
+        {
+          command: "/ck:xia",
+          complexity: "⚡⚡⚡",
+          label: t("commands.label.medium"),
+          desc: t("commands.stable.xia.desc"),
+          detail: t("commands.stable.xia.detail"),
+          isSkill: true,
+          isBeta: true,
+          args: ["<github-url|owner/repo|local-path>", "[feature]"],
+          flags: ["--compare", "--copy", "--improve", "--port", "--auto", "--fast"],
         },
       ],
     },

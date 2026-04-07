@@ -299,5 +299,64 @@ export const betaOnlyWorkflows = [
       'MCP canvas workflow để chỉnh sửa trực tiếp'
     ],
     borderColor: 'border-violet-500/20'
+  },
+  {
+    title: 'Nghiên Cứu & Port Tính Năng (Xia)',
+    category: 'Planning & Review',
+    level: 'Advanced',
+    duration: '~10-30 phút',
+    stepCount: 3,
+    bestFor: 'Phân tích và port tính năng từ repos GitHub bên ngoài vào dự án của bạn an toàn',
+    gradientHeader: 'from-emerald-500/10 to-teal-500/10',
+    hoverBorderColor: 'hover:border-emerald-500/50',
+    buttonColor: 'bg-emerald-500 hover:bg-emerald-600',
+    icon: '<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>',
+    iconColor: 'text-emerald-600 dark:text-emerald-400',
+    steps: [
+      {
+        command: '/ck:xia <repo> --compare',
+        typeLabel: 'Phân tích mã nguồn',
+        description: 'So sánh song song kiến trúc source repo, pattern, và feature implementation',
+        color: 'bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      },
+      {
+        command: '/ck:xia <repo> [feature] --improve',
+        typeLabel: 'Port & refactor',
+        description: 'Sao chép tính năng từ source và refactor để phù hợp với local codebase',
+        color: 'bg-teal-500/10 dark:bg-teal-500/20 text-teal-600 dark:text-teal-400',
+        number: 2,
+        isSkill: true,
+        isBeta: true
+      },
+      {
+        command: '/ck:test',
+        typeLabel: 'Validate port',
+        description: 'Chạy tests để verify tính năng đã port hoạt động đúng trong local context',
+        color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
+        number: 3,
+        isSkill: true
+      }
+    ],
+    tip: 'Nên chạy --compare trước để đánh giá sự tương thích của kiến trúc trước khi port',
+    features: [
+      'Phân tích bất kỳ GitHub repo hay thư mục local nào',
+      'Đánh giá quyết định qua Challenge framework',
+      'AI tự tạo bảng ma trận đánh đổi (trade-offs) và điểm rủi ro trước khi thực thi'
+    ],
+    xiaModeFlags: [
+      { flag: '--compare', desc: 'Chỉ mổ xẻ và so sánh kiến trúc song song', color: 'blue' },
+      { flag: '--copy', desc: 'Bê y nguyên cấu trúc gốc sang, sửa tối thiểu để chạy', color: 'emerald' },
+      { flag: '--improve', desc: 'Copy cấu trúc nhưng AI sẽ refactor và dọn anti-patterns', color: 'teal' },
+      { flag: '--port', desc: 'Chỉ lấy ý tưởng, code lại bằng chuẩn local stack (Mặc định)', color: 'purple' }
+    ],
+    xiaSpeedFlags: [
+      { flag: '--fast', desc: 'Bỏ qua research & validation, tiến hành auto-approve', color: 'orange' },
+      { flag: '--auto', desc: 'Giữ nguyên luồng làm việc nhưng tự động approve các gates', color: 'cyan' },
+      { flag: 'Mặc định', desc: 'Chạy workflow đầy đủ với các cổng cần phê duyệt', color: 'slate' }
+    ],
+    borderColor: 'border-emerald-500/20'
   }
 ];
