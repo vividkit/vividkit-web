@@ -33,7 +33,7 @@ export interface KitConfig {
 
 export const kitConfigs: KitConfig[] = [
   { id: 'engineer', labelEn: 'Engineer Kit', labelVi: 'Engineer Kit' },
-  { id: 'marketer', labelEn: 'Marketer Kit', labelVi: 'Marketer Kit' },
+  { id: 'marketer', labelEn: 'Marketing Kit', labelVi: 'Marketing Kit' },
 ];
 
 export interface WorkflowScenario {

@@ -55,6 +55,7 @@ const typeColorsJson = JSON.stringify(stepTypeColors);
 
 <div
   x-data="{
+    activeKit: 'engineer',
     selectedScenario: 'fix',
     currentStep: -1,
     isPlaying: false,
@@ -94,6 +95,20 @@ const typeColorsJson = JSON.stringify(stepTypeColors);
     },
     get totalSteps() {
       return this.currentScenario?.steps?.length || 0;
+    },
+
+    switchKit(kit) {
+      this.activeKit = kit;
+      // Auto-select first scenario of the new kit
+      const firstOfKit = this.scenarios.find(s => s.kit === kit);
+      if (firstOfKit) {
+        this.selectedScenario = firstOfKit.id;
+        this.resetPipeline();
+      }
+    },
+
+    get filteredScenarios() {
+      return this.scenarios.filter(s => s.kit === this.activeKit);
     },
 
     selectScenario(id) {
@@ -236,11 +251,8 @@ const typeColorsJson = JSON.stringify(stepTypeColors);
     </div>
   </div>
 
-  {/* Scenario selector */}
+  {/* Scenario selector with kit tabs */}
   <section>
-    <h2 class="text-xs font-semibold text-gray-500 dark:text-white/30 uppercase tracking-wider mb-3">
-      {isVi ? 'Chọn Workflow' : 'Choose a Workflow'}
-    </h2>
     <WorkflowScenarioSelector lang={currentLang} />
   </section>
 
