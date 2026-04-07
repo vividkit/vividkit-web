@@ -1,7 +1,7 @@
 ---
-// Scenario picker — compact pill tags grouped by kit (Engineer/Marketer)
-// Shows icon + command only; description appears on hover via tooltip
-// Uses Alpine.js x-data from parent HowItWorksGuide component
+// Scenario picker with Engineer Kit / Marketing Kit tab toggle
+// Compact pill tags for scenarios, filtered by active kit tab
+// Uses Alpine.js x-data from parent HowCkWorksGuide component
 import { getLangFromUrl, type Language } from '@/i18n';
 import { workflowScenarios, kitConfigs } from '@/data/guides/how-ck-works';
 
@@ -36,49 +36,78 @@ const accentMap: Record<string, { border: string; ring: string; bg: string; text
   zinc: { border: 'border-zinc-500/50', ring: 'ring-zinc-500/30', bg: 'bg-zinc-500/10', text: 'text-zinc-500' },
 };
 
-// Group scenarios by kit
-const scenariosByKit = kitConfigs.map(kit => ({
-  ...kit,
-  scenarios: workflowScenarios.filter(s => s.kit === kit.id),
-})).filter(g => g.scenarios.length > 0);
+// Pre-compute scenario counts per kit
+const engineerCount = workflowScenarios.filter(s => s.kit === 'engineer').length;
+const marketerCount = workflowScenarios.filter(s => s.kit === 'marketer').length;
 ---
 
 <div class="space-y-4">
-  {scenariosByKit.map((group) => (
-    <div>
-      {/* Kit group label */}
-      <h3 class="text-[11px] font-semibold text-gray-400 dark:text-white/25 uppercase tracking-wider mb-2">
-        {isVi ? group.labelVi : group.labelEn}
-      </h3>
+  {/* Kit Tab Toggle — matching workflows page design */}
+  <div class="flex items-center gap-2 p-1 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 w-fit">
+    <button
+      x-on:click="switchKit('engineer')"
+      x-bind:class="activeKit === 'engineer' ? 'bg-teal-500 text-white shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'"
+      class="px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200"
+      type="button"
+    >
+      <span class="flex items-center gap-1.5">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="16 18 22 12 16 6"></polyline>
+          <polyline points="8 6 2 12 8 18"></polyline>
+        </svg>
+        Engineer Kit
+        <span
+          x-bind:class="activeKit === 'engineer' ? 'bg-white/20 text-white' : 'bg-slate-200 dark:bg-slate-600 text-slate-500 dark:text-slate-300'"
+          class="text-[10px] font-medium px-1.5 py-0.5 rounded-full transition-colors"
+        >{engineerCount}</span>
+      </span>
+    </button>
+    <button
+      x-on:click="switchKit('marketer')"
+      x-bind:class="activeKit === 'marketer' ? 'bg-purple-500 text-white shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'"
+      class="px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200"
+      type="button"
+    >
+      <span class="flex items-center gap-1.5">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+        </svg>
+        Marketing Kit
+        <span
+          x-bind:class="activeKit === 'marketer' ? 'bg-white/20 text-white' : 'bg-slate-200 dark:bg-slate-600 text-slate-500 dark:text-slate-300'"
+          class="text-[10px] font-medium px-1.5 py-0.5 rounded-full transition-colors"
+        >{marketerCount}</span>
+      </span>
+    </button>
+  </div>
 
-      {/* Compact pill tags — icon + command only, description on hover */}
-      <div class="flex flex-wrap gap-1.5">
-        {group.scenarios.map((scenario) => {
-          const accent = accentMap[scenario.accentColor] || accentMap.purple;
-          const desc = isVi ? scenario.descVi : scenario.descEn;
-          return (
-            <button
-              x-on:click={`selectScenario('${scenario.id}')`}
-              x-bind:class={`selectedScenario === '${scenario.id}' ? '${accent.border} ${accent.ring} ring-2 ${accent.bg}' : 'border-gray-200 dark:border-white/8 hover:border-gray-300 dark:hover:border-white/20 hover:bg-gray-50 dark:hover:bg-white/5'`}
-              class="group relative flex items-center gap-1.5 px-2 py-1.5 rounded-md border backdrop-blur-sm bg-white dark:bg-white/[0.03] transition-all duration-150 cursor-pointer text-left"
-              type="button"
-              role="tab"
-              x-bind:aria-selected={`selectedScenario === '${scenario.id}'`}
-              title={desc}
-            >
-              {/* Icon */}
-              <svg class={`w-3 h-3 ${accent.text} shrink-0`} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <Fragment set:html={scenario.icon} />
-              </svg>
+  {/* Scenario pills — filtered by active kit via Alpine */}
+  <div class="flex flex-wrap gap-1.5">
+    {workflowScenarios.map((scenario) => {
+      const accent = accentMap[scenario.accentColor] || accentMap.purple;
+      const desc = isVi ? scenario.descVi : scenario.descEn;
+      return (
+        <button
+          x-show={`activeKit === '${scenario.kit}'`}
+          x-on:click={`selectScenario('${scenario.id}')`}
+          x-bind:class={`selectedScenario === '${scenario.id}' ? '${accent.border} ${accent.ring} ring-2 ${accent.bg}' : 'border-gray-200 dark:border-white/8 hover:border-gray-300 dark:hover:border-white/20 hover:bg-gray-50 dark:hover:bg-white/5'`}
+          class="group relative flex items-center gap-1.5 px-2 py-1.5 rounded-md border backdrop-blur-sm bg-white dark:bg-white/[0.03] transition-all duration-150 cursor-pointer text-left"
+          type="button"
+          role="tab"
+          x-bind:aria-selected={`selectedScenario === '${scenario.id}'`}
+          title={desc}
+        >
+          {/* Icon */}
+          <svg class={`w-3 h-3 ${accent.text} shrink-0`} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <Fragment set:html={scenario.icon} />
+          </svg>
 
-              {/* Command name only */}
-              <code class="text-[11px] font-mono font-medium text-gray-700 dark:text-white/80 whitespace-nowrap">{scenario.command}</code>
-            </button>
-          );
-        })}
-      </div>
-    </div>
-  ))}
+          {/* Command name only */}
+          <code class="text-[11px] font-mono font-medium text-gray-700 dark:text-white/80 whitespace-nowrap">{scenario.command}</code>
+        </button>
+      );
+    })}
+  </div>
 
   {/* Selected scenario info card */}
   <div
@@ -94,7 +123,11 @@ const scenariosByKit = kitConfigs.map(kit => ({
         <div class="min-w-0 flex-1">
           <div class="flex items-center gap-2 mb-1">
             <code class="text-xs font-mono font-semibold text-gray-900 dark:text-white/90" x-text="sc.command"></code>
-            <span class="text-[10px] font-medium px-1.5 py-0.5 rounded bg-gray-200 dark:bg-white/10 text-gray-500 dark:text-white/40" x-text="sc.kit === 'engineer' ? 'Engineer Kit' : 'Marketer Kit'"></span>
+            <span
+              x-bind:class="sc.kit === 'engineer' ? 'bg-teal-500/10 text-teal-600 dark:text-teal-400' : 'bg-purple-500/10 text-purple-600 dark:text-purple-400'"
+              class="text-[10px] font-medium px-1.5 py-0.5 rounded"
+              x-text="sc.kit === 'engineer' ? 'Engineer Kit' : 'Marketing Kit'"
+            ></span>
           </div>
           <p class="text-xs text-gray-600 dark:text-white/50" x-text={`sc.${isVi ? 'descVi' : 'descEn'}`}></p>
         </div>
