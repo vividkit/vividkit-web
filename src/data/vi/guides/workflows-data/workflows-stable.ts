@@ -144,11 +144,11 @@ export const stableWorkflows = [
     ],
     tip: '--interactive là mặc định, dùng native Claude Tasks API.',
     cookFlags: [
-      { flag: '--interactive', desc: 'Từng bước với approval (mặc định)', color: 'teal' },
-      { flag: '--fast', desc: 'Bỏ qua research, implement nhanh', color: 'purple' },
-      { flag: '--parallel', desc: 'Chạy phases song song', color: 'blue' },
-      { flag: '--auto', desc: 'Tự động approve tất cả steps', color: 'green' },
-      { flag: '--no-test', desc: 'Bỏ qua test sau khi code', color: 'orange' }
+      { flag: '--interactive', desc: 'Từng bước rà soát (mặc định)', color: 'teal' },
+      { flag: '--fast', desc: 'Bỏ qua research, code luôn', color: 'purple' },
+      { flag: '--parallel', desc: 'Chạy agent song song', color: 'blue' },
+      { flag: '--auto', desc: 'Tự động duyệt mọi bước', color: 'green' },
+      { flag: '--no-test', desc: 'Không bắt buộc test', color: 'orange' }
     ],
     features: [
       'Research best practices và technologies',

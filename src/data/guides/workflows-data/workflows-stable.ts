@@ -1,4 +1,4 @@
-// v2.14.0 Stable workflows - skill-based approach with /ck: prefix
+// Stable workflows - skill-based approach with /ck: prefix
 // /ck:cook uses native Claude Tasks, /ck:fix supports flags
 export const stableWorkflows = [
   {

@@ -145,7 +145,7 @@ const unifiedNodes: FlowchartNode[] = [...stableNodes, ...betaExtraNodes];
 const unifiedEdges: FlowchartEdge[] = [...stableEdges, ...betaExtraEdges];
 const unifiedPaths: FlowchartPath[] = [...stablePaths, ...betaExtraPaths];
 
-// Engineer Kit unified flowchart data (v2.13.0 stable + v2.14.0 beta)
+// Engineer Kit unified flowchart data (Stable + Beta merged, beta items flagged with isBeta)
 export const engineerFlowchartData: FlowchartData = {
   nodes: unifiedNodes,
   edges: unifiedEdges,
