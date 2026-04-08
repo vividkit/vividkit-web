@@ -358,5 +358,36 @@ export const betaOnlyWorkflows = [
       { flag: 'Mặc định', desc: 'Chạy workflow đầy đủ với các cổng cần phê duyệt', color: 'slate' }
     ],
     borderColor: 'border-emerald-500/20'
+  },
+  {
+    title: 'Showcase & Nội Dung Mạng Xã Hội',
+    category: 'Media & Creative',
+    level: 'Beginner',
+    duration: '~5-10 phút',
+    stepCount: 1,
+    bestFor: 'Tạo trang HTML showcase đẹp mắt cho demo, bài viết, và mạng xã hội',
+    gradientHeader: 'from-pink-500/10 to-rose-500/10',
+    hoverBorderColor: 'hover:border-pink-500/50',
+    buttonColor: 'bg-pink-500 hover:bg-pink-600',
+    icon: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+    iconColor: 'text-pink-600 dark:text-pink-400',
+    steps: [
+      {
+        command: '/ck:show-off',
+        typeLabel: 'Tạo showcase',
+        description: 'Tạo trang HTML nhiều section với parallax, chuyển đổi theme, nội dung song ngữ (VI/EN), và tự động chụp screenshots',
+        color: 'bg-pink-500/10 dark:bg-pink-500/20 text-pink-600 dark:text-pink-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      }
+    ],
+    tip: 'Xuất screenshots ở tỷ lệ 16:9, 9:16, và 1:1 — sẵn sàng cho các nền tảng mạng xã hội',
+    features: [
+      'Layout cuộn nhiều section với hiệu ứng parallax',
+      'Tự động chuyển đổi theme (system/light/dark)',
+      'Chụp screenshot song song ở nhiều tỷ lệ khung hình'
+    ],
+    borderColor: 'border-pink-500/20'
   }
 ];
