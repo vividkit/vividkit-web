@@ -1,6 +1,6 @@
 // Beta-only workflow additions
 // These are combined with stableWorkflows in the index to form betaWorkflows
-// Beta skills: /ck:autoresearch, /ck:predict, /ck:scenario, /ck:security, /ck:excalidraw, /ck:xia
+// Beta skills: /ck:autoresearch, /ck:predict, /ck:scenario, /ck:security, /ck:excalidraw, /ck:xia, /ck:show-off
 
 export const betaOnlyWorkflows = [
   {
@@ -359,5 +359,36 @@ export const betaOnlyWorkflows = [
       { flag: 'Default', desc: 'Full workflow with approval gates', color: 'slate' }
     ],
     borderColor: 'border-emerald-500/20'
+  },
+  {
+    title: 'Showcase & Social Media Content',
+    category: 'Media & Creative',
+    level: 'Beginner',
+    duration: '~5-10 min',
+    stepCount: 1,
+    bestFor: 'Creating polished HTML showcase pages for demos, articles, and social media posts',
+    gradientHeader: 'from-pink-500/10 to-rose-500/10',
+    hoverBorderColor: 'hover:border-pink-500/50',
+    buttonColor: 'bg-pink-500 hover:bg-pink-600',
+    icon: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+    iconColor: 'text-pink-600 dark:text-pink-400',
+    steps: [
+      {
+        command: '/ck:show-off',
+        typeLabel: 'Generate showcase',
+        description: 'Create multi-section HTML page with parallax, theme toggle, bilingual content (VI/EN), and auto-captured screenshots',
+        color: 'bg-pink-500/10 dark:bg-pink-500/20 text-pink-600 dark:text-pink-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      }
+    ],
+    tip: 'Outputs screenshots in 16:9, 9:16, and 1:1 aspect ratios — ready for social media platforms',
+    features: [
+      'Scrollable multi-section layout with parallax effects',
+      'Auto theme toggle (system/light/dark)',
+      'Parallel screenshot capture in multiple aspect ratios'
+    ],
+    borderColor: 'border-pink-500/20'
   }
 ];
