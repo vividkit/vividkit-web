@@ -149,7 +149,7 @@ export const stableWorkflows = [
       { flag: '--parallel', desc: 'Run phases in parallel', color: 'blue' },
       { flag: '--auto', desc: 'Auto-approve all steps', color: 'green' },
       { flag: '--no-test', desc: 'Skip test runs after coding', color: 'orange' },
-      { flag: '--tdd', desc: 'Tests-first per phase (composable with any mode)', color: 'cyan', isBeta: true }
+      { flag: '--tdd', desc: 'Tests-first per phase, works with any other mode', color: 'cyan', isBeta: true }
     ],
     features: [
       'Research best approaches and technologies',
@@ -380,10 +380,10 @@ export const stableWorkflows = [
     tip: '/ck:plan validate decisions auto-propagate to phase files',
     planFlags: [
       { flag: '--hard', desc: 'Complex multi-phase plan with red-team review', color: 'red' },
-      { flag: '--deep', desc: 'File inventory, test matrix, dependency map per phase', color: 'indigo', isBeta: true },
+      { flag: '--deep', desc: 'Deep analysis: file inventory, test scenarios, dependency map per phase', color: 'indigo', isBeta: true },
       { flag: '--parallel', desc: 'Plan designed for parallel agent execution', color: 'blue' },
       { flag: '--two', desc: 'Two-phase plan (plan → implement)', color: 'teal' },
-      { flag: '--tdd', desc: 'Tests-first structure per phase (composable)', color: 'cyan', isBeta: true },
+      { flag: '--tdd', desc: 'Tests-first per phase, works with any other flag', color: 'cyan', isBeta: true },
       { flag: 'validate', desc: 'Interview-style validation gate', color: 'purple' },
       { flag: 'red-team', desc: 'Spawn adversarial reviewers', color: 'orange' }
     ],
