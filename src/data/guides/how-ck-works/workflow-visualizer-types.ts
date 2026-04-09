@@ -1,7 +1,7 @@
 // TypeScript interfaces for the interactive workflow visualizer
 // Used by workflow-visualizer-scenarios.ts and how-it-works components
 
-export type StepType = 'user-input' | 'hook' | 'agent' | 'output';
+export type StepType = 'user-input' | 'hook' | 'skill' | 'agent' | 'output';
 
 export interface WorkflowStep {
   id: string;
@@ -65,6 +65,12 @@ export const stepTypeColors: Record<StepType, { bg: string; text: string; label:
     text: 'text-blue-600 dark:text-blue-400',
     label: 'Hook',
     labelVi: 'Hook',
+  },
+  skill: {
+    bg: 'bg-amber-500/10 dark:bg-amber-500/20',
+    text: 'text-amber-600 dark:text-amber-400',
+    label: 'Skill',
+    labelVi: 'Skill',
   },
   agent: {
     bg: 'bg-green-500/10 dark:bg-green-500/20',

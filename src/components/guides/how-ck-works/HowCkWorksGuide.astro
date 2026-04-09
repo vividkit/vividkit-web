@@ -214,7 +214,7 @@ const typeColorsJson = JSON.stringify(stepTypeColors);
           : 'ClaudeKit is not a standalone app or a new IDE. It is an advanced Framework integrated directly into your native Claude Code configuration (.claude) on your machine, transforming your terminal chat into a professional task automation system.'}
       </p>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 text-left">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 text-left">
         <div class="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 shadow-sm dark:shadow-none rounded-xl p-4">
           <div class="w-8 h-8 rounded-lg flex items-center justify-center bg-blue-500/10 text-blue-500 dark:text-blue-400 mb-3">
              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
@@ -222,12 +222,20 @@ const typeColorsJson = JSON.stringify(stepTypeColors);
           <h3 class="font-semibold text-gray-900 dark:text-white/90 mb-1">{isVi ? '1. Hooks (Hệ thống ngầm)' : '1. Hooks (Background System)'}</h3>
           <p class="text-[13px] text-gray-600 dark:text-white/50">{isVi ? 'Các script chạy lót nền tự động. Khởi tạo config, rules dự án mà bạn không cần copy-paste thủ công mỗi lần.' : 'Background scripts that run automatically. They initialize configs and project rules so you don\'t have to copy-paste them manually.'}</p>
         </div>
-        
+
+        <div class="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 shadow-sm dark:shadow-none rounded-xl p-4">
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center bg-amber-500/10 text-amber-600 dark:text-amber-400 mb-3">
+             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" /></svg>
+          </div>
+          <h3 class="font-semibold text-gray-900 dark:text-white/90 mb-1">{isVi ? '2. Skills (Kiến thức có sẵn)' : '2. Skills (Pre-built Knowledge)'}</h3>
+          <p class="text-[13px] text-gray-600 dark:text-white/50">{isVi ? 'Các gói kiến thức chuyên biệt (SKILL.md) kèm prompt, references và scripts. Là đơn vị thực thi chính khi bạn gõ /ck:*.' : 'Specialized knowledge packages (SKILL.md) with prompts, references and scripts. The primary execution unit when you type /ck:* commands.'}</p>
+        </div>
+
         <div class="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 shadow-sm dark:shadow-none rounded-xl p-4">
           <div class="w-8 h-8 rounded-lg flex items-center justify-center bg-green-500/10 text-green-600 dark:text-green-400 mb-3">
              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
           </div>
-          <h3 class="font-semibold text-gray-900 dark:text-white/90 mb-1">{isVi ? '2. Agents (Các chuyên gia)' : '2. Agents (Specialists)'}</h3>
+          <h3 class="font-semibold text-gray-900 dark:text-white/90 mb-1">{isVi ? '3. Agents (Các chuyên gia)' : '3. Agents (Specialists)'}</h3>
           <p class="text-[13px] text-gray-600 dark:text-white/50">{isVi ? 'Các mô hình được thiết lập riêng (Planner, Tester, Reviewer) với prompt và tool nội bộ, tập trung vào 1 chuyên môn.' : 'Specialized models (Planner, Tester, Reviewer) with internal prompts and tools, focusing on a single task domain.'}</p>
         </div>
 
@@ -235,7 +243,7 @@ const typeColorsJson = JSON.stringify(stepTypeColors);
           <div class="w-8 h-8 rounded-lg flex items-center justify-center bg-purple-500/10 text-purple-600 dark:text-purple-400 mb-3">
              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
           </div>
-          <h3 class="font-semibold text-gray-900 dark:text-white/90 mb-1">{isVi ? '3. Workflows (Quy trình)' : '3. Workflows (Pipelines)'}</h3>
+          <h3 class="font-semibold text-gray-900 dark:text-white/90 mb-1">{isVi ? '4. Workflows (Quy trình)' : '4. Workflows (Pipelines)'}</h3>
           <p class="text-[13px] text-gray-600 dark:text-white/50">{isVi ? 'Tổ hợp các Hooks, Skills và Agents chạy nối tiếp nhau từ lệnh nhập của bạn để xử lý luồng việc phức tạp trọn gói.' : 'Pipelines of Hooks, Skills and Agents running sequentially from your command input to handle complex workflows end-to-end.'}</p>
         </div>
       </div>
@@ -244,8 +252,8 @@ const typeColorsJson = JSON.stringify(stepTypeColors);
         <svg class="w-5 h-5 text-blue-500 dark:text-blue-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
         <p class="text-sm text-blue-900 dark:text-white/70">
           {isVi
-            ? 'Cùng xem chi tiết cách Hooks, Skills và Agents điều phối một lệnh thực tế. Chọn quy trình bên dưới và nhấn Play để khám phá cơ chế bên trong.'
-            : 'Let\'s see how Hooks, Skills and Agents coordinate a real command. Pick a workflow below and press Play to explore the internal mechanism.'}
+            ? 'Cùng xem chi tiết cách Hooks, Skills, Agents và Workflows điều phối một lệnh thực tế. Chọn quy trình bên dưới và nhấn Play để khám phá cơ chế bên trong.'
+            : 'Let\'s see how Hooks, Skills, Agents and Workflows coordinate a real command. Pick a workflow below and press Play to explore the internal mechanism.'}
         </p>
       </div>
     </div>

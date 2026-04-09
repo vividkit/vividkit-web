@@ -30,7 +30,6 @@ const icons = {
 
 const pillars = [
   { key: "agents", icon: icons.users, bgClass: "bg-purple-50 dark:bg-purple-500/10", borderClass: "border-purple-200 dark:border-purple-500/20", textClass: "text-purple-600 dark:text-purple-400", titleClass: "text-purple-700 dark:text-purple-400" },
-  { key: "commands", icon: icons.bolt, bgClass: "bg-blue-50 dark:bg-blue-500/10", borderClass: "border-blue-200 dark:border-blue-500/20", textClass: "text-blue-600 dark:text-blue-400", titleClass: "text-blue-700 dark:text-blue-400" },
   { key: "skills", icon: icons.brain, bgClass: "bg-emerald-50 dark:bg-emerald-500/10", borderClass: "border-emerald-200 dark:border-emerald-500/20", textClass: "text-emerald-600 dark:text-emerald-400", titleClass: "text-emerald-700 dark:text-emerald-400" },
   { key: "workflows", icon: icons.arrow_path, bgClass: "bg-amber-50 dark:bg-amber-500/10", borderClass: "border-amber-200 dark:border-amber-500/20", textClass: "text-amber-600 dark:text-amber-400", titleClass: "text-amber-700 dark:text-amber-400" },
   { key: "hooks", icon: icons.link, bgClass: "bg-rose-50 dark:bg-rose-500/10", borderClass: "border-rose-200 dark:border-rose-500/20", textClass: "text-rose-600 dark:text-rose-400", titleClass: "text-rose-700 dark:text-rose-400" },
@@ -54,7 +53,7 @@ const processSteps = [
     <p class="text-sm text-slate-500 dark:text-slate-400 mt-2" set:html={t("guides.what_is_claudekit.pillars_desc")} />
   </div>
   <div class="p-6">
-    <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {pillars.map((pillar) => (
         <div class={`text-center p-4 rounded-xl ${pillar.bgClass} border ${pillar.borderClass} hover:scale-105 transition-transform`}>
           <div class={`flex justify-center mb-2 ${pillar.textClass}`}>
