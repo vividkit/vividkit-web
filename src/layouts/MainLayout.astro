@@ -3,6 +3,7 @@ import type { SEOMeta } from '@/types';
 import '@/styles/global.css';
 import type { Language } from '@/i18n';
 import Analytics from '@vercel/analytics/astro';
+import ThirdPartyAnalytics from '@/components/layout/Analytics.astro';
 
 interface Props extends SEOMeta {
   lang?: Language;
@@ -83,6 +84,9 @@ const structuredData = {
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+    <!-- Google Analytics + Facebook Pixel -->
+    <ThirdPartyAnalytics />
 
     <!-- Theme toggle FOUC prevention -->
     <script is:inline>
