@@ -61,6 +61,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
           subcommands: ["archive", "red-team", "validate"],
           flags: ["--auto", "--fast", "--hard", "--parallel", "--two", "--no-tasks"],
+          betaFlags: ["--deep", "--tdd"],
           step: 4,
         },
         // Step 5: Execute plan
@@ -72,6 +73,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           detail: t("commands.stable.cook.detail"),
           isSkill: true,
           flags: ["--interactive", "--fast", "--parallel", "--auto", "--no-test"],
+          betaFlags: ["--tdd"],
           step: 5,
         },
       ],
@@ -117,6 +119,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
           subcommands: ["archive", "red-team", "validate"],
           flags: ["--auto", "--fast", "--hard", "--parallel", "--two", "--no-tasks"],
+          betaFlags: ["--deep", "--tdd"],
         },
         {
           command: "/ck:sequential-thinking",
@@ -409,6 +412,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           detail: t("commands.stable.cook.detail"),
           isSkill: true,
           flags: ["--interactive", "--fast", "--parallel", "--auto", "--no-test"],
+          betaFlags: ["--tdd"],
         },
       ],
     },
