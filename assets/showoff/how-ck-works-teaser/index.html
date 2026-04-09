@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How ClaudeKit Works — Interactive Guide | VividKit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & Variables ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:220 15% 5%;--bg2:220 15% 8%;--bg3:220 15% 11%;
+  --fg:0 0% 95%;--fg2:0 0% 72%;--fg3:0 0% 48%;
+  --accent:220 90% 60%;--accent2:280 82% 62%;--accent3:160 72% 52%;--accent4:36 92% 56%;
+  --glass:0 0% 100% / 0.04;--glass2:0 0% 100% / 0.07;
+  --border:0 0% 100% / 0.07;--border2:0 0% 100% / 0.14;
+  --radius:16px;--radius-sm:10px;
+  --font:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;
+}
+[data-theme="light"]{
+  --bg:220 20% 97%;--bg2:0 0% 100%;--bg3:220 15% 94%;
+  --fg:220 15% 10%;--fg2:220 10% 35%;--fg3:220 8% 55%;
+  --glass:220 20% 0% / 0.03;--glass2:220 20% 0% / 0.06;
+  --border:220 20% 0% / 0.08;--border2:220 20% 0% / 0.14;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--font);background:hsl(var(--bg));color:hsl(var(--fg));line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* ── Utility ── */
+.container{max-width:1080px;margin:0 auto;padding:0 24px}
+.glass{background:hsl(var(--glass));border:1px solid hsl(var(--border));backdrop-filter:blur(14px);border-radius:var(--radius)}
+.glass2{background:hsl(var(--glass2));border:1px solid hsl(var(--border2));backdrop-filter:blur(18px);border-radius:var(--radius)}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:99px;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+
+/* ── Controls ── */
+.controls{position:fixed;top:16px;right:16px;z-index:100;display:flex;gap:8px}
+.ctrl-btn{width:40px;height:40px;border-radius:50%;border:1px solid hsl(var(--border2));background:hsl(var(--bg2));color:hsl(var(--fg2));cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:.2s;backdrop-filter:blur(10px)}
+.ctrl-btn:hover{background:hsl(var(--glass2));border-color:hsl(var(--accent)/.4);color:hsl(var(--fg))}
+
+/* ── Animations ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes pulse-glow{0%,100%{opacity:.4}50%{opacity:.8}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes typewriter{from{width:0}to{width:100%}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes orbit{0%{transform:rotate(0deg) translateX(160px) rotate(0deg)}100%{transform:rotate(360deg) translateX(160px) rotate(-360deg)}}
+.fade-up{animation:fadeUp .8s ease both}
+.fade-up-d1{animation-delay:.1s}.fade-up-d2{animation-delay:.2s}.fade-up-d3{animation-delay:.3s}.fade-up-d4{animation-delay:.4s}.fade-up-d5{animation-delay:.5s}
+
+/* ── Hero ── */
+#hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:80px 0 60px}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg::before{content:'';position:absolute;top:-30%;left:-20%;width:70%;height:70%;background:radial-gradient(ellipse,hsl(var(--accent)/.12),transparent 70%);filter:blur(80px)}
+.hero-bg::after{content:'';position:absolute;bottom:-20%;right:-15%;width:60%;height:60%;background:radial-gradient(ellipse,hsl(var(--accent2)/.1),transparent 70%);filter:blur(80px)}
+.hero-content{position:relative;z-index:1;text-align:center;max-width:820px;margin:0 auto}
+.hero-badge{background:hsl(var(--accent)/.12);color:hsl(var(--accent));border:1px solid hsl(var(--accent)/.2)}
+.hero-title{font-size:clamp(2.4rem,6vw,4rem);font-weight:800;line-height:1.1;margin:28px 0 20px;letter-spacing:-.03em}
+.hero-title .gradient{background:linear-gradient(135deg,hsl(var(--accent)),hsl(var(--accent2)),hsl(var(--accent3)));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:clamp(1rem,2.2vw,1.2rem);color:hsl(var(--fg2));max-width:640px;margin:0 auto 36px;line-height:1.7}
+.hero-stats{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin-bottom:40px}
+.stat-pill{display:flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--radius);font-size:14px;font-weight:600;color:hsl(var(--fg))}
+.stat-num{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}
+.hero-cta{display:inline-flex;align-items:center;gap:10px;padding:14px 32px;border-radius:var(--radius);font-weight:700;font-size:15px;text-decoration:none;color:#fff;background:linear-gradient(135deg,hsl(var(--accent)),hsl(var(--accent2)));box-shadow:0 4px 24px hsl(var(--accent)/.3);transition:.3s}
+.hero-cta:hover{transform:translateY(-2px);box-shadow:0 8px 32px hsl(var(--accent)/.4)}
+/* Orbiting icons */
+.orbit-ring{position:absolute;top:50%;left:50%;width:320px;height:320px;margin:-160px 0 0 -160px;pointer-events:none;opacity:.18}
+.orbit-icon{position:absolute;top:50%;left:50%;margin:-14px;width:28px;height:28px;animation:orbit 20s linear infinite}
+.orbit-icon:nth-child(2){animation-delay:-5s}.orbit-icon:nth-child(3){animation-delay:-10s}.orbit-icon:nth-child(4){animation-delay:-15s}
+
+/* ── Pillars ── */
+#pillars{padding:100px 0}
+.section-label{text-align:center;margin-bottom:12px}
+.section-title{text-align:center;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;letter-spacing:-.02em;margin-bottom:16px}
+.section-sub{text-align:center;color:hsl(var(--fg2));font-size:15px;max-width:600px;margin:0 auto 48px}
+.pillars-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+@media(max-width:768px){.pillars-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.pillars-grid{grid-template-columns:1fr}}
+.pillar-card{padding:28px 24px;text-align:center;transition:.3s;position:relative;overflow:hidden}
+.pillar-card:hover{transform:translateY(-4px);border-color:hsl(var(--border2))}
+.pillar-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:24px}
+.pillar-name{font-size:17px;font-weight:700;margin-bottom:6px}
+.pillar-desc{font-size:13px;color:hsl(var(--fg2));line-height:1.6}
+.pillar-num{position:absolute;top:12px;left:16px;font-size:11px;font-weight:700;color:hsl(var(--fg3));opacity:.6}
+
+/* Pillar colors */
+.p-hooks .pillar-icon{background:hsl(220 90% 60%/.12);color:hsl(220 90% 60%)}
+.p-skills .pillar-icon{background:hsl(36 92% 56%/.12);color:hsl(36 92% 56%)}
+.p-agents .pillar-icon{background:hsl(160 72% 46%/.12);color:hsl(160 72% 46%)}
+.p-workflows .pillar-icon{background:hsl(280 82% 62%/.12);color:hsl(280 82% 62%)}
+.p-hooks:hover{border-color:hsl(220 90% 60%/.3)}.p-skills:hover{border-color:hsl(36 92% 56%/.3)}
+.p-agents:hover{border-color:hsl(160 72% 46%/.3)}.p-workflows:hover{border-color:hsl(280 82% 62%/.3)}
+
+/* ── Pipeline Demo ── */
+#pipeline{padding:100px 0;position:relative}
+.pipeline-visual{padding:36px;margin-top:20px;position:relative;overflow:hidden}
+.pipeline-flow{display:flex;align-items:center;gap:0;overflow-x:auto;padding:20px 0;scrollbar-width:none}
+.pipeline-flow::-webkit-scrollbar{display:none}
+.pipe-step{display:flex;flex-direction:column;align-items:center;min-width:120px;position:relative;flex-shrink:0}
+.pipe-node{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;position:relative;z-index:1;transition:.4s}
+.pipe-label{margin-top:10px;font-size:12px;font-weight:600;text-align:center;color:hsl(var(--fg2))}
+.pipe-type{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:4px;opacity:.7}
+.pipe-arrow{display:flex;align-items:center;padding:0 4px;color:hsl(var(--fg3));font-size:18px;flex-shrink:0}
+/* Step type colors */
+.step-input .pipe-node{background:hsl(280 82% 62%/.15);color:hsl(280 82% 62%);border:2px solid hsl(280 82% 62%/.3)}
+.step-hook .pipe-node{background:hsl(220 90% 60%/.15);color:hsl(220 90% 60%);border:2px solid hsl(220 90% 60%/.3)}
+.step-skill .pipe-node{background:hsl(36 92% 56%/.15);color:hsl(36 92% 56%);border:2px solid hsl(36 92% 56%/.3)}
+.step-agent .pipe-node{background:hsl(160 72% 46%/.15);color:hsl(160 72% 46%);border:2px solid hsl(160 72% 46%/.3)}
+.step-output .pipe-node{background:hsl(340 80% 55%/.15);color:hsl(340 80% 55%);border:2px solid hsl(340 80% 55%/.3)}
+.step-active .pipe-node{animation:pulse-glow 1.5s ease infinite;box-shadow:0 0 24px hsl(var(--accent)/.3)}
+/* Terminal mockup */
+.terminal{margin-top:32px;border-radius:var(--radius);overflow:hidden;border:1px solid hsl(var(--border2));background:hsl(220 20% 6%)}
+[data-theme="light"] .terminal{background:hsl(220 15% 97%)}
+.terminal-bar{padding:10px 16px;background:hsl(var(--glass2));display:flex;align-items:center;gap:8px;border-bottom:1px solid hsl(var(--border))}
+.terminal-dot{width:11px;height:11px;border-radius:50%}
+.terminal-dot.r{background:#ff5f57}.terminal-dot.y{background:#ffbd2e}.terminal-dot.g{background:#28c840}
+.terminal-body{padding:20px;font-family:var(--mono);font-size:13px;line-height:1.8;color:hsl(var(--fg2))}
+.terminal-body .prompt{color:hsl(var(--accent3))}
+.terminal-body .cmd{color:hsl(var(--fg));font-weight:600}
+.terminal-body .dim{color:hsl(var(--fg3))}
+.terminal-body .hl{color:hsl(var(--accent4))}
+
+/* ── Scenarios ── */
+#scenarios{padding:100px 0}
+.kits-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:8px}
+@media(max-width:640px){.kits-grid{grid-template-columns:1fr}}
+.kit-card{padding:32px 28px;position:relative;overflow:hidden}
+.kit-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.kit-ek::before{background:linear-gradient(90deg,hsl(var(--accent)),hsl(var(--accent3)))}
+.kit-mk::before{background:linear-gradient(90deg,hsl(var(--accent2)),hsl(var(--accent4)))}
+.kit-title{font-size:20px;font-weight:800;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.kit-count{font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px}
+.kit-ek .kit-count{background:hsl(var(--accent3)/.12);color:hsl(var(--accent3))}
+.kit-mk .kit-count{background:hsl(var(--accent2)/.12);color:hsl(var(--accent2))}
+.kit-desc{font-size:13px;color:hsl(var(--fg2));margin-bottom:16px}
+.scenario-tags{display:flex;flex-wrap:wrap;gap:8px}
+.scenario-tag{padding:6px 12px;border-radius:var(--radius-sm);font-size:12px;font-weight:500;font-family:var(--mono);background:hsl(var(--glass2));border:1px solid hsl(var(--border));color:hsl(var(--fg2));transition:.2s}
+.scenario-tag:hover{border-color:hsl(var(--accent)/.3);color:hsl(var(--fg))}
+
+/* ── CTA ── */
+#cta{padding:100px 0 80px;text-align:center;position:relative}
+.cta-glow{position:absolute;top:50%;left:50%;width:500px;height:300px;margin:-150px 0 0 -250px;background:radial-gradient(ellipse,hsl(var(--accent)/.08),transparent 70%);filter:blur(60px);pointer-events:none}
+.cta-buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin-top:32px}
+.btn-primary{display:inline-flex;align-items:center;gap:10px;padding:14px 32px;border-radius:var(--radius);font-weight:700;font-size:15px;text-decoration:none;color:#fff;background:linear-gradient(135deg,hsl(var(--accent)),hsl(var(--accent2)));box-shadow:0 4px 24px hsl(var(--accent)/.25);transition:.3s;border:none;cursor:pointer}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px hsl(var(--accent)/.35)}
+.btn-secondary{display:inline-flex;align-items:center;gap:10px;padding:14px 32px;border-radius:var(--radius);font-weight:600;font-size:15px;text-decoration:none;color:hsl(var(--fg));border:1px solid hsl(var(--border2));background:hsl(var(--glass));transition:.3s;cursor:pointer}
+.btn-secondary:hover{border-color:hsl(var(--accent)/.4);background:hsl(var(--glass2))}
+
+/* ── Footer ── */
+footer{padding:32px 0;text-align:center;font-size:12px;color:hsl(var(--fg3));border-top:1px solid hsl(var(--border))}
+footer a{color:hsl(var(--accent));text-decoration:none}
+
+/* ── Responsive ── */
+@media(max-width:640px){
+  .hero-title{font-size:2rem}
+  .hero-stats{gap:10px}
+  .stat-pill{padding:8px 14px;font-size:12px}
+  .stat-num{font-size:18px}
+  .pipe-step{min-width:90px}
+  .pipe-node{width:44px;height:44px;font-size:18px}
+  .pillar-card{padding:20px 16px}
+}
+</style>
+</head>
+<body>
+
+<!-- Controls -->
+<div class="controls">
+  <button class="ctrl-btn" id="langBtn" title="Switch language" onclick="toggleLang()">🌐</button>
+  <button class="ctrl-btn" id="themeBtn" title="Toggle theme" onclick="toggleTheme()">🌙</button>
+</div>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="container hero-content">
+    <div class="badge hero-badge fade-up" data-vi="HƯỚNG DẪN TƯƠNG TÁC MỚI" data-en="NEW INTERACTIVE GUIDE">HƯỚNG DẪN TƯƠNG TÁC MỚI</div>
+    <h1 class="hero-title fade-up fade-up-d1">
+      <span data-vi="Bên trong mỗi lệnh" data-en="Inside every command">Bên trong mỗi lệnh</span><br>
+      <span class="gradient" data-vi="/ck:* là gì?" data-en="what is /ck:*?">/ck:* là gì?</span>
+    </h1>
+    <p class="hero-sub fade-up fade-up-d2" data-vi="Khám phá cơ chế ẩn sau ClaudeKit — cách Hooks, Skills, Agents và Workflows phối hợp biến terminal thành hệ thống tự động hóa chuyên nghiệp." data-en="Discover the invisible engine behind ClaudeKit — how Hooks, Skills, Agents and Workflows orchestrate to transform your terminal into a professional automation system.">Khám phá cơ chế ẩn sau ClaudeKit — cách Hooks, Skills, Agents và Workflows phối hợp biến terminal thành hệ thống tự động hóa chuyên nghiệp.</p>
+    <div class="hero-stats fade-up fade-up-d3">
+      <div class="stat-pill glass">
+        <span class="stat-num" style="color:hsl(var(--accent))">20</span>
+        <span data-vi="Kịch bản" data-en="Scenarios">Kịch bản</span>
+      </div>
+      <div class="stat-pill glass">
+        <span class="stat-num" style="color:hsl(var(--accent2))">2</span>
+        <span data-vi="Bộ Kit" data-en="Kits">Bộ Kit</span>
+      </div>
+      <div class="stat-pill glass">
+        <span class="stat-num" style="color:hsl(var(--accent3))">4</span>
+        <span data-vi="Trụ cột" data-en="Pillars">Trụ cột</span>
+      </div>
+      <div class="stat-pill glass">
+        <span class="stat-num" style="color:hsl(var(--accent4))">2</span>
+        <span data-vi="Ngôn ngữ" data-en="Languages">Ngôn ngữ</span>
+      </div>
+    </div>
+    <a class="hero-cta fade-up fade-up-d4" href="http://localhost:4321/vi/guides/how-ck-works" target="_blank">
+      <span data-vi="Khám Phá Ngay" data-en="Explore Now">Khám Phá Ngay</span> →
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════ 4 PILLARS ═══════════ -->
+<section id="pillars">
+  <div class="container">
+    <div class="section-label"><span class="badge glass" data-vi="KIẾN TRÚC" data-en="ARCHITECTURE">KIẾN TRÚC</span></div>
+    <h2 class="section-title" data-vi="4 Trụ Cột Cốt Lõi" data-en="4 Core Pillars">4 Trụ Cột Cốt Lõi</h2>
+    <p class="section-sub" data-vi="Mỗi lệnh /ck:* kích hoạt một pipeline phối hợp 4 thành phần — từ automation ngầm đến AI chuyên biệt." data-en="Every /ck:* command triggers a pipeline coordinating 4 components — from background automation to specialized AI.">Mỗi lệnh /ck:* kích hoạt một pipeline phối hợp 4 thành phần — từ automation ngầm đến AI chuyên biệt.</p>
+    <div class="pillars-grid">
+      <div class="pillar-card glass p-hooks fade-up">
+        <span class="pillar-num">01</span>
+        <div class="pillar-icon">⚡</div>
+        <div class="pillar-name">Hooks</div>
+        <div class="pillar-desc" data-vi="Script nền tự động — khởi tạo config, inject context, rules dự án mỗi session" data-en="Background scripts — auto-init configs, inject context, project rules per session">Script nền tự động — khởi tạo config, inject context, rules dự án mỗi session</div>
+      </div>
+      <div class="pillar-card glass p-skills fade-up fade-up-d1">
+        <span class="pillar-num">02</span>
+        <div class="pillar-icon">✨</div>
+        <div class="pillar-name">Skills</div>
+        <div class="pillar-desc" data-vi="Gói kiến thức SKILL.md — prompts, references, scripts. Đơn vị thực thi chính khi gõ /ck:*" data-en="SKILL.md knowledge packages — prompts, references, scripts. Primary execution unit for /ck:* commands">Gói kiến thức SKILL.md — prompts, references, scripts. Đơn vị thực thi chính khi gõ /ck:*</div>
+      </div>
+      <div class="pillar-card glass p-agents fade-up fade-up-d2">
+        <span class="pillar-num">03</span>
+        <div class="pillar-icon">🤖</div>
+        <div class="pillar-name">Agents</div>
+        <div class="pillar-desc" data-vi="Mô hình chuyên biệt (Planner, Tester, Reviewer) — prompt riêng, tool riêng, 1 chuyên môn" data-en="Specialized models (Planner, Tester, Reviewer) — custom prompts, scoped tools, single domain">Mô hình chuyên biệt (Planner, Tester, Reviewer) — prompt riêng, tool riêng, 1 chuyên môn</div>
+      </div>
+      <div class="pillar-card glass p-workflows fade-up fade-up-d3">
+        <span class="pillar-num">04</span>
+        <div class="pillar-icon">🔄</div>
+        <div class="pillar-name">Workflows</div>
+        <div class="pillar-desc" data-vi="Pipeline tổ hợp Hooks → Skills → Agents — chạy nối tiếp, xử lý luồng việc phức tạp trọn gói" data-en="Orchestrated pipelines of Hooks → Skills → Agents — sequential execution, end-to-end complex workflows">Pipeline tổ hợp Hooks → Skills → Agents — chạy nối tiếp, xử lý luồng việc phức tạp trọn gói</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PIPELINE DEMO ═══════════ -->
+<section id="pipeline">
+  <div class="container">
+    <div class="section-label"><span class="badge glass" data-vi="MINH HỌA" data-en="DEMO">MINH HỌA</span></div>
+    <h2 class="section-title" data-vi="Pipeline Thực Tế" data-en="Real Pipeline">Pipeline Thực Tế</h2>
+    <p class="section-sub" data-vi="Ví dụ: khi bạn gõ /ck:cook — xem từng bước ClaudeKit xử lý yêu cầu của bạn." data-en="Example: when you type /ck:cook — see each step ClaudeKit takes to handle your request.">Ví dụ: khi bạn gõ /ck:cook — xem từng bước ClaudeKit xử lý yêu cầu của bạn.</p>
+
+    <div class="pipeline-visual glass2">
+      <div class="pipeline-flow" id="pipelineFlow">
+        <div class="pipe-step step-input step-active"><div class="pipe-node">⌨️</div><div class="pipe-label">/ck:cook</div><div class="pipe-type">Input</div></div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step step-hook"><div class="pipe-node">⚡</div><div class="pipe-label">Session Init</div><div class="pipe-type">Hook</div></div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step step-skill"><div class="pipe-node">✨</div><div class="pipe-label" data-vi="Kích hoạt Cook" data-en="Activate Cook">Kích hoạt Cook</div><div class="pipe-type">Skill</div></div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step step-agent"><div class="pipe-node">📋</div><div class="pipe-label">Planner</div><div class="pipe-type">Agent</div></div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step step-agent"><div class="pipe-node">🛠️</div><div class="pipe-label">Developer</div><div class="pipe-type">Agent</div></div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step step-agent"><div class="pipe-node">🧪</div><div class="pipe-label">Tester</div><div class="pipe-type">Agent</div></div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step step-agent"><div class="pipe-node">🔍</div><div class="pipe-label">Reviewer</div><div class="pipe-type">Agent</div></div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step step-output"><div class="pipe-node">✅</div><div class="pipe-label" data-vi="Hoàn thành" data-en="Done">Hoàn thành</div><div class="pipe-type">Output</div></div>
+      </div>
+
+      <!-- Terminal -->
+      <div class="terminal">
+        <div class="terminal-bar">
+          <div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div>
+          <span style="font-size:12px;color:hsl(var(--fg3));margin-left:8px;font-family:var(--mono)">claude-code</span>
+        </div>
+        <div class="terminal-body">
+          <div><span class="prompt">❯</span> <span class="cmd">/ck:cook</span> <span class="dim">"Add dark mode toggle"</span></div>
+          <div class="dim">┌ <span class="hl">Hook</span> SessionInit → inject rules, context</div>
+          <div class="dim">├ <span class="hl">Skill</span> cook activated → reading SKILL.md</div>
+          <div class="dim">├ <span class="hl">Agent</span> Planner → creating implementation plan</div>
+          <div class="dim">├ <span class="hl">Agent</span> Developer → writing code across 4 files</div>
+          <div class="dim">├ <span class="hl">Agent</span> Tester → running 12 tests... all passed ✓</div>
+          <div class="dim">├ <span class="hl">Agent</span> Reviewer → code quality check ✓</div>
+          <div><span class="prompt">✓</span> <span style="color:hsl(var(--accent3))">Feature complete.</span> <span class="dim">4 files changed, 127 insertions</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ SCENARIOS ═══════════ -->
+<section id="scenarios">
+  <div class="container">
+    <div class="section-label"><span class="badge glass" data-vi="KỊCH BẢN" data-en="SCENARIOS">KỊCH BẢN</span></div>
+    <h2 class="section-title" data-vi="20 Kịch Bản, 2 Bộ Kit" data-en="20 Scenarios, 2 Kits">20 Kịch Bản, 2 Bộ Kit</h2>
+    <p class="section-sub" data-vi="Từ brainstorm ý tưởng đến ship production — mỗi kịch bản mô phỏng pipeline thực tế với animation từng bước." data-en="From brainstorming ideas to shipping production — each scenario simulates a real pipeline with step-by-step animation.">Từ brainstorm ý tưởng đến ship production — mỗi kịch bản mô phỏng pipeline thực tế với animation từng bước.</p>
+
+    <div class="kits-grid">
+      <!-- Engineer Kit -->
+      <div class="kit-card glass kit-ek fade-up">
+        <div class="kit-title">
+          <span>⚙️</span> Engineer Kit <span class="kit-count">13</span>
+        </div>
+        <div class="kit-desc" data-vi="Dành cho lập trình viên — từ planning đến deployment" data-en="For developers — from planning to deployment">Dành cho lập trình viên — từ planning đến deployment</div>
+        <div class="scenario-tags">
+          <span class="scenario-tag">/ck:brainstorm</span>
+          <span class="scenario-tag">/ck:plan</span>
+          <span class="scenario-tag">/ck:cook</span>
+          <span class="scenario-tag">/ck:fix</span>
+          <span class="scenario-tag">/ck:frontend-design</span>
+          <span class="scenario-tag">/ck:write</span>
+          <span class="scenario-tag">/ck:ship</span>
+          <span class="scenario-tag">/ck:code-review</span>
+          <span class="scenario-tag">/ck:test</span>
+          <span class="scenario-tag">/ck:deploy</span>
+          <span class="scenario-tag">/ck:predict</span>
+          <span class="scenario-tag">/ck:bootstrap</span>
+          <span class="scenario-tag">/ck:security-scan</span>
+        </div>
+      </div>
+      <!-- Marketing Kit -->
+      <div class="kit-card glass kit-mk fade-up fade-up-d1">
+        <div class="kit-title">
+          <span>🎨</span> Marketing Kit <span class="kit-count">7</span>
+        </div>
+        <div class="kit-desc" data-vi="Dành cho marketer — nội dung, SEO, chiến dịch" data-en="For marketers — content, SEO, campaigns">Dành cho marketer — nội dung, SEO, chiến dịch</div>
+        <div class="scenario-tags">
+          <span class="scenario-tag">/ck:design</span>
+          <span class="scenario-tag">/ck:seo</span>
+          <span class="scenario-tag">/ck:campaign</span>
+          <span class="scenario-tag">/ck:social</span>
+          <span class="scenario-tag">/ck:email</span>
+          <span class="scenario-tag">/ck:persona</span>
+          <span class="scenario-tag">/ck:video</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CTA ═══════════ -->
+<section id="cta">
+  <div class="cta-glow"></div>
+  <div class="container" style="position:relative;z-index:1">
+    <h2 class="section-title" data-vi="Sẵn sàng khám phá?" data-en="Ready to explore?">Sẵn sàng khám phá?</h2>
+    <p class="section-sub" data-vi="Nhấn Play, chọn kịch bản, và xem ClaudeKit orchestrate mọi thứ theo thời gian thực." data-en="Hit Play, pick a scenario, and watch ClaudeKit orchestrate everything in real time.">Nhấn Play, chọn kịch bản, và xem ClaudeKit orchestrate mọi thứ theo thời gian thực.</p>
+    <div class="cta-buttons">
+      <a class="btn-primary" href="http://localhost:4321/vi/guides/how-ck-works" target="_blank">
+        <span data-vi="Khám Phá Guide" data-en="Explore the Guide">Khám Phá Guide</span> →
+      </a>
+      <a class="btn-secondary" href="https://claudekit.cc" target="_blank">
+        <span data-vi="Tìm Hiểu ClaudeKit" data-en="Learn About ClaudeKit">Tìm Hiểu ClaudeKit</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <p>Built with ❤️ by <a href="https://vividkit.cc" target="_blank">VividKit</a> · <a href="https://code.claude.com/docs/en/skills" target="_blank">Claude Code Skills</a> · <a href="https://docs.claudekit.cc" target="_blank">ClaudeKit Docs</a></p>
+  </div>
+</footer>
+
+<script>
+// ── Theme toggle ──
+function toggleTheme(){
+  const html=document.documentElement;
+  const next=html.dataset.theme==='dark'?'light':'dark';
+  html.dataset.theme=next;
+  document.getElementById('themeBtn').textContent=next==='dark'?'🌙':'☀️';
+}
+// ── Language toggle ──
+let currentLang='vi';
+function toggleLang(){
+  currentLang=currentLang==='vi'?'en':'vi';
+  document.querySelectorAll('[data-vi][data-en]').forEach(el=>{
+    el.textContent=el.dataset[currentLang];
+  });
+  document.documentElement.lang=currentLang;
+}
+// ── Pipeline animation ──
+(function(){
+  const steps=document.querySelectorAll('.pipe-step');
+  let idx=0;
+  setInterval(()=>{
+    steps.forEach(s=>s.classList.remove('step-active'));
+    idx=(idx+1)%steps.length;
+    steps[idx].classList.add('step-active');
+  },1800);
+})();
+// ── Scroll reveal ──
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.style.animationPlayState='running';obs.unobserve(e.target)}});
+},{threshold:.15});
+document.querySelectorAll('.fade-up').forEach(el=>{el.style.animationPlayState='paused';obs.observe(el)});
+</script>
+</body>
+</html>
