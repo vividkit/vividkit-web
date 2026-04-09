@@ -149,7 +149,7 @@ export const stableWorkflows = [
       { flag: '--parallel', desc: 'Chạy agent song song', color: 'blue' },
       { flag: '--auto', desc: 'Tự động duyệt mọi bước', color: 'green' },
       { flag: '--no-test', desc: 'Không bắt buộc test', color: 'orange' },
-      { flag: '--tdd', desc: 'Viết test trước theo từng phase (kết hợp mọi mode)', color: 'cyan', isBeta: true }
+      { flag: '--tdd', desc: 'Viết test trước theo từng phase, dùng chung với mọi mode khác', color: 'cyan', isBeta: true }
     ],
     features: [
       'Research best practices và technologies',
@@ -380,10 +380,10 @@ export const stableWorkflows = [
     tip: '/ck:plan validate decisions tự propagate xuống phase files',
     planFlags: [
       { flag: '--hard', desc: 'Plan phức tạp nhiều phase với red-team review', color: 'red' },
-      { flag: '--deep', desc: 'Bảng file, ma trận test, sơ đồ phụ thuộc theo phase', color: 'indigo', isBeta: true },
+      { flag: '--deep', desc: 'Phân tích sâu: danh sách file, kịch bản test, sơ đồ phụ thuộc theo phase', color: 'indigo', isBeta: true },
       { flag: '--parallel', desc: 'Plan thiết kế cho agent chạy song song', color: 'blue' },
       { flag: '--two', desc: 'Plan 2 phase (plan → implement)', color: 'teal' },
-      { flag: '--tdd', desc: 'Cấu trúc viết test trước theo phase (kết hợp được)', color: 'cyan', isBeta: true },
+      { flag: '--tdd', desc: 'Viết test trước theo phase, dùng chung với mọi flag khác', color: 'cyan', isBeta: true },
       { flag: 'validate', desc: 'Cổng validation kiểu phỏng vấn', color: 'purple' },
       { flag: 'red-team', desc: 'Spawn adversarial reviewers', color: 'orange' }
     ],
