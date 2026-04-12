@@ -129,10 +129,10 @@ const isVi = currentLang === 'vi';
                 <span class="text-gray-900 dark:text-white/90 font-medium whitespace-nowrap truncate" x-text="step.name"></span>
                 <span
                   x-bind:class="'w-fit text-[10px] font-medium px-2 py-0.5 rounded-full ' + getColorClass(step.color, 'iconBg') + ' ' + getColorClass(step.color, 'iconText')"
-                  x-text={`step.type === 'agent' ? (step.isSubAgent ? ('${isVi}' === 'true' ? 'Sub-Agent' : 'Sub-Agent') : ('${isVi}' === 'true' ? 'Main Agent' : 'Main Agent')) : ('${isVi}' === 'true' ? typeColors[step.type]?.labelVi : typeColors[step.type]?.label)`}
+                  x-text="step.type === 'agent' ? (step.isSubAgent ? 'Sub-Agent' : 'Main Agent') : (isVi ? typeColors[step.type]?.labelVi : typeColors[step.type]?.label)"
                 ></span>
               </div>
-              <p class="text-xs text-gray-500 dark:text-white/50 truncate" x-text={`'${isVi}' === 'true' ? step.descVi : step.descEn`}></p>
+              <p class="text-xs text-gray-500 dark:text-white/50 truncate" x-text="isVi ? step.descVi : step.descEn"></p>
             </div>
           </button>
 

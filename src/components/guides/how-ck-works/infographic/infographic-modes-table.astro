@@ -1,0 +1,91 @@
+---
+// Workflow modes table showing flags and their behaviors
+import type { WorkflowModeRow } from '@/data/guides/how-ck-works';
+import type { Language } from '@/i18n';
+
+interface Props {
+  modes: WorkflowModeRow[];
+  composableFlagsEn?: string;
+  composableFlagsVi?: string;
+  lang: Language;
+}
+
+const { modes, composableFlagsEn, composableFlagsVi, lang } = Astro.props;
+const isVi = lang === 'vi';
+
+// Skip if no modes data
+if (!modes || modes.length === 0) return null;
+
+// Flag colors for visual distinction
+const flagColors: Record<string, string> = {
+  '--auto': 'bg-gray-500',
+  '--fast': 'bg-green-500',
+  '--hard': 'bg-red-500',
+  '--deep': 'bg-purple-500',
+  '--parallel': 'bg-blue-500',
+  '--two': 'bg-amber-500',
+};
+---
+
+<div class="mb-8">
+  <h2 class="text-xs font-semibold text-gray-500 dark:text-white/40 uppercase tracking-wider mb-4">
+    {isVi ? 'CHẾ ĐỘ LÀM VIỆC' : 'WORKFLOW MODES'}
+  </h2>
+
+  <div class="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl overflow-hidden">
+    <!-- Table (scrollable on mobile) -->
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="bg-gray-50 dark:bg-white/5 border-b border-gray-200 dark:border-white/10">
+            <th class="px-3 py-2.5 text-left text-xs font-semibold text-gray-500 dark:text-white/50 uppercase tracking-wider">Flag</th>
+            <th class="px-3 py-2.5 text-left text-xs font-semibold text-gray-500 dark:text-white/50 uppercase tracking-wider">{isVi ? 'Chế độ' : 'Mode'}</th>
+            <th class="px-3 py-2.5 text-left text-xs font-semibold text-gray-500 dark:text-white/50 uppercase tracking-wider">{isVi ? 'Nghiên cứu' : 'Research'}</th>
+            <th class="px-3 py-2.5 text-left text-xs font-semibold text-gray-500 dark:text-white/50 uppercase tracking-wider">Red Team</th>
+            <th class="px-3 py-2.5 text-left text-xs font-semibold text-gray-500 dark:text-white/50 uppercase tracking-wider">{isVi ? 'Xác thực' : 'Validation'}</th>
+            <th class="px-3 py-2.5 text-left text-xs font-semibold text-gray-500 dark:text-white/50 uppercase tracking-wider">Cook Flag</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100 dark:divide-white/5">
+          {modes.map(row => (
+            <tr class="hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+              <td class="px-3 py-2.5">
+                <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-gray-100 dark:bg-white/10 text-gray-800 dark:text-white/90 font-mono text-xs">
+                  <span class={`w-2 h-2 rounded-full ${flagColors[row.flag] || 'bg-gray-400'}`}></span>
+                  {row.flag}
+                </span>
+              </td>
+              <td class="px-3 py-2.5 text-gray-700 dark:text-white/70 font-medium">
+                {isVi ? row.modeVi : row.modeEn}
+              </td>
+              <td class="px-3 py-2.5 text-gray-600 dark:text-white/60">
+                {row.research}
+              </td>
+              <td class="px-3 py-2.5 text-gray-600 dark:text-white/60">
+                {row.redTeam}
+              </td>
+              <td class="px-3 py-2.5 text-gray-600 dark:text-white/60">
+                {row.validation}
+              </td>
+              <td class="px-3 py-2.5 text-gray-600 dark:text-white/60 font-mono text-xs">
+                {row.cookFlag}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Composable flags note -->
+    {(composableFlagsEn || composableFlagsVi) && (
+      <div class="px-4 py-3 bg-gray-50 dark:bg-white/5 border-t border-gray-100 dark:border-white/5">
+        <p class="text-xs text-gray-500 dark:text-white/50 flex items-start gap-1.5">
+          <svg class="w-3.5 h-3.5 shrink-0 mt-0.5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>{isVi ? composableFlagsVi : composableFlagsEn}</span>
+        </p>
+      </div>
+    )}
+  </div>
+</div>
