@@ -81,12 +81,12 @@ const isVi = currentLang === 'vi';
             <h4 class="text-sm font-semibold text-gray-900 dark:text-white/90" x-text="getActiveStep().name"></h4>
             <span
               x-bind:class="'text-[10px] font-medium px-2 py-0.5 rounded-full ' + (colorMap[getActiveStep().color]?.iconBg || '') + ' ' + (colorMap[getActiveStep().color]?.iconText || '')"
-              x-text={`getActiveStep().type === 'agent' ? (getActiveStep().isSubAgent ? 'Sub-Agent' : 'Main Agent') : ('${isVi}' === 'true' ? typeColors[getActiveStep().type]?.labelVi : typeColors[getActiveStep().type]?.label)`}
+              x-text="getActiveStep().type === 'agent' ? (getActiveStep().isSubAgent ? 'Sub-Agent' : 'Main Agent') : (isVi ? typeColors[getActiveStep().type]?.labelVi : typeColors[getActiveStep().type]?.label)"
             ></span>
           </div>
 
           {/* Formatted explanation — paragraphs + indented bullets */}
-          <div class="explain-content text-sm text-gray-600 dark:text-white/60 leading-relaxed" x-html={`formatExplain('${isVi}' === 'true' ? getActiveStep().explainVi : getActiveStep().explainEn)`}></div>
+          <div class="explain-content text-sm text-gray-600 dark:text-white/60 leading-relaxed" x-html="formatExplain(isVi ? getActiveStep().explainVi : getActiveStep().explainEn)"></div>
         </div>
       </div>
     </template>

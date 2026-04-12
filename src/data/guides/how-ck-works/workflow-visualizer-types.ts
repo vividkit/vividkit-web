@@ -85,3 +85,120 @@ export const stepTypeColors: Record<StepType, { bg: string; text: string; label:
     labelVi: 'Kết quả',
   },
 };
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Workflow Combos — Group multiple scenarios into common workflows
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** Workflow combo — a sequence of scenarios that work together */
+export interface WorkflowCombo {
+  id: string;
+  kit: KitId;
+  titleEn: string;
+  titleVi: string;
+  descEn: string;
+  descVi: string;
+  /** Ordered scenario IDs in this combo */
+  scenarios: string[];
+  /** Relationship type between scenarios */
+  category: 'sequential' | 'parallel' | 'optional';
+  /** SVG path data for combo icon */
+  icon: string;
+  /** Tailwind color for accent/border */
+  accentColor: string;
+  /** Optional usage tip */
+  tipEn?: string;
+  tipVi?: string;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Skill Infographics — One-page visual summaries for individual skills
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** Process flow step for infographic */
+export interface ProcessFlowStep {
+  number: number;
+  titleEn: string;
+  titleVi: string;
+  descEn?: string;
+  descVi?: string;
+}
+
+/** Workflow mode row for flags table */
+export interface WorkflowModeRow {
+  flag: string;
+  modeEn: string;
+  modeVi: string;
+  research: string;
+  redTeam: string;
+  validation: string;
+  cookFlag?: string;
+}
+
+/** Badge type for skill stack */
+export type SkillStackType = 'agent' | 'skill' | 'tool';
+
+/** Skill/Agent stack badge */
+export interface SkillStackBadge {
+  name: string;
+  type: SkillStackType;
+}
+
+/** Special operation card */
+export interface SpecialOpCard {
+  id: string;
+  titleEn: string;
+  titleVi: string;
+  descEn: string;
+  descVi: string;
+  color: string;
+}
+
+/** Hard gate warning type */
+export type HardGateType = 'warning' | 'critical' | 'info';
+
+/** One-page infographic data for a skill */
+export interface SkillInfographic {
+  /** Matches scenario ID */
+  id: string;
+  /** Command name (e.g., /ck:brainstorm) */
+  command: string;
+  kit: KitId;
+
+  header: {
+    titleEn: string;
+    titleVi: string;
+    taglineEn: string;
+    taglineVi: string;
+  };
+
+  hardGate?: {
+    type: HardGateType;
+    titleEn: string;
+    titleVi: string;
+    contentEn: string;
+    contentVi: string;
+  };
+
+  processFlow: ProcessFlowStep[];
+
+  corePrinciples?: string[];
+  expertiseAreas?: string[];
+
+  workflowModes?: WorkflowModeRow[];
+  composableFlagsEn?: string;
+  composableFlagsVi?: string;
+
+  skillStack?: SkillStackBadge[];
+
+  specialOperations?: SpecialOpCard[];
+
+  reportOutput?: {
+    titleEn: string;
+    titleVi: string;
+    patternEn: string;
+    patternVi: string;
+    descEn: string;
+    descVi: string;
+  };
+}

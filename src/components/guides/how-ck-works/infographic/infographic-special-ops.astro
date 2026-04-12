@@ -1,0 +1,54 @@
+---
+// Special operations cards grid
+import type { SpecialOpCard } from '@/data/guides/how-ck-works';
+import type { Language } from '@/i18n';
+
+interface Props {
+  operations: SpecialOpCard[];
+  lang: Language;
+}
+
+const { operations, lang } = Astro.props;
+const isVi = lang === 'vi';
+
+// Skip if no operations
+if (!operations || operations.length === 0) return null;
+
+// Header bar colors
+const opColors: Record<string, string> = {
+  red: 'bg-red-500',
+  blue: 'bg-blue-500',
+  amber: 'bg-amber-500',
+  green: 'bg-green-500',
+  purple: 'bg-purple-500',
+};
+---
+
+<div class="mb-8">
+  <h2 class="text-xs font-semibold text-gray-500 dark:text-white/40 uppercase tracking-wider mb-4">
+    {isVi ? 'HOẠT ĐỘNG ĐẶC BIỆT' : 'SPECIAL OPERATIONS'}
+  </h2>
+
+  <div class="grid md:grid-cols-3 gap-4">
+    {operations.map(op => (
+      <div class="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl overflow-hidden">
+        <!-- Colored header bar -->
+        <div class={`h-1.5 ${opColors[op.color] || 'bg-gray-400'}`}></div>
+
+        <div class="p-4">
+          <!-- Title -->
+          <h3 class="font-semibold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+            <code class="text-sm bg-gray-100 dark:bg-white/10 px-2 py-0.5 rounded font-mono">
+              {op.id}
+            </code>
+          </h3>
+
+          <!-- Description -->
+          <p class="text-sm text-gray-600 dark:text-white/70 leading-relaxed">
+            {isVi ? op.descVi : op.descEn}
+          </p>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>

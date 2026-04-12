@@ -1,0 +1,48 @@
+---
+// Horizontal process flow with numbered circles and connecting line
+import type { ProcessFlowStep } from '@/data/guides/how-ck-works';
+import type { Language } from '@/i18n';
+
+interface Props {
+  steps: ProcessFlowStep[];
+  lang: Language;
+}
+
+const { steps, lang } = Astro.props;
+const isVi = lang === 'vi';
+---
+
+<div class="mb-8">
+  <h2 class="text-xs font-semibold text-gray-500 dark:text-white/40 uppercase tracking-wider mb-4">
+    {isVi ? 'QUY TRÌNH' : 'PROCESS FLOW'}
+  </h2>
+
+  <div class="relative bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-6 overflow-x-auto">
+    <!-- Connection line (visible on md+) -->
+    <div class="absolute top-[52px] left-8 right-8 h-0.5 bg-gradient-to-r from-blue-400/20 via-blue-400/40 to-blue-400/20 hidden md:block"></div>
+
+    <!-- Steps grid -->
+    <div class="flex flex-wrap md:flex-nowrap justify-between gap-4 md:gap-2">
+      {steps.map((step) => (
+        <div class="flex flex-col items-center text-center flex-1 min-w-[70px] max-w-[100px]">
+          <!-- Numbered circle -->
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-blue-500/20 relative z-10">
+            {step.number}
+          </div>
+
+          <!-- Title -->
+          <p class="mt-2 text-sm font-medium text-gray-900 dark:text-white leading-tight">
+            {isVi ? step.titleVi : step.titleEn}
+          </p>
+
+          <!-- Description (optional) -->
+          {step.descEn && (
+            <p class="mt-1 text-[11px] text-gray-500 dark:text-white/50 leading-tight">
+              {isVi ? step.descVi : step.descEn}
+            </p>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
