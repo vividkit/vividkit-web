@@ -152,4 +152,79 @@ export const guides = {
   // Session Recovery Guide (đã gộp với Resume Guide)
   'guides.session_recovery.title': 'Khôi Phục Session',
   'guides.session_recovery.description': 'Khôi phục session, tiếp tục công việc và chuyển context giữa các provider',
+
+  // Guides Home Page
+  'guides.home.title': 'Chào Mừng Đến VividKit Guides',
+  'guides.home.subtitle': 'Hành trình AI coding của bạn bắt đầu từ đây. Chọn đường đi phù hợp với bạn.',
+  'guides.home.tip': 'Mẹo: Trên desktop, dùng menu bên trái để mở nhanh các guide khác',
+  // Pathway: New to Claude
+  'guides.home.pathway_new.title': 'Mới Dùng Claude Code?',
+  'guides.home.pathway_new.desc': 'Bắt đầu hành trình AI coding tại đây',
+  'guides.home.pathway_new.link_what': 'ClaudeKit là gì?',
+  'guides.home.pathway_new.link_how': 'Cách Hoạt Động',
+  'guides.home.pathway_new.link_install': 'Cài Đặt Nhanh',
+  // Pathway: Already Using
+  'guides.home.pathway_using.title': 'Đang Dùng ClaudeKit?',
+  'guides.home.pathway_using.desc': 'Khám phá commands và workflows',
+  'guides.home.pathway_using.link_commands': 'Xem Commands',
+  'guides.home.pathway_using.link_workflows': 'Hướng Dẫn Workflows',
+  'guides.home.pathway_using.link_flowchart': 'Sơ Đồ Trực Quan',
+  // Pathway: Config Confused
+  'guides.home.pathway_config.title': 'Bối Rối Về Config?',
+  'guides.home.pathway_config.desc': 'Hiểu CLAUDE.md, ck init, và settings',
+  'guides.home.pathway_config.link_mechanics': 'Claude Mechanics',
+  'guides.home.pathway_config.link_permissions': 'Thiết Lập Permissions',
+  'guides.home.pathway_config.link_hooks': 'Custom Hooks',
+  // Pathway: Specific Feature
+  'guides.home.pathway_feature.title': 'Mẹo Hay & Công Cụ Bổ Trợ',
+  'guides.home.pathway_feature.desc': 'Tips, tricks dùng external tools và các mẹo hay khác để tối ưu workflow hiệu quả hơn',
+  'guides.home.pathway_feature.link_session': 'Khôi Phục Session',
+  'guides.home.pathway_feature.link_ccs': 'CCS Multi-Provider',
+  'guides.home.pathway_feature.link_ide': 'Cấu Hình IDE',
+
+  // Claude Mechanics Page
+  'guides.claude_mechanics.title': 'Claude Mechanics',
+  'guides.claude_mechanics.description': 'Hiểu CLAUDE.md, config hierarchy, và ck init',
+  'guides.claude_mechanics.subtitle': 'Hướng dẫn trực quan về cách Claude đọc instructions và ClaudeKit cấu hình project của bạn.',
+  'guides.claude_mechanics.section_what_is': 'CLAUDE.md là gì?',
+  'guides.claude_mechanics.section_hierarchy': 'Config Hierarchy',
+  'guides.claude_mechanics.section_ck_init': 'ck init Tạo Gì',
+  'guides.claude_mechanics.section_kit_vs_you': 'Config Kit vs Config Của Bạn',
+  'guides.claude_mechanics.section_faq': 'Câu Hỏi Thường Gặp',
+  // Section 1: What is CLAUDE.md
+  'guides.claude_mechanics.what_is.analogy_title': 'Sách Công Thức cho Claude',
+  'guides.claude_mechanics.what_is.analogy_intro': 'Giống như sách công thức hướng dẫn đầu bếp, CLAUDE.md hướng dẫn Claude cách làm việc với project của bạn.',
+  'guides.claude_mechanics.what_is.chef_ingredients': 'Nguyên liệu nào dùng (tools, frameworks)',
+  'guides.claude_mechanics.what_is.chef_prepare': 'Cách chế biến (coding standards)',
+  'guides.claude_mechanics.what_is.chef_rules': 'Quy tắc nhà bếp (những gì cần tránh)',
+  'guides.claude_mechanics.what_is.claude_context': 'Context project (tech stack, structure)',
+  'guides.claude_mechanics.what_is.claude_standards': 'Coding standards (naming, patterns)',
+  'guides.claude_mechanics.what_is.claude_workflows': 'Workflows (cách plan, test, deploy)',
+  // Section 2: Config Hierarchy
+  'guides.claude_mechanics.hierarchy.title': 'Cách Config Files Xếp Chồng',
+  'guides.claude_mechanics.hierarchy.desc': 'Claude đọc config files theo thứ tự. Files sau có thể override files trước.',
+  'guides.claude_mechanics.hierarchy.global': 'Global (tất cả projects)',
+  'guides.claude_mechanics.hierarchy.project': 'Riêng cho project',
+  'guides.claude_mechanics.hierarchy.rules': 'Rules chi tiết',
+  'guides.claude_mechanics.hierarchy.local': 'Cá nhân (gitignored)',
+  'guides.claude_mechanics.hierarchy.load_order': 'Thứ tự load: Global → Project → Rules → Local',
+  // Section 3: ck init
+  'guides.claude_mechanics.ck_init.title': 'ck init Tạo Những Gì',
+  'guides.claude_mechanics.ck_init.desc': 'Khi chạy ck init, ClaudeKit tải và cài đặt kit hoàn chỉnh vào project của bạn.',
+  'guides.claude_mechanics.ck_init.flag_kit': 'Kit nào để cài',
+  'guides.claude_mechanics.ck_init.flag_global': 'Cài vào ~/.claude/ thay vì project',
+  'guides.claude_mechanics.ck_init.flag_fresh': 'Reset hoàn toàn, thay thế tất cả',
+  // Section 4: Kit vs Your Config
+  'guides.claude_mechanics.kit_vs_you.kit_title': 'Files ClaudeKit',
+  'guides.claude_mechanics.kit_vs_you.kit_subtitle': 'Do ClaudeKit quản lý',
+  'guides.claude_mechanics.kit_vs_you.you_title': 'Files Của Bạn',
+  'guides.claude_mechanics.kit_vs_you.you_subtitle': 'Thoải mái chỉnh sửa!',
+  'guides.claude_mechanics.kit_vs_you.warning': 'Đừng sửa trực tiếp!',
+  // Section 5: FAQ
+  'guides.claude_mechanics.faq.q1': 'ck init đã ghi đè CLAUDE.md của tôi!',
+  'guides.claude_mechanics.faq.a1': 'Mặc định, ck init merge configs và không ghi đè files hiện có. Chỉ có flag --fresh mới reset hoàn toàn.',
+  'guides.claude_mechanics.faq.q2': 'Nên đặt custom rules ở đâu?',
+  'guides.claude_mechanics.faq.a2': 'Tạo files trong thư mục .claude/rules/. ClaudeKit sẽ không ghi đè những files này. Hoặc thêm vào CLAUDE.local.md cho preferences cá nhân (gitignored).',
+  'guides.claude_mechanics.faq.q3': 'Khác biệt giữa global và local install là gì?',
+  'guides.claude_mechanics.faq.a3': 'ck init -g → ~/.claude/ (áp dụng cho TẤT CẢ projects). ck init → ./.claude/ (chỉ project này). Bắt đầu với local, chỉ dùng global cho preferences thực sự phổ quát.',
 } as const;

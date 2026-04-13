@@ -152,4 +152,79 @@ export const guides = {
   // Session Recovery Guide (merged with Resume Guide)
   'guides.session_recovery.title': 'Session Recovery',
   'guides.session_recovery.description': 'Recover sessions, resume work, and transfer context between providers',
+
+  // Guides Home Page
+  'guides.home.title': 'Welcome to VividKit Guides',
+  'guides.home.subtitle': 'Your AI coding journey starts here. Choose your path based on where you are.',
+  'guides.home.tip': 'Tip: On desktop, use the left menu to jump to other guides quickly',
+  // Pathway: New to Claude
+  'guides.home.pathway_new.title': 'New to Claude Code?',
+  'guides.home.pathway_new.desc': 'Start your AI coding journey here',
+  'guides.home.pathway_new.link_what': 'What is ClaudeKit?',
+  'guides.home.pathway_new.link_how': 'How It Works',
+  'guides.home.pathway_new.link_install': 'Quick Install',
+  // Pathway: Already Using
+  'guides.home.pathway_using.title': 'Already Using ClaudeKit?',
+  'guides.home.pathway_using.desc': 'Explore commands and workflows',
+  'guides.home.pathway_using.link_commands': 'Browse Commands',
+  'guides.home.pathway_using.link_workflows': 'Workflows Guide',
+  'guides.home.pathway_using.link_flowchart': 'Visual Flowchart',
+  // Pathway: Config Confused
+  'guides.home.pathway_config.title': 'Confused About Config?',
+  'guides.home.pathway_config.desc': 'Understand CLAUDE.md, ck init, and settings',
+  'guides.home.pathway_config.link_mechanics': 'Claude Mechanics',
+  'guides.home.pathway_config.link_permissions': 'Permissions Setup',
+  'guides.home.pathway_config.link_hooks': 'Custom Hooks',
+  // Pathway: Specific Feature
+  'guides.home.pathway_feature.title': 'Tips, Tools & Setup',
+  'guides.home.pathway_feature.desc': 'Tips, tricks, and external tools to help you optimize your workflow',
+  'guides.home.pathway_feature.link_session': 'Session Recovery',
+  'guides.home.pathway_feature.link_ccs': 'CCS Multi-Provider',
+  'guides.home.pathway_feature.link_ide': 'IDE Config',
+
+  // Claude Mechanics Page
+  'guides.claude_mechanics.title': 'Claude Mechanics',
+  'guides.claude_mechanics.description': 'Understanding CLAUDE.md, config hierarchy, and ck init',
+  'guides.claude_mechanics.subtitle': 'A visual guide to how Claude reads your instructions and how ClaudeKit configures your project.',
+  'guides.claude_mechanics.section_what_is': 'What is CLAUDE.md?',
+  'guides.claude_mechanics.section_hierarchy': 'Config Hierarchy',
+  'guides.claude_mechanics.section_ck_init': 'What ck init Creates',
+  'guides.claude_mechanics.section_kit_vs_you': 'Kit Config vs Your Config',
+  'guides.claude_mechanics.section_faq': 'Common Confusions',
+  // Section 1: What is CLAUDE.md
+  'guides.claude_mechanics.what_is.analogy_title': 'Recipe Book for Claude',
+  'guides.claude_mechanics.what_is.analogy_intro': 'Just like a recipe book tells a chef what to do, CLAUDE.md tells Claude how to work on your project.',
+  'guides.claude_mechanics.what_is.chef_ingredients': 'What ingredients to use (tools, frameworks)',
+  'guides.claude_mechanics.what_is.chef_prepare': 'How to prepare dishes (coding standards)',
+  'guides.claude_mechanics.what_is.chef_rules': 'Kitchen rules (what to avoid)',
+  'guides.claude_mechanics.what_is.claude_context': 'Project context (tech stack, structure)',
+  'guides.claude_mechanics.what_is.claude_standards': 'Coding standards (naming, patterns)',
+  'guides.claude_mechanics.what_is.claude_workflows': 'Workflows (how to plan, test, deploy)',
+  // Section 2: Config Hierarchy
+  'guides.claude_mechanics.hierarchy.title': 'How Config Files Stack',
+  'guides.claude_mechanics.hierarchy.desc': 'Claude reads config files in order. Later files can override earlier ones.',
+  'guides.claude_mechanics.hierarchy.global': 'Global (all projects)',
+  'guides.claude_mechanics.hierarchy.project': 'Project-specific',
+  'guides.claude_mechanics.hierarchy.rules': 'Detailed rules',
+  'guides.claude_mechanics.hierarchy.local': 'Personal (gitignored)',
+  'guides.claude_mechanics.hierarchy.load_order': 'Load order: Global → Project → Rules → Local',
+  // Section 3: ck init
+  'guides.claude_mechanics.ck_init.title': 'What ck init Creates',
+  'guides.claude_mechanics.ck_init.desc': 'When you run ck init, ClaudeKit downloads and installs a complete kit to your project.',
+  'guides.claude_mechanics.ck_init.flag_kit': 'Which kit to install',
+  'guides.claude_mechanics.ck_init.flag_global': 'Install to ~/.claude/ instead of project',
+  'guides.claude_mechanics.ck_init.flag_fresh': 'Full reset, replace everything',
+  // Section 4: Kit vs Your Config
+  'guides.claude_mechanics.kit_vs_you.kit_title': 'ClaudeKit Files',
+  'guides.claude_mechanics.kit_vs_you.kit_subtitle': 'Managed by ClaudeKit',
+  'guides.claude_mechanics.kit_vs_you.you_title': 'Your Files',
+  'guides.claude_mechanics.kit_vs_you.you_subtitle': 'Safe to edit!',
+  'guides.claude_mechanics.kit_vs_you.warning': "Don't edit directly!",
+  // Section 5: FAQ
+  'guides.claude_mechanics.faq.q1': 'ck init overwrote my CLAUDE.md!',
+  'guides.claude_mechanics.faq.a1': "By default, ck init merges configs and doesn't overwrite existing files. Only --fresh flag does full reset.",
+  'guides.claude_mechanics.faq.q2': 'Where should I put my custom rules?',
+  'guides.claude_mechanics.faq.a2': "Create files in .claude/rules/ directory. ClaudeKit won't overwrite these. Or add to CLAUDE.local.md for personal, gitignored preferences.",
+  'guides.claude_mechanics.faq.q3': "What's the difference between global and local install?",
+  'guides.claude_mechanics.faq.a3': 'ck init -g → ~/.claude/ (applies to ALL projects). ck init → ./.claude/ (this project only). Start with local, use global only for truly universal preferences.',
 } as const;

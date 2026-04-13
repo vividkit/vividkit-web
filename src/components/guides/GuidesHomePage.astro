@@ -1,0 +1,94 @@
+---
+// Guides landing page with 4 guided pathways for different user types
+import { Rocket, Workflow, CircleHelp, Zap } from 'lucide-astro';
+import GuidedPathwayCard from './guides-home/guided-pathway-card.astro';
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+// Pathway data with i18n keys
+const pathways = [
+  {
+    id: 'new-to-claude',
+    icon: Rocket,
+    titleKey: 'guides.home.pathway_new.title',
+    descKey: 'guides.home.pathway_new.desc',
+    accentColor: 'green' as const,
+    links: [
+      { href: '/guides/what-is-claudekit', labelKey: 'guides.home.pathway_new.link_what' },
+      { href: '/guides/how-ck-works', labelKey: 'guides.home.pathway_new.link_how' },
+      { href: '/guides/cli', labelKey: 'guides.home.pathway_new.link_install' },
+    ],
+  },
+  {
+    id: 'already-using',
+    icon: Workflow,
+    titleKey: 'guides.home.pathway_using.title',
+    descKey: 'guides.home.pathway_using.desc',
+    accentColor: 'blue' as const,
+    links: [
+      { href: '/guides/commands', labelKey: 'guides.home.pathway_using.link_commands' },
+      { href: '/guides/workflows', labelKey: 'guides.home.pathway_using.link_workflows' },
+      { href: '/guides/flowchart', labelKey: 'guides.home.pathway_using.link_flowchart' },
+    ],
+  },
+  {
+    id: 'config-confused',
+    icon: CircleHelp,
+    titleKey: 'guides.home.pathway_config.title',
+    descKey: 'guides.home.pathway_config.desc',
+    accentColor: 'amber' as const,
+    links: [
+      { href: '/guides/claude-mechanics', labelKey: 'guides.home.pathway_config.link_mechanics' },
+      { href: '/guides/permissions', labelKey: 'guides.home.pathway_config.link_permissions' },
+      { href: '/guides/hooks', labelKey: 'guides.home.pathway_config.link_hooks' },
+    ],
+  },
+  {
+    id: 'specific-feature',
+    icon: Zap,
+    titleKey: 'guides.home.pathway_feature.title',
+    descKey: 'guides.home.pathway_feature.desc',
+    accentColor: 'purple' as const,
+    links: [
+      { href: '/guides/session-recovery', labelKey: 'guides.home.pathway_feature.link_session' },
+      { href: '/guides/ccs', labelKey: 'guides.home.pathway_feature.link_ccs' },
+      { href: '/guides/ide-config', labelKey: 'guides.home.pathway_feature.link_ide' },
+    ],
+  },
+];
+---
+
+<div class="space-y-10 mt-6">
+  <!-- Header -->
+  <div class="text-center space-y-4">
+    <h1 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
+      {t('guides.home.title')}
+    </h1>
+    <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+      {t('guides.home.subtitle')}
+    </p>
+  </div>
+
+  <!-- 2x2 Grid of Pathways -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    {pathways.map((pathway) => (
+      <GuidedPathwayCard
+        id={pathway.id}
+        icon={pathway.icon}
+        titleKey={pathway.titleKey}
+        descKey={pathway.descKey}
+        links={pathway.links}
+        accentColor={pathway.accentColor}
+        lang={currentLang}
+      />
+    ))}
+  </div>
+</div>
