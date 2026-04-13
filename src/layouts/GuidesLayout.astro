@@ -9,7 +9,7 @@ import { useTranslatedPath, getLangFromUrl, type Language } from '@/i18n';
 interface Props {
   title: string;
   description: string;
-  activeTab: 'cli' | 'ccs' | 'happy-ccs' | 'mobile-coding' | 'remote-control' | 'ide-config' | 'token-tips' | 'workflows' | 'flowchart' | 'commands' | 'uiux' | 'session-recovery' | 'permissions' | 'hooks' | 'promotions' | 'what-is-claudekit' | 'fix-logs' | 'migrate' | 'how-ck-works';
+  activeTab: 'index' | 'cli' | 'ccs' | 'happy-ccs' | 'mobile-coding' | 'remote-control' | 'ide-config' | 'token-tips' | 'workflows' | 'flowchart' | 'commands' | 'uiux' | 'session-recovery' | 'permissions' | 'hooks' | 'promotions' | 'what-is-claudekit' | 'fix-logs' | 'migrate' | 'how-ck-works' | 'claude-mechanics';
   lang?: Language;
 }
 
@@ -23,7 +23,7 @@ const translatePath = useTranslatedPath(currentLang);
 <MainLayout
   title={title}
   description={description}
-  canonical={`/guides${activeTab !== 'cli' ? '/' + activeTab : ''}`}
+  canonical={`/guides${activeTab !== 'index' ? '/' + activeTab : ''}`}
   lang={currentLang}
 >
   <Header lang={currentLang} />
