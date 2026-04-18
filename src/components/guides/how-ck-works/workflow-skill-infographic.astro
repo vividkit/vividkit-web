@@ -1,0 +1,70 @@
+---
+// Main wrapper for skill infographic one-page visual summary
+// Composes all infographic sub-components based on available data
+import { getLangFromUrl, type Language } from '@/i18n';
+import { getInfographicById } from '@/data/guides/how-ck-works';
+import InfographicHeader from './infographic/infographic-header.astro';
+import InfographicProcessFlow from './infographic/infographic-process-flow.astro';
+import InfographicTwoColumn from './infographic/infographic-two-column.astro';
+import InfographicModesTable from './infographic/infographic-modes-table.astro';
+import InfographicSkillStack from './infographic/infographic-skill-stack.astro';
+import InfographicSpecialOps from './infographic/infographic-special-ops.astro';
+import InfographicReportOutput from './infographic/infographic-report-output.astro';
+
+interface Props {
+  scenarioId: string;
+  lang?: Language;
+}
+
+const { scenarioId, lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === 'vi';
+
+// Lookup infographic data by scenario ID
+const infographic = getInfographicById(scenarioId);
+---
+
+{infographic ? (
+  <div class="infographic-container">
+    <!-- Header with command name and tagline -->
+    <InfographicHeader data={infographic} lang={currentLang} />
+
+    <!-- Process flow steps -->
+    {infographic.processFlow && infographic.processFlow.length > 0 && (
+      <InfographicProcessFlow steps={infographic.processFlow} lang={currentLang} />
+    )}
+
+    <!-- Two-column: Core Principles + Expertise Areas -->
+    <InfographicTwoColumn
+      principles={isVi ? infographic.corePrinciplesVi : infographic.corePrinciplesEn}
+      expertise={isVi ? infographic.expertiseAreasVi : infographic.expertiseAreasEn}
+      lang={currentLang}
+    />
+
+    <!-- Workflow modes table (optional) -->
+    {infographic.workflowModes && (
+      <InfographicModesTable
+        modes={infographic.workflowModes}
+        composableFlagsEn={infographic.composableFlagsEn}
+        composableFlagsVi={infographic.composableFlagsVi}
+        lang={currentLang}
+      />
+    )}
+
+    <!-- Skill & Agent stack badges -->
+    {infographic.skillStack && (
+      <InfographicSkillStack badges={infographic.skillStack} lang={currentLang} />
+    )}
+
+    <!-- Special operations cards (optional) -->
+    {infographic.specialOperations && (
+      <InfographicSpecialOps operations={infographic.specialOperations} lang={currentLang} />
+    )}
+
+    <!-- Report output section -->
+    {infographic.reportOutput && (
+      <InfographicReportOutput data={infographic.reportOutput} lang={currentLang} />
+    )}
+
+  </div>
+) : null}

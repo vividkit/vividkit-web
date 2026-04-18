@@ -1,0 +1,122 @@
+---
+// Section 3: What ck init Creates - Interactive file tree
+import { useTranslations } from "@/i18n/utils";
+import { type Language } from "@/i18n";
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const icon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>`;
+
+const flags = [
+  { flag: '--kit engineer', desc: 'flag_kit' },
+  { flag: '-g, --global', desc: 'flag_global' },
+  { flag: '--fresh', desc: 'flag_fresh' },
+];
+
+const fileTree = [
+  // Root level
+  { name: 'CLAUDE.md', type: 'file', indent: 0, desc: 'Template (customize after)' },
+  { name: 'AGENTS.md', type: 'file', indent: 0, desc: 'Agent definitions' },
+  { name: '.gitignore', type: 'file', indent: 0, desc: '' },
+  { name: '.repomixignore', type: 'file', indent: 0, desc: 'Repomix ignore patterns' },
+  { name: 'release-manifest.json', type: 'file', indent: 0, desc: 'Kit version manifest' },
+  { name: 'plans/', type: 'folder', indent: 0, desc: 'Plans directory' },
+  { name: '.opencode/', type: 'folder', indent: 0, desc: 'OpenCode compatibility' },
+  // .claude/ directory
+  { name: '.claude/', type: 'folder', indent: 0, desc: 'ClaudeKit config' },
+  { name: '.ck.json', type: 'file', indent: 1, desc: 'Kit metadata' },
+  { name: 'settings.json', type: 'file', indent: 1, desc: 'Claude Code settings' },
+  { name: 'metadata.json', type: 'file', indent: 1, desc: 'Deletion patterns' },
+  { name: 'statusline.cjs', type: 'file', indent: 1, desc: 'Statusline config' },
+  { name: '.env.example', type: 'file', indent: 1, desc: 'Environment template' },
+  { name: '.mcp.json.example', type: 'file', indent: 1, desc: 'MCP config template' },
+  { name: 'agents/', type: 'folder', indent: 1, desc: '14+ definitions' },
+  { name: 'hooks/', type: 'folder', indent: 1, desc: '22+ hooks' },
+  { name: 'rules/', type: 'folder', indent: 1, desc: 'Workflow rules' },
+  { name: 'skills/', type: 'folder', indent: 1, desc: '90+ commands' },
+  { name: 'scripts/', type: 'folder', indent: 1, desc: 'Utility scripts' },
+  { name: 'schemas/', type: 'folder', indent: 1, desc: 'JSON schemas' },
+  { name: 'output-styles/', type: 'folder', indent: 1, desc: 'Response formats' },
+  { name: 'session-state/', type: 'folder', indent: 1, desc: 'Session tracking' },
+];
+---
+
+<section class="space-y-6">
+  <!-- Section Header -->
+  <div class="flex items-center gap-3">
+    <div class="w-10 h-10 rounded-xl bg-green-100 dark:bg-green-500/20 flex items-center justify-center text-green-600 dark:text-green-400">
+      <Fragment set:html={icon} />
+    </div>
+    <h2 class="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap">
+      <code class="text-lg px-2 py-1 rounded bg-slate-100 dark:bg-slate-900 text-green-600 dark:text-green-400 font-mono border border-slate-200 dark:border-slate-700">ck init</code>
+      <span>{t('guides.claude_mechanics.section_ck_init_suffix')}</span>
+    </h2>
+  </div>
+
+  <div class="glass-card rounded-2xl overflow-hidden">
+    <!-- Header with command -->
+    <div class="p-4 bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
+      <div class="flex items-center gap-2 text-slate-600 dark:text-slate-400 text-sm mb-2">
+        <span class="text-green-600 dark:text-green-400">$</span>
+        <span class="text-slate-800 dark:text-white font-mono">ck init --kit engineer</span>
+      </div>
+      <p class="text-sm text-slate-600 dark:text-slate-400">
+        {t('guides.claude_mechanics.ck_init.desc')}
+      </p>
+    </div>
+
+    <div class="p-6 space-y-6">
+      <!-- File Tree -->
+      <div class="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-4 font-mono text-sm overflow-x-auto">
+        <div class="text-slate-400 text-xs mb-3">project/</div>
+        {fileTree.map((item) => (
+          <div
+            class={`flex items-center gap-2 py-1 ${item.indent === 1 ? 'pl-6' : ''}`}
+            style={item.indent > 1 ? `padding-left: ${item.indent * 1.5}rem` : ''}
+          >
+            {item.type === 'folder' ? (
+              <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
+              </svg>
+            ) : (
+              <svg class="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            )}
+            <span class={`${item.type === 'folder' ? 'text-amber-600 dark:text-amber-400' : 'text-slate-600 dark:text-slate-300'}`}>
+              {item.name}
+            </span>
+            {item.desc && (
+              <span class="text-slate-400 dark:text-slate-500 text-xs ml-2">
+                {item.desc}
+              </span>
+            )}
+          </div>
+        ))}
+        <div class="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700 text-green-600 dark:text-green-500">
+          ✓ Kit installed successfully
+        </div>
+      </div>
+
+      <!-- Flags explanation -->
+      <div class="space-y-3">
+        <h4 class="font-semibold text-slate-700 dark:text-slate-300">Common Flags:</h4>
+        <div class="grid gap-2">
+          {flags.map((item) => (
+            <div class="flex items-start gap-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50">
+              <code class="text-xs px-2 py-1 rounded bg-green-100 dark:bg-green-500/20 text-green-700 dark:text-green-400 font-mono whitespace-nowrap">
+                {item.flag}
+              </code>
+              <span class="text-sm text-slate-600 dark:text-slate-400" set:html={t(`guides.claude_mechanics.ck_init.${item.desc}`)} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

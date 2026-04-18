@@ -1,0 +1,109 @@
+---
+import { getLangFromUrl, type Language } from '@/i18n';
+import { useTranslations } from '@/i18n/utils';
+import InsideClaudeKitArticleShell from './InsideClaudeKitArticleShell.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+const copy = currentLang === 'vi'
+  ? {
+      kicker: 'Design Workflows',
+      summary: 'Điểm mạnh thật sự của /ck:frontend-design không nằm ở việc “ra UI đẹp” một cách chung chung, mà ở khả năng giúp bạn khám phá visual direction nhanh hơn khi đã có mục tiêu, context, và quality bar rõ ràng.',
+      sections: {
+        useCases: 'Khi nào nên dùng skill này',
+        prompt: 'Prompt thế nào để kết quả bớt generic',
+        workflow: 'Cách đưa skill này vào workflow thật',
+      },
+      useCases: [
+        'Khi bạn đã biết mình đang xây màn nào nhưng cần nhiều hướng visual nhanh để chọn.',
+        'Khi cần biến screenshot, wireframe, hay brief mơ hồ thành giao diện có định hướng rõ.',
+        'Khi muốn iterate nhanh phần look-and-feel trước khi polish logic chi tiết.',
+      ],
+      promptHints: [
+        'Nói rõ mục tiêu của màn hình, loại người dùng, và hành động chính cần nổi bật.',
+        'Chỉ ra visual language muốn tránh, không chỉ cái muốn hướng tới.',
+        'Nêu constraint thật: responsive, existing brand, performance, design system.',
+      ],
+      workflow: [
+        'Dùng nó sớm để explore direction, không đợi tới cuối mới “trang điểm” UI.',
+        'Sau khi có direction tốt, chuyển sang implementation/review flow để giữ tính nhất quán.',
+        'Luôn đánh giá output như một bản draft có chủ đích, không phải kết quả cuối cùng mặc định đúng.',
+      ],
+    }
+  : {
+      kicker: 'Design Workflows',
+      summary: 'The real value of /ck:frontend-design is not generic “pretty UI.” It is the speed at which it helps you explore visual directions once you already have clear goals, context, and a quality bar.',
+      sections: {
+        useCases: 'When this skill is a strong fit',
+        prompt: 'How to prompt it without getting generic output',
+        workflow: 'How to use it inside a real workflow',
+      },
+      useCases: [
+        'When you know which screen you are building but need fast visual exploration.',
+        'When a screenshot, wireframe, or vague brief needs to become a clearer interface direction.',
+        'When you want to iterate on look-and-feel before polishing detailed logic.',
+      ],
+      promptHints: [
+        'State the screen goal, user type, and the primary action that should stand out.',
+        'Say what visual language to avoid, not just what to aim for.',
+        'Include real constraints: responsive behavior, brand boundaries, performance, and system fit.',
+      ],
+      workflow: [
+        'Use it early to explore direction instead of treating UI as a late polish phase.',
+        'Once a direction works, move back into implementation and review loops for consistency.',
+        'Judge the output as an intentional draft, not as a final answer by default.',
+      ],
+    };
+---
+
+<InsideClaudeKitArticleShell
+  lang={currentLang}
+  kicker={copy.kicker}
+  title={t('guides.home.inside_claudekit.topic_2.title')}
+  summary={copy.summary}
+  slug="frontend-design"
+>
+  <section id="best-use-cases" class="rounded-3xl border border-slate-200/70 bg-white p-6 dark:border-slate-800 dark:bg-slate-900/70">
+    <h2 class="mb-4 text-2xl font-semibold text-slate-900 dark:text-white">{copy.sections.useCases}</h2>
+    <ul class="space-y-3">
+      {copy.useCases.map((item) => (
+        <li class="flex gap-3 text-sm leading-7 text-slate-600 dark:text-slate-300">
+          <span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-fuchsia-400"></span>
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section id="prompt-patterns" class="rounded-3xl border border-slate-200/70 bg-white p-6 dark:border-slate-800 dark:bg-slate-900/70">
+    <h2 class="mb-4 text-2xl font-semibold text-slate-900 dark:text-white">{copy.sections.prompt}</h2>
+    <div class="rounded-2xl border border-slate-200/70 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-950">
+      <ul class="space-y-3">
+        {copy.promptHints.map((item) => (
+          <li class="flex gap-3 text-sm leading-7 text-slate-600 dark:text-slate-300">
+            <span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-cyan-400"></span>
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section id="workflow-integration" class="rounded-3xl border border-slate-200/70 bg-white p-6 dark:border-slate-800 dark:bg-slate-900/70">
+    <h2 class="mb-4 text-2xl font-semibold text-slate-900 dark:text-white">{copy.sections.workflow}</h2>
+    <ul class="space-y-3">
+      {copy.workflow.map((item) => (
+        <li class="flex gap-3 text-sm leading-7 text-slate-600 dark:text-slate-300">
+          <span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-emerald-400"></span>
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+</InsideClaudeKitArticleShell>

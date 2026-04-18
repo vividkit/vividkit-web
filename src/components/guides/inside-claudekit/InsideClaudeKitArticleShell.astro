@@ -1,0 +1,135 @@
+---
+/**
+ * Shared shell for Inside ClaudeKit article pages.
+ * Provides: breadcrumb (xl+), back link (mobile), header, prev/next nav.
+ * TOC removed for wider content area - infographic-style layout.
+ */
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
+import { useTranslations } from '@/i18n/utils';
+import { ArrowLeft, ArrowRight, ChevronRight } from 'lucide-astro';
+import { insideClaudeKitTopics } from '@/data/guides/inside-claudekit';
+
+interface Props {
+  title: string;
+  summary: string;
+  kicker: string;
+  /** Current topic slug to compute prev/next */
+  slug?: string;
+  lang?: Language;
+}
+
+const { title, summary, kicker, slug, lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(currentLang);
+const t = useTranslations(currentLang);
+
+const backLabel = currentLang === 'vi' ? 'Quay lại Inside ClaudeKit' : 'Back to Inside ClaudeKit';
+
+// Filter only enabled topics for navigation
+const enabledTopics = insideClaudeKitTopics.filter((tp) => !tp.disabled);
+const currentIndex = slug ? enabledTopics.findIndex((tp) => tp.slug === slug) : -1;
+const prevTopic = currentIndex > 0 ? enabledTopics[currentIndex - 1] : null;
+const nextTopic = currentIndex >= 0 && currentIndex < enabledTopics.length - 1
+  ? enabledTopics[currentIndex + 1]
+  : null;
+---
+
+<!-- Full-width infographic-style layout (TOC removed) -->
+<div class="article-layout mt-6">
+  <article class="article-content-col">
+    <!-- Mobile back link -->
+    <a
+      href={translatePath('/guides/inside-claudekit')}
+      class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:border-slate-300 hover:text-slate-900 xl:hidden dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-slate-700 dark:hover:text-white"
+    >
+      <ArrowLeft class="h-4 w-4" />
+      {backLabel}
+    </a>
+
+    <!-- Breadcrumb (xl+ only) -->
+    <nav class="hidden items-center gap-1.5 text-sm text-slate-500 xl:flex dark:text-slate-400" aria-label="Breadcrumb">
+      <a href={translatePath('/guides')} class="transition-colors hover:text-slate-900 dark:hover:text-white">
+        {currentLang === 'vi' ? 'Hướng dẫn' : 'Guides'}
+      </a>
+      <ChevronRight class="h-3.5 w-3.5 shrink-0" />
+      <a href={translatePath('/guides/inside-claudekit')} class="transition-colors hover:text-slate-900 dark:hover:text-white">
+        Inside ClaudeKit
+      </a>
+      <ChevronRight class="h-3.5 w-3.5 shrink-0" />
+      <span class="truncate font-medium text-slate-900 dark:text-white">{title}</span>
+    </nav>
+
+    <!-- Article header -->
+    <header class="rounded-2xl border border-slate-200/70 bg-gradient-to-br from-slate-50 via-white to-blue-50/80 p-6 md:p-8 dark:border-slate-800 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900">
+      <p class="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-blue-700 dark:text-blue-300">
+        {kicker}
+      </p>
+      <h1 class="mb-4 text-3xl font-bold tracking-tight text-slate-900 dark:text-white lg:text-4xl lg:leading-[1.1]">
+        {title}
+      </h1>
+      <p class="text-base leading-7 text-slate-600 dark:text-slate-300 lg:text-lg lg:leading-8">
+        {summary}
+      </p>
+    </header>
+
+    <!-- Article body -->
+    <div class="article-prose space-y-8">
+      <slot />
+    </div>
+
+    <!-- Prev / Next navigation -->
+    {(prevTopic || nextTopic) && (
+      <nav class="grid gap-4 border-t border-slate-200/70 pt-8 dark:border-slate-800 sm:grid-cols-2" aria-label="Article navigation">
+        {prevTopic ? (
+          <a
+            href={translatePath(`/guides/inside-claudekit/${prevTopic.slug}`)}
+            class="group flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-white p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-sm dark:border-slate-800 dark:bg-slate-900/70 dark:hover:border-slate-700"
+          >
+            <ArrowLeft class="h-4 w-4 shrink-0 text-slate-400 transition-transform group-hover:-translate-x-0.5 dark:text-slate-500" />
+            <div class="min-w-0">
+              <span class="text-xs font-medium text-slate-500 dark:text-slate-400">
+                {t('guides.inside_claudekit.prev')}
+              </span>
+              <p class="truncate text-sm font-semibold text-slate-900 dark:text-white">
+                {t(prevTopic.navLabelKey)}
+              </p>
+            </div>
+          </a>
+        ) : <div />}
+        {nextTopic ? (
+          <a
+            href={translatePath(`/guides/inside-claudekit/${nextTopic.slug}`)}
+            class="group flex items-center justify-end gap-3 rounded-2xl border border-slate-200/70 bg-white p-4 text-right transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-sm dark:border-slate-800 dark:bg-slate-900/70 dark:hover:border-slate-700"
+          >
+            <div class="min-w-0">
+              <span class="text-xs font-medium text-slate-500 dark:text-slate-400">
+                {t('guides.inside_claudekit.next')}
+              </span>
+              <p class="truncate text-sm font-semibold text-slate-900 dark:text-white">
+                {t(nextTopic.navLabelKey)}
+              </p>
+            </div>
+            <ArrowRight class="h-4 w-4 shrink-0 text-slate-400 transition-transform group-hover:translate-x-0.5 dark:text-slate-500" />
+          </a>
+        ) : <div />}
+      </nav>
+    )}
+  </article>
+</div>
+
+<style>
+  /* Full-width infographic layout */
+  .article-layout {
+    display: flex;
+    justify-content: center;
+  }
+
+  .article-content-col {
+    width: 100%;
+    max-width: 56rem; /* wider for infographic-style content */
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+</style>
