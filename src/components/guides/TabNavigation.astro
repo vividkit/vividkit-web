@@ -3,7 +3,32 @@ import { useTranslations } from '@/i18n/utils';
 import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
 
 export interface Props {
-  activeTab: 'index' | 'what-is-claudekit' | 'cli' | 'ccs' | 'happy-ccs' | 'mobile-coding' | 'remote-control' | 'ide-config' | 'token-tips' | 'workflows' | 'flowchart' | 'commands' | 'uiux' | 'session-recovery' | 'permissions' | 'fix-logs' | 'hooks' | 'promotions' | 'migrate' | 'how-ck-works' | 'claude-mechanics';
+  activeTab:
+    | 'index'
+    | 'what-is-claudekit'
+    | 'cli'
+    | 'ccs'
+    | 'happy-ccs'
+    | 'mobile-coding'
+    | 'remote-control'
+    | 'ide-config'
+    | 'token-tips'
+    | 'workflows'
+    | 'flowchart'
+    | 'commands'
+    | 'uiux'
+    | 'session-recovery'
+    | 'permissions'
+    | 'fix-logs'
+    | 'hooks'
+    | 'promotions'
+    | 'migrate'
+    | 'how-ck-works'
+    | 'claude-mechanics'
+    | 'inside-claudekit'
+    | 'inside-claudekit-plan-modes'
+    | 'inside-claudekit-frontend-design'
+    | 'inside-claudekit-getting-started';
   lang?: Language;
 }
 
@@ -38,11 +63,23 @@ const navSections = [
         icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>`,
         href: '/guides/claude-mechanics',
       },
+    ],
+  },
+  {
+    id: 'deep-dives',
+    label: t('guides.sections.deep_dives'),
+    items: [
       {
         id: 'how-ck-works',
         label: t('guides.how_ck_works.title'),
         icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" /></svg>`,
         href: '/guides/how-ck-works',
+      },
+      {
+        id: 'inside-claudekit',
+        label: t('guides.inside_claudekit.title'),
+        icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 4.5 2.25 2.25 0 003.75 6.75v10.5A2.25 2.25 0 006 19.5a8.967 8.967 0 016 1.542m0-15A8.967 8.967 0 0118 4.5a2.25 2.25 0 012.25 2.25v10.5A2.25 2.25 0 0118 19.5a8.967 8.967 0 00-6 1.542m0-15v15" /></svg>`,
+        href: '/guides/inside-claudekit',
       },
     ],
   },
@@ -175,8 +212,13 @@ const navSections = [
   },
 ];
 
-// Flatten items for mobile view
-const flatNavItems = navSections.flatMap(section => section.items);
+const insideClaudeKitArticleTabs = [
+  'inside-claudekit-plan-modes',
+  'inside-claudekit-frontend-design',
+  'inside-claudekit-getting-started',
+];
+
+const flatNavItems = navSections.flatMap((section) => section.items);
 ---
 
 <style>
@@ -223,24 +265,30 @@ const flatNavItems = navSections.flatMap(section => section.items);
           <!-- Section Items -->
           <div class="space-y-0.5">
             {section.items.map((item) => (
-              <a
-                href={translatePath(item.href)}
-                class={`group flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
-                  activeTab === item.id
-                    ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 shadow-sm'
-                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-slate-200'
-                }`}
-              >
-                <span class={`text-lg transition-transform duration-200 ${activeTab === item.id ? 'scale-110' : 'group-hover:scale-110'}`}>
-                  <Fragment set:html={item.icon} />
-                </span>
-                <span>
-                  {item.label}
-                </span>
-                {activeTab === item.id && (
-                  <div class="ml-auto w-1.5 h-1.5 rounded-full bg-blue-500 dark:bg-blue-400 shadow-[0_0_8px_rgba(59,130,246,0.6)]"></div>
-                )}
-              </a>
+              (() => {
+                const isItemActive = activeTab === item.id || (item.id === 'inside-claudekit' && insideClaudeKitArticleTabs.includes(activeTab));
+
+                return (
+                  <div class="space-y-1">
+                    <a
+                      href={translatePath(item.href)}
+                      class={`group flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                        isItemActive
+                          ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 shadow-sm'
+                          : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-slate-200'
+                      }`}
+                    >
+                      <span class={`text-lg transition-transform duration-200 ${isItemActive ? 'scale-110' : 'group-hover:scale-110'}`}>
+                        <Fragment set:html={item.icon} />
+                      </span>
+                      <span>{item.label}</span>
+                      {isItemActive && (
+                        <div class="ml-auto w-1.5 h-1.5 rounded-full bg-blue-500 dark:bg-blue-400 shadow-[0_0_8px_rgba(59,130,246,0.6)]"></div>
+                      )}
+                    </a>
+                  </div>
+                );
+              })()
             ))}
           </div>
         </div>
@@ -253,19 +301,23 @@ const flatNavItems = navSections.flatMap(section => section.items);
 <!-- Mobile Navigation (Sticky Top) -->
 <div class="lg:hidden sticky top-20 z-40 -mx-4 sm:-mx-6 lg:-mx-8 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-y border-slate-200/50 dark:border-slate-800/50 px-4 sm:px-6 lg:px-8 py-3 mb-8">
   <div class="mobile-nav-scroll flex gap-2 overflow-x-auto no-scrollbar">
-    {flatNavItems.map((item) => (
-      <a
-        href={translatePath(item.href)}
-        class={`flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
-          activeTab === item.id
-            ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
-            : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
-        }`}
-      >
-        <span><Fragment set:html={item.icon} /></span>
-        {item.label}
-      </a>
-    ))}
+    {flatNavItems.map((item) => {
+      const isItemActive = activeTab === item.id || (item.id === 'inside-claudekit' && insideClaudeKitArticleTabs.includes(activeTab));
+
+      return (
+        <a
+          href={translatePath(item.href)}
+          class={`flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
+            isItemActive
+              ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
+              : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
+          }`}
+        >
+          {item.icon ? <span><Fragment set:html={item.icon} /></span> : <span class="h-1.5 w-1.5 rounded-full bg-current"></span>}
+          {item.label}
+        </a>
+      );
+    })}
   </div>
 </div>
 

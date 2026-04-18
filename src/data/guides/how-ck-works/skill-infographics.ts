@@ -14,8 +14,8 @@ export const skillInfographics: SkillInfographic[] = [
     kit: 'engineer',
 
     header: {
-      titleEn: '/brainstorm',
-      titleVi: '/brainstorm',
+      titleEn: '/ck:brainstorm',
+      titleVi: '/ck:brainstorm',
       taglineEn: 'Solution brainstormer with trade-off analysis and brutal honesty. Design-first, no code.',
       taglineVi: 'Brainstorm giải pháp với phân tích trade-off và thẳng thắn. Design-first, không code.',
     },
@@ -23,7 +23,7 @@ export const skillInfographics: SkillInfographic[] = [
     hardGate: {
       type: 'warning',
       titleEn: 'HARD GATE',
-      titleVi: 'CỔNG CỨNG',
+      titleVi: 'HARD GATE',
       contentEn: 'No code, no scaffolding, no implementation until design is presented and user approves. Applies to every session regardless of complexity.',
       contentVi: 'Không code, không scaffolding, không triển khai cho đến khi design được trình bày và user duyệt. Áp dụng cho mọi phiên làm việc.',
     },
@@ -40,20 +40,34 @@ export const skillInfographics: SkillInfographic[] = [
       { number: 9, titleEn: 'Next?', titleVi: 'Tiếp?', descEn: 'Ask: create plan? → /plan', descVi: 'Hỏi: tạo plan? → /plan' },
     ],
 
-    corePrinciples: [
+    corePrinciplesEn: [
       'YAGNI — You Aren\'t Gonna Need It',
       'KISS — Keep It Simple, Stupid',
       'DRY — Don\'t Repeat Yourself',
       'Brutal honesty over diplomacy',
       'Challenge every assumption',
     ],
+    corePrinciplesVi: [
+      'YAGNI — Đừng xây thứ chưa cần',
+      'KISS — Giữ cho đơn giản',
+      'DRY — Không lặp lại code',
+      'Ưu tiên thẳng thắn, không vòng vo',
+      'Thách thức mọi giả định',
+    ],
 
-    expertiseAreas: [
+    expertiseAreasEn: [
       'System architecture & scalability',
       'Risk assessment & mitigation',
       'UX/DX optimization',
       'Technical debt management',
       'Performance bottleneck identification',
+    ],
+    expertiseAreasVi: [
+      'Kiến trúc hệ thống & khả năng mở rộng',
+      'Đánh giá & giảm thiểu rủi ro',
+      'Tối ưu UX/DX',
+      'Quản lý technical debt',
+      'Xác định bottleneck hiệu năng',
     ],
 
     skillStack: [
@@ -72,6 +86,8 @@ export const skillInfographics: SkillInfographic[] = [
       titleVi: 'Báo cáo tổng hợp Markdown',
       patternEn: 'brainstorm-YYMMDD-HHMM-slug.md',
       patternVi: 'brainstorm-YYMMDD-HHMM-slug.md',
+      locationEn: 'plans/reports/',
+      locationVi: 'plans/reports/',
       descEn: 'Problem statement • Evaluated approaches • Final recommendation • Implementation risks • Success metrics • Next steps',
       descVi: 'Mô tả vấn đề • Các hướng đánh giá • Khuyến nghị cuối • Rủi ro triển khai • Metrics thành công • Bước tiếp theo',
     },
@@ -86,8 +102,8 @@ export const skillInfographics: SkillInfographic[] = [
     kit: 'engineer',
 
     header: {
-      titleEn: '/plan',
-      titleVi: '/plan',
+      titleEn: '/ck:plan',
+      titleVi: '/ck:plan',
       taglineEn: 'Implementation planner with research phases, red-team review, and task hydration. Creates actionable phase files.',
       taglineVi: 'Lập kế hoạch triển khai với phases nghiên cứu, review red-team, và hydrate tasks. Tạo phase files có thể hành động.',
     },
@@ -98,7 +114,7 @@ export const skillInfographics: SkillInfographic[] = [
       { number: 3, titleEn: 'Research', titleVi: 'Nghiên cứu', descEn: 'Spawn researcher agents', descVi: 'Spawn researcher agents' },
       { number: 4, titleEn: 'Analyze', titleVi: 'Phân tích', descEn: 'Read docs, scout codebase', descVi: 'Đọc docs, scout codebase' },
       { number: 5, titleEn: 'Plan', titleVi: 'Lập kế hoạch', descEn: 'Write plan.md + phase files', descVi: 'Viết plan.md + phase files' },
-      { number: 6, titleEn: 'Red Team', titleVi: 'Red Team', descEn: 'Adversarial review (5 personas)', descVi: 'Review đối kháng (5 personas)' },
+      { number: 6, titleEn: 'Red Team', titleVi: 'Red Team', descEn: 'Adversarial review (2-4 reviewers)', descVi: 'Review đối kháng (2-4 reviewers)' },
       { number: 7, titleEn: 'Validate', titleVi: 'Xác thực', descEn: 'Critical questions interview', descVi: 'Phỏng vấn câu hỏi quan trọng' },
       { number: 8, titleEn: 'Hydrate', titleVi: 'Hydrate', descEn: 'Create Claude Tasks from phases', descVi: 'Tạo Claude Tasks từ phases' },
       { number: 9, titleEn: 'Handoff', titleVi: 'Bàn giao', descEn: 'Output /cook command', descVi: 'Xuất lệnh /cook' },
@@ -121,8 +137,8 @@ export const skillInfographics: SkillInfographic[] = [
         id: 'red-team',
         titleEn: 'red-team',
         titleVi: 'red-team',
-        descEn: '5 adversarial personas challenge plan assumptions, find blind spots, test edge cases. Run as /plan red-team.',
-        descVi: '5 personas đối kháng thách thức giả định của plan, tìm điểm mù, test edge cases. Chạy /plan red-team.',
+        descEn: '2-4 code-reviewer agents challenge plan assumptions, find blind spots, test edge cases. Run as /plan red-team.',
+        descVi: '2-4 code-reviewer agents thách thức giả định của plan, tìm điểm mù, test edge cases. Chạy /plan red-team.',
         color: 'red',
       },
       {
@@ -153,38 +169,50 @@ export const skillInfographics: SkillInfographic[] = [
     kit: 'engineer',
 
     header: {
-      titleEn: '/cook',
-      titleVi: '/cook',
+      titleEn: '/ck:cook',
+      titleVi: '/ck:cook',
       taglineEn: 'Implementation engine that follows plans, runs tests, simplifies code, and reviews quality. The workhorse of ClaudeKit.',
       taglineVi: 'Engine triển khai theo plans, chạy tests, đơn giản hóa code, và review chất lượng. Công cụ chính của ClaudeKit.',
     },
 
     processFlow: [
-      { number: 1, titleEn: 'Intent', titleVi: 'Ý định', descEn: 'Detect plan vs task vs bug', descVi: 'Phát hiện plan vs task vs bug' },
-      { number: 2, titleEn: 'Research', titleVi: 'Nghiên cứu', descEn: 'Optional: scout codebase', descVi: 'Tùy chọn: scout codebase' },
-      { number: 3, titleEn: 'Review', titleVi: 'Xem xét', descEn: 'Review plan/task scope', descVi: 'Xem xét scope của plan/task' },
-      { number: 4, titleEn: 'Plan', titleVi: 'Lập kế hoạch', descEn: 'Create mini-plan if needed', descVi: 'Tạo mini-plan nếu cần' },
-      { number: 5, titleEn: 'Implement', titleVi: 'Triển khai', descEn: 'Write code following plan', descVi: 'Viết code theo plan' },
-      { number: 6, titleEn: 'Test', titleVi: 'Test', descEn: 'Run tests, fix failures', descVi: 'Chạy tests, sửa lỗi' },
-      { number: 7, titleEn: 'Simplify', titleVi: 'Đơn giản', descEn: 'Code simplifier pass', descVi: 'Pass đơn giản hóa code' },
-      { number: 8, titleEn: 'Review', titleVi: 'Review', descEn: 'Code review for quality', descVi: 'Code review cho chất lượng' },
-      { number: 9, titleEn: 'Commit', titleVi: 'Commit', descEn: 'Stage and commit changes', descVi: 'Stage và commit changes' },
+      { number: 1, titleEn: 'Intent', titleVi: 'Ý định', descEn: 'Detect mode from input', descVi: 'Phát hiện mode từ input' },
+      { number: 2, titleEn: 'Research', titleVi: 'Nghiên cứu', descEn: 'Scout codebase (skip if fast)', descVi: 'Scout codebase (bỏ nếu fast)' },
+      { number: 3, titleEn: 'Plan', titleVi: 'Lập kế hoạch', descEn: 'Create plan.md + phases', descVi: 'Tạo plan.md + phases' },
+      { number: 4, titleEn: 'Implement', titleVi: 'Triển khai', descEn: 'Execute phase tasks', descVi: 'Thực thi tasks theo phase' },
+      { number: 5, titleEn: 'Test', titleVi: 'Test', descEn: 'Run tests via tester agent', descVi: 'Chạy tests qua tester agent' },
+      { number: 6, titleEn: 'Review', titleVi: 'Review', descEn: 'Code review via reviewer agent', descVi: 'Code review qua reviewer agent' },
+      { number: 7, titleEn: 'Finalize', titleVi: 'Hoàn tất', descEn: 'Sync plan + docs + commit', descVi: 'Sync plan + docs + commit' },
     ],
 
-    corePrinciples: [
+    corePrinciplesEn: [
       'Follow the plan exactly',
       'Test before review',
-      'Simplify after implementation',
+      'Delegate to subagents (tester, reviewer)',
       'Never skip quality checks',
-      'Commit with conventional messages',
+      'Finalize with docs + commit',
+    ],
+    corePrinciplesVi: [
+      'Theo plan chính xác',
+      'Test trước review',
+      'Delegate cho subagents (tester, reviewer)',
+      'Không bỏ qua kiểm tra chất lượng',
+      'Hoàn tất với docs + commit',
     ],
 
-    expertiseAreas: [
+    expertiseAreasEn: [
       'Full-stack implementation',
       'Test-driven development',
-      'Code simplification',
+      'Subagent orchestration',
       'Quality assurance',
       'Git workflow management',
+    ],
+    expertiseAreasVi: [
+      'Triển khai full-stack',
+      'Test-driven development',
+      'Điều phối subagents',
+      'Đảm bảo chất lượng',
+      'Quản lý Git workflow',
     ],
 
     skillStack: [
@@ -216,35 +244,49 @@ export const skillInfographics: SkillInfographic[] = [
     kit: 'engineer',
 
     header: {
-      titleEn: '/fix',
-      titleVi: '/fix',
+      titleEn: '/ck:fix',
+      titleVi: '/ck:fix',
       taglineEn: 'Structured debugging pipeline with root cause analysis, fix implementation, and regression prevention.',
       taglineVi: 'Pipeline debug có cấu trúc với phân tích nguyên nhân gốc, triển khai sửa lỗi, và phòng ngừa regression.',
     },
 
     processFlow: [
       { number: 1, titleEn: 'Scout', titleVi: 'Khảo sát', descEn: 'Gather evidence: logs, stack traces', descVi: 'Thu thập bằng chứng: logs, stack traces' },
-      { number: 2, titleEn: 'Diagnose', titleVi: 'Chẩn đoán', descEn: 'Identify root cause', descVi: 'Xác định nguyên nhân gốc' },
-      { number: 3, titleEn: 'Assess', titleVi: 'Đánh giá', descEn: 'Evaluate fix approaches', descVi: 'Đánh giá các hướng sửa' },
+      { number: 2, titleEn: 'Diagnose', titleVi: 'Chẩn đoán', descEn: 'Root cause analysis (no guessing)', descVi: 'Phân tích nguyên nhân gốc (không đoán)' },
+      { number: 3, titleEn: 'Route', titleVi: 'Định tuyến', descEn: 'Assess complexity → workflow', descVi: 'Đánh giá độ phức tạp → workflow' },
       { number: 4, titleEn: 'Fix', titleVi: 'Sửa', descEn: 'Implement the fix', descVi: 'Triển khai sửa lỗi' },
-      { number: 5, titleEn: 'Verify', titleVi: 'Xác minh', descEn: 'Run tests, confirm fix', descVi: 'Chạy tests, xác nhận sửa' },
-      { number: 6, titleEn: 'Prevent', titleVi: 'Phòng ngừa', descEn: 'Add regression tests', descVi: 'Thêm regression tests' },
+      { number: 5, titleEn: 'Verify', titleVi: 'Xác minh', descEn: 'Run tests + add regression test', descVi: 'Chạy tests + thêm regression test' },
+      { number: 6, titleEn: 'Finalize', titleVi: 'Hoàn tất', descEn: 'Docs + commit + journal', descVi: 'Docs + commit + journal' },
     ],
 
-    corePrinciples: [
+    corePrinciplesEn: [
       'Find root cause, not symptoms',
       'One bug, one commit',
       'Always add regression test',
       'Document the fix',
       'Never ignore test failures',
     ],
+    corePrinciplesVi: [
+      'Tìm nguyên nhân gốc, không phải triệu chứng',
+      'Một bug, một commit',
+      'Luôn thêm regression test',
+      'Ghi lại bản sửa',
+      'Không bỏ qua test thất bại',
+    ],
 
-    expertiseAreas: [
+    expertiseAreasEn: [
       'Root cause analysis',
       'Debugging techniques',
       'Test coverage expansion',
       'Error handling patterns',
       'Log analysis',
+    ],
+    expertiseAreasVi: [
+      'Phân tích nguyên nhân gốc',
+      'Kỹ thuật debug',
+      'Mở rộng test coverage',
+      'Patterns xử lý lỗi',
+      'Phân tích log',
     ],
 
     skillStack: [
@@ -274,4 +316,10 @@ export function getInfographicById(id: string): SkillInfographic | undefined {
 /** Check if infographic exists for a scenario */
 export function hasInfographic(id: string): boolean {
   return skillInfographics.some(info => info.id === id);
+}
+
+/** Get processFlow phase count for a scenario (for badge display) */
+export function getPhaseCount(id: string): number | undefined {
+  const info = skillInfographics.find(i => i.id === id);
+  return info?.processFlow?.length;
 }

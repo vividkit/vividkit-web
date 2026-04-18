@@ -8,7 +8,7 @@ export { workflowCombos } from './workflow-combos';
 export type { WorkflowCombo } from './workflow-visualizer-types';
 
 // Skill infographics — one-page visual summaries
-export { skillInfographics, getInfographicById, hasInfographic } from './skill-infographics';
+export { skillInfographics, getInfographicById, hasInfographic, getPhaseCount } from './skill-infographics';
 export type {
   SkillInfographic,
   ProcessFlowStep,

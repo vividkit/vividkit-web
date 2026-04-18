@@ -182,8 +182,10 @@ export interface SkillInfographic {
 
   processFlow: ProcessFlowStep[];
 
-  corePrinciples?: string[];
-  expertiseAreas?: string[];
+  corePrinciplesEn?: string[];
+  corePrinciplesVi?: string[];
+  expertiseAreasEn?: string[];
+  expertiseAreasVi?: string[];
 
   workflowModes?: WorkflowModeRow[];
   composableFlagsEn?: string;
@@ -198,6 +200,8 @@ export interface SkillInfographic {
     titleVi: string;
     patternEn: string;
     patternVi: string;
+    locationEn?: string;
+    locationVi?: string;
     descEn: string;
     descVi: string;
   };

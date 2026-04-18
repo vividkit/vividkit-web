@@ -1,0 +1,112 @@
+---
+import { getLangFromUrl, type Language } from '@/i18n';
+import { useTranslations } from '@/i18n/utils';
+import InsideClaudeKitArticleShell from './InsideClaudeKitArticleShell.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+const copy = currentLang === 'vi'
+  ? {
+      kicker: 'Planning Systems',
+      summary: 'Ba cách chạy /ck:plan này không chỉ khác syntax. Chúng khác nhau ở độ sâu suy nghĩ, phạm vi kiểm chứng, và lượng thời gian bạn đầu tư trước khi chạm vào implementation.',
+      sections: {
+        matter: 'Vì sao 3 modes này đáng để hiểu kỹ',
+        choose: 'Chọn mode nào trong từng tình huống',
+        mistakes: 'Những lỗi chọn mode phổ biến',
+      },
+      matterPoints: [
+        'Default mode phù hợp khi bài toán đã khá rõ và bạn cần tiến nhanh.',
+        '--tdd ép plan nghĩ theo validation path trước, hữu ích khi bug risk cao hoặc behavior cần khóa chặt bằng test.',
+        '--deep đáng dùng khi vấn đề mơ hồ, nhiều phụ thuộc, hoặc bạn chưa tin vào framing ban đầu.',
+      ],
+      chooseCards: [
+        { title: 'Default', desc: 'Dùng khi scope rõ, dependency ít, và bạn chủ yếu cần một execution plan sạch, gọn, đủ chạy.' },
+        { title: '--tdd', desc: 'Dùng khi logic dễ regress, cần confidence cao, hoặc muốn biến test strategy thành backbone của plan.' },
+        { title: '--deep', desc: 'Dùng khi bài toán lớn, nhiều unknowns, hoặc bạn muốn ép hệ thống nghiên cứu và phản biện framing kỹ hơn.' },
+      ],
+      workflow: 'Một mental model đơn giản là: càng nhiều unknowns hoặc càng đắt khi sửa sai về sau, bạn càng nên nghiêng sang --deep hoặc --tdd.',
+      mistakes: [
+        'Dùng --deep cho cả những task nhỏ, làm workflow chậm đi mà giá trị tăng không đáng kể.',
+        'Bỏ qua --tdd ở các task dễ sinh regression, rồi phải debug lại khi implementation đã đi quá xa.',
+        'Nhìn mode như level “xịn hơn” thay vì xem nó là trade-off giữa tốc độ và độ chắc chắn.',
+      ],
+    }
+  : {
+      kicker: 'Planning Systems',
+      summary: 'These /ck:plan modes are not just syntax variations. They change the depth of thinking, the validation strategy, and how much time you invest before implementation begins.',
+      sections: {
+        matter: 'Why these 3 modes are worth understanding',
+        choose: 'How to choose the right mode',
+        mistakes: 'Common mode-selection mistakes',
+      },
+      matterPoints: [
+        'Default mode fits when the problem is already clear and you need momentum.',
+        '--tdd makes the plan think through validation first, which helps when regression risk is high or behavior needs to be locked down.',
+        '--deep is worth it when the problem is fuzzy, heavily connected, or not yet framed well enough.',
+      ],
+      chooseCards: [
+        { title: 'Default', desc: 'Use it when scope is clear, dependencies are limited, and you mainly need a clean execution plan.' },
+        { title: '--tdd', desc: 'Use it when logic is regression-prone, confidence matters, or you want tests to shape the implementation path.' },
+        { title: '--deep', desc: 'Use it when the problem is large, uncertain, or needs stronger research and framing before code starts.' },
+      ],
+      workflow: 'A simple mental model: the more unknowns you have, or the more expensive it is to be wrong later, the more you should lean toward --deep or --tdd.',
+      mistakes: [
+        'Using --deep for every small task and paying a speed cost without enough upside.',
+        'Skipping --tdd on fragile work, then debugging regressions after implementation has already spread.',
+        'Treating modes like “higher tiers” instead of trade-offs between speed and certainty.',
+      ],
+    };
+---
+
+<InsideClaudeKitArticleShell
+  lang={currentLang}
+  kicker={copy.kicker}
+  title={t('guides.home.inside_claudekit.topic_1.title')}
+  summary={copy.summary}
+  slug="plan-modes"
+>
+  <section id="why-modes-matter" class="rounded-3xl border border-slate-200/70 bg-white p-6 dark:border-slate-800 dark:bg-slate-900/70">
+    <h2 class="mb-4 text-2xl font-semibold text-slate-900 dark:text-white">{copy.sections.matter}</h2>
+    <ul class="space-y-3">
+      {copy.matterPoints.map((item) => (
+        <li class="flex gap-3 text-sm leading-7 text-slate-600 dark:text-slate-300">
+          <span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-blue-500"></span>
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section id="choosing-a-mode" class="rounded-3xl border border-slate-200/70 bg-white p-6 dark:border-slate-800 dark:bg-slate-900/70">
+    <h2 class="mb-4 text-2xl font-semibold text-slate-900 dark:text-white">{copy.sections.choose}</h2>
+    <div class="grid gap-4 lg:grid-cols-3">
+      {copy.chooseCards.map((card) => (
+        <div class="rounded-2xl border border-slate-200/70 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-950">
+          <h3 class="mb-2 text-lg font-semibold text-slate-900 dark:text-white">{card.title}</h3>
+          <p class="text-sm leading-7 text-slate-600 dark:text-slate-300">{card.desc}</p>
+        </div>
+      ))}
+    </div>
+    <p class="mt-5 rounded-2xl border border-blue-200/70 bg-blue-50 px-4 py-3 text-sm leading-7 text-blue-900 dark:border-blue-500/20 dark:bg-blue-950/40 dark:text-blue-100">
+      {copy.workflow}
+    </p>
+  </section>
+
+  <section id="common-mistakes" class="rounded-3xl border border-slate-200/70 bg-white p-6 dark:border-slate-800 dark:bg-slate-900/70">
+    <h2 class="mb-4 text-2xl font-semibold text-slate-900 dark:text-white">{copy.sections.mistakes}</h2>
+    <ul class="space-y-3">
+      {copy.mistakes.map((item) => (
+        <li class="flex gap-3 text-sm leading-7 text-slate-600 dark:text-slate-300">
+          <span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-amber-400"></span>
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+</InsideClaudeKitArticleShell>

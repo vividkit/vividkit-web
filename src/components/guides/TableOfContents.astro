@@ -1,95 +1,232 @@
 ---
+import { List } from 'lucide-astro';
+
+interface Props {
+  title?: string;
+  variant?: 'default' | 'docs-left';
+}
+
+const { title = 'On this page', variant = 'default' } = Astro.props;
+const isDocsLeft = variant === 'docs-left';
 ---
 
-<div class="toc-wrapper hidden xl:block w-56 shrink-0 order-2">
-  <div class="sticky top-32 max-h-[calc(100vh-10rem)] overflow-y-auto pr-4">
-    <h3 class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-4 pl-3">
-      On This Page
-    </h3>
-    <nav id="toc-nav" class="space-y-0.5 border-l border-slate-200 dark:border-slate-800">
+<aside
+  class:list={[
+    'hidden xl:block shrink-0',
+    isDocsLeft ? 'w-full' : 'w-56 order-2',
+  ]}
+  data-variant={variant}
+>
+  <div
+    class:list={[
+      'sticky top-32 max-h-[calc(100vh-10rem)] overflow-y-auto',
+      isDocsLeft
+        ? 'pr-2'
+        : 'pr-4',
+    ]}
+  >
+    <div class="flex items-center gap-2.5">
+      <List class:list={['h-4 w-4', isDocsLeft ? 'text-slate-400 dark:text-slate-500' : 'text-slate-400 dark:text-slate-500']} />
+      <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+        {title}
+      </h3>
+    </div>
+
+    <nav
+      id="toc-nav"
+      class:list={[
+        'mt-4',
+        isDocsLeft ? 'toc-nav-docs' : 'space-y-0.5 border-l border-slate-200 dark:border-slate-800',
+      ]}
+      data-variant={variant}
+    >
       <!-- Links injected by JS -->
     </nav>
   </div>
-</div>
+</aside>
+
+<style>
+  .toc-nav-docs {
+    position: relative;
+    margin-left: 0.3rem;
+    border-left: 1px solid rgba(148, 163, 184, 0.18);
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding-left: 0.95rem;
+  }
+
+  .dark .toc-nav-docs {
+    border-left-color: rgba(100, 116, 139, 0.28);
+  }
+
+  .toc-link {
+    position: relative;
+    display: block;
+    transition: color 180ms ease, border-color 180ms ease, background-color 180ms ease;
+  }
+
+  .toc-link[data-active='true'] {
+    font-weight: 600;
+  }
+
+  .toc-nav-docs .toc-link {
+    margin-left: -0.95rem;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0.38rem 0 0.38rem 1rem;
+    color: rgb(100 116 139);
+    max-width: 100%;
+    white-space: normal;
+  }
+
+  .dark .toc-nav-docs .toc-link {
+    color: rgb(148 163 184);
+  }
+
+  .toc-nav-docs .toc-link::before {
+    content: '';
+    position: absolute;
+    left: -1px;
+    top: 1rem;
+    height: 0.85rem;
+    width: 0.8rem;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+    border-left: 1px solid rgba(148, 163, 184, 0.18);
+    border-bottom-left-radius: 0.7rem;
+    transform: translateX(-100%);
+  }
+
+  .dark .toc-nav-docs .toc-link::before {
+    border-bottom-color: rgba(100, 116, 139, 0.28);
+    border-left-color: rgba(100, 116, 139, 0.28);
+  }
+
+  .toc-nav-docs .toc-link:hover {
+    color: rgb(30 41 59);
+  }
+
+  .dark .toc-nav-docs .toc-link:hover {
+    color: rgb(226 232 240);
+  }
+
+  .toc-nav-docs .toc-link[data-active='true'] {
+    color: rgb(180 83 9);
+  }
+
+  .dark .toc-nav-docs .toc-link[data-active='true'] {
+    border-left-color: rgb(251 191 36);
+    color: rgb(252 211 77);
+  }
+
+  .toc-nav-docs .toc-link[data-level='H3'] {
+    padding-left: 1.7rem;
+    font-size: 0.8rem;
+  }
+
+  .toc-nav-docs .toc-link[data-active='true']::before {
+    border-bottom-color: rgb(180 83 9);
+    border-left-color: rgb(180 83 9);
+  }
+
+  .dark .toc-nav-docs .toc-link[data-active='true']::before {
+    border-bottom-color: rgb(251 191 36);
+    border-left-color: rgb(251 191 36);
+  }
+</style>
 
 <script>
   function generateTOC() {
     const nav = document.getElementById('toc-nav');
-    // Using main or specific content ID if available to narrow down
     const main = document.querySelector('main');
 
     if (!nav || !main) return;
 
-    // Find all h2 and h3 with IDs
-    const headings = main.querySelectorAll('h2[id], h3[id]');
-
-    // Clear existing to avoid duplicates on re-renders if standard script
     nav.innerHTML = '';
+    const variant = nav.dataset.variant || 'default';
+    const sections = Array.from(main.querySelectorAll('section[id]'));
+    const headingTargets = Array.from(main.querySelectorAll('h2[id], h3[id]')).map((heading) => ({
+      id: heading.id,
+      label: heading.textContent?.trim() || heading.id,
+      level: heading.tagName,
+      target: heading,
+      observeTarget: heading,
+    }));
 
-    if (headings.length === 0) {
+    const fallbackSectionTargets = sections
+      .map((section) => {
+        const heading = section.querySelector('h2, h3');
+
+        if (!heading) return null;
+
+        return {
+          id: section.id,
+          label: heading.textContent?.trim() || section.id,
+          level: heading.tagName,
+          target: section,
+          observeTarget: section,
+        };
+      })
+      .filter(Boolean);
+
+    const tocTargets = headingTargets.length > 0 ? headingTargets : fallbackSectionTargets;
+
+    if (tocTargets.length === 0) {
       nav.innerHTML = '<p class="text-xs text-slate-400 pl-3 py-1">No sections</p>';
       return;
     }
 
-    // Scroll Observer for Active State
     const observerOptions = {
       root: null,
       rootMargin: '-100px 0px -66% 0px',
-      threshold: 0
+      threshold: 0,
     };
 
     const observer = new IntersectionObserver((entries) => {
-      // Find the entry that intersects
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
-            setActive(entry.target.id);
+          setActive(entry.target.id);
         }
       });
     }, observerOptions);
 
     function setActive(id) {
-        document.querySelectorAll('.toc-link').forEach(link => {
-            const isActive = link.getAttribute('href') === `#${id}`;
-            if (isActive) {
-                link.classList.add('text-blue-600', 'dark:text-blue-400', 'font-medium', 'border-blue-600', 'dark:border-blue-400');
-                link.classList.remove('text-slate-500', 'dark:text-slate-400', 'border-transparent');
-            } else {
-                link.classList.remove('text-blue-600', 'dark:text-blue-400', 'font-medium', 'border-blue-600', 'dark:border-blue-400');
-                link.classList.add('text-slate-500', 'dark:text-slate-400', 'border-transparent');
-            }
-        });
+      document.querySelectorAll('.toc-link').forEach((link) => {
+        link.dataset.active = link.getAttribute('href') === `#${id}` ? 'true' : 'false';
+      });
     }
 
-    headings.forEach((heading, index) => {
+    tocTargets.forEach((item, index) => {
       const link = document.createElement('a');
-      link.href = `#${heading.id}`;
-      link.textContent = heading.innerText;
-      // Style
-      link.className = `toc-link block text-xs py-1.5 border-l-2 transition-colors hover:text-slate-900 dark:hover:text-slate-200 hover:border-slate-300 ${
-        heading.tagName === 'H3' ? 'pl-6' : 'pl-3'
-      } ${
-        index === 0 ? 'text-blue-600 dark:text-blue-400 font-medium border-blue-600 dark:border-blue-400' : 'text-slate-500 dark:text-slate-400 border-transparent'
-      }`;
+      link.href = `#${item.id}`;
+      link.textContent = item.label;
+      link.dataset.level = item.level;
+      link.dataset.active = index === 0 ? 'true' : 'false';
+
+      if (variant === 'docs-left') {
+        link.className = 'toc-link text-[0.95rem] leading-6';
+      } else {
+        link.className = `toc-link block border-l-2 py-1.5 text-xs transition-colors hover:text-slate-900 hover:border-slate-300 dark:hover:text-slate-200 ${
+          item.level === 'H3' ? 'pl-6' : 'pl-3'
+        }`;
+      }
 
       link.addEventListener('click', (e) => {
         e.preventDefault();
-        // Adjust for sticky header offset
         const yOffset = -140;
-        const y = heading.getBoundingClientRect().top + window.scrollY + yOffset;
-        window.scrollTo({top: y, behavior: 'smooth'});
-
-        // Update URL
-        history.pushState(null, null, `#${heading.id}`);
-        // Manually set active since scroll might not trigger quickly enough or for last item
-        setActive(heading.id);
+        const y = item.target.getBoundingClientRect().top + window.scrollY + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+        history.pushState(null, null, `#${item.id}`);
+        setActive(item.id);
       });
 
       nav.appendChild(link);
-      observer.observe(heading);
+      observer.observe(item.observeTarget);
     });
   }
 
-  // Support for View Transitions if enabled, else just load
   document.addEventListener('astro:page-load', generateTOC);
   document.addEventListener('DOMContentLoaded', generateTOC);
 </script>
