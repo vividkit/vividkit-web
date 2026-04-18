@@ -180,8 +180,8 @@ const copy = currentLang === 'vi'
           <span class="ml-2 text-xs text-slate-500 dark:text-slate-400">{currentLang === 'vi' ? 'Global — mọi project' : 'Global — all projects'}</span>
         </div>
       </div>
-      <div class="ml-3 border-l-2 border-dashed border-amber-300 pl-6 dark:border-amber-700">
-        <svg class="h-3 w-3 -ml-[7px] text-amber-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+      <div class="flex justify-center py-1">
+        <svg class="h-4 w-4 text-amber-400" fill="currentColor" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
       </div>
       <div class="flex items-center gap-3">
         <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-amber-200 text-xs font-bold text-amber-800 dark:bg-amber-800 dark:text-amber-200">2</span>
@@ -192,8 +192,8 @@ const copy = currentLang === 'vi'
           <span class="ml-2 text-xs text-slate-500 dark:text-slate-400">{currentLang === 'vi' ? 'Project root' : 'Project root'}</span>
         </div>
       </div>
-      <div class="ml-3 border-l-2 border-dashed border-amber-300 pl-6 dark:border-amber-700">
-        <svg class="h-3 w-3 -ml-[7px] text-amber-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+      <div class="flex justify-center py-1">
+        <svg class="h-4 w-4 text-amber-400" fill="currentColor" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
       </div>
       <div class="flex items-center gap-3">
         <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-amber-200 text-xs font-bold text-amber-800 dark:bg-amber-800 dark:text-amber-200">3</span>
@@ -202,8 +202,8 @@ const copy = currentLang === 'vi'
           <span class="ml-2 text-xs text-slate-500 dark:text-slate-400">{currentLang === 'vi' ? 'Rules theo topic (lazy-load nếu có paths)' : 'Topic rules (lazy-load if path-scoped)'}</span>
         </div>
       </div>
-      <div class="ml-3 border-l-2 border-dashed border-amber-300 pl-6 dark:border-amber-700">
-        <svg class="h-3 w-3 -ml-[7px] text-amber-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+      <div class="flex justify-center py-1">
+        <svg class="h-4 w-4 text-amber-400" fill="currentColor" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
       </div>
       <div class="flex items-center gap-3">
         <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-200 text-xs font-bold text-emerald-800 dark:bg-emerald-800 dark:text-emerald-200">✓</span>
@@ -312,11 +312,11 @@ const copy = currentLang === 'vi'
         <p class="mb-2 text-xs italic text-slate-500 dark:text-slate-400">
           {currentLang === 'vi' ? 'Scenario: Thêm user settings page với dark mode toggle' : 'Scenario: Add user settings page with dark mode toggle'}
         </p>
-        <div class="rounded-lg bg-slate-900 p-3 font-mono text-xs text-slate-200">
-          <div><span class="text-purple-400">/ck:brainstorm</span> <span class="text-slate-400"># Explore options</span></div>
-          <div><span class="text-purple-400">/ck:plan</span> <span class="text-slate-400"># Detail implementation</span></div>
-          <div><span class="text-purple-400">/ck:cook</span> <span class="text-slate-400"># Build + test + review</span></div>
-          <div><span class="text-purple-400">/ck:git</span> cm <span class="text-slate-400"># Commit</span></div>
+        <div class="rounded-lg bg-slate-100 p-3 font-mono text-xs text-slate-700 dark:bg-slate-900 dark:text-slate-200">
+          <div><span class="text-purple-600 dark:text-purple-400">/ck:brainstorm</span> <span class="text-slate-500 dark:text-slate-400"># Explore options</span></div>
+          <div><span class="text-purple-600 dark:text-purple-400">/ck:plan</span> <span class="text-slate-500 dark:text-slate-400"># Detail implementation</span></div>
+          <div><span class="text-purple-600 dark:text-purple-400">/ck:cook</span> <span class="text-slate-500 dark:text-slate-400"># Build + test + review</span></div>
+          <div><span class="text-purple-600 dark:text-purple-400">/ck:git</span> cm <span class="text-slate-500 dark:text-slate-400"># Commit</span></div>
         </div>
       </div>
       <!-- UC2: Fix bug -->
@@ -329,9 +329,9 @@ const copy = currentLang === 'vi'
         <p class="mb-2 text-xs italic text-slate-500 dark:text-slate-400">
           {currentLang === 'vi' ? 'Scenario: Form validation không show error message' : 'Scenario: Form validation not showing error message'}
         </p>
-        <div class="rounded-lg bg-slate-900 p-3 font-mono text-xs text-slate-200">
-          <div><span class="text-purple-400">/ck:fix</span> Email validation in signup form...</div>
-          <div class="text-slate-400"># Auto: scout → diagnose → fix → verify</div>
+        <div class="rounded-lg bg-slate-100 p-3 font-mono text-xs text-slate-700 dark:bg-slate-900 dark:text-slate-200">
+          <div><span class="text-purple-600 dark:text-purple-400">/ck:fix</span> Email validation in signup form...</div>
+          <div class="text-slate-500 dark:text-slate-400"># Auto: scout → diagnose → fix → verify</div>
         </div>
       </div>
       <!-- UC3: Onboard codebase -->
@@ -344,10 +344,10 @@ const copy = currentLang === 'vi'
         <p class="mb-2 text-xs italic text-slate-500 dark:text-slate-400">
           {currentLang === 'vi' ? 'Scenario: Join team mới, cần hiểu codebase nhanh' : 'Scenario: Join new team, need to understand codebase quickly'}
         </p>
-        <div class="rounded-lg bg-slate-900 p-3 font-mono text-xs text-slate-200">
-          <div><span class="text-purple-400">/ck:scout</span> src/ <span class="text-slate-400"># Explore structure</span></div>
-          <div><span class="text-purple-400">/ck:ask</span> How does auth flow work?</div>
-          <div><span class="text-purple-400">/ck:ask</span> Explain src/services/auth/</div>
+        <div class="rounded-lg bg-slate-100 p-3 font-mono text-xs text-slate-700 dark:bg-slate-900 dark:text-slate-200">
+          <div><span class="text-purple-600 dark:text-purple-400">/ck:scout</span> src/ <span class="text-slate-500 dark:text-slate-400"># Explore structure</span></div>
+          <div><span class="text-purple-600 dark:text-purple-400">/ck:ask</span> How does auth flow work?</div>
+          <div><span class="text-purple-600 dark:text-purple-400">/ck:ask</span> Explain src/services/auth/</div>
         </div>
         <p class="mt-2 text-xs text-emerald-600 dark:text-emerald-400">
           {currentLang === 'vi' ? '→ Hiểu architecture trong 30 phút thay vì 2 ngày' : '→ Understand architecture in 30min instead of 2 days'}
@@ -363,11 +363,11 @@ const copy = currentLang === 'vi'
         <p class="mb-2 text-xs italic text-slate-500 dark:text-slate-400">
           {currentLang === 'vi' ? 'Scenario: Module cũ 500 LOC cần cleanup' : 'Scenario: Old 500 LOC module needs cleanup'}
         </p>
-        <div class="rounded-lg bg-slate-900 p-3 font-mono text-xs text-slate-200">
-          <div><span class="text-purple-400">/ck:ask</span> Analyze src/legacy/user-manager.js</div>
-          <div><span class="text-purple-400">/ck:plan</span> Refactor into smaller modules</div>
-          <div><span class="text-purple-400">/ck:cook</span> <span class="text-slate-400"># Tests first, then refactor</span></div>
-          <div><span class="text-purple-400">/ck:code-review</span> <span class="text-slate-400"># Verify no regressions</span></div>
+        <div class="rounded-lg bg-slate-100 p-3 font-mono text-xs text-slate-700 dark:bg-slate-900 dark:text-slate-200">
+          <div><span class="text-purple-600 dark:text-purple-400">/ck:ask</span> Analyze src/legacy/user-manager.js</div>
+          <div><span class="text-purple-600 dark:text-purple-400">/ck:plan</span> Refactor into smaller modules</div>
+          <div><span class="text-purple-600 dark:text-purple-400">/ck:cook</span> <span class="text-slate-500 dark:text-slate-400"># Tests first, then refactor</span></div>
+          <div><span class="text-purple-600 dark:text-purple-400">/ck:code-review</span> <span class="text-slate-500 dark:text-slate-400"># Verify no regressions</span></div>
         </div>
       </div>
     </div>
