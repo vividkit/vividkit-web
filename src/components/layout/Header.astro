@@ -219,4 +219,48 @@ const translatePath = useTranslatedPath(currentLang);
     }
   });
 
+  // Auto-hide header on scroll down, show on scroll up (guides article pages only)
+  (function() {
+    const path = window.location.pathname;
+    // Match inside-claudekit sub-article pages: /guides/inside-claudekit/xxx or /vi/guides/inside-claudekit/xxx
+    const isArticlePage = /\/(vi\/)?guides\/inside-claudekit\/.+/.test(path);
+    if (!isArticlePage) return;
+
+    const header = document.getElementById('main-header');
+    if (!header) return;
+
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+    const SCROLL_THRESHOLD = 60; // px before triggering hide
+
+    function onScroll() {
+      const currentY = window.scrollY;
+      const delta = currentY - lastScrollY;
+
+      if (currentY <= SCROLL_THRESHOLD) {
+        // At top of page — always show
+        header.style.transform = '';
+        header.style.opacity = '';
+      } else if (delta > 5) {
+        // Scrolling down — hide
+        header.style.transform = 'translateY(-120%)';
+        header.style.opacity = '0';
+      } else if (delta < -5) {
+        // Scrolling up — show
+        header.style.transform = '';
+        header.style.opacity = '';
+      }
+
+      lastScrollY = currentY;
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(onScroll);
+        ticking = true;
+      }
+    }, { passive: true });
+  })();
+
 </script>

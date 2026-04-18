@@ -1,0 +1,108 @@
+---
+// Section 1: What is CLAUDE.md? - Recipe book analogy
+import { useTranslations } from "@/i18n/utils";
+import { type Language } from "@/i18n";
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const icons = {
+  book: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>`,
+  chef: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013-5.65 8.287 8.287 0 003.362 1.264z" /></svg>`,
+  code: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" /></svg>`,
+};
+
+const chefItems = [
+  { key: 'chef_ingredients', icon: '1' },
+  { key: 'chef_prepare', icon: '2' },
+  { key: 'chef_rules', icon: '3' },
+];
+
+const claudeItems = [
+  { key: 'claude_context', icon: '1' },
+  { key: 'claude_standards', icon: '2' },
+  { key: 'claude_workflows', icon: '3' },
+];
+---
+
+<section class="space-y-6">
+  <!-- Section Header -->
+  <div class="flex items-center gap-3">
+    <div class="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-500/20 flex items-center justify-center text-amber-600 dark:text-amber-400">
+      <Fragment set:html={icons.book} />
+    </div>
+    <h2 class="text-2xl font-bold text-slate-900 dark:text-white">
+      {t('guides.claude_mechanics.section_what_is')}
+    </h2>
+  </div>
+
+  <!-- Recipe Book Analogy Card -->
+  <div class="glass-card rounded-2xl overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border-b border-slate-200 dark:border-slate-800">
+      <h3 class="text-xl font-bold text-amber-600 dark:text-amber-400">
+        {t('guides.claude_mechanics.what_is.analogy_title')}
+      </h3>
+      <p class="text-slate-600 dark:text-slate-400 mt-2">
+        {t('guides.claude_mechanics.what_is.analogy_intro')}
+      </p>
+    </div>
+
+    <div class="p-6">
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Chef Side -->
+        <div class="space-y-4">
+          <div class="flex items-center gap-2 text-amber-600 dark:text-amber-400 font-semibold">
+            <Fragment set:html={icons.chef} />
+            <span>Recipe Book tells Chef:</span>
+          </div>
+          <div class="space-y-3">
+            {chefItems.map((item) => (
+              <div class="flex items-start gap-3 p-3 rounded-lg bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20">
+                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-amber-200 dark:bg-amber-500/30 flex items-center justify-center text-sm font-bold text-amber-700 dark:text-amber-300">
+                  {item.icon}
+                </span>
+                <span class="text-slate-700 dark:text-slate-300 text-sm">
+                  {t(`guides.claude_mechanics.what_is.${item.key}`)}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Claude Side -->
+        <div class="space-y-4">
+          <div class="flex items-center gap-2 text-blue-600 dark:text-blue-400 font-semibold">
+            <Fragment set:html={icons.code} />
+            <span>CLAUDE.md tells Claude:</span>
+          </div>
+          <div class="space-y-3">
+            {claudeItems.map((item) => (
+              <div class="flex items-start gap-3 p-3 rounded-lg bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20">
+                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-blue-200 dark:bg-blue-500/30 flex items-center justify-center text-sm font-bold text-blue-700 dark:text-blue-300">
+                  {item.icon}
+                </span>
+                <span class="text-slate-700 dark:text-slate-300 text-sm">
+                  {t(`guides.claude_mechanics.what_is.${item.key}`)}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Callout: Guidance, not enforcement -->
+  <div class="flex items-start gap-3 p-4 rounded-xl bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20">
+    <svg class="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z" />
+    </svg>
+    <p class="text-sm text-amber-700 dark:text-amber-400 leading-relaxed">
+      {t('guides.claude_mechanics.what_is.callout_rules_not_enforcement')}
+    </p>
+  </div>
+</section>

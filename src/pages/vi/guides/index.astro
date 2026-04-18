@@ -1,3 +1,16 @@
 ---
-return Astro.redirect('/vi/guides/cli');
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import GuidesHomePage from '@/components/guides/GuidesHomePage.astro';
+import type { Language } from '@/i18n';
+
+const lang: Language = 'vi';
 ---
+
+<GuidesLayout
+  title="VividKit Guides - Hành trình AI coding của bạn"
+  description="Khám phá các guide của ClaudeKit từ người mới bắt đầu đến nâng cao. Tìm đúng lộ trình để bắt đầu, khám phá tính năng, hiểu cách cấu hình và hơn thế nữa."
+  activeTab="index"
+  lang={lang}
+>
+  <GuidesHomePage lang={lang} />
+</GuidesLayout>

@@ -1,0 +1,179 @@
+---
+// Horizontal pipeline showing combo skill sequence with playback controls
+// Shows connected nodes with arrows, highlights current scenario during playback
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === 'vi';
+---
+
+<div x-show="selectedCombo && viewType === 'combos'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" class="mb-6">
+  <div class="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-4 shadow-sm dark:shadow-none">
+    <!-- Header with title and controls -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg flex items-center justify-center bg-blue-500/10">
+          <svg class="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="font-semibold text-gray-900 dark:text-white text-sm" x-text="isVi ? getSelectedCombo()?.titleVi : getSelectedCombo()?.titleEn"></h3>
+          <p class="text-xs text-gray-500 dark:text-white/50" x-text="isVi ? getSelectedCombo()?.descVi : getSelectedCombo()?.descEn"></p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <!-- Play/Pause button -->
+        <button
+          @click="toggleComboPlay()"
+          class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors"
+          :class="isComboPlaying
+            ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400 hover:bg-amber-500/20'
+            : 'bg-blue-500/10 text-blue-600 dark:text-blue-400 hover:bg-blue-500/20'"
+        >
+          <template x-if="!isComboPlaying">
+            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+          </template>
+          <template x-if="isComboPlaying">
+            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+            </svg>
+          </template>
+          <span x-text="isComboPlaying ? (isVi ? 'Dừng' : 'Pause') : (isVi ? 'Chạy tuần tự' : 'Play sequence')"></span>
+        </button>
+
+        <!-- Reset button -->
+        <button
+          @click="resetComboPipeline()"
+          class="flex items-center gap-1 px-2.5 py-1.5 text-xs text-gray-600 dark:text-white/60 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 rounded-lg transition-colors"
+          :title="isVi ? 'Đặt lại' : 'Reset'"
+        >
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+        </button>
+
+        <!-- Close button -->
+        <button
+          @click="selectedCombo = null; comboPlayIndex = -1; stopComboPlay()"
+          class="flex items-center gap-1 px-2.5 py-1.5 text-xs text-gray-600 dark:text-white/60 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 rounded-lg transition-colors"
+        >
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+          <span class="hidden sm:inline">{isVi ? 'Đóng' : 'Close'}</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Horizontal pipeline nodes -->
+    <div class="flex items-center gap-1 overflow-x-auto pb-2 pt-3 -mx-1 px-1">
+      <template x-for="(scenarioId, i) in getSelectedCombo()?.scenarios || []" :key="scenarioId">
+        <div class="flex items-center shrink-0">
+          <!-- Step node -->
+          <button
+            @click="jumpToComboScenario(i)"
+            class="relative flex flex-col items-center gap-1 px-3 py-2 rounded-lg border transition-all min-w-[80px]"
+            :class="[
+              comboPlayIndex === i
+                ? 'bg-blue-50 dark:bg-blue-500/20 border-blue-500 ring-2 ring-blue-500/30'
+                : selectedScenario === scenarioId
+                  ? 'bg-gray-50 dark:bg-white/10 border-gray-300 dark:border-white/20'
+                  : 'bg-white dark:bg-white/5 border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:border-white/20 hover:bg-gray-50 dark:hover:bg-white/10',
+              comboPlayIndex > i ? 'opacity-60' : ''
+            ]"
+          >
+            <!-- Step number badge -->
+            <span
+              class="absolute -top-2 -left-1 w-5 h-5 flex items-center justify-center rounded-full text-[10px] font-bold"
+              :class="comboPlayIndex >= i
+                ? 'bg-blue-500 text-white'
+                : 'bg-gray-200 dark:bg-white/20 text-gray-600 dark:text-white/60'"
+              x-text="i + 1"
+            ></span>
+
+            <!-- Scenario icon (dynamic from scenario data) -->
+            <div
+              class="w-6 h-6 rounded-md flex items-center justify-center"
+              :class="getColorClass(getScenarioById(scenarioId)?.accentColor || 'purple', 'iconBg')"
+            >
+              <svg
+                class="w-3.5 h-3.5"
+                :class="getColorClass(getScenarioById(scenarioId)?.accentColor || 'purple', 'iconText')"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                x-html="getScenarioById(scenarioId)?.icon || ''"
+              ></svg>
+            </div>
+
+            <!-- Scenario name -->
+            <span class="text-[11px] font-medium text-gray-700 dark:text-white/80" x-text="'/ck:' + scenarioId"></span>
+          </button>
+
+          <!-- Connecting arrow (except for last item) -->
+          <template x-if="i < (getSelectedCombo()?.scenarios?.length || 1) - 1">
+            <div class="flex items-center px-1">
+              <svg
+                class="w-5 h-5 transition-colors"
+                :class="comboPlayIndex > i ? 'text-blue-400' : 'text-gray-300 dark:text-white/20'"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          </template>
+        </div>
+      </template>
+    </div>
+
+    <!-- Progress indicator -->
+    <div class="mt-3 pt-3 border-t border-gray-100 dark:border-white/5">
+      <div class="flex items-center justify-between text-xs text-gray-500 dark:text-white/50">
+        <span>
+          {isVi ? 'Bước' : 'Step'}
+          <span x-text="Math.max(0, comboPlayIndex + 1)"></span>
+          /
+          <span x-text="getSelectedCombo()?.scenarios?.length || 0"></span>
+        </span>
+        <span x-show="isComboPlaying" class="flex items-center gap-1.5 text-blue-500">
+          <span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
+          {isVi ? 'Đang chạy...' : 'Playing...'}
+        </span>
+      </div>
+      <!-- Progress bar -->
+      <div class="mt-2 h-1 bg-gray-100 dark:bg-white/10 rounded-full overflow-hidden">
+        <div
+          class="h-full bg-blue-500 transition-all duration-300"
+          :style="`width: ${getSelectedCombo()?.scenarios?.length ? ((comboPlayIndex + 1) / getSelectedCombo().scenarios.length) * 100 : 0}%`"
+        ></div>
+      </div>
+    </div>
+
+    <!-- Tip (if combo has one) -->
+    <template x-if="getSelectedCombo()?.tipEn">
+      <div class="mt-3 pt-3 border-t border-gray-100 dark:border-white/5">
+        <p class="text-xs text-gray-500 dark:text-white/40 flex items-start gap-1.5">
+          <svg class="w-3.5 h-3.5 shrink-0 mt-0.5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span x-text="isVi ? getSelectedCombo()?.tipVi : getSelectedCombo()?.tipEn"></span>
+        </p>
+      </div>
+    </template>
+  </div>
+</div>

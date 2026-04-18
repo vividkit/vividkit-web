@@ -1,0 +1,244 @@
+---
+/**
+ * Inside ClaudeKit hub page — compact header + search + track filter + paginated article grid.
+ * Scales from 3 to 100+ articles: search narrows, filter focuses, load-more paginates.
+ */
+import { BookOpenText, Search } from 'lucide-astro';
+import { getLangFromUrl, type Language } from '@/i18n';
+import { useTranslations } from '@/i18n/utils';
+import { insideClaudeKitTopics, trackMeta } from '@/data/guides/inside-claudekit';
+import InsideClaudeKitArticleCard from './inside-claudekit/inside-claudekit-article-card.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+const totalArticles = insideClaudeKitTopics.length;
+const PAGE_SIZE = 8;
+
+// Collect unique tracks in order for filter pills
+const tracks = [...new Set(insideClaudeKitTopics.map((topic) => topic.track))];
+---
+
+<div class="mt-6 space-y-6">
+  <!-- Compact Header -->
+  <section class="relative overflow-hidden rounded-2xl border border-slate-200/70 bg-gradient-to-br from-slate-50 via-white to-sky-50/60 px-6 py-6 md:px-8 dark:border-slate-800 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(14,165,233,0.12),transparent_28%)] dark:bg-[radial-gradient(circle_at_top_right,rgba(14,165,233,0.10),transparent_32%)]"></div>
+    <div class="relative flex flex-wrap items-start justify-between gap-4">
+      <div class="space-y-2">
+        <div class="flex items-center gap-3">
+          <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-sky-500 to-blue-600 text-white shadow-md shadow-sky-500/25">
+            <BookOpenText class="h-5 w-5" />
+          </div>
+          <h1 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+            {t('guides.inside_claudekit.title')}
+          </h1>
+        </div>
+        <p class="max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-300">
+          {t('guides.inside_claudekit.description')}
+        </p>
+      </div>
+      <span id="ick-count-badge" class="shrink-0 rounded-full border border-slate-200/80 bg-white/90 px-3 py-1.5 text-sm font-medium tabular-nums text-slate-600 dark:border-slate-700 dark:bg-slate-900/80 dark:text-slate-300">
+        {totalArticles} {t('guides.inside_claudekit.articles_count')}
+      </span>
+    </div>
+  </section>
+
+  <!-- Search + Filter + Grid -->
+  <section>
+    <!-- Search bar -->
+    <div class="relative mb-4">
+      <Search class="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-slate-500" />
+      <input
+        id="ick-search"
+        type="search"
+        placeholder={t('guides.inside_claudekit.search_placeholder')}
+        class="w-full rounded-xl border border-slate-200/80 bg-white py-2.5 pl-10 pr-4 text-sm text-slate-900 outline-none transition-colors placeholder:text-slate-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 dark:border-slate-700 dark:bg-slate-900/80 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-blue-500 dark:focus:ring-blue-900/40"
+      />
+    </div>
+
+    <!-- Track filter pills -->
+    <div class="mb-5 flex flex-wrap gap-2" id="ick-filter-bar" role="tablist" aria-label="Filter by track">
+      <button
+        data-filter="all"
+        class="ick-filter-pill ick-filter-active rounded-full border border-slate-200/80 px-3.5 py-1.5 text-sm font-medium transition-all duration-200 dark:border-slate-700"
+        role="tab"
+        aria-selected="true"
+      >
+        {t('guides.inside_claudekit.filter.all')}
+      </button>
+      {tracks.map((track) => {
+        const meta = trackMeta[track];
+        return (
+          <button
+            data-filter={track}
+            data-active-bg={meta.filterActiveBg}
+            data-active-text={meta.filterActiveText}
+            class="ick-filter-pill rounded-full border border-slate-200/80 px-3.5 py-1.5 text-sm font-medium transition-all duration-200 dark:border-slate-700"
+            role="tab"
+            aria-selected="false"
+          >
+            {t(meta.badgeKey)}
+          </button>
+        );
+      })}
+    </div>
+
+    <!-- Article grid -->
+    <div class="grid gap-4 md:grid-cols-2" id="ick-article-grid">
+      {insideClaudeKitTopics.map((topic) => (
+        <InsideClaudeKitArticleCard
+          slug={topic.slug}
+          track={topic.track}
+          titleKey={topic.titleKey}
+          descKey={topic.descKey}
+          navLabelKey={topic.navLabelKey}
+          lang={currentLang}
+          disabled={topic.disabled}
+        />
+      ))}
+    </div>
+
+    <!-- Empty state -->
+    <div id="ick-empty-state" class="hidden py-12 text-center">
+      <p class="text-sm text-slate-500 dark:text-slate-400">
+        {t('guides.inside_claudekit.no_results')}
+      </p>
+    </div>
+
+    <!-- Load more button + count indicator -->
+    <div id="ick-load-more-wrap" class="mt-6 flex flex-col items-center gap-3">
+      <p id="ick-showing-count" class="text-xs tabular-nums text-slate-500 dark:text-slate-400"></p>
+      <button
+        id="ick-load-more"
+        class="hidden rounded-full border border-slate-200/80 bg-white px-5 py-2 text-sm font-medium text-slate-700 transition-all duration-200 hover:border-slate-300 hover:bg-slate-50 hover:shadow-sm dark:border-slate-700 dark:bg-slate-900/80 dark:text-slate-200 dark:hover:border-slate-600 dark:hover:bg-slate-800"
+      >
+        {t('guides.inside_claudekit.load_more')}
+      </button>
+    </div>
+  </section>
+</div>
+
+<script define:vars={{ PAGE_SIZE, showingLabel: t('guides.inside_claudekit.showing_count'), ofLabel: t('guides.inside_claudekit.of_count'), articlesLabel: t('guides.inside_claudekit.articles_count') }}>
+  function initHub() {
+    const bar = document.getElementById('ick-filter-bar');
+    const grid = document.getElementById('ick-article-grid');
+    const empty = document.getElementById('ick-empty-state');
+    const searchInput = document.getElementById('ick-search');
+    const loadMoreBtn = document.getElementById('ick-load-more');
+    const showingCount = document.getElementById('ick-showing-count');
+    if (!bar || !grid || !empty || !searchInput || !loadMoreBtn || !showingCount) return;
+
+    const pills = bar.querySelectorAll('.ick-filter-pill');
+    const allCards = Array.from(grid.querySelectorAll('[data-track]'));
+
+    let activeFilter = 'all';
+    let searchQuery = '';
+    let visibleLimit = PAGE_SIZE;
+
+    // Pill styling helpers
+    const allActiveCls = ['bg-slate-900', 'text-white', 'border-slate-900', 'dark:bg-white', 'dark:text-slate-900', 'dark:border-white'];
+    const inactiveCls = ['bg-white/80', 'text-slate-600', 'dark:bg-slate-900/60', 'dark:text-slate-300'];
+
+    function getMatchingCards() {
+      return allCards.filter((card) => {
+        const trackMatch = activeFilter === 'all' || card.dataset.track === activeFilter;
+        if (!trackMatch) return false;
+        if (!searchQuery) return true;
+        const title = card.dataset.title || '';
+        const desc = card.dataset.desc || '';
+        return title.includes(searchQuery) || desc.includes(searchQuery);
+      });
+    }
+
+    function render() {
+      const matched = getMatchingCards();
+      const totalMatched = matched.length;
+      const showing = Math.min(visibleLimit, totalMatched);
+
+      // Hide all, then show matched up to limit
+      allCards.forEach((c) => { c.style.display = 'none'; });
+      matched.slice(0, showing).forEach((c) => { c.style.display = ''; });
+
+      // Empty state
+      empty.classList.toggle('hidden', totalMatched > 0);
+      grid.classList.toggle('hidden', totalMatched === 0);
+
+      // Count indicator
+      if (totalMatched > 0) {
+        showingCount.textContent = `${showingLabel} ${showing} ${ofLabel} ${totalMatched} ${articlesLabel}`;
+        showingCount.style.display = '';
+      } else {
+        showingCount.style.display = 'none';
+      }
+
+      // Load more button
+      loadMoreBtn.classList.toggle('hidden', showing >= totalMatched);
+    }
+
+    function activatePill(pill) {
+      pills.forEach((p) => {
+        p.classList.remove(...allActiveCls, 'ick-filter-active', 'border-transparent');
+        const bg = p.dataset.activeBg;
+        const txt = p.dataset.activeText;
+        if (bg) bg.split(' ').forEach((c) => p.classList.remove(c));
+        if (txt) txt.split(' ').forEach((c) => p.classList.remove(c));
+        inactiveCls.forEach((c) => p.classList.add(c));
+        p.setAttribute('aria-selected', 'false');
+      });
+
+      pill.classList.add('ick-filter-active');
+      pill.setAttribute('aria-selected', 'true');
+      inactiveCls.forEach((c) => pill.classList.remove(c));
+
+      if (pill.dataset.filter === 'all') {
+        allActiveCls.forEach((c) => pill.classList.add(c));
+      } else {
+        const bg = pill.dataset.activeBg;
+        const txt = pill.dataset.activeText;
+        if (bg) bg.split(' ').forEach((c) => pill.classList.add(c));
+        if (txt) txt.split(' ').forEach((c) => pill.classList.add(c));
+        pill.classList.add('border-transparent');
+      }
+    }
+
+    // Filter pill clicks
+    pills.forEach((pill) => {
+      pill.addEventListener('click', () => {
+        activeFilter = pill.dataset.filter || 'all';
+        visibleLimit = PAGE_SIZE;
+        activatePill(pill);
+        render();
+      });
+    });
+
+    // Search input
+    let debounceTimer;
+    searchInput.addEventListener('input', () => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        searchQuery = searchInput.value.trim().toLowerCase();
+        visibleLimit = PAGE_SIZE;
+        render();
+      }, 200);
+    });
+
+    // Load more
+    loadMoreBtn.addEventListener('click', () => {
+      visibleLimit += PAGE_SIZE;
+      render();
+    });
+
+    // Init
+    const allPill = bar.querySelector('[data-filter="all"]');
+    if (allPill) activatePill(allPill);
+    render();
+  }
+
+  document.addEventListener('astro:page-load', initHub);
+  document.addEventListener('DOMContentLoaded', initHub);
+</script>

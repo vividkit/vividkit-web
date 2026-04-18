@@ -1,0 +1,65 @@
+---
+// Infographic header with command name gradient, tagline, and optional HARD GATE warning
+import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import type { Language } from '@/i18n';
+
+interface Props {
+  data: SkillInfographic;
+  lang: Language;
+}
+
+const { data, lang } = Astro.props;
+const isVi = lang === 'vi';
+
+// Map warning type to color classes
+const warningColors = {
+  warning: {
+    bg: 'bg-amber-500/10 border-amber-500/20',
+    icon: 'text-amber-500',
+  },
+  critical: {
+    bg: 'bg-red-500/10 border-red-500/20',
+    icon: 'text-red-500',
+  },
+  info: {
+    bg: 'bg-blue-500/10 border-blue-500/20',
+    icon: 'text-blue-500',
+  },
+};
+---
+
+<div class="text-center mb-8">
+  <!-- Command name with gradient -->
+  <h1 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent mb-3">
+    {data.header.titleEn}
+  </h1>
+
+  <!-- Tagline -->
+  <p class="text-sm md:text-base text-gray-600 dark:text-white/70 max-w-2xl mx-auto">
+    {isVi ? data.header.taglineVi : data.header.taglineEn}
+  </p>
+</div>
+
+<!-- Optional HARD GATE warning -->
+{data.hardGate && (
+  <div class={`mb-8 p-4 rounded-xl border flex items-start gap-3 ${warningColors[data.hardGate.type]?.bg || warningColors.warning.bg}`}>
+    <svg
+      class={`w-5 h-5 flex-shrink-0 mt-0.5 ${warningColors[data.hardGate.type]?.icon || warningColors.warning.icon}`}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+    </svg>
+    <div>
+      <span class="font-semibold text-gray-900 dark:text-white">
+        {isVi ? data.hardGate.titleVi : data.hardGate.titleEn}:
+      </span>
+      {' '}
+      <span class="text-gray-700 dark:text-white/80">
+        {isVi ? data.hardGate.contentVi : data.hardGate.contentEn}
+      </span>
+    </div>
+  </div>
+)}

@@ -1,0 +1,176 @@
+---
+// Guides landing page with 4 guided pathways for different user types
+import { Rocket, Workflow, CircleHelp, Zap, BookOpenText, Cog } from 'lucide-astro';
+import GuidedPathwayCard from './guides-home/guided-pathway-card.astro';
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
+import { insideClaudeKitTopics } from '@/data/guides/inside-claudekit';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+const translatePath = useTranslatedPath(currentLang);
+
+// Pathway data with i18n keys
+const pathways = [
+  {
+    id: 'new-to-claude',
+    icon: Rocket,
+    titleKey: 'guides.home.pathway_new.title',
+    descKey: 'guides.home.pathway_new.desc',
+    accentColor: 'green' as const,
+    links: [
+      { href: '/guides/what-is-claudekit', labelKey: 'guides.home.pathway_new.link_what' },
+      { href: '/guides/cli', labelKey: 'guides.home.pathway_new.link_install' },
+    ],
+  },
+  {
+    id: 'already-using',
+    icon: Workflow,
+    titleKey: 'guides.home.pathway_using.title',
+    descKey: 'guides.home.pathway_using.desc',
+    accentColor: 'blue' as const,
+    links: [
+      { href: '/guides/commands', labelKey: 'guides.home.pathway_using.link_commands' },
+      { href: '/guides/workflows', labelKey: 'guides.home.pathway_using.link_workflows' },
+      { href: '/guides/flowchart', labelKey: 'guides.home.pathway_using.link_flowchart' },
+    ],
+  },
+  {
+    id: 'config-confused',
+    icon: CircleHelp,
+    titleKey: 'guides.home.pathway_config.title',
+    descKey: 'guides.home.pathway_config.desc',
+    accentColor: 'amber' as const,
+    links: [
+      { href: '/guides/claude-mechanics', labelKey: 'guides.home.pathway_config.link_mechanics' },
+      { href: '/guides/permissions', labelKey: 'guides.home.pathway_config.link_permissions' },
+      { href: '/guides/hooks', labelKey: 'guides.home.pathway_config.link_hooks' },
+    ],
+  },
+  {
+    id: 'specific-feature',
+    icon: Zap,
+    titleKey: 'guides.home.pathway_feature.title',
+    descKey: 'guides.home.pathway_feature.desc',
+    accentColor: 'purple' as const,
+    links: [
+      { href: '/guides/session-recovery', labelKey: 'guides.home.pathway_feature.link_session' },
+      { href: '/guides/ccs', labelKey: 'guides.home.pathway_feature.link_ccs' },
+      { href: '/guides/ide-config', labelKey: 'guides.home.pathway_feature.link_ide' },
+    ],
+  },
+];
+
+---
+
+<div class="space-y-10 mt-6">
+  <!-- Header -->
+  <div class="text-center space-y-4">
+    <h1 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
+      {t('guides.home.title')}
+    </h1>
+    <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+      {t('guides.home.subtitle')}
+    </p>
+  </div>
+
+  <!-- 2x2 Grid of Pathways -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    {pathways.map((pathway) => (
+      <GuidedPathwayCard
+        id={pathway.id}
+        icon={pathway.icon}
+        titleKey={pathway.titleKey}
+        descKey={pathway.descKey}
+        links={pathway.links}
+        accentColor={pathway.accentColor}
+        lang={currentLang}
+      />
+    ))}
+  </div>
+
+  <section class="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-gradient-to-br from-slate-50 via-white to-emerald-50/50 p-6 md:p-8 dark:border-slate-800 dark:from-slate-950 dark:via-slate-950 dark:to-emerald-950/30">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.10),transparent_35%)] dark:bg-[radial-gradient(circle_at_top_right,rgba(52,211,153,0.08),transparent_35%)]"></div>
+
+    <div class="relative space-y-6">
+      <!-- Header -->
+      <div class="flex flex-wrap items-start justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-500/25">
+            <BookOpenText class="h-5 w-5" />
+          </div>
+          <div>
+            <h2 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
+              {t('guides.home.inside_claudekit.title')}
+            </h2>
+            <p class="text-xs font-medium uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">
+              {t('guides.home.inside_claudekit.kicker')}
+            </p>
+          </div>
+        </div>
+        <a
+          href={translatePath('/guides/inside-claudekit')}
+          class="group inline-flex items-center gap-1.5 rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 text-sm font-medium text-slate-600 transition-all hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-300 dark:hover:border-emerald-600/50 dark:hover:bg-emerald-950/40 dark:hover:text-emerald-300"
+        >
+          {t('guides.home.inside_claudekit.discover_more')}
+          <svg class="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+        </a>
+      </div>
+
+      <!-- Deep Dive Cards Grid -->
+      <div class="grid gap-4 sm:grid-cols-2">
+        <!-- How ClaudeKit Works Card -->
+        <a
+          href={translatePath('/guides/how-ck-works')}
+          class="group flex flex-col gap-3 rounded-2xl border border-slate-200/70 bg-white/70 p-5 backdrop-blur transition-all duration-200 hover:-translate-y-0.5 hover:border-teal-300/80 hover:bg-white/90 hover:shadow-lg hover:shadow-teal-500/10 dark:border-slate-800 dark:bg-slate-900/60 dark:hover:border-teal-500/40 dark:hover:bg-slate-900/80"
+        >
+          <div class="flex items-center gap-3">
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-50 text-teal-600 transition-colors group-hover:bg-teal-100 dark:bg-teal-900/30 dark:text-teal-400 dark:group-hover:bg-teal-900/50">
+              <Cog class="h-5 w-5" />
+            </div>
+            <h3 class="text-base font-semibold text-slate-900 transition-colors group-hover:text-teal-700 dark:text-white dark:group-hover:text-teal-300">
+              {t('guides.how_ck_works.title')}
+            </h3>
+          </div>
+          <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+            {t('guides.home.deep_dive.how_ck_works_desc')}
+          </p>
+        </a>
+
+        <!-- Featured Inside ClaudeKit Article -->
+        {(() => {
+          const featured = insideClaudeKitTopics.find(t => !t.disabled);
+          if (!featured) return null;
+          return (
+            <a
+              href={translatePath(`/guides/inside-claudekit/${featured.slug}`)}
+              class="group flex flex-col gap-3 rounded-2xl border border-slate-200/70 bg-white/70 p-5 backdrop-blur transition-all duration-200 hover:-translate-y-0.5 hover:border-emerald-300/80 hover:bg-white/90 hover:shadow-lg hover:shadow-emerald-500/10 dark:border-slate-800 dark:bg-slate-900/60 dark:hover:border-emerald-500/40 dark:hover:bg-slate-900/80"
+            >
+              <div class="flex items-center gap-3">
+                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 transition-colors group-hover:bg-emerald-100 dark:bg-emerald-900/30 dark:text-emerald-400 dark:group-hover:bg-emerald-900/50">
+                  <BookOpenText class="h-5 w-5" />
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <h3 class="text-base font-semibold text-slate-900 transition-colors group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-300">
+                    {t(featured.titleKey)}
+                  </h3>
+                  <span class="inline-flex items-center rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300">
+                    {t('guides.home.inside_claudekit.featured')}
+                  </span>
+                </div>
+              </div>
+              <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                {t(featured.descKey)}
+              </p>
+            </a>
+          );
+        })()}
+      </div>
+    </div>
+  </section>
+</div>

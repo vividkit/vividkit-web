@@ -1,0 +1,45 @@
+---
+// Claude Mechanics Guide - Main wrapper combining all 5 sections
+import MechanicsWhatIsClaudeMd from './claude-mechanics/mechanics-what-is-claude-md.astro';
+import MechanicsConfigHierarchy from './claude-mechanics/mechanics-config-hierarchy.astro';
+import MechanicsCkInitTree from './claude-mechanics/mechanics-ck-init-tree.astro';
+import MechanicsKitVsYourConfig from './claude-mechanics/mechanics-kit-vs-your-config.astro';
+import MechanicsCommonConfusions from './claude-mechanics/mechanics-common-confusions.astro';
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+---
+
+<div class="space-y-12">
+  <!-- Page Header -->
+  <div class="text-center space-y-4">
+    <h1 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
+      {t('guides.claude_mechanics.title')}
+    </h1>
+    <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+      {t('guides.claude_mechanics.subtitle')}
+    </p>
+  </div>
+
+  <!-- Section 1: What is CLAUDE.md? -->
+  <MechanicsWhatIsClaudeMd lang={currentLang} />
+
+  <!-- Section 2: Config Hierarchy -->
+  <MechanicsConfigHierarchy lang={currentLang} />
+
+  <!-- Section 3: What ck init Creates -->
+  <MechanicsCkInitTree lang={currentLang} />
+
+  <!-- Section 4: Kit Config vs Your Config -->
+  <MechanicsKitVsYourConfig lang={currentLang} />
+
+  <!-- Section 5: Common Confusions -->
+  <MechanicsCommonConfusions lang={currentLang} />
+</div>
