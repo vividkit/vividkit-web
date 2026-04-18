@@ -1,5 +1,5 @@
 ---
-// Report output section showing file pattern and description
+// Report output section showing file pattern, location, and description as badges
 import type { Language } from '@/i18n';
 
 interface Props {
@@ -8,6 +8,8 @@ interface Props {
     titleVi: string;
     patternEn: string;
     patternVi: string;
+    locationEn?: string;
+    locationVi?: string;
     descEn: string;
     descVi: string;
   };
@@ -19,6 +21,13 @@ const isVi = lang === 'vi';
 
 // Skip if no data
 if (!data) return null;
+
+// Parse description into badges (split by •)
+const descText = isVi ? data.descVi : data.descEn;
+const descBadges = descText.split('•').map(s => s.trim()).filter(Boolean);
+
+// Get location
+const location = isVi ? data.locationVi : data.locationEn;
 ---
 
 <div class="mb-8">
@@ -37,19 +46,36 @@ if (!data) return null;
 
       <div class="flex-1 min-w-0">
         <!-- Title -->
-        <h3 class="font-semibold text-gray-900 dark:text-white mb-1">
+        <h3 class="font-semibold text-gray-900 dark:text-white mb-2">
           {isVi ? data.titleVi : data.titleEn}
         </h3>
 
-        <!-- File pattern -->
-        <code class="inline-block text-sm bg-gray-100 dark:bg-white/10 px-2 py-1 rounded font-mono text-gray-700 dark:text-white/80 mb-2">
-          {isVi ? data.patternVi : data.patternEn}
-        </code>
+        <!-- Location + File pattern -->
+        <div class="flex flex-wrap items-center gap-2 mb-3">
+          {location && (
+            <span class="inline-flex items-center gap-1 text-xs bg-blue-500/10 text-blue-600 dark:text-blue-400 px-2 py-1 rounded">
+              <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+              </svg>
+              {location}
+            </span>
+          )}
+          <code class="text-xs bg-gray-100 dark:bg-white/10 px-2 py-1 rounded font-mono text-gray-700 dark:text-white/80">
+            {isVi ? data.patternVi : data.patternEn}
+          </code>
+        </div>
 
-        <!-- Description -->
-        <p class="text-sm text-gray-600 dark:text-white/60">
-          {isVi ? data.descVi : data.descEn}
-        </p>
+        <!-- Description as badges -->
+        <div class="flex flex-wrap gap-2">
+          {descBadges.map((badge) => (
+            <span class="inline-flex items-center gap-1 text-xs bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-white/70 px-2 py-1 rounded">
+              <svg class="w-3 h-3 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              {badge}
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   </div>

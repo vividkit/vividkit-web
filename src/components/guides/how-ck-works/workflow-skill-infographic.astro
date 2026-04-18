@@ -36,8 +36,8 @@ const infographic = getInfographicById(scenarioId);
 
     <!-- Two-column: Core Principles + Expertise Areas -->
     <InfographicTwoColumn
-      principles={infographic.corePrinciples}
-      expertise={infographic.expertiseAreas}
+      principles={isVi ? infographic.corePrinciplesVi : infographic.corePrinciplesEn}
+      expertise={isVi ? infographic.expertiseAreasVi : infographic.expertiseAreasEn}
       lang={currentLang}
     />
 

@@ -1,0 +1,19 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import InsideClaudeKitGettingStartedArticle from '@/components/guides/inside-claudekit/InsideClaudeKitGettingStartedArticle.astro';
+import { useTranslations } from '@/i18n/utils';
+import type { Language } from '@/i18n';
+
+const lang: Language = 'vi';
+const t = useTranslations(lang);
+---
+
+<GuidesLayout
+  title={`${t('guides.home.inside_claudekit.topic_3.title')} - ${t('site.title')}`}
+  description={t('guides.home.inside_claudekit.topic_3.desc')}
+  canonicalPath="/guides/inside-claudekit/getting-started"
+  activeTab="inside-claudekit-getting-started"
+  lang="vi"
+>
+  <InsideClaudeKitGettingStartedArticle lang="vi" />
+</GuidesLayout>
