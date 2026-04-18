@@ -28,6 +28,14 @@ When running Python scripts from `.claude/skills/`, use the venv Python interpre
 
 This ensures packages installed by `install.sh` (google-genai, pypdf, etc.) are available.
 
+## UI/Styling Conventions
+
+- **Code snippet boxes**: Always support both light and dark mode
+  - Background: `bg-slate-100 dark:bg-slate-800/90`
+  - Text: `text-slate-700 dark:text-slate-200`
+  - Command highlights: `text-purple-600 dark:text-purple-400`
+  - Secondary text: `text-slate-500 dark:text-slate-400`
+
 ## Documentation Management
 
 We keep all important docs in `./docs` folder and keep updating them, structure like below:
