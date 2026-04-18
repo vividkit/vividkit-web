@@ -1,4 +1,4 @@
-// Marketing Kit v1.3.1 flowchart data - purpose-driven decision tree for marketers
+// Marketing Kit v1.3.2 flowchart data - purpose-driven decision tree for marketers
 // All commands use /ckm: prefix (migration from /mkt: complete)
 import { type FlowchartNode, type FlowchartEdge, type FlowchartPath, generatePath } from "./flowchart-types";
 

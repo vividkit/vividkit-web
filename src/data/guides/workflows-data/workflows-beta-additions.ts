@@ -1,6 +1,6 @@
 // Beta-only workflow additions
 // These are combined with stableWorkflows in the index to form betaWorkflows
-// Beta skills: /ck:autoresearch, /ck:predict, /ck:scenario, /ck:security, /excalidraw, /ck:xia, /ck:show-off
+// Beta skills: /ck:autoresearch, /ck:predict, /ck:scenario, /ck:security, /excalidraw, /ck:xia, /ck:show-off, /ck:graphify
 
 export const betaOnlyWorkflows = [
   {
@@ -359,6 +359,46 @@ export const betaOnlyWorkflows = [
       { flag: 'Default', desc: 'Full workflow with approval gates', color: 'slate' }
     ],
     borderColor: 'border-emerald-500/20'
+  },
+  {
+    title: 'Knowledge Graph Navigation',
+    category: 'Planning & Review',
+    level: 'Intermediate',
+    duration: '~5-15 min',
+    stepCount: 2,
+    bestFor: 'Understanding unfamiliar codebases through structural analysis before planning',
+    gradientHeader: 'from-cyan-500/10 to-blue-500/10',
+    hoverBorderColor: 'hover:border-cyan-500/50',
+    buttonColor: 'bg-cyan-500 hover:bg-cyan-600',
+    icon: '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>',
+    iconColor: 'text-cyan-600 dark:text-cyan-400',
+    steps: [
+      {
+        command: '/ck:graphify',
+        typeLabel: 'Build graph',
+        description: 'Analyze codebase with tree-sitter AST, generate interactive visualization + report',
+        color: 'bg-cyan-500/10 dark:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      },
+      {
+        command: '/ck:plan',
+        typeLabel: 'Plan with context',
+        description: 'Use GRAPH_REPORT.md to understand architecture before creating implementation plan',
+        color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
+        number: 2,
+        isSkill: true
+      }
+    ],
+    tip: 'Use --watch for incremental updates as you code. MCP mode exposes graph to Claude for direct queries.',
+    features: [
+      '20+ language support via tree-sitter AST',
+      'Interactive HTML visualization with search',
+      'God nodes and surprising connections report',
+      '71.5x fewer tokens vs raw file context'
+    ],
+    borderColor: 'border-cyan-500/20'
   },
   {
     title: 'Showcase & Social Media Content',

@@ -102,18 +102,22 @@ const marketingCategories = getMarketingKitCategories(t as any);
           { cmd: "/excalidraw", labelKey: "commands.beta_excalidraw.desc", detailKey: "commands.beta_excalidraw.detail", type: "skill", badge: "new" },
           { cmd: "/ck:xia", labelKey: "commands.beta_xia.desc", detailKey: "commands.beta_xia.detail", type: "skill", badge: "new" },
           { cmd: "/ck:show-off", labelKey: "commands.beta_show_off.desc", detailKey: "commands.beta_show_off.detail", type: "skill", badge: "new" },
+          { cmd: "/ck:graphify", labelKey: "commands.beta_graphify.desc", detailKey: "commands.beta_graphify.detail", type: "skill", badge: "new" },
           { cmd: "/ck:cook --tdd", labelKey: "commands.beta_cook_tdd.desc", detailKey: "commands.beta_cook_tdd.detail", type: "flag", badge: "enhanced" },
           { cmd: "/ck:plan --deep", labelKey: "commands.beta_plan_deep.desc", detailKey: "commands.beta_plan_deep.detail", type: "flag", badge: "enhanced" },
+          // Deprecated
+          { cmd: "/ck:autoresearch", labelKey: "commands.beta_autoresearch.desc", detailKey: "commands.beta_autoresearch.detail", type: "skill", badge: "deprecated" },
         ].map((item) => (
-          <div class="p-3 rounded-lg bg-white/60 dark:bg-slate-900/50 border border-purple-500/30 transition-all duration-200 hover:shadow-sm h-full flex flex-col">
+          <div class={`p-3 rounded-lg border transition-all duration-200 hover:shadow-sm h-full flex flex-col ${item.badge === "deprecated" ? 'bg-slate-100 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 opacity-70' : 'bg-white/60 dark:bg-slate-900/50 border-purple-500/30'}`}>
             <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
               <div class="flex items-center gap-1.5 flex-wrap">
-                <code class="text-sm font-bold font-mono text-purple-600 dark:text-purple-400">{item.cmd}</code>
+                <code class={`text-sm font-bold font-mono ${item.badge === "deprecated" ? 'line-through text-slate-400 dark:text-slate-500' : 'text-purple-600 dark:text-purple-400'}`}>{item.cmd}</code>
 
                 {item.badge === "new" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 font-medium uppercase">new</span>}
                 {item.badge === "enhanced" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium uppercase">enhanced</span>}
                 {item.badge === "renamed" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium uppercase">renamed</span>}
                 {item.badge === "removed" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-500 dark:text-red-400 font-medium uppercase">removed</span>}
+                {item.badge === "deprecated" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium uppercase">deprecated</span>}
               </div>
             </div>
             <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">{t(item.labelKey as any)}</p>
@@ -225,7 +229,7 @@ const marketingCategories = getMarketingKitCategories(t as any);
     <!-- Stable version badge -->
     <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
       <span class="px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 font-semibold"
-        >v1.3.1 Stable</span
+        >v1.3.2 Stable</span
       >
       <span>{t("commands.marketing_stable_note")}</span>
     </div>
