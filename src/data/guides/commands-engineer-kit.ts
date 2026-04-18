@@ -255,7 +255,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:excalidraw",
+          command: "/excalidraw",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.excalidraw.desc"),

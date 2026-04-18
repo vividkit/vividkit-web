@@ -437,7 +437,7 @@ export const marketingKitWorkflows = [
     iconColor: 'text-violet-600 dark:text-violet-400',
     steps: [
       {
-        command: '/ck:excalidraw',
+        command: '/excalidraw',
         typeLabel: 'Generate diagram',
         description: 'Generate hand-drawn Excalidraw diagrams — marketing funnels, campaign flows, content calendars, competitor maps',
         color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',

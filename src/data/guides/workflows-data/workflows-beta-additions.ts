@@ -1,6 +1,6 @@
 // Beta-only workflow additions
 // These are combined with stableWorkflows in the index to form betaWorkflows
-// Beta skills: /ck:autoresearch, /ck:predict, /ck:scenario, /ck:security, /ck:excalidraw, /ck:xia, /ck:show-off
+// Beta skills: /ck:autoresearch, /ck:predict, /ck:scenario, /ck:security, /excalidraw, /ck:xia, /ck:show-off
 
 export const betaOnlyWorkflows = [
   {
@@ -283,7 +283,7 @@ export const betaOnlyWorkflows = [
     iconColor: 'text-violet-600 dark:text-violet-400',
     steps: [
       {
-        command: '/ck:excalidraw',
+        command: '/excalidraw',
         typeLabel: 'Generate diagram',
         description: 'Generate hand-drawn Excalidraw diagrams from text prompts — architecture, flowcharts, system designs',
         color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
