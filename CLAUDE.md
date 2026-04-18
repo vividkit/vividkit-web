@@ -36,6 +36,23 @@ This ensures packages installed by `install.sh` (google-genai, pypdf, etc.) are 
   - Command highlights: `text-purple-600 dark:text-purple-400`
   - Secondary text: `text-slate-500 dark:text-slate-400`
 
+## VividKit Guides - Changelog Sync
+
+When running `/vk:changelog-sync`, update these locations:
+
+### CommandsGuide (`src/components/guides/commands/`)
+1. **Version badges**: `commands-categories-grid.astro` - EK/MK version labels
+2. **Beta Preview section**: `commands-categories-grid.astro` lines ~99-122 - NEW/ENHANCED/DEPRECATED skills
+3. **Commands data**: `src/data/guides/commands-engineer-kit.ts`, `commands-marketing-kit.ts`
+4. **i18n strings**: `src/i18n/en/commands.ts`, `src/i18n/vi/commands.ts`
+
+### Other Guides
+- **Flowchart versions**: `flowchart-marketing-v12-data.ts`, `flowchart-marketing-summary-section.astro`
+- **Hooks data**: `src/data/guides/custom-hooks/custom-hooks-data.ts`
+- **Workflows data**: `src/data/guides/workflows-data/workflows-stable.ts`
+
+**IMPORTANT:** Beta Preview section is separate from main commands grid - don't forget to update both!
+
 ## Documentation Management
 
 We keep all important docs in `./docs` folder and keep updating them, structure like below:

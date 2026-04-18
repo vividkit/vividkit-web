@@ -1,4 +1,4 @@
-// Marketing Kit (v1.3.1) — prefix migration complete: /mkt: → /ckm:
+// Marketing Kit (v1.3.2) — prefix migration complete: /mkt: → /ckm:
 // All commands now use /ckm: as stable prefix
 // Consolidated: parent commands with subcommands in flags (no duplicate variant cards)
 import type { CommandCategory, TranslationFn } from "./commands-types";
