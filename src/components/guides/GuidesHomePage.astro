@@ -152,17 +152,12 @@ const pathways = [
               class="group flex flex-col gap-3 rounded-2xl border border-slate-200/70 bg-white/70 p-5 backdrop-blur transition-all duration-200 hover:-translate-y-0.5 hover:border-emerald-300/80 hover:bg-white/90 hover:shadow-lg hover:shadow-emerald-500/10 dark:border-slate-800 dark:bg-slate-900/60 dark:hover:border-emerald-500/40 dark:hover:bg-slate-900/80"
             >
               <div class="flex items-center gap-3">
-                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 transition-colors group-hover:bg-emerald-100 dark:bg-emerald-900/30 dark:text-emerald-400 dark:group-hover:bg-emerald-900/50">
+                <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 transition-colors group-hover:bg-emerald-100 dark:bg-emerald-900/30 dark:text-emerald-400 dark:group-hover:bg-emerald-900/50">
                   <BookOpenText class="h-5 w-5" />
                 </div>
-                <div class="flex flex-wrap items-center gap-2">
-                  <h3 class="text-base font-semibold text-slate-900 transition-colors group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-300">
-                    {t(featured.titleKey)}
-                  </h3>
-                  <span class="inline-flex items-center rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300">
-                    {t('guides.home.inside_claudekit.featured')}
-                  </span>
-                </div>
+                <h3 class="text-base font-semibold leading-snug text-slate-900 transition-colors group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-300">
+                  {t(featured.titleKey)}
+                </h3>
               </div>
               <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
                 {t(featured.descKey)}
