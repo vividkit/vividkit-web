@@ -49,9 +49,18 @@ When running `/vk:changelog-sync`, update these locations:
 ### Other Guides
 - **Flowchart versions**: `flowchart-marketing-v12-data.ts`, `flowchart-marketing-summary-section.astro`
 - **Hooks data**: `src/data/guides/custom-hooks/custom-hooks-data.ts`
-- **Workflows data**: `src/data/guides/workflows-data/workflows-stable.ts`
+- **Workflows data**: `src/data/guides/workflows-data/workflows-stable.ts`, `workflows-beta-additions.ts`
+
+### Workflows - Bilingual Files
+When adding new workflow cards, update BOTH:
+- **EN**: `src/data/guides/workflows-data/workflows-*.ts`
+- **VI**: `src/data/vi/guides/workflows-data/workflows-*.ts`
 
 **IMPORTANT:** Beta Preview section is separate from main commands grid - don't forget to update both!
+
+### HTML in Detail Fields
+- **Stable commands** (`commands-engineer-kit.ts`): Uses `{cmd.detail}` → **NO HTML rendering** → don't use `<br/>`
+- **Beta Preview** (`commands-categories-grid.astro`): Uses `set:html` → **renders HTML** → can use `<br/>`
 
 ## Documentation Management
 

@@ -99,11 +99,13 @@ const marketingCategories = getMarketingKitCategories(t as any);
         <!-- Beta skill cards -->
         {[
           // Beta-only skills (not yet in stable)
+          { cmd: "/ck:agentize", labelKey: "commands.beta_agentize.desc", detailKey: "commands.beta_agentize.detail", type: "skill", badge: "new" },
           { cmd: "/excalidraw", labelKey: "commands.beta_excalidraw.desc", detailKey: "commands.beta_excalidraw.detail", type: "skill", badge: "new" },
           { cmd: "/ck:xia", labelKey: "commands.beta_xia.desc", detailKey: "commands.beta_xia.detail", type: "skill", badge: "new" },
           { cmd: "/ck:show-off", labelKey: "commands.beta_show_off.desc", detailKey: "commands.beta_show_off.detail", type: "skill", badge: "new" },
           { cmd: "/ck:graphify", labelKey: "commands.beta_graphify.desc", detailKey: "commands.beta_graphify.detail", type: "skill", badge: "new" },
           { cmd: "/ck:cook --tdd", labelKey: "commands.beta_cook_tdd.desc", detailKey: "commands.beta_cook_tdd.detail", type: "flag", badge: "enhanced" },
+          { cmd: "/ck:cook", labelKey: "commands.beta_cook_simplify.desc", detailKey: "commands.beta_cook_simplify.detail", type: "skill", badge: "enhanced" },
           { cmd: "/ck:plan --deep", labelKey: "commands.beta_plan_deep.desc", detailKey: "commands.beta_plan_deep.detail", type: "flag", badge: "enhanced" },
           // Deprecated
           { cmd: "/ck:autoresearch", labelKey: "commands.beta_autoresearch.desc", detailKey: "commands.beta_autoresearch.detail", type: "skill", badge: "deprecated" },

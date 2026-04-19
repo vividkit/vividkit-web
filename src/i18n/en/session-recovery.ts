@@ -95,15 +95,15 @@ export const session_recovery = {
   'session_recovery.guide.related_ccs': 'Multi-account & model switching',
   'session_recovery.guide.related_token': 'Reduce token consumption',
   'session_recovery.guide.related_commands': 'All available commands',
-  // Beta: Auto Session State (v2.14.0)
-  'session_recovery.guide.auto_state.badge': 'Beta',
+  // Auto Session State (stable since v2.14.0)
+  'session_recovery.guide.auto_state.badge': 'Stable',
   'session_recovery.guide.auto_state.title': 'Auto Session State',
-  'session_recovery.guide.auto_state.desc': 'Beta introduces session-state.cjs — a hook that automatically persists and restores session progress across compactions and restarts.',
+  'session_recovery.guide.auto_state.desc': 'The session-state.cjs hook automatically persists and restores session progress across compactions and restarts.',
   'session_recovery.guide.auto_state.point1': 'State saved to .claude/session-state/.last-state.md',
   'session_recovery.guide.auto_state.point2': 'Auto-loads on SessionStart (startup or after compact)',
   'session_recovery.guide.auto_state.point3': 'Auto-saves on Stop and SubagentStop events',
   'session_recovery.guide.auto_state.point4': 'State includes: last active plan, todo items, subagent outputs, branch/commit status',
   'session_recovery.guide.auto_state.point5': 'Archives old state — rotates after 10 sessions',
   'session_recovery.guide.auto_state.point6': 'Fail-open design: non-blocking if hook errors',
-  'session_recovery.guide.auto_state.migration': 'Beta auto-persists session state. Manual recovery (/resume, /export) still works as fallback.',
+  'session_recovery.guide.auto_state.migration': 'Auto-persists session state by default. Manual recovery (/resume, /export) still works as fallback.',
 } as const;
