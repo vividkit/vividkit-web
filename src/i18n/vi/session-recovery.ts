@@ -95,15 +95,15 @@ export const session_recovery = {
   'session_recovery.guide.related_ccs': 'Multi-account & đổi model',
   'session_recovery.guide.related_token': 'Giảm tiêu thụ token',
   'session_recovery.guide.related_commands': 'Tất cả lệnh có sẵn',
-  // Beta: Auto Session State (v2.14.0)
-  'session_recovery.guide.auto_state.badge': 'Beta',
+  // Auto Session State (stable since v2.14.0)
+  'session_recovery.guide.auto_state.badge': 'Stable',
   'session_recovery.guide.auto_state.title': 'Session State Tự động',
-  'session_recovery.guide.auto_state.desc': 'Beta giới thiệu session-state.cjs — một hook tự động lưu và khôi phục tiến trình session qua các lần compact và khởi động lại.',
+  'session_recovery.guide.auto_state.desc': 'Hook session-state.cjs tự động lưu và khôi phục tiến trình session qua các lần compact và khởi động lại.',
   'session_recovery.guide.auto_state.point1': 'State được lưu vào .claude/session-state/.last-state.md',
   'session_recovery.guide.auto_state.point2': 'Tự động load khi SessionStart (khởi động hoặc sau compact)',
   'session_recovery.guide.auto_state.point3': 'Tự động lưu khi có sự kiện Stop và SubagentStop',
   'session_recovery.guide.auto_state.point4': 'State bao gồm: plan hiện tại, todo items, subagent outputs, trạng thái branch/commit',
   'session_recovery.guide.auto_state.point5': 'Lưu trữ state cũ — xoay vòng sau 10 sessions',
   'session_recovery.guide.auto_state.point6': 'Thiết kế fail-open: không chặn nếu hook gặp lỗi',
-  'session_recovery.guide.auto_state.migration': 'Beta tự động lưu session state. Recovery thủ công (/resume, /export) vẫn hoạt động như fallback.',
+  'session_recovery.guide.auto_state.migration': 'Tự động lưu session state mặc định. Recovery thủ công (/resume, /export) vẫn hoạt động như fallback.',
 } as const;

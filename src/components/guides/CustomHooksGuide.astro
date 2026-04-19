@@ -273,6 +273,11 @@ const lifecycleEvents = [
                         {t.deprecatedLabel}
                       </span>
                     )}
+                    {hook.isBeta && (
+                      <span class="px-1.5 py-0.5 text-[10px] font-semibold bg-purple-100 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400 rounded uppercase">
+                        beta
+                      </span>
+                    )}
                     {hook.kits.includes("ek") && hook.kits.includes("mk") ? (
                       <span class="px-1.5 py-0.5 text-[10px] font-semibold bg-sky-100 dark:bg-sky-500/20 text-sky-700 dark:text-sky-400 rounded">
                         EK + MK

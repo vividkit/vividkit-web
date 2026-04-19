@@ -10,6 +10,8 @@ export interface HookDef {
   triggers: string[];
   /** Which kits include this hook: 'ek' (Engineer), 'mk' (Marketing), or both */
   kits: ('ek' | 'mk')[];
+  /** Whether this hook is in beta only (not yet in stable) */
+  isBeta?: boolean;
   /** Whether this hook is deprecated/disabled */
   deprecated?: boolean;
   descEn: string;
@@ -141,6 +143,16 @@ export const hookCategories: HookCategory[] = [
         descVi: 'Enforce đặt tên file theo kebab-case mô tả rõ ràng khi tạo file mới.',
       },
       {
+        id: 'simplify-gate',
+        name: 'simplify-gate.cjs',
+        lines: 85,
+        kits: ['ek'],
+        isBeta: true,
+        triggers: ['PostToolUse (Edit/Write/MultiEdit)'],
+        descEn: '[Beta] Replaces post-edit-simplify-reminder. Auto-triggers code-simplifier when edit thresholds (400 LOC / 8 files) are breached.',
+        descVi: '[Beta] Thay thế post-edit-simplify-reminder. Tự động trigger code-simplifier khi vượt ngưỡng edit (400 LOC / 8 files).',
+      },
+      {
         id: 'post-edit-simplify-reminder',
         name: 'post-edit-simplify-reminder.cjs',
         lines: 161,
@@ -231,8 +243,8 @@ export const hookCategories: HookCategory[] = [
     id: 'deprecated',
     titleEn: 'Deprecated',
     titleVi: 'Deprecated',
-    descEn: 'Hooks that are currently disabled or pending redesign.',
-    descVi: 'Hooks hiện đang bị vô hiệu hóa hoặc chờ redesign.',
+    descEn: 'Hooks that are disabled or will be deprecated in upcoming releases (marked with Beta badge).',
+    descVi: 'Hooks đã bị vô hiệu hoặc sẽ bị deprecated trong bản release sắp tới (đánh dấu Beta badge).',
     color: 'slate',
     icon: 'archive',
     hooks: [
@@ -245,6 +257,17 @@ export const hookCategories: HookCategory[] = [
         deprecated: true,
         descEn: 'Prevented local skills from shadowing global versions. Disabled in v2.9.1 due to race condition with parallel sessions.',
         descVi: 'Ngăn local skills shadow global versions. Bị vô hiệu từ v2.9.1 do race condition với parallel sessions.',
+      },
+      {
+        id: 'post-edit-simplify-reminder-deprecated',
+        name: 'post-edit-simplify-reminder.cjs',
+        lines: 161,
+        kits: ['ek', 'mk'],
+        triggers: ['(deprecated in beta)'],
+        deprecated: true,
+        isBeta: true,
+        descEn: 'Will be replaced by simplify-gate in upcoming release. Tracks file modifications and reminds to run code-simplifier.',
+        descVi: 'Sẽ được thay thế bởi simplify-gate trong bản release sắp tới. Theo dõi file thay đổi và nhắc chạy code-simplifier.',
       },
     ],
   },

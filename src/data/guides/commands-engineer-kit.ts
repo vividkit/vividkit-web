@@ -680,6 +680,16 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           detail: t("commands.stable.google_adk_python.detail"),
           isSkill: true,
         },
+        {
+          command: "/ck:agentize",
+          complexity: "⚡⚡⚡",
+          label: t("commands.label.medium"),
+          desc: t("commands.stable.agentize.desc"),
+          detail: t("commands.stable.agentize.detail"),
+          isSkill: true,
+          isBeta: true,
+          flags: ["--both", "--mcp", "--cli"],
+        },
       ],
     },
     {

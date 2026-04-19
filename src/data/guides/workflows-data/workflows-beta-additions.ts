@@ -1,6 +1,6 @@
 // Beta-only workflow additions
 // These are combined with stableWorkflows in the index to form betaWorkflows
-// Beta skills: /ck:autoresearch, /ck:predict, /ck:scenario, /ck:security, /excalidraw, /ck:xia, /ck:show-off, /ck:graphify
+// Beta skills: /ck:autoresearch, /ck:predict, /ck:scenario, /ck:security, /excalidraw, /ck:xia, /ck:show-off, /ck:graphify, /ck:agentize
 
 export const betaOnlyWorkflows = [
   {
@@ -430,5 +430,59 @@ export const betaOnlyWorkflows = [
       'Parallel screenshot capture in multiple aspect ratios'
     ],
     borderColor: 'border-pink-500/20'
+  },
+  {
+    title: 'Agentize Your Codebase',
+    category: 'Backend & Infra',
+    level: 'Intermediate',
+    duration: '~15-30 min',
+    stepCount: 3,
+    bestFor: 'Converting existing code into AI agent-friendly CLI tools and MCP servers',
+    gradientHeader: 'from-indigo-500/10 to-purple-500/10',
+    hoverBorderColor: 'hover:border-indigo-500/50',
+    buttonColor: 'bg-indigo-500 hover:bg-indigo-600',
+    icon: '<path d="M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8m-1 3h2v4h4v2h-4v4h-2v-4H7v-2h4V7z"/>',
+    iconColor: 'text-indigo-600 dark:text-indigo-400',
+    steps: [
+      {
+        command: '/ck:agentize --both',
+        typeLabel: 'Generate CLI + MCP',
+        description: 'Wrap codebase as both CLI tool and MCP server with shared core/ module',
+        color: 'bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      },
+      {
+        command: 'Agent-centric design',
+        typeLabel: 'Optimize for AI',
+        description: 'Concise outputs, actionable errors, consolidated workflows — designed for LLM consumption',
+        color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
+        number: 2,
+        hasIcon: true,
+        icon: '<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>'
+      },
+      {
+        command: '/ck:deploy',
+        typeLabel: 'Deploy to cloud',
+        description: 'Deploy to Cloudflare Workers, Docker, or any supported platform',
+        color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
+        number: 3,
+        isSkill: true
+      }
+    ],
+    tip: 'Use --mcp for MCP-only or --cli for CLI-only output. Default --both generates shared core/',
+    agentizeFlags: [
+      { flag: '--both', desc: 'Generate both CLI and MCP with shared core/ (default)', color: 'indigo' },
+      { flag: '--mcp', desc: 'MCP server only — tools exposed via Model Context Protocol', color: 'purple' },
+      { flag: '--cli', desc: 'CLI tool only — standard terminal interface', color: 'blue' }
+    ],
+    features: [
+      'Shared core/ module for CLI + MCP',
+      'Agent-centric output formatting',
+      'Actionable error messages for LLMs',
+      'Deploy to Cloudflare Workers or Docker'
+    ],
+    borderColor: 'border-indigo-500/20'
   }
 ];

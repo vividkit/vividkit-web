@@ -389,5 +389,59 @@ export const betaOnlyWorkflows = [
       'Chụp screenshot song song ở nhiều tỷ lệ khung hình'
     ],
     borderColor: 'border-pink-500/20'
+  },
+  {
+    title: 'Agentize Codebase Của Bạn',
+    category: 'Backend & Infra',
+    level: 'Intermediate',
+    duration: '~15-30 phút',
+    stepCount: 3,
+    bestFor: 'Chuyển đổi code hiện có thành CLI tools và MCP servers thân thiện với AI agent',
+    gradientHeader: 'from-indigo-500/10 to-purple-500/10',
+    hoverBorderColor: 'hover:border-indigo-500/50',
+    buttonColor: 'bg-indigo-500 hover:bg-indigo-600',
+    icon: '<path d="M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8m-1 3h2v4h4v2h-4v4h-2v-4H7v-2h4V7z"/>',
+    iconColor: 'text-indigo-600 dark:text-indigo-400',
+    steps: [
+      {
+        command: '/ck:agentize --both',
+        typeLabel: 'Tạo CLI + MCP',
+        description: 'Wrap codebase thành CLI tool và MCP server với module core/ dùng chung',
+        color: 'bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      },
+      {
+        command: 'Agent-centric design',
+        typeLabel: 'Tối ưu cho AI',
+        description: 'Output ngắn gọn, error actionable, workflow được consolidate — thiết kế cho LLM tiêu thụ',
+        color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
+        number: 2,
+        hasIcon: true,
+        icon: '<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>'
+      },
+      {
+        command: '/ck:deploy',
+        typeLabel: 'Deploy lên cloud',
+        description: 'Deploy lên Cloudflare Workers, Docker, hoặc các platform được hỗ trợ',
+        color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
+        number: 3,
+        isSkill: true
+      }
+    ],
+    tip: 'Dùng --mcp cho MCP-only hoặc --cli cho CLI-only. Mặc định --both tạo shared core/',
+    agentizeFlags: [
+      { flag: '--both', desc: 'Tạo cả CLI và MCP với shared core/ (mặc định)', color: 'indigo' },
+      { flag: '--mcp', desc: 'Chỉ MCP server — tools expose qua Model Context Protocol', color: 'purple' },
+      { flag: '--cli', desc: 'Chỉ CLI tool — giao diện terminal tiêu chuẩn', color: 'blue' }
+    ],
+    features: [
+      'Module core/ dùng chung cho CLI + MCP',
+      'Định dạng output thân thiện với agent',
+      'Thông báo lỗi actionable cho LLMs',
+      'Deploy lên Cloudflare Workers hoặc Docker'
+    ],
+    borderColor: 'border-indigo-500/20'
   }
 ];
