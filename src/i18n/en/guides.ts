@@ -270,4 +270,7 @@ export const guides = {
   'guides.claude_mechanics.faq.a4': 'No. Rules are guidance — Claude tries to follow them but may miss some. For 100% guarantees (blocking dangerous commands, auto-formatting before commit), use Hooks or Permissions in .claude/settings.json.',
   'guides.claude_mechanics.faq.q5': 'How long should CLAUDE.md be?',
   'guides.claude_mechanics.faq.a5': 'Under 200 lines is ideal. The shorter and more specific, the easier for Claude to follow. Move longer content into .claude/rules/*.md and link from CLAUDE.md via @-references.',
+  // Setup Wizard
+  'guides.setup_wizard.title': 'Setup Wizard',
+  'guides.setup_wizard.description': 'Interactive wizard to configure your AI coding tools with the right provider and settings.',
 } as const;

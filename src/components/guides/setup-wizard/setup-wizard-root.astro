@@ -1,0 +1,380 @@
+---
+// Setup Wizard Root — Vertical decision tree layout
+// Each wizard step is a "level" with three visual states: active / past / locked.
+// Completed levels collapse to chip-row summaries connected by SVG trunk lines.
+// Replaces the previous two-column sidebar+steps layout.
+import type { Language } from '@/i18n';
+import { PROVIDERS } from '@/data/guides/setup-wizard/providers';
+import { TOOLS } from '@/data/guides/setup-wizard/tools';
+import SetupWizardLevel from './setup-wizard-level.astro';
+import SetupWizardSummaryChipRow from './setup-wizard-summary-chip-row.astro';
+import SetupWizardStepSubscriptions from './setup-wizard-step-subscriptions.astro';
+import SetupWizardStepRouting from './setup-wizard-step-routing.astro';
+import SetupWizardStepToolType from './setup-wizard-step-tool-type.astro';
+import SetupWizardStepToolSelection from './setup-wizard-step-tool-selection.astro';
+import SetupWizardResultPanel from './setup-wizard-result-panel.astro';
+
+interface Props {
+  locale?: Language;
+}
+
+const { locale = 'en' } = Astro.props;
+const isVi = locale === 'vi';
+
+// Serialize static data for Alpine access at runtime
+const providersJson = JSON.stringify(PROVIDERS);
+const toolsJson = JSON.stringify(TOOLS);
+
+const STRINGS = {
+  back: isVi ? 'Quay lai' : 'Back',
+  next: isVi ? 'Tiep theo' : 'Continue',
+  reset: isVi ? 'Dat lai' : 'Reset',
+  resetConfirm: isVi
+    ? 'Dat lai toan bo wizard? Lua chon cua ban se bi xoa.'
+    : 'Reset the wizard? Your selections will be cleared.',
+  providers: isVi ? 'Providers:' : 'Providers:',
+  routing: isVi ? 'Routing:' : 'Routing:',
+  toolType: isVi ? 'Tool type:' : 'Tool type:',
+  tools: isVi ? 'Tools:' : 'Tools:',
+  edit: isVi ? 'Sua' : 'Edit',
+};
+---
+
+{/* Inject static data + register Alpine component before Alpine processes x-data */}
+<script is:inline define:vars={{ providersJson, toolsJson }}>
+  window.__wzProviders = JSON.parse(providersJson);
+  window.__wzTools = JSON.parse(toolsJson);
+</script>
+
+<script>
+  import Alpine from 'alpinejs';
+  import { setupWizard } from '@/scripts/setup-wizard/wizard-store';
+
+  // Handle ?reset on page load (before Alpine mounts)
+  if (new URLSearchParams(window.location.search).has('reset')) {
+    window.history.replaceState({}, '', window.location.pathname);
+  }
+
+  document.addEventListener('alpine:init', () => {
+    Alpine.data('setupWizard', setupWizard);
+  });
+
+  if (!window.Alpine) {
+    window.Alpine = Alpine;
+    setTimeout(() => Alpine.start(), 0);
+  }
+</script>
+
+<style>
+  [x-cloak] { display: none !important; }
+</style>
+
+<div
+  x-data="setupWizard()"
+  x-cloak
+  class="w-full max-w-2xl mx-auto"
+>
+
+  {/* ── Top toolbar: Reset (shows after step 3+) ──────────────────────────── */}
+  <div class="flex justify-end mb-2 min-h-[28px]">
+    <button
+      type="button"
+      x-show="['tool-selection','result'].includes(step)"
+      x-on:click={`if (confirm('${STRINGS.resetConfirm}')) reset()`}
+      class="text-xs text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 transition-colors px-2 py-1 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
+    >
+      {STRINGS.reset}
+    </button>
+  </div>
+
+  {/* ══════════════════════════════════════════════════════════════════════
+      LEVEL 1 — AI Providers (Subscriptions)
+      Always first, no connector above it.
+  ══════════════════════════════════════════════════════════════════════ */}
+  <SetupWizardLevel
+    title={isVi ? 'Nha cung cap AI' : 'AI Providers'}
+    stepId="subscriptions"
+    activeExpr="step === 'subscriptions'"
+    pastExpr="['routing','tool-type','tool-selection','result'].includes(step)"
+    lockedExpr="false"
+    showConnector={false}
+  >
+    {/* ACTIVE: full subscription step */}
+    <Fragment slot="active">
+      <SetupWizardStepSubscriptions locale={locale} />
+      {/* Inline Continue button */}
+      <div class="pt-4 flex justify-end">
+        <button
+          type="button"
+          x-on:click="goNext()"
+          x-bind:disabled="!canGoNext"
+          x-bind:class="canGoNext
+            ? 'bg-teal-500 hover:bg-teal-600 text-white cursor-pointer'
+            : 'bg-slate-200 dark:bg-slate-700 text-slate-400 cursor-not-allowed'"
+          class="px-5 py-2 rounded-lg text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500"
+        >
+          {STRINGS.next}
+        </button>
+      </div>
+    </Fragment>
+
+    {/* PAST: chip summary */}
+    <Fragment slot="past">
+      <SetupWizardSummaryChipRow
+        label={STRINGS.providers}
+        chipTextExpr="subs.map(id => (window.__wzProviders||[]).find(p=>p.id===id)?.name ?? id).join(', ')"
+        stepId="subscriptions"
+        showExpr="['routing','tool-type','tool-selection','result'].includes(step)"
+        editLabel={STRINGS.edit}
+      />
+    </Fragment>
+  </SetupWizardLevel>
+
+  {/* ══════════════════════════════════════════════════════════════════════
+      LEVEL 2 — Routing (only when subs.length >= 2)
+      Connector above: branches from multiple selected provider chips.
+  ══════════════════════════════════════════════════════════════════════ */}
+
+  {/* Branching SVG connector — only shown when routing level is visible (subs >= 2) */}
+  <div
+    x-show="subs.length >= 2 && step !== 'subscriptions'"
+    class="flex justify-center"
+    aria-hidden="true"
+  >
+    <svg
+      viewBox="0 0 200 48"
+      class="w-full max-w-xs h-12"
+      fill="none"
+      overflow="visible"
+    >
+      {/*
+        V-merge visual: two bezier paths from left/right converge to center trunk.
+        Shows when user selected multiple providers.
+        Uses passive color — teal when routing step is active.
+      */}
+      <path
+        d="M 60 0 Q 60 24 100 48"
+        x-bind:stroke="step === 'routing' ? '#14b8a6' : 'currentColor'"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        class="text-slate-300 dark:text-slate-700 transition-colors"
+      />
+      <path
+        d="M 140 0 Q 140 24 100 48"
+        x-bind:stroke="step === 'routing' ? '#14b8a6' : 'currentColor'"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        class="text-slate-300 dark:text-slate-700 transition-colors"
+      />
+    </svg>
+  </div>
+
+  {/* Single connector when routing is skipped (subs === 1) */}
+  <div
+    x-show="subs.length === 1 && step !== 'subscriptions'"
+    class="flex justify-center"
+    aria-hidden="true"
+  >
+    <svg viewBox="0 0 200 36" class="w-full max-w-xs h-9 text-slate-300 dark:text-slate-700" fill="none" overflow="visible">
+      <line x1="100" y1="0" x2="100" y2="36" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+    </svg>
+  </div>
+
+  {/* Routing level — only rendered when subs.length >= 2 */}
+  <div x-show="subs.length >= 2">
+    <SetupWizardLevel
+      title="Routing"
+      stepId="routing"
+      activeExpr="step === 'routing'"
+      pastExpr="['tool-type','tool-selection','result'].includes(step) && subs.length >= 2"
+      lockedExpr="false"
+      showConnector={false}
+    >
+      <Fragment slot="active">
+        <SetupWizardStepRouting locale={locale} />
+        <div class="pt-4 flex items-center justify-between">
+          <button
+            type="button"
+            x-on:click="goBack()"
+            class="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400"
+          >
+            {STRINGS.back}
+          </button>
+          <button
+            type="button"
+            x-on:click="goNext()"
+            x-bind:disabled="!canGoNext"
+            x-bind:class="canGoNext
+              ? 'bg-teal-500 hover:bg-teal-600 text-white cursor-pointer'
+              : 'bg-slate-200 dark:bg-slate-700 text-slate-400 cursor-not-allowed'"
+            class="px-5 py-2 rounded-lg text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500"
+          >
+            {STRINGS.next}
+          </button>
+        </div>
+      </Fragment>
+
+      <Fragment slot="past">
+        <SetupWizardSummaryChipRow
+          label={STRINGS.routing}
+          chipTextExpr="routing === 'ccs' ? 'CCS (Claude Code Switch)' : (routing === 'manual' ? 'Manual' : '—')"
+          stepId="routing"
+          showExpr="['tool-type','tool-selection','result'].includes(step) && subs.length >= 2"
+          editLabel={STRINGS.edit}
+        />
+      </Fragment>
+    </SetupWizardLevel>
+  </div>
+
+  {/* ══════════════════════════════════════════════════════════════════════
+      LEVEL 3 — Tool Type
+  ══════════════════════════════════════════════════════════════════════ */}
+  <SetupWizardLevel
+    title={isVi ? 'Loai cong cu' : 'Tool Type'}
+    stepId="tool-type"
+    activeExpr="step === 'tool-type'"
+    pastExpr="['tool-selection','result'].includes(step)"
+    lockedExpr="step === 'subscriptions' || step === 'routing'"
+    showConnector={false}
+  >
+    {/* Single connector rendered above this level (outside the component) */}
+
+    <Fragment slot="active">
+      <SetupWizardStepToolType locale={locale} />
+      <div class="pt-4 flex items-center justify-between">
+        <button
+          type="button"
+          x-on:click="goBack()"
+          class="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400"
+        >
+          {STRINGS.back}
+        </button>
+        <button
+          type="button"
+          x-on:click="goNext()"
+          x-bind:disabled="!canGoNext"
+          x-bind:class="canGoNext
+            ? 'bg-teal-500 hover:bg-teal-600 text-white cursor-pointer'
+            : 'bg-slate-200 dark:bg-slate-700 text-slate-400 cursor-not-allowed'"
+          class="px-5 py-2 rounded-lg text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500"
+        >
+          {STRINGS.next}
+        </button>
+      </div>
+    </Fragment>
+
+    <Fragment slot="past">
+      <SetupWizardSummaryChipRow
+        label={STRINGS.toolType}
+        chipTextExpr="toolType === 'ide' ? 'IDE Extensions' : (toolType === 'cli' ? 'CLI Tools' : (toolType === 'both' ? 'IDE + CLI' : '—'))"
+        stepId="tool-type"
+        showExpr="['tool-selection','result'].includes(step)"
+        editLabel={STRINGS.edit}
+      />
+    </Fragment>
+  </SetupWizardLevel>
+
+  {/* Connector between Level 3 and Level 4 */}
+  <div
+    x-show="['tool-selection','result'].includes(step) || step === 'tool-type'"
+    class="flex justify-center"
+    aria-hidden="true"
+  >
+    <svg viewBox="0 0 200 36" class="w-full max-w-xs h-9 text-slate-300 dark:text-slate-700" fill="none" overflow="visible">
+      <line
+        x1="100" y1="0" x2="100" y2="36"
+        x-bind:stroke="step === 'tool-selection' ? '#14b8a6' : 'currentColor'"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        class="transition-colors"
+      />
+    </svg>
+  </div>
+
+  {/* ══════════════════════════════════════════════════════════════════════
+      LEVEL 4 — Tool Selection
+  ══════════════════════════════════════════════════════════════════════ */}
+  <SetupWizardLevel
+    title={isVi ? 'Chon cong cu' : 'Select Tools'}
+    stepId="tool-selection"
+    activeExpr="step === 'tool-selection'"
+    pastExpr="step === 'result'"
+    lockedExpr="['subscriptions','routing','tool-type'].includes(step)"
+    showConnector={false}
+  >
+    <Fragment slot="active">
+      <SetupWizardStepToolSelection locale={locale} />
+      <div class="pt-4 flex items-center justify-between">
+        <button
+          type="button"
+          x-on:click="goBack()"
+          class="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400"
+        >
+          {STRINGS.back}
+        </button>
+        <button
+          type="button"
+          x-on:click="goNext()"
+          x-bind:disabled="!canGoNext"
+          x-bind:class="canGoNext
+            ? 'bg-teal-500 hover:bg-teal-600 text-white cursor-pointer'
+            : 'bg-slate-200 dark:bg-slate-700 text-slate-400 cursor-not-allowed'"
+          class="px-5 py-2 rounded-lg text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500"
+        >
+          {STRINGS.next}
+        </button>
+      </div>
+    </Fragment>
+
+    <Fragment slot="past">
+      <SetupWizardSummaryChipRow
+        label={STRINGS.tools}
+        chipTextExpr="tools.map(id => (window.__wzTools||[]).find(t=>t.id===id)?.name ?? id).join(', ')"
+        stepId="tool-selection"
+        showExpr="step === 'result'"
+        editLabel={STRINGS.edit}
+      />
+    </Fragment>
+  </SetupWizardLevel>
+
+  {/* ══════════════════════════════════════════════════════════════════════
+      RESULT — Config output panel
+  ══════════════════════════════════════════════════════════════════════ */}
+
+  {/* Connector to result */}
+  <div
+    x-show="step === 'result'"
+    class="flex justify-center"
+    aria-hidden="true"
+  >
+    <svg viewBox="0 0 200 36" class="w-full max-w-xs h-9 text-teal-400 dark:text-teal-600" fill="none" overflow="visible">
+      <line x1="100" y1="0" x2="100" y2="36" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+    </svg>
+  </div>
+
+  <div x-show="step === 'result'" class="wizard-fade-in">
+    <div class="rounded-xl border border-teal-200 dark:border-teal-800 overflow-hidden">
+      <div class="px-4 py-2 border-b border-teal-100 dark:border-teal-800 bg-teal-50 dark:bg-teal-900/20 flex items-center justify-between gap-2">
+        <div class="flex items-center gap-2">
+          <svg viewBox="0 0 24 24" class="w-4 h-4 text-teal-600 dark:text-teal-400 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span class="text-xs font-semibold uppercase tracking-wide text-teal-700 dark:text-teal-400">
+            {isVi ? 'Ket qua cau hinh' : 'Your Setup'}
+          </span>
+        </div>
+        <button
+          type="button"
+          x-on:click="goBack()"
+          class="text-xs text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-colors px-2 py-1 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400"
+        >
+          {STRINGS.back}
+        </button>
+      </div>
+      <div class="px-4 py-4">
+        <SetupWizardResultPanel locale={locale} />
+      </div>
+    </div>
+  </div>
+
+</div>

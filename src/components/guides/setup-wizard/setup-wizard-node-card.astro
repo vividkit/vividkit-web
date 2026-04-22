@@ -1,0 +1,82 @@
+---
+// Setup Wizard Node Card — state-driven card with ARIA + keyboard support.
+// State variants: locked | available | selected | completed
+// Styled via Tailwind. Progressive disclosure via `wizard-fade-in` keyframe class.
+// Usage: rendered inside setup-wizard-tree-canvas, bound via Alpine x-for.
+---
+
+{/*
+  This component is rendered via Alpine x-for as an inline template.
+  The actual HTML is inlined in setup-wizard-tree-canvas.astro to keep
+  Alpine template bindings co-located with the x-for loop.
+  This file documents the card structure and variant classes for reference.
+
+  Card HTML structure (used inline in tree-canvas):
+  <div
+    data-wizard-node-id="{id}"
+    role="button"
+    tabindex="0"
+    aria-pressed="{state === 'selected'}"
+    aria-disabled="{state === 'locked'}"
+    class="wizard-node-card wizard-fade-in {stateClass}"
+    @click="if (state !== 'locked') $dispatch('wizard-node-click', { id })"
+    @keydown.enter="if (state !== 'locked') $dispatch('wizard-node-click', { id })"
+    @keydown.space.prevent="if (state !== 'locked') $dispatch('wizard-node-click', { id })"
+  >
+    <span class="node-icon">{icon}</span>
+    <span class="node-label">{label}</span>
+    <span class="node-check" x-show="state === 'completed'">✓</span>
+  </div>
+
+  State classes:
+  - locked:    grayscale opacity-40 cursor-not-allowed
+  - available: hover:ring-2 hover:ring-purple-400/50 cursor-pointer
+  - selected:  ring-2 ring-purple-500 bg-gradient-to-br from-purple-500/10 to-teal-500/10
+  - completed: ring-2 ring-green-500/60 opacity-80
+*/}
+
+<style>
+  /* wizard-fade-in: progressive disclosure animation */
+  @keyframes wizardFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  :global(.wizard-fade-in) {
+    animation: wizardFadeIn 300ms ease-out forwards;
+  }
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    :global(.wizard-fade-in) {
+      animation: none;
+    }
+  }
+
+  /* SVG path reveal animation */
+  :global(.wizard-path-reveal) {
+    animation: wizardPathReveal 400ms ease-out forwards;
+  }
+
+  @keyframes wizardPathReveal {
+    from {
+      stroke-dashoffset: var(--path-length);
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.wizard-path-reveal) {
+      animation: none;
+      stroke-dashoffset: 0;
+    }
+  }
+</style>

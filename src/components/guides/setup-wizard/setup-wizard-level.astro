@@ -1,0 +1,104 @@
+---
+// Setup Wizard — Level Container
+// Wraps one decision tree level in three visual states:
+//   active  — full step component rendered (slot)
+//   past    — collapsed chip row summary
+//   locked  — faded placeholder label
+//
+// All state switching is controlled via Alpine x-show on children —
+// this component provides only the structural frame + connector line above.
+
+interface Props {
+  /** Human-readable level label e.g. "AI Providers" */
+  title: string;
+  /** Wizard step id this level corresponds to */
+  stepId: string;
+  /** Alpine expression: true when this level is the current active step */
+  activeExpr: string;
+  /** Alpine expression: true when this level has been completed and user moved past it */
+  pastExpr: string;
+  /** Alpine expression: true when this level is still locked/future */
+  lockedExpr: string;
+  /** Whether to render the top connector line (false for first level) */
+  showConnector?: boolean;
+  /** Alpine expression for connector SVG: show branching (multi-select merge) or single line */
+  branchCountExpr?: string;
+}
+
+const {
+  title,
+  stepId,
+  activeExpr,
+  pastExpr,
+  lockedExpr,
+  showConnector = true,
+  branchCountExpr = '1',
+} = Astro.props;
+
+const lockedLabel = `${title} (locked)`;
+---
+
+{/* Connector SVG — vertical line (or branching) from previous level */}
+{showConnector && (
+  <div class="flex justify-center" aria-hidden="true">
+    <svg
+      viewBox="0 0 200 36"
+      class="w-full max-w-xs h-9 text-slate-300 dark:text-slate-700 transition-colors"
+      fill="none"
+      overflow="visible"
+    >
+      {/*
+        Single vertical trunk when branch count is 1 (default / collapsed summary).
+        When branching (e.g. multiple subs merge into one routing step), we use
+        a simple V-merge drawn via Alpine at runtime — kept as a single trunk
+        here for SSR/static render safety. Branch SVG is rendered client-side
+        via the connector slot when needed.
+      */}
+      <line x1="100" y1="0" x2="100" y2="36" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+    </svg>
+  </div>
+)}
+
+{/* Level frame */}
+<div class="relative">
+
+  {/* ACTIVE state — full step rendered via slot */}
+  <div
+    x-show={activeExpr}
+    class="rounded-xl border border-teal-300 dark:border-teal-700 bg-white dark:bg-slate-900 shadow-sm shadow-teal-100 dark:shadow-teal-950/30 overflow-hidden wizard-fade-in"
+    x-transition:enter="transition ease-out duration-200"
+    x-transition:enter-start="opacity-0 translate-y-1"
+    x-transition:enter-end="opacity-100 translate-y-0"
+  >
+    {/* Level header strip */}
+    <div class="px-4 py-2 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full bg-teal-500 animate-pulse flex-shrink-0" aria-hidden="true"></span>
+      <span class="text-xs font-semibold uppercase tracking-wide text-teal-700 dark:text-teal-400">{title}</span>
+    </div>
+    {/* Step content injected via slot */}
+    <div class="px-4 py-4">
+      <slot name="active" />
+    </div>
+  </div>
+
+  {/* PAST state — chip row summary */}
+  <div
+    x-show={pastExpr}
+    class="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900/50 px-4 py-1"
+    x-transition:enter="transition ease-out duration-150"
+    x-transition:enter-start="opacity-0"
+    x-transition:enter-end="opacity-100"
+  >
+    <slot name="past" />
+  </div>
+
+  {/* LOCKED state — dimmed placeholder */}
+  <div
+    x-show={lockedExpr}
+    class="rounded-xl border border-slate-200/60 dark:border-slate-700/50 bg-slate-50/50 dark:bg-slate-800/30 px-4 py-3 opacity-40 select-none"
+    aria-hidden="true"
+  >
+    <span class="text-sm text-slate-400 dark:text-slate-600 font-medium">{lockedLabel}</span>
+  </div>
+
+</div>

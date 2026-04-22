@@ -1,0 +1,77 @@
+---
+// Setup Wizard — Step 2: Routing Method
+// Only shown when subs.length >= 2 (auto-skipped otherwise via wizard-transitions).
+// Two choices: CCS managed (recommended) vs Manual config per tool.
+
+import type { Language } from '@/i18n';
+
+interface Props {
+  locale?: Language;
+}
+
+const { locale = 'en' } = Astro.props;
+const isVi = locale === 'vi';
+
+// Strings — extract to i18n in phase 7
+const STRINGS = {
+  heading: isVi ? 'Bước 2: Phương thức định tuyến' : 'Step 2: Routing method',
+  sub: isVi
+    ? 'Bạn muốn dùng CCS hay cấu hình thủ công từng tool?'
+    : 'How do you want to manage multiple providers?',
+  ccsTitle: 'CCS (Claude Code Switch)',
+  ccsDesc: isVi ? 'Một điểm cấu hình, tất cả tools. Đề xuất khi dùng nhiều nhà cung cấp.' : 'Single config point for all tools. Recommended with multiple providers.',
+  ccsBadge: isVi ? 'Đề xuất' : 'Recommended',
+  ccsLink: isVi ? 'CCS là gì?' : 'What is CCS?',
+  manualTitle: isVi ? 'Thủ công' : 'Manual',
+  manualDesc: isVi ? 'Cấu hình từng tool riêng lẻ với từng provider.' : 'Configure each tool individually per provider.',
+};
+---
+
+<div x-show="step === 'routing'" class="space-y-4 wizard-fade-in">
+  <div>
+    <h2 class="text-lg font-semibold text-slate-900 dark:text-white">{STRINGS.heading}</h2>
+    <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">{STRINGS.sub}</p>
+  </div>
+
+  <div class="flex flex-col sm:flex-row gap-3">
+
+    {/* CCS managed — recommended */}
+    <button
+      type="button"
+      x-on:click="setRouting('ccs')"
+      x-bind:aria-pressed="routing === 'ccs'"
+      x-bind:class="routing === 'ccs'
+        ? 'border-teal-500 bg-teal-50 dark:bg-teal-900/20 ring-1 ring-teal-500'
+        : 'border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 hover:border-teal-400 dark:hover:border-teal-500'"
+      class="relative flex-1 flex flex-col gap-1.5 px-4 py-3 rounded-lg border text-left transition-all cursor-pointer"
+    >
+      {/* Recommended badge */}
+      <span class="absolute top-2 right-2 text-xs px-1.5 py-0.5 rounded-full bg-teal-100 dark:bg-teal-900/50 text-teal-700 dark:text-teal-300 font-semibold">
+        {STRINGS.ccsBadge}
+      </span>
+      <span class="text-sm font-bold text-slate-800 dark:text-slate-100 pr-16">{STRINGS.ccsTitle}</span>
+      <span class="text-xs text-slate-500 dark:text-slate-400">{STRINGS.ccsDesc}</span>
+      <a
+        href="/guides/ccs"
+        class="text-xs text-teal-600 dark:text-teal-400 hover:underline mt-0.5 w-fit"
+        x-on:click.stop
+        tabindex="0"
+      >{STRINGS.ccsLink} →</a>
+    </button>
+
+    {/* Manual */}
+    <button
+      type="button"
+      x-on:click="setRouting('manual')"
+      x-bind:aria-pressed="routing === 'manual'"
+      x-bind:class="routing === 'manual'
+        ? 'border-teal-500 bg-teal-50 dark:bg-teal-900/20 ring-1 ring-teal-500'
+        : 'border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 hover:border-teal-400 dark:hover:border-teal-500'"
+      class="flex-1 flex flex-col gap-1.5 px-4 py-3 rounded-lg border text-left transition-all cursor-pointer"
+    >
+      <span class="text-sm font-bold text-slate-800 dark:text-slate-100">{STRINGS.manualTitle}</span>
+      <span class="text-xs text-slate-500 dark:text-slate-400">{STRINGS.manualDesc}</span>
+    </button>
+
+  </div>
+</div>

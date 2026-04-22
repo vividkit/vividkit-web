@@ -1,0 +1,112 @@
+---
+// Setup Wizard — Breadcrumb Navigation
+// Horizontal step tracker: Subs > Routing > Tool Type > Tools > Result.
+// Clicking a completed/current step navigates back via goToStep().
+// Reset button appears after step 3+ with native confirm() guard.
+// Routing step is hidden in breadcrumb when subs.length === 1 (auto-skipped).
+
+import type { Language } from '@/i18n';
+
+interface Props {
+  locale?: Language;
+}
+
+const { locale = 'en' } = Astro.props;
+const isVi = locale === 'vi';
+
+// Strings — extract to i18n in phase 7
+const STRINGS = {
+  reset: isVi ? 'Đặt lại' : 'Reset',
+  resetConfirm: isVi
+    ? 'Đặt lại toàn bộ wizard? Lựa chọn của bạn sẽ bị xoá.'
+    : 'Reset the wizard? Your selections will be cleared.',
+  ariaNav: isVi ? 'Tiến trình wizard' : 'Wizard progress',
+};
+
+// Step definitions — order matches STEPS in wizard-tree-schema.ts
+// Alpine expressions control visibility + clickability at runtime
+const BREADCRUMB_STEPS = [
+  {
+    id: 'subscriptions',
+    label: isVi ? 'Nhà cung cấp' : 'Providers',
+    // Always visible
+    showExpr: 'true',
+    // Reachable if we're past this step
+    clickableExpr: `['routing','tool-type','tool-selection','result'].includes(step)`,
+  },
+  {
+    id: 'routing',
+    label: 'Routing',
+    // Hidden when routing was auto-skipped (single sub)
+    showExpr: 'subs.length >= 2',
+    clickableExpr: `subs.length >= 2 && ['tool-type','tool-selection','result'].includes(step)`,
+  },
+  {
+    id: 'tool-type',
+    label: isVi ? 'Loại tool' : 'Tool type',
+    showExpr: 'true',
+    clickableExpr: `['tool-selection','result'].includes(step)`,
+  },
+  {
+    id: 'tool-selection',
+    label: isVi ? 'Công cụ' : 'Tools',
+    showExpr: 'true',
+    clickableExpr: `step === 'result'`,
+  },
+  {
+    id: 'result',
+    label: isVi ? 'Kết quả' : 'Result',
+    showExpr: 'true',
+    clickableExpr: 'false',
+  },
+] as const;
+---
+
+<nav
+  aria-label={STRINGS.ariaNav}
+  class="flex items-center gap-1 flex-wrap mb-4"
+>
+  {BREADCRUMB_STEPS.map((s, i) => (
+    <>
+      {/* Step pill */}
+      <span x-show={s.showExpr}>
+        <button
+          type="button"
+          x-on:click={`if (${s.clickableExpr}) goToStep('${s.id}')`}
+          x-bind:class={`
+            step === '${s.id}'
+              ? 'text-teal-600 dark:text-teal-400 font-semibold cursor-default'
+              : (${s.clickableExpr})
+                ? 'text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 cursor-pointer underline-offset-2 hover:underline'
+                : 'text-slate-300 dark:text-slate-600 cursor-default'
+          `}
+          x-bind:aria-current={`step === '${s.id}' ? 'step' : undefined`}
+          class="text-xs font-medium transition-colors px-0.5 py-0.5 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500"
+        >
+          {s.label}
+        </button>
+      </span>
+
+      {/* Separator — shown between steps, hidden after last */}
+      {i < BREADCRUMB_STEPS.length - 1 && (
+        <span
+          x-show={s.showExpr}
+          class="text-slate-300 dark:text-slate-600 text-xs select-none"
+          aria-hidden="true"
+        >›</span>
+      )}
+    </>
+  ))}
+
+  {/* Reset button — only shown after tool-type step (step 3+) */}
+  <span class="ml-auto">
+    <button
+      type="button"
+      x-show={`['tool-selection','result'].includes(step)`}
+      x-on:click={`if (confirm('${STRINGS.resetConfirm}')) reset()`}
+      class="text-xs text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 transition-colors px-1.5 py-0.5 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
+    >
+      {STRINGS.reset}
+    </button>
+  </span>
+</nav>

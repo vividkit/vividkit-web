@@ -1,0 +1,103 @@
+---
+// Setup Wizard — Step 4: Tool Selection
+// Multi-select tool cards filtered by state.subs + state.toolType.
+// Grouped into "IDE Tools" / "CLI Tools" sections when toolType === 'both'.
+// Bound to Alpine parent store via x-data="setupWizard()".
+
+import type { Language } from '@/i18n';
+
+interface Props {
+  locale?: Language;
+}
+
+const { locale = 'en' } = Astro.props;
+const isVi = locale === 'vi';
+
+// Strings — extract to i18n in phase 7
+const STRINGS = {
+  heading: isVi ? 'Bước 4: Chọn công cụ' : 'Step 4: Select tools',
+  sub: isVi
+    ? 'Công cụ nào bạn muốn cài đặt? (chọn ít nhất 1)'
+    : 'Which tools do you want to configure? (select at least 1)',
+  ideSection: isVi ? 'Tiện ích IDE' : 'IDE Tools',
+  cliSection: isVi ? 'Công cụ CLI' : 'CLI Tools',
+  empty: isVi
+    ? 'Không có công cụ nào phù hợp với lựa chọn của bạn.'
+    : 'No tools available for your current selection.',
+};
+---
+
+<div x-show="step === 'tool-selection'" class="space-y-4 wizard-fade-in">
+  <div>
+    <h2 class="text-lg font-semibold text-slate-900 dark:text-white">{STRINGS.heading}</h2>
+    <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">{STRINGS.sub}</p>
+  </div>
+
+  {/* IDE Tools section — shown when toolType is 'ide' or 'both' */}
+  <div x-show="toolType === 'ide' || toolType === 'both'" class="space-y-2">
+    <h3
+      x-show="toolType === 'both'"
+      class="text-xs font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500"
+    >{STRINGS.ideSection}</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+      <template
+        x-for="tool in (window.__wzTools||[]).filter(t => t.type === 'ide' && subs.some(s => t.providers.includes(s)))"
+        :key="tool.id"
+      >
+        <button
+          type="button"
+          x-on:click="toggleTool(tool.id)"
+          x-bind:aria-pressed="tools.includes(tool.id)"
+          x-bind:class="tools.includes(tool.id)
+            ? 'border-teal-500 bg-teal-50 dark:bg-teal-900/20 ring-1 ring-teal-500'
+            : 'border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 hover:border-teal-400 dark:hover:border-teal-500'"
+          class="flex items-center justify-between px-3 py-2.5 rounded-lg border text-left transition-all cursor-pointer"
+        >
+          <span class="text-sm font-semibold text-slate-800 dark:text-slate-100" x-text="tool.name"></span>
+          <span
+            x-show="tools.includes(tool.id)"
+            class="text-teal-500 dark:text-teal-400 text-xs font-bold flex-shrink-0 ml-2"
+            aria-hidden="true"
+          >✓</span>
+        </button>
+      </template>
+    </div>
+  </div>
+
+  {/* CLI Tools section — shown when toolType is 'cli' or 'both' */}
+  <div x-show="toolType === 'cli' || toolType === 'both'" class="space-y-2">
+    <h3
+      x-show="toolType === 'both'"
+      class="text-xs font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500"
+    >{STRINGS.cliSection}</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+      <template
+        x-for="tool in (window.__wzTools||[]).filter(t => t.type === 'cli' && subs.some(s => t.providers.includes(s)))"
+        :key="tool.id"
+      >
+        <button
+          type="button"
+          x-on:click="toggleTool(tool.id)"
+          x-bind:aria-pressed="tools.includes(tool.id)"
+          x-bind:class="tools.includes(tool.id)
+            ? 'border-teal-500 bg-teal-50 dark:bg-teal-900/20 ring-1 ring-teal-500'
+            : 'border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 hover:border-teal-400 dark:hover:border-teal-500'"
+          class="flex items-center justify-between px-3 py-2.5 rounded-lg border text-left transition-all cursor-pointer"
+        >
+          <span class="text-sm font-semibold text-slate-800 dark:text-slate-100" x-text="tool.name"></span>
+          <span
+            x-show="tools.includes(tool.id)"
+            class="text-teal-500 dark:text-teal-400 text-xs font-bold flex-shrink-0 ml-2"
+            aria-hidden="true"
+          >✓</span>
+        </button>
+      </template>
+    </div>
+  </div>
+
+  {/* Empty state — no tools match current filter */}
+  <p
+    x-show="(window.__wzTools||[]).filter(t => subs.some(s => t.providers.includes(s)) && (toolType === 'both' || t.type === toolType)).length === 0"
+    class="text-sm text-slate-400 dark:text-slate-500 italic"
+  >{STRINGS.empty}</p>
+</div>

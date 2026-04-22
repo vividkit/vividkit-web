@@ -1,0 +1,25 @@
+---
+// Setup Wizard — CTA Link
+// "Xem hướng dẫn đầy đủ →" styled button. Pure Astro, dark/light aware.
+
+interface Props {
+  href: string;
+  label?: string;
+  /** Visual variant: 'primary' (filled) | 'ghost' (outlined). Defaults to 'primary'. */
+  variant?: 'primary' | 'ghost';
+}
+
+const { href, label = 'Xem hướng dẫn đầy đủ →', variant = 'primary' } = Astro.props;
+
+const baseClasses =
+  'inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500';
+
+const variantClasses =
+  variant === 'primary'
+    ? 'bg-purple-600 text-white hover:bg-purple-700 dark:bg-purple-500 dark:hover:bg-purple-400'
+    : 'border border-purple-300 dark:border-purple-700 text-purple-700 dark:text-purple-300 hover:bg-purple-50 dark:hover:bg-purple-900/30';
+---
+
+<a href={href} class={`${baseClasses} ${variantClasses}`}>
+  {label}
+</a>

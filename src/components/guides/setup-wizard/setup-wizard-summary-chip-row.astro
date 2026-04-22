@@ -1,0 +1,53 @@
+---
+// Setup Wizard — Summary Chip Row
+// Collapsed summary for a completed wizard level.
+// Shows selected values as chips + Edit button to navigate back.
+// Props are label + Alpine expressions for the chip text and step id to go back to.
+
+interface Props {
+  /** Label prefix shown before the chips e.g. "Providers:" */
+  label: string;
+  /** Alpine expression that evaluates to string displayed in chip area */
+  chipTextExpr: string;
+  /** Step id passed to goToStep() when Edit is clicked */
+  stepId: string;
+  /** Alpine x-show guard expression — when to show this row */
+  showExpr: string;
+  /** Edit button label */
+  editLabel?: string;
+}
+
+const { label, chipTextExpr, stepId, showExpr, editLabel = 'Edit' } = Astro.props;
+---
+
+<div
+  x-show={showExpr}
+  class="flex items-center gap-2 flex-wrap py-2 px-1"
+  aria-label={`Completed: ${label}`}
+>
+  {/* Check icon */}
+  <span class="flex-shrink-0 w-5 h-5 rounded-full bg-teal-500/15 flex items-center justify-center" aria-hidden="true">
+    <svg viewBox="0 0 16 16" class="w-3 h-3 text-teal-600 dark:text-teal-400" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="3,8 6.5,11.5 13,4.5"></polyline>
+    </svg>
+  </span>
+
+  {/* Label */}
+  <span class="text-xs font-medium text-slate-500 dark:text-slate-400 flex-shrink-0">{label}</span>
+
+  {/* Value chip(s) */}
+  <span
+    class="text-xs font-semibold text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-full"
+    x-text={chipTextExpr}
+  ></span>
+
+  {/* Edit button */}
+  <button
+    type="button"
+    x-on:click={`goToStep('${stepId}')`}
+    class="ml-auto text-xs text-slate-400 dark:text-slate-500 hover:text-teal-600 dark:hover:text-teal-400 underline underline-offset-2 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 rounded"
+    aria-label={`Edit ${label}`}
+  >
+    {editLabel}
+  </button>
+</div>

@@ -1,0 +1,79 @@
+---
+// Setup Wizard — Step 1: Subscriptions
+// Multi-select provider cards. Bound to Alpine store via parent x-data="setupWizard()".
+// Strings hardcoded in VI for MVP; extract in phase 7 i18n pass.
+
+import { PROVIDERS } from '@/data/guides/setup-wizard/providers';
+import type { Language } from '@/i18n';
+
+interface Props {
+  locale?: Language;
+}
+
+const { locale = 'en' } = Astro.props;
+const isVi = locale === 'vi';
+
+// Strings — extract to i18n in phase 7
+const STRINGS = {
+  heading: isVi ? 'Bước 1: Chọn nhà cung cấp AI' : 'Step 1: Pick your AI providers',
+  sub: isVi ? 'Bạn đang dùng dịch vụ nào? (chọn nhiều)' : 'Which services do you have? (select all that apply)',
+  ccsHint: isVi ? 'Hỗ trợ CCS' : 'CCS compatible',
+  continue: isVi ? 'Tiếp tục' : 'Continue',
+};
+
+// Serialize providers for inline Alpine access
+const providersJson = JSON.stringify(PROVIDERS.map(p => ({
+  id: p.id,
+  name: p.name,
+  subscription_types: p.subscription_types,
+  ccs_compatible: p.ccs_compatible,
+})));
+---
+
+<div x-show="step === 'subscriptions'" class="space-y-4 wizard-fade-in">
+  <div>
+    <h2 class="text-lg font-semibold text-slate-900 dark:text-white">{STRINGS.heading}</h2>
+    <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">{STRINGS.sub}</p>
+  </div>
+
+  {/* Provider grid — Alpine x-for over static data injected via window.__wzProviders */}
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+    <template x-for="p in (window.__wzProviders || [])" :key="p.id">
+      <button
+        type="button"
+        x-on:click="toggleSub(p.id)"
+        x-bind:aria-pressed="subs.includes(p.id)"
+        x-bind:class="subs.includes(p.id)
+          ? 'border-teal-500 bg-teal-50 dark:bg-teal-900/20 ring-1 ring-teal-500'
+          : 'border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 hover:border-teal-400 dark:hover:border-teal-500'"
+        class="relative flex flex-col gap-1.5 px-3 py-2.5 rounded-lg border text-left transition-all cursor-pointer"
+      >
+        {/* Provider name + selected check */}
+        <span class="flex items-center justify-between">
+          <span class="text-sm font-semibold text-slate-800 dark:text-slate-100" x-text="p.name"></span>
+          <span
+            x-show="subs.includes(p.id)"
+            class="text-teal-500 dark:text-teal-400 text-xs font-bold"
+            aria-hidden="true"
+          >✓</span>
+        </span>
+
+        {/* Subscription type tags */}
+        <span class="flex flex-wrap gap-1">
+          <template x-for="tag in p.subscription_types" :key="tag">
+            <span
+              class="text-xs px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400 font-medium"
+              x-text="tag"
+            ></span>
+          </template>
+        </span>
+
+        {/* CCS hint badge */}
+        <span
+          x-show="p.ccs_compatible"
+          class="text-xs text-teal-600 dark:text-teal-400 font-medium"
+        >{STRINGS.ccsHint}</span>
+      </button>
+    </template>
+  </div>
+</div>

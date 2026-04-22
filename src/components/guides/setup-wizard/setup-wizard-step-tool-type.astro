@@ -1,0 +1,79 @@
+---
+// Setup Wizard — Step 3: Tool Type
+// 3 choices: IDE / CLI / Both. Disables a type if no tools of that type exist
+// for the currently selected providers — computed inline via Alpine expressions
+// using window.__wzTools (injected by setup-wizard-root.astro).
+
+import type { Language } from '@/i18n';
+
+interface Props {
+  locale?: Language;
+}
+
+const { locale = 'en' } = Astro.props;
+const isVi = locale === 'vi';
+
+// Strings — extract to i18n in phase 7
+const STRINGS = {
+  heading: isVi ? 'Bước 3: Loại công cụ' : 'Step 3: Tool type',
+  sub: isVi ? 'Bạn muốn dùng loại công cụ nào?' : 'What kind of tools do you want to set up?',
+  unavailable: isVi ? 'Không khả dụng với provider đã chọn' : 'Not available for selected providers',
+};
+
+// Static option definitions — availability computed at runtime via Alpine
+const toolTypeOpts = [
+  {
+    value: 'ide',
+    label: isVi ? 'Tiện ích IDE' : 'IDE Extensions',
+    desc: isVi ? 'Cursor, Cline, Kilo Code…' : 'Cursor, Cline, Kilo Code…',
+    // Alpine expression: true when no IDE tools exist for current subs
+    disabledExpr: `!(window.__wzTools||[]).some(t => t.type==='ide' && subs.some(s => t.providers.includes(s)))`,
+  },
+  {
+    value: 'cli',
+    label: isVi ? 'Công cụ CLI' : 'CLI Tools',
+    desc: isVi ? 'Claude Code, Codex CLI, OpenCode…' : 'Claude Code, Codex CLI, OpenCode…',
+    disabledExpr: `!(window.__wzTools||[]).some(t => t.type==='cli' && subs.some(s => t.providers.includes(s)))`,
+  },
+  {
+    value: 'both',
+    label: isVi ? 'Cả hai' : 'Both',
+    desc: isVi ? 'IDE lẫn CLI' : 'IDE + CLI tools',
+    // "both" disabled only if either ide OR cli has zero tools (no point selecting both)
+    disabledExpr: `!(window.__wzTools||[]).some(t => t.type==='ide' && subs.some(s => t.providers.includes(s))) || !(window.__wzTools||[]).some(t => t.type==='cli' && subs.some(s => t.providers.includes(s)))`,
+  },
+] as const;
+---
+
+<div x-show="step === 'tool-type'" class="space-y-4 wizard-fade-in">
+  <div>
+    <h2 class="text-lg font-semibold text-slate-900 dark:text-white">{STRINGS.heading}</h2>
+    <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">{STRINGS.sub}</p>
+  </div>
+
+  <div class="flex flex-col sm:flex-row gap-3">
+    {toolTypeOpts.map(opt => (
+      <button
+        type="button"
+        x-on:click={`if (!(${opt.disabledExpr})) setToolType('${opt.value}')`}
+        x-bind:aria-pressed={`toolType === '${opt.value}'`}
+        x-bind:disabled={opt.disabledExpr}
+        x-bind:class={`
+          (${opt.disabledExpr})
+            ? 'border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 opacity-40 cursor-not-allowed'
+            : toolType === '${opt.value}'
+              ? 'border-teal-500 bg-teal-50 dark:bg-teal-900/20 ring-1 ring-teal-500 cursor-pointer'
+              : 'border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 hover:border-teal-400 dark:hover:border-teal-500 cursor-pointer'
+        `}
+        class="flex-1 flex flex-col gap-1 px-4 py-3 rounded-lg border text-left transition-all"
+      >
+        <span class="text-sm font-bold text-slate-800 dark:text-slate-100">{opt.label}</span>
+        <span class="text-xs text-slate-500 dark:text-slate-400">{opt.desc}</span>
+        <span
+          x-show={opt.disabledExpr}
+          class="text-xs text-amber-600 dark:text-amber-400 mt-0.5"
+        >{STRINGS.unavailable}</span>
+      </button>
+    ))}
+  </div>
+</div>

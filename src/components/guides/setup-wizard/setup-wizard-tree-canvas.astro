@@ -1,0 +1,215 @@
+---
+// Setup Wizard Tree Canvas — grid layout with absolute SVG overlay for bezier path connections.
+// Renders nodes per current wizard state step using Alpine reactive data.
+// Integrates with wizard-store.ts (setupWizard Alpine component) and node-positions.ts mixin.
+//
+// Alpine data: extended from parent setupWizard() via x-data spread in root.
+// This component is slotted inside setup-wizard-root.astro's x-data="setupWizard()" container.
+---
+
+<script>
+  import { nodePositions } from '@/scripts/setup-wizard/node-positions';
+
+  // Register nodePositions as an Alpine magic or expose via window for x-data access
+  document.addEventListener('alpine:init', () => {
+    // @ts-ignore — Alpine global
+    window.Alpine.data('wizardCanvas', () => ({
+      ...nodePositions(),
+
+      /**
+       * Derive node display state from parent setupWizard() store.
+       * Called from x-bind:class on each node card.
+       * Walks up to find the setupWizard Alpine component root.
+       */
+      nodeState(
+        nodeId: string,
+        step: string,
+        subs: string[],
+        routing: string | null,
+        toolType: string | null,
+        tools: string[],
+      ): 'locked' | 'available' | 'selected' | 'completed' {
+        const currentStepIndex = ['subscriptions', 'routing', 'tool-type', 'tool-selection', 'result'].indexOf(step);
+        const nodeStepIndex = ['subscriptions', 'routing', 'tool-type', 'tool-selection', 'result'].indexOf(nodeId);
+
+        if (nodeStepIndex < 0) return 'available';
+
+        if (nodeStepIndex < currentStepIndex) return 'completed';
+        if (nodeStepIndex === currentStepIndex) return 'selected';
+        if (nodeStepIndex === currentStepIndex + 1) return 'available';
+        return 'locked';
+      },
+    }));
+  });
+</script>
+
+{/*
+  Tree Canvas: positioned relative container holds both the node grid and the SVG overlay.
+  The SVG sits at z-0 (below cards at z-10) so paths render behind node cards.
+
+  Node grid: single column, one row per wizard step.
+  Each step node card reads state from parent setupWizard() data via $root or explicit bindings.
+
+  NOTE: This component must be placed INSIDE the x-data="setupWizard()" container
+  so that `step`, `subs`, etc. are accessible in scope.
+*/}
+
+<div
+  x-data="wizardCanvas()"
+  class="relative w-full"
+  x-init="init()"
+  x-effect="computePositions()"
+>
+  {/* SVG overlay — absolute inset-0, z-0, below cards */}
+  <svg
+    aria-hidden="true"
+    class="absolute inset-0 w-full h-full pointer-events-none"
+    style="z-index: 0;"
+    overflow="visible"
+  >
+    <template x-for="path in paths" :key="path.id">
+      <path
+        x-bind:d="path.d"
+        x-bind:style="`--path-length: ${path.length}; stroke-dasharray: ${path.length}; stroke-dashoffset: ${path.length};`"
+        class="wizard-path-reveal"
+        fill="none"
+        stroke="url(#wizardPathGradient)"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        opacity="0.5"
+      />
+    </template>
+
+    {/* Gradient definition for path stroke */}
+    <defs>
+      <linearGradient id="wizardPathGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#a855f7" stop-opacity="0.8" />
+        <stop offset="100%" stop-color="#14b8a6" stop-opacity="0.8" />
+      </linearGradient>
+    </defs>
+  </svg>
+
+  {/* Node grid — single column, 4 step rows */}
+  <div class="relative flex flex-col gap-3" style="z-index: 10;">
+
+    {/* Step: subscriptions */}
+    <div
+      x-bind:data-wizard-node-id="'subscriptions'"
+      data-wizard-node-id="subscriptions"
+      role="button"
+      tabindex="0"
+      x-bind:aria-pressed="$root.step === 'subscriptions'"
+      x-bind:aria-disabled="false"
+      x-bind:class="{
+        'grayscale opacity-40 cursor-not-allowed': nodeState('subscriptions', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'locked',
+        'hover:ring-2 hover:ring-purple-400/50 cursor-pointer': nodeState('subscriptions', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'available',
+        'ring-2 ring-purple-500 bg-gradient-to-br from-purple-500/10 to-teal-500/10': nodeState('subscriptions', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'selected',
+        'ring-2 ring-green-500/60': nodeState('subscriptions', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'completed',
+      }"
+      class="wizard-fade-in relative flex items-center gap-3 px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 transition-all duration-200 select-none"
+      x-on:click="if ($root.step !== 'subscriptions' && nodeState('subscriptions', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'completed') $root.goToStep('subscriptions')"
+      x-on:keydown.enter="if ($root.step !== 'subscriptions' && nodeState('subscriptions', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'completed') $root.goToStep('subscriptions')"
+      x-on:keydown.space.prevent="if ($root.step !== 'subscriptions' && nodeState('subscriptions', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'completed') $root.goToStep('subscriptions')"
+    >
+      <div class="flex-1 min-w-0">
+        <span class="block text-sm font-semibold text-slate-900 dark:text-white">AI Providers</span>
+        <span class="block text-xs text-slate-500 dark:text-slate-400 truncate" x-text="$root.subs.length ? $root.subs.join(', ') : 'Select providers'"></span>
+      </div>
+      {/* Completed check badge */}
+      <span
+        x-show="nodeState('subscriptions', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'completed'"
+        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center text-white text-xs flex-shrink-0"
+        aria-label="Completed"
+      >✓</span>
+    </div>
+
+    {/* Step: routing */}
+    <div
+      data-wizard-node-id="routing"
+      role="button"
+      x-bind:tabindex="nodeState('routing', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'locked' ? -1 : 0"
+      x-bind:aria-pressed="$root.step === 'routing'"
+      x-bind:aria-disabled="nodeState('routing', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'locked'"
+      x-show="$root.subs.length > 1"
+      x-bind:class="{
+        'grayscale opacity-40 cursor-not-allowed': nodeState('routing', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'locked',
+        'hover:ring-2 hover:ring-purple-400/50 cursor-pointer': nodeState('routing', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'available',
+        'ring-2 ring-purple-500 bg-gradient-to-br from-purple-500/10 to-teal-500/10': nodeState('routing', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'selected',
+        'ring-2 ring-green-500/60': nodeState('routing', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'completed',
+      }"
+      class="wizard-fade-in relative flex items-center gap-3 px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 transition-all duration-200 select-none"
+      x-on:click="if (nodeState('routing', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'completed') $root.goToStep('routing')"
+      x-on:keydown.enter="if (nodeState('routing', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'completed') $root.goToStep('routing')"
+      x-on:keydown.space.prevent="if (nodeState('routing', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'completed') $root.goToStep('routing')"
+    >
+      <div class="flex-1 min-w-0">
+        <span class="block text-sm font-semibold text-slate-900 dark:text-white">Routing Method</span>
+        <span class="block text-xs text-slate-500 dark:text-slate-400" x-text="$root.routing ?? 'CCS or manual?'"></span>
+      </div>
+      <span
+        x-show="nodeState('routing', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'completed'"
+        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center text-white text-xs flex-shrink-0"
+        aria-label="Completed"
+      >✓</span>
+    </div>
+
+    {/* Step: tool-type */}
+    <div
+      data-wizard-node-id="tool-type"
+      role="button"
+      x-bind:tabindex="nodeState('tool-type', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'locked' ? -1 : 0"
+      x-bind:aria-pressed="$root.step === 'tool-type'"
+      x-bind:aria-disabled="nodeState('tool-type', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'locked'"
+      x-bind:class="{
+        'grayscale opacity-40 cursor-not-allowed': nodeState('tool-type', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'locked',
+        'hover:ring-2 hover:ring-purple-400/50 cursor-pointer': nodeState('tool-type', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'available',
+        'ring-2 ring-purple-500 bg-gradient-to-br from-purple-500/10 to-teal-500/10': nodeState('tool-type', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'selected',
+        'ring-2 ring-green-500/60': nodeState('tool-type', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'completed',
+      }"
+      class="wizard-fade-in relative flex items-center gap-3 px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 transition-all duration-200 select-none"
+      x-on:click="if (nodeState('tool-type', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'completed') $root.goToStep('tool-type')"
+      x-on:keydown.enter="if (nodeState('tool-type', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'completed') $root.goToStep('tool-type')"
+      x-on:keydown.space.prevent="if (nodeState('tool-type', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'completed') $root.goToStep('tool-type')"
+    >
+      <div class="flex-1 min-w-0">
+        <span class="block text-sm font-semibold text-slate-900 dark:text-white">Tool Type</span>
+        <span class="block text-xs text-slate-500 dark:text-slate-400" x-text="$root.toolType ?? 'IDE, CLI, or both?'"></span>
+      </div>
+      <span
+        x-show="nodeState('tool-type', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'completed'"
+        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center text-white text-xs flex-shrink-0"
+        aria-label="Completed"
+      >✓</span>
+    </div>
+
+    {/* Step: tool-selection */}
+    <div
+      data-wizard-node-id="tool-selection"
+      role="button"
+      x-bind:tabindex="nodeState('tool-selection', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'locked' ? -1 : 0"
+      x-bind:aria-pressed="$root.step === 'tool-selection'"
+      x-bind:aria-disabled="nodeState('tool-selection', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'locked'"
+      x-bind:class="{
+        'grayscale opacity-40 cursor-not-allowed': nodeState('tool-selection', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'locked',
+        'hover:ring-2 hover:ring-purple-400/50 cursor-pointer': nodeState('tool-selection', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'available',
+        'ring-2 ring-purple-500 bg-gradient-to-br from-purple-500/10 to-teal-500/10': nodeState('tool-selection', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'selected',
+        'ring-2 ring-green-500/60': nodeState('tool-selection', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'completed',
+      }"
+      class="wizard-fade-in relative flex items-center gap-3 px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 transition-all duration-200 select-none"
+      x-on:click="if (nodeState('tool-selection', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'completed') $root.goToStep('tool-selection')"
+      x-on:keydown.enter="if (nodeState('tool-selection', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'completed') $root.goToStep('tool-selection')"
+      x-on:keydown.space.prevent="if (nodeState('tool-selection', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'completed') $root.goToStep('tool-selection')"
+    >
+      <div class="flex-1 min-w-0">
+        <span class="block text-sm font-semibold text-slate-900 dark:text-white">Select Tools</span>
+        <span class="block text-xs text-slate-500 dark:text-slate-400" x-text="$root.tools.length ? `${$root.tools.length} selected` : 'Which tools to configure?'"></span>
+      </div>
+      <span
+        x-show="nodeState('tool-selection', $root.step, $root.subs, $root.routing, $root.toolType, $root.tools) === 'completed'"
+        class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center text-white text-xs flex-shrink-0"
+        aria-label="Completed"
+      >✓</span>
+    </div>
+
+  </div>
+</div>

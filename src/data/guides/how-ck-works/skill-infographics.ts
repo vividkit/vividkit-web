@@ -110,14 +110,15 @@ export const skillInfographics: SkillInfographic[] = [
 
     processFlow: [
       { number: 1, titleEn: 'Pre-Check', titleVi: 'Kiểm tra', descEn: 'Check Plan Context + active plan', descVi: 'Kiểm tra Plan Context + plan đang hoạt động' },
-      { number: 2, titleEn: 'Mode', titleVi: 'Chế độ', descEn: 'Auto-detect or explicit flag', descVi: 'Tự động phát hiện hoặc flag rõ ràng' },
-      { number: 3, titleEn: 'Research', titleVi: 'Nghiên cứu', descEn: 'Spawn researcher agents', descVi: 'Spawn researcher agents' },
-      { number: 4, titleEn: 'Analyze', titleVi: 'Phân tích', descEn: 'Read docs, scout codebase', descVi: 'Đọc docs, scout codebase' },
-      { number: 5, titleEn: 'Plan', titleVi: 'Lập kế hoạch', descEn: 'Write plan.md + phase files', descVi: 'Viết plan.md + phase files' },
-      { number: 6, titleEn: 'Red Team', titleVi: 'Red Team', descEn: 'Adversarial review (2-4 reviewers)', descVi: 'Review đối kháng (2-4 reviewers)' },
-      { number: 7, titleEn: 'Validate', titleVi: 'Xác thực', descEn: 'Critical questions interview', descVi: 'Phỏng vấn câu hỏi quan trọng' },
-      { number: 8, titleEn: 'Hydrate', titleVi: 'Hydrate', descEn: 'Create Claude Tasks from phases', descVi: 'Tạo Claude Tasks từ phases' },
-      { number: 9, titleEn: 'Handoff', titleVi: 'Bàn giao', descEn: 'Output /cook command', descVi: 'Xuất lệnh /cook' },
+      { number: 2, titleEn: 'Cross-Plan Scan', titleVi: 'Quét plan chéo', descEn: 'Detect blockedBy/blocks relationships', descVi: 'Phát hiện quan hệ blockedBy/blocks' },
+      { number: 3, titleEn: 'Scope Challenge', titleVi: 'Thách thức scope', descEn: 'Question scope before planning', descVi: 'Thách thức scope trước khi plan' },
+      { number: 4, titleEn: 'Mode', titleVi: 'Chế độ', descEn: 'Auto-detect or explicit flag', descVi: 'Tự động phát hiện hoặc flag rõ ràng' },
+      { number: 5, titleEn: 'Research', titleVi: 'Nghiên cứu', descEn: 'Spawn researcher agents', descVi: 'Spawn researcher agents' },
+      { number: 6, titleEn: 'Analyze', titleVi: 'Phân tích', descEn: 'Read docs, scout codebase', descVi: 'Đọc docs, scout codebase' },
+      { number: 7, titleEn: 'Plan', titleVi: 'Lập kế hoạch', descEn: 'Write plan.md + phase files via ck CLI', descVi: 'Viết plan.md + phase files qua ck CLI' },
+      { number: 8, titleEn: 'Red Team', titleVi: 'Red Team', descEn: 'Adversarial review (2-4 reviewers)', descVi: 'Review đối kháng (2-4 reviewers)' },
+      { number: 9, titleEn: 'Verify + Validate', titleVi: 'Verify + Validate', descEn: 'Verification pass + critical Qs interview', descVi: 'Verification pass + phỏng vấn câu hỏi quan trọng' },
+      { number: 10, titleEn: 'Hydrate + Handoff', titleVi: 'Hydrate + Bàn giao', descEn: 'Tasks → /cook → /journal', descVi: 'Tasks → /cook → /journal' },
     ],
 
     workflowModes: [
@@ -157,6 +158,16 @@ export const skillInfographics: SkillInfographic[] = [
         descVi: 'Viết nhật ký ghi lại quyết định. Lưu trữ plans hoàn thành/bỏ dở để tham khảo.',
         color: 'amber',
       },
+    ],
+
+    skillStack: [
+      { name: 'ck (CLI)', type: 'tool' },
+      { name: 'researcher agent', type: 'agent' },
+      { name: 'planner agent', type: 'agent' },
+      { name: 'code-reviewer agent', type: 'agent' },
+      { name: 'project-manager agent', type: 'agent' },
+      { name: 'ck:scout', type: 'skill' },
+      { name: 'ck:journal', type: 'skill' },
     ],
   },
 
@@ -304,6 +315,108 @@ export const skillInfographics: SkillInfographic[] = [
       patternVi: 'Tóm tắt inline + commit',
       descEn: 'Root cause identified • Fix implemented • Tests passing • Regression test added',
       descVi: 'Nguyên nhân gốc xác định • Sửa lỗi triển khai • Tests pass • Regression test thêm',
+    },
+  },
+
+  // ─────────────────────────────────────────────────────────────────────────────
+  // /ck:agentize — Codebase to Agent-Tool Converter (Beta)
+  // ─────────────────────────────────────────────────────────────────────────────
+  {
+    id: 'agentize',
+    command: '/ck:agentize',
+    kit: 'engineer',
+
+    header: {
+      titleEn: '/ck:agentize',
+      titleVi: '/ck:agentize',
+      taglineEn: 'Convert a codebase (or feature) into CLI + MCP server + companion skill. Agent-centric design with credentials, docs, tests, CI.',
+      taglineVi: 'Biến codebase (hoặc feature) thành CLI + MCP server + companion skill. Agent-centric design với credentials, docs, tests, CI.',
+    },
+
+    hardGate: {
+      type: 'critical',
+      titleEn: 'HARD GATES',
+      titleVi: 'HARD GATES',
+      contentEn: 'Phase 0 (Track) before Phase 1. Phase 1 (Scout) complete before design. Phase 3 (Decide) resolves mode before scaffolding. No invented behavior — extract facts only.',
+      contentVi: 'Phase 0 (Track) trước Phase 1. Phase 1 (Scout) hoàn thành trước design. Phase 3 (Decide) resolve mode trước scaffold. Không được bịa behavior — chỉ extract sự thật.',
+    },
+
+    processFlow: [
+      { number: 0, titleEn: 'Track', titleVi: 'Track', descEn: 'ck:project-management creates plan + tasks', descVi: 'ck:project-management tạo plan + tasks' },
+      { number: 1, titleEn: 'Scout', titleVi: 'Khảo sát', descEn: 'Map entry points, capabilities, secrets', descVi: 'Map entry points, capabilities, secrets' },
+      { number: 2, titleEn: 'Analyze', titleVi: 'Phân tích', descEn: 'Agentization Map (capability × value)', descVi: 'Agentization Map (capability × giá trị)' },
+      { number: 3, titleEn: 'Decide', titleVi: 'Quyết định', descEn: 'Mode + tool/command list + package meta', descVi: 'Mode + danh sách tool/command + package meta' },
+      { number: 4, titleEn: 'Scaffold', titleVi: 'Scaffold', descEn: 'Monorepo: core/ cli/ mcp/', descVi: 'Monorepo: core/ cli/ mcp/' },
+      { number: 5, titleEn: 'Wrap', titleVi: 'Wrap', descEn: 'Core + CLI + MCP adapters + auth chain', descVi: 'Core + CLI + MCP adapters + chuỗi auth' },
+      { number: 6, titleEn: 'Harden', titleVi: 'Harden', descEn: 'Tests, CI, docs, companion skill, security', descVi: 'Tests, CI, docs, companion skill, security' },
+      { number: 7, titleEn: 'Package', titleVi: 'Package', descEn: 'Handoff + release checklist + decision record', descVi: 'Handoff + release checklist + decision record' },
+    ],
+
+    workflowModes: [
+      { flag: '--both', modeEn: 'CLI + MCP (default)', modeVi: 'CLI + MCP (mặc định)', research: 'Full scout', redTeam: '—', validation: 'Phase 6 tests', cookFlag: '—' },
+      { flag: '--mcp', modeEn: 'MCP only', modeVi: 'Chỉ MCP', research: 'Full scout', redTeam: '—', validation: 'MCP auth + transport tests', cookFlag: '—' },
+      { flag: '--cli', modeEn: 'CLI only', modeVi: 'Chỉ CLI', research: 'Full scout', redTeam: '—', validation: 'argv tests + exit codes', cookFlag: '—' },
+      { flag: '--auto', modeEn: 'Autonomous (default)', modeVi: 'Tự động (mặc định)', research: 'Analyze + decide', redTeam: '—', validation: 'Decision record', cookFlag: '—' },
+      { flag: '--ask', modeEn: 'Challenge user', modeVi: 'Thách thức user', research: 'Analyze + 7 clarifying Qs', redTeam: '—', validation: 'User-confirmed decisions', cookFlag: '—' },
+    ],
+
+    composableFlagsEn: 'Combine surface flag (`--both`/`--mcp`/`--cli`) with interaction flag (`--auto`/`--ask`). Intent detection auto-picks from natural language.',
+    composableFlagsVi: 'Kết hợp flag surface (`--both`/`--mcp`/`--cli`) với flag tương tác (`--auto`/`--ask`). Intent detection tự pick từ ngôn ngữ tự nhiên.',
+
+    corePrinciplesEn: [
+      'Understand before wrap',
+      'Agent-centric tool design (workflows, not endpoint mirrors)',
+      'One source of truth: shared core, thin adapters',
+      'Credentials at every layer (flag → env → config → keychain)',
+      'Ship with docs, tests, CI — or don\'t ship',
+    ],
+    corePrinciplesVi: [
+      'Hiểu trước khi wrap',
+      'Thiết kế tool agent-centric (workflows, không phải mirror endpoint)',
+      'Một nguồn sự thật: core chia sẻ, adapters mỏng',
+      'Credentials ở mọi tầng (flag → env → config → keychain)',
+      'Ship với docs, tests, CI — hoặc đừng ship',
+    ],
+
+    expertiseAreasEn: [
+      'Monorepo architecture (pnpm/npm workspaces)',
+      'MCP server design (stdio/SSE/Streamable HTTP)',
+      'CLI design (commander/cac, exit codes, NO_COLOR)',
+      'Credentials resolution & redaction',
+      'Cloudflare Workers / Docker deployment',
+      'Agent-centric tool naming and error design',
+    ],
+    expertiseAreasVi: [
+      'Kiến trúc monorepo (pnpm/npm workspaces)',
+      'Thiết kế MCP server (stdio/SSE/Streamable HTTP)',
+      'Thiết kế CLI (commander/cac, exit codes, NO_COLOR)',
+      'Resolution credentials & redaction',
+      'Deploy Cloudflare Workers / Docker',
+      'Đặt tên tool agent-centric và thiết kế lỗi',
+    ],
+
+    skillStack: [
+      { name: 'ck:project-management', type: 'skill' },
+      { name: 'ck:scout', type: 'skill' },
+      { name: 'ck:test', type: 'skill' },
+      { name: 'ck:docs', type: 'skill' },
+      { name: 'ck:skill-creator', type: 'skill' },
+      { name: 'researcher agent', type: 'agent' },
+      { name: 'planner agent', type: 'agent' },
+      { name: 'MCP SDK', type: 'tool' },
+      { name: 'commander/cac', type: 'tool' },
+      { name: 'keytar', type: 'tool' },
+    ],
+
+    reportOutput: {
+      titleEn: 'Agentization Ready',
+      titleVi: 'Agentization sẵn sàng',
+      patternEn: 'Monorepo + decision record + release checklist',
+      patternVi: 'Monorepo + decision record + release checklist',
+      locationEn: 'plans/reports/agentize-decisions-<slug>.md + packages/{core,cli,mcp}/',
+      locationVi: 'plans/reports/agentize-decisions-<slug>.md + packages/{core,cli,mcp}/',
+      descEn: 'CLI publishable on npm • MCP deployable to Cloudflare/Docker • Companion skill marketplace-ready • Green CI • ≥80% core coverage',
+      descVi: 'CLI publish npm được • MCP deploy Cloudflare/Docker được • Companion skill sẵn cho marketplace • CI xanh • ≥80% core coverage',
     },
   },
 ];
