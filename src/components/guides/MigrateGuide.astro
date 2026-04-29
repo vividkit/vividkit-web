@@ -15,26 +15,30 @@ const t = (en: string, vi: string) => isVi ? vi : en;
 
 // Supported providers table data
 const providers = [
-  { name: 'OpenCode',        agents: true,  commands: true,  skills: true,  config: true,  rules: true,  hooks: true,  flag: 'opencode' },
-  { name: 'Cursor',          agents: true,  commands: true,  skills: true,  config: true,  rules: true,  hooks: false, flag: 'cursor' },
+  { name: 'OpenCode',        agents: true,  commands: true,  skills: true,  config: true,  rules: true,  hooks: false, flag: 'opencode' },
+  { name: 'Cursor',          agents: true,  commands: false, skills: true,  config: true,  rules: true,  hooks: false, flag: 'cursor' },
   { name: 'Windsurf',        agents: true,  commands: true,  skills: true,  config: true,  rules: true,  hooks: false, flag: 'windsurf' },
-  { name: 'GitHub Copilot',  agents: true,  commands: true,  skills: true,  config: true,  rules: true,  hooks: false, flag: 'github-copilot' },
-  { name: 'Antigravity',     agents: true,  commands: false, skills: false, config: true,  rules: true,  hooks: false, flag: 'antigravity' },
-  { name: 'Cline',           agents: true,  commands: false, skills: false, config: true,  rules: true,  hooks: false, flag: 'cline' },
-  { name: 'Roo Code',        agents: true,  commands: true,  skills: true,  config: true,  rules: true,  hooks: false, flag: 'roo-code' },
-  { name: 'Codex',           agents: true,  commands: true,  skills: true,  config: true,  rules: true,  hooks: false, flag: 'codex' },
-  { name: 'Kilo Code',       agents: true,  commands: true,  skills: true,  config: true,  rules: true,  hooks: false, flag: 'kilo-code' },
-  { name: 'Gemini CLI',      agents: true,  commands: false, skills: false, config: true,  rules: true,  hooks: false, flag: 'gemini-cli' },
-  { name: 'Amp',             agents: true,  commands: false, skills: false, config: true,  rules: true,  hooks: false, flag: 'amp' },
+  { name: 'GitHub Copilot',  agents: true,  commands: false, skills: true,  config: true,  rules: true,  hooks: false, flag: 'github-copilot' },
+  { name: 'Antigravity',     agents: false, commands: true,  skills: true,  config: true,  rules: true,  hooks: false, flag: 'antigravity' },
+  { name: 'Cline',           agents: true,  commands: false, skills: true,  config: true,  rules: true,  hooks: false, flag: 'cline' },
+  { name: 'Roo',             agents: true,  commands: false, skills: true,  config: true,  rules: true,  hooks: false, flag: 'roo' },
+  { name: 'Codex',           agents: true,  commands: true,  skills: true,  config: true,  rules: true,  hooks: true,  flag: 'codex' },
+  { name: 'Kilo',            agents: true,  commands: false, skills: true,  config: true,  rules: true,  hooks: false, flag: 'kilo' },
+  { name: 'Kiro',            agents: true,  commands: false, skills: true,  config: true,  rules: true,  hooks: false, flag: 'kiro' },
+  { name: 'Droid',           agents: true,  commands: true,  skills: true,  config: true,  rules: true,  hooks: true,  flag: 'droid' },
+  { name: 'Goose',           agents: true,  commands: false, skills: true,  config: true,  rules: true,  hooks: false, flag: 'goose' },
+  { name: 'OpenHands',       agents: true,  commands: false, skills: true,  config: true,  rules: true,  hooks: false, flag: 'openhands' },
+  { name: 'Gemini CLI',      agents: true,  commands: true,  skills: true,  config: true,  rules: true,  hooks: true,  flag: 'gemini-cli' },
+  { name: 'Amp',             agents: true,  commands: false, skills: true,  config: true,  rules: true,  hooks: false, flag: 'amp' },
 ];
 
 const quickExamples = [
+  { label: t('Interactive install picker', 'Chọn item để cài'), cmd: 'ck migrate --install' },
+  { label: t('Preview reconcile plan', 'Xem trước kế hoạch reconcile'), cmd: 'ck migrate --agent codex --dry-run' },
+  { label: t('Preserve deletions', 'Giữ nguyên các mục đã xóa'), cmd: 'ck migrate --respect-deletions' },
   { label: t('To Cursor', 'Sang Cursor'),        cmd: 'ck migrate --agent cursor' },
-  { label: t('To Antigravity', 'Sang Antigravity'), cmd: 'ck migrate --agent antigravity' },
   { label: t('To all providers', 'Sang tất cả'), cmd: 'ck migrate --all' },
-  { label: t('Preview only (dry-run)', 'Xem trước (không ghi file)'), cmd: 'ck migrate --dry-run' },
   { label: t('Config + rules only', 'Chỉ config + rules'), cmd: 'ck migrate --all --config --rules' },
-  { label: t('Skip hooks', 'Bỏ qua hooks'), cmd: 'ck migrate --all --skip-hooks' },
 ];
 
 const migrationPhases = [
@@ -364,6 +368,67 @@ const migrationPhases = [
     </div>
   </div>
 
+  <!-- Modes: Install vs Reconcile -->
+  <div class="glass-card rounded-xl border-indigo-200 dark:border-indigo-500/30 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-indigo-500/10 to-violet-500/10 border-b border-indigo-200 dark:border-slate-800">
+      <h3 class="text-xl font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/>
+        </svg>
+        {t('Two Modes: Install vs Reconcile', 'Hai chế độ: Install và Reconcile')}
+      </h3>
+    </div>
+    <div class="p-6 space-y-4">
+      <p class="text-sm text-slate-600 dark:text-slate-400">
+        {t('ck migrate auto-detects the right mode based on registry state. You can also force one explicitly.', 'ck migrate tự động chọn chế độ phù hợp dựa trên trạng thái registry. Bạn cũng có thể chỉ định bằng tay.')}
+      </p>
+      <div class="grid sm:grid-cols-2 gap-3">
+        <div class="p-4 rounded-xl bg-violet-50 dark:bg-violet-900/20 border border-violet-200 dark:border-violet-700/50">
+          <div class="flex items-center gap-2 mb-2">
+            <code class="text-xs bg-slate-900 text-violet-300 px-2 py-0.5 rounded font-mono">--install</code>
+            <span class="text-xs font-semibold text-violet-700 dark:text-violet-400 uppercase tracking-wider">{t('Install Picker', 'Chọn cài đặt')}</span>
+          </div>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            {t('Interactively pick which agents/commands/skills/hooks to install. Default when registry is empty or has unknown checksums.', 'Chọn tương tác từng agent/command/skill/hook để cài. Mặc định khi registry trống hoặc checksum không xác định.')}
+          </p>
+        </div>
+        <div class="p-4 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-700/50">
+          <div class="flex items-center gap-2 mb-2">
+            <code class="text-xs bg-slate-900 text-emerald-300 px-2 py-0.5 rounded font-mono">--reconcile</code>
+            <span class="text-xs font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">{t('Reconcile', 'Reconcile')}</span>
+          </div>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            {t('Compute diff vs registry and apply only the changes (install/update/skip/delete). Default when registry is valid.', 'So sánh với registry rồi áp dụng đúng các thay đổi (cài mới/cập nhật/bỏ qua/xóa). Mặc định khi registry hợp lệ.')}
+          </p>
+        </div>
+        <div class="p-4 rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700/50">
+          <div class="flex items-center gap-2 mb-2">
+            <code class="text-xs bg-slate-900 text-blue-300 px-2 py-0.5 rounded font-mono">--reinstall-empty-dirs</code>
+          </div>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            {t('Reinstall items when their type directory is empty/missing (default: true).', 'Cài lại các mục khi thư mục type của chúng trống/thiếu (mặc định: bật).')}
+          </p>
+        </div>
+        <div class="p-4 rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700/50">
+          <div class="flex items-center gap-2 mb-2">
+            <code class="text-xs bg-slate-900 text-amber-300 px-2 py-0.5 rounded font-mono">--respect-deletions</code>
+          </div>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            {t('Preserve empty directories — skip the auto-reinstall heuristic when you intentionally deleted items.', 'Giữ nguyên thư mục trống — bỏ qua heuristic auto-reinstall khi bạn đã chủ đích xóa các mục.')}
+          </p>
+        </div>
+      </div>
+      <div class="p-4 rounded-lg bg-orange-50 dark:bg-orange-900/10 border border-orange-200 dark:border-orange-700/30">
+        <p class="text-xs text-orange-800 dark:text-orange-300 font-semibold mb-1">{t('Gotchas', 'Lưu ý')}</p>
+        <ul class="text-xs text-orange-700 dark:text-orange-300/90 space-y-1 list-disc pl-4">
+          <li>{t('--install and --reconcile are mutually exclusive — pass only one', '--install và --reconcile loại trừ nhau — chỉ truyền một')}</li>
+          <li>{t('--reinstall-empty-dirs and --respect-deletions are mutually exclusive', '--reinstall-empty-dirs và --respect-deletions loại trừ nhau')}</li>
+          <li>{t('--force overrides skip decisions per item; --reinstall-empty-dirs is a per-directory heuristic', '--force ghi đè quyết định skip theo từng mục; --reinstall-empty-dirs là heuristic theo từng thư mục')}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
   <!-- Conflict Resolution -->
   <div class="glass-card rounded-xl border-orange-200 dark:border-orange-500/30 overflow-hidden">
     <div class="p-6 bg-gradient-to-r from-orange-500/10 to-amber-500/10 border-b border-orange-200 dark:border-slate-800">
@@ -449,6 +514,15 @@ const migrationPhases = [
     </div>
     <div class="p-6 space-y-4">
       {[
+        {
+          title: t('Mode Options', 'Options chế độ'),
+          rows: [
+            ['--install', t('Opt-in install picker — interactively select items', 'Chế độ chọn item để cài (tương tác)')],
+            ['--reconcile', t('Force reconcile mode (diff vs registry)', 'Chế độ reconcile (so sánh với registry)')],
+            ['--reinstall-empty-dirs', t('Reinstall items when type dir is empty (default: true)', 'Cài lại khi thư mục type trống (mặc định: bật)')],
+            ['--respect-deletions', t('Preserve deletions — skip auto-reinstall heuristic', 'Giữ nguyên các mục đã xóa — bỏ qua auto-reinstall')],
+          ]
+        },
         {
           title: t('Target Options', 'Options chọn đích'),
           rows: [
