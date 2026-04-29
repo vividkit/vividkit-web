@@ -1,0 +1,106 @@
+---
+import { useTranslations } from '@/i18n/utils';
+import type { Language } from '@/i18n';
+import { renderInlineMarkdown } from './inline-code';
+import { Folder, House } from 'lucide-astro';
+
+interface Props { lang: Language }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const mechanicsHref = lang === 'vi'
+  ? '/vi/guides/claude-mechanics#config-hierarchy'
+  : '/guides/claude-mechanics#config-hierarchy';
+
+const projectPoints = [
+  'coexistence.installScope.project.point1',
+  'coexistence.installScope.project.point2',
+  'coexistence.installScope.project.point3',
+  'coexistence.installScope.project.point4',
+] as const;
+
+const globalPoints = [
+  'coexistence.installScope.global.point1',
+  'coexistence.installScope.global.point2',
+  'coexistence.installScope.global.point3',
+] as const;
+---
+
+<section id="install-scope" class="space-y-6">
+  <div class="space-y-2">
+    <h3 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
+      {t('coexistence.installScope.heading')}
+    </h3>
+    <p class="text-base text-slate-600 dark:text-slate-300 max-w-2xl">
+      {t('coexistence.installScope.intro')}
+    </p>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-5">
+    <article class="relative rounded-2xl border-2 border-emerald-300 dark:border-emerald-700/70 bg-emerald-50/40 dark:bg-emerald-950/20 p-6 space-y-4 overflow-hidden">
+      <div class="absolute top-4 right-4">
+        <span class="inline-flex items-center gap-1 rounded-full bg-emerald-500 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1">
+          ✓ {t('coexistence.installScope.project.tag')}
+        </span>
+      </div>
+      <div class="w-12 h-12 rounded-2xl border border-emerald-300/80 dark:border-emerald-400/40 bg-emerald-100 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-200 shadow-lg shadow-emerald-500/20 flex items-center justify-center">
+        <Folder class="w-6 h-6" stroke-width={2.1} />
+      </div>
+      <h4 class="text-xl font-bold text-slate-900 dark:text-white">
+        {t('coexistence.installScope.project.title')}
+      </h4>
+      <pre class="bg-white/70 dark:bg-slate-900/60 text-purple-700 dark:text-purple-300 text-sm font-mono px-3 py-2 rounded-lg border border-emerald-200 dark:border-emerald-800/60 inline-block"><code>$ {t('coexistence.installScope.project.command')}</code></pre>
+      <p class="text-xs text-slate-500 dark:text-slate-400 font-mono">
+        {t('coexistence.installScope.project.location')}
+      </p>
+      <ul class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
+        {projectPoints.map((key) => (
+          <li class="flex items-start gap-2">
+            <span class="mt-0.5 text-emerald-600 dark:text-emerald-400 shrink-0">✓</span>
+            <span set:html={renderInlineMarkdown(t(key), 'emerald')} />
+          </li>
+        ))}
+      </ul>
+    </article>
+
+    <article class="relative rounded-2xl border-2 border-slate-200 dark:border-slate-700/60 bg-slate-50/40 dark:bg-slate-900/30 p-6 space-y-4 overflow-hidden">
+      <div class="absolute top-4 right-4">
+        <span class="inline-flex items-center rounded-full bg-slate-500 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1">
+          {t('coexistence.installScope.global.tag')}
+        </span>
+      </div>
+      <div class="w-12 h-12 rounded-2xl border border-sky-300/80 dark:border-sky-400/40 bg-sky-100 dark:bg-sky-500/15 text-sky-700 dark:text-sky-200 shadow-lg shadow-sky-500/20 flex items-center justify-center">
+        <House class="w-6 h-6" stroke-width={2.1} />
+      </div>
+      <h4 class="text-xl font-bold text-slate-900 dark:text-white">
+        {t('coexistence.installScope.global.title')}
+      </h4>
+      <pre class="bg-white/70 dark:bg-slate-900/60 text-purple-700 dark:text-purple-300 text-sm font-mono px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700/60 inline-block"><code>$ {t('coexistence.installScope.global.command')}</code></pre>
+      <p class="text-xs text-slate-500 dark:text-slate-400 font-mono">
+        {t('coexistence.installScope.global.location')}
+      </p>
+      <ul class="space-y-2 text-sm text-slate-700 dark:text-slate-200">
+        {globalPoints.map((key) => (
+          <li class="flex items-start gap-2">
+            <span class="mt-0.5 text-amber-500 dark:text-amber-400 shrink-0">!</span>
+            <span set:html={renderInlineMarkdown(t(key), 'slate')} />
+          </li>
+        ))}
+      </ul>
+    </article>
+  </div>
+
+  <aside class="rounded-2xl border border-sky-200 dark:border-sky-800/70 bg-sky-50/60 dark:bg-sky-950/20 px-5 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+    <div class="space-y-1">
+      <p class="text-sm font-semibold text-sky-800 dark:text-sky-200">
+        {t('coexistence.installScope.notice.title')}
+      </p>
+      <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed" set:html={renderInlineMarkdown(t('coexistence.installScope.notice.body'), 'sky')} />
+    </div>
+    <a
+      href={mechanicsHref}
+      class="inline-flex shrink-0 items-center justify-center rounded-lg border border-sky-300 dark:border-sky-700 bg-white/70 dark:bg-slate-950/40 px-3 py-2 text-sm font-semibold text-sky-700 dark:text-sky-300 hover:bg-sky-100 dark:hover:bg-sky-950 transition-colors"
+    >
+      {t('coexistence.installScope.notice.link')}
+    </a>
+  </aside>
+</section>

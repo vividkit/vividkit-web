@@ -7,6 +7,7 @@ import { cli } from './cli';
 import { session_recovery } from './session-recovery';
 import { token_tips } from './token-tips';
 import { ide_config } from './ide-config';
+import { coexistence } from './coexistence';
 import { workflows } from './workflows';
 import { happy_ccs } from './happy-ccs';
 import { pricing } from './pricing';
@@ -21,6 +22,7 @@ export default {
   ...session_recovery,
   ...token_tips,
   ...ide_config,
+  ...coexistence,
   ...workflows,
   ...happy_ccs,
   ...pricing,
