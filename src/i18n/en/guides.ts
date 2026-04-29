@@ -203,6 +203,7 @@ export const guides = {
   'guides.home.pathway_feature.link_session': 'Session Recovery',
   'guides.home.pathway_feature.link_ccs': 'CCS Multi-Provider',
   'guides.home.pathway_feature.link_ide': 'IDE Config',
+  'guides.home.pathway_feature.link_coexistence': 'Coexistence with your setup',
   'guides.home.deep_dive.how_ck_works_desc': 'Interactive visualizer showing how ClaudeKit orchestrates tools, hooks, and multi-agent workflows.',
   'guides.home.inside_claudekit.title': 'Inside ClaudeKit',
   'guides.home.inside_claudekit.kicker': 'Deeper topics for real workflows',
