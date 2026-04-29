@@ -14,6 +14,8 @@ export interface CommandItem {
   args?: string[];
   // Dash flags: --fast, --verbose → flags: ["--fast"]
   flags?: string[];
+  // Beta-only flags (rendered with purple BETA tag in command card)
+  betaFlags?: string[];
   replacedCommand?: string;
   // Beta syntax annotation (for Marketing Kit)
   betaSyntax?: string;

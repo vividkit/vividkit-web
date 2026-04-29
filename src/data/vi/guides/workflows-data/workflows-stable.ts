@@ -840,6 +840,38 @@ export const stableWorkflows = [
     borderColor: 'border-violet-500/20'
   },
   {
+    title: 'Diagram Publication (tech-graph)',
+    category: 'Design & Frontend',
+    level: 'Intermediate',
+    duration: '~5-15 phút',
+    stepCount: 1,
+    isBeta: true,
+    bestFor: 'Tạo SVG diagram chất lượng publication cho docs, slides, blog post',
+    gradientHeader: 'from-purple-500/10 to-fuchsia-500/10',
+    hoverBorderColor: 'hover:border-purple-500/50',
+    buttonColor: 'bg-purple-500 hover:bg-purple-600',
+    icon: '<path d="M3 3h7v7H3z"/><path d="M14 3h7v7h-7z"/><path d="M14 14h7v7h-7z"/><path d="M3 14h7v7H3z"/>',
+    iconColor: 'text-purple-600 dark:text-purple-400',
+    steps: [
+      {
+        command: '/ck:tech-graph "<topic hoặc system>"',
+        typeLabel: 'Tạo SVG diagram',
+        description: 'Render SVG chất lượng publication với 7 design style (modern, minimal, neon, retro,...) và 10 template (architecture, sequence, ER, flowchart, state-machine, timeline, comparison-matrix, use-case, agent-architecture, data-flow)',
+        color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
+        number: 1,
+        isSkill: true
+      }
+    ],
+    tip: 'Kết hợp với /ck:preview --diagram để visual self-review (auto-detect collision, label overlap, arrow routing issue)',
+    features: [
+      '7 design style: flat-icon, dark-terminal, blueprint, notion-clean, glassmorphism, claude-official, openai',
+      '10 diagram template gồm cả agent-architecture và data-flow',
+      'Built-in SVG layout best-practices (spacing, arrow routing, z-index)',
+      'Output sẵn sàng cho docs/slides/blog post, không cần cleanup thủ công'
+    ],
+    borderColor: 'border-purple-500/20'
+  },
+  {
     title: 'Nghiên Cứu & Port Tính Năng (Xia)',
     category: 'Planning & Review',
     level: 'Advanced',

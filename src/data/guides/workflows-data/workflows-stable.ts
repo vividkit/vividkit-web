@@ -840,6 +840,38 @@ export const stableWorkflows = [
     borderColor: 'border-violet-500/20'
   },
   {
+    title: 'Publication Diagrams (tech-graph)',
+    category: 'Design & Frontend',
+    level: 'Intermediate',
+    duration: '~5-15 min',
+    stepCount: 1,
+    isBeta: true,
+    bestFor: 'Generating publication-quality SVG diagrams for docs, slides, blog posts',
+    gradientHeader: 'from-purple-500/10 to-fuchsia-500/10',
+    hoverBorderColor: 'hover:border-purple-500/50',
+    buttonColor: 'bg-purple-500 hover:bg-purple-600',
+    icon: '<path d="M3 3h7v7H3z"/><path d="M14 3h7v7h-7z"/><path d="M14 14h7v7h-7z"/><path d="M3 14h7v7H3z"/>',
+    iconColor: 'text-purple-600 dark:text-purple-400',
+    steps: [
+      {
+        command: '/ck:tech-graph "<topic or system>"',
+        typeLabel: 'Generate SVG diagram',
+        description: 'Render publication-grade SVG with 7 design styles (modern, minimal, neon, retro, etc.) and 10 templates (architecture, sequence, ER, flowchart, state-machine, timeline, comparison-matrix, use-case, agent-architecture, data-flow)',
+        color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
+        number: 1,
+        isSkill: true
+      }
+    ],
+    tip: 'Pair with /ck:preview --diagram for visual self-review (auto-detects collisions, label overlaps, arrow routing issues)',
+    features: [
+      '7 design styles: flat-icon, dark-terminal, blueprint, notion-clean, glassmorphism, claude-official, openai',
+      '10 diagram templates incl. agent-architecture and data-flow',
+      'SVG layout best-practices baked in (spacing, arrow routing, z-index)',
+      'Output ready for docs/slides/blog without manual cleanup'
+    ],
+    borderColor: 'border-purple-500/20'
+  },
+  {
     title: 'Extract & Port Features (Xia)',
     category: 'Planning & Review',
     level: 'Advanced',

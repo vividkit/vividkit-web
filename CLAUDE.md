@@ -63,6 +63,13 @@ When adding new workflow cards, update BOTH:
 
 **IMPORTANT:** Beta Preview section is separate from main commands grid - don't forget to update both!
 
+### Beta-Only Skills - Dual Listing Convention
+When a skill is **beta-exclusive** (exists in beta branch only, not yet in stable), list it in BOTH places:
+1. **Beta Preview section** (`commands-categories-grid.astro` beta array) — surfaces the forward-looking signal
+2. **Stable category group** (`commands-engineer-kit.ts`) with `isBeta: true` flag — renders a purple BETA badge inline next to the command name, keeping it discoverable in its natural category
+
+When the skill graduates to stable: remove `isBeta: true` flag AND remove the Beta Preview entry. See `.claude/skills/vk-changelog-sync/SKILL.md` → "Universal Beta-Badge Rule" for the full decision matrix.
+
 ### HTML in Detail Fields
 - **Stable commands** (`commands-engineer-kit.ts`): Uses `{cmd.detail}` → **NO HTML rendering** → don't use `<br/>`
 - **Beta Preview** (`commands-categories-grid.astro`): Uses `set:html` → **renders HTML** → can use `<br/>`
