@@ -732,8 +732,16 @@ export const commands = {
   // Beta Preview section
   'commands.beta_preview.title': 'Beta Preview',
   'commands.beta_preview.subtitle': 'Skill mới và cải tiến lớn trong Engineer Kit Beta',
+  'commands.stable.tech_graph.desc': 'Tạo SVG technical diagram chất lượng publication',
+  'commands.stable.tech_graph.detail': '7 phong cách thiết kế (modern, minimal, neon, retro,...) và 10 template (architecture, sequence, ER, flow). Output SVG sẵn sàng cho docs, slides, blog post.',
   'commands.beta_tech_graph.desc': 'Tạo SVG technical diagram chất lượng publication',
   'commands.beta_tech_graph.detail': '7 phong cách thiết kế (modern, minimal, neon, retro,...) và 10 template (architecture, sequence, ER, flow).<br/>Output SVG sẵn sàng cho docs, slides, blog post.',
+  'commands.beta_ck_plan.desc': 'Whole-Plan Consistency Gate trước khi recommend cook',
+  'commands.beta_ck_plan.detail': 'Sau khi validate/red-team chỉnh plan, tự re-scan toàn bộ plan.md + mọi phase-*.md tìm stale term, decision đã bị supersede, draft duplicate.<br/>Chỉ cho cook khi zero contradiction còn lại. <code>--fast</code> không còn auto chain sang <code>--auto</code>.',
+  'commands.beta_bootstrap.desc': 'Default mode đổi sang <code>--full</code> (interactive)',
+  'commands.beta_bootstrap.detail': 'Behavior change: default từ <code>--auto</code> chuyển sang <code>--full</code>; <code>--auto</code> giờ là explicit autonomous opt-in.<br/><code>--fast</code> giữ cook review gate thay vì force <code>--auto</code>.',
+  'commands.beta_preview_skill.desc': 'Visual self-review cho diagram output',
+  'commands.beta_preview_skill.detail': '<code>--diagram</code>/<code>--html --diagram</code> giờ load lại SVG/PNG đã render dưới dạng image rồi inspect collision (arrow xuyên box, label overlap, legend che content).<br/>Lặp re-render đến khi diagram clean visually.',
   'commands.stable.xia.desc': 'Học hỏi, trích xuất và port tính năng từ repo khác một cách an toàn',
   'commands.stable.xia.detail': 'Nghiên cứu mã nguồn thay thế (GitHub/Local) để phân tích kiến trúc tính năng. Sử dụng Challenge Framework để đánh giá rủi ro trước khi triển khai, tránh blind copy-paste.',
   // Marketing Kit categories

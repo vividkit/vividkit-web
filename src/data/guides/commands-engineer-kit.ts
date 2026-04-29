@@ -599,6 +599,15 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           flags: ["--explain", "--slides", "--diagram", "--ascii", "--html", "--diff", "--plan-review", "--recap"],
         },
         {
+          command: "/ck:tech-graph",
+          complexity: "⚡⚡",
+          label: t("commands.label.medium"),
+          desc: t("commands.stable.tech_graph.desc"),
+          detail: t("commands.stable.tech_graph.detail"),
+          isSkill: true,
+          isBeta: true,
+        },
+        {
           command: "/ck:markdown-novel-viewer",
           complexity: "⚡",
           label: t("commands.label.easy"),

@@ -732,8 +732,16 @@ export const commands = {
   // Beta Preview section
   'commands.beta_preview.title': 'Beta Preview',
   'commands.beta_preview.subtitle': 'New skills and enhancements in Engineer Kit Beta',
+  'commands.stable.tech_graph.desc': 'Generate publication-quality SVG technical diagrams',
+  'commands.stable.tech_graph.detail': '7 design styles (modern, minimal, neon, retro, etc.) and 10 templates (architecture, sequence, ER, flow). SVG output ready for docs, slides, blog posts.',
   'commands.beta_tech_graph.desc': 'Generate publication-quality SVG technical diagrams',
   'commands.beta_tech_graph.detail': '7 design styles (modern, minimal, neon, retro, etc.) and 10 templates (architecture, sequence, ER, flow).<br/>SVG output ready for docs, slides, blog posts.',
+  'commands.beta_ck_plan.desc': 'Whole-Plan Consistency Gate before recommending cook',
+  'commands.beta_ck_plan.detail': 'After validate/red-team edits, re-scans plan.md + every phase-*.md for stale terms, superseded decisions, duplicate drafts.<br/>Cook only proceeds with zero unresolved contradictions. <code>--fast</code> no longer chains to <code>--auto</code>.',
+  'commands.beta_bootstrap.desc': 'Default mode now <code>--full</code> (interactive)',
+  'commands.beta_bootstrap.detail': 'Behavior change: default switched from <code>--auto</code> to <code>--full</code>; <code>--auto</code> is now an explicit autonomous opt-in.<br/><code>--fast</code> keeps cook review gates instead of forcing <code>--auto</code>.',
+  'commands.beta_preview_skill.desc': 'Visual self-review for diagram output',
+  'commands.beta_preview_skill.detail': '<code>--diagram</code>/<code>--html --diagram</code> now loads rendered SVG/PNG back as image and inspects for collisions (arrows-through-boxes, label overlaps, legend covering content).<br/>Iteratively re-renders until visually clean.',
   'commands.stable.xia.desc': 'Safely study, extract, and port features from other repositories',
   'commands.stable.xia.detail': 'Analyze reference implementations (GitHub/Local) to understand feature architecture. Integrates a Challenge Framework to evaluate risks before implementation, preventing blind copy-pasting.',
   // Marketing Kit categories
