@@ -13,7 +13,6 @@ export const coexistence = {
   'coexistence.hero.q3.body': 'They survive a normal install. `--fresh` can remove CK-tracked or legacy kit folders.',
   'coexistence.hero.q4.title': 'What if this project already has .claude/?',
   'coexistence.hero.q4.body': 'Normal `ck init` scans project-local `.claude/` files, protects custom files, and merges `.claude/settings.json`.',
-  'coexistence.hero.verified': 'Facts verified against ClaudeKit CLI v3.41.4.',
 
   // Section A — Install scope (two-card layout)
   'coexistence.installScope.heading': 'Where does ClaudeKit live after install?',
@@ -85,8 +84,6 @@ export const coexistence = {
   'coexistence.migrate.notMigrate': 'Not what you need? `ck migrate` is for **switching tools**, not version upgrades.',
   'coexistence.migrate.col.provider': 'Tool',
   'coexistence.migrate.col.target': 'Where it ends up',
-  'coexistence.migrate.note':
-    'Paths verified against `src/commands/portable/provider-registry.ts` at CLI v3.41.4.',
 
   // Section E — Recipes
   'coexistence.recipes.heading': 'Recipes: Bring Your Own Workflow',
