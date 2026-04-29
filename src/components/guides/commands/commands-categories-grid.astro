@@ -73,7 +73,7 @@ const marketingCategories = getMarketingKitCategories(t as any);
     <!-- Stable version badge -->
     <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
       <span class="px-2 py-0.5 rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 font-semibold"
-        >v2.16.0 Stable</span
+        >v2.17.0 Stable</span
       >
       <span>{t("commands.engineer_stable_note")}</span>
     </div>
@@ -99,16 +99,7 @@ const marketingCategories = getMarketingKitCategories(t as any);
         <!-- Beta skill cards -->
         {[
           // Beta-only skills (not yet in stable)
-          { cmd: "/ck:agentize", labelKey: "commands.beta_agentize.desc", detailKey: "commands.beta_agentize.detail", type: "skill", badge: "new" },
-          { cmd: "/excalidraw", labelKey: "commands.beta_excalidraw.desc", detailKey: "commands.beta_excalidraw.detail", type: "skill", badge: "new" },
-          { cmd: "/ck:xia", labelKey: "commands.beta_xia.desc", detailKey: "commands.beta_xia.detail", type: "skill", badge: "new" },
-          { cmd: "/ck:show-off", labelKey: "commands.beta_show_off.desc", detailKey: "commands.beta_show_off.detail", type: "skill", badge: "new" },
-          { cmd: "/ck:graphify", labelKey: "commands.beta_graphify.desc", detailKey: "commands.beta_graphify.detail", type: "skill", badge: "new" },
-          { cmd: "/ck:cook --tdd", labelKey: "commands.beta_cook_tdd.desc", detailKey: "commands.beta_cook_tdd.detail", type: "flag", badge: "enhanced" },
-          { cmd: "/ck:cook", labelKey: "commands.beta_cook_simplify.desc", detailKey: "commands.beta_cook_simplify.detail", type: "skill", badge: "enhanced" },
-          { cmd: "/ck:plan --deep", labelKey: "commands.beta_plan_deep.desc", detailKey: "commands.beta_plan_deep.detail", type: "flag", badge: "enhanced" },
-          // Deprecated
-          { cmd: "/ck:autoresearch", labelKey: "commands.beta_autoresearch.desc", detailKey: "commands.beta_autoresearch.detail", type: "skill", badge: "deprecated" },
+          { cmd: "/ck:tech-graph", labelKey: "commands.beta_tech_graph.desc", detailKey: "commands.beta_tech_graph.detail", type: "skill", badge: "new" },
         ].map((item) => (
           <div class={`p-3 rounded-lg border transition-all duration-200 hover:shadow-sm h-full flex flex-col ${item.badge === "deprecated" ? 'bg-slate-100 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 opacity-70' : 'bg-white/60 dark:bg-slate-900/50 border-purple-500/30'}`}>
             <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
