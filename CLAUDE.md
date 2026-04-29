@@ -56,6 +56,11 @@ When adding new workflow cards, update BOTH:
 - **EN**: `src/data/guides/workflows-data/workflows-*.ts`
 - **VI**: `src/data/vi/guides/workflows-data/workflows-*.ts`
 
+**VI translation convention for workflow entries:**
+- **Translate to Vietnamese:** `title`, `bestFor`, `description` (in steps), `tip`, `features`, `typeLabel`, time unit in `duration` (e.g. `phút` instead of `min`)
+- **Keep in English (verbatim):** `category`, `level` — these are matched against English-keyed lookup tables (`categoryOrder`, `categoryMeta` in `workflows-engineer-section.astro`). Translating them causes the workflow to silently disappear from the rendered page.
+- All other technical fields (`command`, `color`, `icon`, `gradientHeader`, etc.) stay verbatim.
+
 **IMPORTANT:** Beta Preview section is separate from main commands grid - don't forget to update both!
 
 ### HTML in Detail Fields
