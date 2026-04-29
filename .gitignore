@@ -34,5 +34,7 @@ pnpm-debug.log*
 .agent/
 .shared/
 reference/**/*
+!reference/skills-registry.json
+!reference/skills-registry-index.json
 plans/**/*
 !plans/templates/*
