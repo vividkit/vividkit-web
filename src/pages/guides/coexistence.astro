@@ -1,0 +1,17 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import CoexistenceGuide from '@/components/guides/CoexistenceGuide.astro';
+import { useTranslations } from '@/i18n/utils';
+import type { Language } from '@/i18n';
+
+const lang: Language = 'en';
+const t = useTranslations(lang);
+---
+
+<GuidesLayout
+  title={`${t('coexistence.hero.title')} - ${t('site.title')}`}
+  description={t('coexistence.hero.tldr')}
+  activeTab="coexistence"
+>
+  <CoexistenceGuide lang="en" />
+</GuidesLayout>

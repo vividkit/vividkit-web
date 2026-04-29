@@ -9,8 +9,10 @@ export { legacyWorkflows, workflows } from './workflows-legacy';
 import { stableWorkflows } from './workflows-stable';
 import { betaOnlyWorkflows } from './workflows-beta-additions';
 
-// betaWorkflows = stable + beta-only additions (mirrors original behavior)
+// betaWorkflows kept for backward compat — beta-additions currently empty,
+// so these are equivalent to stableWorkflows. Spread preserved for forward compat
+// when net-new beta-only workflows are added.
 export const betaWorkflows = [...stableWorkflows, ...betaOnlyWorkflows];
 
-// engineerKitWorkflows = all engineer workflows (stable + beta)
+// engineerKitWorkflows = single source of truth for the EK tab
 export const engineerKitWorkflows = [...stableWorkflows, ...betaOnlyWorkflows];

@@ -1,0 +1,68 @@
+---
+import { useTranslations } from '@/i18n/utils';
+import type { Language } from '@/i18n';
+import { renderInlineMarkdown } from './inline-code';
+import { FileText, House, Package, Wrench } from 'lucide-astro';
+
+interface Props { lang: Language }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const quickAnswers = [
+  { icon: House, titleKey: 'coexistence.hero.q1.title', bodyKey: 'coexistence.hero.q1.body', accent: 'emerald' },
+  { icon: FileText, titleKey: 'coexistence.hero.q2.title', bodyKey: 'coexistence.hero.q2.body', accent: 'sky' },
+  { icon: Wrench, titleKey: 'coexistence.hero.q3.title', bodyKey: 'coexistence.hero.q3.body', accent: 'violet' },
+  { icon: Package, titleKey: 'coexistence.hero.q4.title', bodyKey: 'coexistence.hero.q4.body', accent: 'emerald' },
+] as const;
+
+const accentMap: Record<string, { card: string; icon: string }> = {
+  emerald: {
+    card: 'border-emerald-200 dark:border-emerald-800/60 bg-emerald-50/50 dark:bg-emerald-950/20',
+    icon: 'bg-emerald-100 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-200 border-emerald-300/80 dark:border-emerald-400/40 shadow-emerald-500/20',
+  },
+  sky: {
+    card: 'border-sky-200 dark:border-sky-800/60 bg-sky-50/50 dark:bg-sky-950/20',
+    icon: 'bg-sky-100 dark:bg-sky-500/15 text-sky-700 dark:text-sky-200 border-sky-300/80 dark:border-sky-400/40 shadow-sky-500/20',
+  },
+  violet: {
+    card: 'border-violet-200 dark:border-violet-800/60 bg-violet-50/50 dark:bg-violet-950/20',
+    icon: 'bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-200 border-violet-300/80 dark:border-violet-400/40 shadow-violet-500/20',
+  },
+};
+
+const dangerCodeClass = 'px-1.5 py-0.5 rounded-md bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-800/60 font-mono text-[0.9em] border whitespace-nowrap';
+const tldrHtml = renderInlineMarkdown(t('coexistence.hero.tldr'), 'emerald').replace(
+  /<code class="[^"]*">ck init --fresh<\/code>/,
+  `<code class="${dangerCodeClass}">ck init --fresh</code>`
+);
+---
+
+<div class="relative overflow-hidden rounded-3xl border border-slate-200/70 dark:border-slate-800 bg-gradient-to-br from-slate-50 via-white to-emerald-50/40 dark:from-slate-950 dark:via-slate-950 dark:to-emerald-950/20 p-6 md:p-10">
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.10),transparent_45%)] dark:bg-[radial-gradient(circle_at_top_right,rgba(52,211,153,0.08),transparent_45%)]"></div>
+
+  <div class="relative space-y-6 max-w-3xl">
+    <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 text-xs font-semibold uppercase tracking-wider px-3 py-1 border border-emerald-200 dark:border-emerald-800/60">
+      <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+      Coexistence guide
+    </span>
+    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white tracking-tight leading-tight">
+      {t('coexistence.hero.title')}
+    </h2>
+    <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed" set:html={tldrHtml} />
+  </div>
+</div>
+
+<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+  {quickAnswers.map((a) => {
+    const Icon = a.icon;
+    return (
+      <article class={`rounded-2xl border p-5 ${accentMap[a.accent].card}`}>
+        <div class={`w-11 h-11 rounded-xl border flex items-center justify-center shadow-lg ${accentMap[a.accent].icon}`}>
+          <Icon class="w-6 h-6" stroke-width={2.1} />
+        </div>
+        <h3 class="mt-3 text-base font-bold text-slate-900 dark:text-white">{t(a.titleKey)}</h3>
+        <p class="mt-1.5 text-sm text-slate-600 dark:text-slate-300 leading-relaxed" set:html={renderInlineMarkdown(t(a.bodyKey), a.accent as any)} />
+      </article>
+    );
+  })}
+</div>
