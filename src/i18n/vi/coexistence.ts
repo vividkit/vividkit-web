@@ -13,7 +13,6 @@ export const coexistence = {
   'coexistence.hero.q3.body': 'Còn nguyên với install thường. `--fresh` có thể xóa file CK-tracked hoặc folder kit legacy.',
   'coexistence.hero.q4.title': 'Project đã có .claude/ thì sao?',
   'coexistence.hero.q4.body': '`ck init` thường scan `.claude/` trong project, protect custom files, và merge `.claude/settings.json`.',
-  'coexistence.hero.verified': 'Facts verify với ClaudeKit CLI v3.41.4.',
 
   // Section A — Install scope (two-card layout)
   'coexistence.installScope.heading': 'Sau khi cài, ClaudeKit ở đâu?',
@@ -85,8 +84,6 @@ export const coexistence = {
   'coexistence.migrate.notMigrate': 'Không phải cái bạn cần? `ck migrate` để **đổi tool**, không phải upgrade version.',
   'coexistence.migrate.col.provider': 'Tool',
   'coexistence.migrate.col.target': 'Sẽ ở đâu',
-  'coexistence.migrate.note':
-    'Path verify với `src/commands/portable/provider-registry.ts` CLI v3.41.4.',
 
   // Section E — Recipes
   'coexistence.recipes.heading': 'Recipes: Bring Your Own Workflow',
