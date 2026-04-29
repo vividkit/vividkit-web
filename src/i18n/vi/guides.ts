@@ -203,6 +203,7 @@ export const guides = {
   'guides.home.pathway_feature.link_session': 'Khôi Phục Session',
   'guides.home.pathway_feature.link_ccs': 'CCS Multi-Provider',
   'guides.home.pathway_feature.link_ide': 'Cấu Hình IDE',
+  'guides.home.pathway_feature.link_coexistence': 'Coexistence với setup của bạn',
   'guides.home.deep_dive.how_ck_works_desc': 'Trình mô phỏng tương tác cách ClaudeKit điều phối tools, hooks, và quy trình multi-agent.',
   'guides.home.inside_claudekit.title': 'Inside ClaudeKit',
   'guides.home.inside_claudekit.kicker': 'Những chủ đề đào sâu cho workflow thực tế',

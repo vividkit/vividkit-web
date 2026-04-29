@@ -56,7 +56,19 @@ When adding new workflow cards, update BOTH:
 - **EN**: `src/data/guides/workflows-data/workflows-*.ts`
 - **VI**: `src/data/vi/guides/workflows-data/workflows-*.ts`
 
+**VI translation convention for workflow entries:**
+- **Translate to Vietnamese:** `title`, `bestFor`, `description` (in steps), `tip`, `features`, `typeLabel`, time unit in `duration` (e.g. `phút` instead of `min`)
+- **Keep in English (verbatim):** `category`, `level` — these are matched against English-keyed lookup tables (`categoryOrder`, `categoryMeta` in `workflows-engineer-section.astro`). Translating them causes the workflow to silently disappear from the rendered page.
+- All other technical fields (`command`, `color`, `icon`, `gradientHeader`, etc.) stay verbatim.
+
 **IMPORTANT:** Beta Preview section is separate from main commands grid - don't forget to update both!
+
+### Beta-Only Skills - Dual Listing Convention
+When a skill is **beta-exclusive** (exists in beta branch only, not yet in stable), list it in BOTH places:
+1. **Beta Preview section** (`commands-categories-grid.astro` beta array) — surfaces the forward-looking signal
+2. **Stable category group** (`commands-engineer-kit.ts`) with `isBeta: true` flag — renders a purple BETA badge inline next to the command name, keeping it discoverable in its natural category
+
+When the skill graduates to stable: remove `isBeta: true` flag AND remove the Beta Preview entry. See `.claude/skills/vk-changelog-sync/SKILL.md` → "Universal Beta-Badge Rule" for the full decision matrix.
 
 ### HTML in Detail Fields
 - **Stable commands** (`commands-engineer-kit.ts`): Uses `{cmd.detail}` → **NO HTML rendering** → don't use `<br/>`

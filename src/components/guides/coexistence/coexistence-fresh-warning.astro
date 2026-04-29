@@ -1,0 +1,100 @@
+---
+import { useTranslations } from '@/i18n/utils';
+import type { Language } from '@/i18n';
+import { renderInlineMarkdown } from './inline-code';
+import { OctagonAlert, TriangleAlert } from 'lucide-astro';
+
+interface Props { lang: Language }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const backupSnippet = `cp -r ./.claude "./.claude.bak.$(date +%s)"`;
+const restoreSnippet = `cp -r ./.claude.bak.<timestamp>/skills/my-skill ./.claude/skills/`;
+
+const steps = [
+  {
+    n: '1',
+    titleKey: 'coexistence.fresh.safe.step1.title',
+    bodyKey: 'coexistence.fresh.safe.step1.body',
+    code: backupSnippet,
+    accent: 'emerald',
+  },
+  {
+    n: '2',
+    titleKey: 'coexistence.fresh.safe.step2.title',
+    bodyKey: 'coexistence.fresh.safe.step2.body',
+    code: 'ck init --fresh',
+    accent: 'amber',
+  },
+  {
+    n: '3',
+    titleKey: 'coexistence.fresh.safe.step3.title',
+    bodyKey: 'coexistence.fresh.safe.step3.body',
+    code: restoreSnippet,
+    accent: 'emerald',
+  },
+] as const;
+
+const accentRing: Record<string, string> = {
+  emerald: 'bg-emerald-500',
+  amber: 'bg-amber-500',
+};
+---
+
+<section id="fresh-warning" class="space-y-6">
+  <div class="space-y-2">
+    <h3 class="text-2xl md:text-3xl font-bold text-rose-700 dark:text-rose-300 tracking-tight" set:html={renderInlineMarkdown(t('coexistence.fresh.heading'), 'rose')} />
+    <p class="text-base text-slate-700 dark:text-slate-200 max-w-3xl leading-relaxed" set:html={renderInlineMarkdown(t('coexistence.fresh.intro'), 'rose')} />
+  </div>
+
+  <article class="relative rounded-2xl border-2 border-rose-400 dark:border-rose-700 bg-gradient-to-br from-rose-50 to-rose-100/60 dark:from-rose-950/40 dark:to-rose-900/20 p-6 overflow-hidden">
+    <TriangleAlert class="absolute top-0 right-0 w-28 h-28 text-rose-500/10 dark:text-rose-300/20 translate-x-4 -translate-y-2 select-none" stroke-width={1.5} />
+    <div class="relative space-y-4">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-xl border border-rose-300/80 dark:border-rose-400/40 bg-rose-100 dark:bg-rose-500/15 text-rose-700 dark:text-rose-200 shadow-lg shadow-rose-500/20 flex items-center justify-center shrink-0">
+          <OctagonAlert class="w-6 h-6" stroke-width={2.1} />
+        </div>
+        <h4 class="text-lg font-bold text-rose-800 dark:text-rose-200">
+          {t('coexistence.fresh.dangerCard.title')}
+        </h4>
+      </div>
+      <p class="text-sm text-slate-800 dark:text-slate-100 leading-relaxed" set:html={renderInlineMarkdown(t('coexistence.fresh.dangerCard.body'), 'rose')} />
+      <div class="rounded-xl bg-white/80 dark:bg-slate-900/60 border border-rose-300 dark:border-rose-800/60 px-4 py-3 font-mono text-xs text-rose-700 dark:text-rose-300 break-words">
+        {t('coexistence.fresh.dangerCard.folders')}
+      </div>
+      <div class="flex items-start gap-2 text-sm text-rose-800 dark:text-rose-200 font-semibold">
+        <TriangleAlert class="w-4 h-4 mt-0.5 shrink-0" stroke-width={2} />
+        <span set:html={renderInlineMarkdown(t('coexistence.fresh.dangerCard.note'), 'rose')} />
+      </div>
+    </div>
+  </article>
+
+  <div class="space-y-4">
+    <h4 class="text-xl font-bold text-slate-900 dark:text-white" set:html={renderInlineMarkdown(t('coexistence.fresh.safe.heading'))} />
+
+    <ol class="space-y-3">
+      {steps.map((s) => (
+        <li class="relative rounded-2xl border border-slate-200 dark:border-slate-700/60 bg-white/60 dark:bg-slate-900/40 p-5 pl-16">
+          <div class={`absolute left-4 top-5 w-9 h-9 rounded-full ${accentRing[s.accent]} text-white font-bold flex items-center justify-center shadow-lg`}>
+            {s.n}
+          </div>
+          <h5 class="text-base font-bold text-slate-900 dark:text-white" set:html={renderInlineMarkdown(t(s.titleKey as any))} />
+          <p class="mt-1 text-sm text-slate-600 dark:text-slate-300 leading-relaxed" set:html={renderInlineMarkdown(t(s.bodyKey as any))} />
+          <div class="mt-3 relative">
+            <pre class="bg-slate-100 dark:bg-slate-800/90 text-slate-700 dark:text-slate-200 text-xs font-mono pl-3 pr-12 py-2 rounded-lg overflow-x-auto border border-slate-200 dark:border-slate-700/60"><code>$ {s.code}</code></pre>
+            <button
+              class="copy-btn absolute top-1/2 right-1.5 -translate-y-1/2 inline-flex h-7 w-7 items-center justify-center rounded-md bg-white/80 dark:bg-slate-700/80 text-slate-500 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-white dark:hover:bg-slate-700 transition-colors"
+              data-code={s.code}
+              aria-label="Copy"
+            >
+              <svg class="copy-icon w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              <svg class="check-icon w-3.5 h-3.5 hidden text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+
+  <div class="rounded-2xl border border-emerald-200 dark:border-emerald-800/60 bg-emerald-50/60 dark:bg-emerald-950/20 px-5 py-4 text-sm text-slate-700 dark:text-slate-200 leading-relaxed" set:html={renderInlineMarkdown(t('coexistence.fresh.tip'), 'emerald')} />
+</section>

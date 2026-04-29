@@ -1,0 +1,89 @@
+---
+import { useTranslations, type TranslationKey } from '@/i18n/utils';
+import type { Language } from '@/i18n';
+import { coexistenceRecipes } from '@/data/guides/coexistence-recipes';
+import { renderInlineMarkdown } from './inline-code';
+import { GitMerge, Save, ShieldCheck } from 'lucide-astro';
+
+interface Props { lang: Language }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const tk = (k: string) => t(k as TranslationKey);
+
+const accents = ['emerald', 'sky', 'violet'] as const;
+const accentMap = {
+  emerald: {
+    ring: 'border-emerald-300 dark:border-emerald-700/70',
+    chip: 'bg-emerald-500',
+    icon: ShieldCheck,
+  },
+  sky: {
+    ring: 'border-sky-300 dark:border-sky-700/70',
+    chip: 'bg-sky-500',
+    icon: GitMerge,
+  },
+  violet: {
+    ring: 'border-violet-300 dark:border-violet-700/70',
+    chip: 'bg-violet-500',
+    icon: Save,
+  },
+};
+---
+
+<section id="recipes" class="space-y-6">
+  <div class="space-y-2">
+    <h3 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
+      {t('coexistence.recipes.heading')}
+    </h3>
+    <p class="text-base text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
+      {t('coexistence.recipes.intro')}
+    </p>
+  </div>
+
+  <div class="space-y-5">
+    {coexistenceRecipes.map((r, i) => {
+      const a = accentMap[accents[i % accents.length]];
+      const Icon = a.icon;
+      return (
+        <article id={r.id} class={`relative rounded-2xl border-2 ${a.ring} bg-white/60 dark:bg-slate-900/40 p-6 md:p-7`}>
+          <div class={`absolute -top-3 left-6 inline-flex items-center gap-1.5 rounded-full ${a.chip} text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 shadow-md`}>
+            <span>Recipe {String(i + 1).padStart(2, '0')}</span>
+          </div>
+
+          <div class="grid md:grid-cols-5 gap-6 mt-1">
+            <div class="md:col-span-2 space-y-3">
+              <div class="flex items-start gap-3">
+                <div class="w-12 h-12 rounded-xl border border-slate-300/80 dark:border-slate-400/40 bg-slate-100 dark:bg-slate-500/15 text-slate-700 dark:text-slate-100 shadow-lg shadow-slate-500/20 flex items-center justify-center shrink-0">
+                  <Icon class="w-6 h-6" stroke-width={2.1} />
+                </div>
+                <h4 class="text-lg font-bold text-slate-900 dark:text-white leading-snug">
+                  {tk(r.titleKey)}
+                </h4>
+              </div>
+              <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed" set:html={renderInlineMarkdown(tk(r.descKey))} />
+            </div>
+
+            <div class="md:col-span-3 space-y-2.5">
+              {r.codeBlocks.map((block) => (
+                <div class="relative">
+                  <div class="absolute top-0 left-3 -translate-y-1/2 px-1.5 text-[9px] font-mono uppercase tracking-wider text-slate-400 dark:text-slate-500 bg-white dark:bg-slate-950 z-10">
+                    {block.lang}
+                  </div>
+                  <pre class="bg-slate-950 dark:bg-slate-900 text-slate-200 text-xs font-mono p-4 pt-4 rounded-lg overflow-x-auto leading-relaxed border border-slate-800"><code>{block.code}</code></pre>
+                  <button
+                    class="copy-btn absolute top-2 right-2 p-1.5 rounded-md bg-slate-800/80 text-slate-400 hover:text-emerald-400 hover:bg-slate-800 transition-colors"
+                    data-code={block.code}
+                    aria-label="Copy"
+                  >
+                    <svg class="copy-icon w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                    <svg class="check-icon w-3.5 h-3.5 hidden text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </article>
+      );
+    })}
+  </div>
+</section>
