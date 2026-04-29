@@ -73,6 +73,13 @@ export const styles: Record<string, Record<string, string>> = {
     hover: "hover:border-emerald-500/30",
     badge: "bg-emerald-500/20 text-emerald-600 dark:text-emerald-400",
   },
+  rose: {
+    border: "border-rose-500/30 hover:border-rose-500/50",
+    bg: "bg-gradient-to-r from-rose-500/10 to-red-500/10",
+    text: "text-rose-600 dark:text-rose-400",
+    hover: "hover:border-rose-500/30",
+    badge: "bg-rose-500/20 text-rose-600 dark:text-rose-400",
+  },
   slate: {
     border: "border-slate-400/30 hover:border-slate-400/50",
     bg: "bg-gradient-to-r from-slate-400/10 to-slate-500/10",
