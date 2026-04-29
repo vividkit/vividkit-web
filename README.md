@@ -84,6 +84,49 @@ While waiting for VividKit Desktop, master ClaudeKit through our comprehensive d
 - **Performance**: Sharp for image optimization, LightningCSS for CSS minification
 - **Design System**: Custom glassmorphism UI with three-font typography system
 
+## 🤖 VividKit Maintainer Skills (`/vk:*`)
+
+Repo-specific skills that keep VividKit guides in sync with upstream ClaudeKit. Invoke via Claude Code using the `/vk:` prefix.
+
+> 🇻🇳 Tiếng Việt: see [README.vi.md](./README.vi.md)
+
+| Skill | When to use | Example |
+|-------|-------------|---------|
+| `/vk:changelog-sync` | Detect new ClaudeKit changelog entries and sync Commands/Hooks/Workflows guides + i18n strings | `/vk:changelog-sync` |
+| `/vk:audit-ck-cli` | Compare upstream `claudekit-cli` against the CLI/Migrate guides; propose updates per command (`ck migrate`, `ck init`, …) | `/vk:audit-ck-cli` or `/vk:audit-ck-cli page=guides/migrate command=migrate` |
+| `/vk:audit-skill` | Audit upstream ClaudeKit skill changes against the skill catalog rendered on the site | `/vk:audit-skill <skill-name>` |
+| `/vk:add-scenario` | Add a new scenario entry for a ClaudeKit command into the guides | `/vk:add-scenario` |
+
+### Quick usage
+
+1. **Quick check** — no fetch, just compare current marker:
+   ```
+   /vk:audit-ck-cli
+   ```
+2. **Detailed report** — categorized diff + impact map + update proposals:
+   ```
+   /vk:audit-ck-cli report
+   ```
+3. **Full sync** — fetch latest, generate report, update marker:
+   ```
+   /vk:audit-ck-cli sync
+   ```
+4. **Target a specific page/command** — pass args as `page=<guide-slug> command=<ck-command>`:
+   ```
+   /vk:audit-ck-cli page=guides/migrate command=migrate
+   ```
+
+### Conventions
+
+- **Reference repos** are cloned under `reference/` (claudekit, claudekit-cli) — not committed; treated as source of truth during audits.
+- **Marker files** (`reference/.last-sync*`) store the commit SHA of the last successful sync.
+- **Reports** are written to `reference/changelog-reports/` (skill-generated).
+- Skills only **propose** changes — always review before applying them to `src/components/guides/*` or `src/data/guides/*`.
+
+See `.claude/skills/vk-*/SKILL.md` for per-skill details.
+
+---
+
 ## 🧞 Development Commands
 
 | Command | Action |
