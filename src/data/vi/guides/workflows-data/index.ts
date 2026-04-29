@@ -10,8 +10,8 @@ export { legacyWorkflows, workflows } from './workflows-legacy';
 import { stableWorkflows } from './workflows-stable';
 import { betaOnlyWorkflows } from './workflows-beta-additions';
 
-// betaWorkflows = stable + beta-only additions (mirrors original behavior)
+// betaWorkflows kept for backward compat — beta-additions currently empty.
 export const betaWorkflows = [...stableWorkflows, ...betaOnlyWorkflows];
 
-// engineerKitWorkflows built from VI data (stable + beta-only)
+// engineerKitWorkflows = single source of truth for the EK tab (VI)
 export const engineerKitWorkflows = [...stableWorkflows, ...betaOnlyWorkflows];
