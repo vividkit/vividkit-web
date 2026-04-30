@@ -746,6 +746,10 @@ export const commands = {
   'commands.beta_bootstrap.detail': 'Behavior change: default switched from <code>--auto</code> to <code>--full</code>; <code>--auto</code> is now an explicit autonomous opt-in.<br/><code>--fast</code> keeps cook review gates instead of forcing <code>--auto</code>.',
   'commands.beta_preview_skill.desc': 'Visual self-review for diagram output',
   'commands.beta_preview_skill.detail': '<code>--diagram</code>/<code>--html --diagram</code> now loads rendered SVG/PNG back as image and inspects for collisions (arrows-through-boxes, label overlaps, legend covering content).<br/>Iteratively re-renders until visually clean.',
+  'commands.beta_kanban.desc': 'Removed from beta — scheduled for stable removal',
+  'commands.beta_kanban.detail': 'Standalone <code>/ck:kanban</code> skill removed in beta.8. Use <code>/ck:plans-kanban</code> instead.<br/>Stable users still have access until next stable release drops it.',
+  'commands.beta_mcp_management.desc': 'Removed from beta — replaced by /ck:use-mcp',
+  'commands.beta_mcp_management.detail': '<code>/ck:mcp-management</code> consolidated into <code>/ck:use-mcp</code> in beta.8 (renamed assets, scripts, references).<br/>Stable retains both until next stable release drops <code>mcp-management</code>.',
   'commands.stable.xia.desc': 'Safely study, extract, and port features from other repositories',
   'commands.stable.xia.detail': 'Analyze reference implementations (GitHub/Local) to understand feature architecture. Integrates a Challenge Framework to evaluate risks before implementation, preventing blind copy-pasting.',
   // Marketing Kit categories
