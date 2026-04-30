@@ -746,6 +746,10 @@ export const commands = {
   'commands.beta_bootstrap.detail': 'Behavior change: default từ <code>--auto</code> chuyển sang <code>--full</code>; <code>--auto</code> giờ là explicit autonomous opt-in.<br/><code>--fast</code> giữ cook review gate thay vì force <code>--auto</code>.',
   'commands.beta_preview_skill.desc': 'Visual self-review cho diagram output',
   'commands.beta_preview_skill.detail': '<code>--diagram</code>/<code>--html --diagram</code> giờ load lại SVG/PNG đã render dưới dạng image rồi inspect collision (arrow xuyên box, label overlap, legend che content).<br/>Lặp re-render đến khi diagram clean visually.',
+  'commands.beta_kanban.desc': 'Đã gỡ khỏi beta — sắp gỡ khỏi stable',
+  'commands.beta_kanban.detail': 'Skill <code>/ck:kanban</code> standalone đã bị gỡ ở beta.8. Dùng <code>/ck:plans-kanban</code> thay thế.<br/>Stable users vẫn còn truy cập đến khi bản stable kế tiếp gỡ luôn.',
+  'commands.beta_mcp_management.desc': 'Đã gỡ khỏi beta — thay bằng /ck:use-mcp',
+  'commands.beta_mcp_management.detail': '<code>/ck:mcp-management</code> được hợp nhất vào <code>/ck:use-mcp</code> ở beta.8 (rename assets, scripts, references).<br/>Stable vẫn giữ cả hai đến khi bản stable kế tiếp gỡ <code>mcp-management</code>.',
   'commands.stable.xia.desc': 'Học hỏi, trích xuất và port tính năng từ repo khác một cách an toàn',
   'commands.stable.xia.detail': 'Nghiên cứu mã nguồn thay thế (GitHub/Local) để phân tích kiến trúc tính năng. Sử dụng Challenge Framework để đánh giá rủi ro trước khi triển khai, tránh blind copy-paste.',
   // Marketing Kit categories
