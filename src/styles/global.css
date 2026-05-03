@@ -72,6 +72,7 @@
     @apply backdrop-blur-2xl;
     -webkit-backdrop-filter: blur(24px);
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    contain: paint;
   }
 
   .glass-card-light {
@@ -79,6 +80,7 @@
     @apply border border-slate-200 dark:border-white/5;
     @apply backdrop-blur-xl;
     -webkit-backdrop-filter: blur(16px);
+    contain: paint;
   }
 
   .glass-card-hover {
@@ -415,5 +417,31 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/*
+ * Safari CPU-load mitigation.
+ * `backdrop-filter: blur(r)` cost scales ~O(r²) and Safari's compositor invalidates
+ * full-screen on scroll, so large blur radii spike CPU site-wide.
+ * `@supports (-webkit-hyphens:none)` is a Safari-only feature query — Chrome/FF skip this.
+ */
+@supports (-webkit-hyphens: none) {
+  .glass-card {
+    @apply backdrop-blur-md;
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .glass-card-light {
+    @apply backdrop-blur-sm;
+    -webkit-backdrop-filter: blur(8px);
+  }
+}
+
+/* Honor macOS "Reduce transparency" — disable blur entirely for users who opt in. */
+@media (prefers-reduced-transparency: reduce) {
+  .glass-card,
+  .glass-card-light {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
 }
