@@ -746,6 +746,8 @@ export const commands = {
   'commands.beta_security.detail': 'New <code>--red-team</code> mode runs 4 attacker personas (security adversary, supply chain, insider, infrastructure) iteratively before the STRIDE/OWASP sweep.<br/>Combine with <code>--fix</code> for full persona discovery + auto-fix on Critical/High findings.',
   'commands.beta_autoresearch.desc': 'Reframed as autoresearch family router',
   'commands.beta_autoresearch.detail': 'No longer a deprecated alias for <code>ck-loop</code> — now an umbrella concept anchor that explains the autoresearch pattern (Udit Goenka, MIT) and routes to 4 specialized skills: <code>ck-loop</code>, <code>ck-predict</code>, <code>ck-scenario</code>, <code>ck-security</code>.<br/>Start here to learn the lineage, then pick the right specialized skill.',
+  'commands.beta_predict.desc': 'Chain modes for follow-on refinement after verdict',
+  'commands.beta_predict.detail': 'New <code>--chain reason</code> runs a subjective refinement loop (generate → critique → synthesize → blind judge) until convergence — for CAUTION verdicts with subjective tradeoffs.<br/>New <code>--chain probe</code> drives saturation-based interrogation to harvest missing constraints and unstated assumptions when verdicts flag incomplete requirements.',
   'commands.beta_ck_plan.desc': 'Whole-Plan Consistency Gate before recommending cook',
   'commands.beta_ck_plan.detail': 'After validate/red-team edits, re-scans plan.md + every phase-*.md for stale terms, superseded decisions, duplicate drafts.<br/>Cook only proceeds with zero unresolved contradictions. <code>--fast</code> no longer chains to <code>--auto</code>.',
   'commands.beta_bootstrap.desc': 'Default mode now <code>--full</code> (interactive)',

@@ -746,6 +746,8 @@ export const commands = {
   'commands.beta_security.detail': 'Mode mới <code>--red-team</code> chạy 4 attacker persona (security adversary, supply chain, insider, infrastructure) iterative trước khi sweep STRIDE/OWASP.<br/>Kết hợp với <code>--fix</code> để discovery + auto-fix các finding Critical/High.',
   'commands.beta_autoresearch.desc': 'Reframe thành autoresearch family router',
   'commands.beta_autoresearch.detail': 'Không còn là deprecated alias của <code>ck-loop</code> — giờ là umbrella concept anchor giải thích autoresearch pattern (Udit Goenka, MIT) và route sang 4 skill chuyên biệt: <code>ck-loop</code>, <code>ck-predict</code>, <code>ck-scenario</code>, <code>ck-security</code>.<br/>Bắt đầu ở đây để học lineage, rồi chọn skill chuyên biệt phù hợp.',
+  'commands.beta_predict.desc': 'Chain mode refinement sau khi có verdict',
+  'commands.beta_predict.detail': 'Flag mới <code>--chain reason</code> chạy subjective refinement loop (generate → critique → synthesize → blind judge) lặp đến khi convergence — cho verdict CAUTION với subjective tradeoff.<br/>Flag mới <code>--chain probe</code> drive saturation-based interrogation để harvest missing constraint và unstated assumption khi verdict báo requirement chưa đầy đủ.',
   'commands.beta_ck_plan.desc': 'Whole-Plan Consistency Gate trước khi recommend cook',
   'commands.beta_ck_plan.detail': 'Sau khi validate/red-team chỉnh plan, tự re-scan toàn bộ plan.md + mọi phase-*.md tìm stale term, decision đã bị supersede, draft duplicate.<br/>Chỉ cho cook khi zero contradiction còn lại. <code>--fast</code> không còn auto chain sang <code>--auto</code>.',
   'commands.beta_bootstrap.desc': 'Default mode đổi sang <code>--full</code> (interactive)',
