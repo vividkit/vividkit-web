@@ -123,10 +123,10 @@ const marketingCategories = getMarketingKitCategories(t as any);
                 {item.badge === "enhanced" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium uppercase">enhanced</span>}
                 {item.badge === "renamed" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium uppercase">renamed</span>}
                 {item.badge === "removed" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-500 dark:text-red-400 font-medium uppercase">removed</span>}
-                {item.badge === "deprecated" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium uppercase">deprecated</span>}
+                {item.badge === "deprecated" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700/40 text-slate-500 dark:text-slate-400 font-medium uppercase">deprecated</span>}
               </div>
             </div>
-            <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">{t(item.labelKey as any)}</p>
+            <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1" set:html={t(item.labelKey as any)} />
             <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50" set:html={t(item.detailKey as any)} />
           </div>
         ))}
@@ -163,7 +163,7 @@ const marketingCategories = getMarketingKitCategories(t as any);
                     <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">beta</span>
                   )}
                   {cmd.deprecated && (
-                    <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium uppercase">deprecated</span>
+                    <span class="text-[9px] px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700/40 text-slate-500 dark:text-slate-400 font-medium uppercase">deprecated</span>
                   )}
                 </div>
                 <span class="text-[10px] opacity-70">{cmd.complexity}</span>
@@ -272,7 +272,7 @@ const marketingCategories = getMarketingKitCategories(t as any);
                     <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">beta</span>
                   )}
                   {cmd.deprecated && (
-                    <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium uppercase">deprecated</span>
+                    <span class="text-[9px] px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700/40 text-slate-500 dark:text-slate-400 font-medium uppercase">deprecated</span>
                   )}
                 </div>
                 <span class="text-[10px] opacity-70">{cmd.complexity}</span>
