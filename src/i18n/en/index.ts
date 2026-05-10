@@ -10,6 +10,7 @@ import { ide_config } from './ide-config';
 import { coexistence } from './coexistence';
 import { workflows } from './workflows';
 import { happy_ccs } from './happy-ccs';
+import { ck_with_codex } from './ck-with-codex';
 import { pricing } from './pricing';
 import { common } from './common';
 
@@ -25,6 +26,7 @@ export default {
   ...coexistence,
   ...workflows,
   ...happy_ccs,
+  ...ck_with_codex,
   ...pricing,
   ...common,
 } as const;

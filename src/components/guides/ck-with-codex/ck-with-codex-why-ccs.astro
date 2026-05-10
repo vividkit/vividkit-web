@@ -1,0 +1,89 @@
+---
+import { useTranslations } from '@/i18n/utils';
+import type { Language } from '@/i18n';
+import { renderInlineMarkdown } from '../coexistence/inline-code';
+import { BarChart3, Gauge, Repeat2, SlidersHorizontal } from 'lucide-astro';
+
+interface Props { lang: Language }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const reasons = [
+  {
+    icon: Repeat2,
+    titleKey: 'ckWithCodex.why.reasons.rotation.title',
+    bodyKey: 'ckWithCodex.why.reasons.rotation.body',
+    accent: 'emerald',
+  },
+  {
+    icon: Gauge,
+    titleKey: 'ckWithCodex.why.reasons.quota.title',
+    bodyKey: 'ckWithCodex.why.reasons.quota.body',
+    accent: 'sky',
+  },
+  {
+    icon: BarChart3,
+    titleKey: 'ckWithCodex.why.reasons.analytics.title',
+    bodyKey: 'ckWithCodex.why.reasons.analytics.body',
+    accent: 'violet',
+  },
+  {
+    icon: SlidersHorizontal,
+    titleKey: 'ckWithCodex.why.reasons.control.title',
+    bodyKey: 'ckWithCodex.why.reasons.control.body',
+    accent: 'amber',
+  },
+] as const;
+
+const accentMap: Record<string, { card: string; icon: string }> = {
+  emerald: {
+    card: 'border-emerald-200 dark:border-emerald-800/60 bg-emerald-50/55 dark:bg-emerald-950/20',
+    icon: 'bg-emerald-100 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-200',
+  },
+  sky: {
+    card: 'border-sky-200 dark:border-sky-800/60 bg-sky-50/55 dark:bg-sky-950/20',
+    icon: 'bg-sky-100 dark:bg-sky-500/15 text-sky-700 dark:text-sky-200',
+  },
+  violet: {
+    card: 'border-violet-200 dark:border-violet-800/60 bg-violet-50/55 dark:bg-violet-950/20',
+    icon: 'bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-200',
+  },
+  amber: {
+    card: 'border-amber-200 dark:border-amber-800/60 bg-amber-50/55 dark:bg-amber-950/20',
+    icon: 'bg-amber-100 dark:bg-amber-500/15 text-amber-700 dark:text-amber-200',
+  },
+};
+---
+
+<section class="space-y-6">
+  <div class="space-y-2">
+    <h3 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
+      {t('ckWithCodex.why.heading')}
+    </h3>
+    <p class="text-base text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed" set:html={renderInlineMarkdown(t('ckWithCodex.why.intro'), 'violet')} />
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    {reasons.map((reason) => {
+      const Icon = reason.icon;
+      const a = accentMap[reason.accent];
+      return (
+        <article class={`min-w-0 rounded-2xl border p-5 md:p-6 ${a.card}`}>
+          <div class="flex items-start gap-4">
+            <div class={`shrink-0 w-11 h-11 rounded-xl flex items-center justify-center ${a.icon}`}>
+              <Icon class="w-5.5 h-5.5" stroke-width={2.1} />
+            </div>
+            <div class="space-y-1.5 min-w-0">
+              <h4 class="text-base font-bold text-slate-900 dark:text-white leading-snug">{t(reason.titleKey)}</h4>
+              <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed" set:html={renderInlineMarkdown(t(reason.bodyKey), reason.accent as any)} />
+            </div>
+          </div>
+        </article>
+      );
+    })}
+  </div>
+
+  <div class="rounded-2xl border border-slate-200/70 dark:border-slate-800 bg-white/70 dark:bg-slate-900/45 p-5 md:p-6">
+    <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed" set:html={renderInlineMarkdown(t('ckWithCodex.why.caveat'))} />
+  </div>
+</section>

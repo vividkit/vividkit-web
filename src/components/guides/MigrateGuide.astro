@@ -34,7 +34,7 @@ const providers = [
 
 const quickExamples = [
   { label: t('Interactive install picker', 'Chọn item để cài'), cmd: 'ck migrate --install' },
-  { label: t('Preview reconcile plan', 'Xem trước kế hoạch reconcile'), cmd: 'ck migrate --agent codex --dry-run' },
+  { label: t('Preview reconcile plan', 'Xem trước kế hoạch reconcile'), cmd: 'ck migrate -a codex --dry-run' },
   { label: t('Preserve deletions', 'Giữ nguyên các mục đã xóa'), cmd: 'ck migrate --respect-deletions' },
   { label: t('To Cursor', 'Sang Cursor'),        cmd: 'ck migrate --agent cursor' },
   { label: t('To all providers', 'Sang tất cả'), cmd: 'ck migrate --all' },

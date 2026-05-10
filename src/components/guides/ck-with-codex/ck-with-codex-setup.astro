@@ -1,0 +1,373 @@
+---
+import { useTranslations } from '@/i18n/utils';
+import type { Language } from '@/i18n';
+import { renderInlineMarkdown } from '../coexistence/inline-code';
+import { Package, KeyRound, Stethoscope, FileCog, Rocket, LayoutDashboard, Terminal, Eye, Check, MessageSquare, Zap, AlertTriangle } from 'lucide-astro';
+
+interface Props { lang: Language }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+type Accent = 'slate' | 'violet' | 'sky' | 'emerald' | 'amber';
+
+const accentMap: Record<Accent, { ring: string; chip: string; chipRing: string; chipIcon: string; badge: string; tagBg: string; eyebrow: string; hoverShadow: string }> = {
+  slate: {
+    ring: 'border-slate-200/80 dark:border-slate-700/70',
+    chip: 'bg-slate-100 dark:bg-slate-900 border-slate-400 dark:border-slate-500',
+    chipRing: 'ring-slate-300/50 dark:ring-slate-500/25',
+    chipIcon: 'text-slate-600 dark:text-slate-300',
+    badge: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700',
+    tagBg: 'bg-slate-200 dark:bg-slate-700/70 text-slate-700 dark:text-slate-200',
+    eyebrow: 'text-slate-600 dark:text-slate-400',
+    hoverShadow: 'hover:shadow-slate-400/40 dark:hover:shadow-slate-500/20',
+  },
+  violet: {
+    ring: 'border-violet-200/80 dark:border-violet-700/70',
+    chip: 'bg-violet-100 dark:bg-violet-950/60 border-violet-400 dark:border-violet-500',
+    chipRing: 'ring-violet-300/40 dark:ring-violet-400/25',
+    chipIcon: 'text-violet-600 dark:text-violet-300',
+    badge: 'bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300 border-violet-200 dark:border-violet-800/60',
+    tagBg: 'bg-violet-200/70 dark:bg-violet-800/50 text-violet-800 dark:text-violet-200',
+    eyebrow: 'text-violet-600 dark:text-violet-400',
+    hoverShadow: 'hover:shadow-violet-500/30 dark:hover:shadow-violet-400/20',
+  },
+  sky: {
+    ring: 'border-sky-200/80 dark:border-sky-700/70',
+    chip: 'bg-sky-100 dark:bg-sky-950/60 border-sky-400 dark:border-sky-500',
+    chipRing: 'ring-sky-300/40 dark:ring-sky-400/25',
+    chipIcon: 'text-sky-600 dark:text-sky-300',
+    badge: 'bg-sky-100 dark:bg-sky-500/15 text-sky-700 dark:text-sky-300 border-sky-200 dark:border-sky-800/60',
+    tagBg: 'bg-sky-200/70 dark:bg-sky-800/50 text-sky-800 dark:text-sky-200',
+    eyebrow: 'text-sky-600 dark:text-sky-400',
+    hoverShadow: 'hover:shadow-sky-500/30 dark:hover:shadow-sky-400/20',
+  },
+  emerald: {
+    ring: 'border-emerald-200/80 dark:border-emerald-700/70',
+    chip: 'bg-emerald-100 dark:bg-emerald-950/60 border-emerald-400 dark:border-emerald-500',
+    chipRing: 'ring-emerald-300/40 dark:ring-emerald-400/25',
+    chipIcon: 'text-emerald-600 dark:text-emerald-300',
+    badge: 'bg-emerald-100 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800/60',
+    tagBg: 'bg-emerald-200/70 dark:bg-emerald-800/50 text-emerald-800 dark:text-emerald-200',
+    eyebrow: 'text-emerald-600 dark:text-emerald-400',
+    hoverShadow: 'hover:shadow-emerald-500/30 dark:hover:shadow-emerald-400/20',
+  },
+  amber: {
+    ring: 'border-amber-200/80 dark:border-amber-700/70',
+    chip: 'bg-amber-100 dark:bg-amber-950/60 border-amber-400 dark:border-amber-500',
+    chipRing: 'ring-amber-300/40 dark:ring-amber-400/25',
+    chipIcon: 'text-amber-600 dark:text-amber-400',
+    badge: 'bg-amber-100 dark:bg-amber-500/15 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800/60',
+    tagBg: 'bg-amber-200/70 dark:bg-amber-800/50 text-amber-800 dark:text-amber-200',
+    eyebrow: 'text-amber-600 dark:text-amber-400',
+    hoverShadow: 'hover:shadow-amber-500/30 dark:hover:shadow-amber-400/20',
+  },
+};
+
+const stepMeta = [
+  { n: 1, icon: Package,     accent: 'slate'   as Accent, badgeKey: 'ckWithCodex.setup.step1.badge', titleKey: 'ckWithCodex.setup.step1.title', descKey: 'ckWithCodex.setup.step1.desc' },
+  { n: 2, icon: KeyRound,    accent: 'violet'  as Accent, badgeKey: 'ckWithCodex.setup.step2.badge', titleKey: 'ckWithCodex.setup.step2.title', descKey: 'ckWithCodex.setup.step2.desc' },
+  { n: 3, icon: Stethoscope, accent: 'sky'     as Accent, badgeKey: 'ckWithCodex.setup.step3.badge', titleKey: 'ckWithCodex.setup.step3.title', descKey: 'ckWithCodex.setup.step3.desc' },
+  { n: 4, icon: FileCog,     accent: 'emerald' as Accent, badgeKey: 'ckWithCodex.setup.step4.badge', titleKey: 'ckWithCodex.setup.step4.title', descKey: 'ckWithCodex.setup.step4.desc' },
+  { n: 5, icon: Rocket,      accent: 'amber'   as Accent, badgeKey: 'ckWithCodex.setup.step5.badge', titleKey: 'ckWithCodex.setup.step5.title', descKey: 'ckWithCodex.setup.step5.desc' },
+] as const;
+
+import {
+  PRE_LG, PRE_SM,
+  COPY_BTN_LG, COPY_BTN_SM,
+  COPY_ICON_LG, CHECK_ICON_LG, COPY_ICON_SM, CHECK_ICON_SM,
+  renderShellSnippet, stripShellComments,
+} from './shell-snippet-helpers';
+
+const SUB_LABEL = 'text-[10px] uppercase tracking-[0.14em] font-bold';
+const SUB_TITLE = 'text-sm font-bold text-slate-900 dark:text-white leading-snug';
+const SUB_BODY = 'text-[13px] text-slate-600 dark:text-slate-400 leading-relaxed break-words';
+const CODE_FRAME = 'relative rounded-lg overflow-hidden ring-1 ring-slate-200/80 dark:ring-slate-800/80';
+---
+
+<section class="space-y-7">
+  <div class="space-y-2.5">
+    <h3 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
+      {t('ckWithCodex.setup.heading')}
+    </h3>
+    <p class="text-base text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed" set:html={renderInlineMarkdown(t('ckWithCodex.setup.intro'))} />
+  </div>
+
+  <ol class="relative space-y-8 pl-16 before:absolute before:left-6 before:top-8 before:bottom-8 before:w-px before:bg-gradient-to-b before:from-violet-300 before:via-sky-300 before:to-amber-300 dark:before:from-violet-500/60 dark:before:via-sky-500/60 dark:before:to-amber-500/60">
+    {stepMeta.map((step) => {
+      const a = accentMap[step.accent];
+      const Icon = step.icon;
+      const stepLabel = String(step.n).padStart(2, '0');
+      return (
+        <li class="group/step relative">
+          <div class={`absolute -left-[3.75rem] top-0 w-10 h-10 rounded-full border-2 ${a.chip} flex items-center justify-center shadow-md ring-4 ${a.chipRing} z-10 transition-all duration-200 group-hover/step:scale-110 group-hover/step:shadow-lg`}>
+            <Icon class={`w-[18px] h-[18px] ${a.chipIcon}`} stroke-width={2.1} />
+          </div>
+
+          <article class={`group relative rounded-2xl border ${a.ring} bg-white/80 dark:bg-slate-900/55 overflow-hidden shadow-sm transition-all duration-200 hover:shadow-xl ${a.hoverShadow} hover:-translate-y-0.5`}>
+            <header class="px-5 py-4 border-b border-slate-200/70 dark:border-slate-800/80">
+              <div class="space-y-2 min-w-0">
+                <div class="flex items-center gap-2 flex-wrap min-w-0">
+                  <span class={`text-[10px] uppercase tracking-[0.18em] font-bold ${a.eyebrow}`}>Step {stepLabel}</span>
+                  <span class="text-slate-300 dark:text-slate-600">·</span>
+                  <span class={`shrink-0 inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.14em] ${a.badge}`}>
+                    {t(step.badgeKey as any)}
+                  </span>
+                </div>
+                <h4 class="text-base md:text-lg font-bold text-slate-900 dark:text-white leading-snug min-w-0 break-words">
+                  {t(step.titleKey as any)}
+                </h4>
+                <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed break-words" set:html={renderInlineMarkdown(t(step.descKey as any))} />
+              </div>
+            </header>
+
+            {step.n === 1 && (() => {
+              const code = t('ckWithCodex.setup.step1.code' as any);
+              const label = t('ckWithCodex.setup.step1.hint.label' as any);
+              const body = t('ckWithCodex.setup.step1.hint.body' as any);
+              return (
+                <>
+                  <div class="flex items-center justify-between gap-3 px-4 py-2 bg-slate-50/60 dark:bg-slate-900/40 border-b border-slate-200/70 dark:border-slate-800/80 flex-wrap">
+                    <div class="flex items-center gap-1.5 text-[10px] text-slate-500 dark:text-slate-500 font-mono uppercase tracking-[0.18em]">
+                      <span class="inline-block w-2 h-2 rounded-full bg-rose-400/70" aria-hidden="true"></span>
+                      <span class="inline-block w-2 h-2 rounded-full bg-amber-400/70" aria-hidden="true"></span>
+                      <span class="inline-block w-2 h-2 rounded-full bg-emerald-400/70" aria-hidden="true"></span>
+                      <span class="ml-1">shell</span>
+                    </div>
+                    <div class="inline-flex items-center gap-1.5 min-w-0">
+                      <span class={`shrink-0 px-1.5 py-px rounded text-[9px] font-bold uppercase tracking-[0.14em] ${a.tagBg}`}>{label}</span>
+                      <span class="text-[11px] text-slate-600 dark:text-slate-400 font-mono break-words [overflow-wrap:anywhere]" set:html={renderInlineMarkdown(body)} />
+                    </div>
+                  </div>
+                  <div class="relative">
+                    <pre class={PRE_LG}><code set:html={renderShellSnippet(code)} /></pre>
+                    <button class={COPY_BTN_LG} data-code={stripShellComments(code)} aria-label="Copy">
+                      <svg class={COPY_ICON_LG} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                      <svg class={CHECK_ICON_LG} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    </button>
+                  </div>
+                </>
+              );
+            })()}
+
+            {step.n === 2 && (
+              <div class="grid md:grid-cols-2 md:grid-rows-[auto_auto_1fr_auto] divide-y md:divide-y-0 md:divide-x divide-slate-200/70 dark:divide-slate-800/80">
+                <div class="p-5 min-w-0 flex flex-col gap-3 md:grid md:grid-rows-subgrid md:row-span-4">
+                  <div class="flex items-center gap-2.5">
+                    <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-200">
+                      <LayoutDashboard class="w-3.5 h-3.5" stroke-width={2.2} />
+                    </span>
+                    <span class={`${SUB_LABEL} text-violet-700 dark:text-violet-300`}>{t('ckWithCodex.setup.step2.optionA.label' as any)}</span>
+                  </div>
+                  <h5 class={SUB_TITLE}>{t('ckWithCodex.setup.step2.optionA.title' as any)}</h5>
+                  <p class={SUB_BODY} set:html={renderInlineMarkdown(t('ckWithCodex.setup.step2.optionA.body' as any))} />
+                  {(() => { const code = t('ckWithCodex.setup.step2.optionA.code' as any); return (
+                    <div class={`${CODE_FRAME} h-full flex flex-col`}>
+                      <pre class={`${PRE_SM} flex-1 m-0`}><code set:html={renderShellSnippet(code)} /></pre>
+                      <button class={COPY_BTN_SM} data-code={stripShellComments(code)} aria-label="Copy">
+                        <svg class={COPY_ICON_SM} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                        <svg class={CHECK_ICON_SM} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                      </button>
+                    </div>
+                  ); })()}
+                </div>
+                <div class="p-5 min-w-0 flex flex-col gap-3 md:grid md:grid-rows-subgrid md:row-span-4">
+                  <div class="flex items-center gap-2.5">
+                    <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-emerald-100 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-200">
+                      <Terminal class="w-3.5 h-3.5" stroke-width={2.2} />
+                    </span>
+                    <span class={`${SUB_LABEL} text-emerald-700 dark:text-emerald-300`}>{t('ckWithCodex.setup.step2.optionB.label' as any)}</span>
+                  </div>
+                  <h5 class={SUB_TITLE}>{t('ckWithCodex.setup.step2.optionB.title' as any)}</h5>
+                  <p class={SUB_BODY} set:html={renderInlineMarkdown(t('ckWithCodex.setup.step2.optionB.body' as any))} />
+                  {(() => { const code = t('ckWithCodex.setup.step2.optionB.code' as any); return (
+                    <div class={`${CODE_FRAME} h-full flex flex-col`}>
+                      <pre class={`${PRE_SM} flex-1 m-0`}><code set:html={renderShellSnippet(code)} /></pre>
+                      <button class={COPY_BTN_SM} data-code={stripShellComments(code)} aria-label="Copy">
+                        <svg class={COPY_ICON_SM} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                        <svg class={CHECK_ICON_SM} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                      </button>
+                    </div>
+                  ); })()}
+                </div>
+              </div>
+            )}
+
+            {step.n === 3 && (() => {
+              const code = t('ckWithCodex.setup.step3.code' as any);
+              const label = t('ckWithCodex.setup.step3.hint.label' as any);
+              const body = t('ckWithCodex.setup.step3.hint.body' as any);
+              return (
+                <>
+                  <div class="flex items-center justify-between gap-3 px-4 py-2 bg-slate-50/60 dark:bg-slate-900/40 border-b border-slate-200/70 dark:border-slate-800/80 flex-wrap">
+                    <div class="flex items-center gap-1.5 text-[10px] text-slate-500 dark:text-slate-500 font-mono uppercase tracking-[0.18em]">
+                      <span class="inline-block w-2 h-2 rounded-full bg-rose-400/70" aria-hidden="true"></span>
+                      <span class="inline-block w-2 h-2 rounded-full bg-amber-400/70" aria-hidden="true"></span>
+                      <span class="inline-block w-2 h-2 rounded-full bg-emerald-400/70" aria-hidden="true"></span>
+                      <span class="ml-1">shell</span>
+                    </div>
+                    <div class="inline-flex items-center gap-1.5 min-w-0">
+                      <span class={`shrink-0 px-1.5 py-px rounded text-[9px] font-bold uppercase tracking-[0.14em] ${a.tagBg}`}>{label}</span>
+                      <span class="text-[11px] text-slate-600 dark:text-slate-400 font-mono break-words [overflow-wrap:anywhere]" set:html={renderInlineMarkdown(body)} />
+                    </div>
+                  </div>
+                  <div class="relative">
+                    <pre class={PRE_LG}><code set:html={renderShellSnippet(code)} /></pre>
+                    <button class={COPY_BTN_LG} data-code={stripShellComments(code)} aria-label="Copy">
+                      <svg class={COPY_ICON_LG} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                      <svg class={CHECK_ICON_LG} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    </button>
+                  </div>
+                </>
+              );
+            })()}
+
+            {step.n === 4 && (
+              <>
+                <div class="px-5 py-4 bg-amber-50/70 dark:bg-amber-950/20 border-b border-amber-200/50 dark:border-amber-800/30">
+                  <div class="flex items-start gap-3 min-w-0">
+                    <div class="shrink-0 w-8 h-8 rounded-lg bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-200 border border-amber-300/80 dark:border-amber-400/40 flex items-center justify-center">
+                      <AlertTriangle class="w-4 h-4" stroke-width={2.2} />
+                    </div>
+                    <div class="min-w-0 flex-1 space-y-1.5">
+                      <div class="flex items-center gap-2 flex-wrap">
+                        <span class="inline-flex items-center rounded-full border bg-amber-100 dark:bg-amber-500/15 text-amber-800 dark:text-amber-200 border-amber-300/70 dark:border-amber-700/60 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.14em]">
+                          {t('ckWithCodex.setup.step4.warning.label' as any)}
+                        </span>
+                        <h5 class="text-sm font-bold text-amber-900 dark:text-amber-100 leading-snug min-w-0 break-words" set:html={renderInlineMarkdown(t('ckWithCodex.setup.step4.warning.title' as any))} />
+                      </div>
+                      <div class="space-y-2.5">
+                        <div class="grid grid-cols-[auto_1fr_1fr] gap-x-3 gap-y-1.5 text-[12px] leading-relaxed">
+                          <div class="text-[10px] uppercase tracking-[0.14em] font-bold text-amber-800/70 dark:text-amber-300/60">Flag</div>
+                          <div class="text-[10px] uppercase tracking-[0.14em] font-bold text-amber-800/70 dark:text-amber-300/60">Source (read)</div>
+                          <div class="text-[10px] uppercase tracking-[0.14em] font-bold text-amber-800/70 dark:text-amber-300/60">Destination (write)</div>
+
+                          <div class="text-amber-900/85 dark:text-amber-100/80 italic">no flag</div>
+                          <div class="text-amber-900 dark:text-amber-100 break-words" set:html={renderInlineMarkdown('CWD has `.claude/*`', 'slate')} />
+                          <div class="text-amber-900 dark:text-amber-100 break-words" set:html={renderInlineMarkdown('`.codex/*` <span class="text-amber-700/70 dark:text-amber-300/60">— project-local</span>', 'slate')} />
+
+                          <div class="text-amber-900 dark:text-amber-100 break-words" set:html={renderInlineMarkdown('`-g`', 'slate')} />
+                          <div class="text-amber-900 dark:text-amber-100 break-words" set:html={renderInlineMarkdown('CWD has `.claude/*` <span class="text-amber-700/70 dark:text-amber-300/60">(upstream bug)</span>', 'slate')} />
+                          <div class="text-amber-900 dark:text-amber-100 break-words" set:html={renderInlineMarkdown('`~/.codex/*` <span class="text-amber-700/70 dark:text-amber-300/60">— global</span>', 'slate')} />
+                        </div>
+                        <p class="text-[12px] text-amber-900/85 dark:text-amber-100/80 leading-relaxed pt-2 border-t border-amber-300/40 dark:border-amber-700/30 break-words" set:html={renderInlineMarkdown(t('ckWithCodex.setup.step4.warning.tip' as any))} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {(() => {
+                  const code = t('ckWithCodex.setup.step4.code' as any);
+                  const label = t('ckWithCodex.setup.step4.init.label' as any);
+                  const body = t('ckWithCodex.setup.step4.init.body' as any);
+                  return (
+                    <>
+                      <div class="flex items-center justify-between gap-3 px-4 py-2 bg-slate-50/60 dark:bg-slate-900/40 border-b border-slate-200/70 dark:border-slate-800/80 flex-wrap">
+                        <div class="flex items-center gap-1.5 text-[10px] text-slate-500 dark:text-slate-500 font-mono uppercase tracking-[0.18em]">
+                          <span class="inline-block w-2 h-2 rounded-full bg-rose-400/70" aria-hidden="true"></span>
+                          <span class="inline-block w-2 h-2 rounded-full bg-amber-400/70" aria-hidden="true"></span>
+                          <span class="inline-block w-2 h-2 rounded-full bg-emerald-400/70" aria-hidden="true"></span>
+                          <span class="ml-1">shell</span>
+                        </div>
+                        <div class="inline-flex items-center gap-1.5 min-w-0">
+                          <span class={`shrink-0 px-1.5 py-px rounded text-[9px] font-bold uppercase tracking-[0.14em] ${a.tagBg}`}>{label}</span>
+                          <span class="text-[11px] text-slate-600 dark:text-slate-400 font-mono break-words [overflow-wrap:anywhere]" set:html={renderInlineMarkdown(body)} />
+                        </div>
+                      </div>
+                      <div class="relative">
+                        <pre class={PRE_LG}><code set:html={renderShellSnippet(code)} /></pre>
+                        <button class={COPY_BTN_LG} data-code={stripShellComments(code)} aria-label="Copy">
+                          <svg class={COPY_ICON_LG} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                          <svg class={CHECK_ICON_LG} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        </button>
+                      </div>
+                    </>
+                  );
+                })()}
+                <div class="grid md:grid-cols-2 border-t border-slate-200/70 dark:border-slate-800/80 divide-y md:divide-y-0 md:divide-x divide-slate-200/70 dark:divide-slate-800/80">
+                  <div class="p-5 space-y-3 bg-amber-50/40 dark:bg-amber-950/10 min-w-0">
+                    <div class="flex items-center gap-2.5">
+                      <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-amber-100 dark:bg-amber-500/15 text-amber-700 dark:text-amber-200">
+                        <Eye class="w-3.5 h-3.5" stroke-width={2.2} />
+                      </span>
+                      <span class={`${SUB_LABEL} text-amber-700 dark:text-amber-300`}>{t('ckWithCodex.setup.step4.dryRun.label' as any)}</span>
+                    </div>
+                    <p class={SUB_BODY} set:html={renderInlineMarkdown(t('ckWithCodex.setup.step4.dryRun.body' as any))} />
+                    {(() => { const code = t('ckWithCodex.setup.step4.dryRun.code' as any); return (
+                      <div class={CODE_FRAME}>
+                        <pre class={PRE_SM}><code set:html={renderShellSnippet(code)} /></pre>
+                        <button class={COPY_BTN_SM} data-code={stripShellComments(code)} aria-label="Copy">
+                          <svg class={COPY_ICON_SM} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                          <svg class={CHECK_ICON_SM} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        </button>
+                      </div>
+                    ); })()}
+                  </div>
+                  <div class="p-5 space-y-3 bg-emerald-50/40 dark:bg-emerald-950/10 min-w-0">
+                    <div class="flex items-center gap-2.5">
+                      <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-emerald-100 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-200">
+                        <Check class="w-3.5 h-3.5" stroke-width={2.6} />
+                      </span>
+                      <span class={`${SUB_LABEL} text-emerald-700 dark:text-emerald-300`}>{t('ckWithCodex.setup.step4.apply.label' as any)}</span>
+                    </div>
+                    <p class={SUB_BODY} set:html={renderInlineMarkdown(t('ckWithCodex.setup.step4.apply.body' as any))} />
+                    {(() => { const code = t('ckWithCodex.setup.step4.apply.code' as any); return (
+                      <div class={CODE_FRAME}>
+                        <pre class={PRE_SM}><code set:html={renderShellSnippet(code)} /></pre>
+                        <button class={COPY_BTN_SM} data-code={stripShellComments(code)} aria-label="Copy">
+                          <svg class={COPY_ICON_SM} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                          <svg class={CHECK_ICON_SM} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        </button>
+                      </div>
+                    ); })()}
+                  </div>
+                </div>
+              </>
+            )}
+
+            {step.n === 5 && (
+              <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-200/70 dark:divide-slate-800/80">
+                <div class="p-5 space-y-3 min-w-0 flex flex-col">
+                  <div class="flex items-center gap-2.5">
+                    <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-amber-100 dark:bg-amber-500/15 text-amber-700 dark:text-amber-200">
+                      <MessageSquare class="w-3.5 h-3.5" stroke-width={2.2} />
+                    </span>
+                    <span class={`${SUB_LABEL} text-amber-700 dark:text-amber-300`}>{t('ckWithCodex.setup.step5.interactive.label' as any)}</span>
+                  </div>
+                  <h5 class={SUB_TITLE}>{t('ckWithCodex.setup.step5.interactive.title' as any)}</h5>
+                  <p class={SUB_BODY} set:html={renderInlineMarkdown(t('ckWithCodex.setup.step5.interactive.body' as any))} />
+                  {(() => { const code = t('ckWithCodex.setup.step5.interactive.code' as any); return (
+                    <div class={CODE_FRAME}>
+                      <pre class={PRE_SM}><code set:html={renderShellSnippet(code)} /></pre>
+                      <button class={COPY_BTN_SM} data-code={stripShellComments(code)} aria-label="Copy">
+                        <svg class={COPY_ICON_SM} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                        <svg class={CHECK_ICON_SM} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                      </button>
+                    </div>
+                  ); })()}
+                </div>
+                <div class="p-5 space-y-3 min-w-0 flex flex-col">
+                  <div class="flex items-center gap-2.5">
+                    <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-200">
+                      <Zap class="w-3.5 h-3.5" stroke-width={2.2} />
+                    </span>
+                    <span class={`${SUB_LABEL} text-violet-700 dark:text-violet-300`}>{t('ckWithCodex.setup.step5.exec.label' as any)}</span>
+                  </div>
+                  <h5 class={`${SUB_TITLE} break-words`} set:html={renderInlineMarkdown(t('ckWithCodex.setup.step5.exec.title' as any))} />
+                  <p class={SUB_BODY} set:html={renderInlineMarkdown(t('ckWithCodex.setup.step5.exec.body' as any))} />
+                  {(() => { const code = t('ckWithCodex.setup.step5.exec.code' as any); return (
+                    <div class={CODE_FRAME}>
+                      <pre class={PRE_SM}><code set:html={renderShellSnippet(code)} /></pre>
+                      <button class={COPY_BTN_SM} data-code={stripShellComments(code)} aria-label="Copy">
+                        <svg class={COPY_ICON_SM} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                        <svg class={CHECK_ICON_SM} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                      </button>
+                    </div>
+                  ); })()}
+                </div>
+              </div>
+            )}
+          </article>
+        </li>
+      );
+    })}
+  </ol>
+</section>

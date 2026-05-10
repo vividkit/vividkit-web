@@ -1,0 +1,17 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import CkWithCodexGuide from '@/components/guides/CkWithCodexGuide.astro';
+import { useTranslations } from '@/i18n/utils';
+import type { Language } from '@/i18n';
+
+const lang: Language = 'en';
+const t = useTranslations(lang);
+---
+
+<GuidesLayout
+  title={`${t('ckWithCodex.hero.title')} - ${t('site.title')}`}
+  description={t('ckWithCodex.hero.tldr')}
+  activeTab="ck-with-codex"
+>
+  <CkWithCodexGuide lang="en" />
+</GuidesLayout>

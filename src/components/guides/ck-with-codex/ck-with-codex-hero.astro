@@ -1,0 +1,45 @@
+---
+import { useTranslations } from '@/i18n/utils';
+import { useTranslatedPath, type Language } from '@/i18n';
+import { renderInlineMarkdown } from '../coexistence/inline-code';
+import { ArrowRight } from 'lucide-astro';
+
+interface Props { lang: Language }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+---
+
+<div class="relative overflow-hidden rounded-3xl border border-slate-200/70 dark:border-slate-800 bg-gradient-to-br from-slate-50 via-white to-violet-50/40 dark:from-slate-950 dark:via-slate-950 dark:to-violet-950/20 p-6 md:p-10">
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(139,92,246,0.10),transparent_45%)] dark:bg-[radial-gradient(circle_at_top_right,rgba(167,139,250,0.10),transparent_45%)]"></div>
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(16,185,129,0.08),transparent_45%)]"></div>
+
+  <div class="relative space-y-6 max-w-3xl">
+    <span class="inline-flex items-center gap-1.5 rounded-full bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300 text-xs font-semibold uppercase tracking-wider px-3 py-1 border border-violet-200 dark:border-violet-800/60">
+      <span class="h-1.5 w-1.5 rounded-full bg-violet-500"></span>
+      {t('ckWithCodex.hero.eyebrow')}
+    </span>
+    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white tracking-tight leading-tight">
+      {t('ckWithCodex.hero.title')}
+    </h2>
+    <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed" set:html={renderInlineMarkdown(t('ckWithCodex.hero.tldr'), 'violet')} />
+  </div>
+</div>
+
+<div class="rounded-2xl border border-sky-200/80 dark:border-sky-800/60 bg-sky-50/60 dark:bg-sky-950/20 p-5 md:p-6">
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <div class="space-y-1 min-w-0">
+      <h4 class="text-base font-bold text-slate-900 dark:text-white">
+        {t('ckWithCodex.why.cta.title')}
+      </h4>
+      <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed" set:html={renderInlineMarkdown(t('ckWithCodex.why.cta.body'), 'sky')} />
+    </div>
+    <a
+      href={translatePath('/guides/ccs')}
+      class="inline-flex w-fit shrink-0 items-center gap-2 rounded-lg bg-sky-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-sky-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-950"
+    >
+      {t('ckWithCodex.why.cta.link')}
+      <ArrowRight class="h-4 w-4" stroke-width={2.2} />
+    </a>
+  </div>
+</div>
