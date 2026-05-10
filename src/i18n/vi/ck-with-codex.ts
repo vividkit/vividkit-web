@@ -151,12 +151,12 @@ export const ck_with_codex = {
   'ckWithCodex.aliases.row4.useWhen': 'Bạn muốn đường đi mỏng hơn, bỏ qua CCS Runtime và nói thẳng với CLIProxy. Cần `CLIPROXY_API_KEY=ccs-internal-managed`; pin `CODEX_HOME` về `~/.codex` trừ khi đã set `CCSXP_CODEX_HOME`.',
 
   // Workflows
-  'ckWithCodex.workflows.heading': 'Workflow khớp gọn với Codex',
+  'ckWithCodex.workflows.heading': 'Workflow chạy mượt trên Codex như trên Claude Code',
   'ckWithCodex.workflows.intro':
     'Các chuỗi ClaudeKit này hoạt động tốt nhất sau khi `ck migrate -a codex` đã cài skills, agents, rules, prompt cũ, và hooks tương thích Codex.',
   'ckWithCodex.workflows.flow1.label': 'Vòng build',
   'ckWithCodex.workflows.flow1.title': 'Plan → Cook → Test',
-  'ckWithCodex.workflows.flow1.desc': 'Vòng build kinh điển. `$ck:plan` phác design, `$ck:cook` triển khai, `$ck:test` xác minh. Codex thường nhanh ở bước cook.',
+  'ckWithCodex.workflows.flow1.desc': 'Vòng build quen thuộc. `$ck:plan` lên design, `$ck:cook` code, `$ck:test` kiểm tra. Codex thường chạy nhanh ở bước cook.',
   'ckWithCodex.workflows.flow2.label': 'Vòng triage',
   'ckWithCodex.workflows.flow2.title': 'Fix → Test → Review',
   'ckWithCodex.workflows.flow2.desc': '`$ck:fix` triage một test hoặc log lỗi, sau đó `$ck:test` chạy lại và `$ck:review` audit diff trước khi commit.',
