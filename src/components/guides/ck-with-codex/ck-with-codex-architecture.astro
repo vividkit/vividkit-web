@@ -1,0 +1,136 @@
+---
+import { useTranslations } from '@/i18n/utils';
+import type { Language } from '@/i18n';
+import { renderInlineMarkdown } from '../coexistence/inline-code';
+import { FolderTree, GitBranch, Server, Terminal, BookOpenText, ShieldCheck, SquareTerminal } from 'lucide-astro';
+
+interface Props { lang: Language }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const lanes = [
+  { icon: FolderTree, titleKey: 'ckWithCodex.arch.lane1.title', descKey: 'ckWithCodex.arch.lane1.desc', accent: 'emerald', label: 'SOURCE' },
+  { icon: GitBranch, titleKey: 'ckWithCodex.arch.lane2.title', descKey: 'ckWithCodex.arch.lane2.desc', accent: 'violet', label: 'MIGRATE' },
+  { icon: Server, titleKey: 'ckWithCodex.arch.lane3.title', descKey: 'ckWithCodex.arch.lane3.desc', accent: 'sky', label: 'ROUTE' },
+  { icon: Terminal, titleKey: 'ckWithCodex.arch.lane4.title', descKey: 'ckWithCodex.arch.lane4.desc', accent: 'amber', label: 'RUNTIME' },
+] as const;
+
+const accentMap: Record<string, { ring: string; chip: string; iconBox: string }> = {
+  emerald: {
+    ring: 'border-emerald-300/80 dark:border-emerald-700/70',
+    chip: 'bg-emerald-500',
+    iconBox: 'bg-emerald-100 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-200 border-emerald-300/80 dark:border-emerald-400/40 shadow-emerald-500/20',
+  },
+  violet: {
+    ring: 'border-violet-300/80 dark:border-violet-700/70',
+    chip: 'bg-violet-500',
+    iconBox: 'bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-200 border-violet-300/80 dark:border-violet-400/40 shadow-violet-500/20',
+  },
+  sky: {
+    ring: 'border-sky-300/80 dark:border-sky-700/70',
+    chip: 'bg-sky-500',
+    iconBox: 'bg-sky-100 dark:bg-sky-500/15 text-sky-700 dark:text-sky-200 border-sky-300/80 dark:border-sky-400/40 shadow-sky-500/20',
+  },
+  amber: {
+    ring: 'border-amber-300/80 dark:border-amber-700/70',
+    chip: 'bg-amber-500',
+    iconBox: 'bg-amber-100 dark:bg-amber-500/15 text-amber-700 dark:text-amber-200 border-amber-300/80 dark:border-amber-400/40 shadow-amber-500/20',
+  },
+};
+---
+
+<section class="space-y-6">
+  <div class="space-y-2">
+    <h3 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
+      {t('ckWithCodex.arch.heading')}
+    </h3>
+    <p class="text-base text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed" set:html={renderInlineMarkdown(t('ckWithCodex.arch.intro'))} />
+  </div>
+
+  <div class="relative rounded-2xl border border-slate-200/70 dark:border-slate-800 bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 p-5 md:p-7 overflow-hidden">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-5 items-stretch">
+      {lanes.map((lane) => {
+        const a = accentMap[lane.accent];
+        const Icon = lane.icon;
+        return (
+          <article class={`relative rounded-xl border-2 ${a.ring} bg-white/75 dark:bg-slate-900/65 p-5 min-h-[210px] flex flex-col gap-4 shadow-sm`}>
+            <div class={`absolute -top-2.5 left-4 inline-flex items-center rounded-full ${a.chip} text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 shadow-md`}>
+              {lane.label}
+            </div>
+
+            <div class="flex items-start gap-3">
+              <div class={`shrink-0 w-11 h-11 rounded-lg border flex items-center justify-center shadow-lg ${a.iconBox}`}>
+                <Icon class="w-5.5 h-5.5" stroke-width={2.1} />
+              </div>
+              <h4 class="pt-1 text-base font-bold text-slate-900 dark:text-white leading-snug">{t(lane.titleKey)}</h4>
+            </div>
+
+            <div class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed" set:html={renderInlineMarkdown(t(lane.descKey))} />
+          </article>
+        );
+      })}
+    </div>
+
+    <div class="mt-6 pt-5 border-t border-dashed border-slate-200 dark:border-slate-800 space-y-3">
+      <div class="flex flex-wrap items-center gap-2 text-[11px] font-mono text-slate-500 dark:text-slate-400">
+        <span class="text-[10px] font-sans font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mr-1">Setup <span class="font-normal normal-case tracking-normal">(per source project)</span></span>
+        <span class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700">ck migrate -a codex</span>
+        <span class="text-slate-400 dark:text-slate-500" aria-hidden="true">→</span>
+        <span class="px-2 py-1 rounded bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/60 text-emerald-700 dark:text-emerald-300">~/.codex/{`{prompts,agents,hooks}`} + ~/.agents/skills</span>
+      </div>
+      <div class="flex flex-wrap items-center gap-2 text-[11px] font-mono text-slate-500 dark:text-slate-400">
+        <span class="text-[10px] font-sans font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mr-1">Runtime <span class="font-normal normal-case tracking-normal">(per launch)</span></span>
+        <span class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700">ccsx codex</span>
+        <span class="text-slate-400 dark:text-slate-500" aria-hidden="true">→</span>
+        <span class="px-2 py-1 rounded bg-violet-50 dark:bg-violet-950/30 border border-violet-200 dark:border-violet-800/60 text-violet-700 dark:text-violet-300">CCS injects -c model_provider="ccs_runtime"</span>
+        <span class="text-slate-400 dark:text-slate-500" aria-hidden="true">→</span>
+        <span class="px-2 py-1 rounded bg-sky-50 dark:bg-sky-950/30 border border-sky-200 dark:border-sky-800/60 text-sky-700 dark:text-sky-300">:8317/api/provider/codex</span>
+      </div>
+    </div>
+  </div>
+
+  <article class="rounded-2xl border border-violet-200 dark:border-violet-800/60 bg-violet-50/60 dark:bg-violet-950/20 p-5 md:p-6 space-y-5 overflow-hidden">
+    <div class="flex flex-col md:flex-row md:items-start gap-4">
+      <div class="w-11 h-11 shrink-0 rounded-xl bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-200 flex items-center justify-center">
+        <BookOpenText class="w-5 h-5" stroke-width={2.1} />
+      </div>
+      <div class="space-y-1.5 min-w-0">
+        <h4 class="text-base md:text-lg font-bold text-slate-900 dark:text-white">{t('ckWithCodex.interactive.ps.title')}</h4>
+        <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed" set:html={renderInlineMarkdown(t('ckWithCodex.interactive.ps.intro'))} />
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-4">
+      <div class="rounded-xl border border-slate-200/70 dark:border-slate-800 bg-white/70 dark:bg-slate-900/45 p-4 min-w-0">
+        <div class="flex items-start gap-3">
+          <div class="w-9 h-9 shrink-0 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 flex items-center justify-center">
+            <SquareTerminal class="w-4.5 h-4.5" stroke-width={2.1} />
+          </div>
+          <div class="space-y-1.5 min-w-0">
+            <span class="inline-flex rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider">{t('ckWithCodex.interactive.ps.prompt.label')}</span>
+            <h5 class="text-sm font-bold text-slate-900 dark:text-white">{t('ckWithCodex.interactive.ps.prompt.title')}</h5>
+            <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed" set:html={renderInlineMarkdown(t('ckWithCodex.interactive.ps.prompt.body'))} />
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-xl border border-emerald-200/80 dark:border-emerald-800/60 bg-emerald-50/60 dark:bg-emerald-950/20 p-4 min-w-0">
+        <div class="flex items-start gap-3">
+          <div class="w-9 h-9 shrink-0 rounded-lg bg-emerald-100 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-200 flex items-center justify-center">
+            <ShieldCheck class="w-4.5 h-4.5" stroke-width={2.1} />
+          </div>
+          <div class="space-y-1.5 min-w-0">
+            <span class="inline-flex rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider">{t('ckWithCodex.interactive.ps.skill.label')}</span>
+            <h5 class="text-sm font-bold text-slate-900 dark:text-white">{t('ckWithCodex.interactive.ps.skill.title')}</h5>
+            <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed" set:html={renderInlineMarkdown(t('ckWithCodex.interactive.ps.skill.body'))} />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="space-y-3">
+      <p class="rounded-xl border border-violet-200/80 dark:border-violet-800/60 bg-white/60 dark:bg-slate-900/40 p-4 text-sm text-slate-700 dark:text-slate-300 leading-relaxed" set:html={renderInlineMarkdown(t('ckWithCodex.interactive.ps.relationship'), 'violet')} />
+      <p class="rounded-xl border border-sky-200/80 dark:border-sky-800/60 bg-sky-50/60 dark:bg-sky-950/20 p-4 text-sm text-slate-700 dark:text-slate-300 leading-relaxed" set:html={renderInlineMarkdown(t('ckWithCodex.interactive.ps.agentScope'), 'sky')} />
+    </div>
+  </article>
+</section>

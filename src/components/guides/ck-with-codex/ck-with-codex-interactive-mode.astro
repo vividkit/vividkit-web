@@ -1,0 +1,154 @@
+---
+import { useTranslations } from '@/i18n/utils';
+import type { Language } from '@/i18n';
+import { renderInlineMarkdown } from '../coexistence/inline-code';
+import { MessageSquareText } from 'lucide-astro';
+import {
+  PRE_LG, COPY_BTN_LG, COPY_ICON_LG, CHECK_ICON_LG,
+  renderShellSnippet, stripShellComments,
+} from './shell-snippet-helpers';
+
+const PROMPT_EXAMPLE = '$ck:plan design the billing retry flow\n$ck:cook plans/260509-1231-billing-retry/';
+
+interface Props { lang: Language }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const aliasRows = [
+  {
+    cmd: 'ccsx',
+    routesKey: 'ckWithCodex.aliases.row1.routes',
+    useWhenKey: 'ckWithCodex.aliases.row1.useWhen',
+    accent: 'sky',
+    recommended: false,
+  },
+  {
+    cmd: 'ccsx codex',
+    routesKey: 'ckWithCodex.aliases.row2.routes',
+    useWhenKey: 'ckWithCodex.aliases.row2.useWhen',
+    accent: 'violet',
+    recommended: true,
+  },
+  {
+    cmd: 'ccsxp',
+    routesKey: 'ckWithCodex.aliases.row4.routes',
+    useWhenKey: 'ckWithCodex.aliases.row4.useWhen',
+    accent: 'amber',
+    recommended: false,
+  },
+] as const;
+
+const aliasAccent: Record<string, { dot: string; cmd: string }> = {
+  violet: { dot: 'bg-violet-500', cmd: 'text-violet-700 dark:text-violet-300 bg-violet-50 dark:bg-violet-950/40 border-violet-200 dark:border-violet-800/60' },
+  sky: { dot: 'bg-sky-500', cmd: 'text-sky-700 dark:text-sky-300 bg-sky-50 dark:bg-sky-950/40 border-sky-200 dark:border-sky-800/60' },
+  amber: { dot: 'bg-amber-500', cmd: 'text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/40 border-amber-200 dark:border-amber-800/60' },
+};
+---
+
+<section id="launching" class="space-y-6">
+  <div class="space-y-2">
+    <h3 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
+      {t('ckWithCodex.interactive.heading')}
+    </h3>
+    <p class="text-base text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed" set:html={renderInlineMarkdown(t('ckWithCodex.interactive.intro'))} />
+  </div>
+
+  <div class="space-y-3">
+    <h4 class="text-lg font-bold text-slate-900 dark:text-white">{t('ckWithCodex.aliases.heading')}</h4>
+    <p class="text-sm text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
+      {t('ckWithCodex.aliases.intro')}
+    </p>
+
+    <div class="hidden md:block rounded-2xl border border-slate-200/70 dark:border-slate-800 overflow-hidden bg-white/60 dark:bg-slate-900/40">
+      <table class="w-full text-left text-sm">
+        <thead class="bg-slate-100/70 dark:bg-slate-800/60 text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          <tr>
+            <th class="px-5 py-3 font-semibold w-[18%]">{t('ckWithCodex.aliases.col.command')}</th>
+            <th class="px-5 py-3 font-semibold w-[37%]">{t('ckWithCodex.aliases.col.routes')}</th>
+            <th class="px-5 py-3 font-semibold">{t('ckWithCodex.aliases.col.useWhen')}</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200/70 dark:divide-slate-800">
+          {aliasRows.map((r) => {
+            const a = aliasAccent[r.accent];
+            return (
+              <tr class="align-top hover:bg-slate-50 dark:hover:bg-slate-900/70 transition-colors">
+                <td class="px-5 py-4">
+                  <div class="flex items-center gap-2">
+                    <span class={`h-2 w-2 rounded-full ${a.dot}`}></span>
+                    <code class={`px-2 py-1 rounded-md border font-mono text-[12.5px] ${a.cmd}`}>{r.cmd}</code>
+                  </div>
+                </td>
+                <td class="px-5 py-4 text-slate-600 dark:text-slate-300 leading-relaxed" set:html={renderInlineMarkdown(t(r.routesKey as any))} />
+                <td class="px-5 py-4 text-slate-600 dark:text-slate-300 leading-relaxed">
+                  {r.recommended && (
+                    <span class="float-right -mt-4 -mr-5 ml-2 mb-1 inline-flex items-center gap-1 px-1.5 py-0.5 rounded-bl text-[8.5px] font-semibold uppercase tracking-[0.1em] text-emerald-600/80 dark:text-emerald-400/70 bg-emerald-50/80 dark:bg-emerald-950/40 border-l border-b border-emerald-200/60 dark:border-emerald-800/40">
+                      <span class="h-1 w-1 rounded-full bg-emerald-500/70"></span>
+                      {t('ckWithCodex.aliases.recommended')}
+                    </span>
+                  )}
+                  <span set:html={renderInlineMarkdown(t(r.useWhenKey as any))} />
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+
+    <p class="text-[12.5px] text-slate-500 dark:text-slate-400 leading-relaxed pt-1" set:html={renderInlineMarkdown(t('ckWithCodex.aliases.footnote'))} />
+
+    <div class="md:hidden space-y-3">
+      {aliasRows.map((r) => {
+        const a = aliasAccent[r.accent];
+        return (
+          <article class="relative rounded-xl border border-slate-200/70 dark:border-slate-800 bg-white/60 dark:bg-slate-900/40 p-4 space-y-2.5">
+            <div class="flex items-center gap-2">
+              <span class={`h-2 w-2 rounded-full ${a.dot}`}></span>
+              <code class={`px-2 py-1 rounded-md border font-mono text-[12.5px] ${a.cmd}`}>{r.cmd}</code>
+            </div>
+            <dl class="space-y-1.5 text-[13px]">
+              <div>
+                <dt class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">{t('ckWithCodex.aliases.col.routes')}</dt>
+                <dd class="text-slate-700 dark:text-slate-300" set:html={renderInlineMarkdown(t(r.routesKey as any))} />
+              </div>
+              <div>
+                <dt class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">{t('ckWithCodex.aliases.col.useWhen')}</dt>
+                <dd class="text-slate-700 dark:text-slate-300" set:html={renderInlineMarkdown(t(r.useWhenKey as any))} />
+              </div>
+            </dl>
+            {r.recommended && (
+              <span class="absolute top-0 right-0 inline-flex items-center gap-1 px-1.5 py-0.5 rounded-tr-xl rounded-bl text-[8.5px] font-semibold uppercase tracking-[0.1em] text-emerald-600/80 dark:text-emerald-400/70 bg-emerald-50/80 dark:bg-emerald-950/40 border-l border-b border-emerald-200/60 dark:border-emerald-800/40">
+                <span class="h-1 w-1 rounded-full bg-emerald-500/70"></span>
+                {t('ckWithCodex.aliases.recommended')}
+              </span>
+            )}
+          </article>
+        );
+      })}
+    </div>
+  </div>
+
+  <article class="rounded-2xl border border-slate-200/70 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/45 p-5 md:p-6 flex flex-col sm:flex-row gap-4 min-w-0 overflow-hidden">
+    <div class="w-11 h-11 shrink-0 rounded-xl bg-slate-200/80 dark:bg-slate-800 text-slate-700 dark:text-slate-200 flex items-center justify-center">
+      <MessageSquareText class="w-5 h-5" stroke-width={2.1} />
+    </div>
+    <div class="space-y-3 min-w-0 flex-1">
+      <h4 class="text-base font-bold text-slate-900 dark:text-white" set:html={renderInlineMarkdown(t('ckWithCodex.interactive.prompt.title'))} />
+      <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed" set:html={renderInlineMarkdown(t('ckWithCodex.interactive.prompt.body'))} />
+      <div class="relative rounded-lg overflow-hidden ring-1 ring-slate-200/80 dark:ring-slate-800/80">
+        <div class="flex items-center gap-1.5 px-4 py-2 bg-slate-50/60 dark:bg-slate-900/40 border-b border-slate-200/70 dark:border-slate-800/80 text-[10px] text-slate-500 dark:text-slate-500 font-mono uppercase tracking-[0.18em]">
+          <span class="inline-block w-2 h-2 rounded-full bg-rose-400/70" aria-hidden="true"></span>
+          <span class="inline-block w-2 h-2 rounded-full bg-amber-400/70" aria-hidden="true"></span>
+          <span class="inline-block w-2 h-2 rounded-full bg-emerald-400/70" aria-hidden="true"></span>
+          <span class="ml-1">codex repl</span>
+        </div>
+        <pre class={PRE_LG}><code set:html={renderShellSnippet(PROMPT_EXAMPLE, '>')} /></pre>
+        <button class={COPY_BTN_LG} data-code={stripShellComments(PROMPT_EXAMPLE)} aria-label="Copy">
+          <svg class={COPY_ICON_LG} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          <svg class={CHECK_ICON_LG} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        </button>
+      </div>
+    </div>
+  </article>
+</section>

@@ -1,0 +1,151 @@
+---
+import { useTranslations } from '@/i18n/utils';
+import type { Language } from '@/i18n';
+import { renderInlineMarkdown } from '../coexistence/inline-code';
+import { ClipboardList, Wrench, Search, ArrowRight } from 'lucide-astro';
+import {
+  PRE_LG, COPY_BTN_LG, COPY_ICON_LG, CHECK_ICON_LG,
+  renderShellSnippet, stripShellComments,
+} from './shell-snippet-helpers';
+
+interface Props { lang: Language }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const isVi = lang === 'vi';
+const commandsHref = isVi ? '/vi/guides/commands' : '/guides/commands';
+const workflowsHref = isVi ? '/vi/guides/workflows' : '/guides/workflows';
+
+const flows = [
+  {
+    id: 'plan-cook-test',
+    icon: ClipboardList,
+    accent: 'emerald',
+    labelKey: 'ckWithCodex.workflows.flow1.label',
+    titleKey: 'ckWithCodex.workflows.flow1.title',
+    descKey: 'ckWithCodex.workflows.flow1.desc',
+    chain: ['$ck:plan', '$ck:cook', '$ck:test'],
+    sample: "ccsx '$ck:plan add OAuth2 PKCE flow'\nccsx '$ck:cook plans/260509-0807-oauth-pkce/'\nccsx '$ck:test --coverage'",
+  },
+  {
+    id: 'fix-test-review',
+    icon: Wrench,
+    accent: 'sky',
+    labelKey: 'ckWithCodex.workflows.flow2.label',
+    titleKey: 'ckWithCodex.workflows.flow2.title',
+    descKey: 'ckWithCodex.workflows.flow2.desc',
+    chain: ['$ck:fix', '$ck:test', '$ck:review'],
+    sample: "ccsx '$ck:fix flaky billing webhook test'\nccsx '$ck:test billing/'\nccsx '$ck:review --staged'",
+  },
+  {
+    id: 'scout-brainstorm-plan',
+    icon: Search,
+    accent: 'violet',
+    labelKey: 'ckWithCodex.workflows.flow3.label',
+    titleKey: 'ckWithCodex.workflows.flow3.title',
+    descKey: 'ckWithCodex.workflows.flow3.desc',
+    chain: ['$ck:scout', '$ck:brainstorm', '$ck:plan'],
+    sample: "ccsx '$ck:scout where rate-limit logic lives'\nccsx '$ck:brainstorm sliding window vs token bucket'\nccsx '$ck:plan adopt token bucket'",
+  },
+] as const;
+
+const accentMap: Record<string, { ring: string; chip: string; icon: string; chainBg: string }> = {
+  emerald: {
+    ring: 'border-emerald-300/70 dark:border-emerald-700/60',
+    chip: 'bg-emerald-500',
+    icon: 'bg-emerald-100 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-200 border-emerald-300/80 dark:border-emerald-400/40',
+    chainBg: 'bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800/60',
+  },
+  sky: {
+    ring: 'border-sky-300/70 dark:border-sky-700/60',
+    chip: 'bg-sky-500',
+    icon: 'bg-sky-100 dark:bg-sky-500/15 text-sky-700 dark:text-sky-200 border-sky-300/80 dark:border-sky-400/40',
+    chainBg: 'bg-sky-50 dark:bg-sky-950/30 text-sky-700 dark:text-sky-300 border-sky-200 dark:border-sky-800/60',
+  },
+  violet: {
+    ring: 'border-violet-300/70 dark:border-violet-700/60',
+    chip: 'bg-violet-500',
+    icon: 'bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-200 border-violet-300/80 dark:border-violet-400/40',
+    chainBg: 'bg-violet-50 dark:bg-violet-950/30 text-violet-700 dark:text-violet-300 border-violet-200 dark:border-violet-800/60',
+  },
+};
+---
+
+<section class="space-y-6">
+  <div class="space-y-2">
+    <h3 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
+      {t('ckWithCodex.workflows.heading')}
+    </h3>
+    <p class="text-base text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
+      {t('ckWithCodex.workflows.intro')}
+    </p>
+  </div>
+
+  <div class="space-y-5">
+    {flows.map((f) => {
+      const a = accentMap[f.accent];
+      const Icon = f.icon;
+      return (
+        <article id={f.id} class={`relative rounded-2xl border-2 ${a.ring} bg-white/60 dark:bg-slate-900/40 p-6 md:p-7 min-w-0 overflow-x-clip`}>
+          <div class={`absolute -top-3 left-6 inline-flex items-center gap-1.5 rounded-full ${a.chip} text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 shadow-md`}>
+            <span>{t(f.labelKey)}</span>
+          </div>
+
+          <div class="grid md:grid-cols-5 gap-6 mt-1 min-w-0">
+            <div class="md:col-span-2 space-y-3 min-w-0">
+              <div class="flex items-center gap-3">
+                <div class={`w-12 h-12 shrink-0 rounded-xl border flex items-center justify-center shadow-lg ${a.icon}`}>
+                  <Icon class="w-6 h-6" stroke-width={2.1} />
+                </div>
+                <h4 class="text-lg font-bold text-slate-900 dark:text-white leading-snug" set:html={renderInlineMarkdown(t(f.titleKey))} />
+              </div>
+              <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed" set:html={renderInlineMarkdown(t(f.descKey))} />
+              <div class="flex flex-wrap items-center gap-1.5 pt-1">
+                {f.chain.map((step, j) => (
+                  <>
+                    <code class={`px-2 py-1 rounded-md border font-mono text-[11.5px] ${a.chainBg}`}>{step}</code>
+                    {j < f.chain.length - 1 && (
+                      <span class="text-slate-400 dark:text-slate-500" aria-hidden="true">→</span>
+                    )}
+                  </>
+                ))}
+              </div>
+            </div>
+
+            <div class="md:col-span-3 md:self-start relative min-w-0 rounded-lg overflow-hidden ring-1 ring-slate-200/80 dark:ring-slate-800/80">
+              <div class="flex items-center gap-1.5 px-4 py-2 bg-slate-50/60 dark:bg-slate-900/40 border-b border-slate-200/70 dark:border-slate-800/80 text-[10px] text-slate-500 dark:text-slate-500 font-mono uppercase tracking-[0.18em]">
+                <span class="inline-block w-2 h-2 rounded-full bg-rose-400/70" aria-hidden="true"></span>
+                <span class="inline-block w-2 h-2 rounded-full bg-amber-400/70" aria-hidden="true"></span>
+                <span class="inline-block w-2 h-2 rounded-full bg-emerald-400/70" aria-hidden="true"></span>
+                <span class="ml-1">shell · ccsx</span>
+              </div>
+              <pre class={PRE_LG}><code set:html={renderShellSnippet(f.sample)} /></pre>
+              <button class={COPY_BTN_LG} data-code={stripShellComments(f.sample)} aria-label="Copy">
+                <svg class={COPY_ICON_LG} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                <svg class={CHECK_ICON_LG} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              </button>
+            </div>
+          </div>
+        </article>
+      );
+    })}
+  </div>
+
+  <div class="grid sm:grid-cols-2 gap-3 pt-2">
+    <a href={commandsHref} class="group rounded-xl border border-slate-200/70 dark:border-slate-800 bg-white/60 dark:bg-slate-900/40 hover:bg-white dark:hover:bg-slate-900/70 transition-colors p-4 flex items-center justify-between gap-3 min-w-0">
+      <div class="space-y-0.5 min-w-0">
+        <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">{t('ckWithCodex.workflows.outro.cmdsLabel')}</div>
+        <div class="text-sm font-semibold text-slate-900 dark:text-white truncate">{t('ckWithCodex.workflows.outro.cmdsTitle')}</div>
+        <div class="text-xs text-slate-500 dark:text-slate-400 truncate" set:html={renderInlineMarkdown(t('ckWithCodex.workflows.outro.cmdsBody'))} />
+      </div>
+      <ArrowRight class="w-4 h-4 shrink-0 text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200 transition-colors" stroke-width={2.2} />
+    </a>
+    <a href={workflowsHref} class="group rounded-xl border border-slate-200/70 dark:border-slate-800 bg-white/60 dark:bg-slate-900/40 hover:bg-white dark:hover:bg-slate-900/70 transition-colors p-4 flex items-center justify-between gap-3 min-w-0">
+      <div class="space-y-0.5 min-w-0">
+        <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">{t('ckWithCodex.workflows.outro.flowsLabel')}</div>
+        <div class="text-sm font-semibold text-slate-900 dark:text-white truncate">{t('ckWithCodex.workflows.outro.flowsTitle')}</div>
+        <div class="text-xs text-slate-500 dark:text-slate-400 truncate" set:html={renderInlineMarkdown(t('ckWithCodex.workflows.outro.flowsBody'))} />
+      </div>
+      <ArrowRight class="w-4 h-4 shrink-0 text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200 transition-colors" stroke-width={2.2} />
+    </a>
+  </div>
+</section>
