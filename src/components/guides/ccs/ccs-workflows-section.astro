@@ -1,0 +1,193 @@
+---
+// CCSGuide — Best workflows with CCS: curated recipes showing how to route
+// tasks across providers and runtimes for cost / quality / context trade-offs.
+import { getLangFromUrl, type Language } from "@/i18n";
+import { useTranslations } from "@/i18n/utils";
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+---
+
+<!-- Best Workflows Section -->
+<div id="workflows" class="glass-card rounded-xl border-slate-200 dark:border-slate-700 overflow-hidden scroll-mt-24">
+  <div class="p-6 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border-b border-slate-200 dark:border-slate-800">
+    <div class="flex items-center gap-3 mb-2">
+      <div class="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center font-bold text-emerald-600 dark:text-emerald-400 border-2 border-emerald-500/50">
+        3
+      </div>
+      <h3 class="text-xl font-bold text-slate-800 dark:text-slate-200">
+        {t('ccs.guide.workflows_title')}
+      </h3>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 ml-[52px]">
+      {t('ccs.guide.workflows_desc')}
+    </p>
+  </div>
+
+  <div class="p-6 space-y-6">
+    <!-- Recipe 1: Cost-optimized full cycle -->
+    <div class="rounded-xl border border-emerald-200/60 dark:border-emerald-500/20 bg-emerald-50/40 dark:bg-emerald-500/5 overflow-hidden">
+      <div class="p-4 border-b border-emerald-200/50 dark:border-emerald-500/15">
+        <div class="flex items-start gap-3">
+          <div class="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center shrink-0 border border-emerald-200 dark:border-emerald-800">
+            <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+          </div>
+          <div class="flex-1">
+            <h4 class="text-base font-bold text-slate-800 dark:text-slate-200 mb-1">
+              {t('ccs.guide.workflow_cost_title')}
+            </h4>
+            <p class="text-xs text-slate-600 dark:text-slate-400">
+              {t('ccs.guide.workflow_cost_when')}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 space-y-3 font-mono text-sm">
+        <div class="flex items-start gap-3">
+          <span class="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center text-xs font-bold text-emerald-600 dark:text-emerald-400 shrink-0">1</span>
+          <div class="flex-1 min-w-0">
+            <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.workflow_cost_step1_note')}</div>
+            <code class="text-slate-700 dark:text-slate-300 break-all">$ ccs "/ck:plan add payment integration"</code>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center text-xs font-bold text-emerald-600 dark:text-emerald-400 shrink-0">2</span>
+          <div class="flex-1 min-w-0">
+            <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.workflow_cost_step2_note')}</div>
+            <code class="text-amber-600 dark:text-amber-400 break-all">$ ccs glm "/ck:cook implement Stripe payment flow"</code>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center text-xs font-bold text-emerald-600 dark:text-emerald-400 shrink-0">3</span>
+          <div class="flex-1 min-w-0">
+            <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.workflow_cost_step3_note')}</div>
+            <code class="text-amber-600 dark:text-amber-400 break-all">$ ccs glm "/ck:test run payment tests"</code>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center text-xs font-bold text-emerald-600 dark:text-emerald-400 shrink-0">4</span>
+          <div class="flex-1 min-w-0">
+            <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.workflow_cost_step4_note')}</div>
+            <code class="text-slate-700 dark:text-slate-300 break-all">$ ccs "/ck:code-review check payment implementation"</code>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recipe 2: Deep debugging with thinking models -->
+    <div class="rounded-xl border border-purple-200/60 dark:border-purple-500/20 bg-purple-50/40 dark:bg-purple-500/5 overflow-hidden">
+      <div class="p-4 border-b border-purple-200/50 dark:border-purple-500/15">
+        <div class="flex items-start gap-3">
+          <div class="w-8 h-8 rounded-lg bg-purple-100 dark:bg-purple-900/40 flex items-center justify-center shrink-0 border border-purple-200 dark:border-purple-800">
+            <svg class="w-4 h-4 text-purple-600 dark:text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M12 1v6m0 10v6m11-11h-6M7 12H1m17.07-7.07l-4.24 4.24M9.17 14.83l-4.24 4.24m0-14.14l4.24 4.24m5.66 5.66l4.24 4.24"/>
+            </svg>
+          </div>
+          <div class="flex-1">
+            <h4 class="text-base font-bold text-slate-800 dark:text-slate-200 mb-1">
+              {t('ccs.guide.workflow_debug_title')}
+            </h4>
+            <p class="text-xs text-slate-600 dark:text-slate-400">
+              {t('ccs.guide.workflow_debug_when')}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 space-y-3 font-mono text-sm">
+        <div class="flex items-start gap-3">
+          <span class="w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center text-xs font-bold text-purple-600 dark:text-purple-400 shrink-0">1</span>
+          <div class="flex-1 min-w-0">
+            <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.workflow_debug_step1_note')}</div>
+            <code class="text-amber-600 dark:text-amber-400 break-all">$ ccsx codex "/ck:debug investigate flaky webhook test"</code>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center text-xs font-bold text-purple-600 dark:text-purple-400 shrink-0">2</span>
+          <div class="flex-1 min-w-0">
+            <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.workflow_debug_step2_note')}</div>
+            <code class="text-slate-700 dark:text-slate-300 break-all">$ ccs "/ck:scout cross-reference call sites"</code>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center text-xs font-bold text-purple-600 dark:text-purple-400 shrink-0">3</span>
+          <div class="flex-1 min-w-0">
+            <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.workflow_debug_step3_note')}</div>
+            <code class="text-amber-600 dark:text-amber-400 break-all">$ ccs glm "/ck:fix apply patch + rerun tests"</code>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recipe 3: Multi-runtime routing -->
+    <div class="rounded-xl border border-blue-200/60 dark:border-blue-500/20 bg-blue-50/40 dark:bg-blue-500/5 overflow-hidden">
+      <div class="p-4 border-b border-blue-200/50 dark:border-blue-500/15">
+        <div class="flex items-start gap-3">
+          <div class="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center shrink-0 border border-blue-200 dark:border-blue-800">
+            <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="6" cy="6" r="3"/>
+              <circle cx="18" cy="18" r="3"/>
+              <path d="M11 6h5a2 2 0 0 1 2 2v7M13 18H8a2 2 0 0 1-2-2V9"/>
+            </svg>
+          </div>
+          <div class="flex-1">
+            <h4 class="text-base font-bold text-slate-800 dark:text-slate-200 mb-1">
+              {t('ccs.guide.workflow_multi_title')}
+            </h4>
+            <p class="text-xs text-slate-600 dark:text-slate-400">
+              {t('ccs.guide.workflow_multi_when')}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 space-y-3 font-mono text-sm">
+        <div class="flex items-start gap-3">
+          <span class="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center text-xs font-bold text-blue-600 dark:text-blue-400 shrink-0">1</span>
+          <div class="flex-1 min-w-0">
+            <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.workflow_multi_step1_note')}</div>
+            <code class="text-slate-700 dark:text-slate-300 break-all">$ ccs "/ck:plan refactor auth module"</code>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center text-xs font-bold text-blue-600 dark:text-blue-400 shrink-0">2</span>
+          <div class="flex-1 min-w-0">
+            <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.workflow_multi_step2_note')}</div>
+            <code class="text-amber-600 dark:text-amber-400 break-all">$ ccsx codex "/ck:cook scaffold module"</code>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center text-xs font-bold text-blue-600 dark:text-blue-400 shrink-0">3</span>
+          <div class="flex-1 min-w-0">
+            <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.workflow_multi_step3_note')}</div>
+            <code class="text-amber-600 dark:text-amber-400 break-all">$ ccsd glm "/ck:test run integration suite"</code>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center text-xs font-bold text-blue-600 dark:text-blue-400 shrink-0">4</span>
+          <div class="flex-1 min-w-0">
+            <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.workflow_multi_step4_note')}</div>
+            <code class="text-slate-700 dark:text-slate-300 break-all">$ ccs "/ck:code-review final pass"</code>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom hint: when to mix providers -->
+    <div class="p-4 rounded-lg bg-slate-100/70 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+      <p class="text-xs text-slate-600 dark:text-slate-400 flex items-start gap-2">
+        <svg class="w-4 h-4 shrink-0 mt-0.5 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M12 16v-4M12 8h.01"/>
+        </svg>
+        <span set:html={t('ccs.guide.workflows_hint')}></span>
+      </p>
+    </div>
+  </div>
+</div>

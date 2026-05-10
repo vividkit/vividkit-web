@@ -24,7 +24,8 @@ interface Props {
     | "cursor"
     | "windsurf"
     | "alibabacloud"
-    | "qwen";
+    | "qwen"
+    | "ollama";
   size?: number;
   variant?: "color" | "mono" | "text";
   class?: string;
@@ -59,12 +60,16 @@ const iconMap: Record<string, string> = {
   windsurf: "windsurf",
   alibabacloud: "alibabacloud",
   qwen: "qwen",
+  ollama: "ollama",
 };
 
 const iconName = iconMap[provider] || provider;
 
 // Icons that don't have a -color variant (use mono instead)
-const noColorVariant = ["zai", "moonshot", "cursor", "windsurf", "openai"];
+const noColorVariant = ["zai", "moonshot", "cursor", "windsurf", "openai", "kimi", "ollama"];
+
+// Whether this icon uses mono variant (needs dark mode inversion)
+const isMono = variant === "color" && noColorVariant.includes(iconName);
 
 // Build icon URL based on variant
 const getIconUrl = (name: string, variant: string): string => {
@@ -86,7 +91,14 @@ const iconUrl = getIconUrl(iconName, variant);
   alt={`${provider} icon`}
   width={size}
   height={size}
-  class:list={["inline-block", className]}
+  class:list={["inline-block", isMono && "llm-icon-mono", className]}
   loading="lazy"
   decoding="async"
 />
+
+<style is:global>
+  :root.dark .llm-icon-mono,
+  .dark .llm-icon-mono {
+    filter: invert(1);
+  }
+</style>

@@ -1,0 +1,165 @@
+---
+// CCSGuide — Key Features to Highlight (unique differentiators vs alternatives)
+import { getLangFromUrl, type Language } from "@/i18n";
+import { useTranslations } from "@/i18n/utils";
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+// Lucide icon SVG paths for each feature
+const features = [
+  {
+    // Zap (⚡ one-command switching)
+    icon: '<polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+    iconColor: "text-emerald-600 dark:text-emerald-400",
+    iconBg: "bg-emerald-500/15",
+    titleKey: "ccs.guide.kf_switching_title",
+    descKey: "ccs.guide.kf_switching_desc",
+    badgeKey: "ccs.guide.kf_badge_cli",
+    badgeColor: "bg-emerald-500/20 text-emerald-700 dark:text-emerald-400",
+    borderColor: "hover:border-emerald-500/40",
+  },
+  {
+    // RefreshCw (🔄 session recovery)
+    icon: '<path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>',
+    iconColor: "text-amber-600 dark:text-amber-400",
+    iconBg: "bg-amber-500/15",
+    titleKey: "ccs.guide.kf_resume_title",
+    descKey: "ccs.guide.kf_resume_desc",
+    badgeKey: "ccs.guide.kf_badge_exclusive",
+    badgeColor: "bg-amber-500/20 text-amber-700 dark:text-amber-400",
+    borderColor: "hover:border-amber-500/40",
+  },
+  {
+    // Layers (🖥️ multi-runtime)
+    icon: '<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>',
+    iconColor: "text-blue-600 dark:text-blue-400",
+    iconBg: "bg-blue-500/15",
+    titleKey: "ccs.guide.kf_runtime_title",
+    descKey: "ccs.guide.kf_runtime_desc",
+    badgeKey: "",
+    badgeColor: "",
+    borderColor: "hover:border-blue-500/40",
+  },
+  {
+    // Search (🔍 websearch & browser)
+    icon: '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',
+    iconColor: "text-violet-600 dark:text-violet-400",
+    iconBg: "bg-violet-500/15",
+    titleKey: "ccs.guide.kf_tools_title",
+    descKey: "ccs.guide.kf_tools_desc",
+    badgeKey: "",
+    badgeColor: "",
+    borderColor: "hover:border-violet-500/40",
+  },
+  {
+    // Key (🔑 19+ providers, 3 auth tiers)
+    icon: '<path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/>',
+    iconColor: "text-orange-600 dark:text-orange-400",
+    iconBg: "bg-orange-500/15",
+    titleKey: "ccs.guide.kf_providers_title",
+    descKey: "ccs.guide.kf_providers_desc",
+    badgeKey: "",
+    badgeColor: "",
+    borderColor: "hover:border-orange-500/40",
+  },
+  {
+    // Brain (🧠 extended thinking — unified --thinking flag)
+    icon: '<path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2z"/>',
+    iconColor: "text-fuchsia-600 dark:text-fuchsia-400",
+    iconBg: "bg-fuchsia-500/15",
+    titleKey: "ccs.guide.kf_thinking_title",
+    descKey: "ccs.guide.kf_thinking_desc",
+    badgeKey: "",
+    badgeColor: "",
+    borderColor: "hover:border-fuchsia-500/40",
+  },
+  {
+    // ShieldCheck (🛡️ account safety — ban detection)
+    icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/>',
+    iconColor: "text-red-600 dark:text-red-400",
+    iconBg: "bg-red-500/15",
+    titleKey: "ccs.guide.kf_safety_title",
+    descKey: "ccs.guide.kf_safety_desc",
+    badgeKey: "",
+    badgeColor: "",
+    borderColor: "hover:border-red-500/40",
+  },
+  {
+    // Image (🖼️ image/PDF analysis — MCP-first)
+    icon: '<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>',
+    iconColor: "text-teal-600 dark:text-teal-400",
+    iconBg: "bg-teal-500/15",
+    titleKey: "ccs.guide.kf_image_title",
+    descKey: "ccs.guide.kf_image_desc",
+    badgeKey: "",
+    badgeColor: "",
+    borderColor: "hover:border-teal-500/40",
+  },
+] as const;
+---
+
+<div class="glass-card rounded-xl border-slate-200 dark:border-slate-700 overflow-hidden">
+  <!-- Header -->
+  <div class="p-6 bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-rose-500/10 border-b border-slate-200 dark:border-slate-800">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center">
+        <svg class="w-6 h-6 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        </svg>
+      </div>
+      <div>
+        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-200">
+          {t("ccs.guide.kf_section_title")}
+        </h3>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+          {t("ccs.guide.kf_section_subtitle")}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="p-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+      {features.map((f) => (
+        <div class:list={[
+          "group relative p-4 rounded-lg",
+          "bg-white/60 dark:bg-slate-800/40",
+          "border border-slate-200/80 dark:border-slate-700/60",
+          f.borderColor,
+          "transition-all duration-200",
+        ]}>
+          {/* Icon + Badge row */}
+          <div class="flex items-start justify-between mb-2.5">
+            <div class:list={["w-8 h-8 rounded-lg flex items-center justify-center", f.iconBg]}>
+              <svg class:list={["w-4.5 h-4.5", f.iconColor]} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={f.icon} />
+            </div>
+            {f.badgeKey && (
+              <span class:list={[
+                "px-1.5 py-0.5 text-[10px] font-bold rounded-full uppercase tracking-wider whitespace-nowrap",
+                f.badgeColor,
+              ]}>
+                {t(f.badgeKey)}
+              </span>
+            )}
+          </div>
+
+          {/* Title */}
+          <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 mb-1.5 leading-snug">
+            {t(f.titleKey)}
+          </h4>
+
+          {/* Description */}
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            {t(f.descKey)}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>

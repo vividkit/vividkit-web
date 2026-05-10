@@ -1,13 +1,13 @@
 ---
 // CCSGuide - Main composition component
-// Assembles all CCS (Claude Context Switcher) guide sub-sections
+// Flow: Overview → Key Features → Cheatsheet → Configure (Decision Tree | Dashboard) → Workflows
 import { getLangFromUrl, type Language } from '@/i18n';
 
 import CCSOverviewSection from './ccs/ccs-overview-section.astro';
-import CCSInstallationAndQuickstartSection from './ccs/ccs-installation-and-quickstart-section.astro';
-import CCSFeaturesAndIntegrationSection from './ccs/ccs-features-and-integration-section.astro';
-import CCSProviderConfigurationSection from './ccs/ccs-provider-configuration-section.astro';
-import CCSDashboardAndResourcesSection from './ccs/ccs-dashboard-and-resources-section.astro';
+import CCSKeyFeaturesSection from './ccs/ccs-key-features-section.astro';
+import CCSCheatsheetSection from './ccs/ccs-cheatsheet-section.astro';
+import CCSConfigureProvidersSection from './ccs/ccs-configure-providers-section.astro';
+import CCSWorkflowsSection from './ccs/ccs-workflows-section.astro';
 
 interface Props {
   lang?: Language;
@@ -19,54 +19,8 @@ const currentLang = lang || getLangFromUrl(Astro.url);
 
 <div class="space-y-8 mt-6">
   <CCSOverviewSection lang={currentLang} />
-  <CCSInstallationAndQuickstartSection lang={currentLang} />
-  <CCSFeaturesAndIntegrationSection lang={currentLang} />
-  <CCSProviderConfigurationSection lang={currentLang} />
-  <CCSDashboardAndResourcesSection lang={currentLang} />
+  <CCSKeyFeaturesSection lang={currentLang} />
+  <CCSCheatsheetSection lang={currentLang} />
+  <CCSConfigureProvidersSection lang={currentLang} />
+  <CCSWorkflowsSection lang={currentLang} />
 </div>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.copy-btn').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        const code = btn.getAttribute('data-code');
-        if (!code) return;
-
-        try {
-          await navigator.clipboard.writeText(code);
-
-          // Show check icon
-          const copyIcon = btn.querySelector('.copy-icon');
-          const checkIcon = btn.querySelector('.check-icon');
-
-          copyIcon?.classList.add('hidden');
-          checkIcon?.classList.remove('hidden');
-
-          // Reset after 2 seconds
-          setTimeout(() => {
-            copyIcon?.classList.remove('hidden');
-            checkIcon?.classList.add('hidden');
-          }, 2000);
-        } catch (err) {
-          console.error('Failed to copy:', err);
-        }
-      });
-    });
-
-    // Auto-update inline platform paths based on detected OS
-    function detectPlatform(): 'macos' | 'linux' | 'windows' {
-      const userAgent = navigator.userAgent.toLowerCase();
-      if (userAgent.includes('win')) return 'windows';
-      if (userAgent.includes('mac')) return 'macos';
-      return 'linux';
-    }
-
-    const platform = detectPlatform();
-    document.querySelectorAll('.platform-path-display').forEach(el => {
-      const path = el.getAttribute(`data-${platform}`);
-      if (path) {
-        el.textContent = path;
-      }
-    });
-  });
-</script>

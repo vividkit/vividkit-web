@@ -1,0 +1,81 @@
+---
+// CCSGuide cheatsheet — categorized CLI command reference
+// Replaces the old Installation section: install command lives in Overview tease,
+// the cheatsheet groups commands by purpose (basics / config / ops / runtimes / docker).
+import { getLangFromUrl, type Language } from "@/i18n";
+import { useTranslations } from "@/i18n/utils";
+import { CCS_CHEATSHEET_CATEGORIES, COLOR_STYLES } from "@/data/guides/ccs-cheatsheet-data";
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+// Cast: cheatsheet keys are dynamic from data file; runtime resolves them safely.
+const t = useTranslations(currentLang) as (k: string) => string;
+---
+
+<!-- Cheatsheet Section -->
+<div id="cheatsheet" class="glass-card rounded-xl border-slate-200 dark:border-slate-700 overflow-hidden scroll-mt-24">
+  <div class="p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border-b border-slate-200 dark:border-slate-800">
+    <div class="flex items-center gap-3 mb-2">
+      <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center font-bold text-blue-600 dark:text-blue-400 border-2 border-blue-500/50">
+        1
+      </div>
+      <h3 class="text-xl font-bold text-slate-800 dark:text-slate-200">
+        {t("ccs.cheatsheet.title")}
+      </h3>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 ml-[52px]">
+      {t("ccs.cheatsheet.subtitle")}
+    </p>
+  </div>
+
+  <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+    {CCS_CHEATSHEET_CATEGORIES.map((cat) => {
+      const styles = COLOR_STYLES[cat.color];
+      return (
+        <div class:list={["rounded-xl border overflow-hidden", styles.border, styles.bg]}>
+          <div class:list={["p-4 border-b", styles.headerBorder]}>
+            <div class="flex items-start gap-3">
+              <div class:list={["w-8 h-8 rounded-lg flex items-center justify-center shrink-0 border", styles.headerBg, styles.headerBorder]}>
+                <svg class:list={["w-4 h-4", styles.iconText]} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={cat.icon} />
+              </div>
+              <div class="flex-1 min-w-0">
+                <h4 class="text-base font-bold text-slate-800 dark:text-slate-200 mb-0.5">
+                  {t(cat.titleKey)}
+                </h4>
+                <p class="text-xs text-slate-600 dark:text-slate-400">
+                  {t(cat.descKey)}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="p-4 space-y-2 font-mono text-xs">
+            {cat.commands.map((cmd) => (
+              <div class="flex flex-col sm:flex-row sm:items-baseline sm:gap-3">
+                <code class:list={["font-semibold whitespace-nowrap shrink-0", styles.cmdText]}>{cmd.cmd}</code>
+                <span class="text-slate-500 dark:text-slate-400 text-[11px] sm:text-right sm:ml-auto">
+                  {t(cmd.descKey)}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    })}
+  </div>
+
+  <div class="px-6 pb-6">
+    <div class="p-4 rounded-lg bg-slate-100/70 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+      <p class="text-xs text-slate-600 dark:text-slate-400 flex items-start gap-2">
+        <svg class="w-4 h-4 shrink-0 mt-0.5 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10" />
+          <path d="M12 16v-4M12 8h.01" />
+        </svg>
+        <span set:html={t("ccs.cheatsheet.hint")} />
+      </p>
+    </div>
+  </div>
+</div>
