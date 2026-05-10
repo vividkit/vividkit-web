@@ -1,0 +1,653 @@
+---
+// FlowchartInteractiveCCS — interactive decision tree for CCS provider selection
+// Forked from FlowchartInteractiveMarketing; payload-aware right panel
+import { ccsDecisionTreeData } from '@/data/guides/ccs-decision-tree-data';
+import { pathColors } from '@/data/guides/flowchart-types';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+  class?: string;
+}
+
+const { lang, class: className = '' } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+
+const data = ccsDecisionTreeData;
+const { viewBox } = data;
+
+const pathsJson = JSON.stringify(data.paths);
+const colorsJson = JSON.stringify(pathColors);
+
+const t = {
+  placeholder: currentLang === 'vi' ? 'Click một provider để xem hướng dẫn cài đặt' : 'Click any provider to view setup',
+  banRisk: currentLang === 'vi' ? '⚠ Rủi ro khoá tài khoản — vi phạm Google ToS' : '⚠ Account ban risk — Google ToS violation',
+  envVars: currentLang === 'vi' ? 'Biến môi trường' : 'Environment Variables',
+  caveats: currentLang === 'vi' ? 'Lưu ý' : 'Notes',
+  setup: currentLang === 'vi' ? 'Cài đặt' : 'Setup Steps',
+  models: currentLang === 'vi' ? 'Models khả dụng' : 'Available Models',
+  useCases: currentLang === 'vi' ? 'Cách dùng' : 'Usage',
+  docs: currentLang === 'vi' ? 'Xem docs' : 'View docs',
+  copy: currentLang === 'vi' ? 'Sao chép' : 'Copy',
+  copied: currentLang === 'vi' ? 'Đã chép' : 'Copied',
+  cost: currentLang === 'vi' ? 'Chi phí' : 'Cost',
+  hint: currentLang === 'vi'
+    ? 'Click một node provider để xem cấu hình. Cuộn để zoom, kéo để pan.'
+    : 'Click any provider node to see config. Wheel to zoom, drag to pan.',
+  envHint: currentLang === 'vi'
+    ? 'Các biến này được CCS quản lý qua file profile — bạn không phải set thủ công vào shell.'
+    : 'CCS manages these via your profile file — no need to set them in your shell manually.',
+  techDetailsLabel: currentLang === 'vi' ? 'Chi tiết kỹ thuật' : 'Technical details',
+};
+
+const authTypeLabels: Record<string, { en: string; vi: string }> = {
+  oauth:       { en: 'Browser sign-in', vi: 'Đăng nhập qua trình duyệt' },
+  api_key:     { en: 'API key',         vi: 'Khoá API' },
+  device_code: { en: 'Device code',     vi: 'Mã thiết bị' },
+  local:       { en: 'Runs locally',    vi: 'Chạy nội bộ máy' },
+};
+const authTypeJson = JSON.stringify(
+  Object.fromEntries(
+    Object.entries(authTypeLabels).map(([k, v]) => [k, currentLang === 'vi' ? v.vi : v.en])
+  )
+);
+
+const groupColorMap: Record<string, { fill: string; stroke: string; bar: string; text: string }> = {
+  'group-anthropic': { fill: 'fill-purple-50 dark:fill-purple-950/50', stroke: 'stroke-purple-300 dark:stroke-purple-700', bar: 'fill-purple-500', text: 'fill-purple-500 dark:fill-purple-400' },
+  'group-openai': { fill: 'fill-cyan-50 dark:fill-cyan-950/50', stroke: 'stroke-cyan-300 dark:stroke-cyan-700', bar: 'fill-cyan-500', text: 'fill-cyan-500 dark:fill-cyan-400' },
+  'group-google': { fill: 'fill-red-50 dark:fill-red-950/50', stroke: 'stroke-red-300 dark:stroke-red-700', bar: 'fill-red-500', text: 'fill-red-500 dark:fill-red-400' },
+  'group-cloud-ai': { fill: 'fill-amber-50 dark:fill-amber-950/50', stroke: 'stroke-amber-300 dark:stroke-amber-700', bar: 'fill-amber-500', text: 'fill-amber-500 dark:fill-amber-400' },
+  'group-ide': { fill: 'fill-blue-50 dark:fill-blue-950/50', stroke: 'stroke-blue-300 dark:stroke-blue-700', bar: 'fill-blue-500', text: 'fill-blue-500 dark:fill-blue-400' },
+  'group-local': { fill: 'fill-green-50 dark:fill-green-950/50', stroke: 'stroke-green-300 dark:stroke-green-700', bar: 'fill-green-500', text: 'fill-green-500 dark:fill-green-400' },
+};
+const defaultGC = groupColorMap['group-local'];
+---
+
+<div
+  x-data={`{
+    activePath: null,
+    scale: 0.5,
+    minScale: 0.2,
+    maxScale: 2,
+    isFullscreen: false,
+    paths: ${pathsJson},
+    colors: ${colorsJson},
+    authTypeLabels: ${authTypeJson},
+    currentLang: '${currentLang}',
+    rootEl: null,
+    placeholder: null,
+    copied: '',
+    readyPaths: ['path-claude', 'path-claude-pool', 'path-codex'],
+    isReady() { return this.activePath && this.readyPaths.includes(this.activePath); },
+
+    init() { this.rootEl = this.$el; },
+
+    loc(v) {
+      if (v == null) return '';
+      if (typeof v === 'string') return v;
+      if (typeof v === 'object' && 'en' in v && 'vi' in v) {
+        return this.currentLang === 'vi' ? v.vi : v.en;
+      }
+      return v;
+    },
+
+    selectPath(pathId) {
+      this.activePath = this.activePath === pathId ? null : pathId;
+    },
+
+    selectNodePath(nodeId) {
+      const match = this.paths.find(p => p.nodes.includes(nodeId));
+      if (match) this.selectPath(match.id);
+    },
+
+    selectEdgePath(edgeId) {
+      const match = this.paths.find(p => p.edges.includes(edgeId));
+      if (match) this.selectPath(match.id);
+    },
+
+    isInActivePath(itemId, type) {
+      if (!this.activePath) return false;
+      const path = this.paths.find(p => p.id === this.activePath);
+      if (!path) return false;
+      return type === 'node' ? path.nodes.includes(itemId) : path.edges.includes(itemId);
+    },
+
+    getNodeClass(nodeId) {
+      if (!this.activePath) return '';
+      return this.isInActivePath(nodeId, 'node') ? 'active' : 'faded';
+    },
+
+    getEdgeClass(edgeId) {
+      if (!this.activePath) return '';
+      return this.isInActivePath(edgeId, 'edge') ? 'active' : 'faded';
+    },
+
+    activeData() {
+      return this.activePath ? this.paths.find(p => p.id === this.activePath) : null;
+    },
+
+    activeColor() {
+      const p = this.activeData();
+      return p ? this.colors[p.color] : null;
+    },
+
+    zoomIn() { this.scale = Math.min(this.maxScale, this.scale + 0.1); },
+    zoomOut() { this.scale = Math.max(this.minScale, this.scale - 0.1); },
+    resetZoom() { this.scale = this.isFullscreen ? 0.7 : 0.5; },
+
+    handleWheel(e) {
+      if (this.isFullscreen || e.ctrlKey || e.metaKey) {
+        e.preventDefault();
+        if (e.deltaY < 0) this.zoomIn(); else this.zoomOut();
+      }
+    },
+
+    toggleFullscreen() {
+      if (!this.isFullscreen) {
+        this.placeholder = document.createElement('div');
+        this.placeholder.style.display = 'none';
+        this.rootEl.parentNode.insertBefore(this.placeholder, this.rootEl);
+        document.body.appendChild(this.rootEl);
+        this.isFullscreen = true;
+        document.body.style.overflow = 'hidden';
+        this.scale = Math.min(0.9, Math.max(0.5, window.innerWidth * 0.6 / 2050));
+      } else { this.exitFullscreen(); }
+    },
+
+    exitFullscreen() {
+      if (!this.isFullscreen) return;
+      if (this.placeholder?.parentNode) {
+        this.placeholder.parentNode.insertBefore(this.rootEl, this.placeholder);
+        this.placeholder.remove();
+        this.placeholder = null;
+      }
+      this.isFullscreen = false;
+      document.body.style.overflow = '';
+      this.scale = 0.5;
+    },
+
+    formatInline(text) {
+      const esc = String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const open = '<code class="px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-500/20 text-amber-800 dark:text-amber-200 font-mono text-[0.8em] font-semibold">';
+      const close = '</code>';
+      const bt = String.fromCharCode(96);
+      return esc.replace(new RegExp(bt + '([^' + bt + ']+)' + bt, 'g'), open + '$1' + close);
+    },
+
+    caveatText(c) {
+      if (typeof c === 'string') return c;
+      // discriminate {en,vi} from {text,level}
+      if ('level' in c) return this.loc(c.text);
+      return this.loc(c);
+    },
+
+    hasSections() {
+      const steps = this.activeData()?.payload?.setupSteps || [];
+      return steps.some(s => typeof s === 'object' && s.section);
+    },
+    groupedSetupSteps() {
+      const steps = this.activeData()?.payload?.setupSteps || [];
+      const groups = [];
+      let current = null;
+      for (const step of steps) {
+        if (typeof step === 'object' && step.section) {
+          current = { title: step.title, desc: step.desc, steps: [] };
+          groups.push(current);
+        } else {
+          if (!current) { current = { title: null, desc: null, steps: [] }; groups.push(current); }
+          current.steps.push(step);
+        }
+      }
+      return groups;
+    },
+    quickCaveats() {
+      const list = this.activeData()?.payload?.caveats || [];
+      return list.filter(c => typeof c === 'string' || !('level' in c) || c.level !== 'tech');
+    },
+    techCaveats() {
+      const list = this.activeData()?.payload?.caveats || [];
+      return list.filter(c => typeof c !== 'string' && 'level' in c && c.level === 'tech');
+    },
+
+    formatShellBlock(text) {
+      return text.split('\\n').map(line => {
+        const esc = line.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        if (line.startsWith('#')) return '<span class="text-slate-400 dark:text-slate-500 italic">' + esc + '</span>';
+        return '<span class="text-slate-700 dark:text-slate-200">' + esc + '</span>';
+      }).join('\\n');
+    },
+
+    extractCmd(text) {
+      return text.split('\\n').filter(l => !l.startsWith('#')).join('\\n');
+    },
+
+    async copy(text, key) {
+      try {
+        await navigator.clipboard.writeText(text);
+        this.copied = key;
+        setTimeout(() => { if (this.copied === key) this.copied = ''; }, 1500);
+      } catch (err) {
+        const ta = document.createElement('textarea');
+        ta.value = text; document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); this.copied = key; setTimeout(() => { this.copied = ''; }, 1500); } catch {}
+        ta.remove();
+      }
+    }
+  }`}
+  class:list={['flowchart-ccs-container relative', className]}
+  x-bind:class="{ 'flowchart-ccs-fullscreen': isFullscreen }"
+  x-on:keydown.escape.window="exitFullscreen()"
+>
+  <!-- Toolbar -->
+  <div class="flex items-center justify-center gap-2 mb-4 shrink-0 z-10 relative">
+    <div class="flex items-center bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-slate-200 dark:border-slate-800 p-1">
+      <button x-on:click="zoomOut()" x-bind:disabled="scale <= minScale" class="p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-40" aria-label="Zoom out">
+        <svg class="w-4 h-4 text-slate-600 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/></svg>
+      </button>
+      <button x-on:click="resetZoom()" class="px-3 text-xs font-medium text-slate-600 dark:text-slate-400 min-w-[60px]">
+        <span x-text="Math.round(scale * 100) + '%'"></span>
+      </button>
+      <button x-on:click="zoomIn()" x-bind:disabled="scale >= maxScale" class="p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-40" aria-label="Zoom in">
+        <svg class="w-4 h-4 text-slate-600 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+      </button>
+    </div>
+    <button x-on:click="toggleFullscreen()" class="p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400">
+      <svg x-show="!isFullscreen" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+      <svg x-show="isFullscreen" x-cloak class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+  </div>
+
+  <!-- SVG canvas -->
+  <div
+    class="flowchart-ccs-scroll overflow-auto relative bg-slate-50/50 dark:bg-slate-900/50 rounded-xl border border-slate-200/50 dark:border-slate-800/50"
+    x-on:wheel="handleWheel($event)"
+  >
+    <div class="min-w-full min-h-full flex p-4">
+      <div class="origin-center transition-all duration-150 shrink-0 m-auto"
+           x-bind:style="`width: ${2050 * scale}px; height: ${780 * scale}px`">
+        <svg viewBox={viewBox} class="w-full h-full drop-shadow-sm" role="img" aria-label="CCS provider decision tree">
+          <defs>
+            <marker id="ccs-arrowhead" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto">
+              <polygon points="0 0, 12 4, 0 8" class="fill-slate-400 dark:fill-slate-500"/>
+            </marker>
+            <marker id="ccs-arrowhead-active" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto">
+              <polygon points="0 0, 12 4, 0 8" class="fill-blue-500"/>
+            </marker>
+          </defs>
+
+          <g class="edges">
+            {data.edges.map(edge => (
+              <g class="flowchart-ccs-edge cursor-pointer"
+                 x-bind:class={`getEdgeClass('${edge.id}')`}
+                 x-on:click={`selectEdgePath('${edge.id}')`}>
+                <path d={edge.path} fill="none" class="stroke-slate-300 dark:stroke-slate-600" stroke-width="2.5" marker-end="url(#ccs-arrowhead)"/>
+              </g>
+            ))}
+          </g>
+
+          <g class="nodes">
+            {data.nodes.map(node => {
+              const w = node.type === 'start' ? 360 : node.type === 'group' ? 220 : node.type === 'decision' ? 220 : Math.max(150, node.label.length * 9 + 30);
+              const h = node.type === 'start' ? 55 : node.type === 'group' ? 52 : node.type === 'decision' ? 55 : 50;
+              const hitPad = 10;
+              const gc = groupColorMap[node.id] ?? defaultGC;
+              return (
+                <g class="flowchart-ccs-node cursor-pointer"
+                   x-bind:class={`getNodeClass('${node.id}')`}
+                   x-on:click={`selectNodePath('${node.id}')`}>
+                  {/* Invisible expanded hit area for reliable clicks */}
+                  <rect
+                    x={node.position.x - (w/2 + hitPad)}
+                    y={node.position.y - (h/2 + hitPad)}
+                    width={w + hitPad * 2}
+                    height={h + hitPad * 2}
+                    fill="transparent"
+                    class="pointer-events-auto"
+                  />
+                  {node.type === 'group' ? (
+                    <g>
+                      <rect x={node.position.x - w/2} y={node.position.y - h/2} width={w} height={h} rx="12"
+                            class={`${gc.fill} ${gc.stroke}`}
+                            stroke-width="1.5" stroke-dasharray="6 3" />
+                      <rect x={node.position.x - w/2} y={node.position.y - h/2} width="5" height={h} rx="2.5"
+                            class={gc.bar} />
+                      {node.description && (
+                        <text x={node.position.x} y={node.position.y + 12} text-anchor="middle"
+                              class={`text-[10px] pointer-events-none ${gc.text}`}>
+                          {node.description}
+                        </text>
+                      )}
+                    </g>
+                  ) : node.type === 'decision' ? (
+                    <polygon points={`${node.position.x},${node.position.y - 28} ${node.position.x + 110},${node.position.y} ${node.position.x},${node.position.y + 28} ${node.position.x - 110},${node.position.y}`} class="fill-white/95 dark:fill-surface-800/95 stroke-slate-400 dark:stroke-slate-500" stroke-width="2"/>
+                  ) : node.type === 'command' ? (
+                    <g>
+                      <rect x={node.position.x - w/2} y={node.position.y - 25} width={w} height={h} rx="10" class="fill-white/95 dark:fill-surface-800/95 stroke-slate-300 dark:stroke-slate-600" stroke-width="2"/>
+                      <rect x={node.position.x - w/2} y={node.position.y - 25} width="4" height={h} rx="2" class="fill-blue-500 dark:fill-blue-400"/>
+                      {node.description && (
+                        <text x={node.position.x} y={node.position.y + 10} text-anchor="middle" class="text-[11px] fill-slate-500 dark:fill-slate-400 pointer-events-none">{node.description}</text>
+                      )}
+                    </g>
+                  ) : (
+                    <rect x={node.position.x - w/2} y={node.position.y - 28} width={w} height={h} rx="28" class="fill-blue-500 stroke-blue-400" stroke-width="2"/>
+                  )}
+                  <text x={node.position.x} y={node.type === 'group' ? node.position.y - 4 : (node.type === 'command' && node.description ? node.position.y - 4 : node.position.y)} text-anchor="middle" dominant-baseline="middle" class:list={['pointer-events-none', node.type === 'start' ? 'text-xl font-bold fill-white' : node.type === 'group' ? 'text-[13px] font-bold fill-slate-700 dark:fill-slate-200' : node.type === 'command' ? 'text-sm font-semibold fill-slate-700 dark:fill-slate-200' : 'text-sm font-semibold fill-slate-700 dark:fill-slate-200']}>{node.label}</text>
+                </g>
+              );
+            })}
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right panel / detail (stacks below on mobile, sits below SVG always for KISS) -->
+  <div class="mt-6">
+    <template x-if="!activeData()">
+      <div class="p-6 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-dashed border-slate-300 dark:border-slate-700 text-center text-slate-500 dark:text-slate-400">
+        {t.placeholder}
+      </div>
+    </template>
+
+    <template x-if="activeData() && !isReady()">
+      <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border-l-4 shadow-xl border border-slate-200 dark:border-slate-800"
+           x-bind:style="activeColor() ? `border-left-color: ${activeColor().text}` : ''">
+        <div class="flex flex-wrap items-center gap-3 mb-3">
+          <code class="px-3 py-1.5 rounded-lg font-mono font-bold text-base"
+                x-bind:style="activeColor() ? `background-color: ${activeColor().bg}; color: ${activeColor().text}` : ''"
+                x-text="activeData()?.command"></code>
+          <h3 class="font-semibold text-slate-800 dark:text-slate-200" x-text="loc(activeData()?.name)"></h3>
+          <button x-on:click="activePath = null" class="ml-auto p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400" aria-label="Close">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <p class="text-slate-500 dark:text-slate-400 italic text-sm">Coming soon...</p>
+      </div>
+    </template>
+
+    <template x-if="activeData() && isReady()">
+      <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border-l-4 shadow-xl border border-slate-200 dark:border-slate-800"
+           x-bind:style="activeColor() ? `border-left-color: ${activeColor().text}` : ''">
+
+        <!-- Ban risk banner -->
+        <template x-if="activeData()?.payload?.banRisk === 'high'">
+          <div class="mb-4 p-3 rounded-lg bg-red-50 dark:bg-red-900/30 border border-red-300 dark:border-red-800 text-red-800 dark:text-red-200 text-sm font-medium">
+            {t.banRisk}
+          </div>
+        </template>
+
+        <!-- Header -->
+        <div class="flex flex-wrap items-center gap-3 mb-3">
+          <code class="px-3 py-1.5 rounded-lg font-mono font-bold text-base"
+                x-bind:style="activeColor() ? `background-color: ${activeColor().bg}; color: ${activeColor().text}` : ''"
+                x-text="activeData()?.command"></code>
+          <h3 class="font-semibold text-slate-800 dark:text-slate-200" x-text="loc(activeData()?.name)"></h3>
+          <template x-if="activeData()?.payload?.costLabel">
+            <span class="px-2 py-1 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 text-xs font-semibold"
+                  x-text="t_cost + ': ' + loc(activeData().payload.costLabel)"
+                  x-data={`{ t_cost: '${t.cost}' }`}></span>
+          </template>
+          <span class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs font-medium"
+                x-text="authTypeLabels[activeData()?.payload?.authType] ?? activeData()?.payload?.authType"></span>
+          <button x-on:click="activePath = null" class="ml-auto p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400" aria-label="Close">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+
+        <p class="text-slate-600 dark:text-slate-400 mb-4" x-text="loc(activeData()?.description)"></p>
+
+        <!-- Setup steps — bullet-dot stepper. Section dividers split into side-by-side cards on md+. -->
+        <template x-if="activeData()?.payload?.setupSteps?.length">
+          <div class="mb-4">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-3">{t.setup}</h4>
+            <div x-bind:class="hasSections() ? 'grid grid-cols-1 md:grid-cols-2 gap-3' : 'space-y-4'">
+              <template x-for="(group, gi) in groupedSetupSteps()" :key="gi">
+                <div x-bind:class="hasSections() ? 'rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/40 dark:bg-slate-800/30 p-4' : ''">
+                  <template x-if="group.title">
+                    <div class="mb-3 pb-2 border-b border-slate-200 dark:border-slate-700">
+                      <span class="text-[11px] font-bold uppercase tracking-wider"
+                            x-bind:style="activeColor() ? `color: ${activeColor().text}` : 'color: #a855f7'"
+                            x-text="loc(group.title)"></span>
+                      <template x-if="group.desc">
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5" x-text="loc(group.desc)"></p>
+                      </template>
+                    </div>
+                  </template>
+                  <div class="space-y-4">
+                    <template x-for="(step, i) in group.steps" :key="i">
+                      <div>
+                        <template x-if="typeof step === 'object'">
+                          <div class="relative pl-6">
+                            <div class="absolute left-0 top-0 bottom-0 w-px bg-slate-200 dark:bg-slate-700"></div>
+                            <div class="absolute left-[-3px] top-2 w-1.5 h-1.5 rounded-full ring-2 ring-white dark:ring-slate-900"
+                                 x-bind:style="activeColor() ? `background-color: ${activeColor().text}` : 'background-color: #a855f7'"></div>
+                            <div class="mb-1.5">
+                              <span class="font-bold text-slate-900 dark:text-slate-100 text-sm" x-text="loc(step.title)"></span>
+                              <template x-if="step.desc">
+                                <span class="text-slate-500 dark:text-slate-400 text-xs ml-1">— <span x-text="loc(step.desc)"></span></span>
+                              </template>
+                            </div>
+                            <template x-if="step.cmd">
+                              <div class="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-3 border border-slate-100 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 whitespace-pre-wrap" x-html="step.cmd"></div>
+                            </template>
+                          </div>
+                        </template>
+                        <template x-if="typeof step === 'string'">
+                          <div class="relative pl-6">
+                            <div class="absolute left-0 top-0 bottom-0 w-px bg-slate-200 dark:bg-slate-700"></div>
+                            <div class="absolute left-[-3px] top-2 w-1.5 h-1.5 rounded-full ring-2 ring-white dark:ring-slate-900"
+                                 x-bind:style="activeColor() ? `background-color: ${activeColor().text}` : 'background-color: #a855f7'"></div>
+                            <!-- Instruction (# prefix only) — no code box, no copy -->
+                            <div x-show="step.startsWith('#')" class="flex items-center gap-2 py-1.5">
+                              <svg class="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                              <span class="text-xs text-slate-500 dark:text-slate-400 italic" x-text="step.replace(/^#\s*/, '')"></span>
+                            </div>
+                            <!-- Command — code box + copy (first non-# line only) -->
+                            <div x-show="!step.startsWith('#')" class="group">
+                              <div class="flex items-start gap-2">
+                                <pre class="flex-1 px-3 py-2 rounded-lg bg-slate-100 dark:bg-slate-800/90 font-mono text-xs overflow-x-auto m-0" x-html="formatShellBlock(step)"></pre>
+                                <button x-on:click="copy(extractCmd(step), 'step-' + i)" class="mt-1.5 px-2 py-1 text-xs rounded text-purple-600 dark:text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
+                                  <span x-text="copied === 'step-' + i ? t_copied : t_copy" x-data={`{ t_copy: '${t.copy}', t_copied: '${t.copied}' }`}></span>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </template>
+                      </div>
+                    </template>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </div>
+        </template>
+
+        <!-- Use Cases -->
+        <template x-if="activeData()?.payload?.useCases?.length">
+          <div class="mb-4">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">{t.useCases}</h4>
+            <div class="space-y-2">
+              <template x-for="(uc, ui) in activeData().payload.useCases" :key="ui">
+                <div class="rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50/60 dark:bg-slate-800/40 p-2.5">
+                  <div class="flex items-baseline gap-2 mb-1">
+                    <span class="text-xs font-semibold text-slate-700 dark:text-slate-200" x-text="loc(uc.label)"></span>
+                    <template x-if="uc.desc">
+                      <span class="text-[11px] text-slate-500 dark:text-slate-400" x-text="'— ' + loc(uc.desc)"></span>
+                    </template>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <code class="flex-1 px-2 py-1 rounded bg-white dark:bg-slate-900 text-purple-600 dark:text-purple-400 font-mono text-xs truncate border border-slate-100 dark:border-slate-700" x-text="uc.cmd"></code>
+                    <button x-on:click="copy(uc.cmd, 'uc-' + ui)" class="px-2 py-1 text-xs rounded text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/30 transition-colors flex-shrink-0 font-medium">
+                      <span x-text="copied === 'uc-' + ui ? t_copied : t_copy" x-data={`{ t_copy: '${t.copy}', t_copied: '${t.copied}' }`}></span>
+                    </button>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </div>
+        </template>
+
+        <!-- Available models -->
+        <template x-if="activeData()?.payload?.availableModels?.length">
+          <div class="mb-4">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">{t.models}</h4>
+            <div class="space-y-1">
+              <template x-for="m in activeData().payload.availableModels" :key="m.name">
+                <div class="flex items-center gap-2 group">
+                  <span class="px-2 py-1 rounded font-mono text-[10px] font-bold uppercase tracking-wide w-16 text-center flex-shrink-0"
+                        x-bind:style="activeColor() ? `background-color: ${activeColor().bg}; color: ${activeColor().text}` : 'background-color: #f3e8ff; color: #7c3aed'"
+                        x-text="m.tier"></span>
+                  <code class="px-2 py-1 rounded bg-slate-50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-200 font-mono text-xs flex-shrink-0" x-text="m.name"></code>
+                  <template x-if="m.note">
+                    <span class="text-[11px] text-slate-500 dark:text-slate-400 italic truncate" x-text="loc(m.note)"></span>
+                  </template>
+                  <button x-on:click="copy(m.name, 'model-' + m.name)" class="ml-auto px-2 py-1 text-xs rounded text-purple-600 dark:text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
+                    <span x-text="copied === 'model-' + m.name ? t_copied : t_copy" x-data={`{ t_copy: '${t.copy}', t_copied: '${t.copied}' }`}></span>
+                  </button>
+                </div>
+              </template>
+            </div>
+          </div>
+        </template>
+
+        <!-- Env vars -->
+        <template x-if="activeData()?.payload?.envVars?.length">
+          <div class="mb-4">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-1">{t.envVars}</h4>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 italic mb-2">{t.envHint}</p>
+            <div class="space-y-1">
+              <template x-for="ev in activeData().payload.envVars" :key="ev.name">
+                <div>
+                  <div class="flex items-center gap-2 group">
+                    <code class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-800/90 text-purple-600 dark:text-purple-400 font-mono text-xs font-bold" x-text="ev.name"></code>
+                    <code class="flex-1 px-2 py-1 rounded bg-slate-50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-200 font-mono text-xs truncate" x-text="ev.value"></code>
+                    <button x-on:click="copy(ev.value, 'env-' + ev.name)" class="px-2 py-1 text-xs rounded text-purple-600 dark:text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <span x-text="copied === 'env-' + ev.name ? t_copied : t_copy" x-data={`{ t_copy: '${t.copy}', t_copied: '${t.copied}' }`}></span>
+                    </button>
+                  </div>
+                  <template x-if="ev.note">
+                    <p class="ml-2 mt-0.5 text-[11px] text-slate-500 dark:text-slate-400 italic" x-text="loc(ev.note)"></p>
+                  </template>
+                </div>
+              </template>
+            </div>
+          </div>
+        </template>
+
+        <!-- Notes — quick caveats shown by default, technical ones tucked behind a toggle -->
+        <template x-if="activeData()?.payload?.caveats?.length">
+          <div class="mb-4 ccs-notes">
+            <h4 class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">{t.caveats}</h4>
+
+            <template x-if="quickCaveats().length">
+              <ul class="space-y-2">
+                <template x-for="c in quickCaveats()" :key="caveatText(c)">
+                  <li class="rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50/60 dark:bg-slate-800/40 p-2.5">
+                    <div class="flex items-start gap-2">
+                      <svg class="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-purple-500 dark:text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="16" x2="12" y2="12"/>
+                        <line x1="12" y1="8" x2="12.01" y2="8"/>
+                      </svg>
+                      <p class="text-xs text-slate-700 dark:text-slate-200 leading-relaxed flex-1 m-0" x-html="formatInline(caveatText(c))"></p>
+                    </div>
+                  </li>
+                </template>
+              </ul>
+            </template>
+
+            <template x-if="techCaveats().length">
+              <details class="mt-2 group">
+                <summary class="flex items-center gap-1.5 text-[11px] font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 cursor-pointer select-none list-none py-1.5">
+                  <svg class="w-3 h-3 transition-transform group-open:rotate-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                  <span x-text="t_label" x-data={`{ t_label: '${t.techDetailsLabel}' }`}></span>
+                  <span class="text-slate-400 dark:text-slate-500" x-text="'(' + techCaveats().length + ')'"></span>
+                </summary>
+                <ul class="mt-1.5 space-y-2">
+                  <template x-for="c in techCaveats()" :key="caveatText(c)">
+                    <li class="rounded-lg border border-dashed border-slate-200 dark:border-slate-700/60 bg-slate-50/40 dark:bg-slate-800/25 p-2.5">
+                      <div class="flex items-start gap-2">
+                        <span class="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-slate-400 dark:bg-slate-500"></span>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed flex-1 m-0" x-html="formatInline(caveatText(c))"></p>
+                      </div>
+                    </li>
+                  </template>
+                </ul>
+              </details>
+            </template>
+          </div>
+        </template>
+
+        <!-- Docs link — placed AFTER Notes so the anchor cannot accidentally wrap them -->
+        <template x-if="activeData()?.payload?.docsUrl">
+          <div class="mt-4">
+            <a x-bind:href="activeData().payload.docsUrl" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-1.5 text-xs font-semibold text-purple-600 dark:text-purple-400 hover:underline">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+              </svg>
+              <span x-text="t_docs" x-data={`{ t_docs: '${t.docs}' }`}></span>
+            </a>
+          </div>
+        </template>
+
+      </div>
+    </template>
+  </div>
+
+  <p x-show="!isFullscreen" class="mt-3 text-center text-xs text-slate-500 dark:text-slate-400">{t.hint}</p>
+</div>
+
+<style>
+  .flowchart-ccs-scroll { min-height: 400px; }
+  .flowchart-ccs-scroll::-webkit-scrollbar { height: 6px; width: 6px; }
+  .flowchart-ccs-scroll::-webkit-scrollbar-track { background: transparent; }
+  .flowchart-ccs-scroll::-webkit-scrollbar-thumb { background: rgba(156, 163, 175, 0.3); border-radius: 20px; }
+  .flowchart-ccs-scroll::-webkit-scrollbar-thumb:hover { background: rgba(156, 163, 175, 0.5); }
+
+  .flowchart-ccs-node { transition: all 0.3s ease; }
+  .flowchart-ccs-node:hover polygon, .flowchart-ccs-node:hover rect:not([fill="transparent"]) { filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5)); }
+  .flowchart-ccs-node.active polygon, .flowchart-ccs-node.active rect:not([width="4"]):not([width="5"]):not([fill="transparent"]) { filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.6)); stroke: #3B82F6; stroke-width: 2.5; stroke-dasharray: none; }
+  .flowchart-ccs-node.faded, .flowchart-ccs-edge.faded { opacity: 0.2; pointer-events: none; }
+
+  .flowchart-ccs-edge { transition: all 0.3s ease; }
+  .flowchart-ccs-edge:hover path { stroke: #64748b; stroke-width: 3.5; }
+  .flowchart-ccs-edge.active path { stroke: #3B82F6; stroke-width: 3.5; marker-end: url(#ccs-arrowhead-active); }
+
+  .flowchart-ccs-fullscreen {
+    position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
+    z-index: 9999 !important; background: rgb(255 255 255) !important; padding: 1rem !important;
+    display: flex !important; flex-direction: column !important; overflow: auto !important;
+  }
+  :global(.dark) .flowchart-ccs-fullscreen { background: rgb(15 23 42) !important; }
+  [x-cloak] { display: none !important; }
+
+</style>
+
+<!-- Global because Alpine's x-html and template-cloned nodes don't carry Astro's scope attribute -->
+<style is:global>
+  .ccs-notes ul { list-style: none; padding: 0; margin: 0; }
+  .ccs-notes,
+  .ccs-notes *,
+  .ccs-notes *::before,
+  .ccs-notes *::after {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+    text-underline-offset: 0 !important;
+    border-bottom-width: 0 !important;
+  }
+  .ccs-notes *:hover,
+  .ccs-notes *:focus,
+  .ccs-notes *:active,
+  .ccs-notes *:visited,
+  .ccs-notes:hover *,
+  .ccs-notes:focus-within * { text-decoration: none !important; }
+  .ccs-notes a { color: inherit !important; cursor: text !important; pointer-events: none; }
+  .ccs-notes summary::-webkit-details-marker { display: none; }
+  .ccs-notes summary::marker { display: none; }
+</style>
+
+<script>
+  import Alpine from 'alpinejs';
+  if (!window.Alpine) { window.Alpine = Alpine; Alpine.start(); }
+</script>

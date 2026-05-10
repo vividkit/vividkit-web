@@ -3,7 +3,7 @@
 
 export interface FlowchartNode {
   id: string;
-  type: 'start' | 'decision' | 'command';
+  type: 'start' | 'decision' | 'group' | 'command';
   label: string;
   description?: string;
   position: { x: number; y: number };

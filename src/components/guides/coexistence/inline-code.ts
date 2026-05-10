@@ -12,7 +12,7 @@ export function renderInlineMarkdown(text: string, codeAccent: 'slate' | 'purple
   };
   const cls = accentClass[codeAccent];
   return text
-    .replace(/`([^`]+)`/g, `<code class="px-1.5 py-0.5 rounded-md ${cls} font-mono text-[0.9em] border whitespace-nowrap">$1</code>`)
+    .replace(/`([^`]+)`/g, `<code class="px-1.5 py-0.5 rounded-md ${cls} font-mono text-[0.9em] border whitespace-normal break-words [overflow-wrap:anywhere]">$1</code>`)
     .replace(/\*\*(.+?)\*\*/g, '<strong class="text-slate-900 dark:text-white font-semibold">$1</strong>')
     .replace(/(^|[^*])\*([^*\n]+)\*/g, '$1<em class="italic">$2</em>');
 }
