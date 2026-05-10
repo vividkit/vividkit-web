@@ -39,7 +39,7 @@ export const ck_with_codex = {
   'ckWithCodex.arch.lane2.title': 'File CK Codex global',
   'ckWithCodex.arch.lane2.desc': 'Với `-g`: ghi `~/.codex/{agents,hooks}` + `~/.agents/skills/` + `~/.codex/AGENTS.md`. Commands được lưu dưới dạng skill `source-command-*`, không phải `~/.codex/prompts/*`.<br/><span class="text-slate-500 dark:text-slate-500">Bỏ `-g` để dùng các phiên bản project-local dưới `.codex/*` và `.agents/skills/*`.</span>',
   'ckWithCodex.arch.lane3.title': 'CLIProxyAPI :8317',
-  'ckWithCodex.arch.lane3.desc': 'Proxy HTTP local nhúng trong CCS Runtime.<ul class="list-disc pl-5 mt-2 space-y-1"><li>`ccsx codex` <span class="text-slate-500 dark:text-slate-500">→ qua CCS Runtime, CLIProxy ngầm bên dưới, không cần config thêm</span></li><li>`ccsxp` <span class="text-slate-500 dark:text-slate-500">→ trực tiếp CLIProxy, cần `CLIPROXY_API_KEY=ccs-internal-managed` trong env</span></li></ul><span class="block mt-2 text-slate-500 dark:text-slate-500">Bỏ qua trong chế độ native auth thuần.</span>',
+  'ckWithCodex.arch.lane3.desc': 'Proxy HTTP local nhúng trong CCS Runtime.<ul class="list-disc pl-5 mt-2 space-y-1"><li>`ccsx codex` <span class="text-slate-500 dark:text-slate-500">→ qua CCS Runtime, CLIProxy ngầm bên dưới, không cần config thêm</span></li><li>`ccsxp` <span class="text-slate-500 dark:text-slate-500">→ trực tiếp CLIProxy; qua CCS set `CLIPROXY_API_KEY=ccs-internal-managed`, hoặc truyền key riêng nếu tự host</span></li></ul><span class="block mt-2 text-slate-500 dark:text-slate-500">Bỏ qua trong chế độ native auth thuần.</span>',
   'ckWithCodex.arch.lane4.title': 'Runtime Codex CLI',
   'ckWithCodex.arch.lane4.desc': 'Cùng binary `codex` của OpenAI, nhưng được CCS khởi chạy nên kế thừa routing provider và config OAuth — gọi `codex` trực tiếp sẽ bypass CCS. Các entrypoint phổ biến:<ul class="list-disc pl-5 mt-2 space-y-1"><li>`ccsx` <span class="text-slate-500 dark:text-slate-500">(subscription GPT OAuth native)</span></li><li>`ccsx codex` <span class="text-slate-500 dark:text-slate-500">(CCS Runtime + CLIProxy)</span></li><li>`ccsxp` <span class="text-slate-500 dark:text-slate-500">(shortcut CLIProxy trực tiếp)</span></li></ul>',
 
@@ -88,7 +88,7 @@ export const ck_with_codex = {
   'ckWithCodex.setup.step4.title': 'Khởi tạo ClaudeKit, sau đó migrate từ project đó',
   'ckWithCodex.setup.step4.badge': 'migrate',
   'ckWithCodex.setup.step4.desc': '`ck init` đặt layout source ClaudeKit. `ck migrate -a codex` sau đó copy nội dung đó vào các vị trí Codex-native.',
-  'ckWithCodex.setup.step4.warning.label': 'đọc trước tiên',
+  'ckWithCodex.setup.step4.warning.label': 'quan trọng',
   'ckWithCodex.setup.step4.warning.title': 'Source bỏ qua `-g` — destination thì theo',
   'ckWithCodex.setup.step4.warning.tip': '**Global → global:** chạy `cd ~` trước để căn CWD, rồi `ck migrate -a codex -g --dry-run` để xác minh SOURCE trước khi áp dụng.',
   'ckWithCodex.setup.step4.code': 'cd your-project\nck init',
@@ -136,6 +136,13 @@ export const ck_with_codex = {
   'ckWithCodex.interactive.ps.agentScope':
     'Agents Codex project và global độc lập với nhau — không merge hay override. Giữ định nghĩa repo-only trong `.codex/agents/agent-name.toml` và rules repo-only trong `AGENTS.md` của project để chúng đi cùng codebase, không đi theo máy của bạn.',
 
+  // YOLO mode
+  'ckWithCodex.interactive.yolo.title': 'Chế độ full quyền (`--yolo`)',
+  'ckWithCodex.interactive.yolo.body':
+    'Flag `--yolo` truyền `--dangerously-bypass-approvals-and-sandbox` cho binary Codex bên dưới. Hoạt động ở mọi entrypoint: `ccsx --yolo`, `ccsx codex --yolo`, `ccsxp --yolo`, hoặc trực tiếp `codex --yolo` mà không cần CCS. Codex tự duyệt mọi tool call — ghi file, chạy shell, cài package — giống hệt `--dangerously-skip-permissions` của Claude Code.',
+  'ckWithCodex.interactive.yolo.warning':
+    'Không có rào chắn. `--yolo` tắt mọi xác nhận. Codex có thể xóa file, chạy lệnh phá, và cài package mà không hỏi. Chỉ dùng trong môi trường bỏ được hoặc khi bạn tin tưởng scope prompt hoàn toàn.',
+
   // Aliases reference
   'ckWithCodex.aliases.heading': 'Giải mã các entrypoint runtime',
   'ckWithCodex.aliases.intro': 'CCS expose các target alias Codex native cộng với một shortcut cliproxy. Chọn dựa trên việc bạn muốn routing GPT OAuth thông thường, rotation quota của CCS Runtime, hay CLIProxy trực tiếp.',
@@ -148,7 +155,7 @@ export const ck_with_codex = {
   'ckWithCodex.aliases.row2.routes': 'Profile Codex built-in qua CCS Runtime + CLIProxy',
   'ckWithCodex.aliases.row2.useWhen': 'Bạn muốn rotation quota qua nhiều tài khoản GPT và theo dõi quota trực tiếp qua `ccs cliproxy quota --provider codex`.',
   'ckWithCodex.aliases.row4.routes': 'Override provider CLIProxy trực tiếp',
-  'ckWithCodex.aliases.row4.useWhen': 'Bạn muốn đường đi mỏng hơn, bỏ qua CCS Runtime và nói thẳng với CLIProxy. Cần `CLIPROXY_API_KEY=ccs-internal-managed`; pin `CODEX_HOME` về `~/.codex` trừ khi đã set `CCSXP_CODEX_HOME`.',
+  'ckWithCodex.aliases.row4.useWhen': 'Bạn muốn đường đi mỏng hơn, bỏ qua CCS Runtime và nói thẳng với CLIProxy. Nếu đi qua CCS thì set `CLIPROXY_API_KEY=ccs-internal-managed`; nếu tự host CLIProxy riêng thì truyền key tùy ý vào `CLIPROXY_API_KEY`. Pin `CODEX_HOME` về `~/.codex` trừ khi đã set `CCSXP_CODEX_HOME`.',
 
   // Workflows
   'ckWithCodex.workflows.heading': 'Workflow chạy mượt trên Codex như trên Claude Code',

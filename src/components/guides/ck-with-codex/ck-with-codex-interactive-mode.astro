@@ -2,7 +2,7 @@
 import { useTranslations } from '@/i18n/utils';
 import type { Language } from '@/i18n';
 import { renderInlineMarkdown } from '../coexistence/inline-code';
-import { MessageSquareText } from 'lucide-astro';
+import { MessageSquareText, ShieldOff, ShieldAlert } from 'lucide-astro';
 import {
   PRE_LG, COPY_BTN_LG, COPY_ICON_LG, CHECK_ICON_LG,
   renderShellSnippet, stripShellComments,
@@ -128,6 +128,42 @@ const aliasAccent: Record<string, { dot: string; cmd: string }> = {
       })}
     </div>
   </div>
+
+  <article class="rounded-2xl border border-rose-200/70 dark:border-rose-900/50 bg-rose-50/50 dark:bg-rose-950/20 p-5 md:p-6 space-y-4 min-w-0 overflow-hidden">
+    <div class="flex items-start gap-3.5">
+      <div class="w-10 h-10 shrink-0 rounded-xl bg-rose-100 dark:bg-rose-500/15 text-rose-700 dark:text-rose-200 border border-rose-300/60 dark:border-rose-700/40 flex items-center justify-center">
+        <ShieldOff class="w-5 h-5" stroke-width={2.1} />
+      </div>
+      <div class="space-y-1.5 min-w-0 flex-1">
+        <h4 class="text-base font-bold text-slate-900 dark:text-white" set:html={renderInlineMarkdown(t('ckWithCodex.interactive.yolo.title'))} />
+        <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed" set:html={renderInlineMarkdown(t('ckWithCodex.interactive.yolo.body'))} />
+      </div>
+    </div>
+
+    <div class="relative rounded-lg overflow-hidden ring-1 ring-slate-200/80 dark:ring-slate-800/80">
+      <div class="flex items-center gap-1.5 px-4 py-2 bg-slate-50/60 dark:bg-slate-900/40 border-b border-slate-200/70 dark:border-slate-800/80 text-[10px] text-slate-500 dark:text-slate-500 font-mono uppercase tracking-[0.18em]">
+        <span class="inline-block w-2 h-2 rounded-full bg-rose-400/70" aria-hidden="true"></span>
+        <span class="inline-block w-2 h-2 rounded-full bg-amber-400/70" aria-hidden="true"></span>
+        <span class="inline-block w-2 h-2 rounded-full bg-emerald-400/70" aria-hidden="true"></span>
+        <span class="ml-1">shell</span>
+      </div>
+      {(() => { const code = 'ccsx --yolo\nccsx codex --yolo\ncodex --yolo'; return (
+        <>
+          <pre class={PRE_LG}><code set:html={renderShellSnippet(code)} /></pre>
+          <button class={COPY_BTN_LG} data-code={stripShellComments(code)} aria-label="Copy">
+            <svg class={COPY_ICON_LG} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+            <svg class={CHECK_ICON_LG} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          </button>
+        </>
+      ); })()}
+    </div>
+
+    <div class="flex items-start gap-2.5 px-4 py-3 rounded-lg bg-rose-100/60 dark:bg-rose-900/20 border border-rose-300/50 dark:border-rose-800/40">
+      <ShieldAlert class="w-4 h-4 shrink-0 mt-0.5 text-rose-600 dark:text-rose-400" stroke-width={2.2} />
+      <p class="text-[13px] text-rose-800 dark:text-rose-200 leading-relaxed" set:html={renderInlineMarkdown(t('ckWithCodex.interactive.yolo.warning'))} />
+    </div>
+
+  </article>
 
   <article class="rounded-2xl border border-slate-200/70 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/45 p-5 md:p-6 flex flex-col sm:flex-row gap-4 min-w-0 overflow-hidden">
     <div class="w-11 h-11 shrink-0 rounded-xl bg-slate-200/80 dark:bg-slate-800 text-slate-700 dark:text-slate-200 flex items-center justify-center">

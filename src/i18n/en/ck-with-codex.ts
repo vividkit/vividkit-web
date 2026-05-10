@@ -39,7 +39,7 @@ export const ck_with_codex = {
   'ckWithCodex.arch.lane2.title': 'Global Codex CK files',
   'ckWithCodex.arch.lane2.desc': 'With `-g`: writes `~/.codex/{agents,hooks}` + `~/.agents/skills/` + `~/.codex/AGENTS.md`. Commands land as `source-command-*` skills, not `~/.codex/prompts/*`.<br/><span class="text-slate-500 dark:text-slate-500">Drop `-g` for project-local equivalents under `.codex/*` and `.agents/skills/*`.</span>',
   'ckWithCodex.arch.lane3.title': 'CLIProxyAPI :8317',
-  'ckWithCodex.arch.lane3.desc': 'Local HTTP proxy embedded inside CCS Runtime.<ul class="list-disc pl-5 mt-2 space-y-1"><li>`ccsx codex` <span class="text-slate-500 dark:text-slate-500">→ via CCS Runtime, CLIProxy under the hood, no extra config</span></li><li>`ccsxp` <span class="text-slate-500 dark:text-slate-500">→ direct CLIProxy, requires `CLIPROXY_API_KEY=ccs-internal-managed` in env</span></li></ul><span class="block mt-2 text-slate-500 dark:text-slate-500">Skipped in bare native auth mode.</span>',
+  'ckWithCodex.arch.lane3.desc': 'Local HTTP proxy embedded inside CCS Runtime.<ul class="list-disc pl-5 mt-2 space-y-1"><li>`ccsx codex` <span class="text-slate-500 dark:text-slate-500">→ via CCS Runtime, CLIProxy under the hood, no extra config</span></li><li>`ccsxp` <span class="text-slate-500 dark:text-slate-500">→ direct CLIProxy; via CCS set `CLIPROXY_API_KEY=ccs-internal-managed`, or pass your own key if self-hosting</span></li></ul><span class="block mt-2 text-slate-500 dark:text-slate-500">Skipped in bare native auth mode.</span>',
   'ckWithCodex.arch.lane4.title': 'Codex CLI runtime',
   'ckWithCodex.arch.lane4.desc': 'The same OpenAI `codex` binary, but launched by CCS so it inherits provider routing and OAuth config — calling `codex` directly bypasses CCS. Common entrypoints:<ul class="list-disc pl-5 mt-2 space-y-1"><li>`ccsx` <span class="text-slate-500 dark:text-slate-500">(native GPT OAuth subscription)</span></li><li>`ccsx codex` <span class="text-slate-500 dark:text-slate-500">(CCS Runtime + CLIProxy)</span></li><li>`ccsxp` <span class="text-slate-500 dark:text-slate-500">(direct CLIProxy shortcut)</span></li></ul>',
 
@@ -88,7 +88,7 @@ export const ck_with_codex = {
   'ckWithCodex.setup.step4.title': 'Initialize ClaudeKit, then migrate from that project',
   'ckWithCodex.setup.step4.badge': 'migrate',
   'ckWithCodex.setup.step4.desc': '`ck init` plants the ClaudeKit source layout. `ck migrate -a codex` then copies that content into Codex-native locations.',
-  'ckWithCodex.setup.step4.warning.label': 'read this first',
+  'ckWithCodex.setup.step4.warning.label': 'important',
   'ckWithCodex.setup.step4.warning.title': 'Source ignores `-g` — destination follows it',
   'ckWithCodex.setup.step4.warning.tip': '**Global → global:** run `cd ~` first to align CWD, then `ck migrate -a codex -g --dry-run` to verify SOURCE before applying.',
   'ckWithCodex.setup.step4.code': 'cd your-project\nck init',
@@ -136,6 +136,13 @@ export const ck_with_codex = {
   'ckWithCodex.interactive.ps.agentScope':
     'Project and global Codex agents are independent — they don\'t merge or override. Keep repo-only definitions in `.codex/agents/agent-name.toml` and repo-only rules in project `AGENTS.md` so they travel with the codebase, not with your machine.',
 
+  // YOLO mode
+  'ckWithCodex.interactive.yolo.title': 'Full-permission mode (`--yolo`)',
+  'ckWithCodex.interactive.yolo.body':
+    'The `--yolo` flag passes `--dangerously-bypass-approvals-and-sandbox` to the underlying Codex binary. Works at every entrypoint: `ccsx --yolo`, `ccsx codex --yolo`, `ccsxp --yolo`, or directly `codex --yolo` without CCS. Codex then approves every tool call automatically — file writes, shell commands, package installs — just like Claude Code\'s `--dangerously-skip-permissions`.',
+  'ckWithCodex.interactive.yolo.warning':
+    'No guardrails. `--yolo` disables all confirmation prompts. Codex can delete files, run destructive commands, and install packages without asking. Only use in disposable environments or when you fully trust the prompt scope.',
+
   // Aliases reference
   'ckWithCodex.aliases.heading': 'Runtime entrypoints, decoded',
   'ckWithCodex.aliases.intro': 'CCS exposes native Codex target aliases plus one cliproxy shortcut. Pick based on whether you want normal GPT OAuth routing, CCS Runtime quota rotation, or direct CLIProxy.',
@@ -148,7 +155,7 @@ export const ck_with_codex = {
   'ckWithCodex.aliases.row2.routes': 'Built-in Codex profile through CCS Runtime + CLIProxy',
   'ckWithCodex.aliases.row2.useWhen': 'You want quota rotation across multiple GPT accounts and live quota visibility through `ccs cliproxy quota --provider codex`.',
   'ckWithCodex.aliases.row4.routes': 'Direct CLIProxy provider override',
-  'ckWithCodex.aliases.row4.useWhen': 'You want a thinner path that skips CCS Runtime and talks straight to CLIProxy. Requires `CLIPROXY_API_KEY=ccs-internal-managed`; pins `CODEX_HOME` to `~/.codex` unless `CCSXP_CODEX_HOME` is set.',
+  'ckWithCodex.aliases.row4.useWhen': 'You want a thinner path that skips CCS Runtime and talks straight to CLIProxy. Via CCS set `CLIPROXY_API_KEY=ccs-internal-managed`; self-hosting CLIProxy pass your own key into `CLIPROXY_API_KEY`. Pins `CODEX_HOME` to `~/.codex` unless `CCSXP_CODEX_HOME` is set.',
 
   // Workflows
   'ckWithCodex.workflows.heading': 'Workflows that map cleanly to Codex',
