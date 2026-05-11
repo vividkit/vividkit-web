@@ -2,188 +2,169 @@
 // CCSGuide web dashboard section
 import { getLangFromUrl, type Language } from "@/i18n";
 import { useTranslations } from "@/i18n/utils";
+
 interface Props {
   lang?: Language;
 }
 
 const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
-const t = useTranslations(currentLang);
+const t = useTranslations(currentLang) as (key: string) => string;
+
+const dashboardFeatures = [
+  { title: "ccs.guide.dashboard_feature1", desc: "ccs.guide.dashboard_feature1_desc", color: "cyan", icon: '<path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/>' },
+  { title: "ccs.guide.dashboard_feature2", desc: "ccs.guide.dashboard_feature2_desc", color: "amber", icon: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>' },
+  { title: "ccs.guide.dashboard_feature3", desc: "ccs.guide.dashboard_feature3_desc", color: "violet", icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>' },
+  { title: "ccs.guide.dashboard_feature4", desc: "ccs.guide.dashboard_feature4_desc", color: "blue", icon: '<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>' },
+  { title: "ccs.guide.dashboard_feature5", desc: "ccs.guide.dashboard_feature5_desc", color: "emerald", icon: '<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>' },
+  { title: "ccs.guide.dashboard_feature6", desc: "ccs.guide.dashboard_feature6_desc", color: "slate", icon: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06A1.65 1.65 0 0 0 15 19.4a1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09A1.65 1.65 0 0 0 15 4.6a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>' },
+];
+
+const setupSteps = [
+  { title: "ccs.guide.dashboard_step1_title", desc: "ccs.guide.dashboard_step1_desc", command: "ccs config" },
+  { title: "ccs.guide.dashboard_step2_title", desc: "ccs.guide.dashboard_step2_desc", command: "/providers" },
+  { title: "ccs.guide.dashboard_step3_title", desc: "ccs.guide.dashboard_step3_desc", command: "/cliproxy" },
+  { title: "ccs.guide.dashboard_step4_title", desc: "ccs.guide.dashboard_step4_desc", command: "/health" },
+];
+
+const workspaces = [
+  { title: "ccs.guide.dashboard_workspace_home_title", desc: "ccs.guide.dashboard_workspace_home_desc", path: "/" },
+  { title: "ccs.guide.dashboard_workspace_analytics_title", desc: "ccs.guide.dashboard_workspace_analytics_desc", path: "/analytics" },
+  { title: "ccs.guide.dashboard_workspace_profiles_title", desc: "ccs.guide.dashboard_workspace_profiles_desc", path: "/providers" },
+  { title: "ccs.guide.dashboard_workspace_cliproxy_title", desc: "ccs.guide.dashboard_workspace_cliproxy_desc", path: "/cliproxy" },
+  { title: "ccs.guide.dashboard_workspace_ai_providers_title", desc: "ccs.guide.dashboard_workspace_ai_providers_desc", path: "/cliproxy/ai-providers" },
+  { title: "ccs.guide.dashboard_workspace_control_panel_title", desc: "ccs.guide.dashboard_workspace_control_panel_desc", path: "/cliproxy/control-panel" },
+  { title: "ccs.guide.dashboard_workspace_accounts_title", desc: "ccs.guide.dashboard_workspace_accounts_desc", path: "/accounts" },
+  { title: "ccs.guide.dashboard_workspace_shared_title", desc: "ccs.guide.dashboard_workspace_shared_desc", path: "/shared" },
+  { title: "ccs.guide.dashboard_workspace_claude_extension_title", desc: "ccs.guide.dashboard_workspace_claude_extension_desc", path: "/claude-extension" },
+  { title: "ccs.guide.dashboard_workspace_codex_title", desc: "ccs.guide.dashboard_workspace_codex_desc", path: "/codex" },
+  { title: "ccs.guide.dashboard_workspace_droid_title", desc: "ccs.guide.dashboard_workspace_droid_desc", path: "/droid" },
+  { title: "ccs.guide.dashboard_workspace_copilot_title", desc: "ccs.guide.dashboard_workspace_copilot_desc", path: "/copilot" },
+  { title: "ccs.guide.dashboard_workspace_cursor_title", desc: "ccs.guide.dashboard_workspace_cursor_desc", path: "/legacy/cursor" },
+  { title: "ccs.guide.dashboard_workspace_health_title", desc: "ccs.guide.dashboard_workspace_health_desc", path: "/health" },
+  { title: "ccs.guide.dashboard_workspace_logs_title", desc: "ccs.guide.dashboard_workspace_logs_desc", path: "/logs" },
+  { title: "ccs.guide.dashboard_workspace_settings_title", desc: "ccs.guide.dashboard_workspace_settings_desc", path: "/settings" },
+];
+
+const colorClasses = {
+  amber: "from-amber-500/10 to-amber-500/5 border-amber-500/20 text-amber-600 dark:text-amber-400",
+  blue: "from-blue-500/10 to-blue-500/5 border-blue-500/20 text-blue-600 dark:text-blue-400",
+  cyan: "from-cyan-500/10 to-cyan-500/5 border-cyan-500/20 text-cyan-600 dark:text-cyan-400",
+  emerald: "from-emerald-500/10 to-emerald-500/5 border-emerald-500/20 text-emerald-600 dark:text-emerald-400",
+  slate: "from-slate-500/10 to-slate-500/5 border-slate-500/20 text-slate-600 dark:text-slate-400",
+  violet: "from-violet-500/10 to-violet-500/5 border-violet-500/20 text-violet-600 dark:text-violet-400",
+};
 ---
 
-  <!-- Web Dashboard Section -->
-  <div class="glass-card rounded-xl border-slate-200 dark:border-slate-700 overflow-hidden">
-    <div class="p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border-b border-slate-200 dark:border-slate-800">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
-          <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-            <path d="M3 9h18M9 21V9"/>
-          </svg>
-        </div>
-        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-200">
-          {t('ccs.guide.dashboard_title')}
-        </h3>
-        <span class="px-2 py-0.5 text-xs rounded-full bg-blue-500/20 text-blue-600 dark:text-blue-400 font-medium">{t('ccs.guide.new_badge')}</span>
+<div class="glass-card rounded-xl border-slate-200 dark:border-slate-700 overflow-hidden">
+  <div class="p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border-b border-slate-200 dark:border-slate-800">
+    <div class="flex flex-wrap items-center gap-3">
+      <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
+        <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+          <path d="M3 9h18M9 21V9" />
+        </svg>
       </div>
-    </div>
-    <div class="p-6 space-y-6">
-      <p class="text-slate-700 dark:text-slate-300">
-        {t('ccs.guide.dashboard_desc')}
-      </p>
-
-      <!-- Dashboard Workspaces Grid -->
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
-        <!-- Profiles (Key) — cyan -->
-        <div class="group p-4 rounded-xl bg-gradient-to-br from-cyan-500/10 to-cyan-500/5 border border-cyan-500/20 hover:border-cyan-500/40 text-center transition-all duration-200 hover:shadow-md hover:shadow-cyan-500/5">
-          <div class="w-9 h-9 mx-auto mb-2.5 rounded-lg bg-cyan-500/15 flex items-center justify-center group-hover:bg-cyan-500/25 transition-colors">
-            <svg class="w-4.5 h-4.5 text-cyan-600 dark:text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/>
-            </svg>
-          </div>
-          <span class="text-xs font-semibold text-slate-700 dark:text-slate-300">{t('ccs.guide.dashboard_feature1')}</span>
-        </div>
-        <!-- CLIProxy Plus (Zap) — amber -->
-        <div class="group p-4 rounded-xl bg-gradient-to-br from-amber-500/10 to-amber-500/5 border border-amber-500/20 hover:border-amber-500/40 text-center transition-all duration-200 hover:shadow-md hover:shadow-amber-500/5">
-          <div class="w-9 h-9 mx-auto mb-2.5 rounded-lg bg-amber-500/15 flex items-center justify-center group-hover:bg-amber-500/25 transition-colors">
-            <svg class="w-4.5 h-4.5 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-            </svg>
-          </div>
-          <span class="text-xs font-semibold text-slate-700 dark:text-slate-300">{t('ccs.guide.dashboard_feature2')}</span>
-        </div>
-        <!-- Accounts (Users) — violet -->
-        <div class="group p-4 rounded-xl bg-gradient-to-br from-violet-500/10 to-violet-500/5 border border-violet-500/20 hover:border-violet-500/40 text-center transition-all duration-200 hover:shadow-md hover:shadow-violet-500/5">
-          <div class="w-9 h-9 mx-auto mb-2.5 rounded-lg bg-violet-500/15 flex items-center justify-center group-hover:bg-violet-500/25 transition-colors">
-            <svg class="w-4.5 h-4.5 text-violet-600 dark:text-violet-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-              <circle cx="9" cy="7" r="4"/>
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-            </svg>
-          </div>
-          <span class="text-xs font-semibold text-slate-700 dark:text-slate-300">{t('ccs.guide.dashboard_feature3')}</span>
-        </div>
-        <!-- Analytics (BarChart3) — blue -->
-        <div class="group p-4 rounded-xl bg-gradient-to-br from-blue-500/10 to-blue-500/5 border border-blue-500/20 hover:border-blue-500/40 text-center transition-all duration-200 hover:shadow-md hover:shadow-blue-500/5">
-          <div class="w-9 h-9 mx-auto mb-2.5 rounded-lg bg-blue-500/15 flex items-center justify-center group-hover:bg-blue-500/25 transition-colors">
-            <svg class="w-4.5 h-4.5 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="18" y1="20" x2="18" y2="10"/>
-              <line x1="12" y1="20" x2="12" y2="4"/>
-              <line x1="6" y1="20" x2="6" y2="14"/>
-            </svg>
-          </div>
-          <span class="text-xs font-semibold text-slate-700 dark:text-slate-300">{t('ccs.guide.dashboard_feature4')}</span>
-        </div>
-        <!-- Health (Activity) — emerald -->
-        <div class="group p-4 rounded-xl bg-gradient-to-br from-emerald-500/10 to-emerald-500/5 border border-emerald-500/20 hover:border-emerald-500/40 text-center transition-all duration-200 hover:shadow-md hover:shadow-emerald-500/5">
-          <div class="w-9 h-9 mx-auto mb-2.5 rounded-lg bg-emerald-500/15 flex items-center justify-center group-hover:bg-emerald-500/25 transition-colors">
-            <svg class="w-4.5 h-4.5 text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-            </svg>
-          </div>
-          <span class="text-xs font-semibold text-slate-700 dark:text-slate-300">{t('ccs.guide.dashboard_feature5')}</span>
-        </div>
-        <!-- Settings (Gear) — slate -->
-        <div class="group p-4 rounded-xl bg-gradient-to-br from-slate-500/10 to-slate-500/5 border border-slate-500/20 hover:border-slate-400/40 text-center transition-all duration-200 hover:shadow-md hover:shadow-slate-500/5">
-          <div class="w-9 h-9 mx-auto mb-2.5 rounded-lg bg-slate-500/15 flex items-center justify-center group-hover:bg-slate-500/25 transition-colors">
-            <svg class="w-4.5 h-4.5 text-slate-600 dark:text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="3"/>
-              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-            </svg>
-          </div>
-          <span class="text-xs font-semibold text-slate-700 dark:text-slate-300">{t('ccs.guide.dashboard_feature6')}</span>
-        </div>
-      </div>
-
-      <!-- Launch Command -->
-      <div>
-        <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3 flex items-center gap-2">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="4 17 10 11 4 5"/>
-            <line x1="12" y1="19" x2="20" y2="19"/>
-          </svg>
-          {t('ccs.guide.dashboard_launch_title')}
-        </h4>
-        <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm space-y-3">
-          <div class="flex items-center gap-4">
-            <code class="text-slate-700 dark:text-slate-300">ccs config</code>
-            <span class="text-slate-500 text-xs"># {t('ccs.guide.dashboard_launch_default')}</span>
-          </div>
-          <div class="flex items-center gap-4">
-            <code class="text-slate-700 dark:text-slate-300">ccs config --port 3000</code>
-            <span class="text-slate-500 text-xs"># {t('ccs.guide.dashboard_launch_custom')}</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Access Info -->
-      <div class="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
-        <p class="text-sm text-slate-700 dark:text-slate-300 flex items-start gap-2">
-          <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M12 16v-4M12 8h.01"/>
-          </svg>
-          <span>{t('ccs.guide.dashboard_access_note')}</span>
-        </p>
-      </div>
-
-      <!-- Dashboard Screenshot (Theme-aware) -->
-      <div>
-        <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3 flex items-center gap-2">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-            <circle cx="8.5" cy="8.5" r="1.5"/>
-            <polyline points="21 15 16 10 5 21"/>
-          </svg>
-          {t('ccs.guide.dashboard_preview_title')}
-        </h4>
-        <div class="rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
-          <!-- Light Mode Screenshot (visible in light mode) -->
-          <div class="block dark:hidden">
-            <div class="p-2 bg-slate-100 border-b border-slate-200 flex items-center gap-2">
-              <svg class="w-4 h-4 text-amber-500" viewBox="0 0 24 24" fill="currentColor">
-                <circle cx="12" cy="12" r="5"/>
-                <line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" stroke-width="2"/>
-                <line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" stroke-width="2"/>
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="currentColor" stroke-width="2"/>
-                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="2"/>
-                <line x1="1" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2"/>
-                <line x1="21" y1="12" x2="23" y2="12" stroke="currentColor" stroke-width="2"/>
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="currentColor" stroke-width="2"/>
-                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="2"/>
-              </svg>
-              <span class="text-xs font-medium text-slate-600">{t('ccs.guide.dashboard_light_mode')}</span>
-            </div>
-            <img
-              src="/guides/ccs_dashboard_light.png"
-              alt="CCS Dashboard - Light Mode"
-              class="w-full h-auto"
-              loading="lazy"
-            />
-          </div>
-          <!-- Dark Mode Screenshot (visible in dark mode) -->
-          <div class="hidden dark:block">
-            <div class="p-2 bg-slate-800 border-b border-slate-700 flex items-center gap-2">
-              <svg class="w-4 h-4 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-              </svg>
-              <span class="text-xs font-medium text-slate-300">{t('ccs.guide.dashboard_dark_mode')}</span>
-            </div>
-            <img
-              src="/guides/ccs_dashboard_dark.png"
-              alt="CCS Dashboard - Dark Mode"
-              class="w-full h-auto"
-              loading="lazy"
-            />
-          </div>
-        </div>
-      </div>
-
-      <!-- Sidebar Structure Note -->
-      <div class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50">
-        <p class="text-xs text-slate-600 dark:text-slate-400">
-          {t('ccs.guide.dashboard_sidebar_desc')}
-        </p>
-      </div>
+      <h3 class="text-xl font-bold text-slate-800 dark:text-slate-200">{t("ccs.guide.dashboard_title")}</h3>
+      <span class="px-2 py-0.5 text-xs rounded-full bg-blue-500/20 text-blue-600 dark:text-blue-400 font-medium">{t("ccs.guide.new_badge")}</span>
     </div>
   </div>
+
+  <div class="p-6 space-y-7">
+    <p class="text-slate-700 dark:text-slate-300">{t("ccs.guide.dashboard_desc")}</p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+      {dashboardFeatures.map((feature) => (
+        <div class:list={["p-4 rounded-xl bg-gradient-to-br border", colorClasses[feature.color]]}>
+          <div class="flex items-start gap-3">
+            <div class="w-9 h-9 rounded-lg bg-white/60 dark:bg-slate-950/40 border border-current/20 flex items-center justify-center shrink-0">
+              <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={feature.icon} />
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200">{t(feature.title)}</h4>
+              <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">{t(feature.desc)}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-4">
+      <div class="rounded-xl border border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-900/50 p-4">
+        <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 mb-3">{t("ccs.guide.dashboard_launch_title")}</h4>
+        <div class="space-y-3">
+          <div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-1">{t("ccs.guide.dashboard_launch_default")}</p>
+            <div class="bg-slate-100 dark:bg-slate-800/90 rounded-lg p-3 border border-slate-200 dark:border-slate-700 font-mono text-sm overflow-x-auto">
+              <code class="text-slate-700 dark:text-slate-200 whitespace-nowrap">ccs config</code>
+            </div>
+          </div>
+          <div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-1">{t("ccs.guide.dashboard_launch_custom")}</p>
+            <div class="bg-slate-100 dark:bg-slate-800/90 rounded-lg p-3 border border-slate-200 dark:border-slate-700 font-mono text-sm overflow-x-auto">
+              <code class="text-slate-700 dark:text-slate-200 whitespace-nowrap">ccs config --port 3000</code>
+            </div>
+          </div>
+        </div>
+        <p class="text-xs text-slate-600 dark:text-slate-400 mt-3">{t("ccs.guide.dashboard_access_note")}</p>
+      </div>
+
+      <div class="rounded-xl border border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-900/50 p-4">
+        <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 mb-3">{t("ccs.guide.dashboard_setup_title")}</h4>
+        <div class="space-y-3">
+          {setupSteps.map((step, index) => (
+            <div class="flex gap-3">
+              <div class="w-6 h-6 rounded-full bg-blue-500/15 text-blue-600 dark:text-blue-400 text-xs font-bold flex items-center justify-center shrink-0">{index + 1}</div>
+              <div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <h5 class="text-sm font-semibold text-slate-800 dark:text-slate-200">{t(step.title)}</h5>
+                  <code class="text-[11px] text-blue-600 dark:text-blue-400 bg-blue-500/10 px-1.5 py-0.5 rounded">{step.command}</code>
+                </div>
+                <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">{t(step.desc)}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 mb-3">{t("ccs.guide.dashboard_workspace_title")}</h4>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        {workspaces.map((workspace) => (
+          <div class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50">
+            <div class="flex items-center justify-between gap-3 mb-1">
+              <h5 class="text-sm font-bold text-slate-800 dark:text-slate-200">{t(workspace.title)}</h5>
+              <code class="text-[11px] text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded">{workspace.path}</code>
+            </div>
+            <p class="text-xs text-slate-600 dark:text-slate-400">{t(workspace.desc)}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-4 items-start">
+      <div>
+        <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3">{t("ccs.guide.dashboard_preview_title")}</h4>
+        <div class="rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+          <img src="/guides/ccs_dashboard_light.png" alt="CCS Dashboard - Light Mode" class="w-full h-auto block dark:hidden" loading="lazy" />
+          <img src="/guides/ccs_dashboard_dark.png" alt="CCS Dashboard - Dark Mode" class="w-full h-auto hidden dark:block" loading="lazy" />
+        </div>
+      </div>
+      <div class="space-y-3">
+        <div class="p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+          <h5 class="text-sm font-bold text-slate-800 dark:text-slate-200 mb-1">{t("ccs.guide.dashboard_beginner_title")}</h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400">{t("ccs.guide.dashboard_beginner_desc")}</p>
+        </div>
+        <div class="p-4 rounded-lg bg-slate-100/70 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+          <h5 class="text-sm font-bold text-slate-800 dark:text-slate-200 mb-1">{t("ccs.guide.dashboard_safety_title")}</h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400">{t("ccs.guide.dashboard_safety_desc")}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-4 rounded-lg bg-white/50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/50">
+      <p class="text-xs text-slate-600 dark:text-slate-400">{t("ccs.guide.dashboard_sidebar_desc")}</p>
+    </div>
+  </div>
+</div>
