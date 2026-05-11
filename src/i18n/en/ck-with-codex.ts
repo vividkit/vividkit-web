@@ -57,11 +57,11 @@ export const ck_with_codex = {
 
   // Setup walkthrough
   'ckWithCodex.setup.heading': 'Five-minute setup',
-  'ckWithCodex.setup.intro': 'Run the machine setup once. Run `ck init` in each project, then run `ck migrate -a codex` from the project whose ClaudeKit content you want copied into Codex-native locations. Without `-g`, writes are project-local (`.codex/*`, `.agents/skills/*`); add `-g` to write globally (`~/.codex/*`, `~/.agents/skills/*`). For global → global, `cd ~` first — see the Step 4 caveat.<br/><br/>**Version note:** this guide tracks `claudekit-cli` `v4.0.0-dev.5+`. Run `ck update -d -y` to grab the latest beta so paths and behaviour match.',
+  'ckWithCodex.setup.intro': 'Run the machine setup once. Run `ck init` in each project, then run `ck migrate -a codex` from the project whose ClaudeKit content you want copied into Codex-native locations. Without `-g`, writes are project-local (`.codex/*`, `.agents/skills/*`); add `-g` to write globally (`~/.codex/*`, `~/.agents/skills/*`). For global → global, `cd ~` first — see the Step 4 caveat.<br/><br/>**Version note:** this guide tracks `claudekit-cli` `v4.1.0+`. Run `ck update -y` to update.',
 
   'ckWithCodex.setup.step1.title': 'Install CCS and ClaudeKit',
   'ckWithCodex.setup.step1.badge': 'one-time',
-  'ckWithCodex.setup.step1.desc': 'Already installed? Update with `ccs update` and `ck update -y` (stable) or `ck update -d -y` (beta — recommended, has Codex migrate fixes). CCS handles routing; ClaudeKit ships skills and legacy prompt compatibility files.',
+  'ckWithCodex.setup.step1.desc': 'Already installed? Update with `ccs update` and `ck update -y`. CCS handles routing; ClaudeKit ships skills and legacy prompt compatibility files.',
   'ckWithCodex.setup.step1.code': 'npm install -g @kaitranntt/ccs\nnpm install -g claudekit-cli',
   'ckWithCodex.setup.step1.hint.label': 'verify',
   'ckWithCodex.setup.step1.hint.body': '`ccs --version` · `ck --version`',
@@ -126,7 +126,7 @@ export const ck_with_codex = {
   'ckWithCodex.interactive.ps.prompt.label': 'prompt file',
   'ckWithCodex.interactive.ps.prompt.title': 'No longer written',
   'ckWithCodex.interactive.ps.prompt.body':
-    'Used to live at `~/.codex/prompts/*.md`. OpenAI deprecated Codex custom prompts, and `claudekit-cli` followed suit in `v4.0.0-dev.5+` — commands now migrate as scoped skills. The legacy prompts path is no longer written.',
+    'Used to live at `~/.codex/prompts/*.md`. OpenAI deprecated Codex custom prompts, and `claudekit-cli` followed suit in `v4.1.0` — commands now migrate as scoped skills. The legacy prompts path is no longer written.',
   'ckWithCodex.interactive.ps.skill.label': 'skill directory',
   'ckWithCodex.interactive.ps.skill.title': 'Workflow playbook',
   'ckWithCodex.interactive.ps.skill.body':

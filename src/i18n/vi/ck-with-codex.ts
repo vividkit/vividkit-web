@@ -57,11 +57,11 @@ export const ck_with_codex = {
 
   // Setup walkthrough
   'ckWithCodex.setup.heading': 'Setup trong năm phút',
-  'ckWithCodex.setup.intro': 'Chạy setup máy một lần. Chạy `ck init` trong từng project, sau đó chạy `ck migrate -a codex` từ project mà bạn muốn copy nội dung ClaudeKit vào các vị trí Codex-native. Không có `-g`, ghi sẽ là project-local (`.codex/*`, `.agents/skills/*`); thêm `-g` để ghi global (`~/.codex/*`, `~/.agents/skills/*`). Để global → global, `cd ~` trước — xem caveat ở Step 4.<br/><br/>**Lưu ý phiên bản:** hướng dẫn này theo `claudekit-cli` `v4.0.0-dev.5+`. Chạy `ck update -d -y` để lấy beta mới nhất cho khớp đường dẫn và hành vi.',
+  'ckWithCodex.setup.intro': 'Chạy setup máy một lần. Chạy `ck init` trong từng project, sau đó chạy `ck migrate -a codex` từ project mà bạn muốn copy nội dung ClaudeKit vào các vị trí Codex-native. Không có `-g`, ghi sẽ là project-local (`.codex/*`, `.agents/skills/*`); thêm `-g` để ghi global (`~/.codex/*`, `~/.agents/skills/*`). Để global → global, `cd ~` trước — xem caveat ở Step 4.<br/><br/>**Lưu ý phiên bản:** hướng dẫn này theo `claudekit-cli` `v4.1.0+`. Chạy `ck update -y` để cập nhật.',
 
   'ckWithCodex.setup.step1.title': 'Cài CCS và ClaudeKit',
   'ckWithCodex.setup.step1.badge': 'một lần',
-  'ckWithCodex.setup.step1.desc': 'Đã cài rồi? Cập nhật bằng `ccs update` và `ck update -y` (stable) hoặc `ck update -d -y` (beta — khuyến nghị, có fix lỗi migrate sang Codex). CCS lo routing; ClaudeKit ship skills và file tương thích prompt cũ.',
+  'ckWithCodex.setup.step1.desc': 'Đã cài rồi? Cập nhật bằng `ccs update` và `ck update -y`. CCS lo routing; ClaudeKit ship skills và file tương thích prompt cũ.',
   'ckWithCodex.setup.step1.code': 'npm install -g @kaitranntt/ccs\nnpm install -g claudekit-cli',
   'ckWithCodex.setup.step1.hint.label': 'kiểm tra',
   'ckWithCodex.setup.step1.hint.body': '`ccs --version` · `ck --version`',
@@ -126,7 +126,7 @@ export const ck_with_codex = {
   'ckWithCodex.interactive.ps.prompt.label': 'file prompt',
   'ckWithCodex.interactive.ps.prompt.title': 'Không còn được ghi',
   'ckWithCodex.interactive.ps.prompt.body':
-    'Trước đây ở `~/.codex/prompts/*.md`. OpenAI đã deprecate Codex custom prompts, và `claudekit-cli` cũng theo từ `v4.0.0-dev.5+` — commands giờ được migrate dưới dạng skill có scope. Đường dẫn prompts cũ không còn được ghi.',
+    'Trước đây ở `~/.codex/prompts/*.md`. OpenAI đã deprecate Codex custom prompts, và `claudekit-cli` cũng theo từ `v4.1.0` — commands giờ được migrate dưới dạng skill có scope. Đường dẫn prompts cũ không còn được ghi.',
   'ckWithCodex.interactive.ps.skill.label': 'thư mục skill',
   'ckWithCodex.interactive.ps.skill.title': 'Playbook workflow',
   'ckWithCodex.interactive.ps.skill.body':
