@@ -32,9 +32,12 @@ pnpm-debug.log*
 
 .claude/
 .agent/
+.agents/
 .shared/
+.handoff/
 reference/**/*
 !reference/skills-registry.json
 !reference/skills-registry-index.json
+!reference/ccs-provider-editorial.json
 plans/**/*
 !plans/templates/*

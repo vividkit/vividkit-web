@@ -2,8 +2,8 @@
 export const ccs = {
   // CCS Guide
   'ccs.guide.title': 'CCS - Claude Code Switch',
-  'ccs.guide.tagline': 'Một lệnh, không gián đoạn, nhiều tài khoản',
-  'ccs.guide.description': 'Chuyển đổi giữa các tài khoản Claude, GLM, Kimi và nhiều hơn nữa ngay lập tức. Không còn bị giới hạn. Làm việc liên tục.',
+  'ccs.guide.tagline': 'Một lệnh, không gián đoạn, mọi provider',
+  'ccs.guide.description': 'Chuyển đổi giữa Claude, Codex, Kiro, GLM, Kimi, Ollama và hơn thế. Nhiều tài khoản, nhiều runtime — không cần đổi config.',
   'ccs.guide.created_by': 'Được tạo bởi',
   'ccs.guide.google_ban_warning_title': 'Cảnh Báo: Ban Tài Khoản Google',
   'ccs.guide.google_ban_warning_desc': 'Google đang tích cực ban các tài khoản sử dụng Antigravity/Gemini OAuth với công cụ bên thứ ba (OpenCode, các công cụ dựa trên CLIProxy như CCS/ProxyPal, AntigravityManager, v.v.). Việc sử dụng các công cụ này có thể vi phạm ToS của Google và dẫn đến mất quyền truy cập vĩnh viễn vào tất cả dịch vụ Google. Mọi rủi ro xin tự chịu trách nhiệm.',

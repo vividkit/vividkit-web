@@ -25,9 +25,9 @@ const t = {
   envVars: currentLang === 'vi' ? 'Biến môi trường' : 'Environment Variables',
   caveats: currentLang === 'vi' ? 'Lưu ý' : 'Notes',
   setup: currentLang === 'vi' ? 'Cài đặt' : 'Setup Steps',
-  models: currentLang === 'vi' ? 'Models khả dụng' : 'Available Models',
-  useCases: currentLang === 'vi' ? 'Cách dùng' : 'Usage',
-  docs: currentLang === 'vi' ? 'Xem docs' : 'View docs',
+  models: currentLang === 'vi' ? 'Models mặc định CCS' : 'CCS Default Models',
+  useCases: currentLang === 'vi' ? 'Cheatsheet' : 'Cheatsheet',
+  docs: currentLang === 'vi' ? 'Xem CCS upstream docs' : 'View CCS upstream docs',
   copy: currentLang === 'vi' ? 'Sao chép' : 'Copy',
   copied: currentLang === 'vi' ? 'Đã chép' : 'Copied',
   cost: currentLang === 'vi' ? 'Chi phí' : 'Cost',
@@ -37,6 +37,9 @@ const t = {
   envHint: currentLang === 'vi'
     ? 'Các biến này được CCS quản lý qua file profile — bạn không phải set thủ công vào shell.'
     : 'CCS manages these via your profile file — no need to set them in your shell manually.',
+  modelsHint: currentLang === 'vi'
+    ? 'Các model CCS mặc định set cho profile này. Bạn có thể override trong CCS settings file hoặc qua dashboard.'
+    : 'Models CCS pre-configures for this profile. You can override them in CCS settings file or via dashboard.',
   techDetailsLabel: currentLang === 'vi' ? 'Chi tiết kỹ thuật' : 'Technical details',
 };
 
@@ -428,7 +431,13 @@ const defaultGC = groupColorMap['group-local'];
                               </template>
                             </div>
                             <template x-if="step.cmd">
-                              <div class="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-3 border border-slate-100 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 whitespace-pre-wrap" x-html="step.cmd"></div>
+                              <div class="group/cmd relative">
+                                <div class="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-3 pr-10 border border-slate-100 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 whitespace-pre-wrap" x-html="step.cmd"></div>
+                                <button x-on:click="copy(step.cmd.replace(/<[^>]*>/g, ''), 'ostep-' + gi + '-' + i)" class="absolute top-2 right-2 p-1.5 rounded-md bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover/cmd:opacity-100 transition-opacity" title="Copy">
+                                  <svg x-show="copied !== 'ostep-' + gi + '-' + i" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path></svg>
+                                  <svg x-show="copied === 'ostep-' + gi + '-' + i" x-cloak class="w-3.5 h-3.5 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </button>
+                              </div>
                             </template>
                           </div>
                         </template>
@@ -446,8 +455,9 @@ const defaultGC = groupColorMap['group-local'];
                             <div x-show="!step.startsWith('#')" class="group">
                               <div class="flex items-start gap-2">
                                 <pre class="flex-1 px-3 py-2 rounded-lg bg-slate-100 dark:bg-slate-800/90 font-mono text-xs overflow-x-auto m-0" x-html="formatShellBlock(step)"></pre>
-                                <button x-on:click="copy(extractCmd(step), 'step-' + i)" class="mt-1.5 px-2 py-1 text-xs rounded text-purple-600 dark:text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
-                                  <span x-text="copied === 'step-' + i ? t_copied : t_copy" x-data={`{ t_copy: '${t.copy}', t_copied: '${t.copied}' }`}></span>
+                                <button x-on:click="copy(extractCmd(step), 'step-' + i)" class="mt-1 p-1.5 rounded-md bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" title="Copy">
+                                  <svg x-show="copied !== 'step-' + i" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path></svg>
+                                  <svg x-show="copied === 'step-' + i" x-cloak class="w-3.5 h-3.5 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                 </button>
                               </div>
                             </div>
@@ -490,7 +500,8 @@ const defaultGC = groupColorMap['group-local'];
         <!-- Available models -->
         <template x-if="activeData()?.payload?.availableModels?.length">
           <div class="mb-4">
-            <h4 class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">{t.models}</h4>
+            <h4 class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-1">{t.models}</h4>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 italic mb-2" x-data={`{ hint: '${t.modelsHint}' }`} x-text="hint"></p>
             <div class="space-y-1">
               <template x-for="m in activeData().payload.availableModels" :key="m.name">
                 <div class="flex items-center gap-2 group">
@@ -534,59 +545,75 @@ const defaultGC = groupColorMap['group-local'];
           </div>
         </template>
 
-        <!-- Notes — quick caveats shown by default, technical ones tucked behind a toggle -->
+        <!-- Notes + Technical details — side-by-side on md+, stacked on mobile -->
         <template x-if="activeData()?.payload?.caveats?.length">
           <div class="mb-4 ccs-notes">
-            <h4 class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">{t.caveats}</h4>
+            <div x-bind:class="techCaveats().length ? 'grid grid-cols-1 md:grid-cols-2 gap-4' : ''">
+              <!-- Quick Notes column -->
+              <template x-if="quickCaveats().length">
+                <div>
+                  <h4 class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2 flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5 text-purple-500 dark:text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"/>
+                      <line x1="12" y1="16" x2="12" y2="12"/>
+                      <line x1="12" y1="8" x2="12.01" y2="8"/>
+                    </svg>
+                    {t.caveats}
+                  </h4>
+                  <ul class="space-y-2">
+                    <template x-for="c in quickCaveats()" :key="caveatText(c)">
+                      <li class="border-l-2 border-purple-400/60 dark:border-purple-500/40 pl-3 py-1.5">
+                        <p class="text-xs text-slate-700 dark:text-slate-200 leading-relaxed m-0" x-html="formatInline(caveatText(c))"></p>
+                      </li>
+                    </template>
+                  </ul>
+                </div>
+              </template>
 
-            <template x-if="quickCaveats().length">
-              <ul class="space-y-2">
-                <template x-for="c in quickCaveats()" :key="caveatText(c)">
-                  <li class="rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50/60 dark:bg-slate-800/40 p-2.5">
-                    <div class="flex items-start gap-2">
-                      <svg class="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-purple-500 dark:text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"/>
-                        <line x1="12" y1="16" x2="12" y2="12"/>
-                        <line x1="12" y1="8" x2="12.01" y2="8"/>
+              <!-- Technical details column -->
+              <template x-if="techCaveats().length">
+                <div>
+                  <details class="group" open>
+                    <summary class="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 cursor-pointer select-none list-none mb-2 py-0">
+                      <svg class="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
                       </svg>
-                      <p class="text-xs text-slate-700 dark:text-slate-200 leading-relaxed flex-1 m-0" x-html="formatInline(caveatText(c))"></p>
-                    </div>
-                  </li>
-                </template>
-              </ul>
-            </template>
-
-            <template x-if="techCaveats().length">
-              <details class="mt-2 group">
-                <summary class="flex items-center gap-1.5 text-[11px] font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 cursor-pointer select-none list-none py-1.5">
-                  <svg class="w-3 h-3 transition-transform group-open:rotate-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-                  <span x-text="t_label" x-data={`{ t_label: '${t.techDetailsLabel}' }`}></span>
-                  <span class="text-slate-400 dark:text-slate-500" x-text="'(' + techCaveats().length + ')'"></span>
-                </summary>
-                <ul class="mt-1.5 space-y-2">
-                  <template x-for="c in techCaveats()" :key="caveatText(c)">
-                    <li class="rounded-lg border border-dashed border-slate-200 dark:border-slate-700/60 bg-slate-50/40 dark:bg-slate-800/25 p-2.5">
-                      <div class="flex items-start gap-2">
-                        <span class="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-slate-400 dark:bg-slate-500"></span>
-                        <p class="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed flex-1 m-0" x-html="formatInline(caveatText(c))"></p>
-                      </div>
-                    </li>
-                  </template>
-                </ul>
-              </details>
-            </template>
+                      <span x-text="t_label" x-data={`{ t_label: '${t.techDetailsLabel}' }`}></span>
+                      <span class="text-slate-400 dark:text-slate-500 font-normal" x-text="'(' + techCaveats().length + ')'"></span>
+                      <svg class="w-3 h-3 ml-auto transition-transform group-open:rotate-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </summary>
+                    <ul class="space-y-2">
+                      <template x-for="c in techCaveats()" :key="caveatText(c)">
+                        <li class="pl-3 py-1.5">
+                          <div class="flex items-start gap-2">
+                            <span class="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-slate-400 dark:bg-slate-500"></span>
+                            <p class="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed flex-1 m-0" x-html="formatInline(caveatText(c))"></p>
+                          </div>
+                        </li>
+                      </template>
+                    </ul>
+                  </details>
+                </div>
+              </template>
+            </div>
           </div>
         </template>
 
-        <!-- Docs link — placed AFTER Notes so the anchor cannot accidentally wrap them -->
+        <!-- Docs link — button-style for clarity -->
         <template x-if="activeData()?.payload?.docsUrl">
-          <div class="mt-4">
+          <div class="mt-4 pt-3 border-t border-slate-200 dark:border-slate-700">
             <a x-bind:href="activeData().payload.docsUrl" target="_blank" rel="noopener noreferrer"
-               class="inline-flex items-center gap-1.5 text-xs font-semibold text-purple-600 dark:text-purple-400 hover:underline">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+               class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-purple-300 dark:border-purple-700 bg-purple-50 dark:bg-purple-900/20 text-xs font-semibold text-purple-600 dark:text-purple-400 hover:bg-purple-100 dark:hover:bg-purple-900/40 transition-colors">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
               </svg>
               <span x-text="t_docs" x-data={`{ t_docs: '${t.docs}' }`}></span>
+              <svg class="w-3 h-3 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+              </svg>
             </a>
           </div>
         </template>
