@@ -278,6 +278,8 @@ export const commands = {
   'commands.mkt_beta.ckm_storage.detail': 'Lưu trữ đám mây cho tài sản marketing: liệt kê, đồng bộ, tải lên và tạo URL chia sẻ.',
   'commands.mkt_beta.design_consolidated.desc': 'Gộp skill thiết kế',
   'commands.mkt_beta.design_consolidated.detail': 'Logo, CIP, slides, banner, icon, ảnh mạng xã hội — gộp thành skill design thống nhất với Python scripts.',
+  'commands.mkt_beta.design_poster.desc': 'Sub-skill poster với knowledge base từ vision-clustering',
+  'commands.mkt_beta.design_poster.detail': '121 poster mẫu phân tích thành 4 trục (style, palette, layout, texture).<br/>Locked-axis generation: giữ style identity, mỗi lần gọi tạo composition khác biệt.',
   'commands.mkt_beta.ads_management.desc': 'Nâng cấp quản lý quảng cáo',
   'commands.mkt_beta.ads_management.detail': 'Script Google Ads & Meta Ads, thiết lập chiến dịch, đấu thầu, creative assets, đo lường & attribution.',
   'commands.mkt_beta.changes.title': 'Thay đổi trong bản Beta',
