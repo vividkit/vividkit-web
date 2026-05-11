@@ -295,8 +295,8 @@ const paths: CCSPath[] = [
       ],
       setupSteps: [
         {
-          title: { en: 'Step 1: Auth work account', vi: 'Bước 1: Auth tài khoản work' },
-          desc: { en: 'Browser opens for native Claude OAuth', vi: 'Trình duyệt mở để chạy Claude OAuth gốc' },
+          title: { en: 'Step 1: Auth first account (with alias "work")', vi: 'Bước 1: Auth tài khoản đầu tiên (alias "work")' },
+          desc: { en: 'Browser opens for native Claude OAuth — alias is your profile name', vi: 'Trình duyệt mở để chạy Claude OAuth gốc — alias là tên profile' },
           cmd: `<span class="text-blue-600 dark:text-blue-400 font-bold">ccs</span> auth create <span class="text-purple-600 dark:text-purple-400 font-bold">work</span>`,
         },
         {
@@ -310,13 +310,13 @@ const paths: CCSPath[] = [
             en: 'Activate the chosen profile, isolated via CLAUDE_CONFIG_DIR',
             vi: 'Kích hoạt profile đã chọn, cô lập qua CLAUDE_CONFIG_DIR',
           },
-          cmd: `<span class="text-blue-600 dark:text-blue-400 font-bold">ccs</span> <span class="text-purple-600 dark:text-purple-400 font-bold">work</span>     <span class="text-slate-400 italic"># or: ccs personal</span>`,
+          cmd: `<span class="text-blue-600 dark:text-blue-400 font-bold">ccs</span> <span class="text-purple-600 dark:text-purple-400 font-bold">work</span>\n<span class="text-slate-400 italic"># or: ccs personal</span>`,
         },
       ],
       availableModels: [
-        { tier: 'opus', name: 'claude-opus-4-7' },
-        { tier: 'sonnet', name: 'claude-sonnet-4-6' },
-        { tier: 'haiku', name: 'claude-haiku-4-5-20251001' },
+        { tier: 'opus', name: 'claude-opus-4-7', note: { en: 'was claude-opus-4-5-20250514', vi: 'trước là claude-opus-4-5-20250514' } },
+        { tier: 'sonnet', name: 'claude-sonnet-4-6', note: { en: 'was claude-sonnet-4-5-20250514', vi: 'trước là claude-sonnet-4-5-20250514' } },
+        { tier: 'haiku', name: 'claude-haiku-4-5-20251001', note: { en: 'stable since Oct 2025', vi: 'ổn định từ 10/2025' } },
       ],
       useCases: [
         {

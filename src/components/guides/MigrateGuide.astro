@@ -537,9 +537,15 @@ const migrationPhases = [
         {
           title: t('Content Selection', 'Chọn nội dung migrate'),
           rows: [
+            ['--only-agents', t('Migrate agents only', 'Chỉ migrate agents')],
+            ['--only-commands', t('Migrate commands only', 'Chỉ migrate commands')],
+            ['--only-skills', t('Migrate skills only', 'Chỉ migrate skills')],
             ['--config', t('Migrate CLAUDE.md config only', 'Chỉ migrate CLAUDE.md')],
             ['--rules', t('Migrate .claude/rules/ only', 'Chỉ migrate .claude/rules/')],
             ['--hooks', t('Migrate .claude/hooks/ only', 'Chỉ migrate .claude/hooks/')],
+            ['--skip-agents', t('Skip agents migration', 'Bỏ qua migrate agents')],
+            ['--skip-commands', t('Skip commands migration', 'Bỏ qua migrate commands')],
+            ['--skip-skills', t('Skip skills migration (preserve symlinks/custom layouts)', 'Bỏ qua migrate skills (giữ symlinks/layout tùy chỉnh)')],
             ['--skip-config', t('Skip config migration', 'Bỏ qua migrate config')],
             ['--skip-rules', t('Skip rules migration', 'Bỏ qua migrate rules')],
             ['--skip-hooks', t('Skip hooks migration', 'Bỏ qua migrate hooks')],

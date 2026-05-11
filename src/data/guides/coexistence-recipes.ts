@@ -104,7 +104,7 @@ export const migrateProviders: MigrateProvider[] = [
     name: 'Cursor',
     type: 'skill',
     from: '.claude/skills',
-    to: 'project .agents/skills, global ~/.cursor/skills',
+    to: 'project .cursor/skills, global ~/.cursor/skills',
     since: '3.41.4',
   },
   {
@@ -128,7 +128,7 @@ export const migrateProviders: MigrateProvider[] = [
     name: 'Windsurf',
     type: 'mixed',
     from: '.claude/commands, .claude/skills, .claude/rules',
-    to: '.windsurf/workflows, .agents/skills, .windsurf/rules',
+    to: '.windsurf/workflows, .windsurf/skills, .windsurf/rules',
     since: '3.41.4',
   },
   {

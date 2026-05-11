@@ -61,7 +61,7 @@ export const ck_with_codex = {
 
   'ckWithCodex.setup.step1.title': 'Cài CCS và ClaudeKit',
   'ckWithCodex.setup.step1.badge': 'một lần',
-  'ckWithCodex.setup.step1.desc': 'Bỏ qua nếu cả hai CLI đã có trong PATH. CCS lo routing; ClaudeKit ship skills và file tương thích prompt cũ.',
+  'ckWithCodex.setup.step1.desc': 'Đã cài rồi? Cập nhật bằng `ccs update` và `ck update -y` (stable) hoặc `ck update -d -y` (beta — khuyến nghị, có fix lỗi migrate sang Codex). CCS lo routing; ClaudeKit ship skills và file tương thích prompt cũ.',
   'ckWithCodex.setup.step1.code': 'npm install -g @kaitranntt/ccs\nnpm install -g claudekit-cli',
   'ckWithCodex.setup.step1.hint.label': 'kiểm tra',
   'ckWithCodex.setup.step1.hint.body': '`ccs --version` · `ck --version`',

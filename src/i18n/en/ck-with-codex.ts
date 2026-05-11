@@ -61,7 +61,7 @@ export const ck_with_codex = {
 
   'ckWithCodex.setup.step1.title': 'Install CCS and ClaudeKit',
   'ckWithCodex.setup.step1.badge': 'one-time',
-  'ckWithCodex.setup.step1.desc': 'Skip if both CLIs are already on your PATH. CCS handles routing; ClaudeKit ships skills and legacy prompt compatibility files.',
+  'ckWithCodex.setup.step1.desc': 'Already installed? Update with `ccs update` and `ck update -y` (stable) or `ck update -d -y` (beta — recommended, has Codex migrate fixes). CCS handles routing; ClaudeKit ships skills and legacy prompt compatibility files.',
   'ckWithCodex.setup.step1.code': 'npm install -g @kaitranntt/ccs\nnpm install -g claudekit-cli',
   'ckWithCodex.setup.step1.hint.label': 'verify',
   'ckWithCodex.setup.step1.hint.body': '`ccs --version` · `ck --version`',

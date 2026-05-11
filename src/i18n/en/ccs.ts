@@ -2,8 +2,8 @@
 export const ccs = {
   // CCS Guide
   'ccs.guide.title': 'CCS - Claude Code Switch',
-  'ccs.guide.tagline': 'One command, zero downtime, multiple accounts',
-  'ccs.guide.description': 'Switch between Claude accounts, GLM, Kimi and more instantly. Stop hitting rate limits. Keep working continuously.',
+  'ccs.guide.tagline': 'One command, zero downtime, any provider',
+  'ccs.guide.description': 'Switch between Claude, Codex, Kiro, GLM, Kimi, Ollama and more. Multiple accounts, multiple runtimes — no config thrash.',
   'ccs.guide.created_by': 'Created by',
   'ccs.guide.google_ban_warning_title': 'Warning: Google Account Bans',
   'ccs.guide.google_ban_warning_desc': 'Google is actively banning accounts that use Antigravity/Gemini OAuth with third-party tools (OpenCode, CLIProxy-based tools like CCS/ProxyPal, AntigravityManager, etc.). Using these tools may violate Google\'s ToS and result in permanent loss of access to all Google services including Gmail, Drive, and YouTube. Proceed with caution - you are responsible for any consequences.',
