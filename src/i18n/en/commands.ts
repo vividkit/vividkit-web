@@ -278,6 +278,8 @@ export const commands = {
   'commands.mkt_beta.ckm_storage.detail': 'Cloud storage for marketing assets: list, sync, upload, and generate shareable URLs.',
   'commands.mkt_beta.design_consolidated.desc': 'Design skill consolidation',
   'commands.mkt_beta.design_consolidated.detail': 'Logo, CIP, slides, banner, icon, social photos — merged into unified design skill with Python scripts.',
+  'commands.mkt_beta.design_poster.desc': 'Poster sub-skill with vision-clustered knowledge base',
+  'commands.mkt_beta.design_poster.detail': '121 reference posters analyzed into 4 axes (styles, palettes, layouts, textures).<br/>Locked-axis generation: same style identity, distinct compositions per call.',
   'commands.mkt_beta.ads_management.desc': 'Ads management enhanced',
   'commands.mkt_beta.ads_management.detail': 'Google Ads & Meta Ads scripts, campaign setup, bidding, creative assets, measurement & attribution.',
   'commands.mkt_beta.changes.title': 'Changes in Beta',
