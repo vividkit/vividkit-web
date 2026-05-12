@@ -158,6 +158,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.predict.desc"),
           detail: t("commands.stable.predict.detail"),
           isSkill: true,
+          flags: ["--chain reason", "--chain probe"],
         },
         {
           command: "/ck:xia",
@@ -502,20 +503,13 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:chrome-devtools",
-          complexity: "⚡⚡",
-          label: t("commands.label.medium"),
-          desc: t("commands.stable.chrome_devtools.desc"),
-          detail: t("commands.stable.chrome_devtools.detail"),
-          isSkill: true,
-        },
-        {
           command: "/ck:scenario",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.scenario.desc"),
           detail: t("commands.stable.scenario.detail"),
           isSkill: true,
+          flags: ["--saturation", "--iterations"],
         },
       ],
     },
@@ -532,6 +526,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.security.desc"),
           detail: t("commands.stable.security.detail"),
           isSkill: true,
+          flags: ["--fix", "--red-team", "--iterations"],
         },
         {
           command: "/ck:security-scan",
@@ -627,7 +622,6 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.tech_graph.desc"),
           detail: t("commands.stable.tech_graph.detail"),
           isSkill: true,
-          isBeta: true,
         },
         {
           command: "/ck:markdown-novel-viewer",
@@ -659,14 +653,6 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           label: t("commands.label.medium"),
           desc: t("commands.stable.mcp_builder.desc"),
           detail: t("commands.stable.mcp_builder.detail"),
-          isSkill: true,
-        },
-        {
-          command: "/ck:mcp-management",
-          complexity: "⚡⚡",
-          label: t("commands.label.medium"),
-          desc: t("commands.stable.mcp_management.desc"),
-          detail: t("commands.stable.mcp_management.detail"),
           isSkill: true,
         },
         {
@@ -770,14 +756,6 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           flags: ["status", "hydrate", "sync", "report"],
         },
         {
-          command: "/ck:kanban",
-          complexity: "⚡",
-          label: t("commands.label.easy"),
-          desc: t("commands.stable.kanban.desc"),
-          detail: t("commands.stable.kanban.detail"),
-          isSkill: true,
-        },
-        {
           command: "/ck:plans-kanban",
           complexity: "⚡",
           label: t("commands.label.easy"),
@@ -835,7 +813,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:graphify",
+          command: "/ck:ck-graphify",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.graphify.desc"),
