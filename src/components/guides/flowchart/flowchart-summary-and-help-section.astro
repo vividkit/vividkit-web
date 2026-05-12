@@ -226,62 +226,8 @@ const t = useTranslations(currentLang);
               ></td
             ></tr
           >
-          <tr
-            ><td class="py-2 px-4 text-slate-600 dark:text-slate-400"
-              >{
-                isVi ? "Cần help với ClaudeKit" : '"I need help with ClaudeKit"'
-              }</td
-            ><td class="py-2 px-4"
-              ><code class="text-blue-600 dark:text-blue-400">/ck:ck-help</code
-              ></td
-            ></tr
-          >
         </tbody>
       </table>
     </div>
   </div>
 
-  <!-- Not Sure? -->
-  <div
-    class="flex items-start gap-4 p-6 rounded-xl bg-blue-500/5 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20"
-  >
-    <div
-      class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center"
-    >
-      <svg
-        class="w-5 h-5 text-blue-500"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-        ><path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-        ></path></svg
-      >
-    </div>
-    <div class="flex-1">
-      <div class="font-bold text-blue-700 dark:text-blue-400 mb-1 text-lg">
-        {isVi ? "Không chắc? Dùng /ck-help" : "Not Sure? Use /ck-help"}
-      </div>
-      <div
-        class="text-slate-600 dark:text-slate-400 leading-relaxed font-mono text-sm"
-      >
-        <code>/ck:ck-help</code> → {
-          isVi ? "Full documentation" : "Full documentation"
-        }<br />
-        <code>/ck:ck-help fix</code> → {
-          isVi
-            ? "Category guide cho fix commands"
-            : "Category guide for fix commands"
-        }<br />
-        <code>/ck:ck-help plan --hard</code> → {
-          isVi ? "Chi tiết specific command" : "Details on specific command"
-        }<br />
-        <code>/ck:ck-help how to debug</code> → {
-          isVi ? "Task-based recommendations" : "Task-based recommendations"
-        }
-      </div>
-    </div>
-  </div>

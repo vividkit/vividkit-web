@@ -1,4 +1,4 @@
-// Legacy v2.4.x flowchart data - original command syntax (/git:*, /design:*, /code @plan.md)
+// Legacy flowchart data - original command syntax (/git:*, /design:*, /code @plan.md)
 // Kept in source for reference only - NOT rendered in production
 import { type FlowchartNode, type FlowchartEdge, type FlowchartPath, generatePath } from "./flowchart-types";
 

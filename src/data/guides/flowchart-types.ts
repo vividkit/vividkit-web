@@ -1,5 +1,5 @@
 // Shared TypeScript interfaces and utilities for flowchart data
-// Used by flowchart-legacy-v24-data.ts, flowchart-stable-v25-data.ts, and flowchart-index.ts
+// Used by flowchart-legacy-data.ts, flowchart-engineer-data.ts, flowchart-marketing-data.ts, and flowchart-index.ts
 
 export interface FlowchartNode {
   id: string;
