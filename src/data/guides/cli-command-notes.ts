@@ -162,12 +162,16 @@ const commandNotes: Record<string, [string, string][]> = {
     ['<code>--beta</code> is deprecated — use <code>-d, --dev</code> instead.', '<code>--beta</code> đã deprecated — dùng <code>-d, --dev</code> thay thế.'],
     ['Updates CLI only. Use <code>ck init</code> to update kit content.', 'Chỉ update CLI. Dùng <code>ck init</code> để update nội dung kit.'],
   ],
+  'ck skills': [
+    ['<code>--installed</code> shows two sections: active Claude Code skills (from <code>.claude/skills/</code>) and registry-managed agent installations.', '<code>--installed</code> hiện 2 phần: skills Claude Code active (từ <code>.claude/skills/</code>) và agent installations do registry quản lý.'],
+  ],
   'ck config': [
     ['Bare <code>ck config</code> opens dashboard (= <code>ck config ui</code>).', '<code>ck config</code> không argument sẽ mở dashboard (= <code>ck config ui</code>).'],
   ],
   'ck migrate': [
     ['<code>--install</code> and <code>--reconcile</code> are mutually exclusive.', '<code>--install</code> và <code>--reconcile</code> loại trừ lẫn nhau.'],
     ['Codex commands migrate as skills under <code>.agents/skills/</code>.', 'Codex commands migrate thành skills trong <code>.agents/skills/</code>.'],
+    ['<code>-g</code> now correctly resolves SOURCE to global scope (fixed in v4.2.0). Older versions read CWD even with <code>-g</code>.', '<code>-g</code> giờ đã resolve đúng SOURCE scope global (fix từ v4.2.0). Bản cũ hơn đọc CWD dù có <code>-g</code>.'],
   ],
   'ck backups': [
     ['Covers CK-managed files only — not the full <code>~/.claude/</code> directory.', 'Chỉ chứa file do CK quản lý — không phải toàn bộ <code>~/.claude/</code>.'],
