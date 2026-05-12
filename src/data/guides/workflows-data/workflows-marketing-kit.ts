@@ -442,8 +442,7 @@ export const marketingKitWorkflows = [
         description: 'Generate hand-drawn Excalidraw diagrams — marketing funnels, campaign flows, content calendars, competitor maps',
         color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
         number: 1,
-        isSkill: true,
-        isBeta: true
+        isSkill: true
       }
     ],
     tip: 'Auto-diagram mode can analyze your project structure and generate architecture/flow diagrams automatically',

@@ -845,7 +845,6 @@ export const stableWorkflows = [
     level: 'Intermediate',
     duration: '~5-15 min',
     stepCount: 1,
-    isBeta: true,
     bestFor: 'Generating publication-quality SVG diagrams for docs, slides, blog posts',
     gradientHeader: 'from-purple-500/10 to-fuchsia-500/10',
     hoverBorderColor: 'hover:border-purple-500/50',

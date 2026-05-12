@@ -68,17 +68,17 @@ const marketingCategories = getMarketingKitCategories(t as any);
     </div>
   </div>
 
-  <!-- Engineer Kit (v2.17.0 stable / v2.17.0-beta.24 beta) categories panel -->
+  <!-- Engineer Kit (v2.18.0 stable / v2.17.0-beta.25 beta) categories panel -->
   <div id="categories-engineer" class="space-y-6">
     <!-- Stable version badge -->
     <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
       <span class="px-2 py-0.5 rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 font-semibold"
-        >v2.17.0 Stable</span
+        >v2.18.0 Stable</span
       >
-      <span class="px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 font-semibold"
-        >v2.17.0-beta.24 Beta</span
+      <span class="px-2 py-0.5 rounded-full bg-slate-200 dark:bg-slate-700/40 text-slate-500 dark:text-slate-400 font-semibold"
+        >v2.17.0-beta.25</span
       >
-      <span>{t("commands.engineer_stable_note")}</span>
+      <span class="text-slate-400 dark:text-slate-500 italic">{t("commands.engineer_beta_caught_up")}</span>
     </div>
 
     <!-- Beta preview card -->
@@ -98,38 +98,10 @@ const marketingCategories = getMarketingKitCategories(t as any);
         </h3>
         <p class="text-xs text-slate-500 mt-1">{t("commands.beta_preview.subtitle")}</p>
       </div>
-      <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-        <!-- Beta skill cards -->
-        {[
-          // Beta-only skills (not yet in stable)
-          { cmd: "/ck:tech-graph", labelKey: "commands.beta_tech_graph.desc", detailKey: "commands.beta_tech_graph.detail", type: "skill", badge: "new" },
-          { cmd: "/ck:scenario", labelKey: "commands.beta_scenario.desc", detailKey: "commands.beta_scenario.detail", type: "skill", badge: "enhanced" },
-          { cmd: "/ck:security", labelKey: "commands.beta_security.desc", detailKey: "commands.beta_security.detail", type: "skill", badge: "enhanced" },
-          { cmd: "/ck:autoresearch", labelKey: "commands.beta_autoresearch.desc", detailKey: "commands.beta_autoresearch.detail", type: "skill", badge: "enhanced" },
-          { cmd: "/ck:predict", labelKey: "commands.beta_predict.desc", detailKey: "commands.beta_predict.detail", type: "skill", badge: "enhanced" },
-          { cmd: "/ck:ck-plan", labelKey: "commands.beta_ck_plan.desc", detailKey: "commands.beta_ck_plan.detail", type: "skill", badge: "enhanced" },
-          { cmd: "/ck:bootstrap", labelKey: "commands.beta_bootstrap.desc", detailKey: "commands.beta_bootstrap.detail", type: "skill", badge: "enhanced" },
-          { cmd: "/ck:preview", labelKey: "commands.beta_preview_skill.desc", detailKey: "commands.beta_preview_skill.detail", type: "skill", badge: "enhanced" },
-          { cmd: "/ck:kanban", labelKey: "commands.beta_kanban.desc", detailKey: "commands.beta_kanban.detail", type: "skill", badge: "deprecated" },
-          { cmd: "/ck:mcp-management", labelKey: "commands.beta_mcp_management.desc", detailKey: "commands.beta_mcp_management.detail", type: "skill", badge: "deprecated" },
-          { cmd: "/ck:chrome-devtools", labelKey: "commands.beta_chrome_devtools.desc", detailKey: "commands.beta_chrome_devtools.detail", type: "skill", badge: "deprecated" },
-        ].map((item) => (
-          <div class={`p-3 rounded-lg border transition-all duration-200 hover:shadow-sm h-full flex flex-col ${item.badge === "deprecated" ? 'bg-slate-100 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 opacity-70' : 'bg-white/60 dark:bg-slate-900/50 border-purple-500/30'}`}>
-            <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
-              <div class="flex items-center gap-1.5 flex-wrap">
-                <code class={`text-sm font-bold font-mono ${item.badge === "deprecated" ? 'line-through text-slate-400 dark:text-slate-500' : 'text-purple-600 dark:text-purple-400'}`}>{item.cmd}</code>
-
-                {item.badge === "new" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 font-medium uppercase">new</span>}
-                {item.badge === "enhanced" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium uppercase">enhanced</span>}
-                {item.badge === "renamed" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium uppercase">renamed</span>}
-                {item.badge === "removed" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-500 dark:text-red-400 font-medium uppercase">removed</span>}
-                {item.badge === "deprecated" && <span class="text-[9px] px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700/40 text-slate-500 dark:text-slate-400 font-medium uppercase">deprecated</span>}
-              </div>
-            </div>
-            <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1" set:html={t(item.labelKey as any)} />
-            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50" set:html={t(item.detailKey as any)} />
-          </div>
-        ))}
+      <div class="p-4">
+        <p class="text-sm text-slate-500 dark:text-slate-400 text-center py-4">
+          {t("commands.beta_preview.caught_up")}
+        </p>
       </div>
     </div>
 

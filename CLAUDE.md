@@ -70,6 +70,20 @@ When a skill is **beta-exclusive** (exists in beta branch only, not yet in stabl
 
 When the skill graduates to stable: remove `isBeta: true` flag AND remove the Beta Preview entry. See `.claude/skills/vk-changelog-sync/SKILL.md` → "Universal Beta-Badge Rule" for the full decision matrix.
 
+### Beta → Stable Promotion Checklist
+
+When beta features are promoted to stable:
+1. **Update stable descriptions**: Refresh `desc` and `detail` in i18n (`en/commands.ts`, `vi/commands.ts`) to reflect the upstream stable description — beta-era wording often understates the now-shipped feature.
+2. **Add newly promoted flags/subcommands**: If the beta added new `--flags` or subcommands, add them to the stable card's `flags`/`subcommands` arrays.
+3. **Cross-page isBeta audit**: `isBeta` flags exist in multiple data files beyond CommandsGuide — check ALL:
+   - `src/data/guides/commands-engineer-kit.ts` (command cards)
+   - `src/data/guides/workflows-data/workflows-stable.ts` (workflow-level, step-level, flag-level)
+   - `src/data/guides/workflows-data/workflows-marketing-kit.ts` (step-level)
+   - `src/data/vi/guides/workflows-data/workflows-stable.ts` (VI mirror)
+   - `src/data/vi/guides/workflows-data/workflows-marketing-kit.ts` (VI mirror)
+   - `src/data/guides/flowchart-index.ts` (flowchart nodes/edges/paths)
+   - `src/data/guides/custom-hooks/custom-hooks-data.ts` (hooks)
+
 ### HTML in Detail Fields
 - **Stable commands** (`commands-engineer-kit.ts`): Uses `{cmd.detail}` → **NO HTML rendering** → don't use `<br/>`
 - **Beta Preview** (`commands-categories-grid.astro`): Uses `set:html` → **renders HTML** → can use `<br/>`

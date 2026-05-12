@@ -451,8 +451,7 @@ export const marketingKitWorkflows = [
         description: 'Tạo diagram Excalidraw hand-drawn — marketing funnel, campaign flow, lịch content, bản đồ đối thủ',
         color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
         number: 1,
-        isSkill: true,
-        isBeta: true
+        isSkill: true
       }
     ],
     tip: 'Chế độ auto-diagram có thể phân tích cấu trúc project và tự động tạo diagram kiến trúc',
