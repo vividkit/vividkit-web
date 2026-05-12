@@ -1,5 +1,4 @@
 // Flowchart data index - assembles unified Engineer Kit and Marketing Kit data
-// Beta nodes/edges/paths are merged into stable with isBeta flag for UI badges
 import {
   type FlowchartNode,
   type FlowchartEdge,
@@ -8,9 +7,9 @@ import {
   generatePath,
   pathColors,
 } from './flowchart-types';
-import { stableNodes, stableEdges, stablePaths } from './flowchart-stable-v25-data';
-import { betaNodes, betaEdges, betaPaths } from './flowchart-legacy-v24-data';
-import { marketingNodes, marketingEdges, marketingPaths } from './flowchart-marketing-v12-data';
+import { stableNodes, stableEdges, stablePaths } from './flowchart-engineer-data';
+import { betaNodes, betaEdges, betaPaths } from './flowchart-legacy-data';
+import { marketingNodes, marketingEdges, marketingPaths } from './flowchart-marketing-data';
 
 export type { FlowchartNode, FlowchartEdge, FlowchartPath, FlowchartData };
 export { pathColors };
@@ -157,7 +156,7 @@ export const engineerFlowchartData: FlowchartData = {
 export const stableFlowchartData = engineerFlowchartData;
 export const betaFlowchartData = engineerFlowchartData;
 
-// Legacy v2.4.x flowchart data - kept for reference, NOT rendered
+// Legacy flowchart data - kept for reference, NOT rendered
 export const legacyFlowchartData: FlowchartData = {
   nodes: betaNodes,
   edges: betaEdges,
@@ -165,7 +164,7 @@ export const legacyFlowchartData: FlowchartData = {
   viewBox: engineerViewBox
 };
 
-// Marketing Kit v1.2.1 flowchart data
+// Marketing Kit flowchart data
 export const marketingFlowchartData: FlowchartData = {
   nodes: marketingNodes,
   edges: marketingEdges,

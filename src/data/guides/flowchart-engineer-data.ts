@@ -1,4 +1,4 @@
-// Stable v2.5.0+ flowchart data - skill-based commands (/git skill, /worktree, separated Docs/Designs)
+// Engineer Kit flowchart data - skill-based commands (/git skill, /worktree, separated Docs/Designs)
 import { type FlowchartNode, type FlowchartEdge, type FlowchartPath, generatePath } from "./flowchart-types";
 
 const stableNodes: FlowchartNode[] = [
@@ -53,12 +53,6 @@ const stableNodes: FlowchartNode[] = [
     label: 'Designs?',
     position: { x: 1060, y: 160 }
   },
-  {
-    id: 'need-help',
-    type: 'decision',
-    label: 'Need help?',
-    position: { x: 1280, y: 160 }
-  },
 
   // Level 2 - Sub-decisions
   {
@@ -78,12 +72,6 @@ const stableNodes: FlowchartNode[] = [
     type: 'decision',
     label: 'Know issue?',
     position: { x: 615, y: 280 }
-  },
-  {
-    id: 'help-type',
-    type: 'decision',
-    label: 'What type?',
-    position: { x: 1340, y: 280 }
   },
 
   // Level 3 - Sub-decisions
@@ -188,10 +176,10 @@ const stableNodes: FlowchartNode[] = [
     position: { x: 870, y: 360 }
   },
   {
-    id: 'cmd-review-pr',
+    id: 'cmd-code-review',
     type: 'command',
-    label: '/ck:review-pr',
-    description: 'Review pull request code',
+    label: '/ck:code-review',
+    description: 'Review code & pull requests',
     position: { x: 790, y: 440 }
   },
 
@@ -227,28 +215,6 @@ const stableNodes: FlowchartNode[] = [
     position: { x: 1100, y: 360 }
   },
 
-  // Command nodes - Need Help
-  {
-    id: 'cmd-ck-help',
-    type: 'command',
-    label: '/ck:help',
-    description: 'General ClaudeKit help',
-    position: { x: 1170, y: 400 }
-  },
-  {
-    id: 'cmd-ask',
-    type: 'command',
-    label: '/ck:ask',
-    description: 'Architectural advice',
-    position: { x: 1280, y: 400 }
-  },
-  {
-    id: 'cmd-coding-level',
-    type: 'command',
-    label: '/ck:coding-level',
-    description: 'Slow down explanations',
-    position: { x: 1440, y: 400 }
-  },
   // Command nodes - Post-implementation
   {
     id: 'cmd-simplify',
@@ -302,12 +268,6 @@ const stableEdges: FlowchartEdge[] = [
     from: 'start',
     to: 'designs',
     path: generatePath({ x: 700, y: 50 }, { x: 1060, y: 160 })
-  },
-  {
-    id: 'e-start-need-help',
-    from: 'start',
-    to: 'need-help',
-    path: generatePath({ x: 700, y: 50 }, { x: 1280, y: 160 })
   },
 
   // New project branch
@@ -464,9 +424,9 @@ const stableEdges: FlowchartEdge[] = [
     path: generatePath({ x: 790, y: 160 }, { x: 870, y: 360 })
   },
   {
-    id: 'e-git-review-pr',
+    id: 'e-git-code-review',
     from: 'git-ops',
-    to: 'cmd-review-pr',
+    to: 'cmd-code-review',
     path: generatePath({ x: 790, y: 160 }, { x: 790, y: 440 })
   },
 
@@ -498,40 +458,6 @@ const stableEdges: FlowchartEdge[] = [
     path: generatePath({ x: 1060, y: 160 }, { x: 1100, y: 360 })
   },
 
-  // Need help branch
-  {
-    id: 'e-help-type',
-    from: 'need-help',
-    to: 'help-type',
-    path: generatePath({ x: 1280, y: 160 }, { x: 1340, y: 280 })
-  },
-  {
-    id: 'e-help-ck',
-    from: 'help-type',
-    to: 'cmd-ck-help',
-    label: 'CK',
-    path: generatePath({ x: 1340, y: 280 }, { x: 1170, y: 400 }),
-    labelX: 1235,
-    labelY: 340
-  },
-  {
-    id: 'e-help-ask',
-    from: 'help-type',
-    to: 'cmd-ask',
-    label: 'Tech',
-    path: generatePath({ x: 1340, y: 280 }, { x: 1280, y: 400 }),
-    labelX: 1320,
-    labelY: 340
-  },
-  {
-    id: 'e-help-coding',
-    from: 'help-type',
-    to: 'cmd-coding-level',
-    label: 'Learn',
-    path: generatePath({ x: 1340, y: 280 }, { x: 1440, y: 400 }),
-    labelX: 1410,
-    labelY: 340
-  },
   // Post-implementation flow
   {
     id: 'e-cook-simplify',
@@ -663,12 +589,12 @@ const stablePaths: FlowchartPath[] = [
     color: 'indigo'
   },
   {
-    id: 'path-review-pr',
+    id: 'path-code-review',
     name: 'PR Code Review',
-    nodes: ['start', 'git-ops', 'cmd-review-pr'],
-    edges: ['e-start-git-ops', 'e-git-review-pr'],
-    command: '/ck:review-pr',
-    description: 'Review pull request with scout-based edge case detection',
+    nodes: ['start', 'git-ops', 'cmd-code-review'],
+    edges: ['e-start-git-ops', 'e-git-code-review'],
+    command: '/ck:code-review',
+    description: 'Review code & pull requests with scout-based edge case detection',
     color: 'indigo'
   },
 
@@ -712,34 +638,6 @@ const stablePaths: FlowchartPath[] = [
     color: 'pink'
   },
 
-  // Need Help paths
-  {
-    id: 'path-ck-help',
-    name: 'ClaudeKit Help',
-    nodes: ['start', 'need-help', 'help-type', 'cmd-ck-help'],
-    edges: ['e-start-need-help', 'e-help-type', 'e-help-ck'],
-    command: '/ck:help',
-    description: 'General ClaudeKit documentation and command help',
-    color: 'blue'
-  },
-  {
-    id: 'path-ask',
-    name: 'Architectural Advice',
-    nodes: ['start', 'need-help', 'help-type', 'cmd-ask'],
-    edges: ['e-start-need-help', 'e-help-type', 'e-help-ask'],
-    command: '/ck:ask',
-    description: 'Technical and architectural consultation from expert',
-    color: 'blue'
-  },
-  {
-    id: 'path-coding-level',
-    name: 'Learning Mode',
-    nodes: ['start', 'need-help', 'help-type', 'cmd-coding-level'],
-    edges: ['e-start-need-help', 'e-help-type', 'e-help-coding'],
-    command: '/ck:coding-level',
-    description: 'Slow down explanations for learning and understanding',
-    color: 'cyan'
-  },
   // Post-implementation path
   {
     id: 'path-simplify',

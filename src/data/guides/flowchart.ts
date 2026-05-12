@@ -1,6 +1,6 @@
 // Flowchart data barrel - re-exports all public APIs for backward compatibility
-// Modular files: flowchart-types.ts, flowchart-legacy-v24-data.ts,
-//                flowchart-stable-v25-data.ts, flowchart-index.ts
+// Modular files: flowchart-types.ts, flowchart-legacy-data.ts,
+//                flowchart-engineer-data.ts, flowchart-marketing-data.ts, flowchart-index.ts
 export {
   type FlowchartNode,
   type FlowchartEdge,

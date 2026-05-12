@@ -1,4 +1,4 @@
-// Marketing Kit v1.3.2 flowchart data - purpose-driven decision tree for marketers
+// Marketing Kit flowchart data - purpose-driven decision tree for marketers
 // All commands use /ckm: prefix (migration from /mkt: complete)
 import { type FlowchartNode, type FlowchartEdge, type FlowchartPath, generatePath } from "./flowchart-types";
 
@@ -95,18 +95,11 @@ const marketingNodes: FlowchartNode[] = [
 
   // Command nodes - Learn ClaudeKit (Essentials)
   {
-    id: 'cmd-mkt-ck-help',
-    type: 'command',
-    label: '/ckm:ck-help',
-    description: 'Learn ClaudeKit basics ⚡',
-    position: { x: 100, y: 280 }
-  },
-  {
     id: 'cmd-mkt-init',
     type: 'command',
     label: '/ckm:init',
     description: 'Setup marketing workspace ⚡⚡',
-    position: { x: 100, y: 400 }
+    position: { x: 100, y: 280 }
   },
 
   // Command nodes - Plan branch (2 separate paths)
@@ -341,19 +334,10 @@ const marketingEdges: FlowchartEdge[] = [
 
   // Learn branch
   {
-    id: 'e-mkt-learn-ck-help',
+    id: 'e-mkt-learn-init',
     from: 'mkt-learn',
-    to: 'cmd-mkt-ck-help',
-    path: generatePath({ x: 100, y: 160 }, { x: 100, y: 280 })
-  },
-  {
-    id: 'e-mkt-ck-help-init',
-    from: 'cmd-mkt-ck-help',
     to: 'cmd-mkt-init',
-    label: 'Next',
-    path: generatePath({ x: 100, y: 280 }, { x: 100, y: 400 }),
-    labelX: 120,
-    labelY: 340
+    path: generatePath({ x: 100, y: 160 }, { x: 100, y: 280 })
   },
 
   // Plan branch - 2 separate paths
@@ -601,11 +585,11 @@ const marketingPaths: FlowchartPath[] = [
   // Learn ClaudeKit paths
   {
     id: 'mkt-path-learn',
-    name: 'Learn ClaudeKit',
-    nodes: ['mkt-start', 'mkt-learn', 'cmd-mkt-ck-help', 'cmd-mkt-init'],
-    edges: ['e-mkt-start-learn', 'e-mkt-learn-ck-help', 'e-mkt-ck-help-init'],
-    command: '/ckm:ck-help → /ckm:init',
-    description: 'Start here: Learn CK basics then setup your marketing workspace',
+    name: 'Setup Workspace',
+    nodes: ['mkt-start', 'mkt-learn', 'cmd-mkt-init'],
+    edges: ['e-mkt-start-learn', 'e-mkt-learn-init'],
+    command: '/ckm:init',
+    description: 'Start here: Setup your marketing workspace with brand, personas, templates',
     color: 'green'
   },
 
