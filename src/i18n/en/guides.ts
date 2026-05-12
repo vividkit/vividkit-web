@@ -108,6 +108,8 @@ export const guides = {
   'guides.cli.description': 'Complete guide to ClaudeKit CLI commands',
   'guides.commands.title': 'Commands Cheat Sheet',
   'guides.commands.description': 'Comprehensive list of all available commands',
+  'guides.cli_commands.title': 'CLI Quick Reference',
+  'guides.cli_commands.description': 'All 18 ClaudeKit CLI commands — flags, subcommands, and examples',
   'guides.workflows.title': 'Workflow Recipes',
   'guides.workflows.description': 'Best practices and common workflows',
   'guides.uiux.title': 'UI/UX Guide',
@@ -189,6 +191,7 @@ export const guides = {
   'guides.home.pathway_using.title': 'Already Using ClaudeKit?',
   'guides.home.pathway_using.desc': 'Explore commands and workflows',
   'guides.home.pathway_using.link_commands': 'Browse Commands',
+  'guides.home.pathway_using.link_cli_commands': 'CLI Quick Reference',
   'guides.home.pathway_using.link_workflows': 'Workflows Guide',
   'guides.home.pathway_using.link_flowchart': 'Visual Flowchart',
   // Pathway: Config Confused

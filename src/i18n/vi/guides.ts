@@ -108,6 +108,8 @@ export const guides = {
   'guides.cli.description': 'Cài đặt và sử dụng ClaudeKit CLI',
   'guides.commands.title': 'Bảng Lệnh Nhanh',
   'guides.commands.description': 'Danh sách đầy đủ các slash commands',
+  'guides.cli_commands.title': 'Tham Chiếu CLI',
+  'guides.cli_commands.description': 'Toàn bộ 18 lệnh ClaudeKit CLI — flags, subcommands, và ví dụ',
   'guides.workflows.title': 'Quy Trình Mẫu',
   'guides.workflows.description': 'Các workflow thường dùng cho người mới',
   'guides.uiux.title': 'Thiết Kế UI/UX',
@@ -189,6 +191,7 @@ export const guides = {
   'guides.home.pathway_using.title': 'Đang Dùng ClaudeKit?',
   'guides.home.pathway_using.desc': 'Khám phá commands và workflows',
   'guides.home.pathway_using.link_commands': 'Xem Commands',
+  'guides.home.pathway_using.link_cli_commands': 'Tra Cứu CLI',
   'guides.home.pathway_using.link_workflows': 'Hướng Dẫn Workflows',
   'guides.home.pathway_using.link_flowchart': 'Sơ Đồ Trực Quan',
   // Pathway: Config Confused
