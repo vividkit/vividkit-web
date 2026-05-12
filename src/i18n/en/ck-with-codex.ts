@@ -33,7 +33,7 @@ export const ck_with_codex = {
   // Architecture
   'ckWithCodex.arch.heading': 'How the pieces fit together',
   'ckWithCodex.arch.intro':
-    '**Two jobs, no overlap.** `ck migrate -a codex` reads ClaudeKit source from the current working directory and writes Codex-native files to global locations. CCS only launches Codex with the right runtime target and transient provider overrides.<br/><br/>**Heads-up:** even `-g` reads CWD first (upstream `claudekit-cli` limitation) — `cd ~` before running migrate if you want global → global.',
+    '**Two jobs, no overlap.** `ck migrate -a codex` reads ClaudeKit source from the current working directory and writes Codex-native files to global locations. CCS only launches Codex with the right runtime target and transient provider overrides.<br/><br/>**`-g` scope fix (v4.2.0+):** `-g` now correctly reads SOURCE from global scope. On older versions, SOURCE always read CWD even with `-g` — if you\'re pre-4.2.0, `cd ~` first.',
   'ckWithCodex.arch.lane1.title': 'Source project (./.claude/)',
   'ckWithCodex.arch.lane1.desc': '`ck migrate` discovers source files from the current repo first, then falls back to `~/.claude/*` when a source type is missing locally.',
   'ckWithCodex.arch.lane2.title': 'Global Codex CK files',
@@ -57,7 +57,7 @@ export const ck_with_codex = {
 
   // Setup walkthrough
   'ckWithCodex.setup.heading': 'Five-minute setup',
-  'ckWithCodex.setup.intro': 'Run the machine setup once. Run `ck init` in each project, then run `ck migrate -a codex` from the project whose ClaudeKit content you want copied into Codex-native locations. Without `-g`, writes are project-local (`.codex/*`, `.agents/skills/*`); add `-g` to write globally (`~/.codex/*`, `~/.agents/skills/*`). For global → global, `cd ~` first — see the Step 4 caveat.<br/><br/>**Version note:** this guide tracks `claudekit-cli` `v4.1.0+`. Run `ck update -y` to update.',
+  'ckWithCodex.setup.intro': 'Run the machine setup once. Run `ck init` in each project, then run `ck migrate -a codex` from the project whose ClaudeKit content you want copied into Codex-native locations. Without `-g`, writes are project-local (`.codex/*`, `.agents/skills/*`); add `-g` to write globally (`~/.codex/*`, `~/.agents/skills/*`).<br/><br/>**Version note:** this guide tracks `claudekit-cli` `v4.2.0+`. Run `ck update -y` to update.',
 
   'ckWithCodex.setup.step1.title': 'Install CCS and ClaudeKit',
   'ckWithCodex.setup.step1.badge': 'one-time',
@@ -89,8 +89,8 @@ export const ck_with_codex = {
   'ckWithCodex.setup.step4.badge': 'migrate',
   'ckWithCodex.setup.step4.desc': '`ck init` plants the ClaudeKit source layout. `ck migrate -a codex` then copies that content into Codex-native locations.',
   'ckWithCodex.setup.step4.warning.label': 'important',
-  'ckWithCodex.setup.step4.warning.title': 'Source ignores `-g` — destination follows it',
-  'ckWithCodex.setup.step4.warning.tip': '**Global → global:** run `cd ~` first to align CWD, then `ck migrate -a codex -g --dry-run` to verify SOURCE before applying.',
+  'ckWithCodex.setup.step4.warning.title': '`-g` scope: fixed in v4.2.0+',
+  'ckWithCodex.setup.step4.warning.tip': '**v4.2.0+:** `-g` correctly reads SOURCE from global scope. **Pre-4.2.0:** `-g` only affected destination — run `cd ~` first to align SOURCE. Always `--dry-run` to verify.',
   'ckWithCodex.setup.step4.code': 'cd your-project\nck init',
   'ckWithCodex.setup.step4.init.label': 'init',
   'ckWithCodex.setup.step4.init.body': 'plant `.claude/*` source layout in CWD',

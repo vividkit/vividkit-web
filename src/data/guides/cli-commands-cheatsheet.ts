@@ -86,9 +86,9 @@ export const cliCommandsCheatsheet: CliCommand[] = [
   // --- Distribution ---
   {
     name: 'ck skills',
-    description: 'Install/uninstall skills to coding agents',
+    description: 'Install/uninstall skills to coding agents; list active Claude Code skills and registry-managed installations',
     category: 'distribution',
-    keyFlags: ['-n, --name <skill>', '-a, --agent <agents>', '-g, --global', '-l, --list', '-u, --uninstall', '--search <query>', '--catalog', '--validate', '--sync', '-y, --yes'],
+    keyFlags: ['-n, --name <skill>', '-a, --agent <agents>', '-g, --global', '-l, --list', '--installed', '-u, --uninstall', '--search <query>', '--catalog', '--validate', '--sync', '-y, --yes'],
     example: 'ck skills -n ui-ux-pro-max -a cursor --global',
   },
   {
@@ -110,7 +110,7 @@ export const cliCommandsCheatsheet: CliCommand[] = [
     description: 'Migrate agents, commands, skills, config, rules, hooks to other providers',
     category: 'distribution',
     keyFlags: ['-a, --agent <providers>', '--all', '--install', '--reconcile', '--dry-run', '--only-*', '--skip-*', '--config', '--rules', '--hooks', '-g, --global', '-y, --yes', '--force', '--respect-deletions'],
-    example: 'ck migrate -a cursor --dry-run',
+    example: 'ck migrate -a codex --dry-run',
   },
   // --- Workflow ---
   {
