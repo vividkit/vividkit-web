@@ -72,9 +72,10 @@ When the skill graduates to stable: remove `isBeta: true` flag AND remove the Be
 
 ### Beta → Stable Promotion Checklist
 
-When beta features are promoted to stable:
-1. **Update stable descriptions**: Refresh `desc` and `detail` in i18n (`en/commands.ts`, `vi/commands.ts`) to reflect the upstream stable description — beta-era wording often understates the now-shipped feature.
-2. **Add newly promoted flags/subcommands**: If the beta added new `--flags` or subcommands, add them to the stable card's `flags`/`subcommands` arrays.
+🚨 **MANDATORY when removing a Beta Preview entry** — never just delete the beta card. Three actions every promotion:
+
+1. **Update stable descriptions** (MOST FORGOTTEN): Refresh `desc` and `detail` in i18n (`en/commands.ts`, `vi/commands.ts`) to reflect the upstream stable SKILL.md description — beta-era wording often understates the now-shipped feature. Use PLAIN TEXT only (no `<code>` tags) since stable `detail` field renders via `{cmd.detail}` not `set:html`.
+2. **Add newly promoted flags/subcommands**: If the beta added new `--flags` or subcommands, add them to the stable card's `flags`/`subcommands` arrays in `commands-engineer-kit.ts`.
 3. **Cross-page isBeta audit**: `isBeta` flags exist in multiple data files beyond CommandsGuide — check ALL:
    - `src/data/guides/commands-engineer-kit.ts` (command cards)
    - `src/data/guides/workflows-data/workflows-stable.ts` (workflow-level, step-level, flag-level)

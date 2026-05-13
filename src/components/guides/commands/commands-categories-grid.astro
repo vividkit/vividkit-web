@@ -68,15 +68,15 @@ const marketingCategories = getMarketingKitCategories(t as any);
     </div>
   </div>
 
-  <!-- Engineer Kit (v2.18.0 stable / v2.18.1-beta.1 beta) categories panel -->
+  <!-- Engineer Kit (v2.19.0 stable / v2.18.1-beta.4 beta) categories panel -->
   <div id="categories-engineer" class="space-y-6">
     <!-- Stable version badge -->
     <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
       <span class="px-2 py-0.5 rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 font-semibold"
-        >v2.18.0 Stable</span
+        >v2.19.0 Stable</span
       >
       <span class="px-2 py-0.5 rounded-full bg-slate-200 dark:bg-slate-700/40 text-slate-500 dark:text-slate-400 font-semibold"
-        >v2.18.1-beta.1</span
+        >v2.18.1-beta.4</span
       >
       <span class="text-slate-400 dark:text-slate-500 italic">{t("commands.engineer_stable_note")}</span>
     </div>
@@ -98,23 +98,10 @@ const marketingCategories = getMarketingKitCategories(t as any);
         </h3>
         <p class="text-xs text-slate-500 mt-1">{t("commands.beta_preview.subtitle")}</p>
       </div>
-      <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-        {[
-          { cmd: "/ck:brainstorm", labelKey: "commands.beta_brainstorm.desc", detailKey: "commands.beta_brainstorm.detail", type: "skill", badge: "enhanced" },
-          { cmd: "/ck:cook", labelKey: "commands.beta_cook.desc", detailKey: "commands.beta_cook.detail", type: "skill", badge: "enhanced" },
-          { cmd: "/ck:fix", labelKey: "commands.beta_fix.desc", detailKey: "commands.beta_fix.detail", type: "skill", badge: "enhanced" },
-        ].map((item) => (
-          <div class="p-3 rounded-lg border transition-all duration-200 hover:shadow-sm h-full flex flex-col bg-white/60 dark:bg-slate-900/50 border-purple-500/30">
-            <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
-              <div class="flex items-center gap-1.5 flex-wrap">
-                <code class="text-sm font-bold font-mono text-purple-600 dark:text-purple-400">{item.cmd}</code>
-                <span class="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-full bg-sky-100 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400">enhanced</span>
-              </div>
-            </div>
-            <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1" set:html={t(item.labelKey as any)} />
-            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50" set:html={t(item.detailKey as any)} />
-          </div>
-        ))}
+      <div class="p-4">
+        <p class="text-xs text-slate-600 dark:text-slate-400 italic text-center">
+          {t("commands.beta_preview.caught_up")}
+        </p>
       </div>
     </div>
 
