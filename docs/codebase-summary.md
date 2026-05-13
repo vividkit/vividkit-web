@@ -268,7 +268,7 @@ All public env vars use the `PUBLIC_` prefix (Astro convention — available at 
 | `PUBLIC_WEB3FORMS_KEY` | Yes | Web3Forms API key for contact form |
 | `PUBLIC_SITE_URL` | Yes | Canonical site URL for meta tags |
 | `PUBLIC_CLAUDEKIT_REFERRAL_URL` | Yes | ClaudeKit referral link |
-| `PUBLIC_GIVEAWAY_API_URL` | Yes | Deals giveaway API base URL (e.g. `https://ck-coupon.vividkit.app`) |
+| `PUBLIC_GIVEAWAY_API_URL` | Yes | Deals giveaway API base URL (Cloudflare Worker) |
 | `PUBLIC_TURNSTILE_SITE_KEY` | Yes | Cloudflare Turnstile site key for bot protection on claim flow |
 | `PUBLIC_GA_ID` | No | Google Analytics 4 measurement ID |
 | `PUBLIC_FB_PIXEL_ID` | No | Facebook/Meta Pixel ID |
