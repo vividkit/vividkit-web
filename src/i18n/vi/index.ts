@@ -13,6 +13,7 @@ import { happy_ccs } from './happy-ccs';
 import { ck_with_codex } from './ck-with-codex';
 import { pricing } from './pricing';
 import { common } from './common';
+import { deals } from './deals';
 
 export default {
   ...commands,
@@ -29,4 +30,5 @@ export default {
   ...ck_with_codex,
   ...pricing,
   ...common,
+  ...deals,
 } as const;
