@@ -1,0 +1,57 @@
+---
+// deals-fair-play: gentle author's note on referral etiquette & anti-abuse
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+---
+
+<section
+  class="relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-rose-200 bg-gradient-to-br from-rose-50 via-white to-pink-50 p-6 shadow-xl shadow-rose-900/[0.06] dark:border-rose-900/40 dark:from-rose-950/30 dark:via-slate-900/40 dark:to-pink-950/20 dark:shadow-rose-950/30 sm:p-8"
+>
+  <div class="absolute -right-6 -top-6 h-32 w-32 rounded-full bg-rose-200/40 blur-3xl dark:bg-rose-500/10" aria-hidden="true"></div>
+
+  <div class="relative flex flex-1 flex-col gap-4">
+    <div class="flex items-center gap-3">
+      <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-rose-500 to-pink-500 text-white shadow-lg shadow-rose-500/30 ring-1 ring-rose-400/50 dark:ring-rose-400/30">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 21s-7-4.5-9.5-9.5C.5 7 4 3 7.5 3c2 0 3.4 1 4.5 2.5C13.1 4 14.5 3 16.5 3 20 3 23.5 7 21.5 11.5 19 16.5 12 21 12 21z" />
+        </svg>
+      </div>
+      <p class="text-xs font-bold uppercase tracking-[0.2em] text-rose-600 dark:text-rose-400">
+        {t('deals.fair_play.kicker')}
+      </p>
+    </div>
+
+    <h3 class="font-heading text-xl font-black leading-tight text-slate-950 dark:text-white sm:text-2xl">
+      {t('deals.fair_play.title')}
+    </h3>
+
+    <p class="text-sm leading-6 text-slate-600 dark:text-slate-300 sm:text-[15px] sm:leading-7">
+      {t('deals.fair_play.intro')}
+    </p>
+
+    <ul class="mt-auto space-y-3 text-sm leading-6 text-slate-700 dark:text-slate-300 sm:text-[15px] sm:leading-7">
+      <li class="flex items-start gap-2.5">
+        <span class="mt-2 inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-rose-500" aria-hidden="true"></span>
+        <span>
+          <strong class="font-bold text-slate-900 dark:text-white">{t('deals.fair_play.point1_strong')}</strong>
+          {' '}{t('deals.fair_play.point1')}
+        </span>
+      </li>
+      <li class="flex items-start gap-2.5">
+        <span class="mt-2 inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-rose-500" aria-hidden="true"></span>
+        <span>
+          <strong class="font-bold text-slate-900 dark:text-white">{t('deals.fair_play.point2_strong')}</strong>
+          {' '}{t('deals.fair_play.point2')}
+        </span>
+      </li>
+    </ul>
+  </div>
+</section>

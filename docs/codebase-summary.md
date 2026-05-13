@@ -259,6 +259,22 @@ src/data/vi/guides/cli-guide.ts → CLI guide (Vietnamese)
 - **tsconfig.json:** Strict mode, path aliases (@/*), build target
 - **package.json:** Dependencies (Astro, Tailwind, Alpine, TypeScript)
 
+### Environment Variables
+
+All public env vars use the `PUBLIC_` prefix (Astro convention — available at build time and in client-side code).
+
+| Variable | Required | Description |
+|---|---|---|
+| `PUBLIC_WEB3FORMS_KEY` | Yes | Web3Forms API key for contact form |
+| `PUBLIC_SITE_URL` | Yes | Canonical site URL for meta tags |
+| `PUBLIC_CLAUDEKIT_REFERRAL_URL` | Yes | ClaudeKit referral link |
+| `PUBLIC_GIVEAWAY_API_URL` | Yes | Deals giveaway API base URL (Cloudflare Worker) |
+| `PUBLIC_TURNSTILE_SITE_KEY` | Yes | Cloudflare Turnstile site key for bot protection on claim flow |
+| `PUBLIC_GA_ID` | No | Google Analytics 4 measurement ID |
+| `PUBLIC_FB_PIXEL_ID` | No | Facebook/Meta Pixel ID |
+
+Reference: `.env.example` for default values.
+
 ### Build Process
 1. Astro loads pages from `src/pages/`
 2. Each page imports components and data

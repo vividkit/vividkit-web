@@ -1,0 +1,695 @@
+---
+// deals-claim-widget: Interactive claim widget with full state machine
+// States: loading → not_yet | available | sold_out | already_claimed | ended | error
+//         not_yet → (auto-refresh on countdown end) → available
+//         available → claiming → success | already_claimed | sold_out | error
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+const defaultErrorMessage = t('deals.claim.error');
+const errorLoadMessage = t('deals.claim.error_load');
+const errorSecurityMessage = t('deals.claim.error_security');
+const errorRateLimitedMessage = t('deals.claim.rate_limited');
+const errorAccountTooNewMessage = t('deals.claim.account_too_new');
+const availableMessage = t('deals.claim.available');
+const giveawayApiUrl = import.meta.env.PUBLIC_GIVEAWAY_API_URL;
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+---
+
+<div
+  data-deals-claim-widget
+  data-api-url={giveawayApiUrl}
+  data-turnstile-key={turnstileSiteKey}
+  data-msg-error={defaultErrorMessage}
+  data-msg-error-load={errorLoadMessage}
+  data-msg-error-security={errorSecurityMessage}
+  data-msg-error-rate-limited={errorRateLimitedMessage}
+  data-msg-error-account-too-new={errorAccountTooNewMessage}
+  x-data="claimWidget()"
+  class="flex h-full flex-col overflow-hidden rounded-[1.75rem] border-2 border-emerald-400/80 bg-white shadow-2xl shadow-emerald-900/20 ring-1 ring-emerald-500/10 dark:border-emerald-700/80 dark:bg-slate-900 dark:shadow-emerald-950/40"
+>
+  <div class="border-b border-emerald-100 bg-emerald-50/80 px-6 py-5 dark:border-emerald-900/60 dark:bg-emerald-950/30 sm:px-8">
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <p class="text-xs font-bold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-300">
+        {t('deals.claim.card_kicker')}
+      </p>
+      <span class="inline-flex w-fit shrink-0 items-center gap-2 whitespace-nowrap rounded-full border border-emerald-200 bg-white/85 px-3 py-1.5 text-[11px] font-black uppercase tracking-[0.08em] text-slate-700 shadow-sm shadow-slate-900/[0.04] dark:border-emerald-900/70 dark:bg-slate-950/55 dark:text-slate-200">
+        <span class="inline-flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
+          <svg class="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+        </span>
+        {t('deals.claim.secure_label')}
+      </span>
+    </div>
+    <h2 class="mt-3 font-heading text-2xl font-black text-slate-950 dark:text-white">
+      {t('deals.claim.card_title')}
+    </h2>
+    <p class="mt-2 max-w-xl text-sm leading-6 text-slate-600 dark:text-slate-400">
+      {t('deals.claim.card_desc')}
+    </p>
+  </div>
+
+  <!-- LOADING state: skeleton shimmer -->
+  <div x-show="state === 'loading'" x-cloak class="p-8 space-y-4 animate-pulse">
+    <div class="h-6 bg-slate-200 dark:bg-slate-700 rounded-lg w-2/3 mx-auto"></div>
+    <div class="h-4 bg-slate-200 dark:bg-slate-700 rounded w-1/2 mx-auto"></div>
+    <div class="h-12 bg-slate-200 dark:bg-slate-700 rounded-xl mt-6"></div>
+  </div>
+
+  <!-- NOT_YET state: codes haven't dropped yet -->
+  <div x-show="state === 'not_yet'" x-cloak class="p-8 text-center space-y-6">
+    <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-violet-100 dark:bg-violet-900/30 mx-auto">
+      <svg class="w-7 h-7 text-violet-500 dark:text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    </div>
+    <div>
+      <h3 class="text-xl font-bold text-slate-900 dark:text-white">{t('deals.claim.not_yet')}</h3>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">{t('deals.claim.not_yet_desc')}</p>
+    </div>
+    <div class="bg-violet-50 dark:bg-violet-900/20 rounded-xl p-5 inline-block mx-auto">
+      <p class="text-xs text-violet-600 dark:text-violet-400 uppercase tracking-wide font-semibold mb-2">{t('deals.claim.drops_in')}</p>
+      <p class="font-mono text-3xl font-bold text-violet-700 dark:text-violet-300 tabular-nums" x-text="dropCountdown">--:--:--</p>
+    </div>
+  </div>
+
+  <!-- AVAILABLE state -->
+  <div x-show="state === 'available'" x-cloak class="p-6 space-y-6 sm:p-8">
+    <!-- Claim button -->
+    <button
+      type="button"
+      x-on:click="startClaim()"
+      class="inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-2xl border border-emerald-500/60 bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-600 px-8 py-4 text-base font-bold text-white shadow-xl shadow-emerald-900/20 transition hover:-translate-y-0.5 hover:from-emerald-500 hover:via-emerald-400 hover:to-emerald-500 focus-visible:ring-4 focus-visible:ring-emerald-300 dark:border-emerald-400/40 dark:shadow-emerald-950/40 dark:focus-visible:ring-emerald-700"
+    >
+      <!-- GitHub icon -->
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+      </svg>
+      {t('deals.claim.button_short')}
+    </button>
+
+    <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5 text-center dark:border-slate-800 dark:bg-slate-950/50">
+      <p class="text-xs font-bold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+        {t('deals.claim.remaining_label')}
+      </p>
+      <div class="mt-2 flex items-end justify-center gap-2">
+        <span class="font-heading text-5xl font-black text-slate-950 dark:text-white" x-text="available"></span>
+        <span class="pb-2 text-lg font-bold text-slate-400">/</span>
+        <span class="pb-2 text-lg font-bold text-slate-500 dark:text-slate-400" x-text="total"></span>
+      </div>
+      <div class="mx-auto mt-4 h-2.5 w-full max-w-xs overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
+        <div
+          class="h-full rounded-full bg-gradient-to-r from-emerald-500 to-amber-400 transition-all duration-700"
+          x-bind:style="`width: ${total > 0 ? Math.round(((total - available) / total) * 100) : 0}%`"
+        ></div>
+      </div>
+      <p
+        class="mt-3 text-sm text-slate-600 dark:text-slate-400"
+        x-text={`${JSON.stringify(availableMessage)}.replace('{available}', available).replace('{total}', total)`}
+      ></p>
+    </div>
+  </div>
+
+  <!-- CLAIMING state: spinner -->
+  <div x-show="state === 'claiming'" x-cloak class="p-8 text-center space-y-5">
+    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-50 dark:bg-emerald-900/20 mx-auto">
+      <svg class="w-8 h-8 text-emerald-600 dark:text-emerald-400 animate-spin" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+      </svg>
+    </div>
+    <div>
+      <p class="font-bold text-slate-900 dark:text-white">{t('deals.claim.claiming')}</p>
+      <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">{t('deals.claim.claiming_desc')}</p>
+    </div>
+    <div class="mx-auto h-2 w-full max-w-xs overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
+      <div class="h-full w-2/3 animate-pulse rounded-full bg-gradient-to-r from-emerald-500 to-amber-400"></div>
+    </div>
+  </div>
+
+  <!-- SUCCESS state: show both codes -->
+  <div x-show="state === 'success'" x-cloak class="p-8 space-y-6">
+    <div class="text-center">
+      <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-green-100 dark:bg-green-900/30 mb-4">
+        <svg class="w-7 h-7 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+      <h3 class="text-xl font-bold text-slate-900 dark:text-white">{t('deals.claim.success')}</h3>
+    </div>
+
+    <!-- Discount code card -->
+    <div class="rounded-xl bg-violet-50 dark:bg-violet-900/20 border border-violet-200 dark:border-violet-800/40 p-4 space-y-2">
+      <p class="text-xs font-semibold text-violet-600 dark:text-violet-400 uppercase tracking-wide">
+        {t('deals.claim.discount_label')}
+      </p>
+      <div class="flex items-center gap-3">
+        <code
+          class="flex-1 font-mono text-lg font-bold text-violet-700 dark:text-violet-300 bg-violet-100 dark:bg-violet-900/40 rounded-lg px-3 py-2 select-all"
+          x-text="discountCode"
+        ></code>
+        <button
+          type="button"
+          x-on:click="copyCode(discountCode, 'discount')"
+          class="shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-violet-600 hover:bg-violet-700 text-white text-sm font-medium transition-colors"
+        >
+          <span x-show="copiedDiscount" class="text-xs">{t('deals.claim.copied')}</span>
+          <span x-show="!copiedDiscount">{t('deals.claim.copy')}</span>
+          <svg x-show="!copiedDiscount" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          </svg>
+          <svg x-show="copiedDiscount" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Referral code card -->
+    <div class="rounded-xl bg-slate-50 dark:bg-slate-700/40 border border-slate-200 dark:border-slate-600/40 p-4 space-y-2">
+      <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">
+        {t('deals.claim.referral_label')}
+      </p>
+      <div class="flex items-center gap-3">
+        <code
+          class="flex-1 font-mono text-lg font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800/90 rounded-lg px-3 py-2 select-all"
+          x-text="referralCode"
+        ></code>
+        <button
+          type="button"
+          x-on:click="copyCode(referralCode, 'referral')"
+          class="shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 dark:bg-slate-600 dark:hover:bg-slate-500 text-white text-sm font-medium transition-colors"
+        >
+          <span x-show="copiedReferral" class="text-xs">{t('deals.claim.copied')}</span>
+          <span x-show="!copiedReferral">{t('deals.claim.copy')}</span>
+          <svg x-show="!copiedReferral" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          </svg>
+          <svg x-show="copiedReferral" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Stacking guide callout -->
+    <div class="rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/40 p-4">
+      <p class="text-xs font-semibold text-amber-700 dark:text-amber-400 uppercase tracking-wide mb-1">
+        {t('deals.claim.stack_guide_title')}
+      </p>
+      <p class="text-sm text-amber-800 dark:text-amber-300 leading-relaxed">
+        {t('deals.claim.stack_guide')}
+      </p>
+    </div>
+
+    <div class="rounded-xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900/50 p-4">
+      <p class="text-xs font-semibold text-rose-700 dark:text-rose-300 uppercase tracking-wide mb-1">
+        {t('deals.claim.payment_note_title')}
+      </p>
+      <p class="text-sm text-rose-800 dark:text-rose-200 leading-relaxed">
+        {t('deals.claim.payment_note')}
+      </p>
+    </div>
+  </div>
+
+  <!-- ALREADY_CLAIMED state -->
+  <div x-show="state === 'already_claimed'" x-cloak class="p-8 space-y-6">
+    <div class="text-center">
+      <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-blue-100 dark:bg-blue-900/30 mb-4">
+        <svg class="w-7 h-7 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+      </div>
+      <h3 class="text-xl font-bold text-slate-900 dark:text-white">{t('deals.claim.already_claimed')}</h3>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">{t('deals.claim.already_claimed_desc')}</p>
+    </div>
+
+    <!-- Discount code card (re-show) -->
+    <div x-show="discountCode" class="rounded-xl bg-violet-50 dark:bg-violet-900/20 border border-violet-200 dark:border-violet-800/40 p-4 space-y-2">
+      <p class="text-xs font-semibold text-violet-600 dark:text-violet-400 uppercase tracking-wide">
+        {t('deals.claim.discount_label')}
+      </p>
+      <div class="flex items-center gap-3">
+        <code
+          class="flex-1 font-mono text-lg font-bold text-violet-700 dark:text-violet-300 bg-violet-100 dark:bg-violet-900/40 rounded-lg px-3 py-2 select-all"
+          x-text="discountCode"
+        ></code>
+        <button
+          type="button"
+          x-on:click="copyCode(discountCode, 'discount')"
+          class="shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-violet-600 hover:bg-violet-700 text-white text-sm font-medium transition-colors"
+        >
+          <span x-show="copiedDiscount">{t('deals.claim.copied')}</span>
+          <span x-show="!copiedDiscount">{t('deals.claim.copy')}</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Referral code -->
+    <div x-show="referralCode" class="rounded-xl bg-slate-50 dark:bg-slate-700/40 border border-slate-200 dark:border-slate-600/40 p-4 space-y-2">
+      <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">
+        {t('deals.claim.referral_label')}
+      </p>
+      <div class="flex items-center gap-3">
+        <code
+          class="flex-1 font-mono text-lg font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800/90 rounded-lg px-3 py-2 select-all"
+          x-text="referralCode"
+        ></code>
+        <button
+          type="button"
+          x-on:click="copyCode(referralCode, 'referral')"
+          class="shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-white text-sm font-medium transition-colors"
+        >
+          <span x-show="copiedReferral">{t('deals.claim.copied')}</span>
+          <span x-show="!copiedReferral">{t('deals.claim.copy')}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOLD_OUT state: countdown -->
+  <div x-show="state === 'sold_out'" x-cloak class="p-8 text-center space-y-6">
+    <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-orange-100 dark:bg-orange-900/30 mx-auto">
+      <svg class="w-7 h-7 text-orange-500 dark:text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    </div>
+    <div>
+      <h3 class="text-xl font-bold text-slate-900 dark:text-white">{t('deals.claim.sold_out')}</h3>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">{t('deals.claim.sold_out_desc')}</p>
+    </div>
+    <div class="bg-slate-50 dark:bg-slate-700/40 rounded-xl p-5 inline-block mx-auto">
+      <p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">{t('deals.claim.next_drop')}</p>
+      <p class="font-mono text-3xl font-bold text-slate-900 dark:text-white tabular-nums" x-text="countdown">--:--:--</p>
+    </div>
+  </div>
+
+  <!-- CAMPAIGN_ENDED state -->
+  <div x-show="state === 'ended'" x-cloak class="p-8 text-center space-y-6">
+    <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-slate-100 dark:bg-slate-700 mx-auto">
+      <svg class="w-7 h-7 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 3l18 18M10.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V13.5m-10.5-6H18a2.25 2.25 0 012.25 2.25V12" />
+      </svg>
+    </div>
+    <div>
+      <h3 class="text-xl font-bold text-slate-900 dark:text-white">{t('deals.claim.ended')}</h3>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">{t('deals.claim.ended_desc')}</p>
+    </div>
+    <!-- Referral code still works -->
+    <div x-show="referralCode" class="rounded-xl bg-slate-50 dark:bg-slate-700/40 border border-slate-200 dark:border-slate-600/40 p-4 space-y-2 text-left">
+      <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">
+        {t('deals.claim.referral_still_works')}
+      </p>
+      <div class="flex items-center gap-3">
+        <code
+          class="flex-1 font-mono text-base font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800/90 rounded-lg px-3 py-2 select-all"
+          x-text="referralCode"
+        ></code>
+        <button
+          type="button"
+          x-on:click="copyCode(referralCode, 'referral')"
+          class="shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-white text-sm font-medium transition-colors"
+        >
+          <span x-show="copiedReferral">{t('deals.claim.copied')}</span>
+          <span x-show="!copiedReferral">{t('deals.claim.copy')}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ERROR state -->
+  <div x-show="state === 'error'" x-cloak class="p-8 text-center space-y-4">
+    <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-red-100 dark:bg-red-900/30 mx-auto">
+      <svg class="w-7 h-7 text-red-500 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+      </svg>
+    </div>
+    <p class="font-medium text-slate-900 dark:text-white" x-text={`errorMessage || ${JSON.stringify(defaultErrorMessage)}`}></p>
+    <button
+      type="button"
+      x-on:click="fetchStatus()"
+      class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
+    >
+      {t('deals.claim.retry')}
+    </button>
+  </div>
+
+  <!-- Turnstile script (loaded async, only when needed) -->
+  <!-- Kept inside widget root so it never becomes a sibling grid item when un-hidden -->
+  <div id="turnstile-container" class="hidden"></div>
+</div>
+
+<script>
+  import Alpine from 'alpinejs';
+
+  const registerClaimWidget = (activeAlpine: typeof Alpine) => {
+    if ((activeAlpine as any).__dealClaimWidgetRegistered) return;
+    (activeAlpine as any).__dealClaimWidgetRegistered = true;
+
+    // Shared store so the hero progress bar and dev preview can read status without a second fetch
+    activeAlpine.store('dealStatus', {
+      loaded: false,
+      progressPercent: 0,
+      claimedLabel: '',
+      totalLabel: '',
+      nextReset: '' as string,
+    });
+
+    activeAlpine.data('claimWidget', () => ({
+      // State machine
+      state: 'loading' as
+        | 'loading'
+        | 'not_yet'
+        | 'available'
+        | 'claiming'
+        | 'success'
+        | 'already_claimed'
+        | 'sold_out'
+        | 'ended'
+        | 'error',
+
+      // Data fields
+      available: 0,
+      total: 0,
+      nextReset: null as string | null,
+      dropsAt: null as string | null,
+      discountCode: null as string | null,
+      referralCode: null as string | null,
+      countdown: '--:--:--',
+      dropCountdown: '--:--:--',
+      copiedDiscount: false,
+      copiedReferral: false,
+      errorMessage: '',
+
+      API_BASE: '',
+      TURNSTILE_KEY: '',
+
+      // Translated error messages bridged from frontmatter via data-* attrs
+      MSG_ERROR: '',
+      MSG_ERROR_LOAD: '',
+      MSG_ERROR_SECURITY: '',
+      MSG_ERROR_RATE_LIMITED: '',
+      MSG_ERROR_ACCOUNT_TOO_NEW: '',
+
+      async init() {
+        const el = document.querySelector('[data-deals-claim-widget]') as HTMLElement;
+        this.API_BASE = el?.dataset.apiUrl || '';
+        this.TURNSTILE_KEY = el?.dataset.turnstileKey || '';
+        this.MSG_ERROR = el?.dataset.msgError || '';
+        this.MSG_ERROR_LOAD = el?.dataset.msgErrorLoad || '';
+        this.MSG_ERROR_SECURITY = el?.dataset.msgErrorSecurity || '';
+        this.MSG_ERROR_RATE_LIMITED = el?.dataset.msgErrorRateLimited || '';
+        this.MSG_ERROR_ACCOUNT_TOO_NEW = el?.dataset.msgErrorAccountTooNew || '';
+
+        // Check if we're returning from GitHub OAuth (token in URL param)
+        const params = new URLSearchParams(window.location.search);
+        const oauthCode = params.get('code');
+        const turnstileToken = sessionStorage.getItem('turnstile_token');
+
+        if (oauthCode && turnstileToken) {
+          // Clear params from URL without reload
+          const cleanUrl = window.location.pathname;
+          history.replaceState(null, '', cleanUrl);
+          sessionStorage.removeItem('turnstile_token');
+          await this.completeClaim(oauthCode, turnstileToken);
+          return;
+        }
+
+        await this.fetchStatus();
+        this.startCountdown();
+      },
+
+      async fetchStatus() {
+        this.state = 'loading';
+        try {
+          const res = await fetch(`${this.API_BASE}/status`, {
+            credentials: 'include',
+          });
+
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+          const data = await res.json() as {
+            active: boolean;
+            user_claimed: boolean;
+            user_code?: string;
+            referral_code?: string;
+            available: number;
+            total: number;
+            next_reset: string;
+            drops_at?: string;
+          };
+
+          // Update shared store for hero progress bar + dev preview
+          const claimed = data.total - data.available;
+          const store = activeAlpine.store('dealStatus') as {
+            loaded: boolean;
+            progressPercent: number;
+            claimedLabel: string;
+            totalLabel: string;
+            nextReset: string;
+          };
+          store.loaded = true;
+          store.progressPercent =
+            data.total > 0 ? Math.round((claimed / data.total) * 100) : 0;
+          store.claimedLabel = String(claimed);
+          store.totalLabel = String(data.total);
+          store.nextReset = data.next_reset ?? '';
+
+          if (!data.active) {
+            this.referralCode = data.referral_code ?? null;
+            this.state = 'ended';
+            return;
+          }
+
+          if (data.user_claimed) {
+            this.discountCode = data.user_code ?? null;
+            this.referralCode = data.referral_code ?? null;
+            this.state = 'already_claimed';
+            return;
+          }
+
+          this.available = data.available;
+          this.total = data.total;
+          this.nextReset = data.next_reset;
+
+          if (data.drops_at && new Date(data.drops_at).getTime() > Date.now()) {
+            this.dropsAt = data.drops_at;
+            this.state = 'not_yet';
+            // Codes haven't dropped yet — server reports available=0, but no one has claimed.
+            // Force progress to 0 so the hero shows "0 / total" instead of a misleading 100%.
+            store.progressPercent = 0;
+            store.claimedLabel = '0';
+            return;
+          }
+
+          this.state = data.available > 0 ? 'available' : 'sold_out';
+        } catch (e) {
+          this.state = 'error';
+          this.errorMessage = this.MSG_ERROR_LOAD;
+        }
+      },
+
+      startClaim() {
+        // Load Turnstile widget, execute challenge, then redirect to GitHub OAuth
+        this.state = 'claiming';
+        this.errorMessage = '';
+        this.renderTurnstile();
+      },
+
+      renderTurnstile() {
+        const container = document.getElementById('turnstile-container');
+        if (!container) {
+          this.state = 'error';
+          this.errorMessage = this.MSG_ERROR_SECURITY;
+          return;
+        }
+
+        // Load Turnstile script if not already present
+        if (!document.getElementById('cf-turnstile-script')) {
+          const script = document.createElement('script');
+          script.id = 'cf-turnstile-script';
+          script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+          script.async = true;
+          script.defer = true;
+          document.head.appendChild(script);
+        }
+
+        // Wait for Turnstile to be ready, then execute invisible challenge
+        const tryRender = () => {
+          if (typeof (window as any).turnstile === 'undefined') {
+            setTimeout(tryRender, 200);
+            return;
+          }
+          container.classList.remove('hidden');
+          (window as any).turnstile.render(container, {
+            sitekey: this.TURNSTILE_KEY,
+            size: 'invisible',
+            callback: (token: string) => {
+              container.classList.add('hidden');
+              // Store token and redirect to GitHub OAuth
+              sessionStorage.setItem('turnstile_token', token);
+              const redirectUri = encodeURIComponent(window.location.href.split('?')[0]);
+              window.location.href = `${this.API_BASE}/auth/github?redirect_uri=${redirectUri}`;
+            },
+            'error-callback': () => {
+              this.state = 'error';
+              this.errorMessage = this.MSG_ERROR_SECURITY;
+            },
+          });
+          (window as any).turnstile.execute(container);
+        };
+        tryRender();
+      },
+
+      async completeClaim(oauthCode: string, turnstileToken: string) {
+        this.state = 'claiming';
+        try {
+          const res = await fetch(`${this.API_BASE}/claim`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              oauth_code: oauthCode,
+              turnstile_token: turnstileToken,
+            }),
+          });
+
+          if (res.status === 409) {
+            // Already claimed — fetch status to get the existing code
+            await this.fetchStatus();
+            return;
+          }
+
+          if (res.status === 410) {
+            this.state = 'sold_out';
+            return;
+          }
+
+          if (res.status === 425) {
+            // Codes haven't dropped yet for current window — bounce back to not_yet state
+            const body = await res.json().catch(() => ({})) as { next_reset?: string };
+            if (body.next_reset) {
+              this.dropsAt = body.next_reset;
+              this.nextReset = body.next_reset;
+            }
+            this.state = 'not_yet';
+            return;
+          }
+
+          if (res.status === 429) {
+            this.state = 'error';
+            this.errorMessage = this.MSG_ERROR_RATE_LIMITED;
+            return;
+          }
+
+          if (res.status === 403) {
+            this.state = 'error';
+            this.errorMessage = this.MSG_ERROR_ACCOUNT_TOO_NEW;
+            return;
+          }
+
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+          const data = await res.json() as {
+            discount_code: string;
+            referral_code: string;
+          };
+
+          this.discountCode = data.discount_code;
+          this.referralCode = data.referral_code;
+          this.state = 'success';
+        } catch (e) {
+          this.state = 'error';
+          this.errorMessage = this.MSG_ERROR;
+        }
+      },
+
+      formatCountdown(diff: number): string {
+        const h = Math.floor(diff / 3_600_000);
+        const m = Math.floor((diff % 3_600_000) / 60_000);
+        const s = Math.floor((diff % 60_000) / 1_000);
+        return [h, m, s].map((n) => String(n).padStart(2, '0')).join(':');
+      },
+
+      startCountdown() {
+        setInterval(() => {
+          const now = Date.now();
+
+          // Drop countdown (not_yet state)
+          if (this.dropsAt) {
+            const dropDiff = new Date(this.dropsAt).getTime() - now;
+            if (dropDiff <= 0) {
+              this.dropsAt = null;
+              this.fetchStatus();
+            } else {
+              this.dropCountdown = this.formatCountdown(dropDiff);
+            }
+          }
+
+          // Next reset countdown (sold_out state)
+          if (this.nextReset) {
+            const resetDiff = new Date(this.nextReset).getTime() - now;
+            if (resetDiff <= 0) {
+              this.nextReset = null;
+              this.fetchStatus();
+            } else {
+              this.countdown = this.formatCountdown(resetDiff);
+            }
+          }
+        }, 1_000);
+      },
+
+      async copyCode(code: string | null, which: 'discount' | 'referral') {
+        if (!code) return;
+        try {
+          await navigator.clipboard.writeText(code);
+        } catch {
+          // Fallback for older browsers
+          const el = document.createElement('textarea');
+          el.value = code;
+          el.style.position = 'fixed';
+          el.style.opacity = '0';
+          document.body.appendChild(el);
+          el.select();
+          document.execCommand('copy');
+          document.body.removeChild(el);
+        }
+
+        if (which === 'discount') {
+          this.copiedDiscount = true;
+          setTimeout(() => { this.copiedDiscount = false; }, 2_000);
+        } else {
+          this.copiedReferral = true;
+          setTimeout(() => { this.copiedReferral = false; }, 2_000);
+        }
+      },
+    }));
+  };
+
+  if (!window.Alpine) {
+    window.Alpine = Alpine;
+    registerClaimWidget(Alpine);
+    Alpine.start();
+  } else {
+    registerClaimWidget(window.Alpine);
+    const claimWidgetRoot = document.querySelector('[data-deals-claim-widget]');
+    if (claimWidgetRoot && !(claimWidgetRoot as any)._x_dataStack) {
+      window.Alpine.initTree(claimWidgetRoot);
+    }
+  }
+</script>
+
+<style>
+  /* Prevent flash of all states before Alpine hydrates */
+  [x-cloak] {
+    display: none !important;
+  }
+</style>
