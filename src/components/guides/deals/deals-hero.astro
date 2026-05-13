@@ -1,0 +1,87 @@
+---
+// deals-hero: Hero section showing headline, savings badge, and live progress bar
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+---
+
+<section class="relative overflow-hidden rounded-[1.75rem] border border-emerald-200/80 dark:border-emerald-900/60 bg-stone-50 dark:bg-slate-950">
+  <div class="absolute inset-0 opacity-[0.45] dark:opacity-[0.18] bg-[linear-gradient(90deg,rgba(15,23,42,0.05)_1px,transparent_1px),linear-gradient(rgba(15,23,42,0.05)_1px,transparent_1px)] bg-[size:28px_28px]"></div>
+  <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-emerald-500 via-amber-400 to-sky-500"></div>
+
+  <div class="relative grid gap-8 px-5 py-7 sm:px-8 sm:py-9 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-center">
+    <div class="space-y-6">
+      <div class="inline-flex items-center gap-2 rounded-full border border-emerald-300/80 bg-emerald-50 px-3 py-1.5 text-sm font-semibold text-emerald-800 dark:border-emerald-800/70 dark:bg-emerald-950/50 dark:text-emerald-300">
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.169.659 1.591l8.182 8.182a2.25 2.25 0 003.182 0l4.318-4.318a2.25 2.25 0 000-3.182L11.159 3.659A2.25 2.25 0 009.568 3z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 6.75h.008v.008H6.75z" />
+        </svg>
+        {t('deals.hero.badge')}
+      </div>
+
+      <div class="max-w-2xl">
+        <p class="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400">{t('deals.hero.kicker')}</p>
+        <h1 class="font-heading text-4xl font-black leading-[0.98] text-slate-950 dark:text-white sm:text-5xl lg:text-6xl">
+          {t('deals.hero.title')}
+        </h1>
+        <p class="mt-4 max-w-xl text-lg leading-8 text-slate-600 dark:text-slate-300">
+          {t('deals.hero.subtitle')}
+        </p>
+      </div>
+
+      <a
+        href="#claim"
+        class="inline-flex min-h-11 items-center rounded-full border border-slate-300 bg-slate-700 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-slate-900/15 transition hover:-translate-y-0.5 hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-slate-300 dark:border-slate-700 dark:bg-slate-200 dark:text-slate-950 dark:hover:bg-white dark:focus-visible:ring-slate-700"
+      >
+        {t('deals.claim.button')}
+      </a>
+    </div>
+
+    <div class="relative rounded-2xl border border-slate-900/10 bg-white/85 p-4 shadow-xl shadow-slate-900/10 dark:border-white/10 dark:bg-slate-900/80">
+      <div class="mb-4 flex items-center justify-between border-b border-dashed border-slate-300 pb-3 dark:border-slate-700">
+        <span class="text-xs font-bold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">{t('deals.hero.ticket_label')}</span>
+        <span class="rounded-full bg-emerald-100 px-2 py-1 text-xs font-bold text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
+          {t('deals.hero.stackable_label')}
+        </span>
+      </div>
+
+      <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-2 text-center">
+        <div class="rounded-xl bg-emerald-50 p-3 dark:bg-emerald-950/40">
+          <div class="text-3xl font-black text-emerald-700 dark:text-emerald-300">50%</div>
+          <div class="mt-1 text-xs font-semibold text-emerald-900/70 dark:text-emerald-200/70">{t('deals.hero.discount_label_short')}</div>
+        </div>
+        <div class="text-xl font-black text-slate-400">+</div>
+        <div class="rounded-xl bg-sky-50 p-3 dark:bg-sky-950/40">
+          <div class="text-3xl font-black text-sky-700 dark:text-sky-300">20%</div>
+          <div class="mt-1 text-xs font-semibold text-sky-900/70 dark:text-sky-200/70">{t('deals.hero.referral_label_short')}</div>
+        </div>
+      </div>
+
+      <div class="mt-3 rounded-xl bg-amber-100 p-4 text-center dark:bg-amber-950/40">
+        <div class="text-5xl font-black text-amber-700 dark:text-amber-300">60%</div>
+        <div class="mt-1 text-xs font-bold uppercase tracking-[0.18em] text-amber-900/70 dark:text-amber-200/70">{t('deals.hero.total_savings_label')}</div>
+      </div>
+
+      <div x-data x-bind:class="$store.dealStatus.loaded ? 'opacity-100' : 'opacity-0'" class="mt-4 transition-opacity duration-500">
+        <div class="mb-2 flex justify-between text-xs font-semibold text-slate-500 dark:text-slate-400">
+          <span x-text="$store.dealStatus.claimedLabel"></span>
+          <span x-text="$store.dealStatus.totalLabel"></span>
+        </div>
+        <div class="h-2.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
+          <div
+            class="h-full rounded-full bg-gradient-to-r from-emerald-500 to-amber-400 transition-all duration-700"
+            x-bind:style="`width: ${$store.dealStatus.progressPercent}%`"
+          ></div>
+        </div>
+        <p class="mt-2 text-center text-xs text-slate-500 dark:text-slate-400">{t('deals.hero.progress_label')}</p>
+      </div>
+    </div>
+  </div>
+</section>

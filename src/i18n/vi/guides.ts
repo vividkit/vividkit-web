@@ -145,6 +145,8 @@ export const guides = {
   'guides.fix_logs.description': 'Debug thông minh với /ck:fix phân tích log',
   'guides.resume.title': 'Tiếp Tục Phiên',
   'guides.resume.description': 'Khôi phục context từ phiên trước',
+  'guides.deals.title': 'Ưu Đãi',
+  'guides.deals.description': 'Nhận mã giảm giá ClaudeKit hàng ngày',
   'guides.promotions.title': 'Khuyến Mãi',
   'guides.promotions.description': 'Ưu đãi và khuyến mãi dịch vụ AI',
   'guides.custom_hooks.title': 'Custom Hooks',

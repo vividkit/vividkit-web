@@ -145,6 +145,8 @@ export const guides = {
   'guides.fix_logs.description': 'Intelligent debugging with /ck:fix log analysis',
   'guides.resume.title': 'Resume Guide',
   'guides.resume.description': 'Project resumption workflows',
+  'guides.deals.title': 'Deals',
+  'guides.deals.description': 'Claim exclusive daily discount codes for ClaudeKit',
   'guides.promotions.title': 'Promotions',
   'guides.promotions.description': 'AI service deals and promotions',
   'guides.custom_hooks.title': 'Custom Hooks',

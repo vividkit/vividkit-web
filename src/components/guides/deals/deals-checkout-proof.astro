@@ -1,0 +1,146 @@
+---
+// deals-checkout-proof: real checkout examples showing how coupon + referral stack
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+const authorReferralCode = 'OMG49S8R';
+
+const examples = [
+  {
+    image: '/guides/deals/ck-coupon-onekit.png',
+    title: t('deals.proof.onekit_title'),
+    alt: t('deals.proof.onekit_alt'),
+  },
+  {
+    image: '/guides/deals/ck-coupon-combo.png',
+    title: t('deals.proof.combo_title'),
+    alt: t('deals.proof.combo_alt'),
+  },
+];
+---
+
+<aside
+  x-data="{ selectedProof: null }"
+  x-on:keydown.escape.window="selectedProof = null"
+  class="rounded-[1.75rem] border border-slate-200 bg-white p-5 shadow-xl shadow-slate-900/[0.06] dark:border-slate-800 dark:bg-slate-900/75 sm:p-6"
+>
+  <div class="mb-3">
+    <p class="text-xs font-bold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-300">
+      {t('deals.proof.kicker')}
+    </p>
+    <h2 class="mt-2 font-heading text-xl font-black text-slate-950 dark:text-white">
+      {t('deals.proof.title')}
+    </h2>
+  </div>
+
+  <div class="mb-4 rounded-2xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-950/60">
+    <div class="grid gap-2 sm:grid-cols-2 xl:grid-cols-2">
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+          {t('deals.proof.coupon_field')}
+        </p>
+        <p class="mt-1 text-sm font-bold text-slate-950 dark:text-white">
+          {t('deals.proof.coupon_value')}
+        </p>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+          {t('deals.proof.referral_field')}
+        </p>
+        <p class="mt-1 font-mono text-sm font-black text-slate-950 dark:text-white">
+          {authorReferralCode}
+        </p>
+      </div>
+    </div>
+    <p class="mt-3 border-t border-slate-200 pt-3 text-xs leading-5 text-slate-600 dark:border-slate-800 dark:text-slate-400">
+      <span class="font-bold text-slate-800 dark:text-slate-200">{t('deals.claim.payment_note_title')}:</span>
+      {t('deals.claim.payment_note')}
+    </p>
+  </div>
+
+  <div class="grid gap-3 sm:grid-cols-2">
+    {examples.map((example) => (
+      <figure class="proof-card relative rounded-2xl transition hover:shadow-xl hover:shadow-emerald-950/10">
+        <div class="mb-2 px-1">
+          <figcaption class="text-sm font-bold text-slate-900 dark:text-white">
+            {example.title}
+          </figcaption>
+        </div>
+        <button
+          type="button"
+          x-on:click={`selectedProof = ${JSON.stringify(example)}`}
+          class="block w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-50 text-left focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-300 dark:border-slate-800 dark:bg-slate-950 dark:focus-visible:ring-emerald-900"
+          aria-label={example.title}
+        >
+          <img
+            src={example.image}
+            alt={example.alt}
+            width="896"
+            height="1610"
+            loading="lazy"
+            decoding="async"
+            data-image-component
+            class="proof-thumbnail aspect-[896/1610] w-full object-contain transition duration-300 dark:brightness-[0.92]"
+          />
+        </button>
+      </figure>
+    ))}
+  </div>
+
+  <div
+    x-show="selectedProof"
+    x-cloak
+    x-transition.opacity
+    x-on:click.self="selectedProof = null"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/75 p-4 backdrop-blur-sm"
+  >
+    <div
+      role="dialog"
+      aria-modal="true"
+      class="relative max-h-[92vh] w-full max-w-3xl overflow-hidden rounded-2xl border border-white/15 bg-slate-950 shadow-2xl shadow-slate-950/70"
+    >
+      <div class="flex items-center justify-between gap-4 border-b border-white/10 px-4 py-3">
+        <h3 class="text-sm font-bold text-white" x-text="selectedProof?.title"></h3>
+        <button
+          type="button"
+          x-on:click="selectedProof = null"
+          class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-500/40"
+          aria-label="Close preview"
+        >
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="max-h-[calc(92vh-4rem)] overflow-auto bg-slate-950 p-3">
+        <img
+          x-bind:src="selectedProof?.image"
+          x-bind:alt="selectedProof?.alt"
+          width="896"
+          height="1610"
+          data-image-component
+          class="mx-auto max-h-[calc(92vh-6rem)] w-auto max-w-full rounded-xl object-contain"
+        />
+      </div>
+    </div>
+  </div>
+</aside>
+
+<style>
+  [x-cloak] {
+    display: none !important;
+  }
+
+  .proof-card:hover .proof-thumbnail,
+  .proof-card:focus-within .proof-thumbnail {
+    filter: brightness(0.95);
+    transform: scale(1.035);
+  }
+</style>
