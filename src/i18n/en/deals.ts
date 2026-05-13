@@ -82,6 +82,8 @@ export const deals = {
   'deals.claim.ended': 'Campaign has ended.',
   'deals.claim.ended_desc': 'Thanks for participating! Follow us for future deals.',
   'deals.claim.referral_still_works': 'Your referral code still works:',
+  'deals.claim.referral_link_label': 'Open your referral link',
+  'deals.claim.referral_link_helper': 'Opens claudekit.cc with your referral pre-applied — then paste the discount code into the Coupon Code field at checkout to stack both.',
   'deals.claim.copied': 'Copied!',
   'deals.claim.copy': 'Copy',
   'deals.claim.account_too_new': 'Your GitHub account must be at least 30 days old to claim.',
