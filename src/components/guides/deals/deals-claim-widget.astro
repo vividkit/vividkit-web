@@ -548,6 +548,17 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
             return;
           }
 
+          if (res.status === 425) {
+            // Codes haven't dropped yet for current window — bounce back to not_yet state
+            const body = await res.json().catch(() => ({})) as { next_reset?: string };
+            if (body.next_reset) {
+              this.dropsAt = body.next_reset;
+              this.nextReset = body.next_reset;
+            }
+            this.state = 'not_yet';
+            return;
+          }
+
           if (res.status === 429) {
             this.state = 'error';
             this.errorMessage = 'Too many attempts. Please try again later.';
