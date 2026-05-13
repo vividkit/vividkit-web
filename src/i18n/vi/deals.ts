@@ -82,6 +82,8 @@ export const deals = {
   'deals.claim.ended': 'Chiến dịch đã kết thúc.',
   'deals.claim.ended_desc': 'Cảm ơn bạn đã tham gia! Theo dõi chúng tôi để biết các ưu đãi tiếp theo.',
   'deals.claim.referral_still_works': 'Mã referral của bạn vẫn còn hiệu lực:',
+  'deals.claim.referral_link_label': 'Mở link referral của bạn',
+  'deals.claim.referral_link_helper': 'Mở claudekit.cc với referral đã được áp sẵn — sau đó dán mã giảm giá vào ô Coupon Code ở bước thanh toán để stack cả hai.',
   'deals.claim.copied': 'Đã sao chép!',
   'deals.claim.copy': 'Sao chép',
   'deals.claim.account_too_new': 'Tài khoản GitHub của bạn phải ít nhất 30 ngày tuổi để nhận mã.',
