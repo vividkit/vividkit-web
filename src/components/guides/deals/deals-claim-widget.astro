@@ -14,6 +14,10 @@ const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
 const defaultErrorMessage = t('deals.claim.error');
+const errorLoadMessage = t('deals.claim.error_load');
+const errorSecurityMessage = t('deals.claim.error_security');
+const errorRateLimitedMessage = t('deals.claim.rate_limited');
+const errorAccountTooNewMessage = t('deals.claim.account_too_new');
 const availableMessage = t('deals.claim.available');
 const giveawayApiUrl = import.meta.env.PUBLIC_GIVEAWAY_API_URL;
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
@@ -23,6 +27,11 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
   data-deals-claim-widget
   data-api-url={giveawayApiUrl}
   data-turnstile-key={turnstileSiteKey}
+  data-msg-error={defaultErrorMessage}
+  data-msg-error-load={errorLoadMessage}
+  data-msg-error-security={errorSecurityMessage}
+  data-msg-error-rate-limited={errorRateLimitedMessage}
+  data-msg-error-account-too-new={errorAccountTooNewMessage}
   x-data="claimWidget()"
   class="flex h-full flex-col overflow-hidden rounded-[1.75rem] border-2 border-emerald-400/80 bg-white shadow-2xl shadow-emerald-900/20 ring-1 ring-emerald-500/10 dark:border-emerald-700/80 dark:bg-slate-900 dark:shadow-emerald-950/40"
 >
@@ -383,10 +392,22 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
       API_BASE: '',
       TURNSTILE_KEY: '',
 
+      // Translated error messages bridged from frontmatter via data-* attrs
+      MSG_ERROR: '',
+      MSG_ERROR_LOAD: '',
+      MSG_ERROR_SECURITY: '',
+      MSG_ERROR_RATE_LIMITED: '',
+      MSG_ERROR_ACCOUNT_TOO_NEW: '',
+
       async init() {
         const el = document.querySelector('[data-deals-claim-widget]') as HTMLElement;
         this.API_BASE = el?.dataset.apiUrl || '';
         this.TURNSTILE_KEY = el?.dataset.turnstileKey || '';
+        this.MSG_ERROR = el?.dataset.msgError || '';
+        this.MSG_ERROR_LOAD = el?.dataset.msgErrorLoad || '';
+        this.MSG_ERROR_SECURITY = el?.dataset.msgErrorSecurity || '';
+        this.MSG_ERROR_RATE_LIMITED = el?.dataset.msgErrorRateLimited || '';
+        this.MSG_ERROR_ACCOUNT_TOO_NEW = el?.dataset.msgErrorAccountTooNew || '';
 
         // Check if we're returning from GitHub OAuth (token in URL param)
         const params = new URLSearchParams(window.location.search);
@@ -462,13 +483,17 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
           if (data.drops_at && new Date(data.drops_at).getTime() > Date.now()) {
             this.dropsAt = data.drops_at;
             this.state = 'not_yet';
+            // Codes haven't dropped yet — server reports available=0, but no one has claimed.
+            // Force progress to 0 so the hero shows "0 / total" instead of a misleading 100%.
+            store.progressPercent = 0;
+            store.claimedLabel = '0';
             return;
           }
 
           this.state = data.available > 0 ? 'available' : 'sold_out';
         } catch (e) {
           this.state = 'error';
-          this.errorMessage = 'Failed to load deal status. Please try again.';
+          this.errorMessage = this.MSG_ERROR_LOAD;
         }
       },
 
@@ -483,7 +508,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
         const container = document.getElementById('turnstile-container');
         if (!container) {
           this.state = 'error';
-          this.errorMessage = 'Security check failed. Please try again.';
+          this.errorMessage = this.MSG_ERROR_SECURITY;
           return;
         }
 
@@ -516,7 +541,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
             },
             'error-callback': () => {
               this.state = 'error';
-              this.errorMessage = 'Security check failed. Please try again.';
+              this.errorMessage = this.MSG_ERROR_SECURITY;
             },
           });
           (window as any).turnstile.execute(container);
@@ -561,13 +586,13 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 
           if (res.status === 429) {
             this.state = 'error';
-            this.errorMessage = 'Too many attempts. Please try again later.';
+            this.errorMessage = this.MSG_ERROR_RATE_LIMITED;
             return;
           }
 
           if (res.status === 403) {
             this.state = 'error';
-            this.errorMessage = 'Your GitHub account must be at least 30 days old to claim.';
+            this.errorMessage = this.MSG_ERROR_ACCOUNT_TOO_NEW;
             return;
           }
 
@@ -583,7 +608,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
           this.state = 'success';
         } catch (e) {
           this.state = 'error';
-          this.errorMessage = 'Something went wrong. Please try again.';
+          this.errorMessage = this.MSG_ERROR;
         }
       },
 
