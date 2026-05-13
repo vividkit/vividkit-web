@@ -1,0 +1,41 @@
+---
+// deals-rules: Amber callout listing giveaway rules
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+const rules = [
+  t('deals.rules.rule1'),
+  t('deals.rules.rule2'),
+  t('deals.rules.rule3'),
+  t('deals.rules.rule4'),
+];
+---
+
+<div class="flex items-start gap-4 rounded-xl border border-amber-200 bg-amber-500/5 p-6 text-left dark:border-amber-500/20 dark:bg-amber-500/10">
+  <div class="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-amber-400 to-amber-500 text-white shadow-lg shadow-amber-500/30 ring-1 ring-amber-300/60 dark:ring-amber-300/30">
+    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+      <path d="M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v0z" />
+      <path d="M9 12h6M9 16h4" />
+    </svg>
+  </div>
+  <div class="flex-1">
+    <div class="mb-2 font-bold text-amber-700 dark:text-amber-400">{t('deals.rules.title')}</div>
+    <ul class="space-y-1.5 text-sm text-slate-600 dark:text-slate-400">
+      {rules.map((rule) => (
+        <li class="flex items-start gap-2">
+          <span class="mt-0.5 text-amber-400">&#8226;</span>
+          {rule}
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>
