@@ -2,6 +2,7 @@
 // DealsGuide: top-level composition of all deals guide sub-components
 import { getLangFromUrl, type Language } from '@/i18n';
 import DealsHero from './deals/deals-hero.astro';
+import DealsWhatIsClaudekit from './deals/deals-what-is-claudekit.astro';
 import DealsHowItWorks from './deals/deals-how-it-works.astro';
 import DealsClaimWidget from './deals/deals-claim-widget.astro';
 import DealsCheckoutProof from './deals/deals-checkout-proof.astro';
@@ -22,6 +23,8 @@ const currentLang = lang || getLangFromUrl(Astro.url);
 
 <div class="mt-5 space-y-8">
   <DealsHero lang={currentLang} />
+
+  <DealsWhatIsClaudekit lang={currentLang} />
 
   <section
     id="claim"
