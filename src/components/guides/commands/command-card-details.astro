@@ -1,0 +1,193 @@
+---
+// Renders chip rows (subcommands/args/flags/betaFlags) followed by a
+// "Details" trigger that opens a native <dialog> modal listing each
+// chip with its 1-line explanation. Card height stays constant so the
+// CSS grid does not jump. Accepts both legacy string chips (MK) and
+// structured ChipItem chips (EK migrated in Phase 1); only chips
+// carrying a descKey appear in the modal definition list.
+import { chipDescKey, chipName, type Chip, type CommandItem, type TranslationFn } from "@/data/guides/commands-types";
+
+interface Props {
+  cmd: CommandItem;
+  t: TranslationFn;
+}
+
+const { cmd, t } = Astro.props;
+
+type Section = {
+  kind: "subcommand" | "arg" | "flag" | "betaFlag";
+  headerKey: string;
+  chips: Chip[];
+};
+
+const sections: Section[] = [
+  { kind: "subcommand", headerKey: "commands.details.section.subcommands", chips: cmd.subcommands ?? [] },
+  { kind: "arg",        headerKey: "commands.details.section.args",        chips: cmd.args ?? [] },
+  { kind: "flag",       headerKey: "commands.details.section.flags",       chips: cmd.flags ?? [] },
+  { kind: "betaFlag",   headerKey: "commands.details.section.beta_flags",  chips: cmd.betaFlags ?? [] },
+];
+
+// Sections with at least one chip carrying a descKey contribute rows
+// to the modal definition list. Empty descKey sections are skipped.
+const detailSections = sections
+  .map((s) => ({ ...s, rows: s.chips.filter((c) => chipDescKey(c) !== null) }))
+  .filter((s) => s.rows.length > 0);
+
+const hasDetails = detailSections.length > 0;
+
+// Counter on the trigger button, e.g. "3 subcommands · 8 flags"
+const counterParts = sections
+  .map((s) => {
+    if (s.chips.length === 0) return null;
+    const label = t(`commands.details.count.${s.kind === "betaFlag" ? "beta_flag" : s.kind}`);
+    return `${s.chips.length} ${label}`;
+  })
+  .filter((x): x is string => x !== null);
+
+// Stable DOM id for the dialog. cmd.command shape: "/ck:plan", "/mkt:ask".
+const dialogId = `cmd-dialog-${cmd.command.replace(/[^a-zA-Z0-9]+/g, "-").replace(/^-+|-+$/g, "").toLowerCase()}`;
+---
+
+{/* Subcommands chips (purple) */}
+{cmd.subcommands && cmd.subcommands.length > 0 && (
+  <div class="flex flex-wrap gap-1 mt-1.5">
+    {cmd.subcommands.map((sub: Chip) => (
+      <code class="text-[9px] px-1 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-mono">
+        {chipName(sub)}
+      </code>
+    ))}
+  </div>
+)}
+
+{/* Args chips (slate) */}
+{cmd.args && cmd.args.length > 0 && (
+  <div class="flex flex-wrap gap-1 mt-1.5">
+    {cmd.args.map((arg: Chip) => (
+      <code class="text-[9px] px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400 font-mono">
+        {chipName(arg)}
+      </code>
+    ))}
+  </div>
+)}
+
+{/* Flags + betaFlags chips */}
+{((cmd.flags && cmd.flags.length > 0) || (cmd.betaFlags && cmd.betaFlags.length > 0)) && (
+  <div class="flex flex-wrap gap-1 mt-1.5">
+    {cmd.flags && cmd.flags.map((flag: Chip) => (
+      <code class="text-[9px] px-1 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-mono">
+        {chipName(flag)}
+      </code>
+    ))}
+    {cmd.betaFlags && cmd.betaFlags.map((flag: Chip) => (
+      <code class="text-[9px] px-1 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-mono">
+        {chipName(flag)} <span class="text-[7px] font-bold uppercase">beta</span>
+      </code>
+    ))}
+  </div>
+)}
+
+{/* Details trigger + modal */}
+{hasDetails && (
+  <>
+    <button
+      type="button"
+      class="cmd-details-trigger mt-2 text-[11px] text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 cursor-pointer select-none flex items-center gap-1.5"
+      data-dialog-target={dialogId}
+    >
+      <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+      <span>{t("commands.details.button")}</span>
+      {counterParts.length > 0 && (
+        <span class="text-slate-400 dark:text-slate-500">· {counterParts.join(" · ")}</span>
+      )}
+    </button>
+
+    <dialog id={dialogId} class="cmd-dialog backdrop:bg-slate-900/60 backdrop:backdrop-blur-sm rounded-xl p-0 w-[min(92vw,520px)] max-h-[80vh] bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 shadow-2xl border border-slate-200 dark:border-slate-700/50">
+      <div class="sticky top-0 flex items-center justify-between gap-3 px-4 py-3 border-b border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-t-xl">
+        <div class="flex items-center gap-2 min-w-0">
+          <code class="text-sm font-mono text-purple-600 dark:text-purple-400 truncate">{cmd.command}</code>
+          {counterParts.length > 0 && (
+            <span class="text-[10px] text-slate-400 dark:text-slate-500 truncate">· {counterParts.join(" · ")}</span>
+          )}
+        </div>
+        <button
+          type="button"
+          class="cmd-dialog-close shrink-0 w-6 h-6 flex items-center justify-center rounded text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
+          aria-label={t("commands.details.close")}
+        >
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="px-4 py-3 overflow-y-auto max-h-[calc(80vh-3.25rem)] space-y-3">
+        {detailSections.map((section) => (
+          <div>
+            <div class="text-[9px] uppercase tracking-wider text-slate-400 dark:text-slate-500 font-semibold mb-1.5">
+              {t(section.headerKey)}
+            </div>
+            <dl class="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1.5">
+              {section.rows.map((chip) => {
+                const key = chipDescKey(chip);
+                const desc = key ? t(key) : "";
+                const chipClass =
+                  section.kind === "subcommand"
+                    ? "bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400"
+                    : section.kind === "arg"
+                    ? "bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400"
+                    : section.kind === "betaFlag"
+                    ? "bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400"
+                    : "bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400";
+                return (
+                  <>
+                    <dt class={`text-[11px] px-1.5 py-0.5 rounded font-mono self-start ${chipClass}`}>
+                      {chipName(chip)}
+                    </dt>
+                    <dd class="text-[12px] leading-snug text-slate-600 dark:text-slate-300">
+                      {desc || <span class="italic text-slate-400 dark:text-slate-500">—</span>}
+                    </dd>
+                  </>
+                );
+              })}
+            </dl>
+          </div>
+        ))}
+      </div>
+    </dialog>
+  </>
+)}
+
+<script>
+  // One hoisted bundle wires every trigger + dialog on the page.
+  // Click outside content closes; <dialog> native handles Esc + focus trap.
+  document.querySelectorAll<HTMLButtonElement>(".cmd-details-trigger").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const id = btn.dataset.dialogTarget;
+      if (!id) return;
+      const dlg = document.getElementById(id) as HTMLDialogElement | null;
+      dlg?.showModal();
+    });
+  });
+  document.querySelectorAll<HTMLDialogElement>("dialog.cmd-dialog").forEach((dlg) => {
+    dlg.addEventListener("click", (e) => {
+      if (e.target === dlg) dlg.close();
+    });
+    dlg.querySelector(".cmd-dialog-close")?.addEventListener("click", () => dlg.close());
+  });
+</script>
+
+<style is:global>
+  /* Force-center the modal — some Tailwind resets neutralize the
+     UA default (position: fixed + inset: 0 + margin: auto) on
+     top-layer <dialog>. Re-apply explicitly. */
+  dialog.cmd-dialog[open] {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+  }
+</style>
