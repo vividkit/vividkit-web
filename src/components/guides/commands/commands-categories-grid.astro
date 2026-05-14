@@ -5,6 +5,7 @@ import { getLangFromUrl, type Language } from "@/i18n";
 import { getEngineerKitCategories } from "@/data/guides/commands-engineer-kit";
 import { getMarketingKitCategories } from "@/data/guides/commands-marketing-kit";
 import { styles } from "@/data/guides/commands-styles";
+import CommandCardDetails from "./command-card-details.astro";
 
 interface Props {
   lang?: Language;
@@ -152,41 +153,7 @@ const marketingCategories = getMarketingKitCategories(t as any);
                   <span class="text-purple-500 dark:text-purple-400">{cmd.betaNote}</span>
                 </div>
               )}
-              {/* Subcommands (space-separated) */}
-              {cmd.subcommands && cmd.subcommands.length > 0 && (
-                <div class="flex flex-wrap gap-1 mt-1.5">
-                  {cmd.subcommands.map((sub: string) => (
-                    <code class="text-[9px] px-1 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-mono">
-                      {sub}
-                    </code>
-                  ))}
-                </div>
-              )}
-              {/* Arguments (space-separated) */}
-              {cmd.args && cmd.args.length > 0 && (
-                <div class="flex flex-wrap gap-1 mt-1.5">
-                  {cmd.args.map((arg: string) => (
-                    <code class="text-[9px] px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400 font-mono">
-                      {arg}
-                    </code>
-                  ))}
-                </div>
-              )}
-              {/* Flags (dash-prefixed) */}
-              {cmd.flags && cmd.flags.length > 0 && (
-                <div class="flex flex-wrap gap-1 mt-1.5">
-                  {cmd.flags.map((flag: string) => (
-                    <code class="text-[9px] px-1 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-mono">
-                      {flag}
-                    </code>
-                  ))}
-                  {cmd.betaFlags && cmd.betaFlags.map((flag: string) => (
-                    <code class="text-[9px] px-1 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-mono">
-                      {flag} <span class="text-[7px] font-bold uppercase">beta</span>
-                    </code>
-                  ))}
-                </div>
-              )}
+              <CommandCardDetails cmd={cmd} t={t as any} />
               {cmd.replacedCommand && (
                 <p class="text-[10px] text-slate-500 mt-1 flex items-center gap-1">
                   <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -297,41 +264,7 @@ const marketingCategories = getMarketingKitCategories(t as any);
                   <span class="text-purple-500 dark:text-purple-400">{cmd.betaNote}</span>
                 </div>
               )}
-              {/* Subcommands (space-separated) */}
-              {cmd.subcommands && cmd.subcommands.length > 0 && (
-                <div class="flex flex-wrap gap-1 mt-1.5">
-                  {cmd.subcommands.map((sub: string) => (
-                    <code class="text-[9px] px-1 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-mono">
-                      {sub}
-                    </code>
-                  ))}
-                </div>
-              )}
-              {/* Arguments (space-separated) */}
-              {cmd.args && cmd.args.length > 0 && (
-                <div class="flex flex-wrap gap-1 mt-1.5">
-                  {cmd.args.map((arg: string) => (
-                    <code class="text-[9px] px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400 font-mono">
-                      {arg}
-                    </code>
-                  ))}
-                </div>
-              )}
-              {/* Flags (dash-prefixed) */}
-              {cmd.flags && cmd.flags.length > 0 && (
-                <div class="flex flex-wrap gap-1 mt-1.5">
-                  {cmd.flags.map((flag: string) => (
-                    <code class="text-[9px] px-1 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-mono">
-                      {flag}
-                    </code>
-                  ))}
-                  {cmd.betaFlags && cmd.betaFlags.map((flag: string) => (
-                    <code class="text-[9px] px-1 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-mono">
-                      {flag} <span class="text-[7px] font-bold uppercase">beta</span>
-                    </code>
-                  ))}
-                </div>
-              )}
+              <CommandCardDetails cmd={cmd} t={t as any} />
               {/* Beta syntax footer note */}
               {cmd.betaSyntax && (
                 <div class="mt-1.5 pt-1.5 border-t border-purple-200/50 dark:border-purple-800/30 text-[10px] flex items-center gap-1">
