@@ -36,15 +36,6 @@ export const subscriptionPromotions: SubscriptionPromotion[] = [
     color: 'cyan',
     recommended: true,
   },
-  {
-    id: 'alibaba-sas-instance',
-    name: 'Alibaba Cloud SAS',
-    tagline: '2vCPU 1GiB VPS — From $0.99/month or $9.90/year! Deploy lightweight agentic bots (GoClaw, ZeroClaw)',
-    promoLinks: [{ label: 'alibabacloud.com/benefits (referral)', url: 'https://www.alibabacloud.com/campaign/benefits?_p_lc=1&referral_code=A92LZF#J_7789915720' }],
-    color: 'cyan',
-    recommended: true,
-  },
-
 ];
 
 export const tips = [

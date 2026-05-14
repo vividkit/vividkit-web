@@ -195,8 +195,6 @@ const colorClasses = {
                 <div class={`flex items-center justify-center w-8 h-8 rounded-lg ${colors.iconBg}`}>
                   {promo.id === 'alibaba-cloud-ai-coding' ? (
                     <LLMProviderIcon provider="qwen" size={20} />
-                  ) : promo.id === 'alibaba-sas-instance' ? (
-                    <LLMProviderIcon provider="alibabacloud" size={20} />
                   ) : promo.id === 'zai-subscription' ? (
                     <LLMProviderIcon provider="zai" size={20} class="dark:invert" />
                   ) : promo.id === 'minimax-subscription' ? (
@@ -219,7 +217,6 @@ const colorClasses = {
               <!-- Tagline -->
               <p class="text-sm text-slate-600 dark:text-slate-400 mb-2">
                 {promo.id === 'alibaba-cloud-ai-coding' ? t('promotions.alibaba.tagline') :
-                 promo.id === 'alibaba-sas-instance' ? t('promotions.alibaba_sas.tagline') :
                  promo.id === 'zai-subscription' ? t('promotions.zai.tagline') :
                  promo.id === 'minimax-subscription' ? t('promotions.minimax.tagline') :
                  promo.tagline}
@@ -231,11 +228,6 @@ const colorClasses = {
                   <div class="p-2 rounded bg-purple-50/50 dark:bg-purple-900/10 border border-purple-200/50 dark:border-purple-500/20">
                     <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                       {t('promotions.minimax.compatible')}
-                    </p>
-                  </div>
-                  <div class="p-2 rounded bg-purple-50/50 dark:bg-purple-900/10 border border-purple-200/50 dark:border-purple-500/20">
-                    <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                      {t('promotions.minimax.performance')}
                     </p>
                   </div>
                 </div>
@@ -262,22 +254,6 @@ const colorClasses = {
                   <div class="p-2 rounded bg-cyan-50/50 dark:bg-cyan-900/10 border border-cyan-200/50 dark:border-cyan-500/20">
                     <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                       {t('promotions.alibaba.value')}
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              {/* Alibaba SAS Instance Info */}
-              {promo.id === 'alibaba-sas-instance' && (
-                <div class="mb-3 space-y-2">
-                  <div class="p-2 rounded bg-cyan-50/50 dark:bg-cyan-900/10 border border-cyan-200/50 dark:border-cyan-500/20">
-                    <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                      {t('promotions.alibaba_sas.specs')}
-                    </p>
-                  </div>
-                  <div class="p-2 rounded bg-cyan-50/50 dark:bg-cyan-900/10 border border-cyan-200/50 dark:border-cyan-500/20">
-                    <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                      {t('promotions.alibaba_sas.suitable')}
                     </p>
                   </div>
                 </div>
