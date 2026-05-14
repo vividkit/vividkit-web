@@ -52,31 +52,29 @@ const t = useTranslations(lang);
     </div>
 
     <!-- Schema Example -->
-    <div class="bg-[#1E1E1E] rounded-lg p-5 font-mono text-sm shadow-inner relative group/code mt-6">
-      <div class="mb-3 text-slate-400 text-xs" set:html={t('cli.guide.settings_schema')}></div>
-      
-      <button class="copy-btn absolute top-4 right-4 p-1.5 rounded-md bg-white/10 hover:bg-white/20 text-white opacity-0 group-hover/code:opacity-100 transition-opacity duration-200" 
+    <div class="bg-slate-50 dark:bg-[#1E1E1E] border border-slate-200 dark:border-transparent rounded-lg p-5 font-mono text-sm shadow-inner relative group/code mt-6">
+      <div class="mb-3 text-slate-600 dark:text-slate-400 text-xs" set:html={t('cli.guide.settings_schema')}></div>
+
+      <button class="copy-btn absolute top-4 right-4 p-1.5 rounded-md bg-slate-200 hover:bg-slate-300 text-slate-700 dark:bg-white/10 dark:hover:bg-white/20 dark:text-white opacity-0 group-hover/code:opacity-100 transition-opacity duration-200"
         data-code={`{
   "$schema": "https://claudekit.cc/schemas/ck-config.schema.json",
-  "theme": "dark",
-  "attribution": {
-    "commit": "",
-    "pr": ""
+  "statusline": "full",
+  "gemini": {
+    "model": "gemini-3-flash-preview"
   }
 }`}
         title="Copy to clipboard">
         <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-        <svg class="w-4 h-4 check-icon hidden text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <svg class="w-4 h-4 check-icon hidden text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
       </button>
 
-      <pre class="text-[#E6E6E6] overflow-x-auto"><span class="text-[#888888]">{"{"}</span>
-  <span class="text-[#9CDCFE]">"$schema"</span>: <span class="text-[#CE9178]">"https://claudekit.cc/schemas/ck-config.schema.json"</span>,
-  <span class="text-[#9CDCFE]">"theme"</span>: <span class="text-[#CE9178]">"dark"</span>,
-  <span class="text-[#9CDCFE]">"attribution"</span>: <span class="text-[#888888]">{"{"}</span>
-    <span class="text-[#9CDCFE]">"commit"</span>: <span class="text-[#CE9178]">""</span>,
-    <span class="text-[#9CDCFE]">"pr"</span>: <span class="text-[#CE9178]">""</span>
-  <span class="text-[#888888]">{"}"}</span>
-<span class="text-[#888888]">{"}"}</span></pre>
+      <pre class="text-slate-800 dark:text-[#E6E6E6] overflow-x-auto"><span class="text-slate-500 dark:text-[#888888]">{"{"}</span>
+  <span class="text-blue-700 dark:text-[#9CDCFE]">"$schema"</span>: <span class="text-amber-700 dark:text-[#CE9178]">"https://claudekit.cc/schemas/ck-config.schema.json"</span>,
+  <span class="text-blue-700 dark:text-[#9CDCFE]">"statusline"</span>: <span class="text-amber-700 dark:text-[#CE9178]">"full"</span>,
+  <span class="text-blue-700 dark:text-[#9CDCFE]">"gemini"</span>: <span class="text-slate-500 dark:text-[#888888]">{"{"}</span>
+    <span class="text-blue-700 dark:text-[#9CDCFE]">"model"</span>: <span class="text-amber-700 dark:text-[#CE9178]">"gemini-3-flash-preview"</span>
+  <span class="text-slate-500 dark:text-[#888888]">{"}"}</span>
+<span class="text-slate-500 dark:text-[#888888]">{"}"}</span></pre>
     </div>
 
     <!-- Migration Note -->
@@ -168,9 +166,9 @@ const t = useTranslations(lang);
     </div>
 
     <!-- Default Example -->
-    <div class="bg-[#1E1E1E] rounded-lg p-5 font-mono text-sm shadow-inner relative group/code mt-2">
-      <div class="mb-3 text-slate-400 text-xs">Default .ck.json Configuration</div>
-      <button class="copy-btn absolute top-4 right-4 p-1.5 rounded-md bg-white/10 hover:bg-white/20 text-white opacity-0 group-hover/code:opacity-100 transition-opacity duration-200" 
+    <div class="bg-slate-50 dark:bg-[#1E1E1E] border border-slate-200 dark:border-transparent rounded-lg p-5 font-mono text-sm shadow-inner relative group/code mt-2">
+      <div class="mb-3 text-slate-600 dark:text-slate-400 text-xs">Default .ck.json Configuration</div>
+      <button class="copy-btn absolute top-4 right-4 p-1.5 rounded-md bg-slate-200 hover:bg-slate-300 text-slate-700 dark:bg-white/10 dark:hover:bg-white/20 dark:text-white opacity-0 group-hover/code:opacity-100 transition-opacity duration-200"
         data-code={JSON.stringify({
           $schema: "https://claudekit.cc/schemas/ck-config.schema.json",
           theme: "dark",
@@ -206,40 +204,40 @@ const t = useTranslations(lang);
         }, null, 2)}
         title="Copy to clipboard">
         <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-        <svg class="w-4 h-4 check-icon hidden text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <svg class="w-4 h-4 check-icon hidden text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
       </button>
 
-      <pre class="text-[#E6E6E6] overflow-x-auto"><span class="text-[#888888]">&#123;</span>
-  <span class="text-[#9CDCFE]">"codingLevel"</span>: <span class="text-[#B5CEA8]">-1</span>,
-  <span class="text-[#9CDCFE]">"statusline"</span>: <span class="text-[#CE9178]">"full"</span>,
-  <span class="text-[#9CDCFE]">"privacyBlock"</span>: <span class="text-[#569CD6]">true</span>,
-  <span class="text-[#9CDCFE]">"docs"</span>: <span class="text-[#888888]">&#123;</span>
-    <span class="text-[#9CDCFE]">"maxLoc"</span>: <span class="text-[#B5CEA8]">800</span>
-  <span class="text-[#888888]">&#125;</span>,
-  <span class="text-[#9CDCFE]">"plan"</span>: <span class="text-[#888888]">&#123;</span>
-    <span class="text-[#9CDCFE]">"namingFormat"</span>: <span class="text-[#CE9178]">&quot;&#123;date&#125;-&#123;slug&#125;&quot;</span>,
-    <span class="text-[#9CDCFE]">"dateFormat"</span>: <span class="text-[#CE9178]">"YYMMDD"</span>,
-    <span class="text-[#9CDCFE]">"validation"</span>: <span class="text-[#888888]">&#123;</span>
-      <span class="text-[#9CDCFE]">"mode"</span>: <span class="text-[#CE9178]">"prompt"</span>,
-      <span class="text-[#9CDCFE]">"questions"</span>: <span class="text-[#CE9178]">"3-8"</span>
-    <span class="text-[#888888]">&#125;</span>
-  <span class="text-[#888888]">&#125;</span>,
-  <span class="text-[#9CDCFE]">"locale"</span>: <span class="text-[#888888]">&#123;</span>
-    <span class="text-[#9CDCFE]">"responseLanguage"</span>: <span class="text-[#569CD6]">null</span>
-  <span class="text-[#888888]">&#125;</span>,
-  <span class="text-[#9CDCFE]">"project"</span>: <span class="text-[#888888]">&#123;</span>
-    <span class="text-[#9CDCFE]">"type"</span>: <span class="text-[#CE9178]">"auto"</span>,
-    <span class="text-[#9CDCFE]">"packageManager"</span>: <span class="text-[#CE9178]">"auto"</span>
-  <span class="text-[#888888]">&#125;</span>,
-  <span class="text-[#9CDCFE]">"gemini"</span>: <span class="text-[#888888]">&#123;</span>
-    <span class="text-[#9CDCFE]">"model"</span>: <span class="text-[#CE9178]">"gemini-3-flash-preview"</span>
-  <span class="text-[#888888]">&#125;</span>,
-  <span class="text-[#9CDCFE]">"skills"</span>: <span class="text-[#888888]">&#123;</span>
-    <span class="text-[#9CDCFE]">"research"</span>: <span class="text-[#888888]">&#123;</span>
-      <span class="text-[#9CDCFE]">"useGemini"</span>: <span class="text-[#569CD6]">true</span>
-    <span class="text-[#888888]">&#125;</span>
-  <span class="text-[#888888]">&#125;</span>
-<span class="text-[#888888]">&#125;</span></pre>
+      <pre class="text-slate-800 dark:text-[#E6E6E6] overflow-x-auto"><span class="text-slate-500 dark:text-[#888888]">&#123;</span>
+  <span class="text-blue-700 dark:text-[#9CDCFE]">"codingLevel"</span>: <span class="text-emerald-700 dark:text-[#B5CEA8]">-1</span>,
+  <span class="text-blue-700 dark:text-[#9CDCFE]">"statusline"</span>: <span class="text-amber-700 dark:text-[#CE9178]">"full"</span>,
+  <span class="text-blue-700 dark:text-[#9CDCFE]">"privacyBlock"</span>: <span class="text-sky-700 dark:text-[#569CD6]">true</span>,
+  <span class="text-blue-700 dark:text-[#9CDCFE]">"docs"</span>: <span class="text-slate-500 dark:text-[#888888]">&#123;</span>
+    <span class="text-blue-700 dark:text-[#9CDCFE]">"maxLoc"</span>: <span class="text-emerald-700 dark:text-[#B5CEA8]">800</span>
+  <span class="text-slate-500 dark:text-[#888888]">&#125;</span>,
+  <span class="text-blue-700 dark:text-[#9CDCFE]">"plan"</span>: <span class="text-slate-500 dark:text-[#888888]">&#123;</span>
+    <span class="text-blue-700 dark:text-[#9CDCFE]">"namingFormat"</span>: <span class="text-amber-700 dark:text-[#CE9178]">&quot;&#123;date&#125;-&#123;slug&#125;&quot;</span>,
+    <span class="text-blue-700 dark:text-[#9CDCFE]">"dateFormat"</span>: <span class="text-amber-700 dark:text-[#CE9178]">"YYMMDD"</span>,
+    <span class="text-blue-700 dark:text-[#9CDCFE]">"validation"</span>: <span class="text-slate-500 dark:text-[#888888]">&#123;</span>
+      <span class="text-blue-700 dark:text-[#9CDCFE]">"mode"</span>: <span class="text-amber-700 dark:text-[#CE9178]">"prompt"</span>,
+      <span class="text-blue-700 dark:text-[#9CDCFE]">"questions"</span>: <span class="text-amber-700 dark:text-[#CE9178]">"3-8"</span>
+    <span class="text-slate-500 dark:text-[#888888]">&#125;</span>
+  <span class="text-slate-500 dark:text-[#888888]">&#125;</span>,
+  <span class="text-blue-700 dark:text-[#9CDCFE]">"locale"</span>: <span class="text-slate-500 dark:text-[#888888]">&#123;</span>
+    <span class="text-blue-700 dark:text-[#9CDCFE]">"responseLanguage"</span>: <span class="text-sky-700 dark:text-[#569CD6]">null</span>
+  <span class="text-slate-500 dark:text-[#888888]">&#125;</span>,
+  <span class="text-blue-700 dark:text-[#9CDCFE]">"project"</span>: <span class="text-slate-500 dark:text-[#888888]">&#123;</span>
+    <span class="text-blue-700 dark:text-[#9CDCFE]">"type"</span>: <span class="text-amber-700 dark:text-[#CE9178]">"auto"</span>,
+    <span class="text-blue-700 dark:text-[#9CDCFE]">"packageManager"</span>: <span class="text-amber-700 dark:text-[#CE9178]">"auto"</span>
+  <span class="text-slate-500 dark:text-[#888888]">&#125;</span>,
+  <span class="text-blue-700 dark:text-[#9CDCFE]">"gemini"</span>: <span class="text-slate-500 dark:text-[#888888]">&#123;</span>
+    <span class="text-blue-700 dark:text-[#9CDCFE]">"model"</span>: <span class="text-amber-700 dark:text-[#CE9178]">"gemini-3-flash-preview"</span>
+  <span class="text-slate-500 dark:text-[#888888]">&#125;</span>,
+  <span class="text-blue-700 dark:text-[#9CDCFE]">"skills"</span>: <span class="text-slate-500 dark:text-[#888888]">&#123;</span>
+    <span class="text-blue-700 dark:text-[#9CDCFE]">"research"</span>: <span class="text-slate-500 dark:text-[#888888]">&#123;</span>
+      <span class="text-blue-700 dark:text-[#9CDCFE]">"useGemini"</span>: <span class="text-sky-700 dark:text-[#569CD6]">true</span>
+    <span class="text-slate-500 dark:text-[#888888]">&#125;</span>
+  <span class="text-slate-500 dark:text-[#888888]">&#125;</span>
+<span class="text-slate-500 dark:text-[#888888]">&#125;</span></pre>
     </div>
 
     <!-- Settings Table -->

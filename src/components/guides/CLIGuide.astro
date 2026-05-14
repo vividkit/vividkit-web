@@ -10,6 +10,7 @@ import DailyRoutine from './cli-guide/DailyRoutine.astro';
 import CCSLink from './cli-guide/CCSLink.astro';
 import AdvancedSettings from './cli-guide/AdvancedSettings.astro';
 import ProTips from './cli-guide/ProTips.astro';
+import CLIFaq from './cli-guide/CLIFaq.astro';
 
 interface Props {
   lang?: Language;
@@ -57,6 +58,7 @@ const translatePath = useTranslatedPath(currentLang);
   <CCSLink lang={currentLang} />
   <AdvancedSettings lang={currentLang} />
   <ProTips lang={currentLang} />
+  <CLIFaq lang={currentLang} />
 </div>
 
 <script>
