@@ -33,7 +33,7 @@ export const ck_with_codex = {
   // Architecture
   'ckWithCodex.arch.heading': 'Các mảnh ghép khớp với nhau ra sao',
   'ckWithCodex.arch.intro':
-    '**Hai nhiệm vụ, không chồng chéo.** `ck migrate -a codex` đọc source ClaudeKit từ thư mục đang làm việc và ghi file Codex-native vào các vị trí global. CCS chỉ khởi chạy Codex với target runtime đúng và override provider tạm thời.<br/><br/>**Lưu ý:** ngay cả `-g` cũng đọc CWD trước (giới hạn upstream của `claudekit-cli`) — `cd ~` trước khi chạy migrate nếu bạn muốn global → global.',
+    '**Hai nhiệm vụ, không chồng chéo.** `ck migrate -a codex` đọc source ClaudeKit và ghi file Codex-native vào vị trí tương ứng. CCS chỉ khởi chạy Codex với target runtime đúng và override provider tạm thời.<br/><br/>**`-g` scope fix (v4.2.0+):** `-g` hiện đọc SOURCE đúng từ global scope. Trên bản cũ hơn 4.2.0, SOURCE vẫn đọc CWD dù có `-g` — nếu bạn còn dùng pre-4.2.0, `cd ~` trước.',
   'ckWithCodex.arch.lane1.title': 'Project nguồn (./.claude/)',
   'ckWithCodex.arch.lane1.desc': '`ck migrate` tìm file source từ repo hiện tại trước, sau đó fallback về `~/.claude/*` khi loại source thiếu ở local.',
   'ckWithCodex.arch.lane2.title': 'File CK Codex global',
@@ -57,7 +57,7 @@ export const ck_with_codex = {
 
   // Setup walkthrough
   'ckWithCodex.setup.heading': 'Setup trong năm phút',
-  'ckWithCodex.setup.intro': 'Chạy setup máy một lần. Chạy `ck init` trong từng project, sau đó chạy `ck migrate -a codex` từ project mà bạn muốn copy nội dung ClaudeKit vào các vị trí Codex-native. Không có `-g`, ghi sẽ là project-local (`.codex/*`, `.agents/skills/*`); thêm `-g` để ghi global (`~/.codex/*`, `~/.agents/skills/*`). Để global → global, `cd ~` trước — xem caveat ở Step 4.<br/><br/>**Lưu ý phiên bản:** hướng dẫn này theo `claudekit-cli` `v4.1.0+`. Chạy `ck update -y` để cập nhật.',
+  'ckWithCodex.setup.intro': 'Chạy setup máy một lần. Chạy `ck init` trong từng project, sau đó chạy `ck migrate -a codex` từ project mà bạn muốn copy nội dung ClaudeKit vào các vị trí Codex-native. Không có `-g`, ghi sẽ là project-local (`.codex/*`, `.agents/skills/*`); thêm `-g` để ghi global (`~/.codex/*`, `~/.agents/skills/*`).<br/><br/>**Lưu ý phiên bản:** hướng dẫn này theo `claudekit-cli` `v4.2.0+`. Chạy `ck update -y` để cập nhật.',
 
   'ckWithCodex.setup.step1.title': 'Cài CCS và ClaudeKit',
   'ckWithCodex.setup.step1.badge': 'một lần',
@@ -89,8 +89,8 @@ export const ck_with_codex = {
   'ckWithCodex.setup.step4.badge': 'migrate',
   'ckWithCodex.setup.step4.desc': '`ck init` đặt layout source ClaudeKit. `ck migrate -a codex` sau đó copy nội dung đó vào các vị trí Codex-native.',
   'ckWithCodex.setup.step4.warning.label': 'quan trọng',
-  'ckWithCodex.setup.step4.warning.title': 'Source bỏ qua `-g` — destination thì theo',
-  'ckWithCodex.setup.step4.warning.tip': '**Global → global:** chạy `cd ~` trước để căn CWD, rồi `ck migrate -a codex -g --dry-run` để xác minh SOURCE trước khi áp dụng.',
+  'ckWithCodex.setup.step4.warning.title': '`-g` scope: đã fix trong v4.2.0+',
+  'ckWithCodex.setup.step4.warning.tip': '**v4.2.0+:** `-g` đọc SOURCE đúng từ global scope.<br/>**Pre-4.2.0:** `-g` chỉ đổi destination — chạy `cd ~` trước để căn SOURCE.<br/>Luôn dùng `--dry-run` để xác minh.',
   'ckWithCodex.setup.step4.code': 'cd your-project\nck init',
   'ckWithCodex.setup.step4.init.label': 'init',
   'ckWithCodex.setup.step4.init.body': 'đặt layout source `.claude/*` trong CWD',
