@@ -10,6 +10,25 @@
     <span class="text-sm font-bold text-red-600 dark:text-red-400">Error Messages & States Preview</span>
   </div>
 
+  <div class="rounded-lg border border-rose-200 bg-rose-50 p-4 dark:border-rose-500/30 dark:bg-rose-900/20">
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <p class="text-sm font-bold text-rose-700 dark:text-rose-300">Reset local GitHub claim session</p>
+        <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400">
+          Clears cached coupon claim, raffle session token, OAuth nonce, Turnstile token, and pending order ref in this browser.
+        </p>
+      </div>
+      <button
+        id="dev-reset-deals-auth"
+        type="button"
+        class="inline-flex min-h-10 shrink-0 items-center justify-center rounded-lg bg-rose-600 px-4 py-2 text-sm font-bold text-white transition hover:bg-rose-500 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-rose-300 dark:bg-rose-400 dark:text-slate-950 dark:hover:bg-rose-300 dark:focus-visible:ring-rose-800"
+      >
+        Reset auth cache
+      </button>
+    </div>
+    <p id="dev-reset-deals-auth-status" class="mt-2 text-xs font-semibold text-rose-700 dark:text-rose-300" aria-live="polite"></p>
+  </div>
+
   {/* not_yet — codes haven't dropped yet */}
   <div class="rounded-lg border border-violet-200 bg-violet-50 p-4 dark:border-violet-500/30 dark:bg-violet-900/20">
     <div class="mb-2 flex items-center gap-3">
@@ -115,6 +134,41 @@
 
 <script>
   const $ = (sel: string) => document.getElementById(sel);
+
+  const sessionStorageKeysToClear = [
+    'raffle_session_token',
+    'raffle_pending_order_ref',
+    'turnstile_token',
+    'turnstile_token:claim',
+    'turnstile_token:raffle_status',
+    'turnstile_token:raffle_verify_order',
+    'turnstile_token:raffle_register',
+    'turnstile_token:raffle_claim_prize',
+    'oauth_nonce:claim',
+    'oauth_nonce:raffle_status',
+    'oauth_nonce:raffle_verify_order',
+    'oauth_nonce:raffle_register',
+    'oauth_nonce:raffle_claim_prize',
+  ];
+
+  function resetDealsAuthState() {
+    try {
+      localStorage.removeItem('vk-deal-claim');
+    } catch {}
+
+    sessionStorageKeysToClear.forEach((key) => {
+      try {
+        sessionStorage.removeItem(key);
+      } catch {}
+    });
+
+    window.dispatchEvent(new CustomEvent('vividkit:deals-dev-reset-auth'));
+    const status = $('dev-reset-deals-auth-status');
+    if (status) status.textContent = 'Cleared local claim cache and raffle session keys. The claim widget was refreshed.';
+    document.getElementById('claim')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  $('dev-reset-deals-auth')?.addEventListener('click', resetDealsAuthState);
 
   function formatCountdown(diff: number) {
     if (diff <= 0) return '00:00:00';
