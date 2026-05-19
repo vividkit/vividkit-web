@@ -227,6 +227,14 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
         : (document.documentElement.lang === 'vi' ? 'qualified' : 'qualified');
     },
 
+    prizeTierBadgeClass(tier: string | undefined) {
+      const normalized = String(tier || '').toLowerCase();
+      if (normalized === 'premium') {
+        return 'bg-amber-100 text-amber-900 ring-amber-300 dark:bg-amber-400/20 dark:text-amber-200 dark:ring-amber-300/30';
+      }
+      return 'bg-emerald-100 text-emerald-800 ring-emerald-300 dark:bg-emerald-500/20 dark:text-emerald-200 dark:ring-emerald-300/25';
+    },
+
     openAuthWindow() {
       if (this.authWindow && !this.authWindow.closed) return this.authWindow;
       this.authWindow = window.open('about:blank', 'vividkit-raffle-oauth', 'popup,width=520,height=720');
@@ -346,7 +354,6 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       else if (this.privateWinner) this.state = 'winner_revealed';
       else if (data.registration?.approval_status === 'pending_approval') this.state = 'pending_approval';
       else if (data.registration) this.state = data.phase === 'draw_ready' ? 'draw_pending' : 'registered';
-      else if (!data.claimed) this.state = 'needs_claim';
       else if (data.pending_order) this.state = 'pending_order';
       else if (!data.bound) this.state = 'needs_payment';
       else if (data.qualified) this.state = data.phase === 'registration_open' ? 'eligible' : 'draw_pending';

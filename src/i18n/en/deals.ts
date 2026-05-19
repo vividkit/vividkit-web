@@ -171,7 +171,7 @@ export const deals = {
   'deals.raffle.status_loading': 'Loading draw status...',
   'deals.raffle.sign_in': 'Check with GitHub',
   'deals.raffle.needs_claim': 'Claim a coupon first, then return here to join the draw.',
-  'deals.raffle.needs_payment': 'Paste your paid ClaudeKit order ref.',
+  'deals.raffle.needs_payment': 'Paste your paid ClaudeKit order ref. No coupon claim required.',
   'deals.raffle.pending_order': 'Order ref received. Register now; auto-verification did not pass, so admin approval must arrive before the draw for this entry to enter today’s pool.',
   'deals.raffle.register_pending': 'Register pending approval',
   'deals.raffle.order_ref_label': 'CK order ref',

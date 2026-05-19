@@ -183,7 +183,11 @@ const isDev = import.meta.env.DEV;
       <template x-for="result in publicResults" :key="`${result.github_username}-${result.prize_tier}`">
         <div class="flex min-w-0 items-center justify-between gap-3 rounded-xl bg-slate-50 px-3 py-2 text-sm dark:bg-slate-900">
           <span class="min-w-0 break-all font-mono font-bold text-slate-950 dark:text-white" x-text="result.github_username"></span>
-          <span class="rounded-full bg-emerald-100 px-2 py-1 text-xs font-black uppercase text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-200" x-text="result.prize_tier"></span>
+          <span
+            class="rounded-full px-2 py-1 text-xs font-black uppercase ring-1"
+            x-bind:class="prizeTierBadgeClass(result.prize_tier)"
+            x-text="result.prize_tier"
+          ></span>
         </div>
       </template>
     </div>

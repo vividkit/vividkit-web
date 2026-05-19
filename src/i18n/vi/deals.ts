@@ -171,7 +171,7 @@ export const deals = {
   'deals.raffle.status_loading': 'Đang tải trạng thái draw...',
   'deals.raffle.sign_in': 'Kiểm tra bằng GitHub',
   'deals.raffle.needs_claim': 'Claim coupon trước, rồi quay lại đây để tham gia.',
-  'deals.raffle.needs_payment': 'Dán paid ClaudeKit order ref của bạn.',
+  'deals.raffle.needs_payment': 'Dán paid ClaudeKit order ref của bạn. Không cần claim coupon trước.',
   'deals.raffle.pending_order': 'Đã nhận order ref. Bạn có thể đăng ký trước; auto-verify chưa pass nên admin cần approve trước giờ draw để entry này vào pool hôm nay.',
   'deals.raffle.register_pending': 'Đăng ký chờ approve',
   'deals.raffle.order_ref_label': 'CK order ref',
