@@ -1,6 +1,6 @@
 import type Alpine from 'alpinejs';
 
-type AuthAction = 'raffle_status' | 'raffle_verify_order' | 'raffle_register' | 'raffle_claim_prize';
+type AuthAction = 'raffle_status' | 'raffle_verify_order' | 'raffle_register' | 'raffle_claim_prize' | 'raffle_decline_prize';
 
 type DrawState =
   | 'loading'
@@ -16,6 +16,8 @@ type DrawState =
   | 'draw_pending'
   | 'winner_revealed'
   | 'claiming_prize'
+  | 'declining_prize'
+  | 'prize_declined'
   | 'proof_ready'
   | 'claim_expired'
   | 'before_open'
@@ -25,6 +27,9 @@ type DrawState =
 type DevScenario =
   | DrawState
   | 'invalid_order'
+  | 'chiennb_wrong_account'
+  | 'chiennb_order_bound'
+  | 'chiennb_ready'
   | 'many_pool_users'
   | 'public_results'
   | 'rate_limited';
@@ -75,6 +80,17 @@ function formatDateWithZone(value: string | undefined): string {
   }).format(date);
 }
 
+function formatCampaignDay(value: string | undefined): string {
+  if (!value) return '--';
+  const date = new Date(`${value}T00:00:00`);
+  if (Number.isNaN(date.getTime())) return value;
+  return new Intl.DateTimeFormat(document.documentElement.lang || undefined, {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  }).format(date);
+}
+
 export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
   if ((activeAlpine as any).__dealScheduledDrawRegistered) return;
   (activeAlpine as any).__dealScheduledDrawRegistered = true;
@@ -86,8 +102,11 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
     DEV_MODE: false,
     MSG_ERROR: '',
     MSG_RATE_LIMITED: '',
+    MSG_DECLINE_CONFIRM: '',
+    MSG_DECLINE_UNAVAILABLE: '',
     LABEL_VERIFY: '',
     LABEL_VERIFY_FOR_PREFIX: '',
+    LABEL_PUBLIC_RESULTS_FOR: '',
     seatBudget: { ...emptyBudget },
     orderRef: '',
     errorMessage: '',
@@ -100,6 +119,8 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
     poolEntries: [] as any[],
     privateWinner: null as any,
     proof: null as any,
+    orderGuideOpen: false,
+    declineConfirmOpen: false,
 
     async init() {
       const el = document.querySelector('[data-deals-raffle-widget]') as HTMLElement | null;
@@ -109,8 +130,11 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       this.DEV_MODE = el?.dataset.devMode === 'true';
       this.MSG_ERROR = el?.dataset.msgError || '';
       this.MSG_RATE_LIMITED = el?.dataset.msgRateLimited || '';
+      this.MSG_DECLINE_CONFIRM = el?.dataset.msgDeclineConfirm || '';
+      this.MSG_DECLINE_UNAVAILABLE = el?.dataset.msgDeclineUnavailable || this.MSG_ERROR;
       this.LABEL_VERIFY = el?.dataset.labelVerify || '';
       this.LABEL_VERIFY_FOR_PREFIX = el?.dataset.labelVerifyForPrefix || this.LABEL_VERIFY;
+      this.LABEL_PUBLIC_RESULTS_FOR = el?.dataset.labelPublicResultsFor || '';
       this.sessionToken = sessionStorage.getItem('raffle_session_token') || '';
 
       const params = new URLSearchParams(window.location.search);
@@ -188,6 +212,12 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       } catch {
         this.publicResults = [];
       }
+    },
+
+    publicResultsLabel() {
+      const campaignDay = this.publicResults?.[0]?.campaign_day || this.schedule?.campaign_day;
+      const formattedDay = formatCampaignDay(campaignDay);
+      return this.LABEL_PUBLIC_RESULTS_FOR.replace('{date}', formattedDay);
     },
 
     normalizePoolEntries(data: any) {
@@ -280,6 +310,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       if (action === 'raffle_verify_order') return this.postVerify(oauthCode);
       if (action === 'raffle_register') return this.postRegister(oauthCode);
       if (action === 'raffle_claim_prize') return this.postClaimPrize(oauthCode);
+      if (action === 'raffle_decline_prize') return this.postDeclinePrize(oauthCode);
     },
 
     startVerify() {
@@ -298,6 +329,16 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
     startClaimPrize() {
       this.state = 'claiming_prize';
       this.renderTurnstile('raffle_claim_prize');
+    },
+
+    startDeclinePrize() {
+      this.declineConfirmOpen = true;
+    },
+
+    confirmDeclinePrize() {
+      this.declineConfirmOpen = false;
+      this.state = 'declining_prize';
+      this.renderTurnstile('raffle_decline_prize');
     },
 
     renderTurnstile(action: AuthAction) {
@@ -347,6 +388,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       if (action === 'raffle_verify_order') return this.postVerify();
       if (action === 'raffle_register') return this.postRegister();
       if (action === 'raffle_claim_prize') return this.postClaimPrize();
+      if (action === 'raffle_decline_prize') return this.postDeclinePrize();
     },
 
     applyStatus(data: any) {
@@ -362,6 +404,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       }
       this.currentUsername = data.username || data.registration?.github_username || data.pending_order?.github_username || '';
       if (this.proof) this.state = 'proof_ready';
+      else if (this.privateWinner?.fulfillment_status === 'declined') this.state = 'prize_declined';
       else if (this.privateWinner?.fulfillment_status === 'rolled_over') this.state = 'claim_expired';
       else if (this.privateWinner) this.state = 'winner_revealed';
       else if (data.registration?.approval_status === 'pending_approval') this.state = 'pending_approval';
@@ -435,6 +478,30 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
         return;
       }
 
+      if (scenario === 'chiennb_wrong_account') {
+        this.currentUsername = 'thonhoasung';
+        this.orderRef = '01E4B532';
+        this.orderErrorMessage = '';
+        this.state = 'needs_payment';
+        return;
+      }
+
+      if (scenario === 'chiennb_order_bound') {
+        this.currentUsername = 'chiennb';
+        this.orderRef = '01E4B532';
+        this.orderErrorMessage = 'This order ref is already bound to another GitHub account.';
+        this.state = 'needs_payment';
+        return;
+      }
+
+      if (scenario === 'chiennb_ready') {
+        this.currentUsername = 'chiennb';
+        this.orderRef = '01E4B532';
+        this.orderErrorMessage = '';
+        this.state = 'needs_payment';
+        return;
+      }
+
       if (scenario === 'winner_revealed') {
         this.privateWinner = winner;
       }
@@ -445,6 +512,10 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
 
       if (scenario === 'claim_expired') {
         this.privateWinner = { ...winner, fulfillment_status: 'rolled_over', claim_deadline_at: isoFromNow(-1) };
+      }
+
+      if (scenario === 'prize_declined') {
+        this.privateWinner = { ...winner, fulfillment_status: 'declined' };
       }
 
       if (scenario === 'public_results') {
@@ -484,6 +555,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       sessionStorage.removeItem('turnstile_token:raffle_verify_order');
       sessionStorage.removeItem('turnstile_token:raffle_register');
       sessionStorage.removeItem('turnstile_token:raffle_claim_prize');
+      sessionStorage.removeItem('turnstile_token:raffle_decline_prize');
     },
 
     switchGitHubAccount() {
@@ -591,6 +663,29 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       } catch (err: any) {
         this.state = err?.error === 'claim_expired' ? 'claim_expired' : 'error';
         this.errorMessage = err?.message || this.MSG_ERROR;
+      }
+    },
+
+    async postDeclinePrize(oauthCode = '') {
+      const token = sessionStorage.getItem('turnstile_token:raffle_decline_prize');
+      sessionStorage.removeItem('turnstile_token:raffle_decline_prize');
+      const authPayload = this.sessionToken ? { session_token: this.sessionToken } : { oauth_code: oauthCode };
+      try {
+        const res = await fetch(`${this.API_BASE}/raffle/decline-prize`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ...authPayload, turnstile_token: token }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw data;
+        this.state = 'prize_declined';
+        await this.postStatus();
+        await this.loadPublicResults();
+      } catch (err: any) {
+        this.state = 'error';
+        this.errorMessage = err?.status === 404 || err?.error === 'Not found'
+          ? this.MSG_DECLINE_UNAVAILABLE
+          : err?.message || this.MSG_ERROR;
       }
     },
   }));

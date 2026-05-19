@@ -1,6 +1,7 @@
 ---
 import { useTranslations } from '@/i18n/utils';
 import { getLangFromUrl, type Language } from '@/i18n';
+import { AlertTriangle, RotateCcw, X } from 'lucide-astro';
 
 interface Props {
   lang?: Language;
@@ -13,6 +14,7 @@ const t = useTranslations(currentLang);
 const giveawayApiUrl = import.meta.env.PUBLIC_GIVEAWAY_API_URL;
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 const isDev = import.meta.env.DEV;
+const ordersHref = 'https://claudekit.cc/account/orders';
 ---
 
 <div
@@ -22,10 +24,13 @@ const isDev = import.meta.env.DEV;
   data-dev-mode={isDev ? 'true' : 'false'}
   data-msg-error={t('deals.raffle.error')}
   data-msg-rate-limited={t('deals.raffle.rate_limited')}
+  data-msg-decline-confirm={t('deals.raffle.decline_confirm')}
+  data-msg-decline-unavailable={t('deals.raffle.decline_unavailable')}
   data-label-verify={t('deals.raffle.verify')}
   data-label-verify-for-prefix={t('deals.raffle.verify_for_prefix')}
+  data-label-public-results-for={t('deals.raffle.public_results_for')}
   x-data="scheduledDrawWidget()"
-  class="min-w-0 overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-xl shadow-slate-900/5 dark:border-slate-800 dark:bg-slate-950 sm:p-5 lg:p-6"
+  class="min-w-0"
 >
   <div class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(280px,0.72fr)]">
     <div class="rounded-2xl border border-slate-200 p-5 dark:border-slate-800">
@@ -55,6 +60,18 @@ const isDev = import.meta.env.DEV;
         </div>
       </div>
 
+      <div class="mb-5 rounded-2xl border border-cyan-200 bg-cyan-50/80 p-4 dark:border-cyan-400/20 dark:bg-cyan-400/10">
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div class="min-w-0">
+            <p class="text-xs font-black uppercase tracking-[0.14em] text-cyan-800 dark:text-cyan-200">{t('deals.raffle.order_guide_title')}</p>
+            <p class="mt-1 text-sm leading-6 text-slate-700 dark:text-slate-200">{t('deals.raffle.order_guide_desc')}</p>
+          </div>
+          <button type="button" x-on:click="orderGuideOpen = true" class="inline-flex min-h-10 shrink-0 cursor-pointer items-center justify-center rounded-xl border border-cyan-300 bg-white px-4 py-2 text-sm font-black text-cyan-800 shadow-sm shadow-cyan-900/5 transition hover:bg-cyan-100 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-300/50 dark:border-cyan-300/25 dark:bg-slate-950/65 dark:text-cyan-100 dark:hover:bg-cyan-400/10 dark:focus-visible:ring-cyan-500/30">
+            {t('deals.raffle.order_guide_button')}
+          </button>
+        </div>
+      </div>
+
     <p x-show="state === 'loading'" x-cloak class="text-sm font-semibold text-slate-600 dark:text-slate-300">
       {t('deals.raffle.status_loading')}
     </p>
@@ -71,7 +88,7 @@ const isDev = import.meta.env.DEV;
 
     <div x-show="state === 'ready'" x-cloak class="space-y-4">
       <p class="text-sm leading-6 text-slate-600 dark:text-slate-300">{t('deals.raffle.ready_desc')}</p>
-      <button type="button" x-on:click="startOAuth('raffle_status')" class="inline-flex min-h-12 items-center justify-center rounded-xl border border-emerald-500/60 bg-emerald-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-900/15 transition hover:-translate-y-0.5 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-300 dark:border-emerald-400/50 dark:bg-emerald-400 dark:text-slate-950 dark:shadow-emerald-950/30 dark:hover:bg-emerald-300 dark:focus-visible:ring-emerald-800">
+      <button type="button" x-on:click="startOAuth('raffle_status')" class="inline-flex min-h-12 items-center justify-center rounded-xl border border-emerald-500/60 bg-emerald-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-900/15 transition hover:-translate-y-0.5 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-300 dark:border-emerald-400/50 dark:bg-emerald-600 dark:text-white dark:shadow-emerald-950/30 dark:hover:bg-emerald-500 dark:focus-visible:ring-emerald-800">
         {t('deals.raffle.sign_in')}
       </button>
     </div>
@@ -132,9 +149,19 @@ const isDev = import.meta.env.DEV;
           <dd class="mt-1 break-words font-semibold text-slate-950 dark:text-white" x-text="scheduleText.call({ schedule: { claim_deadline_at: privateWinner?.claim_deadline_at } }, 'claim_deadline_at')"></dd>
         </div>
       </dl>
-      <button type="button" x-on:click="startClaimPrize()" class="mt-4 inline-flex min-h-11 items-center rounded-xl bg-emerald-600 px-4 py-2 text-sm font-bold text-white">
-        {t('deals.raffle.claim_prize')}
-      </button>
+      <div class="mt-4 flex flex-wrap gap-3">
+        <button type="button" x-on:click="startClaimPrize()" class="inline-flex min-h-11 cursor-pointer items-center rounded-xl bg-emerald-600 px-4 py-2 text-sm font-bold text-white">
+          {t('deals.raffle.claim_prize')}
+        </button>
+        <button type="button" x-on:click="startDeclinePrize()" class="inline-flex min-h-11 cursor-pointer items-center rounded-xl border border-amber-300 bg-amber-50 px-4 py-2 text-sm font-bold text-amber-900 transition hover:bg-amber-100 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-300/40 dark:border-amber-400/25 dark:bg-amber-400/10 dark:text-amber-100 dark:hover:bg-amber-400/15">
+          {t('deals.raffle.decline_prize')}
+        </button>
+      </div>
+    </div>
+
+    <p x-show="state === 'declining_prize'" x-cloak class="text-sm font-semibold text-slate-700 dark:text-slate-200">{t('deals.raffle.declining_prize')}</p>
+    <div x-show="state === 'prize_declined'" x-cloak class="rounded-2xl border border-amber-200 bg-amber-50 p-5 dark:border-amber-500/30 dark:bg-amber-500/10">
+      <p class="text-sm font-black text-amber-900 dark:text-amber-100">{t('deals.raffle.prize_declined')}</p>
     </div>
 
     <div x-show="state === 'proof_ready'" x-cloak class="rounded-2xl border border-emerald-200 bg-emerald-50 p-5 dark:border-emerald-900/60 dark:bg-emerald-950/30">
@@ -190,7 +217,7 @@ const isDev = import.meta.env.DEV;
   </div>
 
   <div x-show="publicResults.length" x-cloak class="mt-5 rounded-2xl border border-slate-200 p-5 dark:border-slate-800">
-    <p class="text-xs font-black uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">{t('deals.raffle.public_results')}</p>
+    <p class="text-xs font-black uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400" x-text="publicResultsLabel()">{t('deals.raffle.public_results')}</p>
     <div class="mt-3 grid gap-2">
       <template x-for="result in publicResults" :key="`${result.github_username}-${result.prize_tier}`">
         <div class="flex min-w-0 items-center justify-between gap-3 rounded-xl bg-slate-50 px-3 py-2 text-sm dark:bg-slate-900">
@@ -225,6 +252,9 @@ const isDev = import.meta.env.DEV;
         <button type="button" x-on:click="applyDevScenario('needs_claim')" class="min-h-9 rounded-lg bg-amber-100 px-3 py-2 text-left text-xs font-bold text-amber-800 transition hover:bg-amber-200 dark:bg-amber-500/20 dark:text-amber-100">Needs coupon</button>
         <button type="button" x-on:click="applyDevScenario('needs_payment')" class="min-h-9 rounded-lg bg-sky-100 px-3 py-2 text-left text-xs font-bold text-sky-800 transition hover:bg-sky-200 dark:bg-sky-500/20 dark:text-sky-100">Needs order ref</button>
         <button type="button" x-on:click="applyDevScenario('invalid_order')" class="min-h-9 rounded-lg bg-rose-100 px-3 py-2 text-left text-xs font-bold text-rose-800 transition hover:bg-rose-200 dark:bg-rose-500/20 dark:text-rose-100">Invalid order</button>
+        <button type="button" x-on:click="applyDevScenario('chiennb_wrong_account')" class="min-h-9 rounded-lg bg-fuchsia-100 px-3 py-2 text-left text-xs font-bold text-fuchsia-800 transition hover:bg-fuchsia-200 dark:bg-fuchsia-500/20 dark:text-fuchsia-100">ChienNB wrong account</button>
+        <button type="button" x-on:click="applyDevScenario('chiennb_order_bound')" class="min-h-9 rounded-lg bg-rose-100 px-3 py-2 text-left text-xs font-bold text-rose-800 transition hover:bg-rose-200 dark:bg-rose-500/20 dark:text-rose-100">ChienNB ref bound</button>
+        <button type="button" x-on:click="applyDevScenario('chiennb_ready')" class="min-h-9 rounded-lg bg-emerald-100 px-3 py-2 text-left text-xs font-bold text-emerald-800 transition hover:bg-emerald-200 dark:bg-emerald-500/20 dark:text-emerald-100">ChienNB ready</button>
         <button type="button" x-on:click="applyDevScenario('verifying_order')" class="min-h-9 rounded-lg bg-cyan-100 px-3 py-2 text-left text-xs font-bold text-cyan-800 transition hover:bg-cyan-200 dark:bg-cyan-500/20 dark:text-cyan-100">Verifying</button>
         <button type="button" x-on:click="applyDevScenario('eligible')" class="min-h-9 rounded-lg bg-emerald-100 px-3 py-2 text-left text-xs font-bold text-emerald-800 transition hover:bg-emerald-200 dark:bg-emerald-500/20 dark:text-emerald-100">Eligible</button>
         <button type="button" x-on:click="applyDevScenario('pending_order')" class="min-h-9 rounded-lg bg-amber-100 px-3 py-2 text-left text-xs font-bold text-amber-800 transition hover:bg-amber-200 dark:bg-amber-500/20 dark:text-amber-100">Pending order</button>
@@ -234,6 +264,8 @@ const isDev = import.meta.env.DEV;
         <button type="button" x-on:click="applyDevScenario('draw_pending')" class="min-h-9 rounded-lg bg-slate-100 px-3 py-2 text-left text-xs font-bold text-slate-800 transition hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-100">Draw pending</button>
         <button type="button" x-on:click="applyDevScenario('winner_revealed')" class="min-h-9 rounded-lg bg-teal-100 px-3 py-2 text-left text-xs font-bold text-teal-800 transition hover:bg-teal-200 dark:bg-teal-500/20 dark:text-teal-100">Winner revealed</button>
         <button type="button" x-on:click="applyDevScenario('claiming_prize')" class="min-h-9 rounded-lg bg-slate-100 px-3 py-2 text-left text-xs font-bold text-slate-800 transition hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-100">Claiming prize</button>
+        <button type="button" x-on:click="applyDevScenario('declining_prize')" class="min-h-9 rounded-lg bg-amber-100 px-3 py-2 text-left text-xs font-bold text-amber-800 transition hover:bg-amber-200 dark:bg-amber-500/20 dark:text-amber-100">Declining prize</button>
+        <button type="button" x-on:click="applyDevScenario('prize_declined')" class="min-h-9 rounded-lg bg-amber-100 px-3 py-2 text-left text-xs font-bold text-amber-800 transition hover:bg-amber-200 dark:bg-amber-500/20 dark:text-amber-100">Prize declined</button>
         <button type="button" x-on:click="applyDevScenario('proof_ready')" class="min-h-9 rounded-lg bg-teal-100 px-3 py-2 text-left text-xs font-bold text-teal-800 transition hover:bg-teal-200 dark:bg-teal-500/20 dark:text-teal-100">Proof ready</button>
         <button type="button" x-on:click="applyDevScenario('claim_expired')" class="min-h-9 rounded-lg bg-orange-100 px-3 py-2 text-left text-xs font-bold text-orange-800 transition hover:bg-orange-200 dark:bg-orange-500/20 dark:text-orange-100">Claim expired</button>
         <button type="button" x-on:click="applyDevScenario('closed')" class="min-h-9 rounded-lg bg-slate-100 px-3 py-2 text-left text-xs font-bold text-slate-800 transition hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-100">Closed</button>
@@ -244,6 +276,150 @@ const isDev = import.meta.env.DEV;
       </div>
     </div>
   )}
+
+  <div
+    x-show="declineConfirmOpen"
+    x-cloak
+    x-transition:enter="motion-safe:transition motion-safe:duration-200"
+    x-transition:enter-start="opacity-0"
+    x-transition:enter-end="opacity-100"
+    x-transition:leave="motion-safe:transition motion-safe:duration-150"
+    x-transition:leave-start="opacity-100"
+    x-transition:leave-end="opacity-0"
+    x-on:keydown.escape.window="declineConfirmOpen = false"
+    x-on:click.self="declineConfirmOpen = false"
+    class="fixed inset-0 z-[90] flex items-center justify-center overflow-y-auto bg-slate-950/80 p-3 backdrop-blur-md sm:p-6"
+  >
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="decline-prize-title"
+      x-transition:enter="motion-safe:transition motion-safe:duration-200 motion-safe:ease-out"
+      x-transition:enter-start="motion-safe:translate-y-3 motion-safe:scale-[0.98]"
+      x-transition:enter-end="motion-safe:translate-y-0 motion-safe:scale-100"
+      x-transition:leave="motion-safe:transition motion-safe:duration-150 motion-safe:ease-in"
+      x-transition:leave-start="motion-safe:translate-y-0 motion-safe:scale-100"
+      x-transition:leave-end="motion-safe:translate-y-2 motion-safe:scale-[0.99]"
+      class="relative w-full max-w-lg overflow-hidden rounded-3xl border border-white/70 bg-white shadow-2xl shadow-slate-950/40 ring-1 ring-amber-900/10 dark:border-slate-700/70 dark:bg-slate-950 dark:ring-amber-300/15"
+    >
+      <div class="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-amber-100 via-amber-50/70 to-transparent dark:from-amber-400/15 dark:via-amber-400/5"></div>
+
+      <button type="button" x-on:click="declineConfirmOpen = false" class="absolute right-4 top-4 z-10 inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-slate-200 bg-white/90 text-slate-500 shadow-sm transition hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-300/50 dark:border-slate-700 dark:bg-slate-900/90 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white" aria-label={t('deals.raffle.decline_cancel')}>
+        <X class="h-4 w-4" aria-hidden="true" />
+      </button>
+
+      <div class="relative p-5 pb-4 sm:p-6 sm:pb-4">
+        <div class="flex items-start gap-4 pr-10">
+          <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-amber-500 text-slate-950 shadow-lg shadow-amber-900/20 dark:bg-amber-300">
+            <AlertTriangle class="h-6 w-6" aria-hidden="true" />
+          </div>
+          <div class="min-w-0">
+            <p class="text-xs font-black uppercase tracking-[0.16em] text-amber-800 dark:text-amber-200">{t('deals.raffle.decline_prize')}</p>
+            <h2 id="decline-prize-title" class="mt-2 font-heading text-2xl font-black leading-tight text-slate-950 dark:text-white">
+              {t('deals.raffle.decline_confirm_title')}
+            </h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative px-5 pb-5 sm:px-6 sm:pb-6">
+        <p class="text-base leading-7 text-slate-700 dark:text-slate-200">{t('deals.raffle.decline_confirm')}</p>
+
+        <div class="mt-4 grid gap-2">
+          <div class="flex items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-950 dark:border-amber-300/20 dark:bg-amber-300/10 dark:text-amber-100">
+            <RotateCcw class="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+            <span>{t('deals.raffle.decline_impact_rollover')}</span>
+          </div>
+          <div class="flex items-start gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-950 dark:border-emerald-300/20 dark:bg-emerald-300/10 dark:text-emerald-100">
+            <span class="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-[10px] font-black leading-none text-white dark:bg-emerald-300 dark:text-emerald-950">✓</span>
+            <span>{t('deals.raffle.decline_impact_next_draw')}</span>
+          </div>
+        </div>
+
+        <div class="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+          <button type="button" x-on:click="declineConfirmOpen = false" class="inline-flex min-h-12 cursor-pointer items-center justify-center rounded-2xl border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-700 shadow-sm transition hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-slate-300/50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800">
+            {t('deals.raffle.decline_cancel')}
+          </button>
+          <button type="button" x-on:click="confirmDeclinePrize()" x-bind:disabled="state === 'declining_prize'" class="inline-flex min-h-12 cursor-pointer items-center justify-center rounded-2xl bg-slate-950 px-5 py-3 text-sm font-black text-white shadow-lg shadow-slate-950/20 transition hover:-translate-y-0.5 hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-300/60 disabled:cursor-wait disabled:opacity-70 dark:bg-amber-300 dark:text-slate-950 dark:hover:bg-amber-200">
+            {t('deals.raffle.decline_confirm_action')}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    x-show="orderGuideOpen"
+    x-cloak
+    x-transition.opacity
+    x-on:keydown.escape.window="orderGuideOpen = false"
+    x-on:click.self="orderGuideOpen = false"
+    class="fixed inset-0 z-[80] flex items-center justify-center overflow-y-auto bg-slate-950/75 p-4 backdrop-blur-sm"
+  >
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="order-guide-title"
+      class="w-full max-w-2xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl shadow-slate-950/40 dark:border-slate-800 dark:bg-slate-950"
+    >
+      <div class="flex items-start justify-between gap-4 border-b border-slate-200 p-5 dark:border-slate-800">
+        <div>
+          <p class="text-xs font-black uppercase tracking-[0.16em] text-cyan-700 dark:text-cyan-300">{t('deals.raffle.order_guide_kicker')}</p>
+          <h2 id="order-guide-title" class="mt-2 font-heading text-2xl font-black leading-tight text-slate-950 dark:text-white">{t('deals.raffle.order_guide_modal_title')}</h2>
+        </div>
+        <button type="button" x-on:click="orderGuideOpen = false" class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-slate-50 text-xl font-black leading-none text-slate-600 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-300/50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800" aria-label={t('deals.raffle.order_guide_close')}>
+          ×
+        </button>
+      </div>
+
+      <div class="grid gap-5 p-5 lg:grid-cols-[minmax(0,0.78fr)_minmax(280px,1fr)]">
+        <ol class="space-y-3">
+          <li class="rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-900/70">
+            <p class="text-xs font-black uppercase tracking-[0.14em] text-cyan-700 dark:text-cyan-300">{t('deals.raffle.order_guide_step1_label')}</p>
+            <p class="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-200">
+              {t('deals.raffle.order_guide_step1_before')}{' '}
+              <a href={ordersHref} target="_blank" rel="noreferrer" class="break-all font-black text-cyan-700 underline decoration-cyan-300 underline-offset-4 hover:text-cyan-600 dark:text-cyan-200 dark:decoration-cyan-500/50 dark:hover:text-cyan-100">
+                {ordersHref}
+              </a>
+            </p>
+          </li>
+          <li class="rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-900/70">
+            <p class="text-xs font-black uppercase tracking-[0.14em] text-cyan-700 dark:text-cyan-300">{t('deals.raffle.order_guide_step2_label')}</p>
+            <p class="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-200">{t('deals.raffle.order_guide_step2_desc')}</p>
+          </li>
+        </ol>
+
+        <div class="rounded-2xl border border-cyan-200 bg-[radial-gradient(circle_at_20%_12%,rgba(14,165,233,0.18),transparent_35%),linear-gradient(145deg,#f8fafc,#ecfeff)] p-4 text-slate-950 shadow-xl shadow-cyan-950/10 dark:border-slate-800 dark:bg-[radial-gradient(circle_at_20%_12%,rgba(14,165,233,0.22),transparent_35%),linear-gradient(145deg,#111827,#020617)] dark:text-white dark:shadow-slate-950/30">
+          <p class="text-lg font-black">{t('deals.raffle.order_guide_mock_title')}</p>
+          <div class="mt-4 rounded-xl border border-slate-200 bg-white/85 p-4 shadow-sm shadow-cyan-950/5 dark:border-white/12 dark:bg-white/[0.06] dark:shadow-none">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <p class="text-xl font-black">Marketing Kit</p>
+                <div class="mt-2 inline-flex items-center font-mono text-sm font-black text-slate-950 dark:text-white">
+                  <span>Order #</span>
+                  <span class="rounded-md border-2 border-rose-500 bg-rose-500/10 px-2.5 py-1.5 text-rose-700 dark:text-white">
+                    {t('deals.raffle.order_guide_mock_order')}
+                  </span>
+                </div>
+              </div>
+              <span class="rounded-full border border-emerald-300 bg-emerald-100 px-3 py-1 text-xs font-black text-emerald-800 dark:border-emerald-400/40 dark:bg-emerald-400/15 dark:text-emerald-200">Completed</span>
+            </div>
+            <div class="mt-6 grid gap-4 text-sm sm:grid-cols-2">
+              <div>
+                <p class="text-slate-500 dark:text-slate-400">Amount</p>
+                <p class="mt-1 font-bold text-slate-800 dark:text-slate-100">...</p>
+              </div>
+              <div>
+                <p class="text-slate-500 dark:text-slate-400">Payment Method</p>
+                <p class="mt-1 font-bold text-slate-800 dark:text-slate-100">SePay</p>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs leading-5 text-slate-600 dark:text-slate-300">{t('deals.raffle.order_guide_mock_hint')}</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div id="raffle-turnstile-container" class="hidden"></div>
 </div>
