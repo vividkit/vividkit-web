@@ -1,0 +1,18 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import LuckyDrawGuide from '@/components/guides/LuckyDrawGuide.astro';
+import { useTranslations } from '@/i18n/utils';
+import type { Language } from '@/i18n';
+
+const lang: Language = 'vi';
+const t = useTranslations(lang);
+---
+
+<GuidesLayout
+  title={`${t('guides.lucky_draw.title')} | VividKit`}
+  description={t('guides.lucky_draw.description')}
+  activeTab="lucky-draw"
+  lang="vi"
+>
+  <LuckyDrawGuide lang="vi" />
+</GuidesLayout>
