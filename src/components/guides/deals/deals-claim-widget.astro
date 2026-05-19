@@ -118,10 +118,10 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
     </div>
   </div>
 
-  <!-- CLAIMING state: spinner -->
+  <!-- CLAIMING state: loading indicator -->
   <div x-show="state === 'claiming'" x-cloak class="p-8 text-center space-y-5">
     <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-50 dark:bg-emerald-900/20 mx-auto">
-      <svg class="w-8 h-8 text-emerald-600 dark:text-emerald-400 animate-spin" fill="none" viewBox="0 0 24 24">
+      <svg class="w-8 h-8 text-emerald-600 dark:text-emerald-400 animate-pulse" fill="none" viewBox="0 0 24 24">
         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
       </svg>
@@ -497,17 +497,32 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
         this.MSG_ERROR_RATE_LIMITED = el?.dataset.msgErrorRateLimited || '';
         this.MSG_ERROR_ACCOUNT_TOO_NEW = el?.dataset.msgErrorAccountTooNew || '';
 
-        // Check if we're returning from GitHub OAuth (token in URL param)
+        window.addEventListener('vividkit:deals-dev-reset-auth', () => {
+          this.discountCode = null;
+          this.referralCode = null;
+          this.errorMessage = '';
+          this.fetchStatus();
+        });
+
         const params = new URLSearchParams(window.location.search);
         const oauthCode = params.get('code');
-        const turnstileToken = sessionStorage.getItem('turnstile_token');
+        const oauthAction = params.get('vk_action');
+        const oauthNonce = params.get('vk_nonce');
+        const turnstileToken = sessionStorage.getItem('turnstile_token:claim') || sessionStorage.getItem('turnstile_token');
 
-        if (oauthCode && turnstileToken) {
-          // Clear params from URL without reload, preserving the #claim hash so the browser scrolls there
+        if (oauthCode && turnstileToken && (!oauthAction || oauthAction === 'claim')) {
+          const expectedNonce = sessionStorage.getItem('oauth_nonce:claim');
+          if (oauthNonce && expectedNonce !== oauthNonce) {
+            history.replaceState(null, '', window.location.pathname + '#claim');
+            this.state = 'error';
+            this.errorMessage = this.MSG_ERROR_SECURITY;
+            return;
+          }
           const cleanUrl = window.location.pathname + '#claim';
           history.replaceState(null, '', cleanUrl);
+          sessionStorage.removeItem('turnstile_token:claim');
           sessionStorage.removeItem('turnstile_token');
-          // Scroll into view on next tick so Alpine has time to mount + reveal the success state
+          sessionStorage.removeItem('oauth_nonce:claim');
           requestAnimationFrame(() => {
             document.getElementById('claim')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
           });
@@ -636,10 +651,11 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
             size: 'invisible',
             callback: (token: string) => {
               container.classList.add('hidden');
-              // Store token and redirect to GitHub OAuth
-              sessionStorage.setItem('turnstile_token', token);
+              sessionStorage.setItem('turnstile_token:claim', token);
+              const nonce = crypto.randomUUID();
+              sessionStorage.setItem('oauth_nonce:claim', nonce);
               const redirectUri = encodeURIComponent(window.location.href.split('?')[0]);
-              window.location.href = `${this.API_BASE}/auth/github?redirect_uri=${redirectUri}`;
+              window.location.href = `${this.API_BASE}/auth/github?redirect_uri=${redirectUri}&vk_action=claim&vk_nonce=${encodeURIComponent(nonce)}`;
             },
             'error-callback': () => {
               this.state = 'error';
@@ -785,10 +801,25 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
     }));
   };
 
+  const startAlpineOnce = (activeAlpine: typeof Alpine) => {
+    if ((activeAlpine as any).__vividKitAlpineStartScheduled || (activeAlpine as any).__vividKitAlpineStarted) return;
+    (activeAlpine as any).__vividKitAlpineStartScheduled = true;
+    const start = () => {
+      if ((activeAlpine as any).__vividKitAlpineStarted) return;
+      (activeAlpine as any).__vividKitAlpineStarted = true;
+      activeAlpine.start();
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', start, { once: true });
+    } else {
+      setTimeout(start, 0);
+    }
+  };
+
   if (!window.Alpine) {
     window.Alpine = Alpine;
     registerClaimWidget(Alpine);
-    Alpine.start();
+    startAlpineOnce(Alpine);
   } else {
     registerClaimWidget(window.Alpine);
     const claimWidgetRoot = document.querySelector('[data-deals-claim-widget]');

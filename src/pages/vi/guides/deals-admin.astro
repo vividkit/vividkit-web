@@ -1,0 +1,16 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import DealsLuckyDrawAdmin from '@/components/guides/deals/deals-lucky-draw-admin.astro';
+import type { Language } from '@/i18n';
+
+const lang: Language = 'vi';
+---
+
+<GuidesLayout
+  title="Admin vòng quay ClaudeKit | VividKit"
+  description="Trang admin ẩn để import order ref và audit vòng quay ClaudeKit."
+  activeTab="deals"
+  lang="vi"
+>
+  <DealsLuckyDrawAdmin lang={lang} />
+</GuidesLayout>

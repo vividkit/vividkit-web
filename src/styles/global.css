@@ -36,6 +36,16 @@
 
 /* Base styles */
 @layer base {
+  [x-cloak] {
+    display: none !important;
+  }
+
+  .theme-changing *,
+  .theme-changing *::before,
+  .theme-changing *::after {
+    transition: none !important;
+  }
+
   * {
     scroll-behavior: smooth;
   }
