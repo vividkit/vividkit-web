@@ -1,0 +1,30 @@
+---
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+---
+
+<template data-raffle-result-template>
+  <div class="rounded-2xl border border-emerald-200 bg-emerald-50 p-5 dark:border-emerald-900/60 dark:bg-emerald-950/30">
+    <p class="text-sm font-black text-emerald-800 dark:text-emerald-200">
+      {t('deals.raffle.public_results')}
+    </p>
+    <dl class="mt-4 grid gap-3 text-sm sm:grid-cols-2">
+      <div class="min-w-0">
+        <dt class="text-xs font-bold uppercase text-emerald-700 dark:text-emerald-300">{t('deals.raffle.github')}</dt>
+        <dd class="mt-1 break-words font-mono font-bold text-slate-950 dark:text-white" x-text="result?.github_username"></dd>
+      </div>
+      <div class="min-w-0">
+        <dt class="text-xs font-bold uppercase text-emerald-700 dark:text-emerald-300">{t('deals.raffle.prize')}</dt>
+        <dd class="mt-1 break-words font-mono font-bold text-slate-950 dark:text-white" x-text="result?.prize_tier"></dd>
+      </div>
+    </dl>
+  </div>
+</template>
