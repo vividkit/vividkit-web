@@ -86,11 +86,14 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
     DEV_MODE: false,
     MSG_ERROR: '',
     MSG_RATE_LIMITED: '',
+    LABEL_VERIFY: '',
+    LABEL_VERIFY_FOR_PREFIX: '',
     seatBudget: { ...emptyBudget },
     orderRef: '',
     errorMessage: '',
     orderErrorMessage: '',
     sessionToken: '',
+    currentUsername: '',
     authWindow: null as Window | null,
     schedule: null as any,
     publicResults: [] as any[],
@@ -106,6 +109,8 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       this.DEV_MODE = el?.dataset.devMode === 'true';
       this.MSG_ERROR = el?.dataset.msgError || '';
       this.MSG_RATE_LIMITED = el?.dataset.msgRateLimited || '';
+      this.LABEL_VERIFY = el?.dataset.labelVerify || '';
+      this.LABEL_VERIFY_FOR_PREFIX = el?.dataset.labelVerifyForPrefix || this.LABEL_VERIFY;
       this.sessionToken = sessionStorage.getItem('raffle_session_token') || '';
 
       const params = new URLSearchParams(window.location.search);
@@ -235,6 +240,12 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       return 'bg-emerald-100 text-emerald-800 ring-emerald-300 dark:bg-emerald-500/20 dark:text-emerald-200 dark:ring-emerald-300/25';
     },
 
+    verifyButtonLabel() {
+      return this.currentUsername
+        ? `${this.LABEL_VERIFY_FOR_PREFIX} @${this.currentUsername}`
+        : this.LABEL_VERIFY;
+    },
+
     openAuthWindow() {
       if (this.authWindow && !this.authWindow.closed) return this.authWindow;
       this.authWindow = window.open('about:blank', 'vividkit-raffle-oauth', 'popup,width=520,height=720');
@@ -349,6 +360,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
         this.sessionToken = data.session_token;
         sessionStorage.setItem('raffle_session_token', data.session_token);
       }
+      this.currentUsername = data.username || data.registration?.github_username || data.pending_order?.github_username || '';
       if (this.proof) this.state = 'proof_ready';
       else if (this.privateWinner?.fulfillment_status === 'rolled_over') this.state = 'claim_expired';
       else if (this.privateWinner) this.state = 'winner_revealed';
@@ -396,6 +408,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       this.errorMessage = '';
       this.orderErrorMessage = '';
       this.orderRef = 'CK-ORDER-DEV-0001';
+      this.currentUsername = 'dev-user';
 
       if (scenario === 'before_open') {
         this.schedule = {
@@ -464,7 +477,21 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
 
     clearSession() {
       this.sessionToken = '';
+      this.currentUsername = '';
       sessionStorage.removeItem('raffle_session_token');
+      sessionStorage.removeItem('raffle_pending_order_ref');
+      sessionStorage.removeItem('turnstile_token:raffle_status');
+      sessionStorage.removeItem('turnstile_token:raffle_verify_order');
+      sessionStorage.removeItem('turnstile_token:raffle_register');
+      sessionStorage.removeItem('turnstile_token:raffle_claim_prize');
+    },
+
+    switchGitHubAccount() {
+      this.clearSession();
+      this.errorMessage = '';
+      this.orderErrorMessage = '';
+      this.state = 'loading';
+      this.startOAuth('raffle_status');
     },
 
     async postStatus(oauthCode = '') {
@@ -511,7 +538,12 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
         this.orderErrorMessage = '';
         await this.postStatus();
       } catch (err: any) {
-        if (err?.error === 'order_not_found' || err?.error === 'invalid_order_ref') {
+        if (
+          err?.error === 'order_not_found' ||
+          err?.error === 'invalid_order_ref' ||
+          err?.error === 'order_already_bound' ||
+          err?.error === 'user_already_bound'
+        ) {
           this.orderErrorMessage = err?.message || this.MSG_ERROR;
           this.state = 'needs_payment';
           return;
