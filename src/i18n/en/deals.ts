@@ -157,6 +157,7 @@ export const deals = {
   'deals.raffle.countdown_open': 'Registration closes in',
   'deals.raffle.countdown_waiting': 'Draw starts in',
   'deals.raffle.countdown_draw': 'Revealing on schedule',
+  'deals.raffle.countdown_next_draw': 'Next draw',
   'deals.raffle.countdown_ended': 'Campaign ended',
   'deals.raffle.schedule_unknown': 'Schedule unavailable',
   'deals.raffle.claim_window': 'Prize claim window',

@@ -26,6 +26,7 @@ const claimHref = `${translatePath('/guides/deals')}#claim`;
       data-label-ready={t('deals.raffle.draw_countdown_ready')}
       data-label-reveal={t('deals.raffle.countdown_draw')}
       data-label-ended={t('deals.raffle.countdown_ended')}
+      data-label-next-draw={t('deals.raffle.countdown_next_draw')}
       data-label-days={t('deals.raffle.countdown_days')}
       data-label-hours={t('deals.raffle.countdown_hours')}
       data-label-minutes={t('deals.raffle.countdown_minutes')}
@@ -76,13 +77,19 @@ const claimHref = `${translatePath('/guides/deals')}#claim`;
     registration_cutoff_at?: string;
     draw_at?: string;
     claim_window_hours?: number;
+    reveal_interval_minutes?: number;
+    ends_at?: string;
+    seat_budget?: {
+      total?: number;
+    };
   };
 
   const scheduleSummary = document.querySelector<HTMLElement>('[data-raffle-schedule-summary]');
   const countdown = scheduleSummary?.querySelector<HTMLElement>('[data-raffle-countdown]');
   const drawTime = scheduleSummary?.querySelector<HTMLElement>('[data-raffle-draw-time]');
-  let drawAt = '';
+  let countdownTargetAt = '';
   let currentPhase: ScheduleConfig['phase'] | undefined;
+  let isPostRevealComplete = false;
   let countdownTimer: number | undefined;
 
   const formatScheduleTime = (value: string | undefined) => {
@@ -104,13 +111,17 @@ const claimHref = `${translatePath('/guides/deals')}#claim`;
       countdown.textContent = scheduleSummary.dataset.labelEnded || '--';
       return;
     }
-    if (!drawAt) {
+    if (!countdownTargetAt) {
       countdown.textContent = '--:--:--';
       return;
     }
-    const target = new Date(drawAt).getTime();
+    const target = new Date(countdownTargetAt).getTime();
     const diff = target - Date.now();
     if (!Number.isFinite(target) || diff <= 0) {
+      if (isPostRevealComplete) {
+        countdown.textContent = scheduleSummary.dataset.labelEnded || '--';
+        return;
+      }
       countdown.textContent = currentPhase === 'reveal_ready'
         ? scheduleSummary.dataset.labelReveal || scheduleSummary.dataset.labelReady || '--'
         : scheduleSummary.dataset.labelReady || '--';
@@ -127,10 +138,34 @@ const claimHref = `${translatePath('/guides/deals')}#claim`;
       : `${two(hours)}:${two(minutes)}:${two(seconds)}`;
   };
 
-  const renderScheduleSummary = (config: ScheduleConfig) => {
+  const resolveCountdownTarget = (config: ScheduleConfig, resultCount: number, poolCount: number) => {
+    isPostRevealComplete = false;
+    const drawDate = config.draw_at ? new Date(config.draw_at) : null;
+    if (!drawDate || Number.isNaN(drawDate.getTime())) return '';
+    if (config.phase === 'draw_ready' || config.phase === 'reveal_ready') {
+      const expectedResults = Math.min(
+        Math.max(Number(config.seat_budget?.total || 0), resultCount),
+        poolCount > 0 ? poolCount : Number(config.seat_budget?.total || resultCount)
+      );
+      if (resultCount > 0 && resultCount >= expectedResults) {
+        const nextDrawDate = new Date(drawDate.getTime() + 24 * 60 * 60 * 1000);
+        const endsAt = config.ends_at ? new Date(config.ends_at).getTime() : Number.POSITIVE_INFINITY;
+        if (nextDrawDate.getTime() < endsAt) {
+          isPostRevealComplete = true;
+          return nextDrawDate.toISOString();
+        }
+      }
+    }
+    return config.draw_at || '';
+  };
+
+  const renderScheduleSummary = (config: ScheduleConfig, resultCount = 0, poolCount = 0) => {
     currentPhase = config.phase;
-    drawAt = config.draw_at || '';
-    if (drawTime) drawTime.textContent = formatScheduleTime(drawAt);
+    countdownTargetAt = resolveCountdownTarget(config, resultCount, poolCount);
+    if (drawTime) {
+      const prefix = isPostRevealComplete ? `${scheduleSummary?.dataset.labelNextDraw || ''} · ` : '';
+      drawTime.textContent = `${prefix}${formatScheduleTime(countdownTargetAt)}`.trim();
+    }
     renderCountdown();
     if (countdownTimer) window.clearInterval(countdownTimer);
     countdownTimer = window.setInterval(renderCountdown, 1000);
@@ -139,7 +174,17 @@ const claimHref = `${translatePath('/guides/deals')}#claim`;
   if (scheduleSummary?.dataset.apiUrl) {
     fetch(`${scheduleSummary.dataset.apiUrl}/raffle/config`)
       .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`HTTP ${res.status}`))))
-      .then((config: ScheduleConfig) => renderScheduleSummary(config))
+      .then(async (config: ScheduleConfig) => {
+        const [results, pool] = await Promise.all([
+          fetch(`${scheduleSummary.dataset.apiUrl}/raffle/results`).then((res) => (res.ok ? res.json() : null)).catch(() => null),
+          fetch(`${scheduleSummary.dataset.apiUrl}/raffle/pool`).then((res) => (res.ok ? res.json() : null)).catch(() => null),
+        ]);
+        renderScheduleSummary(
+          config,
+          Array.isArray(results?.results) ? results.results.length : 0,
+          Array.isArray(pool?.entries) ? pool.entries.length : 0
+        );
+      })
       .catch(() => {
         if (countdown) countdown.textContent = '--:--:--';
         if (drawTime) drawTime.textContent = scheduleSummary.dataset.labelUnknown || '--';
