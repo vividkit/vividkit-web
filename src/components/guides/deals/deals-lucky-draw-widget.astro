@@ -29,6 +29,10 @@ const ordersHref = 'https://claudekit.cc/account/orders';
   data-label-verify={t('deals.raffle.verify')}
   data-label-verify-for-prefix={t('deals.raffle.verify_for_prefix')}
   data-label-public-results-for={t('deals.raffle.public_results_for')}
+  data-label-prize-status-pending={t('deals.raffle.prize_status_pending')}
+  data-label-prize-status-claimed={t('deals.raffle.prize_status_claimed')}
+  data-label-prize-status-declined={t('deals.raffle.prize_status_declined')}
+  data-label-prize-status-rolled-over={t('deals.raffle.prize_status_rolled_over')}
   x-data="scheduledDrawWidget()"
   class="min-w-0"
 >
@@ -220,13 +224,20 @@ const ordersHref = 'https://claudekit.cc/account/orders';
     <p class="text-xs font-black uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400" x-text="publicResultsLabel()">{t('deals.raffle.public_results')}</p>
     <div class="mt-3 grid gap-2">
       <template x-for="result in publicResults" :key="`${result.github_username}-${result.prize_tier}`">
-        <div class="flex min-w-0 items-center justify-between gap-3 rounded-xl bg-slate-50 px-3 py-2 text-sm dark:bg-slate-900">
+        <div class="flex min-w-0 flex-col gap-3 rounded-xl bg-slate-50 px-3 py-2 text-sm dark:bg-slate-900 sm:flex-row sm:items-center sm:justify-between">
           <span class="min-w-0 break-all font-mono font-bold text-slate-950 dark:text-white" x-text="result.github_username"></span>
-          <span
-            class="rounded-full px-2 py-1 text-xs font-black uppercase ring-1"
-            x-bind:class="prizeTierBadgeClass(result.prize_tier)"
-            x-text="result.prize_tier"
-          ></span>
+          <span class="flex shrink-0 flex-wrap gap-2">
+            <span
+              class="rounded-full px-2 py-1 text-xs font-black uppercase ring-1"
+              x-bind:class="prizeTierBadgeClass(result.prize_tier)"
+              x-text="result.prize_tier"
+            ></span>
+            <span
+              class="rounded-full px-2 py-1 text-xs font-black uppercase ring-1"
+              x-bind:class="prizeStatusBadgeClass(result.claim_status || result.fulfillment_status)"
+              x-text="prizeStatusLabel(result.claim_status || result.fulfillment_status)"
+            ></span>
+          </span>
         </div>
       </template>
     </div>

@@ -107,6 +107,10 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
     LABEL_VERIFY: '',
     LABEL_VERIFY_FOR_PREFIX: '',
     LABEL_PUBLIC_RESULTS_FOR: '',
+    LABEL_PRIZE_STATUS_PENDING: '',
+    LABEL_PRIZE_STATUS_CLAIMED: '',
+    LABEL_PRIZE_STATUS_DECLINED: '',
+    LABEL_PRIZE_STATUS_ROLLED_OVER: '',
     seatBudget: { ...emptyBudget },
     orderRef: '',
     errorMessage: '',
@@ -135,6 +139,10 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       this.LABEL_VERIFY = el?.dataset.labelVerify || '';
       this.LABEL_VERIFY_FOR_PREFIX = el?.dataset.labelVerifyForPrefix || this.LABEL_VERIFY;
       this.LABEL_PUBLIC_RESULTS_FOR = el?.dataset.labelPublicResultsFor || '';
+      this.LABEL_PRIZE_STATUS_PENDING = el?.dataset.labelPrizeStatusPending || '';
+      this.LABEL_PRIZE_STATUS_CLAIMED = el?.dataset.labelPrizeStatusClaimed || '';
+      this.LABEL_PRIZE_STATUS_DECLINED = el?.dataset.labelPrizeStatusDeclined || '';
+      this.LABEL_PRIZE_STATUS_ROLLED_OVER = el?.dataset.labelPrizeStatusRolledOver || '';
       this.sessionToken = sessionStorage.getItem('raffle_session_token') || '';
 
       const params = new URLSearchParams(window.location.search);
@@ -268,6 +276,28 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
         return 'bg-amber-100 text-amber-900 ring-amber-300 dark:bg-amber-400/20 dark:text-amber-200 dark:ring-amber-300/30';
       }
       return 'bg-emerald-100 text-emerald-800 ring-emerald-300 dark:bg-emerald-500/20 dark:text-emerald-200 dark:ring-emerald-300/25';
+    },
+
+    prizeStatusLabel(status: string | undefined) {
+      const normalized = String(status || 'pending').toLowerCase();
+      if (normalized === 'claimed') return this.LABEL_PRIZE_STATUS_CLAIMED;
+      if (normalized === 'declined') return this.LABEL_PRIZE_STATUS_DECLINED;
+      if (normalized === 'rolled_over' || normalized === 'expired_rollover_pending') return this.LABEL_PRIZE_STATUS_ROLLED_OVER;
+      return this.LABEL_PRIZE_STATUS_PENDING;
+    },
+
+    prizeStatusBadgeClass(status: string | undefined) {
+      const normalized = String(status || 'pending').toLowerCase();
+      if (normalized === 'claimed') {
+        return 'bg-emerald-100 text-emerald-800 ring-emerald-300 dark:bg-emerald-500/20 dark:text-emerald-200 dark:ring-emerald-300/25';
+      }
+      if (normalized === 'declined') {
+        return 'bg-amber-100 text-amber-900 ring-amber-300 dark:bg-amber-400/20 dark:text-amber-200 dark:ring-amber-300/30';
+      }
+      if (normalized === 'rolled_over' || normalized === 'expired_rollover_pending') {
+        return 'bg-sky-100 text-sky-800 ring-sky-300 dark:bg-sky-400/15 dark:text-sky-200 dark:ring-sky-300/25';
+      }
+      return 'bg-slate-100 text-slate-700 ring-slate-300 dark:bg-slate-800 dark:text-slate-200 dark:ring-slate-600';
     },
 
     verifyButtonLabel() {
@@ -520,8 +550,9 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
 
       if (scenario === 'public_results') {
         this.publicResults = [
-          { github_username: 'kai-dev', prize_tier: 'Standard' },
-          { github_username: 'thieunv-dev', prize_tier: 'Premium' },
+          { github_username: 'kai-dev', prize_tier: 'Standard', claim_status: 'claimed', campaign_day: '2026-05-18' },
+          { github_username: 'thieunv-dev', prize_tier: 'Premium', claim_status: 'declined', campaign_day: '2026-05-18' },
+          { github_username: 'pending-dev', prize_tier: 'Standard', claim_status: 'pending', campaign_day: '2026-05-18' },
         ];
         this.state = 'ready';
         return;
