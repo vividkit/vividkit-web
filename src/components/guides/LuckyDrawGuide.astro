@@ -1,0 +1,138 @@
+---
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
+import { useTranslations } from '@/i18n/utils';
+import DealsLuckyDrawSection from './deals/deals-lucky-draw-section.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+const translatePath = useTranslatedPath(currentLang);
+const dealsHref = `${translatePath('/guides/deals')}#claim`;
+const drawHref = '#draw-console';
+const ordersHref = 'https://claudekit.cc/account/orders';
+---
+
+<div class="mt-5 min-w-0 space-y-8">
+  <section class="relative isolate max-w-full overflow-hidden rounded-[1.75rem] border border-slate-200 bg-slate-950 text-white shadow-2xl shadow-slate-950/20 dark:border-slate-800" style="width: min(100%, calc(100vw - 4rem));">
+    <div class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_12%_18%,rgba(16,185,129,0.32),transparent_32%),radial-gradient(circle_at_88%_12%,rgba(245,158,11,0.22),transparent_30%),linear-gradient(135deg,#020617_0%,#10231f_48%,#18181b_100%)]" aria-hidden="true"></div>
+    <div class="absolute inset-x-0 top-0 -z-10 h-px bg-gradient-to-r from-transparent via-emerald-300/70 to-transparent" aria-hidden="true"></div>
+
+    <div class="grid gap-6 p-5 sm:p-7 lg:grid-cols-[minmax(0,0.92fr)_minmax(360px,1.08fr)] lg:p-8">
+      <div class="min-w-0 space-y-6">
+        <p class="text-xs font-black uppercase tracking-[0.18em] text-emerald-200">
+          {t('deals.raffle.page_kicker')}
+        </p>
+
+        <div class="min-w-0">
+          <p class="inline-flex rounded-full border border-emerald-300/25 bg-emerald-300/10 px-3 py-1 text-xs font-black uppercase tracking-[0.14em] text-emerald-100">
+            {t('deals.raffle.campaign_dates')}
+          </p>
+          <h1 class="mt-4 max-w-[15ch] break-words font-heading text-3xl font-black leading-tight text-white sm:max-w-3xl sm:text-5xl">
+            {t('deals.raffle.page_title_start')}{' '}
+            <span class="text-[#d97742]">{t('deals.raffle.page_title_team')}</span>{' '}
+            {t('deals.raffle.page_title_end')}{' '}
+            <span class="text-amber-200">{t('deals.raffle.page_title_discount')}</span>
+          </h1>
+          <p class="mt-4 max-w-[24ch] break-words text-base leading-8 text-slate-200 sm:max-w-2xl sm:text-lg">
+            {t('deals.raffle.page_desc')}
+          </p>
+        </div>
+
+        <div class="grid gap-3 sm:grid-cols-3">
+          <div class="rounded-2xl border border-emerald-300/20 bg-white/[0.07] p-4">
+            <p class="text-2xl font-black text-emerald-200">50%</p>
+            <p class="mt-1 text-sm font-bold text-slate-200">{t('deals.raffle.prize_discount')}</p>
+          </div>
+          <div class="rounded-2xl border border-cyan-300/20 bg-white/[0.07] p-4">
+            <p class="text-2xl font-black text-cyan-200">3</p>
+            <p class="mt-1 text-sm font-bold text-slate-200">{t('deals.raffle.prize_standard')}</p>
+          </div>
+          <div class="rounded-2xl border border-amber-300/20 bg-white/[0.07] p-4">
+            <p class="text-2xl font-black text-amber-200">1</p>
+            <p class="mt-1 text-sm font-bold text-slate-200">{t('deals.raffle.prize_premium')}</p>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-white/12 bg-white/[0.06] p-4">
+          <p class="text-xs font-black uppercase tracking-[0.14em] text-amber-200">{t('deals.raffle.join_rule_title')}</p>
+          <p class="mt-2 text-sm leading-7 text-slate-200">{t('deals.raffle.join_rule_desc')}</p>
+          <a href={ordersHref} target="_blank" rel="noreferrer" class="mt-3 inline-flex text-sm font-black text-emerald-200 underline decoration-emerald-200/40 underline-offset-4 hover:text-emerald-100">
+            {t('deals.raffle.order_ref_link')}
+          </a>
+        </div>
+
+        <div class="grid max-w-lg grid-cols-2 gap-2.5 sm:gap-3">
+          <a
+            href={dealsHref}
+            class="inline-flex min-h-12 min-w-0 items-center justify-center whitespace-nowrap rounded-2xl border border-[#f1b184]/40 bg-[#d97742] px-2.5 py-3 text-center text-xs font-black text-white shadow-lg shadow-[#d97742]/20 transition hover:-translate-y-0.5 hover:bg-[#c96632] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#f0b48b]/60 sm:px-5 sm:text-sm"
+          >
+            {t('deals.raffle.page_deals_cta')}
+          </a>
+          <a
+            href={drawHref}
+            class="inline-flex min-h-12 min-w-0 items-center justify-center whitespace-nowrap rounded-2xl border border-teal-200/35 bg-teal-500 px-2.5 py-3 text-center text-xs font-black text-white shadow-lg shadow-teal-500/20 transition hover:-translate-y-0.5 hover:bg-teal-400 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-200/45 sm:px-5 sm:text-sm"
+          >
+            {t('deals.raffle.page_primary_cta')}
+          </a>
+        </div>
+      </div>
+
+      <div class="min-w-0 space-y-4 rounded-2xl border border-white/14 bg-white/[0.08] p-4 shadow-xl shadow-black/20 backdrop-blur sm:p-5">
+        <div>
+          <p class="text-xs font-black uppercase tracking-[0.16em] text-amber-200">
+            {t('deals.raffle.daily_schedule_title')}
+          </p>
+          <div class="mt-4 space-y-2">
+            <div class="grid grid-cols-[6rem_minmax(0,1fr)] gap-3 rounded-xl border border-white/10 bg-white/[0.07] p-3 text-sm">
+              <span class="font-mono font-black text-emerald-200">20:00</span>
+              <span class="font-bold text-white">{t('deals.raffle.schedule_claim')}</span>
+            </div>
+            <div class="grid grid-cols-[6rem_minmax(0,1fr)] gap-3 rounded-xl border border-white/10 bg-white/[0.07] p-3 text-sm">
+              <span class="font-mono font-black text-cyan-200">20:00-21:50</span>
+              <span class="font-bold text-white">{t('deals.raffle.schedule_register')}</span>
+            </div>
+            <div class="grid grid-cols-[6rem_minmax(0,1fr)] gap-3 rounded-xl border border-white/10 bg-white/[0.07] p-3 text-sm">
+              <span class="font-mono font-black text-amber-200">21:50</span>
+              <span class="font-bold text-white">{t('deals.raffle.schedule_lock')}</span>
+            </div>
+            <div class="grid grid-cols-[6rem_minmax(0,1fr)] gap-3 rounded-xl border border-white/10 bg-white/[0.07] p-3 text-sm">
+              <span class="font-mono font-black text-rose-200">22:00+</span>
+              <span class="font-bold text-white">{t('deals.raffle.schedule_reveal')}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid gap-3 sm:grid-cols-2">
+          <div class="rounded-xl border border-emerald-300/20 bg-emerald-300/10 p-3">
+            <p class="text-xs font-black uppercase tracking-[0.12em] text-emerald-200">{t('deals.raffle.qualified_title')}</p>
+            <p class="mt-2 text-sm leading-6 text-slate-200">{t('deals.raffle.qualified_allowlist')}</p>
+          </div>
+          <div class="rounded-xl border border-amber-300/20 bg-amber-300/10 p-3">
+            <p class="text-xs font-black uppercase tracking-[0.12em] text-amber-200">{t('deals.raffle.pending_title')}</p>
+            <p class="mt-2 text-sm leading-6 text-slate-200">{t('deals.raffle.qualified_pending')}</p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-[#d97742]/35 bg-[#d97742]/12 p-3">
+          <p class="text-xs font-black uppercase tracking-[0.12em] text-[#f0b48b]">{t('deals.raffle.prior_purchase_title')}</p>
+          <p class="mt-2 text-sm leading-6 text-slate-100">{t('deals.raffle.prior_purchase_desc')}</p>
+        </div>
+
+        <div class="rounded-xl border border-white/10 bg-slate-950/35 p-3 text-sm leading-6 text-slate-200">
+          <p>
+            <strong class="text-white">{t('deals.raffle.notes_title')}</strong>{' '}
+            {t('deals.raffle.notes_desc_before')}{' '}
+            <code class="rounded-md border border-white/10 bg-white/10 px-1.5 py-0.5 font-mono text-[0.82em] font-black text-amber-100">{t('deals.raffle.notes_contact')}</code>{' '}
+            {t('deals.raffle.notes_desc_after')}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <DealsLuckyDrawSection lang={currentLang} />
+</div>

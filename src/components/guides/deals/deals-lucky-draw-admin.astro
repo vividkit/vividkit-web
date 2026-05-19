@@ -1,0 +1,243 @@
+---
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+const giveawayApiUrl = import.meta.env.PUBLIC_GIVEAWAY_API_URL;
+---
+
+<section
+  data-raffle-admin
+  data-api-url={giveawayApiUrl}
+  data-msg-error={t('deals.raffle_admin.error')}
+  x-data="raffleAdmin()"
+  class="mx-auto max-w-5xl space-y-6 px-4 py-10"
+>
+  <div>
+    <h1 class="font-heading text-3xl font-black text-slate-950 dark:text-white">{t('deals.raffle_admin.title')}</h1>
+    <p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">{t('deals.raffle_admin.desc')}</p>
+  </div>
+
+	  <div class="grid gap-5 lg:grid-cols-2">
+	    <form x-on:submit.prevent="importRefs()" class="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-950">
+      <label class="block">
+        <span class="text-xs font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">API URL</span>
+        <input x-model="apiBaseInput" type="url" autocomplete="off" class="mt-2 min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 text-sm text-slate-950 dark:border-slate-700 dark:bg-slate-900 dark:text-white" />
+      </label>
+      <label class="block">
+        <span class="text-xs font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">{t('deals.raffle_admin.secret')}</span>
+        <input x-model="secret" type="password" autocomplete="off" class="mt-2 min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 text-sm text-slate-950 dark:border-slate-700 dark:bg-slate-900 dark:text-white" />
+      </label>
+      <label class="block">
+        <span class="text-xs font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">{t('deals.raffle_admin.refs')}</span>
+        <textarea x-model="refsText" rows="10" placeholder={t('deals.raffle_admin.placeholder')} class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 font-mono text-sm text-slate-950 dark:border-slate-700 dark:bg-slate-900 dark:text-white"></textarea>
+      </label>
+      <div class="flex flex-wrap gap-3">
+        <button type="submit" class="inline-flex min-h-11 items-center rounded-xl bg-emerald-600 px-4 py-2 text-sm font-bold text-white">{t('deals.raffle_admin.import')}</button>
+        <button type="button" x-on:click="runDraw()" class="inline-flex min-h-11 items-center rounded-xl bg-teal-600 px-4 py-2 text-sm font-bold text-white">{t('deals.raffle_admin.run_draw')}</button>
+        <button type="button" x-on:click="rolloverExpired()" class="inline-flex min-h-11 items-center rounded-xl bg-cyan-600 px-4 py-2 text-sm font-bold text-white">{t('deals.raffle_admin.rollover')}</button>
+        <button type="button" x-on:click="refreshDump()" class="inline-flex min-h-11 items-center rounded-xl bg-slate-900 px-4 py-2 text-sm font-bold text-white dark:bg-white dark:text-slate-950">{t('deals.raffle_admin.refresh')}</button>
+      </div>
+      <p x-show="message" x-cloak class="text-sm font-semibold text-slate-700 dark:text-slate-200" x-text="message"></p>
+	      <p x-show="errorMessage" x-cloak class="text-sm font-semibold text-rose-700 dark:text-rose-300" x-text="errorMessage"></p>
+	    </form>
+
+	    <div class="space-y-5">
+	      <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-950">
+	        <div class="flex items-center justify-between gap-3">
+	          <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">{t('deals.raffle_admin.order_log')}</p>
+	          <span class="font-mono text-xs font-bold text-slate-500 dark:text-slate-400" x-text="orderLog.length"></span>
+	        </div>
+	        <div class="mt-3 max-h-[280px] overflow-auto rounded-xl border border-slate-200 dark:border-slate-800">
+	          <table class="min-w-full text-left text-xs">
+	            <thead class="sticky top-0 bg-slate-100 text-[0.68rem] uppercase tracking-[0.12em] text-slate-500 dark:bg-slate-900 dark:text-slate-400">
+	              <tr>
+	                <th class="px-3 py-2 font-black">{t('deals.raffle_admin.order_ref')}</th>
+	                <th class="px-3 py-2 font-black">{t('deals.raffle_admin.added_at')}</th>
+	                <th class="px-3 py-2 font-black">{t('deals.raffle_admin.source')}</th>
+	                <th class="px-3 py-2 font-black">{t('deals.raffle_admin.status')}</th>
+	                <th class="px-3 py-2 font-black">{t('deals.raffle_admin.user')}</th>
+	              </tr>
+	            </thead>
+	            <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+	              <template x-for="item in orderLog" :key="item.orderRef">
+	                <tr class="bg-white text-slate-700 dark:bg-slate-950 dark:text-slate-200">
+	                  <td class="px-3 py-2 font-mono font-bold" x-text="item.orderRef"></td>
+	                  <td class="px-3 py-2 whitespace-nowrap" x-text="item.addedAt"></td>
+	                  <td class="px-3 py-2 whitespace-nowrap" x-text="item.source"></td>
+	                  <td class="px-3 py-2 whitespace-nowrap" x-text="item.status"></td>
+	                  <td class="px-3 py-2 font-mono" x-text="item.user"></td>
+	                </tr>
+	              </template>
+	              <tr x-show="!orderLog.length" x-cloak>
+	                <td colspan="5" class="px-3 py-6 text-center text-sm font-semibold text-slate-500 dark:text-slate-400">--</td>
+	              </tr>
+	            </tbody>
+	          </table>
+	        </div>
+	      </div>
+
+	      <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-950">
+	        <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">{t('deals.raffle_admin.audit')}</p>
+	      <pre class="mt-3 max-h-[520px] overflow-auto rounded-xl bg-slate-100 p-4 text-xs text-slate-700 dark:bg-slate-800/90 dark:text-slate-200" x-text="dumpText"></pre>
+	      </div>
+	    </div>
+	  </div>
+	</section>
+
+<script>
+  import Alpine from 'alpinejs';
+
+  const registerRaffleAdmin = (activeAlpine: typeof Alpine) => {
+    if ((activeAlpine as any).__dealRaffleAdminRegistered) return;
+    (activeAlpine as any).__dealRaffleAdminRegistered = true;
+    activeAlpine.data('raffleAdmin', () => ({
+      API_BASE: '',
+      MSG_ERROR: '',
+      secret: sessionStorage.getItem('vk_raffle_admin_secret') || '',
+      apiBaseInput: sessionStorage.getItem('vk_raffle_admin_api') || '',
+	      refsText: '',
+	      dumpText: '',
+	      orderLog: [] as Array<Record<string, string>>,
+	      message: '',
+	      errorMessage: '',
+
+      init() {
+        const el = document.querySelector('[data-raffle-admin]') as HTMLElement;
+        this.API_BASE = this.apiBaseInput || el?.dataset.apiUrl || '';
+        this.apiBaseInput = this.API_BASE;
+        this.MSG_ERROR = el?.dataset.msgError || '';
+      },
+
+      headers() {
+        if (this.secret) sessionStorage.setItem('vk_raffle_admin_secret', this.secret);
+        if (this.apiBaseInput) {
+          this.API_BASE = this.apiBaseInput.replace(/\/$/, '');
+          sessionStorage.setItem('vk_raffle_admin_api', this.API_BASE);
+        }
+        return { 'Content-Type': 'application/json', 'Admin-Secret': this.secret };
+      },
+
+      async importRefs() {
+        this.message = '';
+        this.errorMessage = '';
+        try {
+          const res = await fetch(`${this.API_BASE}/admin/paid-orders/import`, {
+            method: 'POST',
+            headers: this.headers(),
+            body: JSON.stringify({ text: this.refsText }),
+          });
+          const data = await res.json();
+          if (!res.ok) throw data;
+          this.message = `Accepted ${data.accepted_count}; approved pending ${data.approved_pending_count || 0}; duplicates ${data.duplicate_existing_count + data.duplicate_payload_count}; invalid ${data.invalid_count}`;
+          await this.refreshDump();
+        } catch (err: any) {
+          this.errorMessage = err?.message || this.MSG_ERROR;
+        }
+      },
+
+	      async refreshDump() {
+	        this.errorMessage = '';
+	        try {
+	          const res = await fetch(`${this.API_BASE}/admin/raffle/dump`, { headers: this.headers() });
+	          const data = await res.json();
+	          if (!res.ok) throw data;
+	          this.orderLog = this.buildOrderLog(data);
+	          this.dumpText = JSON.stringify(data, null, 2);
+	        } catch (err: any) {
+	          this.errorMessage = err?.message || this.MSG_ERROR;
+	        }
+	      },
+
+	      formatDateTime(value: string | undefined) {
+	        if (!value) return '--';
+	        const date = new Date(value);
+	        if (Number.isNaN(date.getTime())) return '--';
+	        return new Intl.DateTimeFormat(document.documentElement.lang || undefined, {
+	          month: 'short',
+	          day: 'numeric',
+	          hour: '2-digit',
+	          minute: '2-digit',
+	        }).format(date);
+	      },
+
+	      buildOrderLog(data: any) {
+	        const refs = data?.paid_order_refs && typeof data.paid_order_refs === 'object' ? data.paid_order_refs : {};
+	        const bindings = data?.order_bindings && typeof data.order_bindings === 'object' ? data.order_bindings : {};
+	        const pending = data?.pending_order_approvals && typeof data.pending_order_approvals === 'object'
+	          ? data.pending_order_approvals
+	          : {};
+	        const rowsByRef = new Map<string, Record<string, string>>();
+	        Object.values(pending).forEach((item: any) => {
+	          const normalized = item?.normalized_ref || '';
+	          if (!normalized) return;
+	          rowsByRef.set(normalized, {
+	            orderRef: normalized,
+	            addedAt: this.formatDateTime(item?.requested_at),
+	            addedAtRaw: item?.requested_at || '',
+	            source: 'pending',
+	            status: item?.status || 'pending_approval',
+	            user: item?.github_username || item?.github_id || '--',
+	          });
+	        });
+	        Object.values(refs)
+	          .map((ref: any) => {
+	            const normalized = ref?.normalized_ref || '';
+	            const detail = ref?.source_detail || {};
+	            const binding = bindings[normalized] || {};
+	            return {
+		              orderRef: normalized || '--',
+		              addedAt: this.formatDateTime(ref?.imported_at),
+		              addedAtRaw: ref?.imported_at || '',
+		              source: ref?.source || ref?.imported_by || '--',
+	              status: detail.order_status || detail.commission_status || binding.approval_status || '--',
+	              user: binding.username || detail.referee_email_masked || '--',
+	            };
+	          })
+	          .forEach((row: any) => rowsByRef.set(row.orderRef, row));
+	        return [...rowsByRef.values()].sort((a: any, b: any) => b.addedAtRaw.localeCompare(a.addedAtRaw));
+	      },
+
+	      async runDraw() {
+        await this.postAdminAction('/admin/raffle/run-draw');
+      },
+
+      async rolloverExpired() {
+        await this.postAdminAction('/admin/raffle/rollover-expired');
+      },
+
+      async postAdminAction(path: string) {
+        this.message = '';
+        this.errorMessage = '';
+        try {
+          const res = await fetch(`${this.API_BASE}${path}`, {
+            method: 'POST',
+            headers: this.headers(),
+          });
+          const data = await res.json();
+          if (!res.ok) throw data;
+          this.message = JSON.stringify(data);
+          await this.refreshDump();
+        } catch (err: any) {
+          this.errorMessage = err?.message || this.MSG_ERROR;
+        }
+      },
+    }));
+  };
+
+  if (!window.Alpine) {
+    window.Alpine = Alpine;
+    registerRaffleAdmin(Alpine);
+    Alpine.start();
+  } else {
+    registerRaffleAdmin(window.Alpine);
+    const root = document.querySelector('[data-raffle-admin]');
+    if (root && !(root as any)._x_dataStack) window.Alpine.initTree(root);
+  }
+</script>
