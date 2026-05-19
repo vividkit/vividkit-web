@@ -157,6 +157,8 @@ export const deals = {
   'deals.raffle.countdown_open': 'Đóng đăng ký sau',
   'deals.raffle.countdown_waiting': 'Draw bắt đầu sau',
   'deals.raffle.countdown_draw': 'Đang reveal theo lịch',
+  'deals.raffle.countdown_today_ended': 'Đã kết thúc',
+  'deals.raffle.countdown_today_revealed': 'Draw hôm nay đã reveal xong',
   'deals.raffle.countdown_next_draw': 'Draw tiếp theo',
   'deals.raffle.countdown_ended': 'Campaign đã kết thúc',
   'deals.raffle.schedule_unknown': 'Chưa có lịch',

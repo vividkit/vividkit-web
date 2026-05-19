@@ -26,6 +26,8 @@ const claimHref = `${translatePath('/guides/deals')}#claim`;
       data-label-ready={t('deals.raffle.draw_countdown_ready')}
       data-label-reveal={t('deals.raffle.countdown_draw')}
       data-label-ended={t('deals.raffle.countdown_ended')}
+      data-label-today-ended={t('deals.raffle.countdown_today_ended')}
+      data-label-today-revealed={t('deals.raffle.countdown_today_revealed')}
       data-label-next-draw={t('deals.raffle.countdown_next_draw')}
       data-label-days={t('deals.raffle.countdown_days')}
       data-label-hours={t('deals.raffle.countdown_hours')}
@@ -115,13 +117,13 @@ const claimHref = `${translatePath('/guides/deals')}#claim`;
       countdown.textContent = '--:--:--';
       return;
     }
+    if (isPostRevealComplete) {
+      countdown.textContent = scheduleSummary.dataset.labelTodayEnded || scheduleSummary.dataset.labelEnded || '--';
+      return;
+    }
     const target = new Date(countdownTargetAt).getTime();
     const diff = target - Date.now();
     if (!Number.isFinite(target) || diff <= 0) {
-      if (isPostRevealComplete) {
-        countdown.textContent = scheduleSummary.dataset.labelEnded || '--';
-        return;
-      }
       countdown.textContent = currentPhase === 'reveal_ready'
         ? scheduleSummary.dataset.labelReveal || scheduleSummary.dataset.labelReady || '--'
         : scheduleSummary.dataset.labelReady || '--';
@@ -163,8 +165,9 @@ const claimHref = `${translatePath('/guides/deals')}#claim`;
     currentPhase = config.phase;
     countdownTargetAt = resolveCountdownTarget(config, resultCount, poolCount);
     if (drawTime) {
-      const prefix = isPostRevealComplete ? `${scheduleSummary?.dataset.labelNextDraw || ''} · ` : '';
-      drawTime.textContent = `${prefix}${formatScheduleTime(countdownTargetAt)}`.trim();
+      drawTime.textContent = isPostRevealComplete
+        ? `${scheduleSummary?.dataset.labelTodayRevealed || ''} · ${scheduleSummary?.dataset.labelNextDraw || ''}: ${formatScheduleTime(countdownTargetAt)}`.trim()
+        : formatScheduleTime(countdownTargetAt);
     }
     renderCountdown();
     if (countdownTimer) window.clearInterval(countdownTimer);
