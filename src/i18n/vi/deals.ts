@@ -114,6 +114,7 @@ export const deals = {
   'deals.raffle.join_rule_title': 'Thể thức tham gia',
   'deals.raffle.join_rule_desc': 'Follow fb.com/shinantori, đăng nhập GitHub và đăng ký trước giờ khoá. GitHub account cần tồn tại ít nhất 30 ngày để hạn chế spam và cheat.',
   'deals.raffle.order_ref_link': 'Đăng ký ở form bên dưới',
+  'deals.raffle.claim_code_link': 'Muốn CK coupon? Claim mã ở Deals',
   'deals.raffle.prior_purchase_title': 'Follower đều có thể tham gia',
   'deals.raffle.prior_purchase_desc': 'Event này không cần ClaudeKit order ref. Mỗi follower dùng GitHub account đã tồn tại từ 30 ngày trở lên để vào pool.',
   'deals.raffle.daily_schedule_title': 'Lịch mỗi ngày',
