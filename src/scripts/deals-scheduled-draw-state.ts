@@ -437,6 +437,8 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       else if (this.privateWinner?.fulfillment_status === 'declined') this.state = 'prize_declined';
       else if (this.privateWinner?.fulfillment_status === 'rolled_over') this.state = 'claim_expired';
       else if (this.privateWinner) this.state = 'winner_revealed';
+      else if (data.phase === 'before_open') this.state = 'before_open';
+      else if (data.phase === 'inactive') this.state = 'closed';
       else if (data.registration?.approval_status === 'pending_approval') this.state = 'pending_approval';
       else if (data.registration) this.state = data.phase === 'draw_ready' ? 'draw_pending' : 'registered';
       else if (data.pending_order) this.state = 'pending_order';
