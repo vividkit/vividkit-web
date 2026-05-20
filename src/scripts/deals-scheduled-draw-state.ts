@@ -1,15 +1,18 @@
 import type Alpine from 'alpinejs';
 
-type AuthAction = 'raffle_status' | 'raffle_verify_order' | 'raffle_register' | 'raffle_claim_prize' | 'raffle_decline_prize';
+type AuthAction =
+  | 'raffle_status'
+  | 'raffle_check_engagement'
+  | 'raffle_register'
+  | 'raffle_claim_prize'
+  | 'raffle_decline_prize';
 
 type DrawState =
   | 'loading'
   | 'ready'
   | 'needs_claim'
-  | 'needs_payment'
-  | 'pending_order'
-  | 'pending_approval'
-  | 'verifying_order'
+  | 'needs_engagement'
+  | 'checking_engagement'
   | 'eligible'
   | 'registering'
   | 'registered'
@@ -112,9 +115,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
     LABEL_PRIZE_STATUS_DECLINED: '',
     LABEL_PRIZE_STATUS_ROLLED_OVER: '',
     seatBudget: { ...emptyBudget },
-    orderRef: '',
     errorMessage: '',
-    orderErrorMessage: '',
     sessionToken: '',
     currentUsername: '',
     authWindow: null as Window | null,
@@ -123,7 +124,6 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
     poolEntries: [] as any[],
     privateWinner: null as any,
     proof: null as any,
-    orderGuideOpen: false,
     declineConfirmOpen: false,
 
     async init() {
@@ -241,7 +241,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       return source
         .map((entry: any, index: number) => ({
           id: entry.id || entry.github_id || entry.github_username || entry.username || `entry-${index}`,
-          github_username: entry.github_username || entry.username || entry.github_login || entry.github || '',
+          github_username: entry.facebook_name || entry.github_username || entry.username || entry.github_login || entry.github || '',
           github_id: entry.github_id || '',
           approval_status: entry.approval_status || entry.status || (entry.qualified ? 'qualified' : ''),
           status: entry.status || '',
@@ -265,9 +265,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
     },
 
     poolEntryStatusLabel(entry: any) {
-      return entry?.approval_status === 'pending_approval' || entry?.status === 'pending_approval'
-        ? (document.documentElement.lang === 'vi' ? 'chờ approve' : 'pending approval')
-        : (document.documentElement.lang === 'vi' ? 'qualified' : 'qualified');
+      return entry?.approval_status || entry?.status || 'qualified';
     },
 
     prizeTierBadgeClass(tier: string | undefined) {
@@ -302,7 +300,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
 
     verifyButtonLabel() {
       return this.currentUsername
-        ? `${this.LABEL_VERIFY_FOR_PREFIX} @${this.currentUsername}`
+        ? `${this.LABEL_VERIFY_FOR_PREFIX} ${this.currentUsername}`
         : this.LABEL_VERIFY;
     },
 
@@ -337,18 +335,15 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
         return;
       }
       if (action === 'raffle_status') return this.postStatus(oauthCode);
-      if (action === 'raffle_verify_order') return this.postVerify(oauthCode);
+      if (action === 'raffle_check_engagement') return this.postCheckEngagement(oauthCode);
       if (action === 'raffle_register') return this.postRegister(oauthCode);
       if (action === 'raffle_claim_prize') return this.postClaimPrize(oauthCode);
       if (action === 'raffle_decline_prize') return this.postDeclinePrize(oauthCode);
     },
 
-    startVerify() {
-      if (!this.orderRef.trim()) return;
-      this.orderErrorMessage = '';
-      sessionStorage.setItem('raffle_pending_order_ref', this.orderRef.trim());
-      this.state = 'verifying_order';
-      this.renderTurnstile('raffle_verify_order');
+    startEngagementCheck() {
+      this.state = 'checking_engagement';
+      this.renderTurnstile('raffle_check_engagement');
     },
 
     startRegister() {
@@ -415,7 +410,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
     },
 
     async completeSessionAction(action: AuthAction) {
-      if (action === 'raffle_verify_order') return this.postVerify();
+      if (action === 'raffle_check_engagement') return this.postCheckEngagement();
       if (action === 'raffle_register') return this.postRegister();
       if (action === 'raffle_claim_prize') return this.postClaimPrize();
       if (action === 'raffle_decline_prize') return this.postDeclinePrize();
@@ -432,17 +427,15 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
         this.sessionToken = data.session_token;
         sessionStorage.setItem('raffle_session_token', data.session_token);
       }
-      this.currentUsername = data.username || data.registration?.github_username || data.pending_order?.github_username || '';
+      this.currentUsername = data.facebook_name || data.username || data.registration?.facebook_name || data.registration?.github_username || '';
       if (this.proof) this.state = 'proof_ready';
       else if (this.privateWinner?.fulfillment_status === 'declined') this.state = 'prize_declined';
       else if (this.privateWinner?.fulfillment_status === 'rolled_over') this.state = 'claim_expired';
       else if (this.privateWinner) this.state = 'winner_revealed';
       else if (data.phase === 'before_open') this.state = 'before_open';
       else if (data.phase === 'inactive') this.state = 'closed';
-      else if (data.registration?.approval_status === 'pending_approval') this.state = 'pending_approval';
       else if (data.registration) this.state = data.phase === 'draw_ready' ? 'draw_pending' : 'registered';
-      else if (data.pending_order) this.state = 'pending_order';
-      else if (!data.bound) this.state = 'needs_payment';
+      else if (!data.bound) this.state = 'needs_engagement';
       else if (data.qualified) this.state = data.phase === 'registration_open' ? 'eligible' : 'draw_pending';
       else this.state = this.initialStateFromPhase();
     },
@@ -459,14 +452,15 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       };
       const winner = {
         prize_tier: 'Premium',
-        github_username: 'dev-winner',
+        github_username: 'Dev Winner',
+        facebook_name: 'Dev Winner',
         claim_deadline_at: isoFromNow(24),
         fulfillment_status: 'pending_claim',
       };
       const proof = {
         prize_tier: 'Premium',
-        order_ref: 'CK-ORDER-DEV-0001',
-        github_username: 'dev-winner',
+        github_username: 'Dev Winner',
+        facebook_name: 'Dev Winner',
         claim_deadline_at: isoFromNow(24),
       };
 
@@ -474,16 +468,14 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       this.seatBudget = { standard: 12, premium: 3, total: 15 };
       this.publicResults = [];
       this.poolEntries = [
-        { id: 'pool-1', github_username: 'kai-dev', approval_status: 'qualified' },
-        { id: 'pool-2', github_username: 'thieunv-dev', approval_status: 'qualified' },
-        { id: 'pool-3', github_username: 'pending-dev', approval_status: 'pending_approval' },
+        { id: 'pool-1', github_username: 'Kai Dev', approval_status: 'qualified' },
+        { id: 'pool-2', github_username: 'Thieu Dev', approval_status: 'qualified' },
+        { id: 'pool-3', github_username: 'GitHub Dev', approval_status: 'qualified' },
       ];
       this.privateWinner = null;
       this.proof = null;
       this.errorMessage = '';
-      this.orderErrorMessage = '';
-      this.orderRef = 'CK-ORDER-DEV-0001';
-      this.currentUsername = 'dev-user';
+      this.currentUsername = 'Dev User';
 
       if (scenario === 'before_open') {
         this.schedule = {
@@ -504,33 +496,26 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       }
 
       if (scenario === 'invalid_order') {
-        this.orderRef = 'CK-ORDER-MISSING';
-        this.orderErrorMessage = 'Order ref is not in the local paid-order allowlist.';
-        this.state = 'needs_payment';
+        this.errorMessage = 'Could not verify this GitHub account.';
+        this.state = 'error';
         return;
       }
 
       if (scenario === 'chiennb_wrong_account') {
         this.currentUsername = 'thonhoasung';
-        this.orderRef = '01E4B532';
-        this.orderErrorMessage = '';
-        this.state = 'needs_payment';
+        this.state = 'needs_engagement';
         return;
       }
 
       if (scenario === 'chiennb_order_bound') {
         this.currentUsername = 'chiennb';
-        this.orderRef = '01E4B532';
-        this.orderErrorMessage = 'This order ref is already bound to another GitHub account.';
-        this.state = 'needs_payment';
+        this.state = 'needs_engagement';
         return;
       }
 
       if (scenario === 'chiennb_ready') {
         this.currentUsername = 'chiennb';
-        this.orderRef = '01E4B532';
-        this.orderErrorMessage = '';
-        this.state = 'needs_payment';
+        this.state = 'needs_engagement';
         return;
       }
 
@@ -552,9 +537,9 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
 
       if (scenario === 'public_results') {
         this.publicResults = [
-          { github_username: 'kai-dev', prize_tier: 'Standard', claim_status: 'claimed', campaign_day: '2026-05-18' },
-          { github_username: 'thieunv-dev', prize_tier: 'Premium', claim_status: 'declined', campaign_day: '2026-05-18' },
-          { github_username: 'pending-dev', prize_tier: 'Standard', claim_status: 'pending', campaign_day: '2026-05-18' },
+          { facebook_name: 'Kai Dev', github_username: 'Kai Dev', prize_tier: 'Standard', claim_status: 'claimed', campaign_day: '2026-05-18' },
+          { facebook_name: 'Thieu Dev', github_username: 'Thieu Dev', prize_tier: 'Premium', claim_status: 'declined', campaign_day: '2026-05-18' },
+          { facebook_name: 'Pending Dev', github_username: 'Pending Dev', prize_tier: 'Standard', claim_status: 'pending', campaign_day: '2026-05-18' },
         ];
         this.state = 'ready';
         return;
@@ -563,8 +548,8 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       if (scenario === 'many_pool_users') {
         this.poolEntries = Array.from({ length: 32 }, (_, index) => ({
           id: `pool-many-${index + 1}`,
-          github_username: index % 6 === 0 ? `pending-dev-${index + 1}` : `qualified-dev-${index + 1}`,
-          approval_status: index % 6 === 0 ? 'pending_approval' : 'qualified',
+          github_username: `Qualified Dev ${index + 1}`,
+          approval_status: 'qualified',
         }));
         this.state = 'ready';
         return;
@@ -583,9 +568,8 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       this.sessionToken = '';
       this.currentUsername = '';
       sessionStorage.removeItem('raffle_session_token');
-      sessionStorage.removeItem('raffle_pending_order_ref');
       sessionStorage.removeItem('turnstile_token:raffle_status');
-      sessionStorage.removeItem('turnstile_token:raffle_verify_order');
+      sessionStorage.removeItem('turnstile_token:raffle_check_engagement');
       sessionStorage.removeItem('turnstile_token:raffle_register');
       sessionStorage.removeItem('turnstile_token:raffle_claim_prize');
       sessionStorage.removeItem('turnstile_token:raffle_decline_prize');
@@ -594,9 +578,8 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
     switchGitHubAccount() {
       this.clearSession();
       this.errorMessage = '';
-      this.orderErrorMessage = '';
       this.state = 'loading';
-      this.startOAuth('raffle_status');
+      this.startOAuth('raffle_check_engagement');
     },
 
     async postStatus(oauthCode = '') {
@@ -625,34 +608,24 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       }
     },
 
-    async postVerify(oauthCode = '') {
-      const token = sessionStorage.getItem('turnstile_token:raffle_verify_order');
-      const orderRef = sessionStorage.getItem('raffle_pending_order_ref') || this.orderRef;
-      sessionStorage.removeItem('turnstile_token:raffle_verify_order');
-      sessionStorage.removeItem('raffle_pending_order_ref');
+    async postCheckEngagement(oauthCode = '') {
+      const token = sessionStorage.getItem('turnstile_token:raffle_check_engagement');
+      sessionStorage.removeItem('turnstile_token:raffle_check_engagement');
       const authPayload = this.sessionToken ? { session_token: this.sessionToken } : { oauth_code: oauthCode };
       try {
-        const res = await fetch(`${this.API_BASE}/raffle/verify-order`, {
+        const res = await fetch(`${this.API_BASE}/raffle/check-engagement`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ...authPayload, turnstile_token: token, order_ref: orderRef }),
+          body: JSON.stringify({ ...authPayload, turnstile_token: token }),
         });
         const data = await res.json();
         if (!res.ok) throw data;
-        this.orderRef = data.order_ref || orderRef;
-        this.orderErrorMessage = '';
+        if (data.session_token) {
+          this.sessionToken = data.session_token;
+          sessionStorage.setItem('raffle_session_token', data.session_token);
+        }
         await this.postStatus();
       } catch (err: any) {
-        if (
-          err?.error === 'order_not_found' ||
-          err?.error === 'invalid_order_ref' ||
-          err?.error === 'order_already_bound' ||
-          err?.error === 'user_already_bound'
-        ) {
-          this.orderErrorMessage = err?.message || this.MSG_ERROR;
-          this.state = 'needs_payment';
-          return;
-        }
         this.state = 'error';
         this.errorMessage = err?.message || this.MSG_ERROR;
       }

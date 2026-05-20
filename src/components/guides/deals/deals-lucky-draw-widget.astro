@@ -14,7 +14,6 @@ const t = useTranslations(currentLang);
 const giveawayApiUrl = import.meta.env.PUBLIC_GIVEAWAY_API_URL;
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 const isDev = import.meta.env.DEV;
-const ordersHref = 'https://claudekit.cc/account/orders';
 ---
 
 <div
@@ -64,18 +63,6 @@ const ordersHref = 'https://claudekit.cc/account/orders';
         </div>
       </div>
 
-      <div class="mb-5 rounded-2xl border border-cyan-200 bg-cyan-50/80 p-4 dark:border-cyan-400/20 dark:bg-cyan-400/10">
-        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div class="min-w-0">
-            <p class="text-xs font-black uppercase tracking-[0.14em] text-cyan-800 dark:text-cyan-200">{t('deals.raffle.order_guide_title')}</p>
-            <p class="mt-1 text-sm leading-6 text-slate-700 dark:text-slate-200">{t('deals.raffle.order_guide_desc')}</p>
-          </div>
-          <button type="button" x-on:click="orderGuideOpen = true" class="inline-flex min-h-10 shrink-0 cursor-pointer items-center justify-center rounded-xl border border-cyan-300 bg-white px-4 py-2 text-sm font-black text-cyan-800 shadow-sm shadow-cyan-900/5 transition hover:bg-cyan-100 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-300/50 dark:border-cyan-300/25 dark:bg-slate-950/65 dark:text-cyan-100 dark:hover:bg-cyan-400/10 dark:focus-visible:ring-cyan-500/30">
-            {t('deals.raffle.order_guide_button')}
-          </button>
-        </div>
-      </div>
-
     <p x-show="state === 'loading'" x-cloak class="text-sm font-semibold text-slate-600 dark:text-slate-300">
       {t('deals.raffle.status_loading')}
     </p>
@@ -83,16 +70,16 @@ const ordersHref = 'https://claudekit.cc/account/orders';
     <div x-show="currentUsername" x-cloak class="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm dark:border-slate-800 dark:bg-slate-900/70">
       <div class="min-w-0">
         <p class="text-[0.68rem] font-black uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{t('deals.raffle.current_github')}</p>
-        <p class="mt-0.5 truncate font-mono font-black text-slate-950 dark:text-white" x-text="currentUsername ? `@${currentUsername}` : ''"></p>
+        <p class="mt-0.5 truncate font-mono font-black text-slate-950 dark:text-white" x-text="currentUsername || ''"></p>
       </div>
-      <button type="button" x-on:click="switchGitHubAccount()" x-bind:disabled="state === 'verifying_order' || state === 'registering' || state === 'claiming_prize'" class="inline-flex min-h-9 shrink-0 items-center rounded-lg bg-white px-3 py-1.5 text-xs font-bold text-slate-700 ring-1 ring-slate-200 transition hover:bg-slate-100 disabled:cursor-wait disabled:opacity-60 dark:bg-slate-950 dark:text-slate-200 dark:ring-slate-700 dark:hover:bg-slate-800">
+      <button type="button" x-on:click="switchGitHubAccount()" x-bind:disabled="state === 'checking_engagement' || state === 'registering' || state === 'claiming_prize'" class="inline-flex min-h-9 shrink-0 items-center rounded-lg bg-white px-3 py-1.5 text-xs font-bold text-slate-700 ring-1 ring-slate-200 transition hover:bg-slate-100 disabled:cursor-wait disabled:opacity-60 dark:bg-slate-950 dark:text-slate-200 dark:ring-slate-700 dark:hover:bg-slate-800">
         {t('deals.raffle.switch_github')}
       </button>
     </div>
 
     <div x-show="state === 'ready'" x-cloak class="space-y-4">
       <p class="text-sm leading-6 text-slate-600 dark:text-slate-300">{t('deals.raffle.ready_desc')}</p>
-      <button type="button" x-on:click="startOAuth('raffle_status')" class="inline-flex min-h-12 items-center justify-center rounded-xl border border-emerald-500/60 bg-emerald-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-900/15 transition hover:-translate-y-0.5 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-300 dark:border-emerald-400/50 dark:bg-emerald-600 dark:text-white dark:shadow-emerald-950/30 dark:hover:bg-emerald-500 dark:focus-visible:ring-emerald-800">
+      <button type="button" x-on:click="startEngagementCheck()" class="inline-flex min-h-12 items-center justify-center rounded-xl border border-emerald-500/60 bg-emerald-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-900/15 transition hover:-translate-y-0.5 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-300 dark:border-emerald-400/50 dark:bg-emerald-600 dark:text-white dark:shadow-emerald-950/30 dark:hover:bg-emerald-500 dark:focus-visible:ring-emerald-800">
         {t('deals.raffle.sign_in')}
       </button>
     </div>
@@ -104,19 +91,14 @@ const ordersHref = 'https://claudekit.cc/account/orders';
       </a>
     </div>
 
-    <form x-show="state === 'needs_payment' || state === 'verifying_order'" x-cloak x-on:submit.prevent="startVerify()" class="space-y-4">
+    <div x-show="state === 'needs_engagement' || state === 'checking_engagement'" x-cloak class="space-y-4">
       <p class="text-sm font-semibold text-slate-700 dark:text-slate-200">{t('deals.raffle.needs_payment')}</p>
-      <label class="block">
-        <span class="text-xs font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">{t('deals.raffle.order_ref_label')}</span>
-        <input x-model="orderRef" x-bind:disabled="state === 'verifying_order'" x-bind:aria-invalid="orderErrorMessage ? 'true' : 'false'" type="text" autocomplete="off" placeholder={t('deals.raffle.order_ref_placeholder')} class="mt-2 min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 font-mono text-sm text-slate-950 outline-none focus:border-emerald-500 disabled:cursor-wait disabled:opacity-70 aria-invalid:border-rose-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white" />
-      </label>
-      <p x-show="orderErrorMessage" x-cloak class="text-sm font-semibold text-rose-700 dark:text-rose-300" x-text="orderErrorMessage"></p>
-      <button type="submit" x-bind:disabled="state === 'verifying_order'" class="inline-flex min-h-12 items-center gap-2 rounded-xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white transition hover:bg-emerald-500 disabled:cursor-wait disabled:bg-emerald-700 disabled:opacity-85 dark:disabled:bg-emerald-700">
-        <span x-show="state === 'verifying_order'" x-cloak class="h-4 w-4 rounded-full border-2 border-white/40 border-t-white motion-safe:animate-pulse"></span>
-        <span x-show="state === 'verifying_order'" x-cloak>{t('deals.raffle.verifying')}</span>
-        <span x-show="state !== 'verifying_order'" x-text="verifyButtonLabel()">{t('deals.raffle.verify')}</span>
+      <button type="button" x-on:click="startEngagementCheck()" x-bind:disabled="state === 'checking_engagement'" class="inline-flex min-h-12 items-center gap-2 rounded-xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white transition hover:bg-emerald-500 disabled:cursor-wait disabled:bg-emerald-700 disabled:opacity-85 dark:disabled:bg-emerald-700">
+        <span x-show="state === 'checking_engagement'" x-cloak class="h-4 w-4 rounded-full border-2 border-white/40 border-t-white motion-safe:animate-pulse"></span>
+        <span x-show="state === 'checking_engagement'" x-cloak>{t('deals.raffle.verifying')}</span>
+        <span x-show="state !== 'checking_engagement'" x-text="verifyButtonLabel()">{t('deals.raffle.verify')}</span>
       </button>
-    </form>
+    </div>
 
     <div x-show="state === 'eligible'" x-cloak class="space-y-4">
       <p class="text-lg font-black text-emerald-700 dark:text-emerald-300">{t('deals.raffle.eligible')}</p>
@@ -125,16 +107,8 @@ const ordersHref = 'https://claudekit.cc/account/orders';
       </button>
     </div>
 
-    <div x-show="state === 'pending_order'" x-cloak class="space-y-4">
-      <p class="text-sm font-semibold text-amber-800 dark:text-amber-200">{t('deals.raffle.pending_order')}</p>
-      <button type="button" x-on:click="startRegister()" class="inline-flex min-h-12 items-center justify-center rounded-xl bg-amber-500 px-5 py-3 text-sm font-bold text-slate-950 shadow-lg shadow-amber-900/15 transition hover:bg-amber-400">
-        {t('deals.raffle.register_pending')}
-      </button>
-    </div>
-
     <p x-show="state === 'registering'" x-cloak class="text-sm font-semibold text-slate-700 dark:text-slate-200">{t('deals.raffle.registering')}</p>
     <p x-show="state === 'registered'" x-cloak class="text-sm font-bold text-emerald-700 dark:text-emerald-300">{t('deals.raffle.registered')}</p>
-    <p x-show="state === 'pending_approval'" x-cloak class="text-sm font-semibold text-amber-800 dark:text-amber-200">{t('deals.raffle.pending_approval')}</p>
     <p x-show="state === 'draw_pending'" x-cloak class="text-sm font-semibold text-slate-700 dark:text-slate-200">{t('deals.raffle.draw_pending')}</p>
 
     <div x-show="state === 'winner_revealed'" x-cloak class="rounded-2xl border border-emerald-200 bg-emerald-50 p-5 dark:border-emerald-900/60 dark:bg-emerald-950/30">
@@ -146,7 +120,7 @@ const ordersHref = 'https://claudekit.cc/account/orders';
         </div>
         <div class="min-w-0">
           <dt class="text-xs font-bold uppercase text-emerald-700 dark:text-emerald-300">{t('deals.raffle.github')}</dt>
-          <dd class="mt-1 break-words font-mono font-bold text-slate-950 dark:text-white" x-text="privateWinner?.github_username"></dd>
+          <dd class="mt-1 break-words font-mono font-bold text-slate-950 dark:text-white" x-text="privateWinner?.facebook_name || privateWinner?.github_username"></dd>
         </div>
         <div class="min-w-0">
           <dt class="text-xs font-bold uppercase text-emerald-700 dark:text-emerald-300">{t('deals.raffle.deadline')}</dt>
@@ -170,10 +144,9 @@ const ordersHref = 'https://claudekit.cc/account/orders';
 
     <div x-show="state === 'proof_ready'" x-cloak class="rounded-2xl border border-emerald-200 bg-emerald-50 p-5 dark:border-emerald-900/60 dark:bg-emerald-950/30">
       <p class="text-sm font-black text-emerald-800 dark:text-emerald-200">{t('deals.raffle.proof_ready')}</p>
-      <dl class="mt-4 grid gap-3 text-sm md:grid-cols-2">
+      <dl class="mt-4 grid gap-3 text-sm md:grid-cols-3">
         <div><dt class="text-xs font-bold uppercase text-emerald-700 dark:text-emerald-300">{t('deals.raffle.prize')}</dt><dd class="mt-1 font-mono font-bold text-slate-950 dark:text-white" x-text="proof?.prize_tier"></dd></div>
-        <div><dt class="text-xs font-bold uppercase text-emerald-700 dark:text-emerald-300">{t('deals.raffle.order_ref')}</dt><dd class="mt-1 break-all font-mono font-bold text-slate-950 dark:text-white" x-text="proof?.order_ref"></dd></div>
-        <div><dt class="text-xs font-bold uppercase text-emerald-700 dark:text-emerald-300">{t('deals.raffle.github')}</dt><dd class="mt-1 font-mono font-bold text-slate-950 dark:text-white" x-text="proof?.github_username"></dd></div>
+        <div><dt class="text-xs font-bold uppercase text-emerald-700 dark:text-emerald-300">{t('deals.raffle.github')}</dt><dd class="mt-1 font-mono font-bold text-slate-950 dark:text-white" x-text="proof?.facebook_name || proof?.github_username"></dd></div>
         <div><dt class="text-xs font-bold uppercase text-emerald-700 dark:text-emerald-300">{t('deals.raffle.deadline')}</dt><dd class="mt-1 font-semibold text-slate-950 dark:text-white" x-text="scheduleText.call({ schedule: { claim_deadline_at: proof?.claim_deadline_at } }, 'claim_deadline_at')"></dd></div>
       </dl>
       <p class="mt-4 text-sm leading-6 text-emerald-900 dark:text-emerald-100">{t('deals.raffle.telegram')}</p>
@@ -183,7 +156,7 @@ const ordersHref = 'https://claudekit.cc/account/orders';
     <p x-show="state === 'claim_expired'" x-cloak class="text-sm font-semibold text-amber-800 dark:text-amber-200">{t('deals.raffle.claim_expired')}</p>
     <div x-show="state === 'before_open'" x-cloak class="space-y-3">
       <p class="text-sm font-semibold text-slate-700 dark:text-slate-200">{t('deals.raffle.before_start')}</p>
-      <button type="button" x-show="publicResults.length" x-cloak x-on:click="startOAuth('raffle_status')" class="inline-flex min-h-12 items-center justify-center rounded-xl border border-emerald-500/60 bg-emerald-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-900/15 transition hover:-translate-y-0.5 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-300 dark:border-emerald-400/50 dark:bg-emerald-600 dark:text-white dark:shadow-emerald-950/30 dark:hover:bg-emerald-500 dark:focus-visible:ring-emerald-800">
+      <button type="button" x-show="publicResults.length" x-cloak x-on:click="startEngagementCheck()" class="inline-flex min-h-12 items-center justify-center rounded-xl border border-emerald-500/60 bg-emerald-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-900/15 transition hover:-translate-y-0.5 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-300 dark:border-emerald-400/50 dark:bg-emerald-600 dark:text-white dark:shadow-emerald-950/30 dark:hover:bg-emerald-500 dark:focus-visible:ring-emerald-800">
         {t('deals.raffle.sign_in')}
       </button>
       <button type="button" x-show="!publicResults.length" x-cloak disabled class="inline-flex min-h-12 cursor-not-allowed items-center justify-center rounded-xl border border-slate-300 bg-slate-100 px-5 py-3 text-sm font-bold text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400">
@@ -212,7 +185,7 @@ const ordersHref = 'https://claudekit.cc/account/orders';
         <template x-for="entry in poolEntries" :key="entry.id || entry.github_username || entry.github_id || entry.username">
           <div class="flex min-w-0 items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm dark:border-slate-800 dark:bg-slate-950/65">
             <span class="min-w-0 truncate font-mono font-black text-slate-950 dark:text-white" x-text="poolEntryName(entry)"></span>
-            <span class="shrink-0 rounded-full px-2 py-1 text-[0.68rem] font-black uppercase" x-bind:class="entry.approval_status === 'pending_approval' || entry.status === 'pending_approval' ? 'bg-amber-100 text-amber-800 dark:bg-amber-400/15 dark:text-amber-200' : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-400/15 dark:text-emerald-200'" x-text="poolEntryStatusLabel(entry)"></span>
+            <span class="shrink-0 rounded-full bg-emerald-100 px-2 py-1 text-[0.68rem] font-black uppercase text-emerald-800 dark:bg-emerald-400/15 dark:text-emerald-200" x-text="poolEntryStatusLabel(entry)"></span>
           </div>
         </template>
       </div>
@@ -226,9 +199,9 @@ const ordersHref = 'https://claudekit.cc/account/orders';
   <div x-show="publicResults.length" x-cloak class="mt-5 rounded-2xl border border-slate-200 p-5 dark:border-slate-800">
     <p class="text-xs font-black uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400" x-text="publicResultsLabel()">{t('deals.raffle.public_results')}</p>
     <div class="mt-3 grid gap-2">
-      <template x-for="result in publicResults" :key="`${result.github_username}-${result.prize_tier}`">
+      <template x-for="result in publicResults" :key="`${result.facebook_name || result.github_username}-${result.prize_tier}`">
         <div class="flex min-w-0 flex-col gap-3 rounded-xl bg-slate-50 px-3 py-2 text-sm dark:bg-slate-900 sm:flex-row sm:items-center sm:justify-between">
-          <span class="min-w-0 break-all font-mono font-bold text-slate-950 dark:text-white" x-text="result.github_username"></span>
+          <span class="min-w-0 break-all font-mono font-bold text-slate-950 dark:text-white" x-text="result.facebook_name || result.github_username"></span>
           <span class="flex shrink-0 flex-wrap gap-2">
             <span
               class="rounded-full px-2 py-1 text-xs font-black uppercase ring-1"
@@ -264,17 +237,15 @@ const ordersHref = 'https://claudekit.cc/account/orders';
         <button type="button" x-on:click="applyDevScenario('before_open')" class="min-h-9 rounded-lg bg-violet-100 px-3 py-2 text-left text-xs font-bold text-violet-800 transition hover:bg-violet-200 dark:bg-violet-500/20 dark:text-violet-100">Before open</button>
         <button type="button" x-on:click="applyDevScenario('ready')" class="min-h-9 rounded-lg bg-emerald-100 px-3 py-2 text-left text-xs font-bold text-emerald-800 transition hover:bg-emerald-200 dark:bg-emerald-500/20 dark:text-emerald-100">Ready / sign in</button>
         <button type="button" x-on:click="applyDevScenario('needs_claim')" class="min-h-9 rounded-lg bg-amber-100 px-3 py-2 text-left text-xs font-bold text-amber-800 transition hover:bg-amber-200 dark:bg-amber-500/20 dark:text-amber-100">Needs coupon</button>
-        <button type="button" x-on:click="applyDevScenario('needs_payment')" class="min-h-9 rounded-lg bg-sky-100 px-3 py-2 text-left text-xs font-bold text-sky-800 transition hover:bg-sky-200 dark:bg-sky-500/20 dark:text-sky-100">Needs order ref</button>
-        <button type="button" x-on:click="applyDevScenario('invalid_order')" class="min-h-9 rounded-lg bg-rose-100 px-3 py-2 text-left text-xs font-bold text-rose-800 transition hover:bg-rose-200 dark:bg-rose-500/20 dark:text-rose-100">Invalid order</button>
+        <button type="button" x-on:click="applyDevScenario('needs_engagement')" class="min-h-9 rounded-lg bg-sky-100 px-3 py-2 text-left text-xs font-bold text-sky-800 transition hover:bg-sky-200 dark:bg-sky-500/20 dark:text-sky-100">Needs engagement</button>
+        <button type="button" x-on:click="applyDevScenario('invalid_order')" class="min-h-9 rounded-lg bg-rose-100 px-3 py-2 text-left text-xs font-bold text-rose-800 transition hover:bg-rose-200 dark:bg-rose-500/20 dark:text-rose-100">Invalid account</button>
         <button type="button" x-on:click="applyDevScenario('chiennb_wrong_account')" class="min-h-9 rounded-lg bg-fuchsia-100 px-3 py-2 text-left text-xs font-bold text-fuchsia-800 transition hover:bg-fuchsia-200 dark:bg-fuchsia-500/20 dark:text-fuchsia-100">ChienNB wrong account</button>
-        <button type="button" x-on:click="applyDevScenario('chiennb_order_bound')" class="min-h-9 rounded-lg bg-rose-100 px-3 py-2 text-left text-xs font-bold text-rose-800 transition hover:bg-rose-200 dark:bg-rose-500/20 dark:text-rose-100">ChienNB ref bound</button>
+        <button type="button" x-on:click="applyDevScenario('chiennb_order_bound')" class="min-h-9 rounded-lg bg-rose-100 px-3 py-2 text-left text-xs font-bold text-rose-800 transition hover:bg-rose-200 dark:bg-rose-500/20 dark:text-rose-100">ChienNB needs check</button>
         <button type="button" x-on:click="applyDevScenario('chiennb_ready')" class="min-h-9 rounded-lg bg-emerald-100 px-3 py-2 text-left text-xs font-bold text-emerald-800 transition hover:bg-emerald-200 dark:bg-emerald-500/20 dark:text-emerald-100">ChienNB ready</button>
-        <button type="button" x-on:click="applyDevScenario('verifying_order')" class="min-h-9 rounded-lg bg-cyan-100 px-3 py-2 text-left text-xs font-bold text-cyan-800 transition hover:bg-cyan-200 dark:bg-cyan-500/20 dark:text-cyan-100">Verifying</button>
+        <button type="button" x-on:click="applyDevScenario('checking_engagement')" class="min-h-9 rounded-lg bg-cyan-100 px-3 py-2 text-left text-xs font-bold text-cyan-800 transition hover:bg-cyan-200 dark:bg-cyan-500/20 dark:text-cyan-100">Checking</button>
         <button type="button" x-on:click="applyDevScenario('eligible')" class="min-h-9 rounded-lg bg-emerald-100 px-3 py-2 text-left text-xs font-bold text-emerald-800 transition hover:bg-emerald-200 dark:bg-emerald-500/20 dark:text-emerald-100">Eligible</button>
-        <button type="button" x-on:click="applyDevScenario('pending_order')" class="min-h-9 rounded-lg bg-amber-100 px-3 py-2 text-left text-xs font-bold text-amber-800 transition hover:bg-amber-200 dark:bg-amber-500/20 dark:text-amber-100">Pending order</button>
         <button type="button" x-on:click="applyDevScenario('registering')" class="min-h-9 rounded-lg bg-slate-100 px-3 py-2 text-left text-xs font-bold text-slate-800 transition hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-100">Registering</button>
         <button type="button" x-on:click="applyDevScenario('registered')" class="min-h-9 rounded-lg bg-emerald-100 px-3 py-2 text-left text-xs font-bold text-emerald-800 transition hover:bg-emerald-200 dark:bg-emerald-500/20 dark:text-emerald-100">Registered</button>
-        <button type="button" x-on:click="applyDevScenario('pending_approval')" class="min-h-9 rounded-lg bg-amber-100 px-3 py-2 text-left text-xs font-bold text-amber-800 transition hover:bg-amber-200 dark:bg-amber-500/20 dark:text-amber-100">Pending approval</button>
         <button type="button" x-on:click="applyDevScenario('draw_pending')" class="min-h-9 rounded-lg bg-slate-100 px-3 py-2 text-left text-xs font-bold text-slate-800 transition hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-100">Draw pending</button>
         <button type="button" x-on:click="applyDevScenario('winner_revealed')" class="min-h-9 rounded-lg bg-teal-100 px-3 py-2 text-left text-xs font-bold text-teal-800 transition hover:bg-teal-200 dark:bg-teal-500/20 dark:text-teal-100">Winner revealed</button>
         <button type="button" x-on:click="applyDevScenario('claiming_prize')" class="min-h-9 rounded-lg bg-slate-100 px-3 py-2 text-left text-xs font-bold text-slate-800 transition hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-100">Claiming prize</button>
@@ -357,79 +328,6 @@ const ordersHref = 'https://claudekit.cc/account/orders';
           <button type="button" x-on:click="confirmDeclinePrize()" x-bind:disabled="state === 'declining_prize'" class="inline-flex min-h-12 cursor-pointer items-center justify-center rounded-2xl bg-slate-950 px-5 py-3 text-sm font-black text-white shadow-lg shadow-slate-950/20 transition hover:-translate-y-0.5 hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-300/60 disabled:cursor-wait disabled:opacity-70 dark:bg-amber-300 dark:text-slate-950 dark:hover:bg-amber-200">
             {t('deals.raffle.decline_confirm_action')}
           </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div
-    x-show="orderGuideOpen"
-    x-cloak
-    x-transition.opacity
-    x-on:keydown.escape.window="orderGuideOpen = false"
-    x-on:click.self="orderGuideOpen = false"
-    class="fixed inset-0 z-[80] flex items-start justify-center overflow-y-auto bg-slate-950/75 p-3 pt-4 backdrop-blur-sm sm:items-center sm:p-4"
-  >
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="order-guide-title"
-      class="max-h-[calc(100dvh-2rem)] w-full max-w-2xl overflow-y-auto rounded-2xl border border-slate-200 bg-white shadow-2xl shadow-slate-950/40 dark:border-slate-800 dark:bg-slate-950"
-    >
-      <div class="sticky top-0 z-10 flex items-start justify-between gap-4 border-b border-slate-200 bg-white/95 p-4 shadow-sm shadow-slate-950/5 backdrop-blur dark:border-slate-800 dark:bg-slate-950/95 dark:shadow-black/20 sm:p-5">
-        <div class="min-w-0 pr-2">
-          <p class="text-xs font-black uppercase tracking-[0.16em] text-cyan-700 dark:text-cyan-300">{t('deals.raffle.order_guide_kicker')}</p>
-          <h2 id="order-guide-title" class="mt-2 font-heading text-xl font-black leading-tight text-slate-950 dark:text-white sm:text-2xl">{t('deals.raffle.order_guide_modal_title')}</h2>
-        </div>
-        <button type="button" x-on:click="orderGuideOpen = false" class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-300 bg-white text-2xl font-black leading-none text-slate-700 shadow-sm shadow-slate-950/10 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-300/50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:shadow-black/30 dark:hover:bg-slate-800" aria-label={t('deals.raffle.order_guide_close')}>
-          ×
-        </button>
-      </div>
-
-      <div class="grid gap-5 p-4 sm:p-5 lg:grid-cols-[minmax(0,0.78fr)_minmax(280px,1fr)]">
-        <ol class="space-y-3">
-          <li class="rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-900/70">
-            <p class="text-xs font-black uppercase tracking-[0.14em] text-cyan-700 dark:text-cyan-300">{t('deals.raffle.order_guide_step1_label')}</p>
-            <p class="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-200">
-              {t('deals.raffle.order_guide_step1_before')}{' '}
-              <a href={ordersHref} target="_blank" rel="noreferrer" class="break-all font-black text-cyan-700 underline decoration-cyan-300 underline-offset-4 hover:text-cyan-600 dark:text-cyan-200 dark:decoration-cyan-500/50 dark:hover:text-cyan-100">
-                {ordersHref}
-              </a>
-            </p>
-          </li>
-          <li class="rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-900/70">
-            <p class="text-xs font-black uppercase tracking-[0.14em] text-cyan-700 dark:text-cyan-300">{t('deals.raffle.order_guide_step2_label')}</p>
-            <p class="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-200">{t('deals.raffle.order_guide_step2_desc')}</p>
-          </li>
-        </ol>
-
-        <div class="rounded-2xl border border-cyan-200 bg-[radial-gradient(circle_at_20%_12%,rgba(14,165,233,0.18),transparent_35%),linear-gradient(145deg,#f8fafc,#ecfeff)] p-4 text-slate-950 shadow-xl shadow-cyan-950/10 dark:border-slate-800 dark:bg-[radial-gradient(circle_at_20%_12%,rgba(14,165,233,0.22),transparent_35%),linear-gradient(145deg,#111827,#020617)] dark:text-white dark:shadow-slate-950/30">
-          <p class="text-lg font-black">{t('deals.raffle.order_guide_mock_title')}</p>
-          <div class="mt-4 rounded-xl border border-slate-200 bg-white/85 p-4 shadow-sm shadow-cyan-950/5 dark:border-white/12 dark:bg-white/[0.06] dark:shadow-none">
-            <div class="flex items-start justify-between gap-3">
-              <div>
-                <p class="text-xl font-black">Marketing Kit</p>
-                <div class="mt-2 inline-flex items-center font-mono text-sm font-black text-slate-950 dark:text-white">
-                  <span>Order #</span>
-                  <span class="rounded-md border-2 border-rose-500 bg-rose-500/10 px-2.5 py-1.5 text-rose-700 dark:text-white">
-                    {t('deals.raffle.order_guide_mock_order')}
-                  </span>
-                </div>
-              </div>
-              <span class="rounded-full border border-emerald-300 bg-emerald-100 px-3 py-1 text-xs font-black text-emerald-800 dark:border-emerald-400/40 dark:bg-emerald-400/15 dark:text-emerald-200">Completed</span>
-            </div>
-            <div class="mt-6 grid gap-4 text-sm sm:grid-cols-2">
-              <div>
-                <p class="text-slate-500 dark:text-slate-400">Amount</p>
-                <p class="mt-1 font-bold text-slate-800 dark:text-slate-100">...</p>
-              </div>
-              <div>
-                <p class="text-slate-500 dark:text-slate-400">Payment Method</p>
-                <p class="mt-1 font-bold text-slate-800 dark:text-slate-100">SePay</p>
-              </div>
-            </div>
-          </div>
-          <p class="mt-3 text-xs leading-5 text-slate-600 dark:text-slate-300">{t('deals.raffle.order_guide_mock_hint')}</p>
         </div>
       </div>
     </div>
