@@ -346,6 +346,10 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       this.renderTurnstile('raffle_check_engagement');
     },
 
+    startStatusCheck() {
+      this.startOAuth('raffle_status');
+    },
+
     startRegister() {
       this.state = 'registering';
       this.renderTurnstile('raffle_register');

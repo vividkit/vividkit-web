@@ -205,6 +205,8 @@ export const deals = {
   'deals.raffle.registered': 'You are registered for today’s draw.',
   'deals.raffle.pending_approval': 'This GitHub account is not eligible to register.',
   'deals.raffle.draw_pending': 'Registration is closed. The backend draws at 22:00 and reveals on schedule.',
+  'deals.raffle.check_results': 'Check your result',
+  'deals.raffle.check_results_desc': 'If your name is in the winner list, sign in with GitHub to open the claim screen.',
   'deals.raffle.winner': 'You won a Claude Team plan seat.',
   'deals.raffle.before_start': 'Registration is not open yet.',
   'deals.raffle.registration_not_open': 'Wait for registration',
