@@ -13,9 +13,9 @@
   <div class="rounded-lg border border-rose-200 bg-rose-50 p-4 dark:border-rose-500/30 dark:bg-rose-900/20">
     <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
       <div>
-        <p class="text-sm font-bold text-rose-700 dark:text-rose-300">Reset local GitHub claim session</p>
+        <p class="text-sm font-bold text-rose-700 dark:text-rose-300">Reset local claim and raffle session</p>
         <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400">
-          Clears cached coupon claim, raffle session token, OAuth nonce, Turnstile token, and pending order ref in this browser.
+          Clears cached coupon claim, raffle session token, OAuth nonce, and Turnstile token in this browser.
         </p>
       </div>
       <button
@@ -135,21 +135,20 @@
 <script>
   const $ = (sel: string) => document.getElementById(sel);
 
-  const sessionStorageKeysToClear = [
-    'raffle_session_token',
-    'raffle_pending_order_ref',
-    'turnstile_token',
-    'turnstile_token:claim',
-    'turnstile_token:raffle_status',
-    'turnstile_token:raffle_verify_order',
-    'turnstile_token:raffle_register',
-    'turnstile_token:raffle_claim_prize',
-    'oauth_nonce:claim',
-    'oauth_nonce:raffle_status',
-    'oauth_nonce:raffle_verify_order',
-    'oauth_nonce:raffle_register',
-    'oauth_nonce:raffle_claim_prize',
-  ];
+	  const sessionStorageKeysToClear = [
+	    'raffle_session_token',
+	    'turnstile_token',
+	    'turnstile_token:claim',
+	    'turnstile_token:raffle_status',
+	    'turnstile_token:raffle_check_engagement',
+	    'turnstile_token:raffle_register',
+	    'turnstile_token:raffle_claim_prize',
+	    'oauth_nonce:claim',
+	    'oauth_nonce:raffle_status',
+	    'oauth_nonce:raffle_check_engagement',
+	    'oauth_nonce:raffle_register',
+	    'oauth_nonce:raffle_claim_prize',
+	  ];
 
   function resetDealsAuthState() {
     try {

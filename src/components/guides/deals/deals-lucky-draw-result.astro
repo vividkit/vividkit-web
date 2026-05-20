@@ -19,7 +19,7 @@ const t = useTranslations(currentLang);
     <dl class="mt-4 grid gap-3 text-sm sm:grid-cols-2">
       <div class="min-w-0">
         <dt class="text-xs font-bold uppercase text-emerald-700 dark:text-emerald-300">{t('deals.raffle.github')}</dt>
-        <dd class="mt-1 break-words font-mono font-bold text-slate-950 dark:text-white" x-text="result?.github_username"></dd>
+        <dd class="mt-1 break-words font-mono font-bold text-slate-950 dark:text-white" x-text="result?.facebook_name || result?.github_username"></dd>
       </div>
       <div class="min-w-0">
         <dt class="text-xs font-bold uppercase text-emerald-700 dark:text-emerald-300">{t('deals.raffle.prize')}</dt>
