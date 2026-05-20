@@ -205,6 +205,8 @@ export const deals = {
   'deals.raffle.registered': 'Bạn đã đăng ký draw hôm nay.',
   'deals.raffle.pending_approval': 'GitHub account chưa đủ điều kiện để đăng ký.',
   'deals.raffle.draw_pending': 'Đăng ký đã đóng. Hệ thống sẽ draw lúc 22:00 và công bố kết quả theo lịch.',
+  'deals.raffle.check_results': 'Kiểm tra kết quả của bạn',
+  'deals.raffle.check_results_desc': 'Nếu tên bạn nằm trong danh sách winner, đăng nhập GitHub để hiện màn hình claim.',
   'deals.raffle.winner': 'Bạn đã trúng một seat Claude Team plan.',
   'deals.raffle.before_start': 'Đăng ký chưa mở.',
   'deals.raffle.registration_not_open': 'Đợi mở đăng ký',
