@@ -3,6 +3,7 @@ import type Alpine from 'alpinejs';
 type AuthAction =
   | 'raffle_status'
   | 'raffle_check_engagement'
+  | 'raffle_verify_order'
   | 'raffle_register'
   | 'raffle_claim_prize'
   | 'raffle_decline_prize';
@@ -14,6 +15,7 @@ type DrawState =
   | 'needs_engagement'
   | 'checking_engagement'
   | 'eligible'
+  | 'decline_blocked'
   | 'registering'
   | 'registered'
   | 'draw_pending'
@@ -33,8 +35,15 @@ type DevScenario =
   | 'chiennb_wrong_account'
   | 'chiennb_order_bound'
   | 'chiennb_ready'
+  | 'check_order'
+  | 'check_order_success'
+  | 'boosted_eligible'
+  | 'decline_blocked'
   | 'many_pool_users'
   | 'public_results'
+  | 'reveal_started'
+  | 'reveal_partial'
+  | 'reveal_complete'
   | 'rate_limited';
 
 type SeatBudget = { standard: number; premium: number; total: number };
@@ -125,6 +134,15 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
     privateWinner: null as any,
     proof: null as any,
     declineConfirmOpen: false,
+    orderGuideOpen: false,
+    orderRefInput: '',
+    orderBoostStatus: 'idle',
+    orderMessage: '',
+    hasVividKitReferralBoost: false,
+    raffleWeight: 1,
+    declineCount: 0,
+    declineLimit: 2,
+    declineBlocked: false,
 
     async init() {
       const el = document.querySelector('[data-deals-raffle-widget]') as HTMLElement | null;
@@ -228,6 +246,15 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       return this.LABEL_PUBLIC_RESULTS_FOR.replace('{date}', formattedDay);
     },
 
+    hasRevealedResults() {
+      return this.publicResults.length > 0;
+    },
+
+    hasFullyRevealedResults() {
+      const total = Number(this.seatBudget?.total || this.schedule?.seat_budget?.total || 0);
+      return total > 0 && this.publicResults.length >= total;
+    },
+
     normalizePoolEntries(data: any) {
       const source = Array.isArray(data?.entries)
         ? data.entries
@@ -244,6 +271,8 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
           github_username: entry.facebook_name || entry.github_username || entry.username || entry.github_login || entry.github || '',
           github_id: entry.github_id || '',
           approval_status: entry.approval_status || entry.status || (entry.qualified ? 'qualified' : ''),
+          entry_type: entry.entry_type || 'normal',
+          raffle_weight: Number(entry.raffle_weight || 1),
           status: entry.status || '',
         }))
         .filter((entry: any) => entry.github_username || entry.github_id);
@@ -266,6 +295,10 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
 
     poolEntryStatusLabel(entry: any) {
       return entry?.approval_status || entry?.status || 'qualified';
+    },
+
+    poolEntryIsBoosted(entry: any) {
+      return entry?.entry_type === 'vividkit_referral_boost' || Number(entry?.raffle_weight || 1) > 1;
     },
 
     prizeTierBadgeClass(tier: string | undefined) {
@@ -336,6 +369,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       }
       if (action === 'raffle_status') return this.postStatus(oauthCode);
       if (action === 'raffle_check_engagement') return this.postCheckEngagement(oauthCode);
+      if (action === 'raffle_verify_order') return this.postVerifyOrder(oauthCode);
       if (action === 'raffle_register') return this.postRegister(oauthCode);
       if (action === 'raffle_claim_prize') return this.postClaimPrize(oauthCode);
       if (action === 'raffle_decline_prize') return this.postDeclinePrize(oauthCode);
@@ -353,6 +387,15 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
     startRegister() {
       this.state = 'registering';
       this.renderTurnstile('raffle_register');
+    },
+
+    startVerifyOrder() {
+      if (!String(this.orderRefInput || '').trim()) {
+        this.orderBoostStatus = 'error';
+        return;
+      }
+      this.orderBoostStatus = 'checking';
+      this.renderTurnstile('raffle_verify_order');
     },
 
     startClaimPrize() {
@@ -415,6 +458,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
 
     async completeSessionAction(action: AuthAction) {
       if (action === 'raffle_check_engagement') return this.postCheckEngagement();
+      if (action === 'raffle_verify_order') return this.postVerifyOrder();
       if (action === 'raffle_register') return this.postRegister();
       if (action === 'raffle_claim_prize') return this.postClaimPrize();
       if (action === 'raffle_decline_prize') return this.postDeclinePrize();
@@ -432,10 +476,16 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
         sessionStorage.setItem('raffle_session_token', data.session_token);
       }
       this.currentUsername = data.facebook_name || data.username || data.registration?.facebook_name || data.registration?.github_username || '';
+      this.hasVividKitReferralBoost = Boolean(data.has_vividkit_referral_boost || data.registration?.entry_type === 'vividkit_referral_boost');
+      this.raffleWeight = Number(data.raffle_weight || data.registration?.raffle_weight || (this.hasVividKitReferralBoost ? 2 : 1));
+      this.declineCount = Number(data.decline_count || 0);
+      this.declineLimit = Number(data.decline_limit || 2);
+      this.declineBlocked = Boolean(data.decline_blocked);
       if (this.proof) this.state = 'proof_ready';
       else if (this.privateWinner?.fulfillment_status === 'declined') this.state = 'prize_declined';
       else if (this.privateWinner?.fulfillment_status === 'rolled_over') this.state = 'claim_expired';
       else if (this.privateWinner) this.state = 'winner_revealed';
+      else if (this.declineBlocked) this.state = 'decline_blocked';
       else if (data.phase === 'before_open') this.state = 'before_open';
       else if (data.phase === 'inactive') this.state = 'closed';
       else if (data.registration) this.state = data.phase === 'draw_ready' ? 'draw_pending' : 'registered';
@@ -472,13 +522,20 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       this.seatBudget = { standard: 12, premium: 3, total: 15 };
       this.publicResults = [];
       this.poolEntries = [
-        { id: 'pool-1', github_username: 'Kai Dev', approval_status: 'qualified' },
-        { id: 'pool-2', github_username: 'Thieu Dev', approval_status: 'qualified' },
-        { id: 'pool-3', github_username: 'GitHub Dev', approval_status: 'qualified' },
+        { id: 'pool-1', github_username: 'Kai Dev', approval_status: 'qualified', entry_type: 'vividkit_referral_boost', raffle_weight: 2 },
+        { id: 'pool-2', github_username: 'Thieu Dev', approval_status: 'qualified', entry_type: 'normal', raffle_weight: 1 },
+        { id: 'pool-3', github_username: 'GitHub Dev', approval_status: 'qualified', entry_type: 'normal', raffle_weight: 1 },
       ];
       this.privateWinner = null;
       this.proof = null;
       this.errorMessage = '';
+      this.orderBoostStatus = 'idle';
+      this.orderMessage = '';
+      this.hasVividKitReferralBoost = false;
+      this.raffleWeight = 1;
+      this.declineCount = 0;
+      this.declineLimit = 2;
+      this.declineBlocked = false;
       this.currentUsername = 'Dev User';
 
       if (scenario === 'before_open') {
@@ -498,6 +555,15 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       if (scenario === 'draw_pending') {
         this.schedule = { ...schedule, phase: 'draw_ready', registration_cutoff_at: isoFromNow(-1), draw_at: isoFromNow(1) };
       }
+
+      const revealResults = (count: number) => Array.from({ length: count }, (_, index) => ({
+        facebook_name: `Reveal Dev ${index + 1}`,
+        github_username: `Reveal Dev ${index + 1}`,
+        prize_tier: index === 4 ? 'Premium' : 'Standard',
+        claim_status: 'pending',
+        campaign_day: '2026-05-20',
+        revealed_at: isoFromNow((index - count) / 12),
+      }));
 
       if (scenario === 'invalid_order') {
         this.errorMessage = 'Could not verify this GitHub account.';
@@ -520,6 +586,38 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       if (scenario === 'chiennb_ready') {
         this.currentUsername = 'chiennb';
         this.state = 'needs_engagement';
+        return;
+      }
+
+      if (scenario === 'boosted_eligible') {
+        this.hasVividKitReferralBoost = true;
+        this.raffleWeight = 2;
+        this.orderBoostStatus = 'verified';
+        this.state = 'eligible';
+        return;
+      }
+
+      if (scenario === 'check_order') {
+        this.orderRefInput = '0688adb3';
+        this.orderBoostStatus = 'checking';
+        this.state = 'eligible';
+        return;
+      }
+
+      if (scenario === 'check_order_success') {
+        this.orderRefInput = '0688adb3';
+        this.hasVividKitReferralBoost = true;
+        this.raffleWeight = 2;
+        this.orderBoostStatus = 'verified';
+        this.state = 'eligible';
+        return;
+      }
+
+      if (scenario === 'decline_blocked') {
+        this.declineCount = 2;
+        this.declineLimit = 2;
+        this.declineBlocked = true;
+        this.state = 'decline_blocked';
         return;
       }
 
@@ -549,11 +647,23 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
         return;
       }
 
+      if (scenario === 'reveal_started' || scenario === 'reveal_partial' || scenario === 'reveal_complete') {
+        const resultCount = scenario === 'reveal_started' ? 1 : scenario === 'reveal_partial' ? 3 : 5;
+        this.schedule = { ...schedule, phase: 'draw_ready', registration_cutoff_at: isoFromNow(-1), draw_at: isoFromNow(-0.5) };
+        this.seatBudget = { standard: 4, premium: 1, total: 5 };
+        this.publicResults = revealResults(resultCount);
+        this.currentUsername = '';
+        this.state = 'draw_pending';
+        return;
+      }
+
       if (scenario === 'many_pool_users') {
         this.poolEntries = Array.from({ length: 32 }, (_, index) => ({
           id: `pool-many-${index + 1}`,
           github_username: `Qualified Dev ${index + 1}`,
           approval_status: 'qualified',
+          entry_type: index % 5 === 0 ? 'vividkit_referral_boost' : 'normal',
+          raffle_weight: index % 5 === 0 ? 2 : 1,
         }));
         this.state = 'ready';
         return;
@@ -574,6 +684,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       sessionStorage.removeItem('raffle_session_token');
       sessionStorage.removeItem('turnstile_token:raffle_status');
       sessionStorage.removeItem('turnstile_token:raffle_check_engagement');
+      sessionStorage.removeItem('turnstile_token:raffle_verify_order');
       sessionStorage.removeItem('turnstile_token:raffle_register');
       sessionStorage.removeItem('turnstile_token:raffle_claim_prize');
       sessionStorage.removeItem('turnstile_token:raffle_decline_prize');
@@ -635,6 +746,36 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       }
     },
 
+    async postVerifyOrder(oauthCode = '') {
+      const token = sessionStorage.getItem('turnstile_token:raffle_verify_order');
+      sessionStorage.removeItem('turnstile_token:raffle_verify_order');
+      const authPayload = this.sessionToken ? { session_token: this.sessionToken } : { oauth_code: oauthCode };
+      try {
+        const res = await fetch(`${this.API_BASE}/raffle/verify-order`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            ...authPayload,
+            turnstile_token: token,
+            order_ref: this.orderRefInput,
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw data;
+        if (data.session_token) {
+          this.sessionToken = data.session_token;
+          sessionStorage.setItem('raffle_session_token', data.session_token);
+        }
+        this.orderBoostStatus = 'verified';
+        this.orderMessage = data.message || '';
+        await this.postStatus();
+      } catch (err: any) {
+        this.orderBoostStatus = 'normal';
+        this.orderMessage = err?.message || this.MSG_ERROR;
+        if (this.state !== 'eligible') this.state = 'eligible';
+      }
+    },
+
     async postRegister(oauthCode = '') {
       const token = sessionStorage.getItem('turnstile_token:raffle_register');
       sessionStorage.removeItem('turnstile_token:raffle_register');
@@ -651,6 +792,13 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
         await this.postStatus();
         await this.loadPoolEntries();
       } catch (err: any) {
+        if (err?.error === 'decline_limit_reached') {
+          this.declineCount = Number(err.decline_count || this.declineLimit);
+          this.declineLimit = Number(err.decline_limit || this.declineLimit);
+          this.declineBlocked = true;
+          this.state = 'decline_blocked';
+          return;
+        }
         this.state = 'error';
         this.errorMessage = err?.message || this.MSG_ERROR;
       }
