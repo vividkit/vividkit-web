@@ -114,6 +114,7 @@ export const deals = {
   'deals.raffle.join_rule_title': 'How to enter',
   'deals.raffle.join_rule_desc': 'Follow fb.com/shinantori, sign in with GitHub, then register before the cutoff. Your GitHub account must be at least 30 days old to reduce spam and cheating.',
   'deals.raffle.order_ref_link': 'Register in the form below',
+  'deals.raffle.claim_code_link': 'Want a CK coupon? Claim it on Deals',
   'deals.raffle.prior_purchase_title': 'Followers can join',
   'deals.raffle.prior_purchase_desc': 'No ClaudeKit order ref is required for this event. Each follower enters with a GitHub account that is at least 30 days old.',
   'deals.raffle.daily_schedule_title': 'Daily schedule',
