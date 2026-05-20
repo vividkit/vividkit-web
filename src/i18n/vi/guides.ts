@@ -150,7 +150,7 @@ export const guides = {
   'guides.deals.title': 'Ưu Đãi',
   'guides.deals.description': 'Nhận mã giảm giá ClaudeKit hàng ngày',
   'guides.lucky_draw.title': 'Lucky Draw',
-  'guides.lucky_draw.description': 'Đăng ký paid ClaudeKit order để tham gia lucky draw theo lịch',
+  'guides.lucky_draw.description': 'Đăng nhập GitHub để tham gia lucky draw theo lịch',
   'guides.promotions.title': 'Khuyến Mãi',
   'guides.promotions.description': 'Ưu đãi và khuyến mãi dịch vụ AI',
   'guides.custom_hooks.title': 'Custom Hooks',
