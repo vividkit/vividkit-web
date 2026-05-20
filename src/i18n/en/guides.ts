@@ -150,7 +150,7 @@ export const guides = {
   'guides.deals.title': 'Deals',
   'guides.deals.description': 'Claim exclusive daily discount codes for ClaudeKit',
   'guides.lucky_draw.title': 'Lucky Draw',
-  'guides.lucky_draw.description': 'Register paid ClaudeKit orders for the scheduled lucky draw',
+  'guides.lucky_draw.description': 'Register with GitHub for the scheduled lucky draw',
   'guides.promotions.title': 'Promotions',
   'guides.promotions.description': 'AI service deals and promotions',
   'guides.custom_hooks.title': 'Custom Hooks',
