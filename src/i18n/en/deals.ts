@@ -273,7 +273,12 @@ export const deals = {
   'deals.raffle.order_ref': 'GitHub',
   'deals.raffle.github': 'GitHub',
   'deals.raffle.prize': 'Prize',
-  'deals.raffle.telegram': 'Contact the VividKit author on Telegram at @thieunv and provide a screenshot of this winning claim screen to proceed with the next step.',
+  'deals.raffle.contact_title': 'Contact VividKit author',
+  'deals.raffle.telegram': 'Scan the Telegram QR or open @thieunv, then send a screenshot of this winning claim screen.',
+  'deals.raffle.telegram_qr_alt': 'Telegram QR code for @thieunv',
+  'deals.raffle.telegram_label': 'Telegram',
+  'deals.raffle.facebook_label': 'Facebook',
+  'deals.raffle.discord_label': 'Discord',
   'deals.raffle.error': 'Could not complete this draw action. Please try again.',
   'deals.raffle.rate_limited': 'Too many attempts. Please try again later.',
 

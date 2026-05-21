@@ -72,14 +72,14 @@ const isDev = import.meta.env.DEV;
         <p class="text-[0.68rem] font-black uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{t('deals.raffle.current_github')}</p>
         <p class="mt-0.5 truncate font-mono font-black text-slate-950 dark:text-white" x-text="currentUsername || ''"></p>
       </div>
-      <button type="button" x-on:click="switchGitHubAccount()" x-bind:disabled="state === 'checking_engagement' || state === 'registering' || state === 'claiming_prize'" class="inline-flex min-h-9 shrink-0 items-center rounded-lg bg-white px-3 py-1.5 text-xs font-bold text-slate-700 ring-1 ring-slate-200 transition hover:bg-slate-100 disabled:cursor-wait disabled:opacity-60 dark:bg-slate-950 dark:text-slate-200 dark:ring-slate-700 dark:hover:bg-slate-800">
+      <button type="button" x-on:click="switchGitHubAccount()" x-bind:disabled="state === 'confirming_github_entry' || state === 'registering' || state === 'claiming_prize'" class="inline-flex min-h-9 shrink-0 items-center rounded-lg bg-white px-3 py-1.5 text-xs font-bold text-slate-700 ring-1 ring-slate-200 transition hover:bg-slate-100 disabled:cursor-wait disabled:opacity-60 dark:bg-slate-950 dark:text-slate-200 dark:ring-slate-700 dark:hover:bg-slate-800">
         {t('deals.raffle.switch_github')}
       </button>
     </div>
 
     <div x-show="state === 'ready'" x-cloak class="space-y-4">
       <p class="text-sm leading-6 text-slate-600 dark:text-slate-300">{t('deals.raffle.ready_desc')}</p>
-      <button type="button" x-on:click="startEngagementCheck()" class="inline-flex min-h-12 items-center justify-center rounded-xl border border-emerald-500/60 bg-emerald-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-900/15 transition hover:-translate-y-0.5 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-300 dark:border-emerald-400/50 dark:bg-emerald-600 dark:text-white dark:shadow-emerald-950/30 dark:hover:bg-emerald-500 dark:focus-visible:ring-emerald-800">
+      <button type="button" x-on:click="startGitHubEntryConfirm()" class="inline-flex min-h-12 items-center justify-center rounded-xl border border-emerald-500/60 bg-emerald-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-900/15 transition hover:-translate-y-0.5 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-300 dark:border-emerald-400/50 dark:bg-emerald-600 dark:text-white dark:shadow-emerald-950/30 dark:hover:bg-emerald-500 dark:focus-visible:ring-emerald-800">
         {t('deals.raffle.sign_in')}
       </button>
     </div>
@@ -91,12 +91,12 @@ const isDev = import.meta.env.DEV;
       </a>
     </div>
 
-    <div x-show="state === 'needs_engagement' || state === 'checking_engagement'" x-cloak class="space-y-4">
+    <div x-show="state === 'needs_github_confirmation' || state === 'confirming_github_entry'" x-cloak class="space-y-4">
       <p class="text-sm font-semibold text-slate-700 dark:text-slate-200">{t('deals.raffle.needs_payment')}</p>
-      <button type="button" x-on:click="startEngagementCheck()" x-bind:disabled="state === 'checking_engagement'" class="inline-flex min-h-12 items-center gap-2 rounded-xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white transition hover:bg-emerald-500 disabled:cursor-wait disabled:bg-emerald-700 disabled:opacity-85 dark:disabled:bg-emerald-700">
-        <span x-show="state === 'checking_engagement'" x-cloak class="h-4 w-4 rounded-full border-2 border-white/40 border-t-white motion-safe:animate-pulse"></span>
-        <span x-show="state === 'checking_engagement'" x-cloak>{t('deals.raffle.verifying')}</span>
-        <span x-show="state !== 'checking_engagement'" x-text="verifyButtonLabel()">{t('deals.raffle.verify')}</span>
+      <button type="button" x-on:click="startGitHubEntryConfirm()" x-bind:disabled="state === 'confirming_github_entry'" class="inline-flex min-h-12 items-center gap-2 rounded-xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white transition hover:bg-emerald-500 disabled:cursor-wait disabled:bg-emerald-700 disabled:opacity-85 dark:disabled:bg-emerald-700">
+        <span x-show="state === 'confirming_github_entry'" x-cloak class="h-4 w-4 rounded-full border-2 border-white/40 border-t-white motion-safe:animate-pulse"></span>
+        <span x-show="state === 'confirming_github_entry'" x-cloak>{t('deals.raffle.verifying')}</span>
+        <span x-show="state !== 'confirming_github_entry'" x-text="verifyButtonLabel()">{t('deals.raffle.verify')}</span>
       </button>
     </div>
 
@@ -192,14 +192,53 @@ const isDev = import.meta.env.DEV;
         <div><dt class="text-xs font-bold uppercase text-emerald-700 dark:text-emerald-300">{t('deals.raffle.github')}</dt><dd class="mt-1 font-mono font-bold text-slate-950 dark:text-white" x-text="proof?.facebook_name || proof?.github_username"></dd></div>
         <div><dt class="text-xs font-bold uppercase text-emerald-700 dark:text-emerald-300">{t('deals.raffle.deadline')}</dt><dd class="mt-1 font-semibold text-slate-950 dark:text-white" x-text="scheduleText.call({ schedule: { claim_deadline_at: proof?.claim_deadline_at } }, 'claim_deadline_at')"></dd></div>
       </dl>
-      <p class="mt-4 text-sm leading-6 text-emerald-900 dark:text-emerald-100">{t('deals.raffle.telegram')}</p>
+      <div class="mt-5 border-t border-emerald-200 pt-5 dark:border-emerald-800/80">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-start">
+          <a href="https://t.me/THIEUNV" target="_blank" rel="noopener noreferrer" class="inline-flex h-32 w-32 shrink-0 items-center justify-center rounded-xl bg-white p-2 shadow-sm ring-1 ring-emerald-200 transition hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-300 dark:ring-emerald-900/80">
+            <img src="/guides/deals/telegram-thieunv-qr.svg" alt={t('deals.raffle.telegram_qr_alt')} class="h-full w-full" loading="lazy" decoding="async" />
+          </a>
+          <div class="min-w-0 flex-1">
+            <p class="text-xs font-black uppercase tracking-[0.14em] text-emerald-700 dark:text-emerald-300">{t('deals.raffle.contact_title')}</p>
+            <p class="mt-2 text-sm leading-6 text-emerald-900 dark:text-emerald-100">{t('deals.raffle.telegram')}</p>
+            <div class="mt-4 grid gap-2">
+              <a href="https://t.me/THIEUNV" target="_blank" rel="noopener noreferrer" class="group flex min-h-14 min-w-0 items-center gap-3 rounded-lg bg-emerald-700 px-3 py-2 text-white transition hover:bg-emerald-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-300 dark:bg-emerald-500 dark:text-emerald-950 dark:hover:bg-emerald-400">
+                <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/15 text-white dark:bg-emerald-950/15 dark:text-emerald-950" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M9.04 15.49 8.65 20c.56 0 .8-.24 1.09-.53l2.62-2.5 5.43 3.98c.99.55 1.7.26 1.96-.91l3.56-16.67.01-.01c.32-1.47-.53-2.04-1.5-1.68L.9 9.69c-1.42.55-1.4 1.34-.24 1.7l5.35 1.67L18.43 5.3c.58-.39 1.12-.17.68.22L9.04 15.49Z"></path></svg>
+                </span>
+                <span class="min-w-0">
+                  <span class="block text-[0.68rem] font-black uppercase tracking-[0.1em]">{t('deals.raffle.telegram_label')}</span>
+                  <span class="block truncate font-mono text-sm font-black">@thieunv</span>
+                </span>
+              </a>
+              <a href="https://www.facebook.com/shinantori" target="_blank" rel="noopener noreferrer" class="group flex min-h-14 min-w-0 items-center gap-3 rounded-lg bg-white px-3 py-2 text-emerald-900 ring-1 ring-emerald-200 transition hover:bg-emerald-100 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-300 dark:bg-emerald-950 dark:text-emerald-100 dark:ring-emerald-800 dark:hover:bg-emerald-900">
+                <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M14.2 8.4V6.7c0-.82.2-1.24 1.34-1.24H17V2.2C16.3 2.1 15.55 2 14.78 2c-3.05 0-5.13 1.86-5.13 5.28V8.4H6.2v3.64h3.45V22h4.12v-9.96h3.05l.48-3.64h-3.1Z"></path></svg>
+                </span>
+                <span class="min-w-0">
+                  <span class="block text-[0.68rem] font-black uppercase tracking-[0.1em]">{t('deals.raffle.facebook_label')}</span>
+                  <span class="block truncate font-mono text-sm font-black">shinantori</span>
+                </span>
+              </a>
+              <a href="https://discordapp.com/users/thieunguyen_41895" target="_blank" rel="noopener noreferrer" class="group flex min-h-14 min-w-0 items-center gap-3 rounded-lg bg-white px-3 py-2 text-emerald-900 ring-1 ring-emerald-200 transition hover:bg-emerald-100 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-300 dark:bg-emerald-950 dark:text-emerald-100 dark:ring-emerald-800 dark:hover:bg-emerald-900">
+                <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-indigo-600 text-white" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M19.54 5.34A17.59 17.59 0 0 0 15.18 4c-.19.33-.4.78-.55 1.14a16.28 16.28 0 0 0-5.26 0A10.2 10.2 0 0 0 8.82 4c-1.53.27-3 .73-4.36 1.34C1.7 9.46.95 13.47 1.33 17.42A17.66 17.66 0 0 0 6.67 20.1c.43-.59.81-1.21 1.14-1.86-.63-.24-1.23-.53-1.8-.86.15-.11.3-.22.44-.34a12.6 12.6 0 0 0 11.1 0c.15.12.29.23.44.34-.57.33-1.17.62-1.8.86.33.65.71 1.27 1.14 1.86a17.58 17.58 0 0 0 5.34-2.68c.46-4.58-.77-8.55-3.13-12.08ZM8.68 14.99c-1.04 0-1.9-.96-1.9-2.14 0-1.18.84-2.14 1.9-2.14 1.06 0 1.92.97 1.9 2.14 0 1.18-.84 2.14-1.9 2.14Zm6.64 0c-1.04 0-1.9-.96-1.9-2.14 0-1.18.84-2.14 1.9-2.14 1.06 0 1.92.97 1.9 2.14 0 1.18-.84 2.14-1.9 2.14Z"></path></svg>
+                </span>
+                <span class="min-w-0">
+                  <span class="block text-[0.68rem] font-black uppercase tracking-[0.1em]">{t('deals.raffle.discord_label')}</span>
+                  <span class="block truncate font-mono text-sm font-black">thieunguyen_41895</span>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <p x-show="state === 'claiming_prize'" x-cloak class="text-sm font-semibold text-slate-700 dark:text-slate-200">{t('deals.raffle.claiming_prize')}</p>
     <p x-show="state === 'claim_expired'" x-cloak class="text-sm font-semibold text-amber-800 dark:text-amber-200">{t('deals.raffle.claim_expired')}</p>
     <div x-show="state === 'before_open'" x-cloak class="space-y-3">
       <p class="text-sm font-semibold text-slate-700 dark:text-slate-200">{t('deals.raffle.before_start')}</p>
-      <button type="button" x-show="publicResults.length && !currentUsername" x-cloak x-on:click="startEngagementCheck()" class="inline-flex min-h-12 items-center justify-center rounded-xl border border-emerald-500/60 bg-emerald-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-900/15 transition hover:-translate-y-0.5 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-300 dark:border-emerald-400/50 dark:bg-emerald-600 dark:text-white dark:shadow-emerald-950/30 dark:hover:bg-emerald-500 dark:focus-visible:ring-emerald-800">
+      <button type="button" x-show="publicResults.length && !currentUsername" x-cloak x-on:click="startGitHubEntryConfirm()" class="inline-flex min-h-12 items-center justify-center rounded-xl border border-emerald-500/60 bg-emerald-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-900/15 transition hover:-translate-y-0.5 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-300 dark:border-emerald-400/50 dark:bg-emerald-600 dark:text-white dark:shadow-emerald-950/30 dark:hover:bg-emerald-500 dark:focus-visible:ring-emerald-800">
         {t('deals.raffle.sign_in')}
       </button>
       <button type="button" x-show="!publicResults.length || currentUsername" x-cloak disabled class="inline-flex min-h-12 cursor-not-allowed items-center justify-center rounded-xl border border-slate-300 bg-slate-100 px-5 py-3 text-sm font-bold text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400">
@@ -286,12 +325,12 @@ const isDev = import.meta.env.DEV;
         <button type="button" x-on:click="applyDevScenario('before_open')" class="min-h-9 rounded-lg bg-violet-100 px-3 py-2 text-left text-xs font-bold text-violet-800 transition hover:bg-violet-200 dark:bg-violet-500/20 dark:text-violet-100">Before open</button>
         <button type="button" x-on:click="applyDevScenario('ready')" class="min-h-9 rounded-lg bg-emerald-100 px-3 py-2 text-left text-xs font-bold text-emerald-800 transition hover:bg-emerald-200 dark:bg-emerald-500/20 dark:text-emerald-100">Ready / sign in</button>
         <button type="button" x-on:click="applyDevScenario('needs_claim')" class="min-h-9 rounded-lg bg-amber-100 px-3 py-2 text-left text-xs font-bold text-amber-800 transition hover:bg-amber-200 dark:bg-amber-500/20 dark:text-amber-100">Needs coupon</button>
-        <button type="button" x-on:click="applyDevScenario('needs_engagement')" class="min-h-9 rounded-lg bg-sky-100 px-3 py-2 text-left text-xs font-bold text-sky-800 transition hover:bg-sky-200 dark:bg-sky-500/20 dark:text-sky-100">Needs engagement</button>
+        <button type="button" x-on:click="applyDevScenario('needs_github_confirmation')" class="min-h-9 rounded-lg bg-sky-100 px-3 py-2 text-left text-xs font-bold text-sky-800 transition hover:bg-sky-200 dark:bg-sky-500/20 dark:text-sky-100">Needs GitHub confirmation</button>
         <button type="button" x-on:click="applyDevScenario('invalid_order')" class="min-h-9 rounded-lg bg-rose-100 px-3 py-2 text-left text-xs font-bold text-rose-800 transition hover:bg-rose-200 dark:bg-rose-500/20 dark:text-rose-100">Invalid account</button>
         <button type="button" x-on:click="applyDevScenario('chiennb_wrong_account')" class="min-h-9 rounded-lg bg-fuchsia-100 px-3 py-2 text-left text-xs font-bold text-fuchsia-800 transition hover:bg-fuchsia-200 dark:bg-fuchsia-500/20 dark:text-fuchsia-100">ChienNB wrong account</button>
         <button type="button" x-on:click="applyDevScenario('chiennb_order_bound')" class="min-h-9 rounded-lg bg-rose-100 px-3 py-2 text-left text-xs font-bold text-rose-800 transition hover:bg-rose-200 dark:bg-rose-500/20 dark:text-rose-100">ChienNB needs check</button>
         <button type="button" x-on:click="applyDevScenario('chiennb_ready')" class="min-h-9 rounded-lg bg-emerald-100 px-3 py-2 text-left text-xs font-bold text-emerald-800 transition hover:bg-emerald-200 dark:bg-emerald-500/20 dark:text-emerald-100">ChienNB ready</button>
-        <button type="button" x-on:click="applyDevScenario('checking_engagement')" class="min-h-9 rounded-lg bg-cyan-100 px-3 py-2 text-left text-xs font-bold text-cyan-800 transition hover:bg-cyan-200 dark:bg-cyan-500/20 dark:text-cyan-100">Checking</button>
+        <button type="button" x-on:click="applyDevScenario('confirming_github_entry')" class="min-h-9 rounded-lg bg-cyan-100 px-3 py-2 text-left text-xs font-bold text-cyan-800 transition hover:bg-cyan-200 dark:bg-cyan-500/20 dark:text-cyan-100">Confirming</button>
         <button type="button" x-on:click="applyDevScenario('eligible')" class="min-h-9 rounded-lg bg-emerald-100 px-3 py-2 text-left text-xs font-bold text-emerald-800 transition hover:bg-emerald-200 dark:bg-emerald-500/20 dark:text-emerald-100">Eligible</button>
         <button type="button" x-on:click="applyDevScenario('check_order')" class="min-h-9 rounded-lg bg-cyan-100 px-3 py-2 text-left text-xs font-bold text-cyan-800 transition hover:bg-cyan-200 dark:bg-cyan-500/20 dark:text-cyan-100">Check Order</button>
         <button type="button" x-on:click="applyDevScenario('check_order_success')" class="min-h-9 rounded-lg bg-amber-100 px-3 py-2 text-left text-xs font-bold text-amber-900 transition hover:bg-amber-200 dark:bg-amber-500/20 dark:text-amber-100">Check Order success</button>

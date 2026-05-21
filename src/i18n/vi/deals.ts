@@ -273,7 +273,12 @@ export const deals = {
   'deals.raffle.order_ref': 'GitHub',
   'deals.raffle.github': 'GitHub',
   'deals.raffle.prize': 'Giải',
-  'deals.raffle.telegram': 'Liên hệ tác giả VividKit qua Telegram @thieunv và cung cấp screenshot màn hình claim trúng thưởng này để được xử lý bước tiếp theo.',
+  'deals.raffle.contact_title': 'Liên hệ tác giả VividKit',
+  'deals.raffle.telegram': 'Scan QR Telegram hoặc mở @thieunv, rồi gửi screenshot màn hình claim trúng thưởng này.',
+  'deals.raffle.telegram_qr_alt': 'QR Telegram cho @thieunv',
+  'deals.raffle.telegram_label': 'Telegram',
+  'deals.raffle.facebook_label': 'Facebook',
+  'deals.raffle.discord_label': 'Discord',
   'deals.raffle.error': 'Không thể hoàn tất thao tác vòng quay. Vui lòng thử lại.',
   'deals.raffle.rate_limited': 'Quá nhiều lần thử. Vui lòng thử lại sau.',
 

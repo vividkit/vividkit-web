@@ -2,7 +2,7 @@ import type Alpine from 'alpinejs';
 
 type AuthAction =
   | 'raffle_status'
-  | 'raffle_check_engagement'
+  | 'raffle_confirm_github_entry'
   | 'raffle_verify_order'
   | 'raffle_register'
   | 'raffle_claim_prize'
@@ -12,8 +12,8 @@ type DrawState =
   | 'loading'
   | 'ready'
   | 'needs_claim'
-  | 'needs_engagement'
-  | 'checking_engagement'
+  | 'needs_github_confirmation'
+  | 'confirming_github_entry'
   | 'eligible'
   | 'decline_blocked'
   | 'registering'
@@ -368,16 +368,16 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
         return;
       }
       if (action === 'raffle_status') return this.postStatus(oauthCode);
-      if (action === 'raffle_check_engagement') return this.postCheckEngagement(oauthCode);
+      if (action === 'raffle_confirm_github_entry') return this.postConfirmGitHubEntry(oauthCode);
       if (action === 'raffle_verify_order') return this.postVerifyOrder(oauthCode);
       if (action === 'raffle_register') return this.postRegister(oauthCode);
       if (action === 'raffle_claim_prize') return this.postClaimPrize(oauthCode);
       if (action === 'raffle_decline_prize') return this.postDeclinePrize(oauthCode);
     },
 
-    startEngagementCheck() {
-      this.state = 'checking_engagement';
-      this.renderTurnstile('raffle_check_engagement');
+    startGitHubEntryConfirm() {
+      this.state = 'confirming_github_entry';
+      this.renderTurnstile('raffle_confirm_github_entry');
     },
 
     startStatusCheck() {
@@ -457,7 +457,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
     },
 
     async completeSessionAction(action: AuthAction) {
-      if (action === 'raffle_check_engagement') return this.postCheckEngagement();
+      if (action === 'raffle_confirm_github_entry') return this.postConfirmGitHubEntry();
       if (action === 'raffle_verify_order') return this.postVerifyOrder();
       if (action === 'raffle_register') return this.postRegister();
       if (action === 'raffle_claim_prize') return this.postClaimPrize();
@@ -489,7 +489,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       else if (data.phase === 'before_open') this.state = 'before_open';
       else if (data.phase === 'inactive') this.state = 'closed';
       else if (data.registration) this.state = data.phase === 'draw_ready' ? 'draw_pending' : 'registered';
-      else if (!data.bound) this.state = 'needs_engagement';
+      else if (!data.bound) this.state = 'needs_github_confirmation';
       else if (data.qualified) this.state = data.phase === 'registration_open' ? 'eligible' : 'draw_pending';
       else this.state = this.initialStateFromPhase();
     },
@@ -573,19 +573,19 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
 
       if (scenario === 'chiennb_wrong_account') {
         this.currentUsername = 'thonhoasung';
-        this.state = 'needs_engagement';
+        this.state = 'needs_github_confirmation';
         return;
       }
 
       if (scenario === 'chiennb_order_bound') {
         this.currentUsername = 'chiennb';
-        this.state = 'needs_engagement';
+        this.state = 'needs_github_confirmation';
         return;
       }
 
       if (scenario === 'chiennb_ready') {
         this.currentUsername = 'chiennb';
-        this.state = 'needs_engagement';
+        this.state = 'needs_github_confirmation';
         return;
       }
 
@@ -683,6 +683,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       this.currentUsername = '';
       sessionStorage.removeItem('raffle_session_token');
       sessionStorage.removeItem('turnstile_token:raffle_status');
+      sessionStorage.removeItem('turnstile_token:raffle_confirm_github_entry');
       sessionStorage.removeItem('turnstile_token:raffle_check_engagement');
       sessionStorage.removeItem('turnstile_token:raffle_verify_order');
       sessionStorage.removeItem('turnstile_token:raffle_register');
@@ -694,7 +695,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       this.clearSession();
       this.errorMessage = '';
       this.state = 'loading';
-      this.startOAuth('raffle_check_engagement');
+      this.startOAuth('raffle_confirm_github_entry');
     },
 
     async postStatus(oauthCode = '') {
@@ -723,12 +724,12 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       }
     },
 
-    async postCheckEngagement(oauthCode = '') {
-      const token = sessionStorage.getItem('turnstile_token:raffle_check_engagement');
-      sessionStorage.removeItem('turnstile_token:raffle_check_engagement');
+    async postConfirmGitHubEntry(oauthCode = '') {
+      const token = sessionStorage.getItem('turnstile_token:raffle_confirm_github_entry');
+      sessionStorage.removeItem('turnstile_token:raffle_confirm_github_entry');
       const authPayload = this.sessionToken ? { session_token: this.sessionToken } : { oauth_code: oauthCode };
       try {
-        const res = await fetch(`${this.API_BASE}/raffle/check-engagement`, {
+        const res = await fetch(`${this.API_BASE}/raffle/confirm-github-entry`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ ...authPayload, turnstile_token: token }),
