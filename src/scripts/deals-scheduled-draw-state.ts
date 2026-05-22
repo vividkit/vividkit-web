@@ -49,6 +49,7 @@ type DevScenario =
 type SeatBudget = { standard: number; premium: number; total: number };
 
 const emptyBudget: SeatBudget = { standard: 0, premium: 0, total: 0 };
+const FINAL_REVEAL_VISIBLE_MS = 60 * 1000;
 
 function isoFromNow(hours: number): string {
   return new Date(Date.now() + hours * 60 * 60 * 1000).toISOString();
@@ -103,6 +104,27 @@ function formatCampaignDay(value: string | undefined): string {
   }).format(date);
 }
 
+function expectedRevealCount(schedule: any, resultCount: number, poolCount: number): number {
+  const seatTotal = Number(schedule?.seat_budget?.total || schedule?.remaining?.total || 0);
+  if (seatTotal > 0 && poolCount > 0) return Math.min(seatTotal, poolCount);
+  return Math.max(seatTotal, resultCount, poolCount);
+}
+
+function resolveNextRevealAt(schedule: any, resultCount: number, expectedCount: number): string {
+  const drawDate = schedule?.draw_at ? new Date(schedule.draw_at) : null;
+  if (!drawDate || Number.isNaN(drawDate.getTime()) || expectedCount <= 0) return '';
+  const intervalMs = Math.max(1, Number(schedule?.reveal_interval_minutes || 5)) * 60 * 1000;
+  if (Date.now() < drawDate.getTime()) return drawDate.toISOString();
+
+  const nextRevealIndex = Math.min(Math.max(1, resultCount), expectedCount);
+  let nextRevealAt = drawDate.getTime() + nextRevealIndex * intervalMs;
+  if (nextRevealAt <= Date.now() && resultCount < expectedCount) {
+    const elapsedIndex = Math.floor((Date.now() - drawDate.getTime()) / intervalMs) + 1;
+    nextRevealAt = drawDate.getTime() + Math.min(Math.max(elapsedIndex, resultCount + 1), expectedCount) * intervalMs;
+  }
+  return new Date(nextRevealAt).toISOString();
+}
+
 export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
   if ((activeAlpine as any).__dealScheduledDrawRegistered) return;
   (activeAlpine as any).__dealScheduledDrawRegistered = true;
@@ -123,6 +145,12 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
     LABEL_PRIZE_STATUS_CLAIMED: '',
     LABEL_PRIZE_STATUS_DECLINED: '',
     LABEL_PRIZE_STATUS_ROLLED_OVER: '',
+    LABEL_LATEST_REVEAL: '',
+    LABEL_FINAL_REVEAL: '',
+    LABEL_NEXT_REVEAL: '',
+    LABEL_REVEAL_PROGRESS: '',
+    LABEL_REVEAL_STATUS: '',
+    LABEL_REVEAL_COMPLETE: '',
     MSG_ORDER_BOOST_VERIFIED: '',
     MSG_ORDER_BOOST_NORMAL: '',
     MSG_ORDER_BOOST_NEED_REF: '',
@@ -150,6 +178,10 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
     declineCount: 0,
     declineLimit: 2,
     declineBlocked: false,
+    revealRefreshTimer: null as number | null,
+    finalRevealHideTimer: null as number | null,
+    finalRevealVisible: false,
+    lastRevealResultCount: 0,
 
     async init() {
       const el = document.querySelector('[data-deals-raffle-widget]') as HTMLElement | null;
@@ -168,6 +200,12 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       this.LABEL_PRIZE_STATUS_CLAIMED = el?.dataset.labelPrizeStatusClaimed || '';
       this.LABEL_PRIZE_STATUS_DECLINED = el?.dataset.labelPrizeStatusDeclined || '';
       this.LABEL_PRIZE_STATUS_ROLLED_OVER = el?.dataset.labelPrizeStatusRolledOver || '';
+      this.LABEL_LATEST_REVEAL = el?.dataset.labelLatestReveal || '';
+      this.LABEL_FINAL_REVEAL = el?.dataset.labelFinalReveal || this.LABEL_LATEST_REVEAL;
+      this.LABEL_NEXT_REVEAL = el?.dataset.labelNextReveal || '';
+      this.LABEL_REVEAL_PROGRESS = el?.dataset.labelRevealProgress || '';
+      this.LABEL_REVEAL_STATUS = el?.dataset.labelRevealStatus || '';
+      this.LABEL_REVEAL_COMPLETE = el?.dataset.labelRevealComplete || '';
       this.MSG_ORDER_BOOST_VERIFIED = el?.dataset.msgOrderBoostVerified || '';
       this.MSG_ORDER_BOOST_NORMAL = el?.dataset.msgOrderBoostNormal || '';
       this.MSG_ORDER_BOOST_NEED_REF = el?.dataset.msgOrderBoostNeedRef || '';
@@ -200,6 +238,10 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
         this.completeOAuthAction(data.action, data.code, data.nonce || null);
       });
 
+      window.addEventListener('vividkit:raffle-reveal-countdown-zero', () => {
+        this.refreshRevealResultsNow();
+      });
+
       await this.loadConfig();
     },
 
@@ -224,14 +266,19 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
         this.seatBudget = this.schedule.seat_budget || this.schedule.remaining || emptyBudget;
         await this.loadPublicResults();
         await this.loadPoolEntries();
+        this.syncLatestRevealCard();
+        this.publishScheduleSummary();
         if (this.sessionToken) {
           await this.postStatus();
           return;
         }
         this.state = this.initialStateFromPhase();
+        this.publishScheduleSummary();
+        this.syncRevealPolling();
       } catch {
         this.state = 'error';
         this.errorMessage = this.MSG_ERROR;
+        this.syncRevealPolling();
       }
     },
 
@@ -264,8 +311,125 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
     },
 
     hasFullyRevealedResults() {
-      const total = Number(this.seatBudget?.total || this.schedule?.seat_budget?.total || 0);
+      const total = expectedRevealCount(this.schedule, this.publicResults.length, this.poolEntries.length);
       return total > 0 && this.publicResults.length >= total;
+    },
+
+    latestRevealedResult() {
+      if (!this.publicResults.length) return null;
+      if (this.hasFullyRevealedResults() && !this.finalRevealVisible) return null;
+      return this.publicResults[this.publicResults.length - 1] || null;
+    },
+
+    latestRevealLabel() {
+      return this.hasFullyRevealedResults() ? this.LABEL_FINAL_REVEAL : this.LABEL_LATEST_REVEAL;
+    },
+
+    latestRevealedName() {
+      const result = this.latestRevealedResult();
+      const name = result?.facebook_name || result?.github_username || result?.username || '';
+      return name ? `@${name}` : '--';
+    },
+
+    revealProgressText() {
+      const total = expectedRevealCount(this.schedule, this.publicResults.length, this.poolEntries.length);
+      const count = this.publicResults.length;
+      return total > 0 ? `${this.LABEL_REVEAL_PROGRESS} ${count}/${total}` : `${this.LABEL_REVEAL_PROGRESS} ${count}`;
+    },
+
+    nextRevealText() {
+      const total = expectedRevealCount(this.schedule, this.publicResults.length, this.poolEntries.length);
+      return formatDateTime(resolveNextRevealAt(this.schedule, this.publicResults.length, total));
+    },
+
+    latestRevealMetaLabel() {
+      return this.hasFullyRevealedResults() ? this.LABEL_REVEAL_STATUS : this.LABEL_NEXT_REVEAL;
+    },
+
+    latestRevealMetaText() {
+      return this.hasFullyRevealedResults() ? this.LABEL_REVEAL_COMPLETE : this.nextRevealText();
+    },
+
+    showFinalRevealBriefly() {
+      this.finalRevealVisible = true;
+      if (this.finalRevealHideTimer) window.clearTimeout(this.finalRevealHideTimer);
+      this.finalRevealHideTimer = window.setTimeout(() => {
+        this.finalRevealVisible = false;
+        this.finalRevealHideTimer = null;
+        this.publishScheduleSummary();
+      }, FINAL_REVEAL_VISIBLE_MS);
+    },
+
+    syncLatestRevealCard() {
+      const resultCount = this.publicResults.length;
+      const fullReveal = this.hasFullyRevealedResults();
+      if (!fullReveal) {
+        if (this.finalRevealHideTimer) {
+          window.clearTimeout(this.finalRevealHideTimer);
+          this.finalRevealHideTimer = null;
+        }
+        this.finalRevealVisible = false;
+        this.lastRevealResultCount = resultCount;
+        return;
+      }
+      if (resultCount > 0 && resultCount !== this.lastRevealResultCount) {
+        this.showFinalRevealBriefly();
+      }
+      this.lastRevealResultCount = resultCount;
+    },
+
+    publishScheduleSummary() {
+      const latestReveal = this.latestRevealSummary();
+      window.dispatchEvent(new CustomEvent('vividkit:raffle-schedule-update', {
+        detail: {
+          schedule: this.schedule,
+          resultCount: this.publicResults.length,
+          poolCount: this.poolEntries.length,
+          latestReveal,
+        },
+      }));
+    },
+
+    latestRevealSummary() {
+      const result = this.state === 'draw_pending' ? this.latestRevealedResult() : null;
+      if (!result) return { visible: false };
+      return {
+        visible: true,
+        label: this.latestRevealLabel(),
+        name: this.latestRevealedName(),
+        progress: this.revealProgressText(),
+        prizeTier: result.prize_tier || '--',
+        metaLabel: this.latestRevealMetaLabel(),
+        metaText: this.latestRevealMetaText(),
+      };
+    },
+
+    shouldPollReveal() {
+      const isRevealPhase = this.schedule?.phase === 'draw_ready' || this.schedule?.phase === 'reveal_ready';
+      return Boolean(this.API_BASE && this.state === 'draw_pending' && isRevealPhase && !this.hasFullyRevealedResults());
+    },
+
+    syncRevealPolling() {
+      if (!this.shouldPollReveal()) {
+        if (this.revealRefreshTimer) {
+          window.clearInterval(this.revealRefreshTimer);
+          this.revealRefreshTimer = null;
+        }
+        return;
+      }
+      if (this.revealRefreshTimer) return;
+      this.revealRefreshTimer = window.setInterval(async () => {
+        await this.refreshRevealResultsNow();
+      }, 15000);
+    },
+
+    async refreshRevealResultsNow() {
+      if (!this.shouldPollReveal()) return;
+      await this.loadPublicResults();
+      await this.loadPoolEntries();
+      this.syncLatestRevealCard();
+      this.publishScheduleSummary();
+      this.syncRevealPolling();
     },
 
     normalizePoolEntries(data: any) {
@@ -546,6 +710,9 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       else if (!data.bound) this.state = 'needs_github_confirmation';
       else if (data.qualified) this.state = data.phase === 'registration_open' ? 'eligible' : 'draw_pending';
       else this.state = this.initialStateFromPhase();
+      this.syncLatestRevealCard();
+      this.publishScheduleSummary();
+      this.syncRevealPolling();
     },
 
     applyDevScenario(scenario: DevScenario) {
@@ -698,16 +865,30 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
           { facebook_name: 'Pending Dev', github_username: 'Pending Dev', prize_tier: 'Standard', claim_status: 'pending', campaign_day: '2026-05-18' },
         ];
         this.state = 'ready';
+        this.syncLatestRevealCard();
+        this.publishScheduleSummary();
+        this.syncRevealPolling();
         return;
       }
 
       if (scenario === 'reveal_started' || scenario === 'reveal_partial' || scenario === 'reveal_complete') {
         const resultCount = scenario === 'reveal_started' ? 1 : scenario === 'reveal_partial' ? 3 : 5;
-        this.schedule = { ...schedule, phase: 'draw_ready', registration_cutoff_at: isoFromNow(-1), draw_at: isoFromNow(-0.5) };
+        const drawHoursFromNow = resultCount >= 5 ? -0.5 : -(resultCount * 5 - 1) / 60;
+        this.schedule = { ...schedule, phase: 'draw_ready', registration_cutoff_at: isoFromNow(-1), draw_at: isoFromNow(drawHoursFromNow), reveal_interval_minutes: 5 };
         this.seatBudget = { standard: 4, premium: 1, total: 5 };
         this.publicResults = revealResults(resultCount);
+        this.poolEntries = Array.from({ length: 5 }, (_, index) => ({
+          id: `reveal-pool-${index + 1}`,
+          github_username: `Reveal Pool ${index + 1}`,
+          approval_status: 'qualified',
+          entry_type: index === 0 ? 'vividkit_referral_boost' : 'normal',
+          raffle_weight: index === 0 ? 2 : 1,
+        }));
         this.currentUsername = '';
         this.state = 'draw_pending';
+        this.syncLatestRevealCard();
+        this.publishScheduleSummary();
+        this.syncRevealPolling();
         return;
       }
 
@@ -726,10 +907,14 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       if (scenario === 'error' || scenario === 'rate_limited') {
         this.errorMessage = scenario === 'rate_limited' ? this.MSG_RATE_LIMITED : this.MSG_ERROR;
         this.state = 'error';
+        this.syncRevealPolling();
         return;
       }
 
       this.state = scenario;
+      this.syncLatestRevealCard();
+      this.publishScheduleSummary();
+      this.syncRevealPolling();
     },
 
     clearSession() {
