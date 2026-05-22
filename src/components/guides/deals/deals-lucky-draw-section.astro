@@ -2,7 +2,7 @@
 import { useTranslations } from '@/i18n/utils';
 import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
 import DealsLuckyDrawWidget from './deals-lucky-draw-widget.astro';
-import { Ban, ShieldCheck } from 'lucide-astro';
+import { Ban, Clock3, ShieldCheck, Sparkles, Trophy } from 'lucide-astro';
 
 interface Props {
   lang?: Language;
@@ -26,6 +26,8 @@ const claimHref = `${translatePath('/guides/deals')}#claim`;
       data-label-unknown={t('deals.raffle.schedule_unknown')}
       data-label-ready={t('deals.raffle.draw_countdown_ready')}
       data-label-reveal={t('deals.raffle.countdown_draw')}
+      data-label-next-reveal={t('deals.raffle.countdown_next_reveal')}
+      data-label-reveal-progress={t('deals.raffle.countdown_reveal_progress')}
       data-label-ended={t('deals.raffle.countdown_ended')}
       data-label-today-ended={t('deals.raffle.countdown_today_ended')}
       data-label-today-revealed={t('deals.raffle.countdown_today_revealed')}
@@ -50,6 +52,45 @@ const claimHref = `${translatePath('/guides/deals')}#claim`;
           <p class="text-xs font-black uppercase tracking-[0.14em] text-cyan-700 dark:text-cyan-300">{t('deals.raffle.draw_countdown_label')}</p>
           <p data-raffle-countdown class="mt-3 font-mono text-3xl font-black leading-none text-slate-950 dark:text-white sm:text-4xl">--:--:--</p>
           <p data-raffle-draw-time class="mt-3 flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-sm font-semibold text-slate-600 dark:text-slate-300">--</p>
+        </div>
+      </div>
+
+      <div
+        data-raffle-latest-reveal
+        hidden
+        class="relative mt-5 overflow-hidden rounded-2xl border border-cyan-300 bg-white p-4 shadow-xl shadow-cyan-900/15 ring-2 ring-cyan-200/70 dark:border-cyan-300/45 dark:bg-slate-950 dark:shadow-cyan-950/40 dark:ring-cyan-300/20 sm:p-5"
+      >
+        <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-cyan-300 via-emerald-300 to-amber-300"></div>
+        <div class="relative grid gap-4 lg:grid-cols-[minmax(0,0.95fr)_minmax(360px,1.05fr)] lg:items-stretch">
+          <div class="flex min-w-0 gap-3">
+            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-cyan-500 text-white shadow-lg shadow-cyan-900/20 ring-1 ring-cyan-300/60 dark:bg-cyan-300 dark:text-slate-950 dark:shadow-cyan-950/40 dark:ring-cyan-100/30">
+              <Sparkles class="h-5 w-5" aria-hidden="true" />
+            </div>
+            <div class="min-w-0 flex-1">
+              <div class="flex min-w-0 flex-wrap items-center gap-2">
+                <span class="h-2.5 w-2.5 rounded-full bg-cyan-500 shadow-sm shadow-cyan-500/50 motion-safe:animate-pulse dark:bg-cyan-300" aria-hidden="true"></span>
+                <p data-raffle-latest-reveal-label class="text-[0.68rem] font-black uppercase tracking-[0.14em] text-cyan-800 dark:text-cyan-200">--</p>
+                <span data-raffle-latest-reveal-progress class="inline-flex w-fit max-w-full shrink-0 rounded-full bg-slate-950 px-3 py-1 font-mono text-xs font-black text-white shadow-sm shadow-slate-950/20 dark:bg-cyan-200 dark:text-slate-950">--</span>
+              </div>
+              <p data-raffle-latest-reveal-name class="mt-2 break-words font-heading text-3xl font-black leading-tight text-slate-950 dark:text-white">--</p>
+            </div>
+          </div>
+          <div class="grid gap-2 sm:grid-cols-2 lg:grid-cols-[minmax(132px,0.78fr)_minmax(210px,1.22fr)]">
+            <div class="min-w-0 rounded-xl border border-amber-200 bg-amber-50/80 px-3 py-2.5 dark:border-amber-300/25 dark:bg-amber-300/10">
+              <div class="flex items-center gap-2 text-[0.68rem] font-black uppercase tracking-[0.12em] text-amber-800 dark:text-amber-200">
+                <Trophy class="h-3.5 w-3.5" aria-hidden="true" />
+                <span>{t('deals.raffle.prize')}</span>
+              </div>
+              <span data-raffle-latest-reveal-prize class="mt-2 inline-flex max-w-full rounded-full px-2 py-1 text-xs font-black uppercase ring-1">--</span>
+            </div>
+            <div class="min-w-0 rounded-xl border border-cyan-200 bg-cyan-50/80 px-3 py-2.5 dark:border-cyan-300/25 dark:bg-cyan-300/10">
+              <div class="flex items-center gap-2 text-[0.68rem] font-black uppercase tracking-[0.12em] text-cyan-800 dark:text-cyan-200">
+                <Clock3 class="h-3.5 w-3.5" aria-hidden="true" />
+                <span data-raffle-latest-reveal-meta-label class="whitespace-nowrap">--</span>
+              </div>
+              <p data-raffle-latest-reveal-meta-text class="mt-1 whitespace-nowrap font-mono text-sm font-black text-slate-950 dark:text-white">--</p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -118,10 +159,33 @@ const claimHref = `${translatePath('/guides/deals')}#claim`;
   const scheduleSummary = document.querySelector<HTMLElement>('[data-raffle-schedule-summary]');
   const countdown = scheduleSummary?.querySelector<HTMLElement>('[data-raffle-countdown]');
   const drawTime = scheduleSummary?.querySelector<HTMLElement>('[data-raffle-draw-time]');
+  const latestReveal = scheduleSummary?.querySelector<HTMLElement>('[data-raffle-latest-reveal]');
+  const latestRevealLabel = scheduleSummary?.querySelector<HTMLElement>('[data-raffle-latest-reveal-label]');
+  const latestRevealName = scheduleSummary?.querySelector<HTMLElement>('[data-raffle-latest-reveal-name]');
+  const latestRevealProgress = scheduleSummary?.querySelector<HTMLElement>('[data-raffle-latest-reveal-progress]');
+  const latestRevealPrize = scheduleSummary?.querySelector<HTMLElement>('[data-raffle-latest-reveal-prize]');
+  const latestRevealMetaLabel = scheduleSummary?.querySelector<HTMLElement>('[data-raffle-latest-reveal-meta-label]');
+  const latestRevealMetaText = scheduleSummary?.querySelector<HTMLElement>('[data-raffle-latest-reveal-meta-text]');
+  type CountdownMode = 'draw' | 'reveal' | 'next_draw' | 'ended';
+  type LatestRevealDetail = {
+    visible?: boolean;
+    label?: string;
+    name?: string;
+    progress?: string;
+    prizeTier?: string;
+    metaLabel?: string;
+    metaText?: string;
+  };
   let countdownTargetAt = '';
+  let countdownMode: CountdownMode = 'draw';
+  let revealResultCount = 0;
+  let revealExpectedCount = 0;
   let currentPhase: ScheduleConfig['phase'] | undefined;
   let isPostRevealComplete = false;
   let countdownTimer: number | undefined;
+  let summaryRefreshTimer: number | undefined;
+  let revealZeroRefreshTargetAt = '';
+  let summaryUsesWidgetState = false;
 
   const formatScheduleTime = (value: string | undefined) => {
     if (!value) return scheduleSummary?.dataset.labelUnknown || '--';
@@ -153,6 +217,15 @@ const claimHref = `${translatePath('/guides/deals')}#claim`;
   const renderDrawTime = (value: string) => {
     if (!drawTime) return;
     drawTime.replaceChildren();
+    if (countdownMode === 'reveal') {
+      appendText(drawTime, `${scheduleSummary?.dataset.labelNextReveal || ''}: `);
+      appendTimeCode(drawTime, value);
+      if (revealExpectedCount > 0) {
+        appendText(drawTime, `${scheduleSummary?.dataset.labelRevealProgress || ''} ${revealResultCount}/${revealExpectedCount}`, 'font-black text-cyan-800 dark:text-cyan-100');
+      }
+      return;
+    }
+
     if (!isPostRevealComplete) {
       appendText(drawTime, value);
       return;
@@ -180,6 +253,11 @@ const claimHref = `${translatePath('/guides/deals')}#claim`;
     const target = new Date(countdownTargetAt).getTime();
     const diff = target - Date.now();
     if (!Number.isFinite(target) || diff <= 0) {
+      if (countdownMode === 'reveal') {
+        countdown.textContent = '00:00:00';
+        triggerRevealZeroRefresh();
+        return;
+      }
       countdown.textContent = currentPhase === 'reveal_ready'
         ? scheduleSummary.dataset.labelReveal || scheduleSummary.dataset.labelReady || '--'
         : scheduleSummary.dataset.labelReady || '--';
@@ -196,22 +274,47 @@ const claimHref = `${translatePath('/guides/deals')}#claim`;
       : `${two(hours)}:${two(minutes)}:${two(seconds)}`;
   };
 
+  const resolveExpectedResults = (config: ScheduleConfig, resultCount: number, poolCount: number) => {
+    const seatTotal = Number(config.seat_budget?.total || 0);
+    if (seatTotal > 0 && poolCount > 0) return Math.min(seatTotal, poolCount);
+    return Math.max(seatTotal, resultCount, poolCount);
+  };
+
+  const resolveNextRevealTarget = (drawDate: Date, config: ScheduleConfig, resultCount: number, expectedResults: number) => {
+    const intervalMs = Math.max(1, Number(config.reveal_interval_minutes || 5)) * 60 * 1000;
+    if (Date.now() < drawDate.getTime()) return drawDate.toISOString();
+
+    const nextRevealIndex = Math.min(Math.max(1, resultCount), expectedResults);
+    let nextRevealAt = drawDate.getTime() + nextRevealIndex * intervalMs;
+    if (nextRevealAt <= Date.now() && resultCount < expectedResults) {
+      const elapsedIndex = Math.floor((Date.now() - drawDate.getTime()) / intervalMs) + 1;
+      nextRevealAt = drawDate.getTime() + Math.min(Math.max(elapsedIndex, resultCount + 1), expectedResults) * intervalMs;
+    }
+    return new Date(nextRevealAt).toISOString();
+  };
+
   const resolveCountdownTarget = (config: ScheduleConfig, resultCount: number, poolCount: number) => {
     isPostRevealComplete = false;
+    countdownMode = 'draw';
+    revealResultCount = resultCount;
+    revealExpectedCount = 0;
     const drawDate = config.draw_at ? new Date(config.draw_at) : null;
     if (!drawDate || Number.isNaN(drawDate.getTime())) return '';
     if (config.phase === 'draw_ready' || config.phase === 'reveal_ready') {
-      const expectedResults = Math.min(
-        Math.max(Number(config.seat_budget?.total || 0), resultCount),
-        poolCount > 0 ? poolCount : Number(config.seat_budget?.total || resultCount)
-      );
+      const expectedResults = resolveExpectedResults(config, resultCount, poolCount);
+      revealExpectedCount = expectedResults;
       if (resultCount > 0 && resultCount >= expectedResults) {
         const nextDrawDate = new Date(drawDate.getTime() + 24 * 60 * 60 * 1000);
         const endsAt = config.ends_at ? new Date(config.ends_at).getTime() : Number.POSITIVE_INFINITY;
         if (nextDrawDate.getTime() < endsAt) {
           isPostRevealComplete = true;
+          countdownMode = 'next_draw';
           return nextDrawDate.toISOString();
         }
+      }
+      if (Date.now() >= drawDate.getTime() && expectedResults > 0) {
+        countdownMode = 'reveal';
+        return resolveNextRevealTarget(drawDate, config, resultCount, expectedResults);
       }
     }
     return config.draw_at || '';
@@ -226,7 +329,44 @@ const claimHref = `${translatePath('/guides/deals')}#claim`;
     countdownTimer = window.setInterval(renderCountdown, 1000);
   };
 
-  if (scheduleSummary?.dataset.apiUrl) {
+  const prizeTierBadgeClass = (tier: string | undefined) => {
+    const normalized = String(tier || '').toLowerCase();
+    if (normalized === 'premium') {
+      return 'mt-1 inline-flex max-w-full rounded-full px-2 py-1 text-xs font-black uppercase ring-1 bg-amber-100 text-amber-900 ring-amber-300 dark:bg-amber-400/20 dark:text-amber-200 dark:ring-amber-300/30';
+    }
+    return 'mt-1 inline-flex max-w-full rounded-full px-2 py-1 text-xs font-black uppercase ring-1 bg-emerald-100 text-emerald-800 ring-emerald-300 dark:bg-emerald-500/20 dark:text-emerald-200 dark:ring-emerald-300/25';
+  };
+
+  const renderLatestReveal = (detail?: LatestRevealDetail) => {
+    if (!latestReveal) return;
+    if (!detail?.visible) {
+      latestReveal.hidden = true;
+      return;
+    }
+    latestReveal.hidden = false;
+    if (latestRevealLabel) latestRevealLabel.textContent = detail.label || '--';
+    if (latestRevealName) latestRevealName.textContent = detail.name || '--';
+    if (latestRevealProgress) latestRevealProgress.textContent = detail.progress || '--';
+    if (latestRevealPrize) {
+      latestRevealPrize.textContent = detail.prizeTier || '--';
+      latestRevealPrize.className = prizeTierBadgeClass(detail.prizeTier);
+    }
+    if (latestRevealMetaLabel) latestRevealMetaLabel.textContent = detail.metaLabel || '--';
+    if (latestRevealMetaText) latestRevealMetaText.textContent = detail.metaText || '--';
+  };
+
+  const triggerRevealZeroRefresh = () => {
+    if (!countdownTargetAt || revealZeroRefreshTargetAt === countdownTargetAt) return;
+    revealZeroRefreshTargetAt = countdownTargetAt;
+    window.dispatchEvent(new CustomEvent('vividkit:raffle-reveal-countdown-zero', {
+      detail: { targetAt: countdownTargetAt },
+    }));
+    fetchScheduleSummary();
+  };
+
+  function fetchScheduleSummary() {
+    if (summaryUsesWidgetState) return;
+    if (!scheduleSummary?.dataset.apiUrl) return;
     fetch(`${scheduleSummary.dataset.apiUrl}/raffle/config`)
       .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`HTTP ${res.status}`))))
       .then(async (config: ScheduleConfig) => {
@@ -239,10 +379,30 @@ const claimHref = `${translatePath('/guides/deals')}#claim`;
           Array.isArray(results?.results) ? results.results.length : 0,
           Array.isArray(pool?.entries) ? pool.entries.length : 0
         );
+        if (summaryRefreshTimer) window.clearTimeout(summaryRefreshTimer);
+        if ((config.phase === 'draw_ready' || config.phase === 'reveal_ready') && !isPostRevealComplete) {
+          summaryRefreshTimer = window.setTimeout(fetchScheduleSummary, 15000);
+        }
       })
       .catch(() => {
         if (countdown) countdown.textContent = '--:--:--';
         if (drawTime) drawTime.textContent = scheduleSummary.dataset.labelUnknown || '--';
       });
+  }
+
+  window.addEventListener('vividkit:raffle-schedule-update', (event) => {
+    const detail = (event as CustomEvent<{ schedule?: ScheduleConfig; resultCount?: number; poolCount?: number; latestReveal?: LatestRevealDetail }>).detail;
+    if (!detail?.schedule) return;
+    summaryUsesWidgetState = true;
+    if (summaryRefreshTimer) {
+      window.clearTimeout(summaryRefreshTimer);
+      summaryRefreshTimer = undefined;
+    }
+    renderScheduleSummary(detail.schedule, Number(detail.resultCount || 0), Number(detail.poolCount || 0));
+    renderLatestReveal(detail.latestReveal);
+  });
+
+  if (scheduleSummary?.dataset.apiUrl) {
+    fetchScheduleSummary();
   }
 </script>
