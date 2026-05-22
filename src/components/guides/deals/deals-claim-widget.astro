@@ -437,6 +437,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 
       API_BASE: '',
       TURNSTILE_KEY: '',
+      turnstileWidgetId: null as string | null,
 
       // Translated error messages bridged from frontmatter via data-* attrs
       MSG_ERROR: '',
@@ -623,11 +624,14 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 
       renderTurnstile() {
         const container = document.getElementById('turnstile-container');
-        if (!container) {
+        if (!container || !this.TURNSTILE_KEY) {
           this.state = 'error';
           this.errorMessage = this.MSG_ERROR_SECURITY;
           return;
         }
+        sessionStorage.removeItem('turnstile_token:claim');
+        sessionStorage.removeItem('turnstile_token');
+        sessionStorage.removeItem('oauth_nonce:claim');
 
         // Load Turnstile script if not already present
         if (!document.getElementById('cf-turnstile-script')) {
@@ -645,8 +649,15 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
             setTimeout(tryRender, 200);
             return;
           }
+          const turnstile = (window as any).turnstile;
+          if (this.turnstileWidgetId && typeof turnstile.remove === 'function') {
+            turnstile.remove(this.turnstileWidgetId);
+            this.turnstileWidgetId = null;
+          } else {
+            container.replaceChildren();
+          }
           container.classList.remove('hidden');
-          (window as any).turnstile.render(container, {
+          this.turnstileWidgetId = turnstile.render(container, {
             sitekey: this.TURNSTILE_KEY,
             size: 'invisible',
             callback: (token: string) => {
@@ -658,11 +669,19 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
               window.location.href = `${this.API_BASE}/auth/github?redirect_uri=${redirectUri}&vk_action=claim&vk_nonce=${encodeURIComponent(nonce)}`;
             },
             'error-callback': () => {
+              container.classList.add('hidden');
+              sessionStorage.removeItem('turnstile_token:claim');
+              this.state = 'error';
+              this.errorMessage = this.MSG_ERROR_SECURITY;
+            },
+            'expired-callback': () => {
+              container.classList.add('hidden');
+              sessionStorage.removeItem('turnstile_token:claim');
               this.state = 'error';
               this.errorMessage = this.MSG_ERROR_SECURITY;
             },
           });
-          (window as any).turnstile.execute(container);
+          turnstile.execute(this.turnstileWidgetId);
         };
         tryRender();
       },
@@ -717,8 +736,15 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
           }
 
           if (res.status === 403) {
+            const body = await res.json().catch(() => ({})) as {
+              error?: string;
+              message?: string;
+              turnstile_error_codes?: string[];
+            };
             this.state = 'error';
-            this.errorMessage = this.MSG_ERROR_ACCOUNT_TOO_NEW;
+            this.errorMessage = body.error === 'account_too_new'
+              ? this.MSG_ERROR_ACCOUNT_TOO_NEW
+              : body.message || this.MSG_ERROR_SECURITY;
             return;
           }
 
