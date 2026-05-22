@@ -1,10 +1,10 @@
 // VI translations - deals namespace
 export const deals = {
   'deals.hero.title': 'Tiết kiệm 60% ClaudeKit',
-  'deals.hero.subtitle': 'Mã giảm giá hàng ngày dành riêng cho cộng đồng',
+  'deals.hero.subtitle': 'Chỉ còn 3 ngày để claim CK coupon 50% cho cộng đồng VividKit',
   'deals.hero.badge': 'Tiết kiệm đến 60% với coupon + referral',
   'deals.hero.progress_label': 'mã đã được nhận hôm nay',
-  'deals.hero.kicker': 'Đợt mã ClaudeKit hằng ngày',
+  'deals.hero.kicker': '3 ngày cuối claim CK coupon',
   'deals.hero.ticket_label': 'Thẻ ưu đãi',
   'deals.hero.discount_label_short': 'Giảm giá',
   'deals.hero.referral_label_short': 'Referral',
@@ -58,8 +58,8 @@ export const deals = {
   'deals.how_it_works.step3.desc_after_link': 'sau đó nhập coupon vừa claim ở bước checkout và tiếp tục checkout.',
 
   'deals.claim.available': 'Còn {available} / {total} mã hôm nay',
-  'deals.claim.card_kicker': 'Nhận mã hằng ngày',
-  'deals.claim.card_title': 'Nhận mã hôm nay',
+  'deals.claim.card_kicker': 'Còn 3 ngày',
+  'deals.claim.card_title': 'Claim CK coupon hôm nay',
   'deals.claim.card_desc': 'Đăng nhập GitHub để hệ thống kiểm tra điều kiện và giữ đúng một mã cho mỗi tài khoản.',
   'deals.claim.secure_label': '1 GitHub = 1 mã',
   'deals.claim.remaining_label': 'Mã còn lại',
@@ -320,7 +320,7 @@ export const deals = {
   'deals.proof.combo_alt': 'Ảnh checkout ClaudeKit cho gói combo với coupon 50% và referral discount 20% đã được áp dụng.',
 
   'deals.rules.title': 'Quy Tắc',
-  'deals.rules.rule1': 'Mã giới hạn phát hàng ngày — ai đến trước được trước',
+  'deals.rules.rule1': 'Chỉ còn 3 ngày claim CK coupon — ai đến trước được trước',
   'deals.rules.rule2': 'Mỗi tài khoản GitHub chỉ nhận một mã (vĩnh viễn)',
   'deals.rules.rule3': 'Tài khoản GitHub phải ít nhất 30 ngày tuổi',
   'deals.rules.rule4': 'Giới hạn tốc độ — đừng spam nút nhận mã',
@@ -340,7 +340,7 @@ export const deals = {
   'deals.faq.q2': 'Tôi có thể nhận nhiều hơn một mã không?',
   'deals.faq.a2': 'Không. Mỗi tài khoản GitHub chỉ được nhận đúng một mã giảm giá. Điều này đảm bảo phân phối công bằng trong cộng đồng.',
   'deals.faq.q3': 'Mã mới xuất hiện khi nào?',
-  'deals.faq.a3': 'Mã mới được phát hành hàng ngày. Số lượng dao động từ 5–10 mã mỗi ngày.',
+  'deals.faq.a3': 'Campaign CK coupon chỉ còn 3 ngày. Mã vẫn mở theo từng ngày và số lượng có hạn.',
   'deals.faq.q4': 'Chiến dịch kéo dài bao lâu?',
   'deals.faq.a4': 'Chiến dịch kéo dài cho đến khi tất cả mã được phân phối. Hãy ghé thăm mỗi ngày để có cơ hội nhận mã tốt nhất!',
   'deals.faq.q5': 'claudekit-cli miễn phí khác Engineer Kit (EK) và Marketing Kit (MK) có phí ra sao?',

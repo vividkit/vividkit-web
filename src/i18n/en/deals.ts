@@ -1,10 +1,10 @@
 // EN translations - deals namespace
 export const deals = {
   'deals.hero.title': 'Save 60% on ClaudeKit',
-  'deals.hero.subtitle': 'Exclusive daily discount codes for our community',
+  'deals.hero.subtitle': 'Only 3 days left to claim the CK coupon for the VividKit community',
   'deals.hero.badge': 'Up to 60% savings with discount + referral',
   'deals.hero.progress_label': 'codes claimed today',
-  'deals.hero.kicker': 'Daily ClaudeKit drop',
+  'deals.hero.kicker': 'Final 3 days to claim CK coupon',
   'deals.hero.ticket_label': 'Deal pass',
   'deals.hero.discount_label_short': 'Discount',
   'deals.hero.referral_label_short': 'Referral',
@@ -58,8 +58,8 @@ export const deals = {
   'deals.how_it_works.step3.desc_after_link': 'then enter the coupon you just claimed at checkout and continue checkout.',
 
   'deals.claim.available': '{available} of {total} codes left today',
-  'deals.claim.card_kicker': 'Daily code claim',
-  'deals.claim.card_title': 'Claim today’s codes',
+  'deals.claim.card_kicker': '3 days left',
+  'deals.claim.card_title': 'Claim today’s CK coupon',
   'deals.claim.card_desc': 'Sign in with GitHub so we can check eligibility and reserve one code per account.',
   'deals.claim.secure_label': '1 GitHub = 1 code',
   'deals.claim.remaining_label': 'Codes remaining',
@@ -320,7 +320,7 @@ export const deals = {
   'deals.proof.combo_alt': 'ClaudeKit checkout screenshot showing a combo purchase with a 50% coupon and 20% referral discount applied.',
 
   'deals.rules.title': 'Rules',
-  'deals.rules.rule1': 'Limited codes drop daily — first come, first served',
+  'deals.rules.rule1': 'Only 3 days left to claim CK coupon — first come, first served',
   'deals.rules.rule2': 'One code per GitHub account (lifetime)',
   'deals.rules.rule3': 'GitHub account must be at least 30 days old',
   'deals.rules.rule4': 'Rate limited — don\'t spam the claim button',
@@ -340,7 +340,7 @@ export const deals = {
   'deals.faq.q2': 'Can I claim more than one code?',
   'deals.faq.a2': 'No. Each GitHub account can claim exactly one discount code. This ensures fair distribution among community members.',
   'deals.faq.q3': 'When do new codes appear?',
-  'deals.faq.a3': 'New codes are released daily. The number varies between 5–10 codes per day.',
+  'deals.faq.a3': 'The CK coupon campaign has only 3 days left. Codes still open daily and remain limited.',
   'deals.faq.q4': 'How long does this campaign last?',
   'deals.faq.a4': 'The campaign runs until all codes are distributed. Visit daily for the best chance to grab one!',
   'deals.faq.q5': 'How is the free claudekit-cli different from the paid Engineer Kit (EK) and Marketing Kit (MK)?',
