@@ -21,12 +21,21 @@ const errorAccountTooNewMessage = t('deals.claim.account_too_new');
 const availableMessage = t('deals.claim.available');
 const giveawayApiUrl = import.meta.env.PUBLIC_GIVEAWAY_API_URL;
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+const couponEndsAt = import.meta.env.PUBLIC_CLAUDEKIT_COUPON_END_AT || '2026-05-25T23:59:59+07:00';
 ---
 
 <div
   data-deals-claim-widget
   data-api-url={giveawayApiUrl}
   data-turnstile-key={turnstileSiteKey}
+  data-coupon-ends-at={couponEndsAt}
+  data-countdown-days={t('deals.countdown.days_left')}
+  data-countdown-day={t('deals.countdown.day_left')}
+  data-countdown-hours={t('deals.countdown.hours_left')}
+  data-countdown-ended={t('deals.countdown.ended')}
+  data-countdown-hint={t('deals.countdown.hint')}
+  data-countdown-ended-hint={t('deals.countdown.ended_hint')}
+  data-card-kicker={t('deals.claim.card_kicker')}
   data-msg-error={defaultErrorMessage}
   data-msg-error-load={errorLoadMessage}
   data-msg-error-security={errorSecurityMessage}
@@ -37,7 +46,10 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 >
   <div class="border-b border-emerald-100 bg-emerald-50/80 px-6 py-5 dark:border-emerald-900/60 dark:bg-emerald-950/30 sm:px-8">
     <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-      <p class="text-xs font-bold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-300">
+      <p
+        class="text-xs font-bold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-300"
+        x-text="claimCountdownLabel || cardKicker"
+      >
         {t('deals.claim.card_kicker')}
       </p>
       <span class="inline-flex w-fit shrink-0 items-center gap-2 whitespace-nowrap rounded-full border border-emerald-200 bg-white/85 px-3 py-1.5 text-[11px] font-black uppercase tracking-[0.08em] text-slate-700 shadow-sm shadow-slate-900/[0.04] dark:border-emerald-900/70 dark:bg-slate-950/55 dark:text-slate-200">
@@ -55,6 +67,17 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
     <p class="mt-2 max-w-xl text-sm leading-6 text-slate-600 dark:text-slate-400">
       {t('deals.claim.card_desc')}
     </p>
+    <div
+      x-show="claimCountdownLabel"
+      x-cloak
+      x-bind:class="claimCountdownEnded ? 'border-rose-200 bg-rose-50 text-rose-800 dark:border-rose-900/60 dark:bg-rose-950/30 dark:text-rose-200' : 'border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/30 dark:text-amber-100'"
+      class="mt-4 rounded-2xl border px-4 py-3"
+    >
+      <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+        <span class="text-sm font-black" x-text="claimCountdownLabel"></span>
+        <span class="text-xs font-semibold opacity-80" x-text="claimCountdownHint"></span>
+      </div>
+    </div>
   </div>
 
   <!-- LOADING state: skeleton shimmer -->
@@ -407,6 +430,10 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
       claimedLabel: '',
       totalLabel: '',
       nextReset: '' as string,
+      claimCountdownVisible: false,
+      claimCountdownLabel: '',
+      claimCountdownHint: '',
+      claimCountdownEnded: false,
     });
 
     activeAlpine.data('claimWidget', () => ({
@@ -434,6 +461,11 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
       copiedDiscount: false,
       copiedReferral: false,
       errorMessage: '',
+      couponEndsAt: '',
+      cardKicker: '',
+      claimCountdownLabel: '',
+      claimCountdownHint: '',
+      claimCountdownEnded: false,
 
       API_BASE: '',
       TURNSTILE_KEY: '',
@@ -445,6 +477,12 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
       MSG_ERROR_SECURITY: '',
       MSG_ERROR_RATE_LIMITED: '',
       MSG_ERROR_ACCOUNT_TOO_NEW: '',
+      LABEL_COUNTDOWN_DAYS: '',
+      LABEL_COUNTDOWN_DAY: '',
+      LABEL_COUNTDOWN_HOURS: '',
+      LABEL_COUNTDOWN_ENDED: '',
+      LABEL_COUNTDOWN_HINT: '',
+      LABEL_COUNTDOWN_ENDED_HINT: '',
 
       // Backend may return either a bare shortcode ("OMG49S8R") or a full URL
       // ("https://claudekit.cc/?ref=OMG49S8R"). Strip to the shortcode so the
@@ -492,17 +530,40 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
         const el = document.querySelector('[data-deals-claim-widget]') as HTMLElement;
         this.API_BASE = el?.dataset.apiUrl || '';
         this.TURNSTILE_KEY = el?.dataset.turnstileKey || '';
+        this.couponEndsAt = el?.dataset.couponEndsAt || '';
+        this.cardKicker = el?.dataset.cardKicker || '';
         this.MSG_ERROR = el?.dataset.msgError || '';
         this.MSG_ERROR_LOAD = el?.dataset.msgErrorLoad || '';
         this.MSG_ERROR_SECURITY = el?.dataset.msgErrorSecurity || '';
         this.MSG_ERROR_RATE_LIMITED = el?.dataset.msgErrorRateLimited || '';
         this.MSG_ERROR_ACCOUNT_TOO_NEW = el?.dataset.msgErrorAccountTooNew || '';
+        this.LABEL_COUNTDOWN_DAYS = el?.dataset.countdownDays || '';
+        this.LABEL_COUNTDOWN_DAY = el?.dataset.countdownDay || '';
+        this.LABEL_COUNTDOWN_HOURS = el?.dataset.countdownHours || '';
+        this.LABEL_COUNTDOWN_ENDED = el?.dataset.countdownEnded || '';
+        this.LABEL_COUNTDOWN_HINT = el?.dataset.countdownHint || '';
+        this.LABEL_COUNTDOWN_ENDED_HINT = el?.dataset.countdownEndedHint || '';
+
+        this.updateCampaignCountdown();
 
         window.addEventListener('vividkit:deals-dev-reset-auth', () => {
           this.discountCode = null;
           this.referralCode = null;
           this.errorMessage = '';
           this.fetchStatus();
+        });
+        window.addEventListener('vividkit:deals-dev-set-claim-state', (event: Event) => {
+          const detail = (event as CustomEvent<{ state?: string }>).detail;
+          if (detail?.state !== 'ended') return;
+          this.discountCode = null;
+          this.referralCode = 'OMG49S8R';
+          this.errorMessage = '';
+          this.claimCountdownLabel = this.LABEL_COUNTDOWN_ENDED;
+          this.claimCountdownHint = this.LABEL_COUNTDOWN_ENDED_HINT;
+          this.claimCountdownEnded = true;
+          this.syncCampaignCountdownStore(true);
+          this.state = 'ended';
+          document.getElementById('claim')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
 
         const params = new URLSearchParams(window.location.search);
@@ -579,6 +640,13 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
           store.claimedLabel = String(claimed);
           store.totalLabel = String(data.total);
           store.nextReset = data.next_reset ?? '';
+          this.updateCampaignCountdown();
+
+          if (this.claimCountdownEnded) {
+            this.referralCode = this.normalizeReferral(data.referral_code);
+            this.state = 'ended';
+            return;
+          }
 
           if (!data.active) {
             this.referralCode = this.normalizeReferral(data.referral_code);
@@ -772,9 +840,55 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
         return [h, m, s].map((n) => String(n).padStart(2, '0')).join(':');
       },
 
+      formatCampaignCountdown(diff: number): string {
+        if (diff <= 0) return this.LABEL_COUNTDOWN_ENDED;
+        const dayMs = 86_400_000;
+        const hourMs = 3_600_000;
+        if (diff >= dayMs) {
+          const days = Math.ceil(diff / dayMs);
+          const template = days === 1 ? this.LABEL_COUNTDOWN_DAY : this.LABEL_COUNTDOWN_DAYS;
+          return template.replace('{days}', String(days));
+        }
+        const hours = Math.max(1, Math.ceil(diff / hourMs));
+        return this.LABEL_COUNTDOWN_HOURS.replace('{hours}', String(hours));
+      },
+
+      syncCampaignCountdownStore(visible: boolean) {
+        const store = activeAlpine.store('dealStatus') as {
+          claimCountdownVisible?: boolean;
+          claimCountdownLabel?: string;
+          claimCountdownHint?: string;
+          claimCountdownEnded?: boolean;
+        };
+        store.claimCountdownVisible = visible;
+        store.claimCountdownLabel = this.claimCountdownLabel;
+        store.claimCountdownHint = this.claimCountdownHint;
+        store.claimCountdownEnded = this.claimCountdownEnded;
+      },
+
+      updateCampaignCountdown() {
+        const deadlineMs = this.couponEndsAt ? new Date(this.couponEndsAt).getTime() : NaN;
+        if (!Number.isFinite(deadlineMs)) {
+          this.claimCountdownLabel = '';
+          this.claimCountdownHint = '';
+          this.claimCountdownEnded = false;
+          this.syncCampaignCountdownStore(false);
+          return;
+        }
+
+        const diff = deadlineMs - Date.now();
+        this.claimCountdownEnded = diff <= 0;
+        this.claimCountdownLabel = this.formatCampaignCountdown(diff);
+        this.claimCountdownHint = this.claimCountdownEnded
+          ? this.LABEL_COUNTDOWN_ENDED_HINT
+          : this.LABEL_COUNTDOWN_HINT;
+        this.syncCampaignCountdownStore(true);
+      },
+
       startCountdown() {
         setInterval(() => {
           const now = Date.now();
+          this.updateCampaignCountdown();
 
           // Drop countdown (not_yet state)
           if (this.dropsAt) {
