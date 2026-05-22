@@ -148,7 +148,7 @@ export const guides = {
   'guides.resume.title': 'Tiếp Tục Phiên',
   'guides.resume.description': 'Khôi phục context từ phiên trước',
   'guides.deals.title': 'Ưu Đãi',
-  'guides.deals.description': 'Nhận mã giảm giá ClaudeKit hàng ngày',
+  'guides.deals.description': 'Chỉ còn 3 ngày để claim CK coupon ClaudeKit',
   'guides.lucky_draw.title': 'Lucky Draw',
   'guides.lucky_draw.description': 'Đăng nhập GitHub để tham gia lucky draw theo lịch',
   'guides.promotions.title': 'Khuyến Mãi',

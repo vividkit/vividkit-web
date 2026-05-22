@@ -148,7 +148,7 @@ export const guides = {
   'guides.resume.title': 'Resume Guide',
   'guides.resume.description': 'Project resumption workflows',
   'guides.deals.title': 'Deals',
-  'guides.deals.description': 'Claim exclusive daily discount codes for ClaudeKit',
+  'guides.deals.description': 'Only 3 days left to claim the ClaudeKit CK coupon',
   'guides.lucky_draw.title': 'Lucky Draw',
   'guides.lucky_draw.description': 'Register with GitHub for the scheduled lucky draw',
   'guides.promotions.title': 'Promotions',
