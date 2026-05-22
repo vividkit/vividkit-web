@@ -134,6 +134,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
     sessionToken: '',
     currentUsername: '',
     authWindow: null as Window | null,
+    turnstileWidgetId: null as string | null,
     schedule: null as any,
     publicResults: [] as any[],
     poolEntries: [] as any[],
@@ -389,7 +390,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
 
     startGitHubEntryConfirm() {
       this.state = 'confirming_github_entry';
-      this.renderTurnstile('raffle_confirm_github_entry');
+      this.startProtectedAction('raffle_confirm_github_entry');
     },
 
     startStatusCheck() {
@@ -398,7 +399,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
 
     startRegister() {
       this.state = 'registering';
-      this.renderTurnstile('raffle_register');
+      this.startProtectedAction('raffle_register');
     },
 
     startVerifyOrder() {
@@ -409,12 +410,12 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       }
       this.orderBoostStatus = 'checking';
       this.orderMessage = '';
-      this.renderTurnstile('raffle_verify_order');
+      this.startProtectedAction('raffle_verify_order');
     },
 
     startClaimPrize() {
       this.state = 'claiming_prize';
-      this.renderTurnstile('raffle_claim_prize');
+      this.startProtectedAction('raffle_claim_prize');
     },
 
     startDeclinePrize() {
@@ -424,16 +425,26 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
     confirmDeclinePrize() {
       this.declineConfirmOpen = false;
       this.state = 'declining_prize';
-      this.renderTurnstile('raffle_decline_prize');
+      this.startProtectedAction('raffle_decline_prize');
+    },
+
+    startProtectedAction(action: AuthAction) {
+      sessionStorage.removeItem(`turnstile_token:${action}`);
+      if (this.sessionToken && action !== 'raffle_status') {
+        this.completeSessionAction(action);
+        return;
+      }
+      this.renderTurnstile(action);
     },
 
     renderTurnstile(action: AuthAction) {
       const container = document.getElementById('raffle-turnstile-container');
-      if (!container) {
+      if (!container || !this.TURNSTILE_KEY) {
         this.state = 'error';
         this.errorMessage = this.MSG_ERROR;
         return;
       }
+      sessionStorage.removeItem(`turnstile_token:${action}`);
       if (!document.getElementById('cf-turnstile-script')) {
         const script = document.createElement('script');
         script.id = 'cf-turnstile-script';
@@ -447,8 +458,15 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
           setTimeout(tryRender, 200);
           return;
         }
+        const turnstile = (window as any).turnstile;
+        if (this.turnstileWidgetId && typeof turnstile.remove === 'function') {
+          turnstile.remove(this.turnstileWidgetId);
+          this.turnstileWidgetId = null;
+        } else {
+          container.replaceChildren();
+        }
         container.classList.remove('hidden');
-        (window as any).turnstile.render(container, {
+        this.turnstileWidgetId = turnstile.render(container, {
           sitekey: this.TURNSTILE_KEY,
           size: 'invisible',
           callback: (token: string) => {
@@ -461,11 +479,19 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
             }
           },
           'error-callback': () => {
+            container.classList.add('hidden');
+            sessionStorage.removeItem(`turnstile_token:${action}`);
+            this.state = 'error';
+            this.errorMessage = this.MSG_ERROR;
+          },
+          'expired-callback': () => {
+            container.classList.add('hidden');
+            sessionStorage.removeItem(`turnstile_token:${action}`);
             this.state = 'error';
             this.errorMessage = this.MSG_ERROR;
           },
         });
-        (window as any).turnstile.execute(container);
+        turnstile.execute(this.turnstileWidgetId);
       };
       tryRender();
     },
@@ -476,6 +502,13 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       if (action === 'raffle_register') return this.postRegister();
       if (action === 'raffle_claim_prize') return this.postClaimPrize();
       if (action === 'raffle_decline_prize') return this.postDeclinePrize();
+    },
+
+    retryWithFreshAuth(action: AuthAction, err: any) {
+      if (err?.error !== 'session_expired') return false;
+      this.clearSession();
+      this.renderTurnstile(action);
+      return true;
     },
 
     applyStatus(data: any) {
@@ -763,6 +796,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
         }
         await this.postStatus();
       } catch (err: any) {
+        if (this.retryWithFreshAuth('raffle_confirm_github_entry', err)) return;
         this.state = 'error';
         this.errorMessage = err?.message || this.MSG_ERROR;
       }
@@ -792,6 +826,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
         this.orderMessage = this.MSG_ORDER_BOOST_VERIFIED || data.message || '';
         await this.postStatus();
       } catch (err: any) {
+        if (this.retryWithFreshAuth('raffle_verify_order', err)) return;
         if (err?.error === 'order_not_found') {
           this.orderBoostStatus = this.hasVividKitReferralBoost ? 'verified' : 'normal';
           this.orderMessage = this.hasVividKitReferralBoost
@@ -838,6 +873,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
         await this.postStatus();
         await this.loadPoolEntries();
       } catch (err: any) {
+        if (this.retryWithFreshAuth('raffle_register', err)) return;
         if (err?.error === 'decline_limit_reached') {
           this.declineCount = Number(err.decline_count || this.declineLimit);
           this.declineLimit = Number(err.decline_limit || this.declineLimit);
@@ -865,6 +901,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
         this.proof = data.proof;
         this.state = 'proof_ready';
       } catch (err: any) {
+        if (this.retryWithFreshAuth('raffle_claim_prize', err)) return;
         this.state = err?.error === 'claim_expired' ? 'claim_expired' : 'error';
         this.errorMessage = err?.message || this.MSG_ERROR;
       }
@@ -886,6 +923,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
         await this.postStatus();
         await this.loadPublicResults();
       } catch (err: any) {
+        if (this.retryWithFreshAuth('raffle_decline_prize', err)) return;
         this.state = 'error';
         this.errorMessage = err?.status === 404 || err?.error === 'Not found'
           ? this.MSG_DECLINE_UNAVAILABLE
