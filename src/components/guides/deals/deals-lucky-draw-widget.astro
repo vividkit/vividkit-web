@@ -32,6 +32,12 @@ const isDev = import.meta.env.DEV;
   data-label-prize-status-claimed={t('deals.raffle.prize_status_claimed')}
   data-label-prize-status-declined={t('deals.raffle.prize_status_declined')}
   data-label-prize-status-rolled-over={t('deals.raffle.prize_status_rolled_over')}
+  data-msg-order-boost-verified={t('deals.raffle.order_boost_verified')}
+  data-msg-order-boost-normal={t('deals.raffle.order_boost_normal')}
+  data-msg-order-boost-need-ref={t('deals.raffle.order_boost_need_ref')}
+  data-msg-order-boost-already-bound={t('deals.raffle.order_boost_already_bound')}
+  data-msg-order-boost-user-bound={t('deals.raffle.order_boost_user_bound')}
+  data-msg-order-boost-error={t('deals.raffle.order_boost_error')}
   x-data="scheduledDrawWidget()"
   class="min-w-0"
 >
@@ -121,9 +127,9 @@ const isDev = import.meta.env.DEV;
           </button>
         </div>
         <div class="flex flex-wrap items-center justify-between gap-2">
-          <p x-show="orderBoostStatus === 'verified'" x-cloak class="text-sm font-bold text-emerald-700 dark:text-emerald-300">{t('deals.raffle.order_boost_verified')}</p>
-          <p x-show="orderBoostStatus === 'normal'" x-cloak class="text-sm font-semibold text-slate-700 dark:text-slate-200">{t('deals.raffle.order_boost_normal')}</p>
-          <p x-show="orderBoostStatus === 'error'" x-cloak class="text-sm font-semibold text-amber-800 dark:text-amber-200">{t('deals.raffle.order_boost_need_ref')}</p>
+          <p x-show="orderBoostStatus === 'verified'" x-cloak class="text-sm font-bold text-emerald-700 dark:text-emerald-300" x-text="orderMessage || MSG_ORDER_BOOST_VERIFIED">{t('deals.raffle.order_boost_verified')}</p>
+          <p x-show="orderBoostStatus === 'normal'" x-cloak class="text-sm font-semibold text-slate-700 dark:text-slate-200" x-text="orderMessage || MSG_ORDER_BOOST_NORMAL">{t('deals.raffle.order_boost_normal')}</p>
+          <p x-show="orderBoostStatus === 'error'" x-cloak class="text-sm font-semibold text-amber-800 dark:text-amber-200" x-text="orderMessage || MSG_ORDER_BOOST_ERROR">{t('deals.raffle.order_boost_need_ref')}</p>
           <button type="button" x-on:click="orderGuideOpen = true" class="cursor-pointer text-sm font-bold text-cyan-800 underline decoration-cyan-300 underline-offset-4 hover:text-cyan-600 dark:text-cyan-200 dark:decoration-cyan-500/60 dark:hover:text-cyan-100">
             {t('deals.raffle.order_guide_button')}
           </button>

@@ -123,6 +123,12 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
     LABEL_PRIZE_STATUS_CLAIMED: '',
     LABEL_PRIZE_STATUS_DECLINED: '',
     LABEL_PRIZE_STATUS_ROLLED_OVER: '',
+    MSG_ORDER_BOOST_VERIFIED: '',
+    MSG_ORDER_BOOST_NORMAL: '',
+    MSG_ORDER_BOOST_NEED_REF: '',
+    MSG_ORDER_BOOST_ALREADY_BOUND: '',
+    MSG_ORDER_BOOST_USER_BOUND: '',
+    MSG_ORDER_BOOST_ERROR: '',
     seatBudget: { ...emptyBudget },
     errorMessage: '',
     sessionToken: '',
@@ -161,6 +167,12 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       this.LABEL_PRIZE_STATUS_CLAIMED = el?.dataset.labelPrizeStatusClaimed || '';
       this.LABEL_PRIZE_STATUS_DECLINED = el?.dataset.labelPrizeStatusDeclined || '';
       this.LABEL_PRIZE_STATUS_ROLLED_OVER = el?.dataset.labelPrizeStatusRolledOver || '';
+      this.MSG_ORDER_BOOST_VERIFIED = el?.dataset.msgOrderBoostVerified || '';
+      this.MSG_ORDER_BOOST_NORMAL = el?.dataset.msgOrderBoostNormal || '';
+      this.MSG_ORDER_BOOST_NEED_REF = el?.dataset.msgOrderBoostNeedRef || '';
+      this.MSG_ORDER_BOOST_ALREADY_BOUND = el?.dataset.msgOrderBoostAlreadyBound || '';
+      this.MSG_ORDER_BOOST_USER_BOUND = el?.dataset.msgOrderBoostUserBound || '';
+      this.MSG_ORDER_BOOST_ERROR = el?.dataset.msgOrderBoostError || this.MSG_ERROR;
       this.sessionToken = sessionStorage.getItem('raffle_session_token') || '';
 
       const params = new URLSearchParams(window.location.search);
@@ -392,9 +404,11 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
     startVerifyOrder() {
       if (!String(this.orderRefInput || '').trim()) {
         this.orderBoostStatus = 'error';
+        this.orderMessage = this.MSG_ORDER_BOOST_NEED_REF;
         return;
       }
       this.orderBoostStatus = 'checking';
+      this.orderMessage = '';
       this.renderTurnstile('raffle_verify_order');
     },
 
@@ -478,6 +492,13 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       this.currentUsername = data.facebook_name || data.username || data.registration?.facebook_name || data.registration?.github_username || '';
       this.hasVividKitReferralBoost = Boolean(data.has_vividkit_referral_boost || data.registration?.entry_type === 'vividkit_referral_boost');
       this.raffleWeight = Number(data.raffle_weight || data.registration?.raffle_weight || (this.hasVividKitReferralBoost ? 2 : 1));
+      if (
+        this.hasVividKitReferralBoost &&
+        (this.orderBoostStatus === 'idle' || this.orderBoostStatus === 'normal' || this.orderBoostStatus === 'error')
+      ) {
+        this.orderBoostStatus = 'verified';
+        this.orderMessage = this.MSG_ORDER_BOOST_VERIFIED;
+      }
       this.declineCount = Number(data.decline_count || 0);
       this.declineLimit = Number(data.decline_limit || 2);
       this.declineBlocked = Boolean(data.decline_blocked);
@@ -768,11 +789,35 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
           sessionStorage.setItem('raffle_session_token', data.session_token);
         }
         this.orderBoostStatus = 'verified';
-        this.orderMessage = data.message || '';
+        this.orderMessage = this.MSG_ORDER_BOOST_VERIFIED || data.message || '';
         await this.postStatus();
       } catch (err: any) {
-        this.orderBoostStatus = 'normal';
-        this.orderMessage = err?.message || this.MSG_ERROR;
+        if (err?.error === 'order_not_found') {
+          this.orderBoostStatus = this.hasVividKitReferralBoost ? 'verified' : 'normal';
+          this.orderMessage = this.hasVividKitReferralBoost
+            ? this.MSG_ORDER_BOOST_VERIFIED
+            : this.MSG_ORDER_BOOST_NORMAL;
+        } else if (err?.error === 'order_already_bound') {
+          this.orderBoostStatus = this.hasVividKitReferralBoost ? 'verified' : 'error';
+          this.orderMessage = this.hasVividKitReferralBoost
+            ? this.MSG_ORDER_BOOST_VERIFIED
+            : this.MSG_ORDER_BOOST_ALREADY_BOUND;
+        } else if (err?.error === 'user_already_bound') {
+          this.orderBoostStatus = this.hasVividKitReferralBoost ? 'verified' : 'error';
+          this.orderMessage = this.hasVividKitReferralBoost
+            ? this.MSG_ORDER_BOOST_VERIFIED
+            : this.MSG_ORDER_BOOST_USER_BOUND;
+        } else if (err?.error === 'rate_limited') {
+          this.orderBoostStatus = this.hasVividKitReferralBoost ? 'verified' : 'error';
+          this.orderMessage = this.hasVividKitReferralBoost
+            ? this.MSG_ORDER_BOOST_VERIFIED
+            : this.MSG_RATE_LIMITED;
+        } else {
+          this.orderBoostStatus = this.hasVividKitReferralBoost ? 'verified' : 'error';
+          this.orderMessage = this.hasVividKitReferralBoost
+            ? this.MSG_ORDER_BOOST_VERIFIED
+            : (this.MSG_ORDER_BOOST_ERROR || err?.message || this.MSG_ERROR);
+        }
         if (this.state !== 'eligible') this.state = 'eligible';
       }
     },
