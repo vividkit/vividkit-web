@@ -1,12 +1,4 @@
 ---
-import { insideClaudeKitTopics } from '@/data/guides/inside-claudekit';
-
-// Check if this topic is disabled
-const topic = insideClaudeKitTopics.find((t) => t.slug === 'plan-modes');
-if (topic?.disabled) {
-  return Astro.redirect('/vi/guides/inside-claudekit');
-}
-
 import GuidesLayout from '@/layouts/GuidesLayout.astro';
 import InsideClaudeKitPlanModesArticle from '@/components/guides/inside-claudekit/InsideClaudeKitPlanModesArticle.astro';
 import { useTranslations } from '@/i18n/utils';

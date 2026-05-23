@@ -22,22 +22,23 @@ export const skillInfographics: SkillInfographic[] = [
 
     hardGate: {
       type: 'warning',
-      titleEn: 'HARD GATE',
-      titleVi: 'HARD GATE',
-      contentEn: 'No code, no scaffolding, no implementation until design is presented and user approves. Applies to every session regardless of complexity.',
-      contentVi: 'Không code, không scaffolding, không triển khai cho đến khi design được trình bày và user duyệt. Áp dụng cho mọi phiên làm việc.',
+      titleEn: 'HARD GATES (3)',
+      titleVi: 'HARD GATES (3)',
+      contentEn: '① No implementation until design is presented & user approves. ② Scout codebase BEFORE asking any clarifying question (project type, modules, patterns, docs, plans, constraints). ③ Discovery must extract EXACT requirements — expected output, acceptance criteria, scope boundary, non-negotiable constraints, touchpoints. Loop until concrete.',
+      contentVi: '① Không triển khai cho đến khi design được trình bày & user duyệt. ② BẮT BUỘC scout codebase TRƯỚC mọi câu hỏi làm rõ (loại dự án, modules, patterns, docs, plans, ràng buộc). ③ Discovery phải trích xuất yêu cầu CHÍNH XÁC — output mong đợi, acceptance criteria, scope boundary, ràng buộc bất khả nhân nhượng, touchpoints. Lặp đến khi cụ thể.',
     },
 
     processFlow: [
-      { number: 1, titleEn: 'Scout', titleVi: 'Khảo sát', descEn: 'Read project docs & code patterns', descVi: 'Đọc docs dự án & code patterns' },
-      { number: 2, titleEn: 'Discover', titleVi: 'Khám phá', descEn: 'Ask clarifying questions via AskUser', descVi: 'Hỏi làm rõ qua AskUser' },
-      { number: 3, titleEn: 'Scope', titleVi: 'Phạm vi', descEn: 'Decompose if 3+ independent concerns', descVi: 'Phân tách nếu 3+ vấn đề độc lập' },
-      { number: 4, titleEn: 'Research', titleVi: 'Nghiên cứu', descEn: 'Parallel researcher agents + web search', descVi: 'Agents nghiên cứu song song + web search' },
-      { number: 5, titleEn: 'Analyze', titleVi: 'Phân tích', descEn: 'Evaluate 2-3 approaches with pros/cons', descVi: 'Đánh giá 2-3 hướng với pros/cons' },
-      { number: 6, titleEn: 'Debate', titleVi: 'Tranh luận', descEn: 'Challenge assumptions, present options', descVi: 'Thách thức giả định, trình bày options' },
+      { number: 1, titleEn: 'Scout', titleVi: 'Khảo sát', descEn: 'MANDATORY first step — map project type, modules, patterns, docs, plans', descVi: 'BẮT BUỘC trước tiên — xác định loại dự án, modules, patterns, docs, plans' },
+      { number: 2, titleEn: 'Discover', titleVi: 'Khám phá', descEn: 'AskUser loop — extract 5 exact items: output, acceptance, scope, constraints, touchpoints', descVi: 'AskUser lặp — trích 5 mục: output, acceptance, scope, ràng buộc, touchpoints' },
+      { number: 3, titleEn: 'Scope', titleVi: 'Phạm vi', descEn: 'Decompose if 3+ independent subsystems', descVi: 'Phân tách nếu 3+ subsystem độc lập' },
+      { number: 4, titleEn: 'Research', titleVi: 'Nghiên cứu', descEn: 'planner agent + WebSearch + docs-seeker', descVi: 'planner agent + WebSearch + docs-seeker' },
+      { number: 5, titleEn: 'Analyze', titleVi: 'Phân tích', descEn: 'Evaluate 2-3 approaches with pros/cons via YAGNI/KISS/DRY', descVi: 'Đánh giá 2-3 hướng với pros/cons theo YAGNI/KISS/DRY' },
+      { number: 6, titleEn: 'Debate', titleVi: 'Tranh luận', descEn: 'Brutal honesty — challenge assumptions, present options', descVi: 'Brutal honesty — thách thức giả định, trình bày options' },
       { number: 7, titleEn: 'Consensus', titleVi: 'Đồng thuận', descEn: 'Align on chosen approach', descVi: 'Thống nhất hướng đi' },
-      { number: 8, titleEn: 'Report', titleVi: 'Báo cáo', descEn: 'Write markdown summary', descVi: 'Viết báo cáo markdown' },
-      { number: 9, titleEn: 'Next?', titleVi: 'Tiếp?', descEn: 'Ask: create plan? → /plan', descVi: 'Hỏi: tạo plan? → /plan' },
+      { number: 8, titleEn: 'Report', titleVi: 'Báo cáo', descEn: 'Markdown summary via ck:project-organization', descVi: 'Báo cáo markdown qua ck:project-organization' },
+      { number: 9, titleEn: 'Handoff', titleVi: 'Bàn giao', descEn: 'AskUser: /ck:plan --tdd (refactor/critical) · /ck:plan (default) · end', descVi: 'AskUser: /ck:plan --tdd (refactor/critical) · /ck:plan (default) · kết thúc' },
+      { number: 10, titleEn: 'Journal', titleVi: 'Nhật ký', descEn: '/ck:journal — concise technical entry', descVi: '/ck:journal — entry kỹ thuật ngắn gọn' },
     ],
 
     corePrinciplesEn: [
@@ -104,49 +105,110 @@ export const skillInfographics: SkillInfographic[] = [
     header: {
       titleEn: '/ck:plan',
       titleVi: '/ck:plan',
-      taglineEn: 'Implementation planner with research phases, red-team review, and task hydration. Creates actionable phase files.',
-      taglineVi: 'Lập kế hoạch triển khai với phases nghiên cứu, review red-team, và hydrate tasks. Tạo phase files có thể hành động.',
+      taglineEn: 'Implementation planner with cross-plan scan, scope challenge, research phases, red-team review, and task hydration. Creates actionable phase files via the ck CLI.',
+      taglineVi: 'Lập kế hoạch triển khai với cross-plan scan, scope challenge, phases nghiên cứu, review red-team, và hydrate tasks. Tạo phase files có thể hành động qua ck CLI.',
+    },
+
+    hardGate: {
+      type: 'warning',
+      titleEn: 'HARD GATE',
+      titleVi: 'HARD GATE',
+      contentEn: 'No code implementation — /ck:plan only creates plans. CLI-owned scaffolding via `ck plan create/check/uncheck`; never hand-edit the phases table when CLI is available. Plans must live under project or global plan roots, never arbitrary user directories.',
+      contentVi: 'Không triển khai code — /ck:plan chỉ tạo plans. Scaffolding do CLI sở hữu qua `ck plan create/check/uncheck`; không sửa tay bảng phases khi CLI có sẵn. Plans phải nằm dưới project hoặc global plan roots, không phải thư mục user tùy ý.',
     },
 
     processFlow: [
-      { number: 1, titleEn: 'Pre-Check', titleVi: 'Kiểm tra', descEn: 'Check Plan Context + active plan', descVi: 'Kiểm tra Plan Context + plan đang hoạt động' },
-      { number: 2, titleEn: 'Mode', titleVi: 'Chế độ', descEn: 'Auto-detect or explicit flag', descVi: 'Tự động phát hiện hoặc flag rõ ràng' },
-      { number: 3, titleEn: 'Research', titleVi: 'Nghiên cứu', descEn: 'Spawn researcher agents', descVi: 'Spawn researcher agents' },
-      { number: 4, titleEn: 'Analyze', titleVi: 'Phân tích', descEn: 'Read docs, scout codebase', descVi: 'Đọc docs, scout codebase' },
-      { number: 5, titleEn: 'Plan', titleVi: 'Lập kế hoạch', descEn: 'Write plan.md + phase files', descVi: 'Viết plan.md + phase files' },
-      { number: 6, titleEn: 'Red Team', titleVi: 'Red Team', descEn: 'Adversarial review (2-4 reviewers)', descVi: 'Review đối kháng (2-4 reviewers)' },
-      { number: 7, titleEn: 'Validate', titleVi: 'Xác thực', descEn: 'Critical questions interview', descVi: 'Phỏng vấn câu hỏi quan trọng' },
-      { number: 8, titleEn: 'Hydrate', titleVi: 'Hydrate', descEn: 'Create Claude Tasks from phases', descVi: 'Tạo Claude Tasks từ phases' },
-      { number: 9, titleEn: 'Handoff', titleVi: 'Bàn giao', descEn: 'Output /cook command', descVi: 'Xuất lệnh /cook' },
+      { number: 1, titleEn: 'Pre-Check', titleVi: 'Kiểm tra', descEn: 'Check Plan Context: active / suggested / none', descVi: 'Kiểm tra Plan Context: active / suggested / none' },
+      { number: 2, titleEn: 'Cross-Scan', titleVi: 'Quét chéo', descEn: 'Scan unfinished plans, detect blockedBy/blocks', descVi: 'Quét plans dang dở, phát hiện blockedBy/blocks' },
+      { number: 3, titleEn: 'Scope', titleVi: 'Phạm vi', descEn: 'Scope Challenge (skip if --fast or trivial)', descVi: 'Scope Challenge (bỏ nếu --fast hoặc trivial)' },
+      { number: 4, titleEn: 'Mode', titleVi: 'Chế độ', descEn: 'Auto-detect or explicit flag', descVi: 'Tự động phát hiện hoặc flag rõ ràng' },
+      { number: 5, titleEn: 'Research', titleVi: 'Nghiên cứu', descEn: 'Spawn researcher agents (skip in fast)', descVi: 'Spawn researcher agents (bỏ trong fast)' },
+      { number: 6, titleEn: 'Analyze', titleVi: 'Phân tích', descEn: 'Read docs, scout codebase if stale', descVi: 'Đọc docs, scout codebase nếu cũ' },
+      { number: 7, titleEn: 'Plan', titleVi: 'Lập kế hoạch', descEn: 'Planner writes plan.md + phase files via ck CLI', descVi: 'Planner viết plan.md + phase files qua ck CLI' },
+      { number: 8, titleEn: 'Red Team', titleVi: 'Red Team', descEn: 'Adversarial review (2-4 reviewers)', descVi: 'Review đối kháng (2-4 reviewers)' },
+      { number: 9, titleEn: 'Validate', titleVi: 'Xác thực', descEn: 'Verification pass + critical questions', descVi: 'Verification pass + câu hỏi quan trọng' },
+      { number: 10, titleEn: 'Hydrate', titleVi: 'Hydrate', descEn: 'Create Claude Tasks per phase + critical steps', descVi: 'Tạo Claude Tasks cho mỗi phase + bước quan trọng' },
+      { number: 11, titleEn: 'Handoff', titleVi: 'Bàn giao', descEn: 'Boundary reminder → AskUser: validate/red-team/cook/end', descVi: 'Nhắc boundary → AskUser: validate/red-team/cook/end' },
+    ],
+
+    corePrinciplesEn: [
+      'YAGNI / KISS / DRY — be honest, brutal, concise',
+      'CLI-owned scaffolding — use `ck plan` commands, never hand-edit phases',
+      'Whole-plan consistency sweep after every validate/red-team edit',
+      'No code implementation — plans only, hand off via /ck:cook',
+      'Plans live under project or global roots, never arbitrary directories',
+    ],
+    corePrinciplesVi: [
+      'YAGNI / KISS / DRY — thẳng thắn, brutal, súc tích',
+      'CLI sở hữu scaffolding — dùng lệnh `ck plan`, không sửa tay phases',
+      'Quét tính nhất quán toàn plan sau mỗi lần validate/red-team edit',
+      'Không triển khai code — chỉ plans, bàn giao qua /ck:cook',
+      'Plans nằm dưới project hoặc global roots, không phải thư mục tùy ý',
+    ],
+
+    expertiseAreasEn: [
+      'Cross-plan dependency mapping (blockedBy / blocks)',
+      'Scope challenge & mode auto-detection',
+      'Phase decomposition & canonical phase template',
+      'Adversarial red-team review with 2-4 reviewers',
+      'Task hydration with TaskCreate dependency chains',
+    ],
+    expertiseAreasVi: [
+      'Mapping phụ thuộc cross-plan (blockedBy / blocks)',
+      'Scope challenge & auto-detect mode',
+      'Phân rã phases & canonical phase template',
+      'Red-team đối kháng với 2-4 reviewers',
+      'Hydrate tasks với chuỗi phụ thuộc TaskCreate',
     ],
 
     workflowModes: [
       { flag: '--auto', modeEn: 'Auto-detect', modeVi: 'Tự động', research: 'Follows mode', redTeam: 'Follows mode', validation: 'Follows mode', cookFlag: 'Follows mode' },
-      { flag: '--fast', modeEn: 'Fast', modeVi: 'Nhanh', research: 'Skip', redTeam: 'Skip', validation: 'Skip', cookFlag: '--auto' },
+      { flag: '--fast', modeEn: 'Fast', modeVi: 'Nhanh', research: 'Skip', redTeam: 'Skip', validation: 'Skip', cookFlag: '—' },
       { flag: '--hard', modeEn: 'Hard', modeVi: 'Khó', research: '2 researchers', redTeam: 'Yes', validation: 'Optional', cookFlag: '—' },
-      { flag: '--deep', modeEn: 'Deep', modeVi: 'Sâu', research: '3+ scouts/phase', redTeam: 'Yes', validation: 'Forced', cookFlag: '—' },
+      { flag: '--deep', modeEn: 'Deep', modeVi: 'Sâu', research: '2-3 + per-phase scout', redTeam: 'Yes', validation: 'Yes', cookFlag: '—' },
       { flag: '--parallel', modeEn: 'Parallel', modeVi: 'Song song', research: '2 researchers', redTeam: 'Yes', validation: 'Optional', cookFlag: '--parallel' },
       { flag: '--two', modeEn: 'Two approaches', modeVi: 'Hai hướng', research: '2+ researchers', redTeam: 'After select', validation: 'After select', cookFlag: '—' },
     ],
 
-    composableFlagsEn: '--tdd (tests-first per phase) and --no-tasks (skip task hydration) can combine with any mode.',
-    composableFlagsVi: '--tdd (tests-first mỗi phase) và --no-tasks (bỏ qua task hydration) có thể kết hợp với bất kỳ mode nào.',
+    composableFlagsEn: '--tdd (tests-first per phase) and --no-tasks (skip task hydration) combine with any mode.',
+    composableFlagsVi: '--tdd (tests-first mỗi phase) và --no-tasks (bỏ task hydration) kết hợp được với mọi mode.',
+
+    deepDiveLink: {
+      hrefEn: '/guides/inside-claudekit/plan-modes',
+      hrefVi: '/vi/guides/inside-claudekit/plan-modes',
+      labelEn: 'Deep dive: when to use --deep and --tdd',
+      labelVi: 'Đọc thêm: khi nào dùng --deep và --tdd',
+    },
+
+    skillStack: [
+      { name: 'planner agent', type: 'agent' },
+      { name: 'researcher agent', type: 'agent' },
+      { name: 'code-reviewer agent', type: 'agent' },
+      { name: 'ck:scout', type: 'skill' },
+      { name: 'ck:docs-seeker', type: 'skill' },
+      { name: 'ck:sequential-thinking', type: 'skill' },
+      { name: 'ck:project-organization', type: 'skill' },
+      { name: 'ck:journal', type: 'skill' },
+      { name: 'ck CLI (plan create/check)', type: 'tool' },
+      { name: 'TaskCreate / TaskList', type: 'tool' },
+      { name: 'AskUserQuestion', type: 'tool' },
+    ],
 
     specialOperations: [
       {
         id: 'red-team',
         titleEn: 'red-team',
         titleVi: 'red-team',
-        descEn: '2-4 code-reviewer agents challenge plan assumptions, find blind spots, test edge cases. Run as /plan red-team.',
-        descVi: '2-4 code-reviewer agents thách thức giả định của plan, tìm điểm mù, test edge cases. Chạy /plan red-team.',
+        descEn: '2-4 code-reviewer agents challenge plan assumptions, find blind spots, test edge cases. Run as /ck:plan red-team {plan-path}.',
+        descVi: '2-4 code-reviewer agents thách thức giả định plan, tìm điểm mù, test edge cases. Chạy /ck:plan red-team {plan-path}.',
         color: 'red',
       },
       {
         id: 'validate',
         titleEn: 'validate',
         titleVi: 'validate',
-        descEn: 'Critical questions interview (3-8 questions). Ensures plan completeness before implementation begins.',
-        descVi: 'Phỏng vấn câu hỏi quan trọng (3-8 câu). Đảm bảo plan đầy đủ trước khi triển khai.',
+        descEn: 'Critical questions interview (3-8 questions) + verification pass. Triggers whole-plan consistency sweep on edits.',
+        descVi: 'Phỏng vấn câu hỏi quan trọng (3-8 câu) + verification pass. Kích hoạt whole-plan consistency sweep khi edit.',
         color: 'blue',
       },
       {
@@ -158,6 +220,17 @@ export const skillInfographics: SkillInfographic[] = [
         color: 'amber',
       },
     ],
+
+    reportOutput: {
+      titleEn: 'Plan Directory + Cook Handoff',
+      titleVi: 'Thư mục Plan + Bàn giao Cook',
+      patternEn: 'plans/YYMMDD-HHMM-{slug}/plan.md + phase-XX-*.md',
+      patternVi: 'plans/YYMMDD-HHMM-{slug}/plan.md + phase-XX-*.md',
+      locationEn: 'Project: ./plans/  •  Global: ~/.claude/plans/',
+      locationVi: 'Project: ./plans/  •  Global: ~/.claude/plans/',
+      descEn: 'plan.md (frontmatter + phases table) • phase-XX files (canonical template) • Claude Tasks per phase • Post-plan AskUser: validate / red-team / /ck:cook {absolute-path} / end',
+      descVi: 'plan.md (frontmatter + bảng phases) • file phase-XX (template chuẩn) • Claude Tasks mỗi phase • Post-plan AskUser: validate / red-team / /ck:cook {absolute-path} / end',
+    },
   },
 
   // ─────────────────────────────────────────────────────────────────────────────

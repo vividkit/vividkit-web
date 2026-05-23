@@ -1,0 +1,539 @@
+---
+// Purpose-built Quick Ref layout for /ck:plan.
+// Presents the dense planning workflow as a readable command reference.
+import type { SkillInfographic, ProcessFlowStep } from '@/data/guides/how-ck-works';
+import type { Language } from '@/i18n';
+
+interface Props {
+  data: SkillInfographic;
+  lang: Language;
+}
+
+type Tone = {
+  rail: string;
+  label: string;
+  chip: string;
+  surface: string;
+};
+
+interface ProcessGroup {
+  label: string;
+  kicker: string;
+  steps: ProcessFlowStep[];
+  tone: Tone;
+}
+
+const { data, lang } = Astro.props;
+const isVi = lang === 'vi';
+const ckPlanCliHref = isVi ? '/vi/guides/cli-commands#cli-cmd-ck-plan' : '/guides/cli-commands#cli-cmd-ck-plan';
+
+const text = {
+  eyebrow: isVi ? 'Quick Ref / Planning command' : 'Quick Ref / Planning command',
+  summary: isVi
+    ? 'Dùng khi brief đã đủ rõ và cần tách thành phases, bước kiểm chứng, và lệnh bàn giao cho /ck:cook.'
+    : 'Use it when the brief is clear enough to split into phases, validation gates, and a clean /ck:cook handoff.',
+  afterBrainstorm: isVi ? 'Sau brainstorm / khi scope đã rõ' : 'After brainstorm / when scope is clear',
+  hardGate: isVi ? 'Gate bắt buộc' : 'Required Gate',
+  hardGateBody: isVi
+    ? 'Chỉ tạo plan. Scaffolding dùng `ck plan create/check/uncheck`; không sửa tay bảng phases khi CLI có sẵn.'
+    : 'Plans only. Scaffolding uses `ck plan create/check/uncheck`; do not hand-edit the phases table when the CLI is available.',
+  cliReference: isVi ? 'Xem trong CLI commands' : 'View in CLI commands',
+  cliCommand: isVi ? 'Tham chiếu CLI' : 'CLI reference',
+  noCode: isVi ? 'Không triển khai' : 'No implementation',
+  noCodeDesc: isVi ? 'Chỉ tạo plan và phase files.' : 'Only creates plan and phase files.',
+  cliOwned: isVi ? 'CLI quản lý' : 'CLI managed',
+  cliOwnedDesc: isVi ? 'Tạo và đổi trạng thái bằng `ck plan`.' : 'Create and update status through `ck plan`.',
+  handoff: isVi ? 'Bàn giao rõ' : 'Clear handoff',
+  handoffDesc: isVi ? 'Kết thúc bằng validate, red-team, cook, hoặc dừng.' : 'Ends with validate, red-team, cook, or stop.',
+  process: isVi ? 'Execution map' : 'Execution Map',
+  processDesc: isVi ? 'Bốn lane chính: định vị scope, nghiên cứu, kiểm chứng, rồi bàn giao.' : 'Four lanes: orient scope, research, stress test, then hand off.',
+  modes: isVi ? 'Mode nên dùng' : 'Mode Selection',
+  modesDesc: isVi ? 'Bắt đầu với auto. Chỉ nâng mode khi scope hoặc rủi ro thật sự cần.' : 'Start with auto. Escalate only when scope or risk demands it.',
+  samplePrompt: isVi ? 'Prompt mẫu' : 'Sample prompt',
+  useWhen: isVi ? 'Dùng khi' : 'Use when',
+  expected: isVi ? 'Kết quả' : 'Expected',
+  output: isVi ? 'Artifact tạo ra' : 'Artifacts Produced',
+  stack: isVi ? 'Stack được gọi khi cần' : 'Stack Used When Needed',
+  extraFlags: isVi ? 'Flags thêm' : 'Extra Flags',
+  extraFlagsDesc: isVi ? 'Kết hợp với mode để đổi cách plan tạo test hoặc task.' : 'Combine with a mode to change how the plan handles tests or tasks.',
+  research: isVi ? 'Research' : 'Research',
+  redTeam: isVi ? 'Red-team' : 'Red-team',
+  validation: isVi ? 'Validate' : 'Validate',
+  cook: isVi ? 'Cook' : 'Cook',
+  deepDive: isVi ? data.deepDiveLink?.labelVi : data.deepDiveLink?.labelEn,
+  deepDiveDesc: isVi
+    ? 'Mở bài giải thích khi nào nên tăng độ sâu plan hoặc buộc tests-first.'
+    : 'Open the guide for when to increase planning depth or force tests-first planning.',
+};
+
+const heroFlow = isVi
+  ? ['Brief rõ', 'Plan phases', 'Validate / red-team', '/ck:cook']
+  : ['Clear brief', 'Plan phases', 'Validate / red-team', '/ck:cook'];
+
+const ruleCards = [
+  {
+    title: text.noCode,
+    desc: text.noCodeDesc,
+    marker: 'bg-slate-400',
+  },
+  {
+    title: text.cliOwned,
+    desc: text.cliOwnedDesc,
+    marker: 'bg-sky-400',
+    href: ckPlanCliHref,
+    command: 'ck plan',
+  },
+  {
+    title: text.handoff,
+    desc: text.handoffDesc,
+    marker: 'bg-emerald-400',
+  },
+];
+
+const tones: Record<string, Tone> = {
+  orient: {
+    rail: 'bg-sky-400',
+    label: 'text-sky-600 dark:text-sky-300',
+    chip: 'bg-sky-50 text-sky-700 ring-sky-200 dark:bg-sky-950/35 dark:text-sky-200 dark:ring-sky-800/60',
+    surface: 'bg-sky-50/55 ring-sky-100 dark:bg-sky-950/12 dark:ring-sky-900/35',
+  },
+  research: {
+    rail: 'bg-amber-400',
+    label: 'text-amber-700 dark:text-amber-300',
+    chip: 'bg-amber-50 text-amber-800 ring-amber-200 dark:bg-amber-950/35 dark:text-amber-200 dark:ring-amber-800/60',
+    surface: 'bg-amber-50/55 ring-amber-100 dark:bg-amber-950/12 dark:ring-amber-900/35',
+  },
+  stress: {
+    rail: 'bg-rose-400',
+    label: 'text-rose-700 dark:text-rose-300',
+    chip: 'bg-rose-50 text-rose-700 ring-rose-200 dark:bg-rose-950/35 dark:text-rose-200 dark:ring-rose-800/60',
+    surface: 'bg-rose-50/55 ring-rose-100 dark:bg-rose-950/12 dark:ring-rose-900/35',
+  },
+  handoff: {
+    rail: 'bg-emerald-400',
+    label: 'text-emerald-700 dark:text-emerald-300',
+    chip: 'bg-emerald-50 text-emerald-700 ring-emerald-200 dark:bg-emerald-950/35 dark:text-emerald-200 dark:ring-emerald-800/60',
+    surface: 'bg-emerald-50/55 ring-emerald-100 dark:bg-emerald-950/12 dark:ring-emerald-900/35',
+  },
+};
+
+const processGroups: ProcessGroup[] = [
+  {
+    label: isVi ? 'Định vị' : 'Orient',
+    kicker: isVi ? 'Chốt context trước khi plan' : 'Set context before planning',
+    steps: data.processFlow.slice(0, 4),
+    tone: tones.orient,
+  },
+  {
+    label: isVi ? 'Nghiên cứu' : 'Research',
+    kicker: isVi ? 'Lấy đủ bằng chứng' : 'Collect enough evidence',
+    steps: data.processFlow.slice(4, 7),
+    tone: tones.research,
+  },
+  {
+    label: isVi ? 'Kiểm chứng' : 'Stress Test',
+    kicker: isVi ? 'Tìm điểm gãy sớm' : 'Find weak points early',
+    steps: data.processFlow.slice(7, 9),
+    tone: tones.stress,
+  },
+  {
+    label: isVi ? 'Bàn giao' : 'Handoff',
+    kicker: isVi ? 'Đưa plan vào cook' : 'Make the plan executable',
+    steps: data.processFlow.slice(9),
+    tone: tones.handoff,
+  },
+];
+
+const modeOrder = ['--auto', '--fast', '--hard', '--deep', '--parallel', '--two'];
+const modeAccent: Record<string, string> = {
+  '--auto': 'border-slate-200 bg-slate-50 text-slate-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100',
+  '--fast': 'border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-800/55 dark:bg-emerald-950/25 dark:text-emerald-200',
+  '--hard': 'border-orange-200 bg-orange-50 text-orange-800 dark:border-orange-800/55 dark:bg-orange-950/25 dark:text-orange-200',
+  '--deep': 'border-violet-200 bg-violet-50 text-violet-800 dark:border-violet-800/55 dark:bg-violet-950/25 dark:text-violet-200',
+  '--parallel': 'border-blue-200 bg-blue-50 text-blue-800 dark:border-blue-800/55 dark:bg-blue-950/25 dark:text-blue-200',
+  '--two': 'border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-800/55 dark:bg-amber-950/25 dark:text-amber-200',
+};
+
+const modes = modeOrder
+  .map(flag => data.workflowModes?.find(mode => mode.flag === flag))
+  .filter(Boolean);
+const modeExamples: Record<string, { prompt: string; when: string; expected: string }> = isVi
+  ? {
+      '--auto': {
+        prompt: '/ck:plan Thiết kế lại luồng checkout để giảm lỗi thanh toán',
+        when: 'Brief đã đủ rõ, nhưng chưa chắc nên dùng fast, hard hay deep.',
+        expected: 'Agent tự chọn mức research, validate, red-team theo rủi ro.',
+      },
+      '--fast': {
+        prompt: '/ck:plan --fast Đổi text CTA trong Pricing section',
+        when: 'Việc nhỏ, ít dependency, rollback dễ.',
+        expected: 'Ra plan nhanh, bỏ research/red-team/validate nặng.',
+      },
+      '--hard': {
+        prompt: '/ck:plan --hard Refactor auth flow nhưng giữ backward compatibility',
+        when: 'Nhiều ràng buộc kỹ thuật, nhưng chưa cần deep theo từng phase.',
+        expected: 'Có research và red-team để bắt rủi ro kiến trúc sớm.',
+      },
+      '--deep': {
+        prompt: '/ck:plan --deep Tách billing module thành subscription, invoice, webhook',
+        when: 'Refactor lớn, nhiều dependency, tác động nhiều module.',
+        expected: 'Research sâu hơn, validate rõ hơn, phase có bằng chứng hơn.',
+      },
+      '--parallel': {
+        prompt: '/ck:plan --parallel Tối ưu dashboard loading và chart rendering',
+        when: 'Có thể chia thành nhiều nhánh độc lập chạy song song.',
+        expected: 'Plan giữ boundary rõ để handoff sang cook với --parallel.',
+      },
+      '--two': {
+        prompt: '/ck:plan --two Chọn kiến trúc sync dữ liệu offline-first',
+        when: 'Cần so sánh hai hướng tiếp cận trước khi chốt plan.',
+        expected: 'Hai phương án được phân tích trước, rồi mới chọn hướng triển khai.',
+      },
+    }
+  : {
+      '--auto': {
+        prompt: '/ck:plan Redesign checkout flow to reduce payment failures',
+        when: 'The brief is clear, but the right planning depth is not obvious.',
+        expected: 'The agent chooses research, validation, and red-team depth by risk.',
+      },
+      '--fast': {
+        prompt: '/ck:plan --fast Change the CTA copy in the Pricing section',
+        when: 'The task is small, low-dependency, and easy to roll back.',
+        expected: 'A quick plan without heavy research, red-team, or validation.',
+      },
+      '--hard': {
+        prompt: '/ck:plan --hard Refactor auth flow while preserving backward compatibility',
+        when: 'There are real technical constraints, but not a per-phase deep refactor.',
+        expected: 'Research and red-team catch architectural risk early.',
+      },
+      '--deep': {
+        prompt: '/ck:plan --deep Split billing into subscription, invoice, webhook modules',
+        when: 'The refactor is large, dependency-heavy, and touches multiple modules.',
+        expected: 'Deeper research, stronger validation, and evidence-backed phases.',
+      },
+      '--parallel': {
+        prompt: '/ck:plan --parallel Optimize dashboard loading and chart rendering',
+        when: 'The work can be split into independent tracks.',
+        expected: 'Clear boundaries that can be handed to cook with --parallel.',
+      },
+      '--two': {
+        prompt: '/ck:plan --two Choose an offline-first data sync architecture',
+        when: 'Two approaches must be compared before committing to a plan.',
+        expected: 'Both approaches are analyzed first, then one direction is selected.',
+      },
+    };
+const flagCards = isVi
+  ? [
+      {
+        command: '--tdd',
+        title: 'Tests-first mỗi phase',
+        desc: 'Plan phải chỉ rõ test trước khi triển khai từng phase.',
+        example: '/ck:plan --deep --tdd Refactor billing module',
+        note: 'Hợp với refactor rủi ro cao, nơi test contract phải được nghĩ trước code.',
+      },
+      {
+        command: '--no-tasks',
+        title: 'Bỏ task hydration',
+        desc: 'Không tạo Claude Tasks sau khi plan xong.',
+        example: '/ck:plan --fast --no-tasks Cập nhật copy trang guide',
+        note: 'Hợp với plan nhỏ hoặc docs-only, khi chưa muốn sinh task phụ.',
+      },
+      {
+        command: '--parallel --tdd',
+        title: 'Song song nhưng vẫn test-first',
+        desc: 'Chia lane độc lập, nhưng mỗi lane vẫn phải có test gate rõ.',
+        example: '/ck:plan --parallel --tdd Tách dashboard API và chart rendering',
+        note: 'Dùng khi nhiều người/agent có thể làm song song mà vẫn cần guardrail test.',
+      },
+    ]
+  : [
+      {
+        command: '--tdd',
+        title: 'Tests-first per phase',
+        desc: 'The plan must define tests before implementing each phase.',
+        example: '/ck:plan --deep --tdd Refactor the billing module',
+        note: 'Best for risky refactors where contract tests need to come before code.',
+      },
+      {
+        command: '--no-tasks',
+        title: 'Skip task hydration',
+        desc: 'Do not create Claude Tasks after the plan is generated.',
+        example: '/ck:plan --fast --no-tasks Update guide copy',
+        note: 'Best for small or docs-only plans where extra task creation is not needed yet.',
+      },
+      {
+        command: '--parallel --tdd',
+        title: 'Parallel, still tests-first',
+        desc: 'Split independent lanes while keeping explicit test gates per lane.',
+        example: '/ck:plan --parallel --tdd Split dashboard API and chart rendering work',
+        note: 'Use when multiple people or agents can work in parallel but tests remain the guardrail.',
+      },
+    ];
+const outputItems = (isVi ? data.reportOutput?.descVi : data.reportOutput?.descEn)
+  ?.split('•')
+  .map(item => item.trim())
+  .filter(Boolean) || [];
+const stackPreview = data.skillStack?.slice(0, 9) || [];
+
+const renderInlineCode = (value = '') => value
+  .replace(/&/g, '&amp;')
+  .replace(/</g, '&lt;')
+  .replace(/>/g, '&gt;')
+  .replace(/`([^`]+)`/g, '<code class="rounded bg-white/80 px-1.5 py-0.5 font-mono text-[0.82em] text-amber-950 ring-1 ring-amber-200 dark:bg-amber-950/45 dark:text-amber-100 dark:ring-amber-700/60">$1</code>');
+---
+
+<div class="space-y-8">
+  <header class="relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm ring-1 ring-white/60 dark:border-white/10 dark:bg-slate-950/55 dark:ring-white/5">
+    <div class="pointer-events-none absolute inset-0 opacity-70 dark:opacity-100">
+      <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-sky-400 via-amber-300 to-emerald-400"></div>
+      <div class="absolute inset-0 bg-[linear-gradient(115deg,rgba(14,165,233,0.10),transparent_28%,rgba(245,158,11,0.08)_56%,rgba(16,185,129,0.10))] dark:bg-[linear-gradient(115deg,rgba(14,165,233,0.16),transparent_30%,rgba(245,158,11,0.10)_62%,rgba(16,185,129,0.13))]"></div>
+      <div class="absolute inset-0 bg-[linear-gradient(rgba(148,163,184,0.10)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.10)_1px,transparent_1px)] bg-[size:28px_28px] [mask-image:linear-gradient(to_bottom,black,transparent_72%)]"></div>
+    </div>
+
+    <div class="relative grid gap-0 xl:grid-cols-[minmax(0,1fr)_330px]">
+      <div class="min-w-0 p-5 sm:p-6">
+        <div class="flex flex-wrap items-center gap-2">
+          <p class="rounded-full bg-sky-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-sky-700 ring-1 ring-sky-500/20 dark:text-sky-300">{text.eyebrow}</p>
+          <p class="rounded-full bg-white/70 px-3 py-1 text-xs font-medium text-slate-600 ring-1 ring-slate-200 dark:bg-white/[0.06] dark:text-slate-300 dark:ring-white/10">{text.afterBrainstorm}</p>
+        </div>
+
+        <div class="mt-5 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <h2 class="font-mono text-3xl font-semibold leading-none text-slate-950 dark:text-white sm:text-4xl">{data.command}</h2>
+            <p class="mt-4 max-w-2xl text-sm leading-6 text-slate-650 dark:text-slate-300">{text.summary}</p>
+          </div>
+
+          <div class="shrink-0 rounded-xl border border-emerald-200 bg-emerald-50/90 px-4 py-3 text-left shadow-sm ring-1 ring-emerald-100 dark:border-white/10 dark:bg-slate-950 dark:ring-white/5">
+            <p class="font-mono text-[11px] uppercase tracking-wider text-emerald-700/70 dark:text-slate-500">handoff</p>
+            <p class="mt-1 font-mono text-sm font-semibold text-emerald-800 dark:text-emerald-300">/ck:cook {'{absolute-path}'}</p>
+          </div>
+        </div>
+
+        <div class="mt-6 grid gap-2 sm:grid-cols-4">
+          {heroFlow.map((item, index) => (
+            <div class="relative rounded-xl border border-slate-200 bg-white/75 px-3 py-3 dark:border-white/10 dark:bg-white/[0.055]">
+              {index < heroFlow.length - 1 && <span class="absolute right-[-9px] top-1/2 z-10 hidden h-px w-4 bg-slate-300 dark:bg-white/20 sm:block"></span>}
+              <span class="font-mono text-[11px] text-slate-400">0{index + 1}</span>
+              <p class="mt-1 text-sm font-semibold text-slate-900 dark:text-white">{item}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {data.hardGate && (
+        <aside class="relative border-t border-amber-200 bg-amber-50/80 p-5 dark:border-amber-800/50 dark:bg-amber-950/25 xl:border-l xl:border-t-0">
+          <div class="flex items-center gap-2">
+            <span class="h-2 w-2 rounded-full bg-amber-500"></span>
+            <p class="text-xs font-semibold uppercase tracking-wider text-amber-900 dark:text-amber-200">{text.hardGate}</p>
+          </div>
+          <p class="mt-3 text-sm leading-6 text-amber-950/85 dark:text-amber-100/85" set:html={renderInlineCode(text.hardGateBody)} />
+          <a
+            href={ckPlanCliHref}
+            class="mt-4 inline-flex items-center gap-2 rounded-lg border border-amber-300/80 bg-white/75 px-3 py-2 text-xs font-semibold text-amber-900 transition hover:border-amber-400 hover:bg-amber-100 hover:text-amber-950 dark:border-amber-500/30 dark:bg-amber-400/10 dark:text-amber-100 dark:hover:border-amber-400/60 dark:hover:bg-amber-400/15 dark:hover:text-white"
+          >
+            <code class="font-mono">ck plan</code>
+            <span>{text.cliReference}</span>
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+        </aside>
+      )}
+    </div>
+
+    <div class="relative grid border-t border-slate-200 bg-slate-50/80 dark:border-white/10 dark:bg-slate-950/35 sm:grid-cols-3">
+      {ruleCards.map(rule => (
+        <div class="border-b border-slate-200 p-4 last:border-b-0 dark:border-white/10 sm:border-b-0 sm:border-r sm:last:border-r-0">
+          <div class="flex items-start gap-3">
+            <span class={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${rule.marker}`}></span>
+            <div>
+              <p class="text-sm font-semibold text-slate-900 dark:text-white">{rule.title}</p>
+              <p class="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-400" set:html={renderInlineCode(rule.desc)} />
+              {'href' in rule && rule.href && (
+                <a
+                  href={rule.href}
+                  class="mt-3 inline-flex items-center gap-2 rounded-md bg-sky-50 px-2.5 py-1.5 text-xs font-semibold text-sky-700 ring-1 ring-sky-200 transition hover:bg-sky-100 hover:text-sky-900 dark:bg-sky-400/10 dark:text-sky-200 dark:ring-sky-400/20 dark:hover:bg-sky-400/15 dark:hover:text-white"
+                >
+                  <code class="font-mono">{rule.command}</code>
+                  <span>{text.cliCommand}</span>
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </header>
+
+  <section class="rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-white/10 dark:bg-slate-950/45">
+    <div class="border-b border-slate-200 p-5 dark:border-white/10">
+      <div class="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.process}</h3>
+          <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300">{text.processDesc}</p>
+        </div>
+        <div class="hidden font-mono text-xs text-slate-400 sm:block">01 -> 11</div>
+      </div>
+    </div>
+
+    <div class="divide-y divide-slate-200 dark:divide-white/10">
+      {processGroups.map((group, groupIndex) => (
+        <div class="relative grid gap-4 p-5 lg:grid-cols-[10rem_minmax(0,1fr)]">
+          <div class="flex items-start gap-3 lg:block">
+            <span class={`mt-1 block h-10 w-1.5 shrink-0 rounded-full ${group.tone.rail} lg:h-12 lg:w-2`}></span>
+            <div class="min-w-0 lg:mt-3">
+              <span class={`rounded-full px-2.5 py-1 text-[11px] font-semibold ring-1 ${group.tone.chip}`}>0{groupIndex + 1}</span>
+              <p class={`mt-2 text-base font-semibold ${group.tone.label}`}>{group.label}</p>
+              <p class="mt-1 text-xs leading-5 text-slate-500 dark:text-slate-400">{group.kicker}</p>
+            </div>
+          </div>
+
+          <ol class="grid gap-3 sm:grid-cols-2">
+            {group.steps.map(step => (
+              <li class={`grid grid-cols-[2.25rem_minmax(0,1fr)] gap-3 rounded-xl p-3.5 ring-1 transition duration-200 hover:-translate-y-0.5 hover:shadow-sm ${group.tone.surface}`}>
+                <span class="flex h-9 w-9 items-center justify-center rounded-full bg-white font-mono text-xs font-semibold text-slate-700 ring-1 ring-slate-200 dark:bg-slate-950/75 dark:text-slate-200 dark:ring-white/10">{step.number}</span>
+                <span class="min-w-0">
+                  <span class="block text-sm font-semibold leading-5 text-slate-950 dark:text-white">{isVi ? step.titleVi : step.titleEn}</span>
+                  {step.descEn && <span class="mt-1 block text-xs leading-5 text-slate-600 dark:text-slate-400">{isVi ? step.descVi : step.descEn}</span>}
+                </span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="space-y-5">
+    <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-slate-950/45">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.modes}</h3>
+      <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300">{text.modesDesc}</p>
+
+      <div class="mt-4 space-y-3">
+        {modes.map(mode => mode && (
+          <article class={`rounded-xl border p-3.5 sm:p-4 ${modeAccent[mode.flag] || modeAccent['--auto']}`}>
+            <div class="grid gap-3 lg:grid-cols-[10rem_minmax(0,1fr)] lg:items-stretch">
+              <div class="flex min-w-0 flex-wrap items-center gap-2 lg:block">
+                <code class="inline-flex whitespace-nowrap rounded-lg bg-white/75 px-2.5 py-1 font-mono text-sm font-semibold ring-1 ring-black/5 dark:bg-white/10 dark:ring-white/10">{mode.flag}</code>
+                <span class="text-xs font-semibold text-slate-600 dark:text-slate-300 lg:mt-2 lg:block">{isVi ? mode.modeVi : mode.modeEn}</span>
+              </div>
+
+              <dl class="grid min-w-0 gap-2 sm:grid-cols-2">
+                <div class="min-w-0 rounded-lg bg-white/60 px-3 py-2.5 ring-1 ring-black/5 dark:bg-slate-950/28 dark:ring-white/10">
+                  <dt class="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{text.research}</dt>
+                  <dd class="mt-1 text-sm font-semibold leading-5 text-slate-800 dark:text-slate-100">{mode.research}</dd>
+                </div>
+                <div class="min-w-0 rounded-lg bg-white/60 px-3 py-2.5 ring-1 ring-black/5 dark:bg-slate-950/28 dark:ring-white/10">
+                  <dt class="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{text.redTeam}</dt>
+                  <dd class="mt-1 text-sm font-semibold leading-5 text-slate-800 dark:text-slate-100">{mode.redTeam}</dd>
+                </div>
+                <div class="min-w-0 rounded-lg bg-white/60 px-3 py-2.5 ring-1 ring-black/5 dark:bg-slate-950/28 dark:ring-white/10">
+                  <dt class="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{text.validation}</dt>
+                  <dd class="mt-1 text-sm font-semibold leading-5 text-slate-800 dark:text-slate-100">{mode.validation}</dd>
+                </div>
+                <div class="min-w-0 rounded-lg bg-white/60 px-3 py-2.5 ring-1 ring-black/5 dark:bg-slate-950/28 dark:ring-white/10">
+                  <dt class="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{text.cook}</dt>
+                  <dd class="mt-1 font-mono text-sm font-semibold leading-5 text-slate-800 dark:text-slate-100">{mode.cookFlag}</dd>
+                </div>
+              </dl>
+            </div>
+
+            {modeExamples[mode.flag] && (
+              <div class="mt-3 grid gap-3 rounded-lg bg-white/72 p-3 ring-1 ring-black/5 dark:bg-slate-950/30 dark:ring-white/10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.95fr)]">
+                <div class="min-w-0">
+                  <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{text.samplePrompt}</p>
+                  <code class="mt-1.5 block whitespace-pre-wrap break-words rounded-lg bg-slate-100 px-3 py-2 font-mono text-xs leading-5 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-slate-200 dark:ring-white/10">{modeExamples[mode.flag].prompt}</code>
+                </div>
+                <div class="grid min-w-0 gap-2 sm:grid-cols-2 lg:grid-cols-1">
+                  <div class="min-w-0">
+                    <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{text.useWhen}</p>
+                    <p class="mt-1 text-xs leading-5 text-slate-650 dark:text-slate-300">{modeExamples[mode.flag].when}</p>
+                  </div>
+                  <div class="min-w-0">
+                    <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{text.expected}</p>
+                    <p class="mt-1 text-xs leading-5 text-slate-650 dark:text-slate-300">{modeExamples[mode.flag].expected}</p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </article>
+        ))}
+      </div>
+    </div>
+
+    {data.composableFlagsEn && (
+      <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-slate-950/45">
+        <div class="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.extraFlags}</h3>
+            <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300">{text.extraFlagsDesc}</p>
+          </div>
+        </div>
+        <div class="mt-4 space-y-3">
+          {flagCards.map(flag => (
+            <div class="grid gap-3 rounded-xl border border-slate-200 bg-slate-50/80 p-4 ring-1 ring-white/70 dark:border-white/10 dark:bg-white/[0.04] dark:ring-white/5 lg:grid-cols-[11rem_minmax(0,1fr)_minmax(0,0.9fr)]">
+              <div class="min-w-0">
+                <code class="inline-flex max-w-full break-words rounded-lg bg-slate-100 px-2.5 py-1 font-mono text-sm font-semibold text-purple-600 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-purple-400 dark:ring-white/10">{flag.command}</code>
+                <p class="mt-2 text-sm font-semibold text-slate-900 dark:text-white">{flag.title}</p>
+                <p class="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-400">{flag.desc}</p>
+              </div>
+              <div class="min-w-0">
+                <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{text.samplePrompt}</p>
+                <code class="mt-1.5 block whitespace-pre-wrap break-words rounded-lg bg-slate-100 px-3 py-2 font-mono text-xs leading-5 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-slate-200 dark:ring-white/10">{flag.example}</code>
+              </div>
+              <div class="min-w-0 rounded-lg bg-white/70 px-3 py-2.5 ring-1 ring-slate-200/80 dark:bg-slate-950/35 dark:ring-white/10">
+                <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{text.useWhen}</p>
+                <p class="mt-1 text-xs leading-5 text-slate-650 dark:text-slate-300">{flag.note}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <aside class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_330px]">
+      <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-white/10 dark:bg-slate-950/45">
+        <div class="border-b border-slate-200 p-5 dark:border-white/10">
+          <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.output}</h3>
+          <p class="mt-3 text-sm font-semibold leading-5 text-slate-900 dark:text-white">{isVi ? data.reportOutput?.titleVi : data.reportOutput?.titleEn}</p>
+          <code class="mt-3 block whitespace-normal break-words rounded-lg bg-slate-100 px-3 py-2 font-mono text-xs leading-5 text-slate-700 ring-1 ring-slate-200 dark:bg-white/[0.06] dark:text-slate-300 dark:ring-white/10">{isVi ? data.reportOutput?.patternVi : data.reportOutput?.patternEn}</code>
+        </div>
+        <div class="grid divide-y divide-slate-200 dark:divide-white/10">
+          {outputItems.map(item => (
+            <p class="px-5 py-3 text-xs leading-5 text-slate-600 dark:text-slate-400">{item}</p>
+          ))}
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 bg-slate-50/80 p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.03]">
+        <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.stack}</h3>
+        <div class="mt-3 flex flex-wrap gap-2">
+          {stackPreview.map(item => (
+            <span class="rounded-full bg-white px-2.5 py-1 text-xs text-slate-700 ring-1 ring-slate-200 dark:bg-slate-950/60 dark:text-slate-300 dark:ring-white/10">{item.name}</span>
+          ))}
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <section class="space-y-5">
+    {data.deepDiveLink && (
+      <a href={isVi ? data.deepDiveLink.hrefVi : data.deepDiveLink.hrefEn} class="group block rounded-2xl border border-sky-200 bg-sky-50/80 p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-sky-300 hover:bg-sky-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/70 dark:border-sky-700/50 dark:bg-slate-950/55 dark:hover:border-sky-400/60 dark:hover:bg-sky-950/45 dark:focus-visible:ring-sky-300/40">
+        <span class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <span class="flex min-w-0 items-start gap-3">
+            <span class="shrink-0 rounded-lg bg-white px-2.5 py-1.5 font-mono text-[10px] font-bold uppercase tracking-wider text-sky-700 ring-1 ring-sky-200 transition group-hover:bg-sky-600 group-hover:text-white dark:bg-sky-400/10 dark:text-sky-200 dark:ring-sky-400/25 dark:group-hover:bg-sky-400/20 dark:group-hover:text-white">
+              {isVi ? 'Guide' : 'Guide'}
+            </span>
+            <span class="min-w-0">
+              <span class="block text-sm font-semibold leading-5 text-sky-900 dark:text-sky-100">{text.deepDive}</span>
+              <span class="mt-1 block text-xs leading-5 text-slate-600 dark:text-slate-400">{text.deepDiveDesc}</span>
+            </span>
+          </span>
+          <span class="flex shrink-0 items-center gap-2">
+            <code class="rounded-lg bg-white px-2.5 py-1 font-mono text-[11px] font-semibold text-sky-800 ring-1 ring-sky-200 dark:bg-sky-400/10 dark:text-sky-100 dark:ring-sky-400/25">--deep</code>
+            <code class="rounded-lg bg-white px-2.5 py-1 font-mono text-[11px] font-semibold text-sky-800 ring-1 ring-sky-200 dark:bg-sky-400/10 dark:text-sky-100 dark:ring-sky-400/25">--tdd</code>
+            <span class="ml-1 flex h-8 w-8 items-center justify-center rounded-full bg-sky-600 text-white transition group-hover:translate-x-0.5 dark:bg-sky-400/20 dark:text-sky-100">&rarr;</span>
+          </span>
+        </span>
+      </a>
+    )}
+  </section>
+</div>

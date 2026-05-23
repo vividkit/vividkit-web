@@ -205,4 +205,11 @@ export interface SkillInfographic {
     descEn: string;
     descVi: string;
   };
+
+  deepDiveLink?: {
+    hrefEn: string;
+    hrefVi: string;
+    labelEn: string;
+    labelVi: string;
+  };
 }

@@ -10,6 +10,7 @@ import InfographicModesTable from './infographic/infographic-modes-table.astro';
 import InfographicSkillStack from './infographic/infographic-skill-stack.astro';
 import InfographicSpecialOps from './infographic/infographic-special-ops.astro';
 import InfographicReportOutput from './infographic/infographic-report-output.astro';
+import InfographicPlanQuickRef from './infographic/infographic-plan-quick-ref.astro';
 
 interface Props {
   scenarioId: string;
@@ -25,7 +26,10 @@ const infographic = getInfographicById(scenarioId);
 ---
 
 {infographic ? (
-  <div class="infographic-container">
+  scenarioId === 'plan' ? (
+    <InfographicPlanQuickRef data={infographic} lang={currentLang} />
+  ) : (
+    <div class="infographic-container">
     <!-- Header with command name and tagline -->
     <InfographicHeader data={infographic} lang={currentLang} />
 
@@ -66,5 +70,28 @@ const infographic = getInfographicById(scenarioId);
       <InfographicReportOutput data={infographic.reportOutput} lang={currentLang} />
     )}
 
-  </div>
+    <!-- Deep dive link to Inside ClaudeKit article -->
+    {infographic.deepDiveLink && (
+      <div class="mt-6">
+        <a
+          href={isVi ? infographic.deepDiveLink.hrefVi : infographic.deepDiveLink.hrefEn}
+          class="group flex items-center gap-3 rounded-xl border border-blue-200/70 bg-gradient-to-r from-blue-50 to-cyan-50/50 px-4 py-3 transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-sm dark:border-blue-800/50 dark:from-blue-950/30 dark:to-cyan-950/20 dark:hover:border-blue-700"
+        >
+          <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900/50">
+            <svg class="h-4 w-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+            </svg>
+          </div>
+          <span class="text-sm font-medium text-blue-700 group-hover:text-blue-900 dark:text-blue-300 dark:group-hover:text-blue-100">
+            {isVi ? infographic.deepDiveLink.labelVi : infographic.deepDiveLink.labelEn}
+          </span>
+          <svg class="ml-auto h-4 w-4 text-blue-400 transition-transform group-hover:translate-x-0.5 dark:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </a>
+      </div>
+    )}
+
+    </div>
+  )
 ) : null}
