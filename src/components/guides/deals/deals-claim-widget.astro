@@ -840,10 +840,25 @@ const couponEndsAt = import.meta.env.PUBLIC_CLAUDEKIT_COUPON_END_AT || '2026-05-
         return [h, m, s].map((n) => String(n).padStart(2, '0')).join(':');
       },
 
-      formatCampaignCountdown(diff: number): string {
+      formatCampaignCountdown(diff: number, deadlineMs?: number): string {
         if (diff <= 0) return this.LABEL_COUNTDOWN_ENDED;
         const dayMs = 86_400_000;
         const hourMs = 3_600_000;
+        const deadline = Number.isFinite(deadlineMs) ? new Date(deadlineMs as number) : null;
+        if (deadline) {
+          const now = new Date();
+          const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+          const deadlineDayStart = new Date(
+            deadline.getFullYear(),
+            deadline.getMonth(),
+            deadline.getDate(),
+          ).getTime();
+          const calendarDays = Math.round((deadlineDayStart - todayStart) / dayMs);
+          if (calendarDays >= 1) {
+            const template = calendarDays === 1 ? this.LABEL_COUNTDOWN_DAY : this.LABEL_COUNTDOWN_DAYS;
+            return template.replace('{days}', String(calendarDays));
+          }
+        }
         if (diff >= dayMs) {
           const days = Math.ceil(diff / dayMs);
           const template = days === 1 ? this.LABEL_COUNTDOWN_DAY : this.LABEL_COUNTDOWN_DAYS;
@@ -878,7 +893,7 @@ const couponEndsAt = import.meta.env.PUBLIC_CLAUDEKIT_COUPON_END_AT || '2026-05-
 
         const diff = deadlineMs - Date.now();
         this.claimCountdownEnded = diff <= 0;
-        this.claimCountdownLabel = this.formatCampaignCountdown(diff);
+        this.claimCountdownLabel = this.formatCampaignCountdown(diff, deadlineMs);
         this.claimCountdownHint = this.claimCountdownEnded
           ? this.LABEL_COUNTDOWN_ENDED_HINT
           : this.LABEL_COUNTDOWN_HINT;
