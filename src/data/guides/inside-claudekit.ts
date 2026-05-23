@@ -66,7 +66,7 @@ export const insideClaudeKitTopics = [
     titleKey: 'guides.home.inside_claudekit.topic_1.title',
     descKey: 'guides.home.inside_claudekit.topic_1.desc',
     navLabelKey: 'guides.inside_claudekit.topic_1.nav',
-    disabled: true,
+    disabled: false,
   },
   {
     id: 'inside-claudekit-frontend-design' as const,

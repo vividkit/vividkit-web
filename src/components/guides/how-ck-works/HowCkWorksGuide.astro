@@ -92,6 +92,7 @@ const infographicIdsJson = JSON.stringify(workflowScenarios.filter(s => hasInfog
     typeColors: {},
     combos: [],
     infographicIds: [],
+    hashChangeHandler: null,
     colorMap: {
       purple: { iconBg: 'bg-purple-500/10', iconText: 'text-purple-400', ring: 'ring-purple-500/50' },
       blue:   { iconBg: 'bg-blue-500/10',   iconText: 'text-blue-400',   ring: 'ring-blue-500/50' },
@@ -119,6 +120,58 @@ const infographicIdsJson = JSON.stringify(workflowScenarios.filter(s => hasInfog
       this.combos = window.__wfCombos || [];
       this.infographicIds = window.__wfInfographicIds || [];
       this.isVi = window.__wfIsVi || false;
+
+      this.syncScenarioFromHash({ behavior: 'auto' });
+      this.hashChangeHandler = () => this.syncScenarioFromHash({ behavior: 'smooth' });
+      window.addEventListener('hashchange', this.hashChangeHandler);
+    },
+
+    destroy() {
+      if (this.hashChangeHandler) {
+        window.removeEventListener('hashchange', this.hashChangeHandler);
+      }
+    },
+
+    navigateToScenario(id) {
+      const hash = `ck-${id}`;
+      if (window.location.hash === `#${hash}`) {
+        this.syncScenarioFromHash({ behavior: 'smooth' });
+        return;
+      }
+      window.location.hash = hash;
+    },
+
+    syncScenarioFromHash({ behavior = 'smooth' } = {}) {
+      const hash = window.location.hash.replace('#', '');
+      if (!hash.startsWith('ck-')) return false;
+
+      const scenarioId = hash.replace('ck-', '');
+      const match = this.scenarios.find(s => s.id === scenarioId);
+      if (!match) return false;
+
+      this.activeKit = match.kit;
+      this.selectedScenario = scenarioId;
+      this.viewType = 'individual';
+      this.selectedCombo = null;
+      this.showQuickRef = this.infographicIds.includes(scenarioId);
+      this.resetPipeline();
+      this.stopComboPlay();
+
+      this.$nextTick(() => {
+        window.requestAnimationFrame(() => {
+          const scrollToTarget = () => {
+            const el = document.getElementById('workflow-selected-scenario') || document.getElementById(hash);
+            if (!el) return;
+            el.scrollIntoView({ behavior, block: 'start' });
+            el.focus({ preventScroll: true });
+          };
+
+          scrollToTarget();
+          window.setTimeout(scrollToTarget, 250);
+          window.setTimeout(scrollToTarget, 750);
+        });
+      });
+      return true;
     },
 
     // Helper methods used by child components (pipeline-view, detail-panel)
@@ -463,16 +516,16 @@ const infographicIdsJson = JSON.stringify(workflowScenarios.filter(s => hasInfog
 
     {/* Quick Ref content */}
     <div class="rounded-xl border border-blue-200 dark:border-blue-500/20 bg-blue-50/50 dark:bg-blue-500/5 p-6">
-      <div x-show="selectedScenario === 'brainstorm'">
+      <div id="ck-brainstorm" tabindex="-1" class="scroll-mt-24 focus:outline-none" x-show="selectedScenario === 'brainstorm'">
         <WorkflowSkillInfographic scenarioId="brainstorm" lang={currentLang} />
       </div>
-      <div x-show="selectedScenario === 'plan'">
+      <div id="ck-plan" tabindex="-1" class="scroll-mt-24 focus:outline-none" x-show="selectedScenario === 'plan'">
         <WorkflowSkillInfographic scenarioId="plan" lang={currentLang} />
       </div>
-      <div x-show="selectedScenario === 'cook'">
+      <div id="ck-cook" tabindex="-1" class="scroll-mt-24 focus:outline-none" x-show="selectedScenario === 'cook'">
         <WorkflowSkillInfographic scenarioId="cook" lang={currentLang} />
       </div>
-      <div x-show="selectedScenario === 'fix'">
+      <div id="ck-fix" tabindex="-1" class="scroll-mt-24 focus:outline-none" x-show="selectedScenario === 'fix'">
         <WorkflowSkillInfographic scenarioId="fix" lang={currentLang} />
       </div>
     </div>
