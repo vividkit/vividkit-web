@@ -3,6 +3,7 @@
 import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
 import { useTranslations } from '@/i18n/utils';
 import DealsHero from './deals/deals-hero.astro';
+import DealsCampaignEndedBanner from './deals/deals-campaign-ended-banner.astro';
 import DealsWhatIsClaudekit from './deals/deals-what-is-claudekit.astro';
 import DealsHowItWorks from './deals/deals-how-it-works.astro';
 import DealsClaimWidget from './deals/deals-claim-widget.astro';
@@ -13,6 +14,10 @@ import DealsFairPlay from './deals/deals-fair-play.astro';
 import DealsDevPreview from './deals/deals-dev-preview.astro';
 
 const isDev = import.meta.env.DEV;
+// Toggle the campaign-ended announcement via env (.env): set
+// PUBLIC_DEALS_CAMPAIGN_ENDED=true to surface the banner. Unset/false keeps the
+// active campaign layout intact for a quick re-enable later.
+const campaignEnded = import.meta.env.PUBLIC_DEALS_CAMPAIGN_ENDED === 'true';
 
 interface Props {
   lang?: Language;
@@ -25,6 +30,8 @@ const translatePath = useTranslatedPath(currentLang);
 ---
 
 <div class="mt-5 space-y-8">
+  {campaignEnded && <DealsCampaignEndedBanner lang={currentLang} />}
+
   <DealsHero lang={currentLang} />
 
   <DealsWhatIsClaudekit lang={currentLang} />

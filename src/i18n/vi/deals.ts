@@ -11,6 +11,14 @@ export const deals = {
   'deals.hero.total_savings_label': 'Tiết kiệm thực',
   'deals.hero.stackable_label': 'Có thể chồng mã',
 
+  'deals.campaign_ended.badge': 'Campaign đã kết thúc',
+  'deals.campaign_ended.title': 'Cảm ơn các follower! Campaign CK coupon đã khép lại.',
+  'deals.campaign_ended.subtitle': 'Toàn bộ 80 mã coupon CK đã được phát hành và claim thành công bởi các follower. Hẹn gặp lại các bạn ở campaign tiếp theo nhé!',
+  'deals.campaign_ended.expiry_warning': 'Lưu ý: Coupon code có thời hạn sử dụng. Nếu bạn đã claim mã, hãy nhanh chóng áp dụng để mua ClaudeKit trước khi mã hết hạn.',
+  'deals.campaign_ended.stats_kicker': 'Thống kê chiến dịch',
+  'deals.campaign_ended.stats_label': 'mã đã phát ra & claim thành công',
+  'deals.campaign_ended.stats_status': 'Đã claim 100%',
+
   'deals.countdown.window_label': 'Coupon cho follower',
   'deals.countdown.days_left': 'Còn {days} ngày',
   'deals.countdown.day_left': 'Còn 1 ngày',
