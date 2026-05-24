@@ -11,6 +11,14 @@ export const deals = {
   'deals.hero.total_savings_label': 'Effective savings',
   'deals.hero.stackable_label': 'Stackable',
 
+  'deals.campaign_ended.badge': 'Campaign ended',
+  'deals.campaign_ended.title': 'Thank you, followers! The CK coupon campaign has wrapped up.',
+  'deals.campaign_ended.subtitle': 'All 80 CK coupon codes were released and successfully claimed by our followers. See you in the next campaign!',
+  'deals.campaign_ended.expiry_warning': 'Heads up: coupon codes have a limited validity window. If you already claimed yours, redeem it on ClaudeKit soon before it expires.',
+  'deals.campaign_ended.stats_kicker': 'Campaign stats',
+  'deals.campaign_ended.stats_label': 'codes released & claimed successfully',
+  'deals.campaign_ended.stats_status': '100% claimed',
+
   'deals.countdown.window_label': 'Follower coupon window',
   'deals.countdown.days_left': '{days} days left',
   'deals.countdown.day_left': '1 day left',
