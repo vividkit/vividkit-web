@@ -736,6 +736,8 @@ export const commands = {
   'commands.stable.security.detail': '4 persona tấn công (security adversary, supply chain, insider, infrastructure). --red-team cho persona discovery loop. --fix cho auto-remediation.',
   'commands.stable.cti_expert.desc': 'Bộ công cụ điều tra CTI/OSINT',
   'commands.stable.cti_expert.detail': 'Cyber threat intelligence và open-source investigation: case timeline, recon, kiểm tra breach, digital footprint, forensics ảnh/blockchain. Không cần API key.',
+  'commands.stable.chrome_profile.desc': 'Browser automation trên Chrome profile thật của user',
+  'commands.stable.chrome_profile.detail': 'Target một Chrome profile thật cho automation qua Chrome DevTools MCP hoặc claude-in-chrome. CLI chrome-profile, profile discovery, bridge diagnostics, URL-anchor workflow để chọn đúng profile tab. Dùng khi automation cần cookies thật, Google account, workspace, hoặc session đã login.',
   // Beta Preview section
   'commands.beta_preview.title': 'Beta Preview',
   'commands.beta_preview.subtitle': 'Skill mới và cải tiến lớn trong Engineer Kit Beta',
@@ -746,6 +748,8 @@ export const commands = {
   'commands.beta_fix.detail': 'Checklist prevention-gate giờ yêu cầu <code>verification.json</code> có command proof tóm tắt và validator pass trên <code>review-decision.json</code> + <code>risk-gate.json</code> trước khi finalize.<br/>Gắn với hook mới <code>workflow-artifact-gate</code>.',
   'commands.beta_ck_plan_readpass.desc': 'Bắt buộc read pass trên phase stub đã generate',
   'commands.beta_ck_plan_readpass.detail': 'Sau <code>ck plan create</code>, phải Read <code>plan.md</code> + mọi <code>phase-*.md</code> stub trước khi Write/Edit dài (Read-before-Write contract).<br/>Red-team reviewer giờ dùng filename mô tả gắn plan-scope (vd. <code>from-code-reviewer-to-planner-red-team-{lens}-plan-review-report.md</code>) — không dùng tên chung chung như <code>review.md</code>.',
+  'commands.beta_chrome_profile.desc': 'Browser automation chạy trên Chrome profile thật của user',
+  'commands.beta_chrome_profile.detail': 'Target một Chrome profile thật để automation qua Chrome DevTools MCP hoặc claude-in-chrome. Cung cấp CLI <code>chrome-profile</code>, profile discovery, bridge diagnostics, và URL-anchor workflow để chọn đúng profile tab.<br/>Dùng khi automation cần cookies thật, Google account, workspace, tenant, hoặc session đã login của user — không phải default; ưu tiên <code>ck:agent-browser</code> cho browser fresh/tool-managed.',
   'commands.stable.tech_graph.desc': 'Tạo SVG technical diagram chất lượng publication',
   'commands.stable.tech_graph.detail': '7 phong cách thiết kế (modern, minimal, neon, retro,...) và 10 template (architecture, sequence, ER, flow). Output SVG sẵn sàng cho docs, slides, blog post.',
   'commands.beta_tech_graph.desc': 'Tạo SVG technical diagram chất lượng publication',

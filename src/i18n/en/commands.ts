@@ -736,6 +736,8 @@ export const commands = {
   'commands.stable.security.detail': '4 attacker personas (security adversary, supply chain, insider, infrastructure). --red-team for persona discovery loop. --fix for auto-remediation.',
   'commands.stable.cti_expert.desc': 'CTI/OSINT investigation toolkit',
   'commands.stable.cti_expert.detail': 'Cyber threat intelligence and open-source investigation: case timelines, recon, breach checks, digital footprint, image/blockchain forensics. No API keys required.',
+  'commands.stable.chrome_profile.desc': 'Browser automation on the user\'s real Chrome profile',
+  'commands.stable.chrome_profile.detail': 'Targets a real Google Chrome profile for automation via Chrome DevTools MCP or claude-in-chrome. CLI chrome-profile, profile discovery, bridge diagnostics, URL-anchor workflow for picking the right profile tab. Use when automation needs real cookies, Google account, workspace, or logged-in session.',
   // Beta Preview section
   'commands.beta_preview.title': 'Beta Preview',
   'commands.beta_preview.subtitle': 'New skills and enhancements in Engineer Kit Beta',
@@ -746,6 +748,8 @@ export const commands = {
   'commands.beta_fix.detail': 'Prevention-gate checklist now requires <code>verification.json</code> summarized command proof and validator-pass on <code>review-decision.json</code> + <code>risk-gate.json</code> before finalize.<br/>Tied to the new <code>workflow-artifact-gate</code> hook.',
   'commands.beta_ck_plan_readpass.desc': 'Mandatory read pass on generated phase stubs',
   'commands.beta_ck_plan_readpass.detail': 'After <code>ck plan create</code>, must Read <code>plan.md</code> + every <code>phase-*.md</code> stub before any long Write/Edit (Read-before-Write contract).<br/>Red-team reviewers now use plan-scoped descriptive filenames (e.g. <code>from-code-reviewer-to-planner-red-team-{lens}-plan-review-report.md</code>) — no generic <code>review.md</code>.',
+  'commands.beta_chrome_profile.desc': 'Profile-aware browser automation against real Chrome',
+  'commands.beta_chrome_profile.detail': 'Targets a real Google Chrome profile for browser automation via Chrome DevTools MCP or claude-in-chrome. Provides a <code>chrome-profile</code> CLI, profile discovery, bridge diagnostics, and the URL-anchor workflow for selecting the correct profile tab.<br/>Use when automation needs the user\'s actual cookies, Google account, workspace, tenant, or logged-in product session — not the default; prefer <code>ck:agent-browser</code> for fresh/tool-managed browsers.',
   'commands.stable.tech_graph.desc': 'Generate publication-quality SVG technical diagrams',
   'commands.stable.tech_graph.detail': '7 design styles (modern, minimal, neon, retro, etc.) and 10 templates (architecture, sequence, ER, flow). SVG output ready for docs, slides, blog posts.',
   'commands.beta_tech_graph.desc': 'Generate publication-quality SVG technical diagrams',

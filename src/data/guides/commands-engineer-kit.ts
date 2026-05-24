@@ -503,6 +503,15 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
+          command: "/ck:chrome-profile",
+          complexity: "⚡⚡",
+          label: t("commands.label.medium"),
+          desc: t("commands.stable.chrome_profile.desc"),
+          detail: t("commands.stable.chrome_profile.detail"),
+          isSkill: true,
+          isBeta: true,
+        },
+        {
           command: "/ck:scenario",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
