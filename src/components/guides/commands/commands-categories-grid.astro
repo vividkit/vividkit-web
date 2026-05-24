@@ -68,7 +68,7 @@ const marketingCategories = getMarketingKitCategories(t as any);
     </div>
   </div>
 
-  <!-- Engineer Kit (v2.19.0 stable / v2.19.1-beta.11 beta) categories panel -->
+  <!-- Engineer Kit (v2.19.0 stable / v2.19.1-beta.16 beta) categories panel -->
   <div id="categories-engineer" class="space-y-6">
     <!-- Stable version badge -->
     <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
@@ -76,7 +76,7 @@ const marketingCategories = getMarketingKitCategories(t as any);
         >v2.19.0 Stable</span
       >
       <span class="px-2 py-0.5 rounded-full bg-slate-200 dark:bg-slate-700/40 text-slate-500 dark:text-slate-400 font-semibold"
-        >v2.19.1-beta.11</span
+        >v2.19.1-beta.16</span
       >
       <span class="text-slate-400 dark:text-slate-500 italic">{t("commands.engineer_stable_note")}</span>
     </div>
@@ -100,6 +100,7 @@ const marketingCategories = getMarketingKitCategories(t as any);
       </div>
       <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         {[
+          { cmd: "/ck:chrome-profile", labelKey: "commands.beta_chrome_profile.desc", detailKey: "commands.beta_chrome_profile.detail", type: "skill", badge: "new" },
           { cmd: "/ck:cook", labelKey: "commands.beta_cook.desc", detailKey: "commands.beta_cook.detail", type: "skill", badge: "enhanced" },
           { cmd: "/ck:fix", labelKey: "commands.beta_fix.desc", detailKey: "commands.beta_fix.detail", type: "skill", badge: "enhanced" },
           { cmd: "/ck:plan", labelKey: "commands.beta_ck_plan_readpass.desc", detailKey: "commands.beta_ck_plan_readpass.detail", type: "skill", badge: "enhanced" },
@@ -108,7 +109,7 @@ const marketingCategories = getMarketingKitCategories(t as any);
             <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
               <div class="flex items-center gap-1.5 flex-wrap">
                 <code class="text-sm font-bold font-mono text-purple-600 dark:text-purple-400">{item.cmd}</code>
-                <span class="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-full bg-sky-100 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400">enhanced</span>
+                <span class={`text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-full ${item.badge === "new" ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400" : "bg-sky-100 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400"}`}>{item.badge}</span>
               </div>
             </div>
             <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1" set:html={t(item.labelKey as any)} />
