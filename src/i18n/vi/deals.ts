@@ -10,6 +10,11 @@ export const deals = {
   'deals.hero.referral_label_short': 'Referral',
   'deals.hero.total_savings_label': 'Tiết kiệm thực',
   'deals.hero.stackable_label': 'Có thể chồng mã',
+  'deals.hero.kicker_ended': 'Tổng kết campaign',
+  'deals.hero.title_ended': 'Coupon đã đóng — referral 20% vẫn còn',
+  'deals.hero.subtitle_ended': 'Toàn bộ 80 mã đã được follower claim. Link referral VividKit vẫn giảm 20% ClaudeKit bất cứ lúc nào.',
+  'deals.hero.cta_ended': 'Mua qua referral VividKit',
+  'deals.hero.progress_label_ended': 'mã đã claim trong campaign',
 
   'deals.campaign_ended.badge': 'Campaign đã kết thúc',
   'deals.campaign_ended.title': 'Cảm ơn các follower! Campaign CK coupon đã khép lại.',

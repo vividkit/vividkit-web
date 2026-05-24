@@ -32,7 +32,7 @@ const translatePath = useTranslatedPath(currentLang);
 <div class="mt-5 space-y-8">
   {campaignEnded && <DealsCampaignEndedBanner lang={currentLang} />}
 
-  <DealsHero lang={currentLang} />
+  <DealsHero lang={currentLang} campaignEnded={campaignEnded} />
 
   <DealsWhatIsClaudekit lang={currentLang} />
 

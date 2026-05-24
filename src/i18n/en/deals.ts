@@ -10,6 +10,11 @@ export const deals = {
   'deals.hero.referral_label_short': 'Referral',
   'deals.hero.total_savings_label': 'Effective savings',
   'deals.hero.stackable_label': 'Stackable',
+  'deals.hero.kicker_ended': 'Campaign recap',
+  'deals.hero.title_ended': 'Coupon closed — 20% referral still on',
+  'deals.hero.subtitle_ended': 'All 80 follower coupons were claimed. The VividKit referral still gives readers 20% off ClaudeKit anytime.',
+  'deals.hero.cta_ended': 'Buy with VividKit referral',
+  'deals.hero.progress_label_ended': 'codes claimed in this campaign',
 
   'deals.campaign_ended.badge': 'Campaign ended',
   'deals.campaign_ended.title': 'Thank you, followers! The CK coupon campaign has wrapped up.',
