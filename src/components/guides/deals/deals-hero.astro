@@ -1,15 +1,25 @@
 ---
-// deals-hero: Hero section showing headline, savings badge, and live progress bar
+// deals-hero: Hero section showing headline, savings badge, and live progress bar.
+// When `campaignEnded` is true, swaps kicker/title/subtitle/CTA/progress into a
+// retrospective variant that points readers at the evergreen referral link.
+// All ended-mode copy lives behind `_ended` i18n keys so flipping
+// PUBLIC_DEALS_CAMPAIGN_ENDED back to false restores the active-campaign hero.
 import { useTranslations } from '@/i18n/utils';
 import { getLangFromUrl, type Language } from '@/i18n';
 
 interface Props {
   lang?: Language;
+  campaignEnded?: boolean;
 }
 
-const { lang } = Astro.props;
+const { lang, campaignEnded = false } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
+
+const referralUrl = import.meta.env.PUBLIC_CLAUDEKIT_REFERRAL_URL || 'https://claudekit.cc/';
+const claimedTotal = Number(import.meta.env.PUBLIC_DEALS_CAMPAIGN_CLAIMED || 80);
+const releasedTotal = Number(import.meta.env.PUBLIC_DEALS_CAMPAIGN_TOTAL || 80);
+const endedProgressPct = releasedTotal > 0 ? Math.min(100, (claimedTotal / releasedTotal) * 100) : 100;
 ---
 
 <section class="relative overflow-hidden rounded-[1.75rem] border border-emerald-200/80 dark:border-emerald-900/60 bg-stone-50 dark:bg-slate-950">
@@ -26,36 +36,54 @@ const t = useTranslations(currentLang);
         {t('deals.hero.badge')}
       </div>
 
-      <div
-        x-data
-        x-show="$store.dealStatus.claimCountdownVisible"
-        x-cloak
-        x-bind:class="$store.dealStatus.claimCountdownEnded ? 'border-rose-300 bg-rose-50 text-rose-900 dark:border-rose-900/70 dark:bg-rose-950/35 dark:text-rose-100' : 'border-amber-300 bg-amber-50 text-amber-950 dark:border-amber-800/70 dark:bg-amber-950/35 dark:text-amber-100'"
-        class="max-w-xl rounded-2xl border px-4 py-3 shadow-sm"
-      >
-        <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
-          <span class="text-xs font-black uppercase tracking-[0.18em]">{t('deals.countdown.window_label')}</span>
-          <span class="font-heading text-2xl font-black leading-none sm:text-3xl" x-text="$store.dealStatus.claimCountdownLabel"></span>
+      {!campaignEnded && (
+        <div
+          x-data
+          x-show="$store.dealStatus.claimCountdownVisible"
+          x-cloak
+          x-bind:class="$store.dealStatus.claimCountdownEnded ? 'border-rose-300 bg-rose-50 text-rose-900 dark:border-rose-900/70 dark:bg-rose-950/35 dark:text-rose-100' : 'border-amber-300 bg-amber-50 text-amber-950 dark:border-amber-800/70 dark:bg-amber-950/35 dark:text-amber-100'"
+          class="max-w-xl rounded-2xl border px-4 py-3 shadow-sm"
+        >
+          <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+            <span class="text-xs font-black uppercase tracking-[0.18em]">{t('deals.countdown.window_label')}</span>
+            <span class="font-heading text-2xl font-black leading-none sm:text-3xl" x-text="$store.dealStatus.claimCountdownLabel"></span>
+          </div>
+          <p class="mt-2 text-sm font-semibold opacity-85" x-text="$store.dealStatus.claimCountdownHint"></p>
         </div>
-        <p class="mt-2 text-sm font-semibold opacity-85" x-text="$store.dealStatus.claimCountdownHint"></p>
-      </div>
+      )}
 
       <div class="max-w-2xl">
-        <p class="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400">{t('deals.hero.kicker')}</p>
+        <p class="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400">
+          {campaignEnded ? t('deals.hero.kicker_ended') : t('deals.hero.kicker')}
+        </p>
         <h1 class="font-heading text-4xl font-black leading-[0.98] text-slate-950 dark:text-white sm:text-5xl lg:text-6xl">
-          {t('deals.hero.title')}
+          {campaignEnded ? t('deals.hero.title_ended') : t('deals.hero.title')}
         </h1>
         <p class="mt-4 max-w-xl text-lg leading-8 text-slate-600 dark:text-slate-300">
-          {t('deals.hero.subtitle')}
+          {campaignEnded ? t('deals.hero.subtitle_ended') : t('deals.hero.subtitle')}
         </p>
       </div>
 
-      <a
-        href="#claim"
-        class="inline-flex min-h-11 items-center rounded-full border border-slate-300 bg-slate-700 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-slate-900/15 transition hover:-translate-y-0.5 hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-slate-300 dark:border-slate-700 dark:bg-slate-200 dark:text-slate-950 dark:hover:bg-white dark:focus-visible:ring-slate-700"
-      >
-        {t('deals.claim.button')}
-      </a>
+      {campaignEnded ? (
+        <a
+          href={referralUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex min-h-11 items-center gap-2 rounded-full border border-emerald-300 bg-emerald-600 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-emerald-900/20 transition hover:-translate-y-0.5 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-300 dark:border-emerald-700 dark:bg-emerald-400 dark:text-slate-950 dark:hover:bg-emerald-300 dark:focus-visible:ring-emerald-800"
+        >
+          {t('deals.hero.cta_ended')}
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+          </svg>
+        </a>
+      ) : (
+        <a
+          href="#claim"
+          class="inline-flex min-h-11 items-center rounded-full border border-slate-300 bg-slate-700 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-slate-900/15 transition hover:-translate-y-0.5 hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-slate-300 dark:border-slate-700 dark:bg-slate-200 dark:text-slate-950 dark:hover:bg-white dark:focus-visible:ring-slate-700"
+        >
+          {t('deals.claim.button')}
+        </a>
+      )}
     </div>
 
     <div class="relative rounded-2xl border border-slate-900/10 bg-white/85 p-4 shadow-xl shadow-slate-900/10 dark:border-white/10 dark:bg-slate-900/80">
@@ -83,19 +111,35 @@ const t = useTranslations(currentLang);
         <div class="mt-1 text-xs font-bold uppercase tracking-[0.18em] text-amber-900/70 dark:text-amber-200/70">{t('deals.hero.total_savings_label')}</div>
       </div>
 
-      <div x-data x-bind:class="$store.dealStatus.loaded ? 'opacity-100' : 'opacity-0'" class="mt-4 transition-opacity duration-500">
-        <div class="mb-2 flex justify-between text-xs font-semibold text-slate-500 dark:text-slate-400">
-          <span x-text="$store.dealStatus.claimedLabel"></span>
-          <span x-text="$store.dealStatus.totalLabel"></span>
+      {campaignEnded ? (
+        <div class="mt-4">
+          <div class="mb-2 flex justify-between text-xs font-semibold text-slate-500 dark:text-slate-400 tabular-nums">
+            <span>{claimedTotal}</span>
+            <span>{releasedTotal}</span>
+          </div>
+          <div class="h-2.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
+            <div
+              class="h-full rounded-full bg-gradient-to-r from-emerald-500 to-amber-400"
+              style={`width: ${endedProgressPct}%`}
+            ></div>
+          </div>
+          <p class="mt-2 text-center text-xs text-slate-500 dark:text-slate-400">{t('deals.hero.progress_label_ended')}</p>
         </div>
-        <div class="h-2.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
-          <div
-            class="h-full rounded-full bg-gradient-to-r from-emerald-500 to-amber-400 transition-all duration-700"
-            x-bind:style="`width: ${$store.dealStatus.progressPercent}%`"
-          ></div>
+      ) : (
+        <div x-data x-bind:class="$store.dealStatus.loaded ? 'opacity-100' : 'opacity-0'" class="mt-4 transition-opacity duration-500">
+          <div class="mb-2 flex justify-between text-xs font-semibold text-slate-500 dark:text-slate-400">
+            <span x-text="$store.dealStatus.claimedLabel"></span>
+            <span x-text="$store.dealStatus.totalLabel"></span>
+          </div>
+          <div class="h-2.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
+            <div
+              class="h-full rounded-full bg-gradient-to-r from-emerald-500 to-amber-400 transition-all duration-700"
+              x-bind:style="`width: ${$store.dealStatus.progressPercent}%`"
+            ></div>
+          </div>
+          <p class="mt-2 text-center text-xs text-slate-500 dark:text-slate-400">{t('deals.hero.progress_label')}</p>
         </div>
-        <p class="mt-2 text-center text-xs text-slate-500 dark:text-slate-400">{t('deals.hero.progress_label')}</p>
-      </div>
+      )}
     </div>
   </div>
 </section>
