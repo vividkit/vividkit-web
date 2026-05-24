@@ -676,7 +676,22 @@ const couponEndsAt = import.meta.env.PUBLIC_CLAUDEKIT_COUPON_END_AT || '2026-05-
             return;
           }
 
-          this.state = data.available > 0 ? 'available' : 'sold_out';
+          if (data.available > 0) {
+            this.state = 'available';
+          } else {
+            const nextResetMs = data.next_reset ? new Date(data.next_reset).getTime() : NaN;
+            const deadlineMs = this.couponEndsAt ? new Date(this.couponEndsAt).getTime() : NaN;
+            if (
+              Number.isFinite(nextResetMs) &&
+              Number.isFinite(deadlineMs) &&
+              nextResetMs >= deadlineMs
+            ) {
+              this.referralCode = this.normalizeReferral(data.referral_code);
+              this.state = 'ended';
+            } else {
+              this.state = 'sold_out';
+            }
+          }
         } catch (e) {
           this.state = 'error';
           this.errorMessage = this.MSG_ERROR_LOAD;
