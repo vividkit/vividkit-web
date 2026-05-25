@@ -1,6 +1,11 @@
 ---
 // Guides landing page with 4 guided pathways for different user types
-import { Rocket, Workflow, CircleHelp, Zap, BookOpenText, Cog } from 'lucide-astro';
+import Rocket from 'lucide-astro/Rocket';
+import Workflow from 'lucide-astro/Workflow';
+import CircleHelp from 'lucide-astro/CircleHelp';
+import Zap from 'lucide-astro/Zap';
+import BookOpenText from 'lucide-astro/BookOpenText';
+import Cog from 'lucide-astro/Cog';
 import GuidedPathwayCard from './guides-home/guided-pathway-card.astro';
 import { useTranslations } from '@/i18n/utils';
 import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';

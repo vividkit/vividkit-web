@@ -1,4 +1,16 @@
 export function initThemeToggle(): void {
+  const withoutThemeTransition = (applyTheme: () => void) => {
+    const html = document.documentElement;
+
+    html.classList.add('theme-changing');
+    void html.offsetWidth;
+    applyTheme();
+
+    requestAnimationFrame(() => {
+      html.classList.remove('theme-changing');
+    });
+  };
+
   // Check localStorage and system preference on load
   const storedTheme = localStorage.getItem('theme');
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -28,9 +40,6 @@ export function initThemeToggle(): void {
     }
   };
 
-  // Initial icon update after a small delay to ensure DOM is ready
-  setTimeout(updateIcons, 50);
-
   // Add click handler to theme toggle button
   const themeToggle = document.getElementById('theme-toggle');
   if (themeToggle) {
@@ -47,15 +56,15 @@ export function initThemeToggle(): void {
         const html = document.documentElement;
         const isDark = html.classList.contains('dark');
 
-        if (isDark) {
-          html.classList.remove('dark');
-          localStorage.setItem('theme', 'light');
-          console.log('Theme switched to light');
-        } else {
-          html.classList.add('dark');
-          localStorage.setItem('theme', 'dark');
-          console.log('Theme switched to dark');
-        }
+        withoutThemeTransition(() => {
+          if (isDark) {
+            html.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+          } else {
+            html.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+          }
+        });
 
         // Update icons immediately
         updateIcons();
@@ -69,13 +78,17 @@ export function initThemeToggle(): void {
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
     // Only auto-switch if user hasn't manually set theme
     if (!localStorage.getItem('theme')) {
-      if (e.matches) {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
+      withoutThemeTransition(() => {
+        if (e.matches) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      });
       // Update icons
-      setTimeout(updateIcons, 10);
+      updateIcons();
     }
   });
+
+  updateIcons();
 }

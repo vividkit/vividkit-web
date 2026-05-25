@@ -1,5 +1,5 @@
 ---
-import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
+import { getLangFromUrl, type Language } from '@/i18n';
 import { useTranslations } from '@/i18n/utils';
 import DealsLuckyDrawSection from './deals/deals-lucky-draw-section.astro';
 
@@ -10,8 +10,7 @@ interface Props {
 const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
-const translatePath = useTranslatedPath(currentLang);
-const dealsHref = `${translatePath('/guides/deals')}#claim`;
+const giveawayApiUrl = import.meta.env.PUBLIC_GIVEAWAY_API_URL;
 const drawHref = '#draw-console';
 const authorFacebookLabel = 'fb.com/shinantori';
 const authorFacebookHref = 'https://fb.com/shinantori';
@@ -20,7 +19,13 @@ const [joinRuleBeforeLink = '', joinRuleAfterLink = ''] = joinRuleDesc.split(aut
 ---
 
 <div class="mt-5 min-w-0 space-y-8">
-  <section class="relative isolate w-full max-w-full overflow-hidden rounded-[1.75rem] border border-emerald-100 bg-white text-slate-950 shadow-2xl shadow-slate-950/10 dark:border-slate-800 dark:bg-slate-950 dark:text-white dark:shadow-slate-950/20">
+  <section
+    data-raffle-hero-summary
+    data-api-url={giveawayApiUrl}
+    data-label-final-days-desc={t('deals.raffle.final_days_desc_dynamic')}
+    data-label-reveal-dynamic={t('deals.raffle.schedule_reveal_dynamic')}
+    class="relative isolate w-full max-w-full overflow-hidden rounded-[1.75rem] border border-emerald-100 bg-white text-slate-950 shadow-2xl shadow-slate-950/10 dark:border-slate-800 dark:bg-slate-950 dark:text-white dark:shadow-slate-950/20"
+  >
     <div class="absolute inset-0 -z-10 bg-[linear-gradient(135deg,#ffffff_0%,#ecfdf5_46%,#fff7ed_100%)] dark:bg-[radial-gradient(circle_at_12%_18%,rgba(16,185,129,0.32),transparent_32%),radial-gradient(circle_at_88%_12%,rgba(245,158,11,0.22),transparent_30%),linear-gradient(135deg,#020617_0%,#10231f_48%,#18181b_100%)]" aria-hidden="true"></div>
     <div class="absolute inset-x-0 top-0 -z-10 h-px bg-gradient-to-r from-transparent via-emerald-400/60 to-transparent dark:via-emerald-300/70" aria-hidden="true"></div>
 
@@ -45,46 +50,35 @@ const [joinRuleBeforeLink = '', joinRuleAfterLink = ''] = joinRuleDesc.split(aut
           </p>
         </div>
 
-        <div class="grid gap-3 sm:grid-cols-3">
-          <div class="rounded-2xl border border-emerald-200 bg-white/80 p-4 shadow-sm shadow-emerald-900/5 dark:border-emerald-300/20 dark:bg-white/[0.07] dark:shadow-none">
-            <p class="text-2xl font-black text-emerald-700 dark:text-emerald-200">50%</p>
-            <p class="mt-1 text-sm font-bold text-slate-700 dark:text-slate-200">{t('deals.raffle.prize_discount')}</p>
-          </div>
-          <div class="rounded-2xl border border-cyan-200 bg-white/80 p-4 shadow-sm shadow-cyan-900/5 dark:border-cyan-300/20 dark:bg-white/[0.07] dark:shadow-none">
-            <p class="text-2xl font-black text-cyan-700 dark:text-cyan-200">3</p>
-            <p class="mt-1 text-sm font-bold text-slate-700 dark:text-slate-200">{t('deals.raffle.prize_standard')}</p>
-          </div>
-          <div class="rounded-2xl border border-amber-200 bg-white/80 p-4 shadow-sm shadow-amber-900/5 dark:border-amber-300/20 dark:bg-white/[0.07] dark:shadow-none">
-            <p class="text-2xl font-black text-amber-700 dark:text-amber-200">1</p>
-            <p class="mt-1 text-sm font-bold text-slate-700 dark:text-slate-200">{t('deals.raffle.prize_premium')}</p>
-          </div>
+        <div class="rounded-2xl border border-emerald-200 bg-white/80 p-4 shadow-sm shadow-emerald-900/5 dark:border-emerald-300/20 dark:bg-white/[0.07] dark:shadow-none">
+          <p class="text-xs font-black uppercase tracking-[0.14em] text-emerald-700 dark:text-emerald-200">{t('deals.raffle.discount_price_title')}</p>
+          <dl class="mt-3 space-y-2 text-sm font-bold text-slate-700 dark:text-slate-200">
+            <div class="flex items-center justify-between gap-3">
+              <dt>{t('deals.raffle.standard_seat_label')}</dt>
+              <dd class="font-mono text-base font-black text-emerald-700 dark:text-emerald-200">12.5$</dd>
+            </div>
+            <div class="flex items-center justify-between gap-3">
+              <dt>{t('deals.raffle.premium_seat_label')}</dt>
+              <dd class="font-mono text-base font-black text-amber-700 dark:text-amber-200">62.5$</dd>
+            </div>
+          </dl>
         </div>
 
-        <div class="rounded-2xl border border-amber-200 bg-white/80 p-4 shadow-sm shadow-amber-900/5 dark:border-white/12 dark:bg-white/[0.06] dark:shadow-none">
-          <p class="text-xs font-black uppercase tracking-[0.14em] text-amber-700 dark:text-amber-200">{t('deals.raffle.join_rule_title')}</p>
-          <p class="mt-2 text-sm leading-7 text-slate-700 dark:text-slate-200">
-            {joinRuleBeforeLink}<a href={authorFacebookHref} target="_blank" rel="noreferrer" class="font-black text-emerald-700 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-900 dark:text-emerald-200 dark:decoration-emerald-200/40 dark:hover:text-emerald-100">{authorFacebookLabel}</a>{joinRuleAfterLink}
-          </p>
-          <div class="mt-3 flex flex-wrap gap-x-4 gap-y-2">
-            <a href={drawHref} class="inline-flex text-sm font-black text-emerald-700 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-900 dark:text-emerald-200 dark:decoration-emerald-200/40 dark:hover:text-emerald-100">
-              {t('deals.raffle.order_ref_link')}
-            </a>
-            <a href={dealsHref} class="inline-flex text-sm font-black text-[#b85f2d] underline decoration-[#d97742]/40 underline-offset-4 hover:text-[#8f461f] dark:text-[#f0b48b] dark:decoration-[#f0b48b]/40 dark:hover:text-[#ffd1b4]">
-              {t('deals.raffle.claim_code_link')}
-            </a>
+        <div data-raffle-final-days-banner class="relative overflow-hidden rounded-2xl border border-amber-300 bg-gradient-to-br from-amber-50 via-rose-50 to-white p-4 shadow-lg shadow-amber-900/10 ring-1 ring-amber-200/70 dark:border-amber-300/60 dark:from-amber-300/18 dark:via-rose-400/14 dark:to-slate-950 dark:shadow-amber-950/35 dark:ring-amber-200/20">
+          <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-amber-400 via-rose-400 to-cyan-300" aria-hidden="true"></div>
+          <div class="flex flex-wrap items-center gap-2 pt-0.5">
+            <p class="text-[0.7rem] font-black uppercase tracking-[0.16em] text-amber-800 dark:text-amber-100">{t('deals.raffle.final_days_title')}</p>
+            <span class="rounded-full bg-slate-950 px-2.5 py-1 text-[0.68rem] font-black uppercase tracking-[0.08em] text-white shadow-sm shadow-slate-950/15 dark:bg-amber-200 dark:text-slate-950">
+              {t('deals.raffle.final_days_badge')}
+            </span>
           </div>
+          <p data-raffle-final-days-desc class="mt-2 text-base font-black leading-7 text-slate-950 dark:text-white">{t('deals.raffle.final_days_desc')}</p>
         </div>
 
-        <div class="grid max-w-lg grid-cols-2 gap-2.5 sm:gap-3">
-          <a
-            href={dealsHref}
-            class="inline-flex min-h-12 min-w-0 items-center justify-center whitespace-nowrap rounded-2xl border border-[#f1b184]/40 bg-[#d97742] px-2.5 py-3 text-center text-xs font-black text-white shadow-lg shadow-[#d97742]/20 transition hover:-translate-y-0.5 hover:bg-[#c96632] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#f0b48b]/60 sm:px-5 sm:text-sm"
-          >
-            {t('deals.raffle.page_deals_cta')}
-          </a>
+        <div class="grid w-full gap-2.5 sm:gap-3">
           <a
             href={drawHref}
-            class="inline-flex min-h-12 min-w-0 items-center justify-center whitespace-nowrap rounded-2xl border border-teal-200/35 bg-teal-500 px-2.5 py-3 text-center text-xs font-black text-white shadow-lg shadow-teal-500/20 transition hover:-translate-y-0.5 hover:bg-teal-400 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-200/45 sm:px-5 sm:text-sm"
+            class="inline-flex min-h-12 w-full min-w-0 items-center justify-center whitespace-nowrap rounded-2xl border border-teal-200/35 bg-teal-500 px-2.5 py-3 text-center text-xs font-black text-white shadow-lg shadow-teal-500/20 transition hover:-translate-y-0.5 hover:bg-teal-400 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-200/45 sm:px-5 sm:text-sm"
           >
             {t('deals.raffle.page_primary_cta')}
           </a>
@@ -97,22 +91,30 @@ const [joinRuleBeforeLink = '', joinRuleAfterLink = ''] = joinRuleDesc.split(aut
             {t('deals.raffle.daily_schedule_title')}
           </p>
           <div class="mt-4 space-y-2">
-            <div class="grid grid-cols-[6rem_minmax(0,1fr)] gap-3 rounded-xl border border-emerald-200 bg-emerald-50/80 p-3 text-sm dark:border-white/10 dark:bg-white/[0.07]">
-              <span class="font-mono font-black text-emerald-700 dark:text-emerald-200">20:00</span>
-              <span class="font-bold text-slate-800 dark:text-white">{t('deals.raffle.schedule_claim')}</span>
-            </div>
             <div class="grid grid-cols-[6rem_minmax(0,1fr)] gap-3 rounded-xl border border-cyan-200 bg-cyan-50/80 p-3 text-sm dark:border-white/10 dark:bg-white/[0.07]">
-              <span class="font-mono font-black text-cyan-700 dark:text-cyan-200">20:00-21:50</span>
+              <span data-raffle-range="registration_open_at registration_cutoff_at" class="font-mono font-black text-cyan-700 dark:text-cyan-200">20:00-21:50</span>
               <span class="font-bold text-slate-800 dark:text-white">{t('deals.raffle.schedule_register')}</span>
             </div>
             <div class="grid grid-cols-[6rem_minmax(0,1fr)] gap-3 rounded-xl border border-amber-200 bg-amber-50/80 p-3 text-sm dark:border-white/10 dark:bg-white/[0.07]">
-              <span class="font-mono font-black text-amber-700 dark:text-amber-200">21:50</span>
+              <span data-raffle-time="registration_cutoff_at" class="font-mono font-black text-amber-700 dark:text-amber-200">21:50</span>
               <span class="font-bold text-slate-800 dark:text-white">{t('deals.raffle.schedule_lock')}</span>
             </div>
             <div class="grid grid-cols-[6rem_minmax(0,1fr)] gap-3 rounded-xl border border-rose-200 bg-rose-50/80 p-3 text-sm dark:border-white/10 dark:bg-white/[0.07]">
-              <span class="font-mono font-black text-rose-700 dark:text-rose-200">22:00+</span>
-              <span class="font-bold text-slate-800 dark:text-white">{t('deals.raffle.schedule_reveal')}</span>
+              <span class="font-mono font-black text-rose-700 dark:text-rose-200"><span data-raffle-time="draw_at">22:00</span>+</span>
+              <span data-raffle-reveal-copy class="font-bold text-slate-800 dark:text-white">{t('deals.raffle.schedule_reveal')}</span>
             </div>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-amber-200 bg-amber-50/80 p-3 dark:border-amber-300/20 dark:bg-amber-300/10">
+          <p class="text-xs font-black uppercase tracking-[0.14em] text-amber-700 dark:text-amber-200">{t('deals.raffle.join_rule_title')}</p>
+          <p class="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-100">
+            {joinRuleBeforeLink}<a href={authorFacebookHref} target="_blank" rel="noreferrer" class="font-black text-emerald-700 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-900 dark:text-emerald-200 dark:decoration-emerald-200/40 dark:hover:text-emerald-100">{authorFacebookLabel}</a>{joinRuleAfterLink}
+          </p>
+          <div class="mt-3 flex flex-wrap gap-x-4 gap-y-2">
+            <a href={drawHref} class="inline-flex text-sm font-black text-emerald-700 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-900 dark:text-emerald-200 dark:decoration-emerald-200/40 dark:hover:text-emerald-100">
+              {t('deals.raffle.order_ref_link')}
+            </a>
           </div>
         </div>
 
@@ -135,3 +137,87 @@ const [joinRuleBeforeLink = '', joinRuleAfterLink = ''] = joinRuleDesc.split(aut
 
   <DealsLuckyDrawSection lang={currentLang} />
 </div>
+
+<script>
+  type HeroRaffleConfig = {
+    active?: boolean;
+    campaign_day?: string;
+    ends_at?: string;
+    registration_open_at?: string;
+    registration_cutoff_at?: string;
+    draw_at?: string;
+    reveal_interval_minutes?: number;
+    seat_budget?: {
+      standard?: number;
+      premium?: number;
+    };
+  };
+
+  const heroSummary = document.querySelector<HTMLElement>('[data-raffle-hero-summary]');
+
+  const formatHeroTime = (value: string | undefined) => {
+    if (!value) return '';
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return '';
+    return new Intl.DateTimeFormat(document.documentElement.lang || undefined, {
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(date);
+  };
+
+  const replaceTokens = (template: string, values: Record<string, string | number>) => {
+    return Object.entries(values).reduce(
+      (text, [key, value]) => text.replaceAll(`{${key}}`, String(value)),
+      template
+    );
+  };
+
+  const renderHeroConfig = (config: HeroRaffleConfig) => {
+    if (!heroSummary) return;
+    const standardSeats = Number(config.seat_budget?.standard);
+    const premiumSeats = Number(config.seat_budget?.premium);
+
+    heroSummary.querySelectorAll<HTMLElement>('[data-raffle-time]').forEach((el) => {
+      const value = formatHeroTime(config[el.dataset.raffleTime as keyof HeroRaffleConfig] as string | undefined);
+      if (value) el.textContent = value;
+    });
+
+    heroSummary.querySelectorAll<HTMLElement>('[data-raffle-range]').forEach((el) => {
+      const [startKey, endKey] = (el.dataset.raffleRange || '').split(/\s+/);
+      const start = formatHeroTime(config[startKey as keyof HeroRaffleConfig] as string | undefined);
+      const end = formatHeroTime(config[endKey as keyof HeroRaffleConfig] as string | undefined);
+      if (start && end) el.textContent = `${start}-${end}`;
+    });
+
+    const revealCopy = heroSummary.querySelector<HTMLElement>('[data-raffle-reveal-copy]');
+    const revealTemplate = heroSummary.dataset.labelRevealDynamic || '';
+    if (revealCopy && revealTemplate) {
+      revealCopy.textContent = replaceTokens(revealTemplate, {
+        minutes: Number(config.reveal_interval_minutes || 5),
+      });
+    }
+
+    const endsAt = config.ends_at ? new Date(config.ends_at).getTime() : Number.NaN;
+    const msRemaining = endsAt - Date.now();
+    const daysRemaining = Math.ceil(msRemaining / 86_400_000);
+    const finalDaysBanner = heroSummary.querySelector<HTMLElement>('[data-raffle-final-days-banner]');
+    const finalDaysDesc = heroSummary.querySelector<HTMLElement>('[data-raffle-final-days-desc]');
+    if (finalDaysBanner && config.active !== false && Number.isFinite(endsAt) && daysRemaining > 0 && daysRemaining <= 2) {
+      finalDaysBanner.hidden = false;
+      if (finalDaysDesc) {
+        finalDaysDesc.textContent = replaceTokens(heroSummary.dataset.labelFinalDaysDesc || finalDaysDesc.textContent || '', {
+          days: daysRemaining,
+          standard: Number.isFinite(standardSeats) ? standardSeats : 5,
+          premium: Number.isFinite(premiumSeats) ? premiumSeats : 2,
+        });
+      }
+    } else if (finalDaysBanner && Number.isFinite(endsAt)) {
+      finalDaysBanner.hidden = true;
+    }
+  };
+
+  window.addEventListener('vividkit:raffle-schedule-update', (event) => {
+    const detail = (event as CustomEvent<{ schedule?: HeroRaffleConfig }>).detail;
+    if (detail?.schedule) renderHeroConfig(detail.schedule);
+  });
+</script>
