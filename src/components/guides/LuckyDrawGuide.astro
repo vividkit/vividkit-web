@@ -193,7 +193,7 @@ const [joinRuleBeforeLink = '', joinRuleAfterLink = ''] = joinRuleDesc.split(aut
     const revealTemplate = heroSummary.dataset.labelRevealDynamic || '';
     if (revealCopy && revealTemplate) {
       revealCopy.textContent = replaceTokens(revealTemplate, {
-        minutes: Number(config.reveal_interval_minutes || 5),
+        minutes: Number(config.reveal_interval_minutes || 2),
       });
     }
 

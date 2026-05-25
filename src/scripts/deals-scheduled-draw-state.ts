@@ -115,7 +115,7 @@ function expectedRevealCount(schedule: any, resultCount: number, poolCount: numb
 function resolveNextRevealAt(schedule: any, resultCount: number, expectedCount: number): string {
   const drawDate = schedule?.draw_at ? new Date(schedule.draw_at) : null;
   if (!drawDate || Number.isNaN(drawDate.getTime()) || expectedCount <= 0) return '';
-  const intervalMs = Math.max(1, Number(schedule?.reveal_interval_minutes || 5)) * 60 * 1000;
+  const intervalMs = Math.max(1, Number(schedule?.reveal_interval_minutes || 2)) * 60 * 1000;
   if (Date.now() < drawDate.getTime()) return drawDate.toISOString();
 
   const nextRevealIndex = Math.min(Math.max(1, resultCount), expectedCount);
@@ -927,12 +927,12 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       }
 
       if (scenario === 'reveal_started' || scenario === 'reveal_partial' || scenario === 'reveal_complete') {
-        const resultCount = scenario === 'reveal_started' ? 1 : scenario === 'reveal_partial' ? 3 : 5;
-        const drawHoursFromNow = resultCount >= 5 ? -0.5 : -(resultCount * 5 - 1) / 60;
-        this.schedule = { ...schedule, phase: 'draw_ready', registration_cutoff_at: isoFromNow(-1), draw_at: isoFromNow(drawHoursFromNow), reveal_interval_minutes: 5 };
-        this.seatBudget = { standard: 4, premium: 1, total: 5 };
+        const resultCount = scenario === 'reveal_started' ? 1 : scenario === 'reveal_partial' ? 3 : 7;
+        const drawHoursFromNow = resultCount >= 7 ? -0.5 : -(resultCount * 2 - 1) / 60;
+        this.schedule = { ...schedule, phase: 'draw_ready', registration_cutoff_at: isoFromNow(-1), draw_at: isoFromNow(drawHoursFromNow), reveal_interval_minutes: 2 };
+        this.seatBudget = { standard: 5, premium: 2, total: 7 };
         this.publicResults = revealResults(resultCount);
-        this.poolEntries = Array.from({ length: 5 }, (_, index) => ({
+        this.poolEntries = Array.from({ length: 7 }, (_, index) => ({
           id: `reveal-pool-${index + 1}`,
           github_username: `Reveal Pool ${index + 1}`,
           approval_status: 'qualified',
