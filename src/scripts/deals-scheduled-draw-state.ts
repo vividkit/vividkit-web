@@ -41,6 +41,8 @@ type DevScenario =
   | 'decline_blocked'
   | 'many_pool_users'
   | 'public_results'
+  | 'one_day_left'
+  | 'campaign_ended'
   | 'reveal_started'
   | 'reveal_partial'
   | 'reveal_complete'
@@ -735,6 +737,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
         registration_open_at: isoFromNow(-2),
         registration_cutoff_at: isoFromNow(4),
         draw_at: isoFromNow(5),
+        ends_at: isoFromNow(48),
         claim_deadline_at: isoFromNow(29),
       };
       const winner = {
@@ -752,7 +755,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       };
 
       this.schedule = { ...schedule };
-      this.seatBudget = { standard: 12, premium: 3, total: 15 };
+      this.seatBudget = { standard: 5, premium: 2, total: 7 };
       this.publicResults = [];
       this.poolEntries = [
         { id: 'pool-1', github_username: 'Kai Dev', approval_status: 'qualified', entry_type: 'vividkit_referral_boost', raffle_weight: 2 },
@@ -771,6 +774,21 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       this.declineBlocked = false;
       this.currentUsername = 'Dev User';
 
+      const revealResults = (count: number) => {
+        const totalSeats = this.seatBudget.total || count;
+        const premiumSeats = this.seatBudget.premium || 1;
+        const premiumStartIndex = Math.max(0, totalSeats - premiumSeats);
+
+        return Array.from({ length: count }, (_, index) => ({
+          facebook_name: `Reveal Dev ${index + 1}`,
+          github_username: `Reveal Dev ${index + 1}`,
+          prize_tier: index >= premiumStartIndex ? 'Premium' : 'Standard',
+          claim_status: 'pending',
+          campaign_day: '2026-05-20',
+          revealed_at: isoFromNow((index - count) / 12),
+        }));
+      };
+
       if (scenario === 'before_open') {
         this.schedule = {
           ...schedule,
@@ -785,18 +803,43 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
         this.schedule = { ...schedule, phase: 'inactive' };
       }
 
+      if (scenario === 'one_day_left') {
+        this.schedule = {
+          ...schedule,
+          phase: 'registration_open',
+          registration_open_at: isoFromNow(-1),
+          registration_cutoff_at: isoFromNow(2),
+          draw_at: isoFromNow(3),
+          ends_at: isoFromNow(24),
+        };
+        this.seatBudget = { standard: 5, premium: 2, total: 7 };
+        this.state = 'ready';
+        this.publishScheduleSummary();
+        this.syncRevealPolling();
+        return;
+      }
+
+      if (scenario === 'campaign_ended') {
+        this.schedule = {
+          ...schedule,
+          phase: 'inactive',
+          registration_open_at: isoFromNow(-28),
+          registration_cutoff_at: isoFromNow(-26),
+          draw_at: isoFromNow(-25),
+          ends_at: isoFromNow(-1),
+        };
+        this.seatBudget = { standard: 5, premium: 2, total: 7 };
+        this.publicResults = revealResults(7);
+        this.state = 'closed';
+        this.syncLatestRevealCard();
+        this.publishScheduleSummary();
+        this.syncRevealPolling();
+        return;
+      }
+
       if (scenario === 'draw_pending') {
         this.schedule = { ...schedule, phase: 'draw_ready', registration_cutoff_at: isoFromNow(-1), draw_at: isoFromNow(1) };
       }
-
-      const revealResults = (count: number) => Array.from({ length: count }, (_, index) => ({
-        facebook_name: `Reveal Dev ${index + 1}`,
-        github_username: `Reveal Dev ${index + 1}`,
-        prize_tier: index === 4 ? 'Premium' : 'Standard',
-        claim_status: 'pending',
-        campaign_day: '2026-05-20',
-        revealed_at: isoFromNow((index - count) / 12),
-      }));
 
       if (scenario === 'invalid_order') {
         this.errorMessage = 'Could not verify this GitHub account.';

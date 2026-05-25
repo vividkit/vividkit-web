@@ -1,6 +1,6 @@
 ---
 import { useTranslations } from '@/i18n/utils';
-import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
+import { getLangFromUrl, type Language } from '@/i18n';
 import DealsLuckyDrawWidget from './deals-lucky-draw-widget.astro';
 import { Ban, Clock3, ShieldCheck, Sparkles, Trophy } from 'lucide-astro';
 
@@ -12,10 +12,8 @@ interface Props {
 const { lang, isPageHeading = false } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
-const translatePath = useTranslatedPath(currentLang);
 const giveawayApiUrl = import.meta.env.PUBLIC_GIVEAWAY_API_URL;
 const HeadingTag = isPageHeading ? 'h1' : 'h2';
-const claimHref = `${translatePath('/guides/deals')}#claim`;
 ---
 
 <section id="draw-console" class="w-full min-w-0 max-w-full scroll-mt-28">
@@ -138,7 +136,7 @@ const claimHref = `${translatePath('/guides/deals')}#claim`;
       </div>
     </div>
 
-    <DealsLuckyDrawWidget lang={currentLang} claimHref={claimHref} />
+    <DealsLuckyDrawWidget lang={currentLang} />
   </div>
 </section>
 
@@ -402,7 +400,5 @@ const claimHref = `${translatePath('/guides/deals')}#claim`;
     renderLatestReveal(detail.latestReveal);
   });
 
-  if (scheduleSummary?.dataset.apiUrl) {
-    fetchScheduleSummary();
-  }
+  renderCountdown();
 </script>
