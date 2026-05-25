@@ -11,6 +11,8 @@ import InfographicSkillStack from './infographic/infographic-skill-stack.astro';
 import InfographicSpecialOps from './infographic/infographic-special-ops.astro';
 import InfographicReportOutput from './infographic/infographic-report-output.astro';
 import InfographicPlanQuickRef from './infographic/infographic-plan-quick-ref.astro';
+import InfographicBrainstormQuickRef from './infographic/infographic-brainstorm-quick-ref.astro';
+import InfographicExecutionQuickRef from './infographic/infographic-execution-quick-ref.astro';
 
 interface Props {
   scenarioId: string;
@@ -26,8 +28,12 @@ const infographic = getInfographicById(scenarioId);
 ---
 
 {infographic ? (
-  scenarioId === 'plan' ? (
+  scenarioId === 'brainstorm' ? (
+    <InfographicBrainstormQuickRef data={infographic} lang={currentLang} />
+  ) : scenarioId === 'plan' ? (
     <InfographicPlanQuickRef data={infographic} lang={currentLang} />
+  ) : scenarioId === 'cook' || scenarioId === 'fix' ? (
+    <InfographicExecutionQuickRef data={infographic} lang={currentLang} />
   ) : (
     <div class="infographic-container">
     <!-- Header with command name and tagline -->
