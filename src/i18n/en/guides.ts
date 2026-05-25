@@ -147,7 +147,7 @@ export const guides = {
   'guides.fix_logs.description': 'Intelligent debugging with /ck:fix log analysis',
   'guides.resume.title': 'Resume Guide',
   'guides.resume.description': 'Project resumption workflows',
-  'guides.deals.title': 'Deals',
+  'guides.deals.title': 'CK Coupon',
   'guides.deals.description': 'Claim the ClaudeKit CK coupon before the campaign closes',
   'guides.lucky_draw.title': 'Lucky Draw',
   'guides.lucky_draw.description': 'Register with GitHub for the scheduled lucky draw',
