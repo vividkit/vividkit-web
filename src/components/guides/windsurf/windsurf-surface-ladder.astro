@@ -1,0 +1,45 @@
+---
+import type { Language } from '@/i18n';
+import { windsurfCopy } from '@/data/guides/windsurf';
+
+interface Props { lang: Language }
+const { lang } = Astro.props;
+const copy = windsurfCopy[lang];
+---
+
+<section class="space-y-6">
+  <div class="max-w-3xl space-y-2">
+    <h2 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white md:text-3xl">
+      {copy.ladderTitle}
+    </h2>
+    <p class="text-base leading-relaxed text-slate-600 dark:text-slate-300">
+      {copy.ladderIntro}
+    </p>
+  </div>
+
+  <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950">
+    <div class="grid gap-px bg-slate-200 dark:bg-slate-800 md:grid-cols-5">
+      {copy.ladder.map(([title, body, tag], index) => (
+        <article class="relative min-h-[190px] bg-slate-50 p-5 dark:bg-slate-950 md:min-h-[230px]">
+          <div class="flex h-full flex-col justify-between gap-6">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between gap-3">
+                <span class="font-mono text-xs text-slate-400">0{index + 1}</span>
+                <span class="rounded-full border border-slate-200 bg-white px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400">
+                  {tag}
+                </span>
+              </div>
+              <h3 class="text-lg font-bold text-slate-900 dark:text-white">{title}</h3>
+              <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-300">{body}</p>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-teal-500"></span>
+              <div class="h-px flex-1 bg-gradient-to-r from-teal-400 to-transparent"></div>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

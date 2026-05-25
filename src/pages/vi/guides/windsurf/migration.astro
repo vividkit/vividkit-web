@@ -1,0 +1,21 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import WindsurfDeepDiveGuide from '@/components/guides/WindsurfDeepDiveGuide.astro';
+import { windsurfDeepDiveCopy } from '@/data/guides/windsurf';
+import { useTranslations } from '@/i18n/utils';
+import type { Language } from '@/i18n';
+
+const lang: Language = 'vi';
+const t = useTranslations(lang);
+const copy = windsurfDeepDiveCopy[lang].migration;
+---
+
+<GuidesLayout
+  title={`${copy.pageTitle} - ${t('site.title')}`}
+  description={copy.pageDescription}
+  activeTab="windsurf"
+  canonicalPath="/vi/guides/windsurf/migration"
+  lang="vi"
+>
+  <WindsurfDeepDiveGuide lang="vi" topic="migration" />
+</GuidesLayout>

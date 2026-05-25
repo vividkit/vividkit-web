@@ -1,0 +1,19 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import WindsurfGuide from '@/components/guides/WindsurfGuide.astro';
+import { windsurfCopy } from '@/data/guides/windsurf';
+import { useTranslations } from '@/i18n/utils';
+import type { Language } from '@/i18n';
+
+const lang: Language = 'en';
+const t = useTranslations(lang);
+const copy = windsurfCopy[lang];
+---
+
+<GuidesLayout
+  title={`${copy.pageTitle} - ${t('site.title')}`}
+  description={copy.pageDescription}
+  activeTab="windsurf"
+>
+  <WindsurfGuide lang="en" />
+</GuidesLayout>

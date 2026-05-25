@@ -1,0 +1,73 @@
+---
+import type { Language } from '@/i18n';
+import { windsurfCopy, accentClasses, type Accent } from '@/data/guides/windsurf';
+import { BrainCircuit, DatabaseZap, Route, TerminalSquare } from 'lucide-astro';
+
+interface Props { lang: Language }
+const { lang } = Astro.props;
+const copy = windsurfCopy[lang];
+const icons = [DatabaseZap, BrainCircuit, Route, TerminalSquare] as const;
+---
+
+<section class="space-y-6">
+  <div class="max-w-3xl space-y-2">
+    <h2 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white md:text-3xl">
+      {copy.systemTitle}
+    </h2>
+    <p class="text-base leading-relaxed text-slate-600 dark:text-slate-300">
+      {copy.systemIntro}
+    </p>
+  </div>
+
+  <div class="rounded-3xl border border-slate-200 bg-slate-50 p-5 dark:border-slate-800 dark:bg-slate-950 md:p-7">
+    <div class="grid gap-4 lg:grid-cols-[1fr_auto_1fr] lg:items-center">
+      <div class="space-y-4">
+        {copy.systemNodes.slice(0, 2).map(([title, body, accent], index) => {
+          const Icon = icons[index];
+          const a = accentClasses[accent as Accent];
+          return (
+            <article class={`rounded-2xl border bg-white p-5 dark:bg-slate-900/55 ${a.border}`}>
+              <div class="flex items-start gap-3">
+                <div class={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${a.soft} ${a.text}`}>
+                  <Icon class="h-5 w-5" stroke-width={2.1} />
+                </div>
+                <div>
+                  <h3 class="text-base font-bold text-slate-900 dark:text-white">{title}</h3>
+                  <p class="mt-1 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{body}</p>
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+
+      <div class="hidden w-20 flex-col items-center gap-3 lg:flex">
+        <div class="h-px w-full bg-gradient-to-r from-transparent via-slate-300 to-transparent dark:via-slate-700"></div>
+        <div class="rounded-full border border-teal-200 bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-teal-700 dark:border-teal-800 dark:bg-slate-900 dark:text-teal-300">
+          Cascade
+        </div>
+        <div class="h-px w-full bg-gradient-to-r from-transparent via-slate-300 to-transparent dark:via-slate-700"></div>
+      </div>
+
+      <div class="space-y-4">
+        {copy.systemNodes.slice(2).map(([title, body, accent], offset) => {
+          const Icon = icons[offset + 2];
+          const a = accentClasses[accent as Accent];
+          return (
+            <article class={`rounded-2xl border bg-white p-5 dark:bg-slate-900/55 ${a.border}`}>
+              <div class="flex items-start gap-3">
+                <div class={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${a.soft} ${a.text}`}>
+                  <Icon class="h-5 w-5" stroke-width={2.1} />
+                </div>
+                <div>
+                  <h3 class="text-base font-bold text-slate-900 dark:text-white">{title}</h3>
+                  <p class="mt-1 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{body}</p>
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </div>
+</section>
