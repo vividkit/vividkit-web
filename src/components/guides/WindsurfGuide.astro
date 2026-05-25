@@ -1,0 +1,22 @@
+---
+import { getLangFromUrl, type Language } from '@/i18n';
+import WindsurfHero from './windsurf/windsurf-hero.astro';
+import WindsurfSurfaceLadder from './windsurf/windsurf-surface-ladder.astro';
+import WindsurfSystemMap from './windsurf/windsurf-system-map.astro';
+import WindsurfCustomizationMap from './windsurf/windsurf-customization-map.astro';
+import WindsurfMigrationCard from './windsurf/windsurf-migration-card.astro';
+import WindsurfNextSteps from './windsurf/windsurf-next-steps.astro';
+
+interface Props { lang?: Language }
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+---
+
+<div class="mt-6 space-y-12">
+  <WindsurfHero lang={currentLang} />
+  <WindsurfSurfaceLadder lang={currentLang} />
+  <WindsurfSystemMap lang={currentLang} />
+  <WindsurfCustomizationMap lang={currentLang} />
+  <WindsurfMigrationCard lang={currentLang} />
+  <WindsurfNextSteps lang={currentLang} />
+</div>

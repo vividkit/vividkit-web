@@ -1,0 +1,95 @@
+---
+import type { Language } from '@/i18n';
+import { windsurfCopy } from '@/data/guides/windsurf';
+import { AlertTriangle, CheckCircle2, Copy, GitBranch, ShieldAlert } from 'lucide-astro';
+
+interface Props { lang: Language }
+const { lang } = Astro.props;
+const copy = windsurfCopy[lang];
+const command = 'ck migrate -a windsurf --dry-run --yes';
+---
+
+<section class="space-y-6">
+  <div class="max-w-3xl space-y-2">
+    <h2 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white md:text-3xl">
+      {copy.migrationTitle}
+    </h2>
+    <p class="text-base leading-relaxed text-slate-600 dark:text-slate-300">
+      {copy.migrationBody}
+    </p>
+  </div>
+
+  <div class="grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
+    <article class="rounded-2xl border border-slate-200 bg-slate-950 p-5 text-slate-100 dark:border-slate-800">
+      <div class="mb-4 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-2">
+          <GitBranch class="h-4 w-4 text-teal-300" />
+          <span class="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">dry run</span>
+        </div>
+        <button
+          class="copy-btn inline-flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-white/[0.06] text-slate-300 transition hover:bg-white/[0.12]"
+          data-code={command}
+          aria-label="Copy command"
+          type="button"
+        >
+          <Copy class="copy-icon h-4 w-4" />
+          <CheckCircle2 class="check-icon hidden h-4 w-4 text-teal-300" />
+        </button>
+      </div>
+      <code class="block overflow-x-auto rounded-xl border border-white/10 bg-white/[0.04] p-4 font-mono text-sm text-teal-200">
+        {command}
+      </code>
+      <div class="mt-4 rounded-xl border border-amber-300/20 bg-amber-300/10 p-4">
+        <div class="flex items-start gap-3">
+          <AlertTriangle class="mt-0.5 h-4 w-4 shrink-0 text-amber-300" />
+          <p class="text-sm leading-relaxed text-amber-50">
+            {copy.migrationLabels.hookWarning}
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <article class="overflow-x-auto rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950">
+      <div class="grid min-w-[420px] grid-cols-[minmax(92px,0.8fr)_minmax(132px,1fr)_minmax(128px,128px)] items-center gap-3 border-b border-slate-200 bg-slate-50 px-4 py-3 text-xs font-bold uppercase tracking-[0.12em] text-slate-500 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-400">
+        <span>{copy.migrationLabels.source}</span>
+        <span>{copy.migrationLabels.destination}</span>
+        <span>{copy.migrationLabels.status}</span>
+      </div>
+      {copy.migrationRows.map(([source, destination, status]) => {
+        const isGap = status.toLowerCase().includes('not') || status.toLowerCase().includes('chưa');
+        return (
+          <div class="grid min-w-[420px] grid-cols-[minmax(92px,0.8fr)_minmax(132px,1fr)_minmax(128px,128px)] items-center gap-3 border-b border-slate-100 px-4 py-3 last:border-b-0 dark:border-slate-800">
+            <span class="text-sm font-semibold text-slate-800 dark:text-slate-100">{source}</span>
+            <code class="break-words text-xs text-slate-600 dark:text-slate-300">{destination}</code>
+            <span class={`grid w-32 grid-cols-[16px_1fr] items-center gap-2 text-xs font-semibold leading-tight ${isGap ? 'text-amber-700 dark:text-amber-300' : 'text-teal-700 dark:text-teal-300'}`}>
+              {isGap ? <ShieldAlert class="h-3.5 w-3.5" /> : <CheckCircle2 class="h-3.5 w-3.5" />}
+              {status}
+            </span>
+          </div>
+        );
+      })}
+    </article>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.copy-btn').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const code = btn.getAttribute('data-code');
+        if (!code) return;
+        try {
+          await navigator.clipboard.writeText(code);
+          btn.querySelector('.copy-icon')?.classList.add('hidden');
+          btn.querySelector('.check-icon')?.classList.remove('hidden');
+          setTimeout(() => {
+            btn.querySelector('.copy-icon')?.classList.remove('hidden');
+            btn.querySelector('.check-icon')?.classList.add('hidden');
+          }, 1600);
+        } catch (error) {
+          console.error('Failed to copy command:', error);
+        }
+      });
+    });
+  });
+</script>

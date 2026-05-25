@@ -1,0 +1,57 @@
+---
+import type { Language } from '@/i18n';
+import { windsurfCopy } from '@/data/guides/windsurf';
+import { FileCode2, GitBranch, MemoryStick, ScrollText, ShieldCheck, Workflow } from 'lucide-astro';
+
+interface Props { lang: Language }
+const { lang } = Astro.props;
+const copy = windsurfCopy[lang];
+const icons = [ScrollText, GitBranch, MemoryStick, Workflow, FileCode2, ShieldCheck] as const;
+---
+
+<section class="space-y-6">
+  <div class="max-w-3xl space-y-2">
+    <h2 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white md:text-3xl">
+      {copy.customizationTitle}
+    </h2>
+    <p class="text-base leading-relaxed text-slate-600 dark:text-slate-300">
+      {copy.customizationIntro}
+    </p>
+  </div>
+
+  <div class="grid gap-4 md:grid-cols-2">
+    {copy.customization.map(([name, path, description], index) => {
+      const Icon = icons[index];
+      return (
+        <article class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-950">
+          <div class="flex items-start gap-3">
+            <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
+              <Icon class="h-5 w-5" stroke-width={2.1} />
+            </div>
+            <div class="min-w-0 space-y-2">
+              <div class="flex flex-wrap items-center gap-2">
+                <h3 class="text-base font-bold text-slate-900 dark:text-white">{name}</h3>
+                <code class="rounded-md bg-slate-100 px-2 py-1 text-xs text-slate-600 dark:bg-slate-800/90 dark:text-slate-300">
+                  {path}
+                </code>
+              </div>
+              <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-300">{description}</p>
+            </div>
+          </div>
+        </article>
+      );
+    })}
+  </div>
+
+  <article class="rounded-2xl border border-amber-200 bg-amber-50/70 p-5 dark:border-amber-800/60 dark:bg-amber-950/20">
+    <div class="flex items-start gap-3">
+      <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300">
+        <ShieldCheck class="h-5 w-5" stroke-width={2.1} />
+      </div>
+      <div class="space-y-1">
+        <h3 class="text-base font-bold text-slate-900 dark:text-white">{copy.hooksTitle}</h3>
+        <p class="text-sm leading-relaxed text-slate-700 dark:text-slate-300">{copy.hooksBody}</p>
+      </div>
+    </div>
+  </article>
+</section>

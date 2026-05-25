@@ -1,0 +1,43 @@
+---
+import type { Language } from '@/i18n';
+import { useTranslatedPath } from '@/i18n';
+import { windsurfCopy } from '@/data/guides/windsurf';
+import { ArrowRight, BookOpenCheck } from 'lucide-astro';
+
+interface Props { lang: Language }
+const { lang } = Astro.props;
+const copy = windsurfCopy[lang];
+const translatePath = useTranslatedPath(lang);
+---
+
+<section>
+  <div class="rounded-2xl border border-teal-200 bg-teal-50/60 p-5 dark:border-teal-800/60 dark:bg-teal-950/20">
+    <div class="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+      <div class="max-w-2xl space-y-2">
+        <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-100 text-teal-700 dark:bg-teal-500/15 dark:text-teal-300">
+          <BookOpenCheck class="h-5 w-5" stroke-width={2.1} />
+        </div>
+        <h2 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
+          {copy.nextTitle}
+        </h2>
+      </div>
+    </div>
+
+    <div class="mt-4 grid gap-3 md:grid-cols-3">
+      {copy.next.map(([title, body, path]) => (
+        <a
+          href={translatePath(path)}
+          class="group flex items-start gap-3 rounded-xl border border-teal-200/80 bg-white/70 p-4 transition hover:-translate-y-0.5 hover:border-teal-300 hover:bg-white hover:shadow-sm dark:border-teal-800/60 dark:bg-slate-950/35 dark:hover:border-teal-700 dark:hover:bg-slate-950/55"
+        >
+          <div class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-teal-100 text-teal-700 dark:bg-teal-500/15 dark:text-teal-300">
+            <ArrowRight class="h-4 w-4 transition group-hover:translate-x-0.5" stroke-width={2.1} />
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-slate-900 dark:text-white">{title}</h3>
+            <p class="mt-1 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{body}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
