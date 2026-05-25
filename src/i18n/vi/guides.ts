@@ -147,7 +147,7 @@ export const guides = {
   'guides.fix_logs.description': 'Debug thông minh với /ck:fix phân tích log',
   'guides.resume.title': 'Tiếp Tục Phiên',
   'guides.resume.description': 'Khôi phục context từ phiên trước',
-  'guides.deals.title': 'Ưu Đãi',
+  'guides.deals.title': 'CK Coupon',
   'guides.deals.description': 'Claim CK coupon ClaudeKit trước khi campaign đóng',
   'guides.lucky_draw.title': 'Lucky Draw',
   'guides.lucky_draw.description': 'Đăng nhập GitHub để tham gia lucky draw theo lịch',
