@@ -509,7 +509,6 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.chrome_profile.desc"),
           detail: t("commands.stable.chrome_profile.detail"),
           isSkill: true,
-          isBeta: true,
         },
         {
           command: "/ck:scenario",
