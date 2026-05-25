@@ -23,6 +23,33 @@ const currentLang = lang || getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
 const engineerExtraCount = engineerMigrationExtra.length;
 const marketingExtraCount = marketingMigrationExtra.length + marketingRenamedMkt.length + marketingRenamedShared.length;
+
+const quickNavItems = [
+  {
+    href: "#whats-new-section",
+    labelKey: "commands.nav.migration",
+    descKey: "commands.nav.migration_desc",
+    accent: "text-amber-700 dark:text-amber-300",
+    border: "hover:border-amber-300 hover:bg-amber-50/60 dark:hover:border-amber-300/40 dark:hover:bg-amber-950/20",
+    icon: '<path d="M8 3 4 7l4 4"></path><path d="M4 7h16"></path><path d="m16 21 4-4-4-4"></path><path d="M20 17H4"></path>',
+  },
+  {
+    href: "#commands-symbols",
+    labelKey: "commands.nav.legend",
+    descKey: "commands.nav.legend_desc",
+    accent: "text-teal-700 dark:text-teal-300",
+    border: "hover:border-teal-300 hover:bg-teal-50/60 dark:hover:border-teal-300/40 dark:hover:bg-teal-950/20",
+    icon: '<rect x="4" y="5" width="3.5" height="3.5" rx="0.6"></rect><path d="M10 6.75h10"></path><rect x="4" y="10.25" width="3.5" height="3.5" rx="0.6"></rect><path d="M10 12h10"></path><rect x="4" y="15.5" width="3.5" height="3.5" rx="0.6"></rect><path d="M10 17.25h10"></path>',
+  },
+  {
+    href: "#commands-catalog",
+    labelKey: "commands.nav.catalog",
+    descKey: "commands.nav.catalog_desc",
+    accent: "text-cyan-700 dark:text-cyan-300",
+    border: "hover:border-cyan-300 hover:bg-cyan-50/60 dark:hover:border-cyan-300/40 dark:hover:bg-cyan-950/20",
+    icon: '<rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect>',
+  },
+];
 ---
 
 <style>
@@ -58,16 +85,62 @@ const marketingExtraCount = marketingMigrationExtra.length + marketingRenamedMkt
   </div>
 
   <!-- Hero banner: /ck: prefix explanation -->
-  <CommandsHeroBanner lang={currentLang} />
+  <section id="commands-prefix" class="scroll-mt-32">
+    <CommandsHeroBanner lang={currentLang} />
+  </section>
+
+  <!-- Quick navigation -->
+  <nav
+    class="rounded-2xl border border-slate-200 bg-white/80 p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900/60"
+    aria-label={t("commands.nav.aria")}
+  >
+    <div class="mb-3 flex items-center justify-between gap-3">
+      <div>
+        <div class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+          {t("commands.nav.eyebrow")}
+        </div>
+        <div class="mt-1 text-sm font-semibold text-slate-800 dark:text-slate-200">
+          {t("commands.nav.title")}
+        </div>
+      </div>
+      <span class="hidden rounded-full bg-teal-50 px-3 py-1 text-[11px] font-medium text-teal-700 dark:bg-teal-900/30 dark:text-teal-300 sm:inline-flex">
+        {t("commands.nav.hint")}
+      </span>
+    </div>
+    <div class="grid gap-2 sm:grid-cols-3">
+      {quickNavItems.map((item) => (
+        <a
+          href={item.href}
+          class={`group min-h-[92px] rounded-xl border border-slate-200 bg-slate-50 p-3 transition dark:border-slate-800 dark:bg-slate-950/40 ${item.border}`}
+        >
+          <div class="mb-2 flex items-center gap-2">
+            <span class={`flex h-7 w-7 items-center justify-center rounded-lg bg-white shadow-sm dark:bg-slate-900 ${item.accent}`}>
+              <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={item.icon} />
+            </span>
+            <span class={`font-mono text-[11px] font-bold ${item.accent}`}>
+              {t(item.labelKey as any)}
+            </span>
+          </div>
+          <span class="block text-[11px] leading-snug text-slate-500 dark:text-slate-400">
+            {t(item.descKey as any)}
+          </span>
+        </a>
+      ))}
+    </div>
+  </nav>
 
   <!-- What's New: v2.14.0 migration table -->
   <CommandsMigrationTable lang={currentLang} />
 
   <!-- Understanding Symbols: ⚡ token weight tiers -->
-  <CommandsSymbolsLegend lang={currentLang} />
+  <section id="commands-symbols" class="scroll-mt-32">
+    <CommandsSymbolsLegend lang={currentLang} />
+  </section>
 
   <!-- Command categories grid with Engineer / Marketing Kit toggle -->
-  <CommandsCategoriesGrid lang={currentLang} />
+  <section id="commands-catalog" class="scroll-mt-32">
+    <CommandsCategoriesGrid lang={currentLang} />
+  </section>
 
   <!-- Official docs link -->
   <CommandsDocsNote lang={currentLang} />
