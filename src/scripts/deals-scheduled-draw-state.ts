@@ -51,8 +51,6 @@ type DevScenario =
 type SeatBudget = { standard: number; premium: number; total: number };
 
 const emptyBudget: SeatBudget = { standard: 0, premium: 0, total: 0 };
-const FINAL_REVEAL_VISIBLE_MS = 60 * 1000;
-
 function isoFromNow(hours: number): string {
   return new Date(Date.now() + hours * 60 * 60 * 1000).toISOString();
 }
@@ -182,8 +180,6 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
     declineLimit: 2,
     declineBlocked: false,
     revealRefreshTimer: null as number | null,
-    finalRevealHideTimer: null as number | null,
-    finalRevealVisible: false,
     lastRevealResultCount: 0,
 
     async init() {
@@ -320,7 +316,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
 
     latestRevealedResult() {
       if (!this.publicResults.length) return null;
-      if (this.hasFullyRevealedResults() && !this.finalRevealVisible) return null;
+      if (this.hasFullyRevealedResults()) return null;
       return this.publicResults[this.publicResults.length - 1] || null;
     },
 
@@ -353,31 +349,8 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       return this.hasFullyRevealedResults() ? this.LABEL_REVEAL_COMPLETE : this.nextRevealText();
     },
 
-    showFinalRevealBriefly() {
-      this.finalRevealVisible = true;
-      if (this.finalRevealHideTimer) window.clearTimeout(this.finalRevealHideTimer);
-      this.finalRevealHideTimer = window.setTimeout(() => {
-        this.finalRevealVisible = false;
-        this.finalRevealHideTimer = null;
-        this.publishScheduleSummary();
-      }, FINAL_REVEAL_VISIBLE_MS);
-    },
-
     syncLatestRevealCard() {
       const resultCount = this.publicResults.length;
-      const fullReveal = this.hasFullyRevealedResults();
-      if (!fullReveal) {
-        if (this.finalRevealHideTimer) {
-          window.clearTimeout(this.finalRevealHideTimer);
-          this.finalRevealHideTimer = null;
-        }
-        this.finalRevealVisible = false;
-        this.lastRevealResultCount = resultCount;
-        return;
-      }
-      if (resultCount > 0 && resultCount !== this.lastRevealResultCount) {
-        this.showFinalRevealBriefly();
-      }
       this.lastRevealResultCount = resultCount;
     },
 
