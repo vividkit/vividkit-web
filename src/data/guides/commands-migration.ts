@@ -37,7 +37,7 @@ export const engineerMigrationExtra: MigrationRow[] = [
   { old: '/git:pr', new: '/ck:git pr' },
   { old: '/git:merge', new: '/ck:git merge' },
   { old: '/design:video', new: '/ck:remotion [video or component]' },
-  { old: '/design:3d', new: '/ck:threejs spinning globe with markers' },
+  { old: '/design:3d', new: '/ck:threejs rotating globe with markers' },
   { old: '/design:screenshot', new: '/ck:frontend-design' },
   { old: '/design:describe', new: '/ck:frontend-design' },
   { old: '/review:codebase', new: '/ck:code-review codebase' },
