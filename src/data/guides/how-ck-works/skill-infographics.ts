@@ -1,6 +1,6 @@
 // Skill infographic data for the how-ck-works guide
 // One-page visual summaries matching the design from reference images
-// v1 MVP: brainstorm, plan, cook, fix
+// v1 MVP: brainstorm, plan, cook, fix, team
 
 import type { SkillInfographic } from './workflow-visualizer-types';
 
@@ -442,6 +442,237 @@ export const skillInfographics: SkillInfographic[] = [
       patternVi: 'Step markers + điểm confidence + nhật ký kỹ thuật',
       descEn: 'Root cause cited file:line • Fix targeted • Regression test added • Blast-radius swept • Prevention guards in place • Plan/tasks synced • Docs updated • Journal recorded',
       descVi: 'Root cause kèm file:line • Fix đúng đích • Regression test thêm • Quét blast-radius • Prevention guard đặt chỗ • Plan/task đồng bộ • Docs cập nhật • Nhật ký ghi lại',
+    },
+  },
+
+  // ─────────────────────────────────────────────────────────────────────────────
+  // /ck:team — Agent Teams Multi-Session Orchestrator
+  // ─────────────────────────────────────────────────────────────────────────────
+  {
+    id: 'team',
+    command: '/ck:team',
+    kit: 'engineer',
+
+    header: {
+      titleEn: '/ck:team',
+      titleVi: '/ck:team',
+      taglineEn: 'Multi-session orchestration engine — spawn N independent Claude Code teammates in parallel for research, cook, review, or debug. Each teammate has its own context window.',
+      taglineVi: 'Engine điều phối đa session — spawn N teammate Claude Code độc lập song song cho research, cook, review, hoặc debug. Mỗi teammate có context window riêng.',
+    },
+
+    hardGate: {
+      type: 'critical',
+      titleEn: 'HARD GATES (3)',
+      titleVi: 'HARD GATES (3)',
+      contentEn: '① Pre-flight TeamCreate-first — Step 2 of every template calls TeamCreate without pre-checking the tool exists. Success → continue. Error or unrecognized tool → STOP and tell user the env flag is missing. NO fallback to subagents under any circumstance. ② Env + terminal lock — CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 must be set in settings.json env, AND must run in a CLI terminal (Task/Team tools are disabled in the VSCode extension via isTTY check). ③ Model lock — all teammates MUST run Opus 4.6; no other model is allowed for Agent Teams teammates.',
+      contentVi: '① Pre-flight TeamCreate-first — Step 2 của mọi template gọi TeamCreate không pre-check tool tồn tại. Success → continue. Error hoặc tool không nhận diện → DỪNG và báo user env flag thiếu. KHÔNG fallback sang subagent trong mọi trường hợp. ② Env + terminal lock — phải set CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 trong env của settings.json, VÀ phải chạy trong CLI terminal (tool Task/Team bị disable trong extension VSCode qua isTTY check). ③ Model lock — mọi teammate BẮT BUỘC dùng Opus 4.6; không model khác cho teammate của Agent Teams.',
+    },
+
+    processFlow: [
+      { number: 1, titleEn: 'Invoke', titleVi: 'Gọi', descEn: '/ck:team <template> <context> [flags] — pick research / cook / review / debug + optional --devs/--researchers/--reviewers/--debuggers N, --delegate, --worktree', descVi: '/ck:team <template> <context> [flags] — chọn research / cook / review / debug + flag tuỳ chọn --devs/--researchers/--reviewers/--debuggers N, --delegate, --worktree' },
+      { number: 2, titleEn: 'Pre-flight', titleVi: 'Tiền kiểm', descEn: 'MANDATORY — call TeamCreate(team_name) directly; success continues, error ABORTS (no subagent fallback). Env flag + CLI terminal + Opus 4.6 must all hold', descVi: 'BẮT BUỘC — gọi thẳng TeamCreate(team_name); success thì tiếp, error thì ABORT (không fallback subagent). Env flag + CLI terminal + Opus 4.6 đều phải đúng' },
+      { number: 3, titleEn: 'Derive N', titleVi: 'Tách N', descEn: 'Split input into N independent work items (default N=3) — angles (research) / file-owned tasks + tester blocker (cook) / focuses (review) / competing hypotheses (debug). TaskCreate × N', descVi: 'Tách input thành N work item độc lập (mặc định N=3) — angles (research) / task có file ownership + tester blocker (cook) / focuses (review) / giả thuyết cạnh tranh (debug). TaskCreate × N' },
+      { number: 4, titleEn: 'Spawn', titleVi: 'Spawn', descEn: 'Agent tool × N in parallel — model: opus, run_in_background: true, isolation: worktree (cook devs only). Each prompt includes the mandatory CK Context Block', descVi: 'Agent tool × N song song — model: opus, run_in_background: true, isolation: worktree (chỉ cho cook dev). Mỗi prompt có CK Context Block bắt buộc' },
+      { number: 5, titleEn: 'Coordinate', titleVi: 'Điều phối', descEn: 'React to TaskCompleted / TeammateIdle hook events (60s TaskList fallback). Teammates DM each other via SendMessage — adversarial in debug, lead-routed in cook', descVi: 'Phản ứng theo hook TaskCompleted / TeammateIdle (fallback 60s qua TaskList). Teammate DM nhau qua SendMessage — adversarial trong debug, routed qua lead trong cook' },
+      { number: 6, titleEn: 'Synthesize', titleVi: 'Tổng hợp', descEn: 'Lead reads all reports. research → research-summary-<slug>.md. cook → git merge --no-ff worktree branches sequentially + MANDATORY Docs impact eval. review → dedupe + prioritize CRITICAL/IMPORTANT/MODERATE. debug → surviving theory = root cause', descVi: 'Lead đọc mọi report. research → research-summary-<slug>.md. cook → git merge --no-ff branch worktree tuần tự + BẮT BUỘC eval Docs impact. review → dedupe + ưu tiên CRITICAL/IMPORTANT/MODERATE. debug → giả thuyết còn sống = root cause' },
+      { number: 7, titleEn: 'Shutdown', titleVi: 'Đóng', descEn: 'SendMessage(shutdown_request) × N → TeamDelete (NO params) → /ck:journal → report to user. Agent memory at $HOME/.claude/agent-memory/<name>/ persists separately', descVi: 'SendMessage(shutdown_request) × N → TeamDelete (KHÔNG params) → /ck:journal → báo user. Agent memory ở $HOME/.claude/agent-memory/<name>/ tồn tại độc lập' },
+    ],
+
+    corePrinciplesEn: [
+      'TeamCreate-first — NEVER fall back to subagents on failure',
+      'File ownership boundaries — devs must not overlap on cook tasks',
+      'CK Context Block in EVERY spawn prompt — teammates need it to find reports/plans',
+      'Refer to teammates by NAME (not agent ID) in recipient + owner fields',
+      'Adversarial in debug — let competing hypotheses converge by mutual disproof',
+    ],
+    corePrinciplesVi: [
+      'TeamCreate-first — KHÔNG fallback subagent khi fail',
+      'File ownership boundaries — dev không được trùng nhau trong cook tasks',
+      'CK Context Block trong MỌI spawn prompt — teammate cần để tìm reports/plans',
+      'Gọi teammate bằng NAME (không phải agent ID) ở field recipient + owner',
+      'Adversarial trong debug — để các giả thuyết cạnh tranh hội tụ bằng mutual disproof',
+    ],
+
+    expertiseAreasEn: [
+      'Multi-session parallel orchestration with own context per teammate',
+      'Worktree isolation for safe parallel code editing (cook --worktree)',
+      'Event-driven coordination via TaskCompleted / TeammateIdle hooks',
+      'Inter-agent messaging (DM + broadcast + shutdown + plan approval)',
+      'Per-template synthesis: summary / merge+docs / severity-dedupe / root-cause',
+    ],
+    expertiseAreasVi: [
+      'Điều phối đa session song song với context riêng cho mỗi teammate',
+      'Worktree isolation để sửa code song song an toàn (cook --worktree)',
+      'Điều phối theo sự kiện qua hook TaskCompleted / TeammateIdle',
+      'Messaging giữa agent (DM + broadcast + shutdown + plan approval)',
+      'Synthesis theo template: summary / merge+docs / severity-dedupe / root-cause',
+    ],
+
+    specialOperations: [
+      {
+        id: 'tpl-research',
+        titleEn: 'research <topic>',
+        titleVi: 'research <topic>',
+        descEn: 'Wraps /ck:research. Default 3 angles — architecture & patterns / alternatives & trade-offs / risks & failure modes. Output: research-summary-<slug>.md.',
+        descVi: 'Wrap /ck:research. Mặc định 3 góc — architecture & patterns / alternatives & trade-offs / risks & failure modes. Output: research-summary-<slug>.md.',
+        color: 'sky',
+      },
+      {
+        id: 'tpl-cook',
+        titleEn: 'cook <plan-or-desc>',
+        titleVi: 'cook <plan-or-desc>',
+        descEn: 'Wraps /ck:cook. Default 4 devs (worktree-isolated) + 1 tester blocked on devs. Lead merges branches sequentially + MANDATORY docs sync eval.',
+        descVi: 'Wrap /ck:cook. Mặc định 4 dev (worktree-isolated) + 1 tester chặn theo dev. Lead merge branch tuần tự + BẮT BUỘC eval docs sync.',
+        color: 'amber',
+      },
+      {
+        id: 'tpl-review',
+        titleEn: 'review <scope>',
+        titleVi: 'review <scope>',
+        descEn: 'Wraps /ck:code-review. Default 3 focuses — security (OWASP) / performance / test coverage. Output: severity-rated dedupe in review-<slug>.md.',
+        descVi: 'Wrap /ck:code-review. Mặc định 3 focus — security (OWASP) / performance / test coverage. Output: dedupe theo severity trong review-<slug>.md.',
+        color: 'violet',
+      },
+      {
+        id: 'tpl-debug',
+        titleEn: 'debug <issue>',
+        titleVi: 'debug <issue>',
+        descEn: 'Wraps /ck:fix. Default 3 competing hypotheses — debuggers DM each other to disprove peers. Surviving theory = root cause in debug-<slug>.md.',
+        descVi: 'Wrap /ck:fix. Mặc định 3 giả thuyết cạnh tranh — debugger DM nhau để disprove. Giả thuyết còn sống = root cause trong debug-<slug>.md.',
+        color: 'rose',
+      },
+    ],
+
+    skillStack: [
+      { name: 'researcher agent', type: 'agent' },
+      { name: 'fullstack-developer agent', type: 'agent' },
+      { name: 'code-reviewer agent', type: 'agent' },
+      { name: 'debugger agent', type: 'agent' },
+      { name: 'tester agent', type: 'agent' },
+      { name: 'ck:research', type: 'skill' },
+      { name: 'ck:cook', type: 'skill' },
+      { name: 'ck:code-review', type: 'skill' },
+      { name: 'ck:fix', type: 'skill' },
+      { name: 'ck:journal', type: 'skill' },
+      { name: 'TeamCreate', type: 'tool' },
+      { name: 'TeamDelete', type: 'tool' },
+      { name: 'TaskCreate', type: 'tool' },
+      { name: 'TaskUpdate', type: 'tool' },
+      { name: 'Agent', type: 'tool' },
+      { name: 'SendMessage', type: 'tool' },
+    ],
+
+    reportOutput: {
+      titleEn: 'Per-Template Report',
+      titleVi: 'Report theo Template',
+      patternEn: 'research-summary / cook merge+docs / review-<slug> / debug-<slug>.md',
+      patternVi: 'research-summary / cook merge+docs / review-<slug> / debug-<slug>.md',
+      locationEn: 'plans/reports/',
+      locationVi: 'plans/reports/',
+      descEn: 'research → exec summary + comparative analysis + recommendations • cook → merged branches + Docs impact eval + test results • review → severity-dedupe + action items • debug → root cause + evidence chain + disproven hypotheses • All templates close with /ck:journal',
+      descVi: 'research → exec summary + comparative analysis + recommendations • cook → branch đã merge + eval Docs impact + kết quả test • review → dedupe theo severity + action items • debug → root cause + evidence chain + giả thuyết đã disproven • Mọi template đều đóng bằng /ck:journal',
+    },
+  },
+
+  // ─────────────────────────────────────────────────────────────────────────────
+  // /ck:preview — Visual Explanations & File Viewer
+  // ─────────────────────────────────────────────────────────────────────────────
+  {
+    id: 'preview',
+    command: '/ck:preview',
+    kit: 'engineer',
+
+    header: {
+      titleEn: '/ck:preview',
+      titleVi: '/ck:preview',
+      taglineEn: 'View files or generate visual explanations, diagrams, and slide decks — in the browser or as a self-contained HTML page. A read/visualize utility that never modifies code.',
+      taglineVi: 'Xem file hoặc tạo giải thích trực quan, sơ đồ, và slide deck — trên browser hoặc dưới dạng trang HTML độc lập. Utility đọc/trực quan hóa, không sửa code.',
+    },
+
+    hardGate: {
+      type: 'info',
+      titleEn: 'FLAG COMBINATION RULES',
+      titleVi: 'LUẬT KẾT HỢP FLAG',
+      contentEn: 'Two input shapes: a file path (view/walkthrough) OR a generate flag + topic. --html composes with ANY generate flag (--explain / --diagram / --slides / --ascii) to emit a self-contained browser page — no dev server. The review flags --diff [ref], --plan-review, and --recap [timeframe] REQUIRE --html. Output saves to the active plan folder ({plan_dir}/visuals/) or falls back to plans/visuals/.',
+      contentVi: 'Hai dạng input: một file path (view/walkthrough) HOẶC generate flag + topic. --html kết hợp với BẤT KỲ generate flag nào (--explain / --diagram / --slides / --ascii) để xuất trang browser độc lập — không cần dev server. Các review flag --diff [ref], --plan-review, và --recap [timeframe] YÊU CẦU --html. Output lưu vào thư mục plan active ({plan_dir}/visuals/) hoặc fallback plans/visuals/.',
+    },
+
+    processFlow: [
+      { number: 1, titleEn: 'Input', titleVi: 'Đầu vào', descEn: 'A file path, or a generate flag + topic (add --html for a browser page)', descVi: 'Một file path, hoặc generate flag + topic (thêm --html để có trang browser)' },
+      { number: 2, titleEn: 'Plan Context', titleVi: 'Plan Context', descEn: 'Hook injects active plan — visuals save to {plan_dir}/visuals/ (fallback plans/visuals/)', descVi: 'Hook inject plan active — visuals lưu vào {plan_dir}/visuals/ (fallback plans/visuals/)' },
+      { number: 3, titleEn: 'Route', titleVi: 'Định tuyến', descEn: 'Path → file preview/walkthrough · Topic → pick explain/diagram/slides/ascii', descVi: 'Path → file preview/walkthrough · Topic → chọn explain/diagram/slides/ascii' },
+      { number: 4, titleEn: 'Generate', titleVi: 'Tạo', descEn: 'Build prose + ASCII + Mermaid (mermaidjs-v11 syntax); tech-graph for publish-grade SVG/PNG', descVi: 'Dựng prose + ASCII + Mermaid (cú pháp mermaidjs-v11); tech-graph cho SVG/PNG cấp publish' },
+      { number: 5, titleEn: 'Output', titleVi: 'Kết quả', descEn: 'Markdown auto-opens in browser (Mermaid live) · --html = self-contained shareable page', descVi: 'Markdown tự mở trên browser (Mermaid live) · --html = trang độc lập dễ chia sẻ' },
+    ],
+
+    corePrinciplesEn: [
+      'Read/visualize only — never modifies code',
+      '--html is self-contained — opens in any browser, no server',
+      'Markdown mode renders Mermaid live via markdown-novel-viewer',
+      'Visuals colocate with the active plan folder',
+      'Pairs with ck:mermaidjs-v11 (syntax) and ck:tech-graph (publish-grade)',
+    ],
+    corePrinciplesVi: [
+      'Chỉ đọc/trực quan hóa — không sửa code',
+      '--html độc lập — mở trên mọi browser, không cần server',
+      'Markdown mode render Mermaid trực tiếp qua markdown-novel-viewer',
+      'Visuals nằm cùng thư mục plan active',
+      'Kết hợp ck:mermaidjs-v11 (cú pháp) và ck:tech-graph (cấp publish)',
+    ],
+
+    expertiseAreasEn: [
+      'Code walkthroughs & file previews',
+      'Architecture & data-flow diagrams',
+      'Step-by-step slide decks',
+      'Visual diff & plan-vs-codebase review',
+      'Project recap / context snapshots',
+    ],
+    expertiseAreasVi: [
+      'Code walkthrough & xem file',
+      'Sơ đồ kiến trúc & data-flow',
+      'Slide deck từng bước',
+      'Visual diff & so sánh plan-vs-codebase',
+      'Recap project / snapshot context',
+    ],
+
+    workflowModes: [
+      { flag: '--explain', modeEn: 'Visual explanation of code or a concept — narrative + ASCII + Mermaid diagrams', modeVi: 'Giải thích trực quan code hoặc concept — narrative + ASCII + sơ đồ Mermaid', research: '', redTeam: '', validation: '' },
+      { flag: '--diagram', modeEn: 'Architecture and data-flow diagrams', modeVi: 'Sơ đồ kiến trúc và data-flow', research: '', redTeam: '', validation: '' },
+      { flag: '--slides', modeEn: 'Step-by-step walkthrough as a slide deck', modeVi: 'Walkthrough từng bước dạng slide deck', research: '', redTeam: '', validation: '' },
+      { flag: '--ascii', modeEn: 'Terminal-friendly ASCII diagram (no browser needed)', modeVi: 'Sơ đồ ASCII thân thiện terminal (không cần browser)', research: '', redTeam: '', validation: '' },
+      { flag: '--html', modeEn: 'Self-contained HTML page — composes with any generate flag, opens directly in browser', modeVi: 'Trang HTML độc lập — kết hợp với mọi generate flag, mở thẳng trên browser', research: '', redTeam: '', validation: '' },
+      { flag: '--diff [ref]', modeEn: 'Visual diff review of changes (requires --html)', modeVi: 'Review diff trực quan các thay đổi (yêu cầu --html)', research: '', redTeam: '', validation: '' },
+      { flag: '--plan-review', modeEn: 'Compare a plan against the actual codebase (requires --html)', modeVi: 'So sánh plan với codebase thực tế (yêu cầu --html)', research: '', redTeam: '', validation: '' },
+      { flag: '--recap [timeframe]', modeEn: 'Project context snapshot over a timeframe (requires --html)', modeVi: 'Snapshot context project theo khoảng thời gian (yêu cầu --html)', research: '', redTeam: '', validation: '' },
+    ],
+
+    composableFlagsEn: '--html composes with any generate flag (--explain / --diagram / --slides / --ascii) for a self-contained browser page. The review flags --diff / --plan-review / --recap require --html.',
+    composableFlagsVi: '--html kết hợp với mọi generate flag (--explain / --diagram / --slides / --ascii) để có trang browser độc lập. Các review flag --diff / --plan-review / --recap yêu cầu --html.',
+
+    skillStack: [
+      { name: 'ck:mermaidjs-v11', type: 'skill' },
+      { name: 'ck:markdown-novel-viewer', type: 'skill' },
+      { name: 'ck:tech-graph', type: 'skill' },
+      { name: 'ck:ai-multimodal', type: 'skill' },
+      { name: 'Mermaid', type: 'tool' },
+    ],
+
+    reportOutput: {
+      titleEn: 'Visual Output',
+      titleVi: 'Output Trực Quan',
+      patternEn: '{slug}.md (browser) · {slug}.html (self-contained)',
+      patternVi: '{slug}.md (browser) · {slug}.html (độc lập)',
+      locationEn: 'Active plan: {plan_dir}/visuals/  •  Fallback: plans/visuals/',
+      locationVi: 'Plan active: {plan_dir}/visuals/  •  Fallback: plans/visuals/',
+      descEn: 'Explanation / diagram / slides / ascii • Markdown auto-opens with live Mermaid • --html is shareable with no server • Diff / plan-review / recap produce review-grade visuals',
+      descVi: 'Giải thích / sơ đồ / slides / ascii • Markdown tự mở với Mermaid live • --html dễ chia sẻ, không cần server • Diff / plan-review / recap tạo visual cấp review',
+    },
+
+    deepDiveLink: {
+      hrefEn: '/guides/commands',
+      hrefVi: '/vi/guides/commands',
+      labelEn: 'See all ClaudeKit commands',
+      labelVi: 'Xem tất cả lệnh ClaudeKit',
     },
   },
 ];

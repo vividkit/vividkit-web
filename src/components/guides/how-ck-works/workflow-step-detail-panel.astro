@@ -138,4 +138,19 @@ const isVi = currentLang === 'vi';
   :global(.dark) .explain-content strong {
     color: rgba(255, 255, 255, 0.8);
   }
+  :global(.explain-inline-code) {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.85em;
+    padding: 0.1em 0.4em;
+    border-radius: 0.3rem;
+    background: rgb(241 245 249);
+    color: rgb(126 34 206);
+    border: 1px solid rgb(226 232 240);
+    white-space: nowrap;
+  }
+  :global(.dark .explain-inline-code) {
+    background: rgba(30, 41, 59, 0.9);
+    color: rgb(192 132 252);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
 </style>

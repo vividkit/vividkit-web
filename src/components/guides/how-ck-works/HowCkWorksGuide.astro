@@ -52,6 +52,8 @@ const getCommandNavItem = (id: string) => {
   window.__formatExplain = function(text) {
     if (!text) return '';
     var esc = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    // Inline code: wrap `…` segments in <code>. Skip if pair crosses a newline.
+    esc = esc.replace(/`([^`\n]+?)`/g, '<code class="explain-inline-code">$1</code>');
     var paragraphs = esc.split(/\n\n+/);
     return paragraphs.map(function(p) {
       var lines = p.split(/\n/);
@@ -541,7 +543,7 @@ const getCommandNavItem = (id: string) => {
     <div class="rounded-xl border border-blue-200 dark:border-blue-500/20 bg-blue-50/50 dark:bg-blue-500/5 p-6">
       <div id="ck-brainstorm" tabindex="-1" class="scroll-mt-24 focus:outline-none" x-show="selectedScenario === 'brainstorm'">
         <WorkflowSkillInfographic scenarioId="brainstorm" lang={currentLang} />
-        <WorkflowCommandNav previous={getCommandNavItem('fix')} next={getCommandNavItem('plan')} lang={currentLang} />
+        <WorkflowCommandNav previous={getCommandNavItem('preview')} next={getCommandNavItem('plan')} lang={currentLang} />
       </div>
       <div id="ck-plan" tabindex="-1" class="scroll-mt-24 focus:outline-none" x-show="selectedScenario === 'plan'">
         <WorkflowSkillInfographic scenarioId="plan" lang={currentLang} />
@@ -553,7 +555,15 @@ const getCommandNavItem = (id: string) => {
       </div>
       <div id="ck-fix" tabindex="-1" class="scroll-mt-24 focus:outline-none" x-show="selectedScenario === 'fix'">
         <WorkflowSkillInfographic scenarioId="fix" lang={currentLang} />
-        <WorkflowCommandNav previous={getCommandNavItem('cook')} next={getCommandNavItem('brainstorm')} lang={currentLang} />
+        <WorkflowCommandNav previous={getCommandNavItem('cook')} next={getCommandNavItem('team')} lang={currentLang} />
+      </div>
+      <div id="ck-team" tabindex="-1" class="scroll-mt-24 focus:outline-none" x-show="selectedScenario === 'team'">
+        <WorkflowSkillInfographic scenarioId="team" lang={currentLang} />
+        <WorkflowCommandNav previous={getCommandNavItem('fix')} next={getCommandNavItem('preview')} lang={currentLang} />
+      </div>
+      <div id="ck-preview" tabindex="-1" class="scroll-mt-24 focus:outline-none" x-show="selectedScenario === 'preview'">
+        <WorkflowSkillInfographic scenarioId="preview" lang={currentLang} />
+        <WorkflowCommandNav previous={getCommandNavItem('team')} next={getCommandNavItem('brainstorm')} lang={currentLang} />
       </div>
     </div>
   </section>
