@@ -269,6 +269,7 @@ export const deals = {
   'deals.raffle.draw_final_revealed': 'The final draw is fully revealed. The Lucky Draw campaign has ended.',
   'deals.raffle.check_results': 'Check your result',
   'deals.raffle.check_results_desc': 'If your name is in the winner list, sign in with GitHub to open the claim screen.',
+  'deals.raffle.final_claim_window_desc': 'Winners can still sign in and claim within 24h from their reveal time.',
   'deals.raffle.winner': 'You won a Claude Team plan seat.',
   'deals.raffle.before_start': 'Registration is not open yet.',
   'deals.raffle.registration_not_open': 'Wait for registration',

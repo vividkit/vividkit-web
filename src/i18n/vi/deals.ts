@@ -269,6 +269,7 @@ export const deals = {
   'deals.raffle.draw_final_revealed': 'Draw cuối đã công bố đủ kết quả. Lucky Draw campaign đã kết thúc.',
   'deals.raffle.check_results': 'Kiểm tra kết quả của bạn',
   'deals.raffle.check_results_desc': 'Nếu tên bạn nằm trong danh sách winner, đăng nhập GitHub để hiện màn hình claim.',
+  'deals.raffle.final_claim_window_desc': 'Winner vẫn đăng nhập và claim được trong 24h kể từ lúc tên được reveal.',
   'deals.raffle.winner': 'Bạn đã trúng một seat Claude Team plan.',
   'deals.raffle.before_start': 'Đăng ký chưa mở.',
   'deals.raffle.registration_not_open': 'Đợi mở đăng ký',
