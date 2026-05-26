@@ -37,6 +37,7 @@ const isDev = import.meta.env.DEV;
   data-label-reveal-progress={t('deals.raffle.countdown_reveal_progress')}
   data-label-reveal-status={t('deals.raffle.reveal_status')}
   data-label-reveal-complete={t('deals.raffle.reveal_complete')}
+  data-label-campaign-ended={t('deals.raffle.countdown_ended')}
   data-msg-order-boost-verified={t('deals.raffle.order_boost_verified')}
   data-msg-order-boost-normal={t('deals.raffle.order_boost_normal')}
   data-msg-order-boost-need-ref={t('deals.raffle.order_boost_need_ref')}
@@ -153,7 +154,8 @@ const isDev = import.meta.env.DEV;
     <div x-show="state === 'draw_pending'" x-cloak class="space-y-3">
       <p x-show="!hasRevealedResults()" x-cloak class="text-sm font-semibold text-slate-700 dark:text-slate-200">{t('deals.raffle.draw_pending')}</p>
       <p x-show="hasRevealedResults() && !hasFullyRevealedResults()" x-cloak class="text-sm font-semibold text-slate-700 dark:text-slate-200">{t('deals.raffle.draw_revealing')}</p>
-      <p x-show="hasFullyRevealedResults()" x-cloak class="text-sm font-semibold text-slate-700 dark:text-slate-200">{t('deals.raffle.draw_revealed')}</p>
+      <p x-show="hasFullyRevealedResults() && !isFinalCampaignComplete()" x-cloak class="text-sm font-semibold text-slate-700 dark:text-slate-200">{t('deals.raffle.draw_revealed')}</p>
+      <p x-show="hasFullyRevealedResults() && isFinalCampaignComplete()" x-cloak class="text-sm font-semibold text-slate-700 dark:text-slate-200">{t('deals.raffle.draw_final_revealed')}</p>
       <div x-show="publicResults.length && !currentUsername" x-cloak class="space-y-3 rounded-xl border border-emerald-200 bg-emerald-50/70 p-4 dark:border-emerald-500/20 dark:bg-emerald-500/10">
         <p class="text-sm font-semibold text-emerald-900 dark:text-emerald-100">{t('deals.raffle.check_results_desc')}</p>
         <button type="button" x-on:click="startStatusCheck()" class="inline-flex min-h-11 items-center justify-center rounded-xl bg-emerald-600 px-4 py-2 text-sm font-bold text-white shadow-lg shadow-emerald-900/15 transition hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-300 dark:focus-visible:ring-emerald-800">
@@ -253,7 +255,8 @@ const isDev = import.meta.env.DEV;
         {t('deals.raffle.registration_not_open')}
       </button>
     </div>
-    <p x-show="state === 'closed'" x-cloak class="text-sm font-semibold text-slate-700 dark:text-slate-200">{t('deals.raffle.ended')}</p>
+    <p x-show="state === 'closed' && !hasFullyRevealedResults()" x-cloak class="text-sm font-semibold text-slate-700 dark:text-slate-200">{t('deals.raffle.ended')}</p>
+    <p x-show="state === 'closed' && hasFullyRevealedResults()" x-cloak class="text-sm font-semibold text-slate-700 dark:text-slate-200">{t('deals.raffle.draw_final_revealed')}</p>
 
     <div x-show="state === 'error'" x-cloak class="space-y-3">
       <p class="text-sm font-semibold text-rose-700 dark:text-rose-300" x-text="errorMessage || MSG_ERROR"></p>
