@@ -176,6 +176,11 @@ const getVariantNote = (cmd: CommandItem) => {
                   <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
                     {getVariantLabel(cmd)}
                   </p>
+                  {getVariantNote(cmd) && (
+                    <p class="text-[10px] leading-snug text-slate-500 dark:text-slate-400">
+                      {getVariantNote(cmd)}
+                    </p>
+                  )}
                   <div class="flex flex-wrap gap-1">
                     {cmd.subcommands.map((sub: string) => (
                       <code class="text-[9px] px-1 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-mono">
@@ -183,11 +188,6 @@ const getVariantNote = (cmd: CommandItem) => {
                       </code>
                     ))}
                   </div>
-                  {getVariantNote(cmd) && (
-                    <p class="text-[10px] leading-snug text-slate-500 dark:text-slate-400">
-                      {getVariantNote(cmd)}
-                    </p>
-                  )}
                 </div>
               )}
               {/* Arguments (space-separated) */}
@@ -331,6 +331,11 @@ const getVariantNote = (cmd: CommandItem) => {
                   <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
                     {getVariantLabel(cmd)}
                   </p>
+                  {getVariantNote(cmd) && (
+                    <p class="text-[10px] leading-snug text-slate-500 dark:text-slate-400">
+                      {getVariantNote(cmd)}
+                    </p>
+                  )}
                   <div class="flex flex-wrap gap-1">
                     {cmd.subcommands.map((sub: string) => (
                       <code class="text-[9px] px-1 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-mono">
@@ -338,11 +343,6 @@ const getVariantNote = (cmd: CommandItem) => {
                       </code>
                     ))}
                   </div>
-                  {getVariantNote(cmd) && (
-                    <p class="text-[10px] leading-snug text-slate-500 dark:text-slate-400">
-                      {getVariantNote(cmd)}
-                    </p>
-                  )}
                 </div>
               )}
               {/* Arguments (space-separated) */}
