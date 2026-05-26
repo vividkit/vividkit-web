@@ -224,6 +224,15 @@ const HeadingTag = isPageHeading ? 'h1' : 'h2';
       return;
     }
 
+    if (countdownMode === 'ended') {
+      if (isPostRevealComplete) {
+        appendText(drawTime, `${scheduleSummary?.dataset.labelTodayRevealed || ''} `);
+      }
+      appendText(drawTime, `${scheduleSummary?.dataset.labelEnded || ''}: `);
+      appendTimeCode(drawTime, value);
+      return;
+    }
+
     if (!isPostRevealComplete) {
       appendText(drawTime, value);
       return;
@@ -245,7 +254,9 @@ const HeadingTag = isPageHeading ? 'h1' : 'h2';
       return;
     }
     if (isPostRevealComplete) {
-      countdown.textContent = scheduleSummary.dataset.labelTodayEnded || scheduleSummary.dataset.labelEnded || '--';
+      countdown.textContent = countdownMode === 'ended'
+        ? scheduleSummary.dataset.labelEnded || scheduleSummary.dataset.labelTodayEnded || '--'
+        : scheduleSummary.dataset.labelTodayEnded || scheduleSummary.dataset.labelEnded || '--';
       return;
     }
     const target = new Date(countdownTargetAt).getTime();
@@ -297,11 +308,16 @@ const HeadingTag = isPageHeading ? 'h1' : 'h2';
     revealResultCount = resultCount;
     revealExpectedCount = 0;
     const drawDate = config.draw_at ? new Date(config.draw_at) : null;
+    const expectedResults = resolveExpectedResults(config, resultCount, poolCount);
+    revealExpectedCount = expectedResults;
+    if (config.phase === 'inactive') {
+      countdownMode = 'ended';
+      isPostRevealComplete = expectedResults > 0 && resultCount > 0 && resultCount >= expectedResults;
+      return config.ends_at || config.draw_at || '';
+    }
     if (!drawDate || Number.isNaN(drawDate.getTime())) return '';
     if (config.phase === 'draw_ready' || config.phase === 'reveal_ready') {
-      const expectedResults = resolveExpectedResults(config, resultCount, poolCount);
-      revealExpectedCount = expectedResults;
-      if (resultCount > 0 && resultCount >= expectedResults) {
+      if (expectedResults > 0 && resultCount > 0 && resultCount >= expectedResults) {
         const nextDrawDate = new Date(drawDate.getTime() + 24 * 60 * 60 * 1000);
         const endsAt = config.ends_at ? new Date(config.ends_at).getTime() : Number.POSITIVE_INFINITY;
         if (nextDrawDate.getTime() < endsAt) {
@@ -309,6 +325,9 @@ const HeadingTag = isPageHeading ? 'h1' : 'h2';
           countdownMode = 'next_draw';
           return nextDrawDate.toISOString();
         }
+        isPostRevealComplete = true;
+        countdownMode = 'ended';
+        return config.ends_at || config.draw_at || '';
       }
       if (Date.now() >= drawDate.getTime() && expectedResults > 0) {
         countdownMode = 'reveal';

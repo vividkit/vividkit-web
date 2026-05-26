@@ -227,9 +227,9 @@ const flagCards = isVi
       {
         command: '--tdd',
         title: 'Tests-first mỗi phase',
-        desc: 'Plan phải chỉ rõ test trước khi triển khai từng phase.',
+        desc: 'Composable flag: thêm cấu trúc tests-first vào từng phase.',
         example: '/ck:plan --deep --tdd Refactor billing module',
-        note: 'Hợp với refactor rủi ro cao, nơi test contract phải được nghĩ trước code.',
+        note: '--deep --tdd là combo chính cho major refactor hoặc logic có contract quan trọng.',
       },
       {
         command: '--no-tasks',
@@ -238,21 +238,14 @@ const flagCards = isVi
         example: '/ck:plan --fast --no-tasks Cập nhật copy trang guide',
         note: 'Hợp với plan nhỏ hoặc docs-only, khi chưa muốn sinh task phụ.',
       },
-      {
-        command: '--parallel --tdd',
-        title: 'Song song nhưng vẫn test-first',
-        desc: 'Chia lane độc lập, nhưng mỗi lane vẫn phải có test gate rõ.',
-        example: '/ck:plan --parallel --tdd Tách dashboard API và chart rendering',
-        note: 'Dùng khi nhiều người/agent có thể làm song song mà vẫn cần guardrail test.',
-      },
     ]
   : [
       {
         command: '--tdd',
         title: 'Tests-first per phase',
-        desc: 'The plan must define tests before implementing each phase.',
+        desc: 'Composable flag: adds tests-first structure to each phase.',
         example: '/ck:plan --deep --tdd Refactor the billing module',
-        note: 'Best for risky refactors where contract tests need to come before code.',
+        note: '--deep --tdd is the main combo for major refactors or logic with important contracts.',
       },
       {
         command: '--no-tasks',
@@ -261,18 +254,50 @@ const flagCards = isVi
         example: '/ck:plan --fast --no-tasks Update guide copy',
         note: 'Best for small or docs-only plans where extra task creation is not needed yet.',
       },
+    ];
+const tddCombos = isVi
+  ? [
+      {
+        command: '--hard --tdd',
+        title: 'Complex, cần research',
+        note: 'Khi task phức tạp nhưng chưa phải major refactor nhiều area.',
+      },
+      {
+        command: '--deep --tdd',
+        title: 'Recommended cho risky refactor',
+        note: 'Dùng khi refactor lớn, 5+ areas, architectural debt, hoặc cần per-phase scouting.',
+        recommended: true,
+      },
       {
         command: '--parallel --tdd',
-        title: 'Parallel, still tests-first',
-        desc: 'Split independent lanes while keeping explicit test gates per lane.',
-        example: '/ck:plan --parallel --tdd Split dashboard API and chart rendering work',
-        note: 'Use when multiple people or agents can work in parallel but tests remain the guardrail.',
+        title: 'Niche: song song + tests-first',
+        note: 'Chỉ dùng khi có nhiều workstream độc lập và mỗi lane vẫn cần test gate.',
+      },
+    ]
+  : [
+      {
+        command: '--hard --tdd',
+        title: 'Complex, needs research',
+        note: 'Use when the task is complex but not a major multi-area refactor.',
+      },
+      {
+        command: '--deep --tdd',
+        title: 'Recommended for risky refactors',
+        note: 'Use for large refactors, 5+ areas, architectural debt, or per-phase scouting.',
+        recommended: true,
+      },
+      {
+        command: '--parallel --tdd',
+        title: 'Niche: parallel + tests-first',
+        note: 'Use only when independent workstreams can run in parallel and each lane still needs test gates.',
       },
     ];
 const outputItems = (isVi ? data.reportOutput?.descVi : data.reportOutput?.descEn)
   ?.split('•')
   .map(item => item.trim())
   .filter(Boolean) || [];
+const outputPattern = isVi ? data.reportOutput?.patternVi : data.reportOutput?.patternEn;
+const outputLocation = isVi ? data.reportOutput?.locationVi : data.reportOutput?.locationEn;
 const stackPreview = data.skillStack?.slice(0, 9) || [];
 
 const renderInlineCode = (value = '') => value
@@ -486,22 +511,54 @@ const renderInlineCode = (value = '') => value
             </div>
           ))}
         </div>
+        <div class="mt-4 rounded-xl border border-violet-200 bg-violet-50/65 p-4 dark:border-violet-800/45 dark:bg-violet-950/15">
+          <div class="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p class="text-[10px] font-semibold uppercase tracking-wide text-violet-700 dark:text-violet-300">{isVi ? 'Compose với mode' : 'Compose With Modes'}</p>
+              <p class="mt-1 text-xs leading-5 text-slate-650 dark:text-slate-300">
+                {isVi
+                  ? '--tdd kết hợp được với mọi mode, nhưng chọn mode theo scope trước.'
+                  : '--tdd can combine with any mode, but pick the mode from scope first.'}
+              </p>
+            </div>
+          </div>
+          <div class="mt-3 grid gap-2 lg:grid-cols-3">
+            {tddCombos.map(combo => (
+              <div class={`rounded-lg border p-3 ${combo.recommended ? 'border-violet-300 bg-white ring-1 ring-violet-200 dark:border-violet-700/60 dark:bg-violet-950/25 dark:ring-violet-800/40' : 'border-violet-200/70 bg-white/70 dark:border-violet-800/40 dark:bg-slate-950/30'}`}>
+                <div class="flex flex-wrap items-center gap-2">
+                  <code class="rounded-lg bg-slate-100 px-2 py-1 font-mono text-xs font-semibold text-violet-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-violet-200 dark:ring-white/10">{combo.command}</code>
+                  {combo.recommended && <span class="rounded-full bg-violet-600 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white dark:bg-violet-400 dark:text-violet-950">Recommended</span>}
+                </div>
+                <p class="mt-2 text-sm font-semibold leading-5 text-slate-900 dark:text-white">{combo.title}</p>
+                <p class="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-400">{combo.note}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     )}
 
-    <aside class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_330px]">
-      <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-white/10 dark:bg-slate-950/45">
+    <aside class="space-y-5">
+      <article class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-white/10 dark:bg-slate-950/45">
         <div class="border-b border-slate-200 p-5 dark:border-white/10">
-          <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.output}</h3>
-          <p class="mt-3 text-sm font-semibold leading-5 text-slate-900 dark:text-white">{isVi ? data.reportOutput?.titleVi : data.reportOutput?.titleEn}</p>
-          <code class="mt-3 block whitespace-normal break-words rounded-lg bg-slate-100 px-3 py-2 font-mono text-xs leading-5 text-slate-700 ring-1 ring-slate-200 dark:bg-white/[0.06] dark:text-slate-300 dark:ring-white/10">{isVi ? data.reportOutput?.patternVi : data.reportOutput?.patternEn}</code>
+          <div class="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+            <div class="min-w-0">
+              <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.output}</h3>
+              <p class="mt-3 text-base font-semibold leading-6 text-slate-900 dark:text-white">{isVi ? data.reportOutput?.titleVi : data.reportOutput?.titleEn}</p>
+            </div>
+            {outputLocation && <span class="inline-flex w-fit max-w-full break-words rounded-full bg-emerald-50 px-3 py-1 text-left text-[11px] font-semibold leading-5 text-emerald-700 ring-1 ring-emerald-200 dark:bg-emerald-950/30 dark:text-emerald-200 dark:ring-emerald-800/50">{outputLocation}</span>}
+          </div>
+          {outputPattern && <code class="mt-4 block whitespace-normal break-words rounded-xl bg-slate-100 px-4 py-3 font-mono text-sm leading-6 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-slate-200 dark:ring-white/10">{outputPattern}</code>}
         </div>
-        <div class="grid divide-y divide-slate-200 dark:divide-white/10">
-          {outputItems.map(item => (
-            <p class="px-5 py-3 text-xs leading-5 text-slate-600 dark:text-slate-400">{item}</p>
+        <div class="grid gap-3 p-5 md:grid-cols-2">
+          {outputItems.map((item, index) => (
+            <div class="grid grid-cols-[2rem_minmax(0,1fr)] gap-3 rounded-xl border border-slate-200 bg-slate-50/75 p-3 dark:border-white/10 dark:bg-white/[0.035]">
+              <span class="flex h-8 w-8 items-center justify-center rounded-full bg-white font-mono text-[11px] font-semibold text-slate-600 ring-1 ring-slate-200 dark:bg-slate-950/65 dark:text-slate-300 dark:ring-white/10">{index + 1}</span>
+              <p class="text-sm leading-6 text-slate-650 dark:text-slate-300">{item}</p>
+            </div>
           ))}
         </div>
-      </div>
+      </article>
 
       <div class="rounded-2xl border border-slate-200 bg-slate-50/80 p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.03]">
         <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.stack}</h3>

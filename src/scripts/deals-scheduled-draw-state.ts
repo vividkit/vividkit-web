@@ -125,6 +125,16 @@ function resolveNextRevealAt(schedule: any, resultCount: number, expectedCount: 
   return new Date(nextRevealAt).toISOString();
 }
 
+function isExpiredFulfillmentStatus(status: string | undefined): boolean {
+  const normalized = String(status || '').toLowerCase();
+  return normalized === 'rolled_over' || normalized === 'expired_rollover_pending';
+}
+
+function isClaimWindowExpired(winner: any): boolean {
+  const deadline = winner?.claim_deadline_at ? new Date(winner.claim_deadline_at) : null;
+  return Boolean(deadline && !Number.isNaN(deadline.getTime()) && Date.now() > deadline.getTime());
+}
+
 export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
   if ((activeAlpine as any).__dealScheduledDrawRegistered) return;
   (activeAlpine as any).__dealScheduledDrawRegistered = true;
@@ -151,6 +161,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
     LABEL_REVEAL_PROGRESS: '',
     LABEL_REVEAL_STATUS: '',
     LABEL_REVEAL_COMPLETE: '',
+    LABEL_CAMPAIGN_ENDED: '',
     MSG_ORDER_BOOST_VERIFIED: '',
     MSG_ORDER_BOOST_NORMAL: '',
     MSG_ORDER_BOOST_NEED_REF: '',
@@ -205,6 +216,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       this.LABEL_REVEAL_PROGRESS = el?.dataset.labelRevealProgress || '';
       this.LABEL_REVEAL_STATUS = el?.dataset.labelRevealStatus || '';
       this.LABEL_REVEAL_COMPLETE = el?.dataset.labelRevealComplete || '';
+      this.LABEL_CAMPAIGN_ENDED = el?.dataset.labelCampaignEnded || this.LABEL_REVEAL_COMPLETE;
       this.MSG_ORDER_BOOST_VERIFIED = el?.dataset.msgOrderBoostVerified || '';
       this.MSG_ORDER_BOOST_NORMAL = el?.dataset.msgOrderBoostNormal || '';
       this.MSG_ORDER_BOOST_NEED_REF = el?.dataset.msgOrderBoostNeedRef || '';
@@ -316,8 +328,16 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
 
     latestRevealedResult() {
       if (!this.publicResults.length) return null;
-      if (this.hasFullyRevealedResults()) return null;
       return this.publicResults[this.publicResults.length - 1] || null;
+    },
+
+    isFinalCampaignComplete() {
+      if (!this.hasFullyRevealedResults()) return false;
+      if (this.schedule?.phase === 'inactive' || this.schedule?.active === false) return true;
+      const drawDate = this.schedule?.draw_at ? new Date(this.schedule.draw_at) : null;
+      const endsAt = this.schedule?.ends_at ? new Date(this.schedule.ends_at) : null;
+      if (!drawDate || !endsAt || Number.isNaN(drawDate.getTime()) || Number.isNaN(endsAt.getTime())) return false;
+      return drawDate.getTime() + 24 * 60 * 60 * 1000 >= endsAt.getTime();
     },
 
     latestRevealLabel() {
@@ -346,6 +366,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
     },
 
     latestRevealMetaText() {
+      if (this.isFinalCampaignComplete()) return this.LABEL_CAMPAIGN_ENDED;
       return this.hasFullyRevealedResults() ? this.LABEL_REVEAL_COMPLETE : this.nextRevealText();
     },
 
@@ -367,7 +388,8 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
     },
 
     latestRevealSummary() {
-      const result = this.state === 'draw_pending' ? this.latestRevealedResult() : null;
+      const shouldShowReveal = this.state === 'draw_pending' || this.hasFullyRevealedResults();
+      const result = shouldShowReveal ? this.latestRevealedResult() : null;
       if (!result) return { visible: false };
       return {
         visible: true,
@@ -554,6 +576,10 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
     },
 
     startClaimPrize() {
+      if (isClaimWindowExpired(this.privateWinner)) {
+        this.state = 'claim_expired';
+        return;
+      }
       this.state = 'claiming_prize';
       this.startProtectedAction('raffle_claim_prize');
     },
@@ -688,7 +714,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       this.declineBlocked = Boolean(data.decline_blocked);
       if (this.proof) this.state = 'proof_ready';
       else if (this.privateWinner?.fulfillment_status === 'declined') this.state = 'prize_declined';
-      else if (this.privateWinner?.fulfillment_status === 'rolled_over') this.state = 'claim_expired';
+      else if (isExpiredFulfillmentStatus(this.privateWinner?.fulfillment_status) || isClaimWindowExpired(this.privateWinner)) this.state = 'claim_expired';
       else if (this.privateWinner) this.state = 'winner_revealed';
       else if (this.declineBlocked) this.state = 'decline_blocked';
       else if (data.phase === 'before_open') this.state = 'before_open';

@@ -11,6 +11,7 @@ import WorkflowViewToggle from './workflow-view-toggle.astro';
 import WorkflowComboGrid from './workflow-combo-grid.astro';
 import WorkflowComboPipeline from './workflow-combo-pipeline.astro';
 import WorkflowSkillInfographic from './workflow-skill-infographic.astro';
+import WorkflowCommandNav from './workflow-command-nav.astro';
 
 interface Props {
   lang?: Language;
@@ -26,6 +27,18 @@ const typeColorsJson = JSON.stringify(stepTypeColors);
 const combosJson = JSON.stringify(workflowCombos);
 // List of scenario IDs that have infographics available
 const infographicIdsJson = JSON.stringify(workflowScenarios.filter(s => hasInfographic(s.id)).map(s => s.id));
+const getCommandNavItem = (id: string) => {
+  const scenario = workflowScenarios.find(s => s.id === id);
+  if (!scenario) throw new Error(`Missing workflow scenario for ${id}`);
+  return {
+    id: scenario.id,
+    command: scenario.command,
+    titleEn: scenario.titleEn,
+    titleVi: scenario.titleVi,
+    descEn: scenario.descEn,
+    descVi: scenario.descVi,
+  };
+};
 ---
 
 {/* Inject data BEFORE Alpine processes x-data — avoids HTML entity escaping issue */}
@@ -69,7 +82,7 @@ const infographicIdsJson = JSON.stringify(workflowScenarios.filter(s => hasInfog
   x-data="{
     viewType: 'individual',
     activeKit: 'engineer',
-    selectedScenario: 'fix',
+    selectedScenario: 'brainstorm',
     isVi: false,
 
     // Individual scenario playback
@@ -85,7 +98,7 @@ const infographicIdsJson = JSON.stringify(workflowScenarios.filter(s => hasInfog
     comboPlayInterval: null,
 
     // Quick Ref expandable state
-    showQuickRef: false,
+    showQuickRef: true,
 
     // Data stores
     scenarios: [],
@@ -93,6 +106,7 @@ const infographicIdsJson = JSON.stringify(workflowScenarios.filter(s => hasInfog
     combos: [],
     infographicIds: [],
     hashChangeHandler: null,
+    preferredHashAnchor: null,
     colorMap: {
       purple: { iconBg: 'bg-purple-500/10', iconText: 'text-purple-400', ring: 'ring-purple-500/50' },
       blue:   { iconBg: 'bg-blue-500/10',   iconText: 'text-blue-400',   ring: 'ring-blue-500/50' },
@@ -121,7 +135,13 @@ const infographicIdsJson = JSON.stringify(workflowScenarios.filter(s => hasInfog
       this.infographicIds = window.__wfInfographicIds || [];
       this.isVi = window.__wfIsVi || false;
 
-      this.syncScenarioFromHash({ behavior: 'auto' });
+      const hadHash = Boolean(window.location.hash);
+      const syncedFromHash = this.syncScenarioFromHash({ behavior: 'auto' });
+      if (!syncedFromHash && !hadHash) {
+        this.preferredHashAnchor = 'ck-brainstorm';
+        window.history.replaceState(null, '', '#ck-brainstorm');
+        this.syncScenarioFromHash({ behavior: 'auto', preferScenarioAnchor: true });
+      }
       this.hashChangeHandler = () => this.syncScenarioFromHash({ behavior: 'smooth' });
       window.addEventListener('hashchange', this.hashChangeHandler);
     },
@@ -141,7 +161,7 @@ const infographicIdsJson = JSON.stringify(workflowScenarios.filter(s => hasInfog
       window.location.hash = hash;
     },
 
-    syncScenarioFromHash({ behavior = 'smooth' } = {}) {
+    syncScenarioFromHash({ behavior = 'smooth', preferScenarioAnchor = false } = {}) {
       const hash = window.location.hash.replace('#', '');
       if (!hash.startsWith('ck-')) return false;
 
@@ -160,7 +180,10 @@ const infographicIdsJson = JSON.stringify(workflowScenarios.filter(s => hasInfog
       this.$nextTick(() => {
         window.requestAnimationFrame(() => {
           const scrollToTarget = () => {
-            const el = document.getElementById('workflow-selected-scenario') || document.getElementById(hash);
+            const shouldPreferScenarioAnchor = preferScenarioAnchor || this.preferredHashAnchor === hash;
+            const el = shouldPreferScenarioAnchor
+              ? document.getElementById(hash)
+              : document.getElementById('workflow-selected-scenario') || document.getElementById(hash);
             if (!el) return;
             el.scrollIntoView({ behavior, block: 'start' });
             el.focus({ preventScroll: true });
@@ -518,15 +541,19 @@ const infographicIdsJson = JSON.stringify(workflowScenarios.filter(s => hasInfog
     <div class="rounded-xl border border-blue-200 dark:border-blue-500/20 bg-blue-50/50 dark:bg-blue-500/5 p-6">
       <div id="ck-brainstorm" tabindex="-1" class="scroll-mt-24 focus:outline-none" x-show="selectedScenario === 'brainstorm'">
         <WorkflowSkillInfographic scenarioId="brainstorm" lang={currentLang} />
+        <WorkflowCommandNav previous={getCommandNavItem('fix')} next={getCommandNavItem('plan')} lang={currentLang} />
       </div>
       <div id="ck-plan" tabindex="-1" class="scroll-mt-24 focus:outline-none" x-show="selectedScenario === 'plan'">
         <WorkflowSkillInfographic scenarioId="plan" lang={currentLang} />
+        <WorkflowCommandNav previous={getCommandNavItem('brainstorm')} next={getCommandNavItem('cook')} lang={currentLang} />
       </div>
       <div id="ck-cook" tabindex="-1" class="scroll-mt-24 focus:outline-none" x-show="selectedScenario === 'cook'">
         <WorkflowSkillInfographic scenarioId="cook" lang={currentLang} />
+        <WorkflowCommandNav previous={getCommandNavItem('plan')} next={getCommandNavItem('fix')} lang={currentLang} />
       </div>
       <div id="ck-fix" tabindex="-1" class="scroll-mt-24 focus:outline-none" x-show="selectedScenario === 'fix'">
         <WorkflowSkillInfographic scenarioId="fix" lang={currentLang} />
+        <WorkflowCommandNav previous={getCommandNavItem('cook')} next={getCommandNavItem('brainstorm')} lang={currentLang} />
       </div>
     </div>
   </section>

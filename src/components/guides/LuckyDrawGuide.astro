@@ -22,7 +22,10 @@ const [joinRuleBeforeLink = '', joinRuleAfterLink = ''] = joinRuleDesc.split(aut
   <section
     data-raffle-hero-summary
     data-api-url={giveawayApiUrl}
+    data-label-final-days-badge={t('deals.raffle.final_days_badge_dynamic')}
+    data-label-final-day-badge={t('deals.raffle.final_day_badge')}
     data-label-final-days-desc={t('deals.raffle.final_days_desc_dynamic')}
+    data-label-final-day-desc={t('deals.raffle.final_day_desc_dynamic')}
     data-label-reveal-dynamic={t('deals.raffle.schedule_reveal_dynamic')}
     class="relative isolate w-full max-w-full overflow-hidden rounded-[1.75rem] border border-emerald-100 bg-white text-slate-950 shadow-2xl shadow-slate-950/10 dark:border-slate-800 dark:bg-slate-950 dark:text-white dark:shadow-slate-950/20"
   >
@@ -68,8 +71,8 @@ const [joinRuleBeforeLink = '', joinRuleAfterLink = ''] = joinRuleDesc.split(aut
           <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-amber-400 via-rose-400 to-cyan-300" aria-hidden="true"></div>
           <div class="flex flex-wrap items-center gap-2 pt-0.5">
             <p class="text-[0.7rem] font-black uppercase tracking-[0.16em] text-amber-800 dark:text-amber-100">{t('deals.raffle.final_days_title')}</p>
-            <span class="rounded-full bg-slate-950 px-2.5 py-1 text-[0.68rem] font-black uppercase tracking-[0.08em] text-white shadow-sm shadow-slate-950/15 dark:bg-amber-200 dark:text-slate-950">
-              {t('deals.raffle.final_days_badge')}
+            <span data-raffle-final-days-badge class="rounded-full bg-slate-950 px-2.5 py-1 text-[0.68rem] font-black uppercase tracking-[0.08em] text-white shadow-sm shadow-slate-950/15 dark:bg-amber-200 dark:text-slate-950">
+              {t('deals.raffle.final_day_badge')}
             </span>
           </div>
           <p data-raffle-final-days-desc class="mt-2 text-base font-black leading-7 text-slate-950 dark:text-white">{t('deals.raffle.final_days_desc')}</p>
@@ -142,6 +145,7 @@ const [joinRuleBeforeLink = '', joinRuleAfterLink = ''] = joinRuleDesc.split(aut
   type HeroRaffleConfig = {
     active?: boolean;
     campaign_day?: string;
+    timezone?: string;
     ends_at?: string;
     registration_open_at?: string;
     registration_cutoff_at?: string;
@@ -172,6 +176,34 @@ const [joinRuleBeforeLink = '', joinRuleAfterLink = ''] = joinRuleDesc.split(aut
     );
   };
 
+  const dayKeyToUtcMs = (dayKey: string | undefined) => {
+    if (!dayKey || !/^\d{4}-\d{2}-\d{2}$/.test(dayKey)) return Number.NaN;
+    const [year, month, day] = dayKey.split('-').map(Number);
+    return Date.UTC(year, month - 1, day);
+  };
+
+  const getZonedDayKey = (date: Date, timezone: string | undefined) => {
+    if (Number.isNaN(date.getTime())) return '';
+    const parts = new Intl.DateTimeFormat('en-US', {
+      timeZone: timezone || undefined,
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }).formatToParts(date);
+    const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+    return `${values.year}-${values.month}-${values.day}`;
+  };
+
+  const resolveFinalDaysRemaining = (config: HeroRaffleConfig, endsAtMs: number) => {
+    const finalDayKey = getZonedDayKey(new Date(endsAtMs), config.timezone);
+    const finalDayMs = dayKeyToUtcMs(finalDayKey);
+    const currentDayMs = dayKeyToUtcMs(config.campaign_day);
+    if (Number.isFinite(finalDayMs) && Number.isFinite(currentDayMs)) {
+      return Math.floor((finalDayMs - currentDayMs) / 86_400_000) + 1;
+    }
+    return Math.ceil((endsAtMs - Date.now()) / 86_400_000);
+  };
+
   const renderHeroConfig = (config: HeroRaffleConfig) => {
     if (!heroSummary) return;
     const standardSeats = Number(config.seat_budget?.standard);
@@ -198,18 +230,29 @@ const [joinRuleBeforeLink = '', joinRuleAfterLink = ''] = joinRuleDesc.split(aut
     }
 
     const endsAt = config.ends_at ? new Date(config.ends_at).getTime() : Number.NaN;
-    const msRemaining = endsAt - Date.now();
-    const daysRemaining = Math.ceil(msRemaining / 86_400_000);
+    const daysRemaining = resolveFinalDaysRemaining(config, endsAt);
     const finalDaysBanner = heroSummary.querySelector<HTMLElement>('[data-raffle-final-days-banner]');
+    const finalDaysBadge = heroSummary.querySelector<HTMLElement>('[data-raffle-final-days-badge]');
     const finalDaysDesc = heroSummary.querySelector<HTMLElement>('[data-raffle-final-days-desc]');
     if (finalDaysBanner && config.active !== false && Number.isFinite(endsAt) && daysRemaining > 0 && daysRemaining <= 2) {
       finalDaysBanner.hidden = false;
+      const values = {
+        days: daysRemaining,
+        standard: Number.isFinite(standardSeats) ? standardSeats : 5,
+        premium: Number.isFinite(premiumSeats) ? premiumSeats : 2,
+      };
+      const isFinalDay = daysRemaining <= 1;
+      if (finalDaysBadge) {
+        finalDaysBadge.textContent = replaceTokens(
+          (isFinalDay ? heroSummary.dataset.labelFinalDayBadge : heroSummary.dataset.labelFinalDaysBadge) || finalDaysBadge.textContent || '',
+          values
+        );
+      }
       if (finalDaysDesc) {
-        finalDaysDesc.textContent = replaceTokens(heroSummary.dataset.labelFinalDaysDesc || finalDaysDesc.textContent || '', {
-          days: daysRemaining,
-          standard: Number.isFinite(standardSeats) ? standardSeats : 5,
-          premium: Number.isFinite(premiumSeats) ? premiumSeats : 2,
-        });
+        finalDaysDesc.textContent = replaceTokens(
+          (isFinalDay ? heroSummary.dataset.labelFinalDayDesc : heroSummary.dataset.labelFinalDaysDesc) || finalDaysDesc.textContent || '',
+          values
+        );
       }
     } else if (finalDaysBanner && Number.isFinite(endsAt)) {
       finalDaysBanner.hidden = true;
