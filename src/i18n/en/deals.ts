@@ -266,6 +266,7 @@ export const deals = {
   'deals.raffle.draw_pending': 'Registration is closed. The backend draws at 22:00 and reveals on schedule.',
   'deals.raffle.draw_revealing': 'Today’s draw is revealing winners on schedule. Check your result if your name is already shown.',
   'deals.raffle.draw_revealed': 'Today’s draw is fully revealed. The next pool opens tomorrow.',
+  'deals.raffle.draw_final_revealed': 'The final draw is fully revealed. The Lucky Draw campaign has ended.',
   'deals.raffle.check_results': 'Check your result',
   'deals.raffle.check_results_desc': 'If your name is in the winner list, sign in with GitHub to open the claim screen.',
   'deals.raffle.winner': 'You won a Claude Team plan seat.',

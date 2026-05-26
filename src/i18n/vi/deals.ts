@@ -266,6 +266,7 @@ export const deals = {
   'deals.raffle.draw_pending': 'Đăng ký đã đóng. Hệ thống sẽ draw lúc 22:00 và công bố kết quả theo lịch.',
   'deals.raffle.draw_revealing': 'Draw hôm nay đang công bố từng winner theo lịch. Kiểm tra kết quả nếu tên bạn đã xuất hiện.',
   'deals.raffle.draw_revealed': 'Draw hôm nay đã công bố đủ kết quả. Pool mới mở lại vào ngày mai.',
+  'deals.raffle.draw_final_revealed': 'Draw cuối đã công bố đủ kết quả. Lucky Draw campaign đã kết thúc.',
   'deals.raffle.check_results': 'Kiểm tra kết quả của bạn',
   'deals.raffle.check_results_desc': 'Nếu tên bạn nằm trong danh sách winner, đăng nhập GitHub để hiện màn hình claim.',
   'deals.raffle.winner': 'Bạn đã trúng một seat Claude Team plan.',
