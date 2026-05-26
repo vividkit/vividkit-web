@@ -16,6 +16,7 @@ Reference docs for VividKit "How ClaudeKit Works" guide accuracy.
 - [ck-predict.md](ck-predict.md) — /ck:predict 5-persona impact analysis before implementation
 - [ck-bootstrap.md](ck-bootstrap.md) — /ck:bootstrap end-to-end project scaffolding (full/auto/fast/parallel)
 - [ck-security-scan.md](ck-security-scan.md) — /ck:security STRIDE + OWASP security audit with auto-fix
+- [ck-team.md](ck-team.md) — /ck:team Agent Teams multi-session orchestration (research / cook / review / debug)
 - [ckm-write.md](ckm-write.md) — /ckm:write:* creative copy & content writing (9 subcommands)
 - [ckm-design.md](ckm-design.md) — /ckm:design unified design (logo, CIP, banners, social, icons, slides)
 - [ckm-seo.md](ckm-seo.md) — /ckm:seo:* SEO audits, keyword research, pSEO, schema (5 subcommands)
