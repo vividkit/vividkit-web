@@ -125,6 +125,16 @@ function resolveNextRevealAt(schedule: any, resultCount: number, expectedCount: 
   return new Date(nextRevealAt).toISOString();
 }
 
+function isExpiredFulfillmentStatus(status: string | undefined): boolean {
+  const normalized = String(status || '').toLowerCase();
+  return normalized === 'rolled_over' || normalized === 'expired_rollover_pending';
+}
+
+function isClaimWindowExpired(winner: any): boolean {
+  const deadline = winner?.claim_deadline_at ? new Date(winner.claim_deadline_at) : null;
+  return Boolean(deadline && !Number.isNaN(deadline.getTime()) && Date.now() > deadline.getTime());
+}
+
 export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
   if ((activeAlpine as any).__dealScheduledDrawRegistered) return;
   (activeAlpine as any).__dealScheduledDrawRegistered = true;
@@ -566,6 +576,10 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
     },
 
     startClaimPrize() {
+      if (isClaimWindowExpired(this.privateWinner)) {
+        this.state = 'claim_expired';
+        return;
+      }
       this.state = 'claiming_prize';
       this.startProtectedAction('raffle_claim_prize');
     },
@@ -700,7 +714,7 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       this.declineBlocked = Boolean(data.decline_blocked);
       if (this.proof) this.state = 'proof_ready';
       else if (this.privateWinner?.fulfillment_status === 'declined') this.state = 'prize_declined';
-      else if (this.privateWinner?.fulfillment_status === 'rolled_over') this.state = 'claim_expired';
+      else if (isExpiredFulfillmentStatus(this.privateWinner?.fulfillment_status) || isClaimWindowExpired(this.privateWinner)) this.state = 'claim_expired';
       else if (this.privateWinner) this.state = 'winner_revealed';
       else if (this.declineBlocked) this.state = 'decline_blocked';
       else if (data.phase === 'before_open') this.state = 'before_open';
