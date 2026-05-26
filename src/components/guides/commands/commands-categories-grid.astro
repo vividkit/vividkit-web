@@ -17,13 +17,6 @@ const t = useTranslations(currentLang);
 
 const stableCategories = getEngineerKitCategories(t as any);
 const marketingCategories = getMarketingKitCategories(t as any);
-const engineerBetaPreviewItems: Array<{
-  cmd: string;
-  labelKey: string;
-  detailKey: string;
-  type: string;
-  badge: "new" | "enhanced" | "deprecated";
-}> = [];
 
 const getCommandDisplay = (cmd: CommandItem) => cmd.displayCommand ?? cmd.command;
 const getVariantDisplay = (cmd: CommandItem, variant: string) => {
@@ -95,7 +88,7 @@ const getVariantNote = (cmd: CommandItem) => {
     </div>
   </div>
 
-  <!-- Engineer Kit (v2.19.1 stable / v2.19.1 beta branch) categories panel -->
+  <!-- Engineer Kit (v2.19.1 stable / v2.19.1 beta in sync) categories panel -->
   <div id="categories-engineer" class="space-y-6">
     <!-- Stable version badge -->
     <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
@@ -103,7 +96,7 @@ const getVariantNote = (cmd: CommandItem) => {
         >v2.19.1 Stable</span
       >
       <span class="px-2 py-0.5 rounded-full bg-slate-200 dark:bg-slate-700/40 text-slate-500 dark:text-slate-400 font-semibold"
-        >v2.19.1 Beta branch</span
+        >v2.19.1 Beta</span
       >
       <span class="text-slate-400 dark:text-slate-500 italic">{t("commands.engineer_stable_note")}</span>
     </div>
@@ -125,26 +118,9 @@ const getVariantNote = (cmd: CommandItem) => {
         </h3>
         <p class="text-xs text-slate-500 mt-1">{t("commands.beta_preview.subtitle")}</p>
       </div>
-      {engineerBetaPreviewItems.length > 0 ? (
-        <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-          {engineerBetaPreviewItems.map((item) => (
-          <div class="p-3 rounded-lg border transition-all duration-200 hover:shadow-sm h-full flex flex-col bg-white/60 dark:bg-slate-900/50 border-purple-500/30">
-            <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
-              <div class="flex items-center gap-1.5 flex-wrap">
-                <code class="text-sm font-bold font-mono text-purple-600 dark:text-purple-400">{item.cmd}</code>
-                <span class={`text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-full ${item.badge === "new" ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400" : "bg-sky-100 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400"}`}>{item.badge}</span>
-              </div>
-            </div>
-            <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1" set:html={t(item.labelKey as any)} />
-            <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50" set:html={t(item.detailKey as any)} />
-          </div>
-          ))}
-        </div>
-      ) : (
-        <p class="p-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-          {t("commands.beta_preview.caught_up")}
-        </p>
-      )}
+      <div class="p-4">
+        <p class="text-xs text-slate-600 dark:text-slate-400 italic">{t("commands.beta_preview.caught_up")}</p>
+      </div>
     </div>
 
     <!-- Stable category cards -->

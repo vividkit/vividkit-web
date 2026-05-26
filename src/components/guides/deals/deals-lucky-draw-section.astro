@@ -279,7 +279,7 @@ const HeadingTag = isPageHeading ? 'h1' : 'h2';
   };
 
   const resolveNextRevealTarget = (drawDate: Date, config: ScheduleConfig, resultCount: number, expectedResults: number) => {
-    const intervalMs = Math.max(1, Number(config.reveal_interval_minutes || 5)) * 60 * 1000;
+    const intervalMs = Math.max(1, Number(config.reveal_interval_minutes || 2)) * 60 * 1000;
     if (Date.now() < drawDate.getTime()) return drawDate.toISOString();
 
     const nextRevealIndex = Math.min(Math.max(1, resultCount), expectedResults);
