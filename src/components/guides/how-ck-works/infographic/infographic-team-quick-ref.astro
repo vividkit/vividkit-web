@@ -1,0 +1,380 @@
+---
+// Purpose-built Quick Ref layout for /ck:team.
+// Mirrors the brainstorm/plan quick-ref structure while surfacing the 4 templates,
+// pre-flight gates, and per-template report outputs unique to Agent Teams.
+import type { SkillInfographic, ProcessFlowStep } from '@/data/guides/how-ck-works';
+import type { Language } from '@/i18n';
+
+interface Props {
+  data: SkillInfographic;
+  lang: Language;
+}
+
+type Tone = {
+  rail: string;
+  chip: string;
+  label: string;
+  surface: string;
+};
+
+interface ProcessGroup {
+  label: string;
+  kicker: string;
+  steps: ProcessFlowStep[];
+  tone: Tone;
+}
+
+const { data, lang } = Astro.props;
+const isVi = lang === 'vi';
+
+const text = {
+  eyebrow: isVi ? 'Quick Ref / Team orchestration' : 'Quick Ref / Team orchestration',
+  summary: isVi
+    ? 'Dùng khi cần spawn N teammate Claude Code song song với context window riêng — research từ nhiều góc, cook nhiều file, review nhiều focus, hoặc debug nhiều giả thuyết cạnh tranh.'
+    : 'Use it to spawn N independent Claude Code teammates in parallel — research from multiple angles, cook many files, review multiple focuses, or debug competing hypotheses.',
+  parallelOnly: isVi ? 'Parallel multi-session' : 'Parallel multi-session',
+  hardGate: isVi ? 'Hard gates (3)' : 'Hard Gates (3)',
+  hardGate1Title: isVi ? 'TeamCreate-first' : 'TeamCreate-first',
+  hardGate1Desc: isVi
+    ? 'Step 2 phải gọi TeamCreate trực tiếp. Lỗi tool → ABORT, báo user thiếu env flag. KHÔNG fallback subagent.'
+    : 'Step 2 must call TeamCreate directly. Tool error → ABORT and tell user the env flag is missing. NO subagent fallback.',
+  hardGate2Title: isVi ? 'Env + CLI lock' : 'Env + CLI lock',
+  hardGate2Desc: isVi
+    ? 'CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 trong settings.json + phải chạy CLI terminal (VSCode ext bị disable).'
+    : 'CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 in settings.json + must run in CLI terminal (VSCode ext disables it).',
+  hardGate3Title: isVi ? 'Opus 4.6 lock' : 'Opus 4.6 lock',
+  hardGate3Desc: isVi
+    ? 'Mọi teammate BẮT BUỘC chạy Opus 4.6. Không model khác.'
+    : 'Every teammate MUST run Opus 4.6. No other model allowed.',
+  process: isVi ? 'Execution map' : 'Execution Map',
+  processDesc: isVi
+    ? 'Bốn lane: setup pre-flight, spawn song song, điều phối qua hook + DM, rồi tổng hợp và đóng.'
+    : 'Four lanes: setup pre-flight, parallel spawn, event-driven coordination, then synthesize and close.',
+  templates: isVi ? 'Templates' : 'Templates',
+  templatesDesc: isVi
+    ? 'Chọn template theo nhu cầu. Mỗi template có default N teammate, behaviour riêng và artifact riêng.'
+    : 'Pick a template by need. Each one has its own default N, behaviour, and artifact.',
+  samplePrompt: isVi ? 'Prompt mẫu' : 'Sample prompt',
+  defaultN: isVi ? 'Mặc định N' : 'Default N',
+  useWhen: isVi ? 'Dùng khi' : 'Use when',
+  output: isVi ? 'Output' : 'Output',
+  output_section: isVi ? 'Artifact theo template' : 'Per-Template Artifacts',
+  outputDesc: isVi
+    ? 'Lead tổng hợp report sau khi mọi teammate xong. Đường dẫn cố định ở plans/reports/.'
+    : 'Lead synthesizes the report after every teammate finishes. Fixed location at plans/reports/.',
+  stack: isVi ? 'Stack được gọi khi cần' : 'Stack Used When Needed',
+  guardrails: isVi ? 'Nguyên tắc bắt buộc' : 'Core Principles',
+  guardrailsDesc: isVi
+    ? 'Năm điều này áp dụng cho mọi template — vi phạm = team không chạy đúng.'
+    : 'These five rules apply to every template — violating them breaks team execution.',
+};
+
+const heroFlow = isVi
+  ? ['Invoke', 'Pre-flight', 'Spawn N', 'Synth + close']
+  : ['Invoke', 'Pre-flight', 'Spawn N', 'Synth + close'];
+
+const tones: Record<string, Tone> = {
+  setup: {
+    rail: 'bg-sky-400',
+    chip: 'bg-sky-50 text-sky-700 ring-sky-200 dark:bg-sky-950/35 dark:text-sky-200 dark:ring-sky-800/60',
+    label: 'text-sky-700 dark:text-sky-300',
+    surface: 'bg-sky-50/55 ring-sky-100 dark:bg-sky-950/12 dark:ring-sky-900/35',
+  },
+  spawn: {
+    rail: 'bg-amber-400',
+    chip: 'bg-amber-50 text-amber-800 ring-amber-200 dark:bg-amber-950/35 dark:text-amber-200 dark:ring-amber-800/60',
+    label: 'text-amber-700 dark:text-amber-300',
+    surface: 'bg-amber-50/55 ring-amber-100 dark:bg-amber-950/12 dark:ring-amber-900/35',
+  },
+  coordinate: {
+    rail: 'bg-rose-400',
+    chip: 'bg-rose-50 text-rose-700 ring-rose-200 dark:bg-rose-950/35 dark:text-rose-200 dark:ring-rose-800/60',
+    label: 'text-rose-700 dark:text-rose-300',
+    surface: 'bg-rose-50/55 ring-rose-100 dark:bg-rose-950/12 dark:ring-rose-900/35',
+  },
+  close: {
+    rail: 'bg-emerald-400',
+    chip: 'bg-emerald-50 text-emerald-700 ring-emerald-200 dark:bg-emerald-950/35 dark:text-emerald-200 dark:ring-emerald-800/60',
+    label: 'text-emerald-700 dark:text-emerald-300',
+    surface: 'bg-emerald-50/55 ring-emerald-100 dark:bg-emerald-950/12 dark:ring-emerald-900/35',
+  },
+};
+
+const processGroups: ProcessGroup[] = [
+  {
+    label: isVi ? 'Setup' : 'Setup',
+    kicker: isVi ? 'Invoke + pre-flight check' : 'Invoke + pre-flight check',
+    steps: data.processFlow.slice(0, 2),
+    tone: tones.setup,
+  },
+  {
+    label: isVi ? 'Spawn' : 'Spawn',
+    kicker: isVi ? 'Tách N + spawn song song' : 'Derive N + spawn in parallel',
+    steps: data.processFlow.slice(2, 4),
+    tone: tones.spawn,
+  },
+  {
+    label: isVi ? 'Điều phối' : 'Coordinate',
+    kicker: isVi ? 'Hook + DM giữa teammate' : 'Hooks + teammate DM',
+    steps: data.processFlow.slice(4, 5),
+    tone: tones.coordinate,
+  },
+  {
+    label: isVi ? 'Đóng' : 'Close',
+    kicker: isVi ? 'Synthesize + shutdown' : 'Synthesize + shutdown',
+    steps: data.processFlow.slice(5),
+    tone: tones.close,
+  },
+];
+
+interface TemplateInfo {
+  flag: string;
+  titleEn: string;
+  titleVi: string;
+  defaultN: string;
+  accent: string;
+  badge: string;
+  promptEn: string;
+  promptVi: string;
+  whenEn: string;
+  whenVi: string;
+  outputEn: string;
+  outputVi: string;
+}
+
+const templates: TemplateInfo[] = [
+  {
+    flag: 'research',
+    titleEn: 'Research from N angles',
+    titleVi: 'Research nhiều góc',
+    defaultN: '3',
+    accent: 'border-sky-200 bg-sky-50/65 ring-sky-100 dark:border-sky-800/55 dark:bg-sky-950/20 dark:ring-sky-900/35',
+    badge: 'bg-sky-500 text-white dark:bg-sky-400 dark:text-sky-950',
+    promptEn: '/ck:team research Compare auth strategies for our SaaS app',
+    promptVi: '/ck:team research So sánh các hướng auth cho SaaS app',
+    whenEn: 'Architecture decisions, technology evaluation, multi-angle investigation.',
+    whenVi: 'Quyết định kiến trúc, đánh giá công nghệ, khảo sát đa góc.',
+    outputEn: 'research-summary-<slug>.md — exec summary, comparative analysis, recommendations.',
+    outputVi: 'research-summary-<slug>.md — exec summary, comparative analysis, recommendations.',
+  },
+  {
+    flag: 'cook',
+    titleEn: 'Cook with file-owned devs',
+    titleVi: 'Cook với dev có file ownership',
+    defaultN: '4 devs + 1 tester',
+    accent: 'border-amber-200 bg-amber-50/65 ring-amber-100 dark:border-amber-800/55 dark:bg-amber-950/20 dark:ring-amber-900/35',
+    badge: 'bg-amber-500 text-white dark:bg-amber-400 dark:text-amber-950',
+    promptEn: '/ck:team cook plans/.../plan.md --devs 4 --worktree',
+    promptVi: '/ck:team cook plans/.../plan.md --devs 4 --worktree',
+    whenEn: 'Multi-file feature implementation with parallel devs in isolated worktrees.',
+    whenVi: 'Triển khai feature nhiều file với dev song song trong worktree riêng.',
+    outputEn: 'Merged branches via git merge --no-ff + MANDATORY docs sync eval + test results.',
+    outputVi: 'Branch merge qua git merge --no-ff + BẮT BUỘC eval docs sync + kết quả test.',
+  },
+  {
+    flag: 'review',
+    titleEn: 'Review N focuses',
+    titleVi: 'Review nhiều focus',
+    defaultN: '3',
+    accent: 'border-violet-200 bg-violet-50/65 ring-violet-100 dark:border-violet-800/55 dark:bg-violet-950/20 dark:ring-violet-900/35',
+    badge: 'bg-violet-500 text-white dark:bg-violet-400 dark:text-violet-950',
+    promptEn: '/ck:team review src/api --reviewers 3',
+    promptVi: '/ck:team review src/api --reviewers 3',
+    whenEn: 'Pre-merge review with security, performance, and test-coverage lanes in parallel.',
+    whenVi: 'Review trước merge với lane song song: security, performance, test coverage.',
+    outputEn: 'review-<slug>.md — severity-dedupe (CRITICAL / IMPORTANT / MODERATE) + action items.',
+    outputVi: 'review-<slug>.md — dedupe theo severity (CRITICAL / IMPORTANT / MODERATE) + action items.',
+  },
+  {
+    flag: 'debug',
+    titleEn: 'Debug competing hypotheses',
+    titleVi: 'Debug giả thuyết cạnh tranh',
+    defaultN: '3',
+    accent: 'border-rose-200 bg-rose-50/65 ring-rose-100 dark:border-rose-800/55 dark:bg-rose-950/20 dark:ring-rose-900/35',
+    badge: 'bg-rose-500 text-white dark:bg-rose-400 dark:text-rose-950',
+    promptEn: '/ck:team debug "Webhook returns 500 intermittently" --debuggers 3',
+    promptVi: '/ck:team debug "Webhook trả 500 không liên tục" --debuggers 3',
+    whenEn: 'Hard-to-reproduce bugs where you want adversarial disproof to converge on root cause.',
+    whenVi: 'Bug khó reproduce, muốn dùng disproof đối kháng để hội tụ về root cause.',
+    outputEn: 'debug-<slug>.md — root cause + evidence chain + disproven hypotheses.',
+    outputVi: 'debug-<slug>.md — root cause + evidence chain + giả thuyết đã disproven.',
+  },
+];
+
+const principles = isVi ? data.corePrinciplesVi || [] : data.corePrinciplesEn || [];
+const principleAccents = [
+  'border-rose-200 bg-rose-50/60 dark:border-rose-800/50 dark:bg-rose-950/18',
+  'border-amber-200 bg-amber-50/60 dark:border-amber-800/50 dark:bg-amber-950/18',
+  'border-sky-200 bg-sky-50/60 dark:border-sky-800/50 dark:bg-sky-950/18',
+  'border-violet-200 bg-violet-50/60 dark:border-violet-800/50 dark:bg-violet-950/18',
+  'border-emerald-200 bg-emerald-50/60 dark:border-emerald-800/50 dark:bg-emerald-950/18',
+];
+
+const stackPreview = data.skillStack?.slice(0, 12) || [];
+const outputLocation = isVi ? data.reportOutput?.locationVi : data.reportOutput?.locationEn;
+const outputPattern = isVi ? data.reportOutput?.patternVi : data.reportOutput?.patternEn;
+---
+
+<div class="space-y-8">
+  <header class="relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm ring-1 ring-white/60 dark:border-white/10 dark:bg-slate-950/55 dark:ring-white/5">
+    <div class="pointer-events-none absolute inset-0 opacity-80 dark:opacity-100">
+      <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-sky-400 via-amber-300 via-rose-300 to-emerald-400"></div>
+      <div class="absolute inset-0 bg-[linear-gradient(115deg,rgba(14,165,233,0.10),transparent_28%,rgba(245,158,11,0.08)_52%,rgba(244,63,94,0.08)_72%,rgba(16,185,129,0.10))] dark:bg-[linear-gradient(115deg,rgba(14,165,233,0.16),transparent_28%,rgba(245,158,11,0.10)_52%,rgba(244,63,94,0.10)_72%,rgba(16,185,129,0.13))]"></div>
+      <div class="absolute inset-0 bg-[linear-gradient(rgba(148,163,184,0.10)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.10)_1px,transparent_1px)] bg-[size:28px_28px] [mask-image:linear-gradient(to_bottom,black,transparent_72%)]"></div>
+    </div>
+
+    <div class="relative grid gap-0 xl:grid-cols-[minmax(0,1fr)_360px]">
+      <div class="min-w-0 p-5 sm:p-6">
+        <div class="flex flex-wrap items-center gap-2">
+          <p class="rounded-full bg-rose-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-rose-700 ring-1 ring-rose-500/20 dark:text-rose-300">{text.eyebrow}</p>
+          <p class="rounded-full bg-white/70 px-3 py-1 text-xs font-medium text-slate-600 ring-1 ring-slate-200 dark:bg-white/[0.06] dark:text-slate-300 dark:ring-white/10">{text.parallelOnly}</p>
+        </div>
+        <div class="mt-5">
+          <h2 class="font-mono text-3xl font-semibold leading-none text-slate-950 dark:text-white sm:text-4xl">{data.command}</h2>
+          <p class="mt-4 max-w-2xl text-sm leading-6 text-slate-650 dark:text-slate-300">{text.summary}</p>
+        </div>
+        <div class="mt-6 grid gap-2 sm:grid-cols-4">
+          {heroFlow.map((item, index) => (
+            <div class="relative rounded-xl border border-slate-200 bg-white/75 px-3 py-3 dark:border-white/10 dark:bg-white/[0.055]">
+              {index < heroFlow.length - 1 && <span class="absolute right-[-9px] top-1/2 z-10 hidden h-px w-4 bg-slate-300 dark:bg-white/20 sm:block"></span>}
+              <span class="font-mono text-[11px] text-slate-400">0{index + 1}</span>
+              <p class="mt-1 text-sm font-semibold text-slate-900 dark:text-white">{item}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <aside class="relative border-t border-rose-200 bg-rose-50/80 p-5 dark:border-rose-800/50 dark:bg-rose-950/25 xl:border-l xl:border-t-0">
+        <div class="flex items-center gap-2">
+          <span class="h-2 w-2 rounded-full bg-rose-500"></span>
+          <p class="text-xs font-semibold uppercase tracking-wider text-rose-900 dark:text-rose-200">{text.hardGate}</p>
+        </div>
+        <ul class="mt-3 space-y-3">
+          {[
+            { title: text.hardGate1Title, desc: text.hardGate1Desc },
+            { title: text.hardGate2Title, desc: text.hardGate2Desc },
+            { title: text.hardGate3Title, desc: text.hardGate3Desc },
+          ].map((gate, index) => (
+            <li class="grid grid-cols-[1.5rem_minmax(0,1fr)] gap-2">
+              <span class="flex h-5 w-5 items-center justify-center rounded-full bg-rose-200 font-mono text-[10px] font-semibold text-rose-900 dark:bg-rose-900/60 dark:text-rose-100">{index + 1}</span>
+              <div class="min-w-0">
+                <p class="text-sm font-semibold leading-5 text-rose-950 dark:text-rose-100">{gate.title}</p>
+                <p class="mt-0.5 text-xs leading-5 text-rose-900/80 dark:text-rose-100/75">{gate.desc}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    </div>
+  </header>
+
+  <section class="rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-white/10 dark:bg-slate-950/45">
+    <div class="border-b border-slate-200 p-5 dark:border-white/10">
+      <div class="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.process}</h3>
+          <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300">{text.processDesc}</p>
+        </div>
+        <div class="hidden font-mono text-xs text-slate-400 sm:block">01 -> 07</div>
+      </div>
+    </div>
+    <div class="divide-y divide-slate-200 dark:divide-white/10">
+      {processGroups.map((group, groupIndex) => (
+        <div class="relative grid gap-4 p-5 lg:grid-cols-[10rem_minmax(0,1fr)]">
+          <div class="flex items-start gap-3 lg:block">
+            <span class={`mt-1 block h-10 w-1.5 shrink-0 rounded-full ${group.tone.rail} lg:h-12 lg:w-2`}></span>
+            <div class="min-w-0 lg:mt-3">
+              <span class={`rounded-full px-2.5 py-1 text-[11px] font-semibold ring-1 ${group.tone.chip}`}>0{groupIndex + 1}</span>
+              <p class={`mt-2 text-base font-semibold ${group.tone.label}`}>{group.label}</p>
+              <p class="mt-1 text-xs leading-5 text-slate-500 dark:text-slate-400">{group.kicker}</p>
+            </div>
+          </div>
+          <ol class="grid gap-3 sm:grid-cols-2">
+            {group.steps.map(step => (
+              <li class={`grid grid-cols-[2.25rem_minmax(0,1fr)] gap-3 rounded-xl p-3.5 ring-1 transition duration-200 hover:-translate-y-0.5 hover:shadow-sm ${group.tone.surface}`}>
+                <span class="flex h-9 w-9 items-center justify-center rounded-full bg-white font-mono text-xs font-semibold text-slate-700 ring-1 ring-slate-200 dark:bg-slate-950/75 dark:text-slate-200 dark:ring-white/10">{step.number}</span>
+                <span class="min-w-0">
+                  <span class="block text-sm font-semibold leading-5 text-slate-950 dark:text-white">{isVi ? step.titleVi : step.titleEn}</span>
+                  {step.descEn && <span class="mt-1 block text-xs leading-5 text-slate-600 dark:text-slate-400">{isVi ? step.descVi : step.descEn}</span>}
+                </span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-slate-950/45">
+    <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.templates}</h3>
+    <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300">{text.templatesDesc}</p>
+    <div class="mt-4 grid gap-3 lg:grid-cols-2">
+      {templates.map(tpl => (
+        <article class={`rounded-xl border p-4 ring-1 ${tpl.accent}`}>
+          <div class="flex flex-wrap items-center gap-2">
+            <code class={`inline-flex rounded-lg px-2.5 py-1 font-mono text-sm font-semibold shadow-sm ${tpl.badge}`}>{tpl.flag}</code>
+            <span class="rounded-full bg-white/80 px-2.5 py-1 text-[11px] font-semibold text-slate-700 ring-1 ring-slate-200 dark:bg-slate-950/60 dark:text-slate-300 dark:ring-white/10">{text.defaultN}: {tpl.defaultN}</span>
+          </div>
+          <p class="mt-3 text-sm font-semibold leading-5 text-slate-950 dark:text-white">{isVi ? tpl.titleVi : tpl.titleEn}</p>
+
+          <div class="mt-3 space-y-2.5">
+            <div>
+              <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{text.samplePrompt}</p>
+              <code class="mt-1 block whitespace-pre-wrap break-words rounded-lg bg-slate-100 px-3 py-2 font-mono text-xs leading-5 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-slate-200 dark:ring-white/10">{isVi ? tpl.promptVi : tpl.promptEn}</code>
+            </div>
+            <div class="grid gap-2 sm:grid-cols-2">
+              <div class="min-w-0 rounded-lg bg-white/70 px-3 py-2 ring-1 ring-slate-200/80 dark:bg-slate-950/35 dark:ring-white/10">
+                <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{text.useWhen}</p>
+                <p class="mt-1 text-xs leading-5 text-slate-650 dark:text-slate-300">{isVi ? tpl.whenVi : tpl.whenEn}</p>
+              </div>
+              <div class="min-w-0 rounded-lg bg-white/70 px-3 py-2 ring-1 ring-slate-200/80 dark:bg-slate-950/35 dark:ring-white/10">
+                <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{text.output}</p>
+                <p class="mt-1 text-xs leading-5 text-slate-650 dark:text-slate-300">{isVi ? tpl.outputVi : tpl.outputEn}</p>
+              </div>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_330px]">
+    <article class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-white/10 dark:bg-slate-950/45">
+      <div class="border-b border-slate-200 p-5 dark:border-white/10">
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+          <div class="min-w-0">
+            <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.output_section}</h3>
+            <p class="mt-3 text-base font-semibold leading-6 text-slate-950 dark:text-white">{isVi ? data.reportOutput?.titleVi : data.reportOutput?.titleEn}</p>
+            <p class="mt-1 max-w-3xl text-sm leading-6 text-slate-600 dark:text-slate-300">{text.outputDesc}</p>
+          </div>
+          {outputLocation && <span class="inline-flex w-fit shrink-0 rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-emerald-700 ring-1 ring-emerald-200 dark:bg-emerald-950/30 dark:text-emerald-200 dark:ring-emerald-800/50">{outputLocation}</span>}
+        </div>
+        {outputPattern && <code class="mt-4 block whitespace-normal break-words rounded-xl bg-slate-100 px-4 py-3 font-mono text-xs leading-6 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-slate-200 dark:ring-white/10">{outputPattern}</code>}
+      </div>
+    </article>
+
+    <aside class="rounded-2xl border border-slate-200 bg-slate-50/80 p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.03]">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.stack}</h3>
+      <div class="mt-3 flex flex-wrap gap-2">
+        {stackPreview.map(item => (
+          <span class="rounded-full bg-white px-2.5 py-1 text-xs text-slate-700 ring-1 ring-slate-200 dark:bg-slate-950/60 dark:text-slate-300 dark:ring-white/10">{item.name}</span>
+        ))}
+      </div>
+    </aside>
+  </section>
+
+  <section class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-white/10 dark:bg-slate-950/45">
+    <div class="border-b border-slate-200 p-5 dark:border-white/10">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.guardrails}</h3>
+      <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300">{text.guardrailsDesc}</p>
+    </div>
+    <ol class="grid gap-3 p-5 lg:grid-cols-2">
+      {principles.map((principle, index) => (
+        <li class={`grid grid-cols-[2.25rem_minmax(0,1fr)] gap-3 rounded-xl border p-3.5 ${principleAccents[index % principleAccents.length]}`}>
+          <span class="flex h-9 w-9 items-center justify-center rounded-full bg-white font-mono text-xs font-semibold text-slate-700 ring-1 ring-slate-200 dark:bg-slate-950/75 dark:text-slate-200 dark:ring-white/10">{index + 1}</span>
+          <span class="min-w-0 text-sm leading-6 text-slate-800 dark:text-slate-200">{principle}</span>
+        </li>
+      ))}
+    </ol>
+  </section>
+</div>
