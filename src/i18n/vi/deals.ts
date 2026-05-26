@@ -146,7 +146,7 @@ export const deals = {
   'deals.raffle.daily_schedule_title': 'Lịch mỗi ngày',
   'deals.raffle.schedule_register': 'Mở đăng ký lucky draw',
   'deals.raffle.schedule_lock': 'Khoá đăng ký',
-  'deals.raffle.schedule_reveal': 'Draw và công bố kết quả mỗi 5 phút. Standard trước, Premium sau.',
+  'deals.raffle.schedule_reveal': 'Draw và công bố kết quả mỗi 2 phút. Standard trước, Premium sau.',
   'deals.raffle.schedule_reveal_dynamic': 'Draw và công bố kết quả mỗi {minutes} phút. Standard trước, Premium sau.',
   'deals.raffle.qualified_title': 'GitHub identity',
   'deals.raffle.qualified_allowlist': 'Đăng nhập GitHub để gửi đăng ký.',

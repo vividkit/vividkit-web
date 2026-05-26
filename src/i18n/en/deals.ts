@@ -146,7 +146,7 @@ export const deals = {
   'deals.raffle.daily_schedule_title': 'Daily schedule',
   'deals.raffle.schedule_register': 'Lucky-draw registration opens',
   'deals.raffle.schedule_lock': 'Registration locks',
-  'deals.raffle.schedule_reveal': 'Draw and reveal every 5 minutes. Standard first, Premium last.',
+  'deals.raffle.schedule_reveal': 'Draw and reveal every 2 minutes. Standard first, Premium last.',
   'deals.raffle.schedule_reveal_dynamic': 'Draw and reveal every {minutes} minutes. Standard first, Premium last.',
   'deals.raffle.qualified_title': 'GitHub identity',
   'deals.raffle.qualified_allowlist': 'Use GitHub sign-in to submit your entry.',

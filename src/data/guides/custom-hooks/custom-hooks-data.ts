@@ -232,7 +232,6 @@ export const hookCategories: HookCategory[] = [
         name: 'workflow-artifact-gate.cjs',
         lines: 119,
         kits: ['ek'],
-        isBeta: true,
         triggers: ['PreToolUse (finalize stage)', 'manual CLI'],
         descEn: 'Validate ck:fix/ck:cook review artifacts (context-snippets, verification, review-decision, risk-gate) before finalize and ship-like actions. Opt-in via ck-config; fail-open on crash.',
         descVi: 'Validate review artifacts của ck:fix/ck:cook (context-snippets, verification, review-decision, risk-gate) trước khi finalize và ship-like actions. Bật qua ck-config; fail-open khi crash.',
