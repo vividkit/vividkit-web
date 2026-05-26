@@ -1,0 +1,87 @@
+{
+  "lastAuditDate": "2026-05-26",
+  "sourceRoot": "reference/stable/claude",
+  "guide": "src/data/guides/how-ck-works/workflow-visualizer-scenarios.ts",
+  "status": "fail",
+  "notes": [
+    "Report-only audit. No guide source files were modified.",
+    "Stable source was used because the request referenced just-updated source.",
+    "~/.claude/skills/ck-plan/SKILL.md differs from stable only in the active-plan command path."
+  ],
+  "auditedScenarios": {
+    "brainstorm": {
+      "date": "2026-05-26",
+      "status": "warn",
+      "sourceHashes": {
+        "skills/brainstorm/SKILL.md": "sha256:2415e6b6ac828572e8256317910b90b024e3d1fbb6ac717d6f707f60582a56f3"
+      }
+    },
+    "plan": {
+      "date": "2026-05-26",
+      "status": "warn",
+      "sourceHashes": {
+        "skills/ck-plan/SKILL.md": "sha256:9532e5bbb53baa708e0460fb091d1458054455e7328f5a0af1e1917ee9fd3455",
+        "skills/ck-plan/references/archive-workflow.md": "sha256:81af37b4ccca4ad73160a91aadb39d754d997c1dfce9dc0cda6bb89c8801c1f8",
+        "skills/ck-plan/references/codebase-understanding.md": "sha256:c1e78ef9dba69a667f240cec791fb8ccec0d711c96fd69d3e188d2ace061eb2b",
+        "skills/ck-plan/references/output-standards.md": "sha256:73cc27ee3f24aacd3c74b6904255b52e0631bb3491e00caa7fca92773c044066",
+        "skills/ck-plan/references/plan-organization.md": "sha256:8d3df001cef1af99270d55c65d67a479f46454ce3c8b7647b4f4937ce55d2330",
+        "skills/ck-plan/references/red-team-personas.md": "sha256:4c73b8dd3aa6607a5796a02a2ff33fbd8698c659fc27f7ab100df8651c0a196c",
+        "skills/ck-plan/references/red-team-workflow.md": "sha256:13d03a86e9037b4a0facff5f4a018a632e2d14c929ce75558c55fcdc56c5ac11",
+        "skills/ck-plan/references/research-phase.md": "sha256:b921f91f8f2b1566824625a7ab35ae9572473c6a96ba8979b0a23f21f9e8727e",
+        "skills/ck-plan/references/scope-challenge.md": "sha256:429c130ca8042838f14c402abba60128031e06498269b6a52437bea91491db74",
+        "skills/ck-plan/references/solution-design.md": "sha256:805525a1f228e080809cd8794735ed148fb37c2702517a8982488f72a31ab7f0",
+        "skills/ck-plan/references/task-management.md": "sha256:1ab2b21f7691f6b266d5e9bb4a6b9af6da429568293691714753aea57d8be5e1",
+        "skills/ck-plan/references/validate-question-framework.md": "sha256:d868ac6e03e395857186f801127b2f4b47c8aaabf5326fc2a25982804a0c113c",
+        "skills/ck-plan/references/validate-workflow.md": "sha256:70790813c733762630c0e1547ce61b737e1685d6a0837bea15c204ab378c4f0d",
+        "skills/ck-plan/references/verification-roles.md": "sha256:5cdf4d92e655bb1ea31afff352ab13a4a393411c22b3c5d3717a7c4e1054aa38",
+        "skills/ck-plan/references/workflow-modes.md": "sha256:e400c7f18c31e43d11bca33d9244ce19b7d455dfc3f2797f25922c6f771a47e3"
+      }
+    },
+    "cook": {
+      "date": "2026-05-26",
+      "status": "fail",
+      "sourceHashes": {
+        "skills/cook/README.md": "sha256:25627695ecfb2b3d37e341ecc10d1bac405c7f3fe2f751168a0e44e43132e4ed",
+        "skills/cook/SKILL.md": "sha256:8ebb87a03162bf67781525cb3d747c57b60b082ba15134f371e138fdc8ba418f",
+        "skills/cook/references/intent-detection.md": "sha256:13992d745375ba8310fc86a2789f19b9a2c28231822eabb456c298f9149b0f9b",
+        "skills/cook/references/review-cycle.md": "sha256:5ee742d72b9c47acf7bc6e9862698080ed1bd7840651ba3d48346d87f3fb519b",
+        "skills/cook/references/subagent-patterns.md": "sha256:3e89c8eabf93870e63748968b0bb074b32b7d513052c13c3f93bc7aec55142cb",
+        "skills/cook/references/workflow-steps.md": "sha256:589fc134edeec67cd70ec7ce8cea2964f57f5718bc8f0159f2eee75591b5cfed",
+        "skills/_shared/references/workflow-artifacts.md": "sha256:ac1b15de6beebd3cc259398a34283f0eeb21c55732e26a3539f04733569de439"
+      }
+    },
+    "fix": {
+      "date": "2026-05-26",
+      "status": "fail",
+      "sourceHashes": {
+        "skills/fix/SKILL.md": "sha256:4a44da3e47655c7ae4e746211002e05ca9cb9b964215a354078f3b09af81ccfc",
+        "skills/fix/references/complexity-assessment.md": "sha256:fe34c07a16940f834f4cfc18440d9c3a20ff85e0b53fbc5d5ba77881730b4052",
+        "skills/fix/references/diagnosis-protocol.md": "sha256:8ea656105b6847c7fa4a83af77aa0198b464bed445dd022d06a75d6c3476ec5c",
+        "skills/fix/references/mode-selection.md": "sha256:f9e281e5e6a595f4db167cfef0287a697ba3b8784ca2db863d1827891e698c27",
+        "skills/fix/references/parallel-exploration.md": "sha256:b1aff6077a68a6061672312d8ff338a8f7d3822790c932a4634a70840a44f129",
+        "skills/fix/references/prevention-gate.md": "sha256:5ab219c4860a15574a1100397361e198766b0725022f2ff0afcfdce398c8e569",
+        "skills/fix/references/review-cycle.md": "sha256:e3179a130c5b3b1f0e1a4ff75b3c1af3aafbbb1a87f753e739b809d1e89c95ea",
+        "skills/fix/references/skill-activation-matrix.md": "sha256:60151b3da2fdd605615366f579a4628f133d2c18df81a62a50b79e5308c10c17",
+        "skills/fix/references/task-orchestration.md": "sha256:1f6d3895978bcd6a254904728bf8ba71e68dd347ae6777b55496b40b8f0c9a83",
+        "skills/fix/references/workflow-ci.md": "sha256:905dbdae740bee9909aa6714bbe57042960574620273a80f7fd2c288e5a57a92",
+        "skills/fix/references/workflow-deep.md": "sha256:a8f9f41b4323be960298264035e776ed62518ad3104f18f829a592fdbc35528f",
+        "skills/fix/references/workflow-logs.md": "sha256:505e006df58c5b71cb059a78d5f2b13826b23676563a0cd5302631647bde69df",
+        "skills/fix/references/workflow-quick.md": "sha256:59783e8c68c2210efa3f8a799377b20ea3547ff7e01c4cc4ba4900fc28ecdb91",
+        "skills/fix/references/workflow-standard.md": "sha256:ea1a014113df397719e82cb918d75ff1115889bb2a82db40a681d3e9533541ee",
+        "skills/fix/references/workflow-test.md": "sha256:175f2d16955954a40fe8bacd3a2c100162c6981867da2f474980ade5c4a80f0b",
+        "skills/fix/references/workflow-types.md": "sha256:b0c0f7225f614af68f3d2c98234aff2339ad78a06607b96da9791a0358a1e5b3",
+        "skills/fix/references/workflow-ui.md": "sha256:fa5bffbbed70361086255da1f9ac9710bde29d2d7a022951b21076fe748f1d7e",
+        "skills/_shared/references/workflow-artifacts.md": "sha256:ac1b15de6beebd3cc259398a34283f0eeb21c55732e26a3539f04733569de439"
+      }
+    },
+    "shared-hooks-agents": {
+      "date": "2026-05-26",
+      "status": "fail",
+      "sourceHashes": {
+        "settings.json": "sha256:0136eb27c94f15acc10a59ca8542bac4fc507c92b705c5f409d3b89190d868f3",
+        "agents-file-list": "sha256:c8a5a13af3f0cd10974dbe2787bdd9a2fff3cf83df1451292d04f0243c03a25b"
+      }
+    }
+  },
+  "report": "plans/reports/audit-guide-260526-how-ck-works.md"
+}
