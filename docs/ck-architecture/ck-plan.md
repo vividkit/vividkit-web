@@ -1,68 +1,175 @@
 # /ck:plan — Implementation Planning
 
-Source: `~/.claude/skills/ck-plan/SKILL.md` + `references/`
+Source: `reference/stable/claude/skills/ck-plan/SKILL.md` (v1.1.0) + `references/`
 
 ## Authoritative Flow
 
 ```
-Pre-Creation Check → active/suggested/no plan context
-Cross-Plan Scan → detect blockedBy/blocks relationships
-Step 0: Scope Challenge (skip if --fast or trivial)
-Mode Detection → fast | hard | parallel | two
-Codebase Analysis → read docs, scout if stale (hard/parallel/two only)
-Plan Creation → planner subagent writes plan.md + phase-XX.md
-Red Team Review → 2-4 code-reviewer agents (hard/parallel/two only)
-Validation → interview with critical questions (hard/parallel/two only)
-Task Hydration → TaskCreate per phase + critical steps
-Output Cook Command → absolute path, mode-specific flags (MANDATORY)
-Journal → /ck:journal
+Pre-Creation Check        → active / suggested / no plan context
+Cross-Plan Scan           → detect blockedBy / blocks across unfinished plans
+Scope Challenge           → step-0 scope questions (skip if --fast or trivial)
+Mode Detection            → --auto / --fast / --hard / --deep / --parallel / --two
+Research Phase            → spawn researcher agents (skip in fast)
+Codebase Analysis         → read docs, scout if stale, no scout if reports provided
+Plan Creation             → planner subagent writes plan.md + phase-XX-*.md via `ck plan create`
+Red Team Review           → 2-4 code-reviewer agents (hard / deep / parallel / two)
+Verification Pass         → verification-roles pipeline before validate interview
+Validation Interview      → critical questions (deep forces; hard / parallel / two optional)
+Whole-Plan Consistency    → mandatory sweep after every validate / red-team edit
+Task Hydration            → TaskCreate per phase + critical steps (skip --no-tasks or <3 phases)
+Boundary Reminder         → present optional next-step commands with absolute path
+Post-Plan Handoff         → AskUserQuestion: validate / red-team / /ck:cook / end
+Journal                   → /ck:journal entry on completion
 ```
+
+The mermaid diagram in SKILL.md (`## Process Flow (Authoritative)`) is the source of truth. Skip rules for red-team / validate options track Workflow Process Steps 6-7.
+
+## CLI Integration (v1.1.0+)
+
+ClaudeKit CLI owns plan file scaffolding and phase state mutations whenever `ck` is available. The skill orchestrates, the CLI mutates.
+
+| Command | Purpose |
+|---------|---------|
+| `ck plan create --title ... --phases ... --dir ... --source skill` | Scaffold project-scope `plan.md` + `phase-*.md` |
+| `ck plan create --global ...` | Scaffold under global plan root |
+| `ck plan check <phase-id> --start` | Mark phase in-progress |
+| `ck plan check <phase-id>` | Mark phase completed |
+| `ck plan uncheck <phase-id>` | Revert phase status |
+| `ck plan status /abs/path/to/plan.md` | Authoritative inspection surface |
+| `ck config ui --port 3456` | Open dashboard at `localhost:3456/plans` |
+
+Rules:
+- Default scope is project-local (`./plans/`). Global scope only when user requests `--global` or no project context exists (no `.git`, `package.json`, `CLAUDE.md` in ancestor chain).
+- Never hand-edit the phases table for status toggles or structural updates when the CLI is available.
+- **Mandatory generated-file read pass:** After `ck plan create`, before composing any long Write/Edit — enumerate `plan.md` + every `phase-*.md` stub, read them all, then write content. A directory listing is not enough. Claude Code rejects Write calls to existing files that were not read first in the current session; skipping any stub wastes the full Write payload on a rejected call.
+- Stub fill-in must follow the canonical phase template embedded in SKILL.md.
+
+## Default (No Arguments)
+
+If invoked without a task or with unclear intent, `AskUserQuestion` (header "Planning Operation") offers:
+
+| Operation | Description |
+|-----------|-------------|
+| `(default)` | Create implementation plan for a task |
+| `archive` | Write journal entry & archive plans |
+| `red-team` | Adversarial plan review |
+| `validate` | Critical questions interview |
 
 ## Mode Selection
 
-Auto-detection or manual flags:
+| Mode | Flag | Research | Red Team | Validate | Cook Flag |
+|------|------|----------|----------|----------|-----------|
+| Auto-detect | `--auto` | Follows mode | Follows mode | Follows mode | Follows mode |
+| Fast | `--fast` | Skip | Skip | Skip | — |
+| Hard | `--hard` | 2 researchers | Yes | Optional | — |
+| Deep | `--deep` | 2-3 researchers + per-phase scout | Yes | Yes | — |
+| Parallel | `--parallel` | 2 researchers | Yes | Optional | `--parallel` |
+| Two approaches | `--two` | 2+ researchers | After selection | After selection | — |
 
-| Mode | Flag | Research | Red Team | Validate | Task Hydrate |
-|------|------|----------|----------|----------|-------------|
-| Fast | --fast | Skip | Skip | Skip | Phase-level |
-| Hard | --hard | 2 researchers | 2-4 reviewers | Yes | Phase + steps |
-| Parallel | --parallel | 2 researchers | 2-4 reviewers | Yes | + ownership matrix |
-| Two | --two | 2 researchers | 2-4 reviewers | Yes | Selected approach |
+Composable flags (combine with any mode):
+
+| Flag | Effect |
+|------|--------|
+| `--tdd` | Add tests-first structure to each phase for regression-safe refactors |
+| `--no-tasks` | Skip task hydration |
+
+## Cross-Plan Dependency Detection
+
+Run during pre-creation scan:
+
+1. Scan `plan.md` frontmatter of every unfinished plan (`status != completed/cancelled`).
+2. Compare scope — overlapping files, shared dependencies, same feature area.
+3. Classify relationship:
+   - New plan needs existing output → new `blockedBy: [existing-plan-dir]`
+   - New plan changes existing dependency → existing `blockedBy: [new-plan-dir]`, new `blocks: [...]`
+   - Cross-scope dependency → `global:` / `project:` prefixes
+   - Mutual dependency → both reference each other
+4. Bidirectional update both `plan.md` files.
+5. Ambiguous? `AskUserQuestion` header "Plan Dependency".
+
+Frontmatter:
+```yaml
+blockedBy: [260301-1200-auth-system]            # same-scope
+blockedBy: [global:260301-1200-auth-system]     # cross-scope
+blocks: [project:260228-0900-user-dashboard]    # explicit project ref
+```
 
 ## Skills Activated
 
-| Type | Skill |
-|------|-------|
-| Mandatory | /ck:project-organization |
-| Conditional | ck:scout (if docs stale), ck:sequential-thinking, ck:docs-seeker |
-| End-of-flow | /ck:journal |
+| Type | Skill | Condition |
+|------|-------|-----------|
+| Mandatory | `/ck:project-organization` | Organize outputs |
+| Conditional | `ck:scout` | If docs / codebase context stale |
+| Conditional | `ck:sequential-thinking` | Multi-step reasoning |
+| Conditional | `ck:docs-seeker` | When library / framework docs needed |
+| End-of-flow | `/ck:journal` | After plan finalized |
 
 ## Sub-agents Spawned
 
-| Phase | Agent | Condition |
-|-------|-------|-----------|
-| Research | 2x researcher | hard/parallel/two only |
-| Plan Creation | planner | Always |
-| Red Team | 2-4x code-reviewer | hard/parallel/two only |
+| Phase | Agent | Count | Condition |
+|-------|-------|-------|-----------|
+| Research | researcher | 2 (hard / parallel) • 2-3 + per-phase scout (deep) • 2+ (two) | Modes other than `--fast` |
+| Plan Creation | planner | 1 | Always |
+| Red Team | code-reviewer | 2-4 (scales with phase count) | Hard / deep / parallel / two |
 
-Red Team scaling:
+Red-team scaling:
 - 1-2 phases → 2 reviewers
 - 3-5 phases → 3 reviewers
 - 6+ phases → 4 reviewers
 
 ## Task Hydration
 
-- ON by default, skip with --no-tasks or <3 phases
-- TaskCreate per phase with dependencies (addBlockedBy)
-- Critical steps get separate tasks with riskLevel metadata
+- Default: ON. Skip with `--no-tasks` or when plan has <3 phases.
+- `TaskCreate` per phase with `addBlockedBy` chain.
+- `TaskCreate` for critical / high-risk steps inside phases.
+- Metadata: `phase`, `priority`, `effort`, `planDir`, `phaseFile`.
+- Cook picks up via `TaskList` (same session) or re-hydrates from plan files (new session).
+- Fallback: if `TaskCreate` / `TaskUpdate` errors (VSCode extension), drop to `TodoWrite`. Plan files remain source of truth.
 
-## Output
+## Whole-Plan Consistency Gate
 
-MANDATORY: output cook command with absolute path
-- Fast: `/ck:cook --auto {path}/plan.md`
-- Hard: `/ck:cook {path}/plan.md`
-- Parallel: `/ck:cook --parallel {path}/plan.md`
+Mandatory after every `/ck:plan validate` or `/ck:plan red-team` edit. Re-read `plan.md` and every `phase-*.md`. Search for:
+- Stale terms from rejected assumptions
+- Renamed APIs / files / fields
+- Superseded decisions
+- Duplicate embedded drafts / contracts
+
+Reconcile contradictions across the entire plan, not only the edited phase. Do not recommend `/ck:cook` until the sweep reports zero unresolved contradictions.
+
+## Subcommands
+
+| Subcommand | Reference file | Purpose |
+|------------|----------------|---------|
+| `/ck:plan archive` | `references/archive-workflow.md` | Archive plans + write journal |
+| `/ck:plan red-team` | `references/red-team-workflow.md` | Adversarial review with hostile reviewers; report artifacts use plan-scoped descriptive filenames |
+| `/ck:plan validate` | `references/validate-workflow.md` | Critical questions interview |
+
+## Post-Plan Handoff (MANDATORY)
+
+After `plan.md` + phase files are written and user-approved, `AskUserQuestion` offers the appropriate next step. Recommended option listed FIRST and labelled "(Recommended)".
+
+| Option | Recommend When | Why |
+|--------|----------------|-----|
+| `/ck:plan validate` | Moderate-to-complex plan; user wants critical-questions gate | Cheapest gate — surfaces unspecified assumptions |
+| `/ck:plan red-team` | Plan touches security, auth, payments, data integrity, public APIs, infra, high blast radius | Adversarial stress-test |
+| `/ck:cook <plan-path>` | Plan is small / well-understood / low-risk | Skip extra gates |
+| End session | User wants to review / share plan first | Stop with plan path returned |
+
+Skip the entire handoff when invocation IS already a subcommand (`validate`, `red-team`, `archive`) — those have their own terminal handoff — or when the user explicitly said "just plan, don't suggest next step".
+
+Skip an individual option when the active mode already auto-ran the gate:
+- Omit `red-team` for `--hard`, `--deep`, `--parallel`, `--two`
+- Omit `validate` for `--deep`
+- If both already ran → only `/ck:cook` and `End session` remain.
 
 ## Hard Gate
 
-No code implementation — ck:plan only creates plans.
+- No code implementation — `/ck:plan` only creates plans.
+- Plans must live under project scope (`./plans/`) or global scope (`~/.claude/plans/` default). Never arbitrary user directories.
+- CLI-owned scaffolding — never hand-edit the phases table when `ck` is available.
+
+## Workflow Position
+
+**Typically follows:** `/ck:brainstorm` (after option exploration) • `/ck:scout` (after codebase discovery)
+**May precede:** `/ck:cook` after user approval
+**Related:** `/ck:brainstorm`, `/ck:cook`, `/ck:journal`
