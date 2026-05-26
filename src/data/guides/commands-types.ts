@@ -2,13 +2,16 @@
 
 export interface CommandItem {
   command: string;
+  // Optional display label for a command group, e.g. /ckm:skill:*.
+  // Keep command as a real executable command for validation.
+  displayCommand?: string;
   complexity: string;
   label: string;
   desc: string;
   detail: string;
   isSkill?: boolean;
   isBeta?: boolean;
-  // Colon-separated subcommands: /mkt:plan:cro → subcommands: ["cro"]
+  // Variants/options. Values starting with ":" are rendered as full command variants.
   subcommands?: string[];
   // Space-separated arguments: /mkt:ask [question] → args: ["[question]"]
   args?: string[];
