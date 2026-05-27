@@ -154,15 +154,22 @@ const flagGroups: FlagGroup[] = [
   {
     labelEn: 'View · no flag',
     labelVi: 'View · không flag',
-    kickerEn: 'Read or walk through an existing file',
-    kickerVi: 'Đọc hoặc walkthrough một file có sẵn',
+    kickerEn: 'Read an existing file/dir — plans in novel UI',
+    kickerVi: 'Đọc file/thư mục có sẵn — plan dạng novel',
     items: [
+      {
+        flag: '<file.md>',
+        promptEn: '/ck:preview plans/.../plan.md',
+        promptVi: '/ck:preview plans/.../plan.md',
+        descEn: 'View a markdown file (plan, phase, doc) in the novel-reader UI — Mermaid renders live.',
+        descVi: 'Xem file markdown (plan, phase, doc) trong novel-reader UI — Mermaid render trực tiếp.',
+      },
       {
         flag: '<path>',
         promptEn: '/ck:preview src/auth/middleware.ts',
         promptVi: '/ck:preview src/auth/middleware.ts',
-        descEn: 'No flag — point at a file/path to read or step through it as-is. This is the only input shape that takes a path; generate flags take a topic.',
-        descVi: 'Không flag — trỏ vào một file/path để đọc hoặc đi từng bước nguyên trạng. Đây là dạng input duy nhất nhận path; generate flag nhận topic.',
+        descEn: 'Point at any file or directory to read it as-is. This is the only input shape that takes a path; generate flags take a topic.',
+        descVi: 'Trỏ vào bất kỳ file hoặc thư mục nào để đọc nguyên trạng. Đây là dạng input duy nhất nhận path; generate flag nhận topic.',
       },
     ],
     accent: 'border-slate-200 bg-slate-50/70 ring-slate-100 dark:border-white/10 dark:bg-white/[0.04] dark:ring-white/5',
