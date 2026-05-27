@@ -5,6 +5,7 @@
 // raffle, FAQ) stays fully intact and can be re-enabled by flipping the flag.
 import { useTranslations } from '@/i18n/utils';
 import { getLangFromUrl, type Language } from '@/i18n';
+import { ArrowDownToLine } from 'lucide-astro';
 
 interface Props {
   lang?: Language;
@@ -66,6 +67,14 @@ const total = Number(import.meta.env.PUBLIC_DEALS_CAMPAIGN_TOTAL || 80);
           {t('deals.campaign_ended.expiry_warning')}
         </p>
       </div>
+
+      <a
+        href="#claim"
+        class="inline-flex min-h-11 w-fit items-center gap-2 rounded-xl border border-emerald-300 bg-emerald-600 px-4 py-2.5 text-sm font-bold text-white shadow-lg shadow-emerald-900/15 transition hover:-translate-y-0.5 hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-300 dark:border-emerald-700 dark:bg-emerald-400 dark:text-slate-950 dark:hover:bg-emerald-300 dark:focus-visible:ring-emerald-800"
+      >
+        <ArrowDownToLine class="h-4 w-4" aria-hidden="true" />
+        {t('deals.campaign_ended.claim_cta')}
+      </a>
     </div>
 
     <div class="relative rounded-2xl border-2 border-emerald-300/80 bg-white/90 p-5 shadow-lg shadow-emerald-900/[0.08] dark:border-emerald-700/70 dark:bg-slate-900/85 dark:shadow-emerald-950/30">
