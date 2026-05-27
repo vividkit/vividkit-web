@@ -45,8 +45,10 @@ const text = {
     ? 'View (không flag) nhận path để đọc/walkthrough file. Tám flag chia ba nhóm: Generate chọn dạng output từ topic; --html bọc bất kỳ generate flag nào thành trang độc lập; nhóm Review bắt buộc đi kèm --html.'
     : 'View (no flag) takes a path to read/walk through a file. Eight flags in three groups: Generate picks an output shape from a topic; --html wraps any generate flag into a standalone page; the Review group requires --html.',
   serverNote: isVi
-    ? 'View và markdown generation chạy local server (markdown-novel-viewer); --html và review flag là self-contained, không cần server. Dừng server: /ck:preview --stop.'
-    : 'View and markdown generation run a local server (markdown-novel-viewer); --html and review flags are self-contained, no server. Stop it with /ck:preview --stop.',
+    ? 'View và markdown generation chạy local server (markdown-novel-viewer); --html và review flag là self-contained, không cần server.'
+    : 'View and markdown generation run a local server (markdown-novel-viewer); --html and review flags are self-contained, no server.',
+  stopLabel: isVi ? 'Dừng server' : 'Stop server',
+  stopCmd: '/ck:preview --stop',
   output_section: isVi ? 'Output trực quan' : 'Visual Output',
   outputDesc: isVi ? data.reportOutput?.descVi : data.reportOutput?.descEn,
   stack: isVi ? 'Stack được gọi khi cần' : 'Stack Used When Needed',
@@ -390,12 +392,18 @@ const locationNote = isVi
         </article>
       ))}
     </div>
-    <p class="mt-4 flex items-start gap-2 rounded-xl border border-slate-200 bg-slate-50/70 px-3.5 py-3 text-xs leading-5 text-slate-600 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-300">
-      <svg class="mt-0.5 h-3.5 w-3.5 shrink-0 text-slate-400 dark:text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
-      </svg>
-      <span class="min-w-0">{text.serverNote}</span>
-    </p>
+    <div class="mt-4 rounded-xl border border-slate-200 bg-slate-50/70 px-3.5 py-3 dark:border-white/10 dark:bg-white/[0.04]">
+      <p class="flex items-start gap-2 text-xs leading-5 text-slate-600 dark:text-slate-300">
+        <svg class="mt-0.5 h-3.5 w-3.5 shrink-0 text-slate-400 dark:text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
+        </svg>
+        <span class="min-w-0">{text.serverNote}</span>
+      </p>
+      <p class="mt-2.5 flex flex-wrap items-center gap-2 border-t border-slate-200/70 pt-2.5 dark:border-white/10">
+        <span class="text-[11px] font-semibold uppercase tracking-wide text-amber-700 dark:text-amber-400">{text.stopLabel}</span>
+        <code class="rounded-md bg-slate-100 px-2 py-0.5 font-mono text-[11px] font-semibold text-purple-600 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-purple-400 dark:ring-white/10">{text.stopCmd}</code>
+      </p>
+    </div>
   </section>
 
   <section class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_330px]">
