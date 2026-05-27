@@ -40,10 +40,10 @@ const text = {
   processDesc: isVi
     ? 'Một input (file path hoặc generate flag + topic) chạy qua bốn chặng: nhận input, định tuyến, tạo visual, rồi xuất ra browser hoặc HTML độc lập.'
     : 'One input (file path or generate flag + topic) runs through four stages: receive, route, generate, then emit to the browser or a self-contained HTML page.',
-  flags: isVi ? 'Flags theo vai trò' : 'Flags by Role',
+  flags: isVi ? 'Cách dùng theo vai trò' : 'Usage by Role',
   flagsDesc: isVi
-    ? 'Tám flag chia ba nhóm. Generate chọn dạng output; --html bọc bất kỳ generate flag nào thành trang độc lập; nhóm Review bắt buộc đi kèm --html.'
-    : 'Eight flags in three groups. Generate picks an output shape; --html wraps any generate flag into a standalone page; the Review group requires --html.',
+    ? 'View (không flag) nhận path để đọc/walkthrough file. Tám flag chia ba nhóm: Generate chọn dạng output từ topic; --html bọc bất kỳ generate flag nào thành trang độc lập; nhóm Review bắt buộc đi kèm --html.'
+    : 'View (no flag) takes a path to read/walk through a file. Eight flags in three groups: Generate picks an output shape from a topic; --html wraps any generate flag into a standalone page; the Review group requires --html.',
   output_section: isVi ? 'Output trực quan' : 'Visual Output',
   outputDesc: isVi ? data.reportOutput?.descVi : data.reportOutput?.descEn,
   stack: isVi ? 'Stack được gọi khi cần' : 'Stack Used When Needed',
@@ -132,6 +132,8 @@ interface FlagItem {
   flag: string;
   promptEn: string;
   promptVi: string;
+  descEn?: string;
+  descVi?: string;
   altPromptEn?: string;
   altPromptVi?: string;
   altLabelEn?: string;
@@ -149,6 +151,23 @@ interface FlagGroup {
 }
 
 const flagGroups: FlagGroup[] = [
+  {
+    labelEn: 'View · no flag',
+    labelVi: 'View · không flag',
+    kickerEn: 'Read or walk through an existing file',
+    kickerVi: 'Đọc hoặc walkthrough một file có sẵn',
+    items: [
+      {
+        flag: '<path>',
+        promptEn: '/ck:preview src/auth/middleware.ts',
+        promptVi: '/ck:preview src/auth/middleware.ts',
+        descEn: 'No flag — point at a file/path to read or step through it as-is. This is the only input shape that takes a path; generate flags take a topic.',
+        descVi: 'Không flag — trỏ vào một file/path để đọc hoặc đi từng bước nguyên trạng. Đây là dạng input duy nhất nhận path; generate flag nhận topic.',
+      },
+    ],
+    accent: 'border-slate-200 bg-slate-50/70 ring-slate-100 dark:border-white/10 dark:bg-white/[0.04] dark:ring-white/5',
+    badge: 'bg-slate-600 text-white dark:bg-slate-500 dark:text-white',
+  },
   {
     labelEn: 'Generate',
     labelVi: 'Tạo',
@@ -332,10 +351,11 @@ const locationNote = isVi
           <ul class="mt-3 grid gap-2.5 sm:grid-cols-2">
             {group.items.map(item => {
               const mode = modeMap.get(item.flag);
+              const desc = mode ? (isVi ? mode.modeVi : mode.modeEn) : (isVi ? item.descVi : item.descEn) ?? '';
               return (
                 <li class="min-w-0 rounded-lg bg-white/70 p-3 ring-1 ring-slate-200/80 dark:bg-slate-950/35 dark:ring-white/10">
                   <code class={`inline-flex max-w-full rounded-md px-2 py-0.5 font-mono text-xs font-semibold shadow-sm ${group.badge}`}>{item.flag}</code>
-                  <p class="mt-2 text-xs leading-5 text-slate-650 dark:text-slate-300">{mode ? (isVi ? mode.modeVi : mode.modeEn) : ''}</p>
+                  <p class="mt-2 text-xs leading-5 text-slate-650 dark:text-slate-300">{desc}</p>
                   <div class="mt-2">
                     <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">{text.samplePrompt}</p>
                     <code class="mt-1 block whitespace-pre-wrap break-words rounded-md bg-slate-100 px-2.5 py-1.5 font-mono text-[11px] leading-5 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-slate-200 dark:ring-white/10">{isVi ? item.promptVi : item.promptEn}</code>
