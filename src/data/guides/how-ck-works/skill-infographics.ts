@@ -593,8 +593,8 @@ export const skillInfographics: SkillInfographic[] = [
       type: 'info',
       titleEn: 'FLAG COMBINATION RULES',
       titleVi: 'LUẬT KẾT HỢP FLAG',
-      contentEn: 'Two input shapes: a file path (view/walkthrough) OR a generate flag + topic. --html composes with ANY generate flag (--explain / --diagram / --slides / --ascii) to emit a self-contained browser page — no dev server. The review flags --diff [ref], --plan-review, and --recap [timeframe] REQUIRE --html. Output saves to the active plan folder ({plan_dir}/visuals/) or falls back to plans/visuals/.',
-      contentVi: 'Hai dạng input: một file path (view/walkthrough) HOẶC generate flag + topic. --html kết hợp với BẤT KỲ generate flag nào (--explain / --diagram / --slides / --ascii) để xuất trang browser độc lập — không cần dev server. Các review flag --diff [ref], --plan-review, và --recap [timeframe] YÊU CẦU --html. Output lưu vào thư mục plan active ({plan_dir}/visuals/) hoặc fallback plans/visuals/.',
+      contentEn: 'Two input shapes: a file path (view/walkthrough) OR a generate flag + topic. --html composes with ANY generate flag (--explain / --diagram / --slides / --ascii) to emit a self-contained browser page — no dev server. The review flags --diff [ref], --plan-review [plan-file], and --recap [timeframe] imply --html (auto-enabled, so --html is optional). Output saves to the active plan folder ({plan_dir}/visuals/) or falls back to plans/visuals/.',
+      contentVi: 'Hai dạng input: một file path (view/walkthrough) HOẶC generate flag + topic. --html kết hợp với BẤT KỲ generate flag nào (--explain / --diagram / --slides / --ascii) để xuất trang browser độc lập — không cần dev server. Các review flag --diff [ref], --plan-review [plan-file], và --recap [timeframe] tự bật --html (nên --html là optional). Output lưu vào thư mục plan active ({plan_dir}/visuals/) hoặc fallback plans/visuals/.',
     },
 
     processFlow: [
@@ -642,7 +642,7 @@ export const skillInfographics: SkillInfographic[] = [
       { flag: '--ascii', modeEn: 'Terminal-friendly ASCII diagram (no browser needed)', modeVi: 'Sơ đồ ASCII thân thiện terminal (không cần browser)', research: '', redTeam: '', validation: '' },
       { flag: '--html', modeEn: 'Self-contained HTML page — composes with any generate flag, opens directly in browser', modeVi: 'Trang HTML độc lập — kết hợp với mọi generate flag, mở thẳng trên browser', research: '', redTeam: '', validation: '' },
       { flag: '--diff [ref]', modeEn: 'Visual diff review of changes (requires --html)', modeVi: 'Review diff trực quan các thay đổi (yêu cầu --html)', research: '', redTeam: '', validation: '' },
-      { flag: '--plan-review', modeEn: 'Compare a plan against the actual codebase (requires --html)', modeVi: 'So sánh plan với codebase thực tế (yêu cầu --html)', research: '', redTeam: '', validation: '' },
+      { flag: '--plan-review [plan-file]', modeEn: 'Compare a plan file against the actual codebase — implies --html. Omit the path to use the active plan.', modeVi: 'So sánh plan file với codebase thực tế — tự bật --html. Bỏ path để dùng active plan.', research: '', redTeam: '', validation: '' },
       { flag: '--recap [timeframe]', modeEn: 'Project context snapshot over a timeframe (requires --html)', modeVi: 'Snapshot context project theo khoảng thời gian (yêu cầu --html)', research: '', redTeam: '', validation: '' },
     ],
 
