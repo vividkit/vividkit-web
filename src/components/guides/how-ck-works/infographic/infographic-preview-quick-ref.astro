@@ -44,6 +44,9 @@ const text = {
   flagsDesc: isVi
     ? 'View (không flag) nhận path để đọc/walkthrough file. Tám flag chia ba nhóm: Generate chọn dạng output từ topic; --html bọc bất kỳ generate flag nào thành trang độc lập; nhóm Review bắt buộc đi kèm --html.'
     : 'View (no flag) takes a path to read/walk through a file. Eight flags in three groups: Generate picks an output shape from a topic; --html wraps any generate flag into a standalone page; the Review group requires --html.',
+  serverNote: isVi
+    ? 'View và markdown generation chạy local server (markdown-novel-viewer); --html và review flag là self-contained, không cần server. Dừng server: /ck:preview --stop.'
+    : 'View and markdown generation run a local server (markdown-novel-viewer); --html and review flags are self-contained, no server. Stop it with /ck:preview --stop.',
   output_section: isVi ? 'Output trực quan' : 'Visual Output',
   outputDesc: isVi ? data.reportOutput?.descVi : data.reportOutput?.descEn,
   stack: isVi ? 'Stack được gọi khi cần' : 'Stack Used When Needed',
@@ -161,15 +164,22 @@ const flagGroups: FlagGroup[] = [
         flag: '<file.md>',
         promptEn: '/ck:preview plans/.../plan.md',
         promptVi: '/ck:preview plans/.../plan.md',
-        descEn: 'View a markdown file (plan, phase, doc) in the novel-reader UI — Mermaid renders live.',
-        descVi: 'Xem file markdown (plan, phase, doc) trong novel-reader UI — Mermaid render trực tiếp.',
+        descEn: 'View one markdown file (plan, phase, doc) in the novel-reader UI — Mermaid renders live.',
+        descVi: 'Xem một file markdown (plan, phase, doc) trong novel-reader UI — Mermaid render trực tiếp.',
+      },
+      {
+        flag: '<dir/>',
+        promptEn: '/ck:preview plans/260527-.../',
+        promptVi: '/ck:preview plans/260527-.../',
+        descEn: 'Pass a folder to browse every doc inside — e.g. a whole plan folder (plan.md + all phase files).',
+        descVi: 'Truyền một thư mục để duyệt mọi doc bên trong — vd cả thư mục plan (plan.md + tất cả phase file).',
       },
       {
         flag: '<path>',
         promptEn: '/ck:preview src/auth/middleware.ts',
         promptVi: '/ck:preview src/auth/middleware.ts',
-        descEn: 'Point at any file or directory to read it as-is. This is the only input shape that takes a path; generate flags take a topic.',
-        descVi: 'Trỏ vào bất kỳ file hoặc thư mục nào để đọc nguyên trạng. Đây là dạng input duy nhất nhận path; generate flag nhận topic.',
+        descEn: 'Point at any file to read it as-is. This is the only input shape that takes a path; generate flags take a topic.',
+        descVi: 'Trỏ vào bất kỳ file nào để đọc nguyên trạng. Đây là dạng input duy nhất nhận path; generate flag nhận topic.',
       },
     ],
     accent: 'border-slate-200 bg-slate-50/70 ring-slate-100 dark:border-white/10 dark:bg-white/[0.04] dark:ring-white/5',
@@ -380,6 +390,12 @@ const locationNote = isVi
         </article>
       ))}
     </div>
+    <p class="mt-4 flex items-start gap-2 rounded-xl border border-slate-200 bg-slate-50/70 px-3.5 py-3 text-xs leading-5 text-slate-600 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-300">
+      <svg class="mt-0.5 h-3.5 w-3.5 shrink-0 text-slate-400 dark:text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
+      </svg>
+      <span class="min-w-0">{text.serverNote}</span>
+    </p>
   </section>
 
   <section class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_330px]">
