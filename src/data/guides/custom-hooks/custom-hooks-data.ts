@@ -145,11 +145,11 @@ export const hookCategories: HookCategory[] = [
       {
         id: 'simplify-gate',
         name: 'simplify-gate.cjs',
-        lines: 85,
+        lines: 215,
         kits: ['ek'],
-        triggers: ['PostToolUse (Edit/Write/MultiEdit)'],
-        descEn: 'Replaces post-edit-simplify-reminder. Auto-triggers code-simplifier when edit thresholds (400 LOC / 8 files) are breached.',
-        descVi: 'Thay thế post-edit-simplify-reminder. Tự động trigger code-simplifier khi vượt ngưỡng edit (400 LOC / 8 files).',
+        triggers: ['UserPromptSubmit'],
+        descEn: 'Opt-in gate (gate.enabled=false by default). Hard-blocks ship/merge/pr/deploy/publish and soft-warns commit/finalize/release when the working tree carries a large unsimplified diff (400 LOC / 8 files / 200 LOC single-file). Bypass via env CK_SIMPLIFY_DISABLED=1 or .ck.json hooks.simplify-gate=false.',
+        descVi: 'Gate opt-in (mặc định gate.enabled=false). Hard-block ship/merge/pr/deploy/publish và soft-warn commit/finalize/release khi working tree có diff lớn chưa simplify (400 LOC / 8 file / 200 LOC một file). Bypass qua env CK_SIMPLIFY_DISABLED=1 hoặc .ck.json hooks.simplify-gate=false.',
       },
       {
         id: 'plan-format-kanban',
