@@ -68,15 +68,15 @@ const marketingCategories = getMarketingKitCategories(t as any);
     </div>
   </div>
 
-  <!-- Engineer Kit (v2.19.1 stable / v2.19.1 beta in sync) categories panel -->
+  <!-- Engineer Kit (v2.19.1 stable / v2.19.2-beta.3 beta) categories panel -->
   <div id="categories-engineer" class="space-y-6">
     <!-- Stable version badge -->
     <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
       <span class="px-2 py-0.5 rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 font-semibold"
         >v2.19.1 Stable</span
       >
-      <span class="px-2 py-0.5 rounded-full bg-slate-200 dark:bg-slate-700/40 text-slate-500 dark:text-slate-400 font-semibold"
-        >v2.19.1 Beta</span
+      <span class="px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 font-semibold"
+        >v2.19.2-beta.3 Beta</span
       >
       <span class="text-slate-400 dark:text-slate-500 italic">{t("commands.engineer_stable_note")}</span>
     </div>
@@ -98,8 +98,21 @@ const marketingCategories = getMarketingKitCategories(t as any);
         </h3>
         <p class="text-xs text-slate-500 mt-1">{t("commands.beta_preview.subtitle")}</p>
       </div>
-      <div class="p-4">
-        <p class="text-xs text-slate-600 dark:text-slate-400 italic">{t("commands.beta_preview.caught_up")}</p>
+      <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        {[
+          { cmd: "/ck:review-pr", labelKey: "commands.beta_review_pr.desc", detailKey: "commands.beta_review_pr.detail", type: "skill", badge: "new" },
+        ].map((item) => (
+          <div class="p-3 rounded-lg border transition-all duration-200 hover:shadow-sm h-full flex flex-col bg-white/60 dark:bg-slate-900/50 border-purple-500/30">
+            <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <code class="text-xs font-mono px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium">{item.cmd}</code>
+                <span class={`text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400`}>new</span>
+              </div>
+            </div>
+            <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">{t(item.labelKey)}</p>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-auto" set:html={t(item.detailKey)}></p>
+          </div>
+        ))}
       </div>
     </div>
 
@@ -205,7 +218,7 @@ const marketingCategories = getMarketingKitCategories(t as any);
     <!-- Stable + beta version badges -->
     <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
       <span class="px-2 py-0.5 rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 font-semibold"
-        >v1.3.2 Stable</span
+        >v1.4.0 Stable</span
       >
       <span class="px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 font-semibold"
         >v1.4.0-beta.2 Beta</span
