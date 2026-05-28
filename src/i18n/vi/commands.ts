@@ -823,6 +823,8 @@ export const commands = {
   'commands.beta_preview.title': 'Beta Preview',
   'commands.beta_preview.subtitle': 'Skill mới và cải tiến lớn trong Engineer Kit Beta',
   'commands.beta_preview.caught_up': 'Beta đang đồng bộ với stable — hiện chưa có tính năng beta-exclusive nào.',
+  'commands.beta_review_pr.desc': 'Review GitHub PR diff với heuristic chống AI-slop',
+  'commands.beta_review_pr.detail': 'Skill mới <code>/ck:review-pr &lt;PR&gt;</code> review pull request về correctness, security, breaking change, code quality và pattern AI-slop (file dumping-ground, reimplementation song song, abstraction sớm).<br/>Hỗ trợ <code>--fix</code> để auto-remediate finding và <code>--reply</code> để post review formal lên GitHub qua <code>gh</code>.',
   'commands.stable.tech_graph.desc': 'Tạo SVG technical diagram chất lượng publication',
   'commands.stable.tech_graph.detail': '7 phong cách thiết kế (modern, minimal, neon, retro,...) và 10 template (architecture, sequence, ER, flow). Output SVG sẵn sàng cho docs, slides, blog post.',
   'commands.beta_tech_graph.desc': 'Tạo SVG technical diagram chất lượng publication',
