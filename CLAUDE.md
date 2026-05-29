@@ -35,6 +35,7 @@ This ensures packages installed by `install.sh` (google-genai, pypdf, etc.) are 
   - Text: `text-slate-700 dark:text-slate-200`
   - Command highlights: `text-purple-600 dark:text-purple-400`
   - Secondary text: `text-slate-500 dark:text-slate-400`
+- **Inline code in prose**: Text wrapped in backticks inside rendered guide copy must become a real `<code>` element, not visible literal backticks. Style it for both light and dark mode, e.g. `bg-slate-100 dark:bg-slate-800/90`, `text-slate-800 dark:text-slate-100`, and a subtle border.
 
 ## VividKit Guides - Changelog Sync
 
