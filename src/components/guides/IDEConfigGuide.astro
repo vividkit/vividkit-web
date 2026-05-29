@@ -1,11 +1,12 @@
 ---
 // IDEConfigGuide - composition parent, delegates to sub-components
 import { useTranslations } from '@/i18n/utils';
-import { getLangFromUrl, type Language } from '@/i18n';
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
 import IdeConfigHeroAndSetup from './ide-config/ide-config-hero-and-setup.astro';
 import IdeConfigProviderConfigs from './ide-config/ide-config-provider-configs.astro';
 import IdeConfigModelAndTips from './ide-config/ide-config-model-and-tips.astro';
 import IdeConfigAdvancedAndFooter from './ide-config/ide-config-advanced-and-footer.astro';
+import { ArrowRight, Cable, Clock3 } from 'lucide-astro';
 
 interface Props {
   lang?: Language;
@@ -14,6 +15,9 @@ interface Props {
 const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
+const translatePath = useTranslatedPath(currentLang);
+const isVi = currentLang === 'vi';
+const label = (en: string, vi: string) => isVi ? vi : en;
 
 // fullExample uses a translation string so must be built here in the parent
 const fullExample = `"claudeCode.environmentVariables": [
@@ -30,16 +34,130 @@ const fullExample = `"claudeCode.environmentVariables": [
 ]`;
 ---
 
-<div class="space-y-8 mt-6">
-  <IdeConfigHeroAndSetup lang={currentLang} fullExample={fullExample} />
-  <IdeConfigProviderConfigs lang={currentLang} />
-  <IdeConfigModelAndTips lang={currentLang} />
-  <IdeConfigAdvancedAndFooter lang={currentLang} />
+<div class="space-y-8 mt-6" data-guide-tabs data-default-tab="claude">
+  <section class="rounded-2xl border border-slate-200 bg-white/90 p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950/70">
+    <div class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
+          {label('IDE extension routes', 'Luồng IDE extension')}
+        </p>
+        <h2 class="mt-1 text-2xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-3xl">
+          {label('Pick the extension surface', 'Chọn extension surface')}
+        </h2>
+      </div>
+      <p class="max-w-md text-sm leading-6 text-slate-600 dark:text-slate-400">
+        {label('Claude Code extension is ready today. Codex extension stays as a tracked placeholder until its workflow is stable.', 'Claude Code extension dùng được ngay. Codex extension tạm là placeholder cho tới khi workflow ổn định.')}
+      </p>
+    </div>
+
+    <div class="grid gap-2 rounded-xl border border-slate-200 bg-slate-100/70 p-1.5 dark:border-slate-800 dark:bg-slate-900/45 sm:grid-cols-2" role="tablist" aria-label={label('IDE extension routes', 'Luồng IDE extension')}>
+      <button
+        type="button"
+        data-tab-button="claude"
+        aria-selected="true"
+        class="guide-tab-card group rounded-lg border border-slate-950 bg-slate-950 px-4 py-3 text-left text-white shadow-sm transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-300 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+      >
+        <span class="flex items-center justify-between gap-3">
+          <span class="flex min-w-0 items-center gap-2 text-sm font-bold">
+            <Cable class="h-4 w-4 shrink-0" stroke-width={2.2} />
+            <span class="truncate">{label('Claude Code Extension', 'Claude Code Extension')}</span>
+          </span>
+          <span class="rounded-full bg-white/15 px-2 py-0.5 text-[11px] font-bold">{label('Ready', 'Ready')}</span>
+        </span>
+        <span class="mt-1 block text-xs leading-5 opacity-75">
+          {label('Current guide for VS Code and VS Code-forked IDEs.', 'Guide hiện tại cho VS Code và các IDE fork từ VS Code.')}
+        </span>
+      </button>
+
+      <button
+        type="button"
+        data-tab-button="codex"
+        aria-selected="false"
+        class="guide-tab-card group rounded-lg border border-transparent px-4 py-3 text-left text-slate-600 transition hover:bg-white/70 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-300 dark:text-slate-300 dark:hover:bg-slate-950/50"
+      >
+        <span class="flex items-center justify-between gap-3">
+          <span class="flex min-w-0 items-center gap-2 text-sm font-bold">
+            <Clock3 class="h-4 w-4 shrink-0" stroke-width={2.2} />
+            <span class="truncate">{label('Codex Extension', 'Codex Extension')}</span>
+          </span>
+          <span class="rounded-full border border-slate-300 px-2 py-0.5 text-[11px] font-bold dark:border-slate-700">{label('Soon', 'Soon')}</span>
+        </span>
+        <span class="mt-1 block text-xs leading-5 opacity-75">
+          {label('Placeholder for the Codex IDE extension path.', 'Placeholder cho luồng Codex IDE extension.')}
+        </span>
+      </button>
+    </div>
+  </section>
+
+  <div data-tab-panel="claude">
+    <div class="space-y-8">
+      <IdeConfigHeroAndSetup lang={currentLang} fullExample={fullExample} />
+      <IdeConfigProviderConfigs lang={currentLang} />
+      <IdeConfigModelAndTips lang={currentLang} />
+      <IdeConfigAdvancedAndFooter lang={currentLang} />
+    </div>
+  </div>
+
+  <div data-tab-panel="codex" hidden>
+    <section class="rounded-xl border border-cyan-200 bg-white p-6 shadow-sm dark:border-cyan-500/30 dark:bg-slate-950/70">
+      <div class="max-w-2xl">
+        <div class="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-cyan-50 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-cyan-700 dark:border-cyan-500/30 dark:bg-cyan-950/40 dark:text-cyan-300">
+          {label('Coming Soon', 'Sắp ra mắt')}
+        </div>
+        <h2 class="mt-4 text-2xl font-bold tracking-tight text-slate-950 dark:text-white">
+          {label('Codex Extension setup', 'Cấu hình Codex Extension')}
+        </h2>
+        <p class="mt-3 text-base leading-7 text-slate-600 dark:text-slate-400">
+          {label(
+            'This tab will cover the Codex IDE extension path once the extension workflow is stable. For now, use the Codex App guide for CLIProxyAPI routing, account rotation, ~/.codex/config.toml, and CLIPROXY_API_KEY.',
+            'Tab này sẽ dành cho luồng Codex IDE extension khi workflow ổn định hơn. Hiện tại, dùng Codex App guide cho CLIProxyAPI routing, account rotation, ~/.codex/config.toml, và CLIPROXY_API_KEY.'
+          )}
+        </p>
+        <a
+          href={translatePath('/guides/codex-app')}
+          class="group mt-5 inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-slate-950 px-5 py-3 text-sm font-bold text-white transition hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-300 dark:bg-cyan-400 dark:text-slate-950 dark:hover:bg-cyan-300"
+        >
+          <span>{label('Open Codex App guide', 'Mở guide Codex App')}</span>
+          <ArrowRight class="h-4 w-4 transition group-hover:translate-x-0.5" stroke-width={2.2} />
+        </a>
+      </div>
+    </section>
+  </div>
 </div>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-guide-tabs]').forEach(group => {
+      const buttons = Array.from(group.querySelectorAll('[data-tab-button]'));
+      const panels = Array.from(group.querySelectorAll('[data-tab-panel]'));
+      const activate = (tab) => {
+        buttons.forEach(button => {
+          const active = button.getAttribute('data-tab-button') === tab;
+          button.setAttribute('aria-selected', String(active));
+          button.classList.toggle('border-slate-950', active);
+          button.classList.toggle('bg-slate-950', active);
+          button.classList.toggle('shadow-sm', active);
+          button.classList.toggle('text-white', active);
+          button.classList.toggle('dark:border-slate-700', active);
+          button.classList.toggle('dark:bg-slate-800', active);
+          button.classList.toggle('dark:text-white', active);
+          button.classList.toggle('border-transparent', !active);
+          button.classList.toggle('text-slate-600', !active);
+          button.classList.toggle('dark:text-slate-300', !active);
+        });
+        panels.forEach(panel => {
+          panel.hidden = panel.getAttribute('data-tab-panel') !== tab;
+        });
+      };
+      buttons.forEach(button => {
+        button.addEventListener('click', () => activate(button.getAttribute('data-tab-button')));
+      });
+      activate(group.getAttribute('data-default-tab') || buttons[0]?.getAttribute('data-tab-button'));
+    });
+
     document.querySelectorAll('.copy-btn').forEach(btn => {
+      if (btn.getAttribute('data-copy-bound') === 'true') return;
+      btn.setAttribute('data-copy-bound', 'true');
       btn.addEventListener('click', async () => {
         const code = btn.getAttribute('data-code');
         if (!code) return;
