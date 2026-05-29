@@ -216,7 +216,7 @@ export const guides = {
   'guides.home.pathway_providers.link_migrate': 'Migrate to Other Tools',
   // Pathway: Environments & Devices
   'guides.home.pathway_environments.title': 'Environments & Devices',
-  'guides.home.pathway_environments.desc': 'Set up the IDE extension and control Claude from mobile',
+  'guides.home.pathway_environments.desc': 'Set up the IDE extension and control Claude/Codex from mobile',
   'guides.home.pathway_environments.link_ide': 'IDE Config',
   'guides.home.pathway_environments.link_remote_control': 'Remote Control',
   // Pathway: Support & Discovery
