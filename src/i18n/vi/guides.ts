@@ -206,9 +206,9 @@ export const guides = {
   'guides.home.pathway_config.link_mechanics': 'Claude Mechanics',
   'guides.home.pathway_config.link_permissions': 'Thiết Lập Permissions',
   'guides.home.pathway_config.link_hooks': 'Custom Hooks',
-  // Pathway: Alternative Providers
-  'guides.home.pathway_providers.title': 'Provider Thay Thế',
-  'guides.home.pathway_providers.desc': 'Chạy Claude Code qua các LLM provider và tool khác',
+  // Pathway: Other Tools & Providers
+  'guides.home.pathway_providers.title': 'Tool & Provider Khác',
+  'guides.home.pathway_providers.desc': 'Dùng ClaudeKit với Codex CLI, route qua CCS đa provider, hoặc migrate sang tool khác',
   'guides.home.pathway_providers.link_ccs': 'CCS Multi-Provider',
   'guides.home.pathway_providers.link_codex_app': 'Codex App',
   'guides.home.pathway_providers.link_codex': 'CK with Codex',
@@ -219,12 +219,13 @@ export const guides = {
   'guides.home.pathway_environments.link_ide': 'Cấu Hình IDE',
   'guides.home.pathway_environments.link_remote_control': 'Remote Control',
   'guides.home.pathway_environments.link_coexistence': 'Coexistence với setup của bạn',
-  // Pathway: Reliability & Polish
-  'guides.home.pathway_reliability.title': 'Ổn Định & Tinh Chỉnh',
-  'guides.home.pathway_reliability.desc': 'Khôi phục session, debug từ log, và trau chuốt UI',
+  // Pathway: Support & Discovery
+  'guides.home.pathway_reliability.title': 'Hỗ Trợ & Khám Phá',
+  'guides.home.pathway_reliability.desc': 'Khôi phục session, debug từ log, tinh chỉnh UI, và xem ưu đãi từ provider',
   'guides.home.pathway_reliability.link_uiux': 'Thiết Kế UI/UX',
   'guides.home.pathway_reliability.link_session': 'Khôi Phục Session',
   'guides.home.pathway_reliability.link_fix_logs': 'Sửa Lỗi Từ Log',
+  'guides.home.pathway_reliability.link_promotions': 'Khuyến Mãi',
   'guides.home.deep_dive.how_ck_works_desc': 'Trình mô phỏng tương tác cách ClaudeKit điều phối tools, hooks, và quy trình multi-agent.',
   'guides.home.inside_claudekit.title': 'Inside ClaudeKit',
   'guides.home.inside_claudekit.kicker': 'Những chủ đề đào sâu cho workflow thực tế',
