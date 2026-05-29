@@ -1,6 +1,5 @@
 ---
-// Reusable card component for guides home page pathways
-import ArrowRight from 'lucide-astro/ArrowRight';
+import { ChevronRight } from 'lucide-astro';
 import { useTranslations } from "@/i18n/utils";
 import { useTranslatedPath, type Language } from "@/i18n";
 
@@ -15,7 +14,7 @@ interface Props {
   titleKey: string;
   descKey: string;
   links: PathwayLink[];
-  accentColor: 'green' | 'blue' | 'amber' | 'purple';
+  accentColor: 'green' | 'blue' | 'amber' | 'purple' | 'cyan' | 'rose';
   lang: Language;
 }
 
@@ -23,76 +22,134 @@ const { id, icon: Icon, titleKey, descKey, links, accentColor, lang } = Astro.pr
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 
-// Color mappings for accent colors
 const colorClasses = {
   green: {
-    bg: 'from-emerald-500/5 to-green-500/5 dark:from-emerald-500/10 dark:to-green-500/10',
-    border: 'border-emerald-200 dark:border-emerald-500/30',
-    iconBg: 'bg-emerald-100 dark:bg-emerald-500/20',
-    iconText: 'text-emerald-600 dark:text-emerald-400',
-    titleText: 'text-emerald-700 dark:text-emerald-400',
-    linkHover: 'hover:text-emerald-600 dark:hover:text-emerald-400',
+    surface: 'bg-gradient-to-br from-white via-white to-emerald-50/40 dark:from-slate-900/80 dark:via-slate-900/60 dark:to-emerald-950/30',
+    border: 'border-slate-200/70 dark:border-slate-800',
+    hoverBorder: 'hover:border-emerald-300/80 dark:hover:border-emerald-500/40',
+    hoverShadow: 'hover:shadow-emerald-500/10 dark:hover:shadow-emerald-500/10',
+    iconBg: 'bg-gradient-to-br from-emerald-500 to-teal-600 shadow-emerald-500/25 dark:shadow-emerald-500/20',
+    titleHover: 'group-hover:text-emerald-700 dark:group-hover:text-emerald-300',
+    linkHover: 'hover:bg-emerald-50/60 dark:hover:bg-emerald-950/30',
+    linkText: 'group-hover/link:text-emerald-700 dark:group-hover/link:text-emerald-300',
+    chevron: 'text-emerald-500/70 dark:text-emerald-400/60',
   },
   blue: {
-    bg: 'from-blue-500/5 to-cyan-500/5 dark:from-blue-500/10 dark:to-cyan-500/10',
-    border: 'border-blue-200 dark:border-blue-500/30',
-    iconBg: 'bg-blue-100 dark:bg-blue-500/20',
-    iconText: 'text-blue-600 dark:text-blue-400',
-    titleText: 'text-blue-700 dark:text-blue-400',
-    linkHover: 'hover:text-blue-600 dark:hover:text-blue-400',
+    surface: 'bg-gradient-to-br from-white via-white to-blue-50/40 dark:from-slate-900/80 dark:via-slate-900/60 dark:to-blue-950/30',
+    border: 'border-slate-200/70 dark:border-slate-800',
+    hoverBorder: 'hover:border-blue-300/80 dark:hover:border-blue-500/40',
+    hoverShadow: 'hover:shadow-blue-500/10 dark:hover:shadow-blue-500/10',
+    iconBg: 'bg-gradient-to-br from-blue-500 to-cyan-600 shadow-blue-500/25 dark:shadow-blue-500/20',
+    titleHover: 'group-hover:text-blue-700 dark:group-hover:text-blue-300',
+    linkHover: 'hover:bg-blue-50/60 dark:hover:bg-blue-950/30',
+    linkText: 'group-hover/link:text-blue-700 dark:group-hover/link:text-blue-300',
+    chevron: 'text-blue-500/70 dark:text-blue-400/60',
   },
   amber: {
-    bg: 'from-amber-500/5 to-orange-500/5 dark:from-amber-500/10 dark:to-orange-500/10',
-    border: 'border-amber-200 dark:border-amber-500/30',
-    iconBg: 'bg-amber-100 dark:bg-amber-500/20',
-    iconText: 'text-amber-600 dark:text-amber-400',
-    titleText: 'text-amber-700 dark:text-amber-400',
-    linkHover: 'hover:text-amber-600 dark:hover:text-amber-400',
+    surface: 'bg-gradient-to-br from-white via-white to-amber-50/40 dark:from-slate-900/80 dark:via-slate-900/60 dark:to-amber-950/30',
+    border: 'border-slate-200/70 dark:border-slate-800',
+    hoverBorder: 'hover:border-amber-300/80 dark:hover:border-amber-500/40',
+    hoverShadow: 'hover:shadow-amber-500/10 dark:hover:shadow-amber-500/10',
+    iconBg: 'bg-gradient-to-br from-amber-500 to-orange-600 shadow-amber-500/25 dark:shadow-amber-500/20',
+    titleHover: 'group-hover:text-amber-700 dark:group-hover:text-amber-300',
+    linkHover: 'hover:bg-amber-50/60 dark:hover:bg-amber-950/30',
+    linkText: 'group-hover/link:text-amber-700 dark:group-hover/link:text-amber-300',
+    chevron: 'text-amber-500/70 dark:text-amber-400/60',
   },
   purple: {
-    bg: 'from-purple-500/5 to-fuchsia-500/5 dark:from-purple-500/10 dark:to-fuchsia-500/10',
-    border: 'border-purple-200 dark:border-purple-500/30',
-    iconBg: 'bg-purple-100 dark:bg-purple-500/20',
-    iconText: 'text-purple-600 dark:text-purple-400',
-    titleText: 'text-purple-700 dark:text-purple-400',
-    linkHover: 'hover:text-purple-600 dark:hover:text-purple-400',
+    surface: 'bg-gradient-to-br from-white via-white to-purple-50/40 dark:from-slate-900/80 dark:via-slate-900/60 dark:to-purple-950/30',
+    border: 'border-slate-200/70 dark:border-slate-800',
+    hoverBorder: 'hover:border-purple-300/80 dark:hover:border-purple-500/40',
+    hoverShadow: 'hover:shadow-purple-500/10 dark:hover:shadow-purple-500/10',
+    iconBg: 'bg-gradient-to-br from-purple-500 to-fuchsia-600 shadow-purple-500/25 dark:shadow-purple-500/20',
+    titleHover: 'group-hover:text-purple-700 dark:group-hover:text-purple-300',
+    linkHover: 'hover:bg-purple-50/60 dark:hover:bg-purple-950/30',
+    linkText: 'group-hover/link:text-purple-700 dark:group-hover/link:text-purple-300',
+    chevron: 'text-purple-500/70 dark:text-purple-400/60',
+  },
+  cyan: {
+    surface: 'bg-gradient-to-br from-white via-white to-cyan-50/40 dark:from-slate-900/80 dark:via-slate-900/60 dark:to-cyan-950/30',
+    border: 'border-slate-200/70 dark:border-slate-800',
+    hoverBorder: 'hover:border-cyan-300/80 dark:hover:border-cyan-500/40',
+    hoverShadow: 'hover:shadow-cyan-500/10 dark:hover:shadow-cyan-500/10',
+    iconBg: 'bg-gradient-to-br from-cyan-500 to-teal-600 shadow-cyan-500/25 dark:shadow-cyan-500/20',
+    titleHover: 'group-hover:text-cyan-700 dark:group-hover:text-cyan-300',
+    linkHover: 'hover:bg-cyan-50/60 dark:hover:bg-cyan-950/30',
+    linkText: 'group-hover/link:text-cyan-700 dark:group-hover/link:text-cyan-300',
+    chevron: 'text-cyan-500/70 dark:text-cyan-400/60',
+  },
+  rose: {
+    surface: 'bg-gradient-to-br from-white via-white to-rose-50/40 dark:from-slate-900/80 dark:via-slate-900/60 dark:to-rose-950/30',
+    border: 'border-slate-200/70 dark:border-slate-800',
+    hoverBorder: 'hover:border-rose-300/80 dark:hover:border-rose-500/40',
+    hoverShadow: 'hover:shadow-rose-500/10 dark:hover:shadow-rose-500/10',
+    iconBg: 'bg-gradient-to-br from-rose-500 to-red-600 shadow-rose-500/25 dark:shadow-rose-500/20',
+    titleHover: 'group-hover:text-rose-700 dark:group-hover:text-rose-300',
+    linkHover: 'hover:bg-rose-50/60 dark:hover:bg-rose-950/30',
+    linkText: 'group-hover/link:text-rose-700 dark:group-hover/link:text-rose-300',
+    chevron: 'text-rose-500/70 dark:text-rose-400/60',
   },
 };
 
 const colors = colorClasses[accentColor];
 ---
 
-<div
-  class={`group rounded-2xl p-6 bg-gradient-to-br ${colors.bg} border ${colors.border} hover:shadow-lg hover:scale-[1.02] transition-all duration-300`}
+<article
+  class:list={[
+    'pathway-card group relative grid row-span-4 rounded-2xl border backdrop-blur transition-all duration-300',
+    'hover:-translate-y-1 hover:shadow-xl',
+    colors.surface,
+    colors.border,
+    colors.hoverBorder,
+    colors.hoverShadow,
+  ]}
   data-pathway={id}
 >
-  <!-- Icon + Title -->
-  <div class="flex items-start gap-4 mb-4">
-    <div class={`flex-shrink-0 w-12 h-12 rounded-xl ${colors.iconBg} flex items-center justify-center ${colors.iconText}`}>
-      <Icon class="w-6 h-6" />
+  <!-- Header: icon + title -->
+  <div class="flex items-start gap-4 px-6 pt-6 pb-3">
+    <div
+      class:list={[
+        'flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl text-white shadow-md transition-transform duration-300',
+        'group-hover:scale-105 group-hover:rotate-[-4deg]',
+        colors.iconBg,
+      ]}
+    >
+      <Icon class="h-6 w-6" />
     </div>
-    <div class="flex-1 min-w-0">
-      <h3 class={`text-lg font-bold ${colors.titleText} mb-1`}>
-        {t(titleKey)}
-      </h3>
-      <p class="text-sm text-slate-600 dark:text-slate-400">
-        {t(descKey)}
-      </p>
-    </div>
+    <h3 class:list={['min-w-0 flex-1 pt-1.5 text-lg font-bold leading-tight text-slate-900 transition-colors dark:text-white', colors.titleHover]}>
+      {t(titleKey)}
+    </h3>
   </div>
 
+  <!-- Description row (subgrid-aligned across cards) -->
+  <p class="px-6 pb-4 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+    {t(descKey)}
+  </p>
+
+  <!-- Divider -->
+  <div class="mx-6 border-t border-slate-200/60 dark:border-slate-800/80"></div>
+
   <!-- Links -->
-  <ul class="space-y-2 pl-16">
+  <ul class="flex flex-col gap-0.5 self-start p-3">
     {links.map((link) => (
       <li>
         <a
           href={translatePath(link.href)}
-          class={`flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 ${colors.linkHover} transition-colors`}
+          class:list={[
+            'group/link flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-700 transition-all dark:text-slate-300',
+            colors.linkHover,
+          ]}
         >
-          <ArrowRight class="w-4 h-4 flex-shrink-0" />
-          <span>{t(link.labelKey)}</span>
+          <span class:list={['truncate transition-colors', colors.linkText]}>{t(link.labelKey)}</span>
+          <ChevronRight class:list={['h-4 w-4 flex-shrink-0 translate-x-0 transition-transform duration-200 group-hover/link:translate-x-0.5', colors.chevron]} />
         </a>
       </li>
     ))}
   </ul>
-</div>
+</article>
+
+<style>
+  .pathway-card {
+    grid-template-rows: subgrid;
+  }
+</style>
