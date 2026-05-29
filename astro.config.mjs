@@ -36,6 +36,8 @@ export default defineConfig({
   },
   redirects: {
     '/guides/resume': '/guides/session-recovery',
-    '/vi/guides/resume': '/vi/guides/session-recovery'
+    '/vi/guides/resume': '/vi/guides/session-recovery',
+    '/guides/mobile-coding': '/guides/remote-control',
+    '/vi/guides/mobile-coding': '/vi/guides/remote-control'
   }
 });

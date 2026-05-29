@@ -1,0 +1,121 @@
+---
+import {
+  PRE_LG,
+  PRE_SM,
+  COPY_BTN_LG,
+  COPY_BTN_SM,
+  COPY_ICON_LG,
+  CHECK_ICON_LG,
+  COPY_ICON_SM,
+  CHECK_ICON_SM,
+  renderShellSnippet,
+  stripShellComments,
+} from './ck-with-codex/shell-snippet-helpers';
+
+interface Props {
+  code: string;
+  label?: string;
+  compact?: boolean;
+  mode?: 'shell' | 'plain';
+  copyMode?: 'commands' | 'raw';
+  copyText?: string;
+  prompt?: string;
+  class?: string;
+}
+
+const {
+  code,
+  label = 'shell',
+  compact = false,
+  mode = 'shell',
+  copyMode,
+  copyText,
+  prompt = '$',
+} = Astro.props;
+
+const className = Astro.props.class;
+const preClass = compact ? PRE_SM : PRE_LG;
+const copyButtonClass = compact ? COPY_BTN_SM : COPY_BTN_LG;
+const copyIconClass = compact ? COPY_ICON_SM : COPY_ICON_LG;
+const checkIconClass = compact ? CHECK_ICON_SM : CHECK_ICON_LG;
+const resolvedCopyMode = copyMode ?? (mode === 'shell' ? 'commands' : 'raw');
+const copyPayload = copyText ?? (resolvedCopyMode === 'commands' ? stripShellComments(code) : copySnippetAsShown(code));
+
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function copySnippetAsShown(s: string): string {
+  return s.replace(/^\n+|\n+$/g, '');
+}
+
+const COMMENT_CLS = 'text-slate-500 dark:text-slate-400 italic';
+
+function renderPlainSnippet(s: string): string {
+  return s.split('\n').map((line) => {
+    if (line.trimStart().startsWith('#')) {
+      return `<span class="${COMMENT_CLS}">${escapeHtml(line)}</span>`;
+    }
+    return escapeHtml(line);
+  }).join('\n');
+}
+
+const renderedCode = mode === 'shell' ? renderShellSnippet(code, prompt) : renderPlainSnippet(code);
+---
+
+<div class:list={[
+  'relative min-w-0 overflow-hidden rounded-lg ring-1 ring-slate-200/80 dark:ring-slate-800/80',
+  className,
+]}>
+  <div class="flex min-h-8 items-center gap-1.5 border-b border-slate-200/70 bg-slate-50/60 px-4 py-2 pr-10 font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500 dark:border-slate-800/80 dark:bg-slate-900/40 dark:text-slate-500">
+    <span class="inline-block h-2 w-2 rounded-full bg-rose-400/70" aria-hidden="true"></span>
+    <span class="inline-block h-2 w-2 rounded-full bg-amber-400/70" aria-hidden="true"></span>
+    <span class="inline-block h-2 w-2 rounded-full bg-emerald-400/70" aria-hidden="true"></span>
+    <span class="ml-1 truncate">{label}</span>
+  </div>
+  <pre class={`${preClass} m-0 overflow-x-auto`}><code set:html={renderedCode} /></pre>
+  <button class={copyButtonClass} data-code={copyPayload} aria-label="Copy">
+    <svg class={copyIconClass} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
+    </svg>
+    <svg class={checkIconClass} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+  </button>
+</div>
+
+<script>
+  function bindSnippetCopyButtons() {
+    document.querySelectorAll('.copy-btn').forEach((btn) => {
+      if (btn.getAttribute('data-copy-bound') === 'true') return;
+      btn.setAttribute('data-copy-bound', 'true');
+      btn.addEventListener('click', async () => {
+        const code = btn.getAttribute('data-code');
+        if (!code) return;
+
+        try {
+          await navigator.clipboard.writeText(code);
+          const copyIcon = btn.querySelector('.copy-icon');
+          const checkIcon = btn.querySelector('.check-icon');
+          if (copyIcon && checkIcon) {
+            copyIcon.classList.add('hidden');
+            checkIcon.classList.remove('hidden');
+          }
+          setTimeout(() => {
+            if (copyIcon && checkIcon) {
+              copyIcon.classList.remove('hidden');
+              checkIcon.classList.add('hidden');
+            }
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy:', err);
+        }
+      });
+    });
+  }
+
+  bindSnippetCopyButtons();
+  document.addEventListener('DOMContentLoaded', bindSnippetCopyButtons);
+  document.addEventListener('astro:page-load', bindSnippetCopyButtons);
+</script>
