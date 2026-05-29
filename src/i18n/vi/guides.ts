@@ -216,7 +216,7 @@ export const guides = {
   'guides.home.pathway_providers.link_migrate': 'Migrate sang Tool Khác',
   // Pathway: Environments & Devices
   'guides.home.pathway_environments.title': 'Môi Trường & Thiết Bị',
-  'guides.home.pathway_environments.desc': 'Cấu hình IDE extension và điều khiển Claude từ mobile',
+  'guides.home.pathway_environments.desc': 'Cấu hình IDE extension và điều khiển Claude/Codex từ mobile',
   'guides.home.pathway_environments.link_ide': 'Cấu Hình IDE',
   'guides.home.pathway_environments.link_remote_control': 'Remote Control',
   // Pathway: Support & Discovery
