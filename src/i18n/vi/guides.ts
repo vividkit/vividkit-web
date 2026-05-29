@@ -209,7 +209,7 @@ export const guides = {
   'guides.home.pathway_config.link_coexistence': 'Coexistence với setup của bạn',
   // Pathway: Other Tools & Providers
   'guides.home.pathway_providers.title': 'Tool & Provider Khác',
-  'guides.home.pathway_providers.desc': 'Áp dụng ClaudeKit vào Codex CLI, đa provider qua CCS, hoặc migrate',
+  'guides.home.pathway_providers.desc': 'Áp dụng ClaudeKit vào Codex CLI, dùng nhiều AI provider qua CCS, hoặc migrate',
   'guides.home.pathway_providers.link_ccs': 'CCS Multi-Provider',
   'guides.home.pathway_providers.link_codex_app': 'Codex App',
   'guides.home.pathway_providers.link_codex': 'CK with Codex',

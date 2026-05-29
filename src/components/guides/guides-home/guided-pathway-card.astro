@@ -96,7 +96,7 @@ const colors = colorClasses[accentColor];
 
 <article
   class:list={[
-    'group relative flex flex-col rounded-2xl border backdrop-blur transition-all duration-300',
+    'pathway-card group relative grid row-span-4 rounded-2xl border backdrop-blur transition-all duration-300',
     'hover:-translate-y-1 hover:shadow-xl',
     colors.surface,
     colors.border,
@@ -105,8 +105,8 @@ const colors = colorClasses[accentColor];
   ]}
   data-pathway={id}
 >
-  <!-- Header -->
-  <div class="flex items-start gap-4 p-6 pb-4">
+  <!-- Header: icon + title -->
+  <div class="flex items-start gap-4 px-6 pt-6 pb-3">
     <div
       class:list={[
         'flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl text-white shadow-md transition-transform duration-300',
@@ -116,21 +116,21 @@ const colors = colorClasses[accentColor];
     >
       <Icon class="h-6 w-6" />
     </div>
-    <div class="min-w-0 flex-1 pt-0.5">
-      <h3 class:list={['text-lg font-bold leading-tight text-slate-900 transition-colors dark:text-white', colors.titleHover]}>
-        {t(titleKey)}
-      </h3>
-      <p class="mt-1.5 min-h-[4.25rem] text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-        {t(descKey)}
-      </p>
-    </div>
+    <h3 class:list={['min-w-0 flex-1 pt-1.5 text-lg font-bold leading-tight text-slate-900 transition-colors dark:text-white', colors.titleHover]}>
+      {t(titleKey)}
+    </h3>
   </div>
+
+  <!-- Description row (subgrid-aligned across cards) -->
+  <p class="px-6 pb-4 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+    {t(descKey)}
+  </p>
 
   <!-- Divider -->
   <div class="mx-6 border-t border-slate-200/60 dark:border-slate-800/80"></div>
 
   <!-- Links -->
-  <ul class="flex flex-col gap-0.5 p-3">
+  <ul class="flex flex-col gap-0.5 self-start p-3">
     {links.map((link) => (
       <li>
         <a
@@ -147,3 +147,9 @@ const colors = colorClasses[accentColor];
     ))}
   </ul>
 </article>
+
+<style>
+  .pathway-card {
+    grid-template-rows: subgrid;
+  }
+</style>
