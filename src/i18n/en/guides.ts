@@ -206,9 +206,9 @@ export const guides = {
   'guides.home.pathway_config.link_mechanics': 'Claude Mechanics',
   'guides.home.pathway_config.link_permissions': 'Permissions Setup',
   'guides.home.pathway_config.link_hooks': 'Custom Hooks',
-  // Pathway: Alternative Providers
-  'guides.home.pathway_providers.title': 'Alternative Providers',
-  'guides.home.pathway_providers.desc': 'Route Claude Code through other LLM providers and tools',
+  // Pathway: Other Tools & Providers
+  'guides.home.pathway_providers.title': 'Other Tools & Providers',
+  'guides.home.pathway_providers.desc': 'Apply ClaudeKit to Codex CLI, route through CCS providers, or migrate to other tools',
   'guides.home.pathway_providers.link_ccs': 'CCS Multi-Provider',
   'guides.home.pathway_providers.link_codex_app': 'Codex App',
   'guides.home.pathway_providers.link_codex': 'CK with Codex',
@@ -219,12 +219,13 @@ export const guides = {
   'guides.home.pathway_environments.link_ide': 'IDE Config',
   'guides.home.pathway_environments.link_remote_control': 'Remote Control',
   'guides.home.pathway_environments.link_coexistence': 'Coexistence with your setup',
-  // Pathway: Reliability & Polish
-  'guides.home.pathway_reliability.title': 'Reliability & Polish',
-  'guides.home.pathway_reliability.desc': 'Recover sessions, debug from logs, and refine UI quality',
+  // Pathway: Support & Discovery
+  'guides.home.pathway_reliability.title': 'Support & Discovery',
+  'guides.home.pathway_reliability.desc': 'Recover sessions, debug from logs, polish UI, and grab provider deals',
   'guides.home.pathway_reliability.link_uiux': 'UI/UX Guide',
   'guides.home.pathway_reliability.link_session': 'Session Recovery',
   'guides.home.pathway_reliability.link_fix_logs': 'Fix from Logs',
+  'guides.home.pathway_reliability.link_promotions': 'Promotions',
   'guides.home.deep_dive.how_ck_works_desc': 'Interactive visualizer showing how ClaudeKit orchestrates tools, hooks, and multi-agent workflows.',
   'guides.home.inside_claudekit.title': 'Inside ClaudeKit',
   'guides.home.inside_claudekit.kicker': 'Deeper topics for real workflows',
