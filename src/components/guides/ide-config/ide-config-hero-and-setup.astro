@@ -3,6 +3,7 @@
 import { useTranslations } from '@/i18n/utils';
 import { getLangFromUrl, type Language } from '@/i18n';
 import LLMProviderIcon from '@/components/ui/LLMProviderIcon.astro';
+import TerminalSnippet from '../TerminalSnippet.astro';
 
 interface Props {
   lang?: Language;
@@ -167,9 +168,7 @@ const t = useTranslations(currentLang);
         <span class="font-bold text-slate-900 dark:text-slate-100 text-sm">{t('ide_config.guide.step1_title')}</span>
         <span class="text-slate-500 text-xs ml-2">— {t('ide_config.guide.step1_desc')}</span>
       </div>
-      <div class="bg-slate-900 rounded-lg p-3 overflow-x-auto">
-        <code class="text-sm text-green-400 whitespace-pre">Cmd/Ctrl + Shift + P → "Preferences: Open User Settings (JSON)"</code>
-      </div>
+      <TerminalSnippet code={`Cmd/Ctrl + Shift + P -> "Preferences: Open User Settings (JSON)"`} label="ide · command palette" mode="plain" compact />
     </div>
 
     <!-- Step 2 -->
@@ -180,9 +179,7 @@ const t = useTranslations(currentLang);
         <span class="font-bold text-slate-900 dark:text-slate-100 text-sm">{t('ide_config.guide.step2_title')}</span>
         <span class="text-slate-500 text-xs ml-2">— {t('ide_config.guide.step2_desc')}</span>
       </div>
-      <div class="bg-slate-900 rounded-lg p-3 overflow-x-auto">
-        <pre class="text-sm text-green-400 whitespace-pre">{fullExample}</pre>
-      </div>
+      <TerminalSnippet code={fullExample} label="json · settings.json" mode="plain" />
     </div>
 
     <!-- Step 3 -->
