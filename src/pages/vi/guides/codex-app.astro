@@ -1,6 +1,6 @@
 ---
 import GuidesLayout from '@/layouts/GuidesLayout.astro';
-import HappyCCSGuide from '@/components/guides/HappyCCSGuide.astro';
+import CodexAppGuide from '@/components/guides/CodexAppGuide.astro';
 import { useTranslations } from '@/i18n/utils';
 import type { Language } from '@/i18n';
 
@@ -9,10 +9,10 @@ const t = useTranslations(lang);
 ---
 
 <GuidesLayout
-  title={`${t('guides.happy_ccs.title')} - ${t('site.title')}`}
-  description={t('guides.happy_ccs.description')}
-  activeTab="remote-control"
+  title={`${t('guides.codex_app.title')} - ${t('site.title')}`}
+  description={t('guides.codex_app.description')}
+  activeTab="codex-app"
   lang="vi"
 >
-  <HappyCCSGuide lang="vi" />
+  <CodexAppGuide lang="vi" />
 </GuidesLayout>
