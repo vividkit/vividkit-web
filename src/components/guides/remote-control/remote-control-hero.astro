@@ -1,0 +1,118 @@
+---
+import { type Language } from '@/i18n';
+import {
+  Cable,
+  Cloud,
+  MonitorUp,
+  Route,
+  ShieldCheck,
+  Smartphone,
+  TerminalSquare,
+} from 'lucide-astro';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const isVi = lang === 'vi';
+const t = (en: string, vi: string) => isVi ? vi : en;
+---
+
+<section class="relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950/80">
+  <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-400/70 to-transparent" aria-hidden="true"></div>
+  <div class="p-5 sm:p-7 lg:p-9">
+    <div class="grid gap-8 xl:grid-cols-[minmax(0,0.95fr)_minmax(360px,0.65fr)] xl:items-start">
+      <div>
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-cyan-50 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-cyan-800 dark:border-cyan-500/30 dark:bg-cyan-500/10 dark:text-cyan-200">
+            <MonitorUp class="h-3.5 w-3.5" stroke-width={2.2} />
+            Remote Control
+          </span>
+          <span class="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-bold text-slate-600 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-300">
+            Claude Code
+          </span>
+          <span class="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-bold text-slate-600 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-300">
+            Codex
+          </span>
+        </div>
+
+        <h2 class="mt-5 max-w-3xl text-3xl font-bold leading-tight tracking-tight text-slate-950 dark:text-white sm:text-5xl">
+          {t('Choose the runtime before opening remote access', 'Chọn runtime trước khi bật remote access')}
+        </h2>
+
+        <p class="mt-5 max-w-3xl text-base leading-7 text-slate-600 dark:text-slate-400 sm:text-lg">
+          {t('Both paths share the same local-first shape: a signed-in remote device talks through a relay, while the real session keeps running on a connected host. What changes is the host process, the identity system, and whether model routing is added.', 'Cả hai path có chung logic local-first: thiết bị remote đã đăng nhập đi qua relay, còn session thật vẫn chạy trên host được connect. Khác nhau là host process, identity system, và có thêm model routing hay không.')}
+        </p>
+
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 bg-slate-50/80 p-4 dark:border-slate-800 dark:bg-slate-900/35">
+        <div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-950/75">
+          <div class="flex items-center justify-between gap-3">
+            <span class="text-sm font-bold text-slate-950 dark:text-white">{t('What talks to what', 'Luồng kết nối')}</span>
+            <span class="rounded-full border border-cyan-200 bg-cyan-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.14em] text-cyan-700 dark:border-cyan-500/30 dark:bg-cyan-500/10 dark:text-cyan-200">
+              {t('local-first', 'local-first')}
+            </span>
+          </div>
+
+          <div class="mt-4 grid gap-3">
+            <div class="rounded-xl border border-cyan-200 bg-cyan-50/70 p-3 dark:border-cyan-500/30 dark:bg-cyan-500/10">
+              <div class="flex items-start gap-3">
+                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white text-cyan-700 shadow-sm dark:bg-slate-950/70 dark:text-cyan-200">
+                  <Smartphone class="h-5 w-5" stroke-width={2.2} />
+                </span>
+                <div>
+                  <div class="text-sm font-bold text-slate-950 dark:text-white">{t('Phone / tablet / browser', 'Phone / tablet / browser')}</div>
+                  <p class="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-400">{t('Only sends control events and receives session updates.', 'Chỉ gửi control event và nhận session update.')}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-center text-slate-400 dark:text-slate-600" aria-hidden="true">
+              <Cable class="h-5 w-5" stroke-width={2.2} />
+            </div>
+
+            <div class="grid gap-3">
+              <div class="rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-900/70">
+                <div class="flex items-center gap-2 text-sm font-bold text-slate-950 dark:text-white">
+                  <Cloud class="h-4 w-4 text-sky-600 dark:text-sky-300" stroke-width={2.2} />
+                  {t('Remote relay', 'Remote relay')}
+                </div>
+                <p class="mt-2 text-xs leading-5 text-slate-600 dark:text-slate-400">{t('Only forwards prompts, approvals, and status. Files and workspace stay on the host.', 'Relay chỉ chuyển prompt, yêu cầu duyệt và trạng thái. File/workspace vẫn ở host.')}</p>
+              </div>
+              <div class="rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-900/70">
+                <div class="flex items-center gap-2 text-sm font-bold text-slate-950 dark:text-white">
+                  <ShieldCheck class="h-4 w-4 text-emerald-600 dark:text-emerald-300" stroke-width={2.2} />
+                  {t('Local session', 'Local session')}
+                </div>
+                <p class="mt-2 text-xs leading-5 text-slate-600 dark:text-slate-400">{t('Runs the real Claude/Codex session. Files, tools, credentials, and approvals stay on the host.', 'Host chạy phiên Claude/Codex thật. File, tool, credential và quyền duyệt ở lại host.')}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-6 grid gap-3 md:grid-cols-2">
+      <div class="rounded-xl border border-amber-200 bg-amber-50/60 p-4 dark:border-amber-500/30 dark:bg-amber-500/10">
+        <div class="flex min-w-0 items-center gap-3 text-sm font-bold text-slate-950 dark:text-white">
+          <TerminalSquare class="h-5 w-5 shrink-0 text-amber-700 dark:text-amber-300" stroke-width={2.2} />
+          <span class="min-w-0 whitespace-nowrap">{t('Claude Code path', 'Path Claude Code')}</span>
+        </div>
+        <p class="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400">
+          {t('Use the built-in Claude Code command. Remote Control needs a claude.ai subscription login; API-key or Console auth cannot create the remote session.', 'Dùng command tích hợp của Claude Code. Remote Control cần login subscription claude.ai; auth bằng API key hoặc Console không tạo được remote session.')}
+        </p>
+      </div>
+      <div class="rounded-xl border border-cyan-200 bg-cyan-50/60 p-4 dark:border-cyan-500/30 dark:bg-cyan-500/10">
+        <div class="flex min-w-0 items-center gap-3 text-sm font-bold text-slate-950 dark:text-white">
+          <Route class="h-5 w-5 shrink-0 text-cyan-700 dark:text-cyan-300" stroke-width={2.2} />
+          <span class="min-w-0 whitespace-nowrap">{t('Codex path', 'Path Codex')}</span>
+        </div>
+        <p class="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400">
+          {t('Use the Codex app-server host process. ChatGPT identity handles the remote relay; CLIProxyAPI/CCS only changes where model calls are routed.', 'Dùng Codex app-server làm host process. ChatGPT identity lo remote relay; CLIProxyAPI/CCS chỉ đổi route của model call.')}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

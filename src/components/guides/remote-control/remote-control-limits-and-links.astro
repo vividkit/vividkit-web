@@ -1,0 +1,77 @@
+---
+import type { Language } from '@/i18n';
+import { ArrowRight, BookOpen, LifeBuoy, Route, Server } from 'lucide-astro';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const isVi = lang === 'vi';
+const t = (en: string, vi: string) => isVi ? vi : en;
+
+const sources = [
+  {
+    href: 'https://code.claude.com/docs/en/remote-control',
+    icon: LifeBuoy,
+    title: t('Claude Remote Control docs', 'Tài liệu Claude Remote Control'),
+    body: t('Requirements, claude.ai login, Team/Enterprise admin toggle, local-session behavior, and limitations.', 'Requirements, claude.ai login, admin toggle cho Team/Enterprise, local-session behavior, và limitations.'),
+    tone: 'amber',
+  },
+  {
+    href: 'https://developers.openai.com/codex/remote-connections',
+    icon: Route,
+    title: t('OpenAI Codex remote connections', 'OpenAI Codex Remote connections'),
+    body: t('Connected host model, mobile setup, secure relay, and what comes from the host.', 'Connected host model, mobile setup, secure relay, và những gì lấy từ host.'),
+    tone: 'cyan',
+  },
+  {
+    href: 'https://developers.openai.com/codex/app-server',
+    icon: Server,
+    title: t('OpenAI Codex app-server', 'OpenAI Codex app-server'),
+    body: t('Official definition of app-server as the local protocol/interface for rich Codex clients.', 'Định nghĩa chính thức app-server là protocol/interface local cho rich Codex clients.'),
+    tone: 'slate',
+  },
+] as const;
+
+const linkClass = {
+  amber: 'border-amber-200 bg-amber-50 text-amber-900 hover:border-amber-300 hover:bg-amber-100/70 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-200 dark:hover:border-amber-400/50 dark:hover:bg-amber-500/15',
+  cyan: 'border-cyan-200 bg-cyan-50 text-cyan-900 hover:border-cyan-300 hover:bg-cyan-100/70 dark:border-cyan-500/30 dark:bg-cyan-500/10 dark:text-cyan-200 dark:hover:border-cyan-400/50 dark:hover:bg-cyan-500/15',
+  slate: 'border-slate-200 bg-white text-slate-800 hover:border-cyan-300 hover:bg-cyan-50/60 dark:border-slate-800 dark:bg-slate-950/70 dark:text-slate-200 dark:hover:border-cyan-500/40 dark:hover:bg-cyan-500/10',
+} as const;
+---
+
+<section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950/75 sm:p-6">
+  <div class="flex items-start gap-3">
+    <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-700 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-200">
+      <BookOpen class="h-5 w-5" stroke-width={2.2} />
+    </span>
+    <div class="min-w-0">
+      <h3 class="text-lg font-bold text-slate-950 dark:text-white">{t('Sources checked', 'Nguồn đã check')}</h3>
+      <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400">
+        {t('The Claude and Codex sections above cover the main things to watch for. Use the official docs below when you want more detail.', 'Phần Claude và Codex ở trên đã tóm tắt các điểm cần chú ý. Muốn đọc kỹ hơn thì xem thêm official docs bên dưới.')}
+      </p>
+    </div>
+  </div>
+
+  <div class="mt-5 grid gap-3 lg:grid-cols-3">
+    {sources.map(source => {
+      const Icon = source.icon;
+      return (
+        <a href={source.href} target="_blank" rel="noopener noreferrer" class={`group flex min-h-32 flex-col justify-between gap-4 rounded-xl border p-4 transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-300 ${linkClass[source.tone]}`}>
+          <span>
+            <span class="inline-flex items-center gap-2 text-sm font-bold">
+              <Icon class="h-4 w-4" stroke-width={2.2} />
+              {source.title}
+            </span>
+            <span class="mt-2 block text-xs leading-5 opacity-75">{source.body}</span>
+          </span>
+          <span class="inline-flex items-center gap-1 text-xs font-bold">
+            {t('Open official docs', 'Mở docs chính thức')}
+            <ArrowRight class="h-3.5 w-3.5 transition group-hover:translate-x-0.5" stroke-width={2.2} />
+          </span>
+        </a>
+      );
+    })}
+  </div>
+</section>

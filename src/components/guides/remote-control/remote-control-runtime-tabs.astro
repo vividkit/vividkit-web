@@ -1,0 +1,77 @@
+---
+import { type Language } from '@/i18n';
+import { ArrowRight, CheckCircle2, MonitorUp, Route } from 'lucide-astro';
+import RemoteControlClaudePanel from './remote-control-claude-panel.astro';
+import RemoteControlCodexPanel from './remote-control-codex-panel.astro';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const isVi = lang === 'vi';
+const t = (en: string, vi: string) => isVi ? vi : en;
+---
+
+<section class="rounded-2xl border border-slate-200 bg-slate-50/80 p-2 shadow-sm dark:border-slate-800 dark:bg-slate-950/75">
+  <div class="grid gap-2 sm:grid-cols-2" role="tablist" aria-label="Remote Control runtime">
+    <button
+      id="remote-control-tab-claude"
+      type="button"
+      role="tab"
+      data-tab-button="claude"
+      aria-selected="true"
+      aria-controls="remote-control-panel-claude"
+      class="remote-runtime-tab-active group flex min-h-16 cursor-pointer items-center justify-between gap-3 rounded-xl border px-4 py-3 text-left transition duration-200 hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-300"
+    >
+      <span class="flex min-w-0 items-center gap-3">
+        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-current/20 bg-white/70 dark:bg-slate-950/50">
+          <MonitorUp class="h-4 w-4" stroke-width={2.2} />
+        </span>
+        <span class="min-w-0">
+          <span class="block text-sm font-bold">{t('Claude Code', 'Claude Code')}</span>
+          <span class="mt-0.5 block text-xs leading-5 opacity-75">remote-control</span>
+        </span>
+      </span>
+      <span class="remote-runtime-tab-current shrink-0 items-center gap-1 rounded-full border border-current/20 bg-white/70 px-2.5 py-1 text-[11px] font-bold dark:bg-slate-950/45">
+        <CheckCircle2 class="h-3.5 w-3.5" stroke-width={2.2} />
+        {t('Viewing', 'Đang xem')}
+      </span>
+      <span class="remote-runtime-tab-action shrink-0 items-center gap-1 rounded-full border border-current/20 px-2.5 py-1 text-[11px] font-bold">
+        {t('Open', 'Xem')}
+        <ArrowRight class="h-3.5 w-3.5 transition group-hover:translate-x-0.5" stroke-width={2.2} />
+      </span>
+    </button>
+
+    <button
+      id="remote-control-tab-codex"
+      type="button"
+      role="tab"
+      data-tab-button="codex"
+      aria-selected="false"
+      aria-controls="remote-control-panel-codex"
+      class="remote-runtime-tab-idle group flex min-h-16 cursor-pointer items-center justify-between gap-3 rounded-xl border px-4 py-3 text-left transition duration-200 hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-300"
+    >
+      <span class="flex min-w-0 items-center gap-3">
+        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-current/20 bg-white/70 dark:bg-slate-950/50">
+          <Route class="h-4 w-4" stroke-width={2.2} />
+        </span>
+        <span class="min-w-0">
+          <span class="block text-sm font-bold">{t('Codex', 'Codex')}</span>
+          <span class="mt-0.5 block text-xs leading-5 opacity-75">app-server</span>
+        </span>
+      </span>
+      <span class="remote-runtime-tab-current shrink-0 items-center gap-1 rounded-full border border-current/20 bg-white/70 px-2.5 py-1 text-[11px] font-bold dark:bg-slate-950/45">
+        <CheckCircle2 class="h-3.5 w-3.5" stroke-width={2.2} />
+        {t('Viewing', 'Đang xem')}
+      </span>
+      <span class="remote-runtime-tab-action shrink-0 items-center gap-1 rounded-full border border-current/20 px-2.5 py-1 text-[11px] font-bold">
+        {t('Open', 'Xem')}
+        <ArrowRight class="h-3.5 w-3.5 transition group-hover:translate-x-0.5" stroke-width={2.2} />
+      </span>
+    </button>
+  </div>
+</section>
+
+<RemoteControlClaudePanel lang={lang} />
+<RemoteControlCodexPanel lang={lang} />

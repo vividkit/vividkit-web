@@ -25,25 +25,37 @@ function escapeHtml(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-// Render a multi-line shell snippet: prepend a prompt glyph (default `$`) to each command,
-// dim full-line `#` comments and trailing ` # ...` annotations. Pass `>` for REPL prompts
-// so it doesn't visually collide with `$ck:*` workflow invocations.
+// Render a multi-line shell snippet: prepend a prompt glyph (default `$`) to the first
+// line of each command, render continuation lines (those following a trailing `\`) with
+// an invisible placeholder so the command body stays vertically aligned without a fake
+// extra prompt. Dim full-line `#` comments and trailing ` # ...` annotations. Pass `>`
+// for REPL prompts so it doesn't visually collide with `$ck:*` workflow invocations.
 export function renderShellSnippet(code: string, prompt: string = '$'): string {
   const PROMPT_HTML = promptHtml(prompt);
+  const CONTINUATION_HTML = promptHtml(' ');
+  let prevContinues = false;
   return code.split('\n').map((line) => {
     const trimmed = line.trimStart();
+    if (trimmed.length === 0) {
+      prevContinues = false;
+      return '';
+    }
     if (trimmed.startsWith('#')) {
+      prevContinues = false;
       return `<span class="${COMMENT_CLS}">${escapeHtml(line)}</span>`;
     }
+    const isContinuation = prevContinues;
+    prevContinues = line.trimEnd().endsWith('\\');
+    const prefix = isContinuation ? CONTINUATION_HTML : PROMPT_HTML;
     const m = line.match(/^(.*?)(\s+#.*)$/);
-    if (m) return `${PROMPT_HTML}${escapeHtml(m[1])}<span class="${COMMENT_CLS}">${escapeHtml(m[2])}</span>`;
-    return `${PROMPT_HTML}${escapeHtml(line)}`;
+    if (m) return `${prefix}${escapeHtml(m[1])}<span class="${COMMENT_CLS}">${escapeHtml(m[2])}</span>`;
+    return `${prefix}${escapeHtml(line)}`;
   }).join('\n');
 }
 
 // Clipboard payload: drop `#`-only lines and trailing ` # ...` annotations, then
-// `&&`-chain multi-line snippets so a single paste runs every command in order
-// (and bails on first failure). Single-line input passes through unchanged.
+// preserve original line breaks so `\<newline>` continuations stay intact and separate
+// commands paste as separate lines (bash runs them sequentially as written).
 export function stripShellComments(code: string): string {
   return code.split('\n')
     .map((line) => {
@@ -52,5 +64,5 @@ export function stripShellComments(code: string): string {
       return (m ? m[1] : line).trimEnd();
     })
     .filter((line): line is string => line !== null && line.length > 0)
-    .join(' && ');
+    .join('\n');
 }
