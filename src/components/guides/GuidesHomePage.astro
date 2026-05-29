@@ -1,6 +1,6 @@
 ---
 // Guides landing page with guided pathways for different user types
-import { Rocket, Workflow, CircleHelp, Zap, BookOpenText, Cog, TrendingUp, LifeBuoy } from 'lucide-astro';
+import { Rocket, Workflow, CircleHelp, Zap, BookOpenText, Cog, Monitor, ShieldCheck } from 'lucide-astro';
 import GuidedPathwayCard from './guides-home/guided-pathway-card.astro';
 import { useTranslations } from '@/i18n/utils';
 import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
@@ -54,41 +54,40 @@ const pathways = [
     ],
   },
   {
-    id: 'specific-feature',
+    id: 'alt-providers',
     icon: Zap,
-    titleKey: 'guides.home.pathway_feature.title',
-    descKey: 'guides.home.pathway_feature.desc',
+    titleKey: 'guides.home.pathway_providers.title',
+    descKey: 'guides.home.pathway_providers.desc',
     accentColor: 'purple' as const,
     links: [
-      { href: '/guides/ccs', labelKey: 'guides.home.pathway_feature.link_ccs' },
-      { href: '/guides/codex-app', labelKey: 'guides.home.pathway_feature.link_codex_app' },
-      { href: '/guides/remote-control', labelKey: 'guides.home.pathway_feature.link_remote_control' },
-      { href: '/guides/ide-config', labelKey: 'guides.home.pathway_feature.link_ide' },
-      { href: '/guides/ck-with-codex', labelKey: 'guides.home.pathway_feature.link_codex' },
-      { href: '/guides/coexistence', labelKey: 'guides.home.pathway_feature.link_coexistence' },
-      { href: '/guides/migrate', labelKey: 'guides.home.pathway_feature.link_migrate' },
+      { href: '/guides/ccs', labelKey: 'guides.home.pathway_providers.link_ccs' },
+      { href: '/guides/codex-app', labelKey: 'guides.home.pathway_providers.link_codex_app' },
+      { href: '/guides/ck-with-codex', labelKey: 'guides.home.pathway_providers.link_codex' },
+      { href: '/guides/migrate', labelKey: 'guides.home.pathway_providers.link_migrate' },
     ],
   },
   {
-    id: 'optimization',
-    icon: TrendingUp,
-    titleKey: 'guides.home.pathway_optimization.title',
-    descKey: 'guides.home.pathway_optimization.desc',
+    id: 'environments',
+    icon: Monitor,
+    titleKey: 'guides.home.pathway_environments.title',
+    descKey: 'guides.home.pathway_environments.desc',
     accentColor: 'cyan' as const,
     links: [
-      { href: '/guides/uiux', labelKey: 'guides.home.pathway_optimization.link_uiux' },
-      { href: '/guides/token-tips', labelKey: 'guides.home.pathway_optimization.link_token_tips' },
+      { href: '/guides/ide-config', labelKey: 'guides.home.pathway_environments.link_ide' },
+      { href: '/guides/remote-control', labelKey: 'guides.home.pathway_environments.link_remote_control' },
+      { href: '/guides/coexistence', labelKey: 'guides.home.pathway_environments.link_coexistence' },
     ],
   },
   {
-    id: 'troubleshooting',
-    icon: LifeBuoy,
-    titleKey: 'guides.home.pathway_troubleshooting.title',
-    descKey: 'guides.home.pathway_troubleshooting.desc',
+    id: 'reliability',
+    icon: ShieldCheck,
+    titleKey: 'guides.home.pathway_reliability.title',
+    descKey: 'guides.home.pathway_reliability.desc',
     accentColor: 'rose' as const,
     links: [
-      { href: '/guides/session-recovery', labelKey: 'guides.home.pathway_troubleshooting.link_session' },
-      { href: '/guides/fix-logs', labelKey: 'guides.home.pathway_troubleshooting.link_fix_logs' },
+      { href: '/guides/uiux', labelKey: 'guides.home.pathway_reliability.link_uiux' },
+      { href: '/guides/session-recovery', labelKey: 'guides.home.pathway_reliability.link_session' },
+      { href: '/guides/fix-logs', labelKey: 'guides.home.pathway_reliability.link_fix_logs' },
     ],
   },
 ];
