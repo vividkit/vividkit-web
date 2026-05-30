@@ -1,0 +1,142 @@
+{
+  "generatedAt": "2026-05-11",
+  "version": "1.2.0",
+  "scope": "binary-cli-commands-only",
+  "ccsCli": {
+    "package": "@kaitranntt/ccs",
+    "sourceOfTruth": "reference/ccs/src/commands/command-catalog.ts",
+    "rootCommands": [
+      { "name": "setup", "aliases": ["--setup"], "flags": ["--force", "-f"], "group": "start", "visibility": "public" },
+      { "name": "doctor", "aliases": ["--doctor"], "flags": ["--fix", "-f"], "group": "start", "visibility": "public" },
+      { "name": "version", "aliases": ["--version", "-v"], "group": "start", "visibility": "public" },
+      { "name": "help", "aliases": ["--help", "-h"], "group": "start", "visibility": "public", "acceptsTopic": true },
+      { "name": "migrate", "aliases": ["--migrate"], "flags": ["--dry-run", "--rollback", "--list-backups"], "group": "manage", "visibility": "public" },
+      { "name": "sync", "aliases": ["--sync"], "group": "operations", "visibility": "public" },
+      { "name": "update", "aliases": ["--update"], "flags": ["--force", "--beta", "--dev"], "group": "operations", "visibility": "public" },
+      { "name": "cleanup", "aliases": ["--cleanup"], "flags": ["--errors", "--days=", "--dry-run", "--force"], "group": "operations", "visibility": "public" },
+      { "name": "env", "flags": ["--format", "--shell", "--ide"], "group": "manage", "visibility": "public", "requiresArg": true },
+      { "name": "persist", "flags": ["--yes", "-y", "--permission-mode", "--dangerously-skip-permissions", "--auto-approve", "--list-backups", "--restore"], "group": "manage", "visibility": "public", "requiresArg": true },
+      { "name": "tokens", "flags": ["--show", "--api-key", "--secret", "--regenerate-secret", "--variant", "--reset"], "group": "manage", "visibility": "public" },
+      { "name": "config", "subcommands": ["auth", "channels", "image-analysis", "thinking"], "group": "start", "visibility": "public" },
+      { "name": "auth", "subcommands": ["create", "backup", "list", "show", "resources", "remove", "default", "reset-default"], "group": "manage", "visibility": "public" },
+      { "name": "api", "subcommands": ["create", "list", "discover", "copy", "export", "import", "remove"], "presets": ["openrouter", "alibaba-coding-plan", "ollama", "llamacpp", "anthropic", "huggingface", "glm", "km", "foundry", "mm", "deepseek", "qwen", "ollama-cloud", "novita"], "group": "manage", "visibility": "public" },
+      { "name": "cliproxy", "subcommands": ["create", "edit", "list", "remove", "routing", "catalog", "sync", "quota", "start", "restart", "status", "stop", "doctor", "default", "pause", "resume"], "group": "runtime", "visibility": "public", "flagDrivenInstall": ["--install", "--latest", "--update", "--backend"] },
+      { "name": "cursor", "subcommands": ["auth", "status", "probe", "models", "start", "stop", "enable", "disable"], "group": "runtime", "visibility": "public" },
+      { "name": "copilot", "subcommands": ["auth", "status", "models", "usage", "start", "stop", "enable", "disable"], "group": "runtime", "visibility": "public" },
+      { "name": "browser", "subcommands": ["setup", "status", "doctor", "policy", "enable", "disable"], "group": "runtime", "visibility": "public" },
+      { "name": "proxy", "subcommands": ["start", "stop", "status", "activate"], "group": "runtime", "visibility": "public" },
+      { "name": "docker", "subcommands": ["up", "down", "status", "update", "logs", "config", "show-key", "finalize-key-rotation"], "group": "runtime", "visibility": "public" },
+      { "name": "--shell-completion", "aliases": ["-sc"], "group": "operations", "visibility": "hidden" },
+      { "name": "--install", "group": "operations", "visibility": "hidden" },
+      { "name": "--uninstall", "group": "operations", "visibility": "hidden" },
+      { "name": "__complete", "group": "operations", "visibility": "hidden" }
+    ],
+    "hiddenCommands": [
+      { "name": "--install", "description": "Post-install bootstrap (inert)" },
+      { "name": "--uninstall", "description": "Remove managed integrations" },
+      { "name": "--shell-completion", "aliases": ["-sc"], "description": "Install shell completion" },
+      { "name": "__complete", "description": "Hidden shell completion backend" }
+    ],
+    "providerShortcuts": ["gemini", "codex", "agy", "qwen", "iflow", "kiro", "ghcp", "claude", "kimi", "gitlab", "codebuddy", "kilo"],
+    "runtimeAliases": ["ccs-droid", "ccsd", "ccs-codex", "ccsx", "ccsxp"]
+  },
+  "claudekitCli": {
+    "package": "claudekit-cli",
+    "sourceOfTruth": "reference/claudekit-cli/src/cli/command-registry.ts",
+    "binaryCommands": [
+      {
+        "name": "new",
+        "keyFlags": ["--kit", "--release", "--force", "--exclude", "--opencode", "--gemini", "--install-skills", "--with-sudo", "--prefix", "--beta", "--refresh", "-y", "--use-git", "--archive", "--kit-path"],
+        "description": "Bootstrap new ClaudeKit project"
+      },
+      {
+        "name": "init",
+        "keyFlags": ["--kit", "--release", "--exclude", "--only", "--global", "--fresh", "--force", "--install-skills", "--with-sudo", "--prefix", "--beta", "--refresh", "--dry-run", "--force-overwrite", "--force-overwrite-settings", "--skip-setup", "-y", "--sync", "--use-git", "--archive", "--kit-path"],
+        "description": "Initialize or update ClaudeKit project"
+      },
+      {
+        "name": "update",
+        "keyFlags": ["--release", "--check", "-y", "--dev", "--beta", "--registry"],
+        "description": "Update ClaudeKit CLI itself"
+      },
+      {
+        "name": "versions",
+        "keyFlags": ["--kit", "--limit", "--all"],
+        "description": "List available ClaudeKit versions"
+      },
+      {
+        "name": "doctor",
+        "keyFlags": ["--report", "--fix", "--check-only", "--json", "--full"],
+        "description": "Comprehensive health check"
+      },
+      {
+        "name": "uninstall",
+        "keyFlags": ["-y", "--local", "--global", "--all", "--kit", "--dry-run", "--force-overwrite"],
+        "description": "Remove ClaudeKit installations"
+      },
+      {
+        "name": "backups",
+        "subActions": ["--list", "--restore", "--prune", "--dry-run"],
+        "description": "Manage backups (via registerBackupsCommand)"
+      },
+      {
+        "name": "setup",
+        "keyFlags": ["--global", "--skip-packages", "--dir"],
+        "description": "Configure API keys + optional packages"
+      },
+      {
+        "name": "config",
+        "keyFlags": ["[action] [key] [value]", "-g", "-l", "--json", "--port", "--host", "--no-open", "--dev"],
+        "description": "Manage configuration + dashboard"
+      },
+      {
+        "name": "projects",
+        "description": "Project management (subcommands via registerProjectsCommand)"
+      },
+      {
+        "name": "skills",
+        "keyFlags": ["-n", "-a", "-g", "-l", "--installed", "--all", "-u", "--force", "--sync", "-y", "--catalog", "--regenerate", "--search", "--json", "--limit", "--validate"],
+        "description": "Install skills to other coding agents"
+      },
+      {
+        "name": "agents",
+        "keyFlags": ["-n", "-a", "-g", "-l", "--installed", "--all", "-u", "--force", "--sync", "-y"],
+        "description": "Install agents to other providers"
+      },
+      {
+        "name": "commands",
+        "keyFlags": ["-n", "-a", "-g", "-l", "--installed", "--all", "-u", "--force", "--sync", "-y"],
+        "description": "Install commands to other providers"
+      },
+      {
+        "name": "plan",
+        "keyFlags": ["[action] [target]", "--json", "--strict", "--port", "--no-open", "--dev", "-g", "--title", "--phases", "--dir", "--priority", "--issue", "--after", "--start", "--source", "--session-id"],
+        "description": "Plan management: parse, validate, status, kanban, create"
+      },
+      {
+        "name": "api",
+        "keyFlags": ["[action] [service] [path]", "--method", "--body", "--query", "--key", "--force", "--json", "--locale", "--max-results", "--second", "--order", "--format", "--max-length", "--instructions", "--template", "--type", "--country"],
+        "description": "Interact with ClaudeKit API and proxy services"
+      },
+      {
+        "name": "migrate",
+        "keyFlags": ["-a", "-g", "--all", "-y", "--only-*", "--skip-*", "--config", "--rules", "--hooks", "--source", "--dry-run", "-f", "--install", "--reconcile", "--reinstall-empty-dirs", "--respect-deletions"],
+        "description": "Migrate agents, commands, skills, config, rules, hooks to other providers"
+      },
+      {
+        "name": "content",
+        "subActions": ["[action] [id]", "start", "stop", "status", "logs", "setup", "queue", "approve", "reject", "--dry-run", "--verbose", "--force", "--tail", "--reason"],
+        "description": "Multi-channel content automation"
+      },
+      {
+        "name": "watch",
+        "keyFlags": ["--interval", "--dry-run", "--force", "--verbose"],
+        "description": "Watch GitHub issues and auto-respond"
+      },
+      {
+        "name": "easter-egg",
+        "description": "Easter egg (Code Hunt 2025)"
+      }
+    ]
+  }
+}
