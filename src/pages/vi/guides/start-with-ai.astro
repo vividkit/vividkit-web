@@ -1,0 +1,16 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import StartWithAiGuide from '@/components/guides/StartWithAiGuide.astro';
+import type { Language } from '@/i18n';
+
+const lang: Language = 'vi';
+---
+
+<GuidesLayout
+  title="Bắt Đầu Với AI - VividKit Documentation"
+  description="Hướng dẫn thực tế cho người mới hoàn toàn: bắt đầu từ công việc hiện tại, chọn hướng phù hợp, và xây workflow AI hữu ích trước khi học tool."
+  activeTab="start-with-ai"
+  lang={lang}
+>
+  <StartWithAiGuide lang={lang} />
+</GuidesLayout>

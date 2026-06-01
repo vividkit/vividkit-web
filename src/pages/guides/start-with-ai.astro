@@ -1,0 +1,16 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import StartWithAiGuide from '@/components/guides/StartWithAiGuide.astro';
+import { getLangFromUrl } from '@/i18n';
+
+const lang = getLangFromUrl(Astro.url);
+---
+
+<GuidesLayout
+  title="Start With AI - VividKit Documentation"
+  description="A practical guide for complete AI beginners: start from current work, choose a path, and build useful AI workflows before jumping into tools."
+  activeTab="start-with-ai"
+  lang={lang}
+>
+  <StartWithAiGuide lang={lang} />
+</GuidesLayout>

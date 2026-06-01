@@ -1,0 +1,493 @@
+---
+import ArrowRight from 'lucide-astro/ArrowRight';
+import BookOpenText from 'lucide-astro/BookOpenText';
+import BriefcaseBusiness from 'lucide-astro/BriefcaseBusiness';
+import CheckCircle2 from 'lucide-astro/CheckCircle2';
+import ChartColumnIncreasing from 'lucide-astro/ChartColumnIncreasing';
+import ClipboardCheck from 'lucide-astro/ClipboardCheck';
+import Code2 from 'lucide-astro/Code2';
+import Compass from 'lucide-astro/Compass';
+import FileText from 'lucide-astro/FileText';
+import GitBranch from 'lucide-astro/GitBranch';
+import Lightbulb from 'lucide-astro/Lightbulb';
+import Megaphone from 'lucide-astro/Megaphone';
+import Route from 'lucide-astro/Route';
+import Search from 'lucide-astro/Search';
+import ShieldCheck from 'lucide-astro/ShieldCheck';
+import Sparkles from 'lucide-astro/Sparkles';
+import Workflow from 'lucide-astro/Workflow';
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(currentLang);
+
+const copy = currentLang === 'vi'
+  ? {
+      eyebrow: 'AI cho người mới',
+      title: 'Bắt đầu với AI từ công việc hiện tại',
+      subtitle: 'Đừng bắt đầu bằng việc học tool. Bắt đầu bằng việc hiểu AI có thể giúp đoạn nào trong công việc, rồi biến đoạn đó thành workflow có kiểm chứng.',
+      introTitle: 'Đừng bắt đầu bằng câu "học AI"',
+      introText: 'Câu đó quá rộng và dễ làm người mới lạc vào danh sách tool. Cách thực tế hơn là nhìn lại công việc hằng ngày: việc nào lặp lại, mất thời gian, cần viết, cần phân tích, cần tổng hợp, cần ra quyết định. Đó là nơi nên đưa AI vào trước.',
+      heroSteps: ['Việc đang làm', 'Đoạn AI hỗ trợ', 'Workflow có kiểm chứng'],
+      heroNote: 'Điểm bắt đầu tốt nhất không phải tool mới nhất, mà là một việc thật mình muốn làm nhanh hơn hoặc rõ hơn.',
+      mentalTitle: 'Mental model đúng',
+      mentalDesc: 'AI không phải một nghề riêng cho tất cả mọi người. Nó là đòn bẩy. Người có domain cộng thêm workflow AI sẽ mạnh hơn người chỉ học tool mà thiếu ngữ cảnh công việc.',
+      mentalCallout: 'Nghĩ AI như một cộng sự giúp mình đi qua từng đoạn việc, nhưng mình vẫn giữ vai trò định hướng, kiểm tra, và quyết định.',
+      mentalStages: [
+        { label: 'Mình định hướng', desc: 'Nói rõ mục tiêu, bối cảnh, tiêu chí tốt.' },
+        { label: 'AI hỗ trợ từng đoạn', desc: 'Hỏi, viết nháp, tổng hợp, chia nhỏ việc.' },
+        { label: 'Mình kiểm chứng', desc: 'So với dữ liệu thật và kinh nghiệm nghề.' },
+      ],
+      pathsTitle: 'Chọn một đường gần với mình',
+      pathsDesc: 'Không cần nhảy thẳng vào coding. Chọn nhóm công việc gần nền hiện tại nhất, luyện workflow thật, rồi mới đi sâu hơn.',
+      routeTitle: 'Lộ trình 30 ngày',
+      routeDesc: 'Mục tiêu là có kết quả thật trong công việc, không phải thuộc tên tool.',
+      ladderTitle: 'Muốn dùng tốt hơn thì học gì?',
+      nextTitle: 'Bước tiếp theo trong VividKit',
+      nextDesc: 'Khi đã hiểu cách biến việc thành workflow, các guide này giúp bạn đi vào ClaudeKit, commands, setup, và cách làm việc có cấu trúc hơn.',
+      roles: [
+        { title: 'Phản biện vấn đề', desc: 'Hỏi để hiểu việc, tìm góc nhìn khác, soi lựa chọn.' },
+        { title: 'Viết bản nháp', desc: 'Email, tài liệu, checklist, proposal, test case.' },
+        { title: 'Gom thông tin', desc: 'Tóm tắt nguồn, gom insight, so sánh lựa chọn.' },
+        { title: 'Nối bước việc', desc: 'Biến việc lặp lại thành các bước rõ ràng.' },
+        { title: 'Soi thiếu sót', desc: 'Tìm edge cases, điểm mù, checklist review.' },
+      ],
+      paths: [
+        {
+          title: 'Office / Admin / Ops',
+          subtitle: 'Tối ưu việc vận hành và tài liệu',
+          tasks: ['Báo cáo', 'SOP', 'Meeting notes', 'Checklist', 'Tổng hợp chính sách', 'Giải thích spreadsheet'],
+          outcome: 'Biết dùng AI để giảm việc lặp lại và làm tài liệu nội bộ rõ hơn.',
+        },
+        {
+          title: 'Marketing / Sales / Content',
+          subtitle: 'Tăng tốc research và nội dung',
+          tasks: ['Customer research', 'Content draft', 'Campaign ideas', 'Ad variants', 'Email sequence', 'Persona analysis'],
+          outcome: 'Biết biến insight thành bản nháp có cấu trúc, rồi tự chỉnh bằng kinh nghiệm ngành.',
+        },
+        {
+          title: 'Product / Design / BA',
+          subtitle: 'Dịch nhu cầu thành yêu cầu rõ',
+          tasks: ['Requirement questions', 'User stories', 'Acceptance criteria', 'User flow', 'UAT scenarios', 'Feedback synthesis'],
+          outcome: 'BA nằm ở nhóm này vì trọng tâm là hiểu nghiệp vụ, làm rõ requirement, và nối business với product.',
+        },
+        {
+          title: 'Engineer / Developer',
+          subtitle: 'Đọc code, viết tính năng, review thay đổi',
+          tasks: ['Codebase Q&A', 'Feature plan', 'Code review', 'Bug investigation', 'Test ideas', 'Refactor notes', 'Technical docs'],
+          outcome: 'Engineer dùng AI tốt nhất khi biết giao một phần việc rõ: đọc context, đề xuất hướng làm, viết patch nhỏ, rồi tự review lại logic.',
+        },
+        {
+          title: 'Data / Analytics / Finance',
+          subtitle: 'Làm rõ số liệu và báo cáo',
+          tasks: ['Spreadsheet cleanup', 'Dashboard notes', 'KPI summary', 'Variance check', 'Forecast draft', 'Data questions', 'Report narrative'],
+          outcome: 'Nhóm này nên dùng AI để hiểu số liệu nhanh hơn, tìm điểm bất thường, và biến bảng dữ liệu thành insight dễ đọc.',
+        },
+        {
+          title: 'QA / Testing / Automation',
+          subtitle: 'Kiểm chứng hệ thống và tự động hóa nhỏ',
+          tasks: ['Test cases', 'Regression checklist', 'Bug report', 'Edge cases', 'Log analysis', 'Test data', 'Basic scripts'],
+          outcome: 'Tester, QC, QA là cửa vào tech tốt vì luyện tư duy hệ thống, đọc chi tiết, và kiểm chứng kết quả.',
+        },
+      ],
+      weeks: [
+        { label: 'Tuần 1', title: 'Dùng AI như trợ lý hằng ngày', tasks: ['Tóm tắt tài liệu', 'Viết lại tin nhắn', 'Giải thích khái niệm khó', 'Tạo checklist'] },
+        { label: 'Tuần 2', title: 'Học prompt có context', tasks: ['Vai trò', 'Mục tiêu', 'Bối cảnh', 'Dữ liệu đầu vào', 'Ràng buộc', 'Format output'] },
+        { label: 'Tuần 3', title: 'Biến việc lặp lại thành workflow', tasks: ['Research', 'Phân tích', 'Tạo bản nháp', 'Review', 'Chỉnh sửa', 'Đưa vào sử dụng'] },
+        { label: 'Tuần 4', title: 'Chọn một hướng sâu hơn', tasks: ['Content', 'Ops', 'Product/BA', 'Engineer', 'Data/Finance', 'QA/testing'] },
+      ],
+      ladder: [
+        ['Hỏi rõ việc hơn', 'Khi AI trả lời chung chung, nói rõ mình đang làm gì, muốn kết quả gì, có ví dụ nào, và muốn nhận câu trả lời dạng nào.'],
+        ['Lưu cách làm thành mẫu', 'Việc nào làm đi làm lại, giữ lại câu hỏi hoặc checklist hiệu quả để lần sau mở ra dùng ngay.'],
+        ['Nhờ AI dọn bước thủ công', 'Khi phải chuyển nội dung giữa email, bảng tính, tài liệu, hoặc chat, nhờ AI sắp xếp, đổi dạng, tóm tắt trước.'],
+        ['Đưa tài liệu thật vào', 'Khi cần câu trả lời sát việc hơn, cho AI đọc file, ghi chú, bảng dữ liệu, hoặc nội dung mình đang xử lý.'],
+        ['Cho AI làm bản nháp đầu', 'Với việc có nhiều bước, để AI đọc, tóm tắt, đề xuất, kiểm tra trước. Mình vẫn là người duyệt cuối.'],
+      ],
+      nextLinks: [
+        { href: '/guides/what-is-claudekit', title: 'ClaudeKit là gì?', desc: 'Hiểu cách ClaudeKit biến AI assistant thành workflow có cấu trúc.' },
+        { href: '/guides/workflows', title: 'Quy Trình Mẫu', desc: 'Xem các pattern làm việc khi bạn đã sẵn sàng đi sâu hơn.' },
+        { href: '/guides/flowchart', title: 'Tìm Lệnh Phù Hợp', desc: 'Chọn command theo tình huống thay vì nhớ hết mọi thứ.' },
+      ],
+    }
+  : {
+      eyebrow: 'AI for beginners',
+      title: 'Start with AI from the work you already do',
+      subtitle: 'Do not begin with tools. Begin by finding where AI can help in your current work, then turn that into a workflow you can verify.',
+      introTitle: 'Do not start with "learning AI"',
+      introText: 'That question is too broad and pushes beginners into tool lists. The practical entry point is your daily work: repeated tasks, time-consuming tasks, writing, analysis, synthesis, and decisions. Those are the first places to use AI.',
+      heroSteps: ['Current work', 'AI-assisted step', 'Verified workflow'],
+      heroNote: 'The best starting point is not the newest tool. It is one real task you want to make faster, clearer, or easier to check.',
+      mentalTitle: 'The right mental model',
+      mentalDesc: 'AI is not a separate career for everyone. It is leverage. Someone with domain context plus AI workflows will usually beat someone who only learns tools without work context.',
+      mentalCallout: 'Treat AI as a collaborator that helps you move through parts of the work while you still own direction, review, and decisions.',
+      mentalStages: [
+        { label: 'You set direction', desc: 'Goal, context, and success criteria.' },
+        { label: 'AI assists the steps', desc: 'Ask, draft, summarize, and break work down.' },
+        { label: 'You verify', desc: 'Check against real data and domain judgment.' },
+      ],
+      pathsTitle: 'Choose the path closest to you',
+      pathsDesc: 'You do not need to jump straight into coding. Start near your current background, practice real workflows, then go deeper.',
+      routeTitle: '30-day route',
+      routeDesc: 'The goal is useful work output, not memorizing tool names.',
+      ladderTitle: 'What to improve next',
+      nextTitle: 'Next steps in VividKit',
+      nextDesc: 'Once you understand how to turn work into workflow, these guides help you move into ClaudeKit, commands, setup, and more structured AI work.',
+      roles: [
+        { title: 'Thinking partner', desc: 'Understand problems, explore angles, and challenge decisions.' },
+        { title: 'Drafting assistant', desc: 'Draft emails, docs, checklists, proposals, and test cases.' },
+        { title: 'Research assistant', desc: 'Summarize sources, collect insights, compare options, and ask next questions.' },
+        { title: 'Workflow accelerator', desc: 'Turn repeated work into clear steps so you can move faster.' },
+        { title: 'Verification helper', desc: 'Find edge cases, review gaps, and create quality checklists.' },
+      ],
+      paths: [
+        {
+          title: 'Office / Admin / Ops',
+          subtitle: 'Improve operations and internal docs',
+          tasks: ['Reports', 'SOPs', 'Meeting notes', 'Checklists', 'Policy summaries', 'Spreadsheet explanations'],
+          outcome: 'Use AI to reduce repeated work and make internal documents clearer.',
+        },
+        {
+          title: 'Marketing / Sales / Content',
+          subtitle: 'Speed up research and messaging',
+          tasks: ['Customer research', 'Content drafts', 'Campaign ideas', 'Ad variants', 'Email sequences', 'Persona analysis'],
+          outcome: 'Turn insights into structured drafts, then refine them with domain judgment.',
+        },
+        {
+          title: 'Product / Design / BA',
+          subtitle: 'Translate needs into clear requirements',
+          tasks: ['Requirement questions', 'User stories', 'Acceptance criteria', 'User flows', 'UAT scenarios', 'Feedback synthesis'],
+          outcome: 'BA belongs here because the core job is clarifying requirements and connecting business needs to product behavior.',
+        },
+        {
+          title: 'Engineer / Developer',
+          subtitle: 'Read code, build features, and review changes',
+          tasks: ['Codebase Q&A', 'Feature plans', 'Code review', 'Bug investigation', 'Test ideas', 'Refactor notes', 'Technical docs'],
+          outcome: 'Engineers use AI best when they give it a clear slice of work: read context, suggest an approach, draft a small patch, then review the logic themselves.',
+        },
+        {
+          title: 'Data / Analytics / Finance',
+          subtitle: 'Clarify numbers and reports',
+          tasks: ['Spreadsheet cleanup', 'Dashboard notes', 'KPI summaries', 'Variance checks', 'Forecast drafts', 'Data questions', 'Report narrative'],
+          outcome: 'This group should use AI to understand numbers faster, spot odd patterns, and turn tables into readable insights.',
+        },
+        {
+          title: 'QA / Testing / Automation',
+          subtitle: 'Verify systems and automate small loops',
+          tasks: ['Test cases', 'Regression checklists', 'Bug reports', 'Edge cases', 'Log analysis', 'Test data', 'Basic scripts'],
+          outcome: 'Tester, QC, and QA are strong tech entry paths because they build system thinking, detail reading, and verification habits.',
+        },
+      ],
+      weeks: [
+        { label: 'Week 1', title: 'Use AI as a daily assistant', tasks: ['Summarize docs', 'Rewrite messages', 'Explain hard concepts', 'Create checklists'] },
+        { label: 'Week 2', title: 'Learn context-rich prompting', tasks: ['Role', 'Goal', 'Background', 'Input data', 'Constraints', 'Output format'] },
+        { label: 'Week 3', title: 'Turn repeated work into workflows', tasks: ['Research', 'Analyze', 'Draft', 'Review', 'Revise', 'Use or publish'] },
+        { label: 'Week 4', title: 'Choose one deeper path', tasks: ['Content', 'Ops', 'Product/BA', 'Engineer', 'Data/Finance', 'QA/testing'] },
+      ],
+      ladder: [
+        ['Ask more clearly', 'When AI gives generic answers, say what you are doing, what result you want, what example you have, and how you want the answer shaped.'],
+        ['Save a reusable template', 'For work you repeat often, keep the question or checklist that worked so next time you can start faster.'],
+        ['Let AI clean up busywork', 'When you move content between email, spreadsheets, docs, or chat, ask AI to organize, reformat, or summarize first.'],
+        ['Use real work materials', 'For answers closer to your work, give AI the file, notes, table, or text you are working on.'],
+        ['Ask for a first pass', 'For work with several steps, let AI read, summarize, suggest, and check first. You still approve the final version.'],
+      ],
+      nextLinks: [
+        { href: '/guides/what-is-claudekit', title: 'What is ClaudeKit?', desc: 'Understand how ClaudeKit turns an AI assistant into structured workflows.' },
+        { href: '/guides/workflows', title: 'Workflow Recipes', desc: 'See practical patterns once you are ready to go deeper.' },
+        { href: '/guides/flowchart', title: 'Command Finder', desc: 'Choose commands by situation instead of memorizing everything.' },
+      ],
+    };
+
+const roleIcons = [Lightbulb, FileText, Search, Workflow, ShieldCheck];
+const heroIcons = [BriefcaseBusiness, Sparkles, GitBranch];
+const mentalStageIcons = [Compass, Workflow, ShieldCheck];
+const pathIcons = [BriefcaseBusiness, Megaphone, Compass, Code2, ChartColumnIncreasing, ClipboardCheck];
+const pathStyles = [
+  {
+    panel: 'border-emerald-200 bg-emerald-50/80 dark:border-emerald-900/60 dark:bg-emerald-950/30',
+    icon: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/70 dark:text-emerald-300',
+    tag: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/70 dark:text-emerald-300',
+  },
+  {
+    panel: 'border-sky-200 bg-sky-50/80 dark:border-sky-900/60 dark:bg-sky-950/30',
+    icon: 'bg-sky-100 text-sky-700 dark:bg-sky-900/70 dark:text-sky-300',
+    tag: 'bg-sky-100 text-sky-700 dark:bg-sky-900/70 dark:text-sky-300',
+  },
+  {
+    panel: 'border-amber-200 bg-amber-50/80 dark:border-amber-900/60 dark:bg-amber-950/30',
+    icon: 'bg-amber-100 text-amber-700 dark:bg-amber-900/70 dark:text-amber-300',
+    tag: 'bg-amber-100 text-amber-700 dark:bg-amber-900/70 dark:text-amber-300',
+  },
+  {
+    panel: 'border-violet-200 bg-violet-50/80 dark:border-violet-900/60 dark:bg-violet-950/30',
+    icon: 'bg-violet-100 text-violet-700 dark:bg-violet-900/70 dark:text-violet-300',
+    tag: 'bg-violet-100 text-violet-700 dark:bg-violet-900/70 dark:text-violet-300',
+  },
+  {
+    panel: 'border-fuchsia-200 bg-fuchsia-50/80 dark:border-fuchsia-900/60 dark:bg-fuchsia-950/30',
+    icon: 'bg-fuchsia-100 text-fuchsia-700 dark:bg-fuchsia-900/70 dark:text-fuchsia-300',
+    tag: 'bg-fuchsia-100 text-fuchsia-700 dark:bg-fuchsia-900/70 dark:text-fuchsia-300',
+  },
+  {
+    panel: 'border-cyan-200 bg-cyan-50/80 dark:border-cyan-900/60 dark:bg-cyan-950/30',
+    icon: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/70 dark:text-cyan-300',
+    tag: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/70 dark:text-cyan-300',
+  },
+];
+---
+
+<div class="mt-6 space-y-10">
+  <header class="relative overflow-hidden rounded-3xl border border-emerald-200/80 bg-gradient-to-br from-white via-slate-50 to-emerald-50/80 px-6 py-8 text-slate-950 shadow-xl shadow-emerald-900/5 dark:border-emerald-900/50 dark:from-slate-950 dark:via-slate-950 dark:to-emerald-950/40 dark:text-white dark:shadow-slate-950/10 md:px-9 md:py-10">
+    <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-emerald-300/0 via-emerald-300/70 to-cyan-300/0"></div>
+    <div class="absolute inset-0 opacity-70 [background-image:linear-gradient(to_right,rgba(15,23,42,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,23,42,0.08)_1px,transparent_1px)] [background-size:44px_44px] dark:opacity-[0.12] dark:[background-image:linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)]"></div>
+    <div class="absolute right-0 top-0 h-full w-1/3 bg-[linear-gradient(135deg,transparent,rgba(16,185,129,0.13))] dark:bg-[linear-gradient(135deg,transparent,rgba(45,212,191,0.16))]"></div>
+
+    <div class="relative grid gap-8 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-end">
+      <div class="space-y-6">
+        <div class="inline-flex items-center gap-2 rounded-full border border-emerald-300 bg-emerald-50 px-3 py-1.5 text-sm font-semibold text-emerald-700 dark:border-emerald-400/50 dark:bg-emerald-400/10 dark:text-emerald-200">
+          <Sparkles class="h-4 w-4" />
+          <span>{copy.eyebrow}</span>
+        </div>
+
+        <div class="max-w-4xl space-y-5">
+          <h1 class="text-4xl font-bold leading-[1.05] tracking-tight text-slate-950 dark:text-white md:text-6xl">
+            {copy.title}
+          </h1>
+          <p class="max-w-3xl text-lg leading-8 text-slate-600 dark:text-slate-300 md:text-xl md:leading-9">
+            {copy.subtitle}
+          </p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 bg-white/80 p-4 shadow-xl shadow-emerald-900/10 backdrop-blur dark:border-white/10 dark:bg-white/[0.06] dark:shadow-slate-950/30">
+        <div class="mb-4 flex items-center justify-between border-b border-slate-200 pb-3 dark:border-white/10">
+          <span class="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700 dark:text-emerald-200">
+            {currentLang === 'vi' ? 'Cách bắt đầu' : 'Start map'}
+          </span>
+          <span class="h-2 w-2 rounded-full bg-emerald-500 dark:bg-emerald-300"></span>
+        </div>
+
+        <div class="space-y-3">
+          {copy.heroSteps.map((step, index) => {
+            const Icon = heroIcons[index];
+
+            return (
+              <div class="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50/80 p-3 dark:border-white/10 dark:bg-white/[0.07]">
+                <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald-100 text-emerald-700 dark:bg-emerald-300/15 dark:text-emerald-200">
+                  <Icon class="h-4 w-4" />
+                </div>
+                <div>
+                  <p class="text-sm font-semibold text-slate-900 dark:text-white">{step}</p>
+                  <p class="text-xs text-slate-500 dark:text-slate-400">
+                    {index === 0 && (currentLang === 'vi' ? 'Có thật trong ngày' : 'Real daily task')}
+                    {index === 1 && (currentLang === 'vi' ? 'Một đoạn cụ thể' : 'One concrete part')}
+                    {index === 2 && (currentLang === 'vi' ? 'Có người kiểm tra' : 'Human checked')}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <p class="mt-4 text-sm leading-6 text-slate-600 dark:text-slate-300">
+          {copy.heroNote}
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-950">
+    <div class="flex flex-col gap-5 md:flex-row md:items-start">
+      <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-rose-50 text-rose-600 dark:bg-rose-950/50 dark:text-rose-300">
+        <BookOpenText class="h-6 w-6" />
+      </div>
+      <div class="space-y-3">
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white">{copy.introTitle}</h2>
+        <p class="leading-7 text-slate-600 dark:text-slate-300">{copy.introText}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950">
+    <div class="p-6 md:p-7">
+      <div class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(14rem,18rem)] lg:items-start">
+        <div>
+          <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 dark:bg-emerald-900/70 dark:text-emerald-300">
+            <Sparkles class="h-5 w-5" />
+          </div>
+          <div class="max-w-2xl space-y-3">
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-white">{copy.mentalTitle}</h2>
+            <p class="leading-7 text-slate-600 dark:text-slate-300">{copy.mentalDesc}</p>
+          </div>
+        </div>
+
+        <p class="rounded-2xl border border-emerald-200 bg-emerald-50/80 p-4 text-base font-semibold leading-7 text-slate-900 dark:border-emerald-900/60 dark:bg-emerald-950/30 dark:text-white">
+          {copy.mentalCallout}
+        </p>
+      </div>
+
+      <div class="mt-6 grid gap-3 md:grid-cols-3">
+        {copy.mentalStages.map((stage, index) => {
+          const Icon = mentalStageIcons[index];
+
+          return (
+            <article class="relative rounded-2xl border border-slate-200 bg-slate-50/80 p-4 dark:border-slate-800 dark:bg-slate-900/70">
+              <div class="mb-4 flex items-center justify-between gap-3">
+                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-emerald-700 shadow-sm dark:bg-slate-950 dark:text-emerald-300">
+                  <Icon class="h-5 w-5" />
+                </div>
+                <span class="text-xs font-bold uppercase tracking-wide text-slate-400 dark:text-slate-500">
+                  0{index + 1}
+                </span>
+              </div>
+              <h3 class="text-base font-bold text-slate-900 dark:text-white">{stage.label}</h3>
+              <p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">{stage.desc}</p>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+
+    <div class="border-t border-slate-200 bg-slate-50/60 p-6 dark:border-slate-800 dark:bg-slate-900/30 md:p-7">
+      <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950">
+        <div class="border-b border-slate-200 px-4 py-3 dark:border-slate-800">
+          <p class="text-sm font-semibold text-slate-700 dark:text-slate-300">
+            {currentLang === 'vi' ? '5 vai trò thực tế của AI trong công việc' : '5 practical AI roles at work'}
+          </p>
+        </div>
+        <div class="divide-y divide-slate-200 dark:divide-slate-800">
+          {copy.roles.map((role, index) => {
+            const Icon = roleIcons[index];
+
+            return (
+              <article class="grid gap-3 p-4 sm:grid-cols-[minmax(11rem,14rem)_1fr] sm:items-start">
+                <div class="flex items-center gap-3">
+                  <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+                    <Icon class="h-4 w-4" />
+                  </div>
+                  <h3 class="text-base font-bold leading-snug text-slate-900 dark:text-white">{role.title}</h3>
+                </div>
+                <p class="text-sm leading-6 text-slate-600 dark:text-slate-400">{role.desc}</p>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="space-y-5">
+    <div class="max-w-3xl space-y-2">
+      <h2 class="text-2xl font-bold text-slate-900 dark:text-white">{copy.pathsTitle}</h2>
+      <p class="leading-7 text-slate-600 dark:text-slate-300">{copy.pathsDesc}</p>
+    </div>
+
+    <div class="grid gap-5 lg:grid-cols-2">
+      {copy.paths.map((path, index) => {
+        const Icon = pathIcons[index];
+        const style = pathStyles[index];
+
+        return (
+          <article class={`rounded-2xl border p-5 ${style.panel} ${index === copy.paths.length - 1 && copy.paths.length % 2 === 1 ? 'lg:col-span-2' : ''}`}>
+            <div class="mb-4 flex items-start gap-4">
+              <div class={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${style.icon}`}>
+                <Icon class="h-5 w-5" />
+              </div>
+              <div>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white">{path.title}</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400">{path.subtitle}</p>
+              </div>
+            </div>
+
+            <div class="mb-4 flex flex-wrap gap-2">
+              {path.tasks.map((task) => (
+                <span class={`rounded-full px-3 py-1 text-xs font-medium ${style.tag}`}>
+                  {task}
+                </span>
+              ))}
+            </div>
+
+            <p class="text-sm leading-6 text-slate-700 dark:text-slate-300">{path.outcome}</p>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+
+  <section class="rounded-2xl border border-slate-200 bg-slate-50 p-6 dark:border-slate-800 dark:bg-slate-950/60">
+    <div class="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+      <div class="max-w-2xl space-y-2">
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white">{copy.routeTitle}</h2>
+        <p class="leading-7 text-slate-600 dark:text-slate-300">{copy.routeDesc}</p>
+      </div>
+      <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+        <Route class="h-5 w-5" />
+      </div>
+    </div>
+
+    <div class="grid gap-4 md:grid-cols-2">
+      {copy.weeks.map((week) => (
+        <article class="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/70">
+          <p class="mb-2 text-xs font-bold uppercase tracking-wide text-blue-600 dark:text-blue-300">{week.label}</p>
+          <h3 class="mb-3 text-base font-bold text-slate-900 dark:text-white">{week.title}</h3>
+          <ul class="grid gap-2 sm:grid-cols-2">
+            {week.tasks.map((task) => (
+              <li class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+                <CheckCircle2 class="h-4 w-4 shrink-0 text-emerald-500" />
+                <span>{task}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="space-y-5">
+    <h2 class="text-2xl font-bold text-slate-900 dark:text-white">{copy.ladderTitle}</h2>
+    <div class="divide-y divide-slate-200 overflow-hidden rounded-2xl border border-slate-200 bg-white dark:divide-slate-800 dark:border-slate-800 dark:bg-slate-950">
+      {copy.ladder.map(([label, desc], index) => (
+        <div class="grid gap-3 p-4 md:grid-cols-[minmax(13rem,15rem)_1fr] md:items-center">
+          <div class="flex min-w-0 items-center gap-3">
+            <span class="flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-sm font-bold text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+              {index + 1}
+            </span>
+            <span class="min-w-0 break-words font-semibold leading-snug text-slate-900 dark:text-white">{label}</span>
+          </div>
+          <p class="text-sm leading-6 text-slate-600 dark:text-slate-300">{desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="rounded-2xl border border-emerald-200 bg-emerald-50/70 p-6 dark:border-emerald-900/60 dark:bg-emerald-950/30">
+    <div class="mb-5 max-w-3xl space-y-2">
+      <h2 class="text-2xl font-bold text-slate-900 dark:text-white">{copy.nextTitle}</h2>
+      <p class="leading-7 text-slate-700 dark:text-slate-300">{copy.nextDesc}</p>
+    </div>
+
+    <div class="grid gap-4 md:grid-cols-3">
+      {copy.nextLinks.map((link) => (
+        <a
+          href={translatePath(link.href)}
+          class="group flex min-h-36 flex-col justify-between rounded-xl border border-emerald-200 bg-white p-4 transition-all hover:-translate-y-0.5 hover:border-emerald-400 hover:shadow-lg hover:shadow-emerald-500/10 dark:border-emerald-900/70 dark:bg-slate-950 dark:hover:border-emerald-600"
+        >
+          <div>
+            <h3 class="mb-2 font-bold text-slate-900 group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-300">
+              {link.title}
+            </h3>
+            <p class="text-sm leading-6 text-slate-600 dark:text-slate-400">{link.desc}</p>
+          </div>
+          <span class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-emerald-700 dark:text-emerald-300">
+            {currentLang === 'vi' ? 'Đọc tiếp' : 'Read next'}
+            <ArrowRight class="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </span>
+        </a>
+      ))}
+    </div>
+  </section>
+</div>
