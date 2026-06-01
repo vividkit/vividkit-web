@@ -675,6 +675,157 @@ export const skillInfographics: SkillInfographic[] = [
       labelVi: 'Xem tất cả lệnh ClaudeKit',
     },
   },
+
+  // ─────────────────────────────────────────────────────────────────────────────
+  // /ck:code-review — Adversarial Three-Stage Code Review
+  // ─────────────────────────────────────────────────────────────────────────────
+  {
+    id: 'code-review',
+    command: '/ck:code-review',
+    kit: 'engineer',
+
+    header: {
+      titleEn: '/ck:code-review',
+      titleVi: '/ck:code-review',
+      taglineEn: 'Adversarial three-stage review with always-on red-team analysis. Resolves input mode, runs spec compliance → code quality → adversarial reviewer sub-agents, blocks merge on critical findings.',
+      taglineVi: 'Review đối kháng ba giai đoạn với red-team luôn bật. Xác định input mode, chạy spec compliance → code quality → adversarial reviewer sub-agent, chặn merge khi có critical findings.',
+    },
+
+    hardGate: {
+      type: 'critical',
+      titleEn: 'HARD GATES (5)',
+      titleVi: 'HARD GATES (5)',
+      contentEn: '① Spec compliance MUST pass before code quality review — Stage 1 fail → fix → re-run Stage 1, no skipping to Stage 2. ② Adversarial review runs on EVERY review — no exceptions (scope gate only exempts ≤2 files, ≤30 lines, no security files). ③ NO completion claims without fresh verification evidence — tests pass (0 failures), build succeeds (exit 0), original symptom resolved. ④ Critical findings BLOCK merge — must fix before proceeding; deferred findings create GitHub issues. ⑤ Re-review cycle limit: 3 — escalate to user after 3 failed fix/re-review cycles.',
+      contentVi: '① Spec compliance PHẢI pass trước code quality review — Stage 1 fail → fix → chạy lại Stage 1, không nhảy sang Stage 2. ② Adversarial review chạy MỌI lần review — không ngoại lệ (scope gate chỉ miễn khi ≤2 files, ≤30 lines, không có security files). ③ KHÔNG claim hoàn thành nếu chưa có bằng chứng verify mới — tests pass (0 failures), build success (exit 0), symptom gốc đã giải quyết. ④ Critical findings CHẶN merge — phải fix trước khi tiến tiếp; deferred findings tạo GitHub issues. ⑤ Re-review cycle giới hạn: 3 — escalate cho user sau 3 vòng fix/re-review thất bại.',
+    },
+
+    processFlow: [
+      { number: 1, titleEn: 'Input Resolution', titleVi: 'Xác định Input', descEn: 'Auto-detect mode from argument: #PR | commit | --pending | codebase | codebase parallel. If ambiguous, AskUserQuestion to choose review target.', descVi: 'Tự nhận diện mode từ argument: #PR | commit | --pending | codebase | codebase parallel. Nếu mơ hồ, AskUserQuestion để chọn review target.' },
+      { number: 2, titleEn: 'Diff Acquisition', titleVi: 'Lấy Diff', descEn: 'Main agent fetches diff: gh pr diff #N · git show <sha> · git diff (staged + unstaged) · full codebase scan. No sub-agents at this step.', descVi: 'Main agent lấy diff: gh pr diff #N · git show <sha> · git diff (staged + unstaged) · quét toàn bộ codebase. Không sub-agent ở bước này.' },
+      { number: 3, titleEn: 'Stage 1: Spec Compliance', titleVi: 'Stage 1: Spec Compliance', descEn: 'HARD GATE — main agent verifies code matches plan/spec. Missing requirements? Unjustified extras (YAGNI)? PASS → Stage 2 | FAIL → fix → re-run Stage 1.', descVi: 'HARD GATE — main agent xác minh code khớp plan/spec. Thiếu requirements? Có extras vô lý (YAGNI)? PASS → Stage 2 | FAIL → fix → chạy lại Stage 1.' },
+      { number: 4, titleEn: 'Edge Case Scouting', titleVi: 'Scout Edge Case', descEn: 'Invoke /ck:scout with edge-case focus — 2-6 parallel Explore sub-agents scan data flows, error paths, boundary conditions. Findings feed Stage 2.', descVi: 'Gọi /ck:scout tập trung edge case — 2-6 Explore sub-agent song song quét data flows, error paths, boundary conditions. Findings nuôi Stage 2.' },
+      { number: 5, titleEn: 'Stage 2: Code Quality', titleVi: 'Stage 2: Code Quality', descEn: 'code-reviewer sub-agent — standards, security, performance, edge cases from scout. For 3+ files: parallel scoped reviewers (e.g. backend + frontend).', descVi: 'code-reviewer sub-agent — standards, security, performance, edge case từ scout. Với 3+ files: parallel scoped reviewer (vd backend + frontend).' },
+      { number: 6, titleEn: 'Stage 3: Adversarial', titleVi: 'Stage 3: Adversarial', descEn: 'Adversarial reviewer sub-agent (red team) actively tries to break the code — security holes, false assumptions, race conditions, resource exhaustion, supply chain. Verdicts: Accept / Reject / Defer.', descVi: 'Adversarial reviewer sub-agent (red team) chủ động phá code — security holes, false assumptions, race conditions, resource exhaustion, supply chain. Verdict: Accept / Reject / Defer.' },
+      { number: 7, titleEn: 'Verification Gate', titleVi: 'Verification Gate', descEn: 'IRON LAW — run build + tests, read output, confirm 0 failures with FRESH evidence before any completion claim. No "should" / "probably" / "seems to".', descVi: 'IRON LAW — chạy build + tests, đọc output, xác nhận 0 failures với bằng chứng MỚI trước khi claim hoàn thành. Không "should" / "probably" / "seems to".' },
+      { number: 8, titleEn: 'Review Report', titleVi: 'Report Review', descEn: 'Findings grouped by severity (Critical / Important / Minor) with verdict per finding. Recommendation: APPROVE | REQUEST CHANGES | BLOCK. Critical → merge blocked.', descVi: 'Findings nhóm theo severity (Critical / Important / Minor) với verdict từng finding. Recommendation: APPROVE | REQUEST CHANGES | BLOCK. Critical → chặn merge.' },
+    ],
+
+    corePrinciplesEn: [
+      'Resolve input mode FIRST — know exactly WHAT you are reviewing',
+      'Technical rigor over social performance — be brutal, evidence-based',
+      'Scout edge cases BEFORE requesting code-reviewer',
+      'Adversarial review on EVERY review — red-team is non-negotiable',
+      'NO completion claims without fresh verification evidence',
+    ],
+    corePrinciplesVi: [
+      'Xác định input mode TRƯỚC — biết chính xác đang review CÁI GÌ',
+      'Technical rigor hơn social performance — thẳng thắn, dựa bằng chứng',
+      'Scout edge case TRƯỚC khi gọi code-reviewer',
+      'Adversarial review MỌI lần — red-team là bắt buộc',
+      'KHÔNG claim hoàn thành nếu thiếu bằng chứng verify mới',
+    ],
+
+    expertiseAreasEn: [
+      'Multi-stage review: spec compliance → code quality → adversarial',
+      'Red-team adversarial analysis (security, assumptions, race conditions)',
+      'Input mode resolution (PR / commit / pending / codebase)',
+      'Parallel scoped reviewers for multi-file features (3+ files)',
+      'Task-managed review pipeline with dependency chain',
+    ],
+    expertiseAreasVi: [
+      'Review nhiều giai đoạn: spec compliance → code quality → adversarial',
+      'Red-team adversarial analysis (security, giả định, race conditions)',
+      'Xác định input mode (PR / commit / pending / codebase)',
+      'Parallel scoped reviewer cho feature nhiều file (3+ files)',
+      'Pipeline review quản lý qua Task với dependency chain',
+    ],
+
+    workflowModes: [
+      { flag: '#123 | PR URL', modeEn: 'PR mode — full PR diff via gh pr diff', modeVi: 'PR mode — full PR diff qua gh pr diff', research: '', redTeam: '', validation: '' },
+      { flag: 'abc1234', modeEn: 'Commit mode — single commit diff via git show', modeVi: 'Commit mode — diff một commit qua git show', research: '', redTeam: '', validation: '' },
+      { flag: '--pending', modeEn: 'Pending mode — staged + unstaged via git diff', modeVi: 'Pending mode — staged + unstaged qua git diff', research: '', redTeam: '', validation: '' },
+      { flag: '(no args)', modeEn: 'Default — recent changes in conversation context', modeVi: 'Default — thay đổi gần đây trong context', research: '', redTeam: '', validation: '' },
+      { flag: 'codebase', modeEn: 'Codebase scan — full codebase analysis', modeVi: 'Quét codebase — phân tích toàn bộ codebase', research: '', redTeam: '', validation: '' },
+      { flag: 'codebase parallel', modeEn: 'Parallel multi-reviewer audit — ultrathink edge cases, then parallel verify', modeVi: 'Audit nhiều reviewer song song — ultrathink edge case, rồi verify song song', research: '', redTeam: '', validation: '' },
+    ],
+
+    composableFlagsEn: 'Input modes are mutually exclusive — pick ONE. When invoked without arguments and no recent changes, AskUserQuestion prompts to select review target.',
+    composableFlagsVi: 'Các input mode loại trừ lẫn nhau — chọn MỘT. Khi gọi không có argument và không có thay đổi gần đây, AskUserQuestion sẽ hỏi chọn review target.',
+
+    skillStack: [
+      { name: 'code-reviewer agent', type: 'agent' },
+      { name: 'adversarial-reviewer agent', type: 'agent' },
+      { name: 'ck:scout', type: 'skill' },
+      { name: 'ck:sequential-thinking', type: 'skill' },
+      { name: 'ck:docs-seeker', type: 'skill' },
+      { name: 'Agent', type: 'tool' },
+      { name: 'TaskCreate', type: 'tool' },
+      { name: 'TaskUpdate', type: 'tool' },
+      { name: 'AskUserQuestion', type: 'tool' },
+      { name: 'Bash (gh / git)', type: 'tool' },
+    ],
+
+    specialOperations: [
+      {
+        id: 'op-spec-compliance',
+        titleEn: 'Stage 1: Spec Compliance',
+        titleVi: 'Stage 1: Spec Compliance',
+        descEn: 'HARD GATE before quality review. Verifies code matches plan/spec — no missing requirements, no YAGNI violations. Fail → fix → re-run Stage 1.',
+        descVi: 'HARD GATE trước quality review. Xác minh code khớp plan/spec — không thiếu requirement, không vi phạm YAGNI. Fail → fix → chạy lại Stage 1.',
+        color: 'sky',
+      },
+      {
+        id: 'op-quality-review',
+        titleEn: 'Stage 2: Code Quality',
+        titleVi: 'Stage 2: Code Quality',
+        descEn: 'code-reviewer sub-agent reviews standards, security, performance, edge cases. 3+ files → parallel scoped reviewers (backend / frontend).',
+        descVi: 'code-reviewer sub-agent review standards, security, performance, edge case. 3+ files → parallel scoped reviewer (backend / frontend).',
+        color: 'emerald',
+      },
+      {
+        id: 'op-adversarial-review',
+        titleEn: 'Stage 3: Adversarial (Red Team)',
+        titleVi: 'Stage 3: Adversarial (Red Team)',
+        descEn: 'Adversarial reviewer actively tries to break the code — security holes, false assumptions, race conditions, supply chain risks. Verdicts: Accept / Reject / Defer.',
+        descVi: 'Adversarial reviewer chủ động phá code — security holes, giả định sai, race conditions, supply chain risks. Verdict: Accept / Reject / Defer.',
+        color: 'rose',
+      },
+      {
+        id: 'op-task-pipeline',
+        titleEn: 'Task-Managed Pipeline (3+ files)',
+        titleVi: 'Pipeline qua Task (3+ files)',
+        descEn: 'scout → review → adversarial → fix → verify, each a Task with dependency chain. Parallel scoped reviewers for independent file groups. Fix task blocks on all reviewers.',
+        descVi: 'scout → review → adversarial → fix → verify, mỗi bước là một Task với dependency chain. Parallel scoped reviewer cho nhóm file độc lập. Fix task chặn đến khi mọi reviewer xong.',
+        color: 'amber',
+      },
+      {
+        id: 'op-codebase-parallel',
+        titleEn: 'codebase parallel — Multi-Reviewer Audit',
+        titleVi: 'codebase parallel — Audit Nhiều Reviewer',
+        descEn: 'Ultrathink edge cases, then spawn parallel adversarial reviewers across the codebase. Used for deep audits — security review, pre-launch hardening.',
+        descVi: 'Ultrathink edge case, rồi spawn nhiều adversarial reviewer song song trên codebase. Dùng cho audit sâu — security review, hardening trước launch.',
+        color: 'violet',
+      },
+    ],
+
+    reportOutput: {
+      titleEn: 'Adversarial Review Report',
+      titleVi: 'Báo cáo Adversarial Review',
+      patternEn: 'Findings grouped by severity (Critical / Important / Minor) + verdict per finding + merge recommendation',
+      patternVi: 'Findings nhóm theo severity (Critical / Important / Minor) + verdict từng finding + recommendation merge',
+      locationEn: 'Inline review output · plans/reports/review-<slug>.md (when --parallel)',
+      locationVi: 'Inline review output · plans/reports/review-<slug>.md (khi --parallel)',
+      descEn: 'Each finding: description, file:line, severity, verdict (Accept / Reject / Defer) • Critical → BLOCK merge • Deferred → GitHub issue • Recommendation: APPROVE | REQUEST CHANGES | BLOCK • Verification gate (tests + build) MUST pass before report finalizes',
+      descVi: 'Mỗi finding: mô tả, file:line, severity, verdict (Accept / Reject / Defer) • Critical → CHẶN merge • Deferred → GitHub issue • Recommendation: APPROVE | REQUEST CHANGES | BLOCK • Verification gate (tests + build) PHẢI pass trước khi report finalize',
+    },
+
+    deepDiveLink: {
+      hrefEn: '/guides/commands',
+      hrefVi: '/vi/guides/commands',
+      labelEn: 'See all ClaudeKit commands',
+      labelVi: 'Xem tất cả lệnh ClaudeKit',
+    },
+  },
 ];
 
 /** Helper to find infographic by scenario ID */

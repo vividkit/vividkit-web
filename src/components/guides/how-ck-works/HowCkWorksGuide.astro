@@ -551,11 +551,15 @@ const getCommandNavItem = (id: string) => {
       </div>
       <div id="ck-cook" tabindex="-1" class="scroll-mt-24 focus:outline-none" x-show="selectedScenario === 'cook'">
         <WorkflowSkillInfographic scenarioId="cook" lang={currentLang} />
-        <WorkflowCommandNav previous={getCommandNavItem('plan')} next={getCommandNavItem('fix')} lang={currentLang} />
+        <WorkflowCommandNav previous={getCommandNavItem('plan')} next={getCommandNavItem('code-review')} lang={currentLang} />
+      </div>
+      <div id="ck-code-review" tabindex="-1" class="scroll-mt-24 focus:outline-none" x-show="selectedScenario === 'code-review'">
+        <WorkflowSkillInfographic scenarioId="code-review" lang={currentLang} />
+        <WorkflowCommandNav previous={getCommandNavItem('cook')} next={getCommandNavItem('fix')} lang={currentLang} />
       </div>
       <div id="ck-fix" tabindex="-1" class="scroll-mt-24 focus:outline-none" x-show="selectedScenario === 'fix'">
         <WorkflowSkillInfographic scenarioId="fix" lang={currentLang} />
-        <WorkflowCommandNav previous={getCommandNavItem('cook')} next={getCommandNavItem('team')} lang={currentLang} />
+        <WorkflowCommandNav previous={getCommandNavItem('code-review')} next={getCommandNavItem('team')} lang={currentLang} />
       </div>
       <div id="ck-team" tabindex="-1" class="scroll-mt-24 focus:outline-none" x-show="selectedScenario === 'team'">
         <WorkflowSkillInfographic scenarioId="team" lang={currentLang} />

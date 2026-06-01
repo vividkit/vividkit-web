@@ -15,6 +15,7 @@ import InfographicBrainstormQuickRef from './infographic/infographic-brainstorm-
 import InfographicExecutionQuickRef from './infographic/infographic-execution-quick-ref.astro';
 import InfographicTeamQuickRef from './infographic/infographic-team-quick-ref.astro';
 import InfographicPreviewQuickRef from './infographic/infographic-preview-quick-ref.astro';
+import InfographicCodeReviewQuickRef from './infographic/infographic-code-review-quick-ref.astro';
 
 interface Props {
   scenarioId: string;
@@ -40,6 +41,8 @@ const infographic = getInfographicById(scenarioId);
     <InfographicTeamQuickRef data={infographic} lang={currentLang} />
   ) : scenarioId === 'preview' ? (
     <InfographicPreviewQuickRef data={infographic} lang={currentLang} />
+  ) : scenarioId === 'code-review' ? (
+    <InfographicCodeReviewQuickRef data={infographic} lang={currentLang} />
   ) : (
     <div class="infographic-container">
     <!-- Header with command name and tagline -->
