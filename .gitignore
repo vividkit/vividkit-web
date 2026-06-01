@@ -38,6 +38,10 @@ pnpm-debug.log*
 reference/**/*
 !reference/skills-registry.json
 !reference/skills-registry-index.json
-!reference/ccs-provider-editorial.json
 plans/**/*
 !plans/templates/*
+
+# local-only working assets
+archive/
+assets/generated/
+repomix-output.xml
