@@ -40,6 +40,7 @@ const translatePath = useTranslatedPath(currentLang);
           <!-- Language Toggle -->
           <a
             href={translatePath(Astro.url.pathname, currentLang === 'en' ? 'vi' : 'en')}
+            data-lang-toggle
             class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer text-slate-600 dark:text-slate-300"
             title={currentLang === 'en' ? 'Chuyển sang Tiếng Việt' : 'Switch to English'}
           >
@@ -94,6 +95,7 @@ const translatePath = useTranslatedPath(currentLang);
       <div class="h-px bg-slate-200 dark:bg-slate-700 my-2"></div>
       <a
         href={translatePath(Astro.url.pathname, currentLang === 'en' ? 'vi' : 'en')}
+        data-lang-toggle
         class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors flex items-center gap-2"
       >
         <span class="font-bold">{currentLang === 'en' ? 'VI' : 'EN'}</span>
@@ -106,6 +108,18 @@ const translatePath = useTranslatedPath(currentLang);
 </header>
 
 <script is:inline>
+  // Preserve current hash when switching language so anchor-driven guides
+  // (e.g. how-ck-works) don't reset to their default scenario.
+  document.querySelectorAll('a[data-lang-toggle]').forEach(link => {
+    link.addEventListener('click', event => {
+      const hash = window.location.hash;
+      if (!hash) return;
+      const target = event.currentTarget;
+      const base = (target.getAttribute('href') || '').split('#')[0];
+      target.setAttribute('href', base + hash);
+    });
+  });
+
   const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
 
