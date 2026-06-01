@@ -11,6 +11,7 @@ export const GET: APIRoute = () => {
   const pages = [
     { path: '/', changefreq: 'weekly', priority: '1.0' },
     { path: '/guides', changefreq: 'weekly', priority: '0.9' },
+    { path: '/guides/start-with-ai', changefreq: 'monthly', priority: '0.9' },
     { path: '/guides/commands', changefreq: 'monthly', priority: '0.8' },
     { path: '/guides/workflows', changefreq: 'monthly', priority: '0.8' },
     { path: '/guides/uiux', changefreq: 'monthly', priority: '0.8' },

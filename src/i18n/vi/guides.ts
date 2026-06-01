@@ -21,6 +21,9 @@ export const guides = {
   'guides.cli.purchase_notice.cta': 'Mua ClaudeKit (Giảm 20%)',
   // How It Works Guide
   'guides.how_ck_works.title': 'Cách ClaudeKit Hoạt Động',
+  // Start With AI Guide
+  'guides.start_with_ai.title': 'Bắt Đầu Với AI',
+  'guides.start_with_ai.description': 'Hướng dẫn thực tế cho người mới hoàn toàn',
   // What is ClaudeKit Guide
   'guides.what_is_claudekit.title': 'Giới Thiệu ClaudeKit',
   'guides.what_is_claudekit.description': 'Giới thiệu ClaudeKit cho người mới bắt đầu',
@@ -187,6 +190,10 @@ export const guides = {
   'guides.home.title': 'Chào Mừng Đến VividKit Guides',
   'guides.home.subtitle': 'Hành trình AI coding của bạn bắt đầu từ đây. Chọn đường đi phù hợp với bạn.',
   'guides.home.tip': 'Mẹo: Trên desktop, dùng menu bên trái để mở nhanh các guide khác',
+  'guides.home.start_with_ai.kicker': 'Bắt đầu tại đây',
+  'guides.home.start_with_ai.title': 'Mới với AI, không chỉ Claude Code?',
+  'guides.home.start_with_ai.desc': 'Bắt đầu từ công việc hiện tại, chọn hướng thực tế, và học cách biến AI thành workflow hữu ích trước khi nhảy vào tool.',
+  'guides.home.start_with_ai.cta': 'Bắt đầu với AI',
   // Pathway: New to Claude
   'guides.home.pathway_new.title': 'Mới Dùng Claude Code?',
   'guides.home.pathway_new.desc': 'Bắt đầu hành trình AI coding tại đây',

@@ -21,6 +21,9 @@ export const guides = {
   'guides.cli.purchase_notice.cta': 'Get ClaudeKit (20% OFF)',
   // How It Works Guide
   'guides.how_ck_works.title': 'How ClaudeKit Works',
+  // Start With AI Guide
+  'guides.start_with_ai.title': 'Start With AI',
+  'guides.start_with_ai.description': 'A practical guide for complete AI beginners',
   // What is ClaudeKit Guide
   'guides.what_is_claudekit.title': 'What is ClaudeKit?',
   'guides.what_is_claudekit.description': 'Introduction to ClaudeKit for beginners',
@@ -187,6 +190,10 @@ export const guides = {
   'guides.home.title': 'Welcome to VividKit Guides',
   'guides.home.subtitle': 'Your AI coding journey starts here. Choose your path based on where you are.',
   'guides.home.tip': 'Tip: On desktop, use the left menu to jump to other guides quickly',
+  'guides.home.start_with_ai.kicker': 'Start here',
+  'guides.home.start_with_ai.title': 'New to AI, not just Claude Code?',
+  'guides.home.start_with_ai.desc': 'Begin with your current work, choose a practical path, and learn how to turn AI into useful workflows before jumping into tools.',
+  'guides.home.start_with_ai.cta': 'Start with AI',
   // Pathway: New to Claude
   'guides.home.pathway_new.title': 'New to Claude Code?',
   'guides.home.pathway_new.desc': 'Start your AI coding journey here',
