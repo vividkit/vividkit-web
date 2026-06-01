@@ -1,0 +1,16 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import RemoteAccessGuide from '@/components/guides/RemoteAccessGuide.astro';
+import type { Language } from '@/i18n';
+
+const lang: Language = 'vi';
+---
+
+<GuidesLayout
+  title="Remote Access - VividKit Documentation"
+  description="Chọn giữa Remote Control chính thức và cloud terminal riêng tư cho Claude Code, Codex, và AI coding CLI khác."
+  activeTab="remote-access"
+  lang={lang}
+>
+  <RemoteAccessGuide lang={lang} />
+</GuidesLayout>

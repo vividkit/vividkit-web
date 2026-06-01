@@ -1,0 +1,570 @@
+---
+// Remote access guide for official app control and private browser-terminal setups.
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
+import {
+  PRE_LG,
+  COPY_BTN_LG,
+  COPY_ICON_LG,
+  CHECK_ICON_LG,
+  renderShellSnippet,
+  stripShellComments,
+} from './ck-with-codex/shell-snippet-helpers';
+
+interface Props {
+  lang?: Language;
+}
+
+interface SetupStep {
+  title: string;
+  desc: string;
+  command: string;
+  codeLabel: string;
+  accent: Accent;
+  note?: string;
+}
+
+interface SourceLink {
+  label: string;
+  href: string;
+  desc: string;
+}
+
+type Accent = 'cyan' | 'sky' | 'violet' | 'emerald' | 'amber' | 'slate';
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(currentLang);
+const isVi = currentLang === 'vi';
+const t = (en: string, vi: string) => (isVi ? vi : en);
+
+const accentMap: Record<Accent, { border: string; bar: string; chip: string; note: string }> = {
+  cyan: {
+    border: 'border-cyan-200/80 dark:border-cyan-800/60',
+    bar: 'bg-cyan-500',
+    chip: 'bg-cyan-100 text-cyan-700 ring-cyan-200 dark:bg-cyan-950/70 dark:text-cyan-300 dark:ring-cyan-900/60',
+    note: 'text-cyan-700 dark:text-cyan-300',
+  },
+  sky: {
+    border: 'border-sky-200/80 dark:border-sky-800/60',
+    bar: 'bg-sky-500',
+    chip: 'bg-sky-100 text-sky-700 ring-sky-200 dark:bg-sky-950/70 dark:text-sky-300 dark:ring-sky-900/60',
+    note: 'text-sky-700 dark:text-sky-300',
+  },
+  violet: {
+    border: 'border-violet-200/80 dark:border-violet-800/60',
+    bar: 'bg-violet-500',
+    chip: 'bg-violet-100 text-violet-700 ring-violet-200 dark:bg-violet-950/70 dark:text-violet-300 dark:ring-violet-900/60',
+    note: 'text-violet-700 dark:text-violet-300',
+  },
+  emerald: {
+    border: 'border-emerald-200/80 dark:border-emerald-800/60',
+    bar: 'bg-emerald-500',
+    chip: 'bg-emerald-100 text-emerald-700 ring-emerald-200 dark:bg-emerald-950/70 dark:text-emerald-300 dark:ring-emerald-900/60',
+    note: 'text-emerald-700 dark:text-emerald-300',
+  },
+  amber: {
+    border: 'border-amber-200/80 dark:border-amber-800/60',
+    bar: 'bg-amber-500',
+    chip: 'bg-amber-100 text-amber-700 ring-amber-200 dark:bg-amber-950/70 dark:text-amber-300 dark:ring-amber-900/60',
+    note: 'text-amber-700 dark:text-amber-300',
+  },
+  slate: {
+    border: 'border-slate-200/80 dark:border-slate-700/70',
+    bar: 'bg-slate-500',
+    chip: 'bg-slate-100 text-slate-700 ring-slate-200 dark:bg-slate-900 dark:text-slate-300 dark:ring-slate-800',
+    note: 'text-slate-600 dark:text-slate-400',
+  },
+};
+
+const CODE_FRAME = 'relative overflow-hidden rounded-xl border border-slate-200/80 bg-white/80 shadow-sm dark:border-slate-800 dark:bg-slate-950/70';
+const CODE_CHROME = 'flex min-h-8 items-center justify-between gap-3 border-b border-slate-200/80 bg-slate-50/80 px-4 py-2 dark:border-slate-800 dark:bg-slate-950/80';
+const codePreClass = `${PRE_LG} m-0 max-h-[28rem] overflow-x-auto`;
+
+const setupSteps: SetupStep[] = [
+  {
+    title: t('Install the terminal layer', 'Cài lớp terminal'),
+    desc: t('Install tmux, ttyd, and Tailscale on the Ubuntu VPS or devbox.', 'Cài tmux, ttyd, và Tailscale trên VPS Ubuntu hoặc devbox.'),
+    codeLabel: 'shell · base',
+    accent: 'cyan',
+    command: `sudo apt update
+sudo apt install -y curl git tmux ttyd
+curl -fsSL https://tailscale.com/install.sh | sh
+sudo tailscale up`,
+    note: t('Approve the device in your Tailscale account when the login URL appears.', 'Approve device trong tài khoản Tailscale khi URL đăng nhập hiện ra.'),
+  },
+  {
+    title: t('Install the coding agent CLI', 'Cài coding agent CLI'),
+    desc: t('Install one or both CLIs. Keep install details anchored to the official docs when versions change.', 'Cài một hoặc cả hai CLI. Khi version thay đổi, lấy official docs làm nguồn chính.'),
+    codeLabel: 'shell · agents',
+    accent: 'sky',
+    command: `# Claude Code
+curl -fsSL https://claude.ai/install.sh | bash
+claude --version
+
+# Codex CLI
+npm i -g @openai/codex
+codex --version`,
+    note: t('Claude also supports npm as an advanced install path. For npm installs, use a non-root Node setup and avoid sudo npm global installs.', 'Claude cũng hỗ trợ npm như một cách cài nâng cao. Với npm install, dùng Node setup không phải root và tránh sudo npm global install.'),
+  },
+  {
+    title: t('Authenticate once on the VPS', 'Đăng nhập một lần trên VPS'),
+    desc: t('Run the CLI over SSH, complete the login flow, then keep credentials on that machine.', 'Chạy CLI qua SSH, hoàn tất login flow, rồi giữ credentials trên máy đó.'),
+    codeLabel: 'shell · auth',
+    accent: 'violet',
+    command: `# Claude Code: prefer full interactive claude.ai login
+claude
+# inside Claude Code, run:
+/login
+
+# Codex CLI on headless hosts
+codex login --device-auth`,
+    note: t('For Claude Remote Control, do not use setup-token. It is limited for Remote Control; use claude.ai login instead.', 'Với Claude Remote Control, đừng dùng setup-token. Token này bị giới hạn cho Remote Control; hãy login bằng claude.ai.'),
+  },
+  {
+    title: t('Create the persistent tmux session', 'Tạo session tmux bền vững'),
+    desc: t('Start the agent inside tmux, then detach. The process keeps running after SSH disconnects.', 'Chạy agent trong tmux, sau đó detach. Process vẫn chạy sau khi SSH mất kết nối.'),
+    codeLabel: 'shell · tmux',
+    accent: 'emerald',
+    command: `tmux new -s ai
+cd ~/your-project
+codex
+# or: claude
+
+# Detach: Ctrl-b then d
+tmux attach -t ai`,
+    note: t('tmux survives terminal disconnects, not a server reboot. Use the systemd section below for reboot recovery.', 'tmux sống qua việc mất terminal, không sống qua reboot server. Dùng phần systemd bên dưới nếu cần tự khởi động lại.'),
+  },
+  {
+    title: t('Expose tmux through ttyd on localhost', 'Mở tmux qua ttyd trên localhost'),
+    desc: t('Bind ttyd to localhost first. Tailscale Serve will publish it privately to your tailnet.', 'Bind ttyd vào localhost trước. Tailscale Serve sẽ publish riêng tư vào tailnet của bạn.'),
+    codeLabel: 'shell · ttyd',
+    accent: 'amber',
+    command: `ttyd -i 127.0.0.1 -p 7681 -W tmux attach -t ai`,
+    note: t('The -W flag matters: ttyd is read-only without it.', 'Flag -W rất quan trọng: không có nó thì ttyd chỉ read-only.'),
+  },
+  {
+    title: t('Publish with Tailscale Serve', 'Publish bằng Tailscale Serve'),
+    desc: t('Serve proxies the localhost ttyd port to a private tailnet HTTPS URL.', 'Serve proxy port ttyd localhost thành URL HTTPS riêng trong tailnet.'),
+    codeLabel: 'shell · tailscale',
+    accent: 'slate',
+    command: `tailscale serve --bg 7681
+tailscale serve status`,
+    note: t('Open the shown https://device.tailnet.ts.net URL from any device signed in to Tailscale.', 'Mở URL https://device.tailnet.ts.net được hiển thị từ thiết bị đã đăng nhập Tailscale.'),
+  },
+];
+
+const comparisonRows = [
+  {
+    axis: t('Where the agent runs', 'Agent chạy ở đâu'),
+    diy: t('Any VPS/devbox you control', 'Bất kỳ VPS/devbox bạn quản lý'),
+    claude: t('Local machine running Claude Code', 'Máy local đang chạy Claude Code'),
+    codex: t('Codex App host or SSH host', 'Codex App host hoặc SSH host'),
+  },
+  {
+    axis: t('Interface', 'Giao diện'),
+    diy: t('Full browser terminal', 'Terminal đầy đủ trên browser'),
+    claude: t('claude.ai/code or Claude mobile app', 'claude.ai/code hoặc Claude mobile app'),
+    codex: t('ChatGPT mobile app and Codex App', 'ChatGPT mobile app và Codex App'),
+  },
+  {
+    axis: t('Best for', 'Hợp với'),
+    diy: t('Cloud terminal, full shell, long tasks', 'Cloud terminal, full shell, task dài'),
+    claude: t('Steering an existing Claude session', 'Điều hướng Claude session đang chạy'),
+    codex: t('Approvals, diffs, host switching', 'Approve, diff, chuyển host'),
+  },
+  {
+    axis: t('Main risk', 'Rủi ro chính'),
+    diy: t('You own security and access control', 'Bạn tự chịu security và access control'),
+    claude: t('Local process must stay alive', 'Process local phải còn sống'),
+    codex: t('Current mobile setup is app-host focused', 'Mobile setup hiện nghiêng về app host'),
+  },
+];
+
+const safetyRules = [
+  t('Do not expose ttyd directly to the public internet. Use Tailscale Serve, Tailscale IP binding, or another private tunnel.', 'Đừng expose ttyd trực tiếp ra internet public. Dùng Tailscale Serve, bind vào Tailscale IP, hoặc tunnel riêng.'),
+  t('Do not share a personal Claude/Codex subscription session. A shared writable terminal is effectively account sharing.', 'Đừng share session subscription cá nhân của Claude/Codex. Terminal có quyền ghi gần như share account.'),
+  t('Treat ~/.codex/auth.json, Claude credentials, shell history, and project .env files as secrets.', 'Xem ~/.codex/auth.json, credentials Claude, shell history, và file .env project như secret.'),
+  t('Give teammates read-only visibility unless your plan and policy allow shared operation.', 'Chỉ cho teammate xem read-only nếu plan và policy chưa cho phép cùng thao tác.'),
+];
+
+const troubleshooting = [
+  {
+    problem: t('I opened http://TAILSCALE_IP:7681 and it fails', 'Mở http://TAILSCALE_IP:7681 bị fail'),
+    fix: t('If ttyd is bound to 127.0.0.1, use tailscale serve. Direct Tailscale IP access only works if ttyd binds to the Tailscale IP.', 'Nếu ttyd bind 127.0.0.1, phải dùng tailscale serve. Truy cập trực tiếp Tailscale IP chỉ chạy khi ttyd bind vào Tailscale IP.'),
+  },
+  {
+    problem: t('The browser terminal is read-only', 'Terminal trên browser chỉ đọc'),
+    fix: t('Add -W to ttyd. Without it, ttyd intentionally blocks keyboard input.', 'Thêm -W vào ttyd. Không có nó, ttyd cố tình chặn input bàn phím.'),
+  },
+  {
+    problem: t('Session disappeared after VPS reboot', 'Session biến mất sau khi reboot VPS'),
+    fix: t('Expected. tmux keeps sessions across disconnects, not reboots. Use systemd to recreate ttyd and tmux automatically.', 'Đúng kỳ vọng. tmux giữ session qua disconnect, không qua reboot. Dùng systemd để tạo lại ttyd và tmux tự động.'),
+  },
+  {
+    problem: t('Claude Remote Control complains about token scope', 'Claude Remote Control báo lỗi token scope'),
+    fix: t('Run claude auth login or /login with claude.ai. setup-token is not enough for Remote Control.', 'Chạy claude auth login hoặc /login bằng claude.ai. setup-token không đủ cho Remote Control.'),
+  },
+];
+
+const sourceLinks: SourceLink[] = [
+  {
+    label: 'Tailscale Serve',
+    href: 'https://tailscale.com/docs/features/tailscale-serve',
+    desc: t('Private tailnet proxy for localhost services.', 'Proxy riêng trong tailnet cho service localhost.'),
+  },
+  {
+    label: 'ttyd',
+    href: 'https://github.com/tsl0922/ttyd',
+    desc: t('Web terminal options: port, interface, writable mode.', 'Options web terminal: port, interface, writable mode.'),
+  },
+  {
+    label: 'Claude Code setup',
+    href: 'https://code.claude.com/docs/en/setup',
+    desc: t('Install and authenticate Claude Code.', 'Cài đặt và authenticate Claude Code.'),
+  },
+  {
+    label: 'Claude Remote Control',
+    href: 'https://code.claude.com/docs/en/remote-control',
+    desc: t('Official remote-control behavior and limitations.', 'Hành vi và giới hạn Remote Control chính thức.'),
+  },
+  {
+    label: 'Codex CLI',
+    href: 'https://developers.openai.com/codex/cli',
+    desc: t('Install and run the official Codex CLI.', 'Cài và chạy Codex CLI chính thức.'),
+  },
+  {
+    label: 'Codex auth',
+    href: 'https://developers.openai.com/codex/auth',
+    desc: t('Device-code login and credential storage.', 'Device-code login và nơi lưu credential.'),
+  },
+  {
+    label: 'Codex remote connections',
+    href: 'https://developers.openai.com/codex/remote-connections',
+    desc: t('Official mobile and SSH remote access model.', 'Mô hình remote mobile và SSH chính thức.'),
+  },
+];
+
+const systemdUnit = `[Unit]
+Description=Private AI web terminal through ttyd
+After=network-online.target tailscaled.service
+Wants=network-online.target
+
+[Service]
+User=YOUR_USER
+WorkingDirectory=/home/YOUR_USER/your-project
+ExecStart=/usr/bin/ttyd -i 127.0.0.1 -p 7681 -W /usr/bin/tmux new-session -A -s ai
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target`;
+
+const systemdCommands = `sudo nano /etc/systemd/system/ai-web-terminal.service
+sudo systemctl daemon-reload
+sudo systemctl enable --now ai-web-terminal
+tailscale serve --bg 7681`;
+---
+
+<div class="space-y-10 mt-6">
+  <section class="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-gradient-to-br from-slate-50 via-white to-cyan-50/70 p-6 md:p-8 dark:border-slate-800 dark:from-slate-950 dark:via-slate-950 dark:to-cyan-950/30">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(6,182,212,0.12),transparent_34%)]"></div>
+    <div class="relative space-y-5">
+      <div class="inline-flex items-center gap-2 rounded-full bg-cyan-100 px-4 py-1.5 text-sm font-semibold text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300">
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5 9.75 9.75l-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0 0 21 18V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v12a2.25 2.25 0 0 0 2.25 2.25Z" />
+        </svg>
+        Remote Access
+      </div>
+      <div class="max-w-3xl space-y-3">
+        <h1 class="text-4xl font-bold tracking-tight text-slate-900 dark:text-white">
+          {t('Remote Access for AI Coding Agents', 'Remote Access cho AI Coding Agent')}
+        </h1>
+        <p class="text-xl font-medium text-cyan-700 dark:text-cyan-300">
+          {t('Choose the right remote path: official app control for quick steering, or a private cloud terminal for full-shell work.', 'Chọn đúng kiểu remote: official app control để điều hướng nhanh, hoặc cloud terminal riêng tư khi cần full shell.')}
+        </p>
+        <p class="max-w-2xl text-base leading-relaxed text-slate-600 dark:text-slate-400">
+          {t('Start with the remote-access decision: app-level control when you need quick steering, private terminal when you need the whole shell. The private-terminal path uses tmux + ttyd + Tailscale.', 'Bắt đầu từ lựa chọn remote access: app-level control khi cần điều hướng nhanh, private terminal khi cần full shell. Nhánh private terminal dùng tmux + ttyd + Tailscale.')}
+        </p>
+      </div>
+      <div class="grid gap-3 sm:grid-cols-3">
+        {[
+          ['tmux', t('Keeps the shell session alive after SSH disconnects.', 'Giữ shell session sống sau khi mất SSH.')],
+          ['ttyd', t('Turns that terminal into a browser UI.', 'Biến terminal thành UI trên browser.')],
+          ['Tailscale', t('Keeps the web terminal inside your private tailnet.', 'Giữ web terminal trong tailnet riêng của bạn.')],
+        ].map(([label, desc]) => (
+          <div class="rounded-2xl border border-cyan-200/70 bg-white/75 p-4 backdrop-blur dark:border-cyan-800/40 dark:bg-slate-900/60">
+            <div class="text-sm font-bold text-cyan-700 dark:text-cyan-300">{label}</div>
+            <div class="mt-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">{desc}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="grid gap-4 md:grid-cols-2">
+    <div class="glass-card rounded-2xl border-emerald-200/70 p-5 dark:border-emerald-800/40">
+      <h2 class="text-lg font-bold text-slate-900 dark:text-white">{t('Use this when', 'Nên dùng khi')}</h2>
+      <ul class="mt-4 space-y-3">
+        {[
+          t('You want a cheap VPS or devbox running long tasks while your laptop sleeps.', 'Bạn muốn VPS/devbox rẻ tiền chạy task dài khi laptop ngủ.'),
+          t('Your local machine is Windows, but the AI coding toolchain is smoother on a Linux VPS.', 'Bạn dùng Windows ở máy local và muốn tận dụng VPS Linux để tránh friction từ các coding tool ưu tiên Unix/Linux.'),
+          t('You need full shell access: git, Docker, scripts, logs, editors, SSH.', 'Bạn cần full shell: git, Docker, scripts, logs, editors, SSH.'),
+          t('You want phone/tablet/browser access without exposing SSH or ttyd publicly.', 'Bạn muốn truy cập bằng phone/tablet/browser mà không expose SSH hoặc ttyd public.'),
+        ].map(item => (
+          <li class="flex gap-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+            <svg class="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m5 13 4 4L19 7" /></svg>
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div class="glass-card rounded-2xl border-amber-200/70 p-5 dark:border-amber-800/40">
+      <h2 class="text-lg font-bold text-slate-900 dark:text-white">{t('Do not use it for', 'Không dùng để')}</h2>
+      <ul class="mt-4 space-y-3">
+        {[
+          t('Public demo links. A writable terminal is more sensitive than a normal web app.', 'Demo link public. Writable terminal nhạy cảm hơn web app bình thường.'),
+          t('Sharing one personal Claude or Codex account with other people.', 'Share một account Claude hoặc Codex cá nhân cho người khác.'),
+          t('Replacing official Remote Control if you need polished diffs, approvals, and app notifications.', 'Thay Remote Control chính thức nếu bạn cần diff, approve, và notification đẹp.'),
+        ].map(item => (
+          <li class="flex gap-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+            <svg class="mt-0.5 h-4 w-4 shrink-0 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z" /></svg>
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="space-y-4">
+    <div class="border-b border-slate-200 bg-slate-50/80 p-5 dark:border-slate-800 dark:bg-slate-900/50">
+      <h2 class="text-xl font-bold text-slate-900 dark:text-white">{t('Private Terminal Setup in 10-15 Minutes', 'Setup private terminal trong 10-15 phút')}</h2>
+      <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
+        {t('Baseline: Ubuntu VPS, one user, private tailnet URL, Claude Code or Codex already allowed by your plan.', 'Mặc định: VPS Ubuntu, một user, URL private trong tailnet, Claude Code hoặc Codex được plan của bạn hỗ trợ.')}
+      </p>
+    </div>
+    <div class="space-y-4">
+      {setupSteps.map((step, index) => {
+        const accent = accentMap[step.accent];
+        const stepLabel = String(index + 1).padStart(2, '0');
+        return (
+          <article class={`relative overflow-hidden rounded-2xl border bg-white/80 shadow-sm transition-shadow hover:shadow-lg dark:bg-slate-950/40 ${accent.border}`}>
+            <div class={`absolute inset-x-0 top-0 h-1 ${accent.bar}`}></div>
+            <div class="grid gap-5 p-5 lg:grid-cols-[minmax(0,0.85fr)_minmax(22rem,1.35fr)] lg:items-start">
+              <div class="flex min-w-0 gap-3">
+                <div class="flex flex-col items-center gap-2">
+                  <div class={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-bold ring-4 ${accent.chip}`}>{stepLabel}</div>
+                  <div class={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ring-1 ${accent.chip}`}>
+                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5 9.75 9.75l-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0 0 21 18V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v12a2.25 2.25 0 0 0 2.25 2.25Z" />
+                    </svg>
+                  </div>
+                </div>
+                <div class="min-w-0 pt-1">
+                  <h3 class="font-semibold leading-snug text-slate-900 dark:text-white">{step.title}</h3>
+                  <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">{step.desc}</p>
+                  {step.note && (
+                    <p class={`mt-3 text-xs font-medium leading-relaxed ${accent.note}`}>{step.note}</p>
+                  )}
+                </div>
+              </div>
+
+              <div class={CODE_FRAME}>
+                <div class={CODE_CHROME}>
+                  <div class="flex min-w-0 items-center gap-2 text-[10px] font-mono uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500">
+                    <span class="h-2 w-2 rounded-full bg-rose-400" aria-hidden="true"></span>
+                    <span class="h-2 w-2 rounded-full bg-amber-400" aria-hidden="true"></span>
+                    <span class="h-2 w-2 rounded-full bg-emerald-400" aria-hidden="true"></span>
+                    <span class="truncate">{step.codeLabel}</span>
+                  </div>
+                  <button class={COPY_BTN_LG} data-code={stripShellComments(step.command)} aria-label={t('Copy command', 'Sao chép lệnh')}>
+                    <svg class={COPY_ICON_LG} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    <svg class={CHECK_ICON_LG} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  </button>
+                </div>
+                <pre class={codePreClass}><code set:html={renderShellSnippet(step.command)} /></pre>
+              </div>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+
+  <section class="glass-card rounded-2xl p-5">
+    <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <h2 class="text-xl font-bold text-slate-900 dark:text-white">{t('Optional: systemd Autostart', 'Tùy chọn: systemd autostart')}</h2>
+        <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
+          {t('Use this when the VPS can reboot and you want the browser terminal to come back automatically.', 'Dùng khi VPS có thể reboot và bạn muốn browser terminal tự quay lại.')}
+        </p>
+      </div>
+      <span class="w-fit rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+        {t('Replace YOUR_USER first', 'Đổi YOUR_USER trước')}
+      </span>
+    </div>
+    <div class="mt-5 grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+      <div class={CODE_FRAME}>
+        <div class={CODE_CHROME}>
+          <div class="flex min-w-0 items-center gap-2 text-[10px] font-mono uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500">
+            <span class="h-2 w-2 rounded-full bg-rose-400" aria-hidden="true"></span>
+            <span class="h-2 w-2 rounded-full bg-amber-400" aria-hidden="true"></span>
+            <span class="h-2 w-2 rounded-full bg-emerald-400" aria-hidden="true"></span>
+            <span class="truncate">systemd · service</span>
+          </div>
+          <button class={COPY_BTN_LG} data-code={systemdUnit} aria-label={t('Copy systemd unit', 'Sao chép systemd unit')}>
+            <svg class={COPY_ICON_LG} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <svg class={CHECK_ICON_LG} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          </button>
+        </div>
+        <pre class={codePreClass}><code>{systemdUnit}</code></pre>
+      </div>
+      <div class="space-y-3">
+        <div class={CODE_FRAME}>
+          <div class={CODE_CHROME}>
+            <div class="flex min-w-0 items-center gap-2 text-[10px] font-mono uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500">
+              <span class="h-2 w-2 rounded-full bg-rose-400" aria-hidden="true"></span>
+              <span class="h-2 w-2 rounded-full bg-amber-400" aria-hidden="true"></span>
+              <span class="h-2 w-2 rounded-full bg-emerald-400" aria-hidden="true"></span>
+              <span class="truncate">shell · enable</span>
+            </div>
+            <button class={COPY_BTN_LG} data-code={stripShellComments(systemdCommands)} aria-label={t('Copy commands', 'Sao chép lệnh')}>
+              <svg class={COPY_ICON_LG} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <svg class={CHECK_ICON_LG} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+          </div>
+          <pre class={codePreClass}><code set:html={renderShellSnippet(systemdCommands)} /></pre>
+        </div>
+        <p class="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm leading-relaxed text-amber-800 dark:border-amber-800/40 dark:bg-amber-950/30 dark:text-amber-200">
+          {t('For extra defense, add ttyd basic auth with -c "owner:long-random-password". Keep that password out of public notes and screenshots.', 'Để phòng thủ thêm, thêm basic auth cho ttyd bằng -c "owner:long-random-password". Đừng để password vào note hoặc screenshot public.')}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="glass-card overflow-hidden rounded-2xl">
+    <div class="border-b border-slate-200 bg-slate-50/80 p-5 dark:border-slate-800 dark:bg-slate-900/50">
+      <h2 class="text-xl font-bold text-slate-900 dark:text-white">{t('DIY vs Official Remote Control', 'DIY vs Remote Control chính thức')}</h2>
+      <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
+        {t('The DIY stack is a private terminal. Official remote control is an app-level control plane.', 'Stack DIY là private terminal. Remote control chính thức là control plane ở cấp app.')}
+      </p>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full min-w-[720px] text-left text-sm">
+        <thead class="bg-slate-100 text-xs uppercase tracking-wide text-slate-500 dark:bg-slate-900 dark:text-slate-400">
+          <tr>
+            <th class="px-5 py-3">{t('Axis', 'Tiêu chí')}</th>
+            <th class="px-5 py-3">tmux + ttyd + Tailscale</th>
+            <th class="px-5 py-3">Claude Remote Control</th>
+            <th class="px-5 py-3">Codex Remote Connections</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+          {comparisonRows.map(row => (
+            <tr>
+              <td class="px-5 py-4 font-semibold text-slate-900 dark:text-white">{row.axis}</td>
+              <td class="px-5 py-4 text-slate-600 dark:text-slate-400">{row.diy}</td>
+              <td class="px-5 py-4 text-slate-600 dark:text-slate-400">{row.claude}</td>
+              <td class="px-5 py-4 text-slate-600 dark:text-slate-400">{row.codex}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <div class="border-t border-slate-200 p-5 text-sm leading-relaxed text-slate-600 dark:border-slate-800 dark:text-slate-400">
+      {t('Current Codex docs describe mobile access through the Codex App host and ChatGPT mobile app, plus SSH host support. This guide intentionally does not invent a Codex CLI remote-control command.', 'Docs Codex hiện tại mô tả mobile access qua Codex App host và ChatGPT mobile app, kèm hỗ trợ SSH host. Guide này cố tình không chế ra một lệnh remote-control cho Codex CLI khi docs không có.')}
+    </div>
+  </section>
+
+  <section class="grid gap-4 md:grid-cols-2">
+    <div class="glass-card rounded-2xl border-red-200/70 p-5 dark:border-red-800/40">
+      <h2 class="text-xl font-bold text-slate-900 dark:text-white">{t('Security Rules', 'Quy tắc bảo mật')}</h2>
+      <ul class="mt-4 space-y-3">
+        {safetyRules.map(rule => (
+          <li class="flex gap-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+            <svg class="mt-0.5 h-4 w-4 shrink-0 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M12 3 2.5 20h19L12 3Z" /></svg>
+            <span>{rule}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div class="glass-card rounded-2xl p-5">
+      <h2 class="text-xl font-bold text-slate-900 dark:text-white">{t('Common Fixes', 'Lỗi thường gặp')}</h2>
+      <div class="mt-4 space-y-4">
+        {troubleshooting.map(item => (
+          <div class="rounded-xl border border-slate-200 bg-slate-50/70 p-4 dark:border-slate-800 dark:bg-slate-900/50">
+            <div class="text-sm font-semibold text-slate-900 dark:text-white">{item.problem}</div>
+            <div class="mt-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">{item.fix}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="glass-card rounded-2xl p-5">
+    <h2 class="text-xl font-bold text-slate-900 dark:text-white">{t('Official Sources to Re-check', 'Nguồn chính thức cần đối chiếu')}</h2>
+    <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
+      {t('Authentication and remote-control behavior changes quickly. Check these before turning the guide into a production runbook.', 'Authentication và remote-control thay đổi nhanh. Đối chiếu các nguồn này trước khi biến guide thành runbook production.')}
+    </p>
+    <div class="mt-5 grid gap-3 sm:grid-cols-2">
+      {sourceLinks.map(source => (
+        <a
+          href={source.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group rounded-xl border border-slate-200 bg-slate-50/70 p-4 transition hover:border-cyan-300 hover:bg-cyan-50 dark:border-slate-800 dark:bg-slate-900/50 dark:hover:border-cyan-700/60 dark:hover:bg-cyan-950/30"
+        >
+          <div class="flex items-center justify-between gap-3">
+            <div class="font-semibold text-slate-900 group-hover:text-cyan-700 dark:text-white dark:group-hover:text-cyan-300">{source.label}</div>
+            <svg class="h-4 w-4 shrink-0 text-slate-400 transition group-hover:translate-x-0.5 group-hover:text-cyan-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5H21m0 0V12m0-7.5L10.5 15M6 6h4.5M6 18h12" /></svg>
+          </div>
+          <div class="mt-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">{source.desc}</div>
+        </a>
+      ))}
+    </div>
+    <div class="mt-5 flex flex-col gap-3 sm:flex-row">
+      <a
+        href={translatePath('/guides/remote-control')}
+        class="inline-flex items-center justify-center rounded-xl bg-cyan-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-cyan-700"
+      >
+        {t('Compare with Remote Control', 'So sánh với Remote Control')}
+      </a>
+      <a
+        href={translatePath('/guides/mobile-coding')}
+        class="inline-flex items-center justify-center rounded-xl border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800/50"
+      >
+        {t('Back to Mobile Coding', 'Về Mobile Coding')}
+      </a>
+    </div>
+  </section>
+</div>
+
+<script>
+  function bindRemoteAccessCopyButtons() {
+    document.querySelectorAll('.copy-btn').forEach((btn) => {
+      if (btn.dataset.copyBound === 'true') return;
+      btn.dataset.copyBound = 'true';
+
+      btn.addEventListener('click', async () => {
+        const code = btn.getAttribute('data-code');
+        if (!code) return;
+
+        try {
+          await navigator.clipboard.writeText(code);
+          const copyIcon = btn.querySelector('.copy-icon');
+          const checkIcon = btn.querySelector('.check-icon');
+          copyIcon?.classList.add('hidden');
+          checkIcon?.classList.remove('hidden');
+          setTimeout(() => {
+            copyIcon?.classList.remove('hidden');
+            checkIcon?.classList.add('hidden');
+          }, 1800);
+        } catch (err) {
+          console.error('Failed to copy:', err);
+        }
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', bindRemoteAccessCopyButtons);
+  document.addEventListener('astro:page-load', bindRemoteAccessCopyButtons);
+</script>
