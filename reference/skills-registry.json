@@ -1089,7 +1089,7 @@
       "kit": "engineer",
       "channels": {
         "stable": {
-          "version": "2.0.0",
+          "version": "2.1.0",
           "argumentHint": "[issue] --auto|--review|--quick|--parallel",
           "args": [
             "[issue]"
@@ -1104,7 +1104,7 @@
           "description": "Fix bugs, errors, test failures, and CI/CD issues with intelligent routing"
         },
         "beta": {
-          "version": null,
+          "version": "2.1.0",
           "argumentHint": "[issue] --auto|--review|--quick|--parallel",
           "args": [
             "[issue]"
