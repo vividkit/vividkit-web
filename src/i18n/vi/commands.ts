@@ -825,6 +825,8 @@ export const commands = {
   'commands.beta_preview.caught_up': 'Beta đang đồng bộ với stable — hiện chưa có tính năng beta-exclusive nào.',
   'commands.beta_review_pr.desc': 'Review GitHub PR diff với heuristic chống AI-slop',
   'commands.beta_review_pr.detail': 'Skill mới <code>/ck:review-pr &lt;PR&gt;</code> review pull request về correctness, security, breaking change, code quality và pattern AI-slop (file dumping-ground, reimplementation song song, abstraction sớm).<br/>Hỗ trợ <code>--fix</code> để auto-remediate finding và <code>--reply</code> để post review formal lên GitHub qua <code>gh</code>.',
+  'commands.beta_code_review.desc': 'Reviewer posture cứng rắn hơn với AI-slop',
+  'commands.beta_code_review.detail': 'Reviewer mặc định xem code có thể do AI sinh — hình thức bóng bẩy, comment tự tin, test happy-path xanh đều không phải bằng chứng.<br/>Thêm AI-slop risk lens (reimplementation song song, generic manager thiếu domain anchor, defensive paranoia, phantom test, scope drift) và bỏ praise-padding khỏi template báo cáo.',
   'commands.stable.tech_graph.desc': 'Tạo SVG technical diagram chất lượng publication',
   'commands.stable.tech_graph.detail': '7 phong cách thiết kế (modern, minimal, neon, retro,...) và 10 template (architecture, sequence, ER, flow). Output SVG sẵn sàng cho docs, slides, blog post.',
   'commands.beta_tech_graph.desc': 'Tạo SVG technical diagram chất lượng publication',
