@@ -1,6 +1,6 @@
 # VividKit Web - Codebase Summary
 
-**Last Updated:** December 10, 2025
+**Last Updated:** May 19, 2026
 **Build Tool:** Astro 5.16.4
 **Language:** TypeScript 5.9.3 (strict mode)
 **Generated from:** repomix-output.xml
@@ -221,6 +221,22 @@ GuidesLayout
     └── Footer (shared)
 ```
 
+### Deals Lucky Draw Extension
+
+- Public lucky draw is driven by `src/scripts/deals-scheduled-draw-state.ts`, with the section composed in `src/components/guides/DealsGuide.astro` after the existing coupon claim widget.
+- New frontend files:
+  - `src/components/guides/deals/deals-lucky-draw-section.astro`
+  - `src/components/guides/deals/deals-lucky-draw-widget.astro`
+  - `src/components/guides/deals/deals-lucky-draw-admin.astro`
+  - `src/components/guides/deals/deals-lucky-draw-result.astro`
+  - `src/pages/guides/deals-admin.astro`
+  - `src/pages/vi/guides/deals-admin.astro`
+- `deals-claim-widget.astro` remains coupon-claim focused and only accepts GitHub OAuth returns with `vk_action=claim` or legacy no-action returns.
+- The raffle widget owns `vk_action=raffle_status`, `vk_action=raffle_verify_order`, `vk_action=raffle_register`, and `vk_action=raffle_claim_prize`; `/raffle/spin` remains only as a deprecated compatibility route.
+- `/raffle/verify-order` checks the local paid-order allowlist first, then calls the ClaudeKit referrals API for pending refs and auto-imports an exact-match verified ref with upstream source/timestamp details; API failure, missing key, empty result, or mismatch falls back to `pending_approval`.
+- Hidden admin page is unlinked from navigation. It keeps `Admin-Secret` in `sessionStorage` only and uses the backend `Admin-Secret` header for `/admin/paid-orders/import`, `/admin/raffle/run-draw`, `/admin/raffle/rollover-expired`, and `/admin/raffle/dump`; the order log merges paid refs and pending approvals, showing source and timestamps, and importing a pending user-submitted ref approves that registration before draw.
+- Backend source of truth for raffle state and routes lives in `/Users/thieunv/projects/personal/vividkit-giveaway-api`, and the draw schedule is env-driven in the backend, with scheduled cron invoking the daily draw.
+
 ---
 
 ## i18n Architecture
@@ -261,7 +277,7 @@ src/data/vi/guides/cli-guide.ts → CLI guide (Vietnamese)
 
 ### Environment Variables
 
-All public env vars use the `PUBLIC_` prefix (Astro convention — available at build time and in client-side code).
+Public env vars use Astro's build-time client exposure convention, so they are available in client-side code.
 
 | Variable | Required | Description |
 |---|---|---|
