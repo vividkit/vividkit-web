@@ -1,6 +1,6 @@
 // CCS CLI cheatsheet — categorized command reference
-// Source-of-truth: reference/ccs/src/commands/*-command.ts
-// Mirrors the pattern of commands-engineer-kit.ts but simpler (no complexity tier).
+// Source-of-truth: reference/ccs/src/commands/command-catalog.ts
+// Audit synced via .claude/skills/vk-audit-ccs (see reference/.last-sync-ccs).
 import type { Language } from "@/i18n";
 
 export interface CCSCheatsheetCommand {
@@ -12,7 +12,7 @@ export interface CCSCheatsheetCategory {
   id: string;
   titleKey: string;
   descKey: string;
-  color: "emerald" | "blue" | "amber" | "purple" | "cyan";
+  color: "emerald" | "blue" | "amber" | "purple" | "cyan" | "rose" | "orange";
   icon: string; // inline <svg> path content
   commands: CCSCheatsheetCommand[];
 }
@@ -31,6 +31,31 @@ export const CCS_CHEATSHEET_CATEGORIES: CCSCheatsheetCategory[] = [
       { cmd: "ccs kimi", descKey: "ccs.cheatsheet.basics_kimi" },
       { cmd: "ccs codex", descKey: "ccs.cheatsheet.basics_codex" },
       { cmd: 'ccs <profile> "<prompt>"', descKey: "ccs.cheatsheet.basics_oneshot" },
+      { cmd: "ccs setup", descKey: "ccs.cheatsheet.basics_setup" },
+    ],
+  },
+  {
+    id: "profiles",
+    titleKey: "ccs.cheatsheet.profiles_title",
+    descKey: "ccs.cheatsheet.profiles_desc",
+    color: "rose",
+    icon: `<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>`,
+    commands: [
+      { cmd: "ccs auth create <profile>", descKey: "ccs.cheatsheet.profiles_auth_create" },
+      { cmd: "ccs auth list", descKey: "ccs.cheatsheet.profiles_auth_list" },
+      { cmd: "ccs auth show <profile>", descKey: "ccs.cheatsheet.profiles_auth_show" },
+      { cmd: "ccs auth default <profile>", descKey: "ccs.cheatsheet.profiles_auth_default" },
+      { cmd: "ccs auth reset-default", descKey: "ccs.cheatsheet.profiles_auth_reset_default" },
+      { cmd: "ccs auth backup", descKey: "ccs.cheatsheet.profiles_auth_backup" },
+      { cmd: "ccs auth resources", descKey: "ccs.cheatsheet.profiles_auth_resources" },
+      { cmd: "ccs auth remove <profile>", descKey: "ccs.cheatsheet.profiles_auth_remove" },
+      { cmd: "ccs api create --preset <name>", descKey: "ccs.cheatsheet.profiles_api_create" },
+      { cmd: "ccs api list", descKey: "ccs.cheatsheet.profiles_api_list" },
+      { cmd: "ccs api discover", descKey: "ccs.cheatsheet.profiles_api_discover" },
+      { cmd: "ccs api copy <name>", descKey: "ccs.cheatsheet.profiles_api_copy" },
+      { cmd: "ccs api export <name>", descKey: "ccs.cheatsheet.profiles_api_export" },
+      { cmd: "ccs api import <file>", descKey: "ccs.cheatsheet.profiles_api_import" },
+      { cmd: "ccs api remove <name>", descKey: "ccs.cheatsheet.profiles_api_remove" },
     ],
   },
   {
@@ -41,15 +66,35 @@ export const CCS_CHEATSHEET_CATEGORIES: CCSCheatsheetCategory[] = [
     icon: `<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>`,
     commands: [
       { cmd: "ccs config", descKey: "ccs.cheatsheet.config_dashboard" },
-      { cmd: "ccs config channels", descKey: "ccs.cheatsheet.config_channels" },
       { cmd: "ccs config auth", descKey: "ccs.cheatsheet.config_auth" },
+      { cmd: "ccs config channels", descKey: "ccs.cheatsheet.config_channels" },
       { cmd: "ccs config thinking", descKey: "ccs.cheatsheet.config_thinking" },
       { cmd: "ccs config image-analysis", descKey: "ccs.cheatsheet.config_image_analysis" },
-      { cmd: "ccs auth create <profile>", descKey: "ccs.cheatsheet.config_auth_create" },
-      { cmd: "ccs auth reset-default", descKey: "ccs.cheatsheet.config_auth_reset_default" },
-      { cmd: "ccs api create --preset <name>", descKey: "ccs.cheatsheet.config_api_create" },
-      { cmd: "ccs api discover", descKey: "ccs.cheatsheet.config_api_discover" },
-      { cmd: "ccs api copy <name>", descKey: "ccs.cheatsheet.config_api_copy" },
+    ],
+  },
+  {
+    id: "cliproxy",
+    titleKey: "ccs.cheatsheet.cliproxy_title",
+    descKey: "ccs.cheatsheet.cliproxy_desc",
+    color: "orange",
+    icon: `<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>`,
+    commands: [
+      { cmd: "ccs cliproxy create", descKey: "ccs.cheatsheet.cliproxy_create" },
+      { cmd: "ccs cliproxy edit", descKey: "ccs.cheatsheet.cliproxy_edit" },
+      { cmd: "ccs cliproxy list", descKey: "ccs.cheatsheet.cliproxy_list" },
+      { cmd: "ccs cliproxy default <variant>", descKey: "ccs.cheatsheet.cliproxy_default" },
+      { cmd: "ccs cliproxy routing", descKey: "ccs.cheatsheet.cliproxy_routing" },
+      { cmd: "ccs cliproxy catalog", descKey: "ccs.cheatsheet.cliproxy_catalog" },
+      { cmd: "ccs cliproxy sync", descKey: "ccs.cheatsheet.cliproxy_sync" },
+      { cmd: "ccs cliproxy quota", descKey: "ccs.cheatsheet.cliproxy_quota" },
+      { cmd: "ccs cliproxy start", descKey: "ccs.cheatsheet.cliproxy_start" },
+      { cmd: "ccs cliproxy restart", descKey: "ccs.cheatsheet.cliproxy_restart" },
+      { cmd: "ccs cliproxy stop", descKey: "ccs.cheatsheet.cliproxy_stop" },
+      { cmd: "ccs cliproxy status", descKey: "ccs.cheatsheet.cliproxy_status" },
+      { cmd: "ccs cliproxy doctor", descKey: "ccs.cheatsheet.cliproxy_doctor" },
+      { cmd: "ccs cliproxy pause", descKey: "ccs.cheatsheet.cliproxy_pause" },
+      { cmd: "ccs cliproxy resume", descKey: "ccs.cheatsheet.cliproxy_resume" },
+      { cmd: "ccs cliproxy remove", descKey: "ccs.cheatsheet.cliproxy_remove" },
     ],
   },
   {
@@ -63,11 +108,15 @@ export const CCS_CHEATSHEET_CATEGORIES: CCSCheatsheetCategory[] = [
       { cmd: "ccs persist", descKey: "ccs.cheatsheet.ops_persist" },
       { cmd: "ccs migrate", descKey: "ccs.cheatsheet.ops_migrate" },
       { cmd: "ccs cleanup", descKey: "ccs.cheatsheet.ops_cleanup" },
-      { cmd: "ccs cliproxy restart", descKey: "ccs.cheatsheet.ops_cliproxy_restart" },
-      { cmd: "ccs cliproxy pause", descKey: "ccs.cheatsheet.ops_cliproxy_pause" },
-      { cmd: "ccs proxy activate", descKey: "ccs.cheatsheet.ops_proxy_activate" },
       { cmd: "ccs update", descKey: "ccs.cheatsheet.ops_update" },
-      { cmd: "ccs help completion", descKey: "ccs.cheatsheet.ops_help_completion" },
+      { cmd: "ccs sync", descKey: "ccs.cheatsheet.ops_sync" },
+      { cmd: "ccs env <profile>", descKey: "ccs.cheatsheet.ops_env" },
+      { cmd: "ccs tokens", descKey: "ccs.cheatsheet.ops_tokens" },
+      { cmd: "ccs proxy start", descKey: "ccs.cheatsheet.ops_proxy_start" },
+      { cmd: "ccs proxy stop", descKey: "ccs.cheatsheet.ops_proxy_stop" },
+      { cmd: "ccs proxy status", descKey: "ccs.cheatsheet.ops_proxy_status" },
+      { cmd: "ccs proxy activate", descKey: "ccs.cheatsheet.ops_proxy_activate" },
+      { cmd: "ccs help <topic>", descKey: "ccs.cheatsheet.ops_help" },
       { cmd: "ccs --version", descKey: "ccs.cheatsheet.ops_version" },
     ],
   },
@@ -78,12 +127,18 @@ export const CCS_CHEATSHEET_CATEGORIES: CCSCheatsheetCategory[] = [
     color: "purple",
     icon: `<circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M11 6h5a2 2 0 0 1 2 2v7M13 18H8a2 2 0 0 1-2-2V9"/>`,
     commands: [
-      { cmd: "ccs --target droid <profile>", descKey: "ccs.cheatsheet.runtimes_target" },
+      { cmd: "ccs --target droid <profile>", descKey: "ccs.cheatsheet.runtimes_target_droid" },
+      { cmd: "ccs --target codex <profile>", descKey: "ccs.cheatsheet.runtimes_target_codex" },
+      { cmd: "ccs --target claude <profile>", descKey: "ccs.cheatsheet.runtimes_target_claude" },
       { cmd: "ccs-droid <profile>", descKey: "ccs.cheatsheet.runtimes_droid" },
       { cmd: "ccsd <profile>", descKey: "ccs.cheatsheet.runtimes_ccsd" },
       { cmd: "ccs-codex <profile>", descKey: "ccs.cheatsheet.runtimes_codex" },
       { cmd: "ccsx <profile>", descKey: "ccs.cheatsheet.runtimes_ccsx" },
       { cmd: "ccsxp <profile>", descKey: "ccs.cheatsheet.runtimes_ccsxp" },
+      { cmd: "ccs browser", descKey: "ccs.cheatsheet.runtimes_browser" },
+      { cmd: "ccs cursor", descKey: "ccs.cheatsheet.runtimes_cursor" },
+      { cmd: "ccs copilot", descKey: "ccs.cheatsheet.runtimes_copilot" },
+      { cmd: "ccs help completion", descKey: "ccs.cheatsheet.ops_help_completion" },
     ],
   },
   {
@@ -97,54 +152,71 @@ export const CCS_CHEATSHEET_CATEGORIES: CCSCheatsheetCategory[] = [
       { cmd: "ccs docker down", descKey: "ccs.cheatsheet.docker_down" },
       { cmd: "ccs docker status", descKey: "ccs.cheatsheet.docker_status" },
       { cmd: "ccs docker logs", descKey: "ccs.cheatsheet.docker_logs" },
+      { cmd: "ccs docker update", descKey: "ccs.cheatsheet.docker_update" },
+      { cmd: "ccs docker config", descKey: "ccs.cheatsheet.docker_config" },
+      { cmd: "ccs docker show-key", descKey: "ccs.cheatsheet.docker_show_key" },
+      { cmd: "ccs docker finalize-key-rotation", descKey: "ccs.cheatsheet.docker_finalize_key_rotation" },
     ],
   },
 ];
 
 export const COLOR_STYLES = {
   emerald: {
-    border: "border-emerald-200/60 dark:border-emerald-500/20",
-    bg: "bg-emerald-50/40 dark:bg-emerald-500/5",
-    headerBg: "bg-emerald-100 dark:bg-emerald-900/40",
-    headerBorder: "border-emerald-200 dark:border-emerald-800",
-    iconText: "text-emerald-600 dark:text-emerald-400",
-    cmdText: "text-emerald-700 dark:text-emerald-300",
+    accent: "bg-emerald-400",
+    panel: "from-emerald-50 to-teal-50 dark:from-emerald-950/40 dark:to-teal-950/20",
+    text: "text-emerald-700 dark:text-emerald-300",
+    chip: "bg-emerald-100 text-emerald-800 dark:bg-emerald-400/10 dark:text-emerald-200",
+    ring: "border-emerald-200/80 dark:border-emerald-400/20",
   },
   blue: {
-    border: "border-blue-200/60 dark:border-blue-500/20",
-    bg: "bg-blue-50/40 dark:bg-blue-500/5",
-    headerBg: "bg-blue-100 dark:bg-blue-900/40",
-    headerBorder: "border-blue-200 dark:border-blue-800",
-    iconText: "text-blue-600 dark:text-blue-400",
-    cmdText: "text-blue-700 dark:text-blue-300",
+    accent: "bg-sky-400",
+    panel: "from-sky-50 to-blue-50 dark:from-sky-950/40 dark:to-blue-950/20",
+    text: "text-sky-700 dark:text-sky-300",
+    chip: "bg-sky-100 text-sky-800 dark:bg-sky-400/10 dark:text-sky-200",
+    ring: "border-sky-200/80 dark:border-sky-400/20",
   },
   amber: {
-    border: "border-amber-200/60 dark:border-amber-500/20",
-    bg: "bg-amber-50/40 dark:bg-amber-500/5",
-    headerBg: "bg-amber-100 dark:bg-amber-900/40",
-    headerBorder: "border-amber-200 dark:border-amber-800",
-    iconText: "text-amber-600 dark:text-amber-400",
-    cmdText: "text-amber-700 dark:text-amber-300",
+    accent: "bg-amber-400",
+    panel: "from-amber-50 to-orange-50 dark:from-amber-950/35 dark:to-orange-950/20",
+    text: "text-amber-700 dark:text-amber-300",
+    chip: "bg-amber-100 text-amber-800 dark:bg-amber-400/10 dark:text-amber-200",
+    ring: "border-amber-200/80 dark:border-amber-400/20",
   },
   purple: {
-    border: "border-purple-200/60 dark:border-purple-500/20",
-    bg: "bg-purple-50/40 dark:bg-purple-500/5",
-    headerBg: "bg-purple-100 dark:bg-purple-900/40",
-    headerBorder: "border-purple-200 dark:border-purple-800",
-    iconText: "text-purple-600 dark:text-purple-400",
-    cmdText: "text-purple-700 dark:text-purple-300",
+    accent: "bg-purple-400",
+    panel: "from-purple-50 to-fuchsia-50 dark:from-purple-950/40 dark:to-fuchsia-950/20",
+    text: "text-purple-700 dark:text-purple-300",
+    chip: "bg-purple-100 text-purple-800 dark:bg-purple-400/10 dark:text-purple-200",
+    ring: "border-purple-200/80 dark:border-purple-400/20",
   },
   cyan: {
-    border: "border-cyan-200/60 dark:border-cyan-500/20",
-    bg: "bg-cyan-50/40 dark:bg-cyan-500/5",
-    headerBg: "bg-cyan-100 dark:bg-cyan-900/40",
-    headerBorder: "border-cyan-200 dark:border-cyan-800",
-    iconText: "text-cyan-600 dark:text-cyan-400",
-    cmdText: "text-cyan-700 dark:text-cyan-300",
+    accent: "bg-cyan-400",
+    panel: "from-cyan-50 to-slate-50 dark:from-cyan-950/35 dark:to-slate-950/20",
+    text: "text-cyan-700 dark:text-cyan-300",
+    chip: "bg-cyan-100 text-cyan-800 dark:bg-cyan-400/10 dark:text-cyan-200",
+    ring: "border-cyan-200/80 dark:border-cyan-400/20",
+  },
+  rose: {
+    accent: "bg-rose-400",
+    panel: "from-rose-50 to-pink-50 dark:from-rose-950/40 dark:to-pink-950/20",
+    text: "text-rose-700 dark:text-rose-300",
+    chip: "bg-rose-100 text-rose-800 dark:bg-rose-400/10 dark:text-rose-200",
+    ring: "border-rose-200/80 dark:border-rose-400/20",
+  },
+  orange: {
+    accent: "bg-orange-400",
+    panel: "from-orange-50 to-amber-50 dark:from-orange-950/40 dark:to-amber-950/20",
+    text: "text-orange-700 dark:text-orange-300",
+    chip: "bg-orange-100 text-orange-800 dark:bg-orange-400/10 dark:text-orange-200",
+    ring: "border-orange-200/80 dark:border-orange-400/20",
   },
 } as const;
 
 export type CCSColor = keyof typeof COLOR_STYLES;
+
+// CCS upstream version reflected by this cheatsheet (synced via vk-audit-ccs).
+export const CCS_SYNCED_VERSION = "8.1.0";
+export const CCS_SYNCED_DATE = "2026-05-26";
 
 // Marker so unused-imports/lint won't strip Language import (kept for future per-lang content)
 export type _LangRef = Language;

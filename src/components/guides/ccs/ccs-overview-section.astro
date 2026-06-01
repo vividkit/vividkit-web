@@ -3,6 +3,7 @@
 import { getLangFromUrl, type Language } from "@/i18n";
 import { useTranslations } from "@/i18n/utils";
 import LLMProviderIcon from "@/components/ui/LLMProviderIcon.astro";
+import { CCS_SYNCED_VERSION } from "@/data/guides/ccs-cheatsheet-data";
 
 interface Props {
   lang?: Language;
@@ -198,6 +199,9 @@ const withChips = [
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
         </svg>
         <span class="text-sm font-bold text-slate-800 dark:text-slate-200">{t("ccs.guide.intro_install_label")}</span>
+        <span class="ml-auto inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[10px] font-mono font-medium text-emerald-700 dark:text-emerald-400">
+          v{CCS_SYNCED_VERSION}
+        </span>
       </div>
       <div class="relative group">
         <pre class="bg-slate-100 dark:bg-slate-800/90 rounded-md px-3 py-2 pr-10 text-xs font-mono text-slate-700 dark:text-slate-200 overflow-x-auto"><code>npm install -g @kaitranntt/ccs <span class="text-slate-500 dark:text-slate-400">&amp;&amp;</span> ccs config</code></pre>
