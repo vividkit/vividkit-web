@@ -38,6 +38,8 @@ export default defineConfig({
     '/guides/resume': '/guides/session-recovery',
     '/vi/guides/resume': '/vi/guides/session-recovery',
     '/guides/mobile-coding': '/guides/remote-control',
-    '/vi/guides/mobile-coding': '/vi/guides/remote-control'
+    '/vi/guides/mobile-coding': '/vi/guides/remote-control',
+    '/guides/tmux-ttyd-tailscale': '/guides/remote-access',
+    '/vi/guides/tmux-ttyd-tailscale': '/vi/guides/remote-access'
   }
 });

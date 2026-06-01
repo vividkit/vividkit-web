@@ -141,6 +141,8 @@ export const guides = {
   'guides.happy_ccs.description': 'Code từ điện thoại với CCS providers',
   'guides.codex_app.title': 'Codex App',
   'guides.codex_app.description': 'Route request của Codex App qua CLIProxyAPI với auth helper Keychain',
+  'guides.remote_access.title': 'Remote Access',
+  'guides.remote_access.description': 'Chọn Remote Control chính thức hoặc cloud terminal riêng tư cho AI coding CLI',
   'guides.ide_config.title': 'Cấu Hình IDE',
   'guides.ide_config.description': 'Cấu hình Claude Code extension và theo dõi Codex extension',
   'guides.permissions.title': 'Permission Modes',
@@ -219,6 +221,7 @@ export const guides = {
   'guides.home.pathway_environments.desc': 'Cấu hình IDE extension và điều khiển Claude/Codex từ mobile',
   'guides.home.pathway_environments.link_ide': 'Cấu Hình IDE',
   'guides.home.pathway_environments.link_remote_control': 'Remote Control',
+  'guides.home.pathway_environments.link_remote_access': 'Remote Access',
   // Pathway: Support & Discovery
   'guides.home.pathway_reliability.title': 'Hỗ Trợ & Khám Phá',
   'guides.home.pathway_reliability.desc': 'Khôi phục session, debug từ log, tinh chỉnh UI, và xem ưu đãi',

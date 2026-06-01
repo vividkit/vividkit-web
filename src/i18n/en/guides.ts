@@ -141,6 +141,8 @@ export const guides = {
   'guides.happy_ccs.description': 'Code from your phone with CCS providers',
   'guides.codex_app.title': 'Codex App',
   'guides.codex_app.description': 'Route Codex App requests through CLIProxyAPI with Keychain auth helper',
+  'guides.remote_access.title': 'Remote Access',
+  'guides.remote_access.description': 'Choose official remote control or a private cloud terminal for AI coding CLIs',
   'guides.ide_config.title': 'IDE Config',
   'guides.ide_config.description': 'Configure Claude Code extension and track Codex extension setup',
   'guides.permissions.title': 'Permission Modes',
@@ -219,6 +221,7 @@ export const guides = {
   'guides.home.pathway_environments.desc': 'Set up the IDE extension and control Claude/Codex from mobile',
   'guides.home.pathway_environments.link_ide': 'IDE Config',
   'guides.home.pathway_environments.link_remote_control': 'Remote Control',
+  'guides.home.pathway_environments.link_remote_access': 'Remote Access',
   // Pathway: Support & Discovery
   'guides.home.pathway_reliability.title': 'Support & Discovery',
   'guides.home.pathway_reliability.desc': 'Recover sessions, debug logs, polish UI, and provider deals',
