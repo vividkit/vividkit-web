@@ -825,6 +825,8 @@ export const commands = {
   'commands.beta_preview.caught_up': 'Beta is in sync with stable — no beta-exclusive items at this time.',
   'commands.beta_review_pr.desc': 'Review a GitHub PR diff with anti-AI-slop heuristics',
   'commands.beta_review_pr.detail': 'New <code>/ck:review-pr &lt;PR&gt;</code> skill reviews a pull request for correctness, security, breaking changes, code quality, and AI-slop patterns (dumping-ground files, parallel reimplementation, premature abstraction).<br/>Supports <code>--fix</code> to auto-remediate findings and <code>--reply</code> to post the formal review back to GitHub via <code>gh</code>.',
+  'commands.beta_code_review.desc': 'Hardened reviewer posture against AI-assisted slop',
+  'commands.beta_code_review.detail': 'Reviewer now defaults to assuming code may be AI-generated — polished shape, confident comments, and green happy-path tests are not evidence.<br/>Adds an explicit AI-slop risk lens (parallel reimplementations, generic managers without domain anchor, defensive paranoia, phantom tests, scope drift) and removes praise-padding from the report template.',
   'commands.stable.tech_graph.desc': 'Generate publication-quality SVG technical diagrams',
   'commands.stable.tech_graph.detail': '7 design styles (modern, minimal, neon, retro, etc.) and 10 templates (architecture, sequence, ER, flow). SVG output ready for docs, slides, blog posts.',
   'commands.beta_tech_graph.desc': 'Generate publication-quality SVG technical diagrams',
