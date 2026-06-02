@@ -155,8 +155,8 @@ export const guides = {
   'guides.lucky_draw.description': 'Register with GitHub for the scheduled lucky draw',
   'guides.promotions.title': 'Promotions',
   'guides.promotions.description': 'AI service deals and promotions',
-  'guides.custom_hooks.title': 'Custom Hooks',
-  'guides.custom_hooks.description': 'Customize your vibe coding workflow',
+  'guides.custom_hooks.title': 'ClaudeKit Hooks',
+  'guides.custom_hooks.description': 'Understand ClaudeKit hook guard rails',
   'guides.flowchart.title': 'Command Finder',
   'guides.flowchart.description': 'Interactive decision tree to find the right command',
   // Promotions Guide
@@ -205,7 +205,7 @@ export const guides = {
   'guides.home.pathway_config.desc': 'CLAUDE.md, permissions, hooks, and coexistence with other tools',
   'guides.home.pathway_config.link_mechanics': 'Claude Mechanics',
   'guides.home.pathway_config.link_permissions': 'Permissions Setup',
-  'guides.home.pathway_config.link_hooks': 'Custom Hooks',
+  'guides.home.pathway_config.link_hooks': 'ClaudeKit Hooks',
   'guides.home.pathway_config.link_coexistence': 'Coexistence with your setup',
   // Pathway: Other Tools & Providers
   'guides.home.pathway_providers.title': 'Other Tools & Providers',

@@ -128,6 +128,12 @@ const navSections = [
         icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>`,
         href: '/guides/cli-commands',
       },
+      {
+        id: 'hooks',
+        label: t('guides.custom_hooks.title'),
+        icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14.25 9.75L16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" /></svg>`,
+        href: '/guides/hooks',
+      },
     ],
   },
   {
@@ -200,12 +206,6 @@ const navSections = [
         label: t('guides.permissions.title'),
         icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg>`,
         href: '/guides/permissions',
-      },
-      {
-        id: 'hooks',
-        label: t('guides.custom_hooks.title'),
-        icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14.25 9.75L16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" /></svg>`,
-        href: '/guides/hooks',
       },
     ],
   },
@@ -335,8 +335,10 @@ const flatNavItems = navSections.flatMap((section) => section.items);
 </aside>
 
 <!-- Mobile Navigation (Sticky Top) -->
-<div class="lg:hidden sticky top-20 z-40 -mx-4 sm:-mx-6 lg:-mx-8 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-y border-slate-200/50 dark:border-slate-800/50 px-4 sm:px-6 lg:px-8 py-3 mb-8 overflow-hidden">
-  <div class="mobile-nav-scroll flex w-full max-w-full gap-2 overflow-x-auto no-scrollbar">
+<div class="lg:hidden sticky top-20 z-40 -mx-4 sm:-mx-6 lg:-mx-8 bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border-y border-slate-200/50 dark:border-slate-800/50 px-4 sm:px-6 lg:px-8 py-3 mb-8 overflow-hidden relative">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-white via-white/90 to-transparent dark:from-slate-900 dark:via-slate-900/90"></div>
+  <div aria-hidden="true" class="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-white via-white/90 to-transparent dark:from-slate-900 dark:via-slate-900/90"></div>
+  <div class="mobile-nav-scroll flex w-full max-w-full gap-2 overflow-x-auto overflow-y-hidden no-scrollbar [contain:layout_paint]">
     {flatNavItems.map((item) => {
       const isItemActive = activeTab === item.id || (item.id === 'inside-claudekit' && insideClaudeKitArticleTabs.includes(activeTab));
 
@@ -344,7 +346,7 @@ const flatNavItems = navSections.flatMap((section) => section.items);
         <a
           href={translatePath(item.href)}
           data-active-mobile-guide-item={isItemActive ? 'true' : undefined}
-          class={`flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
+          class={`flex min-h-11 items-center gap-2 rounded-full px-3 py-2 text-sm font-medium whitespace-nowrap transition-all focus-visible:ring-2 focus-visible:ring-blue-500 ${
             isItemActive
               ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
               : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'

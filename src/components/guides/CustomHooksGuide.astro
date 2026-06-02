@@ -2,9 +2,14 @@
 import { getLangFromUrl, type Language } from "@/i18n";
 import {
   hookCategories,
-  libModules,
 } from "@/data/guides/custom-hooks/custom-hooks-data";
 import { customHooksTranslations } from "@/data/guides/custom-hooks/custom-hooks-translations";
+import CustomHooksIntroduction from "./custom-hooks/custom-hooks-introduction.astro";
+import CustomHooksCategorySection from "./custom-hooks/custom-hooks-category-section.astro";
+import {
+  buildHookViewModels,
+  flattenHooks,
+} from "./custom-hooks/custom-hooks-ui";
 
 interface Props {
   lang?: Language;
@@ -15,385 +20,101 @@ const currentLang = lang || getLangFromUrl(Astro.url);
 const t = customHooksTranslations[currentLang] || customHooksTranslations.en;
 const isVi = currentLang === "vi";
 
-// Color mappings for category accents
-const colorMap: Record<
-  string,
-  {
-    bg: string;
-    border: string;
-    text: string;
-    badgeBg: string;
-    badgeText: string;
-  }
-> = {
-  blue: {
-    bg: "bg-blue-500/5 dark:bg-blue-500/10",
-    border: "border-blue-200 dark:border-blue-500/20",
-    text: "text-blue-700 dark:text-blue-400",
-    badgeBg: "bg-blue-100 dark:bg-blue-500/20",
-    badgeText: "text-blue-700 dark:text-blue-400",
-  },
-  violet: {
-    bg: "bg-violet-500/5 dark:bg-violet-500/10",
-    border: "border-violet-200 dark:border-violet-500/20",
-    text: "text-violet-700 dark:text-violet-400",
-    badgeBg: "bg-violet-100 dark:bg-violet-500/20",
-    badgeText: "text-violet-700 dark:text-violet-400",
-  },
-  emerald: {
-    bg: "bg-emerald-500/5 dark:bg-emerald-500/10",
-    border: "border-emerald-200 dark:border-emerald-500/20",
-    text: "text-emerald-700 dark:text-emerald-400",
-    badgeBg: "bg-emerald-100 dark:bg-emerald-500/20",
-    badgeText: "text-emerald-700 dark:text-emerald-400",
-  },
-  red: {
-    bg: "bg-red-500/5 dark:bg-red-500/10",
-    border: "border-red-200 dark:border-red-500/20",
-    text: "text-red-700 dark:text-red-400",
-    badgeBg: "bg-red-100 dark:bg-red-500/20",
-    badgeText: "text-red-700 dark:text-red-400",
-  },
-  amber: {
-    bg: "bg-amber-500/5 dark:bg-amber-500/10",
-    border: "border-amber-200 dark:border-amber-500/20",
-    text: "text-amber-700 dark:text-amber-400",
-    badgeBg: "bg-amber-100 dark:bg-amber-500/20",
-    badgeText: "text-amber-700 dark:text-amber-400",
-  },
-  slate: {
-    bg: "bg-slate-500/5 dark:bg-slate-500/10",
-    border: "border-slate-200 dark:border-slate-500/20",
-    text: "text-slate-500 dark:text-slate-400",
-    badgeBg: "bg-slate-100 dark:bg-slate-500/20",
-    badgeText: "text-slate-500 dark:text-slate-400",
-  },
-};
+const categoryModels = buildHookViewModels(hookCategories);
+const allHooks = flattenHooks(categoryModels);
+const totalHooks = allHooks.length;
+const totalCategories = categoryModels.length;
 
-// Lifecycle events for the visual diagram
-const lifecycleEvents = [
+const stats = [
+  { value: totalHooks, label: t.statHooks },
+  { value: totalCategories, label: t.statCategories },
+];
+
+const catalogHints = [
   {
-    name: "SessionStart",
-    descEn: "startup, resume, clear, compact",
-    descVi: "startup, resume, clear, compact",
-    color: "blue",
+    title: t.catalogHintDefaultTitle,
+    desc: t.catalogHintDefaultDesc,
+    accent: "border-emerald-200 bg-emerald-50/70 text-emerald-800 dark:border-emerald-500/25 dark:bg-emerald-500/10 dark:text-emerald-200",
   },
   {
-    name: "UserPromptSubmit",
-    descEn: "every user prompt",
-    descVi: "mỗi user prompt",
-    color: "violet",
+    title: t.catalogHintDisableTitle,
+    desc: t.catalogHintDisableDesc,
+    accent: "border-blue-200 bg-blue-50/70 text-blue-800 dark:border-blue-500/25 dark:bg-blue-500/10 dark:text-blue-200",
   },
   {
-    name: "PreToolUse",
-    descEn: "before tool execution",
-    descVi: "trước khi chạy tool",
-    color: "red",
-  },
-  {
-    name: "PostToolUse",
-    descEn: "after tool execution",
-    descVi: "sau khi chạy tool",
-    color: "emerald",
-  },
-  {
-    name: "SubagentStart",
-    descEn: "subagent spawned",
-    descVi: "subagent được spawn",
-    color: "violet",
-  },
-  {
-    name: "SubagentStop",
-    descEn: "subagent finished",
-    descVi: "subagent hoàn thành",
-    color: "violet",
-  },
-  {
-    name: "Stop",
-    descEn: "session ends",
-    descVi: "session kết thúc",
-    color: "blue",
-  },
-  {
-    name: "TaskCompleted",
-    descEn: "task marked done",
-    descVi: "task hoàn thành",
-    color: "amber",
-  },
-  {
-    name: "TeammateIdle",
-    descEn: "teammate about to idle",
-    descVi: "teammate sắp idle",
-    color: "amber",
+    title: t.catalogHintFailureTitle,
+    desc: t.catalogHintFailureDesc,
+    accent: "border-amber-200 bg-amber-50/75 text-amber-900 dark:border-amber-500/25 dark:bg-amber-500/10 dark:text-amber-100",
   },
 ];
 ---
 
-<div class="space-y-8 mt-6">
-  <!-- Page Header -->
-  <div class="text-center space-y-4">
-    <h2
-      class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight"
-    >
-      {t.pageTitle}
-    </h2>
-    <p
-      class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed"
-    >
-      {t.pageSubtitle}
-    </p>
-  </div>
+<div
+  id="custom-hooks-catalog"
+  class="mt-4 space-y-7"
+>
+  <CustomHooksIntroduction t={t} stats={stats} />
 
-  <!-- Info Banner -->
-  <div
-    class="flex items-start gap-4 p-6 rounded-xl bg-blue-500/5 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20"
-  >
-    <div
-      class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center"
-    >
-      <svg
-        class="w-5 h-5 text-blue-600 dark:text-blue-400"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <circle cx="12" cy="12" r="10"></circle><line
-          x1="12"
-          y1="16"
-          x2="12"
-          y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line>
-      </svg>
-    </div>
-    <div class="flex-1">
-      <div class="font-bold text-blue-700 dark:text-blue-400 mb-1 text-lg">
-        {t.infoBannerTitle}
+  <section id="hook-list" class="scroll-mt-28 space-y-6">
+    <div class="border-y border-slate-200 py-6 dark:border-slate-800">
+      <div class="max-w-3xl">
+        <p class="text-xs font-semibold uppercase text-blue-600 dark:text-blue-400">
+          {t.catalogLabel}
+        </p>
+        <h2 class="mt-1 text-2xl font-bold tracking-tight text-slate-950 dark:text-white">
+          {t.catalogTitle}
+        </h2>
+        <p class="mt-2 text-base leading-7 text-slate-600 dark:text-slate-300">
+          {t.catalogDesc}
+        </p>
       </div>
-      <div class="text-slate-600 dark:text-slate-400 leading-relaxed">
-        {t.infoBannerDesc}
-        <code
-          class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-sm"
-          >~/.claude/settings.json</code
-        >
-        {t.infoBannerDescEnd}
-      </div>
-    </div>
-  </div>
 
-  <!-- Stats Bar -->
-  <div class="flex flex-wrap gap-3 justify-center">
-    <span
-      class="px-4 py-2 rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-sm font-semibold"
-    >
-      {t.hookCountLabel}
-    </span>
-    <span
-      class="px-4 py-2 rounded-full bg-indigo-100 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-400 text-sm font-semibold"
-    >
-      {t.libCountLabel}
-    </span>
-  </div>
-
-  <!-- Lifecycle Events -->
-  <div
-    class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden"
-  >
-    <div
-      class="p-5 bg-gradient-to-r from-slate-500/10 to-slate-600/10 border-b border-slate-100 dark:border-slate-800"
-    >
-      <h3 class="text-lg font-bold text-slate-900 dark:text-white">
-        {t.lifecycleTitle}
-      </h3>
-      <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
-        {t.lifecycleDesc}
-      </p>
-    </div>
-    <div class="p-5">
-      <div class="flex flex-wrap gap-2">
-        {
-          lifecycleEvents.map((evt) => {
-            const c = colorMap[evt.color] || colorMap.slate;
-            return (
-              <div
-                class={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg ${c.bg} border ${c.border}`}
-              >
-                <code class={`text-xs font-mono font-bold ${c.text}`}>
-                  {evt.name}
-                </code>
-                <span class="text-xs text-slate-500 dark:text-slate-400">
-                  {isVi ? evt.descVi : evt.descEn}
-                </span>
-              </div>
-            );
-          })
-        }
-      </div>
-    </div>
-  </div>
-
-  <!-- Hook Categories -->
-  {
-    hookCategories.map((cat) => {
-      const c = colorMap[cat.color] || colorMap.slate;
-      return (
-        <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
-          <div
-            class={`p-5 ${c.bg} border-b border-slate-100 dark:border-slate-800`}
-          >
-            <div class="flex items-center gap-3">
-              <h3 class="text-lg font-bold text-slate-900 dark:text-white">
-                {isVi ? cat.titleVi : cat.titleEn}
-              </h3>
-              <span
-                class={`px-2 py-0.5 text-xs font-semibold rounded-full ${c.badgeBg} ${c.badgeText}`}
-              >
-                {cat.hooks.length} {cat.hooks.length === 1 ? "hook" : "hooks"}
+      <div class="mt-5 grid gap-3 lg:grid-cols-3">
+        {catalogHints.map((item, index) => (
+          <div class:list={[
+            "min-w-0 rounded-lg border p-4",
+            item.accent,
+          ]}>
+            <div class="flex items-center gap-2">
+              <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-white/70 text-xs font-bold dark:bg-slate-950/35">
+                {index + 1}
               </span>
+              <h3 class="text-sm font-bold">{item.title}</h3>
             </div>
-            <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
-              {isVi ? cat.descVi : cat.descEn}
-            </p>
+            <p class="mt-2 text-sm leading-6 opacity-90">{item.desc}</p>
           </div>
-          <div class="p-5 space-y-3">
-            {cat.hooks.map((hook) => (
-              <div
-                class={`p-4 rounded-lg border ${hook.deprecated ? "bg-slate-50 dark:bg-slate-800/30 border-slate-200 dark:border-slate-700 opacity-70" : `${c.bg} ${c.border}`}`}
-              >
-                <div class="flex items-start justify-between gap-3 mb-2">
-                  <div class="flex items-center gap-2 min-w-0 flex-wrap">
-                    <code
-                      class={`text-sm font-mono font-bold ${hook.deprecated ? "text-slate-500 dark:text-slate-400 line-through" : c.text} shrink-0`}
-                    >
-                      {hook.name}
-                    </code>
-                    {hook.deprecated && (
-                      <span class="px-1.5 py-0.5 text-[10px] font-semibold bg-red-100 dark:bg-red-500/20 text-red-600 dark:text-red-400 rounded">
-                        {t.deprecatedLabel}
-                      </span>
-                    )}
-                    {hook.isBeta && (
-                      <span class="px-1.5 py-0.5 text-[10px] font-semibold bg-purple-100 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400 rounded uppercase">
-                        beta
-                      </span>
-                    )}
-                    {hook.kits.includes("ek") && hook.kits.includes("mk") ? (
-                      <span class="px-1.5 py-0.5 text-[10px] font-semibold bg-sky-100 dark:bg-sky-500/20 text-sky-700 dark:text-sky-400 rounded">
-                        EK + MK
-                      </span>
-                    ) : hook.kits.includes("ek") ? (
-                      <span class="px-1.5 py-0.5 text-[10px] font-semibold bg-orange-100 dark:bg-orange-500/20 text-orange-700 dark:text-orange-400 rounded">
-                        EK only
-                      </span>
-                    ) : (
-                      <span class="px-1.5 py-0.5 text-[10px] font-semibold bg-pink-100 dark:bg-pink-500/20 text-pink-700 dark:text-pink-400 rounded">
-                        MK only
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <p class="text-sm text-slate-600 dark:text-slate-400 mb-2">
-                  {isVi ? hook.descVi : hook.descEn}
-                </p>
-                <div class="flex flex-wrap gap-1.5">
-                  <span class="text-[10px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mr-1 self-center">
-                    {t.triggerLabel}:
-                  </span>
-                  {hook.triggers.map((trigger) => (
-                    <span class="px-2 py-0.5 text-[11px] font-mono rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
-                      {trigger}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      );
-    })
-  }
+        ))}
+      </div>
 
-  <!-- Utility Library -->
-  <div
-    class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden"
-  >
-    <div
-      class="p-5 bg-gradient-to-r from-indigo-500/10 to-violet-500/10 border-b border-slate-100 dark:border-slate-800"
-    >
-      <h3 class="text-lg font-bold text-slate-900 dark:text-white">
-        {t.libTitle}
-      </h3>
-      <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">{t.libDesc}</p>
-    </div>
-    <div class="p-5">
-      <div class="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-        {
-          libModules.map((mod) => (
-            <div class="flex flex-col gap-1 p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700">
-              <code class="text-[11px] font-mono text-indigo-600 dark:text-indigo-400 shrink-0">
-                {mod.name}
-              </code>
-              <span class="text-[11px] text-slate-500 dark:text-slate-400">
-                {isVi ? mod.descVi : mod.descEn}
-              </span>
-            </div>
-          ))
-        }
+      <div class="mt-4 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 dark:border-slate-800 dark:bg-slate-900/55">
+        <h3 class="text-sm font-bold text-slate-950 dark:text-white">{t.failureExplainerTitle}</h3>
+        <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300">
+          {t.failureExplainerDesc}
+        </p>
       </div>
     </div>
-  </div>
 
-  <!-- More Coming Soon -->
-  <div
-    class="text-center py-8 border border-dashed border-slate-200 dark:border-slate-700 rounded-xl"
-  >
-    <div class="text-slate-400 dark:text-slate-500 mb-2">
-      <svg
-        class="w-8 h-8 mx-auto"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        stroke-width="1.5"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-      </svg>
+    <div class="space-y-8">
+      {categoryModels.map((category) => (
+        <CustomHooksCategorySection category={category} t={t} isVi={isVi} />
+      ))}
     </div>
-    <p class="text-slate-500 dark:text-slate-400 font-medium">
-      {t.moreComingSoon}
-    </p>
-    <p class="text-slate-400 dark:text-slate-500 text-sm mt-1">
-      {t.moreComingSoonDesc}
-    </p>
-  </div>
+  </section>
 
-  <!-- Official Docs Link -->
-  <div class="text-center pt-8 border-t border-slate-200 dark:border-slate-800">
-    <p class="text-slate-600 dark:text-slate-400 text-sm">
+  <div class="border-t border-slate-200 pt-6 text-center dark:border-slate-800">
+    <p class="text-sm text-slate-600 dark:text-slate-400">
       {t.officialDocsText}
       <a
         href="https://docs.claudekit.cc/docs/engineer/configuration/hooks"
         target="_blank"
         rel="noopener noreferrer"
-        class="text-blue-600 dark:text-blue-400 hover:underline font-medium inline-flex items-center gap-1"
+        class="inline-flex items-center gap-1 font-medium text-blue-600 hover:underline focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-blue-400"
       >
         {t.officialDocsLink}
-        <svg
-          class="w-3 h-3"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
-          ></path><polyline points="15 3 21 3 21 9"></polyline><line
-            x1="10"
-            y1="14"
-            x2="21"
-            y2="3"></line>
+        <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+          <polyline points="15 3 21 3 21 9"></polyline>
+          <line x1="10" y1="14" x2="21" y2="3"></line>
         </svg>
       </a>
     </p>
