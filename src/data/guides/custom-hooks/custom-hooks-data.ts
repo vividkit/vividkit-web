@@ -8,6 +8,14 @@ export interface HookDef {
   name: string;
   lines: number;
   triggers: string[];
+  /** Default new-install state, based on the stable ClaudeKit docs/changelog. */
+  defaultState: 'on' | 'off' | 'removed';
+  /** Reader-facing behavior once the hook is active. */
+  flowImpact: 'policy-block' | 'guidance' | 'context' | 'state' | 'removed';
+  /** Which disable instructions should be shown in the UI. */
+  disableMode?: 'standard' | 'simplify' | 'workflow' | 'removed';
+  /** Why the hook has that default state. */
+  defaultReason: 'active-default' | 'generated-context' | 'opt-in-gate' | 'agent-teams-opt-in' | 'removed';
   /** Which kits include this hook: 'ek' (Engineer), 'mk' (Marketing), or both */
   kits: ('ek' | 'mk')[];
   /** Whether this hook is in beta only (not yet in stable) */
@@ -30,12 +38,6 @@ export interface HookCategory {
   hooks: HookDef[];
 }
 
-export interface LibModule {
-  name: string;
-  descEn: string;
-  descVi: string;
-}
-
 // ─── Hook Categories ─────────────────────────────────────────────
 
 export const hookCategories: HookCategory[] = [
@@ -52,8 +54,11 @@ export const hookCategories: HookCategory[] = [
         id: 'session-init',
         name: 'session-init.cjs',
         lines: 379,
+        defaultState: 'off',
+        flowImpact: 'context',
+        defaultReason: 'generated-context',
         kits: ['ek', 'mk'],
-        triggers: ['SessionStart'],
+        triggers: ['SessionStart (startup/resume/clear/compact)'],
         descEn: 'Initialize session with project detection, config loading, and environment setup. Fires on startup, resume, clear, and compact.',
         descVi: 'Khởi tạo session với project detection, load config, và setup environment. Kích hoạt khi startup, resume, clear, và compact.',
       },
@@ -61,8 +66,11 @@ export const hookCategories: HookCategory[] = [
         id: 'session-state',
         name: 'session-state.cjs',
         lines: 94,
+        defaultState: 'off',
+        flowImpact: 'state',
+        defaultReason: 'generated-context',
         kits: ['ek'],
-        triggers: ['PostToolUse', 'Stop', 'SubagentStop'],
+        triggers: ['PostToolUse (Task/TaskCreate/TaskUpdate/TodoWrite)', 'Stop', 'SubagentStop'],
         descEn: 'Persist and restore session progress across compactions. Saves active plan, todo items, and branch status.',
         descVi: 'Lưu và khôi phục tiến trình session qua các lần compact. Lưu plan, todo items, và trạng thái branch.',
       },
@@ -70,8 +78,11 @@ export const hookCategories: HookCategory[] = [
         id: 'usage-quota-cache-refresh',
         name: 'usage-quota-cache-refresh.cjs',
         lines: 100,
+        defaultState: 'off',
+        flowImpact: 'context',
+        defaultReason: 'generated-context',
         kits: ['ek'],
-        triggers: ['SessionStart', 'UserPromptSubmit', 'PostToolUse'],
+        triggers: ['SessionStart (startup/resume/clear/compact)', 'UserPromptSubmit', 'PostToolUse (Task/TaskCreate/TaskUpdate/TodoWrite)'],
         descEn: 'Keep usage quota cache warm for statusline. Smart throttling: 60s for prompts, 300s for tool events.',
         descVi: 'Giữ cache usage quota cho statusline. Throttle thông minh: 60s cho prompt, 300s cho tool events.',
       },
@@ -79,10 +90,13 @@ export const hookCategories: HookCategory[] = [
         id: 'usage-context-awareness',
         name: 'usage-context-awareness.cjs',
         lines: 39,
+        defaultState: 'off',
+        flowImpact: 'context',
+        defaultReason: 'generated-context',
         kits: ['ek', 'mk'],
-        triggers: ['(config-gated)'],
-        descEn: 'Config gate wrapper for usage-quota-cache-refresh. Enables usage awareness via ck-config flag.',
-        descVi: 'Config gate wrapper cho usage-quota-cache-refresh. Bật usage awareness qua ck-config flag.',
+        triggers: ['(optional setting)'],
+        descEn: 'Optional switch for usage-quota-cache-refresh. It only adds quota awareness when enabled in .claude/.ck.json.',
+        descVi: 'Công tắc tuỳ chọn cho usage-quota-cache-refresh. Chỉ thêm context quota khi được bật trong .claude/.ck.json.',
       },
     ],
   },
@@ -99,6 +113,9 @@ export const hookCategories: HookCategory[] = [
         id: 'dev-rules-reminder',
         name: 'dev-rules-reminder.cjs',
         lines: 90,
+        defaultState: 'off',
+        flowImpact: 'context',
+        defaultReason: 'generated-context',
         kits: ['ek', 'mk'],
         triggers: ['UserPromptSubmit'],
         descEn: 'Inject session info, development rules, modularization reminders, and active plan context on every prompt.',
@@ -108,6 +125,9 @@ export const hookCategories: HookCategory[] = [
         id: 'subagent-init',
         name: 'subagent-init.cjs',
         lines: 229,
+        defaultState: 'off',
+        flowImpact: 'context',
+        defaultReason: 'generated-context',
         kits: ['ek', 'mk'],
         triggers: ['SubagentStart'],
         descEn: 'Inject minimal context (~200 tokens) to subagents using environment variables from SessionStart.',
@@ -117,6 +137,9 @@ export const hookCategories: HookCategory[] = [
         id: 'team-context-inject',
         name: 'team-context-inject.cjs',
         lines: 176,
+        defaultState: 'off',
+        flowImpact: 'context',
+        defaultReason: 'generated-context',
         kits: ['ek'],
         triggers: ['SubagentStart'],
         descEn: 'Inject peer info and task summary when spawning Agent Team teammates. Non-blocking, fail-open.',
@@ -137,6 +160,9 @@ export const hookCategories: HookCategory[] = [
         id: 'descriptive-name',
         name: 'descriptive-name.cjs',
         lines: 46,
+        defaultState: 'on',
+        flowImpact: 'guidance',
+        defaultReason: 'active-default',
         kits: ['ek', 'mk'],
         triggers: ['PreToolUse (Write)'],
         descEn: 'Enforce descriptive, kebab-case file naming when creating new files.',
@@ -145,7 +171,11 @@ export const hookCategories: HookCategory[] = [
       {
         id: 'simplify-gate',
         name: 'simplify-gate.cjs',
-        lines: 215,
+        lines: 179,
+        defaultState: 'off',
+        flowImpact: 'policy-block',
+        disableMode: 'simplify',
+        defaultReason: 'opt-in-gate',
         kits: ['ek'],
         triggers: ['UserPromptSubmit'],
         descEn: 'Opt-in gate (gate.enabled=false by default). Hard-blocks ship/merge/pr/deploy/publish and soft-warns commit/finalize/release when the working tree carries a large unsimplified diff (400 LOC / 8 files / 200 LOC single-file). Bypass via env CK_SIMPLIFY_DISABLED=1 or .ck.json hooks.simplify-gate=false.',
@@ -155,6 +185,9 @@ export const hookCategories: HookCategory[] = [
         id: 'plan-format-kanban',
         name: 'plan-format-kanban.cjs',
         lines: 101,
+        defaultState: 'off',
+        flowImpact: 'guidance',
+        defaultReason: 'generated-context',
         kits: ['ek'],
         triggers: ['PostToolUse (Edit/Write/MultiEdit)'],
         descEn: 'Warn when plan.md uses filenames as link text instead of human-readable names.',
@@ -175,6 +208,9 @@ export const hookCategories: HookCategory[] = [
         id: 'privacy-block',
         name: 'privacy-block.cjs',
         lines: 189,
+        defaultState: 'on',
+        flowImpact: 'policy-block',
+        defaultReason: 'active-default',
         kits: ['ek', 'mk'],
         triggers: ['PreToolUse (Bash/Glob/Grep/Read/Edit/Write)'],
         descEn: 'Block access to sensitive files (.env, credentials). Requires explicit user approval to proceed.',
@@ -184,6 +220,9 @@ export const hookCategories: HookCategory[] = [
         id: 'scout-block',
         name: 'scout-block.cjs',
         lines: 163,
+        defaultState: 'on',
+        flowImpact: 'policy-block',
+        defaultReason: 'active-default',
         kits: ['ek', 'mk'],
         triggers: ['PreToolUse (Bash/Glob/Grep/Read/Edit/Write)'],
         descEn: 'Block directory access based on .ckignore patterns. Uses gitignore-spec matching.',
@@ -204,6 +243,9 @@ export const hookCategories: HookCategory[] = [
         id: 'cook-after-plan-reminder',
         name: 'cook-after-plan-reminder.cjs',
         lines: 72,
+        defaultState: 'off',
+        flowImpact: 'guidance',
+        defaultReason: 'generated-context',
         kits: ['ek'],
         triggers: ['SubagentStop (Plan)'],
         descEn: 'Remind to invoke /ck:cook after Plan subagent completes. Outputs plan path for new sessions.',
@@ -213,6 +255,9 @@ export const hookCategories: HookCategory[] = [
         id: 'task-completed-handler',
         name: 'task-completed-handler.cjs',
         lines: 123,
+        defaultState: 'off',
+        flowImpact: 'state',
+        defaultReason: 'agent-teams-opt-in',
         kits: ['ek'],
         triggers: ['TaskCompleted'],
         descEn: 'Log task completions and inject progress context when agents mark tasks done.',
@@ -222,58 +267,27 @@ export const hookCategories: HookCategory[] = [
         id: 'teammate-idle-handler',
         name: 'teammate-idle-handler.cjs',
         lines: 121,
+        defaultState: 'off',
+        flowImpact: 'guidance',
+        defaultReason: 'agent-teams-opt-in',
         kits: ['ek'],
         triggers: ['TeammateIdle'],
-        descEn: 'Inject available task context when a teammate goes idle. Can prevent idle via exit code.',
-        descVi: 'Inject available task context khi teammate idle. Có thể ngăn idle qua exit code.',
+        descEn: 'Inject available task context when a teammate goes idle. Current implementation is non-blocking and fail-open.',
+        descVi: 'Inject context về task còn trống khi teammate idle. Implementation hiện tại non-blocking và fail-open.',
       },
       {
         id: 'workflow-artifact-gate',
         name: 'workflow-artifact-gate.cjs',
         lines: 119,
+        defaultState: 'off',
+        flowImpact: 'policy-block',
+        disableMode: 'workflow',
+        defaultReason: 'opt-in-gate',
         kits: ['ek'],
         triggers: ['PreToolUse (finalize stage)', 'manual CLI'],
-        descEn: 'Validate ck:fix/ck:cook review artifacts (context-snippets, verification, review-decision, risk-gate) before finalize and ship-like actions. Opt-in via ck-config; fail-open on crash.',
-        descVi: 'Validate review artifacts của ck:fix/ck:cook (context-snippets, verification, review-decision, risk-gate) trước khi finalize và ship-like actions. Bật qua ck-config; fail-open khi crash.',
+        descEn: 'Validate ck:fix/ck:cook review artifacts (context-snippets, verification, review-decision, risk-gate) before finalize and ship-like actions. Optional via .claude/.ck.json; fail-open on crash.',
+        descVi: 'Validate review artifacts của ck:fix/ck:cook (context-snippets, verification, review-decision, risk-gate) trước khi finalize và ship-like actions. Có thể bật trong .claude/.ck.json; fail-open khi crash.',
       },
     ],
   },
-  {
-    id: 'deprecated',
-    titleEn: 'Deprecated',
-    titleVi: 'Deprecated',
-    descEn: 'Hooks that are disabled or removed from the active distribution.',
-    descVi: 'Hooks đã bị vô hiệu hoặc đã bị remove khỏi distribution hiện tại.',
-    color: 'slate',
-    icon: 'archive',
-    hooks: [
-      {
-        id: 'skill-dedup',
-        name: 'skill-dedup.cjs',
-        lines: 269,
-        kits: ['ek'],
-        triggers: ['(disabled)'],
-        deprecated: true,
-        descEn: 'Prevented local skills from shadowing global versions. Disabled in v2.9.1 due to race condition with parallel sessions.',
-        descVi: 'Ngăn local skills shadow global versions. Bị vô hiệu từ v2.9.1 do race condition với parallel sessions.',
-      },
-    ],
-  },
-];
-
-// ─── Utility Library Modules ─────────────────────────────────────
-
-export const libModules: LibModule[] = [
-  { name: 'ck-config-utils', descEn: 'Read/validate .ck.json configuration', descVi: 'Đọc/validate cấu hình .ck.json' },
-  { name: 'colors', descEn: 'ANSI color formatting', descVi: 'Format màu ANSI' },
-  { name: 'config-counter', descEn: 'Track skills, hooks, agents counts', descVi: 'Đếm skills, hooks, agents' },
-  { name: 'context-builder', descEn: 'Build session context with WARN 70% / CRITICAL 90% thresholds', descVi: 'Build session context với ngưỡng WARN 70% / CRITICAL 90%' },
-  { name: 'git-info-cache', descEn: 'Cache git status for performance', descVi: 'Cache git status cho hiệu suất' },
-  { name: 'hook-logger', descEn: 'Structured diagnostics with performance tracking', descVi: 'Structured diagnostics với performance tracking' },
-  { name: 'privacy-checker', descEn: 'Block access to sensitive files (.env, credentials)', descVi: 'Chặn truy cập file nhạy cảm (.env, credentials)' },
-  { name: 'project-detector', descEn: 'Detect project type and package manager', descVi: 'Nhận diện loại project và package manager' },
-  { name: 'scout-checker', descEn: 'Check if scout agents are available', descVi: 'Kiểm tra scout agents có sẵn' },
-  { name: 'session-state-manager', descEn: 'Manage session state persistence', descVi: 'Quản lý lưu trạng thái session' },
-  { name: 'transcript-parser', descEn: 'Parse Claude conversation transcripts', descVi: 'Parse transcripts hội thoại Claude' },
-  { name: 'usage-limits-cache', descEn: 'Atomic cache for usage quota snapshots', descVi: 'Atomic cache cho usage quota snapshots' },
 ];

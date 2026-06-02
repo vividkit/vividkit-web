@@ -155,8 +155,8 @@ export const guides = {
   'guides.lucky_draw.description': 'Đăng nhập GitHub để tham gia lucky draw theo lịch',
   'guides.promotions.title': 'Khuyến Mãi',
   'guides.promotions.description': 'Ưu đãi và khuyến mãi dịch vụ AI',
-  'guides.custom_hooks.title': 'Custom Hooks',
-  'guides.custom_hooks.description': 'Tùy chỉnh workflow coding của bạn',
+  'guides.custom_hooks.title': 'ClaudeKit Hooks',
+  'guides.custom_hooks.description': 'Hiểu lớp guard rails của ClaudeKit hooks',
   'guides.flowchart.title': 'Tìm Lệnh Phù Hợp',
   'guides.flowchart.description': 'Sơ đồ tương tác để tìm command phù hợp',
   // Promotions Guide
@@ -205,7 +205,7 @@ export const guides = {
   'guides.home.pathway_config.desc': 'CLAUDE.md, permissions, hooks, và coexistence với tool khác',
   'guides.home.pathway_config.link_mechanics': 'Claude Mechanics',
   'guides.home.pathway_config.link_permissions': 'Thiết Lập Permissions',
-  'guides.home.pathway_config.link_hooks': 'Custom Hooks',
+  'guides.home.pathway_config.link_hooks': 'ClaudeKit Hooks',
   'guides.home.pathway_config.link_coexistence': 'Coexistence với setup của bạn',
   // Pathway: Other Tools & Providers
   'guides.home.pathway_providers.title': 'Tool & Provider Khác',

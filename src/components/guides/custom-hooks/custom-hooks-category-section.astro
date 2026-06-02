@@ -1,0 +1,43 @@
+---
+import CustomHooksHookRow from "./custom-hooks-hook-row.astro";
+import { colorMap, type HookCategoryViewModel } from "./custom-hooks-ui";
+import type { customHooksTranslations } from "@/data/guides/custom-hooks/custom-hooks-translations";
+
+interface Props {
+  category: HookCategoryViewModel;
+  t: (typeof customHooksTranslations)["en"];
+  isVi: boolean;
+}
+
+const { category, t, isVi } = Astro.props;
+const c = colorMap[category.color] || colorMap.slate;
+---
+
+<section
+  id={`hooks-${category.id}`}
+  data-category-card
+  class="scroll-mt-28 space-y-3"
+>
+  <div class="flex flex-col gap-2 border-b border-slate-200 pb-3 dark:border-slate-800 sm:flex-row sm:items-end sm:justify-between">
+    <div class="max-w-2xl">
+      <div class="flex items-center gap-2">
+        <span class={`h-2.5 w-2.5 rounded-full ${c.dot}`}></span>
+        <h2 class="text-lg font-bold tracking-tight text-slate-950 dark:text-white">
+          {isVi ? category.titleVi : category.titleEn}
+        </h2>
+      </div>
+      <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400">
+        {isVi ? category.descVi : category.descEn}
+      </p>
+    </div>
+    <span class="text-sm font-medium text-slate-500 dark:text-slate-400" data-category-count>
+      {category.hooks.length} {category.hooks.length === 1 ? t.hookSingular : t.hookPlural}
+    </span>
+  </div>
+
+  <div class="grid min-w-0 gap-3">
+    {category.hooks.map((hook) => (
+      <CustomHooksHookRow hook={hook} t={t} isVi={isVi} />
+    ))}
+  </div>
+</section>
