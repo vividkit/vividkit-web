@@ -1,0 +1,51 @@
+---
+import { ArrowRight } from 'lucide-astro';
+import { useTranslatedPath, type Language } from '@/i18n';
+import { cursorTrackMeta, tCursor, type CursorTrack } from '@/data/guides/cursor';
+
+interface Props {
+  slug: string;
+  track: CursorTrack;
+  title: { en: string; vi: string };
+  desc: { en: string; vi: string };
+  lang: Language;
+}
+
+const { slug, track, title, desc, lang } = Astro.props;
+const translatePath = useTranslatedPath(lang);
+const meta = cursorTrackMeta[track];
+---
+
+<a
+  href={translatePath(`/guides/cursor/${slug}`)}
+  data-track={track}
+  data-title={tCursor(title, lang).toLowerCase()}
+  data-desc={tCursor(desc, lang).toLowerCase()}
+  class:list={[
+    'group relative flex flex-col rounded-2xl border border-slate-200/70 border-l-[3px] bg-white p-5 transition-all duration-200',
+    'hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-[0_12px_32px_-16px_rgba(15,23,42,0.18)]',
+    'dark:border-slate-800 dark:bg-slate-900/70 dark:hover:border-slate-700 dark:hover:shadow-[0_12px_32px_-16px_rgba(0,0,0,0.4)]',
+    meta.borderAccent,
+  ]}
+>
+  <span class:list={[
+    'mb-3 inline-flex w-fit items-center rounded-full px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-[0.12em]',
+    meta.badgeBg,
+    meta.badgeText,
+  ]}>
+    {tCursor(meta.badge, lang)}
+  </span>
+
+  <h3 class="mb-2 line-clamp-2 text-lg font-semibold leading-snug tracking-tight text-slate-900 transition-colors group-hover:text-slate-950 dark:text-white dark:group-hover:text-blue-50">
+    {tCursor(title, lang)}
+  </h3>
+
+  <p class="mb-4 line-clamp-3 flex-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+    {tCursor(desc, lang)}
+  </p>
+
+  <span class="inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 transition-colors group-hover:text-slate-900 dark:text-slate-400 dark:group-hover:text-white">
+    {lang === 'vi' ? 'Đọc chi tiết' : 'Read the guide'}
+    <ArrowRight class="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+  </span>
+</a>

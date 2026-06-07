@@ -236,8 +236,8 @@ const translatePath = useTranslatedPath(currentLang);
   // Auto-hide header on scroll down, show on scroll up (guides article pages only)
   (function() {
     const path = window.location.pathname;
-    // Match inside-claudekit sub-article pages: /guides/inside-claudekit/xxx or /vi/guides/inside-claudekit/xxx
-    const isArticlePage = /\/(vi\/)?guides\/inside-claudekit\/.+/.test(path);
+    // Match guide sub-article pages that use the full-width article shell.
+    const isArticlePage = /\/(vi\/)?guides\/(inside-claudekit|cursor)\/.+/.test(path);
     if (!isArticlePage) return;
 
     const header = document.getElementById('main-header');
