@@ -34,7 +34,7 @@ export const ccs = {
   'ccs.guide.intro_session_recovery_link': 'Want to learn more about resuming sessions across providers? See the <a href="/guides/session-recovery" class="text-blue-600 dark:text-blue-400 underline font-medium">Session Recovery Guide</a>.',
   // Solution stats (used in Introduction)
   'ccs.guide.solution_title': 'The Solution',
-  'ccs.guide.solution_desc': 'CCS routes 13 OAuth providers, multi-account Claude, and BYO-key API profiles through a single CLI. Switch models, stack accounts, run parallel — all with one command.',
+  'ccs.guide.solution_desc': 'CCS routes 14 OAuth providers, multi-account Claude, and BYO-key API profiles through a single CLI. Switch models, stack accounts, run parallel — all with one command.',
   'ccs.guide.solution_example_label': 'Run all simultaneously:',
   'ccs.guide.solution_terminal1': 'Terminal 1: Main work (Claude Pro)',
   'ccs.guide.solution_terminal2': 'Terminal 2: Code review (Codex / GPT-5.4)',
@@ -65,7 +65,7 @@ export const ccs = {
   'ccs.guide.kf_dashboard_title': 'Visual Dashboard',
   'ccs.guide.kf_dashboard_desc': 'React 19 dashboard for auth monitoring, usage analytics, and profile management.',
   'ccs.guide.kf_providers_title': '20+ Providers, 3 Auth Tiers',
-  'ccs.guide.kf_providers_desc': '13 CLIProxy OAuth providers, multi-account Claude, and BYO-key API profiles (Alibaba, MiniMax, Novita, Ollama, Llama.cpp).',
+  'ccs.guide.kf_providers_desc': '14 CLIProxy OAuth providers, multi-account Claude, and BYO-key API profiles (Alibaba, MiniMax, Novita, Ollama, Llama.cpp).',
   'ccs.guide.kf_docs_title': 'Full Documentation',
   'ccs.guide.kf_docs_desc': 'Dedicated docs site with product tour, CLI reference, and provider-specific guides.',
   'ccs.guide.kf_thinking_title': 'Extended Thinking',

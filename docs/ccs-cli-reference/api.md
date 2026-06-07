@@ -52,7 +52,7 @@ Source: `src/shared/provider-preset-catalog.ts` (`PROVIDER_PRESET_IDS`).
 
 ### CLIProxy providers (`--cliproxy-provider <id>`)
 
-From `PROVIDER_CAPABILITIES`: `gemini`, `codex`, `agy`, `qwen`, `iflow`, `kiro`, `ghcp`, `claude`, `kimi`, `cursor`, `gitlab`, `codebuddy`, `kilo`.
+From `PROVIDER_CAPABILITIES`: `gemini`, `codex`, `agy`, `qwen`, `iflow`, `kiro`, `ghcp`, `claude`, `kimi`, `cursor`, `gitlab`, `codebuddy`, `kilo`, `qoder`.
 
 ---
 
@@ -63,7 +63,7 @@ ccs api create [name]
               [--preset <id> | --cliproxy-provider <id>]
               [--base-url <url>] [--api-key <key>] [--model <model>]
               [--extra-models <m1,m2,...>]
-              [--target claude|droid]
+              [--target claude|droid|codex]
               [--1m | --no-1m]
               [--force] [--yes|-y]
 ```
@@ -85,7 +85,7 @@ Validation: `validateApiName`, `validateUrl`, name-conflict check unless `--forc
 | `--api-key <key>` | Token. Optional for `requiresApiKey: false` presets |
 | `--model <model>` | Default `ANTHROPIC_MODEL`. Allows dash values |
 | `--extra-models <csv>` | Extra models exposed alongside `--model` |
-| `--target claude\|droid` | Default runtime target |
+| `--target claude\|droid\|codex` | Default runtime target (codex persistable since 8.2.0) |
 | `--1m` | Append `[1m]` suffix to compatible Claude model IDs |
 | `--no-1m` | Strip `[1m]` suffix |
 | `--force` | Overwrite existing |
@@ -245,7 +245,7 @@ ccs api remove [name] [--yes|-y]
 
 **Target adapter**
 - `parseTargetValue` validates against `isPersistedTargetType`.
-- Persisted targets: `claude`, `droid`. Codex is runtime-only via `--target codex` (not persisted).
+- Persisted targets: `claude`, `droid`, `codex`. Codex became persistable in CCS 8.2.0 (`persistedTarget: true` in `target-metadata.ts`, upstream commit `04dc97aa`) — previously runtime-only.
 
 ## Unresolved Questions
 

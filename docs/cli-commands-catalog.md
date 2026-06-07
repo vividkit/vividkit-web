@@ -1,6 +1,6 @@
 # CLI Commands Catalog — Source of Truth
 
-**Generated:** 2026-05-11
+**Generated:** 2026-06-08
 **Scope:** CCS CLI (`@kaitranntt/ccs`) + ClaudeKit CLI (`claudekit-cli`)
 **Focus:** Binary CLI commands only. Slash commands/skills NOT included.
 
@@ -130,7 +130,7 @@ Package: `@kaitranntt/ccs` | Source: `reference/ccs/src/commands/command-catalog
 | `config image-analysis` | `--enable`/`--disable`, `--timeout`, `--set-model`, `--set-fallback`, `--set-profile-backend`, `--clear-profile-backend` | Vision-model routing |
 | `config thinking` | `--mode`, `--override`, `--clear-override`, `--tier`, `--provider-override`, `--clear-provider-override` | Thinking-budget defaults |
 
-### A3. Provider Shortcuts (`ccs <provider>`) — 13
+### A3. Provider Shortcuts (`ccs <provider>`) — 14
 
 | Command | Provider |
 |---------|----------|
@@ -147,6 +147,7 @@ Package: `@kaitranntt/ccs` | Source: `reference/ccs/src/commands/command-catalog
 | `ccs gitlab` | GitLab Duo |
 | `ccs codebuddy` | CodeBuddy |
 | `ccs kilo` | Kilo AI |
+| `ccs qoder` | Qoder AI |
 
 All support flags: `--auth`, `--add`, `--paste-callback`, `--accounts`, `--use`, `--config`, `--thinking`, `--effort`, `--1m`, `--no-1m`, `--browser`, `--no-browser`, `--logout`, `--headless`, `--port-forward`
 
