@@ -309,6 +309,15 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           detail: t("commands.stable.remotion.detail"),
           isSkill: true,
         },
+        {
+          command: "/ck:html-video",
+          complexity: "⚡⚡⚡",
+          label: t("commands.label.medium"),
+          desc: t("commands.stable.html_video.desc"),
+          detail: t("commands.stable.html_video.detail"),
+          isSkill: true,
+          isBeta: true,
+        },
       ],
     },
     {
