@@ -25,7 +25,7 @@ Backends: `original` (default) vs `plus` (community fork with extra providers). 
 ```
 ccs cliproxy create [name]
                     [--provider <p>] [--model <m>] [--account <a>]
-                    [--target claude|droid]
+                    [--target claude|droid|codex]
                     [--composite]
                     [--force] [-y|--yes] [--verbose]
                     [--backend original|plus]
@@ -41,7 +41,7 @@ ccs cliproxy create [name]
 | `--provider` | Built-in profile name |
 | `--model` | Provider-specific model id |
 | `--account` | Account ID for that provider |
-| `--target` | Default exec target: `claude` (default) or `droid` |
+| `--target` | Default exec target: `claude` (default), `droid`, or `codex` (persistable since 8.2.0) |
 | `--composite` | Multi-tier (Opus/Sonnet/Haiku) mode |
 | `--force` | Overwrite existing |
 | `--yes`/`-y` | Skip target confirmation |

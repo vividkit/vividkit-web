@@ -34,7 +34,7 @@ export const ccs = {
   'ccs.guide.intro_session_recovery_link': 'Muốn tìm hiểu thêm về cách resume session giữa các provider? Xem <a href="/vi/guides/session-recovery" class="text-blue-600 dark:text-blue-400 underline font-medium">Hướng Dẫn Phục Hồi Session</a>.',
   // Solution stats (used in Introduction)
   'ccs.guide.solution_title': 'Giải Pháp',
-  'ccs.guide.solution_desc': 'CCS điều phối 13 provider OAuth, đa tài khoản Claude, và API profile BYO-key qua một CLI duy nhất. Đổi model, xếp chồng tài khoản, chạy song song — chỉ với một lệnh.',
+  'ccs.guide.solution_desc': 'CCS điều phối 14 provider OAuth, đa tài khoản Claude, và API profile BYO-key qua một CLI duy nhất. Đổi model, xếp chồng tài khoản, chạy song song — chỉ với một lệnh.',
   'ccs.guide.solution_example_label': 'Chạy tất cả cùng lúc:',
   'ccs.guide.solution_terminal1': 'Terminal 1: Công việc chính (Claude Pro)',
   'ccs.guide.solution_terminal2': 'Terminal 2: Review code (Codex / GPT-5.4)',
@@ -65,7 +65,7 @@ export const ccs = {
   'ccs.guide.kf_dashboard_title': 'Dashboard Trực Quan',
   'ccs.guide.kf_dashboard_desc': 'Dashboard React 19 để theo dõi auth, phân tích sử dụng và quản lý profile.',
   'ccs.guide.kf_providers_title': '20+ Provider, 3 Tầng Auth',
-  'ccs.guide.kf_providers_desc': '13 provider OAuth qua CLIProxy, đa tài khoản Claude, và API profile BYO-key (Alibaba, MiniMax, Novita, Ollama, Llama.cpp).',
+  'ccs.guide.kf_providers_desc': '14 provider OAuth qua CLIProxy, đa tài khoản Claude, và API profile BYO-key (Alibaba, MiniMax, Novita, Ollama, Llama.cpp).',
   'ccs.guide.kf_docs_title': 'Tài Liệu Đầy Đủ',
   'ccs.guide.kf_docs_desc': 'Trang docs riêng với product tour, CLI reference và hướng dẫn theo từng provider.',
   'ccs.guide.kf_thinking_title': 'Extended Thinking',

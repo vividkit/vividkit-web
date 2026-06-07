@@ -113,7 +113,7 @@ ccs config auth disable
 ccs config channels [--set <csv|all>] [--clear]
                     [--enable | --disable]            (legacy: Discord on/off)
                     [--unattended | --no-unattended]
-                    [--set-token <channel>=<token>]
+                    [--set-token <channel>]
                     [--clear-token [<channel>]]
                     [--help|-h]
 ```
@@ -129,21 +129,21 @@ ccs config channels [--set <csv|all>] [--clear]
 | `--enable` | Legacy: add `discord` |
 | `--disable` | Legacy: remove `discord` |
 | `--unattended` / `--no-unattended` | Toggle `unattended` flag → `--dangerously-skip-permissions` runtime arg |
-| `--set-token <ch>=<tok>` | Store bot token (e.g. `telegram=abc:xyz`). Bare value → Discord token |
+| `--set-token <ch>` | Store bot token read from channel env var (e.g. `TELEGRAM_BOT_TOKEN`). Since 8.2.0 — inline `<ch>=<tok>` form removed (keeps token out of shell history); missing env var → error |
 | `--clear-token [<ch>]` | No arg → clear all; with arg → clear one |
 
 **How**
-1. Parse via `extractOption` + `hasAnyFlag`. `parseTokenAssignment` splits at first `=`.
+1. Parse via `extractOption` + `hasAnyFlag`. `--set-token` value validated as a channel id against `getOfficialChannelChoices()`.
 2. Build `nextConfig` from `config.channels ?? DEFAULT_OFFICIAL_CHANNELS_CONFIG`.
 3. `resolveNextSelection` → `expandOfficialChannelSelection` resolves `'all'`.
 4. Mutation → `updateConfig({channels: nextConfig})`.
-5. Token writes: `setConfiguredOfficialChannelToken(channelId, token)` → persists to Claude channel state.
+5. Token writes: token resolved from `getOfficialChannelEnvKey(channelId)` env var, then `setConfiguredOfficialChannelToken(channelId, token)` → persists to Claude channel state.
 6. Always renders `showStatus()`: state (`ready|limited|disabled`), launch preview (what `ccs adds`), per-channel rows (selected, token source, env-key status), bun installed check, Claude version eligibility, auth state, supported profiles, manual setup commands.
 
 **Step-by-step**
 1. `ccs config channels` → see status.
 2. `ccs config channels --set telegram,discord` → select.
-3. `ccs config channels --set-token telegram=123:abc` → save token.
+3. `TELEGRAM_BOT_TOKEN=123:abc ccs config channels --set-token telegram` → save token from env var.
 4. `ccs` (run a profile) → auto-injects channel runtime args.
 
 **Internals**

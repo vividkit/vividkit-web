@@ -41,7 +41,7 @@ const nodes: FlowchartNode[] = [
   { id: 'group-openai', type: 'group', label: 'OpenAI', description: 'Plus / Pro', position: { x: OPENAI_X, y: GROUP_Y } },
   { id: 'group-google', type: 'group', label: 'Google', description: '⚠ Ban Risk', position: { x: GOOGLE_X, y: GROUP_Y } },
   { id: 'group-cloud-ai', type: 'group', label: 'Cloud AI', description: '8 providers', position: { x: CLOUD_X, y: GROUP_Y } },
-  { id: 'group-ide', type: 'group', label: 'IDE & DevTools', description: '6 providers', position: { x: IDE_X, y: GROUP_Y } },
+  { id: 'group-ide', type: 'group', label: 'IDE & DevTools', description: '7 providers', position: { x: IDE_X, y: GROUP_Y } },
   { id: 'group-local', type: 'group', label: 'Self-Hosted', description: '3 providers', position: { x: LOCAL_X, y: GROUP_Y } },
 
   // Anthropic (2 modes — Native OAuth vs CLIProxy Pool)
@@ -65,13 +65,14 @@ const nodes: FlowchartNode[] = [
   { id: 'p-alibaba', type: 'command', label: 'Alibaba Coding', description: 'API Key', position: { x: CLOUD_SUB[0], y: ROW_Y[2] } },
   { id: 'p-novita', type: 'command', label: 'Novita AI', description: 'DeepSeek + more', position: { x: CLOUD_SUB[1], y: ROW_Y[2] } },
 
-  // IDE & DevTools (6)
+  // IDE & DevTools (7)
   { id: 'p-copilot', type: 'command', label: 'GitHub Copilot', description: 'Device Code', position: { x: IDE_SUB[0], y: ROW_Y[0] } },
   { id: 'p-cursor', type: 'command', label: 'Cursor', description: 'Plus', position: { x: IDE_SUB[1], y: ROW_Y[0] } },
   { id: 'p-gitlab', type: 'command', label: 'GitLab Duo', description: 'Plus', position: { x: IDE_SUB[2], y: ROW_Y[0] } },
   { id: 'p-codebuddy', type: 'command', label: 'CodeBuddy', description: 'Plus', position: { x: IDE_SUB[0], y: ROW_Y[1] } },
   { id: 'p-kilo', type: 'command', label: 'Kilo', description: 'Plus', position: { x: IDE_SUB[1], y: ROW_Y[1] } },
   { id: 'p-iflow', type: 'command', label: 'iFlow', description: 'Free tier', position: { x: IDE_SUB[2], y: ROW_Y[1] } },
+  { id: 'p-qoder', type: 'command', label: 'Qoder', description: 'Plus', position: { x: IDE_SUB[0], y: ROW_Y[2] } },
 
   // Self-Hosted (3)
   { id: 'p-ollama', type: 'command', label: 'Ollama', description: 'localhost:11434', position: { x: LOCAL_X, y: ROW_Y[0] } },
@@ -125,13 +126,14 @@ const edges: FlowchartEdge[] = [
   edge('e-cloud-alibaba', 'group-cloud-ai', 'p-alibaba', -15),
   edge('e-cloud-novita', 'group-cloud-ai', 'p-novita', 0),
 
-  // IDE → 6
+  // IDE → 7
   edge('e-ide-copilot', 'group-ide', 'p-copilot', -15),
   edge('e-ide-cursor', 'group-ide', 'p-cursor', 0),
   edge('e-ide-gitlab', 'group-ide', 'p-gitlab', 15),
   edge('e-ide-codebuddy', 'group-ide', 'p-codebuddy', -15),
   edge('e-ide-kilo', 'group-ide', 'p-kilo', 0),
   edge('e-ide-iflow', 'group-ide', 'p-iflow', 15),
+  edge('e-ide-qoder', 'group-ide', 'p-qoder', -15),
 
   // Self-Hosted → 3
   edge('e-local-ollama', 'group-local', 'p-ollama'),
@@ -758,7 +760,7 @@ const paths: CCSPath[] = [
   }),
 
   // ============================================================
-  // IDE & DevTools — 6 providers
+  // IDE & DevTools — 7 providers
   // ============================================================
   oauthPath({
     id: 'path-copilot', providerKey: 'copilot', command: 'ccs ghcp', name: 'GitHub Copilot',
@@ -841,6 +843,22 @@ const paths: CCSPath[] = [
     availableModels: [{ tier: 'default', name: 'qwen3-coder-plus' }],
     useCases: [{ label: 'Interactive', cmd: 'ccs iflow' }],
     docsUrl: 'https://docs.ccs.kaitran.ca/providers/oauth/iflow',
+  }),
+  oauthPath({
+    id: 'path-qoder', providerKey: 'qoder', command: 'ccs qoder', name: 'Qoder',
+    nodeId: 'p-qoder', edgeIds: ['e-ide-qoder'], groupEdgeId: 'e-start-ide', groupNodeId: 'group-ide',
+    color: 'indigo', model: 'qoder/auto',
+    description: 'Qoder AI auto-routing via OAuth.',
+    configFile: 'base-qoder.settings.json',
+    extraCaveats: [{ text: 'Requires the CLIProxyAPIPlus fork (advanced setup).', level: 'tech' }],
+    availableModels: [
+      { tier: 'auto', name: 'qoder/auto', note: 'Auto model selection' },
+      { tier: 'ultimate', name: 'qoder/ultimate' },
+      { tier: 'performance', name: 'qoder/performance' },
+      { tier: 'efficient', name: 'qoder/efficient' },
+    ],
+    useCases: [{ label: 'Interactive', cmd: 'ccs qoder' }],
+    docsUrl: 'https://docs.ccs.kaitran.ca/providers/oauth/qoder',
   }),
 
   // ============================================================
