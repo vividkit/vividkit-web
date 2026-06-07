@@ -116,6 +116,8 @@ export const guides = {
   'guides.uiux.description': 'Design and implementation guidelines',
   'guides.inside_claudekit.title': 'Inside ClaudeKit',
   'guides.inside_claudekit.description': 'Deep dives into ClaudeKit commands, skills, and practical workflows.',
+  'guides.cursor.title': 'Cursor Setup',
+  'guides.cursor.description': 'Action-first guide to Cursor rules, skills, subagents, hooks, CLI config, and migration follow-up.',
   'guides.inside_claudekit.topic_1.nav': '/ck:plan Modes',
   'guides.inside_claudekit.topic_2.nav': '/ck:frontend-design',
   'guides.inside_claudekit.topic_3.nav': 'Getting Started',

@@ -116,6 +116,8 @@ export const guides = {
   'guides.uiux.description': 'Tạo giao diện đẹp với AI',
   'guides.inside_claudekit.title': 'Inside ClaudeKit',
   'guides.inside_claudekit.description': 'Các bài viết đào sâu về command, skill, và workflow thực tế trong ClaudeKit.',
+  'guides.cursor.title': 'Cursor Setup',
+  'guides.cursor.description': 'Hướng dẫn thực dụng để cấu hình Cursor rules, skills, subagents, hooks, CLI config, và phần cần làm sau migration.',
   'guides.inside_claudekit.topic_1.nav': '/ck:plan Modes',
   'guides.inside_claudekit.topic_2.nav': '/ck:frontend-design',
   'guides.inside_claudekit.topic_3.nav': 'Nhập Môn',

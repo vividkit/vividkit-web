@@ -1,0 +1,104 @@
+---
+import { ArrowLeft, ArrowRight, ChevronRight } from 'lucide-astro';
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
+import { cursorTopics, tCursor, type CursorTopicSlug } from '@/data/guides/cursor';
+
+interface Props {
+  title: { en: string; vi: string };
+  summary: { en: string; vi: string };
+  kicker: { en: string; vi: string };
+  slug: CursorTopicSlug;
+  lang?: Language;
+}
+
+const { title, summary, kicker, slug, lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(currentLang);
+
+const currentIndex = cursorTopics.findIndex((topic) => topic.slug === slug);
+const prevTopic = currentIndex > 0 ? cursorTopics[currentIndex - 1] : null;
+const nextTopic = currentIndex >= 0 && currentIndex < cursorTopics.length - 1 ? cursorTopics[currentIndex + 1] : null;
+---
+
+<div class="article-layout mt-6">
+  <article class="article-content-col">
+    <a
+      href={translatePath('/guides/cursor')}
+      class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:border-slate-300 hover:text-slate-900 xl:hidden dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-slate-700 dark:hover:text-white"
+    >
+      <ArrowLeft class="h-4 w-4" />
+      {currentLang === 'vi' ? 'Quay lại Cursor Guide' : 'Back to Cursor Guide'}
+    </a>
+
+    <nav class="hidden items-center gap-1.5 text-sm text-slate-500 xl:flex dark:text-slate-400" aria-label="Breadcrumb">
+      <a href={translatePath('/guides')} class="transition-colors hover:text-slate-900 dark:hover:text-white">
+        {currentLang === 'vi' ? 'Hướng dẫn' : 'Guides'}
+      </a>
+      <ChevronRight class="h-3.5 w-3.5 shrink-0" />
+      <a href={translatePath('/guides/cursor')} class="transition-colors hover:text-slate-900 dark:hover:text-white">
+        Cursor
+      </a>
+      <ChevronRight class="h-3.5 w-3.5 shrink-0" />
+      <span class="truncate font-medium text-slate-900 dark:text-white">{tCursor(title, currentLang)}</span>
+    </nav>
+
+    <header class="rounded-2xl border border-slate-200/70 bg-gradient-to-br from-slate-50 via-white to-cyan-50/80 p-6 md:p-8 dark:border-slate-800 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900">
+      <p class="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-sky-700 dark:text-sky-300">
+        {tCursor(kicker, currentLang)}
+      </p>
+      <h1 class="mb-4 text-3xl font-bold tracking-tight text-slate-900 dark:text-white lg:text-4xl lg:leading-[1.1]">
+        {tCursor(title, currentLang)}
+      </h1>
+      <p class="text-base leading-7 text-slate-600 dark:text-slate-300 lg:text-lg lg:leading-8">
+        {tCursor(summary, currentLang)}
+      </p>
+    </header>
+
+    <div class="article-prose space-y-8">
+      <slot />
+    </div>
+
+    <nav class="grid gap-4 border-t border-slate-200/70 pt-8 dark:border-slate-800 sm:grid-cols-2" aria-label="Article navigation">
+      {prevTopic ? (
+        <a
+          href={translatePath(`/guides/cursor/${prevTopic.slug}`)}
+          class="group flex items-center gap-3 rounded-2xl border border-slate-200/70 bg-white p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-sm dark:border-slate-800 dark:bg-slate-900/70 dark:hover:border-slate-700"
+        >
+          <ArrowLeft class="h-4 w-4 shrink-0 text-slate-400 transition-transform group-hover:-translate-x-0.5 dark:text-slate-500" />
+          <div class="min-w-0">
+            <span class="text-xs font-medium text-slate-500 dark:text-slate-400">{currentLang === 'vi' ? 'Trước' : 'Previous'}</span>
+            <p class="truncate text-sm font-semibold text-slate-900 dark:text-white">{tCursor(prevTopic.navLabel, currentLang)}</p>
+          </div>
+        </a>
+      ) : <div />}
+      {nextTopic ? (
+        <a
+          href={translatePath(`/guides/cursor/${nextTopic.slug}`)}
+          class="group flex items-center justify-end gap-3 rounded-2xl border border-slate-200/70 bg-white p-4 text-right transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-sm dark:border-slate-800 dark:bg-slate-900/70 dark:hover:border-slate-700"
+        >
+          <div class="min-w-0">
+            <span class="text-xs font-medium text-slate-500 dark:text-slate-400">{currentLang === 'vi' ? 'Tiếp' : 'Next'}</span>
+            <p class="truncate text-sm font-semibold text-slate-900 dark:text-white">{tCursor(nextTopic.navLabel, currentLang)}</p>
+          </div>
+          <ArrowRight class="h-4 w-4 shrink-0 text-slate-400 transition-transform group-hover:translate-x-0.5 dark:text-slate-500" />
+        </a>
+      ) : <div />}
+    </nav>
+  </article>
+</div>
+
+<style>
+  .article-layout {
+    display: flex;
+    justify-content: center;
+  }
+
+  .article-content-col {
+    width: 100%;
+    max-width: 56rem;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+</style>

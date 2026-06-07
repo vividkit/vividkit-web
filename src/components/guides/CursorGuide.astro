@@ -1,0 +1,225 @@
+---
+import { CheckCircle2, FileText, Route, Search, Wrench } from 'lucide-astro';
+import { getLangFromUrl, type Language } from '@/i18n';
+import {
+  cursorConfigChoices,
+  cursorGuideOutcomes,
+  cursorMigrationVerdict,
+  cursorSources,
+  cursorStarterChecklist,
+  cursorStarterTree,
+  cursorTopics,
+  tCursor,
+} from '@/data/guides/cursor';
+import CursorArticleCard from './cursor/cursor-article-card.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const PAGE_SIZE = 6;
+---
+
+<div class="mt-6 space-y-7">
+  <section class="overflow-hidden rounded-xl border border-slate-200/70 bg-white dark:border-slate-800 dark:bg-slate-950">
+    <div class="grid gap-0 lg:grid-cols-[1.1fr_0.9fr]">
+      <div class="space-y-6 border-b border-slate-200/70 p-6 md:p-8 lg:border-b-0 lg:border-r dark:border-slate-800">
+        <div class="flex items-center gap-3">
+          <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-white p-1.5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <img src="/brands/cursor-logo.svg" alt="Cursor" class="h-full w-full rounded-lg" loading="eager" decoding="async" />
+          </div>
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.16em] text-sky-700 dark:text-sky-300">
+              {currentLang === 'vi' ? 'Rules, skills, agents, hooks, CLI' : 'Rules, skills, agents, hooks, CLI'}
+            </p>
+            <h1 class="text-3xl font-bold tracking-tight text-slate-950 dark:text-white lg:text-4xl">
+              {currentLang === 'vi' ? 'Cấu hình Cursor để Agent thật sự theo workflow của bạn' : 'Configure Cursor so Agent actually follows your workflow'}
+            </h1>
+          </div>
+        </div>
+        <p class="max-w-3xl text-base leading-8 text-slate-600 dark:text-slate-300">
+          {currentLang === 'vi'
+            ? 'Bắt đầu bằng 4 bước: đặt chuẩn project bằng rules, đóng gói workflow lặp lại bằng skills, tách việc chuyên môn cho subagents, rồi dùng hooks và CLI để enforce hoặc tự động hóa.'
+            : 'Start with four steps: set project defaults with rules, package repeatable workflows as skills, split specialist work into subagents, then use hooks and the CLI to enforce or automate the setup.'}
+        </p>
+
+        <div class="grid gap-3">
+          {cursorGuideOutcomes.map((item) => (
+            <div class="grid gap-2 rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-900/70 sm:grid-cols-[12rem_1fr] sm:items-start">
+              <div class="flex items-center gap-2 text-sm font-semibold text-slate-950 dark:text-white">
+                <CheckCircle2 class="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                {tCursor(item.label, currentLang)}
+              </div>
+              <p class="text-sm leading-6 text-slate-600 dark:text-slate-400">{tCursor(item.text, currentLang)}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="bg-slate-50 p-6 md:p-8 dark:bg-slate-900/60">
+        <div class="mb-4 flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">
+          <Route class="h-4 w-4" />
+          {currentLang === 'vi' ? 'Setup path' : 'Setup path'}
+        </div>
+        <div class="space-y-4">
+          {cursorStarterChecklist.map((item) => (
+            <div class="grid grid-cols-[2.5rem_1fr] gap-3">
+              <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-950 text-xs font-bold text-white dark:bg-white dark:text-slate-950">
+                {item.step}
+              </div>
+              <div>
+                <h3 class="text-base font-semibold text-slate-950 dark:text-white">{tCursor(item.title, currentLang)}</h3>
+                <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400">{tCursor(item.text, currentLang)}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="rounded-xl border border-slate-200/70 bg-white p-5 dark:border-slate-800 dark:bg-slate-950">
+    <div class="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-[0.14em] text-amber-700 dark:text-amber-300">
+          {currentLang === 'vi' ? 'Decision table' : 'Decision table'}
+        </p>
+        <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">
+          {currentLang === 'vi' ? 'Muốn config gì thì sửa file nào?' : 'What do you want Cursor to do?'}
+        </h2>
+      </div>
+      <p class="max-w-xl text-sm leading-6 text-slate-600 dark:text-slate-400">
+        {currentLang === 'vi'
+          ? 'Đây là bảng nên đọc trước khi đụng vào filesystem. Nó giảm nhầm lẫn giữa rules, skills, subagents, hooks và CLI config.'
+          : 'Read this before touching the filesystem. It prevents the common mix-up between rules, skills, subagents, hooks, and CLI config.'}
+      </p>
+    </div>
+
+    <div class="overflow-hidden rounded-lg border border-slate-200 dark:border-slate-800">
+      {cursorConfigChoices.map((choice, index) => (
+        <div class:list={[
+          'grid gap-4 p-4 md:grid-cols-[1.1fr_1fr_1fr]',
+          index > 0 && 'border-t border-slate-200 dark:border-slate-800',
+        ]}>
+          <div>
+            <div class="text-sm font-semibold text-slate-950 dark:text-white">{tCursor(choice.goal, currentLang)}</div>
+            <code class="mt-2 inline-flex rounded-md bg-slate-100 px-2 py-1 text-xs text-slate-700 dark:bg-slate-800/90 dark:text-slate-200">{choice.file}</code>
+          </div>
+          <p class="text-sm leading-6 text-slate-600 dark:text-slate-400">{tCursor(choice.useWhen, currentLang)}</p>
+          <p class="text-sm leading-6 text-emerald-700 dark:text-emerald-300">{tCursor(choice.verify, currentLang)}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="grid gap-4 lg:grid-cols-[0.92fr_1.08fr]">
+    <div class="rounded-xl border border-slate-200/70 bg-white p-5 dark:border-slate-800 dark:bg-slate-950">
+      <div class="mb-4 flex items-center gap-2">
+        <FileText class="h-5 w-5 text-sky-600 dark:text-sky-300" />
+        <h2 class="text-lg font-semibold text-slate-950 dark:text-white">
+          {currentLang === 'vi' ? 'Starter filesystem nên có' : 'Starter filesystem to aim for'}
+        </h2>
+      </div>
+      <pre class="overflow-x-auto rounded-lg border border-slate-200 bg-slate-50 p-4 text-xs leading-6 text-slate-700 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-200"><code>{cursorStarterTree}</code></pre>
+    </div>
+
+    <div class="rounded-xl border border-slate-200/70 bg-white p-5 dark:border-slate-800 dark:bg-slate-950">
+      <div class="mb-4 flex items-center gap-2">
+        <Wrench class="h-5 w-5 text-amber-600 dark:text-amber-300" />
+        <h2 class="text-lg font-semibold text-slate-950 dark:text-white">
+          {currentLang === 'vi' ? 'ck migrate -a cursor đang fit tới đâu?' : 'Where ck migrate -a cursor fits today'}
+        </h2>
+      </div>
+      <div class="space-y-3">
+        {cursorMigrationVerdict.map((item) => (
+          <div class="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-900/70">
+            <h3 class="text-sm font-semibold text-slate-950 dark:text-white">{tCursor(item.label, currentLang)}</h3>
+            <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400">{tCursor(item.text, currentLang)}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-[0.14em] text-sky-700 dark:text-sky-300">
+          {currentLang === 'vi' ? 'Deep dives' : 'Deep dives'}
+        </p>
+        <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">
+          {currentLang === 'vi' ? 'Mở đúng subpage theo việc cần làm' : 'Open the right subpage for the job'}
+        </h2>
+      </div>
+      <div class="relative sm:w-80">
+        <Search class="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-slate-500" />
+        <input
+          id="cursor-search"
+          type="search"
+          placeholder={currentLang === 'vi' ? 'Tìm subagents, hooks, CLI...' : 'Search subagents, hooks, CLI...'}
+          class="w-full rounded-lg border border-slate-200/80 bg-white py-2.5 pl-10 pr-4 text-base text-slate-900 outline-none transition-colors placeholder:text-slate-400 focus:border-sky-400 focus:ring-2 focus:ring-sky-100 dark:border-slate-700 dark:bg-slate-900/80 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-sky-500 dark:focus:ring-sky-900/40 sm:text-sm"
+        />
+      </div>
+    </div>
+
+    <div class="grid gap-4 md:grid-cols-3" id="cursor-article-grid">
+      {cursorTopics.map((topic) => (
+        <CursorArticleCard
+          slug={topic.slug}
+          track={topic.track}
+          title={topic.title}
+          desc={topic.desc}
+          lang={currentLang}
+        />
+      ))}
+    </div>
+    <div id="cursor-empty-state" class="hidden py-10 text-center text-sm text-slate-500 dark:text-slate-400">
+      {currentLang === 'vi' ? 'Không tìm thấy bài phù hợp.' : 'No matching guide found.'}
+    </div>
+  </section>
+
+  <section class="rounded-xl border border-slate-200/70 bg-white p-5 dark:border-slate-800 dark:bg-slate-950">
+    <h2 class="mb-4 text-lg font-semibold text-slate-900 dark:text-white">
+      {currentLang === 'vi' ? 'Nguồn đã verify' : 'Verified sources'}
+    </h2>
+    <div class="grid gap-3 md:grid-cols-2">
+      {cursorSources.map((source) => (
+        <a href={source.url} class="rounded-xl border border-slate-200/70 p-4 transition-colors hover:border-sky-300 dark:border-slate-800 dark:hover:border-sky-700">
+          <div class="text-sm font-semibold text-slate-900 dark:text-white">{source.label}</div>
+          <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400">{tCursor(source.note, currentLang)}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+</div>
+
+<script is:inline define:vars={{ PAGE_SIZE }}>
+  function initCursorHub() {
+    const grid = document.getElementById('cursor-article-grid');
+    const empty = document.getElementById('cursor-empty-state');
+    const searchInput = document.getElementById('cursor-search');
+    if (!grid || !empty || !searchInput) return;
+    const cards = Array.from(grid.querySelectorAll('[data-track]'));
+
+    function render() {
+      const query = searchInput.value.trim().toLowerCase();
+      const matched = cards.filter((card) => {
+        const title = card.dataset.title || '';
+        const desc = card.dataset.desc || '';
+        return !query || title.includes(query) || desc.includes(query);
+      });
+      cards.forEach((card) => { card.style.display = 'none'; });
+      matched.slice(0, PAGE_SIZE).forEach((card) => { card.style.display = ''; });
+      empty.classList.toggle('hidden', matched.length > 0);
+      grid.classList.toggle('hidden', matched.length === 0);
+    }
+
+    searchInput.addEventListener('input', render);
+    render();
+  }
+
+  document.addEventListener('astro:page-load', initCursorHub);
+  document.addEventListener('DOMContentLoaded', initCursorHub);
+</script>

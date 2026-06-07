@@ -10,6 +10,12 @@ export interface Props {
     | 'ccs'
     | 'ck-with-codex'
     | 'codex-app'
+    | 'cursor'
+    | 'cursor-subagents'
+    | 'cursor-hooks'
+    | 'cursor-commands'
+    | 'happy-ccs'
+    | 'mobile-coding'
     | 'remote-control'
     | 'ide-config'
     | 'coexistence'
@@ -47,6 +53,13 @@ const ckWithCodexNavItem = {
   label: 'ClaudeKit x Codex',
   icon: `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.282 9.821a5.985 5.985 0 0 0-.516-4.91 6.046 6.046 0 0 0-6.51-2.9A6.065 6.065 0 0 0 4.981 4.18a5.985 5.985 0 0 0-3.998 2.9 6.046 6.046 0 0 0 .743 7.097 5.98 5.98 0 0 0 .51 4.911 6.051 6.051 0 0 0 6.515 2.9A5.985 5.985 0 0 0 13.26 24a6.056 6.056 0 0 0 5.772-4.206 5.99 5.99 0 0 0 3.997-2.9 6.056 6.056 0 0 0-.747-7.073zM13.26 22.43a4.476 4.476 0 0 1-2.876-1.04l.141-.081 4.779-2.758a.795.795 0 0 0 .392-.681v-6.737l2.02 1.168a.071.071 0 0 1 .038.052v5.583a4.504 4.504 0 0 1-4.494 4.494zM3.6 18.304a4.47 4.47 0 0 1-.535-3.014l.142.085 4.783 2.759a.771.771 0 0 0 .78 0l5.843-3.369v2.332a.08.08 0 0 1-.033.062L9.74 19.95a4.5 4.5 0 0 1-6.14-1.646zM2.34 7.896a4.485 4.485 0 0 1 2.366-1.973v5.677a.766.766 0 0 0 .388.676l5.815 3.355-2.02 1.168a.076.076 0 0 1-.071 0l-4.83-2.786A4.504 4.504 0 0 1 2.34 7.872zm16.597 3.855l-5.833-3.387L15.119 7.2a.076.076 0 0 1 .071 0l4.83 2.791a4.494 4.494 0 0 1-.676 8.105v-5.678a.79.79 0 0 0-.407-.667zm2.01-3.023l-.141-.085-4.774-2.782a.776.776 0 0 0-.785 0L9.409 9.23V6.897a.066.066 0 0 1 .028-.061l4.83-2.787a4.5 4.5 0 0 1 6.68 4.66zm-12.64 4.135l-2.02-1.164a.08.08 0 0 1-.038-.057V6.075a4.5 4.5 0 0 1 7.375-3.453l-.142.08-4.778 2.758a.795.795 0 0 0-.393.681zm1.097-2.365l2.602-1.5 2.607 1.5v3l-2.597 1.5-2.607-1.5z"/></svg>`,
   href: '/guides/ck-with-codex',
+};
+
+const cursorNavItem = {
+  id: 'cursor',
+  label: t('guides.cursor.title'),
+  icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.75h4.5m-7.5 3.75h10.5m-12 3.75h13.5m-15 3.75h16.5M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" /></svg>`,
+  href: '/guides/cursor',
 };
 
 // Navigation items organized by sections
@@ -98,6 +111,7 @@ const navSections = [
         href: '/guides/inside-claudekit',
       },
       ckWithCodexNavItem,
+      cursorNavItem,
     ],
   },
   {
@@ -252,6 +266,11 @@ const insideClaudeKitArticleTabs = [
   'inside-claudekit-frontend-design',
   'inside-claudekit-getting-started',
 ];
+const cursorArticleTabs = [
+  'cursor-subagents',
+  'cursor-hooks',
+  'cursor-commands',
+];
 
 const flatNavItems = navSections.flatMap((section) => section.items);
 ---
@@ -301,7 +320,10 @@ const flatNavItems = navSections.flatMap((section) => section.items);
           <div class="space-y-0.5">
             {section.items.map((item) => (
               (() => {
-                const isItemActive = activeTab === item.id || (item.id === 'inside-claudekit' && insideClaudeKitArticleTabs.includes(activeTab));
+                const isItemActive =
+                  activeTab === item.id ||
+                  (item.id === 'inside-claudekit' && insideClaudeKitArticleTabs.includes(activeTab)) ||
+                  (item.id === 'cursor' && cursorArticleTabs.includes(activeTab));
 
                 return (
                   <div class="space-y-1">
@@ -340,7 +362,10 @@ const flatNavItems = navSections.flatMap((section) => section.items);
   <div aria-hidden="true" class="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-white via-white/90 to-transparent dark:from-slate-900 dark:via-slate-900/90"></div>
   <div class="mobile-nav-scroll flex w-full max-w-full gap-2 overflow-x-auto overflow-y-hidden no-scrollbar [contain:layout_paint]">
     {flatNavItems.map((item) => {
-      const isItemActive = activeTab === item.id || (item.id === 'inside-claudekit' && insideClaudeKitArticleTabs.includes(activeTab));
+      const isItemActive =
+        activeTab === item.id ||
+        (item.id === 'inside-claudekit' && insideClaudeKitArticleTabs.includes(activeTab)) ||
+        (item.id === 'cursor' && cursorArticleTabs.includes(activeTab));
 
       return (
         <a

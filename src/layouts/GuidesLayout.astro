@@ -15,6 +15,12 @@ interface Props {
     | 'ccs'
     | 'ck-with-codex'
     | 'codex-app'
+    | 'cursor'
+    | 'cursor-subagents'
+    | 'cursor-hooks'
+    | 'cursor-commands'
+    | 'happy-ccs'
+    | 'mobile-coding'
     | 'remote-control'
     | 'ide-config'
     | 'coexistence'
@@ -49,8 +55,13 @@ const isInsideClaudeKitArticle = [
   'inside-claudekit-frontend-design',
   'inside-claudekit-getting-started',
 ].includes(activeTab);
-const showSidebar = !isInsideClaudeKitArticle;
 const isWideSidebarGuide = activeTab === 'codex-app';
+const isCursorArticle = [
+  'cursor-subagents',
+  'cursor-hooks',
+  'cursor-commands',
+].includes(activeTab);
+const showSidebar = !isInsideClaudeKitArticle && !isCursorArticle;
 ---
 
 <MainLayout

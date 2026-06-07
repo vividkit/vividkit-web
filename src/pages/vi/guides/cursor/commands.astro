@@ -1,0 +1,21 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import CursorArticle from '@/components/guides/cursor/CursorArticle.astro';
+import { cursorArticles } from '@/data/guides/cursor';
+import { useTranslations } from '@/i18n/utils';
+import type { Language } from '@/i18n';
+
+const lang: Language = 'vi';
+const t = useTranslations(lang);
+const article = cursorArticles.commands;
+---
+
+<GuidesLayout
+  title={`${article.title.vi} - ${t('site.title')}`}
+  description={article.summary.vi}
+  canonicalPath="/guides/cursor/commands"
+  activeTab="cursor-commands"
+  lang="vi"
+>
+  <CursorArticle slug="commands" lang="vi" />
+</GuidesLayout>
