@@ -75,6 +75,7 @@ export const common = {
   'footer.links.waitlist': 'Danh Sách Chờ',
   'footer.links.documentation': 'Tài Liệu',
   'footer.links.guides': 'Hướng Dẫn',
+  'footer.links.promotions': 'Khuyến Mãi',
   'footer.links.api': 'API Reference',
   'footer.links.examples': 'Ví Dụ',
   'footer.links.about': 'Về Chúng Tôi',

@@ -1,6 +1,6 @@
 ---
 // Guides landing page with guided pathways for different user types
-import { Rocket, Workflow, CircleHelp, Zap, BookOpenText, Cog, Monitor, ShieldCheck } from 'lucide-astro';
+import { Rocket, Workflow, CircleHelp, Zap, BookOpenText, Cog, ShieldCheck, BadgePercent } from 'lucide-astro';
 import GuidedPathwayCard from './guides-home/guided-pathway-card.astro';
 import { useTranslations } from '@/i18n/utils';
 import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
@@ -26,7 +26,7 @@ const pathways = [
     links: [
       { href: '/guides/what-is-claudekit', labelKey: 'guides.home.pathway_new.link_what' },
       { href: '/guides/cli', labelKey: 'guides.home.pathway_new.link_install' },
-      { href: '/guides/how-ck-works', labelKey: 'guides.home.pathway_new.link_how' },
+      { href: '/guides/claude-mechanics', labelKey: 'guides.home.pathway_config.link_mechanics' },
     ],
   },
   {
@@ -36,10 +36,10 @@ const pathways = [
     descKey: 'guides.home.pathway_using.desc',
     accentColor: 'blue' as const,
     links: [
-      { href: '/guides/commands', labelKey: 'guides.home.pathway_using.link_commands' },
-      { href: '/guides/cli-commands', labelKey: 'guides.home.pathway_using.link_cli_commands' },
-      { href: '/guides/workflows', labelKey: 'guides.home.pathway_using.link_workflows' },
       { href: '/guides/flowchart', labelKey: 'guides.home.pathway_using.link_flowchart' },
+      { href: '/guides/commands', labelKey: 'guides.home.pathway_using.link_commands' },
+      { href: '/guides/workflows', labelKey: 'guides.home.pathway_using.link_workflows' },
+      { href: '/guides/cli-commands', labelKey: 'guides.home.pathway_using.link_cli_commands' },
     ],
   },
   {
@@ -49,7 +49,6 @@ const pathways = [
     descKey: 'guides.home.pathway_config.desc',
     accentColor: 'amber' as const,
     links: [
-      { href: '/guides/claude-mechanics', labelKey: 'guides.home.pathway_config.link_mechanics' },
       { href: '/guides/permissions', labelKey: 'guides.home.pathway_config.link_permissions' },
       { href: '/guides/hooks', labelKey: 'guides.home.pathway_config.link_hooks' },
       { href: '/guides/coexistence', labelKey: 'guides.home.pathway_config.link_coexistence' },
@@ -63,20 +62,11 @@ const pathways = [
     accentColor: 'purple' as const,
     links: [
       { href: '/guides/ccs', labelKey: 'guides.home.pathway_providers.link_ccs' },
+      { href: '/guides/ide-config', labelKey: 'guides.home.pathway_environments.link_ide' },
+      { href: '/guides/remote-control', labelKey: 'guides.home.pathway_environments.link_remote_control' },
       { href: '/guides/codex-app', labelKey: 'guides.home.pathway_providers.link_codex_app' },
       { href: '/guides/ck-with-codex', labelKey: 'guides.home.pathway_providers.link_codex' },
       { href: '/guides/migrate', labelKey: 'guides.home.pathway_providers.link_migrate' },
-    ],
-  },
-  {
-    id: 'environments',
-    icon: Monitor,
-    titleKey: 'guides.home.pathway_environments.title',
-    descKey: 'guides.home.pathway_environments.desc',
-    accentColor: 'cyan' as const,
-    links: [
-      { href: '/guides/ide-config', labelKey: 'guides.home.pathway_environments.link_ide' },
-      { href: '/guides/remote-control', labelKey: 'guides.home.pathway_environments.link_remote_control' },
     ],
   },
   {
@@ -89,7 +79,6 @@ const pathways = [
       { href: '/guides/session-recovery', labelKey: 'guides.home.pathway_reliability.link_session' },
       { href: '/guides/fix-logs', labelKey: 'guides.home.pathway_reliability.link_fix_logs' },
       { href: '/guides/uiux', labelKey: 'guides.home.pathway_reliability.link_uiux' },
-      { href: '/guides/promotions', labelKey: 'guides.home.pathway_reliability.link_promotions' },
     ],
   },
 ];
@@ -121,6 +110,30 @@ const pathways = [
       />
     ))}
   </div>
+
+  <section class="rounded-2xl border border-slate-200/70 bg-white/80 p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div class="flex items-start gap-4">
+        <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+          <BadgePercent class="h-5 w-5" />
+        </div>
+        <div class="space-y-1">
+          <h2 class="text-base font-semibold text-slate-900 dark:text-white">
+            {t('guides.home.promotions.title')}
+          </h2>
+          <p class="max-w-2xl text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+            {t('guides.home.promotions.desc')}
+          </p>
+        </div>
+      </div>
+      <a
+        href={translatePath('/guides/promotions')}
+        class="inline-flex min-h-10 shrink-0 items-center justify-center rounded-lg border border-slate-200 px-4 text-sm font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:border-slate-600 dark:hover:bg-slate-800"
+      >
+        {t('guides.home.promotions.cta')}
+      </a>
+    </div>
+  </section>
 
   <section class="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-gradient-to-br from-slate-50 via-white to-emerald-50/50 p-6 md:p-8 dark:border-slate-800 dark:from-slate-950 dark:via-slate-950 dark:to-emerald-950/30">
     <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.10),transparent_35%)] dark:bg-[radial-gradient(circle_at_top_right,rgba(52,211,153,0.08),transparent_35%)]"></div>
