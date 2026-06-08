@@ -1,3 +1,5 @@
+import type { TranslationKey } from '@/i18n/utils';
+
 export type InsideClaudeKitTabId =
   | 'inside-claudekit'
   | 'inside-claudekit-plan-modes'
@@ -5,6 +7,17 @@ export type InsideClaudeKitTabId =
   | 'inside-claudekit-getting-started';
 
 export type InsideClaudeKitTrack = 'planning' | 'design' | 'foundations';
+
+/** A single Inside ClaudeKit deep-dive article entry. i18n keys are typed so `t()` accepts them directly. */
+export interface InsideClaudeKitTopic {
+  id: InsideClaudeKitTabId;
+  slug: string;
+  track: InsideClaudeKitTrack;
+  titleKey: TranslationKey;
+  descKey: TranslationKey;
+  navLabelKey: TranslationKey;
+  disabled: boolean;
+}
 
 /** Per-track display metadata (colors, badge keys) */
 export const trackMeta: Record<
@@ -49,7 +62,7 @@ export const trackMeta: Record<
   },
 };
 
-export const insideClaudeKitTopics = [
+export const insideClaudeKitTopics: InsideClaudeKitTopic[] = [
   {
     id: 'inside-claudekit-getting-started' as const,
     slug: 'getting-started',

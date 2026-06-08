@@ -1,6 +1,6 @@
 ---
 // Guides landing page with guided pathways for different user types
-import { Rocket, Workflow, CircleHelp, Zap, BookOpenText, Cog, ShieldCheck, BadgePercent } from 'lucide-astro';
+import { Rocket, Workflow, CircleHelp, Zap, BookOpenText, Cog, Layers, ShieldCheck, BadgePercent } from 'lucide-astro';
 import GuidedPathwayCard from './guides-home/guided-pathway-card.astro';
 import { useTranslations } from '@/i18n/utils';
 import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
@@ -111,27 +111,78 @@ const pathways = [
     ))}
   </div>
 
-  <section class="rounded-2xl border border-slate-200/70 bg-white/80 p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
-    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+  <section class="relative overflow-hidden rounded-2xl border border-amber-200/70 bg-gradient-to-br from-amber-50 via-white to-orange-50/60 p-5 shadow-sm dark:border-amber-500/20 dark:from-amber-950/30 dark:via-slate-900/70 dark:to-orange-950/20">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(245,158,11,0.12),transparent_40%)] dark:bg-[radial-gradient(circle_at_top_right,rgba(251,191,36,0.10),transparent_40%)]"></div>
+    <div class="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
       <div class="flex items-start gap-4">
-        <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+        <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-md shadow-amber-500/25">
           <BadgePercent class="h-5 w-5" />
         </div>
         <div class="space-y-1">
-          <h2 class="text-base font-semibold text-slate-900 dark:text-white">
-            {t('guides.home.promotions.title')}
-          </h2>
-          <p class="max-w-2xl text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+          <div class="flex flex-wrap items-center gap-2">
+            <h2 class="text-base font-semibold text-slate-900 dark:text-white">
+              {t('guides.home.promotions.title')}
+            </h2>
+            <span class="inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-amber-700 dark:bg-amber-500/15 dark:text-amber-300">
+              {t('guides.home.promotions.badge')}
+            </span>
+          </div>
+          <p class="text-xs font-medium uppercase tracking-[0.12em] text-amber-600/90 dark:text-amber-400/90">
+            {t('guides.home.promotions.kicker')}
+          </p>
+          <p class="max-w-2xl pt-0.5 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
             {t('guides.home.promotions.desc')}
           </p>
         </div>
       </div>
       <a
         href={translatePath('/guides/promotions')}
-        class="inline-flex min-h-10 shrink-0 items-center justify-center rounded-lg border border-slate-200 px-4 text-sm font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:border-slate-600 dark:hover:bg-slate-800"
+        class="inline-flex min-h-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 px-4 text-sm font-semibold text-white shadow-sm shadow-amber-500/25 transition hover:from-amber-600 hover:to-orange-700 hover:shadow-md hover:shadow-amber-500/30"
       >
         {t('guides.home.promotions.cta')}
       </a>
+    </div>
+  </section>
+
+  <!-- Deep Dives: foundational internals (How ClaudeKit Works + future deep dives) -->
+  <section class="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-gradient-to-br from-slate-50 via-white to-teal-50/50 p-6 md:p-8 dark:border-slate-800 dark:from-slate-950 dark:via-slate-950 dark:to-teal-950/30">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(20,184,166,0.10),transparent_35%)] dark:bg-[radial-gradient(circle_at_top_right,rgba(45,212,191,0.08),transparent_35%)]"></div>
+
+    <div class="relative space-y-6">
+      <!-- Header -->
+      <div class="flex items-center gap-3">
+        <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-teal-500 to-cyan-600 text-white shadow-md shadow-teal-500/25">
+          <Layers class="h-5 w-5" />
+        </div>
+        <div>
+          <h2 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
+            {t('guides.sections.deep_dives')}
+          </h2>
+          <p class="text-xs font-medium uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">
+            {t('guides.home.deep_dives.kicker')}
+          </p>
+        </div>
+      </div>
+
+      <!-- Deep Dive Cards Grid -->
+      <div class="grid gap-4 sm:grid-cols-2">
+        <a
+          href={translatePath('/guides/how-ck-works')}
+          class="group flex flex-col gap-3 rounded-2xl border border-slate-200/70 bg-white/70 p-5 backdrop-blur transition-all duration-200 hover:-translate-y-0.5 hover:border-teal-300/80 hover:bg-white/90 hover:shadow-lg hover:shadow-teal-500/10 dark:border-slate-800 dark:bg-slate-900/60 dark:hover:border-teal-500/40 dark:hover:bg-slate-900/80"
+        >
+          <div class="flex items-center gap-3">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-teal-50 text-teal-600 transition-colors group-hover:bg-teal-100 dark:bg-teal-900/30 dark:text-teal-400 dark:group-hover:bg-teal-900/50">
+              <Cog class="h-5 w-5" />
+            </div>
+            <h3 class="text-base font-semibold text-slate-900 transition-colors group-hover:text-teal-700 dark:text-white dark:group-hover:text-teal-300">
+              {t('guides.how_ck_works.title')}
+            </h3>
+          </div>
+          <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+            {t('guides.home.deep_dive.how_ck_works_desc')}
+          </p>
+        </a>
+      </div>
     </div>
   </section>
 
@@ -147,7 +198,7 @@ const pathways = [
           </div>
           <div>
             <h2 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
-              {t('guides.home.inside_claudekit.title')}
+              {t('guides.inside_claudekit.title')}
             </h2>
             <p class="text-xs font-medium uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">
               {t('guides.home.inside_claudekit.kicker')}
@@ -163,49 +214,26 @@ const pathways = [
         </a>
       </div>
 
-      <!-- Deep Dive Cards Grid -->
+      <!-- Inside ClaudeKit Deep Dive Articles -->
       <div class="grid gap-4 sm:grid-cols-2">
-        <!-- How ClaudeKit Works Card -->
-        <a
-          href={translatePath('/guides/how-ck-works')}
-          class="group flex flex-col gap-3 rounded-2xl border border-slate-200/70 bg-white/70 p-5 backdrop-blur transition-all duration-200 hover:-translate-y-0.5 hover:border-teal-300/80 hover:bg-white/90 hover:shadow-lg hover:shadow-teal-500/10 dark:border-slate-800 dark:bg-slate-900/60 dark:hover:border-teal-500/40 dark:hover:bg-slate-900/80"
-        >
-          <div class="flex items-center gap-3">
-            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-50 text-teal-600 transition-colors group-hover:bg-teal-100 dark:bg-teal-900/30 dark:text-teal-400 dark:group-hover:bg-teal-900/50">
-              <Cog class="h-5 w-5" />
-            </div>
-            <h3 class="text-base font-semibold text-slate-900 transition-colors group-hover:text-teal-700 dark:text-white dark:group-hover:text-teal-300">
-              {t('guides.how_ck_works.title')}
-            </h3>
-          </div>
-          <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-            {t('guides.home.deep_dive.how_ck_works_desc')}
-          </p>
-        </a>
-
-        <!-- Featured Inside ClaudeKit Article -->
-        {(() => {
-          const featured = insideClaudeKitTopics.find(t => !t.disabled);
-          if (!featured) return null;
-          return (
-            <a
-              href={translatePath(`/guides/inside-claudekit/${featured.slug}`)}
-              class="group flex flex-col gap-3 rounded-2xl border border-slate-200/70 bg-white/70 p-5 backdrop-blur transition-all duration-200 hover:-translate-y-0.5 hover:border-emerald-300/80 hover:bg-white/90 hover:shadow-lg hover:shadow-emerald-500/10 dark:border-slate-800 dark:bg-slate-900/60 dark:hover:border-emerald-500/40 dark:hover:bg-slate-900/80"
-            >
-              <div class="flex items-center gap-3">
-                <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 transition-colors group-hover:bg-emerald-100 dark:bg-emerald-900/30 dark:text-emerald-400 dark:group-hover:bg-emerald-900/50">
-                  <BookOpenText class="h-5 w-5" />
-                </div>
-                <h3 class="text-base font-semibold leading-snug text-slate-900 transition-colors group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-300">
-                  {t(featured.titleKey)}
-                </h3>
+        {insideClaudeKitTopics.filter((topic) => !topic.disabled).map((topic) => (
+          <a
+            href={translatePath(`/guides/inside-claudekit/${topic.slug}`)}
+            class="group flex flex-col gap-3 rounded-2xl border border-slate-200/70 bg-white/70 p-5 backdrop-blur transition-all duration-200 hover:-translate-y-0.5 hover:border-emerald-300/80 hover:bg-white/90 hover:shadow-lg hover:shadow-emerald-500/10 dark:border-slate-800 dark:bg-slate-900/60 dark:hover:border-emerald-500/40 dark:hover:bg-slate-900/80"
+          >
+            <div class="flex items-center gap-3">
+              <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 transition-colors group-hover:bg-emerald-100 dark:bg-emerald-900/30 dark:text-emerald-400 dark:group-hover:bg-emerald-900/50">
+                <BookOpenText class="h-5 w-5" />
               </div>
-              <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                {t(featured.descKey)}
-              </p>
-            </a>
-          );
-        })()}
+              <h3 class="text-base font-semibold leading-snug text-slate-900 transition-colors group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-300">
+                {t(topic.titleKey)}
+              </h3>
+            </div>
+            <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+              {t(topic.descKey)}
+            </p>
+          </a>
+        ))}
       </div>
     </div>
   </section>
