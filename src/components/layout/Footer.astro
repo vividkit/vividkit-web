@@ -39,7 +39,7 @@ const translatePath = useTranslatedPath(currentLang);
         <h4 class="font-heading font-semibold mb-4">{t('footer.resources')}</h4>
         <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
           <li><a href={translatePath('/guides')} class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">{t('footer.links.guides')}</a></li>
-          <li><a href="https://docs.claudekit.cc/docs" target="_blank" class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">{t('footer.links.documentation')}</a></li>
+          <li><a href={translatePath('/guides/promotions')} class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">{t('footer.links.promotions')}</a></li>
           <li><a href="https://claudekit.cc/discord" target="_blank" class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">{t('footer.claudekit_discord')}</a></li>
         </ul>
       </div>
