@@ -6,6 +6,7 @@ import {
   Info,
   Layers,
   MessageSquare,
+  Pause,
   Power,
   PowerOff,
   Settings,
@@ -41,8 +42,9 @@ const kitLabel =
       : "Marketing Kit";
 
 const stateClasses = {
-  on: "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-300",
-  off: "border-amber-200 bg-amber-50 text-amber-800 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-200",
+  active: "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-300",
+  dormant: "border-amber-200 bg-amber-50 text-amber-800 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-200",
+  "opt-in": "border-slate-200 bg-slate-100 text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300",
   removed: "border-slate-200 bg-slate-100 text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300",
 };
 
@@ -55,8 +57,9 @@ const impactClasses = {
 };
 
 const stateIcons = {
-  on: Power,
-  off: PowerOff,
+  active: Power,
+  dormant: Pause,
+  "opt-in": PowerOff,
   removed: Archive,
 };
 

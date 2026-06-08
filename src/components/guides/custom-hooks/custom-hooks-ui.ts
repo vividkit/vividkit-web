@@ -107,8 +107,12 @@ const easyHookDescriptions: Record<string, { en: string; vi: string }> = {
     vi: "Refresh quota ở nền để statusline có dữ liệu mà không làm chậm mỗi prompt.",
   },
   "usage-context-awareness": {
-    en: "Acts as the on/off switch for quota awareness when a project wants that context.",
-    vi: "Đóng vai trò bật/tắt usage awareness khi project muốn dùng context về quota.",
+    en: "In Engineer Kit this named switch is not wired — the quota-refresh hook runs directly — so it stays available only if you register it yourself.",
+    vi: "Trong Engineer Kit công tắc tên này không được wire — hook quota-refresh chạy thẳng — nên nó chỉ sẵn sàng nếu bạn tự đăng ký.",
+  },
+  "usage-context-awareness-mk": {
+    en: "In Marketing Kit this runs on every prompt to keep quota awareness available to the agent.",
+    vi: "Trong Marketing Kit nó chạy ở mỗi prompt để giữ quota awareness sẵn sàng cho agent.",
   },
   "dev-rules-reminder": {
     en: "Adds the important project rules back into each prompt so the agent does not forget local conventions.",
@@ -174,8 +178,12 @@ const hookExamples: Record<string, { en: string; vi: string }> = {
     vi: "Statusline có thể hiện context quota từ cache mà không bắt mỗi prompt chờ kiểm tra quota mới.",
   },
   "usage-context-awareness": {
-    en: "If a project enables usage awareness, this hook lets quota context appear. If not enabled, it stays quiet.",
-    vi: "Nếu project bật usage awareness, hook này cho phép context quota xuất hiện. Nếu chưa bật, nó im lặng.",
+    en: "On an Engineer Kit install this command is absent from settings.json, so the quota-refresh hook covers the work instead.",
+    vi: "Trên bản cài Engineer Kit, command này không có trong settings.json, nên hook quota-refresh đảm nhận thay.",
+  },
+  "usage-context-awareness-mk": {
+    en: "On a Marketing Kit install, each prompt triggers this hook so quota context is ready when the agent needs it.",
+    vi: "Trên bản cài Marketing Kit, mỗi prompt kích hoạt hook này để context quota sẵn sàng khi agent cần.",
   },
   "dev-rules-reminder": {
     en: "You ask for a UI edit. The hook adds project rules back into context, such as read README first and do not revert unrelated changes.",
@@ -228,27 +236,32 @@ const hookExamples: Record<string, { en: string; vi: string }> = {
 };
 
 const defaultStateLabels: Record<HookDef["defaultState"], { en: string; vi: string }> = {
-  on: { en: "Default ON", vi: "Mặc định bật" },
-  off: { en: "Default OFF", vi: "Mặc định tắt" },
+  active: { en: "Active by default", vi: "Bật sẵn" },
+  dormant: { en: "Active · gate off", vi: "Bật · gate tắt" },
+  "opt-in": { en: "Opt-in", vi: "Cần bật" },
   removed: { en: "Removed", vi: "Đã remove" },
 };
 
 const defaultReasonText: Record<HookDef["defaultReason"], { en: string; vi: string }> = {
-  "active-default": {
-    en: "Registered in the current default guardrail set.",
-    vi: "Đang chạy sẵn trong bộ guard rails mặc định.",
+  "wired-active": {
+    en: "Wired into settings.json with its .ck.json flag defaulting to true, so a standard install runs it.",
+    vi: "Được wire vào settings.json và flag trong .ck.json mặc định true, nên bản cài chuẩn chạy hook này.",
   },
-  "generated-context": {
-    en: "Source still ships, but new installs do not register generated context hooks by default.",
-    vi: "File hook vẫn có sẵn, nhưng project mới không tự bật nhóm hook inject context này.",
+  "gate-dormant": {
+    en: "Wired and running, but its inner gate (simplify.gate.enabled) is false by default — it watches silently and blocks nothing until you opt in.",
+    vi: "Đã wire và vẫn chạy, nhưng gate bên trong (simplify.gate.enabled) mặc định false — hook quan sát im lặng, không chặn gì cho tới khi bạn bật gate.",
   },
-  "opt-in-gate": {
-    en: "Available as an opt-in gate; it only acts after you enable its gate config.",
-    vi: "Có sẵn nhưng chỉ chạy sau khi bạn chủ động bật gate.",
+  "not-wired": {
+    en: "The script ships, but a fresh project does not wire it into settings.json, so it stays inactive until the command is registered.",
+    vi: "Script có sẵn, nhưng project mới không wire vào settings.json, nên hook nằm im cho tới khi command được đăng ký.",
   },
-  "agent-teams-opt-in": {
-    en: "Used by Agent Teams flows; not part of the normal single-agent default.",
-    vi: "Dùng cho Agent Teams; single-agent bình thường không chạy hook này.",
+  "runtime-flag-false": {
+    en: "Not wired, and its runtime flag defaults to false, so it stays inactive until you set the hook flag true and enable the gate.",
+    vi: "Không được wire, và runtime flag mặc định false, nên hook nằm im cho tới khi bạn set flag true và bật gate.",
+  },
+  "agent-teams-event": {
+    en: "Fires on Agent Teams events that a normal single-agent session never emits, so it stays quiet outside team runs.",
+    vi: "Chỉ kích hoạt bởi event của Agent Teams mà session single-agent bình thường không phát ra, nên hook im lặng ngoài team run.",
   },
   removed: {
     en: "No active hook file in the current stable distribution.",
@@ -330,7 +343,7 @@ function disableSnippet(hook: HookDef): string {
 # If an old project still calls it, remove that command from .claude/settings.json.`;
   }
 
-  return standardDisableSnippet(hook.id);
+  return standardDisableSnippet(hook.configKey ?? hook.id);
 }
 
 function disableText(hook: HookDef): { en: string; vi: string } {
@@ -355,16 +368,16 @@ function disableText(hook: HookDef): { en: string; vi: string } {
     };
   }
 
-  if (hook.defaultState === "off") {
+  if (hook.defaultState === "opt-in") {
     return {
-      en: "It is already off in new installs. If a project manually restored the hook command, set this flag to false or remove the settings entry.",
-      vi: "Project mới đã tắt sẵn. Nếu project đã bật lại command thủ công, set flag này về false hoặc xoá entry trong settings.",
+      en: "It is inactive on a standard install — it is not wired (or its runtime flag is false). If your setup turned it on (e.g. Agent Teams), set this hook flag to false in .claude/.ck.json to keep it off.",
+      vi: "Mặc định không chạy trên bản cài chuẩn — hook chưa được wire (hoặc runtime flag là false). Nếu cấu hình của bạn đã bật (vd Agent Teams), set hook flag này về false trong .claude/.ck.json để giữ tắt.",
     };
   }
 
   return {
-    en: "Set the hook flag to false in .claude/.ck.json. Delete the line, or set it back to true, to re-enable.",
-    vi: "Set hook flag về false trong .claude/.ck.json. Muốn bật lại thì xoá dòng đó hoặc set lại true.",
+    en: "It is active by default. Set the hook flag to false in .claude/.ck.json to silence it; delete the line, or set it back to true, to re-enable.",
+    vi: "Mặc định đang bật. Set hook flag về false trong .claude/.ck.json để tắt; muốn bật lại thì xoá dòng đó hoặc set lại true.",
   };
 }
 
