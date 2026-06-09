@@ -4,9 +4,10 @@ export type InsideClaudeKitTabId =
   | 'inside-claudekit'
   | 'inside-claudekit-plan-modes'
   | 'inside-claudekit-frontend-design'
-  | 'inside-claudekit-getting-started';
+  | 'inside-claudekit-getting-started'
+  | 'inside-claudekit-guard-rails';
 
-export type InsideClaudeKitTrack = 'planning' | 'design' | 'foundations';
+export type InsideClaudeKitTrack = 'planning' | 'design' | 'foundations' | 'safety';
 
 /** A single Inside ClaudeKit deep-dive article entry. i18n keys are typed so `t()` accepts them directly. */
 export interface InsideClaudeKitTopic {
@@ -60,6 +61,14 @@ export const trackMeta: Record<
     filterActiveBg: 'bg-emerald-600 dark:bg-emerald-500',
     filterActiveText: 'text-white',
   },
+  safety: {
+    badgeKey: 'guides.inside_claudekit.track.safety',
+    borderAccent: 'border-l-amber-500',
+    badgeBg: 'bg-amber-50 dark:bg-amber-950/50',
+    badgeText: 'text-amber-700 dark:text-amber-300',
+    filterActiveBg: 'bg-amber-600 dark:bg-amber-500',
+    filterActiveText: 'text-white',
+  },
 };
 
 export const insideClaudeKitTopics: InsideClaudeKitTopic[] = [
@@ -79,6 +88,15 @@ export const insideClaudeKitTopics: InsideClaudeKitTopic[] = [
     titleKey: 'guides.home.inside_claudekit.topic_1.title',
     descKey: 'guides.home.inside_claudekit.topic_1.desc',
     navLabelKey: 'guides.inside_claudekit.topic_1.nav',
+    disabled: false,
+  },
+  {
+    id: 'inside-claudekit-guard-rails' as const,
+    slug: 'guard-rails',
+    track: 'safety' as InsideClaudeKitTrack,
+    titleKey: 'guides.home.inside_claudekit.topic_4.title',
+    descKey: 'guides.home.inside_claudekit.topic_4.desc',
+    navLabelKey: 'guides.inside_claudekit.topic_4.nav',
     disabled: false,
   },
   {

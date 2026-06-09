@@ -119,10 +119,12 @@ export const guides = {
   'guides.inside_claudekit.topic_1.nav': '/ck:plan Modes',
   'guides.inside_claudekit.topic_2.nav': '/ck:frontend-design',
   'guides.inside_claudekit.topic_3.nav': 'Getting Started',
+  'guides.inside_claudekit.topic_4.nav': 'Guard Rails',
   // Inside ClaudeKit - track badges
   'guides.inside_claudekit.track.planning': 'Planning',
   'guides.inside_claudekit.track.design': 'Design',
   'guides.inside_claudekit.track.foundations': 'Foundations',
+  'guides.inside_claudekit.track.safety': 'Safety',
   // Inside ClaudeKit - hub filter & nav
   'guides.inside_claudekit.filter.all': 'All',
   'guides.inside_claudekit.articles_count': 'articles',
@@ -241,6 +243,8 @@ export const guides = {
   'guides.home.inside_claudekit.topic_2.desc': 'Practical guidance on when this skill is the right tool, how to prompt it better, and how to get stronger UI outcomes from it.',
   'guides.home.inside_claudekit.topic_3.title': 'Getting Started with Claude Code & ClaudeKit Engineer Kit',
   'guides.home.inside_claudekit.topic_3.desc': 'Set up ClaudeKit, learn the 7 core commands, and apply best practices to ship features and fix bugs faster with your AI development partner.',
+  'guides.home.inside_claudekit.topic_4.title': 'Guard rails: the brake layer between model and action',
+  'guides.home.inside_claudekit.topic_4.desc': 'When an agent can read files, run shells, edit code and ship PRs, one prompt line is not enough. Breaking down the 4 guard layers, 7 guard-rail groups, and the gaps that remain in ClaudeKit.',
   'guides.home.inside_claudekit.discover_more': 'Discover more articles',
   'guides.home.inside_claudekit.featured': 'Featured',
 

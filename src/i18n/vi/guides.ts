@@ -119,10 +119,12 @@ export const guides = {
   'guides.inside_claudekit.topic_1.nav': '/ck:plan Modes',
   'guides.inside_claudekit.topic_2.nav': '/ck:frontend-design',
   'guides.inside_claudekit.topic_3.nav': 'Nhập Môn',
+  'guides.inside_claudekit.topic_4.nav': 'Guard Rails',
   // Inside ClaudeKit - track badges
   'guides.inside_claudekit.track.planning': 'Lập kế hoạch',
   'guides.inside_claudekit.track.design': 'Thiết kế',
   'guides.inside_claudekit.track.foundations': 'Nhập môn',
+  'guides.inside_claudekit.track.safety': 'An toàn',
   // Inside ClaudeKit - hub filter & nav
   'guides.inside_claudekit.filter.all': 'Tất cả',
   'guides.inside_claudekit.articles_count': 'bài viết',
@@ -241,6 +243,8 @@ export const guides = {
   'guides.home.inside_claudekit.topic_2.desc': 'Đi sâu vào các tình huống nên dùng, cách viết prompt tốt hơn, và cách tận dụng skill này để ra UI chất lượng hơn.',
   'guides.home.inside_claudekit.topic_3.title': 'Bắt đầu với Claude Code & ClaudeKit Engineer Kit',
   'guides.home.inside_claudekit.topic_3.desc': 'Cài đặt ClaudeKit, nắm vững 7 lệnh core, và áp dụng best practices để ship feature và fix bug nhanh hơn với AI partner.',
+  'guides.home.inside_claudekit.topic_4.title': 'Guard rails: lớp phanh giữa model và hành động',
+  'guides.home.inside_claudekit.topic_4.desc': 'Khi agent đọc file, chạy shell, sửa code và ship PR, một dòng dặn trong prompt là chưa đủ. Mổ xẻ 4 lớp guard, 7 nhóm guard rail và những chỗ vẫn hở trong ClaudeKit.',
   'guides.home.inside_claudekit.discover_more': 'Khám phá thêm bài viết',
   'guides.home.inside_claudekit.featured': 'Nổi bật',
 
