@@ -1,0 +1,5 @@
+# Cloudflare Pages redirects for legacy VividKit guide URLs.
+/guides/resume /guides/session-recovery 301
+/vi/guides/resume /vi/guides/session-recovery 301
+/guides/mobile-coding /guides/remote-control 301
+/vi/guides/mobile-coding /vi/guides/remote-control 301

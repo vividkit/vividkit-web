@@ -75,12 +75,12 @@ While waiting for VividKit Desktop, master ClaudeKit through our comprehensive d
 
 ## 🛠️ Tech Stack (This Website)
 
-- **Framework**: Astro 5.x with Static Site Generation (SSG)
+- **Framework**: Astro 6.x with Static Site Generation (SSG)
 - **Styling**: Tailwind CSS v4 with custom glassmorphism design system
 - **Type Safety**: TypeScript with strict mode and comprehensive path aliasing
 - **Interactivity**: Alpine.js 3.15.2 for lightweight client-side interactions
 - **i18n**: Built-in Astro i18n with English (default) and Vietnamese support
-- **Deployment**: Vercel with integrated analytics
+- **Deployment**: Cloudflare Pages static hosting
 - **Performance**: Sharp for image optimization, LightningCSS for CSS minification
 - **Design System**: Custom glassmorphism UI with three-font typography system
 
