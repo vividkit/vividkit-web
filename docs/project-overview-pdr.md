@@ -190,8 +190,8 @@ Make AI coding accessible to developers of all skill levels by providing intuiti
 - **Content:** 3 command categories, 2 pricing tiers, 5+ navigation structures
 
 ### Build & Deployment
-- **Adapter:** @astrojs/vercel for edge-ready static deployment
-- **Analytics:** Vercel Web Analytics integration
+- **Hosting:** Cloudflare Pages static deployment
+- **Analytics:** Optional GA4 and Meta Pixel via public env vars
 - **Output:** Static HTML/CSS/JS (no server-side code)
 - **Code Splitting:** Bundled to prevent bloat
 
@@ -333,7 +333,7 @@ All pages duplicated with `/vi/` prefix for full localization.
 - [x] Promotions guide for subscription deals
 - [x] Glassmorphism design system implementation
 - [x] Performance optimization (LCP <2.5s)
-- [x] Vercel Analytics integration
+- [x] Optional GA4/Meta Pixel integration
 
 ### Next Phase (Q1 2025)
 - [ ] VividKit Desktop MVP launch
@@ -377,7 +377,7 @@ All pages duplicated with `/vi/` prefix for full localization.
 
 ### External Dependencies
 - **Web3Forms API:** Email form submissions
-- **Vercel deployment:** Edge hosting and analytics
+- **Cloudflare Pages deployment:** Static edge hosting
 - **Lucide icons:** SVG icon library
 - **Google Fonts:** Font delivery (via @fontsource)
 
@@ -388,7 +388,7 @@ All pages duplicated with `/vi/` prefix for full localization.
 - **Browser support:** Modern browsers (ES2022+)
 
 ### Business Constraints
-- **Budget:** No paid services beyond Vercel
+- **Budget:** No paid services beyond Cloudflare Pages and existing third-party integrations
 - **Timeline:** Desktop MVP by Q1 2025
 - **Team:** Single developer with design input
 - **Content:** Must maintain English/Vietnamese parity

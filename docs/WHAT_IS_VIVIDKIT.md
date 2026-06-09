@@ -96,9 +96,9 @@
 - Structured interfaces với strict types
 
 **Build & Deployment**
-- @astrojs/vercel adapter
+- Cloudflare Pages static hosting
 - Edge-ready static deployment
-- Vercel Web Analytics integration
+- Optional GA4 and Meta Pixel analytics
 
 ### 3.2 Component Architecture
 
@@ -283,10 +283,10 @@ cli.stdout.on('data', (chunk) => {
 - **Resource management:** Limit concurrent CLI processes
 
 ### Web Scale
-- **Static CDN:** Vercel Edge handles millions of requests
+- **Static CDN:** Cloudflare Pages handles static edge delivery
 - **Build optimization:** Astro partial hydration prevents bloat
 - **i18n scaling:** Add languages without architecture changes
-- **Analytics:** Vercel Analytics scales automatically
+- **Analytics:** GA4 and Meta Pixel are enabled only when configured
 
 ---
 

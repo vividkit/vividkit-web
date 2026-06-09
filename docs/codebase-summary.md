@@ -111,7 +111,7 @@ vividkit-web/
 ├── reference/                      # Reference materials
 ├── .claude/                        # Claude Code workflows
 ├── .astro/                         # Astro generated types
-├── .vercel/                        # Vercel configuration
+├── public/_redirects               # Cloudflare Pages legacy redirects
 ├── .vscode/                        # VS Code settings
 │
 ├── astro.config.mjs                # Astro configuration
@@ -270,7 +270,7 @@ src/data/vi/guides/cli-guide.ts → CLI guide (Vietnamese)
 ## Build & Deployment Pipeline
 
 ### Configuration Files
-- **astro.config.mjs:** SSG output, i18n routing, Vercel adapter, CSS minification
+- **astro.config.mjs:** SSG output, i18n routing, CSS minification
 - **tailwind.config.mjs:** Design tokens, dark mode config, responsive breakpoints
 - **tsconfig.json:** Strict mode, path aliases (@/*), build target
 - **package.json:** Dependencies (Astro, Tailwind, Alpine, TypeScript)
@@ -298,7 +298,7 @@ Reference: `.env.example` for default values.
 4. Tailwind CSS generates utility classes
 5. LightningCSS minifies CSS
 6. Static HTML/CSS/JS written to `dist/`
-7. Vercel deploys to edge
+7. Cloudflare Pages deploys `dist/` to static edge hosting
 
 ### Development Server
 - **Command:** `npm run dev`
@@ -468,8 +468,7 @@ Each page defines:
 ### Dev Dependencies
 ```json
 {
-  "@astrojs/vercel": "^9.0.2",     // Deployment adapter
-  "@astrojs/check": "^0.9.6",      // Type checking
+  "@astrojs/check": "^0.9.7",      // Astro type checking
   "@tailwindcss/vite": "^4.1.17",  // CSS build plugin
   "@types/alpinejs": "^3.13.11"    // Type definitions
 }
@@ -589,7 +588,7 @@ export function setupThemeToggle() {
 ### 2. Static Generation First
 - Every page pre-rendered at build
 - No server-side rendering
-- Edge-ready deployment
+- Cloudflare Pages static deployment
 - Zero cold starts
 
 ### 3. Progressive Enhancement
