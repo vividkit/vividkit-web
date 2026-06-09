@@ -36,6 +36,7 @@ interface Props {
     | 'inside-claudekit-plan-modes'
     | 'inside-claudekit-frontend-design'
     | 'inside-claudekit-getting-started'
+    | 'inside-claudekit-guard-rails'
     | 'deals'
     | 'lucky-draw';
   lang?: Language;
@@ -48,6 +49,7 @@ const isInsideClaudeKitArticle = [
   'inside-claudekit-plan-modes',
   'inside-claudekit-frontend-design',
   'inside-claudekit-getting-started',
+  'inside-claudekit-guard-rails',
 ].includes(activeTab);
 const showSidebar = !isInsideClaudeKitArticle;
 const isWideSidebarGuide = activeTab === 'codex-app';
