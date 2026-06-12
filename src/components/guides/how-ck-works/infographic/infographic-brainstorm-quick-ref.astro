@@ -27,22 +27,30 @@ const { data, lang } = Astro.props;
 const isVi = lang === 'vi';
 
 const text = {
-  eyebrow: isVi ? 'Quick Ref / Brainstorm command' : 'Quick Ref / Brainstorm command',
+  eyebrow: isVi ? 'Tóm tắt nhanh / Lệnh brainstorm' : 'Quick Ref / Brainstorm command',
   summary: isVi
     ? 'Dùng khi hướng làm còn mơ hồ. Scout trước, chốt requirements cụ thể, tranh luận trade-off, rồi mới viết report và bàn giao sang /ck:plan.'
     : 'Use it when the right approach is still unclear. Scout first, lock exact requirements, debate trade-offs, then write a report and hand off to /ck:plan.',
   beforePlan: isVi ? 'Trước /ck:plan' : 'Before /ck:plan',
   hardGate: isVi ? 'Gate bắt buộc' : 'Required Gate',
-  hardGateBody: isVi
-    ? 'Không code, không scaffold, không invoke implementation skill. Phải scout trước câu hỏi, chốt 5 requirements cụ thể, trình bày design và được user duyệt.'
-    : 'No code, no scaffolding, no implementation skill. Scout before questions, capture 5 exact requirement fields, present a design, and get user approval.',
+  hardGateItems: isVi
+    ? [
+        { label: 'Không implementation', detail: 'Không code, không scaffold, không invoke implementation skill.' },
+        { label: 'Scout trước', detail: 'Phải scout trước câu hỏi.' },
+        { label: 'User gate', detail: 'Chốt 5 requirements cụ thể, trình bày design và được user duyệt.' },
+      ]
+    : [
+        { label: 'No implementation', detail: 'No code, no scaffolding, no implementation skill.' },
+        { label: 'Scout first', detail: 'Scout before questions.' },
+        { label: 'Approval gate', detail: 'Capture 5 exact requirement fields, present a design, and get user approval.' },
+      ],
   reportFirst: isVi ? 'Report trước' : 'Report first',
   reportFirstDesc: isVi ? 'Bàn giao plan phải nhận path brainstorm report.' : 'The plan handoff receives the brainstorm report path.',
   scoutFirst: isVi ? 'Scout trước' : 'Scout first',
   scoutFirstDesc: isVi ? 'Tóm tắt 3-6 findings trước Discovery.' : 'Summarize 3-6 findings before Discovery.',
   noTaskAgents: isVi ? 'Không Task-spawn' : 'No Task-spawn',
   noTaskAgentsDesc: isVi ? 'planner/docs-manager là consultation inline.' : 'planner/docs-manager are inline consultation.',
-  process: isVi ? 'Execution map' : 'Execution Map',
+  process: isVi ? 'Bản đồ thực thi' : 'Execution Map',
   processDesc: isVi ? 'Bốn lane: scout, làm rõ, đánh giá, rồi đóng bằng report/handoff.' : 'Four lanes: scout, clarify, evaluate, then close with report/handoff.',
   samplePrompt: isVi ? 'Prompt mẫu' : 'Sample Prompt',
   samplePromptDesc: isVi
@@ -50,12 +58,12 @@ const text = {
     : 'Use different prompts for a new brainstorm, a same-session plan handoff, and a fresh-session plan.',
   useWhen: isVi ? 'Dùng khi' : 'Use when',
   expected: isVi ? 'Kết quả' : 'Expected',
-  recommended: isVi ? 'Recommended' : 'Recommended',
-  handoff: isVi ? 'Plan handoff' : 'Plan Handoff',
+  recommended: isVi ? 'Khuyến nghị' : 'Recommended',
+  handoff: isVi ? 'Bàn giao sang plan' : 'Plan Handoff',
   handoffDesc: isVi
     ? 'Trong session brainstorm, offer khi proposal đã duyệt, hết câu hỏi mở, report đã viết. Nếu đã clear/start session mới, phải có brainstorm artifact và mention đúng file path khi gọi plan.'
     : 'Inside the brainstorm session, offer only after proposal approval, no open questions, and a written report. If starting a fresh session, make sure the brainstorm artifact exists and pass its file path to plan.',
-  option: isVi ? 'Option' : 'Option',
+  option: isVi ? 'Lựa chọn' : 'Option',
   recommend: isVi ? 'Recommend khi' : 'Recommend when',
   result: isVi ? 'Kết quả' : 'Result',
   currentSession: isVi ? 'Cùng session' : 'Same session',
@@ -72,16 +80,16 @@ const text = {
     : 'This is the outline inside the report file, not separate artifacts.',
   guardrails: isVi ? 'Không bỏ qua design' : 'Do Not Skip Design',
   guardrailsDesc: isVi
-    ? 'Các lý do thường nghe hợp lý nhưng bị SKILL.md chặn trước khi chuyển sang plan hoặc code.'
-    : 'Common-sounding excuses that SKILL.md blocks before planning or coding.',
-  sourceSkill: isVi ? 'Nguồn: SKILL.md / Anti-Rationalization' : 'Source: SKILL.md / Anti-Rationalization',
+    ? 'Các lý do nghe có vẻ hợp lý nhưng bị workflow chặn trước khi chuyển sang plan hoặc code.'
+    : 'Common-sounding excuses the workflow blocks before planning or coding.',
+  sourceSkill: isVi ? 'Quy tắc: Anti-Rationalization' : 'Rule: Anti-Rationalization',
   thought: isVi ? 'Suy nghĩ' : 'Thought',
   reality: isVi ? 'Thực tế' : 'Reality',
   stack: isVi ? 'Stack được gọi khi cần' : 'Stack Used When Needed',
 };
 
 const heroFlow = isVi
-  ? ['Scout', 'Reqs rõ', 'Debate', 'Report path']
+  ? ['Scout', 'Req rõ', 'Tranh luận', 'Path report']
   : ['Scout', 'Exact reqs', 'Debate', 'Report path'];
 
 const tones: Record<string, Tone> = {
@@ -207,49 +215,19 @@ const guardrailItems = isVi
         accent: 'border-emerald-200 bg-emerald-50/70 dark:border-emerald-800/50 dark:bg-emerald-950/18',
       },
     ];
-const samplePrompts = isVi
-  ? [
-      {
-        label: 'Start brainstorm',
-        command: '/ck:brainstorm Chọn hướng auth tốt nhất cho SaaS app hiện tại',
-        when: 'Hướng làm còn mơ hồ, cần scout repo và tranh luận trade-off trước.',
-        expected: `Viết report tại ${artifactExamplePath}.`,
-      },
-      {
-        label: text.currentSession,
-        command: '/ck:plan Lập plan triển khai hướng auth đã chốt trong brainstorm, dùng report vừa tạo làm context',
-        when: 'Vẫn đang ở session brainstorm và agent vừa tạo report.',
-        expected: 'Plan dùng context hiện tại cùng path report đã được bàn giao.',
-      },
-      {
-        label: text.newSession,
-        recommended: true,
-        command: `/ck:plan ${artifactExamplePath}`,
-        when: 'Sau brainstorm dài, nên start session mới để tránh đầy context.',
-        expected: 'Phải mention file path để plan đọc đúng brainstorm artifact.',
-      },
-    ]
-  : [
-      {
-        label: 'Start brainstorm',
-        command: '/ck:brainstorm Choose the best auth approach for our current SaaS app',
-        when: 'The direction is unclear and needs repo scouting plus trade-off debate first.',
-        expected: `Writes the report at ${artifactExamplePath}.`,
-      },
-      {
-        label: text.currentSession,
-        command: '/ck:plan Create an implementation plan for the auth approach we selected in brainstorm, using the report just created as context',
-        when: 'You are still inside the brainstorm session and the agent just wrote the report.',
-        expected: 'Plan uses current context plus the report path handed off by brainstorm.',
-      },
-      {
-        label: text.newSession,
-        recommended: true,
-        command: `/ck:plan ${artifactExamplePath}`,
-        when: 'After a long brainstorm, start a fresh session to avoid context bloat.',
-        expected: 'Mention the file path so plan reads the correct brainstorm artifact.',
-      },
-    ];
+const samplePrompts = (data.promptExamples || []).map(p => ({
+  label: isVi ? p.labelVi : p.labelEn,
+  command: p.command,
+  when: isVi ? p.whenVi : p.whenEn,
+  expected: isVi ? p.expectedVi : p.expectedEn,
+  recommended: p.recommended,
+}));
+
+const renderInlineCode = (value = '') => value
+  .replace(/&/g, '&amp;')
+  .replace(/</g, '&lt;')
+  .replace(/>/g, '&gt;')
+  .replace(/`([^`]+)`/g, '<code class="rounded bg-white/80 px-1.5 py-0.5 font-mono text-[0.82em] text-amber-950 ring-1 ring-amber-200 dark:bg-amber-950/45 dark:text-amber-100 dark:ring-amber-700/60">$1</code>');
 ---
 
 <div class="space-y-8">
@@ -282,10 +260,23 @@ const samplePrompts = isVi
 
       <aside class="relative border-t border-amber-200 bg-amber-50/80 p-5 dark:border-amber-800/50 dark:bg-amber-950/25 xl:border-l xl:border-t-0">
         <div class="flex items-center gap-2">
-          <span class="h-2 w-2 rounded-full bg-amber-500"></span>
+          <span class="relative flex h-2 w-2">
+            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-60"></span>
+            <span class="relative inline-flex h-2 w-2 rounded-full bg-amber-500"></span>
+          </span>
           <p class="text-xs font-semibold uppercase tracking-wider text-amber-900 dark:text-amber-200">{text.hardGate}</p>
         </div>
-        <p class="mt-3 text-sm leading-6 text-amber-950/85 dark:text-amber-100/85">{text.hardGateBody}</p>
+        <ol class="mt-3 space-y-2">
+          {(text.hardGateItems as { label: string; detail: string }[]).map((item, index) => (
+            <li class="grid grid-cols-[1.5rem_minmax(0,1fr)] gap-2.5 rounded-lg border border-amber-200/70 bg-white/65 p-2.5 ring-1 ring-amber-100/60 dark:border-amber-800/40 dark:bg-amber-950/30 dark:ring-amber-900/30">
+              <span class="flex h-6 w-6 items-center justify-center rounded-full bg-amber-500 font-mono text-[11px] font-bold text-white shadow-sm shadow-amber-500/30 dark:bg-amber-400 dark:text-amber-950">{index + 1}</span>
+              <div class="min-w-0">
+                <p class="text-[11px] font-semibold uppercase tracking-wide text-amber-900 dark:text-amber-200">{item.label}</p>
+                <p class="mt-0.5 text-xs leading-5 text-amber-950/85 dark:text-amber-100/85" set:html={renderInlineCode(item.detail)} />
+              </div>
+            </li>
+          ))}
+        </ol>
       </aside>
     </div>
 

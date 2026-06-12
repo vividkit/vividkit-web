@@ -60,12 +60,12 @@ const commandText = data.command;
 
 const commonText = {
   hardGate: isVi ? 'Gate bắt buộc' : 'Required Gate',
-  process: isVi ? 'Execution map' : 'Execution Map',
+  process: isVi ? 'Bản đồ thực thi' : 'Execution Map',
   modes: isVi ? 'Mode nên dùng' : 'Mode Selection',
   samplePrompt: isVi ? 'Prompt mẫu' : 'Sample Prompt',
   useWhen: isVi ? 'Dùng khi' : 'Use when',
   expected: isVi ? 'Kết quả' : 'Expected',
-  recommended: isVi ? 'Recommended' : 'Recommended',
+  recommended: isVi ? 'Khuyến nghị' : 'Recommended',
   output: isVi ? 'Artifact tạo ra' : 'Artifacts Produced',
   stack: isVi ? 'Stack được gọi khi cần' : 'Stack Used When Needed',
   guardrails: isVi ? 'Shortcut bị chặn' : 'Shortcuts Blocked',
@@ -109,14 +109,22 @@ const tones: Record<string, Tone> = {
 };
 
 const cook = {
-  eyebrow: isVi ? 'Quick Ref / Implementation command' : 'Quick Ref / Implementation command',
+  eyebrow: isVi ? 'Tóm tắt nhanh / Lệnh triển khai' : 'Quick Ref / Implementation command',
   context: isVi ? 'Sau /ck:plan hoặc feature brief' : 'After /ck:plan or feature brief',
   summary: isVi
     ? 'Dùng khi đã có plan hoặc cần biến feature brief thành code. Scout trước, chốt 5 requirement, plan-gate, implement, test, review, rồi sync plan/docs/git/journal.'
     : 'Use it when a plan or feature brief must become working code. Scout first, lock 5 requirements, pass plan gates, implement, test, review, then sync plan/docs/git/journal.',
-  hardGateBody: isVi
-    ? 'Không code trước plan review. Scout trước mọi câu hỏi. AskUser phải chốt output, acceptance, scope, constraints, touchpoints. Chưa xong nếu code-review + tests chưa chứng minh không side effect.'
-    : 'No code before plan review. Scout before questions. AskUser must lock output, acceptance, scope, constraints, and touchpoints. Not done until code-review + tests prove no side effects.',
+  hardGateItems: isVi
+    ? [
+        { label: 'Plan review', detail: 'Không code trước plan review.' },
+        { label: 'Scout + requirements', detail: 'Scout trước mọi câu hỏi. AskUser phải chốt output, acceptance, scope, constraints, touchpoints.' },
+        { label: 'Bằng chứng hoàn tất', detail: 'Chưa xong nếu code-review + tests chưa chứng minh không side effect.' },
+      ]
+    : [
+        { label: 'Plan review', detail: 'No code before plan review.' },
+        { label: 'Scout + requirements', detail: 'Scout before questions. AskUser must lock output, acceptance, scope, constraints, and touchpoints.' },
+        { label: 'Proof before done', detail: 'Not done until code-review + tests prove no side effects.' },
+      ],
   processDesc: isVi
     ? 'Bốn lane: định vị intent, lập plan có bằng chứng, implement/test, rồi review + sync lại artifacts.'
     : 'Four lanes: orient intent, create an evidence-backed plan, implement/test, then review and sync artifacts.',
@@ -181,14 +189,22 @@ const cook = {
 };
 
 const fix = {
-  eyebrow: isVi ? 'Quick Ref / Fix command' : 'Quick Ref / Fix command',
+  eyebrow: isVi ? 'Tóm tắt nhanh / Lệnh sửa lỗi' : 'Quick Ref / Fix command',
   context: isVi ? 'Bug, CI đỏ, regression, production issue' : 'Bug, failing CI, regression, production issue',
   summary: isVi
     ? 'Dùng khi có lỗi cần sửa bằng bằng chứng. Chọn mode, scout trước, diagnose root cause, sửa đúng nguyên nhân, verify/prevent, review, rồi finalize.'
     : 'Use it when a failure needs an evidence-based repair. Pick mode, scout first, diagnose root cause, fix the cause, verify/prevent, review, then finalize.',
-  hardGateBody: isVi
-    ? 'Không fix trước Scout + Diagnose. Root cause phải có symptom, repro, expected/actual, file:line, why now, blast radius. Mọi fix phải chứng minh symptom hết và không regression.'
-    : 'No fix before Scout + Diagnose. Root cause must include symptom, repro, expected/actual, file:line, why now, and blast radius. Every fix must prove the symptom is gone with no regression.',
+  hardGateItems: isVi
+    ? [
+        { label: 'Scout + Diagnose', detail: 'Không fix trước Scout + Diagnose.' },
+        { label: 'Root cause packet', detail: 'Root cause phải có symptom, repro, expected/actual, file:line, why now, blast radius.' },
+        { label: 'Regression proof', detail: 'Mọi fix phải chứng minh symptom hết và không regression.' },
+      ]
+    : [
+        { label: 'Scout + Diagnose', detail: 'No fix before Scout + Diagnose.' },
+        { label: 'Root cause packet', detail: 'Root cause must include symptom, repro, expected/actual, file:line, why now, and blast radius.' },
+        { label: 'Regression proof', detail: 'Every fix must prove the symptom is gone with no regression.' },
+      ],
   processDesc: isVi
     ? 'Bốn lane: mode/scout, diagnose root cause, fix đúng điểm, rồi verify/prevent + finalize.'
     : 'Four lanes: mode/scout, root-cause diagnosis, targeted repair, then verify/prevent + finalize.',
@@ -256,7 +272,13 @@ const config = isFix ? fix : cook;
 const ruleCards = config.ruleCards as RuleCard[];
 const processGroups = config.groups as ProcessGroup[];
 const modes = config.modes as ModeCard[];
-const samplePrompts = config.prompts as SamplePrompt[];
+const samplePrompts = (data.promptExamples || []).map(p => ({
+  label: isVi ? p.labelVi : p.labelEn,
+  command: p.command,
+  when: isVi ? p.whenVi : p.whenEn,
+  expected: isVi ? p.expectedVi : p.expectedEn,
+  recommended: p.recommended,
+})) as SamplePrompt[];
 const guardrails = config.guardrails as Guardrail[];
 const modeListClass = 'mt-4 space-y-3';
 const modeCardClass = 'grid gap-4 rounded-xl border p-4 lg:grid-cols-[15rem_minmax(0,1fr)] lg:items-stretch';
@@ -314,10 +336,23 @@ const renderInlineCode = (value = '') => value
 
       <aside class="relative border-t border-amber-200 bg-amber-50/80 p-5 dark:border-amber-800/50 dark:bg-amber-950/25 xl:border-l xl:border-t-0">
         <div class="flex items-center gap-2">
-          <span class="h-2 w-2 rounded-full bg-amber-500"></span>
+          <span class="relative flex h-2 w-2">
+            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-60"></span>
+            <span class="relative inline-flex h-2 w-2 rounded-full bg-amber-500"></span>
+          </span>
           <p class="text-xs font-semibold uppercase tracking-wider text-amber-900 dark:text-amber-200">{commonText.hardGate}</p>
         </div>
-        <p class="mt-3 text-sm leading-6 text-amber-950/85 dark:text-amber-100/85" set:html={renderInlineCode(config.hardGateBody)} />
+        <ol class="mt-3 space-y-2">
+          {(config.hardGateItems as { label: string; detail: string }[]).map((item, index) => (
+            <li class="grid grid-cols-[1.5rem_minmax(0,1fr)] gap-2.5 rounded-lg border border-amber-200/70 bg-white/65 p-2.5 ring-1 ring-amber-100/60 dark:border-amber-800/40 dark:bg-amber-950/30 dark:ring-amber-900/30">
+              <span class="flex h-6 w-6 items-center justify-center rounded-full bg-amber-500 font-mono text-[11px] font-bold text-white shadow-sm shadow-amber-500/30 dark:bg-amber-400 dark:text-amber-950">{index + 1}</span>
+              <div class="min-w-0">
+                <p class="text-[11px] font-semibold uppercase tracking-wide text-amber-900 dark:text-amber-200">{item.label}</p>
+                <p class="mt-0.5 text-xs leading-5 text-amber-950/85 dark:text-amber-100/85" set:html={renderInlineCode(item.detail)} />
+              </div>
+            </li>
+          ))}
+        </ol>
       </aside>
     </div>
 

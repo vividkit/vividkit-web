@@ -28,7 +28,7 @@ const { data, lang } = Astro.props;
 const isVi = lang === 'vi';
 
 const text = {
-  eyebrow: isVi ? 'Quick Ref / Team orchestration' : 'Quick Ref / Team orchestration',
+  eyebrow: isVi ? 'Tóm tắt nhanh / Điều phối team' : 'Quick Ref / Team orchestration',
   summary: isVi
     ? 'Dùng khi cần spawn N teammate Claude Code song song với context window riêng — research từ nhiều góc, cook nhiều file, review nhiều focus, hoặc debug nhiều giả thuyết cạnh tranh.'
     : 'Use it to spawn N independent Claude Code teammates in parallel — research from multiple angles, cook many files, review multiple focuses, or debug competing hypotheses.',
@@ -46,18 +46,18 @@ const text = {
   hardGate3Desc: isVi
     ? 'Mọi teammate BẮT BUỘC chạy Opus 4.6. Không model khác.'
     : 'Every teammate MUST run Opus 4.6. No other model allowed.',
-  process: isVi ? 'Execution map' : 'Execution Map',
+  process: isVi ? 'Bản đồ thực thi' : 'Execution Map',
   processDesc: isVi
     ? 'Bốn lane: setup pre-flight, spawn song song, điều phối qua hook + DM, rồi tổng hợp và đóng.'
     : 'Four lanes: setup pre-flight, parallel spawn, event-driven coordination, then synthesize and close.',
-  templates: isVi ? 'Templates' : 'Templates',
+  templates: isVi ? 'Mẫu team' : 'Templates',
   templatesDesc: isVi
     ? 'Chọn template theo nhu cầu. Mỗi template có default N teammate, behaviour riêng và artifact riêng.'
     : 'Pick a template by need. Each one has its own default N, behaviour, and artifact.',
   samplePrompt: isVi ? 'Prompt mẫu' : 'Sample prompt',
   defaultN: isVi ? 'Mặc định N' : 'Default N',
   useWhen: isVi ? 'Dùng khi' : 'Use when',
-  output: isVi ? 'Output' : 'Output',
+  output: isVi ? 'Kết quả' : 'Output',
   output_section: isVi ? 'Artifact theo template' : 'Per-Template Artifacts',
   outputDesc: isVi
     ? 'Lead tổng hợp report sau khi mọi teammate xong. Đường dẫn cố định ở plans/reports/.'
@@ -70,7 +70,7 @@ const text = {
 };
 
 const heroFlow = isVi
-  ? ['Invoke', 'Pre-flight', 'Spawn N', 'Synth + close']
+  ? ['Gọi lệnh', 'Pre-flight', 'Spawn N', 'Tổng hợp + đóng']
   : ['Invoke', 'Pre-flight', 'Spawn N', 'Synth + close'];
 
 const tones: Record<string, Tone> = {
@@ -127,22 +127,27 @@ const processGroups: ProcessGroup[] = [
   },
 ];
 
-interface TemplateInfo {
+// Build a lookup map from template prompt examples stored in the data file.
+// Keys use the 'tpl-{flag}' labelEn convention defined in skill-infographics.ts.
+const tplPromptMap = Object.fromEntries(
+  (data.promptExamples || [])
+    .filter(p => p.labelEn.startsWith('tpl-'))
+    .map(p => [p.labelEn, p])
+);
+
+interface TemplateLayout {
   flag: string;
   titleEn: string;
   titleVi: string;
   defaultN: string;
   accent: string;
   badge: string;
-  promptEn: string;
-  promptVi: string;
-  whenEn: string;
-  whenVi: string;
   outputEn: string;
   outputVi: string;
 }
 
-const templates: TemplateInfo[] = [
+// Visual/layout fields stay in the component; prompt content comes from data.
+const templateLayouts: TemplateLayout[] = [
   {
     flag: 'research',
     titleEn: 'Research from N angles',
@@ -150,10 +155,6 @@ const templates: TemplateInfo[] = [
     defaultN: '3',
     accent: 'border-sky-200 bg-sky-50/65 ring-sky-100 dark:border-sky-800/55 dark:bg-sky-950/20 dark:ring-sky-900/35',
     badge: 'bg-sky-500 text-white dark:bg-sky-400 dark:text-sky-950',
-    promptEn: '/ck:team research Compare auth strategies for our SaaS app',
-    promptVi: '/ck:team research So sánh các hướng auth cho SaaS app',
-    whenEn: 'Architecture decisions, technology evaluation, multi-angle investigation.',
-    whenVi: 'Quyết định kiến trúc, đánh giá công nghệ, khảo sát đa góc.',
     outputEn: 'research-summary-<slug>.md — exec summary, comparative analysis, recommendations.',
     outputVi: 'research-summary-<slug>.md — exec summary, comparative analysis, recommendations.',
   },
@@ -164,10 +165,6 @@ const templates: TemplateInfo[] = [
     defaultN: '4 devs + 1 tester',
     accent: 'border-amber-200 bg-amber-50/65 ring-amber-100 dark:border-amber-800/55 dark:bg-amber-950/20 dark:ring-amber-900/35',
     badge: 'bg-amber-500 text-white dark:bg-amber-400 dark:text-amber-950',
-    promptEn: '/ck:team cook plans/.../plan.md --devs 4 --worktree',
-    promptVi: '/ck:team cook plans/.../plan.md --devs 4 --worktree',
-    whenEn: 'Multi-file feature implementation with parallel devs in isolated worktrees.',
-    whenVi: 'Triển khai feature nhiều file với dev song song trong worktree riêng.',
     outputEn: 'Merged branches via git merge --no-ff + MANDATORY docs sync eval + test results.',
     outputVi: 'Branch merge qua git merge --no-ff + BẮT BUỘC eval docs sync + kết quả test.',
   },
@@ -178,10 +175,6 @@ const templates: TemplateInfo[] = [
     defaultN: '3',
     accent: 'border-violet-200 bg-violet-50/65 ring-violet-100 dark:border-violet-800/55 dark:bg-violet-950/20 dark:ring-violet-900/35',
     badge: 'bg-violet-500 text-white dark:bg-violet-400 dark:text-violet-950',
-    promptEn: '/ck:team review src/api --reviewers 3',
-    promptVi: '/ck:team review src/api --reviewers 3',
-    whenEn: 'Pre-merge review with security, performance, and test-coverage lanes in parallel.',
-    whenVi: 'Review trước merge với lane song song: security, performance, test coverage.',
     outputEn: 'review-<slug>.md — severity-dedupe (CRITICAL / IMPORTANT / MODERATE) + action items.',
     outputVi: 'review-<slug>.md — dedupe theo severity (CRITICAL / IMPORTANT / MODERATE) + action items.',
   },
@@ -192,10 +185,6 @@ const templates: TemplateInfo[] = [
     defaultN: '3',
     accent: 'border-rose-200 bg-rose-50/65 ring-rose-100 dark:border-rose-800/55 dark:bg-rose-950/20 dark:ring-rose-900/35',
     badge: 'bg-rose-500 text-white dark:bg-rose-400 dark:text-rose-950',
-    promptEn: '/ck:team debug "Webhook returns 500 intermittently" --debuggers 3',
-    promptVi: '/ck:team debug "Webhook trả 500 không liên tục" --debuggers 3',
-    whenEn: 'Hard-to-reproduce bugs where you want adversarial disproof to converge on root cause.',
-    whenVi: 'Bug khó reproduce, muốn dùng disproof đối kháng để hội tụ về root cause.',
     outputEn: 'debug-<slug>.md — root cause + evidence chain + disproven hypotheses.',
     outputVi: 'debug-<slug>.md — root cause + evidence chain + giả thuyết đã disproven.',
   },
@@ -309,32 +298,37 @@ const outputPattern = isVi ? data.reportOutput?.patternVi : data.reportOutput?.p
     <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.templates}</h3>
     <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300">{text.templatesDesc}</p>
     <div class="mt-4 grid gap-3 lg:grid-cols-2">
-      {templates.map(tpl => (
-        <article class={`rounded-xl border p-4 ring-1 ${tpl.accent}`}>
-          <div class="flex flex-wrap items-center gap-2">
-            <code class={`inline-flex rounded-lg px-2.5 py-1 font-mono text-sm font-semibold shadow-sm ${tpl.badge}`}>{tpl.flag}</code>
-            <span class="rounded-full bg-white/80 px-2.5 py-1 text-[11px] font-semibold text-slate-700 ring-1 ring-slate-200 dark:bg-slate-950/60 dark:text-slate-300 dark:ring-white/10">{text.defaultN}: {tpl.defaultN}</span>
-          </div>
-          <p class="mt-3 text-sm font-semibold leading-5 text-slate-950 dark:text-white">{isVi ? tpl.titleVi : tpl.titleEn}</p>
+      {templateLayouts.map(tpl => {
+        const pd = tplPromptMap[`tpl-${tpl.flag}`];
+        const prompt = pd ? pd.command : '';
+        const when = pd ? (isVi ? pd.whenVi : pd.whenEn) : '';
+        return (
+          <article class={`rounded-xl border p-4 ring-1 ${tpl.accent}`}>
+            <div class="flex flex-wrap items-center gap-2">
+              <code class={`inline-flex rounded-lg px-2.5 py-1 font-mono text-sm font-semibold shadow-sm ${tpl.badge}`}>{tpl.flag}</code>
+              <span class="rounded-full bg-white/80 px-2.5 py-1 text-[11px] font-semibold text-slate-700 ring-1 ring-slate-200 dark:bg-slate-950/60 dark:text-slate-300 dark:ring-white/10">{text.defaultN}: {tpl.defaultN}</span>
+            </div>
+            <p class="mt-3 text-sm font-semibold leading-5 text-slate-950 dark:text-white">{isVi ? tpl.titleVi : tpl.titleEn}</p>
 
-          <div class="mt-3 space-y-2.5">
-            <div>
-              <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{text.samplePrompt}</p>
-              <code class="mt-1 block whitespace-pre-wrap break-words rounded-lg bg-slate-100 px-3 py-2 font-mono text-xs leading-5 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-slate-200 dark:ring-white/10">{isVi ? tpl.promptVi : tpl.promptEn}</code>
-            </div>
-            <div class="grid gap-2 sm:grid-cols-2">
-              <div class="min-w-0 rounded-lg bg-white/70 px-3 py-2 ring-1 ring-slate-200/80 dark:bg-slate-950/35 dark:ring-white/10">
-                <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{text.useWhen}</p>
-                <p class="mt-1 text-xs leading-5 text-slate-650 dark:text-slate-300">{isVi ? tpl.whenVi : tpl.whenEn}</p>
+            <div class="mt-3 space-y-2.5">
+              <div>
+                <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{text.samplePrompt}</p>
+                <code class="mt-1 block whitespace-pre-wrap break-words rounded-lg bg-slate-100 px-3 py-2 font-mono text-xs leading-5 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-slate-200 dark:ring-white/10">{prompt}</code>
               </div>
-              <div class="min-w-0 rounded-lg bg-white/70 px-3 py-2 ring-1 ring-slate-200/80 dark:bg-slate-950/35 dark:ring-white/10">
-                <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{text.output}</p>
-                <p class="mt-1 text-xs leading-5 text-slate-650 dark:text-slate-300">{isVi ? tpl.outputVi : tpl.outputEn}</p>
+              <div class="grid gap-2 sm:grid-cols-2">
+                <div class="min-w-0 rounded-lg bg-white/70 px-3 py-2 ring-1 ring-slate-200/80 dark:bg-slate-950/35 dark:ring-white/10">
+                  <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{text.useWhen}</p>
+                  <p class="mt-1 text-xs leading-5 text-slate-650 dark:text-slate-300">{when}</p>
+                </div>
+                <div class="min-w-0 rounded-lg bg-white/70 px-3 py-2 ring-1 ring-slate-200/80 dark:bg-slate-950/35 dark:ring-white/10">
+                  <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{text.output}</p>
+                  <p class="mt-1 text-xs leading-5 text-slate-650 dark:text-slate-300">{isVi ? tpl.outputVi : tpl.outputEn}</p>
+                </div>
               </div>
             </div>
-          </div>
-        </article>
-      ))}
+          </article>
+        );
+      })}
     </div>
   </section>
 
