@@ -837,6 +837,8 @@ export const commands = {
   'commands.stable.tech_graph.detail': '7 phong cách thiết kế (modern, minimal, neon, retro,...) và 10 template (architecture, sequence, ER, flow). Output SVG sẵn sàng cho docs, slides, blog post.',
   'commands.beta_tech_graph.desc': 'Bổ sung Style 8 "Dark Luxury" — dark theme editorial cao cấp',
   'commands.beta_tech_graph.detail': 'Style mới do AI tạo với canvas đen sâu (<code>#0a0a0a</code>) và accent vàng champagne — title dùng Georgia serif, body sans-serif. Vendored từ theme <code>dark-gold</code> của <code>understand-anything</code>.<br/>Hand-craft SVG trực tiếp (bỏ qua <code>generate-from-template.py</code>) khi user yêu cầu look dark editorial cao cấp.',
+  'commands.beta_show_off.desc': 'Lưu trữ workflow preferences cho screenshots, publishing và ngôn ngữ',
+  'commands.beta_show_off.detail': 'Helper <code>preferences.js</code> mới lưu opt-out của user (<code>--no-screenshots</code>, <code>--no-publish</code>, <code>--languages en</code>) tại <code>~/.claude/show-off/preferences.json</code>.<br/>Preferences tồn tại qua các session — không cần lặp lại "skip screenshots" mỗi lần chạy. Hỗ trợ override một lần ("for this run only") và <code>reset</code>.',
   'commands.beta_cti_expert.desc': 'Sub-command mới /github-osint cho GitHub recon',
   'commands.beta_cti_expert.detail': 'Sub-command mới <code>/github-osint &lt;target&gt;</code> phủ profile, org, repo, code, commit metadata và collaboration recon trên GitHub.<br/>Target có thể là <code>github.com/org</code>, <code>github.com/org/repo</code>, hoặc username — bổ sung cho flow <code>/secrets</code> và <code>/sweep</code> sẵn có.',
   'commands.beta_scenario.desc': 'Iterative saturation mode để generate edge-case',
