@@ -68,7 +68,7 @@ const marketingCategories = getMarketingKitCategories(t as any);
     </div>
   </div>
 
-  <!-- Engineer Kit (v2.19.1 stable / v2.19.2-beta.11 beta) categories panel -->
+  <!-- Engineer Kit (v2.19.1 stable / v2.19.2-beta.16 beta) categories panel -->
   <div id="categories-engineer" class="space-y-6">
     <!-- Stable version badge -->
     <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
@@ -76,7 +76,7 @@ const marketingCategories = getMarketingKitCategories(t as any);
         >v2.19.1 Stable</span
       >
       <span class="px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 font-semibold"
-        >v2.19.2-beta.11 Beta</span
+        >v2.19.2-beta.16 Beta</span
       >
       <span class="text-slate-400 dark:text-slate-500 italic">{t("commands.engineer_stable_note")}</span>
     </div>
@@ -106,6 +106,7 @@ const marketingCategories = getMarketingKitCategories(t as any);
           { cmd: "/ck:cti-expert", labelKey: "commands.beta_cti_expert.desc", detailKey: "commands.beta_cti_expert.detail", type: "skill", badge: "enhanced", subcommands: ["/github-osint"] },
           { cmd: "/ck:tech-graph", labelKey: "commands.beta_tech_graph.desc", detailKey: "commands.beta_tech_graph.detail", type: "skill", badge: "enhanced" },
           { cmd: "/ck:chrome-profile", labelKey: "commands.beta_chrome_profile.desc", detailKey: "commands.beta_chrome_profile.detail", type: "skill", badge: "enhanced", subcommands: ["open --json"], flags: ["--no-activate"] },
+          { cmd: "/ck:show-off", labelKey: "commands.beta_show_off.desc", detailKey: "commands.beta_show_off.detail", type: "skill", badge: "enhanced" },
         ].map((item) => (
           <div class="p-3 rounded-lg border transition-all duration-200 hover:shadow-sm h-full flex flex-col bg-white/60 dark:bg-slate-900/50 border-purple-500/30">
             <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
@@ -180,6 +181,9 @@ const marketingCategories = getMarketingKitCategories(t as any);
                   {cmd.deprecated && (
                     <span class="text-[9px] px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700/40 text-slate-500 dark:text-slate-400 font-medium uppercase">deprecated</span>
                   )}
+                  {cmd.isRouter && (
+                    <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium uppercase" title="Routes to specialized skills — invoke to learn which one fits your task">router</span>
+                  )}
                 </div>
                 <span class="text-[10px] opacity-70">{cmd.complexity}</span>
               </div>
@@ -253,7 +257,7 @@ const marketingCategories = getMarketingKitCategories(t as any);
         >v1.4.0 Stable</span
       >
       <span class="px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 font-semibold"
-        >v1.4.0-beta.3 Beta</span
+        >v1.4.0-beta.4 Beta</span
       >
       <span>{t("commands.marketing_stable_note")}</span>
     </div>
@@ -324,6 +328,9 @@ const marketingCategories = getMarketingKitCategories(t as any);
                   )}
                   {cmd.deprecated && (
                     <span class="text-[9px] px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700/40 text-slate-500 dark:text-slate-400 font-medium uppercase">deprecated</span>
+                  )}
+                  {cmd.isRouter && (
+                    <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium uppercase" title="Routes to specialized skills — invoke to learn which one fits your task">router</span>
                   )}
                 </div>
                 <span class="text-[10px] opacity-70">{cmd.complexity}</span>

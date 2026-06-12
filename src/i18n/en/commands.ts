@@ -837,6 +837,8 @@ export const commands = {
   'commands.stable.tech_graph.detail': '7 design styles (modern, minimal, neon, retro, etc.) and 10 templates (architecture, sequence, ER, flow). SVG output ready for docs, slides, blog posts.',
   'commands.beta_tech_graph.desc': 'Adds Style 8 "Dark Luxury" — premium editorial dark theme',
   'commands.beta_tech_graph.detail': 'New AI-authored style with deep black canvas (<code>#0a0a0a</code>) and champagne-gold accents — Georgia serif titles, sans-serif body. Vendored from <code>understand-anything</code> dark-gold theme.<br/>Hand-craft the SVG directly (skip <code>generate-from-template.py</code>) when user asks for premium dark editorial look.',
+  'commands.beta_show_off.desc': 'Persisted workflow preferences for screenshots, publishing, and languages',
+  'commands.beta_show_off.detail': 'New <code>preferences.js</code> helper stores user-level opt-outs (<code>--no-screenshots</code>, <code>--no-publish</code>, <code>--languages en</code>) at <code>~/.claude/show-off/preferences.json</code>.<br/>Preferences persist across sessions — no need to repeat "skip screenshots" every run. Supports one-time overrides ("for this run only") and <code>reset</code>.',
   'commands.beta_cti_expert.desc': 'New /github-osint sub-command for GitHub recon',
   'commands.beta_cti_expert.detail': 'New <code>/github-osint &lt;target&gt;</code> sub-command covers GitHub profile, org, repo, code, commit metadata, and collaboration recon.<br/>Targets <code>github.com/org</code>, <code>github.com/org/repo</code>, or a username — complements existing <code>/secrets</code> and <code>/sweep</code> flows.',
   'commands.beta_scenario.desc': 'Iterative saturation mode for edge-case generation',
