@@ -45,7 +45,7 @@ export const workflowCombos: WorkflowCombo[] = [
     titleVi: 'Ship lên Production',
     descEn: 'Pre-flight security audit → ship pipeline → deploy',
     descVi: 'Kiểm tra bảo mật → ship pipeline → deploy',
-    scenarios: ['security', 'ship', 'deploy'],
+    scenarios: ['security-scan', 'ship', 'deploy'],
     category: 'sequential',
     icon: '<path d="M5 12h14M12 5l7 7-7 7"/>',
     accentColor: 'green',

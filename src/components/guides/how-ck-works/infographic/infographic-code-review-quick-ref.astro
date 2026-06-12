@@ -64,7 +64,7 @@ const commonText = {
   samplePrompt: isVi ? 'Prompt mẫu' : 'Sample Prompt',
   useWhen: isVi ? 'Dùng khi' : 'Use when',
   expected: isVi ? 'Kết quả' : 'Expected',
-  recommended: isVi ? 'Recommended' : 'Recommended',
+  recommended: isVi ? 'Khuyến nghị' : 'Recommended',
   output: isVi ? 'Artifact tạo ra' : 'Artifacts Produced',
   stack: isVi ? 'Stack được gọi khi cần' : 'Stack Used When Needed',
   guardrails: isVi ? 'Shortcut bị chặn' : 'Shortcuts Blocked',
@@ -102,7 +102,7 @@ const tones: Record<string, Tone> = {
 };
 
 const config = {
-  eyebrow: isVi ? 'Quick Ref / Review command' : 'Quick Ref / Review command',
+  eyebrow: isVi ? 'Tóm tắt nhanh / Lệnh review' : 'Quick Ref / Review command',
   context: isVi ? 'Sau /ck:cook hoặc /ck:fix, trước /ck:ship' : 'After /ck:cook or /ck:fix, before /ck:ship',
   summary: isVi
     ? 'Dùng khi cần review code với rigor đối kháng. Resolve input mode, qua spec compliance gate, scout edge case, code-reviewer sub-agent, rồi adversarial red-team chủ động phá code trước khi verify + report.'
@@ -188,7 +188,13 @@ const config = {
 const ruleCards = config.ruleCards as RuleCard[];
 const processGroups = config.groups;
 const modes = config.modes as ModeCard[];
-const samplePrompts = config.prompts as SamplePrompt[];
+const samplePrompts = (data.promptExamples || []).map(p => ({
+  label: isVi ? p.labelVi : p.labelEn,
+  command: p.command,
+  when: isVi ? p.whenVi : p.whenEn,
+  expected: isVi ? p.expectedVi : p.expectedEn,
+  recommended: p.recommended,
+})) as SamplePrompt[];
 const guardrails = config.guardrails as Guardrail[];
 const modeListClass = 'mt-4 space-y-3';
 const modeCardClass = 'grid gap-4 rounded-xl border p-4 lg:grid-cols-[15rem_minmax(0,1fr)] lg:items-stretch';

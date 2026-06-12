@@ -32,8 +32,8 @@ export interface KitConfig {
 }
 
 export const kitConfigs: KitConfig[] = [
-  { id: 'engineer', labelEn: 'Engineer Kit', labelVi: 'Engineer Kit' },
-  { id: 'marketer', labelEn: 'Marketing Kit', labelVi: 'Marketing Kit' },
+  { id: 'engineer', labelEn: 'Engineer Kit', labelVi: 'Bộ Engineer' },
+  { id: 'marketer', labelEn: 'Marketing Kit', labelVi: 'Bộ Marketing' },
 ];
 
 export interface WorkflowScenario {
@@ -135,6 +135,18 @@ export interface WorkflowModeRow {
   cookFlag?: string;
 }
 
+/** Concrete command prompt example for a mode, flag, or subcommand */
+export interface PromptExample {
+  labelEn: string;
+  labelVi: string;
+  command: string;
+  whenEn: string;
+  whenVi: string;
+  expectedEn: string;
+  expectedVi: string;
+  recommended?: boolean;
+}
+
 /** Badge type for skill stack */
 export type SkillStackType = 'agent' | 'skill' | 'tool';
 
@@ -152,6 +164,40 @@ export interface SpecialOpCard {
   descEn: string;
   descVi: string;
   color: string;
+}
+
+/** Anti-rationalization guardrail (thought vs reality) */
+export interface GuardrailItem {
+  thoughtEn: string;
+  thoughtVi: string;
+  realityEn: string;
+  realityVi: string;
+  accent: string;
+}
+
+/** Enriched mode card with inline prompt example */
+export interface ModeCardData {
+  flag: string;
+  titleEn: string;
+  titleVi: string;
+  descEn: string;
+  descVi: string;
+  promptEn: string;
+  promptVi: string;
+  whenEn: string;
+  whenVi: string;
+  expectedEn: string;
+  expectedVi: string;
+  accent: string;
+}
+
+/** Custom process group label (overrides auto-generated labels) */
+export interface ProcessGroupLabel {
+  labelEn: string;
+  labelVi: string;
+  kickerEn: string;
+  kickerVi: string;
+  stepSlice: [number, number];
 }
 
 /** Hard gate warning type */
@@ -188,12 +234,17 @@ export interface SkillInfographic {
   expertiseAreasVi?: string[];
 
   workflowModes?: WorkflowModeRow[];
+  promptExamples?: PromptExample[];
   composableFlagsEn?: string;
   composableFlagsVi?: string;
 
   skillStack?: SkillStackBadge[];
 
   specialOperations?: SpecialOpCard[];
+
+  guardrails?: GuardrailItem[];
+  modeCards?: ModeCardData[];
+  processGroupLabels?: ProcessGroupLabel[];
 
   reportOutput?: {
     titleEn: string;

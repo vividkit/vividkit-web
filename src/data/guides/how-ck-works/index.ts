@@ -11,10 +11,14 @@ export type { WorkflowCombo } from './workflow-visualizer-types';
 export { skillInfographics, getInfographicById, hasInfographic, getPhaseCount } from './skill-infographics';
 export type {
   SkillInfographic,
+  PromptExample,
   ProcessFlowStep,
   WorkflowModeRow,
   SkillStackBadge,
   SkillStackType,
   SpecialOpCard,
   HardGateType,
+  GuardrailItem,
+  ModeCardData,
+  ProcessGroupLabel,
 } from './workflow-visualizer-types';

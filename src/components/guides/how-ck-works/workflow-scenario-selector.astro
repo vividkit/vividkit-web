@@ -1,9 +1,10 @@
 ---
-// Scenario picker with Engineer Kit / Marketing Kit tab toggle
-// Compact pill tags for scenarios, filtered by active kit tab
+// Scenario picker with Engineer Kit / Marketing Kit tab toggle.
+// The grouped catalog is collapsed by default and scrolls inside a bounded panel,
+// so the main workflow content (Quick Ref + Pipeline) stays close to the fold.
 // Uses Alpine.js x-data from parent HowCkWorksGuide component
 import { getLangFromUrl, type Language } from '@/i18n';
-import { workflowScenarios, kitConfigs, hasInfographic, getPhaseCount } from '@/data/guides/how-ck-works';
+import { workflowScenarios, hasInfographic, getPhaseCount } from '@/data/guides/how-ck-works';
 
 // Pre-compute phase counts for scenarios with infographics (for badge display)
 const phaseCounts: Record<string, number> = {};
@@ -20,189 +21,484 @@ const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const isVi = currentLang === 'vi';
 
-// Static color map for all scenario accent colors (avoids Tailwind purge issues)
-const accentMap: Record<string, { border: string; ring: string; bg: string; text: string }> = {
-  red: { border: 'border-red-500/50', ring: 'ring-red-500/30', bg: 'bg-red-500/10', text: 'text-red-500' },
-  purple: { border: 'border-purple-500/50', ring: 'ring-purple-500/30', bg: 'bg-purple-500/10', text: 'text-purple-500' },
-  emerald: { border: 'border-emerald-500/50', ring: 'ring-emerald-500/30', bg: 'bg-emerald-500/10', text: 'text-emerald-500' },
-  blue: { border: 'border-blue-500/50', ring: 'ring-blue-500/30', bg: 'bg-blue-500/10', text: 'text-blue-500' },
-  amber: { border: 'border-amber-500/50', ring: 'ring-amber-500/30', bg: 'bg-amber-500/10', text: 'text-amber-500' },
-  rose: { border: 'border-rose-500/50', ring: 'ring-rose-500/30', bg: 'bg-rose-500/10', text: 'text-rose-500' },
-  violet: { border: 'border-violet-500/50', ring: 'ring-violet-500/30', bg: 'bg-violet-500/10', text: 'text-violet-500' },
-  cyan: { border: 'border-cyan-500/50', ring: 'ring-cyan-500/30', bg: 'bg-cyan-500/10', text: 'text-cyan-500' },
-  orange: { border: 'border-orange-500/50', ring: 'ring-orange-500/30', bg: 'bg-orange-500/10', text: 'text-orange-500' },
-  lime: { border: 'border-lime-500/50', ring: 'ring-lime-500/30', bg: 'bg-lime-500/10', text: 'text-lime-500' },
-  pink: { border: 'border-pink-500/50', ring: 'ring-pink-500/30', bg: 'bg-pink-500/10', text: 'text-pink-500' },
-  teal: { border: 'border-teal-500/50', ring: 'ring-teal-500/30', bg: 'bg-teal-500/10', text: 'text-teal-500' },
-  fuchsia: { border: 'border-fuchsia-500/50', ring: 'ring-fuchsia-500/30', bg: 'bg-fuchsia-500/10', text: 'text-fuchsia-500' },
-  indigo: { border: 'border-indigo-500/50', ring: 'ring-indigo-500/30', bg: 'bg-indigo-500/10', text: 'text-indigo-500' },
-  yellow: { border: 'border-yellow-500/50', ring: 'ring-yellow-500/30', bg: 'bg-yellow-500/10', text: 'text-yellow-500' },
-  slate: { border: 'border-slate-500/50', ring: 'ring-slate-500/30', bg: 'bg-slate-500/10', text: 'text-slate-500' },
-  sky: { border: 'border-sky-500/50', ring: 'ring-sky-500/30', bg: 'bg-sky-500/10', text: 'text-sky-500' },
-  stone: { border: 'border-stone-500/50', ring: 'ring-stone-500/30', bg: 'bg-stone-500/10', text: 'text-stone-500' },
-  zinc: { border: 'border-zinc-500/50', ring: 'ring-zinc-500/30', bg: 'bg-zinc-500/10', text: 'text-zinc-500' },
-};
-
-// Pre-compute scenario counts per kit
-// MVP: Curated engineer skills (core workflow + orchestration)
-const visibleEngineerSkills = ['brainstorm', 'plan', 'cook', 'code-review', 'fix', 'team', 'preview'];
+// Curated command surface for How ClaudeKit Works.
+// ck-init remains hidden: it is a CLI lifecycle command, not a /ck:* skill scenario.
+const visibleEngineerSkills = [
+  'brainstorm',
+  'predict',
+  'plan',
+  'cook',
+  'frontend-design',
+  'code-review',
+  'test',
+  'fix',
+  'security-scan',
+  'ship',
+  'deploy',
+  'bootstrap',
+  'autoresearch',
+  'backend-development',
+  'better-auth',
+  'context-engineering',
+  'docs-seeker',
+  'ai-artist',
+  'agentize',
+  'cti-expert',
+  'retro',
+  'graphify',
+  'git',
+  'debug',
+  'agent-browser',
+  'ai-multimodal',
+  'ask',
+  'security',
+  'repomix',
+  'llms',
+  'scenario',
+  'docs',
+  'xia',
+  'team',
+  'preview',
+  'chrome-devtools',
+  'coding-level',
+  'copywriting',
+  'databases',
+  'devops',
+  'find-skills',
+  'frontend-development',
+  'gkg',
+  'google-adk-python',
+  'journal',
+  'loop',
+  'markdown-novel-viewer',
+  'mcp-builder',
+  'media-processing',
+  'mermaidjs-v11',
+  'mintlify',
+  'mobile-development',
+  'payment-integration',
+  'problem-solving',
+  'project-management',
+  'react-best-practices',
+  'remotion',
+  'research',
+  'scout',
+  'sequential-thinking',
+  'shader',
+  'shopify',
+  'show-off',
+  'skill-creator',
+  'stitch',
+  'tanstack',
+  'tech-graph',
+  'template-skill',
+  'threejs',
+  'ui-styling',
+  'ui-ux-pro-max',
+  'watzup',
+  'web-design-guidelines',
+  'web-frameworks',
+  'web-testing',
+  'worktree',
+  'excalidraw',
+  'plans-kanban',
+  'project-organization',
+];
+const visibleMarketerSkills = [
+  'persona',
+  'campaign',
+  'write',
+  'design',
+  'seo',
+  'social',
+  'email',
+  'video',
+  'ckm-ask',
+  'ckm-docs',
+  'ckm-journal',
+  'ckm-plan',
+  'ckm-preview',
+  'ckm-test',
+  'ckm-watzup',
+  'ckm-worktree',
+  'ab-test-setup',
+  'ads-management',
+  'affiliate-marketing',
+  'analytics',
+  'analyze',
+  'assets-organizing',
+  'banner-design',
+  'brand',
+  'cip-design',
+  'claude-code',
+  'competitor',
+  'content-hub',
+  'content-marketing',
+  'creativity',
+  'dashboard',
+  'debugging',
+  'design-system',
+  'elevenlabs',
+  'form-cro',
+  'free-tool-strategy',
+  'funnel',
+  'gamification-marketing',
+  'hub',
+  'init',
+  'kit-builder',
+  'launch-strategy',
+  'logo-design',
+  'marketing-dashboard',
+  'marketing-ideas',
+  'marketing-planning',
+  'marketing-psychology',
+  'marketing-research',
+  'onboarding-cro',
+  'paid-ads',
+  'play',
+  'pricing-strategy',
+  'referral-program-building',
+  'slides',
+  'storage',
+  'youtube',
+  'youtube-thumbnail-design',
+  'kanban',
+  'skill',
+  'use-mcp',
+];
 const engineerCount = visibleEngineerSkills.length;
-const marketerCount = 0; // Temporarily hidden — Marketing Kit guide coming soon
+const marketerCount = visibleMarketerSkills.length;
+
+const skillPickerSections = {
+  engineer: [
+    {
+      id: 'core-delivery',
+      labelEn: 'Core Delivery',
+      labelVi: 'Bàn giao chính',
+      descEn: 'Plan, build, review, test, ship.',
+      descVi: 'Plan, build, review, test, ship.',
+      ids: ['brainstorm', 'predict', 'plan', 'cook', 'code-review', 'test', 'fix', 'team', 'preview', 'ship', 'deploy', 'bootstrap'],
+    },
+    {
+      id: 'research-reasoning',
+      labelEn: 'Research & Reasoning',
+      labelVi: 'Nghiên cứu & suy luận',
+      descEn: 'Clarify, compare, scout, and turn ambiguity into direction.',
+      descVi: 'Làm rõ, so sánh, scout, và biến mơ hồ thành hướng đi.',
+      ids: ['ask', 'research', 'autoresearch', 'loop', 'scenario', 'scout', 'docs-seeker', 'sequential-thinking', 'problem-solving'],
+    },
+    {
+      id: 'frontend-product',
+      labelEn: 'Frontend & Product UI',
+      labelVi: 'Frontend & UI sản phẩm',
+      descEn: 'Design, frontend implementation, web testing, and visual systems.',
+      descVi: 'Design, triển khai frontend, web testing, và hệ thống visual.',
+      ids: ['frontend-design', 'frontend-development', 'react-best-practices', 'ui-styling', 'ui-ux-pro-max', 'web-design-guidelines', 'web-frameworks', 'web-testing', 'threejs', 'shader', 'remotion', 'show-off', 'stitch'],
+    },
+    {
+      id: 'backend-platform',
+      labelEn: 'Backend & Platform',
+      labelVi: 'Backend & nền tảng',
+      descEn: 'APIs, auth, databases, DevOps, mobile, payments, and MCP.',
+      descVi: 'API, auth, database, DevOps, mobile, payment, và MCP.',
+      ids: ['backend-development', 'better-auth', 'databases', 'devops', 'mobile-development', 'payment-integration', 'shopify', 'tanstack', 'google-adk-python', 'mcp-builder', 'agentize'],
+    },
+    {
+      id: 'ops-security-docs',
+      labelEn: 'Ops, Security & Docs',
+      labelVi: 'Ops, security & docs',
+      descEn: 'Git, debugging, security, documentation, context packs, and project control.',
+      descVi: 'Git, debug, security, tài liệu, context pack, và điều phối project.',
+      ids: ['git', 'debug', 'security', 'security-scan', 'cti-expert', 'retro', 'docs', 'journal', 'llms', 'repomix', 'graphify', 'gkg', 'context-engineering', 'project-management', 'project-organization', 'plans-kanban', 'watzup', 'worktree', 'xia'],
+    },
+    {
+      id: 'media-specialists',
+      labelEn: 'Media & Specialists',
+      labelVi: 'Media & tiện ích',
+      descEn: 'Images, browsers, diagrams, media processing, and niche utilities.',
+      descVi: 'Ảnh, browser, diagram, xử lý media, và các tiện ích.',
+      ids: ['ai-artist', 'ai-multimodal', 'agent-browser', 'chrome-devtools', 'coding-level', 'copywriting', 'find-skills', 'markdown-novel-viewer', 'media-processing', 'mermaidjs-v11', 'mintlify', 'skill-creator', 'tech-graph', 'template-skill', 'excalidraw'],
+    },
+  ],
+  marketer: [
+    {
+      id: 'gtm-core',
+      labelEn: 'GTM Core',
+      labelVi: 'GTM chính',
+      descEn: 'Persona, campaigns, writing, design, SEO, social, email, and video.',
+      descVi: 'Persona, campaign, writing, design, SEO, social, email, và video.',
+      ids: ['persona', 'campaign', 'write', 'design', 'seo', 'social', 'email', 'video'],
+    },
+    {
+      id: 'strategy-research',
+      labelEn: 'Strategy & Research',
+      labelVi: 'Chiến lược & nghiên cứu',
+      descEn: 'Market research, competitors, analytics, pricing, funnels, and launches.',
+      descVi: 'Research thị trường, competitor, analytics, pricing, funnel, và launch.',
+      ids: ['marketing-research', 'competitor', 'analytics', 'analyze', 'marketing-ideas', 'marketing-planning', 'marketing-psychology', 'pricing-strategy', 'launch-strategy', 'funnel', 'free-tool-strategy', 'ab-test-setup'],
+    },
+    {
+      id: 'content-brand',
+      labelEn: 'Content & Brand Assets',
+      labelVi: 'Nội dung & brand asset',
+      descEn: 'Content hubs, YouTube, slides, banners, logos, and brand systems.',
+      descVi: 'Content hub, YouTube, slides, banner, logo, và brand system.',
+      ids: ['content-hub', 'content-marketing', 'creativity', 'youtube', 'youtube-thumbnail-design', 'slides', 'banner-design', 'logo-design', 'brand', 'cip-design', 'design-system', 'assets-organizing'],
+    },
+    {
+      id: 'growth-ops',
+      labelEn: 'Growth Ops',
+      labelVi: 'Growth ops',
+      descEn: 'Ads, referrals, CRO, gamification, dashboards, storage, and launch ops.',
+      descVi: 'Ads, referral, CRO, gamification, dashboard, storage, và launch ops.',
+      ids: ['paid-ads', 'ads-management', 'affiliate-marketing', 'referral-program-building', 'onboarding-cro', 'form-cro', 'gamification-marketing', 'dashboard', 'marketing-dashboard', 'hub', 'kit-builder', 'init', 'storage', 'elevenlabs', 'claude-code', 'debugging', 'play'],
+    },
+    {
+      id: 'shared-utilities',
+      labelEn: 'Shared Utilities',
+      labelVi: 'Tiện ích dùng chung',
+      descEn: 'Marketing-facing wrappers for shared ClaudeKit command families.',
+      descVi: 'Các wrapper marketing cho nhóm lệnh ClaudeKit dùng chung.',
+      ids: ['ckm-ask', 'ckm-docs', 'ckm-journal', 'ckm-plan', 'ckm-preview', 'ckm-test', 'ckm-watzup', 'ckm-worktree', 'kanban', 'skill', 'use-mcp'],
+    },
+  ],
+};
 ---
 
 <style>
   [x-cloak] { display: none !important; }
 </style>
 
-{/* Embed phase counts for Alpine.js access */}
-<script define:vars={{ phaseCounts }} is:inline>
+{/* Embed picker metadata for Alpine.js access */}
+<script define:vars={{ phaseCounts, skillPickerSections }} is:inline>
   window.__ckPhaseCounts = phaseCounts;
+  window.__ckSkillPickerSections = skillPickerSections;
 </script>
 
 <div class="space-y-4" x-cloak>
-  {/* Kit Tab Toggle — matching workflows page design */}
-  <div class="flex items-center gap-2 p-1 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 w-fit">
-    <button
-      x-on:click="switchKit('engineer')"
-      x-bind:class="activeKit === 'engineer' ? 'bg-teal-500 text-white shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'"
-      class="px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200"
-      type="button"
-    >
-      <span class="flex items-center gap-1.5">
-        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="16 18 22 12 16 6"></polyline>
-          <polyline points="8 6 2 12 8 18"></polyline>
-        </svg>
-        Engineer Kit
-        <span
-          x-bind:class="activeKit === 'engineer' ? 'bg-white/20 text-white' : 'bg-slate-200 dark:bg-slate-600 text-slate-500 dark:text-slate-300'"
-          class="text-[10px] font-medium px-1.5 py-0.5 rounded-full transition-colors"
-        >{engineerCount}</span>
-      </span>
-    </button>
-    <button
-      x-on:click="switchKit('marketer')"
-      x-bind:class="activeKit === 'marketer' ? 'bg-purple-500 text-white shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'"
-      class="px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200"
-      type="button"
-    >
-      <span class="flex items-center gap-1.5">
-        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
-        </svg>
-        Marketing Kit
-        <span
-          x-bind:class="activeKit === 'marketer' ? 'bg-white/20 text-white' : 'bg-slate-200 dark:bg-slate-600 text-slate-500 dark:text-slate-300'"
-          class="text-[10px] font-medium px-1.5 py-0.5 rounded-full transition-colors"
-        >{marketerCount}</span>
-      </span>
-    </button>
-  </div>
-
-  {/* Scenario pills — filtered by active kit via Alpine */}
-  {/* Engineer Kit: Only show visible skills (MVP validation) */}
-  <div x-show="activeKit === 'engineer'" class="flex flex-wrap gap-1.5">
-    {workflowScenarios.filter(s => s.kit === 'engineer' && visibleEngineerSkills.includes(s.id)).map((scenario) => {
-      const accent = accentMap[scenario.accentColor] || accentMap.purple;
-      const desc = isVi ? scenario.descVi : scenario.descEn;
-      return (
-        <button
-          x-on:click={`navigateToScenario('${scenario.id}')`}
-          x-bind:class={`selectedScenario === '${scenario.id}' ? '${accent.border} ${accent.ring} ring-2 ${accent.bg}' : 'border-gray-200 dark:border-white/8 hover:border-gray-300 dark:hover:border-white/20 hover:bg-gray-50 dark:hover:bg-white/5'`}
-          class="group relative flex items-center gap-1.5 px-2 py-1.5 rounded-md border backdrop-blur-sm bg-white dark:bg-white/[0.03] transition-all duration-150 cursor-pointer text-left"
-          type="button"
-          role="tab"
-          x-bind:aria-selected={`selectedScenario === '${scenario.id}'`}
-          title={desc}
-        >
-          {/* Icon */}
-          <svg class={`w-3 h-3 ${accent.text} shrink-0`} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <Fragment set:html={scenario.icon} />
-          </svg>
-
-          {/* Command name */}
-          <code class="text-[11px] font-mono font-medium text-gray-700 dark:text-white/80 whitespace-nowrap">{scenario.command}</code>
-
-          {/* Infographic indicator */}
-          {hasInfographic(scenario.id) && (
-            <span class="ml-0.5 text-blue-500 dark:text-blue-400" title={isVi ? 'Có Infographic' : 'Has Infographic'}>
-              <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+  <div class="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm dark:border-white/10 dark:bg-slate-950/45 dark:shadow-none md:p-4">
+    <div class="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
+      <div class="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
+        <div class="inline-flex w-full rounded-xl border border-slate-200 bg-slate-100 p-1 dark:border-white/10 dark:bg-white/5 sm:w-fit">
+          <button
+            x-on:click="switchKit('engineer')"
+            x-bind:class="activeKit === 'engineer' ? 'bg-teal-600 text-white shadow-sm dark:bg-teal-500' : 'text-slate-600 hover:bg-white dark:text-slate-400 dark:hover:bg-white/10'"
+            class="min-h-11 flex-1 rounded-lg px-3 text-sm font-semibold transition-all duration-200 sm:flex-none"
+            type="button"
+          >
+            <span class="flex items-center justify-center gap-2">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
               </svg>
+              {isVi ? 'Bộ Engineer' : 'Engineer Kit'}
+              <span
+                x-bind:class="activeKit === 'engineer' ? 'bg-white/20 text-white' : 'bg-slate-200 text-slate-600 dark:bg-white/10 dark:text-slate-300'"
+                class="rounded-full px-2 py-0.5 text-xs font-semibold transition-colors"
+              >{engineerCount}</span>
             </span>
-          )}
+          </button>
+          <button
+            x-on:click="switchKit('marketer')"
+            x-bind:class="activeKit === 'marketer' ? 'bg-fuchsia-600 text-white shadow-sm dark:bg-fuchsia-500' : 'text-slate-600 hover:bg-white dark:text-slate-400 dark:hover:bg-white/10'"
+            class="min-h-11 flex-1 rounded-lg px-3 text-sm font-semibold transition-all duration-200 sm:flex-none"
+            type="button"
+          >
+            <span class="flex items-center justify-center gap-2">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+              </svg>
+              {isVi ? 'Bộ Marketing' : 'Marketing Kit'}
+              <span
+                x-bind:class="activeKit === 'marketer' ? 'bg-white/20 text-white' : 'bg-slate-200 text-slate-600 dark:bg-white/10 dark:text-slate-300'"
+                class="rounded-full px-2 py-0.5 text-xs font-semibold transition-colors"
+              >{marketerCount}</span>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <label class="relative block w-full xl:max-w-md">
+        <span class="sr-only">{isVi ? 'Tìm skill hoặc command' : 'Search skills or commands'}</span>
+        <svg class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-white/35" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" />
+        </svg>
+        <input
+          x-model.debounce.120ms="skillSearch"
+          type="search"
+          class="min-h-11 w-full rounded-xl border border-slate-200 bg-white py-2 pl-10 pr-10 text-base text-slate-900 outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-500/10 dark:border-white/10 dark:bg-white/[0.04] dark:text-white dark:placeholder:text-white/35 dark:focus:border-sky-400"
+          placeholder={isVi ? 'Tìm theo /ckm:seo, dashboard, research...' : 'Search /ckm:seo, dashboard, research...'}
+        />
+        <button
+          x-show="skillSearch"
+          x-on:click="skillSearch = ''"
+          type="button"
+          class="absolute right-2 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-white/10 dark:hover:text-white"
+          aria-label={isVi ? 'Xóa tìm kiếm' : 'Clear search'}
+        >
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+          </svg>
         </button>
-      );
-    })}
-  </div>
-
-  {/* Marketing Kit: Coming soon placeholder */}
-  <div x-show="activeKit === 'marketer'" class="py-12 text-center">
-    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-purple-500/10 mb-4">
-      <svg class="w-8 h-8 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
+      </label>
     </div>
-    <h3 class="text-lg font-semibold text-gray-900 dark:text-white/90 mb-2">
-      {isVi ? 'Hướng dẫn sắp ra mắt...' : 'Guide coming soon...'}
-    </h3>
-    <p class="text-sm text-gray-500 dark:text-white/50 max-w-md mx-auto">
-      {isVi
-        ? 'VividKit đang hoàn thiện hướng dẫn chi tiết cho Marketing Kit.'
-        : 'VividKit is finalizing the detailed guide for Marketing Kit.'}
-    </p>
+
   </div>
 
-  {/* Selected scenario info card (only for engineer kit) */}
+  {/* Collapsible skill catalog — bounded internal scroll keeps the page short */}
+  <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-white/10 dark:bg-slate-950/45 dark:shadow-none">
+    <button
+      x-on:click="showCatalog = !showCatalog"
+      x-bind:aria-expanded="showCatalog"
+      aria-controls="skill-catalog-panel"
+      type="button"
+      class="flex min-h-12 w-full items-center justify-between gap-3 px-4 py-3 text-left transition hover:bg-slate-50 dark:hover:bg-white/5"
+    >
+      <span class="flex flex-wrap items-center gap-2 text-sm font-semibold text-slate-900 dark:text-white">
+        <svg class="h-4 w-4 shrink-0 text-slate-400 dark:text-white/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h7" />
+        </svg>
+        <span>{isVi ? 'Duyệt tất cả skill theo nhóm' : 'Browse all skills by group'}</span>
+        <span class="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-600 dark:bg-white/10 dark:text-slate-300">
+          <span x-text="visibleSkillCount()"></span>
+          <span>{isVi ? ' skill' : ' skills'}</span>
+        </span>
+      </span>
+      <span class="flex shrink-0 items-center gap-2">
+        <span class="hidden text-xs text-slate-400 dark:text-white/35 md:inline" x-text="showCatalog ? (isVi ? 'Thu gọn' : 'Collapse') : (isVi ? 'Mở rộng' : 'Expand')"></span>
+        <svg class="h-4 w-4 text-slate-400 transition-transform duration-200 dark:text-white/40" x-bind:class="showCatalog ? 'rotate-180' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" />
+        </svg>
+      </span>
+    </button>
+
+    <div
+      id="skill-catalog-panel"
+      x-show="showCatalog"
+      x-transition:enter="transition ease-out duration-200"
+      x-transition:enter-start="opacity-0"
+      x-transition:enter-end="opacity-100"
+      class="border-t border-slate-200 dark:border-white/10"
+    >
+      <div class="grid gap-3 p-3 md:p-4 lg:grid-cols-[220px_minmax(0,1fr)]">
+        <aside class="min-w-0 lg:self-start">
+          <div class="mb-2 px-1 text-xs font-semibold uppercase text-slate-400 dark:text-white/35">
+            {isVi ? 'Nhóm skill' : 'Skill Groups'}
+          </div>
+          <div class="flex gap-1.5 overflow-x-auto pb-1 lg:block lg:space-y-1.5 lg:overflow-visible lg:pb-0">
+            <template x-for="section in activeSkillSections" :key="section.id">
+              <button
+                x-show="filteredSectionScenarios(section).length"
+                x-on:click="scrollToSkillGroup(section.id)"
+                type="button"
+                class="flex min-h-10 shrink-0 items-center justify-between gap-2 rounded-lg border border-slate-200 bg-slate-50/70 px-3 py-2 text-left text-[13px] font-medium text-slate-700 transition hover:border-slate-300 hover:bg-white hover:text-slate-950 dark:border-white/10 dark:bg-white/[0.035] dark:text-white/70 dark:hover:border-white/20 dark:hover:bg-white/[0.07] dark:hover:text-white lg:w-full"
+              >
+                <span class="truncate" x-text="isVi ? section.labelVi : section.labelEn"></span>
+                <span
+                  class="shrink-0 rounded-full bg-slate-200/70 px-1.5 py-0.5 text-[11px] font-semibold tabular-nums text-slate-500 dark:bg-white/10 dark:text-white/45"
+                  x-text="filteredSectionScenarios(section).length"
+                ></span>
+              </button>
+            </template>
+          </div>
+        </aside>
+
+        <div id="skill-catalog-scroll" class="relative min-w-0 max-h-[60vh] space-y-5 overflow-y-auto overscroll-contain pr-1 lg:max-h-[32rem]">
+          <template x-for="section in activeSkillSections" :key="section.id">
+            <section
+              x-show="filteredSectionScenarios(section).length"
+              x-bind:id="'skill-group-' + section.id"
+            >
+              <div class="mb-2 flex items-end justify-between gap-2 border-b border-slate-200 pb-2 dark:border-white/10">
+                <div>
+                  <h3 class="text-sm font-semibold text-slate-900 dark:text-white" x-text="isVi ? section.labelVi : section.labelEn"></h3>
+                  <p class="text-xs leading-5 text-slate-500 dark:text-white/45" x-text="isVi ? section.descVi : section.descEn"></p>
+                </div>
+                <span class="shrink-0 text-xs text-slate-400 dark:text-white/35">
+                  <span x-text="filteredSectionScenarios(section).length"></span>
+                  <span>{isVi ? ' skill' : ' skills'}</span>
+                </span>
+              </div>
+
+              <div class="grid gap-2 sm:grid-cols-2">
+                <template x-for="sc in filteredSectionScenarios(section)" :key="sc.id">
+                  <button
+                    x-on:click="navigateToScenario(sc.id)"
+                    x-bind:class="selectedScenario === sc.id ? 'border-sky-400 bg-sky-50 ring-2 ring-sky-500/15 dark:border-sky-400/70 dark:bg-sky-500/10 dark:ring-sky-400/15' : 'border-slate-200 bg-slate-50/70 hover:border-slate-300 hover:bg-white dark:border-white/10 dark:bg-white/[0.035] dark:hover:border-white/20 dark:hover:bg-white/[0.06]'"
+                    x-bind:title="isVi ? sc.descVi : sc.descEn"
+                    x-bind:aria-pressed="selectedScenario === sc.id"
+                    class="flex items-center gap-2.5 rounded-xl border p-2.5 text-left transition duration-150 focus:outline-none focus-visible:ring-4 focus-visible:ring-sky-500/20"
+                    type="button"
+                  >
+                    <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white ring-1 ring-slate-200 dark:bg-white/5 dark:ring-white/10">
+                      <svg class="h-4 w-4" x-bind:class="getColorClass(sc.accentColor, 'iconText')" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" x-html="sc.icon"></svg>
+                    </span>
+                    <span class="min-w-0 flex-1">
+                      <code class="block truncate font-mono text-[13px] font-semibold text-slate-950 dark:text-white" x-text="sc.command"></code>
+                      <span class="mt-0.5 block truncate text-xs leading-5 text-slate-500 dark:text-white/50" x-text="isVi ? sc.titleVi : sc.titleEn"></span>
+                    </span>
+                    <svg
+                      x-show="selectedScenario === sc.id"
+                      class="h-4 w-4 shrink-0 text-sky-500 dark:text-sky-300"
+                      fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"
+                    >
+                      <path stroke-linecap="round" stroke-linejoin="round" d="m5 13 4 4L19 7" />
+                    </svg>
+                  </button>
+                </template>
+              </div>
+            </section>
+          </template>
+
+          <div
+            x-show="visibleSkillCount() === 0"
+            class="rounded-xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-500 dark:border-white/15 dark:text-white/45"
+          >
+            {isVi ? 'Không tìm thấy skill phù hợp. Thử command, tên skill, hoặc keyword khác.' : 'No matching skills. Try another command, skill name, or keyword.'}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div
     id="workflow-selected-scenario"
     tabindex="-1"
-    x-show="selectedScenario && activeKit === 'engineer'"
+    x-show="selectedScenario"
     x-transition:enter="transition ease-out duration-150"
     x-transition:enter-start="opacity-0 -translate-y-1"
     x-transition:enter-end="opacity-100 translate-y-0"
-    class="scroll-mt-24 px-4 py-3 rounded-lg bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 focus:outline-none"
+    class="scroll-mt-24 rounded-2xl border border-slate-200 bg-slate-50 p-4 focus:outline-none dark:border-white/10 dark:bg-white/[0.035]"
   >
-    <template x-if="scenarios.find(s => s.id === selectedScenario)">
-      <div class="flex items-start gap-3" x-data={`{ get sc() { return scenarios.find(s => s.id === selectedScenario) } }`}>
-        {/* Left: title + description */}
-        <div class="min-w-0 flex-1">
-          <div class="flex items-center gap-2 mb-1">
-            <code class="text-xs font-mono font-semibold text-gray-900 dark:text-white/90" x-text="sc.command"></code>
+    <template x-if="currentScenario">
+      <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+        <div class="min-w-0">
+          <div class="mb-2 flex flex-wrap items-center gap-2">
             <span
-              x-bind:class="sc.kit === 'engineer' ? 'bg-teal-500/10 text-teal-600 dark:text-teal-400' : 'bg-purple-500/10 text-purple-600 dark:text-purple-400'"
-              class="text-[10px] font-medium px-1.5 py-0.5 rounded"
-              x-text="sc.kit === 'engineer' ? 'Engineer Kit' : 'Marketing Kit'"
+              x-bind:class="currentScenario.kit === 'engineer' ? 'bg-teal-500/10 text-teal-700 dark:text-teal-300' : 'bg-fuchsia-500/10 text-fuchsia-700 dark:text-fuchsia-300'"
+              class="rounded-full px-2.5 py-1 text-xs font-semibold"
+              x-text="currentScenario.kit === 'engineer' ? (isVi ? 'Bộ Engineer' : 'Engineer Kit') : (isVi ? 'Bộ Marketing' : 'Marketing Kit')"
             ></span>
+            <code class="font-mono text-sm font-semibold text-slate-950 dark:text-white" x-text="currentScenario.command"></code>
+            <span class="text-xs text-slate-400 dark:text-white/35" x-text="scenarioCountLabel(currentScenario)"></span>
           </div>
-          <p class="text-xs text-gray-600 dark:text-white/50" x-text={`sc.${isVi ? 'descVi' : 'descEn'}`}></p>
+          <h3 class="text-base font-semibold text-slate-950 dark:text-white" x-text="isVi ? currentScenario.titleVi : currentScenario.titleEn"></h3>
+          <p class="mt-1 max-w-4xl text-sm leading-6 text-slate-600 dark:text-white/55" x-text="isVi ? currentScenario.descVi : currentScenario.descEn"></p>
         </div>
 
-        {/* Right: phase/step count + infographic button */}
-        <div class="shrink-0 flex items-center gap-2">
-          <div class="flex items-center gap-1 px-2 py-1 rounded-md bg-gray-200 dark:bg-white/10">
-            <svg class="w-3 h-3 text-gray-400 dark:text-white/30" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-            <span
-              class="text-[11px] font-medium text-gray-500 dark:text-white/40"
-              x-text={`(showQuickRef && window.__ckPhaseCounts?.[sc.id] ? window.__ckPhaseCounts[sc.id] + ' ${isVi ? 'giai đoạn' : 'phases'}' : sc.steps.length + ' steps')`}
-            ></span>
-          </div>
-
-          {/* Quick Ref toggle button — only shown for skills with quick ref */}
-          <button
-            x-show="hasInfographic(selectedScenario)"
-            @click="toggleQuickRef()"
-            :class="showQuickRef ? 'bg-blue-500 text-white' : 'bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 dark:text-blue-400'"
-            class="flex items-center gap-1 px-2 py-1 rounded-md transition-colors"
-            type="button"
-            :title="showQuickRef ? (isVi ? 'Ẩn Quick Ref' : 'Hide Quick Ref') : (isVi ? 'Xem Quick Ref' : 'View Quick Ref')"
-          >
-            <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span class="text-[10px] font-medium">{isVi ? 'Quick Ref' : 'Quick Ref'}</span>
-          </button>
-        </div>
+        <button
+          x-show="hasInfographic(selectedScenario)"
+          @click="toggleQuickRef()"
+          x-bind:class="showQuickRef ? 'border border-slate-200 text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:border-white/10 dark:text-white/50 dark:hover:bg-white/10 dark:hover:text-white/80' : 'bg-sky-500/10 text-sky-700 hover:bg-sky-500/15 dark:text-sky-300 dark:hover:bg-sky-500/15'"
+          class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-xl px-4 text-sm font-semibold transition"
+          type="button"
+          x-bind:title="showQuickRef ? (isVi ? 'Ẩn tóm tắt nhanh' : 'Hide Quick Ref') : (isVi ? 'Xem tóm tắt nhanh' : 'View Quick Ref')"
+        >
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+          </svg>
+          <span x-text="showQuickRef ? (isVi ? 'Ẩn tóm tắt' : 'Hide Quick Ref') : (isVi ? 'Mở tóm tắt' : 'Open Quick Ref')"></span>
+        </button>
       </div>
     </template>
   </div>
