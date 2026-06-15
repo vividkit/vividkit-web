@@ -11,7 +11,7 @@ Source: `~/.claude/skills/test/SKILL.md`
 4. Execute Tests — run appropriate test suite (Jest/Vitest/pytest/go test/etc.)
 5. Analyze Results — focus on failures, identify root causes
 6. Coverage Report — generate coverage metrics (Istanbul/c8/pytest-cov/go cover)
-7. UI Tests (conditional) — ck:chrome-devtools for screenshots, a11y, responsive
+7. UI Tests (conditional) — ck:agent-browser (screenshots, a11y, responsive); ck:chrome-profile for real login state; ck:web-testing / Playwright for repeatable tests
 8. Screenshot Analysis (conditional) — ck:ai-multimodal for visual regression
 9. Debug (conditional) — ck:debug for complex test failure investigation
 10. QA Report — structured summary with metrics & recommendations
@@ -23,20 +23,20 @@ Source: `~/.claude/skills/test/SKILL.md`
 | Type | Skill |
 |------|-------|
 | Mandatory | (none — test runners invoked via Bash) |
-| Conditional | ck:chrome-devtools (UI tests), ck:ai-multimodal (screenshot analysis) |
+| Conditional | ck:agent-browser / ck:chrome-profile / ck:web-testing (UI tests), ck:ai-multimodal (screenshot analysis) |
 | Conditional | ck:debug (failure investigation), ck:sequential-thinking (complex analysis) |
 | Conditional | /ck:project-organization (report output) |
 
 ## Sub-agents
 
 No dedicated sub-agents spawned by default. Main agent runs test commands directly.
-For UI testing, ck:chrome-devtools skill may spawn browser automation sub-agents.
+For UI testing, ck:agent-browser (or ck:chrome-profile for real login state) may spawn browser automation sub-agents.
 
 ## Mode Selection
 
 Two modes selected via AskUserQuestion (or argument):
 - **Code tests** (default) — unit/integration/e2e via test runners
-- **UI tests** (`ui` arg) — browser-based visual testing via ck:chrome-devtools
+- **UI tests** (`ui` arg) — browser-based visual testing via ck:agent-browser / ck:chrome-profile / ck:web-testing
 
 ## Hard Gates
 

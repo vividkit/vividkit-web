@@ -76,6 +76,7 @@ export const common = {
   'footer.links.documentation': 'Documentation',
   'footer.links.guides': 'Guides',
   'footer.links.promotions': 'Promotions',
+  'footer.links.donate': 'Donate',
   'footer.links.api': 'API Reference',
   'footer.links.examples': 'Examples',
   'footer.links.about': 'About',

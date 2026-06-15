@@ -28,7 +28,7 @@ const { data, lang } = Astro.props;
 const isVi = lang === 'vi';
 
 const text = {
-  eyebrow: 'Quick Ref / Visual utility',
+  eyebrow: isVi ? 'Tóm tắt nhanh / Tiện ích visual' : 'Quick Ref / Visual utility',
   readOnly: isVi ? 'Read-only · không sửa code' : 'Read-only · never modifies code',
   summary: isVi ? data.header.taglineVi : data.header.taglineEn,
   gate: isVi ? data.hardGate?.titleVi : data.hardGate?.titleEn,
@@ -60,7 +60,7 @@ const text = {
 };
 
 const heroFlow = isVi
-  ? ['Input', 'Định tuyến', 'Tạo', 'Output']
+  ? ['Đầu vào', 'Định tuyến', 'Tạo', 'Kết quả']
   : ['Input', 'Route', 'Generate', 'Output'];
 
 interface GateRule {
@@ -134,12 +134,14 @@ const processGroups: ProcessGroup[] = [
   },
 ];
 
+// Build a lookup map from promptExamples keyed by labelEn for flag card prompts.
+const flagPromptMap = Object.fromEntries(
+  (data.promptExamples || []).map(p => [p.labelEn, p])
+);
+
 interface FlagItem {
   flag: string;
-  promptEn: string;
-  promptVi: string;
-  descEn?: string;
-  descVi?: string;
+  // prompt and desc come from flagPromptMap (data.promptExamples)
   altPromptEn?: string;
   altPromptVi?: string;
   altLabelEn?: string;
@@ -163,27 +165,9 @@ const flagGroups: FlagGroup[] = [
     kickerEn: 'Read an existing file/dir — plans in novel UI',
     kickerVi: 'Đọc file/thư mục có sẵn — plan dạng novel',
     items: [
-      {
-        flag: '<file.md>',
-        promptEn: '/ck:preview plans/.../plan.md',
-        promptVi: '/ck:preview plans/.../plan.md',
-        descEn: 'View one markdown file (plan, phase, doc) in the novel-reader UI — Mermaid renders live.',
-        descVi: 'Xem một file markdown (plan, phase, doc) trong novel-reader UI — Mermaid render trực tiếp.',
-      },
-      {
-        flag: '<dir/>',
-        promptEn: '/ck:preview plans/260527-.../',
-        promptVi: '/ck:preview plans/260527-.../',
-        descEn: 'Pass a folder to browse every doc inside — e.g. a whole plan folder (plan.md + all phase files).',
-        descVi: 'Truyền một thư mục để duyệt mọi doc bên trong — vd cả thư mục plan (plan.md + tất cả phase file).',
-      },
-      {
-        flag: '<path>',
-        promptEn: '/ck:preview src/auth/middleware.ts',
-        promptVi: '/ck:preview src/auth/middleware.ts',
-        descEn: 'View reads the file as-is. Contrast with generate flags (--explain / --diagram / --slides / --ascii): they take a topic in plain words and build a new visual — not a path.',
-        descVi: 'View đọc file nguyên trạng. Khác với generate flag (--explain / --diagram / --slides / --ascii): chúng nhận topic mô tả bằng lời để dựng visual mới — không đọc path.',
-      },
+      { flag: '<file.md>' },
+      { flag: '<dir/>' },
+      { flag: '<path>' },
     ],
     accent: 'border-slate-200 bg-slate-50/70 ring-slate-100 dark:border-white/10 dark:bg-white/[0.04] dark:ring-white/5',
     badge: 'bg-slate-600 text-white dark:bg-slate-500 dark:text-white',
@@ -194,10 +178,10 @@ const flagGroups: FlagGroup[] = [
     kickerEn: 'Pick one output shape from a topic',
     kickerVi: 'Chọn một dạng output từ topic',
     items: [
-      { flag: '--explain', promptEn: '/ck:preview --explain "auth middleware flow"', promptVi: '/ck:preview --explain "luồng auth middleware"' },
-      { flag: '--diagram', promptEn: '/ck:preview --diagram "request lifecycle"', promptVi: '/ck:preview --diagram "vòng đời request"' },
-      { flag: '--slides', promptEn: '/ck:preview --slides "onboarding flow"', promptVi: '/ck:preview --slides "luồng onboarding"' },
-      { flag: '--ascii', promptEn: '/ck:preview --ascii "folder structure"', promptVi: '/ck:preview --ascii "cấu trúc thư mục"' },
+      { flag: '--explain' },
+      { flag: '--diagram' },
+      { flag: '--slides' },
+      { flag: '--ascii' },
     ],
     accent: 'border-cyan-200 bg-cyan-50/65 ring-cyan-100 dark:border-cyan-800/55 dark:bg-cyan-950/20 dark:ring-cyan-900/35',
     badge: 'bg-cyan-500 text-white dark:bg-cyan-400 dark:text-cyan-950',
@@ -208,7 +192,7 @@ const flagGroups: FlagGroup[] = [
     kickerEn: 'Composes with any generate flag',
     kickerVi: 'Kết hợp với mọi generate flag',
     items: [
-      { flag: '--html', promptEn: '/ck:preview --html --diagram "DB schema"', promptVi: '/ck:preview --html --diagram "schema DB"' },
+      { flag: '--html' },
     ],
     accent: 'border-violet-200 bg-violet-50/65 ring-violet-100 dark:border-violet-800/55 dark:bg-violet-950/20 dark:ring-violet-900/35',
     badge: 'bg-violet-500 text-white dark:bg-violet-400 dark:text-violet-950',
@@ -219,17 +203,15 @@ const flagGroups: FlagGroup[] = [
     kickerEn: 'Diff, plan-vs-code, and recap views',
     kickerVi: 'View diff, plan-vs-code, và recap',
     items: [
-      { flag: '--diff [ref]', promptEn: '/ck:preview --diff HEAD~3', promptVi: '/ck:preview --diff HEAD~3' },
+      { flag: '--diff [ref]' },
       {
         flag: '--plan-review [plan-file]',
-        promptEn: '/ck:preview --plan-review plans/.../plan.md',
-        promptVi: '/ck:preview --plan-review plans/.../plan.md',
         altPromptEn: '/ck:preview --plan-review',
         altPromptVi: '/ck:preview --plan-review',
         altLabelEn: 'Omit path → active plan',
         altLabelVi: 'Bỏ path → dùng plan active',
       },
-      { flag: '--recap [timeframe]', promptEn: '/ck:preview --recap "last week"', promptVi: '/ck:preview --recap "tuần trước"' },
+      { flag: '--recap [timeframe]' },
     ],
     accent: 'border-amber-200 bg-amber-50/65 ring-amber-100 dark:border-amber-800/55 dark:bg-amber-950/20 dark:ring-amber-900/35',
     badge: 'bg-amber-500 text-white dark:bg-amber-400 dark:text-amber-950',
@@ -408,14 +390,16 @@ const locationNote = isVi
           <ul class="mt-3 grid gap-2.5 sm:grid-cols-2">
             {group.items.map(item => {
               const mode = modeMap.get(item.flag);
-              const desc = mode ? (isVi ? mode.modeVi : mode.modeEn) : (isVi ? item.descVi : item.descEn) ?? '';
+              const pd = flagPromptMap[item.flag];
+              const desc = mode ? (isVi ? mode.modeVi : mode.modeEn) : pd ? (isVi ? pd.whenVi : pd.whenEn) : '';
+              const prompt = pd ? pd.command : '';
               return (
                 <li class="min-w-0 rounded-lg bg-white/70 p-3 ring-1 ring-slate-200/80 dark:bg-slate-950/35 dark:ring-white/10">
                   <code class={`inline-flex max-w-full rounded-md px-2 py-0.5 font-mono text-xs font-semibold shadow-sm ${group.badge}`}>{item.flag}</code>
                   <p class="mt-2 text-xs leading-5 text-slate-650 dark:text-slate-300">{desc}</p>
                   <div class="mt-2">
                     <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">{text.samplePrompt}</p>
-                    <code class="mt-1 block whitespace-pre-wrap break-words rounded-md bg-slate-100 px-2.5 py-1.5 font-mono text-[11px] leading-5 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-slate-200 dark:ring-white/10">{isVi ? item.promptVi : item.promptEn}</code>
+                    <code class="mt-1 block whitespace-pre-wrap break-words rounded-md bg-slate-100 px-2.5 py-1.5 font-mono text-[11px] leading-5 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-slate-200 dark:ring-white/10">{prompt}</code>
                   </div>
                   {item.altPromptEn && (
                     <div class="mt-2">

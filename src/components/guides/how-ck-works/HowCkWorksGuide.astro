@@ -7,7 +7,6 @@ import { workflowScenarios, stepTypeColors, workflowCombos, hasInfographic } fro
 import WorkflowScenarioSelector from './workflow-scenario-selector.astro';
 import WorkflowPipelineView from './workflow-pipeline-view.astro';
 import WorkflowStepDetailPanel from './workflow-step-detail-panel.astro';
-import WorkflowViewToggle from './workflow-view-toggle.astro';
 import WorkflowComboGrid from './workflow-combo-grid.astro';
 import WorkflowComboPipeline from './workflow-combo-pipeline.astro';
 import WorkflowSkillInfographic from './workflow-skill-infographic.astro';
@@ -27,6 +26,154 @@ const typeColorsJson = JSON.stringify(stepTypeColors);
 const combosJson = JSON.stringify(workflowCombos);
 // List of scenario IDs that have infographics available
 const infographicIdsJson = JSON.stringify(workflowScenarios.filter(s => hasInfographic(s.id)).map(s => s.id));
+const engineerQuickRefIds = [
+  'brainstorm',
+  'predict',
+  'plan',
+  'cook',
+  'frontend-design',
+  'code-review',
+  'review-pr',
+  'test',
+  'fix',
+  'security-scan',
+  'ship',
+  'vibe',
+  'deploy',
+  'bootstrap',
+  'autoresearch',
+  'backend-development',
+  'better-auth',
+  'context-engineering',
+  'docs-seeker',
+  'ai-artist',
+  'agentize',
+  'cti-expert',
+  'retro',
+  'graphify',
+  'git',
+  'ghpm',
+  'debug',
+  'agent-browser',
+  'ai-multimodal',
+  'ask',
+  'security',
+  'repomix',
+  'llms',
+  'scenario',
+  'docs',
+  'xia',
+  'team',
+  'preview',
+  'chrome-profile',
+  'coding-level',
+  'copywriting',
+  'databases',
+  'devops',
+  'find-skills',
+  'frontend-development',
+  'gkg',
+  'google-adk-python',
+  'journal',
+  'loop',
+  'markdown-novel-viewer',
+  'mcp-builder',
+  'media-processing',
+  'mermaidjs-v11',
+  'mintlify',
+  'mobile-development',
+  'payment-integration',
+  'problem-solving',
+  'project-management',
+  'react-best-practices',
+  'remotion',
+  'html-video',
+  'research',
+  'scout',
+  'sequential-thinking',
+  'shader',
+  'shopify',
+  'show-off',
+  'skill-creator',
+  'stitch',
+  'tanstack',
+  'tech-graph',
+  'threejs',
+  'ui-styling',
+  'ui-ux-pro-max',
+  'watzup',
+  'web-design-guidelines',
+  'web-frameworks',
+  'web-testing',
+  'worktree',
+  'excalidraw',
+  'plans-kanban',
+  'project-organization',
+].filter(hasInfographic);
+const marketerQuickRefIds = [
+  'persona',
+  'campaign',
+  'write',
+  'design',
+  'seo',
+  'social',
+  'email',
+  'video',
+  'ckm-ask',
+  'ckm-docs',
+  'ckm-journal',
+  'ckm-plan',
+  'ckm-preview',
+  'ckm-test',
+  'ckm-watzup',
+  'ckm-worktree',
+  'ab-test-setup',
+  'ads-management',
+  'affiliate-marketing',
+  'analytics',
+  'analyze',
+  'assets-organizing',
+  'banner-design',
+  'brand',
+  'cip-design',
+  'claude-code',
+  'competitor',
+  'content-hub',
+  'content-marketing',
+  'creativity',
+  'dashboard',
+  'debugging',
+  'design-system',
+  'elevenlabs',
+  'form-cro',
+  'free-tool-strategy',
+  'funnel',
+  'gamification-marketing',
+  'hub',
+  'init',
+  'kit-builder',
+  'launch-strategy',
+  'logo-design',
+  'marketing-dashboard',
+  'marketing-ideas',
+  'marketing-planning',
+  'marketing-psychology',
+  'marketing-research',
+  'onboarding-cro',
+  'paid-ads',
+  'play',
+  'pricing-strategy',
+  'referral-program-building',
+  'slides',
+  'storage',
+  'youtube',
+  'youtube-thumbnail-design',
+  'kanban',
+  'skill',
+  'use-mcp',
+].filter(hasInfographic);
+const quickRefScenarioGroups = [engineerQuickRefIds, marketerQuickRefIds].filter(group => group.length > 0);
+const quickRefScenarioIds = quickRefScenarioGroups.flat();
 const getCommandNavItem = (id: string) => {
   const scenario = workflowScenarios.find(s => s.id === id);
   if (!scenario) throw new Error(`Missing workflow scenario for ${id}`);
@@ -86,6 +233,7 @@ const getCommandNavItem = (id: string) => {
     activeKit: 'engineer',
     selectedScenario: 'brainstorm',
     isVi: false,
+    skillSearch: '',
 
     // Individual scenario playback
     currentStep: -1,
@@ -102,13 +250,16 @@ const getCommandNavItem = (id: string) => {
     // Quick Ref expandable state
     showQuickRef: true,
 
+    // Skill catalog collapsed by default so the main workflow content stays above the fold
+    showCatalog: false,
+
     // Data stores
     scenarios: [],
     typeColors: {},
     combos: [],
     infographicIds: [],
+    skillPickerSections: {},
     hashChangeHandler: null,
-    preferredHashAnchor: null,
     colorMap: {
       purple: { iconBg: 'bg-purple-500/10', iconText: 'text-purple-400', ring: 'ring-purple-500/50' },
       blue:   { iconBg: 'bg-blue-500/10',   iconText: 'text-blue-400',   ring: 'ring-blue-500/50' },
@@ -135,17 +286,19 @@ const getCommandNavItem = (id: string) => {
       this.typeColors = window.__wfTypeColors || {};
       this.combos = window.__wfCombos || [];
       this.infographicIds = window.__wfInfographicIds || [];
+      this.skillPickerSections = window.__ckSkillPickerSections || {};
       this.isVi = window.__wfIsVi || false;
 
-      const hadHash = Boolean(window.location.hash);
-      const syncedFromHash = this.syncScenarioFromHash({ behavior: 'auto' });
-      if (!syncedFromHash && !hadHash) {
-        this.preferredHashAnchor = 'ck-brainstorm';
-        window.history.replaceState(null, '', '#ck-brainstorm');
-        this.syncScenarioFromHash({ behavior: 'auto', preferScenarioAnchor: true });
-      }
+      // Fresh load without hash keeps the default selection (brainstorm) and stays
+      // at the intro — writing a default hash here makes Chrome re-anchor mid-load.
+      this.syncScenarioFromHash({ behavior: 'auto' });
       this.hashChangeHandler = () => this.syncScenarioFromHash({ behavior: 'smooth' });
       window.addEventListener('hashchange', this.hashChangeHandler);
+
+      // Typing a search query should reveal the catalog so results are visible
+      this.$watch('skillSearch', value => {
+        if ((value || '').trim()) this.showCatalog = true;
+      });
     },
 
     destroy() {
@@ -163,7 +316,7 @@ const getCommandNavItem = (id: string) => {
       window.location.hash = hash;
     },
 
-    syncScenarioFromHash({ behavior = 'smooth', preferScenarioAnchor = false } = {}) {
+    syncScenarioFromHash({ behavior = 'smooth' } = {}) {
       const hash = window.location.hash.replace('#', '');
       if (!hash.startsWith('ck-')) return false;
 
@@ -176,16 +329,14 @@ const getCommandNavItem = (id: string) => {
       this.viewType = 'individual';
       this.selectedCombo = null;
       this.showQuickRef = this.infographicIds.includes(scenarioId);
+      this.showCatalog = false;
       this.resetPipeline();
       this.stopComboPlay();
 
       this.$nextTick(() => {
         window.requestAnimationFrame(() => {
           const scrollToTarget = () => {
-            const shouldPreferScenarioAnchor = preferScenarioAnchor || this.preferredHashAnchor === hash;
-            const el = shouldPreferScenarioAnchor
-              ? document.getElementById(hash)
-              : document.getElementById('workflow-selected-scenario') || document.getElementById(hash);
+            const el = document.getElementById('workflow-selected-scenario') || document.getElementById(hash);
             if (!el) return;
             el.scrollIntoView({ behavior, block: 'start' });
             el.focus({ preventScroll: true });
@@ -213,6 +364,62 @@ const getCommandNavItem = (id: string) => {
       return this.scenarios.find(s => s.id === id);
     },
     formatExplain(text) { return window.__formatExplain?.(text) || text || ''; },
+    localizeStepName(name) {
+      if (!this.isVi || !name) return name;
+      const exact = {
+        'Context + Guardrails': 'Nạp context + ràng buộc',
+        'Audit Source + Scope': 'Rà nguồn + phạm vi',
+        'Execute Workflow': 'Chạy workflow',
+        'Validate + Deliver': 'Kiểm chứng + bàn giao',
+        'Hooks Fire': 'Hooks kích hoạt',
+        'Hooks + Brand Context': 'Hooks + context thương hiệu',
+        'QA Report': 'Báo cáo QA',
+        'Safety Gates': 'Cổng an toàn',
+        'Docs-Only Gate': 'Cổng chỉ-tài-liệu',
+        'Context + Permissions': 'Context + quyền',
+        'Audit Current State': 'Rà trạng thái hiện tại',
+        'Execute Scoped Action': 'Thực thi đúng phạm vi',
+        'Report + Handoff': 'Báo cáo + bàn giao',
+        'Scout First': 'Scout trước',
+        'Discovery + Exact Requirements': 'Khám phá + yêu cầu chính xác',
+        'Research + Evidence': 'Nghiên cứu + bằng chứng',
+        'Analyze + Debate': 'Phân tích + tranh luận',
+        'Report + Plan Handoff': 'Báo cáo + bàn giao sang plan',
+        'Diff Acquisition': 'Lấy diff',
+        'Review Report': 'Báo cáo review',
+        'Secret Scan': 'Quét secret',
+        'Dependency Audit': 'Audit dependency',
+        'Code Pattern Analysis': 'Phân tích pattern code',
+        'Security Scan Report': 'Báo cáo security scan',
+      };
+      if (exact[name]) return exact[name];
+      return name
+        .replace(/^Main Agent\b/, 'Agent chính')
+        .replace(/^Sub-Agent\b/, 'Agent phụ')
+        .replace(/\bPre-Check\b/g, 'Kiểm tra trước')
+        .replace(/\bResearch\b/g, 'Nghiên cứu')
+        .replace(/\bPlan Creation\b/g, 'Tạo plan')
+        .replace(/\bValidate\b/g, 'Kiểm chứng')
+        .replace(/\bTask Hydration\b/g, 'Hydrate task')
+        .replace(/\bPost-Plan Handoff\b/g, 'Bàn giao sau plan')
+        .replace(/\bScout\b/g, 'Scout')
+        .replace(/\bDiagnose\b/g, 'Chẩn đoán')
+        .replace(/\bFix\b/g, 'Sửa')
+        .replace(/\bVerify\b/g, 'Kiểm chứng')
+        .replace(/\bPrevent\b/g, 'Ngăn tái phát')
+        .replace(/\bFinalize\b/g, 'Hoàn tất')
+        .replace(/\bImplement\b/g, 'Triển khai')
+        .replace(/\bTesting\b/g, 'Kiểm thử')
+        .replace(/\bCode Review\b/g, 'Review code')
+        .replace(/\bReport\b/g, 'Báo cáo')
+        .replace(/\bHandoff\b/g, 'Bàn giao')
+        .replace(/\bInput\b/g, 'Đầu vào')
+        .replace(/\bOutput\b/g, 'Kết quả')
+        .replace(/\bRoute\b/g, 'Định tuyến')
+        .replace(/\bExecute\b/g, 'Thực thi')
+        .replace(/\bAssets\b/g, 'Asset')
+        .replace(/\bDelivered\b/g, 'Đã bàn giao');
+    },
     get steps() {
       return this.currentScenario?.steps || [];
     },
@@ -226,16 +433,75 @@ const getCommandNavItem = (id: string) => {
 
     switchKit(kit) {
       this.activeKit = kit;
-      // Auto-select first scenario of the new kit
-      const firstOfKit = this.scenarios.find(s => s.kit === kit);
+      const firstOfKit = this.firstScenarioForKit(kit);
       if (firstOfKit) {
         this.selectedScenario = firstOfKit.id;
+        this.showQuickRef = this.infographicIds.includes(firstOfKit.id);
         this.resetPipeline();
       }
     },
 
     get filteredScenarios() {
       return this.scenarios.filter(s => s.kit === this.activeKit);
+    },
+
+    get activeSkillSections() {
+      return this.skillPickerSections?.[this.activeKit] || [];
+    },
+
+    firstScenarioForKit(kit) {
+      const sections = this.skillPickerSections?.[kit] || [];
+      for (const section of sections) {
+        for (const id of section.ids || []) {
+          const scenario = this.scenarios.find(s => s.id === id && s.kit === kit);
+          if (scenario) return scenario;
+        }
+      }
+      return this.scenarios.find(s => s.kit === kit);
+    },
+
+    skillMatches(sc, section) {
+      const query = (this.skillSearch || '').trim().toLowerCase();
+      if (!query) return true;
+      const text = [
+        sc.id,
+        sc.command,
+        sc.titleEn,
+        sc.titleVi,
+        sc.descEn,
+        sc.descVi,
+        section?.labelEn,
+        section?.labelVi,
+        section?.descEn,
+        section?.descVi,
+      ].filter(Boolean).join(' ').toLowerCase();
+      return text.includes(query);
+    },
+
+    filteredSectionScenarios(section) {
+      return (section?.ids || [])
+        .map(id => this.scenarios.find(sc => sc.id === id))
+        .filter(Boolean)
+        .filter(sc => sc.kit === this.activeKit)
+        .filter(sc => this.skillMatches(sc, section));
+    },
+
+    visibleSkillCount() {
+      return this.activeSkillSections.reduce((total, section) => total + this.filteredSectionScenarios(section).length, 0);
+    },
+
+    scrollToSkillGroup(sectionId) {
+      // Scroll within the bounded catalog panel instead of the page
+      const container = document.getElementById('skill-catalog-scroll');
+      const target = document.getElementById('skill-group-' + sectionId);
+      if (!container || !target) return;
+      container.scrollTo({ top: Math.max(target.offsetTop - 4, 0), behavior: 'smooth' });
+    },
+
+    scenarioCountLabel(sc) {
+      const phaseCount = window.__ckPhaseCounts?.[sc.id];
+      if (phaseCount) return `${phaseCount} ${this.isVi ? 'giai đoạn' : 'phases'}`;
+      return `${sc.steps?.length || 0} ${this.isVi ? 'bước' : 'steps'}`;
     },
 
     selectScenario(id) {
@@ -452,7 +718,7 @@ const getCommandNavItem = (id: string) => {
              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" /></svg>
           </div>
           <h3 class="font-semibold text-gray-900 dark:text-white/90 mb-1">{isVi ? '2. Skills (Kiến thức có sẵn)' : '2. Skills (Pre-built Knowledge)'}</h3>
-          <p class="text-[13px] text-gray-600 dark:text-white/50">{isVi ? 'Các gói kiến thức chuyên biệt (SKILL.md) kèm prompt, references và scripts. Là đơn vị thực thi chính khi bạn gõ /ck:*.' : 'Specialized knowledge packages (SKILL.md) with prompts, references and scripts. The primary execution unit when you type /ck:* commands.'}</p>
+          <p class="text-[13px] text-gray-600 dark:text-white/50">{isVi ? 'Các gói năng lực chuyên biệt kèm prompt, references và scripts. Là đơn vị thực thi chính khi bạn gõ /ck:*.' : 'Specialized capability packages with prompts, references, and scripts. The primary execution unit when you type /ck:* commands.'}</p>
         </div>
 
         <div class="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 shadow-sm dark:shadow-none rounded-xl p-4">
@@ -483,9 +749,6 @@ const getCommandNavItem = (id: string) => {
     </div>
   </div>
 
-  {/* View type toggle: Individual / Combos / Infographic */}
-  <WorkflowViewToggle lang={currentLang} />
-
   {/* Scenario selector (individual view) or Combo grid (combos view) */}
   <section>
     <div x-show="viewType === 'individual'" x-transition>
@@ -506,7 +769,7 @@ const getCommandNavItem = (id: string) => {
       </h3>
       <p class="text-sm text-gray-500 dark:text-white/50 max-w-md mx-auto">
         {isVi
-          ? 'VividKit đang hoàn thiện hướng dẫn chi tiết cho Marketing Kit.'
+          ? 'VividKit đang hoàn thiện hướng dẫn chi tiết cho Bộ Marketing.'
           : 'VividKit is finalizing the detailed guide for Marketing Kit.'}
       </p>
     </div>
@@ -517,9 +780,9 @@ const getCommandNavItem = (id: string) => {
     <WorkflowComboPipeline lang={currentLang} />
   </div>
 
-  {/* Quick Ref expandable section (Individual Skills view, Engineer Kit only) */}
+  {/* Quick Ref expandable section (Individual Skills view) */}
   <section
-    x-show="activeKit === 'engineer' && viewType === 'individual' && showQuickRef && hasInfographic(selectedScenario)"
+    x-show="viewType === 'individual' && showQuickRef && hasInfographic(selectedScenario)"
     x-transition:enter="transition ease-out duration-300"
     x-transition:enter-start="opacity-0 -translate-y-4"
     x-transition:enter-end="opacity-100 translate-y-0"
@@ -541,54 +804,38 @@ const getCommandNavItem = (id: string) => {
 
     {/* Quick Ref content */}
     <div class="rounded-xl border border-blue-200 dark:border-blue-500/20 bg-blue-50/50 dark:bg-blue-500/5 p-6">
-      <div id="ck-brainstorm" tabindex="-1" class="scroll-mt-24 focus:outline-none" x-show="selectedScenario === 'brainstorm'">
-        <WorkflowSkillInfographic scenarioId="brainstorm" lang={currentLang} />
-        <WorkflowCommandNav previous={getCommandNavItem('preview')} next={getCommandNavItem('plan')} lang={currentLang} />
-      </div>
-      <div id="ck-plan" tabindex="-1" class="scroll-mt-24 focus:outline-none" x-show="selectedScenario === 'plan'">
-        <WorkflowSkillInfographic scenarioId="plan" lang={currentLang} />
-        <WorkflowCommandNav previous={getCommandNavItem('brainstorm')} next={getCommandNavItem('cook')} lang={currentLang} />
-      </div>
-      <div id="ck-cook" tabindex="-1" class="scroll-mt-24 focus:outline-none" x-show="selectedScenario === 'cook'">
-        <WorkflowSkillInfographic scenarioId="cook" lang={currentLang} />
-        <WorkflowCommandNav previous={getCommandNavItem('plan')} next={getCommandNavItem('code-review')} lang={currentLang} />
-      </div>
-      <div id="ck-code-review" tabindex="-1" class="scroll-mt-24 focus:outline-none" x-show="selectedScenario === 'code-review'">
-        <WorkflowSkillInfographic scenarioId="code-review" lang={currentLang} />
-        <WorkflowCommandNav previous={getCommandNavItem('cook')} next={getCommandNavItem('fix')} lang={currentLang} />
-      </div>
-      <div id="ck-fix" tabindex="-1" class="scroll-mt-24 focus:outline-none" x-show="selectedScenario === 'fix'">
-        <WorkflowSkillInfographic scenarioId="fix" lang={currentLang} />
-        <WorkflowCommandNav previous={getCommandNavItem('code-review')} next={getCommandNavItem('team')} lang={currentLang} />
-      </div>
-      <div id="ck-team" tabindex="-1" class="scroll-mt-24 focus:outline-none" x-show="selectedScenario === 'team'">
-        <WorkflowSkillInfographic scenarioId="team" lang={currentLang} />
-        <WorkflowCommandNav previous={getCommandNavItem('fix')} next={getCommandNavItem('preview')} lang={currentLang} />
-      </div>
-      <div id="ck-preview" tabindex="-1" class="scroll-mt-24 focus:outline-none" x-show="selectedScenario === 'preview'">
-        <WorkflowSkillInfographic scenarioId="preview" lang={currentLang} />
-        <WorkflowCommandNav previous={getCommandNavItem('team')} next={getCommandNavItem('brainstorm')} lang={currentLang} />
-      </div>
+      {quickRefScenarioIds.map((scenarioId, index) => {
+        const navGroup = quickRefScenarioGroups.find(group => group.includes(scenarioId)) || quickRefScenarioIds;
+        const groupIndex = navGroup.indexOf(scenarioId);
+        const previousId = navGroup[(groupIndex - 1 + navGroup.length) % navGroup.length];
+        const nextId = navGroup[(groupIndex + 1) % navGroup.length];
+        return (
+          <div id={`ck-${scenarioId}`} tabindex="-1" class="scroll-mt-24 focus:outline-none" x-show={`selectedScenario === '${scenarioId}'`}>
+            <WorkflowSkillInfographic scenarioId={scenarioId} lang={currentLang} />
+            <WorkflowCommandNav previous={getCommandNavItem(previousId)} next={getCommandNavItem(nextId)} lang={currentLang} />
+          </div>
+        );
+      })}
     </div>
   </section>
 
-  {/* Pipeline visualization (only for engineer kit) */}
-  <section x-show="activeKit === 'engineer' && (viewType !== 'combos' || selectedCombo)" x-transition>
+  {/* Pipeline visualization */}
+  <section x-show="viewType !== 'combos' || selectedCombo" x-transition>
     <h2 class="text-xs font-semibold text-gray-500 dark:text-white/30 uppercase tracking-wider mb-3">
       {isVi ? 'Pipeline' : 'Pipeline'}
     </h2>
     <WorkflowPipelineView lang={currentLang} />
   </section>
 
-  {/* Step detail panel (only for engineer kit) */}
-  <div x-show="activeKit === 'engineer' && (viewType === 'individual' || selectedCombo)" x-transition>
+  {/* Step detail panel */}
+  <div x-show="viewType === 'individual' || selectedCombo" x-transition>
     <WorkflowStepDetailPanel lang={currentLang} />
   </div>
 
-  {/* Keyboard hint (only for engineer kit) */}
-  <p x-show="activeKit === 'engineer'" class="text-[10px] text-gray-400 dark:text-white/20 text-center pb-4 border-b border-gray-200 dark:border-white/5">
+  {/* Keyboard hint */}
+  <p class="text-[10px] text-gray-400 dark:text-white/20 text-center pb-4 border-b border-gray-200 dark:border-white/5">
     {isVi
-      ? 'Phím tắt: Space = Play/Pause · ← → = Bước trước/sau'
+      ? 'Phím tắt: Space = Chạy/Tạm dừng · ← → = Bước trước/sau'
       : 'Keyboard: Space = Play/Pause · ← → = Prev/Next step'}
   </p>
 

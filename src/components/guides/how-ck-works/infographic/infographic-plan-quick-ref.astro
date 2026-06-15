@@ -28,16 +28,23 @@ const isVi = lang === 'vi';
 const ckPlanCliHref = isVi ? '/vi/guides/cli-commands#cli-cmd-ck-plan' : '/guides/cli-commands#cli-cmd-ck-plan';
 
 const text = {
-  eyebrow: isVi ? 'Quick Ref / Planning command' : 'Quick Ref / Planning command',
+  eyebrow: isVi ? 'Tóm tắt nhanh / Lệnh lập plan' : 'Quick Ref / Planning command',
   summary: isVi
     ? 'Dùng khi brief đã đủ rõ và cần tách thành phases, bước kiểm chứng, và lệnh bàn giao cho /ck:cook.'
     : 'Use it when the brief is clear enough to split into phases, validation gates, and a clean /ck:cook handoff.',
   afterBrainstorm: isVi ? 'Sau brainstorm / khi scope đã rõ' : 'After brainstorm / when scope is clear',
   hardGate: isVi ? 'Gate bắt buộc' : 'Required Gate',
-  hardGateBody: isVi
-    ? 'Chỉ tạo plan. Scaffolding dùng `ck plan create/check/uncheck`; không sửa tay bảng phases khi CLI có sẵn.'
-    : 'Plans only. Scaffolding uses `ck plan create/check/uncheck`; do not hand-edit the phases table when the CLI is available.',
-  cliReference: isVi ? 'Xem trong CLI commands' : 'View in CLI commands',
+  hardGateItems: isVi
+    ? [
+        { label: 'Plan only', detail: 'Chỉ tạo plan và phase files. Không triển khai code trong bước này.' },
+        { label: 'CLI-owned scaffolding', detail: 'Scaffolding dùng `ck plan create/check/uncheck`.' },
+        { label: 'Status integrity', detail: 'Không sửa tay bảng phases khi CLI có sẵn.' },
+      ]
+    : [
+        { label: 'Plan only', detail: 'Create only the plan and phase files. Do not implement code in this step.' },
+        { label: 'CLI-owned scaffolding', detail: 'Scaffolding uses `ck plan create/check/uncheck`.' },
+        { label: 'Status integrity', detail: 'Do not hand-edit the phases table when the CLI is available.' },
+      ],
   cliCommand: isVi ? 'Tham chiếu CLI' : 'CLI reference',
   noCode: isVi ? 'Không triển khai' : 'No implementation',
   noCodeDesc: isVi ? 'Chỉ tạo plan và phase files.' : 'Only creates plan and phase files.',
@@ -45,7 +52,7 @@ const text = {
   cliOwnedDesc: isVi ? 'Tạo và đổi trạng thái bằng `ck plan`.' : 'Create and update status through `ck plan`.',
   handoff: isVi ? 'Bàn giao rõ' : 'Clear handoff',
   handoffDesc: isVi ? 'Kết thúc bằng validate, red-team, cook, hoặc dừng.' : 'Ends with validate, red-team, cook, or stop.',
-  process: isVi ? 'Execution map' : 'Execution Map',
+  process: isVi ? 'Bản đồ thực thi' : 'Execution Map',
   processDesc: isVi ? 'Bốn lane chính: định vị scope, nghiên cứu, kiểm chứng, rồi bàn giao.' : 'Four lanes: orient scope, research, stress test, then hand off.',
   modes: isVi ? 'Mode nên dùng' : 'Mode Selection',
   modesDesc: isVi ? 'Bắt đầu với auto. Chỉ nâng mode khi scope hoặc rủi ro thật sự cần.' : 'Start with auto. Escalate only when scope or risk demands it.',
@@ -56,9 +63,9 @@ const text = {
   stack: isVi ? 'Stack được gọi khi cần' : 'Stack Used When Needed',
   extraFlags: isVi ? 'Flags thêm' : 'Extra Flags',
   extraFlagsDesc: isVi ? 'Kết hợp với mode để đổi cách plan tạo test hoặc task.' : 'Combine with a mode to change how the plan handles tests or tasks.',
-  research: isVi ? 'Research' : 'Research',
+  research: isVi ? 'Nghiên cứu' : 'Research',
   redTeam: isVi ? 'Red-team' : 'Red-team',
-  validation: isVi ? 'Validate' : 'Validate',
+  validation: isVi ? 'Kiểm chứng' : 'Validate',
   cook: isVi ? 'Cook' : 'Cook',
   deepDive: isVi ? data.deepDiveLink?.labelVi : data.deepDiveLink?.labelEn,
   deepDiveDesc: isVi
@@ -157,141 +164,67 @@ const modeAccent: Record<string, string> = {
 const modes = modeOrder
   .map(flag => data.workflowModes?.find(mode => mode.flag === flag))
   .filter(Boolean);
-const modeExamples: Record<string, { prompt: string; when: string; expected: string }> = isVi
-  ? {
-      '--auto': {
-        prompt: '/ck:plan Thiết kế lại luồng checkout để giảm lỗi thanh toán',
-        when: 'Brief đã đủ rõ, nhưng chưa chắc nên dùng fast, hard hay deep.',
-        expected: 'Agent tự chọn mức research, validate, red-team theo rủi ro.',
-      },
-      '--fast': {
-        prompt: '/ck:plan --fast Đổi text CTA trong Pricing section',
-        when: 'Việc nhỏ, ít dependency, rollback dễ.',
-        expected: 'Ra plan nhanh, bỏ research/red-team/validate nặng.',
-      },
-      '--hard': {
-        prompt: '/ck:plan --hard Refactor auth flow nhưng giữ backward compatibility',
-        when: 'Nhiều ràng buộc kỹ thuật, nhưng chưa cần deep theo từng phase.',
-        expected: 'Có research và red-team để bắt rủi ro kiến trúc sớm.',
-      },
-      '--deep': {
-        prompt: '/ck:plan --deep Tách billing module thành subscription, invoice, webhook',
-        when: 'Refactor lớn, nhiều dependency, tác động nhiều module.',
-        expected: 'Research sâu hơn, validate rõ hơn, phase có bằng chứng hơn.',
-      },
-      '--parallel': {
-        prompt: '/ck:plan --parallel Tối ưu dashboard loading và chart rendering',
-        when: 'Có thể chia thành nhiều nhánh độc lập chạy song song.',
-        expected: 'Plan giữ boundary rõ để handoff sang cook với --parallel.',
-      },
-      '--two': {
-        prompt: '/ck:plan --two Chọn kiến trúc sync dữ liệu offline-first',
-        when: 'Cần so sánh hai hướng tiếp cận trước khi chốt plan.',
-        expected: 'Hai phương án được phân tích trước, rồi mới chọn hướng triển khai.',
-      },
-    }
-  : {
-      '--auto': {
-        prompt: '/ck:plan Redesign checkout flow to reduce payment failures',
-        when: 'The brief is clear, but the right planning depth is not obvious.',
-        expected: 'The agent chooses research, validation, and red-team depth by risk.',
-      },
-      '--fast': {
-        prompt: '/ck:plan --fast Change the CTA copy in the Pricing section',
-        when: 'The task is small, low-dependency, and easy to roll back.',
-        expected: 'A quick plan without heavy research, red-team, or validation.',
-      },
-      '--hard': {
-        prompt: '/ck:plan --hard Refactor auth flow while preserving backward compatibility',
-        when: 'There are real technical constraints, but not a per-phase deep refactor.',
-        expected: 'Research and red-team catch architectural risk early.',
-      },
-      '--deep': {
-        prompt: '/ck:plan --deep Split billing into subscription, invoice, webhook modules',
-        when: 'The refactor is large, dependency-heavy, and touches multiple modules.',
-        expected: 'Deeper research, stronger validation, and evidence-backed phases.',
-      },
-      '--parallel': {
-        prompt: '/ck:plan --parallel Optimize dashboard loading and chart rendering',
-        when: 'The work can be split into independent tracks.',
-        expected: 'Clear boundaries that can be handed to cook with --parallel.',
-      },
-      '--two': {
-        prompt: '/ck:plan --two Choose an offline-first data sync architecture',
-        when: 'Two approaches must be compared before committing to a plan.',
-        expected: 'Both approaches are analyzed first, then one direction is selected.',
-      },
-    };
-const flagCards = isVi
-  ? [
-      {
-        command: '--tdd',
-        title: 'Tests-first mỗi phase',
-        desc: 'Composable flag: thêm cấu trúc tests-first vào từng phase.',
-        example: '/ck:plan --deep --tdd Refactor billing module',
-        note: '--deep --tdd là combo chính cho major refactor hoặc logic có contract quan trọng.',
-      },
-      {
-        command: '--no-tasks',
-        title: 'Bỏ task hydration',
-        desc: 'Không tạo Claude Tasks sau khi plan xong.',
-        example: '/ck:plan --fast --no-tasks Cập nhật copy trang guide',
-        note: 'Hợp với plan nhỏ hoặc docs-only, khi chưa muốn sinh task phụ.',
-      },
-    ]
-  : [
-      {
-        command: '--tdd',
-        title: 'Tests-first per phase',
-        desc: 'Composable flag: adds tests-first structure to each phase.',
-        example: '/ck:plan --deep --tdd Refactor the billing module',
-        note: '--deep --tdd is the main combo for major refactors or logic with important contracts.',
-      },
-      {
-        command: '--no-tasks',
-        title: 'Skip task hydration',
-        desc: 'Do not create Claude Tasks after the plan is generated.',
-        example: '/ck:plan --fast --no-tasks Update guide copy',
-        note: 'Best for small or docs-only plans where extra task creation is not needed yet.',
-      },
-    ];
-const tddCombos = isVi
-  ? [
-      {
-        command: '--hard --tdd',
-        title: 'Complex, cần research',
-        note: 'Khi task phức tạp nhưng chưa phải major refactor nhiều area.',
-      },
-      {
-        command: '--deep --tdd',
-        title: 'Recommended cho risky refactor',
-        note: 'Dùng khi refactor lớn, 5+ areas, architectural debt, hoặc cần per-phase scouting.',
-        recommended: true,
-      },
-      {
-        command: '--parallel --tdd',
-        title: 'Niche: song song + tests-first',
-        note: 'Chỉ dùng khi có nhiều workstream độc lập và mỗi lane vẫn cần test gate.',
-      },
-    ]
-  : [
-      {
-        command: '--hard --tdd',
-        title: 'Complex, needs research',
-        note: 'Use when the task is complex but not a major multi-area refactor.',
-      },
-      {
-        command: '--deep --tdd',
-        title: 'Recommended for risky refactors',
-        note: 'Use for large refactors, 5+ areas, architectural debt, or per-phase scouting.',
-        recommended: true,
-      },
-      {
-        command: '--parallel --tdd',
-        title: 'Niche: parallel + tests-first',
-        note: 'Use only when independent workstreams can run in parallel and each lane still needs test gates.',
-      },
-    ];
+const modeExamples: Record<string, { prompt: string; when: string; expected: string }> = Object.fromEntries(
+  (data.promptExamples || [])
+    .filter(p => p.labelEn.startsWith('--') && !p.labelEn.includes(' '))
+    .map(p => [p.labelEn, {
+      prompt: p.command,
+      when: isVi ? p.whenVi : p.whenEn,
+      expected: isVi ? p.expectedVi : p.expectedEn,
+    }])
+);
+// Build lookup map for extra flag card and tddCombo data from promptExamples.
+const planPromptMap = Object.fromEntries(
+  (data.promptExamples || []).map(p => [p.labelEn, p])
+);
+
+// Flag cards: visual/structural metadata stays here; prompt examples come from data.
+const flagCardDefs = [
+  {
+    command: '--tdd',
+    titleEn: 'Tests-first per phase',
+    titleVi: 'Tests-first mỗi phase',
+    descEn: 'Composable flag: adds tests-first structure to each phase.',
+    descVi: 'Composable flag: thêm cấu trúc tests-first vào từng phase.',
+    dataKey: 'flag-tdd',
+  },
+  {
+    command: '--no-tasks',
+    titleEn: 'Skip task hydration',
+    titleVi: 'Bỏ task hydration',
+    descEn: 'Do not create Claude Tasks after the plan is generated.',
+    descVi: 'Không tạo Claude Tasks sau khi plan xong.',
+    dataKey: 'flag-no-tasks',
+  },
+];
+
+const flagCards = flagCardDefs.map(def => {
+  const pd = planPromptMap[def.dataKey];
+  return {
+    command: def.command,
+    title: isVi ? def.titleVi : def.titleEn,
+    desc: isVi ? def.descVi : def.descEn,
+    example: pd ? pd.command : '',
+    note: pd ? (isVi ? pd.whenVi : pd.whenEn) : '',
+  };
+});
+
+// tddCombo entries: pulled from data using 'combo-{flag}' keys.
+const tddComboDefs = [
+  { dataKey: 'combo-hard-tdd' },
+  { dataKey: 'combo-deep-tdd' },
+  { dataKey: 'combo-parallel-tdd' },
+];
+
+const tddCombos = tddComboDefs.map(def => {
+  const pd = planPromptMap[def.dataKey];
+  return {
+    command: pd ? pd.command : '',
+    title: pd ? (isVi ? pd.expectedVi : pd.expectedEn) : '',
+    note: pd ? (isVi ? pd.whenVi : pd.whenEn) : '',
+    recommended: pd?.recommended ?? false,
+  };
+});
 const outputItems = (isVi ? data.reportOutput?.descVi : data.reportOutput?.descEn)
   ?.split('•')
   .map(item => item.trim())
@@ -304,7 +237,7 @@ const renderInlineCode = (value = '') => value
   .replace(/&/g, '&amp;')
   .replace(/</g, '&lt;')
   .replace(/>/g, '&gt;')
-  .replace(/`([^`]+)`/g, '<code class="rounded bg-white/80 px-1.5 py-0.5 font-mono text-[0.82em] text-amber-950 ring-1 ring-amber-200 dark:bg-amber-950/45 dark:text-amber-100 dark:ring-amber-700/60">$1</code>');
+  .replace(/`([^`]+)`/g, '<code class="inline-flex max-w-full whitespace-nowrap rounded bg-slate-100 px-1.5 py-0.5 font-mono text-[0.82em] text-slate-800 ring-1 ring-slate-300/70 dark:bg-slate-800/90 dark:text-slate-100 dark:ring-white/10">$1</code>');
 ---
 
 <div class="space-y-8">
@@ -348,18 +281,23 @@ const renderInlineCode = (value = '') => value
       {data.hardGate && (
         <aside class="relative border-t border-amber-200 bg-amber-50/80 p-5 dark:border-amber-800/50 dark:bg-amber-950/25 xl:border-l xl:border-t-0">
           <div class="flex items-center gap-2">
-            <span class="h-2 w-2 rounded-full bg-amber-500"></span>
+            <span class="relative flex h-2 w-2">
+              <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-60"></span>
+              <span class="relative inline-flex h-2 w-2 rounded-full bg-amber-500"></span>
+            </span>
             <p class="text-xs font-semibold uppercase tracking-wider text-amber-900 dark:text-amber-200">{text.hardGate}</p>
           </div>
-          <p class="mt-3 text-sm leading-6 text-amber-950/85 dark:text-amber-100/85" set:html={renderInlineCode(text.hardGateBody)} />
-          <a
-            href={ckPlanCliHref}
-            class="mt-4 inline-flex items-center gap-2 rounded-lg border border-amber-300/80 bg-white/75 px-3 py-2 text-xs font-semibold text-amber-900 transition hover:border-amber-400 hover:bg-amber-100 hover:text-amber-950 dark:border-amber-500/30 dark:bg-amber-400/10 dark:text-amber-100 dark:hover:border-amber-400/60 dark:hover:bg-amber-400/15 dark:hover:text-white"
-          >
-            <code class="font-mono">ck plan</code>
-            <span>{text.cliReference}</span>
-            <span aria-hidden="true">&rarr;</span>
-          </a>
+          <ol class="mt-3 space-y-2">
+            {(text.hardGateItems as { label: string; detail: string }[]).map((item, index) => (
+              <li class="grid grid-cols-[1.5rem_minmax(0,1fr)] gap-2.5 rounded-lg border border-amber-200/70 bg-white/65 p-2.5 ring-1 ring-amber-100/60 dark:border-amber-800/40 dark:bg-amber-950/30 dark:ring-amber-900/30">
+                <span class="flex h-6 w-6 items-center justify-center rounded-full bg-amber-500 font-mono text-[11px] font-bold text-white shadow-sm shadow-amber-500/30 dark:bg-amber-400 dark:text-amber-950">{index + 1}</span>
+                <div class="min-w-0">
+                  <p class="text-[11px] font-semibold uppercase tracking-wide text-amber-900 dark:text-amber-200">{item.label}</p>
+                  <p class="mt-0.5 text-xs leading-5 text-amber-950/85 dark:text-amber-100/85" set:html={renderInlineCode(item.detail)} />
+                </div>
+              </li>
+            ))}
+          </ol>
         </aside>
       )}
     </div>
@@ -527,7 +465,11 @@ const renderInlineCode = (value = '') => value
               <div class={`rounded-lg border p-3 ${combo.recommended ? 'border-violet-300 bg-white ring-1 ring-violet-200 dark:border-violet-700/60 dark:bg-violet-950/25 dark:ring-violet-800/40' : 'border-violet-200/70 bg-white/70 dark:border-violet-800/40 dark:bg-slate-950/30'}`}>
                 <div class="flex flex-wrap items-center gap-2">
                   <code class="rounded-lg bg-slate-100 px-2 py-1 font-mono text-xs font-semibold text-violet-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-violet-200 dark:ring-white/10">{combo.command}</code>
-                  {combo.recommended && <span class="rounded-full bg-violet-600 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white dark:bg-violet-400 dark:text-violet-950">Recommended</span>}
+                  {combo.recommended && (
+                    <span class="rounded-full bg-violet-600 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white dark:bg-violet-400 dark:text-violet-950">
+                      {isVi ? 'Khuyến nghị' : 'Recommended'}
+                    </span>
+                  )}
                 </div>
                 <p class="mt-2 text-sm font-semibold leading-5 text-slate-900 dark:text-white">{combo.title}</p>
                 <p class="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-400">{combo.note}</p>
