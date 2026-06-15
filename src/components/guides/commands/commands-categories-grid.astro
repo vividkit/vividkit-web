@@ -5,6 +5,7 @@ import { getLangFromUrl, type Language } from "@/i18n";
 import { getEngineerKitCategories } from "@/data/guides/commands-engineer-kit";
 import { getMarketingKitCategories } from "@/data/guides/commands-marketing-kit";
 import { styles } from "@/data/guides/commands-styles";
+import { workflowScenarios } from "@/data/guides/how-ck-works";
 
 interface Props {
   lang?: Language;
@@ -16,6 +17,38 @@ const t = useTranslations(currentLang);
 
 const stableCategories = getEngineerKitCategories(t as any);
 const marketingCategories = getMarketingKitCategories(t as any);
+
+// ─── Deep-link each command card to its How-CK-Works infographic ──────────────
+// The How-CK-Works guide selects a scenario from the URL hash `#ck-<scenarioId>`,
+// so every card maps to that page anchored at its matching scenario.
+const howCkWorksBase = currentLang === "vi" ? "/vi/guides/how-ck-works" : "/guides/how-ck-works";
+
+// Reduce a command to its skill key: keep the prefix + first skill token, drop any
+// `:subcommand` / `:*` tail. e.g. `/ckm:write:good` → `/ckm:write`, `/ck:plan` → `/ck:plan`.
+function commandKey(command: string): string {
+  const match = command.match(/^(\/ckm?:[a-z0-9-]+)/i);
+  return (match ? match[1] : command).trim().toLowerCase();
+}
+
+// Build command-key → scenario-id map straight from the scenario data (source of truth).
+const scenarioIdByCommandKey = new Map<string, string>();
+for (const scenario of workflowScenarios) {
+  scenarioIdByCommandKey.set(commandKey(scenario.command), scenario.id);
+}
+
+// Aliases for cards whose grid command differs from the scenario command but is the
+// same skill (the scenario file uses a different prefix/slug).
+const commandKeyAliases: Record<string, string> = {
+  "/ck:ck-graphify": "/ck:graphify",
+  "/ck:use-mcp": "/ckm:use-mcp",
+};
+
+function getHowItWorksHref(command: string): string | null {
+  const key = commandKey(command);
+  const resolvedKey = commandKeyAliases[key] ?? key;
+  const scenarioId = scenarioIdByCommandKey.get(resolvedKey);
+  return scenarioId ? `${howCkWorksBase}#ck-${scenarioId}` : null;
+}
 ---
 
 <div class="space-y-6">
@@ -167,9 +200,14 @@ const marketingCategories = getMarketingKitCategories(t as any);
           <p class="text-xs text-slate-500 mt-1">{category.description}</p>
         </div>
         <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-          {category.commands.map((cmd) => (
-            <div
-              class={`p-3 rounded-lg border transition-all duration-200 hover:shadow-sm h-full flex flex-col ${cmd.deprecated ? 'bg-slate-100 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 opacity-70' : `bg-slate-50 dark:bg-slate-900/50 ${styles[category.color].border}`}`}
+          {category.commands.map((cmd) => {
+            const howHref = getHowItWorksHref(cmd.command);
+            const CardTag = howHref ? "a" : "div";
+            return (
+            <CardTag
+              {...(howHref ? { href: howHref } : {})}
+              title={howHref ? t("commands.card_link_hint") : undefined}
+              class={`group relative p-3 rounded-lg border transition-all duration-200 h-full flex flex-col ${howHref ? 'cursor-pointer hover:-translate-y-0.5 hover:shadow-md hover:pb-11 hover:border-cyan-400/70 dark:hover:border-cyan-500/60 hover:bg-white dark:hover:bg-slate-800/70 hover:ring-1 hover:ring-cyan-400/30 dark:hover:ring-cyan-500/25' : 'hover:shadow-sm'} ${cmd.deprecated ? 'bg-slate-100 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 opacity-70' : `bg-slate-50 dark:bg-slate-900/50 ${styles[category.color].border}`}`}
             >
               <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
                 <div class="flex items-center gap-1.5 flex-wrap">
@@ -247,8 +285,18 @@ const marketingCategories = getMarketingKitCategories(t as any);
                   Replaces: <code class="text-red-500 line-through">{cmd.replacedCommand}</code>
                 </p>
               )}
-            </div>
-          ))}
+              {/* Floating navigate affordance — absolute, adds no layout spacing */}
+              {howHref && (
+                <span class="absolute bottom-2 right-2 z-10 flex items-center gap-1 rounded-full bg-cyan-500/10 dark:bg-cyan-400/15 px-2 py-1 text-[10px] font-semibold text-cyan-600 dark:text-cyan-400 opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200" aria-hidden="true">
+                  {t("commands.card_link_hint")}
+                  <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M7 17L17 7M17 7H8M17 7v9" />
+                  </svg>
+                </span>
+              )}
+            </CardTag>
+            );
+          })}
         </div>
       </div>
     ))}
@@ -315,9 +363,14 @@ const marketingCategories = getMarketingKitCategories(t as any);
           <p class="text-xs text-slate-500 mt-1">{category.description}</p>
         </div>
         <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-          {category.commands.map((cmd) => (
-            <div
-              class={`p-3 rounded-lg border transition-all duration-200 hover:shadow-sm h-full flex flex-col ${cmd.deprecated ? 'bg-slate-100 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 opacity-70' : `bg-slate-50 dark:bg-slate-900/50 ${styles[category.color].border}`}`}
+          {category.commands.map((cmd) => {
+            const howHref = getHowItWorksHref(cmd.command);
+            const CardTag = howHref ? "a" : "div";
+            return (
+            <CardTag
+              {...(howHref ? { href: howHref } : {})}
+              title={howHref ? t("commands.card_link_hint") : undefined}
+              class={`group relative p-3 rounded-lg border transition-all duration-200 h-full flex flex-col ${howHref ? 'cursor-pointer hover:-translate-y-0.5 hover:shadow-md hover:pb-11 hover:border-cyan-400/70 dark:hover:border-cyan-500/60 hover:bg-white dark:hover:bg-slate-800/70 hover:ring-1 hover:ring-cyan-400/30 dark:hover:ring-cyan-500/25' : 'hover:shadow-sm'} ${cmd.deprecated ? 'bg-slate-100 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 opacity-70' : `bg-slate-50 dark:bg-slate-900/50 ${styles[category.color].border}`}`}
             >
               <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
                 <div class="flex items-center gap-1.5 flex-wrap">
@@ -396,8 +449,18 @@ const marketingCategories = getMarketingKitCategories(t as any);
                   </code>
                 </div>
               )}
-            </div>
-          ))}
+              {/* Floating navigate affordance — absolute, adds no layout spacing */}
+              {howHref && (
+                <span class="absolute bottom-2 right-2 z-10 flex items-center gap-1 rounded-full bg-cyan-500/10 dark:bg-cyan-400/15 px-2 py-1 text-[10px] font-semibold text-cyan-600 dark:text-cyan-400 opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200" aria-hidden="true">
+                  {t("commands.card_link_hint")}
+                  <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M7 17L17 7M17 7H8M17 7v9" />
+                  </svg>
+                </span>
+              )}
+            </CardTag>
+            );
+          })}
         </div>
       </div>
     ))}

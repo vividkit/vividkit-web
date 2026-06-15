@@ -274,6 +274,7 @@ export const commands = {
   'commands.pro_tip.example': '→ AI brainstorms, lên kế hoạch và triển khai mọi thứ tự động! 🚀',
   // Categories & Tips
   'commands.categories.title': 'Tất Cả Lệnh Theo Danh Mục',
+  'commands.card_link_hint': 'Xem quy trình hoạt động',
   'commands.engineer_stable_note': 'Phiên bản stable & beta hiện tại của Engineer Kit',
   'commands.engineer_beta_caught_up': 'Không có beta mới — bản phát hành mới nhất đã bao gồm tất cả tính năng beta',
   'commands.marketing_stable_note': 'Phiên bản stable & beta hiện tại của Marketing Kit',
