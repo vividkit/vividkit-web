@@ -20,11 +20,11 @@ Step 7: Docs + Onboard → docs-manager, project-manager sub-agents → final re
 | Mode | Flag | Research | User Gates | Planning Skill | Cook Skill |
 |------|------|----------|------------|----------------|------------|
 | full | --full | Yes | Every phase | --hard | interactive |
-| auto | --auto (default) | Yes | Design only | --auto | --auto |
-| fast | --fast | Skip | None | --fast | --auto |
+| auto | --auto | Yes | Design only | --auto | --auto |
+| fast | --fast | Light | Cook review gates | --fast | interactive |
 | parallel | --parallel | Yes | Design only | --parallel | --parallel |
 
-Detection: explicit flag → default `--auto`.
+Detection: explicit flag → default `--full`.
 
 ## Skills Activated
 
@@ -32,7 +32,7 @@ Detection: explicit flag → default `--auto`.
 |-------|-------|
 | Step 4 | ck:plan (planning) |
 | Step 5-6 | ck:cook (implementation + test + review) |
-| Step 3 | ck:ai-multimodal (image generation), ck:chrome-devtools (screenshots) |
+| Step 3 | ck:ai-multimodal (image generation), ck:agent-browser (screenshots) |
 | Step 7 | ck:journal (final entry) |
 
 ## Sub-agents Spawned
@@ -40,9 +40,9 @@ Detection: explicit flag → default `--auto`.
 | Phase | Agent | Mandatory |
 |-------|-------|-----------|
 | Git Init | git-manager | Yes (all modes) |
-| Research | researcher (parallel) | Optional (skip in fast) |
-| Tech Stack | planner + researcher | Optional (skip in fast) |
-| Design | ui-ux-designer + researcher | Optional (skip in fast) |
+| Research | researcher (parallel) | Yes, bounded/light in fast |
+| Tech Stack | planner + researcher | Yes, bounded/light in fast |
+| Design | ui-ux-designer + researcher | Yes; fast skips design gate only |
 | Planning | via ck:plan skill | Yes |
 | Implementation | via ck:cook skill | Yes |
 | Docs | docs-manager | Yes |
@@ -59,7 +59,8 @@ Detection: explicit flag → default `--auto`.
 ## Design Gate (auto/parallel modes)
 
 Only user approval gate in auto mode. Wireframes generated as HTML at `./docs/wireframe/`.
-If rejected, iterate until approved. Full mode gates every phase; fast mode skips all gates.
+If rejected, iterate until approved. Full mode gates every major phase; fast mode runs
+bounded parallel research/design setup, skips the design gate, and keeps ck:cook review gates.
 
 ## Shared Phases (Step 5-7)
 

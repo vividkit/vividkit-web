@@ -5,7 +5,7 @@
 Source: `github.com/claudekit/claudekit-engineer/claude/agents/`
 
 brainstormer, code-reviewer, code-simplifier, debugger, docs-manager,
-fullstack-developer, git-manager, journal-writer, mcp-manager,
+fullstack-developer, git-manager, journal-writer,
 planner, project-manager, researcher, tester, ui-ux-designer
 
 ## Skills vs Agents vs Built-in Subagent Types
