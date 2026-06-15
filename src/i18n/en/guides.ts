@@ -169,7 +169,7 @@ export const guides = {
   'guides.donate.step_bank_title': 'Transfer manually',
   'guides.donate.step_bank_desc': 'If QR scan fails, use the MB Bank account details shown on this page.',
   'guides.donate.step_note_title': 'Keep it simple',
-  'guides.donate.step_note_desc': 'Any amount is appreciated. Add “VividKit” in the transfer note if your bank app asks for one.',
+  'guides.donate.step_note_desc': 'Any amount is appreciated. If your bank app asks for a transfer note, leave the default note as-is.',
   'guides.custom_hooks.title': 'ClaudeKit Hooks',
   'guides.custom_hooks.description': 'Understand ClaudeKit hook guard rails',
   'guides.flowchart.title': 'Command Finder',

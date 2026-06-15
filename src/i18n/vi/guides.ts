@@ -169,7 +169,7 @@ export const guides = {
   'guides.donate.step_bank_title': 'Chuyển khoản thủ công',
   'guides.donate.step_bank_desc': 'Nếu không quét được QR, dùng thông tin tài khoản MB Bank hiển thị trên trang này.',
   'guides.donate.step_note_title': 'Đơn giản là được',
-  'guides.donate.step_note_desc': 'Ủng hộ bao nhiêu cũng quý. Nếu app ngân hàng hỏi nội dung chuyển khoản, có thể ghi “VividKit”.',
+  'guides.donate.step_note_desc': 'Ủng hộ bao nhiêu cũng quý. Nếu app ngân hàng hỏi nội dung chuyển khoản, cứ để nội dung mặc định.',
   'guides.custom_hooks.title': 'ClaudeKit Hooks',
   'guides.custom_hooks.description': 'Hiểu lớp guard rails của ClaudeKit hooks',
   'guides.flowchart.title': 'Tìm Lệnh Phù Hợp',
