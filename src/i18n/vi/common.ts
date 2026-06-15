@@ -76,6 +76,7 @@ export const common = {
   'footer.links.documentation': 'Tài Liệu',
   'footer.links.guides': 'Hướng Dẫn',
   'footer.links.promotions': 'Khuyến Mãi',
+  'footer.links.donate': 'Ủng Hộ',
   'footer.links.api': 'API Reference',
   'footer.links.examples': 'Ví Dụ',
   'footer.links.about': 'Về Chúng Tôi',
