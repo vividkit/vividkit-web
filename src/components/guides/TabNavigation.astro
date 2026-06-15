@@ -23,6 +23,7 @@ export interface Props {
     | 'fix-logs'
     | 'hooks'
     | 'promotions'
+    | 'donate'
     | 'migrate'
     | 'how-ck-works'
     | 'claude-mechanics'
@@ -206,6 +207,24 @@ const navSections = [
         label: t('guides.uiux.title'),
         icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.396 3.395c.98-.18 1.933-.414 2.855-.693l1.955-1.956a8.827 8.827 0 01-4.186-3.416 19.584 19.584 0 00-4.218 4.218l-1.956 1.956a2.625 2.625 0 002.394 2.883l.003-.003h-.002z" /></svg>`,
         href: '/guides/uiux',
+      },
+    ],
+  },
+  {
+    id: 'resources',
+    label: t('guides.sections.resources'),
+    items: [
+      {
+        id: 'promotions',
+        label: t('guides.promotions.title'),
+        icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-9.75h4.5a2.25 2.25 0 010 4.5h-3a2.25 2.25 0 000 4.5H15M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`,
+        href: '/guides/promotions',
+      },
+      {
+        id: 'donate',
+        label: t('guides.donate.title'),
+        icon: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733C11.285 4.876 9.623 3.75 7.688 3.75 5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" /></svg>`,
+        href: '/guides/donate',
       },
     ],
   },
