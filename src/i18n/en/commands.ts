@@ -274,6 +274,7 @@ export const commands = {
   'commands.pro_tip.example': '→ AI brainstorms, plans, and implements everything automatically! 🚀',
   // Categories & Tips
   'commands.categories.title': 'All Commands by Category',
+  'commands.card_link_hint': 'See how it works',
   'commands.engineer_stable_note': 'Current stable & beta releases of Engineer Kit',
   'commands.engineer_beta_caught_up': 'No new beta — latest release includes all beta features',
   'commands.marketing_stable_note': 'Current stable & beta releases of Marketing Kit',
