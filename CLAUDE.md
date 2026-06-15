@@ -47,6 +47,23 @@ When running `/vk:changelog-sync`, update these locations:
 3. **Commands data**: `src/data/guides/commands-engineer-kit.ts`, `commands-marketing-kit.ts`
 4. **i18n strings**: `src/i18n/en/commands.ts`, `src/i18n/vi/commands.ts`
 
+### How CK Works Guide (`src/components/guides/how-ck-works/`, `src/data/guides/how-ck-works/`)
+
+Each skill has **2 data entries** that must stay in sync:
+
+| Layer | File | Content |
+|-------|------|---------|
+| Scenario (card) | `workflow-visualizer-scenarios.ts` | `titleEn/Vi`, `descEn/Vi`, `steps`, `icon`, `accentColor` |
+| Infographic (detail) | `skill-infographics-additional.ts` | `taglineEn/Vi`, `promptExamples`, `processFlow`, `workflowModes`, `guardrails`, `modeCards` |
+
+**During changelog-sync:**
+- **New skill** → use `/vk:add-scenario` (creates both scenario + infographic entries)
+- **Skill updated** (desc/flags/modes changed) → edit infographic data directly for 1-2 fields; use `/vk:audit-skill` for batch (5+ skills)
+- **Skill removed** → delete from both `workflow-visualizer-scenarios.ts` AND `skill-infographics-additional.ts`
+- **Periodic sweep** → `/vk:audit-skill` every few versions to catch drift across both layers
+
+**i18n rules:** `descVi` (scenario) and `taglineVi` (infographic) are separate — both need natural Vietnamese, not English copies.
+
 ### Other Guides
 - **Flowchart versions**: `flowchart-marketing-v12-data.ts`, `flowchart-marketing-summary-section.astro`
 - **Hooks data**: `src/data/guides/custom-hooks/custom-hooks-data.ts`

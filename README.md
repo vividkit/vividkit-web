@@ -84,7 +84,7 @@ While waiting for VividKit Desktop, master ClaudeKit through our comprehensive d
 - **Performance**: Sharp for image optimization, LightningCSS for CSS minification
 - **Design System**: Custom glassmorphism UI with three-font typography system
 
-## 🤖 VividKit Maintainer Skills (`/vk:*`)
+## 🤖 VividKit Maintainer Skills & Commands (`/vk:*`)
 
 Repo-specific skills that keep VividKit guides in sync with upstream ClaudeKit. Invoke via Claude Code using the `/vk:` prefix.
 
@@ -96,6 +96,7 @@ Repo-specific skills that keep VividKit guides in sync with upstream ClaudeKit. 
 | `/vk:audit-ck-cli` | Compare upstream `claudekit-cli` against the CLI/Migrate guides; propose updates per command (`ck migrate`, `ck init`, …) | `/vk:audit-ck-cli` or `/vk:audit-ck-cli page=guides/migrate command=migrate` |
 | `/vk:audit-skill` | Audit upstream ClaudeKit skill changes against the skill catalog rendered on the site | `/vk:audit-skill <skill-name>` |
 | `/vk:add-scenario` | Add a new scenario entry for a ClaudeKit command into the guides | `/vk:add-scenario` |
+| `/project:vk:update-how-ck-works` | Project custom command: orchestrates `/vk:audit-skill` + `/vk:add-scenario` to update How-CK-Works pages with detailed explanation, graphic quick refs, pipeline data, and prompt examples; use `--include-local-missing` to cover CK skills not yet on the guide | `/project:vk:update-how-ck-works --include-local-missing --limit 3` |
 
 ### Quick usage
 
@@ -123,7 +124,7 @@ Repo-specific skills that keep VividKit guides in sync with upstream ClaudeKit. 
 - **Reports** are written to `reference/changelog-reports/` (skill-generated).
 - Skills only **propose** changes — always review before applying them to `src/components/guides/*` or `src/data/guides/*`.
 
-See `.claude/skills/vk-*/SKILL.md` for per-skill details.
+See `.agents/skills/vk-*/SKILL.md` for per-skill details.
 
 ---
 

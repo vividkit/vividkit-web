@@ -216,7 +216,7 @@ export type CCSColor = keyof typeof COLOR_STYLES;
 
 // CCS upstream version reflected by this cheatsheet (synced via vk-audit-ccs).
 export const CCS_SYNCED_VERSION = "8.2.0";
-export const CCS_SYNCED_DATE = "2026-06-08";
+export const CCS_SYNCED_DATE = "2026-06-10";
 
 // Marker so unused-imports/lint won't strip Language import (kept for future per-lang content)
 export type _LangRef = Language;
