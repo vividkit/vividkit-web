@@ -64,6 +64,7 @@ export const common = {
   // Footer
   'footer.tagline': 'Build anything without terminal friction. Powered by ClaudeKit Framework.',
   'footer.copyright': '© 2025 VividKit. All rights reserved.',
+  'footer.sponsor': 'Sponsor on GitHub',
   // Footer links
   'footer.product': 'Product',
   'footer.resources': 'Resources',

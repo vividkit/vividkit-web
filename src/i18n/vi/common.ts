@@ -64,6 +64,7 @@ export const common = {
   // Footer
   'footer.tagline': 'Xây dựng mọi thứ không cần terminal friction. Powered by ClaudeKit Framework.',
   'footer.copyright': '© 2025 VividKit. All rights reserved.',
+  'footer.sponsor': 'Ủng hộ trên GitHub',
   // Footer links
   'footer.product': 'Sản Phẩm',
   'footer.resources': 'Tài Nguyên',
