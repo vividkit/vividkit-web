@@ -1,56 +1,63 @@
-# /ck:security — Security Audit (STRIDE + OWASP)
+# /ck:security-scan — Lightweight Security Scanner
 
-Source: `~/.claude/skills/ck-security/SKILL.md`
+Source: `reference/stable/claude/skills/security-scan/SKILL.md`
 
 ## Authoritative Flow
 
 ```
-1. Scope Resolution — expand glob or `full` keyword into file list, read all in-scope files
-2. STRIDE Analysis — evaluate 6 threat categories systematically:
-   S=Spoofing, T=Tampering, R=Repudiation, I=Info Disclosure, D=DoS, E=Elevation
-3. OWASP Top 10 Check — map findings to A01–A10 categories
-   → Uses references/stride-owasp-checklist.md for per-category checks
-4. Dependency Audit — run stack-appropriate tool (npm audit / pip-audit / govulncheck / bundle audit)
-5. Secret Detection — regex scan for API keys, passwords, tokens, private keys
-   → Redact values in output (first 4 + last 2 chars only)
-6. Finding Categorization — assign severity (Critical → High → Medium → Low → Info)
-7. Output — severity-ranked findings report with fix recommendations
-8. [--fix] Iterative Fix — sort by severity, apply one fix at a time, guard with tests
-   → Uses ck:autoresearch pattern for regression prevention
-   → Commit each fix: `security(fix-N): <description>`
-   → Stop early if guard fails
+1. Detect Project Type — identify JS/TS, Python, Go, Ruby, or other stacks
+2. Secret Scanning — always scan credentials first, verify placeholders, redact output
+3. Dependency Audit — run stack-appropriate audit when applicable
+   npm audit / pip audit / govulncheck / bundle audit
+4. Code Pattern Analysis — check common OWASP-style vulnerability patterns
+5. Env Exposure Check — detect tracked .env files and .gitignore coverage gaps
+6. Generate Report — severity summary, findings, recommendations, and scope declaration
 ```
 
 ## Modes
 
 | Mode | Invocation | Behavior |
 |------|-----------|----------|
-| Audit only | `/ck:security <scope>` | Scan → categorize → report |
-| Audit + Fix | `/ck:security <scope> --fix` | Scan → categorize → fix iteratively |
-| Bounded fix | `/ck:security <scope> --fix --iterations N` | Cap fix iterations to N |
+| Scoped scan | `/ck:security-scan <scope>` | Scan a bounded path or glob |
+| Secrets only | `/ck:security-scan --secrets-only` | Only secret and credential detection |
+| Dependencies only | `/ck:security-scan --deps-only` | Only dependency audit |
+| Full scan | `/ck:security-scan --full` | Secrets + dependencies + code patterns + env exposure |
 
-## Severity Definitions
+No-fix rule: this skill reports findings only. It does not modify code automatically.
 
-| Severity | Description | Fix Priority |
-|----------|-------------|-------------|
-| Critical | Exploitable now, data breach/RCE risk | Immediate — block release |
-| High | Exploitable with moderate effort | This sprint |
-| Medium | Limited exploitability or impact | Next sprint |
-| Low | Theoretical risk, defense-in-depth | Backlog |
-| Info | Best practice suggestion | Optional |
+## Scan Categories
+
+| Category | Method | Priority | Output |
+|----------|--------|----------|--------|
+| Secrets | Regex patterns + placeholder verification | High | Redacted findings and rotation guidance |
+| Dependencies | Stack audit tools | Medium | Severity summary and package details |
+| Code patterns | OWASP-style grep/review patterns | Medium | File/line findings with recommendations |
+| Env exposure | `git ls-files` + ignore checks | High | Tracked env warnings and remediation notes |
+
+## Report Output
+
+| Section | Contents |
+|---------|----------|
+| Summary | Project, scan date, files checked, severity counts |
+| Findings | Grouped by Secrets, Dependencies, Code, Env |
+| Recommendations | Rotation, dependency upgrades, code hardening |
+| Scope declaration | What the scan handles and what it does not cover |
+
+If `--auto` mode is active inside ck:cook, save report to `{CK_REPORTS_PATH}` or
+`plans/reports/security-scan-{date}.md`.
 
 ## Integration with Other Skills
 
 | Skill | Relationship |
 |-------|-------------|
-| ck:predict | Run security audit when predict's security persona flags concerns |
-| ck:autoresearch | Feed Critical/High findings for automated remediation (--fix mode) |
-| ck:scenario | Deeper auth flow testing with `--focus authorization` |
-| ck:plan | Schedule Medium/Low findings as sprint tasks |
+| ck:ship | Use before release when security gate is needed |
+| ck:test | Validate dependency/build impact after recommended fixes are applied elsewhere |
+| ck:plan | Turn Medium/Low findings into implementation tasks |
+| ck:security | Use for deeper STRIDE/OWASP audit or remediation workflow |
 
 ## Hard Gates
 
-1. **Secret redaction** — NEVER output actual secret values in reports.
-2. **No auto-modification without --fix** — audit-only mode is read-only.
-3. **Guard must pass** — each fix iteration verified by tests before proceeding.
+1. **Secret redaction** — never output actual secret values.
+2. **No credential execution** — never test or execute found credentials.
+3. **Report-only** — never modify code automatically.
 4. **Real credential found** — recommend immediate rotation.

@@ -1,87 +1,2348 @@
 {
-  "lastAuditDate": "2026-05-26",
+  "lastAuditDate": "2026-06-15",
   "sourceRoot": "reference/stable/claude",
   "guide": "src/data/guides/how-ck-works/workflow-visualizer-scenarios.ts",
-  "status": "fail",
+  "status": "pass",
   "notes": [
     "Report-only audit. No guide source files were modified.",
     "Stable source was used because the request referenced just-updated source.",
-    "~/.claude/skills/ck-plan/SKILL.md differs from stable only in the active-plan command path."
+    "~/.claude/skills/ck-plan/SKILL.md differs from stable only in the active-plan command path.",
+    "How-CK-Works custom command synced visible guide/UI.",
+    "How-CK-Works add-scenario synced all visible scenarios.",
+    "How-CK-Works add-scenario synced all visible scenarios and shared hooks/agents marker.",
+    "How-CK-Works add-scenario refreshed reference/local/guide hash groups for all visible scenarios.",
+    "How-CK-Works add-scenario refreshed reference/guide hash groups for all visible scenarios.",
+    "How-CK-Works full Engineer and Marketing coverage synced visible guide/UI.",
+    "2026-06-12 fact-check: removed mcp-manager from shared-concepts agent list (upstream has 13 agents); rewrote ck-code-review.md to SKILL.md v2.0.0 (adversarial Stage 3 removed upstream).",
+    "How-CK-Works add-scenario synced: new beta skills (ghpm, html-video, review-pr, vibe) + tech-graph scenario; architecture/scenario/infographic/UI registration.",
+    "Renamed from chrome-devtools (engineer); real Chrome profile automation via Chrome DevTools MCP; scenario+infographic+arch doc+catalog updated."
   ],
   "auditedScenarios": {
     "brainstorm": {
-      "date": "2026-05-26",
-      "status": "warn",
-      "sourceHashes": {
-        "skills/brainstorm/SKILL.md": "sha256:2415e6b6ac828572e8256317910b90b024e3d1fbb6ac717d6f707f60582a56f3"
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/brainstorm/SKILL.md": "sha256:2415e6b6ac828572e8256317910b90b024e3d1fbb6ac717d6f707f60582a56f3"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-brainstorm.md": "sha256:9a759c921f831aa1ea2cc0bc3f51a5b5eb43ded82b50c70311056211552fb29b"
       }
     },
     "plan": {
-      "date": "2026-05-26",
-      "status": "warn",
-      "sourceHashes": {
-        "skills/ck-plan/SKILL.md": "sha256:9532e5bbb53baa708e0460fb091d1458054455e7328f5a0af1e1917ee9fd3455",
-        "skills/ck-plan/references/archive-workflow.md": "sha256:81af37b4ccca4ad73160a91aadb39d754d997c1dfce9dc0cda6bb89c8801c1f8",
-        "skills/ck-plan/references/codebase-understanding.md": "sha256:c1e78ef9dba69a667f240cec791fb8ccec0d711c96fd69d3e188d2ace061eb2b",
-        "skills/ck-plan/references/output-standards.md": "sha256:73cc27ee3f24aacd3c74b6904255b52e0631bb3491e00caa7fca92773c044066",
-        "skills/ck-plan/references/plan-organization.md": "sha256:8d3df001cef1af99270d55c65d67a479f46454ce3c8b7647b4f4937ce55d2330",
-        "skills/ck-plan/references/red-team-personas.md": "sha256:4c73b8dd3aa6607a5796a02a2ff33fbd8698c659fc27f7ab100df8651c0a196c",
-        "skills/ck-plan/references/red-team-workflow.md": "sha256:13d03a86e9037b4a0facff5f4a018a632e2d14c929ce75558c55fcdc56c5ac11",
-        "skills/ck-plan/references/research-phase.md": "sha256:b921f91f8f2b1566824625a7ab35ae9572473c6a96ba8979b0a23f21f9e8727e",
-        "skills/ck-plan/references/scope-challenge.md": "sha256:429c130ca8042838f14c402abba60128031e06498269b6a52437bea91491db74",
-        "skills/ck-plan/references/solution-design.md": "sha256:805525a1f228e080809cd8794735ed148fb37c2702517a8982488f72a31ab7f0",
-        "skills/ck-plan/references/task-management.md": "sha256:1ab2b21f7691f6b266d5e9bb4a6b9af6da429568293691714753aea57d8be5e1",
-        "skills/ck-plan/references/validate-question-framework.md": "sha256:d868ac6e03e395857186f801127b2f4b47c8aaabf5326fc2a25982804a0c113c",
-        "skills/ck-plan/references/validate-workflow.md": "sha256:70790813c733762630c0e1547ce61b737e1685d6a0837bea15c204ab378c4f0d",
-        "skills/ck-plan/references/verification-roles.md": "sha256:5cdf4d92e655bb1ea31afff352ab13a4a393411c22b3c5d3717a7c4e1054aa38",
-        "skills/ck-plan/references/workflow-modes.md": "sha256:e400c7f18c31e43d11bca33d9244ce19b7d455dfc3f2797f25922c6f771a47e3"
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/ck-plan/SKILL.md": "sha256:9532e5bbb53baa708e0460fb091d1458054455e7328f5a0af1e1917ee9fd3455",
+        "reference/stable/claude/skills/ck-plan/references/archive-workflow.md": "sha256:81af37b4ccca4ad73160a91aadb39d754d997c1dfce9dc0cda6bb89c8801c1f8",
+        "reference/stable/claude/skills/ck-plan/references/codebase-understanding.md": "sha256:c1e78ef9dba69a667f240cec791fb8ccec0d711c96fd69d3e188d2ace061eb2b",
+        "reference/stable/claude/skills/ck-plan/references/output-standards.md": "sha256:73cc27ee3f24aacd3c74b6904255b52e0631bb3491e00caa7fca92773c044066",
+        "reference/stable/claude/skills/ck-plan/references/plan-organization.md": "sha256:8d3df001cef1af99270d55c65d67a479f46454ce3c8b7647b4f4937ce55d2330",
+        "reference/stable/claude/skills/ck-plan/references/red-team-personas.md": "sha256:4c73b8dd3aa6607a5796a02a2ff33fbd8698c659fc27f7ab100df8651c0a196c",
+        "reference/stable/claude/skills/ck-plan/references/red-team-workflow.md": "sha256:13d03a86e9037b4a0facff5f4a018a632e2d14c929ce75558c55fcdc56c5ac11",
+        "reference/stable/claude/skills/ck-plan/references/research-phase.md": "sha256:b921f91f8f2b1566824625a7ab35ae9572473c6a96ba8979b0a23f21f9e8727e",
+        "reference/stable/claude/skills/ck-plan/references/scope-challenge.md": "sha256:429c130ca8042838f14c402abba60128031e06498269b6a52437bea91491db74",
+        "reference/stable/claude/skills/ck-plan/references/solution-design.md": "sha256:805525a1f228e080809cd8794735ed148fb37c2702517a8982488f72a31ab7f0",
+        "reference/stable/claude/skills/ck-plan/references/task-management.md": "sha256:1ab2b21f7691f6b266d5e9bb4a6b9af6da429568293691714753aea57d8be5e1",
+        "reference/stable/claude/skills/ck-plan/references/validate-question-framework.md": "sha256:d868ac6e03e395857186f801127b2f4b47c8aaabf5326fc2a25982804a0c113c",
+        "reference/stable/claude/skills/ck-plan/references/validate-workflow.md": "sha256:70790813c733762630c0e1547ce61b737e1685d6a0837bea15c204ab378c4f0d",
+        "reference/stable/claude/skills/ck-plan/references/verification-roles.md": "sha256:5cdf4d92e655bb1ea31afff352ab13a4a393411c22b3c5d3717a7c4e1054aa38",
+        "reference/stable/claude/skills/ck-plan/references/workflow-modes.md": "sha256:e400c7f18c31e43d11bca33d9244ce19b7d455dfc3f2797f25922c6f771a47e3"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-plan.md": "sha256:9b7ad5e69fc304924aa1176c1d78c4f610673704209a522fabb4ac64dc98f02b"
       }
     },
     "cook": {
-      "date": "2026-05-26",
-      "status": "fail",
-      "sourceHashes": {
-        "skills/cook/README.md": "sha256:25627695ecfb2b3d37e341ecc10d1bac405c7f3fe2f751168a0e44e43132e4ed",
-        "skills/cook/SKILL.md": "sha256:8ebb87a03162bf67781525cb3d747c57b60b082ba15134f371e138fdc8ba418f",
-        "skills/cook/references/intent-detection.md": "sha256:13992d745375ba8310fc86a2789f19b9a2c28231822eabb456c298f9149b0f9b",
-        "skills/cook/references/review-cycle.md": "sha256:5ee742d72b9c47acf7bc6e9862698080ed1bd7840651ba3d48346d87f3fb519b",
-        "skills/cook/references/subagent-patterns.md": "sha256:3e89c8eabf93870e63748968b0bb074b32b7d513052c13c3f93bc7aec55142cb",
-        "skills/cook/references/workflow-steps.md": "sha256:589fc134edeec67cd70ec7ce8cea2964f57f5718bc8f0159f2eee75591b5cfed",
-        "skills/_shared/references/workflow-artifacts.md": "sha256:ac1b15de6beebd3cc259398a34283f0eeb21c55732e26a3539f04733569de439"
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/_shared/references/workflow-artifacts.md": "sha256:ac1b15de6beebd3cc259398a34283f0eeb21c55732e26a3539f04733569de439",
+        "reference/stable/claude/skills/cook/README.md": "sha256:25627695ecfb2b3d37e341ecc10d1bac405c7f3fe2f751168a0e44e43132e4ed",
+        "reference/stable/claude/skills/cook/SKILL.md": "sha256:8ebb87a03162bf67781525cb3d747c57b60b082ba15134f371e138fdc8ba418f",
+        "reference/stable/claude/skills/cook/references/intent-detection.md": "sha256:13992d745375ba8310fc86a2789f19b9a2c28231822eabb456c298f9149b0f9b",
+        "reference/stable/claude/skills/cook/references/review-cycle.md": "sha256:5ee742d72b9c47acf7bc6e9862698080ed1bd7840651ba3d48346d87f3fb519b",
+        "reference/stable/claude/skills/cook/references/subagent-patterns.md": "sha256:3e89c8eabf93870e63748968b0bb074b32b7d513052c13c3f93bc7aec55142cb",
+        "reference/stable/claude/skills/cook/references/workflow-steps.md": "sha256:589fc134edeec67cd70ec7ce8cea2964f57f5718bc8f0159f2eee75591b5cfed"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-cook.md": "sha256:42177577590a092638f2886cb5baf8707ca550957787a8ec3e470cbdf795096f"
       }
     },
     "fix": {
-      "date": "2026-05-26",
-      "status": "fail",
-      "sourceHashes": {
-        "skills/fix/SKILL.md": "sha256:4a44da3e47655c7ae4e746211002e05ca9cb9b964215a354078f3b09af81ccfc",
-        "skills/fix/references/complexity-assessment.md": "sha256:fe34c07a16940f834f4cfc18440d9c3a20ff85e0b53fbc5d5ba77881730b4052",
-        "skills/fix/references/diagnosis-protocol.md": "sha256:8ea656105b6847c7fa4a83af77aa0198b464bed445dd022d06a75d6c3476ec5c",
-        "skills/fix/references/mode-selection.md": "sha256:f9e281e5e6a595f4db167cfef0287a697ba3b8784ca2db863d1827891e698c27",
-        "skills/fix/references/parallel-exploration.md": "sha256:b1aff6077a68a6061672312d8ff338a8f7d3822790c932a4634a70840a44f129",
-        "skills/fix/references/prevention-gate.md": "sha256:5ab219c4860a15574a1100397361e198766b0725022f2ff0afcfdce398c8e569",
-        "skills/fix/references/review-cycle.md": "sha256:e3179a130c5b3b1f0e1a4ff75b3c1af3aafbbb1a87f753e739b809d1e89c95ea",
-        "skills/fix/references/skill-activation-matrix.md": "sha256:60151b3da2fdd605615366f579a4628f133d2c18df81a62a50b79e5308c10c17",
-        "skills/fix/references/task-orchestration.md": "sha256:1f6d3895978bcd6a254904728bf8ba71e68dd347ae6777b55496b40b8f0c9a83",
-        "skills/fix/references/workflow-ci.md": "sha256:905dbdae740bee9909aa6714bbe57042960574620273a80f7fd2c288e5a57a92",
-        "skills/fix/references/workflow-deep.md": "sha256:a8f9f41b4323be960298264035e776ed62518ad3104f18f829a592fdbc35528f",
-        "skills/fix/references/workflow-logs.md": "sha256:505e006df58c5b71cb059a78d5f2b13826b23676563a0cd5302631647bde69df",
-        "skills/fix/references/workflow-quick.md": "sha256:59783e8c68c2210efa3f8a799377b20ea3547ff7e01c4cc4ba4900fc28ecdb91",
-        "skills/fix/references/workflow-standard.md": "sha256:ea1a014113df397719e82cb918d75ff1115889bb2a82db40a681d3e9533541ee",
-        "skills/fix/references/workflow-test.md": "sha256:175f2d16955954a40fe8bacd3a2c100162c6981867da2f474980ade5c4a80f0b",
-        "skills/fix/references/workflow-types.md": "sha256:b0c0f7225f614af68f3d2c98234aff2339ad78a06607b96da9791a0358a1e5b3",
-        "skills/fix/references/workflow-ui.md": "sha256:fa5bffbbed70361086255da1f9ac9710bde29d2d7a022951b21076fe748f1d7e",
-        "skills/_shared/references/workflow-artifacts.md": "sha256:ac1b15de6beebd3cc259398a34283f0eeb21c55732e26a3539f04733569de439"
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/_shared/references/workflow-artifacts.md": "sha256:ac1b15de6beebd3cc259398a34283f0eeb21c55732e26a3539f04733569de439",
+        "reference/stable/claude/skills/fix/SKILL.md": "sha256:4a44da3e47655c7ae4e746211002e05ca9cb9b964215a354078f3b09af81ccfc",
+        "reference/stable/claude/skills/fix/references/complexity-assessment.md": "sha256:fe34c07a16940f834f4cfc18440d9c3a20ff85e0b53fbc5d5ba77881730b4052",
+        "reference/stable/claude/skills/fix/references/diagnosis-protocol.md": "sha256:8ea656105b6847c7fa4a83af77aa0198b464bed445dd022d06a75d6c3476ec5c",
+        "reference/stable/claude/skills/fix/references/mode-selection.md": "sha256:f9e281e5e6a595f4db167cfef0287a697ba3b8784ca2db863d1827891e698c27",
+        "reference/stable/claude/skills/fix/references/parallel-exploration.md": "sha256:b1aff6077a68a6061672312d8ff338a8f7d3822790c932a4634a70840a44f129",
+        "reference/stable/claude/skills/fix/references/prevention-gate.md": "sha256:5ab219c4860a15574a1100397361e198766b0725022f2ff0afcfdce398c8e569",
+        "reference/stable/claude/skills/fix/references/review-cycle.md": "sha256:e3179a130c5b3b1f0e1a4ff75b3c1af3aafbbb1a87f753e739b809d1e89c95ea",
+        "reference/stable/claude/skills/fix/references/skill-activation-matrix.md": "sha256:60151b3da2fdd605615366f579a4628f133d2c18df81a62a50b79e5308c10c17",
+        "reference/stable/claude/skills/fix/references/task-orchestration.md": "sha256:1f6d3895978bcd6a254904728bf8ba71e68dd347ae6777b55496b40b8f0c9a83",
+        "reference/stable/claude/skills/fix/references/workflow-ci.md": "sha256:905dbdae740bee9909aa6714bbe57042960574620273a80f7fd2c288e5a57a92",
+        "reference/stable/claude/skills/fix/references/workflow-deep.md": "sha256:a8f9f41b4323be960298264035e776ed62518ad3104f18f829a592fdbc35528f",
+        "reference/stable/claude/skills/fix/references/workflow-logs.md": "sha256:505e006df58c5b71cb059a78d5f2b13826b23676563a0cd5302631647bde69df",
+        "reference/stable/claude/skills/fix/references/workflow-quick.md": "sha256:59783e8c68c2210efa3f8a799377b20ea3547ff7e01c4cc4ba4900fc28ecdb91",
+        "reference/stable/claude/skills/fix/references/workflow-standard.md": "sha256:ea1a014113df397719e82cb918d75ff1115889bb2a82db40a681d3e9533541ee",
+        "reference/stable/claude/skills/fix/references/workflow-test.md": "sha256:175f2d16955954a40fe8bacd3a2c100162c6981867da2f474980ade5c4a80f0b",
+        "reference/stable/claude/skills/fix/references/workflow-types.md": "sha256:b0c0f7225f614af68f3d2c98234aff2339ad78a06607b96da9791a0358a1e5b3",
+        "reference/stable/claude/skills/fix/references/workflow-ui.md": "sha256:fa5bffbbed70361086255da1f9ac9710bde29d2d7a022951b21076fe748f1d7e"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-fix.md": "sha256:38718484324d430e6f285b5759572ae63a4358b9f7dbba11a217d2c968804752"
       }
     },
     "shared-hooks-agents": {
-      "date": "2026-05-26",
-      "status": "fail",
-      "sourceHashes": {
-        "settings.json": "sha256:0136eb27c94f15acc10a59ca8542bac4fc507c92b705c5f409d3b89190d868f3",
-        "agents-file-list": "sha256:c8a5a13af3f0cd10974dbe2787bdd9a2fff3cf83df1451292d04f0243c03a25b"
+      "date": "2026-06-12",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/settings.json": "sha256:0136eb27c94f15acc10a59ca8542bac4fc507c92b705c5f409d3b89190d868f3",
+        "docs/ck-architecture/shared-concepts.md": "sha256:d8604f4bbc998c880cb27e7c1f554ddfecfe5c5faec5b042416b2f813473d917"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/shared-concepts.md": "sha256:d8604f4bbc998c880cb27e7c1f554ddfecfe5c5faec5b042416b2f813473d917"
+      }
+    },
+    "ai-artist": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/ai-artist/SKILL.md": "sha256:c80395d04e537ee6e84bed8e0ff66d3506ae4522fce0c25d0ecd4393af7a4157",
+        "reference/stable/claude/skills/ai-artist/references/advanced-techniques.md": "sha256:6f11ee79809b1aa8acc3630d775eddf40c3f3e6c1ade9526553a863490480a17",
+        "reference/stable/claude/skills/ai-artist/references/awesome-nano-banana-pro-prompts.md": "sha256:423b32cb2f9190cebe3b595797813d6342a0ea560f4c83809e5d23e0359f3d5b",
+        "reference/stable/claude/skills/ai-artist/references/domain-code.md": "sha256:121e4d719cf4a152a979429beb4f28794ddf205304bd625768d6c98972d4110a",
+        "reference/stable/claude/skills/ai-artist/references/domain-data.md": "sha256:755ee62aaeb6ce900a64c10090b5ae3b4a24b29d32cea669743047f42f884cca",
+        "reference/stable/claude/skills/ai-artist/references/domain-marketing.md": "sha256:c150d530b506006ccb3167c2c8af58f674f8b90c68843d6ea5813474386f1c37",
+        "reference/stable/claude/skills/ai-artist/references/domain-patterns.md": "sha256:ba8d26386876efe1311539b23c0ccac26d87aa2adaa1b9da4753e8aa99026c29",
+        "reference/stable/claude/skills/ai-artist/references/domain-writing.md": "sha256:e2e415cf3c3755dfc5cd43282dc19a8cc3b718bbab776c3ca14d8b143c90b054",
+        "reference/stable/claude/skills/ai-artist/references/image-prompting.md": "sha256:4fb4a761cddc47d5f6e77c77e2833f1e8143253682a3d16ce7383918c67b8b61",
+        "reference/stable/claude/skills/ai-artist/references/llm-prompting.md": "sha256:ed4f343e2055a659617104a65f25d78abe239af4e8c56a7430c46d188e415d26",
+        "reference/stable/claude/skills/ai-artist/references/nano-banana.md": "sha256:c4ce848d8d93ce95d031955c6a08a10db37e5a75850499cfe8af7e1c9f582ffb",
+        "reference/stable/claude/skills/ai-artist/references/reasoning-techniques.md": "sha256:571838b5c6f3665ec58438fc9f653cbcabb5b17fc69102b9d2819dddffc5bc99",
+        "reference/stable/claude/skills/ai-artist/references/validation-workflow.md": "sha256:53be26fb0ac322ed5654b6a0e3ca495f16fd9471a7e23f0a0a6dbd1771778c2b"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-ai-artist.md": "sha256:9434fa492e4b3e0f9c30fd3532e0ee7647692db494af83b190984b011cfd9941"
+      }
+    },
+    "agentize": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/agentize/SKILL.md": "sha256:9a9605b34caf30d1769a0c74723f4c6cd0322095d9a0424c069b974552b6f223",
+        "reference/stable/claude/skills/agentize/references/agent-centric-design.md": "sha256:36e99a3f58d9beac987f9c193706b0141bdcf42f316bf8ce48dd97da27486f3b",
+        "reference/stable/claude/skills/agentize/references/auth-resolution-chain.md": "sha256:c4a64bf71b191c04d5ca117745886f6025450af2ddc41f3b52e9d7219ef7d532",
+        "reference/stable/claude/skills/agentize/references/challenge-framework.md": "sha256:8dced43663e0adc2e2d5c54a97d3feb87458f98f8b43d747fa49f8af56c2d28c",
+        "reference/stable/claude/skills/agentize/references/deployment-guide.md": "sha256:f81c35b4280fdae09c8e01670f384bfc3a72608eaf0011fbf41d70a74cff60d8",
+        "reference/stable/claude/skills/agentize/references/mcp-transports.md": "sha256:15367543f53f22c99db297e6c04e8da7e05abee1b78628ee9e86e173f47b28da",
+        "reference/stable/claude/skills/agentize/references/monorepo-layout.md": "sha256:0584b88e40e6a4bf7c70293436165c990ddd652d56ad7854483a0f5cff70013d"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-agentize.md": "sha256:58933d66e16c23e2d70aed7a72e11f5a7fb1c6468cc503a02cd134c6f76d9259"
+      }
+    },
+    "cti-expert": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/cti-expert/README.md": "sha256:95e2299e019bbb58f3259dd26d8222a44884404df5e4a994644c1f3cd4f4d229",
+        "reference/stable/claude/skills/cti-expert/SKILL.md": "sha256:2a3fa754bf4d58d6e32ab25011c9babd3d8e9d9e2f83061b29c1ed45fca833ad",
+        "reference/stable/claude/skills/cti-expert/analysis/deviation-detector.md": "sha256:3191975a62c0352fecaa12d7eabf4c693a2fc341ffd3a004d101549cbef031ff",
+        "reference/stable/claude/skills/cti-expert/analysis/weight-engine.md": "sha256:d8c3e148f4572b290cc360cf7a334626ffeca3a76dfb0c5c9348c2c8b24c73a9",
+        "reference/stable/claude/skills/cti-expert/connectors/maltego-export.md": "sha256:d820f8715f1c869305fe73c8213d12f59e80ae0cf0b858c7c05273b4f0ef28be",
+        "reference/stable/claude/skills/cti-expert/connectors/notion-schema.md": "sha256:2a9632f09d96f54c6b87b9f208c57c4ed513feeb0f13741f42d5f81b86b07c5b",
+        "reference/stable/claude/skills/cti-expert/connectors/obsidian-setup.md": "sha256:593c53e05e5f2c2c9969559ac5d1aa6407c118b682b94d736a5a3498d635fe04",
+        "reference/stable/claude/skills/cti-expert/engine/conflict-resolver.md": "sha256:05217a482537106de579b8b193655f087cd9926bcb38b5fe127afcacd89eca01",
+        "reference/stable/claude/skills/cti-expert/engine/finding-framework.md": "sha256:c0ece472bdd835107700c257ffad098528fff2124764975229be699ce1a11222",
+        "reference/stable/claude/skills/cti-expert/engine/subject-registry.md": "sha256:e0918353e62ee96c37b22206be58e7168d45b47744ededa5684d8ee3a432855c",
+        "reference/stable/claude/skills/cti-expert/experience/layered-detail.md": "sha256:a64b068ef0d17ab8ef5580c7e613fde2542478bbaa477d89edfbcd3bdaacc567",
+        "reference/stable/claude/skills/cti-expert/experience/skill-tiers.md": "sha256:6dbd691f0943216b8747748aa3715be92729c61d5e742dcc385a113ed0cf8dfc",
+        "reference/stable/claude/skills/cti-expert/techniques/agentflow-enrichment.md": "sha256:e4e56fc9e11f8655b0d77711ba8e71ed16ac78b11334356dcbd1954f1b2f5ed1"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-cti-expert.md": "sha256:fa70b4503c52df88b8cacddea75f5d1b840caeffabff537dace77cd7af4a012d"
+      }
+    },
+    "retro": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/retro/SKILL.md": "sha256:821c46c903241ca72a51cd676870bc53aee036aea836b83924b400eac0125bf4",
+        "reference/stable/claude/skills/retro/references/metrics-guide.md": "sha256:2a06dd83ad6928134f3eed76091dcb522ffec489613b7c227d19d3c8e70d9460",
+        "reference/stable/claude/skills/retro/references/report-template.md": "sha256:2528064ff0732b88045d056e3f39536e1cda9a449212eaf8f7d91ffa995d339d"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-retro.md": "sha256:35633768a75c30a8822db7d66efe4ba6460d627c7a642a5bd62df87707ffeac2"
+      }
+    },
+    "graphify": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/ck-graphify/SKILL.md": "sha256:fdfd81a7b93598c8115cf98338bf9431cef01ad5e0f1c62c8ded3a79bf864684"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-graphify.md": "sha256:d46c8cd24a43af2f0d74e83a1798c26e782ab1f422f303c7c5fdf11697026577"
+      }
+    },
+    "security": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/ck-security/SKILL.md": "sha256:4032dbdae97bd09ea6aa714e1b9e817c3ae65298ba962f6b3c09765c21ba754f",
+        "reference/stable/claude/skills/ck-security/references/red-team-personas.md": "sha256:0d8c2b64a4f1b546cf1a0a7f0d89e435e51f15783f37428f1e118b5496513394",
+        "reference/stable/claude/skills/ck-security/references/stride-owasp-checklist.md": "sha256:1ef185a3ea57a56ae0018deffd027486e55c2485adfbcbd3ad3bea7fa6afdbe7"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-security.md": "sha256:a92c4131751b624315de67ca1c0be8e0f03c97ab55269d1514d91f6b8849e204"
+      }
+    },
+    "repomix": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/repomix/SKILL.md": "sha256:4588e81dfa2c580657638fe5295e28067fb854f75360efb45ba5a36987d8c577",
+        "reference/stable/claude/skills/repomix/references/configuration.md": "sha256:a40386b0ca68061d03ba2ae6d1a8109306895b13699e1e05bd4b8b4c4fa7912d",
+        "reference/stable/claude/skills/repomix/references/usage-patterns.md": "sha256:6e28825bf0c97e05dc367ba590487a6ecb0b3b530ff3540429d761b03b2ad1ed"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-repomix.md": "sha256:a3c1928f5bea994217fa24a7045d762fea45d8df6cf6d89284a6705e36fe736f"
+      }
+    },
+    "llms": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/llms/SKILL.md": "sha256:6618a8f696423b9eb889c62c269ca269dae01e4317770c82e4ddd472ef29385d",
+        "reference/stable/claude/skills/llms/references/llms-txt-specification.md": "sha256:1b63d3bb8b67bff0a2dbe116ef4befc27573bd0e7d63e9436952b94b4652deab"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-llms.md": "sha256:f4e0e28dcde77bdd9bfb0786d3e51bac1c13f6863077ddbc1d06de550a1db188"
+      }
+    },
+    "scenario": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/ck-scenario/SKILL.md": "sha256:c6903426d984f73796888d35b4cb5b0635b8bc726bdeadf7742b821c22edf4cc",
+        "reference/stable/claude/skills/ck-scenario/references/saturation-loop.md": "sha256:bd423c2dba39f715c09a2f40c00cde9f0aa29743e355a8c960e8940e44e489b2"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-scenario.md": "sha256:85a8968bf0c6b7507a2612c81971954cce822825aac4029655102b02845ff548"
+      }
+    },
+    "docs": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/docs/SKILL.md": "sha256:600985e35fba0b7f405f3761164ee7a7a0263302ebb2ced7e24767b51fdb1e6a",
+        "reference/stable/claude/skills/docs/references/init-workflow.md": "sha256:ad20e7954c340bb1c23b52f16066486feb8b306ddf522c52bccc4df81ceb6cb1",
+        "reference/stable/claude/skills/docs/references/summarize-workflow.md": "sha256:2436475d737456c3510ea1dba84bff5b840786dc079a78e1dde50773a0bb6842",
+        "reference/stable/claude/skills/docs/references/update-workflow.md": "sha256:c0a651d107c1e7282b71f2578900c47fece8cf76f6d17d774cf6098dadaf3490"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-docs.md": "sha256:ce6566126e9839a2fc0ad42a75ec58f7df49840f206b5b05b67011cb8aeb121b"
+      }
+    },
+    "git": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/git/SKILL.md": "sha256:fcfdf0266078a7f75bfbaf81e5dbf99bbe1666eadd75290bef11ee0e9b37b83f",
+        "reference/stable/claude/skills/git/references/branch-management.md": "sha256:c82b4f20fdcdbf8741bd8817391cf9cd9328f56a87e4e431af0b3e6ed32d374d",
+        "reference/stable/claude/skills/git/references/commit-standards.md": "sha256:d58ba2e249a26f716c23761d7852f2826a589d83029db9d70a1856e946da6548",
+        "reference/stable/claude/skills/git/references/gh-cli-guide.md": "sha256:c638ddc7c078638d761191075edfdc60386c7581acc6db511feaf0e128c4a9de",
+        "reference/stable/claude/skills/git/references/safety-protocols.md": "sha256:cc7dcc25e41359e2107425bdff6ce180b36f2b87ca2a7875952a0ba5c61a9b6f",
+        "reference/stable/claude/skills/git/references/workflow-commit.md": "sha256:0b111c4538c001b3884c9d04af4b899e6fe192e508e72f0745af6f5583fae9ec",
+        "reference/stable/claude/skills/git/references/workflow-merge.md": "sha256:f36346ced78e8a5ac9b852bcb5fb108f927fbd20e6087856455216bf2d765ad6",
+        "reference/stable/claude/skills/git/references/workflow-pr.md": "sha256:a81eacbf306317931a034d3c4f6184b71271c5b4558da22b71d5e346754b5a34",
+        "reference/stable/claude/skills/git/references/workflow-push.md": "sha256:8e6aad80c4128a8a7a1aa6b4d46b74f7870d81f2320d45a813fdc22d2d155598"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-git.md": "sha256:3aab63852d8f08882bc5033e7f0eae51a6c085e679f90a514153059c249a5a58"
+      }
+    },
+    "debug": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/ck-debug/SKILL.md": "sha256:0683bc1a41f16f1a854a3b48602440975ef75f7d9b76706106945408148407f9",
+        "reference/stable/claude/skills/ck-debug/references/defense-in-depth.md": "sha256:89e23fdfcd85ecb2ea867e9770775cd8c7211682af4152719364b1005d0f5497",
+        "reference/stable/claude/skills/ck-debug/references/frontend-verification.md": "sha256:9361be06ab16f02f5168e44c07cc3289979a94da2090d7851b0dfb8ddc52a3e3",
+        "reference/stable/claude/skills/ck-debug/references/investigation-methodology.md": "sha256:21f56af62c3fa85124b5123a27a6d9cd681361a563d31febe4d19210f552b910",
+        "reference/stable/claude/skills/ck-debug/references/log-and-ci-analysis.md": "sha256:b33c7c8c3f436a1aec3d9842a8990ebff6b731674866d7dd4ff0c75d6020db73",
+        "reference/stable/claude/skills/ck-debug/references/performance-diagnostics.md": "sha256:be9bd0342d6bef3adba741217bcf03baa0e5781b18c7c70b07af2f7b343e7936",
+        "reference/stable/claude/skills/ck-debug/references/reporting-standards.md": "sha256:1a89483f670ec0a6b7143896fa94ccacd8f3e1d863382f8bc96c24d5341f3162",
+        "reference/stable/claude/skills/ck-debug/references/root-cause-tracing.md": "sha256:4df0e51b2d26a407d3e2ffba19c7c0cf8d01698c1745009e667b69ba2c962100",
+        "reference/stable/claude/skills/ck-debug/references/systematic-debugging.md": "sha256:2c97f742d43baae7206d0859d42bb6837cb89949c7ab0c3fa37d6df129f2b628",
+        "reference/stable/claude/skills/ck-debug/references/task-management-debugging.md": "sha256:04d23e03ad060198a59cd083839ad34643972be39789a54fef1816384fbfa85d",
+        "reference/stable/claude/skills/ck-debug/references/verification.md": "sha256:ac56942520327efaf29b415b27e6a4211d88386d0072c5d400fdee39eba8bbf3"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-debug.md": "sha256:1fd5d64fb7b94a3e74c36b7af88d4576b992d046f7e118600b7db2cec15b8bfa"
+      }
+    },
+    "agent-browser": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/agent-browser/SKILL.md": "sha256:cd32d2e9434bf55d61f62c0b56798641fc3f1e96b73cc567dde88dca94130f74",
+        "reference/stable/claude/skills/agent-browser/references/agent-browser-vs-chrome-devtools.md": "sha256:6578f6bc4681c4c4472428ba1f51852b945c4a9e072afdc4d91c3049386fbf65",
+        "reference/stable/claude/skills/agent-browser/references/browserbase-cloud-setup.md": "sha256:d81066796056615d39fec50525452c9fc998971a5f55759317f03d86fefb4438"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-agent-browser.md": "sha256:a086672d7f2772638b13ed046e8c5e7783d7c8bbd06e845a300eccf5ac339df7"
+      }
+    },
+    "ai-multimodal": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/ai-multimodal/SKILL.md": "sha256:61e740cba2c05ad78e830992470965753d99b2303536c37acfd23922a62e49f5",
+        "reference/stable/claude/skills/ai-multimodal/references/audio-processing.md": "sha256:90cf5a145e2a0e76c374d60649db8808d734565dc737c9f26a84f8e1a6d3a106",
+        "reference/stable/claude/skills/ai-multimodal/references/image-generation.md": "sha256:0c5a6756dc8bca2d93e24e4e5a7e5a2de308b594411b692ff81a54fdf05fe7e2",
+        "reference/stable/claude/skills/ai-multimodal/references/minimax-generation.md": "sha256:406578ea4f090ac9ca008c5585dcf464771bc1400075a30820e3f614add1641c",
+        "reference/stable/claude/skills/ai-multimodal/references/music-generation.md": "sha256:d13f8fead0f514f8f1054055d792e92bf39b7dfead3ad90f59c16fad6c756e5c",
+        "reference/stable/claude/skills/ai-multimodal/references/video-analysis.md": "sha256:bd5bc0362c74f2f27f10bf26fe906f93b7692bf749681d5a7fb8d70f01f4ca17",
+        "reference/stable/claude/skills/ai-multimodal/references/video-generation.md": "sha256:7982f522bb2a748c2a13bd06b451bf26fb31806c8fd733c47cbdc50940aa4a68",
+        "reference/stable/claude/skills/ai-multimodal/references/vision-understanding.md": "sha256:d441cf095b0a9d1da04f5e61b41c8116e44206f2a80b2662ba43906dda956421"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-ai-multimodal.md": "sha256:362155e18513de1e45b17660828111c018e4b152b999294e08d31462bd6ee121"
+      }
+    },
+    "ask": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/ask/SKILL.md": "sha256:217986063048f336828fb84a091a9e8d6dd46e02364f6714b014a9143cfef47d"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-ask.md": "sha256:64d2458e6e851510126b400225dca258792c2be112be0ce101e04610b83b110f"
+      }
+    },
+    "autoresearch": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/ck-autoresearch/SKILL.md": "sha256:495ff79a8b79758ae034c6cb0ef9fec9c43d691f556711df46f6cf3fb57b5cd2"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-autoresearch.md": "sha256:2cba24663e67a60f383e525da635d2838cd94c9c186ae2d6ce1287e8e9e14a65"
+      }
+    },
+    "backend-development": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/backend-development/SKILL.md": "sha256:6998d4404b1534a760d0a04c25394a6364f2148a8e244e767d86f578a3b5e792",
+        "reference/stable/claude/skills/backend-development/references/backend-api-design.md": "sha256:9bdf6bf139dd215e2baf3d5686077a37d38a2a92598c681c626edd81110239b3",
+        "reference/stable/claude/skills/backend-development/references/backend-architecture.md": "sha256:8ae6a40cd186a95dfca6c185dc8b68d396b4f26ef79ed4fee4c814f19be29119",
+        "reference/stable/claude/skills/backend-development/references/backend-authentication.md": "sha256:396f0d1af48227ea74e79e03bbfea32e616e876c593f6cc8d20ce66a34b47e8c",
+        "reference/stable/claude/skills/backend-development/references/backend-code-quality.md": "sha256:3d08a02acf3274e43160698bce322b5e9ca11d983a722aed2de6aa699cad422c",
+        "reference/stable/claude/skills/backend-development/references/backend-debugging.md": "sha256:9468a89f03b14e90005193d5e4c4bd69e48908bff7e70307457e5e8d1657ce08",
+        "reference/stable/claude/skills/backend-development/references/backend-devops.md": "sha256:1fbb7010ca94dfb440e104b9d373205c9f7912ffe69cf3be2ee7497928275310",
+        "reference/stable/claude/skills/backend-development/references/backend-mindset.md": "sha256:078b6f8a0bcf70b38c7ab811df7a685dcac353300207e499f6e5793050015588",
+        "reference/stable/claude/skills/backend-development/references/backend-performance.md": "sha256:abdbb2d30949cda1051c6d84770641bf00c397dc21003aabf76692096c7367cb",
+        "reference/stable/claude/skills/backend-development/references/backend-security.md": "sha256:ba5e857e5c3cea426454dcfbd35f9fd18fa2d0091cab82537c720354f8e2eb6d",
+        "reference/stable/claude/skills/backend-development/references/backend-technologies.md": "sha256:5f2082515d330b1a12e925e0b130ca34d7a83428adf5c89fec157667c4f37ec2",
+        "reference/stable/claude/skills/backend-development/references/backend-testing.md": "sha256:18221e8e048b16a3d8857725ed13c4f7d7c2a28fb58aebfa5b17efb25d710034"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-backend-development.md": "sha256:9d67630944e92056544a78ffb1e9439e841c749e0109e96358facca84c450276"
+      }
+    },
+    "better-auth": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/better-auth/SKILL.md": "sha256:3c009965afd6ace100615a07caab80cabbd338dd10c4ec8c1dc89cca637cf0ab",
+        "reference/stable/claude/skills/better-auth/references/advanced-features.md": "sha256:cf67bd65f28f1c09281a18c2a30e4adc425403dd688de3a3396dc8d0a5c47708",
+        "reference/stable/claude/skills/better-auth/references/database-integration.md": "sha256:89a873e8462dca550439e75e2dd1721835127239b5bdd71ba2cac58d35571841",
+        "reference/stable/claude/skills/better-auth/references/email-password-auth.md": "sha256:a96376f55c00c2c7f0ff63bffd656fb4426a51c16c49868a7a5045b29d1bc7e3",
+        "reference/stable/claude/skills/better-auth/references/oauth-providers.md": "sha256:5201dc2715fe4e385e9363e67adcdeb3dd0e0879c42158e7846dd02138cf8684"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-better-auth.md": "sha256:499386ba212a7bc8ec59faecdc4ea218dda2bf92220cb62746c57c8caf620c32"
+      }
+    },
+    "context-engineering": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/context-engineering/SKILL.md": "sha256:28c95627fbc5be3291d2f871286e36562210e93bac61ad71e8f619adc423ea15",
+        "reference/stable/claude/skills/context-engineering/references/context-compression.md": "sha256:17a27c30e69cc6b4ec16fe22de7675beceb1f75aed2c5ff8e1bf1909871149f6",
+        "reference/stable/claude/skills/context-engineering/references/context-degradation.md": "sha256:1a3333fdade2aa8405ba35dd25dd1045fc61ac7d74f8addc62cd55013b6df2af",
+        "reference/stable/claude/skills/context-engineering/references/context-fundamentals.md": "sha256:dcdb069c98db4fa935ae66c8a3502d772ee040b5a7d7b3b2881dd4b0a4a429d7",
+        "reference/stable/claude/skills/context-engineering/references/context-optimization.md": "sha256:61c3a7ebf218ad26c72cbbe4a9e5b99a1863408ebf324b93f08d5e117a6d4590",
+        "reference/stable/claude/skills/context-engineering/references/evaluation.md": "sha256:e6ee2c46def044328e892d0ef7ad301aab63e7b73bd4cae382231447e98a379b",
+        "reference/stable/claude/skills/context-engineering/references/memory-systems.md": "sha256:6c392fc6ceb36a415eb8c20f12bbd1148880eff5aed63132f04270e6aa8dfccd",
+        "reference/stable/claude/skills/context-engineering/references/multi-agent-patterns.md": "sha256:2b4106a5ae7bd4818db6f6837312b1b810e5b7373ba22960a60b768f1db4ad3f",
+        "reference/stable/claude/skills/context-engineering/references/project-development.md": "sha256:efc40a212d5894b093fb45096e891351c676cd9eafba754ed6e41473f703a3ab",
+        "reference/stable/claude/skills/context-engineering/references/runtime-awareness.md": "sha256:c1cc4258ff051e8b711969e2f420a9565310b981c031b7f83669b991eeb42760",
+        "reference/stable/claude/skills/context-engineering/references/tool-design.md": "sha256:91d38658121a641aa7ee86579254bc96ba2526ce108de2d981cca3d83313a609"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-context-engineering.md": "sha256:1887e8fc3558e420bdc1db6025d7575b0f1fdd691c68295ad4ce6b986164355e"
+      }
+    },
+    "docs-seeker": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/docs-seeker/SKILL.md": "sha256:494f5411a9e49d13f5d9fd4b72ca32bba009e50858a63f7ad536526cb89b7963",
+        "reference/stable/claude/skills/docs-seeker/references/advanced.md": "sha256:4bc5569fbe32ddba79760ea5ab010ac43e64dcaf5830b2d159c0ebbf6307db9e",
+        "reference/stable/claude/skills/docs-seeker/references/context7-patterns.md": "sha256:bf7216d9c5c6fdccc67326e9de5a71d9ac9032ebd6121373558b90b43dfbc355",
+        "reference/stable/claude/skills/docs-seeker/references/errors.md": "sha256:6eea64783a4b66051a1780e9a6ce725a7ffaa73d09d0f58fbadf736f360c5d23"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-docs-seeker.md": "sha256:9e21561f5141b6c8744e8f112194a257d6f80ac98780191366932d8a47a255ed"
+      }
+    },
+    "code-review": {
+      "date": "2026-06-12",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/ck-code-review/SKILL.md": "sha256:f4da5ca777e26163ed1f3a3574c2d2ff8230640fb5f9d587f610179b386afd90",
+        "reference/stable/claude/skills/ck-code-review/references/checklist-workflow.md": "sha256:15515d39b7afa784f667e4b8aa41ef237465c30d5cbcff84520348cf2287709f",
+        "reference/stable/claude/skills/ck-code-review/references/checklists/api.md": "sha256:d9041be1459ca934573918cebbb976ab695b49eda73651e121f777d086f3ddaf",
+        "reference/stable/claude/skills/ck-code-review/references/checklists/base.md": "sha256:eb4c55edc9cdd8a0a4704798d8d537b86c19ddc98afdd821187efff17e097213",
+        "reference/stable/claude/skills/ck-code-review/references/checklists/web-app.md": "sha256:cf6c14d4772e237b417284aea79a7c1e771e890e278a0786a519e205b8811418",
+        "reference/stable/claude/skills/ck-code-review/references/code-review-reception.md": "sha256:f8b818db1b47ecf7a43328783cd298f4efeacdf8d2bb04061281149a2256cada",
+        "reference/stable/claude/skills/ck-code-review/references/codebase-scan-workflow.md": "sha256:3495a74fbea069a00cb9110bbdf1743041a1888dae31ef0bab8435a7ec82e6db",
+        "reference/stable/claude/skills/ck-code-review/references/edge-case-scouting.md": "sha256:1b250390990038426e86fdab061ca073b8db2f87abaf8935e9d514972d504c3e",
+        "reference/stable/claude/skills/ck-code-review/references/input-mode-resolution.md": "sha256:0685bec615a9780d61f3ce21cb70689f0a9fd3f9e043bc817db204d8dc466c48",
+        "reference/stable/claude/skills/ck-code-review/references/parallel-review-workflow.md": "sha256:55078454b14afdb521e9f321840ff4146b195621e29aaaa37509e1a696948e25",
+        "reference/stable/claude/skills/ck-code-review/references/requesting-code-review.md": "sha256:c923d68f9e4effbe9d21ed5095cfc9246d24bfb9c2e114ef3cca26f7dbe4f35c",
+        "reference/stable/claude/skills/ck-code-review/references/spec-compliance-review.md": "sha256:f66d056e6204c23cec67bca5dfb92806d9e4b5fbc4a32be415059628981a7783",
+        "reference/stable/claude/skills/ck-code-review/references/task-management-reviews.md": "sha256:111b1c16f8c826079181e640eaa694e96fa9290ab964ed7934389792f4b38e4d",
+        "reference/stable/claude/skills/ck-code-review/references/verification-before-completion.md": "sha256:ad75a3a6de283507d7827b103fb82497102dee4f77d004a3d81ea7a997b53b4f"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-code-review.md": "sha256:daa531f7173428509dc4f4ab2549b99ef74f9262d676c2d6d8ebba47a1a0fe83"
+      }
+    },
+    "frontend-design": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/frontend-design/SKILL.md": "sha256:53e260f55ef8565d488970bf620ca96273794b50031783f699f69ca62ca81de4",
+        "reference/stable/claude/skills/frontend-design/references/ai-multimodal-overview.md": "sha256:8525d4269fbc7df8aa056803cd84db352d86a24ca1706825f6dfbe6873856ee3",
+        "reference/stable/claude/skills/frontend-design/references/analysis-best-practices.md": "sha256:61f370388d9cc1803927b1a8804e744266d4d45edd501f9704ae169dcac8857e",
+        "reference/stable/claude/skills/frontend-design/references/analysis-prompts.md": "sha256:0db7f84ad1fc380ac99009a7e4c294bd49907150d3bb9346b73ef100800774a1",
+        "reference/stable/claude/skills/frontend-design/references/analysis-techniques.md": "sha256:602d9a0a37c2566cd24531005acd36bdbecb32f6c4331621d53d7e53fe965edf",
+        "reference/stable/claude/skills/frontend-design/references/animejs.md": "sha256:9a8f57874ea054f2bc8661dbbda5b8132bd3196fc8300d099d4d62a90521359b",
+        "reference/stable/claude/skills/frontend-design/references/anti-slop-rules.md": "sha256:89ae8c91a4331ae0c7be775c0f8d953d304ccdfd31c54ffa99fe1358673e3d17",
+        "reference/stable/claude/skills/frontend-design/references/asset-generation.md": "sha256:d9e655d20c039dbab3062024c67f245b341044e762563e4711215c4beed0dc8f",
+        "reference/stable/claude/skills/frontend-design/references/bento-motion-engine.md": "sha256:ab54cf13214fac09d58b170e620138d4f9bad8357ce6db2be082ff154fa5d064",
+        "reference/stable/claude/skills/frontend-design/references/design-extraction-overview.md": "sha256:e8ddc2947bc07a486858e3c174ad7e589d1241d6b15b40ee6892c9bdd35605f6",
+        "reference/stable/claude/skills/frontend-design/references/extraction-best-practices.md": "sha256:c155ab69a55e9cbb72162d67d6c39597138a9a4601a949c03ece507914e67556",
+        "reference/stable/claude/skills/frontend-design/references/extraction-output-templates.md": "sha256:56ce1c81310b9a667c146ce332f33f5df8de7a7f59ab43e3463dda535c345cab",
+        "reference/stable/claude/skills/frontend-design/references/extraction-prompts.md": "sha256:22e1836d0cf5a97ef21e70f313e3deb8e58606a531ad0645a380d9dc5606d55e",
+        "reference/stable/claude/skills/frontend-design/references/magicui-components.md": "sha256:455d5e2bee873078f67acc6d983509649fb6559059aa6a678aa4ef8b67cc9390",
+        "reference/stable/claude/skills/frontend-design/references/performance-guardrails.md": "sha256:3f138048ca8228e08c70a2d72fbfe9b5e69df67516b421accb23f0c21e372ec7",
+        "reference/stable/claude/skills/frontend-design/references/premium-design-patterns.md": "sha256:39e0815106e296165b8e5988711fd24f0690d5a5fca4c4fa15e29da274b7940c",
+        "reference/stable/claude/skills/frontend-design/references/redesign-audit-checklist.md": "sha256:740b23d8980419e42a300bb43b3e1bea2b382a3ee5baf7c0d80b923a56369c76",
+        "reference/stable/claude/skills/frontend-design/references/technical-accessibility.md": "sha256:0eb08a6fcfc2651d7c4bb87a33bc898918cf4bdc43f5601f9314b8e27c2edfc1",
+        "reference/stable/claude/skills/frontend-design/references/technical-best-practices.md": "sha256:c1fa9d8b15e95e870405977f702846c9cbe10cdbad4a0ae002585b8428fe3eae",
+        "reference/stable/claude/skills/frontend-design/references/technical-optimization.md": "sha256:a46bc622c3a2a361c73f673681320a1cf777feb6ad62e8d9995d00cc6de378c6",
+        "reference/stable/claude/skills/frontend-design/references/technical-overview.md": "sha256:073fc8c7f7f7fbfa2305bbfc50c19f62dd383a400639d11e9f74d0183f60e43e",
+        "reference/stable/claude/skills/frontend-design/references/technical-workflows.md": "sha256:f4cc6e127bf54935eb058c3112e08cfc682e1380b8d2c47996275e83a717b153",
+        "reference/stable/claude/skills/frontend-design/references/visual-analysis-overview.md": "sha256:74fd823cb3096b13f2ac2f17a7ad713c22e67b8d54c305f0c69d2bb9db80d145",
+        "reference/stable/claude/skills/frontend-design/references/workflow-3d.md": "sha256:3f83345c6690c60363e36c2b13111b3a3e33ec2cf21d1c29e428c1fb9004fff4",
+        "reference/stable/claude/skills/frontend-design/references/workflow-describe.md": "sha256:f03eedd271c6938a336b063e250db42708439cc2baeaa951ba6207b6bf758bdb",
+        "reference/stable/claude/skills/frontend-design/references/workflow-immersive.md": "sha256:2462655598ace8aff0159b6ff85cfb03f4aff9a25c924b413248a221166a46d7",
+        "reference/stable/claude/skills/frontend-design/references/workflow-quick.md": "sha256:53f8830ea21b5a280c8833482fa302f0cec4136ab00b6b92ba34ef3c0cb1b46a",
+        "reference/stable/claude/skills/frontend-design/references/workflow-screenshot.md": "sha256:e3943cc4af5d4ac4962b38aa7bd49f0c2d39d18fe35eb929b58895287a26cb21",
+        "reference/stable/claude/skills/frontend-design/references/workflow-video.md": "sha256:b4b2b28268299bca19e9ac9f6678ede23f9adec0e1640c107ffee077eeddebff"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-frontend-design.md": "sha256:89486f49df445a6d8b6562569f67cb24e6dad98cddcc1f8033a0a80dad106e3e"
+      }
+    },
+    "write": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/write/SKILL.md": "sha256:dbb9344153a241399919f2038f5890cfa1547d594d3eedffe0fb658376d90d9d",
+        "reference/marketing-stable/claude/skills/write/references/audit.md": "sha256:304c261b322ec039e85e3df8773ea60b9a6e4a690e5de958b9ac6653d042b154",
+        "reference/marketing-stable/claude/skills/write/references/blog-youtube.md": "sha256:26af3f5c1d7dca99c0466a027bcbeaadd3016cbf765de5399d1829b16f7dc864",
+        "reference/marketing-stable/claude/skills/write/references/blog.md": "sha256:62d388a90bdfdeb53c384ba54ece371f3a5f0a49a9e4a4161541e053e6a53501",
+        "reference/marketing-stable/claude/skills/write/references/cro.md": "sha256:cd78ca1eeedb035828977d6039ee5d32932570adbe5daa52dc1a317b02853631",
+        "reference/marketing-stable/claude/skills/write/references/enhance.md": "sha256:bfe8abe5dd83ddc78db49a69f1ee5d48ba193a16701f4c1f72e116a2e93b87bc",
+        "reference/marketing-stable/claude/skills/write/references/fast.md": "sha256:4e1939d69b9a71ddedbee8d5341f6322a7c8a370504f611e67c0c6ac005a9724",
+        "reference/marketing-stable/claude/skills/write/references/formula.md": "sha256:926a5cca3fe04e037562a793a0e6e783814b88f638fd9f48c695c36808001c36",
+        "reference/marketing-stable/claude/skills/write/references/good.md": "sha256:688436add936a06956ae3f6f874f3c8f8ec5cf6fbedd73e030aa3ea4611027e6",
+        "reference/marketing-stable/claude/skills/write/references/publish.md": "sha256:fb21c77ebb46a0d6b4c61f5ac73adb6c9e9a0c4699e5a75b5335d87daebc6fd8"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-write.md": "sha256:90d1a2da6984531998cd3b8469e6f28f1e455707198f8801dfb0ee0b263b0c7b"
+      }
+    },
+    "ship": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/ship/SKILL.md": "sha256:ef530cfeba2bcd7fd36210344e3cf46444a16a99c692b79b26cc37ca5bee7c52",
+        "reference/stable/claude/skills/ship/references/auto-detect.md": "sha256:92f6380c986cb166d2832251463617cc50d556deda8e1bdc5adda6ffd67f31f5",
+        "reference/stable/claude/skills/ship/references/pr-template.md": "sha256:0c92b4111ccda2a1cf0ac622b12e9f16d3c43bdf1819fdf6c7eeb1ee17b6348e",
+        "reference/stable/claude/skills/ship/references/ship-workflow.md": "sha256:74d667833cfbe3ae8cb1318d6338f71d804930dfa4a51752eb4baeb130a9f038"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-ship.md": "sha256:6ea160cb574504f27c75bbfc0317c3ce636b229a349528bb953a9207026b18af"
+      }
+    },
+    "test": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/test/SKILL.md": "sha256:d7d14346d94acf6946f913c404d8f6104226cad764075f6e374c81db759ea473",
+        "reference/stable/claude/skills/test/references/report-format.md": "sha256:64c483316450d87566e22d78a3c6ff2342d209717b207dfea1d004b3ac99359a",
+        "reference/stable/claude/skills/test/references/test-execution-workflow.md": "sha256:541af139cfdd1f2c69fc16b8da82c2248c77a8882cb4addd2a2176ef6b0a5506",
+        "reference/stable/claude/skills/test/references/ui-testing-workflow.md": "sha256:da8545a2d3107d70cf9da0f68a122861670d14c44d59447a6dec6c42f0773f0e"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-test.md": "sha256:38ef2f79e4f8c5a7da0f6576e0d6b0eeb94df7b90e671a9fd5ba4fa2b46f5f8b"
+      }
+    },
+    "design": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/design/SKILL.md": "sha256:1c41406e1257b171c380fe3a0bda47881706c5e8fa81ab51a27fbfcab146d0e5",
+        "reference/stable/claude/skills/design/references/banner-sizes-and-styles.md": "sha256:c8906fb1073a576ee8c680d9bc8586249cbc4ed36690da960d65a1c9c37143b7",
+        "reference/stable/claude/skills/design/references/cip-deliverable-guide.md": "sha256:1424e120b967288e2334f24fcfa5cdc7f238420326a7444f4c5597efecfabc41",
+        "reference/stable/claude/skills/design/references/cip-design.md": "sha256:47a3b2e445bc07185edd0cd24ba8a417229baf86717dcdff7c4e403adbceb3f1",
+        "reference/stable/claude/skills/design/references/cip-prompt-engineering.md": "sha256:4bf3a0c858f38c230e43e872857b72d9eb692e066e8de5920da75aac733e753c",
+        "reference/stable/claude/skills/design/references/cip-style-guide.md": "sha256:f3e15408cd981e93804440c1159c12e02d001bc37a3945f455b3fc13729ed4e1",
+        "reference/stable/claude/skills/design/references/design-routing.md": "sha256:32914a913f4f20d4cb1e497e5a87cfc04b71af4e6d75db72ecf50e4f060201c8",
+        "reference/stable/claude/skills/design/references/icon-design.md": "sha256:39281931d070918b4e51ecd71054da99493cabe06a07dfa8f1f682e48637c83f",
+        "reference/stable/claude/skills/design/references/logo-color-psychology.md": "sha256:3fd0e93e24c3b2ea7f3be778e8f2d03b1c62c7c6eab3ade478c8fca332bff287",
+        "reference/stable/claude/skills/design/references/logo-design.md": "sha256:2e845fe165c845fd9582c1d74204fa31de607380982a6ea0b5f8db4e293afa3a",
+        "reference/stable/claude/skills/design/references/logo-prompt-engineering.md": "sha256:e50f55bf323263eb27b4cd4c5172383a787fb894581d5d2befb3f6e0180b253e",
+        "reference/stable/claude/skills/design/references/logo-style-guide.md": "sha256:611baa841eedab101f45c113c6bfbd4d7e16e859c9d6ebd2cf941827a6e8dd15",
+        "reference/stable/claude/skills/design/references/slides-copywriting-formulas.md": "sha256:03733d5916ab771834745550045b736deeb94a08226f2b200f7953009c35b219",
+        "reference/stable/claude/skills/design/references/slides-create.md": "sha256:792d647a5d4f87d765cf417f7ac54dd0b2fc4d229cc23ea9df56282d4c1ee086",
+        "reference/stable/claude/skills/design/references/slides-html-template.md": "sha256:fd5b051a37365fc6059c75bb388ec6f64daf1bd9ae938b287b6d762dc83c0c35",
+        "reference/stable/claude/skills/design/references/slides-layout-patterns.md": "sha256:0a967ca3bd829d3234e6f1802bade6c76447fabbaddbc8117c41adbae7dfb6df",
+        "reference/stable/claude/skills/design/references/slides-strategies.md": "sha256:27ee3e53ffa0ea679ec83ebeacb0bcfbce498df57277e99f574b9c139dc44286",
+        "reference/stable/claude/skills/design/references/slides.md": "sha256:5630d5daec947ff58ab1ac97c7a1ee77a21cf6f5dce5155535b65d291691979f",
+        "reference/stable/claude/skills/design/references/social-photos-design.md": "sha256:a268f84003313e642554c91dd89a947aa454f9bffa7136ab45dbc130e5ce67e5"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-design.md": "sha256:53320d174048cf5b37082a9f85db70d5f8331b150b9ea51a0bdc05382037f4fa"
+      }
+    },
+    "seo": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/seo/SKILL.md": "sha256:1bfe8ae81130302263c4f75ab67631b1d5223b17aaba7045b2e8f081a4b2bbc3",
+        "reference/marketing-stable/claude/skills/seo/references/audit.md": "sha256:4bf2656540b5b5ed7e861e8572e3e5738bec8ecbf2ea0f5eb37a2c2f4c48e0cd",
+        "reference/marketing-stable/claude/skills/seo/references/backlink-analysis-framework.md": "sha256:c3eb4f97cf634ba003ea953af4baffb4f6c053709558493d275ab64f83024fc0",
+        "reference/marketing-stable/claude/skills/seo/references/browser-seo-audit-workflow.md": "sha256:d03a705e1dea9b367cbdd2a6606a451e8ace0f671024fe07b0811ec71ee5a70a",
+        "reference/marketing-stable/claude/skills/seo/references/canonical-url-strategy.md": "sha256:f06bb04014cde97c4b8a0d6a166372cb16c5f8b7bb350bacd31fe0d9eb715757",
+        "reference/marketing-stable/claude/skills/seo/references/content-gap-analysis-framework.md": "sha256:fac5738c17ef83a9eff087fab778fca6d9ed07512aefbc388e31b992bc2db8c0",
+        "reference/marketing-stable/claude/skills/seo/references/core-web-vitals-remediation.md": "sha256:b16283aed581445173624672220b1b320395487063875a2ac46f830ae3590596",
+        "reference/marketing-stable/claude/skills/seo/references/directory-submission-list.md": "sha256:af5c15764a16d1b4f964623608118b6d566974ef5575af73f06c2ce62a1132a0",
+        "reference/marketing-stable/claude/skills/seo/references/google-search-console-api-guide.md": "sha256:14ffa1fe7be21dfb53021f0c7fa0ec3397c32913304fd470b7ae8ed9a348d895",
+        "reference/marketing-stable/claude/skills/seo/references/internal-linking-automation.md": "sha256:a6c57e25277f93b57939bc95ac767b26bc16cec70d12280d72840a86ac2d014e",
+        "reference/marketing-stable/claude/skills/seo/references/keyword-clustering-methodology.md": "sha256:74f7f9ec25183bff3d2630ef057f2b0353a7125e8d9496e004052e77b1b88c93",
+        "reference/marketing-stable/claude/skills/seo/references/keyword-research-workflow.md": "sha256:9fa89af222a0692d2ff650f1465ba669f265287b81c825f6c79beb3db3f73e3e",
+        "reference/marketing-stable/claude/skills/seo/references/keywords.md": "sha256:e4f47eda4828a873127b57d81e50dd069a638e9d95bc7ec9337341bb876df60c",
+        "reference/marketing-stable/claude/skills/seo/references/link-building-campaign-framework.md": "sha256:5d45612739978056b773b63f2ca83284ee4bf9bf269b0ae1fd41d6faa630774b",
+        "reference/marketing-stable/claude/skills/seo/references/meta-tag-templates.md": "sha256:374c1e988bb1dda2a6668df35b6ccdc534db3e9bb942768eefa8716dc3cf52c6",
+        "reference/marketing-stable/claude/skills/seo/references/mobile-seo-checklist.md": "sha256:a80fa3a69ed3104cb4687ace533df7ac108658fe90259595ece3d039ae7c8c6a",
+        "reference/marketing-stable/claude/skills/seo/references/on-page-seo-checklist-2025.md": "sha256:b608ae581e4ef1aee3584e1c650b8831f006a6e886b0c2e3d05799ba4484460d",
+        "reference/marketing-stable/claude/skills/seo/references/outreach-email-templates.md": "sha256:5b468839c6eca5c267883a79bb7716f9916ece379c7022c32ace7bd0badb2c81",
+        "reference/marketing-stable/claude/skills/seo/references/pseo-best-practices.md": "sha256:dc25f2607b96c71297c050ff40854e51bb38fd17c41c1394f81bff95dcdbb1f9",
+        "reference/marketing-stable/claude/skills/seo/references/pseo-scale-architecture.md": "sha256:db0dac4bc6a7279c41f3484ad965edc1a2c19f137303b9237d263e38d25fb19e",
+        "reference/marketing-stable/claude/skills/seo/references/pseo-template-syntax.md": "sha256:d3a3d8162535abeb2e069772c553dd8aca4e56182623c36640919a6f532d41bb",
+        "reference/marketing-stable/claude/skills/seo/references/pseo-templates.md": "sha256:f038d46dbbf0e5a474d791bed5df43078a1a09bf359130585758c84e6adfd8a4",
+        "reference/marketing-stable/claude/skills/seo/references/pseo-url-structure-guide.md": "sha256:1c17a7212c39fe7645533d592d76c8bc2e9ec766ba6019157e2e2d4a01544f26",
+        "reference/marketing-stable/claude/skills/seo/references/pseo.md": "sha256:ac1bed4e5bedeaae8089b0c2f240ad5e0e1f180c95ffb28e33e0fe7090c27b0f",
+        "reference/marketing-stable/claude/skills/seo/references/readability-scoring-guide.md": "sha256:b75faad9d31b07e3daa207db3a516766ebd4ee0a500f78615723f8f47ff41d06",
+        "reference/marketing-stable/claude/skills/seo/references/reviewweb-api.md": "sha256:9ea2593f27b0d93ff74e99d1d93ee566e9b994e916df9ee87b30f025da810bec",
+        "reference/marketing-stable/claude/skills/seo/references/reviewweb-content-api.md": "sha256:2cf09ce21f1c3de336d7aa4705282af22f6bce637a1d868052b8d43d88e75f5b",
+        "reference/marketing-stable/claude/skills/seo/references/robots-txt-best-practices-2025.md": "sha256:c5efb7c65d73762e9c12f65999541dca5ecca4970518dd674b127aae6e9c2a1b",
+        "reference/marketing-stable/claude/skills/seo/references/schema-generation.md": "sha256:b04f15de586865514b440c1a33e985a78cb53a842a94ae052e935b77ebdabcef",
+        "reference/marketing-stable/claude/skills/seo/references/search-console-query-patterns.md": "sha256:6f34dd8bd69ba8614c9b84848ab1f7a821181525043359857efb053a2b0f176b",
+        "reference/marketing-stable/claude/skills/seo/references/semantic-seo-framework.md": "sha256:47adff1245f4d221b9305246a438a7503ea88a2498c55d7619fa36af6d6ad8e1",
+        "reference/marketing-stable/claude/skills/seo/references/seo-audit-workflow.md": "sha256:5ce357164778c021a66a5266908ff07c7864d5a36b2f6c0b7c5c78eb0fd3fb1c",
+        "reference/marketing-stable/claude/skills/seo/references/sitemap-best-practices.md": "sha256:f02a9449521ea9249909dc81fa7138e69ceef32ac0476e95f788e1632eb69706",
+        "reference/marketing-stable/claude/skills/seo/references/technical-seo-checklist.md": "sha256:f3fe9841b2c7a84b02e2dc14438e630554f906fc04bb368834455dd6f3bbc8a8"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-seo.md": "sha256:31651a2de1d3f7f2482b4f6e48e292ff347406e0297129614926677650509201"
+      }
+    },
+    "campaign": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/campaign/SKILL.md": "sha256:90fa218c11e98ecf6f0484d815f7e90037fb168e46658d0efa2b2712cc3d58af",
+        "reference/marketing-stable/claude/skills/campaign/references/analyze.md": "sha256:7017343bf53b99e92acda203067a800d6565364054d1417791d021563c9b229c",
+        "reference/marketing-stable/claude/skills/campaign/references/budget-allocation.md": "sha256:58f06cb36c1547e471be2af5f8adc12354a297340b97d670f716974f0105e6da",
+        "reference/marketing-stable/claude/skills/campaign/references/campaign-brief.md": "sha256:821202f88339d0416765a93560cd2c3f71f058d25a1cb0aca1ce10082118508f",
+        "reference/marketing-stable/claude/skills/campaign/references/create.md": "sha256:ef435e382cc3bed5a4ee4a0e17efe0088a81e2eb1942488048b75e59d137097e",
+        "reference/marketing-stable/claude/skills/campaign/references/email.md": "sha256:3bbf533b9e718932df5c60268635d7abed8eec94e1305420cc1400de3b14875e",
+        "reference/marketing-stable/claude/skills/campaign/references/launch-checklist.md": "sha256:78e8875727a4604a0f494f038a449d40ba481da62650b57bb3b0403349bd7df7",
+        "reference/marketing-stable/claude/skills/campaign/references/optimization-framework.md": "sha256:c2d5792395586b2d98146384abee6083cf8f10533b3c3ba1d267d38504ec26cb",
+        "reference/marketing-stable/claude/skills/campaign/references/status.md": "sha256:7f2c6926fb6cdce75b463aa7d28eaefaec96afc0884544bc20f0dedb6d188548"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-campaign.md": "sha256:a67395449087f7731bb788bd6d7789d9b7b0428647a0ad5223d7b2ff187b5720"
+      }
+    },
+    "deploy": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/deploy/SKILL.md": "sha256:f9434db163d170f9327abb8a5749880901496260610d10242fb0f4fd8018a298",
+        "reference/stable/claude/skills/deploy/references/platform-config-templates.md": "sha256:5840c396f3b1c91b77113968eb005f8139f5df91e8d536c8b8dfe601da7f8d8b",
+        "reference/stable/claude/skills/deploy/references/platforms/aws.md": "sha256:360265be42a5129c91dd2b8d790db97134b720a05569d41b6da4e54c83589b2e",
+        "reference/stable/claude/skills/deploy/references/platforms/cloudflare.md": "sha256:d62859284bdc7412c530d66641d33b27c7ba2d4488f77bd7a13c26fbd0649203",
+        "reference/stable/claude/skills/deploy/references/platforms/coolify.md": "sha256:bdbda9d71d371fb2bd1a970beead101dabb05d921dbb0c7e29c8a43198e5acea",
+        "reference/stable/claude/skills/deploy/references/platforms/digitalocean.md": "sha256:bb578a1c4e809a24036bd51cfd6786ae9bb198833021465640fe153e1fb915d6",
+        "reference/stable/claude/skills/deploy/references/platforms/dokploy.md": "sha256:b226baf473617fbdd8c73e7eb90d3de3c15eefc847f14fb21b8977f0078bc8ed",
+        "reference/stable/claude/skills/deploy/references/platforms/flyio.md": "sha256:bfffd5e8455d037202b9f5102116bbb45c761ad9b96b836a9854ede5d6a5f1d8",
+        "reference/stable/claude/skills/deploy/references/platforms/gcp.md": "sha256:8ae4f227d3e217f823162afecfce2cf4212c09cf9cf00ebfc3ba3d593c840e9a",
+        "reference/stable/claude/skills/deploy/references/platforms/github-pages.md": "sha256:bb367a1b63ddec943f5795e38d6d53460f2ccd32540d25432763db4d6c0aae32",
+        "reference/stable/claude/skills/deploy/references/platforms/heroku.md": "sha256:e6db6c6f0ea03acb7610aa2555a5fbe6d292fe199cbd961e6d5e0323583dd296",
+        "reference/stable/claude/skills/deploy/references/platforms/netlify.md": "sha256:28ae216feeb1de827e671363a65bc403b94071db3e2bfd0f621b9f0af728b2ad",
+        "reference/stable/claude/skills/deploy/references/platforms/railway.md": "sha256:95ed8769d4e4d09992fba58db5768bb34eec5569c90681820b140684f86d56a0",
+        "reference/stable/claude/skills/deploy/references/platforms/render.md": "sha256:2665d84001ae665df6716d88ac79c6a74b69be37bde76f3005964cfb6a2f1038",
+        "reference/stable/claude/skills/deploy/references/platforms/tose.md": "sha256:a0e442b41c887cee2cc54556cca22ed2eba2c9625ca00cbc547f352df7540092",
+        "reference/stable/claude/skills/deploy/references/platforms/vercel.md": "sha256:05429775a1f9f4f3096934bc11f82368321821377ef8c50f7611687ec8de99f3",
+        "reference/stable/claude/skills/deploy/references/platforms/vultr.md": "sha256:41aecb5efd19d29dfb465ca5e5999eda007450c54051ff03d28de992013ce4a9"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-deploy.md": "sha256:525b76a568bded2d429ca82ece962369e693dbc693e9e91ed091d69fa9a1b410"
+      }
+    },
+    "predict": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/ck-predict/SKILL.md": "sha256:b4c20a4e458d86cdd8e17911c54fb7922576fb9ef54a1ad65b319e645c1334b0",
+        "reference/stable/claude/skills/ck-predict/references/chain-modes.md": "sha256:514e00d5d03b5f275b0ed9cc30d8e72e63a347e05a7b5320ce35f5c30878a153"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-predict.md": "sha256:3de84460594888cad7b87534abdc3e27aafda84bc4ee63379fa2763b9fb8cba9"
+      }
+    },
+    "bootstrap": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/bootstrap/SKILL.md": "sha256:0c685cafd7899026695090e5e6a99da1d4e8424e2d3cbd43c1af49315cf304ec",
+        "reference/stable/claude/skills/bootstrap/references/shared-phases.md": "sha256:08a4d708b3948bb2a3793c735ad0e6962edb0088a962af61962579ae410a6edd",
+        "reference/stable/claude/skills/bootstrap/references/workflow-auto.md": "sha256:b6c6874796b05ce7a80484b758f1b2a00e7fef0a6e447b287fadf19f93b32db7",
+        "reference/stable/claude/skills/bootstrap/references/workflow-fast.md": "sha256:a9f63e05c5087e8d6d13288a5b1700fe0fa641c9f1d7ef60101824ae0add0255",
+        "reference/stable/claude/skills/bootstrap/references/workflow-full.md": "sha256:0f243c727a23b535dfaa1934acd759053ebc69d8edfeee7b93dbec23e0e5a68d",
+        "reference/stable/claude/skills/bootstrap/references/workflow-parallel.md": "sha256:5fbf9f25bc32cea205f2d1e2d94127c02a53379a2b1ca55997364de48a486710"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-bootstrap.md": "sha256:79921927795e85be14010855809657262637ce06c3aff5a49f578337ee46c5ec"
+      }
+    },
+    "security-scan": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/security-scan/SKILL.md": "sha256:afb43bc3488b30e5000e569c34e2ed2e56961e09a9f6809e80a4c8f15342f9da",
+        "reference/stable/claude/skills/security-scan/references/secret-patterns.md": "sha256:28f023ff7388821bf74579cb41bdc5ba5d942700e8d3b8a8b536caa15adfb43c",
+        "reference/stable/claude/skills/security-scan/references/vulnerability-patterns.md": "sha256:c4fd47950903dc02745fa2299f29bad2912d3f4af9ed68b602d9ae56f6d7cb5c"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-security-scan.md": "sha256:3b739afd98d25e93be31d9bed0a76f880ffc4a992bde7084a6acc6f32d8d95db"
+      }
+    },
+    "social": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/social/SKILL.md": "sha256:3571fca96a9b91704b9a5210d6c1423798a895b921d5a5292def73dd7005ec4e",
+        "reference/marketing-stable/claude/skills/social/references/engagement-templates.md": "sha256:68e67de733d9234bef1e1c4c4233552d4e32e23f0a884795868a3cf6c5e6e1ef",
+        "reference/marketing-stable/claude/skills/social/references/facebook-workflow.md": "sha256:c71cda6afd2fed173d11908fc0db27d1fda65cb878b5930425ca14e70355c730",
+        "reference/marketing-stable/claude/skills/social/references/hook-writing.md": "sha256:f3b5e7ea8b9633916393f9d1ddf415cd249ed64c361be165987d9b0b96fad13b",
+        "reference/marketing-stable/claude/skills/social/references/linkedin-workflow.md": "sha256:4cd4ee4434e2fa7020401854fae5273e5035aab10b1ecce2c8e94fcfc4a8932e",
+        "reference/marketing-stable/claude/skills/social/references/platform-specs.md": "sha256:14bf0f6fb144b0354f3c9fe7662806c303356fa4e6f37806806ec581748228bd",
+        "reference/marketing-stable/claude/skills/social/references/posting-best-practices.md": "sha256:38bf967d3bd5b886648dfeafaadfa03a35142b9cfb4e65ca550f203a18947e93",
+        "reference/marketing-stable/claude/skills/social/references/rate-limits-errors.md": "sha256:9449b0ce448a5ac1409ca5e95a1ffadced4b2b7dae44f8c026cde407acdf4dde",
+        "reference/marketing-stable/claude/skills/social/references/schedule.md": "sha256:57328af010a251c907992681de590a289e7024b225320f52f47c54af525d6194",
+        "reference/marketing-stable/claude/skills/social/references/thread-templates.md": "sha256:a11b3b261a4eaab4c257c246c236451fda50efbea310934adc77d53cad65a212",
+        "reference/marketing-stable/claude/skills/social/references/threads-workflow.md": "sha256:dd74c8ab8b1c3802b4f34f652c564e38744cb6d2d157a76277a30025c4255ae5",
+        "reference/marketing-stable/claude/skills/social/references/tiktok-workflow.md": "sha256:09465cf425f7909937de6e2a1bbd43b037b98d647c90d3e8df8a9de387a5e2f2",
+        "reference/marketing-stable/claude/skills/social/references/unified-api-services.md": "sha256:160856e61e2d4ec0a2dfe258e5f7b329d81ad85901366ad4acb5b45707bddd37",
+        "reference/marketing-stable/claude/skills/social/references/x-twitter-workflow.md": "sha256:5c6f4cf3a04263d43c413624b3102d7a755581b09551d8f6fd799a30c1e675cb",
+        "reference/marketing-stable/claude/skills/social/references/youtube-workflow.md": "sha256:4ec337a6310c6d24e580ab75c1dd80e409ab99c6002db97c7f43a90491402bf1"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-social.md": "sha256:04f702a0aa8a4da529c79aab1da763bd3a92b8998e1c077af48c2e76abe2ea30"
+      }
+    },
+    "email": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/email/SKILL.md": "sha256:0718d6e4edc18f0c1bf3355c25c92a8d8a8e6c29ae38d8aae113e1fc21d7205b",
+        "reference/marketing-stable/claude/skills/email/references/automation-flows.md": "sha256:b60e6e553a59e7ae1ca476d7501ec68b2c181df27b430f6e09d2a91dce501ff0",
+        "reference/marketing-stable/claude/skills/email/references/deliverability-checklist.md": "sha256:e97f297e4802871411d0461305ea7e9140e8b7783ccdfabdf33c11bf94f68c78",
+        "reference/marketing-stable/claude/skills/email/references/email-templates.md": "sha256:39e1a9d8283827487f33e70898f394039f1e4a9c35c33a97cf5cfd4c28d112b5",
+        "reference/marketing-stable/claude/skills/email/references/flow.md": "sha256:7f4099815aacbcaf8a15d8505f9ac28e0d07c9527a652f347fc18143558f7a63",
+        "reference/marketing-stable/claude/skills/email/references/sequence.md": "sha256:007880f73cbda9295e7e35a4dd9172f0a0e31462fe3203e97c382fc0c733b59d",
+        "reference/marketing-stable/claude/skills/email/references/subject-line-formulas.md": "sha256:3fa63a3800725250bb0d61feed835e7c6daaea79759ca7a036fbba9d6646d622"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-email.md": "sha256:275405c7f47a65cf54cd89384b031a4902ac177808a20050d54e393b6f48b88b"
+      }
+    },
+    "persona": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/persona/SKILL.md": "sha256:f7fe84de029c5ecb156e71b1e1f1919767df2bd9b5512ba9b5ebe46889fea1c6"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-persona.md": "sha256:5b071195deb0e4a6551aa11f0eb95ddc8fd4b9fc7da933c4e3d4836ef816d54e"
+      }
+    },
+    "video": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/video/SKILL.md": "sha256:7f59711e4e51f20e4c66879a105182a2cd9a6f0a10f84cb67c01a2c934202efd",
+        "reference/marketing-stable/claude/skills/video/references/audio-directive-guide.md": "sha256:7f7aab43e9c124cab2b0188a3df1f312df6143d99980e4ab25a44b3e07bf1d2b",
+        "reference/marketing-stable/claude/skills/video/references/create.md": "sha256:6d360ad0094a0c9351f9a03a91e39496c87de3010cabb2afd30c9743cee567aa",
+        "reference/marketing-stable/claude/skills/video/references/production-workflow.md": "sha256:7488e8c42218a28cc67cafa1baa5ae2deaf3c2de6d8fa63e1047d2fff6dfaf79",
+        "reference/marketing-stable/claude/skills/video/references/quality-review-workflow.md": "sha256:ce5e35845ac74cd7542bdd95ddf88ed781b24116a26570b48c4f46ea833dec2c",
+        "reference/marketing-stable/claude/skills/video/references/script-create.md": "sha256:d728cb0b264fd8d3385d1c6eb601851d8859b8ab4e9aa9b3aaef3cee08874e46",
+        "reference/marketing-stable/claude/skills/video/references/script-templates.md": "sha256:cf204e33abd4d67588a7dcf3e13babcba47b6311f341bf18128dc2c63cc74e16",
+        "reference/marketing-stable/claude/skills/video/references/storyboard-create.md": "sha256:4adcf05c139a6f6bd4241c1a6711d0c0c97200c3e414e36350cd13f65cb27acf",
+        "reference/marketing-stable/claude/skills/video/references/storyboard-format.md": "sha256:065aa094ff91990f2d28a42c54f4a3ccf55b10ea70bdda9617ad1a474cc8ab5a",
+        "reference/marketing-stable/claude/skills/video/references/thumbnail-design-guide.md": "sha256:960bda44bf35fa32cbdddc2f5aecd729213026796d69f45932a57d647d9d1e89",
+        "reference/marketing-stable/claude/skills/video/references/veo-prompt-guide.md": "sha256:855df737ca9d393ef3ffac03de95bc01590f8ad18f3277c92174021d7352337c",
+        "reference/marketing-stable/claude/skills/video/references/video-art-directions.md": "sha256:ebc7ec512158dc61c631678b4e653d026cfe5bb4a46799e50d4f06746da5da68",
+        "reference/marketing-stable/claude/skills/video/references/video-optimization.md": "sha256:52d45c9c6795c7a4b6c67adf7b0fa572b8217c9c7458781ec273659685585beb",
+        "reference/marketing-stable/claude/skills/video/references/video-seo-optimization.md": "sha256:97c1541b798ca6f85d213ba12c93b93556f91fb74fa89e943f64bc09daf88664",
+        "reference/marketing-stable/claude/skills/video/references/video-types-specs.md": "sha256:c5e00deac66aec7364d109efdf4511c37a30df7b5b63d4da22215aac3eb20b6c"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-video.md": "sha256:f390ff92d1fba43be7480d2b656ee1158d8e5e86c97335a96e9e573bbca4c4a9"
+      }
+    },
+    "team": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/team/SKILL.md": "sha256:f5cf096246494f4256d036d917c7b914d34ea46e53c0149f74c9a66ca98a2d34",
+        "reference/stable/claude/skills/team/references/agent-teams-controls-and-modes.md": "sha256:539dd472fcf77b1c46305061bbbd63d42c4086cb1571230453b1e57a2afe9c44",
+        "reference/stable/claude/skills/team/references/agent-teams-examples-and-best-practices.md": "sha256:8792f1f3dcdc0c6d96474c7cccd4beaac96f0edd9cd3194327a8c66c8ce91f1a",
+        "reference/stable/claude/skills/team/references/agent-teams-official-docs.md": "sha256:7d9bd4763e1f4ce7d2384e3107949b9f4a98e71afe5ad5f810454880fd7f6ebc"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-team.md": "sha256:b91cb0f128f2a6077d757c9506d49683c79dde5be3044b1ba3ba7ef671e78a10"
+      }
+    },
+    "preview": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/preview/SKILL.md": "sha256:3a306832edabe2aa6e4fdef2e93649a1ed00bdb75a39cb17e3e1433a5dec5a90",
+        "reference/stable/claude/skills/preview/references/generation-modes.md": "sha256:07aa385406ce8fb661f9cb8e137beb9bd98a5a68a6a87acd451fa92d5bdc2704",
+        "reference/stable/claude/skills/preview/references/html-css-patterns.md": "sha256:c2c3f860622465fd4e7c5fbb94ecf39519526a5cc892ae14f8155b1f48ee3216",
+        "reference/stable/claude/skills/preview/references/html-design-guidelines.md": "sha256:67b5faf5234614b0ffe765253699067863fd098da97a755c6da6e4a6d1492893",
+        "reference/stable/claude/skills/preview/references/html-libraries.md": "sha256:0e0cc223d7cc800cc1e4158d26067e8ea8b41d08adf57d81427dac52ae3f4ab6",
+        "reference/stable/claude/skills/preview/references/html-responsive-nav.md": "sha256:c2507c5a468632eab14028780898422b1a6d7a2e3d1708933bd294f2cf6989c3",
+        "reference/stable/claude/skills/preview/references/html-slide-patterns.md": "sha256:14da4390afb8c669214e8310153f974b5bbdbd675d84b44510c24bd2e28cba4d",
+        "reference/stable/claude/skills/preview/references/view-mode.md": "sha256:74c02f2ec503bb67ca6e95324c14a36dba7d0e4f54e66888bef733c7454f88f1"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-preview.md": "sha256:7c098c69a0631162655a9e5e718cc04793a58ddb3446b703913488f0d62b078c"
+      }
+    },
+    "ck-init": {
+      "date": "2026-06-10",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/claudekit-cli/src/cli/command-registry.ts": "sha256:b1b05f5f38df5d5d5e4587c288a0f79fe15619d404c8f83c6aefe42ad4bba412",
+        "reference/claudekit-cli/src/domains/help/commands/init-command-help.ts": "sha256:a8185b37e1c44acfec7562c6af45631d23bf5184840d0d275a9011108cec9df3",
+        "reference/claudekit-cli/src/commands/init.ts": "sha256:1690ef367284375ceb427aa84bb0e74c17470544f4f3ec5238ebdb1430c9a635",
+        "reference/claudekit-cli/src/commands/init/init-command.ts": "sha256:428682d16c2a03735d55c56af4045c8c07ed57ab92c2fdd3e2b24d594e582e69"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-init.md": "sha256:c74b15062ee9e211609599bcdbc6f2547eb2799c67fa0e2b06cbe9feeab1e83e"
+      }
+    },
+    "xia": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/xia/SKILL.md": "sha256:f7b15ee10aeb849d5ac2cf84cb30bb9f67be478770f7c6d31775662b78a697ef",
+        "reference/stable/claude/skills/xia/references/challenge-framework.md": "sha256:b0c7a24dc113cf1e7133ad36ea22ddece34e1156b27019bba7e65af523c03695"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-xia.md": "sha256:0180563fc2001b3e07ae0c73d07b5bc8099e4eb847c0b7c935f9faf84a827255"
+      }
+    },
+    "coding-level": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/coding-level/SKILL.md": "sha256:029303f63d518b89aba2fe89aa6ba5bad9d7d83abee0310884fc8b80a6238189"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-coding-level.md": "sha256:1c8d16db05f72128b207e22425e6bdfee226abdd942d83c5b0779b3a868bd4c1"
+      }
+    },
+    "copywriting": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/copywriting/SKILL.md": "sha256:c326ed22d35530bd913599153f2ebd4ac66cf085d8250166e34d6e698df09aa2",
+        "reference/stable/claude/skills/copywriting/references/copy-formulas.md": "sha256:ccd59982c8d2e06641110fee1a9a43506dfe9fc42f2eca1c92236ea800b84c1a",
+        "reference/stable/claude/skills/copywriting/references/cta-patterns.md": "sha256:0af09c230d6fb56383c336388cb88f7ede393efdc34604d0d11730d9187c8835",
+        "reference/stable/claude/skills/copywriting/references/email-copy.md": "sha256:adb2efc6bcc0f70290d8c9f5db5b4276ac42649c8098cdec66b40e0b57f59fef",
+        "reference/stable/claude/skills/copywriting/references/headline-templates.md": "sha256:375a78fe8c4ca986f6474fc4ec68487e6bee9cad3213fc995fcb1efe1ae01e4e",
+        "reference/stable/claude/skills/copywriting/references/landing-page-copy.md": "sha256:a139563a54b1aeefc9cddfbcbaff000750e5ae437c6a98e7abf158f1c32bc914",
+        "reference/stable/claude/skills/copywriting/references/power-words.md": "sha256:813c671adda2bf9adc5038637f32bac0a96a9440d59f963ca319ca743784e54e",
+        "reference/stable/claude/skills/copywriting/references/social-media-copy.md": "sha256:d962250d0d640d1823063f2dbf5dbe29b6fb4ab50c32d3edfdf17fe9cd715353",
+        "reference/stable/claude/skills/copywriting/references/workflow-cro.md": "sha256:4612eb474c9128ee98d425e8725d32c0b40f6eafbf328076255d28f168a69ba7",
+        "reference/stable/claude/skills/copywriting/references/workflow-enhance.md": "sha256:77c654706cbcab2f11aa1d72f5b1b9812180e34dc7340ad7f525da4ba5b97277",
+        "reference/stable/claude/skills/copywriting/references/workflow-fast.md": "sha256:07b273c33943413248f384cf14257128c295ff78129544feb6ed6a7970973a09",
+        "reference/stable/claude/skills/copywriting/references/workflow-good.md": "sha256:4e4c5c179f8fc46aafc42d59e1ab79d4cd3da3f0439484cb5e69284803f37c00",
+        "reference/stable/claude/skills/copywriting/references/writing-styles.md": "sha256:5c83c6c7c652aa0f4d5302eeff1f0e7365c8b2355b11116b1aec426bc8a09464",
+        "reference/stable/claude/skills/copywriting/templates/copy-brief.md": "sha256:7265df3bdb489b50dbf22df2269db21adc86637e46ad41783bcd691e84c5b0f1"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-copywriting.md": "sha256:375086f0cc8549abd5cfd0c16e332fa2c7e93511dcd8f42db552bc4c43a3fe2f"
+      }
+    },
+    "databases": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/databases/SKILL.md": "sha256:5185a766e504684fac58fe9148a556e22ba3579669912b44d932af51ddc29532",
+        "reference/stable/claude/skills/databases/references/mongodb-aggregation.md": "sha256:b7cca207376f2a9b62de73615ec8ff22dc339f1cb84fb39b6d548a8271fc6b52",
+        "reference/stable/claude/skills/databases/references/mongodb-atlas.md": "sha256:d37fea35012dc79ba21f9f5f541307b9b7289ec828007b58e02621e63010411b",
+        "reference/stable/claude/skills/databases/references/mongodb-crud.md": "sha256:4c931cea2dbab883fe0c904dc3278c779488ad31cba93dd24b937bd5a2674721",
+        "reference/stable/claude/skills/databases/references/mongodb-indexing.md": "sha256:828af24fa18b508b0df3699a0d78345a21a2a6dbb42a6b0522758cc517efce45",
+        "reference/stable/claude/skills/databases/references/postgresql-administration.md": "sha256:3bf09a45484b4a3633d4b8c0e3812051508116233fcef7136ab21aa696ee479b",
+        "reference/stable/claude/skills/databases/references/postgresql-performance.md": "sha256:77f84195e3f519c8f63679d57d80b1517b04b0188a966141a05cba1d72092116",
+        "reference/stable/claude/skills/databases/references/postgresql-psql-cli.md": "sha256:ca3a81fde3d1e894510b5b906c9e91db2d300df4cbdb1171ad5683df7ccc0b61",
+        "reference/stable/claude/skills/databases/references/postgresql-queries.md": "sha256:860725feefff992bdef6defb4acb93235f9662abfd076dafb61c194f4e4ee689"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-databases.md": "sha256:2353c319a057fc9f585629410318a04832159f5ec26185967ec4ba44a49b211f"
+      }
+    },
+    "devops": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/devops/SKILL.md": "sha256:f59bd229300ec56ae7effcdb5975e21add46820da7377dd65d0ffe3e0c12acbd",
+        "reference/stable/claude/skills/devops/references/browser-rendering.md": "sha256:d258f97511e47ef425bfc1ae5578720162fa2499466ef4c275072c1a4db25d9d",
+        "reference/stable/claude/skills/devops/references/cloudflare-d1-kv.md": "sha256:d35c07d3bf5356a21544e088c9995cd59dec463992ae95e7a848130ebf8c6d3d",
+        "reference/stable/claude/skills/devops/references/cloudflare-platform.md": "sha256:d009a10f0f37073a08ae51ab6768a63b3baf20f815c2048e3370dfd263d21e6a",
+        "reference/stable/claude/skills/devops/references/cloudflare-r2-storage.md": "sha256:03c90dd24354676d97ac53b2b111daae3c88002955849f2bddd9689447db4235",
+        "reference/stable/claude/skills/devops/references/cloudflare-workers-advanced.md": "sha256:fc4b2c5bd5c826ce1dbbeec914666dd6c8edc64287dbd0acc75c4de1ccaae019",
+        "reference/stable/claude/skills/devops/references/cloudflare-workers-apis.md": "sha256:d36537cf342f93b3db0bc6457f2e61ac5f10e3daf82fab2d557cdb88278fe57f",
+        "reference/stable/claude/skills/devops/references/cloudflare-workers-basics.md": "sha256:a975a4f0ef7e663e66f54156153568b2735a9a626e0fae13cd777e5399979a37",
+        "reference/stable/claude/skills/devops/references/docker-basics.md": "sha256:9e92f9e2f9e147d1002b3abdb45526ac175fd63d1fec6b5862a3c3c0cb828631",
+        "reference/stable/claude/skills/devops/references/docker-compose.md": "sha256:cf6eb6338aa55201f0a5b4390cdb33d4de2b8cffabf2c2b84dac612a2d4f0816",
+        "reference/stable/claude/skills/devops/references/gcloud-platform.md": "sha256:195c09f69bb47976467fe1e5094a156f16ac88ad8e20003b60d7f9ae037bc09d",
+        "reference/stable/claude/skills/devops/references/gcloud-services.md": "sha256:2581140e4bf5412fdc7b2758e9c2acc59e428117af26b1cc1efb10a21106c454",
+        "reference/stable/claude/skills/devops/references/kubernetes-basics.md": "sha256:7232b88a3ec5a740f08683867e57481dee4ea3083fc27fafb872af51a7aeb12f",
+        "reference/stable/claude/skills/devops/references/kubernetes-helm-advanced.md": "sha256:3fbb59829fbdc9cb5722147889d3d6666d43a3efc7e589667dc92ea0574d13ca",
+        "reference/stable/claude/skills/devops/references/kubernetes-helm.md": "sha256:9496cac90b2bb1656c81d5194858dd974e06ed746ebb1c12d9102641812fbb8a",
+        "reference/stable/claude/skills/devops/references/kubernetes-kubectl.md": "sha256:43fe156bfd4ba7fa44cc76335e709f885c262aa5a5aeb95a047b66141c11c84e",
+        "reference/stable/claude/skills/devops/references/kubernetes-security-advanced.md": "sha256:26e8cbd516658233fe85a3dff805d7697de7615e9711c396bb7c59bd904b1196",
+        "reference/stable/claude/skills/devops/references/kubernetes-security.md": "sha256:83c817d3dae55f4ee170a97bc311ee375e1305cd32be29fc984512bcc5d17ad7",
+        "reference/stable/claude/skills/devops/references/kubernetes-troubleshooting-advanced.md": "sha256:9922fd417784d88ba34d028f45bab63da3c0b97e385ee7f453b6bcf38ff04534",
+        "reference/stable/claude/skills/devops/references/kubernetes-troubleshooting.md": "sha256:5f5d950904dcb79bf926d6bcb41e3b60fc424cc60a9023ba1ca99e20ba8941e9",
+        "reference/stable/claude/skills/devops/references/kubernetes-workflows-advanced.md": "sha256:b18c3169301374f8bb125e710f871aa4ec832cb8257cfca4ba8627c97f3e7242",
+        "reference/stable/claude/skills/devops/references/kubernetes-workflows.md": "sha256:dafc947fbad553a3707ef9256093b800b44bc8131eca7ea332c705d31f6b85a2"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-devops.md": "sha256:0b982c8b8387ccf08ede6c6ff631b9f8018ae23b30e98349de1a5e2950a75517"
+      }
+    },
+    "find-skills": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/find-skills/SKILL.md": "sha256:47784b20fe8e6e97ef6a97eb84cb41d3585599722a0e18f299d23e0967e521f0"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-find-skills.md": "sha256:3c274ec33d59dc237b2fa260ae40f0f318123c5d16d385772aa5afee2ccb3e43"
+      }
+    },
+    "frontend-development": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/frontend-development/SKILL.md": "sha256:c51a8627b37cb6f39f69d9c4b4800695191010b0dc2f77cc636afad28168c781"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-frontend-development.md": "sha256:bbba73aa86141b8a6267069145e05a4300043dacdcd80c9edee5464f13670749"
+      }
+    },
+    "gkg": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/gkg/SKILL.md": "sha256:f3b79bcfe5c7a443acf72d41de5ec0e82f18e1f720e2657289753de5a9815d99",
+        "reference/stable/claude/skills/gkg/references/cli-commands.md": "sha256:f62bafc2074b47ba75ca311296f6a0c5498f7bef48279e1026c2970d74e84fa6",
+        "reference/stable/claude/skills/gkg/references/http-api.md": "sha256:b08ccac0025ac528e78e3d3c6ffb0b089fef903b4319f3ac3405cca89f13b71d",
+        "reference/stable/claude/skills/gkg/references/language-support.md": "sha256:e3eac0dc7714ff0bd74b16ef5086dc77250131a71c690fd13e32d3ea8ebdd1ef",
+        "reference/stable/claude/skills/gkg/references/mcp-tools.md": "sha256:12feb707267659bbf267dfdea763339c0ed7f6291833a9b6753db01e0ce69f93"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-gkg.md": "sha256:54ccd159dec39a1f7a6bef6edff11f441035b14068776a1a569a6f5f9e3c902e"
+      }
+    },
+    "google-adk-python": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/google-adk-python/SKILL.md": "sha256:8fbda90247d46f533fa7055c32f8d139ddc68176ea3a82500fd71c8d35298745",
+        "reference/stable/claude/skills/google-adk-python/references/agent-types-and-architecture.md": "sha256:edf54ebe1293bfbeb40666978b0cf759a41c7c8d168e09e45cd293f9f674b055",
+        "reference/stable/claude/skills/google-adk-python/references/callbacks-plugins-observability.md": "sha256:a7d4f0bad7d239efbd31616cdeec1d196b936b9136c71700ec0e004814c0cc73",
+        "reference/stable/claude/skills/google-adk-python/references/deployment-cloud-run-vertex-gke.md": "sha256:42f94cdb2324703c84f1d085e50aa21cb9a83dbf7b53e56cff5907793baa9ac7",
+        "reference/stable/claude/skills/google-adk-python/references/evaluation-testing-cli.md": "sha256:2c83ff074efca06167b85672f4cc9ea4450578734f9bfe084b23a9c0e0116e82",
+        "reference/stable/claude/skills/google-adk-python/references/multi-agent-and-a2a-protocol.md": "sha256:badfdb96be7845cf9b53a58cb2e79b8530e6b17f67300794ec7ab9d38148f89d",
+        "reference/stable/claude/skills/google-adk-python/references/sessions-state-memory-artifacts.md": "sha256:8e41bda48a5396ae24f5cd159cfa80c0235ebe0c264538d421e4e3f2ee3f1713",
+        "reference/stable/claude/skills/google-adk-python/references/tools-and-mcp-integration.md": "sha256:72d35fcf8f7c42253ea9c0ecc8d96fd6268a45f3a24c237cee3f0ea61c516219"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-google-adk-python.md": "sha256:bb89115239bacce433141850048ffcc604e1288123d66ad9969c359d8e53301b"
+      }
+    },
+    "journal": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/journal/SKILL.md": "sha256:5a9e7dd428d0877ff7b370fc2fcd5963a053b4adc4cb2281ea22ab3d0202e7da"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-journal.md": "sha256:fe77062dcb416fa38bffbe9658f4d6a7eadb0c879fb64a038cb43faf7c6ca4a3"
+      }
+    },
+    "loop": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/ck-loop/SKILL.md": "sha256:df55428da56e69e0c45a0e0b2b57c01381650bba2ce2db6579953760d42e486e",
+        "reference/stable/claude/skills/ck-loop/references/autonomous-loop-protocol.md": "sha256:2164a1f3d44329ffbaa13b8c879e2bf6024e001ba2b42d3046e015bdbe292b20",
+        "reference/stable/claude/skills/ck-loop/references/git-memory-pattern.md": "sha256:5d4c5f4e74914eeeef6b930aac0766503ed825a50ebc28d1ccecfa3a2cb6ce37",
+        "reference/stable/claude/skills/ck-loop/references/guard-and-noise.md": "sha256:e50bfc8f229e0ec8e066033733d46c66833614a5b54efd49681f498a1a7152e2",
+        "reference/stable/claude/skills/ck-loop/references/metric-library.md": "sha256:84dcc5a9cda2f15b76f50561d85834b4629c96ba3878735d86c0c9c5a6e120c4",
+        "reference/stable/claude/skills/ck-loop/references/results-logging.md": "sha256:0a1d50cc7e993cc41285e0cc8fdf4d12c598a7477acdcd924fdaba1334bd73b2"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-loop.md": "sha256:97838a884bec92034b54b059a9cfc427d701e40f201739abb29b7e7543d7ff76"
+      }
+    },
+    "markdown-novel-viewer": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/markdown-novel-viewer/SKILL.md": "sha256:a2bf654f066e29acd683b6d2cb1e98dd101ef1dada5dbfb08f35daaa7eb3f2d2"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-markdown-novel-viewer.md": "sha256:e4fc7031db6233072717da22279d3b64ebf1ae60aa0981290017889b8510f765"
+      }
+    },
+    "mcp-builder": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/mcp-builder/SKILL.md": "sha256:c10055193387fdf2b7b132c05b8814138891743afdd7a33f13b8e3f4e7c35cbb"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-mcp-builder.md": "sha256:888da96e746ae40156ff9ef3faa321ba0dc62304316581bb2fe5a1acae756b42"
+      }
+    },
+    "media-processing": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/media-processing/SKILL.md": "sha256:3663e4f2107b121a67443e403883b757fa1e723af6f9c124e8e0bd91b319ecec",
+        "reference/stable/claude/skills/media-processing/references/common-workflows.md": "sha256:4ebf9159c7e6955a49b7323c1a1e367a9e63e7722ed7a71157b3267f67c77f5a",
+        "reference/stable/claude/skills/media-processing/references/ffmpeg-encoding.md": "sha256:903682c3375524ce29a12f52c72e947ab114cee1187d88652360911d06a5759f",
+        "reference/stable/claude/skills/media-processing/references/ffmpeg-filters.md": "sha256:347447ae305410e5bb72a4934ad4fadeb91fdc12435551b038a7f895a49a72a0",
+        "reference/stable/claude/skills/media-processing/references/ffmpeg-streaming.md": "sha256:087eab32cf7336e7815158635a4487db9640d038a22bb01a269277393c5b510f",
+        "reference/stable/claude/skills/media-processing/references/format-compatibility.md": "sha256:900ac7216f595d94ae597096c2bf12cd62bfe0cf1841b143e4ac8564cd12e02f",
+        "reference/stable/claude/skills/media-processing/references/imagemagick-batch.md": "sha256:e9aefed340939dc2241df5a45f82a49516bd348b6340d2acb42b4a3cfdf30537",
+        "reference/stable/claude/skills/media-processing/references/imagemagick-editing.md": "sha256:61f9e9f4d7266db2ed6bd7774f4790c4146fab07c127413a1037b53af8096c0e",
+        "reference/stable/claude/skills/media-processing/references/rmbg-background-removal.md": "sha256:2311024465a5e1e3c379e58406fb18f5bb6c7e2c861134c8ff3f9e5364aaaada",
+        "reference/stable/claude/skills/media-processing/references/troubleshooting.md": "sha256:064e02fa485a5493e84f362736b13f1d30862e461be3d5074d11504ee5438997"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-media-processing.md": "sha256:208bf4de62ebbba8b851d1a00c6c7222315518509ca1f8fc99b7331b963a3b4d"
+      }
+    },
+    "mermaidjs-v11": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/mermaidjs-v11/SKILL.md": "sha256:422480a65c4159334772f813bc9981915e5e3683b0c826c5216578a1f608a6ca",
+        "reference/stable/claude/skills/mermaidjs-v11/references/cli-usage.md": "sha256:cb932f10be5e1f161161c31829cea507b18762498cc6a3c2f413faac82fde175",
+        "reference/stable/claude/skills/mermaidjs-v11/references/configuration.md": "sha256:ec71b889ad80b92fc80100ef4a8466f6b580931055de35a2eb7523308d9726f0",
+        "reference/stable/claude/skills/mermaidjs-v11/references/diagram-types.md": "sha256:c9bf1071a6c03fd84d1e9e0485c71f26bda6e43ad0df1e71f23c989bf902ad4d",
+        "reference/stable/claude/skills/mermaidjs-v11/references/examples.md": "sha256:bf12b42f3b1de3534c156d113b00a56829236c5b50adb93cbfd0fff558ae46f1",
+        "reference/stable/claude/skills/mermaidjs-v11/references/integration.md": "sha256:4682677fc7eeb335e8587bf893abe808148f9542c5abc37faacad2378194cdfd"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-mermaidjs-v11.md": "sha256:58c4690274c0b86d1d49d3017de871444f423d1162b6678c5a2c210b71041857"
+      }
+    },
+    "mintlify": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/mintlify/SKILL.md": "sha256:55d1fdf6301b8a2a74b0d528b7c8f88fa5a79e3c66b913ae92e9413027f51dce",
+        "reference/stable/claude/skills/mintlify/references/ai-features-and-integrations-reference.md": "sha256:8cb36514f4e4d00531ef82a4f28263e32954f63dbdab6fef828a36ae9c3931a1",
+        "reference/stable/claude/skills/mintlify/references/api-documentation-components-reference.md": "sha256:869518c4c37194de0b0ff4f9d8e13173d00e79897241fa2a4542b93e23f14b45",
+        "reference/stable/claude/skills/mintlify/references/deployment-and-continuous-integration-reference.md": "sha256:853e2b70b1d2c06868172bcc0b60a41373d47a4e2ac48c76cd6ff63894e1b92d",
+        "reference/stable/claude/skills/mintlify/references/docs-json-configuration-reference.md": "sha256:e5de8fa71562a52ed51e10370d95e44d7f54ab033067829f1e6ff9d9b59ed39e",
+        "reference/stable/claude/skills/mintlify/references/mdx-components-reference.md": "sha256:7ab8ecc5cf7e40f6e61cedda457db9f0f6fe2e610dd377836c0289c706ee0b08",
+        "reference/stable/claude/skills/mintlify/references/navigation-structure-and-organization-reference.md": "sha256:da98eefd266a04e037bffc03303ae253482cc4ee86e531c65a44d27946cd8277"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-mintlify.md": "sha256:5f4d4219dbb833c5b9b2d2ac120b849e6705f58e2a2a878354dca1ee64c4a319"
+      }
+    },
+    "mobile-development": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/mobile-development/SKILL.md": "sha256:70ef349651a1420e26bac11382335a45ce27826f3e5a46cfbb4a388554470081",
+        "reference/stable/claude/skills/mobile-development/references/mobile-android.md": "sha256:3ffe2296e0d7fb5bc30726f3178b453ced9eca54e547e551cabeecbbb48b78ac",
+        "reference/stable/claude/skills/mobile-development/references/mobile-best-practices.md": "sha256:d7232f95cc8fc46eba9a8e498e108e89b26973d6cb5e22a63ff188c34a2eb449",
+        "reference/stable/claude/skills/mobile-development/references/mobile-debugging.md": "sha256:2562a53047463478989afd3a163940ee5f678093c423b363324076db0f26102e",
+        "reference/stable/claude/skills/mobile-development/references/mobile-frameworks.md": "sha256:c18d0b5c82fe733ac91be7c5c01ecdb0fa04b2d920d6bf3b68a00fdfe07d942d",
+        "reference/stable/claude/skills/mobile-development/references/mobile-ios.md": "sha256:20b2253292952cc58bfa611fdf32a0bf54b5b485f0f747fc0cec3de221020862",
+        "reference/stable/claude/skills/mobile-development/references/mobile-mindset.md": "sha256:72119c9cece4093ea23622cd1d4c14c6b10cb5dd469d46dd2993f05a3d557d88"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-mobile-development.md": "sha256:3f5aec114790c391ea6d78dae6c64079696ef59623b2ae6d61b73727c676ae97"
+      }
+    },
+    "payment-integration": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/payment-integration/README.md": "sha256:bc170cfff3ceb8eab8282e53a9643f50137c455a64fd063df2a75e12e224b3f7",
+        "reference/stable/claude/skills/payment-integration/SKILL.md": "sha256:c6b007108aa34711bb26289b638820120cc88bca9d8f7416345fb34340da68a6",
+        "reference/stable/claude/skills/payment-integration/references/creem/api.md": "sha256:a135d189d12a1411c762ad7f5eedf9328cc472347099b9e32317eedfc3d48872",
+        "reference/stable/claude/skills/payment-integration/references/creem/checkouts.md": "sha256:cb4abc34abd528af6965aaed79b28a54daa01a9b7d41220b73a4c2d0d8cfe9ae",
+        "reference/stable/claude/skills/payment-integration/references/creem/licensing.md": "sha256:5eb6450e7373d8cdbfd0e72e3fa295d866ab053c8d969bd7fc8ee544b9f4bc37",
+        "reference/stable/claude/skills/payment-integration/references/creem/overview.md": "sha256:e26ceb657c0aa552144b20b40b88cbdafa8c1ff232b1920256068989f8f3156a",
+        "reference/stable/claude/skills/payment-integration/references/creem/sdk.md": "sha256:f4376e5c0f75ee55bd12a20fd19b72361c6f9fd92867cacde32983dbd81a147b",
+        "reference/stable/claude/skills/payment-integration/references/creem/subscriptions.md": "sha256:29af22a7cac9bb650d72d22ecdc7161d03d45d8613855f3a961c76cefd79f212",
+        "reference/stable/claude/skills/payment-integration/references/creem/webhooks.md": "sha256:1639c9df6408024c6a0e98fb405e50baf139790a2495ee46b1ff5e27cbf5d7db",
+        "reference/stable/claude/skills/payment-integration/references/implementation-workflows.md": "sha256:ee34ca8cea4163510327a27b2dd85e9909e4432090bdf967c42edeed684f79f2",
+        "reference/stable/claude/skills/payment-integration/references/multi-provider-order-management-patterns.md": "sha256:bcc64ec48aacde5347e8917461a70eb89b734ff047ce5f526ba968ae1c83b252",
+        "reference/stable/claude/skills/payment-integration/references/paddle/api.md": "sha256:1672b30920ecc6c0b232956a0570e1c20741bac578f61c883d14c019f6432561",
+        "reference/stable/claude/skills/payment-integration/references/paddle/best-practices.md": "sha256:a65f0e521d07c8be45b77c500daeb53da93148bd733e828080aef7d4a4823f13",
+        "reference/stable/claude/skills/payment-integration/references/paddle/overview.md": "sha256:d7a8f6666da098b89a345ca5f263300bf6fe76973d9ea3ae714c6d7618764dd5",
+        "reference/stable/claude/skills/payment-integration/references/paddle/paddle-js.md": "sha256:5d484bc2fab13bdf9e6aa15e55a9a2b930710a4a8fb4a7b6772900ad68f01105",
+        "reference/stable/claude/skills/payment-integration/references/paddle/sdk.md": "sha256:45646b1607eed2dfcdb341b3da0b6c64aeeb51a67dbb2e9e5899714ecf298b46",
+        "reference/stable/claude/skills/payment-integration/references/paddle/subscriptions.md": "sha256:0224cc12fa5e10c3712f63ba5a7fa095d8efdc716f507ee6ea7a7251e992096a",
+        "reference/stable/claude/skills/payment-integration/references/paddle/webhooks.md": "sha256:df9447392afc5c1978466f379a687bb87bc5776229cf8136cc778e2dc242098c",
+        "reference/stable/claude/skills/payment-integration/references/polar/benefits.md": "sha256:29f4049da57daa0047228b78af80fcfc4ee3621af875ca3e219b86e15ea96350",
+        "reference/stable/claude/skills/payment-integration/references/polar/best-practices.md": "sha256:ee28b89c334842660e5b941f82f97010193633496438c6df8844677f90ce6870",
+        "reference/stable/claude/skills/payment-integration/references/polar/checkouts.md": "sha256:5fd4c244d488e02b7b0ca3a1449f0cec4881e0488d784fd359e3b1b9b03f3f07",
+        "reference/stable/claude/skills/payment-integration/references/polar/overview.md": "sha256:60abeb8bfe879f6706e429fad2999cc314c24a5fdf384536ca02a081dcdcd6c7",
+        "reference/stable/claude/skills/payment-integration/references/polar/products.md": "sha256:9ab521e5cc8dc98e9fd84a3641e68af1a3d2096f2d710e355280f9e80a181505",
+        "reference/stable/claude/skills/payment-integration/references/polar/sdk.md": "sha256:874d967d2e40a84ab79d3f2501813d6147767ec571f4c134a12986a84dbb070a",
+        "reference/stable/claude/skills/payment-integration/references/polar/subscriptions.md": "sha256:f86eb43e9a24d867fce5affe00b04bb98dce71acff7d068765f49803fda59c5f",
+        "reference/stable/claude/skills/payment-integration/references/polar/webhooks.md": "sha256:091a12103d2df9413d836330e36fb1d8ed03527122abdc1aceeb8b191681f1d0",
+        "reference/stable/claude/skills/payment-integration/references/sepay/api.md": "sha256:c894057de43384a23053855c2f3b11eea154ee149f7c3b5216998cc28d1908f4",
+        "reference/stable/claude/skills/payment-integration/references/sepay/best-practices.md": "sha256:fb36b6ccfc3703f71245bc6444bebbe923b6c6fdabb0bae5802d7acfbde3ee83",
+        "reference/stable/claude/skills/payment-integration/references/sepay/overview.md": "sha256:4db01d56869b3084aaaab3560e56a91052ac36c3a4dffcacb49d7e178f3aaedc",
+        "reference/stable/claude/skills/payment-integration/references/sepay/qr-codes.md": "sha256:695686e0b8236c82e9400e602c7ff95e6778f248b59fc838b06f5d6c01947660",
+        "reference/stable/claude/skills/payment-integration/references/sepay/sdk.md": "sha256:f8b7b555850388790bbbdece145a21379878f6c7401cf6529efb665eca66218e",
+        "reference/stable/claude/skills/payment-integration/references/sepay/webhooks.md": "sha256:15534c7c56b6cbdba7ec13ecae3709127b486c9a8a61fe530cb47a0988a7cda7",
+        "reference/stable/claude/skills/payment-integration/references/stripe/stripe-best-practices.md": "sha256:dc6eaaec4fa486512989d85b28524545c3598bacb2bbdda7642c90aa57c8bce8",
+        "reference/stable/claude/skills/payment-integration/references/stripe/stripe-cli.md": "sha256:e441bb79c57b79e56ed10a57e47499a371413701ffd49c4407b6773566d75bdc",
+        "reference/stable/claude/skills/payment-integration/references/stripe/stripe-js.md": "sha256:ea89bd966fbce6ddac2a2f3db436efe8993c6dddb7e6eb14b8d85bf4ec5513a2",
+        "reference/stable/claude/skills/payment-integration/references/stripe/stripe-sdks.md": "sha256:2e929ac8e8f587e13336e8225249f922092f64f47eba7516c75fdaa5f5992111",
+        "reference/stable/claude/skills/payment-integration/references/stripe/stripe-upgrade.md": "sha256:1f3280b10690fe85bcc47fe5f7331d242c9c270f6519486974009182e470bb14"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-payment-integration.md": "sha256:981173326d0f5aee7a94f846330ff70991288714e6d90a8fd2fcef7759f4378d"
+      }
+    },
+    "problem-solving": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/problem-solving/SKILL.md": "sha256:09685f4afbffac2e7bcd0ff1d8878a44e0a22412d19da8c8f3a4015d2f8fff74",
+        "reference/stable/claude/skills/problem-solving/references/attribution.md": "sha256:31a2aaa9398c34e9d28324cccda7954ad5b8075e6785f2d511b498105247193a",
+        "reference/stable/claude/skills/problem-solving/references/collision-zone-thinking.md": "sha256:6b8b5cd22ba84d42f593b87d2c3f3bebcf865a8a0739a63267ff10fbdfa19aa9",
+        "reference/stable/claude/skills/problem-solving/references/inversion-exercise.md": "sha256:6cf90d3175a73272ddc6b2fcf0d67c2ec4b76146257785800f027dee7bf8e648",
+        "reference/stable/claude/skills/problem-solving/references/meta-pattern-recognition.md": "sha256:948bae5d7a5b3e7d2c05a69ee06e457b9127d55ad4eee670adf4c6ab757659a4",
+        "reference/stable/claude/skills/problem-solving/references/scale-game.md": "sha256:6201d459b1f7956d6bb94320ddfb5c6c11bcecac837dfcef44b079a6ee42f32e",
+        "reference/stable/claude/skills/problem-solving/references/simplification-cascades.md": "sha256:7183cb578e0a3eec635067b3848c7069c89eae093afdd8278cd81ca740b30756",
+        "reference/stable/claude/skills/problem-solving/references/when-stuck.md": "sha256:ad5e721ef86f2d19c628bdbf5d7de2e76dfc02388ccdbb595dfa0e68a3f02d48"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-problem-solving.md": "sha256:7fd0d2f37cd0ec5f3a4ed2c5bf9d2acbd75298785f11c23adb653ab8da30d2e8"
+      }
+    },
+    "project-management": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/project-management/SKILL.md": "sha256:d2e9d9767c48452b2a42d74ef58b7528954d3ced146de9d8f261181e0539c18a",
+        "reference/stable/claude/skills/project-management/references/documentation-triggers.md": "sha256:b71f87f979a3c41deaebd027293aa4cfb3c932c6aaefacb25dbdeb337d9c6141",
+        "reference/stable/claude/skills/project-management/references/hydration-workflow.md": "sha256:ef86578bd3ef79eb34e82d4b9039374af4591b2eda8be230eedbb48ab1f0a39e",
+        "reference/stable/claude/skills/project-management/references/progress-tracking.md": "sha256:c8677ed866ae6abc015d8612b7f3619d97edfa9f7f5a646eb23dabb4c22d3991",
+        "reference/stable/claude/skills/project-management/references/reporting-patterns.md": "sha256:3dfab4046ed1442df09bde3abc16f5d248ed3df21dff95640107a605f4524ff6",
+        "reference/stable/claude/skills/project-management/references/task-operations.md": "sha256:7894b9d8361058b176e8c49a8748edd070214a4a38f08c522a36d53322327161"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-project-management.md": "sha256:0b120216e5770a20ac2adcf1fa00464401cfa67ab1aa161f4fc5fcb29d9a7845"
+      }
+    },
+    "react-best-practices": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/react-best-practices/AGENTS.md": "sha256:9288e276adf1a8e907721874d5c1ca7ea62d57ca81750d5ac9d0d87f4e1c52f8",
+        "reference/stable/claude/skills/react-best-practices/README.md": "sha256:9eafb2123d3b8b2aef41fba0db2648a3f4f49996f8c7c8bb2c86263befd8b48a",
+        "reference/stable/claude/skills/react-best-practices/SKILL.md": "sha256:51c0e9f39badcb2228fc8084d15ada399739ee18449aa013f1ad56beab4c4f69"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-react-best-practices.md": "sha256:f57b578d3d07484ecec681d79c28e10fdab040e63f10b0768ac91ad1170fb96b"
+      }
+    },
+    "remotion": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/remotion/SKILL.md": "sha256:1aee088e6e971d37b2a0c19cbef083ddf9641b295ea681442f4c76191b0a26d7"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-remotion.md": "sha256:21a72233e772d52d9f5844441e94d97e484bd73f27b542ecd98340d13ec1df69"
+      }
+    },
+    "research": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/research/SKILL.md": "sha256:aeb91e29dc6dbcca297b9923ac2714561918ef9b5e7fd16591ad1f30bcd282e9"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-research.md": "sha256:c692755ae1e5178329385bd94b2194b0da353dffaae34b390d9e415bd09d65fc"
+      }
+    },
+    "scout": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/scout/SKILL.md": "sha256:f51582bdab6a8ebbead632a88b4069faa01c8c7758349175eaa899dcc47850f0",
+        "reference/stable/claude/skills/scout/references/external-scouting.md": "sha256:baecd1003856246cf222ca3e611204aabcedc32571d93f7d18178ae9a5c640c4",
+        "reference/stable/claude/skills/scout/references/internal-scouting.md": "sha256:b3549fa2f2f72cceeb4278c973dc8b52653a1dacf9533bdf0d09a0565e7bbd14",
+        "reference/stable/claude/skills/scout/references/task-management-scouting.md": "sha256:78ab0b90b058096fef35601c10d9e082bc2c8de25bdb118e81d2008c2ca1879e"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-scout.md": "sha256:01ea2a48349fb02d03d7811b0209d17a157c574422ea8b2fc1c77d83434c7ba1"
+      }
+    },
+    "sequential-thinking": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/sequential-thinking/README.md": "sha256:f674df8bcd1aa5cf551edd3c55ee580e7b385d2016d847bf23df712fc212dbc1",
+        "reference/stable/claude/skills/sequential-thinking/SKILL.md": "sha256:b00cdf0d1e54bbcbf3e9820ea75ee11218ebe459f5990aab2f6087c947d48242",
+        "reference/stable/claude/skills/sequential-thinking/references/advanced-strategies.md": "sha256:27d543374e9f61bcbeb6e9a15521379580610e20ae3cb3ecbebb1e0d0ee30d5f",
+        "reference/stable/claude/skills/sequential-thinking/references/advanced-techniques.md": "sha256:53dd89b952c1f4489620864626d6a46ec3fe57602b7dc864757ed0dfcc2b246f",
+        "reference/stable/claude/skills/sequential-thinking/references/core-patterns.md": "sha256:2f11f94fc30d9d9b44c312a3d988bf1479463e936cf5bcc5ca2330318529516a",
+        "reference/stable/claude/skills/sequential-thinking/references/examples-api.md": "sha256:1bbce0c751d06be5457740a458412d7d5536d585354055aabb2456a3d873ab5b",
+        "reference/stable/claude/skills/sequential-thinking/references/examples-architecture.md": "sha256:cff32c210dbdf3f3221069a9f5ae1d672b3d4e171a1afdbc0cc78ccc3a942bc8",
+        "reference/stable/claude/skills/sequential-thinking/references/examples-debug.md": "sha256:00d4478d5552a4bf449550711e9f7e4633451bc53f47d02ffebf40431f65a976"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-sequential-thinking.md": "sha256:48621374558c8cc627e059311c0659b2cb68ffd69f7586475500ef4452d19e1d"
+      }
+    },
+    "shader": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/shader/SKILL.md": "sha256:57360c6fed21217809c1492e5140e900a9122613933b6000167c55268f17c269",
+        "reference/stable/claude/skills/shader/references/glsl-cellular-voronoi-worley-noise-patterns.md": "sha256:b4aebd85844c051a20ee141c5c3c1a5e9909f13eed6ae979392964594c609142",
+        "reference/stable/claude/skills/shader/references/glsl-colors-rgb-hsb-gradients-mixing-color-spaces.md": "sha256:0701abae35d0c9a8da69ab62f556a3d8d9e7dc1a981fc44cc62ccb1f10c50a0c",
+        "reference/stable/claude/skills/shader/references/glsl-fbm-fractional-brownian-motion-turbulence-octaves.md": "sha256:ad62793ee0378375a4ef10e534d36483460dddb634fd9d2934e21f2ae639e33b",
+        "reference/stable/claude/skills/shader/references/glsl-fundamentals-data-types-vectors-precision-coordinates.md": "sha256:3728478ea3493793c8672cc6ff6f1d09da5318ae6799b22a0813ef0e24ae95f3",
+        "reference/stable/claude/skills/shader/references/glsl-noise-random-perlin-simplex-cellular-voronoi.md": "sha256:f7fa78c77666919d5b66e61811c21d5ed51dcb3b93c3a7eda6871dff40de8e90",
+        "reference/stable/claude/skills/shader/references/glsl-pattern-symmetry-truchet-domain-warping.md": "sha256:1a60f759d4785653f1d2e38f91ebd4f6b1fa534d8db6dca80e9767527069582f",
+        "reference/stable/claude/skills/shader/references/glsl-patterns-tiling-fract-matrices-transformations.md": "sha256:7054860563f56bfd7ae822de95683713c0a53b24c5f7e127c27bce83a8e5c95a",
+        "reference/stable/claude/skills/shader/references/glsl-procedural-textures-clouds-marble-wood-terrain.md": "sha256:fcd8b3447f265771bd557dc2a11c5f8cf51d7d67b639f47efaf3cadd599ec732",
+        "reference/stable/claude/skills/shader/references/glsl-shader-builtin-functions-complete-api-reference.md": "sha256:e3c4b30fcbd2f14f9f69bffce7e0217897ed7ada4dc3b4bbf3bae0bc04a9c9a4",
+        "reference/stable/claude/skills/shader/references/glsl-shapes-polygon-star-polar-sdf-combinations.md": "sha256:4be07b3121ec0b506216c18edbe26c6c074fc0ce3573d833a967b676167de37a",
+        "reference/stable/claude/skills/shader/references/glsl-shapes-sdf-circles-rectangles-polar-distance-fields.md": "sha256:a8a2e4d72bba22473deba93eb1883057f8099e6d06adc2c9c4977f6d0b5ba88c",
+        "reference/stable/claude/skills/shader/references/glsl-shaping-functions-step-smoothstep-curves-interpolation.md": "sha256:86761d0cf8b4abd64bd7a1f822f3c235d2fa9a6210768c9ccb73258b7bd11f9a"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-shader.md": "sha256:ae5cddb6878e9ad44ab182763cfa84c23481f6882ea40ad3d91d2e6d3a291d61"
+      }
+    },
+    "shopify": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/shopify/README.md": "sha256:c13775e03e078aae7fee1956ec758e2f728195495a1033680e4c202625bb2d64",
+        "reference/stable/claude/skills/shopify/SKILL.md": "sha256:a0dfdcd9655dfd510924d1ce90b46cd21c26399d46a9fcd4eeed96e6701b669c",
+        "reference/stable/claude/skills/shopify/references/app-development.md": "sha256:af92f5533dec1d23a1836a84e253d2f3737f0f00db03146ab9d1ca171cb05e10",
+        "reference/stable/claude/skills/shopify/references/extensions.md": "sha256:8264fa2dac7d21493fe23cebe96271fcf90f88119b49491157c29a3fbcdb16e9",
+        "reference/stable/claude/skills/shopify/references/themes.md": "sha256:0a18523f8183f060d4867bec17a4f25f48f7e8cdbc0b6e543795dd00fa087c67"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-shopify.md": "sha256:85ebfb39c7ca92a66916ccafe09cedf9324c30d0960017008e8b5f642434793c"
+      }
+    },
+    "show-off": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/show-off/SKILL.md": "sha256:83bb6b9ff790955f414179057699a19bad48cad6efb8e356b8ee58525673a759"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-show-off.md": "sha256:6c0f0c4319c25ed6210c4c38e19ece474cb832bcee62cf310e762d40f4e19ec4"
+      }
+    },
+    "skill-creator": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/skill-creator/SKILL.md": "sha256:e12958e01c924fa74db4d5b196ad4a20ef050711d2c7ebb515e317825bbcb682",
+        "reference/stable/claude/skills/skill-creator/agents/analyzer.md": "sha256:bf68f4cac5a56c673a928c2e6d619586c5b93ea364026ab37547772cb45a663a",
+        "reference/stable/claude/skills/skill-creator/agents/comparator.md": "sha256:fe1fc9787c495d864c5d6eada47396478572325fde1b33a96d78bf4b849b7a3e",
+        "reference/stable/claude/skills/skill-creator/agents/grader.md": "sha256:57134da0c1a4eea33fbd74a1c9c44aa814f07d6bc64de303edb586f941e5d21a",
+        "reference/stable/claude/skills/skill-creator/references/benchmark-optimization-guide.md": "sha256:2e0e24f4012cd3ba35727de9efe23c4164ae62e787567e56adbe28ad00b0b41e",
+        "reference/stable/claude/skills/skill-creator/references/distribution-guide.md": "sha256:8d4f1492887f6873922f06f91b9b22569a91092152fe1160f317fdd13f445dca",
+        "reference/stable/claude/skills/skill-creator/references/eval-infrastructure-guide.md": "sha256:33e7e006324847d704a880b34ed774a974489bdc21c81069999b4a97bc5fa012",
+        "reference/stable/claude/skills/skill-creator/references/eval-schemas.md": "sha256:8d3de1f31b306c202198ab3d8f24f968ff697b3018a760165089586c59583883",
+        "reference/stable/claude/skills/skill-creator/references/mcp-skills-integration.md": "sha256:05d310fadf3ebc4bbfe2081a9e9f977e33cebec96e68621837832180f7cbd83b",
+        "reference/stable/claude/skills/skill-creator/references/metadata-quality-criteria.md": "sha256:0cd072db92ed67381baa41b6ac4dbd32cd866f902dcc363526ae94d5d6a2c34b",
+        "reference/stable/claude/skills/skill-creator/references/plugin-marketplace-hosting.md": "sha256:cd67aed29adec076b5c823c0c8ac6ac55b55180f1109fda025be7946c29ae89b",
+        "reference/stable/claude/skills/skill-creator/references/plugin-marketplace-overview.md": "sha256:8d54a0a8bf443195c6401df7d4a2934fdd81b3a0349ee18b5f8e14f7a5a65e1f",
+        "reference/stable/claude/skills/skill-creator/references/plugin-marketplace-schema.md": "sha256:50d27dd0f01c1d3530e077412a2770c4f96c639ee5c2290eb54a85a3516f21d3",
+        "reference/stable/claude/skills/skill-creator/references/plugin-marketplace-sources.md": "sha256:43ad5b6b30be6c655930c1a2656b846300ed27d5a247981a56325882403575b4",
+        "reference/stable/claude/skills/skill-creator/references/plugin-marketplace-troubleshooting.md": "sha256:3ae22cff058b6ebca1bb826bf2af5c5478670056359ee86dde3b5b35074be026",
+        "reference/stable/claude/skills/skill-creator/references/script-quality-criteria.md": "sha256:0c56828f468e226a340745a1c72ffa75b86de466b49ef76b3b75037833baa474",
+        "reference/stable/claude/skills/skill-creator/references/skill-anatomy-and-requirements.md": "sha256:6e99105d22f5bdb6625b2b6192ade552893e159bab23c9ef12229ef4c0c6dfb5",
+        "reference/stable/claude/skills/skill-creator/references/skill-creation-workflow.md": "sha256:161141424ce080706f36ab1dcd43e59b3a1bcd1a9e9b4c2f3b01345b1a0f0e9e",
+        "reference/stable/claude/skills/skill-creator/references/skill-design-patterns.md": "sha256:646a15112fd05e8b82720511947488a795cdbb48d2728158f7fbeeb78121f7e5",
+        "reference/stable/claude/skills/skill-creator/references/skillmark-benchmark-criteria.md": "sha256:374b6700e9120ef5b2c3c3d635dff156b51931f0ab04248eb5fab75b92aa4d4e",
+        "reference/stable/claude/skills/skill-creator/references/structure-organization-criteria.md": "sha256:1909d00e3a5e8122fff89ac18e026a5580d07d8afde3572b079a341fec289d09",
+        "reference/stable/claude/skills/skill-creator/references/testing-and-iteration.md": "sha256:789e6e3e75756d2ee193fe8174a4322d748d47440dce9f8582849a23cff3ca4c",
+        "reference/stable/claude/skills/skill-creator/references/token-efficiency-criteria.md": "sha256:bf3f353ba8350907dda18f0e4f29f6564a45ecfb7a448c731e2b182770005aa8",
+        "reference/stable/claude/skills/skill-creator/references/troubleshooting-guide.md": "sha256:5e9341af2bd8ac74347105161ce787ce46fdb8aa6551964ef240940898efdee5",
+        "reference/stable/claude/skills/skill-creator/references/validation-checklist.md": "sha256:0ed687bc1e626b37bc2f03d30cd550bfe757c90ace16898ab82c576f5a8409e6",
+        "reference/stable/claude/skills/skill-creator/references/writing-effective-instructions.md": "sha256:ef419db671c42cb20c66baac7f57f15522eef510a1d2625d34dcf4e102d77830",
+        "reference/stable/claude/skills/skill-creator/references/yaml-frontmatter-reference.md": "sha256:f8ddb433b67305f82f5d3d078dfe4537902ca233c36047fae7659ef049f10d55"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-skill-creator.md": "sha256:9eff722ac23d7fa99aa0404aaeec66572e19d8df6279e30609fb557d6ee1cf7a"
+      }
+    },
+    "stitch": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/stitch/SKILL.md": "sha256:b45ec4f2396043c2d0a8b35ada05b050ce3a2fbf2dc128e026d04d6b60e25a60",
+        "reference/stable/claude/skills/stitch/references/design-to-code-pipeline.md": "sha256:f4ce67b34a40d1e97e655020eb0ba654be3969079b2110f194b98a128938d9ff",
+        "reference/stable/claude/skills/stitch/references/quota-management.md": "sha256:c5494cb86683121aa6cc9e5f5560a2aad3dd4f7f0d53a9597957326b1073e5eb",
+        "reference/stable/claude/skills/stitch/references/stitch-mcp-setup.md": "sha256:8628eb8d04d3dd67daadf5e39c7c60b380663ef236e55f564224b793a6ae3cd0",
+        "reference/stable/claude/skills/stitch/references/stitch-sdk-api.md": "sha256:025560b32916e12ac6b2a2e00dfc806adefad24d2d9343ec31786821c92af6f9"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-stitch.md": "sha256:529d8bfe6072efd51473f77f2f8d378ce094e31691e8d4fdcca4fdfd86945f2c"
+      }
+    },
+    "tanstack": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/tanstack/SKILL.md": "sha256:20b854131a3a407bf914e5ecd9ddfe0c9a3cbf7cfd890b8cb7319c2e228b0ae8",
+        "reference/stable/claude/skills/tanstack/references/tanstack-ai.md": "sha256:9cc47e81799e6e9b650ac55a07b324b8b7a1d8d13e26567961d0f43127f5489f",
+        "reference/stable/claude/skills/tanstack/references/tanstack-form.md": "sha256:522c868d83f1fba7e462bff1a0ce26af7000328c6556be067ad82b9f0298cb01",
+        "reference/stable/claude/skills/tanstack/references/tanstack-start.md": "sha256:b5684d38675f2fb5853608f1a66843fc5dc101b8346a3c19c6db9e2e140d3e79"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-tanstack.md": "sha256:ee22a015e21b308f959fb67cd3c407cb1fc7ac1ade691f437c07506bf8e5b0fb"
+      }
+    },
+    "tech-graph": {
+      "date": "2026-06-15",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/tech-graph/README.md": "sha256:b276d2c9047372485aeb5bf05e1de3e72552c047c24fdc9b6ea80175f2bdd7c2",
+        "reference/stable/claude/skills/tech-graph/SKILL.md": "sha256:fd7b129d626d2952998f2dcc1bdfe6f99e9d80655f18825c12cf2e71d2a26f3b",
+        "reference/stable/claude/skills/tech-graph/references/icons.md": "sha256:cf9e623bd555d3c445b5a74d3e9b252e89016f53868b5b63baf6c15d0ff79515",
+        "reference/stable/claude/skills/tech-graph/references/style-1-flat-icon.md": "sha256:667c2b0d97d88a4826020f770f6e0e62a4b5e1b4a7a23a0ecf136ad740aca5a2",
+        "reference/stable/claude/skills/tech-graph/references/style-2-dark-terminal.md": "sha256:5d25eaee6c02b5162634f0bd62538983bad6a284247a5e445022e1b4f92e6a28",
+        "reference/stable/claude/skills/tech-graph/references/style-3-blueprint.md": "sha256:0a6cbc4a3b0eabe3da30e4fecc85e16d9a75379b16cab6e2a47ec01bdd9c14f6",
+        "reference/stable/claude/skills/tech-graph/references/style-4-notion-clean.md": "sha256:51ececad23503891861a9f8c8c3a0f4c90b32bd88d511563c7485e8e2de816e0",
+        "reference/stable/claude/skills/tech-graph/references/style-5-glassmorphism.md": "sha256:2edbfa67536e037475b3553e2a848eb7d717b4f177e727060b1854afa299a689",
+        "reference/stable/claude/skills/tech-graph/references/style-6-claude-official.md": "sha256:95d85bfb2ce117626497ea583d351eea6f77afbc57782f0fbbfb922811566df9",
+        "reference/stable/claude/skills/tech-graph/references/style-7-openai.md": "sha256:4962c87e0e968c0eba93b6cd662c06f92dd37e11b972fe6574f31e480d5f287d",
+        "reference/stable/claude/skills/tech-graph/references/style-diagram-matrix.md": "sha256:957e958b75400dbc2bc46044c7e46c803e86546ab1f5de444f56cca6936696f2",
+        "reference/stable/claude/skills/tech-graph/references/svg-layout-best-practices.md": "sha256:1bf2afdbc794999bc0aa6983ca7d7eb7b34980c86699293dfae6d51d5d62d8a6"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-tech-graph.md": "sha256:9106aee07940172bf42c5e3c76ade009cb6c640f3a259bca1e29ee9bb4fbe4e0"
+      },
+      "previousAuditDate": "2026-06-11"
+    },
+    "threejs": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/threejs/SKILL.md": "sha256:b6b0437fa8bee789fb6ee4a032cbf8404a3a0932c4b38955c4b2b7fef884ad2e",
+        "reference/stable/claude/skills/threejs/references/00-fundamentals.md": "sha256:b4fb7db57919c57af6dd237513ed68a8fd9db000befada77e4cf44838be890f9",
+        "reference/stable/claude/skills/threejs/references/01-getting-started.md": "sha256:bd572f13cbfe5a65db046aaa1e62984bcb5358bdc7772ecd60a1118dccae4bd4",
+        "reference/stable/claude/skills/threejs/references/02-loaders.md": "sha256:5975da9fbc494d9e8157897ad436177aab15f28c1540bc8206203dcd330f63f9",
+        "reference/stable/claude/skills/threejs/references/03-textures.md": "sha256:499a16dba38153a235499607299eb1967a28da4e2050b526bb7e79772ac04549",
+        "reference/stable/claude/skills/threejs/references/04-cameras.md": "sha256:0c0380b4b894f4201113e5617e96aa0011aa89b1f517d190222cdcab824e666c",
+        "reference/stable/claude/skills/threejs/references/05-lights.md": "sha256:a35828280d61900505244b43b127e40d98d231a38c5102e20e473f50ae11812e",
+        "reference/stable/claude/skills/threejs/references/06-animations.md": "sha256:4012cad031c2ca992a0ba50e3ee85c307b86ef15d9c28830ce4a1aed765fc3b1",
+        "reference/stable/claude/skills/threejs/references/07-math.md": "sha256:a870178b12fbdca3c2ed6b812e2675c51db6623b70778e15022d3a3c14055721",
+        "reference/stable/claude/skills/threejs/references/08-interaction.md": "sha256:6298b81274cfe24f6de6908a0fb2d2000bc00a3117b45ad724b28afc98b26838",
+        "reference/stable/claude/skills/threejs/references/09-postprocessing.md": "sha256:be4898fc85d3a56bf5c8a8c3a96954c3625f04f182ed5df64ba3cdf0d0a288a1",
+        "reference/stable/claude/skills/threejs/references/10-controls.md": "sha256:3616fb636e221a13cf48310f5a0dd86bfe26d4579156d58a00dd0130e132258f",
+        "reference/stable/claude/skills/threejs/references/11-materials-advanced.md": "sha256:58ed014cb1a458885e9ac4dc12fa18c602296b86ca5d0e23ebbcfed5b8b0f933",
+        "reference/stable/claude/skills/threejs/references/11-materials.md": "sha256:940fda0fb5033a56453ce7c92f11b71eb2a3204ec713f8c10105033161699b29",
+        "reference/stable/claude/skills/threejs/references/12-performance.md": "sha256:22c1ff72ff22b1581bbe56f955bc8f9248e5b0b59cc78c81f3b6735099fb3cb0",
+        "reference/stable/claude/skills/threejs/references/13-node-materials.md": "sha256:b30ea64dd977cb10c2d9546417ecfd9e873419228a0a88e3d04f4aea7f624a1a",
+        "reference/stable/claude/skills/threejs/references/14-physics-vr.md": "sha256:3fd89d46ad2a30af09aa86856ae0a9c1f99290600e7ef571969308b731fc63eb",
+        "reference/stable/claude/skills/threejs/references/15-specialized-loaders.md": "sha256:550c5014198bd7234b40e22899f1a6cc0aa826a070d00af87213c9e4e87db040",
+        "reference/stable/claude/skills/threejs/references/16-webgpu.md": "sha256:7a56835d742407366dce8825c79bd2e75c4107f11d3f6a8f80dad353db0d6853",
+        "reference/stable/claude/skills/threejs/references/17-shader.md": "sha256:f17101c36e33d4a45ca1200a7983a07129f4d7da3fdadbe7076e98749eb42501",
+        "reference/stable/claude/skills/threejs/references/18-geometry.md": "sha256:077e11c07a74aa2fac8c202a642bca1c0ee959373593a77b34b934f2bd09d56a"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-threejs.md": "sha256:d7ab45b290869beeb69a448361caeadfe89233567540dded09e8cc374e2ab81c"
+      }
+    },
+    "ui-styling": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/ui-styling/SKILL.md": "sha256:da77ab0cfdccd6b95cf8d879ee273d492c4bf048e882e9e1f9a812c49766eebd",
+        "reference/stable/claude/skills/ui-styling/references/canvas-design-system.md": "sha256:f5de85ff39d9f3a8275c4164b921ba72d5e1d34b8d7a9243d9ee34b3870a4f5f",
+        "reference/stable/claude/skills/ui-styling/references/shadcn-accessibility.md": "sha256:a22cd4ccf82b635b2b2c4f12416a0c4f7edcd825d219d6089450fa797a0d9511",
+        "reference/stable/claude/skills/ui-styling/references/shadcn-components.md": "sha256:79c4f91cbf68993a43fa3a95889c35db73de45bdd3dfd83a6830863c01aa598a",
+        "reference/stable/claude/skills/ui-styling/references/shadcn-theming.md": "sha256:d17d641474221123ff0e0288043ca2f2dab3ac96908a19eed28d82f9e58865ed",
+        "reference/stable/claude/skills/ui-styling/references/tailwind-customization.md": "sha256:4c5adeed6263a274f74f6eb2c816ca420fd6ef4f35683582988bacd404799afe",
+        "reference/stable/claude/skills/ui-styling/references/tailwind-responsive.md": "sha256:8d00ae620df26daea4623c7bf996d6e612e09d359305fcfa2b40cab757ed840c",
+        "reference/stable/claude/skills/ui-styling/references/tailwind-utilities.md": "sha256:aba1c40ef84f43beea142ae310371e332541f39d973df90a71f1854823effda1"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-ui-styling.md": "sha256:d05a84a5c7b48ff2aa81c3ca589c36d3b7f27d0a43cb0556f187fd6bfae7552b"
+      }
+    },
+    "ui-ux-pro-max": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/ui-ux-pro-max/SKILL.md": "sha256:20e6e4c1235b4382186d1054a3ff61364097379572aa1966ba272688ade81471"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-ui-ux-pro-max.md": "sha256:49f599e7c6fdae7be552ecdb7043ea01618af19abf80a75b7a74fceb9593fc6f"
+      }
+    },
+    "watzup": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/watzup/SKILL.md": "sha256:16088d9b945931e21a258b102811a43b210221a64a4d86bbd5c36552cd56494b"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-watzup.md": "sha256:3a6e249e0ab0274bac0d27acfb23816e75036e407e0603fea0da881990d0b968"
+      }
+    },
+    "web-design-guidelines": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/web-design-guidelines/SKILL.md": "sha256:260af832ed3d2ff5aa6abe553c51855d8d6deed6b80ed897e1555f0141208a3a"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-web-design-guidelines.md": "sha256:47a9fd905de515646e54a79eb6306c3fa52d649862528c4c8e72f786ed502ac4"
+      }
+    },
+    "web-frameworks": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/web-frameworks/SKILL.md": "sha256:e9c46d09c40c3b1733bc8dd253852f8da224874699fd4b34cc5300322c238c1a",
+        "reference/stable/claude/skills/web-frameworks/references/nextjs-app-router.md": "sha256:bca2cc4b417f2e7aaff4a7491bdd84a10ac03ad4b42839b8c91181b5851a69c7",
+        "reference/stable/claude/skills/web-frameworks/references/nextjs-data-fetching.md": "sha256:5175463a517033aa8d3295c4fc7420db57726017450ec637d413afcb541d3e9f",
+        "reference/stable/claude/skills/web-frameworks/references/nextjs-optimization.md": "sha256:20b66c2e616ea9af62e1b3a07b68069dfc2df1574dfca6bce2e00a427ac76498",
+        "reference/stable/claude/skills/web-frameworks/references/nextjs-server-components.md": "sha256:afce90a0cd5175832212bd03fdf692ee5ad7154dfce0aeb75f153fc244224801",
+        "reference/stable/claude/skills/web-frameworks/references/remix-icon-integration.md": "sha256:5f2d77e5b1ddc512e2be1f270e55435e372b332e98ed56d8a399ec48226405a3",
+        "reference/stable/claude/skills/web-frameworks/references/turborepo-caching.md": "sha256:2d7056c6cc5b5041e23c2f7bd0ff26da685c6e9513a9271803ae93bc0d2be1e2",
+        "reference/stable/claude/skills/web-frameworks/references/turborepo-pipelines.md": "sha256:64279184f245524dbcaf94e29b48c56fb766e41af36e4ad92253edcc648dfe5e",
+        "reference/stable/claude/skills/web-frameworks/references/turborepo-setup.md": "sha256:429c0ed6cab365a18f3ecfb12df741ece4b4e5bc2052719b6dec97f496f81d8f"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-web-frameworks.md": "sha256:a06ab461cecb7a312857613f9bbf4ef72fe5ba27b6ed120c1b7b9d4121ca92ad"
+      }
+    },
+    "web-testing": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/web-testing/SKILL.md": "sha256:2ab3f760a52172c41d3dde1492deb93a6d79d3d3a8f7e27861ba1fb5e6ed69cc",
+        "reference/stable/claude/skills/web-testing/references/accessibility-testing.md": "sha256:29240bf03979c9a5ed3a52a30aa88f4097f0baea08bdfac19330437a0a3e96df",
+        "reference/stable/claude/skills/web-testing/references/api-testing.md": "sha256:014742548e91976caa34d59f7f70d8fe655bf6b01a78be740f312223d40bc2bf",
+        "reference/stable/claude/skills/web-testing/references/ci-cd-testing-workflows.md": "sha256:f7954eee4a5129623ad56439099d75f1a0b489b59f75607c59db2c062db8c8b3",
+        "reference/stable/claude/skills/web-testing/references/component-testing.md": "sha256:b7ae79fefa875b39d70f6e3eb065e44ddac1a1729ba30a12f48d4035fdd7f89d",
+        "reference/stable/claude/skills/web-testing/references/contract-testing.md": "sha256:fe0e3ac8fa27145c7a37e5db054aad7522f97ee6af54f501ec0334e52dd14dfe",
+        "reference/stable/claude/skills/web-testing/references/cross-browser-checklist.md": "sha256:3e5ef0577ac999e1abe5d92f6936150f82174f11b123485c4485a05570d8ab66",
+        "reference/stable/claude/skills/web-testing/references/database-testing.md": "sha256:565732257fb98e27d589b9edfb65fc416063227cbd388323082ad1886126c059",
+        "reference/stable/claude/skills/web-testing/references/e2e-testing-playwright.md": "sha256:b584c854292a1202b3f7873c40d30c524011c857896bb68b4777298d82585bdd",
+        "reference/stable/claude/skills/web-testing/references/functional-testing-checklist.md": "sha256:373531b6a74e1be71f7daff73e9fcb2c8c1f9f1f97c57cc2e257d6d0ca531333",
+        "reference/stable/claude/skills/web-testing/references/interactive-testing-patterns.md": "sha256:a9972e974aa4b848d418f130da64a952a899895337852409dce97e163ac819c8",
+        "reference/stable/claude/skills/web-testing/references/load-testing-k6.md": "sha256:a8ffffcefd3b55139f0be7c7544ee289008aad4d6e8c3c3144c8abf0fbe198bf",
+        "reference/stable/claude/skills/web-testing/references/mobile-gesture-testing.md": "sha256:7db8c59dc0e6b1a822db5db5d7d331bff4f190c9c841c75963bc578759f27e7f",
+        "reference/stable/claude/skills/web-testing/references/performance-core-web-vitals.md": "sha256:ceb4712dfa03380c2ea791189e549ae89b14504c60d4827bf023496f9f968d78",
+        "reference/stable/claude/skills/web-testing/references/playwright-component-testing.md": "sha256:4d9fa5c964f810fcee1025b8bc02a61edf651c92765b88ed0324dec0bdca9a96",
+        "reference/stable/claude/skills/web-testing/references/pre-release-checklist.md": "sha256:3b733d03085fb9766727ea5ce98012e75a28722956df4c641509a190610417ab",
+        "reference/stable/claude/skills/web-testing/references/security-checklists.md": "sha256:3be0bd620df2f95fb98650581dae9a14c2fa6a65e6be41037a4239ad9faf4187",
+        "reference/stable/claude/skills/web-testing/references/security-testing-overview.md": "sha256:f46dbd996ba2bf320bc4d328fc28307ec88847fe2f458932e45c0a8df995f0aa",
+        "reference/stable/claude/skills/web-testing/references/shadow-dom-testing.md": "sha256:4b21bb4494e2ce27848567e71b90ecf98191b543bfbd4487aa4fbbb46544d7f7",
+        "reference/stable/claude/skills/web-testing/references/test-data-management.md": "sha256:f3c0147f585ba81e78a60e432b617b75fc49374bed63f8c112c56161bbea717b",
+        "reference/stable/claude/skills/web-testing/references/test-flakiness-mitigation.md": "sha256:c9abc4971bfffc7c6c971a52aa2682f8c66b1e5f539904c467ea0145d41908ad",
+        "reference/stable/claude/skills/web-testing/references/testing-pyramid-strategy.md": "sha256:0ecc5115dd9bd6c98c2623b71faafc610570437f32cdd42d22f8512d8b9f0374",
+        "reference/stable/claude/skills/web-testing/references/unit-integration-testing.md": "sha256:a7218bd576d690298d2234ed0569e981c6e55ab6e212b01715c5d13647f76d0e",
+        "reference/stable/claude/skills/web-testing/references/visual-regression.md": "sha256:22cdd88965eddb27682ab4562771ba5d4ed6d490dce9d2451cb48fb2c7557081",
+        "reference/stable/claude/skills/web-testing/references/vulnerability-payloads.md": "sha256:c878e61d455058b9772fcda32740d83b982eb0159433b7de5aed23dbd0d7b157"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-web-testing.md": "sha256:41d9f239c70d09dfe4582ca214b353df3e24c205a5f3911321da3718569b85b7"
+      }
+    },
+    "worktree": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/worktree/SKILL.md": "sha256:baa4feabaf11b7d9caaf10cc6caee9265b45bc9f063757ee135467540e671c6d"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-worktree.md": "sha256:c7e809d9ed2b7cad4e1dacfe36e18fc7e596f567cdbabcaf41597c6d744b7d1e"
+      }
+    },
+    "excalidraw": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/excalidraw/SKILL.md": "sha256:2db9a31c5a4aee9b2665e8b44357b0872535e2e178387651debe00c2f6eb19a4",
+        "reference/stable/claude/skills/excalidraw/references/auto-diagram-guide.md": "sha256:9ba27f616afef3a5811bd18ca5f8ec81c73a5bbd8fae8ac46a648e8c38755275",
+        "reference/stable/claude/skills/excalidraw/references/color-palette.md": "sha256:43b92a808cbe45c5f862ab8d50e36c11288136e2eeea8da4bcf7af85d85d0f49",
+        "reference/stable/claude/skills/excalidraw/references/design-methodology.md": "sha256:e9d21309b735b5c67e61a5e78faeb8f3d905adb7b088e8a14e71b4ddb8ebaf51",
+        "reference/stable/claude/skills/excalidraw/references/element-templates.md": "sha256:fdf2c4431aed3fd0232bb50cd849f4bd3fc8f4f88024348c2a7d1358c500f3f2",
+        "reference/stable/claude/skills/excalidraw/references/file-workflow.md": "sha256:8dd2be446f43c9019d9da76f47e5a845ac7adc746b68edb11174b3722b829394",
+        "reference/stable/claude/skills/excalidraw/references/json-schema.md": "sha256:77b2d2becb201f7ccd25e7ad5c1130cff66ea1ff9a17adbed42cf963b96d316c",
+        "reference/stable/claude/skills/excalidraw/references/mcp-workflow.md": "sha256:1ac89af1877484b2c3d1b26bed13bc7178e4a93bbc605bf8ee3c07e54cc6d90e"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/excalidraw.md": "sha256:d1271f67ba8abfea73471aaf5520ec6b86b0d47f9ccbbf891f8bdd11a72250d3"
+      }
+    },
+    "ckm-ask": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "architecture-doc-only",
+      "referenceSourceHashes": {},
+      "guideHashes": {
+        "docs/ck-architecture/ckm-ask.md": "sha256:ed36f1459d1c650aa883342039025bfafa1b78042b80ca2e4fe8ac174c7c76b4"
+      }
+    },
+    "ckm-docs": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "architecture-doc-only",
+      "referenceSourceHashes": {},
+      "guideHashes": {
+        "docs/ck-architecture/ckm-docs.md": "sha256:ad53e3582178580ce3b3b03c3e6166c2dce2406e03258a8aa98b0d95ab86d7e6"
+      }
+    },
+    "ckm-journal": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "architecture-doc-only",
+      "referenceSourceHashes": {},
+      "guideHashes": {
+        "docs/ck-architecture/ckm-journal.md": "sha256:aa39c8a804db45b417ef4fb95712372e352b22dcea9f61f3d5304c14ce260e9c"
+      }
+    },
+    "ckm-plan": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "architecture-doc-only",
+      "referenceSourceHashes": {},
+      "guideHashes": {
+        "docs/ck-architecture/ckm-plan.md": "sha256:11d19c45919eb8564a69a909c29052af6ae5aa1e7d067ed395d7f1a9b55491ce"
+      }
+    },
+    "ckm-preview": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "architecture-doc-only",
+      "referenceSourceHashes": {},
+      "guideHashes": {
+        "docs/ck-architecture/ckm-preview.md": "sha256:62ea31b0f339099e4c470fb42d680a03362afd1f7138bc31b983662cff65232c"
+      }
+    },
+    "ckm-test": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "architecture-doc-only",
+      "referenceSourceHashes": {},
+      "guideHashes": {
+        "docs/ck-architecture/ckm-test.md": "sha256:ca9bef504e7a6af9174a9721194845c98e265a32b5e3a00e13cfc242f7b275ff"
+      }
+    },
+    "ckm-watzup": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "architecture-doc-only",
+      "referenceSourceHashes": {},
+      "guideHashes": {
+        "docs/ck-architecture/ckm-watzup.md": "sha256:b4df66f59049a737a303637eb3de6ad6df96fd899f2546769888aa386f1d8140"
+      }
+    },
+    "ckm-worktree": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "architecture-doc-only",
+      "referenceSourceHashes": {},
+      "guideHashes": {
+        "docs/ck-architecture/ckm-worktree.md": "sha256:c1473fe87846071bca227f2a1827c61d630b94f5fa1ce8c2ec8e76165be4b4d0"
+      }
+    },
+    "init": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/init/SKILL.md": "sha256:a549015694219d33039a8d7005ac78a6eddd431c220ea3acdc6a3a4115005842"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-init.md": "sha256:c74b15062ee9e211609599bcdbc6f2547eb2799c67fa0e2b06cbe9feeab1e83e"
+      }
+    },
+    "ab-test-setup": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/ab-test-setup/SKILL.md": "sha256:051f6845f97fda2bb42ae90df1d7162358ec1219ecee60c114b830a31f66c53a"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-ab-test-setup.md": "sha256:48a29327e7862039d9a105519c5611ffa0c2b43649552d3da807f454aa5f530e"
+      }
+    },
+    "ads-management": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/ads-management/SKILL.md": "sha256:2b527b877d96b1940bbadd759a2a8dd39c01d0966e9e0dfc1fb9a113139f54ad",
+        "reference/marketing-stable/claude/skills/ads-management/references/ad-copy-templates.md": "sha256:e01be7471a462564526e77d3b16f7ddd45bbb4dee085e765d60ca837f0c3c02d",
+        "reference/marketing-stable/claude/skills/ads-management/references/audience-targeting.md": "sha256:8c2415e7979626fbf60095391cee7c225a7afb2b65fb98c1d0fcc9df24efa95f",
+        "reference/marketing-stable/claude/skills/ads-management/references/campaign-setup-and-bidding.md": "sha256:be1ab0487de2b00aeb84289d938b30d26bd83129cee9bf7cb09cf2e4d34059da",
+        "reference/marketing-stable/claude/skills/ads-management/references/competitor-analysis-and-tools.md": "sha256:e43e0ace2ed41e8ef119fa9e9fcb49d3b41177f9f960654bb8a950cc1e0e86cd",
+        "reference/marketing-stable/claude/skills/ads-management/references/creative-asset-generation.md": "sha256:1906c80e7bf1c963bd35b7e702e979543548b79387c48b9cc8c3a2459df07ca0",
+        "reference/marketing-stable/claude/skills/ads-management/references/measurement-and-attribution.md": "sha256:4671dd0b9d798f4ae17f3056a06b3da7060ee0b552aca390e9c828c6951234e1",
+        "reference/marketing-stable/claude/skills/ads-management/references/optimization-playbook.md": "sha256:0888a8fafdac6ed8c7ec97e46d9fba687c23f7452bfe70f6bde8f15df5a2efd8",
+        "reference/marketing-stable/claude/skills/ads-management/references/platform-specs.md": "sha256:a55f78b37876c6cf2c170e827662849037a35189a48a0728857f17d338c2c93a"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-ads-management.md": "sha256:b62459bc5754d3c4207fecb451c4a07223774ca4201563c429877f577488b432"
+      }
+    },
+    "affiliate-marketing": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/affiliate-marketing/SKILL.md": "sha256:f19b5d7f4a9807e0df0b07633395b9ae950bc795d686733ce72e87956972c504",
+        "reference/marketing-stable/claude/skills/affiliate-marketing/references/case-studies.md": "sha256:9576a5b109914ceb8c0b7ba78cd1290da95c0d216b46c692316a909ab067d346",
+        "reference/marketing-stable/claude/skills/affiliate-marketing/references/compliance-legal.md": "sha256:4740ec79d5d345c414c0b4c824fb005bec17af4039234fdea722c257723b118c",
+        "reference/marketing-stable/claude/skills/affiliate-marketing/references/fraud-prevention.md": "sha256:e11d949f04a75a9f7f7fb6c58a82342c473fe331496723ad5fbd9d722bd22922",
+        "reference/marketing-stable/claude/skills/affiliate-marketing/references/kol-koc-partnerships.md": "sha256:0a7308cd3e16930905d0672dc3c70e5390d803f174156b7635f52662a37117db",
+        "reference/marketing-stable/claude/skills/affiliate-marketing/references/outreach-templates.md": "sha256:0850bb753c95704159b09b6c05d27f1fedbd86a58c506c3ce9381bca28eb715a",
+        "reference/marketing-stable/claude/skills/affiliate-marketing/references/platform-selection.md": "sha256:843efd62bf5182b38180a4bfae9543c13c72ce78f5710aa3b05dc3f330bacc35",
+        "reference/marketing-stable/claude/skills/affiliate-marketing/references/program-structure.md": "sha256:e6ee2e6500ce35585ec61109e775420c5e797d6dc8a2dca20c409b4731ef75bf"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-affiliate-marketing.md": "sha256:746a42ed2c6d3d991e2f117b83cf697e5cc37161eb0169a08fbf164a747be8c1"
+      }
+    },
+    "analytics": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/analytics/SKILL.md": "sha256:50bb87c767f9df286bf85bc839ee802fe442b979b486b4ff9ba75c645e82031b",
+        "reference/marketing-stable/claude/skills/analytics/references/analysis-workflows.md": "sha256:50ea084ecee48ddd95bc1b99992d67fc691c063cf40f70657e6669ce0696bf48",
+        "reference/marketing-stable/claude/skills/analytics/references/attribution-models.md": "sha256:97d09d43b0e96747053f101abd4bdb7d145b3bafac64c632825ecdbacce32a31",
+        "reference/marketing-stable/claude/skills/analytics/references/ga-admin-api.md": "sha256:3f018f76bcb63ba9fce513c2f71c0d77c3c5fb12d3110e136d4eed062db76989",
+        "reference/marketing-stable/claude/skills/analytics/references/ga-data-api.md": "sha256:ff9fa46209d8537a1b2ae8bece5dd0a82328773d4024df7173f43a4dc0103758",
+        "reference/marketing-stable/claude/skills/analytics/references/marketing-kpis.md": "sha256:12e1319837db8aeb1bbee871e8428e25fd9150b5d1450b5e867027d59463a904",
+        "reference/marketing-stable/claude/skills/analytics/references/report-templates.md": "sha256:eaba0a3a8371b04ca34799e60b6d63ea5eb81642ce1af23d100d1e729ff0e434"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-analytics.md": "sha256:2ce8c4a475f7790304aee6ba2ac8699ad72fc52a3a24675a3b64fde2e727693a"
+      }
+    },
+    "analyze": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/analyze/SKILL.md": "sha256:da728504e27d5c8c763c81e704d3dd81b311615b8fb06746d20052008e2a4a66",
+        "reference/marketing-stable/claude/skills/analyze/references/report.md": "sha256:262878512d0fe11845b7288fd35c11649d62851a3d2f0be8899b5bb89a053d8c"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-analyze.md": "sha256:5868da1275e604827182a5dd827875a04911b1bad2a224bec7f837e6d151fb2d"
+      }
+    },
+    "assets-organizing": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/assets-organizing/SKILL.md": "sha256:f6482b85f5b9aae636c6f29f41412bee6d56116f95198216e874bd8dbb5509a0",
+        "reference/marketing-stable/claude/skills/assets-organizing/references/asset-types.md": "sha256:1e4f4a2e62a083c5db1a9c6158e72669b2b794062eaf326d93d6a8f157460eb1",
+        "reference/marketing-stable/claude/skills/assets-organizing/references/directory-structure.md": "sha256:f9b67a6a88495d7a95ce61d9d01898335c5bbfcd50dfc533c76ed3af43195e90",
+        "reference/marketing-stable/claude/skills/assets-organizing/references/naming-conventions.md": "sha256:2d674aace329a3d43d44f6860a7b5952124be6a07834b91a955338c350c5d828"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-assets-organizing.md": "sha256:2b2845bd234a65c0534307447d730a7b17bda185afda2927feca602e62f90acd"
+      }
+    },
+    "banner-design": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/banner-design/SKILL.md": "sha256:b55b30c763e2aa9aac953021bcb72bd03669f187150fc0815ab1313846b79466",
+        "reference/marketing-stable/claude/skills/banner-design/references/banner-sizes-and-styles.md": "sha256:c8906fb1073a576ee8c680d9bc8586249cbc4ed36690da960d65a1c9c37143b7"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-banner-design.md": "sha256:b4e4b9d025327b2df23dcbb8a4790eb1a42fb5e73d116753e039863fa08ba229"
+      }
+    },
+    "brand": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/brand/SKILL.md": "sha256:1312fe0046f4b52fc53695efa102da6f900688c32f839dbe154e803cb8cea1ad",
+        "reference/marketing-stable/claude/skills/brand/references/approval-checklist.md": "sha256:4bf8549687f53a7b9684005b4b87de93c26f018e00609b4c506a5812abd13d20",
+        "reference/marketing-stable/claude/skills/brand/references/asset-organization.md": "sha256:de98123417e9c5a1cc71a78131bba979c4c8ed2e5289e6c7a7f166576e488101",
+        "reference/marketing-stable/claude/skills/brand/references/brand-guideline-template.md": "sha256:392db8cf10fef492221c15a86e68590074bf5716de1f2982f41c01fbe30567cc",
+        "reference/marketing-stable/claude/skills/brand/references/color-palette-management.md": "sha256:c429298ffe3955edb8b22c9f51426fef75e83d02848cd4300e89c0d3fc34b44a",
+        "reference/marketing-stable/claude/skills/brand/references/consistency-checklist.md": "sha256:56d8b2d4852cda11e600adec4b9dd68fc89a1b8265382359953bec5c5e5e2c36",
+        "reference/marketing-stable/claude/skills/brand/references/logo-usage-rules.md": "sha256:044c5ddf30cfe0eea047451cfce6ea654939198ffdd8968a19161c97066a5a26",
+        "reference/marketing-stable/claude/skills/brand/references/messaging-framework.md": "sha256:24b2500a72867b55dd10f4bf359178b0eb347fddd852659ce47b69d9f597d4e6",
+        "reference/marketing-stable/claude/skills/brand/references/typography-specifications.md": "sha256:921c3d9e6ddfde2677b9a3e32eee94c7922f54f22c1f380c5ed2eb25a7d5bfa9",
+        "reference/marketing-stable/claude/skills/brand/references/update.md": "sha256:537cb55ebe260e1de127bd6288b19d8d7b15b6c893545442a58b739cbd342b37",
+        "reference/marketing-stable/claude/skills/brand/references/visual-identity.md": "sha256:63f0cfc5d95403d8e12aca4d839cc28471515574d9a431334bfbb96c15407c31",
+        "reference/marketing-stable/claude/skills/brand/references/voice-framework.md": "sha256:08c15ac79f81cd964c5efbe593131b61a093c7e1b060d5dd28b17f3cc5b331fb",
+        "reference/marketing-stable/claude/skills/brand/templates/brand-guidelines-starter.md": "sha256:d157a57b15f0b458c79636d11de42f3c89f03d8c0bbea1bdd3cf1c3542b2140d"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-brand.md": "sha256:3411d08b7c97eb9b3889e5a65567ba68b62d2813bbd3a2b7b38124b3def5eb49"
+      }
+    },
+    "cip-design": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/cip-design/SKILL.md": "sha256:957e6a8334716eb8499195b2d2099e3d1efcc93937d4e379cde53dabec4e0a86",
+        "reference/marketing-stable/claude/skills/cip-design/references/deliverable-guide.md": "sha256:1424e120b967288e2334f24fcfa5cdc7f238420326a7444f4c5597efecfabc41",
+        "reference/marketing-stable/claude/skills/cip-design/references/prompt-engineering.md": "sha256:4bf3a0c858f38c230e43e872857b72d9eb692e066e8de5920da75aac733e753c",
+        "reference/marketing-stable/claude/skills/cip-design/references/style-guide.md": "sha256:f3e15408cd981e93804440c1159c12e02d001bc37a3945f455b3fc13729ed4e1"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-cip-design.md": "sha256:a07169eff0b9c63ff7b91d9dba13a5f6d38505a7eed7c3f254743f72125ef739"
+      }
+    },
+    "claude-code": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/claude-code/SKILL.md": "sha256:1deb4f28ff75091174e249492b5d299be1782891028b8d77e6a33f73d0f97366",
+        "reference/marketing-stable/claude/skills/claude-code/references/advanced-features.md": "sha256:2fb92f67efbed1338ea53c7be52ed52bffe98f3e1a51c2b79094cc213ca65c2a",
+        "reference/marketing-stable/claude/skills/claude-code/references/agent-skills.md": "sha256:1e7177fafaf739c3bb31f35cc4f44b65baed00af7ac2d32416b94be52f4f2fee",
+        "reference/marketing-stable/claude/skills/claude-code/references/api-reference.md": "sha256:e6c62e7d435c012be4437cd3630b1501bab07ed2183ee5b267dd0f0632f2dfdf",
+        "reference/marketing-stable/claude/skills/claude-code/references/best-practices.md": "sha256:efabe665fd9ba46270e937503648a0f0f0cf6302142ca8ab5e128d66031adf56",
+        "reference/marketing-stable/claude/skills/claude-code/references/cicd-integration.md": "sha256:8f74dd8c4f5a197338c5a09fc932fe634eb6a774f1bf2253b872c02f1165c323",
+        "reference/marketing-stable/claude/skills/claude-code/references/common-workflows.md": "sha256:4cf547539202504ac261204aa4c69bbe7364989d61c32348c3b3e99618eb9352",
+        "reference/marketing-stable/claude/skills/claude-code/references/configuration.md": "sha256:36f648bd73ee38cfdda861bf4e9366d2110e9ef9a231fdc4084469a88d6b9515",
+        "reference/marketing-stable/claude/skills/claude-code/references/enterprise-features.md": "sha256:8f885147892a5493676f1b97101cd937c3c5800c5a30498d0f0ad8d4a55742e0",
+        "reference/marketing-stable/claude/skills/claude-code/references/getting-started.md": "sha256:14e1b685b36914f114bfcaa1a74fc618f6aa315d79cc45b76e3234935322bcd1",
+        "reference/marketing-stable/claude/skills/claude-code/references/hooks-and-plugins.md": "sha256:89248abb0c798618f87cd40ca63f43d4dea9660f7e9e72080fe90290d70368a4",
+        "reference/marketing-stable/claude/skills/claude-code/references/hooks-comprehensive.md": "sha256:e480ad2da6ce7c89c32022571b13c2ddfb769b35fca81dd6543e794d4c55df31",
+        "reference/marketing-stable/claude/skills/claude-code/references/ide-integration.md": "sha256:1e599fd5abe9322d22f14e7e178c7aca42292a1fc493e67eb634fcc7c712c56f",
+        "reference/marketing-stable/claude/skills/claude-code/references/mcp-integration.md": "sha256:29e711f34c06c014f8ea790388b5f089f4c8bb96d73807effdb7b3763d2f6176",
+        "reference/marketing-stable/claude/skills/claude-code/references/slash-commands.md": "sha256:9dabacf7955e23fd1762bf880347972ea2529630f59dfe8be1a1d5f4c3d90655",
+        "reference/marketing-stable/claude/skills/claude-code/references/troubleshooting.md": "sha256:39c73df67cce1001f0868671ef99fe19e3607dc40bd1fb6aadc360a66ad0c9a0"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-claude-code.md": "sha256:e3d2f9a8f61f9ed576b811bd6c27fdc557b649d28e594c4dfdcd59855903ffa2"
+      }
+    },
+    "competitor": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/competitor/SKILL.md": "sha256:fb0a476f348fea8f28933bb4eda0bea4541988135d4141677e4aa4560282bb70",
+        "reference/marketing-stable/claude/skills/competitor/references/alternatives.md": "sha256:1390b390644ba3ea6dbc3212e695ba84ce4d1e0c10af32928944cba24476c4b0"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-competitor.md": "sha256:b8707f907678235dfaf30fcce42bbdb4ccac84488bd5ae004ebd7ff32ac7902c"
+      }
+    },
+    "content-hub": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/content-hub/SKILL.md": "sha256:901f92391059d0cfa18107e0cce000de101b3138ea3d1a03555fbba16ca07b62"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-content-hub.md": "sha256:ff192f5ad4eaf8a4aa11efb8f5a05f07faf0fc89b266c4fa98a55d4e3d9a31ea"
+      }
+    },
+    "content-marketing": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/content-marketing/SKILL.md": "sha256:b940673550c79f6f21ffce5aca6de5eabda746193d50a0a572ccc7ea40276eef",
+        "reference/marketing-stable/claude/skills/content-marketing/references/blog-post-templates.md": "sha256:6d96116ae499ef294701e44229450d79f1e41ce2826c11400071128f7226691c",
+        "reference/marketing-stable/claude/skills/content-marketing/references/content-audit-checklist.md": "sha256:5a2e97908e9c54c8355f95fa8a860b31f2747332f89aa3df723dc7a93baa449a",
+        "reference/marketing-stable/claude/skills/content-marketing/references/content-strategy-framework.md": "sha256:e0ec5965af14af9dc04156facaedf10426cf35089020f29f0093e879be60055f",
+        "reference/marketing-stable/claude/skills/content-marketing/references/editorial-calendar-template.md": "sha256:100703c15613ee4f16a65a96dd703cefba4dff33b9a4a57a884c687a04077c32"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-content-marketing.md": "sha256:9c80fac53f2aec086f082cae09180b20cc99af176bbd1419518ea2099e21e2b3"
+      }
+    },
+    "creativity": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/creativity/SKILL.md": "sha256:07b598d459912d17dbca1de623be068351e2116acaf87e3b58469f29549df62c",
+        "reference/marketing-stable/claude/skills/creativity/references/audio-music.md": "sha256:626e988bc0bbb0a86fc73806b4fa3dd04bc32b57cf30f565a2a59ed2c781c366",
+        "reference/marketing-stable/claude/skills/creativity/references/color-psychology.md": "sha256:e86eba2fa3347ea3ee00978b7f18ef37d268fc11ad115e5f16c46af4b0e68233",
+        "reference/marketing-stable/claude/skills/creativity/references/creative-styles-part1.md": "sha256:9cf87af673a3c6d5374f6061429cc6ce077f0dac3f4a50939568d82007994113",
+        "reference/marketing-stable/claude/skills/creativity/references/creative-styles-part2.md": "sha256:cf272462ec4f351d8a5a944aa8114ad1232779425d784ad3e15348f1c1a79a84",
+        "reference/marketing-stable/claude/skills/creativity/references/visual-trends.md": "sha256:6dcb2b7846cd58a527ccd2d4c15e6328bc861da09b60ff2f690c631185a11d46",
+        "reference/marketing-stable/claude/skills/creativity/references/voiceover-styles.md": "sha256:76e85bf55c911894abb22c1f5f47cd2ebc426a67a755350ca465779177f33339"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-creativity.md": "sha256:5b25b0216318969a9e371d5413408fde3b5222a5093160173e08edfe132c4067"
+      }
+    },
+    "dashboard": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/dashboard/SKILL.md": "sha256:3cd0fa75ea3aa6e6ff8ea01638308d3c6e9d87c980b39402cf64bc45210a36e0",
+        "reference/marketing-stable/claude/skills/dashboard/references/check.md": "sha256:6eba9283083b426fb80a03950c9ae3e89c11d04e2b20d51c41040bb135504cda"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-dashboard.md": "sha256:66461820ab18170fe65ac9b0afdbd5b033213c8814c8230743c75af4fe02586e"
+      }
+    },
+    "debugging": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/debugging/SKILL.md": "sha256:747e8bb6ea1ab2ecaf36766ed0bac43052c24b8596f7bdd8985a568011fc62de",
+        "reference/marketing-stable/claude/skills/debugging/references/defense-in-depth.md": "sha256:89e23fdfcd85ecb2ea867e9770775cd8c7211682af4152719364b1005d0f5497",
+        "reference/marketing-stable/claude/skills/debugging/references/root-cause-tracing.md": "sha256:4df0e51b2d26a407d3e2ffba19c7c0cf8d01698c1745009e667b69ba2c962100",
+        "reference/marketing-stable/claude/skills/debugging/references/systematic-debugging.md": "sha256:2c97f742d43baae7206d0859d42bb6837cb89949c7ab0c3fa37d6df129f2b628",
+        "reference/marketing-stable/claude/skills/debugging/references/verification.md": "sha256:ac56942520327efaf29b415b27e6a4211d88386d0072c5d400fdee39eba8bbf3"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-debugging.md": "sha256:b51841215082f023a346b455d80ce177afc7db28b409f2f0a122b2605105f1c7"
+      }
+    },
+    "design-system": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/design-system/SKILL.md": "sha256:eb484103939b1ba2778c351f0c97b7899ea09ebe143bafb7eed29385dfedf854",
+        "reference/marketing-stable/claude/skills/design-system/references/component-specs.md": "sha256:b265d979a741dd748d4e595e6898ae430faeef4f6d13d7a634fa6241b91d2da4",
+        "reference/marketing-stable/claude/skills/design-system/references/component-tokens.md": "sha256:e27f8f5999badee425c98235eabbd2cb3ebe2a1a364766d5c7a6b3134ceaaec8",
+        "reference/marketing-stable/claude/skills/design-system/references/primitive-tokens.md": "sha256:91e6caa12646c08c8aadf8e09399aed65760a25c8d80595936d81a9131118fc3",
+        "reference/marketing-stable/claude/skills/design-system/references/semantic-tokens.md": "sha256:97e16d8061bbc22e82b51966a7015e3fc990932902e4647843506669a1cdebcc",
+        "reference/marketing-stable/claude/skills/design-system/references/states-and-variants.md": "sha256:8dacb95d57d4bb37d8a99cc55515ff26da272056f837d29abc74aedcaa3ba104",
+        "reference/marketing-stable/claude/skills/design-system/references/tailwind-integration.md": "sha256:6d01092db1479dbd2060567b4232bb2b4bc16e89730ab07e1f87a3e7f5c406b9",
+        "reference/marketing-stable/claude/skills/design-system/references/token-architecture.md": "sha256:925f4049c4c4313d9fd5df98cdfd52004112aca49fba1664ad85e76bc9dce4d3"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-design-system.md": "sha256:c8ef2b63cc6d8da15ca91e2586743a7c981b96a8affdf1f26bffe9dbe6974ff9"
+      }
+    },
+    "elevenlabs": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/elevenlabs/README.md": "sha256:d678e99a2b4cddb8246273c18bf1c314c64d80bf35cecefafc41ffafbd7c67e8",
+        "reference/marketing-stable/claude/skills/elevenlabs/SKILL.md": "sha256:b7e1e7858f92a19fb99f2fad6fb2a0d8cf8f8b90e469a5f3f73f44993dc02fb4",
+        "reference/marketing-stable/claude/skills/elevenlabs/references/available-models.md": "sha256:97f5b9cdca348323aa8eb89ca3bc8f524ec0266cb96a20374a12560a797fdebc",
+        "reference/marketing-stable/claude/skills/elevenlabs/references/conversational-ai-agents-guide.md": "sha256:a00ee24b50d6d0af5df615347f50d4d9b32e0e11a348d67d84c216c054eb3b71",
+        "reference/marketing-stable/claude/skills/elevenlabs/references/sound-effects-and-music-generation-guide.md": "sha256:312e8a53dc139c3d4cecdd6bd8817139351da4282daf3dcf6f72c466904872b2",
+        "reference/marketing-stable/claude/skills/elevenlabs/references/text-to-speech-guide.md": "sha256:8e2d1a7ea31ad7c8a392ae37c0b130b71635f4703f2db7a4cfeae3958d44a3f9",
+        "reference/marketing-stable/claude/skills/elevenlabs/references/voice-cloning-guide.md": "sha256:54d4847e342b50bb4eeba486ad78715202553f2cb2f778d92f690c92a8931a85",
+        "reference/marketing-stable/claude/skills/elevenlabs/references/voice-design-prompting-guide.md": "sha256:8b60400b5f7c28db5a0960c41679838995647d1a6243ef6f43df92480e3a9e91"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-elevenlabs.md": "sha256:c86e520a8dc63326ab74bae1e5d6b61a8b142c6ea351a90def9a0ab0eb2f7651"
+      }
+    },
+    "form-cro": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/form-cro/SKILL.md": "sha256:f9c3dd6df863a74f91e4884a6d35318d394b5db56c8a81d96a79a1e239107f72"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-form-cro.md": "sha256:e1940051b61732aed7779838cb703a8a790ed4a66a3b86fae3069bb0edef730e"
+      }
+    },
+    "free-tool-strategy": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/free-tool-strategy/SKILL.md": "sha256:161c50ad5c4e0825831e388eecb4b9f14e4a7324781a89348c5f3edac4089304"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-free-tool-strategy.md": "sha256:f3975289b9f07758a043f09fdba098dca7f790edcb937d644ea677250e6459b0"
+      }
+    },
+    "funnel": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/funnel/SKILL.md": "sha256:7baa335117a6b51e59e2d7351963d179c9f6c1ebaeb458ba5b5d847c8c1c5945"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-funnel.md": "sha256:9eb742f26b851c2974ed95cda521cbf15940a87093eb6f61ada98d253347d52b"
+      }
+    },
+    "gamification-marketing": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/gamification-marketing/SKILL.md": "sha256:8e2f71333916e03a52158d19d8b8932869ef4e41ed444889357a6614128bd589",
+        "reference/marketing-stable/claude/skills/gamification-marketing/references/analytics-events.md": "sha256:ece2abf9b09d3b3ab9da653636565f705f1fd55fee459ab190ce0022f8c3dd04",
+        "reference/marketing-stable/claude/skills/gamification-marketing/references/campaign-templates.md": "sha256:80224c2959470393984b1dcf9075695f19ba7ef2f21e60fb3083258500947126",
+        "reference/marketing-stable/claude/skills/gamification-marketing/references/case-studies.md": "sha256:ff0e0c3c92e5ec486e21d5034e96f9fadfd067e20339b190eb498f0c6da96b16",
+        "reference/marketing-stable/claude/skills/gamification-marketing/references/challenge-configs.md": "sha256:084b7aa1b55eccde4464c0e0484bd26c6c6e2253d2fc333e6461d72fcb208114",
+        "reference/marketing-stable/claude/skills/gamification-marketing/references/database-schema.md": "sha256:222db373f543e1d7c554eeeb1d1355309566a4c31a6988f3d5d452ac2190af60",
+        "reference/marketing-stable/claude/skills/gamification-marketing/references/implementation-guide.md": "sha256:a99fd0c5b2f15ee188a7c01e4abedfddb43e2363c2938b61d7af87266af49bee",
+        "reference/marketing-stable/claude/skills/gamification-marketing/references/kpi-tracking.md": "sha256:e031d44d4e174cbbbdac3ed0021f0d9baf78c6cabd742d2a3e5f8723f8717719",
+        "reference/marketing-stable/claude/skills/gamification-marketing/references/mechanics-selection.md": "sha256:d553d8efbd94c515a9fe454764d6e386ad12839aa565c2b2c1e05060ae908803",
+        "reference/marketing-stable/claude/skills/gamification-marketing/references/psychology-frameworks.md": "sha256:fe70aba33b7a45bee96494983438bde212aedf5f7b99475f6c93d68a4cc12e56"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-gamification-marketing.md": "sha256:04b677c9a9d36338f299c5b32600ea2f30e954d5cc6b1ade6e5dfb4b99417d40"
+      }
+    },
+    "hub": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/hub/SKILL.md": "sha256:514aa8e95838de05702e7cbe790ebcdd863c70c58e7b92b4c11d1905420301c9"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-hub.md": "sha256:0f8e4bb885f511a27a0cffb9d32c3357dede206433bc20ebe6ebefaf4cb81f6e"
+      }
+    },
+    "kit-builder": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/kit-builder/SKILL.md": "sha256:dd9dc7c5174cc60d2676d5ede7d8fd15cd31b4b0a1ec9d69f3a88cf13ab4389b",
+        "reference/marketing-stable/claude/skills/kit-builder/references/agent-guide.md": "sha256:1f831dfd82cb559cc2bfe156a60d2bc29ecdac0105d47ca25298ed827f352413",
+        "reference/marketing-stable/claude/skills/kit-builder/references/best-practices.md": "sha256:93a13a86acbeb1172e61644d5d6a6972c5b4c4fb45a574ec2a8685d7c0859a21",
+        "reference/marketing-stable/claude/skills/kit-builder/references/command-guide.md": "sha256:40877cf84081d3e4e29d811003c3d05c16f010b34d8f3cebb5d0c553fefda68d",
+        "reference/marketing-stable/claude/skills/kit-builder/references/marketing-checklist.md": "sha256:79bbc9313f8c9101e5563dbf98ea3eb8fb84fbc92c374b1ea46822d027550e0b",
+        "reference/marketing-stable/claude/skills/kit-builder/references/skill-guide.md": "sha256:465802058a66477e5c4051b59daa2e16e76dfe619aea6ac179799493c2dc88f5",
+        "reference/marketing-stable/claude/skills/kit-builder/references/workflow-guide.md": "sha256:eabb3922ed81963804fcf17bc2d844baeb51429cd7e3cce524fca98fb2288979",
+        "reference/marketing-stable/claude/skills/kit-builder/templates/agent-template.md": "sha256:0323144e404d7b3c03019de2d7453b8097d81fc0e4fe61cf526a8836b0731484",
+        "reference/marketing-stable/claude/skills/kit-builder/templates/command-template.md": "sha256:7bb4dbd35ca754c7bfee3278616fdf4fe2af187ce7c0230f68bbf788ea576645",
+        "reference/marketing-stable/claude/skills/kit-builder/templates/skill-template.md": "sha256:ea6102b7272a2e8aad9557edc96aff97cbe1be8312ab242c4c6e04746f99629d",
+        "reference/marketing-stable/claude/skills/kit-builder/templates/workflow-template.md": "sha256:18518c430a53fc36f099ef553acf45ab4b13bbfa4f2cd5063f8708ee8e58195b"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-kit-builder.md": "sha256:df12c61bdd89f3a7d8b96a13d55267d1132a533dd9d1a43fefba7c1db179c30e"
+      }
+    },
+    "launch-strategy": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/launch-strategy/SKILL.md": "sha256:559030d6d9d49f8e226f30ed945b03aaed0cafe907ddad6ac0b765aa28aa84cc"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-launch-strategy.md": "sha256:f080530a68f9fd252e03510a441e02b568ae988077902fd9aca88785f95309f7"
+      }
+    },
+    "logo-design": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/logo-design/SKILL.md": "sha256:9c83e076a4f3bbc7fd6d26b175c31b619430c2e9ef5da52883a4e06bbd196157",
+        "reference/marketing-stable/claude/skills/logo-design/references/color-psychology.md": "sha256:3fd0e93e24c3b2ea7f3be778e8f2d03b1c62c7c6eab3ade478c8fca332bff287",
+        "reference/marketing-stable/claude/skills/logo-design/references/prompt-engineering.md": "sha256:e50f55bf323263eb27b4cd4c5172383a787fb894581d5d2befb3f6e0180b253e",
+        "reference/marketing-stable/claude/skills/logo-design/references/style-guide.md": "sha256:611baa841eedab101f45c113c6bfbd4d7e16e859c9d6ebd2cf941827a6e8dd15"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-logo-design.md": "sha256:6ee9daed5823c6cdfaa58e7e7b32900b317c856149ac552d666d8a84f4b5a8a5"
+      }
+    },
+    "marketing-dashboard": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/marketing-dashboard/README.md": "sha256:bd887c15d67edc4bb46887bd8ac27ce978f51e02654652d4b5b75c3557d9990e",
+        "reference/marketing-stable/claude/skills/marketing-dashboard/SKILL.md": "sha256:b159ec9b5cfe6467532b478d0d706d6fcc239aadac8b019647642e5262bff7a7"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-marketing-dashboard.md": "sha256:fee4ee96f5a401ddaa588f33127a5316a74122e867c8f9c769c6e2111b401773"
+      }
+    },
+    "marketing-ideas": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/marketing-ideas/SKILL.md": "sha256:18db764b88e39cff148a8affdf34f62dbc8172674a11f665a976618d7d261340"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-marketing-ideas.md": "sha256:88e53114b45b2ffaf4e7ff2b62cd8140ddb2c1cee1413a3a1d7af607430b46bb"
+      }
+    },
+    "marketing-planning": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/marketing-planning/SKILL.md": "sha256:b13f151a852a9501db7e32067522908515109befe0db337eae273428d840941a",
+        "reference/marketing-stable/claude/skills/marketing-planning/references/brand-context.md": "sha256:082a860c5836d1fbb64aee40b2a77ab420a88c558904d93cb95f9e6d8c6c90c7",
+        "reference/marketing-stable/claude/skills/marketing-planning/references/output-standards.md": "sha256:10c3fec0cc437618b104accbff733ae2c3cdebaee5f9bfcc3493adfb1013adb9",
+        "reference/marketing-stable/claude/skills/marketing-planning/references/plan-organization.md": "sha256:b3c32df883648eecced6cc993116ab99973a3d0e9b9d2e87b7e166d419424214",
+        "reference/marketing-stable/claude/skills/marketing-planning/references/research-phase.md": "sha256:20c64ccc76c9ab25135538bae438ecab09ebb86b47a0d36a54e0a9574fd3982d",
+        "reference/marketing-stable/claude/skills/marketing-planning/references/strategy-design.md": "sha256:7c0eb4aba1964f14d1c9f6140aeac1a3d6c5772e2dd13f12b6d1b6b594cc2264"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-marketing-planning.md": "sha256:d98662fcf753318e294e4768282531fa2594737b33ae191c7ad91a8ba1dda781"
+      }
+    },
+    "marketing-psychology": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/marketing-psychology/SKILL.md": "sha256:21074e89b6df29df3d8df06f2578a3ef9b1f389882a194d21303854cb24e85b8"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-marketing-psychology.md": "sha256:738453e4dbcb7de4c2311afbedacef0d8704faf208c338f745f92a31dcc131a7"
+      }
+    },
+    "marketing-research": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/marketing-research/SKILL.md": "sha256:3b760f7b6e1c7226ca1f6548534c9ebb604b94185c37540ea2acd8efbffdd586"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-marketing-research.md": "sha256:25f4e8c9211fe4a1a83f5e934ce03dac3b29295abb4db6ce0320988399115f46"
+      }
+    },
+    "onboarding-cro": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/onboarding-cro/SKILL.md": "sha256:4e9e1c92479351856453803ea863b4db49ed3dbab3ef1377cbea5d8593044305"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-onboarding-cro.md": "sha256:2a0e27959952c5ec302e40e9a193f18126c53636281af086a4fbf0ebc5f651ee"
+      }
+    },
+    "paid-ads": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/paid-ads/SKILL.md": "sha256:7966fcf8e41cac4e7a24acc46fff20a8b21fb3251bfea5a2fae49d1f8ff50ad8"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-paid-ads.md": "sha256:3b26a0e92d5c024231e52a8db549585fa1d170ee41aadc40d2c37212eded845a"
+      }
+    },
+    "play": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/play/SKILL.md": "sha256:ae474e6f5d8ceb49882333698b0c3a1bd1e564d946716fbd0a4f60cf2482d5af",
+        "reference/marketing-stable/claude/skills/play/references/blocked.md": "sha256:f71596e974314025bc6ae61fc33f11baf54eb1691404f3a7109e2cc5069b47fd",
+        "reference/marketing-stable/claude/skills/play/references/create.md": "sha256:3cf15a6710301299b3a38162dee07eb450fcb7131c52a34b5d42655e7fecca68",
+        "reference/marketing-stable/claude/skills/play/references/gate.md": "sha256:8e6a1320360c3b255c4fdabc55f481b979467acc9c750b24b01b11ff85d10c27",
+        "reference/marketing-stable/claude/skills/play/references/goals.md": "sha256:795a0fcee2d81c68c66eb245812808f271997da06ba6c7ee30fdc37ccb942518",
+        "reference/marketing-stable/claude/skills/play/references/learn.md": "sha256:66de05c1dc1941e8a440132defeeb031cc09dd34024c69c5ecb11d67fbcb4183",
+        "reference/marketing-stable/claude/skills/play/references/list.md": "sha256:6bdfa5f749d24e6390bb454953031522ba8338fc8f0f5d19a362e9fa5819e21b",
+        "reference/marketing-stable/claude/skills/play/references/next.md": "sha256:992c5c7a10199d86ec00e5f7da98cf6f2cbeb743a84a1a7d091dca320d90c321",
+        "reference/marketing-stable/claude/skills/play/references/reset.md": "sha256:287540e78b354df3c1b242671d6a885b13edbec01a5fe58ebbe7959910a12b3a",
+        "reference/marketing-stable/claude/skills/play/references/status.md": "sha256:8173b56011bbc5236624ef5a94aacc7357a82991d8667938b3274bebc6991ca2",
+        "reference/marketing-stable/claude/skills/play/references/templates.md": "sha256:6c26e6175cd92ebcaef5d93c2d51578cc10f5950a076676ecb956cab70e7c8ff"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-play.md": "sha256:5751b6598f0293e589b22090e568d1e6e97e6074128663caa322c4d74bf53de1"
+      }
+    },
+    "pricing-strategy": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/pricing-strategy/SKILL.md": "sha256:4e7c3b294b284ef08bc7d9ab9420d1e33c331ceda822a39d0c228cf4ef9fbd7a"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-pricing-strategy.md": "sha256:e72647661e974567350daf5d54f13a521807295ebeff068a03ee56ab26a82cd5"
+      }
+    },
+    "referral-program-building": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/referral-program-building/SKILL.md": "sha256:1455f9e1bf995cd503c347e18bd7a9d32dbb48807b9255f5c8eab4870566af09",
+        "reference/marketing-stable/claude/skills/referral-program-building/references/email-templates.md": "sha256:dd5e5e6f3252c3671430464936adf22a59612f1245036206f635930c67f61417",
+        "reference/marketing-stable/claude/skills/referral-program-building/references/fraud-prevention.md": "sha256:57051d047f068a805d6fb73ba1cc50bb457a8534dc71ab77c8237ca3e1f64e23",
+        "reference/marketing-stable/claude/skills/referral-program-building/references/metrics-tracking.md": "sha256:2596817d830f2f1ad69a383c807e545c267617c89c7502f4d5b8c7b7e8e9669a",
+        "reference/marketing-stable/claude/skills/referral-program-building/references/platform-selection.md": "sha256:871e7d6b8aac18340da7cbe8ed05929d6c8c8604f56700b5e9ae0480a8330ddb",
+        "reference/marketing-stable/claude/skills/referral-program-building/references/reward-structures.md": "sha256:0967557e6451d504699623e52c2bdcfa8ba3335925c38ac8ebf50044aa4f8f81",
+        "reference/marketing-stable/claude/skills/referral-program-building/references/technical-implementation.md": "sha256:484764dab1204ce50decd70263261eed92b9ea6f9e5f64e5a6b3404169580ba6"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-referral-program-building.md": "sha256:21450348f15c8b59ffc0d2a47c3b1d491d418774e065485c7cabaf7e7072ba13"
+      }
+    },
+    "slides": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/slides/SKILL.md": "sha256:e071a7ad7a72f10344d3fe55a29cebf8750a255ecbf98af2daee9e6432bd8b3a",
+        "reference/marketing-stable/claude/skills/slides/references/copywriting-formulas.md": "sha256:03733d5916ab771834745550045b736deeb94a08226f2b200f7953009c35b219",
+        "reference/marketing-stable/claude/skills/slides/references/create.md": "sha256:792d647a5d4f87d765cf417f7ac54dd0b2fc4d229cc23ea9df56282d4c1ee086",
+        "reference/marketing-stable/claude/skills/slides/references/html-template.md": "sha256:fd5b051a37365fc6059c75bb388ec6f64daf1bd9ae938b287b6d762dc83c0c35",
+        "reference/marketing-stable/claude/skills/slides/references/layout-patterns.md": "sha256:0a967ca3bd829d3234e6f1802bade6c76447fabbaddbc8117c41adbae7dfb6df",
+        "reference/marketing-stable/claude/skills/slides/references/slide-strategies.md": "sha256:27ee3e53ffa0ea679ec83ebeacb0bcfbce498df57277e99f574b9c139dc44286"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-slides.md": "sha256:7ad05250073d99d5b738d3c7eb32e9867f8b99cf252b95a99e9f3f368f4a765d"
+      }
+    },
+    "storage": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/ckm-storage/SKILL.md": "sha256:37198dc5fac11779b47bbc0f2fb328eb06f7ff342f4ce38e017dbf4c6fc0c091",
+        "reference/marketing-stable/claude/skills/ckm-storage/references/list.md": "sha256:c0d95f420538035336a4e99e041e6c4abfb4704a43439ce70eb4169fb634cd3b",
+        "reference/marketing-stable/claude/skills/ckm-storage/references/sync.md": "sha256:b712a1d3cf8d7e1d84365938f8da26537a845acfe37cc7453cf5be8f802588ea",
+        "reference/marketing-stable/claude/skills/ckm-storage/references/upload.md": "sha256:2487d0d71a54624e4326cf54d2a048fedd0906370ec235252771e4d034b36b41",
+        "reference/marketing-stable/claude/skills/ckm-storage/references/url.md": "sha256:fca799e2515023adb08f79cb19586167dc903716cb7f37a1027eeb6e846a0070"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-storage.md": "sha256:9e57173413643212405f8addc5fed65a10284c4aceec3191537185a8d3148658"
+      }
+    },
+    "youtube": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/youtube/SKILL.md": "sha256:e22f12e234b16c53bdb1877cfe031fa2a8ddb54998a04ded939dfb147e3b4ec9",
+        "reference/marketing-stable/claude/skills/youtube/references/api-content.md": "sha256:12ebb011c38476d2606968a992dc4a69db7bb20a3d11245f80f6b85e84fddbd1",
+        "reference/marketing-stable/claude/skills/youtube/references/api-media.md": "sha256:9a8c8787676b528db8f34171c3aceb127a314e7c24514d7c755331479c69409f",
+        "reference/marketing-stable/claude/skills/youtube/references/blog.md": "sha256:441bba2402970941e1efc5bd00d007dac2cebc6e496e736c7ce298a046fcef71",
+        "reference/marketing-stable/claude/skills/youtube/references/infographic.md": "sha256:f97590d963733c12c81438d84a1d80ee28a1063401857b692c1fdf8aafb8c182",
+        "reference/marketing-stable/claude/skills/youtube/references/social.md": "sha256:e6e4203867690082c94fd7fa25ee75bf70407f3b625d010c9e343775a3a55f74"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-youtube.md": "sha256:a4e82c11821a19a5646cdc1dd2bdb70d31564bd2d3a22cf050bace92cc0dbb2f"
+      }
+    },
+    "youtube-thumbnail-design": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/youtube-thumbnail-design/SKILL.md": "sha256:d4602f0180fa2aa712cd01d8143054a7cacbb2540adaa2980ba8f3ff04414d59",
+        "reference/marketing-stable/claude/skills/youtube-thumbnail-design/references/thumbnail-styles.md": "sha256:077b0a94fca44a672757f97ed4b2b4be0a6a95541b2ff31aee1e66bb863729ff"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-youtube-thumbnail-design.md": "sha256:a678c65b088ea1dd6bcba0346e38654221223f1a755fd78cb6bfe79d3ffa9585"
+      }
+    },
+    "kanban": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/marketing-stable/claude/skills/kanban/SKILL.md": "sha256:2d9ca274b3102e5d7a6f0915a15fe617179c4f017c7cf954781dceef08e3bfcc"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-kanban.md": "sha256:898a9a4d3a44a3d715114a69000122ba79d22ffbe10eb72bfbd1709acb5d29e2"
+      }
+    },
+    "skill": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "architecture-doc-only",
+      "referenceSourceHashes": {},
+      "guideHashes": {
+        "docs/ck-architecture/ckm-skill.md": "sha256:3dc60f74292ee3d9af4619d3f8bf9f6727bbb8324b83231bb70bec437022351f"
+      }
+    },
+    "use-mcp": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/use-mcp/SKILL.md": "sha256:71fffc9df2eb719d1b34a7055629c4232cbbb9feb1e8c38f5d74a15642dbd681",
+        "reference/stable/claude/skills/use-mcp/references/configuration.md": "sha256:08e7a95e077476ac6514b34af8160614ca11933b7fdf15f0161363b57cb0f0fa",
+        "reference/stable/claude/skills/use-mcp/references/gemini-cli-integration.md": "sha256:2a4ab31a14d024a2e2e8afd2e6d8ca97da1c19436983250f25143b89437209c8",
+        "reference/stable/claude/skills/use-mcp/references/mcp-protocol.md": "sha256:eb4ab38de303d0e9702d5e5f82953e89ad156755b446d07af6fbfd55503d3579"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ckm-use-mcp.md": "sha256:7baeb601df4d808bb6949125983cd9ae0c6009a95a530193590170ebd92b18d7"
+      }
+    },
+    "plans-kanban": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/plans-kanban/SKILL.md": "sha256:b32b5081940b7a05774fcee8b354df2fe96c30fd8805cc0e3578d753fc9d161a"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-plans-kanban.md": "sha256:01c53ed81142b15cae3e61b2595e81e9b7877e06902d889b6447c2cf443c8840"
+      }
+    },
+    "project-organization": {
+      "date": "2026-06-11",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/project-organization/SKILL.md": "sha256:178da9da4e68647a0e16710f7fff53cf32d509878e3b2b87a79949309f0fe99c",
+        "reference/stable/claude/skills/project-organization/references/directory-patterns.md": "sha256:5973cf858f405f68269b821523f57262306cb2e1cd9f8e3d8ab9e5627900d7df",
+        "reference/stable/claude/skills/project-organization/references/markdown-body-templates.md": "sha256:19c5e6c97129eddaacbbddf2083113774c4ecf615568407c911fd224a32060cf",
+        "reference/stable/claude/skills/project-organization/references/naming-conventions.md": "sha256:bbfe760a99b571f282ae0b95144a346718bed8182ec97d7f2ce141d9423542e3"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-project-organization.md": "sha256:bf5f72714bbf54325d476775f7b46ab83a12c3e6615ccb7e14706be838bbf29b"
+      }
+    },
+    "ghpm": {
+      "date": "2026-06-15",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/beta/claude/skills/ghpm/SKILL.md": "sha256:01e7a15713d2e178f35a3637a61ff96411d8d0bd1c48da23b84998b18e15a256",
+        "reference/beta/claude/skills/ghpm/references/command-cookbook.md": "sha256:a5d9377cc7d7522599bc3ff77931f71f6741390f7d8b554e092556e81239438a",
+        "reference/beta/claude/skills/ghpm/references/schema-and-taxonomy.md": "sha256:bbfb73a7b8b13204032a8ea69d796a2a7416df2354bd13766a0765dba018fd04",
+        "reference/beta/claude/skills/ghpm/references/skill-pipelines.md": "sha256:f6fce96fec5592eebfc21ac770e8efef57b868991afa2894eaecec17e0ccd041"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-ghpm.md": "sha256:8d7becb9804308853791adb925f8f070c8db6f9bea4e426948af9e92909dd535"
+      }
+    },
+    "html-video": {
+      "date": "2026-06-15",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/beta/claude/skills/html-video/SKILL.md": "sha256:eb46c5bdacd4ca52feab9b8530c1ca851dec22bbf8849060f3e13759f3d8df7d"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-html-video.md": "sha256:54f1498180c4e62ace45d1fe54bbcd5d15ed582b3722893b3c89a35fa36f0b5d"
+      }
+    },
+    "review-pr": {
+      "date": "2026-06-15",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/beta/claude/skills/review-pr/SKILL.md": "sha256:da599eeca57d15697fa86a62e4432f725eed21d499fcb886c1c86eb764b107c2",
+        "reference/beta/claude/skills/review-pr/references/anti-ai-slop.md": "sha256:b9594a93271cb4b524639ae48827abd0978abeee943217a94158ad094e43455c",
+        "reference/beta/claude/skills/review-pr/references/project-rules-example.md": "sha256:cbabfbbfd40ac454138dea73e9d9b413ac33f16ad5462f60dc305fe53c4bfca7"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-review-pr.md": "sha256:7b37d6cef56219b802e64121f31388448057a53fbf57a8499b9fd27c5070ab50"
+      }
+    },
+    "vibe": {
+      "date": "2026-06-15",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/beta/claude/skills/vibe/SKILL.md": "sha256:8811803eef92635d6fe4244f15d29a0ffe2e7601b8cda3dbf36ec8669c6d653e"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-vibe.md": "sha256:42c6ea8d7dd4523c05d45d9ec83043d4ce46c578cb8b7b8a78cfe7975030eb57"
+      }
+    },
+    "chrome-profile": {
+      "date": "2026-06-15",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/stable/claude/skills/chrome-profile/SKILL.md": "sha256:18176d6c690e6ae7cd9efd6315560c93dec703aa2022e7fd1b910eb43a1d63ac",
+        "reference/stable/claude/skills/chrome-profile/references/architecture.md": "sha256:50d4be9a3daa0cb7bc60d91e38ed7367550ab2e9dd4c788780356514e31aa4b0",
+        "reference/stable/claude/skills/chrome-profile/references/mcp-config-recipes.md": "sha256:419d25f7b282e02c95302cb89465e30aa45fa96a4371f5697fd74952f2fde084",
+        "reference/stable/claude/skills/chrome-profile/references/troubleshooting.md": "sha256:ed994eb388f08689783cb30b00f0359dcf5183d8db839cb9c0041765a8af8e3d"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-chrome-profile.md": "sha256:8492fce2c5ac624eef07b3e61c9f18a0668135e3bee96c88c9a2798ffcb71c71"
       }
     }
   },
-  "report": "plans/reports/audit-guide-260526-how-ck-works.md"
+  "report": "plans/reports/audit-guide-260526-how-ck-works.md",
+  "lastHowCkWorksSync": {
+    "date": "2026-06-15",
+    "status": "pass",
+    "targets": [
+      "chrome-profile"
+    ],
+    "note": "Renamed from chrome-devtools (engineer); real Chrome profile automation via Chrome DevTools MCP; scenario+infographic+arch doc+catalog updated."
+  }
 }
