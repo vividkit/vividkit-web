@@ -1,0 +1,103 @@
+{
+  "stage": "facts",
+  "title": "VividKit Pipeline Packs Landing Page",
+  "goalSlug": "vividkit-pipeline-packs-landing-page",
+  "facts": [
+    {
+      "id": "fact-primary-offer",
+      "text": "The landing page sells VividKit Pipeline Packs as practical implementation kits for concrete workflows, not as premium articles or generic courses.",
+      "accepted": false,
+      "removed": false,
+      "recommendedAutomatedVerification": true,
+      "automatedVerification": true
+    },
+    {
+      "id": "fact-first-pack",
+      "text": "The first featured pack is the Workflow Optimization Pipeline: cmux + NotebookLM + Obsidian + Codex/Claude Code.",
+      "accepted": false,
+      "removed": false,
+      "recommendedAutomatedVerification": true,
+      "automatedVerification": true
+    },
+    {
+      "id": "fact-audience",
+      "text": "The primary audience is automation builders and AI power users who already use Claude, Codex, NotebookLM, or Obsidian but do not yet have a repeatable operating workflow.",
+      "accepted": false,
+      "removed": false,
+      "recommendedAutomatedVerification": true,
+      "automatedVerification": true
+    },
+    {
+      "id": "fact-page-promise",
+      "text": "The page promise is that buyers get a working pipeline setup with playbook, step-by-step guide, templates, artifact examples, failure modes, and an operating rhythm.",
+      "accepted": false,
+      "removed": false,
+      "recommendedAutomatedVerification": true,
+      "automatedVerification": true
+    },
+    {
+      "id": "fact-commercial-model",
+      "text": "The first CTA is pre-sell or waitlist oriented, used to validate demand before building real checkout, account, entitlement, or paywall infrastructure.",
+      "accepted": false,
+      "removed": false,
+      "recommendedAutomatedVerification": true,
+      "automatedVerification": true
+    },
+    {
+      "id": "fact-price",
+      "text": "The early access price anchor is $9 per pack, framed as a limited first-cohort price for a self-serve implementation kit.",
+      "accepted": false,
+      "removed": false,
+      "recommendedAutomatedVerification": true,
+      "automatedVerification": true
+    },
+    {
+      "id": "fact-support-boundary",
+      "text": "The $9 early access pack includes pack files, pack updates, and private buyer Discord access for shared Q&A, updates, and artifact issue reports, but it does not include 1:1 setup or debugging support.",
+      "accepted": false,
+      "removed": false,
+      "recommendedAutomatedVerification": true,
+      "automatedVerification": true
+    },
+    {
+      "id": "fact-support-upsell",
+      "text": "The page may mention paid setup review or workflow audit as a future upsell, but the first implementation does not need to build that purchase flow.",
+      "accepted": false,
+      "removed": false,
+      "recommendedAutomatedVerification": true,
+      "automatedVerification": true
+    },
+    {
+      "id": "fact-scope",
+      "text": "The first implementation includes one landing page, navigation or CTA entry points, bilingual EN/VI copy, and static pack/pricing sections.",
+      "accepted": false,
+      "removed": false,
+      "recommendedAutomatedVerification": true,
+      "automatedVerification": true
+    },
+    {
+      "id": "fact-out-of-scope",
+      "text": "Real checkout, gated content, subscription membership, account login, entitlement checks, and Discord automation are out of scope for the first implementation.",
+      "accepted": false,
+      "removed": false,
+      "recommendedAutomatedVerification": true,
+      "automatedVerification": true
+    },
+    {
+      "id": "fact-visual-direction",
+      "text": "The visual direction is a practical product page: dense, concrete, pipeline-focused, with simple system diagrams and artifact previews, avoiding generic SaaS hero copy.",
+      "accepted": false,
+      "removed": false,
+      "recommendedAutomatedVerification": true,
+      "automatedVerification": true
+    },
+    {
+      "id": "fact-branding",
+      "text": "The page keeps the VividKit brand and may use VividKit Pipeline Packs or VividKit Automation Lab as the paid product umbrella.",
+      "accepted": false,
+      "removed": false,
+      "recommendedAutomatedVerification": true,
+      "automatedVerification": true
+    }
+  ]
+}

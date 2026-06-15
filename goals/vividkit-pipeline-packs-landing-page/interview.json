@@ -1,0 +1,165 @@
+{
+  "stage": "interview",
+  "title": "VividKit Pipeline Packs Landing Page",
+  "goalSlug": "vividkit-pipeline-packs-landing-page",
+  "questions": [
+    {
+      "id": "first_pack",
+      "prompt": "Which concrete pipeline should the landing page sell first?",
+      "description": "This decides the hero, proof, pack contents, and CTA. The page can mention other future packs, but should sell one primary implementation kit.",
+      "answerMode": "single-custom",
+      "recommendedAnswer": "Workflow Optimization Pipeline: cmux + NotebookLM + Obsidian + Codex/Claude Code. It is broad enough to attract practical users and specific enough to package as an implementation kit.",
+      "options": [
+        {
+          "id": "workflow_optimization",
+          "label": "Workflow Optimization Pipeline"
+        },
+        {
+          "id": "auto_research",
+          "label": "Auto-Research Pipeline"
+        },
+        {
+          "id": "content_pipeline",
+          "label": "Content Pipeline"
+        },
+        {
+          "id": "harness_engineering",
+          "label": "Harness Engineering Pipeline"
+        }
+      ],
+      "required": true
+    },
+    {
+      "id": "audience",
+      "prompt": "Who should the page speak to first?",
+      "description": "This affects copy tone, examples, and pricing. Secondary audiences can still appear lower on the page.",
+      "answerMode": "single-custom",
+      "recommendedAnswer": "Automation builders / AI power users who already use Claude/Codex/NotebookLM/Obsidian but lack a repeatable operating workflow.",
+      "options": [
+        {
+          "id": "automation_power_users",
+          "label": "Automation power users"
+        },
+        {
+          "id": "solo_dev_vietnam",
+          "label": "Solo dev Việt Nam"
+        },
+        {
+          "id": "global_claudekit_users",
+          "label": "Global Claude Code users"
+        }
+      ],
+      "required": true
+    },
+    {
+      "id": "commercial_model",
+      "prompt": "What should the first commercial CTA be?",
+      "description": "This determines whether implementation needs real checkout now or only a pre-sell/waitlist landing page.",
+      "answerMode": "single-custom",
+      "recommendedAnswer": "Pre-sell / waitlist CTA first. Use this page to validate demand and collect buyers before building entitlement/paywall infrastructure.",
+      "options": [
+        {
+          "id": "presell_waitlist",
+          "label": "Pre-sell / waitlist"
+        },
+        {
+          "id": "checkout_link",
+          "label": "Hosted checkout link"
+        },
+        {
+          "id": "full_paywall",
+          "label": "Full paywall later"
+        }
+      ],
+      "required": true
+    },
+    {
+      "id": "price_anchor",
+      "prompt": "What price anchor should the landing page show?",
+      "description": "The page can frame this as founder pricing, expected price, or early access pricing.",
+      "answerMode": "single-custom",
+      "recommendedAnswer": "Founder price $19, normal price $39. For Vietnamese copy, optionally show 299k-399k VND equivalent.",
+      "options": [
+        {
+          "id": "founder_19_normal_39",
+          "label": "$19 founder / $39 normal"
+        },
+        {
+          "id": "low_membership",
+          "label": "$7/mo membership"
+        },
+        {
+          "id": "premium_pack_49",
+          "label": "$49 advanced pack"
+        },
+        {
+          "id": "no_price_yet",
+          "label": "No price yet"
+        }
+      ],
+      "required": true
+    },
+    {
+      "id": "landing_scope",
+      "prompt": "What should be in scope for the first implementation?",
+      "description": "This keeps the first build narrow and avoids accidentally building a full paid content platform.",
+      "answerMode": "multi-custom",
+      "recommendedAnswer": "Add one landing page, navigation/CTA entry points, bilingual EN/VI copy if existing guide parity is expected, and static pricing/pack sections. Do not implement auth, real checkout, entitlement, or gated content in this round.",
+      "recommendedOptionIds": [
+        "landing_page",
+        "nav_entry",
+        "bilingual_copy",
+        "static_pack_sections"
+      ],
+      "options": [
+        {
+          "id": "landing_page",
+          "label": "Landing page"
+        },
+        {
+          "id": "nav_entry",
+          "label": "Nav/CTA entry"
+        },
+        {
+          "id": "bilingual_copy",
+          "label": "Bilingual EN/VI"
+        },
+        {
+          "id": "static_pack_sections",
+          "label": "Static pack/pricing sections"
+        },
+        {
+          "id": "real_checkout",
+          "label": "Real checkout"
+        },
+        {
+          "id": "gated_content",
+          "label": "Gated content"
+        }
+      ],
+      "required": true
+    },
+    {
+      "id": "visual_direction",
+      "prompt": "What visual direction should the landing page use?",
+      "description": "The existing VividKit site uses guide-oriented glass/card sections. This choice decides whether the landing page feels like a guide page, a product page, or an operating-system schematic.",
+      "answerMode": "single-custom",
+      "recommendedAnswer": "Practical product page: dense, concrete, toolchain/pipeline focused, with simple system diagrams and artifact previews. Avoid generic SaaS hero fluff.",
+      "options": [
+        {
+          "id": "practical_product",
+          "label": "Practical product page"
+        },
+        {
+          "id": "guide_style",
+          "label": "Guide-style page"
+        },
+        {
+          "id": "technical_schematic",
+          "label": "Technical schematic"
+        }
+      ],
+      "required": true
+    }
+  ]
+}
