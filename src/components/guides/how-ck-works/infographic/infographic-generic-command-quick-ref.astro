@@ -305,7 +305,7 @@ const getOutputPattern = () => (isVi ? output?.patternVi : output?.patternEn)?.t
       <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.modeSelection}</h3>
       <div class="mt-4 grid gap-3 md:grid-cols-2">
         {modeCards.map(mc => (
-          <article class={`rounded-xl border p-4 ring-1 ${mc.accent}`}>
+          <article class={`rounded-xl border p-4 ring-1 ring-slate-200/70 dark:ring-white/10 ${mc.accent}`}>
             <div class="flex items-center gap-3">
               <code class="rounded-md bg-white/80 px-2 py-1 font-mono text-xs font-semibold text-slate-700 ring-1 ring-slate-200 dark:bg-slate-950/60 dark:text-slate-200 dark:ring-white/10">{mc.flag}</code>
               <span class="text-sm font-semibold text-slate-950 dark:text-white">{isVi ? mc.titleVi : mc.titleEn}</span>
@@ -363,7 +363,7 @@ const getOutputPattern = () => (isVi ? output?.patternVi : output?.patternEn)?.t
       <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.guardrails}</h3>
       <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {guardrails.map(g => (
-          <article class={`rounded-xl border p-4 ring-1 ${g.accent}`}>
+          <article class={`rounded-xl border p-4 ring-1 ring-slate-200/70 dark:ring-white/10 ${g.accent}`}>
             <div class="flex items-start gap-2">
               <span class="mt-0.5 text-base">💭</span>
               <p class="text-sm font-medium italic text-slate-700 dark:text-slate-200">"{isVi ? g.thoughtVi : g.thoughtEn}"</p>
@@ -383,7 +383,7 @@ const getOutputPattern = () => (isVi ? output?.patternVi : output?.patternEn)?.t
       <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.specialOps}</h3>
       <div class="mt-4 grid gap-3 sm:grid-cols-2">
         {specialOps.map(op => (
-          <article class={`rounded-xl border border-transparent p-4 ring-1 ${op.color}`}>
+          <article class={`rounded-xl border border-transparent p-4 ring-1 ring-slate-200/70 dark:ring-white/10 ${op.color}`}>
             <p class="text-sm font-semibold text-slate-950 dark:text-white">{isVi ? op.titleVi : op.titleEn}</p>
             <p class="mt-2 text-xs leading-5 text-slate-600 dark:text-slate-300">{isVi ? op.descVi : op.descEn}</p>
           </article>
