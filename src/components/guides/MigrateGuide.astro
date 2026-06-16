@@ -19,7 +19,7 @@ const providers = [
   { name: 'Cursor',          agents: true,  commands: false, skills: true,  config: true,  rules: true,  hooks: false, flag: 'cursor' },
   { name: 'Windsurf',        agents: true,  commands: true,  skills: true,  config: true,  rules: true,  hooks: false, flag: 'windsurf' },
   { name: 'GitHub Copilot',  agents: true,  commands: false, skills: true,  config: true,  rules: true,  hooks: false, flag: 'github-copilot' },
-  { name: 'Antigravity',     agents: false, commands: true,  skills: true,  config: true,  rules: true,  hooks: false, flag: 'antigravity' },
+  { name: 'Antigravity',     agents: true,  commands: true,  skills: true,  config: true,  rules: true,  hooks: false, flag: 'antigravity', note: '2.0' },
   { name: 'Cline',           agents: true,  commands: false, skills: true,  config: true,  rules: true,  hooks: false, flag: 'cline' },
   { name: 'Roo',             agents: true,  commands: false, skills: true,  config: true,  rules: true,  hooks: false, flag: 'roo' },
   { name: 'Codex',           agents: true,  commands: true,  skills: true,  config: true,  rules: true,  hooks: true,  flag: 'codex' },
@@ -283,7 +283,7 @@ const migrationPhases = [
               icon: migrationPhases[3].icon,
               title: migrationPhases[3].title,
               desc: migrationPhases[3].desc,
-              detail: t('Converts content to each provider\'s format (e.g., .cursorrules, .windsurfrules), writes files to the correct locations, and merges hook configurations non-destructively.', 'Chuyển đổi nội dung sang định dạng từng provider (vd: .cursorrules, .windsurfrules), ghi file vào đúng vị trí và merge hook config mà không làm mất cấu hình cũ.'),
+              detail: t('Converts content to each provider\'s format (e.g., .cursor/rules, .windsurf/rules), writes files to the correct locations, and merges hook configurations non-destructively.', 'Chuyển đổi nội dung sang định dạng từng provider (vd: .cursor/rules, .windsurf/rules), ghi file vào đúng vị trí và merge hook config mà không làm mất cấu hình cũ.'),
             },
             {
               color: 'emerald',
@@ -349,7 +349,12 @@ const migrationPhases = [
         <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
           {providers.map(p => (
             <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
-              <td class="px-4 py-3 font-medium text-slate-800 dark:text-slate-200 whitespace-nowrap">{p.name}</td>
+              <td class="px-4 py-3 font-medium text-slate-800 dark:text-slate-200 whitespace-nowrap">
+                {p.name}
+                {p.note && (
+                  <span class="ml-1.5 inline-flex items-center rounded-full bg-violet-100 dark:bg-violet-900/40 px-1.5 py-0.5 text-[10px] font-semibold text-violet-700 dark:text-violet-300 align-middle">{p.note}</span>
+                )}
+              </td>
               {[p.agents, p.commands, p.skills, p.config, p.rules, p.hooks].map(v => (
                 <td class="text-center px-3 py-3">
                   {v
@@ -365,6 +370,18 @@ const migrationPhases = [
           ))}
         </tbody>
       </table>
+    </div>
+    <div class="px-6 py-3 border-t border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-800/20">
+      <p class="text-xs text-slate-500 dark:text-slate-400">
+        <span class="inline-flex items-center rounded-full bg-violet-100 dark:bg-violet-900/40 px-1.5 py-0.5 text-[10px] font-semibold text-violet-700 dark:text-violet-300 mr-1">2.0</span>
+        {t('Requires Antigravity 2.0 — agents now migrate to .agents/agents.md, and skills/rules/workflows live under .agents/ (plural).', 'Yêu cầu Antigravity 2.0 — agents giờ được migrate sang .agents/agents.md, còn skills/rules/workflows nằm trong .agents/ (số nhiều).')}
+        {' '}
+        {t('This support currently ships in the ClaudeKit CLI dev channel only — run', 'Hỗ trợ này hiện chỉ có trên kênh dev của ClaudeKit CLI — chạy')}
+        {' '}
+        <code class="bg-slate-100 dark:bg-slate-800/90 text-purple-600 dark:text-purple-400 px-1 py-0.5 rounded text-[10px] font-mono">ck update --dev</code>
+        {' '}
+        {t('until it lands in a stable release.', 'cho tới khi nó có mặt ở bản stable.')}
+      </p>
     </div>
   </div>
 
