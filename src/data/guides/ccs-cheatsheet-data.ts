@@ -94,6 +94,8 @@ export const CCS_CHEATSHEET_CATEGORIES: CCSCheatsheetCategory[] = [
       { cmd: "ccs cliproxy doctor", descKey: "ccs.cheatsheet.cliproxy_doctor" },
       { cmd: "ccs cliproxy pause", descKey: "ccs.cheatsheet.cliproxy_pause" },
       { cmd: "ccs cliproxy resume", descKey: "ccs.cheatsheet.cliproxy_resume" },
+      { cmd: "ccs cliproxy pool --enable", descKey: "ccs.cheatsheet.cliproxy_pool" },
+      { cmd: "ccs cliproxy accounts order <provider>", descKey: "ccs.cheatsheet.cliproxy_order" },
       { cmd: "ccs cliproxy remove", descKey: "ccs.cheatsheet.cliproxy_remove" },
     ],
   },
@@ -158,6 +160,21 @@ export const CCS_CHEATSHEET_CATEGORIES: CCSCheatsheetCategory[] = [
       { cmd: "ccs docker finalize-key-rotation", descKey: "ccs.cheatsheet.docker_finalize_key_rotation" },
     ],
   },
+  {
+    id: "bar",
+    titleKey: "ccs.cheatsheet.bar_title",
+    descKey: "ccs.cheatsheet.bar_desc",
+    color: "purple",
+    icon: `<rect x="3" y="4" width="18" height="3" rx="1"/><line x1="7" y1="11" x2="7" y2="17"/><line x1="12" y1="9" x2="12" y2="17"/><line x1="17" y1="13" x2="17" y2="17"/>`,
+    commands: [
+      { cmd: "ccs bar install", descKey: "ccs.cheatsheet.bar_install" },
+      { cmd: "ccs bar", descKey: "ccs.cheatsheet.bar_launch" },
+      { cmd: "ccs bar serve", descKey: "ccs.cheatsheet.bar_serve" },
+      { cmd: "ccs bar status", descKey: "ccs.cheatsheet.bar_status" },
+      { cmd: "ccs bar stop", descKey: "ccs.cheatsheet.bar_stop" },
+      { cmd: "ccs bar uninstall", descKey: "ccs.cheatsheet.bar_uninstall" },
+    ],
+  },
 ];
 
 export const COLOR_STYLES = {
@@ -215,8 +232,8 @@ export const COLOR_STYLES = {
 export type CCSColor = keyof typeof COLOR_STYLES;
 
 // CCS upstream version reflected by this cheatsheet (synced via vk-audit-ccs).
-export const CCS_SYNCED_VERSION = "8.2.0";
-export const CCS_SYNCED_DATE = "2026-06-10";
+export const CCS_SYNCED_VERSION = "8.4.0";
+export const CCS_SYNCED_DATE = "2026-06-18";
 
 // Marker so unused-imports/lint won't strip Language import (kept for future per-lang content)
 export type _LangRef = Language;
