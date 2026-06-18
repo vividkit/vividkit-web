@@ -45,3 +45,6 @@ plans/**/*
 archive/
 assets/generated/
 repomix-output.xml
+
+# Generated poster/screenshot artifacts (local only)
+artifacts/
