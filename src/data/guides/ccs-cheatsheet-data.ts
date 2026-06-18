@@ -172,6 +172,7 @@ export const CCS_CHEATSHEET_CATEGORIES: CCSCheatsheetCategory[] = [
       { cmd: "ccs bar serve", descKey: "ccs.cheatsheet.bar_serve" },
       { cmd: "ccs bar status", descKey: "ccs.cheatsheet.bar_status" },
       { cmd: "ccs bar stop", descKey: "ccs.cheatsheet.bar_stop" },
+      { cmd: "ccs bar version", descKey: "ccs.cheatsheet.bar_version" },
       { cmd: "ccs bar uninstall", descKey: "ccs.cheatsheet.bar_uninstall" },
     ],
   },

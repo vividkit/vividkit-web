@@ -486,6 +486,7 @@ export const ccs = {
   'ccs.cheatsheet.bar_serve': 'Chạy web-server ở foreground (nâng cao)',
   'ccs.cheatsheet.bar_status': 'Báo server nền có đang chạy không',
   'ccs.cheatsheet.bar_stop': 'Dừng server nền',
+  'ccs.cheatsheet.bar_version': 'Hiển thị phiên bản CCS Bar đã cài',
   'ccs.cheatsheet.bar_uninstall': 'Gỡ CCS Bar.app và version pin',
   // Best Workflows Section
   'ccs.guide.workflows_title': 'Workflow hiệu quả với CCS & ClaudeKit',

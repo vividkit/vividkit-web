@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-06-08",
-  "version": "1.3.0",
+  "generatedAt": "2026-06-18",
+  "version": "1.4.0",
   "scope": "binary-cli-commands-only",
   "ccsCli": {
     "package": "@kaitranntt/ccs",
@@ -26,6 +26,7 @@
       { "name": "browser", "subcommands": ["setup", "status", "doctor", "policy", "enable", "disable"], "group": "runtime", "visibility": "public" },
       { "name": "proxy", "subcommands": ["start", "stop", "status", "activate"], "group": "runtime", "visibility": "public" },
       { "name": "docker", "subcommands": ["up", "down", "status", "update", "logs", "config", "show-key", "finalize-key-rotation"], "group": "runtime", "visibility": "public" },
+      { "name": "bar", "subcommands": ["launch", "serve", "stop", "status", "install", "uninstall", "version"], "group": "operations", "visibility": "public" },
       { "name": "--shell-completion", "aliases": ["-sc"], "group": "operations", "visibility": "hidden" },
       { "name": "--install", "group": "operations", "visibility": "hidden" },
       { "name": "--uninstall", "group": "operations", "visibility": "hidden" },
