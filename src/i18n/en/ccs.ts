@@ -483,6 +483,7 @@ export const ccs = {
   'ccs.cheatsheet.bar_serve': 'Run the web-server in the foreground (advanced)',
   'ccs.cheatsheet.bar_status': 'Report whether the background server is running',
   'ccs.cheatsheet.bar_stop': 'Stop the background server',
+  'ccs.cheatsheet.bar_version': 'Show the installed CCS Bar version',
   'ccs.cheatsheet.bar_uninstall': 'Remove CCS Bar.app and the version pin',
   // Best Workflows Section
   'ccs.guide.workflows_title': 'Best workflows with CCS & ClaudeKit',

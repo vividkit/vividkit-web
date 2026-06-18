@@ -1,4 +1,4 @@
-# Operations: env / persist / sync / update / cleanup / tokens
+# Operations: env / persist / sync / update / cleanup / tokens / bar
 
 Source: `reference/ccs/src/commands/`. Covers six ops commands.
 
@@ -267,6 +267,42 @@ ccs cliproxy restart                             # apply
 
 ---
 
+## `ccs bar` — macOS menu-bar app (live quota & spend)
+
+```
+ccs bar [launch|serve|stop|status|install|uninstall|version] [--help|-h]
+```
+
+Subcommand dispatcher in `src/commands/bar/index.ts`. Bare `ccs bar` → `launch`. macOS-only feature (8.3.0+). The app talks only to a localhost CCS web-server.
+
+**What** — Native Swift menu-bar app surfacing live subscription quota, reset countdowns, and 7/30-day spend without opening the dashboard. The CLI side manages the app bundle + the detached local server it reads from.
+
+**Subcommands**
+
+| Sub | Effect |
+|---|---|
+| `launch` (default) | Spawn the menu-bar app; reuse a running server or start one detached |
+| `serve` | Long-lived server host (`--port N`); the process `launch` spawns detached and the Swift app spawns via launch.json |
+| `stop` | Stop the detached server (reads `server.pid`) |
+| `status` | Report whether the server is running + reachable at `GET /api/bar/summary` |
+| `install` | Download `CCS Bar.app` from the floating `ccs-bar-latest` GitHub release into `~/Applications`; pins bundle version to `~/.ccs/bar/.version` |
+| `uninstall` | Remove `CCS Bar.app` and the version pin |
+| `version` / `--version` | Show installed CCS Bar version |
+
+**Network** — `install` only: GitHub release download (host-allowlisted: github.com → objects.githubusercontent.com) + a single post-install compat probe `GET {baseUrl}/api/bar/summary` (200 ok, 404 server-too-old warning, else soft-warn). Other subcommands: localhost only.
+
+**Notes** — `install` uses a FLOATING release tag so the Swift app ships independently of CLI semver; real version is read from the bundle `Info.plist` (`CFBundleShortVersionString`).
+
+```bash
+ccs bar install   # download & install into ~/Applications
+ccs bar           # launch (starts/reuses local server)
+ccs bar status    # is the background server up?
+ccs bar stop      # stop the background server
+ccs bar uninstall # remove the app + version pin
+```
+
+---
+
 ## Summary Table
 
 | Command | Mutates filesystem | Network | Dry-run | Idempotent | Notable |
@@ -277,6 +313,7 @@ ccs cliproxy restart                             # apply
 | `update` | global node_modules | npm registry | no | yes | `--beta` ↔ `@dev` tag toggle |
 | `cleanup` | log dirs only | no | yes (`--dry-run`) | yes | Two modes: main vs error-only |
 | `tokens` | CLIProxy config file | no | no | yes | All mutations trigger config regen |
+| `bar` | `~/Applications`, `~/.ccs/bar/` (install) | install only (GitHub release) | no | yes | macOS-only menu-bar app + detached localhost server |
 
 ## Unresolved Questions
 

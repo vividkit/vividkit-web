@@ -1,6 +1,6 @@
 # CLI Commands Catalog — Source of Truth
 
-**Generated:** 2026-06-08
+**Generated:** 2026-06-18
 **Scope:** CCS CLI (`@kaitranntt/ccs`) + ClaudeKit CLI (`claudekit-cli`)
 **Focus:** Binary CLI commands only. Slash commands/skills NOT included.
 
@@ -12,7 +12,7 @@ This document is the single source of truth for VividKit Guides.
 
 Package: `@kaitranntt/ccs` | Source: `reference/ccs/src/commands/command-catalog.ts`
 
-### A1. Root Commands (20 public + 4 hidden)
+### A1. Root Commands (21 public + 4 hidden)
 
 | # | Command | Aliases | Group | Description |
 |---|---------|---------|-------|-------------|
@@ -36,6 +36,7 @@ Package: `@kaitranntt/ccs` | Source: `reference/ccs/src/commands/command-catalog
 | 18 | `ccs browser` | — | runtime | Browser Attach lane management |
 | 19 | `ccs proxy` | — | runtime | OpenAI-compatible local proxy daemon |
 | 20 | `ccs docker` | — | runtime | Docker stack (Dashboard + CLIProxy) |
+| 21 | `ccs bar` | — | operations | Install/launch macOS menu-bar app (live quota & spend) |
 | — | `ccs --install` | — | operations | Post-install bootstrap hook (inert) |
 | — | `ccs --uninstall` | — | operations | Post-uninstall cleanup hook |
 | — | `ccs --shell-completion` | `-sc` | operations | Install shell completion |
@@ -121,6 +122,17 @@ Package: `@kaitranntt/ccs` | Source: `reference/ccs/src/commands/command-catalog
 | `update` | `--host` | In-place refresh |
 | `logs` | `--host`, `--follow`, `--service` | Tail container logs |
 | `config` | `--host` | Read-only summary |
+
+#### `ccs bar <sub>` (7 subs, macOS only)
+| Sub | Key Flags | Description |
+|-----|-----------|-------------|
+| `launch` (default) | — | Bare `ccs bar` → launch the menu-bar app |
+| `serve` | `--port` | Long-lived server host (spawned detached by launch) |
+| `stop` | — | Stop the detached server |
+| `status` | — | Report whether the server is running |
+| `install` | — | Download & install CCS Bar.app into `~/Applications` |
+| `uninstall` | — | Remove CCS Bar.app and the version pin |
+| `version` | `--version` | Show CCS Bar version |
 
 #### `ccs config <sub>` (4 subs)
 | Sub | Sub-subcommands | Description |
