@@ -1,5 +1,5 @@
 ---
-import { getLangFromUrl, type Language } from "@/i18n";
+import { getLangFromUrl, useTranslatedPath, type Language } from "@/i18n";
 import {
   hookCategories,
 } from "@/data/guides/custom-hooks/custom-hooks-data";
@@ -17,6 +17,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(currentLang);
 const t = customHooksTranslations[currentLang] || customHooksTranslations.en;
 const isVi = currentLang === "vi";
 
@@ -54,6 +55,28 @@ const catalogHints = [
   class="mt-4 space-y-7"
 >
   <CustomHooksIntroduction t={t} stats={stats} />
+
+  <section class="rounded-2xl border border-cyan-200 bg-cyan-50/80 p-5 dark:border-cyan-500/25 dark:bg-cyan-500/10">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div class="min-w-0">
+        <p class="text-xs font-bold uppercase tracking-[0.16em] text-cyan-700 dark:text-cyan-300">
+          {isVi ? 'Hook-based review gate' : 'Hook-based review gate'}
+        </p>
+        <h2 class="mt-1 text-lg font-bold text-slate-950 dark:text-white">UI Review Gate</h2>
+        <p class="mt-1 max-w-3xl text-sm leading-6 text-slate-700 dark:text-slate-300">
+          {isVi
+            ? 'Plannotator là ví dụ thực tế cho pattern hook mở browser review UI trước khi agent tiếp tục.'
+            : 'Plannotator is a concrete example of a hook opening a browser review UI before the agent continues.'}
+        </p>
+      </div>
+      <a
+        href={translatePath('/guides/ui-review-gate')}
+        class="inline-flex min-h-10 shrink-0 items-center justify-center rounded-lg bg-cyan-600 px-4 text-sm font-bold text-white shadow-sm transition hover:bg-cyan-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-300"
+      >
+        {isVi ? 'Mở UI Review Gate' : 'Open UI Review Gate'}
+      </a>
+    </div>
+  </section>
 
   <section id="hook-list" class="scroll-mt-28 space-y-6">
     <div class="border-y border-slate-200 py-6 dark:border-slate-800">

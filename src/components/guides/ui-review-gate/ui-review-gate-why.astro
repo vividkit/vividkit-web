@@ -1,0 +1,108 @@
+---
+import type { Language } from '@/i18n';
+import { Brain, Highlighter, MapPin, MessageSquareText, ScrollText, Terminal } from 'lucide-astro';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const isVi = lang === 'vi';
+const t = (en: string, vi: string) => isVi ? vi : en;
+
+// The pain (terminal review) vs the gain (visual review). Inline annotation is the headline benefit.
+const painPoints = [
+  {
+    icon: ScrollText,
+    title: t('Long plans scroll away', 'Plan dài trôi mất'),
+    body: t('A multi-step plan or large diff scrolls past in the terminal. You hold the whole thing in your head to keep track.', 'Plan nhiều bước hoặc diff lớn trôi qua trong terminal. Bạn phải giữ cả plan trong đầu để theo dõi.'),
+  },
+  {
+    icon: Brain,
+    title: t('Reviewing a wall of text is tiring', 'Đọc một bức tường chữ rất mệt'),
+    body: t('Reading a dense wall of text with no structure is mentally draining, so real issues slip through.', 'Đọc một khối chữ dày, không cấu trúc làm não mệt nhanh, nên lỗi thật dễ lọt qua.'),
+  },
+  {
+    icon: Terminal,
+    title: t('Feedback is retyped from memory', 'Feedback gõ lại từ trí nhớ'),
+    body: t('There is no place to mark a specific line, so you describe the change from memory and hope the agent maps it back.', 'Không có chỗ đánh dấu dòng cụ thể, nên bạn mô tả lại từ trí nhớ và mong agent hiểu đúng chỗ.'),
+  },
+];
+
+const gainPoints = [
+  {
+    icon: MapPin,
+    title: t('Annotate right where the fix belongs', 'Annotate đúng nơi cần sửa'),
+    body: t('Comment inline, on the exact line or block that needs the change. The note stays anchored to that spot.', 'Comment inline, ngay dòng hoặc block cần sửa. Ghi chú gắn chặt vào đúng vị trí đó.'),
+  },
+  {
+    icon: Highlighter,
+    title: t('Long plans become scannable', 'Plan dài trở nên dễ quét'),
+    body: t('The plan or diff opens as a structured, navigable document, so a long review is far easier on the brain.', 'Plan hoặc diff mở ra như một tài liệu có cấu trúc, điều hướng được, nên review dài nhẹ đầu hơn hẳn.'),
+  },
+  {
+    icon: MessageSquareText,
+    title: t('Precise feedback, straight to the agent', 'Feedback chính xác, gửi thẳng agent'),
+    body: t('Each annotation carries its location and context, so the agent gets exact feedback instead of a vague summary.', 'Mỗi annotation mang theo vị trí và ngữ cảnh, nên agent nhận feedback chính xác thay vì mô tả mơ hồ.'),
+  },
+];
+---
+
+<section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950/75 sm:p-6">
+  <div class="max-w-3xl">
+    <p class="text-xs font-bold uppercase tracking-[0.16em] text-cyan-700 dark:text-cyan-300">
+      {t('Why a visual gate', 'Vì sao cần visual gate')}
+    </p>
+    <h2 class="mt-2 text-2xl font-bold tracking-tight text-slate-950 dark:text-white">
+      {t('Long plans are hard to review in a terminal', 'Plan dài rất khó review trong terminal')}
+    </h2>
+    <p class="mt-2 text-sm leading-7 text-slate-600 dark:text-slate-400">
+      {t(
+        'The terminal is a poor surface for reviewing a long plan: there is nowhere to mark a specific spot, and reading a dense wall of text is exhausting. A visual UI fixes both — you read it like a document and annotate exactly where the change belongs.',
+        'Terminal là một surface kém để review plan dài: không có chỗ đánh dấu vị trí cụ thể, và đọc một khối chữ dày làm não mệt. Visual UI giải quyết cả hai — bạn đọc như một tài liệu và annotate đúng ngay chỗ cần sửa.'
+      )}
+    </p>
+  </div>
+
+  <div class="mt-5 grid gap-4 lg:grid-cols-2">
+    <div class="rounded-xl border border-rose-200 bg-rose-50/50 p-5 dark:border-rose-500/25 dark:bg-rose-500/5">
+      <h3 class="text-sm font-bold uppercase tracking-wide text-rose-700 dark:text-rose-300">
+        {t('In the terminal', 'Trong terminal')}
+      </h3>
+      <ul class="mt-4 space-y-4">
+        {painPoints.map((point) => {
+          const Icon = point.icon;
+          return (
+            <li class="flex items-start gap-3">
+              <Icon class="mt-0.5 h-5 w-5 shrink-0 text-rose-500 dark:text-rose-400" stroke-width={2.2} />
+              <div>
+                <p class="text-sm font-bold text-slate-950 dark:text-white">{point.title}</p>
+                <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400">{point.body}</p>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+
+    <div class="rounded-xl border border-cyan-200 bg-cyan-50/50 p-5 dark:border-cyan-500/25 dark:bg-cyan-500/5">
+      <h3 class="text-sm font-bold uppercase tracking-wide text-cyan-700 dark:text-cyan-300">
+        {t('In Plannotator', 'Trong Plannotator')}
+      </h3>
+      <ul class="mt-4 space-y-4">
+        {gainPoints.map((point) => {
+          const Icon = point.icon;
+          return (
+            <li class="flex items-start gap-3">
+              <Icon class="mt-0.5 h-5 w-5 shrink-0 text-cyan-600 dark:text-cyan-300" stroke-width={2.2} />
+              <div>
+                <p class="text-sm font-bold text-slate-950 dark:text-white">{point.title}</p>
+                <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400">{point.body}</p>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </div>
+</section>

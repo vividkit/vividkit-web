@@ -185,6 +185,8 @@ export const guides = {
   'guides.donate.sponsor_step_keep_desc': 'Sự ủng hộ của bạn giúp các guide public được duy trì, mở rộng và miễn phí cho mọi người.',
   'guides.custom_hooks.title': 'ClaudeKit Hooks',
   'guides.custom_hooks.description': 'Hiểu lớp guard rails của ClaudeKit hooks',
+  'guides.ui_review_gate.title': 'UI Review Gate',
+  'guides.ui_review_gate.description': 'Review plan và diff của agent trong browser bằng Plannotator',
   'guides.flowchart.title': 'Tìm Lệnh Phù Hợp',
   'guides.flowchart.description': 'Sơ đồ tương tác để tìm command phù hợp',
   // Promotions Guide
@@ -234,6 +236,7 @@ export const guides = {
   'guides.home.pathway_config.link_mechanics': 'Claude Mechanics',
   'guides.home.pathway_config.link_permissions': 'Thiết Lập Permissions',
   'guides.home.pathway_config.link_hooks': 'ClaudeKit Hooks',
+  'guides.home.pathway_config.link_ui_review_gate': 'UI Review Gate',
   'guides.home.pathway_config.link_coexistence': 'Coexistence với setup của bạn',
   // Pathway: Other Tools & Providers
   'guides.home.pathway_providers.title': 'AI Tools & Runtimes',

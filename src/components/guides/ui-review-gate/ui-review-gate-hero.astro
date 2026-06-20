@@ -1,0 +1,153 @@
+---
+import type { Language } from '@/i18n';
+import { CheckCircle2, GitPullRequestArrow, MonitorCheck, ShieldCheck, Smartphone } from 'lucide-astro';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const isVi = lang === 'vi';
+const t = (en: string, vi: string) => isVi ? vi : en;
+
+const points = [
+  {
+    icon: ShieldCheck,
+    title: t('A pattern, not just a tool', 'Một pattern, không chỉ là tool'),
+    body: t('UI Review Gate is the checkpoint pattern; Plannotator is the tool that implements it.', 'UI Review Gate là pattern checkpoint; Plannotator là tool hiện thực nó.'),
+  },
+  {
+    icon: MonitorCheck,
+    title: t('Review in the browser', 'Review ngay trong browser'),
+    body: t('Plans, diffs, files, folders, URLs, and the latest agent message all open in a visual review UI.', 'Plan, diff, file, folder, URL và message mới nhất của agent đều mở trong một UI review trực quan.'),
+  },
+  {
+    icon: GitPullRequestArrow,
+    title: t('Feedback goes back to the agent', 'Feedback quay lại agent'),
+    body: t('Approve to continue, or send annotations so the agent fixes the plan or code first.', 'Approve để đi tiếp, hoặc gửi annotation để agent sửa plan/code trước.'),
+  },
+];
+
+const reviewTargets = [
+  t('Plans', 'Plan'),
+  t('Diffs', 'Diff'),
+  t('Messages', 'Message'),
+];
+
+// Vertical, responsive flow — no fixed-width SVG, no horizontal scroll.
+const flowSteps = [
+  { n: 1, label: t('Agent plan / diff / message', 'Agent plan / diff / message') },
+  { n: 2, label: t('Plannotator local server', 'Plannotator local server') },
+  { n: 3, label: t('Browser review UI', 'Browser review UI') },
+  { n: 4, label: t('Approve or annotate', 'Approve hoặc annotate') },
+];
+---
+
+<section class="overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-cyan-50/80 shadow-sm dark:border-slate-800 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900">
+  <div class="grid gap-0 lg:grid-cols-[minmax(0,1.06fr)_minmax(320px,0.9fr)]">
+    <div class="p-6 sm:p-8 lg:p-9">
+      <p class="inline-flex rounded-full border border-cyan-200 bg-white/80 px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-cyan-800 shadow-sm dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-200">
+        {t('Agent safety pattern', 'Pattern kiểm agent')}
+      </p>
+      <h1 class="mt-4 max-w-2xl text-3xl font-bold tracking-tight text-slate-950 text-balance dark:text-white sm:text-5xl">
+        UI Review Gate
+      </h1>
+      <p class="mt-4 max-w-2xl text-lg leading-8 text-slate-700 dark:text-slate-300">
+        {t('Review agent plans and diffs in the browser with Plannotator', 'Review plan và diff của agent trong browser bằng Plannotator')}
+      </p>
+      <p class="mt-4 max-w-2xl text-sm leading-7 text-slate-600 dark:text-slate-400">
+        {t(
+          'Plannotator does not replace the coding agent. It adds a browser checkpoint before the agent continues, so you can inspect the plan, diff, or message visually and return exact feedback.',
+          'Plannotator không thay coding agent. Nó thêm một checkpoint trong browser trước khi agent đi tiếp, để bạn kiểm tra plan, diff, hoặc message trực quan rồi trả feedback cụ thể.'
+        )}
+      </p>
+
+      <div class="mt-5 flex flex-wrap gap-2">
+        {reviewTargets.map((target) => (
+          <span class="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">
+            {target}
+          </span>
+        ))}
+      </div>
+
+      <div class="mt-6 grid gap-3 sm:grid-cols-2">
+        {points.map((point, index) => {
+          const Icon = point.icon;
+          return (
+            <div class={`rounded-xl border border-slate-200 bg-white/85 p-4 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md dark:border-slate-800 dark:bg-slate-900/70 ${index === 2 ? 'sm:col-span-2' : ''}`}>
+              <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-cyan-100 bg-cyan-50 text-cyan-700 dark:border-cyan-400/20 dark:bg-cyan-500/10 dark:text-cyan-300">
+                <Icon class="h-5 w-5" stroke-width={2.2} />
+              </span>
+              <h2 class="mt-3 text-sm font-bold text-slate-950 dark:text-white">{point.title}</h2>
+              <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400">{point.body}</p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+
+    <aside class="border-t border-slate-200 bg-white/70 p-5 dark:border-slate-800 dark:bg-slate-900/45 sm:p-6 lg:border-l lg:border-t-0">
+      <div class="rounded-2xl border border-cyan-100 bg-cyan-50/80 p-4 shadow-sm dark:border-cyan-400/15 dark:bg-cyan-500/10">
+        <div class="flex items-start gap-3">
+          <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-cyan-700 shadow-sm dark:bg-slate-950/60 dark:text-cyan-300">
+            <MonitorCheck class="h-5 w-5" stroke-width={2.3} />
+          </span>
+          <div>
+            <p class="text-xs font-bold uppercase tracking-[0.16em] text-cyan-800 dark:text-cyan-200">
+              {t('Main review loop', 'Vòng review chính')}
+            </p>
+            <p class="mt-1 text-sm leading-6 text-slate-700 dark:text-slate-300">
+              {t('The agent waits while the browser review is open.', 'Agent chờ khi browser review đang mở.')}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <ol class="mt-5 space-y-0">
+        {flowSteps.map((step, i) => (
+          <li class="relative">
+            <div class="flex gap-3">
+              <div class="flex w-8 shrink-0 flex-col items-center">
+                <span class="flex h-8 w-8 items-center justify-center rounded-full border border-cyan-200 bg-white text-xs font-bold text-cyan-800 shadow-sm dark:border-cyan-400/30 dark:bg-slate-950 dark:text-cyan-200">
+                  {step.n}
+                </span>
+                {i < flowSteps.length - 1 && (
+                  <span class="h-5 w-px bg-cyan-200 dark:bg-cyan-400/30" aria-hidden="true"></span>
+                )}
+              </div>
+              <div class="min-w-0 flex-1 pb-3">
+                <div class="rounded-xl border border-slate-200 bg-white px-3.5 py-3 shadow-sm dark:border-slate-800 dark:bg-slate-950/65">
+                  <span class="text-sm font-semibold text-slate-900 dark:text-slate-100">{step.label}</span>
+                </div>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      <div class="mt-1 grid gap-2.5 sm:grid-cols-2">
+        <div class="rounded-xl border border-emerald-200 bg-emerald-50 px-3.5 py-3 dark:border-emerald-400/25 dark:bg-emerald-500/10">
+          <div class="flex items-center gap-2">
+            <CheckCircle2 class="h-4 w-4 text-emerald-700 dark:text-emerald-300" stroke-width={2.4} />
+            <span class="text-xs font-bold text-emerald-800 dark:text-emerald-200">{t('Approve', 'Approve')}</span>
+          </div>
+          <p class="mt-1 text-xs leading-5 text-emerald-900/75 dark:text-slate-400">{t('Agent continues.', 'Agent đi tiếp.')}</p>
+        </div>
+        <div class="rounded-xl border border-amber-200 bg-amber-50 px-3.5 py-3 dark:border-amber-400/25 dark:bg-amber-500/10">
+          <div class="flex items-center gap-2">
+            <GitPullRequestArrow class="h-4 w-4 text-amber-700 dark:text-amber-300" stroke-width={2.4} />
+            <span class="text-xs font-bold text-amber-800 dark:text-amber-200">{t('Annotate', 'Annotate')}</span>
+          </div>
+          <p class="mt-1 text-xs leading-5 text-amber-950/75 dark:text-slate-400">{t('Feedback returns; agent revises.', 'Feedback quay lại; agent sửa.')}</p>
+        </div>
+      </div>
+
+      <div class="mt-4 flex items-start gap-2.5 rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-3 dark:border-slate-800 dark:bg-slate-950/55">
+        <Smartphone class="mt-0.5 h-4 w-4 shrink-0 text-cyan-700 dark:text-cyan-300" stroke-width={2.2} />
+        <p class="text-xs leading-5 text-slate-600 dark:text-slate-400">
+          {t('Mobile route: phone → LAN IP / Tailscale / tunnel → Plannotator port → browser UI.', 'Route mobile: phone → LAN IP / Tailscale / tunnel → Plannotator port → browser UI.')}
+        </p>
+      </div>
+    </aside>
+  </div>
+</section>

@@ -185,6 +185,8 @@ export const guides = {
   'guides.donate.sponsor_step_keep_desc': 'Your support keeps the public guides maintained, expanded, and free for everyone.',
   'guides.custom_hooks.title': 'ClaudeKit Hooks',
   'guides.custom_hooks.description': 'Understand ClaudeKit hook guard rails',
+  'guides.ui_review_gate.title': 'UI Review Gate',
+  'guides.ui_review_gate.description': 'Review agent plans and diffs in the browser with Plannotator',
   'guides.flowchart.title': 'Command Finder',
   'guides.flowchart.description': 'Interactive decision tree to find the right command',
   // Promotions Guide
@@ -234,6 +236,7 @@ export const guides = {
   'guides.home.pathway_config.link_mechanics': 'Claude Mechanics',
   'guides.home.pathway_config.link_permissions': 'Permissions Setup',
   'guides.home.pathway_config.link_hooks': 'ClaudeKit Hooks',
+  'guides.home.pathway_config.link_ui_review_gate': 'UI Review Gate',
   'guides.home.pathway_config.link_coexistence': 'Coexistence with your setup',
   // Pathway: Other Tools & Providers
   'guides.home.pathway_providers.title': 'AI Tools & Runtimes',
