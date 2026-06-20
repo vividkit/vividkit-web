@@ -98,9 +98,9 @@ const controls = [
 ];
 ---
 
-<section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-200/60 dark:border-slate-800 dark:bg-slate-950/80 dark:shadow-none md:p-7">
-  <div class="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-    <div class="max-w-3xl">
+<section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-200/60 dark:border-slate-800 dark:bg-slate-950/80 dark:shadow-none sm:p-6 lg:p-8">
+  <div class="max-w-3xl">
+    <div>
       <p class="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-purple-600 dark:text-purple-400">
         <Workflow class="h-4 w-4" />
         {t('Hook lifecycle', 'Hook lifecycle')}
@@ -115,54 +115,66 @@ const controls = [
         )}
       </p>
     </div>
-    <div class="rounded-xl border border-purple-200 bg-purple-50 px-4 py-3 text-xs leading-5 text-purple-800 dark:border-purple-900/60 dark:bg-purple-950/35 dark:text-purple-200">
-      <Plug class="mb-2 h-4 w-4" />
+    <div class="mt-4 flex items-start gap-3 rounded-xl border border-purple-200 bg-purple-50 px-4 py-3 text-sm leading-6 text-purple-900 dark:border-purple-900/60 dark:bg-purple-950/35 dark:text-purple-100">
+      <Plug class="mt-0.5 h-4 w-4 shrink-0" />
       {t('Default install favors plan review. File and response review hooks are opt-in recipes.', 'Cài mặc định ưu tiên review plan. Hook review file và response là recipe opt-in.')}
     </div>
   </div>
 
-  <div class="mt-6 grid gap-4 lg:grid-cols-3">
-    {lifecycleHooks.map((item) => (
-      <article class="rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-900/50">
-        <div class="flex items-start justify-between gap-3">
-          <div>
-            <h3 class="text-base font-semibold text-slate-950 dark:text-white">{item.agent}</h3>
-            <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">{item.phase}</p>
-          </div>
-          <code class={hookCodeClass}>{item.hook}</code>
+  <div class="mt-7 space-y-4">
+    {lifecycleHooks.map((item, index) => (
+      <article class="grid gap-4 rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-900/50 sm:grid-cols-[2.5rem_minmax(0,1fr)] sm:p-5">
+        <div class="flex sm:block">
+          <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-purple-200 bg-white text-sm font-bold text-purple-700 shadow-sm dark:border-purple-700/60 dark:bg-slate-950 dark:text-purple-200">
+            {index + 1}
+          </span>
         </div>
-        <dl class="mt-4 space-y-3 text-sm leading-6">
-          <div>
-            <dt class="font-semibold text-slate-800 dark:text-slate-100">{t('Role', 'Vai trò')}</dt>
-            <dd class="mt-1 text-slate-600 dark:text-slate-300" set:html={renderInlineCode(item.role)}></dd>
+        <div class="min-w-0">
+          <div class="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+            <div class="min-w-0">
+              <h3 class="text-base font-semibold text-slate-950 dark:text-white">{item.agent}</h3>
+              <p class="mt-1 text-sm leading-6 text-slate-500 dark:text-slate-400">{item.phase}</p>
+            </div>
+            <code class={`${hookCodeClass} w-fit max-w-full`}>{item.hook}</code>
           </div>
-          <div>
-            <dt class="font-semibold text-slate-800 dark:text-slate-100">{t('Enable', 'Bật')}</dt>
-            <dd class="mt-1 text-slate-600 dark:text-slate-300" set:html={renderInlineCode(item.enable)}></dd>
-          </div>
-          <div>
-            <dt class="font-semibold text-slate-800 dark:text-slate-100">{t('Disable', 'Tắt')}</dt>
-            <dd class="mt-1 text-slate-600 dark:text-slate-300" set:html={renderInlineCode(item.disable)}></dd>
-          </div>
-        </dl>
+
+          <dl class="mt-4 space-y-3 text-sm leading-6">
+            <div class="rounded-lg border border-slate-200 bg-white p-3 dark:border-slate-800 dark:bg-slate-950/70">
+              <dt class="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">{t('Role', 'Vai trò')}</dt>
+              <dd class="mt-2 text-slate-700 dark:text-slate-200" set:html={renderInlineCode(item.role)}></dd>
+            </div>
+            <div class="grid gap-3 lg:grid-cols-2">
+              <div class="rounded-lg border border-emerald-200 bg-emerald-50/70 p-3 dark:border-emerald-900/60 dark:bg-emerald-950/25">
+                <dt class="text-xs font-semibold uppercase tracking-[0.14em] text-emerald-700 dark:text-emerald-300">{t('Enable', 'Bật')}</dt>
+                <dd class="mt-2 text-slate-700 dark:text-slate-200" set:html={renderInlineCode(item.enable)}></dd>
+              </div>
+              <div class="rounded-lg border border-amber-200 bg-amber-50/70 p-3 dark:border-amber-900/60 dark:bg-amber-950/25">
+                <dt class="text-xs font-semibold uppercase tracking-[0.14em] text-amber-700 dark:text-amber-300">{t('Disable', 'Tắt')}</dt>
+                <dd class="mt-2 text-slate-700 dark:text-slate-200" set:html={renderInlineCode(item.disable)}></dd>
+              </div>
+            </div>
+          </dl>
+        </div>
       </article>
     ))}
   </div>
 
-  <div class="mt-5 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(300px,0.82fr)]">
+  <div class="mt-6 space-y-4">
     <div class="rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-900/50">
       <h3 class="flex items-center gap-2 text-base font-semibold text-slate-950 dark:text-white">
         <Settings2 class="h-4 w-4 text-purple-600 dark:text-purple-400" />
         {t('Opt-in hook recipes', 'Recipe hook opt-in')}
       </h3>
-      <div class="mt-4 grid gap-3 md:grid-cols-3">
+      <div class="mt-4 space-y-3">
         {optionalHooks.map((hook) => {
           const Icon = hook.icon;
           return (
-            <div class="rounded-lg border border-slate-200 bg-white p-3 dark:border-slate-800 dark:bg-slate-950/70">
-              <Icon class="h-4 w-4 text-purple-600 dark:text-purple-400" />
-              <h4 class="mt-3 text-sm font-semibold text-slate-900 dark:text-white" set:html={renderInlineCode(hook.title)}></h4>
-              <p class="mt-2 text-xs leading-5 text-slate-600 dark:text-slate-300" set:html={renderInlineCode(hook.body)}></p>
+            <div class="flex gap-3 rounded-lg border border-slate-200 bg-white p-3 dark:border-slate-800 dark:bg-slate-950/70">
+              <Icon class="mt-1 h-4 w-4 shrink-0 text-purple-600 dark:text-purple-400" />
+              <div class="min-w-0">
+                <h4 class="text-sm font-semibold text-slate-900 dark:text-white" set:html={renderInlineCode(hook.title)}></h4>
+                <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300" set:html={renderInlineCode(hook.body)}></p>
+              </div>
             </div>
           );
         })}
