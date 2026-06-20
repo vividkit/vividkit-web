@@ -346,6 +346,27 @@ const toneBorder: Record<string, string> = {
   summary={copy.summary}
   slug="guard-rails"
 >
+  <section class="rounded-2xl border border-cyan-200 bg-cyan-50/80 p-5 dark:border-cyan-500/25 dark:bg-cyan-500/10">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div class="min-w-0">
+        <p class="text-xs font-bold uppercase tracking-[0.16em] text-cyan-700 dark:text-cyan-300">
+          UI Review Gate
+        </p>
+        <p class="mt-1 max-w-3xl text-sm leading-6 text-slate-700 dark:text-slate-300">
+          {currentLang === 'vi'
+            ? 'Một số guard rail chặn tool bằng code. UI Review Gate thêm lớp người duyệt trong browser trước khi agent đi tiếp.'
+            : 'Some guard rails block tools with code. UI Review Gate adds a human browser review before the agent continues.'}
+        </p>
+      </div>
+      <a
+        href={translatePath('/guides/ui-review-gate')}
+        class="inline-flex min-h-10 shrink-0 items-center justify-center rounded-lg bg-cyan-600 px-4 text-sm font-bold text-white shadow-sm transition hover:bg-cyan-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-300"
+      >
+        {currentLang === 'vi' ? 'Mở guide' : 'Open guide'}
+      </a>
+    </div>
+  </section>
+
   <!-- Section 1: Intro case comparison -->
   <section id="intro-case" class="rounded-2xl border border-slate-200/70 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/70">
     <div class="mb-4 flex items-center gap-2">

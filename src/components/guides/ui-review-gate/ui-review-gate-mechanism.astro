@@ -1,0 +1,68 @@
+---
+import type { Language } from '@/i18n';
+import { FileText, GitCompareArrows, MessageSquareText, Network, RotateCcw, ServerCog, ShieldCheck } from 'lucide-astro';
+import { renderInlineCode } from './inline-code';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const isVi = lang === 'vi';
+const t = (en: string, vi: string) => isVi ? vi : en;
+
+const reviewTargets = [
+  { icon: FileText, title: t('Plan review gate', 'Gate review plan'), desc: t('Claude Code uses an `ExitPlanMode` `PermissionRequest` hook. Codex uses a `Stop` hook that reads the latest plan from the rollout transcript.', 'Claude Code dùng hook `PermissionRequest` cho `ExitPlanMode`. Codex dùng `Stop` hook đọc plan mới nhất từ rollout transcript.') },
+  { icon: GitCompareArrows, title: t('Code and diff review', 'Review code và diff'), desc: t('The review command opens a diff review UI for current changes or a `PR/MR URL`, then returns feedback to the agent session.', 'Lệnh review mở UI review diff cho thay đổi hiện tại hoặc `PR/MR URL`, rồi trả feedback về agent session.') },
+  { icon: MessageSquareText, title: t('Annotate artifacts', 'Annotate artifact'), desc: t('The `annotate` command covers Markdown, HTML, URLs, and folders; the `last` command targets the latest assistant message.', 'Lệnh `annotate` xử lý Markdown, HTML, URL, folder; lệnh `last` mở message mới nhất của assistant.') },
+  { icon: Network, title: t('Remote-friendly port', 'Port hợp remote'), desc: t('`Remote mode` and a fixed port make the server reachable through forwarded ports, devcontainers, or tunnels.', '`Remote mode` và fixed port giúp server chạy qua forwarded port, devcontainer, hoặc tunnel.') },
+  { icon: RotateCcw, title: t('Revisions and sessions', 'Revision và session'), desc: t('Plan re-submissions can show diffs. Sessions can be listed, reopened by number, or cleaned when stale.', 'Plan submit lại có thể hiện diff. Session có thể liệt kê, mở lại theo số, hoặc dọn khi cũ.') },
+  { icon: ServerCog, title: t('Share links when appropriate', 'Share link khi phù hợp'), desc: t('Small reviews can be shared through URL hash data. Large short links are opt-in and encrypted; sharing can be disabled for sensitive work.', 'Review nhỏ có thể share bằng dữ liệu trong URL hash. Short link cho nội dung lớn là opt-in và encrypted; việc share có thể tắt khi nội dung nhạy cảm.') },
+];
+---
+
+<section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950/75 sm:p-6">
+  <div class="max-w-3xl">
+    <p class="text-xs font-bold uppercase tracking-[0.16em] text-cyan-700 dark:text-cyan-300">
+      {t('What the gate covers', 'Gate này cover gì')}
+    </p>
+    <h2 class="mt-2 text-2xl font-bold tracking-tight text-slate-950 dark:text-white">
+      {t('One pattern, several review surfaces', 'Một pattern, nhiều mặt review')}
+    </h2>
+    <p class="mt-2 text-sm leading-7 text-slate-600 dark:text-slate-400">
+      {t(
+        'The same loop applies whether the artifact is a plan, a code diff, a rendered HTML page, a docs folder, or the agent response you just received.',
+        'Cùng một vòng lặp dùng được cho plan, code diff, trang HTML render, folder docs, hoặc response agent vừa gửi.'
+      )}
+    </p>
+  </div>
+
+  <div class="mt-4 flex items-start gap-3 rounded-xl border border-cyan-200 bg-cyan-50/70 p-4 dark:border-cyan-500/25 dark:bg-cyan-500/5">
+    <ShieldCheck class="mt-0.5 h-5 w-5 shrink-0 text-cyan-700 dark:text-cyan-300" stroke-width={2.2} />
+    <p class="text-sm leading-6 text-slate-700 dark:text-slate-300">
+      {t(
+        'The agent is paused the whole time the review is open. Nothing proceeds until you approve, so the gate is blocking by design — not a notification you can miss.',
+        'Agent bị tạm dừng suốt thời gian review đang mở. Không gì chạy tiếp cho tới khi bạn approve, nên gate này chặn theo thiết kế — không phải notification dễ bỏ lỡ.'
+      )}
+    </p>
+  </div>
+
+  <div class="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+    {reviewTargets.map((item) => {
+      const Icon = item.icon;
+      return (
+        <article class="rounded-xl border border-slate-200 bg-slate-50/75 p-4 dark:border-slate-800 dark:bg-slate-900/55">
+          <div class="flex items-start gap-3">
+            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-cyan-50 text-cyan-700 dark:bg-cyan-500/10 dark:text-cyan-300">
+              <Icon class="h-5 w-5" stroke-width={2.2} />
+            </span>
+            <div>
+              <h3 class="text-sm font-bold text-slate-950 dark:text-white">{item.title}</h3>
+              <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400" set:html={renderInlineCode(item.desc)}></p>
+            </div>
+          </div>
+        </article>
+      );
+    })}
+  </div>
+</section>

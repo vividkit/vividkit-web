@@ -1,0 +1,29 @@
+---
+import { getLangFromUrl, type Language } from '@/i18n';
+import UIReviewGateHero from './ui-review-gate/ui-review-gate-hero.astro';
+import UIReviewGateWhy from './ui-review-gate/ui-review-gate-why.astro';
+import UIReviewGateMechanism from './ui-review-gate/ui-review-gate-mechanism.astro';
+import UIReviewGateHooks from './ui-review-gate/ui-review-gate-hooks.astro';
+import UIReviewGateUsage from './ui-review-gate/ui-review-gate-usage.astro';
+import UIReviewGateMobile from './ui-review-gate/ui-review-gate-mobile.astro';
+import UIReviewGateFit from './ui-review-gate/ui-review-gate-fit.astro';
+import UIReviewGateReferences from './ui-review-gate/ui-review-gate-references.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+---
+
+<div class="mt-6 space-y-6">
+  <UIReviewGateHero lang={currentLang} />
+  <UIReviewGateWhy lang={currentLang} />
+  <UIReviewGateMechanism lang={currentLang} />
+  <UIReviewGateHooks lang={currentLang} />
+  <UIReviewGateUsage lang={currentLang} />
+  <UIReviewGateMobile lang={currentLang} />
+  <UIReviewGateFit lang={currentLang} />
+  <UIReviewGateReferences lang={currentLang} />
+</div>
