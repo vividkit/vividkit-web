@@ -1279,5 +1279,141 @@ export const stableWorkflows = [
       'Quota: 200 credits/day (Flash), 50/day (Pro)'
     ],
     borderColor: 'border-sky-500/20'
+  },
+  {
+    title: 'Autonomous Feature Delivery',
+    category: 'Shipping',
+    level: 'Advanced',
+    duration: '~30-60 min',
+    stepCount: 2,
+    bestFor: 'Hands-off delivery from a GitHub issue or feature request to a shipped PR',
+    gradientHeader: 'from-teal-500/10 to-cyan-500/10',
+    hoverBorderColor: 'hover:border-teal-500/50',
+    buttonColor: 'bg-teal-500 hover:bg-teal-600',
+    icon: '<path d="M13 3L4 14h7l-1 7 9-11h-7l1-7z"/>',
+    iconColor: 'text-teal-600 dark:text-teal-400',
+    steps: [
+      {
+        command: '/ck:vibe',
+        typeLabel: 'Autonomous pipeline',
+        description: 'One command takes a GitHub issue or feature request through plan → implement → review → ship (worktree isolation, reusable/TDD plan gates, cook or fix routing, review-pr, merge/CI watch)',
+        color: 'bg-teal-500/10 dark:bg-teal-500/20 text-teal-600 dark:text-teal-400',
+        number: 1,
+        isSkill: true
+      },
+      {
+        typeLabel: 'Plan gate → PR',
+        description: 'Approve the generated plan at the gate; it then implements, self-reviews, and opens a PR',
+        color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
+        number: 2,
+        hasIcon: true
+      }
+    ],
+    tip: 'Use /ck:vibe for end-to-end automation; for manual control use /ck:plan → /ck:cook instead',
+    borderColor: 'border-teal-500/20'
+  },
+  {
+    title: 'Review & Merge a PR',
+    category: 'Planning & Review',
+    level: 'Intermediate',
+    duration: '~10-20 min',
+    stepCount: 3,
+    bestFor: 'Reviewing a GitHub pull request for standards, security, and breaking changes before merge',
+    gradientHeader: 'from-indigo-500/10 to-blue-500/10',
+    hoverBorderColor: 'hover:border-indigo-500/50',
+    buttonColor: 'bg-indigo-500 hover:bg-indigo-600',
+    icon: '<path d="M9 12l2 2 4-4"/><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>',
+    iconColor: 'text-indigo-600 dark:text-indigo-400',
+    steps: [
+      {
+        command: '/ck:review-pr <PR>',
+        typeLabel: 'Review the PR',
+        description: 'Checks duplicate prior work, project standards, strategic necessity, correctness, security, breaking changes, and AI-slop patterns',
+        color: 'bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400',
+        number: 1,
+        isSkill: true
+      },
+      {
+        command: '/ck:review-pr <PR> --fix --reply',
+        typeLabel: 'Auto-fix & reply',
+        description: 'Apply the findings to the working tree and post the formal review back to GitHub',
+        color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
+        number: 2
+      },
+      {
+        command: '/ck:git merge',
+        typeLabel: 'Merge when green',
+        description: 'Merge once approved and CI passes',
+        color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
+        number: 3,
+        isSkill: true
+      }
+    ],
+    tip: 'review-pr supports --fix (apply) and --reply (post to GitHub)',
+    borderColor: 'border-indigo-500/20'
+  },
+  {
+    title: 'HTML-to-Video Rendering',
+    category: 'Media & Creative',
+    level: 'Intermediate',
+    duration: '~20-40 min',
+    stepCount: 2,
+    bestFor: 'Rendering local MP4 videos from HTML/CSS/JS templates (promos, explainers, social clips)',
+    gradientHeader: 'from-pink-500/10 to-rose-500/10',
+    hoverBorderColor: 'hover:border-pink-500/50',
+    buttonColor: 'bg-pink-500 hover:bg-pink-600',
+    icon: '<path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>',
+    iconColor: 'text-pink-600 dark:text-pink-400',
+    steps: [
+      {
+        command: '/ck:html-video',
+        typeLabel: 'Scaffold from template',
+        description: 'Check out a template (promo, explainer, data video, social clip) and customize it in the studio',
+        color: 'bg-pink-500/10 dark:bg-pink-500/20 text-pink-600 dark:text-pink-400',
+        number: 1,
+        isSkill: true
+      },
+      {
+        typeLabel: 'Render & verify MP4',
+        description: 'Render locally through Chromium + ffmpeg, then verify the output MP4',
+        color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
+        number: 2,
+        hasIcon: true
+      }
+    ],
+    tip: 'Renders locally (Chromium + ffmpeg) — no external service needed',
+    borderColor: 'border-pink-500/20'
+  },
+  {
+    title: 'Browser Automation (Real Chrome)',
+    category: 'Advanced',
+    level: 'Advanced',
+    duration: '~10-20 min',
+    stepCount: 2,
+    bestFor: 'Automating or testing logged-in web UIs using your real Chrome profile and cookies',
+    gradientHeader: 'from-blue-500/10 to-cyan-500/10',
+    hoverBorderColor: 'hover:border-blue-500/50',
+    buttonColor: 'bg-blue-500 hover:bg-blue-600',
+    icon: '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
+    iconColor: 'text-blue-600 dark:text-blue-400',
+    steps: [
+      {
+        command: '/ck:chrome-profile',
+        typeLabel: 'Target real profile',
+        description: 'Discover and target your real Google Chrome profile through Chrome DevTools MCP (real session cookies)',
+        color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
+        number: 1,
+        isSkill: true
+      },
+      {
+        typeLabel: 'Automate / screenshot',
+        description: 'Preview or test authenticated UI, capture screenshots, or scrape with your logged-in session',
+        color: 'bg-cyan-500/10 dark:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400',
+        number: 2,
+        hasIcon: true
+      }
+    ],
+    tip: 'Use chrome-profile when automation needs your real cookies/account; use web-testing for clean-room E2E',
+    borderColor: 'border-blue-500/20'
   }
 ];
