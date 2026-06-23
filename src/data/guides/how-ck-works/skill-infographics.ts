@@ -23,10 +23,10 @@ const coreSkillInfographics: SkillInfographic[] = [
 
     hardGate: {
       type: 'warning',
-      titleEn: 'HARD GATES (3)',
-      titleVi: 'HARD GATES (3)',
-      contentEn: '① No implementation until design is presented & user approves. ② Scout codebase BEFORE asking any clarifying question (project type, modules, patterns, docs, plans, constraints). ③ Discovery must extract EXACT requirements — expected output, acceptance criteria, scope boundary, non-negotiable constraints, touchpoints. Loop until concrete.',
-      contentVi: '① Không triển khai cho đến khi design được trình bày & user duyệt. ② BẮT BUỘC scout codebase TRƯỚC mọi câu hỏi làm rõ (loại dự án, modules, patterns, docs, plans, ràng buộc). ③ Discovery phải trích xuất yêu cầu CHÍNH XÁC — output mong đợi, acceptance criteria, scope boundary, ràng buộc bất khả nhân nhượng, touchpoints. Lặp đến khi cụ thể.',
+      titleEn: 'HARD GATES (4)',
+      titleVi: 'HARD GATES (4)',
+      contentEn: '① No implementation until design is presented & user approves. ② Scout codebase BEFORE asking any clarifying question (project type, modules, patterns, docs, plans, constraints). ③ Discovery must extract EXACT requirements — expected output, acceptance criteria, scope boundary, non-negotiable constraints, touchpoints. Loop until concrete. ④ Present before ask — write options, trade-offs & recommendation in visible text BEFORE any AskUserQuestion (extended thinking is invisible to the user).',
+      contentVi: '① Không triển khai cho đến khi design được trình bày & user duyệt. ② BẮT BUỘC scout codebase TRƯỚC mọi câu hỏi làm rõ (loại dự án, modules, patterns, docs, plans, ràng buộc). ③ Discovery phải trích xuất yêu cầu CHÍNH XÁC — output mong đợi, acceptance criteria, scope boundary, ràng buộc bất khả nhân nhượng, touchpoints. Lặp đến khi cụ thể. ④ Trình bày trước khi hỏi — viết options, trade-off & khuyến nghị trong text hiển thị TRƯỚC mọi AskUserQuestion (extended thinking user không thấy).',
     },
 
     processFlow: [
@@ -37,7 +37,7 @@ const coreSkillInfographics: SkillInfographic[] = [
       { number: 5, titleEn: 'Analyze', titleVi: 'Phân tích', descEn: 'Evaluate 2-3 approaches with pros/cons via YAGNI/KISS/DRY', descVi: 'Đánh giá 2-3 hướng với pros/cons theo YAGNI/KISS/DRY' },
       { number: 6, titleEn: 'Debate', titleVi: 'Tranh luận', descEn: 'Brutal honesty — challenge assumptions, present options', descVi: 'Brutal honesty — thách thức giả định, trình bày options' },
       { number: 7, titleEn: 'Consensus', titleVi: 'Đồng thuận', descEn: 'Align on chosen approach', descVi: 'Thống nhất hướng đi' },
-      { number: 8, titleEn: 'Report', titleVi: 'Báo cáo', descEn: 'Markdown summary via ck:project-organization', descVi: 'Báo cáo markdown qua ck:project-organization' },
+      { number: 8, titleEn: 'Report', titleVi: 'Báo cáo', descEn: 'Markdown summary via ck:project-organization (+ HTML report when --html)', descVi: 'Báo cáo markdown qua ck:project-organization (+ HTML report khi --html)' },
       { number: 9, titleEn: 'Handoff', titleVi: 'Bàn giao', descEn: 'AskUser: /ck:plan --tdd (refactor/critical) · /ck:plan (default) · end', descVi: 'AskUser: /ck:plan --tdd (refactor/critical) · /ck:plan (default) · kết thúc' },
       { number: 10, titleEn: 'Journal', titleVi: 'Nhật ký', descEn: '/ck:journal — concise technical entry', descVi: '/ck:journal — entry kỹ thuật ngắn gọn' },
     ],
@@ -120,6 +120,25 @@ const coreSkillInfographics: SkillInfographic[] = [
       descEn: 'Problem statement • Evaluated approaches • Final recommendation • Implementation risks • Success metrics • Next steps',
       descVi: 'Mô tả vấn đề • Các hướng đánh giá • Khuyến nghị cuối • Rủi ro triển khai • Metrics thành công • Bước tiếp theo',
     },
+
+    outputFlags: [
+      {
+        flag: '--html',
+        titleEn: 'Editorial HTML report',
+        titleVi: 'Report HTML editorial',
+        descEn: 'After the markdown report, also write a self-contained editorial-magazine HTML report (same directory & stem).',
+        descVi: 'Sau report markdown, viết thêm report HTML editorial-magazine self-contained (cùng thư mục & tên gốc).',
+        exampleCommand: '/ck:brainstorm --html Compare auth approaches for our SaaS app',
+      },
+      {
+        flag: '--wiki',
+        titleEn: 'Publish to AgentWiki',
+        titleVi: 'Publish lên AgentWiki',
+        descEn: 'After local reports exist, publish markdown + HTML via agentwiki CLI or MCP. Skips cleanly when unavailable.',
+        descVi: 'Sau khi report local đã có, publish markdown + HTML qua agentwiki CLI hoặc MCP. Nếu không khả dụng thì tự bỏ qua bước publish (không làm fail brainstorm).',
+        exampleCommand: '/ck:brainstorm --html --wiki Compare auth approaches for our SaaS app',
+      },
+    ],
 
     promptExamples: [
       {
@@ -231,6 +250,33 @@ const coreSkillInfographics: SkillInfographic[] = [
 
     composableFlagsEn: '--tdd (tests-first per phase) and --no-tasks (skip task hydration) combine with any mode.',
     composableFlagsVi: '--tdd (tests-first mỗi phase) và --no-tasks (bỏ task hydration) kết hợp được với mọi mode.',
+
+    outputFlags: [
+      {
+        flag: '--html',
+        titleEn: 'Interactive HTML plan',
+        titleVi: 'Plan HTML tương tác',
+        descEn: 'Self-contained editorial plan.html — phase outlines, full-markdown detail modals, optional watercolor sketches. Generated AFTER red-team & validate so it reflects the final reviewed plan.',
+        descVi: 'plan.html editorial self-contained — outline phases, modal chi tiết full-markdown, sketch watercolor tùy chọn. Tạo SAU red-team & validate để phản ánh plan đã review cuối cùng.',
+        exampleCommand: '/ck:plan --html Redesign checkout flow to reduce payment failures',
+      },
+      {
+        flag: '--github',
+        titleEn: 'Create GitHub issue',
+        titleVi: 'Tạo GitHub issue',
+        descEn: 'After validation, create/update a GitHub issue with branch, summary, repo-relative plan links, open questions, acceptance criteria, and the `ready to review` label.',
+        descVi: 'Sau validate, tạo/cập nhật GitHub issue với branch, tóm tắt, link plan repo-relative, open questions, acceptance criteria, và label `ready to review`.',
+        exampleCommand: '/ck:plan --github Redesign checkout flow to reduce payment failures',
+      },
+      {
+        flag: '--wiki',
+        titleEn: 'Publish to AgentWiki',
+        titleVi: 'Publish lên AgentWiki',
+        descEn: 'Publish the final reviewed plan docs or plan.html to AgentWiki via CLI or MCP when available. Skips cleanly (never blocks plan creation) when unavailable.',
+        descVi: 'Publish plan docs đã review cuối hoặc plan.html lên AgentWiki qua CLI hoặc MCP khi khả dụng. Nếu không khả dụng thì tự bỏ qua bước publish (không chặn việc tạo plan).',
+        exampleCommand: '/ck:plan --html --wiki Redesign checkout flow to reduce payment failures',
+      },
+    ],
 
     deepDiveLink: {
       hrefEn: '/guides/inside-claudekit/plan-modes',

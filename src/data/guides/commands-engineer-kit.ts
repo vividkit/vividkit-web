@@ -855,7 +855,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:ck-graphify",
+          command: "/ck:graphify",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.graphify.desc"),

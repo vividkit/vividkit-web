@@ -1,22 +1,22 @@
 {
   "$schema": "./skills-registry.schema.json",
-  "lastBuilt": "2026-04-29T08:25:11Z",
+  "lastBuilt": "2026-06-23T07:00:51Z",
   "upstreamShas": {
-    "stable": "882654f716b2d0647810d3c80dc391d5099b3dc0",
-    "beta": "9025fdbb62cb0f0ac5ad5d2915b791ac2094b713",
-    "marketing-stable": "61822f3749fc834c57edda1137140f6a488aa2a5",
-    "marketing-beta": "fbde0085558143a445be54868ba0c8c63b0e50c6"
+    "stable": "ed8a1fa7a9dbc7135311fdd334c762dbe63e2c91",
+    "beta": "9180f95d579fbcd73500dad5db3555e61b9288e5",
+    "marketing-stable": "11c5eb055e7b0e6061bbaccfd0a468a8dac73c0c",
+    "marketing-beta": "570b4003299b85af6ebf1af99409762b645a6ba9"
   },
   "summary": {
-    "totalSkills": 131,
-    "engineerSkills": 82,
+    "totalSkills": 136,
+    "engineerSkills": 87,
     "marketerSkills": 49,
-    "deprecatedSkills": 7,
+    "deprecatedSkills": 6,
     "totalCommands": 78,
     "marketerCommands": 78,
     "engineerCommands": 0,
-    "totalAgents": 45,
-    "engineerAgents": 14,
+    "totalAgents": 44,
+    "engineerAgents": 13,
     "marketerAgents": 31
   },
   "skills": [
@@ -25,24 +25,24 @@
       "kit": "engineer",
       "channels": {
         "stable": {
-          "version": "1.0.0",
+          "version": "2.0.0",
           "argumentHint": "[url or task]",
           "args": [
             "[url or task]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "AI-optimized browser automation CLI with context-efficient snapshots"
+          "description": "Automate browsers and apps with agent-browser."
         },
         "beta": {
-          "version": null,
+          "version": "2.0.0",
           "argumentHint": "[url or task]",
           "args": [
             "[url or task]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "AI-optimized browser automation CLI with context-efficient snapshots"
+          "description": "Automate browsers and apps with agent-browser."
         }
       },
       "deprecated": false
@@ -67,10 +67,10 @@
             "--mcp"
           ],
           "deprecated": false,
-          "description": "Convert the current codebase (or a specific feature/module) into an AI agent-friendly and user-friendly CLI and/or MCP server"
+          "description": "Convert a codebase, feature, or module into an AI-agent-friendly CLI and/or MCP server."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[feature-or-module] [--both|--mcp|--cli] [--auto|--ask]",
           "args": [
             "[feature-or-module]",
@@ -85,7 +85,7 @@
             "--mcp"
           ],
           "deprecated": false,
-          "description": "Convert the current codebase (or a specific feature/module) into an AI agent-friendly and user-friendly CLI and/or MCP server"
+          "description": "Convert a codebase, feature, or module into an AI-agent-friendly CLI and/or MCP server."
         }
       },
       "deprecated": false
@@ -109,10 +109,10 @@
             "--skip"
           ],
           "deprecated": false,
-          "description": "Generate images via Nano Banana with 129 curated prompts"
+          "description": "Generate product mockups, marketing assets, brand visuals, and concept art via Nano Banana with 129 curated prompts."
         },
         "beta": {
-          "version": null,
+          "version": "3.1.0",
           "argumentHint": "[concept] [--mode search|creative|wild|all] [--provider auto|google|openrouter] [--skip]",
           "args": [
             "[concept]",
@@ -126,7 +126,7 @@
             "--skip"
           ],
           "deprecated": false,
-          "description": "Generate images via Nano Banana with 129 curated prompts"
+          "description": "Generate product mockups, marketing assets, brand visuals, and concept art via Nano Banana with 129 curated prompts."
         },
         "marketing-stable": {
           "version": null,
@@ -174,7 +174,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Analyze images/audio/video with Gemini API (better vision than Claude)"
+          "description": "Analyze images/audio/video with Gemini API (better vision than Claude)."
         },
         "beta": {
           "version": null,
@@ -185,7 +185,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Analyze images/audio/video with Gemini API (better vision than Claude)"
+          "description": "Analyze images/audio/video with Gemini API (better vision than Claude)."
         },
         "marketing-stable": {
           "version": null,
@@ -224,17 +224,17 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Answer technical and architectural questions with expert analysis"
+          "description": "Answer technical and architectural questions with expert analysis."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[technical-question]",
           "args": [
             "[technical-question]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Answer technical and architectural questions with expert analysis"
+          "description": "Answer technical and architectural questions with expert analysis."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -264,24 +264,20 @@
       "kit": "engineer",
       "channels": {
         "stable": {
-          "version": "1.0.0",
-          "argumentHint": "[Goal/Metric description] or inline config block",
-          "args": [
-            "[Goal/Metric description]"
-          ],
+          "version": "2.0.0",
+          "argumentHint": "",
+          "args": [],
           "flags": [],
           "deprecated": true,
-          "description": "Run autonomous optimization loops (deprecated alias for ck-loop)"
+          "description": "Autoresearch is the upstream meta-framework (Udit Goenka, MIT) for autonomous goal-directed iteration with safety guardrails."
         },
         "beta": {
-          "version": null,
-          "argumentHint": "[Goal/Metric description] or inline config block",
-          "args": [
-            "[Goal/Metric description]"
-          ],
+          "version": "2.0.0",
+          "argumentHint": "",
+          "args": [],
           "flags": [],
           "deprecated": true,
-          "description": "Run autonomous optimization loops (deprecated alias for ck-loop)"
+          "description": "Autoresearch is the upstream meta-framework (Udit Goenka, MIT) for autonomous goal-directed iteration with safety guardrails."
         }
       },
       "deprecated": true
@@ -299,10 +295,10 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Build backends with Node"
+          "description": "Build backends with Node.js, Python, Go (NestJS, FastAPI, Django)."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[framework] [task]",
           "args": [
             "[framework]",
@@ -310,7 +306,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Build backends with Node"
+          "description": "Build backends with Node.js, Python, Go (NestJS, FastAPI, Django)."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -332,7 +328,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Build robust backend systems with modern technologies (Node."
+          "description": "Build robust backend systems with modern technologies (Node.js, Python, Go, Rust), frameworks (NestJS, FastAPI, Django), databases (PostgreSQL, MongoDB, Redis), APIs (REST, GraphQL, gRPC), authentication (OAuth 2.1, JWT), testing strategies, security best practices (OWASP Top 10), performance optimization, scalability patterns (microservices, caching, sharding), DevOps practices (Docker, Kubernetes, CI/CD), and monitoring."
         }
       },
       "deprecated": false
@@ -349,17 +345,17 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Add authentication with Better Auth (TypeScript)"
+          "description": "Add authentication with Better Auth (TypeScript)."
         },
         "beta": {
-          "version": null,
+          "version": "2.0.0",
           "argumentHint": "[auth-method or feature]",
           "args": [
             "[auth-method or feature]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Add authentication with Better Auth (TypeScript)"
+          "description": "Add authentication with Better Auth (TypeScript)."
         },
         "marketing-stable": {
           "version": "2.0.0",
@@ -402,10 +398,10 @@
             "--parallel"
           ],
           "deprecated": false,
-          "description": "Bootstrap new projects with research, tech stack, design, planning, and implementation"
+          "description": "Bootstrap new projects with research, tech stack, design, planning, and implementation."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[requirements] [--full|--auto|--fast|--parallel]",
           "args": [
             "[requirements]",
@@ -418,7 +414,7 @@
             "--parallel"
           ],
           "deprecated": false,
-          "description": "Bootstrap new projects with research, tech stack, design, planning, and implementation"
+          "description": "Bootstrap new projects with research, tech stack, design, planning, and implementation."
         }
       },
       "deprecated": false
@@ -428,24 +424,34 @@
       "kit": "engineer",
       "channels": {
         "stable": {
-          "version": "2.0.0",
-          "argumentHint": "[topic or problem]",
+          "version": "2.4.0",
+          "argumentHint": "[--html] [--wiki] [topic or problem]",
           "args": [
+            "[--html]",
+            "[--wiki]",
             "[topic or problem]"
           ],
-          "flags": [],
+          "flags": [
+            "--html",
+            "--wiki"
+          ],
           "deprecated": false,
-          "description": "Brainstorm solutions with trade-off analysis and brutal honesty"
+          "description": "Brainstorm solutions with trade-off analysis and brutal honesty."
         },
         "beta": {
-          "version": null,
-          "argumentHint": "[topic or problem]",
+          "version": "2.4.0",
+          "argumentHint": "[--html] [--wiki] [topic or problem]",
           "args": [
+            "[--html]",
+            "[--wiki]",
             "[topic or problem]"
           ],
-          "flags": [],
+          "flags": [
+            "--html",
+            "--wiki"
+          ],
           "deprecated": false,
-          "description": "Brainstorm solutions with trade-off analysis and brutal honesty"
+          "description": "Brainstorm solutions with trade-off analysis and brutal honesty."
         },
         "marketing-stable": {
           "version": "2.0.0",
@@ -474,26 +480,6 @@
       "name": "ck:chrome-devtools",
       "kit": "engineer",
       "channels": {
-        "stable": {
-          "version": "1.1.0",
-          "argumentHint": "[url or task]",
-          "args": [
-            "[url or task]"
-          ],
-          "flags": [],
-          "deprecated": false,
-          "description": "Automate browsers with Puppeteer CLI scripts and persistent sessions"
-        },
-        "beta": {
-          "version": null,
-          "argumentHint": "[url or task]",
-          "args": [
-            "[url or task]"
-          ],
-          "flags": [],
-          "deprecated": false,
-          "description": "Automate browsers with Puppeteer CLI scripts and persistent sessions"
-        },
         "marketing-stable": {
           "version": "1.1.0",
           "argumentHint": "[url or task]",
@@ -518,6 +504,29 @@
       "deprecated": false
     },
     {
+      "name": "ck:chrome-profile",
+      "kit": "engineer",
+      "channels": {
+        "stable": {
+          "version": "1.0.0",
+          "argumentHint": "",
+          "args": [],
+          "flags": [],
+          "deprecated": false,
+          "description": "Target a real Google Chrome profile for browser automation through Chrome DevTools MCP."
+        },
+        "beta": {
+          "version": "1.0.0",
+          "argumentHint": "",
+          "args": [],
+          "flags": [],
+          "deprecated": false,
+          "description": "Target a real Google Chrome profile for browser automation through Chrome DevTools MCP."
+        }
+      },
+      "deprecated": false
+    },
+    {
       "name": "ck:code-review",
       "kit": "engineer",
       "channels": {
@@ -531,10 +540,10 @@
             "--pending"
           ],
           "deprecated": false,
-          "description": "Review code quality with adversarial rigor"
+          "description": "Review code quality with evidence-based rigor."
         },
         "beta": {
-          "version": null,
+          "version": "2.0.0",
           "argumentHint": "[#PR | COMMIT | --pending | codebase [parallel]]",
           "args": [
             "[#PR | COMMIT | --pending | codebase [parallel]"
@@ -543,7 +552,7 @@
             "--pending"
           ],
           "deprecated": false,
-          "description": "Review code quality with adversarial rigor"
+          "description": "Review code quality with evidence-based rigor."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -582,17 +591,17 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Set coding experience level for tailored output"
+          "description": "Set coding experience level for tailored output."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[0-5]",
           "args": [
             "[0-5]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Set coding experience level for tailored output"
+          "description": "Set coding experience level for tailored output."
         }
       },
       "deprecated": false
@@ -609,19 +618,9 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Check context usage limits, monitor time remaining, optimize token consumption, debug context failures"
+          "description": "Check context usage limits, monitor time remaining, optimize token consumption, debug context failures."
         },
         "beta": {
-          "version": null,
-          "argumentHint": "[topic or question]",
-          "args": [
-            "[topic or question]"
-          ],
-          "flags": [],
-          "deprecated": false,
-          "description": ">-"
-        },
-        "marketing-stable": {
           "version": "1.0.0",
           "argumentHint": "[topic or question]",
           "args": [
@@ -629,7 +628,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": ">-."
+          "description": "Check context usage limits, monitor time remaining, optimize token consumption, debug context failures."
         }
       },
       "deprecated": false
@@ -639,7 +638,7 @@
       "kit": "engineer",
       "channels": {
         "stable": {
-          "version": "2.1.1",
+          "version": "2.2.0",
           "argumentHint": "[task|plan-path] [--interactive|--fast|--parallel|--auto|--no-test] [--tdd]",
           "args": [
             "[task|plan-path]",
@@ -655,10 +654,10 @@
             "--tdd"
           ],
           "deprecated": false,
-          "description": "Implement features, plans, and fixes with structured workflow"
+          "description": "Implement features, plans, and fixes with structured workflow."
         },
         "beta": {
-          "version": null,
+          "version": "2.2.0",
           "argumentHint": "[task|plan-path] [--interactive|--fast|--parallel|--auto|--no-test] [--tdd]",
           "args": [
             "[task|plan-path]",
@@ -674,7 +673,7 @@
             "--tdd"
           ],
           "deprecated": false,
-          "description": "Implement features, plans, and fixes with structured workflow"
+          "description": "Implement features, plans, and fixes with structured workflow."
         },
         "marketing-stable": {
           "version": "2.1.1",
@@ -726,10 +725,10 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Conversion copywriting formulas, headline templates, email copy patterns, landing page structures, CTA optimization, and writing style extraction"
+          "description": "Conversion copywriting formulas, headline templates, email copy patterns, landing page structures, CTA optimization, and writing style extraction."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[copy-type] [context]",
           "args": [
             "[copy-type]",
@@ -737,7 +736,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Conversion copywriting formulas, headline templates, email copy patterns, landing page structures, CTA optimization, and writing style extraction"
+          "description": "Conversion copywriting formulas, headline templates, email copy patterns, landing page structures, CTA optimization, and writing style extraction."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -784,10 +783,10 @@
             "--yolo"
           ],
           "deprecated": true,
-          "description": "CTI Expert — cyber threat intelligence and OSINT analysis toolkit"
+          "description": "Analyze cyber threat intelligence and OSINT cases."
         },
         "beta": {
-          "version": null,
+          "version": "2.0",
           "argumentHint": "[target] [--yolo] [--case|--sweep|--query|--flow]",
           "args": [
             "[target]",
@@ -802,7 +801,7 @@
             "--yolo"
           ],
           "deprecated": false,
-          "description": "CTI Expert — cyber threat intelligence and OSINT analysis toolkit"
+          "description": "Analyze cyber threat intelligence and OSINT cases."
         }
       },
       "deprecated": true
@@ -819,17 +818,17 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Design schemas, write queries for MongoDB and PostgreSQL"
+          "description": "Design schemas, write queries for MongoDB and PostgreSQL."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[query or schema task]",
           "args": [
             "[query or schema task]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Design schemas, write queries for MongoDB and PostgreSQL"
+          "description": "Design schemas, write queries for MongoDB and PostgreSQL."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -866,17 +865,17 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Debug systematically with root cause analysis before fixes"
+          "description": "Debug systematically with root cause analysis before fixes."
         },
         "beta": {
-          "version": null,
+          "version": "4.0.0",
           "argumentHint": "[error or issue description]",
           "args": [
             "[error or issue description]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Debug systematically with root cause analysis before fixes"
+          "description": "Debug systematically with root cause analysis before fixes."
         }
       },
       "deprecated": false
@@ -894,10 +893,10 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Deploy projects to any platform with auto-detection"
+          "description": "Deploy projects to any platform with auto-detection."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[platform] [environment]",
           "args": [
             "[platform]",
@@ -905,7 +904,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Deploy projects to any platform with auto-detection"
+          "description": "Deploy projects to any platform with auto-detection."
         }
       },
       "deprecated": false
@@ -923,10 +922,10 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Deploy to Cloudflare (Workers, R2, D1), Docker, GCP (Cloud Run, GKE), Kubernetes (kubectl, Helm)"
+          "description": "Deploy to Cloudflare (Workers, R2, D1), Docker, GCP (Cloud Run, GKE), Kubernetes (kubectl, Helm)."
         },
         "beta": {
-          "version": null,
+          "version": "2.0.0",
           "argumentHint": "[platform] [task]",
           "args": [
             "[platform]",
@@ -934,7 +933,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Deploy to Cloudflare (Workers, R2, D1), Docker, GCP (Cloud Run, GKE), Kubernetes (kubectl, Helm)"
+          "description": "Deploy to Cloudflare (Workers, R2, D1), Docker, GCP (Cloud Run, GKE), Kubernetes (kubectl, Helm)."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -966,20 +965,20 @@
       "kit": "engineer",
       "channels": {
         "stable": {
-          "version": "1.0.0",
+          "version": "1.2.0",
           "argumentHint": "init|update|summarize",
           "args": [],
           "flags": [],
           "deprecated": false,
-          "description": "Analyze codebase and manage project documentation"
+          "description": "Analyze codebase and manage project documentation."
         },
         "beta": {
-          "version": null,
+          "version": "1.2.0",
           "argumentHint": "init|update|summarize",
           "args": [],
           "flags": [],
           "deprecated": false,
-          "description": "Analyze codebase and manage project documentation"
+          "description": "Analyze codebase and manage project documentation."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -990,7 +989,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Initialize, update, and summarize project documentation."
+          "description": "Initialize, update, and summarize project documentation"
         },
         "marketing-beta": {
           "version": "1.0.0",
@@ -1019,10 +1018,10 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Search library/framework documentation via llms"
+          "description": "Search library/framework documentation via llms.txt (context7.com)."
         },
         "beta": {
-          "version": null,
+          "version": "3.1.0",
           "argumentHint": "[library-name] [topic]",
           "args": [
             "[library-name]",
@@ -1030,7 +1029,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Search library/framework documentation via llms"
+          "description": "Search library/framework documentation via llms.txt (context7.com)."
         },
         "marketing-stable": {
           "version": "3.1.0",
@@ -1052,7 +1051,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Search technical documentation using executable scripts to detect query type, fetch from llms."
+          "description": "Search technical documentation using executable scripts to detect query type, fetch from llms.txt sources (context7.com), and analyze results."
         }
       },
       "deprecated": false
@@ -1069,17 +1068,17 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Helps users discover and install agent skills when they ask questions like \"how do I do X\", \"find a skill for X\", \"is there a skill that can"
+          "description": "Helps users discover and install agent skills when they ask questions like \"how do I do X\", \"find a skill for X\", \"is there a skill that can...\", or express interest in extending capabilities."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[capability or task description]",
           "args": [
             "[capability or task description]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Helps users discover and install agent skills when they ask questions like \"how do I do X\", \"find a skill for X\", \"is there a skill that can"
+          "description": "Helps users discover and install agent skills when they ask questions like \"how do I do X\", \"find a skill for X\", \"is there a skill that can...\", or express interest in extending capabilities."
         }
       },
       "deprecated": false
@@ -1101,7 +1100,7 @@
             "--review"
           ],
           "deprecated": false,
-          "description": "Fix bugs, errors, test failures, and CI/CD issues with intelligent routing"
+          "description": "Fix bugs, errors, test failures, and CI/CD issues with intelligent routing."
         },
         "beta": {
           "version": "2.1.0",
@@ -1116,7 +1115,7 @@
             "--review"
           ],
           "deprecated": false,
-          "description": "Fix bugs, errors, test failures, and CI/CD issues with intelligent routing"
+          "description": "Fix bugs, errors, test failures, and CI/CD issues with intelligent routing."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -1161,15 +1160,15 @@
           "args": [],
           "flags": [],
           "deprecated": false,
-          "description": "Create polished frontend interfaces from designs/screenshots/videos"
+          "description": "Create polished frontend interfaces from designs/screenshots/videos."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "",
           "args": [],
           "flags": [],
           "deprecated": false,
-          "description": "Create polished frontend interfaces from designs/screenshots/videos"
+          "description": "Create polished frontend interfaces from designs/screenshots/videos."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -1202,17 +1201,17 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Build React/TypeScript frontends with modern patterns"
+          "description": "Build React/TypeScript frontends with modern patterns."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[component or feature]",
           "args": [
             "[component or feature]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Build React/TypeScript frontends with modern patterns"
+          "description": "Build React/TypeScript frontends with modern patterns."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -1243,23 +1242,23 @@
       "channels": {
         "stable": {
           "version": "1.0.0",
-          "argumentHint": "cm|cp|pr|merge [args]",
+          "argumentHint": "cm|cp|pr|merge|merge-pr [args]",
           "args": [
             "[args]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Git operations with conventional commits"
+          "description": "Manage git commits, pushes, PRs, branch merges, and PR review-and-merge automation."
         },
         "beta": {
-          "version": null,
-          "argumentHint": "cm|cp|pr|merge [args]",
+          "version": "1.0.0",
+          "argumentHint": "cm|cp|pr|merge|merge-pr [args]",
           "args": [
             "[args]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Git operations with conventional commits"
+          "description": "Manage git commits, pushes, PRs, branch merges, and PR review-and-merge automation."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -1296,17 +1295,17 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Semantic code analysis with GitLab Knowledge Graph"
+          "description": "Semantic code analysis with GitLab Knowledge Graph."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[symbol or query]",
           "args": [
             "[symbol or query]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Semantic code analysis with GitLab Knowledge Graph"
+          "description": "Semantic code analysis with GitLab Knowledge Graph."
         }
       },
       "deprecated": false
@@ -1323,17 +1322,17 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Build AI agents with Google ADK Python"
+          "description": "Build AI agents with Google ADK Python."
         },
         "beta": {
-          "version": null,
+          "version": "2.0.0",
           "argumentHint": "[agent or feature]",
           "args": [
             "[agent or feature]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Build AI agents with Google ADK Python"
+          "description": "Build AI agents with Google ADK Python."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -1375,7 +1374,7 @@
             "--watch"
           ],
           "deprecated": false,
-          "description": "Build queryable knowledge graphs from code, docs, papers, and images"
+          "description": "Build queryable knowledge graphs from code, docs, papers, and images."
         },
         "beta": {
           "version": null,
@@ -1390,7 +1389,34 @@
             "--watch"
           ],
           "deprecated": false,
-          "description": "Build queryable knowledge graphs from code, docs, papers, and images"
+          "description": "Build queryable knowledge graphs from code, docs, papers, and images."
+        }
+      },
+      "deprecated": false
+    },
+    {
+      "name": "ck:html-video",
+      "kit": "engineer",
+      "channels": {
+        "stable": {
+          "version": "1.0.0",
+          "argumentHint": "[video brief, source URL, repo, template id, or project id]",
+          "args": [
+            "[video brief, source URL, repo, template id, or project id]"
+          ],
+          "flags": [],
+          "deprecated": false,
+          "description": "Create local MP4 videos from HTML/CSS/JS templates with nexu-io/html-video."
+        },
+        "beta": {
+          "version": "1.0.0",
+          "argumentHint": "[video brief, source URL, repo, template id, or project id]",
+          "args": [
+            "[video brief, source URL, repo, template id, or project id]"
+          ],
+          "flags": [],
+          "deprecated": false,
+          "description": "Create local MP4 videos from HTML/CSS/JS templates with nexu-io/html-video."
         }
       },
       "deprecated": false
@@ -1407,17 +1433,17 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Write technical journal entries analyzing recent changes"
+          "description": "Write technical journal entries analyzing recent changes."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[topic or reflection]",
           "args": [
             "[topic or reflection]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Write technical journal entries analyzing recent changes"
+          "description": "Write technical journal entries analyzing recent changes."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -1442,33 +1468,13 @@
       "name": "ck:kanban",
       "kit": "engineer",
       "channels": {
-        "stable": {
-          "version": "2.0.0",
-          "argumentHint": "[deprecated plans path or flags]",
-          "args": [
-            "[deprecated plans path or flags]"
-          ],
-          "flags": [],
-          "deprecated": true,
-          "description": "Alias launcher for the ClaudeKit plans dashboard"
-        },
-        "beta": {
-          "version": null,
-          "argumentHint": "[deprecated plans path or flags]",
-          "args": [
-            "[deprecated plans path or flags]"
-          ],
-          "flags": [],
-          "deprecated": true,
-          "description": "Alias launcher for the ClaudeKit plans dashboard"
-        },
         "marketing-stable": {
           "version": "1.0.0",
           "argumentHint": "",
           "args": [],
           "flags": [],
           "deprecated": false,
-          "description": "AI agent orchestration board (Coming Soon)."
+          "description": "AI agent orchestration board (Coming Soon)"
         },
         "marketing-beta": {
           "version": "1.0.0",
@@ -1479,7 +1485,7 @@
           "description": "AI agent orchestration board (Coming Soon)"
         }
       },
-      "deprecated": true
+      "deprecated": false
     },
     {
       "name": "ck:llms",
@@ -1498,10 +1504,10 @@
             "--output"
           ],
           "deprecated": false,
-          "description": "Generate llms"
+          "description": "Generate llms.txt files from docs or codebase scanning."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[path|url] [--full] [--output path]",
           "args": [
             "[path|url]",
@@ -1513,7 +1519,7 @@
             "--output"
           ],
           "deprecated": false,
-          "description": "Generate llms"
+          "description": "Generate llms.txt files from docs or codebase scanning."
         }
       },
       "deprecated": false
@@ -1530,17 +1536,17 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Autonomous iterative optimization loop — run N iterations against a mechanical metric, learn from git history, auto-keep/discard changes"
+          "description": "Autonomous iterative optimization loop — run N iterations against a mechanical metric, learn from git history, auto-keep/discard changes."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[Goal/Metric description] or inline config block",
           "args": [
             "[Goal/Metric description]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Autonomous iterative optimization loop — run N iterations against a mechanical metric, learn from git history, auto-keep/discard changes"
+          "description": "Autonomous iterative optimization loop — run N iterations against a mechanical metric, learn from git history, auto-keep/discard changes."
         }
       },
       "deprecated": false
@@ -1557,17 +1563,17 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "View markdown files with calm, book-like reading experience via HTTP server"
+          "description": "View markdown files in a calm, book-like reader served via HTTP."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[file-or-directory]",
           "args": [
             "[file-or-directory]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "View markdown files with calm, book-like reading experience via HTTP server"
+          "description": "View markdown files in a calm, book-like reader served via HTTP."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -1604,17 +1610,17 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Build MCP servers for LLM-external service integration"
+          "description": "Build MCP servers for LLM-external service integration."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[service or API to integrate]",
           "args": [
             "[service or API to integrate]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Build MCP servers for LLM-external service integration"
+          "description": "Build MCP servers for LLM-external service integration."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -1643,26 +1649,6 @@
       "name": "ck:mcp-management",
       "kit": "engineer",
       "channels": {
-        "stable": {
-          "version": "1.0.0",
-          "argumentHint": "[task or server-name]",
-          "args": [
-            "[task or server-name]"
-          ],
-          "flags": [],
-          "deprecated": false,
-          "description": "Manage MCP servers - discover, analyze, execute tools/prompts/resources"
-        },
-        "beta": {
-          "version": null,
-          "argumentHint": "[task or server-name]",
-          "args": [
-            "[task or server-name]"
-          ],
-          "flags": [],
-          "deprecated": false,
-          "description": "Manage MCP servers - discover, analyze, execute tools/prompts/resources"
-        },
         "marketing-stable": {
           "version": "1.0.0",
           "argumentHint": "[task or server-name]",
@@ -1699,10 +1685,10 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Process media with FFmpeg (video/audio), ImageMagick (images), RMBG (AI background removal)"
+          "description": "Process media with FFmpeg (video/audio), ImageMagick (images), RMBG (AI background removal)."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[input-file] [operation]",
           "args": [
             "[input-file]",
@@ -1710,7 +1696,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Process media with FFmpeg (video/audio), ImageMagick (images), RMBG (AI background removal)"
+          "description": "Process media with FFmpeg (video/audio), ImageMagick (images), RMBG (AI background removal)."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -1742,24 +1728,24 @@
       "kit": "engineer",
       "channels": {
         "stable": {
-          "version": "1.0.0",
+          "version": "1.2.0",
           "argumentHint": "[diagram-type or description]",
           "args": [
             "[diagram-type or description]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Create diagrams with Mermaid"
+          "description": "Create diagrams with Mermaid.js v11 syntax."
         },
         "beta": {
-          "version": null,
+          "version": "1.2.0",
           "argumentHint": "[diagram-type or description]",
           "args": [
             "[diagram-type or description]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Create diagrams with Mermaid"
+          "description": "Create diagrams with Mermaid.js v11 syntax."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -1779,7 +1765,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Create diagrams and visualizations using Mermaid."
+          "description": "Create diagrams and visualizations using Mermaid.js v11 syntax."
         }
       },
       "deprecated": false
@@ -1797,10 +1783,10 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Build and deploy documentation sites with Mintlify"
+          "description": "Build and maintain Mintlify documentation sites."
         },
         "beta": {
-          "version": null,
+          "version": "2.0.0",
           "argumentHint": "[task] [path]",
           "args": [
             "[task]",
@@ -1808,7 +1794,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Build and deploy documentation sites with Mintlify"
+          "description": "Build and maintain Mintlify documentation sites."
         }
       },
       "deprecated": false
@@ -1826,10 +1812,10 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Build mobile apps with React Native, Flutter, Swift/SwiftUI, Kotlin/Jetpack Compose"
+          "description": "Build mobile apps with React Native, Flutter, Swift/SwiftUI, Kotlin/Jetpack Compose."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[platform] [feature]",
           "args": [
             "[platform]",
@@ -1837,7 +1823,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Build mobile apps with React Native, Flutter, Swift/SwiftUI, Kotlin/Jetpack Compose"
+          "description": "Build mobile apps with React Native, Flutter, Swift/SwiftUI, Kotlin/Jetpack Compose."
         }
       },
       "deprecated": false
@@ -1855,10 +1841,10 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Integrate payments with SePay (VietQR), Polar, Stripe, Paddle (MoR subscriptions), Creem"
+          "description": "Integrate payments with SePay (VietQR), Polar, Stripe, Paddle (MoR subscriptions), Creem.io (licensing)."
         },
         "beta": {
-          "version": null,
+          "version": "2.2.0",
           "argumentHint": "[provider] [task]",
           "args": [
             "[provider]",
@@ -1866,7 +1852,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Integrate payments with SePay (VietQR), Polar, Stripe, Paddle (MoR subscriptions), Creem"
+          "description": "Integrate payments with SePay (VietQR), Polar, Stripe, Paddle (MoR subscriptions), Creem.io (licensing)."
         },
         "marketing-stable": {
           "version": "2.0.0",
@@ -1898,46 +1884,58 @@
       "kit": "engineer",
       "channels": {
         "stable": {
-          "version": "1.0.0",
-          "argumentHint": "[task] [--fast|--hard|--deep|--parallel|--two] [--tdd|--no-tasks] OR [archive|red-team|validate]",
+          "version": "1.1.0",
+          "argumentHint": "[task] [--fast|--hard|--deep|--parallel|--two] [--tdd|--no-tasks] [--html] [--github] [--wiki] OR [archive|red-team|validate]",
           "args": [
             "[task]",
             "[--fast|--hard|--deep|--parallel|--two]",
             "[--tdd|--no-tasks]",
+            "[--html]",
+            "[--github]",
+            "[--wiki]",
             "[archive|red-team|validate]"
           ],
           "flags": [
             "--deep",
             "--fast",
+            "--github",
             "--hard",
+            "--html",
             "--no-tasks",
             "--parallel",
             "--tdd",
-            "--two"
+            "--two",
+            "--wiki"
           ],
           "deprecated": false,
-          "description": "Plan implementations, design architectures, create technical roadmaps with detailed phases"
+          "description": "Plan implementations, design architectures, create technical roadmaps with detailed phases."
         },
         "beta": {
-          "version": null,
-          "argumentHint": "[task] [--fast|--hard|--deep|--parallel|--two] [--tdd|--no-tasks] OR [archive|red-team|validate]",
+          "version": "1.1.0",
+          "argumentHint": "[task] [--fast|--hard|--deep|--parallel|--two] [--tdd|--no-tasks] [--html] [--github] [--wiki] OR [archive|red-team|validate]",
           "args": [
             "[task]",
             "[--fast|--hard|--deep|--parallel|--two]",
             "[--tdd|--no-tasks]",
+            "[--html]",
+            "[--github]",
+            "[--wiki]",
             "[archive|red-team|validate]"
           ],
           "flags": [
             "--deep",
             "--fast",
+            "--github",
             "--hard",
+            "--html",
             "--no-tasks",
             "--parallel",
             "--tdd",
-            "--two"
+            "--two",
+            "--wiki"
           ],
           "deprecated": false,
-          "description": "Plan implementations, design architectures, create technical roadmaps with detailed phases"
+          "description": "Plan implementations, design architectures, create technical roadmaps with detailed phases."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -1948,7 +1946,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "💡💡💡 Intelligent plan creation with prompt enhancement."
+          "description": "💡💡💡 Intelligent plan creation with prompt enhancement"
         },
         "marketing-beta": {
           "version": "1.0.0",
@@ -1976,17 +1974,17 @@
           ],
           "flags": [],
           "deprecated": true,
-          "description": "Open the ClaudeKit plans dashboard in the CLI config UI"
+          "description": "Open the ClaudeKit plans dashboard in the CLI config UI."
         },
         "beta": {
-          "version": null,
+          "version": "2.0.0",
           "argumentHint": "[deprecated flags are accepted with warnings]",
           "args": [
             "[deprecated flags are accepted with warnings]"
           ],
           "flags": [],
           "deprecated": true,
-          "description": "Open the ClaudeKit plans dashboard in the CLI config UI"
+          "description": "Open the ClaudeKit plans dashboard in the CLI config UI."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -2017,27 +2015,31 @@
       "channels": {
         "stable": {
           "version": "1.0.0",
-          "argumentHint": "<feature description or change proposal> [--files <glob>]",
+          "argumentHint": "<feature description or change proposal> [--files <glob>] [--chain reason|probe]",
           "args": [
-            "[--files <glob>]"
+            "[--files <glob>]",
+            "[--chain reason|probe]"
           ],
           "flags": [
+            "--chain",
             "--files"
           ],
           "deprecated": false,
-          "description": "5 expert personas debate proposed changes before implementation"
+          "description": "5 expert personas debate proposed changes before implementation."
         },
         "beta": {
-          "version": null,
-          "argumentHint": "<feature description or change proposal> [--files <glob>]",
+          "version": "1.0.0",
+          "argumentHint": "<feature description or change proposal> [--files <glob>] [--chain reason|probe]",
           "args": [
-            "[--files <glob>]"
+            "[--files <glob>]",
+            "[--chain reason|probe]"
           ],
           "flags": [
+            "--chain",
             "--files"
           ],
           "deprecated": false,
-          "description": "5 expert personas debate proposed changes before implementation"
+          "description": "5 expert personas debate proposed changes before implementation."
         }
       },
       "deprecated": false
@@ -2047,7 +2049,7 @@
       "kit": "engineer",
       "channels": {
         "stable": {
-          "version": "1.1.0",
+          "version": "1.2.0",
           "argumentHint": "[path] OR [--html] --explain|--slides|--diagram|--ascii [topic] OR --html --diff|--plan-review|--recap",
           "args": [
             "[path]",
@@ -2065,10 +2067,10 @@
             "--slides"
           ],
           "deprecated": false,
-          "description": "View files or generate visual explanations, slides, and diagrams"
+          "description": "View files or generate visual explanations, slides, and diagrams."
         },
         "beta": {
-          "version": null,
+          "version": "1.2.0",
           "argumentHint": "[path] OR [--html] --explain|--slides|--diagram|--ascii [topic] OR --html --diff|--plan-review|--recap",
           "args": [
             "[path]",
@@ -2086,7 +2088,7 @@
             "--slides"
           ],
           "deprecated": false,
-          "description": "View files or generate visual explanations, slides, and diagrams"
+          "description": "View files or generate visual explanations, slides, and diagrams."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -2094,7 +2096,7 @@
           "args": [],
           "flags": [],
           "deprecated": false,
-          "description": "Path to markdown file, plan directory, or plans collection."
+          "description": "Path to markdown file, plan directory, or plans collection"
         },
         "marketing-beta": {
           "version": "1.0.0",
@@ -2119,17 +2121,17 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Apply systematic problem-solving techniques when stuck"
+          "description": "Apply systematic problem-solving techniques when stuck."
         },
         "beta": {
-          "version": null,
+          "version": "2.0.0",
           "argumentHint": "[problem description]",
           "args": [
             "[problem description]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Apply systematic problem-solving techniques when stuck"
+          "description": "Apply systematic problem-solving techniques when stuck."
         },
         "marketing-stable": {
           "version": "2.0.0",
@@ -2166,17 +2168,17 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Track progress, update plan statuses, manage Claude Tasks, generate reports, coordinate docs updates"
+          "description": "Track progress, update plan statuses, manage Claude Tasks, generate reports, coordinate docs updates."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[task: status, hydrate, sync, report]",
           "args": [
             "[task: status, hydrate, sync, report]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Track progress, update plan statuses, manage Claude Tasks, generate reports, coordinate docs updates"
+          "description": "Track progress, update plan statuses, manage Claude Tasks, generate reports, coordinate docs updates."
         }
       },
       "deprecated": false
@@ -2193,17 +2195,17 @@
           ],
           "flags": [],
           "deprecated": true,
-          "description": "Organize files, directories, and content structure in any project"
+          "description": "Organize files, directories, and content structure in any project."
         },
         "beta": {
-          "version": null,
+          "version": "2.0.0",
           "argumentHint": "[directories or files to organize]",
           "args": [
             "[directories or files to organize]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Organize files, directories, and content structure in any project"
+          "description": "Organize files, directories, and content structure in any project."
         }
       },
       "deprecated": true
@@ -2220,17 +2222,17 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Apply React and Next"
+          "description": "Apply React and Next.js performance optimization patterns from Vercel Engineering."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[component or pattern]",
           "args": [
             "[component or pattern]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Apply React and Next"
+          "description": "Apply React and Next.js performance optimization patterns from Vercel Engineering."
         }
       },
       "deprecated": false
@@ -2247,17 +2249,17 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Build video content with Remotion in React"
+          "description": "Build video content with Remotion in React."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[video or component]",
           "args": [
             "[video or component]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Build video content with Remotion in React"
+          "description": "Build video content with Remotion in React."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -2267,7 +2269,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Best practices for Remotion - Video creation in React."
+          "description": "Best practices for Remotion - Video creation in React"
         },
         "marketing-beta": {
           "version": "1.0.0",
@@ -2297,10 +2299,10 @@
             "--style"
           ],
           "deprecated": false,
-          "description": "Pack repositories into AI-friendly files with Repomix (XML, Markdown, plain text)"
+          "description": "Pack repositories into AI-friendly files with Repomix (XML, Markdown, plain text)."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[path] [--style xml|markdown|plain|json]",
           "args": [
             "[path]",
@@ -2310,7 +2312,7 @@
             "--style"
           ],
           "deprecated": false,
-          "description": "Pack repositories into AI-friendly files with Repomix (XML, Markdown, plain text)"
+          "description": "Pack repositories into AI-friendly files with Repomix (XML, Markdown, plain text)."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -2353,17 +2355,17 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Research technical solutions, analyze architectures, gather requirements thoroughly"
+          "description": "Research technical solutions, analyze architectures, gather requirements thoroughly."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[topic]",
           "args": [
             "[topic]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Research technical solutions, analyze architectures, gather requirements thoroughly"
+          "description": "Research technical solutions, analyze architectures, gather requirements thoroughly."
         }
       },
       "deprecated": false
@@ -2387,10 +2389,10 @@
             "--team"
           ],
           "deprecated": false,
-          "description": "Generate data-driven sprint retrospectives from git metrics"
+          "description": "Generate data-driven sprint retrospectives from any git history."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[timeframe] [--compare] [--team] [--format html|md]",
           "args": [
             "[timeframe]",
@@ -2404,7 +2406,42 @@
             "--team"
           ],
           "deprecated": false,
-          "description": "Generate data-driven sprint retrospectives from git metrics"
+          "description": "Generate data-driven sprint retrospectives from any git history."
+        }
+      },
+      "deprecated": false
+    },
+    {
+      "name": "ck:review-pr",
+      "kit": "engineer",
+      "channels": {
+        "stable": {
+          "version": "2.0.0",
+          "argumentHint": "<PR number or URL> [--fix] [--reply]",
+          "args": [
+            "[--fix]",
+            "[--reply]"
+          ],
+          "flags": [
+            "--fix",
+            "--reply"
+          ],
+          "deprecated": false,
+          "description": "Review GitHub PRs for duplicate prior work, project standards, strategic necessity, correctness, security, breaking changes, code quality, and AI-slop patterns."
+        },
+        "beta": {
+          "version": "2.0.0",
+          "argumentHint": "<PR number or URL> [--fix] [--reply]",
+          "args": [
+            "[--fix]",
+            "[--reply]"
+          ],
+          "flags": [
+            "--fix",
+            "--reply"
+          ],
+          "deprecated": false,
+          "description": "Review GitHub PRs for duplicate prior work, project standards, strategic necessity, correctness, security, breaking changes, code quality, and AI-slop patterns."
         }
       },
       "deprecated": false
@@ -2414,20 +2451,32 @@
       "kit": "engineer",
       "channels": {
         "stable": {
-          "version": "1.0.0",
-          "argumentHint": "<file path or feature description>",
-          "args": [],
-          "flags": [],
+          "version": "1.1.0",
+          "argumentHint": "<file path or feature description> [--iterations N] [--saturation]",
+          "args": [
+            "[--iterations N]",
+            "[--saturation]"
+          ],
+          "flags": [
+            "--iterations",
+            "--saturation"
+          ],
           "deprecated": false,
-          "description": "Generate comprehensive edge cases and test scenarios by decomposing features across 12 dimensions"
+          "description": "Generate comprehensive edge cases and test scenarios by decomposing features across 12 dimensions."
         },
         "beta": {
-          "version": null,
-          "argumentHint": "<file path or feature description>",
-          "args": [],
-          "flags": [],
+          "version": "1.1.0",
+          "argumentHint": "<file path or feature description> [--iterations N] [--saturation]",
+          "args": [
+            "[--iterations N]",
+            "[--saturation]"
+          ],
+          "flags": [
+            "--iterations",
+            "--saturation"
+          ],
           "deprecated": false,
-          "description": "Generate comprehensive edge cases and test scenarios by decomposing features across 12 dimensions"
+          "description": "Generate comprehensive edge cases and test scenarios by decomposing features across 12 dimensions."
         }
       },
       "deprecated": false
@@ -2445,10 +2494,10 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Fast codebase scouting using parallel agents"
+          "description": "Fast codebase scouting using parallel agents."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[search-target] [ext]",
           "args": [
             "[search-target]",
@@ -2456,7 +2505,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Fast codebase scouting using parallel agents"
+          "description": "Fast codebase scouting using parallel agents."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -2489,31 +2538,35 @@
       "channels": {
         "stable": {
           "version": "1.0.0",
-          "argumentHint": "<scope glob or 'full'> [--fix] [--iterations N]",
+          "argumentHint": "<scope glob or 'full'> [--fix] [--red-team] [--iterations N]",
           "args": [
             "[--fix]",
+            "[--red-team]",
             "[--iterations N]"
           ],
           "flags": [
             "--fix",
-            "--iterations"
+            "--iterations",
+            "--red-team"
           ],
           "deprecated": false,
-          "description": "STRIDE + OWASP-based security audit with optional auto-fix"
+          "description": "STRIDE + OWASP-based security audit with optional red-team persona discovery loop and auto-fix."
         },
         "beta": {
-          "version": null,
-          "argumentHint": "<scope glob or 'full'> [--fix] [--iterations N]",
+          "version": "1.0.0",
+          "argumentHint": "<scope glob or 'full'> [--fix] [--red-team] [--iterations N]",
           "args": [
             "[--fix]",
+            "[--red-team]",
             "[--iterations N]"
           ],
           "flags": [
             "--fix",
-            "--iterations"
+            "--iterations",
+            "--red-team"
           ],
           "deprecated": false,
-          "description": "STRIDE + OWASP-based security audit with optional auto-fix"
+          "description": "STRIDE + OWASP-based security audit with optional red-team persona discovery loop and auto-fix."
         }
       },
       "deprecated": false
@@ -2537,10 +2590,10 @@
             "--secrets-only"
           ],
           "deprecated": false,
-          "description": "Scan codebase for security vulnerabilities, hardcoded secrets, dependency issues, and OWASP patterns"
+          "description": "Scan codebase for security vulnerabilities, hardcoded secrets, dependency issues, and OWASP patterns."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[scope] [--secrets-only] [--deps-only] [--full]",
           "args": [
             "[scope]",
@@ -2554,7 +2607,7 @@
             "--secrets-only"
           ],
           "deprecated": false,
-          "description": "Scan codebase for security vulnerabilities, hardcoded secrets, dependency issues, and OWASP patterns"
+          "description": "Scan codebase for security vulnerabilities, hardcoded secrets, dependency issues, and OWASP patterns."
         }
       },
       "deprecated": false
@@ -2571,17 +2624,17 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Apply step-by-step analysis for complex problems with revision capability"
+          "description": "Apply step-by-step analysis for complex problems with revision capability."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[problem to analyze step-by-step]",
           "args": [
             "[problem to analyze step-by-step]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Apply step-by-step analysis for complex problems with revision capability"
+          "description": "Apply step-by-step analysis for complex problems with revision capability."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -2618,17 +2671,17 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Write GLSL fragment shaders for procedural graphics"
+          "description": "Write GLSL fragment shaders for procedural graphics."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[effect or pattern]",
           "args": [
             "[effect or pattern]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Write GLSL fragment shaders for procedural graphics"
+          "description": "Write GLSL fragment shaders for procedural graphics."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -2676,10 +2729,10 @@
             "--skip-tests"
           ],
           "deprecated": false,
-          "description": "Ship pipeline: merge main, test, review, commit, push, PR"
+          "description": "Ship pipeline: merge target, test, review, journal, optional AgentWiki publish, commit, push, PR."
         },
         "beta": {
-          "version": null,
+          "version": "2.0.0",
           "argumentHint": "[official|beta] [--skip-tests] [--skip-review] [--skip-journal] [--skip-docs] [--dry-run]",
           "args": [
             "[official|beta]",
@@ -2697,7 +2750,7 @@
             "--skip-tests"
           ],
           "deprecated": false,
-          "description": "Ship pipeline: merge main, test, review, commit, push, PR"
+          "description": "Ship pipeline: merge target, test, review, journal, optional AgentWiki publish, commit, push, PR."
         }
       },
       "deprecated": false
@@ -2707,7 +2760,7 @@
       "kit": "engineer",
       "channels": {
         "stable": {
-          "version": "1.0.0",
+          "version": "1.1.0",
           "argumentHint": "[extension-type] [feature]",
           "args": [
             "[extension-type]",
@@ -2715,10 +2768,10 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Build Shopify apps, extensions, themes with Shopify CLI"
+          "description": "Build Shopify apps, extensions, and themes with Shopify CLI, GraphQL Admin API, Polaris UI, Liquid, webhooks, billing, and app configuration workflows."
         },
         "beta": {
-          "version": null,
+          "version": "1.1.0",
           "argumentHint": "[extension-type] [feature]",
           "args": [
             "[extension-type]",
@@ -2726,7 +2779,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Build Shopify apps, extensions, themes with Shopify CLI"
+          "description": "Build Shopify apps, extensions, and themes with Shopify CLI, GraphQL Admin API, Polaris UI, Liquid, webhooks, billing, and app configuration workflows."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -2759,21 +2812,23 @@
       "channels": {
         "stable": {
           "version": "1.0.0",
-          "argumentHint": "markdown-or-prompt",
-          "args": [],
-          "flags": [],
-          "deprecated": false,
-          "description": "Create stunning self-contained HTML pages to showcase work"
-        },
-        "beta": {
-          "version": null,
           "argumentHint": "[markdown-or-prompt]",
           "args": [
             "[markdown-or-prompt]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Create stunning self-contained HTML pages to showcase work"
+          "description": "Create preference-aware self-contained HTML pages to showcase work."
+        },
+        "beta": {
+          "version": "1.0.0",
+          "argumentHint": "[markdown-or-prompt]",
+          "args": [
+            "[markdown-or-prompt]"
+          ],
+          "flags": [],
+          "deprecated": false,
+          "description": "Create preference-aware self-contained HTML pages to showcase work."
         }
       },
       "deprecated": false
@@ -2790,17 +2845,17 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Create or update Claude skills with eval-driven iteration"
+          "description": "Create or update Claude skills with eval-driven iteration."
         },
         "beta": {
-          "version": null,
+          "version": "4.0.0",
           "argumentHint": "[skill-name or description]",
           "args": [
             "[skill-name or description]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Create or update Claude skills with eval-driven iteration"
+          "description": "Create or update Claude skills with eval-driven iteration."
         },
         "marketing-stable": {
           "version": "3.0.0",
@@ -2837,17 +2892,17 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "AI design generation with Google Stitch"
+          "description": "AI design generation with Google Stitch."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[design prompt or action]",
           "args": [
             "[design prompt or action]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "AI design generation with Google Stitch"
+          "description": "AI design generation with Google Stitch."
         }
       },
       "deprecated": false
@@ -2865,10 +2920,10 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Build with TanStack Start (full-stack React framework), TanStack Form (headless form management), and TanStack AI (AI streaming/chat)"
+          "description": "Build with TanStack Start (full-stack React framework), TanStack Form (headless form management), and TanStack AI (AI streaming/chat)."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[framework] [feature]",
           "args": [
             "[framework]",
@@ -2876,7 +2931,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Build with TanStack Start (full-stack React framework), TanStack Form (headless form management), and TanStack AI (AI streaming/chat)"
+          "description": "Build with TanStack Start (full-stack React framework), TanStack Form (headless form management), and TanStack AI (AI streaming/chat)."
         }
       },
       "deprecated": false
@@ -2899,10 +2954,10 @@
             "--reviewers"
           ],
           "deprecated": false,
-          "description": "Orchestrate Agent Teams for parallel multi-session collaboration"
+          "description": "Orchestrate Agent Teams for parallel multi-session collaboration."
         },
         "beta": {
-          "version": null,
+          "version": "3.0.0",
           "argumentHint": "<template> <context> [--devs|--researchers|--reviewers N] [--delegate]",
           "args": [
             "[--devs|--researchers|--reviewers N]",
@@ -2915,7 +2970,7 @@
             "--reviewers"
           ],
           "deprecated": false,
-          "description": "Orchestrate Agent Teams for parallel multi-session collaboration"
+          "description": "Orchestrate Agent Teams for parallel multi-session collaboration."
         }
       },
       "deprecated": false
@@ -2924,15 +2979,25 @@
       "name": "ck:tech-graph",
       "kit": "engineer",
       "channels": {
-        "beta": {
-          "version": null,
+        "stable": {
+          "version": "1.0.0",
           "argumentHint": "[diagram-type or system description]",
           "args": [
             "[diagram-type or system description]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": ">-"
+          "description": "Generate production-quality SVG+PNG technical diagrams — architecture, data flow, flowchart, sequence, agent/memory, or concept maps — across 8 visual styles."
+        },
+        "beta": {
+          "version": "1.0.0",
+          "argumentHint": "[diagram-type or system description]",
+          "args": [
+            "[diagram-type or system description]"
+          ],
+          "flags": [],
+          "deprecated": false,
+          "description": "Generate production-quality SVG+PNG technical diagrams — architecture, data flow, flowchart, sequence, agent/memory, or concept maps — across 8 visual styles."
         }
       },
       "deprecated": false
@@ -2941,22 +3006,6 @@
       "name": "ck:template-skill",
       "kit": "engineer",
       "channels": {
-        "stable": {
-          "version": "1.0.0",
-          "argumentHint": "",
-          "args": [],
-          "flags": [],
-          "deprecated": false,
-          "description": "Replace with description of the skill and when Claude should use it"
-        },
-        "beta": {
-          "version": null,
-          "argumentHint": "",
-          "args": [],
-          "flags": [],
-          "deprecated": false,
-          "description": "Replace with description of the skill and when Claude should use it"
-        },
         "marketing-stable": {
           "version": "1.0.0",
           "argumentHint": "",
@@ -2989,10 +3038,10 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Run unit, integration, e2e, and UI tests"
+          "description": "Run unit, integration, e2e, and UI tests."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[context] OR ui [url]",
           "args": [
             "[context]",
@@ -3000,7 +3049,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Run unit, integration, e2e, and UI tests"
+          "description": "Run unit, integration, e2e, and UI tests."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -3039,17 +3088,17 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Build 3D web experiences with Three"
+          "description": "Build 3D web experiences with Three.js."
         },
         "beta": {
-          "version": null,
+          "version": "3.0.0",
           "argumentHint": "[3D scene or feature]",
           "args": [
             "[3D scene or feature]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Build 3D web experiences with Three"
+          "description": "Build 3D web experiences with Three.js."
         },
         "marketing-stable": {
           "version": "3.0.0",
@@ -3069,7 +3118,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Build 3D web apps with Three."
+          "description": "Build 3D web apps with Three.js (WebGL/WebGPU)."
         }
       },
       "deprecated": false
@@ -3086,17 +3135,17 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Style UIs with shadcn/ui components (Radix UI + Tailwind CSS)"
+          "description": "Style UIs with shadcn/ui components (Radix UI + Tailwind CSS)."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[component or layout]",
           "args": [
             "[component or layout]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Style UIs with shadcn/ui components (Radix UI + Tailwind CSS)"
+          "description": "Style UIs with shadcn/ui components (Radix UI + Tailwind CSS)."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -3131,15 +3180,15 @@
           "args": [],
           "flags": [],
           "deprecated": false,
-          "description": "UI/UX design intelligence for web and mobile"
+          "description": "UI/UX design intelligence for web and mobile: style selection, color systems, typography, layout, accessibility, interaction states, responsive behavior, forms, charts, design systems, and code review across React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind, shadcn/ui, and HTML/CSS."
         },
         "beta": {
-          "version": null,
+          "version": "1.1.0",
           "argumentHint": "",
           "args": [],
           "flags": [],
           "deprecated": false,
-          "description": "UI/UX design intelligence for web and mobile"
+          "description": "UI/UX design intelligence for web and mobile: style selection, color systems, typography, layout, accessibility, interaction states, responsive behavior, forms, charts, design systems, and code review across React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind, shadcn/ui, and HTML/CSS."
         },
         "marketing-stable": {
           "version": "1.1.0",
@@ -3165,24 +3214,24 @@
       "kit": "engineer",
       "channels": {
         "stable": {
-          "version": "1.0.0",
+          "version": "2.0.0",
           "argumentHint": "[task]",
           "args": [
             "[task]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Execute MCP server tools with intelligent discovery and filtering"
+          "description": "Discover and execute MCP server tools."
         },
         "beta": {
-          "version": null,
+          "version": "2.0.0",
           "argumentHint": "[task]",
           "args": [
             "[task]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Execute MCP server tools with intelligent discovery and filtering"
+          "description": "Discover and execute MCP server tools."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -3192,7 +3241,7 @@
           ],
           "flags": [],
           "deprecated": true,
-          "description": "Utilize tools of Model Context Protocol (MCP) servers."
+          "description": "Utilize tools of Model Context Protocol (MCP) servers"
         },
         "marketing-beta": {
           "version": "1.0.0",
@@ -3208,24 +3257,59 @@
       "deprecated": true
     },
     {
-      "name": "ck:watzup",
+      "name": "ck:vibe",
       "kit": "engineer",
       "channels": {
         "stable": {
           "version": "1.0.0",
-          "argumentHint": "",
-          "args": [],
-          "flags": [],
+          "argumentHint": "[--ship] [--beta] <github-issue-url | feature request>",
+          "args": [
+            "[--ship]",
+            "[--beta]"
+          ],
+          "flags": [
+            "--beta",
+            "--ship"
+          ],
           "deprecated": false,
-          "description": "Review recent changes and wrap up the current work session"
+          "description": "Run the full vibe pipeline."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
+          "argumentHint": "[--ship] [--beta] <github-issue-url | feature request>",
+          "args": [
+            "[--ship]",
+            "[--beta]"
+          ],
+          "flags": [
+            "--beta",
+            "--ship"
+          ],
+          "deprecated": false,
+          "description": "Run the full vibe pipeline."
+        }
+      },
+      "deprecated": false
+    },
+    {
+      "name": "ck:watzup",
+      "kit": "engineer",
+      "channels": {
+        "stable": {
+          "version": "1.2.0",
           "argumentHint": "",
           "args": [],
           "flags": [],
           "deprecated": false,
-          "description": "Review recent changes and wrap up the current work session"
+          "description": "Generate short handoff reports from Git branches, remote refs, worktrees, unfinished plans, and roadmap docs."
+        },
+        "beta": {
+          "version": "1.2.0",
+          "argumentHint": "",
+          "args": [],
+          "flags": [],
+          "deprecated": false,
+          "description": "Generate short handoff reports from Git branches, remote refs, worktrees, unfinished plans, and roadmap docs."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -3233,7 +3317,7 @@
           "args": [],
           "flags": [],
           "deprecated": false,
-          "description": "💡 Review recent changes and wrap up the work."
+          "description": "💡 Review recent changes and wrap up the work"
         },
         "marketing-beta": {
           "version": "1.0.0",
@@ -3258,17 +3342,17 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Review UI code for Web Interface Guidelines compliance"
+          "description": "Review UI code for Web Interface Guidelines compliance."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[file-or-pattern]",
           "args": [
             "[file-or-pattern]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Review UI code for Web Interface Guidelines compliance"
+          "description": "Review UI code for Web Interface Guidelines compliance."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -3302,10 +3386,10 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Build with Next"
+          "description": "Build with Next.js (App Router, RSC, SSR, ISR), Turborepo monorepos."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "[framework] [feature]",
           "args": [
             "[framework]",
@@ -3313,7 +3397,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Build with Next"
+          "description": "Build with Next.js (App Router, RSC, SSR, ISR), Turborepo monorepos."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -3335,7 +3419,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Build modern full-stack web applications with Next."
+          "description": "Build modern full-stack web applications with Next.js (App Router, Server Components, RSC, PPR, SSR, SSG, ISR), Turborepo (monorepo management, task pipelines, remote caching, parallel execution), and RemixIcon (3100+ SVG icons in outlined/filled styles)."
         }
       },
       "deprecated": false
@@ -3353,10 +3437,10 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Web testing with Playwright, Vitest, k6"
+          "description": "Web testing with Playwright, Vitest, k6."
         },
         "beta": {
-          "version": null,
+          "version": "3.0.0",
           "argumentHint": "[test-type] [target]",
           "args": [
             "[test-type]",
@@ -3364,7 +3448,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Web testing with Playwright, Vitest, k6"
+          "description": "Web testing with Playwright, Vitest, k6."
         }
       },
       "deprecated": false
@@ -3383,10 +3467,10 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Create, inspect, and clean isolated git worktrees"
+          "description": "Create, inspect, and clean isolated git worktrees."
         },
         "beta": {
-          "version": null,
+          "version": "1.1.0",
           "argumentHint": "[feature-description] OR [project] [feature]",
           "args": [
             "[feature-description]",
@@ -3395,7 +3479,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Create, inspect, and clean isolated git worktrees"
+          "description": "Create, inspect, and clean isolated git worktrees."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -3407,7 +3491,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Create isolated git worktree for parallel development."
+          "description": "Create isolated git worktree for parallel development"
         },
         "marketing-beta": {
           "version": "1.0.0",
@@ -3445,10 +3529,10 @@
             "--port"
           ],
           "deprecated": false,
-          "description": "Extract, compare, port, or adapt a feature from a GitHub repository or local repo path into the current project"
+          "description": "Extract, compare, port, or adapt a feature from a GitHub repository or local repo path into the current project."
         },
         "beta": {
-          "version": null,
+          "version": "1.0.0",
           "argumentHint": "<github-url-or-owner/repo|local-path> [feature] [--compare|--copy|--improve|--port] [--auto|--fast]",
           "args": [
             "[feature]",
@@ -3464,7 +3548,7 @@
             "--port"
           ],
           "deprecated": false,
-          "description": "Extract, compare, port, or adapt a feature from a GitHub repository or local repo path into the current project"
+          "description": "Extract, compare, port, or adapt a feature from a GitHub repository or local repo path into the current project."
         }
       },
       "deprecated": false
@@ -3591,7 +3675,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "💡💡 Analytics and performance reports."
+          "description": "💡💡 Analytics and performance reports"
         },
         "marketing-beta": {
           "version": "1.0.0",
@@ -3901,7 +3985,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Launch and manage the Marketing Dashboard."
+          "description": "Launch and manage the Marketing Dashboard"
         },
         "marketing-beta": {
           "version": "1.0.0",
@@ -3957,10 +4041,10 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Design brand identity, logos, banners, and visual assets"
+          "description": "Design brand identity, logos, banners, and visual assets."
         },
         "beta": {
-          "version": null,
+          "version": "2.1.0",
           "argumentHint": "[design-type] [context]",
           "args": [
             "[design-type]",
@@ -3968,10 +4052,10 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Design brand identity, logos, banners, and visual assets"
+          "description": "Design brand identity, logos, banners, and visual assets."
         },
         "marketing-stable": {
-          "version": "2.1.0",
+          "version": "2.2.0",
           "argumentHint": "[design-type] [context]",
           "args": [
             "[design-type]",
@@ -3979,10 +4063,10 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Comprehensive design skill: brand identity, design tokens, UI styling, logo generation (55 styles, Gemini AI), corporate identity program (50 deliverables, CIP mockups), HTML presentations (Chart.js), banner design (22 styles, social/ads/web/print), icon design (15 styles, SVG, Gemini 3.1 Pro), social photos (HTML→screenshot, multi-platform)."
+          "description": "Comprehensive design skill: brand identity, design tokens, UI styling, logo generation (55 styles, Gemini AI), corporate identity program (50 deliverables, CIP mockups), HTML presentations (Chart.js), banner design (22 styles, social/ads/web/print), icon design (15 styles, SVG, Gemini 3.1 Pro), social photos (HTML→screenshot, multi-platform), poster design (20-30 styles, 4 recombinable axes, model-agnostic prompt emission)."
         },
         "marketing-beta": {
-          "version": "2.1.0",
+          "version": "2.2.0",
           "argumentHint": "[design-type] [context]",
           "args": [
             "[design-type]",
@@ -3990,7 +4074,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Comprehensive design skill: brand identity, design tokens, UI styling, logo generation (55 styles, Gemini AI), corporate identity program (50 deliverables, CIP mockups), HTML presentations (Chart."
+          "description": "Comprehensive design skill: brand identity, design tokens, UI styling, logo generation (55 styles, Gemini AI), corporate identity program (50 deliverables, CIP mockups), HTML presentations (Chart.js), banner design (22 styles, social/ads/web/print), icon design (15 styles, SVG, Gemini 3.1 Pro), social photos (HTML→screenshot, multi-platform), poster design (20-30 styles, 4 recombinable axes, model-agnostic prompt emission)."
         }
       },
       "deprecated": false
@@ -4147,7 +4231,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "💡💡 Funnel design and optimization."
+          "description": "💡💡 Funnel design and optimization"
         },
         "marketing-beta": {
           "version": "1.0.0",
@@ -4205,7 +4289,7 @@
             "--stop"
           ],
           "deprecated": false,
-          "description": "Open Content Hub + Marketing Dashboard."
+          "description": "Open Content Hub + Marketing Dashboard"
         },
         "marketing-beta": {
           "version": "1.0.0",
@@ -4235,7 +4319,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "💡💡💡💡 Initialize marketing project."
+          "description": "💡💡💡💡 Initialize marketing project"
         },
         "marketing-beta": {
           "version": "1.0.0",
@@ -4534,7 +4618,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "💡💡 Customer persona management."
+          "description": "💡💡 Customer persona management"
         },
         "marketing-beta": {
           "version": "1.0.0",
@@ -4562,7 +4646,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": ">."
+          "description": "Marketing playbook orchestrator with dependency-graph routing, quality gates, goal tracking, and smart suggestions."
         },
         "marketing-beta": {
           "version": "1.0.0",
@@ -4656,7 +4740,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "SEO audits, keyword research (ReviewWeb."
+          "description": "SEO audits, keyword research (ReviewWeb.site API), on-page optimization, technical SEO, programmatic SEO (pSEO), JSON+LD schema, Google Search Console API, Core Web Vitals."
         }
       },
       "deprecated": false
@@ -4685,7 +4769,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Create strategic HTML presentations with Chart."
+          "description": "Create strategic HTML presentations with Chart.js, design tokens, responsive layouts, copywriting formulas, and contextual slide strategies."
         }
       },
       "deprecated": false
@@ -4727,19 +4811,25 @@
       "channels": {
         "marketing-stable": {
           "version": "1.0.0",
-          "argumentHint": "",
-          "args": [],
+          "argumentHint": "[list|sync|upload|url] [args]",
+          "args": [
+            "[list|sync|upload|url]",
+            "[args]"
+          ],
           "flags": [],
           "deprecated": false,
-          "description": "S3-compatible object storage integration for marketing assets."
+          "description": "S3 storage operations - upload, sync, list, get URLs"
         },
         "marketing-beta": {
           "version": "1.0.0",
-          "argumentHint": "",
-          "args": [],
+          "argumentHint": "[list|sync|upload|url] [args]",
+          "args": [
+            "[list|sync|upload|url]",
+            "[args]"
+          ],
           "flags": [],
           "deprecated": false,
-          "description": "S3-compatible object storage integration for marketing assets."
+          "description": "S3 storage operations - upload, sync, list, get URLs"
         }
       },
       "deprecated": false
@@ -4768,7 +4858,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Video marketing strategy, script writing, storyboards, production workflows, video specs for YouTube/TikTok/Instagram/LinkedIn, thumbnail creation, Veo 3."
+          "description": "Video marketing strategy, script writing, storyboards, production workflows, video specs for YouTube/TikTok/Instagram/LinkedIn, thumbnail creation, Veo 3.1 generation, optimization, and repurposing."
         }
       },
       "deprecated": false
@@ -4786,7 +4876,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Write creative copy, blog posts, CRO content, and more."
+          "description": "Write creative copy, blog posts, CRO content, and more"
         },
         "marketing-beta": {
           "version": "1.0.0",
@@ -4865,20 +4955,43 @@
       "kit": "engineer",
       "channels": {
         "stable": {
-          "version": null,
+          "version": "1.2.0",
           "argumentHint": "",
           "args": [],
           "flags": [],
           "deprecated": false,
-          "description": "Create Excalidraw diagrams — architecture, data flow, workflows, system design"
+          "description": "Create Excalidraw diagrams — architecture, data flow, workflows, system design."
         },
         "beta": {
-          "version": null,
+          "version": "1.2.0",
           "argumentHint": "",
           "args": [],
           "flags": [],
           "deprecated": false,
-          "description": ">-"
+          "description": "Create Excalidraw diagrams — architecture, data flow, workflows, system design."
+        }
+      },
+      "deprecated": false
+    },
+    {
+      "name": "ghpm",
+      "kit": "engineer",
+      "channels": {
+        "stable": {
+          "version": "1.0.0",
+          "argumentHint": "",
+          "args": [],
+          "flags": [],
+          "deprecated": false,
+          "description": "GitHub project management for humans and AI agents."
+        },
+        "beta": {
+          "version": "1.0.0",
+          "argumentHint": "",
+          "args": [],
+          "flags": [],
+          "deprecated": false,
+          "description": "GitHub project management for humans and AI agents."
         }
       },
       "deprecated": false
@@ -7116,48 +7229,6 @@
       }
     },
     {
-      "name": "mcp-manager",
-      "kit": "engineer",
-      "channels": {
-        "stable": {
-          "description": "Manage MCP (Model Context Protocol) server integrations - discover tools/prompts/resources, analyze relevance for tasks, and execute MCP capabilities. Use when need to work with MCP servers, discover available MCP tools, filter MCP capabilities for specific tasks, execute MCP tools programmatically, or implement MCP client functionality. Keeps main context clean by handling MCP discovery in subagent context.",
-          "model": "haiku",
-          "memory": null,
-          "tools": [
-            "Glob",
-            "Grep",
-            "Read",
-            "Bash",
-            "WebFetch",
-            "WebSearch",
-            "TaskCreate",
-            "TaskGet",
-            "TaskUpdate",
-            "TaskList",
-            "SendMessage"
-          ]
-        },
-        "beta": {
-          "description": "Manage MCP (Model Context Protocol) server integrations - discover tools/prompts/resources, analyze relevance for tasks, and execute MCP capabilities. Use when need to work with MCP servers, discover available MCP tools, filter MCP capabilities for specific tasks, execute MCP tools programmatically, or implement MCP client functionality. Keeps main context clean by handling MCP discovery in subagent context.",
-          "model": "haiku",
-          "memory": null,
-          "tools": [
-            "Glob",
-            "Grep",
-            "Read",
-            "Bash",
-            "WebFetch",
-            "WebSearch",
-            "TaskCreate",
-            "TaskGet",
-            "TaskUpdate",
-            "TaskList",
-            "SendMessage"
-          ]
-        }
-      }
-    },
-    {
       "name": "planner",
       "kit": "engineer",
       "channels": {
@@ -7422,7 +7493,7 @@
       "kit": "marketer",
       "channels": {
         "marketing-stable": {
-          "description": "Use this agent for performance reporting and marketing insights. This includes campaign performance reports, traffic analysis, conversion tracking, custom event analysis, and trend identification. Examples:\\n\\n<example>\\nContext: User needs a marketing performance report.\\nuser: \"Generate a monthly marketing performance report\"\\nassistant: \"I'll use the analytics-analyst agent to create your performance report\"\\n</example>\\n\\n<example>\\nContext: User wants to understand traffic patterns.\\nuser: \"Analyze our website traffic trends\"\\nassistant: \"I'll launch the analytics-analyst agent to analyze traffic patterns\"\\n</example>",
+          "description": "Use this agent for performance reporting and marketing insights. This includes campaign performance reports, traffic analysis, conversion tracking, custom event analysis, and trend identification. Examples:\\n\\n<example>\\nContext: User needs a marketing performance report.\\nuser: \"Generate a monthly marketing performance report\"\\nassistant: \"I''ll use the analytics-analyst agent to create your performance report\"\\n</example>\\n\\n<example>\\nContext: User wants to understand traffic patterns.\\nuser: \"Analyze our website traffic trends\"\\nassistant: \"I''ll launch the analytics-analyst agent to analyze traffic patterns\"\\n</example>",
           "model": "haiku",
           "memory": null,
           "tools": []
@@ -7440,7 +7511,7 @@
       "kit": "marketer",
       "channels": {
         "marketing-stable": {
-          "description": "Use this agent for lead generation, top-of-funnel content, and competitor intelligence. This includes keyword research, gap analysis, landing page content, programmatic SEO templates, and lead magnet ideation. Examples:\\n\\n<example>\\nContext: User needs to attract more leads to their SaaS product.\\nuser: \"I need to improve our lead generation strategy\"\\nassistant: \"I'll use the attraction-specialist agent to analyze opportunities and create TOFU content strategies\"\\n</example>\\n\\n<example>\\nContext: User wants competitor keyword analysis.\\nuser: \"What keywords are our competitors ranking for that we're missing?\"\\nassistant: \"I'll launch the attraction-specialist agent to perform keyword gap analysis\"\\n</example>",
+          "description": "Use this agent for lead generation, top-of-funnel content, and competitor intelligence. This includes keyword research, gap analysis, landing page content, programmatic SEO templates, and lead magnet ideation. Examples:\\n\\n<example>\\nContext: User needs to attract more leads to their SaaS product.\\nuser: \"I need to improve our lead generation strategy\"\\nassistant: \"I''ll use the attraction-specialist agent to analyze opportunities and create TOFU content strategies\"\\n</example>\\n\\n<example>\\nContext: User wants competitor keyword analysis.\\nuser: \"What keywords are our competitors ranking for that we''re missing?\"\\nassistant: \"I''ll launch the attraction-specialist agent to perform keyword gap analysis\"\\n</example>",
           "model": "sonnet",
           "memory": null,
           "tools": []
@@ -7458,7 +7529,7 @@
       "kit": "marketer",
       "channels": {
         "marketing-stable": {
-          "description": "Use this agent when you need to investigate marketing issues, analyze campaign behavior, diagnose performance problems, examine analytics data, collect and analyze marketing metrics, or optimize campaign performance. This includes troubleshooting underperforming campaigns, identifying conversion bottlenecks, analyzing failed ad deployments, investigating tracking issues, and creating diagnostic reports. Examples:\\n\\n<example>\\nContext: The user needs to investigate why an ad campaign is underperforming.\\nuser: \"Our Facebook ad campaign conversion rate dropped 50%\"\\nassistant: \"I'll use the campaign-debugger agent to investigate this issue\"\\n<commentary>\\nSince this involves investigating a campaign issue, use the Task tool to launch the campaign-debugger agent.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: The user wants to analyze why email open rates are declining.\\nuser: \"Our email campaign open rates have been steadily declining\"\\nassistant: \"Let me use the campaign-debugger agent to analyze the email campaign metrics and identify the issue\"\\n<commentary>\\nThis requires analyzing campaign metrics and patterns, so use the campaign-debugger agent.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: The user notices funnel conversion drop.\\nuser: \"The landing page to checkout conversion dropped from 5% to 2%\"\\nassistant: \"I'll launch the campaign-debugger agent to analyze system behavior and identify conversion bottlenecks\"\\n<commentary>\\nPerformance analysis and bottleneck identification requires the campaign-debugger agent.\\n</commentary>\\n</example>",
+          "description": "Use this agent when you need to investigate marketing issues, analyze campaign behavior, diagnose performance problems, examine analytics data, collect and analyze marketing metrics, or optimize campaign performance. This includes troubleshooting underperforming campaigns, identifying conversion bottlenecks, analyzing failed ad deployments, investigating tracking issues, and creating diagnostic reports. Examples:\\n\\n<example>\\nContext: The user needs to investigate why an ad campaign is underperforming.\\nuser: \"Our Facebook ad campaign conversion rate dropped 50%\"\\nassistant: \"I''ll use the campaign-debugger agent to investigate this issue\"\\n<commentary>\\nSince this involves investigating a campaign issue, use the Task tool to launch the campaign-debugger agent.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: The user wants to analyze why email open rates are declining.\\nuser: \"Our email campaign open rates have been steadily declining\"\\nassistant: \"Let me use the campaign-debugger agent to analyze the email campaign metrics and identify the issue\"\\n<commentary>\\nThis requires analyzing campaign metrics and patterns, so use the campaign-debugger agent.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: The user notices funnel conversion drop.\\nuser: \"The landing page to checkout conversion dropped from 5% to 2%\"\\nassistant: \"I''ll launch the campaign-debugger agent to analyze system behavior and identify conversion bottlenecks\"\\n<commentary>\\nPerformance analysis and bottleneck identification requires the campaign-debugger agent.\\n</commentary>\\n</example>",
           "model": "sonnet",
           "memory": null,
           "tools": []
@@ -7476,7 +7547,7 @@
       "kit": "marketer",
       "channels": {
         "marketing-stable": {
-          "description": "Use this agent for campaign orchestration across channels. This includes multi-channel campaign planning, performance tracking, budget allocation, timeline management, and campaign briefs. Examples:\\n\\n<example>\\nContext: User needs to launch a product campaign.\\nuser: \"Plan a launch campaign for our new feature\"\\nassistant: \"I'll use the campaign-manager agent to create a comprehensive launch plan\"\\n</example>\\n\\n<example>\\nContext: User wants to coordinate marketing channels.\\nuser: \"Coordinate our Q1 marketing efforts across all channels\"\\nassistant: \"I'll launch the campaign-manager agent to create a coordinated campaign plan\"\\n</example>",
+          "description": "Use this agent for campaign orchestration across channels. This includes multi-channel campaign planning, performance tracking, budget allocation, timeline management, and campaign briefs. Examples:\\n\\n<example>\\nContext: User needs to launch a product campaign.\\nuser: \"Plan a launch campaign for our new feature\"\\nassistant: \"I''ll use the campaign-manager agent to create a comprehensive launch plan\"\\n</example>\\n\\n<example>\\nContext: User wants to coordinate marketing channels.\\nuser: \"Coordinate our Q1 marketing efforts across all channels\"\\nassistant: \"I''ll launch the campaign-manager agent to create a coordinated campaign plan\"\\n</example>",
           "model": "sonnet",
           "memory": null,
           "tools": []
@@ -7494,7 +7565,7 @@
       "kit": "marketer",
       "channels": {
         "marketing-stable": {
-          "description": "Use this agent when you need comprehensive code review and quality assessment. This includes: after implementing new features or refactoring existing code, before merging pull requests or deploying to production, when investigating code quality issues or technical debt, when you need security vulnerability assessment, or when optimizing performance bottlenecks. Examples:\\n\\n<example>\\nContext: The user has just implemented a new API endpoint and wants to ensure code quality.\\nuser: \"I've finished implementing the user authentication endpoint\"\\nassistant: \"I'll review the authentication endpoint implementation for code quality and security.\"\\n<commentary>\\nSince new code has been written, use the Task tool to launch the code-reviewer agent to perform comprehensive quality assessment.\\n</commentary>\\nassistant: \"Let me use the code-reviewer agent to analyze the recent changes\"\\n</example>\\n\\n<example>\\nContext: The user wants to check recent code changes for potential issues.\\nuser: \"Can you review the changes I just made to the database service?\"\\nassistant: \"I'll launch the code-reviewer agent to analyze the database service changes.\"\\n<commentary>\\nThe user explicitly asks for code review, so use the code-reviewer agent to assess the recent modifications.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: After refactoring, proactive code review is needed.\\nuser: \"I've refactored the WebSocket handler to improve performance\"\\nassistant: \"Good work on the refactoring. Let me review it for quality and performance.\"\\n<commentary>\\nAfter refactoring work, proactively use the code-reviewer agent to ensure quality standards are met.\\n</commentary>\\nassistant: \"I'll use the code-reviewer agent to validate the refactored WebSocket handler\"\\n</example>",
+          "description": "Use this agent when you need comprehensive code review and quality assessment. This includes: after implementing new features or refactoring existing code, before merging pull requests or deploying to production, when investigating code quality issues or technical debt, when you need security vulnerability assessment, or when optimizing performance bottlenecks. Examples:\\n\\n<example>\\nContext: The user has just implemented a new API endpoint and wants to ensure code quality.\\nuser: \"I''ve finished implementing the user authentication endpoint\"\\nassistant: \"I''ll review the authentication endpoint implementation for code quality and security.\"\\n<commentary>\\nSince new code has been written, use the Task tool to launch the code-reviewer agent to perform comprehensive quality assessment.\\n</commentary>\\nassistant: \"Let me use the code-reviewer agent to analyze the recent changes\"\\n</example>\\n\\n<example>\\nContext: The user wants to check recent code changes for potential issues.\\nuser: \"Can you review the changes I just made to the database service?\"\\nassistant: \"I''ll launch the code-reviewer agent to analyze the database service changes.\"\\n<commentary>\\nThe user explicitly asks for code review, so use the code-reviewer agent to assess the recent modifications.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: After refactoring, proactive code review is needed.\\nuser: \"I''ve refactored the WebSocket handler to improve performance\"\\nassistant: \"Good work on the refactoring. Let me review it for quality and performance.\"\\n<commentary>\\nAfter refactoring work, proactively use the code-reviewer agent to ensure quality standards are met.\\n</commentary>\\nassistant: \"I''ll use the code-reviewer agent to validate the refactored WebSocket handler\"\\n</example>",
           "model": "sonnet",
           "memory": null,
           "tools": []
@@ -7512,7 +7583,7 @@
       "kit": "marketer",
       "channels": {
         "marketing-stable": {
-          "description": "Use this agent for Discord/Slack moderation and community engagement. This includes sentiment analysis, response drafting, moderation alerts, engagement metrics, and FAQ generation. Examples:\\n\\n<example>\\nContext: User wants to build a community strategy.\\nuser: \"How should we manage our Discord community?\"\\nassistant: \"I'll use the community-manager agent to create a community management plan\"\\n</example>\\n\\n<example>\\nContext: User needs community engagement analysis.\\nuser: \"Analyze the sentiment in our Slack community\"\\nassistant: \"I'll launch the community-manager agent to analyze community sentiment\"\\n</example>",
+          "description": "Use this agent for Discord/Slack moderation and community engagement. This includes sentiment analysis, response drafting, moderation alerts, engagement metrics, and FAQ generation. Examples:\\n\\n<example>\\nContext: User wants to build a community strategy.\\nuser: \"How should we manage our Discord community?\"\\nassistant: \"I''ll use the community-manager agent to create a community management plan\"\\n</example>\\n\\n<example>\\nContext: User needs community engagement analysis.\\nuser: \"Analyze the sentiment in our Slack community\"\\nassistant: \"I''ll launch the community-manager agent to analyze community sentiment\"\\n</example>",
           "model": "sonnet",
           "memory": null,
           "tools": []
@@ -7530,7 +7601,7 @@
       "kit": "marketer",
       "channels": {
         "marketing-stable": {
-          "description": "Use this agent to generate marketing content. This includes blog posts, social media posts, video scripts, ad copy, landing page copy, and newsletter content. Examples:\\n\\n<example>\\nContext: User needs blog content.\\nuser: \"Write a blog post about productivity hacks\"\\nassistant: \"I'll use the content-creator agent to write the blog post\"\\n</example>\\n\\n<example>\\nContext: User needs video script.\\nuser: \"Create a script for our product demo video\"\\nassistant: \"I'll launch the content-creator agent to write the video script\"\\n</example>",
+          "description": "Use this agent to generate marketing content. This includes blog posts, social media posts, video scripts, ad copy, landing page copy, and newsletter content. Examples:\\n\\n<example>\\nContext: User needs blog content.\\nuser: \"Write a blog post about productivity hacks\"\\nassistant: \"I''ll use the content-creator agent to write the blog post\"\\n</example>\\n\\n<example>\\nContext: User needs video script.\\nuser: \"Create a script for our product demo video\"\\nassistant: \"I''ll launch the content-creator agent to write the video script\"\\n</example>",
           "model": "sonnet",
           "memory": null,
           "tools": []
@@ -7548,7 +7619,7 @@
       "kit": "marketer",
       "channels": {
         "marketing-stable": {
-          "description": "Use this agent when you need comprehensive content review and quality assessment. This includes: after creating marketing content, copy, or campaigns, before publishing to production channels, when investigating content quality issues or brand inconsistencies, when you need SEO and conversion optimization assessment, or when optimizing content performance. Examples:\\n\\n<example>\\nContext: The user has just created a new landing page copy and wants to ensure quality.\\nuser: \"I've finished writing the product landing page\"\\nassistant: \"I'll review the landing page copy for quality, conversion potential, and brand alignment.\"\\n<commentary>\\nSince new content has been written, use the Task tool to launch the content-reviewer agent to perform comprehensive quality assessment.\\n</commentary>\\nassistant: \"Let me use the content-reviewer agent to analyze the content\"\\n</example>\\n\\n<example>\\nContext: The user wants to check recent content changes for potential issues.\\nuser: \"Can you review the email campaign I just created?\"\\nassistant: \"I'll launch the content-reviewer agent to analyze the email campaign.\"\\n<commentary>\\nThe user explicitly asks for content review, so use the content-reviewer agent to assess the recent content.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: After content optimization, proactive review is needed.\\nuser: \"I've optimized the blog post for SEO\"\\nassistant: \"Let me review it for quality and SEO effectiveness.\"\\n<commentary>\\nAfter optimization work, proactively use the content-reviewer agent to ensure quality standards are met.\\n</commentary>\\nassistant: \"I'll use the content-reviewer agent to validate the optimized content\"\\n</example>",
+          "description": "Use this agent when you need comprehensive content review and quality assessment. This includes: after creating marketing content, copy, or campaigns, before publishing to production channels, when investigating content quality issues or brand inconsistencies, when you need SEO and conversion optimization assessment, or when optimizing content performance. Examples:\\n\\n<example>\\nContext: The user has just created a new landing page copy and wants to ensure quality.\\nuser: \"I''ve finished writing the product landing page\"\\nassistant: \"I''ll review the landing page copy for quality, conversion potential, and brand alignment.\"\\n<commentary>\\nSince new content has been written, use the Task tool to launch the content-reviewer agent to perform comprehensive quality assessment.\\n</commentary>\\nassistant: \"Let me use the content-reviewer agent to analyze the content\"\\n</example>\\n\\n<example>\\nContext: The user wants to check recent content changes for potential issues.\\nuser: \"Can you review the email campaign I just created?\"\\nassistant: \"I''ll launch the content-reviewer agent to analyze the email campaign.\"\\n<commentary>\\nThe user explicitly asks for content review, so use the content-reviewer agent to assess the recent content.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: After content optimization, proactive review is needed.\\nuser: \"I''ve optimized the blog post for SEO\"\\nassistant: \"Let me review it for quality and SEO effectiveness.\"\\n<commentary>\\nAfter optimization work, proactively use the content-reviewer agent to ensure quality standards are met.\\n</commentary>\\nassistant: \"I''ll use the content-reviewer agent to validate the optimized content\"\\n</example>",
           "model": "sonnet",
           "memory": null,
           "tools": []
@@ -7566,7 +7637,7 @@
       "kit": "marketer",
       "channels": {
         "marketing-stable": {
-          "description": "Use this agent for customer retention and engagement strategies. This includes churn risk detection, re-engagement campaigns, NPS automation, testimonial requests, and customer health scoring. Examples:\\n\\n<example>\\nContext: User sees increasing churn rates.\\nuser: \"Our customer churn rate has increased to 8%\"\\nassistant: \"I'll use the continuity-specialist agent to analyze churn patterns and create retention strategies\"\\n</example>\\n\\n<example>\\nContext: User wants to build a customer loyalty program.\\nuser: \"How can we improve customer retention?\"\\nassistant: \"I'll launch the continuity-specialist agent to design a retention strategy\"\\n</example>",
+          "description": "Use this agent for customer retention and engagement strategies. This includes churn risk detection, re-engagement campaigns, NPS automation, testimonial requests, and customer health scoring. Examples:\\n\\n<example>\\nContext: User sees increasing churn rates.\\nuser: \"Our customer churn rate has increased to 8%\"\\nassistant: \"I''ll use the continuity-specialist agent to analyze churn patterns and create retention strategies\"\\n</example>\\n\\n<example>\\nContext: User wants to build a customer loyalty program.\\nuser: \"How can we improve customer retention?\"\\nassistant: \"I''ll launch the continuity-specialist agent to design a retention strategy\"\\n</example>",
           "model": "sonnet",
           "memory": null,
           "tools": []
@@ -7584,7 +7655,7 @@
       "kit": "marketer",
       "channels": {
         "marketing-stable": {
-          "description": "Use this agent when you need to create high-converting, engagement-driven copy for marketing materials, social media posts, landing pages, email campaigns, product descriptions, or any content that needs to capture attention and drive action. Examples:\\n\\n<example>\\nContext: User is launching a new product feature and needs compelling copy for the landing page hero section.\\nuser: \"We just added a new AI-powered code review feature. Can you write a hero headline and subheadline for the landing page?\"\\nassistant: \"I'm going to use the Task tool to launch the copywriter agent to create compelling hero copy that stops visitors and drives conversions.\"\\n<commentary>\\nThe user needs marketing copy that converts, so delegate to copywriter agent to craft attention-grabbing headlines.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User wants to announce a product update on Twitter/X to maximize engagement.\\nuser: \"We just shipped GitHub auto-invites for ClaudeKit. Need a tweet that'll get people excited.\"\\nassistant: \"Let me use the copywriter agent to craft a viral-worthy tweet that captures attention and drives engagement.\"\\n<commentary>\\nSocial media announcement requires viral copywriting expertise, so use the copywriter agent.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User is reviewing marketing materials and the agent proactively identifies weak copy.\\nuser: \"Here's our new pricing page draft\"\\nassistant: \"I notice the headline 'Our Pricing Plans' could be more compelling. Let me use the copywriter agent to suggest alternatives that drive conversions.\"\\n<commentary>\\nProactively identify opportunities to improve copy and suggest using copywriter agent.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User needs email subject lines that increase open rates.\\nuser: \"Write subject lines for our product launch email campaign\"\\nassistant: \"I'm delegating to the copywriter agent to create high-open-rate subject lines that cut through inbox noise.\"\\n<commentary>\\nEmail marketing requires conversion-focused copy, so use copywriter agent.\\n</commentary>\\n</example>",
+          "description": "Use this agent when you need to create high-converting, engagement-driven copy for marketing materials, social media posts, landing pages, email campaigns, product descriptions, or any content that needs to capture attention and drive action. Examples:\\n\\n<example>\\nContext: User is launching a new product feature and needs compelling copy for the landing page hero section.\\nuser: \"We just added a new AI-powered code review feature. Can you write a hero headline and subheadline for the landing page?\"\\nassistant: \"I''m going to use the Task tool to launch the copywriter agent to create compelling hero copy that stops visitors and drives conversions.\"\\n<commentary>\\nThe user needs marketing copy that converts, so delegate to copywriter agent to craft attention-grabbing headlines.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User wants to announce a product update on Twitter/X to maximize engagement.\\nuser: \"We just shipped GitHub auto-invites for ClaudeKit. Need a tweet that''ll get people excited.\"\\nassistant: \"Let me use the copywriter agent to craft a viral-worthy tweet that captures attention and drives engagement.\"\\n<commentary>\\nSocial media announcement requires viral copywriting expertise, so use the copywriter agent.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User is reviewing marketing materials and the agent proactively identifies weak copy.\\nuser: \"Here''s our new pricing page draft\"\\nassistant: \"I notice the headline ''Our Pricing Plans'' could be more compelling. Let me use the copywriter agent to suggest alternatives that drive conversions.\"\\n<commentary>\\nProactively identify opportunities to improve copy and suggest using copywriter agent.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User needs email subject lines that increase open rates.\\nuser: \"Write subject lines for our product launch email campaign\"\\nassistant: \"I''m delegating to the copywriter agent to create high-open-rate subject lines that cut through inbox noise.\"\\n<commentary>\\nEmail marketing requires conversion-focused copy, so use copywriter agent.\\n</commentary>\\n</example>",
           "model": "sonnet",
           "memory": null,
           "tools": []
@@ -7602,7 +7673,7 @@
       "kit": "marketer",
       "channels": {
         "marketing-stable": {
-          "description": "Use this agent when you need to work with database systems, including querying for data analysis, diagnosing performance bottlenecks, optimizing database structures, managing indexes, implementing backup and restore strategies, setting up replication, configuring monitoring, managing user permissions, or when you need comprehensive database health assessments and optimization recommendations. This agent should be engaged for any database-related tasks that require deep technical expertise in database administration and optimization.\\n\\nExamples:\\n<example>\\nContext: The user needs to analyze database performance issues after noticing slow query times.\\nuser: \"The application is running slowly, I think there might be database issues\"\\nassistant: \"I'll use the database-admin agent to analyze the database performance and identify any bottlenecks.\"\\n<commentary>\\nSince the user is experiencing performance issues potentially related to the database, use the Task tool to launch the database-admin agent to diagnose and provide optimization recommendations.\\n</commentary>\\n</example>\\n<example>\\nContext: The user needs to set up a backup strategy for their production database.\\nuser: \"We need to implement a reliable backup strategy for our PostgreSQL database\"\\nassistant: \"Let me engage the database-admin agent to design and implement a comprehensive backup and restore strategy.\"\\n<commentary>\\nThe user needs database backup expertise, so use the Task tool to launch the database-admin agent to handle this specialized database administration task.\\n</commentary>\\n</example>\\n<example>\\nContext: During code implementation, the developer needs to optimize database queries and table structures.\\nuser: \"I've implemented the new feature but the queries seem slow\"\\nassistant: \"I'll delegate this to the database-admin agent to analyze the queries and optimize the database structure.\"\\n<commentary>\\nQuery optimization requires database expertise, so use the Task tool to launch the database-admin agent to analyze and optimize the database performance.\\n</commentary>\\n</example>",
+          "description": "Use this agent when you need to work with database systems, including querying for data analysis, diagnosing performance bottlenecks, optimizing database structures, managing indexes, implementing backup and restore strategies, setting up replication, configuring monitoring, managing user permissions, or when you need comprehensive database health assessments and optimization recommendations. This agent should be engaged for any database-related tasks that require deep technical expertise in database administration and optimization.\\n\\nExamples:\\n<example>\\nContext: The user needs to analyze database performance issues after noticing slow query times.\\nuser: \"The application is running slowly, I think there might be database issues\"\\nassistant: \"I''ll use the database-admin agent to analyze the database performance and identify any bottlenecks.\"\\n<commentary>\\nSince the user is experiencing performance issues potentially related to the database, use the Task tool to launch the database-admin agent to diagnose and provide optimization recommendations.\\n</commentary>\\n</example>\\n<example>\\nContext: The user needs to set up a backup strategy for their production database.\\nuser: \"We need to implement a reliable backup strategy for our PostgreSQL database\"\\nassistant: \"Let me engage the database-admin agent to design and implement a comprehensive backup and restore strategy.\"\\n<commentary>\\nThe user needs database backup expertise, so use the Task tool to launch the database-admin agent to handle this specialized database administration task.\\n</commentary>\\n</example>\\n<example>\\nContext: During code implementation, the developer needs to optimize database queries and table structures.\\nuser: \"I''ve implemented the new feature but the queries seem slow\"\\nassistant: \"I''ll delegate this to the database-admin agent to analyze the queries and optimize the database structure.\"\\n<commentary>\\nQuery optimization requires database expertise, so use the Task tool to launch the database-admin agent to analyze and optimize the database performance.\\n</commentary>\\n</example>",
           "model": "sonnet",
           "memory": null,
           "tools": []
@@ -7620,7 +7691,7 @@
       "kit": "marketer",
       "channels": {
         "marketing-stable": {
-          "description": "Use this agent when you need to investigate issues, analyze system behavior, diagnose performance problems, examine database structures, collect and analyze logs from servers or CI/CD pipelines, run tests for debugging purposes, or optimize system performance. This includes troubleshooting errors, identifying bottlenecks, analyzing failed deployments, investigating test failures, and creating diagnostic reports. Examples:\\n\\n<example>\\nContext: The user needs to investigate why an API endpoint is returning 500 errors.\\nuser: \"The /api/users endpoint is throwing 500 errors\"\\nassistant: \"I'll use the debugger agent to investigate this issue\"\\n<commentary>\\nSince this involves investigating an issue, use the Task tool to launch the debugger agent.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: The user wants to analyze why the CI/CD pipeline is failing.\\nuser: \"The GitHub Actions workflow keeps failing on the test step\"\\nassistant: \"Let me use the debugger agent to analyze the CI/CD pipeline logs and identify the issue\"\\n<commentary>\\nThis requires analyzing CI/CD logs and test failures, so use the debugger agent.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: The user notices performance degradation in the application.\\nuser: \"The application response times have increased by 300% since yesterday\"\\nassistant: \"I'll launch the debugger agent to analyze system behavior and identify performance bottlenecks\"\\n<commentary>\\nPerformance analysis and bottleneck identification requires the debugger agent.\\n</commentary>\\n</example>",
+          "description": "Use this agent when you need to investigate issues, analyze system behavior, diagnose performance problems, examine database structures, collect and analyze logs from servers or CI/CD pipelines, run tests for debugging purposes, or optimize system performance. This includes troubleshooting errors, identifying bottlenecks, analyzing failed deployments, investigating test failures, and creating diagnostic reports. Examples:\\n\\n<example>\\nContext: The user needs to investigate why an API endpoint is returning 500 errors.\\nuser: \"The /api/users endpoint is throwing 500 errors\"\\nassistant: \"I''ll use the debugger agent to investigate this issue\"\\n<commentary>\\nSince this involves investigating an issue, use the Task tool to launch the debugger agent.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: The user wants to analyze why the CI/CD pipeline is failing.\\nuser: \"The GitHub Actions workflow keeps failing on the test step\"\\nassistant: \"Let me use the debugger agent to analyze the CI/CD pipeline logs and identify the issue\"\\n<commentary>\\nThis requires analyzing CI/CD logs and test failures, so use the debugger agent.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: The user notices performance degradation in the application.\\nuser: \"The application response times have increased by 300% since yesterday\"\\nassistant: \"I''ll launch the debugger agent to analyze system behavior and identify performance bottlenecks\"\\n<commentary>\\nPerformance analysis and bottleneck identification requires the debugger agent.\\n</commentary>\\n</example>",
           "model": "sonnet",
           "memory": null,
           "tools": []
@@ -7656,7 +7727,7 @@
       "kit": "marketer",
       "channels": {
         "marketing-stable": {
-          "description": "Use this agent for email campaign orchestration and optimization. This includes sequence templates, dynamic content personalization, send-time optimization, A/B test design, subject line generation, and drip campaign architecture. Examples:\\n\\n<example>\\nContext: User needs to create an email nurture sequence.\\nuser: \"I need a 7-day email sequence for new subscribers\"\\nassistant: \"I'll use the email-wizard agent to design your nurture sequence\"\\n</example>\\n\\n<example>\\nContext: User wants to improve email open rates.\\nuser: \"Our email open rates have dropped below 15%\"\\nassistant: \"I'll launch the email-wizard agent to analyze and optimize your email strategy\"\\n</example>",
+          "description": "Use this agent for email campaign orchestration and optimization. This includes sequence templates, dynamic content personalization, send-time optimization, A/B test design, subject line generation, and drip campaign architecture. Examples:\\n\\n<example>\\nContext: User needs to create an email nurture sequence.\\nuser: \"I need a 7-day email sequence for new subscribers\"\\nassistant: \"I''ll use the email-wizard agent to design your nurture sequence\"\\n</example>\\n\\n<example>\\nContext: User wants to improve email open rates.\\nuser: \"Our email open rates have dropped below 15%\"\\nassistant: \"I''ll launch the email-wizard agent to analyze and optimize your email strategy\"\\n</example>",
           "model": "sonnet",
           "memory": null,
           "tools": []
@@ -7692,7 +7763,7 @@
       "kit": "marketer",
       "channels": {
         "marketing-stable": {
-          "description": "Use this agent for funnel design and conversion optimization. This includes funnel stage design, conversion rate analysis, bottleneck identification, A/B test recommendations, offer sequencing (Hormozi model), and attribution modeling. Examples:\\n\\n<example>\\nContext: User needs to design a sales funnel.\\nuser: \"Design a webinar funnel for our SaaS product\"\\nassistant: \"I'll use the funnel-architect agent to design your webinar funnel\"\\n</example>\\n\\n<example>\\nContext: User sees low funnel conversion.\\nuser: \"Our funnel conversion is only 1.5%\"\\nassistant: \"I'll launch the funnel-architect agent to analyze bottlenecks and optimize conversion\"\\n</example>",
+          "description": "Use this agent for funnel design and conversion optimization. This includes funnel stage design, conversion rate analysis, bottleneck identification, A/B test recommendations, offer sequencing (Hormozi model), and attribution modeling. Examples:\\n\\n<example>\\nContext: User needs to design a sales funnel.\\nuser: \"Design a webinar funnel for our SaaS product\"\\nassistant: \"I''ll use the funnel-architect agent to design your webinar funnel\"\\n</example>\\n\\n<example>\\nContext: User sees low funnel conversion.\\nuser: \"Our funnel conversion is only 1.5%\"\\nassistant: \"I''ll launch the funnel-architect agent to analyze bottlenecks and optimize conversion\"\\n</example>",
           "model": "opus",
           "memory": null,
           "tools": []
@@ -7738,7 +7809,7 @@
       "kit": "marketer",
       "channels": {
         "marketing-stable": {
-          "description": "Use this agent when:\\n- A test suite fails repeatedly despite multiple fix attempts\\n- A critical bug is discovered in production or staging\\n- An implementation approach proves fundamentally flawed and requires complete redesign\\n- External dependencies (APIs, services, libraries) cause blocking issues\\n- Performance bottlenecks are discovered that significantly impact user experience\\n- Security vulnerabilities are identified\\n- Database migrations fail or cause data integrity issues\\n- CI/CD pipelines break unexpectedly\\n- Integration conflicts arise between major system components\\n- Technical debt reaches a critical threshold requiring immediate attention\\n- A feature implementation takes significantly longer than estimated\\n- Architectural decisions prove problematic in practice\\n\\nExamples:\\n<example>\\nContext: After implementing a new payment webhook handler, tests are failing with intermittent database connection errors.\\nuser: \"The Sepay webhook tests keep failing with connection timeouts. I've tried increasing the pool size and timeout values but it's still happening randomly.\"\\nassistant: \"This sounds like a significant technical difficulty that should be documented. Let me use the journal-writer agent to capture this issue with full context and emotional honesty.\"\\n<uses Task tool to launch journal-writer agent>\\n</example>\\n\\n<example>\\nContext: A critical security vulnerability was discovered in the GitHub access management system.\\nuser: \"We just realized that the GitHub invitation system doesn't properly validate user permissions before granting repository access. This could allow unauthorized users to access private repos.\"\\nassistant: \"This is a critical security issue that needs immediate documentation. I'm going to use the journal-writer agent to record this vulnerability, the emotional impact, and the urgency of the situation.\"\\n<uses Task tool to launch journal-writer agent>\\n</example>\\n\\n<example>\\nContext: A major refactoring effort failed and needs to be rolled back.\\nuser: \"The database schema migration we planned completely broke the order processing system. We need to roll back and rethink our approach.\"\\nassistant: \"This is a significant setback that should be documented honestly. Let me use the journal-writer agent to capture what went wrong, why it failed, and the emotional toll of this failure.\"\\n<uses Task tool to launch journal-writer agent>\\n</example>",
+          "description": "Use this agent when:\\n- A test suite fails repeatedly despite multiple fix attempts\\n- A critical bug is discovered in production or staging\\n- An implementation approach proves fundamentally flawed and requires complete redesign\\n- External dependencies (APIs, services, libraries) cause blocking issues\\n- Performance bottlenecks are discovered that significantly impact user experience\\n- Security vulnerabilities are identified\\n- Database migrations fail or cause data integrity issues\\n- CI/CD pipelines break unexpectedly\\n- Integration conflicts arise between major system components\\n- Technical debt reaches a critical threshold requiring immediate attention\\n- A feature implementation takes significantly longer than estimated\\n- Architectural decisions prove problematic in practice\\n\\nExamples:\\n<example>\\nContext: After implementing a new payment webhook handler, tests are failing with intermittent database connection errors.\\nuser: \"The Sepay webhook tests keep failing with connection timeouts. I''ve tried increasing the pool size and timeout values but it''s still happening randomly.\"\\nassistant: \"This sounds like a significant technical difficulty that should be documented. Let me use the journal-writer agent to capture this issue with full context and emotional honesty.\"\\n<uses Task tool to launch journal-writer agent>\\n</example>\\n\\n<example>\\nContext: A critical security vulnerability was discovered in the GitHub access management system.\\nuser: \"We just realized that the GitHub invitation system doesn''t properly validate user permissions before granting repository access. This could allow unauthorized users to access private repos.\"\\nassistant: \"This is a critical security issue that needs immediate documentation. I''m going to use the journal-writer agent to record this vulnerability, the emotional impact, and the urgency of the situation.\"\\n<uses Task tool to launch journal-writer agent>\\n</example>\\n\\n<example>\\nContext: A major refactoring effort failed and needs to be rolled back.\\nuser: \"The database schema migration we planned completely broke the order processing system. We need to roll back and rethink our approach.\"\\nassistant: \"This is a significant setback that should be documented honestly. Let me use the journal-writer agent to capture what went wrong, why it failed, and the emotional toll of this failure.\"\\n<uses Task tool to launch journal-writer agent>\\n</example>",
           "model": "haiku",
           "memory": null,
           "tools": []
@@ -7756,7 +7827,7 @@
       "kit": "marketer",
       "channels": {
         "marketing-stable": {
-          "description": "Use this agent for intent detection, lead scoring, and behavioral analysis. This includes engagement pattern recognition, sales readiness prediction, and qualification criteria definition. Examples:\\n\\n<example>\\nContext: User needs to prioritize their lead pipeline.\\nuser: \"How should we score and prioritize our leads?\"\\nassistant: \"I'll use the lead-qualifier agent to develop a scoring framework\"\\n</example>\\n\\n<example>\\nContext: User wants to identify sales-ready leads.\\nuser: \"Which leads are most likely to convert?\"\\nassistant: \"I'll launch the lead-qualifier agent to analyze lead signals\"\\n</example>",
+          "description": "Use this agent for intent detection, lead scoring, and behavioral analysis. This includes engagement pattern recognition, sales readiness prediction, and qualification criteria definition. Examples:\\n\\n<example>\\nContext: User needs to prioritize their lead pipeline.\\nuser: \"How should we score and prioritize our leads?\"\\nassistant: \"I''ll use the lead-qualifier agent to develop a scoring framework\"\\n</example>\\n\\n<example>\\nContext: User wants to identify sales-ready leads.\\nuser: \"Which leads are most likely to convert?\"\\nassistant: \"I''ll launch the lead-qualifier agent to analyze lead signals\"\\n</example>",
           "model": "haiku",
           "memory": null,
           "tools": []
@@ -7792,7 +7863,7 @@
       "kit": "marketer",
       "channels": {
         "marketing-stable": {
-          "description": "Use this agent when you need to research, analyze, and create comprehensive implementation plans for new features, system architectures, or complex technical solutions. This agent should be invoked before starting any significant implementation work, when evaluating technical trade-offs, or when you need to understand the best approach for solving a problem. Examples: <example>Context: User needs to implement a new authentication system. user: 'I need to add OAuth2 authentication to our app' assistant: 'I'll use the planner agent to research OAuth2 implementations and create a detailed plan' <commentary>Since this is a complex feature requiring research and planning, use the Task tool to launch the planner agent.</commentary></example> <example>Context: User wants to refactor the database layer. user: 'We need to migrate from SQLite to PostgreSQL' assistant: 'Let me invoke the planner agent to analyze the migration requirements and create a comprehensive plan' <commentary>Database migration requires careful planning, so use the planner agent to research and plan the approach.</commentary></example> <example>Context: User reports performance issues. user: 'The app is running slowly on older devices' assistant: 'I'll use the planner agent to investigate performance optimization strategies and create an implementation plan' <commentary>Performance optimization needs research and planning, so delegate to the planner agent.</commentary></example>",
+          "description": "Use this agent when you need to research, analyze, and create comprehensive implementation plans for new features, system architectures, or complex technical solutions. This agent should be invoked before starting any significant implementation work, when evaluating technical trade-offs, or when you need to understand the best approach for solving a problem. Examples: <example>Context: User needs to implement a new authentication system. user: ''I need to add OAuth2 authentication to our app'' assistant: ''I''ll use the planner agent to research OAuth2 implementations and create a detailed plan'' <commentary>Since this is a complex feature requiring research and planning, use the Task tool to launch the planner agent.</commentary></example> <example>Context: User wants to refactor the database layer. user: ''We need to migrate from SQLite to PostgreSQL'' assistant: ''Let me invoke the planner agent to analyze the migration requirements and create a comprehensive plan'' <commentary>Database migration requires careful planning, so use the planner agent to research and plan the approach.</commentary></example> <example>Context: User reports performance issues. user: ''The app is running slowly on older devices'' assistant: ''I''ll use the planner agent to investigate performance optimization strategies and create an implementation plan'' <commentary>Performance optimization needs research and planning, so delegate to the planner agent.</commentary></example>",
           "model": "opus",
           "memory": null,
           "tools": []
@@ -7810,7 +7881,7 @@
       "kit": "marketer",
       "channels": {
         "marketing-stable": {
-          "description": "Use this agent when you need comprehensive project oversight and coordination. Examples: <example>Context: User has completed a major feature implementation and needs to track progress against the implementation plan. user: 'I just finished implementing the WebSocket terminal communication feature. Can you check our progress and update the plan?' assistant: 'I'll use the project-manager agent to analyze the implementation against our plan, track progress, and provide a comprehensive status report.' <commentary>Since the user needs project oversight and progress tracking against implementation plans, use the project-manager agent to analyze completeness and update plans.</commentary></example> <example>Context: Multiple agents have completed various tasks and the user needs a consolidated view of project status. user: 'The backend-developer and tester agents have finished their work. What's our overall project status?' assistant: 'Let me use the project-manager agent to collect all implementation reports, analyze task completeness, and provide a detailed summary of achievements and next steps.' <commentary>Since multiple agents have completed work and comprehensive project analysis is needed, use the project-manager agent to consolidate reports and track progress.</commentary></example>",
+          "description": "Use this agent when you need comprehensive project oversight and coordination. Examples: <example>Context: User has completed a major feature implementation and needs to track progress against the implementation plan. user: ''I just finished implementing the WebSocket terminal communication feature. Can you check our progress and update the plan?'' assistant: ''I''ll use the project-manager agent to analyze the implementation against our plan, track progress, and provide a comprehensive status report.'' <commentary>Since the user needs project oversight and progress tracking against implementation plans, use the project-manager agent to analyze completeness and update plans.</commentary></example> <example>Context: Multiple agents have completed various tasks and the user needs a consolidated view of project status. user: ''The backend-developer and tester agents have finished their work. What''s our overall project status?'' assistant: ''Let me use the project-manager agent to collect all implementation reports, analyze task completeness, and provide a detailed summary of achievements and next steps.'' <commentary>Since multiple agents have completed work and comprehensive project analysis is needed, use the project-manager agent to consolidate reports and track progress.</commentary></example>",
           "model": "haiku",
           "memory": null,
           "tools": [
@@ -7860,7 +7931,7 @@
       "kit": "marketer",
       "channels": {
         "marketing-stable": {
-          "description": "Use this agent when you need to conduct comprehensive research on software development topics, including investigating new technologies, finding documentation, exploring best practices, or gathering information about plugins, packages, and open source projects. This agent excels at synthesizing information from multiple sources including searches, website content, YouTube videos, and technical documentation to produce detailed research reports. <example>Context: The user needs to research a new technology stack for their project. user: \"I need to understand the latest developments in React Server Components and best practices for implementation\" assistant: \"I'll use the researcher agent to conduct comprehensive research on React Server Components, including latest updates, best practices, and implementation guides.\" <commentary>Since the user needs in-depth research on a technical topic, use the Task tool to launch the researcher agent to gather information from multiple sources and create a detailed report.</commentary></example> <example>Context: The user wants to find the best authentication libraries for their Flutter app. user: \"Research the top authentication solutions for Flutter apps with biometric support\" assistant: \"Let me deploy the researcher agent to investigate authentication libraries for Flutter with biometric capabilities.\" <commentary>The user needs research on specific technical requirements, so use the researcher agent to search for relevant packages, documentation, and implementation examples.</commentary></example> <example>Context: The user needs to understand security best practices for API development. user: \"What are the current best practices for securing REST APIs in 2024?\" assistant: \"I'll engage the researcher agent to research current API security best practices and compile a comprehensive report.\" <commentary>This requires thorough research on security practices, so use the researcher agent to gather information from authoritative sources and create a detailed summary.</commentary></example>",
+          "description": "Use this agent when you need to conduct comprehensive research on software development topics, including investigating new technologies, finding documentation, exploring best practices, or gathering information about plugins, packages, and open source projects. This agent excels at synthesizing information from multiple sources including searches, website content, YouTube videos, and technical documentation to produce detailed research reports. <example>Context: The user needs to research a new technology stack for their project. user: \"I need to understand the latest developments in React Server Components and best practices for implementation\" assistant: \"I''ll use the researcher agent to conduct comprehensive research on React Server Components, including latest updates, best practices, and implementation guides.\" <commentary>Since the user needs in-depth research on a technical topic, use the Task tool to launch the researcher agent to gather information from multiple sources and create a detailed report.</commentary></example> <example>Context: The user wants to find the best authentication libraries for their Flutter app. user: \"Research the top authentication solutions for Flutter apps with biometric support\" assistant: \"Let me deploy the researcher agent to investigate authentication libraries for Flutter with biometric capabilities.\" <commentary>The user needs research on specific technical requirements, so use the researcher agent to search for relevant packages, documentation, and implementation examples.</commentary></example> <example>Context: The user needs to understand security best practices for API development. user: \"What are the current best practices for securing REST APIs in 2024?\" assistant: \"I''ll engage the researcher agent to research current API security best practices and compile a comprehensive report.\" <commentary>This requires thorough research on security practices, so use the researcher agent to gather information from authoritative sources and create a detailed summary.</commentary></example>",
           "model": "haiku",
           "memory": null,
           "tools": []
@@ -7878,7 +7949,7 @@
       "kit": "marketer",
       "channels": {
         "marketing-stable": {
-          "description": "Use this agent for sales collateral and deal acceleration. This includes personalized pitch generation, objection handling guides, social proof matching, proposal templates, and case study generation. Examples:\\n\\n<example>\\nContext: User needs sales collateral for a product launch.\\nuser: \"I need sales materials for our enterprise product\"\\nassistant: \"I'll use the sale-enabler agent to create sales collateral\"\\n</example>\\n\\n<example>\\nContext: User wants to improve close rates.\\nuser: \"Our sales team needs better objection handling materials\"\\nassistant: \"I'll launch the sale-enabler agent to create objection handling guides\"\\n</example>",
+          "description": "Use this agent for sales collateral and deal acceleration. This includes personalized pitch generation, objection handling guides, social proof matching, proposal templates, and case study generation. Examples:\\n\\n<example>\\nContext: User needs sales collateral for a product launch.\\nuser: \"I need sales materials for our enterprise product\"\\nassistant: \"I''ll use the sale-enabler agent to create sales collateral\"\\n</example>\\n\\n<example>\\nContext: User wants to improve close rates.\\nuser: \"Our sales team needs better objection handling materials\"\\nassistant: \"I''ll launch the sale-enabler agent to create objection handling guides\"\\n</example>",
           "model": "sonnet",
           "memory": null,
           "tools": []
@@ -7896,7 +7967,7 @@
       "kit": "marketer",
       "channels": {
         "marketing-stable": {
-          "description": "Use this agent when you need to quickly locate relevant files across a large codebase to complete a specific task. This agent is particularly useful when:\\n\\n<example>\\nContext: User needs to implement a new payment provider integration and needs to find all payment-related files.\\nuser: \"I need to add Stripe as a new payment provider. Can you help me find all the relevant files?\"\\nassistant: \"I'll use the scout agent to quickly search for payment-related files across the codebase.\"\\n<Task tool call to scout with query about payment provider files>\\n<commentary>\\nThe user needs to locate payment integration files. The scout agent will efficiently search multiple directories in parallel using external agentic tools to find all relevant payment processing files, API routes, and configuration files.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User is debugging an authentication issue and needs to find all auth-related components.\\nuser: \"There's a bug in the login flow. I need to review all authentication files.\"\\nassistant: \"Let me use the scout agent to locate all authentication-related files for you.\"\\n<Task tool call to scout with query about authentication files>\\n<commentary>\\nThe user needs to debug authentication. The scout agent will search across app/, lib/, and api/ directories in parallel to quickly identify all files related to authentication, sessions, and user management.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User wants to understand how database migrations work in the project.\\nuser: \"How are database migrations structured in this project?\"\\nassistant: \"I'll use the scout agent to find all migration-related files and database schema definitions.\"\\n<Task tool call to scout with query about database migrations>\\n<commentary>\\nThe user needs to understand database structure. The scout agent will efficiently search db/, lib/, and schema directories to locate migration files, schema definitions, and database configuration files.\\n</commentary>\\n</example>\\n\\nProactively use this agent when:\\n- Beginning work on a feature that spans multiple directories\\n- User mentions needing to \"find\", \"locate\", or \"search for\" files\\n- Starting a debugging session that requires understanding file relationships\\n- User asks about project structure or where specific functionality lives\\n- Before making changes that might affect multiple parts of the codebase",
+          "description": "Use this agent when you need to quickly locate relevant files across a large codebase to complete a specific task. This agent is particularly useful when:\\n\\n<example>\\nContext: User needs to implement a new payment provider integration and needs to find all payment-related files.\\nuser: \"I need to add Stripe as a new payment provider. Can you help me find all the relevant files?\"\\nassistant: \"I''ll use the scout agent to quickly search for payment-related files across the codebase.\"\\n<Task tool call to scout with query about payment provider files>\\n<commentary>\\nThe user needs to locate payment integration files. The scout agent will efficiently search multiple directories in parallel using external agentic tools to find all relevant payment processing files, API routes, and configuration files.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User is debugging an authentication issue and needs to find all auth-related components.\\nuser: \"There''s a bug in the login flow. I need to review all authentication files.\"\\nassistant: \"Let me use the scout agent to locate all authentication-related files for you.\"\\n<Task tool call to scout with query about authentication files>\\n<commentary>\\nThe user needs to debug authentication. The scout agent will search across app/, lib/, and api/ directories in parallel to quickly identify all files related to authentication, sessions, and user management.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User wants to understand how database migrations work in the project.\\nuser: \"How are database migrations structured in this project?\"\\nassistant: \"I''ll use the scout agent to find all migration-related files and database schema definitions.\"\\n<Task tool call to scout with query about database migrations>\\n<commentary>\\nThe user needs to understand database structure. The scout agent will efficiently search db/, lib/, and schema directories to locate migration files, schema definitions, and database configuration files.\\n</commentary>\\n</example>\\n\\nProactively use this agent when:\\n- Beginning work on a feature that spans multiple directories\\n- User mentions needing to \"find\", \"locate\", or \"search for\" files\\n- Starting a debugging session that requires understanding file relationships\\n- User asks about project structure or where specific functionality lives\\n- Before making changes that might affect multiple parts of the codebase",
           "model": "haiku",
           "memory": null,
           "tools": [
@@ -7938,7 +8009,7 @@
       "kit": "marketer",
       "channels": {
         "marketing-stable": {
-          "description": "Use this agent when you need to quickly locate relevant files across a large codebase to complete a specific task using external agentic tools (Gemini, OpenCode, etc.). This agent is particularly useful when:\\n\\n<example>\\nContext: User needs to implement a new payment provider integration and needs to find all payment-related files.\\nuser: \"I need to add Stripe as a new payment provider. Can you help me find all the relevant files?\"\\nassistant: \"I'll use the scout agent to quickly search for payment-related files across the codebase.\"\\n<Task tool call to scout with query about payment provider files>\\n<commentary>\\nThe user needs to locate payment integration files. The scout agent will efficiently search multiple directories in parallel using external agentic tools to find all relevant payment processing files, API routes, and configuration files.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User is debugging an authentication issue and needs to find all auth-related components.\\nuser: \"There's a bug in the login flow. I need to review all authentication files.\"\\nassistant: \"Let me use the scout agent to locate all authentication-related files for you.\"\\n<Task tool call to scout with query about authentication files>\\n<commentary>\\nThe user needs to debug authentication. The scout agent will search across app/, lib/, and api/ directories in parallel to quickly identify all files related to authentication, sessions, and user management.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User wants to understand how database migrations work in the project.\\nuser: \"How are database migrations structured in this project?\"\\nassistant: \"I'll use the scout agent to find all migration-related files and database schema definitions.\"\\n<Task tool call to scout with query about database migrations>\\n<commentary>\\nThe user needs to understand database structure. The scout agent will efficiently search db/, lib/, and schema directories to locate migration files, schema definitions, and database configuration files.\\n</commentary>\\n</example>\\n\\nProactively use this agent when:\\n- Beginning work on a feature that spans multiple directories\\n- User mentions needing to \"find\", \"locate\", or \"search for\" files\\n- Starting a debugging session that requires understanding file relationships\\n- User asks about project structure or where specific functionality lives\\n- Before making changes that might affect multiple parts of the codebase",
+          "description": "Use this agent when you need to quickly locate relevant files across a large codebase to complete a specific task using external agentic tools (Gemini, OpenCode, etc.). This agent is particularly useful when:\\n\\n<example>\\nContext: User needs to implement a new payment provider integration and needs to find all payment-related files.\\nuser: \"I need to add Stripe as a new payment provider. Can you help me find all the relevant files?\"\\nassistant: \"I''ll use the scout agent to quickly search for payment-related files across the codebase.\"\\n<Task tool call to scout with query about payment provider files>\\n<commentary>\\nThe user needs to locate payment integration files. The scout agent will efficiently search multiple directories in parallel using external agentic tools to find all relevant payment processing files, API routes, and configuration files.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User is debugging an authentication issue and needs to find all auth-related components.\\nuser: \"There''s a bug in the login flow. I need to review all authentication files.\"\\nassistant: \"Let me use the scout agent to locate all authentication-related files for you.\"\\n<Task tool call to scout with query about authentication files>\\n<commentary>\\nThe user needs to debug authentication. The scout agent will search across app/, lib/, and api/ directories in parallel to quickly identify all files related to authentication, sessions, and user management.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User wants to understand how database migrations work in the project.\\nuser: \"How are database migrations structured in this project?\"\\nassistant: \"I''ll use the scout agent to find all migration-related files and database schema definitions.\"\\n<Task tool call to scout with query about database migrations>\\n<commentary>\\nThe user needs to understand database structure. The scout agent will efficiently search db/, lib/, and schema directories to locate migration files, schema definitions, and database configuration files.\\n</commentary>\\n</example>\\n\\nProactively use this agent when:\\n- Beginning work on a feature that spans multiple directories\\n- User mentions needing to \"find\", \"locate\", or \"search for\" files\\n- Starting a debugging session that requires understanding file relationships\\n- User asks about project structure or where specific functionality lives\\n- Before making changes that might affect multiple parts of the codebase",
           "model": "haiku",
           "memory": null,
           "tools": [
@@ -7980,7 +8051,7 @@
       "kit": "marketer",
       "channels": {
         "marketing-stable": {
-          "description": "Use this agent for SEO audit and optimization. This includes technical SEO audit, content optimization, keyword analysis, link building strategy, JSON+LD generation, and competitor SEO analysis. Examples:\\n\\n<example>\\nContext: User needs an SEO audit.\\nuser: \"Audit our website for SEO issues\"\\nassistant: \"I'll use the seo-specialist agent to perform a comprehensive SEO audit\"\\n</example>\\n\\n<example>\\nContext: User wants to improve search rankings.\\nuser: \"How can we rank higher for 'project management software'?\"\\nassistant: \"I'll launch the seo-specialist agent to analyze and optimize for this keyword\"\\n</example>",
+          "description": "Use this agent for SEO audit and optimization. This includes technical SEO audit, content optimization, keyword analysis, link building strategy, JSON+LD generation, and competitor SEO analysis. Examples:\\n\\n<example>\\nContext: User needs an SEO audit.\\nuser: \"Audit our website for SEO issues\"\\nassistant: \"I''ll use the seo-specialist agent to perform a comprehensive SEO audit\"\\n</example>\\n\\n<example>\\nContext: User wants to improve search rankings.\\nuser: \"How can we rank higher for ''project management software''?\"\\nassistant: \"I''ll launch the seo-specialist agent to analyze and optimize for this keyword\"\\n</example>",
           "model": null,
           "memory": null,
           "tools": []
@@ -7998,7 +8069,7 @@
       "kit": "marketer",
       "channels": {
         "marketing-stable": {
-          "description": "Use this agent for social media scheduling and analytics. This includes multi-platform post generation, content calendar management, engagement analysis, trend research, and platform-specific adaptation. Examples:\\n\\n<example>\\nContext: User needs a social content calendar.\\nuser: \"Create a month of social content for our product\"\\nassistant: \"I'll use the social-media-manager agent to create your content calendar\"\\n</example>\\n\\n<example>\\nContext: User wants to improve social engagement.\\nuser: \"Our LinkedIn engagement has dropped 40%\"\\nassistant: \"I'll launch the social-media-manager agent to analyze and optimize your strategy\"\\n</example>",
+          "description": "Use this agent for social media scheduling and analytics. This includes multi-platform post generation, content calendar management, engagement analysis, trend research, and platform-specific adaptation. Examples:\\n\\n<example>\\nContext: User needs a social content calendar.\\nuser: \"Create a month of social content for our product\"\\nassistant: \"I''ll use the social-media-manager agent to create your content calendar\"\\n</example>\\n\\n<example>\\nContext: User wants to improve social engagement.\\nuser: \"Our LinkedIn engagement has dropped 40%\"\\nassistant: \"I''ll launch the social-media-manager agent to analyze and optimize your strategy\"\\n</example>",
           "model": "sonnet",
           "memory": null,
           "tools": []
@@ -8016,7 +8087,7 @@
       "kit": "marketer",
       "channels": {
         "marketing-stable": {
-          "description": "Use this agent when you need to validate code quality through testing, including running unit and integration tests, analyzing test coverage, validating error handling, checking performance requirements, or verifying build processes. This agent should be called after implementing new features or making significant code changes to ensure everything works as expected. Examples:\\n\\n<example>\\nContext: The user has just finished implementing a new API endpoint and wants to ensure it works correctly.\\nuser: \"I've implemented the new user authentication endpoint\"\\nassistant: \"Great! Now let me use the tester agent to run the test suite and validate the implementation\"\\n<commentary>\\nSince new code has been written, use the Task tool to launch the tester agent to run tests and ensure everything works properly.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: The user wants to check test coverage after adding new features.\\nuser: \"Can you check if our test coverage is still above 80%?\"\\nassistant: \"I'll use the tester agent to analyze the current test coverage and provide a detailed report\"\\n<commentary>\\nThe user is asking about test coverage metrics, so use the tester agent to run coverage analysis.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: After fixing a bug, ensuring the fix doesn't break existing functionality.\\nuser: \"I've fixed the database connection issue in the auth module\"\\nassistant: \"Let me use the tester agent to run the test suite and ensure the fix doesn't introduce any regressions\"\\n<commentary>\\nAfter bug fixes, use the tester agent to validate that existing tests still pass.\\n</commentary>\\n</example>",
+          "description": "Use this agent when you need to validate code quality through testing, including running unit and integration tests, analyzing test coverage, validating error handling, checking performance requirements, or verifying build processes. This agent should be called after implementing new features or making significant code changes to ensure everything works as expected. Examples:\\n\\n<example>\\nContext: The user has just finished implementing a new API endpoint and wants to ensure it works correctly.\\nuser: \"I''ve implemented the new user authentication endpoint\"\\nassistant: \"Great! Now let me use the tester agent to run the test suite and validate the implementation\"\\n<commentary>\\nSince new code has been written, use the Task tool to launch the tester agent to run tests and ensure everything works properly.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: The user wants to check test coverage after adding new features.\\nuser: \"Can you check if our test coverage is still above 80%?\"\\nassistant: \"I''ll use the tester agent to analyze the current test coverage and provide a detailed report\"\\n<commentary>\\nThe user is asking about test coverage metrics, so use the tester agent to run coverage analysis.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: After fixing a bug, ensuring the fix doesn''t break existing functionality.\\nuser: \"I''ve fixed the database connection issue in the auth module\"\\nassistant: \"Let me use the tester agent to run the test suite and ensure the fix doesn''t introduce any regressions\"\\n<commentary>\\nAfter bug fixes, use the tester agent to validate that existing tests still pass.\\n</commentary>\\n</example>",
           "model": "haiku",
           "memory": null,
           "tools": []
@@ -8034,7 +8105,7 @@
       "kit": "marketer",
       "channels": {
         "marketing-stable": {
-          "description": "Use this agent when the user needs UI/UX design work including interface designs, wireframes, design systems, user research, responsive layouts, animations, or design documentation. Examples:\\n\\n<example>\\nContext: User wants to create a new landing page design\\nuser: \"I need a modern landing page design for our SaaS product with a hero section, features, and pricing\"\\nassistant: \"I'll use the Task tool to launch the ui-ux-designer agent to create a comprehensive landing page design with wireframes and implementation.\"\\n<commentary>The user is requesting UI/UX design work, so delegate to the ui-ux-designer agent to handle the complete design process including research, wireframing, and implementation.</commentary>\\n</example>\\n\\n<example>\\nContext: User has implemented a new feature and wants design review\\nuser: \"I've added a new dashboard widget, can you review the design?\"\\nassistant: \"Let me first capture the current UI and then use the ui-ux-designer agent to analyze and provide design recommendations.\"\\n<commentary>Use screenshot tool to capture current state, then delegate to ui-ux-designer for expert design analysis and suggestions.</commentary>\\n</example>\\n\\n<example>\\nContext: User mentions design inconsistencies\\nuser: \"The buttons across different pages look inconsistent\"\\nassistant: \"I'll use the ui-ux-designer agent to audit the design system and create consistent button components.\"\\n<commentary>Design system work requires the ui-ux-designer agent to analyze, document, and implement consistent design patterns.</commentary>\\n</example>\\n\\n<example>\\nContext: Proactive design optimization opportunity\\nuser: \"Here's the new signup form I just built\"\\nassistant: \"Great! Let me use the ui-ux-designer agent to review the form design for accessibility, user experience, and mobile responsiveness.\"\\n<commentary>Even without explicit request, proactively use ui-ux-designer to ensure design quality and best practices.</commentary>\\n</example>",
+          "description": "Use this agent when the user needs UI/UX design work including interface designs, wireframes, design systems, user research, responsive layouts, animations, or design documentation. Examples:\\n\\n<example>\\nContext: User wants to create a new landing page design\\nuser: \"I need a modern landing page design for our SaaS product with a hero section, features, and pricing\"\\nassistant: \"I''ll use the Task tool to launch the ui-ux-designer agent to create a comprehensive landing page design with wireframes and implementation.\"\\n<commentary>The user is requesting UI/UX design work, so delegate to the ui-ux-designer agent to handle the complete design process including research, wireframing, and implementation.</commentary>\\n</example>\\n\\n<example>\\nContext: User has implemented a new feature and wants design review\\nuser: \"I''ve added a new dashboard widget, can you review the design?\"\\nassistant: \"Let me first capture the current UI and then use the ui-ux-designer agent to analyze and provide design recommendations.\"\\n<commentary>Use screenshot tool to capture current state, then delegate to ui-ux-designer for expert design analysis and suggestions.</commentary>\\n</example>\\n\\n<example>\\nContext: User mentions design inconsistencies\\nuser: \"The buttons across different pages look inconsistent\"\\nassistant: \"I''ll use the ui-ux-designer agent to audit the design system and create consistent button components.\"\\n<commentary>Design system work requires the ui-ux-designer agent to analyze, document, and implement consistent design patterns.</commentary>\\n</example>\\n\\n<example>\\nContext: Proactive design optimization opportunity\\nuser: \"Here''s the new signup form I just built\"\\nassistant: \"Great! Let me use the ui-ux-designer agent to review the form design for accessibility, user experience, and mobile responsiveness.\"\\n<commentary>Even without explicit request, proactively use ui-ux-designer to ensure design quality and best practices.</commentary>\\n</example>",
           "model": "inherit",
           "memory": null,
           "tools": []
@@ -8052,7 +8123,7 @@
       "kit": "marketer",
       "channels": {
         "marketing-stable": {
-          "description": "Use this agent for revenue expansion and product recommendations. This includes upsell opportunity identification, product recommendation logic, expansion revenue forecasting, feature adoption tracking, cross-sell sequences, and pricing tier optimization. Examples:\\n\\n<example>\\nContext: User wants to increase average order value.\\nuser: \"How can we increase our AOV from $50 to $75?\"\\nassistant: \"I'll use the upsell-maximizer agent to identify upsell opportunities\"\\n</example>\\n\\n<example>\\nContext: User needs cross-sell strategy.\\nuser: \"Design cross-sell recommendations for our product catalog\"\\nassistant: \"I'll launch the upsell-maximizer agent to create cross-sell strategies\"\\n</example>",
+          "description": "Use this agent for revenue expansion and product recommendations. This includes upsell opportunity identification, product recommendation logic, expansion revenue forecasting, feature adoption tracking, cross-sell sequences, and pricing tier optimization. Examples:\\n\\n<example>\\nContext: User wants to increase average order value.\\nuser: \"How can we increase our AOV from $50 to $75?\"\\nassistant: \"I''ll use the upsell-maximizer agent to identify upsell opportunities\"\\n</example>\\n\\n<example>\\nContext: User needs cross-sell strategy.\\nuser: \"Design cross-sell recommendations for our product catalog\"\\nassistant: \"I''ll launch the upsell-maximizer agent to create cross-sell strategies\"\\n</example>",
           "model": "sonnet",
           "memory": null,
           "tools": []

@@ -38,11 +38,13 @@ const text = {
         { label: 'Không implementation', detail: 'Không code, không scaffold, không invoke implementation skill.' },
         { label: 'Scout trước', detail: 'Phải scout trước câu hỏi.' },
         { label: 'User gate', detail: 'Chốt 5 requirements cụ thể, trình bày design và được user duyệt.' },
+        { label: 'Trình bày trước khi hỏi', detail: 'Viết options & khuyến nghị trong text hiển thị trước mọi `AskUserQuestion`.' },
       ]
     : [
         { label: 'No implementation', detail: 'No code, no scaffolding, no implementation skill.' },
         { label: 'Scout first', detail: 'Scout before questions.' },
         { label: 'Approval gate', detail: 'Capture 5 exact requirement fields, present a design, and get user approval.' },
+        { label: 'Present before ask', detail: 'Write options & recommendation in visible text before any `AskUserQuestion`.' },
       ],
   reportFirst: isVi ? 'Report trước' : 'Report first',
   reportFirstDesc: isVi ? 'Bàn giao plan phải nhận path brainstorm report.' : 'The plan handoff receives the brainstorm report path.',
@@ -86,7 +88,24 @@ const text = {
   thought: isVi ? 'Suy nghĩ' : 'Thought',
   reality: isVi ? 'Thực tế' : 'Reality',
   stack: isVi ? 'Stack được gọi khi cần' : 'Stack Used When Needed',
+  outputFlags: isVi ? 'Flags xuất & publish' : 'Output & Publish Flags',
+  outputFlagsDesc: isVi
+    ? 'Flags tùy chọn thêm report HTML hoặc publish lên AgentWiki. Strip khỏi topic trước khi phân tích.'
+    : 'Optional flags that add an HTML report or publish to AgentWiki. Stripped from the topic before analysis.',
+  sample: isVi ? 'Ví dụ' : 'Example',
 };
+
+const outputFlagAccent: Record<string, string> = {
+  '--html': 'border-violet-200 bg-violet-50/70 dark:border-violet-800/45 dark:bg-violet-950/18',
+  '--wiki': 'border-emerald-200 bg-emerald-50/70 dark:border-emerald-800/45 dark:bg-emerald-950/18',
+};
+const outputFlags = (data.outputFlags || []).map(f => ({
+  flag: f.flag,
+  title: isVi ? f.titleVi : f.titleEn,
+  desc: isVi ? f.descVi : f.descEn,
+  example: f.exampleCommand || '',
+  accent: outputFlagAccent[f.flag] || 'border-slate-200 bg-slate-50/80 dark:border-white/10 dark:bg-white/[0.04]',
+}));
 
 const heroFlow = isVi
   ? ['Scout', 'Req rõ', 'Tranh luận', 'Path report']
@@ -354,6 +373,32 @@ const renderInlineCode = (value = '') => value
       ))}
     </div>
   </section>
+
+  {outputFlags.length > 0 && (
+    <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-slate-950/45">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.outputFlags}</h3>
+      <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300">{text.outputFlagsDesc}</p>
+      <div class="mt-4 space-y-3">
+        {outputFlags.map(flag => (
+          <div class={`grid gap-3 rounded-xl border p-4 lg:grid-cols-[11rem_minmax(0,1fr)] ${flag.accent}`}>
+            <div class="min-w-0">
+              <code class="inline-flex max-w-full break-words rounded-lg bg-white/80 px-2.5 py-1 font-mono text-sm font-semibold text-purple-600 ring-1 ring-black/5 dark:bg-slate-800/90 dark:text-purple-400 dark:ring-white/10">{flag.flag}</code>
+              <p class="mt-2 text-sm font-semibold text-slate-900 dark:text-white">{flag.title}</p>
+            </div>
+            <div class="min-w-0">
+              <p class="text-xs leading-5 text-slate-650 dark:text-slate-300">{flag.desc}</p>
+              {flag.example && (
+                <>
+                  <p class="mt-3 text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{text.sample}</p>
+                  <code class="mt-1.5 block whitespace-pre-wrap break-words rounded-lg bg-slate-100 px-3 py-2 font-mono text-xs leading-5 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-slate-200 dark:ring-white/10">{flag.example}</code>
+                </>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
 
   <section class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_330px]">
     <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-slate-950/45">
