@@ -67,39 +67,6 @@ const t = useTranslations(currentLang);
           }
         </p>
       </div>
-      <div
-        class="p-4 rounded-lg bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 fc-beta-content hidden"
-      >
-        <p class="text-sm text-emerald-700 dark:text-emerald-400">
-          <strong class="flex items-center gap-1"
-            ><svg
-              class="w-4 h-4 text-emerald-500 inline"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              ><path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
-              ></path></svg
-            >
-            {
-              isVi ? "Speed vs Safety Trade-off:" : "Speed vs Safety Trade-off:"
-            }</strong
-          ><br />
-          • {
-            isVi
-              ? "Dùng /ck:cook khi confident và muốn speed"
-              : "Use /ck:cook when you're confident and want speed"
-          }<br />
-          • {
-            isVi
-              ? "Dùng /ck:plan → /code khi precision và review quan trọng"
-              : "Use /ck:plan → /code when precision and review matter"
-          }
-        </p>
-      </div>
 
       <div
         class="p-4 rounded-lg bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 fc-stable-content"
@@ -132,38 +99,6 @@ const t = useTranslations(currentLang);
           }
         </p>
       </div>
-      <div
-        class="p-4 rounded-lg bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 fc-beta-content hidden"
-      >
-        <p class="text-sm text-amber-700 dark:text-amber-400">
-          <strong class="flex items-center gap-1"
-            ><svg
-              class="w-4 h-4 text-amber-500 inline"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              ><path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-              ></path></svg
-            >
-            {
-              isVi ? "Không mix workflows:" : "Never mix these workflows:"
-            }</strong
-          ><br />
-          • ❌ <code>/ck:plan</code> → <code>/ck:cook</code> ({
-            isVi ? "cook có planning riêng" : "cook has its own planning"
-          })<br />
-          • ✅ <code>/ck:plan</code> → <code>/code</code> ({
-            isVi ? "flow đúng" : "correct flow"
-          })<br />
-          • ✅ <code>/ck:cook</code> standalone ({
-            isVi ? "có internal planning" : "has internal planning"
-          })
-        </p>
-      </div>
 
       <div
         class="p-4 rounded-lg bg-red-500/10 border border-red-200 dark:border-red-500/20 fc-stable-content"
@@ -190,37 +125,6 @@ const t = useTranslations(currentLang);
               : "commit only (safe for experimentation)"
           }<br />
           • <code>/ck:git cp</code> = {
-            isVi
-              ? "commits VÀ pushes (không thể undo dễ dàng)"
-              : "commits AND pushes (can't undo easily)"
-          }
-        </p>
-      </div>
-      <div
-        class="p-4 rounded-lg bg-red-500/10 border border-red-200 dark:border-red-500/20 fc-beta-content hidden"
-      >
-        <p class="text-sm text-red-700 dark:text-red-400">
-          <strong class="flex items-center gap-1"
-            ><svg
-              class="w-4 h-4 text-red-500 inline"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              ><path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-              ></path></svg
-            >
-            {isVi ? "Git safety:" : "Git safety:"}</strong
-          ><br />
-          • <code>/git:cm</code> = {
-            isVi
-              ? "commit only (safe cho experimentation)"
-              : "commit only (safe for experimentation)"
-          }<br />
-          • <code>/git:cp</code> = {
             isVi
               ? "commits VÀ pushes (không thể undo dễ dàng)"
               : "commits AND pushes (can't undo easily)"

@@ -120,8 +120,8 @@ const t = useTranslations(currentLang);
           >
           {
             isVi
-              ? "New Project Flow: /bootstrap → tự động xử lý mọi thứ bao gồm Git init, tech stack research, wireframes và initial implementation."
-              : "New Project Flow: /bootstrap → automatically handles everything including Git initialization, tech stack research, wireframes, and initial implementation."
+              ? "New Project Flow: /ck:bootstrap → tự động xử lý mọi thứ bao gồm Git init, tech stack research, wireframes và initial implementation."
+              : "New Project Flow: /ck:bootstrap → automatically handles everything including Git initialization, tech stack research, wireframes, and initial implementation."
           }
         </p>
       </div>
@@ -180,8 +180,8 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
                 >{
                   isVi
-                    ? "Ideation với lời khuyên chuyên gia"
-                    : "Collaborative ideation with expert advice"
+                    ? "Ideation với lời khuyên chuyên gia. Flags: --html (báo cáo editorial), --wiki (publish AgentWiki)"
+                    : "Collaborative ideation with expert advice. Flags: --html (editorial report), --wiki (publish to AgentWiki)"
                 }</td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -197,32 +197,6 @@ const t = useTranslations(currentLang);
       </div>
       <div
         class="mb-6 p-4 rounded-lg bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 fc-stable-content"
-      >
-        <p class="text-sm text-amber-700 dark:text-amber-400">
-          <strong class="flex items-center gap-1"
-            ><svg
-              class="w-4 h-4 text-amber-500 inline"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              ><path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-              ></path></svg
-            >
-            {isVi ? "Quan trọng:" : "Important:"}</strong
-          >
-          {
-            isVi
-              ? "/brainstorm KHÔNG implement - chỉ tư vấn. Sau khi brainstorm, dùng /ck:plan hoặc /ck:cook để implement."
-              : "/brainstorm DOES NOT implement - it only advises. After brainstorming, use /ck:plan or /ck:cook to implement."
-          }
-        </p>
-      </div>
-      <div
-        class="mb-6 p-4 rounded-lg bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 fc-beta-content hidden"
       >
         <p class="text-sm text-amber-700 dark:text-amber-400">
           <strong class="flex items-center gap-1"
@@ -289,24 +263,6 @@ const t = useTranslations(currentLang);
                 }</td
               >
             </tr>
-            <tr class="fc-beta-content hidden">
-              <td class="py-3 px-4"
-                ><code
-                  class="px-2 py-1 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-mono font-bold"
-                  >/ck:cook</code
-                ></td
-              >
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
-                >⚡⚡⚡ All-in-one: research → plan → implement → test → review</td
-              >
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
-                ><strong>FAST mode</strong> - {
-                  isVi
-                    ? "Quick iterations, features đơn giản"
-                    : "Quick iterations, simpler features"
-                }</td
-              >
-            </tr>
             <tr>
               <td class="py-3 px-4"
                 ><code
@@ -317,8 +273,8 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
                 >{
                   isVi
-                    ? "Tạo plan chi tiết không code"
-                    : "Create detailed implementation plan without coding"
+                    ? "Tạo plan chi tiết không code. Flags: --html (phases HTML), --github (tạo GitHub issue), --wiki"
+                    : "Create detailed implementation plan without coding. Flags: --html (HTML phases), --github (create GitHub issue), --wiki"
                 }</td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -326,6 +282,28 @@ const t = useTranslations(currentLang);
                   isVi
                     ? "Features phức tạp, cần approval trước"
                     : "Complex features, need approval first"
+                }</td
+              >
+            </tr>
+            <tr>
+              <td class="py-3 px-4"
+                ><code
+                  class="px-2 py-1 rounded bg-teal-500/20 text-teal-600 dark:text-teal-400 font-mono font-bold"
+                  >/ck:vibe</code
+                ></td
+              >
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
+                >{
+                  isVi
+                    ? "Pipeline trọn gói: issue → plan → implement → review → ship"
+                    : "Full pipeline: issue → plan → implement → review → ship"
+                }</td
+              >
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
+                ><strong>AUTO mode</strong> - {
+                  isVi
+                    ? "Từ GitHub issue/yêu cầu tới PR tự động"
+                    : "From a GitHub issue/request to PR autonomously"
                 }</td
               >
             </tr>
@@ -341,28 +319,6 @@ const t = useTranslations(currentLang);
                   isVi
                     ? "Implement plan có sẵn từng bước"
                     : "Implement an existing plan step by step"
-                }</td
-              >
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
-                >{
-                  isVi
-                    ? "Sau khi /ck:plan được approved"
-                    : "After /ck:plan is approved"
-                }</td
-              >
-            </tr>
-            <tr class="fc-beta-content hidden">
-              <td class="py-3 px-4"
-                ><code
-                  class="px-2 py-1 rounded bg-blue-500/20 text-blue-600 dark:text-blue-400 font-mono font-bold"
-                  >/code @plan.md</code
-                ></td
-              >
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
-                >{
-                  isVi
-                    ? "Execute plan có sẵn từng bước"
-                    : "Execute an existing plan step by step"
                 }</td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -403,39 +359,6 @@ const t = useTranslations(currentLang);
           }<br />
           • <code class="bg-blue-200 dark:bg-blue-800 px-1 rounded">/ck:plan</code> →
           <code class="bg-blue-200 dark:bg-blue-800 px-1 rounded">/ck:cook</code> = {
-            isVi
-              ? "An toàn, tạo plan có thể review trước"
-              : "Safety-focused, creates reviewable plan first"
-          }
-        </p>
-      </div>
-      <div
-        class="p-4 rounded-lg bg-blue-500/10 border border-blue-200 dark:border-blue-500/20 fc-beta-content hidden"
-      >
-        <p class="text-sm text-blue-700 dark:text-blue-400">
-          <strong class="flex items-center gap-1"
-            ><svg
-              class="w-4 h-4 text-blue-500 inline"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              ><path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
-              ></path></svg
-            >
-            {isVi ? "Sự khác biệt chính:" : "Key Difference:"}</strong
-          ><br />
-          • <code class="bg-blue-200 dark:bg-blue-800 px-1 rounded">/ck:cook</code> =
-          {
-            isVi
-              ? "Tốc độ, plan nội bộ, straight to implementation"
-              : "Speed-focused, plans internally, goes straight to implementation"
-          }<br />
-          • <code class="bg-blue-200 dark:bg-blue-800 px-1 rounded">/ck:plan</code> →
-          <code class="bg-blue-200 dark:bg-blue-800 px-1 rounded">/code</code> = {
             isVi
               ? "An toàn, tạo plan có thể review trước"
               : "Safety-focused, creates reviewable plan first"
@@ -653,6 +576,53 @@ const t = useTranslations(currentLang);
                 }</td
               >
             </tr>
+            <tr>
+              <td class="py-3 px-4"
+                ><code
+                  class="px-2 py-1 rounded bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-mono font-bold"
+                  >/ck:review-pr</code
+                ></td
+              >
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
+                >{
+                  isVi
+                    ? "Review PR GitHub: chuẩn dự án, security, breaking changes, AI-slop"
+                    : "Review GitHub PRs: standards, security, breaking changes, AI-slop"
+                }</td
+              >
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400">
+                <code
+                  class="text-xs px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800"
+                  >--fix</code
+                >
+                <code
+                  class="text-xs px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 ml-1"
+                  >--reply</code
+                >
+              </td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4"
+                ><code
+                  class="px-2 py-1 rounded bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-mono font-bold"
+                  >/ck:ship</code
+                ></td
+              >
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
+                >{
+                  isVi
+                    ? "Ship pipeline: test → review → commit → push → PR"
+                    : "Ship pipeline: test → review → commit → push → PR"
+                }</td
+              >
+              <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
+                >{
+                  isVi
+                    ? "Hoàn tất branch, tạo release PR"
+                    : "Finalize a branch, open release PR"
+                }</td
+              >
+            </tr>
           </tbody>
         </table>
       </div>
@@ -683,113 +653,3 @@ const t = useTranslations(currentLang);
       </div>
     </div>
 
-    <!-- v2.4.0 Git Operations (/git:* commands) -->
-    <div class="glass-card rounded-2xl p-6 sm:p-8 fc-beta-content hidden">
-      <h3
-        class="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2"
-      >
-        <svg
-          class="w-5 h-5 text-indigo-500"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <circle cx="18" cy="18" r="3"></circle>
-          <circle cx="6" cy="6" r="3"></circle>
-          <path
-            d="M6 21V9a9 9 0 0 0 9 9"
-            stroke-linecap="round"
-            stroke-linejoin="round"></path>
-        </svg>
-        {isVi ? "Git Operations" : "Git Operations"}
-        <span
-          class="ml-2 px-2 py-0.5 text-xs font-medium rounded-full bg-blue-500/20 text-blue-600 dark:text-blue-400"
-          >Legacy</span
-        >
-      </h3>
-      <div class="overflow-x-auto">
-        <table class="w-full text-sm">
-          <thead class="border-b border-slate-200 dark:border-slate-700">
-            <tr>
-              <th
-                class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white min-w-[180px] whitespace-nowrap"
-                >Command</th
-              >
-              <th
-                class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white"
-                >{isVi ? "Mô tả" : "Description"}</th
-              >
-              <th
-                class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white"
-                >{isVi ? "Khi nào dùng" : "When to Use"}</th
-              >
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
-            <tr>
-              <td class="py-3 px-4"
-                ><code
-                  class="px-2 py-1 rounded bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-mono font-bold"
-                  >/ck:git cm</code
-                ></td
-              >
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
-                >Stage all + commit ({isVi ? "không push" : "no push"})</td
-              >
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
-                >{isVi ? "Lưu work locally" : "Save work locally"}</td
-              >
-            </tr>
-            <tr>
-              <td class="py-3 px-4"
-                ><code
-                  class="px-2 py-1 rounded bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-mono font-bold"
-                  >/ck:git cp</code
-                ></td
-              >
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
-                >Stage + commit + push</td
-              >
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
-                >{
-                  isVi ? "Sẵn sàng share changes" : "Ready to share changes"
-                }</td
-              >
-            </tr>
-            <tr>
-              <td class="py-3 px-4"
-                ><code
-                  class="px-2 py-1 rounded bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-mono font-bold"
-                  >/ck:git merge</code
-                ></td
-              >
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
-                >{isVi ? "Merge branches" : "Merge branches"}</td
-              >
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
-                >{
-                  isVi
-                    ? "Combine feature branch to main"
-                    : "Combine feature branch to main"
-                }</td
-              >
-            </tr>
-            <tr>
-              <td class="py-3 px-4"
-                ><code
-                  class="px-2 py-1 rounded bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-mono font-bold"
-                  >/ck:git pr</code
-                ></td
-              >
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
-                >{isVi ? "Tạo pull request" : "Create pull request"}</td
-              >
-              <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
-                >{isVi ? "Request code review" : "Request code review"}</td
-              >
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
