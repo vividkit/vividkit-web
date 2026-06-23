@@ -16,11 +16,16 @@ Red Team Review           → 2-4 code-reviewer agents (hard / deep / parallel /
 Verification Pass         → verification-roles pipeline before validate interview
 Validation Interview      → critical questions (deep forces; hard / parallel / two optional)
 Whole-Plan Consistency    → mandatory sweep after every validate / red-team edit
+HTML Artifact             → if --html: activate /ck:frontend-design, write final reviewed plan.html
 Task Hydration            → TaskCreate per phase + critical steps (skip --no-tasks or <3 phases)
+GitHub Issue              → if --github: create/update issue + `ready to review` label
+AgentWiki Publish         → if --wiki: publish reviewed docs or plan.html via AgentWiki CLI/MCP
 Boundary Reminder         → present optional next-step commands with absolute path
 Post-Plan Handoff         → AskUserQuestion: validate / red-team / /ck:cook / end
 Journal                   → /ck:journal entry on completion
 ```
+
+Output/publish phases (HTML / GitHub / AgentWiki) run AFTER red-team + validate gates so they reflect the final reviewed plan.
 
 The mermaid diagram in SKILL.md (`## Process Flow (Authoritative)`) is the source of truth. Skip rules for red-team / validate options track Workflow Process Steps 6-7.
 
@@ -73,6 +78,18 @@ Composable flags (combine with any mode):
 | `--tdd` | Add tests-first structure to each phase for regression-safe refactors |
 | `--no-tasks` | Skip task hydration |
 
+## Output & Publish Flags
+
+Conditional, compose with any mode. All run after red-team + validate so they reflect the final reviewed plan.
+
+| Flag | Effect |
+|------|--------|
+| `--html` | Activate `/ck:frontend-design` and write a self-contained editorial interactive `plan.html` (inline CSS/JS, no build/network). Main page shows a concise outline per phase (title, status, priority, dependencies, objective, key bullets, related files, success criteria, validation gate); each outline opens a detail modal rendering the full phase markdown. Optional 1-3 watercolor/technical-sketch raster illustrations embedded as data URIs (source under `{plan-dir}/assets/`). Falls back to CSS-only diagrams if image gen unavailable. `plan.html` becomes the authoritative deliverable; markdown kept only for CLI/gate compatibility. |
+| `--github` | After validation/red-team, create or update a GitHub issue with: branch (`git branch --show-current`), plan summary, repo-relative link to `plan.md` (and `plan.html` when `--html`), brainstorm report link (or "None found"), open questions (or "None"), acceptance criteria. Required label `ready to review` (created if missing). Update existing issue for the same plan/branch instead of duplicating. Repo-relative links only; redact secrets. Stop and report on `gh` failure. |
+| `--wiki` | Publish the final reviewed plan to AgentWiki. CLI first (`agentwiki whoami` auth check → `doc upload`/`doc publish` for a combined `wiki-publish.md`; `sites upload` for `plan.html`), MCP document/static-site tools as fallback, else `AgentWiki publish skipped` with the exact missing capability. Never blocks plan creation. Redact secrets; publish only final reviewed artifacts. If `--github` also present, comment the wiki URL on the issue. |
+
+**Combined `--html --github`:** `plan.html` is authoritative; a short companion `plan.md` index is created only to satisfy the issue's stable `plan.md` link. Issue includes both relative links.
+
 ## Cross-Plan Dependency Detection
 
 Run during pre-creation scan:
@@ -102,6 +119,9 @@ blocks: [project:260228-0900-user-dashboard]    # explicit project ref
 | Conditional | `ck:scout` | If docs / codebase context stale |
 | Conditional | `ck:sequential-thinking` | Multi-step reasoning |
 | Conditional | `ck:docs-seeker` | When library / framework docs needed |
+| Conditional | `/ck:frontend-design` (→ `ck:ui-ux-pro-max`) | `--html` — compose the `plan.html` artifact |
+| Conditional | `agentwiki` CLI / AgentWiki MCP | `--wiki` — publish reviewed docs or `plan.html` |
+| Conditional | `gh` CLI | `--github` — create/update issue + `ready to review` label |
 | End-of-flow | `/ck:journal` | After plan finalized |
 
 ## Sub-agents Spawned
@@ -122,7 +142,7 @@ Red-team scaling:
 - Default: ON. Skip with `--no-tasks` or when plan has <3 phases.
 - `TaskCreate` per phase with `addBlockedBy` chain.
 - `TaskCreate` for critical / high-risk steps inside phases.
-- Metadata: `phase`, `priority`, `effort`, `planDir`, `phaseFile`.
+- Metadata: `phase`, `priority`, `planDir`, `phaseFile`.
 - Cook picks up via `TaskList` (same session) or re-hydrates from plan files (new session).
 - Fallback: if `TaskCreate` / `TaskUpdate` errors (VSCode extension), drop to `TodoWrite`. Plan files remain source of truth.
 

@@ -1,11 +1,11 @@
 {
   "$schema": "./skills-registry.schema.json",
-  "lastBuilt": "2026-04-29T08:25:11Z",
+  "lastBuilt": "2026-06-23T06:14:09Z",
   "upstreamShas": {
-    "stable": "882654f716b2d0647810d3c80dc391d5099b3dc0",
-    "beta": "9025fdbb62cb0f0ac5ad5d2915b791ac2094b713",
-    "marketing-stable": "61822f3749fc834c57edda1137140f6a488aa2a5",
-    "marketing-beta": "fbde0085558143a445be54868ba0c8c63b0e50c6"
+    "stable": "ed8a1fa7a9dbc7135311fdd334c762dbe63e2c91",
+    "beta": "9180f95d579fbcd73500dad5db3555e61b9288e5",
+    "marketing-stable": "11c5eb055e7b0e6061bbaccfd0a468a8dac73c0c",
+    "marketing-beta": "570b4003299b85af6ebf1af99409762b645a6ba9"
   },
   "summary": {
     "totalSkills": 131,
@@ -15,8 +15,8 @@
     "totalCommands": 78,
     "marketerCommands": 78,
     "engineerCommands": 0,
-    "totalAgents": 45,
-    "engineerAgents": 14,
+    "totalAgents": 44,
+    "engineerAgents": 13,
     "marketerAgents": 31
   },
   "skills": [
@@ -428,22 +428,32 @@
       "kit": "engineer",
       "channels": {
         "stable": {
-          "version": "2.0.0",
-          "argumentHint": "[topic or problem]",
+          "version": "2.4.0",
+          "argumentHint": "[--html] [--wiki] [topic or problem]",
           "args": [
+            "[--html]",
+            "[--wiki]",
             "[topic or problem]"
           ],
-          "flags": [],
+          "flags": [
+            "--html",
+            "--wiki"
+          ],
           "deprecated": false,
           "description": "Brainstorm solutions with trade-off analysis and brutal honesty"
         },
         "beta": {
-          "version": null,
-          "argumentHint": "[topic or problem]",
+          "version": "2.4.0",
+          "argumentHint": "[--html] [--wiki] [topic or problem]",
           "args": [
+            "[--html]",
+            "[--wiki]",
             "[topic or problem]"
           ],
-          "flags": [],
+          "flags": [
+            "--html",
+            "--wiki"
+          ],
           "deprecated": false,
           "description": "Brainstorm solutions with trade-off analysis and brutal honesty"
         },
@@ -1089,7 +1099,7 @@
       "kit": "engineer",
       "channels": {
         "stable": {
-          "version": "2.1.0",
+          "version": "2.0.0",
           "argumentHint": "[issue] --auto|--review|--quick|--parallel",
           "args": [
             "[issue]"
@@ -1104,7 +1114,7 @@
           "description": "Fix bugs, errors, test failures, and CI/CD issues with intelligent routing"
         },
         "beta": {
-          "version": "2.1.0",
+          "version": null,
           "argumentHint": "[issue] --auto|--review|--quick|--parallel",
           "args": [
             "[issue]"
@@ -1898,43 +1908,55 @@
       "kit": "engineer",
       "channels": {
         "stable": {
-          "version": "1.0.0",
-          "argumentHint": "[task] [--fast|--hard|--deep|--parallel|--two] [--tdd|--no-tasks] OR [archive|red-team|validate]",
+          "version": "1.1.0",
+          "argumentHint": "[task] [--fast|--hard|--deep|--parallel|--two] [--tdd|--no-tasks] [--html] [--github] [--wiki] OR [archive|red-team|validate]",
           "args": [
             "[task]",
             "[--fast|--hard|--deep|--parallel|--two]",
             "[--tdd|--no-tasks]",
+            "[--html]",
+            "[--github]",
+            "[--wiki]",
             "[archive|red-team|validate]"
           ],
           "flags": [
             "--deep",
             "--fast",
+            "--github",
             "--hard",
+            "--html",
             "--no-tasks",
             "--parallel",
             "--tdd",
-            "--two"
+            "--two",
+            "--wiki"
           ],
           "deprecated": false,
           "description": "Plan implementations, design architectures, create technical roadmaps with detailed phases"
         },
         "beta": {
-          "version": null,
-          "argumentHint": "[task] [--fast|--hard|--deep|--parallel|--two] [--tdd|--no-tasks] OR [archive|red-team|validate]",
+          "version": "1.1.0",
+          "argumentHint": "[task] [--fast|--hard|--deep|--parallel|--two] [--tdd|--no-tasks] [--html] [--github] [--wiki] OR [archive|red-team|validate]",
           "args": [
             "[task]",
             "[--fast|--hard|--deep|--parallel|--two]",
             "[--tdd|--no-tasks]",
+            "[--html]",
+            "[--github]",
+            "[--wiki]",
             "[archive|red-team|validate]"
           ],
           "flags": [
             "--deep",
             "--fast",
+            "--github",
             "--hard",
+            "--html",
             "--no-tasks",
             "--parallel",
             "--tdd",
-            "--two"
+            "--two",
+            "--wiki"
           ],
           "deprecated": false,
           "description": "Plan implementations, design architectures, create technical roadmaps with detailed phases"
@@ -4890,14 +4912,6 @@
       "kit": "marketer",
       "parent": "ckm",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[type]",
-          "args": [
-            "[type]"
-          ],
-          "flags": [],
-          "description": "💡💡 Analytics and performance reports"
-        },
         "marketing-beta": {
           "argumentHint": "[type]",
           "args": [
@@ -4914,14 +4928,6 @@
       "kit": "marketer",
       "parent": "ckm:analyze",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[period]",
-          "args": [
-            "[period]"
-          ],
-          "flags": [],
-          "description": "💡💡 Generate periodic reports"
-        },
         "marketing-beta": {
           "argumentHint": "[period]",
           "args": [
@@ -4938,14 +4944,6 @@
       "kit": "marketer",
       "parent": "ckm",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[technical-question]",
-          "args": [
-            "[technical-question]"
-          ],
-          "flags": [],
-          "description": "💡 Answer technical and architectural questions."
-        },
         "marketing-beta": {
           "argumentHint": "[technical-question]",
           "args": [
@@ -4962,14 +4960,6 @@
       "kit": "marketer",
       "parent": "ckm:brand",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[theme-name] or interactive",
-          "args": [
-            "[theme-name]"
-          ],
-          "flags": [],
-          "description": "🎨 Update brand identity and sync to all design systems"
-        },
         "marketing-beta": {
           "argumentHint": "[theme-name] or interactive",
           "args": [
@@ -4986,15 +4976,6 @@
       "kit": "marketer",
       "parent": "ckm",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[action] [name]",
-          "args": [
-            "[action]",
-            "[name]"
-          ],
-          "flags": [],
-          "description": "💡💡 Create and manage marketing campaigns"
-        },
         "marketing-beta": {
           "argumentHint": "[action] [name]",
           "args": [
@@ -5012,14 +4993,6 @@
       "kit": "marketer",
       "parent": "ckm:campaign",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[campaign-name]",
-          "args": [
-            "[campaign-name]"
-          ],
-          "flags": [],
-          "description": "💡💡 Analyze campaign performance"
-        },
         "marketing-beta": {
           "argumentHint": "[campaign-name]",
           "args": [
@@ -5036,14 +5009,6 @@
       "kit": "marketer",
       "parent": "ckm:campaign",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[campaign-type-or-brief]",
-          "args": [
-            "[campaign-type-or-brief]"
-          ],
-          "flags": [],
-          "description": "💡💡💡 Create comprehensive digital marketing campaign"
-        },
         "marketing-beta": {
           "argumentHint": "[campaign-type-or-brief]",
           "args": [
@@ -5060,14 +5025,6 @@
       "kit": "marketer",
       "parent": "ckm:campaign",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[action]",
-          "args": [
-            "[action]"
-          ],
-          "flags": [],
-          "description": "💡💡 Email campaign management"
-        },
         "marketing-beta": {
           "argumentHint": "[action]",
           "args": [
@@ -5084,14 +5041,6 @@
       "kit": "marketer",
       "parent": "ckm:campaign",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[campaign-name]",
-          "args": [
-            "[campaign-name]"
-          ],
-          "flags": [],
-          "description": "💡 Get campaign status"
-        },
         "marketing-beta": {
           "argumentHint": "[campaign-name]",
           "args": [
@@ -5108,15 +5057,6 @@
       "kit": "marketer",
       "parent": "ckm",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[action] [url]",
-          "args": [
-            "[action]",
-            "[url]"
-          ],
-          "flags": [],
-          "description": "💡💡 Competitive analysis"
-        },
         "marketing-beta": {
           "argumentHint": "[action] [url]",
           "args": [
@@ -5134,12 +5074,6 @@
       "kit": "marketer",
       "parent": "ckm",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "",
-          "args": [],
-          "flags": [],
-          "description": ""
-        },
         "marketing-beta": {
           "argumentHint": "",
           "args": [],
@@ -5154,12 +5088,6 @@
       "kit": "marketer",
       "parent": "ckm:dashboard",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[]",
-          "args": [],
-          "flags": [],
-          "description": "Check Marketing Dashboard server status"
-        },
         "marketing-beta": {
           "argumentHint": "[]",
           "args": [],
@@ -5174,12 +5102,6 @@
       "kit": "marketer",
       "parent": "ckm:docs",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "",
-          "args": [],
-          "flags": [],
-          "description": "💡💡💡💡 Analyze the codebase and create initial documentation"
-        },
         "marketing-beta": {
           "argumentHint": "",
           "args": [],
@@ -5194,14 +5116,6 @@
       "kit": "marketer",
       "parent": "ckm:docs",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[additional-prompts]",
-          "args": [
-            "[additional-prompts]"
-          ],
-          "flags": [],
-          "description": "💡💡💡 Generate llms.txt based on the current codebase"
-        },
         "marketing-beta": {
           "argumentHint": "[additional-prompts]",
           "args": [
@@ -5218,15 +5132,6 @@
       "kit": "marketer",
       "parent": "ckm:docs",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[focused-topics] [should-scan-codebase]",
-          "args": [
-            "[focused-topics]",
-            "[should-scan-codebase]"
-          ],
-          "flags": [],
-          "description": "💡 Analyze the codebase and update documentation"
-        },
         "marketing-beta": {
           "argumentHint": "[focused-topics] [should-scan-codebase]",
           "args": [
@@ -5244,12 +5149,6 @@
       "kit": "marketer",
       "parent": "ckm:docs",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "",
-          "args": [],
-          "flags": [],
-          "description": "💡💡💡 Analyze the codebase and update documentation"
-        },
         "marketing-beta": {
           "argumentHint": "",
           "args": [],
@@ -5264,14 +5163,6 @@
       "kit": "marketer",
       "parent": "ckm",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[type]",
-          "args": [
-            "[type]"
-          ],
-          "flags": [],
-          "description": "💡💡 Generate email content"
-        },
         "marketing-beta": {
           "argumentHint": "[type]",
           "args": [
@@ -5288,14 +5179,6 @@
       "kit": "marketer",
       "parent": "ckm:email",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "<flow-type> [goal]",
-          "args": [
-            "[goal]"
-          ],
-          "flags": [],
-          "description": "Generate complete email automation sequence"
-        },
         "marketing-beta": {
           "argumentHint": "<flow-type> [goal]",
           "args": [
@@ -5312,14 +5195,6 @@
       "kit": "marketer",
       "parent": "ckm:email",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "<type> \"[context]",
-          "args": [
-            "[context]"
-          ],
-          "flags": [],
-          "description": "Generate complete email drip sequence with copy"
-        },
         "marketing-beta": {
           "argumentHint": "<type> \"[context]",
           "args": [
@@ -5336,15 +5211,6 @@
       "kit": "marketer",
       "parent": "ckm",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[action] [type]",
-          "args": [
-            "[action]",
-            "[type]"
-          ],
-          "flags": [],
-          "description": "💡💡 Funnel design and optimization"
-        },
         "marketing-beta": {
           "argumentHint": "[action] [type]",
           "args": [
@@ -5362,17 +5228,6 @@
       "kit": "marketer",
       "parent": "ckm",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[--stop|--scan]",
-          "args": [
-            "[--stop|--scan]"
-          ],
-          "flags": [
-            "--scan",
-            "--stop"
-          ],
-          "description": "Open Content Hub + Marketing Dashboard"
-        },
         "marketing-beta": {
           "argumentHint": "[--stop|--scan]",
           "args": [
@@ -5392,14 +5247,6 @@
       "kit": "marketer",
       "parent": "ckm",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[prompt]",
-          "args": [
-            "[prompt]"
-          ],
-          "flags": [],
-          "description": "💡💡💡💡 Initialize marketing project"
-        },
         "marketing-beta": {
           "argumentHint": "[prompt]",
           "args": [
@@ -5416,12 +5263,6 @@
       "kit": "marketer",
       "parent": "ckm",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "",
-          "args": [],
-          "flags": [],
-          "description": "💡 Write some journal entries."
-        },
         "marketing-beta": {
           "argumentHint": "",
           "args": [],
@@ -5436,12 +5277,6 @@
       "kit": "marketer",
       "parent": "ckm",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "",
-          "args": [],
-          "flags": [],
-          "description": "Plans directory (default: ./plans)"
-        },
         "marketing-beta": {
           "argumentHint": "",
           "args": [],
@@ -5456,14 +5291,6 @@
       "kit": "marketer",
       "parent": "ckm",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[action]",
-          "args": [
-            "[action]"
-          ],
-          "flags": [],
-          "description": "💡💡 Customer persona management"
-        },
         "marketing-beta": {
           "argumentHint": "[action]",
           "args": [
@@ -5480,14 +5307,6 @@
       "kit": "marketer",
       "parent": "ckm",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[task]",
-          "args": [
-            "[task]"
-          ],
-          "flags": [],
-          "description": "💡💡💡 Intelligent plan creation with prompt enhancement"
-        },
         "marketing-beta": {
           "argumentHint": "[task]",
           "args": [
@@ -5504,14 +5323,6 @@
       "kit": "marketer",
       "parent": "ckm:plan",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[path-to-plan] (default: all plans)",
-          "args": [
-            "[path-to-plan]"
-          ],
-          "flags": [],
-          "description": "Write journal entries and archive specific plans or all plans"
-        },
         "marketing-beta": {
           "argumentHint": "[path-to-plan] (default: all plans)",
           "args": [
@@ -5528,14 +5339,6 @@
       "kit": "marketer",
       "parent": "ckm:plan",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[github-actions-url]",
-          "args": [
-            "[github-actions-url]"
-          ],
-          "flags": [],
-          "description": "Analyze Github Actions logs and provide a plan to fix the issues"
-        },
         "marketing-beta": {
           "argumentHint": "[github-actions-url]",
           "args": [
@@ -5552,14 +5355,6 @@
       "kit": "marketer",
       "parent": "ckm:plan",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[issues]",
-          "args": [
-            "[issues]"
-          ],
-          "flags": [],
-          "description": "Create a CRO plan for the given content"
-        },
         "marketing-beta": {
           "argumentHint": "[issues]",
           "args": [
@@ -5576,14 +5371,6 @@
       "kit": "marketer",
       "parent": "ckm:plan",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[task]",
-          "args": [
-            "[task]"
-          ],
-          "flags": [],
-          "description": "💡💡 No research. Only analyze and create an implementation plan"
-        },
         "marketing-beta": {
           "argumentHint": "[task]",
           "args": [
@@ -5600,14 +5387,6 @@
       "kit": "marketer",
       "parent": "ckm:plan",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[task]",
-          "args": [
-            "[task]"
-          ],
-          "flags": [],
-          "description": "💡💡💡 Research, analyze, and create an implementation plan"
-        },
         "marketing-beta": {
           "argumentHint": "[task]",
           "args": [
@@ -5624,14 +5403,6 @@
       "kit": "marketer",
       "parent": "ckm:plan",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[task]",
-          "args": [
-            "[task]"
-          ],
-          "flags": [],
-          "description": "💡💡💡 Create detailed plan with parallel-executable phases"
-        },
         "marketing-beta": {
           "argumentHint": "[task]",
           "args": [
@@ -5648,14 +5419,6 @@
       "kit": "marketer",
       "parent": "ckm:plan",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[task]",
-          "args": [
-            "[task]"
-          ],
-          "flags": [],
-          "description": "💡💡💡💡 Research & create an implementation plan with 2 approaches"
-        },
         "marketing-beta": {
           "argumentHint": "[task]",
           "args": [
@@ -5672,14 +5435,6 @@
       "kit": "marketer",
       "parent": "ckm:plan",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[plan-path]",
-          "args": [
-            "[plan-path]"
-          ],
-          "flags": [],
-          "description": "Validate plan with critical questions interview"
-        },
         "marketing-beta": {
           "argumentHint": "[plan-path]",
           "args": [
@@ -5696,15 +5451,6 @@
       "kit": "marketer",
       "parent": "ckm",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[create|next|status|list|blocked|learn|reset|gate|templates|goals] [args]",
-          "args": [
-            "[create|next|status|list|blocked|learn|reset|gate|templates|goals]",
-            "[args]"
-          ],
-          "flags": [],
-          "description": "Marketing playbook orchestrator — expert strategy, AI execution, goal tracking"
-        },
         "marketing-beta": {
           "argumentHint": "[create|next|status|list|blocked|learn|reset|gate|templates|goals] [args]",
           "args": [
@@ -5722,16 +5468,6 @@
       "kit": "marketer",
       "parent": "ckm:play",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "<name> [--template <id>]",
-          "args": [
-            "[--template <id>]"
-          ],
-          "flags": [
-            "--template"
-          ],
-          "description": "Create a new marketing playbook from expert template"
-        },
         "marketing-beta": {
           "argumentHint": "<name> [--template <id>]",
           "args": [
@@ -5750,15 +5486,6 @@
       "kit": "marketer",
       "parent": "ckm:play",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[set|pull] [args]",
-          "args": [
-            "[set|pull]",
-            "[args]"
-          ],
-          "flags": [],
-          "description": "Goal tracker — set targets, pull metrics, view progress"
-        },
         "marketing-beta": {
           "argumentHint": "[set|pull] [args]",
           "args": [
@@ -5776,14 +5503,6 @@
       "kit": "marketer",
       "parent": "ckm:play",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[playbook-name]",
-          "args": [
-            "[playbook-name]"
-          ],
-          "flags": [],
-          "description": "Show and execute next ready playbook step"
-        },
         "marketing-beta": {
           "argumentHint": "[playbook-name]",
           "args": [
@@ -5800,14 +5519,6 @@
       "kit": "marketer",
       "parent": "ckm:play",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[playbook-name]",
-          "args": [
-            "[playbook-name]"
-          ],
-          "flags": [],
-          "description": "Show playbook progress dashboard"
-        },
         "marketing-beta": {
           "argumentHint": "[playbook-name]",
           "args": [
@@ -5824,12 +5535,6 @@
       "kit": "marketer",
       "parent": "ckm",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "",
-          "args": [],
-          "flags": [],
-          "description": "Path to file or directory to preview"
-        },
         "marketing-beta": {
           "argumentHint": "",
           "args": [],
@@ -5844,15 +5549,6 @@
       "kit": "marketer",
       "parent": "ckm",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[action] [target]",
-          "args": [
-            "[action]",
-            "[target]"
-          ],
-          "flags": [],
-          "description": "💡💡 SEO audit and optimization"
-        },
         "marketing-beta": {
           "argumentHint": "[action] [target]",
           "args": [
@@ -5870,14 +5566,6 @@
       "kit": "marketer",
       "parent": "ckm:seo",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[url]",
-          "args": [
-            "[url]"
-          ],
-          "flags": [],
-          "description": "💡💡 Technical SEO audit"
-        },
         "marketing-beta": {
           "argumentHint": "[url]",
           "args": [
@@ -5894,14 +5582,6 @@
       "kit": "marketer",
       "parent": "ckm:seo",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[topic]",
-          "args": [
-            "[topic]"
-          ],
-          "flags": [],
-          "description": "💡💡 Keyword research & planning"
-        },
         "marketing-beta": {
           "argumentHint": "[topic]",
           "args": [
@@ -5918,14 +5598,6 @@
       "kit": "marketer",
       "parent": "ckm:seo",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[template-type]",
-          "args": [
-            "[template-type]"
-          ],
-          "flags": [],
-          "description": "💡💡 Programmatic SEO template generation"
-        },
         "marketing-beta": {
           "argumentHint": "[template-type]",
           "args": [
@@ -5942,15 +5614,6 @@
       "kit": "marketer",
       "parent": "ckm:skill",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[skill-name] [reference-or-script-prompt]",
-          "args": [
-            "[skill-name]",
-            "[reference-or-script-prompt]"
-          ],
-          "flags": [],
-          "description": "Add new reference files or scripts to a skill"
-        },
         "marketing-beta": {
           "argumentHint": "[skill-name] [reference-or-script-prompt]",
           "args": [
@@ -5968,14 +5631,6 @@
       "kit": "marketer",
       "parent": "ckm:skill",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[prompt-or-llms-or-github-url]",
-          "args": [
-            "[prompt-or-llms-or-github-url]"
-          ],
-          "flags": [],
-          "description": "Create a new agent skill"
-        },
         "marketing-beta": {
           "argumentHint": "[prompt-or-llms-or-github-url]",
           "args": [
@@ -5992,14 +5647,6 @@
       "kit": "marketer",
       "parent": "ckm:skill",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[prompt-or-path-to-skill]",
-          "args": [
-            "[prompt-or-path-to-skill]"
-          ],
-          "flags": [],
-          "description": "Fix the agent skill based on `logs.txt` file."
-        },
         "marketing-beta": {
           "argumentHint": "[prompt-or-path-to-skill]",
           "args": [
@@ -6016,15 +5663,6 @@
       "kit": "marketer",
       "parent": "ckm:skill",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[skill-name] [prompt]",
-          "args": [
-            "[skill-name]",
-            "[prompt]"
-          ],
-          "flags": [],
-          "description": "Optimize an existing agent skill"
-        },
         "marketing-beta": {
           "argumentHint": "[skill-name] [prompt]",
           "args": [
@@ -6042,15 +5680,6 @@
       "kit": "marketer",
       "parent": "ckm:skill:optimize",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[skill-name] [prompt]",
-          "args": [
-            "[skill-name]",
-            "[prompt]"
-          ],
-          "flags": [],
-          "description": "Optimize an existing agent skill [auto]"
-        },
         "marketing-beta": {
           "argumentHint": "[skill-name] [prompt]",
           "args": [
@@ -6068,15 +5697,6 @@
       "kit": "marketer",
       "parent": "ckm:skill",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[skill-name] [prompt]",
-          "args": [
-            "[skill-name]",
-            "[prompt]"
-          ],
-          "flags": [],
-          "description": "Plan to create a new agent skill"
-        },
         "marketing-beta": {
           "argumentHint": "[skill-name] [prompt]",
           "args": [
@@ -6094,15 +5714,6 @@
       "kit": "marketer",
       "parent": "ckm:skill",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[skill-name] [prompt]",
-          "args": [
-            "[skill-name]",
-            "[prompt]"
-          ],
-          "flags": [],
-          "description": "Update an existing agent skill [auto]"
-        },
         "marketing-beta": {
           "argumentHint": "[skill-name] [prompt]",
           "args": [
@@ -6120,14 +5731,6 @@
       "kit": "marketer",
       "parent": "ckm:slides",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[presentation goal and context]",
-          "args": [
-            "[presentation goal and context]"
-          ],
-          "flags": [],
-          "description": "Create strategic presentation slides with Chart.js and design tokens"
-        },
         "marketing-beta": {
           "argumentHint": "[presentation goal and context]",
           "args": [
@@ -6144,15 +5747,6 @@
       "kit": "marketer",
       "parent": "ckm",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[platform] [type]",
-          "args": [
-            "[platform]",
-            "[type]"
-          ],
-          "flags": [],
-          "description": "💡💡 Social media content generation"
-        },
         "marketing-beta": {
           "argumentHint": "[platform] [type]",
           "args": [
@@ -6170,14 +5764,6 @@
       "kit": "marketer",
       "parent": "ckm:social",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[period]",
-          "args": [
-            "[period]"
-          ],
-          "flags": [],
-          "description": "💡 Schedule social media posts"
-        },
         "marketing-beta": {
           "argumentHint": "[period]",
           "args": [
@@ -6194,12 +5780,6 @@
       "kit": "marketer",
       "parent": "ckm:storage",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "",
-          "args": [],
-          "flags": [],
-          "description": ""
-        },
         "marketing-beta": {
           "argumentHint": "",
           "args": [],
@@ -6214,12 +5794,6 @@
       "kit": "marketer",
       "parent": "ckm:storage",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "",
-          "args": [],
-          "flags": [],
-          "description": ""
-        },
         "marketing-beta": {
           "argumentHint": "",
           "args": [],
@@ -6234,12 +5808,6 @@
       "kit": "marketer",
       "parent": "ckm:storage",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "",
-          "args": [],
-          "flags": [],
-          "description": ""
-        },
         "marketing-beta": {
           "argumentHint": "",
           "args": [],
@@ -6254,12 +5822,6 @@
       "kit": "marketer",
       "parent": "ckm:storage",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "",
-          "args": [],
-          "flags": [],
-          "description": ""
-        },
         "marketing-beta": {
           "argumentHint": "",
           "args": [],
@@ -6274,15 +5836,6 @@
       "kit": "marketer",
       "parent": "ckm:test",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[url] [options]",
-          "args": [
-            "[url]",
-            "[options]"
-          ],
-          "flags": [],
-          "description": "💡💡 Run UI tests on a website & generate a detailed report."
-        },
         "marketing-beta": {
           "argumentHint": "[url] [options]",
           "args": [
@@ -6300,14 +5853,6 @@
       "kit": "marketer",
       "parent": "ckm:test",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[workflow: youtube|content|email|brand|all]",
-          "args": [
-            "[workflow: youtube|content|email|brand|all]"
-          ],
-          "flags": [],
-          "description": "Run workflow tests with step-by-step manual verification"
-        },
         "marketing-beta": {
           "argumentHint": "[workflow: youtube|content|email|brand|all]",
           "args": [
@@ -6324,14 +5869,6 @@
       "kit": "marketer",
       "parent": "ckm",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[task]",
-          "args": [
-            "[task]"
-          ],
-          "flags": [],
-          "description": "Utilize tools of Model Context Protocol (MCP) servers"
-        },
         "marketing-beta": {
           "argumentHint": "[task]",
           "args": [
@@ -6348,14 +5885,6 @@
       "kit": "marketer",
       "parent": "ckm:video",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[script-file-or-storyboard-or-prompt]",
-          "args": [
-            "[script-file-or-storyboard-or-prompt]"
-          ],
-          "flags": [],
-          "description": "💡💡 Create a video using Veo 3.1"
-        },
         "marketing-beta": {
           "argumentHint": "[script-file-or-storyboard-or-prompt]",
           "args": [
@@ -6372,15 +5901,6 @@
       "kit": "marketer",
       "parent": "ckm:video:script",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[type] [topic]",
-          "args": [
-            "[type]",
-            "[topic]"
-          ],
-          "flags": [],
-          "description": "💡💡 Create a production-ready video script with creative direction"
-        },
         "marketing-beta": {
           "argumentHint": "[type] [topic]",
           "args": [
@@ -6398,14 +5918,6 @@
       "kit": "marketer",
       "parent": "ckm:video:storyboard",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[script-file-or-prompt]",
-          "args": [
-            "[script-file-or-prompt]"
-          ],
-          "flags": [],
-          "description": "💡💡 Create a storyboard for video content"
-        },
         "marketing-beta": {
           "argumentHint": "[script-file-or-prompt]",
           "args": [
@@ -6422,12 +5934,6 @@
       "kit": "marketer",
       "parent": "ckm",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "",
-          "args": [],
-          "flags": [],
-          "description": "💡 Review recent changes and wrap up the work"
-        },
         "marketing-beta": {
           "argumentHint": "",
           "args": [],
@@ -6442,16 +5948,6 @@
       "kit": "marketer",
       "parent": "ckm",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[feature-description] OR [project] [feature] (monorepo)",
-          "args": [
-            "[feature-description]",
-            "[project]",
-            "[feature]"
-          ],
-          "flags": [],
-          "description": "Create isolated git worktree for parallel development"
-        },
         "marketing-beta": {
           "argumentHint": "[feature-description] OR [project] [feature] (monorepo)",
           "args": [
@@ -6470,12 +5966,6 @@
       "kit": "marketer",
       "parent": "ckm:write",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "<file-path>",
-          "args": [],
-          "flags": [],
-          "description": "Audit content quality against copywriting, SEO, and platform standards"
-        },
         "marketing-beta": {
           "argumentHint": "<file-path>",
           "args": [],
@@ -6490,14 +5980,6 @@
       "kit": "marketer",
       "parent": "ckm:write",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[topic]",
-          "args": [
-            "[topic]"
-          ],
-          "flags": [],
-          "description": "💡💡 Create SEO-optimized blog content"
-        },
         "marketing-beta": {
           "argumentHint": "[topic]",
           "args": [
@@ -6514,14 +5996,6 @@
       "kit": "marketer",
       "parent": "ckm:write:blog",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[youtube-url]",
-          "args": [
-            "[youtube-url]"
-          ],
-          "flags": [],
-          "description": "💡💡 Generate SEO-optimized blog article from YouTube video"
-        },
         "marketing-beta": {
           "argumentHint": "[youtube-url]",
           "args": [
@@ -6538,14 +6012,6 @@
       "kit": "marketer",
       "parent": "ckm:write",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[issues]",
-          "args": [
-            "[issues]"
-          ],
-          "flags": [],
-          "description": "Analyze the current content and optimize for conversion"
-        },
         "marketing-beta": {
           "argumentHint": "[issues]",
           "args": [
@@ -6562,14 +6028,6 @@
       "kit": "marketer",
       "parent": "ckm:write",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[issues]",
-          "args": [
-            "[issues]"
-          ],
-          "flags": [],
-          "description": "Analyze the current copy issues and enhance it"
-        },
         "marketing-beta": {
           "argumentHint": "[issues]",
           "args": [
@@ -6586,14 +6044,6 @@
       "kit": "marketer",
       "parent": "ckm:write",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[user-request]",
-          "args": [
-            "[user-request]"
-          ],
-          "flags": [],
-          "description": "Write creative & smart copy [FAST]"
-        },
         "marketing-beta": {
           "argumentHint": "[user-request]",
           "args": [
@@ -6610,12 +6060,6 @@
       "kit": "marketer",
       "parent": "ckm:write",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "<formula> \"<topic>",
-          "args": [],
-          "flags": [],
-          "description": "Generate copy using proven copywriting formulas (AIDA, PAS, BAB, etc.)"
-        },
         "marketing-beta": {
           "argumentHint": "<formula> \"<topic>",
           "args": [],
@@ -6630,14 +6074,6 @@
       "kit": "marketer",
       "parent": "ckm:write",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "[user-request]",
-          "args": [
-            "[user-request]"
-          ],
-          "flags": [],
-          "description": "Write good creative & smart copy [GOOD]"
-        },
         "marketing-beta": {
           "argumentHint": "[user-request]",
           "args": [
@@ -6654,12 +6090,6 @@
       "kit": "marketer",
       "parent": "ckm:write",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "<file-path>",
-          "args": [],
-          "flags": [],
-          "description": "Audit content, auto-fix issues, output publish-ready version"
-        },
         "marketing-beta": {
           "argumentHint": "<file-path>",
           "args": [],
@@ -6674,14 +6104,6 @@
       "kit": "marketer",
       "parent": "ckm:youtube",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "<youtube-url> [writing-style]",
-          "args": [
-            "[writing-style]"
-          ],
-          "flags": [],
-          "description": "Convert YouTube video to SEO-optimized blog post"
-        },
         "marketing-beta": {
           "argumentHint": "<youtube-url> [writing-style]",
           "args": [
@@ -6698,14 +6120,6 @@
       "kit": "marketer",
       "parent": "ckm:youtube",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "<youtube-url> [style]",
-          "args": [
-            "[style]"
-          ],
-          "flags": [],
-          "description": "Convert YouTube video to visual infographic"
-        },
         "marketing-beta": {
           "argumentHint": "<youtube-url> [style]",
           "args": [
@@ -6722,14 +6136,6 @@
       "kit": "marketer",
       "parent": "ckm:youtube",
       "channels": {
-        "marketing-stable": {
-          "argumentHint": "<youtube-url> [platforms]",
-          "args": [
-            "[platforms]"
-          ],
-          "flags": [],
-          "description": "Convert YouTube video to multi-platform social posts"
-        },
         "marketing-beta": {
           "argumentHint": "<youtube-url> [platforms]",
           "args": [
@@ -7116,48 +6522,6 @@
       }
     },
     {
-      "name": "mcp-manager",
-      "kit": "engineer",
-      "channels": {
-        "stable": {
-          "description": "Manage MCP (Model Context Protocol) server integrations - discover tools/prompts/resources, analyze relevance for tasks, and execute MCP capabilities. Use when need to work with MCP servers, discover available MCP tools, filter MCP capabilities for specific tasks, execute MCP tools programmatically, or implement MCP client functionality. Keeps main context clean by handling MCP discovery in subagent context.",
-          "model": "haiku",
-          "memory": null,
-          "tools": [
-            "Glob",
-            "Grep",
-            "Read",
-            "Bash",
-            "WebFetch",
-            "WebSearch",
-            "TaskCreate",
-            "TaskGet",
-            "TaskUpdate",
-            "TaskList",
-            "SendMessage"
-          ]
-        },
-        "beta": {
-          "description": "Manage MCP (Model Context Protocol) server integrations - discover tools/prompts/resources, analyze relevance for tasks, and execute MCP capabilities. Use when need to work with MCP servers, discover available MCP tools, filter MCP capabilities for specific tasks, execute MCP tools programmatically, or implement MCP client functionality. Keeps main context clean by handling MCP discovery in subagent context.",
-          "model": "haiku",
-          "memory": null,
-          "tools": [
-            "Glob",
-            "Grep",
-            "Read",
-            "Bash",
-            "WebFetch",
-            "WebSearch",
-            "TaskCreate",
-            "TaskGet",
-            "TaskUpdate",
-            "TaskList",
-            "SendMessage"
-          ]
-        }
-      }
-    },
-    {
       "name": "planner",
       "kit": "engineer",
       "channels": {
@@ -7421,12 +6785,6 @@
       "name": "analytics-analyst",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Use this agent for performance reporting and marketing insights. This includes campaign performance reports, traffic analysis, conversion tracking, custom event analysis, and trend identification. Examples:\\n\\n<example>\\nContext: User needs a marketing performance report.\\nuser: \"Generate a monthly marketing performance report\"\\nassistant: \"I'll use the analytics-analyst agent to create your performance report\"\\n</example>\\n\\n<example>\\nContext: User wants to understand traffic patterns.\\nuser: \"Analyze our website traffic trends\"\\nassistant: \"I'll launch the analytics-analyst agent to analyze traffic patterns\"\\n</example>",
-          "model": "haiku",
-          "memory": null,
-          "tools": []
-        },
         "marketing-beta": {
           "description": "Use this agent for performance reporting and marketing insights. This includes campaign performance reports, traffic analysis, conversion tracking, custom event analysis, and trend identification. Examples:\\n\\n<example>\\nContext: User needs a marketing performance report.\\nuser: \"Generate a monthly marketing performance report\"\\nassistant: \"I''ll use the analytics-analyst agent to create your performance report\"\\n</example>\\n\\n<example>\\nContext: User wants to understand traffic patterns.\\nuser: \"Analyze our website traffic trends\"\\nassistant: \"I''ll launch the analytics-analyst agent to analyze traffic patterns\"\\n</example>",
           "model": "haiku",
@@ -7439,12 +6797,6 @@
       "name": "attraction-specialist",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Use this agent for lead generation, top-of-funnel content, and competitor intelligence. This includes keyword research, gap analysis, landing page content, programmatic SEO templates, and lead magnet ideation. Examples:\\n\\n<example>\\nContext: User needs to attract more leads to their SaaS product.\\nuser: \"I need to improve our lead generation strategy\"\\nassistant: \"I'll use the attraction-specialist agent to analyze opportunities and create TOFU content strategies\"\\n</example>\\n\\n<example>\\nContext: User wants competitor keyword analysis.\\nuser: \"What keywords are our competitors ranking for that we're missing?\"\\nassistant: \"I'll launch the attraction-specialist agent to perform keyword gap analysis\"\\n</example>",
-          "model": "sonnet",
-          "memory": null,
-          "tools": []
-        },
         "marketing-beta": {
           "description": "Use this agent for lead generation, top-of-funnel content, and competitor intelligence. This includes keyword research, gap analysis, landing page content, programmatic SEO templates, and lead magnet ideation. Examples:\\n\\n<example>\\nContext: User needs to attract more leads to their SaaS product.\\nuser: \"I need to improve our lead generation strategy\"\\nassistant: \"I''ll use the attraction-specialist agent to analyze opportunities and create TOFU content strategies\"\\n</example>\\n\\n<example>\\nContext: User wants competitor keyword analysis.\\nuser: \"What keywords are our competitors ranking for that we''re missing?\"\\nassistant: \"I''ll launch the attraction-specialist agent to perform keyword gap analysis\"\\n</example>",
           "model": "sonnet",
@@ -7457,12 +6809,6 @@
       "name": "campaign-debugger",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Use this agent when you need to investigate marketing issues, analyze campaign behavior, diagnose performance problems, examine analytics data, collect and analyze marketing metrics, or optimize campaign performance. This includes troubleshooting underperforming campaigns, identifying conversion bottlenecks, analyzing failed ad deployments, investigating tracking issues, and creating diagnostic reports. Examples:\\n\\n<example>\\nContext: The user needs to investigate why an ad campaign is underperforming.\\nuser: \"Our Facebook ad campaign conversion rate dropped 50%\"\\nassistant: \"I'll use the campaign-debugger agent to investigate this issue\"\\n<commentary>\\nSince this involves investigating a campaign issue, use the Task tool to launch the campaign-debugger agent.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: The user wants to analyze why email open rates are declining.\\nuser: \"Our email campaign open rates have been steadily declining\"\\nassistant: \"Let me use the campaign-debugger agent to analyze the email campaign metrics and identify the issue\"\\n<commentary>\\nThis requires analyzing campaign metrics and patterns, so use the campaign-debugger agent.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: The user notices funnel conversion drop.\\nuser: \"The landing page to checkout conversion dropped from 5% to 2%\"\\nassistant: \"I'll launch the campaign-debugger agent to analyze system behavior and identify conversion bottlenecks\"\\n<commentary>\\nPerformance analysis and bottleneck identification requires the campaign-debugger agent.\\n</commentary>\\n</example>",
-          "model": "sonnet",
-          "memory": null,
-          "tools": []
-        },
         "marketing-beta": {
           "description": "Use this agent when you need to investigate marketing issues, analyze campaign behavior, diagnose performance problems, examine analytics data, collect and analyze marketing metrics, or optimize campaign performance. This includes troubleshooting underperforming campaigns, identifying conversion bottlenecks, analyzing failed ad deployments, investigating tracking issues, and creating diagnostic reports. Examples:\\n\\n<example>\\nContext: The user needs to investigate why an ad campaign is underperforming.\\nuser: \"Our Facebook ad campaign conversion rate dropped 50%\"\\nassistant: \"I''ll use the campaign-debugger agent to investigate this issue\"\\n<commentary>\\nSince this involves investigating a campaign issue, use the Task tool to launch the campaign-debugger agent.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: The user wants to analyze why email open rates are declining.\\nuser: \"Our email campaign open rates have been steadily declining\"\\nassistant: \"Let me use the campaign-debugger agent to analyze the email campaign metrics and identify the issue\"\\n<commentary>\\nThis requires analyzing campaign metrics and patterns, so use the campaign-debugger agent.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: The user notices funnel conversion drop.\\nuser: \"The landing page to checkout conversion dropped from 5% to 2%\"\\nassistant: \"I''ll launch the campaign-debugger agent to analyze system behavior and identify conversion bottlenecks\"\\n<commentary>\\nPerformance analysis and bottleneck identification requires the campaign-debugger agent.\\n</commentary>\\n</example>",
           "model": "sonnet",
@@ -7475,12 +6821,6 @@
       "name": "campaign-manager",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Use this agent for campaign orchestration across channels. This includes multi-channel campaign planning, performance tracking, budget allocation, timeline management, and campaign briefs. Examples:\\n\\n<example>\\nContext: User needs to launch a product campaign.\\nuser: \"Plan a launch campaign for our new feature\"\\nassistant: \"I'll use the campaign-manager agent to create a comprehensive launch plan\"\\n</example>\\n\\n<example>\\nContext: User wants to coordinate marketing channels.\\nuser: \"Coordinate our Q1 marketing efforts across all channels\"\\nassistant: \"I'll launch the campaign-manager agent to create a coordinated campaign plan\"\\n</example>",
-          "model": "sonnet",
-          "memory": null,
-          "tools": []
-        },
         "marketing-beta": {
           "description": "Use this agent for campaign orchestration across channels. This includes multi-channel campaign planning, performance tracking, budget allocation, timeline management, and campaign briefs. Examples:\\n\\n<example>\\nContext: User needs to launch a product campaign.\\nuser: \"Plan a launch campaign for our new feature\"\\nassistant: \"I''ll use the campaign-manager agent to create a comprehensive launch plan\"\\n</example>\\n\\n<example>\\nContext: User wants to coordinate marketing channels.\\nuser: \"Coordinate our Q1 marketing efforts across all channels\"\\nassistant: \"I''ll launch the campaign-manager agent to create a coordinated campaign plan\"\\n</example>",
           "model": "sonnet",
@@ -7493,12 +6833,6 @@
       "name": "code-reviewer",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Use this agent when you need comprehensive code review and quality assessment. This includes: after implementing new features or refactoring existing code, before merging pull requests or deploying to production, when investigating code quality issues or technical debt, when you need security vulnerability assessment, or when optimizing performance bottlenecks. Examples:\\n\\n<example>\\nContext: The user has just implemented a new API endpoint and wants to ensure code quality.\\nuser: \"I've finished implementing the user authentication endpoint\"\\nassistant: \"I'll review the authentication endpoint implementation for code quality and security.\"\\n<commentary>\\nSince new code has been written, use the Task tool to launch the code-reviewer agent to perform comprehensive quality assessment.\\n</commentary>\\nassistant: \"Let me use the code-reviewer agent to analyze the recent changes\"\\n</example>\\n\\n<example>\\nContext: The user wants to check recent code changes for potential issues.\\nuser: \"Can you review the changes I just made to the database service?\"\\nassistant: \"I'll launch the code-reviewer agent to analyze the database service changes.\"\\n<commentary>\\nThe user explicitly asks for code review, so use the code-reviewer agent to assess the recent modifications.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: After refactoring, proactive code review is needed.\\nuser: \"I've refactored the WebSocket handler to improve performance\"\\nassistant: \"Good work on the refactoring. Let me review it for quality and performance.\"\\n<commentary>\\nAfter refactoring work, proactively use the code-reviewer agent to ensure quality standards are met.\\n</commentary>\\nassistant: \"I'll use the code-reviewer agent to validate the refactored WebSocket handler\"\\n</example>",
-          "model": "sonnet",
-          "memory": null,
-          "tools": []
-        },
         "marketing-beta": {
           "description": "Use this agent when you need comprehensive code review and quality assessment. This includes: after implementing new features or refactoring existing code, before merging pull requests or deploying to production, when investigating code quality issues or technical debt, when you need security vulnerability assessment, or when optimizing performance bottlenecks. Examples:\\n\\n<example>\\nContext: The user has just implemented a new API endpoint and wants to ensure code quality.\\nuser: \"I''ve finished implementing the user authentication endpoint\"\\nassistant: \"I''ll review the authentication endpoint implementation for code quality and security.\"\\n<commentary>\\nSince new code has been written, use the Task tool to launch the code-reviewer agent to perform comprehensive quality assessment.\\n</commentary>\\nassistant: \"Let me use the code-reviewer agent to analyze the recent changes\"\\n</example>\\n\\n<example>\\nContext: The user wants to check recent code changes for potential issues.\\nuser: \"Can you review the changes I just made to the database service?\"\\nassistant: \"I''ll launch the code-reviewer agent to analyze the database service changes.\"\\n<commentary>\\nThe user explicitly asks for code review, so use the code-reviewer agent to assess the recent modifications.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: After refactoring, proactive code review is needed.\\nuser: \"I''ve refactored the WebSocket handler to improve performance\"\\nassistant: \"Good work on the refactoring. Let me review it for quality and performance.\"\\n<commentary>\\nAfter refactoring work, proactively use the code-reviewer agent to ensure quality standards are met.\\n</commentary>\\nassistant: \"I''ll use the code-reviewer agent to validate the refactored WebSocket handler\"\\n</example>",
           "model": "sonnet",
@@ -7511,12 +6845,6 @@
       "name": "community-manager",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Use this agent for Discord/Slack moderation and community engagement. This includes sentiment analysis, response drafting, moderation alerts, engagement metrics, and FAQ generation. Examples:\\n\\n<example>\\nContext: User wants to build a community strategy.\\nuser: \"How should we manage our Discord community?\"\\nassistant: \"I'll use the community-manager agent to create a community management plan\"\\n</example>\\n\\n<example>\\nContext: User needs community engagement analysis.\\nuser: \"Analyze the sentiment in our Slack community\"\\nassistant: \"I'll launch the community-manager agent to analyze community sentiment\"\\n</example>",
-          "model": "sonnet",
-          "memory": null,
-          "tools": []
-        },
         "marketing-beta": {
           "description": "Use this agent for Discord/Slack moderation and community engagement. This includes sentiment analysis, response drafting, moderation alerts, engagement metrics, and FAQ generation. Examples:\\n\\n<example>\\nContext: User wants to build a community strategy.\\nuser: \"How should we manage our Discord community?\"\\nassistant: \"I''ll use the community-manager agent to create a community management plan\"\\n</example>\\n\\n<example>\\nContext: User needs community engagement analysis.\\nuser: \"Analyze the sentiment in our Slack community\"\\nassistant: \"I''ll launch the community-manager agent to analyze community sentiment\"\\n</example>",
           "model": "sonnet",
@@ -7529,12 +6857,6 @@
       "name": "content-creator",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Use this agent to generate marketing content. This includes blog posts, social media posts, video scripts, ad copy, landing page copy, and newsletter content. Examples:\\n\\n<example>\\nContext: User needs blog content.\\nuser: \"Write a blog post about productivity hacks\"\\nassistant: \"I'll use the content-creator agent to write the blog post\"\\n</example>\\n\\n<example>\\nContext: User needs video script.\\nuser: \"Create a script for our product demo video\"\\nassistant: \"I'll launch the content-creator agent to write the video script\"\\n</example>",
-          "model": "sonnet",
-          "memory": null,
-          "tools": []
-        },
         "marketing-beta": {
           "description": "Use this agent to generate marketing content. This includes blog posts, social media posts, video scripts, ad copy, landing page copy, and newsletter content. Examples:\\n\\n<example>\\nContext: User needs blog content.\\nuser: \"Write a blog post about productivity hacks\"\\nassistant: \"I''ll use the content-creator agent to write the blog post\"\\n</example>\\n\\n<example>\\nContext: User needs video script.\\nuser: \"Create a script for our product demo video\"\\nassistant: \"I''ll launch the content-creator agent to write the video script\"\\n</example>",
           "model": "sonnet",
@@ -7547,12 +6869,6 @@
       "name": "content-reviewer",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Use this agent when you need comprehensive content review and quality assessment. This includes: after creating marketing content, copy, or campaigns, before publishing to production channels, when investigating content quality issues or brand inconsistencies, when you need SEO and conversion optimization assessment, or when optimizing content performance. Examples:\\n\\n<example>\\nContext: The user has just created a new landing page copy and wants to ensure quality.\\nuser: \"I've finished writing the product landing page\"\\nassistant: \"I'll review the landing page copy for quality, conversion potential, and brand alignment.\"\\n<commentary>\\nSince new content has been written, use the Task tool to launch the content-reviewer agent to perform comprehensive quality assessment.\\n</commentary>\\nassistant: \"Let me use the content-reviewer agent to analyze the content\"\\n</example>\\n\\n<example>\\nContext: The user wants to check recent content changes for potential issues.\\nuser: \"Can you review the email campaign I just created?\"\\nassistant: \"I'll launch the content-reviewer agent to analyze the email campaign.\"\\n<commentary>\\nThe user explicitly asks for content review, so use the content-reviewer agent to assess the recent content.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: After content optimization, proactive review is needed.\\nuser: \"I've optimized the blog post for SEO\"\\nassistant: \"Let me review it for quality and SEO effectiveness.\"\\n<commentary>\\nAfter optimization work, proactively use the content-reviewer agent to ensure quality standards are met.\\n</commentary>\\nassistant: \"I'll use the content-reviewer agent to validate the optimized content\"\\n</example>",
-          "model": "sonnet",
-          "memory": null,
-          "tools": []
-        },
         "marketing-beta": {
           "description": "Use this agent when you need comprehensive content review and quality assessment. This includes: after creating marketing content, copy, or campaigns, before publishing to production channels, when investigating content quality issues or brand inconsistencies, when you need SEO and conversion optimization assessment, or when optimizing content performance. Examples:\\n\\n<example>\\nContext: The user has just created a new landing page copy and wants to ensure quality.\\nuser: \"I''ve finished writing the product landing page\"\\nassistant: \"I''ll review the landing page copy for quality, conversion potential, and brand alignment.\"\\n<commentary>\\nSince new content has been written, use the Task tool to launch the content-reviewer agent to perform comprehensive quality assessment.\\n</commentary>\\nassistant: \"Let me use the content-reviewer agent to analyze the content\"\\n</example>\\n\\n<example>\\nContext: The user wants to check recent content changes for potential issues.\\nuser: \"Can you review the email campaign I just created?\"\\nassistant: \"I''ll launch the content-reviewer agent to analyze the email campaign.\"\\n<commentary>\\nThe user explicitly asks for content review, so use the content-reviewer agent to assess the recent content.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: After content optimization, proactive review is needed.\\nuser: \"I''ve optimized the blog post for SEO\"\\nassistant: \"Let me review it for quality and SEO effectiveness.\"\\n<commentary>\\nAfter optimization work, proactively use the content-reviewer agent to ensure quality standards are met.\\n</commentary>\\nassistant: \"I''ll use the content-reviewer agent to validate the optimized content\"\\n</example>",
           "model": "sonnet",
@@ -7565,12 +6881,6 @@
       "name": "continuity-specialist",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Use this agent for customer retention and engagement strategies. This includes churn risk detection, re-engagement campaigns, NPS automation, testimonial requests, and customer health scoring. Examples:\\n\\n<example>\\nContext: User sees increasing churn rates.\\nuser: \"Our customer churn rate has increased to 8%\"\\nassistant: \"I'll use the continuity-specialist agent to analyze churn patterns and create retention strategies\"\\n</example>\\n\\n<example>\\nContext: User wants to build a customer loyalty program.\\nuser: \"How can we improve customer retention?\"\\nassistant: \"I'll launch the continuity-specialist agent to design a retention strategy\"\\n</example>",
-          "model": "sonnet",
-          "memory": null,
-          "tools": []
-        },
         "marketing-beta": {
           "description": "Use this agent for customer retention and engagement strategies. This includes churn risk detection, re-engagement campaigns, NPS automation, testimonial requests, and customer health scoring. Examples:\\n\\n<example>\\nContext: User sees increasing churn rates.\\nuser: \"Our customer churn rate has increased to 8%\"\\nassistant: \"I''ll use the continuity-specialist agent to analyze churn patterns and create retention strategies\"\\n</example>\\n\\n<example>\\nContext: User wants to build a customer loyalty program.\\nuser: \"How can we improve customer retention?\"\\nassistant: \"I''ll launch the continuity-specialist agent to design a retention strategy\"\\n</example>",
           "model": "sonnet",
@@ -7583,12 +6893,6 @@
       "name": "copywriter",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Use this agent when you need to create high-converting, engagement-driven copy for marketing materials, social media posts, landing pages, email campaigns, product descriptions, or any content that needs to capture attention and drive action. Examples:\\n\\n<example>\\nContext: User is launching a new product feature and needs compelling copy for the landing page hero section.\\nuser: \"We just added a new AI-powered code review feature. Can you write a hero headline and subheadline for the landing page?\"\\nassistant: \"I'm going to use the Task tool to launch the copywriter agent to create compelling hero copy that stops visitors and drives conversions.\"\\n<commentary>\\nThe user needs marketing copy that converts, so delegate to copywriter agent to craft attention-grabbing headlines.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User wants to announce a product update on Twitter/X to maximize engagement.\\nuser: \"We just shipped GitHub auto-invites for ClaudeKit. Need a tweet that'll get people excited.\"\\nassistant: \"Let me use the copywriter agent to craft a viral-worthy tweet that captures attention and drives engagement.\"\\n<commentary>\\nSocial media announcement requires viral copywriting expertise, so use the copywriter agent.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User is reviewing marketing materials and the agent proactively identifies weak copy.\\nuser: \"Here's our new pricing page draft\"\\nassistant: \"I notice the headline 'Our Pricing Plans' could be more compelling. Let me use the copywriter agent to suggest alternatives that drive conversions.\"\\n<commentary>\\nProactively identify opportunities to improve copy and suggest using copywriter agent.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User needs email subject lines that increase open rates.\\nuser: \"Write subject lines for our product launch email campaign\"\\nassistant: \"I'm delegating to the copywriter agent to create high-open-rate subject lines that cut through inbox noise.\"\\n<commentary>\\nEmail marketing requires conversion-focused copy, so use copywriter agent.\\n</commentary>\\n</example>",
-          "model": "sonnet",
-          "memory": null,
-          "tools": []
-        },
         "marketing-beta": {
           "description": "Use this agent when you need to create high-converting, engagement-driven copy for marketing materials, social media posts, landing pages, email campaigns, product descriptions, or any content that needs to capture attention and drive action. Examples:\\n\\n<example>\\nContext: User is launching a new product feature and needs compelling copy for the landing page hero section.\\nuser: \"We just added a new AI-powered code review feature. Can you write a hero headline and subheadline for the landing page?\"\\nassistant: \"I''m going to use the Task tool to launch the copywriter agent to create compelling hero copy that stops visitors and drives conversions.\"\\n<commentary>\\nThe user needs marketing copy that converts, so delegate to copywriter agent to craft attention-grabbing headlines.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User wants to announce a product update on Twitter/X to maximize engagement.\\nuser: \"We just shipped GitHub auto-invites for ClaudeKit. Need a tweet that''ll get people excited.\"\\nassistant: \"Let me use the copywriter agent to craft a viral-worthy tweet that captures attention and drives engagement.\"\\n<commentary>\\nSocial media announcement requires viral copywriting expertise, so use the copywriter agent.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User is reviewing marketing materials and the agent proactively identifies weak copy.\\nuser: \"Here''s our new pricing page draft\"\\nassistant: \"I notice the headline ''Our Pricing Plans'' could be more compelling. Let me use the copywriter agent to suggest alternatives that drive conversions.\"\\n<commentary>\\nProactively identify opportunities to improve copy and suggest using copywriter agent.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User needs email subject lines that increase open rates.\\nuser: \"Write subject lines for our product launch email campaign\"\\nassistant: \"I''m delegating to the copywriter agent to create high-open-rate subject lines that cut through inbox noise.\"\\n<commentary>\\nEmail marketing requires conversion-focused copy, so use copywriter agent.\\n</commentary>\\n</example>",
           "model": "sonnet",
@@ -7601,12 +6905,6 @@
       "name": "database-admin",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Use this agent when you need to work with database systems, including querying for data analysis, diagnosing performance bottlenecks, optimizing database structures, managing indexes, implementing backup and restore strategies, setting up replication, configuring monitoring, managing user permissions, or when you need comprehensive database health assessments and optimization recommendations. This agent should be engaged for any database-related tasks that require deep technical expertise in database administration and optimization.\\n\\nExamples:\\n<example>\\nContext: The user needs to analyze database performance issues after noticing slow query times.\\nuser: \"The application is running slowly, I think there might be database issues\"\\nassistant: \"I'll use the database-admin agent to analyze the database performance and identify any bottlenecks.\"\\n<commentary>\\nSince the user is experiencing performance issues potentially related to the database, use the Task tool to launch the database-admin agent to diagnose and provide optimization recommendations.\\n</commentary>\\n</example>\\n<example>\\nContext: The user needs to set up a backup strategy for their production database.\\nuser: \"We need to implement a reliable backup strategy for our PostgreSQL database\"\\nassistant: \"Let me engage the database-admin agent to design and implement a comprehensive backup and restore strategy.\"\\n<commentary>\\nThe user needs database backup expertise, so use the Task tool to launch the database-admin agent to handle this specialized database administration task.\\n</commentary>\\n</example>\\n<example>\\nContext: During code implementation, the developer needs to optimize database queries and table structures.\\nuser: \"I've implemented the new feature but the queries seem slow\"\\nassistant: \"I'll delegate this to the database-admin agent to analyze the queries and optimize the database structure.\"\\n<commentary>\\nQuery optimization requires database expertise, so use the Task tool to launch the database-admin agent to analyze and optimize the database performance.\\n</commentary>\\n</example>",
-          "model": "sonnet",
-          "memory": null,
-          "tools": []
-        },
         "marketing-beta": {
           "description": "Use this agent when you need to work with database systems, including querying for data analysis, diagnosing performance bottlenecks, optimizing database structures, managing indexes, implementing backup and restore strategies, setting up replication, configuring monitoring, managing user permissions, or when you need comprehensive database health assessments and optimization recommendations. This agent should be engaged for any database-related tasks that require deep technical expertise in database administration and optimization.\\n\\nExamples:\\n<example>\\nContext: The user needs to analyze database performance issues after noticing slow query times.\\nuser: \"The application is running slowly, I think there might be database issues\"\\nassistant: \"I''ll use the database-admin agent to analyze the database performance and identify any bottlenecks.\"\\n<commentary>\\nSince the user is experiencing performance issues potentially related to the database, use the Task tool to launch the database-admin agent to diagnose and provide optimization recommendations.\\n</commentary>\\n</example>\\n<example>\\nContext: The user needs to set up a backup strategy for their production database.\\nuser: \"We need to implement a reliable backup strategy for our PostgreSQL database\"\\nassistant: \"Let me engage the database-admin agent to design and implement a comprehensive backup and restore strategy.\"\\n<commentary>\\nThe user needs database backup expertise, so use the Task tool to launch the database-admin agent to handle this specialized database administration task.\\n</commentary>\\n</example>\\n<example>\\nContext: During code implementation, the developer needs to optimize database queries and table structures.\\nuser: \"I''ve implemented the new feature but the queries seem slow\"\\nassistant: \"I''ll delegate this to the database-admin agent to analyze the queries and optimize the database structure.\"\\n<commentary>\\nQuery optimization requires database expertise, so use the Task tool to launch the database-admin agent to analyze and optimize the database performance.\\n</commentary>\\n</example>",
           "model": "sonnet",
@@ -7619,12 +6917,6 @@
       "name": "debugger",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Use this agent when you need to investigate issues, analyze system behavior, diagnose performance problems, examine database structures, collect and analyze logs from servers or CI/CD pipelines, run tests for debugging purposes, or optimize system performance. This includes troubleshooting errors, identifying bottlenecks, analyzing failed deployments, investigating test failures, and creating diagnostic reports. Examples:\\n\\n<example>\\nContext: The user needs to investigate why an API endpoint is returning 500 errors.\\nuser: \"The /api/users endpoint is throwing 500 errors\"\\nassistant: \"I'll use the debugger agent to investigate this issue\"\\n<commentary>\\nSince this involves investigating an issue, use the Task tool to launch the debugger agent.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: The user wants to analyze why the CI/CD pipeline is failing.\\nuser: \"The GitHub Actions workflow keeps failing on the test step\"\\nassistant: \"Let me use the debugger agent to analyze the CI/CD pipeline logs and identify the issue\"\\n<commentary>\\nThis requires analyzing CI/CD logs and test failures, so use the debugger agent.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: The user notices performance degradation in the application.\\nuser: \"The application response times have increased by 300% since yesterday\"\\nassistant: \"I'll launch the debugger agent to analyze system behavior and identify performance bottlenecks\"\\n<commentary>\\nPerformance analysis and bottleneck identification requires the debugger agent.\\n</commentary>\\n</example>",
-          "model": "sonnet",
-          "memory": null,
-          "tools": []
-        },
         "marketing-beta": {
           "description": "Use this agent when you need to investigate issues, analyze system behavior, diagnose performance problems, examine database structures, collect and analyze logs from servers or CI/CD pipelines, run tests for debugging purposes, or optimize system performance. This includes troubleshooting errors, identifying bottlenecks, analyzing failed deployments, investigating test failures, and creating diagnostic reports. Examples:\\n\\n<example>\\nContext: The user needs to investigate why an API endpoint is returning 500 errors.\\nuser: \"The /api/users endpoint is throwing 500 errors\"\\nassistant: \"I''ll use the debugger agent to investigate this issue\"\\n<commentary>\\nSince this involves investigating an issue, use the Task tool to launch the debugger agent.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: The user wants to analyze why the CI/CD pipeline is failing.\\nuser: \"The GitHub Actions workflow keeps failing on the test step\"\\nassistant: \"Let me use the debugger agent to analyze the CI/CD pipeline logs and identify the issue\"\\n<commentary>\\nThis requires analyzing CI/CD logs and test failures, so use the debugger agent.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: The user notices performance degradation in the application.\\nuser: \"The application response times have increased by 300% since yesterday\"\\nassistant: \"I''ll launch the debugger agent to analyze system behavior and identify performance bottlenecks\"\\n<commentary>\\nPerformance analysis and bottleneck identification requires the debugger agent.\\n</commentary>\\n</example>",
           "model": "sonnet",
@@ -7637,12 +6929,6 @@
       "name": "docs-manager",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Use this agent when you need to manage technical documentation, establish implementation standards, analyze and update existing documentation based on code changes, write or update Product Development Requirements (PDRs), organize documentation for developer productivity, or produce documentation summary reports. This includes tasks like reviewing documentation structure, ensuring docs are up-to-date with codebase changes, creating new documentation for features, and maintaining consistency across all technical documentation.",
-          "model": "haiku",
-          "memory": null,
-          "tools": []
-        },
         "marketing-beta": {
           "description": "Use this agent when you need to manage technical documentation, establish implementation standards, analyze and update existing documentation based on code changes, write or update Product Development Requirements (PDRs), organize documentation for developer productivity, or produce documentation summary reports. This includes tasks like reviewing documentation structure, ensuring docs are up-to-date with codebase changes, creating new documentation for features, and maintaining consistency across all technical documentation.",
           "model": "haiku",
@@ -7655,12 +6941,6 @@
       "name": "email-wizard",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Use this agent for email campaign orchestration and optimization. This includes sequence templates, dynamic content personalization, send-time optimization, A/B test design, subject line generation, and drip campaign architecture. Examples:\\n\\n<example>\\nContext: User needs to create an email nurture sequence.\\nuser: \"I need a 7-day email sequence for new subscribers\"\\nassistant: \"I'll use the email-wizard agent to design your nurture sequence\"\\n</example>\\n\\n<example>\\nContext: User wants to improve email open rates.\\nuser: \"Our email open rates have dropped below 15%\"\\nassistant: \"I'll launch the email-wizard agent to analyze and optimize your email strategy\"\\n</example>",
-          "model": "sonnet",
-          "memory": null,
-          "tools": []
-        },
         "marketing-beta": {
           "description": "Use this agent for email campaign orchestration and optimization. This includes sequence templates, dynamic content personalization, send-time optimization, A/B test design, subject line generation, and drip campaign architecture. Examples:\\n\\n<example>\\nContext: User needs to create an email nurture sequence.\\nuser: \"I need a 7-day email sequence for new subscribers\"\\nassistant: \"I''ll use the email-wizard agent to design your nurture sequence\"\\n</example>\\n\\n<example>\\nContext: User wants to improve email open rates.\\nuser: \"Our email open rates have dropped below 15%\"\\nassistant: \"I''ll launch the email-wizard agent to analyze and optimize your email strategy\"\\n</example>",
           "model": "sonnet",
@@ -7673,12 +6953,6 @@
       "name": "fullstack-developer",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Execute implementation phases from parallel plans. Handles backend (Node.js, APIs, databases), frontend (React, TypeScript), and infrastructure tasks. Designed for parallel execution with strict file ownership boundaries. Use when implementing a specific phase from /plan:parallel output.",
-          "model": "sonnet",
-          "memory": null,
-          "tools": []
-        },
         "marketing-beta": {
           "description": "Execute implementation phases from parallel plans. Handles backend (Node.js, APIs, databases), frontend (React, TypeScript), and infrastructure tasks. Designed for parallel execution with strict file ownership boundaries. Use when implementing a specific phase from /plan:parallel output.",
           "model": "sonnet",
@@ -7691,12 +6965,6 @@
       "name": "funnel-architect",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Use this agent for funnel design and conversion optimization. This includes funnel stage design, conversion rate analysis, bottleneck identification, A/B test recommendations, offer sequencing (Hormozi model), and attribution modeling. Examples:\\n\\n<example>\\nContext: User needs to design a sales funnel.\\nuser: \"Design a webinar funnel for our SaaS product\"\\nassistant: \"I'll use the funnel-architect agent to design your webinar funnel\"\\n</example>\\n\\n<example>\\nContext: User sees low funnel conversion.\\nuser: \"Our funnel conversion is only 1.5%\"\\nassistant: \"I'll launch the funnel-architect agent to analyze bottlenecks and optimize conversion\"\\n</example>",
-          "model": "opus",
-          "memory": null,
-          "tools": []
-        },
         "marketing-beta": {
           "description": "Use this agent for funnel design and conversion optimization. This includes funnel stage design, conversion rate analysis, bottleneck identification, A/B test recommendations, offer sequencing (Hormozi model), and attribution modeling. Examples:\\n\\n<example>\\nContext: User needs to design a sales funnel.\\nuser: \"Design a webinar funnel for our SaaS product\"\\nassistant: \"I''ll use the funnel-architect agent to design your webinar funnel\"\\n</example>\\n\\n<example>\\nContext: User sees low funnel conversion.\\nuser: \"Our funnel conversion is only 1.5%\"\\nassistant: \"I''ll launch the funnel-architect agent to analyze bottlenecks and optimize conversion\"\\n</example>",
           "model": "opus",
@@ -7709,17 +6977,6 @@
       "name": "git-manager",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Stage, commit, and push code changes with conventional commits. Use when user says \"commit\", \"push\", or finishes a feature/fix.",
-          "model": "haiku",
-          "memory": null,
-          "tools": [
-            "Glob",
-            "Grep",
-            "Read",
-            "Bash"
-          ]
-        },
         "marketing-beta": {
           "description": "Stage, commit, and push code changes with conventional commits. Use when user says \"commit\", \"push\", or finishes a feature/fix.",
           "model": "haiku",
@@ -7737,12 +6994,6 @@
       "name": "journal-writer",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Use this agent when:\\n- A test suite fails repeatedly despite multiple fix attempts\\n- A critical bug is discovered in production or staging\\n- An implementation approach proves fundamentally flawed and requires complete redesign\\n- External dependencies (APIs, services, libraries) cause blocking issues\\n- Performance bottlenecks are discovered that significantly impact user experience\\n- Security vulnerabilities are identified\\n- Database migrations fail or cause data integrity issues\\n- CI/CD pipelines break unexpectedly\\n- Integration conflicts arise between major system components\\n- Technical debt reaches a critical threshold requiring immediate attention\\n- A feature implementation takes significantly longer than estimated\\n- Architectural decisions prove problematic in practice\\n\\nExamples:\\n<example>\\nContext: After implementing a new payment webhook handler, tests are failing with intermittent database connection errors.\\nuser: \"The Sepay webhook tests keep failing with connection timeouts. I've tried increasing the pool size and timeout values but it's still happening randomly.\"\\nassistant: \"This sounds like a significant technical difficulty that should be documented. Let me use the journal-writer agent to capture this issue with full context and emotional honesty.\"\\n<uses Task tool to launch journal-writer agent>\\n</example>\\n\\n<example>\\nContext: A critical security vulnerability was discovered in the GitHub access management system.\\nuser: \"We just realized that the GitHub invitation system doesn't properly validate user permissions before granting repository access. This could allow unauthorized users to access private repos.\"\\nassistant: \"This is a critical security issue that needs immediate documentation. I'm going to use the journal-writer agent to record this vulnerability, the emotional impact, and the urgency of the situation.\"\\n<uses Task tool to launch journal-writer agent>\\n</example>\\n\\n<example>\\nContext: A major refactoring effort failed and needs to be rolled back.\\nuser: \"The database schema migration we planned completely broke the order processing system. We need to roll back and rethink our approach.\"\\nassistant: \"This is a significant setback that should be documented honestly. Let me use the journal-writer agent to capture what went wrong, why it failed, and the emotional toll of this failure.\"\\n<uses Task tool to launch journal-writer agent>\\n</example>",
-          "model": "haiku",
-          "memory": null,
-          "tools": []
-        },
         "marketing-beta": {
           "description": "Use this agent when:\\n- A test suite fails repeatedly despite multiple fix attempts\\n- A critical bug is discovered in production or staging\\n- An implementation approach proves fundamentally flawed and requires complete redesign\\n- External dependencies (APIs, services, libraries) cause blocking issues\\n- Performance bottlenecks are discovered that significantly impact user experience\\n- Security vulnerabilities are identified\\n- Database migrations fail or cause data integrity issues\\n- CI/CD pipelines break unexpectedly\\n- Integration conflicts arise between major system components\\n- Technical debt reaches a critical threshold requiring immediate attention\\n- A feature implementation takes significantly longer than estimated\\n- Architectural decisions prove problematic in practice\\n\\nExamples:\\n<example>\\nContext: After implementing a new payment webhook handler, tests are failing with intermittent database connection errors.\\nuser: \"The Sepay webhook tests keep failing with connection timeouts. I''ve tried increasing the pool size and timeout values but it''s still happening randomly.\"\\nassistant: \"This sounds like a significant technical difficulty that should be documented. Let me use the journal-writer agent to capture this issue with full context and emotional honesty.\"\\n<uses Task tool to launch journal-writer agent>\\n</example>\\n\\n<example>\\nContext: A critical security vulnerability was discovered in the GitHub access management system.\\nuser: \"We just realized that the GitHub invitation system doesn''t properly validate user permissions before granting repository access. This could allow unauthorized users to access private repos.\"\\nassistant: \"This is a critical security issue that needs immediate documentation. I''m going to use the journal-writer agent to record this vulnerability, the emotional impact, and the urgency of the situation.\"\\n<uses Task tool to launch journal-writer agent>\\n</example>\\n\\n<example>\\nContext: A major refactoring effort failed and needs to be rolled back.\\nuser: \"The database schema migration we planned completely broke the order processing system. We need to roll back and rethink our approach.\"\\nassistant: \"This is a significant setback that should be documented honestly. Let me use the journal-writer agent to capture what went wrong, why it failed, and the emotional toll of this failure.\"\\n<uses Task tool to launch journal-writer agent>\\n</example>",
           "model": "haiku",
@@ -7755,12 +7006,6 @@
       "name": "lead-qualifier",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Use this agent for intent detection, lead scoring, and behavioral analysis. This includes engagement pattern recognition, sales readiness prediction, and qualification criteria definition. Examples:\\n\\n<example>\\nContext: User needs to prioritize their lead pipeline.\\nuser: \"How should we score and prioritize our leads?\"\\nassistant: \"I'll use the lead-qualifier agent to develop a scoring framework\"\\n</example>\\n\\n<example>\\nContext: User wants to identify sales-ready leads.\\nuser: \"Which leads are most likely to convert?\"\\nassistant: \"I'll launch the lead-qualifier agent to analyze lead signals\"\\n</example>",
-          "model": "haiku",
-          "memory": null,
-          "tools": []
-        },
         "marketing-beta": {
           "description": "Use this agent for intent detection, lead scoring, and behavioral analysis. This includes engagement pattern recognition, sales readiness prediction, and qualification criteria definition. Examples:\\n\\n<example>\\nContext: User needs to prioritize their lead pipeline.\\nuser: \"How should we score and prioritize our leads?\"\\nassistant: \"I''ll use the lead-qualifier agent to develop a scoring framework\"\\n</example>\\n\\n<example>\\nContext: User wants to identify sales-ready leads.\\nuser: \"Which leads are most likely to convert?\"\\nassistant: \"I''ll launch the lead-qualifier agent to analyze lead signals\"\\n</example>",
           "model": "haiku",
@@ -7773,12 +7018,6 @@
       "name": "mcp-manager",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Manage MCP (Model Context Protocol) server integrations - discover tools/prompts/resources, analyze relevance for tasks, and execute MCP capabilities. Use when need to work with MCP servers, discover available MCP tools, filter MCP capabilities for specific tasks, execute MCP tools programmatically, or implement MCP client functionality. Keeps main context clean by handling MCP discovery in subagent context.",
-          "model": "haiku",
-          "memory": null,
-          "tools": []
-        },
         "marketing-beta": {
           "description": "Manage MCP (Model Context Protocol) server integrations - discover tools/prompts/resources, analyze relevance for tasks, and execute MCP capabilities. Use when need to work with MCP servers, discover available MCP tools, filter MCP capabilities for specific tasks, execute MCP tools programmatically, or implement MCP client functionality. Keeps main context clean by handling MCP discovery in subagent context.",
           "model": "haiku",
@@ -7791,12 +7030,6 @@
       "name": "planner",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Use this agent when you need to research, analyze, and create comprehensive implementation plans for new features, system architectures, or complex technical solutions. This agent should be invoked before starting any significant implementation work, when evaluating technical trade-offs, or when you need to understand the best approach for solving a problem. Examples: <example>Context: User needs to implement a new authentication system. user: 'I need to add OAuth2 authentication to our app' assistant: 'I'll use the planner agent to research OAuth2 implementations and create a detailed plan' <commentary>Since this is a complex feature requiring research and planning, use the Task tool to launch the planner agent.</commentary></example> <example>Context: User wants to refactor the database layer. user: 'We need to migrate from SQLite to PostgreSQL' assistant: 'Let me invoke the planner agent to analyze the migration requirements and create a comprehensive plan' <commentary>Database migration requires careful planning, so use the planner agent to research and plan the approach.</commentary></example> <example>Context: User reports performance issues. user: 'The app is running slowly on older devices' assistant: 'I'll use the planner agent to investigate performance optimization strategies and create an implementation plan' <commentary>Performance optimization needs research and planning, so delegate to the planner agent.</commentary></example>",
-          "model": "opus",
-          "memory": null,
-          "tools": []
-        },
         "marketing-beta": {
           "description": "Use this agent when you need to research, analyze, and create comprehensive implementation plans for new features, system architectures, or complex technical solutions. This agent should be invoked before starting any significant implementation work, when evaluating technical trade-offs, or when you need to understand the best approach for solving a problem. Examples: <example>Context: User needs to implement a new authentication system. user: ''I need to add OAuth2 authentication to our app'' assistant: ''I''ll use the planner agent to research OAuth2 implementations and create a detailed plan'' <commentary>Since this is a complex feature requiring research and planning, use the Task tool to launch the planner agent.</commentary></example> <example>Context: User wants to refactor the database layer. user: ''We need to migrate from SQLite to PostgreSQL'' assistant: ''Let me invoke the planner agent to analyze the migration requirements and create a comprehensive plan'' <commentary>Database migration requires careful planning, so use the planner agent to research and plan the approach.</commentary></example> <example>Context: User reports performance issues. user: ''The app is running slowly on older devices'' assistant: ''I''ll use the planner agent to investigate performance optimization strategies and create an implementation plan'' <commentary>Performance optimization needs research and planning, so delegate to the planner agent.</commentary></example>",
           "model": "opus",
@@ -7809,28 +7042,6 @@
       "name": "project-manager",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Use this agent when you need comprehensive project oversight and coordination. Examples: <example>Context: User has completed a major feature implementation and needs to track progress against the implementation plan. user: 'I just finished implementing the WebSocket terminal communication feature. Can you check our progress and update the plan?' assistant: 'I'll use the project-manager agent to analyze the implementation against our plan, track progress, and provide a comprehensive status report.' <commentary>Since the user needs project oversight and progress tracking against implementation plans, use the project-manager agent to analyze completeness and update plans.</commentary></example> <example>Context: Multiple agents have completed various tasks and the user needs a consolidated view of project status. user: 'The backend-developer and tester agents have finished their work. What's our overall project status?' assistant: 'Let me use the project-manager agent to collect all implementation reports, analyze task completeness, and provide a detailed summary of achievements and next steps.' <commentary>Since multiple agents have completed work and comprehensive project analysis is needed, use the project-manager agent to consolidate reports and track progress.</commentary></example>",
-          "model": "haiku",
-          "memory": null,
-          "tools": [
-            "Glob",
-            "Grep",
-            "LS",
-            "Read",
-            "Edit",
-            "MultiEdit",
-            "Write",
-            "NotebookEdit",
-            "WebFetch",
-            "TodoWrite",
-            "WebSearch",
-            "BashOutput",
-            "KillBash",
-            "ListMcpResourcesTool",
-            "ReadMcpResourceTool"
-          ]
-        },
         "marketing-beta": {
           "description": "Use this agent when you need comprehensive project oversight and coordination. Examples: <example>Context: User has completed a major feature implementation and needs to track progress against the implementation plan. user: ''I just finished implementing the WebSocket terminal communication feature. Can you check our progress and update the plan?'' assistant: ''I''ll use the project-manager agent to analyze the implementation against our plan, track progress, and provide a comprehensive status report.'' <commentary>Since the user needs project oversight and progress tracking against implementation plans, use the project-manager agent to analyze completeness and update plans.</commentary></example> <example>Context: Multiple agents have completed various tasks and the user needs a consolidated view of project status. user: ''The backend-developer and tester agents have finished their work. What''s our overall project status?'' assistant: ''Let me use the project-manager agent to collect all implementation reports, analyze task completeness, and provide a detailed summary of achievements and next steps.'' <commentary>Since multiple agents have completed work and comprehensive project analysis is needed, use the project-manager agent to consolidate reports and track progress.</commentary></example>",
           "model": "haiku",
@@ -7859,12 +7070,6 @@
       "name": "researcher",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Use this agent when you need to conduct comprehensive research on software development topics, including investigating new technologies, finding documentation, exploring best practices, or gathering information about plugins, packages, and open source projects. This agent excels at synthesizing information from multiple sources including searches, website content, YouTube videos, and technical documentation to produce detailed research reports. <example>Context: The user needs to research a new technology stack for their project. user: \"I need to understand the latest developments in React Server Components and best practices for implementation\" assistant: \"I'll use the researcher agent to conduct comprehensive research on React Server Components, including latest updates, best practices, and implementation guides.\" <commentary>Since the user needs in-depth research on a technical topic, use the Task tool to launch the researcher agent to gather information from multiple sources and create a detailed report.</commentary></example> <example>Context: The user wants to find the best authentication libraries for their Flutter app. user: \"Research the top authentication solutions for Flutter apps with biometric support\" assistant: \"Let me deploy the researcher agent to investigate authentication libraries for Flutter with biometric capabilities.\" <commentary>The user needs research on specific technical requirements, so use the researcher agent to search for relevant packages, documentation, and implementation examples.</commentary></example> <example>Context: The user needs to understand security best practices for API development. user: \"What are the current best practices for securing REST APIs in 2024?\" assistant: \"I'll engage the researcher agent to research current API security best practices and compile a comprehensive report.\" <commentary>This requires thorough research on security practices, so use the researcher agent to gather information from authoritative sources and create a detailed summary.</commentary></example>",
-          "model": "haiku",
-          "memory": null,
-          "tools": []
-        },
         "marketing-beta": {
           "description": "Use this agent when you need to conduct comprehensive research on software development topics, including investigating new technologies, finding documentation, exploring best practices, or gathering information about plugins, packages, and open source projects. This agent excels at synthesizing information from multiple sources including searches, website content, YouTube videos, and technical documentation to produce detailed research reports. <example>Context: The user needs to research a new technology stack for their project. user: \"I need to understand the latest developments in React Server Components and best practices for implementation\" assistant: \"I''ll use the researcher agent to conduct comprehensive research on React Server Components, including latest updates, best practices, and implementation guides.\" <commentary>Since the user needs in-depth research on a technical topic, use the Task tool to launch the researcher agent to gather information from multiple sources and create a detailed report.</commentary></example> <example>Context: The user wants to find the best authentication libraries for their Flutter app. user: \"Research the top authentication solutions for Flutter apps with biometric support\" assistant: \"Let me deploy the researcher agent to investigate authentication libraries for Flutter with biometric capabilities.\" <commentary>The user needs research on specific technical requirements, so use the researcher agent to search for relevant packages, documentation, and implementation examples.</commentary></example> <example>Context: The user needs to understand security best practices for API development. user: \"What are the current best practices for securing REST APIs in 2024?\" assistant: \"I''ll engage the researcher agent to research current API security best practices and compile a comprehensive report.\" <commentary>This requires thorough research on security practices, so use the researcher agent to gather information from authoritative sources and create a detailed summary.</commentary></example>",
           "model": "haiku",
@@ -7877,12 +7082,6 @@
       "name": "sale-enabler",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Use this agent for sales collateral and deal acceleration. This includes personalized pitch generation, objection handling guides, social proof matching, proposal templates, and case study generation. Examples:\\n\\n<example>\\nContext: User needs sales collateral for a product launch.\\nuser: \"I need sales materials for our enterprise product\"\\nassistant: \"I'll use the sale-enabler agent to create sales collateral\"\\n</example>\\n\\n<example>\\nContext: User wants to improve close rates.\\nuser: \"Our sales team needs better objection handling materials\"\\nassistant: \"I'll launch the sale-enabler agent to create objection handling guides\"\\n</example>",
-          "model": "sonnet",
-          "memory": null,
-          "tools": []
-        },
         "marketing-beta": {
           "description": "Use this agent for sales collateral and deal acceleration. This includes personalized pitch generation, objection handling guides, social proof matching, proposal templates, and case study generation. Examples:\\n\\n<example>\\nContext: User needs sales collateral for a product launch.\\nuser: \"I need sales materials for our enterprise product\"\\nassistant: \"I''ll use the sale-enabler agent to create sales collateral\"\\n</example>\\n\\n<example>\\nContext: User wants to improve close rates.\\nuser: \"Our sales team needs better objection handling materials\"\\nassistant: \"I''ll launch the sale-enabler agent to create objection handling guides\"\\n</example>",
           "model": "sonnet",
@@ -7895,24 +7094,6 @@
       "name": "scout",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Use this agent when you need to quickly locate relevant files across a large codebase to complete a specific task. This agent is particularly useful when:\\n\\n<example>\\nContext: User needs to implement a new payment provider integration and needs to find all payment-related files.\\nuser: \"I need to add Stripe as a new payment provider. Can you help me find all the relevant files?\"\\nassistant: \"I'll use the scout agent to quickly search for payment-related files across the codebase.\"\\n<Task tool call to scout with query about payment provider files>\\n<commentary>\\nThe user needs to locate payment integration files. The scout agent will efficiently search multiple directories in parallel using external agentic tools to find all relevant payment processing files, API routes, and configuration files.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User is debugging an authentication issue and needs to find all auth-related components.\\nuser: \"There's a bug in the login flow. I need to review all authentication files.\"\\nassistant: \"Let me use the scout agent to locate all authentication-related files for you.\"\\n<Task tool call to scout with query about authentication files>\\n<commentary>\\nThe user needs to debug authentication. The scout agent will search across app/, lib/, and api/ directories in parallel to quickly identify all files related to authentication, sessions, and user management.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User wants to understand how database migrations work in the project.\\nuser: \"How are database migrations structured in this project?\"\\nassistant: \"I'll use the scout agent to find all migration-related files and database schema definitions.\"\\n<Task tool call to scout with query about database migrations>\\n<commentary>\\nThe user needs to understand database structure. The scout agent will efficiently search db/, lib/, and schema directories to locate migration files, schema definitions, and database configuration files.\\n</commentary>\\n</example>\\n\\nProactively use this agent when:\\n- Beginning work on a feature that spans multiple directories\\n- User mentions needing to \"find\", \"locate\", or \"search for\" files\\n- Starting a debugging session that requires understanding file relationships\\n- User asks about project structure or where specific functionality lives\\n- Before making changes that might affect multiple parts of the codebase",
-          "model": "haiku",
-          "memory": null,
-          "tools": [
-            "Glob",
-            "Grep",
-            "Read",
-            "WebFetch",
-            "TodoWrite",
-            "WebSearch",
-            "Bash",
-            "BashOutput",
-            "KillShell",
-            "ListMcpResourcesTool",
-            "ReadMcpResourceTool"
-          ]
-        },
         "marketing-beta": {
           "description": "Use this agent when you need to quickly locate relevant files across a large codebase to complete a specific task. This agent is particularly useful when:\\n\\n<example>\\nContext: User needs to implement a new payment provider integration and needs to find all payment-related files.\\nuser: \"I need to add Stripe as a new payment provider. Can you help me find all the relevant files?\"\\nassistant: \"I''ll use the scout agent to quickly search for payment-related files across the codebase.\"\\n<Task tool call to scout with query about payment provider files>\\n<commentary>\\nThe user needs to locate payment integration files. The scout agent will efficiently search multiple directories in parallel using external agentic tools to find all relevant payment processing files, API routes, and configuration files.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User is debugging an authentication issue and needs to find all auth-related components.\\nuser: \"There''s a bug in the login flow. I need to review all authentication files.\"\\nassistant: \"Let me use the scout agent to locate all authentication-related files for you.\"\\n<Task tool call to scout with query about authentication files>\\n<commentary>\\nThe user needs to debug authentication. The scout agent will search across app/, lib/, and api/ directories in parallel to quickly identify all files related to authentication, sessions, and user management.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User wants to understand how database migrations work in the project.\\nuser: \"How are database migrations structured in this project?\"\\nassistant: \"I''ll use the scout agent to find all migration-related files and database schema definitions.\"\\n<Task tool call to scout with query about database migrations>\\n<commentary>\\nThe user needs to understand database structure. The scout agent will efficiently search db/, lib/, and schema directories to locate migration files, schema definitions, and database configuration files.\\n</commentary>\\n</example>\\n\\nProactively use this agent when:\\n- Beginning work on a feature that spans multiple directories\\n- User mentions needing to \"find\", \"locate\", or \"search for\" files\\n- Starting a debugging session that requires understanding file relationships\\n- User asks about project structure or where specific functionality lives\\n- Before making changes that might affect multiple parts of the codebase",
           "model": "haiku",
@@ -7937,24 +7118,6 @@
       "name": "scout-external",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Use this agent when you need to quickly locate relevant files across a large codebase to complete a specific task using external agentic tools (Gemini, OpenCode, etc.). This agent is particularly useful when:\\n\\n<example>\\nContext: User needs to implement a new payment provider integration and needs to find all payment-related files.\\nuser: \"I need to add Stripe as a new payment provider. Can you help me find all the relevant files?\"\\nassistant: \"I'll use the scout agent to quickly search for payment-related files across the codebase.\"\\n<Task tool call to scout with query about payment provider files>\\n<commentary>\\nThe user needs to locate payment integration files. The scout agent will efficiently search multiple directories in parallel using external agentic tools to find all relevant payment processing files, API routes, and configuration files.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User is debugging an authentication issue and needs to find all auth-related components.\\nuser: \"There's a bug in the login flow. I need to review all authentication files.\"\\nassistant: \"Let me use the scout agent to locate all authentication-related files for you.\"\\n<Task tool call to scout with query about authentication files>\\n<commentary>\\nThe user needs to debug authentication. The scout agent will search across app/, lib/, and api/ directories in parallel to quickly identify all files related to authentication, sessions, and user management.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User wants to understand how database migrations work in the project.\\nuser: \"How are database migrations structured in this project?\"\\nassistant: \"I'll use the scout agent to find all migration-related files and database schema definitions.\"\\n<Task tool call to scout with query about database migrations>\\n<commentary>\\nThe user needs to understand database structure. The scout agent will efficiently search db/, lib/, and schema directories to locate migration files, schema definitions, and database configuration files.\\n</commentary>\\n</example>\\n\\nProactively use this agent when:\\n- Beginning work on a feature that spans multiple directories\\n- User mentions needing to \"find\", \"locate\", or \"search for\" files\\n- Starting a debugging session that requires understanding file relationships\\n- User asks about project structure or where specific functionality lives\\n- Before making changes that might affect multiple parts of the codebase",
-          "model": "haiku",
-          "memory": null,
-          "tools": [
-            "Glob",
-            "Grep",
-            "Read",
-            "WebFetch",
-            "TodoWrite",
-            "WebSearch",
-            "Bash",
-            "BashOutput",
-            "KillShell",
-            "ListMcpResourcesTool",
-            "ReadMcpResourceTool"
-          ]
-        },
         "marketing-beta": {
           "description": "Use this agent when you need to quickly locate relevant files across a large codebase to complete a specific task using external agentic tools (Gemini, OpenCode, etc.). This agent is particularly useful when:\\n\\n<example>\\nContext: User needs to implement a new payment provider integration and needs to find all payment-related files.\\nuser: \"I need to add Stripe as a new payment provider. Can you help me find all the relevant files?\"\\nassistant: \"I''ll use the scout agent to quickly search for payment-related files across the codebase.\"\\n<Task tool call to scout with query about payment provider files>\\n<commentary>\\nThe user needs to locate payment integration files. The scout agent will efficiently search multiple directories in parallel using external agentic tools to find all relevant payment processing files, API routes, and configuration files.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User is debugging an authentication issue and needs to find all auth-related components.\\nuser: \"There''s a bug in the login flow. I need to review all authentication files.\"\\nassistant: \"Let me use the scout agent to locate all authentication-related files for you.\"\\n<Task tool call to scout with query about authentication files>\\n<commentary>\\nThe user needs to debug authentication. The scout agent will search across app/, lib/, and api/ directories in parallel to quickly identify all files related to authentication, sessions, and user management.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User wants to understand how database migrations work in the project.\\nuser: \"How are database migrations structured in this project?\"\\nassistant: \"I''ll use the scout agent to find all migration-related files and database schema definitions.\"\\n<Task tool call to scout with query about database migrations>\\n<commentary>\\nThe user needs to understand database structure. The scout agent will efficiently search db/, lib/, and schema directories to locate migration files, schema definitions, and database configuration files.\\n</commentary>\\n</example>\\n\\nProactively use this agent when:\\n- Beginning work on a feature that spans multiple directories\\n- User mentions needing to \"find\", \"locate\", or \"search for\" files\\n- Starting a debugging session that requires understanding file relationships\\n- User asks about project structure or where specific functionality lives\\n- Before making changes that might affect multiple parts of the codebase",
           "model": "haiku",
@@ -7979,12 +7142,6 @@
       "name": "seo-specialist",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Use this agent for SEO audit and optimization. This includes technical SEO audit, content optimization, keyword analysis, link building strategy, JSON+LD generation, and competitor SEO analysis. Examples:\\n\\n<example>\\nContext: User needs an SEO audit.\\nuser: \"Audit our website for SEO issues\"\\nassistant: \"I'll use the seo-specialist agent to perform a comprehensive SEO audit\"\\n</example>\\n\\n<example>\\nContext: User wants to improve search rankings.\\nuser: \"How can we rank higher for 'project management software'?\"\\nassistant: \"I'll launch the seo-specialist agent to analyze and optimize for this keyword\"\\n</example>",
-          "model": null,
-          "memory": null,
-          "tools": []
-        },
         "marketing-beta": {
           "description": "Use this agent for SEO audit and optimization. This includes technical SEO audit, content optimization, keyword analysis, link building strategy, JSON+LD generation, and competitor SEO analysis. Examples:\\n\\n<example>\\nContext: User needs an SEO audit.\\nuser: \"Audit our website for SEO issues\"\\nassistant: \"I''ll use the seo-specialist agent to perform a comprehensive SEO audit\"\\n</example>\\n\\n<example>\\nContext: User wants to improve search rankings.\\nuser: \"How can we rank higher for ''project management software''?\"\\nassistant: \"I''ll launch the seo-specialist agent to analyze and optimize for this keyword\"\\n</example>",
           "model": null,
@@ -7997,12 +7154,6 @@
       "name": "social-media-manager",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Use this agent for social media scheduling and analytics. This includes multi-platform post generation, content calendar management, engagement analysis, trend research, and platform-specific adaptation. Examples:\\n\\n<example>\\nContext: User needs a social content calendar.\\nuser: \"Create a month of social content for our product\"\\nassistant: \"I'll use the social-media-manager agent to create your content calendar\"\\n</example>\\n\\n<example>\\nContext: User wants to improve social engagement.\\nuser: \"Our LinkedIn engagement has dropped 40%\"\\nassistant: \"I'll launch the social-media-manager agent to analyze and optimize your strategy\"\\n</example>",
-          "model": "sonnet",
-          "memory": null,
-          "tools": []
-        },
         "marketing-beta": {
           "description": "Use this agent for social media scheduling and analytics. This includes multi-platform post generation, content calendar management, engagement analysis, trend research, and platform-specific adaptation. Examples:\\n\\n<example>\\nContext: User needs a social content calendar.\\nuser: \"Create a month of social content for our product\"\\nassistant: \"I''ll use the social-media-manager agent to create your content calendar\"\\n</example>\\n\\n<example>\\nContext: User wants to improve social engagement.\\nuser: \"Our LinkedIn engagement has dropped 40%\"\\nassistant: \"I''ll launch the social-media-manager agent to analyze and optimize your strategy\"\\n</example>",
           "model": "sonnet",
@@ -8015,12 +7166,6 @@
       "name": "tester",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Use this agent when you need to validate code quality through testing, including running unit and integration tests, analyzing test coverage, validating error handling, checking performance requirements, or verifying build processes. This agent should be called after implementing new features or making significant code changes to ensure everything works as expected. Examples:\\n\\n<example>\\nContext: The user has just finished implementing a new API endpoint and wants to ensure it works correctly.\\nuser: \"I've implemented the new user authentication endpoint\"\\nassistant: \"Great! Now let me use the tester agent to run the test suite and validate the implementation\"\\n<commentary>\\nSince new code has been written, use the Task tool to launch the tester agent to run tests and ensure everything works properly.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: The user wants to check test coverage after adding new features.\\nuser: \"Can you check if our test coverage is still above 80%?\"\\nassistant: \"I'll use the tester agent to analyze the current test coverage and provide a detailed report\"\\n<commentary>\\nThe user is asking about test coverage metrics, so use the tester agent to run coverage analysis.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: After fixing a bug, ensuring the fix doesn't break existing functionality.\\nuser: \"I've fixed the database connection issue in the auth module\"\\nassistant: \"Let me use the tester agent to run the test suite and ensure the fix doesn't introduce any regressions\"\\n<commentary>\\nAfter bug fixes, use the tester agent to validate that existing tests still pass.\\n</commentary>\\n</example>",
-          "model": "haiku",
-          "memory": null,
-          "tools": []
-        },
         "marketing-beta": {
           "description": "Use this agent when you need to validate code quality through testing, including running unit and integration tests, analyzing test coverage, validating error handling, checking performance requirements, or verifying build processes. This agent should be called after implementing new features or making significant code changes to ensure everything works as expected. Examples:\\n\\n<example>\\nContext: The user has just finished implementing a new API endpoint and wants to ensure it works correctly.\\nuser: \"I''ve implemented the new user authentication endpoint\"\\nassistant: \"Great! Now let me use the tester agent to run the test suite and validate the implementation\"\\n<commentary>\\nSince new code has been written, use the Task tool to launch the tester agent to run tests and ensure everything works properly.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: The user wants to check test coverage after adding new features.\\nuser: \"Can you check if our test coverage is still above 80%?\"\\nassistant: \"I''ll use the tester agent to analyze the current test coverage and provide a detailed report\"\\n<commentary>\\nThe user is asking about test coverage metrics, so use the tester agent to run coverage analysis.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: After fixing a bug, ensuring the fix doesn''t break existing functionality.\\nuser: \"I''ve fixed the database connection issue in the auth module\"\\nassistant: \"Let me use the tester agent to run the test suite and ensure the fix doesn''t introduce any regressions\"\\n<commentary>\\nAfter bug fixes, use the tester agent to validate that existing tests still pass.\\n</commentary>\\n</example>",
           "model": "haiku",
@@ -8033,12 +7178,6 @@
       "name": "ui-ux-designer",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Use this agent when the user needs UI/UX design work including interface designs, wireframes, design systems, user research, responsive layouts, animations, or design documentation. Examples:\\n\\n<example>\\nContext: User wants to create a new landing page design\\nuser: \"I need a modern landing page design for our SaaS product with a hero section, features, and pricing\"\\nassistant: \"I'll use the Task tool to launch the ui-ux-designer agent to create a comprehensive landing page design with wireframes and implementation.\"\\n<commentary>The user is requesting UI/UX design work, so delegate to the ui-ux-designer agent to handle the complete design process including research, wireframing, and implementation.</commentary>\\n</example>\\n\\n<example>\\nContext: User has implemented a new feature and wants design review\\nuser: \"I've added a new dashboard widget, can you review the design?\"\\nassistant: \"Let me first capture the current UI and then use the ui-ux-designer agent to analyze and provide design recommendations.\"\\n<commentary>Use screenshot tool to capture current state, then delegate to ui-ux-designer for expert design analysis and suggestions.</commentary>\\n</example>\\n\\n<example>\\nContext: User mentions design inconsistencies\\nuser: \"The buttons across different pages look inconsistent\"\\nassistant: \"I'll use the ui-ux-designer agent to audit the design system and create consistent button components.\"\\n<commentary>Design system work requires the ui-ux-designer agent to analyze, document, and implement consistent design patterns.</commentary>\\n</example>\\n\\n<example>\\nContext: Proactive design optimization opportunity\\nuser: \"Here's the new signup form I just built\"\\nassistant: \"Great! Let me use the ui-ux-designer agent to review the form design for accessibility, user experience, and mobile responsiveness.\"\\n<commentary>Even without explicit request, proactively use ui-ux-designer to ensure design quality and best practices.</commentary>\\n</example>",
-          "model": "inherit",
-          "memory": null,
-          "tools": []
-        },
         "marketing-beta": {
           "description": "Use this agent when the user needs UI/UX design work including interface designs, wireframes, design systems, user research, responsive layouts, animations, or design documentation. Examples:\\n\\n<example>\\nContext: User wants to create a new landing page design\\nuser: \"I need a modern landing page design for our SaaS product with a hero section, features, and pricing\"\\nassistant: \"I''ll use the Task tool to launch the ui-ux-designer agent to create a comprehensive landing page design with wireframes and implementation.\"\\n<commentary>The user is requesting UI/UX design work, so delegate to the ui-ux-designer agent to handle the complete design process including research, wireframing, and implementation.</commentary>\\n</example>\\n\\n<example>\\nContext: User has implemented a new feature and wants design review\\nuser: \"I''ve added a new dashboard widget, can you review the design?\"\\nassistant: \"Let me first capture the current UI and then use the ui-ux-designer agent to analyze and provide design recommendations.\"\\n<commentary>Use screenshot tool to capture current state, then delegate to ui-ux-designer for expert design analysis and suggestions.</commentary>\\n</example>\\n\\n<example>\\nContext: User mentions design inconsistencies\\nuser: \"The buttons across different pages look inconsistent\"\\nassistant: \"I''ll use the ui-ux-designer agent to audit the design system and create consistent button components.\"\\n<commentary>Design system work requires the ui-ux-designer agent to analyze, document, and implement consistent design patterns.</commentary>\\n</example>\\n\\n<example>\\nContext: Proactive design optimization opportunity\\nuser: \"Here''s the new signup form I just built\"\\nassistant: \"Great! Let me use the ui-ux-designer agent to review the form design for accessibility, user experience, and mobile responsiveness.\"\\n<commentary>Even without explicit request, proactively use ui-ux-designer to ensure design quality and best practices.</commentary>\\n</example>",
           "model": "inherit",
@@ -8051,12 +7190,6 @@
       "name": "upsell-maximizer",
       "kit": "marketer",
       "channels": {
-        "marketing-stable": {
-          "description": "Use this agent for revenue expansion and product recommendations. This includes upsell opportunity identification, product recommendation logic, expansion revenue forecasting, feature adoption tracking, cross-sell sequences, and pricing tier optimization. Examples:\\n\\n<example>\\nContext: User wants to increase average order value.\\nuser: \"How can we increase our AOV from $50 to $75?\"\\nassistant: \"I'll use the upsell-maximizer agent to identify upsell opportunities\"\\n</example>\\n\\n<example>\\nContext: User needs cross-sell strategy.\\nuser: \"Design cross-sell recommendations for our product catalog\"\\nassistant: \"I'll launch the upsell-maximizer agent to create cross-sell strategies\"\\n</example>",
-          "model": "sonnet",
-          "memory": null,
-          "tools": []
-        },
         "marketing-beta": {
           "description": "Use this agent for revenue expansion and product recommendations. This includes upsell opportunity identification, product recommendation logic, expansion revenue forecasting, feature adoption tracking, cross-sell sequences, and pricing tier optimization. Examples:\\n\\n<example>\\nContext: User wants to increase average order value.\\nuser: \"How can we increase our AOV from $50 to $75?\"\\nassistant: \"I''ll use the upsell-maximizer agent to identify upsell opportunities\"\\n</example>\\n\\n<example>\\nContext: User needs cross-sell strategy.\\nuser: \"Design cross-sell recommendations for our product catalog\"\\nassistant: \"I''ll launch the upsell-maximizer agent to create cross-sell strategies\"\\n</example>",
           "model": "sonnet",

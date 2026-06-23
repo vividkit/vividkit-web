@@ -1,6 +1,6 @@
 # /ck:brainstorm — Solution Brainstorming
 
-Source: `reference/stable/claude/skills/brainstorm/SKILL.md` · v2.2.1 · category `utilities`
+Source: `reference/stable/claude/skills/brainstorm/SKILL.md` · v2.4.0 · category `utilities`
 
 ## Authoritative Flow
 
@@ -19,6 +19,7 @@ Source: `reference/stable/claude/skills/brainstorm/SKILL.md` · v2.2.1 · catego
 7.  Consensus — align on chosen approach
 8.  Documentation — markdown summary report
                     via ck:project-organization for path
+                    + HTML editorial report (same dir/stem) when --html
 9.  Finalize (Plan Handoff) — only when ALL hold:
        (a) user explicitly approved proposal
        (b) no open clarifying questions
@@ -28,18 +29,31 @@ Source: `reference/stable/claude/skills/brainstorm/SKILL.md` · v2.2.1 · catego
        • /ck:plan         (default — standard new feature)
        • End session      (plan later)
      On selection: invoke chosen command with brainstorm summary path as argument.
-10. Journal — /ck:journal (concise technical entry)
+10. Wiki Publish — only when --wiki: redact secrets, detect agentwiki CLI
+                   (doc upload+publish for md, sites upload for HTML),
+                   fall back to AgentWiki MCP, else state skip reason. Non-blocking.
+11. Journal — /ck:journal (concise technical entry)
 ```
 
 The mermaid `flowchart TD` in SKILL.md is the authoritative source. Prose conflicts → follow the diagram.
 
-## Hard Gates (3)
+## Hard Gates (4)
 
 | # | Gate | Effect |
 |---|------|--------|
 | 1 | `HARD-GATE` | No implementation skill / no code / no scaffold / no action until design presented AND user approves. Applies to every session regardless of perceived simplicity. |
 | 2 | `HARD-GATE-SCOUT-FIRST` | Mandatory codebase scan before ANY clarifying question. Output: project type, relevant modules, existing patterns, related docs/plans, constraints. Brief findings to user (3-6 bullets) before Discovery. |
 | 3 | `HARD-GATE-EXACT-REQUIREMENTS` | Discovery must extract EXACT, CONCRETE answers for: expected output, acceptance criteria, scope boundary, non-negotiable constraints, touchpoints. Loop until concrete — no hand-wavy "make it better". Ground options in scout findings. |
+| 4 | `HARD-GATE-PRESENT-BEFORE-ASK` | Never call AskUserQuestion about approaches/trade-offs/decisions the user has not seen in visible text. Extended thinking is invisible — write the options, trade-offs, and recommendation in the response first; each option label/description must stand alone. Applies to Discovery, Debate, Finalize. Clarifying questions exempt only when grounded in already-shown facts (e.g. scout summary). |
+
+## Flags
+
+| Flag | Effect |
+|------|--------|
+| `--html` | After the markdown report, also create a self-contained editorial-magazine HTML report (per `references/editorial-magazine-html.md`) using the same directory and stem (e.g. `brainstorm-report.md` + `brainstorm-report.html`). |
+| `--wiki` | After local outputs exist, publish markdown + HTML through `agentwiki` CLI (`doc upload`/`doc publish`, `sites upload`), falling back to AgentWiki MCP document/site tools. Redact secrets first. State `Wiki publish skipped: agentwiki unavailable` when neither is present — never block the brainstorm. |
+
+Flags are stripped from the topic before analysis; requested modes recorded in report metadata. On `/ck:plan` handoff, pass the report path + any HTML/wiki URLs; do not forward brainstorm-only flags unless the target supports them and the user asks.
 
 ## Skills Activated
 
@@ -49,6 +63,7 @@ The mermaid `flowchart TD` in SKILL.md is the authoritative source. Prose confli
 | Mandatory | `AskUserQuestion` tool | Discovery loop + brutal-honesty feedback + handoff picker |
 | Mandatory | `ck:project-organization` | Decide report path |
 | Conditional | `/ck:plan` / `/ck:plan --tdd` | Plan handoff after consensus |
+| Conditional | `agentwiki` CLI / AgentWiki MCP | `--wiki` publish of markdown + HTML (CLI first, MCP fallback) |
 | Conditional | `/ck:journal` | Final journal entry |
 | Optional | `ck:sequential-thinking` | Structured multi-step analysis |
 | Optional | `ck:docs-seeker` | Latest docs of external plugins/packages |
@@ -90,11 +105,20 @@ The skill ships an explicit table to override common shortcuts. Every reframe is
 - Prioritises long-term maintainability over short-term convenience.
 - Balances technical excellence with business pragmatism.
 
+## Bundled References
+
+| Reference | Read when |
+|-----------|-----------|
+| `references/problem-first.md` | User starts from a proposed solution, roadmap item, feature idea, or idea-triage prompt → apply problem-first inversion (Approach #6) before debating implementation. Adds the eight problem-first sections (or concise equivalent) to the report. |
+| `references/editorial-magazine-html.md` | Only when `--html` present — visual contract for the additional HTML report. |
+
 ## Report Output
 
 - Path: from `ck:project-organization` skill (typically under `plans/reports/`).
 - Naming: per `## Naming` injected context (date + slug).
 - Contents: problem statement · evaluated approaches with pros/cons · final recommendation with rationale · implementation considerations & risks · success metrics · next steps & dependencies.
+- `--html`: additional HTML report (same dir/stem) with same decisions/evidence + editorial sections for strongest trade-offs, assumptions, recommendation.
+- `--wiki`: include AgentWiki document/site URLs (or exact skip reason) in the final response.
 - Style: sacrifice grammar for concision.
 
 ## Workflow Position

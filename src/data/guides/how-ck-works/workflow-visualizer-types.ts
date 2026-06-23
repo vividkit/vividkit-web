@@ -175,6 +175,17 @@ export interface GuardrailItem {
   accent: string;
 }
 
+/** Output / publish flag card (e.g. --html, --github, --wiki) — conditional, composes with any mode */
+export interface OutputFlag {
+  flag: string;
+  titleEn: string;
+  titleVi: string;
+  descEn: string;
+  descVi: string;
+  /** Optional sample command demonstrating the flag */
+  exampleCommand?: string;
+}
+
 /** Enriched mode card with inline prompt example */
 export interface ModeCardData {
   flag: string;
@@ -237,6 +248,8 @@ export interface SkillInfographic {
   promptExamples?: PromptExample[];
   composableFlagsEn?: string;
   composableFlagsVi?: string;
+  /** Conditional output / publish flags (--html, --github, --wiki) */
+  outputFlags?: OutputFlag[];
 
   skillStack?: SkillStackBadge[];
 

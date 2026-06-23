@@ -14,6 +14,7 @@ export type {
   PromptExample,
   ProcessFlowStep,
   WorkflowModeRow,
+  OutputFlag,
   SkillStackBadge,
   SkillStackType,
   SpecialOpCard,
