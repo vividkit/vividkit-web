@@ -22,20 +22,21 @@ REPORTS = ROOT / "plans" / "reports"
 OUTPUT = ROOT / "reference" / "skills-registry.json"
 INDEX_OUTPUT = ROOT / "reference" / "skills-registry-index.json"
 
-# Per-branch directory layouts. Marketing-stable uses hidden `.claude/`,
-# the others use plain `claude/`. Hard-coded — do not assume uniform layout.
+# Per-branch directory layouts. All four branches now use plain `claude/`
+# (marketing-stable migrated off the hidden `.claude/` layout as of 2026-06).
+# Hard-coded — do not assume uniform layout; re-verify on upstream re-sync.
 BRANCH_LAYOUT = {
     "stable":           {"repo": "stable",           "base": "claude"},
     "beta":             {"repo": "beta",             "base": "claude"},
-    "marketing-stable": {"repo": "marketing-stable", "base": ".claude"},
+    "marketing-stable": {"repo": "marketing-stable", "base": "claude"},
     "marketing-beta":   {"repo": "marketing-beta",   "base": "claude"},
 }
 
 SKILL_SCOUT_FILES = {
-    "stable": "scout-260429-1501-skills-stable.json",
-    "beta": "scout-260429-1501-skills-beta.json",
-    "marketing-stable": "scout-260429-1501-skills-marketing-stable.json",
-    "marketing-beta": "scout-260429-1501-skills-marketing-beta.json",
+    "stable": "scout-260623-1357-skills-stable.json",
+    "beta": "scout-260623-1357-skills-beta.json",
+    "marketing-stable": "scout-260623-1357-skills-marketing-stable.json",
+    "marketing-beta": "scout-260623-1357-skills-marketing-beta.json",
 }
 
 
