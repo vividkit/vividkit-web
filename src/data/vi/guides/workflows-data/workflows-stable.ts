@@ -1279,5 +1279,141 @@ export const stableWorkflows = [
       'Auto-fix lặp đi lặp lại tùy chọn theo pattern /ck:loop'
     ],
     borderColor: 'border-red-500/20'
+  },
+  {
+    title: 'Tự Động Giao Feature',
+    category: 'Shipping',
+    level: 'Advanced',
+    duration: '~30-60 phút',
+    stepCount: 2,
+    bestFor: 'Giao feature tự động từ GitHub issue đến PR được ship, không cần can thiệp thủ công',
+    gradientHeader: 'from-teal-500/10 to-cyan-500/10',
+    hoverBorderColor: 'hover:border-teal-500/50',
+    buttonColor: 'bg-teal-500 hover:bg-teal-600',
+    icon: '<path d="M13 3L4 14h7l-1 7 9-11h-7l1-7z"/>',
+    iconColor: 'text-teal-600 dark:text-teal-400',
+    steps: [
+      {
+        command: '/ck:vibe',
+        typeLabel: 'Pipeline tự động',
+        description: 'Một lệnh duy nhất xử lý GitHub issue qua toàn bộ pipeline: plan → implement → review → ship (worktree isolation, plan gate TDD, định tuyến cook/fix, review-pr, merge/CI watch)',
+        color: 'bg-teal-500/10 dark:bg-teal-500/20 text-teal-600 dark:text-teal-400',
+        number: 1,
+        isSkill: true
+      },
+      {
+        typeLabel: 'Plan gate → PR',
+        description: 'Duyệt plan tại gate; hệ thống tự implement, self-review và mở PR',
+        color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
+        number: 2,
+        hasIcon: true
+      }
+    ],
+    tip: 'Dùng /ck:vibe cho tự động hóa end-to-end; kiểm soát thủ công dùng /ck:plan → /ck:cook thay thế',
+    borderColor: 'border-teal-500/20'
+  },
+  {
+    title: 'Review & Merge PR',
+    category: 'Planning & Review',
+    level: 'Intermediate',
+    duration: '~10-20 phút',
+    stepCount: 3,
+    bestFor: 'Review GitHub pull request về chuẩn mực, bảo mật và breaking changes trước khi merge',
+    gradientHeader: 'from-indigo-500/10 to-blue-500/10',
+    hoverBorderColor: 'hover:border-indigo-500/50',
+    buttonColor: 'bg-indigo-500 hover:bg-indigo-600',
+    icon: '<path d="M9 12l2 2 4-4"/><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>',
+    iconColor: 'text-indigo-600 dark:text-indigo-400',
+    steps: [
+      {
+        command: '/ck:review-pr <PR>',
+        typeLabel: 'Review PR',
+        description: 'Kiểm tra công việc trùng lặp, chuẩn dự án, tính cần thiết chiến lược, tính đúng đắn, bảo mật, breaking changes và AI-slop patterns',
+        color: 'bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400',
+        number: 1,
+        isSkill: true
+      },
+      {
+        command: '/ck:review-pr <PR> --fix --reply',
+        typeLabel: 'Tự động sửa & phản hồi',
+        description: 'Áp dụng phát hiện vào working tree và đăng review chính thức lên GitHub',
+        color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
+        number: 2
+      },
+      {
+        command: '/ck:git merge',
+        typeLabel: 'Merge khi CI xanh',
+        description: 'Merge sau khi được duyệt và CI pass',
+        color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
+        number: 3,
+        isSkill: true
+      }
+    ],
+    tip: 'review-pr hỗ trợ --fix (áp dụng) và --reply (đăng lên GitHub)',
+    borderColor: 'border-indigo-500/20'
+  },
+  {
+    title: 'Render Video Từ HTML',
+    category: 'Media & Creative',
+    level: 'Intermediate',
+    duration: '~20-40 phút',
+    stepCount: 2,
+    bestFor: 'Render video MP4 cục bộ từ template HTML/CSS/JS (promo, explainer, social clip)',
+    gradientHeader: 'from-pink-500/10 to-rose-500/10',
+    hoverBorderColor: 'hover:border-pink-500/50',
+    buttonColor: 'bg-pink-500 hover:bg-pink-600',
+    icon: '<path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>',
+    iconColor: 'text-pink-600 dark:text-pink-400',
+    steps: [
+      {
+        command: '/ck:html-video',
+        typeLabel: 'Scaffold từ template',
+        description: 'Chọn template (promo, explainer, data video, social clip) và tùy chỉnh trong studio',
+        color: 'bg-pink-500/10 dark:bg-pink-500/20 text-pink-600 dark:text-pink-400',
+        number: 1,
+        isSkill: true
+      },
+      {
+        typeLabel: 'Render & kiểm tra MP4',
+        description: 'Render cục bộ qua Chromium + ffmpeg, sau đó xác minh file MP4 đầu ra',
+        color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
+        number: 2,
+        hasIcon: true
+      }
+    ],
+    tip: 'Render cục bộ (Chromium + ffmpeg) — không cần dịch vụ bên ngoài',
+    borderColor: 'border-pink-500/20'
+  },
+  {
+    title: 'Tự Động Hóa Trình Duyệt (Chrome Thật)',
+    category: 'Advanced',
+    level: 'Advanced',
+    duration: '~10-20 phút',
+    stepCount: 2,
+    bestFor: 'Tự động hóa hoặc kiểm thử giao diện web đã đăng nhập bằng profile Chrome thật và cookie',
+    gradientHeader: 'from-blue-500/10 to-cyan-500/10',
+    hoverBorderColor: 'hover:border-blue-500/50',
+    buttonColor: 'bg-blue-500 hover:bg-blue-600',
+    icon: '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
+    iconColor: 'text-blue-600 dark:text-blue-400',
+    steps: [
+      {
+        command: '/ck:chrome-profile',
+        typeLabel: 'Nhắm profile thật',
+        description: 'Khám phá và nhắm đến profile Google Chrome thật qua Chrome DevTools MCP (cookie phiên thật)',
+        color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
+        number: 1,
+        isSkill: true
+      },
+      {
+        typeLabel: 'Tự động hóa / chụp màn hình',
+        description: 'Xem trước hoặc kiểm thử giao diện đã xác thực, chụp ảnh màn hình hoặc scrape với phiên đăng nhập',
+        color: 'bg-cyan-500/10 dark:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400',
+        number: 2,
+        hasIcon: true
+      }
+    ],
+    tip: 'Dùng chrome-profile khi tự động hóa cần cookie/tài khoản thật; dùng web-testing cho E2E môi trường sạch',
+    borderColor: 'border-blue-500/20'
   }
 ];

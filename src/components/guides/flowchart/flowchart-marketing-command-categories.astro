@@ -98,8 +98,8 @@ const isVi = currentLang === "vi";
         </thead>
         <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
           <tr>
-            <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-pink-500/20 text-pink-600 dark:text-pink-400 font-mono font-bold">/ckm:write</code></td>
-            <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? "Tạo content (8 modes: fast, good, cro, blog...)" : "Create content (8 modes: fast, good, cro, blog...)"}</td>
+            <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-pink-500/20 text-pink-600 dark:text-pink-400 font-mono font-bold">/ckm:write:*</code></td>
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? "Tạo content — 8 subcommand: write:good, write:fast, write:cro, write:blog..." : "Create content — 8 subcommands: write:good, write:fast, write:cro, write:blog..."}</td>
             <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? "Viết blogs, copy, marketing content" : "Writing blogs, copy, marketing content"}</td>
           </tr>
           <tr>
@@ -117,38 +117,38 @@ const isVi = currentLang === "vi";
     </div>
   </div>
 
-  <!-- 4. Growth & CRO -->
+  <!-- 4. Strategy & Playbook -->
   <div class="glass-card rounded-2xl p-6 sm:p-8">
     <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
       <svg class="w-5 h-5 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" stroke-linecap="round" stroke-linejoin="round"></path>
       </svg>
-      {isVi ? "Growth & Tối Ưu" : "Growth & Optimization"}
+      {isVi ? "Chiến Lược & Playbook" : "Strategy & Playbook"}
     </h3>
     <div class="overflow-x-auto">
       <table class="w-full text-sm">
         <thead class="border-b border-slate-200 dark:border-slate-700">
           <tr>
-            <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white min-w-[180px]">Command</th>
+            <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white min-w-[160px]">Command</th>
             <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? "Mô tả" : "Description"}</th>
             <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? "Khi nào dùng" : "When to Use"}</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
           <tr>
-            <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-mono font-bold">/ckm:launch-strategy</code></td>
-            <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? "Chiến lược go-to-market cho sản phẩm mới" : "Go-to-market strategy for new products"}</td>
-            <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? "Product launches" : "Product launches"}</td>
+            <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-mono font-bold">/ckm:play</code></td>
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? "Marketing playbook orchestrator — chiến lược + thực thi AI + theo dõi mục tiêu" : "Marketing playbook orchestrator — strategy + AI execution + goal tracking"}</td>
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? "Điều phối chiến lược marketing" : "Orchestrate marketing strategy"}</td>
           </tr>
           <tr>
-            <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-mono font-bold">/ckm:pricing-strategy</code></td>
-            <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? "Tối ưu pricing tiers & revenue" : "Optimize pricing tiers & revenue models"}</td>
-            <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? "Pricing optimization" : "Pricing optimization"}</td>
+            <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-mono font-bold">/ckm:persona</code></td>
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? "Tạo & quản lý customer personas" : "Create & manage customer personas"}</td>
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? "Xác định & quản lý target audience" : "Defining & managing target audience"}</td>
           </tr>
           <tr>
-            <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-mono font-bold">/ckm:form-cro</code></td>
-            <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? "Tối ưu forms để tăng conversion" : "Optimize forms for higher conversions"}</td>
-            <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? "CRO, lead generation" : "CRO, lead generation"}</td>
+            <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-mono font-bold">/ckm:journal</code></td>
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? "Viết journal cho các phiên marketing" : "Write journal entries for marketing sessions"}</td>
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? "Ghi lại tiến độ & insight từng phiên" : "Logging session progress & insights"}</td>
           </tr>
         </tbody>
       </table>
@@ -193,28 +193,33 @@ const isVi = currentLang === "vi";
     </div>
   </div>
 
-  <!-- 6. Design & Project Management -->
+  <!-- 6. Analytics & Management -->
   <div class="glass-card rounded-2xl p-6 sm:p-8">
     <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
       <svg class="w-5 h-5 text-teal-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" stroke-linecap="round" stroke-linejoin="round"></path>
       </svg>
-      {isVi ? "Design & Quản Lý" : "Design & Management"}
+      {isVi ? "Phân Tích & Quản Lý" : "Analytics & Management"}
     </h3>
     <div class="overflow-x-auto">
       <table class="w-full text-sm">
         <thead class="border-b border-slate-200 dark:border-slate-700">
           <tr>
-            <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white min-w-[180px]">Command</th>
+            <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white min-w-[160px]">Command</th>
             <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? "Mô tả" : "Description"}</th>
             <th class="text-left py-3 px-4 font-semibold text-slate-900 dark:text-white">{isVi ? "Khi nào dùng" : "When to Use"}</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
           <tr>
-            <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-teal-500/20 text-teal-600 dark:text-teal-400 font-mono font-bold">/ckm:design</code></td>
-            <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? "Tạo logos, banners, social graphics" : "Generate logos, banners, social graphics"}</td>
-            <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? "Visual content creation" : "Visual content creation"}</td>
+            <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-teal-500/20 text-teal-600 dark:text-teal-400 font-mono font-bold">/ckm:analyze</code></td>
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? "Báo cáo analytics & hiệu suất" : "Analytics & performance reports"}</td>
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? "Phân tích hiệu suất chiến dịch" : "Analyzing campaign performance"}</td>
+          </tr>
+          <tr>
+            <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-teal-500/20 text-teal-600 dark:text-teal-400 font-mono font-bold">/ckm:dashboard</code></td>
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? "Dashboard analytics marketing (web)" : "Marketing analytics dashboard (web)"}</td>
+            <td class="py-3 px-4 text-slate-600 dark:text-slate-400">{isVi ? "Xem tổng quan metrics trực quan" : "Viewing metrics at a glance"}</td>
           </tr>
           <tr>
             <td class="py-3 px-4"><code class="px-2 py-1 rounded bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 font-mono font-bold">/ckm:kanban</code></td>

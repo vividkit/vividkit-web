@@ -122,13 +122,11 @@ export const marketingKitWorkflows = [
     iconColor: 'text-purple-600 dark:text-purple-400',
     steps: [
       {
-        command: '/ckm:marketing-planning',
+        command: '/ckm:plan',
         typeLabel: 'Lập chiến lược',
         description: 'Xác định mục tiêu campaign, KPI, timeline, và phân bổ ngân sách',
         color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
         number: 1,
-        isSkill: true,
-        isBeta: true
       },
       {
         command: '/ckm:campaign create',
@@ -138,13 +136,11 @@ export const marketingKitWorkflows = [
         number: 2
       },
       {
-        command: '/ckm:content-marketing',
-        typeLabel: 'Tạo nội dung',
-        description: 'Tạo tài nguyên campaign trên tất cả các kênh',
+        typeLabel: 'Skill content marketing',
+        description: 'Skill content-marketing lên kế hoạch trụ cột nội dung & lịch content — mô tả mục tiêu để kích hoạt',
         color: 'bg-pink-500/10 dark:bg-pink-500/20 text-pink-600 dark:text-pink-400',
         number: 3,
-        isSkill: true,
-        isBeta: true
+        hasIcon: true,
       },
       {
         command: '/ckm:social schedule',
@@ -154,13 +150,11 @@ export const marketingKitWorkflows = [
         number: 4
       },
       {
-        command: '/ckm:analytics',
+        command: '/ckm:analyze',
         typeLabel: 'Thiết lập tracking',
         description: 'Cấu hình analytics và theo dõi conversion',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 5,
-        isSkill: true,
-        isBeta: true
       }
     ],
     tip: 'Dùng /ckm:campaign status để theo dõi hiệu suất trong quá trình chạy campaign',
@@ -193,13 +187,11 @@ export const marketingKitWorkflows = [
         number: 1
       },
       {
-        command: '/ckm:ab-test-setup',
-        typeLabel: 'Thiết kế test',
-        description: 'Tạo hypothesis, biến thể, và chỉ số đánh giá',
+        typeLabel: 'Skill A/B testing',
+        description: 'Skill ab-test-setup thiết kế biến thể & tracking — nói "thiết lập A/B test cho ..."',
         color: 'bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400',
         number: 2,
-        isSkill: true,
-        isBeta: true
+        hasIcon: true,
       },
       {
         command: '/ckm:plan cro',
@@ -292,13 +284,11 @@ export const marketingKitWorkflows = [
         number: 1
       },
       {
-        command: '/ckm:form-cro "url"',
-        typeLabel: 'Tối ưu form',
-        description: 'Tối ưu trường form, CTA, và các điểm gây ma sát',
+        typeLabel: 'Skill form CRO',
+        description: 'Skill form-cro tối ưu form để tăng conversion — mô tả form cần cải thiện',
         color: 'bg-teal-500/10 dark:bg-teal-500/20 text-teal-600 dark:text-teal-400',
         number: 2,
-        isSkill: true,
-        isBeta: true
+        hasIcon: true,
       },
       {
         command: '/ck:copywriting',
@@ -348,31 +338,25 @@ export const marketingKitWorkflows = [
         number: 1
       },
       {
-        command: '/ckm:design-system',
-        typeLabel: 'Hệ thống thiết kế',
-        description: 'Tạo thư viện component phù hợp với brand',
+        typeLabel: 'Skill design system',
+        description: 'Skill design-system xây dựng brand guidelines & token — mô tả thương hiệu của bạn',
         color: 'bg-cyan-500/10 dark:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400',
         number: 2,
-        isSkill: true,
-        isBeta: true
+        hasIcon: true,
       },
       {
-        command: '/ckm:design banner',
-        typeLabel: 'Tạo assets',
-        description: 'Tạo banner, quảng cáo, và đồ họa khuyến mãi',
+        typeLabel: 'Skill design (banner)',
+        description: 'Skill design tạo logo/banner/đồ họa social — nói "thiết kế banner cho ..."',
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
         number: 3,
-        isSkill: true,
-        isBeta: true
+        hasIcon: true,
       },
       {
-        command: '/ckm:assets-organizing',
-        typeLabel: 'Tổ chức assets',
-        description: 'Sắp xếp và xuất assets cho các nền tảng khác nhau',
+        typeLabel: 'Skill tổ chức assets',
+        description: 'Skill assets-organizing đặt tên & sắp xếp assets đã tạo — chạy sau khi tạo xong assets',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 4,
-        isSkill: true,
-        isBeta: true
+        hasIcon: true,
       }
     ],
     tip: 'Dùng /ckm:brand create để thiết lập brand guidelines trước nếu chưa có',
@@ -398,13 +382,11 @@ export const marketingKitWorkflows = [
     iconColor: 'text-pink-600 dark:text-pink-400',
     steps: [
       {
-        command: '/ckm:design social',
-        typeLabel: 'Tạo đồ họa',
-        description: 'Tạo đồ họa social media tối ưu cho từng nền tảng',
+        typeLabel: 'Skill design (social)',
+        description: 'Skill design tạo đồ họa social media — nói "thiết kế đồ họa social cho ..."',
         color: 'bg-pink-500/10 dark:bg-pink-500/20 text-pink-600 dark:text-pink-400',
         number: 1,
-        isSkill: true,
-        isBeta: true
+        hasIcon: true,
       },
       {
         command: '/ck:copywriting',
@@ -422,7 +404,7 @@ export const marketingKitWorkflows = [
         number: 3
       }
     ],
-    tip: 'Mỗi nền tảng có kích thước hình ảnh tối ưu riêng — /ckm:design tự động định dạng',
+    tip: 'Mỗi nền tảng có kích thước hình ảnh tối ưu riêng — skill design tự động định dạng cho từng mục tiêu',
     features: [
       'Kích thước theo từng nền tảng',
       'Nhất quán với brand',
@@ -501,13 +483,11 @@ export const marketingKitWorkflows = [
         number: 3
       },
       {
-        command: '/ckm:marketing-research',
-        typeLabel: 'Insight thị trường',
-        description: 'Tổng hợp kết quả thành các insight có thể hành động',
+        typeLabel: 'Skill nghiên cứu thị trường',
+        description: 'Skill marketing-research thu thập insight thị trường/đối tượng — yêu cầu nó nghiên cứu lĩnh vực của bạn',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 4,
-        isSkill: true,
-        isBeta: true
+        hasIcon: true,
       }
     ],
     tip: 'Theo dõi 3-5 đối thủ chính đều đặn để có thông tin cạnh tranh liên tục',
@@ -540,13 +520,11 @@ export const marketingKitWorkflows = [
         number: 1
       },
       {
-        command: '/ckm:marketing-research',
-        typeLabel: 'Nghiên cứu thị trường',
-        description: 'Phân tích xu hướng thị trường, quy mô, và cơ hội',
+        typeLabel: 'Skill nghiên cứu thị trường',
+        description: 'Skill marketing-research thu thập insight thị trường/đối tượng — yêu cầu nó nghiên cứu lĩnh vực của bạn',
         color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
         number: 2,
-        isSkill: true,
-        isBeta: true
+        hasIcon: true,
       },
       {
         command: '/ckm:funnel design',
@@ -556,13 +534,11 @@ export const marketingKitWorkflows = [
         number: 3
       },
       {
-        command: '/ckm:marketing-planning',
+        command: '/ckm:plan',
         typeLabel: 'Kế hoạch chiến lược',
         description: 'Tạo tài liệu chiến lược marketing toàn diện',
         color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
         number: 4,
-        isSkill: true,
-        isBeta: true
       },
       {
         command: '/ckm:dashboard',
@@ -659,13 +635,11 @@ export const marketingKitWorkflows = [
     iconColor: 'text-red-600 dark:text-red-400',
     steps: [
       {
-        command: '/ckm:youtube-thumbnail-design',
-        typeLabel: 'Thiết kế thumbnail',
-        description: 'AI tạo thumbnail hoàn chỉnh có text qua Gemini Pro (lên đến 4K)',
+        typeLabel: 'Skill YouTube thumbnail',
+        description: 'Skill youtube-thumbnail-design tạo thumbnail thu hút click — mô tả nội dung video',
         color: 'bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400',
         number: 1,
-        isSkill: true,
-        isBeta: true
+        hasIcon: true,
       },
       {
         command: '/ck:ai-multimodal',
@@ -676,13 +650,11 @@ export const marketingKitWorkflows = [
         isSkill: true
       },
       {
-        command: '/ckm:assets-organizing',
-        typeLabel: 'Tổ chức file xuất',
-        description: 'Sắp xếp thumbnail theo video slug với quy tắc đặt tên biến thể',
+        typeLabel: 'Skill tổ chức assets',
+        description: 'Skill assets-organizing đặt tên & sắp xếp assets đã tạo — chạy sau khi tạo xong assets',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 3,
-        isSkill: true,
-        isBeta: true
+        hasIcon: true,
       }
     ],
     tip: '17 phong cách art direction: facecam, mystery, bold-text, before-after, và nhiều hơn',
@@ -723,13 +695,11 @@ export const marketingKitWorkflows = [
         number: 2
       },
       {
-        command: '/ckm:elevenlabs speak',
-        typeLabel: 'Tạo voiceover',
-        description: 'Tạo giọng đọc AI từ script',
+        typeLabel: 'Skill ElevenLabs',
+        description: 'Skill elevenlabs tạo audio giọng đọc — cung cấp script cần đọc',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 3,
-        isSkill: true,
-        isBeta: true
+        hasIcon: true,
       }
     ],
     tip: 'Giữ video dưới 2 phút cho social media; dưới 10 phút cho YouTube',

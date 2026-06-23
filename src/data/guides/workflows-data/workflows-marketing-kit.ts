@@ -122,12 +122,11 @@ export const marketingKitWorkflows = [
     iconColor: 'text-purple-600 dark:text-purple-400',
     steps: [
       {
-        command: '/ckm:marketing-planning',
+        command: '/ckm:plan',
         typeLabel: 'Strategic planning',
         description: 'Define campaign goals, KPIs, timeline, and budget allocation',
         color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
         number: 1,
-        isSkill: true,
       },
       {
         command: '/ckm:campaign:create',
@@ -137,12 +136,11 @@ export const marketingKitWorkflows = [
         number: 2
       },
       {
-        command: '/ckm:content-marketing',
-        typeLabel: 'Content creation',
-        description: 'Generate campaign assets across all channels',
+        typeLabel: 'Content marketing skill',
+        description: 'The content-marketing skill plans content pillars & calendar — describe your goal to activate it',
         color: 'bg-pink-500/10 dark:bg-pink-500/20 text-pink-600 dark:text-pink-400',
         number: 3,
-        isSkill: true,
+        hasIcon: true,
       },
       {
         command: '/ckm:social:schedule',
@@ -152,12 +150,11 @@ export const marketingKitWorkflows = [
         number: 4
       },
       {
-        command: '/ckm:analytics',
+        command: '/ckm:analyze',
         typeLabel: 'Set up tracking',
         description: 'Configure analytics and conversion tracking',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 5,
-        isSkill: true,
       }
     ],
     tip: 'Use /ckm:campaign status to monitor performance during campaign',
@@ -190,12 +187,11 @@ export const marketingKitWorkflows = [
         number: 1
       },
       {
-        command: '/ckm:ab-test-setup',
-        typeLabel: 'Design test',
-        description: 'Create hypothesis, variants, and success metrics',
+        typeLabel: 'A/B testing skill',
+        description: 'The ab-test-setup skill designs variants & tracking — say "set up an A/B test for ..."',
         color: 'bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400',
         number: 2,
-        isSkill: true,
+        hasIcon: true,
       },
       {
         command: '/ckm:plan:cro',
@@ -288,12 +284,11 @@ export const marketingKitWorkflows = [
         number: 1
       },
       {
-        command: '/ckm:form-cro [form-url]',
-        typeLabel: 'Form optimization',
-        description: 'Optimize form fields, CTAs, and friction points',
+        typeLabel: 'Form CRO skill',
+        description: 'The form-cro skill optimizes forms for conversion — describe the form to improve',
         color: 'bg-teal-500/10 dark:bg-teal-500/20 text-teal-600 dark:text-teal-400',
         number: 2,
-        isSkill: true,
+        hasIcon: true,
       },
       {
         command: '/ck:copywriting',
@@ -343,28 +338,25 @@ export const marketingKitWorkflows = [
         number: 1
       },
       {
-        command: '/ckm:design-system',
-        typeLabel: 'Design system',
-        description: 'Generate component library aligned with brand',
+        typeLabel: 'Design system skill',
+        description: 'The design-system skill builds brand guidelines & tokens — describe your brand',
         color: 'bg-cyan-500/10 dark:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400',
         number: 2,
-        isSkill: true,
+        hasIcon: true,
       },
       {
-        command: '/ckm:design banner',
-        typeLabel: 'Create assets',
-        description: 'Generate banners, ads, and promotional graphics',
+        typeLabel: 'Design skill (banner)',
+        description: 'The design skill generates logos/banners/social graphics — say "design a banner for ..."',
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
         number: 3,
-        isSkill: true,
+        hasIcon: true,
       },
       {
-        command: '/ckm:assets-organizing',
-        typeLabel: 'Organize assets',
-        description: 'Structure and export assets for various platforms',
+        typeLabel: 'Assets organizing skill',
+        description: 'The assets-organizing skill files & names your generated assets — run it after creating assets',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 4,
-        isSkill: true,
+        hasIcon: true,
       }
     ],
     tip: 'Use /ckm:brand create to set up brand guidelines first if not exists',
@@ -390,12 +382,11 @@ export const marketingKitWorkflows = [
     iconColor: 'text-pink-600 dark:text-pink-400',
     steps: [
       {
-        command: '/ckm:design social',
-        typeLabel: 'Generate graphics',
-        description: 'Create platform-optimized social media graphics',
+        typeLabel: 'Design skill (social)',
+        description: 'The design skill creates social graphics — say "design a social graphic for ..."',
         color: 'bg-pink-500/10 dark:bg-pink-500/20 text-pink-600 dark:text-pink-400',
         number: 1,
-        isSkill: true,
+        hasIcon: true,
       },
       {
         command: '/ck:copywriting',
@@ -413,7 +404,7 @@ export const marketingKitWorkflows = [
         number: 3
       }
     ],
-    tip: 'Each platform has optimal image sizes - /ckm:design auto-formats',
+    tip: 'Each platform has optimal image sizes — the design skill auto-formats for each target',
     features: [
       'Platform-specific sizing',
       'Brand consistency',
@@ -491,12 +482,11 @@ export const marketingKitWorkflows = [
         number: 3
       },
       {
-        command: '/ckm:marketing-research',
-        typeLabel: 'Market insights',
-        description: 'Synthesize findings into actionable insights',
+        typeLabel: 'Marketing research skill',
+        description: 'The marketing-research skill gathers market/audience insights — ask it to research your niche',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 4,
-        isSkill: true,
+        hasIcon: true,
       }
     ],
     tip: 'Track 3-5 key competitors regularly for ongoing intelligence',
@@ -529,12 +519,11 @@ export const marketingKitWorkflows = [
         number: 1
       },
       {
-        command: '/ckm:marketing-research',
-        typeLabel: 'Market research',
-        description: 'Analyze market trends, size, and opportunities',
+        typeLabel: 'Marketing research skill',
+        description: 'The marketing-research skill gathers market/audience insights — ask it to research your niche',
         color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
         number: 2,
-        isSkill: true,
+        hasIcon: true,
       },
       {
         command: '/ckm:funnel design',
@@ -544,12 +533,11 @@ export const marketingKitWorkflows = [
         number: 3
       },
       {
-        command: '/ckm:marketing-planning',
+        command: '/ckm:plan',
         typeLabel: 'Strategic plan',
         description: 'Create comprehensive marketing strategy document',
         color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
         number: 4,
-        isSkill: true,
       },
       {
         command: '/ckm:dashboard',
@@ -642,12 +630,11 @@ export const marketingKitWorkflows = [
     iconColor: 'text-red-600 dark:text-red-400',
     steps: [
       {
-        command: '/ckm:youtube-thumbnail-design',
-        typeLabel: 'Design thumbnails',
-        description: 'AI generates complete thumbnails with text baked in via Gemini Pro (up to 4K)',
+        typeLabel: 'YouTube thumbnail skill',
+        description: 'The youtube-thumbnail-design skill creates click-worthy thumbnails — describe the video',
         color: 'bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400',
         number: 1,
-        isSkill: true,
+        hasIcon: true,
       },
       {
         command: '/ck:ai-multimodal',
@@ -658,12 +645,11 @@ export const marketingKitWorkflows = [
         isSkill: true
       },
       {
-        command: '/ckm:assets-organizing',
-        typeLabel: 'Organize exports',
-        description: 'Structure thumbnails by video slug with variant naming',
+        typeLabel: 'Assets organizing skill',
+        description: 'The assets-organizing skill files & names your generated assets — run it after creating assets',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 3,
-        isSkill: true,
+        hasIcon: true,
       }
     ],
     tip: '17 art direction styles available: facecam, mystery, bold-text, before-after, and more',
@@ -704,12 +690,11 @@ export const marketingKitWorkflows = [
         number: 2
       },
       {
-        command: '/ckm:elevenlabs speak',
-        typeLabel: 'Generate voiceover',
-        description: 'Create AI voiceover from script',
+        typeLabel: 'ElevenLabs skill',
+        description: 'The elevenlabs skill generates voiceover audio — provide the script to narrate',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 3,
-        isSkill: true,
+        hasIcon: true,
       }
     ],
     tip: 'Keep videos under 2 minutes for social media; under 10 for YouTube',

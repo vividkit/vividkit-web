@@ -112,7 +112,7 @@ const stableNodes: FlowchartNode[] = [
     id: 'cmd-brainstorm',
     type: 'command',
     label: '/ck:brainstorm',
-    description: 'Collaborative ideation ⚡⚡',
+    description: 'Collaborative ideation (--html, --wiki) ⚡⚡',
     position: { x: 380, y: 400 }
   },
   {
@@ -126,7 +126,7 @@ const stableNodes: FlowchartNode[] = [
     id: 'cmd-plan',
     type: 'command',
     label: '/ck:plan',
-    description: 'Create detailed plan ⚡⚡⚡',
+    description: 'Create detailed plan (--html, --github, --wiki) ⚡⚡⚡',
     position: { x: 380, y: 520 }
   },
   {
@@ -215,14 +215,22 @@ const stableNodes: FlowchartNode[] = [
     position: { x: 1100, y: 360 }
   },
 
-  // Command nodes - Post-implementation
+  // Command nodes - Workflow pipelines (v2.20.0)
   {
-    id: 'cmd-simplify',
+    id: 'cmd-vibe',
     type: 'command',
-    label: '/ck:simplify',
-    description: 'Clean up and refactor code ⚡⚡',
-    position: { x: 520, y: 720 }
-  }
+    label: '/ck:vibe',
+    description: 'Full pipeline: issue → plan → implement → review → ship ⚡⚡⚡⚡',
+    position: { x: 200, y: 700 }
+  },
+  {
+    id: 'cmd-review-pr',
+    type: 'command',
+    label: '/ck:review-pr',
+    description: 'Review GitHub PRs (standards, security, breaking changes)',
+    position: { x: 920, y: 520 }
+  },
+
 ];
 
 const stableEdges: FlowchartEdge[] = [
@@ -458,16 +466,26 @@ const stableEdges: FlowchartEdge[] = [
     path: generatePath({ x: 1060, y: 160 }, { x: 1100, y: 360 })
   },
 
-  // Post-implementation flow
+  // Workflow pipeline branches (v2.20.0)
   {
-    id: 'e-cook-simplify',
-    from: 'cmd-cook',
-    to: 'cmd-simplify',
-    label: 'Clean',
-    path: generatePath({ x: 520, y: 600 }, { x: 520, y: 720 }),
-    labelX: 540,
-    labelY: 660
-  }
+    id: 'e-build-vibe',
+    from: 'build-feature',
+    to: 'cmd-vibe',
+    label: 'Auto',
+    path: generatePath({ x: 440, y: 160 }, { x: 200, y: 700 }),
+    labelX: 320,
+    labelY: 430
+  },
+  {
+    id: 'e-code-review-reviewpr',
+    from: 'cmd-code-review',
+    to: 'cmd-review-pr',
+    label: 'PR',
+    path: generatePath({ x: 790, y: 440 }, { x: 920, y: 520 }),
+    labelX: 860,
+    labelY: 482
+  },
+
 ];
 
 const stablePaths: FlowchartPath[] = [
@@ -638,16 +656,26 @@ const stablePaths: FlowchartPath[] = [
     color: 'pink'
   },
 
-  // Post-implementation path
+  // Workflow pipeline paths (v2.20.0)
   {
-    id: 'path-simplify',
-    name: 'Cook & Simplify',
-    nodes: ['start', 'build-feature', 'know-what', 'speed-safety', 'cmd-cook', 'cmd-simplify'],
-    edges: ['e-start-build-feature', 'e-build-feature-know', 'e-know-speed-safety', 'e-speed-cook', 'e-cook-simplify'],
-    command: '/ck:cook → /ck:simplify',
-    description: 'Fast implementation then code cleanup',
+    id: 'path-vibe',
+    name: 'End-to-End (Vibe)',
+    nodes: ['start', 'build-feature', 'cmd-vibe'],
+    edges: ['e-start-build-feature', 'e-build-vibe'],
+    command: '/ck:vibe',
+    description: 'Autonomous full pipeline from a GitHub issue/feature to a shipped PR (worktree, TDD gate, CI watch)',
     color: 'teal'
-  }
+  },
+  {
+    id: 'path-review-pr',
+    name: 'PR Review',
+    nodes: ['start', 'git-ops', 'cmd-code-review', 'cmd-review-pr'],
+    edges: ['e-start-git-ops', 'e-git-code-review', 'e-code-review-reviewpr'],
+    command: '/ck:review-pr',
+    description: 'Review a GitHub PR for project standards, security, breaking changes, and AI-slop (--fix, --reply)',
+    color: 'indigo'
+  },
+
 ];
 
 

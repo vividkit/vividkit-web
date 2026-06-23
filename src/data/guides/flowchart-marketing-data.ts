@@ -39,7 +39,7 @@ const marketingNodes: FlowchartNode[] = [
   {
     id: 'mkt-grow',
     type: 'decision',
-    label: 'Grow?',
+    label: 'Strategy?',
     position: { x: 740, y: 160 }
   },
   {
@@ -51,7 +51,7 @@ const marketingNodes: FlowchartNode[] = [
   {
     id: 'mkt-design',
     type: 'decision',
-    label: 'Design?',
+    label: 'Analytics?',
     position: { x: 1060, y: 160 }
   },
   {
@@ -83,7 +83,7 @@ const marketingNodes: FlowchartNode[] = [
   {
     id: 'mkt-grow-focus',
     type: 'decision',
-    label: 'Focus?',
+    label: 'Pick?',
     position: { x: 740, y: 280 }
   },
   {
@@ -154,8 +154,8 @@ const marketingNodes: FlowchartNode[] = [
   {
     id: 'cmd-mkt-write',
     type: 'command',
-    label: '/ckm:write',
-    description: 'Content creation (8 modes) ⚡⚡⚡',
+    label: '/ckm:write:*',
+    description: 'Content creation — 8 modes: good, fast, blog, cro... ⚡⚡⚡',
     position: { x: 500, y: 520 }
   },
   {
@@ -173,26 +173,26 @@ const marketingNodes: FlowchartNode[] = [
     position: { x: 660, y: 400 }
   },
 
-  // Command nodes - Grow & CRO
+  // Command nodes - Strategy
   {
-    id: 'cmd-ckm-launch',
+    id: 'cmd-ckm-play',
     type: 'command',
-    label: '/ckm:launch-strategy',
-    description: 'Product go-to-market ⚡⚡⚡⚡',
+    label: '/ckm:play',
+    description: 'Marketing playbook orchestrator ⚡⚡⚡⚡',
     position: { x: 660, y: 520 }
   },
   {
-    id: 'cmd-ckm-pricing',
+    id: 'cmd-ckm-persona',
     type: 'command',
-    label: '/ckm:pricing-strategy',
-    description: 'Revenue optimization ⚡⚡⚡',
+    label: '/ckm:persona',
+    description: 'Customer persona management ⚡⚡',
     position: { x: 740, y: 400 }
   },
   {
-    id: 'cmd-ckm-form-cro',
+    id: 'cmd-ckm-journal',
     type: 'command',
-    label: '/ckm:form-cro',
-    description: 'Conversion optimization ⚡⚡',
+    label: '/ckm:journal',
+    description: 'Marketing session journal ⚡',
     position: { x: 820, y: 400 }
   },
 
@@ -219,19 +219,19 @@ const marketingNodes: FlowchartNode[] = [
     position: { x: 980, y: 400 }
   },
 
-  // Command nodes - Design
+  // Command nodes - Analytics
   {
-    id: 'cmd-ckm-design',
+    id: 'cmd-ckm-analyze',
     type: 'command',
-    label: '/ckm:design',
-    description: 'Logo, banner, social ⚡⚡⚡⚡',
+    label: '/ckm:analyze',
+    description: 'Analytics & performance reports ⚡⚡⚡',
     position: { x: 1000, y: 280 }
   },
   {
-    id: 'cmd-ckm-design-system',
+    id: 'cmd-ckm-dashboard',
     type: 'command',
-    label: '/ckm:design-system',
-    description: 'Brand guidelines ⚡⚡⚡',
+    label: '/ckm:dashboard',
+    description: 'Marketing analytics dashboard ⚡⚡',
     position: { x: 1120, y: 280 }
   },
 
@@ -451,8 +451,8 @@ const marketingEdges: FlowchartEdge[] = [
   {
     id: 'e-mkt-focus-launch',
     from: 'mkt-grow-focus',
-    to: 'cmd-ckm-launch',
-    label: 'Launch',
+    to: 'cmd-ckm-play',
+    label: 'Play',
     path: generatePath({ x: 740, y: 280 }, { x: 660, y: 520 }),
     labelX: 680,
     labelY: 400
@@ -460,8 +460,8 @@ const marketingEdges: FlowchartEdge[] = [
   {
     id: 'e-mkt-focus-pricing',
     from: 'mkt-grow-focus',
-    to: 'cmd-ckm-pricing',
-    label: 'Price',
+    to: 'cmd-ckm-persona',
+    label: 'Persona',
     path: generatePath({ x: 740, y: 280 }, { x: 740, y: 400 }),
     labelX: 760,
     labelY: 340
@@ -469,8 +469,8 @@ const marketingEdges: FlowchartEdge[] = [
   {
     id: 'e-mkt-focus-cro',
     from: 'mkt-grow-focus',
-    to: 'cmd-ckm-form-cro',
-    label: 'CRO',
+    to: 'cmd-ckm-journal',
+    label: 'Log',
     path: generatePath({ x: 740, y: 280 }, { x: 820, y: 400 }),
     labelX: 795,
     labelY: 340
@@ -511,21 +511,21 @@ const marketingEdges: FlowchartEdge[] = [
     labelY: 340
   },
 
-  // Design branch
+  // Analytics branch
   {
     id: 'e-mkt-design-cmd',
     from: 'mkt-design',
-    to: 'cmd-ckm-design',
-    label: 'Create',
+    to: 'cmd-ckm-analyze',
+    label: 'Report',
     path: generatePath({ x: 1060, y: 160 }, { x: 1000, y: 280 }),
     labelX: 1010,
     labelY: 220
   },
   {
-    id: 'e-mkt-design-system',
+    id: 'e-mkt-analytics-dashboard',
     from: 'mkt-design',
-    to: 'cmd-ckm-design-system',
-    label: 'System',
+    to: 'cmd-ckm-dashboard',
+    label: 'Board',
     path: generatePath({ x: 1060, y: 160 }, { x: 1120, y: 280 }),
     labelX: 1105,
     labelY: 220
@@ -650,8 +650,8 @@ const marketingPaths: FlowchartPath[] = [
     name: 'Blog & Articles',
     nodes: ['mkt-start', 'mkt-content', 'mkt-content-type', 'cmd-mkt-write'],
     edges: ['e-mkt-start-content', 'e-mkt-content-type', 'e-mkt-format-write'],
-    command: '/ckm:write',
-    description: 'Write blogs, CRO copy, and marketing content (8 modes)',
+    command: '/ckm:write:*',
+    description: 'Write blogs, CRO copy, and marketing content — 8 subcommand modes (write:good, write:fast, write:blog...)',
     color: 'pink'
   },
   {
@@ -673,32 +673,32 @@ const marketingPaths: FlowchartPath[] = [
     color: 'pink'
   },
 
-  // Growth paths
+  // Strategy paths
   {
     id: 'mkt-path-grow-launch',
-    name: 'Product Launch',
-    nodes: ['mkt-start', 'mkt-grow', 'mkt-grow-focus', 'cmd-ckm-launch'],
+    name: 'Marketing Playbook',
+    nodes: ['mkt-start', 'mkt-grow', 'mkt-grow-focus', 'cmd-ckm-play'],
     edges: ['e-mkt-start-grow', 'e-mkt-grow-focus', 'e-mkt-focus-launch'],
-    command: '/ckm:launch-strategy',
-    description: 'Plan go-to-market strategy for new products',
+    command: '/ckm:play',
+    description: 'Orchestrate marketing strategy with AI execution & goal tracking',
     color: 'emerald'
   },
   {
     id: 'mkt-path-grow-pricing',
-    name: 'Pricing Strategy',
-    nodes: ['mkt-start', 'mkt-grow', 'mkt-grow-focus', 'cmd-ckm-pricing'],
+    name: 'Customer Personas',
+    nodes: ['mkt-start', 'mkt-grow', 'mkt-grow-focus', 'cmd-ckm-persona'],
     edges: ['e-mkt-start-grow', 'e-mkt-grow-focus', 'e-mkt-focus-pricing'],
-    command: '/ckm:pricing-strategy',
-    description: 'Optimize pricing tiers and revenue models',
+    command: '/ckm:persona',
+    description: 'Create & manage detailed customer personas',
     color: 'emerald'
   },
   {
     id: 'mkt-path-grow-cro',
-    name: 'Form CRO',
-    nodes: ['mkt-start', 'mkt-grow', 'mkt-grow-focus', 'cmd-ckm-form-cro'],
+    name: 'Session Journal',
+    nodes: ['mkt-start', 'mkt-grow', 'mkt-grow-focus', 'cmd-ckm-journal'],
     edges: ['e-mkt-start-grow', 'e-mkt-grow-focus', 'e-mkt-focus-cro'],
-    command: '/ckm:form-cro',
-    description: 'Optimize forms for higher conversion rates',
+    command: '/ckm:journal',
+    description: 'Write journal entries for marketing sessions',
     color: 'emerald'
   },
 
@@ -731,23 +731,23 @@ const marketingPaths: FlowchartPath[] = [
     color: 'blue'
   },
 
-  // Design paths
+  // Analytics paths
   {
     id: 'mkt-path-design-create',
-    name: 'Create Designs',
-    nodes: ['mkt-start', 'mkt-design', 'cmd-ckm-design'],
+    name: 'Analytics Reports',
+    nodes: ['mkt-start', 'mkt-design', 'cmd-ckm-analyze'],
     edges: ['e-mkt-start-design', 'e-mkt-design-cmd'],
-    command: '/ckm:design',
-    description: 'Generate logos, banners, social graphics, and slides',
+    command: '/ckm:analyze',
+    description: 'Generate analytics and performance reports',
     color: 'teal'
   },
   {
-    id: 'mkt-path-design-system',
-    name: 'Design System',
-    nodes: ['mkt-start', 'mkt-design', 'cmd-ckm-design-system'],
-    edges: ['e-mkt-start-design', 'e-mkt-design-system'],
-    command: '/ckm:design-system',
-    description: 'Build comprehensive brand guidelines and design tokens',
+    id: 'mkt-path-analytics-dashboard',
+    name: 'Marketing Dashboard',
+    nodes: ['mkt-start', 'mkt-design', 'cmd-ckm-dashboard'],
+    edges: ['e-mkt-start-design', 'e-mkt-analytics-dashboard'],
+    command: '/ckm:dashboard',
+    description: 'Launch local marketing analytics dashboard',
     color: 'teal'
   },
 

@@ -19,8 +19,8 @@ const engineerViewBox = '0 0 1500 800';
 // Marketing Kit uses 1600 width (start at x:800, 9 branches need more space)
 const marketingViewBox = '0 0 1600 720';
 
-// Beta-only nodes (merged into unified data with isBeta flag)
-const betaExtraNodes: FlowchartNode[] = [
+// Additional stable commands (graduated to stable in v2.20.0: llms, deploy, security-scan, project-organization)
+const extraStableNodes: FlowchartNode[] = [
   {
     id: 'cmd-llms',
     type: 'command',
@@ -55,8 +55,8 @@ const betaExtraNodes: FlowchartNode[] = [
   }
 ];
 
-// Beta-only edges
-const betaExtraEdges: FlowchartEdge[] = [
+// Additional stable command edges
+const extraStableEdges: FlowchartEdge[] = [
   {
     id: 'e-docs-llms',
     from: 'docs-design',
@@ -95,8 +95,8 @@ const betaExtraEdges: FlowchartEdge[] = [
   }
 ];
 
-// Beta-only paths
-const betaExtraPaths: FlowchartPath[] = [
+// Additional stable command paths
+const extraStablePaths: FlowchartPath[] = [
   {
     id: 'path-llms',
     name: 'Docs Index',
@@ -139,12 +139,12 @@ const betaExtraPaths: FlowchartPath[] = [
   }
 ];
 
-// Unified Engineer Kit data (stable + beta merged, beta items flagged with isBeta)
-const unifiedNodes: FlowchartNode[] = [...stableNodes, ...betaExtraNodes];
-const unifiedEdges: FlowchartEdge[] = [...stableEdges, ...betaExtraEdges];
-const unifiedPaths: FlowchartPath[] = [...stablePaths, ...betaExtraPaths];
+// Unified Engineer Kit data (core stable + additional stable commands)
+const unifiedNodes: FlowchartNode[] = [...stableNodes, ...extraStableNodes];
+const unifiedEdges: FlowchartEdge[] = [...stableEdges, ...extraStableEdges];
+const unifiedPaths: FlowchartPath[] = [...stablePaths, ...extraStablePaths];
 
-// Engineer Kit unified flowchart data (Stable + Beta merged, beta items flagged with isBeta)
+// Engineer Kit unified flowchart data (all stable commands, v2.20.0)
 export const engineerFlowchartData: FlowchartData = {
   nodes: unifiedNodes,
   edges: unifiedEdges,
