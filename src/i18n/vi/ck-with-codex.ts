@@ -178,5 +178,5 @@ export const ck_with_codex = {
   'ckWithCodex.workflows.outro.flowsBody': 'Chuỗi dài hơn: ship, debug, retro, và nhiều hơn.',
 
   'ckWithCodex.aliases.footnote':
-    '**Lưu ý:** các entrypoint này inject `model_provider`, `base_url`, và `env_key` qua `-c` lúc khởi chạy — chỉ runtime. Editor dashboard ở `ccs config → Compatible → Codex CLI` hiển thị lớp user đã lưu, không phải các override này.',
+    '**Lưu ý:** `ccsx codex` và `ccsxp` inject `model_provider`, `base_url`, và `env_key` (lần lượt là `CCS_CODEX_API_KEY` và `CLIPROXY_API_KEY`) qua `-c` lúc khởi chạy — chỉ runtime. `ccsx` trần chạy native, không inject override provider nào. Editor dashboard ở `ccs config → Compatible → Codex CLI` hiển thị lớp user đã lưu, không phải các override này.',
 } as const;

@@ -178,5 +178,5 @@ export const ck_with_codex = {
   'ckWithCodex.workflows.outro.flowsBody': 'Longer chains: ship, debug, retro, and more.',
 
   'ckWithCodex.aliases.footnote':
-    '**Heads-up:** these entrypoints inject `model_provider`, `base_url`, and `env_key` via `-c` at launch — runtime only. The dashboard editor at `ccs config → Compatible → Codex CLI` shows the persisted user layer, not these overrides.',
+    '**Heads-up:** `ccsx codex` and `ccsxp` inject `model_provider`, `base_url`, and `env_key` (`CCS_CODEX_API_KEY` and `CLIPROXY_API_KEY` respectively) via `-c` at launch — runtime only. Bare `ccsx` runs native and injects no provider override. The dashboard editor at `ccs config → Compatible → Codex CLI` shows the persisted user layer, not these overrides.',
 } as const;
