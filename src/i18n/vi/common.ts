@@ -4,8 +4,8 @@ export const common = {
   // ClaudeKit section
   'claudekit.powered_by': 'Được hỗ trợ bởi',
   'claudekit.section_description': 'VividKit yêu cầu ClaudeKit để hoạt động. Đây là lý do tại sao nó đáng giá.',
-  'claudekit.feature1.title': '14 Agent Chuyên Biệt',
-  'claudekit.feature1.description': 'Planner, code-reviewer, debugger, tester, UI designer, và 9 persona AI chuyên biệt khác.',
+  'claudekit.feature1.title': '13 Agent Chuyên Biệt',
+  'claudekit.feature1.description': 'Planner, code-reviewer, debugger, tester, UI designer, và 8 persona AI chuyên biệt khác.',
   'claudekit.feature2.title': '26 Lệnh & 47 Skill',
   'claudekit.feature2.description': 'Bootstrap, plan, code, fix, test, design — bộ công cụ hoàn chỉnh từ ý tưởng đến triển khai.',
   'claudekit.feature3.title': 'Skill UI/UX Pro Max',

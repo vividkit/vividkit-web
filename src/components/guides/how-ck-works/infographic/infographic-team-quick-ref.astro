@@ -48,8 +48,8 @@ const text = {
     : 'Every teammate MUST run Opus 4.6. No other model allowed.',
   process: isVi ? 'Bản đồ thực thi' : 'Execution Map',
   processDesc: isVi
-    ? 'Bốn lane: setup pre-flight, spawn song song, điều phối qua hook + DM, rồi tổng hợp và đóng.'
-    : 'Four lanes: setup pre-flight, parallel spawn, event-driven coordination, then synthesize and close.',
+    ? 'Bốn lane: setup pre-flight, spawn song song, điều phối qua poll TaskList + DM, rồi tổng hợp và đóng.'
+    : 'Four lanes: setup pre-flight, parallel spawn, TaskList-polling + DM coordination, then synthesize and close.',
   templates: isVi ? 'Mẫu team' : 'Templates',
   templatesDesc: isVi
     ? 'Chọn template theo nhu cầu. Mỗi template có default N teammate, behaviour riêng và artifact riêng.'

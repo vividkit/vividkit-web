@@ -302,7 +302,7 @@ export const commands = {
   'commands.mkt_beta.changes.prefix_title': 'Namespace Prefix Mới',
   'commands.mkt_beta.changes.prefix_desc': '49 skill dùng chung chuyển sang prefix /ck:. Skill riêng marketing dùng prefix /ckm:.',
   'commands.mkt_beta.changes.prefix_shared': '49 skill chia sẻ với Engineer Kit',
-  'commands.mkt_beta.changes.prefix_marketing': '48 skill riêng marketing',
+  'commands.mkt_beta.changes.prefix_marketing': '54 skill riêng marketing',
   'commands.mkt_beta.changes.merges_title': 'Gộp Skill',
   'commands.mkt_beta.changes.merges_desc': 'Các skill riêng lẻ được gộp thành command ngắn hơn, truyền action qua argument đầu tiên:',
   'commands.mkt_beta.changes.col_old': 'Command cũ',

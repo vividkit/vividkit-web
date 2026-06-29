@@ -4,8 +4,8 @@ export const common = {
   // ClaudeKit section
   'claudekit.powered_by': 'Powered by',
   'claudekit.section_description': 'VividKit requires ClaudeKit to work. Here\'s why it\'s worth it.',
-  'claudekit.feature1.title': '14 Specialized Agents',
-  'claudekit.feature1.description': 'Planner, code-reviewer, debugger, tester, UI designer, and 9 more specialized AI personas.',
+  'claudekit.feature1.title': '13 Specialized Agents',
+  'claudekit.feature1.description': 'Planner, code-reviewer, debugger, tester, UI designer, and 8 more specialized AI personas.',
   'claudekit.feature2.title': '26 Commands & 47 Skills',
   'claudekit.feature2.description': 'Bootstrap, plan, code, fix, test, design — complete toolkit from idea to deployment.',
   'claudekit.feature3.title': 'UI/UX Pro Max Skill',

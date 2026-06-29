@@ -146,14 +146,6 @@ const easyHookDescriptions: Record<string, { en: string; vi: string }> = {
     en: "When planning is done, reminds the agent to move into implementation with the right next command.",
     vi: "Khi planning xong, nhắc agent chuyển sang implementation bằng command tiếp theo phù hợp.",
   },
-  "task-completed-handler": {
-    en: "Records task completions so progress stays visible across agents and later session steps.",
-    vi: "Ghi nhận task đã hoàn thành để tiến độ vẫn rõ giữa nhiều agent và các bước sau.",
-  },
-  "teammate-idle-handler": {
-    en: "When a teammate is about to go idle, gives it available work or lets the run continue cleanly.",
-    vi: "Khi một teammate sắp idle, đưa việc còn lại cho nó hoặc để run tiếp tục gọn gàng.",
-  },
   "workflow-artifact-gate": {
     en: "Checks review artifacts before finalize or ship-like actions, so the workflow does not skip evidence.",
     vi: "Kiểm tra review artifacts trước finalize hoặc ship-like actions để workflow không bỏ qua evidence.",
@@ -212,14 +204,6 @@ const hookExamples: Record<string, { en: string; vi: string }> = {
   "cook-after-plan-reminder": {
     en: "When the planning agent finishes, this hook points the next step toward implementation with the generated plan path.",
     vi: "Khi planning agent hoàn tất, hook chỉ bước tiếp theo sang implementation kèm path của plan vừa tạo.",
-  },
-  "task-completed-handler": {
-    en: "A teammate marks a task complete. The hook records that progress so the next agent can see what is already done.",
-    vi: "Một teammate đánh dấu task xong. Hook ghi lại tiến độ để agent tiếp theo biết phần nào đã hoàn thành.",
-  },
-  "teammate-idle-handler": {
-    en: "A teammate is about to go idle. The hook can hand it remaining work or let it shut down cleanly.",
-    vi: "Một teammate sắp idle. Hook có thể giao việc còn lại hoặc cho nó dừng gọn gàng.",
   },
   "workflow-artifact-gate": {
     en: "Before finalize, the hook checks that verification and review artifacts exist so the workflow does not skip evidence.",

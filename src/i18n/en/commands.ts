@@ -302,7 +302,7 @@ export const commands = {
   'commands.mkt_beta.changes.prefix_title': 'New Namespace Prefixes',
   'commands.mkt_beta.changes.prefix_desc': '49 shared skills move to /ck: prefix. Marketing-exclusive skills use /ckm: prefix.',
   'commands.mkt_beta.changes.prefix_shared': '49 shared with Engineer Kit',
-  'commands.mkt_beta.changes.prefix_marketing': '48 marketing-exclusive',
+  'commands.mkt_beta.changes.prefix_marketing': '54 marketing-exclusive',
   'commands.mkt_beta.changes.merges_title': 'Skill Merges',
   'commands.mkt_beta.changes.merges_desc': 'Standalone skills are merged into shorter commands, pass action as first argument:',
   'commands.mkt_beta.changes.col_old': 'Old Command',
