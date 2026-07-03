@@ -1,0 +1,16 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import FindingUnknownsGuide from '@/components/guides/FindingUnknownsGuide.astro';
+import type { Language } from '@/i18n';
+
+const lang: Language = 'vi';
+---
+
+<GuidesLayout
+  title="Finding Your Unknowns - VividKit Documentation"
+  description="Phương pháp prompt để tìm ra điều bạn chưa biết mình chưa biết, ánh xạ vào các lệnh ClaudeKit"
+  activeTab="finding-unknowns"
+  lang="vi"
+>
+  <FindingUnknownsGuide lang={lang} />
+</GuidesLayout>

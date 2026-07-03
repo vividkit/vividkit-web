@@ -1,0 +1,27 @@
+---
+import { getLangFromUrl, type Language } from '@/i18n';
+import FindingUnknownsHero from './finding-unknowns/finding-unknowns-hero.astro';
+import FindingUnknownsMatrix from './finding-unknowns/finding-unknowns-matrix.astro';
+import FindingUnknownsTimeline from './finding-unknowns/finding-unknowns-timeline.astro';
+import FindingUnknownsWorkflow from './finding-unknowns/finding-unknowns-workflow.astro';
+import FindingUnknownsCustomSkills from './finding-unknowns/finding-unknowns-custom-skills.astro';
+import FindingUnknownsPrompts from './finding-unknowns/finding-unknowns-prompts.astro';
+import FindingUnknownsReferences from './finding-unknowns/finding-unknowns-references.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+---
+
+<div class="mt-6 space-y-6">
+  <FindingUnknownsHero lang={currentLang} />
+  <FindingUnknownsMatrix lang={currentLang} />
+  <FindingUnknownsTimeline lang={currentLang} />
+  <FindingUnknownsWorkflow lang={currentLang} />
+  <FindingUnknownsCustomSkills lang={currentLang} />
+  <FindingUnknownsPrompts lang={currentLang} />
+  <FindingUnknownsReferences lang={currentLang} />
+</div>

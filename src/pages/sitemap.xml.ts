@@ -19,6 +19,7 @@ export const GET: APIRoute = () => {
     { path: '/guides/fix-logs', changefreq: 'monthly', priority: '0.7' },
     { path: '/guides/session-recovery', changefreq: 'monthly', priority: '0.7' },
     { path: '/guides/ui-review-gate', changefreq: 'monthly', priority: '0.7' },
+    { path: '/guides/finding-unknowns', changefreq: 'monthly', priority: '0.7' },
   ];
 
   const lastmod = new Date().toISOString().split('T')[0];
