@@ -187,6 +187,8 @@ export const guides = {
   'guides.custom_hooks.description': 'Hiểu lớp guard rails của ClaudeKit hooks',
   'guides.ui_review_gate.title': 'UI Review Gate',
   'guides.ui_review_gate.description': 'Review plan và diff của agent trong browser bằng Plannotator',
+  'guides.finding_unknowns.title': 'Tìm Unknowns Của Bạn',
+  'guides.finding_unknowns.description': 'Phương pháp prompt để tìm ra điều bạn chưa biết mình chưa biết',
   'guides.flowchart.title': 'Tìm Lệnh Phù Hợp',
   'guides.flowchart.description': 'Sơ đồ tương tác để tìm command phù hợp',
   // Promotions Guide
@@ -230,6 +232,7 @@ export const guides = {
   'guides.home.pathway_using.link_cli_commands': 'Tra Cứu CLI',
   'guides.home.pathway_using.link_workflows': 'Hướng Dẫn Workflows',
   'guides.home.pathway_using.link_flowchart': 'Sơ Đồ Trực Quan',
+  'guides.home.pathway_using.link_finding_unknowns': 'Tìm Unknowns Của Bạn',
   // Pathway: Config Confused
   'guides.home.pathway_config.title': 'Cấu Hình & Mở Rộng',
   'guides.home.pathway_config.desc': 'Permissions, hooks, và coexistence với setup hiện có',

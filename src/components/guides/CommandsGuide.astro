@@ -1,7 +1,7 @@
 ---
 // CommandsGuide: top-level composition of all commands guide sub-components
 import { useTranslations } from "@/i18n/utils";
-import { getLangFromUrl, type Language } from "@/i18n";
+import { getLangFromUrl, useTranslatedPath, type Language } from "@/i18n";
 import CommandsHeroBanner from "./commands/commands-hero-banner.astro";
 import CommandsMigrationTable from "./commands/commands-migration-table.astro";
 import CommandsSymbolsLegend from "./commands/commands-symbols-legend.astro";
@@ -21,6 +21,9 @@ interface Props {
 const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
+const translatePath = useTranslatedPath(currentLang);
+const isVi = currentLang === "vi";
+const tBridge = (en: string, vi: string) => isVi ? vi : en;
 const engineerExtraCount = engineerMigrationExtra.length;
 const marketingExtraCount = marketingMigrationExtra.length + marketingRenamedMkt.length + marketingRenamedShared.length;
 
@@ -144,6 +147,29 @@ const quickNavItems = [
 
   <!-- Official docs link -->
   <CommandsDocsNote lang={currentLang} />
+
+  <section class="rounded-2xl border border-cyan-200 bg-cyan-50/80 p-5 dark:border-cyan-500/25 dark:bg-cyan-500/10">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div class="min-w-0">
+        <p class="text-xs font-bold uppercase tracking-[0.16em] text-cyan-700 dark:text-cyan-300">
+          {tBridge("Related guide", "Guide liên quan")}
+        </p>
+        <h2 class="mt-1 text-lg font-bold text-slate-950 dark:text-white">Finding Your Unknowns</h2>
+        <p class="mt-1 max-w-3xl text-sm leading-6 text-slate-700 dark:text-slate-300">
+          {tBridge(
+            "Not sure which command category you need? Finding Your Unknowns maps each kind of unknown to the right ClaudeKit command before you browse the full catalog.",
+            "Chưa chắc cần category lệnh nào? Finding Your Unknowns ánh xạ từng loại unknown vào đúng lệnh ClaudeKit trước khi bạn duyệt cả catalog."
+          )}
+        </p>
+      </div>
+      <a
+        href={translatePath("/guides/finding-unknowns")}
+        class="inline-flex min-h-10 shrink-0 items-center justify-center rounded-lg bg-cyan-600 px-4 text-sm font-bold text-white shadow-sm transition hover:bg-cyan-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-300"
+      >
+        {tBridge("Open Finding Your Unknowns", "Mở Finding Your Unknowns")}
+      </a>
+    </div>
+  </section>
 </div>
 
 <script>

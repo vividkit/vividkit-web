@@ -1,0 +1,282 @@
+---
+import type { Language } from '@/i18n';
+import { Search, Lightbulb, ClipboardList, Hammer, ShieldCheck, Rocket, ArrowRight } from 'lucide-astro';
+import TerminalSnippet from '../TerminalSnippet.astro';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const isVi = lang === 'vi';
+const t = (en: string, vi: string) => isVi ? vi : en;
+
+interface CommandChip {
+  cmd: string;
+  custom?: boolean;
+}
+
+interface Example {
+  // Full, ready-to-run command line exactly as you'd type it — pre-composed so
+  // flag/argument order always matches each command's real argument-hint.
+  line: string;
+  // Shown above the example when a phase has more than one — clarifies when to reach for it.
+  caption?: string;
+  // One-time setup commands, shown only for examples that need an external plugin.
+  install?: string;
+}
+
+interface Phase {
+  n: number;
+  icon: typeof Search;
+  title: string;
+  desc: string;
+  commands: CommandChip[];
+  // True when `commands` are alternatives (pick one), not a run-in-order sequence.
+  altCommands?: boolean;
+  note?: string;
+  // One or more runnable examples for this phase (commands that take a free-text argument).
+  examples?: Example[];
+  // Use instead of `examples` for phases whose commands don't take free text —
+  // rendered as a runnable multi-line sequence, matching real invocation syntax.
+  sequence?: string;
+}
+
+// The end-to-end loop: each phase pairs a technique from the method with the
+// ClaudeKit command(s) that run it, plus real runnable examples. Every `line`
+// and `sequence` below matches the actual argument-hint of its command — see
+// each SKILL.md for the source of truth.
+const phases: Phase[] = [
+  {
+    n: 0,
+    icon: Search,
+    title: t('Locate your unknowns', 'Định vị unknowns'),
+    desc: t('Find your unknown unknowns before starting.', 'Tìm ra unknown unknowns của bạn trước khi bắt đầu.'),
+    commands: [{ cmd: '/blindspot', custom: true }],
+    examples: [
+      {
+        line: t(
+          '/blindspot "I\'m adding a new auth provider but know nothing about the auth modules here. Do a blindspot pass."',
+          '/blindspot "Tôi đang thêm auth provider mới nhưng không biết gì về module auth ở đây. Làm giúp tôi 1 blindspot pass."'
+        ),
+      },
+    ],
+  },
+  {
+    n: 1,
+    icon: Lightbulb,
+    title: t('Explore & design', 'Khám phá & thiết kế'),
+    desc: t('Explore approaches, prototype, surface unknown knowns.', 'Khám phá hướng tiếp cận, prototype, lộ ra các unknown knowns.'),
+    commands: [{ cmd: '/ck:brainstorm --html' }],
+    note: t('For high-risk changes, add /ck:predict or /ck:scenario.', 'Với thay đổi rủi ro cao, thêm /ck:predict hoặc /ck:scenario.'),
+    examples: [
+      {
+        line: t(
+          '/ck:brainstorm --html "I want a dashboard for this data but I have no visual taste and do not know what is possible. Make me an HTML page with 4 wildly different design directions so I can react to them."',
+          '/ck:brainstorm --html "Tôi muốn có dashboard cho data này nhưng không có gu thẩm mỹ và không biết cái gì khả thi. Làm giúp tôi trang HTML với 4 hướng thiết kế khác biệt hoàn toàn để tôi phản hồi."'
+        ),
+      },
+    ],
+  },
+  {
+    n: 2,
+    icon: ClipboardList,
+    title: t('Plan', 'Kế hoạch'),
+    desc: t('Turn the agreed approach into phased implementation steps.', 'Biến hướng đã chọn thành các bước implement theo phase.'),
+    commands: [{ cmd: '/ck:plan' }, { cmd: '/ck:plan --tdd' }],
+    altCommands: true,
+    examples: [
+      {
+        line: t(
+          '/ck:plan "Turn the dashboard direction we picked into a phased plan. Lead with the parts I am most likely to change my mind about."',
+          '/ck:plan "Biến hướng dashboard đã chọn thành plan theo phase. Ưu tiên viết trước phần tôi dễ đổi ý nhất."'
+        ),
+      },
+      {
+        caption: t(
+          'When the change touches critical logic with solid existing tests',
+          'Khi thay đổi đụng vào logic quan trọng đã có test tốt'
+        ),
+        line: t(
+          '/ck:plan "This touches the payment retry logic and it already has good test coverage." --tdd',
+          '/ck:plan "Phần này đụng vào logic retry thanh toán và đã có test tốt." --tdd'
+        ),
+      },
+      {
+        caption: t(
+          'Optional, for high-risk changes (public API, security, high blast radius) — skip if using --hard/--deep/--parallel/--two, they already run this',
+          'Tuỳ chọn, cho thay đổi rủi ro cao (public API, security, blast radius lớn) — bỏ qua nếu dùng --hard/--deep/--parallel/--two, các mode này đã tự chạy sẵn'
+        ),
+        line: '/ck:plan red-team <path-to-your-plan>',
+      },
+      {
+        caption: t(
+          'Run after red-team, right before cook — a critical-questions interview that locks assumptions with you',
+          'Chạy sau red-team, ngay trước khi cook — phỏng vấn câu hỏi phản biện để chốt assumption cùng bạn'
+        ),
+        line: '/ck:plan validate <path-to-your-plan>',
+      },
+      {
+        caption: t(
+          'Advanced, optional, needs a separate OpenAI subscription (Codex CLI) — a different model catches blind spots Claude shares with itself. Runs last, after red-team + validate have already hardened the plan.',
+          'Nâng cao, tuỳ chọn, cần subscription OpenAI riêng (Codex CLI) — model khác bắt được blind spot mà Claude tự mù với chính nó. Chạy cuối, sau khi red-team + validate đã tôi luyện plan.'
+        ),
+        install: '/plugin marketplace add openai/codex-plugin-cc\n/plugin install codex@openai-codex\n/codex:setup',
+        line: t(
+          '/codex:adversarial-review --wait this plan already passed red-team + validate — challenge the approach, hidden assumptions, tradeoffs',
+          '/codex:adversarial-review --wait plan này đã qua red-team + validate — challenge hướng đi, hidden assumptions, tradeoffs'
+        ),
+      },
+    ],
+  },
+  {
+    n: 3,
+    icon: Hammer,
+    title: t('Execute', 'Thực thi'),
+    desc: t('Implement; log deviations the moment they happen, conservative option first.', 'Implement; log lại deviation ngay khi xảy ra, chọn phương án bảo thủ trước.'),
+    commands: [{ cmd: '/impl-notes init', custom: true }, { cmd: '/ck:cook' }, { cmd: '/impl-notes review', custom: true }],
+    sequence: t(
+      '/impl-notes init\n/ck:cook <path-to-your-plan>\n# if an edge case forces a deviation mid-session:\n/impl-notes log "plan said X, found Y, chose Z because..."\n/impl-notes review',
+      '/impl-notes init\n/ck:cook <path-to-your-plan>\n# nếu edge case buộc lệch plan giữa chừng:\n/impl-notes log "plan nói X, thực tế Y, tôi chọn Z vì..."\n/impl-notes review'
+    ),
+  },
+  {
+    n: 4,
+    icon: ShieldCheck,
+    title: t('Understanding gate', 'Gate hiểu biết'),
+    desc: t('Two independent gates: does the code work, and do YOU understand what shipped.', 'Hai gate độc lập: code có chạy đúng không, và BẠN có hiểu thứ vừa ship không.'),
+    commands: [{ cmd: '/ck:code-review' }, { cmd: '/quiz-gate', custom: true }],
+    note: t(
+      'Closes the loop: the plan-side gates (red-team, validate) killed the plan\'s unknowns; this gate kills yours.',
+      'Khép vòng gate: gate phía plan (red-team, validate) diệt unknowns của plan; gate này diệt unknowns của chính bạn.'
+    ),
+    sequence: t(
+      '# both default to reviewing your pending changes, no argument needed\n/ck:code-review\n# optional, advanced — needs a separate OpenAI subscription (Codex CLI):\n# /codex:adversarial-review --wait focus on the riskiest part of this diff\n/quiz-gate',
+      '# cả hai đều mặc định soi thay đổi đang chờ (pending changes), không cần tham số\n/ck:code-review\n# tuỳ chọn, nâng cao — cần subscription OpenAI riêng (Codex CLI):\n# /codex:adversarial-review --wait tập trung vào phần rủi ro nhất của diff này\n/quiz-gate'
+    ),
+  },
+  {
+    n: 5,
+    icon: Rocket,
+    title: t('Ship', 'Ship'),
+    desc: t('Buy-in artifact, ship, reflect.', 'Artifact để buy-in, ship, và hồi tưởng.'),
+    commands: [{ cmd: '/ck:preview' }, { cmd: '/ck:git' }, { cmd: '/ck:ship' }, { cmd: '/ck:journal' }],
+    sequence: t(
+      '/ck:preview --html --explain "why we built it this way, demo GIF up top"\n/ck:git cp\n# or, for a full PR pipeline instead of a direct push:\n# /ck:ship\n/ck:journal "what this session taught us"',
+      '/ck:preview --html --explain "vì sao làm theo hướng này, demo GIF để lên đầu"\n/ck:git cp\n# hoặc, muốn full PR pipeline thay vì push thẳng:\n# /ck:ship\n/ck:journal "điều session này dạy chúng ta"'
+    ),
+  },
+];
+---
+
+<section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-950 sm:p-8">
+  <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-3xl">
+    {t('The end-to-end workflow', 'Workflow đầu-cuối')}
+  </h2>
+  <p class="mt-3 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400">
+    {t(
+      'Six phases from "I have no idea" to "shipped and understood." Each phase pairs a technique with the ClaudeKit command that runs it. Not every task needs all six — scale the gates to how novel and risky the work is.',
+      'Sáu giai đoạn từ "tôi chưa biết gì" đến "đã ship và đã hiểu". Mỗi giai đoạn ghép một kỹ thuật với lệnh ClaudeKit thực thi nó. Không phải task nào cũng cần đủ 6 bước — co giãn số gate theo mức độ lạ và rủi ro của việc đang làm.'
+    )}
+  </p>
+
+  <ol class="mt-6 space-y-0">
+    {phases.map((phase, i) => {
+      const Icon = phase.icon;
+      return (
+        <li class="relative">
+          <div class="flex gap-4">
+            <div class="flex w-9 shrink-0 flex-col items-center">
+              <span class="flex h-9 w-9 items-center justify-center rounded-full border border-violet-200 bg-white text-sm font-bold text-violet-800 shadow-sm dark:border-violet-400/30 dark:bg-slate-950 dark:text-violet-200">
+                {phase.n}
+              </span>
+              {i < phases.length - 1 && (
+                <span class="w-px flex-1 bg-violet-200 dark:bg-violet-400/30" aria-hidden="true"></span>
+              )}
+            </div>
+            <div class="min-w-0 flex-1 pb-6">
+              <div class="rounded-xl border border-slate-200 bg-white/85 p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900/70 sm:p-5">
+                <div class="flex flex-wrap items-center gap-2.5">
+                  <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-violet-100 bg-violet-50 text-violet-700 dark:border-violet-400/20 dark:bg-violet-500/10 dark:text-violet-300">
+                    <Icon class="h-5 w-5" stroke-width={2.2} />
+                  </span>
+                  <h3 class="text-base font-bold text-slate-950 dark:text-white">{phase.title}</h3>
+                </div>
+                <p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">{phase.desc}</p>
+
+                <div class="mt-3 flex flex-wrap items-center gap-x-2 gap-y-2">
+                  {phase.commands.map((c, ci) => (
+                    <div class="flex items-center gap-2">
+                      {ci > 0 && (
+                        phase.altCommands ? (
+                          <span class="text-[10px] font-bold uppercase tracking-wide text-slate-400 dark:text-slate-600">{t('or', 'hoặc')}</span>
+                        ) : (
+                          <ArrowRight class="h-3.5 w-3.5 shrink-0 text-slate-300 dark:text-slate-600" stroke-width={2} />
+                        )
+                      )}
+                      <span class="flex items-center gap-1.5">
+                        <code class="rounded border border-slate-200 bg-white px-1.5 py-0.5 font-mono text-[11px] font-semibold text-purple-600 dark:border-slate-700 dark:bg-slate-900 dark:text-purple-400">{c.cmd}</code>
+                        {c.custom && (
+                          <span class="rounded-full border border-amber-200 bg-amber-50 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-amber-700 dark:border-amber-400/25 dark:bg-amber-500/10 dark:text-amber-300">custom</span>
+                        )}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                {phase.note && (
+                  <p class="mt-2 text-xs leading-5 text-slate-500 dark:text-slate-500">{phase.note}</p>
+                )}
+
+                {phase.sequence && (
+                  <div class="mt-3">
+                    <p class="mb-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
+                      {t('How to run it', 'Cách chạy')}
+                    </p>
+                    <TerminalSnippet
+                      code={phase.sequence}
+                      label={t('sequence', 'chuỗi lệnh')}
+                      mode="plain"
+                      copyMode="raw"
+                      compact
+                    />
+                  </div>
+                )}
+
+                {phase.examples && (
+                  <div class="mt-3 flex flex-col gap-3">
+                    {phase.examples.map((ex) => (
+                      <div>
+                        {ex.caption && (
+                          <p class="mb-1.5 text-xs leading-5 text-slate-500 dark:text-slate-500">{ex.caption}</p>
+                        )}
+                        {ex.install && (
+                          <div class="mb-2">
+                            <TerminalSnippet
+                              code={ex.install}
+                              label={t('one-time setup', 'cài đặt một lần')}
+                              mode="plain"
+                              copyMode="raw"
+                              compact
+                            />
+                          </div>
+                        )}
+                        <TerminalSnippet
+                          code={ex.line}
+                          label={t('Example prompt', 'Ví dụ prompt')}
+                          mode="plain"
+                          copyMode="raw"
+                          compact
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </li>
+      );
+    })}
+  </ol>
+</section>

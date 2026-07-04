@@ -187,6 +187,8 @@ export const guides = {
   'guides.custom_hooks.description': 'Understand ClaudeKit hook guard rails',
   'guides.ui_review_gate.title': 'UI Review Gate',
   'guides.ui_review_gate.description': 'Review agent plans and diffs in the browser with Plannotator',
+  'guides.finding_unknowns.title': 'Finding Your Unknowns',
+  'guides.finding_unknowns.description': 'A prompting method for surfacing what you don\'t know you don\'t know',
   'guides.flowchart.title': 'Command Finder',
   'guides.flowchart.description': 'Interactive decision tree to find the right command',
   // Promotions Guide
@@ -230,6 +232,7 @@ export const guides = {
   'guides.home.pathway_using.link_cli_commands': 'CLI Quick Reference',
   'guides.home.pathway_using.link_workflows': 'Workflows Guide',
   'guides.home.pathway_using.link_flowchart': 'Visual Flowchart',
+  'guides.home.pathway_using.link_finding_unknowns': 'Finding Your Unknowns',
   // Pathway: Config Confused
   'guides.home.pathway_config.title': 'Configure & Extend',
   'guides.home.pathway_config.desc': 'Permissions, hooks, and coexistence with your existing setup',
