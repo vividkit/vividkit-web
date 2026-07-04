@@ -22,6 +22,8 @@ interface Example {
   line: string;
   // Shown above the example when a phase has more than one — clarifies when to reach for it.
   caption?: string;
+  // One-time setup commands, shown only for examples that need an external plugin.
+  install?: string;
 }
 
 interface Phase {
@@ -114,6 +116,17 @@ const phases: Phase[] = [
         ),
         line: '/ck:plan validate <path-to-your-plan>',
       },
+      {
+        caption: t(
+          'Advanced, optional, needs a separate OpenAI subscription (Codex CLI) — a different model catches blind spots Claude shares with itself. Runs last, after red-team + validate have already hardened the plan.',
+          'Nâng cao, tuỳ chọn, cần subscription OpenAI riêng (Codex CLI) — model khác bắt được blind spot mà Claude tự mù với chính nó. Chạy cuối, sau khi red-team + validate đã tôi luyện plan.'
+        ),
+        install: '/plugin marketplace add openai/codex-plugin-cc\n/plugin install codex@openai-codex\n/codex:setup',
+        line: t(
+          '/codex:adversarial-review --wait this plan already passed red-team + validate — challenge the approach, hidden assumptions, tradeoffs',
+          '/codex:adversarial-review --wait plan này đã qua red-team + validate — challenge hướng đi, hidden assumptions, tradeoffs'
+        ),
+      },
     ],
   },
   {
@@ -138,8 +151,8 @@ const phases: Phase[] = [
       'Khép vòng gate: gate phía plan (red-team, validate) diệt unknowns của plan; gate này diệt unknowns của chính bạn.'
     ),
     sequence: t(
-      '# both default to reviewing your pending changes, no argument needed\n/ck:code-review\n/quiz-gate',
-      '# cả hai đều mặc định soi thay đổi đang chờ (pending changes), không cần tham số\n/ck:code-review\n/quiz-gate'
+      '# both default to reviewing your pending changes, no argument needed\n/ck:code-review\n# optional, advanced — needs a separate OpenAI subscription (Codex CLI):\n# /codex:adversarial-review --wait focus on the riskiest part of this diff\n/quiz-gate',
+      '# cả hai đều mặc định soi thay đổi đang chờ (pending changes), không cần tham số\n/ck:code-review\n# tuỳ chọn, nâng cao — cần subscription OpenAI riêng (Codex CLI):\n# /codex:adversarial-review --wait tập trung vào phần rủi ro nhất của diff này\n/quiz-gate'
     ),
   },
   {
@@ -236,6 +249,17 @@ const phases: Phase[] = [
                       <div>
                         {ex.caption && (
                           <p class="mb-1.5 text-xs leading-5 text-slate-500 dark:text-slate-500">{ex.caption}</p>
+                        )}
+                        {ex.install && (
+                          <div class="mb-2">
+                            <TerminalSnippet
+                              code={ex.install}
+                              label={t('one-time setup', 'cài đặt một lần')}
+                              mode="plain"
+                              copyMode="raw"
+                              compact
+                            />
+                          </div>
                         )}
                         <TerminalSnippet
                           code={ex.line}
