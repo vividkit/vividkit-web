@@ -5,7 +5,7 @@ import type { APIRoute } from 'astro';
  * Generates XML sitemap for all pages including Vietnamese translations
  */
 export const GET: APIRoute = () => {
-  const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://vividkit.com';
+  const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://vividkit.dev';
 
   // Define all pages with their properties
   const pages = [
