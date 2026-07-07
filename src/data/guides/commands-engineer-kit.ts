@@ -872,6 +872,17 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           detail: t("commands.stable.ghpm.detail"),
           isSkill: true,
         },
+        {
+          command: "/ck:coding-agent-orchestration",
+          complexity: "⚡⚡⚡",
+          label: t("commands.label.medium"),
+          desc: t("commands.stable.coding_agent_orchestration.desc"),
+          detail: t("commands.stable.coding_agent_orchestration.detail"),
+          isSkill: true,
+          isBeta: true,
+          args: ["[task or workflow]"],
+          flags: ["--single", "--sequential", "--parallel", "--review-loop"],
+        },
       ],
     },
   ];
