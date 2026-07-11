@@ -9,7 +9,7 @@ Release evidence for the bilingual ClaudeKit-to-AgentKit guide migration. Detail
 | Gate | Final result |
 |---|---|
 | AgentKit contract, content, catalog, hub, and CI tests | 47/47 pass |
-| Source content audit | 597 files pass |
+| Source content audit | 598 files pass |
 | Scoped Astro diagnostic delta | 0 migration diagnostics |
 | Repository-wide Astro baseline | 271 existing errors, explicitly not claimed green |
 | Static production build | 74 pages |
@@ -47,6 +47,31 @@ The final mobile document measured `375 / 375` scroll/client width; `#kit-target
 
 The first run found a 155 px mobile overflow in the AgentKit target grid. Intrinsic min-content width widened the page. Direct grid children and nested command wrappers now use bounded shrink/scroll behavior; the final regression matrix passed 18/18.
 
+## UI/UX Consistency Follow-up
+
+System Chrome re-audited the migration-touched guide surface after PR review feedback. The tracked runner is `scripts/check-agentkit-guide-ui.mjs`; it covers 19 rendered guide families in EN/VI at 375×812 and 1440×900 in light and dark themes, plus the disabled frontend-design compatibility redirects.
+
+| Follow-up check | Result |
+|---|---|
+| Changed-guide responsive/theme smoke matrix | 152/152 render cases + 2/2 compatibility redirects pass |
+| AgentKit + CLI focused width matrix | 16/16 pass; every document measured viewport width exactly |
+| Theme, keyboard, focus, and anchor interactions | Theme persistence toggled both ways; Linux radio selected by keyboard; focus ring visible; linked step landed 123 px below viewport top |
+| AgentKit source/content/type gates | 47/47 pass; 0 scoped diagnostics |
+| Production build and postbuild route gate | 74 pages; 4/4 route tests pass |
+
+The interaction row was verified separately in system Chrome; the matrix runner covers rendering, theme selection, language, page errors, and document overflow rather than claiming pixel-diff or automated accessibility coverage.
+
+Closed migration-owned issues:
+
+- Replaced near-black light-theme step tiles with purple-tinted semantic surfaces; retained high-contrast dark-theme tiles.
+- Replaced the inverted light-theme “continue” panel with theme-native slate surfaces.
+- Removed mobile overflow from AgentKit CLI install cards.
+- Added sticky-header offsets, visible focus/hover/active states, and clear disabled-copy styling.
+- Restored Vietnamese navigation/table labels and readable mobile migration-table widths.
+- Normalized inline-code borders, backgrounds, and text colors to project conventions.
+
+Browser screenshots and the JSON matrix are generated under the gitignored `artifacts/agentkit-ui/` directory.
+
 ## Unresolved Questions
 
-None for this migration. Repository-wide type debt and shared layout baselines remain separate maintenance work.
+None for this migration. Repository-wide type debt (271 existing diagnostics), existing missing H1s on several legacy guides, and shared interaction/layout baselines remain separate maintenance work.
