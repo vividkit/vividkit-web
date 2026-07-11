@@ -35,7 +35,7 @@ const links = [
 const inlineCodeClass = 'rounded-md border border-slate-200 bg-slate-100 px-2 py-1 font-mono text-sm text-slate-800 dark:border-slate-700 dark:bg-slate-800/90 dark:text-slate-100';
 ---
 
-<section id="troubleshooting" aria-labelledby="troubleshooting-heading" class="pt-16">
+<section id="troubleshooting" aria-labelledby="troubleshooting-heading" class="scroll-mt-28 pt-16">
   <h2 id="troubleshooting-heading" class="font-heading max-w-3xl text-3xl font-bold text-slate-950 text-balance dark:text-slate-50">
     {t('agentkit.compat.heading')}
   </h2>
@@ -47,7 +47,7 @@ const inlineCodeClass = 'rounded-md border border-slate-200 bg-slate-100 px-2 py
         <details
           id={topic.id === 'ci' ? 'automation-safety' : undefined}
           class:list={[
-            'group border-slate-200 dark:border-slate-800',
+            'group scroll-mt-28 border-slate-200 dark:border-slate-800',
             index > 1 && 'border-t',
             index % 2 === 1 && 'md:border-l md:pl-8',
           ]}
@@ -67,13 +67,13 @@ const inlineCodeClass = 'rounded-md border border-slate-200 bg-slate-100 px-2 py
     })}
   </div>
 
-  <nav aria-labelledby="agentkit-next-guides" class="mt-10 rounded-2xl bg-slate-950 p-6 text-slate-100 dark:bg-slate-100 dark:text-slate-950 md:p-8">
+  <nav aria-labelledby="agentkit-next-guides" class="mt-10 rounded-2xl border border-slate-200 bg-slate-50 p-6 text-slate-900 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100 md:p-8">
     <h3 id="agentkit-next-guides" class="font-heading text-xl font-bold">{t('agentkit.links.heading')}</h3>
     <div class="mt-5 grid gap-2 sm:grid-cols-2">
       {links.map((link) => (
         <a
           href={link.href}
-          class="flex min-h-11 items-center justify-between gap-3 rounded-lg px-3 py-2 text-sm font-semibold transition-colors duration-200 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 active:bg-white/15 dark:hover:bg-slate-900/10 dark:active:bg-slate-900/15"
+          class="flex min-h-11 items-center justify-between gap-3 rounded-lg px-3 py-2 text-sm font-semibold transition-colors duration-200 hover:bg-purple-100 focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-50 active:bg-purple-200 dark:hover:bg-slate-800 dark:focus-visible:ring-purple-400 dark:focus-visible:ring-offset-slate-900 dark:active:bg-slate-700"
         >
           <span>{link.label}</span>
           <ArrowUpRight class="h-4 w-4" aria-hidden="true" />

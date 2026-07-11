@@ -97,12 +97,12 @@ const isVi = currentLang === "vi";
         {t("commands.v25.migration_title")}
       </h4>
       <div class="overflow-x-auto">
-        <table class="w-full text-xs border-collapse">
+        <table class="w-full min-w-[34rem] text-xs border-collapse">
           <thead>
             <tr class="bg-teal-50 dark:bg-teal-900/20">
               <th class="py-2 px-3 text-left text-xs font-semibold text-slate-500 dark:text-slate-500 border-b border-slate-200 dark:border-slate-700 w-[25%]">{t("commands.v25.migration_old_cmd")}</th>
               <th class="py-2 px-3 text-left text-xs font-semibold text-teal-700 dark:text-teal-300 border-b border-teal-200 dark:border-teal-800 w-[35%]">{t("commands.v25.migration_new_cmd")}</th>
-              <th class="py-2 px-3 text-left text-xs font-semibold text-slate-500 dark:text-slate-500 border-b border-slate-200 dark:border-slate-700 w-[40%]">Compatibility</th>
+              <th class="py-2 px-3 text-left text-xs font-semibold text-slate-500 dark:text-slate-500 border-b border-slate-200 dark:border-slate-700 w-[40%]">{isVi ? 'Khả năng tương thích' : 'Compatibility'}</th>
             </tr>
           </thead>
           <!-- Always-visible rows -->
@@ -159,7 +159,7 @@ const isVi = currentLang === "vi";
           </svg>
           {t("commands.mkt.beta_notice")}
         </span>
-        <span class="text-[10px] text-slate-400 dark:text-slate-500">Legacy namespaces: <code class="font-mono">/ck:*</code> and <code class="font-mono">/ckm:*</code> → <code class="font-mono text-purple-500">/ak:*</code></span>
+        <span class="text-[10px] text-slate-400 dark:text-slate-500">{isVi ? 'Namespace cũ' : 'Legacy namespaces'}: <code class="font-mono">/ck:*</code> {isVi ? 'và' : 'and'} <code class="font-mono">/ckm:*</code> → <code class="font-mono text-purple-500">/ak:*</code></span>
       </div>
 
       <!-- Prefix reference box (top) -->
@@ -181,12 +181,12 @@ const isVi = currentLang === "vi";
 
       <!-- Migration table: 2 columns (old cmd → new cmd), flat layout like Engineer Kit -->
       <div class="overflow-x-auto">
-        <table class="w-full text-xs border-collapse">
+        <table class="w-full min-w-[34rem] text-xs border-collapse">
           <thead>
             <tr class="bg-purple-50 dark:bg-purple-900/20">
               <th class="py-2 px-3 text-left text-xs font-semibold text-slate-500 dark:text-slate-500 border-b border-slate-200 dark:border-slate-700 w-[25%]">{t("commands.mkt.migration_old_cmd")}</th>
               <th class="py-2 px-3 text-left text-xs font-semibold text-purple-700 dark:text-purple-300 border-b border-purple-200 dark:border-purple-800 w-[35%]">{t("commands.mkt.migration_new_cmd")}</th>
-              <th class="py-2 px-3 text-left text-xs font-semibold text-slate-500 dark:text-slate-500 border-b border-slate-200 dark:border-slate-700 w-[40%]">Compatibility</th>
+              <th class="py-2 px-3 text-left text-xs font-semibold text-slate-500 dark:text-slate-500 border-b border-slate-200 dark:border-slate-700 w-[40%]">{isVi ? 'Khả năng tương thích' : 'Compatibility'}</th>
             </tr>
           </thead>
           <!-- Always-visible rows -->
@@ -210,7 +210,7 @@ const isVi = currentLang === "vi";
             ))}
             <!-- Renamed skills (ckm: marketing-exclusive) -->
             <tr class="border-b border-purple-100 dark:border-purple-900/30 bg-purple-50/30 dark:bg-purple-900/5">
-              <td class="py-1.5 px-3 text-[10px] font-semibold text-purple-600 dark:text-purple-400" colspan="3">📝 Renamed Skills — Marketing Kit legacy aliases</td>
+              <td class="py-1.5 px-3 text-[10px] font-semibold text-purple-600 dark:text-purple-400" colspan="3">{isVi ? 'Kỹ năng đổi tên — alias Marketing Kit cũ' : 'Renamed skills — Marketing Kit legacy aliases'}</td>
             </tr>
             {marketingRenamedMkt.map((row) => (
               <tr class="border-b border-slate-100 dark:border-slate-800">
@@ -221,7 +221,7 @@ const isVi = currentLang === "vi";
             ))}
             <!-- Renamed skills (ck: shared) -->
             <tr class="border-b border-teal-100 dark:border-teal-900/30 bg-teal-50/30 dark:bg-teal-900/5">
-              <td class="py-1.5 px-3 text-[10px] font-semibold text-teal-600 dark:text-teal-400" colspan="3">📝 Renamed Skills — Shared legacy aliases</td>
+              <td class="py-1.5 px-3 text-[10px] font-semibold text-teal-600 dark:text-teal-400" colspan="3">{isVi ? 'Kỹ năng đổi tên — alias dùng chung cũ' : 'Renamed skills — shared legacy aliases'}</td>
             </tr>
             {marketingRenamedShared.map((row, i) => (
               <tr class={i < marketingRenamedShared.length - 1 ? "border-b border-slate-100 dark:border-slate-800" : ""}>
