@@ -1,4 +1,6 @@
-# VividKit - Giao diện Trực quan cho ClaudeKit
+# VividKit - Visual Guides cho AgentKit
+
+> **AgentKit (`ak`) là phiên bản kế nhiệm ClaudeKit (`ck`).** Người dùng CK nên bắt đầu tại [migration guide từng bước](https://vividkit.dev/vi/guides/agentkit). Các route legacy vẫn được giữ để tương thích, trong khi nội dung render chuyển sang AgentKit.
 
 > 🚧 **VividKit Desktop App sắp ra mắt!** Tham gia [danh sách early access](https://vividkit.dev) để được thông báo khi launch.
 
@@ -58,12 +60,13 @@ VividKit Desktop nâng cấp trải nghiệm ClaudeKit CLI với dashboard trự
 
 ---
 
-## 📚 ClaudeKit với Claude Code CLI
+## 📚 AgentKit với Claude Code và Codex
 
-Trong lúc chờ VividKit Desktop, bạn có thể master ClaudeKit qua bộ docs đầy đủ:
+Trong lúc chờ VividKit Desktop, bạn có thể cài AgentKit, migrate project CK và học Engineer/Marketing kits:
 
 | Guide | Mô tả |
 |-------|-------|
+| [CK → AgentKit](https://vividkit.dev/vi/guides/agentkit) | Migration từng bước cho macOS, Linux, Windows, Claude Code, Codex và CI |
 | [CLI Guide](https://vividkit.dev/vi/guides) | Cài đặt và setup |
 | [Commands](https://vividkit.dev/vi/guides/commands) | Tham khảo 60+ commands |
 | [Workflows](https://vividkit.dev/vi/guides/workflows) | Best practices và patterns |

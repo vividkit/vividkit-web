@@ -1,627 +1,207 @@
 # VividKit Web - Codebase Summary
 
-**Last Updated:** May 19, 2026
-**Build Tool:** Astro 5.16.4
+**Last Updated:** July 12, 2026
+**Framework:** Astro 6.0.2 (static output)
 **Language:** TypeScript 5.9.3 (strict mode)
-**Generated from:** repomix-output.xml
+**Generated from:** `repomix-output.xml` (440 files; source snapshot reviewed July 12, 2026)
 
 ---
 
-## Directory Structure
+## Overview
 
-```
-vividkit-web/
-├── src/
-│   ├── components/
-│   │   ├── layout/                 # Layout UI components
-│   │   │   ├── Header.astro
-│   │   │   ├── Footer.astro
-│   │   │   └── AmbientBackground.astro
-│   │   ├── sections/               # Page section components (12)
-│   │   │   ├── Hero.astro
-│   │   │   ├── Features.astro
-│   │   │   ├── Pricing.astro
-│   │   │   ├── WaitlistForm.astro
-│   │   │   ├── Commands.astro
-│   │   │   ├── ClaudeKit.astro
-│   │   │   ├── Promotions.astro
-│   │   │   └── ... (5 more)
-│   │   ├── guides/                 # Guide page components (14)
-│   │   │   ├── CLIGuide.astro
-│   │   │   ├── CommandsGuide.astro
-│   │   │   ├── WorkflowsGuide.astro
-│   │   │   ├── PromotionsGuide.astro
-│   │   │   └── ... (9 more)
-│   │   └── ui/                     # Reusable UI components (8)
-│   │       ├── Button.astro
-│   │       ├── Badge.astro
-│   │       ├── GlassCard.astro
-│   │       ├── Logo.astro
-│   │       ├── Input.astro
-│   │       ├── Select.astro
-│   │       ├── Textarea.astro
-│   │       └── ThemeToggle.astro
-│   │
-│   ├── data/
-│   │   ├── constants.ts            # Site config (name, email, social)
-│   │   ├── features.ts             # Problem/solution/highlight content
-│   │   ├── navigation.ts           # Nav links, footer categories
-│   │   ├── pricing.ts              # 2 pricing tiers
-│   │   ├── commands.ts             # 3 command categories (60+ commands)
-│   │   ├── guides/
-│   │   │   ├── index.astro         # CLI Guide landing
-│   │   │   ├── commands.astro      # Commands reference
-│   │   │   ├── workflows.astro     # Workflows guide
-│   │   │   ├── promotions.astro    # Promotions guide
-│   │   │   └── ... (5 more routes)
-│   │   └── vi/                     # Vietnamese routes
-│   │       └── ... (all data files in Vietnamese)
-│   │
-│   ├── i18n/
-│   │   ├── index.ts                # i18n initialization
-│   │   ├── utils.ts                # Translation utilities
-│   │   └── locales/
-│   │       ├── en.ts               # 866 English translation keys
-│   │       └── vi.ts               # Vietnamese translations
-│   │
-│   ├── layouts/
-│   │   ├── MainLayout.astro        # Root HTML wrapper
-│   │   ├── GuidesLayout.astro      # 2-column guide layout
-│   │   └── GuideLayout.astro       # Single column guide layout
-│   │
-│   ├── pages/
-│   │   ├── index.astro             # Homepage
-│   │   ├── robots.txt.ts           # Dynamic SEO config
-│   │   ├── sitemap.xml.ts          # i18n-aware sitemap
-│   │   ├── guides/
-│   │   │   ├── index.astro         # CLI Guide landing
-│   │   │   ├── commands.astro      # Commands reference
-│   │   │   ├── workflows.astro     # Workflows guide
-│   │   │   └── ... (5 more routes)
-│   │   └── vi/                     # Vietnamese routes
-│   │       └── ... (duplicated pages)
-│   │
-│   ├── scripts/
-│   │   ├── form-handler.ts         # Web3Forms integration
-│   │   ├── theme-toggle.ts         # Dark mode manager
-│   │   ├── smooth-scroll.ts        # Anchor navigation
-│   │   ├── intersection-observer.ts # Scroll animations
-│   │   └── nav-scroll-highlight.ts # Active nav highlighting
-│   │
-│   ├── styles/
-│   │   └── globals.css             # Global Tailwind directives
-│   │
-│   └── types/
-│       ├── index.ts                # 13 core interfaces
-│       └── alpinejs.d.ts           # Alpine.js type definitions
-│
-├── public/
-│   ├── favicon.svg
-│   ├── favicon-16x16.png
-│   ├── favicon-32x32.png
-│   ├── apple-touch-icon.png
-│   ├── chrome-192x192.png
-│   ├── chrome-512x512.png
-│   ├── logo.png
-│   ├── logo-1024.png
-│   └── site.webmanifest
-│
-├── docs/                           # Documentation (THIS FOLDER)
-├── plans/                          # Planning and reports
-├── reference/                      # Reference materials
-├── .claude/                        # Claude Code workflows
-├── .astro/                         # Astro generated types
-├── .vercel/                        # Vercel configuration
-├── .vscode/                        # VS Code settings
-│
-├── astro.config.mjs                # Astro configuration
-├── tailwind.config.mjs             # Tailwind CSS configuration
-├── tsconfig.json                   # TypeScript configuration
-├── package.json                    # Dependencies
-├── package-lock.json               # Lock file
-├── README.md                       # Main documentation
-└── repomix-output.xml             # Codebase summary snapshot
+VividKit Web is a statically generated product site and bilingual documentation hub for AgentKit (`ak`), the successor to ClaudeKit (`ck`). English routes use the root path; Vietnamese mirrors use `/vi`. Existing ClaudeKit-named guide slugs remain available where compatibility or historical context requires them, while active setup and skill guidance uses AgentKit terminology and target-native syntax.
+
+The current build contract contains **74 route identities**: the exact 72-route baseline plus `/guides/agentkit` and `/vi/guides/agentkit`. `src/data/guides/guide-route-manifest.ts` is the typed route inventory used to verify required build output, sitemap inclusion, LLM inclusion, and compatibility policy.
+
+## Repository Structure
+
+```text
+src/
+├── components/
+│   ├── guides/                 # Guide shells and topic sections
+│   │   └── agentkit/           # AgentKit migration hub sections and command views
+│   ├── layout/                 # Header, footer, and shared site chrome
+│   ├── sections/               # Product landing-page sections
+│   └── ui/                     # Reusable UI primitives
+├── data/
+│   ├── guides/                 # Typed guide catalogs and route manifest
+│   │   └── agentkit/           # Canonical AgentKit facts and migration mappings
+│   └── vi/                     # Vietnamese data mirrors where content is data-backed
+├── i18n/
+│   ├── en/                     # English translation modules
+│   └── vi/                     # Vietnamese translation modules
+├── layouts/                    # MainLayout and guide layouts
+├── pages/                      # Astro file routes, including EN/VI guide mirrors
+├── scripts/                    # Browser-side interaction modules
+├── styles/                     # Global Tailwind styles
+└── types/                      # Shared TypeScript types
+
+scripts/
+├── check-agentkit-content.mjs  # Source and generated-output content audit
+└── generate-llms-full.mjs      # Postbuild full-text guide export
+
+tests/
+├── agentkit-catalogs/          # Active catalog namespace/parity contracts
+├── agentkit-hub/               # Migration hub rendering and safety contracts
+└── content/                    # Facts, routes, audit, and allowlist contracts
 ```
 
----
+## AgentKit Guide Architecture
 
-## File Organization Patterns
+### Bilingual Migration Hub
 
-### Component Files
-- **Naming:** PascalCase (e.g., `Button.astro`, `Header.astro`)
-- **Location:** Organized by type (`layout/`, `sections/`, `guides/`, `ui/`)
-- **Props:** TypeScript interfaces for type safety
-- **Exports:** Default export, re-exported in parent layouts
-- **Structure:** Template + script + style (all in `.astro` file)
+The dedicated hub is rendered at:
 
-### Data Files
-- **Naming:** camelCase (e.g., `features.ts`, `navigation.ts`)
-- **Location:** `src/data/` with Vietnamese variants in `src/data/vi/`
-- **Format:** TypeScript objects/arrays matching interface types
-- **Validation:** Type-checked at compile time
-- **Updates:** Source of truth for all content
+- `/guides/agentkit` from `src/pages/guides/agentkit.astro`
+- `/vi/guides/agentkit` from `src/pages/vi/guides/agentkit.astro`
 
-### Page Files
-- **Naming:** Route-based (e.g., `index.astro`, `commands.astro`)
-- **Location:** `src/pages/` with language variants in `src/pages/vi/`
-- **Structure:** Layout wrapper → component composition
-- **Props:** Passed from data files
-- **Generation:** Static HTML at build time
+Both pages compose `src/components/guides/AgentKitGuide.astro`. The shared component renders a ten-step migration journey, platform-specific commands for macOS/Linux/Windows, kit targets, explicit legacy-to-current mappings, compatibility guidance, CI safety, troubleshooting, and rollback guidance. Copy comes from structurally matched `src/i18n/en/agentkit.ts` and `src/i18n/vi/agentkit.ts` modules.
 
-### Script Files
-- **Naming:** kebab-case (e.g., `form-handler.ts`, `theme-toggle.ts`)
-- **Location:** `src/scripts/` (loaded via Alpine.js or script tags)
-- **Pattern:** Exported functions/classes for DOM manipulation
-- **Execution:** Deferred or Alpine.js directives
-- **Performance:** Minimal, essential interactivity only
+### Canonical Typed Facts
 
----
+AgentKit executable facts live under `src/data/guides/agentkit/` and are passed into components instead of being duplicated in prose:
 
-## Key Modules & Relationships
+| Module | Verified responsibility |
+|---|---|
+| `agentkit-source-contract.ts` | Release channels, source metadata, artifact integrity, and credential transport policy |
+| `agentkit-cli-facts.ts` | CLI commands, scope, mutation behavior, flags, write targets, and stable/beta channel |
+| `agentkit-skill-facts.ts` | Core skill IDs, source hashes, kit snapshot provenance, and target-native invocations |
+| `agentkit-target-capabilities.ts` | Claude Code and Codex target/install/invocation contracts |
+| `agentkit-migration-operational-facts.ts` | Platform preflight, install verification, collision checks, and gated legacy removal |
+| `agentkit-migration-mapping.ts` | Localized CK-to-AK binary, skill-prefix, authentication, and kit lifecycle mappings |
 
-### Data Flow Diagram
-```
-data/ (TypeScript objects)
-  ↓
-types/ (Interface definitions)
-  ↓
-components/ (Props-driven UI)
-  ↓
-pages/ (Astro route rendering)
-  ↓
-browser (Static HTML/CSS/JS)
+The rendering flow is:
+
+```text
+official source metadata + installed-kit snapshot
+  -> typed AgentKit facts
+  -> stable/beta selectors and catalog adapters
+  -> bilingual guide components
+  -> Astro static pages
+  -> source audit + build + generated-output audit
 ```
 
-### Type System (15 Core Interfaces)
+### Target-Native Invocation Syntax
 
-| Interface | File | Purpose | Fields |
+Claude Code and Codex share AgentKit skill identities but not invocation syntax:
+
+| Target | Install target | Invocation mode | Example |
 |---|---|---|---|
-| **NavLink** | types/index.ts | Navigation item | label, href, external |
-| **FeatureCard** | types/index.ts | Feature showcase | icon, title, description, href |
-| **PricingTier** | types/index.ts | Pricing card | name, price, features, cta, badge |
-| **Command** | types/index.ts | CLI command | command, description, category, color |
-| **Workflow** | types/index.ts | Learning workflow | title, level, duration, steps, gradient |
-| **SEOMeta** | types/index.ts | Page metadata | title, description, canonical, ogImage |
-| **CLIStep** | types/index.ts | Setup step | number, title, command, note, color |
-| **WorkflowStep** | types/index.ts | Workflow action | command, description |
-| **LandingWorkflow** | types/index.ts | Guide workflow | id, title, level, duration, steps |
-| **CommandCategory** | types/index.ts | Command group | name, description, gradient, commands |
-| **SlashCommand** | types/index.ts | Slash command | command, description, difficulty, complexity |
-| **UIUXFeature** | types/index.ts | Design feature | title, description, items, color |
-| **UIUXExample** | types/index.ts | Example content | level, prompt, searchTerms |
-| **Promotion** | types/index.ts | Subscription deal | title, description, discount, url, code, badge |
-| **PromotionTip** | types/index.ts | Money-saving tip | title, content, category |
+| Claude Code | `claude-code` | Slash command | `/ak:cook` |
+| Codex | `codex` | Skill reference | `$ak:cook` |
 
----
+`AGENTKIT_TARGET_CAPABILITIES` encodes these differences. `AGENTKIT_SKILL_FACTS` stores both forms per skill. Tests reject Claude slash syntax in the Codex path.
 
-## Component Hierarchy
+### Stable and Beta Policy
 
-### Page Rendering Flow
-```
-MainLayout
-├── Header
-│   └── Logo, Navigation, Theme Toggle, Language Switcher
-├── Main Content
-│   ├── Section 1 (Hero)
-│   ├── Section 2 (Features)
-│   ├── Section 3 (Pricing)
-│   └── Section N (custom)
-└── Footer
-    └── Links, Social, Legal
-```
+Every AgentKit CLI fact carries a `channel`. UI intended for current use selects stable facts explicitly. As of the verified July 12 snapshot:
 
-### Guide Page Flow
-```
-GuidesLayout
-├── Header (shared)
-├── Left Sidebar
-│   └── TableOfContents / TabNavigation
-└── Right Content
-    ├── CLIGuide / CommandsGuide / etc.
-    └── Footer (shared)
-```
+- Stable facts drive installation, authentication, project lifecycle, kit lifecycle, diagnostics, audit, and GUI guidance.
+- `ak migrate` and `ak kit refresh <kit>` are recorded as local `1.2.0-beta.1` observations with preview/apply behavior; they are excluded from stable selectors and must not be presented as stable.
+- Beta command cards remain discoverable with `isBeta` metadata and must be mirrored by the Beta Preview section.
+- Promotion to stable requires removing beta metadata across commands, workflows, flowcharts, and bilingual mirrors only after upstream stable verification.
 
-### Deals Lucky Draw Extension
+### Legacy Compatibility
 
-- Public lucky draw is driven by `src/scripts/deals-scheduled-draw-state.ts`, with the section composed in `src/components/guides/DealsGuide.astro` after the existing coupon claim widget.
-- New frontend files:
-  - `src/components/guides/deals/deals-lucky-draw-section.astro`
-  - `src/components/guides/deals/deals-lucky-draw-widget.astro`
-  - `src/components/guides/deals/deals-lucky-draw-admin.astro`
-  - `src/components/guides/deals/deals-lucky-draw-result.astro`
-  - `src/pages/guides/deals-admin.astro`
-  - `src/pages/vi/guides/deals-admin.astro`
-- `deals-claim-widget.astro` remains coupon-claim focused and only accepts GitHub OAuth returns with `vk_action=claim` or legacy no-action returns.
-- The raffle widget owns `vk_action=raffle_status`, `vk_action=raffle_verify_order`, `vk_action=raffle_register`, and `vk_action=raffle_claim_prize`; `/raffle/spin` remains only as a deprecated compatibility route.
-- `/raffle/verify-order` checks the local paid-order allowlist first, then calls the ClaudeKit referrals API for pending refs and auto-imports an exact-match verified ref with upstream source/timestamp details; API failure, missing key, empty result, or mismatch falls back to `pending_approval`.
-- Hidden admin page is unlinked from navigation. It keeps `Admin-Secret` in `sessionStorage` only and uses the backend `Admin-Secret` header for `/admin/paid-orders/import`, `/admin/raffle/run-draw`, `/admin/raffle/rollover-expired`, and `/admin/raffle/dump`; the order log merges paid refs and pending approvals, showing source and timestamps, and importing a pending user-submitted ref approves that registration before draw.
-- Backend source of truth for raffle state and routes lives in `/Users/thieunv/projects/personal/vividkit-giveaway-api`, and the draw schedule is env-driven in the backend, with scheduled cron invoking the daily draw.
+Legacy identifiers are preserved only where they serve compatibility or explicit migration context:
 
----
+- The route manifest marks ClaudeKit-named paths such as `/guides/ck-with-codex`, `/guides/how-ck-works`, `/guides/inside-claudekit/*`, and `/guides/what-is-claudekit` as `legacy-slug`.
+- Active command, workflow, and flowchart catalogs render the unified `/ak:*` namespace.
+- Scenario resolution accepts old `/ck:*` and `/ckm:*` identifiers so saved links and legacy data can resolve to current AgentKit cards.
+- Migration comparison rows carry explicit legacy metadata and a compatibility note; legacy syntax is not treated as a current recommendation.
 
-## i18n Architecture
+## Route, Sitemap, and LLM Contracts
 
-### Translation System
-- **Files:** `src/i18n/locales/en.ts` (866 keys), `vi.ts` (Vietnamese)
-- **Keys:** Nested structure (e.g., `nav.home`, `header.lang.en`)
-- **Utility:** `useTranslations(lang)` → returns `t()` function
-- **Routing:** Convention-based (`/` = en, `/vi/` = vi)
-- **Fallback:** Missing translations use English
+`src/data/guides/guide-route-manifest.ts` separates four concerns for each route: required build presence, sitemap visibility, LLM visibility, and compatibility policy. Its tests enforce:
 
-### Static Generation
-- **en pages:** Generated at `/` route
-- **vi pages:** Generated at `/vi/` route
-- **hreflang:** XML sitemap includes language alternatives
-- **No runtime:** All translations resolved at build time
+- 72 unique baseline route identities remain unchanged.
+- Two bilingual AgentKit identities are added, producing 74 total required identities.
+- Every built HTML route is manifested; no required identity is missing.
+- English/Vietnamese suffixes remain paired.
+- Sitemap consumers receive the exact manifest-classified identities.
 
-### Data Translation Pattern
-```typescript
-// English
-src/data/features.ts → features (English content)
-src/data/guides/cli-guide.ts → CLI guide (English)
+`src/pages/sitemap.xml.ts` consumes the manifest for bilingual hreflang entries. `src/data/guides-llms-index.mjs` is the shared human-curated index for `/llms.txt` and postbuild `/llms-full.txt`; both exports describe active AgentKit guidance while labeling retained ClaudeKit material.
 
-// Vietnamese
-src/data/vi/features.ts → features (Vietnamese content)
-src/data/vi/guides/cli-guide.ts → CLI guide (Vietnamese)
-```
+## Content Audit Pipeline
 
----
+`scripts/check-agentkit-content.mjs` scans source before the Astro build and generated output after the build.
 
-## Build & Deployment Pipeline
-
-### Configuration Files
-- **astro.config.mjs:** SSG output, i18n routing, Vercel adapter, CSS minification
-- **tailwind.config.mjs:** Design tokens, dark mode config, responsive breakpoints
-- **tsconfig.json:** Strict mode, path aliases (@/*), build target
-- **package.json:** Dependencies (Astro, Tailwind, Alpine, TypeScript)
-
-### Environment Variables
-
-Public env vars use Astro's build-time client exposure convention, so they are available in client-side code.
-
-| Variable | Required | Description |
+| Mode | Scope | Enforced behavior |
 |---|---|---|
-| `PUBLIC_WEB3FORMS_KEY` | Yes | Web3Forms API key for contact form |
-| `PUBLIC_SITE_URL` | Yes | Canonical site URL for meta tags |
-| `PUBLIC_CLAUDEKIT_REFERRAL_URL` | Yes | ClaudeKit referral link |
-| `PUBLIC_GIVEAWAY_API_URL` | Yes | Deals giveaway API base URL (Cloudflare Worker) |
-| `PUBLIC_TURNSTILE_SITE_KEY` | Yes | Cloudflare Turnstile site key for bot protection on claim flow |
-| `PUBLIC_GA_ID` | No | Google Analytics 4 measurement ID |
-| `PUBLIC_FB_PIXEL_ID` | No | Facebook/Meta Pixel ID |
+| `agentkit-active` | AgentKit data, components, and bilingual hub pages | Reject legacy npm install commands, `ck` lifecycle recommendations, and `/ck:*` or `/ckm:*` recommendations |
+| `legacy-backlog` | Remaining source documentation and guide content | Permit classified legacy prose while still scanning for credentials |
+| Postbuild | `dist` and Vercel static output | Re-run detectors against generated HTML, XML, text, JSON, maps, and reports |
 
-Reference: `.env.example` for default values.
+The allowlist accepts only exact files, known detector patterns, positive bounded counts, an owner, and a reason. Current exceptions cover the intentional migration comparison rows and their generated hub output. Credential diagnostics contain detector/category/file/line/incident ID only; detected values are never re-emitted to stdout, stderr, JSON reports, or error messages.
 
-### Build Process
-1. Astro loads pages from `src/pages/`
-2. Each page imports components and data
-3. TypeScript validates all types
-4. Tailwind CSS generates utility classes
-5. LightningCSS minifies CSS
-6. Static HTML/CSS/JS written to `dist/`
-7. Vercel deploys to edge
+The build scripts make the audit non-optional:
 
-### Development Server
-- **Command:** `npm run dev`
-- **Port:** localhost:4321
-- **Hot reload:** Changes reflected instantly
-- **Type checking:** Background TypeScript validation
-
-### Production Build
-- **Command:** `npm run build`
-- **Output:** `dist/` directory (static files)
-- **Size:** Optimized, tree-shaken, minified
-- **Time:** <60 seconds for full build
-
----
-
-## Client-Side Interactivity
-
-### Alpine.js Integration
-- **Library:** Alpine.js 3.15.2 (lightweight DOM manipulation)
-- **Usage:** Form handling, theme toggle, scroll animations
-- **Pattern:** Declarative with `x-data`, `x-on`, `x-show`
-- **Performance:** 15KB gzipped, loaded asynchronously
-
-### Script Modules (5)
-
-| Module | Purpose | Entry Point | Execution |
-|---|---|---|---|
-| form-handler.ts | Web3Forms API integration, validation | Alpine x-on:submit | Event-driven |
-| theme-toggle.ts | Dark mode localStorage sync | Alpine.store('theme') | Immediate |
-| smooth-scroll.ts | Anchor navigation with offset | Window load event | On demand |
-| intersection-observer.ts | Scroll animations (fade-in-up) | Window load event | Scroll event |
-| nav-scroll-highlight.ts | Active nav item on scroll | RAF loop | Continuous |
-
-### Performance Optimizations
-- **Defer execution:** Scripts load after HTML render
-- **Event delegation:** Minimize event listeners
-- **RAF optimization:** Scroll handlers use requestAnimationFrame
-- **Debouncing:** Nav highlight updates throttled
-- **No polyfills:** Target modern browsers (ES2022+)
-
----
-
-## Styling Architecture
-
-### Tailwind CSS v4
-- **Version:** 4.1.17 with LightningCSS
-- **Mode:** Utility-first, mobile-first
-- **Dark mode:** Selector-based (`.dark` class)
-- **Customization:** Design tokens in globals.css
-
-### Design System
-
-**Colors:**
-- Primary: Blue (#3B82F6)
-- Accent: Cyan, Purple, Green
-- Neutral: Slate (light/dark variants)
-- Semantic: Green (success), Red (error), Amber (warning)
-
-**Typography:**
-- Heading: Space Grotesk (bold, distinctive)
-- Body: DM Sans (readable, modern)
-- Code: Fira Code (monospace, consistent)
-
-**Spacing:** Tailwind scale (2-unit base)
-- sm: 0.5rem, md: 1rem, lg: 1.5rem, xl: 2rem
-
-**Responsive Breakpoints:**
-- sm: 640px (tablet)
-- md: 768px (landscape tablet)
-- lg: 1024px (desktop)
-- xl: 1280px (wide desktop)
-
-**Components:**
-- GlassCard: Glassmorphism with backdrop blur
-- Badge: Inline status indicators
-- Button: 3 variants × 3 sizes (9 combinations)
-
----
-
-## Type Safety & Validation
-
-### TypeScript Strict Mode
-- **strictNullChecks:** true (null !== undefined)
-- **strictFunctionTypes:** true (function param validation)
-- **strictBindCallApply:** true (bind/call validation)
-- **strictPropertyInitialization:** true (class field validation)
-- **noImplicitAny:** true (explicit types required)
-- **no**Implicit**This:** true (explicit this context)
-
-### Path Aliases (7)
-```typescript
-@/*                → src/*
-@/components/*     → src/components/*
-@/layouts/*        → src/layouts/*
-@/data/*           → src/data/*
-@/types/*          → src/types/*
-@/scripts/*        → src/scripts/*
-@/styles/*         → src/styles/*
+```text
+npm run build
+  -> source content audit
+  -> astro build
+  -> llms-full generation
+  -> generated-output audit
 ```
 
-### Data Validation
-- **Compile-time:** TypeScript interface validation
-- **Runtime:** No validation (trust build-time checks)
-- **Content:** All data typed before use
-- **Refactoring:** Type changes caught immediately
+Useful focused checks:
 
----
-
-## SEO & Metadata
-
-### Dynamic Routes
-- **robots.txt.ts:** Crawling rules, sitemap URL
-- **sitemap.xml.ts:** All routes with hreflang language links
-- **Meta tags:** Open Graph, Twitter, canonical URLs
-
-### Page Metadata
-Each page defines:
-- `<title>`: Page title (SEO important)
-- `<meta name="description">`: Short description
-- `<link rel="canonical">`: Preferred URL
-- `<meta property="og:*">`: Social media preview
-- `<link rel="hreflang">`: Language alternatives
-
-### Performance Metrics
-- **Lighthouse:** Target 90+ on mobile/desktop
-- **Core Web Vitals:**
-  - LCP (Largest Contentful Paint): <2.5s
-  - FID (First Input Delay): <100ms
-  - CLS (Cumulative Layout Shift): <0.1
-
----
-
-## Static Assets (9 Files)
-
-### Favicons
-- favicon.svg (primary)
-- favicon-16x16.png (legacy)
-- favicon-32x32.png (standard)
-- apple-touch-icon.png (iOS)
-
-### Android
-- chrome-192x192.png (launcher icon)
-- chrome-512x512.png (splash screen)
-
-### Logos
-- logo.png (general use)
-- logo-1024.png (high res)
-
-### Web App Manifest
-- site.webmanifest (PWA config)
-
----
-
-## Development Dependencies
-
-### Core Dependencies
-```json
-{
-  "astro": "^5.16.4",          // Framework
-  "typescript": "^5.9.3",      // Type system
-  "tailwindcss": "^4.1.17",    // Styling
-  "alpinejs": "^3.15.2",       // Interactivity
-  "lucide-astro": "^0.555.0"   // Icons
-}
+```bash
+npm run check:agentkit-content
+npm run test:agentkit-content
 ```
 
-### Dev Dependencies
-```json
-{
-  "@astrojs/vercel": "^9.0.2",     // Deployment adapter
-  "@astrojs/check": "^0.9.6",      // Type checking
-  "@tailwindcss/vite": "^4.1.17",  // CSS build plugin
-  "@types/alpinejs": "^3.13.11"    // Type definitions
-}
+## Internationalization
+
+Astro i18n config defines English as the unprefixed default and Vietnamese as `/vi`. Guide pages usually share component logic and switch copy through `useTranslations(lang)`.
+
+AgentKit migration content adds two stricter parity contracts:
+
+- English and Vietnamese translation modules expose the same keys.
+- Localized workflow catalogs inherit canonical IDs, command strings, categories, and levels from the English contract so translated display copy cannot change executable syntax or break lookup keys.
+
+## Build and Deployment
+
+| Concern | Implementation |
+|---|---|
+| Rendering | Astro static output |
+| Styling | Tailwind CSS 4.1.17 via Vite; LightningCSS minification |
+| Interactivity | Alpine.js 3.15.2 and small local scripts |
+| Images | Astro Sharp service |
+| Deployment | `@astrojs/vercel` 10.0.0 with Web Analytics |
+| Type safety | TypeScript strict Astro config and seven `@/` path aliases |
+
+Primary commands:
+
+```bash
+npm run dev
+npm run build
+npm run preview
+npm run check:agentkit-content
+npm run test:agentkit-content
 ```
 
-### Fonts (via @fontsource)
-```json
-{
-  "@fontsource/dm-sans": "^5.2.8",
-  "@fontsource/fira-code": "^5.2.7",
-  "@fontsource/space-grotesk": "^5.2.10"
-}
-```
+## Safety and Maintenance Rules
 
----
+- Treat the typed AgentKit facts as executable-content source of truth; do not hand-copy commands into components.
+- Add source URL, verification date, and channel to new facts.
+- Do not expose a remote installer, credential-bearing command, global write, or destructive removal as a blind copy action.
+- Keep Claude Code `/ak:*` and Codex `$ak:*` examples separate.
+- Keep stable and beta data separate until upstream stable verification.
+- Preserve manifested legacy slugs unless a deliberate redirect/removal migration is approved.
+- Update route manifest, sitemap/LLM classifications, EN/VI content, and contract tests together.
 
-## Key Metrics & Statistics
+## References
 
-### Content Volume
-- **Pages:** 21 (9 English + 9 Vietnamese + 3 special)
-- **Components:** 33 (3 layouts, 3 layout UI, 8 reusable UI, 12 sections, 14 guides)
-- **Data files:** 16 (6 core + 10 guides, bilingual)
-- **Translation keys:** 866 (English) + Vietnamese variants
-- **CLI commands:** 60+ organized in 3 categories
-- **Workflows:** 5+ recommended patterns (beginner→advanced)
-
-### Code Statistics
-- **TypeScript files:** 40+ (.ts, .tsx, .astro)
-- **Data modules:** 16 (structured objects)
-- **Type definitions:** 15 core interfaces
-- **Lines of code:** ~5,000 (excluding node_modules)
-
-### Performance Baseline
-- **HTML size:** ~50KB (gzipped)
-- **CSS size:** ~30KB (gzipped, optimized)
-- **JS size:** ~25KB (Alpine.js + scripts)
-- **Total:** ~105KB (3G friendly)
-
----
-
-## Common Code Patterns
-
-### Component Pattern
-```astro
----
-import type { NavLink } from '@/types';
-
-interface Props {
-  links: NavLink[];
-  active?: string;
-}
-
-const { links, active } = Astro.props;
----
-
-<nav class="...">
-  {links.map(link => (
-    <a href={link.href} class={...}>
-      {link.label}
-    </a>
-  ))}
-</nav>
-```
-
-### Data Pattern
-```typescript
-// src/data/commands.ts
-import type { Command } from '@/types';
-
-export const commands: Command[] = [
-  {
-    command: '/plan',
-    description: 'Create project plan',
-    category: 'planning',
-    color: 'blue-500'
-  },
-  // ...
-];
-```
-
-### i18n Pattern
-```astro
----
-import { useTranslations, getLangFromUrl } from '@/i18n/utils';
-
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
----
-
-<h1>{t('nav.home')}</h1>
-```
-
-### Script Pattern (Alpine.js)
-```typescript
-export function setupThemeToggle() {
-  return {
-    theme: localStorage.getItem('theme') || 'system',
-    toggle() {
-      this.theme = this.theme === 'dark' ? 'light' : 'dark';
-      localStorage.setItem('theme', this.theme);
-      document.documentElement.classList.toggle('dark');
-    }
-  };
-}
-```
-
----
-
-## Architectural Patterns
-
-### 1. Data-Driven Content
-- All content stored in TypeScript
-- Type-safe at compile time
-- Version controlled with code
-- No external CMS dependencies
-
-### 2. Static Generation First
-- Every page pre-rendered at build
-- No server-side rendering
-- Edge-ready deployment
-- Zero cold starts
-
-### 3. Progressive Enhancement
-- Core content HTML-only
-- Interactivity via Alpine.js
-- Graceful fallback without JS
-- No breaking changes
-
-### 4. Composition Over Inheritance
-- Small, focused components
-- Reusable UI primitives
-- Slots for content composition
-- Props-driven behavior
-
-### 5. i18n by Convention
-- Language in URL path
-- Static generation per language
-- Shared component logic
-- Language-specific data
-
-### 6. Performance by Default
-- Minimal JavaScript (25KB total)
-- CSS optimized at build time
-- Image optimization via Sharp
-- No third-party scripts
-
----
+- `src/data/guides/agentkit/`
+- `src/components/guides/AgentKitGuide.astro`
+- `src/data/guides/guide-route-manifest.ts`
+- `scripts/check-agentkit-content.mjs`
+- `tests/agentkit-hub/`
+- `tests/agentkit-catalogs/`
+- `tests/content/`
 
 ## Unresolved Questions
 
-1. Should component documentation be auto-generated from JSDoc?
-2. Are there planned E2E tests for critical user flows?
-3. Will there be unit tests for data validation?
-4. Future plan for content versioning or changelogs?
-5. How will community contributions be reviewed/integrated?
+1. When will `ak migrate` and `ak kit refresh` graduate from beta, and which upstream stable release will be the promotion source?
+2. Should remaining ClaudeKit historical guides receive a formal retirement schedule beyond the current `legacy-slug` classification?

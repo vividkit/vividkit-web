@@ -1,4 +1,6 @@
-# VividKit - Visual Interface for ClaudeKit
+# VividKit - Visual Guides for AgentKit
+
+> **AgentKit (`ak`) is the successor to ClaudeKit (`ck`).** Existing CK users should start with the [step-by-step migration guide](https://vividkit.dev/guides/agentkit). Legacy route names remain available for compatibility while their rendered guidance moves to AgentKit.
 
 > 🚧 **VividKit Desktop App Coming Soon!** Join our [early access waiting list](https://vividkit.dev) to be notified when we launch.
 
@@ -56,12 +58,13 @@ VividKit Desktop transforms the ClaudeKit CLI experience with persistent visual 
 
 ---
 
-## 📚 ClaudeKit with Claude Code CLI
+## 📚 AgentKit with Claude Code and Codex
 
-While waiting for VividKit Desktop, master ClaudeKit through our comprehensive documentation:
+While waiting for VividKit Desktop, install AgentKit, migrate existing CK projects, and learn the Engineer/Marketing kits:
 
 | Guide | Description |
 |-------|-------------|
+| [CK → AgentKit](https://vividkit.dev/guides/agentkit) | Step-by-step migration for macOS, Linux, Windows, Claude Code, Codex, and CI |
 | [CLI Guide](https://vividkit.dev/guides) | Installation and setup |
 | [Commands](https://vividkit.dev/guides/commands) | All 60+ commands reference |
 | [Workflows](https://vividkit.dev/guides/workflows) | Best practices and patterns |
