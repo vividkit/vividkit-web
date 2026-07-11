@@ -107,7 +107,7 @@ async function buildFullText() {
   const parts = [
     '# VividKit Guides — Full Text',
     '',
-    '> Full-text export of the VividKit ClaudeKit documentation for LLM agents. Each section is one guide, rendered to plain text. See /llms.txt for the curated link index.',
+    '> Full-text export of the VividKit AgentKit documentation for LLM agents. Legacy ClaudeKit references are retained only for migration or historical context. See /llms.txt for the curated link index.',
     '',
   ];
 
@@ -130,10 +130,7 @@ async function buildFullText() {
       }
 
       const file = htmlFileForPath(link.path);
-      if (!(await pathExists(file))) {
-        console.warn(`[llms-full] skip (no build output): ${link.path}`);
-        continue;
-      }
+      if (!(await pathExists(file))) throw new Error(`[llms-full] required build output missing: ${link.path}`);
       const html = await readFile(file, 'utf-8');
       const text = capText(htmlToText(html), MAX_WORDS_PER_GUIDE, sourceUrl);
       parts.push(

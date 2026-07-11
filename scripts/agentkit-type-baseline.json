@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "description": "Scoped Astro diagnostic baseline for AgentKit migration files. The repo-wide checker remained red with 271 pre-existing errors when recorded; this gate permits zero scoped diagnostics.",
+  "recordedAt": "2026-07-12",
+  "observedRepoWideErrors": 271,
+  "scope": [
+    "src/data/guides/agentkit/**",
+    "src/i18n/en/agentkit.ts",
+    "src/i18n/vi/agentkit.ts",
+    "src/components/guides/agentkit/**",
+    "src/components/guides/AgentKitGuide.astro",
+    "src/components/guides/CkWithCodexGuide.astro",
+    "src/components/guides/CoexistenceGuide.astro",
+    "src/components/guides/cli-guide/AgentKitCli*.astro",
+    "src/components/guides/migrate/agentkit-*.astro",
+    "src/pages/guides/agentkit.astro",
+    "src/pages/vi/guides/agentkit.astro"
+  ],
+  "allowedScopedFingerprints": []
+}

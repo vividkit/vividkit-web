@@ -4,8 +4,12 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
-    "postbuild": "node scripts/generate-llms-full.mjs",
+    "build": "npm run verify:agentkit && astro build",
+    "postbuild": "node scripts/generate-llms-full.mjs && node scripts/check-agentkit-content.mjs --postbuild",
+    "check:agentkit-content": "node scripts/check-agentkit-content.mjs",
+    "check:agentkit-types": "node scripts/check-agentkit-type-delta.mjs",
+    "test:agentkit-content": "node --test tests/**/*.test.mjs",
+    "verify:agentkit": "npm run test:agentkit-content && npm run check:agentkit-content && npm run check:agentkit-types",
     "preview": "astro preview",
     "astro": "astro"
   },
