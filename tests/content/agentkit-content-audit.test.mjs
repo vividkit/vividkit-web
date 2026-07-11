@@ -261,7 +261,8 @@ test('normal build cannot bypass source or generated-artifact audits', async () 
   assert.match(packageJson.scripts['verify:agentkit'], /check:agentkit-content/);
   assert.match(packageJson.scripts['verify:agentkit'], /check:agentkit-types/);
   assert.match(packageJson.scripts['verify:agentkit'], /test:agentkit-content/);
-  assert.match(packageJson.scripts.postbuild, /check-agentkit-content\.mjs --postbuild$/);
+  assert.match(packageJson.scripts.postbuild, /check-agentkit-content\.mjs --postbuild && npm run test:agentkit-postbuild$/);
   assert.equal(packageJson.scripts['check:agentkit-content'], 'node scripts/check-agentkit-content.mjs');
   assert.equal(packageJson.scripts['test:agentkit-content'], 'node --test tests/**/*.test.mjs');
+  assert.equal(packageJson.scripts['test:agentkit-postbuild'], 'node --test tests/content/guide-route-manifest.test.mjs');
 });

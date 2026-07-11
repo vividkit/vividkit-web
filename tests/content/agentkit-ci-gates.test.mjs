@@ -72,10 +72,12 @@ test('type delta permits unrelated baseline errors and fails every new scoped di
 test('package scripts run every AgentKit suite and make verification part of build', async () => {
   const packageJson = JSON.parse(await readFile(new URL('package.json', ROOT), 'utf8'));
   assert.equal(packageJson.scripts['test:agentkit-content'], 'node --test tests/**/*.test.mjs');
+  assert.equal(packageJson.scripts['test:agentkit-postbuild'], 'node --test tests/content/guide-route-manifest.test.mjs');
   assert.match(packageJson.scripts['verify:agentkit'], /test:agentkit-content/);
   assert.match(packageJson.scripts['verify:agentkit'], /check:agentkit-content/);
   assert.match(packageJson.scripts['verify:agentkit'], /check:agentkit-types/);
   assert.match(packageJson.scripts.build, /^npm run verify:agentkit && astro build$/);
+  assert.match(packageJson.scripts.postbuild, /npm run test:agentkit-postbuild$/);
 });
 
 test('migrated target consumers import the canonical adapter instead of hardcoding resolved facts', async () => {
