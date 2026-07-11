@@ -1,16 +1,11 @@
 ---
 import GuidesLayout from '@/layouts/GuidesLayout.astro';
 import CoexistenceGuide from '@/components/guides/CoexistenceGuide.astro';
-import { useTranslations } from '@/i18n/utils';
-import type { Language } from '@/i18n';
-
-const lang: Language = 'vi';
-const t = useTranslations(lang);
 ---
 
 <GuidesLayout
-  title={`${t('coexistence.hero.title')} - ${t('site.title')}`}
-  description={t('coexistence.hero.tldr')}
+  title="AgentKit Coexistence - Claude Code, Codex & CCS"
+  description="Hiểu ownership khi AgentKit kits cùng tồn tại trên Claude Code, Codex và CCS runtime profiles."
   activeTab="coexistence"
   lang="vi"
 >

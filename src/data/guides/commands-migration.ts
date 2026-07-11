@@ -1,157 +1,191 @@
 // Commands Migration Data
 // Extracted from commands-migration-table.astro to separate data from presentation
 // Phase 1 of modularization: src/data/guides/commands-migration.ts
+import { AGENTKIT_MIGRATION_MAPPING_BY_LOCALE } from './agentkit/agentkit-migration-mapping.ts';
 
 export interface MigrationRow {
   old: string;
-  /** new command - uses 'ck:' prefix by default unless prefixType is 'purple' (ckm:) */
+  /** Canonical AgentKit replacement. */
   new: string;
-  /** 'teal' = Engineer Kit (ck:), 'purple' = Marketing Kit (ckm:) */
+  /** All rows intentionally preserve historical syntax. */
+  legacy: true;
+  /** Reader-facing compatibility context for the legacy syntax. */
+  compatibilityNote: string;
+  compatibilityNoteVi: string;
+  /** Retained only for visual grouping; both kits now share /ak:. */
   prefixType?: 'teal' | 'purple';
   /** optional section divider label rendered as a colspan row */
   dividerLabel?: string;
 }
 
+type MigrationRowInput = Omit<MigrationRow, 'legacy' | 'compatibilityNote' | 'compatibilityNoteVi'> & {
+  compatibilityNote?: string;
+  compatibilityNoteVi?: string;
+};
+
+const prefixNotes = {
+  engineer: {
+    en: AGENTKIT_MIGRATION_MAPPING_BY_LOCALE.en.find(({ id }) => id === 'engineer-prefix')!.summary,
+    vi: AGENTKIT_MIGRATION_MAPPING_BY_LOCALE.vi.find(({ id }) => id === 'engineer-prefix')!.summary,
+  },
+  marketing: {
+    en: AGENTKIT_MIGRATION_MAPPING_BY_LOCALE.en.find(({ id }) => id === 'marketing-prefix')!.summary,
+    vi: AGENTKIT_MIGRATION_MAPPING_BY_LOCALE.vi.find(({ id }) => id === 'marketing-prefix')!.summary,
+  },
+};
+
+function withLegacyMetadata(rows: MigrationRowInput[]): MigrationRow[] {
+  return rows.map((row) => {
+    const note = row.prefixType === 'purple' ? prefixNotes.marketing : prefixNotes.engineer;
+    return {
+      ...row,
+      legacy: true,
+      compatibilityNote: row.compatibilityNote ?? note.en,
+      compatibilityNoteVi: row.compatibilityNoteVi ?? note.vi,
+    };
+  });
+}
+
 // ─── Engineer Kit: Always-visible rows ───────────────────────────────────────
-export const engineerMigrationAlways: MigrationRow[] = [
-  { old: '/debug', new: '/ck:debug' },
-  { old: '/plan', new: '/ck:plan' },
-  { old: '/code @plan.md', new: '/ck:cook @plan.md' },
-  { old: '/code:no-test', new: '/ck:cook add footer --no-test' },
-  { old: '/code:parallel', new: '/ck:cook refactor api --parallel' },
-  { old: '/code:auto', new: '/ck:cook add pagination --auto' },
-  { old: '/plan:fast', new: '/ck:plan --fast add auth' },
-  { old: '/plan:hard', new: '/ck:plan --hard migrate to microservices' },
-];
+export const engineerMigrationAlways: MigrationRow[] = withLegacyMetadata([
+  { old: '/debug', new: '/ak:debug' },
+  { old: '/plan', new: '/ak:plan' },
+  { old: '/code @plan.md', new: '/ak:cook @plan.md' },
+  { old: '/code:no-test', new: '/ak:cook add footer --no-test' },
+  { old: '/code:parallel', new: '/ak:cook refactor api --parallel' },
+  { old: '/code:auto', new: '/ak:cook add pagination --auto' },
+  { old: '/plan:fast', new: '/ak:plan --fast add auth' },
+  { old: '/plan:hard', new: '/ak:plan --hard migrate to microservices' },
+]);
 
 // ─── Engineer Kit: Expandable extra rows ─────────────────────────────────────
-export const engineerMigrationExtra: MigrationRow[] = [
-  { old: '/plan:archive', new: '/ck:plan archive' },
-  { old: '/plan:ci', new: '/ck:fix CI build failing --auto' },
-  { old: '/fix:ci', new: '/ck:fix deploy pipeline error --auto' },
-  { old: '/fix:test', new: '/ck:fix auth tests failing --review' },
-  { old: '/fix:types', new: '/ck:fix type errors in utils --quick' },
-  { old: '/fix:ui', new: '/ck:fix layout broken on mobile --parallel' },
-  { old: '/git:cm', new: '/ck:git cm' },
-  { old: '/git:cp', new: '/ck:git cp' },
-  { old: '/git:pr', new: '/ck:git pr' },
-  { old: '/git:merge', new: '/ck:git merge' },
-  { old: '/design:video', new: '/ck:remotion [video or component]' },
-  { old: '/design:3d', new: '/ck:threejs rotating globe with markers' },
-  { old: '/design:screenshot', new: '/ck:frontend-design' },
-  { old: '/design:describe', new: '/ck:frontend-design' },
-  { old: '/review:codebase', new: '/ck:code-review codebase' },
-  { old: '/review:codebase:parallel', new: '/ck:code-review codebase parallel' },
-  { old: '/docs:init', new: '/ck:docs init' },
-  { old: '/docs:update', new: '/ck:docs update' },
-  { old: '/docs:summarize', new: '/ck:docs summarize' },
-  { old: '/content:blog', new: '/ck:copywriting blog [context]' },
-  { old: '/content:landing', new: '/ck:copywriting landing [context]' },
-  { old: '/skill:create foo', new: '/ck:skill-creator foo' },
-  { old: '/integrate:stripe', new: '/ck:payment-integration stripe checkout' },
-  { old: '/integrate:sepay', new: '/ck:payment-integration sepay webhook' },
-  { old: '/bootstrap:auto', new: '/ck:bootstrap --auto' },
-  { old: '/bootstrap:auto:fast', new: '/ck:bootstrap --fast' },
-  { old: '/bootstrap:auto:parallel', new: '/ck:bootstrap --parallel' },
-  { old: '/test:ui', new: '/ck:test ui [url]' },
-];
+export const engineerMigrationExtra: MigrationRow[] = withLegacyMetadata([
+  { old: '/plan:archive', new: '/ak:plan archive' },
+  { old: '/plan:ci', new: '/ak:fix CI build failing --auto' },
+  { old: '/fix:ci', new: '/ak:fix deploy pipeline error --auto' },
+  { old: '/fix:test', new: '/ak:fix auth tests failing --review' },
+  { old: '/fix:types', new: '/ak:fix type errors in utils --quick' },
+  { old: '/fix:ui', new: '/ak:fix layout broken on mobile --parallel' },
+  { old: '/git:cm', new: '/ak:git cm' },
+  { old: '/git:cp', new: '/ak:git cp' },
+  { old: '/git:pr', new: '/ak:git pr' },
+  { old: '/git:merge', new: '/ak:git merge' },
+  { old: '/design:video', new: '/ak:remotion [video or component]' },
+  { old: '/design:3d', new: '/ak:threejs rotating globe with markers' },
+  { old: '/design:screenshot', new: '/ak:frontend-design' },
+  { old: '/design:describe', new: '/ak:frontend-design' },
+  { old: '/review:codebase', new: '/ak:code-review codebase' },
+  { old: '/review:codebase:parallel', new: '/ak:code-review codebase parallel' },
+  { old: '/docs:init', new: '/ak:docs init' },
+  { old: '/docs:update', new: '/ak:docs update' },
+  { old: '/docs:summarize', new: '/ak:docs summarize' },
+  { old: '/content:blog', new: '/ak:copywriting blog [context]' },
+  { old: '/content:landing', new: '/ak:copywriting landing [context]' },
+  { old: '/skill:create foo', new: '/ak:skill-creator foo' },
+  { old: '/integrate:stripe', new: '/ak:payment-integration stripe checkout' },
+  { old: '/integrate:sepay', new: '/ak:payment-integration sepay webhook' },
+  { old: '/bootstrap:auto', new: '/ak:bootstrap --auto' },
+  { old: '/bootstrap:auto:fast', new: '/ak:bootstrap --fast' },
+  { old: '/bootstrap:auto:parallel', new: '/ak:bootstrap --parallel' },
+  { old: '/test:ui', new: '/ak:test ui [url]' },
+]);
 
 // ─── Marketing Kit: Always-visible rows ──────────────────────────────────────
-export const marketingMigrationAlways: MigrationRow[] = [
-  { old: '/mkt:plan', new: '/ckm:plan [task]', prefixType: 'purple' },
-  { old: '/mkt:plan:fast', new: '/ckm:plan --fast [task]', prefixType: 'purple' },
-  { old: '/mkt:plan:hard', new: '/ckm:plan --hard [task]', prefixType: 'purple' },
-  { old: '/mkt:plan:cro', new: '/ckm:plan --cro landing-page', prefixType: 'purple' },
-  { old: '/mkt:write:good', new: '/ckm:write:good [topic]', prefixType: 'purple' },
-  { old: '/mkt:write:fast', new: '/ckm:write:fast [topic]', prefixType: 'purple' },
-];
+export const marketingMigrationAlways: MigrationRow[] = withLegacyMetadata([
+  { old: '/mkt:plan', new: '/ak:plan [task]', prefixType: 'purple' },
+  { old: '/mkt:plan:fast', new: '/ak:plan --fast [task]', prefixType: 'purple' },
+  { old: '/mkt:plan:hard', new: '/ak:plan --hard [task]', prefixType: 'purple' },
+  { old: '/mkt:plan:cro', new: '/ak:plan --cro landing-page', prefixType: 'purple' },
+  { old: '/mkt:write:good', new: '/ak:write:good [topic]', prefixType: 'purple' },
+  { old: '/mkt:write:fast', new: '/ak:write:fast [topic]', prefixType: 'purple' },
+]);
 
 // ─── Marketing Kit: Expandable extra rows ────────────────────────────────────
-export const marketingMigrationExtra: MigrationRow[] = [
-  { old: '/mkt:write:cro', new: '/ckm:write:cro [page-url]', prefixType: 'purple' },
-  { old: '/mkt:write:enhance', new: '/ckm:write:enhance [file]', prefixType: 'purple' },
-  { old: '/mkt:write:blog', new: '/ckm:write:blog [topic]', prefixType: 'purple' },
-  { old: '/mkt:write:audit', new: '/ckm:write:audit', prefixType: 'purple' },
-  { old: '/mkt:write:publish', new: '/ckm:write:publish [file]', prefixType: 'purple' },
-  { old: '/mkt:campaign:create', new: '/ckm:campaign:create [name]', prefixType: 'purple' },
-  { old: '/mkt:campaign:status', new: '/ckm:campaign:status', prefixType: 'purple' },
-  { old: '/mkt:campaign:analyze', new: '/ckm:campaign:analyze [period]', prefixType: 'purple' },
-  { old: '/mkt:campaign:email', new: '/ckm:campaign:email [series]', prefixType: 'purple' },
-  { old: '/mkt:seo:keywords', new: '/ckm:seo:keywords [query]', prefixType: 'purple' },
-  { old: '/mkt:seo:audit', new: '/ckm:seo:audit [url]', prefixType: 'purple' },
-  { old: '/mkt:seo:pseo', new: '/ckm:seo:pseo [template]', prefixType: 'purple' },
-  { old: '/mkt:email:flow', new: '/ckm:email:flow [type]', prefixType: 'purple' },
-  { old: '/mkt:email:sequence', new: '/ckm:email:sequence [type]', prefixType: 'purple' },
-  { old: '/mkt:social:schedule', new: '/ckm:social:schedule', prefixType: 'purple' },
-  { old: '/mkt:competitor', new: '/ckm:competitor [url]', prefixType: 'purple' },
-  { old: '/mkt:video:create', new: '/ckm:video:create [topic]', prefixType: 'purple' },
-  { old: '/mkt:video:script', new: '/ckm:video:script [topic]', prefixType: 'purple' },
-  { old: '/mkt:youtube:blog', new: '/ckm:youtube:blog [url]', prefixType: 'purple' },
-  { old: '/mkt:brand:update', new: '/ckm:brand:update [element]', prefixType: 'purple' },
-  { old: '/mkt:docs:init', new: '/ckm:docs:init', prefixType: 'purple' },
-  { old: '/mkt:docs:update', new: '/ckm:docs:update', prefixType: 'purple' },
-  { old: '/fixing', new: '/ck:fix [issue] --auto|--review|--quick' },
-  { old: '/test-orchestrator', new: '/ck:test [ui|workflow] [target]' },
-  { old: '/mkt:preview', new: '/ckm:preview [path] --explain|--slides|--diagram|--ascii', prefixType: 'purple' },
-  { old: '/mkt:storage', new: '/ckm:storage', prefixType: 'purple' },
-  { old: '/mkt:storage:list', new: '/ckm:storage:list', prefixType: 'purple' },
-  { old: '/mkt:storage:sync', new: '/ckm:storage:sync', prefixType: 'purple' },
-  { old: '/mkt:storage:upload', new: '/ckm:storage:upload', prefixType: 'purple' },
-  { old: '/mkt:storage:url', new: '/ckm:storage:url', prefixType: 'purple' },
-  { old: '/mkt:dashboard', new: '/ckm:dashboard', prefixType: 'purple' },
-  { old: '/mkt:dashboard:check', new: '/ckm:dashboard:check', prefixType: 'purple' },
-  { old: '/mkt:analyze:report', new: '/ckm:analyze:report', prefixType: 'purple' },
-  { old: '/mkt:init', new: '/ckm:init', prefixType: 'purple' },
-  { old: '/mkt:ask [question]', new: '/ckm:ask [question]', prefixType: 'purple' },
-  { old: '/mkt:funnel [action]', new: '/ckm:funnel [action] [type]', prefixType: 'purple' },
-  { old: '/mkt:persona [action]', new: '/ckm:persona [action]', prefixType: 'purple' },
-  { old: '/mkt:plan:parallel', new: '/ckm:plan --parallel [task]', prefixType: 'purple' },
-  { old: '/mkt:plan:archive', new: '/ckm:plan archive', prefixType: 'purple' },
-  { old: '/mkt:plan:validate', new: '/ckm:plan validate', prefixType: 'purple' },
-  { old: '/mkt:write:formula [type]', new: '/ck:copywriting formula [type]' },
-  { old: '/mkt:video:storyboard', new: '/ckm:video:storyboard [topic]', prefixType: 'purple' },
-  { old: '/mkt:youtube:infographic', new: '/ckm:youtube:infographic [url]', prefixType: 'purple' },
-  { old: '/mkt:youtube:social', new: '/ckm:youtube:social [url]', prefixType: 'purple' },
-  { old: '/mkt:docs:summarize', new: '/ckm:docs:summarize', prefixType: 'purple' },
-  { old: '/mkt:docs:llms', new: '/ckm:docs:llms', prefixType: 'purple' },
-  { old: '/mkt:hub', new: '/ckm:hub [--stop|--scan]', prefixType: 'purple' },
-  { old: '/mkt:slides:create', new: '/ckm:slides:create [topic]', prefixType: 'purple' },
-  { old: '/mkt:skill:create', new: '/ckm:skill:create [name]', prefixType: 'purple' },
-  { old: '/mkt:use-mcp', new: '/ckm:use-mcp', prefixType: 'purple' },
-  { old: '/mkt:journal', new: '/ckm:journal', prefixType: 'purple' },
-  { old: '/mkt:kanban', new: '/ckm:kanban', prefixType: 'purple' },
-  { old: '/mkt:watzup', new: '/ckm:watzup', prefixType: 'purple' },
-  { old: '/mkt:worktree', new: '/ckm:worktree', prefixType: 'purple' },
-  { old: '/mkt:plan:two', new: '/ckm:plan --two [task]', prefixType: 'purple' },
-  { old: '/mkt:plan:ci', new: '/ckm:fix ci [url]', prefixType: 'purple' },
-  { old: '/mkt:ck-help', new: '/ckm:ck-help', prefixType: 'purple' },
-  { old: '/mkt:write:blog-youtube', new: '/ckm:write:blog-youtube [url]', prefixType: 'purple' },
-  { old: '/mkt:skill:add', new: '/ckm:skill:add [file]', prefixType: 'purple' },
-  { old: '/mkt:skill:fix-logs', new: '/ckm:skill:fix-logs', prefixType: 'purple' },
-  { old: '/mkt:skill:optimize', new: '/ckm:skill:optimize [name]', prefixType: 'purple' },
-  { old: '/mkt:skill:optimize:auto', new: '/ckm:skill:optimize:auto [name]', prefixType: 'purple' },
-  { old: '/mkt:skill:plan', new: '/ckm:skill:plan [name]', prefixType: 'purple' },
-  { old: '/mkt:skill:update', new: '/ckm:skill:update [name]', prefixType: 'purple' },
-  { old: '/mkt:test:ui', new: '/ck:test:ui [url]' },
-  { old: '/mkt:test:workflow', new: '/ck:test:workflow [name]' },
-];
+export const marketingMigrationExtra: MigrationRow[] = withLegacyMetadata([
+  { old: '/mkt:write:cro', new: '/ak:write:cro [page-url]', prefixType: 'purple' },
+  { old: '/mkt:write:enhance', new: '/ak:write:enhance [file]', prefixType: 'purple' },
+  { old: '/mkt:write:blog', new: '/ak:write:blog [topic]', prefixType: 'purple' },
+  { old: '/mkt:write:audit', new: '/ak:write:audit', prefixType: 'purple' },
+  { old: '/mkt:write:publish', new: '/ak:write:publish [file]', prefixType: 'purple' },
+  { old: '/mkt:campaign:create', new: '/ak:campaign:create [name]', prefixType: 'purple' },
+  { old: '/mkt:campaign:status', new: '/ak:campaign:status', prefixType: 'purple' },
+  { old: '/mkt:campaign:analyze', new: '/ak:campaign:analyze [period]', prefixType: 'purple' },
+  { old: '/mkt:campaign:email', new: '/ak:campaign:email [series]', prefixType: 'purple' },
+  { old: '/mkt:seo:keywords', new: '/ak:seo:keywords [query]', prefixType: 'purple' },
+  { old: '/mkt:seo:audit', new: '/ak:seo:audit [url]', prefixType: 'purple' },
+  { old: '/mkt:seo:pseo', new: '/ak:seo:pseo [template]', prefixType: 'purple' },
+  { old: '/mkt:email:flow', new: '/ak:email:flow [type]', prefixType: 'purple' },
+  { old: '/mkt:email:sequence', new: '/ak:email:sequence [type]', prefixType: 'purple' },
+  { old: '/mkt:social:schedule', new: '/ak:social:schedule', prefixType: 'purple' },
+  { old: '/mkt:competitor', new: '/ak:competitor [url]', prefixType: 'purple' },
+  { old: '/mkt:video:create', new: '/ak:video:create [topic]', prefixType: 'purple' },
+  { old: '/mkt:video:script', new: '/ak:video:script [topic]', prefixType: 'purple' },
+  { old: '/mkt:youtube:blog', new: '/ak:youtube:blog [url]', prefixType: 'purple' },
+  { old: '/mkt:brand:update', new: '/ak:brand:update [element]', prefixType: 'purple' },
+  { old: '/mkt:docs:init', new: '/ak:docs:init', prefixType: 'purple' },
+  { old: '/mkt:docs:update', new: '/ak:docs:update', prefixType: 'purple' },
+  { old: '/fixing', new: '/ak:fix [issue] --auto|--review|--quick' },
+  { old: '/test-orchestrator', new: '/ak:test [ui|workflow] [target]' },
+  { old: '/mkt:preview', new: '/ak:preview [path] --explain|--slides|--diagram|--ascii', prefixType: 'purple' },
+  { old: '/mkt:storage', new: '/ak:storage', prefixType: 'purple' },
+  { old: '/mkt:storage:list', new: '/ak:storage:list', prefixType: 'purple' },
+  { old: '/mkt:storage:sync', new: '/ak:storage:sync', prefixType: 'purple' },
+  { old: '/mkt:storage:upload', new: '/ak:storage:upload', prefixType: 'purple' },
+  { old: '/mkt:storage:url', new: '/ak:storage:url', prefixType: 'purple' },
+  { old: '/mkt:dashboard', new: '/ak:dashboard', prefixType: 'purple' },
+  { old: '/mkt:dashboard:check', new: '/ak:dashboard:check', prefixType: 'purple' },
+  { old: '/mkt:analyze:report', new: '/ak:analyze:report', prefixType: 'purple' },
+  { old: '/mkt:init', new: '/ak:init', prefixType: 'purple' },
+  { old: '/mkt:ask [question]', new: '/ak:ask [question]', prefixType: 'purple' },
+  { old: '/mkt:funnel [action]', new: '/ak:funnel [action] [type]', prefixType: 'purple' },
+  { old: '/mkt:persona [action]', new: '/ak:persona [action]', prefixType: 'purple' },
+  { old: '/mkt:plan:parallel', new: '/ak:plan --parallel [task]', prefixType: 'purple' },
+  { old: '/mkt:plan:archive', new: '/ak:plan archive', prefixType: 'purple' },
+  { old: '/mkt:plan:validate', new: '/ak:plan validate', prefixType: 'purple' },
+  { old: '/mkt:write:formula [type]', new: '/ak:copywriting formula [type]' },
+  { old: '/mkt:video:storyboard', new: '/ak:video:storyboard [topic]', prefixType: 'purple' },
+  { old: '/mkt:youtube:infographic', new: '/ak:youtube:infographic [url]', prefixType: 'purple' },
+  { old: '/mkt:youtube:social', new: '/ak:youtube:social [url]', prefixType: 'purple' },
+  { old: '/mkt:docs:summarize', new: '/ak:docs:summarize', prefixType: 'purple' },
+  { old: '/mkt:docs:llms', new: '/ak:docs:llms', prefixType: 'purple' },
+  { old: '/mkt:hub', new: '/ak:hub [--stop|--scan]', prefixType: 'purple' },
+  { old: '/mkt:slides:create', new: '/ak:slides:create [topic]', prefixType: 'purple' },
+  { old: '/mkt:skill:create', new: '/ak:skill:create [name]', prefixType: 'purple' },
+  { old: '/mkt:use-mcp', new: '/ak:use-mcp', prefixType: 'purple' },
+  { old: '/mkt:journal', new: '/ak:journal', prefixType: 'purple' },
+  { old: '/mkt:kanban', new: '/ak:kanban', prefixType: 'purple' },
+  { old: '/mkt:watzup', new: '/ak:watzup', prefixType: 'purple' },
+  { old: '/mkt:worktree', new: '/ak:worktree', prefixType: 'purple' },
+  { old: '/mkt:plan:two', new: '/ak:plan --two [task]', prefixType: 'purple' },
+  { old: '/mkt:plan:ci', new: '/ak:fix ci [url]', prefixType: 'purple' },
+  { old: '/mkt:ck-help', new: '/ak:ck-help', prefixType: 'purple' },
+  { old: '/mkt:write:blog-youtube', new: '/ak:write:blog-youtube [url]', prefixType: 'purple' },
+  { old: '/mkt:skill:add', new: '/ak:skill:add [file]', prefixType: 'purple' },
+  { old: '/mkt:skill:fix-logs', new: '/ak:skill:fix-logs', prefixType: 'purple' },
+  { old: '/mkt:skill:optimize', new: '/ak:skill:optimize [name]', prefixType: 'purple' },
+  { old: '/mkt:skill:optimize:auto', new: '/ak:skill:optimize:auto [name]', prefixType: 'purple' },
+  { old: '/mkt:skill:plan', new: '/ak:skill:plan [name]', prefixType: 'purple' },
+  { old: '/mkt:skill:update', new: '/ak:skill:update [name]', prefixType: 'purple' },
+  { old: '/mkt:test:ui', new: '/ak:test:ui [url]' },
+  { old: '/mkt:test:workflow', new: '/ak:test:workflow [name]' },
+]);
 
 // ─── Marketing Kit: Renamed skills section dividers ──────────────────────────
-export const marketingRenamedMkt: MigrationRow[] = [
-  { old: '/brand-guidelines', new: '/ckm:brand', prefixType: 'purple' },
-  { old: '/campaign-management', new: '/ckm:campaign', prefixType: 'purple' },
-  { old: '/competitor-alternatives', new: '/ckm:competitor', prefixType: 'purple' },
-  { old: '/Debugging', new: '/ckm:debugging', prefixType: 'purple' },
-  { old: '/email-marketing', new: '/ckm:email', prefixType: 'purple' },
-  { old: '/seo-optimization', new: '/ckm:seo', prefixType: 'purple' },
-  { old: '/slides-design', new: '/ckm:slides', prefixType: 'purple' },
-  { old: '/social-media', new: '/ckm:social', prefixType: 'purple' },
-  { old: '/video-production', new: '/ckm:video', prefixType: 'purple' },
-  { old: '/youtube-handling', new: '/ckm:youtube', prefixType: 'purple' },
-];
+export const marketingRenamedMkt: MigrationRow[] = withLegacyMetadata([
+  { old: '/brand-guidelines', new: '/ak:brand', prefixType: 'purple' },
+  { old: '/campaign-management', new: '/ak:campaign', prefixType: 'purple' },
+  { old: '/competitor-alternatives', new: '/ak:competitor', prefixType: 'purple' },
+  { old: '/Debugging', new: '/ak:debugging', prefixType: 'purple' },
+  { old: '/email-marketing', new: '/ak:email', prefixType: 'purple' },
+  { old: '/seo-optimization', new: '/ak:seo', prefixType: 'purple' },
+  { old: '/slides-design', new: '/ak:slides', prefixType: 'purple' },
+  { old: '/social-media', new: '/ak:social', prefixType: 'purple' },
+  { old: '/video-production', new: '/ak:video', prefixType: 'purple' },
+  { old: '/youtube-handling', new: '/ak:youtube', prefixType: 'purple' },
+]);
 
-export const marketingRenamedShared: MigrationRow[] = [
-  { old: '/frontend-dev-guidelines', new: '/ck:frontend-development' },
-  { old: '/Problem-Solving Techniques', new: '/ck:problem-solving' },
-  { old: '/remotion-best-practices', new: '/ck:remotion' },
-];
+export const marketingRenamedShared: MigrationRow[] = withLegacyMetadata([
+  { old: '/frontend-dev-guidelines', new: '/ak:frontend-development' },
+  { old: '/Problem-Solving Techniques', new: '/ak:problem-solving' },
+  { old: '/remotion-best-practices', new: '/ak:remotion' },
+]);

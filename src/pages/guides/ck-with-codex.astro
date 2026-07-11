@@ -1,16 +1,11 @@
 ---
 import GuidesLayout from '@/layouts/GuidesLayout.astro';
 import CkWithCodexGuide from '@/components/guides/CkWithCodexGuide.astro';
-import { useTranslations } from '@/i18n/utils';
-import type { Language } from '@/i18n';
-
-const lang: Language = 'en';
-const t = useTranslations(lang);
 ---
 
 <GuidesLayout
-  title={`${t('ckWithCodex.hero.title')} - ${t('site.title')}`}
-  description={t('ckWithCodex.hero.tldr')}
+  title="AgentKit with Codex - Install Kits & Invoke Skills"
+  description="Install AgentKit Engineer Kit for Codex and use Codex-native $ak:* skill invocation without legacy ck migrate."
   activeTab="ck-with-codex"
 >
   <CkWithCodexGuide lang="en" />

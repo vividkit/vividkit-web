@@ -1,0 +1,38 @@
+---
+import { getLangFromUrl, type Language } from '@/i18n';
+import { AGENTKIT_CLI_FACTS } from '@/data/guides/agentkit/agentkit-cli-facts';
+import { AGENTKIT_MIGRATION_MAPPING_BY_LOCALE } from '@/data/guides/agentkit/agentkit-migration-mapping';
+import { AGENTKIT_MIGRATION_OPERATIONAL_FACTS } from '@/data/guides/agentkit/agentkit-migration-operational-facts';
+import { AGENTKIT_SKILL_FACTS } from '@/data/guides/agentkit/agentkit-skill-facts';
+import { AGENTKIT_TARGET_CAPABILITIES } from '@/data/guides/agentkit/agentkit-target-capabilities';
+import AgentKitCommandMapping from './agentkit/agentkit-command-mapping.astro';
+import AgentKitCompatibilityAndTroubleshooting from './agentkit/agentkit-compatibility-and-troubleshooting.astro';
+import AgentKitHeroAndPathSelector from './agentkit/agentkit-hero-and-path-selector.astro';
+import AgentKitKitTargets from './agentkit/agentkit-kit-targets.astro';
+import AgentKitMigrationChecklist from './agentkit/agentkit-migration-checklist.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang ?? getLangFromUrl(Astro.url);
+const mappingRows = AGENTKIT_MIGRATION_MAPPING_BY_LOCALE[currentLang];
+---
+
+<article class="mt-6 pb-8">
+  <AgentKitHeroAndPathSelector lang={currentLang} />
+  <AgentKitMigrationChecklist
+    lang={currentLang}
+    cliFacts={AGENTKIT_CLI_FACTS}
+    operationalFacts={AGENTKIT_MIGRATION_OPERATIONAL_FACTS}
+  />
+  <AgentKitKitTargets
+    lang={currentLang}
+    cliFacts={AGENTKIT_CLI_FACTS}
+    skillFacts={AGENTKIT_SKILL_FACTS}
+    targets={AGENTKIT_TARGET_CAPABILITIES}
+  />
+  <AgentKitCommandMapping lang={currentLang} rows={mappingRows} />
+  <AgentKitCompatibilityAndTroubleshooting lang={currentLang} />
+</article>

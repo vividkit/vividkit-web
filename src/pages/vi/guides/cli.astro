@@ -9,10 +9,10 @@ const t = useTranslations(lang);
 ---
 
 <GuidesLayout
-  title={`${t('guides.cli.title')} - ${t('site.title')}`}
-  description={t('guides.cli.description')}
+  title={`Hướng dẫn AgentKit CLI - ${t('site.title')}`}
+  description="Cài AgentKit ak CLI, đăng nhập, quản lý kit cho Claude Code hoặc Codex và cập nhật từng lifecycle an toàn."
   activeTab="cli"
   lang="vi"
 >
-  <CLIGuide />
+  <CLIGuide lang={lang} />
 </GuidesLayout>

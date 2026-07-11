@@ -1,7 +1,6 @@
 ---
 // FlowchartGuide pro tips and command complexity ratings sections
 import { getLangFromUrl, type Language } from "@/i18n";
-import { useTranslations } from "@/i18n/utils";
 
 interface Props {
   lang?: Language;
@@ -10,7 +9,6 @@ interface Props {
 const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const isVi = currentLang === "vi";
-const t = useTranslations(currentLang);
 ---
 
   <!-- Pro Tips -->
@@ -57,13 +55,13 @@ const t = useTranslations(currentLang);
           ><br />
           • {
             isVi
-              ? "Dùng /ck:cook khi confident và muốn speed"
-              : "Use /ck:cook when you're confident and want speed"
+              ? "Dùng /ak:cook khi confident và muốn speed"
+              : "Use /ak:cook when you're confident and want speed"
           }<br />
           • {
             isVi
-              ? "Dùng /ck:plan → /ck:cook @plan.md khi precision và review quan trọng"
-              : "Use /ck:plan → /ck:cook @plan.md when precision and review matter"
+              ? "Dùng /ak:plan → /ak:cook @plan.md khi precision và review quan trọng"
+              : "Use /ak:plan → /ak:cook @plan.md when precision and review matter"
           }
         </p>
       </div>
@@ -89,13 +87,13 @@ const t = useTranslations(currentLang);
           ><br />
           • {
             isVi
-              ? "Dùng /ck:cook cho hầu hết tasks - có internal planning"
-              : "Use /ck:cook for most tasks - has internal planning"
+              ? "Dùng /ak:cook cho hầu hết tasks - có internal planning"
+              : "Use /ak:cook for most tasks - has internal planning"
           }<br />
           • {
             isVi
-              ? "Dùng /ck:plan trước khi /ck:cook @plan.md cho tasks phức tạp cần review"
-              : "Use /ck:plan before /ck:cook @plan.md for complex tasks needing review"
+              ? "Dùng /ak:plan trước khi /ak:cook @plan.md cho tasks phức tạp cần review"
+              : "Use /ak:plan before /ak:cook @plan.md for complex tasks needing review"
           }
         </p>
       </div>
@@ -119,12 +117,12 @@ const t = useTranslations(currentLang);
             >
             {isVi ? "Git safety:" : "Git safety:"}</strong
           ><br />
-          • <code>/ck:git cm</code> = {
+          • <code>/ak:git cm</code> = {
             isVi
               ? "commit only (safe cho experimentation)"
               : "commit only (safe for experimentation)"
           }<br />
-          • <code>/ck:git cp</code> = {
+          • <code>/ak:git cp</code> = {
             isVi
               ? "commits VÀ pushes (không thể undo dễ dàng)"
               : "commits AND pushes (can't undo easily)"
@@ -133,5 +131,4 @@ const t = useTranslations(currentLang);
       </div>
     </div>
   </div>
-
 

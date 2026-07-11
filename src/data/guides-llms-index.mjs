@@ -22,14 +22,19 @@ export const guideSections = [
     heading: 'Getting Started',
     links: [
       {
+        title: 'Migrate from ClaudeKit to AgentKit',
+        path: '/guides/agentkit',
+        desc: 'Step-by-step CK-to-AK migration for macOS, Linux, Windows, Claude Code, Codex, and CI.',
+      },
+      {
         title: 'What is ClaudeKit?',
         path: '/guides/what-is-claudekit',
         desc: 'Beginner-friendly introduction to how ClaudeKit turns Claude into a professional coding assistant.',
       },
       {
-        title: 'ClaudeKit CLI Guide',
+        title: 'AgentKit CLI Guide',
         path: '/guides/cli',
-        desc: 'Install and use the ClaudeKit CLI to supercharge your development workflow.',
+        desc: 'Install the native ak CLI, authenticate, install kits, and manage binary, project, and kit updates safely.',
       },
     ],
   },
@@ -39,22 +44,22 @@ export const guideSections = [
       {
         title: 'Command Finder',
         path: '/guides/flowchart',
-        desc: 'Interactive decision tree to find the right ClaudeKit command for your task.',
+        desc: 'Interactive decision tree to find the right AgentKit skill for your task.',
       },
       {
         title: 'Commands Cheat Sheet',
         path: '/guides/commands',
-        desc: 'Quick reference for 73 ClaudeKit slash commands & skills with complexity ratings.',
+        desc: 'AgentKit Engineer and Marketing skill reference with stable and beta metadata.',
       },
       {
         title: 'Workflow Recipes',
         path: '/guides/workflows',
-        desc: 'Step-by-step recipes for common ClaudeKit workflows.',
+        desc: 'Step-by-step recipes for common AgentKit workflows.',
       },
       {
         title: 'CLI Quick Reference',
         path: '/guides/cli-commands',
-        desc: 'All 18 ClaudeKit CLI commands at a glance — flags, subcommands, and quick examples.',
+        desc: 'Verified AgentKit CLI command groups with lifecycle scope, flags, and safe examples.',
       },
     ],
   },
@@ -79,7 +84,7 @@ export const guideSections = [
       {
         title: 'Coexistence',
         path: '/guides/coexistence',
-        desc: 'Whether ClaudeKit breaks an existing Claude Code setup — how ck init installs into ./.claude/ and preserves existing config.',
+        desc: 'How AgentKit-managed kit content coexists with Claude Code, Codex, and CCS-owned runtime profiles.',
       },
     ],
   },
@@ -153,14 +158,14 @@ export const guideSections = [
         desc: 'Route Codex App requests through CCS CLIProxyAPI with account rotation and config setup.',
       },
       {
-        title: 'ClaudeKit x Codex',
+        title: 'AgentKit × Codex',
         path: '/guides/ck-with-codex',
-        desc: 'Run ClaudeKit workflows in native Codex CLI via ck migrate -a codex and CCS launch (ccsx / ccsxp).',
+        desc: 'Install AgentKit kits for Codex and invoke installed $ak:* skills with Codex-native syntax.',
       },
       {
-        title: 'Migrate to Other Tools',
+        title: 'AgentKit Targets & Cross-Tool Migration',
         path: '/guides/migrate',
-        desc: 'Migrate ClaudeKit agents, commands, skills, config, rules, and hooks to Cursor, Windsurf, Copilot, and 12+ other AI tools.',
+        desc: 'Distinguish CK-to-AK migration, verified AgentKit targets, legacy provider conversion, and CCS runtime migration.',
       },
       {
         title: 'Happy-CCS Bridge',

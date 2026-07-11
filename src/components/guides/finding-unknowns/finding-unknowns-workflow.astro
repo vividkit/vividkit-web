@@ -43,7 +43,7 @@ interface Phase {
 }
 
 // The end-to-end loop: each phase pairs a technique from the method with the
-// ClaudeKit command(s) that run it, plus real runnable examples. Every `line`
+// AgentKit command(s) that run it, plus real runnable examples. Every `line`
 // and `sequence` below matches the actual argument-hint of its command — see
 // each SKILL.md for the source of truth.
 const phases: Phase[] = [
@@ -67,13 +67,13 @@ const phases: Phase[] = [
     icon: Lightbulb,
     title: t('Explore & design', 'Khám phá & thiết kế'),
     desc: t('Explore approaches, prototype, surface unknown knowns.', 'Khám phá hướng tiếp cận, prototype, lộ ra các unknown knowns.'),
-    commands: [{ cmd: '/ck:brainstorm --html' }],
-    note: t('For high-risk changes, add /ck:predict or /ck:scenario.', 'Với thay đổi rủi ro cao, thêm /ck:predict hoặc /ck:scenario.'),
+    commands: [{ cmd: '/ak:brainstorm --html' }],
+    note: t('For high-risk changes, add /ak:predict or /ak:scenario.', 'Với thay đổi rủi ro cao, thêm /ak:predict hoặc /ak:scenario.'),
     examples: [
       {
         line: t(
-          '/ck:brainstorm --html "I want a dashboard for this data but I have no visual taste and do not know what is possible. Make me an HTML page with 4 wildly different design directions so I can react to them."',
-          '/ck:brainstorm --html "Tôi muốn có dashboard cho data này nhưng không có gu thẩm mỹ và không biết cái gì khả thi. Làm giúp tôi trang HTML với 4 hướng thiết kế khác biệt hoàn toàn để tôi phản hồi."'
+          '/ak:brainstorm --html "I want a dashboard for this data but I have no visual taste and do not know what is possible. Make me an HTML page with 4 wildly different design directions so I can react to them."',
+          '/ak:brainstorm --html "Tôi muốn có dashboard cho data này nhưng không có gu thẩm mỹ và không biết cái gì khả thi. Làm giúp tôi trang HTML với 4 hướng thiết kế khác biệt hoàn toàn để tôi phản hồi."'
         ),
       },
     ],
@@ -83,13 +83,13 @@ const phases: Phase[] = [
     icon: ClipboardList,
     title: t('Plan', 'Kế hoạch'),
     desc: t('Turn the agreed approach into phased implementation steps.', 'Biến hướng đã chọn thành các bước implement theo phase.'),
-    commands: [{ cmd: '/ck:plan' }, { cmd: '/ck:plan --tdd' }],
+    commands: [{ cmd: '/ak:plan' }, { cmd: '/ak:plan --tdd' }],
     altCommands: true,
     examples: [
       {
         line: t(
-          '/ck:plan "Turn the dashboard direction we picked into a phased plan. Lead with the parts I am most likely to change my mind about."',
-          '/ck:plan "Biến hướng dashboard đã chọn thành plan theo phase. Ưu tiên viết trước phần tôi dễ đổi ý nhất."'
+          '/ak:plan "Turn the dashboard direction we picked into a phased plan. Lead with the parts I am most likely to change my mind about."',
+          '/ak:plan "Biến hướng dashboard đã chọn thành plan theo phase. Ưu tiên viết trước phần tôi dễ đổi ý nhất."'
         ),
       },
       {
@@ -98,8 +98,8 @@ const phases: Phase[] = [
           'Khi thay đổi đụng vào logic quan trọng đã có test tốt'
         ),
         line: t(
-          '/ck:plan "This touches the payment retry logic and it already has good test coverage." --tdd',
-          '/ck:plan "Phần này đụng vào logic retry thanh toán và đã có test tốt." --tdd'
+          '/ak:plan "This touches the payment retry logic and it already has good test coverage." --tdd',
+          '/ak:plan "Phần này đụng vào logic retry thanh toán và đã có test tốt." --tdd'
         ),
       },
       {
@@ -107,14 +107,14 @@ const phases: Phase[] = [
           'Optional, for high-risk changes (public API, security, high blast radius) — skip if using --hard/--deep/--parallel/--two, they already run this',
           'Tuỳ chọn, cho thay đổi rủi ro cao (public API, security, blast radius lớn) — bỏ qua nếu dùng --hard/--deep/--parallel/--two, các mode này đã tự chạy sẵn'
         ),
-        line: '/ck:plan red-team <path-to-your-plan>',
+        line: '/ak:plan red-team <path-to-your-plan>',
       },
       {
         caption: t(
           'Run after red-team, right before cook — a critical-questions interview that locks assumptions with you',
           'Chạy sau red-team, ngay trước khi cook — phỏng vấn câu hỏi phản biện để chốt assumption cùng bạn'
         ),
-        line: '/ck:plan validate <path-to-your-plan>',
+        line: '/ak:plan validate <path-to-your-plan>',
       },
       {
         caption: t(
@@ -134,10 +134,10 @@ const phases: Phase[] = [
     icon: Hammer,
     title: t('Execute', 'Thực thi'),
     desc: t('Implement; log deviations the moment they happen, conservative option first.', 'Implement; log lại deviation ngay khi xảy ra, chọn phương án bảo thủ trước.'),
-    commands: [{ cmd: '/impl-notes init', custom: true }, { cmd: '/ck:cook' }, { cmd: '/impl-notes review', custom: true }],
+    commands: [{ cmd: '/impl-notes init', custom: true }, { cmd: '/ak:cook' }, { cmd: '/impl-notes review', custom: true }],
     sequence: t(
-      '/impl-notes init\n/ck:cook <path-to-your-plan>\n# if an edge case forces a deviation mid-session:\n/impl-notes log "plan said X, found Y, chose Z because..."\n/impl-notes review',
-      '/impl-notes init\n/ck:cook <path-to-your-plan>\n# nếu edge case buộc lệch plan giữa chừng:\n/impl-notes log "plan nói X, thực tế Y, tôi chọn Z vì..."\n/impl-notes review'
+      '/impl-notes init\n/ak:cook <path-to-your-plan>\n# if an edge case forces a deviation mid-session:\n/impl-notes log "plan said X, found Y, chose Z because..."\n/impl-notes review',
+      '/impl-notes init\n/ak:cook <path-to-your-plan>\n# nếu edge case buộc lệch plan giữa chừng:\n/impl-notes log "plan nói X, thực tế Y, tôi chọn Z vì..."\n/impl-notes review'
     ),
   },
   {
@@ -145,14 +145,14 @@ const phases: Phase[] = [
     icon: ShieldCheck,
     title: t('Understanding gate', 'Gate hiểu biết'),
     desc: t('Two independent gates: does the code work, and do YOU understand what shipped.', 'Hai gate độc lập: code có chạy đúng không, và BẠN có hiểu thứ vừa ship không.'),
-    commands: [{ cmd: '/ck:code-review' }, { cmd: '/quiz-gate', custom: true }],
+    commands: [{ cmd: '/ak:code-review' }, { cmd: '/quiz-gate', custom: true }],
     note: t(
       'Closes the loop: the plan-side gates (red-team, validate) killed the plan\'s unknowns; this gate kills yours.',
       'Khép vòng gate: gate phía plan (red-team, validate) diệt unknowns của plan; gate này diệt unknowns của chính bạn.'
     ),
     sequence: t(
-      '# both default to reviewing your pending changes, no argument needed\n/ck:code-review\n# optional, advanced — needs a separate OpenAI subscription (Codex CLI):\n# /codex:adversarial-review --wait focus on the riskiest part of this diff\n/quiz-gate',
-      '# cả hai đều mặc định soi thay đổi đang chờ (pending changes), không cần tham số\n/ck:code-review\n# tuỳ chọn, nâng cao — cần subscription OpenAI riêng (Codex CLI):\n# /codex:adversarial-review --wait tập trung vào phần rủi ro nhất của diff này\n/quiz-gate'
+      '# both default to reviewing your pending changes, no argument needed\n/ak:code-review\n# optional, advanced — needs a separate OpenAI subscription (Codex CLI):\n# /codex:adversarial-review --wait focus on the riskiest part of this diff\n/quiz-gate',
+      '# cả hai đều mặc định soi thay đổi đang chờ (pending changes), không cần tham số\n/ak:code-review\n# tuỳ chọn, nâng cao — cần subscription OpenAI riêng (Codex CLI):\n# /codex:adversarial-review --wait tập trung vào phần rủi ro nhất của diff này\n/quiz-gate'
     ),
   },
   {
@@ -160,10 +160,10 @@ const phases: Phase[] = [
     icon: Rocket,
     title: t('Ship', 'Ship'),
     desc: t('Buy-in artifact, ship, reflect.', 'Artifact để buy-in, ship, và hồi tưởng.'),
-    commands: [{ cmd: '/ck:preview' }, { cmd: '/ck:git' }, { cmd: '/ck:ship' }, { cmd: '/ck:journal' }],
+    commands: [{ cmd: '/ak:preview' }, { cmd: '/ak:git' }, { cmd: '/ak:ship' }, { cmd: '/ak:journal' }],
     sequence: t(
-      '/ck:preview --html --explain "why we built it this way, demo GIF up top"\n/ck:git cp\n# or, for a full PR pipeline instead of a direct push:\n# /ck:ship\n/ck:journal "what this session taught us"',
-      '/ck:preview --html --explain "vì sao làm theo hướng này, demo GIF để lên đầu"\n/ck:git cp\n# hoặc, muốn full PR pipeline thay vì push thẳng:\n# /ck:ship\n/ck:journal "điều session này dạy chúng ta"'
+      '/ak:preview --html --explain "why we built it this way, demo GIF up top"\n/ak:git cp\n# or, for a full PR pipeline instead of a direct push:\n# /ak:ship\n/ak:journal "what this session taught us"',
+      '/ak:preview --html --explain "vì sao làm theo hướng này, demo GIF để lên đầu"\n/ak:git cp\n# hoặc, muốn full PR pipeline thay vì push thẳng:\n# /ak:ship\n/ak:journal "điều session này dạy chúng ta"'
     ),
   },
 ];
@@ -175,8 +175,8 @@ const phases: Phase[] = [
   </h2>
   <p class="mt-3 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400">
     {t(
-      'Six phases from "I have no idea" to "shipped and understood." Each phase pairs a technique with the ClaudeKit command that runs it. Not every task needs all six — scale the gates to how novel and risky the work is.',
-      'Sáu giai đoạn từ "tôi chưa biết gì" đến "đã ship và đã hiểu". Mỗi giai đoạn ghép một kỹ thuật với lệnh ClaudeKit thực thi nó. Không phải task nào cũng cần đủ 6 bước — co giãn số gate theo mức độ lạ và rủi ro của việc đang làm.'
+      'Six phases from "I have no idea" to "shipped and understood." Each phase pairs a technique with the AgentKit command that runs it. Not every task needs all six — scale the gates to how novel and risky the work is.',
+      'Sáu giai đoạn từ "tôi chưa biết gì" đến "đã ship và đã hiểu". Mỗi giai đoạn ghép một kỹ thuật với lệnh AgentKit thực thi nó. Không phải task nào cũng cần đủ 6 bước — co giãn số gate theo mức độ lạ và rủi ro của việc đang làm.'
     )}
   </p>
 

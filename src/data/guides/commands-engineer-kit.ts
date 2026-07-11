@@ -1,5 +1,6 @@
 // Engineer Kit (Stable) command categories
 import type { CommandCategory, TranslationFn } from "./commands-types";
+import { agentKitClaudeCodeInvocation } from "./commands-agentkit-facts.ts";
 
 // Returns all stable Engineer Kit categories with translated labels/descriptions
 export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
@@ -12,7 +13,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
       commands: [
         // Deprecated: Learn the tool (archived in v2.14.0)
         {
-          command: "/ck:ck-help",
+          command: "/ak:ck-help",
           complexity: "⚡",
           label: t("commands.label.easy"),
           desc: t("commands.stable.ck_help.desc"),
@@ -22,7 +23,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
         },
         // Step 1: Set experience level
         {
-          command: "/ck:coding-level",
+          command: "/ak:coding-level",
           complexity: "⚡",
           label: t("commands.label.easy"),
           desc: t("commands.stable.coding_level.desc"),
@@ -32,7 +33,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
         },
         // Step 2: Quick Q&A
         {
-          command: "/ck:ask",
+          command: agentKitClaudeCodeInvocation("ak:ask"),
           complexity: "⚡",
           label: t("commands.label.easy"),
           desc: t("commands.stable.ask.desc"),
@@ -43,7 +44,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
         },
         // Step 3: Brainstorm ideas
         {
-          command: "/ck:brainstorm",
+          command: "/ak:brainstorm",
           complexity: "⚡",
           label: t("commands.label.easy"),
           desc: t("commands.stable.brainstorm.desc"),
@@ -54,7 +55,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
         },
         // Step 4: Create plan
         {
-          command: "/ck:plan",
+          command: agentKitClaudeCodeInvocation("ak:plan"),
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.plan.desc"),
@@ -66,7 +67,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
         },
         // Step 5: Execute plan
         {
-          command: "/ck:cook",
+          command: agentKitClaudeCodeInvocation("ak:cook"),
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.cook.desc"),
@@ -84,7 +85,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
       icon: `<circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>`,
       commands: [
         {
-          command: "/ck:brainstorm",
+          command: "/ak:brainstorm",
           complexity: "⚡",
           label: t("commands.label.easy"),
           desc: t("commands.stable.brainstorm.desc"),
@@ -93,7 +94,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           flags: ["--html", "--wiki"],
         },
         {
-          command: "/ck:research",
+          command: "/ak:research",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.research.desc"),
@@ -102,7 +103,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           args: ["[topic]"],
         },
         {
-          command: "/ck:scout",
+          command: "/ak:scout",
           complexity: "⚡",
           label: t("commands.label.easy"),
           desc: t("commands.stable.scout.desc"),
@@ -111,7 +112,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           args: ["[search-target]", "[ext]"],
         },
         {
-          command: "/ck:plan",
+          command: agentKitClaudeCodeInvocation("ak:plan"),
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.plan.desc"),
@@ -121,7 +122,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           flags: ["--auto", "--fast", "--hard", "--parallel", "--two", "--no-tasks", "--deep", "--tdd", "--html", "--github", "--wiki"],
         },
         {
-          command: "/ck:sequential-thinking",
+          command: "/ak:sequential-thinking",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.sequential_thinking.desc"),
@@ -129,7 +130,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:problem-solving",
+          command: "/ak:problem-solving",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.problem_solving.desc"),
@@ -137,7 +138,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:loop",
+          command: "/ak:loop",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.loop.desc"),
@@ -145,7 +146,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:autoresearch",
+          command: "/ak:autoresearch",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.autoresearch.desc"),
@@ -154,7 +155,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isRouter: true,
         },
         {
-          command: "/ck:predict",
+          command: "/ak:predict",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.predict.desc"),
@@ -163,7 +164,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           flags: ["--chain reason", "--chain probe"],
         },
         {
-          command: "/ck:xia",
+          command: "/ak:xia",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.xia.desc"),
@@ -181,7 +182,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
       icon: `<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>`,
       commands: [
         {
-          command: "/ck:frontend-design",
+          command: "/ak:frontend-design",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.frontend_design.desc"),
@@ -189,7 +190,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:frontend-development",
+          command: "/ak:frontend-development",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.frontend_development.desc"),
@@ -197,7 +198,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:ui-styling",
+          command: "/ak:ui-styling",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.ui_styling.desc"),
@@ -205,7 +206,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ckm:design",
+          command: "/ak:design",
           complexity: "⚡⚡⚡⚡",
           label: t("commands.label.advanced"),
           desc: t("commands.stable.design.desc"),
@@ -213,7 +214,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:stitch",
+          command: "/ak:stitch",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.stitch.desc"),
@@ -223,7 +224,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           flags: ["--format all", "--format html", "--device mobile"],
         },
         {
-          command: "/ck:ui-ux-pro-max",
+          command: "/ak:ui-ux-pro-max",
           complexity: "⚡⚡⚡⚡",
           label: t("commands.label.advanced"),
           desc: t("commands.stable.ui_ux_pro_max.desc"),
@@ -231,7 +232,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:web-design-guidelines",
+          command: "/ak:web-design-guidelines",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.web_design_guidelines.desc"),
@@ -239,7 +240,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:threejs",
+          command: "/ak:threejs",
           complexity: "⚡⚡⚡",
           label: t("commands.label.advanced"),
           desc: t("commands.stable.threejs.desc"),
@@ -247,7 +248,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:shader",
+          command: "/ak:shader",
           complexity: "⚡⚡⚡",
           label: t("commands.label.advanced"),
           desc: t("commands.stable.shader.desc"),
@@ -255,7 +256,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:mermaidjs-v11",
+          command: "/ak:mermaidjs-v11",
           complexity: "⚡",
           label: t("commands.label.easy"),
           desc: t("commands.stable.mermaidjs_v11.desc"),
@@ -279,7 +280,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
       icon: `<path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/>`,
       commands: [
         {
-          command: "/ck:ai-multimodal",
+          command: "/ak:ai-multimodal",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.ai_multimodal.desc"),
@@ -287,7 +288,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:ai-artist",
+          command: "/ak:ai-artist",
           complexity: "⚡⚡⚡⚡",
           label: t("commands.label.advanced"),
           desc: t("commands.stable.ai_artist.desc"),
@@ -296,7 +297,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           flags: ["--mode search", "--mode creative", "--mode wild", "--mode all", "--skip"],
         },
         {
-          command: "/ck:media-processing",
+          command: "/ak:media-processing",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.media_processing.desc"),
@@ -304,7 +305,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:remotion",
+          command: "/ak:remotion",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.remotion.desc"),
@@ -312,7 +313,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:html-video",
+          command: "/ak:html-video",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.html_video.desc"),
@@ -329,7 +330,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
       icon: `<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>`,
       commands: [
         {
-          command: "/ck:bootstrap",
+          command: "/ak:bootstrap",
           complexity: "⚡⚡⚡⚡⚡",
           label: t("commands.label.advanced"),
           desc: t("commands.stable.bootstrap.desc"),
@@ -338,7 +339,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           flags: ["--full", "--auto", "--fast", "--parallel"],
         },
         {
-          command: "/ck:backend-development",
+          command: "/ak:backend-development",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.backend_development.desc"),
@@ -346,7 +347,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:web-frameworks",
+          command: "/ak:web-frameworks",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.web_frameworks.desc"),
@@ -354,7 +355,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:databases",
+          command: "/ak:databases",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.databases.desc"),
@@ -362,7 +363,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:tanstack",
+          command: "/ak:tanstack",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.tanstack.desc"),
@@ -370,7 +371,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:react-best-practices",
+          command: "/ak:react-best-practices",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.react_best_practices.desc"),
@@ -378,7 +379,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:devops",
+          command: "/ak:devops",
           complexity: "⚡⚡⚡",
           label: t("commands.label.advanced"),
           desc: t("commands.stable.devops.desc"),
@@ -386,7 +387,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:ship",
+          command: "/ak:ship",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.ship.desc"),
@@ -395,7 +396,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           flags: ["--official", "--beta", "--skip-tests", "--skip-review"],
         },
         {
-          command: "/ck:mobile-development",
+          command: "/ak:mobile-development",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.mobile_development.desc"),
@@ -403,7 +404,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:team",
+          command: "/ak:team",
           complexity: "⚡⚡⚡⚡⚡",
           label: t("commands.label.advanced"),
           desc: t("commands.stable.team.desc"),
@@ -412,7 +413,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           flags: ["<template> <context>", "--devs N", "--researchers N", "--reviewers N", "--delegate"],
         },
         {
-          command: "/ck:deploy",
+          command: "/ak:deploy",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.deploy.desc"),
@@ -421,7 +422,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           args: ["[platform]", "[environment]"],
         },
         {
-          command: "/ck:cook",
+          command: agentKitClaudeCodeInvocation("ak:cook"),
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.cook.desc"),
@@ -430,7 +431,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           flags: ["--interactive", "--fast", "--parallel", "--auto", "--no-test", "--tdd"],
         },
         {
-          command: "/ck:vibe",
+          command: "/ak:vibe",
           complexity: "⚡⚡⚡⚡⚡",
           label: t("commands.label.advanced"),
           desc: t("commands.stable.vibe.desc"),
@@ -448,7 +449,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
       icon: `<line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/>`,
       commands: [
         {
-          command: "/ck:git",
+          command: "/ak:git",
           complexity: "⚡",
           label: t("commands.label.easy"),
           desc: t("commands.stable.git.desc"),
@@ -457,7 +458,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           flags: ["cm", "cp", "pr", "merge", "merge-pr"],
         },
         {
-          command: "/ck:worktree",
+          command: "/ak:worktree",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.worktree.desc"),
@@ -473,7 +474,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
       icon: `<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>`,
       commands: [
         {
-          command: "/ck:test",
+          command: agentKitClaudeCodeInvocation("ak:test"),
           complexity: "⚡",
           label: t("commands.label.easy"),
           desc: t("commands.stable.test.desc"),
@@ -482,7 +483,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           flags: ["[context]", "ui [url]"],
         },
         {
-          command: "/ck:code-review",
+          command: "/ak:code-review",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.code_review.desc"),
@@ -491,7 +492,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           flags: ["[context]", "#PR", "COMMIT", "--pending", "codebase", "codebase parallel"],
         },
         {
-          command: "/ck:review-pr",
+          command: "/ak:review-pr",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.review_pr.desc"),
@@ -501,7 +502,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           flags: ["--fix", "--reply"],
         },
         {
-          command: "/ck:fix",
+          command: agentKitClaudeCodeInvocation("ak:fix"),
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.fix.desc"),
@@ -510,7 +511,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           flags: ["--auto", "--review", "--quick", "--parallel"],
         },
         {
-          command: "/ck:debug",
+          command: "/ak:debug",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.debug.desc"),
@@ -518,7 +519,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:web-testing",
+          command: "/ak:web-testing",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.web_testing.desc"),
@@ -526,7 +527,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:agent-browser",
+          command: "/ak:agent-browser",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.agent_browser.desc"),
@@ -534,7 +535,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:chrome-profile",
+          command: "/ak:chrome-profile",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.chrome_profile.desc"),
@@ -544,7 +545,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           flags: ["--no-activate"],
         },
         {
-          command: "/ck:scenario",
+          command: "/ak:scenario",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.scenario.desc"),
@@ -561,7 +562,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
       icon: `<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/>`,
       commands: [
         {
-          command: "/ck:security",
+          command: "/ak:security",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.security.desc"),
@@ -570,7 +571,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           flags: ["--fix", "--red-team", "--iterations"],
         },
         {
-          command: "/ck:security-scan",
+          command: "/ak:security-scan",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.security_scan.desc"),
@@ -580,7 +581,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           flags: ["--secrets-only", "--deps-only", "--full"],
         },
         {
-          command: "/ck:better-auth",
+          command: "/ak:better-auth",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.better_auth.desc"),
@@ -588,7 +589,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:cti-expert",
+          command: "/ak:cti-expert",
           complexity: "⚡⚡⚡⚡",
           label: t("commands.label.advanced"),
           desc: t("commands.stable.cti_expert.desc"),
@@ -607,7 +608,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
       icon: `<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>`,
       commands: [
         {
-          command: "/ck:docs",
+          command: "/ak:docs",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.docs.desc"),
@@ -616,7 +617,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           flags: ["init", "update", "summarize"],
         },
         {
-          command: "/ck:docs-seeker",
+          command: "/ak:docs-seeker",
           complexity: "⚡",
           label: t("commands.label.easy"),
           desc: t("commands.stable.docs_seeker.desc"),
@@ -624,7 +625,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:copywriting",
+          command: "/ak:copywriting",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.copywriting.desc"),
@@ -633,7 +634,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           flags: ["[copy-type] [context]"],
         },
         {
-          command: "/ck:mintlify",
+          command: "/ak:mintlify",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.mintlify.desc"),
@@ -641,7 +642,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:show-off",
+          command: "/ak:show-off",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.show_off.desc"),
@@ -649,7 +650,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:preview",
+          command: "/ak:preview",
           complexity: "⚡",
           label: t("commands.label.easy"),
           desc: t("commands.stable.preview.desc"),
@@ -658,7 +659,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           flags: ["--explain", "--slides", "--diagram", "--ascii", "--html", "--diff", "--plan-review", "--recap"],
         },
         {
-          command: "/ck:tech-graph",
+          command: "/ak:tech-graph",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.tech_graph.desc"),
@@ -666,7 +667,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:markdown-novel-viewer",
+          command: "/ak:markdown-novel-viewer",
           complexity: "⚡",
           label: t("commands.label.easy"),
           desc: t("commands.stable.markdown_novel_viewer.desc"),
@@ -674,7 +675,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:llms",
+          command: "/ak:llms",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.llms.desc"),
@@ -690,7 +691,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
       icon: `<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>`,
       commands: [
         {
-          command: "/ck:mcp-builder",
+          command: "/ak:mcp-builder",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.mcp_builder.desc"),
@@ -698,7 +699,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:use-mcp",
+          command: "/ak:use-mcp",
           complexity: "⚡",
           label: t("commands.label.easy"),
           desc: t("commands.stable.use_mcp.desc"),
@@ -706,7 +707,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:payment-integration",
+          command: "/ak:payment-integration",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.payment_integration.desc"),
@@ -714,7 +715,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:shopify",
+          command: "/ak:shopify",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.shopify.desc"),
@@ -722,7 +723,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:google-adk-python",
+          command: "/ak:google-adk-python",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.google_adk_python.desc"),
@@ -730,7 +731,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:agentize",
+          command: "/ak:agentize",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.agentize.desc"),
@@ -747,7 +748,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
       icon: `<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>`,
       commands: [
         {
-          command: "/ck:watzup",
+          command: "/ak:watzup",
           complexity: "⚡",
           label: t("commands.label.easy"),
           desc: t("commands.stable.watzup.desc"),
@@ -755,7 +756,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:journal",
+          command: "/ak:journal",
           complexity: "⚡",
           label: t("commands.label.easy"),
           desc: t("commands.stable.journal.desc"),
@@ -763,7 +764,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:context-engineering",
+          command: "/ak:context-engineering",
           complexity: "⚡",
           label: t("commands.label.easy"),
           desc: t("commands.stable.context_engineering.desc"),
@@ -771,7 +772,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:retro",
+          command: "/ak:retro",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.retro.desc"),
@@ -789,7 +790,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
       icon: `<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>`,
       commands: [
         {
-          command: "/ck:project-management",
+          command: "/ak:project-management",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.project_management.desc"),
@@ -798,7 +799,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           flags: ["status", "hydrate", "sync", "report"],
         },
         {
-          command: "/ck:plans-kanban",
+          command: "/ak:plans-kanban",
           complexity: "⚡",
           label: t("commands.label.easy"),
           desc: t("commands.stable.plans_kanban.desc"),
@@ -806,7 +807,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:project-organization",
+          command: "/ak:project-organization",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.project_organization.desc"),
@@ -822,7 +823,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
       icon: `<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>`,
       commands: [
         {
-          command: "/ck:skill-creator",
+          command: "/ak:skill-creator",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.skill_creator.desc"),
@@ -830,7 +831,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:find-skills",
+          command: "/ak:find-skills",
           complexity: "⚡",
           label: t("commands.label.easy"),
           desc: t("commands.stable.find_skills.desc"),
@@ -838,7 +839,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:repomix",
+          command: "/ak:repomix",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.repomix.desc"),
@@ -847,7 +848,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           flags: ["--style xml", "--style markdown", "--style plain", "--style json"],
         },
         {
-          command: "/ck:gkg",
+          command: "/ak:gkg",
           complexity: "⚡",
           label: t("commands.label.easy"),
           desc: t("commands.stable.gkg.desc"),
@@ -855,7 +856,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:graphify",
+          command: "/ak:graphify",
           complexity: "⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.graphify.desc"),
@@ -865,7 +866,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           flags: ["--mcp", "--report", "--watch"],
         },
         {
-          command: "/ck:ghpm",
+          command: "/ak:ghpm",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.ghpm.desc"),
@@ -873,7 +874,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           isSkill: true,
         },
         {
-          command: "/ck:coding-agent-orchestration",
+          command: "/ak:coding-agent-orchestration",
           complexity: "⚡⚡⚡",
           label: t("commands.label.medium"),
           desc: t("commands.stable.coding_agent_orchestration.desc"),

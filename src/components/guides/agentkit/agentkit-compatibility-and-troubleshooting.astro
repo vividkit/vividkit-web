@@ -1,0 +1,84 @@
+---
+import { ArrowUpRight, KeyRound, RotateCcw, Route, ShieldAlert, Workflow } from 'lucide-astro';
+
+import type { Language } from '@/i18n';
+import { useTranslations } from '@/i18n/utils';
+import { getAgentKitCliFact } from '@/data/guides/agentkit/agentkit-cli-facts';
+import { getMigrationOperationalFact } from '@/data/guides/agentkit/agentkit-migration-operational-facts';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const prefix = lang === 'vi' ? '/vi' : '';
+const collisionCommand = getMigrationOperationalFact('collision-check', 'macos')?.command;
+const licensesCommand = getAgentKitCliFact('licenses')?.command;
+
+const topics = [
+  { id: 'shim', icon: Route, title: t('agentkit.compat.shim.title'), body: t('agentkit.compat.shim.body'), code: collisionCommand },
+  { id: 'path', icon: Route, title: t('agentkit.compat.path.title'), body: t('agentkit.compat.path.body'), code: 'PATH' },
+  { id: 'auth', icon: KeyRound, title: t('agentkit.compat.auth.title'), body: t('agentkit.compat.auth.body'), code: licensesCommand },
+  { id: 'checksum', icon: ShieldAlert, title: t('agentkit.compat.checksum.title'), body: t('agentkit.compat.checksum.body'), code: undefined },
+  { id: 'rollback', icon: RotateCcw, title: t('agentkit.compat.rollback.title'), body: t('agentkit.compat.rollback.body'), code: '.claude' },
+  { id: 'ci', icon: Workflow, title: t('agentkit.compat.ci.title'), body: t('agentkit.compat.ci.body'), code: undefined },
+] as const;
+
+const links = [
+  { label: t('agentkit.links.cli'), href: `${prefix}/guides/cli` },
+  { label: t('agentkit.links.commands'), href: `${prefix}/guides/commands` },
+  { label: t('agentkit.links.session'), href: `${prefix}/guides/session-recovery` },
+  { label: t('agentkit.links.migrate'), href: `${prefix}/guides/migrate` },
+] as const;
+
+const inlineCodeClass = 'rounded-md border border-slate-200 bg-slate-100 px-2 py-1 font-mono text-sm text-slate-800 dark:border-slate-700 dark:bg-slate-800/90 dark:text-slate-100';
+---
+
+<section id="troubleshooting" aria-labelledby="troubleshooting-heading" class="pt-16">
+  <h2 id="troubleshooting-heading" class="font-heading max-w-3xl text-3xl font-bold text-slate-950 text-balance dark:text-slate-50">
+    {t('agentkit.compat.heading')}
+  </h2>
+
+  <div class="mt-8 grid gap-x-8 border-y border-slate-200 dark:border-slate-800 md:grid-cols-2">
+    {topics.map((topic, index) => {
+      const Icon = topic.icon;
+      return (
+        <details
+          id={topic.id === 'ci' ? 'automation-safety' : undefined}
+          class:list={[
+            'group border-slate-200 dark:border-slate-800',
+            index > 1 && 'border-t',
+            index % 2 === 1 && 'md:border-l md:pl-8',
+          ]}
+          open={index === 0}
+        >
+          <summary class="flex min-h-16 cursor-pointer list-none items-center gap-3 py-4 font-semibold text-slate-900 transition-colors duration-200 hover:text-purple-700 focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 active:text-purple-600 dark:text-slate-100 dark:hover:text-purple-300">
+            <Icon class="h-5 w-5 shrink-0 text-purple-600 dark:text-purple-400" aria-hidden="true" />
+            <span>{topic.title}</span>
+            <span class="ml-auto text-xl font-normal text-slate-400 transition-transform duration-200 group-open:rotate-45" aria-hidden="true">+</span>
+          </summary>
+          <div class="pb-5 pl-8 pr-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+            <p>{topic.body}</p>
+            {topic.code && <code class={`${inlineCodeClass} mt-3 inline-flex max-w-full overflow-x-auto`}>{topic.code}</code>}
+          </div>
+        </details>
+      );
+    })}
+  </div>
+
+  <nav aria-labelledby="agentkit-next-guides" class="mt-10 rounded-2xl bg-slate-950 p-6 text-slate-100 dark:bg-slate-100 dark:text-slate-950 md:p-8">
+    <h3 id="agentkit-next-guides" class="font-heading text-xl font-bold">{t('agentkit.links.heading')}</h3>
+    <div class="mt-5 grid gap-2 sm:grid-cols-2">
+      {links.map((link) => (
+        <a
+          href={link.href}
+          class="flex min-h-11 items-center justify-between gap-3 rounded-lg px-3 py-2 text-sm font-semibold transition-colors duration-200 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 active:bg-white/15 dark:hover:bg-slate-900/10 dark:active:bg-slate-900/15"
+        >
+          <span>{link.label}</span>
+          <ArrowUpRight class="h-4 w-4" aria-hidden="true" />
+        </a>
+      ))}
+    </div>
+  </nav>
+</section>

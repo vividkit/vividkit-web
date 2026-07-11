@@ -21,7 +21,7 @@ const currentLang = lang || getLangFromUrl(Astro.url);
     document.querySelectorAll('.copy-btn').forEach(btn => {
       btn.addEventListener('click', async () => {
         const code = btn.getAttribute('data-code');
-        if (!code) return;
+        if (!code || /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/.test(code)) return;
         try {
           await navigator.clipboard.writeText(code);
           const copyIcon = btn.querySelector('.copy-icon');

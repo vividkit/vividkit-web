@@ -1,5 +1,5 @@
 ---
-// Purpose-built Quick Ref layout for /ck:preview.
+// Purpose-built Quick Ref layout for /ak:preview.
 // Mirrors the team/brainstorm quick-ref design system while surfacing the two
 // input shapes, the 8 flags grouped by role, and the visual output contract.
 import type { SkillInfographic, ProcessFlowStep, WorkflowModeRow } from '@/data/guides/how-ck-works';
@@ -49,7 +49,7 @@ const text = {
     ? 'Chế độ nào cần local server, chế độ nào self-contained.'
     : 'Which modes need a local server, which are self-contained.',
   stopLabel: isVi ? 'Dừng server' : 'Stop server',
-  stopCmd: '/ck:preview --stop',
+  stopCmd: '/ak:preview --stop',
   output_section: isVi ? 'Output trực quan' : 'Visual Output',
   outputDesc: isVi ? data.reportOutput?.descVi : data.reportOutput?.descEn,
   stack: isVi ? 'Stack được gọi khi cần' : 'Stack Used When Needed',
@@ -206,8 +206,8 @@ const flagGroups: FlagGroup[] = [
       { flag: '--diff [ref]' },
       {
         flag: '--plan-review [plan-file]',
-        altPromptEn: '/ck:preview --plan-review',
-        altPromptVi: '/ck:preview --plan-review',
+        altPromptEn: '/ak:preview --plan-review',
+        altPromptVi: '/ak:preview --plan-review',
         altLabelEn: 'Omit path → active plan',
         altLabelVi: 'Bỏ path → dùng plan active',
       },

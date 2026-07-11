@@ -19,6 +19,7 @@ interface Props {
   mode?: 'shell' | 'plain';
   copyMode?: 'commands' | 'raw';
   copyText?: string;
+  copyable?: boolean;
   prompt?: string;
   class?: string;
 }
@@ -30,6 +31,7 @@ const {
   mode = 'shell',
   copyMode,
   copyText,
+  copyable = true,
   prompt = '$',
 } = Astro.props;
 
@@ -40,6 +42,8 @@ const copyIconClass = compact ? COPY_ICON_SM : COPY_ICON_LG;
 const checkIconClass = compact ? CHECK_ICON_SM : CHECK_ICON_LG;
 const resolvedCopyMode = copyMode ?? (mode === 'shell' ? 'commands' : 'raw');
 const copyPayload = copyText ?? (resolvedCopyMode === 'commands' ? stripShellComments(code) : copySnippetAsShown(code));
+const hasUnsafeControlCharacter = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/.test(copyPayload);
+const canCopy = copyable && !hasUnsafeControlCharacter;
 
 function escapeHtml(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -78,7 +82,7 @@ const renderedCode = mode === 'shell' ? renderShellSnippet(code, prompt) : rende
     <span class="ml-1 truncate">{label}</span>
   </div>
   <pre class={`${preClass} m-0 overflow-x-auto`}><code set:html={renderedCode} /></pre>
-  <button class={copyButtonClass} data-code={copyPayload} aria-label="Copy">
+  <button class={copyButtonClass} data-code={canCopy ? copyPayload : undefined} aria-label={canCopy ? 'Copy' : 'Copy disabled for this command'} disabled={!canCopy} title={canCopy ? 'Copy' : 'Review this command before running it'}>
     <svg class={copyIconClass} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
       <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
@@ -96,7 +100,7 @@ const renderedCode = mode === 'shell' ? renderShellSnippet(code, prompt) : rende
       btn.setAttribute('data-copy-bound', 'true');
       btn.addEventListener('click', async () => {
         const code = btn.getAttribute('data-code');
-        if (!code) return;
+        if (!code || /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/.test(code)) return;
 
         try {
           await navigator.clipboard.writeText(code);

@@ -1,6 +1,6 @@
 ---
-// Purpose-built Quick Ref layout for /ck:brainstorm.
-// Mirrors the /ck:plan quick-ref structure while keeping brainstorm-specific gates.
+// Purpose-built Quick Ref layout for /ak:brainstorm.
+// Mirrors the /ak:plan quick-ref structure while keeping brainstorm-specific gates.
 import type { SkillInfographic, ProcessFlowStep } from '@/data/guides/how-ck-works';
 import type { Language } from '@/i18n';
 
@@ -29,9 +29,9 @@ const isVi = lang === 'vi';
 const text = {
   eyebrow: isVi ? 'Tóm tắt nhanh / Lệnh brainstorm' : 'Quick Ref / Brainstorm command',
   summary: isVi
-    ? 'Dùng khi hướng làm còn mơ hồ. Scout trước, chốt requirements cụ thể, tranh luận trade-off, rồi mới viết report và bàn giao sang /ck:plan.'
-    : 'Use it when the right approach is still unclear. Scout first, lock exact requirements, debate trade-offs, then write a report and hand off to /ck:plan.',
-  beforePlan: isVi ? 'Trước /ck:plan' : 'Before /ck:plan',
+    ? 'Dùng khi hướng làm còn mơ hồ. Scout trước, chốt requirements cụ thể, tranh luận trade-off, rồi mới viết report và bàn giao sang /ak:plan.'
+    : 'Use it when the right approach is still unclear. Scout first, lock exact requirements, debate trade-offs, then write a report and hand off to /ak:plan.',
+  beforePlan: isVi ? 'Trước /ak:plan' : 'Before /ak:plan',
   hardGate: isVi ? 'Gate bắt buộc' : 'Required Gate',
   hardGateItems: isVi
     ? [
@@ -72,8 +72,8 @@ const text = {
   newSession: isVi ? 'Session mới' : 'Fresh session',
   output: isVi ? 'Artifact tạo ra' : 'Artifacts Produced',
   artifactDesc: isVi
-    ? 'Brainstorm kết thúc bằng một file Markdown. File này là context chính để bàn giao sang /ck:plan.'
-    : 'Brainstorm ends with one Markdown file. This file is the primary context for the /ck:plan handoff.',
+    ? 'Brainstorm kết thúc bằng một file Markdown. File này là context chính để bàn giao sang /ak:plan.'
+    : 'Brainstorm ends with one Markdown file. This file is the primary context for the /ak:plan handoff.',
   oneFile: isVi ? '1 file Markdown' : '1 Markdown file',
   fullPath: isVi ? 'Đường dẫn cụ thể' : 'Concrete path',
   reportContents: isVi ? 'Nội dung report gồm' : 'Report Contents',
@@ -147,13 +147,13 @@ const processGroups: ProcessGroup[] = [
 
 const handoffOptions = isVi
   ? [
-      { command: '/ck:plan --tdd', when: 'Refactor, logic quan trọng, hoặc đã có test contract mạnh.', result: 'Cùng session: dùng context report vừa tạo. Session mới: gọi kèm path artifact.' },
-      { command: '/ck:plan', when: 'Feature mới hoặc thay đổi tiêu chuẩn.', result: 'Plan triển khai theo phase từ brainstorm report.' },
+      { command: '/ak:plan --tdd', when: 'Refactor, logic quan trọng, hoặc đã có test contract mạnh.', result: 'Cùng session: dùng context report vừa tạo. Session mới: gọi kèm path artifact.' },
+      { command: '/ak:plan', when: 'Feature mới hoặc thay đổi tiêu chuẩn.', result: 'Plan triển khai theo phase từ brainstorm report.' },
       { command: 'End session', when: 'Muốn plan sau hoặc bàn giao nơi khác.', result: 'Dừng sau report/journal.' },
     ]
   : [
-      { command: '/ck:plan --tdd', when: 'Refactor, critical logic, or strong existing test contracts.', result: 'Same session: use the report context just created. Fresh session: include the artifact path.' },
-      { command: '/ck:plan', when: 'Standard new feature or moderate change.', result: 'Phase-by-phase implementation plan from the brainstorm report.' },
+      { command: '/ak:plan --tdd', when: 'Refactor, critical logic, or strong existing test contracts.', result: 'Same session: use the report context just created. Fresh session: include the artifact path.' },
+      { command: '/ak:plan', when: 'Standard new feature or moderate change.', result: 'Phase-by-phase implementation plan from the brainstorm report.' },
       { command: 'End session', when: 'Plan later or hand off elsewhere.', result: 'Stop after report/journal.' },
     ];
 
@@ -169,7 +169,7 @@ const reportSections = isVi
       { title: 'Khuyến nghị cuối', desc: 'Hướng được chọn và lý do chọn.' },
       { title: 'Rủi ro triển khai', desc: 'Điểm dễ fail, dependency, hoặc assumption cần kiểm chứng.' },
       { title: 'Metrics thành công', desc: 'Tiêu chí biết giải pháp đã đúng và đủ.' },
-      { title: 'Bước tiếp theo', desc: 'Cách bàn giao sang /ck:plan hoặc dừng lại.' },
+      { title: 'Bước tiếp theo', desc: 'Cách bàn giao sang /ak:plan hoặc dừng lại.' },
     ]
   : [
       { title: 'Problem statement', desc: 'The problem, target outcome, and scouted repo context.' },
@@ -177,7 +177,7 @@ const reportSections = isVi
       { title: 'Final recommendation', desc: 'The selected direction and why it won.' },
       { title: 'Implementation risks', desc: 'Failure points, dependencies, or assumptions to verify.' },
       { title: 'Success metrics', desc: 'How to know the solution is correct and complete.' },
-      { title: 'Next steps', desc: 'How to hand off to /ck:plan or stop here.' },
+      { title: 'Next steps', desc: 'How to hand off to /ak:plan or stop here.' },
     ];
 const guardrailItems = isVi
   ? [

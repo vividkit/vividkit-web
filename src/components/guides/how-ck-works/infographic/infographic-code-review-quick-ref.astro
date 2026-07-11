@@ -1,5 +1,5 @@
 ---
-// Purpose-built Quick Ref layout for /ck:code-review — adversarial 3-stage review.
+// Purpose-built Quick Ref layout for /ak:code-review — adversarial 3-stage review.
 // Mirrors the ck-cook / ck-fix visual grammar so all command-level skills feel consistent.
 import type { SkillInfographic, ProcessFlowStep } from '@/data/guides/how-ck-works';
 import type { Language } from '@/i18n';
@@ -103,7 +103,7 @@ const tones: Record<string, Tone> = {
 
 const config = {
   eyebrow: isVi ? 'Tóm tắt nhanh / Lệnh review' : 'Quick Ref / Review command',
-  context: isVi ? 'Sau /ck:cook hoặc /ck:fix, trước /ck:ship' : 'After /ck:cook or /ck:fix, before /ck:ship',
+  context: isVi ? 'Sau /ak:cook hoặc /ak:fix, trước /ak:ship' : 'After /ak:cook or /ak:fix, before /ak:ship',
   summary: isVi
     ? 'Dùng khi cần review code với rigor đối kháng. Resolve input mode, qua spec compliance gate, scout edge case, code-reviewer sub-agent, rồi adversarial red-team chủ động phá code trước khi verify + report.'
     : 'Use it when code needs adversarial-rigor review. Resolve input mode, pass the spec-compliance gate, scout edge cases, run the code-reviewer sub-agent, then let the adversarial red-team actively try to break the code before verify + report.',
@@ -150,27 +150,27 @@ const config = {
   ] as ProcessGroup[],
   modes: isVi
     ? [
-        { flag: '#123', title: 'PR mode', desc: 'Fetch full PR diff qua gh pr diff #N.', prompt: '/ck:code-review #123', when: 'Review một PR đã mở trên GitHub.', expected: 'Diff toàn bộ PR → 3-stage review → recommendation APPROVE / REQUEST CHANGES / BLOCK.', accent: 'border-sky-200 bg-sky-50 text-sky-800 dark:border-sky-800/55 dark:bg-sky-950/25 dark:text-sky-200' },
-        { flag: '--pending', title: 'Pending', desc: 'Review staged + unstaged changes trong working tree.', prompt: '/ck:code-review --pending', when: 'Trước commit, sau khi /ck:cook hoặc /ck:fix xong.', expected: 'git diff (staged + unstaged) → 3-stage review → findings inline.', accent: 'border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-800/55 dark:bg-emerald-950/25 dark:text-emerald-200' },
-        { flag: 'abc1234', title: 'Commit', desc: 'Review một commit cụ thể qua git show <sha>.', prompt: '/ck:code-review abc1234', when: 'Audit commit cũ, post-mortem regression.', expected: 'Diff đúng commit đó → 3-stage review tập trung phạm vi commit.', accent: 'border-violet-200 bg-violet-50 text-violet-800 dark:border-violet-800/55 dark:bg-violet-950/25 dark:text-violet-200' },
-        { flag: 'codebase parallel', title: 'Codebase parallel', desc: 'Ultrathink edge case, rồi spawn nhiều adversarial reviewer song song.', prompt: '/ck:code-review codebase parallel', when: 'Audit sâu — security review, hardening trước launch.', expected: 'Nhiều reviewer scope khác nhau, dedupe + prioritize theo severity.', accent: 'border-rose-200 bg-rose-50 text-rose-800 dark:border-rose-800/55 dark:bg-rose-950/25 dark:text-rose-200' },
+        { flag: '#123', title: 'PR mode', desc: 'Fetch full PR diff qua gh pr diff #N.', prompt: '/ak:code-review #123', when: 'Review một PR đã mở trên GitHub.', expected: 'Diff toàn bộ PR → 3-stage review → recommendation APPROVE / REQUEST CHANGES / BLOCK.', accent: 'border-sky-200 bg-sky-50 text-sky-800 dark:border-sky-800/55 dark:bg-sky-950/25 dark:text-sky-200' },
+        { flag: '--pending', title: 'Pending', desc: 'Review staged + unstaged changes trong working tree.', prompt: '/ak:code-review --pending', when: 'Trước commit, sau khi /ak:cook hoặc /ak:fix xong.', expected: 'git diff (staged + unstaged) → 3-stage review → findings inline.', accent: 'border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-800/55 dark:bg-emerald-950/25 dark:text-emerald-200' },
+        { flag: 'abc1234', title: 'Commit', desc: 'Review một commit cụ thể qua git show <sha>.', prompt: '/ak:code-review abc1234', when: 'Audit commit cũ, post-mortem regression.', expected: 'Diff đúng commit đó → 3-stage review tập trung phạm vi commit.', accent: 'border-violet-200 bg-violet-50 text-violet-800 dark:border-violet-800/55 dark:bg-violet-950/25 dark:text-violet-200' },
+        { flag: 'codebase parallel', title: 'Codebase parallel', desc: 'Ultrathink edge case, rồi spawn nhiều adversarial reviewer song song.', prompt: '/ak:code-review codebase parallel', when: 'Audit sâu — security review, hardening trước launch.', expected: 'Nhiều reviewer scope khác nhau, dedupe + prioritize theo severity.', accent: 'border-rose-200 bg-rose-50 text-rose-800 dark:border-rose-800/55 dark:bg-rose-950/25 dark:text-rose-200' },
       ]
     : [
-        { flag: '#123', title: 'PR mode', desc: 'Fetch full PR diff via gh pr diff #N.', prompt: '/ck:code-review #123', when: 'Reviewing an open GitHub PR.', expected: 'Full PR diff → 3-stage review → APPROVE / REQUEST CHANGES / BLOCK recommendation.', accent: 'border-sky-200 bg-sky-50 text-sky-800 dark:border-sky-800/55 dark:bg-sky-950/25 dark:text-sky-200' },
-        { flag: '--pending', title: 'Pending', desc: 'Review staged + unstaged changes in the working tree.', prompt: '/ck:code-review --pending', when: 'Before commit, right after /ck:cook or /ck:fix.', expected: 'git diff (staged + unstaged) → 3-stage review → inline findings.', accent: 'border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-800/55 dark:bg-emerald-950/25 dark:text-emerald-200' },
-        { flag: 'abc1234', title: 'Commit', desc: 'Review a specific commit via git show <sha>.', prompt: '/ck:code-review abc1234', when: 'Auditing an old commit, post-mortem regression.', expected: 'That commit\'s diff → 3-stage review scoped to the commit.', accent: 'border-violet-200 bg-violet-50 text-violet-800 dark:border-violet-800/55 dark:bg-violet-950/25 dark:text-violet-200' },
-        { flag: 'codebase parallel', title: 'Codebase parallel', desc: 'Ultrathink edge cases, then spawn adversarial reviewers in parallel.', prompt: '/ck:code-review codebase parallel', when: 'Deep audits — security review, pre-launch hardening.', expected: 'Multiple scoped reviewers, dedupe + prioritize by severity.', accent: 'border-rose-200 bg-rose-50 text-rose-800 dark:border-rose-800/55 dark:bg-rose-950/25 dark:text-rose-200' },
+        { flag: '#123', title: 'PR mode', desc: 'Fetch full PR diff via gh pr diff #N.', prompt: '/ak:code-review #123', when: 'Reviewing an open GitHub PR.', expected: 'Full PR diff → 3-stage review → APPROVE / REQUEST CHANGES / BLOCK recommendation.', accent: 'border-sky-200 bg-sky-50 text-sky-800 dark:border-sky-800/55 dark:bg-sky-950/25 dark:text-sky-200' },
+        { flag: '--pending', title: 'Pending', desc: 'Review staged + unstaged changes in the working tree.', prompt: '/ak:code-review --pending', when: 'Before commit, right after /ak:cook or /ak:fix.', expected: 'git diff (staged + unstaged) → 3-stage review → inline findings.', accent: 'border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-800/55 dark:bg-emerald-950/25 dark:text-emerald-200' },
+        { flag: 'abc1234', title: 'Commit', desc: 'Review a specific commit via git show <sha>.', prompt: '/ak:code-review abc1234', when: 'Auditing an old commit, post-mortem regression.', expected: 'That commit\'s diff → 3-stage review scoped to the commit.', accent: 'border-violet-200 bg-violet-50 text-violet-800 dark:border-violet-800/55 dark:bg-violet-950/25 dark:text-violet-200' },
+        { flag: 'codebase parallel', title: 'Codebase parallel', desc: 'Ultrathink edge cases, then spawn adversarial reviewers in parallel.', prompt: '/ak:code-review codebase parallel', when: 'Deep audits — security review, pre-launch hardening.', expected: 'Multiple scoped reviewers, dedupe + prioritize by severity.', accent: 'border-rose-200 bg-rose-50 text-rose-800 dark:border-rose-800/55 dark:bg-rose-950/25 dark:text-rose-200' },
       ],
   prompts: isVi
     ? [
-        { label: 'Pending', recommended: true, command: '/ck:code-review --pending', when: 'Vừa làm xong /ck:cook hoặc /ck:fix, chưa commit.', expected: 'Review tất cả staged + unstaged trước khi commit / ship.' },
-        { label: 'PR review', command: '/ck:code-review #42', when: 'PR đã mở, cần adversarial review trước merge.', expected: 'Findings nhóm theo severity + verdict cho từng item.' },
-        { label: 'Codebase audit', command: '/ck:code-review codebase parallel', when: 'Pre-launch hoặc security audit toàn project.', expected: 'Nhiều reviewer scope khác nhau, severity-dedupe trong report.' },
+        { label: 'Pending', recommended: true, command: '/ak:code-review --pending', when: 'Vừa làm xong /ak:cook hoặc /ak:fix, chưa commit.', expected: 'Review tất cả staged + unstaged trước khi commit / ship.' },
+        { label: 'PR review', command: '/ak:code-review #42', when: 'PR đã mở, cần adversarial review trước merge.', expected: 'Findings nhóm theo severity + verdict cho từng item.' },
+        { label: 'Codebase audit', command: '/ak:code-review codebase parallel', when: 'Pre-launch hoặc security audit toàn project.', expected: 'Nhiều reviewer scope khác nhau, severity-dedupe trong report.' },
       ]
     : [
-        { label: 'Pending', recommended: true, command: '/ck:code-review --pending', when: 'Just finished /ck:cook or /ck:fix, not yet committed.', expected: 'Reviews all staged + unstaged before commit / ship.' },
-        { label: 'PR review', command: '/ck:code-review #42', when: 'PR is open, needs adversarial review before merge.', expected: 'Findings grouped by severity + verdict per item.' },
-        { label: 'Codebase audit', command: '/ck:code-review codebase parallel', when: 'Pre-launch or whole-project security audit.', expected: 'Multiple scoped reviewers, severity-dedupe in the report.' },
+        { label: 'Pending', recommended: true, command: '/ak:code-review --pending', when: 'Just finished /ak:cook or /ak:fix, not yet committed.', expected: 'Reviews all staged + unstaged before commit / ship.' },
+        { label: 'PR review', command: '/ak:code-review #42', when: 'PR is open, needs adversarial review before merge.', expected: 'Findings grouped by severity + verdict per item.' },
+        { label: 'Codebase audit', command: '/ak:code-review codebase parallel', when: 'Pre-launch or whole-project security audit.', expected: 'Multiple scoped reviewers, severity-dedupe in the report.' },
       ],
   guardrails: isVi
     ? [

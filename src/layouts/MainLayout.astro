@@ -43,6 +43,10 @@ const structuredData = {
     url: siteUrl,
   },
 };
+const structuredDataJson = JSON.stringify(structuredData)
+  .replace(/</g, '\\u003c')
+  .replace(/\u2028/g, '\\u2028')
+  .replace(/\u2029/g, '\\u2029');
 ---
 
 <!DOCTYPE html>
@@ -83,7 +87,7 @@ const structuredData = {
     <meta property="twitter:image" content={fullOgImage} />
 
     <!-- Structured Data (JSON-LD) -->
-    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    <script type="application/ld+json" set:html={structuredDataJson} />
 
     <!-- Google Analytics + Facebook Pixel -->
     <ThirdPartyAnalytics />

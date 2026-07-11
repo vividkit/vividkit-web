@@ -1,7 +1,6 @@
 ---
 // FlowchartGuide common workflows section
 import { getLangFromUrl, type Language } from "@/i18n";
-import { useTranslations } from "@/i18n/utils";
 
 interface Props {
   lang?: Language;
@@ -10,7 +9,6 @@ interface Props {
 const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const isVi = currentLang === "vi";
-const t = useTranslations(currentLang);
 ---
 
   <!-- Common Workflows -->
@@ -50,11 +48,11 @@ const t = useTranslations(currentLang);
         >
           <p>
             1. <code class="text-purple-600 dark:text-purple-400"
-              >/ck:brainstorm</code
+              >/ak:brainstorm</code
             > → {isVi ? "Khám phá options" : "Explore options"}
           </p>
           <p>
-            2. <code class="text-purple-600 dark:text-purple-400">/ck:plan</code> → {
+            2. <code class="text-purple-600 dark:text-purple-400">/ak:plan</code> → {
               isVi ? "Review plan" : "Review plan"
             }
           </p>
@@ -65,15 +63,15 @@ const t = useTranslations(currentLang);
           </p>
           <p>
             4. <code class="text-purple-600 dark:text-purple-400"
-              >/ck:cook @plan.md</code
+              >/ak:cook @plan.md</code
             > → {isVi ? "Implement" : "Implementation"}
           </p>
           <p>
-            5. <code class="text-indigo-600 dark:text-indigo-400">/ck:git cp</code> →
+            5. <code class="text-indigo-600 dark:text-indigo-400">/ak:git cp</code> →
             Push
           </p>
           <p>
-            6. <code class="text-indigo-600 dark:text-indigo-400">/ck:git pr</code> →
+            6. <code class="text-indigo-600 dark:text-indigo-400">/ak:git pr</code> →
             PR
           </p>
         </div>
@@ -94,7 +92,7 @@ const t = useTranslations(currentLang);
           class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono"
         >
           <p>
-            1. <code class="text-emerald-600 dark:text-emerald-400">/ck:cook</code> →
+            1. <code class="text-emerald-600 dark:text-emerald-400">/ak:cook</code> →
             {
               isVi
                 ? "Research → Plan → Implement → Test → Review"
@@ -102,7 +100,7 @@ const t = useTranslations(currentLang);
             }
           </p>
           <p>
-            2. <code class="text-indigo-600 dark:text-indigo-400">/ck:git cp</code> →
+            2. <code class="text-indigo-600 dark:text-indigo-400">/ak:git cp</code> →
             {
               isVi
                 ? "Commit và push khi approved"
@@ -127,16 +125,16 @@ const t = useTranslations(currentLang);
           class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono"
         >
           <p>
-            1. <code class="text-orange-600 dark:text-orange-400">/ck:debug</code> →
+            1. <code class="text-orange-600 dark:text-orange-400">/ak:debug</code> →
             {isVi ? "Tìm root cause" : "Find root cause"}
           </p>
           <p>
-            2. <code class="text-red-600 dark:text-red-400">/ck:fix</code> → {
+            2. <code class="text-red-600 dark:text-red-400">/ak:fix</code> → {
               isVi ? "Smart routing" : "Smart routing"
             }
           </p>
           <p>
-            3. <code class="text-indigo-600 dark:text-indigo-400">/ck:git cm</code> →
+            3. <code class="text-indigo-600 dark:text-indigo-400">/ak:git cm</code> →
             {isVi ? "Commit fix locally" : "Commit fix locally"}
           </p>
         </div>
@@ -157,7 +155,7 @@ const t = useTranslations(currentLang);
           class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono"
         >
           <p>
-            1. <code class="text-amber-600 dark:text-amber-400">/ck:bootstrap</code
+            1. <code class="text-amber-600 dark:text-amber-400">/ak:bootstrap</code
             > → {isVi ? "Full setup" : "Full setup"}
           </p>
           <p>
@@ -181,11 +179,11 @@ const t = useTranslations(currentLang);
           class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono"
         >
           <p>
-            1. <code class="text-cyan-600 dark:text-cyan-400">/ck:docs init</code> →
+            1. <code class="text-cyan-600 dark:text-cyan-400">/ak:docs init</code> →
             {isVi ? "Analyze codebase" : "Analyze codebase, create docs"}
           </p>
           <p>
-            2. <code class="text-cyan-600 dark:text-cyan-400">/ck:scout</code> → {
+            2. <code class="text-cyan-600 dark:text-cyan-400">/ak:scout</code> → {
               isVi ? "Explore structure" : "Explore codebase structure"
             }
           </p>
@@ -203,15 +201,15 @@ const t = useTranslations(currentLang);
           class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono"
         >
           <p>
-            1. <code class="text-green-600 dark:text-green-400">/ck:test</code> →
+            1. <code class="text-green-600 dark:text-green-400">/ak:test</code> →
             {isVi ? "Chạy tests" : "Run tests"}
           </p>
           <p>
-            2. <code class="text-violet-600 dark:text-violet-400">/ck:code-review</code> →
+            2. <code class="text-violet-600 dark:text-violet-400">/ak:code-review</code> →
             {isVi ? "Review toàn diện" : "Comprehensive review"}
           </p>
           <p>
-            3. <code class="text-indigo-600 dark:text-indigo-400">/ck:git pr</code> →
+            3. <code class="text-indigo-600 dark:text-indigo-400">/ak:git pr</code> →
             {isVi ? "Tạo PR" : "Create PR"}
           </p>
         </div>
@@ -228,15 +226,15 @@ const t = useTranslations(currentLang);
           class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono"
         >
           <p>
-            1. <code class="text-pink-600 dark:text-pink-400">/ck:frontend-design</code> →
+            1. <code class="text-pink-600 dark:text-pink-400">/ak:frontend-design</code> →
             {isVi ? "Tạo design" : "Create design"}
           </p>
           <p>
-            2. <code class="text-emerald-600 dark:text-emerald-400">/ck:cook</code> →
+            2. <code class="text-emerald-600 dark:text-emerald-400">/ak:cook</code> →
             {isVi ? "Implement" : "Implement design"}
           </p>
           <p>
-            3. <code class="text-green-600 dark:text-green-400">/ck:test</code> →
+            3. <code class="text-green-600 dark:text-green-400">/ak:test</code> →
             {isVi ? "Verify" : "Verify implementation"}
           </p>
         </div>
@@ -253,15 +251,15 @@ const t = useTranslations(currentLang);
           class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono"
         >
           <p>
-            1. <code class="text-cyan-600 dark:text-cyan-400">/ck:scout</code> →
+            1. <code class="text-cyan-600 dark:text-cyan-400">/ak:scout</code> →
             {isVi ? "Tìm files liên quan" : "Find relevant files"}
           </p>
           <p>
-            2. <code class="text-blue-600 dark:text-blue-400">/ck:research</code> →
+            2. <code class="text-blue-600 dark:text-blue-400">/ak:research</code> →
             {isVi ? "Deep dive topic" : "Deep dive into topic"}
           </p>
           <p>
-            3. <code class="text-blue-600 dark:text-blue-400">/ck:ask</code> →
+            3. <code class="text-blue-600 dark:text-blue-400">/ak:ask</code> →
             {isVi ? "Hỏi chuyên gia" : "Get expert advice"}
           </p>
         </div>
@@ -278,7 +276,7 @@ const t = useTranslations(currentLang);
           class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono"
         >
           <p>
-            1. <code class="text-teal-600 dark:text-teal-400">/ck:vibe</code> →
+            1. <code class="text-teal-600 dark:text-teal-400">/ak:vibe</code> →
             {isVi ? "issue → plan → implement → review → ship (worktree, TDD gate, CI watch)" : "issue → plan → implement → review → ship (worktree, TDD gate, CI watch)"}
           </p>
           <p class="text-xs text-slate-500 dark:text-slate-500 mt-1">
@@ -298,23 +296,22 @@ const t = useTranslations(currentLang);
           class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono"
         >
           <p>
-            1. <code class="text-green-600 dark:text-green-400">/ck:test</code> →
+            1. <code class="text-green-600 dark:text-green-400">/ak:test</code> →
             {isVi ? "Xác minh trước khi ship" : "Verify before shipping"}
           </p>
           <p>
-            2. <code class="text-violet-600 dark:text-violet-400">/ck:code-review</code> →
+            2. <code class="text-violet-600 dark:text-violet-400">/ak:code-review</code> →
             {isVi ? "Review code" : "Review code"}
           </p>
           <p>
-            3. <code class="text-sky-600 dark:text-sky-400">/ck:ship</code> →
+            3. <code class="text-sky-600 dark:text-sky-400">/ak:ship</code> →
             {isVi ? "test → review → commit → push → PR" : "test → review → commit → push → PR"}
           </p>
           <p>
-            4. <code class="text-sky-600 dark:text-sky-400">/ck:review-pr</code> →
+            4. <code class="text-sky-600 dark:text-sky-400">/ak:review-pr</code> →
             {isVi ? "Review GitHub PR (security, breaking changes)" : "Review GitHub PR (security, breaking changes)"}
           </p>
         </div>
       </div>
     </div>
   </div>
-

@@ -11,9 +11,9 @@ const currentLang = lang || getLangFromUrl(Astro.url);
 const translations = {
   en: {
     title: 'Fix from Logs',
-    subtitle: 'Intelligent debugging with /ck:fix — from error logs to working code in one command',
+    subtitle: 'Intelligent debugging with /ak:fix — from error logs to working code in one command',
     howItWorksTitle: 'How It Works',
-    howItWorksDesc: 'When logs.txt exists, /ck:fix routes to its log-analysis workflow — a 6-phase pipeline where each phase delegates to a specialized agent.',
+    howItWorksDesc: 'When logs.txt exists, /ak:fix routes to its log-analysis workflow — a 6-phase pipeline where each phase delegates to a specialized agent.',
     flowSteps: [
       { label: 'Analyze Logs', desc: 'debugger agent reads logs.txt' },
       { label: 'Scout Code', desc: 'Explore agents find error locations' },
@@ -29,23 +29,23 @@ const translations = {
     step2Desc: 'Run your app and trigger the issue. Ensure errors are captured in logs.txt.',
     step3Title: '3. Run the fix command',
     step3Desc: 'Tell the AI to analyze your logs:',
-    step3Template: '/ck:fix "analyze logs.txt and fix errors"',
+    step3Template: '/ak:fix "analyze logs.txt and fix errors"',
     step3Note: 'Mention logs.txt in the prompt to trigger log-analysis workflow',
     teeNote: '<code class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs">tee</code> is built-in on macOS &amp; Linux. On Windows, use <code class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs">Tee-Object</code> in PowerShell.',
     modesTitle: 'Modes',
     modesDesc: 'Choose the right mode for your situation:',
     modes: [
-      { cmd: '/ck:fix', flag: '--auto', desc: 'Autonomous — auto-approve if quality high (default)', when: 'Simple/moderate issues, let AI handle' },
-      { cmd: '/ck:fix', flag: '--quick', desc: 'Fast debug → fix → review cycle', when: 'Type errors, lint, trivial bugs' },
-      { cmd: '/ck:fix', flag: '--review', desc: 'Human-in-the-loop — pause at each step', when: 'Production/critical code, security' },
-      { cmd: '/ck:fix', flag: '--parallel', desc: 'Parallel fullstack-developer agents', when: '2+ independent issues in logs' },
+      { cmd: '/ak:fix', flag: '--auto', desc: 'Autonomous — auto-approve if quality high (default)', when: 'Simple/moderate issues, let AI handle' },
+      { cmd: '/ak:fix', flag: '--quick', desc: 'Fast debug → fix → review cycle', when: 'Type errors, lint, trivial bugs' },
+      { cmd: '/ak:fix', flag: '--review', desc: 'Human-in-the-loop — pause at each step', when: 'Production/critical code, security' },
+      { cmd: '/ak:fix', flag: '--parallel', desc: 'Parallel fullstack-developer agents', when: '2+ independent issues in logs' },
     ],
     usageTitle: 'Usage Examples',
     usages: [
-      { cmd: '/ck:fix "analyze logs.txt and fix errors"', desc: 'Full log analysis pipeline' },
-      { cmd: '/ck:fix "check logs.txt for auth errors" --auto', desc: 'Focused fix, autonomous mode' },
-      { cmd: '/ck:fix "fix errors in logs.txt" --quick', desc: 'Quick fix for simple log errors' },
-      { cmd: '/ck:fix "deploy pipeline error" --auto', desc: 'CI/CD fix (replaces /fix:ci)' },
+      { cmd: '/ak:fix "analyze logs.txt and fix errors"', desc: 'Full log analysis pipeline' },
+      { cmd: '/ak:fix "check logs.txt for auth errors" --auto', desc: 'Focused fix, autonomous mode' },
+      { cmd: '/ak:fix "fix errors in logs.txt" --quick', desc: 'Quick fix for simple log errors' },
+      { cmd: '/ak:fix "deploy pipeline error" --auto', desc: 'CI/CD fix (replaces /fix:ci)' },
     ],
     logSetupTitle: 'Log Piping Setup',
     logSetupDesc: 'Different ways to capture logs depending on your stack:',
@@ -64,21 +64,21 @@ const translations = {
       { title: 'Focus on recent errors', desc: 'The debugger reads the last 30 lines first, then expands if needed. Keep logs.txt fresh — clear it before reproducing.' },
       { title: 'Use tee, not redirect', desc: '<code class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs">2>&1 | tee logs.txt</code> lets you see output in terminal AND captures to file. Plain <code class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs">></code> redirect hides terminal output.' },
       { title: '3-strike rule', desc: 'If 3+ fix attempts fail, the skill stops and asks you to reconsider the architecture. No infinite loops.' },
-      { title: 'Combine with /ck:debug', desc: 'For deeper investigation without auto-fixing, use <code class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs">/ck:debug</code> first, then <code class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs">/ck:fix</code> to apply.' },
+      { title: 'Combine with /ak:debug', desc: 'For deeper investigation without auto-fixing, use <code class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs">/ak:debug</code> first, then <code class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs">/ak:fix</code> to apply.' },
     ],
     relatedTitle: 'Related Commands',
     related: [
-      { cmd: '/ck:fix --quick', desc: 'Quick fix for type/lint errors' },
-      { cmd: '/ck:fix --parallel', desc: 'Fix multiple issues simultaneously' },
-      { cmd: '/ck:fix --review', desc: 'Human-in-the-loop review mode' },
-      { cmd: '/ck:debug', desc: 'Deep investigation without auto-fix' },
+      { cmd: '/ak:fix --quick', desc: 'Quick fix for type/lint errors' },
+      { cmd: '/ak:fix --parallel', desc: 'Fix multiple issues simultaneously' },
+      { cmd: '/ak:fix --review', desc: 'Human-in-the-loop review mode' },
+      { cmd: '/ak:debug', desc: 'Deep investigation without auto-fix' },
     ],
   },
   vi: {
     title: 'Sửa Lỗi Từ Log',
-    subtitle: 'Debug thông minh với /ck:fix — từ log lỗi đến code chạy được chỉ với một lệnh',
+    subtitle: 'Debug thông minh với /ak:fix — từ log lỗi đến code chạy được chỉ với một lệnh',
     howItWorksTitle: 'Cách Hoạt Động',
-    howItWorksDesc: 'Khi có logs.txt, /ck:fix chuyển sang workflow phân tích log — pipeline 6 phase, mỗi phase dùng agent chuyên biệt.',
+    howItWorksDesc: 'Khi có logs.txt, /ak:fix chuyển sang workflow phân tích log — pipeline 6 phase, mỗi phase dùng agent chuyên biệt.',
     flowSteps: [
       { label: 'Phân Tích Log', desc: 'debugger agent đọc logs.txt' },
       { label: 'Tìm Code', desc: 'Explore agents tìm vị trí lỗi' },
@@ -94,23 +94,23 @@ const translations = {
     step2Desc: 'Chạy ứng dụng và kích hoạt lỗi. Đảm bảo log lỗi được ghi vào logs.txt.',
     step3Title: '3. Chạy lệnh sửa',
     step3Desc: 'Yêu cầu AI phân tích logs:',
-    step3Template: '/ck:fix "analyze logs.txt and fix errors"',
+    step3Template: '/ak:fix "analyze logs.txt and fix errors"',
     step3Note: 'Mention logs.txt trong prompt để trigger log-analysis workflow',
     teeNote: '<code class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs">tee</code> chỉ có sẵn trên macOS &amp; Linux. Trên Windows, dùng <code class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs">Tee-Object</code> trong PowerShell.',
     modesTitle: 'Các Chế Độ',
     modesDesc: 'Chọn chế độ phù hợp với tình huống:',
     modes: [
-      { cmd: '/ck:fix', flag: '--auto', desc: 'Tự động — auto-approve nếu chất lượng cao (mặc định)', when: 'Lỗi đơn giản/vừa, để AI xử lý' },
-      { cmd: '/ck:fix', flag: '--quick', desc: 'Nhanh: debug → fix → review', when: 'Type errors, lint, lỗi nhỏ' },
-      { cmd: '/ck:fix', flag: '--review', desc: 'Người duyệt — dừng ở mỗi bước', when: 'Code production/quan trọng, bảo mật' },
-      { cmd: '/ck:fix', flag: '--parallel', desc: 'Song song nhiều fullstack-developer agents', when: '2+ lỗi độc lập trong logs' },
+      { cmd: '/ak:fix', flag: '--auto', desc: 'Tự động — auto-approve nếu chất lượng cao (mặc định)', when: 'Lỗi đơn giản/vừa, để AI xử lý' },
+      { cmd: '/ak:fix', flag: '--quick', desc: 'Nhanh: debug → fix → review', when: 'Type errors, lint, lỗi nhỏ' },
+      { cmd: '/ak:fix', flag: '--review', desc: 'Người duyệt — dừng ở mỗi bước', when: 'Code production/quan trọng, bảo mật' },
+      { cmd: '/ak:fix', flag: '--parallel', desc: 'Song song nhiều fullstack-developer agents', when: '2+ lỗi độc lập trong logs' },
     ],
     usageTitle: 'Ví Dụ Sử Dụng',
     usages: [
-      { cmd: '/ck:fix "analyze logs.txt and fix errors"', desc: 'Full log analysis pipeline' },
-      { cmd: '/ck:fix "check logs.txt for auth errors" --auto', desc: 'Fix có focus, chế độ tự động' },
-      { cmd: '/ck:fix "fix errors in logs.txt" --quick', desc: 'Sửa nhanh lỗi đơn giản trong log' },
-      { cmd: '/ck:fix "deploy pipeline error" --auto', desc: 'Sửa CI/CD (thay /fix:ci)' },
+      { cmd: '/ak:fix "analyze logs.txt and fix errors"', desc: 'Full log analysis pipeline' },
+      { cmd: '/ak:fix "check logs.txt for auth errors" --auto', desc: 'Fix có focus, chế độ tự động' },
+      { cmd: '/ak:fix "fix errors in logs.txt" --quick', desc: 'Sửa nhanh lỗi đơn giản trong log' },
+      { cmd: '/ak:fix "deploy pipeline error" --auto', desc: 'Sửa CI/CD (thay /fix:ci)' },
     ],
     logSetupTitle: 'Cài Đặt Ghi Log',
     logSetupDesc: 'Các cách capture log tùy theo stack:',
@@ -129,14 +129,14 @@ const translations = {
       { title: 'Tập trung lỗi mới nhất', desc: 'Debugger đọc 30 dòng cuối trước, rồi mở rộng nếu cần. Giữ logs.txt sạch — xóa trước khi tái tạo lỗi.' },
       { title: 'Dùng tee, không redirect', desc: '<code class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs">2>&1 | tee logs.txt</code> hiện output trên terminal VÀ ghi vào file. Redirect <code class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs">></code> ẩn terminal output.' },
       { title: 'Quy tắc 3 lần', desc: 'Nếu 3+ lần sửa thất bại, skill dừng lại và yêu cầu xem xét kiến trúc. Không loop vô hạn.' },
-      { title: 'Kết hợp với /ck:debug', desc: 'Để điều tra sâu mà không auto-fix, dùng <code class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs">/ck:debug</code> trước, rồi <code class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs">/ck:fix</code> để áp dụng.' },
+      { title: 'Kết hợp với /ak:debug', desc: 'Để điều tra sâu mà không auto-fix, dùng <code class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs">/ak:debug</code> trước, rồi <code class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs">/ak:fix</code> để áp dụng.' },
     ],
     relatedTitle: 'Lệnh Liên Quan',
     related: [
-      { cmd: '/ck:fix --quick', desc: 'Sửa nhanh lỗi type/lint' },
-      { cmd: '/ck:fix --parallel', desc: 'Sửa nhiều lỗi cùng lúc' },
-      { cmd: '/ck:fix --review', desc: 'Chế độ review từng bước' },
-      { cmd: '/ck:debug', desc: 'Điều tra sâu không auto-fix' },
+      { cmd: '/ak:fix --quick', desc: 'Sửa nhanh lỗi type/lint' },
+      { cmd: '/ak:fix --parallel', desc: 'Sửa nhiều lỗi cùng lúc' },
+      { cmd: '/ak:fix --review', desc: 'Chế độ review từng bước' },
+      { cmd: '/ak:debug', desc: 'Điều tra sâu không auto-fix' },
     ],
   }
 };
@@ -234,7 +234,7 @@ const modeColors = ['bg-blue-500/20 text-blue-600 dark:text-blue-400', 'bg-green
           <p class="text-slate-600 dark:text-slate-400 text-sm mb-2">{t.step3Desc}</p>
           <div class="bg-slate-950 rounded-lg p-3 border border-slate-700 space-y-2">
             <div class="flex items-center justify-between">
-              <code class="font-mono text-sm text-green-400">/ck:fix</code>
+              <code class="font-mono text-sm text-green-400">/ak:fix</code>
               <span class="text-xs text-slate-500 italic">{t.step3Note}</span>
             </div>
             <div class="border-t border-slate-700 pt-2">

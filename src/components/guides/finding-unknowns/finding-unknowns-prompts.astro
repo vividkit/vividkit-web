@@ -39,14 +39,14 @@ const groups: Group[] = [
     prompts: [
       {
         line: t(
-          '/ck:brainstorm "Before we start, ask me one question at a time about anything unclear — prioritize the ones that would change how you build this."',
-          '/ck:brainstorm "Trước khi bắt đầu, hỏi tôi từng câu một về chỗ nào còn chưa rõ — ưu tiên câu nào mà câu trả lời sẽ làm thay đổi cách bạn code."'
+          '/ak:brainstorm "Before we start, ask me one question at a time about anything unclear — prioritize the ones that would change how you build this."',
+          '/ak:brainstorm "Trước khi bắt đầu, hỏi tôi từng câu một về chỗ nào còn chưa rõ — ưu tiên câu nào mà câu trả lời sẽ làm thay đổi cách bạn code."'
         ),
       },
       {
         line: t(
-          "/ck:brainstorm \"I want to add a 'forgot password' feature but haven't decided how to send the reset email. List the options from cheapest to best, with trade-offs.\"",
-          "/ck:brainstorm \"Tôi muốn thêm tính năng 'quên mật khẩu' nhưng chưa biết gửi email reset qua đâu. Liệt kê giúp tôi các lựa chọn từ rẻ đến tốt nhất, kèm ưu nhược điểm.\""
+          "/ak:brainstorm \"I want to add a 'forgot password' feature but haven't decided how to send the reset email. List the options from cheapest to best, with trade-offs.\"",
+          "/ak:brainstorm \"Tôi muốn thêm tính năng 'quên mật khẩu' nhưng chưa biết gửi email reset qua đâu. Liệt kê giúp tôi các lựa chọn từ rẻ đến tốt nhất, kèm ưu nhược điểm.\""
         ),
       },
     ],
@@ -58,14 +58,14 @@ const groups: Group[] = [
     prompts: [
       {
         line: t(
-          "/ck:brainstorm --html \"I want a dashboard for this data but I have no design taste and don't know what's possible. Make an HTML page with 4 completely different design directions so I can react to them.\"",
-          '/ck:brainstorm --html "Tôi cần dashboard cho data này nhưng không có gu thẩm mỹ và không biết cái gì khả thi. Làm giúp tôi 1 trang HTML với 4 hướng thiết kế khác biệt hoàn toàn để tôi phản hồi."'
+          "/ak:brainstorm --html \"I want a dashboard for this data but I have no design taste and don't know what's possible. Make an HTML page with 4 completely different design directions so I can react to them.\"",
+          '/ak:brainstorm --html "Tôi cần dashboard cho data này nhưng không có gu thẩm mỹ và không biết cái gì khả thi. Làm giúp tôi 1 trang HTML với 4 hướng thiết kế khác biệt hoàn toàn để tôi phản hồi."'
         ),
       },
       {
         line: t(
-          '/ck:brainstorm --html "Before touching real code, mock the new homepage in a single HTML file with fake data. I want to react to the layout first."',
-          '/ck:brainstorm --html "Trước khi đụng vào code thật, làm giúp tôi 1 file HTML mock trang chủ mới với dữ liệu giả. Tôi muốn xem layout trước đã."'
+          '/ak:brainstorm --html "Before touching real code, mock the new homepage in a single HTML file with fake data. I want to react to the layout first."',
+          '/ak:brainstorm --html "Trước khi đụng vào code thật, làm giúp tôi 1 file HTML mock trang chủ mới với dữ liệu giả. Tôi muốn xem layout trước đã."'
         ),
       },
     ],
@@ -98,11 +98,11 @@ const groups: Group[] = [
     prompts: [
       {
         // xia syntax: <repo-path-or-url> [feature] [--flag]. --port rewrites idiomatically.
-        line: '/ck:xia ~/projects/old-website "hiệu ứng loading" --port',
+        line: '/ak:xia ~/projects/old-website "hiệu ứng loading" --port',
       },
       {
         // --compare: evaluate before deciding to port, per xia's own mode table.
-        line: '/ck:xia shadcn-ui/ui "date picker component" --compare',
+        line: '/ak:xia shadcn-ui/ui "date picker component" --compare',
       },
     ],
   },
@@ -114,8 +114,8 @@ const groups: Group[] = [
       {
         // preview always needs a generation flag — --explain fits "pitch a decision".
         line: t(
-          '/ck:preview --html --explain "why we built it this way, demo GIF up top"',
-          '/ck:preview --html --explain "vì sao làm theo hướng này, demo GIF để lên đầu"'
+          '/ak:preview --html --explain "why we built it this way, demo GIF up top"',
+          '/ak:preview --html --explain "vì sao làm theo hướng này, demo GIF để lên đầu"'
         ),
       },
       {

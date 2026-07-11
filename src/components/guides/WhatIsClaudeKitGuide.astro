@@ -1,68 +1,24 @@
 ---
-// WhatIsClaudeKitGuide: composition of what-is-claudekit sub-components
-import { getLangFromUrl, type Language } from "@/i18n";
-import WhatIsClaudeKitIntroAndMetaphors from "@/components/guides/what-is-claudekit/what-is-claudekit-intro-and-metaphors.astro";
-import WhatIsClaudeKitPillarsAndProcessFlow from "@/components/guides/what-is-claudekit/what-is-claudekit-pillars-and-process-flow.astro";
-import WhatIsClaudeKitBeforeAfterComparison from "@/components/guides/what-is-claudekit/what-is-claudekit-before-after-comparison.astro";
-import WhatIsClaudeKitCommandsAndSummary from "@/components/guides/what-is-claudekit/what-is-claudekit-commands-and-summary.astro";
-
-interface Props {
-  lang?: Language;
-}
-
+import { getLangFromUrl, type Language } from '@/i18n';
+interface Props { lang?: Language }
 const { lang } = Astro.props;
-const currentLang = lang || getLangFromUrl(Astro.url);
+const currentLang = lang ?? getLangFromUrl(Astro.url);
+const isVi = currentLang === 'vi';
+const pillars = [
+  { title: 'Kits', body: isVi ? 'Engineer và Marketing đóng gói skills, agents, hooks và workflow content.' : 'Engineer and Marketing package skills, agents, hooks, and workflow content.' },
+  { title: 'Target adapters', body: isVi ? 'Cài cùng kit cho Claude Code hoặc Codex với syntax đúng target.' : 'Install the same kit for Claude Code or Codex with target-correct syntax.' },
+  { title: 'Native CLI', body: isVi ? 'ak quản lý login, entitlements, kits, project lifecycle và diagnostics.' : 'ak manages login, entitlements, kits, project lifecycle, and diagnostics.' },
+  { title: 'Guard rails', body: isVi ? 'Preview, snapshot, review gates và target permissions giữ thay đổi có thể kiểm soát.' : 'Previews, snapshots, review gates, and target permissions keep changes controlled.' },
+];
 ---
 
-<div class="space-y-8 mt-6">
-  <!-- Header, intro banner, house metaphor, team metaphor with image -->
-  <WhatIsClaudeKitIntroAndMetaphors lang={currentLang} />
-
-  <!-- Building blocks grid + process flow steps with images -->
-  <WhatIsClaudeKitPillarsAndProcessFlow lang={currentLang} />
-
-  <!-- Before/After comparison table with image -->
-  <WhatIsClaudeKitBeforeAfterComparison lang={currentLang} />
-
-  <!-- Quick start commands (stable/beta toggle) + summary + CTA -->
-  <WhatIsClaudeKitCommandsAndSummary lang={currentLang} />
+<div class="mt-6 space-y-10">
+  <section class="rounded-3xl border border-violet-200 bg-gradient-to-br from-violet-50 via-white to-cyan-50 p-6 dark:border-violet-500/20 dark:from-violet-950/30 dark:via-slate-950 dark:to-cyan-950/20 sm:p-8">
+    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-violet-700 dark:text-violet-300">AgentKit · successor to ClaudeKit</p>
+    <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-5xl">{isVi ? 'AgentKit là gì?' : 'What is AgentKit?'}</h1>
+    <p class="mt-4 max-w-3xl text-lg leading-8 text-slate-600 dark:text-slate-300">{isVi ? 'AgentKit là hệ thống CLI + workflow kits giúp coding agent làm việc theo quy trình có cấu trúc. ak thay thế legacy ck; Claude Code và Codex vẫn là các target agent riêng.' : 'AgentKit is a CLI and workflow-kit system that gives coding agents structured development workflows. ak replaces the legacy ck CLI; Claude Code and Codex remain distinct target agents.'}</p>
+    <div class="mt-6 flex flex-wrap gap-3"><a href={isVi ? '/vi/guides/agentkit' : '/guides/agentkit'} class="rounded-xl bg-violet-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-violet-700">{isVi ? 'Migrate từ CK' : 'Migrate from CK'}</a><a href={isVi ? '/vi/guides/cli' : '/guides/cli'} class="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">{isVi ? 'Cài ak CLI' : 'Install ak CLI'}</a></div>
+  </section>
+  <section><h2 class="text-2xl font-bold text-slate-950 dark:text-white">{isVi ? 'Bốn phần của mental model' : 'Four parts of the mental model'}</h2><div class="mt-5 grid gap-4 sm:grid-cols-2">{pillars.map((pillar, index) => <article class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-900"><span class="font-mono text-xs text-violet-600 dark:text-violet-400">0{index + 1}</span><h3 class="mt-2 font-bold text-slate-950 dark:text-white">{pillar.title}</h3><p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">{pillar.body}</p></article>)}</div></section>
+  <section class="rounded-2xl border border-amber-200 bg-amber-50 p-5 dark:border-amber-400/20 dark:bg-amber-950/20"><h2 class="text-xl font-bold text-amber-950 dark:text-amber-100">{isVi ? 'AgentKit không bao gồm model subscription' : 'AgentKit does not include a model subscription'}</h2><p class="mt-2 leading-7 text-amber-900 dark:text-amber-200">{isVi ? 'Kit license cung cấp workflow content. Bạn vẫn cần quyền truy cập Claude Code, Codex hoặc target agent tương ứng.' : 'A kit license provides workflow content. You still need access to Claude Code, Codex, or the relevant target agent.'}</p></section>
 </div>
-
-<script>
-  // Quick Start version toggle: ek vs mk commands
-  document.addEventListener("DOMContentLoaded", () => {
-    const btnStable = document.getElementById("qs-btn-ek");
-    const btnBeta = document.getElementById("qs-btn-mk");
-    const commandsStable = document.getElementById("qs-commands-ek");
-    const commandsBeta = document.getElementById("qs-commands-mk");
-
-    if (!btnStable || !btnBeta || !commandsStable || !commandsBeta) return;
-
-    const activeClasses = "bg-teal-500 text-white shadow-sm";
-    const activeBetaClasses = "bg-purple-500 text-white shadow-sm";
-    const inactiveClasses = "text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700";
-
-    function setVersion(version: "ek" | "mk") {
-      if (version === "ek") {
-        commandsStable.classList.remove("hidden");
-        commandsBeta.classList.add("hidden");
-        btnStable.className = `qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${activeClasses}`;
-        btnBeta.className = `qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${inactiveClasses}`;
-      } else {
-        commandsStable.classList.add("hidden");
-        commandsBeta.classList.remove("hidden");
-        btnBeta.className = `qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${activeBetaClasses}`;
-        btnStable.className = `qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${inactiveClasses}`;
-      }
-      localStorage.setItem("what-is-claudekit-qs-version", version);
-    }
-
-    // Restore saved preference (migrate old keys)
-    const savedVersion = localStorage.getItem("what-is-claudekit-qs-version") as "stable" | "beta" | "v25" | "v24" | "ek" | "mk" | null;
-    if (savedVersion === "v25" || savedVersion === "stable" || savedVersion === "ek") setVersion("ek");
-    else if (savedVersion === "v24" || savedVersion === "beta" || savedVersion === "mk") setVersion("mk");
-
-    btnStable.addEventListener("click", () => setVersion("ek"));
-    btnBeta.addEventListener("click", () => setVersion("mk"));
-  });
-</script>

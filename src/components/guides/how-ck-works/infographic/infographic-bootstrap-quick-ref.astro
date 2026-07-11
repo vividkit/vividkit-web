@@ -1,5 +1,5 @@
 ---
-// Purpose-built Quick Ref layout for /ck:bootstrap.
+// Purpose-built Quick Ref layout for /ak:bootstrap.
 // Keeps the generic command grammar but makes the project-bootstrap pipeline explicit.
 import type { ProcessFlowStep, SkillInfographic } from '@/data/guides/how-ck-works';
 import type { Language } from '@/i18n';
@@ -102,7 +102,7 @@ const pipelineGroups: Array<{ label: string; kicker: string; steps: ProcessFlowS
   },
   {
     label: isVi ? 'Build' : 'Build',
-    kicker: isVi ? 'ck:plan -> ck:cook' : 'ck:plan -> ck:cook',
+    kicker: isVi ? 'ak:plan -> ak:cook' : 'ak:plan -> ak:cook',
     steps: data.processFlow.slice(5, 7),
     tone: tones[2],
   },

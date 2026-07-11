@@ -1,0 +1,30 @@
+---
+import type { Language } from '@/i18n';
+
+interface Props { lang: Language }
+const { lang } = Astro.props;
+const isVi = lang === 'vi';
+---
+
+<section class="overflow-hidden rounded-3xl border border-violet-200 bg-gradient-to-br from-violet-50 via-white to-cyan-50 p-6 dark:border-violet-500/20 dark:from-violet-950/30 dark:via-slate-950 dark:to-cyan-950/20 sm:p-8">
+  <div class="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-violet-700 dark:text-violet-300">
+    <span class="rounded-full bg-violet-100 px-3 py-1 dark:bg-violet-400/10">AgentKit CLI</span>
+    <span class="rounded-full border border-amber-300 px-3 py-1 text-amber-700 dark:border-amber-400/30 dark:text-amber-300">ck → ak</span>
+  </div>
+  <h1 class="mt-5 text-3xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-5xl">
+    {isVi ? 'Cài đặt và vận hành AgentKit bằng ak' : 'Install and operate AgentKit with ak'}
+  </h1>
+  <p class="mt-4 max-w-3xl text-base leading-7 text-slate-600 dark:text-slate-300">
+    {isVi
+      ? 'ak là native CLI kế nhiệm ClaudeKit ck. Dùng nó để đăng nhập, cài kit cho Claude Code hoặc Codex, cập nhật đúng lifecycle và kiểm tra môi trường.'
+      : 'ak is the native CLI successor to ClaudeKit ck. Use it to authenticate, install kits for Claude Code or Codex, update the correct lifecycle layer, and diagnose the environment.'}
+  </p>
+  <div class="mt-6 flex flex-wrap gap-3">
+    <a href={isVi ? '/vi/guides/agentkit' : '/guides/agentkit'} class="rounded-xl bg-violet-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-violet-700">
+      {isVi ? 'Migrate từ CK' : 'Migrate from CK'}
+    </a>
+    <a href="https://agentkit.best/docs" target="_blank" rel="noopener noreferrer" class="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-violet-400 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
+      {isVi ? 'Tài liệu chính thức' : 'Official documentation'}
+    </a>
+  </div>
+</section>

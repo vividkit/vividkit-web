@@ -1,0 +1,174 @@
+---
+import { Check, Copy, ShieldAlert, Terminal } from 'lucide-astro';
+
+import type { Language } from '@/i18n';
+import { useTranslations } from '@/i18n/utils';
+import type { AgentKitCommandView, AgentKitPlatform } from './agentkit-command-view';
+import { isSafeCopyPayload } from './agentkit-command-view';
+
+interface Props {
+  id: string;
+  lang: Language;
+  commands: AgentKitCommandView[];
+}
+
+const { id, lang, commands } = Astro.props;
+const t = useTranslations(lang);
+const platforms: AgentKitPlatform[] = ['macos', 'linux', 'windows'];
+const platformLabels = {
+  macos: t('agentkit.command.macos'),
+  linux: t('agentkit.command.linux'),
+  windows: t('agentkit.command.windows'),
+};
+
+const commandsByPlatform = Object.fromEntries(
+  platforms.map((platform) => [platform, commands.filter((item) => item.platform === platform)]),
+) as Record<AgentKitPlatform, AgentKitCommandView[]>;
+
+for (const item of commands) {
+  if (item.copyable && !isSafeCopyPayload(item)) {
+    throw new Error(`Unsafe AgentKit copy payload: ${item.id}`);
+  }
+}
+
+function safetyMessage(item: AgentKitCommandView): string {
+  if (item.safety === 'network-exec') return t('agentkit.command.trustWarning');
+  if (item.safety === 'credential') return t('agentkit.command.credentialWarning');
+  return t('agentkit.command.destructiveWarning');
+}
+---
+
+<fieldset class="agentkit-platform-switcher min-w-0" data-agentkit-switcher={id}>
+  <legend class="mb-3 text-sm font-semibold text-slate-700 dark:text-slate-200">
+    {t('agentkit.command.platformLegend')}
+  </legend>
+
+  <div class="mb-4 grid grid-cols-3 gap-2" aria-label={t('agentkit.command.platformLegend')}>
+    {platforms.map((platform, index) => (
+      <label class="cursor-pointer">
+        <input
+          class="peer sr-only"
+          type="radio"
+          name={`agentkit-platform-${id}`}
+          value={platform}
+          checked={index === 0}
+        />
+        <span class="flex min-h-11 items-center justify-center rounded-lg border border-slate-200 bg-white px-2 text-center text-xs font-semibold text-slate-600 transition-colors duration-200 peer-checked:border-purple-500 peer-checked:bg-purple-50 peer-checked:text-purple-700 peer-focus-visible:ring-2 peer-focus-visible:ring-purple-500 peer-focus-visible:ring-offset-2 hover:border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:peer-checked:border-purple-400 dark:peer-checked:bg-purple-950/40 dark:peer-checked:text-purple-300 dark:hover:border-slate-600">
+          {platformLabels[platform]}
+        </span>
+      </label>
+    ))}
+  </div>
+
+  <div class="min-w-0">
+    {platforms.map((platform) => (
+      <section
+        class="platform-panel space-y-3"
+        data-platform={platform}
+        aria-label={`${platformLabels[platform]} ${t('agentkit.command.platformLegend')}`}
+      >
+        {commandsByPlatform[platform].map((item) => {
+          const safeToCopy = isSafeCopyPayload(item);
+          return (
+            <div class="min-w-0 overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700">
+              <div class="flex items-center justify-between gap-3 border-b border-slate-200 bg-slate-50 px-4 py-2 dark:border-slate-700 dark:bg-slate-900">
+                <span class="inline-flex items-center gap-2 text-xs font-medium text-slate-500 dark:text-slate-400">
+                  <Terminal class="h-4 w-4" aria-hidden="true" />
+                  {t(`agentkit.command.shell.${item.shell}`)}
+                </span>
+                {!safeToCopy && (
+                  <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-700 dark:text-amber-300">
+                    <ShieldAlert class="h-4 w-4" aria-hidden="true" />
+                    {t('agentkit.command.manual')}
+                  </span>
+                )}
+              </div>
+
+              <div class="relative bg-slate-100 dark:bg-slate-800/90">
+                <pre class="m-0 overflow-x-auto p-4 pr-14 text-sm text-slate-700 dark:text-slate-200"><code class="text-purple-600 dark:text-purple-400" data-copy-source={item.id}>{item.display}</code></pre>
+                {safeToCopy && (
+                  <button
+                    type="button"
+                    class="absolute right-2 top-2 inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-600 transition-colors duration-200 hover:border-purple-400 hover:text-purple-700 focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 active:bg-slate-100 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-purple-400 dark:hover:text-purple-300 dark:active:bg-slate-800"
+                    aria-label={t('agentkit.command.copy')}
+                    data-agentkit-copy={item.id}
+                    data-copy-payload={item.copyPayload}
+                    data-copy-label={t('agentkit.command.copy')}
+                    data-copied-label={t('agentkit.command.copied')}
+                    data-failed-label={t('agentkit.command.copyFailed')}
+                  >
+                    <Copy class="copy-icon h-4 w-4" aria-hidden="true" />
+                    <Check class="check-icon hidden h-4 w-4" aria-hidden="true" />
+                  </button>
+                )}
+              </div>
+
+              {!safeToCopy && (
+                <p class="flex gap-2 border-t border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-relaxed text-amber-900 dark:border-amber-800/70 dark:bg-amber-950/30 dark:text-amber-100">
+                  <ShieldAlert class="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+                  <span>{safetyMessage(item)}</span>
+                </p>
+              )}
+            </div>
+          );
+        })}
+      </section>
+    ))}
+  </div>
+
+  <p class="sr-only" aria-live="polite" data-copy-status></p>
+</fieldset>
+
+<style>
+  .agentkit-platform-switcher .platform-panel {
+    display: none;
+  }
+
+  .agentkit-platform-switcher:has(input[value='macos']:checked) [data-platform='macos'],
+  .agentkit-platform-switcher:has(input[value='linux']:checked) [data-platform='linux'],
+  .agentkit-platform-switcher:has(input[value='windows']:checked) [data-platform='windows'] {
+    display: block;
+  }
+</style>
+
+<script>
+  function bindAgentKitCopyButtons(): void {
+    document.querySelectorAll<HTMLElement>('[data-agentkit-switcher]').forEach((switcher) => {
+      switcher.querySelectorAll<HTMLButtonElement>('[data-agentkit-copy]').forEach((button) => {
+        if (button.dataset.copyBound === 'true') return;
+        button.dataset.copyBound = 'true';
+
+        button.addEventListener('click', async () => {
+          const id = button.dataset.agentkitCopy;
+          const payload = button.dataset.copyPayload;
+          const source = id ? switcher.querySelector<HTMLElement>(`[data-copy-source="${CSS.escape(id)}"]`) : null;
+          const status = switcher.querySelector<HTMLElement>('[data-copy-status]');
+          const invalid = !payload || payload !== source?.textContent || /[\u0000-\u001F\u007F]/u.test(payload);
+          if (invalid) {
+            if (status) status.textContent = button.dataset.failedLabel ?? '';
+            return;
+          }
+
+          try {
+            await navigator.clipboard.writeText(payload);
+            button.setAttribute('aria-label', button.dataset.copiedLabel ?? '');
+            button.querySelector('.copy-icon')?.classList.add('hidden');
+            button.querySelector('.check-icon')?.classList.remove('hidden');
+            if (status) status.textContent = button.dataset.copiedLabel ?? '';
+
+            window.setTimeout(() => {
+              button.setAttribute('aria-label', button.dataset.copyLabel ?? '');
+              button.querySelector('.copy-icon')?.classList.remove('hidden');
+              button.querySelector('.check-icon')?.classList.add('hidden');
+            }, 2000);
+          } catch {
+            if (status) status.textContent = button.dataset.failedLabel ?? '';
+          }
+        });
+      });
+    });
+  }
+
+  bindAgentKitCopyButtons();
+  document.addEventListener('astro:page-load', bindAgentKitCopyButtons);
+</script>

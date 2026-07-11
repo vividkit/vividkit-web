@@ -21,8 +21,8 @@ const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const isVi = currentLang === 'vi';
 
-// Curated command surface for How ClaudeKit Works.
-// ck-init remains hidden: it is a CLI lifecycle command, not a /ck:* skill scenario.
+// Curated command surface for How AgentKit Works.
+// ck-init remains hidden: it is a CLI lifecycle command, not a /ak:* skill scenario.
 const visibleEngineerSkills = [
   'brainstorm',
   'predict',
@@ -260,8 +260,8 @@ const skillPickerSections = {
       id: 'shared-utilities',
       labelEn: 'Shared Utilities',
       labelVi: 'Tiện ích dùng chung',
-      descEn: 'Marketing-facing wrappers for shared ClaudeKit command families.',
-      descVi: 'Các wrapper marketing cho nhóm lệnh ClaudeKit dùng chung.',
+      descEn: 'Marketing-facing wrappers for shared AgentKit command families.',
+      descVi: 'Các wrapper marketing cho nhóm lệnh AgentKit dùng chung.',
       ids: ['ckm-ask', 'ckm-docs', 'ckm-journal', 'ckm-plan', 'ckm-preview', 'ckm-test', 'ckm-watzup', 'ckm-worktree', 'kanban', 'skill', 'use-mcp'],
     },
   ],
@@ -328,7 +328,7 @@ const skillPickerSections = {
         </svg>
         <input
           x-model.debounce.120ms="skillSearch"
-          x-bind:placeholder="activeKit === 'engineer' ? (isVi ? 'Tìm theo /ck:plan, /ck:test, security...' : 'Search /ck:plan, /ck:test, security...') : (isVi ? 'Tìm theo /ckm:seo, /ckm:campaign, dashboard...' : 'Search /ckm:seo, /ckm:campaign, dashboard...')"
+          x-bind:placeholder="activeKit === 'engineer' ? (isVi ? 'Tìm theo /ak:plan, /ak:test, security...' : 'Search /ak:plan, /ak:test, security...') : (isVi ? 'Tìm theo /ak:seo, /ak:campaign, dashboard...' : 'Search /ak:seo, /ak:campaign, dashboard...')"
           type="search"
           class="min-h-11 w-full rounded-xl border border-slate-200 bg-white py-2 pl-10 pr-10 text-base text-slate-900 outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-500/10 dark:border-white/10 dark:bg-white/[0.04] dark:text-white dark:placeholder:text-white/35 dark:focus:border-sky-400"
         />

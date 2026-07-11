@@ -1,6 +1,8 @@
-// Stable workflows - skill-based approach with /ck: prefix
-// /ck:cook uses native Claude Tasks, /ck:fix supports flags
-export const stableWorkflows = [
+// Stable workflows - skill-based approach with /ak: prefix
+// /ak:cook uses native Claude Tasks, /ak:fix supports flags
+import { createAgentKitWorkflowCatalog } from './workflow-catalog-adapters.ts';
+
+const stableWorkflowEntries = [
   {
     title: 'Build a New Feature',
     category: 'Getting Started',
@@ -15,15 +17,15 @@ export const stableWorkflows = [
     iconColor: 'text-purple-600 dark:text-purple-400',
     steps: [
       {
-        command: '/ck:brainstorm',
+        command: '/ak:brainstorm',
         typeLabel: 'Explore ideas',
-        description: 'Use /ck:brainstorm or say "brainstorm ideas for [feature]" to explore possibilities',
+        description: 'Use /ak:brainstorm or say "brainstorm ideas for [feature]" to explore possibilities',
         color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
         number: 1,
         isSkill: true
       },
       {
-        command: '/ck:plan',
+        command: '/ak:plan',
         typeLabel: 'Create implementation plan',
         description: 'AI creates a detailed step-by-step plan for building your feature',
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
@@ -38,7 +40,7 @@ export const stableWorkflows = [
         icon: '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>'
       },
       {
-        command: '/ck:cook @plan.md',
+        command: '/ak:cook @plan.md',
         typeLabel: 'Implement the plan',
         description: 'AI writes the code following the plan, runs tests, and reviews the work',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
@@ -46,7 +48,7 @@ export const stableWorkflows = [
         isSkill: true
       }
     ],
-    tip: '/clear is mandatory after /ck:plan before /ck:cook',
+    tip: '/clear is mandatory after /ak:plan before /ak:cook',
     borderColor: 'border-purple-500/20'
   },
   {
@@ -63,7 +65,7 @@ export const stableWorkflows = [
     iconColor: 'text-red-600 dark:text-red-400',
     steps: [
       {
-        command: '/ck:fix',
+        command: '/ak:fix',
         typeLabel: '6-step pipeline',
         description: 'Runs the full pipeline: Scout → Diagnose → Assess → Fix → Verify → Prevent',
         color: 'bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400',
@@ -111,7 +113,7 @@ export const stableWorkflows = [
         icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>'
       }
     ],
-    tip: '/ck:fix v2.0: evidence-based RCA, no guessing. Flags: --auto, --review, --quick, --parallel',
+    tip: '/ak:fix v2.0: evidence-based RCA, no guessing. Flags: --auto, --review, --quick, --parallel',
     fixFlags: [
       { flag: '--auto', desc: 'Auto-apply fix without confirmation', color: 'green' },
       { flag: '--review', desc: 'Review fix before applying', color: 'purple' },
@@ -134,7 +136,7 @@ export const stableWorkflows = [
     iconColor: 'text-blue-600 dark:text-blue-400',
     steps: [
       {
-        command: '/ck:cook "your task"',
+        command: '/ak:cook "your task"',
         typeLabel: 'All-in-one skill',
         description: 'AI researches, plans, implements, tests, and reviews the feature automatically',
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
@@ -173,7 +175,7 @@ export const stableWorkflows = [
     iconColor: 'text-green-600 dark:text-green-400',
     steps: [
       {
-        command: '/ck:bootstrap "describe your app"',
+        command: '/ak:bootstrap "describe your app"',
         typeLabel: 'Complete project setup',
         description: 'AI builds your entire project: research, architecture, design, implementation, and documentation',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
@@ -204,7 +206,7 @@ export const stableWorkflows = [
     iconColor: 'text-pink-600 dark:text-pink-400',
     steps: [
       {
-        command: '/ck:remotion',
+        command: '/ak:remotion',
         typeLabel: 'Video creation',
         description: 'Create videos programmatically with React and Remotion',
         color: 'bg-pink-500/10 dark:bg-pink-500/20 text-pink-600 dark:text-pink-400',
@@ -242,7 +244,7 @@ export const stableWorkflows = [
     iconColor: 'text-indigo-600 dark:text-indigo-400',
     steps: [
       {
-        command: '/ck:preview --explain "topic"',
+        command: '/ak:preview --explain "topic"',
         typeLabel: 'Markdown explanation',
         description: 'Create ASCII + Mermaid diagrams with prose explanation (opens in novel-reader UI)',
         color: 'bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400',
@@ -250,7 +252,7 @@ export const stableWorkflows = [
         isSkill: true
       },
       {
-        command: '/ck:preview --html --explain "topic"',
+        command: '/ak:preview --html --explain "topic"',
         typeLabel: 'HTML explanation',
         description: 'Self-contained HTML with theme toggle, Mermaid v11, and Chart.js — opens directly in browser',
         color: 'bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400',
@@ -258,7 +260,7 @@ export const stableWorkflows = [
         isSkill: true
       },
       {
-        command: '/ck:preview --html --slides "topic"',
+        command: '/ak:preview --html --slides "topic"',
         typeLabel: 'HTML slide deck',
         description: 'Magazine-quality presentation slides as self-contained HTML',
         color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
@@ -266,7 +268,7 @@ export const stableWorkflows = [
         isSkill: true
       }
     ],
-    featureCommand: '/ck:preview',
+    featureCommand: '/ak:preview',
     tip: 'Add --html to any mode for publication-quality HTML output. Also: --diagram, --diff, --plan-review, --recap',
     features: [
       'Markdown modes: --explain, --slides, --diagram, --ascii',
@@ -291,7 +293,7 @@ export const stableWorkflows = [
     iconColor: 'text-emerald-600 dark:text-emerald-400',
     steps: [
       {
-        command: '/ck:cook @plan.md',
+        command: '/ak:cook @plan.md',
         typeLabel: 'Implement the plan',
         description: 'AI writes the code following the plan with auto test & review cycles',
         color: 'bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
@@ -299,7 +301,7 @@ export const stableWorkflows = [
         isSkill: true
       },
       {
-        command: '/ck:scout',
+        command: '/ak:scout',
         typeLabel: 'Scout edge cases',
         description: 'AI scouts affected files, data flows, error paths, and boundary conditions',
         color: 'bg-teal-500/10 dark:bg-teal-500/20 text-teal-600 dark:text-teal-400',
@@ -315,17 +317,17 @@ export const stableWorkflows = [
         icon: '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>'
       },
       {
-        command: '/ck:git cm',
+        command: '/ak:git cm',
         typeLabel: 'Merge & commit',
         description: 'Commit the reviewed code with conventional commit message',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 4
       }
     ],
-    featureCommand: '/ck:scout',
-    tip: '/ck:scout integrates with code-reviewer for edge case detection before review',
+    featureCommand: '/ak:scout',
+    tip: '/ak:scout integrates with code-reviewer for edge case detection before review',
     features: [
-      'Edge case detection via /ck:scout',
+      'Edge case detection via /ak:scout',
       'Boundary condition analysis',
       'Data flow & error path scouting',
       'Automated code-reviewer integration'
@@ -346,14 +348,14 @@ export const stableWorkflows = [
     iconColor: 'text-sky-600 dark:text-sky-400',
     steps: [
       {
-        command: '/ck:plan',
+        command: '/ak:plan',
         typeLabel: 'Create plan',
         description: 'AI creates a detailed implementation plan with phases',
         color: 'bg-sky-500/10 dark:bg-sky-500/20 text-sky-600 dark:text-sky-400',
         number: 1
       },
       {
-        command: '/ck:plan validate',
+        command: '/ak:plan validate',
         typeLabel: 'Validate plan decisions',
         description: 'Interview-style validation gate. Decisions auto-propagate to phase files',
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
@@ -368,7 +370,7 @@ export const stableWorkflows = [
         icon: '<path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>'
       },
       {
-        command: '/ck:cook @plan.md',
+        command: '/ak:cook @plan.md',
         typeLabel: 'Implement validated plan',
         description: 'AI implements with validated decisions already propagated to each phase',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
@@ -376,8 +378,8 @@ export const stableWorkflows = [
         isSkill: true
       }
     ],
-    featureCommand: '/ck:plan validate',
-    tip: '/ck:plan validate decisions auto-propagate to phase files',
+    featureCommand: '/ak:plan validate',
+    tip: '/ak:plan validate decisions auto-propagate to phase files',
     planFlags: [
       { flag: '--hard', desc: 'Complex multi-phase plan with red-team review', color: 'red' },
       { flag: '--deep', desc: 'Deep analysis: file inventory, test scenarios, dependency map per phase', color: 'indigo' },
@@ -409,14 +411,14 @@ export const stableWorkflows = [
     iconColor: 'text-cyan-600 dark:text-cyan-400',
     steps: [
       {
-        command: '/ck:plan --hard "feature"',
+        command: '/ak:plan --hard "feature"',
         typeLabel: 'Create plan with phases',
         description: 'Create a detailed plan with parallelizable phases for team execution',
         color: 'bg-cyan-500/10 dark:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400',
         number: 1
       },
       {
-        command: '/ck:team cook @plan',
+        command: '/ak:team cook @plan',
         typeLabel: 'Parallel team execution',
         description: 'Spawn parallel dev agents, each handling a phase. Auto test → review → merge',
         color: 'bg-teal-500/10 dark:bg-teal-500/20 text-teal-600 dark:text-teal-400',
@@ -435,7 +437,7 @@ export const stableWorkflows = [
       'Parallel dev agents (--devs N)',
       'Auto test → review → merge pipeline',
       'Event-driven hooks + agent memory',
-      'Also: /ck:team research, /ck:team review, /ck:team debug'
+      'Also: /ak:team research, /ak:team review, /ak:team debug'
     ],
     borderColor: 'border-cyan-500/20'
   },
@@ -453,14 +455,14 @@ export const stableWorkflows = [
     iconColor: 'text-amber-600 dark:text-amber-400',
     steps: [
       {
-        command: '/ck:plan --hard "feature"',
+        command: '/ak:plan --hard "feature"',
         typeLabel: 'Create plan',
         description: 'Create a detailed plan. Hard/parallel/two modes auto-run red-team after creation',
         color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
         number: 1
       },
       {
-        command: '/ck:plan red-team plans/',
+        command: '/ak:plan red-team plans/',
         typeLabel: 'Adversarial review',
         description: 'Spawn hostile reviewers: Security, Failure Mode, Assumption Destroyer, Scope Critic',
         color: 'bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400',
@@ -491,7 +493,7 @@ export const stableWorkflows = [
     iconColor: 'text-orange-600 dark:text-orange-400',
     steps: [
       {
-        command: '/ck:research "topic"',
+        command: '/ak:research "topic"',
         typeLabel: 'Deep research',
         description: 'AI researches the topic thoroughly using web search and documentation',
         color: 'bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400',
@@ -499,7 +501,7 @@ export const stableWorkflows = [
         isSkill: true
       },
       {
-        command: '/ck:docs-seeker "library"',
+        command: '/ak:docs-seeker "library"',
         typeLabel: 'Search library docs',
         description: 'Search official documentation via llms.txt for up-to-date API info',
         color: 'bg-yellow-500/10 dark:bg-yellow-500/20 text-yellow-600 dark:text-yellow-400',
@@ -507,7 +509,7 @@ export const stableWorkflows = [
         isSkill: true
       },
       {
-        command: '/ck:docs',
+        command: '/ak:docs',
         typeLabel: 'Generate project docs',
         description: 'Create or update project documentation based on codebase analysis',
         color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
@@ -515,8 +517,8 @@ export const stableWorkflows = [
         isSkill: true
       }
     ],
-    featureCommand: '/ck:research',
-    tip: '/ck:docs-seeker uses context7 for latest library documentation',
+    featureCommand: '/ak:research',
+    tip: '/ak:docs-seeker uses context7 for latest library documentation',
     features: [
       'Web search and synthesis',
       'Library documentation lookup',
@@ -539,7 +541,7 @@ export const stableWorkflows = [
     iconColor: 'text-rose-600 dark:text-rose-400',
     steps: [
       {
-        command: '/ck:security-scan',
+        command: '/ak:security-scan',
         typeLabel: 'Scan for vulnerabilities',
         description: 'Scan codebase for OWASP issues, hardcoded secrets, and dependency vulnerabilities',
         color: 'bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400',
@@ -547,7 +549,7 @@ export const stableWorkflows = [
         isSkill: true
       },
       {
-        command: '/ck:code-review --security',
+        command: '/ak:code-review --security',
         typeLabel: 'Security-focused review',
         description: 'Deep code review focusing on authentication, authorization, and data handling',
         color: 'bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400',
@@ -555,7 +557,7 @@ export const stableWorkflows = [
         isSkill: true
       },
       {
-        command: '/ck:fix --security',
+        command: '/ak:fix --security',
         typeLabel: 'Apply security fixes',
         description: 'AI applies recommended security fixes with detailed explanations',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
@@ -563,7 +565,7 @@ export const stableWorkflows = [
         isSkill: true
       }
     ],
-    featureCommand: '/ck:security-scan',
+    featureCommand: '/ak:security-scan',
     tip: 'Detects SQL injection, XSS, CSRF, and other OWASP Top 10 issues',
     features: [
       'Hardcoded secrets detection',
@@ -587,7 +589,7 @@ export const stableWorkflows = [
     iconColor: 'text-violet-600 dark:text-violet-400',
     steps: [
       {
-        command: '/ck:databases "schema design"',
+        command: '/ak:databases "schema design"',
         typeLabel: 'Design schema',
         description: 'Design database schema with relationships, indexes, and constraints',
         color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
@@ -595,14 +597,14 @@ export const stableWorkflows = [
         isSkill: true
       },
       {
-        command: '/ck:plan "migration"',
+        command: '/ak:plan "migration"',
         typeLabel: 'Plan migration',
         description: 'Create a safe migration plan with rollback strategy',
         color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
         number: 2
       },
       {
-        command: '/ck:cook @plan.md',
+        command: '/ak:cook @plan.md',
         typeLabel: 'Execute migration',
         description: 'Implement migration with proper error handling and validation',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
@@ -610,7 +612,7 @@ export const stableWorkflows = [
         isSkill: true
       }
     ],
-    featureCommand: '/ck:databases',
+    featureCommand: '/ak:databases',
     tip: 'Supports MongoDB, PostgreSQL, MySQL, and SQLite',
     features: [
       'Schema design with relationships',
@@ -634,7 +636,7 @@ export const stableWorkflows = [
     iconColor: 'text-slate-600 dark:text-slate-400',
     steps: [
       {
-        command: '/ck:devops "setup CI/CD"',
+        command: '/ak:devops "setup CI/CD"',
         typeLabel: 'Configure DevOps',
         description: 'Set up CI/CD pipelines for GitHub Actions, GitLab CI, or other platforms',
         color: 'bg-slate-500/10 dark:bg-slate-500/20 text-slate-600 dark:text-slate-400',
@@ -642,7 +644,7 @@ export const stableWorkflows = [
         isSkill: true
       },
       {
-        command: '/ck:deploy',
+        command: '/ak:deploy',
         typeLabel: 'Deploy to platform',
         description: 'Deploy to Cloudflare, Vercel, GCP, or Kubernetes with auto-detection',
         color: 'bg-zinc-500/10 dark:bg-zinc-500/20 text-zinc-600 dark:text-zinc-400',
@@ -650,14 +652,14 @@ export const stableWorkflows = [
         isSkill: true
       },
       {
-        command: '/ck:test --e2e',
+        command: '/ak:test --e2e',
         typeLabel: 'Run E2E tests',
         description: 'Verify deployment with end-to-end tests',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
         number: 3
       }
     ],
-    featureCommand: '/ck:devops',
+    featureCommand: '/ak:devops',
     tip: 'Supports Docker, Kubernetes, serverless, and container deployments',
     features: [
       'CI/CD pipeline generation',
@@ -681,7 +683,7 @@ export const stableWorkflows = [
     iconColor: 'text-emerald-600 dark:text-emerald-400',
     steps: [
       {
-        command: '/ck:ship [--official|--beta] [--skip-tests] [--skip-review]',
+        command: '/ak:ship [--official|--beta] [--skip-tests] [--skip-review]',
         typeLabel: 'Ship pipeline',
         description: 'Merge main, run tests, pre-landing review, bump version, update changelog, push, create PR',
         color: 'bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
@@ -689,7 +691,7 @@ export const stableWorkflows = [
         isSkill: true
       }
     ],
-    tip: '/ck:ship auto-detects test runner, version file format, and changelog style',
+    tip: '/ak:ship auto-detects test runner, version file format, and changelog style',
     features: [
       'Supports official (→main) and beta (→dev) ship modes',
       'Merges origin/main (or dev for beta) before testing',
@@ -714,7 +716,7 @@ export const stableWorkflows = [
     iconColor: 'text-orange-600 dark:text-orange-400',
     steps: [
       {
-        command: '/ck:deploy [platform]',
+        command: '/ak:deploy [platform]',
         typeLabel: 'Auto-deploy',
         description: 'AI detects your project type and deploys to 15+ platforms with zero manual config',
         color: 'bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400',
@@ -722,7 +724,7 @@ export const stableWorkflows = [
         isSkill: true
       }
     ],
-    tip: '/ck:deploy auto-detects your stack and handles environment variables, build steps, and platform config',
+    tip: '/ak:deploy auto-detects your stack and handles environment variables, build steps, and platform config',
     features: [
       'Auto-detects project type (Next.js, Astro, Express, etc.)',
       'Supports 15+ platforms out of the box',
@@ -745,7 +747,7 @@ export const stableWorkflows = [
     iconColor: 'text-orange-600 dark:text-orange-400',
     steps: [
       {
-        command: '/ck:worktree info',
+        command: '/ak:worktree info',
         typeLabel: 'Step 1: Get Repo Info',
         description: 'Parse repo type, base branch, and existing projects',
         color: 'bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400',
@@ -767,7 +769,7 @@ export const stableWorkflows = [
         icon: '<path d="M16 3h5v5M4 20L21 3M4 14l7 7M14 4l7 7"/>'
       }
     ],
-    featureCommand: '/ck:worktree',
+    featureCommand: '/ak:worktree',
     tip: 'Use --no-prefix to preserve exact branch names for Jira keys (like ND-1377-cleanup-docs).',
     features: [
       'Isolated git worktrees per feature',
@@ -791,7 +793,7 @@ export const stableWorkflows = [
     iconColor: 'text-violet-600 dark:text-violet-400',
     steps: [
       {
-        command: '/ck:llms [path]',
+        command: '/ak:llms [path]',
         typeLabel: 'Generate index',
         description: 'Create llms.txt following llmstxt.org spec — makes your docs AI-readable',
         color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
@@ -799,7 +801,7 @@ export const stableWorkflows = [
         isSkill: true
       }
     ],
-    tip: '/ck:llms generates standardized llms.txt so AI tools can quickly understand your codebase',
+    tip: '/ak:llms generates standardized llms.txt so AI tools can quickly understand your codebase',
     features: [
       'Follows llmstxt.org specification',
       'Generates from docs, README, or codebase',
@@ -853,7 +855,7 @@ export const stableWorkflows = [
     iconColor: 'text-purple-600 dark:text-purple-400',
     steps: [
       {
-        command: '/ck:tech-graph "<topic or system>"',
+        command: '/ak:tech-graph "<topic or system>"',
         typeLabel: 'Generate SVG diagram',
         description: 'Render publication-grade SVG with 7 design styles (modern, minimal, neon, retro, etc.) and 10 templates (architecture, sequence, ER, flowchart, state-machine, timeline, comparison-matrix, use-case, agent-architecture, data-flow)',
         color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
@@ -861,7 +863,7 @@ export const stableWorkflows = [
         isSkill: true
       }
     ],
-    tip: 'Pair with /ck:preview --diagram for visual self-review (auto-detects collisions, label overlaps, arrow routing issues)',
+    tip: 'Pair with /ak:preview --diagram for visual self-review (auto-detects collisions, label overlaps, arrow routing issues)',
     features: [
       '7 design styles: flat-icon, dark-terminal, blueprint, notion-clean, glassmorphism, claude-official, openai',
       '10 diagram templates incl. agent-architecture and data-flow',
@@ -884,7 +886,7 @@ export const stableWorkflows = [
     iconColor: 'text-emerald-600 dark:text-emerald-400',
     steps: [
       {
-        command: '/ck:xia <repo> --compare',
+        command: '/ak:xia <repo> --compare',
         typeLabel: 'Analyze source',
         description: 'Compare source repo architecture, patterns, and feature implementation side-by-side',
         color: 'bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400',
@@ -892,7 +894,7 @@ export const stableWorkflows = [
         isSkill: true
       },
       {
-        command: '/ck:xia <repo> [feature] --improve',
+        command: '/ak:xia <repo> [feature] --improve',
         typeLabel: 'Port & refactor',
         description: 'Copy feature from source and refactor to fit local codebase patterns',
         color: 'bg-teal-500/10 dark:bg-teal-500/20 text-teal-600 dark:text-teal-400',
@@ -900,7 +902,7 @@ export const stableWorkflows = [
         isSkill: true
       },
       {
-        command: '/ck:test',
+        command: '/ak:test',
         typeLabel: 'Validate port',
         description: 'Run tests to verify ported feature works correctly in local context',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
@@ -941,7 +943,7 @@ export const stableWorkflows = [
     iconColor: 'text-cyan-600 dark:text-cyan-400',
     steps: [
       {
-        command: '/ck:graphify',
+        command: '/ak:graphify',
         typeLabel: 'Build graph',
         description: 'Analyze codebase with tree-sitter AST, generate interactive visualization + report',
         color: 'bg-cyan-500/10 dark:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400',
@@ -949,7 +951,7 @@ export const stableWorkflows = [
         isSkill: true
       },
       {
-        command: '/ck:plan',
+        command: '/ak:plan',
         typeLabel: 'Plan with context',
         description: 'Use GRAPH_REPORT.md to understand architecture before creating implementation plan',
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
@@ -980,7 +982,7 @@ export const stableWorkflows = [
     iconColor: 'text-pink-600 dark:text-pink-400',
     steps: [
       {
-        command: '/ck:show-off',
+        command: '/ak:show-off',
         typeLabel: 'Generate showcase',
         description: 'Create multi-section HTML page with parallax, theme toggle, bilingual content (VI/EN), and auto-captured screenshots',
         color: 'bg-pink-500/10 dark:bg-pink-500/20 text-pink-600 dark:text-pink-400',
@@ -1010,7 +1012,7 @@ export const stableWorkflows = [
     iconColor: 'text-indigo-600 dark:text-indigo-400',
     steps: [
       {
-        command: '/ck:agentize --both',
+        command: '/ak:agentize --both',
         typeLabel: 'Generate CLI + MCP',
         description: 'Wrap codebase as both CLI tool and MCP server with shared core/ module',
         color: 'bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400',
@@ -1027,7 +1029,7 @@ export const stableWorkflows = [
         icon: '<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>'
       },
       {
-        command: '/ck:deploy',
+        command: '/ak:deploy',
         typeLabel: 'Deploy to cloud',
         description: 'Deploy to Cloudflare Workers, Docker, or any supported platform',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
@@ -1063,7 +1065,7 @@ export const stableWorkflows = [
     iconColor: 'text-fuchsia-600 dark:text-fuchsia-400',
     steps: [
       {
-        command: '/ck:ui-ux-pro-max',
+        command: '/ak:ui-ux-pro-max',
         typeLabel: 'Design Intelligence',
         description: 'Activate ui-ux-pro-max logic to formulate styling references',
         color: 'bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400',
@@ -1089,7 +1091,7 @@ export const stableWorkflows = [
         icon: '<path d="M20 7h-7L10 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>'
       },
       {
-        command: '/ck:frontend-design',
+        command: '/ak:frontend-design',
         typeLabel: 'Implement Interface',
         description: 'Execute the spec following the design dials: Motion, Variance, Density.',
         color: 'bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400',
@@ -1097,7 +1099,7 @@ export const stableWorkflows = [
         isSkill: true
       }
     ],
-    featureCommand: '/ck:frontend-design',
+    featureCommand: '/ak:frontend-design',
     tip: 'Anti-slop typography demands trending Google Fonts with Vietnamese coverage (e.g. Satoshi, Inter)',
     features: [
       'Design Dials: Variance, Density, Motion Intensity',
@@ -1121,7 +1123,7 @@ export const stableWorkflows = [
     iconColor: 'text-amber-600 dark:text-amber-400',
     steps: [
       {
-        command: '/ck:predict',
+        command: '/ak:predict',
         typeLabel: '5-persona debate',
         description: '5 expert personas debate proposed changes — architect, security, performance, UX, ops',
         color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
@@ -1152,7 +1154,7 @@ export const stableWorkflows = [
     iconColor: 'text-purple-600 dark:text-purple-400',
     steps: [
       {
-        command: '/ck:scenario',
+        command: '/ak:scenario',
         typeLabel: '12-dimension analysis',
         description: 'Decompose features across 12 dimensions to generate comprehensive test scenarios',
         color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
@@ -1165,7 +1167,7 @@ export const stableWorkflows = [
       '12-dimension feature decomposition',
       'Edge case and boundary condition discovery',
       'Test scenario generation with priorities',
-      'Integration with /ck:test for execution'
+      'Integration with /ak:test for execution'
     ],
     borderColor: 'border-purple-500/20'
   },
@@ -1183,7 +1185,7 @@ export const stableWorkflows = [
     iconColor: 'text-red-600 dark:text-red-400',
     steps: [
       {
-        command: '/ck:security',
+        command: '/ak:security',
         typeLabel: 'STRIDE audit',
         description: 'STRIDE threat modeling + OWASP scan with severity categorization and optional auto-fix',
         color: 'bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400',
@@ -1191,12 +1193,12 @@ export const stableWorkflows = [
         isSkill: true
       }
     ],
-    tip: 'Combine with /ck:security-scan for comprehensive vulnerability + threat coverage',
+    tip: 'Combine with /ak:security-scan for comprehensive vulnerability + threat coverage',
     features: [
       'STRIDE threat modeling framework',
       'OWASP vulnerability pattern matching',
       'Severity categorization and prioritization',
-      'Optional iterative auto-fix using /ck:loop pattern'
+      'Optional iterative auto-fix using /ak:loop pattern'
     ],
     borderColor: 'border-red-500/20'
   },
@@ -1214,7 +1216,7 @@ export const stableWorkflows = [
     iconColor: 'text-amber-600 dark:text-amber-400',
     steps: [
       {
-        command: '/ck:retro [timeframe] [--compare] [--team] [--format html|md]',
+        command: '/ak:retro [timeframe] [--compare] [--team] [--format html|md]',
         typeLabel: 'Analyze sprint',
         description: 'Gather git metrics (commits, LOC, hotspots, churn), compute health indicators, generate retrospective report',
         color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
@@ -1222,7 +1224,7 @@ export const stableWorkflows = [
         isSkill: true
       }
     ],
-    tip: '/ck:retro 2w --compare --team generates a two-week retro with period comparison and per-author breakdown',
+    tip: '/ak:retro 2w --compare --team generates a two-week retro with period comparison and per-author breakdown',
     features: [
       'Git metrics: commits/day, LOC added/removed, file hotspots',
       'Health indicators: churn rate, test ratio, active day ratio',
@@ -1246,7 +1248,7 @@ export const stableWorkflows = [
     iconColor: 'text-sky-600 dark:text-sky-400',
     steps: [
       {
-        command: '/ck:stitch generate "prompt"',
+        command: '/ak:stitch generate "prompt"',
         typeLabel: 'Generate design',
         description: 'Create UI designs from text prompts using Google Stitch AI',
         color: 'bg-sky-500/10 dark:bg-sky-500/20 text-sky-600 dark:text-sky-400',
@@ -1254,7 +1256,7 @@ export const stableWorkflows = [
         isSkill: true
       },
       {
-        command: '/ck:stitch export --format all',
+        command: '/ak:stitch export --format all',
         typeLabel: 'Export assets',
         description: 'Export as Tailwind/HTML + DESIGN.md spec for implementation',
         color: 'bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400',
@@ -1262,7 +1264,7 @@ export const stableWorkflows = [
         isSkill: true
       },
       {
-        command: '/ck:frontend-design',
+        command: '/ak:frontend-design',
         typeLabel: 'Implement components',
         description: 'Build React components from the exported design spec',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
@@ -1294,7 +1296,7 @@ export const stableWorkflows = [
     iconColor: 'text-teal-600 dark:text-teal-400',
     steps: [
       {
-        command: '/ck:vibe',
+        command: '/ak:vibe',
         typeLabel: 'Autonomous pipeline',
         description: 'One command takes a GitHub issue or feature request through plan → implement → review → ship (worktree isolation, reusable/TDD plan gates, cook or fix routing, review-pr, merge/CI watch)',
         color: 'bg-teal-500/10 dark:bg-teal-500/20 text-teal-600 dark:text-teal-400',
@@ -1309,7 +1311,7 @@ export const stableWorkflows = [
         hasIcon: true
       }
     ],
-    tip: 'Use /ck:vibe for end-to-end automation; for manual control use /ck:plan → /ck:cook instead',
+    tip: 'Use /ak:vibe for end-to-end automation; for manual control use /ak:plan → /ak:cook instead',
     borderColor: 'border-teal-500/20'
   },
   {
@@ -1326,7 +1328,7 @@ export const stableWorkflows = [
     iconColor: 'text-indigo-600 dark:text-indigo-400',
     steps: [
       {
-        command: '/ck:review-pr <PR>',
+        command: '/ak:review-pr <PR>',
         typeLabel: 'Review the PR',
         description: 'Checks duplicate prior work, project standards, strategic necessity, correctness, security, breaking changes, and AI-slop patterns',
         color: 'bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400',
@@ -1334,14 +1336,14 @@ export const stableWorkflows = [
         isSkill: true
       },
       {
-        command: '/ck:review-pr <PR> --fix --reply',
+        command: '/ak:review-pr <PR> --fix --reply',
         typeLabel: 'Auto-fix & reply',
         description: 'Apply the findings to the working tree and post the formal review back to GitHub',
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
         number: 2
       },
       {
-        command: '/ck:git merge',
+        command: '/ak:git merge',
         typeLabel: 'Merge when green',
         description: 'Merge once approved and CI passes',
         color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
@@ -1366,7 +1368,7 @@ export const stableWorkflows = [
     iconColor: 'text-pink-600 dark:text-pink-400',
     steps: [
       {
-        command: '/ck:html-video',
+        command: '/ak:html-video',
         typeLabel: 'Scaffold from template',
         description: 'Check out a template (promo, explainer, data video, social clip) and customize it in the studio',
         color: 'bg-pink-500/10 dark:bg-pink-500/20 text-pink-600 dark:text-pink-400',
@@ -1398,7 +1400,7 @@ export const stableWorkflows = [
     iconColor: 'text-blue-600 dark:text-blue-400',
     steps: [
       {
-        command: '/ck:chrome-profile',
+        command: '/ak:chrome-profile',
         typeLabel: 'Target real profile',
         description: 'Discover and target your real Google Chrome profile through Chrome DevTools MCP (real session cookies)',
         color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
@@ -1417,3 +1419,8 @@ export const stableWorkflows = [
     borderColor: 'border-blue-500/20'
   }
 ];
+
+export const stableWorkflows = createAgentKitWorkflowCatalog(
+  stableWorkflowEntries,
+  'engineer',
+);

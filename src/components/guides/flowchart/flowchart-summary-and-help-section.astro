@@ -1,7 +1,6 @@
 ---
 // FlowchartGuide summary cheat sheet and "not sure" help section
 import { getLangFromUrl, type Language } from "@/i18n";
-import { useTranslations } from "@/i18n/utils";
 
 interface Props {
   lang?: Language;
@@ -10,7 +9,6 @@ interface Props {
 const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const isVi = currentLang === "vi";
-const t = useTranslations(currentLang);
 ---
 
   <!-- Summary Cheat Sheet -->
@@ -63,7 +61,7 @@ const t = useTranslations(currentLang);
                   : '"I need to build something new from scratch"'
               }</td
             ><td class="py-2 px-4"
-              ><code class="text-amber-600 dark:text-amber-400">/ck:bootstrap</code
+              ><code class="text-amber-600 dark:text-amber-400">/ak:bootstrap</code
               ></td
             ></tr
           >
@@ -76,7 +74,7 @@ const t = useTranslations(currentLang);
               }</td
             ><td class="py-2 px-4"
               ><code class="text-violet-600 dark:text-violet-400"
-                >/ck:brainstorm</code
+                >/ak:brainstorm</code
               ></td
             ></tr
           >
@@ -88,7 +86,7 @@ const t = useTranslations(currentLang);
                   : '"I know exactly what I want, do it fast"'
               }</td
             ><td class="py-2 px-4"
-              ><code class="text-emerald-600 dark:text-emerald-400">/ck:cook</code
+              ><code class="text-emerald-600 dark:text-emerald-400">/ak:cook</code
               ></td
             ></tr
           >
@@ -101,7 +99,7 @@ const t = useTranslations(currentLang);
               }</td
             ><td class="py-2 px-4"
               ><code class="text-purple-600 dark:text-purple-400"
-                >/ck:plan → /ck:cook</code
+                >/ak:plan → /ak:cook</code
               ></td
             ></tr
           >
@@ -114,7 +112,7 @@ const t = useTranslations(currentLang);
               }</td
             ><td class="py-2 px-4"
               ><code class="text-orange-600 dark:text-orange-400"
-                >/ck:debug → /ck:fix</code
+                >/ak:debug → /ak:fix</code
               ></td
             ></tr
           >
@@ -126,16 +124,16 @@ const t = useTranslations(currentLang);
                   : '"Something\'s broken, I know what it is"'
               }</td
             ><td class="py-2 px-4"
-              ><code class="text-red-600 dark:text-red-400">/ck:fix</code></td
+              ><code class="text-red-600 dark:text-red-400">/ak:fix</code></td
             ></tr
           >
           <tr class="fc-stable-content"
             ><td class="py-2 px-4 text-slate-600 dark:text-slate-400"
               >{isVi ? "Cần lưu work" : '"I need to save my work"'}</td
             ><td class="py-2 px-4"
-              ><code class="text-indigo-600 dark:text-indigo-400">/ck:git cm</code>
+              ><code class="text-indigo-600 dark:text-indigo-400">/ak:git cm</code>
               {isVi ? "hoặc" : "or"}
-              <code class="text-indigo-600 dark:text-indigo-400">/ck:git cp</code
+              <code class="text-indigo-600 dark:text-indigo-400">/ak:git cp</code
               ></td
             ></tr
           >
@@ -147,7 +145,7 @@ const t = useTranslations(currentLang);
                   : '"I need to understand this codebase"'
               }</td
             ><td class="py-2 px-4"
-              ><code class="text-cyan-600 dark:text-cyan-400">/ck:docs init</code
+              ><code class="text-cyan-600 dark:text-cyan-400">/ak:docs init</code
               ></td
             ></tr
           >
@@ -157,7 +155,7 @@ const t = useTranslations(currentLang);
                 isVi ? "Cần advice kiến trúc" : '"I need architectural advice"'
               }</td
             ><td class="py-2 px-4"
-              ><code class="text-blue-600 dark:text-blue-400">/ck:ask</code></td
+              ><code class="text-blue-600 dark:text-blue-400">/ak:ask</code></td
             ></tr
           >
           <tr
@@ -166,16 +164,16 @@ const t = useTranslations(currentLang);
                 isVi ? "Có gì thay đổi gần đây?" : '"What changed recently?"'
               }</td
             ><td class="py-2 px-4"
-              ><code class="text-cyan-600 dark:text-cyan-400">/ck:watzup</code></td
+              ><code class="text-cyan-600 dark:text-cyan-400">/ak:watzup</code></td
             ></tr
           >
           <tr
             ><td class="py-2 px-4 text-slate-600 dark:text-slate-400"
               >{isVi ? "Xem plans trực quan" : '"View my plans visually"'}</td
             ><td class="py-2 px-4"
-              ><code class="text-pink-600 dark:text-pink-400">/ck:plans-kanban</code>
+              ><code class="text-pink-600 dark:text-pink-400">/ak:plans-kanban</code>
               {isVi ? "hoặc" : "or"}
-              <code class="text-pink-600 dark:text-pink-400">/ck:preview</code></td
+              <code class="text-pink-600 dark:text-pink-400">/ak:preview</code></td
             ></tr
           >
           <tr
@@ -195,4 +193,3 @@ const t = useTranslations(currentLang);
       </table>
     </div>
   </div>
-

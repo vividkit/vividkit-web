@@ -1,0 +1,140 @@
+---
+import { CheckCircle2 } from 'lucide-astro';
+
+import type { Language } from '@/i18n';
+import { useTranslations } from '@/i18n/utils';
+import type { AgentKitCliFact } from '@/data/guides/agentkit/agentkit-source-contract';
+import type { AgentKitMigrationOperationalFact } from '@/data/guides/agentkit/agentkit-migration-operational-facts';
+import type { AgentKitCommandGroupView } from './agentkit-command-view';
+import { toOperationalCommandView, viewsForPlatforms } from './agentkit-command-view';
+import AgentKitPlatformCommandSwitcher from './agentkit-platform-command-switcher.astro';
+
+interface Props {
+  lang: Language;
+  cliFacts: readonly AgentKitCliFact[];
+  operationalFacts: readonly AgentKitMigrationOperationalFact[];
+}
+
+const { lang, cliFacts, operationalFacts } = Astro.props;
+const t = useTranslations(lang);
+const factsById = new Map(cliFacts.filter((fact) => fact.channel === 'stable').map((fact) => [fact.id, fact]));
+
+function commonPlatformViews(ids: string[]) {
+  return ids.flatMap((id) => {
+    const fact = factsById.get(id);
+    return fact ? viewsForPlatforms(fact) : [];
+  });
+}
+
+const commandGroups: AgentKitCommandGroupView[] = [];
+for (const [id, stage] of [
+  ['preflight', 'preflight'],
+  ['remove', 'legacy-removal'],
+  ['collision', 'collision-check'],
+] as const) {
+  const commands = operationalFacts
+    .filter((fact) => fact.channel === 'stable' && fact.stage === stage)
+    .map(toOperationalCommandView);
+  if (commands.length > 0) commandGroups.push({ id, commands });
+}
+
+const installUnix = factsById.get('install-unix');
+const installWindows = factsById.get('install-windows');
+if (installUnix && installWindows) {
+  commandGroups.push({ id: 'install', commands: viewsForPlatforms(installUnix, installWindows) });
+}
+
+const verifyCommands = operationalFacts
+  .filter((fact) => fact.channel === 'stable' && fact.stage === 'verify-install')
+  .map(toOperationalCommandView);
+const doctor = factsById.get('doctor');
+if (doctor) verifyCommands.push(...viewsForPlatforms(doctor));
+if (verifyCommands.length > 0) commandGroups.push({ id: 'verify', commands: verifyCommands });
+
+for (const [id, factIds] of [
+  ['auth', ['login-license', 'login-email', 'login-api-key', 'whoami', 'licenses']],
+] as const) {
+  const commands = commonPlatformViews([...factIds]);
+  if (commands.length > 0) commandGroups.push({ id, commands });
+}
+
+const steps = [
+  { number: '01', id: 'step-01-choose-lane', commandGroup: undefined },
+  { number: '02', id: 'step-02-understand-boundary', commandGroup: undefined },
+  { number: '03', id: 'step-03-inventory', commandGroup: 'preflight' },
+  { number: '04', id: 'step-04-stage-ak', commandGroup: 'install' },
+  { number: '05', id: 'step-05-verify', commandGroup: 'verify' },
+  { number: '06', id: 'step-06-authenticate', commandGroup: 'auth' },
+  { number: '07', id: 'step-07-install-kit', commandGroup: undefined },
+  { number: '08', id: 'step-08-translate', commandGroup: undefined },
+  { number: '09', id: 'step-09-remove-legacy', commandGroup: 'remove' },
+  { number: '10', id: 'step-10-clean-up', commandGroup: 'collision' },
+] as const;
+
+function commandsFor(groupId: string | undefined): AgentKitCommandGroupView | undefined {
+  return groupId ? commandGroups.find((group) => group.id === groupId) : undefined;
+}
+---
+
+<section id="migration-journey" aria-labelledby="migration-journey-heading" class="pt-16">
+  <div class="max-w-3xl">
+    <h2 id="migration-journey-heading" class="font-heading text-3xl font-bold text-slate-950 text-balance dark:text-slate-50">
+      {t('agentkit.journey.heading')}
+    </h2>
+    <p class="mt-3 text-lg leading-relaxed text-slate-600 text-pretty dark:text-slate-300">
+      {t('agentkit.journey.intro')}
+    </p>
+  </div>
+
+  <ol class="mt-8 border-y border-slate-200 dark:border-slate-800">
+    {steps.map((step, index) => {
+      const group = commandsFor(step.commandGroup);
+      const isRemoval = step.number === '09';
+      return (
+        <li
+          id={step.id}
+          class:list={[
+            'grid gap-5 py-8 md:grid-cols-[4rem_minmax(0,1fr)] md:gap-8',
+            index > 0 && 'border-t border-slate-200 dark:border-slate-800',
+          ]}
+        >
+          <div
+            class:list={[
+              'flex h-12 w-12 items-center justify-center rounded-xl font-mono text-sm font-bold',
+              isRemoval
+                ? 'bg-rose-100 text-rose-700 dark:bg-rose-950/50 dark:text-rose-300'
+                : 'bg-slate-950 text-slate-50 dark:bg-slate-100 dark:text-slate-950',
+            ]}
+            aria-hidden="true"
+          >
+            {step.number}
+          </div>
+
+          <div class="min-w-0">
+            <h3 class="font-heading text-xl font-bold text-slate-950 dark:text-slate-50">
+              {t(`agentkit.step.${step.number}.title`)}
+            </h3>
+            <p class="mt-2 max-w-3xl leading-relaxed text-slate-600 text-pretty dark:text-slate-300">
+              {t(`agentkit.step.${step.number}.body`)}
+            </p>
+
+            {group && (
+              <div class="mt-5 max-w-3xl">
+                <AgentKitPlatformCommandSwitcher
+                  id={`journey-${step.number}`}
+                  lang={lang}
+                  commands={group.commands}
+                />
+              </div>
+            )}
+
+            <p class="mt-5 flex max-w-3xl gap-2 text-sm font-medium text-emerald-800 dark:text-emerald-300">
+              <CheckCircle2 class="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+              <span>{t(`agentkit.step.${step.number}.check`)}</span>
+            </p>
+          </div>
+        </li>
+      );
+    })}
+  </ol>
+</section>

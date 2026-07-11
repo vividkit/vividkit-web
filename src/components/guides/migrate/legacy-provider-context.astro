@@ -1,0 +1,12 @@
+---
+import type { Language } from '@/i18n';
+interface Props { lang: Language }
+const { lang } = Astro.props;
+const isVi = lang === 'vi';
+---
+
+<section id="legacy-provider-migration" class="scroll-mt-28 rounded-2xl border border-amber-300 bg-amber-50 p-5 dark:border-amber-400/30 dark:bg-amber-950/20">
+  <div class="flex flex-wrap items-center gap-2"><span class="rounded-full bg-amber-200 px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-amber-900 dark:bg-amber-400/20 dark:text-amber-100">Legacy CK</span><h2 class="text-xl font-bold text-amber-950 dark:text-amber-50">{isVi ? 'Provider converter cũ' : 'Historical provider converter'}</h2></div>
+  <p class="mt-3 leading-7 text-amber-900 dark:text-amber-100">{isVi ? 'ck migrate -a <provider> từng chuyển nội dung ClaudeKit sang provider khác. Đây là hành vi lịch sử của deprecated CLI, không phải ak migrate và không còn là happy path được copy.' : 'ck migrate -a <provider> historically converted ClaudeKit content for another provider. This belongs to the deprecated CLI, is not ak migrate, and is no longer a copyable happy path.'}</p>
+  <p class="mt-3 text-sm text-amber-800 dark:text-amber-200">{isVi ? 'Nếu project vẫn phụ thuộc converter cũ, giữ snapshot/backup, kiểm tra target support hiện tại và migrate theo từng loại file thay vì chạy lệnh legacy mù.' : 'If a project still depends on the old converter, retain a snapshot, verify current target support, and migrate each content family deliberately instead of blindly running the legacy command.'}</p>
+</section>

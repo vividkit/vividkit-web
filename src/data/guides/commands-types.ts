@@ -1,6 +1,7 @@
 // Shared TypeScript interfaces for command guide data
 
 export interface CommandItem {
+  /** Canonical invocation rendered and copied by the current AgentKit guide. */
   command: string;
   complexity: string;
   label: string;
@@ -8,6 +9,9 @@ export interface CommandItem {
   detail: string;
   isSkill?: boolean;
   isBeta?: boolean;
+  isRouter?: boolean;
+  /** Historical lookup terms; never rendered as preferred invocation syntax. */
+  aliases?: string[];
   // Colon-separated subcommands: /mkt:plan:cro → subcommands: ["cro"]
   subcommands?: string[];
   // Space-separated arguments: /mkt:ask [question] → args: ["[question]"]
@@ -19,7 +23,7 @@ export interface CommandItem {
   replacedCommand?: string;
   // Beta syntax annotation (for Marketing Kit)
   betaSyntax?: string;
-  // Short beta-only note shown after detail, e.g. "(Beta: /ck:debug)"
+  // Short beta-only note shown after detail, e.g. "(Beta: /ak:debug)"
   betaNote?: string;
   // Mark command as deprecated (shown with strikethrough styling)
   deprecated?: boolean;

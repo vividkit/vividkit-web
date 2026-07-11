@@ -9,7 +9,7 @@ import {
  * Dynamic llms.txt generator (https://llmstxt.org spec)
  *
  * Provides a curated, LLM-friendly index of the VividKit Guides so AI agents
- * can discover and navigate the ClaudeKit documentation without scraping HTML.
+ * can discover and navigate the AgentKit documentation without scraping HTML.
  * Sections and link data live in guides-llms-index.mjs (shared with the
  * /llms-full.txt build integration). Vietnamese mirrors live under the /vi
  * prefix of each path.
@@ -38,9 +38,9 @@ export const GET: APIRoute = () => {
   const body = [
     '# VividKit Guides',
     '',
-    '> Comprehensive documentation for ClaudeKit — an AI coding toolkit for the Claude Code CLI. Covers installation, 73+ slash commands and skills, workflow recipes, permissions, hooks, multi-provider setup (CCS, Codex), and troubleshooting.',
+    '> Comprehensive documentation for AgentKit — the successor to ClaudeKit — covering CK-to-AK migration, native CLI lifecycle, Engineer and Marketing kits, Claude Code, Codex, CCS, and troubleshooting.',
     '',
-    `Each guide has a Vietnamese mirror at the same path prefixed with \`/vi\` (e.g. ${siteUrl}/vi/guides/commands). VividKit is a visual interface for ClaudeKit; these guides teach ClaudeKit usage with the Claude Code CLI. A full-text version is available at ${siteUrl}/llms-full.txt.`,
+    `Each guide has a Vietnamese mirror at the same path prefixed with \`/vi\` (e.g. ${siteUrl}/vi/guides/commands). Current setup guidance uses AgentKit and target-native syntax; legacy ClaudeKit references are labeled migration or historical context. A full-text version is available at ${siteUrl}/llms-full.txt.`,
     '',
     (guideSections as GuideSection[]).map(renderSection).join('\n\n'),
     '',

@@ -12,20 +12,20 @@ const { lang } = Astro.props;
 const isVi = lang === 'vi';
 const t = (en: string, vi: string) => isVi ? vi : en;
 
-// Concrete combined workflow: ClaudeKit produces the artifact, Plannotator is the human review gate.
+// Concrete combined workflow: AgentKit produces the artifact, Plannotator is the human review gate.
 const workflow = [
   {
-    step: t('Plan with ClaudeKit, then gate the artifact', 'Plan bằng ClaudeKit, rồi gate artifact'),
-    command: '/ck:plan → /plannotator-annotate plans/.../plan.md',
+    step: t('Plan with AgentKit, then gate the artifact', 'Plan bằng AgentKit, rồi gate artifact'),
+    command: '/ak:plan → /plannotator-annotate plans/.../plan.md',
     body: t(
-      '`/ck:plan` creates a CK plan artifact; it is not automatically the same as host plan mode. Open the generated `plan.md` file in Plannotator when you want a browser review gate.',
-      '`/ck:plan` tạo artifact plan của CK; nó không tự đồng nghĩa với plan mode của host. Khi cần browser review gate, mở file `plan.md` đã tạo bằng Plannotator.'
+      '`/ak:plan` creates a CK plan artifact; it is not automatically the same as host plan mode. Open the generated `plan.md` file in Plannotator when you want a browser review gate.',
+      '`/ak:plan` tạo artifact plan của CK; nó không tự đồng nghĩa với plan mode của host. Khi cần browser review gate, mở file `plan.md` đã tạo bằng Plannotator.'
     ),
   },
   {
     step: t('Implement, then review the diff', 'Implement, rồi review diff'),
-    command: '/ck:cook → /plannotator-review',
-    body: t('Let `/ck:cook` handle the approved plan. Before you commit, open the diff with `/plannotator-review` and comment inline on the exact lines.', 'Để `/ck:cook` xử lý plan đã duyệt. Trước khi commit, mở diff bằng `/plannotator-review` và comment inline ngay các dòng cần sửa.'),
+    command: '/ak:cook → /plannotator-review',
+    body: t('Let `/ak:cook` handle the approved plan. Before you commit, open the diff with `/plannotator-review` and comment inline on the exact lines.', 'Để `/ak:cook` xử lý plan đã duyệt. Trước khi commit, mở diff bằng `/plannotator-review` và comment inline ngay các dòng cần sửa.'),
   },
   {
     step: t('Review docs and artifacts', 'Review docs và artifact'),
@@ -34,10 +34,10 @@ const workflow = [
   },
 ];
 
-const planGateCode = `# 1) Ask ClaudeKit to produce the plan artifact
-/ck:plan "Build the feature and save a phased implementation plan"
+const planGateCode = `# 1) Ask AgentKit to produce the plan artifact
+/ak:plan "Build the feature and save a phased implementation plan"
 
-# 2) Use the real path printed by /ck:plan
+# 2) Use the real path printed by /ak:plan
 /plannotator-annotate plans/<plan-slug>/plan.md
 
 # 3) In the browser, comment on:
@@ -50,8 +50,8 @@ const planGateCode = `# 1) Ask ClaudeKit to produce the plan artifact
 # The annotations return to this agent session.
 # The agent should revise the plan from those notes before implementation.`;
 
-const downstreamGateCode = `# After the approved plan, let ClaudeKit implement
-/ck:cook
+const downstreamGateCode = `# After the approved plan, let AgentKit implement
+/ak:cook
 
 # Review the actual working-tree diff before commit
 /plannotator-review
@@ -71,15 +71,15 @@ const reviewTargets = [
 <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950/75 sm:p-6">
   <div class="max-w-3xl">
     <p class="text-xs font-bold uppercase tracking-[0.16em] text-cyan-700 dark:text-cyan-300">
-      {t('ClaudeKit fit', 'Fit với ClaudeKit')}
+      {t('AgentKit fit', 'Fit với AgentKit')}
     </p>
     <h2 class="mt-2 text-2xl font-bold tracking-tight text-slate-950 dark:text-white">
-      {t('Yes — run it beside ClaudeKit', 'Có — chạy song song với ClaudeKit')}
+      {t('Yes — run it beside AgentKit', 'Có — chạy song song với AgentKit')}
     </h2>
     <p class="mt-2 text-sm leading-7 text-slate-600 dark:text-slate-400">
       {t(
-        'They do different jobs, so they pair cleanly. ClaudeKit drives the work — plan, cook, review, test. Plannotator is the human review gate: the browser surface where you inspect what CK produced and send precise feedback. Auto-blocking only happens when the host lifecycle hook fires.',
-        'Hai bên làm hai việc khác nhau nên ghép rất hợp. ClaudeKit lo phần chạy — plan, cook, review, test. Plannotator là cổng review của con người: surface trong browser để bạn kiểm thứ CK tạo ra và gửi feedback chính xác. Chỉ auto-block khi lifecycle hook của host được kích hoạt.'
+        'They do different jobs, so they pair cleanly. AgentKit drives the work — plan, cook, review, test. Plannotator is the human review gate: the browser surface where you inspect what CK produced and send precise feedback. Auto-blocking only happens when the host lifecycle hook fires.',
+        'Hai bên làm hai việc khác nhau nên ghép rất hợp. AgentKit lo phần chạy — plan, cook, review, test. Plannotator là cổng review của con người: surface trong browser để bạn kiểm thứ CK tạo ra và gửi feedback chính xác. Chỉ auto-block khi lifecycle hook của host được kích hoạt.'
       )}
     </p>
   </div>
@@ -89,8 +89,8 @@ const reviewTargets = [
     <p
       class="text-sm leading-6 text-slate-700 dark:text-slate-300"
       set:html={renderInlineCode(t(
-        'Rule of thumb: Claude Code `ExitPlanMode`, Codex `Stop`, OpenCode `submit_plan`, and Pi plan mode can auto-open Plannotator. A normal ClaudeKit `/ck:plan` run is a plan-producing command, so treat Plannotator as an explicit review step.',
-        'Quy tắc ngắn: Claude Code `ExitPlanMode`, Codex `Stop`, OpenCode `submit_plan`, và Pi plan mode có thể tự mở Plannotator. Một lần chạy `/ck:plan` bình thường của ClaudeKit là command tạo plan, nên xem Plannotator là bước review gọi rõ ràng.'
+        'Rule of thumb: Claude Code `ExitPlanMode`, Codex `Stop`, OpenCode `submit_plan`, and Pi plan mode can auto-open Plannotator. A normal AgentKit `/ak:plan` run is a plan-producing command, so treat Plannotator as an explicit review step.',
+        'Quy tắc ngắn: Claude Code `ExitPlanMode`, Codex `Stop`, OpenCode `submit_plan`, và Pi plan mode có thể tự mở Plannotator. Một lần chạy `/ak:plan` bình thường của AgentKit là command tạo plan, nên xem Plannotator là bước review gọi rõ ràng.'
       ))}
     ></p>
   </div>
@@ -121,8 +121,8 @@ const reviewTargets = [
         </h4>
         <p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
           {t(
-            'After `/ck:plan` writes a plan file, open that exact `plan.md` with Plannotator. When you send feedback in the browser, annotations return to the current agent session and the agent should revise the plan before implementation starts. Ask again only if the review happened outside this session.',
-            'Sau khi `/ck:plan` ghi plan file, mở đúng file `plan.md` đó bằng Plannotator. Khi bạn send feedback trong browser, annotations sẽ quay lại session agent hiện tại và agent nên revise plan trước khi implement. Chỉ cần hỏi lại nếu review diễn ra ngoài session này.'
+            'After `/ak:plan` writes a plan file, open that exact `plan.md` with Plannotator. When you send feedback in the browser, annotations return to the current agent session and the agent should revise the plan before implementation starts. Ask again only if the review happened outside this session.',
+            'Sau khi `/ak:plan` ghi plan file, mở đúng file `plan.md` đó bằng Plannotator. Khi bạn send feedback trong browser, annotations sẽ quay lại session agent hiện tại và agent nên revise plan trước khi implement. Chỉ cần hỏi lại nếu review diễn ra ngoài session này.'
           )}
         </p>
         <div class="mt-3">
@@ -165,8 +165,8 @@ const reviewTargets = [
     <CheckCircle2 class="mt-0.5 h-5 w-5 shrink-0 text-emerald-600 dark:text-emerald-300" stroke-width={2.2} />
     <p class="text-sm leading-6 text-slate-700 dark:text-slate-300">
       {t(
-        'Keep them as separate tools. Use Plannotator beside ClaudeKit, not merged into it — that keeps CK free of a UI server and browser state, and lets each update on its own schedule.',
-        'Giữ chúng là hai tool riêng. Dùng Plannotator song song với ClaudeKit, không merge vào trong — như vậy CK không phải gánh UI server và browser state, và mỗi bên cập nhật theo nhịp riêng.'
+        'Keep them as separate tools. Use Plannotator beside AgentKit, not merged into it — that keeps CK free of a UI server and browser state, and lets each update on its own schedule.',
+        'Giữ chúng là hai tool riêng. Dùng Plannotator song song với AgentKit, không merge vào trong — như vậy CK không phải gánh UI server và browser state, và mỗi bên cập nhật theo nhịp riêng.'
       )}
     </p>
   </div>

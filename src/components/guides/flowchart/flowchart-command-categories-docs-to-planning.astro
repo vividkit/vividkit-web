@@ -1,7 +1,6 @@
 ---
 // FlowchartGuide command categories: Documentation through Planning Variations (categories 5-11)
 import { getLangFromUrl, type Language } from "@/i18n";
-import { useTranslations } from "@/i18n/utils";
 
 interface Props {
   lang?: Language;
@@ -10,7 +9,6 @@ interface Props {
 const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const isVi = currentLang === "vi";
-const t = useTranslations(currentLang);
 ---
 
 
@@ -60,7 +58,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="px-2 py-1 rounded bg-amber-500/20 text-amber-600 dark:text-amber-400 font-mono font-bold"
-                  >/ck:docs init</code
+                  >/ak:docs init</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -80,7 +78,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="px-2 py-1 rounded bg-amber-500/20 text-amber-600 dark:text-amber-400 font-mono font-bold"
-                  >/ck:docs summarize</code
+                  >/ak:docs summarize</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -98,7 +96,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="px-2 py-1 rounded bg-amber-500/20 text-amber-600 dark:text-amber-400 font-mono font-bold"
-                  >/ck:docs update</code
+                  >/ak:docs update</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -159,7 +157,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="px-2 py-1 rounded bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 font-mono font-bold"
-                  >/ck:scout</code
+                  >/ak:scout</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -181,7 +179,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="px-2 py-1 rounded bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 font-mono font-bold"
-                  >/ck:scout ext</code
+                  >/ak:scout ext</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -201,7 +199,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="px-2 py-1 rounded bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 font-mono font-bold"
-                  >/ck:watzup</code
+                  >/ak:watzup</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -265,7 +263,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="px-2 py-1 rounded bg-blue-500/20 text-blue-600 dark:text-blue-400 font-mono font-bold"
-                  >/ck:ask</code
+                  >/ak:ask</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -416,7 +414,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="px-2 py-1 rounded bg-pink-500/20 text-pink-600 dark:text-pink-400 font-mono font-bold"
-                  >/ck:plans-kanban</code
+                  >/ak:plans-kanban</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -438,7 +436,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="px-2 py-1 rounded bg-pink-500/20 text-pink-600 dark:text-pink-400 font-mono font-bold"
-                  >/ck:preview</code
+                  >/ak:preview</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -460,7 +458,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="px-2 py-1 rounded bg-green-500/20 text-green-600 dark:text-green-400 font-mono font-bold"
-                  >/ck:test</code
+                  >/ak:test</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -527,7 +525,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="px-2 py-1 rounded bg-pink-500/20 text-pink-600 dark:text-pink-400 font-mono font-bold"
-                  >/ck:frontend-design</code
+                  >/ak:frontend-design</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -549,7 +547,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="px-2 py-1 rounded bg-pink-500/20 text-pink-600 dark:text-pink-400 font-mono font-bold"
-                  >/ck:remotion</code
+                  >/ak:remotion</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -565,7 +563,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="px-2 py-1 rounded bg-pink-500/20 text-pink-600 dark:text-pink-400 font-mono font-bold"
-                  >/ck:threejs</code
+                  >/ak:threejs</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -585,7 +583,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="px-2 py-1 rounded bg-pink-500/20 text-pink-600 dark:text-pink-400 font-mono font-bold"
-                  >/ck:ai-artist</code
+                  >/ak:ai-artist</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -599,7 +597,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="px-2 py-1 rounded bg-pink-500/20 text-pink-600 dark:text-pink-400 font-mono font-bold"
-                  >/ck:chrome-profile</code
+                  >/ak:chrome-profile</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -671,7 +669,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="text-xs px-2 py-1 rounded bg-violet-500/10 text-violet-600 dark:text-violet-400 font-mono font-bold"
-                  >/ck:code-review</code
+                  >/ak:code-review</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -693,7 +691,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="text-xs px-2 py-1 rounded bg-violet-500/10 text-violet-600 dark:text-violet-400 font-mono font-bold"
-                  >/ck:review-pr</code
+                  >/ak:review-pr</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -770,7 +768,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 font-mono font-bold"
-                  >/ck:plan</code
+                  >/ak:plan</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -786,7 +784,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 font-mono font-bold"
-                  >/ck:plan --fast</code
+                  >/ak:plan --fast</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -808,7 +806,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 font-mono font-bold"
-                  >/ck:plan --hard</code
+                  >/ak:plan --hard</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -830,7 +828,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 font-mono font-bold"
-                  >/ck:plan --parallel</code
+                  >/ak:plan --parallel</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -852,7 +850,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 font-mono font-bold"
-                  >/ck:plan validate</code
+                  >/ak:plan validate</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"
@@ -870,7 +868,7 @@ const t = useTranslations(currentLang);
               <td class="py-3 px-4"
                 ><code
                   class="text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 font-mono font-bold"
-                  >/ck:plan archive</code
+                  >/ak:plan archive</code
                 ></td
               >
               <td class="py-3 px-4 text-slate-600 dark:text-slate-400"

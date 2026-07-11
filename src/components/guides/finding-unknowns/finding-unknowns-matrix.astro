@@ -10,7 +10,7 @@ const { lang } = Astro.props;
 const isVi = lang === 'vi';
 const t = (en: string, vi: string) => isVi ? vi : en;
 
-// The 2x2 unknowns matrix: each quadrant maps to the ClaudeKit commands that resolve it
+// The 2x2 unknowns matrix: each quadrant maps to the AgentKit commands that resolve it
 const quadrants = [
   {
     icon: CheckCircle2,
@@ -24,7 +24,7 @@ const quadrants = [
       '"Add a rate limiter to the API client, max 10 req/s."',
       '"Thêm rate limiter cho API client, tối đa 10 req/s."'
     ),
-    commands: ['/ck:cook', '/ck:fix', '/ck:plan'],
+    commands: ['/ak:cook', '/ak:fix', '/ak:plan'],
     commandNote: t(
       'No dedicated command — known knowns are just the task you hand to whatever you run next.',
       'Không có lệnh riêng — known knowns chính là task bạn đưa cho bất kỳ lệnh nào bạn chạy tiếp theo.'
@@ -42,7 +42,7 @@ const quadrants = [
       '"Should retries use exponential backoff or a fixed delay? I have not picked."',
       '"Retry nên dùng exponential backoff hay fixed delay? Tôi chưa chọn."'
     ),
-    commands: ['/ck:brainstorm', '/ck:plan', '/ck:plan validate'],
+    commands: ['/ak:brainstorm', '/ak:plan', '/ak:plan validate'],
     commandNote: t(
       'All three interview you with targeted questions before locking in a design or its assumptions.',
       'Cả ba đều phỏng vấn bạn bằng câu hỏi trúng đích trước khi chốt design hoặc chốt assumption.'
@@ -60,7 +60,7 @@ const quadrants = [
       '"I cannot describe the dashboard I want, but show me 4 directions and I will point."',
       '"Tôi không tả được dashboard mình muốn, nhưng đưa 4 hướng design là tôi chỉ được ngay."'
     ),
-    commands: ['/ck:brainstorm --html', '/ck:preview'],
+    commands: ['/ak:brainstorm --html', '/ak:preview'],
     commandNote: t(
       'Prototype first, react second. Low-cost HTML mocks surface these before implementation locks them in.',
       'Prototype trước, react sau. Mock HTML nhẹ, ít tốn kém giúp lộ tiêu chí trước khi implementation khoá cứng.'
@@ -78,7 +78,7 @@ const quadrants = [
       '"I am adding an auth provider but know nothing about the auth modules here."',
       '"Tôi cần thêm auth provider nhưng chưa đụng module auth trong codebase này bao giờ."'
     ),
-    commands: ['/blindspot', '/ck:scenario', '/ck:predict', '/ck:scout', '/ck:plan red-team'],
+    commands: ['/blindspot', '/ak:scenario', '/ak:predict', '/ak:scout', '/ak:plan red-team'],
     commandNote: t(
       'The main target of this method. Ask the agent to find them for you — it reads the territory faster than you.',
       'Mục tiêu chính của phương pháp. Nhờ agent tìm giúp — nó đọc lãnh thổ nhanh hơn bạn.'

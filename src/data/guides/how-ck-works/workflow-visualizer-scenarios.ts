@@ -1,13 +1,13 @@
-// Workflow scenario definitions for the interactive "How ClaudeKit Works" visualizer
-// Each scenario describes a ClaudeKit command pipeline with step-by-step breakdown
+// Workflow scenario definitions for the interactive "How AgentKit Works" visualizer
+// Each scenario describes a AgentKit command pipeline with step-by-step breakdown
 
 import type { WorkflowScenario } from './workflow-visualizer-types';
 
 export const workflowScenarios: WorkflowScenario[] = [
-  // ─── /ck:brainstorm — Solution Brainstorming ──────────────────
+  // ─── /ak:brainstorm — Solution Brainstorming ──────────────────
   {
     id: 'brainstorm',
-    command: '/ck:brainstorm',
+    command: '/ak:brainstorm',
     kit: 'engineer',
     titleEn: 'Brainstorm Solutions',
     titleVi: 'Brainstorm Giải Pháp',
@@ -19,12 +19,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'bs-input',
         type: 'user-input',
-        name: '/ck:brainstorm',
+        name: '/ak:brainstorm',
         descEn: 'You describe the unclear decision or feature idea',
         descVi: 'Bạn mô tả quyết định hoặc ý tưởng feature chưa rõ',
-        explainEn: 'You describe a problem where the right approach is not obvious. For example: "/ck:brainstorm best auth approach for our SaaS app".\n\nHARD GATE: this skill does not write code, scaffold files, or invoke implementation skills. It must present a design and get user approval before any later implementation path exists.',
-        explainVi: 'Bạn mô tả một vấn đề chưa rõ hướng làm. Ví dụ: "/ck:brainstorm cách auth tốt nhất cho SaaS app".\n\nHARD GATE: skill này không viết code, không scaffold file, không gọi skill triển khai. Nó phải trình bày design và được user duyệt trước khi có đường triển khai tiếp theo.',
-        codeSnippet: '> /ck:brainstorm best auth approach for our SaaS\n\n// Hard gate:\n// - no implementation skill\n// - no code or scaffolding\n// - design first, approval later',
+        explainEn: 'You describe a problem where the right approach is not obvious. For example: "/ak:brainstorm best auth approach for our SaaS app".\n\nHARD GATE: this skill does not write code, scaffold files, or invoke implementation skills. It must present a design and get user approval before any later implementation path exists.',
+        explainVi: 'Bạn mô tả một vấn đề chưa rõ hướng làm. Ví dụ: "/ak:brainstorm cách auth tốt nhất cho SaaS app".\n\nHARD GATE: skill này không viết code, không scaffold file, không gọi skill triển khai. Nó phải trình bày design và được user duyệt trước khi có đường triển khai tiếp theo.',
+        codeSnippet: '> /ak:brainstorm best auth approach for our SaaS\n\n// Hard gate:\n// - no implementation skill\n// - no code or scaffolding\n// - design first, approval later',
         icon: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
         color: 'purple',
       },
@@ -46,8 +46,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Scout First',
         descEn: 'Map project type, modules, patterns, docs, plans, and constraints',
         descVi: 'Map loại project, modules, patterns, docs, plans, và ràng buộc',
-        explainEn: 'Scout is mandatory before any clarifying question. The main agent uses ck:scout or direct Glob/Grep for small repos to collect:\n\n• Project type, languages, and frameworks.\n• Relevant modules and existing patterns.\n• Related docs, plans, schemas, public APIs, and constraints.\n\nThe agent then summarizes 3-6 findings to the user before Discovery starts.',
-        explainVi: 'Scout là bắt buộc trước mọi câu hỏi làm rõ. Main agent dùng ck:scout hoặc Glob/Grep trực tiếp với repo nhỏ để thu thập:\n\n• Loại project, ngôn ngữ, framework.\n• Modules liên quan và patterns đang dùng.\n• Docs, plans, schemas, public APIs, và ràng buộc liên quan.\n\nSau đó agent tóm tắt 3-6 findings cho user trước khi vào Discovery.',
+        explainEn: 'Scout is mandatory before any clarifying question. The main agent uses ak:scout or direct Glob/Grep for small repos to collect:\n\n• Project type, languages, and frameworks.\n• Relevant modules and existing patterns.\n• Related docs, plans, schemas, public APIs, and constraints.\n\nThe agent then summarizes 3-6 findings to the user before Discovery starts.',
+        explainVi: 'Scout là bắt buộc trước mọi câu hỏi làm rõ. Main agent dùng ak:scout hoặc Glob/Grep trực tiếp với repo nhỏ để thu thập:\n\n• Loại project, ngôn ngữ, framework.\n• Modules liên quan và patterns đang dùng.\n• Docs, plans, schemas, public APIs, và ràng buộc liên quan.\n\nSau đó agent tóm tắt 3-6 findings cho user trước khi vào Discovery.',
         codeSnippet: '// Scout before questions:\n// - package.json / framework / language\n// - relevant files and existing patterns\n// - docs/ and plans/ related to the topic\n// - constraints from schemas, APIs, naming\n//\n// Output to user: 3-6 bullets of codebase findings',
         icon: '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',
         color: 'green',
@@ -72,9 +72,9 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Research + Evidence',
         descEn: 'Consult planner/docs-manager context plus WebSearch and docs tools when useful',
         descVi: 'Tham khảo planner/docs-manager context cùng WebSearch và docs tools khi cần',
-        explainEn: 'The main agent gathers evidence before recommending an approach:\n\n• planner agent context for proven solutions and industry practice.\n• docs-manager context for existing project implementation and constraints.\n• WebSearch, ck:docs-seeker, ck:ai-multimodal, or psql when the problem needs external docs, visual analysis, or DB shape.\n\nThe architecture note says no agents are spawned via Task tool; this remains main-agent-led consultation.',
-        explainVi: 'Main agent gom bằng chứng trước khi khuyến nghị hướng làm:\n\n• planner agent context cho giải pháp đã chứng minh và industry practice.\n• docs-manager context cho implementation và constraints hiện có.\n• WebSearch, ck:docs-seeker, ck:ai-multimodal, hoặc psql khi cần docs ngoài, phân tích hình ảnh, hoặc cấu trúc DB.\n\nArchitecture note nói không spawn agents qua Task tool; đây vẫn là consultation do main agent dẫn.',
-        codeSnippet: '// Evidence gathering led by Main Agent:\n// - planner context: proven solution patterns\n// - docs-manager context: project constraints\n// - WebSearch / ck:docs-seeker when external docs matter\n// - ck:ai-multimodal for mockups\n// - psql for existing DB shape\n//\n// No Task-spawned sub-agents in this flow',
+        explainEn: 'The main agent gathers evidence before recommending an approach:\n\n• planner agent context for proven solutions and industry practice.\n• docs-manager context for existing project implementation and constraints.\n• WebSearch, ak:docs-seeker, ak:ai-multimodal, or psql when the problem needs external docs, visual analysis, or DB shape.\n\nThe architecture note says no agents are spawned via Task tool; this remains main-agent-led consultation.',
+        explainVi: 'Main agent gom bằng chứng trước khi khuyến nghị hướng làm:\n\n• planner agent context cho giải pháp đã chứng minh và industry practice.\n• docs-manager context cho implementation và constraints hiện có.\n• WebSearch, ak:docs-seeker, ak:ai-multimodal, hoặc psql khi cần docs ngoài, phân tích hình ảnh, hoặc cấu trúc DB.\n\nArchitecture note nói không spawn agents qua Task tool; đây vẫn là consultation do main agent dẫn.',
+        codeSnippet: '// Evidence gathering led by Main Agent:\n// - planner context: proven solution patterns\n// - docs-manager context: project constraints\n// - WebSearch / ak:docs-seeker when external docs matter\n// - ak:ai-multimodal for mockups\n// - psql for existing DB shape\n//\n// No Task-spawned sub-agents in this flow',
         icon: '<path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/>',
         color: 'green',
       },
@@ -96,21 +96,21 @@ export const workflowScenarios: WorkflowScenario[] = [
         id: 'bs-finalize',
         type: 'output',
         name: 'Report + Output Flags + Plan Handoff',
-        descEn: 'Write summary report (+ HTML/wiki when flagged), then offer /ck:plan --tdd, /ck:plan, or end session',
-        descVi: 'Viết summary report (+ HTML/wiki nếu có flag), rồi offer /ck:plan --tdd, /ck:plan, hoặc kết thúc',
-        explainEn: 'The workflow closes only when all trigger conditions hold:\n\n• User explicitly approved the proposal.\n• No clarifying questions remain open.\n• The design doc or brainstorm report has been written.\n\nOptional output flags run on top of the markdown report:\n• --html — also write a self-contained editorial-magazine HTML report (same directory & stem).\n• --wiki — publish the markdown + HTML to AgentWiki via the agentwiki CLI or MCP; skips with a notice (never fails the brainstorm) when unavailable.\n\nThen AskUserQuestion offers three choices with the recommended option first: /ck:plan --tdd for refactors or critical logic, /ck:plan for standard changes, or End session. The selected plan command receives the brainstorm summary path (plus any HTML/wiki URLs) as context. /ck:journal records the session.',
-        explainVi: 'Workflow chỉ đóng khi đủ các điều kiện:\n\n• User đã duyệt proposal rõ ràng.\n• Không còn câu hỏi làm rõ đang mở.\n• Design doc hoặc brainstorm report đã được viết.\n\nFlags output tùy chọn chạy thêm trên report markdown:\n• --html — viết thêm report HTML editorial-magazine self-contained (cùng thư mục & tên gốc).\n• --wiki — publish markdown + HTML lên AgentWiki qua agentwiki CLI hoặc MCP; nếu không khả dụng thì tự bỏ qua kèm thông báo (không làm fail brainstorm).\n\nSau đó AskUserQuestion offer 3 lựa chọn với option recommend đặt đầu: /ck:plan --tdd cho refactor hoặc logic quan trọng, /ck:plan cho thay đổi tiêu chuẩn, hoặc End session. Lệnh plan được chọn nhận path report brainstorm (cùng URL HTML/wiki nếu có) làm context. /ck:journal ghi lại session.',
-        codeSnippet: '// Summary report saved via ck:project-organization\n// plans/reports/brainstorm-YYMMDD-HHMM-slug.md\n//\n// Optional output flags:\n// --html  → brainstorm-YYMMDD-HHMM-slug.html (editorial)\n// --wiki  → agentwiki doc upload + sites upload (or skip notice)\n//\n// AskUserQuestion options:\n// 1. /ck:plan --tdd <brainstorm-report>  // recommended for refactor/critical logic\n// 2. /ck:plan <brainstorm-report>        // standard feature/change\n// 3. End session                         // plan later\n//\n// Then: /ck:journal',
+        descEn: 'Write summary report (+ HTML/wiki when flagged), then offer /ak:plan --tdd, /ak:plan, or end session',
+        descVi: 'Viết summary report (+ HTML/wiki nếu có flag), rồi offer /ak:plan --tdd, /ak:plan, hoặc kết thúc',
+        explainEn: 'The workflow closes only when all trigger conditions hold:\n\n• User explicitly approved the proposal.\n• No clarifying questions remain open.\n• The design doc or brainstorm report has been written.\n\nOptional output flags run on top of the markdown report:\n• --html — also write a self-contained editorial-magazine HTML report (same directory & stem).\n• --wiki — publish the markdown + HTML to AgentWiki via the agentwiki CLI or MCP; skips with a notice (never fails the brainstorm) when unavailable.\n\nThen AskUserQuestion offers three choices with the recommended option first: /ak:plan --tdd for refactors or critical logic, /ak:plan for standard changes, or End session. The selected plan command receives the brainstorm summary path (plus any HTML/wiki URLs) as context. /ak:journal records the session.',
+        explainVi: 'Workflow chỉ đóng khi đủ các điều kiện:\n\n• User đã duyệt proposal rõ ràng.\n• Không còn câu hỏi làm rõ đang mở.\n• Design doc hoặc brainstorm report đã được viết.\n\nFlags output tùy chọn chạy thêm trên report markdown:\n• --html — viết thêm report HTML editorial-magazine self-contained (cùng thư mục & tên gốc).\n• --wiki — publish markdown + HTML lên AgentWiki qua agentwiki CLI hoặc MCP; nếu không khả dụng thì tự bỏ qua kèm thông báo (không làm fail brainstorm).\n\nSau đó AskUserQuestion offer 3 lựa chọn với option recommend đặt đầu: /ak:plan --tdd cho refactor hoặc logic quan trọng, /ak:plan cho thay đổi tiêu chuẩn, hoặc End session. Lệnh plan được chọn nhận path report brainstorm (cùng URL HTML/wiki nếu có) làm context. /ak:journal ghi lại session.',
+        codeSnippet: '// Summary report saved via ak:project-organization\n// plans/reports/brainstorm-YYMMDD-HHMM-slug.md\n//\n// Optional output flags:\n// --html  → brainstorm-YYMMDD-HHMM-slug.html (editorial)\n// --wiki  → agentwiki doc upload + sites upload (or skip notice)\n//\n// AskUserQuestion options:\n// 1. /ak:plan --tdd <brainstorm-report>  // recommended for refactor/critical logic\n// 2. /ak:plan <brainstorm-report>        // standard feature/change\n// 3. End session                         // plan later\n//\n// Then: /ak:journal',
         icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
         color: 'purple',
       },
     ],
   },
 
-  // ─── /ck:plan — Implementation Planning ─────────────────────
+  // ─── /ak:plan — Implementation Planning ─────────────────────
   {
     id: 'plan',
-    command: '/ck:plan',
+    command: '/ak:plan',
     kit: 'engineer',
     titleEn: 'Plan Implementation',
     titleVi: 'Lập Kế Hoạch',
@@ -122,12 +122,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'plan-input',
         type: 'user-input',
-        name: '/ck:plan',
+        name: '/ak:plan',
         descEn: 'You describe what to plan and select mode + composable flags',
         descVi: 'Bạn mô tả cần lập kế hoạch gì và chọn mode + composable flags',
-        explainEn: 'You describe the feature or system to plan. ClaudeKit auto-detects complexity, or you pick:\n\n• Fast (--fast) — skip research/red-team/validate.\n• Hard (--hard) — 2 researchers + red-team + optional validate.\n• Deep (--deep) — 2-3 researchers + per-phase scout + forced validate.\n• Parallel (--parallel) — hard + file ownership per phase, hands off with --parallel to cook.\n• Two (--two) — 2+ researchers + 2 approaches, user selects.\n\nComposable flags work with any mode: --tdd (tests-first per phase), --no-tasks (skip task hydration).\n\nDefault no-args opens AskUserQuestion: plan / archive / red-team / validate.',
-        explainVi: 'Bạn mô tả tính năng hoặc hệ thống cần planning. ClaudeKit tự phát hiện complexity, hoặc bạn chọn:\n\n• Fast (--fast) — bỏ research/red-team/validate.\n• Hard (--hard) — 2 researchers + red-team + validate optional.\n• Deep (--deep) — 2-3 researchers + per-phase scout + validate bắt buộc.\n• Parallel (--parallel) — hard + file ownership mỗi phase, bàn giao kèm --parallel cho cook.\n• Two (--two) — 2+ researchers + 2 approaches, user chọn.\n\nComposable flags dùng với mọi mode: --tdd (tests-first mỗi phase), --no-tasks (bỏ task hydration).\n\nMặc định không args mở AskUserQuestion: plan / archive / red-team / validate.',
-        codeSnippet: '> /ck:plan --deep --tdd user authentication system\n\n# Mode: Deep → 2-3 researchers + per-phase scout\n# Composable: --tdd → tests-first in every phase\n# Auto-runs: red-team + validate (forced in deep)',
+        explainEn: 'You describe the feature or system to plan. AgentKit auto-detects complexity, or you pick:\n\n• Fast (--fast) — skip research/red-team/validate.\n• Hard (--hard) — 2 researchers + red-team + optional validate.\n• Deep (--deep) — 2-3 researchers + per-phase scout + forced validate.\n• Parallel (--parallel) — hard + file ownership per phase, hands off with --parallel to cook.\n• Two (--two) — 2+ researchers + 2 approaches, user selects.\n\nComposable flags work with any mode: --tdd (tests-first per phase), --no-tasks (skip task hydration).\n\nDefault no-args opens AskUserQuestion: plan / archive / red-team / validate.',
+        explainVi: 'Bạn mô tả tính năng hoặc hệ thống cần planning. AgentKit tự phát hiện complexity, hoặc bạn chọn:\n\n• Fast (--fast) — bỏ research/red-team/validate.\n• Hard (--hard) — 2 researchers + red-team + validate optional.\n• Deep (--deep) — 2-3 researchers + per-phase scout + validate bắt buộc.\n• Parallel (--parallel) — hard + file ownership mỗi phase, bàn giao kèm --parallel cho cook.\n• Two (--two) — 2+ researchers + 2 approaches, user chọn.\n\nComposable flags dùng với mọi mode: --tdd (tests-first mỗi phase), --no-tasks (bỏ task hydration).\n\nMặc định không args mở AskUserQuestion: plan / archive / red-team / validate.',
+        codeSnippet: '> /ak:plan --deep --tdd user authentication system\n\n# Mode: Deep → 2-3 researchers + per-phase scout\n# Composable: --tdd → tests-first in every phase\n# Auto-runs: red-team + validate (forced in deep)',
         icon: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
         color: 'purple',
       },
@@ -159,12 +159,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'plan-create',
         type: 'agent',
-        name: 'Plan Creation (planner + ck CLI)',
-        descEn: 'Planner sub-agent uses `ck plan create` to scaffold, then writes phases',
-        descVi: 'Planner sub-agent dùng `ck plan create` để scaffold, sau đó viết phases',
-        explainEn: 'ClaudeKit CLI owns plan scaffolding. Planner sub-agent:\n\n1. Runs `ck plan create --title ... --phases "Setup,Backend,Frontend,Testing" --dir <plan-dir> --source skill`. CLI generates plan.md + phase-XX-*.md stubs.\n\n2. Read-before-Write each stub (Claude Code enforces it), then fills the canonical phase template (frontmatter + Overview + Requirements + Architecture + Implementation Steps + Success Criteria + Risk Assessment).\n\n3. Status mutations go through `ck plan check / uncheck`, never hand-edit the phases table.',
-        explainVi: 'ClaudeKit CLI sở hữu scaffolding plan. Planner sub-agent:\n\n1. Chạy `ck plan create --title ... --phases "Setup,Backend,Frontend,Testing" --dir <plan-dir> --source skill`. CLI tạo plan.md + stub phase-XX-*.md.\n\n2. Read-before-Write từng stub (Claude Code enforce), sau đó fill canonical phase template (frontmatter + Overview + Requirements + Architecture + Implementation Steps + Success Criteria + Risk Assessment).\n\n3. Status mutations qua `ck plan check / uncheck`, không sửa tay bảng phases.',
-        codeSnippet: '// 1. CLI scaffolds (planner runs):\n$ ck plan create --title "Auth System" \\\n    --phases "Setup,Backend,Frontend,Testing" \\\n    --dir plans/260406-auth --source skill\n\n// 2. Planner fills each phase (Read-then-Write):\n//    plans/260406-auth/plan.md\n//    plans/260406-auth/phase-01-setup.md\n//    plans/260406-auth/phase-02-backend.md\n//    plans/260406-auth/phase-03-frontend.md\n//    plans/260406-auth/phase-04-testing.md',
+        name: 'Plan Creation (planner + AgentKit CLI)',
+        descEn: 'Planner sub-agent uses `ak plan create` to scaffold, then writes phases',
+        descVi: 'Planner sub-agent dùng `ak plan create` để scaffold, sau đó viết phases',
+        explainEn: 'AgentKit CLI owns plan scaffolding. Planner sub-agent:\n\n1. Runs `ak plan create --title ... --phases "Setup,Backend,Frontend,Testing" --dir <plan-dir> --source skill`. CLI generates plan.md + phase-XX-*.md stubs.\n\n2. Read-before-Write each stub (Claude Code enforces it), then fills the canonical phase template (frontmatter + Overview + Requirements + Architecture + Implementation Steps + Success Criteria + Risk Assessment).\n\n3. Status mutations go through `ak plan check / uncheck`, never hand-edit the phases table.',
+        explainVi: 'AgentKit CLI sở hữu scaffolding plan. Planner sub-agent:\n\n1. Chạy `ak plan create --title ... --phases "Setup,Backend,Frontend,Testing" --dir <plan-dir> --source skill`. CLI tạo plan.md + stub phase-XX-*.md.\n\n2. Read-before-Write từng stub (Claude Code enforce), sau đó fill canonical phase template (frontmatter + Overview + Requirements + Architecture + Implementation Steps + Success Criteria + Risk Assessment).\n\n3. Status mutations qua `ak plan check / uncheck`, không sửa tay bảng phases.',
+        codeSnippet: '// 1. CLI scaffolds (planner runs):\n$ ak plan create --title "Auth System" \\\n    --phases "Setup,Backend,Frontend,Testing" \\\n    --dir plans/260406-auth --source skill\n\n// 2. Planner fills each phase (Read-then-Write):\n//    plans/260406-auth/plan.md\n//    plans/260406-auth/phase-01-setup.md\n//    plans/260406-auth/phase-02-backend.md\n//    plans/260406-auth/phase-03-frontend.md\n//    plans/260406-auth/phase-04-testing.md',
         icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>',
         color: 'amber',
         isSubAgent: true,
@@ -188,19 +188,19 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Validate → Output Flags → Hydration → Post-Plan Handoff',
         descEn: 'Critical questions, optional HTML/GitHub/wiki output, TaskCreate chain, AskUser: validate/red-team/cook/end',
         descVi: 'Câu hỏi quan trọng, output HTML/GitHub/wiki tùy chọn, chuỗi TaskCreate, AskUser: validate/red-team/cook/end',
-        explainEn: 'The pipeline concludes with these terminal stages:\n\n1. Validation interview — 3-8 critical questions to verify plan completeness (forced in --deep; optional in hard/parallel/two).\n\n2. Optional output/publish flags (run AFTER red-team + validate so they reflect the final reviewed plan):\n• --html — activate /ck:frontend-design and write a self-contained interactive plan.html (phase outlines + full-markdown detail modals); plan.html becomes the authoritative deliverable.\n• --github — create/update a GitHub issue (branch, summary, repo-relative plan links, open questions, acceptance criteria) and apply the `ready to review` label.\n• --wiki — publish the reviewed docs or plan.html to AgentWiki via CLI or MCP; skips with a notice (never blocks the plan) when unavailable.\n\n3. Task hydration (default on, skipped by --no-tasks or <3 phases) — TaskCreate per phase with addBlockedBy chain + TaskCreate for critical / high-risk steps. Metadata: phase, priority, planDir, phaseFile.\n\n4. Post-Plan Handoff — MANDATORY AskUserQuestion offering: /ck:plan validate (if not auto-run), /ck:plan red-team (if not auto-run), /ck:cook <absolute-path> (recommended for small/low-risk), End session. Recommended option listed FIRST. Then /ck:journal records the planning session.',
-        explainVi: 'Pipeline kết thúc với các stage terminal:\n\n1. Validation interview — 3-8 câu hỏi quan trọng verify plan đầy đủ (bắt buộc trong --deep; optional trong hard/parallel/two).\n\n2. Flags output/publish tùy chọn (chạy SAU red-team + validate để phản ánh plan đã review cuối):\n• --html — kích hoạt /ck:frontend-design và viết plan.html tương tác self-contained (outline phases + modal chi tiết full-markdown); plan.html thành deliverable chính.\n• --github — tạo/cập nhật GitHub issue (branch, tóm tắt, link plan repo-relative, open questions, acceptance criteria) và gắn label `ready to review`.\n• --wiki — publish docs đã review hoặc plan.html lên AgentWiki qua CLI hoặc MCP; nếu không khả dụng thì tự bỏ qua kèm thông báo (không chặn plan).\n\n3. Task hydration (mặc định bật, bỏ qua nếu --no-tasks hoặc <3 phases) — TaskCreate mỗi phase với chuỗi addBlockedBy + TaskCreate cho bước critical / high-risk. Metadata: phase, priority, planDir, phaseFile.\n\n4. Post-Plan Handoff — BẮT BUỘC AskUserQuestion offer: /ck:plan validate (nếu chưa auto-run), /ck:plan red-team (nếu chưa auto-run), /ck:cook <absolute-path> (khuyến nghị cho plan nhỏ/risk thấp), End session. Option khuyến nghị đặt ĐẦU. Sau đó /ck:journal ghi lại planning session.',
-        codeSnippet: '// 1. Validate interview (3-8 questions):\n//    Q: success metrics for auth? → 99.9% uptime\n//    Q: rollback strategy? → feature flag\n//\n// 2. Optional output flags (after gates):\n//    --html   → plans/260406-auth/plan.html (authoritative)\n//    --github → gh issue + label "ready to review"\n//    --wiki   → agentwiki sites upload plan.html (or skip)\n//\n// 3. Task hydration:\n//    T1: Setup environment\n//    T2: Backend API (blockedBy: T1)\n//    T3: Frontend UI (blockedBy: T2)\n//\n// 4. Post-Plan AskUser:\n//    → /ck:cook /abs/plans/260406-auth/plan.md (Recommended)\n//    → /ck:plan red-team /abs/plans/260406-auth/plan.md\n//    → End session',
+        explainEn: 'The pipeline concludes with these terminal stages:\n\n1. Validation interview — 3-8 critical questions to verify plan completeness (forced in --deep; optional in hard/parallel/two).\n\n2. Optional output/publish flags (run AFTER red-team + validate so they reflect the final reviewed plan):\n• --html — activate /ak:frontend-design and write a self-contained interactive plan.html (phase outlines + full-markdown detail modals); plan.html becomes the authoritative deliverable.\n• --github — create/update a GitHub issue (branch, summary, repo-relative plan links, open questions, acceptance criteria) and apply the `ready to review` label.\n• --wiki — publish the reviewed docs or plan.html to AgentWiki via CLI or MCP; skips with a notice (never blocks the plan) when unavailable.\n\n3. Task hydration (default on, skipped by --no-tasks or <3 phases) — TaskCreate per phase with addBlockedBy chain + TaskCreate for critical / high-risk steps. Metadata: phase, priority, planDir, phaseFile.\n\n4. Post-Plan Handoff — MANDATORY AskUserQuestion offering: /ak:plan validate (if not auto-run), /ak:plan red-team (if not auto-run), /ak:cook <absolute-path> (recommended for small/low-risk), End session. Recommended option listed FIRST. Then /ak:journal records the planning session.',
+        explainVi: 'Pipeline kết thúc với các stage terminal:\n\n1. Validation interview — 3-8 câu hỏi quan trọng verify plan đầy đủ (bắt buộc trong --deep; optional trong hard/parallel/two).\n\n2. Flags output/publish tùy chọn (chạy SAU red-team + validate để phản ánh plan đã review cuối):\n• --html — kích hoạt /ak:frontend-design và viết plan.html tương tác self-contained (outline phases + modal chi tiết full-markdown); plan.html thành deliverable chính.\n• --github — tạo/cập nhật GitHub issue (branch, tóm tắt, link plan repo-relative, open questions, acceptance criteria) và gắn label `ready to review`.\n• --wiki — publish docs đã review hoặc plan.html lên AgentWiki qua CLI hoặc MCP; nếu không khả dụng thì tự bỏ qua kèm thông báo (không chặn plan).\n\n3. Task hydration (mặc định bật, bỏ qua nếu --no-tasks hoặc <3 phases) — TaskCreate mỗi phase với chuỗi addBlockedBy + TaskCreate cho bước critical / high-risk. Metadata: phase, priority, planDir, phaseFile.\n\n4. Post-Plan Handoff — BẮT BUỘC AskUserQuestion offer: /ak:plan validate (nếu chưa auto-run), /ak:plan red-team (nếu chưa auto-run), /ak:cook <absolute-path> (khuyến nghị cho plan nhỏ/risk thấp), End session. Option khuyến nghị đặt ĐẦU. Sau đó /ak:journal ghi lại planning session.',
+        codeSnippet: '// 1. Validate interview (3-8 questions):\n//    Q: success metrics for auth? → 99.9% uptime\n//    Q: rollback strategy? → feature flag\n//\n// 2. Optional output flags (after gates):\n//    --html   → plans/260406-auth/plan.html (authoritative)\n//    --github → gh issue + label "ready to review"\n//    --wiki   → agentwiki sites upload plan.html (or skip)\n//\n// 3. Task hydration:\n//    T1: Setup environment\n//    T2: Backend API (blockedBy: T1)\n//    T3: Frontend UI (blockedBy: T2)\n//\n// 4. Post-Plan AskUser:\n//    → /ak:cook /abs/plans/260406-auth/plan.md (Recommended)\n//    → /ak:plan red-team /abs/plans/260406-auth/plan.md\n//    → End session',
         icon: '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',
         color: 'purple',
       },
     ],
   },
 
-  // ─── /ck:cook — Build Feature ────────────────────────────────
+  // ─── /ak:cook — Build Feature ────────────────────────────────
   {
     id: 'cook',
-    command: '/ck:cook',
+    command: '/ak:cook',
     kit: 'engineer',
     titleEn: 'Build a Feature',
     titleVi: 'Xây Dựng Tính Năng',
@@ -212,12 +212,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'cook-input',
         type: 'user-input',
-        name: '/ck:cook',
+        name: '/ak:cook',
         descEn: 'You pass a plan path or describe a feature — 4 hard gates apply',
         descVi: 'Bạn truyền plan path hoặc mô tả feature — 4 hard gates áp dụng',
-        explainEn: 'You invoke cook with a plan file path or a natural-language task. ClaudeKit auto-detects the mode:\n\n• Interactive (default) — stops at each review gate for approval.\n• Fast (--fast) — skip research; scout → plan → code.\n• Auto (--auto) — auto-approve low-risk artifact-validated steps; stop for high-risk steps before finalize/commit/ship (score advisory only).\n• Parallel (--parallel) — multi-agent for 3+ features.\n• No-test (--no-test) — skip testing (side-effect proof relaxed to a warning).\n• Code (plan path) — skip scout/research/plan, execute existing phases.\n\nComposable: --tdd writes tests for current behavior first, then verifies they still pass post-implementation.\n\n4 HARD GATES enforce the run: ① no implementation until plan reviewed; ② mandatory codebase scout BEFORE any clarifying question; ③ AskUser must pin 5 exact requirements (output / acceptance / scope / constraints / touchpoints); ④ implementation NOT done until proven side-effect-free.',
-        explainVi: 'Bạn gọi cook với file plan hoặc mô tả task. ClaudeKit tự phát hiện mode:\n\n• Interactive (mặc định) — dừng ở mỗi review gate để duyệt.\n• Fast (--fast) — bỏ research; scout → plan → code.\n• Auto (--auto) — tự approve các bước low-risk đã validate bằng artifact; dừng ở bước high-risk trước finalize/commit/ship (score chỉ còn tham khảo).\n• Parallel (--parallel) — multi-agent cho 3+ features.\n• No-test (--no-test) — bỏ testing (side-effect proof nới lỏng thành warning).\n• Code (plan path) — bỏ scout/research/plan, thực thi phases có sẵn.\n\nComposable: --tdd viết tests cho behavior hiện tại trước, rồi xác minh chúng vẫn pass sau implementation.\n\n4 HARD GATES enforce cả run: ① không triển khai cho đến khi plan được review; ② BẮT BUỘC scout codebase TRƯỚC mọi câu hỏi làm rõ; ③ AskUser phải chốt 5 yêu cầu chính xác (output / acceptance / scope / ràng buộc / touchpoints); ④ implementation CHƯA done cho đến khi chứng minh side-effect-free.',
-        codeSnippet: '> /ck:cook "Add user authentication" --tdd\n\n# Mode: Interactive + --tdd (default; tests-first per phase)\n# 4 hard gates active:\n#   ① plan-first       — no code until plan reviewed\n#   ② scout-first      — codebase scan before AskUser\n#   ③ exact-reqs       — 5 items pinned via AskUser\n#   ④ no-side-effects  — code-review + tests must prove\n#\n# Steps: Scout → Summarize → Requirements\n#        → Research → Plan → Implement → Test → Review → Finalize',
+        explainEn: 'You invoke cook with a plan file path or a natural-language task. AgentKit auto-detects the mode:\n\n• Interactive (default) — stops at each review gate for approval.\n• Fast (--fast) — skip research; scout → plan → code.\n• Auto (--auto) — auto-approve low-risk artifact-validated steps; stop for high-risk steps before finalize/commit/ship (score advisory only).\n• Parallel (--parallel) — multi-agent for 3+ features.\n• No-test (--no-test) — skip testing (side-effect proof relaxed to a warning).\n• Code (plan path) — skip scout/research/plan, execute existing phases.\n\nComposable: --tdd writes tests for current behavior first, then verifies they still pass post-implementation.\n\n4 HARD GATES enforce the run: ① no implementation until plan reviewed; ② mandatory codebase scout BEFORE any clarifying question; ③ AskUser must pin 5 exact requirements (output / acceptance / scope / constraints / touchpoints); ④ implementation NOT done until proven side-effect-free.',
+        explainVi: 'Bạn gọi cook với file plan hoặc mô tả task. AgentKit tự phát hiện mode:\n\n• Interactive (mặc định) — dừng ở mỗi review gate để duyệt.\n• Fast (--fast) — bỏ research; scout → plan → code.\n• Auto (--auto) — tự approve các bước low-risk đã validate bằng artifact; dừng ở bước high-risk trước finalize/commit/ship (score chỉ còn tham khảo).\n• Parallel (--parallel) — multi-agent cho 3+ features.\n• No-test (--no-test) — bỏ testing (side-effect proof nới lỏng thành warning).\n• Code (plan path) — bỏ scout/research/plan, thực thi phases có sẵn.\n\nComposable: --tdd viết tests cho behavior hiện tại trước, rồi xác minh chúng vẫn pass sau implementation.\n\n4 HARD GATES enforce cả run: ① không triển khai cho đến khi plan được review; ② BẮT BUỘC scout codebase TRƯỚC mọi câu hỏi làm rõ; ③ AskUser phải chốt 5 yêu cầu chính xác (output / acceptance / scope / ràng buộc / touchpoints); ④ implementation CHƯA done cho đến khi chứng minh side-effect-free.',
+        codeSnippet: '> /ak:cook "Add user authentication" --tdd\n\n# Mode: Interactive + --tdd (default; tests-first per phase)\n# 4 hard gates active:\n#   ① plan-first       — no code until plan reviewed\n#   ② scout-first      — codebase scan before AskUser\n#   ③ exact-reqs       — 5 items pinned via AskUser\n#   ④ no-side-effects  — code-review + tests must prove\n#\n# Steps: Scout → Summarize → Requirements\n#        → Research → Plan → Implement → Test → Review → Finalize',
         icon: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
         color: 'purple',
       },
@@ -225,11 +225,11 @@ export const workflowScenarios: WorkflowScenario[] = [
         id: 'cook-scout',
         type: 'skill',
         name: 'Scout (MANDATORY) + Exact Requirements',
-        descEn: 'ck:scout maps codebase, then AskUser loop pins 5 exact items',
-        descVi: 'ck:scout map codebase, sau đó AskUser loop chốt 5 mục chính xác',
-        explainEn: 'Two hard gates fire before any planning — both skip ONLY when input is a plan.md / phase-*.md path:\n\nHARD-GATE-SCOUT-FIRST — Activate ck:scout to produce 5 outputs:\n1. Project type, language(s), framework(s).\n2. Existing modules/files relevant to the task.\n3. Current patterns/conventions for similar features.\n4. Existing docs in ./docs/ and in-flight plans in ./plans/.\n5. Public APIs, schemas, contracts the task could affect.\n\nMain agent then states a 3-6 bullet codebase-context summary to the user — BEFORE any clarifying question.\n\nHARD-GATE-EXACT-REQUIREMENTS — AskUserQuestion loop pins 5 items in one concrete sentence each, every option grounded in scout findings:\n• Expected output (file paths, behavior, endpoint + payload, CLI command).\n• Acceptance criteria (specific inputs → outputs, edge cases).\n• Scope boundary (what is explicitly OUT this round).\n• Non-negotiable constraints (stack, naming, backward compat, deadlines).\n• Touchpoints (existing files/modules to modify; contracts that must stay stable).\n\nLoop continues until every item is concrete — do NOT proceed on vague intent.',
-        explainVi: 'Hai hard gates fire trước khi planning — cả hai chỉ bỏ qua khi input là plan.md / phase-*.md path:\n\nHARD-GATE-SCOUT-FIRST — Activate ck:scout để sinh 5 output:\n1. Loại dự án, ngôn ngữ, framework.\n2. Modules/files hiện có liên quan task.\n3. Patterns/conventions hiện tại cho feature tương tự.\n4. Docs trong ./docs/ và plans dang dở trong ./plans/.\n5. Public APIs, schemas, contracts mà task có thể ảnh hưởng.\n\nMain agent sau đó tóm tắt codebase 3-6 gạch đầu dòng cho user — TRƯỚC mọi câu hỏi làm rõ.\n\nHARD-GATE-EXACT-REQUIREMENTS — AskUserQuestion loop chốt 5 mục với một câu cụ thể mỗi mục, mọi option phải dựa trên scout findings:\n• Expected output (file paths, behavior, endpoint + payload, CLI command).\n• Acceptance criteria (inputs → outputs cụ thể, edge cases).\n• Scope boundary (cái gì rõ ràng OUT khỏi round này).\n• Non-negotiable constraints (stack, naming, backward compat, deadlines).\n• Touchpoints (files/modules sẽ sửa; contracts phải giữ ổn định).\n\nLoop lặp đến khi từng mục đều cụ thể — KHÔNG proceed khi intent còn mơ hồ.',
-        codeSnippet: '// ck:scout output (summarized to user):\n// • Astro 5.x site, TypeScript + Tailwind\n// • Auth scaffold absent — closest pattern: src/utils/session.ts\n// • Existing plan: plans/260315-mobile-auth/ touches src/auth/*\n// • Contracts: API routes under src/pages/api/* must stay stable\n//\n// AskUserQuestion (5 items pinned):\n// Q1 Expected output? → Email+password login at /login + JWT in httpOnly cookie\n// Q2 Acceptance?      → Wrong creds → 401; valid → 200 + Set-Cookie\n// Q3 Scope OUT?       → No OAuth, no 2FA this round\n// Q4 Constraints?     → Use existing session.ts helpers, no new deps\n// Q5 Touchpoints?     → src/auth/*, src/pages/api/login.ts (new)',
+        descEn: 'ak:scout maps codebase, then AskUser loop pins 5 exact items',
+        descVi: 'ak:scout map codebase, sau đó AskUser loop chốt 5 mục chính xác',
+        explainEn: 'Two hard gates fire before any planning — both skip ONLY when input is a plan.md / phase-*.md path:\n\nHARD-GATE-SCOUT-FIRST — Activate ak:scout to produce 5 outputs:\n1. Project type, language(s), framework(s).\n2. Existing modules/files relevant to the task.\n3. Current patterns/conventions for similar features.\n4. Existing docs in ./docs/ and in-flight plans in ./plans/.\n5. Public APIs, schemas, contracts the task could affect.\n\nMain agent then states a 3-6 bullet codebase-context summary to the user — BEFORE any clarifying question.\n\nHARD-GATE-EXACT-REQUIREMENTS — AskUserQuestion loop pins 5 items in one concrete sentence each, every option grounded in scout findings:\n• Expected output (file paths, behavior, endpoint + payload, CLI command).\n• Acceptance criteria (specific inputs → outputs, edge cases).\n• Scope boundary (what is explicitly OUT this round).\n• Non-negotiable constraints (stack, naming, backward compat, deadlines).\n• Touchpoints (existing files/modules to modify; contracts that must stay stable).\n\nLoop continues until every item is concrete — do NOT proceed on vague intent.',
+        explainVi: 'Hai hard gates fire trước khi planning — cả hai chỉ bỏ qua khi input là plan.md / phase-*.md path:\n\nHARD-GATE-SCOUT-FIRST — Activate ak:scout để sinh 5 output:\n1. Loại dự án, ngôn ngữ, framework.\n2. Modules/files hiện có liên quan task.\n3. Patterns/conventions hiện tại cho feature tương tự.\n4. Docs trong ./docs/ và plans dang dở trong ./plans/.\n5. Public APIs, schemas, contracts mà task có thể ảnh hưởng.\n\nMain agent sau đó tóm tắt codebase 3-6 gạch đầu dòng cho user — TRƯỚC mọi câu hỏi làm rõ.\n\nHARD-GATE-EXACT-REQUIREMENTS — AskUserQuestion loop chốt 5 mục với một câu cụ thể mỗi mục, mọi option phải dựa trên scout findings:\n• Expected output (file paths, behavior, endpoint + payload, CLI command).\n• Acceptance criteria (inputs → outputs cụ thể, edge cases).\n• Scope boundary (cái gì rõ ràng OUT khỏi round này).\n• Non-negotiable constraints (stack, naming, backward compat, deadlines).\n• Touchpoints (files/modules sẽ sửa; contracts phải giữ ổn định).\n\nLoop lặp đến khi từng mục đều cụ thể — KHÔNG proceed khi intent còn mơ hồ.',
+        codeSnippet: '// ak:scout output (summarized to user):\n// • Astro 5.x site, TypeScript + Tailwind\n// • Auth scaffold absent — closest pattern: src/utils/session.ts\n// • Existing plan: plans/260315-mobile-auth/ touches src/auth/*\n// • Contracts: API routes under src/pages/api/* must stay stable\n//\n// AskUserQuestion (5 items pinned):\n// Q1 Expected output? → Email+password login at /login + JWT in httpOnly cookie\n// Q2 Acceptance?      → Wrong creds → 401; valid → 200 + Set-Cookie\n// Q3 Scope OUT?       → No OAuth, no 2FA this round\n// Q4 Constraints?     → Use existing session.ts helpers, no new deps\n// Q5 Touchpoints?     → src/auth/*, src/pages/api/login.ts (new)',
         icon: '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',
         color: 'amber',
       },
@@ -239,9 +239,9 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Research + Plan (researcher + planner)',
         descEn: 'researcher (skip in --fast/code) + planner write plan.md + phase-XX-*.md → Review Gate',
         descVi: 'researcher (bỏ ở --fast/code) + planner viết plan.md + phase-XX-*.md → Review Gate',
-        explainEn: 'Main agent spawns sub-agents to materialize the plan:\n\n• researcher — investigates patterns, libraries, prior art. Spawned in interactive / auto / parallel / no-test modes; skipped in --fast and code.\n• planner — uses ck plan create to scaffold plan.md + phase-XX-*.md, then fills the canonical phase template (frontmatter + Overview + Requirements + Architecture + Implementation Steps + Success Criteria + Risk Assessment).\n\nReview Gate (non-auto): pauses for your approval before any code is written. HARD-GATE plan-first means no implementation until you say yes. Override "just code it" is respected, but the gate exists by default for a reason — even "simple" tasks have hidden complexity.',
-        explainVi: 'Main agent spawn sub-agents để hiện thực hóa plan:\n\n• researcher — điều tra patterns, libraries, prior art. Spawn ở interactive / auto / parallel / no-test; bỏ ở --fast và code.\n• planner — dùng ck plan create để scaffold plan.md + phase-XX-*.md, sau đó fill canonical phase template (frontmatter + Overview + Requirements + Architecture + Implementation Steps + Success Criteria + Risk Assessment).\n\nReview Gate (không phải --auto): dừng để bạn duyệt trước khi viết code. HARD-GATE plan-first nghĩa là không triển khai cho đến khi bạn đồng ý. Override "code luôn" được tôn trọng, nhưng gate tồn tại mặc định vì lý do — kể cả task "đơn giản" cũng có complexity ẩn.',
-        codeSnippet: '// researcher (skip if --fast / code mode):\n//   → patterns/auth-bcrypt-session.md\n//   → prior-art/lucia-auth-comparison.md\n//\n// planner spawns:\n$ ck plan create --title "Auth System" \\\n    --phases "Setup,Backend,Frontend,Tests" \\\n    --dir plans/260524-auth --source skill\n\n// planner fills each phase, then:\n// [Review Gate 1] → User approves plan → continue',
+        explainEn: 'Main agent spawns sub-agents to materialize the plan:\n\n• researcher — investigates patterns, libraries, prior art. Spawned in interactive / auto / parallel / no-test modes; skipped in --fast and code.\n• planner — uses ak plan create to scaffold plan.md + phase-XX-*.md, then fills the canonical phase template (frontmatter + Overview + Requirements + Architecture + Implementation Steps + Success Criteria + Risk Assessment).\n\nReview Gate (non-auto): pauses for your approval before any code is written. HARD-GATE plan-first means no implementation until you say yes. Override "just code it" is respected, but the gate exists by default for a reason — even "simple" tasks have hidden complexity.',
+        explainVi: 'Main agent spawn sub-agents để hiện thực hóa plan:\n\n• researcher — điều tra patterns, libraries, prior art. Spawn ở interactive / auto / parallel / no-test; bỏ ở --fast và code.\n• planner — dùng ak plan create để scaffold plan.md + phase-XX-*.md, sau đó fill canonical phase template (frontmatter + Overview + Requirements + Architecture + Implementation Steps + Success Criteria + Risk Assessment).\n\nReview Gate (không phải --auto): dừng để bạn duyệt trước khi viết code. HARD-GATE plan-first nghĩa là không triển khai cho đến khi bạn đồng ý. Override "code luôn" được tôn trọng, nhưng gate tồn tại mặc định vì lý do — kể cả task "đơn giản" cũng có complexity ẩn.',
+        codeSnippet: '// researcher (skip if --fast / code mode):\n//   → patterns/auth-bcrypt-session.md\n//   → prior-art/lucia-auth-comparison.md\n//\n// planner spawns:\n$ ak plan create --title "Auth System" \\\n    --phases "Setup,Backend,Frontend,Tests" \\\n    --dir plans/260524-auth --source skill\n\n// planner fills each phase, then:\n// [Review Gate 1] → User approves plan → continue',
         icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>',
         color: 'green',
         isSubAgent: true,
@@ -288,21 +288,21 @@ export const workflowScenarios: WorkflowScenario[] = [
         id: 'cook-finalize',
         type: 'output',
         name: 'Finalize: project-management + docs + git + journal',
-        descEn: 'MANDATORY chain: /ck:project-management skill → docs-manager → git-manager → /ck:journal',
-        descVi: 'BẮT BUỘC chain: /ck:project-management skill → docs-manager → git-manager → /ck:journal',
-        explainEn: 'Finalize is MANDATORY and runs in fixed order — workflow is INCOMPLETE if any step is skipped:\n\n1. Activate /ck:project-management skill — runs full plan sync-back across ALL phase-XX-*.md (not only current), updates plan.md status/progress, hydrates Claude Tasks via TaskUpdate, generates progress report.\n2. docs-manager sub-agent — updates ./docs (system-architecture, codebase-summary, etc.) if changes warrant.\n3. TaskUpdate — marks all Claude Tasks complete after sync-back verification (skipped if Task tools unavailable in this client).\n4. AskUserQuestion → commit via git-manager sub-agent (conventional commit, then optional push).\n5. /ck:journal — concise technical journal entry recording decisions and lessons.\n\nWhen --no-test was used, the finalize AskUserQuestion surfaces the unverified-tests risk so the user explicitly accepts the trade-off rather than having it silently chosen.',
-        explainVi: 'Finalize BẮT BUỘC và chạy theo thứ tự cố định — workflow CHƯA hoàn thành nếu bỏ bất kỳ bước nào:\n\n1. Activate /ck:project-management skill — chạy full plan sync-back qua TẤT CẢ phase-XX-*.md (không chỉ current), update plan.md status/progress, hydrate Claude Tasks qua TaskUpdate, tạo progress report.\n2. docs-manager sub-agent — update ./docs (system-architecture, codebase-summary, v.v.) nếu changes đáng kể.\n3. TaskUpdate — mark mọi Claude Tasks complete sau khi sync-back verify (bỏ nếu Task tools không có trong client này).\n4. AskUserQuestion → commit qua git-manager sub-agent (conventional commit, sau đó optional push).\n5. /ck:journal — entry kỹ thuật súc tích ghi lại decisions và lessons.\n\nKhi --no-test được dùng, finalize AskUserQuestion surface rủi ro tests chưa verify để user accept trade-off rõ ràng thay vì bị chọn ngầm.',
-        codeSnippet: '// MANDATORY chain — workflow INCOMPLETE if any step skipped\n//\n// 1. /ck:project-management:\n//    • plan.md status: 4/4 phases ✓\n//    • Claude Tasks hydrated: T1-T8 → completed\n//\n// 2. docs-manager:\n//    • docs/system-architecture.md → auth section added\n//\n// 3. git-manager (AskUserQuestion: commit + push?):\n//    feat(auth): add email+password login with httpOnly session\n//\n// 4. /ck:journal → session decisions + lessons recorded ✓',
+        descEn: 'MANDATORY chain: /ak:project-management skill → docs-manager → git-manager → /ak:journal',
+        descVi: 'BẮT BUỘC chain: /ak:project-management skill → docs-manager → git-manager → /ak:journal',
+        explainEn: 'Finalize is MANDATORY and runs in fixed order — workflow is INCOMPLETE if any step is skipped:\n\n1. Activate /ak:project-management skill — runs full plan sync-back across ALL phase-XX-*.md (not only current), updates plan.md status/progress, hydrates Claude Tasks via TaskUpdate, generates progress report.\n2. docs-manager sub-agent — updates ./docs (system-architecture, codebase-summary, etc.) if changes warrant.\n3. TaskUpdate — marks all Claude Tasks complete after sync-back verification (skipped if Task tools unavailable in this client).\n4. AskUserQuestion → commit via git-manager sub-agent (conventional commit, then optional push).\n5. /ak:journal — concise technical journal entry recording decisions and lessons.\n\nWhen --no-test was used, the finalize AskUserQuestion surfaces the unverified-tests risk so the user explicitly accepts the trade-off rather than having it silently chosen.',
+        explainVi: 'Finalize BẮT BUỘC và chạy theo thứ tự cố định — workflow CHƯA hoàn thành nếu bỏ bất kỳ bước nào:\n\n1. Activate /ak:project-management skill — chạy full plan sync-back qua TẤT CẢ phase-XX-*.md (không chỉ current), update plan.md status/progress, hydrate Claude Tasks qua TaskUpdate, tạo progress report.\n2. docs-manager sub-agent — update ./docs (system-architecture, codebase-summary, v.v.) nếu changes đáng kể.\n3. TaskUpdate — mark mọi Claude Tasks complete sau khi sync-back verify (bỏ nếu Task tools không có trong client này).\n4. AskUserQuestion → commit qua git-manager sub-agent (conventional commit, sau đó optional push).\n5. /ak:journal — entry kỹ thuật súc tích ghi lại decisions và lessons.\n\nKhi --no-test được dùng, finalize AskUserQuestion surface rủi ro tests chưa verify để user accept trade-off rõ ràng thay vì bị chọn ngầm.',
+        codeSnippet: '// MANDATORY chain — workflow INCOMPLETE if any step skipped\n//\n// 1. /ak:project-management — sync plan status:\n//    • plan.md status: 4/4 phases ✓\n//    • Claude Tasks hydrated: T1-T8 → completed\n//\n// 2. docs-manager:\n//    • docs/system-architecture.md → auth section added\n//\n// 3. git-manager (AskUserQuestion: commit + push?):\n//    feat(auth): add email+password login with httpOnly session\n//\n// 4. /ak:journal → session decisions + lessons recorded ✓',
         icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
         color: 'purple',
       },
     ],
   },
 
-  // ─── /ck:code-review — Adversarial Code Review ──────────────
+  // ─── /ak:code-review — Adversarial Code Review ──────────────
   {
     id: 'code-review',
-    command: '/ck:code-review',
+    command: '/ak:code-review',
     kit: 'engineer',
     titleEn: 'Code Review',
     titleVi: 'Review Code',
@@ -314,12 +314,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'cr-input',
         type: 'user-input',
-        name: '/ck:code-review',
+        name: '/ak:code-review',
         descEn: 'You invoke code review with a target: PR#, commit, --pending, or codebase',
         descVi: 'Bạn gọi code review với target: PR#, commit, --pending, hoặc codebase',
-        explainEn: 'You invoke code review with an argument that determines the input mode:\n\n• /ck:code-review #123 — review a PR diff\n• /ck:code-review abc1234 — review a specific commit\n• /ck:code-review --pending — review staged + unstaged changes\n• /ck:code-review codebase — full codebase scan\n• /ck:code-review codebase parallel — multi-reviewer audit',
-        explainVi: 'Bạn gọi code review với argument xác định input mode:\n\n• /ck:code-review #123 — review PR diff\n• /ck:code-review abc1234 — review commit cụ thể\n• /ck:code-review --pending — review staged + unstaged changes\n• /ck:code-review codebase — quét toàn bộ codebase\n• /ck:code-review codebase parallel — audit nhiều reviewer song song',
-        codeSnippet: '> /ck:code-review #42\n> /ck:code-review --pending\n> /ck:code-review codebase parallel',
+        explainEn: 'You invoke code review with an argument that determines the input mode:\n\n• /ak:code-review #123 — review a PR diff\n• /ak:code-review abc1234 — review a specific commit\n• /ak:code-review --pending — review staged + unstaged changes\n• /ak:code-review codebase — full codebase scan\n• /ak:code-review codebase parallel — multi-reviewer audit',
+        explainVi: 'Bạn gọi code review với argument xác định input mode:\n\n• /ak:code-review #123 — review PR diff\n• /ak:code-review abc1234 — review commit cụ thể\n• /ak:code-review --pending — review staged + unstaged changes\n• /ak:code-review codebase — quét toàn bộ codebase\n• /ak:code-review codebase parallel — audit nhiều reviewer song song',
+        codeSnippet: '> /ak:code-review #42\n> /ak:code-review --pending\n> /ak:code-review codebase parallel',
         icon: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
         color: 'purple',
       },
@@ -365,9 +365,9 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Stage 2: Code Quality + Scout',
         descEn: 'Scout edge cases, then spawn code-reviewer for standards/security/performance',
         descVi: 'Scout edge cases, rồi spawn code-reviewer cho standards/security/performance',
-        explainEn: 'First, ck:scout activates with edge-case focus — spawns 2-6 parallel Explore sub-agents to scan data flows, error paths, boundary conditions.\n\nThen code-reviewer sub-agent spawns for full quality review:\n• Coding standards, naming, structure\n• Security: injection, auth bypass, data exposure\n• Performance: N+1 queries, missing caching\n• Edge cases from scout findings\n\nFor 3+ files: parallel scoped reviewers (backend + frontend).',
-        explainVi: 'Đầu tiên, ck:scout kích hoạt tập trung edge cases — spawn 2-6 Explore sub-agent song song quét data flows, error paths, boundary conditions.\n\nSau đó code-reviewer sub-agent spawn cho quality review đầy đủ:\n• Coding standards, naming, structure\n• Security: injection, auth bypass, data exposure\n• Performance: N+1 queries, missing caching\n• Edge cases từ scout\n\nVới 3+ files: parallel scoped reviewers (backend + frontend).',
-        codeSnippet: '// ck:scout → 2-6 Explore sub-agents (edge cases)\n// code-reviewer sub-agent → full review\n//   Standards, Security, Performance\n// 3+ files → parallel scoped reviewers',
+        explainEn: 'First, ak:scout activates with edge-case focus — spawns 2-6 parallel Explore sub-agents to scan data flows, error paths, boundary conditions.\n\nThen code-reviewer sub-agent spawns for full quality review:\n• Coding standards, naming, structure\n• Security: injection, auth bypass, data exposure\n• Performance: N+1 queries, missing caching\n• Edge cases from scout findings\n\nFor 3+ files: parallel scoped reviewers (backend + frontend).',
+        explainVi: 'Đầu tiên, ak:scout kích hoạt tập trung edge cases — spawn 2-6 Explore sub-agent song song quét data flows, error paths, boundary conditions.\n\nSau đó code-reviewer sub-agent spawn cho quality review đầy đủ:\n• Coding standards, naming, structure\n• Security: injection, auth bypass, data exposure\n• Performance: N+1 queries, missing caching\n• Edge cases từ scout\n\nVới 3+ files: parallel scoped reviewers (backend + frontend).',
+        codeSnippet: '// ak:scout → 2-6 Explore sub-agents (edge cases)\n// code-reviewer sub-agent → full review\n//   Standards, Security, Performance\n// 3+ files → parallel scoped reviewers',
         icon: '<path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>',
         color: 'green',
         isSubAgent: true,
@@ -400,10 +400,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:fix — Fix a Bug ─────────────────────────────────────
+  // ─── /ak:fix — Fix a Bug ─────────────────────────────────────
   {
     id: 'fix',
-    command: '/ck:fix',
+    command: '/ak:fix',
     kit: 'engineer',
     titleEn: 'Fix a Bug',
     titleVi: 'Sửa Lỗi',
@@ -416,12 +416,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'fix-input',
         type: 'user-input',
-        name: '/ck:fix',
+        name: '/ak:fix',
         descEn: 'You describe the bug and select a mode',
         descVi: 'Bạn mô tả lỗi và chọn chế độ xử lý',
-        explainEn: 'You describe the bug in natural language after the /ck:fix command. For example: "/ck:fix login button returns 500 error".\n\nClaudeKit then asks you to pick a mode:\n\n• Autonomous (default) — auto-approve only when review artifacts and validator pass.\n• Human-in-the-loop Review — pause for your approval at each step.\n• Quick — fast scout→diagnose→fix cycle for trivial issues (lint, type errors).\n• Parallel — route to parallel fullstack-developer agents per independent issue.\n\nYou can also pass flags directly: --auto, --review, --quick, or --parallel.',
-        explainVi: 'Bạn mô tả lỗi bằng ngôn ngữ tự nhiên sau lệnh /ck:fix. Ví dụ: "/ck:fix nút đăng nhập trả lỗi 500".\n\nClaudeKit sau đó hỏi bạn chọn chế độ:\n\n• Autonomous (mặc định) — chỉ tự approve khi review artifact và validator pass.\n• Human-in-the-loop Review — dừng để duyệt từng bước.\n• Quick — xử lý nhanh scout→diagnose→fix cho lỗi nhỏ (lint, type errors).\n• Parallel — định tuyến tới các fullstack-developer agent song song cho từng issue độc lập.\n\nBạn cũng có thể truyền flag trực tiếp: --auto, --review, --quick, hoặc --parallel.',
-        codeSnippet: '> /ck:fix login button returns 500 error on submit\n\n# Mode selection (asked via interactive prompt):\n#   Autonomous   → auto-approve only when review artifacts + validator pass\n#   Review       → pause for approval at each step\n#   Quick        → fast scout→diagnose→fix cycle\n#   Parallel     → parallel fullstack-developer agents per issue\n#\n# Or pass flags directly:\n#   --auto      --review      --quick      --parallel',
+        explainEn: 'You describe the bug in natural language after the /ak:fix command. For example: "/ak:fix login button returns 500 error".\n\nAgentKit then asks you to pick a mode:\n\n• Autonomous (default) — auto-approve only when review artifacts and validator pass.\n• Human-in-the-loop Review — pause for your approval at each step.\n• Quick — fast scout→diagnose→fix cycle for trivial issues (lint, type errors).\n• Parallel — route to parallel fullstack-developer agents per independent issue.\n\nYou can also pass flags directly: --auto, --review, --quick, or --parallel.',
+        explainVi: 'Bạn mô tả lỗi bằng ngôn ngữ tự nhiên sau lệnh /ak:fix. Ví dụ: "/ak:fix nút đăng nhập trả lỗi 500".\n\nAgentKit sau đó hỏi bạn chọn chế độ:\n\n• Autonomous (mặc định) — chỉ tự approve khi review artifact và validator pass.\n• Human-in-the-loop Review — dừng để duyệt từng bước.\n• Quick — xử lý nhanh scout→diagnose→fix cho lỗi nhỏ (lint, type errors).\n• Parallel — định tuyến tới các fullstack-developer agent song song cho từng issue độc lập.\n\nBạn cũng có thể truyền flag trực tiếp: --auto, --review, --quick, hoặc --parallel.',
+        codeSnippet: '> /ak:fix login button returns 500 error on submit\n\n# Mode selection (asked via interactive prompt):\n#   Autonomous   → auto-approve only when review artifacts + validator pass\n#   Review       → pause for approval at each step\n#   Quick        → fast scout→diagnose→fix cycle\n#   Parallel     → parallel fullstack-developer agents per issue\n#\n# Or pass flags directly:\n#   --auto      --review      --quick      --parallel',
         icon: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
         color: 'purple',
       },
@@ -441,12 +441,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'fix-scout',
         type: 'agent',
-        name: 'Scout (ck:scout)',
+        name: 'Scout (ak:scout)',
         descEn: 'Spawn Explore sub-agents to gather evidence',
         descVi: 'Spawn Explore sub-agent thu thập bằng chứng',
-        explainEn: 'The main agent activates the ck:scout skill, which spawns 2-3 parallel Explore sub-agents:\n\n• Explore #1 — Grep for error patterns in logs and stack traces.\n• Explore #2 — Read affected source files and map dependencies.\n• Explore #3 — Check recent git changes for related commits.\n\nEach runs in isolated context and returns structured findings back to the main agent.',
-        explainVi: 'Main agent kích hoạt skill ck:scout, spawn 2-3 Explore sub-agent song song:\n\n• Explore #1 — Grep tìm error patterns trong logs và stack traces.\n• Explore #2 — Đọc source files bị ảnh hưởng và map dependencies.\n• Explore #3 — Kiểm tra git changes gần đây tìm commits liên quan.\n\nMỗi sub-agent chạy trong isolated context và trả kết quả về main agent.',
-        codeSnippet: '// Main Agent activates ck:scout skill\n// Spawns parallel Explore sub-agents:\n//\n// Explore #1 → Grep for error patterns in logs\n// Explore #2 → Read affected source files + deps\n// Explore #3 → git log --since="2 days" for recent changes\n//\n// Output: evidence report with file map + traces',
+        explainEn: 'The main agent activates the ak:scout skill, which spawns 2-3 parallel Explore sub-agents:\n\n• Explore #1 — Grep for error patterns in logs and stack traces.\n• Explore #2 — Read affected source files and map dependencies.\n• Explore #3 — Check recent git changes for related commits.\n\nEach runs in isolated context and returns structured findings back to the main agent.',
+        explainVi: 'Main agent kích hoạt skill ak:scout, spawn 2-3 Explore sub-agent song song:\n\n• Explore #1 — Grep tìm error patterns trong logs và stack traces.\n• Explore #2 — Đọc source files bị ảnh hưởng và map dependencies.\n• Explore #3 — Kiểm tra git changes gần đây tìm commits liên quan.\n\nMỗi sub-agent chạy trong isolated context và trả kết quả về main agent.',
+        codeSnippet: '// Main Agent activates ak:scout skill\n// Spawns parallel Explore sub-agents:\n//\n// Explore #1 → Grep for error patterns in logs\n// Explore #2 → Read affected source files + deps\n// Explore #3 → git log --since="2 days" for recent changes\n//\n// Output: evidence report with file map + traces',
         icon: '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',
         color: 'green',
         isSubAgent: true,
@@ -455,12 +455,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'fix-diagnose',
         type: 'agent',
-        name: 'Diagnose (ck:debug)',
+        name: 'Diagnose (ak:debug)',
         descEn: 'Spawn debugger sub-agent for root cause analysis',
         descVi: 'Spawn debugger sub-agent phân tích nguyên nhân gốc',
-        explainEn: 'The main agent activates a chain of skills and spawns a debugger sub-agent:\n\n• ck:debug — systematic root cause investigation.\n• ck:sequential-thinking — structured hypothesis formation (no guessing).\n• debugger sub-agent — deep analysis in isolated context.\n• Explore agents — parallel hypothesis verification against codebase.\n\nIf 2+ hypotheses fail, ck:problem-solving auto-activates.\n\nAfter diagnosis, the agent implicitly assesses complexity (Simple → quick workflow, Moderate → standard, Complex → deep with research/brainstorm) and routes to the appropriate workflow.',
-        explainVi: 'Main agent kích hoạt chuỗi skills và spawn debugger sub-agent:\n\n• ck:debug — điều tra nguyên nhân gốc có hệ thống.\n• ck:sequential-thinking — hình thành giả thuyết có cấu trúc (không đoán mò).\n• debugger sub-agent — phân tích sâu trong isolated context.\n• Explore agents — kiểm chứng giả thuyết song song với codebase.\n\nNếu 2+ giả thuyết sai, ck:problem-solving tự kích hoạt.\n\nSau khi chẩn đoán, agent tự đánh giá độ phức tạp (Simple → quick, Moderate → standard, Complex → deep có research/brainstorm) và chọn workflow phù hợp.',
-        codeSnippet: '// Skill chain activated on Main Agent:\n// 1. ck:debug      → systematic root cause investigation\n// 2. ck:sequential  → structured hypothesis reasoning\n//\n// Spawns debugger sub-agent for deep analysis\n// Hypothesis A: null check missing → CONFIRMED ✓\n// Hypothesis B: race condition    → REJECTED ✗\n//\n// Diagnosis: Missing null check in auth.ts:45\n// Severity: HIGH | Scope: 2 files\n// Complexity: Moderate → Standard workflow',
+        explainEn: 'The main agent activates a chain of skills and spawns a debugger sub-agent:\n\n• ak:debug — systematic root cause investigation.\n• ak:sequential-thinking — structured hypothesis formation (no guessing).\n• debugger sub-agent — deep analysis in isolated context.\n• Explore agents — parallel hypothesis verification against codebase.\n\nIf 2+ hypotheses fail, ak:problem-solving auto-activates.\n\nAfter diagnosis, the agent implicitly assesses complexity (Simple → quick workflow, Moderate → standard, Complex → deep with research/brainstorm) and routes to the appropriate workflow.',
+        explainVi: 'Main agent kích hoạt chuỗi skills và spawn debugger sub-agent:\n\n• ak:debug — điều tra nguyên nhân gốc có hệ thống.\n• ak:sequential-thinking — hình thành giả thuyết có cấu trúc (không đoán mò).\n• debugger sub-agent — phân tích sâu trong isolated context.\n• Explore agents — kiểm chứng giả thuyết song song với codebase.\n\nNếu 2+ giả thuyết sai, ak:problem-solving tự kích hoạt.\n\nSau khi chẩn đoán, agent tự đánh giá độ phức tạp (Simple → quick, Moderate → standard, Complex → deep có research/brainstorm) và chọn workflow phù hợp.',
+        codeSnippet: '// Skill chain activated on Main Agent:\n// 1. ak:debug      → systematic root cause investigation\n// 2. ak:sequential  → structured hypothesis reasoning\n//\n// Spawns debugger sub-agent for deep analysis\n// Hypothesis A: null check missing → CONFIRMED ✓\n// Hypothesis B: race condition    → REJECTED ✗\n//\n// Diagnosis: Missing null check in auth.ts:45\n// Severity: HIGH | Scope: 2 files\n// Complexity: Moderate → Standard workflow',
         icon: '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>',
         color: 'amber',
         isSubAgent: true,
@@ -472,8 +472,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Main Agent (Fix)',
         descEn: 'Apply targeted fix based on root cause',
         descVi: 'Áp dụng bản sửa chính xác dựa trên nguyên nhân gốc',
-        explainEn: 'The main agent writes the actual code change — a targeted fix addressing the root cause identified in diagnosis.\n\n• Follows project coding standards (injected by hooks).\n• Makes minimal changes, follows existing patterns.\n• Targets the ROOT CAUSE, not symptoms.\n• May use ck:sequential-thinking for complex logic.',
-        explainVi: 'Main agent viết code thay đổi thực tế — một bản sửa chính xác nhắm vào nguyên nhân gốc.\n\n• Tuân theo coding standards của project (inject bởi hooks).\n• Thay đổi tối thiểu, tuân theo patterns hiện có.\n• Nhắm vào NGUYÊN NHÂN GỐC, không phải triệu chứng.\n• Có thể dùng ck:sequential-thinking cho logic phức tạp.',
+        explainEn: 'The main agent writes the actual code change — a targeted fix addressing the root cause identified in diagnosis.\n\n• Follows project coding standards (injected by hooks).\n• Makes minimal changes, follows existing patterns.\n• Targets the ROOT CAUSE, not symptoms.\n• May use ak:sequential-thinking for complex logic.',
+        explainVi: 'Main agent viết code thay đổi thực tế — một bản sửa chính xác nhắm vào nguyên nhân gốc.\n\n• Tuân theo coding standards của project (inject bởi hooks).\n• Thay đổi tối thiểu, tuân theo patterns hiện có.\n• Nhắm vào NGUYÊN NHÂN GỐC, không phải triệu chứng.\n• Có thể dùng ak:sequential-thinking cho logic phức tạp.',
         codeSnippet: '// Fix applied to auth.ts:45\n// Before:\n//   const user = req.user;\n//   await user.validate();\n//\n// After:\n//   const user = req.user;\n//   if (!user) {\n//     return res.status(401).json({ error: "Session expired" });\n//   }\n//   await user.validate();',
         icon: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
         color: 'green',
@@ -514,19 +514,19 @@ export const workflowScenarios: WorkflowScenario[] = [
         descEn: 'Report, update docs, journal entry, offer commit',
         descVi: 'Báo cáo, cập nhật docs, ghi journal, đề nghị commit',
         isSubAgent: true,
-        explainEn: 'The pipeline closes with a MANDATORY 5-step chain — workflow INCOMPLETE if any step is skipped:\n\n1. /ck:project-management (MANDATORY, every fix) — sync plan/task status, hydrate Claude Tasks, update progress, generate status report.\n2. docs-manager sub-agent (NON-OPTIONAL) — update ./docs if changes warrant it.\n3. TaskUpdate — mark ALL Claude Tasks completed (skip only if Task tools unavailable in VSCode extension).\n4. git-manager sub-agent — AskUser to commit via conventional commit message.\n5. /ck:journal — concise technical entry for future reference.\n\nFinal report includes confidence score, root cause cited with file:line, changes, prevention measures, and side-effect sweep results.',
-        explainVi: 'Pipeline kết thúc bằng chuỗi BẮT BUỘC 5 bước — workflow KHÔNG hoàn tất nếu bỏ qua bất kỳ bước nào:\n\n1. /ck:project-management (BẮT BUỘC, mọi fix) — sync trạng thái plan/task, hydrate Claude Tasks, update progress, sinh status report.\n2. docs-manager sub-agent (KHÔNG-OPTIONAL) — cập nhật ./docs nếu thay đổi yêu cầu.\n3. TaskUpdate — đánh dấu TẤT CẢ Claude Task completed (chỉ bỏ qua khi Task tools unavailable trong VSCode extension).\n4. git-manager sub-agent — AskUser để commit theo conventional commit.\n5. /ck:journal — entry kỹ thuật ngắn gọn cho tham khảo sau.\n\nFinal report gồm điểm confidence, root cause kèm file:line, thay đổi, prevention measure, và kết quả blast-radius sweep.',
-        codeSnippet: '// MANDATORY chain — workflow INCOMPLETE if any step skipped\n//\n// 1. /ck:project-management (every fix):\n//    • plan.md status synced, tasks hydrated\n//    • progress report generated\n//\n// 2. docs-manager sub-agent (NON-OPTIONAL):\n//    • docs/system-architecture.md → auth section updated\n//\n// 3. TaskUpdate → all Claude Tasks completed ✓\n//\n// 4. git-manager (AskUserQuestion: commit + push?):\n//    fix(auth): null check on missing session in middleware\n//\n// 5. /ck:journal → concise technical entry recorded ✓',
+        explainEn: 'The pipeline closes with a MANDATORY 5-step chain — workflow INCOMPLETE if any step is skipped:\n\n1. /ak:project-management (MANDATORY, every fix) — sync plan/task status, hydrate Claude Tasks, update progress, generate status report.\n2. docs-manager sub-agent (NON-OPTIONAL) — update ./docs if changes warrant it.\n3. TaskUpdate — mark ALL Claude Tasks completed (skip only if Task tools unavailable in VSCode extension).\n4. git-manager sub-agent — AskUser to commit via conventional commit message.\n5. /ak:journal — concise technical entry for future reference.\n\nFinal report includes confidence score, root cause cited with file:line, changes, prevention measures, and side-effect sweep results.',
+        explainVi: 'Pipeline kết thúc bằng chuỗi BẮT BUỘC 5 bước — workflow KHÔNG hoàn tất nếu bỏ qua bất kỳ bước nào:\n\n1. /ak:project-management (BẮT BUỘC, mọi fix) — sync trạng thái plan/task, hydrate Claude Tasks, update progress, sinh status report.\n2. docs-manager sub-agent (KHÔNG-OPTIONAL) — cập nhật ./docs nếu thay đổi yêu cầu.\n3. TaskUpdate — đánh dấu TẤT CẢ Claude Task completed (chỉ bỏ qua khi Task tools unavailable trong VSCode extension).\n4. git-manager sub-agent — AskUser để commit theo conventional commit.\n5. /ak:journal — entry kỹ thuật ngắn gọn cho tham khảo sau.\n\nFinal report gồm điểm confidence, root cause kèm file:line, thay đổi, prevention measure, và kết quả blast-radius sweep.',
+        codeSnippet: '// MANDATORY chain — workflow INCOMPLETE if any step skipped\n//\n// 1. /ak:project-management (every fix):\n//    • plan.md status synced, tasks hydrated\n//    • progress report generated\n//\n// 2. docs-manager sub-agent (NON-OPTIONAL):\n//    • docs/system-architecture.md → auth section updated\n//\n// 3. TaskUpdate → all Claude Tasks completed ✓\n//\n// 4. git-manager (AskUserQuestion: commit + push?):\n//    fix(auth): null check on missing session in middleware\n//\n// 5. /ak:journal → concise technical entry recorded ✓',
         icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
         color: 'purple',
       },
     ],
   },
 
-  // ─── /ck:frontend-design — Polished Frontend Interfaces ──────
+  // ─── /ak:frontend-design — Polished Frontend Interfaces ──────
   {
     id: 'frontend-design',
-    command: '/ck:frontend-design',
+    command: '/ak:frontend-design',
     kit: 'engineer',
     titleEn: 'Frontend Design',
     titleVi: 'Thiết Kế Frontend',
@@ -538,12 +538,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'fd-input',
         type: 'user-input',
-        name: '/ck:frontend-design',
+        name: '/ak:frontend-design',
         descEn: 'You provide a design brief, screenshot, video, or description',
         descVi: 'Bạn cung cấp brief thiết kế, screenshot, video, hoặc mô tả',
         explainEn: 'You describe what interface to build. Input types determine the workflow:\n\n• Screenshot → pixel-perfect replication\n• Video → replication with animations\n• 3D/WebGL request → Three.js immersive experience\n• Quick task → rapid implementation\n• Complex/award-quality → full immersive pipeline\n• Existing project → redesign audit\n• From scratch → Design Thinking flow',
         explainVi: 'Bạn mô tả giao diện cần xây dựng. Loại input quyết định workflow:\n\n• Screenshot → sao chép pixel-perfect\n• Video → sao chép kèm animation\n• 3D/WebGL → trải nghiệm Three.js immersive\n• Quick task → triển khai nhanh\n• Complex/award-quality → pipeline immersive đầy đủ\n• Project hiện có → audit redesign\n• Từ đầu → Design Thinking flow',
-        codeSnippet: '> /ck:frontend-design replicate this landing page\n> [attaches screenshot.png]\n\n# Workflow auto-selected: screenshot replication\n# Design Dials: VARIANCE=8, MOTION=6, DENSITY=4',
+        codeSnippet: '> /ak:frontend-design replicate this landing page\n> [attaches screenshot.png]\n\n# Workflow auto-selected: screenshot replication\n# Design Dials: VARIANCE=8, MOTION=6, DENSITY=4',
         icon: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
         color: 'purple',
       },
@@ -562,24 +562,24 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'fd-uiux',
         type: 'agent',
-        name: 'Activate ck:ui-ux-pro-max',
+        name: 'Activate ak:ui-ux-pro-max',
         descEn: 'Load design intelligence — styles, palettes, font pairings, UX guidelines',
         descVi: 'Load design intelligence — styles, palettes, font pairings, UX guidelines',
         explainEn: 'MANDATORY first skill activation for ALL workflows. Loads:\n\n• 50+ design styles catalog\n• 161 color palettes with accessibility scores\n• 57 font pairings (display + body)\n• 161 product type templates\n• 99 UX guidelines\n• 25 chart type recommendations\n\nThis runs on the main agent — no sub-agent spawned. Provides the design foundation for all subsequent steps.',
         explainVi: 'Skill BẮT BUỘC kích hoạt đầu tiên cho TẤT CẢ workflows. Load:\n\n• 50+ catalog phong cách thiết kế\n• 161 color palettes với accessibility scores\n• 57 font pairings (display + body)\n• 161 product type templates\n• 99 UX guidelines\n• 25 chart type recommendations\n\nChạy trên main agent — không spawn sub-agent. Cung cấp nền tảng thiết kế cho các bước sau.',
-        codeSnippet: '// Skill activated: ck:ui-ux-pro-max\n// Loaded into main agent context:\n//   styles: 50+ catalogs\n//   palettes: 161 options\n//   fonts: 57 pairings\n//   ux: 99 guidelines',
+        codeSnippet: '// Skill activated: ak:ui-ux-pro-max\n// Loaded into main agent context:\n//   styles: 50+ catalogs\n//   palettes: 161 options\n//   fonts: 57 pairings\n//   ux: 99 guidelines',
         icon: '<path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>',
         color: 'green',
       },
       {
         id: 'fd-analyze',
         type: 'agent',
-        name: 'Analyze Input (ck:ai-multimodal)',
+        name: 'Analyze Input (ak:ai-multimodal)',
         descEn: 'Extract colors, fonts, spacing, effects from screenshot/video via Gemini',
         descVi: 'Trích xuất colors, fonts, spacing, effects từ screenshot/video qua Gemini',
-        explainEn: 'For screenshot/video workflows, the main agent activates ck:ai-multimodal skill:\n\n• Gemini Vision API analyzes the input image/video\n• Extracts: exact colors (hex), font families, spacing values, border radii, shadow properties, animation timing\n• Generates a structured design spec\n\nFor from-scratch workflows, this step is replaced by Design Thinking: choosing bold aesthetic direction (tone, purpose, differentiation) and configuring Design Dials.',
-        explainVi: 'Cho screenshot/video workflows, main agent kích hoạt skill ck:ai-multimodal:\n\n• Gemini Vision API phân tích input image/video\n• Trích xuất: exact colors (hex), font families, spacing values, border radii, shadow properties, animation timing\n• Tạo structured design spec\n\nCho from-scratch workflows, bước này thay bằng Design Thinking: chọn hướng thẩm mỹ mạnh mẽ (tone, purpose, differentiation) và cấu hình Design Dials.',
-        codeSnippet: '// ck:ai-multimodal activated on Main Agent\n// Gemini Vision → analyze screenshot\n//\n// Extracted:\n//   colors: ["#1a1a2e", "#e94560", "#0f3460"]\n//   font: "Cabinet Grotesk" (display), "Outfit" (body)\n//   spacing: 8px base grid\n//   shadows: tinted inner shadows\n//   motion: spring physics on hover',
+        explainEn: 'For screenshot/video workflows, the main agent activates ak:ai-multimodal skill:\n\n• Gemini Vision API analyzes the input image/video\n• Extracts: exact colors (hex), font families, spacing values, border radii, shadow properties, animation timing\n• Generates a structured design spec\n\nFor from-scratch workflows, this step is replaced by Design Thinking: choosing bold aesthetic direction (tone, purpose, differentiation) and configuring Design Dials.',
+        explainVi: 'Cho screenshot/video workflows, main agent kích hoạt skill ak:ai-multimodal:\n\n• Gemini Vision API phân tích input image/video\n• Trích xuất: exact colors (hex), font families, spacing values, border radii, shadow properties, animation timing\n• Tạo structured design spec\n\nCho from-scratch workflows, bước này thay bằng Design Thinking: chọn hướng thẩm mỹ mạnh mẽ (tone, purpose, differentiation) và cấu hình Design Dials.',
+        codeSnippet: '// ak:ai-multimodal activated on Main Agent\n// Gemini Vision → analyze screenshot\n//\n// Extracted:\n//   colors: ["#1a1a2e", "#e94560", "#0f3460"]\n//   font: "Cabinet Grotesk" (display), "Outfit" (body)\n//   spacing: 8px base grid\n//   shadows: tinted inner shadows\n//   motion: spring physics on hover',
         icon: '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>',
         color: 'green',
       },
@@ -602,8 +602,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Implement + Anti-Slop Check',
         descEn: 'Build production-grade code, verify against anti-slop rules',
         descVi: 'Xây dựng code production-grade, verify theo anti-slop rules',
-        explainEn: 'The main agent implements the design following the phased plan:\n\n• Production-grade HTML/CSS/JS (or React/Vue/Astro components)\n• Anti-slop checklist enforced at every step:\n  - No Inter/Roboto/Arial fonts\n  - No AI purple gradient aesthetic\n  - No 3-column equal card layouts\n  - No "John Doe" placeholder content\n  - No neon/outer glows\n• Asset generation via ck:ai-multimodal (Imagen 4, Nano Banana)\n• Image optimization via ck:media-processing\n• Performance guardrails: animation budget, blur limits',
-        explainVi: 'Main agent triển khai design theo phased plan:\n\n• Code production-grade HTML/CSS/JS (hoặc React/Vue/Astro components)\n• Anti-slop checklist bắt buộc mỗi bước:\n  - Không dùng Inter/Roboto/Arial fonts\n  - Không dùng AI purple gradient aesthetic\n  - Không dùng 3-column equal card layouts\n  - Không dùng "John Doe" placeholder content\n  - Không dùng neon/outer glows\n• Tạo assets qua ck:ai-multimodal (Imagen 4, Nano Banana)\n• Tối ưu hình ảnh qua ck:media-processing\n• Performance guardrails: animation budget, blur limits',
+        explainEn: 'The main agent implements the design following the phased plan:\n\n• Production-grade HTML/CSS/JS (or React/Vue/Astro components)\n• Anti-slop checklist enforced at every step:\n  - No Inter/Roboto/Arial fonts\n  - No AI purple gradient aesthetic\n  - No 3-column equal card layouts\n  - No "John Doe" placeholder content\n  - No neon/outer glows\n• Asset generation via ak:ai-multimodal (Imagen 4, Nano Banana)\n• Image optimization via ak:media-processing\n• Performance guardrails: animation budget, blur limits',
+        explainVi: 'Main agent triển khai design theo phased plan:\n\n• Code production-grade HTML/CSS/JS (hoặc React/Vue/Astro components)\n• Anti-slop checklist bắt buộc mỗi bước:\n  - Không dùng Inter/Roboto/Arial fonts\n  - Không dùng AI purple gradient aesthetic\n  - Không dùng 3-column equal card layouts\n  - Không dùng "John Doe" placeholder content\n  - Không dùng neon/outer glows\n• Tạo assets qua ak:ai-multimodal (Imagen 4, Nano Banana)\n• Tối ưu hình ảnh qua ak:media-processing\n• Performance guardrails: animation budget, blur limits',
         codeSnippet: '// Main Agent implements directly:\n//\n// Phase 1: Layout with CSS Grid (asymmetric)\n// Phase 2: Typography — Cabinet Grotesk + Outfit\n// Phase 3: Colors — neutral base + single accent\n// Phase 4: Motion — spring physics, scroll reveals\n//\n// Anti-slop checklist:\n// ✓ No Inter/Roboto/Arial\n// ✓ No purple gradient\n// ✓ No equal 3-col cards\n// ✓ Realistic content\n// ✓ Performance budget OK',
         icon: '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
         color: 'green',
@@ -623,10 +623,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:write:* — Creative Copy & Content Writing ────────────
+  // ─── /ak:write:* — Creative Copy & Content Writing ────────────
   {
     id: 'write',
-    command: '/ckm:write:*',
+    command: '/ak:write:*',
     kit: 'marketer',
     titleEn: 'Write Copy & Content',
     titleVi: 'Viết Copy & Nội Dung',
@@ -638,12 +638,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'wr-input',
         type: 'user-input',
-        name: '/ckm:write:*',
+        name: '/ak:write:*',
         descEn: 'You choose a writing mode: fast, good, blog, formula, cro, audit, etc.',
         descVi: 'Bạn chọn chế độ viết: fast, good, blog, formula, cro, audit, v.v.',
-        explainEn: 'You invoke /ckm:write:<variant> where <variant> is one of 9 subcommands:\n\n• /ckm:write:fast — quick creative copy (light, 1 agent)\n• /ckm:write:good — thorough copy with research + planning + illustrations (heavy, multi-agent)\n• /ckm:write:blog — SEO-optimized blog article (heavy, keyword research → outline → write)\n• /ckm:write:blog:youtube — blog from YouTube video (heavy, video extraction → research → write)\n• /ckm:write:formula — copy using proven frameworks: AIDA, PAS, BAB, 4Ps, ACCA, FAB\n• /ckm:write:cro — conversion rate optimization (15-point CRO framework)\n• /ckm:write:enhance — fix/improve existing copy\n• /ckm:write:audit — score content quality (0-10 across 4 dimensions)\n• /ckm:write:publish — audit → auto-fix → publish-ready output',
-        explainVi: 'Bạn gọi /ckm:write:<variant> trong đó <variant> là 1 trong 9 subcommand:\n\n• /ckm:write:fast — viết copy nhanh (nhẹ, 1 agent)\n• /ckm:write:good — copy kỹ lưỡng với research + planning + minh hoạ (nặng, multi-agent)\n• /ckm:write:blog — bài blog tối ưu SEO (nặng, keyword research → outline → viết)\n• /ckm:write:blog:youtube — blog từ video YouTube (nặng, trích xuất video → research → viết)\n• /ckm:write:formula — copy theo framework đã chứng minh: AIDA, PAS, BAB, 4Ps, ACCA, FAB\n• /ckm:write:cro — tối ưu conversion rate (15-point CRO framework)\n• /ckm:write:enhance — sửa/cải thiện copy hiện có\n• /ckm:write:audit — chấm điểm chất lượng nội dung (0-10 theo 4 chiều)\n• /ckm:write:publish — audit → auto-fix → sẵn sàng publish',
-        codeSnippet: '> /ckm:write:good write a launch announcement for our new AI feature\n> /ckm:write:blog "best practices for SaaS onboarding"\n> /ckm:write:formula AIDA for our pricing page\n> /ckm:write:audit docs/blog/latest-post.md\n> /ckm:write:cro "landing page has low conversion"',
+        explainEn: 'You invoke /ak:write:<variant> where <variant> is one of 9 subcommands:\n\n• /ak:write:fast — quick creative copy (light, 1 agent)\n• /ak:write:good — thorough copy with research + planning + illustrations (heavy, multi-agent)\n• /ak:write:blog — SEO-optimized blog article (heavy, keyword research → outline → write)\n• /ak:write:blog:youtube — blog from YouTube video (heavy, video extraction → research → write)\n• /ak:write:formula — copy using proven frameworks: AIDA, PAS, BAB, 4Ps, ACCA, FAB\n• /ak:write:cro — conversion rate optimization (15-point CRO framework)\n• /ak:write:enhance — fix/improve existing copy\n• /ak:write:audit — score content quality (0-10 across 4 dimensions)\n• /ak:write:publish — audit → auto-fix → publish-ready output',
+        explainVi: 'Bạn gọi /ak:write:<variant> trong đó <variant> là 1 trong 9 subcommand:\n\n• /ak:write:fast — viết copy nhanh (nhẹ, 1 agent)\n• /ak:write:good — copy kỹ lưỡng với research + planning + minh hoạ (nặng, multi-agent)\n• /ak:write:blog — bài blog tối ưu SEO (nặng, keyword research → outline → viết)\n• /ak:write:blog:youtube — blog từ video YouTube (nặng, trích xuất video → research → viết)\n• /ak:write:formula — copy theo framework đã chứng minh: AIDA, PAS, BAB, 4Ps, ACCA, FAB\n• /ak:write:cro — tối ưu conversion rate (15-point CRO framework)\n• /ak:write:enhance — sửa/cải thiện copy hiện có\n• /ak:write:audit — chấm điểm chất lượng nội dung (0-10 theo 4 chiều)\n• /ak:write:publish — audit → auto-fix → sẵn sàng publish',
+        codeSnippet: '> /ak:write:good write a launch announcement for our new AI feature\n> /ak:write:blog "best practices for SaaS onboarding"\n> /ak:write:formula AIDA for our pricing page\n> /ak:write:audit docs/blog/latest-post.md\n> /ak:write:cro "landing page has low conversion"',
         icon: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
         color: 'purple',
       },
@@ -667,7 +667,7 @@ export const workflowScenarios: WorkflowScenario[] = [
         descVi: 'Parse variant, load workflow reference tương ứng',
         explainEn: 'The main agent parses the subcommand from arguments and loads the corresponding workflow:\n\n• fast → references/fast.md (Light tier)\n• good → references/good.md (Heavy tier)\n• blog → references/blog.md (Heavy tier)\n• blog-youtube → references/blog-youtube.md (Heavy tier)\n• formula → references/formula.md (Medium tier)\n• cro → references/cro.md (Medium tier)\n• enhance → references/enhance.md (Medium tier)\n• audit → references/audit.md (Light tier)\n• publish → references/publish.md (Medium tier)\n\nComplexity tiers determine how many agents are spawned:\n• Light: 1 agent or main agent only\n• Medium: 1-2 agents, focused workflow\n• Heavy: multi-agent parallel research → plan → write → illustrate',
         explainVi: 'Main agent parse subcommand từ arguments và load workflow tương ứng:\n\n• fast → references/fast.md (Light tier)\n• good → references/good.md (Heavy tier)\n• blog → references/blog.md (Heavy tier)\n• blog-youtube → references/blog-youtube.md (Heavy tier)\n• formula → references/formula.md (Medium tier)\n• cro → references/cro.md (Medium tier)\n• enhance → references/enhance.md (Medium tier)\n• audit → references/audit.md (Light tier)\n• publish → references/publish.md (Medium tier)\n\nComplexity tiers quyết định số agents được spawn:\n• Light: 1 agent hoặc chỉ main agent\n• Medium: 1-2 agents, workflow tập trung\n• Heavy: multi-agent parallel research → plan → write → illustrate',
-        codeSnippet: '// Main Agent routes subcommand:\n//\n// /ckm:write:good "launch announcement..."\n//   → variant: "good"\n//   → load: references/good.md\n//   → tier: Heavy (multi-agent)\n//\n// Tier mapping:\n//   Light:  :fast, :audit\n//   Medium: :formula, :cro, :enhance, :publish\n//   Heavy:  :good, :blog, :blog:youtube',
+        codeSnippet: '// Main Agent routes subcommand:\n//\n// /ak:write:good "launch announcement..."\n//   → variant: "good"\n//   → load: references/good.md\n//   → tier: Heavy (multi-agent)\n//\n// Tier mapping:\n//   Light:  :fast, :audit\n//   Medium: :formula, :cro, :enhance, :publish\n//   Heavy:  :good, :blog, :blog:youtube',
         icon: '<polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/>',
         color: 'amber',
       },
@@ -690,9 +690,9 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Plan + Write (copywriter)',
         descEn: 'Planner outlines structure, copywriter agent produces content',
         descVi: 'Planner tạo outline cấu trúc, copywriter agent viết nội dung',
-        explainEn: 'For Heavy/Medium tiers:\n\n1. planner agent creates content outline (structure, sections, key messages)\n2. copywriter agent writes the actual content following the plan\n\nFor Light tier (fast):\n• copywriter agent writes directly from the brief — no planner step.\n\nSpecial variant behaviors:\n• formula: copywriter applies chosen framework (AIDA, PAS, BAB, etc.) directly\n• cro: main agent runs 15-point CRO framework analysis (no copywriter)\n• audit: main agent scores across 4 dimensions — Copywriting 40%, SEO 30%, Platform 20%, Brand 10%\n• enhance: copywriter reads existing copy + issues, writes improved version\n• publish: runs audit first, then auto-fixes issues\n\nFor "good" variant, after content is finalized, /ckm:design is invoked to create 2-3 supporting illustrations.',
-        explainVi: 'Cho Heavy/Medium tiers:\n\n1. planner agent tạo content outline (cấu trúc, sections, key messages)\n2. copywriter agent viết nội dung thực tế theo plan\n\nCho Light tier (fast):\n• copywriter agent viết trực tiếp từ brief — không có bước planner.\n\nHành vi đặc biệt theo variant:\n• formula: copywriter áp dụng framework đã chọn (AIDA, PAS, BAB, v.v.) trực tiếp\n• cro: main agent chạy phân tích 15-point CRO framework (không dùng copywriter)\n• audit: main agent chấm điểm 4 chiều — Copywriting 40%, SEO 30%, Platform 20%, Brand 10%\n• enhance: copywriter đọc copy hiện tại + issues, viết phiên bản cải thiện\n• publish: chạy audit trước, rồi auto-fix issues\n\nCho "good" variant, sau khi content xong, /ckm:design được gọi để tạo 2-3 minh hoạ hỗ trợ.',
-        codeSnippet: '// Heavy "good" variant:\n//\n// Main Agent → spawns planner sub-agent\n//   planner → content outline + key messages\n//\n// Main Agent → spawns copywriter sub-agent\n//   copywriter → writes content per plan\n//   activated: creativity skill\n//\n// Post-write:\n//   /ckm:design → 2-3 illustrations\n//\n// Light "fast" variant:\n//   copywriter → writes directly from brief\n//\n// "audit" variant (no copywriter):\n//   Main Agent → score 4 dimensions (0-10)',
+        explainEn: 'For Heavy/Medium tiers:\n\n1. planner agent creates content outline (structure, sections, key messages)\n2. copywriter agent writes the actual content following the plan\n\nFor Light tier (fast):\n• copywriter agent writes directly from the brief — no planner step.\n\nSpecial variant behaviors:\n• formula: copywriter applies chosen framework (AIDA, PAS, BAB, etc.) directly\n• cro: main agent runs 15-point CRO framework analysis (no copywriter)\n• audit: main agent scores across 4 dimensions — Copywriting 40%, SEO 30%, Platform 20%, Brand 10%\n• enhance: copywriter reads existing copy + issues, writes improved version\n• publish: runs audit first, then auto-fixes issues\n\nFor "good" variant, after content is finalized, /ak:design is invoked to create 2-3 supporting illustrations.',
+        explainVi: 'Cho Heavy/Medium tiers:\n\n1. planner agent tạo content outline (cấu trúc, sections, key messages)\n2. copywriter agent viết nội dung thực tế theo plan\n\nCho Light tier (fast):\n• copywriter agent viết trực tiếp từ brief — không có bước planner.\n\nHành vi đặc biệt theo variant:\n• formula: copywriter áp dụng framework đã chọn (AIDA, PAS, BAB, v.v.) trực tiếp\n• cro: main agent chạy phân tích 15-point CRO framework (không dùng copywriter)\n• audit: main agent chấm điểm 4 chiều — Copywriting 40%, SEO 30%, Platform 20%, Brand 10%\n• enhance: copywriter đọc copy hiện tại + issues, viết phiên bản cải thiện\n• publish: chạy audit trước, rồi auto-fix issues\n\nCho "good" variant, sau khi content xong, /ak:design được gọi để tạo 2-3 minh hoạ hỗ trợ.',
+        codeSnippet: '// Heavy "good" variant:\n//\n// Main Agent → spawns planner sub-agent\n//   planner → content outline + key messages\n//\n// Main Agent → spawns copywriter sub-agent\n//   copywriter → writes content per plan\n//   activated: creativity skill\n//\n// Post-write:\n//   /ak:design → 2-3 illustrations\n//\n// Light "fast" variant:\n//   copywriter → writes directly from brief\n//\n// "audit" variant (no copywriter):\n//   Main Agent → score 4 dimensions (0-10)',
         icon: '<path d="M17 3a2.828 2.828 0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>',
         color: 'green',
         isSubAgent: true,
@@ -703,8 +703,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Content Delivered',
         descEn: 'Final copy, blog article, audit report, or publish-ready content',
         descVi: 'Copy hoàn chỉnh, bài blog, audit report, hoặc nội dung publish-ready',
-        explainEn: 'Output varies by subcommand:\n\n• fast/good: Polished creative copy with brand voice applied\n• blog/blog-youtube: SEO-optimized article with meta tags, keywords, internal links\n• formula: Copy structured around chosen framework (AIDA, PAS, etc.)\n• cro: Actionable optimization recommendations with priority scores\n• enhance: Improved version of existing copy with tracked changes\n• audit: Quality scorecard (0-10) across Copywriting, SEO, Platform Compliance, Brand Alignment\n• publish: Auto-fixed content that passed audit threshold, ready to publish\n\n"good" variant additionally includes 2-3 designed illustrations from /ckm:design.',
-        explainVi: 'Output thay đổi theo subcommand:\n\n• fast/good: Copy creative đã polish với brand voice\n• blog/blog-youtube: Bài viết tối ưu SEO với meta tags, keywords, internal links\n• formula: Copy cấu trúc theo framework đã chọn (AIDA, PAS, v.v.)\n• cro: Recommendations tối ưu conversion với priority scores\n• enhance: Phiên bản cải thiện của copy hiện có với tracked changes\n• audit: Scorecard chất lượng (0-10) theo Copywriting, SEO, Platform Compliance, Brand Alignment\n• publish: Nội dung đã auto-fix qua audit threshold, sẵn sàng publish\n\n"good" variant còn có thêm 2-3 minh hoạ thiết kế từ /ckm:design.',
+        explainEn: 'Output varies by subcommand:\n\n• fast/good: Polished creative copy with brand voice applied\n• blog/blog-youtube: SEO-optimized article with meta tags, keywords, internal links\n• formula: Copy structured around chosen framework (AIDA, PAS, etc.)\n• cro: Actionable optimization recommendations with priority scores\n• enhance: Improved version of existing copy with tracked changes\n• audit: Quality scorecard (0-10) across Copywriting, SEO, Platform Compliance, Brand Alignment\n• publish: Auto-fixed content that passed audit threshold, ready to publish\n\n"good" variant additionally includes 2-3 designed illustrations from /ak:design.',
+        explainVi: 'Output thay đổi theo subcommand:\n\n• fast/good: Copy creative đã polish với brand voice\n• blog/blog-youtube: Bài viết tối ưu SEO với meta tags, keywords, internal links\n• formula: Copy cấu trúc theo framework đã chọn (AIDA, PAS, v.v.)\n• cro: Recommendations tối ưu conversion với priority scores\n• enhance: Phiên bản cải thiện của copy hiện có với tracked changes\n• audit: Scorecard chất lượng (0-10) theo Copywriting, SEO, Platform Compliance, Brand Alignment\n• publish: Nội dung đã auto-fix qua audit threshold, sẵn sàng publish\n\n"good" variant còn có thêm 2-3 minh hoạ thiết kế từ /ak:design.',
         codeSnippet: '// Output examples:\n//\n// "good": polished copy + 2-3 illustrations\n// "blog": SEO article + meta + keywords\n// "formula": AIDA-structured landing page copy\n// "audit": scorecard 8.5/10\n//   Copywriting: 9/10\n//   SEO: 8/10\n//   Platform: 8/10\n//   Brand: 9/10\n// "publish": auto-fixed → ready to ship',
         icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
         color: 'amber',
@@ -712,10 +712,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:ship — Ship to Production ───────────────────────────
+  // ─── /ak:ship — Ship to Production ───────────────────────────
   {
     id: 'ship',
-    command: '/ck:ship',
+    command: '/ak:ship',
     kit: 'engineer',
     titleEn: 'Ship to Production',
     titleVi: 'Ship lên Production',
@@ -727,12 +727,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'sh-input',
         type: 'user-input',
-        name: '/ck:ship',
+        name: '/ak:ship',
         descEn: 'You invoke the ship command with optional mode and flags',
         descVi: 'Bạn gọi lệnh ship với mode và flags tuỳ chọn',
-        explainEn: 'You run /ck:ship from a feature branch. Optional arguments control the pipeline:\n\n- "official" → ship to main/master with full pipeline (docs + journal)\n- "beta" → ship to dev/beta with lighter pipeline\n- No argument → auto-detect from branch name (feature/* → official, dev/* → beta)\n\nFlags like --skip-tests, --skip-review, --skip-journal, --skip-docs, --dry-run let you customize which steps run.',
-        explainVi: 'Bạn chạy /ck:ship từ feature branch. Arguments tuỳ chọn điều khiển pipeline:\n\n- "official" → ship lên main/master với full pipeline (docs + journal)\n- "beta" → ship lên dev/beta với pipeline nhẹ hơn\n- Không argument → auto-detect từ tên branch (feature/* → official, dev/* → beta)\n\nFlags như --skip-tests, --skip-review, --skip-journal, --skip-docs, --dry-run cho phép tuỳ chỉnh steps nào chạy.',
-        codeSnippet: '> /ck:ship official\n> /ck:ship beta --skip-tests\n> /ck:ship --dry-run\n\n# Mode auto-detection:\n# feature/* hotfix/* → official (target main)\n# dev/* beta/*       → beta (target dev)',
+        explainEn: 'You run /ak:ship from a feature branch. Optional arguments control the pipeline:\n\n- "official" → ship to main/master with full pipeline (docs + journal)\n- "beta" → ship to dev/beta with lighter pipeline\n- No argument → auto-detect from branch name (feature/* → official, dev/* → beta)\n\nFlags like --skip-tests, --skip-review, --skip-journal, --skip-docs, --dry-run let you customize which steps run.',
+        explainVi: 'Bạn chạy /ak:ship từ feature branch. Arguments tuỳ chọn điều khiển pipeline:\n\n- "official" → ship lên main/master với full pipeline (docs + journal)\n- "beta" → ship lên dev/beta với pipeline nhẹ hơn\n- Không argument → auto-detect từ tên branch (feature/* → official, dev/* → beta)\n\nFlags như --skip-tests, --skip-review, --skip-journal, --skip-docs, --dry-run cho phép tuỳ chỉnh steps nào chạy.',
+        codeSnippet: '> /ak:ship official\n> /ak:ship beta --skip-tests\n> /ak:ship --dry-run\n\n# Mode auto-detection:\n# feature/* hotfix/* → official (target main)\n# dev/* beta/*       → beta (target dev)',
         icon: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
         color: 'purple',
       },
@@ -804,9 +804,9 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Journal & Docs (background)',
         descEn: 'Write technical journal and update docs in background (non-blocking)',
         descVi: 'Viết technical journal và cập nhật docs trong background (non-blocking)',
-        explainEn: 'Two background tasks run in parallel without blocking the pipeline:\n\nJournal (ck:journal): The journal-writer sub-agent writes a technical journal entry. Saved to ./docs/journals/.\n\nDocs Update (official mode only): The docs-manager sub-agent invokes ck:docs update to sync documentation.\n\nBeta mode auto-skips docs update. Both can be skipped via --skip-journal and --skip-docs flags.',
-        explainVi: 'Hai background tasks chạy song song không block pipeline:\n\nJournal (ck:journal): journal-writer sub-agent viết technical journal entry. Lưu vào ./docs/journals/.\n\nDocs Update (chỉ official mode): docs-manager sub-agent gọi ck:docs update để sync documentation.\n\nBeta mode tự động skip docs update. Cả hai có thể skip qua --skip-journal và --skip-docs flags.',
-        codeSnippet: '# Background (non-blocking):\n# journal-writer → ck:journal → ./docs/journals/\n# docs-manager → ck:docs update (official only)',
+        explainEn: 'Two background tasks run in parallel without blocking the pipeline:\n\nJournal (ak:journal): The journal-writer sub-agent writes a technical journal entry. Saved to ./docs/journals/.\n\nDocs Update (official mode only): The docs-manager sub-agent invokes ak:docs update to sync documentation.\n\nBeta mode auto-skips docs update. Both can be skipped via --skip-journal and --skip-docs flags.',
+        explainVi: 'Hai background tasks chạy song song không block pipeline:\n\nJournal (ak:journal): journal-writer sub-agent viết technical journal entry. Lưu vào ./docs/journals/.\n\nDocs Update (chỉ official mode): docs-manager sub-agent gọi ak:docs update để sync documentation.\n\nBeta mode tự động skip docs update. Cả hai có thể skip qua --skip-journal và --skip-docs flags.',
+        codeSnippet: '# Background (non-blocking):\n# journal-writer → ak:journal → ./docs/journals/\n# docs-manager → ak:docs update (official only)',
         icon: '<path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>',
         color: 'green',
         isSubAgent: true,
@@ -817,8 +817,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Commit, Push & PR',
         descEn: 'Conventional commit, push to origin, create PR with linked issues',
         descVi: 'Conventional commit, push lên origin, tạo PR với linked issues',
-        explainEn: 'The final output steps:\n\n1. Stage all changes with security scan for secrets. HARD GATE if secrets found.\n2. Compose conventional commit message (feat/fix/refactor/chore).\n3. Push to origin (never force push).\n4. Create PR via gh pr create with structured body and linked issues.\n\nThe PR URL is the final output — the single deliverable from /ck:ship.',
-        explainVi: 'Các output steps cuối cùng:\n\n1. Stage all changes với security scan cho secrets. HARD GATE nếu tìm thấy secrets.\n2. Compose conventional commit message (feat/fix/refactor/chore).\n3. Push lên origin (không bao giờ force push).\n4. Tạo PR qua gh pr create với structured body và linked issues.\n\nPR URL là final output — deliverable duy nhất từ /ck:ship.',
+        explainEn: 'The final output steps:\n\n1. Stage all changes with security scan for secrets. HARD GATE if secrets found.\n2. Compose conventional commit message (feat/fix/refactor/chore).\n3. Push to origin (never force push).\n4. Create PR via gh pr create with structured body and linked issues.\n\nThe PR URL is the final output — the single deliverable from /ak:ship.',
+        explainVi: 'Các output steps cuối cùng:\n\n1. Stage all changes với security scan cho secrets. HARD GATE nếu tìm thấy secrets.\n2. Compose conventional commit message (feat/fix/refactor/chore).\n3. Push lên origin (không bao giờ force push).\n4. Tạo PR qua gh pr create với structured body và linked issues.\n\nPR URL là final output — deliverable duy nhất từ /ak:ship.',
         codeSnippet: 'git add -A\ngit commit -m "feat(auth): add OAuth2 login flow"\ngit push -u origin feature/foo\ngh pr create --base main --title "feat: ..." --body "..."',
         icon: '<path d="M5 13l4 4L19 7"/>',
         color: 'amber',
@@ -826,10 +826,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:test — Testing & Quality Assurance ──────────────────
+  // ─── /ak:test — Testing & Quality Assurance ──────────────────
   {
     id: 'test',
-    command: '/ck:test',
+    command: '/ak:test',
     kit: 'engineer',
     titleEn: 'Test & QA',
     titleVi: 'Kiểm Thử & QA',
@@ -841,12 +841,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'ts-input',
         type: 'user-input',
-        name: '/ck:test',
+        name: '/ak:test',
         descEn: 'You specify test scope or select mode (code vs UI)',
         descVi: 'Bạn chỉ định test scope hoặc chọn mode (code vs UI)',
-        explainEn: 'Invoke with context to run code tests directly, or with "ui [url]" for browser-based visual testing.\n\nTwo modes:\n• (default) — Run unit/integration/e2e tests\n• ui — Run UI tests on a website\n\nExample: "/ck:test auth module" or "/ck:test ui https://myapp.com".',
-        explainVi: 'Gọi kèm context để chạy code tests, hoặc "ui [url]" cho visual testing trên browser.\n\nHai mode:\n• (default) — Chạy unit/integration/e2e tests\n• ui — Chạy UI tests trên website\n\nVí dụ: "/ck:test auth module" hoặc "/ck:test ui https://myapp.com".',
-        codeSnippet: '> /ck:test auth module\n> /ck:test ui https://myapp.com',
+        explainEn: 'Invoke with context to run code tests directly, or with "ui [url]" for browser-based visual testing.\n\nTwo modes:\n• (default) — Run unit/integration/e2e tests\n• ui — Run UI tests on a website\n\nExample: "/ak:test auth module" or "/ak:test ui https://myapp.com".',
+        explainVi: 'Gọi kèm context để chạy code tests, hoặc "ui [url]" cho visual testing trên browser.\n\nHai mode:\n• (default) — Chạy unit/integration/e2e tests\n• ui — Chạy UI tests trên website\n\nVí dụ: "/ak:test auth module" hoặc "/ak:test ui https://myapp.com".',
+        codeSnippet: '> /ak:test auth module\n> /ak:test ui https://myapp.com',
         icon: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
         color: 'purple',
       },
@@ -856,8 +856,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Hooks Fire',
         descEn: 'Context injection — project config, test framework detection',
         descVi: 'Inject context — project config, phát hiện test framework',
-        explainEn: 'Hooks fire at lifecycle events:\n\n• SessionStart: session-init.cjs — detects project type, loads config, identifies test framework.\n• UserPromptSubmit: dev-rules-reminder.cjs — injects coding standards and plan context.\n• SubagentStart: subagent-init.cjs — provides context to UI test agents using ck:agent-browser, ck:web-testing, or ck:chrome-profile as needed.',
-        explainVi: 'Hooks fire ở các lifecycle events:\n\n• SessionStart: session-init.cjs — phát hiện loại project, load config, xác định test framework.\n• UserPromptSubmit: dev-rules-reminder.cjs — inject coding standards và plan context.\n• SubagentStart: subagent-init.cjs — cung cấp context cho UI test agents dùng ck:agent-browser, ck:web-testing, hoặc ck:chrome-profile khi cần.',
+        explainEn: 'Hooks fire at lifecycle events:\n\n• SessionStart: session-init.cjs — detects project type, loads config, identifies test framework.\n• UserPromptSubmit: dev-rules-reminder.cjs — injects coding standards and plan context.\n• SubagentStart: subagent-init.cjs — provides context to UI test agents using ak:agent-browser, ak:web-testing, or ak:chrome-profile as needed.',
+        explainVi: 'Hooks fire ở các lifecycle events:\n\n• SessionStart: session-init.cjs — phát hiện loại project, load config, xác định test framework.\n• UserPromptSubmit: dev-rules-reminder.cjs — inject coding standards và plan context.\n• SubagentStart: subagent-init.cjs — cung cấp context cho UI test agents dùng ak:agent-browser, ak:web-testing, hoặc ak:chrome-profile khi cần.',
         codeSnippet: '// SessionStart: session-init.cjs → project + framework\n// UserPromptSubmit: dev-rules-reminder.cjs → rules\n// SubagentStart: subagent-init.cjs → sub-agent context',
         icon: '<path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>',
         color: 'blue',
@@ -880,9 +880,9 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Analyze Failures + Coverage',
         descEn: 'Root cause analysis, fix broken code, generate coverage metrics',
         descVi: 'Phân tích nguyên nhân gốc, sửa code lỗi, tạo coverage metrics',
-        explainEn: 'The main agent analyzes failures and generates coverage:\n\n• Read error messages and stack traces → identify root cause vs. symptom\n• Complex failures → activate ck:sequential-thinking\n• Deep bugs → activate ck:debug\n• Generate coverage reports (Istanbul/c8/pytest-cov/go tool cover)\n• Target: 80%+ coverage on critical paths',
-        explainVi: 'Main agent phân tích failures và tạo coverage:\n\n• Đọc error messages và stack traces → xác định root cause vs. symptom\n• Failures phức tạp → kích hoạt ck:sequential-thinking\n• Bugs sâu → kích hoạt ck:debug\n• Tạo coverage reports (Istanbul/c8/pytest-cov/go tool cover)\n• Mục tiêu: 80%+ coverage trên critical paths',
-        codeSnippet: '// Analyze failures:\n// 1. Stack trace → root cause\n// 2. Complex? → ck:sequential-thinking\n// 3. Deep bug? → ck:debug\n//\n// Coverage: npm run test:coverage\n// Target: 80%+ critical paths',
+        explainEn: 'The main agent analyzes failures and generates coverage:\n\n• Read error messages and stack traces → identify root cause vs. symptom\n• Complex failures → activate ak:sequential-thinking\n• Deep bugs → activate ak:debug\n• Generate coverage reports (Istanbul/c8/pytest-cov/go tool cover)\n• Target: 80%+ coverage on critical paths',
+        explainVi: 'Main agent phân tích failures và tạo coverage:\n\n• Đọc error messages và stack traces → xác định root cause vs. symptom\n• Failures phức tạp → kích hoạt ak:sequential-thinking\n• Bugs sâu → kích hoạt ak:debug\n• Tạo coverage reports (Istanbul/c8/pytest-cov/go tool cover)\n• Mục tiêu: 80%+ coverage trên critical paths',
+        codeSnippet: '// Analyze failures:\n// 1. Stack trace → root cause\n// 2. Complex? → ak:sequential-thinking\n// 3. Deep bug? → ak:debug\n//\n// Coverage: npm run test:coverage\n// Target: 80%+ critical paths',
         icon: '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',
         color: 'green',
       },
@@ -890,11 +890,11 @@ export const workflowScenarios: WorkflowScenario[] = [
         id: 'ts-ui',
         type: 'agent',
         name: 'UI Tests (conditional)',
-        descEn: 'Browser/UI QA via ck:agent-browser, ck:web-testing, and ck:chrome-profile',
-        descVi: 'Browser/UI QA qua ck:agent-browser, ck:web-testing, và ck:chrome-profile',
-        explainEn: 'Activated when mode is "ui". The current skill routes browser validation through ck:agent-browser, ck:web-testing, and ck:chrome-profile when user browser state is needed:\n\n• Screenshots at multiple viewports (mobile, tablet, desktop)\n• Accessibility audit (ARIA, contrast, keyboard nav)\n• Form automation and flow verification\n• Console error collection\n• Screenshots analyzed by ck:ai-multimodal for visual regression',
-        explainVi: 'Kích hoạt khi mode là "ui". Skill hiện tại route browser validation qua ck:agent-browser, ck:web-testing, và ck:chrome-profile khi cần browser state của user:\n\n• Screenshots ở nhiều viewports (mobile, tablet, desktop)\n• Accessibility audit (ARIA, contrast, keyboard nav)\n• Form automation và flow verification\n• Thu thập console errors\n• Screenshots được phân tích bởi ck:ai-multimodal cho visual regression',
-        codeSnippet: '// UI route:\n// 1. ck:agent-browser → browser automation\n// 2. ck:web-testing → Playwright/a11y/responsive checks\n// 3. ck:chrome-profile → existing login/session when needed\n// 4. ck:ai-multimodal → visual regression',
+        descEn: 'Browser/UI QA via ak:agent-browser, ak:web-testing, and ak:chrome-profile',
+        descVi: 'Browser/UI QA qua ak:agent-browser, ak:web-testing, và ak:chrome-profile',
+        explainEn: 'Activated when mode is "ui". The current skill routes browser validation through ak:agent-browser, ak:web-testing, and ak:chrome-profile when user browser state is needed:\n\n• Screenshots at multiple viewports (mobile, tablet, desktop)\n• Accessibility audit (ARIA, contrast, keyboard nav)\n• Form automation and flow verification\n• Console error collection\n• Screenshots analyzed by ak:ai-multimodal for visual regression',
+        explainVi: 'Kích hoạt khi mode là "ui". Skill hiện tại route browser validation qua ak:agent-browser, ak:web-testing, và ak:chrome-profile khi cần browser state của user:\n\n• Screenshots ở nhiều viewports (mobile, tablet, desktop)\n• Accessibility audit (ARIA, contrast, keyboard nav)\n• Form automation và flow verification\n• Thu thập console errors\n• Screenshots được phân tích bởi ak:ai-multimodal cho visual regression',
+        codeSnippet: '// UI route:\n// 1. ak:agent-browser → browser automation\n// 2. ak:web-testing → Playwright/a11y/responsive checks\n// 3. ak:chrome-profile → existing login/session when needed\n// 4. ak:ai-multimodal → visual regression',
         icon: '<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>',
         color: 'green',
         isSubAgent: true,
@@ -914,10 +914,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:design — Unified Design Assets ─────────────────────
+  // ─── /ak:design — Unified Design Assets ─────────────────────
   {
     id: 'design',
-    command: '/ckm:design',
+    command: '/ak:design',
     kit: 'marketer',
     titleEn: 'Design Assets',
     titleVi: 'Thiết Kế Tài Sản',
@@ -929,12 +929,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'ds-input',
         type: 'user-input',
-        name: '/ckm:design',
+        name: '/ak:design',
         descEn: 'You specify design type and context via space args',
         descVi: 'Bạn chỉ định loại thiết kế và context qua space args',
-        explainEn: 'You invoke the unified design skill with a design type as space argument:\n\n• "/ckm:design logo modern tech startup"\n• "/ckm:design banner Facebook cover for SaaS launch"\n• "/ckm:design social photos Instagram carousel"\n• "/ckm:design cip business card letterhead"\n\n9 design types: brand, design-system, ui-styling, logo, cip, slides, banner, social photos, icon.',
-        explainVi: 'Bạn gọi skill thiết kế thống nhất với space argument:\n\n• "/ckm:design logo tech startup hiện đại"\n• "/ckm:design banner Facebook cover cho SaaS launch"\n• "/ckm:design social photos Instagram carousel"\n• "/ckm:design cip business card letterhead"\n\n9 loại: brand, design-system, ui-styling, logo, cip, slides, banner, social photos, icon.',
-        codeSnippet: '> /ckm:design logo modern minimalist tech startup\n\n# Space-arg routing (NOT colon subcommands)\n# 9 types: brand | design-system | ui-styling\n#   logo | cip | slides | banner\n#   social photos | icon',
+        explainEn: 'You invoke the unified design skill with a design type as space argument:\n\n• "/ak:design logo modern tech startup"\n• "/ak:design banner Facebook cover for SaaS launch"\n• "/ak:design social photos Instagram carousel"\n• "/ak:design cip business card letterhead"\n\n9 design types: brand, design-system, ui-styling, logo, cip, slides, banner, social photos, icon.',
+        explainVi: 'Bạn gọi skill thiết kế thống nhất với space argument:\n\n• "/ak:design logo tech startup hiện đại"\n• "/ak:design banner Facebook cover cho SaaS launch"\n• "/ak:design social photos Instagram carousel"\n• "/ak:design cip business card letterhead"\n\n9 loại: brand, design-system, ui-styling, logo, cip, slides, banner, social photos, icon.',
+        codeSnippet: '> /ak:design logo modern minimalist tech startup\n\n# Space-arg routing (NOT colon subcommands)\n# 9 types: brand | design-system | ui-styling\n#   logo | cip | slides | banner\n#   social photos | icon',
         icon: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
         color: 'purple',
       },
@@ -968,9 +968,9 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'AI Generation + Design',
         descEn: 'Gemini AI generates images/SVG, or HTML/CSS design created',
         descVi: 'Gemini AI tạo hình ảnh/SVG, hoặc thiết kế HTML/CSS',
-        explainEn: 'Core creation varies by type:\n\n• Logo: Gemini Flash → logo images (55 styles)\n• CIP: Gemini Flash/Pro → mockup images, supports full set\n• Icon: Gemini 3.1 Pro → SVG output, batch + multi-size\n• Banner: frontend-design + ai-artist/ai-multimodal → HTML/CSS + visuals\n• Social Photos: ckm:brand → ckm:design-system → HTML per platform size\n• Slides: Chart.js + design tokens → HTML presentation',
-        explainVi: 'Tạo chính khác nhau theo type:\n\n• Logo: Gemini Flash → logo images (55 styles)\n• CIP: Gemini Flash/Pro → mockup images, hỗ trợ full set\n• Icon: Gemini 3.1 Pro → SVG output, batch + multi-size\n• Banner: frontend-design + ai-artist/ai-multimodal → HTML/CSS + visuals\n• Social Photos: ckm:brand → ckm:design-system → HTML per platform size\n• Slides: Chart.js + design tokens → HTML presentation',
-        codeSnippet: '# Logo:\npython3 scripts/logo/generate.py --brand "TechFlow" --style minimalist\n# CIP:\npython3 scripts/cip/generate.py --brand "TopGroup" --logo logo.png --set\n# Icon:\npython3 scripts/icon/generate.py --prompt "settings" --style outlined\n# Banner: frontend-design → HTML → ai-artist visuals\n# Social: ckm:brand → design-system → HTML per size',
+        explainEn: 'Core creation varies by type:\n\n• Logo: Gemini Flash → logo images (55 styles)\n• CIP: Gemini Flash/Pro → mockup images, supports full set\n• Icon: Gemini 3.1 Pro → SVG output, batch + multi-size\n• Banner: frontend-design + ai-artist/ai-multimodal → HTML/CSS + visuals\n• Social Photos: ak:brand → ak:design-system → HTML per platform size\n• Slides: Chart.js + design tokens → HTML presentation',
+        explainVi: 'Tạo chính khác nhau theo type:\n\n• Logo: Gemini Flash → logo images (55 styles)\n• CIP: Gemini Flash/Pro → mockup images, hỗ trợ full set\n• Icon: Gemini 3.1 Pro → SVG output, batch + multi-size\n• Banner: frontend-design + ai-artist/ai-multimodal → HTML/CSS + visuals\n• Social Photos: ak:brand → ak:design-system → HTML per platform size\n• Slides: Chart.js + design tokens → HTML presentation',
+        codeSnippet: '# Logo:\npython3 scripts/logo/generate.py --brand "TechFlow" --style minimalist\n# CIP:\npython3 scripts/cip/generate.py --brand "TopGroup" --logo logo.png --set\n# Icon:\npython3 scripts/icon/generate.py --prompt "settings" --style outlined\n# Banner: frontend-design → HTML → ai-artist visuals\n# Social: ak:brand → design-system → HTML per size',
         icon: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
         color: 'green',
         isSubAgent: true,
@@ -990,10 +990,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:seo:* — SEO Audit & Optimization ──────────────────
+  // ─── /ak:seo:* — SEO Audit & Optimization ──────────────────
   {
     id: 'seo',
-    command: '/ckm:seo:*',
+    command: '/ak:seo:*',
     kit: 'marketer',
     titleEn: 'SEO Audit & Optimization',
     titleVi: 'Kiểm Tra & Tối Ưu SEO',
@@ -1005,12 +1005,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'se-input',
         type: 'user-input',
-        name: '/ckm:seo:<variant>',
+        name: '/ak:seo:<variant>',
         descEn: 'You specify SEO task: audit, keywords, pseo, optimize, or schema',
         descVi: 'Bạn chỉ định tác vụ SEO: audit, keywords, pseo, optimize, hoặc schema',
-        explainEn: 'You invoke /ckm:seo with a subcommand:\n\n• /ckm:seo:audit example.com — full technical SEO audit\n• /ckm:seo:keywords "saas pricing" — keyword research with real data\n• /ckm:seo:pseo product-pages — programmatic SEO templates\n• /ckm:seo:schema homepage — JSON+LD structured data',
-        explainVi: 'Bạn gọi /ckm:seo với subcommand:\n\n• /ckm:seo:audit example.com — kiểm tra SEO kỹ thuật toàn diện\n• /ckm:seo:keywords "saas pricing" — nghiên cứu từ khóa với dữ liệu thực\n• /ckm:seo:pseo product-pages — template SEO tự động hóa\n• /ckm:seo:schema homepage — JSON+LD structured data',
-        codeSnippet: '> /ckm:seo:audit example.com\n> /ckm:seo:keywords "saas pricing"\n> /ckm:seo:pseo product-pages\n> /ckm:seo:schema homepage',
+        explainEn: 'You invoke /ak:seo with a subcommand:\n\n• /ak:seo:audit example.com — full technical SEO audit\n• /ak:seo:keywords "saas pricing" — keyword research with real data\n• /ak:seo:pseo product-pages — programmatic SEO templates\n• /ak:seo:schema homepage — JSON+LD structured data',
+        explainVi: 'Bạn gọi /ak:seo với subcommand:\n\n• /ak:seo:audit example.com — kiểm tra SEO kỹ thuật toàn diện\n• /ak:seo:keywords "saas pricing" — nghiên cứu từ khóa với dữ liệu thực\n• /ak:seo:pseo product-pages — template SEO tự động hóa\n• /ak:seo:schema homepage — JSON+LD structured data',
+        codeSnippet: '> /ak:seo:audit example.com\n> /ak:seo:keywords "saas pricing"\n> /ak:seo:pseo product-pages\n> /ak:seo:schema homepage',
         icon: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
         color: 'purple',
       },
@@ -1067,10 +1067,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:campaign:* — Campaign Management ──────────────────
+  // ─── /ak:campaign:* — Campaign Management ──────────────────
   {
     id: 'campaign',
-    command: '/ckm:campaign:*',
+    command: '/ak:campaign:*',
     kit: 'marketer',
     titleEn: 'Campaign Management',
     titleVi: 'Quản Lý Chiến Dịch',
@@ -1082,12 +1082,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'cp-input',
         type: 'user-input',
-        name: '/ckm:campaign:<action>',
+        name: '/ak:campaign:<action>',
         descEn: 'You invoke a campaign action: create, status, analyze, or email',
         descVi: 'Bạn gọi hành động chiến dịch: create, status, analyze, hoặc email',
-        explainEn: 'Campaign commands:\n\n• /ckm:campaign:create "Summer Sale 2025" — full campaign creation\n• /ckm:campaign:status "Summer Sale 2025" — progress check\n• /ckm:campaign:analyze "Q1 Launch" — performance analysis\n• /ckm:campaign:email "Welcome Series" — email campaign\n\nTypes: Product Launch, Seasonal, Brand Awareness, Lead Gen, Re-engagement.',
-        explainVi: 'Các lệnh campaign:\n\n• /ckm:campaign:create "Summer Sale 2025" — tạo chiến dịch đầy đủ\n• /ckm:campaign:status "Summer Sale 2025" — kiểm tra tiến độ\n• /ckm:campaign:analyze "Q1 Launch" — phân tích hiệu suất\n• /ckm:campaign:email "Welcome Series" — email campaign\n\nLoại: Product Launch, Seasonal, Brand Awareness, Lead Gen, Re-engagement.',
-        codeSnippet: '> /ckm:campaign:create "Summer Sale 2025"\n> /ckm:campaign:status "Summer Sale 2025"\n> /ckm:campaign:analyze "Q1 Launch"\n> /ckm:campaign:email "Welcome Series"',
+        explainEn: 'Campaign commands:\n\n• /ak:campaign:create "Summer Sale 2025" — full campaign creation\n• /ak:campaign:status "Summer Sale 2025" — progress check\n• /ak:campaign:analyze "Q1 Launch" — performance analysis\n• /ak:campaign:email "Welcome Series" — email campaign\n\nTypes: Product Launch, Seasonal, Brand Awareness, Lead Gen, Re-engagement.',
+        explainVi: 'Các lệnh campaign:\n\n• /ak:campaign:create "Summer Sale 2025" — tạo chiến dịch đầy đủ\n• /ak:campaign:status "Summer Sale 2025" — kiểm tra tiến độ\n• /ak:campaign:analyze "Q1 Launch" — phân tích hiệu suất\n• /ak:campaign:email "Welcome Series" — email campaign\n\nLoại: Product Launch, Seasonal, Brand Awareness, Lead Gen, Re-engagement.',
+        codeSnippet: '> /ak:campaign:create "Summer Sale 2025"\n> /ak:campaign:status "Summer Sale 2025"\n> /ak:campaign:analyze "Q1 Launch"\n> /ak:campaign:email "Welcome Series"',
         icon: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
         color: 'purple',
       },
@@ -1144,10 +1144,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:deploy — Auto-Detect Deploy Pipeline ────────────────
+  // ─── /ak:deploy — Auto-Detect Deploy Pipeline ────────────────
   {
     id: 'deploy',
-    command: '/ck:deploy',
+    command: '/ak:deploy',
     kit: 'engineer',
     titleEn: 'Deploy Project',
     titleVi: 'Deploy Dự Án',
@@ -1159,12 +1159,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'dp-input',
         type: 'user-input',
-        name: '/ck:deploy',
+        name: '/ak:deploy',
         descEn: 'You say "deploy", "go live", or name a platform',
         descVi: 'Bạn nói "deploy", "go live", hoặc chỉ định platform',
-        explainEn: 'You invoke deploy with an optional platform argument:\n\n• "/ck:deploy" — auto-detect everything\n• "/ck:deploy vercel" — target Vercel\n• "/ck:deploy railway production" — deploy to Railway prod\n\nSupports 15 platforms: Vercel, Netlify, Cloudflare, Railway, Fly.io, Render, Heroku, TOSE.sh, Coolify, Dokploy, Github Pages, GCP, AWS, Digital Ocean, Vultr.',
-        explainVi: 'Bạn gọi deploy với platform tuỳ chọn:\n\n• "/ck:deploy" — tự động phát hiện\n• "/ck:deploy vercel" — chỉ định Vercel\n• "/ck:deploy railway production" — deploy lên Railway prod\n\nHỗ trợ 15 platforms: Vercel, Netlify, Cloudflare, Railway, Fly.io, Render, Heroku, TOSE.sh, Coolify, Dokploy, Github Pages, GCP, AWS, Digital Ocean, Vultr.',
-        codeSnippet: '> /ck:deploy\n> /ck:deploy vercel\n> /ck:deploy railway production',
+        explainEn: 'You invoke deploy with an optional platform argument:\n\n• "/ak:deploy" — auto-detect everything\n• "/ak:deploy vercel" — target Vercel\n• "/ak:deploy railway production" — deploy to Railway prod\n\nSupports 15 platforms: Vercel, Netlify, Cloudflare, Railway, Fly.io, Render, Heroku, TOSE.sh, Coolify, Dokploy, Github Pages, GCP, AWS, Digital Ocean, Vultr.',
+        explainVi: 'Bạn gọi deploy với platform tuỳ chọn:\n\n• "/ak:deploy" — tự động phát hiện\n• "/ak:deploy vercel" — chỉ định Vercel\n• "/ak:deploy railway production" — deploy lên Railway prod\n\nHỗ trợ 15 platforms: Vercel, Netlify, Cloudflare, Railway, Fly.io, Render, Heroku, TOSE.sh, Coolify, Dokploy, Github Pages, GCP, AWS, Digital Ocean, Vultr.',
+        codeSnippet: '> /ak:deploy\n> /ak:deploy vercel\n> /ak:deploy railway production',
         icon: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
         color: 'purple',
       },
@@ -1198,8 +1198,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'CLI Setup + Deploy',
         descEn: 'Install CLI, authenticate, run deploy, verify URL is live',
         descVi: 'Cài CLI, xác thực, chạy deploy, verify URL hoạt động',
-        explainEn: '3-step deploy sequence:\n\n1. Check CLI → install if missing (npm i -g vercel, brew install flyctl)\n2. Check auth → login if needed\n3. Run deploy from platform-specific reference\n\nAfter deploy: verify the deployment URL is reachable and healthy for that platform. If verification fails → troubleshoot → escalate to /ck:devops.\n\nSecurity: checks .env + .gitignore before deploying. Progressive: loads only needed platform reference.',
-        explainVi: 'Deploy sequence 3 bước:\n\n1. Kiểm CLI → cài nếu thiếu\n2. Kiểm auth → login nếu cần\n3. Chạy deploy từ platform reference\n\nSau deploy: verify URL reachable và healthy theo platform đó. Nếu verify fail → troubleshoot → chuyển /ck:devops.\n\nBảo mật: kiểm .env + .gitignore trước deploy. Progressive: chỉ load platform reference cần thiết.',
+        explainEn: '3-step deploy sequence:\n\n1. Check CLI → install if missing (npm i -g vercel, brew install flyctl)\n2. Check auth → login if needed\n3. Run deploy from platform-specific reference\n\nAfter deploy: verify the deployment URL is reachable and healthy for that platform. If verification fails → troubleshoot → escalate to /ak:devops.\n\nSecurity: checks .env + .gitignore before deploying. Progressive: loads only needed platform reference.',
+        explainVi: 'Deploy sequence 3 bước:\n\n1. Kiểm CLI → cài nếu thiếu\n2. Kiểm auth → login nếu cần\n3. Chạy deploy từ platform reference\n\nSau deploy: verify URL reachable và healthy theo platform đó. Nếu verify fail → troubleshoot → chuyển /ak:devops.\n\nBảo mật: kiểm .env + .gitignore trước deploy. Progressive: chỉ load platform reference cần thiết.',
         codeSnippet: '// 1. which vercel || npm i -g vercel\n// 2. vercel whoami || vercel login\n// 3. vercel --prod\n// 4. curl $URL → reachable/healthy?\n// Security: scan .env before deploy',
         icon: '<path d="M12 19V5"/><polyline points="5 12 12 5 19 12"/>',
         color: 'green',
@@ -1210,8 +1210,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'docs/deployment.md',
         descEn: 'Create/update deployment docs with URL, commands, rollback',
         descVi: 'Tạo/cập nhật deployment docs với URL, commands, rollback',
-        explainEn: 'Creates or updates docs/deployment.md with:\n\n• Platform name + version\n• Production URL\n• Deploy command used\n• Environment variables required\n• Custom domain setup\n• Rollback instructions\n\nNext /ck:deploy auto-detects from this file (highest priority).',
-        explainVi: 'Tạo hoặc cập nhật docs/deployment.md:\n\n• Tên platform + version\n• Production URL\n• Deploy command đã dùng\n• Environment variables cần thiết\n• Custom domain setup\n• Rollback instructions\n\nLần /ck:deploy sau auto-detect từ file này (ưu tiên cao nhất).',
+        explainEn: 'Creates or updates docs/deployment.md with:\n\n• Platform name + version\n• Production URL\n• Deploy command used\n• Environment variables required\n• Custom domain setup\n• Rollback instructions\n\nNext /ak:deploy auto-detects from this file (highest priority).',
+        explainVi: 'Tạo hoặc cập nhật docs/deployment.md:\n\n• Tên platform + version\n• Production URL\n• Deploy command đã dùng\n• Environment variables cần thiết\n• Custom domain setup\n• Rollback instructions\n\nLần /ak:deploy sau auto-detect từ file này (ưu tiên cao nhất).',
         codeSnippet: '# docs/deployment.md\n## Platform: Vercel\n## URL: https://my-app.vercel.app\n## Deploy: vercel --prod\n## Rollback: vercel rollback',
         icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>',
         color: 'amber',
@@ -1219,10 +1219,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:predict — Multi-Persona Impact Analysis ─────────────
+  // ─── /ak:predict — Multi-Persona Impact Analysis ─────────────
   {
     id: 'predict',
-    command: '/ck:predict',
+    command: '/ak:predict',
     kit: 'engineer',
     titleEn: 'Predict Impact',
     titleVi: 'Dự Đoán Tác Động',
@@ -1234,12 +1234,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'pd-input',
         type: 'user-input',
-        name: '/ck:predict',
+        name: '/ak:predict',
         descEn: 'You describe the proposed change or feature',
         descVi: 'Bạn mô tả thay đổi hoặc tính năng đề xuất',
-        explainEn: 'Describe your proposed change. Optionally pass --files <glob> for affected code and --chain reason|probe for follow-up analysis.\n\n• "/ck:predict Add WebSocket for real-time notifications"\n• "/ck:predict Migrate auth from JWT to sessions --files src/api/**/*.ts"\n• "/ck:predict Replace REST with GraphQL --chain probe"\n\nThis skill does NOT implement anything — analysis and verdict only.',
-        explainVi: 'Mô tả thay đổi đề xuất. Tuỳ chọn --files <glob> cho code liên quan và --chain reason|probe để phân tích tiếp.\n\n• "/ck:predict Thêm WebSocket cho real-time"\n• "/ck:predict Migrate auth từ JWT sang sessions --files src/api/**/*.ts"\n• "/ck:predict Replace REST with GraphQL --chain probe"\n\nSkill này KHÔNG implement — chỉ phân tích và đưa verdict.',
-        codeSnippet: '> /ck:predict "Replace REST with GraphQL" --files src/api/**/*.ts --chain probe\n\n# Analysis only — no code written\n# Output: GO / CAUTION / STOP',
+        explainEn: 'Describe your proposed change. Optionally pass --files <glob> for affected code and --chain reason|probe for follow-up analysis.\n\n• "/ak:predict Add WebSocket for real-time notifications"\n• "/ak:predict Migrate auth from JWT to sessions --files src/api/**/*.ts"\n• "/ak:predict Replace REST with GraphQL --chain probe"\n\nThis skill does NOT implement anything — analysis and verdict only.',
+        explainVi: 'Mô tả thay đổi đề xuất. Tuỳ chọn --files <glob> cho code liên quan và --chain reason|probe để phân tích tiếp.\n\n• "/ak:predict Thêm WebSocket cho real-time"\n• "/ak:predict Migrate auth từ JWT sang sessions --files src/api/**/*.ts"\n• "/ak:predict Replace REST with GraphQL --chain probe"\n\nSkill này KHÔNG implement — chỉ phân tích và đưa verdict.',
+        codeSnippet: '> /ak:predict "Replace REST with GraphQL" --files src/api/**/*.ts --chain probe\n\n# Analysis only — no code written\n# Output: GO / CAUTION / STOP',
         icon: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
         color: 'purple',
       },
@@ -1285,8 +1285,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Optional Chain Mode',
         descEn: '--chain reason resolves subjective tradeoffs; --chain probe generates missing-info probes',
         descVi: '--chain reason xử lý tradeoff chủ quan; --chain probe tạo probe cho thông tin thiếu',
-        explainEn: 'When requested, chain modes run inside the same /ck:predict session:\n\n• --chain reason — use critics and blind-judge reasoning for subjective tradeoffs after CAUTION.\n• --chain probe — generate concrete constraint probes when CAUTION/STOP comes from missing information.\n\nStill no code implementation.',
-        explainVi: 'Khi được yêu cầu, chain modes chạy trong cùng session /ck:predict:\n\n• --chain reason — dùng critics và blind-judge reasoning cho tradeoff chủ quan sau CAUTION.\n• --chain probe — tạo constraint probes cụ thể khi CAUTION/STOP do thiếu thông tin.\n\nVẫn không implement code.',
+        explainEn: 'When requested, chain modes run inside the same /ak:predict session:\n\n• --chain reason — use critics and blind-judge reasoning for subjective tradeoffs after CAUTION.\n• --chain probe — generate concrete constraint probes when CAUTION/STOP comes from missing information.\n\nStill no code implementation.',
+        explainVi: 'Khi được yêu cầu, chain modes chạy trong cùng session /ak:predict —\n\n• --chain reason — dùng critics và blind-judge reasoning cho tradeoff chủ quan sau CAUTION.\n• --chain probe — tạo constraint probes cụ thể khi CAUTION/STOP do thiếu thông tin.\n\nVẫn không implement code.',
         codeSnippet: '// Optional chain mode:\n// --chain reason → critics + blind judge\n// --chain probe  → concrete questions/tests for missing constraints',
         icon: '<path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/>',
         color: 'green',
@@ -1306,10 +1306,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:bootstrap — New Project Scaffolding ─────────────────
+  // ─── /ak:bootstrap — New Project Scaffolding ─────────────────
   {
     id: 'bootstrap',
-    command: '/ck:bootstrap',
+    command: '/ak:bootstrap',
     kit: 'engineer',
     titleEn: 'Bootstrap Project',
     titleVi: 'Khởi Tạo Dự Án',
@@ -1321,12 +1321,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'bt-input',
         type: 'user-input',
-        name: '/ck:bootstrap',
+        name: '/ak:bootstrap',
         descEn: 'Describe project + optional mode (default/full/auto/fast/parallel)',
         descVi: 'Mô tả dự án + mode tuỳ chọn (default/full/auto/fast/parallel)',
         explainEn: 'Describe your project with an optional mode:\n\n• default / --full: Interactive, gates at every major phase\n• --auto: Explicit autonomous opt-in, design gate only\n• --fast: Bounded parallel research/design setup, then normal cook review gates\n• --parallel: Parallel plan/cook execution shape, not approval bypass',
         explainVi: 'Mô tả dự án với mode tuỳ chọn:\n\n• default / --full: Tương tác, gate ở từng phase lớn\n• --auto: Opt-in autonomous rõ, chỉ giữ design gate\n• --fast: Research/design setup song song có giới hạn, rồi giữ cook review gates\n• --parallel: Điều phối plan/cook song song, không bỏ approval',
-        codeSnippet: '> /ck:bootstrap "Customer support portal with auth" --full\n> /ck:bootstrap "Internal CRM with import/export" --auto\n> /ck:bootstrap "Static docs site for API examples" --fast\n> /ck:bootstrap "SaaS analytics app with billing" --parallel',
+        codeSnippet: '> /ak:bootstrap "Customer support portal with auth" --full\n> /ak:bootstrap "Internal CRM with import/export" --auto\n> /ak:bootstrap "Static docs site for API examples" --fast\n> /ak:bootstrap "SaaS analytics app with billing" --parallel',
         icon: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
         color: 'purple',
       },
@@ -1358,12 +1358,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'bt-plan-cook',
         type: 'agent',
-        name: 'Plan (ck:plan) → Build (ck:cook)',
-        descEn: 'Activate ck:plan then ck:cook for full implementation',
-        descVi: 'Kích hoạt ck:plan rồi ck:cook cho implementation đầy đủ',
-        explainEn: 'Sequential skill activation:\n\n1. ck:plan — creates plan.md + phase-XX files (mode-mapped: full→hard, auto→auto, fast→fast, parallel→parallel)\n2. ck:cook — full build pipeline: implement phases → tester → debugger (if failures) → code-reviewer → fix until quality gates pass\n\nBoth are full skills with their own sub-agent orchestration.',
-        explainVi: 'Kích hoạt skill tuần tự:\n\n1. ck:plan — tạo plan.md + phase-XX files (map mode: full→hard, auto→auto, fast→fast, parallel→parallel)\n2. ck:cook — full build pipeline: implement → tester → debugger → code-reviewer → fix đến khi quality gates pass\n\nCả hai là skills đầy đủ với orchestration sub-agent riêng.',
-        codeSnippet: '// /ck:plan --auto → plans/260406/plan.md\n// /ck:cook --auto plans/260406/plan.md\n//   → implement → test → debug → review\n//   → artifact-validated? → finalize',
+        name: 'Plan (ak:plan) → Build (ak:cook)',
+        descEn: 'Activate ak:plan then ak:cook for full implementation',
+        descVi: 'Kích hoạt ak:plan rồi ak:cook cho implementation đầy đủ',
+        explainEn: 'Sequential skill activation:\n\n1. ak:plan — creates plan.md + phase-XX files (mode-mapped: full→hard, auto→auto, fast→fast, parallel→parallel)\n2. ak:cook — full build pipeline: implement phases → tester → debugger (if failures) → code-reviewer → fix until quality gates pass\n\nBoth are full skills with their own sub-agent orchestration.',
+        explainVi: 'Kích hoạt skill tuần tự:\n\n1. ak:plan — tạo plan.md + phase-XX files (map mode: full→hard, auto→auto, fast→fast, parallel→parallel)\n2. ak:cook — full build pipeline: implement → tester → debugger → code-reviewer → fix đến khi quality gates pass\n\nCả hai là skills đầy đủ với orchestration sub-agent riêng.',
+        codeSnippet: '// /ak:plan --auto → plans/260406/plan.md\n// /ak:cook --auto plans/260406/plan.md\n//   → implement → test → debug → review\n//   → artifact-validated? → finalize',
         icon: '<path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>',
         color: 'green',
         isSubAgent: true,
@@ -1374,19 +1374,19 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Docs + Onboard + Handoff',
         descEn: 'Generate docs, onboard user, summary report, optional git handoff',
         descVi: 'Tạo docs, onboard user, báo cáo tổng kết, optional git handoff',
-        explainEn: 'Finalization sub-agents:\n\n• docs-manager → README, codebase-summary, architecture\n• project-manager → roadmap, plan status\n• Onboarding: AskUserQuestion loop ("Enter API key → .env")\n• git-manager → optional commit/handoff when mode and user approval require it\n• /ck:journal → session entry\n\nImportant: --fast does not auto-commit.',
-        explainVi: 'Sub-agents finalization:\n\n• docs-manager → README, codebase-summary, architecture\n• project-manager → roadmap, plan status\n• Onboarding: AskUserQuestion loop ("Nhập API key → .env")\n• git-manager → optional commit/handoff khi mode và approval yêu cầu\n• /ck:journal → session entry\n\nQuan trọng: --fast không auto-commit.',
-        codeSnippet: '// docs-manager → README, architecture\n// project-manager → roadmap\n// AskUserQuestion → onboard user\n// git-manager → commit\n// /ck:journal → session entry',
+        explainEn: 'Finalization sub-agents:\n\n• docs-manager → README, codebase-summary, architecture\n• project-manager → roadmap, plan status\n• Onboarding: AskUserQuestion loop ("Enter API key → .env")\n• git-manager → optional commit/handoff when mode and user approval require it\n• /ak:journal → session entry\n\nImportant: --fast does not auto-commit.',
+        explainVi: 'Sub-agents finalization:\n\n• docs-manager → README, codebase-summary, architecture\n• project-manager → roadmap, plan status\n• Onboarding: AskUserQuestion loop ("Nhập API key → .env")\n• git-manager → optional commit/handoff khi mode và approval yêu cầu\n• /ak:journal → session entry\n\nQuan trọng: --fast không auto-commit.',
+        codeSnippet: '// docs-manager → README, architecture\n// project-manager → roadmap\n// AskUserQuestion → onboard user\n// git-manager → commit\n// /ak:journal → session entry',
         icon: '<path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',
         color: 'amber',
       },
     ],
   },
 
-  // ─── /ck:security-scan — Security Scan ──────────────────────
+  // ─── /ak:security-scan — Security Scan ──────────────────────
   {
     id: 'security-scan',
-    command: '/ck:security-scan',
+    command: '/ak:security-scan',
     kit: 'engineer',
     titleEn: 'Security Scan',
     titleVi: 'Quét Bảo Mật',
@@ -1398,12 +1398,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'ss-input',
         type: 'user-input',
-        name: '/ck:security-scan',
+        name: '/ak:security-scan',
         descEn: 'Specify scope with optional --secrets-only, --deps-only, or --full',
         descVi: 'Chỉ định scope với tuỳ chọn --secrets-only, --deps-only, hoặc --full',
-        explainEn: 'Examples:\n\n• /ck:security-scan — full scan of current project\n• /ck:security-scan --secrets-only — only secret/credential detection\n• /ck:security-scan --deps-only — only dependency audit\n• /ck:security-scan src/api/ — scan a specific directory\n\nThis skill reports findings only; it does not modify code automatically.',
-        explainVi: 'Ví dụ:\n\n• /ck:security-scan — quét toàn project hiện tại\n• /ck:security-scan --secrets-only — chỉ detect secrets/credentials\n• /ck:security-scan --deps-only — chỉ audit dependencies\n• /ck:security-scan src/api/ — quét thư mục cụ thể\n\nSkill này chỉ report findings; không tự sửa code.',
-        codeSnippet: '> /ck:security-scan\n> /ck:security-scan --secrets-only\n> /ck:security-scan --deps-only\n> /ck:security-scan src/api/',
+        explainEn: 'Examples:\n\n• /ak:security-scan — full scan of current project\n• /ak:security-scan --secrets-only — only secret/credential detection\n• /ak:security-scan --deps-only — only dependency audit\n• /ak:security-scan src/api/ — scan a specific directory\n\nThis skill reports findings only; it does not modify code automatically.',
+        explainVi: 'Ví dụ:\n\n• /ak:security-scan — quét toàn project hiện tại\n• /ak:security-scan --secrets-only — chỉ detect secrets/credentials\n• /ak:security-scan --deps-only — chỉ audit dependencies\n• /ak:security-scan src/api/ — quét thư mục cụ thể\n\nSkill này chỉ report findings; không tự sửa code.',
+        codeSnippet: '> /ak:security-scan\n> /ak:security-scan --secrets-only\n> /ak:security-scan --deps-only\n> /ak:security-scan src/api/',
         icon: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
         color: 'purple',
       },
@@ -1470,10 +1470,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:social:* — Social Media Content ────────────────────
+  // ─── /ak:social:* — Social Media Content ────────────────────
   {
     id: 'social',
-    command: '/ckm:social:*',
+    command: '/ak:social:*',
     kit: 'marketer',
     titleEn: 'Social Media Content',
     titleVi: 'Nội Dung Social Media',
@@ -1485,12 +1485,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'sc-input',
         type: 'user-input',
-        name: '/ckm:social',
+        name: '/ak:social',
         descEn: 'Specify platform, content type, and topic',
         descVi: 'Chỉ định platform, loại content, và chủ đề',
-        explainEn: 'Invoke with platform and type:\n\n• "/ckm:social linkedin post about feature launch"\n• "/ckm:social x thread on AI trends"\n• "/ckm:social:schedule tomorrow 9am"\n\nPlatforms: X, LinkedIn, Instagram, TikTok, YouTube, Facebook, Threads.\nTypes: post, thread, carousel, story, reel.',
-        explainVi: 'Gọi với platform và type:\n\n• "/ckm:social linkedin post về feature launch"\n• "/ckm:social x thread về AI trends"\n• "/ckm:social:schedule ngày mai 9am"\n\nPlatforms: X, LinkedIn, Instagram, TikTok, YouTube, Facebook, Threads.\nLoại: post, thread, carousel, story, reel.',
-        codeSnippet: '> /ckm:social linkedin post about feature launch\n> /ckm:social x thread on AI trends\n> /ckm:social:schedule tomorrow 9am',
+        explainEn: 'Invoke with platform and type:\n\n• "/ak:social linkedin post about feature launch"\n• "/ak:social x thread on AI trends"\n• "/ak:social:schedule tomorrow 9am"\n\nPlatforms: X, LinkedIn, Instagram, TikTok, YouTube, Facebook, Threads.\nTypes: post, thread, carousel, story, reel.',
+        explainVi: 'Gọi với platform và type:\n\n• "/ak:social linkedin post về feature launch"\n• "/ak:social x thread về AI trends"\n• "/ak:social:schedule ngày mai 9am"\n\nPlatforms: X, LinkedIn, Instagram, TikTok, YouTube, Facebook, Threads.\nLoại: post, thread, carousel, story, reel.',
+        codeSnippet: '> /ak:social linkedin post about feature launch\n> /ak:social x thread on AI trends\n> /ak:social:schedule tomorrow 9am',
         icon: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
         color: 'purple',
       },
@@ -1525,8 +1525,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Post Delivered',
         descEn: 'Final content saved to assets/posts/{platform}/ with hashtags + media specs',
         descVi: 'Content cuối lưu assets/posts/{platform}/ với hashtags + media specs',
-        explainEn: 'Validated per platform rules (character limits, hashtag count, media ratios). Saved as markdown with posting time suggestion.\n\nFor /ckm:social:schedule, schedule-post.js queues via API.',
-        explainVi: 'Validate theo rules platform (character limits, hashtag count, media ratios). Lưu markdown với đề xuất thời gian đăng.\n\nVới /ckm:social:schedule, schedule-post.js xếp lịch qua API.',
+        explainEn: 'Validated per platform rules (character limits, hashtag count, media ratios). Saved as markdown with posting time suggestion.\n\nFor /ak:social:schedule, schedule-post.js queues via API.',
+        explainVi: 'Validate theo rules platform (character limits, hashtag count, media ratios). Lưu markdown với đề xuất thời gian đăng.\n\nVới /ak:social:schedule, schedule-post.js xếp lịch qua API.',
         codeSnippet: '// assets/posts/linkedin/2025-01-15-feature.md\n// Copy + hashtags + media specs + posting time',
         icon: '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>',
         color: 'amber',
@@ -1534,10 +1534,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:email:* — Email Campaigns & Automation ─────────────
+  // ─── /ak:email:* — Email Campaigns & Automation ─────────────
   {
     id: 'email',
-    command: '/ckm:email:*',
+    command: '/ak:email:*',
     kit: 'marketer',
     titleEn: 'Email Campaigns & Automation',
     titleVi: 'Email Marketing & Tự Động Hoá',
@@ -1549,12 +1549,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'em-input',
         type: 'user-input',
-        name: '/ckm:email:<action>',
+        name: '/ak:email:<action>',
         descEn: 'Invoke email subcommand: flow, sequence, or direct',
         descVi: 'Gọi subcommand email: flow, sequence, hoặc trực tiếp',
-        explainEn: 'Subcommands:\n\n• /ckm:email:flow welcome — automation flow\n• /ckm:email:sequence launch "Black Friday" — drip sequence\n• /ckm:email newsletter — direct email generation',
-        explainVi: 'Subcommands:\n\n• /ckm:email:flow welcome — automation flow\n• /ckm:email:sequence launch "Black Friday" — drip sequence\n• /ckm:email newsletter — tạo email trực tiếp',
-        codeSnippet: '> /ckm:email:flow welcome\n> /ckm:email:sequence launch "Black Friday"\n> /ckm:email newsletter',
+        explainEn: 'Subcommands:\n\n• /ak:email:flow welcome — automation flow\n• /ak:email:sequence launch "Black Friday" — drip sequence\n• /ak:email newsletter — direct email generation',
+        explainVi: 'Subcommands:\n\n• /ak:email:flow welcome — automation flow\n• /ak:email:sequence launch "Black Friday" — drip sequence\n• /ak:email newsletter — tạo email trực tiếp',
+        codeSnippet: '> /ak:email:flow welcome\n> /ak:email:sequence launch "Black Friday"\n> /ak:email newsletter',
         icon: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
         color: 'purple',
       },
@@ -1598,10 +1598,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:persona — Customer Persona ─────────────────────────
+  // ─── /ak:persona — Customer Persona ─────────────────────────
   {
     id: 'persona',
-    command: '/ckm:persona',
+    command: '/ak:persona',
     kit: 'marketer',
     titleEn: 'Customer Persona',
     titleVi: 'Chân Dung Khách Hàng',
@@ -1613,12 +1613,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'ps-input',
         type: 'user-input',
-        name: '/ckm:persona',
+        name: '/ak:persona',
         descEn: 'You invoke with action: create, analyze, update, or list',
         descVi: 'Bạn gọi với action: create, analyze, update, hoặc list',
         explainEn: '4 actions:\n\n• create — new persona from scratch (most comprehensive)\n• analyze — analyze existing audience data\n• update [name] — revise existing persona\n• list — show all saved personas',
         explainVi: '4 actions:\n\n• create — persona mới từ đầu (toàn diện nhất)\n• analyze — phân tích audience data hiện có\n• update [name] — chỉnh sửa persona đã có\n• list — hiển thị tất cả personas',
-        codeSnippet: '> /ckm:persona create\n> /ckm:persona analyze\n> /ckm:persona update "Tech Startup Founder"',
+        codeSnippet: '> /ak:persona create\n> /ak:persona analyze\n> /ak:persona update "Tech Startup Founder"',
         icon: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
         color: 'purple',
       },
@@ -1662,10 +1662,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:video:* — Video Production Pipeline ────────────────
+  // ─── /ak:video:* — Video Production Pipeline ────────────────
   {
     id: 'video',
-    command: '/ckm:video:*',
+    command: '/ak:video:*',
     kit: 'marketer',
     titleEn: 'Video Production',
     titleVi: 'Sản Xuất Video',
@@ -1677,12 +1677,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'vd-input',
         type: 'user-input',
-        name: '/ckm:video:<action>',
+        name: '/ak:video:<action>',
         descEn: 'Invoke: create, script-create, or storyboard-create',
         descVi: 'Gọi: create, script-create, hoặc storyboard-create',
-        explainEn: '3 subcommands:\n\n• /ckm:video create <prompt> — full pipeline to exported video\n• /ckm:video script-create <topic> — production-ready script with AI prompts\n• /ckm:video storyboard-create <script> — START/END frame pairs for Veo 3.1\n\nRequired inputs (asked if missing): Platform, Goal, Audience, CTA.',
-        explainVi: '3 subcommands:\n\n• /ckm:video create <prompt> — full pipeline đến video xuất\n• /ckm:video script-create <topic> — script production-ready\n• /ckm:video storyboard-create <script> — cặp frame START/END cho Veo 3.1\n\nInputs bắt buộc (hỏi nếu thiếu): Platform, Goal, Audience, CTA.',
-        codeSnippet: '> /ckm:video create "30s product demo for TikTok"\n> /ckm:video script-create "SaaS onboarding"\n> /ckm:video storyboard-create script.md',
+        explainEn: '3 subcommands:\n\n• /ak:video create <prompt> — full pipeline to exported video\n• /ak:video script-create <topic> — production-ready script with AI prompts\n• /ak:video storyboard-create <script> — START/END frame pairs for Veo 3.1\n\nRequired inputs (asked if missing): Platform, Goal, Audience, CTA.',
+        explainVi: '3 subcommands:\n\n• /ak:video create <prompt> — full pipeline đến video xuất\n• /ak:video script-create <topic> — script production-ready\n• /ak:video storyboard-create <script> — cặp frame START/END cho Veo 3.1\n\nInputs bắt buộc (hỏi nếu thiếu): Platform, Goal, Audience, CTA.',
+        codeSnippet: '> /ak:video create "30s product demo for TikTok"\n> /ak:video script-create "SaaS onboarding"\n> /ak:video storyboard-create script.md',
         icon: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
         color: 'purple',
       },
@@ -1738,10 +1738,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:team — Agent Teams Multi-Session Orchestration ─────────
+  // ─── /ak:team — Agent Teams Multi-Session Orchestration ─────────
   {
     id: 'team',
-    command: '/ck:team',
+    command: '/ak:team',
     kit: 'engineer',
     titleEn: 'Agent Teams Orchestration',
     titleVi: 'Điều Phối Agent Teams',
@@ -1753,12 +1753,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'tm-input',
         type: 'user-input',
-        name: '/ck:team <template> <context>',
+        name: '/ak:team <template> <context>',
         descEn: 'You pick a template (research / cook / review / debug) and a context',
         descVi: 'Bạn chọn template (research / cook / review / debug) và context',
-        explainEn: 'You invoke team with one of four templates wrapping core CK skills:\n\n• research <topic> — wraps /ck:research, derives N angles (architecture / alternatives / risks).\n• cook <plan-or-desc> — wraps /ck:cook, splits plan into N file-owned dev tasks + 1 tester.\n• review <scope> — wraps /ck:code-review, derives N focuses (security / performance / coverage).\n• debug <issue> — wraps /ck:fix, generates N competing hypotheses for adversarial root-cause.\n\nFlags: --devs / --researchers / --reviewers / --debuggers N override team size. --delegate makes lead coordinator-only. --worktree gives each cook dev an isolated git worktree (default ON for cook).',
-        explainVi: 'Bạn gọi team với một trong bốn template wrap các CK skill cốt lõi:\n\n• research <topic> — wrap /ck:research, derive N góc nhìn (architecture / alternatives / risks).\n• cook <plan-or-desc> — wrap /ck:cook, tách plan thành N task có file ownership + 1 tester.\n• review <scope> — wrap /ck:code-review, derive N focuses (security / performance / coverage).\n• debug <issue> — wrap /ck:fix, sinh N giả thuyết cạnh tranh để adversarial root-cause.\n\nFlags: --devs / --researchers / --reviewers / --debuggers N override team size. --delegate đặt lead chỉ điều phối. --worktree cấp mỗi cook dev một git worktree độc lập (default ON cho cook).',
-        codeSnippet: '> /ck:team cook plans/260524-auth/ --devs 4 --worktree\n> /ck:team research "JWT vs session cookies" --researchers 3\n> /ck:team review src/auth/ --reviewers 3\n> /ck:team debug "login 500 on Safari" --debuggers 3',
+        explainEn: 'You invoke team with one of four templates wrapping core AgentKit skills:\n\n• research <topic> — wraps /ak:research, derives N angles (architecture / alternatives / risks).\n• cook <plan-or-desc> — wraps /ak:cook, splits plan into N file-owned dev tasks + 1 tester.\n• review <scope> — wraps /ak:code-review, derives N focuses (security / performance / coverage).\n• debug <issue> — wraps /ak:fix, generates N competing hypotheses for adversarial root-cause.\n\nFlags: --devs / --researchers / --reviewers / --debuggers N override team size. --delegate makes lead coordinator-only. --worktree gives each cook dev an isolated git worktree (default ON for cook).',
+        explainVi: 'Bạn gọi team với một trong bốn template wrap các AgentKit skill cốt lõi:\n\n• research <topic> — wrap /ak:research, derive N góc nhìn (architecture / alternatives / risks).\n• cook <plan-or-desc> — wrap /ak:cook, tách plan thành N task có file ownership + 1 tester.\n• review <scope> — wrap /ak:code-review, derive N focuses (security / performance / coverage).\n• debug <issue> — wrap /ak:fix, sinh N giả thuyết cạnh tranh để adversarial root-cause.\n\nFlags: --devs / --researchers / --reviewers / --debuggers N override team size. --delegate đặt lead chỉ điều phối. --worktree cấp mỗi cook dev một git worktree độc lập (default ON cho cook).',
+        codeSnippet: '> /ak:team cook plans/260524-auth/ --devs 4 --worktree\n> /ak:team research "JWT vs session cookies" --researchers 3\n> /ak:team review src/auth/ --reviewers 3\n> /ak:team debug "login 500 on Safari" --debuggers 3',
         icon: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
         color: 'purple',
       },
@@ -1792,8 +1792,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Spawn N Teammates (Agent tool, parallel)',
         descEn: 'Each teammate is its own Claude Code session — own context window, run_in_background, worktree-isolated for cook devs',
         descVi: 'Mỗi teammate là session Claude Code riêng — context riêng, run_in_background, worktree-isolated cho cook dev',
-        explainEn: 'Lead spawns N teammates concurrently via the Agent tool (renamed from Task in v2.1.63):\n\n• subagent_type — researcher / fullstack-developer / code-reviewer / debugger / tester depending on template.\n• model — "opus" (Agent Teams constraint).\n• run_in_background — true; all N spawn non-blocking.\n• isolation — "worktree" for cook devs only (each gets isolated git worktree + branch — no file conflicts even when editing the same paths).\n• name — researcher-1, dev-1, reviewer-1, debugger-1, …\n• prompt — task description + plan/scope context + the MANDATORY CK Context Block (work dir, reports path, plans path, branch, naming pattern, active plan, commit convention, "refer to teammates by NAME").\n\nUnlike subagents, each teammate loads project context (CLAUDE.md, skills, agents) into its own window and can communicate with peers via SendMessage(type: "message", recipient: "<name>").',
-        explainVi: 'Lead spawn N teammate đồng thời qua Agent tool (đổi tên từ Task ở v2.1.63):\n\n• subagent_type — researcher / fullstack-developer / code-reviewer / debugger / tester tuỳ template.\n• model — "opus" (ràng buộc của Agent Teams).\n• run_in_background — true; cả N spawn non-blocking.\n• isolation — "worktree" chỉ cho cook dev (mỗi dev một git worktree + branch độc lập — không xung đột file kể cả khi cùng sửa một path).\n• name — researcher-1, dev-1, reviewer-1, debugger-1, …\n• prompt — task description + plan/scope context + CK Context Block BẮT BUỘC (work dir, reports path, plans path, branch, naming pattern, active plan, commit convention, "refer to teammates by NAME").\n\nKhác subagent, mỗi teammate load context project (CLAUDE.md, skills, agents) vào window riêng và giao tiếp với peer qua SendMessage(type: "message", recipient: "<name>").',
+        explainEn: 'Lead spawns N teammates concurrently via the Agent tool (renamed from Task in v2.1.63):\n\n• subagent_type — researcher / fullstack-developer / code-reviewer / debugger / tester depending on template.\n• model — "opus" (Agent Teams constraint).\n• run_in_background — true; all N spawn non-blocking.\n• isolation — "worktree" for cook devs only (each gets isolated git worktree + branch — no file conflicts even when editing the same paths).\n• name — researcher-1, dev-1, reviewer-1, debugger-1, …\n• prompt — task description + plan/scope context + the MANDATORY AgentKit Context Block (work dir, reports path, plans path, branch, naming pattern, active plan, commit convention, "refer to teammates by NAME").\n\nUnlike subagents, each teammate loads project context (CLAUDE.md, skills, agents) into its own window and can communicate with peers via SendMessage(type: "message", recipient: "<name>").',
+        explainVi: 'Lead spawn N teammate đồng thời qua Agent tool (đổi tên từ Task ở v2.1.63):\n\n• subagent_type — researcher / fullstack-developer / code-reviewer / debugger / tester tuỳ template.\n• model — "opus" (ràng buộc của Agent Teams).\n• run_in_background — true; cả N spawn non-blocking.\n• isolation — "worktree" chỉ cho cook dev (mỗi dev một git worktree + branch độc lập — không xung đột file kể cả khi cùng sửa một path).\n• name — researcher-1, dev-1, reviewer-1, debugger-1, …\n• prompt — task description + plan/scope context + AgentKit Context Block BẮT BUỘC (work dir, reports path, plans path, branch, naming pattern, active plan, commit convention, "refer to teammates by NAME").\n\nKhác subagent, mỗi teammate load context project (CLAUDE.md, skills, agents) vào window riêng và giao tiếp với peer qua SendMessage(type: "message", recipient: "<name>").',
         codeSnippet: '// Lead spawns 4 devs in parallel (cook template):\nAgent(\n  subagent_type: "fullstack-developer",\n  description: "Build auth backend",\n  prompt: task_1 + plan_context + CK_CONTEXT_BLOCK,\n  model: "opus",\n  run_in_background: true,\n  isolation: "worktree"          // isolated dir + branch\n)\n// × 4 devs concurrently — each in own worktree\n// + 1 tester spawned after devs finish (addBlockedBy)',
         icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
         color: 'green',
@@ -1827,21 +1827,21 @@ export const workflowScenarios: WorkflowScenario[] = [
         id: 'tm-shutdown',
         type: 'output',
         name: 'Shutdown + TeamDelete + Journal',
-        descEn: 'shutdown_request × N → TeamDelete (no params) → /ck:journal → report to user',
-        descVi: 'shutdown_request × N → TeamDelete (no params) → /ck:journal → báo cáo user',
-        explainEn: 'Closing sequence is fixed across all four templates:\n\n1. SendMessage(type: "shutdown_request") to each teammate. Teammates approve via shutdown_response (requires request_id) unless mid-critical-op. Teammate marks current task completed before approving.\n2. TeamDelete — called with NO parameters. Removes team resources, task list, message history. Agent memory at $HOME/.claude/agent-memory/<name>/ persists separately (gitignored, survives TeamDelete — useful for code-reviewer remembering conventions, debugger recalling failure patterns).\n3. /ck:journal — write concise technical journal entry recording decisions, surprises, lessons, and references to the synthesized report.\n4. Report to user: research summary path / cook test results + docs impact / review findings count + path / debug root cause + path.\n\nIf TeamDelete is skipped or teammates unresponsive: close terminal/kill session, then clean orphaned configs at ~/.claude/teams/ manually.',
-        explainVi: 'Trình tự đóng cố định cho cả bốn template:\n\n1. SendMessage(type: "shutdown_request") cho từng teammate. Teammate approve qua shutdown_response (cần request_id) trừ khi đang giữa critical-op. Teammate đánh dấu task hiện tại completed trước khi approve.\n2. TeamDelete — gọi KHÔNG truyền tham số. Xoá team resources, task list, message history. Agent memory ở $HOME/.claude/agent-memory/<name>/ tồn tại độc lập (gitignored, sống sót qua TeamDelete — hữu ích để code-reviewer nhớ convention, debugger nhớ failure pattern).\n3. /ck:journal — viết journal kỹ thuật súc tích ghi decisions, bất ngờ, lessons, và link đến report đã synthesize.\n4. Báo user: research summary path / cook test results + docs impact / review findings count + path / debug root cause + path.\n\nNếu TeamDelete bị skip hoặc teammate không phản hồi: đóng terminal/kill session, rồi dọn config orphan ở ~/.claude/teams/ thủ công.',
-        codeSnippet: '// Closing sequence (every template):\nfor teammate in researcher-1 researcher-2 researcher-3:\n  SendMessage({type: "shutdown_request", recipient: teammate})\n\nTeamDelete()  // NO parameters\n\n/ck:journal   // decisions + lessons recorded\n\n// Report to user:\n// "Research complete. Summary: plans/reports/research-summary-jwt-vs-session.md.\n//  3 reports generated."',
+        descEn: 'shutdown_request × N → TeamDelete (no params) → /ak:journal → report to user',
+        descVi: 'shutdown_request × N → TeamDelete (no params) → /ak:journal → báo cáo user',
+        explainEn: 'Closing sequence is fixed across all four templates:\n\n1. SendMessage(type: "shutdown_request") to each teammate. Teammates approve via shutdown_response (requires request_id) unless mid-critical-op. Teammate marks current task completed before approving.\n2. TeamDelete — called with NO parameters. Removes team resources, task list, message history. Agent memory at $HOME/.claude/agent-memory/<name>/ persists separately (gitignored, survives TeamDelete — useful for code-reviewer remembering conventions, debugger recalling failure patterns).\n3. /ak:journal — write concise technical journal entry recording decisions, surprises, lessons, and references to the synthesized report.\n4. Report to user: research summary path / cook test results + docs impact / review findings count + path / debug root cause + path.\n\nIf TeamDelete is skipped or teammates unresponsive: close terminal/kill session, then clean orphaned configs at ~/.claude/teams/ manually.',
+        explainVi: 'Trình tự đóng cố định cho cả bốn template:\n\n1. SendMessage(type: "shutdown_request") cho từng teammate. Teammate approve qua shutdown_response (cần request_id) trừ khi đang giữa critical-op. Teammate đánh dấu task hiện tại completed trước khi approve.\n2. TeamDelete — gọi KHÔNG truyền tham số. Xoá team resources, task list, message history. Agent memory ở $HOME/.claude/agent-memory/<name>/ tồn tại độc lập (gitignored, sống sót qua TeamDelete — hữu ích để code-reviewer nhớ convention, debugger nhớ failure pattern).\n3. /ak:journal — viết journal kỹ thuật súc tích ghi decisions, bất ngờ, lessons, và link đến report đã synthesize.\n4. Báo user: research summary path / cook test results + docs impact / review findings count + path / debug root cause + path.\n\nNếu TeamDelete bị skip hoặc teammate không phản hồi: đóng terminal/kill session, rồi dọn config orphan ở ~/.claude/teams/ thủ công.',
+        codeSnippet: '// Closing sequence (every template):\nfor teammate in researcher-1 researcher-2 researcher-3:\n  SendMessage({type: "shutdown_request", recipient: teammate})\n\nTeamDelete()  // NO parameters\n\n/ak:journal   // decisions + lessons recorded\n\n// Report to user:\n// "Research complete. Summary: plans/reports/research-summary-jwt-vs-session.md.\n//  3 reports generated."',
         icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
         color: 'amber',
       },
     ],
   },
 
-  // ─── /ck:preview — Visual Explanations & File Viewer ─────────
+  // ─── /ak:preview — Visual Explanations & File Viewer ─────────
   {
     id: 'preview',
-    command: '/ck:preview',
+    command: '/ak:preview',
     kit: 'engineer',
     titleEn: 'Preview & Explain',
     titleVi: 'Xem & Giải Thích',
@@ -1853,12 +1853,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'pv-input',
         type: 'user-input',
-        name: '/ck:preview',
+        name: '/ak:preview',
         descEn: 'You pass a file path OR a generate flag + topic',
         descVi: 'Bạn truyền file path HOẶC generate flag + topic',
-        explainEn: '/ck:preview has two input shapes:\n\n• A file path — view or walk through an existing file.\n• A generate flag + topic — produce a fresh visual: --explain (ASCII + Mermaid explanation), --diagram (architecture / data flow), --slides (step-by-step deck), --ascii (terminal-only diagram).\n\nAdd --html to ANY generate flag for a self-contained browser page (no server needed). The review flags --diff [ref], --plan-review, and --recap [timeframe] require --html.\n\nThis is a read/visualize utility — it does not modify code.',
-        explainVi: '/ck:preview có hai dạng input:\n\n• Một file path — xem hoặc walk-through file có sẵn.\n• Generate flag + topic — tạo visual mới: --explain (giải thích ASCII + Mermaid), --diagram (kiến trúc / data flow), --slides (deck từng bước), --ascii (sơ đồ chỉ-terminal).\n\nThêm --html vào BẤT KỲ generate flag nào để có trang browser độc lập (không cần server). Các review flag --diff [ref], --plan-review, và --recap [timeframe] yêu cầu --html.\n\nĐây là utility đọc/trực quan hóa — không sửa code.',
-        codeSnippet: '> /ck:preview src/auth/session.ts          // view a file\n> /ck:preview --explain "JWT refresh flow"  // ASCII + Mermaid\n> /ck:preview --html --diagram "API layer"  // self-contained HTML\n> /ck:preview --html --diff main            // visual diff review',
+        explainEn: '/ak:preview has two input shapes:\n\n• A file path — view or walk through an existing file.\n• A generate flag + topic — produce a fresh visual: --explain (ASCII + Mermaid explanation), --diagram (architecture / data flow), --slides (step-by-step deck), --ascii (terminal-only diagram).\n\nAdd --html to ANY generate flag for a self-contained browser page (no server needed). The review flags --diff [ref], --plan-review, and --recap [timeframe] require --html.\n\nThis is a read/visualize utility — it does not modify code.',
+        explainVi: '/ak:preview có hai dạng input:\n\n• Một file path — xem hoặc walk-through file có sẵn.\n• Generate flag + topic — tạo visual mới: --explain (giải thích ASCII + Mermaid), --diagram (kiến trúc / data flow), --slides (deck từng bước), --ascii (sơ đồ chỉ-terminal).\n\nThêm --html vào BẤT KỲ generate flag nào để có trang browser độc lập (không cần server). Các review flag --diff [ref], --plan-review, và --recap [timeframe] yêu cầu --html.\n\nĐây là utility đọc/trực quan hóa — không sửa code.',
+        codeSnippet: '> /ak:preview src/auth/session.ts          // view a file\n> /ak:preview --explain "JWT refresh flow"  // ASCII + Mermaid\n> /ak:preview --html --diagram "API layer"  // self-contained HTML\n> /ak:preview --html --diff main            // visual diff review',
         icon: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
         color: 'purple',
       },
@@ -1880,9 +1880,9 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Route — File vs Topic',
         descEn: 'Detect path vs concept, then pick the output format',
         descVi: 'Phát hiện path vs concept, rồi chọn format output',
-        explainEn: 'The skill routes on the input shape and flags:\n\n• Input is a path → file preview / code walkthrough.\n• Input is a topic → pick the generator from the flag:\n  - --explain → narrative + ASCII + Mermaid.\n  - --diagram → architecture / data-flow diagram.\n  - --slides → step-by-step slide deck.\n  - --ascii → terminal-friendly diagram only.\n\nOutput channel: Markdown mode auto-opens via ck:markdown-novel-viewer with Mermaid rendering; --html mode emits one self-contained page that opens directly in the browser.',
-        explainVi: 'Skill định tuyến theo dạng input và flags:\n\n• Input là path → file preview / code walkthrough.\n• Input là topic → chọn generator theo flag:\n  - --explain → narrative + ASCII + Mermaid.\n  - --diagram → sơ đồ kiến trúc / data-flow.\n  - --slides → slide deck từng bước.\n  - --ascii → sơ đồ chỉ-terminal.\n\nKênh output: Markdown mode tự mở qua ck:markdown-novel-viewer có render Mermaid; --html mode xuất một trang độc lập mở thẳng trên browser.',
-        codeSnippet: '// Route:\n//   path?  → file preview / walkthrough\n//   topic? → --explain | --diagram | --slides | --ascii\n//\n// Channel:\n//   markdown → ck:markdown-novel-viewer (Mermaid)\n//   --html   → self-contained page, no server',
+        explainEn: 'The skill routes on the input shape and flags:\n\n• Input is a path → file preview / code walkthrough.\n• Input is a topic → pick the generator from the flag:\n  - --explain → narrative + ASCII + Mermaid.\n  - --diagram → architecture / data-flow diagram.\n  - --slides → step-by-step slide deck.\n  - --ascii → terminal-friendly diagram only.\n\nOutput channel: Markdown mode auto-opens via ak:markdown-novel-viewer with Mermaid rendering; --html mode emits one self-contained page that opens directly in the browser.',
+        explainVi: 'Skill định tuyến theo dạng input và flags:\n\n• Input là path → file preview / code walkthrough.\n• Input là topic → chọn generator theo flag:\n  - --explain → narrative + ASCII + Mermaid.\n  - --diagram → sơ đồ kiến trúc / data-flow.\n  - --slides → slide deck từng bước.\n  - --ascii → sơ đồ chỉ-terminal.\n\nKênh output: Markdown mode tự mở qua ak:markdown-novel-viewer có render Mermaid; --html mode xuất một trang độc lập mở thẳng trên browser.',
+        codeSnippet: '// Route:\n//   path?  → file preview / walkthrough\n//   topic? → --explain | --diagram | --slides | --ascii\n//\n// Channel:\n//   markdown → ak:markdown-novel-viewer (Mermaid)\n//   --html   → self-contained page, no server',
         icon: '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',
         color: 'green',
       },
@@ -1892,9 +1892,9 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Generate Visual',
         descEn: 'Build explanation / diagram / slides; Mermaid via mermaidjs-v11 rules',
         descVi: 'Dựng giải thích / sơ đồ / slides; Mermaid theo luật mermaidjs-v11',
-        explainEn: 'The main agent assembles the artifact:\n\n• Explanations interleave prose, ASCII sketches, and Mermaid blocks.\n• Diagrams follow ck:mermaidjs-v11 syntax rules so they render cleanly.\n• Slides become a sequential deck for walkthroughs.\n• Diff / plan-review / recap modes read git refs, plan files, and project history to build review-grade visuals.\n\nFor publish-grade SVG/PNG architecture diagrams, the agent can hand off to ck:tech-graph.',
-        explainVi: 'Main agent lắp ráp artifact:\n\n• Giải thích đan xen prose, sketch ASCII, và block Mermaid.\n• Sơ đồ theo luật cú pháp ck:mermaidjs-v11 để render sạch.\n• Slides thành deck tuần tự cho walkthrough.\n• Mode diff / plan-review / recap đọc git refs, plan files, và lịch sử project để dựng visual cấp review.\n\nVới sơ đồ kiến trúc SVG/PNG cấp publish, agent có thể bàn giao sang ck:tech-graph.',
-        codeSnippet: '// Generate:\n// - prose + ASCII + Mermaid (mermaidjs-v11 syntax)\n// - --diff main      → changed-files visual review\n// - --plan-review    → plan vs codebase comparison\n// - --recap 7d       → project context snapshot\n//\n// publish-grade SVG/PNG → ck:tech-graph',
+        explainEn: 'The main agent assembles the artifact:\n\n• Explanations interleave prose, ASCII sketches, and Mermaid blocks.\n• Diagrams follow ak:mermaidjs-v11 syntax rules so they render cleanly.\n• Slides become a sequential deck for walkthroughs.\n• Diff / plan-review / recap modes read git refs, plan files, and project history to build review-grade visuals.\n\nFor publish-grade SVG/PNG architecture diagrams, the agent can hand off to ak:tech-graph.',
+        explainVi: 'Main agent lắp ráp artifact:\n\n• Giải thích đan xen prose, sketch ASCII, và block Mermaid.\n• Sơ đồ theo luật cú pháp ak:mermaidjs-v11 để render sạch.\n• Slides thành deck tuần tự cho walkthrough.\n• Mode diff / plan-review / recap đọc git refs, plan files, và lịch sử project để dựng visual cấp review.\n\nVới sơ đồ kiến trúc SVG/PNG cấp publish, agent có thể bàn giao sang ak:tech-graph.',
+        codeSnippet: '// Generate:\n// - prose + ASCII + Mermaid (mermaidjs-v11 syntax)\n// - --diff main      → changed-files visual review\n// - --plan-review    → plan vs codebase comparison\n// - --recap 7d       → project context snapshot\n//\n// publish-grade SVG/PNG → ak:tech-graph',
         icon: '<path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/>',
         color: 'amber',
       },
@@ -1904,8 +1904,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Output — Browser or HTML',
         descEn: 'Markdown auto-opens in browser; --html emits a self-contained page',
         descVi: 'Markdown tự mở trên browser; --html xuất trang độc lập',
-        explainEn: 'The final artifact lands in the plan visuals folder and opens for review:\n\n• Markdown mode auto-opens via ck:markdown-novel-viewer with live Mermaid rendering.\n• --html mode produces a single self-contained file that opens directly in any browser — no dev server, easy to share.\n• --ascii output stays terminal-friendly for quick inline reading.\n\nFiles persist under {plan_dir}/visuals/ (or plans/visuals/) so they can be revisited or attached to a PR.',
-        explainVi: 'Artifact cuối nằm trong thư mục visuals của plan và mở để review:\n\n• Markdown mode tự mở qua ck:markdown-novel-viewer với render Mermaid trực tiếp.\n• --html mode tạo một file độc lập mở thẳng trên mọi browser — không cần dev server, dễ chia sẻ.\n• Output --ascii giữ thân thiện terminal để đọc nhanh inline.\n\nFiles tồn tại dưới {plan_dir}/visuals/ (hoặc plans/visuals/) để xem lại hoặc đính kèm PR.',
+        explainEn: 'The final artifact lands in the plan visuals folder and opens for review:\n\n• Markdown mode auto-opens via ak:markdown-novel-viewer with live Mermaid rendering.\n• --html mode produces a single self-contained file that opens directly in any browser — no dev server, easy to share.\n• --ascii output stays terminal-friendly for quick inline reading.\n\nFiles persist under {plan_dir}/visuals/ (or plans/visuals/) so they can be revisited or attached to a PR.',
+        explainVi: 'Artifact cuối nằm trong thư mục visuals của plan và mở để review:\n\n• Markdown mode tự mở qua ak:markdown-novel-viewer với render Mermaid trực tiếp.\n• --html mode tạo một file độc lập mở thẳng trên mọi browser — không cần dev server, dễ chia sẻ.\n• Output --ascii giữ thân thiện terminal để đọc nhanh inline.\n\nFiles tồn tại dưới {plan_dir}/visuals/ (hoặc plans/visuals/) để xem lại hoặc đính kèm PR.',
         codeSnippet: '// Output:\n//   markdown → opens in browser (Mermaid live)\n//   --html   → self-contained page, shareable\n//   --ascii  → inline terminal diagram\n//\n// saved → {plan_dir}/visuals/  ·  plans/visuals/',
         icon: '<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>',
         color: 'purple',
@@ -1913,51 +1913,51 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── ck init — Initialize ClaudeKit ──────────────────────────────
+  // ─── ak init — Initialize AgentKit ──────────────────────────────
   {
     id: 'ck-init',
-    command: 'ck init',
+    command: 'ak init',
     kit: 'engineer',
-    titleEn: 'Initialize ClaudeKit',
-    titleVi: 'Khởi Tạo ClaudeKit',
-    descEn: 'Behind the scenes of ck init — what files get created and where',
-    descVi: 'Phía sau ck init — những file nào được tạo và ở đâu',
+    titleEn: 'Initialize AgentKit',
+    titleVi: 'Khởi Tạo AgentKit',
+    descEn: 'Behind the scenes of ak init — what files get created and where',
+    descVi: 'Phía sau ak init — những file nào được tạo và ở đâu',
     icon: '<path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>',
     accentColor: 'teal',
     steps: [
       {
         id: 'init-input',
         type: 'user-input',
-        name: 'ck init --kit engineer',
-        descEn: 'You run the init command to set up ClaudeKit',
-        descVi: 'Bạn chạy lệnh init để thiết lập ClaudeKit',
-        explainEn: 'The ck init command initializes your project with ClaudeKit configuration.\n\nCommon flags:\n• --kit engineer — Install Engineer Kit (default)\n• --kit marketing — Install Marketing Kit\n• -g, --global — Install to ~/.claude/ (all projects)\n• --fresh — Full reset, replace everything\n• -y, --yes — Non-interactive mode',
-        explainVi: 'Lệnh ck init khởi tạo project với cấu hình ClaudeKit.\n\nCác flag phổ biến:\n• --kit engineer — Cài Bộ Engineer (mặc định)\n• --kit marketing — Cài Bộ Marketing\n• -g, --global — Cài vào ~/.claude/ (tất cả projects)\n• --fresh — Reset hoàn toàn\n• -y, --yes — Chế độ không tương tác',
-        codeSnippet: '$ ck init --kit engineer\n\n# Or with flags:\n$ ck init -g              # Global install\n$ ck init --fresh         # Full reset\n$ ck init --kit marketing # Different kit',
+        name: 'ak init',
+        descEn: 'You run the init command to set up AgentKit',
+        descVi: 'Bạn chạy lệnh init để thiết lập AgentKit',
+        explainEn: 'Run `ak init` in the current project to initialize AgentKit. Kit installation is a separate, explicit lifecycle: use `ak kit init <kit> --target claude-code` when the project still needs a kit.',
+        explainVi: 'Chạy `ak init` trong project hiện tại để khởi tạo AgentKit. Cài kit là lifecycle riêng, rõ ràng: dùng `ak kit init <kit> --target claude-code` khi project chưa có kit.',
+        codeSnippet: '$ ak init\n\n# Install an Engineer kit for Claude Code when needed:\n$ ak kit init engineer --target claude-code',
         icon: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
         color: 'purple',
       },
       {
         id: 'init-auth',
         type: 'hook',
-        name: 'Auth Check',
-        descEn: 'Verify GitHub access for private kit repository',
-        descVi: 'Xác thực GitHub để truy cập repo kit riêng tư',
-        explainEn: 'ClaudeKit authenticates via multi-tier system:\n\n1. Environment variables (GITHUB_TOKEN)\n2. GitHub CLI (gh auth status)\n3. OS Keychain\n4. Interactive prompt\n\nThis allows downloading from private claudekit-engineer/marketing repos.',
-        explainVi: 'ClaudeKit xác thực qua hệ thống đa tầng:\n\n1. Biến môi trường (GITHUB_TOKEN)\n2. GitHub CLI (gh auth status)\n3. OS Keychain\n4. Prompt tương tác\n\nĐiều này cho phép tải từ repos riêng tư claudekit-engineer/marketing.',
-        codeSnippet: '// Auth check order:\n// 1. process.env.GITHUB_TOKEN\n// 2. $ gh auth status\n// 3. OS Keychain lookup\n// 4. Interactive prompt\n\n✓ Authenticated via GitHub CLI',
+        name: 'Environment Check',
+        descEn: 'Verify the AgentKit CLI and current project state',
+        descVi: 'Xác minh AgentKit CLI và trạng thái project hiện tại',
+        explainEn: 'Initialization inspects the current project before writing configuration. Authentication is handled separately by `ak login`; installation health can be checked with `ak doctor`.',
+        explainVi: 'Quá trình khởi tạo kiểm tra project hiện tại trước khi ghi cấu hình. Xác thực được xử lý riêng qua `ak login`; có thể kiểm tra cài đặt bằng `ak doctor`.',
+        codeSnippet: '$ ak doctor\n\n✓ AgentKit CLI available\n✓ Claude Code target available',
         icon: '<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>',
         color: 'blue',
       },
       {
         id: 'init-download',
         type: 'agent',
-        name: 'Download Kit',
-        descEn: 'Fetch kit archive from GitHub releases',
-        descVi: 'Tải archive kit từ GitHub releases',
-        explainEn: 'The CLI downloads the selected kit from GitHub:\n\n• Fetches latest release (or specific version via --release)\n• Downloads claudekit-engineer.zip (~11MB)\n• Extracts to temporary directory\n• Validates checksums\n\nThe kit contains pre-configured skills, hooks, agents, rules.',
-        explainVi: 'CLI tải kit được chọn từ GitHub:\n\n• Fetch release mới nhất (hoặc version cụ thể qua --release)\n• Tải claudekit-engineer.zip (~11MB)\n• Giải nén vào thư mục tạm\n• Kiểm tra checksums\n\nKit chứa skills, hooks, agents, rules được cấu hình sẵn.',
-        codeSnippet: 'i Fetching latest release...\n+ Found: v2.16.0\n\ni Downloading claudekit-engineer.zip (11.24 MB)...\n  Downloading 11.24 MB / 11.24 MB\n\n✓ Downloaded claudekit-engineer.zip',
+        name: 'Resolve Kits',
+        descEn: 'Discover the kits already installed for this target',
+        descVi: 'Phát hiện kit đã cài cho target này',
+        explainEn: 'AgentKit resolves installed kits for the Claude Code target. If a kit is missing, install it explicitly with `ak kit init engineer --target claude-code` before continuing.',
+        explainVi: 'AgentKit xác định kit đã cài cho target Claude Code. Nếu thiếu kit, hãy cài rõ ràng bằng `ak kit init engineer --target claude-code` trước khi tiếp tục.',
+        codeSnippet: '$ ak kit list-kits\n\n# Install when absent:\n$ ak kit init engineer --target claude-code',
         icon: '<path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>',
         color: 'green',
       },
@@ -1965,11 +1965,11 @@ export const workflowScenarios: WorkflowScenario[] = [
         id: 'init-copy',
         type: 'agent',
         name: 'Copy Files',
-        descEn: 'Install 2375+ files to project directory',
-        descVi: 'Cài đặt 2375+ files vào thư mục project',
-        explainEn: 'Files are copied to your project:\n\nRoot level:\n• CLAUDE.md — Project instructions\n• AGENTS.md — Agent definitions\n• .gitignore, plans/\n\n.claude/ directory:\n• skills/ — 85+ slash commands\n• hooks/ — 14 lifecycle hooks\n• agents/ — 13 agent definitions\n• rules/ — Workflow rules\n• settings.json — Claude Code config\n• .ck.json — ClaudeKit config\n\nExisting user files are preserved (no overwrite by default).',
-        explainVi: 'Files được copy vào project:\n\nRoot level:\n• CLAUDE.md — Instructions cho project\n• AGENTS.md — Định nghĩa agents\n• .gitignore, plans/\n\nThư mục .claude/:\n• skills/ — 85+ slash commands\n• hooks/ — 14 lifecycle hooks\n• agents/ — 13 agent definitions\n• rules/ — Workflow rules\n• settings.json — Claude Code config\n• .ck.json — ClaudeKit config\n\nFiles user hiện có được giữ nguyên (không ghi đè mặc định).',
-        codeSnippet: 'project/\n├── CLAUDE.md              ← Project instructions\n├── AGENTS.md              ← Agent definitions\n├── .gitignore\n├── plans/\n└── .claude/\n    ├── .ck.json           ← ClaudeKit config\n    ├── settings.json      ← Claude Code settings\n    ├── agents/            ← 13 definitions\n    ├── hooks/             ← 14 hooks\n    ├── rules/             ← Workflow rules\n    ├── skills/            ← 85+ commands\n    └── scripts/\n\n+ Updated 2375 file(s)',
+        descEn: 'Write AgentKit-managed configuration to the project',
+        descVi: 'Ghi cấu hình do AgentKit quản lý vào project',
+        explainEn: 'Files are copied to your project:\n\nRoot level:\n• CLAUDE.md — Project instructions\n• AGENTS.md — Agent definitions\n• .gitignore, plans/\n\n.claude/ directory:\n• skills/ — 85+ slash commands\n• hooks/ — 14 lifecycle hooks\n• agents/ — 13 agent definitions\n• rules/ — Workflow rules\n• settings.json — Claude Code config\n• .ck.json — AgentKit config\n\nExisting user files are preserved (no overwrite by default).',
+        explainVi: 'Files được copy vào project:\n\nRoot level:\n• CLAUDE.md — Instructions cho project\n• AGENTS.md — Định nghĩa agents\n• .gitignore, plans/\n\nThư mục .claude/:\n• skills/ — 85+ slash commands\n• hooks/ — 14 lifecycle hooks\n• agents/ — 13 agent definitions\n• rules/ — Workflow rules\n• settings.json — Claude Code config\n• .ck.json — AgentKit config\n\nFiles user hiện có được giữ nguyên (không ghi đè mặc định).',
+        codeSnippet: 'project/\n├── CLAUDE.md              ← Project instructions\n├── AGENTS.md              ← Agent definitions\n├── .gitignore\n├── plans/\n└── .claude/\n    ├── .ck.json           ← AgentKit config\n    ├── settings.json      ← Claude Code settings\n    ├── agents/            ← 13 definitions\n    ├── hooks/             ← 14 hooks\n    ├── rules/             ← Workflow rules\n    ├── skills/            ← 85+ commands\n    └── scripts/\n\n+ Updated 2375 file(s)',
         icon: '<rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>',
         color: 'green',
       },
@@ -1979,8 +1979,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Merge Settings',
         descEn: 'Intelligently merge with existing configurations',
         descVi: 'Merge thông minh với cấu hình hiện có',
-        explainEn: 'ClaudeKit merges configs carefully:\n\n• settings.json — Selective merge, preserves your overrides\n• hooks/ — Injects lifecycle hooks (e.g. team-context-inject, session-state) and registers them in settings.json\n• Existing .claude/rules/* — Preserved, not overwritten\n• CLAUDE.local.md — Never touched (personal, gitignored)\n\nUse --fresh to force full replacement instead of merge.',
-        explainVi: 'ClaudeKit merge configs cẩn thận:\n\n• settings.json — Merge chọn lọc, giữ overrides của bạn\n• hooks/ — Inject lifecycle hooks (vd team-context-inject, session-state) và đăng ký vào settings.json\n• .claude/rules/* hiện có — Giữ nguyên, không ghi đè\n• CLAUDE.local.md — Không bao giờ động (cá nhân, gitignored)\n\nDùng --fresh để force thay thế hoàn toàn thay vì merge.',
+        explainEn: 'AgentKit merges managed configuration while preserving user-owned Claude Code files and overrides. Preview later project-file changes with `ak update --dry-run` before applying them.',
+        explainVi: 'AgentKit merge cấu hình được quản lý trong khi giữ file Claude Code và override do user sở hữu. Xem trước thay đổi file project bằng `ak update --dry-run` trước khi áp dụng.',
         codeSnippet: 'i Injected team-context-inject hook\ni Injected session-state hook\n+ Lifecycle hooks injected successfully\n\n// Merge strategy:\n// - settings.json: selective merge\n// - user rules: preserved\n// - CLAUDE.local.md: never touched',
         icon: '<circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 009 9"/>',
         color: 'blue',
@@ -1991,18 +1991,18 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Ready to Use',
         descEn: 'Project initialized, start Claude Code session',
         descVi: 'Project đã khởi tạo, bắt đầu session Claude Code',
-        explainEn: 'Initialization complete! Your project now has:\n\n✓ 85+ slash commands via /ck:* skills\n✓ 14 hooks for automation\n✓ 13 pre-configured agents\n✓ Workflow rules for consistent coding\n\nNext steps:\n1. Start Claude Code: $ claude\n2. Try a command: /ck:brainstorm\n3. Customize: edit CLAUDE.md or .claude/rules/*',
-        explainVi: 'Khởi tạo hoàn tất! Project của bạn giờ có:\n\n✓ 85+ slash commands qua /ck:* skills\n✓ 14 hooks tự động\n✓ 13 agents được cấu hình sẵn\n✓ Workflow rules cho coding nhất quán\n\nBước tiếp theo:\n1. Khởi động Claude Code: $ claude\n2. Thử command: /ck:brainstorm\n3. Tuỳ chỉnh: sửa CLAUDE.md hoặc .claude/rules/*',
-        codeSnippet: '+ Project initialized successfully\n\nNext steps:\n$ claude              # Start session\n> /ck:brainstorm      # Try a skill\n> /ck:plan            # Create a plan\n\n# Customize:\n# - Edit CLAUDE.md for project context\n# - Add rules to .claude/rules/\n# - Personal prefs in CLAUDE.local.md',
+        explainEn: 'Initialization complete! Your project now has:\n\n✓ 85+ slash commands via /ak:* skills\n✓ 14 hooks for automation\n✓ 13 pre-configured agents\n✓ Workflow rules for consistent coding\n\nNext steps:\n1. Start Claude Code: $ claude\n2. Try a command: /ak:brainstorm\n3. Customize: edit CLAUDE.md or .claude/rules/*',
+        explainVi: 'Khởi tạo hoàn tất! Project của bạn giờ có:\n\n✓ 85+ slash commands qua /ak:* skills\n✓ 14 hooks tự động\n✓ 13 agents được cấu hình sẵn\n✓ Workflow rules cho coding nhất quán\n\nBước tiếp theo:\n1. Khởi động Claude Code: $ claude\n2. Thử command: /ak:brainstorm\n3. Tuỳ chỉnh: sửa CLAUDE.md hoặc .claude/rules/*',
+        codeSnippet: '+ Project initialized successfully\n\nNext steps:\n$ claude              # Start session\n> /ak:brainstorm      # Try a skill\n> /ak:plan            # Create a plan\n\n# Customize:\n# - Edit CLAUDE.md for project context\n# - Add rules to .claude/rules/\n# - Personal prefs in CLAUDE.local.md',
         icon: '<path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',
         color: 'amber',
       },
     ],
   },
-  // ─── /ck:xia — Feature Extraction and Porting ─────────────────
+  // ─── /ak:xia — Feature Extraction and Porting ─────────────────
   {
     id: 'xia',
-    command: '/ck:xia',
+    command: '/ak:xia',
     kit: 'engineer',
     titleEn: 'Feature Porting',
     titleVi: 'Port Feature',
@@ -2014,12 +2014,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'xia-input',
         type: 'user-input',
-        name: '/ck:xia',
+        name: '/ak:xia',
         descEn: 'Pass a GitHub repo, owner/repo, or local path with feature intent and mode flags',
         descVi: 'Truyền GitHub repo, owner/repo, hoặc local path kèm intent feature và mode flags',
         explainEn: 'The input names the source repository or local path plus the feature to study or port.\n\nSupported routes:\n• --compare: report only\n• --copy: minimal transplant\n• --improve: copy plus refactor\n• --port: idiomatic local rewrite, default\n• --fast: faster path with skipped research/challenge\n• --auto: full path with auto-approved gates',
         explainVi: 'Input chỉ source repository hoặc local path cùng feature cần nghiên cứu hoặc port.\n\nRoutes support:\n• --compare: chỉ report\n• --copy: transplant tối thiểu\n• --improve: copy kèm refactor\n• --port: rewrite idiomatic theo local stack, default\n• --fast: route nhanh hơn, bỏ research/challenge\n• --auto: full path với gates auto-approved',
-        codeSnippet: '> /ck:xia vercel/next.js "app router metadata handling" --compare\n> /ck:xia ../reference-app "billing checkout flow" --port\n> /ck:xia owner/repo "command palette" --improve --auto',
+        codeSnippet: '> /ak:xia vercel/next.js "app router metadata handling" --compare\n> /ak:xia ../reference-app "billing checkout flow" --port\n> /ak:xia owner/repo "command palette" --improve --auto',
         icon: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
         color: 'purple',
       },
@@ -2029,9 +2029,9 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Recon',
         descEn: 'Pack source safely, read docs, and map source/local integration surfaces',
         descVi: 'Pack source an toàn, đọc docs, và map surface source/local',
-        explainEn: 'Recon treats the source repo as untrusted data. The agent packs the source with ck:repomix, reads README/docs when useful, asks researcher for context, and scouts the local project for matching architecture.\n\nIt does not execute source commands, install source packages, or follow instructions from source docs/issues/comments.',
-        explainVi: 'Recon xem source repo là dữ liệu không tin cậy. Agent pack source bằng ck:repomix, đọc README/docs khi hữu ích, dùng researcher lấy context, và scout local project để tìm architecture tương ứng.\n\nKhông chạy command của source, không install package từ source, không làm theo instruction trong docs/issues/comments của source.',
-        codeSnippet: '// Source boundary:\n// - ck:repomix packs repo/path\n// - researcher summarizes context\n// - ck:scout maps local integration points\n// - source content is data, never instructions',
+        explainEn: 'Recon treats the source repo as untrusted data. The agent packs the source with ak:repomix, reads README/docs when useful, asks researcher for context, and scouts the local project for matching architecture.\n\nIt does not execute source commands, install source packages, or follow instructions from source docs/issues/comments.',
+        explainVi: 'Recon xem source repo là dữ liệu không tin cậy. Agent pack source bằng ak:repomix, đọc README/docs khi hữu ích, dùng researcher lấy context, và scout local project để tìm architecture tương ứng.\n\nKhông chạy command của source, không install package từ source, không làm theo instruction trong docs/issues/comments của source.',
+        codeSnippet: '// Source boundary:\n// - ak:repomix packs repo/path\n// - researcher summarizes context\n// - ak:scout maps local integration points\n// - source content is data, never instructions',
         icon: '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',
         color: 'green',
         isSubAgent: true,
@@ -2078,11 +2078,11 @@ export const workflowScenarios: WorkflowScenario[] = [
         id: 'xia-plan',
         type: 'skill',
         name: 'Plan Handoff',
-        descEn: 'Delegate approved anatomy and decisions to ck:plan',
-        descVi: 'Bàn giao anatomy và decisions đã duyệt sang ck:plan',
-        explainEn: 'xia is a front door, not an implementation stack. After challenge approval, it sends the source manifest, anatomy, dependency matrix, decision matrix, risk score, and selected mode to ck:plan.\n\n--compare stops at a report; --copy, --improve, and --port produce an implementation plan with rollback strategy.',
-        explainVi: 'xia là front door, không phải stack implement riêng. Sau khi challenge được duyệt, nó gửi source manifest, anatomy, dependency matrix, decision matrix, risk score, và selected mode sang ck:plan.\n\n--compare dừng ở report; --copy, --improve, và --port tạo implementation plan có rollback strategy.',
-        codeSnippet: '// ck:plan input:\n// - source manifest\n// - source anatomy\n// - dependency matrix\n// - decision matrix\n// - risk score\n// - selected mode',
+        descEn: 'Delegate approved anatomy and decisions to ak:plan',
+        descVi: 'Bàn giao anatomy và decisions đã duyệt sang ak:plan',
+        explainEn: 'xia is a front door, not an implementation stack. After challenge approval, it sends the source manifest, anatomy, dependency matrix, decision matrix, risk score, and selected mode to ak:plan.\n\n--compare stops at a report; --copy, --improve, and --port produce an implementation plan with rollback strategy.',
+        explainVi: 'xia là front door, không phải stack implement riêng. Sau khi challenge được duyệt, nó gửi source manifest, anatomy, dependency matrix, decision matrix, risk score, và selected mode sang ak:plan.\n\n--compare dừng ở report; --copy, --improve, và --port tạo implementation plan có rollback strategy.',
+        codeSnippet: '// ak:plan input:\n// - source manifest\n// - source anatomy\n// - dependency matrix\n// - decision matrix\n// - risk score\n// - selected mode',
         icon: '<path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>',
         color: 'green',
         isSubAgent: true,
@@ -2091,20 +2091,20 @@ export const workflowScenarios: WorkflowScenario[] = [
         id: 'xia-output',
         type: 'output',
         name: 'Report or Cook Handoff',
-        descEn: 'Produce comparison report or plan path for /ck:cook',
-        descVi: 'Tạo comparison report hoặc plan path cho /ck:cook',
-        explainEn: 'Deliverable depends on mode. Compare mode writes a feature comparison report under plans/reports and stops. Implementation modes return a plan path and handoff text for /ck:cook.\n\nxia does not directly write the ported code.',
-        explainVi: 'Deliverable phụ thuộc mode. Compare mode ghi feature comparison report trong plans/reports rồi dừng. Implementation modes trả plan path và handoff text cho /ck:cook.\n\nxia không trực tiếp viết code ported.',
-        codeSnippet: '// --compare:\n// plans/reports/feature-comparison-<slug>.md\n//\n// other modes:\n// Plan ready at ./plans/<plan-dir>/plan.md\n// To implement, run /ck:cook <plan-path>',
+        descEn: 'Produce comparison report or plan path for /ak:cook',
+        descVi: 'Tạo comparison report hoặc plan path cho /ak:cook',
+        explainEn: 'Deliverable depends on mode. Compare mode writes a feature comparison report under plans/reports and stops. Implementation modes return a plan path and handoff text for /ak:cook.\n\nxia does not directly write the ported code.',
+        explainVi: 'Deliverable phụ thuộc mode. Compare mode ghi feature comparison report trong plans/reports rồi dừng. Implementation modes trả plan path và handoff text cho /ak:cook.\n\nxia không trực tiếp viết code ported.',
+        codeSnippet: '// --compare:\n// plans/reports/feature-comparison-<slug>.md\n//\n// other modes:\n// Plan ready at ./plans/<plan-dir>/plan.md\n// To implement, run /ak:cook <plan-path>',
         icon: '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',
         color: 'amber',
       },
     ],
   },
-  // ─── /ck:ai-artist — AI Image Generation ───────────────────────
+  // ─── /ak:ai-artist — AI Image Generation ───────────────────────
   {
     id: 'ai-artist',
-    command: '/ck:ai-artist',
+    command: '/ak:ai-artist',
     kit: 'engineer',
     titleEn: 'AI Artist Image Generation',
     titleVi: 'AI Artist Image Generation',
@@ -2121,7 +2121,7 @@ export const workflowScenarios: WorkflowScenario[] = [
         descVi: 'User đưa concept kèm mode/provider flags',
         explainEn: 'The command starts from a visual concept and optional flags for mode, provider, or skipping the interview. Default route is best-match prompt search with provider auto-detection.',
         explainVi: 'Command bắt đầu từ concept visual và optional flags cho mode, provider, hoặc bỏ interview. Route default là prompt search best-match với auto-detect provider.',
-        codeSnippet: '> /ck:ai-artist "tech conference banner"\n> /ck:ai-artist "product showcase" --mode creative --provider openrouter',
+        codeSnippet: '> /ak:ai-artist "tech conference banner"\n> /ak:ai-artist "product showcase" --mode creative --provider openrouter',
         icon: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>',
         color: 'purple',
       },
@@ -2167,8 +2167,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Render',
         descEn: 'Route through ai-multimodal provider path',
         descVi: 'Route qua ai-multimodal provider path',
-        explainEn: 'Rendering goes through ck:ai-multimodal using auto, Google, or OpenRouter-backed provider routing. Model errors suggest retrying with a different model path.',
-        explainVi: 'Render đi qua ck:ai-multimodal với route provider auto, Google, hoặc OpenRouter-backed. Model error sẽ gợi ý retry bằng model path khác.',
+        explainEn: 'Rendering goes through ak:ai-multimodal using auto, Google, or OpenRouter-backed provider routing. Model errors suggest retrying with a different model path.',
+        explainVi: 'Render đi qua ak:ai-multimodal với route provider auto, Google, hoặc OpenRouter-backed. Model error sẽ gợi ý retry bằng model path khác.',
         codeSnippet: '// Provider route:\n// auto -> config/env preference\n// google -> direct Google\n// openrouter -> OpenRouter-backed Google model',
         icon: '<path d="M12 2v20"/><path d="m17 5-5-3-5 3"/><path d="m17 19-5 3-5-3"/><path d="M2 12h20"/><path d="m5 7-3 5 3 5"/><path d="m19 7 3 5-3 5"/>',
         color: 'green',
@@ -2187,10 +2187,10 @@ export const workflowScenarios: WorkflowScenario[] = [
       },
     ],
   },
-  // ─── /ck:agentize — Codebase to CLI/MCP ────────────────────────
+  // ─── /ak:agentize — Codebase to CLI/MCP ────────────────────────
   {
     id: 'agentize',
-    command: '/ck:agentize',
+    command: '/ak:agentize',
     kit: 'engineer',
     titleEn: 'Agentize a Codebase',
     titleVi: 'Biến codebase thành công cụ cho agent',
@@ -2207,7 +2207,7 @@ export const workflowScenarios: WorkflowScenario[] = [
         descVi: 'Feature/module kèm output và interaction flags',
         explainEn: 'The user points at a feature or module and optionally selects --both, --mcp, --cli, --auto, or --ask. Intent text can imply these modes.',
         explainVi: 'User trỏ đến feature hoặc module và có thể chọn --both, --mcp, --cli, --auto, hoặc --ask. Intent text cũng có thể ngầm định các mode này.',
-        codeSnippet: '> /ck:agentize src/search --mcp\n> /ck:agentize packages/reporting --both --auto',
+        codeSnippet: '> /ak:agentize src/search --mcp\n> /ak:agentize packages/reporting --both --auto',
         icon: '<path d="M4 17l6-6-6-6"/><path d="M12 19h8"/>',
         color: 'purple',
       },
@@ -2219,7 +2219,7 @@ export const workflowScenarios: WorkflowScenario[] = [
         descVi: 'Context project-management trước khi làm',
         explainEn: 'Hard gate: no wrapping starts before a tracked plan, task context, and invocation args exist. This keeps the generated package work auditable.',
         explainVi: 'Hard gate: không bắt đầu wrap trước khi có plan, task context, và invocation args được track. Việc này giúp package work audit được.',
-        codeSnippet: '// ck:project-management\n// create plan folder\n// record args and task state',
+        codeSnippet: '// ak:project-management\n// create plan folder\n// record args and task state',
         icon: '<path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>',
         color: 'amber',
       },
@@ -2229,8 +2229,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Scout Source',
         descEn: 'Map I/O, side effects, credentials, deps, tests',
         descVi: 'Map I/O, side effects, credentials, deps, tests',
-        explainEn: 'ck:scout maps entry points, capabilities, side effects, configuration, credentials, runtime, dependencies, and tests. The command must not invent behavior not read from source.',
-        explainVi: 'ck:scout map entry points, capabilities, side effects, config, credentials, runtime, dependencies, và tests. Command không được bịa behavior chưa đọc từ source.',
+        explainEn: 'ak:scout maps entry points, capabilities, side effects, configuration, credentials, runtime, dependencies, and tests. The command must not invent behavior not read from source.',
+        explainVi: 'ak:scout map entry points, capabilities, side effects, config, credentials, runtime, dependencies, và tests. Command không được bịa behavior chưa đọc từ source.',
         codeSnippet: '// Scout matrix:\n// capability -> input -> output -> side effects\n// credential -> source -> safe handling',
         icon: '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',
         color: 'green',
@@ -2269,7 +2269,7 @@ export const workflowScenarios: WorkflowScenario[] = [
         descVi: 'Tests, CI, docs, skill đi kèm, security',
         explainEn: 'Harden phase is not optional. It runs tests, CI setup, docs, companion skill creation, and security handling before release packaging.',
         explainVi: 'Harden phase không optional. Nó chạy tests, CI setup, docs, tạo companion skill, và xử lý security trước khi package release.',
-        codeSnippet: '// ck:test\n// ck:docs\n// ck:skill-creator\n// CI + security pass',
+        codeSnippet: '// ak:test\n// ak:docs\n// ak:skill-creator\n// CI + security pass',
         icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
         color: 'green',
       },
@@ -2287,10 +2287,10 @@ export const workflowScenarios: WorkflowScenario[] = [
       },
     ],
   },
-  // ─── /ck:cti-expert — CTI and OSINT ────────────────────────────
+  // ─── /ak:cti-expert — CTI and OSINT ────────────────────────────
   {
     id: 'cti-expert',
-    command: '/ck:cti-expert',
+    command: '/ak:cti-expert',
     kit: 'engineer',
     titleEn: 'CTI and OSINT Investigation',
     titleVi: 'Điều tra CTI và OSINT',
@@ -2307,7 +2307,7 @@ export const workflowScenarios: WorkflowScenario[] = [
         descVi: 'Target kèm route case/sweep/query/flow/yolo',
         explainEn: 'The command accepts a target and investigation mode. Guided flows exist for person, domain, email, and quick investigations; yolo mode only removes routine prompts, not legal or verification gates.',
         explainVi: 'Command nhận target và mode điều tra. Có guided flow cho person, domain, email, quick; yolo chỉ bỏ prompt thường, không bỏ legal hoặc verification gates.',
-        codeSnippet: '> /ck:cti-expert target.com --case\n> /ck:cti-expert @alice --sweep\n> /ck:cti-expert person --flow',
+        codeSnippet: '> /ak:cti-expert target.com --case\n> /ak:cti-expert @alice --sweep\n> /ak:cti-expert person --flow',
         icon: '<path d="M12 2v20"/><path d="M2 12h20"/>',
         color: 'purple',
       },
@@ -2374,10 +2374,10 @@ export const workflowScenarios: WorkflowScenario[] = [
       },
     ],
   },
-  // ─── /ck:retro — Retrospective Report ──────────────────────────
+  // ─── /ak:retro — Retrospective Report ──────────────────────────
   {
     id: 'retro',
-    command: '/ck:retro',
+    command: '/ak:retro',
     kit: 'engineer',
     titleEn: 'Sprint Retrospective',
     titleVi: 'Tổng Kết Sprint',
@@ -2394,7 +2394,7 @@ export const workflowScenarios: WorkflowScenario[] = [
         descVi: '7d, 2w, 1m, sprint, hoặc date range rõ',
         explainEn: 'The command parses timeframe into SINCE and UNTIL. Sprint mode asks for a start date if it cannot be inferred.',
         explainVi: 'Command parse timeframe thành SINCE và UNTIL. Sprint mode hỏi start date nếu không infer được.',
-        codeSnippet: '> /ck:retro\n> /ck:retro 2w --compare\n> /ck:retro 2026-05-01:2026-05-31 --team',
+        codeSnippet: '> /ak:retro\n> /ak:retro 2w --compare\n> /ak:retro 2026-05-01:2026-05-31 --team',
         icon: '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
         color: 'purple',
       },
@@ -2448,10 +2448,10 @@ export const workflowScenarios: WorkflowScenario[] = [
       },
     ],
   },
-  // ─── /ck:graphify — Knowledge Graph ────────────────────────────
+  // ─── /ak:graphify — Knowledge Graph ────────────────────────────
   {
     id: 'graphify',
-    command: '/ck:graphify',
+    command: '/ak:graphify',
     kit: 'engineer',
     titleEn: 'Build Knowledge Graph',
     titleVi: 'Tạo Knowledge Graph',
@@ -2468,7 +2468,7 @@ export const workflowScenarios: WorkflowScenario[] = [
         descVi: 'Repo hiện tại hoặc path kèm flags watch/report/MCP',
         explainEn: 'The command builds a graph from the current directory or provided path. Optional flags enable watch mode, report generation, or MCP serving.',
         explainVi: 'Command build graph từ thư mục hiện tại hoặc path được đưa vào. Optional flags bật watch mode, report generation, hoặc MCP serving.',
-        codeSnippet: '> /ck:graphify\n> /ck:graphify . --report\n> /ck:graphify . --mcp',
+        codeSnippet: '> /ak:graphify\n> /ak:graphify . --report\n> /ak:graphify . --mcp',
         icon: '<path d="M4 17l6-6-6-6"/><path d="M12 19h8"/>',
         color: 'purple',
       },
@@ -2527,18 +2527,18 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Plan / Scout Handoff',
         descEn: 'Use graph report before plan or code navigation',
         descVi: 'Dùng graph report trước plan hoặc điều hướng code',
-        explainEn: 'The graph can be queried through MCP tools or used as context before ck:plan and ck:scout. Typical MCP tools include query_graph, get_node, get_neighbors, and shortest_path.',
-        explainVi: 'Graph có thể được query qua MCP tools hoặc dùng làm context trước ck:plan và ck:scout. MCP tools thường gồm query_graph, get_node, get_neighbors, shortest_path.',
+        explainEn: 'The graph can be queried through MCP tools or used as context before ak:plan and ak:scout. Typical MCP tools include query_graph, get_node, get_neighbors, and shortest_path.',
+        explainVi: 'Graph có thể được query qua MCP tools hoặc dùng làm context trước ak:plan và ak:scout. MCP tools thường gồm query_graph, get_node, get_neighbors, shortest_path.',
         codeSnippet: '// MCP tools:\n// query_graph\n// get_node\n// get_neighbors\n// shortest_path',
         icon: '<path d="M6 3v12"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/>',
         color: 'green',
       },
     ],
   },
-  // ─── /ck:git — Guarded Git Delivery ───────────────────────────
+  // ─── /ak:git — Guarded Git Delivery ───────────────────────────
   {
     id: 'git',
-    command: '/ck:git',
+    command: '/ak:git',
     kit: 'engineer',
     titleEn: 'Guarded Git Delivery',
     titleVi: 'Bàn giao Git có guard',
@@ -2555,7 +2555,7 @@ export const workflowScenarios: WorkflowScenario[] = [
         descVi: 'cm, cp, pr, merge, hoặc chooser',
         explainEn: 'The command chooses commit-only, commit-and-push, PR, merge, or asks you when no subcommand is provided.',
         explainVi: 'Command chọn commit-only, commit-and-push, PR, merge, hoặc hỏi bạn khi không có subcommand.',
-        codeSnippet: '> /ck:git cm\n> /ck:git cp\n> /ck:git pr develop\n> /ck:git merge develop feature/oauth-login',
+        codeSnippet: '> /ak:git cm\n> /ak:git cp\n> /ak:git pr develop\n> /ak:git merge develop feature/oauth-login',
         icon: '<path d="M4 17l6-6-6-6"/><path d="M12 19h8"/>',
         color: 'purple',
       },
@@ -2622,10 +2622,10 @@ export const workflowScenarios: WorkflowScenario[] = [
       },
     ],
   },
-  // ─── /ck:debug — Root-Cause Debugging ─────────────────────────
+  // ─── /ak:debug — Root-Cause Debugging ─────────────────────────
   {
     id: 'debug',
-    command: '/ck:debug',
+    command: '/ak:debug',
     kit: 'engineer',
     titleEn: 'Debug Root Cause',
     titleVi: 'Debug Root Cause',
@@ -2642,7 +2642,7 @@ export const workflowScenarios: WorkflowScenario[] = [
         descVi: 'Error, test fail, incident, performance hoặc UI issue',
         explainEn: 'The command starts from a concrete symptom. It diagnoses first and only routes toward a fix after root cause is evidenced.',
         explainVi: 'Command bắt đầu từ symptom cụ thể. Nó diagnose trước và chỉ route sang fix sau khi root cause có evidence.',
-        codeSnippet: '> /ck:debug \"npm test fails only in CI, passes locally\"\n> /ck:debug \"settings page layout overlaps on mobile\"',
+        codeSnippet: '> /ak:debug \"npm test fails only in CI, passes locally\"\n> /ak:debug \"settings page layout overlaps on mobile\"',
         icon: '<path d="M4 17l6-6-6-6"/><path d="M12 19h8"/>',
         color: 'purple',
       },
@@ -2709,10 +2709,10 @@ export const workflowScenarios: WorkflowScenario[] = [
       },
     ],
   },
-  // ─── /ck:agent-browser — Browser Automation ───────────────────
+  // ─── /ak:agent-browser — Browser Automation ───────────────────
   {
     id: 'agent-browser',
-    command: '/ck:agent-browser',
+    command: '/ak:agent-browser',
     kit: 'engineer',
     titleEn: 'Browser Automation',
     titleVi: 'Browser Automation',
@@ -2729,7 +2729,7 @@ export const workflowScenarios: WorkflowScenario[] = [
         descVi: 'URL, app, provider, session, hoặc QA goal',
         explainEn: 'The skill routes a browser task through the CLI: local URL, CDP target, Electron app, cloud browser provider, or QA report goal.',
         explainVi: 'Skill route browser task qua CLI: local URL, CDP target, Electron app, cloud browser provider, hoặc QA report goal.',
-        codeSnippet: '> /ck:agent-browser test http://localhost:3000/login\n\n// CLI loop:\nagent-browser open http://localhost:3000\nagent-browser snapshot -i',
+        codeSnippet: '> /ak:agent-browser test http://localhost:3000/login\n\n// CLI loop:\nagent-browser open http://localhost:3000\nagent-browser snapshot -i',
         icon: '<path d="M4 17l6-6-6-6"/><path d="M12 19h8"/>',
         color: 'purple',
       },
@@ -2795,10 +2795,10 @@ export const workflowScenarios: WorkflowScenario[] = [
       },
     ],
   },
-  // ─── /ck:ai-multimodal — Media Analysis and Generation ───────
+  // ─── /ak:ai-multimodal — Media Analysis and Generation ───────
   {
     id: 'ai-multimodal',
-    command: '/ck:ai-multimodal',
+    command: '/ak:ai-multimodal',
     kit: 'engineer',
     titleEn: 'Media Analysis and Generation',
     titleVi: 'Phân Tích và Tạo Media',
@@ -2815,7 +2815,7 @@ export const workflowScenarios: WorkflowScenario[] = [
         descVi: 'Analyze, transcribe, extract, generate, optimize',
         explainEn: 'The task determines whether files are required, a prompt is required, and which provider or helper route should run.',
         explainVi: 'Task quyết định có cần files không, có cần prompt không, và provider/helper route nào sẽ chạy.',
-        codeSnippet: '> /ck:ai-multimodal analyze screenshot.png\n> /ck:ai-multimodal generate image \"CLI dashboard mockup\"',
+        codeSnippet: '> /ak:ai-multimodal analyze screenshot.png\n> /ak:ai-multimodal generate image \"CLI dashboard mockup\"',
         icon: '<path d="M4 17l6-6-6-6"/><path d="M12 19h8"/>',
         color: 'purple',
       },
@@ -2881,10 +2881,10 @@ export const workflowScenarios: WorkflowScenario[] = [
       },
     ],
   },
-  // ─── /ck:ask — Technical Consultation ─────────────────────────
+  // ─── /ak:ask — Technical Consultation ─────────────────────────
   {
     id: 'ask',
-    command: '/ck:ask',
+    command: '/ak:ask',
     kit: 'engineer',
     titleEn: 'Ask an Architecture Question',
     titleVi: 'Hỏi Về Kỹ Thuật / Kiến Trúc',
@@ -2901,7 +2901,7 @@ export const workflowScenarios: WorkflowScenario[] = [
         descVi: 'Quyết định kỹ thuật, so sánh, review plan, hoặc risk migration',
         explainEn: 'The user asks a technical or architectural question. The command is for consultation, not implementation.',
         explainVi: 'User hỏi câu hỏi kỹ thuật hoặc kiến trúc. Command dùng để consult, không implement.',
-        codeSnippet: '> /ck:ask Should we split auth into a separate service or keep it in the monolith?',
+        codeSnippet: '> /ak:ask Should we split auth into a separate service or keep it in the monolith?',
         icon: '<path d="M4 17l6-6-6-6"/><path d="M12 19h8"/>',
         color: 'purple',
       },
@@ -2955,10 +2955,10 @@ export const workflowScenarios: WorkflowScenario[] = [
       },
     ],
   },
-  // ─── /ck:security — Security Audit ────────────────────────────
+  // ─── /ak:security — Security Audit ────────────────────────────
   {
     id: 'security',
-    command: '/ck:security',
+    command: '/ak:security',
     kit: 'engineer',
     titleEn: 'Security Audit',
     titleVi: 'Audit Bảo Mật',
@@ -2975,7 +2975,7 @@ export const workflowScenarios: WorkflowScenario[] = [
         descVi: 'Scope glob/full kèm --red-team, --fix, iterations',
         explainEn: 'The command starts from a scoped target. Default and --red-team modes audit only; code changes are allowed only when --fix is explicit.',
         explainVi: 'Command bắt đầu từ target có scope. Default và --red-team chỉ audit; chỉ được sửa code khi có --fix rõ ràng.',
-        codeSnippet: '> /ck:security src/api/**/*.ts\n> /ck:security full --red-team\n> /ck:security src/ --fix --iterations 15',
+        codeSnippet: '> /ak:security src/api/**/*.ts\n> /ak:security full --red-team\n> /ak:security src/ --fix --iterations 15',
         icon: '<path d="M4 17l6-6-6-6"/><path d="M12 19h8"/>',
         color: 'purple',
       },
@@ -3043,10 +3043,10 @@ export const workflowScenarios: WorkflowScenario[] = [
       },
     ],
   },
-  // ─── /ck:repomix — Repository Context Pack ────────────────────
+  // ─── /ak:repomix — Repository Context Pack ────────────────────
   {
     id: 'repomix',
-    command: '/ck:repomix',
+    command: '/ak:repomix',
     kit: 'engineer',
     titleEn: 'Pack Repository Context',
     titleVi: 'Đóng Gói Context Repo',
@@ -3063,7 +3063,7 @@ export const workflowScenarios: WorkflowScenario[] = [
         descVi: 'Path/remote kèm style, filters, output, copy',
         explainEn: 'The user selects a local path or remote repository and optional packing controls: style, include filters, output path, copy, config, token tree, or safety overrides.',
         explainVi: 'User chọn local path hoặc remote repository và các control pack: style, include filters, output path, copy, config, token tree, hoặc safety overrides.',
-        codeSnippet: '> /ck:repomix\n> /ck:repomix --style markdown -o plans/context.md\n> /ck:repomix --remote https://github.com/org/repo',
+        codeSnippet: '> /ak:repomix\n> /ak:repomix --style markdown -o plans/context.md\n> /ak:repomix --remote https://github.com/org/repo',
         icon: '<path d="M4 17l6-6-6-6"/><path d="M12 19h8"/>',
         color: 'purple',
       },
@@ -3117,10 +3117,10 @@ export const workflowScenarios: WorkflowScenario[] = [
       },
     ],
   },
-  // ─── /ck:llms — llms.txt Index ────────────────────────────────
+  // ─── /ak:llms — llms.txt Index ────────────────────────────────
   {
     id: 'llms',
-    command: '/ck:llms',
+    command: '/ak:llms',
     kit: 'engineer',
     titleEn: 'Generate llms.txt',
     titleVi: 'Tạo llms.txt',
@@ -3137,7 +3137,7 @@ export const workflowScenarios: WorkflowScenario[] = [
         descVi: 'Docs path, URL, output path, hoặc --full',
         explainEn: 'The command can scan the current project, a docs path, or a public URL. --full adds a larger companion context file.',
         explainVi: 'Command có thể scan project hiện tại, docs path, hoặc public URL. --full tạo thêm file context lớn hơn.',
-        codeSnippet: '> /ck:llms\n> /ck:llms docs/ --full\n> /ck:llms --url https://vividkit.dev --output public/llms.txt',
+        codeSnippet: '> /ak:llms\n> /ak:llms docs/ --full\n> /ak:llms --url https://vividkit.dev --output public/llms.txt',
         icon: '<path d="M4 17l6-6-6-6"/><path d="M12 19h8"/>',
         color: 'purple',
       },
@@ -3179,10 +3179,10 @@ export const workflowScenarios: WorkflowScenario[] = [
       },
     ],
   },
-  // ─── /ck:scenario — Scenario Discovery ────────────────────────
+  // ─── /ak:scenario — Scenario Discovery ────────────────────────
   {
     id: 'scenario',
-    command: '/ck:scenario',
+    command: '/ak:scenario',
     kit: 'engineer',
     titleEn: 'Generate Scenarios',
     titleVi: 'Tạo Scenarios',
@@ -3199,7 +3199,7 @@ export const workflowScenarios: WorkflowScenario[] = [
         descVi: 'Feature bằng ngôn ngữ tự nhiên hoặc source file path',
         explainEn: 'The command starts from a feature description or a source file. Flags select domain, focus, format, iteration budget, and saturation behavior.',
         explainVi: 'Command bắt đầu từ mô tả feature hoặc source file. Flags chọn domain, focus, format, budget iterations, và saturation behavior.',
-        codeSnippet: '> /ck:scenario "password reset with OTP"\n> /ck:scenario src/auth/reset.ts --focus security\n> /ck:scenario checkout --format test-scenarios --saturation',
+        codeSnippet: '> /ak:scenario "password reset with OTP"\n> /ak:scenario src/auth/reset.ts --focus security\n> /ak:scenario checkout --format test-scenarios --saturation',
         icon: '<path d="M4 17l6-6-6-6"/><path d="M12 19h8"/>',
         color: 'purple',
       },
@@ -3254,10 +3254,10 @@ export const workflowScenarios: WorkflowScenario[] = [
       },
     ],
   },
-  // ─── /ck:docs — Project Documentation ─────────────────────────
+  // ─── /ak:docs — Project Documentation ─────────────────────────
   {
     id: 'docs',
-    command: '/ck:docs',
+    command: '/ak:docs',
     kit: 'engineer',
     titleEn: 'Manage Project Docs',
     titleVi: 'Quản Lý Docs Dự Án',
@@ -3274,7 +3274,7 @@ export const workflowScenarios: WorkflowScenario[] = [
         descVi: 'Picker khi không args, init, update, hoặc summarize',
         explainEn: 'With no args, the command asks which docs action to run. It should not silently initialize documentation.',
         explainVi: 'Khi không args, command hỏi action docs cần chạy. Nó không nên âm thầm init documentation.',
-        codeSnippet: '> /ck:docs\n> /ck:docs init\n> /ck:docs update src/auth\n> /ck:docs summarize',
+        codeSnippet: '> /ak:docs\n> /ak:docs init\n> /ak:docs update src/auth\n> /ak:docs summarize',
         icon: '<path d="M4 17l6-6-6-6"/><path d="M12 19h8"/>',
         color: 'purple',
       },
@@ -3329,10 +3329,10 @@ export const workflowScenarios: WorkflowScenario[] = [
       },
     ],
   },
-  // ─── /ck:autoresearch — Autoresearch Router ──────────────────
+  // ─── /ak:autoresearch — Autoresearch Router ──────────────────
   {
     id: 'autoresearch',
-    command: '/ck:autoresearch',
+    command: '/ak:autoresearch',
     kit: 'engineer',
     titleEn: 'Autoresearch Router',
     titleVi: 'Autoresearch Router',
@@ -3349,7 +3349,7 @@ export const workflowScenarios: WorkflowScenario[] = [
         descVi: 'Request discovery hoặc goal kiểu autoresearch',
         explainEn: 'The command is a family router. It should not be presented as a direct executor. A discovery request can ask which family workflow fits; execution routes to loop, predict, scenario, or security.',
         explainVi: 'Command này là family router. Không nên trình bày như executor trực tiếp. Request discovery có thể hỏi workflow nào phù hợp; phần thực thi route sang loop, predict, scenario, hoặc security.',
-        codeSnippet: '> /ck:autoresearch Which workflow should improve coverage safely?\n\n// router only\n// direct execution happens in the selected family command',
+        codeSnippet: '> /ak:autoresearch Which workflow should improve coverage safely?\n\n// router only\n// direct execution happens in the selected family command',
         icon: '<path d="M4 17l6-6-6-6"/><path d="M12 19h8"/>',
         color: 'purple',
       },
@@ -3359,9 +3359,9 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Classify Intent',
         descEn: 'Metric, prediction, scenario, security, or missing mode',
         descVi: 'Metric, prediction, scenario, security, hoặc mode chưa có',
-        explainEn: 'The router classifies the request: measurable optimization routes to /ck:loop; risk debate routes to /ck:predict; edge cases route to /ck:scenario; security audit/fix routes to /ck:security.',
-        explainVi: 'Router phân loại request: tối ưu metric đo được route sang /ck:loop; debate rủi ro route sang /ck:predict; edge cases route sang /ck:scenario; audit/fix security route sang /ck:security.',
-        codeSnippet: '// metric -> /ck:loop\n// proposal risk -> /ck:predict\n// edge cases -> /ck:scenario\n// security -> /ck:security\n// missing upstream mode -> explain coverage gap',
+        explainEn: 'The router classifies the request: measurable optimization routes to /ak:loop; risk debate routes to /ak:predict; edge cases route to /ak:scenario; security audit/fix routes to /ak:security.',
+        explainVi: 'Router phân loại request: tối ưu metric đo được route sang /ak:loop; debate rủi ro route sang /ak:predict; edge cases route sang /ak:scenario; audit/fix security route sang /ak:security.',
+        codeSnippet: '// metric -> /ak:loop\n// proposal risk -> /ak:predict\n// edge cases -> /ak:scenario\n// security -> /ak:security\n// missing upstream mode -> explain coverage gap',
         icon: '<path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>',
         color: 'amber',
       },
@@ -3373,7 +3373,7 @@ export const workflowScenarios: WorkflowScenario[] = [
         descVi: 'Chọn loop, predict, scenario, hoặc security',
         explainEn: 'The selected family skill owns the real workflow. The router resolves missing fields in one batch and keeps the user-facing command surface honest.',
         explainVi: 'Family skill được chọn sở hữu workflow thật. Router chốt các field còn thiếu trong một lượt và giữ command surface hiển thị đúng sự thật.',
-        codeSnippet: '// examples:\n// /ck:loop Goal/Scope/Verify/Iterations\n// /ck:predict \"proposal\" --chain reason\n// /ck:scenario feature --saturation\n// /ck:security src/api --red-team',
+        codeSnippet: '// examples:\n// /ak:loop Goal/Scope/Verify/Iterations\n// /ak:predict \"proposal\" --chain reason\n// /ak:scenario feature --saturation\n// /ak:security src/api --red-team',
         icon: '<path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M16 3h3a2 2 0 0 1 2 2v3"/><path d="M8 21H5a2 2 0 0 1-2-2v-3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/><path d="M12 8v8"/><path d="M8 12h8"/>',
         color: 'green',
       },
@@ -3403,10 +3403,10 @@ export const workflowScenarios: WorkflowScenario[] = [
       },
     ],
   },
-  // ─── /ck:backend-development — Backend Router ────────────────
+  // ─── /ak:backend-development — Backend Router ────────────────
   {
     id: 'backend-development',
-    command: '/ck:backend-development',
+    command: '/ak:backend-development',
     kit: 'engineer',
     titleEn: 'Backend Development',
     titleVi: 'Backend Development',
@@ -3423,7 +3423,7 @@ export const workflowScenarios: WorkflowScenario[] = [
         descVi: 'Framework kèm task hoặc backend concern',
         explainEn: 'The user passes a framework/task pair or a backend concern. This is domain routing, not a flag-driven command.',
         explainVi: 'User truyền framework/task hoặc backend concern. Đây là domain routing, không phải command chạy bằng flags.',
-        codeSnippet: '> /ck:backend-development NestJS build a REST orders API\n> /ck:backend-development FastAPI OAuth 2.1 login with Redis sessions',
+        codeSnippet: '> /ak:backend-development NestJS build a REST orders API\n> /ak:backend-development FastAPI OAuth 2.1 login with Redis sessions',
         icon: '<path d="M4 17l6-6-6-6"/><path d="M12 19h8"/>',
         color: 'purple',
       },
@@ -3477,10 +3477,10 @@ export const workflowScenarios: WorkflowScenario[] = [
       },
     ],
   },
-  // ─── /ck:better-auth — Better Auth Setup ─────────────────────
+  // ─── /ak:better-auth — Better Auth Setup ─────────────────────
   {
     id: 'better-auth',
-    command: '/ck:better-auth',
+    command: '/ak:better-auth',
     kit: 'engineer',
     titleEn: 'Better Auth Setup',
     titleVi: 'Better Auth Setup',
@@ -3497,7 +3497,7 @@ export const workflowScenarios: WorkflowScenario[] = [
         descVi: 'Email/password, OAuth, MFA, passkeys, orgs, sessions, hardening',
         explainEn: 'The command routes by auth feature described in the prompt. It has no official flags; the examples are feature selectors.',
         explainVi: 'Command route theo auth feature mô tả trong prompt. Nó không có official flags; ví dụ là feature selectors.',
-        codeSnippet: '> /ck:better-auth add email/password auth to this Next.js app\n> /ck:better-auth add 2FA with backup codes',
+        codeSnippet: '> /ak:better-auth add email/password auth to this Next.js app\n> /ak:better-auth add 2FA with backup codes',
         icon: '<path d="M4 17l6-6-6-6"/><path d="M12 19h8"/>',
         color: 'purple',
       },
@@ -3551,10 +3551,10 @@ export const workflowScenarios: WorkflowScenario[] = [
       },
     ],
   },
-  // ─── /ck:context-engineering — Context Diagnostics ───────────
+  // ─── /ak:context-engineering — Context Diagnostics ───────────
   {
     id: 'context-engineering',
-    command: '/ck:context-engineering',
+    command: '/ak:context-engineering',
     kit: 'engineer',
     titleEn: 'Context Engineering',
     titleVi: 'Context Engineering',
@@ -3571,7 +3571,7 @@ export const workflowScenarios: WorkflowScenario[] = [
         descVi: 'Câu hỏi runtime, degradation, memory, budget, tool, hoặc agent',
         explainEn: 'The user asks about context health, token budgets, memory, multi-agent coordination, compression, or tool design. There are no official command flags.',
         explainVi: 'User hỏi về context health, token budgets, memory, multi-agent coordination, compression, hoặc tool design. Không có official command flags.',
-        codeSnippet: '> /ck:context-engineering check whether our current context needs compaction\n> /ck:context-engineering design a memory system for project decisions',
+        codeSnippet: '> /ak:context-engineering check whether our current context needs compaction\n> /ak:context-engineering design a memory system for project decisions',
         icon: '<path d="M4 17l6-6-6-6"/><path d="M12 19h8"/>',
         color: 'purple',
       },
@@ -3625,10 +3625,10 @@ export const workflowScenarios: WorkflowScenario[] = [
       },
     ],
   },
-  // ─── /ck:docs-seeker — Current Docs Lookup ───────────────────
+  // ─── /ak:docs-seeker — Current Docs Lookup ───────────────────
   {
     id: 'docs-seeker',
-    command: '/ck:docs-seeker',
+    command: '/ak:docs-seeker',
     kit: 'engineer',
     titleEn: 'Seek Current Docs',
     titleVi: 'Tìm Docs Mới',
@@ -3645,7 +3645,7 @@ export const workflowScenarios: WorkflowScenario[] = [
         descVi: 'Library, topic, version, language, plugin, hoặc repo',
         explainEn: 'The user asks for current library/framework docs. The command has no official flags; the route comes from query shape.',
         explainVi: 'User hỏi docs hiện tại của library/framework. Command không có official flags; route đến từ shape của query.',
-        codeSnippet: '> /ck:docs-seeker Next.js caching strategies\n> /ck:docs-seeker React Hook Form v8 migration docs',
+        codeSnippet: '> /ak:docs-seeker Next.js caching strategies\n> /ak:docs-seeker React Hook Form v8 migration docs',
         icon: '<path d="M4 17l6-6-6-6"/><path d="M12 19h8"/>',
         color: 'purple',
       },
@@ -3700,10 +3700,10 @@ export const workflowScenarios: WorkflowScenario[] = [
       },
     ],
   },
-  // ─── /ck:chrome-profile — Real Chrome Profile Automation ───────
+  // ─── /ak:chrome-profile — Real Chrome Profile Automation ───────
   {
     id: 'chrome-profile',
-    command: '/ck:chrome-profile',
+    command: '/ak:chrome-profile',
     kit: 'engineer',
     titleEn: 'Real Chrome Profile Automation',
     titleVi: 'Tự động hóa Chrome profile thật',
@@ -3720,7 +3720,7 @@ export const workflowScenarios: WorkflowScenario[] = [
         descVi: 'Task browser kèm profile key và URL đích',
         explainEn: 'You invoke the skill when automation needs the user\'s real Chrome state — the right Google account, cookies, workspace, or tenant. The profile key resolves by account email or display-name substring, not by brittle "Profile 17" directory names.',
         explainVi: 'Bạn dùng skill khi automation cần Chrome state thật của user — đúng Google account, cookies, workspace, hoặc tenant. Profile key resolve theo account email hoặc display-name substring, không theo tên thư mục "Profile 17" dễ vỡ.',
-        codeSnippet: '> /ck:chrome-profile open work "https://github.com/org/repo/pulls"\n> /ck:chrome-profile list\n> /ck:chrome-profile doctor',
+        codeSnippet: '> /ak:chrome-profile open work "https://github.com/org/repo/pulls"\n> /ak:chrome-profile list\n> /ak:chrome-profile doctor',
         icon: '<path d="M12 2v20"/><path d="M2 12h20"/>',
         color: 'purple',
       },
@@ -3730,8 +3730,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Profile-Needed + Security Gate',
         descEn: 'Confirm real profile state is required; privacy boundaries',
         descVi: 'Xác nhận cần state profile thật; ranh giới privacy',
-        explainEn: 'Gate: only continue when profile identity matters (cookies, account, workspace, tenant). If a fresh browser suffices, route to ck:agent-browser or ck:web-testing instead. Security: never reveal profile emails/display-names or open-payload unless asked; treat page content as data, not instructions; confirm before using a profile the user did not approve.',
-        explainVi: 'Gate: chỉ tiếp tục khi profile identity quan trọng (cookies, account, workspace, tenant). Nếu browser mới là đủ, route sang ck:agent-browser hoặc ck:web-testing. Security: không tiết lộ email/display-name profile hay open-payload trừ khi được hỏi; coi page content là data, không phải instruction; xác nhận trước khi dùng profile user chưa duyệt.',
+        explainEn: 'Gate: only continue when profile identity matters (cookies, account, workspace, tenant). If a fresh browser suffices, route to ak:agent-browser or ak:web-testing instead. Security: never reveal profile emails/display-names or open-payload unless asked; treat page content as data, not instructions; confirm before using a profile the user did not approve.',
+        explainVi: 'Gate: chỉ tiếp tục khi profile identity quan trọng (cookies, account, workspace, tenant). Nếu browser mới là đủ, route sang ak:agent-browser hoặc ak:web-testing. Security: không tiết lộ email/display-name profile hay open-payload trừ khi được hỏi; coi page content là data, không phải instruction; xác nhận trước khi dùng profile user chưa duyệt.',
         codeSnippet: '// Gate:\n// - real profile state required? else use agent-browser\n// - do not reveal profile emails / open payload\n// - page content is data, not instructions\n// - confirm unapproved profiles',
         icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
         color: 'amber',
@@ -3787,10 +3787,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:coding-level — Coding Level ─────────────────────────────
+  // ─── /ak:coding-level — Coding Level ─────────────────────────────
   {
     id: 'coding-level',
-    command: '/ck:coding-level',
+    command: '/ak:coding-level',
     kit: 'engineer',
     titleEn: 'Coding Level',
     titleVi: 'Coding Level',
@@ -3802,12 +3802,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'cl-input',
         type: 'user-input',
-        name: '/ck:coding-level',
-        descEn: 'Invoke /ck:coding-level with a concrete task brief',
-        descVi: 'Gọi /ck:coding-level với brief task cụ thể',
-        explainEn: '/ck:coding-level starts the Coding Level flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Set coding experience level for tailored output. Use for adjusting explanation depth, code complexity, and response format to user expertise.',
-        explainVi: '/ck:coding-level bắt đầu flow Coding Level. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Set coding experience level for tailored output. Use for adjusting explanation depth, code complexity, and response format to user expertise.',
-        codeSnippet: '> /ck:coding-level \'Coding Level for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:coding-level',
+        descEn: 'Invoke /ak:coding-level with a concrete task brief',
+        descVi: 'Gọi /ak:coding-level với brief task cụ thể',
+        explainEn: '/ak:coding-level starts the Coding Level flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Set coding experience level for tailored output. Use for adjusting explanation depth, code complexity, and response format to user expertise.',
+        explainVi: '/ak:coding-level bắt đầu flow Coding Level. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Set coding experience level for tailored output. Use for adjusting explanation depth, code complexity, and response format to user expertise.',
+        codeSnippet: '> /ak:coding-level \'Coding Level for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -3842,8 +3842,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:coding-level path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:coding-level đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:coding-level path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:coding-level đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -3864,10 +3864,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:copywriting — Copywriting ─────────────────────────────
+  // ─── /ak:copywriting — Copywriting ─────────────────────────────
   {
     id: 'copywriting',
-    command: '/ck:copywriting',
+    command: '/ak:copywriting',
     kit: 'engineer',
     titleEn: 'Copywriting',
     titleVi: 'Copywriting',
@@ -3879,12 +3879,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'c-input',
         type: 'user-input',
-        name: '/ck:copywriting',
-        descEn: 'Invoke /ck:copywriting with a concrete task brief',
-        descVi: 'Gọi /ck:copywriting với brief task cụ thể',
-        explainEn: '/ck:copywriting starts the Copywriting flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Conversion copywriting formulas, headline templates, email copy patterns, landing page structures, CTA optimization, and writing style extraction. Activate for writing high-converting copy, crafting headlines, email campaigns, landing pages, or applying custom writing styles from assets/writing-styles/ directory.',
-        explainVi: '/ck:copywriting bắt đầu flow Copywriting. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Conversion copywriting formulas, headline templates, email copy patterns, landing page structures, CTA optimization, and writing style extraction. Activate for writing high-converting copy, crafting headlines, email campaigns, landing pages, or applying custom writing styles from assets/writing-styles/ directory.',
-        codeSnippet: '> /ck:copywriting \'Copywriting for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:copywriting',
+        descEn: 'Invoke /ak:copywriting with a concrete task brief',
+        descVi: 'Gọi /ak:copywriting với brief task cụ thể',
+        explainEn: '/ak:copywriting starts the Copywriting flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Conversion copywriting formulas, headline templates, email copy patterns, landing page structures, CTA optimization, and writing style extraction. Activate for writing high-converting copy, crafting headlines, email campaigns, landing pages, or applying custom writing styles from assets/writing-styles/ directory.',
+        explainVi: '/ak:copywriting bắt đầu flow Copywriting. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Conversion copywriting formulas, headline templates, email copy patterns, landing page structures, CTA optimization, and writing style extraction. Activate for writing high-converting copy, crafting headlines, email campaigns, landing pages, or applying custom writing styles from assets/writing-styles/ directory.',
+        codeSnippet: '> /ak:copywriting \'Copywriting for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -3919,8 +3919,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:copywriting path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:copywriting đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:copywriting path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:copywriting đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -3941,10 +3941,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:databases — Databases ─────────────────────────────
+  // ─── /ak:databases — Databases ─────────────────────────────
   {
     id: 'databases',
-    command: '/ck:databases',
+    command: '/ak:databases',
     kit: 'engineer',
     titleEn: 'Databases',
     titleVi: 'Databases',
@@ -3956,12 +3956,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'd-input',
         type: 'user-input',
-        name: '/ck:databases',
-        descEn: 'Invoke /ck:databases with a concrete task brief',
-        descVi: 'Gọi /ck:databases với brief task cụ thể',
-        explainEn: '/ck:databases starts the Databases flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Work with MongoDB (document database, BSON documents, aggregation pipelines, Atlas cloud) and PostgreSQL (relational database, SQL queries, psql CLI, pgAdmin). Use when designing database schemas, writing queries and aggregations, optimizing indexes for performance, performing database migrations, configuring replication and sharding, implementing backup and restore strategies, managing database users and permissions, analyzing query performance, or administering production databases.',
-        explainVi: '/ck:databases bắt đầu flow Databases. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Work with MongoDB (document database, BSON documents, aggregation pipelines, Atlas cloud) and PostgreSQL (relational database, SQL queries, psql CLI, pgAdmin). Use when designing database schemas, writing queries and aggregations, optimizing indexes for performance, performing database migrations, configuring replication and sharding, implementing backup and restore strategies, managing database users and permissions, analyzing query performance, or administering production databases.',
-        codeSnippet: '> /ck:databases \'Databases for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:databases',
+        descEn: 'Invoke /ak:databases with a concrete task brief',
+        descVi: 'Gọi /ak:databases với brief task cụ thể',
+        explainEn: '/ak:databases starts the Databases flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Work with MongoDB (document database, BSON documents, aggregation pipelines, Atlas cloud) and PostgreSQL (relational database, SQL queries, psql CLI, pgAdmin). Use when designing database schemas, writing queries and aggregations, optimizing indexes for performance, performing database migrations, configuring replication and sharding, implementing backup and restore strategies, managing database users and permissions, analyzing query performance, or administering production databases.',
+        explainVi: '/ak:databases bắt đầu flow Databases. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Work with MongoDB (document database, BSON documents, aggregation pipelines, Atlas cloud) and PostgreSQL (relational database, SQL queries, psql CLI, pgAdmin). Use when designing database schemas, writing queries and aggregations, optimizing indexes for performance, performing database migrations, configuring replication and sharding, implementing backup and restore strategies, managing database users and permissions, analyzing query performance, or administering production databases.',
+        codeSnippet: '> /ak:databases \'Databases for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -3996,8 +3996,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:databases path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:databases đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:databases path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:databases đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -4018,10 +4018,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:devops — Devops ─────────────────────────────
+  // ─── /ak:devops — Devops ─────────────────────────────
   {
     id: 'devops',
-    command: '/ck:devops',
+    command: '/ak:devops',
     kit: 'engineer',
     titleEn: 'Devops',
     titleVi: 'Devops',
@@ -4033,12 +4033,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'd-input',
         type: 'user-input',
-        name: '/ck:devops',
-        descEn: 'Invoke /ck:devops with a concrete task brief',
-        descVi: 'Gọi /ck:devops với brief task cụ thể',
-        explainEn: '/ck:devops starts the Devops flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Deploy and manage cloud infrastructure on Cloudflare (Workers, R2, D1, KV, Pages, Durable Objects, Browser Rendering), Docker containers, and Google Cloud Platform (Compute Engine, GKE, Cloud Run, App Engine, Cloud Storage). Use when deploying serverless functions to the edge, configuring edge computing solutions, managing Docker containers and images, setting up CI/CD pipelines, optimizing cloud infrastructure costs, implementing global caching strategies, working with cloud databases, or building cloud-native applications.',
-        explainVi: '/ck:devops bắt đầu flow Devops. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Deploy and manage cloud infrastructure on Cloudflare (Workers, R2, D1, KV, Pages, Durable Objects, Browser Rendering), Docker containers, and Google Cloud Platform (Compute Engine, GKE, Cloud Run, App Engine, Cloud Storage). Use when deploying serverless functions to the edge, configuring edge computing solutions, managing Docker containers and images, setting up CI/CD pipelines, optimizing cloud infrastructure costs, implementing global caching strategies, working with cloud databases, or building cloud-native applications.',
-        codeSnippet: '> /ck:devops \'Devops for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:devops',
+        descEn: 'Invoke /ak:devops with a concrete task brief',
+        descVi: 'Gọi /ak:devops với brief task cụ thể',
+        explainEn: '/ak:devops starts the Devops flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Deploy and manage cloud infrastructure on Cloudflare (Workers, R2, D1, KV, Pages, Durable Objects, Browser Rendering), Docker containers, and Google Cloud Platform (Compute Engine, GKE, Cloud Run, App Engine, Cloud Storage). Use when deploying serverless functions to the edge, configuring edge computing solutions, managing Docker containers and images, setting up CI/CD pipelines, optimizing cloud infrastructure costs, implementing global caching strategies, working with cloud databases, or building cloud-native applications.',
+        explainVi: '/ak:devops bắt đầu flow Devops. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Deploy and manage cloud infrastructure on Cloudflare (Workers, R2, D1, KV, Pages, Durable Objects, Browser Rendering), Docker containers, and Google Cloud Platform (Compute Engine, GKE, Cloud Run, App Engine, Cloud Storage). Use when deploying serverless functions to the edge, configuring edge computing solutions, managing Docker containers and images, setting up CI/CD pipelines, optimizing cloud infrastructure costs, implementing global caching strategies, working with cloud databases, or building cloud-native applications.',
+        codeSnippet: '> /ak:devops \'Devops for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -4073,8 +4073,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:devops path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:devops đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:devops path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:devops đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -4095,10 +4095,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:find-skills — Find Skills ─────────────────────────────
+  // ─── /ak:find-skills — Find Skills ─────────────────────────────
   {
     id: 'find-skills',
-    command: '/ck:find-skills',
+    command: '/ak:find-skills',
     kit: 'engineer',
     titleEn: 'Find Skills',
     titleVi: 'Find Skills',
@@ -4110,12 +4110,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'fs-input',
         type: 'user-input',
-        name: '/ck:find-skills',
-        descEn: 'Invoke /ck:find-skills with a concrete task brief',
-        descVi: 'Gọi /ck:find-skills với brief task cụ thể',
-        explainEn: '/ck:find-skills starts the Find Skills flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Helps users discover and install agent skills when they ask questions like \'how do I do X\', \'find a skill for X\', \'is there a skill that can...\', or express interest in extending capabilities. This skill should be used when the user is looking for functionality that might exist as an installable skill.',
-        explainVi: '/ck:find-skills bắt đầu flow Find Skills. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Helps users discover and install agent skills when they ask questions like \'how do I do X\', \'find a skill for X\', \'is there a skill that can...\', or express interest in extending capabilities. This skill should be used when the user is looking for functionality that might exist as an installable skill.',
-        codeSnippet: '> /ck:find-skills \'Find Skills for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:find-skills',
+        descEn: 'Invoke /ak:find-skills with a concrete task brief',
+        descVi: 'Gọi /ak:find-skills với brief task cụ thể',
+        explainEn: '/ak:find-skills starts the Find Skills flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Helps users discover and install agent skills when they ask questions like \'how do I do X\', \'find a skill for X\', \'is there a skill that can...\', or express interest in extending capabilities. This skill should be used when the user is looking for functionality that might exist as an installable skill.',
+        explainVi: '/ak:find-skills bắt đầu flow Find Skills. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Helps users discover and install agent skills when they ask questions like \'how do I do X\', \'find a skill for X\', \'is there a skill that can...\', or express interest in extending capabilities. This skill should be used when the user is looking for functionality that might exist as an installable skill.',
+        codeSnippet: '> /ak:find-skills \'Find Skills for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -4150,8 +4150,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:find-skills path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:find-skills đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:find-skills path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:find-skills đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -4172,10 +4172,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:frontend-development — Frontend Development ─────────────────────────────
+  // ─── /ak:frontend-development — Frontend Development ─────────────────────────────
   {
     id: 'frontend-development',
-    command: '/ck:frontend-development',
+    command: '/ak:frontend-development',
     kit: 'engineer',
     titleEn: 'Frontend Development',
     titleVi: 'Frontend Development',
@@ -4187,12 +4187,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'fd-input',
         type: 'user-input',
-        name: '/ck:frontend-development',
-        descEn: 'Invoke /ck:frontend-development with a concrete task brief',
-        descVi: 'Gọi /ck:frontend-development với brief task cụ thể',
-        explainEn: '/ck:frontend-development starts the Frontend Development flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Frontend development guidelines for React/TypeScript applications. Modern patterns including Suspense, lazy loading, useSuspenseQuery, file organization with features directory, MUI v7 styling, TanStack Router, performance optimization, and TypeScript best practices. Use when creating components, pages, features, fetching data, styling, routing, or working with frontend code.',
-        explainVi: '/ck:frontend-development bắt đầu flow Frontend Development. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Frontend development guidelines for React/TypeScript applications. Modern patterns including Suspense, lazy loading, useSuspenseQuery, file organization with features directory, MUI v7 styling, TanStack Router, performance optimization, and TypeScript best practices. Use when creating components, pages, features, fetching data, styling, routing, or working with frontend code.',
-        codeSnippet: '> /ck:frontend-development \'Frontend Development for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:frontend-development',
+        descEn: 'Invoke /ak:frontend-development with a concrete task brief',
+        descVi: 'Gọi /ak:frontend-development với brief task cụ thể',
+        explainEn: '/ak:frontend-development starts the Frontend Development flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Frontend development guidelines for React/TypeScript applications. Modern patterns including Suspense, lazy loading, useSuspenseQuery, file organization with features directory, MUI v7 styling, TanStack Router, performance optimization, and TypeScript best practices. Use when creating components, pages, features, fetching data, styling, routing, or working with frontend code.',
+        explainVi: '/ak:frontend-development bắt đầu flow Frontend Development. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Frontend development guidelines for React/TypeScript applications. Modern patterns including Suspense, lazy loading, useSuspenseQuery, file organization with features directory, MUI v7 styling, TanStack Router, performance optimization, and TypeScript best practices. Use when creating components, pages, features, fetching data, styling, routing, or working with frontend code.',
+        codeSnippet: '> /ak:frontend-development \'Frontend Development for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -4227,8 +4227,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:frontend-development path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:frontend-development đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:frontend-development path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:frontend-development đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -4249,10 +4249,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:gkg — GKG ─────────────────────────────
+  // ─── /ak:gkg — GKG ─────────────────────────────
   {
     id: 'gkg',
-    command: '/ck:gkg',
+    command: '/ak:gkg',
     kit: 'engineer',
     titleEn: 'GKG',
     titleVi: 'GKG',
@@ -4264,12 +4264,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'g-input',
         type: 'user-input',
-        name: '/ck:gkg',
-        descEn: 'Invoke /ck:gkg with a concrete task brief',
-        descVi: 'Gọi /ck:gkg với brief task cụ thể',
-        explainEn: '/ck:gkg starts the GKG flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Semantic code analysis with GitLab Knowledge Graph. Use for go-to-definition, find-usages, impact analysis, architecture visualization. Supports Ruby, Java, Kotlin, Python, TypeScript/JavaScript.',
-        explainVi: '/ck:gkg bắt đầu flow GKG. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Semantic code analysis with GitLab Knowledge Graph. Use for go-to-definition, find-usages, impact analysis, architecture visualization. Supports Ruby, Java, Kotlin, Python, TypeScript/JavaScript.',
-        codeSnippet: '> /ck:gkg \'GKG for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:gkg',
+        descEn: 'Invoke /ak:gkg with a concrete task brief',
+        descVi: 'Gọi /ak:gkg với brief task cụ thể',
+        explainEn: '/ak:gkg starts the GKG flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Semantic code analysis with GitLab Knowledge Graph. Use for go-to-definition, find-usages, impact analysis, architecture visualization. Supports Ruby, Java, Kotlin, Python, TypeScript/JavaScript.',
+        explainVi: '/ak:gkg bắt đầu flow GKG. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Semantic code analysis with GitLab Knowledge Graph. Use for go-to-definition, find-usages, impact analysis, architecture visualization. Supports Ruby, Java, Kotlin, Python, TypeScript/JavaScript.',
+        codeSnippet: '> /ak:gkg \'GKG for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -4304,8 +4304,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:gkg path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:gkg đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:gkg path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:gkg đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -4326,10 +4326,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:google-adk-python — Google ADK Python ─────────────────────────────
+  // ─── /ak:google-adk-python — Google ADK Python ─────────────────────────────
   {
     id: 'google-adk-python',
-    command: '/ck:google-adk-python',
+    command: '/ak:google-adk-python',
     kit: 'engineer',
     titleEn: 'Google ADK Python',
     titleVi: 'Google ADK Python',
@@ -4341,12 +4341,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'gap-input',
         type: 'user-input',
-        name: '/ck:google-adk-python',
-        descEn: 'Invoke /ck:google-adk-python with a concrete task brief',
-        descVi: 'Gọi /ck:google-adk-python với brief task cụ thể',
-        explainEn: '/ck:google-adk-python starts the Google ADK Python flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Build AI agents with Google ADK Python. Multi-agent systems, tool integration, workflow orchestration.',
-        explainVi: '/ck:google-adk-python bắt đầu flow Google ADK Python. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Build AI agents with Google ADK Python. Multi-agent systems, tool integration, workflow orchestration.',
-        codeSnippet: '> /ck:google-adk-python \'Google ADK Python for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:google-adk-python',
+        descEn: 'Invoke /ak:google-adk-python with a concrete task brief',
+        descVi: 'Gọi /ak:google-adk-python với brief task cụ thể',
+        explainEn: '/ak:google-adk-python starts the Google ADK Python flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Build AI agents with Google ADK Python. Multi-agent systems, tool integration, workflow orchestration.',
+        explainVi: '/ak:google-adk-python bắt đầu flow Google ADK Python. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Build AI agents with Google ADK Python. Multi-agent systems, tool integration, workflow orchestration.',
+        codeSnippet: '> /ak:google-adk-python \'Google ADK Python for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -4381,8 +4381,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:google-adk-python path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:google-adk-python đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:google-adk-python path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:google-adk-python đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -4403,10 +4403,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:journal — Journal ─────────────────────────────
+  // ─── /ak:journal — Journal ─────────────────────────────
   {
     id: 'journal',
-    command: '/ck:journal',
+    command: '/ak:journal',
     kit: 'engineer',
     titleEn: 'Journal',
     titleVi: 'Journal',
@@ -4418,12 +4418,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'j-input',
         type: 'user-input',
-        name: '/ck:journal',
-        descEn: 'Invoke /ck:journal with a concrete task brief',
-        descVi: 'Gọi /ck:journal với brief task cụ thể',
-        explainEn: '/ck:journal starts the Journal flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: 💡 Write some journal entries.',
-        explainVi: '/ck:journal bắt đầu flow Journal. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: 💡 Write some journal entries.',
-        codeSnippet: '> /ck:journal \'Journal for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:journal',
+        descEn: 'Invoke /ak:journal with a concrete task brief',
+        descVi: 'Gọi /ak:journal với brief task cụ thể',
+        explainEn: '/ak:journal starts the Journal flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: 💡 Write some journal entries.',
+        explainVi: '/ak:journal bắt đầu flow Journal. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: 💡 Write some journal entries.',
+        codeSnippet: '> /ak:journal \'Journal for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -4458,8 +4458,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:journal path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:journal đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:journal path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:journal đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -4480,10 +4480,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:loop — Loop ─────────────────────────────
+  // ─── /ak:loop — Loop ─────────────────────────────
   {
     id: 'loop',
-    command: '/ck:loop',
+    command: '/ak:loop',
     kit: 'engineer',
     titleEn: 'Loop',
     titleVi: 'Loop',
@@ -4495,12 +4495,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'l-input',
         type: 'user-input',
-        name: '/ck:loop',
-        descEn: 'Invoke /ck:loop with a concrete task brief',
-        descVi: 'Gọi /ck:loop với brief task cụ thể',
-        explainEn: '/ck:loop starts the Loop flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Autonomous iterative optimization loop — run N iterations against a mechanical metric, learn from git history, auto-keep/discard changes. Use for improving measurable metrics (coverage, performance, bundle size, etc.) through repeated experimentation.',
-        explainVi: '/ck:loop bắt đầu flow Loop. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Autonomous iterative optimization loop — run N iterations against a mechanical metric, learn from git history, auto-keep/discard changes. Use for improving measurable metrics (coverage, performance, bundle size, etc.) through repeated experimentation.',
-        codeSnippet: '> /ck:loop \'Loop for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:loop',
+        descEn: 'Invoke /ak:loop with a concrete task brief',
+        descVi: 'Gọi /ak:loop với brief task cụ thể',
+        explainEn: '/ak:loop starts the Loop flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Autonomous iterative optimization loop — run N iterations against a mechanical metric, learn from git history, auto-keep/discard changes. Use for improving measurable metrics (coverage, performance, bundle size, etc.) through repeated experimentation.',
+        explainVi: '/ak:loop bắt đầu flow Loop. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Autonomous iterative optimization loop — run N iterations against a mechanical metric, learn from git history, auto-keep/discard changes. Use for improving measurable metrics (coverage, performance, bundle size, etc.) through repeated experimentation.',
+        codeSnippet: '> /ak:loop \'Loop for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -4535,8 +4535,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:loop path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:loop đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:loop path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:loop đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -4557,10 +4557,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:markdown-novel-viewer — Markdown Novel Viewer ─────────────────────────────
+  // ─── /ak:markdown-novel-viewer — Markdown Novel Viewer ─────────────────────────────
   {
     id: 'markdown-novel-viewer',
-    command: '/ck:markdown-novel-viewer',
+    command: '/ak:markdown-novel-viewer',
     kit: 'engineer',
     titleEn: 'Markdown Novel Viewer',
     titleVi: 'Markdown Novel Viewer',
@@ -4572,12 +4572,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'mnv-input',
         type: 'user-input',
-        name: '/ck:markdown-novel-viewer',
-        descEn: 'Invoke /ck:markdown-novel-viewer with a concrete task brief',
-        descVi: 'Gọi /ck:markdown-novel-viewer với brief task cụ thể',
-        explainEn: '/ck:markdown-novel-viewer starts the Markdown Novel Viewer flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: View markdown files with calm, book-like reading experience. Background HTTP server for rendering markdown.',
-        explainVi: '/ck:markdown-novel-viewer bắt đầu flow Markdown Novel Viewer. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: View markdown files with calm, book-like reading experience. Background HTTP server for rendering markdown.',
-        codeSnippet: '> /ck:markdown-novel-viewer \'Markdown Novel Viewer for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:markdown-novel-viewer',
+        descEn: 'Invoke /ak:markdown-novel-viewer with a concrete task brief',
+        descVi: 'Gọi /ak:markdown-novel-viewer với brief task cụ thể',
+        explainEn: '/ak:markdown-novel-viewer starts the Markdown Novel Viewer flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: View markdown files with calm, book-like reading experience. Background HTTP server for rendering markdown.',
+        explainVi: '/ak:markdown-novel-viewer bắt đầu flow Markdown Novel Viewer. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: View markdown files with calm, book-like reading experience. Background HTTP server for rendering markdown.',
+        codeSnippet: '> /ak:markdown-novel-viewer \'Markdown Novel Viewer for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -4612,8 +4612,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:markdown-novel-viewer path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:markdown-novel-viewer đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:markdown-novel-viewer path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:markdown-novel-viewer đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -4634,10 +4634,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:mcp-builder — MCP Builder ─────────────────────────────
+  // ─── /ak:mcp-builder — MCP Builder ─────────────────────────────
   {
     id: 'mcp-builder',
-    command: '/ck:mcp-builder',
+    command: '/ak:mcp-builder',
     kit: 'engineer',
     titleEn: 'MCP Builder',
     titleVi: 'MCP Builder',
@@ -4649,12 +4649,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'mb-input',
         type: 'user-input',
-        name: '/ck:mcp-builder',
-        descEn: 'Invoke /ck:mcp-builder with a concrete task brief',
-        descVi: 'Gọi /ck:mcp-builder với brief task cụ thể',
-        explainEn: '/ck:mcp-builder starts the MCP Builder flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK).',
-        explainVi: '/ck:mcp-builder bắt đầu flow MCP Builder. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK).',
-        codeSnippet: '> /ck:mcp-builder \'MCP Builder for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:mcp-builder',
+        descEn: 'Invoke /ak:mcp-builder with a concrete task brief',
+        descVi: 'Gọi /ak:mcp-builder với brief task cụ thể',
+        explainEn: '/ak:mcp-builder starts the MCP Builder flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK).',
+        explainVi: '/ak:mcp-builder bắt đầu flow MCP Builder. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK).',
+        codeSnippet: '> /ak:mcp-builder \'MCP Builder for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -4689,8 +4689,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:mcp-builder path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:mcp-builder đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:mcp-builder path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:mcp-builder đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -4711,10 +4711,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:media-processing — Media Processing ─────────────────────────────
+  // ─── /ak:media-processing — Media Processing ─────────────────────────────
   {
     id: 'media-processing',
-    command: '/ck:media-processing',
+    command: '/ak:media-processing',
     kit: 'engineer',
     titleEn: 'Media Processing',
     titleVi: 'Media Processing',
@@ -4726,12 +4726,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'mp-input',
         type: 'user-input',
-        name: '/ck:media-processing',
-        descEn: 'Invoke /ck:media-processing with a concrete task brief',
-        descVi: 'Gọi /ck:media-processing với brief task cụ thể',
-        explainEn: '/ck:media-processing starts the Media Processing flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Process multimedia files with FFmpeg (video/audio encoding, conversion, streaming, filtering, hardware acceleration), ImageMagick (image manipulation, format conversion, batch processing, effects, composition), and RMBG (AI-powered background removal). Use when converting media formats, encoding videos with specific codecs (H.264, H.265, VP9), resizing/cropping images, removing backgrounds from images, extracting audio from video, applying filters and effects, optimizing file sizes, creating streaming manifests (HLS/DASH), generating thumbnails, batch processing images, creating composite images, or implementing media processing pipelines. Supports 100+ formats, hardware acceleration (NVENC, QSV), and complex filtergraphs.',
-        explainVi: '/ck:media-processing bắt đầu flow Media Processing. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Process multimedia files with FFmpeg (video/audio encoding, conversion, streaming, filtering, hardware acceleration), ImageMagick (image manipulation, format conversion, batch processing, effects, composition), and RMBG (AI-powered background removal). Use when converting media formats, encoding videos with specific codecs (H.264, H.265, VP9), resizing/cropping images, removing backgrounds from images, extracting audio from video, applying filters and effects, optimizing file sizes, creating streaming manifests (HLS/DASH), generating thumbnails, batch processing images, creating composite images, or implementing media processing pipelines. Supports 100+ formats, hardware acceleration (NVENC, QSV), and complex filtergraphs.',
-        codeSnippet: '> /ck:media-processing \'Media Processing for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:media-processing',
+        descEn: 'Invoke /ak:media-processing with a concrete task brief',
+        descVi: 'Gọi /ak:media-processing với brief task cụ thể',
+        explainEn: '/ak:media-processing starts the Media Processing flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Process multimedia files with FFmpeg (video/audio encoding, conversion, streaming, filtering, hardware acceleration), ImageMagick (image manipulation, format conversion, batch processing, effects, composition), and RMBG (AI-powered background removal). Use when converting media formats, encoding videos with specific codecs (H.264, H.265, VP9), resizing/cropping images, removing backgrounds from images, extracting audio from video, applying filters and effects, optimizing file sizes, creating streaming manifests (HLS/DASH), generating thumbnails, batch processing images, creating composite images, or implementing media processing pipelines. Supports 100+ formats, hardware acceleration (NVENC, QSV), and complex filtergraphs.',
+        explainVi: '/ak:media-processing bắt đầu flow Media Processing. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Process multimedia files with FFmpeg (video/audio encoding, conversion, streaming, filtering, hardware acceleration), ImageMagick (image manipulation, format conversion, batch processing, effects, composition), and RMBG (AI-powered background removal). Use when converting media formats, encoding videos with specific codecs (H.264, H.265, VP9), resizing/cropping images, removing backgrounds from images, extracting audio from video, applying filters and effects, optimizing file sizes, creating streaming manifests (HLS/DASH), generating thumbnails, batch processing images, creating composite images, or implementing media processing pipelines. Supports 100+ formats, hardware acceleration (NVENC, QSV), and complex filtergraphs.',
+        codeSnippet: '> /ak:media-processing \'Media Processing for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -4766,8 +4766,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:media-processing path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:media-processing đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:media-processing path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:media-processing đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -4788,10 +4788,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:mermaidjs-v11 — Mermaidjs V11 ─────────────────────────────
+  // ─── /ak:mermaidjs-v11 — Mermaidjs V11 ─────────────────────────────
   {
     id: 'mermaidjs-v11',
-    command: '/ck:mermaidjs-v11',
+    command: '/ak:mermaidjs-v11',
     kit: 'engineer',
     titleEn: 'Mermaidjs V11',
     titleVi: 'Mermaidjs V11',
@@ -4803,12 +4803,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'mv-input',
         type: 'user-input',
-        name: '/ck:mermaidjs-v11',
-        descEn: 'Invoke /ck:mermaidjs-v11 with a concrete task brief',
-        descVi: 'Gọi /ck:mermaidjs-v11 với brief task cụ thể',
-        explainEn: '/ck:mermaidjs-v11 starts the Mermaidjs V11 flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Create diagrams and visualizations using Mermaid.js v11 syntax. Use when generating flowcharts, sequence diagrams, class diagrams, state diagrams, ER diagrams, Gantt charts, user journeys, timelines, architecture diagrams, or any of 24+ diagram types. Supports JavaScript API integration, CLI rendering to SVG/PNG/PDF, theming, configuration, and accessibility features. Essential for documentation, technical diagrams, project planning, system architecture, and visual communication.',
-        explainVi: '/ck:mermaidjs-v11 bắt đầu flow Mermaidjs V11. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Create diagrams and visualizations using Mermaid.js v11 syntax. Use when generating flowcharts, sequence diagrams, class diagrams, state diagrams, ER diagrams, Gantt charts, user journeys, timelines, architecture diagrams, or any of 24+ diagram types. Supports JavaScript API integration, CLI rendering to SVG/PNG/PDF, theming, configuration, and accessibility features. Essential for documentation, technical diagrams, project planning, system architecture, and visual communication.',
-        codeSnippet: '> /ck:mermaidjs-v11 \'Mermaidjs V11 for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:mermaidjs-v11',
+        descEn: 'Invoke /ak:mermaidjs-v11 with a concrete task brief',
+        descVi: 'Gọi /ak:mermaidjs-v11 với brief task cụ thể',
+        explainEn: '/ak:mermaidjs-v11 starts the Mermaidjs V11 flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Create diagrams and visualizations using Mermaid.js v11 syntax. Use when generating flowcharts, sequence diagrams, class diagrams, state diagrams, ER diagrams, Gantt charts, user journeys, timelines, architecture diagrams, or any of 24+ diagram types. Supports JavaScript API integration, CLI rendering to SVG/PNG/PDF, theming, configuration, and accessibility features. Essential for documentation, technical diagrams, project planning, system architecture, and visual communication.',
+        explainVi: '/ak:mermaidjs-v11 bắt đầu flow Mermaidjs V11. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Create diagrams and visualizations using Mermaid.js v11 syntax. Use when generating flowcharts, sequence diagrams, class diagrams, state diagrams, ER diagrams, Gantt charts, user journeys, timelines, architecture diagrams, or any of 24+ diagram types. Supports JavaScript API integration, CLI rendering to SVG/PNG/PDF, theming, configuration, and accessibility features. Essential for documentation, technical diagrams, project planning, system architecture, and visual communication.',
+        codeSnippet: '> /ak:mermaidjs-v11 \'Mermaidjs V11 for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -4843,8 +4843,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:mermaidjs-v11 path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:mermaidjs-v11 đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:mermaidjs-v11 path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:mermaidjs-v11 đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -4865,10 +4865,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:mintlify — Mintlify ─────────────────────────────
+  // ─── /ak:mintlify — Mintlify ─────────────────────────────
   {
     id: 'mintlify',
-    command: '/ck:mintlify',
+    command: '/ak:mintlify',
     kit: 'engineer',
     titleEn: 'Mintlify',
     titleVi: 'Mintlify',
@@ -4880,12 +4880,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'm-input',
         type: 'user-input',
-        name: '/ck:mintlify',
-        descEn: 'Invoke /ck:mintlify with a concrete task brief',
-        descVi: 'Gọi /ck:mintlify với brief task cụ thể',
-        explainEn: '/ck:mintlify starts the Mintlify flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Build and maintain Mintlify documentation sites. Covers docs.json, MDX components, navigation, page frontmatter, theming, OpenAPI/AsyncAPI, AI docs assets such as llms.txt and skill.md, deployment targets, and local validation CLI commands.',
-        explainVi: '/ck:mintlify bắt đầu flow Mintlify. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Build and maintain Mintlify documentation sites. Covers docs.json, MDX components, navigation, page frontmatter, theming, OpenAPI/AsyncAPI, AI docs assets such as llms.txt and skill.md, deployment targets, and local validation CLI commands.',
-        codeSnippet: '> /ck:mintlify \'Mintlify for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:mintlify',
+        descEn: 'Invoke /ak:mintlify with a concrete task brief',
+        descVi: 'Gọi /ak:mintlify với brief task cụ thể',
+        explainEn: '/ak:mintlify starts the Mintlify flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Build and maintain Mintlify documentation sites. Covers docs.json, MDX components, navigation, page frontmatter, theming, OpenAPI/AsyncAPI, AI docs assets such as llms.txt and skill.md, deployment targets, and local validation CLI commands.',
+        explainVi: '/ak:mintlify bắt đầu flow Mintlify. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Build and maintain Mintlify documentation sites. Covers docs.json, MDX components, navigation, page frontmatter, theming, OpenAPI/AsyncAPI, AI docs assets such as llms.txt and skill.md, deployment targets, and local validation CLI commands.',
+        codeSnippet: '> /ak:mintlify \'Mintlify for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -4920,8 +4920,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:mintlify path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:mintlify đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:mintlify path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:mintlify đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -4942,10 +4942,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:mobile-development — Mobile Development ─────────────────────────────
+  // ─── /ak:mobile-development — Mobile Development ─────────────────────────────
   {
     id: 'mobile-development',
-    command: '/ck:mobile-development',
+    command: '/ak:mobile-development',
     kit: 'engineer',
     titleEn: 'Mobile Development',
     titleVi: 'Mobile Development',
@@ -4957,12 +4957,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'md-input',
         type: 'user-input',
-        name: '/ck:mobile-development',
-        descEn: 'Invoke /ck:mobile-development with a concrete task brief',
-        descVi: 'Gọi /ck:mobile-development với brief task cụ thể',
-        explainEn: '/ck:mobile-development starts the Mobile Development flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Build mobile apps with React Native, Flutter, Swift/SwiftUI, Kotlin/Jetpack Compose. Use for iOS/Android, mobile UX, performance optimization, offline-first, app store deployment.',
-        explainVi: '/ck:mobile-development bắt đầu flow Mobile Development. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Build mobile apps with React Native, Flutter, Swift/SwiftUI, Kotlin/Jetpack Compose. Use for iOS/Android, mobile UX, performance optimization, offline-first, app store deployment.',
-        codeSnippet: '> /ck:mobile-development \'Mobile Development for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:mobile-development',
+        descEn: 'Invoke /ak:mobile-development with a concrete task brief',
+        descVi: 'Gọi /ak:mobile-development với brief task cụ thể',
+        explainEn: '/ak:mobile-development starts the Mobile Development flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Build mobile apps with React Native, Flutter, Swift/SwiftUI, Kotlin/Jetpack Compose. Use for iOS/Android, mobile UX, performance optimization, offline-first, app store deployment.',
+        explainVi: '/ak:mobile-development bắt đầu flow Mobile Development. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Build mobile apps with React Native, Flutter, Swift/SwiftUI, Kotlin/Jetpack Compose. Use for iOS/Android, mobile UX, performance optimization, offline-first, app store deployment.',
+        codeSnippet: '> /ak:mobile-development \'Mobile Development for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -4997,8 +4997,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:mobile-development path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:mobile-development đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:mobile-development path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:mobile-development đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -5019,10 +5019,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:payment-integration — Payment Integration ─────────────────────────────
+  // ─── /ak:payment-integration — Payment Integration ─────────────────────────────
   {
     id: 'payment-integration',
-    command: '/ck:payment-integration',
+    command: '/ak:payment-integration',
     kit: 'engineer',
     titleEn: 'Payment Integration',
     titleVi: 'Payment Integration',
@@ -5034,12 +5034,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'pi-input',
         type: 'user-input',
-        name: '/ck:payment-integration',
-        descEn: 'Invoke /ck:payment-integration with a concrete task brief',
-        descVi: 'Gọi /ck:payment-integration với brief task cụ thể',
-        explainEn: '/ck:payment-integration starts the Payment Integration flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Integrate payments with SePay (VietQR), Polar (SaaS subscriptions), Stripe (global payments). Use for checkout, webhooks, QR codes, subscriptions, currency conversion, multi-provider order management, commission systems.',
-        explainVi: '/ck:payment-integration bắt đầu flow Payment Integration. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Integrate payments with SePay (VietQR), Polar (SaaS subscriptions), Stripe (global payments). Use for checkout, webhooks, QR codes, subscriptions, currency conversion, multi-provider order management, commission systems.',
-        codeSnippet: '> /ck:payment-integration \'Payment Integration for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:payment-integration',
+        descEn: 'Invoke /ak:payment-integration with a concrete task brief',
+        descVi: 'Gọi /ak:payment-integration với brief task cụ thể',
+        explainEn: '/ak:payment-integration starts the Payment Integration flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Integrate payments with SePay (VietQR), Polar (SaaS subscriptions), Stripe (global payments). Use for checkout, webhooks, QR codes, subscriptions, currency conversion, multi-provider order management, commission systems.',
+        explainVi: '/ak:payment-integration bắt đầu flow Payment Integration. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Integrate payments with SePay (VietQR), Polar (SaaS subscriptions), Stripe (global payments). Use for checkout, webhooks, QR codes, subscriptions, currency conversion, multi-provider order management, commission systems.',
+        codeSnippet: '> /ak:payment-integration \'Payment Integration for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -5074,8 +5074,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:payment-integration path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:payment-integration đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:payment-integration path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:payment-integration đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -5096,10 +5096,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:problem-solving — Problem Solving ─────────────────────────────
+  // ─── /ak:problem-solving — Problem Solving ─────────────────────────────
   {
     id: 'problem-solving',
-    command: '/ck:problem-solving',
+    command: '/ak:problem-solving',
     kit: 'engineer',
     titleEn: 'Problem Solving',
     titleVi: 'Problem Solving',
@@ -5111,12 +5111,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'ps-input',
         type: 'user-input',
-        name: '/ck:problem-solving',
-        descEn: 'Invoke /ck:problem-solving with a concrete task brief',
-        descVi: 'Gọi /ck:problem-solving với brief task cụ thể',
-        explainEn: '/ck:problem-solving starts the Problem Solving flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Apply systematic problem-solving techniques for complexity spirals (simplification cascades), innovation blocks (collision-zone thinking), recurring patterns (meta-pattern recognition), assumption constraints (inversion exercise), scale uncertainty (scale game), and dispatch when stuck. Techniques derived from Microsoft Amplifier project patterns adapted for immediate application.',
-        explainVi: '/ck:problem-solving bắt đầu flow Problem Solving. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Apply systematic problem-solving techniques for complexity spirals (simplification cascades), innovation blocks (collision-zone thinking), recurring patterns (meta-pattern recognition), assumption constraints (inversion exercise), scale uncertainty (scale game), and dispatch when stuck. Techniques derived from Microsoft Amplifier project patterns adapted for immediate application.',
-        codeSnippet: '> /ck:problem-solving \'Problem Solving for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:problem-solving',
+        descEn: 'Invoke /ak:problem-solving with a concrete task brief',
+        descVi: 'Gọi /ak:problem-solving với brief task cụ thể',
+        explainEn: '/ak:problem-solving starts the Problem Solving flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Apply systematic problem-solving techniques for complexity spirals (simplification cascades), innovation blocks (collision-zone thinking), recurring patterns (meta-pattern recognition), assumption constraints (inversion exercise), scale uncertainty (scale game), and dispatch when stuck. Techniques derived from Microsoft Amplifier project patterns adapted for immediate application.',
+        explainVi: '/ak:problem-solving bắt đầu flow Problem Solving. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Apply systematic problem-solving techniques for complexity spirals (simplification cascades), innovation blocks (collision-zone thinking), recurring patterns (meta-pattern recognition), assumption constraints (inversion exercise), scale uncertainty (scale game), and dispatch when stuck. Techniques derived from Microsoft Amplifier project patterns adapted for immediate application.',
+        codeSnippet: '> /ak:problem-solving \'Problem Solving for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -5151,8 +5151,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:problem-solving path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:problem-solving đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:problem-solving path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:problem-solving đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -5173,10 +5173,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:project-management — Project Management ─────────────────────────────
+  // ─── /ak:project-management — Project Management ─────────────────────────────
   {
     id: 'project-management',
-    command: '/ck:project-management',
+    command: '/ak:project-management',
     kit: 'engineer',
     titleEn: 'Project Management',
     titleVi: 'Project Management',
@@ -5188,12 +5188,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'pm-input',
         type: 'user-input',
-        name: '/ck:project-management',
-        descEn: 'Invoke /ck:project-management with a concrete task brief',
-        descVi: 'Gọi /ck:project-management với brief task cụ thể',
-        explainEn: '/ck:project-management starts the Project Management flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Track progress, update plan statuses, manage Claude Tasks, generate reports, coordinate docs updates. Use for project oversight, status checks, plan completion, task hydration, cross-session continuity.',
-        explainVi: '/ck:project-management bắt đầu flow Project Management. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Track progress, update plan statuses, manage Claude Tasks, generate reports, coordinate docs updates. Use for project oversight, status checks, plan completion, task hydration, cross-session continuity.',
-        codeSnippet: '> /ck:project-management \'Project Management for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:project-management',
+        descEn: 'Invoke /ak:project-management with a concrete task brief',
+        descVi: 'Gọi /ak:project-management với brief task cụ thể',
+        explainEn: '/ak:project-management starts the Project Management flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Track progress, update plan statuses, manage Claude Tasks, generate reports, coordinate docs updates. Use for project oversight, status checks, plan completion, task hydration, cross-session continuity.',
+        explainVi: '/ak:project-management bắt đầu flow Project Management. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Track progress, update plan statuses, manage Claude Tasks, generate reports, coordinate docs updates. Use for project oversight, status checks, plan completion, task hydration, cross-session continuity.',
+        codeSnippet: '> /ak:project-management \'Project Management for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -5228,8 +5228,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:project-management path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:project-management đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:project-management path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:project-management đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -5250,10 +5250,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:react-best-practices — React Best Practices ─────────────────────────────
+  // ─── /ak:react-best-practices — React Best Practices ─────────────────────────────
   {
     id: 'react-best-practices',
-    command: '/ck:react-best-practices',
+    command: '/ak:react-best-practices',
     kit: 'engineer',
     titleEn: 'React Best Practices',
     titleVi: 'React Best Practices',
@@ -5265,12 +5265,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'rbp-input',
         type: 'user-input',
-        name: '/ck:react-best-practices',
-        descEn: 'Invoke /ck:react-best-practices with a concrete task brief',
-        descVi: 'Gọi /ck:react-best-practices với brief task cụ thể',
-        explainEn: '/ck:react-best-practices starts the React Best Practices flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Apply React and Next.js performance optimization patterns from Vercel Engineering. Use for component optimization, rendering performance, bundle analysis.',
-        explainVi: '/ck:react-best-practices bắt đầu flow React Best Practices. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Apply React and Next.js performance optimization patterns from Vercel Engineering. Use for component optimization, rendering performance, bundle analysis.',
-        codeSnippet: '> /ck:react-best-practices \'React Best Practices for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:react-best-practices',
+        descEn: 'Invoke /ak:react-best-practices with a concrete task brief',
+        descVi: 'Gọi /ak:react-best-practices với brief task cụ thể',
+        explainEn: '/ak:react-best-practices starts the React Best Practices flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Apply React and Next.js performance optimization patterns from Vercel Engineering. Use for component optimization, rendering performance, bundle analysis.',
+        explainVi: '/ak:react-best-practices bắt đầu flow React Best Practices. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Apply React and Next.js performance optimization patterns from Vercel Engineering. Use for component optimization, rendering performance, bundle analysis.',
+        codeSnippet: '> /ak:react-best-practices \'React Best Practices for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -5305,8 +5305,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:react-best-practices path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:react-best-practices đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:react-best-practices path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:react-best-practices đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -5327,10 +5327,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:remotion — Remotion ─────────────────────────────
+  // ─── /ak:remotion — Remotion ─────────────────────────────
   {
     id: 'remotion',
-    command: '/ck:remotion',
+    command: '/ak:remotion',
     kit: 'engineer',
     titleEn: 'Remotion',
     titleVi: 'Remotion',
@@ -5342,12 +5342,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'r-input',
         type: 'user-input',
-        name: '/ck:remotion',
-        descEn: 'Invoke /ck:remotion with a concrete task brief',
-        descVi: 'Gọi /ck:remotion với brief task cụ thể',
-        explainEn: '/ck:remotion starts the Remotion flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Best practices for Remotion - Video creation in React',
-        explainVi: '/ck:remotion bắt đầu flow Remotion. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Best practices for Remotion - Video creation in React',
-        codeSnippet: '> /ck:remotion \'Remotion for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:remotion',
+        descEn: 'Invoke /ak:remotion with a concrete task brief',
+        descVi: 'Gọi /ak:remotion với brief task cụ thể',
+        explainEn: '/ak:remotion starts the Remotion flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Best practices for Remotion - Video creation in React',
+        explainVi: '/ak:remotion bắt đầu flow Remotion. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Best practices for Remotion - Video creation in React',
+        codeSnippet: '> /ak:remotion \'Remotion for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -5382,8 +5382,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:remotion path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:remotion đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:remotion path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:remotion đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -5404,10 +5404,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:research — Research ─────────────────────────────
+  // ─── /ak:research — Research ─────────────────────────────
   {
     id: 'research',
-    command: '/ck:research',
+    command: '/ak:research',
     kit: 'engineer',
     titleEn: 'Research',
     titleVi: 'Research',
@@ -5419,12 +5419,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'r-input',
         type: 'user-input',
-        name: '/ck:research',
-        descEn: 'Invoke /ck:research with a concrete task brief',
-        descVi: 'Gọi /ck:research với brief task cụ thể',
-        explainEn: '/ck:research starts the Research flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Research technical solutions, analyze architectures, gather requirements thoroughly. Use for technology evaluation, best practices research, solution design, scalability/security/maintainability analysis.',
-        explainVi: '/ck:research bắt đầu flow Research. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Research technical solutions, analyze architectures, gather requirements thoroughly. Use for technology evaluation, best practices research, solution design, scalability/security/maintainability analysis.',
-        codeSnippet: '> /ck:research \'Research for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:research',
+        descEn: 'Invoke /ak:research with a concrete task brief',
+        descVi: 'Gọi /ak:research với brief task cụ thể',
+        explainEn: '/ak:research starts the Research flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Research technical solutions, analyze architectures, gather requirements thoroughly. Use for technology evaluation, best practices research, solution design, scalability/security/maintainability analysis.',
+        explainVi: '/ak:research bắt đầu flow Research. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Research technical solutions, analyze architectures, gather requirements thoroughly. Use for technology evaluation, best practices research, solution design, scalability/security/maintainability analysis.',
+        codeSnippet: '> /ak:research \'Research for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -5459,8 +5459,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:research path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:research đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:research path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:research đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -5481,10 +5481,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:scout — Scout ─────────────────────────────
+  // ─── /ak:scout — Scout ─────────────────────────────
   {
     id: 'scout',
-    command: '/ck:scout',
+    command: '/ak:scout',
     kit: 'engineer',
     titleEn: 'Scout',
     titleVi: 'Scout',
@@ -5496,12 +5496,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 's-input',
         type: 'user-input',
-        name: '/ck:scout',
-        descEn: 'Invoke /ck:scout with a concrete task brief',
-        descVi: 'Gọi /ck:scout với brief task cụ thể',
-        explainEn: '/ck:scout starts the Scout flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Fast codebase scouting using parallel agents. Use for file discovery, task context gathering, quick searches across directories. Supports internal (Explore) and external (Gemini/OpenCode) agents.',
-        explainVi: '/ck:scout bắt đầu flow Scout. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Fast codebase scouting using parallel agents. Use for file discovery, task context gathering, quick searches across directories. Supports internal (Explore) and external (Gemini/OpenCode) agents.',
-        codeSnippet: '> /ck:scout \'Scout for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:scout',
+        descEn: 'Invoke /ak:scout with a concrete task brief',
+        descVi: 'Gọi /ak:scout với brief task cụ thể',
+        explainEn: '/ak:scout starts the Scout flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Fast codebase scouting using parallel agents. Use for file discovery, task context gathering, quick searches across directories. Supports internal (Explore) and external (Gemini/OpenCode) agents.',
+        explainVi: '/ak:scout bắt đầu flow Scout. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Fast codebase scouting using parallel agents. Use for file discovery, task context gathering, quick searches across directories. Supports internal (Explore) and external (Gemini/OpenCode) agents.',
+        codeSnippet: '> /ak:scout \'Scout for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -5536,8 +5536,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:scout path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:scout đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:scout path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:scout đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -5558,10 +5558,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:sequential-thinking — Sequential Thinking ─────────────────────────────
+  // ─── /ak:sequential-thinking — Sequential Thinking ─────────────────────────────
   {
     id: 'sequential-thinking',
-    command: '/ck:sequential-thinking',
+    command: '/ak:sequential-thinking',
     kit: 'engineer',
     titleEn: 'Sequential Thinking',
     titleVi: 'Sequential Thinking',
@@ -5573,12 +5573,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'st-input',
         type: 'user-input',
-        name: '/ck:sequential-thinking',
-        descEn: 'Invoke /ck:sequential-thinking with a concrete task brief',
-        descVi: 'Gọi /ck:sequential-thinking với brief task cụ thể',
-        explainEn: '/ck:sequential-thinking starts the Sequential Thinking flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Apply structured, reflective problem-solving for complex tasks requiring multi-step analysis, revision capability, and hypothesis verification. Use for complex problem decomposition, adaptive planning, analysis needing course correction, problems with unclear scope, multi-step solutions, and hypothesis-driven work.',
-        explainVi: '/ck:sequential-thinking bắt đầu flow Sequential Thinking. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Apply structured, reflective problem-solving for complex tasks requiring multi-step analysis, revision capability, and hypothesis verification. Use for complex problem decomposition, adaptive planning, analysis needing course correction, problems with unclear scope, multi-step solutions, and hypothesis-driven work.',
-        codeSnippet: '> /ck:sequential-thinking \'Sequential Thinking for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:sequential-thinking',
+        descEn: 'Invoke /ak:sequential-thinking with a concrete task brief',
+        descVi: 'Gọi /ak:sequential-thinking với brief task cụ thể',
+        explainEn: '/ak:sequential-thinking starts the Sequential Thinking flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Apply structured, reflective problem-solving for complex tasks requiring multi-step analysis, revision capability, and hypothesis verification. Use for complex problem decomposition, adaptive planning, analysis needing course correction, problems with unclear scope, multi-step solutions, and hypothesis-driven work.',
+        explainVi: '/ak:sequential-thinking bắt đầu flow Sequential Thinking. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Apply structured, reflective problem-solving for complex tasks requiring multi-step analysis, revision capability, and hypothesis verification. Use for complex problem decomposition, adaptive planning, analysis needing course correction, problems with unclear scope, multi-step solutions, and hypothesis-driven work.',
+        codeSnippet: '> /ak:sequential-thinking \'Sequential Thinking for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -5613,8 +5613,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:sequential-thinking path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:sequential-thinking đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:sequential-thinking path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:sequential-thinking đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -5635,10 +5635,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:shader — Shader ─────────────────────────────
+  // ─── /ak:shader — Shader ─────────────────────────────
   {
     id: 'shader',
-    command: '/ck:shader',
+    command: '/ak:shader',
     kit: 'engineer',
     titleEn: 'Shader',
     titleVi: 'Shader',
@@ -5650,12 +5650,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 's-input',
         type: 'user-input',
-        name: '/ck:shader',
-        descEn: 'Invoke /ck:shader with a concrete task brief',
-        descVi: 'Gọi /ck:shader với brief task cụ thể',
-        explainEn: '/ck:shader starts the Shader flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Write GLSL fragment shaders for procedural graphics. Topics: shapes (SDF), patterns, noise (Perlin/simplex/cellular), fBm, colors (HSB/RGB), matrices, gradients, animations. Use for generative art, textures, visual effects, WebGL, Three.js shaders.',
-        explainVi: '/ck:shader bắt đầu flow Shader. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Write GLSL fragment shaders for procedural graphics. Topics: shapes (SDF), patterns, noise (Perlin/simplex/cellular), fBm, colors (HSB/RGB), matrices, gradients, animations. Use for generative art, textures, visual effects, WebGL, Three.js shaders.',
-        codeSnippet: '> /ck:shader \'Shader for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:shader',
+        descEn: 'Invoke /ak:shader with a concrete task brief',
+        descVi: 'Gọi /ak:shader với brief task cụ thể',
+        explainEn: '/ak:shader starts the Shader flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Write GLSL fragment shaders for procedural graphics. Topics: shapes (SDF), patterns, noise (Perlin/simplex/cellular), fBm, colors (HSB/RGB), matrices, gradients, animations. Use for generative art, textures, visual effects, WebGL, Three.js shaders.',
+        explainVi: '/ak:shader bắt đầu flow Shader. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Write GLSL fragment shaders for procedural graphics. Topics: shapes (SDF), patterns, noise (Perlin/simplex/cellular), fBm, colors (HSB/RGB), matrices, gradients, animations. Use for generative art, textures, visual effects, WebGL, Three.js shaders.',
+        codeSnippet: '> /ak:shader \'Shader for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -5690,8 +5690,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:shader path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:shader đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:shader path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:shader đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -5712,10 +5712,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:shopify — Shopify ─────────────────────────────
+  // ─── /ak:shopify — Shopify ─────────────────────────────
   {
     id: 'shopify',
-    command: '/ck:shopify',
+    command: '/ak:shopify',
     kit: 'engineer',
     titleEn: 'Shopify',
     titleVi: 'Shopify',
@@ -5727,12 +5727,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 's-input',
         type: 'user-input',
-        name: '/ck:shopify',
-        descEn: 'Invoke /ck:shopify with a concrete task brief',
-        descVi: 'Gọi /ck:shopify với brief task cụ thể',
-        explainEn: '/ck:shopify starts the Shopify flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Build Shopify applications, extensions, and themes using GraphQL/REST APIs, Shopify CLI, Polaris UI components, and Liquid templating. Capabilities include app development with OAuth authentication, checkout UI extensions for customizing checkout flow, admin UI extensions for dashboard integration, POS extensions for retail, theme development with Liquid, webhook management, billing API integration, product/order/customer management. Use when building Shopify apps, implementing checkout customizations, creating admin interfaces, developing themes, integrating payment processing, managing store data via APIs, or extending Shopify functionality.',
-        explainVi: '/ck:shopify bắt đầu flow Shopify. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Build Shopify applications, extensions, and themes using GraphQL/REST APIs, Shopify CLI, Polaris UI components, and Liquid templating. Capabilities include app development with OAuth authentication, checkout UI extensions for customizing checkout flow, admin UI extensions for dashboard integration, POS extensions for retail, theme development with Liquid, webhook management, billing API integration, product/order/customer management. Use when building Shopify apps, implementing checkout customizations, creating admin interfaces, developing themes, integrating payment processing, managing store data via APIs, or extending Shopify functionality.',
-        codeSnippet: '> /ck:shopify \'Shopify for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:shopify',
+        descEn: 'Invoke /ak:shopify with a concrete task brief',
+        descVi: 'Gọi /ak:shopify với brief task cụ thể',
+        explainEn: '/ak:shopify starts the Shopify flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Build Shopify applications, extensions, and themes using GraphQL/REST APIs, Shopify CLI, Polaris UI components, and Liquid templating. Capabilities include app development with OAuth authentication, checkout UI extensions for customizing checkout flow, admin UI extensions for dashboard integration, POS extensions for retail, theme development with Liquid, webhook management, billing API integration, product/order/customer management. Use when building Shopify apps, implementing checkout customizations, creating admin interfaces, developing themes, integrating payment processing, managing store data via APIs, or extending Shopify functionality.',
+        explainVi: '/ak:shopify bắt đầu flow Shopify. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Build Shopify applications, extensions, and themes using GraphQL/REST APIs, Shopify CLI, Polaris UI components, and Liquid templating. Capabilities include app development with OAuth authentication, checkout UI extensions for customizing checkout flow, admin UI extensions for dashboard integration, POS extensions for retail, theme development with Liquid, webhook management, billing API integration, product/order/customer management. Use when building Shopify apps, implementing checkout customizations, creating admin interfaces, developing themes, integrating payment processing, managing store data via APIs, or extending Shopify functionality.',
+        codeSnippet: '> /ak:shopify \'Shopify for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -5767,8 +5767,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:shopify path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:shopify đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:shopify path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:shopify đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -5789,10 +5789,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:show-off — Show OFF ─────────────────────────────
+  // ─── /ak:show-off — Show OFF ─────────────────────────────
   {
     id: 'show-off',
-    command: '/ck:show-off',
+    command: '/ak:show-off',
     kit: 'engineer',
     titleEn: 'Show OFF',
     titleVi: 'Show OFF',
@@ -5804,12 +5804,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'so-input',
         type: 'user-input',
-        name: '/ck:show-off',
-        descEn: 'Invoke /ck:show-off with a concrete task brief',
-        descVi: 'Gọi /ck:show-off với brief task cụ thể',
-        explainEn: '/ck:show-off starts the Show OFF flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Create stunning self-contained HTML pages to showcase work. Use for demos, visual presentations, interactive showcases.',
-        explainVi: '/ck:show-off bắt đầu flow Show OFF. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Create stunning self-contained HTML pages to showcase work. Use for demos, visual presentations, interactive showcases.',
-        codeSnippet: '> /ck:show-off \'Show OFF for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:show-off',
+        descEn: 'Invoke /ak:show-off with a concrete task brief',
+        descVi: 'Gọi /ak:show-off với brief task cụ thể',
+        explainEn: '/ak:show-off starts the Show OFF flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Create stunning self-contained HTML pages to showcase work. Use for demos, visual presentations, interactive showcases.',
+        explainVi: '/ak:show-off bắt đầu flow Show OFF. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Create stunning self-contained HTML pages to showcase work. Use for demos, visual presentations, interactive showcases.',
+        codeSnippet: '> /ak:show-off \'Show OFF for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -5844,8 +5844,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:show-off path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:show-off đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:show-off path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:show-off đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -5866,10 +5866,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:skill-creator — Skill Creator ─────────────────────────────
+  // ─── /ak:skill-creator — Skill Creator ─────────────────────────────
   {
     id: 'skill-creator',
-    command: '/ck:skill-creator',
+    command: '/ak:skill-creator',
     kit: 'engineer',
     titleEn: 'Skill Creator',
     titleVi: 'Skill Creator',
@@ -5881,12 +5881,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'sc-input',
         type: 'user-input',
-        name: '/ck:skill-creator',
-        descEn: 'Invoke /ck:skill-creator with a concrete task brief',
-        descVi: 'Gọi /ck:skill-creator với brief task cụ thể',
-        explainEn: "/ck:skill-creator starts the Skill Creator flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Create or update Claude skills optimized for Skillmark benchmarks. Use for new skills, skill scripts, references, benchmark optimization, extending Claude's capabilities.",
-        explainVi: "/ck:skill-creator bắt đầu flow Skill Creator. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Create or update Claude skills optimized for Skillmark benchmarks. Use for new skills, skill scripts, references, benchmark optimization, extending Claude's capabilities.",
-        codeSnippet: '> /ck:skill-creator \'Skill Creator for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:skill-creator',
+        descEn: 'Invoke /ak:skill-creator with a concrete task brief',
+        descVi: 'Gọi /ak:skill-creator với brief task cụ thể',
+        explainEn: "/ak:skill-creator starts the Skill Creator flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Create or update Claude skills optimized for Skillmark benchmarks. Use for new skills, skill scripts, references, benchmark optimization, extending Claude's capabilities.",
+        explainVi: "/ak:skill-creator bắt đầu flow Skill Creator. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Create or update Claude skills optimized for Skillmark benchmarks. Use for new skills, skill scripts, references, benchmark optimization, extending Claude's capabilities.",
+        codeSnippet: '> /ak:skill-creator \'Skill Creator for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -5921,8 +5921,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:skill-creator path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:skill-creator đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:skill-creator path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:skill-creator đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -5943,10 +5943,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:stitch — Stitch ─────────────────────────────
+  // ─── /ak:stitch — Stitch ─────────────────────────────
   {
     id: 'stitch',
-    command: '/ck:stitch',
+    command: '/ak:stitch',
     kit: 'engineer',
     titleEn: 'Stitch',
     titleVi: 'Stitch',
@@ -5958,12 +5958,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 's-input',
         type: 'user-input',
-        name: '/ck:stitch',
-        descEn: 'Invoke /ck:stitch with a concrete task brief',
-        descVi: 'Gọi /ck:stitch với brief task cụ thể',
-        explainEn: '/ck:stitch starts the Stitch flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: AI design generation with Google Stitch. Generate UI designs from text prompts, export Tailwind/HTML/DESIGN.md, orchestrate design-to-code pipeline. Use for rapid prototyping, UI generation, design exploration.',
-        explainVi: '/ck:stitch bắt đầu flow Stitch. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: AI design generation with Google Stitch. Generate UI designs from text prompts, export Tailwind/HTML/DESIGN.md, orchestrate design-to-code pipeline. Use for rapid prototyping, UI generation, design exploration.',
-        codeSnippet: '> /ck:stitch \'Stitch for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:stitch',
+        descEn: 'Invoke /ak:stitch with a concrete task brief',
+        descVi: 'Gọi /ak:stitch với brief task cụ thể',
+        explainEn: '/ak:stitch starts the Stitch flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: AI design generation with Google Stitch. Generate UI designs from text prompts, export Tailwind/HTML/DESIGN.md, orchestrate design-to-code pipeline. Use for rapid prototyping, UI generation, design exploration.',
+        explainVi: '/ak:stitch bắt đầu flow Stitch. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: AI design generation with Google Stitch. Generate UI designs from text prompts, export Tailwind/HTML/DESIGN.md, orchestrate design-to-code pipeline. Use for rapid prototyping, UI generation, design exploration.',
+        codeSnippet: '> /ak:stitch \'Stitch for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -5998,8 +5998,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:stitch path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:stitch đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:stitch path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:stitch đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -6020,10 +6020,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:tanstack — Tanstack ─────────────────────────────
+  // ─── /ak:tanstack — Tanstack ─────────────────────────────
   {
     id: 'tanstack',
-    command: '/ck:tanstack',
+    command: '/ak:tanstack',
     kit: 'engineer',
     titleEn: 'Tanstack',
     titleVi: 'Tanstack',
@@ -6035,12 +6035,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 't-input',
         type: 'user-input',
-        name: '/ck:tanstack',
-        descEn: 'Invoke /ck:tanstack with a concrete task brief',
-        descVi: 'Gọi /ck:tanstack với brief task cụ thể',
-        explainEn: '/ck:tanstack starts the Tanstack flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Build with TanStack Start (full-stack React framework), TanStack Form (headless form management), and TanStack AI (AI streaming/chat). Use when creating TanStack projects, routes, server functions, forms, validation, or AI chat features.',
-        explainVi: '/ck:tanstack bắt đầu flow Tanstack. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Build with TanStack Start (full-stack React framework), TanStack Form (headless form management), and TanStack AI (AI streaming/chat). Use when creating TanStack projects, routes, server functions, forms, validation, or AI chat features.',
-        codeSnippet: '> /ck:tanstack \'Tanstack for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:tanstack',
+        descEn: 'Invoke /ak:tanstack with a concrete task brief',
+        descVi: 'Gọi /ak:tanstack với brief task cụ thể',
+        explainEn: '/ak:tanstack starts the Tanstack flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Build with TanStack Start (full-stack React framework), TanStack Form (headless form management), and TanStack AI (AI streaming/chat). Use when creating TanStack projects, routes, server functions, forms, validation, or AI chat features.',
+        explainVi: '/ak:tanstack bắt đầu flow Tanstack. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Build with TanStack Start (full-stack React framework), TanStack Form (headless form management), and TanStack AI (AI streaming/chat). Use when creating TanStack projects, routes, server functions, forms, validation, or AI chat features.',
+        codeSnippet: '> /ak:tanstack \'Tanstack for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -6075,8 +6075,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:tanstack path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:tanstack đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:tanstack path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:tanstack đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -6097,10 +6097,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:threejs — Threejs ─────────────────────────────
+  // ─── /ak:threejs — Threejs ─────────────────────────────
   {
     id: 'threejs',
-    command: '/ck:threejs',
+    command: '/ak:threejs',
     kit: 'engineer',
     titleEn: 'Threejs',
     titleVi: 'Threejs',
@@ -6112,12 +6112,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 't-input',
         type: 'user-input',
-        name: '/ck:threejs',
-        descEn: 'Invoke /ck:threejs with a concrete task brief',
-        descVi: 'Gọi /ck:threejs với brief task cụ thể',
-        explainEn: '/ck:threejs starts the Threejs flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Build 3D web apps with Three.js (WebGL/WebGPU). 556 searchable examples, 60 API classes, 20 use cases. Actions: create 3D scene, load model, add animation, implement physics, build VR/XR. Topics: GLTF loader, PBR materials, particle effects, shadows, post-processing, compute shaders, TSL. Integrations: WebGPU, physics engines, spatial audio.',
-        explainVi: '/ck:threejs bắt đầu flow Threejs. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Build 3D web apps with Three.js (WebGL/WebGPU). 556 searchable examples, 60 API classes, 20 use cases. Actions: create 3D scene, load model, add animation, implement physics, build VR/XR. Topics: GLTF loader, PBR materials, particle effects, shadows, post-processing, compute shaders, TSL. Integrations: WebGPU, physics engines, spatial audio.',
-        codeSnippet: '> /ck:threejs \'Threejs for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:threejs',
+        descEn: 'Invoke /ak:threejs with a concrete task brief',
+        descVi: 'Gọi /ak:threejs với brief task cụ thể',
+        explainEn: '/ak:threejs starts the Threejs flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Build 3D web apps with Three.js (WebGL/WebGPU). 556 searchable examples, 60 API classes, 20 use cases. Actions: create 3D scene, load model, add animation, implement physics, build VR/XR. Topics: GLTF loader, PBR materials, particle effects, shadows, post-processing, compute shaders, TSL. Integrations: WebGPU, physics engines, spatial audio.',
+        explainVi: '/ak:threejs bắt đầu flow Threejs. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Build 3D web apps with Three.js (WebGL/WebGPU). 556 searchable examples, 60 API classes, 20 use cases. Actions: create 3D scene, load model, add animation, implement physics, build VR/XR. Topics: GLTF loader, PBR materials, particle effects, shadows, post-processing, compute shaders, TSL. Integrations: WebGPU, physics engines, spatial audio.',
+        codeSnippet: '> /ak:threejs \'Threejs for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -6152,8 +6152,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:threejs path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:threejs đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:threejs path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:threejs đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -6174,10 +6174,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:ui-styling — UI Styling ─────────────────────────────
+  // ─── /ak:ui-styling — UI Styling ─────────────────────────────
   {
     id: 'ui-styling',
-    command: '/ck:ui-styling',
+    command: '/ak:ui-styling',
     kit: 'engineer',
     titleEn: 'UI Styling',
     titleVi: 'UI Styling',
@@ -6189,12 +6189,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'us-input',
         type: 'user-input',
-        name: '/ck:ui-styling',
-        descEn: 'Invoke /ck:ui-styling with a concrete task brief',
-        descVi: 'Gọi /ck:ui-styling với brief task cụ thể',
-        explainEn: '/ck:ui-styling starts the UI Styling flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Create beautiful, accessible user interfaces with shadcn/ui components (built on Radix UI + Tailwind), Tailwind CSS utility-first styling, and canvas-based visual designs. Use when building user interfaces, implementing design systems, creating responsive layouts, adding accessible components (dialogs, dropdowns, forms, tables), customizing themes and colors, implementing dark mode, generating visual designs and posters, or establishing consistent styling patterns across applications.',
-        explainVi: '/ck:ui-styling bắt đầu flow UI Styling. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Create beautiful, accessible user interfaces with shadcn/ui components (built on Radix UI + Tailwind), Tailwind CSS utility-first styling, and canvas-based visual designs. Use when building user interfaces, implementing design systems, creating responsive layouts, adding accessible components (dialogs, dropdowns, forms, tables), customizing themes and colors, implementing dark mode, generating visual designs and posters, or establishing consistent styling patterns across applications.',
-        codeSnippet: '> /ck:ui-styling \'UI Styling for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:ui-styling',
+        descEn: 'Invoke /ak:ui-styling with a concrete task brief',
+        descVi: 'Gọi /ak:ui-styling với brief task cụ thể',
+        explainEn: '/ak:ui-styling starts the UI Styling flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Create beautiful, accessible user interfaces with shadcn/ui components (built on Radix UI + Tailwind), Tailwind CSS utility-first styling, and canvas-based visual designs. Use when building user interfaces, implementing design systems, creating responsive layouts, adding accessible components (dialogs, dropdowns, forms, tables), customizing themes and colors, implementing dark mode, generating visual designs and posters, or establishing consistent styling patterns across applications.',
+        explainVi: '/ak:ui-styling bắt đầu flow UI Styling. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Create beautiful, accessible user interfaces with shadcn/ui components (built on Radix UI + Tailwind), Tailwind CSS utility-first styling, and canvas-based visual designs. Use when building user interfaces, implementing design systems, creating responsive layouts, adding accessible components (dialogs, dropdowns, forms, tables), customizing themes and colors, implementing dark mode, generating visual designs and posters, or establishing consistent styling patterns across applications.',
+        codeSnippet: '> /ak:ui-styling \'UI Styling for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -6229,8 +6229,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:ui-styling path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:ui-styling đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:ui-styling path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:ui-styling đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -6251,10 +6251,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:ui-ux-pro-max — UI UX PRO MAX ─────────────────────────────
+  // ─── /ak:ui-ux-pro-max — UI UX PRO MAX ─────────────────────────────
   {
     id: 'ui-ux-pro-max',
-    command: '/ck:ui-ux-pro-max',
+    command: '/ak:ui-ux-pro-max',
     kit: 'engineer',
     titleEn: 'UI UX PRO MAX',
     titleVi: 'UI UX PRO MAX',
@@ -6266,12 +6266,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'uup-input',
         type: 'user-input',
-        name: '/ck:ui-ux-pro-max',
-        descEn: 'Invoke /ck:ui-ux-pro-max with a concrete task brief',
-        descVi: 'Gọi /ck:ui-ux-pro-max với brief task cụ thể',
-        explainEn: '/ck:ui-ux-pro-max starts the UI UX PRO MAX flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: UI/UX design intelligence for web and mobile. Includes 50+ styles, 161 color palettes, 57 font pairings, 161 product types, 99 UX guidelines, and 25 chart types across 10 stacks (React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind, shadcn/ui, and HTML/CSS). Actions: plan, build, create, design, implement, review, fix, improve, optimize, enhance, refactor, and check UI/UX code. Projects: website, landing page, dashboard, admin panel, e-commerce, SaaS, portfolio, blog, and mobile app. Elements: button, modal, navbar, sidebar, card, table, form, and chart. Styles: glassmorphism, claymorphism, minimalism, brutalism, neumorphism, bento grid, dark mode, responsive, skeuomorphism, and flat design. Topics: color systems, accessibility, animation, layout, typography, font pairing, spacing, interaction states, shadow, and gradient. Integrations: shadcn/ui MCP for component search and examples.',
-        explainVi: '/ck:ui-ux-pro-max bắt đầu flow UI UX PRO MAX. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: UI/UX design intelligence for web and mobile. Includes 50+ styles, 161 color palettes, 57 font pairings, 161 product types, 99 UX guidelines, and 25 chart types across 10 stacks (React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind, shadcn/ui, and HTML/CSS). Actions: plan, build, create, design, implement, review, fix, improve, optimize, enhance, refactor, and check UI/UX code. Projects: website, landing page, dashboard, admin panel, e-commerce, SaaS, portfolio, blog, and mobile app. Elements: button, modal, navbar, sidebar, card, table, form, and chart. Styles: glassmorphism, claymorphism, minimalism, brutalism, neumorphism, bento grid, dark mode, responsive, skeuomorphism, and flat design. Topics: color systems, accessibility, animation, layout, typography, font pairing, spacing, interaction states, shadow, and gradient. Integrations: shadcn/ui MCP for component search and examples.',
-        codeSnippet: '> /ck:ui-ux-pro-max \'UI UX PRO MAX for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:ui-ux-pro-max',
+        descEn: 'Invoke /ak:ui-ux-pro-max with a concrete task brief',
+        descVi: 'Gọi /ak:ui-ux-pro-max với brief task cụ thể',
+        explainEn: '/ak:ui-ux-pro-max starts the UI UX PRO MAX flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: UI/UX design intelligence for web and mobile. Includes 50+ styles, 161 color palettes, 57 font pairings, 161 product types, 99 UX guidelines, and 25 chart types across 10 stacks (React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind, shadcn/ui, and HTML/CSS). Actions: plan, build, create, design, implement, review, fix, improve, optimize, enhance, refactor, and check UI/UX code. Projects: website, landing page, dashboard, admin panel, e-commerce, SaaS, portfolio, blog, and mobile app. Elements: button, modal, navbar, sidebar, card, table, form, and chart. Styles: glassmorphism, claymorphism, minimalism, brutalism, neumorphism, bento grid, dark mode, responsive, skeuomorphism, and flat design. Topics: color systems, accessibility, animation, layout, typography, font pairing, spacing, interaction states, shadow, and gradient. Integrations: shadcn/ui MCP for component search and examples.',
+        explainVi: '/ak:ui-ux-pro-max bắt đầu flow UI UX PRO MAX. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: UI/UX design intelligence for web and mobile. Includes 50+ styles, 161 color palettes, 57 font pairings, 161 product types, 99 UX guidelines, and 25 chart types across 10 stacks (React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind, shadcn/ui, and HTML/CSS). Actions: plan, build, create, design, implement, review, fix, improve, optimize, enhance, refactor, and check UI/UX code. Projects: website, landing page, dashboard, admin panel, e-commerce, SaaS, portfolio, blog, and mobile app. Elements: button, modal, navbar, sidebar, card, table, form, and chart. Styles: glassmorphism, claymorphism, minimalism, brutalism, neumorphism, bento grid, dark mode, responsive, skeuomorphism, and flat design. Topics: color systems, accessibility, animation, layout, typography, font pairing, spacing, interaction states, shadow, and gradient. Integrations: shadcn/ui MCP for component search and examples.',
+        codeSnippet: '> /ak:ui-ux-pro-max \'UI UX PRO MAX for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -6306,8 +6306,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:ui-ux-pro-max path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:ui-ux-pro-max đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:ui-ux-pro-max path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:ui-ux-pro-max đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -6328,10 +6328,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:watzup — Watzup ─────────────────────────────
+  // ─── /ak:watzup — Watzup ─────────────────────────────
   {
     id: 'watzup',
-    command: '/ck:watzup',
+    command: '/ak:watzup',
     kit: 'engineer',
     titleEn: 'Watzup',
     titleVi: 'Watzup',
@@ -6343,12 +6343,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'w-input',
         type: 'user-input',
-        name: '/ck:watzup',
-        descEn: 'Invoke /ck:watzup with a concrete task brief',
-        descVi: 'Gọi /ck:watzup với brief task cụ thể',
-        explainEn: '/ck:watzup starts the Watzup flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: 💡 Review recent changes and wrap up the work',
-        explainVi: '/ck:watzup bắt đầu flow Watzup. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: 💡 Review recent changes and wrap up the work',
-        codeSnippet: '> /ck:watzup \'Watzup for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:watzup',
+        descEn: 'Invoke /ak:watzup with a concrete task brief',
+        descVi: 'Gọi /ak:watzup với brief task cụ thể',
+        explainEn: '/ak:watzup starts the Watzup flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: 💡 Review recent changes and wrap up the work',
+        explainVi: '/ak:watzup bắt đầu flow Watzup. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: 💡 Review recent changes and wrap up the work',
+        codeSnippet: '> /ak:watzup \'Watzup for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -6383,8 +6383,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:watzup path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:watzup đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:watzup path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:watzup đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -6405,10 +6405,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:web-design-guidelines — WEB Design Guidelines ─────────────────────────────
+  // ─── /ak:web-design-guidelines — WEB Design Guidelines ─────────────────────────────
   {
     id: 'web-design-guidelines',
-    command: '/ck:web-design-guidelines',
+    command: '/ak:web-design-guidelines',
     kit: 'engineer',
     titleEn: 'WEB Design Guidelines',
     titleVi: 'WEB Design Guidelines',
@@ -6420,12 +6420,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'wdg-input',
         type: 'user-input',
-        name: '/ck:web-design-guidelines',
-        descEn: 'Invoke /ck:web-design-guidelines with a concrete task brief',
-        descVi: 'Gọi /ck:web-design-guidelines với brief task cụ thể',
-        explainEn: '/ck:web-design-guidelines starts the WEB Design Guidelines flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Review UI code for Web Interface Guidelines compliance. Use when asked to \'review my UI\', \'check accessibility\', \'audit design\', \'review UX\', or \'check my site against best practices\'.',
-        explainVi: '/ck:web-design-guidelines bắt đầu flow WEB Design Guidelines. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Review UI code for Web Interface Guidelines compliance. Use when asked to \'review my UI\', \'check accessibility\', \'audit design\', \'review UX\', or \'check my site against best practices\'.',
-        codeSnippet: '> /ck:web-design-guidelines \'WEB Design Guidelines for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:web-design-guidelines',
+        descEn: 'Invoke /ak:web-design-guidelines with a concrete task brief',
+        descVi: 'Gọi /ak:web-design-guidelines với brief task cụ thể',
+        explainEn: '/ak:web-design-guidelines starts the WEB Design Guidelines flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Review UI code for Web Interface Guidelines compliance. Use when asked to \'review my UI\', \'check accessibility\', \'audit design\', \'review UX\', or \'check my site against best practices\'.',
+        explainVi: '/ak:web-design-guidelines bắt đầu flow WEB Design Guidelines. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Review UI code for Web Interface Guidelines compliance. Use when asked to \'review my UI\', \'check accessibility\', \'audit design\', \'review UX\', or \'check my site against best practices\'.',
+        codeSnippet: '> /ak:web-design-guidelines \'WEB Design Guidelines for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -6460,8 +6460,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:web-design-guidelines path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:web-design-guidelines đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:web-design-guidelines path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:web-design-guidelines đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -6482,10 +6482,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:web-frameworks — WEB Frameworks ─────────────────────────────
+  // ─── /ak:web-frameworks — WEB Frameworks ─────────────────────────────
   {
     id: 'web-frameworks',
-    command: '/ck:web-frameworks',
+    command: '/ak:web-frameworks',
     kit: 'engineer',
     titleEn: 'WEB Frameworks',
     titleVi: 'WEB Frameworks',
@@ -6497,12 +6497,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'wf-input',
         type: 'user-input',
-        name: '/ck:web-frameworks',
-        descEn: 'Invoke /ck:web-frameworks with a concrete task brief',
-        descVi: 'Gọi /ck:web-frameworks với brief task cụ thể',
-        explainEn: '/ck:web-frameworks starts the WEB Frameworks flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Build modern full-stack web applications with Next.js (App Router, Server Components, RSC, PPR, SSR, SSG, ISR), Turborepo (monorepo management, task pipelines, remote caching, parallel execution), and RemixIcon (3100+ SVG icons in outlined/filled styles). Use when creating React applications, implementing server-side rendering, setting up monorepos with multiple packages, optimizing build performance and caching strategies, adding icon libraries, managing shared dependencies, or working with TypeScript full-stack projects.',
-        explainVi: '/ck:web-frameworks bắt đầu flow WEB Frameworks. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Build modern full-stack web applications with Next.js (App Router, Server Components, RSC, PPR, SSR, SSG, ISR), Turborepo (monorepo management, task pipelines, remote caching, parallel execution), and RemixIcon (3100+ SVG icons in outlined/filled styles). Use when creating React applications, implementing server-side rendering, setting up monorepos with multiple packages, optimizing build performance and caching strategies, adding icon libraries, managing shared dependencies, or working with TypeScript full-stack projects.',
-        codeSnippet: '> /ck:web-frameworks \'WEB Frameworks for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:web-frameworks',
+        descEn: 'Invoke /ak:web-frameworks with a concrete task brief',
+        descVi: 'Gọi /ak:web-frameworks với brief task cụ thể',
+        explainEn: '/ak:web-frameworks starts the WEB Frameworks flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Build modern full-stack web applications with Next.js (App Router, Server Components, RSC, PPR, SSR, SSG, ISR), Turborepo (monorepo management, task pipelines, remote caching, parallel execution), and RemixIcon (3100+ SVG icons in outlined/filled styles). Use when creating React applications, implementing server-side rendering, setting up monorepos with multiple packages, optimizing build performance and caching strategies, adding icon libraries, managing shared dependencies, or working with TypeScript full-stack projects.',
+        explainVi: '/ak:web-frameworks bắt đầu flow WEB Frameworks. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Build modern full-stack web applications with Next.js (App Router, Server Components, RSC, PPR, SSR, SSG, ISR), Turborepo (monorepo management, task pipelines, remote caching, parallel execution), and RemixIcon (3100+ SVG icons in outlined/filled styles). Use when creating React applications, implementing server-side rendering, setting up monorepos with multiple packages, optimizing build performance and caching strategies, adding icon libraries, managing shared dependencies, or working with TypeScript full-stack projects.',
+        codeSnippet: '> /ak:web-frameworks \'WEB Frameworks for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -6537,8 +6537,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:web-frameworks path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:web-frameworks đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:web-frameworks path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:web-frameworks đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -6559,10 +6559,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:web-testing — WEB Testing ─────────────────────────────
+  // ─── /ak:web-testing — WEB Testing ─────────────────────────────
   {
     id: 'web-testing',
-    command: '/ck:web-testing',
+    command: '/ak:web-testing',
     kit: 'engineer',
     titleEn: 'WEB Testing',
     titleVi: 'WEB Testing',
@@ -6574,12 +6574,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'wt-input',
         type: 'user-input',
-        name: '/ck:web-testing',
-        descEn: 'Invoke /ck:web-testing with a concrete task brief',
-        descVi: 'Gọi /ck:web-testing với brief task cụ thể',
-        explainEn: '/ck:web-testing starts the WEB Testing flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Web testing with Playwright, Vitest, k6. E2E/unit/integration/load/security/visual/a11y testing. Use for test automation, flakiness, Core Web Vitals, mobile gestures, cross-browser.',
-        explainVi: '/ck:web-testing bắt đầu flow WEB Testing. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Web testing with Playwright, Vitest, k6. E2E/unit/integration/load/security/visual/a11y testing. Use for test automation, flakiness, Core Web Vitals, mobile gestures, cross-browser.',
-        codeSnippet: '> /ck:web-testing \'WEB Testing for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:web-testing',
+        descEn: 'Invoke /ak:web-testing with a concrete task brief',
+        descVi: 'Gọi /ak:web-testing với brief task cụ thể',
+        explainEn: '/ak:web-testing starts the WEB Testing flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Web testing with Playwright, Vitest, k6. E2E/unit/integration/load/security/visual/a11y testing. Use for test automation, flakiness, Core Web Vitals, mobile gestures, cross-browser.',
+        explainVi: '/ak:web-testing bắt đầu flow WEB Testing. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Web testing with Playwright, Vitest, k6. E2E/unit/integration/load/security/visual/a11y testing. Use for test automation, flakiness, Core Web Vitals, mobile gestures, cross-browser.',
+        codeSnippet: '> /ak:web-testing \'WEB Testing for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -6614,8 +6614,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:web-testing path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:web-testing đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:web-testing path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:web-testing đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -6636,10 +6636,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:worktree — Worktree ─────────────────────────────
+  // ─── /ak:worktree — Worktree ─────────────────────────────
   {
     id: 'worktree',
-    command: '/ck:worktree',
+    command: '/ak:worktree',
     kit: 'engineer',
     titleEn: 'Worktree',
     titleVi: 'Worktree',
@@ -6651,12 +6651,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'w-input',
         type: 'user-input',
-        name: '/ck:worktree',
-        descEn: 'Invoke /ck:worktree with a concrete task brief',
-        descVi: 'Gọi /ck:worktree với brief task cụ thể',
-        explainEn: '/ck:worktree starts the Worktree flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Create isolated git worktree for parallel development',
-        explainVi: '/ck:worktree bắt đầu flow Worktree. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Create isolated git worktree for parallel development',
-        codeSnippet: '> /ck:worktree \'Worktree for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:worktree',
+        descEn: 'Invoke /ak:worktree with a concrete task brief',
+        descVi: 'Gọi /ak:worktree với brief task cụ thể',
+        explainEn: '/ak:worktree starts the Worktree flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Create isolated git worktree for parallel development',
+        explainVi: '/ak:worktree bắt đầu flow Worktree. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Create isolated git worktree for parallel development',
+        codeSnippet: '> /ak:worktree \'Worktree for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -6691,8 +6691,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ck:worktree path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ck:worktree đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:worktree path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:worktree đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -6713,10 +6713,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:ab-test-setup — AB Test Setup ─────────────────────────────
+  // ─── /ak:ab-test-setup — AB Test Setup ─────────────────────────────
   {
     id: 'ab-test-setup',
-    command: '/ckm:ab-test-setup',
+    command: '/ak:ab-test-setup',
     kit: 'marketer',
     titleEn: 'AB Test Setup',
     titleVi: 'AB Test Setup',
@@ -6728,12 +6728,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'ats-input',
         type: 'user-input',
-        name: '/ckm:ab-test-setup',
-        descEn: 'Invoke /ckm:ab-test-setup with a concrete task brief',
-        descVi: 'Gọi /ckm:ab-test-setup với brief task cụ thể',
-        explainEn: '/ckm:ab-test-setup starts the AB Test Setup flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: When the user wants to plan, design, or implement an A/B test or experiment. Also use when the user mentions \'A/B test,\' \'split test,\' \'experiment,\' \'test this change,\' \'variant copy,\' \'multivariate test,\' or \'hypothesis.\' For tracking implementation, see analytics-tracking.',
-        explainVi: '/ckm:ab-test-setup bắt đầu flow AB Test Setup. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: When the user wants to plan, design, or implement an A/B test or experiment. Also use when the user mentions \'A/B test,\' \'split test,\' \'experiment,\' \'test this change,\' \'variant copy,\' \'multivariate test,\' or \'hypothesis.\' For tracking implementation, see analytics-tracking.',
-        codeSnippet: '> /ckm:ab-test-setup \'AB Test Setup for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:ab-test-setup',
+        descEn: 'Invoke /ak:ab-test-setup with a concrete task brief',
+        descVi: 'Gọi /ak:ab-test-setup với brief task cụ thể',
+        explainEn: '/ak:ab-test-setup starts the AB Test Setup flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: When the user wants to plan, design, or implement an A/B test or experiment. Also use when the user mentions \'A/B test,\' \'split test,\' \'experiment,\' \'test this change,\' \'variant copy,\' \'multivariate test,\' or \'hypothesis.\' For tracking implementation, see analytics-tracking.',
+        explainVi: '/ak:ab-test-setup bắt đầu flow AB Test Setup. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: When the user wants to plan, design, or implement an A/B test or experiment. Also use when the user mentions \'A/B test,\' \'split test,\' \'experiment,\' \'test this change,\' \'variant copy,\' \'multivariate test,\' or \'hypothesis.\' For tracking implementation, see analytics-tracking.',
+        codeSnippet: '> /ak:ab-test-setup \'AB Test Setup for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -6768,8 +6768,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:ab-test-setup path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:ab-test-setup đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:ab-test-setup path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:ab-test-setup đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -6790,10 +6790,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:ads-management — ADS Management ─────────────────────────────
+  // ─── /ak:ads-management — ADS Management ─────────────────────────────
   {
     id: 'ads-management',
-    command: '/ckm:ads-management',
+    command: '/ak:ads-management',
     kit: 'marketer',
     titleEn: 'ADS Management',
     titleVi: 'ADS Management',
@@ -6805,12 +6805,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'am-input',
         type: 'user-input',
-        name: '/ckm:ads-management',
-        descEn: 'Invoke /ckm:ads-management with a concrete task brief',
-        descVi: 'Gọi /ckm:ads-management với brief task cụ thể',
-        explainEn: '/ckm:ads-management starts the ADS Management flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Activate for paid advertising campaigns on Google Ads, Meta Ads, LinkedIn Ads, TikTok Ads. Includes ad copywriting, audience targeting, budget optimization, A/B testing, ROAS tracking, and AI creative asset generation (images & videos) with ai-multimodal and ai-artist skills using Gemini Nano Banana Pro and Veo 3.1.',
-        explainVi: '/ckm:ads-management bắt đầu flow ADS Management. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Activate for paid advertising campaigns on Google Ads, Meta Ads, LinkedIn Ads, TikTok Ads. Includes ad copywriting, audience targeting, budget optimization, A/B testing, ROAS tracking, and AI creative asset generation (images & videos) with ai-multimodal and ai-artist skills using Gemini Nano Banana Pro and Veo 3.1.',
-        codeSnippet: '> /ckm:ads-management \'ADS Management for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:ads-management',
+        descEn: 'Invoke /ak:ads-management with a concrete task brief',
+        descVi: 'Gọi /ak:ads-management với brief task cụ thể',
+        explainEn: '/ak:ads-management starts the ADS Management flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Activate for paid advertising campaigns on Google Ads, Meta Ads, LinkedIn Ads, TikTok Ads. Includes ad copywriting, audience targeting, budget optimization, A/B testing, ROAS tracking, and AI creative asset generation (images & videos) with ai-multimodal and ai-artist skills using Gemini Nano Banana Pro and Veo 3.1.',
+        explainVi: '/ak:ads-management bắt đầu flow ADS Management. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Activate for paid advertising campaigns on Google Ads, Meta Ads, LinkedIn Ads, TikTok Ads. Includes ad copywriting, audience targeting, budget optimization, A/B testing, ROAS tracking, and AI creative asset generation (images & videos) with ai-multimodal and ai-artist skills using Gemini Nano Banana Pro and Veo 3.1.',
+        codeSnippet: '> /ak:ads-management \'ADS Management for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -6845,8 +6845,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:ads-management path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:ads-management đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:ads-management path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:ads-management đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -6867,10 +6867,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:affiliate-marketing — Affiliate Marketing ─────────────────────────────
+  // ─── /ak:affiliate-marketing — Affiliate Marketing ─────────────────────────────
   {
     id: 'affiliate-marketing',
-    command: '/ckm:affiliate-marketing',
+    command: '/ak:affiliate-marketing',
     kit: 'marketer',
     titleEn: 'Affiliate Marketing',
     titleVi: 'Affiliate Marketing',
@@ -6882,12 +6882,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'am-input',
         type: 'user-input',
-        name: '/ckm:affiliate-marketing',
-        descEn: 'Invoke /ckm:affiliate-marketing with a concrete task brief',
-        descVi: 'Gọi /ckm:affiliate-marketing với brief task cụ thể',
-        explainEn: '/ckm:affiliate-marketing starts the Affiliate Marketing flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Build high-converting SaaS affiliate programs with 20-40% commissions, KOL/KOC partnerships, and fraud prevention. Covers platform selection (PartnerStack, FirstPromoter, Rewardful), commission structures (recurring vs one-time, tiered), influencer outreach strategies, FTC/GDPR compliance, risk management, and case studies (Dropbox 3900%, PayPal 100M users). Use for designing affiliate programs, recruiting partners, optimizing conversion rates, preventing fraud, or scaling referral revenue.',
-        explainVi: '/ckm:affiliate-marketing bắt đầu flow Affiliate Marketing. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Build high-converting SaaS affiliate programs with 20-40% commissions, KOL/KOC partnerships, and fraud prevention. Covers platform selection (PartnerStack, FirstPromoter, Rewardful), commission structures (recurring vs one-time, tiered), influencer outreach strategies, FTC/GDPR compliance, risk management, and case studies (Dropbox 3900%, PayPal 100M users). Use for designing affiliate programs, recruiting partners, optimizing conversion rates, preventing fraud, or scaling referral revenue.',
-        codeSnippet: '> /ckm:affiliate-marketing \'Affiliate Marketing for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:affiliate-marketing',
+        descEn: 'Invoke /ak:affiliate-marketing with a concrete task brief',
+        descVi: 'Gọi /ak:affiliate-marketing với brief task cụ thể',
+        explainEn: '/ak:affiliate-marketing starts the Affiliate Marketing flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Build high-converting SaaS affiliate programs with 20-40% commissions, KOL/KOC partnerships, and fraud prevention. Covers platform selection (PartnerStack, FirstPromoter, Rewardful), commission structures (recurring vs one-time, tiered), influencer outreach strategies, FTC/GDPR compliance, risk management, and case studies (Dropbox 3900%, PayPal 100M users). Use for designing affiliate programs, recruiting partners, optimizing conversion rates, preventing fraud, or scaling referral revenue.',
+        explainVi: '/ak:affiliate-marketing bắt đầu flow Affiliate Marketing. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Build high-converting SaaS affiliate programs with 20-40% commissions, KOL/KOC partnerships, and fraud prevention. Covers platform selection (PartnerStack, FirstPromoter, Rewardful), commission structures (recurring vs one-time, tiered), influencer outreach strategies, FTC/GDPR compliance, risk management, and case studies (Dropbox 3900%, PayPal 100M users). Use for designing affiliate programs, recruiting partners, optimizing conversion rates, preventing fraud, or scaling referral revenue.',
+        codeSnippet: '> /ak:affiliate-marketing \'Affiliate Marketing for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -6922,8 +6922,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:affiliate-marketing path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:affiliate-marketing đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:affiliate-marketing path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:affiliate-marketing đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -6944,10 +6944,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:analytics — Analytics ─────────────────────────────
+  // ─── /ak:analytics — Analytics ─────────────────────────────
   {
     id: 'analytics',
-    command: '/ckm:analytics',
+    command: '/ak:analytics',
     kit: 'marketer',
     titleEn: 'Analytics',
     titleVi: 'Analytics',
@@ -6959,12 +6959,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'a-input',
         type: 'user-input',
-        name: '/ckm:analytics',
-        descEn: 'Invoke /ckm:analytics with a concrete task brief',
-        descVi: 'Gọi /ckm:analytics với brief task cụ thể',
-        explainEn: '/ckm:analytics starts the Analytics flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Activate for marketing analytics, KPI tracking, reporting dashboards, attribution analysis, and performance optimization. Use when analyzing campaign data, creating reports, or measuring marketing ROI.',
-        explainVi: '/ckm:analytics bắt đầu flow Analytics. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Activate for marketing analytics, KPI tracking, reporting dashboards, attribution analysis, and performance optimization. Use when analyzing campaign data, creating reports, or measuring marketing ROI.',
-        codeSnippet: '> /ckm:analytics \'Analytics for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:analytics',
+        descEn: 'Invoke /ak:analytics with a concrete task brief',
+        descVi: 'Gọi /ak:analytics với brief task cụ thể',
+        explainEn: '/ak:analytics starts the Analytics flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Activate for marketing analytics, KPI tracking, reporting dashboards, attribution analysis, and performance optimization. Use when analyzing campaign data, creating reports, or measuring marketing ROI.',
+        explainVi: '/ak:analytics bắt đầu flow Analytics. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Activate for marketing analytics, KPI tracking, reporting dashboards, attribution analysis, and performance optimization. Use when analyzing campaign data, creating reports, or measuring marketing ROI.',
+        codeSnippet: '> /ak:analytics \'Analytics for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -6999,8 +6999,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:analytics path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:analytics đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:analytics path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:analytics đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -7021,10 +7021,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:analyze — Analyze ─────────────────────────────
+  // ─── /ak:analyze — Analyze ─────────────────────────────
   {
     id: 'analyze',
-    command: '/ckm:analyze',
+    command: '/ak:analyze',
     kit: 'marketer',
     titleEn: 'Analyze',
     titleVi: 'Analyze',
@@ -7036,12 +7036,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'a-input',
         type: 'user-input',
-        name: '/ckm:analyze',
-        descEn: 'Invoke /ckm:analyze with a concrete task brief',
-        descVi: 'Gọi /ckm:analyze với brief task cụ thể',
-        explainEn: '/ckm:analyze starts the Analyze flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: 💡💡 Analytics and performance reports',
-        explainVi: '/ckm:analyze bắt đầu flow Analyze. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: 💡💡 Analytics and performance reports',
-        codeSnippet: '> /ckm:analyze \'Analyze for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:analyze',
+        descEn: 'Invoke /ak:analyze with a concrete task brief',
+        descVi: 'Gọi /ak:analyze với brief task cụ thể',
+        explainEn: '/ak:analyze starts the Analyze flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: 💡💡 Analytics and performance reports',
+        explainVi: '/ak:analyze bắt đầu flow Analyze. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: 💡💡 Analytics and performance reports',
+        codeSnippet: '> /ak:analyze \'Analyze for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -7076,8 +7076,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:analyze path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:analyze đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:analyze path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:analyze đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -7098,10 +7098,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:assets-organizing — Assets Organizing ─────────────────────────────
+  // ─── /ak:assets-organizing — Assets Organizing ─────────────────────────────
   {
     id: 'assets-organizing',
-    command: '/ckm:assets-organizing',
+    command: '/ak:assets-organizing',
     kit: 'marketer',
     titleEn: 'Assets Organizing',
     titleVi: 'Assets Organizing',
@@ -7113,12 +7113,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'ao-input',
         type: 'user-input',
-        name: '/ckm:assets-organizing',
-        descEn: 'Invoke /ckm:assets-organizing with a concrete task brief',
-        descVi: 'Gọi /ckm:assets-organizing với brief task cụ thể',
-        explainEn: '/ckm:assets-organizing starts the Assets Organizing flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Organize all outputs from slash commands and subagents in assets/ directory by topics, date format, and slugs.',
-        explainVi: '/ckm:assets-organizing bắt đầu flow Assets Organizing. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Organize all outputs from slash commands and subagents in assets/ directory by topics, date format, and slugs.',
-        codeSnippet: '> /ckm:assets-organizing \'Assets Organizing for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:assets-organizing',
+        descEn: 'Invoke /ak:assets-organizing with a concrete task brief',
+        descVi: 'Gọi /ak:assets-organizing với brief task cụ thể',
+        explainEn: '/ak:assets-organizing starts the Assets Organizing flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Organize all outputs from slash commands and subagents in assets/ directory by topics, date format, and slugs.',
+        explainVi: '/ak:assets-organizing bắt đầu flow Assets Organizing. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Organize all outputs from slash commands and subagents in assets/ directory by topics, date format, and slugs.',
+        codeSnippet: '> /ak:assets-organizing \'Assets Organizing for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -7153,8 +7153,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:assets-organizing path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:assets-organizing đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:assets-organizing path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:assets-organizing đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -7175,10 +7175,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:banner-design — Banner Design ─────────────────────────────
+  // ─── /ak:banner-design — Banner Design ─────────────────────────────
   {
     id: 'banner-design',
-    command: '/ckm:banner-design',
+    command: '/ak:banner-design',
     kit: 'marketer',
     titleEn: 'Banner Design',
     titleVi: 'Banner Design',
@@ -7190,12 +7190,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'bd-input',
         type: 'user-input',
-        name: '/ckm:banner-design',
-        descEn: 'Invoke /ckm:banner-design with a concrete task brief',
-        descVi: 'Gọi /ckm:banner-design với brief task cụ thể',
-        explainEn: '/ckm:banner-design starts the Banner Design flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Design banners for social media, ads, website heroes, creative assets, and print. Multiple art direction options with AI-generated visuals. Actions: design, create, generate banner. Platforms: Facebook, Twitter/X, LinkedIn, YouTube, Instagram, Google Display, website hero, print. Styles: minimalist, gradient, bold typography, photo-based, illustrated, geometric, retro, glassmorphism, 3D, neon, duotone, editorial, collage. Uses ui-ux-pro-max, frontend-design, ai-artist, ai-multimodal skills.',
-        explainVi: '/ckm:banner-design bắt đầu flow Banner Design. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Design banners for social media, ads, website heroes, creative assets, and print. Multiple art direction options with AI-generated visuals. Actions: design, create, generate banner. Platforms: Facebook, Twitter/X, LinkedIn, YouTube, Instagram, Google Display, website hero, print. Styles: minimalist, gradient, bold typography, photo-based, illustrated, geometric, retro, glassmorphism, 3D, neon, duotone, editorial, collage. Uses ui-ux-pro-max, frontend-design, ai-artist, ai-multimodal skills.',
-        codeSnippet: '> /ckm:banner-design \'Banner Design for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:banner-design',
+        descEn: 'Invoke /ak:banner-design with a concrete task brief',
+        descVi: 'Gọi /ak:banner-design với brief task cụ thể',
+        explainEn: '/ak:banner-design starts the Banner Design flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Design banners for social media, ads, website heroes, creative assets, and print. Multiple art direction options with AI-generated visuals. Actions: design, create, generate banner. Platforms: Facebook, Twitter/X, LinkedIn, YouTube, Instagram, Google Display, website hero, print. Styles: minimalist, gradient, bold typography, photo-based, illustrated, geometric, retro, glassmorphism, 3D, neon, duotone, editorial, collage. Uses ui-ux-pro-max, frontend-design, ai-artist, ai-multimodal skills.',
+        explainVi: '/ak:banner-design bắt đầu flow Banner Design. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Design banners for social media, ads, website heroes, creative assets, and print. Multiple art direction options with AI-generated visuals. Actions: design, create, generate banner. Platforms: Facebook, Twitter/X, LinkedIn, YouTube, Instagram, Google Display, website hero, print. Styles: minimalist, gradient, bold typography, photo-based, illustrated, geometric, retro, glassmorphism, 3D, neon, duotone, editorial, collage. Uses ui-ux-pro-max, frontend-design, ai-artist, ai-multimodal skills.',
+        codeSnippet: '> /ak:banner-design \'Banner Design for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -7230,8 +7230,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:banner-design path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:banner-design đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:banner-design path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:banner-design đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -7252,10 +7252,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:brand — Brand ─────────────────────────────
+  // ─── /ak:brand — Brand ─────────────────────────────
   {
     id: 'brand',
-    command: '/ckm:brand',
+    command: '/ak:brand',
     kit: 'marketer',
     titleEn: 'Brand',
     titleVi: 'Brand',
@@ -7267,12 +7267,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'b-input',
         type: 'user-input',
-        name: '/ckm:brand',
-        descEn: 'Invoke /ckm:brand with a concrete task brief',
-        descVi: 'Gọi /ckm:brand với brief task cụ thể',
-        explainEn: '/ckm:brand starts the Brand flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Brand voice, visual identity, messaging frameworks, asset management, brand consistency. Activate for branded content, tone of voice, marketing assets, brand compliance, style guides.',
-        explainVi: '/ckm:brand bắt đầu flow Brand. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Brand voice, visual identity, messaging frameworks, asset management, brand consistency. Activate for branded content, tone of voice, marketing assets, brand compliance, style guides.',
-        codeSnippet: '> /ckm:brand \'Brand for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:brand',
+        descEn: 'Invoke /ak:brand with a concrete task brief',
+        descVi: 'Gọi /ak:brand với brief task cụ thể',
+        explainEn: '/ak:brand starts the Brand flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Brand voice, visual identity, messaging frameworks, asset management, brand consistency. Activate for branded content, tone of voice, marketing assets, brand compliance, style guides.',
+        explainVi: '/ak:brand bắt đầu flow Brand. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Brand voice, visual identity, messaging frameworks, asset management, brand consistency. Activate for branded content, tone of voice, marketing assets, brand compliance, style guides.',
+        codeSnippet: '> /ak:brand \'Brand for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -7307,8 +7307,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:brand path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:brand đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:brand path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:brand đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -7329,11 +7329,11 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:campaign — Campaign ─────────────────────────────
-  // ─── /ckm:cip-design — CIP Design ─────────────────────────────
+  // ─── /ak:campaign — Campaign ─────────────────────────────
+  // ─── /ak:cip-design — CIP Design ─────────────────────────────
   {
     id: 'cip-design',
-    command: '/ckm:cip-design',
+    command: '/ak:cip-design',
     kit: 'marketer',
     titleEn: 'CIP Design',
     titleVi: 'CIP Design',
@@ -7345,12 +7345,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'cd-input',
         type: 'user-input',
-        name: '/ckm:cip-design',
-        descEn: 'Invoke /ckm:cip-design with a concrete task brief',
-        descVi: 'Gọi /ckm:cip-design với brief task cụ thể',
-        explainEn: '/ckm:cip-design starts the CIP Design flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Corporate Identity Program design with 50 deliverables, 20 styles, 20 industries. Generate CIP mockups with Gemini Nano Banana (Flash/Pro). Actions: design, create, generate brand identity. Deliverables: business card, letterhead, signage, vehicle, apparel, packaging. Styles: corporate, luxury, minimal, modern.',
-        explainVi: '/ckm:cip-design bắt đầu flow CIP Design. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Corporate Identity Program design with 50 deliverables, 20 styles, 20 industries. Generate CIP mockups with Gemini Nano Banana (Flash/Pro). Actions: design, create, generate brand identity. Deliverables: business card, letterhead, signage, vehicle, apparel, packaging. Styles: corporate, luxury, minimal, modern.',
-        codeSnippet: '> /ckm:cip-design \'CIP Design for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:cip-design',
+        descEn: 'Invoke /ak:cip-design with a concrete task brief',
+        descVi: 'Gọi /ak:cip-design với brief task cụ thể',
+        explainEn: '/ak:cip-design starts the CIP Design flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Corporate Identity Program design with 50 deliverables, 20 styles, 20 industries. Generate CIP mockups with Gemini Nano Banana (Flash/Pro). Actions: design, create, generate brand identity. Deliverables: business card, letterhead, signage, vehicle, apparel, packaging. Styles: corporate, luxury, minimal, modern.',
+        explainVi: '/ak:cip-design bắt đầu flow CIP Design. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Corporate Identity Program design with 50 deliverables, 20 styles, 20 industries. Generate CIP mockups with Gemini Nano Banana (Flash/Pro). Actions: design, create, generate brand identity. Deliverables: business card, letterhead, signage, vehicle, apparel, packaging. Styles: corporate, luxury, minimal, modern.',
+        codeSnippet: '> /ak:cip-design \'CIP Design for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -7385,8 +7385,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:cip-design path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:cip-design đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:cip-design path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:cip-design đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -7407,10 +7407,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:claude-code — Claude Code ─────────────────────────────
+  // ─── /ak:claude-code — Claude Code ─────────────────────────────
   {
     id: 'claude-code',
-    command: '/ckm:claude-code',
+    command: '/ak:claude-code',
     kit: 'marketer',
     titleEn: 'Claude Code',
     titleVi: 'Claude Code',
@@ -7422,12 +7422,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'cc-input',
         type: 'user-input',
-        name: '/ckm:claude-code',
-        descEn: 'Invoke /ckm:claude-code with a concrete task brief',
-        descVi: 'Gọi /ckm:claude-code với brief task cụ thể',
-        explainEn: '/ckm:claude-code starts the Claude Code flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Activate when users ask about Claude Code installation, slash commands (/plan, /fix, /content, /docs, /design, /git), creating/managing Agent Skills, configuring MCP servers, setting up hooks/plugins, IDE integration (VS Code, JetBrains), CI/CD workflows, enterprise deployment (SSO, RBAC, sandboxing), troubleshooting authentication/performance issues, or advanced features (extended thinking, caching, checkpointing).',
-        explainVi: '/ckm:claude-code bắt đầu flow Claude Code. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Activate when users ask about Claude Code installation, slash commands (/plan, /fix, /content, /docs, /design, /git), creating/managing Agent Skills, configuring MCP servers, setting up hooks/plugins, IDE integration (VS Code, JetBrains), CI/CD workflows, enterprise deployment (SSO, RBAC, sandboxing), troubleshooting authentication/performance issues, or advanced features (extended thinking, caching, checkpointing).',
-        codeSnippet: '> /ckm:claude-code \'Claude Code for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:claude-code',
+        descEn: 'Invoke /ak:claude-code with a concrete task brief',
+        descVi: 'Gọi /ak:claude-code với brief task cụ thể',
+        explainEn: '/ak:claude-code starts the Claude Code flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Activate when users ask about Claude Code installation, slash commands (/plan, /fix, /content, /docs, /design, /git), creating/managing Agent Skills, configuring MCP servers, setting up hooks/plugins, IDE integration (VS Code, JetBrains), CI/CD workflows, enterprise deployment (SSO, RBAC, sandboxing), troubleshooting authentication/performance issues, or advanced features (extended thinking, caching, checkpointing).',
+        explainVi: '/ak:claude-code bắt đầu flow Claude Code. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Activate when users ask about Claude Code installation, slash commands (/plan, /fix, /content, /docs, /design, /git), creating/managing Agent Skills, configuring MCP servers, setting up hooks/plugins, IDE integration (VS Code, JetBrains), CI/CD workflows, enterprise deployment (SSO, RBAC, sandboxing), troubleshooting authentication/performance issues, or advanced features (extended thinking, caching, checkpointing).',
+        codeSnippet: '> /ak:claude-code \'Claude Code for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -7462,8 +7462,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:claude-code path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:claude-code đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:claude-code path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:claude-code đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -7484,10 +7484,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:competitor — Competitor ─────────────────────────────
+  // ─── /ak:competitor — Competitor ─────────────────────────────
   {
     id: 'competitor',
-    command: '/ckm:competitor',
+    command: '/ak:competitor',
     kit: 'marketer',
     titleEn: 'Competitor',
     titleVi: 'Competitor',
@@ -7499,12 +7499,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'c-input',
         type: 'user-input',
-        name: '/ckm:competitor',
-        descEn: 'Invoke /ckm:competitor with a concrete task brief',
-        descVi: 'Gọi /ckm:competitor với brief task cụ thể',
-        explainEn: '/ckm:competitor starts the Competitor flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Competitive analysis, alternative pages, vs comparisons, SEO competitor content, market positioning, and battlecard generation.',
-        explainVi: '/ckm:competitor bắt đầu flow Competitor. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Competitive analysis, alternative pages, vs comparisons, SEO competitor content, market positioning, and battlecard generation.',
-        codeSnippet: '> /ckm:competitor \'Competitor for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:competitor',
+        descEn: 'Invoke /ak:competitor with a concrete task brief',
+        descVi: 'Gọi /ak:competitor với brief task cụ thể',
+        explainEn: '/ak:competitor starts the Competitor flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Competitive analysis, alternative pages, vs comparisons, SEO competitor content, market positioning, and battlecard generation.',
+        explainVi: '/ak:competitor bắt đầu flow Competitor. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Competitive analysis, alternative pages, vs comparisons, SEO competitor content, market positioning, and battlecard generation.',
+        codeSnippet: '> /ak:competitor \'Competitor for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -7539,8 +7539,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:competitor path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:competitor đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:competitor path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:competitor đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -7561,10 +7561,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:content-hub — Content HUB ─────────────────────────────
+  // ─── /ak:content-hub — Content HUB ─────────────────────────────
   {
     id: 'content-hub',
-    command: '/ckm:content-hub',
+    command: '/ak:content-hub',
     kit: 'marketer',
     titleEn: 'Content HUB',
     titleVi: 'Content HUB',
@@ -7576,12 +7576,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'ch-input',
         type: 'user-input',
-        name: '/ckm:content-hub',
-        descEn: 'Invoke /ckm:content-hub with a concrete task brief',
-        descVi: 'Gọi /ckm:content-hub với brief task cụ thể',
-        explainEn: '/ckm:content-hub starts the Content HUB flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Browser-based asset gallery for managing marketing assets. Visual grid with filter/search, brand context sidebar, and actions (preview, edit, generate). R2-ready manifest for future cloud sync. Use when browsing assets, managing content library, or generating new assets with brand context.',
-        explainVi: '/ckm:content-hub bắt đầu flow Content HUB. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Browser-based asset gallery for managing marketing assets. Visual grid with filter/search, brand context sidebar, and actions (preview, edit, generate). R2-ready manifest for future cloud sync. Use when browsing assets, managing content library, or generating new assets with brand context.',
-        codeSnippet: '> /ckm:content-hub \'Content HUB for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:content-hub',
+        descEn: 'Invoke /ak:content-hub with a concrete task brief',
+        descVi: 'Gọi /ak:content-hub với brief task cụ thể',
+        explainEn: '/ak:content-hub starts the Content HUB flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Browser-based asset gallery for managing marketing assets. Visual grid with filter/search, brand context sidebar, and actions (preview, edit, generate). R2-ready manifest for future cloud sync. Use when browsing assets, managing content library, or generating new assets with brand context.',
+        explainVi: '/ak:content-hub bắt đầu flow Content HUB. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Browser-based asset gallery for managing marketing assets. Visual grid with filter/search, brand context sidebar, and actions (preview, edit, generate). R2-ready manifest for future cloud sync. Use when browsing assets, managing content library, or generating new assets with brand context.',
+        codeSnippet: '> /ak:content-hub \'Content HUB for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -7616,8 +7616,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:content-hub path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:content-hub đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:content-hub path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:content-hub đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -7638,10 +7638,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:content-marketing — Content Marketing ─────────────────────────────
+  // ─── /ak:content-marketing — Content Marketing ─────────────────────────────
   {
     id: 'content-marketing',
-    command: '/ckm:content-marketing',
+    command: '/ak:content-marketing',
     kit: 'marketer',
     titleEn: 'Content Marketing',
     titleVi: 'Content Marketing',
@@ -7653,12 +7653,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'cm-input',
         type: 'user-input',
-        name: '/ckm:content-marketing',
-        descEn: 'Invoke /ckm:content-marketing with a concrete task brief',
-        descVi: 'Gọi /ckm:content-marketing với brief task cụ thể',
-        explainEn: '/ckm:content-marketing starts the Content Marketing flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Activate for content strategy, editorial calendars, content pillar mapping, blog planning, and content audit. Use when planning content programs, creating editorial workflows, or building topic clusters.',
-        explainVi: '/ckm:content-marketing bắt đầu flow Content Marketing. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Activate for content strategy, editorial calendars, content pillar mapping, blog planning, and content audit. Use when planning content programs, creating editorial workflows, or building topic clusters.',
-        codeSnippet: '> /ckm:content-marketing \'Content Marketing for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:content-marketing',
+        descEn: 'Invoke /ak:content-marketing with a concrete task brief',
+        descVi: 'Gọi /ak:content-marketing với brief task cụ thể',
+        explainEn: '/ak:content-marketing starts the Content Marketing flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Activate for content strategy, editorial calendars, content pillar mapping, blog planning, and content audit. Use when planning content programs, creating editorial workflows, or building topic clusters.',
+        explainVi: '/ak:content-marketing bắt đầu flow Content Marketing. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Activate for content strategy, editorial calendars, content pillar mapping, blog planning, and content audit. Use when planning content programs, creating editorial workflows, or building topic clusters.',
+        codeSnippet: '> /ak:content-marketing \'Content Marketing for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -7693,8 +7693,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:content-marketing path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:content-marketing đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:content-marketing path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:content-marketing đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -7715,10 +7715,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:creativity — Creativity ─────────────────────────────
+  // ─── /ak:creativity — Creativity ─────────────────────────────
   {
     id: 'creativity',
-    command: '/ckm:creativity',
+    command: '/ak:creativity',
     kit: 'marketer',
     titleEn: 'Creativity',
     titleVi: 'Creativity',
@@ -7730,12 +7730,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'c-input',
         type: 'user-input',
-        name: '/ckm:creativity',
-        descEn: 'Invoke /ckm:creativity with a concrete task brief',
-        descVi: 'Gọi /ckm:creativity với brief task cụ thể',
-        explainEn: '/ckm:creativity starts the Creativity flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Creative direction intelligence. 55 styles, 18 platforms, 12 voiceover types, 17 music genres, 30 campaign categories. Actions: create, design, plan, direct, brief creative campaigns. Projects: ads, videos, social content, commercials, brand films. Styles: minimalist, maximalist, nostalgic, cinematic, UGC, luxury, futuristic, emotional. Topics: visual style, platform specs, voiceover, music, color palette, audience targeting.',
-        explainVi: '/ckm:creativity bắt đầu flow Creativity. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Creative direction intelligence. 55 styles, 18 platforms, 12 voiceover types, 17 music genres, 30 campaign categories. Actions: create, design, plan, direct, brief creative campaigns. Projects: ads, videos, social content, commercials, brand films. Styles: minimalist, maximalist, nostalgic, cinematic, UGC, luxury, futuristic, emotional. Topics: visual style, platform specs, voiceover, music, color palette, audience targeting.',
-        codeSnippet: '> /ckm:creativity \'Creativity for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:creativity',
+        descEn: 'Invoke /ak:creativity with a concrete task brief',
+        descVi: 'Gọi /ak:creativity với brief task cụ thể',
+        explainEn: '/ak:creativity starts the Creativity flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Creative direction intelligence. 55 styles, 18 platforms, 12 voiceover types, 17 music genres, 30 campaign categories. Actions: create, design, plan, direct, brief creative campaigns. Projects: ads, videos, social content, commercials, brand films. Styles: minimalist, maximalist, nostalgic, cinematic, UGC, luxury, futuristic, emotional. Topics: visual style, platform specs, voiceover, music, color palette, audience targeting.',
+        explainVi: '/ak:creativity bắt đầu flow Creativity. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Creative direction intelligence. 55 styles, 18 platforms, 12 voiceover types, 17 music genres, 30 campaign categories. Actions: create, design, plan, direct, brief creative campaigns. Projects: ads, videos, social content, commercials, brand films. Styles: minimalist, maximalist, nostalgic, cinematic, UGC, luxury, futuristic, emotional. Topics: visual style, platform specs, voiceover, music, color palette, audience targeting.',
+        codeSnippet: '> /ak:creativity \'Creativity for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -7770,8 +7770,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:creativity path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:creativity đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:creativity path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:creativity đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -7792,10 +7792,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:dashboard — Dashboard ─────────────────────────────
+  // ─── /ak:dashboard — Dashboard ─────────────────────────────
   {
     id: 'dashboard',
-    command: '/ckm:dashboard',
+    command: '/ak:dashboard',
     kit: 'marketer',
     titleEn: 'Dashboard',
     titleVi: 'Dashboard',
@@ -7807,12 +7807,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'd-input',
         type: 'user-input',
-        name: '/ckm:dashboard',
-        descEn: 'Invoke /ckm:dashboard with a concrete task brief',
-        descVi: 'Gọi /ckm:dashboard với brief task cụ thể',
-        explainEn: '/ckm:dashboard starts the Dashboard flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Launch and manage the Marketing Dashboard',
-        explainVi: '/ckm:dashboard bắt đầu flow Dashboard. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Launch and manage the Marketing Dashboard',
-        codeSnippet: '> /ckm:dashboard \'Dashboard for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:dashboard',
+        descEn: 'Invoke /ak:dashboard with a concrete task brief',
+        descVi: 'Gọi /ak:dashboard với brief task cụ thể',
+        explainEn: '/ak:dashboard starts the Dashboard flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Launch and manage the Marketing Dashboard',
+        explainVi: '/ak:dashboard bắt đầu flow Dashboard. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Launch and manage the Marketing Dashboard',
+        codeSnippet: '> /ak:dashboard \'Dashboard for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -7847,8 +7847,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:dashboard path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:dashboard đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:dashboard path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:dashboard đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -7869,10 +7869,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:debugging — Debugging ─────────────────────────────
+  // ─── /ak:debugging — Debugging ─────────────────────────────
   {
     id: 'debugging',
-    command: '/ckm:debugging',
+    command: '/ak:debugging',
     kit: 'marketer',
     titleEn: 'Debugging',
     titleVi: 'Debugging',
@@ -7884,12 +7884,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'd-input',
         type: 'user-input',
-        name: '/ckm:debugging',
-        descEn: 'Invoke /ckm:debugging with a concrete task brief',
-        descVi: 'Gọi /ckm:debugging với brief task cụ thể',
-        explainEn: '/ckm:debugging starts the Debugging flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Systematic debugging framework ensuring root cause investigation before fixes. Includes four-phase debugging process, backward call stack tracing, multi-layer validation, and verification protocols. Use when encountering bugs, test failures, unexpected behavior, performance issues, or before claiming work complete. Prevents random fixes, masks over symptoms, and false completion claims.',
-        explainVi: '/ckm:debugging bắt đầu flow Debugging. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Systematic debugging framework ensuring root cause investigation before fixes. Includes four-phase debugging process, backward call stack tracing, multi-layer validation, and verification protocols. Use when encountering bugs, test failures, unexpected behavior, performance issues, or before claiming work complete. Prevents random fixes, masks over symptoms, and false completion claims.',
-        codeSnippet: '> /ckm:debugging \'Debugging for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:debugging',
+        descEn: 'Invoke /ak:debugging with a concrete task brief',
+        descVi: 'Gọi /ak:debugging với brief task cụ thể',
+        explainEn: '/ak:debugging starts the Debugging flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Systematic debugging framework ensuring root cause investigation before fixes. Includes four-phase debugging process, backward call stack tracing, multi-layer validation, and verification protocols. Use when encountering bugs, test failures, unexpected behavior, performance issues, or before claiming work complete. Prevents random fixes, masks over symptoms, and false completion claims.',
+        explainVi: '/ak:debugging bắt đầu flow Debugging. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Systematic debugging framework ensuring root cause investigation before fixes. Includes four-phase debugging process, backward call stack tracing, multi-layer validation, and verification protocols. Use when encountering bugs, test failures, unexpected behavior, performance issues, or before claiming work complete. Prevents random fixes, masks over symptoms, and false completion claims.',
+        codeSnippet: '> /ak:debugging \'Debugging for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -7924,8 +7924,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:debugging path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:debugging đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:debugging path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:debugging đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -7946,11 +7946,11 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:design — Design ─────────────────────────────
-  // ─── /ckm:design-system — Design System ─────────────────────────────
+  // ─── /ak:design — Design ─────────────────────────────
+  // ─── /ak:design-system — Design System ─────────────────────────────
   {
     id: 'design-system',
-    command: '/ckm:design-system',
+    command: '/ak:design-system',
     kit: 'marketer',
     titleEn: 'Design System',
     titleVi: 'Design System',
@@ -7962,12 +7962,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'ds-input',
         type: 'user-input',
-        name: '/ckm:design-system',
-        descEn: 'Invoke /ckm:design-system with a concrete task brief',
-        descVi: 'Gọi /ckm:design-system với brief task cụ thể',
-        explainEn: '/ckm:design-system starts the Design System flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Token architecture, component specifications, and slide generation. Three-layer tokens (primitive→semantic→component), CSS variables, spacing/typography scales, component specs, strategic slide creation. Use for design tokens, systematic design, brand-compliant presentations.',
-        explainVi: '/ckm:design-system bắt đầu flow Design System. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Token architecture, component specifications, and slide generation. Three-layer tokens (primitive→semantic→component), CSS variables, spacing/typography scales, component specs, strategic slide creation. Use for design tokens, systematic design, brand-compliant presentations.',
-        codeSnippet: '> /ckm:design-system \'Design System for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:design-system',
+        descEn: 'Invoke /ak:design-system with a concrete task brief',
+        descVi: 'Gọi /ak:design-system với brief task cụ thể',
+        explainEn: '/ak:design-system starts the Design System flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Token architecture, component specifications, and slide generation. Three-layer tokens (primitive→semantic→component), CSS variables, spacing/typography scales, component specs, strategic slide creation. Use for design tokens, systematic design, brand-compliant presentations.',
+        explainVi: '/ak:design-system bắt đầu flow Design System. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Token architecture, component specifications, and slide generation. Three-layer tokens (primitive→semantic→component), CSS variables, spacing/typography scales, component specs, strategic slide creation. Use for design tokens, systematic design, brand-compliant presentations.',
+        codeSnippet: '> /ak:design-system \'Design System for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -8002,8 +8002,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:design-system path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:design-system đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:design-system path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:design-system đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -8024,10 +8024,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:elevenlabs — Elevenlabs ─────────────────────────────
+  // ─── /ak:elevenlabs — Elevenlabs ─────────────────────────────
   {
     id: 'elevenlabs',
-    command: '/ckm:elevenlabs',
+    command: '/ak:elevenlabs',
     kit: 'marketer',
     titleEn: 'Elevenlabs',
     titleVi: 'Elevenlabs',
@@ -8039,12 +8039,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'e-input',
         type: 'user-input',
-        name: '/ckm:elevenlabs',
-        descEn: 'Invoke /ckm:elevenlabs with a concrete task brief',
-        descVi: 'Gọi /ckm:elevenlabs với brief task cụ thể',
-        explainEn: '/ckm:elevenlabs starts the Elevenlabs flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Generate speech, clone voices, create sound effects & music with ElevenLabs API. TTS, voice design, audio generation, conversational AI agents.',
-        explainVi: '/ckm:elevenlabs bắt đầu flow Elevenlabs. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Generate speech, clone voices, create sound effects & music with ElevenLabs API. TTS, voice design, audio generation, conversational AI agents.',
-        codeSnippet: '> /ckm:elevenlabs \'Elevenlabs for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:elevenlabs',
+        descEn: 'Invoke /ak:elevenlabs with a concrete task brief',
+        descVi: 'Gọi /ak:elevenlabs với brief task cụ thể',
+        explainEn: '/ak:elevenlabs starts the Elevenlabs flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Generate speech, clone voices, create sound effects & music with ElevenLabs API. TTS, voice design, audio generation, conversational AI agents.',
+        explainVi: '/ak:elevenlabs bắt đầu flow Elevenlabs. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Generate speech, clone voices, create sound effects & music with ElevenLabs API. TTS, voice design, audio generation, conversational AI agents.',
+        codeSnippet: '> /ak:elevenlabs \'Elevenlabs for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -8079,8 +8079,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:elevenlabs path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:elevenlabs đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:elevenlabs path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:elevenlabs đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -8101,11 +8101,11 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:email — Email ─────────────────────────────
-  // ─── /ckm:form-cro — Form CRO ─────────────────────────────
+  // ─── /ak:email — Email ─────────────────────────────
+  // ─── /ak:form-cro — Form CRO ─────────────────────────────
   {
     id: 'form-cro',
-    command: '/ckm:form-cro',
+    command: '/ak:form-cro',
     kit: 'marketer',
     titleEn: 'Form CRO',
     titleVi: 'Form CRO',
@@ -8117,12 +8117,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'fc-input',
         type: 'user-input',
-        name: '/ckm:form-cro',
-        descEn: 'Invoke /ckm:form-cro with a concrete task brief',
-        descVi: 'Gọi /ckm:form-cro với brief task cụ thể',
-        explainEn: '/ckm:form-cro starts the Form CRO flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: When the user wants to optimize any form that is NOT signup/registration — including lead capture forms, contact forms, demo request forms, application forms, survey forms, or checkout forms. Also use when the user mentions \'form optimization,\' \'lead form conversions,\' \'form friction,\' \'form fields,\' \'form completion rate,\' or \'contact form.\' For signup/registration forms, see signup-flow-cro. For popups containing forms, see popup-cro.',
-        explainVi: '/ckm:form-cro bắt đầu flow Form CRO. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: When the user wants to optimize any form that is NOT signup/registration — including lead capture forms, contact forms, demo request forms, application forms, survey forms, or checkout forms. Also use when the user mentions \'form optimization,\' \'lead form conversions,\' \'form friction,\' \'form fields,\' \'form completion rate,\' or \'contact form.\' For signup/registration forms, see signup-flow-cro. For popups containing forms, see popup-cro.',
-        codeSnippet: '> /ckm:form-cro \'Form CRO for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:form-cro',
+        descEn: 'Invoke /ak:form-cro with a concrete task brief',
+        descVi: 'Gọi /ak:form-cro với brief task cụ thể',
+        explainEn: '/ak:form-cro starts the Form CRO flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: When the user wants to optimize any form that is NOT signup/registration — including lead capture forms, contact forms, demo request forms, application forms, survey forms, or checkout forms. Also use when the user mentions \'form optimization,\' \'lead form conversions,\' \'form friction,\' \'form fields,\' \'form completion rate,\' or \'contact form.\' For signup/registration forms, see signup-flow-cro. For popups containing forms, see popup-cro.',
+        explainVi: '/ak:form-cro bắt đầu flow Form CRO. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: When the user wants to optimize any form that is NOT signup/registration — including lead capture forms, contact forms, demo request forms, application forms, survey forms, or checkout forms. Also use when the user mentions \'form optimization,\' \'lead form conversions,\' \'form friction,\' \'form fields,\' \'form completion rate,\' or \'contact form.\' For signup/registration forms, see signup-flow-cro. For popups containing forms, see popup-cro.',
+        codeSnippet: '> /ak:form-cro \'Form CRO for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -8157,8 +8157,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:form-cro path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:form-cro đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:form-cro path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:form-cro đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -8179,10 +8179,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:free-tool-strategy — Free Tool Strategy ─────────────────────────────
+  // ─── /ak:free-tool-strategy — Free Tool Strategy ─────────────────────────────
   {
     id: 'free-tool-strategy',
-    command: '/ckm:free-tool-strategy',
+    command: '/ak:free-tool-strategy',
     kit: 'marketer',
     titleEn: 'Free Tool Strategy',
     titleVi: 'Free Tool Strategy',
@@ -8194,12 +8194,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'fts-input',
         type: 'user-input',
-        name: '/ckm:free-tool-strategy',
-        descEn: 'Invoke /ckm:free-tool-strategy with a concrete task brief',
-        descVi: 'Gọi /ckm:free-tool-strategy với brief task cụ thể',
-        explainEn: '/ckm:free-tool-strategy starts the Free Tool Strategy flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: When the user wants to plan, evaluate, or build a free tool for marketing purposes — lead generation, SEO value, or brand awareness. Also use when the user mentions \'engineering as marketing,\' \'free tool,\' \'marketing tool,\' \'calculator,\' \'generator,\' \'interactive tool,\' \'lead gen tool,\' \'build a tool for leads,\' or \'free resource.\' This skill bridges engineering and marketing — useful for founders and technical marketers.',
-        explainVi: '/ckm:free-tool-strategy bắt đầu flow Free Tool Strategy. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: When the user wants to plan, evaluate, or build a free tool for marketing purposes — lead generation, SEO value, or brand awareness. Also use when the user mentions \'engineering as marketing,\' \'free tool,\' \'marketing tool,\' \'calculator,\' \'generator,\' \'interactive tool,\' \'lead gen tool,\' \'build a tool for leads,\' or \'free resource.\' This skill bridges engineering and marketing — useful for founders and technical marketers.',
-        codeSnippet: '> /ckm:free-tool-strategy \'Free Tool Strategy for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:free-tool-strategy',
+        descEn: 'Invoke /ak:free-tool-strategy with a concrete task brief',
+        descVi: 'Gọi /ak:free-tool-strategy với brief task cụ thể',
+        explainEn: '/ak:free-tool-strategy starts the Free Tool Strategy flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: When the user wants to plan, evaluate, or build a free tool for marketing purposes — lead generation, SEO value, or brand awareness. Also use when the user mentions \'engineering as marketing,\' \'free tool,\' \'marketing tool,\' \'calculator,\' \'generator,\' \'interactive tool,\' \'lead gen tool,\' \'build a tool for leads,\' or \'free resource.\' This skill bridges engineering and marketing — useful for founders and technical marketers.',
+        explainVi: '/ak:free-tool-strategy bắt đầu flow Free Tool Strategy. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: When the user wants to plan, evaluate, or build a free tool for marketing purposes — lead generation, SEO value, or brand awareness. Also use when the user mentions \'engineering as marketing,\' \'free tool,\' \'marketing tool,\' \'calculator,\' \'generator,\' \'interactive tool,\' \'lead gen tool,\' \'build a tool for leads,\' or \'free resource.\' This skill bridges engineering and marketing — useful for founders and technical marketers.',
+        codeSnippet: '> /ak:free-tool-strategy \'Free Tool Strategy for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -8234,8 +8234,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:free-tool-strategy path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:free-tool-strategy đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:free-tool-strategy path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:free-tool-strategy đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -8256,10 +8256,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:funnel — Funnel ─────────────────────────────
+  // ─── /ak:funnel — Funnel ─────────────────────────────
   {
     id: 'funnel',
-    command: '/ckm:funnel',
+    command: '/ak:funnel',
     kit: 'marketer',
     titleEn: 'Funnel',
     titleVi: 'Funnel',
@@ -8271,12 +8271,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'f-input',
         type: 'user-input',
-        name: '/ckm:funnel',
-        descEn: 'Invoke /ckm:funnel with a concrete task brief',
-        descVi: 'Gọi /ckm:funnel với brief task cụ thể',
-        explainEn: '/ckm:funnel starts the Funnel flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: 💡💡 Funnel design and optimization',
-        explainVi: '/ckm:funnel bắt đầu flow Funnel. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: 💡💡 Funnel design and optimization',
-        codeSnippet: '> /ckm:funnel \'Funnel for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:funnel',
+        descEn: 'Invoke /ak:funnel with a concrete task brief',
+        descVi: 'Gọi /ak:funnel với brief task cụ thể',
+        explainEn: '/ak:funnel starts the Funnel flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: 💡💡 Funnel design and optimization',
+        explainVi: '/ak:funnel bắt đầu flow Funnel. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: 💡💡 Funnel design and optimization',
+        codeSnippet: '> /ak:funnel \'Funnel for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -8311,8 +8311,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:funnel path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:funnel đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:funnel path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:funnel đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -8333,10 +8333,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:gamification-marketing — Gamification Marketing ─────────────────────────────
+  // ─── /ak:gamification-marketing — Gamification Marketing ─────────────────────────────
   {
     id: 'gamification-marketing',
-    command: '/ckm:gamification-marketing',
+    command: '/ak:gamification-marketing',
     kit: 'marketer',
     titleEn: 'Gamification Marketing',
     titleVi: 'Gamification Marketing',
@@ -8348,12 +8348,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'gm-input',
         type: 'user-input',
-        name: '/ckm:gamification-marketing',
-        descEn: 'Invoke /ckm:gamification-marketing with a concrete task brief',
-        descVi: 'Gọi /ckm:gamification-marketing với brief task cụ thể',
-        explainEn: '/ckm:gamification-marketing starts the Gamification Marketing flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Design gamified marketing campaigns using points, badges, leaderboards, streaks, challenges. Use for loyalty programs, referral campaigns, onboarding flows, engagement boosts, email gamification. Provides mechanics selection, psychology alignment, strategy docs, templates, KPIs.',
-        explainVi: '/ckm:gamification-marketing bắt đầu flow Gamification Marketing. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Design gamified marketing campaigns using points, badges, leaderboards, streaks, challenges. Use for loyalty programs, referral campaigns, onboarding flows, engagement boosts, email gamification. Provides mechanics selection, psychology alignment, strategy docs, templates, KPIs.',
-        codeSnippet: '> /ckm:gamification-marketing \'Gamification Marketing for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:gamification-marketing',
+        descEn: 'Invoke /ak:gamification-marketing with a concrete task brief',
+        descVi: 'Gọi /ak:gamification-marketing với brief task cụ thể',
+        explainEn: '/ak:gamification-marketing starts the Gamification Marketing flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Design gamified marketing campaigns using points, badges, leaderboards, streaks, challenges. Use for loyalty programs, referral campaigns, onboarding flows, engagement boosts, email gamification. Provides mechanics selection, psychology alignment, strategy docs, templates, KPIs.',
+        explainVi: '/ak:gamification-marketing bắt đầu flow Gamification Marketing. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Design gamified marketing campaigns using points, badges, leaderboards, streaks, challenges. Use for loyalty programs, referral campaigns, onboarding flows, engagement boosts, email gamification. Provides mechanics selection, psychology alignment, strategy docs, templates, KPIs.',
+        codeSnippet: '> /ak:gamification-marketing \'Gamification Marketing for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -8388,8 +8388,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:gamification-marketing path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:gamification-marketing đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:gamification-marketing path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:gamification-marketing đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -8410,10 +8410,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:hub — HUB ─────────────────────────────
+  // ─── /ak:hub — HUB ─────────────────────────────
   {
     id: 'hub',
-    command: '/ckm:hub',
+    command: '/ak:hub',
     kit: 'marketer',
     titleEn: 'HUB',
     titleVi: 'HUB',
@@ -8425,12 +8425,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'h-input',
         type: 'user-input',
-        name: '/ckm:hub',
-        descEn: 'Invoke /ckm:hub with a concrete task brief',
-        descVi: 'Gọi /ckm:hub với brief task cụ thể',
-        explainEn: '/ckm:hub starts the HUB flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Open Content Hub + Marketing Dashboard',
-        explainVi: '/ckm:hub bắt đầu flow HUB. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Open Content Hub + Marketing Dashboard',
-        codeSnippet: '> /ckm:hub \'HUB for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:hub',
+        descEn: 'Invoke /ak:hub with a concrete task brief',
+        descVi: 'Gọi /ak:hub với brief task cụ thể',
+        explainEn: '/ak:hub starts the HUB flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Open Content Hub + Marketing Dashboard',
+        explainVi: '/ak:hub bắt đầu flow HUB. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Open Content Hub + Marketing Dashboard',
+        codeSnippet: '> /ak:hub \'HUB for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -8465,8 +8465,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:hub path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:hub đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:hub path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:hub đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -8487,10 +8487,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:init — Init ─────────────────────────────
+  // ─── /ak:init — Init ─────────────────────────────
   {
     id: 'init',
-    command: '/ckm:init',
+    command: '/ak:init',
     kit: 'marketer',
     titleEn: 'Init',
     titleVi: 'Init',
@@ -8502,12 +8502,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'i-input',
         type: 'user-input',
-        name: '/ckm:init',
-        descEn: 'Invoke /ckm:init with a concrete task brief',
-        descVi: 'Gọi /ckm:init với brief task cụ thể',
-        explainEn: '/ckm:init starts the Init flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: 💡💡💡💡 Initialize marketing project',
-        explainVi: '/ckm:init bắt đầu flow Init. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: 💡💡💡💡 Initialize marketing project',
-        codeSnippet: '> /ckm:init \'Init for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:init',
+        descEn: 'Invoke /ak:init with a concrete task brief',
+        descVi: 'Gọi /ak:init với brief task cụ thể',
+        explainEn: '/ak:init starts the Init flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: 💡💡💡💡 Initialize marketing project',
+        explainVi: '/ak:init bắt đầu flow Init. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: 💡💡💡💡 Initialize marketing project',
+        codeSnippet: '> /ak:init \'Init for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -8542,8 +8542,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:init path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:init đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:init path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:init đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -8564,27 +8564,27 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:kit-builder — KIT Builder ─────────────────────────────
+  // ─── /ak:kit-builder — KIT Builder ─────────────────────────────
   {
     id: 'kit-builder',
-    command: '/ckm:kit-builder',
+    command: '/ak:kit-builder',
     kit: 'marketer',
     titleEn: 'KIT Builder',
     titleVi: 'KIT Builder',
-    descEn: 'Build ClaudeKit Marketing components - skills, agents, commands, workflows. Use when creating new automation, extending marketing capabilities, or understanding kit structure. Includes templates, examples, and init scripts.',
-    descVi: 'Xây dựng component ClaudeKit Marketing — skills, agent, command, workflow. Dùng khi tạo automation mới, mở rộng khả năng marketing, hoặc tìm hiểu cấu trúc kit.',
+    descEn: 'Build AgentKit Marketing components - skills, agents, commands, workflows. Use when creating new automation, extending marketing capabilities, or understanding kit structure. Includes templates, examples, and init scripts.',
+    descVi: 'Xây dựng component AgentKit Marketing — skills, agent, command, workflow. Dùng khi tạo automation mới, mở rộng khả năng marketing, hoặc tìm hiểu cấu trúc kit.',
     icon: '<path d="M12 2a10 10 0 0 0-7 17.12"/><path d="M12 2a10 10 0 0 1 7 17.12"/><path d="M2 12h20"/><path d="M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10"/><path d="M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10"/>',
     accentColor: 'teal',
     steps: [
       {
         id: 'kb-input',
         type: 'user-input',
-        name: '/ckm:kit-builder',
-        descEn: 'Invoke /ckm:kit-builder with a concrete task brief',
-        descVi: 'Gọi /ckm:kit-builder với brief task cụ thể',
-        explainEn: '/ckm:kit-builder starts the KIT Builder flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Build ClaudeKit Marketing components - skills, agents, commands, workflows. Use when creating new automation, extending marketing capabilities, or understanding kit structure. Includes templates, examples, and init scripts.',
-        explainVi: '/ckm:kit-builder bắt đầu flow KIT Builder. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Build ClaudeKit Marketing components - skills, agents, commands, workflows. Use when creating new automation, extending marketing capabilities, or understanding kit structure. Includes templates, examples, and init scripts.',
-        codeSnippet: '> /ckm:kit-builder \'KIT Builder for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:kit-builder',
+        descEn: 'Invoke /ak:kit-builder with a concrete task brief',
+        descVi: 'Gọi /ak:kit-builder với brief task cụ thể',
+        explainEn: '/ak:kit-builder starts the KIT Builder flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Build AgentKit Marketing components - skills, agents, commands, workflows. Use when creating new automation, extending marketing capabilities, or understanding kit structure. Includes templates, examples, and init scripts.',
+        explainVi: '/ak:kit-builder bắt đầu flow KIT Builder. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Build AgentKit Marketing components - skills, agents, commands, workflows. Use when creating new automation, extending marketing capabilities, or understanding kit structure. Includes templates, examples, and init scripts.',
+        codeSnippet: '> /ak:kit-builder \'KIT Builder for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -8619,8 +8619,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:kit-builder path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:kit-builder đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:kit-builder path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:kit-builder đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -8641,10 +8641,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:launch-strategy — Launch Strategy ─────────────────────────────
+  // ─── /ak:launch-strategy — Launch Strategy ─────────────────────────────
   {
     id: 'launch-strategy',
-    command: '/ckm:launch-strategy',
+    command: '/ak:launch-strategy',
     kit: 'marketer',
     titleEn: 'Launch Strategy',
     titleVi: 'Launch Strategy',
@@ -8656,12 +8656,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'ls-input',
         type: 'user-input',
-        name: '/ckm:launch-strategy',
-        descEn: 'Invoke /ckm:launch-strategy with a concrete task brief',
-        descVi: 'Gọi /ckm:launch-strategy với brief task cụ thể',
-        explainEn: "/ckm:launch-strategy starts the Launch Strategy flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: When the user wants to plan a product launch, feature announcement, or release strategy. Also use when the user mentions 'launch,' 'Product Hunt,' 'feature release,' 'announcement,' 'go-to-market,' 'beta launch,' 'early access,' 'waitlist,' or 'product update.' This skill covers phased launches, channel strategy, and ongoing launch momentum.",
-        explainVi: "/ckm:launch-strategy bắt đầu flow Launch Strategy. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: When the user wants to plan a product launch, feature announcement, or release strategy. Also use when the user mentions 'launch,' 'Product Hunt,' 'feature release,' 'announcement,' 'go-to-market,' 'beta launch,' 'early access,' 'waitlist,' or 'product update.' This skill covers phased launches, channel strategy, and ongoing launch momentum.",
-        codeSnippet: '> /ckm:launch-strategy \'Launch Strategy for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:launch-strategy',
+        descEn: 'Invoke /ak:launch-strategy with a concrete task brief',
+        descVi: 'Gọi /ak:launch-strategy với brief task cụ thể',
+        explainEn: "/ak:launch-strategy starts the Launch Strategy flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: When the user wants to plan a product launch, feature announcement, or release strategy. Also use when the user mentions 'launch,' 'Product Hunt,' 'feature release,' 'announcement,' 'go-to-market,' 'beta launch,' 'early access,' 'waitlist,' or 'product update.' This skill covers phased launches, channel strategy, and ongoing launch momentum.",
+        explainVi: "/ak:launch-strategy bắt đầu flow Launch Strategy. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: When the user wants to plan a product launch, feature announcement, or release strategy. Also use when the user mentions 'launch,' 'Product Hunt,' 'feature release,' 'announcement,' 'go-to-market,' 'beta launch,' 'early access,' 'waitlist,' or 'product update.' This skill covers phased launches, channel strategy, and ongoing launch momentum.",
+        codeSnippet: '> /ak:launch-strategy \'Launch Strategy for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -8696,8 +8696,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:launch-strategy path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:launch-strategy đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:launch-strategy path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:launch-strategy đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -8718,10 +8718,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:logo-design — Logo Design ─────────────────────────────
+  // ─── /ak:logo-design — Logo Design ─────────────────────────────
   {
     id: 'logo-design',
-    command: '/ckm:logo-design',
+    command: '/ak:logo-design',
     kit: 'marketer',
     titleEn: 'Logo Design',
     titleVi: 'Logo Design',
@@ -8733,12 +8733,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'ld-input',
         type: 'user-input',
-        name: '/ckm:logo-design',
-        descEn: 'Invoke /ckm:logo-design with a concrete task brief',
-        descVi: 'Gọi /ckm:logo-design với brief task cụ thể',
-        explainEn: '/ckm:logo-design starts the Logo Design flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Logo design intelligence with 55 styles, 30 color palettes, 25 industries. Generate logos with Gemini Nano Banana model, search styles/colors/industries. Actions: design, create, generate logo. Industries: tech, healthcare, finance, food, fashion, fitness. Styles: minimalist, vintage, luxury, geometric, abstract, mascot, emblem. Features: AI prompt generation, design briefs, color psychology.',
-        explainVi: '/ckm:logo-design bắt đầu flow Logo Design. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Logo design intelligence with 55 styles, 30 color palettes, 25 industries. Generate logos with Gemini Nano Banana model, search styles/colors/industries. Actions: design, create, generate logo. Industries: tech, healthcare, finance, food, fashion, fitness. Styles: minimalist, vintage, luxury, geometric, abstract, mascot, emblem. Features: AI prompt generation, design briefs, color psychology.',
-        codeSnippet: '> /ckm:logo-design \'Logo Design for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:logo-design',
+        descEn: 'Invoke /ak:logo-design with a concrete task brief',
+        descVi: 'Gọi /ak:logo-design với brief task cụ thể',
+        explainEn: '/ak:logo-design starts the Logo Design flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Logo design intelligence with 55 styles, 30 color palettes, 25 industries. Generate logos with Gemini Nano Banana model, search styles/colors/industries. Actions: design, create, generate logo. Industries: tech, healthcare, finance, food, fashion, fitness. Styles: minimalist, vintage, luxury, geometric, abstract, mascot, emblem. Features: AI prompt generation, design briefs, color psychology.',
+        explainVi: '/ak:logo-design bắt đầu flow Logo Design. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Logo design intelligence with 55 styles, 30 color palettes, 25 industries. Generate logos with Gemini Nano Banana model, search styles/colors/industries. Actions: design, create, generate logo. Industries: tech, healthcare, finance, food, fashion, fitness. Styles: minimalist, vintage, luxury, geometric, abstract, mascot, emblem. Features: AI prompt generation, design briefs, color psychology.',
+        codeSnippet: '> /ak:logo-design \'Logo Design for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -8773,8 +8773,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:logo-design path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:logo-design đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:logo-design path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:logo-design đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -8795,10 +8795,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:marketing-dashboard — Marketing Dashboard ─────────────────────────────
+  // ─── /ak:marketing-dashboard — Marketing Dashboard ─────────────────────────────
   {
     id: 'marketing-dashboard',
-    command: '/ckm:marketing-dashboard',
+    command: '/ak:marketing-dashboard',
     kit: 'marketer',
     titleEn: 'Marketing Dashboard',
     titleVi: 'Marketing Dashboard',
@@ -8810,12 +8810,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'md-input',
         type: 'user-input',
-        name: '/ckm:marketing-dashboard',
-        descEn: 'Invoke /ckm:marketing-dashboard with a concrete task brief',
-        descVi: 'Gọi /ckm:marketing-dashboard với brief task cụ thể',
-        explainEn: '/ckm:marketing-dashboard starts the Marketing Dashboard flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Local-first marketing command center for solopreneurs. Manage campaigns, content, and assets with Claude Code AI automation.',
-        explainVi: '/ckm:marketing-dashboard bắt đầu flow Marketing Dashboard. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Local-first marketing command center for solopreneurs. Manage campaigns, content, and assets with Claude Code AI automation.',
-        codeSnippet: '> /ckm:marketing-dashboard \'Marketing Dashboard for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:marketing-dashboard',
+        descEn: 'Invoke /ak:marketing-dashboard with a concrete task brief',
+        descVi: 'Gọi /ak:marketing-dashboard với brief task cụ thể',
+        explainEn: '/ak:marketing-dashboard starts the Marketing Dashboard flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Local-first marketing command center for solopreneurs. Manage campaigns, content, and assets with Claude Code AI automation.',
+        explainVi: '/ak:marketing-dashboard bắt đầu flow Marketing Dashboard. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Local-first marketing command center for solopreneurs. Manage campaigns, content, and assets with Claude Code AI automation.',
+        codeSnippet: '> /ak:marketing-dashboard \'Marketing Dashboard for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -8850,8 +8850,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:marketing-dashboard path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:marketing-dashboard đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:marketing-dashboard path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:marketing-dashboard đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -8872,10 +8872,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:marketing-ideas — Marketing Ideas ─────────────────────────────
+  // ─── /ak:marketing-ideas — Marketing Ideas ─────────────────────────────
   {
     id: 'marketing-ideas',
-    command: '/ckm:marketing-ideas',
+    command: '/ak:marketing-ideas',
     kit: 'marketer',
     titleEn: 'Marketing Ideas',
     titleVi: 'Ý tưởng marketing',
@@ -8887,12 +8887,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'mi-input',
         type: 'user-input',
-        name: '/ckm:marketing-ideas',
-        descEn: 'Invoke /ckm:marketing-ideas with a concrete task brief',
-        descVi: 'Gọi /ckm:marketing-ideas với brief task cụ thể',
-        explainEn: "/ckm:marketing-ideas starts the Marketing Ideas flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: When the user needs marketing ideas, inspiration, or strategies for their SaaS or software product. Also use when the user asks for 'marketing ideas,' 'growth ideas,' 'how to market,' 'marketing strategies,' 'marketing tactics,' 'ways to promote,' or 'ideas to grow.' This skill provides 140 proven marketing approaches organized by category.",
-        explainVi: "/ckm:marketing-ideas bắt đầu flow ý tưởng marketing. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: dùng khi cần ý tưởng, cảm hứng, hoặc chiến lược marketing cho SaaS hay sản phẩm phần mềm. Cũng dùng khi user hỏi về marketing ideas, growth ideas, cách marketing, marketing strategies, marketing tactics, cách quảng bá, hoặc ý tưởng tăng trưởng. Skill này cung cấp 140 hướng marketing đã được phân loại theo category.",
-        codeSnippet: '> /ckm:marketing-ideas \'Marketing Ideas for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:marketing-ideas',
+        descEn: 'Invoke /ak:marketing-ideas with a concrete task brief',
+        descVi: 'Gọi /ak:marketing-ideas với brief task cụ thể',
+        explainEn: "/ak:marketing-ideas starts the Marketing Ideas flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: When the user needs marketing ideas, inspiration, or strategies for their SaaS or software product. Also use when the user asks for 'marketing ideas,' 'growth ideas,' 'how to market,' 'marketing strategies,' 'marketing tactics,' 'ways to promote,' or 'ideas to grow.' This skill provides 140 proven marketing approaches organized by category.",
+        explainVi: "/ak:marketing-ideas bắt đầu flow ý tưởng marketing. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: dùng khi cần ý tưởng, cảm hứng, hoặc chiến lược marketing cho SaaS hay sản phẩm phần mềm. Cũng dùng khi user hỏi về marketing ideas, growth ideas, cách marketing, marketing strategies, marketing tactics, cách quảng bá, hoặc ý tưởng tăng trưởng. Skill này cung cấp 140 hướng marketing đã được phân loại theo category.",
+        codeSnippet: '> /ak:marketing-ideas \'Marketing Ideas for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -8927,8 +8927,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:marketing-ideas path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:marketing-ideas đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:marketing-ideas path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:marketing-ideas đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -8949,10 +8949,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:marketing-planning — Marketing Planning ─────────────────────────────
+  // ─── /ak:marketing-planning — Marketing Planning ─────────────────────────────
   {
     id: 'marketing-planning',
-    command: '/ckm:marketing-planning',
+    command: '/ak:marketing-planning',
     kit: 'marketer',
     titleEn: 'Marketing Planning',
     titleVi: 'Marketing Planning',
@@ -8964,12 +8964,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'mp-input',
         type: 'user-input',
-        name: '/ckm:marketing-planning',
-        descEn: 'Invoke /ckm:marketing-planning with a concrete task brief',
-        descVi: 'Gọi /ckm:marketing-planning với brief task cụ thể',
-        explainEn: '/ckm:marketing-planning starts the Marketing Planning flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Plan marketing strategies, campaigns, content calendars, and initiatives using proven frameworks (RACE, SOSTAC, STP). Activates marketing-research for data-driven insights.',
-        explainVi: '/ckm:marketing-planning bắt đầu flow Marketing Planning. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Plan marketing strategies, campaigns, content calendars, and initiatives using proven frameworks (RACE, SOSTAC, STP). Activates marketing-research for data-driven insights.',
-        codeSnippet: '> /ckm:marketing-planning \'Marketing Planning for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:marketing-planning',
+        descEn: 'Invoke /ak:marketing-planning with a concrete task brief',
+        descVi: 'Gọi /ak:marketing-planning với brief task cụ thể',
+        explainEn: '/ak:marketing-planning starts the Marketing Planning flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Plan marketing strategies, campaigns, content calendars, and initiatives using proven frameworks (RACE, SOSTAC, STP). Activates marketing-research for data-driven insights.',
+        explainVi: '/ak:marketing-planning bắt đầu flow Marketing Planning. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Plan marketing strategies, campaigns, content calendars, and initiatives using proven frameworks (RACE, SOSTAC, STP). Activates marketing-research for data-driven insights.',
+        codeSnippet: '> /ak:marketing-planning \'Marketing Planning for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -9004,8 +9004,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:marketing-planning path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:marketing-planning đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:marketing-planning path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:marketing-planning đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -9026,10 +9026,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:marketing-psychology — Marketing Psychology ─────────────────────────────
+  // ─── /ak:marketing-psychology — Marketing Psychology ─────────────────────────────
   {
     id: 'marketing-psychology',
-    command: '/ckm:marketing-psychology',
+    command: '/ak:marketing-psychology',
     kit: 'marketer',
     titleEn: 'Marketing Psychology',
     titleVi: 'Marketing Psychology',
@@ -9041,12 +9041,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'mp-input',
         type: 'user-input',
-        name: '/ckm:marketing-psychology',
-        descEn: 'Invoke /ckm:marketing-psychology with a concrete task brief',
-        descVi: 'Gọi /ckm:marketing-psychology với brief task cụ thể',
-        explainEn: "/ckm:marketing-psychology starts the Marketing Psychology flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: When the user wants to apply psychological principles, mental models, or behavioral science to marketing. Also use when the user mentions 'psychology,' 'mental models,' 'cognitive bias,' 'persuasion,' 'behavioral science,' 'why people buy,' 'decision-making,' or 'consumer behavior.' This skill provides 70+ mental models organized for marketing application.",
-        explainVi: "/ckm:marketing-psychology bắt đầu flow Marketing Psychology. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: When the user wants to apply psychological principles, mental models, or behavioral science to marketing. Also use when the user mentions 'psychology,' 'mental models,' 'cognitive bias,' 'persuasion,' 'behavioral science,' 'why people buy,' 'decision-making,' or 'consumer behavior.' This skill provides 70+ mental models organized for marketing application.",
-        codeSnippet: '> /ckm:marketing-psychology \'Marketing Psychology for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:marketing-psychology',
+        descEn: 'Invoke /ak:marketing-psychology with a concrete task brief',
+        descVi: 'Gọi /ak:marketing-psychology với brief task cụ thể',
+        explainEn: "/ak:marketing-psychology starts the Marketing Psychology flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: When the user wants to apply psychological principles, mental models, or behavioral science to marketing. Also use when the user mentions 'psychology,' 'mental models,' 'cognitive bias,' 'persuasion,' 'behavioral science,' 'why people buy,' 'decision-making,' or 'consumer behavior.' This skill provides 70+ mental models organized for marketing application.",
+        explainVi: "/ak:marketing-psychology bắt đầu flow Marketing Psychology. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: When the user wants to apply psychological principles, mental models, or behavioral science to marketing. Also use when the user mentions 'psychology,' 'mental models,' 'cognitive bias,' 'persuasion,' 'behavioral science,' 'why people buy,' 'decision-making,' or 'consumer behavior.' This skill provides 70+ mental models organized for marketing application.",
+        codeSnippet: '> /ak:marketing-psychology \'Marketing Psychology for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -9081,8 +9081,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:marketing-psychology path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:marketing-psychology đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:marketing-psychology path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:marketing-psychology đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -9103,10 +9103,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:marketing-research — Marketing Research ─────────────────────────────
+  // ─── /ak:marketing-research — Marketing Research ─────────────────────────────
   {
     id: 'marketing-research',
-    command: '/ckm:marketing-research',
+    command: '/ak:marketing-research',
     kit: 'marketer',
     titleEn: 'Marketing Research',
     titleVi: 'Marketing Research',
@@ -9118,12 +9118,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'mr-input',
         type: 'user-input',
-        name: '/ckm:marketing-research',
-        descEn: 'Invoke /ckm:marketing-research with a concrete task brief',
-        descVi: 'Gọi /ckm:marketing-research với brief task cụ thể',
-        explainEn: '/ckm:marketing-research starts the Marketing Research flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Research market trends, competitors, audience insights, and marketing best practices. Use before marketing-planning for data-driven strategy.',
-        explainVi: '/ckm:marketing-research bắt đầu flow Marketing Research. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Research market trends, competitors, audience insights, and marketing best practices. Use before marketing-planning for data-driven strategy.',
-        codeSnippet: '> /ckm:marketing-research \'Marketing Research for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:marketing-research',
+        descEn: 'Invoke /ak:marketing-research with a concrete task brief',
+        descVi: 'Gọi /ak:marketing-research với brief task cụ thể',
+        explainEn: '/ak:marketing-research starts the Marketing Research flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Research market trends, competitors, audience insights, and marketing best practices. Use before marketing-planning for data-driven strategy.',
+        explainVi: '/ak:marketing-research bắt đầu flow Marketing Research. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Research market trends, competitors, audience insights, and marketing best practices. Use before marketing-planning for data-driven strategy.',
+        codeSnippet: '> /ak:marketing-research \'Marketing Research for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -9158,8 +9158,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:marketing-research path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:marketing-research đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:marketing-research path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:marketing-research đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -9180,10 +9180,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:onboarding-cro — Onboarding CRO ─────────────────────────────
+  // ─── /ak:onboarding-cro — Onboarding CRO ─────────────────────────────
   {
     id: 'onboarding-cro',
-    command: '/ckm:onboarding-cro',
+    command: '/ak:onboarding-cro',
     kit: 'marketer',
     titleEn: 'Onboarding CRO',
     titleVi: 'Onboarding CRO',
@@ -9195,12 +9195,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'oc-input',
         type: 'user-input',
-        name: '/ckm:onboarding-cro',
-        descEn: 'Invoke /ckm:onboarding-cro with a concrete task brief',
-        descVi: 'Gọi /ckm:onboarding-cro với brief task cụ thể',
-        explainEn: '/ckm:onboarding-cro starts the Onboarding CRO flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: When the user wants to optimize post-signup onboarding, user activation, first-run experience, or time-to-value. Also use when the user mentions \'onboarding flow,\' \'activation rate,\' \'user activation,\' \'first-run experience,\' \'empty states,\' \'onboarding checklist,\' \'aha moment,\' or \'new user experience.\' For signup/registration optimization, see signup-flow-cro. For ongoing email sequences, see email-sequence.',
-        explainVi: '/ckm:onboarding-cro bắt đầu flow Onboarding CRO. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: When the user wants to optimize post-signup onboarding, user activation, first-run experience, or time-to-value. Also use when the user mentions \'onboarding flow,\' \'activation rate,\' \'user activation,\' \'first-run experience,\' \'empty states,\' \'onboarding checklist,\' \'aha moment,\' or \'new user experience.\' For signup/registration optimization, see signup-flow-cro. For ongoing email sequences, see email-sequence.',
-        codeSnippet: '> /ckm:onboarding-cro \'Onboarding CRO for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:onboarding-cro',
+        descEn: 'Invoke /ak:onboarding-cro with a concrete task brief',
+        descVi: 'Gọi /ak:onboarding-cro với brief task cụ thể',
+        explainEn: '/ak:onboarding-cro starts the Onboarding CRO flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: When the user wants to optimize post-signup onboarding, user activation, first-run experience, or time-to-value. Also use when the user mentions \'onboarding flow,\' \'activation rate,\' \'user activation,\' \'first-run experience,\' \'empty states,\' \'onboarding checklist,\' \'aha moment,\' or \'new user experience.\' For signup/registration optimization, see signup-flow-cro. For ongoing email sequences, see email-sequence.',
+        explainVi: '/ak:onboarding-cro bắt đầu flow Onboarding CRO. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: When the user wants to optimize post-signup onboarding, user activation, first-run experience, or time-to-value. Also use when the user mentions \'onboarding flow,\' \'activation rate,\' \'user activation,\' \'first-run experience,\' \'empty states,\' \'onboarding checklist,\' \'aha moment,\' or \'new user experience.\' For signup/registration optimization, see signup-flow-cro. For ongoing email sequences, see email-sequence.',
+        codeSnippet: '> /ak:onboarding-cro \'Onboarding CRO for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -9235,8 +9235,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:onboarding-cro path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:onboarding-cro đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:onboarding-cro path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:onboarding-cro đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -9257,10 +9257,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:paid-ads — Paid ADS ─────────────────────────────
+  // ─── /ak:paid-ads — Paid ADS ─────────────────────────────
   {
     id: 'paid-ads',
-    command: '/ckm:paid-ads',
+    command: '/ak:paid-ads',
     kit: 'marketer',
     titleEn: 'Paid ADS',
     titleVi: 'Paid ADS',
@@ -9272,12 +9272,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'pa-input',
         type: 'user-input',
-        name: '/ckm:paid-ads',
-        descEn: 'Invoke /ckm:paid-ads with a concrete task brief',
-        descVi: 'Gọi /ckm:paid-ads với brief task cụ thể',
-        explainEn: "/ckm:paid-ads starts the Paid ADS flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: When the user wants help with paid advertising campaigns on Google Ads, Meta (Facebook/Instagram), LinkedIn, Twitter/X, or other ad platforms. Also use when the user mentions 'PPC,' 'paid media,' 'ad copy,' 'ad creative,' 'ROAS,' 'CPA,' 'ad campaign,' 'retargeting,' or 'audience targeting.' This skill covers campaign strategy, ad creation, audience targeting, and optimization.",
-        explainVi: "/ckm:paid-ads bắt đầu flow Paid ADS. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: When the user wants help with paid advertising campaigns on Google Ads, Meta (Facebook/Instagram), LinkedIn, Twitter/X, or other ad platforms. Also use when the user mentions 'PPC,' 'paid media,' 'ad copy,' 'ad creative,' 'ROAS,' 'CPA,' 'ad campaign,' 'retargeting,' or 'audience targeting.' This skill covers campaign strategy, ad creation, audience targeting, and optimization.",
-        codeSnippet: '> /ckm:paid-ads \'Paid ADS for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:paid-ads',
+        descEn: 'Invoke /ak:paid-ads with a concrete task brief',
+        descVi: 'Gọi /ak:paid-ads với brief task cụ thể',
+        explainEn: "/ak:paid-ads starts the Paid ADS flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: When the user wants help with paid advertising campaigns on Google Ads, Meta (Facebook/Instagram), LinkedIn, Twitter/X, or other ad platforms. Also use when the user mentions 'PPC,' 'paid media,' 'ad copy,' 'ad creative,' 'ROAS,' 'CPA,' 'ad campaign,' 'retargeting,' or 'audience targeting.' This skill covers campaign strategy, ad creation, audience targeting, and optimization.",
+        explainVi: "/ak:paid-ads bắt đầu flow Paid ADS. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: When the user wants help with paid advertising campaigns on Google Ads, Meta (Facebook/Instagram), LinkedIn, Twitter/X, or other ad platforms. Also use when the user mentions 'PPC,' 'paid media,' 'ad copy,' 'ad creative,' 'ROAS,' 'CPA,' 'ad campaign,' 'retargeting,' or 'audience targeting.' This skill covers campaign strategy, ad creation, audience targeting, and optimization.",
+        codeSnippet: '> /ak:paid-ads \'Paid ADS for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -9312,8 +9312,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:paid-ads path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:paid-ads đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:paid-ads path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:paid-ads đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -9334,11 +9334,11 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:persona — Persona ─────────────────────────────
-  // ─── /ckm:play — Play ─────────────────────────────
+  // ─── /ak:persona — Persona ─────────────────────────────
+  // ─── /ak:play — Play ─────────────────────────────
   {
     id: 'play',
-    command: '/ckm:play',
+    command: '/ak:play',
     kit: 'marketer',
     titleEn: 'Play',
     titleVi: 'Play',
@@ -9350,12 +9350,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'p-input',
         type: 'user-input',
-        name: '/ckm:play',
-        descEn: 'Invoke /ckm:play with a concrete task brief',
-        descVi: 'Gọi /ckm:play với brief task cụ thể',
-        explainEn: '/ckm:play starts the Play flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: >',
-        explainVi: '/ckm:play bắt đầu flow Play. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: >',
-        codeSnippet: '> /ckm:play \'Play for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:play',
+        descEn: 'Invoke /ak:play with a concrete task brief',
+        descVi: 'Gọi /ak:play với brief task cụ thể',
+        explainEn: '/ak:play starts the Play flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: >',
+        explainVi: '/ak:play bắt đầu flow Play. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: >',
+        codeSnippet: '> /ak:play \'Play for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -9390,8 +9390,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:play path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:play đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:play path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:play đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -9412,10 +9412,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:pricing-strategy — Pricing Strategy ─────────────────────────────
+  // ─── /ak:pricing-strategy — Pricing Strategy ─────────────────────────────
   {
     id: 'pricing-strategy',
-    command: '/ckm:pricing-strategy',
+    command: '/ak:pricing-strategy',
     kit: 'marketer',
     titleEn: 'Pricing Strategy',
     titleVi: 'Pricing Strategy',
@@ -9427,12 +9427,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'ps-input',
         type: 'user-input',
-        name: '/ckm:pricing-strategy',
-        descEn: 'Invoke /ckm:pricing-strategy with a concrete task brief',
-        descVi: 'Gọi /ckm:pricing-strategy với brief task cụ thể',
-        explainEn: "/ckm:pricing-strategy starts the Pricing Strategy flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: When the user wants help with pricing decisions, packaging, or monetization strategy. Also use when the user mentions 'pricing,' 'pricing tiers,' 'freemium,' 'free trial,' 'packaging,' 'price increase,' 'value metric,' 'Van Westendorp,' 'willingness to pay,' or 'monetization.' This skill covers pricing research, tier structure, and packaging strategy.",
-        explainVi: "/ckm:pricing-strategy bắt đầu flow Pricing Strategy. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: When the user wants help with pricing decisions, packaging, or monetization strategy. Also use when the user mentions 'pricing,' 'pricing tiers,' 'freemium,' 'free trial,' 'packaging,' 'price increase,' 'value metric,' 'Van Westendorp,' 'willingness to pay,' or 'monetization.' This skill covers pricing research, tier structure, and packaging strategy.",
-        codeSnippet: '> /ckm:pricing-strategy \'Pricing Strategy for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:pricing-strategy',
+        descEn: 'Invoke /ak:pricing-strategy with a concrete task brief',
+        descVi: 'Gọi /ak:pricing-strategy với brief task cụ thể',
+        explainEn: "/ak:pricing-strategy starts the Pricing Strategy flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: When the user wants help with pricing decisions, packaging, or monetization strategy. Also use when the user mentions 'pricing,' 'pricing tiers,' 'freemium,' 'free trial,' 'packaging,' 'price increase,' 'value metric,' 'Van Westendorp,' 'willingness to pay,' or 'monetization.' This skill covers pricing research, tier structure, and packaging strategy.",
+        explainVi: "/ak:pricing-strategy bắt đầu flow Pricing Strategy. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: When the user wants help with pricing decisions, packaging, or monetization strategy. Also use when the user mentions 'pricing,' 'pricing tiers,' 'freemium,' 'free trial,' 'packaging,' 'price increase,' 'value metric,' 'Van Westendorp,' 'willingness to pay,' or 'monetization.' This skill covers pricing research, tier structure, and packaging strategy.",
+        codeSnippet: '> /ak:pricing-strategy \'Pricing Strategy for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -9467,8 +9467,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:pricing-strategy path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:pricing-strategy đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:pricing-strategy path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:pricing-strategy đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -9489,10 +9489,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:referral-program-building — Referral Program Building ─────────────────────────────
+  // ─── /ak:referral-program-building — Referral Program Building ─────────────────────────────
   {
     id: 'referral-program-building',
-    command: '/ckm:referral-program-building',
+    command: '/ak:referral-program-building',
     kit: 'marketer',
     titleEn: 'Referral Program Building',
     titleVi: 'Referral Program Building',
@@ -9504,12 +9504,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'rpb-input',
         type: 'user-input',
-        name: '/ckm:referral-program-building',
-        descEn: 'Invoke /ckm:referral-program-building with a concrete task brief',
-        descVi: 'Gọi /ckm:referral-program-building với brief task cụ thể',
-        explainEn: '/ckm:referral-program-building starts the Referral Program Building flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Build referral programs for SaaS/digital products. Covers reward structures (two-sided, tiered, multi-step), platform selection (Rewardful, ReferralCandy, Viral Loops, FirstPromoter), technical implementation (tracking, attribution, API patterns), fraud prevention, email templates, and KPI metrics. Use for designing viral growth loops, implementing refer-a-friend features, or optimizing existing referral systems.',
-        explainVi: '/ckm:referral-program-building bắt đầu flow Referral Program Building. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Build referral programs for SaaS/digital products. Covers reward structures (two-sided, tiered, multi-step), platform selection (Rewardful, ReferralCandy, Viral Loops, FirstPromoter), technical implementation (tracking, attribution, API patterns), fraud prevention, email templates, and KPI metrics. Use for designing viral growth loops, implementing refer-a-friend features, or optimizing existing referral systems.',
-        codeSnippet: '> /ckm:referral-program-building \'Referral Program Building for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:referral-program-building',
+        descEn: 'Invoke /ak:referral-program-building with a concrete task brief',
+        descVi: 'Gọi /ak:referral-program-building với brief task cụ thể',
+        explainEn: '/ak:referral-program-building starts the Referral Program Building flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Build referral programs for SaaS/digital products. Covers reward structures (two-sided, tiered, multi-step), platform selection (Rewardful, ReferralCandy, Viral Loops, FirstPromoter), technical implementation (tracking, attribution, API patterns), fraud prevention, email templates, and KPI metrics. Use for designing viral growth loops, implementing refer-a-friend features, or optimizing existing referral systems.',
+        explainVi: '/ak:referral-program-building bắt đầu flow Referral Program Building. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Build referral programs for SaaS/digital products. Covers reward structures (two-sided, tiered, multi-step), platform selection (Rewardful, ReferralCandy, Viral Loops, FirstPromoter), technical implementation (tracking, attribution, API patterns), fraud prevention, email templates, and KPI metrics. Use for designing viral growth loops, implementing refer-a-friend features, or optimizing existing referral systems.',
+        codeSnippet: '> /ak:referral-program-building \'Referral Program Building for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -9544,8 +9544,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:referral-program-building path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:referral-program-building đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:referral-program-building path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:referral-program-building đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -9566,11 +9566,11 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:seo — SEO ─────────────────────────────
-  // ─── /ckm:slides — Slides ─────────────────────────────
+  // ─── /ak:seo — SEO ─────────────────────────────
+  // ─── /ak:slides — Slides ─────────────────────────────
   {
     id: 'slides',
-    command: '/ckm:slides',
+    command: '/ak:slides',
     kit: 'marketer',
     titleEn: 'Slides',
     titleVi: 'Slides',
@@ -9582,12 +9582,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 's-input',
         type: 'user-input',
-        name: '/ckm:slides',
-        descEn: 'Invoke /ckm:slides with a concrete task brief',
-        descVi: 'Gọi /ckm:slides với brief task cụ thể',
-        explainEn: '/ckm:slides starts the Slides flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Create strategic HTML presentations with Chart.js, design tokens, responsive layouts, copywriting formulas, and contextual slide strategies.',
-        explainVi: '/ckm:slides bắt đầu flow Slides. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Create strategic HTML presentations with Chart.js, design tokens, responsive layouts, copywriting formulas, and contextual slide strategies.',
-        codeSnippet: '> /ckm:slides \'Slides for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:slides',
+        descEn: 'Invoke /ak:slides with a concrete task brief',
+        descVi: 'Gọi /ak:slides với brief task cụ thể',
+        explainEn: '/ak:slides starts the Slides flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Create strategic HTML presentations with Chart.js, design tokens, responsive layouts, copywriting formulas, and contextual slide strategies.',
+        explainVi: '/ak:slides bắt đầu flow Slides. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Create strategic HTML presentations with Chart.js, design tokens, responsive layouts, copywriting formulas, and contextual slide strategies.',
+        codeSnippet: '> /ak:slides \'Slides for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -9622,8 +9622,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:slides path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:slides đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:slides path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:slides đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -9644,11 +9644,11 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:social — Social ─────────────────────────────
-  // ─── /ckm:storage — Storage ─────────────────────────────
+  // ─── /ak:social — Social ─────────────────────────────
+  // ─── /ak:storage — Storage ─────────────────────────────
   {
     id: 'storage',
-    command: '/ckm:storage',
+    command: '/ak:storage',
     kit: 'marketer',
     titleEn: 'Storage',
     titleVi: 'Storage',
@@ -9660,12 +9660,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 's-input',
         type: 'user-input',
-        name: '/ckm:storage',
-        descEn: 'Invoke /ckm:storage with a concrete task brief',
-        descVi: 'Gọi /ckm:storage với brief task cụ thể',
-        explainEn: '/ckm:storage starts the Storage flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: S3 storage operations - upload, sync, list, get URLs',
-        explainVi: '/ckm:storage bắt đầu flow Storage. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: S3 storage operations - upload, sync, list, get URLs',
-        codeSnippet: '> /ckm:storage \'Storage for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:storage',
+        descEn: 'Invoke /ak:storage with a concrete task brief',
+        descVi: 'Gọi /ak:storage với brief task cụ thể',
+        explainEn: '/ak:storage starts the Storage flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: S3 storage operations - upload, sync, list, get URLs',
+        explainVi: '/ak:storage bắt đầu flow Storage. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: S3 storage operations - upload, sync, list, get URLs',
+        codeSnippet: '> /ak:storage \'Storage for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -9700,8 +9700,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:storage path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:storage đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:storage path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:storage đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -9722,12 +9722,12 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:video — Video ─────────────────────────────
-  // ─── /ckm:write — Write ─────────────────────────────
-  // ─── /ckm:youtube — Youtube ─────────────────────────────
+  // ─── /ak:video — Video ─────────────────────────────
+  // ─── /ak:write — Write ─────────────────────────────
+  // ─── /ak:youtube — Youtube ─────────────────────────────
   {
     id: 'youtube',
-    command: '/ckm:youtube',
+    command: '/ak:youtube',
     kit: 'marketer',
     titleEn: 'Youtube',
     titleVi: 'Youtube',
@@ -9739,12 +9739,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'y-input',
         type: 'user-input',
-        name: '/ckm:youtube',
-        descEn: 'Invoke /ckm:youtube with a concrete task brief',
-        descVi: 'Gọi /ckm:youtube với brief task cụ thể',
-        explainEn: '/ckm:youtube starts the Youtube flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Convert YouTube videos to blog posts, infographics, social content. Download video/audio, get captions/transcripts, generate AI summaries, analyze comments via VidCap.xyz API.',
-        explainVi: '/ckm:youtube bắt đầu flow Youtube. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Convert YouTube videos to blog posts, infographics, social content. Download video/audio, get captions/transcripts, generate AI summaries, analyze comments via VidCap.xyz API.',
-        codeSnippet: '> /ckm:youtube \'Youtube for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:youtube',
+        descEn: 'Invoke /ak:youtube with a concrete task brief',
+        descVi: 'Gọi /ak:youtube với brief task cụ thể',
+        explainEn: '/ak:youtube starts the Youtube flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Convert YouTube videos to blog posts, infographics, social content. Download video/audio, get captions/transcripts, generate AI summaries, analyze comments via VidCap.xyz API.',
+        explainVi: '/ak:youtube bắt đầu flow Youtube. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Convert YouTube videos to blog posts, infographics, social content. Download video/audio, get captions/transcripts, generate AI summaries, analyze comments via VidCap.xyz API.',
+        codeSnippet: '> /ak:youtube \'Youtube for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -9779,8 +9779,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:youtube path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:youtube đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:youtube path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:youtube đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -9801,10 +9801,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:youtube-thumbnail-design — Youtube Thumbnail Design ─────────────────────────────
+  // ─── /ak:youtube-thumbnail-design — Youtube Thumbnail Design ─────────────────────────────
   {
     id: 'youtube-thumbnail-design',
-    command: '/ckm:youtube-thumbnail-design',
+    command: '/ak:youtube-thumbnail-design',
     kit: 'marketer',
     titleEn: 'Youtube Thumbnail Design',
     titleVi: 'Youtube Thumbnail Design',
@@ -9816,12 +9816,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'ytd-input',
         type: 'user-input',
-        name: '/ckm:youtube-thumbnail-design',
-        descEn: 'Invoke /ckm:youtube-thumbnail-design with a concrete task brief',
-        descVi: 'Gọi /ckm:youtube-thumbnail-design với brief task cụ thể',
-        explainEn: '/ckm:youtube-thumbnail-design starts the Youtube Thumbnail Design flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Design YouTube thumbnails with 17 styles, niche-specific guides, and CTR optimization. Generate complete thumbnails with text using Gemini Nano Banana Pro (4K text rendering). Actions: design, create, generate thumbnail. Niches: tech, gaming, education, cooking, fitness, business. Styles: facecam, before-after, listicle, diagram, whiteboard, bold-text, mystery, dark-dramatic. Features: AI generation with text baked in, brand identity, reference face, arrows, Google Font support.',
-        explainVi: '/ckm:youtube-thumbnail-design bắt đầu flow Youtube Thumbnail Design. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Design YouTube thumbnails with 17 styles, niche-specific guides, and CTR optimization. Generate complete thumbnails with text using Gemini Nano Banana Pro (4K text rendering). Actions: design, create, generate thumbnail. Niches: tech, gaming, education, cooking, fitness, business. Styles: facecam, before-after, listicle, diagram, whiteboard, bold-text, mystery, dark-dramatic. Features: AI generation with text baked in, brand identity, reference face, arrows, Google Font support.',
-        codeSnippet: '> /ckm:youtube-thumbnail-design \'Youtube Thumbnail Design for this project\'\n\n// Include target, constraints, and desired artifact',
+        name: '/ak:youtube-thumbnail-design',
+        descEn: 'Invoke /ak:youtube-thumbnail-design with a concrete task brief',
+        descVi: 'Gọi /ak:youtube-thumbnail-design với brief task cụ thể',
+        explainEn: '/ak:youtube-thumbnail-design starts the Youtube Thumbnail Design flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Design YouTube thumbnails with 17 styles, niche-specific guides, and CTR optimization. Generate complete thumbnails with text using Gemini Nano Banana Pro (4K text rendering). Actions: design, create, generate thumbnail. Niches: tech, gaming, education, cooking, fitness, business. Styles: facecam, before-after, listicle, diagram, whiteboard, bold-text, mystery, dark-dramatic. Features: AI generation with text baked in, brand identity, reference face, arrows, Google Font support.',
+        explainVi: '/ak:youtube-thumbnail-design bắt đầu flow Youtube Thumbnail Design. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Design YouTube thumbnails with 17 styles, niche-specific guides, and CTR optimization. Generate complete thumbnails with text using Gemini Nano Banana Pro (4K text rendering). Actions: design, create, generate thumbnail. Niches: tech, gaming, education, cooking, fitness, business. Styles: facecam, before-after, listicle, diagram, whiteboard, bold-text, mystery, dark-dramatic. Features: AI generation with text baked in, brand identity, reference face, arrows, Google Font support.',
+        codeSnippet: '> /ak:youtube-thumbnail-design \'Youtube Thumbnail Design for this project\'\n\n// Include target, constraints, and desired artifact',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -9856,8 +9856,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:youtube-thumbnail-design path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:youtube-thumbnail-design đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:youtube-thumbnail-design path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:youtube-thumbnail-design đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -9955,11 +9955,11 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:analyze:* — Analyze Commands ─────────────────────────────
-  // ─── /ckm:ask — ASK Commands ─────────────────────────────
+  // ─── /ak:analyze:* — Analyze Commands ─────────────────────────────
+  // ─── /ak:ask — ASK Commands ─────────────────────────────
   {
     id: 'ckm-ask',
-    command: '/ckm:ask',
+    command: '/ak:ask',
     kit: 'marketer',
     titleEn: 'ASK Commands',
     titleVi: 'Nhóm lệnh ask',
@@ -9971,12 +9971,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'm-input',
         type: 'user-input',
-        name: '/ckm:ask',
-        descEn: 'Invoke /ckm:ask with a concrete command route',
-        descVi: 'Gọi /ckm:ask với route command cụ thể',
-        explainEn: '/ckm:ask starts the ASK Commands flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: 💡 Answer technical and architectural questions.',
-        explainVi: '/ckm:ask bắt đầu flow ASK Commands. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: 💡 Answer technical and architectural questions.',
-        codeSnippet: '// - /ckm:ask\n\n// Pick the route that matches the needed output',
+        name: '/ak:ask',
+        descEn: 'Invoke /ak:ask with a concrete command route',
+        descVi: 'Gọi /ak:ask với route command cụ thể',
+        explainEn: '/ak:ask starts the ASK Commands flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: 💡 Answer technical and architectural questions.',
+        explainVi: '/ak:ask bắt đầu flow ASK Commands. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: 💡 Answer technical and architectural questions.',
+        codeSnippet: '// - /ak:ask\n\n// Pick the route that matches the needed output',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -10011,8 +10011,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:ask path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:ask đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:ask path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:ask đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -10033,31 +10033,31 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:brand — Brand Commands ─────────────────────────────
-  // ─── /ckm:campaign:* — Campaign Commands ─────────────────────────────
-  // ─── /ckm:competitor — Competitor Commands ─────────────────────────────
-  // ─── /ckm:dashboard:* — Dashboard Commands ─────────────────────────────
-  // ─── /ckm:docs:* — Docs Commands ─────────────────────────────
+  // ─── /ak:brand — Brand Commands ─────────────────────────────
+  // ─── /ak:campaign:* — Campaign Commands ─────────────────────────────
+  // ─── /ak:competitor — Competitor Commands ─────────────────────────────
+  // ─── /ak:dashboard:* — Dashboard Commands ─────────────────────────────
+  // ─── /ak:docs:* — Docs Commands ─────────────────────────────
   {
     id: 'ckm-docs',
-    command: '/ckm:docs:*',
+    command: '/ak:docs:*',
     kit: 'marketer',
     titleEn: 'Docs Commands',
     titleVi: 'Nhóm lệnh docs',
-    descEn: 'ckm:docs command family',
-    descVi: 'Nhóm lệnh ckm:docs.',
+    descEn: 'ak:docs command family',
+    descVi: 'Nhóm lệnh ak:docs.',
     icon: '<path d="M12 2a10 10 0 0 0-7 17.12"/><path d="M12 2a10 10 0 0 1 7 17.12"/><path d="M2 12h20"/><path d="M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10"/><path d="M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10"/>',
     accentColor: 'purple',
     steps: [
       {
         id: 'm-input',
         type: 'user-input',
-        name: '/ckm:docs:*',
-        descEn: 'Invoke /ckm:docs:* with a concrete command route',
-        descVi: 'Gọi /ckm:docs:* với route command cụ thể',
-        explainEn: '/ckm:docs:* starts the Docs Commands flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: ckm:docs command family',
-        explainVi: '/ckm:docs:* bắt đầu flow Docs Commands. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: ckm:docs command family',
-        codeSnippet: '// - /ckm:docs:init\n// - /ckm:docs:llms\n// - /ckm:docs:summarize\n// - /ckm:docs:update\n\n// Pick the route that matches the needed output',
+        name: '/ak:docs:*',
+        descEn: 'Invoke /ak:docs:* with a concrete command route',
+        descVi: 'Gọi /ak:docs:* với route command cụ thể',
+        explainEn: '/ak:docs:* starts the Docs Commands flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: ak:docs command family',
+        explainVi: '/ak:docs:* bắt đầu flow Docs Commands. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: ak:docs command family',
+        codeSnippet: '// - /ak:docs:init\n// - /ak:docs:llms\n// - /ak:docs:summarize\n// - /ak:docs:update\n\n// Pick the route that matches the needed output',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -10092,8 +10092,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:docs:* path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:docs:* đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:docs:* path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:docs:* đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -10114,14 +10114,14 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:email:* — Email Commands ─────────────────────────────
-  // ─── /ckm:funnel — Funnel Commands ─────────────────────────────
-  // ─── /ckm:hub — HUB Commands ─────────────────────────────
-  // ─── /ckm:init — Init Commands ─────────────────────────────
-  // ─── /ckm:journal — Journal Commands ─────────────────────────────
+  // ─── /ak:email:* — Email Commands ─────────────────────────────
+  // ─── /ak:funnel — Funnel Commands ─────────────────────────────
+  // ─── /ak:hub — HUB Commands ─────────────────────────────
+  // ─── /ak:init — Init Commands ─────────────────────────────
+  // ─── /ak:journal — Journal Commands ─────────────────────────────
   {
     id: 'ckm-journal',
-    command: '/ckm:journal',
+    command: '/ak:journal',
     kit: 'marketer',
     titleEn: 'Journal Commands',
     titleVi: 'Nhóm lệnh journal',
@@ -10133,12 +10133,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'm-input',
         type: 'user-input',
-        name: '/ckm:journal',
-        descEn: 'Invoke /ckm:journal with a concrete command route',
-        descVi: 'Gọi /ckm:journal với route command cụ thể',
-        explainEn: '/ckm:journal starts the Journal Commands flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: 💡 Write some journal entries.',
-        explainVi: '/ckm:journal bắt đầu flow Journal Commands. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: 💡 Write some journal entries.',
-        codeSnippet: '// - /ckm:journal\n\n// Pick the route that matches the needed output',
+        name: '/ak:journal',
+        descEn: 'Invoke /ak:journal with a concrete command route',
+        descVi: 'Gọi /ak:journal với route command cụ thể',
+        explainEn: '/ak:journal starts the Journal Commands flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: 💡 Write some journal entries.',
+        explainVi: '/ak:journal bắt đầu flow Journal Commands. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: 💡 Write some journal entries.',
+        codeSnippet: '// - /ak:journal\n\n// Pick the route that matches the needed output',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -10173,8 +10173,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:journal path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:journal đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:journal path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:journal đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -10195,10 +10195,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:kanban — Kanban Commands ─────────────────────────────
+  // ─── /ak:kanban — Kanban Commands ─────────────────────────────
   {
     id: 'kanban',
-    command: '/ckm:kanban',
+    command: '/ak:kanban',
     kit: 'marketer',
     titleEn: 'Kanban Commands',
     titleVi: 'Nhóm lệnh kanban',
@@ -10210,12 +10210,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'k-input',
         type: 'user-input',
-        name: '/ckm:kanban',
-        descEn: 'Invoke /ckm:kanban with a concrete command route',
-        descVi: 'Gọi /ckm:kanban với route command cụ thể',
-        explainEn: '/ckm:kanban starts the Kanban Commands flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: AI agent orchestration board (Coming Soon)',
-        explainVi: '/ckm:kanban bắt đầu flow Kanban Commands. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: AI agent orchestration board (Coming Soon)',
-        codeSnippet: '// - /ckm:kanban\n\n// Pick the route that matches the needed output',
+        name: '/ak:kanban',
+        descEn: 'Invoke /ak:kanban with a concrete command route',
+        descVi: 'Gọi /ak:kanban với route command cụ thể',
+        explainEn: '/ak:kanban starts the Kanban Commands flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: AI agent orchestration board (Coming Soon)',
+        explainVi: '/ak:kanban bắt đầu flow Kanban Commands. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: AI agent orchestration board (Coming Soon)',
+        codeSnippet: '// - /ak:kanban\n\n// Pick the route that matches the needed output',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -10250,8 +10250,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:kanban path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:kanban đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:kanban path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:kanban đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -10272,11 +10272,11 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:persona — Persona Commands ─────────────────────────────
-  // ─── /ckm:plan:* — Plan Commands ─────────────────────────────
+  // ─── /ak:persona — Persona Commands ─────────────────────────────
+  // ─── /ak:plan:* — Plan Commands ─────────────────────────────
   {
     id: 'ckm-plan',
-    command: '/ckm:plan:*',
+    command: '/ak:plan:*',
     kit: 'marketer',
     titleEn: 'Plan Commands',
     titleVi: 'Nhóm lệnh plan',
@@ -10288,12 +10288,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'm-input',
         type: 'user-input',
-        name: '/ckm:plan:*',
-        descEn: 'Invoke /ckm:plan:* with a concrete command route',
-        descVi: 'Gọi /ckm:plan:* với route command cụ thể',
-        explainEn: '/ckm:plan:* starts the Plan Commands flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: 💡💡💡 Intelligent plan creation with prompt enhancement',
-        explainVi: '/ckm:plan:* bắt đầu flow Plan Commands. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: 💡💡💡 Intelligent plan creation with prompt enhancement',
-        codeSnippet: '// - /ckm:plan\n// - /ckm:plan:archive\n// - /ckm:plan:ci\n// - /ckm:plan:cro\n// - /ckm:plan:fast\n// - /ckm:plan:hard\n// - /ckm:plan:parallel\n// - /ckm:plan:two\n\n// Pick the route that matches the needed output',
+        name: '/ak:plan:*',
+        descEn: 'Invoke /ak:plan:* with a concrete command route',
+        descVi: 'Gọi /ak:plan:* với route command cụ thể',
+        explainEn: '/ak:plan:* starts the Plan Commands flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: 💡💡💡 Intelligent plan creation with prompt enhancement',
+        explainVi: '/ak:plan:* bắt đầu flow Plan Commands. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: 💡💡💡 Intelligent plan creation with prompt enhancement',
+        codeSnippet: '// - /ak:plan\n// - /ak:plan:archive\n// - /ak:plan:ci\n// - /ak:plan:cro\n// - /ak:plan:fast\n// - /ak:plan:hard\n// - /ak:plan:parallel\n// - /ak:plan:two\n\n// Pick the route that matches the needed output',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -10328,8 +10328,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:plan:* path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:plan:* đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:plan:* path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:plan:* đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -10350,11 +10350,11 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:play:* — Play Commands ─────────────────────────────
-  // ─── /ckm:preview — Preview Commands ─────────────────────────────
+  // ─── /ak:play:* — Play Commands ─────────────────────────────
+  // ─── /ak:preview — Preview Commands ─────────────────────────────
   {
     id: 'ckm-preview',
-    command: '/ckm:preview',
+    command: '/ak:preview',
     kit: 'marketer',
     titleEn: 'Preview Commands',
     titleVi: 'Nhóm lệnh preview',
@@ -10366,12 +10366,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'm-input',
         type: 'user-input',
-        name: '/ckm:preview',
-        descEn: 'Invoke /ckm:preview with a concrete command route',
-        descVi: 'Gọi /ckm:preview với route command cụ thể',
-        explainEn: '/ckm:preview starts the Preview Commands flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Path to markdown file, plan directory, or plans collection',
-        explainVi: '/ckm:preview bắt đầu flow Preview Commands. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Path to markdown file, plan directory, or plans collection',
-        codeSnippet: '// - /ckm:preview\n\n// Pick the route that matches the needed output',
+        name: '/ak:preview',
+        descEn: 'Invoke /ak:preview with a concrete command route',
+        descVi: 'Gọi /ak:preview với route command cụ thể',
+        explainEn: '/ak:preview starts the Preview Commands flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Path to markdown file, plan directory, or plans collection',
+        explainVi: '/ak:preview bắt đầu flow Preview Commands. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Path to markdown file, plan directory, or plans collection',
+        codeSnippet: '// - /ak:preview\n\n// Pick the route that matches the needed output',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -10406,8 +10406,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:preview path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:preview đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:preview path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:preview đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -10428,28 +10428,28 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:seo:* — SEO Commands ─────────────────────────────
-  // ─── /ckm:skill:* — Skill Commands ─────────────────────────────
+  // ─── /ak:seo:* — SEO Commands ─────────────────────────────
+  // ─── /ak:skill:* — Skill Commands ─────────────────────────────
   {
     id: 'skill',
-    command: '/ckm:skill:*',
+    command: '/ak:skill:*',
     kit: 'marketer',
     titleEn: 'Skill Commands',
     titleVi: 'Nhóm lệnh skill',
-    descEn: 'ckm:skill command family',
-    descVi: 'Nhóm lệnh ckm:skill',
+    descEn: 'ak:skill command family',
+    descVi: 'Nhóm lệnh ak:skill',
     icon: '<path d="M12 2a10 10 0 0 0-7 17.12"/><path d="M12 2a10 10 0 0 1 7 17.12"/><path d="M2 12h20"/><path d="M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10"/><path d="M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10"/>',
     accentColor: 'orange',
     steps: [
       {
         id: 's-input',
         type: 'user-input',
-        name: '/ckm:skill:*',
-        descEn: 'Invoke /ckm:skill:* with a concrete command route',
-        descVi: 'Gọi /ckm:skill:* với route command cụ thể',
-        explainEn: '/ckm:skill:* starts the Skill Commands flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: ckm:skill command family',
-        explainVi: '/ckm:skill:* bắt đầu flow nhóm lệnh skill. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: ckm:skill command family',
-        codeSnippet: '// - /ckm:skill:add\n// - /ckm:skill:create\n// - /ckm:skill:fix-logs\n// - /ckm:skill:optimize\n// - /ckm:skill:optimize:auto\n// - /ckm:skill:plan\n// - /ckm:skill:update\n\n// Pick the route that matches the needed output',
+        name: '/ak:skill:*',
+        descEn: 'Invoke /ak:skill:* with a concrete command route',
+        descVi: 'Gọi /ak:skill:* với route command cụ thể',
+        explainEn: '/ak:skill:* starts the Skill Commands flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: ak:skill command family',
+        explainVi: '/ak:skill:* bắt đầu flow nhóm lệnh skill. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: ak:skill command family',
+        codeSnippet: '// - /ak:skill:add\n// - /ak:skill:create\n// - /ak:skill:fix-logs\n// - /ak:skill:optimize\n// - /ak:skill:optimize:auto\n// - /ak:skill:plan\n// - /ak:skill:update\n\n// Pick the route that matches the needed output',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -10484,8 +10484,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:skill:* path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:skill:* đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:skill:* path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:skill:* đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -10506,30 +10506,30 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:slides — Slides Commands ─────────────────────────────
-  // ─── /ckm:social:* — Social Commands ─────────────────────────────
-  // ─── /ckm:storage:* — Storage Commands ─────────────────────────────
-  // ─── /ckm:test:* — Test Commands ─────────────────────────────
+  // ─── /ak:slides — Slides Commands ─────────────────────────────
+  // ─── /ak:social:* — Social Commands ─────────────────────────────
+  // ─── /ak:storage:* — Storage Commands ─────────────────────────────
+  // ─── /ak:test:* — Test Commands ─────────────────────────────
   {
     id: 'ckm-test',
-    command: '/ckm:test:*',
+    command: '/ak:test:*',
     kit: 'marketer',
     titleEn: 'Test Commands',
     titleVi: 'Nhóm lệnh test',
-    descEn: 'ckm:test command family',
-    descVi: 'Nhóm lệnh ckm:test.',
+    descEn: 'ak:test command family',
+    descVi: 'Nhóm lệnh ak:test.',
     icon: '<path d="M12 2a10 10 0 0 0-7 17.12"/><path d="M12 2a10 10 0 0 1 7 17.12"/><path d="M2 12h20"/><path d="M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10"/><path d="M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10"/>',
     accentColor: 'blue',
     steps: [
       {
         id: 'm-input',
         type: 'user-input',
-        name: '/ckm:test:*',
-        descEn: 'Invoke /ckm:test:* with a concrete command route',
-        descVi: 'Gọi /ckm:test:* với route command cụ thể',
-        explainEn: '/ckm:test:* starts the Test Commands flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: ckm:test command family',
-        explainVi: '/ckm:test:* bắt đầu flow Test Commands. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: ckm:test command family',
-        codeSnippet: '// - /ckm:test:ui\n// - /ckm:test:workflow\n\n// Pick the route that matches the needed output',
+        name: '/ak:test:*',
+        descEn: 'Invoke /ak:test:* with a concrete command route',
+        descVi: 'Gọi /ak:test:* với route command cụ thể',
+        explainEn: '/ak:test:* starts the Test Commands flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: ak:test command family',
+        explainVi: '/ak:test:* bắt đầu flow Test Commands. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: ak:test command family',
+        codeSnippet: '// - /ak:test:ui\n// - /ak:test:workflow\n\n// Pick the route that matches the needed output',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -10564,8 +10564,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:test:* path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:test:* đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:test:* path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:test:* đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -10586,10 +10586,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:use-mcp — USE MCP Commands ─────────────────────────────
+  // ─── /ak:use-mcp — USE MCP Commands ─────────────────────────────
   {
     id: 'use-mcp',
-    command: '/ckm:use-mcp',
+    command: '/ak:use-mcp',
     kit: 'marketer',
     titleEn: 'USE MCP Commands',
     titleVi: 'Nhóm lệnh use-mcp',
@@ -10601,12 +10601,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'um-input',
         type: 'user-input',
-        name: '/ckm:use-mcp',
-        descEn: 'Invoke /ckm:use-mcp with a concrete command route',
-        descVi: 'Gọi /ckm:use-mcp với route command cụ thể',
-        explainEn: '/ckm:use-mcp starts the USE MCP Commands flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Utilize tools of Model Context Protocol (MCP) servers',
-        explainVi: '/ckm:use-mcp bắt đầu flow USE MCP Commands. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Utilize tools of Model Context Protocol (MCP) servers',
-        codeSnippet: '// - /ckm:use-mcp\n\n// Pick the route that matches the needed output',
+        name: '/ak:use-mcp',
+        descEn: 'Invoke /ak:use-mcp with a concrete command route',
+        descVi: 'Gọi /ak:use-mcp với route command cụ thể',
+        explainEn: '/ak:use-mcp starts the USE MCP Commands flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Utilize tools of Model Context Protocol (MCP) servers',
+        explainVi: '/ak:use-mcp bắt đầu flow USE MCP Commands. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Utilize tools of Model Context Protocol (MCP) servers',
+        codeSnippet: '// - /ak:use-mcp\n\n// Pick the route that matches the needed output',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -10641,8 +10641,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:use-mcp path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:use-mcp đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:use-mcp path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:use-mcp đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -10663,11 +10663,11 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:video:* — Video Commands ─────────────────────────────
-  // ─── /ckm:watzup — Watzup Commands ─────────────────────────────
+  // ─── /ak:video:* — Video Commands ─────────────────────────────
+  // ─── /ak:watzup — Watzup Commands ─────────────────────────────
   {
     id: 'ckm-watzup',
-    command: '/ckm:watzup',
+    command: '/ak:watzup',
     kit: 'marketer',
     titleEn: 'Watzup Commands',
     titleVi: 'Nhóm lệnh watzup',
@@ -10679,12 +10679,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'm-input',
         type: 'user-input',
-        name: '/ckm:watzup',
-        descEn: 'Invoke /ckm:watzup with a concrete command route',
-        descVi: 'Gọi /ckm:watzup với route command cụ thể',
-        explainEn: '/ckm:watzup starts the Watzup Commands flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: 💡 Review recent changes and wrap up the work',
-        explainVi: '/ckm:watzup bắt đầu flow Watzup Commands. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: 💡 Review recent changes and wrap up the work',
-        codeSnippet: '// - /ckm:watzup\n\n// Pick the route that matches the needed output',
+        name: '/ak:watzup',
+        descEn: 'Invoke /ak:watzup with a concrete command route',
+        descVi: 'Gọi /ak:watzup với route command cụ thể',
+        explainEn: '/ak:watzup starts the Watzup Commands flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: 💡 Review recent changes and wrap up the work',
+        explainVi: '/ak:watzup bắt đầu flow Watzup Commands. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: 💡 Review recent changes and wrap up the work',
+        codeSnippet: '// - /ak:watzup\n\n// Pick the route that matches the needed output',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -10719,8 +10719,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:watzup path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:watzup đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:watzup path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:watzup đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -10741,10 +10741,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ckm:worktree — Worktree Commands ─────────────────────────────
+  // ─── /ak:worktree — Worktree Commands ─────────────────────────────
   {
     id: 'ckm-worktree',
-    command: '/ckm:worktree',
+    command: '/ak:worktree',
     kit: 'marketer',
     titleEn: 'Worktree Commands',
     titleVi: 'Nhóm lệnh worktree',
@@ -10756,12 +10756,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'm-input',
         type: 'user-input',
-        name: '/ckm:worktree',
-        descEn: 'Invoke /ckm:worktree with a concrete command route',
-        descVi: 'Gọi /ckm:worktree với route command cụ thể',
-        explainEn: '/ckm:worktree starts the Worktree Commands flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Create isolated git worktree for parallel development',
-        explainVi: '/ckm:worktree bắt đầu flow Worktree Commands. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Create isolated git worktree for parallel development',
-        codeSnippet: '// - /ckm:worktree\n\n// Pick the route that matches the needed output',
+        name: '/ak:worktree',
+        descEn: 'Invoke /ak:worktree with a concrete command route',
+        descVi: 'Gọi /ak:worktree với route command cụ thể',
+        explainEn: '/ak:worktree starts the Worktree Commands flow. The user provides the target, constraints, and expected artifact so the agent can route the work without guessing.\n\nPrimary surface: Create isolated git worktree for parallel development',
+        explainVi: '/ak:worktree bắt đầu flow Worktree Commands. User đưa target, ràng buộc, và artifact mong đợi để agent route công việc không phải đoán.\n\nBề mặt chính: Create isolated git worktree for parallel development',
+        codeSnippet: '// - /ak:worktree\n\n// Pick the route that matches the needed output',
         icon: '<polyline points=\'4 17 10 11 4 5\'/><line x1=\'12\' y1=\'19\' x2=\'20\' y2=\'19\'/>',
         color: 'purple'
       },
@@ -10796,8 +10796,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Execute Workflow',
         descEn: 'Run the selected workflow path and produce the requested artifact',
         descVi: 'Chạy workflow path đã chọn và tạo artifact yêu cầu',
-        explainEn: 'The main agent executes the selected /ckm:worktree path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
-        explainVi: 'Main agent thực thi path /ckm:worktree đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
+        explainEn: 'The main agent executes the selected /ak:worktree path. It may use specialist skills, local tools, or sub-agents when the source workflow requires research, review, testing, design, or generation.\n\nThe work stays scoped to the selected route and records assumptions when data is unavailable.',
+        explainVi: 'Main agent thực thi path /ak:worktree đã chọn. Nó có thể dùng specialist skills, local tools, hoặc sub-agent khi workflow cần research, review, test, design, hoặc generation.\n\nCông việc giữ đúng scope route đã chọn và ghi assumptions khi thiếu dữ liệu.',
         codeSnippet: '// Execute selected route\n// Use specialist skill/tool only when needed\n// Record assumptions and unavailable data\n// Keep changes/artifacts scoped',
         icon: '<path d=\'M12 2a10 10 0 0 0-7 17.12\'/><path d=\'M12 2a10 10 0 0 1 7 17.12\'/><path d=\'M2 12h20\'/><path d=\'M12 2c2.5 2.8 4 6.2 4 10s-1.5 7.2-4 10\'/><path d=\'M12 2c-2.5 2.8-4 6.2-4 10s1.5 7.2 4 10\'/>',
         color: 'green',
@@ -10818,10 +10818,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:plans-kanban — Plans Kanban ─────────────────────────────
+  // ─── /ak:plans-kanban — Plans Kanban ─────────────────────────────
   {
     id: 'plans-kanban',
-    command: '/ck:plans-kanban',
+    command: '/ak:plans-kanban',
     kit: 'engineer',
     titleEn: 'Plans Kanban',
     titleVi: 'Plans Kanban',
@@ -10833,12 +10833,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'pk-input',
         type: 'user-input',
-        name: '/ck:plans-kanban',
+        name: '/ak:plans-kanban',
         descEn: 'Open the workflow with an explicit dashboard or organization request',
         descVi: 'Mở workflow với request dashboard hoặc tổ chức rõ ràng',
-        explainEn: '/ck:plans-kanban starts from a concrete project-management request. The user provides the plan, board, files, or organization target before the agent acts.',
-        explainVi: '/ck:plans-kanban bắt đầu từ request quản lý project cụ thể. User đưa plan, board, files, hoặc target tổ chức trước khi agent làm.',
-        codeSnippet: '> /ck:plans-kanban "review current project state"',
+        explainEn: '/ak:plans-kanban starts from a concrete project-management request. The user provides the plan, board, files, or organization target before the agent acts.',
+        explainVi: '/ak:plans-kanban bắt đầu từ request quản lý project cụ thể. User đưa plan, board, files, hoặc target tổ chức trước khi agent làm.',
+        codeSnippet: '> /ak:plans-kanban "review current project state"',
         icon: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
         color: 'purple'
       },
@@ -10893,10 +10893,10 @@ export const workflowScenarios: WorkflowScenario[] = [
     ],
   },
 
-  // ─── /ck:project-organization — Project Organization ─────────────────────────────
+  // ─── /ak:project-organization — Project Organization ─────────────────────────────
   {
     id: 'project-organization',
-    command: '/ck:project-organization',
+    command: '/ak:project-organization',
     kit: 'engineer',
     titleEn: 'Project Organization',
     titleVi: 'Project Organization',
@@ -10908,12 +10908,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'po-input',
         type: 'user-input',
-        name: '/ck:project-organization',
+        name: '/ak:project-organization',
         descEn: 'Open the workflow with an explicit dashboard or organization request',
         descVi: 'Mở workflow với request dashboard hoặc tổ chức rõ ràng',
-        explainEn: '/ck:project-organization starts from a concrete project-management request. The user provides the plan, board, files, or organization target before the agent acts.',
-        explainVi: '/ck:project-organization bắt đầu từ request quản lý project cụ thể. User đưa plan, board, files, hoặc target tổ chức trước khi agent làm.',
-        codeSnippet: '> /ck:project-organization "review current project state"',
+        explainEn: '/ak:project-organization starts from a concrete project-management request. The user provides the plan, board, files, or organization target before the agent acts.',
+        explainVi: '/ak:project-organization bắt đầu từ request quản lý project cụ thể. User đưa plan, board, files, hoặc target tổ chức trước khi agent làm.',
+        codeSnippet: '> /ak:project-organization "review current project state"',
         icon: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
         color: 'purple'
       },
@@ -10967,10 +10967,10 @@ export const workflowScenarios: WorkflowScenario[] = [
       }
     ],
   },
-  // ─── /ck:ghpm — GitHub Project Management ──────────────────────
+  // ─── /ak:ghpm — GitHub Project Management ──────────────────────
   {
     id: 'ghpm',
-    command: '/ck:ghpm',
+    command: '/ak:ghpm',
     kit: 'engineer',
     titleEn: 'GitHub Project Management',
     titleVi: 'Quản lý dự án trên GitHub',
@@ -10987,7 +10987,7 @@ export const workflowScenarios: WorkflowScenario[] = [
         descVi: 'Request task/plan/status kèm một operating mode',
         explainEn: 'The skill takes a project-work request and an intent: bootstrap a repo, intake tasks into issues, execute and update status, write a handoff, or audit GitHub against local state. There are no CLI flags — mode is chosen from intent.',
         explainVi: 'Skill nhận request về project-work và một intent: bootstrap repo, intake task thành issue, execute và update status, viết handoff, hoặc audit GitHub so với local. Không có CLI flag — mode chọn theo intent.',
-        codeSnippet: '> /ck:ghpm turn this plan into GitHub issues\n> /ck:ghpm write a handoff for issue #123\n> /ck:ghpm audit board vs local plans',
+        codeSnippet: '> /ak:ghpm turn this plan into GitHub issues\n> /ak:ghpm write a handoff for issue #123\n> /ak:ghpm audit board vs local plans',
         icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/>',
         color: 'purple',
       },
@@ -11053,10 +11053,10 @@ export const workflowScenarios: WorkflowScenario[] = [
       },
     ],
   },
-  // ─── /ck:html-video — HTML/CSS/JS to Local MP4 ─────────────────
+  // ─── /ak:html-video — HTML/CSS/JS to Local MP4 ─────────────────
   {
     id: 'html-video',
-    command: '/ck:html-video',
+    command: '/ak:html-video',
     kit: 'engineer',
     titleEn: 'HTML/CSS/JS to Local MP4 Video',
     titleVi: 'HTML/CSS/JS thành video MP4 local',
@@ -11073,7 +11073,7 @@ export const workflowScenarios: WorkflowScenario[] = [
         descVi: 'Brief kèm source URL, repo, template id, hoặc project id',
         explainEn: 'The command accepts a video brief or a source (URL, repo, template id, or project id). Before creating anything it pins audience, goal, duration, aspect ratio, source assets, template preference, output path, and whether the result is a draft proof or polished export.',
         explainVi: 'Command nhận video brief hoặc source (URL, repo, template id, hoặc project id). Trước khi tạo gì, nó chốt audience, goal, duration, aspect ratio, source assets, template preference, output path, và kết quả là draft proof hay polished export.',
-        codeSnippet: '> /ck:html-video short product promo for a developer tool, 16:9, 20s\n> /ck:html-video https://github.com/org/repo summary video',
+        codeSnippet: '> /ak:html-video short product promo for a developer tool, 16:9, 20s\n> /ak:html-video https://github.com/org/repo summary video',
         icon: '<path d="M12 2v20"/><path d="M2 12h20"/>',
         color: 'purple',
       },
@@ -11109,7 +11109,7 @@ export const workflowScenarios: WorkflowScenario[] = [
         descVi: 'Tạo project, set template, thêm assets và vars',
         explainEn: 'project-create makes a project from intent and aspect; set-template binds a template; add-asset attaches inline text and files. When inspect-template shows a schema, set-var or set-vars supplies values explicitly.',
         explainVi: 'project-create tạo project từ intent và aspect; set-template gắn template; add-asset thêm inline text và file. Khi inspect-template có schema, set-var hoặc set-vars cấp giá trị rõ ràng.',
-        codeSnippet: 'html_video project-create --name "Promo" --intent "..." --aspect 16:9\nhtml_video project-set-template <id> --template frame-product-promo\nhtml_video project-set-var <id> --key headline --value \'"ClaudeKit"\'',
+        codeSnippet: 'html_video project-create --name "Promo" --intent "..." --aspect 16:9\nhtml_video project-set-template <id> --template frame-product-promo\nhtml_video project-set-var <id> --key headline --value \'"AgentKit"\'',
         icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>',
         color: 'green',
       },
@@ -11151,10 +11151,10 @@ export const workflowScenarios: WorkflowScenario[] = [
       },
     ],
   },
-  // ─── /ck:review-pr — Review a Pull Request ─────────────────────
+  // ─── /ak:review-pr — Review a Pull Request ─────────────────────
   {
     id: 'review-pr',
-    command: '/ck:review-pr',
+    command: '/ak:review-pr',
     kit: 'engineer',
     titleEn: 'Review a Pull Request',
     titleVi: 'Review Pull Request',
@@ -11171,7 +11171,7 @@ export const workflowScenarios: WorkflowScenario[] = [
         descVi: 'Một PR number hoặc URL, kèm --fix và/hoặc --reply tùy chọn',
         explainEn: 'You pass a PR number or URL. PR_REF is derived by stripping --fix and --reply flags (order does not matter). Review-only is the default: no edits, no push. --fix activates the remediation loop; --reply posts the final review to GitHub.',
         explainVi: 'Bạn truyền PR number hoặc URL. PR_REF được tách bằng cách bỏ flag --fix và --reply (thứ tự không quan trọng). Review-only là mặc định: không sửa, không push. --fix bật remediation loop; --reply post review cuối lên GitHub.',
-        codeSnippet: '> /ck:review-pr 123\n> /ck:review-pr 123 --fix\n> /ck:review-pr https://github.com/org/repo/pull/123 --fix --reply',
+        codeSnippet: '> /ak:review-pr 123\n> /ak:review-pr 123 --fix\n> /ak:review-pr https://github.com/org/repo/pull/123 --fix --reply',
         icon: '<path d="M18 6v12"/><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 9v6a3 3 0 0 0 3 3h6"/>',
         color: 'purple',
       },
@@ -11227,11 +11227,11 @@ export const workflowScenarios: WorkflowScenario[] = [
         id: 'rpr-fix',
         type: 'agent',
         name: 'Fix Loop (--fix)',
-        descEn: 'Check out head, fix blockers via ck:fix, push, watch CI, re-review',
-        descVi: 'Check out head, fix blockers qua ck:fix, push, watch CI, re-review',
-        explainEn: 'Only with --fix. Builds the blocking set (gate blockers + Critical/Important findings + concrete Suggestions + conflicts + CI failures), checks out the PR head (verifies HEAD matches headRefOid; fork → read-only blocker), then activates ck:fix --auto with full evidence.\n\nResolves merge conflicts in real files, runs ck:git cp to push, watches checks to terminal (30-min ceiling), and re-reviews. Stops on clean state or a true external blocker / 3 non-converging attempts.',
-        explainVi: 'Chỉ khi có --fix. Build blocking set (gate blockers + findings Critical/Important + Suggestion cụ thể + conflicts + CI fail), check out PR head (verify HEAD khớp headRefOid; fork → external blocker read-only), rồi kích hoạt ck:fix --auto với evidence đầy đủ.\n\nResolve merge conflict trong file thật, chạy ck:git cp để push, watch checks tới terminal (ceiling 30 phút), rồi re-review. Dừng khi clean hoặc gặp external blocker thật / 3 lần không hội tụ.',
-        codeSnippet: '// ck:fix --auto "Fix all blockers from review-pr <ref>"\n// resolve conflicts → ck:git cp → gh pr checks (watch)\n// re-review until clean or blocked (max 3 attempts)',
+        descEn: 'Check out head, fix blockers via ak:fix, push, watch CI, re-review',
+        descVi: 'Check out head, fix blockers qua ak:fix, push, watch CI, re-review',
+        explainEn: 'Only with --fix. Builds the blocking set (gate blockers + Critical/Important findings + concrete Suggestions + conflicts + CI failures), checks out the PR head (verifies HEAD matches headRefOid; fork → read-only blocker), then activates ak:fix --auto with full evidence.\n\nResolves merge conflicts in real files, runs ak:git cp to push, watches checks to terminal (30-min ceiling), and re-reviews. Stops on clean state or a true external blocker / 3 non-converging attempts.',
+        explainVi: 'Chỉ khi có --fix. Build blocking set (gate blockers + findings Critical/Important + Suggestion cụ thể + conflicts + CI fail), check out PR head (verify HEAD khớp headRefOid; fork → external blocker read-only), rồi kích hoạt ak:fix --auto với evidence đầy đủ.\n\nResolve merge conflict trong file thật, chạy ak:git cp để push, watch checks tới terminal (ceiling 30 phút), rồi re-review. Dừng khi clean hoặc gặp external blocker thật / 3 lần không hội tụ.',
+        codeSnippet: '// ak:fix --auto "Fix all blockers from review-pr <ref>"\n// resolve conflicts → ak:git cp → gh pr checks (watch)\n// re-review until clean or blocked (max 3 attempts)',
         icon: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
         color: 'green',
         isSubAgent: true,
@@ -11250,10 +11250,10 @@ export const workflowScenarios: WorkflowScenario[] = [
       },
     ],
   },
-  // ─── /ck:vibe — Autonomous Issue-to-PR Pipeline ────────────────
+  // ─── /ak:vibe — Autonomous Issue-to-PR Pipeline ────────────────
   {
     id: 'vibe',
-    command: '/ck:vibe',
+    command: '/ak:vibe',
     kit: 'engineer',
     titleEn: 'Vibe Pipeline',
     titleVi: 'Pipeline Vibe',
@@ -11265,12 +11265,12 @@ export const workflowScenarios: WorkflowScenario[] = [
       {
         id: 'vb-input',
         type: 'user-input',
-        name: '/ck:vibe',
+        name: '/ak:vibe',
         descEn: 'GitHub issue URL or feature request, with optional --ship / --beta',
         descVi: 'GitHub issue URL hoặc feature request, kèm tuỳ chọn --ship / --beta',
         explainEn: 'One command drives the whole pipeline. Pass a GitHub issue URL/number (treated as source of truth, never duplicated) or a natural-language feature request.\n\n• --beta: ship to beta/dev; final label "ready to ship beta"\n• no --beta: ship stable; final label "ready to ship stable"\n• --ship: also merge the PR and watch/fix CI after review\n• no --ship: stop after PR is reviewed, fixed, replied, and labeled ready',
         explainVi: 'Một command chạy cả pipeline. Truyền GitHub issue URL/number (làm source of truth, không tạo trùng) hoặc một feature request bằng ngôn ngữ tự nhiên.\n\n• --beta: ship vào beta/dev; label cuối "ready to ship beta"\n• không --beta: ship stable; label cuối "ready to ship stable"\n• --ship: merge PR và watch/fix CI sau review\n• không --ship: dừng sau khi PR đã review, fix, reply, gắn label ready',
-        codeSnippet: '> /ck:vibe https://github.com/org/repo/issues/42\n> /ck:vibe --ship --beta https://github.com/org/repo/issues/42\n> /ck:vibe --ship "Add CSV export to the reports page"',
+        codeSnippet: '> /ak:vibe https://github.com/org/repo/issues/42\n> /ak:vibe --ship --beta https://github.com/org/repo/issues/42\n> /ak:vibe --ship "Add CSV export to the reports page"',
         icon: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
         color: 'purple',
       },
@@ -11280,9 +11280,9 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Parse + Worktree',
         descEn: 'Resolve repo, classify route, isolate a worktree and branch',
         descVi: 'Resolve repo, phân loại route, tách worktree và branch',
-        explainEn: 'Strips --ship/--beta, resolves the repo with gh, and for issue URLs verifies OWNER/REPO matches the current repo (stops if it differs). Extracts outcome, acceptance criteria, scope, constraints, and likely touched files, then classifies the route as feature or bugfix. Activates /ck:worktree to create an isolated worktree and branch — never main, master, dev, beta, or develop. A clean matching worktree may be reused.',
-        explainVi: 'Bỏ --ship/--beta, resolve repo bằng gh, và với issue URL kiểm tra OWNER/REPO khớp repo hiện tại (dừng nếu khác). Trích outcome, acceptance criteria, scope, constraints, và file có thể bị động, rồi phân loại route feature hay bugfix. Kích hoạt /ck:worktree để tạo worktree và branch cô lập — không bao giờ main, master, dev, beta, hoặc develop. Worktree sạch khớp request có thể được reuse.',
-        codeSnippet: '// gh repo view --json nameWithOwner,defaultBranchRef\n// classify: bug/regression/CI fail → bugfix; else feature\n// /ck:worktree → isolated branch (never main/dev/beta)',
+        explainEn: 'Strips --ship/--beta, resolves the repo with gh, and for issue URLs verifies OWNER/REPO matches the current repo (stops if it differs). Extracts outcome, acceptance criteria, scope, constraints, and likely touched files, then classifies the route as feature or bugfix. Activates /ak:worktree to create an isolated worktree and branch — never main, master, dev, beta, or develop. A clean matching worktree may be reused.',
+        explainVi: 'Bỏ --ship/--beta, resolve repo bằng gh, và với issue URL kiểm tra OWNER/REPO khớp repo hiện tại (dừng nếu khác). Trích outcome, acceptance criteria, scope, constraints, và file có thể bị động, rồi phân loại route feature hay bugfix. Kích hoạt /ak:worktree để tạo worktree và branch cô lập — không bao giờ main, master, dev, beta, hoặc develop. Worktree sạch khớp request có thể được reuse.',
+        codeSnippet: '// gh repo view --json nameWithOwner,defaultBranchRef\n// classify: bug/regression/CI fail → bugfix; else feature\n// /ak:worktree → isolated branch (never main/dev/beta)',
         icon: '<path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>',
         color: 'amber',
       },
@@ -11292,9 +11292,9 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Plan + Gates',
         descEn: 'Reuse or create TDD plan, then validate and red-team',
         descVi: 'Reuse hoặc tạo TDD plan, rồi validate và red-team',
-        explainEn: 'Reuses a valid existing plan.md and skips /ck:plan --tdd; otherwise runs /ck:plan --tdd on the source issue/request. Always runs both gates even for a reused plan: /ck:plan validate and /ck:plan red-team, plus the whole-plan consistency sweep. Implementation does not start while validation failures, accepted red-team findings, or contradictions remain.',
-        explainVi: 'Reuse plan.md hợp lệ và bỏ /ck:plan --tdd; nếu không thì chạy /ck:plan --tdd trên source issue/request. Luôn chạy cả hai gate kể cả khi reuse plan: /ck:plan validate và /ck:plan red-team, kèm sweep kiểm tra nhất quán toàn plan. Không bắt đầu implement khi còn validation fail, red-team finding được chấp nhận, hoặc mâu thuẫn.',
-        codeSnippet: '// reuse plan.md ? skip /ck:plan --tdd\n// else: /ck:plan --tdd "<source>"\n// /ck:plan validate <plan.md>\n// /ck:plan red-team <plan.md>',
+        explainEn: 'Reuses a valid existing plan.md and skips /ak:plan --tdd; otherwise runs /ak:plan --tdd on the source issue/request. Always runs both gates even for a reused plan: /ak:plan validate and /ak:plan red-team, plus the whole-plan consistency sweep. Implementation does not start while validation failures, accepted red-team findings, or contradictions remain.',
+        explainVi: 'Reuse plan.md hợp lệ và bỏ /ak:plan --tdd; nếu không thì chạy /ak:plan --tdd trên source issue/request. Luôn chạy cả hai gate kể cả khi reuse plan: /ak:plan validate và /ak:plan red-team, kèm sweep kiểm tra nhất quán toàn plan. Không bắt đầu implement khi còn validation fail, red-team finding được chấp nhận, hoặc mâu thuẫn.',
+        codeSnippet: '// reuse plan.md ? skip /ak:plan --tdd\n// else: /ak:plan --tdd "<source>"\n// /ak:plan validate <plan.md>\n// /ak:plan red-team <plan.md>',
         icon: '<path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>',
         color: 'green',
         isSubAgent: true,
@@ -11316,11 +11316,11 @@ export const workflowScenarios: WorkflowScenario[] = [
         id: 'vb-implement',
         type: 'agent',
         name: 'Cook or Fix',
-        descEn: 'Route to ck:cook (feature) or ck:fix (bugfix), honoring all gates',
-        descVi: 'Route sang ck:cook (feature) hoặc ck:fix (bugfix), giữ mọi gate',
-        explainEn: 'Flips the issue to "in progress" (removing "ready to cook") before work; stops on a gh failure rather than implementing while the issue still reads ready to cook.\n\n• Feature route → /ck:cook --tdd --auto <plan.md>\n• Bugfix route → /ck:fix --auto <plan.md>, passing failure evidence, validated plan path, scope boundary, and acceptance criteria.\n\nEvery hard gate in ck:cook and ck:fix is honored. A user/business blocker stops the run with issue details recorded.',
-        explainVi: 'Chuyển issue sang "in progress" (xoá "ready to cook") trước khi làm; dừng nếu gh lỗi thay vì implement khi issue vẫn ở ready to cook.\n\n• Route feature → /ck:cook --tdd --auto <plan.md>\n• Route bugfix → /ck:fix --auto <plan.md>, truyền failure evidence, plan path đã validate, scope boundary, và acceptance criteria.\n\nGiữ mọi hard gate trong ck:cook và ck:fix. Blocker user/business sẽ dừng run và ghi chi tiết vào issue.',
-        codeSnippet: '// gh issue edit <n> --add-label "in progress" --remove-label "ready to cook"\n// feature: /ck:cook --tdd --auto <plan.md>\n// bugfix:  /ck:fix --auto <plan.md>',
+        descEn: 'Route to ak:cook (feature) or ak:fix (bugfix), honoring all gates',
+        descVi: 'Route sang ak:cook (feature) hoặc ak:fix (bugfix), giữ mọi gate',
+        explainEn: 'Flips the issue to "in progress" (removing "ready to cook") before work; stops on a gh failure rather than implementing while the issue still reads ready to cook.\n\n• Feature route → /ak:cook --tdd --auto <plan.md>\n• Bugfix route → /ak:fix --auto <plan.md>, passing failure evidence, validated plan path, scope boundary, and acceptance criteria.\n\nEvery hard gate in ak:cook and ak:fix is honored. A user/business blocker stops the run with issue details recorded.',
+        explainVi: 'Chuyển issue sang "in progress" (xoá "ready to cook") trước khi làm; dừng nếu gh lỗi thay vì implement khi issue vẫn ở ready to cook.\n\n• Route feature → /ak:cook --tdd --auto <plan.md>\n• Route bugfix → /ak:fix --auto <plan.md>, truyền failure evidence, plan path đã validate, scope boundary, và acceptance criteria.\n\nGiữ mọi hard gate trong ak:cook và ak:fix. Blocker user/business sẽ dừng run và ghi chi tiết vào issue.',
+        codeSnippet: '// gh issue edit <n> --add-label "in progress" --remove-label "ready to cook"\n// feature: /ak:cook --tdd --auto <plan.md>\n// bugfix:  /ak:fix --auto <plan.md>',
         icon: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
         color: 'green',
         isSubAgent: true,
@@ -11331,9 +11331,9 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Ship + Review PR',
         descEn: 'code-review --pending, ship the PR, then review-pr --fix --reply',
         descVi: 'code-review --pending, ship PR, rồi review-pr --fix --reply',
-        explainEn: 'Runs /ck:code-review --pending and fixes Critical/Important findings before shipping. Ships with /ck:ship beta (with --beta) or /ck:ship official, capturing the PR URL. Then /ck:review-pr <pr> --fix --reply iterates until actionable findings are resolved or an external blocker is documented; PR checks must be terminal and green. On success, applies the ready label (ready to ship beta or ready to ship stable) to issue and PR, removing ready to cook and in progress.',
-        explainVi: 'Chạy /ck:code-review --pending và fix findings Critical/Important trước khi ship. Ship bằng /ck:ship beta (với --beta) hoặc /ck:ship official, lấy PR URL. Rồi /ck:review-pr <pr> --fix --reply lặp đến khi findings được xử lý hoặc có external blocker được ghi; PR checks phải terminal và green. Khi thành công, gắn ready label (ready to ship beta hoặc ready to ship stable) cho issue và PR, xoá ready to cook và in progress.',
-        codeSnippet: '// /ck:code-review --pending → fix Critical/Important\n// /ck:ship official | /ck:ship beta → PR URL\n// /ck:review-pr <pr> --fix --reply\n// + label: ready to ship stable | beta',
+        explainEn: 'Runs /ak:code-review --pending and fixes Critical/Important findings before shipping. Ships with /ak:ship beta (with --beta) or /ak:ship official, capturing the PR URL. Then /ak:review-pr <pr> --fix --reply iterates until actionable findings are resolved or an external blocker is documented; PR checks must be terminal and green. On success, applies the ready label (ready to ship beta or ready to ship stable) to issue and PR, removing ready to cook and in progress.',
+        explainVi: 'Chạy /ak:code-review --pending và fix findings Critical/Important trước khi ship. Ship bằng /ak:ship beta (với --beta) hoặc /ak:ship official, lấy PR URL. Rồi /ak:review-pr <pr> --fix --reply lặp đến khi findings được xử lý hoặc có external blocker được ghi; PR checks phải terminal và green. Khi thành công, gắn ready label (ready to ship beta hoặc ready to ship stable) cho issue và PR, xoá ready to cook và in progress.',
+        codeSnippet: '// /ak:code-review --pending → fix Critical/Important\n// /ak:ship official | /ak:ship beta → PR URL\n// /ak:review-pr <pr> --fix --reply\n// + label: ready to ship stable | beta',
         icon: '<path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>',
         color: 'green',
         isSubAgent: true,
@@ -11344,18 +11344,18 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'Merge + CI Watch',
         descEn: 'With --ship: merge per branch protection, watch CI, report result',
         descVi: 'Với --ship: merge theo branch protection, watch CI, report kết quả',
-        explainEn: 'Only with --ship: merges via GitHub repo convention and branch protection (prefer gh pr merge --auto when checks are pending). Never force-push or direct-push protected branches. Watches target-branch CI for the merge commit; on a deterministic repo-fixable failure it branches from target, runs /ck:fix --auto with the exact error, re-ships, re-reviews, merges, and watches again. Stops when CI is green, an external blocker remains, or the same blocker survives 3 fix attempts. Without --ship, the run ends at a reviewed, labeled-ready PR. Ends with a Vibe Result report (source, branch, plan, issue, PR, mode, route, review, merge, CI).',
-        explainVi: 'Chỉ với --ship: merge theo repo convention và branch protection (ưu tiên gh pr merge --auto khi checks còn pending). Không force-push hay direct-push branch được bảo vệ. Watch CI target-branch cho merge commit; nếu fail deterministic repo-fixable thì tách branch từ target, chạy /ck:fix --auto với đúng lỗi, re-ship, re-review, merge, và watch lại. Dừng khi CI green, còn external blocker, hoặc cùng blocker sống qua 3 lần fix. Không có --ship, run kết thúc ở PR đã review, gắn label ready. Kết thúc bằng report Vibe Result (source, branch, plan, issue, PR, mode, route, review, merge, CI).',
-        codeSnippet: '// --ship only:\n// gh pr merge --auto (checks pending) | repo method\n// gh run view → /ck:fix --auto on CI fail\n// stop: CI green | external blocker | 3 attempts',
+        explainEn: 'Only with --ship: merges via GitHub repo convention and branch protection (prefer gh pr merge --auto when checks are pending). Never force-push or direct-push protected branches. Watches target-branch CI for the merge commit; on a deterministic repo-fixable failure it branches from target, runs /ak:fix --auto with the exact error, re-ships, re-reviews, merges, and watches again. Stops when CI is green, an external blocker remains, or the same blocker survives 3 fix attempts. Without --ship, the run ends at a reviewed, labeled-ready PR. Ends with a Vibe Result report (source, branch, plan, issue, PR, mode, route, review, merge, CI).',
+        explainVi: 'Chỉ với --ship: merge theo repo convention và branch protection (ưu tiên gh pr merge --auto khi checks còn pending). Không force-push hay direct-push branch được bảo vệ. Watch CI target-branch cho merge commit; nếu fail deterministic repo-fixable thì tách branch từ target, chạy /ak:fix --auto với đúng lỗi, re-ship, re-review, merge, và watch lại. Dừng khi CI green, còn external blocker, hoặc cùng blocker sống qua 3 lần fix. Không có --ship, run kết thúc ở PR đã review, gắn label ready. Kết thúc bằng report Vibe Result (source, branch, plan, issue, PR, mode, route, review, merge, CI).',
+        codeSnippet: '// --ship only:\n// gh pr merge --auto (checks pending) | repo method\n// gh run view → /ak:fix --auto on CI fail\n// stop: CI green | external blocker | 3 attempts',
         icon: '<path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',
         color: 'amber',
       },
     ],
   },
-  // ─── /ck:tech-graph — Publish-grade Diagrams ───────────────────
+  // ─── /ak:tech-graph — Publish-grade Diagrams ───────────────────
   {
     id: 'tech-graph',
-    command: '/ck:tech-graph',
+    command: '/ak:tech-graph',
     kit: 'engineer',
     titleEn: 'Publish-grade Technical Diagrams',
     titleVi: 'Diagram kỹ thuật publish-grade',
@@ -11372,7 +11372,7 @@ export const workflowScenarios: WorkflowScenario[] = [
         descVi: 'Hệ thống cần vẽ, diagram type, style tùy chọn',
         explainEn: 'The command takes a system description plus an optional diagram type (architecture, data flow, flowchart, sequence, agent/memory, concept map, UML, ER, network) and a visual style (1-8, default Flat Icon). Output path can be set with --output.',
         explainVi: 'Command nhận mô tả hệ thống kèm diagram type tùy chọn (architecture, data flow, flowchart, sequence, agent/memory, concept map, UML, ER, network) và visual style (1-8, mặc định Flat Icon). Output path đặt qua --output.',
-        codeSnippet: '> /ck:tech-graph architecture diagram for the payments backend\n> /ck:tech-graph sequence of the OAuth login --style 3\n> /ck:tech-graph agent memory map --output ./docs/agent.svg',
+        codeSnippet: '> /ak:tech-graph architecture diagram for the payments backend\n> /ak:tech-graph sequence of the OAuth login --style 3\n> /ak:tech-graph agent memory map --output ./docs/agent.svg',
         icon: '<path d="M12 2v20"/><path d="M2 12h20"/>',
         color: 'purple',
       },
@@ -11430,8 +11430,8 @@ export const workflowScenarios: WorkflowScenario[] = [
         name: 'SVG + PNG Paths',
         descEn: 'Report generated diagram artifacts',
         descVi: 'Report artifact diagram đã tạo',
-        explainEn: 'Delivers the SVG source and exported PNG (default ./[derived-name].svg/.png, or the --output path). Pairs with /ck:preview --diagram for further visual self-review.',
-        explainVi: 'Giao SVG source và PNG đã export (mặc định ./[derived-name].svg/.png, hoặc --output path). Pair với /ck:preview --diagram để self-review visual thêm.',
+        explainEn: 'Delivers the SVG source and exported PNG (default ./[derived-name].svg/.png, or the --output path). Pairs with /ak:preview --diagram for further visual self-review.',
+        explainVi: 'Giao SVG source và PNG đã export (mặc định ./[derived-name].svg/.png, hoặc --output path). Pair với /ak:preview --diagram để self-review visual thêm.',
         codeSnippet: '// Artifacts:\n// ./payments-arch.svg\n// ./payments-arch.png (1920px)',
         icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>',
         color: 'amber',

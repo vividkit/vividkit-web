@@ -13,7 +13,7 @@ const t = useTranslations(currentLang);
 
 const syntaxItems = [
   {
-    sample: "/ck:plan",
+    sample: "/ak:plan",
     classes: "bg-teal-100 text-teal-700 border-teal-200 dark:bg-teal-900/30 dark:text-teal-300 dark:border-teal-800",
     title: t("commands.legend.syntax_base"),
     desc: t("commands.legend.syntax_base_desc"),
@@ -56,7 +56,7 @@ const syntaxItems = [
     requirementClasses: "bg-rose-50 text-rose-700 dark:bg-rose-900/30 dark:text-rose-300",
   },
   {
-    sample: "/ckm:plan:*",
+    sample: "/ak:plan:*",
     classes: "bg-purple-100 text-purple-700 border-purple-200 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-800",
     title: t("commands.legend.syntax_wildcard"),
     desc: t("commands.legend.syntax_wildcard_desc"),
@@ -68,7 +68,7 @@ const syntaxItems = [
 const orderItems = [
   {
     step: "1",
-    sample: "/ck:plan",
+    sample: "/ak:plan",
     label: t("commands.legend.order_base"),
     requirement: t("commands.legend.req_required"),
     classes: "bg-teal-100 text-teal-700 border-teal-200 dark:bg-teal-900/30 dark:text-teal-300 dark:border-teal-800",
@@ -214,7 +214,7 @@ const samplePromptItems = [
             </code>
           ))}
         </div>
-        <p class="mt-2 text-[11px] leading-relaxed text-sky-900/75 dark:text-sky-100/80">{t("commands.legend.example_template_note_intro")}<code class={templateCommandCodeClasses}>/ck:plan</code>{t("commands.legend.example_template_note_between")}<code class={templateCommandCodeClasses}>/ckm:seo</code>{t("commands.legend.example_template_note_after_intro")}<code class={inlineMarkerCodeClasses}>[]</code>{t("commands.legend.example_template_note_after_end")}</p>
+        <p class="mt-2 text-[11px] leading-relaxed text-sky-900/75 dark:text-sky-100/80">{t("commands.legend.example_template_note_intro")}<code class={templateCommandCodeClasses}>/ak:plan</code>{t("commands.legend.example_template_note_between")}<code class={templateCommandCodeClasses}>/ak:seo</code>{t("commands.legend.example_template_note_after_intro")}<code class={inlineMarkerCodeClasses}>[]</code>{t("commands.legend.example_template_note_after_end")}</p>
       </div>
 
       <div class="mb-3 rounded-lg border border-slate-200 bg-slate-50 p-2 dark:border-slate-800 dark:bg-slate-950/40">
@@ -361,7 +361,7 @@ const samplePromptItems = [
         </div>
         <p class="mt-2 text-[11px] leading-relaxed text-emerald-800/80 dark:text-emerald-200/80">
           {t("commands.legend.example_note_intro")}
-          <code class="rounded border border-teal-200 bg-teal-100 px-1 py-0.5 font-mono text-[10px] font-semibold text-teal-700 dark:border-teal-800 dark:bg-teal-900/30 dark:text-teal-300">/ck:plan</code>
+          <code class="rounded border border-teal-200 bg-teal-100 px-1 py-0.5 font-mono text-[10px] font-semibold text-teal-700 dark:border-teal-800 dark:bg-teal-900/30 dark:text-teal-300">/ak:plan</code>
           {t("commands.legend.example_note_request")}
           <code class="rounded border border-teal-200 bg-teal-100 px-1 py-0.5 font-mono text-[10px] font-semibold text-teal-700 dark:border-teal-800 dark:bg-teal-900/30 dark:text-teal-300">--deep</code>
           {t("commands.legend.example_note_flag")}

@@ -18,10 +18,10 @@ const blogPostUrl = currentLang === 'en'
 const copy = currentLang === 'vi'
   ? {
       kicker: 'Getting Started',
-      summary: 'Claude Code là môi trường lập trình agentic từ Anthropic. ClaudeKit Engineer Kit biến Claude từ assistant thành development partner với hệ thống skills, hooks, và workflows.',
+      summary: 'Claude Code là môi trường lập trình agentic từ Anthropic. AgentKit Engineer Kit biến Claude từ assistant thành development partner với hệ thống skills, hooks, và workflows.',
       sections: {
         claudeCode: 'Claude Code là gì?',
-        claudeKit: 'ClaudeKit Engineer Kit là gì?',
+        claudeKit: 'AgentKit Engineer Kit là gì?',
         coreCommands: '7 lệnh core cho người mới',
         bestPractices: 'Nên làm',
         badPractices: 'Không nên làm',
@@ -38,13 +38,13 @@ const copy = currentLang === 'vi'
         'Engineer Kit biến Claude từ assistant thành development partner thực sự.',
       ],
       coreCommands: [
-        { cmd: '/ck:brainstorm', desc: 'Khám phá ý tưởng và giải pháp trước khi code' },
-        { cmd: '/ck:plan', desc: 'Tạo implementation plan chi tiết với phases' },
-        { cmd: '/ck:cook', desc: 'Execute plan — build features theo từng bước' },
-        { cmd: '/ck:fix', desc: 'Debug và fix bugs một cách có hệ thống' },
-        { cmd: '/ck:ask', desc: 'Hỏi đáp nhanh về code hoặc architecture' },
-        { cmd: '/ck:test', desc: 'Chạy tests và phân tích coverage' },
-        { cmd: '/ck:watzup', desc: 'Xem tóm tắt những gì đã làm trong session' },
+        { cmd: '/ak:brainstorm', desc: 'Khám phá ý tưởng và giải pháp trước khi code' },
+        { cmd: '/ak:plan', desc: 'Tạo implementation plan chi tiết với phases' },
+        { cmd: '/ak:cook', desc: 'Execute plan — build features theo từng bước' },
+        { cmd: '/ak:fix', desc: 'Debug và fix bugs một cách có hệ thống' },
+        { cmd: '/ak:ask', desc: 'Hỏi đáp nhanh về code hoặc architecture' },
+        { cmd: '/ak:test', desc: 'Chạy tests và phân tích coverage' },
+        { cmd: '/ak:watzup', desc: 'Xem tóm tắt những gì đã làm trong session' },
       ],
       bestPractices: [
         'Cho Claude tiêu chí verify rõ ràng để nó tự kiểm tra kết quả.',
@@ -95,10 +95,10 @@ const copy = currentLang === 'vi'
     }
   : {
       kicker: 'Getting Started',
-      summary: 'Claude Code is an agentic coding environment from Anthropic. ClaudeKit Engineer Kit transforms Claude from assistant into a true development partner with skills, hooks, and workflows.',
+      summary: 'Claude Code is an agentic coding environment from Anthropic. AgentKit Engineer Kit transforms Claude from assistant into a true development partner with skills, hooks, and workflows.',
       sections: {
         claudeCode: 'What is Claude Code?',
-        claudeKit: 'What is ClaudeKit Engineer Kit?',
+        claudeKit: 'What is AgentKit Engineer Kit?',
         coreCommands: '7 core commands for beginners',
         bestPractices: 'Do This',
         badPractices: 'Avoid This',
@@ -115,13 +115,13 @@ const copy = currentLang === 'vi'
         'Engineer Kit transforms Claude from assistant into a true development partner.',
       ],
       coreCommands: [
-        { cmd: '/ck:brainstorm', desc: 'Explore ideas and solutions before coding' },
-        { cmd: '/ck:plan', desc: 'Create detailed implementation plans with phases' },
-        { cmd: '/ck:cook', desc: 'Execute plan — build features step by step' },
-        { cmd: '/ck:fix', desc: 'Debug and fix bugs systematically' },
-        { cmd: '/ck:ask', desc: 'Quick Q&A about code or architecture' },
-        { cmd: '/ck:test', desc: 'Run tests and analyze coverage' },
-        { cmd: '/ck:watzup', desc: 'See summary of what was done in session' },
+        { cmd: '/ak:brainstorm', desc: 'Explore ideas and solutions before coding' },
+        { cmd: '/ak:plan', desc: 'Create detailed implementation plans with phases' },
+        { cmd: '/ak:cook', desc: 'Execute plan — build features step by step' },
+        { cmd: '/ak:fix', desc: 'Debug and fix bugs systematically' },
+        { cmd: '/ak:ask', desc: 'Quick Q&A about code or architecture' },
+        { cmd: '/ak:test', desc: 'Run tests and analyze coverage' },
+        { cmd: '/ak:watzup', desc: 'See summary of what was done in session' },
       ],
       bestPractices: [
         'Give Claude clear verification criteria so it can self-check results.',
@@ -493,13 +493,13 @@ const copy = currentLang === 'vi'
           {currentLang === 'vi' ? 'Thêm user settings page với dark mode toggle' : 'Add user settings page with dark mode toggle'}
         </p>
         <div class="flex-1 rounded-lg bg-slate-100 p-2.5 font-mono text-[11px] leading-relaxed text-slate-700 dark:bg-slate-800/90 dark:text-slate-200">
-          <div><span class="text-purple-600 dark:text-purple-400">/ck:brainstorm</span> User settings page với dark mode toggle</div>
+          <div><span class="text-purple-600 dark:text-purple-400">/ak:brainstorm</span> User settings page với dark mode toggle</div>
           <div class="text-slate-500 dark:text-slate-400">→ brainstorm-report.md</div>
           <div class="mt-1 text-cyan-600 dark:text-cyan-400">/clear</div>
-          <div class="mt-1"><span class="text-purple-600 dark:text-purple-400">/ck:plan</span> plans/.../brainstorm-report.md</div>
+          <div class="mt-1"><span class="text-purple-600 dark:text-purple-400">/ak:plan</span> plans/.../brainstorm-report.md</div>
           <div class="text-slate-500 dark:text-slate-400">→ plan.md + phase-*.md</div>
           <div class="mt-1 text-cyan-600 dark:text-cyan-400">/clear</div>
-          <div class="mt-1"><span class="text-purple-600 dark:text-purple-400">/ck:cook</span> plans/.../plan.md</div>
+          <div class="mt-1"><span class="text-purple-600 dark:text-purple-400">/ak:cook</span> plans/.../plan.md</div>
         </div>
       </div>
       <!-- UC2: Fix bug -->
@@ -513,7 +513,7 @@ const copy = currentLang === 'vi'
           {currentLang === 'vi' ? 'Form validation không show error message' : 'Form validation not showing error'}
         </p>
         <div class="flex-1 rounded-lg bg-slate-100 p-2.5 font-mono text-[11px] leading-relaxed text-slate-700 dark:bg-slate-800/90 dark:text-slate-200">
-          <div><span class="text-purple-600 dark:text-purple-400">/ck:fix</span> Form validation trong src/components/LoginForm.tsx không hiện error message khi email invalid</div>
+          <div><span class="text-purple-600 dark:text-purple-400">/ak:fix</span> Form validation trong src/components/LoginForm.tsx không hiện error message khi email invalid</div>
         </div>
       </div>
       <!-- UC3: Onboard codebase -->
@@ -527,8 +527,8 @@ const copy = currentLang === 'vi'
           {currentLang === 'vi' ? 'Join team mới, cần hiểu codebase nhanh' : 'Join new team, understand codebase fast'}
         </p>
         <div class="flex-1 rounded-lg bg-slate-100 p-2.5 font-mono text-[11px] leading-relaxed text-slate-700 dark:bg-slate-800/90 dark:text-slate-200">
-          <div><span class="text-purple-600 dark:text-purple-400">/ck:scout</span> src/</div>
-          <div class="mt-1"><span class="text-purple-600 dark:text-purple-400">/ck:ask</span> Authentication flow hoạt động thế nào? Tokens lưu ở đâu?</div>
+          <div><span class="text-purple-600 dark:text-purple-400">/ak:scout</span> src/</div>
+          <div class="mt-1"><span class="text-purple-600 dark:text-purple-400">/ak:ask</span> Authentication flow hoạt động thế nào? Tokens lưu ở đâu?</div>
         </div>
         <p class="mt-2 text-xs font-medium text-emerald-600 dark:text-emerald-400">
           {currentLang === 'vi' ? '→ 30 phút thay vì 2 ngày' : '→ 30min instead of 2 days'}
@@ -545,8 +545,8 @@ const copy = currentLang === 'vi'
           {currentLang === 'vi' ? 'Module cũ 500 LOC cần cleanup' : 'Old 500 LOC module needs cleanup'}
         </p>
         <div class="flex-1 rounded-lg bg-slate-100 p-2.5 font-mono text-[11px] leading-relaxed text-slate-700 dark:bg-slate-800/90 dark:text-slate-200">
-          <div><span class="text-purple-600 dark:text-purple-400">/ck:ask</span> Analyze src/legacy/user.js — Hidden deps? Side effects?</div>
-          <div class="mt-1"><span class="text-purple-600 dark:text-purple-400">/ck:plan</span> Refactor user.js thành modules, giữ nguyên API</div>
+          <div><span class="text-purple-600 dark:text-purple-400">/ak:ask</span> Analyze src/legacy/user.js — Hidden deps? Side effects?</div>
+          <div class="mt-1"><span class="text-purple-600 dark:text-purple-400">/ak:plan</span> Refactor user.js thành modules, giữ nguyên API</div>
         </div>
       </div>
     </div>

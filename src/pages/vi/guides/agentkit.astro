@@ -1,0 +1,17 @@
+---
+import AgentKitGuide from '@/components/guides/AgentKitGuide.astro';
+import { useTranslations } from '@/i18n/utils';
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+
+const t = useTranslations('vi');
+---
+
+<GuidesLayout
+  title={`${t('agentkit.meta.title')} - ${t('site.title')}`}
+  description={t('agentkit.meta.description')}
+  canonicalPath="/vi/guides/agentkit"
+  activeTab="agentkit"
+  lang="vi"
+>
+  <AgentKitGuide lang="vi" />
+</GuidesLayout>

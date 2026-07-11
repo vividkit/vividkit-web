@@ -98,6 +98,17 @@ const pathways = [
     </p>
   </div>
 
+  <section class="rounded-3xl border border-violet-200 bg-gradient-to-r from-violet-50 to-cyan-50 p-6 dark:border-violet-500/20 dark:from-violet-950/30 dark:to-cyan-950/20">
+    <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-violet-700 dark:text-violet-300">ck → ak</p>
+        <h2 class="mt-2 text-2xl font-bold text-slate-950 dark:text-white">{currentLang === 'vi' ? 'ClaudeKit đã chuyển sang AgentKit' : 'ClaudeKit has moved to AgentKit'}</h2>
+        <p class="mt-2 max-w-2xl text-sm leading-6 text-slate-600 dark:text-slate-300">{currentLang === 'vi' ? 'Cài native ak CLI, đăng nhập bằng license/email/API key, migrate scripts và cài kit cho Claude Code hoặc Codex.' : 'Install the native ak CLI, authenticate by license/email/API key, migrate scripts, and install kits for Claude Code or Codex.'}</p>
+      </div>
+      <a href={translatePath('/guides/agentkit')} class="inline-flex min-h-11 shrink-0 items-center justify-center rounded-xl bg-violet-600 px-5 text-sm font-semibold text-white transition hover:bg-violet-700">{currentLang === 'vi' ? 'Mở migration guide' : 'Open migration guide'}</a>
+    </div>
+  </section>
+
   <!-- Pathways Grid -->
   <div class="pathways-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 [grid-auto-rows:auto]">
     {pathways.map((pathway) => (

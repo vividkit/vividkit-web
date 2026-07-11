@@ -1,6 +1,6 @@
 // Legacy flowchart data - original command syntax (/git:*, /design:*, /code @plan.md)
 // Kept in source for reference only - NOT rendered in production
-import { type FlowchartNode, type FlowchartEdge, type FlowchartPath, generatePath } from "./flowchart-types";
+import { type FlowchartNode, type FlowchartEdge, type FlowchartPath, generatePath } from "./flowchart-types.ts";
 
 const betaNodes: FlowchartNode[] = [
   // Start node (centered)

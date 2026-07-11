@@ -1,6 +1,6 @@
 // Marketing Kit flowchart data - purpose-driven decision tree for marketers
-// All commands use /ckm: prefix (migration from /mkt: complete)
-import { type FlowchartNode, type FlowchartEdge, type FlowchartPath, generatePath } from "./flowchart-types";
+// All commands use /ak: prefix (migration from /mkt: complete)
+import { type FlowchartNode, type FlowchartEdge, type FlowchartPath, generatePath } from "./flowchart-types.ts";
 
 const marketingNodes: FlowchartNode[] = [
   // Start node (centered for 1600px canvas)
@@ -93,36 +93,36 @@ const marketingNodes: FlowchartNode[] = [
     position: { x: 900, y: 280 }
   },
 
-  // Command nodes - Learn ClaudeKit (Essentials)
+  // Command nodes - Learn AgentKit (Essentials)
   {
     id: 'cmd-mkt-init',
     type: 'command',
-    label: '/ckm:init',
+    label: '/ak:init',
     description: 'Setup marketing workspace ⚡⚡',
     position: { x: 100, y: 280 }
   },
 
   // Command nodes - Plan branch (2 separate paths)
-  // Path 1: Idea? → /ck:brainstorm → Done → loop back to Plan?
+  // Path 1: Idea? → /ak:brainstorm → Done → loop back to Plan?
   {
     id: 'cmd-ck-brainstorm',
     type: 'command',
-    label: '/ck:brainstorm',
+    label: '/ak:brainstorm',
     description: 'Explore campaign angles ⚡',
     position: { x: 180, y: 280 }
   },
-  // Path 2: Ready? → /ckm:plan → Go → /ckm:write:good
+  // Path 2: Ready? → /ak:plan → Go → /ak:write:good
   {
     id: 'cmd-mkt-plan',
     type: 'command',
-    label: '/ckm:plan',
+    label: '/ak:plan',
     description: 'Marketing plan creation ⚡⚡⚡',
     position: { x: 340, y: 280 }
   },
   {
     id: 'cmd-mkt-write-good',
     type: 'command',
-    label: '/ckm:write:good',
+    label: '/ak:write:good',
     description: 'Execute: Quality content ⚡⚡⚡',
     position: { x: 340, y: 400 }
   },
@@ -131,21 +131,21 @@ const marketingNodes: FlowchartNode[] = [
   {
     id: 'cmd-mkt-campaign',
     type: 'command',
-    label: '/ckm:campaign',
+    label: '/ak:campaign',
     description: 'Multi-channel campaigns ⚡⚡⚡⚡',
     position: { x: 340, y: 520 }
   },
   {
     id: 'cmd-mkt-email',
     type: 'command',
-    label: '/ckm:email',
+    label: '/ak:email',
     description: 'Email flows & sequences ⚡⚡⚡',
     position: { x: 420, y: 400 }
   },
   {
     id: 'cmd-mkt-social',
     type: 'command',
-    label: '/ckm:social',
+    label: '/ak:social',
     description: 'Social media campaigns ⚡⚡',
     position: { x: 500, y: 400 }
   },
@@ -154,21 +154,21 @@ const marketingNodes: FlowchartNode[] = [
   {
     id: 'cmd-mkt-write',
     type: 'command',
-    label: '/ckm:write:*',
+    label: '/ak:write:*',
     description: 'Content creation — 8 modes: good, fast, blog, cro... ⚡⚡⚡',
     position: { x: 500, y: 520 }
   },
   {
     id: 'cmd-mkt-video',
     type: 'command',
-    label: '/ckm:video',
+    label: '/ak:video',
     description: 'Video scripts & storyboards ⚡⚡⚡',
     position: { x: 580, y: 400 }
   },
   {
     id: 'cmd-mkt-slides',
     type: 'command',
-    label: '/ckm:slides',
+    label: '/ak:slides',
     description: 'Pitch decks & presentations ⚡⚡',
     position: { x: 660, y: 400 }
   },
@@ -177,21 +177,21 @@ const marketingNodes: FlowchartNode[] = [
   {
     id: 'cmd-ckm-play',
     type: 'command',
-    label: '/ckm:play',
+    label: '/ak:play',
     description: 'Marketing playbook orchestrator ⚡⚡⚡⚡',
     position: { x: 660, y: 520 }
   },
   {
     id: 'cmd-ckm-persona',
     type: 'command',
-    label: '/ckm:persona',
+    label: '/ak:persona',
     description: 'Customer persona management ⚡⚡',
     position: { x: 740, y: 400 }
   },
   {
     id: 'cmd-ckm-journal',
     type: 'command',
-    label: '/ckm:journal',
+    label: '/ak:journal',
     description: 'Marketing session journal ⚡',
     position: { x: 820, y: 400 }
   },
@@ -200,21 +200,21 @@ const marketingNodes: FlowchartNode[] = [
   {
     id: 'cmd-mkt-competitor',
     type: 'command',
-    label: '/ckm:competitor',
+    label: '/ak:competitor',
     description: 'Competitive analysis ⚡⚡⚡',
     position: { x: 820, y: 520 }
   },
   {
     id: 'cmd-mkt-seo',
     type: 'command',
-    label: '/ckm:seo',
+    label: '/ak:seo',
     description: 'SEO audit & keywords ⚡⚡⚡',
     position: { x: 900, y: 400 }
   },
   {
     id: 'cmd-mkt-funnel',
     type: 'command',
-    label: '/ckm:funnel',
+    label: '/ak:funnel',
     description: 'Funnel design & optimize ⚡⚡⚡',
     position: { x: 980, y: 400 }
   },
@@ -223,14 +223,14 @@ const marketingNodes: FlowchartNode[] = [
   {
     id: 'cmd-ckm-analyze',
     type: 'command',
-    label: '/ckm:analyze',
+    label: '/ak:analyze',
     description: 'Analytics & performance reports ⚡⚡⚡',
     position: { x: 1000, y: 280 }
   },
   {
     id: 'cmd-ckm-dashboard',
     type: 'command',
-    label: '/ckm:dashboard',
+    label: '/ak:dashboard',
     description: 'Marketing analytics dashboard ⚡⚡',
     position: { x: 1120, y: 280 }
   },
@@ -239,21 +239,21 @@ const marketingNodes: FlowchartNode[] = [
   {
     id: 'cmd-mkt-kanban',
     type: 'command',
-    label: '/ckm:kanban',
+    label: '/ak:kanban',
     description: 'Task visualization ⚡',
     position: { x: 1180, y: 280 }
   },
   {
     id: 'cmd-mkt-brand',
     type: 'command',
-    label: '/ckm:brand',
+    label: '/ak:brand',
     description: 'Brand management ⚡⚡',
     position: { x: 1300, y: 280 }
   },
   {
     id: 'cmd-mkt-hub',
     type: 'command',
-    label: '/ckm:hub',
+    label: '/ak:hub',
     description: 'Content hub server ⚡',
     position: { x: 1240, y: 400 }
   },
@@ -262,14 +262,14 @@ const marketingNodes: FlowchartNode[] = [
   {
     id: 'cmd-mkt-watzup',
     type: 'command',
-    label: '/ckm:watzup',
+    label: '/ak:watzup',
     description: 'Session wrap-up ⚡',
     position: { x: 1360, y: 280 }
   },
   {
     id: 'cmd-ck-ask',
     type: 'command',
-    label: '/ck:ask',
+    label: '/ak:ask',
     description: 'Expert consultation ⚡',
     position: { x: 1480, y: 280 }
   }
@@ -341,7 +341,7 @@ const marketingEdges: FlowchartEdge[] = [
   },
 
   // Plan branch - 2 separate paths
-  // Path 1: Idea? → /ck:brainstorm (standalone endpoint)
+  // Path 1: Idea? → /ak:brainstorm (standalone endpoint)
   {
     id: 'e-mkt-plan-brainstorm',
     from: 'mkt-plan',
@@ -351,7 +351,7 @@ const marketingEdges: FlowchartEdge[] = [
     labelX: 200,
     labelY: 220
   },
-  // Path 2: Ready? → /ckm:plan → Go → /ckm:write:good
+  // Path 2: Ready? → /ak:plan → Go → /ak:write:good
   {
     id: 'e-mkt-plan-ready',
     from: 'mkt-plan',
@@ -582,13 +582,13 @@ const marketingEdges: FlowchartEdge[] = [
 ];
 
 const marketingPaths: FlowchartPath[] = [
-  // Learn ClaudeKit paths
+  // Learn AgentKit paths
   {
     id: 'mkt-path-learn',
     name: 'Setup Workspace',
     nodes: ['mkt-start', 'mkt-learn', 'cmd-mkt-init'],
     edges: ['e-mkt-start-learn', 'e-mkt-learn-init'],
-    command: '/ckm:init',
+    command: '/ak:init',
     description: 'Start here: Setup your marketing workspace with brand, personas, templates',
     color: 'green'
   },
@@ -600,7 +600,7 @@ const marketingPaths: FlowchartPath[] = [
     name: 'Brainstorm Ideas',
     nodes: ['mkt-start', 'mkt-plan', 'cmd-ck-brainstorm'],
     edges: ['e-mkt-start-plan', 'e-mkt-plan-brainstorm'],
-    command: '/ck:brainstorm',
+    command: '/ak:brainstorm',
     description: 'Explore campaign angles and marketing ideas',
     color: 'violet'
   },
@@ -610,7 +610,7 @@ const marketingPaths: FlowchartPath[] = [
     name: 'Plan & Execute',
     nodes: ['mkt-start', 'mkt-plan', 'cmd-mkt-plan', 'cmd-mkt-write-good'],
     edges: ['e-mkt-start-plan', 'e-mkt-plan-ready', 'e-mkt-plan-execute'],
-    command: '/ckm:plan → /ckm:write:good',
+    command: '/ak:plan → /ak:write:good',
     description: 'Know what to do? Create plan then execute with quality content',
     color: 'purple'
   },
@@ -621,7 +621,7 @@ const marketingPaths: FlowchartPath[] = [
     name: 'Multi-channel Campaign',
     nodes: ['mkt-start', 'mkt-campaign', 'mkt-campaign-type', 'cmd-mkt-campaign'],
     edges: ['e-mkt-start-campaign', 'e-mkt-campaign-type', 'e-mkt-type-campaign'],
-    command: '/ckm:campaign',
+    command: '/ak:campaign',
     description: 'Create unified campaigns across email, social, and paid channels',
     color: 'purple'
   },
@@ -630,7 +630,7 @@ const marketingPaths: FlowchartPath[] = [
     name: 'Email Campaign',
     nodes: ['mkt-start', 'mkt-campaign', 'mkt-campaign-type', 'cmd-mkt-email'],
     edges: ['e-mkt-start-campaign', 'e-mkt-campaign-type', 'e-mkt-type-email'],
-    command: '/ckm:email',
+    command: '/ak:email',
     description: 'Design email flows and nurture sequences',
     color: 'purple'
   },
@@ -639,7 +639,7 @@ const marketingPaths: FlowchartPath[] = [
     name: 'Social Campaign',
     nodes: ['mkt-start', 'mkt-campaign', 'mkt-campaign-type', 'cmd-mkt-social'],
     edges: ['e-mkt-start-campaign', 'e-mkt-campaign-type', 'e-mkt-type-social'],
-    command: '/ckm:social',
+    command: '/ak:social',
     description: 'Schedule and manage social media content',
     color: 'purple'
   },
@@ -650,7 +650,7 @@ const marketingPaths: FlowchartPath[] = [
     name: 'Blog & Articles',
     nodes: ['mkt-start', 'mkt-content', 'mkt-content-type', 'cmd-mkt-write'],
     edges: ['e-mkt-start-content', 'e-mkt-content-type', 'e-mkt-format-write'],
-    command: '/ckm:write:*',
+    command: '/ak:write:*',
     description: 'Write blogs, CRO copy, and marketing content — 8 subcommand modes (write:good, write:fast, write:blog...)',
     color: 'pink'
   },
@@ -659,7 +659,7 @@ const marketingPaths: FlowchartPath[] = [
     name: 'Video Content',
     nodes: ['mkt-start', 'mkt-content', 'mkt-content-type', 'cmd-mkt-video'],
     edges: ['e-mkt-start-content', 'e-mkt-content-type', 'e-mkt-format-video'],
-    command: '/ckm:video',
+    command: '/ak:video',
     description: 'Create video scripts and storyboards',
     color: 'pink'
   },
@@ -668,7 +668,7 @@ const marketingPaths: FlowchartPath[] = [
     name: 'Presentations',
     nodes: ['mkt-start', 'mkt-content', 'mkt-content-type', 'cmd-mkt-slides'],
     edges: ['e-mkt-start-content', 'e-mkt-content-type', 'e-mkt-format-slides'],
-    command: '/ckm:slides',
+    command: '/ak:slides',
     description: 'Build pitch decks and training presentations',
     color: 'pink'
   },
@@ -679,7 +679,7 @@ const marketingPaths: FlowchartPath[] = [
     name: 'Marketing Playbook',
     nodes: ['mkt-start', 'mkt-grow', 'mkt-grow-focus', 'cmd-ckm-play'],
     edges: ['e-mkt-start-grow', 'e-mkt-grow-focus', 'e-mkt-focus-launch'],
-    command: '/ckm:play',
+    command: '/ak:play',
     description: 'Orchestrate marketing strategy with AI execution & goal tracking',
     color: 'emerald'
   },
@@ -688,7 +688,7 @@ const marketingPaths: FlowchartPath[] = [
     name: 'Customer Personas',
     nodes: ['mkt-start', 'mkt-grow', 'mkt-grow-focus', 'cmd-ckm-persona'],
     edges: ['e-mkt-start-grow', 'e-mkt-grow-focus', 'e-mkt-focus-pricing'],
-    command: '/ckm:persona',
+    command: '/ak:persona',
     description: 'Create & manage detailed customer personas',
     color: 'emerald'
   },
@@ -697,7 +697,7 @@ const marketingPaths: FlowchartPath[] = [
     name: 'Session Journal',
     nodes: ['mkt-start', 'mkt-grow', 'mkt-grow-focus', 'cmd-ckm-journal'],
     edges: ['e-mkt-start-grow', 'e-mkt-grow-focus', 'e-mkt-focus-cro'],
-    command: '/ckm:journal',
+    command: '/ak:journal',
     description: 'Write journal entries for marketing sessions',
     color: 'emerald'
   },
@@ -708,7 +708,7 @@ const marketingPaths: FlowchartPath[] = [
     name: 'Competitor Analysis',
     nodes: ['mkt-start', 'mkt-analyze', 'mkt-analyze-type', 'cmd-mkt-competitor'],
     edges: ['e-mkt-start-analyze', 'e-mkt-analyze-type', 'e-mkt-what-competitor'],
-    command: '/ckm:competitor',
+    command: '/ak:competitor',
     description: 'Research competitors, content, and market positioning',
     color: 'blue'
   },
@@ -717,7 +717,7 @@ const marketingPaths: FlowchartPath[] = [
     name: 'SEO Analysis',
     nodes: ['mkt-start', 'mkt-analyze', 'mkt-analyze-type', 'cmd-mkt-seo'],
     edges: ['e-mkt-start-analyze', 'e-mkt-analyze-type', 'e-mkt-what-seo'],
-    command: '/ckm:seo',
+    command: '/ak:seo',
     description: 'Audit SEO, research keywords, plan pSEO pages',
     color: 'blue'
   },
@@ -726,7 +726,7 @@ const marketingPaths: FlowchartPath[] = [
     name: 'Funnel Optimization',
     nodes: ['mkt-start', 'mkt-analyze', 'mkt-analyze-type', 'cmd-mkt-funnel'],
     edges: ['e-mkt-start-analyze', 'e-mkt-analyze-type', 'e-mkt-what-funnel'],
-    command: '/ckm:funnel',
+    command: '/ak:funnel',
     description: 'Design, analyze, and optimize conversion funnels',
     color: 'blue'
   },
@@ -737,7 +737,7 @@ const marketingPaths: FlowchartPath[] = [
     name: 'Analytics Reports',
     nodes: ['mkt-start', 'mkt-design', 'cmd-ckm-analyze'],
     edges: ['e-mkt-start-design', 'e-mkt-design-cmd'],
-    command: '/ckm:analyze',
+    command: '/ak:analyze',
     description: 'Generate analytics and performance reports',
     color: 'teal'
   },
@@ -746,7 +746,7 @@ const marketingPaths: FlowchartPath[] = [
     name: 'Marketing Dashboard',
     nodes: ['mkt-start', 'mkt-design', 'cmd-ckm-dashboard'],
     edges: ['e-mkt-start-design', 'e-mkt-analytics-dashboard'],
-    command: '/ckm:dashboard',
+    command: '/ak:dashboard',
     description: 'Launch local marketing analytics dashboard',
     color: 'teal'
   },
@@ -757,7 +757,7 @@ const marketingPaths: FlowchartPath[] = [
     name: 'Task Board',
     nodes: ['mkt-start', 'mkt-project', 'cmd-mkt-kanban'],
     edges: ['e-mkt-start-project', 'e-mkt-project-kanban'],
-    command: '/ckm:kanban',
+    command: '/ak:kanban',
     description: 'Visualize and manage marketing tasks',
     color: 'cyan'
   },
@@ -766,7 +766,7 @@ const marketingPaths: FlowchartPath[] = [
     name: 'Brand Management',
     nodes: ['mkt-start', 'mkt-project', 'cmd-mkt-brand'],
     edges: ['e-mkt-start-project', 'e-mkt-project-brand'],
-    command: '/ckm:brand',
+    command: '/ak:brand',
     description: 'Create, update, and review brand guidelines',
     color: 'cyan'
   },
@@ -775,7 +775,7 @@ const marketingPaths: FlowchartPath[] = [
     name: 'Content Hub',
     nodes: ['mkt-start', 'mkt-project', 'cmd-mkt-hub'],
     edges: ['e-mkt-start-project', 'e-mkt-project-hub'],
-    command: '/ckm:hub',
+    command: '/ak:hub',
     description: 'Start local server for content management',
     color: 'cyan'
   },
@@ -786,7 +786,7 @@ const marketingPaths: FlowchartPath[] = [
     name: 'Session Status',
     nodes: ['mkt-start', 'mkt-help', 'cmd-mkt-watzup'],
     edges: ['e-mkt-start-help', 'e-mkt-help-watzup'],
-    command: '/ckm:watzup',
+    command: '/ak:watzup',
     description: 'Review recent changes and wrap up session',
     color: 'indigo'
   },
@@ -795,7 +795,7 @@ const marketingPaths: FlowchartPath[] = [
     name: 'Expert Consultation',
     nodes: ['mkt-start', 'mkt-help', 'cmd-ck-ask'],
     edges: ['e-mkt-start-help', 'e-mkt-help-ask'],
-    command: '/ck:ask',
+    command: '/ak:ask',
     description: 'Get expert advice on marketing strategy',
     color: 'indigo'
   }

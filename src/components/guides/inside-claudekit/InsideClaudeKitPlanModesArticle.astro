@@ -30,7 +30,7 @@ const copy = currentLang === 'vi'
         pitfalls: 'Cần tránh',
         readMore: 'Đọc chi tiết đầy đủ',
       },
-      modeVsFlagDesc: '/ck:plan nhận 2 loại tham số khác nhau. Hiểu sai sẽ chọn sai.',
+      modeVsFlagDesc: '/ak:plan nhận 2 loại tham số khác nhau. Hiểu sai sẽ chọn sai.',
       modes: [
         { name: '--fast', desc: 'Chạy nhanh, plan ngắn gọn' },
         { name: '--hard', desc: 'Nghiên cứu kỹ hơn, phù hợp domain phức tạp' },
@@ -65,23 +65,23 @@ const copy = currentLang === 'vi'
       ],
       togetherNote: 'Task rộng → --deep. Có behavior cũ phải giữ → thêm --tdd. Có cả hai → bật cả cặp.',
       decisionRows: [
-        { situation: 'Fix nhỏ 1-2 file', cmd: '/ck:plan --fast' },
-        { situation: 'Feature mới trung bình', cmd: '/ck:plan (auto)' },
-        { situation: 'Feature phức tạp, domain lạ', cmd: '/ck:plan --hard' },
-        { situation: '3+ module độc lập, song song', cmd: '/ck:plan --parallel' },
-        { situation: 'Phân vân 2 approach cụ thể', cmd: '/ck:plan --two' },
-        { situation: 'Refactor 5+ vùng, nợ kiến trúc', cmd: '/ck:plan --deep' },
+        { situation: 'Fix nhỏ 1-2 file', cmd: '/ak:plan --fast' },
+        { situation: 'Feature mới trung bình', cmd: '/ak:plan (auto)' },
+        { situation: 'Feature phức tạp, domain lạ', cmd: '/ak:plan --hard' },
+        { situation: '3+ module độc lập, song song', cmd: '/ak:plan --parallel' },
+        { situation: 'Phân vân 2 approach cụ thể', cmd: '/ak:plan --two' },
+        { situation: 'Refactor 5+ vùng, nợ kiến trúc', cmd: '/ak:plan --deep' },
         { situation: 'Refactor code đang chạy, sợ regression', cmd: 'Any mode + --tdd' },
-        { situation: 'Major refactor, cần giữ behavior', cmd: '/ck:plan --deep --tdd' },
+        { situation: 'Major refactor, cần giữ behavior', cmd: '/ak:plan --deep --tdd' },
       ],
       bestPracticesList: [
-        { title: 'Worktree sạch', desc: 'Commit/stash trước khi plan lớn, hoặc dùng /ck:worktree' },
+        { title: 'Worktree sạch', desc: 'Commit/stash trước khi plan lớn, hoặc dùng /ak:worktree' },
         { title: 'Review phase file', desc: 'Đừng cook ngay khi chưa đọc lại plan.md và các phase file' },
         { title: 'Khai báo test command', desc: 'Repo dùng tool lạ? Khai báo luôn trong task description' },
-        { title: '/clear giữa plan và cook', desc: 'Plan context nặng → /clear → /ck:cook {path}/plan.md' },
+        { title: '/clear giữa plan và cook', desc: 'Plan context nặng → /clear → /ak:cook {path}/plan.md' },
       ],
       pitfallsList: [
-        { trap: 'Quên --tdd ở /ck:cook', fix: 'Cook không enforce thứ tự test-first nếu thiếu flag' },
+        { trap: 'Quên --tdd ở /ak:cook', fix: 'Cook không enforce thứ tự test-first nếu thiếu flag' },
         { trap: '--deep cho task nhỏ', fix: 'Dưới ~5 file thì dùng --hard hoặc --fast' },
         { trap: '--tdd cho greenfield', fix: 'Code mới không có behavior cũ để chụp test' },
         { trap: 'Tin tuyệt đối vào phase file', fix: 'Vẫn cần review: phase sau có phụ thuộc ngầm không?' },
@@ -103,7 +103,7 @@ const copy = currentLang === 'vi'
         pitfalls: 'Pitfalls to avoid',
         readMore: 'Read the full article',
       },
-      modeVsFlagDesc: '/ck:plan takes 2 types of parameters. Confusing them leads to wrong choices.',
+      modeVsFlagDesc: '/ak:plan takes 2 types of parameters. Confusing them leads to wrong choices.',
       modes: [
         { name: '--fast', desc: 'Quick run, concise plan' },
         { name: '--hard', desc: 'Deeper research, fits complex domains' },
@@ -138,23 +138,23 @@ const copy = currentLang === 'vi'
       ],
       togetherNote: 'Wide task → --deep. Must preserve behavior → add --tdd. Both → use the pair.',
       decisionRows: [
-        { situation: 'Small fix, 1-2 files', cmd: '/ck:plan --fast' },
-        { situation: 'Medium new feature', cmd: '/ck:plan (auto)' },
-        { situation: 'Complex feature, unfamiliar domain', cmd: '/ck:plan --hard' },
-        { situation: '3+ independent modules', cmd: '/ck:plan --parallel' },
-        { situation: 'Torn between 2 approaches', cmd: '/ck:plan --two' },
-        { situation: 'Refactor 5+ areas, arch debt', cmd: '/ck:plan --deep' },
+        { situation: 'Small fix, 1-2 files', cmd: '/ak:plan --fast' },
+        { situation: 'Medium new feature', cmd: '/ak:plan (auto)' },
+        { situation: 'Complex feature, unfamiliar domain', cmd: '/ak:plan --hard' },
+        { situation: '3+ independent modules', cmd: '/ak:plan --parallel' },
+        { situation: 'Torn between 2 approaches', cmd: '/ak:plan --two' },
+        { situation: 'Refactor 5+ areas, arch debt', cmd: '/ak:plan --deep' },
         { situation: 'Refactor running code, fear regression', cmd: 'Any mode + --tdd' },
-        { situation: 'Major refactor, must preserve behavior', cmd: '/ck:plan --deep --tdd' },
+        { situation: 'Major refactor, must preserve behavior', cmd: '/ak:plan --deep --tdd' },
       ],
       bestPracticesList: [
-        { title: 'Clean worktree', desc: 'Commit/stash before big plans, or use /ck:worktree' },
+        { title: 'Clean worktree', desc: 'Commit/stash before big plans, or use /ak:worktree' },
         { title: 'Review phase files', desc: 'Don\'t cook before reading plan.md and phase files' },
         { title: 'Declare test commands', desc: 'Repo uses unusual tools? Declare them in the task' },
-        { title: '/clear between plan and cook', desc: 'Plan context is heavy → /clear → /ck:cook {path}/plan.md' },
+        { title: '/clear between plan and cook', desc: 'Plan context is heavy → /clear → /ak:cook {path}/plan.md' },
       ],
       pitfallsList: [
-        { trap: 'Forgetting --tdd on /ck:cook', fix: 'Cook won\'t enforce test-first order without the flag' },
+        { trap: 'Forgetting --tdd on /ak:cook', fix: 'Cook won\'t enforce test-first order without the flag' },
         { trap: '--deep for small tasks', fix: 'Under ~5 files, use --hard or --fast instead' },
         { trap: '--tdd for greenfield', fix: 'New code has no existing behavior to capture in tests' },
         { trap: 'Blindly trusting phase files', fix: 'Still review: does a later phase silently depend on an earlier one?' },
@@ -220,7 +220,7 @@ const copy = currentLang === 'vi'
 
     <!-- Syntax hint -->
     <div class="mt-4 rounded-lg bg-slate-100 p-3 font-mono text-xs text-slate-700 dark:bg-slate-800/90 dark:text-slate-200">
-      <span class="text-purple-600 dark:text-purple-400">/ck:plan</span>
+      <span class="text-purple-600 dark:text-purple-400">/ak:plan</span>
       <span class="text-slate-500 dark:text-slate-400"> [task] </span>
       <span class="text-blue-600 dark:text-blue-400">[--fast|--hard|--deep|--parallel|--two]</span>
       <span class="text-slate-500 dark:text-slate-400"> </span>
@@ -329,7 +329,7 @@ const copy = currentLang === 'vi'
     </div>
 
     <div class="space-y-2">
-      {copy.decisionRows.map((row, i) => {
+      {copy.decisionRows.map((row) => {
         const isHighlight = row.cmd.includes('--deep') || row.cmd.includes('--tdd');
         const bgClass = isHighlight
           ? 'bg-gradient-to-r from-blue-50 to-emerald-50/50 dark:from-blue-950/30 dark:to-emerald-950/20 border-blue-200/70 dark:border-blue-800/50'
@@ -475,7 +475,7 @@ const copy = currentLang === 'vi'
     </div>
 
     <div class="rounded-lg bg-slate-100 p-4 font-mono text-[11px] leading-relaxed text-slate-700 dark:bg-slate-800/90 dark:text-slate-200">
-      <div><span class="text-purple-600 dark:text-purple-400">/ck:plan</span> <span class="text-blue-600 dark:text-blue-400">[mode]</span> <span class="text-emerald-600 dark:text-emerald-400">[--tdd]</span> <span class="text-slate-500 dark:text-slate-400">"[{currentLang === 'vi' ? 'Việc cần làm' : 'What to do'}].</span></div>
+      <div><span class="text-purple-600 dark:text-purple-400">/ak:plan</span> <span class="text-blue-600 dark:text-blue-400">[mode]</span> <span class="text-emerald-600 dark:text-emerald-400">[--tdd]</span> <span class="text-slate-500 dark:text-slate-400">"[{currentLang === 'vi' ? 'Việc cần làm' : 'What to do'}].</span></div>
       <div class="text-slate-500 dark:text-slate-400 pl-2">{currentLang === 'vi' ? 'Phạm vi' : 'Scope'}: [{currentLang === 'vi' ? 'module/file/stack bị đụng' : 'affected module/file/stack'}].</div>
       <div class="text-slate-500 dark:text-slate-400 pl-2">{currentLang === 'vi' ? 'Giữ nguyên' : 'Preserve'}: [{currentLang === 'vi' ? 'API contract, behavior cũ' : 'API contract, existing behavior'}].</div>
       <div class="text-slate-500 dark:text-slate-400 pl-2">{currentLang === 'vi' ? 'Đụng' : 'Touches'}: [{currentLang === 'vi' ? 'database, job, route, UI' : 'database, job, route, UI'}].</div>
@@ -490,7 +490,7 @@ const copy = currentLang === 'vi'
           : 'If the plan used --tdd, add --tdd to cook as well:'}
       </p>
       <div class="mt-1.5 rounded bg-slate-100 px-2 py-1 font-mono text-[11px] dark:bg-slate-800/90">
-        <span class="text-purple-600 dark:text-purple-400">/ck:cook</span>
+        <span class="text-purple-600 dark:text-purple-400">/ak:cook</span>
         <span class="text-slate-500 dark:text-slate-400"> /path/to/plan.md</span>
         <span class="text-emerald-600 dark:text-emerald-400"> --tdd</span>
       </div>
@@ -509,8 +509,8 @@ const copy = currentLang === 'vi'
     </div>
     <span class="text-sm font-medium text-cyan-700 group-hover:text-cyan-900 dark:text-cyan-300 dark:group-hover:text-cyan-100">
       {currentLang === 'vi'
-        ? 'Xem infographic /ck:plan trong How ClaudeKit Works'
-        : 'See /ck:plan infographic in How ClaudeKit Works'}
+        ? 'Xem infographic /ak:plan trong How AgentKit Works'
+        : 'See /ak:plan infographic in How AgentKit Works'}
     </span>
     <svg class="ml-auto h-4 w-4 text-cyan-400 transition-transform group-hover:translate-x-0.5 dark:text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>

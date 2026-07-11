@@ -1,5 +1,5 @@
 ---
-// Purpose-built Quick Ref layout for /ck:plan.
+// Purpose-built Quick Ref layout for /ak:plan.
 // Presents the dense planning workflow as a readable command reference.
 import type { SkillInfographic, ProcessFlowStep } from '@/data/guides/how-ck-works';
 import type { Language } from '@/i18n';
@@ -25,31 +25,31 @@ interface ProcessGroup {
 
 const { data, lang } = Astro.props;
 const isVi = lang === 'vi';
-const ckPlanCliHref = isVi ? '/vi/guides/cli-commands#cli-cmd-ck-plan' : '/guides/cli-commands#cli-cmd-ck-plan';
+const agentKitPlanCliHref = isVi ? '/vi/guides/cli-commands#cli-cmd-ak-plan' : '/guides/cli-commands#cli-cmd-ak-plan';
 
 const text = {
   eyebrow: isVi ? 'Tóm tắt nhanh / Lệnh lập plan' : 'Quick Ref / Planning command',
   summary: isVi
-    ? 'Dùng khi brief đã đủ rõ và cần tách thành phases, bước kiểm chứng, và lệnh bàn giao cho /ck:cook.'
-    : 'Use it when the brief is clear enough to split into phases, validation gates, and a clean /ck:cook handoff.',
+    ? 'Dùng khi brief đã đủ rõ và cần tách thành phases, bước kiểm chứng, và lệnh bàn giao cho /ak:cook.'
+    : 'Use it when the brief is clear enough to split into phases, validation gates, and a clean /ak:cook handoff.',
   afterBrainstorm: isVi ? 'Sau brainstorm / khi scope đã rõ' : 'After brainstorm / when scope is clear',
   hardGate: isVi ? 'Gate bắt buộc' : 'Required Gate',
   hardGateItems: isVi
     ? [
         { label: 'Plan only', detail: 'Chỉ tạo plan và phase files. Không triển khai code trong bước này.' },
-        { label: 'CLI-owned scaffolding', detail: 'Scaffolding dùng `ck plan create/check/uncheck`.' },
+        { label: 'CLI-owned scaffolding', detail: 'Scaffolding dùng `ak plan create/check/uncheck`.' },
         { label: 'Status integrity', detail: 'Không sửa tay bảng phases khi CLI có sẵn.' },
       ]
     : [
         { label: 'Plan only', detail: 'Create only the plan and phase files. Do not implement code in this step.' },
-        { label: 'CLI-owned scaffolding', detail: 'Scaffolding uses `ck plan create/check/uncheck`.' },
+        { label: 'CLI-owned scaffolding', detail: 'Scaffolding uses `ak plan create/check/uncheck`.' },
         { label: 'Status integrity', detail: 'Do not hand-edit the phases table when the CLI is available.' },
       ],
   cliCommand: isVi ? 'Tham chiếu CLI' : 'CLI reference',
   noCode: isVi ? 'Không triển khai' : 'No implementation',
   noCodeDesc: isVi ? 'Chỉ tạo plan và phase files.' : 'Only creates plan and phase files.',
   cliOwned: isVi ? 'CLI quản lý' : 'CLI managed',
-  cliOwnedDesc: isVi ? 'Tạo và đổi trạng thái bằng `ck plan`.' : 'Create and update status through `ck plan`.',
+  cliOwnedDesc: isVi ? 'Tạo và đổi trạng thái bằng `ak plan`.' : 'Create and update status through `ak plan`.',
   handoff: isVi ? 'Bàn giao rõ' : 'Clear handoff',
   handoffDesc: isVi ? 'Kết thúc bằng validate, red-team, cook, hoặc dừng.' : 'Ends with validate, red-team, cook, or stop.',
   process: isVi ? 'Bản đồ thực thi' : 'Execution Map',
@@ -79,8 +79,8 @@ const text = {
 };
 
 const heroFlow = isVi
-  ? ['Brief rõ', 'Plan phases', 'Validate / red-team', '/ck:cook']
-  : ['Clear brief', 'Plan phases', 'Validate / red-team', '/ck:cook'];
+  ? ['Brief rõ', 'Plan phases', 'Validate / red-team', '/ak:cook']
+  : ['Clear brief', 'Plan phases', 'Validate / red-team', '/ak:cook'];
 
 const ruleCards = [
   {
@@ -92,8 +92,8 @@ const ruleCards = [
     title: text.cliOwned,
     desc: text.cliOwnedDesc,
     marker: 'bg-sky-400',
-    href: ckPlanCliHref,
-    command: 'ck plan',
+    href: agentKitPlanCliHref,
+    command: 'ak plan',
   },
   {
     title: text.handoff,
@@ -281,7 +281,7 @@ const renderInlineCode = (value = '') => value
 
           <div class="shrink-0 rounded-xl border border-emerald-200 bg-emerald-50/90 px-4 py-3 text-left shadow-sm ring-1 ring-emerald-100 dark:border-white/10 dark:bg-slate-950 dark:ring-white/5">
             <p class="font-mono text-[11px] uppercase tracking-wider text-emerald-700/70 dark:text-slate-500">handoff</p>
-            <p class="mt-1 font-mono text-sm font-semibold text-emerald-800 dark:text-emerald-300">/ck:cook {'{absolute-path}'}</p>
+            <p class="mt-1 font-mono text-sm font-semibold text-emerald-800 dark:text-emerald-300">/ak:cook {'{absolute-path}'}</p>
           </div>
         </div>
 

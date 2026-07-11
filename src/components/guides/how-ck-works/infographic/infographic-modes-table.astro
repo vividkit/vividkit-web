@@ -18,7 +18,7 @@ if (!modes || modes.length === 0) return null;
 
 // Simple flag-reference mode: when no row uses the mode-matrix columns
 // (research / redTeam / validation / cookFlag), render a 2-column Flag/What-it-does
-// table instead of the 6-column /ck:plan mode matrix.
+// table instead of the 6-column /ak:plan mode matrix.
 const isSimpleFlagTable = modes.every(
   row => !row.research && !row.redTeam && !row.validation && !row.cookFlag
 );

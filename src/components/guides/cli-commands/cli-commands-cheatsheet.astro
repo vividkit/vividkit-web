@@ -114,7 +114,7 @@ const categoryConfigs = [
           <div class="grid gap-3 p-4 sm:p-5">
             {cmds.map((cmd) => {
               const copyValue = cmd.example || cmd.name;
-              const noteItems = getCliCommandNotes([...(cmd.subcommands || []), ...(cmd.keyFlags || [])], lang, cmd.name);
+              const noteItems = getCliCommandNotes([...(cmd.subcommands || []), ...(cmd.keyFlags || [])], lang);
               const cmdNotes = getCommandNotes(cmd.name, lang);
 
               return (
@@ -126,7 +126,7 @@ const categoryConfigs = [
                         {cmd.name}
                       </code>
                       <p class="text-sm leading-6 text-slate-600 dark:text-slate-300">
-                        {t(`cli.cheatsheet.cmd.${cmd.name.replace('ck ', '')}.desc` as any)}
+                        {lang === 'vi' ? cmd.descriptionVi : cmd.description}
                       </p>
                     </div>
                     <button class="copy-btn flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 transition hover:border-teal-300 hover:bg-teal-50 hover:text-teal-700 group-hover:opacity-100 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 dark:hover:border-teal-400/30 dark:hover:bg-white/[0.08] dark:hover:text-teal-200 sm:opacity-70" data-code={copyValue} title="Copy" aria-label={`Copy ${copyValue}`}>
@@ -173,7 +173,6 @@ const categoryConfigs = [
                                 <code class="min-w-0 break-words font-mono text-[11px] font-semibold text-slate-700 dark:text-slate-200 sm:break-normal">{note.label}</code>
                                 <span class="text-xs leading-5 text-slate-500 dark:text-slate-400">
                                   {note.description}
-                                  {note.scope && <code class="ml-1 rounded bg-violet-100 px-1 py-0.5 text-[9px] font-medium text-violet-600 dark:bg-violet-400/10 dark:text-violet-300">{note.scope}</code>}
                                 </span>
                               </div>
                             ))}
@@ -188,7 +187,6 @@ const categoryConfigs = [
                                 <code class="min-w-0 break-words font-mono text-[11px] font-semibold text-slate-700 dark:text-slate-200 sm:break-normal">{note.label}</code>
                                 <span class="text-xs leading-5 text-slate-500 dark:text-slate-400">
                                   {note.description}
-                                  {note.scope && <code class="ml-1 rounded bg-violet-100 px-1 py-0.5 text-[9px] font-medium text-violet-600 dark:bg-violet-400/10 dark:text-violet-300">{note.scope}</code>}
                                 </span>
                               </div>
                             ))}
@@ -205,7 +203,7 @@ const categoryConfigs = [
                         {cmdNotes.map((note) => (
                           <li class="flex items-start gap-1.5 text-xs leading-5 text-amber-800 dark:text-amber-200">
                             <span class="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-amber-400 dark:bg-amber-500"></span>
-                            <span set:html={note} />
+                            <span>{note}</span>
                           </li>
                         ))}
                       </ul>

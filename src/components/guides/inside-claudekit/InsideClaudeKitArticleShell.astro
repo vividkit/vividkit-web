@@ -1,6 +1,6 @@
 ---
 /**
- * Shared shell for Inside ClaudeKit article pages.
+ * Shared shell for Inside AgentKit article pages.
  * Provides: breadcrumb (xl+), back link (mobile), header, prev/next nav.
  * TOC removed for wider content area - infographic-style layout.
  */
@@ -23,7 +23,7 @@ const currentLang = lang || getLangFromUrl(Astro.url);
 const translatePath = useTranslatedPath(currentLang);
 const t = useTranslations(currentLang);
 
-const backLabel = currentLang === 'vi' ? 'Quay lại Inside ClaudeKit' : 'Back to Inside ClaudeKit';
+const backLabel = currentLang === 'vi' ? 'Quay lại Inside AgentKit' : 'Back to Inside AgentKit';
 
 // Filter only enabled topics for navigation
 const enabledTopics = insideClaudeKitTopics.filter((tp) => !tp.disabled);
@@ -53,7 +53,7 @@ const nextTopic = currentIndex >= 0 && currentIndex < enabledTopics.length - 1
       </a>
       <ChevronRight class="h-3.5 w-3.5 shrink-0" />
       <a href={translatePath('/guides/inside-claudekit')} class="transition-colors hover:text-slate-900 dark:hover:text-white">
-        Inside ClaudeKit
+        Inside AgentKit
       </a>
       <ChevronRight class="h-3.5 w-3.5 shrink-0" />
       <span class="truncate font-medium text-slate-900 dark:text-white">{title}</span>

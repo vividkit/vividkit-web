@@ -6,10 +6,11 @@ import {
   type FlowchartData,
   generatePath,
   pathColors,
-} from './flowchart-types';
-import { stableNodes, stableEdges, stablePaths } from './flowchart-engineer-data';
-import { betaNodes, betaEdges, betaPaths } from './flowchart-legacy-data';
-import { marketingNodes, marketingEdges, marketingPaths } from './flowchart-marketing-data';
+} from './flowchart-types.ts';
+import { stableNodes, stableEdges, stablePaths } from './flowchart-engineer-data.ts';
+import { betaNodes, betaEdges, betaPaths } from './flowchart-legacy-data.ts';
+import { marketingNodes, marketingEdges, marketingPaths } from './flowchart-marketing-data.ts';
+import { commandSkillId } from './commands-scenario-resolver.ts';
 
 export type { FlowchartNode, FlowchartEdge, FlowchartPath, FlowchartData };
 export { pathColors };
@@ -24,7 +25,7 @@ const extraStableNodes: FlowchartNode[] = [
   {
     id: 'cmd-llms',
     type: 'command',
-    label: '/ck:llms',
+    label: '/ak:llms',
     description: 'Generate llms.txt files (llmstxt.org)',
     position: { x: 900, y: 440 },
 
@@ -32,7 +33,7 @@ const extraStableNodes: FlowchartNode[] = [
   {
     id: 'cmd-deploy',
     type: 'command',
-    label: '/ck:deploy',
+    label: '/ak:deploy',
     description: 'Auto-detect & deploy to 15+ platforms ⚡⚡',
     position: { x: 790, y: 520 },
 
@@ -40,7 +41,7 @@ const extraStableNodes: FlowchartNode[] = [
   {
     id: 'cmd-security-scan-beta',
     type: 'command',
-    label: '/ck:security-scan',
+    label: '/ak:security-scan',
     description: 'Scan for vulnerabilities & secrets ⚡⚡',
     position: { x: 615, y: 440 },
 
@@ -48,7 +49,7 @@ const extraStableNodes: FlowchartNode[] = [
   {
     id: 'cmd-project-org',
     type: 'command',
-    label: '/ck:project-organization',
+    label: '/ak:project-organization',
     description: 'Standardize file locations & naming ⚡',
     position: { x: 130, y: 520 },
 
@@ -102,7 +103,7 @@ const extraStablePaths: FlowchartPath[] = [
     name: 'Docs Index',
     nodes: ['start', 'docs-design', 'cmd-llms'],
     edges: ['e-start-docs-design', 'e-docs-llms'],
-    command: '/ck:llms',
+    command: '/ak:llms',
     description: 'Generate llms.txt files following llmstxt.org spec for AI-readable documentation',
     color: 'amber',
 
@@ -112,7 +113,7 @@ const extraStablePaths: FlowchartPath[] = [
     name: 'Deploy App',
     nodes: ['start', 'git-ops', 'cmd-deploy'],
     edges: ['e-start-git-ops', 'e-git-deploy'],
-    command: '/ck:deploy',
+    command: '/ak:deploy',
     description: 'Auto-detect project type and deploy to 15+ cloud platforms',
     color: 'orange',
 
@@ -122,7 +123,7 @@ const extraStablePaths: FlowchartPath[] = [
     name: 'Security Audit',
     nodes: ['start', 'fix-something', 'cmd-security-scan-beta'],
     edges: ['e-start-fix-something', 'e-fix-security'],
-    command: '/ck:security-scan',
+    command: '/ak:security-scan',
     description: 'Scan for OWASP vulnerabilities, leaked secrets, and insecure patterns',
     color: 'red',
 
@@ -132,7 +133,7 @@ const extraStablePaths: FlowchartPath[] = [
     name: 'Organize Project',
     nodes: ['start', 'existing-project', 'cmd-project-org'],
     edges: ['e-start-existing-project', 'e-existing-project-org'],
-    command: '/ck:project-organization',
+    command: '/ak:project-organization',
     description: 'Standardize file locations, naming conventions, and project structure',
     color: 'teal',
 
@@ -186,7 +187,8 @@ export function getFlowchartDataByKit(kit: FlowchartKit): FlowchartData {
 // Helper to get path by command name
 export function getPathByCommand(command: string, kit: FlowchartKit = 'engineer'): FlowchartPath | undefined {
   const paths = kit === 'marketing' ? marketingPaths : unifiedPaths;
-  return paths.find(p => p.command === command || p.command.includes(command));
+  const requestedSkillId = commandSkillId(command);
+  return paths.find((path) => commandSkillId(path.command) === requestedSkillId);
 }
 
 // Helper to get all paths that pass through a node

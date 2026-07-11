@@ -4,6 +4,10 @@ import { useTranslations } from "@/i18n/utils";
 import { getLangFromUrl, type Language } from "@/i18n";
 import { getEngineerKitCategories } from "@/data/guides/commands-engineer-kit";
 import { getMarketingKitCategories } from "@/data/guides/commands-marketing-kit";
+import {
+  createScenarioResolver,
+  legacyCommandAliases,
+} from "@/data/guides/commands-scenario-resolver";
 import { styles } from "@/data/guides/commands-styles";
 import { workflowScenarios } from "@/data/guides/how-ck-works";
 
@@ -23,30 +27,24 @@ const marketingCategories = getMarketingKitCategories(t as any);
 // so every card maps to that page anchored at its matching scenario.
 const howCkWorksBase = currentLang === "vi" ? "/vi/guides/how-ck-works" : "/guides/how-ck-works";
 
-// Reduce a command to its skill key: keep the prefix + first skill token, drop any
-// `:subcommand` / `:*` tail. e.g. `/ckm:write:good` → `/ckm:write`, `/ck:plan` → `/ck:plan`.
-function commandKey(command: string): string {
-  const match = command.match(/^(\/ckm?:[a-z0-9-]+)/i);
-  return (match ? match[1] : command).trim().toLowerCase();
-}
-
-// Build command-key → scenario-id map straight from the scenario data (source of truth).
-const scenarioIdByCommandKey = new Map<string, string>();
-for (const scenario of workflowScenarios) {
-  scenarioIdByCommandKey.set(commandKey(scenario.command), scenario.id);
-}
-
-// Aliases for cards whose grid command differs from the scenario command but is the
-// same skill (the scenario file uses a different prefix/slug).
-const commandKeyAliases: Record<string, string> = {
-  "/ck:ck-graphify": "/ck:graphify",
-  "/ck:use-mcp": "/ckm:use-mcp",
+// Legacy scenario data remains keyed by stable IDs. Resolver ignores display
+// prefixes, prefers the selected kit, and falls back to shared scenarios.
+const scenarioAliases: Record<string, string> = {
+  "ck-graphify": "graphify",
 };
+const resolveEngineerScenario = createScenarioResolver(workflowScenarios, {
+  kit: "engineer",
+  aliases: scenarioAliases,
+});
+const resolveMarketingScenario = createScenarioResolver(workflowScenarios, {
+  kit: "marketing",
+  aliases: scenarioAliases,
+});
 
-function getHowItWorksHref(command: string): string | null {
-  const key = commandKey(command);
-  const resolvedKey = commandKeyAliases[key] ?? key;
-  const scenarioId = scenarioIdByCommandKey.get(resolvedKey);
+function getHowItWorksHref(command: string, kit: "engineer" | "marketing"): string | null {
+  const scenarioId = kit === "marketing"
+    ? resolveMarketingScenario(command)
+    : resolveEngineerScenario(command);
   return scenarioId ? `${howCkWorksBase}#ck-${scenarioId}` : null;
 }
 ---
@@ -133,8 +131,8 @@ function getHowItWorksHref(command: string): string | null {
       </div>
       <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         {[
-          { cmd: "/ck:coding-agent-orchestration", labelKey: "commands.beta_coding_agent_orchestration.desc", detailKey: "commands.beta_coding_agent_orchestration.detail", type: "skill", badge: "new", args: ["[task or workflow]"], flags: ["--single", "--sequential", "--parallel", "--review-loop"] },
-          { cmd: "/ck:review-pr", labelKey: "commands.beta_review_pr.desc", detailKey: "commands.beta_review_pr.detail", type: "skill", badge: "enhanced", args: ["<PR/MR number or URL>"], flags: ["--fix", "--reply"] },
+          { cmd: "/ak:coding-agent-orchestration", labelKey: "commands.beta_coding_agent_orchestration.desc", detailKey: "commands.beta_coding_agent_orchestration.detail", type: "skill", badge: "new", args: ["[task or workflow]"], flags: ["--single", "--sequential", "--parallel", "--review-loop"] },
+          { cmd: "/ak:review-pr", labelKey: "commands.beta_review_pr.desc", detailKey: "commands.beta_review_pr.detail", type: "skill", badge: "enhanced", args: ["<PR/MR number or URL>"], flags: ["--fix", "--reply"] },
         ].map((item) => (
           <div class="p-3 rounded-lg border transition-all duration-200 hover:shadow-sm h-full flex flex-col bg-white/60 dark:bg-slate-900/50 border-purple-500/30">
             <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
@@ -143,8 +141,8 @@ function getHowItWorksHref(command: string): string | null {
                 <span class={`text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400`}>{item.badge}</span>
               </div>
             </div>
-            <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">{t(item.labelKey)}</p>
-            <p class="text-[11px] text-slate-500 dark:text-slate-400" set:html={t(item.detailKey)}></p>
+            <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">{(t as any)(item.labelKey)}</p>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400" set:html={(t as any)(item.detailKey)}></p>
             {item.args && item.args.length > 0 && (
               <div class="flex flex-wrap gap-1 mt-1.5">
                 {item.args.map((arg: string) => (
@@ -182,11 +180,13 @@ function getHowItWorksHref(command: string): string | null {
         </div>
         <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {category.commands.map((cmd) => {
-            const howHref = getHowItWorksHref(cmd.command);
+            const howHref = getHowItWorksHref(cmd.command, "engineer");
+            const searchAliases = [...legacyCommandAliases(cmd.command, "engineer"), ...(cmd.aliases ?? [])];
             const CardTag = howHref ? "a" : "div";
             return (
             <CardTag
               {...(howHref ? { href: howHref } : {})}
+              data-search-aliases={searchAliases.join(" ")}
               title={howHref ? t("commands.card_link_hint") : undefined}
               class={`group relative p-3 rounded-lg border transition-all duration-200 h-full flex flex-col ${howHref ? 'cursor-pointer hover:-translate-y-0.5 hover:shadow-md hover:pb-11 hover:border-cyan-400/70 dark:hover:border-cyan-500/60 hover:bg-white dark:hover:bg-slate-800/70 hover:ring-1 hover:ring-cyan-400/30 dark:hover:ring-cyan-500/25' : 'hover:shadow-sm'} ${cmd.deprecated ? 'bg-slate-100 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 opacity-70' : `bg-slate-50 dark:bg-slate-900/50 ${styles[category.color].border}`}`}
             >
@@ -199,6 +199,7 @@ function getHowItWorksHref(command: string): string | null {
                     </span>
                   )}
                   <code class={`text-sm font-bold font-mono ${cmd.deprecated ? 'line-through text-slate-400 dark:text-slate-500' : styles[category.color].text}`}>{cmd.command}</code>
+                  <span class="sr-only">{searchAliases.join(" ")}</span>
                   {cmd.isBeta && (
                     <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">beta</span>
                   )}
@@ -334,11 +335,13 @@ function getHowItWorksHref(command: string): string | null {
         </div>
         <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {category.commands.map((cmd) => {
-            const howHref = getHowItWorksHref(cmd.command);
+            const howHref = getHowItWorksHref(cmd.command, "marketing");
+            const searchAliases = [...legacyCommandAliases(cmd.command, "marketing"), ...(cmd.aliases ?? [])];
             const CardTag = howHref ? "a" : "div";
             return (
             <CardTag
               {...(howHref ? { href: howHref } : {})}
+              data-search-aliases={searchAliases.join(" ")}
               title={howHref ? t("commands.card_link_hint") : undefined}
               class={`group relative p-3 rounded-lg border transition-all duration-200 h-full flex flex-col ${howHref ? 'cursor-pointer hover:-translate-y-0.5 hover:shadow-md hover:pb-11 hover:border-cyan-400/70 dark:hover:border-cyan-500/60 hover:bg-white dark:hover:bg-slate-800/70 hover:ring-1 hover:ring-cyan-400/30 dark:hover:ring-cyan-500/25' : 'hover:shadow-sm'} ${cmd.deprecated ? 'bg-slate-100 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 opacity-70' : `bg-slate-50 dark:bg-slate-900/50 ${styles[category.color].border}`}`}
             >
@@ -351,6 +354,7 @@ function getHowItWorksHref(command: string): string | null {
                     </span>
                   )}
                     <code class={`text-sm font-bold font-mono ${cmd.deprecated ? 'line-through text-slate-400 dark:text-slate-500' : styles[category.color].text}`}>{cmd.command}</code>
+                  <span class="sr-only">{searchAliases.join(" ")}</span>
                   {cmd.isBeta && (
                     <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">beta</span>
                   )}

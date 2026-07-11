@@ -1,0 +1,103 @@
+---
+import { Bot, Box, ExternalLink, SquareTerminal } from 'lucide-astro';
+
+import type { Language } from '@/i18n';
+import { useTranslations } from '@/i18n/utils';
+import type { AgentKitCliFact } from '@/data/guides/agentkit/agentkit-source-contract';
+import type { AgentKitSkillFact } from '@/data/guides/agentkit/agentkit-skill-facts';
+import type { AgentKitTargetCapability } from '@/data/guides/agentkit/agentkit-target-capabilities';
+
+interface Props {
+  lang: Language;
+  cliFacts: readonly AgentKitCliFact[];
+  skillFacts: readonly AgentKitSkillFact[];
+  targets: readonly AgentKitTargetCapability[];
+}
+
+const { lang, cliFacts, skillFacts, targets } = Astro.props;
+const t = useTranslations(lang);
+const cliFactsById = new Map(cliFacts.map((fact) => [fact.id, fact]));
+const exampleSkill = skillFacts.find((fact) => fact.id === 'ak:cook');
+const targetCopy = {
+  'claude-code': {
+    icon: Bot,
+    title: t('agentkit.targets.claude.title'),
+    body: t('agentkit.targets.claude.body'),
+    invocationLabel: t('agentkit.targets.claude.invokeLabel'),
+  },
+  codex: {
+    icon: SquareTerminal,
+    title: t('agentkit.targets.codex.title'),
+    body: t('agentkit.targets.codex.body'),
+    invocationLabel: t('agentkit.targets.codex.invokeLabel'),
+  },
+} as const;
+
+const inlineCodeClass = 'rounded-md border border-slate-200 bg-slate-100 px-2 py-1 font-mono text-sm text-slate-800 dark:border-slate-700 dark:bg-slate-800/90 dark:text-slate-100';
+---
+
+<section id="kit-targets" aria-labelledby="kit-targets-heading" class="grid gap-8 pt-16 [&>*]:max-w-full [&>*]:min-w-0 lg:grid-cols-[minmax(15rem,0.7fr)_minmax(0,1.3fr)]">
+  <div class="min-w-0">
+    <h2 id="kit-targets-heading" class="font-heading text-3xl font-bold text-slate-950 dark:text-slate-50">
+      {t('agentkit.targets.heading')}
+    </h2>
+    <p class="mt-3 leading-relaxed text-slate-600 text-pretty dark:text-slate-300">
+      {t('agentkit.targets.intro')}
+    </p>
+
+    <div class="mt-6 rounded-xl bg-sky-50 p-4 text-sm leading-relaxed text-sky-950 dark:bg-sky-950/30 dark:text-sky-100">
+      <p class="font-bold">{t('agentkit.targets.scope.title')}</p>
+      <p class="mt-1">{t('agentkit.targets.scope.body')}</p>
+    </div>
+  </div>
+
+  <div class="min-w-0 max-w-full divide-y divide-slate-200 border-y border-slate-200 dark:divide-slate-800 dark:border-slate-800">
+    {targets.map((target) => {
+      const copy = targetCopy[target.target];
+      const Icon = copy.icon;
+      const commandFact = cliFactsById.get(target.installCommandId);
+      const installCommand = commandFact?.command
+        .replace('<kit>', 'engineer')
+        .replace('<agent>', target.target);
+      const invocation = target.target === 'claude-code'
+        ? exampleSkill?.invocations.claudeCode
+        : exampleSkill?.invocations.codex;
+      return (
+        <article class="min-w-0 max-w-full py-7 first:pt-0 last:pb-0 lg:first:pt-7 lg:last:pb-7">
+          <div class="min-w-0 max-w-full flex items-start gap-4">
+            <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+              <Icon class="h-5 w-5" aria-hidden="true" />
+            </div>
+            <div class="min-w-0 flex-1">
+              <h3 class="text-xl font-bold text-slate-950 dark:text-slate-50">{copy.title}</h3>
+              <p class="mt-1 leading-relaxed text-slate-600 text-pretty dark:text-slate-300">{copy.body}</p>
+
+              <div class="mt-4 max-w-full overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700">
+                <div class="flex items-center gap-2 border-b border-slate-200 bg-slate-50 px-4 py-2 text-xs font-medium text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400">
+                  <Box class="h-4 w-4" aria-hidden="true" />
+                  {copy.title}
+                </div>
+                <pre class="m-0 max-w-full overflow-x-auto bg-slate-100 p-4 text-sm text-slate-700 dark:bg-slate-800/90 dark:text-slate-200"><code class="text-purple-600 dark:text-purple-400">{installCommand}</code></pre>
+              </div>
+
+              <p class="mt-4 flex max-w-full flex-wrap items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+                <span class="font-semibold">{copy.invocationLabel}:</span>
+                <code class={`${inlineCodeClass} inline-flex max-w-full overflow-x-auto text-purple-600 dark:text-purple-400`}>{invocation}</code>
+              </p>
+
+              <a
+                href={target.sourceUrl}
+                target="_blank"
+                rel="noopener"
+                class="mt-4 inline-flex min-h-11 items-center gap-2 rounded-lg px-1 text-sm font-semibold text-purple-700 transition-colors duration-200 hover:text-purple-900 hover:underline focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 active:text-purple-600 dark:text-purple-300 dark:hover:text-purple-100"
+              >
+                {t('agentkit.links.official')}
+                <ExternalLink class="h-4 w-4" aria-hidden="true" />
+              </a>
+            </div>
+          </div>
+        </article>
+      );
+    })}
+  </div>
+</section>

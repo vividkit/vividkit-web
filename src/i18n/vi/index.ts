@@ -14,6 +14,7 @@ import { ck_with_codex } from './ck-with-codex';
 import { pricing } from './pricing';
 import { common } from './common';
 import { deals } from './deals';
+import { agentkit } from './agentkit';
 
 export default {
   ...commands,
@@ -31,4 +32,5 @@ export default {
   ...pricing,
   ...common,
   ...deals,
+  ...agentkit,
 } as const;

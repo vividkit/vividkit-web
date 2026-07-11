@@ -27,8 +27,8 @@ const isVi = currentLang === "vi";
         {isVi ? "Bắt Đầu Nhanh" : "Quick Start"}
       </h4>
       <div class="text-sm text-slate-600 dark:text-slate-400 space-y-2">
-        <p><code class="text-green-600 dark:text-green-400">/ckm:init</code> → {isVi ? "Setup workspace" : "Setup workspace"}</p>
-        <p><code class="text-violet-600 dark:text-violet-400">/ck:brainstorm</code> → {isVi ? "Bắt đầu ideation" : "Start ideation"}</p>
+        <p><code class="text-green-600 dark:text-green-400">/ak:init</code> → {isVi ? "Setup workspace" : "Setup workspace"}</p>
+        <p><code class="text-violet-600 dark:text-violet-400">/ak:brainstorm</code> → {isVi ? "Bắt đầu ideation" : "Start ideation"}</p>
       </div>
     </div>
 
@@ -38,9 +38,9 @@ const isVi = currentLang === "vi";
         {isVi ? "Cần Trợ Giúp?" : "Need Help?"}
       </h4>
       <div class="text-sm text-slate-600 dark:text-slate-400 space-y-2">
-        <p><code class="text-indigo-600 dark:text-indigo-400">/ckm:watzup</code> → {isVi ? "Session summary" : "Session summary"}</p>
-        <p><code class="text-indigo-600 dark:text-indigo-400">/ck:ask</code> → {isVi ? "Hỏi expert" : "Ask expert"}</p>
-        <p><code class="text-indigo-600 dark:text-indigo-400">/ck:coding-level</code> → {isVi ? "Adjust depth" : "Adjust depth"}</p>
+        <p><code class="text-indigo-600 dark:text-indigo-400">/ak:watzup</code> → {isVi ? "Session summary" : "Session summary"}</p>
+        <p><code class="text-indigo-600 dark:text-indigo-400">/ak:ask</code> → {isVi ? "Hỏi expert" : "Ask expert"}</p>
+        <p><code class="text-indigo-600 dark:text-indigo-400">/ak:coding-level</code> → {isVi ? "Adjust depth" : "Adjust depth"}</p>
       </div>
     </div>
 
@@ -57,7 +57,7 @@ const isVi = currentLang === "vi";
           → {isVi ? "Workflows Guide" : "Workflows Guide"}
         </a>
         <a href={isVi ? "/vi/guides/what-is-claudekit" : "/guides/what-is-claudekit"} class="block hover:text-purple-600 dark:hover:text-purple-400">
-          → {isVi ? "ClaudeKit là gì?" : "What is ClaudeKit?"}
+          → {isVi ? "AgentKit là gì?" : "What is AgentKit?"}
         </a>
       </div>
     </div>
@@ -68,11 +68,11 @@ const isVi = currentLang === "vi";
     <div class="flex flex-wrap items-center gap-4 text-sm text-slate-500 dark:text-slate-400">
       <span class="flex items-center gap-1.5">
         <span class="w-2 h-2 rounded-full bg-green-500"></span>
-        {isVi ? "Stable v1.4.0" : "Stable v1.4.0"}: /ckm:*
+        {isVi ? "Stable v1.4.0" : "Stable v1.4.0"}: /ak:*
       </span>
       <span class="flex items-center gap-1.5">
         <span class="w-2 h-2 rounded-full bg-purple-500"></span>
-        {isVi ? "Cross-kit Skills" : "Cross-kit Skills"}: /ck:*
+        {isVi ? "Cross-kit Skills" : "Cross-kit Skills"}: /ak:*
       </span>
     </div>
   </div>
