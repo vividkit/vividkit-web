@@ -192,47 +192,57 @@ test('legacy-backlog source remains classified while credentials are still audit
   assert.equal(credentialHit[0].category, 'credential');
 });
 
-test('How AgentKit Works source is active while its compatibility route identifiers remain unchanged', async () => {
+test('AgentKit compatibility sources are active while their legacy route identifiers remain unchanged', async () => {
   const root = await mkdtemp(join(tmpdir(), 'agentkit-how-works-source-'));
   const activeFiles = [
     'src/components/guides/how-ck-works/example.astro',
     'src/data/guides/how-ck-works/example.ts',
     'src/pages/guides/how-ck-works.astro',
     'src/pages/vi/guides/how-ck-works.astro',
+    'src/components/guides/what-is-claudekit/example.astro',
+    'src/components/guides/WhatIsClaudeKitGuide.astro',
+    'src/pages/guides/what-is-claudekit.astro',
+    'src/pages/vi/guides/what-is-claudekit.astro',
+    'src/i18n/en/what-is-claudekit.ts',
+    'src/i18n/vi/what-is-claudekit.ts',
   ];
 
   try {
     for (const file of activeFiles) {
       const absolute = join(root, file);
       await mkdir(join(absolute, '..'), { recursive: true });
-      await writeFile(absolute, 'Invoke /ck:cook.\n');
+      await writeFile(absolute, 'Invoke /ck:cook and $ck:cook.\n');
     }
     const result = await runAudit({ root, allowlist: [] });
-    assert.deepEqual(result.diagnostics.map(({ file }) => file).sort(), activeFiles.sort());
-    assert.ok(result.diagnostics.every(({ detector }) => detector === 'legacy-slash-command'));
+    assert.deepEqual(result.diagnostics.filter(({ detector }) => detector === 'legacy-slash-command').map(({ file }) => file).sort(), activeFiles.sort());
+    assert.deepEqual(result.diagnostics.filter(({ detector }) => detector === 'legacy-dollar-command').map(({ file }) => file).sort(), activeFiles.sort());
   } finally {
     await rm(root, { recursive: true, force: true });
   }
 });
 
-test('generated EN and VI How AgentKit Works pages reject legacy skill prefixes', async () => {
+test('generated EN and VI AgentKit compatibility pages reject legacy skill prefixes', async () => {
   const root = await mkdtemp(join(tmpdir(), 'agentkit-how-works-generated-'));
   const activeFiles = [
     'dist/guides/how-ck-works/index.html',
     'dist/vi/guides/how-ck-works/index.html',
     '.vercel/output/static/guides/how-ck-works/index.html',
     '.vercel/output/static/vi/guides/how-ck-works/index.html',
+    'dist/guides/what-is-claudekit/index.html',
+    'dist/vi/guides/what-is-claudekit/index.html',
+    '.vercel/output/static/guides/what-is-claudekit/index.html',
+    '.vercel/output/static/vi/guides/what-is-claudekit/index.html',
   ];
 
   try {
     for (const file of activeFiles) {
       const absolute = join(root, file);
       await mkdir(join(absolute, '..'), { recursive: true });
-      await writeFile(absolute, '<code>/ckm:design</code>\n');
+      await writeFile(absolute, '<code>/ckm:design</code><code>$ckm:design</code>\n');
     }
     const result = await runAudit({ root, scanSource: false, scanPostbuild: true, allowlist: [] });
-    assert.deepEqual(result.diagnostics.map(({ file }) => file).sort(), activeFiles.sort());
-    assert.ok(result.diagnostics.every(({ detector }) => detector === 'legacy-slash-command'));
+    assert.deepEqual(result.diagnostics.filter(({ detector }) => detector === 'legacy-slash-command').map(({ file }) => file).sort(), activeFiles.sort());
+    assert.deepEqual(result.diagnostics.filter(({ detector }) => detector === 'legacy-dollar-command').map(({ file }) => file).sort(), activeFiles.sort());
   } finally {
     await rm(root, { recursive: true, force: true });
   }

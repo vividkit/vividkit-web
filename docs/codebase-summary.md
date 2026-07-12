@@ -3,7 +3,7 @@
 **Last Updated:** July 12, 2026
 **Framework:** Astro 6.0.2 (static output)
 **Language:** TypeScript 5.9.3 (strict mode)
-**Generated from:** `repomix-output.xml` (440 files; source snapshot reviewed July 12, 2026)
+**Generated from:** `repomix-output.xml` (449 files; source snapshot reviewed July 12, 2026)
 
 ---
 
@@ -55,25 +55,28 @@ The dedicated hub is rendered at:
 - `/guides/agentkit` from `src/pages/guides/agentkit.astro`
 - `/vi/guides/agentkit` from `src/pages/vi/guides/agentkit.astro`
 
-Both pages compose `src/components/guides/AgentKitGuide.astro`. The shared component renders a ten-step migration journey, platform-specific commands for macOS/Linux/Windows, kit targets, explicit legacy-to-current mappings, compatibility guidance, CI safety, troubleshooting, and rollback guidance. Copy comes from structurally matched `src/i18n/en/agentkit.ts` and `src/i18n/vi/agentkit.ts` modules.
+Both pages compose `src/components/guides/AgentKitGuide.astro`. The shared component renders a ten-step migration journey, an optional source-qualified Desktop App section, platform-specific commands for macOS/Linux/Windows, kit targets, explicit legacy-to-current mappings, compatibility guidance, CI safety, troubleshooting, and rollback guidance. Copy comes from structurally matched `src/i18n/en/agentkit.ts` and `src/i18n/vi/agentkit.ts` modules.
 
 ### Canonical Typed Facts
 
-AgentKit executable facts live under `src/data/guides/agentkit/` and are passed into components instead of being duplicated in prose:
+AgentKit executable and product facts live under `src/data/guides/agentkit/` and are passed into components instead of being duplicated in prose:
 
 | Module | Verified responsibility |
 |---|---|
 | `agentkit-source-contract.ts` | Release channels, source metadata, artifact integrity, and credential transport policy |
+| `agentkit-app-facts.ts` | Product-page and stable-changelog sources, unresolved availability signals, platform sets, capabilities, and CLI/App boundary |
 | `agentkit-cli-facts.ts` | CLI commands, scope, mutation behavior, flags, write targets, and stable/beta channel |
 | `agentkit-skill-facts.ts` | Core skill IDs, source hashes, kit snapshot provenance, and target-native invocations |
 | `agentkit-target-capabilities.ts` | Claude Code and Codex target/install/invocation contracts |
 | `agentkit-migration-operational-facts.ts` | Platform preflight, install verification, collision checks, and gated legacy removal |
 | `agentkit-migration-mapping.ts` | Localized CK-to-AK binary, skill-prefix, authentication, and kit lifecycle mappings |
+| `agentkit-legacy-cleanup-facts.ts` | Legacy cleanup sources, inventory/verification/preview/removal stages, scope, copyability, and provider boundaries |
+| `what-is-claudekit-facts.ts` | Current/legacy source status, successor boundary, historical concepts, scope paths, and volatile-count omission policy for the compatibility primer |
 
 The rendering flow is:
 
 ```text
-official source metadata + installed-kit snapshot
+official product/docs/changelog metadata + installed-kit snapshot
   -> typed AgentKit facts
   -> stable/beta selectors and catalog adapters
   -> bilingual guide components
@@ -90,7 +93,7 @@ Claude Code and Codex share AgentKit skill identities but not invocation syntax:
 | Claude Code | `claude-code` | Slash command | `/ak:cook` |
 | Codex | `codex` | Skill reference | `$ak:cook` |
 
-`AGENTKIT_TARGET_CAPABILITIES` encodes these differences. `AGENTKIT_SKILL_FACTS` stores both forms per skill. Tests reject Claude slash syntax in the Codex path.
+The target-capability module encodes these differences. The skill-facts module stores both forms per skill. Tests reject Claude slash syntax in the Codex path.
 
 ### Stable and Beta Policy
 
@@ -109,6 +112,24 @@ Legacy identifiers are preserved only where they serve compatibility or explicit
 - Active command, workflow, and flowchart catalogs render the unified `/ak:*` namespace.
 - Scenario resolution accepts old `/ck:*` and `/ckm:*` identifiers so saved links and legacy data can resolve to current AgentKit cards.
 - Migration comparison rows carry explicit legacy metadata and a compatibility note; legacy syntax is not treated as a current recommendation.
+
+The retained `/guides/what-is-claudekit` and `/vi/guides/what-is-claudekit` pair now renders a fact-backed compatibility primer. Four shared sections explain historical ClaudeKit concepts, the AgentKit successor architecture, project/global scope, target-native Claude Code and Codex syntax, and next-guide routing. EN/VI copy lives in matched `what-is-claudekit.ts` translation modules. The content audit classifies both source and generated primer paths as active AgentKit guidance while the route manifest preserves their `legacy-slug` identity. See the [primer source record](./agentkit-what-is-claudekit-source-record.md).
+
+### Legacy Provider-Skill Cleanup
+
+The migration hub includes a fail-closed cleanup gate for content previously copied by `ck migrate`:
+
+```text
+legacy provider/destination inventory
+  -> stable AgentKit kit inventory
+  -> fresh-session target invocation
+  -> scope-specific ownership-aware uninstall preview
+  -> manual, non-copyable source removal
+```
+
+`src/data/guides/agentkit/agentkit-legacy-cleanup-facts.ts` keeps current AgentKit evidence separate from deprecated ClaudeKit migration and uninstall references. Stable AgentKit documentation does not establish `ak migrate` or automatic bulk deletion of legacy provider destinations. The guide therefore uses `ck migrate --dry-run` only to recover provider and destination evidence, and limits `ck uninstall` guidance to its documented local `.claude/` and global `~/.claude/` ownership scopes.
+
+Claude Code and Codex are the only verified AgentKit targets. Codex command conversions can exist under project or global `.agents/skills/source-command-*/SKILL.md` destinations; the legacy uninstaller does not document bulk removal there. Destructive source-removal commands remain source-record-only and are not rendered because the legacy ownership model is not proven safe for AgentKit files co-located in `.claude`. No recursive-delete command is rendered. See the [cleanup source record](./agentkit-legacy-skill-cleanup-source-record.md) for claim-level evidence and test scope.
 
 ## Route, Sitemap, and LLM Contracts
 
@@ -186,6 +207,7 @@ npm run test:agentkit-content
 - Treat the typed AgentKit facts as executable-content source of truth; do not hand-copy commands into components.
 - Add source URL, verification date, and channel to new facts.
 - Do not expose a remote installer, credential-bearing command, global write, or destructive removal as a blind copy action.
+- Inventory and verify each legacy provider destination before cleanup; never infer bulk-removal coverage from `ck uninstall`.
 - Keep Claude Code `/ak:*` and Codex `$ak:*` examples separate.
 - Keep stable and beta data separate until upstream stable verification.
 - Preserve manifested legacy slugs unless a deliberate redirect/removal migration is approved.
@@ -200,8 +222,11 @@ npm run test:agentkit-content
 - `tests/agentkit-hub/`
 - `tests/agentkit-catalogs/`
 - `tests/content/`
+- `docs/agentkit-legacy-skill-cleanup-source-record.md`
+- `docs/agentkit-what-is-claudekit-source-record.md`
 
 ## Unresolved Questions
 
 1. When will `ak migrate` and `ak kit refresh` graduate from beta, and which upstream stable release will be the promotion source?
 2. Should remaining ClaudeKit historical guides receive a formal retirement schedule beyond the current `legacy-slug` classification?
+3. Will AgentKit publish ownership-aware cleanup for migrated provider destinations and verify additional targets?

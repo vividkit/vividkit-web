@@ -78,6 +78,7 @@ Remote installers, credential-bearing commands, global writes, and destructive r
 | FR-10 | Audit active content before build and generated artifacts after build | P0 | `check-agentkit-content.mjs` build gates |
 | FR-11 | Prevent credential values from appearing in diagnostics or reports | P0 | Redaction contract tests |
 | FR-12 | Preserve executable parity across English/Vietnamese catalogs | P0 | i18n and workflow parity tests |
+| FR-13 | Present optional AgentKit Desktop App guidance while preserving unresolved official availability signals | P1 | Typed App sources, bilingual hub section, and source record |
 
 ### Non-Functional Requirements
 
@@ -93,6 +94,7 @@ Remote installers, credential-bearing commands, global writes, and destructive r
 | NFR-8 | Performance | Public pages remain statically generated and client JavaScript stays progressive |
 | NFR-9 | Discoverability | Sitemap, `/llms.txt`, and `/llms-full.txt` include current AgentKit entry points |
 | NFR-10 | Maintainability | Stable/beta promotion updates all catalogs, bilingual mirrors, and tests together |
+| NFR-11 | Source integrity | Volatile App sources retain typed source-level metadata; the source record preserves claim-level provenance and unresolved availability gaps |
 
 ## Acceptance Criteria
 
@@ -113,6 +115,9 @@ Remote installers, credential-bearing commands, global writes, and destructive r
 - [x] Those two commands remain labeled as local `1.2.0-beta.1` observations.
 - [x] Core skill facts carry reproducible SHA-256 values and target-native invocations.
 - [x] The latest installer is not described as a pinned verified artifact when required integrity evidence is absent.
+- [x] Desktop App product-page and stable-changelog claims keep separate channel/status metadata.
+- [x] Paid-waitlist, stable GUI-asset, Linux, and public-download signals remain explicit instead of being silently reconciled.
+- [x] EN/VI render the same optional section and preserve the CLI/App authentication boundary.
 
 ### Compatibility and Routes
 

@@ -17,6 +17,11 @@ import {
   AGENTKIT_MIGRATION_OPERATIONAL_FACTS,
   getMigrationOperationalFact,
 } from '../../src/data/guides/agentkit/agentkit-migration-operational-facts.ts';
+import {
+  AGENTKIT_LEGACY_CLEANUP_COMMANDS,
+  AGENTKIT_LEGACY_CLEANUP_SOURCES,
+  AGENTKIT_LEGACY_PROVIDER_CLEANUP_POLICIES,
+} from '../../src/data/guides/agentkit/agentkit-legacy-cleanup-facts.ts';
 import { AGENTKIT_SKILL_FACTS } from '../../src/data/guides/agentkit/agentkit-skill-facts.ts';
 import {
   AGENTKIT_TARGET_CAPABILITIES,
@@ -143,6 +148,49 @@ test('migration operations stage safe preflight before non-copyable destructive 
     assert.match(fact.sourceUrl, /^https:\/\//);
     assert.equal(fact.verifiedAt, '2026-07-12');
   }
+});
+
+test('legacy skill cleanup gates provider removal behind inventory and verification', () => {
+  assert.deepEqual(
+    AGENTKIT_LEGACY_CLEANUP_SOURCES.map(({ id, channel }) => [id, channel]),
+    [
+      ['agentkit-docs', 'stable'],
+      ['claudekit-migrate', 'legacy'],
+      ['claudekit-uninstall', 'legacy'],
+    ],
+  );
+  assert.ok(AGENTKIT_LEGACY_CLEANUP_SOURCES.every(({ verifiedAt }) => verifiedAt === '2026-07-12'));
+
+  const stageOrder = [...new Set(AGENTKIT_LEGACY_CLEANUP_COMMANDS.map(({ stage }) => stage))];
+  assert.deepEqual(stageOrder, [
+    'discover-providers',
+    'verify-agentkit',
+    'preview-source-cleanup',
+    'remove-ck-source',
+  ]);
+  assert.equal(AGENTKIT_LEGACY_CLEANUP_COMMANDS[0].command, 'ck migrate --dry-run');
+  assert.equal(AGENTKIT_LEGACY_CLEANUP_COMMANDS[1].command, 'ak kit list');
+  assert.ok(AGENTKIT_LEGACY_CLEANUP_COMMANDS
+    .filter(({ stage }) => stage === 'remove-ck-source')
+    .every(({ safety, copyable, renderPolicy }) => (
+      safety === 'destructive'
+      && copyable === false
+      && renderPolicy === 'source-record-only'
+    )));
+  assert.ok(AGENTKIT_LEGACY_CLEANUP_COMMANDS
+    .filter(({ safety }) => safety === 'read-only')
+    .every(({ renderPolicy }) => renderPolicy === 'guide-command'));
+  assert.ok(AGENTKIT_LEGACY_CLEANUP_COMMANDS.every(({ command }) => !command.includes('rm -rf')));
+
+  assert.deepEqual(
+    AGENTKIT_LEGACY_PROVIDER_CLEANUP_POLICIES.map(({ target }) => target),
+    ['claude-code', 'codex'],
+  );
+  assert.ok(AGENTKIT_LEGACY_PROVIDER_CLEANUP_POLICIES
+    .every(({ automaticBulkRemovalDocumented }) => automaticBulkRemovalDocumented === false));
+  assert.ok(AGENTKIT_LEGACY_PROVIDER_CLEANUP_POLICIES
+    .find(({ target }) => target === 'codex')
+    .legacyDestinationEvidence.includes('.agents/skills/source-command-*/SKILL.md'));
 });
 
 test('core skill facts are reproducible and use target-native invocation syntax', () => {

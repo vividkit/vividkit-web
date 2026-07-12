@@ -17,10 +17,10 @@ const GENERATED_AGENTKIT_MAPPING_ALLOWLIST = GENERATED_AGENTKIT_MAPPING_FILES.fl
   {
     file,
     detector: 'legacy-cli-command',
-    pattern: '\\bck\\s+(?:new|init|update|setup|skills|agents|doctor|versions|config|uninstall)\\b',
-    maxCount: 10,
+    pattern: '\\bck\\s+(?:new|init|update|setup|skills|agents|doctor|versions|config|migrate|uninstall)\\b',
+    maxCount: 18,
     owner: 'AgentKit migration guide',
-    reason: 'The labelled legacy/current comparison renders the ten canonical legacy CLI rows.',
+    reason: 'The migration guide renders ten mapping rows plus eight bounded provider-inventory, dry-run, and cleanup-boundary references.',
   },
   {
     file,
@@ -44,10 +44,18 @@ export const AGENTKIT_LEGACY_ALLOWLIST = [
   {
     file: 'src/data/guides/agentkit/agentkit-migration-mapping.ts',
     detector: 'legacy-cli-command',
-    pattern: '\\bck\\s+(?:new|init|update|setup|skills|agents|doctor|versions|config|uninstall)\\b',
+    pattern: '\\bck\\s+(?:new|init|update|setup|skills|agents|doctor|versions|config|migrate|uninstall)\\b',
     maxCount: 10,
     owner: 'VividKit guides',
     reason: 'Each documented legacy CLI command appears once in the canonical mapping.',
+  },
+  {
+    file: 'src/data/guides/agentkit/agentkit-legacy-cleanup-facts.ts',
+    detector: 'legacy-cli-command',
+    pattern: '\\bck\\s+(?:new|init|update|setup|skills|agents|doctor|versions|config|migrate|uninstall)\\b',
+    maxCount: 5,
+    owner: 'AgentKit migration guide',
+    reason: 'The typed cleanup facts contain one read-only provider inventory and four scope-specific cleanup commands; destructive apply facts remain source-record-only.',
   },
   {
     file: 'src/data/guides/agentkit/agentkit-migration-mapping.ts',

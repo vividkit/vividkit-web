@@ -27,16 +27,21 @@ function commonPlatformViews(ids: string[]) {
 }
 
 const commandGroups: AgentKitCommandGroupView[] = [];
-for (const [id, stage] of [
-  ['preflight', 'preflight'],
-  ['remove', 'legacy-removal'],
-  ['collision', 'collision-check'],
-] as const) {
+for (const [id, stage] of [['preflight', 'preflight']] as const) {
   const commands = operationalFacts
     .filter((fact) => fact.channel === 'stable' && fact.stage === stage)
     .map(toOperationalCommandView);
   if (commands.length > 0) commandGroups.push({ id, commands });
 }
+
+const cleanupStageOrder: readonly AgentKitMigrationOperationalFact['stage'][] = [
+  'legacy-removal',
+  'collision-check',
+];
+const cleanupCommands = cleanupStageOrder.flatMap((stage) => operationalFacts
+  .filter((fact) => fact.channel === 'stable' && fact.stage === stage)
+  .map(toOperationalCommandView));
+if (cleanupCommands.length > 0) commandGroups.push({ id: 'cleanup', commands: cleanupCommands });
 
 const installUnix = factsById.get('install-unix');
 const installWindows = factsById.get('install-windows');
@@ -67,8 +72,8 @@ const steps = [
   { number: '06', id: 'step-06-authenticate', commandGroup: 'auth' },
   { number: '07', id: 'step-07-install-kit', commandGroup: undefined },
   { number: '08', id: 'step-08-translate', commandGroup: undefined },
-  { number: '09', id: 'step-09-remove-legacy', commandGroup: 'remove' },
-  { number: '10', id: 'step-10-clean-up', commandGroup: 'collision' },
+  { number: '09', id: 'step-09-verify-targets', commandGroup: undefined },
+  { number: '10', id: 'step-10-clean-up', commandGroup: 'cleanup' },
 ] as const;
 
 function commandsFor(groupId: string | undefined): AgentKitCommandGroupView | undefined {
@@ -89,7 +94,7 @@ function commandsFor(groupId: string | undefined): AgentKitCommandGroupView | un
   <ol class="mt-8 border-y border-slate-200 dark:border-slate-800">
     {steps.map((step, index) => {
       const group = commandsFor(step.commandGroup);
-      const isRemoval = step.number === '09';
+      const isRemoval = step.number === '10';
       return (
         <li
           id={step.id}

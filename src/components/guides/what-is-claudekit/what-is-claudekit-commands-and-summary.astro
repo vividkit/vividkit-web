@@ -1,232 +1,144 @@
 ---
-// Quick start commands (stable/beta toggle) + summary section with CTA buttons
-import { useTranslations } from "@/i18n/utils";
-import { getLangFromUrl, type Language } from "@/i18n";
-import { SITE_CONFIG } from "@/data/constants";
+import { ArrowRight, Bot, BookOpen, Command, ExternalLink, Map, SquareTerminal } from 'lucide-astro';
+
+import type { Language } from '@/i18n';
+import { useTranslations } from '@/i18n/utils';
+import {
+  WHAT_IS_CLAUDEKIT_FACTS,
+  WHAT_IS_CLAUDEKIT_SOURCES,
+} from '@/data/guides/agentkit/what-is-claudekit-facts';
+import {
+  getAgentKitSkillInvocation,
+  getAgentKitTargetViews,
+} from '@/data/guides/agentkit/agentkit-target-capabilities';
 
 interface Props {
-  lang?: Language;
+  lang: Language;
 }
 
 const { lang } = Astro.props;
-const currentLang = lang || getLangFromUrl(Astro.url);
-const t = useTranslations(currentLang);
+const t = useTranslations(lang);
+const prefix = lang === 'vi' ? '/vi' : '';
 
-const commandsUrl = currentLang === "vi" ? "/vi/guides/commands" : "/guides/commands";
-const cliGuideUrl = currentLang === "vi" ? "/vi/guides/cli" : "/guides/cli";
+const targetViews = getAgentKitTargetViews();
+if (
+  targetViews.length !== WHAT_IS_CLAUDEKIT_FACTS.currentTargets.length
+  || targetViews.some(({ target }) => !WHAT_IS_CLAUDEKIT_FACTS.currentTargets.includes(target))
+) {
+  throw new Error('What-is-ClaudeKit target facts drifted from canonical AgentKit targets.');
+}
 
-const icons = {
-  rocket: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" /></svg>`,
-  users: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" /></svg>`,
-  bolt: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>`,
-  brain: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" /></svg>`,
-  arrow_path: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" /></svg>`,
-  link: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" /></svg>`,
-  clipboard: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" /></svg>`,
-  info: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg>`,
-  hammer: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 01.607 6.364M10.75 8.478l6.364-6.364a2.032 2.032 0 012.873 2.873l-6.364 6.364" /></svg>`,
-  academic: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" /></svg>`,
-  code_bracket: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" /></svg>`,
-  arrow_link: `<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>`,
+const targets = targetViews.map((target) => ({
+  ...target,
+  icon: target.target === 'claude-code' ? Bot : SquareTerminal,
+  body: target.target === 'claude-code'
+    ? t('what_is_ck.targets.claude.body')
+    : t('what_is_ck.targets.codex.body'),
+  invocation: getAgentKitSkillInvocation(target.target, 'cook'),
+}));
+
+const nextGuides = [
+  {
+    icon: Map,
+    href: `${prefix}/guides/agentkit`,
+    title: t('what_is_ck.next.migrate.title'),
+    body: t('what_is_ck.next.migrate.body'),
+    cta: t('what_is_ck.next.migrate.cta'),
+  },
+  {
+    icon: Command,
+    href: `${prefix}/guides/cli`,
+    title: t('what_is_ck.next.cli.title'),
+    body: t('what_is_ck.next.cli.body'),
+    cta: t('what_is_ck.next.cli.cta'),
+  },
+  {
+    icon: BookOpen,
+    href: `${prefix}/guides/how-ck-works`,
+    title: t('what_is_ck.next.how.title'),
+    body: t('what_is_ck.next.how.body'),
+    cta: t('what_is_ck.next.how.cta'),
+  },
+  {
+    icon: Bot,
+    href: `${prefix}/guides/commands`,
+    title: t('what_is_ck.next.commands.title'),
+    body: t('what_is_ck.next.commands.body'),
+    cta: t('what_is_ck.next.commands.cta'),
+  },
+];
+
+const sourceLabels = {
+  'agentkit-docs': t('what_is_ck.sources.agentkit'),
+  'claudekit-docs': t('what_is_ck.sources.claudekit'),
+  'claudekit-cli': t('what_is_ck.sources.cli'),
 };
 
-const stableBeginnerCommands = [
-  { cmd: "/ck:ask", desc: t("guides.what_is_claudekit.cmd_ask") },
-  { cmd: "/ck:brainstorm", desc: t("guides.what_is_claudekit.cmd_brainstorm") },
-  { cmd: "/ck:fix", desc: t("guides.what_is_claudekit.cmd_fix") },
-];
-const stableBuildingCommands = [
-  { cmd: "/ck:plan", desc: t("guides.what_is_claudekit.cmd_plan") },
-  { cmd: "/ck:cook", desc: t("guides.what_is_claudekit.cmd_cook") },
-  { cmd: "/ck:cook @plan.md", desc: t("guides.what_is_claudekit.cmd_cook_plan") },
-];
-const stableGitCommands = [
-  { cmd: "/ck:git", desc: t("guides.what_is_claudekit.cmd_git") },
-  { cmd: "/ck:docs update", desc: t("guides.what_is_claudekit.cmd_docs") },
-  { cmd: "/ck:watzup", desc: t("guides.what_is_claudekit.cmd_watzup") },
-];
-const mkCopyCommands = [
-  { cmd: "/ckm:write:*", desc: t("commands.mkt.write.desc") || "Write high-converting copy" },
-  { cmd: "/ckm:social:*", desc: t("commands.mkt.social.desc") || "Social media center" },
-  { cmd: "/ck:copywriting", desc: t("commands.mkt.copywriting.desc") || "Conversion copywriting" },
-];
-const mkStrategyCommands = [
-  { cmd: "/ckm:play:*", desc: t("commands.mkt.play.desc") || "Playbook orchestrator" },
-  { cmd: "/ckm:plan:*", desc: t("commands.mkt.plan.desc") || "Marketing planning" },
-  { cmd: "/ckm:campaign:*", desc: t("commands.mkt.campaign.desc") || "Campaign orchestration" },
-];
-const mkSeoCommands = [
-  { cmd: "/ckm:seo:*", desc: t("commands.mkt.seo.desc") || "SEO center" },
-  { cmd: "/ckm:analyze:*", desc: t("commands.mkt.analyze.desc") || "Analyze performance" },
-  { cmd: "/ckm:ads-management", desc: t("commands.mkt.ads.desc") || "Ads management" },
-];
-const summaryItems = [
-  { icon: icons.users, label: "Agents" },
-  { icon: icons.brain, label: "Skills" },
-  { icon: icons.arrow_path, label: "Workflows" },
-  { icon: icons.link, label: "Hooks" },
-];
-
-type CommandItem = { cmd: string; desc: string };
-type CommandGroup = { label: string; icon: string; color: string; items: CommandItem[] };
-
-function makeGroups(beginner: CommandItem[], building: CommandItem[], git: CommandItem[]): CommandGroup[] {
-  return [
-    { label: t("guides.what_is_claudekit.for_beginners"), icon: icons.academic, color: "purple", items: beginner },
-    { label: t("guides.what_is_claudekit.for_building"), icon: icons.hammer, color: "emerald", items: building },
-    { label: t("guides.what_is_claudekit.for_git"), icon: icons.code_bracket, color: "amber", items: git },
-  ];
-}
-
-function makeMkGroups(content: CommandItem[], strategy: CommandItem[], seo: CommandItem[]): CommandGroup[] {
-  return [
-    { label: t("commands.mkt.cat.contentCopy"), icon: icons.academic, color: "purple", items: content },
-    { label: t("commands.mkt.cat.strategyResearch"), icon: icons.hammer, color: "emerald", items: strategy },
-    { label: t("commands.mkt.cat.seoAnalytics"), icon: icons.code_bracket, color: "amber", items: seo },
-  ];
-}
-
-const stableGroups = makeGroups(stableBeginnerCommands, stableBuildingCommands, stableGitCommands);
-const mkGroups = makeMkGroups(mkCopyCommands, mkStrategyCommands, mkSeoCommands);
+const inlineCodeClass = 'inline-flex max-w-full overflow-x-auto rounded-md border border-slate-200 bg-slate-100 px-2 py-1 font-mono text-sm text-violet-700 dark:border-slate-700 dark:bg-slate-800/90 dark:text-violet-300';
 ---
 
-<!-- Quick Start Commands -->
-<div class="glass-card rounded-2xl overflow-hidden">
-  <div class="p-6 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 border-b border-slate-200 dark:border-slate-800">
-    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-      <h3 class="text-2xl font-bold text-blue-600 dark:text-blue-400 flex items-center gap-3">
-        <span class="text-blue-600 dark:text-blue-400"><Fragment set:html={icons.rocket} /></span>
-        {t("guides.what_is_claudekit.quick_start_title")}
-      </h3>
-      <!-- Version Toggle -->
-      <div class="flex items-center gap-2 p-1 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-        <button id="qs-btn-ek" class="qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 bg-teal-500 text-white shadow-sm" data-version="ek">
-          <span class="flex items-center gap-1.5">
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="16 18 22 12 16 6"></polyline>
-              <polyline points="8 6 2 12 8 18"></polyline>
-            </svg>
-            {t("guides.what_is_claudekit.qs_tab_ek")}
-          </span>
-        </button>
-        <button id="qs-btn-mk" class="qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700" data-version="mk">
-          <span class="flex items-center gap-1.5">
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
-            </svg>
-            {t("guides.what_is_claudekit.qs_tab_mk")}
-          </span>
-        </button>
-      </div>
-    </div>
+<section id="target-syntax" aria-labelledby="target-syntax-heading" class="pt-16">
+  <div class="max-w-3xl">
+    <h2 id="target-syntax-heading" class="font-heading text-3xl font-bold text-slate-950 dark:text-white">
+      {t('what_is_ck.targets.heading')}
+    </h2>
+    <p class="mt-3 text-lg leading-relaxed text-slate-600 text-pretty dark:text-slate-300">
+      {t('what_is_ck.targets.intro')}
+    </p>
   </div>
-  <div class="p-6">
-    <!-- EK Commands -->
-    <div id="qs-commands-ek" class="grid md:grid-cols-3 gap-6">
-      {stableGroups.map((group) => (
-        <div class={`rounded-xl bg-${group.color}-50 dark:bg-${group.color}-500/10 border border-${group.color}-200 dark:border-${group.color}-500/20 p-4`}>
-          <h4 class={`font-bold text-${group.color}-700 dark:text-${group.color}-400 mb-3 flex items-center gap-2`}>
-            <span class={`text-${group.color}-600 dark:text-${group.color}-400`}><Fragment set:html={group.icon} /></span>
-            {group.label}
-          </h4>
-          <div class="space-y-2">
-            {group.items.map((cmd) => (
-              <div class="flex items-center gap-2">
-                <code class={`px-2 py-1 rounded bg-${group.color}-100 dark:bg-${group.color}-500/20 text-${group.color}-700 dark:text-${group.color}-300 text-sm font-mono`}>{cmd.cmd}</code>
-                <span class="text-xs text-slate-500 dark:text-slate-400">{cmd.desc}</span>
-              </div>
-            ))}
+
+  <div class="mt-8 grid gap-5 lg:grid-cols-2">
+    {targets.map(({ icon: Icon, displayName, body, invocation }) => (
+      <article class="min-w-0 rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-950/40">
+        <div class="flex items-center gap-3">
+          <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-100 text-violet-700 dark:bg-slate-800 dark:text-violet-300">
+            <Icon class="h-5 w-5" aria-hidden="true" />
           </div>
+          <h3 class="text-lg font-bold text-slate-950 dark:text-white">{displayName}</h3>
         </div>
+        <p class="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-300">{body}</p>
+        <div class="mt-4 flex flex-wrap items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+          <span class="font-semibold">{t('what_is_ck.targets.invocation')}:</span>
+          <code class={inlineCodeClass}>{invocation}</code>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<section id="next-guides" aria-labelledby="next-guides-heading" class="pt-16">
+  <div class="max-w-3xl">
+    <h2 id="next-guides-heading" class="font-heading text-3xl font-bold text-slate-950 dark:text-white">
+      {t('what_is_ck.next.heading')}
+    </h2>
+    <p class="mt-3 text-lg leading-relaxed text-slate-600 text-pretty dark:text-slate-300">
+      {t('what_is_ck.next.intro')}
+    </p>
+  </div>
+
+  <div class="mt-8 grid gap-4 sm:grid-cols-2">
+    {nextGuides.map(({ icon: Icon, href, title, body, cta }) => (
+      <article class="group flex min-w-0 flex-col rounded-2xl border border-slate-200 bg-white p-5 transition-colors hover:border-violet-300 dark:border-slate-700 dark:bg-slate-950/40 dark:hover:border-violet-600">
+        <Icon class="h-5 w-5 text-violet-600 dark:text-violet-400" aria-hidden="true" />
+        <h3 class="mt-3 text-lg font-bold text-slate-950 dark:text-white">{title}</h3>
+        <p class="mt-2 flex-1 text-sm leading-6 text-slate-600 dark:text-slate-300">{body}</p>
+        <a href={href} class="mt-4 inline-flex min-h-11 items-center gap-2 self-start rounded-lg px-1 text-sm font-semibold text-violet-700 hover:underline focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 dark:text-violet-300">
+          {cta}
+          <ArrowRight class="h-4 w-4" aria-hidden="true" />
+        </a>
+      </article>
+    ))}
+  </div>
+
+  <div class="mt-8 border-t border-slate-200 pt-6 dark:border-slate-800">
+    <h3 class="text-sm font-bold uppercase tracking-[0.1em] text-slate-700 dark:text-slate-200">{t('what_is_ck.sources.heading')}</h3>
+    <div class="mt-3 flex flex-wrap gap-x-5 gap-y-2">
+      {WHAT_IS_CLAUDEKIT_SOURCES.map((source) => (
+        <a href={source.sourceUrl} target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-violet-700 hover:underline focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 dark:text-violet-300">
+          {sourceLabels[source.id]}
+          <ExternalLink class="h-4 w-4" aria-hidden="true" />
+        </a>
       ))}
     </div>
-    <!-- MK Commands (hidden by default) -->
-    <div id="qs-commands-mk" class="grid md:grid-cols-3 gap-6 hidden">
-      {mkGroups.map((group) => (
-        <div class={`rounded-xl bg-${group.color}-50 dark:bg-${group.color}-500/10 border border-${group.color}-200 dark:border-${group.color}-500/20 p-4`}>
-          <h4 class={`font-bold text-${group.color}-700 dark:text-${group.color}-400 mb-3 flex items-center gap-2`}>
-            <span class={`text-${group.color}-600 dark:text-${group.color}-400`}><Fragment set:html={group.icon} /></span>
-            {group.label}
-          </h4>
-          <div class="space-y-2">
-            {group.items.map((cmd) => (
-              <div class="flex items-center gap-2">
-                <code class={`px-2 py-1 rounded bg-${group.color}-100 dark:bg-${group.color}-500/20 text-${group.color}-700 dark:text-${group.color}-300 text-sm font-mono`}>{cmd.cmd}</code>
-                <span class="text-xs text-slate-500 dark:text-slate-400">{cmd.desc}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
-    </div>
-    <!-- View All Commands Link -->
-    <div class="mt-6 text-center">
-      <a href={commandsUrl} class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-blue-100 dark:bg-blue-500/20 text-blue-700 dark:text-blue-300 text-sm font-medium hover:bg-blue-200 dark:hover:bg-blue-500/30 transition-colors">
-        {t("guides.what_is_claudekit.view_all_commands")}
-        <Fragment set:html={icons.arrow_link} />
-      </a>
-    </div>
   </div>
-</div>
-
-<!-- Summary Section -->
-<div class="glass-card rounded-2xl overflow-hidden bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-500/5 dark:to-blue-500/5">
-  <div class="p-6 border-b border-purple-200 dark:border-purple-500/20">
-    <h3 class="text-2xl font-bold text-purple-600 dark:text-purple-400 flex items-center gap-3">
-      <span class="text-purple-600 dark:text-purple-400"><Fragment set:html={icons.clipboard} /></span>
-      {t("guides.what_is_claudekit.summary_title")}
-    </h3>
-  </div>
-  <div class="p-6 space-y-4">
-    <div class="text-center">
-      <div class="inline-block px-6 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-bold text-xl mb-4">
-        {t("guides.what_is_claudekit.summary_tagline")}
-      </div>
-      <p class="text-slate-600 dark:text-slate-400 mb-4">{t("guides.what_is_claudekit.summary_desc")}</p>
-      <div class="flex flex-wrap justify-center gap-3">
-        {summaryItems.map((item) => (
-          <span class="px-4 py-2 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium text-slate-700 dark:text-slate-300 flex items-center gap-2">
-            <span class="text-purple-600 dark:text-purple-400"><Fragment set:html={item.icon} /></span>
-            {item.label}
-          </span>
-        ))}
-      </div>
-    </div>
-
-    <!-- ClaudeKit Purchase Notice -->
-    <div class="mt-6 p-5 rounded-xl bg-gradient-to-r from-purple-100 via-blue-100 to-purple-100 dark:from-purple-500/20 dark:via-blue-500/20 dark:to-purple-500/20 border-2 border-purple-300 dark:border-purple-500/40 relative overflow-hidden">
-      <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-purple-200/50 to-transparent dark:from-purple-500/10 rounded-bl-full"></div>
-      <div class="relative flex flex-col sm:flex-row items-start sm:items-center gap-4">
-        <div class="flex-1">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="text-purple-600 dark:text-purple-400"><Fragment set:html={icons.info} /></span>
-            <span class="font-bold text-purple-800 dark:text-purple-300">{t("guides.what_is_claudekit.subscription_notice_title")}</span>
-          </div>
-          <p class="text-purple-700 dark:text-purple-300 text-sm leading-relaxed">{t("guides.what_is_claudekit.subscription_notice_desc")}</p>
-        </div>
-        <a href={SITE_CONFIG.claudekitReferralUrl} target="_blank" rel="noopener noreferrer" class="cta-button flex-shrink-0 inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm">
-          {t("guides.what_is_claudekit.get_claudekit_discount")}
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"></path></svg>
-        </a>
-      </div>
-    </div>
-
-    <!-- CLI Setup Section -->
-    <div class="mt-6 p-5 rounded-xl bg-gradient-to-r from-emerald-100 via-teal-100 to-emerald-100 dark:from-emerald-500/20 dark:via-teal-500/20 dark:to-emerald-500/20 border-2 border-emerald-300 dark:border-emerald-500/40 relative overflow-hidden">
-      <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-emerald-200/50 to-transparent dark:from-emerald-500/10 rounded-bl-full"></div>
-      <div class="relative flex flex-col sm:flex-row items-start sm:items-center gap-4">
-        <div class="flex-1">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="text-emerald-600 dark:text-emerald-400"><Fragment set:html={icons.rocket} /></span>
-            <span class="font-bold text-emerald-800 dark:text-emerald-300">{t("guides.what_is_claudekit.cli_setup_title")}</span>
-          </div>
-          <p class="text-emerald-700 dark:text-emerald-300 text-sm leading-relaxed">{t("guides.what_is_claudekit.cli_setup_desc")}</p>
-        </div>
-        <a href={cliGuideUrl} class="cta-button-emerald flex-shrink-0 inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm">
-          {t("guides.what_is_claudekit.cli_setup_cta")}
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
+</section>

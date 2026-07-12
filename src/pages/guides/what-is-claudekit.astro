@@ -1,11 +1,15 @@
 ---
 import GuidesLayout from '@/layouts/GuidesLayout.astro';
 import WhatIsClaudeKitGuide from '@/components/guides/WhatIsClaudeKitGuide.astro';
+import { useTranslations } from '@/i18n/utils';
+
+const t = useTranslations('en');
 ---
 
 <GuidesLayout
-  title="What is AgentKit? - Kits, CLI & Coding-Agent Targets"
-  description="Learn how AgentKit combines the ak CLI, Engineer and Marketing kits, guard rails, Claude Code, and Codex."
+  title={t('what_is_ck.meta.title')}
+  description={t('what_is_ck.meta.description')}
+  canonicalPath="/guides/what-is-claudekit"
   activeTab="what-is-claudekit"
 >
   <WhatIsClaudeKitGuide lang="en" />

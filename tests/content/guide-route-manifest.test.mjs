@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { access, readdir } from 'node:fs/promises';
+import { access, readFile, readdir } from 'node:fs/promises';
 import { join, relative, sep } from 'node:path';
 import test from 'node:test';
 
@@ -86,4 +86,31 @@ test('sitemap consumer receives the exact manifest-classified route identities',
   assert.deepEqual(sitemapRouteIdentities, expected);
   assert.ok(sitemapRouteIdentities.includes('/guides/agentkit'));
   assert.ok(sitemapRouteIdentities.includes('/vi/guides/agentkit'));
+});
+
+test('LLM full export retains the AgentKit App and legacy cleanup safety boundaries', async (context) => {
+  if (process.env.npm_lifecycle_event !== 'test:agentkit-postbuild') {
+    context.skip('postbuild-only LLM assertion');
+    return;
+  }
+  const output = join(projectRoot, 'dist', 'llms-full.txt');
+  assert.equal(await exists(output), true, 'postbuild llms-full.txt missing');
+
+  const text = await readFile(output, 'utf8');
+  assert.match(text, /Public availability is not established/);
+  assert.match(text, /CLI registry and Desktop App use separate sessions/);
+  assert.match(text, /linked release was unavailable when verified/);
+  assert.match(text, /No documented bulk cleanup for every migrated provider/);
+  assert.match(text, /Never delete an entire provider skills directory/);
+  assert.match(text, /ck uninstall does not document bulk removal there/);
+  assert.match(text, /ClaudeKit is historical context, not the current install path/);
+  assert.match(text, /One skill identity, target-correct syntax/);
+  assert.match(text, /ClaudeKit was the original toolkit/);
+
+  const primerStart = text.indexOf('## What is ClaudeKit? From CK to AgentKit');
+  const primerEnd = text.indexOf('\n## ', primerStart + 3);
+  assert.notEqual(primerStart, -1, 'what-is-claudekit LLM section missing');
+  const primer = text.slice(primerStart, primerEnd === -1 ? undefined : primerEnd);
+  assert.doesNotMatch(primer, /(?:\/|\$)(?:ck|ckm):/i);
+  assert.doesNotMatch(primer, /\bck\s+(?:new|init|update|setup|skills|agents|doctor|versions|config|migrate|uninstall)\b/i);
 });
