@@ -8,7 +8,7 @@ export interface HookDef {
   name: string;
   lines: number;
   triggers: string[];
-  /** Default new-install state, based on the stable ClaudeKit docs/changelog. */
+  /** Default new-install state, based on the stable AgentKit docs/changelog. */
   defaultState: 'on' | 'off' | 'removed';
   /** Reader-facing behavior once the hook is active. */
   flowImpact: 'policy-block' | 'guidance' | 'context' | 'state' | 'removed';
@@ -248,8 +248,8 @@ export const hookCategories: HookCategory[] = [
         defaultReason: 'generated-context',
         kits: ['ek'],
         triggers: ['SubagentStop (Plan)'],
-        descEn: 'Remind to invoke /ck:cook after Plan subagent completes. Outputs plan path for new sessions.',
-        descVi: 'Nhắc chạy /ck:cook sau khi Plan subagent hoàn thành. Xuất plan path cho session mới.',
+        descEn: 'Remind to invoke /ak:cook after Plan subagent completes. Outputs plan path for new sessions.',
+        descVi: 'Nhắc chạy /ak:cook sau khi Plan subagent hoàn thành. Xuất plan path cho session mới.',
       },
       {
         id: 'workflow-artifact-gate',
@@ -261,8 +261,8 @@ export const hookCategories: HookCategory[] = [
         defaultReason: 'opt-in-gate',
         kits: ['ek'],
         triggers: ['PreToolUse (finalize stage)', 'manual CLI'],
-        descEn: 'Validate ck:fix/ck:cook review artifacts (context-snippets, verification, review-decision, risk-gate) before finalize and ship-like actions. Optional via .claude/.ck.json; fail-open on crash.',
-        descVi: 'Validate review artifacts của ck:fix/ck:cook (context-snippets, verification, review-decision, risk-gate) trước khi finalize và ship-like actions. Có thể bật trong .claude/.ck.json; fail-open khi crash.',
+        descEn: 'Validate ak:fix/ak:cook review artifacts (context-snippets, verification, review-decision, risk-gate) before finalize and ship-like actions. Optional via .claude/.ck.json; fail-open on crash.',
+        descVi: 'Validate review artifacts của ak:fix/ak:cook (context-snippets, verification, review-decision, risk-gate) trước khi finalize và ship-like actions. Có thể bật trong .claude/.ck.json; fail-open khi crash.',
       },
     ],
   },

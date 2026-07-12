@@ -9,6 +9,7 @@ import {
   AGENTKIT_LEGACY_PROVIDER_CLEANUP_POLICIES,
 } from '@/data/guides/agentkit/agentkit-legacy-cleanup-facts';
 import { getAgentKitSkillInvocation } from '@/data/guides/agentkit/agentkit-target-capabilities';
+import { inlineCodeClass, renderInlineCode } from './inline-code';
 
 interface Props {
   lang: Language;
@@ -38,7 +39,6 @@ const targetCards = AGENTKIT_LEGACY_PROVIDER_CLEANUP_POLICIES.map((policy) => ({
 }));
 
 const codeClass = 'block max-w-full overflow-x-auto bg-slate-100 p-4 font-mono text-sm text-purple-600 dark:bg-slate-800/90 dark:text-purple-400';
-const inlineCodeClass = 'rounded-md border border-slate-200 bg-slate-100 px-2 py-1 font-mono text-sm text-slate-800 dark:border-slate-700 dark:bg-slate-800/90 dark:text-slate-100';
 ---
 
 <section id="legacy-skill-cleanup" aria-labelledby="legacy-skill-cleanup-heading" class="pt-16">
@@ -58,7 +58,7 @@ const inlineCodeClass = 'rounded-md border border-slate-200 bg-slate-100 px-2 py
     <AlertTriangle class="mt-0.5 h-5 w-5 shrink-0" aria-hidden="true" />
     <div>
       <p class="font-bold">{t('agentkit.cleanup.boundary.title')}</p>
-      <p class="mt-1 text-sm leading-relaxed">{t('agentkit.cleanup.boundary.body')}</p>
+      <p class="mt-1 text-sm leading-relaxed" set:html={renderInlineCode(t('agentkit.cleanup.boundary.body'))} ></p>
     </div>
   </div>
 
@@ -68,7 +68,7 @@ const inlineCodeClass = 'rounded-md border border-slate-200 bg-slate-100 px-2 py
         <Search class="h-5 w-5 text-purple-600 dark:text-purple-400" aria-hidden="true" />
         <h3 class="font-bold text-slate-950 dark:text-slate-50">1. {t('agentkit.cleanup.detect.title')}</h3>
       </div>
-      <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{t('agentkit.cleanup.detect.body')}</p>
+      <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300" set:html={renderInlineCode(t('agentkit.cleanup.detect.body'))} ></p>
       <code class={`${codeClass} mt-4 rounded-xl`}>{discovery.command}</code>
     </li>
 
@@ -77,13 +77,13 @@ const inlineCodeClass = 'rounded-md border border-slate-200 bg-slate-100 px-2 py
         <CheckCircle2 class="h-5 w-5 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
         <h3 class="font-bold text-slate-950 dark:text-slate-50">2. {t('agentkit.cleanup.verify.title')}</h3>
       </div>
-      <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{t('agentkit.cleanup.verify.body')}</p>
+      <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300" set:html={renderInlineCode(t('agentkit.cleanup.verify.body'))} ></p>
       <code class={`${codeClass} mt-4 rounded-xl`}>{kitList.command}</code>
       <div class="mt-4 grid gap-3 sm:grid-cols-2">
         {targetCards.map((target) => (
           <article class="min-w-0 rounded-xl border border-slate-200 p-4 dark:border-slate-700">
             <h4 class="font-bold text-slate-950 dark:text-slate-50">{target.title}</h4>
-            <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{target.body}</p>
+            <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300" set:html={renderInlineCode(target.body)} ></p>
             <p class="mt-3 flex flex-wrap items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
               <span class="font-semibold">{t('agentkit.cleanup.targets.verify')}:</span>
               <code class={inlineCodeClass}>{target.invocation}</code>
@@ -101,7 +101,7 @@ const inlineCodeClass = 'rounded-md border border-slate-200 bg-slate-100 px-2 py
         <ShieldCheck class="h-5 w-5 text-sky-600 dark:text-sky-400" aria-hidden="true" />
         <h3 class="font-bold text-slate-950 dark:text-slate-50">3. {t('agentkit.cleanup.preview.title')}</h3>
       </div>
-      <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{t('agentkit.cleanup.preview.body')}</p>
+      <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300" set:html={renderInlineCode(t('agentkit.cleanup.preview.body'))} ></p>
       <div class="mt-4 space-y-3">
         {previews.map((fact) => <code class={`${codeClass} rounded-xl`}>{fact.command}</code>)}
       </div>
@@ -112,7 +112,7 @@ const inlineCodeClass = 'rounded-md border border-slate-200 bg-slate-100 px-2 py
         <AlertTriangle class="h-5 w-5 text-rose-700 dark:text-rose-300" aria-hidden="true" />
         <h3 class="font-bold text-slate-950 dark:text-slate-50">4. {t('agentkit.cleanup.remove.title')}</h3>
       </div>
-      <p class="mt-3 text-sm leading-relaxed text-slate-700 dark:text-slate-200">{t('agentkit.cleanup.remove.body')}</p>
+      <p class="mt-3 text-sm leading-relaxed text-slate-700 dark:text-slate-200" set:html={renderInlineCode(t('agentkit.cleanup.remove.body'))} ></p>
       <p class="mt-4 rounded-xl border border-rose-300 bg-rose-100 px-4 py-3 text-sm font-bold text-rose-900 dark:border-rose-800 dark:bg-rose-950/50 dark:text-rose-100">
         {t('agentkit.cleanup.remove.manual')}
       </p>
@@ -126,7 +126,7 @@ const inlineCodeClass = 'rounded-md border border-slate-200 bg-slate-100 px-2 py
   <div class="mt-6 flex flex-wrap gap-4">
     {AGENTKIT_LEGACY_CLEANUP_SOURCES.map((source) => (
       <a href={source.sourceUrl} target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center gap-2 rounded-lg px-1 text-sm font-semibold text-purple-700 hover:underline focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:text-purple-300">
-        {t(`agentkit.cleanup.sources.${source.id}`)}
+        <span set:html={renderInlineCode(t(`agentkit.cleanup.sources.${source.id}`))} ></span>
         <ExternalLink class="h-4 w-4" aria-hidden="true" />
       </a>
     ))}

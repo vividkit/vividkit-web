@@ -1,8 +1,9 @@
 ---
-import { ArrowRight, Bot, GitBranch, ServerCog, ShieldCheck } from 'lucide-astro';
+import { ArrowRight, Bot, GitBranch, ShieldCheck } from 'lucide-astro';
 
 import type { Language } from '@/i18n';
 import { useTranslations } from '@/i18n/utils';
+import { renderInlineCode } from './inline-code';
 
 interface Props {
   lang: Language;
@@ -19,7 +20,7 @@ const paths = [
     body: t('agentkit.paths.legacy.body'),
     cta: t('agentkit.paths.legacy.cta'),
     href: '#step-03-inventory',
-    className: 'md:col-span-2 border-purple-200 bg-purple-50/70 dark:border-purple-800/70 dark:bg-purple-950/20',
+    className: 'border-purple-200 bg-purple-50/70 dark:border-purple-800/70 dark:bg-purple-950/20',
     iconClass: 'bg-purple-100 text-purple-700 dark:bg-purple-900/50 dark:text-purple-300',
   },
   {
@@ -32,16 +33,6 @@ const paths = [
     className: 'border-sky-200 bg-sky-50/70 dark:border-sky-800/70 dark:bg-sky-950/20',
     iconClass: 'bg-sky-100 text-sky-700 dark:bg-sky-900/50 dark:text-sky-300',
   },
-  {
-    id: 'ci',
-    icon: ServerCog,
-    title: t('agentkit.paths.ci.title'),
-    body: t('agentkit.paths.ci.body'),
-    cta: t('agentkit.paths.ci.cta'),
-    href: '#automation-safety',
-    className: 'border-amber-200 bg-amber-50/70 dark:border-amber-800/70 dark:bg-amber-950/20',
-    iconClass: 'bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300',
-  },
 ] as const;
 ---
 
@@ -50,9 +41,10 @@ const paths = [
     <p class="mb-4 text-xs font-bold uppercase tracking-[0.12em] text-purple-700 dark:text-purple-300">
       {t('agentkit.hero.eyebrow')}
     </p>
-    <h1 class="font-heading text-4xl font-bold leading-[1.1] tracking-[-0.03em] text-slate-950 text-balance dark:text-slate-50 md:text-5xl">
-      {t('agentkit.hero.title')}
-    </h1>
+    <h1
+      class="font-heading text-4xl font-bold leading-[1.1] tracking-[-0.03em] text-slate-950 text-balance dark:text-slate-50 md:text-5xl"
+      set:html={renderInlineCode(t('agentkit.hero.title'))}
+    ></h1>
     <p class="mt-5 max-w-2xl text-lg leading-relaxed text-slate-600 text-pretty dark:text-slate-300">
       {t('agentkit.hero.description')}
     </p>
@@ -78,7 +70,7 @@ const paths = [
             <Icon class="h-5 w-5" aria-hidden="true" />
           </div>
           <h3 class="mt-5 text-lg font-bold text-slate-950 dark:text-slate-50">{path.title}</h3>
-          <p class="mt-2 max-w-2xl leading-relaxed text-slate-600 text-pretty dark:text-slate-300">{path.body}</p>
+          <p class="mt-2 max-w-2xl leading-relaxed text-slate-600 text-pretty dark:text-slate-300" set:html={renderInlineCode(path.body)} ></p>
           <a
             href={path.href}
             class="mt-5 inline-flex min-h-11 items-center gap-2 rounded-lg px-1 font-semibold text-purple-700 transition-colors duration-200 hover:text-purple-900 hover:underline focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 active:text-purple-600 dark:text-purple-300 dark:hover:text-purple-100"

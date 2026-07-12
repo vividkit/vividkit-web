@@ -5,6 +5,7 @@ import type { Language } from '@/i18n';
 import { useTranslations } from '@/i18n/utils';
 import { getAgentKitCliFact } from '@/data/guides/agentkit/agentkit-cli-facts';
 import { getMigrationOperationalFact } from '@/data/guides/agentkit/agentkit-migration-operational-facts';
+import { inlineCodeClass, renderInlineCode } from './inline-code';
 
 interface Props {
   lang: Language;
@@ -31,8 +32,6 @@ const links = [
   { label: t('agentkit.links.session'), href: `${prefix}/guides/session-recovery` },
   { label: t('agentkit.links.migrate'), href: `${prefix}/guides/migrate` },
 ] as const;
-
-const inlineCodeClass = 'rounded-md border border-slate-200 bg-slate-100 px-2 py-1 font-mono text-sm text-slate-800 dark:border-slate-700 dark:bg-slate-800/90 dark:text-slate-100';
 ---
 
 <section id="troubleshooting" aria-labelledby="troubleshooting-heading" class="scroll-mt-28 pt-16">
@@ -55,11 +54,11 @@ const inlineCodeClass = 'rounded-md border border-slate-200 bg-slate-100 px-2 py
         >
           <summary class="flex min-h-16 cursor-pointer list-none items-center gap-3 py-4 font-semibold text-slate-900 transition-colors duration-200 hover:text-purple-700 focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 active:text-purple-600 dark:text-slate-100 dark:hover:text-purple-300">
             <Icon class="h-5 w-5 shrink-0 text-purple-600 dark:text-purple-400" aria-hidden="true" />
-            <span>{topic.title}</span>
+            <span set:html={renderInlineCode(topic.title)} ></span>
             <span class="ml-auto text-xl font-normal text-slate-400 transition-transform duration-200 group-open:rotate-45" aria-hidden="true">+</span>
           </summary>
           <div class="pb-5 pl-8 pr-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-            <p>{topic.body}</p>
+            <p set:html={renderInlineCode(topic.body)} ></p>
             {topic.code && <code class={`${inlineCodeClass} mt-3 inline-flex max-w-full overflow-x-auto`}>{topic.code}</code>}
           </div>
         </details>

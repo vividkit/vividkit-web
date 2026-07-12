@@ -158,8 +158,8 @@ const hookExamples: Record<string, { en: string; vi: string }> = {
     vi: "Bạn mở Claude Code trong một repo. Hook này nhận diện project, config, package manager, và branch để các hook sau hiểu workspace.",
   },
   "session-state": {
-    en: "After compaction or handoff, ClaudeKit can restore the active plan and todo list instead of treating the session as blank.",
-    vi: "Sau compact hoặc handoff, ClaudeKit có thể khôi phục plan và todo đang làm thay vì xem session như mới hoàn toàn.",
+    en: "After compaction or handoff, AgentKit can restore the active plan and todo list instead of treating the session as blank.",
+    vi: "Sau compact hoặc handoff, AgentKit có thể khôi phục plan và todo đang làm thay vì xem session như mới hoàn toàn.",
   },
   "usage-quota-cache-refresh": {
     en: "A statusline can show quota context from cache without making every prompt wait for a fresh quota check.",

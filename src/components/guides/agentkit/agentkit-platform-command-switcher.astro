@@ -5,6 +5,7 @@ import type { Language } from '@/i18n';
 import { useTranslations } from '@/i18n/utils';
 import type { AgentKitCommandView, AgentKitPlatform } from './agentkit-command-view';
 import { isSafeCopyPayload } from './agentkit-command-view';
+import { renderInlineCode } from './inline-code';
 
 interface Props {
   id: string;
@@ -84,12 +85,12 @@ function safetyMessage(item: AgentKitCommandView): string {
                 )}
               </div>
 
-              <div class="relative bg-slate-100 dark:bg-slate-800/90">
-                <pre class="m-0 overflow-x-auto p-4 pr-14 text-sm text-slate-700 dark:text-slate-200"><code class="text-purple-600 dark:text-purple-400" data-copy-source={item.id}>{item.display}</code></pre>
+              <div class="flex items-center gap-1 bg-slate-100 dark:bg-slate-800/90">
+                <pre class="m-0 min-w-0 flex-1 overflow-x-auto p-4 text-sm leading-6 text-slate-700 dark:text-slate-200"><code class="text-purple-600 dark:text-purple-400" data-copy-source={item.id}>{item.display}</code></pre>
                 {safeToCopy && (
                   <button
                     type="button"
-                    class="absolute right-2 top-2 inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-600 transition-colors duration-200 hover:border-purple-400 hover:text-purple-700 focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 active:bg-slate-100 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-purple-400 dark:hover:text-purple-300 dark:active:bg-slate-800"
+                    class="mr-2 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-slate-300 bg-white leading-none text-slate-600 transition-colors duration-200 hover:border-purple-400 hover:text-purple-700 focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 active:bg-slate-100 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-purple-400 dark:hover:text-purple-300 dark:active:bg-slate-800 [&_svg]:block"
                     aria-label={t('agentkit.command.copy')}
                     data-agentkit-copy={item.id}
                     data-copy-payload={item.copyPayload}
@@ -106,7 +107,7 @@ function safetyMessage(item: AgentKitCommandView): string {
               {!safeToCopy && (
                 <p class="flex gap-2 border-t border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-relaxed text-amber-900 dark:border-amber-800/70 dark:bg-amber-950/30 dark:text-amber-100">
                   <ShieldAlert class="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-                  <span>{safetyMessage(item)}</span>
+                  <span set:html={renderInlineCode(safetyMessage(item))} ></span>
                 </p>
               )}
             </div>

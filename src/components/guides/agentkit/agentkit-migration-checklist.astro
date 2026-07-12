@@ -8,6 +8,7 @@ import type { AgentKitMigrationOperationalFact } from '@/data/guides/agentkit/ag
 import type { AgentKitCommandGroupView } from './agentkit-command-view';
 import { toOperationalCommandView, viewsForPlatforms } from './agentkit-command-view';
 import AgentKitPlatformCommandSwitcher from './agentkit-platform-command-switcher.astro';
+import { renderInlineCode } from './inline-code';
 
 interface Props {
   lang: Language;
@@ -116,12 +117,8 @@ function commandsFor(groupId: string | undefined): AgentKitCommandGroupView | un
           </div>
 
           <div class="min-w-0">
-            <h3 class="font-heading text-xl font-bold text-slate-950 dark:text-slate-50">
-              {t(`agentkit.step.${step.number}.title`)}
-            </h3>
-            <p class="mt-2 max-w-3xl leading-relaxed text-slate-600 text-pretty dark:text-slate-300">
-              {t(`agentkit.step.${step.number}.body`)}
-            </p>
+            <h3 class="font-heading text-xl font-bold text-slate-950 dark:text-slate-50" set:html={renderInlineCode(t(`agentkit.step.${step.number}.title`))} ></h3>
+            <p class="mt-2 max-w-3xl leading-relaxed text-slate-600 text-pretty dark:text-slate-300" set:html={renderInlineCode(t(`agentkit.step.${step.number}.body`))} ></p>
 
             {group && (
               <div class="mt-5 max-w-3xl">
@@ -135,7 +132,7 @@ function commandsFor(groupId: string | undefined): AgentKitCommandGroupView | un
 
             <p class="mt-5 flex max-w-3xl gap-2 text-sm font-medium text-emerald-800 dark:text-emerald-300">
               <CheckCircle2 class="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-              <span>{t(`agentkit.step.${step.number}.check`)}</span>
+              <span set:html={renderInlineCode(t(`agentkit.step.${step.number}.check`))} ></span>
             </p>
           </div>
         </li>

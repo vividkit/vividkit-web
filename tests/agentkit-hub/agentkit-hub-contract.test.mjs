@@ -69,8 +69,13 @@ test('Continuity FAQ renders before Desktop App and answers entitlement confusio
   assert.match(en['agentkit.continuity.desktop.body'], /optional/i);
   assert.match(en['agentkit.continuity.kits.body'], /two kits/i);
   assert.match(en['agentkit.continuity.boundary.body'], /App waitlist|license-key/i);
-  assert.match(en['agentkit.continuity.entitlements.body'], /ak licenses/);
-  assert.ok(!source.includes('set:html'));
+  assert.match(en['agentkit.continuity.entitlements.body'], /`ak licenses`/);
+  assert.match(en['agentkit.continuity.kits.body'], /`ak kit init engineer`/);
+  assert.match(en['agentkit.continuity.kits.body'], /`ak kit init marketing`/);
+  assert.match(vi['agentkit.continuity.kits.body'], /`ak kit init engineer`/);
+  assert.match(vi['agentkit.continuity.kits.body'], /`ak kit init marketing`/);
+  assert.match(source, /renderInlineCode/);
+  assert.match(source, /set:html=\{renderInlineCode\(/);
 });
 
 test('Desktop App section keeps canonical links and rendered structure explicit', async () => {
@@ -85,7 +90,7 @@ test('Desktop App section keeps canonical links and rendered structure explicit'
   assert.match(source, /role="note"/);
   assert.match(source, /throw new Error\(`Unsupported AgentKit App fact state/);
   assert.match(source, /rel="noopener noreferrer"/);
-  assert.ok(!source.includes('set:html'));
+  assert.match(source, /renderInlineCode/);
 });
 
 test('legacy cleanup section renders target verification and fail-closed removal boundaries', async () => {
@@ -103,7 +108,7 @@ test('legacy cleanup section renders target verification and fail-closed removal
   assert.ok(!source.includes('remove-global-ck-source'));
   assert.ok(!source.includes('rm -rf'));
   assert.ok(!source.includes('data-agentkit-copy'));
-  assert.ok(!source.includes('set:html'));
+  assert.match(source, /renderInlineCode/);
 });
 
 test('the migration journey exposes exactly ten stable step ids', async () => {
@@ -165,7 +170,12 @@ test('stable authentication commands do not retain the removed auth namespace', 
   assert.ok(commands.every((fact) => !fact.command.startsWith('ak auth ')));
 });
 
-test('AgentKit components use escaped interpolation instead of set:html', async () => {
+test('AgentKit set:html prose always routes through escaping renderInlineCode', async () => {
+  const { renderInlineCode } = await import('../../src/components/guides/agentkit/inline-code.ts');
+  assert.match(renderInlineCode('Install `ak` now'), /<code[^>]*>ak<\/code>/);
+  assert.match(renderInlineCode('Avoid <script>alert(1)</script> and `ck`'), /&lt;script&gt;/);
+  assert.doesNotMatch(renderInlineCode('Avoid <script>alert(1)</script>'), /<script>/);
+
   const files = [
     'AgentKitGuide.astro',
     'agentkit/agentkit-hero-and-path-selector.astro',
@@ -181,6 +191,9 @@ test('AgentKit components use escaped interpolation instead of set:html', async 
 
   for (const file of files) {
     const source = await readFile(new URL(file, COMPONENT_ROOT), 'utf8');
-    assert.ok(!source.includes('set:html'), file);
+    if (!source.includes('set:html')) continue;
+    assert.match(source, /from ['"]\.\/inline-code['"]/, file);
+    assert.match(source, /set:html=\{renderInlineCode\(/, file);
+    assert.ok(!/set:html=\{(?!renderInlineCode\()/.test(source), file);
   }
 });
