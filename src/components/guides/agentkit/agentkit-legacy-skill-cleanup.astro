@@ -1,0 +1,134 @@
+---
+import { AlertTriangle, CheckCircle2, ExternalLink, Search, ShieldCheck } from 'lucide-astro';
+
+import type { Language } from '@/i18n';
+import { useTranslations } from '@/i18n/utils';
+import {
+  AGENTKIT_LEGACY_CLEANUP_COMMANDS,
+  AGENTKIT_LEGACY_CLEANUP_SOURCES,
+  AGENTKIT_LEGACY_PROVIDER_CLEANUP_POLICIES,
+} from '@/data/guides/agentkit/agentkit-legacy-cleanup-facts';
+import { getAgentKitSkillInvocation } from '@/data/guides/agentkit/agentkit-target-capabilities';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+function command(id: string) {
+  const fact = AGENTKIT_LEGACY_CLEANUP_COMMANDS.find((candidate) => candidate.id === id);
+  if (!fact) throw new Error(`Missing AgentKit legacy cleanup command: ${id}`);
+  return fact;
+}
+
+const discovery = command('discover-migrated-providers');
+const kitList = command('verify-agentkit-kits');
+const previews = [command('preview-local-ck-source'), command('preview-global-ck-source')];
+const targetCards = AGENTKIT_LEGACY_PROVIDER_CLEANUP_POLICIES.map((policy) => ({
+  ...policy,
+  invocation: getAgentKitSkillInvocation(policy.target, 'cook'),
+  title: policy.target === 'claude-code'
+    ? t('agentkit.cleanup.targets.claude.title')
+    : t('agentkit.cleanup.targets.codex.title'),
+  body: policy.target === 'claude-code'
+    ? t('agentkit.cleanup.targets.claude.body')
+    : t('agentkit.cleanup.targets.codex.body'),
+}));
+
+const codeClass = 'block max-w-full overflow-x-auto bg-slate-100 p-4 font-mono text-sm text-purple-600 dark:bg-slate-800/90 dark:text-purple-400';
+const inlineCodeClass = 'rounded-md border border-slate-200 bg-slate-100 px-2 py-1 font-mono text-sm text-slate-800 dark:border-slate-700 dark:bg-slate-800/90 dark:text-slate-100';
+---
+
+<section id="legacy-skill-cleanup" aria-labelledby="legacy-skill-cleanup-heading" class="pt-16">
+  <div class="max-w-3xl">
+    <p class="text-sm font-bold uppercase tracking-[0.12em] text-rose-700 dark:text-rose-300">
+      {t('agentkit.cleanup.eyebrow')}
+    </p>
+    <h2 id="legacy-skill-cleanup-heading" class="mt-2 font-heading text-3xl font-bold text-slate-950 text-balance dark:text-slate-50">
+      {t('agentkit.cleanup.heading')}
+    </h2>
+    <p class="mt-3 text-lg leading-relaxed text-slate-600 text-pretty dark:text-slate-300">
+      {t('agentkit.cleanup.intro')}
+    </p>
+  </div>
+
+  <div role="note" class="mt-6 flex max-w-4xl gap-3 rounded-2xl border border-amber-300 bg-amber-50 p-5 text-amber-950 dark:border-amber-800 dark:bg-amber-950/30 dark:text-amber-100">
+    <AlertTriangle class="mt-0.5 h-5 w-5 shrink-0" aria-hidden="true" />
+    <div>
+      <p class="font-bold">{t('agentkit.cleanup.boundary.title')}</p>
+      <p class="mt-1 text-sm leading-relaxed">{t('agentkit.cleanup.boundary.body')}</p>
+    </div>
+  </div>
+
+  <ol class="mt-8 grid max-w-4xl gap-5">
+    <li class="min-w-0 rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-950/40">
+      <div class="flex items-center gap-3">
+        <Search class="h-5 w-5 text-purple-600 dark:text-purple-400" aria-hidden="true" />
+        <h3 class="font-bold text-slate-950 dark:text-slate-50">1. {t('agentkit.cleanup.detect.title')}</h3>
+      </div>
+      <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{t('agentkit.cleanup.detect.body')}</p>
+      <code class={`${codeClass} mt-4 rounded-xl`}>{discovery.command}</code>
+    </li>
+
+    <li class="min-w-0 rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-950/40">
+      <div class="flex items-center gap-3">
+        <CheckCircle2 class="h-5 w-5 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
+        <h3 class="font-bold text-slate-950 dark:text-slate-50">2. {t('agentkit.cleanup.verify.title')}</h3>
+      </div>
+      <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{t('agentkit.cleanup.verify.body')}</p>
+      <code class={`${codeClass} mt-4 rounded-xl`}>{kitList.command}</code>
+      <div class="mt-4 grid gap-3 sm:grid-cols-2">
+        {targetCards.map((target) => (
+          <article class="min-w-0 rounded-xl border border-slate-200 p-4 dark:border-slate-700">
+            <h4 class="font-bold text-slate-950 dark:text-slate-50">{target.title}</h4>
+            <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{target.body}</p>
+            <p class="mt-3 flex flex-wrap items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+              <span class="font-semibold">{t('agentkit.cleanup.targets.verify')}:</span>
+              <code class={inlineCodeClass}>{target.invocation}</code>
+            </p>
+            <div class="mt-3 flex flex-wrap gap-2">
+              {target.legacyDestinationEvidence.map((path) => <code class={inlineCodeClass}>{path}</code>)}
+            </div>
+          </article>
+        ))}
+      </div>
+    </li>
+
+    <li class="min-w-0 rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-950/40">
+      <div class="flex items-center gap-3">
+        <ShieldCheck class="h-5 w-5 text-sky-600 dark:text-sky-400" aria-hidden="true" />
+        <h3 class="font-bold text-slate-950 dark:text-slate-50">3. {t('agentkit.cleanup.preview.title')}</h3>
+      </div>
+      <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{t('agentkit.cleanup.preview.body')}</p>
+      <div class="mt-4 space-y-3">
+        {previews.map((fact) => <code class={`${codeClass} rounded-xl`}>{fact.command}</code>)}
+      </div>
+    </li>
+
+    <li class="min-w-0 rounded-2xl border border-rose-200 bg-rose-50/60 p-5 dark:border-rose-900 dark:bg-rose-950/20">
+      <div class="flex items-center gap-3">
+        <AlertTriangle class="h-5 w-5 text-rose-700 dark:text-rose-300" aria-hidden="true" />
+        <h3 class="font-bold text-slate-950 dark:text-slate-50">4. {t('agentkit.cleanup.remove.title')}</h3>
+      </div>
+      <p class="mt-3 text-sm leading-relaxed text-slate-700 dark:text-slate-200">{t('agentkit.cleanup.remove.body')}</p>
+      <p class="mt-4 rounded-xl border border-rose-300 bg-rose-100 px-4 py-3 text-sm font-bold text-rose-900 dark:border-rose-800 dark:bg-rose-950/50 dark:text-rose-100">
+        {t('agentkit.cleanup.remove.manual')}
+      </p>
+    </li>
+  </ol>
+
+  <p class="mt-6 max-w-4xl text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+    {t('agentkit.cleanup.otherProviders')}
+  </p>
+
+  <div class="mt-6 flex flex-wrap gap-4">
+    {AGENTKIT_LEGACY_CLEANUP_SOURCES.map((source) => (
+      <a href={source.sourceUrl} target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center gap-2 rounded-lg px-1 text-sm font-semibold text-purple-700 hover:underline focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:text-purple-300">
+        {t(`agentkit.cleanup.sources.${source.id}`)}
+        <ExternalLink class="h-4 w-4" aria-hidden="true" />
+      </a>
+    ))}
+  </div>
+</section>

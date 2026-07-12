@@ -74,10 +74,29 @@ test('Desktop App section keeps canonical links and rendered structure explicit'
   assert.ok(!source.includes('set:html'));
 });
 
+test('legacy cleanup section renders target verification and fail-closed removal boundaries', async () => {
+  const guide = await readFile(new URL('AgentKitGuide.astro', COMPONENT_ROOT), 'utf8');
+  const source = await readFile(new URL('agentkit/agentkit-legacy-skill-cleanup.astro', COMPONENT_ROOT), 'utf8');
+
+  assert.match(guide, /<AgentKitLegacySkillCleanup lang=\{currentLang\} \/>/);
+  assert.match(source, /id="legacy-skill-cleanup"/);
+  assert.match(source, /getAgentKitSkillInvocation/);
+  assert.match(source, /AGENTKIT_LEGACY_CLEANUP_SOURCES\.map/);
+  assert.match(source, /role="note"/);
+  assert.match(source, /rel="noopener noreferrer"/);
+  assert.ok(source.indexOf('targetCards.map') < source.indexOf('previews.map'));
+  assert.ok(!source.includes('remove-local-ck-source'));
+  assert.ok(!source.includes('remove-global-ck-source'));
+  assert.ok(!source.includes('rm -rf'));
+  assert.ok(!source.includes('data-agentkit-copy'));
+  assert.ok(!source.includes('set:html'));
+});
+
 test('the migration journey exposes exactly ten stable step ids', async () => {
   const source = await readFile(new URL('agentkit/agentkit-migration-checklist.astro', COMPONENT_ROOT), 'utf8');
   const ids = [...source.matchAll(/id: 'step-(\d{2})-[^']+'/g)].map((match) => match[1]);
   assert.deepEqual(ids, ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10']);
+  assert.match(source, /cleanupStageOrder[\s\S]*'legacy-removal',[\s\S]*'collision-check'/);
 });
 
 test('canonical commands can render macOS, Linux, and Windows views', () => {
@@ -139,6 +158,7 @@ test('AgentKit components use escaped interpolation instead of set:html', async 
     'agentkit/agentkit-migration-checklist.astro',
     'agentkit/agentkit-command-mapping.astro',
     'agentkit/agentkit-kit-targets.astro',
+    'agentkit/agentkit-legacy-skill-cleanup.astro',
     'agentkit/agentkit-compatibility-and-troubleshooting.astro',
     'agentkit/agentkit-desktop-app-overview.astro',
     'agentkit/agentkit-platform-command-switcher.astro',

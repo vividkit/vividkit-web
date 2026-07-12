@@ -2,9 +2,13 @@
 
 ## Overview
 
-Release evidence for the bilingual ClaudeKit-to-AgentKit guide migration and its AgentKit Desktop App follow-up. See the [AgentKit Desktop App source record](./agentkit-desktop-app-source-record.md) for the unresolved public-availability signals and claim-level evidence.
+Release evidence for the bilingual ClaudeKit-to-AgentKit guide migration and its focused follow-ups. See the [AgentKit Desktop App source record](./agentkit-desktop-app-source-record.md) and [legacy provider-skill cleanup source record](./agentkit-legacy-skill-cleanup-source-record.md) for claim-level evidence and explicit source boundaries.
 
-## Automated Gates
+The original migration release baseline and the later cleanup addendum have separate verification scopes. Results below identify which evidence was rerun.
+
+## Migration Release Baseline
+
+These results predate the legacy provider-skill cleanup addendum:
 
 | Gate | Final result |
 |---|---|
@@ -16,9 +20,30 @@ Release evidence for the bilingual ClaudeKit-to-AgentKit guide migration and its
 | Generated artifact audit | 156 files pass |
 | Plan sync | 8/8 phases, 103/103 tasks |
 
-## Browser Matrix
+## Legacy Provider-Skill Cleanup Addendum
 
-System Chrome tested the final static build after the responsive fix:
+Run on 2026-07-12 against the final cleanup facts, component, generated artifacts, and rendered routes:
+
+```bash
+npm run build
+```
+
+| Gate | Result |
+|---|---|
+| AgentKit suite during prebuild | 52 tests: 50 pass + 2 expected postbuild-only skips |
+| Source content audit | 605 files pass |
+| Scoped AgentKit diagnostic delta | 0 new diagnostics |
+| Repository-wide Astro baseline | 271 existing errors, unchanged |
+| Static production build | 74 pages |
+| Generated artifact audit | 156 files pass |
+| Postbuild route and LLM checks | 5/5 pass |
+| Cleanup browser matrix | 8/8 pass |
+
+The contracts verify the three-source metadata set, four-stage safety order, destructive-command copy gating, Claude Code/Codex target boundary, Codex `source-command-*` destination evidence, source-link rendering, escaped component output, and LLM safety boundary.
+
+## Migration Browser Matrix
+
+System Chrome tested the migration baseline static build after the responsive fix. These results were not rerun for the cleanup addendum:
 
 | Surface | Coverage | Result |
 |---|---|---|
@@ -26,6 +51,7 @@ System Chrome tested the final static build after the responsive fix:
 | AgentKit hub VI | 375×812 + 1440×900; light/dark; JS on/off | 8/8 pass |
 | How AgentKit Works EN/VI | mobile overflow and legacy-prefix delta | 2/2 pass |
 | AgentKit Desktop App section EN/VI | 375×812 + 1440×900; light/dark; focus and overflow | 8/8 pass |
+| Legacy skill cleanup EN/VI | 375×812 + 1440×900; light/dark; focus, 44 px links, overflow, provider invocations, destructive-copy boundary | 8/8 pass |
 
 The final mobile document measured `375 / 375` scroll/client width; `#kit-targets` measured `343 / 343`. Desktop measured `1440 / 1440` and `848 / 848`. Each case rendered one H1 with the correct language.
 
@@ -38,6 +64,7 @@ The final mobile document measured `375 / 375` scroll/client width; `#kit-target
 - Canonical and EN/VI/x-default hreflang links are present.
 - EN/VI How AgentKit Works pages have no active `/ck:*` or `/ckm:*` invocations.
 - Desktop App source links, localized CLI links, 44 px CTAs, and visible keyboard focus pass in all eight representative cases.
+- Legacy cleanup renders four ordered steps with target invocations before previews, three official-source links, `/ak:cook` and `$ak:cook`, no recursive-delete command, and no destructive apply command in all eight representative cases.
 
 ## Baseline Exclusions
 
@@ -51,4 +78,4 @@ The first run found a 155 px mobile overflow in the AgentKit target grid. Intrin
 
 ## Unresolved Questions
 
-Desktop product-page and stable-changelog availability signals remain inconsistent; the guide surfaces both. Repository-wide type debt and shared layout baselines remain separate maintenance work.
+Desktop product-page and stable-changelog availability signals remain inconsistent; the guide surfaces both. Stable AgentKit documentation still does not establish automatic cleanup for legacy provider destinations. Repository-wide type debt and shared layout baselines remain separate maintenance work.

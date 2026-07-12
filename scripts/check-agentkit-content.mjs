@@ -27,7 +27,7 @@ export const CONTENT_DETECTORS = [
     id: 'legacy-cli-command',
     category: 'legacy-recommendation',
     modes: ['agentkit-active'],
-    pattern: /\bck\s+(?:new|init|update|setup|skills|agents|doctor|versions|config|uninstall)\b/gi,
+    pattern: /\bck\s+(?:new|init|update|setup|skills|agents|doctor|versions|config|migrate|uninstall)\b/gi,
   },
   {
     id: 'legacy-slash-command',
