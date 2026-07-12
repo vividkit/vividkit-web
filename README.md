@@ -4,13 +4,13 @@
 
 > 🚧 **VividKit Desktop App Coming Soon!** Join our [early access waiting list](https://vividkit.dev) to be notified when we launch.
 
-VividKit transforms AI coding commands into an intuitive GUI, making ClaudeKit accessible to developers of all skill levels. While our Desktop App is in development, explore our comprehensive guides on using ClaudeKit effectively with Claude Code CLI.
+VividKit turns AgentKit skills and workflows into an intuitive visual layer for Claude Code and Codex. While the VividKit Desktop App is in development, use these guides to install `ak`, migrate from `ck`, and keep Engineer and Marketing kits working.
 
 ## 🖥️ VividKit Desktop App (Coming Soon)
 
-**Visual Intelligence Layer for ClaudeKit CLI**
+**Visual Intelligence Layer for AgentKit**
 
-VividKit Desktop transforms the ClaudeKit CLI experience with persistent visual dashboards and GUI-driven interactions.
+VividKit Desktop complements the AgentKit CLI (`ak`) with persistent visual dashboards and GUI-driven interactions. It is separate from the optional AgentKit Desktop App on agentkit.best.
 
 ### Key Features (MVP)
 

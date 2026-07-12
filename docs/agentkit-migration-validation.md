@@ -4,6 +4,18 @@
 
 Release evidence for the bilingual ClaudeKit-to-AgentKit guide migration and its focused follow-ups. See the [AgentKit Desktop App source record](./agentkit-desktop-app-source-record.md), [legacy provider-skill cleanup source record](./agentkit-legacy-skill-cleanup-source-record.md), and [“What Is ClaudeKit?” source record](./agentkit-what-is-claudekit-source-record.md) for claim-level evidence and explicit source boundaries.
 
+## 2026-07-13 accuracy + continuity follow-up
+
+Verified against stable `ak 2.1.0` (temp install) and [agentkit.best/docs](https://agentkit.best/docs):
+
+- `ak kit list` is **not** an alias; canonical command is `ak kit list-kits`
+- `ak migrate` / `ak kit refresh` are stable with `--dry-run` / `--yes` (not `--apply`)
+- CLI auth: email/API key open CLI sessions; `--license-key` is Desktop App device activation only
+- Continuity FAQ (`#continuity`) renders **before** `#desktop-app` and answers Desktop optional / two kits / App license ≠ kit entitlement
+- Desktop App primary CTA is “Continue with the ak CLI”; waitlist is secondary
+
+Gates: `npm run test:agentkit-content` 58/58 (+1 postbuild skip); `npm run check:agentkit-content` 612 files; `npm run check:agentkit-types` 0 scoped AgentKit delta.
+
 The original migration release baseline and the later cleanup addendum have separate verification scopes. Results below identify which evidence was rerun.
 
 ## Migration Release Baseline

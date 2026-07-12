@@ -43,10 +43,15 @@ const codexTarget = targets.find((target) => target.target === 'codex')!;
   </div>
   <TerminalSnippet code={'ak --version\nak doctor'} label="shell · read-only checks" />
   <div class="grid gap-3 md:grid-cols-3">
-    <div class="rounded-2xl border border-slate-200 p-4 dark:border-slate-700"><h3 class="font-semibold text-slate-900 dark:text-white">License key</h3><p class="mt-2 text-sm text-slate-600 dark:text-slate-300">{isVi ? 'Khuyến nghị cho paid seat. Nhập key ở terminal riêng; không commit hoặc paste vào tài liệu.' : 'Recommended for a paid seat. Enter the key in a private terminal; never commit or paste it into docs.'}</p></div>
-    <div class="rounded-2xl border border-slate-200 p-4 dark:border-slate-700"><h3 class="font-semibold text-slate-900 dark:text-white">Email OTP</h3><p class="mt-2 text-sm text-slate-600 dark:text-slate-300"><code class="rounded-md border border-slate-200 bg-slate-100 px-1 text-slate-800 dark:border-slate-700 dark:bg-slate-800/90 dark:text-slate-100">ak login --email you@example.com</code></p></div>
-    <div class="rounded-2xl border border-slate-200 p-4 dark:border-slate-700"><h3 class="font-semibold text-slate-900 dark:text-white">API key</h3><p class="mt-2 text-sm text-slate-600 dark:text-slate-300">{isVi ? 'Dành cho CI. Inject từ secret store, mask logs, không chạy secrets trên fork PR.' : 'For CI. Inject from a secret store, mask logs, and do not expose secrets to fork PRs.'}</p></div>
+    <div class="rounded-2xl border border-slate-200 p-4 dark:border-slate-700"><h3 class="font-semibold text-slate-900 dark:text-white">Email OTP</h3><p class="mt-2 text-sm text-slate-600 dark:text-slate-300">{isVi ? 'Khuyến nghị cho máy local. Mở CLI session:' : 'Recommended for local machines. Opens a CLI session:'} <code class="rounded-md border border-slate-200 bg-slate-100 px-1 text-slate-800 dark:border-slate-700 dark:bg-slate-800/90 dark:text-slate-100">ak login --email you@example.com</code></p></div>
+    <div class="rounded-2xl border border-slate-200 p-4 dark:border-slate-700"><h3 class="font-semibold text-slate-900 dark:text-white">API key</h3><p class="mt-2 text-sm text-slate-600 dark:text-slate-300">{isVi ? 'Khuyến nghị cho CI. Inject từ secret store, mask logs, không chạy secrets trên fork PR.' : 'Recommended for CI. Inject from a secret store, mask logs, and do not expose secrets to fork PRs.'}</p></div>
+    <div class="rounded-2xl border border-amber-200 bg-amber-50/60 p-4 dark:border-amber-800/60 dark:bg-amber-950/20"><h3 class="font-semibold text-slate-900 dark:text-white">License key</h3><p class="mt-2 text-sm text-slate-600 dark:text-slate-300">{isVi ? 'Chỉ kích hoạt thiết bị Desktop App — không mở CLI session. Không dùng thay email/API key khi cài kit.' : 'Desktop App device activation only — does not open a CLI session. Do not use it instead of email/API key when installing kits.'}</p></div>
   </div>
+  <aside class="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm leading-6 text-slate-700 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-300">
+    {isVi
+      ? 'Nếu domain sản phẩm bị chặn, official docs ghi fallback installer tại releases.agentkit.best — vẫn phải giữ verification chain, không bypass checksum.'
+      : 'If the product domain is blocked, official docs document a releases.agentkit.best installer fallback — keep the verification chain; never bypass checksums.'}
+  </aside>
   <TerminalSnippet code={'ak whoami\nak licenses'} label="shell · entitlement checks" />
 </section>
 

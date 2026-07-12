@@ -112,7 +112,7 @@ Remote installers, credential-bearing commands, global writes, and destructive r
 
 - [x] CLI, skill, target, credential, and migration facts have typed contracts.
 - [x] Stable selectors exclude `ak migrate` and `ak kit refresh <kit>`.
-- [x] Those two commands remain labeled as local `1.2.0-beta.1` observations.
+- [x] `ak migrate` and `ak kit refresh` are promoted to stable facts verified against `ak 2.1.0`.
 - [x] Core skill facts carry reproducible SHA-256 values and target-native invocations.
 - [x] The latest installer is not described as a pinned verified artifact when required integrity evidence is absent.
 - [x] Desktop App product-page and stable-changelog claims keep separate channel/status metadata.
@@ -255,6 +255,6 @@ AgentKit source metadata + installed-kit snapshot
 
 ## Unresolved Questions
 
-1. What upstream stable release and evidence threshold will authorize `ak migrate` and `ak kit refresh` promotion?
+1. What official source will document automatic CK purchase → AK entitlement transfer, if any?
 2. What deprecation window should apply to routes classified as `legacy-slug`?
 3. Which migration-success events can be measured without collecting command content or credentials?

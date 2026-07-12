@@ -7,6 +7,7 @@ import { AGENTKIT_SKILL_FACTS } from '@/data/guides/agentkit/agentkit-skill-fact
 import { AGENTKIT_TARGET_CAPABILITIES } from '@/data/guides/agentkit/agentkit-target-capabilities';
 import AgentKitCommandMapping from './agentkit/agentkit-command-mapping.astro';
 import AgentKitCompatibilityAndTroubleshooting from './agentkit/agentkit-compatibility-and-troubleshooting.astro';
+import AgentKitContinuityFaq from './agentkit/agentkit-continuity-faq.astro';
 import AgentKitDesktopAppOverview from './agentkit/agentkit-desktop-app-overview.astro';
 import AgentKitHeroAndPathSelector from './agentkit/agentkit-hero-and-path-selector.astro';
 import AgentKitKitTargets from './agentkit/agentkit-kit-targets.astro';
@@ -24,6 +25,7 @@ const mappingRows = AGENTKIT_MIGRATION_MAPPING_BY_LOCALE[currentLang];
 
 <article class="mt-6 pb-8">
   <AgentKitHeroAndPathSelector lang={currentLang} />
+  <AgentKitContinuityFaq lang={currentLang} />
   <AgentKitMigrationChecklist
     lang={currentLang}
     cliFacts={AGENTKIT_CLI_FACTS}

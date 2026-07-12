@@ -28,7 +28,7 @@ test('ClaudeKit explainer facts preserve official successor and source boundarie
   assert.equal(WHAT_IS_CLAUDEKIT_FACTS.modelSubscriptionIncluded, false);
   assert.deepEqual(WHAT_IS_CLAUDEKIT_FACTS.currentTargets, ['claude-code', 'codex']);
   assert.deepEqual(WHAT_IS_CLAUDEKIT_SOURCES.map(({ channel }) => channel), ['stable', 'legacy', 'legacy']);
-  assert.ok(WHAT_IS_CLAUDEKIT_SOURCES.every(({ verifiedAt }) => verifiedAt === '2026-07-12'));
+  assert.ok(WHAT_IS_CLAUDEKIT_SOURCES.every(({ verifiedAt }) => verifiedAt === '2026-07-13'));
   assert.deepEqual(WHAT_IS_CLAUDEKIT_SCOPE_FACTS.map(({ path }) => path), ['.claude/', '~/.claude/']);
 });
 

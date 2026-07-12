@@ -57,7 +57,7 @@ if (doctor) verifyCommands.push(...viewsForPlatforms(doctor));
 if (verifyCommands.length > 0) commandGroups.push({ id: 'verify', commands: verifyCommands });
 
 for (const [id, factIds] of [
-  ['auth', ['login-license', 'login-email', 'login-api-key', 'whoami', 'licenses']],
+  ['auth', ['login-email', 'login-api-key', 'login-license', 'whoami', 'licenses']],
 ] as const) {
   const commands = commonPlatformViews([...factIds]);
   if (commands.length > 0) commandGroups.push({ id, commands });

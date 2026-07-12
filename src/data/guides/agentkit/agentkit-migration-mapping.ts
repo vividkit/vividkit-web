@@ -27,25 +27,34 @@ const EXECUTABLE_MAPPING: readonly ExecutableMapping[] = [
   { id: 'uninstall', category: 'binary-command', legacy: 'ck uninstall', agentkit: 'ak uninstall', status: 'replace' },
   { id: 'engineer-prefix', category: 'slash-skill', legacy: '/ck:*', agentkit: '/ak:*', status: 'replace' },
   { id: 'marketing-prefix', category: 'slash-skill', legacy: '/ckm:*', agentkit: '/ak:*', status: 'replace' },
-  { id: 'authentication', category: 'auth-migration', legacy: 'GitHub PAT authentication', agentkit: 'ak login', status: 'replace' },
+  { id: 'authentication', category: 'auth-migration', legacy: 'GitHub PAT authentication', agentkit: 'ak login --email <account-email>', status: 'replace' },
   { id: 'kit-lifecycle', category: 'kit-lifecycle', legacy: '—', agentkit: 'ak kit init <kit> --target <agent> --global', status: 'new-capability' },
+  { id: 'migrate', category: 'kit-lifecycle', legacy: '—', agentkit: 'ak migrate --from=ck', status: 'new-capability' },
+  { id: 'self-update', category: 'binary-command', legacy: '—', agentkit: 'ak self-update', status: 'new-capability' },
+  { id: 'gui', category: 'binary-command', legacy: '—', agentkit: 'ak gui', status: 'new-capability' },
 ];
 
 const SUMMARIES: Record<MappingLocale, Record<string, string>> = {
   en: {
     install: 'Replace the deprecated npm package with the native installer.',
-    authentication: 'Use one of the documented license, email OTP, or API-key login methods.',
+    authentication: 'Open a CLI session with email OTP or an API key. License keys activate the Desktop App only.',
     'engineer-prefix': 'Engineer skills move to the unified AgentKit namespace.',
     'marketing-prefix': 'Marketing skills move to the unified AgentKit namespace.',
     'kit-lifecycle': 'Install an entitled kit for a specific coding-agent target.',
+    migrate: 'Preview, then apply a ClaudeKit-to-AgentKit migration. Not a provider-conversion command.',
+    'self-update': 'Update the signed ak binary itself.',
+    gui: 'Launch the optional Desktop App shell when packaged for your platform.',
     default: 'Use the same command name through the AgentKit binary.',
   },
   vi: {
     install: 'Thay gói npm đã ngừng dùng bằng trình cài native.',
-    authentication: 'Dùng license, email OTP hoặc API key theo tài liệu chính thức.',
+    authentication: 'Mở CLI session bằng email OTP hoặc API key. License key chỉ kích hoạt Desktop App.',
     'engineer-prefix': 'Skill Engineer chuyển sang namespace AgentKit thống nhất.',
     'marketing-prefix': 'Skill Marketing chuyển sang namespace AgentKit thống nhất.',
     'kit-lifecycle': 'Cài kit được cấp quyền cho đúng coding-agent target.',
+    migrate: 'Xem trước rồi áp dụng migration ClaudeKit sang AgentKit. Không phải lệnh chuyển provider.',
+    'self-update': 'Cập nhật chính binary ak đã ký.',
+    gui: 'Mở Desktop App shell tùy chọn khi binary có GUI cho nền tảng của bạn.',
     default: 'Giữ tên lệnh và chuyển sang binary AgentKit.',
   },
 };

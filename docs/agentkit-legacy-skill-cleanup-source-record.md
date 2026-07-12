@@ -14,7 +14,7 @@ The guide deliberately separates three operations:
 
 | Source | Status in this guide | Verified claims | Explicit limit |
 |---|---|---|---|
-| [AgentKit documentation](https://agentkit.best/docs) | Current stable AgentKit guidance | `ak kit list`; kit installation for Claude Code and Codex; target-native invocation; legacy CLI deprecation and binary migration guidance | Does not document stable `ak migrate` or automatic removal of legacy provider copies |
+| [AgentKit documentation](https://agentkit.best/docs) | Current stable AgentKit guidance | `ak kit list-kits`; kit installation for Claude Code and Codex; target-native invocation; legacy CLI deprecation and binary migration guidance | Documents `ak migrate`; does not document automatic removal of every legacy provider copy |
 | [ClaudeKit `ck migrate`](https://docs.claudekit.cc/docs/cli/migrate/) | Deprecated first-party CLI reference | `ck migrate --dry-run` previews without writes; detects providers; reports source/destination and `WHERE / WHAT / NEXT`; Codex command conversion uses `source-command-*` skill destinations | Describes migration/reconciliation, not a bulk removal workflow for every destination previously written |
 | [ClaudeKit `ck uninstall`](https://docs.claudekit.cc/docs/cli/uninstall/) | Deprecated first-party CLI reference | Local/global scope, dry-run preview, ownership tracking, scoped backup, and preservation of detected customizations | Does not guarantee its legacy ownership model distinguishes AgentKit files installed later into the same `.claude` paths; apply commands are therefore not rendered |
 
@@ -45,7 +45,7 @@ legacy dry-run inventory
 ```
 
 - `ck migrate --dry-run` is inventory evidence only. Do not apply another migration as cleanup.
-- `ak kit list` confirms installed kits, but a fresh-session skill invocation is the functional gate.
+- `ak kit list-kits` confirms installed kits, but a fresh-session skill invocation is the functional gate.
 - `ck uninstall --local --dry-run` and `ck uninstall --global --dry-run` preview separate source scopes.
 - Destructive uninstall apply commands are retained only as source-record facts and are not rendered in the guide.
 - A successful AgentKit invocation before cleanup does not prove shared `.claude` candidates are safe to delete; every ambiguous or co-located candidate stays.

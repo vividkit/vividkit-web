@@ -47,7 +47,8 @@ export const AGENTKIT_SOURCE_SNAPSHOT = {
   channel: 'stable',
   sourceUrl: 'https://agentkit.best/docs',
   changelogUrl: 'https://agentkit.best/changelog',
-  verifiedAt: '2026-07-12',
+  verifiedAt: '2026-07-13',
+  releaseVersion: '2.1.0',
   localBetaVersion: '1.2.0-beta.1',
 } as const satisfies AgentKitSourceMetadata & {
   changelogUrl: string;
@@ -100,17 +101,9 @@ function credentialTransport(
 
 export const AGENTKIT_CREDENTIAL_TRANSPORTS = [
   credentialTransport({
-    id: 'license-key',
-    command: 'ak login --license-key <license-key>',
-    officialMethod: 'Paid-seat device activation with an optional device name.',
-    exposureNotes: 'A command-line argument can be retained by shell history or visible in a process listing.',
-    ciHandling: 'Not the recommended CI method; prefer the documented non-interactive API-key flow.',
-    ...CREDENTIAL_SAFETY,
-  }),
-  credentialTransport({
     id: 'email-otp',
     command: 'ak login --email <account-email>',
-    officialMethod: 'Interactive email one-time-code sign-in.',
+    officialMethod: 'Interactive email one-time-code sign-in for a CLI registry session.',
     exposureNotes: 'The email address is visible in the command; the short-lived OTP is entered interactively.',
     ciHandling: 'Interactive OTP is unsuitable for unattended CI.',
     ...CREDENTIAL_SAFETY,
@@ -118,9 +111,17 @@ export const AGENTKIT_CREDENTIAL_TRANSPORTS = [
   credentialTransport({
     id: 'api-key',
     command: 'ak login --api-key <api-key> --no-interactive',
-    officialMethod: 'User API key for non-interactive and CI use.',
+    officialMethod: 'User API key for a non-interactive CLI registry session and CI use.',
     exposureNotes: 'A command-line argument can be retained by shell history, job logs, or process inspection.',
     ciHandling: 'Inject through a masked CI secret and expand only in the trusted job; never print the command.',
+    ...CREDENTIAL_SAFETY,
+  }),
+  credentialTransport({
+    id: 'license-key',
+    command: 'ak login --license-key <license-key>',
+    officialMethod: 'Desktop App device activation only — does not open a CLI registry session.',
+    exposureNotes: 'A command-line argument can be retained by shell history or visible in a process listing.',
+    ciHandling: 'Not a CLI authentication method; use the documented non-interactive API-key flow for CI.',
     ...CREDENTIAL_SAFETY,
   }),
 ] as const satisfies readonly CredentialTransport[];

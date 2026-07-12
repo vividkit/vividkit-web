@@ -1,9 +1,9 @@
 import type { Language } from '@/i18n';
 
 const NOTE_TEXT: Record<string, [string, string]> = {
-  '--license-key': ['Activate a paid seat. Prefer interactive entry on shared terminals.', 'Kích hoạt paid seat. Ưu tiên nhập tương tác trên terminal dùng chung.'],
-  '--email': ['Send an OTP to the supplied email address.', 'Gửi OTP đến địa chỉ email được cung cấp.'],
-  '--api-key': ['Use a user API key for CI or non-interactive sessions.', 'Dùng user API key cho CI hoặc phiên non-interactive.'],
+  '--license-key': ['Activate the Desktop App on this device. Does not open a CLI session.', 'Kích hoạt Desktop App trên thiết bị này. Không mở CLI session.'],
+  '--email': ['Open a CLI session with an email OTP (recommended locally).', 'Mở CLI session bằng email OTP (khuyên dùng trên máy local).'],
+  '--api-key': ['Open a CLI session with a user API key (recommended for CI).', 'Mở CLI session bằng user API key (khuyên dùng cho CI).'],
   '--no-interactive': ['Disable prompts for CI-safe execution.', 'Tắt prompt để chạy an toàn trong CI.'],
   '--check': ['Inspect without applying a change.', 'Chỉ kiểm tra, không áp dụng thay đổi.'],
   '--json': ['Emit machine-readable output.', 'Xuất dữ liệu dạng máy đọc được.'],

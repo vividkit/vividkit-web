@@ -100,7 +100,7 @@ The target-capability module encodes these differences. The skill-facts module s
 Every AgentKit CLI fact carries a `channel`. UI intended for current use selects stable facts explicitly. As of the verified July 12 snapshot:
 
 - Stable facts drive installation, authentication, project lifecycle, kit lifecycle, diagnostics, audit, and GUI guidance.
-- `ak migrate` and `ak kit refresh <kit>` are recorded as local `1.2.0-beta.1` observations with preview/apply behavior; they are excluded from stable selectors and must not be presented as stable.
+- `ak migrate` and `ak kit refresh <kit>` are stable facts verified against `ak 2.1.0` and official docs (`--dry-run` / `--yes`, not `--apply`). Kit discovery uses `ak kit list-kits`.
 - Beta command cards remain discoverable with `isBeta` metadata and must be mirrored by the Beta Preview section.
 - Promotion to stable requires removing beta metadata across commands, workflows, flowcharts, and bilingual mirrors only after upstream stable verification.
 

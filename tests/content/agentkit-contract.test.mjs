@@ -42,20 +42,25 @@ const REQUIRED_STABLE_CLI_IDS = [
   'versions',
   'config',
   'uninstall',
-  'login-license',
   'login-email',
   'login-api-key',
+  'login-license',
   'whoami',
   'licenses',
   'logout',
   'kit-init',
   'kit-install',
   'kit-list',
+  'kit-refresh',
+  'migrate',
   'self-update',
+  'audit',
+  'gui',
 ];
 
 test('source snapshot and every CLI fact carry stable audit metadata', () => {
-  assert.equal(AGENTKIT_SOURCE_SNAPSHOT.verifiedAt, '2026-07-12');
+  assert.equal(AGENTKIT_SOURCE_SNAPSHOT.verifiedAt, '2026-07-13');
+  assert.equal(AGENTKIT_SOURCE_SNAPSHOT.releaseVersion, '2.1.0');
   assert.match(AGENTKIT_SOURCE_SNAPSHOT.sourceUrl, /^https:\/\//);
 
   for (const fact of AGENTKIT_CLI_FACTS) {
@@ -67,18 +72,25 @@ test('source snapshot and every CLI fact carry stable audit metadata', () => {
   }
 });
 
-test('stable CLI selector covers documented commands and excludes local beta additions', () => {
+test('stable CLI selector covers documented commands including migrate and refresh', () => {
   const stableFacts = getStableAgentKitCliFacts();
   const stableIds = new Set(stableFacts.map(({ id }) => id));
 
   for (const id of REQUIRED_STABLE_CLI_IDS) assert.ok(stableIds.has(id), `missing ${id}`);
   assert.ok(stableFacts.every(({ channel }) => channel === 'stable'));
-  assert.ok(!stableIds.has('migrate'));
-  assert.ok(!stableIds.has('kit-refresh'));
+  assert.equal(AGENTKIT_CLI_FACTS.filter(({ channel }) => channel === 'beta').length, 0);
 
-  const betaFacts = AGENTKIT_CLI_FACTS.filter(({ channel }) => channel === 'beta');
-  assert.deepEqual(betaFacts.map(({ id }) => id).sort(), ['kit-refresh', 'migrate']);
-  assert.ok(betaFacts.every(({ releaseVersion }) => releaseVersion === '1.2.0-beta.1'));
+  const kitList = AGENTKIT_CLI_FACTS.find(({ id }) => id === 'kit-list');
+  assert.equal(kitList?.command, 'ak kit list-kits');
+
+  const migrate = AGENTKIT_CLI_FACTS.find(({ id }) => id === 'migrate');
+  assert.equal(migrate?.command, 'ak migrate --from=ck');
+  assert.ok(migrate?.flags.includes('--dry-run'));
+  assert.ok(!migrate?.flags.includes('--apply'));
+
+  const refresh = AGENTKIT_CLI_FACTS.find(({ id }) => id === 'kit-refresh');
+  assert.equal(refresh?.command, 'ak kit refresh <kit> --yes');
+  assert.ok(!refresh?.flags.includes('--apply'));
 });
 
 test('installer integrity policy never overclaims an unpinned latest artifact', () => {
@@ -99,6 +111,11 @@ test('credential transports encode the three official login methods and lifecycl
     assert.ok(transport.exposureNotes);
     assert.ok(transport.ciHandling);
   }
+
+  const license = AGENTKIT_CREDENTIAL_TRANSPORTS.find(({ id }) => id === 'license-key');
+  assert.match(license.officialMethod, /Desktop App/i);
+  const email = AGENTKIT_CREDENTIAL_TRANSPORTS.find(({ id }) => id === 'email-otp');
+  assert.match(email.officialMethod, /CLI registry session/i);
 });
 
 test('EN and VI migration mappings have identical executable structure', () => {
@@ -121,7 +138,7 @@ test('EN and VI migration mappings have identical executable structure', () => {
   assert.equal(commandPairs.get('ck init'), 'ak init');
   assert.equal(commandPairs.get('/ck:*'), '/ak:*');
   assert.equal(commandPairs.get('/ckm:*'), '/ak:*');
-  assert.equal(commandPairs.get('GitHub PAT authentication'), 'ak login');
+  assert.equal(commandPairs.get('GitHub PAT authentication'), 'ak login --email <account-email>');
 });
 
 test('migration operations stage safe preflight before non-copyable destructive removal', () => {
@@ -146,7 +163,7 @@ test('migration operations stage safe preflight before non-copyable destructive 
   for (const fact of AGENTKIT_MIGRATION_OPERATIONAL_FACTS) {
     assert.equal(fact.channel, 'stable');
     assert.match(fact.sourceUrl, /^https:\/\//);
-    assert.equal(fact.verifiedAt, '2026-07-12');
+    assert.equal(fact.verifiedAt, '2026-07-13');
   }
 });
 
@@ -159,7 +176,7 @@ test('legacy skill cleanup gates provider removal behind inventory and verificat
       ['claudekit-uninstall', 'legacy'],
     ],
   );
-  assert.ok(AGENTKIT_LEGACY_CLEANUP_SOURCES.every(({ verifiedAt }) => verifiedAt === '2026-07-12'));
+  assert.ok(AGENTKIT_LEGACY_CLEANUP_SOURCES.every(({ verifiedAt }) => verifiedAt === '2026-07-13'));
 
   const stageOrder = [...new Set(AGENTKIT_LEGACY_CLEANUP_COMMANDS.map(({ stage }) => stage))];
   assert.deepEqual(stageOrder, [
@@ -169,7 +186,7 @@ test('legacy skill cleanup gates provider removal behind inventory and verificat
     'remove-ck-source',
   ]);
   assert.equal(AGENTKIT_LEGACY_CLEANUP_COMMANDS[0].command, 'ck migrate --dry-run');
-  assert.equal(AGENTKIT_LEGACY_CLEANUP_COMMANDS[1].command, 'ak kit list');
+  assert.equal(AGENTKIT_LEGACY_CLEANUP_COMMANDS[1].command, 'ak kit list-kits');
   assert.ok(AGENTKIT_LEGACY_CLEANUP_COMMANDS
     .filter(({ stage }) => stage === 'remove-ck-source')
     .every(({ safety, copyable, renderPolicy }) => (

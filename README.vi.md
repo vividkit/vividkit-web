@@ -6,13 +6,13 @@
 
 > 🇬🇧 English: see [README.md](./README.md)
 
-VividKit biến các lệnh AI coding thành GUI trực quan, giúp ClaudeKit dễ tiếp cận với dev ở mọi cấp độ. Trong khi Desktop App đang phát triển, bạn có thể khám phá bộ guides của tụi mình về cách dùng ClaudeKit hiệu quả với Claude Code CLI.
+VividKit biến AgentKit skills và workflows thành lớp visual trực quan cho Claude Code và Codex. Trong khi VividKit Desktop App đang phát triển, dùng các guides này để cài `ak`, migrate từ `ck`, và giữ Engineer cùng Marketing hoạt động.
 
 ## 🖥️ VividKit Desktop App (Sắp ra mắt)
 
-**Lớp Visual Intelligence cho ClaudeKit CLI**
+**Lớp Visual Intelligence cho AgentKit**
 
-VividKit Desktop nâng cấp trải nghiệm ClaudeKit CLI với dashboard trực quan persistent và tương tác qua GUI.
+VividKit Desktop bổ sung cho AgentKit CLI (`ak`) bằng dashboard trực quan persistent và tương tác qua GUI. Nó tách biệt với AgentKit Desktop App tùy chọn trên agentkit.best.
 
 ### Tính năng chính (MVP)
 

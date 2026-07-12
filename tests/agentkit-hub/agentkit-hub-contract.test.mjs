@@ -59,6 +59,20 @@ test('Desktop App facts preserve unresolved official availability boundaries', (
   assert.match(AGENTKIT_APP_FACTS.ctaUrl, /^https:\/\/agentkit\.best\/agentkit-app#pricing$/);
 });
 
+test('Continuity FAQ renders before Desktop App and answers entitlement confusion', async () => {
+  const guide = await readFile(new URL('AgentKitGuide.astro', COMPONENT_ROOT), 'utf8');
+  const source = await readFile(new URL('agentkit/agentkit-continuity-faq.astro', COMPONENT_ROOT), 'utf8');
+
+  assert.match(guide, /<AgentKitContinuityFaq lang=\{currentLang\} \/>/);
+  assert.ok(guide.indexOf('AgentKitContinuityFaq') < guide.indexOf('AgentKitDesktopAppOverview'));
+  assert.match(source, /id="continuity"/);
+  assert.match(en['agentkit.continuity.desktop.body'], /optional/i);
+  assert.match(en['agentkit.continuity.kits.body'], /two kits/i);
+  assert.match(en['agentkit.continuity.boundary.body'], /App waitlist|license-key/i);
+  assert.match(en['agentkit.continuity.entitlements.body'], /ak licenses/);
+  assert.ok(!source.includes('set:html'));
+});
+
 test('Desktop App section keeps canonical links and rendered structure explicit', async () => {
   const guide = await readFile(new URL('AgentKitGuide.astro', COMPONENT_ROOT), 'utf8');
   const source = await readFile(new URL('agentkit/agentkit-desktop-app-overview.astro', COMPONENT_ROOT), 'utf8');
@@ -146,7 +160,7 @@ test('legacy mappings resolve explicitly and Codex never uses Claude slash synta
 });
 
 test('stable authentication commands do not retain the removed auth namespace', () => {
-  const commands = AGENTKIT_CLI_FACTS.filter((fact) => ['login-license', 'login-email', 'login-api-key', 'whoami', 'licenses'].includes(fact.id));
+  const commands = AGENTKIT_CLI_FACTS.filter((fact) => ['login-email', 'login-api-key', 'login-license', 'whoami', 'licenses'].includes(fact.id));
   assert.ok(commands.length >= 5);
   assert.ok(commands.every((fact) => !fact.command.startsWith('ak auth ')));
 });
@@ -161,6 +175,7 @@ test('AgentKit components use escaped interpolation instead of set:html', async 
     'agentkit/agentkit-legacy-skill-cleanup.astro',
     'agentkit/agentkit-compatibility-and-troubleshooting.astro',
     'agentkit/agentkit-desktop-app-overview.astro',
+    'agentkit/agentkit-continuity-faq.astro',
     'agentkit/agentkit-platform-command-switcher.astro',
   ];
 

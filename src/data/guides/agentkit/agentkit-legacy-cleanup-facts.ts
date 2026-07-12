@@ -70,7 +70,7 @@ export const AGENTKIT_LEGACY_CLEANUP_COMMANDS = [
   {
     id: 'verify-agentkit-kits',
     stage: 'verify-agentkit',
-    command: 'ak kit list',
+    command: 'ak kit list-kits',
     scope: 'all-detected-providers',
     safety: 'read-only',
     copyable: true,

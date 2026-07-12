@@ -18,7 +18,7 @@ export interface CliCommand {
 }
 
 const SOURCE_URL = 'https://agentkit.best/docs';
-const VERIFIED_AT = '2026-07-12';
+const VERIFIED_AT = '2026-07-13';
 
 export const cliCommandsCheatsheet: CliCommand[] = [
   {
@@ -48,10 +48,10 @@ export const cliCommandsCheatsheet: CliCommand[] = [
   {
     id: 'login',
     name: 'ak login',
-    description: 'Authenticate by license key, email OTP, or user API key.',
-    descriptionVi: 'Đăng nhập bằng license key, email OTP hoặc user API key.',
+    description: 'Open a CLI session with email OTP or API key. Use --license-key only for Desktop App device activation.',
+    descriptionVi: 'Mở CLI session bằng email OTP hoặc API key. Chỉ dùng --license-key để kích hoạt thiết bị Desktop App.',
     category: 'setup', channel: 'stable', sourceUrl: SOURCE_URL, verifiedAt: VERIFIED_AT, mutatesDisk: true,
-    keyFlags: ['--license-key <key>', '--email <email>', '--api-key <key>', '--no-interactive'],
+    keyFlags: ['--email <email>', '--api-key <key>', '--license-key <key>', '--no-interactive'],
     example: 'ak login --email you@example.com',
   },
   {

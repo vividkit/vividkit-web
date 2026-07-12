@@ -54,6 +54,14 @@ if (concepts.some(({ id }) => !factConcepts.has(id as typeof WHAT_IS_CLAUDEKIT_F
     </div>
   </div>
 
+  <p class="mt-4 max-w-4xl rounded-2xl border border-emerald-200 bg-emerald-50/70 px-5 py-4 text-sm leading-relaxed text-emerald-950 dark:border-emerald-800/60 dark:bg-emerald-950/20 dark:text-emerald-100">
+    {t('what_is_ck.continuity.strip')}
+    {' '}
+    <a href={`${prefix}/guides/agentkit#continuity`} class="font-semibold underline decoration-emerald-400 underline-offset-4 hover:text-emerald-800 focus-visible:ring-2 focus-visible:ring-emerald-600 dark:hover:text-emerald-50">
+      {t('what_is_ck.hero.migrateCta')}
+    </a>
+  </p>
+
   <div class="mt-6 flex flex-wrap gap-3">
     <a href={`${prefix}/guides/agentkit`} class="inline-flex min-h-11 items-center gap-2 rounded-xl bg-violet-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-violet-700 focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 active:bg-violet-800">
       {t('what_is_ck.hero.migrateCta')}
