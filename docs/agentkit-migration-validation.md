@@ -64,7 +64,7 @@ The interaction row was verified separately in system Chrome; the matrix runner 
 Closed migration-owned issues:
 
 - Replaced near-black light-theme step tiles with purple-tinted semantic surfaces; retained high-contrast dark-theme tiles.
-- Replaced the inverted light-theme “continue” panel with theme-native slate surfaces.
+- Replaced the inverted “continue” panel with paired purple–slate gradient surfaces for light and dark themes.
 - Removed mobile overflow from AgentKit CLI install cards.
 - Added sticky-header offsets, visible focus/hover/active states, and clear disabled-copy styling.
 - Restored Vietnamese navigation/table labels and readable mobile migration-table widths.

@@ -67,13 +67,13 @@ const inlineCodeClass = 'rounded-md border border-slate-200 bg-slate-100 px-2 py
     })}
   </div>
 
-  <nav aria-labelledby="agentkit-next-guides" class="mt-10 rounded-2xl border border-slate-200 bg-slate-50 p-6 text-slate-900 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100 md:p-8">
+  <nav aria-labelledby="agentkit-next-guides" class="mt-10 rounded-2xl border border-purple-200 bg-gradient-to-br from-purple-50 via-white to-sky-50 p-6 text-slate-900 shadow-sm shadow-purple-950/5 dark:border-purple-800/60 dark:from-purple-950/30 dark:via-slate-900 dark:to-sky-950/20 dark:text-slate-100 dark:shadow-none md:p-8">
     <h3 id="agentkit-next-guides" class="font-heading text-xl font-bold">{t('agentkit.links.heading')}</h3>
     <div class="mt-5 grid gap-2 sm:grid-cols-2">
       {links.map((link) => (
         <a
           href={link.href}
-          class="flex min-h-11 items-center justify-between gap-3 rounded-lg px-3 py-2 text-sm font-semibold transition-colors duration-200 hover:bg-purple-100 focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-50 active:bg-purple-200 dark:hover:bg-slate-800 dark:focus-visible:ring-purple-400 dark:focus-visible:ring-offset-slate-900 dark:active:bg-slate-700"
+          class="flex min-h-11 items-center justify-between gap-3 rounded-lg px-3 py-2 text-sm font-semibold transition-colors duration-200 hover:bg-white/80 hover:text-purple-800 focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 focus-visible:ring-offset-purple-50 active:bg-purple-100 dark:hover:bg-white/5 dark:hover:text-purple-200 dark:focus-visible:ring-purple-400 dark:focus-visible:ring-offset-slate-900 dark:active:bg-white/10"
         >
           <span>{link.label}</span>
           <ArrowUpRight class="h-4 w-4" aria-hidden="true" />
