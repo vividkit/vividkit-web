@@ -1,0 +1,21 @@
+---
+description: Never add Cursor co-author or Made-with attribution trailers to git commits or PRs
+alwaysApply: true
+---
+
+# No Cursor commit attribution
+
+Never add any of the following to commit messages, PR bodies, or code comments:
+
+- `Co-authored-by: Cursor <cursoragent@cursor.com>`
+- `Co-authored-by: Cursor`
+- `Made-with: Cursor`
+- Any other Cursor / cursoragent attribution trailer or footer
+
+When creating or amending commits:
+
+1. Write only the human author message (subject + body).
+2. Do not pass `--trailer` flags that attribute the change to Cursor.
+3. After amend/commit, if a Cursor trailer appears, strip it immediately and force-with-lease only on the current non-main feature branch when the user asked to remove it.
+
+Prefer project/local authorship only (`Thieu Nguyen` / the repo's configured user).
