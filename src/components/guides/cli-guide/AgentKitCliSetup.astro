@@ -19,19 +19,19 @@ const codexTarget = targets.find((target) => target.target === 'codex')!;
       {isVi ? 'Đường dẫn thận trọng tải installer về để review trước khi chạy. Official one-liner được giữ làm tham chiếu trust boundary, không phải copy CTA chính.' : 'The cautious path downloads the installer for review before execution. The official one-liner remains a trust-boundary reference, not the primary copy CTA.'}
     </p>
   </div>
-  <div class="grid gap-4 lg:grid-cols-2">
-    <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
+  <div class="grid min-w-0 gap-4 lg:grid-cols-2">
+    <div class="min-w-0 rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
       <h3 class="font-semibold text-slate-900 dark:text-white">macOS / Linux</h3>
       <div class="mt-3"><TerminalSnippet code={'curl -fsSLo /tmp/agentkit-install.sh https://agentkit.best/install.sh\nless /tmp/agentkit-install.sh\nsh /tmp/agentkit-install.sh'} label="shell · inspect before run" /></div>
     </div>
-    <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
+    <div class="min-w-0 rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
       <h3 class="font-semibold text-slate-900 dark:text-white">Windows PowerShell</h3>
       <div class="mt-3"><TerminalSnippet code={'Invoke-WebRequest https://agentkit.best/install.ps1 -OutFile $env:TEMP\\agentkit-install.ps1\nGet-Content $env:TEMP\\agentkit-install.ps1\npowershell -File $env:TEMP\\agentkit-install.ps1'} label="powershell · inspect before run" mode="plain" copyMode="raw" /></div>
     </div>
   </div>
   <aside class="rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm leading-6 text-amber-900 dark:border-amber-400/30 dark:bg-amber-950/30 dark:text-amber-100">
     <strong>{isVi ? 'Official convenience path:' : 'Official convenience path:'}</strong>
-    <code class="mx-1 rounded border border-amber-300 bg-white px-1.5 py-0.5 text-amber-900 dark:border-amber-400/30 dark:bg-slate-900 dark:text-amber-100">curl -fsSL https://agentkit.best/install.sh | sh</code>
+    <code class="mx-1 rounded-md border border-amber-300 bg-white px-1.5 py-0.5 text-amber-900 dark:border-amber-400/30 dark:bg-slate-800/90 dark:text-amber-100">curl -fsSL https://agentkit.best/install.sh | sh</code>
     {isVi ? 'chạy remote script trực tiếp. Chỉ dùng khi bạn chấp nhận trust boundary đó.' : 'executes a remote script directly. Use it only when you accept that trust boundary.'}
   </aside>
 </section>
@@ -44,7 +44,7 @@ const codexTarget = targets.find((target) => target.target === 'codex')!;
   <TerminalSnippet code={'ak --version\nak doctor'} label="shell · read-only checks" />
   <div class="grid gap-3 md:grid-cols-3">
     <div class="rounded-2xl border border-slate-200 p-4 dark:border-slate-700"><h3 class="font-semibold text-slate-900 dark:text-white">License key</h3><p class="mt-2 text-sm text-slate-600 dark:text-slate-300">{isVi ? 'Khuyến nghị cho paid seat. Nhập key ở terminal riêng; không commit hoặc paste vào tài liệu.' : 'Recommended for a paid seat. Enter the key in a private terminal; never commit or paste it into docs.'}</p></div>
-    <div class="rounded-2xl border border-slate-200 p-4 dark:border-slate-700"><h3 class="font-semibold text-slate-900 dark:text-white">Email OTP</h3><p class="mt-2 text-sm text-slate-600 dark:text-slate-300"><code class="rounded bg-slate-100 px-1 dark:bg-slate-800">ak login --email you@example.com</code></p></div>
+    <div class="rounded-2xl border border-slate-200 p-4 dark:border-slate-700"><h3 class="font-semibold text-slate-900 dark:text-white">Email OTP</h3><p class="mt-2 text-sm text-slate-600 dark:text-slate-300"><code class="rounded-md border border-slate-200 bg-slate-100 px-1 text-slate-800 dark:border-slate-700 dark:bg-slate-800/90 dark:text-slate-100">ak login --email you@example.com</code></p></div>
     <div class="rounded-2xl border border-slate-200 p-4 dark:border-slate-700"><h3 class="font-semibold text-slate-900 dark:text-white">API key</h3><p class="mt-2 text-sm text-slate-600 dark:text-slate-300">{isVi ? 'Dành cho CI. Inject từ secret store, mask logs, không chạy secrets trên fork PR.' : 'For CI. Inject from a secret store, mask logs, and do not expose secrets to fork PRs.'}</p></div>
   </div>
   <TerminalSnippet code={'ak whoami\nak licenses'} label="shell · entitlement checks" />

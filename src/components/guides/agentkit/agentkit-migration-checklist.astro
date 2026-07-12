@@ -81,7 +81,7 @@ function commandsFor(groupId: string | undefined): AgentKitCommandGroupView | un
 }
 ---
 
-<section id="migration-journey" aria-labelledby="migration-journey-heading" class="pt-16">
+<section id="migration-journey" aria-labelledby="migration-journey-heading" class="scroll-mt-28 pt-16">
   <div class="max-w-3xl">
     <h2 id="migration-journey-heading" class="font-heading text-3xl font-bold text-slate-950 text-balance dark:text-slate-50">
       {t('agentkit.journey.heading')}
@@ -99,16 +99,16 @@ function commandsFor(groupId: string | undefined): AgentKitCommandGroupView | un
         <li
           id={step.id}
           class:list={[
-            'grid gap-5 py-8 md:grid-cols-[4rem_minmax(0,1fr)] md:gap-8',
+            'grid scroll-mt-28 gap-5 py-8 md:grid-cols-[4rem_minmax(0,1fr)] md:gap-8',
             index > 0 && 'border-t border-slate-200 dark:border-slate-800',
           ]}
         >
           <div
             class:list={[
-              'flex h-12 w-12 items-center justify-center rounded-xl font-mono text-sm font-bold',
+              'flex h-12 w-12 items-center justify-center rounded-xl font-mono text-sm font-bold ring-1 ring-inset',
               isRemoval
-                ? 'bg-rose-100 text-rose-700 dark:bg-rose-950/50 dark:text-rose-300'
-                : 'bg-slate-950 text-slate-50 dark:bg-slate-100 dark:text-slate-950',
+                ? 'bg-rose-100 text-rose-700 ring-rose-200 dark:bg-rose-950/50 dark:text-rose-300 dark:ring-rose-900'
+                : 'bg-purple-100 text-purple-700 ring-purple-200 dark:bg-slate-100 dark:text-slate-950 dark:ring-slate-200',
             ]}
             aria-hidden="true"
           >
