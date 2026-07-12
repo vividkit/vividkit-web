@@ -24,7 +24,7 @@ export const guideSections = [
       {
         title: 'Migrate from ClaudeKit to AgentKit',
         path: '/guides/agentkit',
-        desc: 'Step-by-step CK-to-AK migration for macOS, Linux, Windows, Claude Code, Codex, and CI.',
+        desc: 'Step-by-step CK-to-AK migration plus the unresolved public-availability signals for AgentKit Desktop App.',
       },
       {
         title: 'What is ClaudeKit?',

@@ -1,0 +1,168 @@
+---
+import {
+  ArrowUpRight,
+  Bot,
+  CheckCircle2,
+  CircleAlert,
+  Laptop,
+  Settings2,
+  ShieldCheck,
+} from 'lucide-astro';
+
+import type { Language } from '@/i18n';
+import { useTranslations } from '@/i18n/utils';
+import {
+  AGENTKIT_APP_FACTS,
+  AGENTKIT_APP_SOURCES,
+  type AgentKitAppCapability,
+} from '@/data/guides/agentkit/agentkit-app-facts';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const prefix = lang === 'vi' ? '/vi' : '';
+function factBackedCopy(condition: boolean, key: Parameters<typeof t>[0]): string {
+  if (!condition) throw new Error(`Unsupported AgentKit App fact state for ${key}`);
+  return t(key);
+}
+
+const appView = {
+  status: factBackedCopy(
+    AGENTKIT_APP_FACTS.status === 'public-availability-not-established',
+    'agentkit.app.status',
+  ),
+  platforms: factBackedCopy(
+    AGENTKIT_APP_FACTS.releaseAssetPlatforms.includes('linux')
+      && AGENTKIT_APP_FACTS.publicDownloadStatus === 'not-verified',
+    'agentkit.app.platforms.body',
+  ),
+  access: factBackedCopy(
+    AGENTKIT_APP_FACTS.paymentRequiredToReserve
+      && AGENTKIT_APP_FACTS.releasePageStatus === 'unavailable-when-verified',
+    'agentkit.app.access.body',
+  ),
+  cliBoundary: factBackedCopy(
+    AGENTKIT_APP_FACTS.cliRelationship === 'separate-auth-sessions-app-license-gated-shell',
+    'agentkit.app.boundary.body',
+  ),
+} as const;
+
+const capabilityCopy: Record<AgentKitAppCapability, string> = {
+  'skills-and-plugins': t('agentkit.app.capabilities.skills'),
+  configuration: t('agentkit.app.capabilities.config'),
+  'tokens-and-plans': t('agentkit.app.capabilities.tokens'),
+  'secret-scanning': t('agentkit.app.capabilities.security'),
+};
+
+const factCards = [
+  {
+    icon: Laptop,
+    title: t('agentkit.app.platforms.title'),
+    body: appView.platforms,
+  },
+  {
+    icon: Bot,
+    title: t('agentkit.app.targets.title'),
+    body: t('agentkit.app.targets.body'),
+  },
+  {
+    icon: Settings2,
+    title: t('agentkit.app.access.title'),
+    body: appView.access,
+  },
+] as const;
+---
+
+<section id="desktop-app" aria-labelledby="desktop-app-heading" class="pt-16">
+  <div class="overflow-hidden rounded-3xl border border-cyan-200 bg-cyan-50/60 dark:border-cyan-800/70 dark:bg-cyan-950/20">
+    <div class="grid gap-8 p-6 md:p-8 lg:grid-cols-[minmax(0,1.25fr)_minmax(18rem,0.75fr)] lg:p-10">
+      <div class="min-w-0">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="rounded-full bg-cyan-100 px-3 py-1 text-xs font-bold uppercase tracking-[0.1em] text-cyan-800 dark:bg-cyan-900/60 dark:text-cyan-200">
+            {t('agentkit.app.badge')}
+          </span>
+          <span class="rounded-full border border-amber-300 bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-800 dark:border-amber-700 dark:bg-amber-950/40 dark:text-amber-200">
+            {appView.status}
+          </span>
+        </div>
+
+        <h2 id="desktop-app-heading" class="mt-5 font-heading text-3xl font-bold text-slate-950 text-balance dark:text-slate-50">
+          {t('agentkit.app.heading')}
+        </h2>
+        <p class="mt-4 max-w-3xl text-lg leading-relaxed text-slate-600 text-pretty dark:text-slate-300">
+          {t('agentkit.app.intro')}
+        </p>
+
+        <ul class="mt-6 grid gap-3 sm:grid-cols-2">
+          {AGENTKIT_APP_FACTS.capabilities.map((capability) => (
+            <li class="flex gap-3 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
+              <CheckCircle2 class="mt-0.5 h-5 w-5 shrink-0 text-cyan-700 dark:text-cyan-300" aria-hidden="true" />
+              <span>{capabilityCopy[capability]}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="rounded-2xl border border-cyan-200 bg-white/80 p-5 dark:border-cyan-800 dark:bg-slate-950/50" role="note" aria-labelledby="desktop-app-boundary-heading">
+        <div class="flex items-center gap-3">
+          <ShieldCheck class="h-5 w-5 text-cyan-700 dark:text-cyan-300" aria-hidden="true" />
+          <h3 id="desktop-app-boundary-heading" class="font-bold text-slate-950 dark:text-slate-50">{t('agentkit.app.boundary.title')}</h3>
+        </div>
+        <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{appView.cliBoundary}</p>
+        <p class="mt-4 flex gap-3 rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm leading-relaxed text-amber-900 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-100">
+          <CircleAlert class="mt-0.5 h-5 w-5 shrink-0" aria-hidden="true" />
+          <span>{t('agentkit.app.boundary.limit')}</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="grid border-t border-cyan-200 dark:border-cyan-800 md:grid-cols-3">
+      {factCards.map(({ icon: Icon, title, body }, index) => (
+        <article class:list={['p-6', index > 0 && 'border-t border-cyan-200 dark:border-cyan-800 md:border-l md:border-t-0']}>
+          <Icon class="h-5 w-5 text-cyan-700 dark:text-cyan-300" aria-hidden="true" />
+          <h3 class="mt-3 font-bold text-slate-950 dark:text-slate-50">{title}</h3>
+          <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{body}</p>
+        </article>
+      ))}
+    </div>
+
+    <div class="flex flex-col gap-4 border-t border-cyan-200 bg-white/60 p-6 dark:border-cyan-800 dark:bg-slate-950/30 sm:flex-row sm:items-center sm:justify-between md:px-8">
+      <p class="text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+        {AGENTKIT_APP_SOURCES.map((source, index) => (
+          <>
+            {index > 0 && ' · '}
+            <a
+              href={source.sourceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="rounded underline decoration-slate-300 underline-offset-4 hover:text-cyan-800 focus-visible:ring-2 focus-visible:ring-cyan-600 dark:decoration-slate-600 dark:hover:text-cyan-200"
+            >
+              {t(source.id === 'product-page' ? 'agentkit.app.source.product' : 'agentkit.app.source.changelog')}
+            </a>
+          </>
+        ))}
+        {' · '}{AGENTKIT_APP_SOURCES[0].verifiedAt}
+      </p>
+      <div class="flex flex-col gap-3 sm:flex-row">
+        <a
+          href={`${prefix}/guides/cli`}
+          class="inline-flex min-h-11 items-center justify-center rounded-lg border border-slate-300 bg-white px-4 text-sm font-semibold text-slate-800 transition-colors hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-cyan-600 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
+        >
+          {t('agentkit.app.cliCta')}
+        </a>
+        <a
+          href={AGENTKIT_APP_FACTS.ctaUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-cyan-700 px-4 text-sm font-semibold text-white transition-colors hover:bg-cyan-800 focus-visible:ring-2 focus-visible:ring-cyan-600 focus-visible:ring-offset-2 active:bg-cyan-900 dark:bg-cyan-500 dark:text-slate-950 dark:hover:bg-cyan-400"
+        >
+          {t('agentkit.app.officialCta')}
+          <ArrowUpRight class="h-4 w-4" aria-hidden="true" />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { access, readdir } from 'node:fs/promises';
+import { access, readFile, readdir } from 'node:fs/promises';
 import { join, relative, sep } from 'node:path';
 import test from 'node:test';
 
@@ -86,4 +86,18 @@ test('sitemap consumer receives the exact manifest-classified route identities',
   assert.deepEqual(sitemapRouteIdentities, expected);
   assert.ok(sitemapRouteIdentities.includes('/guides/agentkit'));
   assert.ok(sitemapRouteIdentities.includes('/vi/guides/agentkit'));
+});
+
+test('LLM full export retains the AgentKit App availability gap and CLI safety boundary', async (context) => {
+  if (process.env.npm_lifecycle_event !== 'test:agentkit-postbuild') {
+    context.skip('postbuild-only LLM assertion');
+    return;
+  }
+  const output = join(projectRoot, 'dist', 'llms-full.txt');
+  assert.equal(await exists(output), true, 'postbuild llms-full.txt missing');
+
+  const text = await readFile(output, 'utf8');
+  assert.match(text, /Public availability is not established/);
+  assert.match(text, /CLI registry and Desktop App use separate sessions/);
+  assert.match(text, /linked release was unavailable when verified/);
 });

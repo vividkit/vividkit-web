@@ -55,15 +55,16 @@ The dedicated hub is rendered at:
 - `/guides/agentkit` from `src/pages/guides/agentkit.astro`
 - `/vi/guides/agentkit` from `src/pages/vi/guides/agentkit.astro`
 
-Both pages compose `src/components/guides/AgentKitGuide.astro`. The shared component renders a ten-step migration journey, platform-specific commands for macOS/Linux/Windows, kit targets, explicit legacy-to-current mappings, compatibility guidance, CI safety, troubleshooting, and rollback guidance. Copy comes from structurally matched `src/i18n/en/agentkit.ts` and `src/i18n/vi/agentkit.ts` modules.
+Both pages compose `src/components/guides/AgentKitGuide.astro`. The shared component renders a ten-step migration journey, an optional source-qualified Desktop App section, platform-specific commands for macOS/Linux/Windows, kit targets, explicit legacy-to-current mappings, compatibility guidance, CI safety, troubleshooting, and rollback guidance. Copy comes from structurally matched `src/i18n/en/agentkit.ts` and `src/i18n/vi/agentkit.ts` modules.
 
 ### Canonical Typed Facts
 
-AgentKit executable facts live under `src/data/guides/agentkit/` and are passed into components instead of being duplicated in prose:
+AgentKit executable and product facts live under `src/data/guides/agentkit/` and are passed into components instead of being duplicated in prose:
 
 | Module | Verified responsibility |
 |---|---|
 | `agentkit-source-contract.ts` | Release channels, source metadata, artifact integrity, and credential transport policy |
+| `agentkit-app-facts.ts` | Product-page and stable-changelog sources, unresolved availability signals, platform sets, capabilities, and CLI/App boundary |
 | `agentkit-cli-facts.ts` | CLI commands, scope, mutation behavior, flags, write targets, and stable/beta channel |
 | `agentkit-skill-facts.ts` | Core skill IDs, source hashes, kit snapshot provenance, and target-native invocations |
 | `agentkit-target-capabilities.ts` | Claude Code and Codex target/install/invocation contracts |
@@ -73,7 +74,7 @@ AgentKit executable facts live under `src/data/guides/agentkit/` and are passed 
 The rendering flow is:
 
 ```text
-official source metadata + installed-kit snapshot
+official product/docs/changelog metadata + installed-kit snapshot
   -> typed AgentKit facts
   -> stable/beta selectors and catalog adapters
   -> bilingual guide components

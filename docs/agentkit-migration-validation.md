@@ -2,14 +2,14 @@
 
 ## Overview
 
-Release evidence for the bilingual ClaudeKit-to-AgentKit guide migration. Detailed working notes remain plan-scoped; this tracked record preserves the gates required to review the PR.
+Release evidence for the bilingual ClaudeKit-to-AgentKit guide migration and its AgentKit Desktop App follow-up. See the [AgentKit Desktop App source record](./agentkit-desktop-app-source-record.md) for the unresolved public-availability signals and claim-level evidence.
 
 ## Automated Gates
 
 | Gate | Final result |
 |---|---|
-| AgentKit contract, content, catalog, hub, and CI tests | 47/47 pass |
-| Source content audit | 597 files pass |
+| AgentKit contract, content, catalog, hub, CI, route, and LLM tests | 50/50 pass after build |
+| Source content audit | 601 files pass |
 | Scoped Astro diagnostic delta | 0 migration diagnostics |
 | Repository-wide Astro baseline | 271 existing errors, explicitly not claimed green |
 | Static production build | 74 pages |
@@ -25,6 +25,7 @@ System Chrome tested the final static build after the responsive fix:
 | AgentKit hub EN | 375×812 + 1440×900; light/dark; JS on/off | 8/8 pass |
 | AgentKit hub VI | 375×812 + 1440×900; light/dark; JS on/off | 8/8 pass |
 | How AgentKit Works EN/VI | mobile overflow and legacy-prefix delta | 2/2 pass |
+| AgentKit Desktop App section EN/VI | 375×812 + 1440×900; light/dark; focus and overflow | 8/8 pass |
 
 The final mobile document measured `375 / 375` scroll/client width; `#kit-targets` measured `343 / 343`. Desktop measured `1440 / 1440` and `848 / 848`. Each case rendered one H1 with the correct language.
 
@@ -36,6 +37,7 @@ The final mobile document measured `375 / 375` scroll/client width; `#kit-target
 - Language switching preserves `#migration-journey` and changes the document language.
 - Canonical and EN/VI/x-default hreflang links are present.
 - EN/VI How AgentKit Works pages have no active `/ck:*` or `/ckm:*` invocations.
+- Desktop App source links, localized CLI links, 44 px CTAs, and visible keyboard focus pass in all eight representative cases.
 
 ## Baseline Exclusions
 
@@ -49,4 +51,4 @@ The first run found a 155 px mobile overflow in the AgentKit target grid. Intrin
 
 ## Unresolved Questions
 
-None for this migration. Repository-wide type debt and shared layout baselines remain separate maintenance work.
+Desktop product-page and stable-changelog availability signals remain inconsistent; the guide surfaces both. Repository-wide type debt and shared layout baselines remain separate maintenance work.
