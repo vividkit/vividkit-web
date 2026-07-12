@@ -18,7 +18,7 @@ const targets = getAgentKitTargetViews();
           <tr>
             <td class="px-4 py-3 font-semibold">{target.displayName}</td>
             <td class="px-4 py-3 capitalize text-emerald-700 dark:text-emerald-300">{target.status} · {target.channel}</td>
-            <td class="px-4 py-3"><code class="rounded bg-slate-100 px-1.5 py-0.5 dark:bg-slate-800">{target.invocationWildcard}</code> {target.invocationDescription}</td>
+            <td class="px-4 py-3"><code class="rounded-md border border-slate-200 bg-slate-100 px-1.5 py-0.5 text-slate-800 dark:border-slate-700 dark:bg-slate-800/90 dark:text-slate-100">{target.invocationWildcard}</code> {target.invocationDescription}</td>
           </tr>
         ))}
       </tbody>
