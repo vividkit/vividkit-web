@@ -703,6 +703,18 @@ const getCommandNavItem = (id: string) => {
           ? 'AgentKit không phải là một phần mềm độc lập hay IDE mới. Nó là một bộ khung (Framework) nâng cao được tích hợp thẳng vào cấu hình native (.claude) của Claude Code trên máy bạn, biến terminal chat thành một hệ thống tự động hóa tác vụ chuyên nghiệp.'
           : 'AgentKit is not a standalone app or a new IDE. It is an advanced Framework integrated directly into your native Claude Code configuration (.claude) on your machine, transforming your terminal chat into a professional task automation system.'}
       </p>
+      <p class="text-sm text-gray-600 dark:text-white/55 max-w-3xl mx-auto">
+        {isVi
+          ? 'Skills bên dưới thuộc Engineer hoặc Marketing — hai kit riêng. Desktop App là companion tùy chọn, không bắt buộc để chạy skills.'
+          : 'Skills below belong to Engineer or Marketing — two separate kits. The Desktop App is an optional companion, not required to run skills.'}
+        {' '}
+        <a
+          href={isVi ? '/vi/guides/agentkit#continuity' : '/guides/agentkit#continuity'}
+          class="font-semibold text-violet-700 underline-offset-4 hover:underline dark:text-violet-300"
+        >
+          {isVi ? 'Xem Continuity FAQ' : 'See Continuity FAQ'} →
+        </a>
+      </p>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 text-left">
         <div class="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 shadow-sm dark:shadow-none rounded-xl p-4">
