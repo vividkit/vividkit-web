@@ -36,6 +36,12 @@ export const CONTENT_DETECTORS = [
     pattern: /\/(?:ck|ckm):(?:[a-z][a-z0-9-]*|\*)/gi,
   },
   {
+    id: 'legacy-dollar-command',
+    category: 'legacy-recommendation',
+    modes: ['agentkit-active'],
+    pattern: /\$(?:ck|ckm):(?:[a-z][a-z0-9-]*|\*)/gi,
+  },
+  {
     id: 'github-token',
     category: 'credential',
     modes: ['agentkit-active', 'legacy-backlog'],
@@ -99,10 +105,16 @@ function sourceMode(file) {
   return (
     file.startsWith('src/data/guides/agentkit/')
     || file.startsWith('src/components/guides/agentkit/')
+    || file.startsWith('src/components/guides/what-is-claudekit/')
     || file.startsWith('src/data/guides/how-ck-works/')
     || file.startsWith('src/components/guides/how-ck-works/')
+    || file === 'src/components/guides/WhatIsClaudeKitGuide.astro'
     || file === 'src/pages/guides/agentkit.astro'
     || file === 'src/pages/vi/guides/agentkit.astro'
+    || file === 'src/pages/guides/what-is-claudekit.astro'
+    || file === 'src/pages/vi/guides/what-is-claudekit.astro'
+    || file === 'src/i18n/en/what-is-claudekit.ts'
+    || file === 'src/i18n/vi/what-is-claudekit.ts'
     || file === 'src/pages/guides/how-ck-works.astro'
     || file === 'src/pages/vi/guides/how-ck-works.astro'
   ) ? 'agentkit-active' : 'legacy-backlog';
@@ -111,6 +123,7 @@ function sourceMode(file) {
 function generatedMode(file) {
   return (
     file.includes('/guides/agentkit/')
+    || file.includes('/guides/what-is-claudekit/')
     || file.includes('/guides/how-ck-works/')
   ) ? 'agentkit-active' : 'legacy-backlog';
 }

@@ -15,6 +15,7 @@ import { pricing } from './pricing';
 import { common } from './common';
 import { deals } from './deals';
 import { agentkit } from './agentkit';
+import { whatIsClaudeKit } from './what-is-claudekit';
 
 export default {
   ...commands,
@@ -33,4 +34,5 @@ export default {
   ...common,
   ...deals,
   ...agentkit,
+  ...whatIsClaudeKit,
 } as const;

@@ -2,7 +2,7 @@
 
 ## Overview
 
-Release evidence for the bilingual ClaudeKit-to-AgentKit guide migration and its focused follow-ups. See the [AgentKit Desktop App source record](./agentkit-desktop-app-source-record.md) and [legacy provider-skill cleanup source record](./agentkit-legacy-skill-cleanup-source-record.md) for claim-level evidence and explicit source boundaries.
+Release evidence for the bilingual ClaudeKit-to-AgentKit guide migration and its focused follow-ups. See the [AgentKit Desktop App source record](./agentkit-desktop-app-source-record.md), [legacy provider-skill cleanup source record](./agentkit-legacy-skill-cleanup-source-record.md), and [“What Is ClaudeKit?” source record](./agentkit-what-is-claudekit-source-record.md) for claim-level evidence and explicit source boundaries.
 
 The original migration release baseline and the later cleanup addendum have separate verification scopes. Results below identify which evidence was rerun.
 
@@ -40,6 +40,24 @@ npm run build
 | Cleanup browser matrix | 8/8 pass |
 
 The contracts verify the three-source metadata set, four-stage safety order, destructive-command copy gating, Claude Code/Codex target boundary, Codex `source-command-*` destination evidence, source-link rendering, escaped component output, and LLM safety boundary.
+
+## Compatibility Primer Addendum
+
+Run on 2026-07-12 against the refreshed EN/VI `what-is-claudekit` primer, typed facts, route/LLM contracts, generated output, and static browser preview:
+
+| Gate | Result |
+|---|---|
+| Focused primer, audit, and route contracts | 21 pass + 1 expected postbuild-only skip |
+| Full AgentKit suite during prebuild | 57 pass + 1 expected postbuild-only skip |
+| Source content audit | 611 files pass |
+| Scoped AgentKit diagnostic delta | 0 new diagnostics |
+| Repository-wide Astro baseline | 267 existing errors; not claimed green |
+| Static production build | 74 pages |
+| Generated artifact audit | 156 files pass |
+| Postbuild route and LLM checks | 5/5 pass |
+| Primer browser matrix | 8/8 pass |
+
+The browser matrix covered EN/VI, light/dark, and 375×812/1440×900. Every case rendered one locale-correct H1, correct document language and canonical, no horizontal overflow, Claude Code `/ak:cook`, Codex `$ak:cook`, visible keyboard focus, and the three official source links. No browser errors were reported. Route identity remains `legacy-slug`; rendered guidance is current AgentKit compatibility content.
 
 ## Migration Browser Matrix
 

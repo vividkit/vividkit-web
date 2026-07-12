@@ -27,9 +27,9 @@ export const guideSections = [
         desc: 'Step-by-step CK-to-AK migration plus the unresolved public-availability signals for AgentKit Desktop App.',
       },
       {
-        title: 'What is ClaudeKit?',
+        title: 'What is ClaudeKit? From CK to AgentKit',
         path: '/guides/what-is-claudekit',
-        desc: 'Beginner-friendly introduction to how ClaudeKit turns Claude into a professional coding assistant.',
+        desc: 'Compatibility primer explaining ClaudeKit’s legacy concepts, AgentKit as its successor, project/global scope, target-native Claude Code and Codex syntax, and the correct next guide.',
       },
       {
         title: 'AgentKit CLI Guide',

@@ -3,7 +3,7 @@
 **Last Updated:** July 12, 2026
 **Framework:** Astro 6.0.2 (static output)
 **Language:** TypeScript 5.9.3 (strict mode)
-**Generated from:** `repomix-output.xml` (446 files; source snapshot reviewed July 12, 2026)
+**Generated from:** `repomix-output.xml` (449 files; source snapshot reviewed July 12, 2026)
 
 ---
 
@@ -71,6 +71,7 @@ AgentKit executable and product facts live under `src/data/guides/agentkit/` and
 | `agentkit-migration-operational-facts.ts` | Platform preflight, install verification, collision checks, and gated legacy removal |
 | `agentkit-migration-mapping.ts` | Localized CK-to-AK binary, skill-prefix, authentication, and kit lifecycle mappings |
 | `agentkit-legacy-cleanup-facts.ts` | Legacy cleanup sources, inventory/verification/preview/removal stages, scope, copyability, and provider boundaries |
+| `what-is-claudekit-facts.ts` | Current/legacy source status, successor boundary, historical concepts, scope paths, and volatile-count omission policy for the compatibility primer |
 
 The rendering flow is:
 
@@ -111,6 +112,8 @@ Legacy identifiers are preserved only where they serve compatibility or explicit
 - Active command, workflow, and flowchart catalogs render the unified `/ak:*` namespace.
 - Scenario resolution accepts old `/ck:*` and `/ckm:*` identifiers so saved links and legacy data can resolve to current AgentKit cards.
 - Migration comparison rows carry explicit legacy metadata and a compatibility note; legacy syntax is not treated as a current recommendation.
+
+The retained `/guides/what-is-claudekit` and `/vi/guides/what-is-claudekit` pair now renders a fact-backed compatibility primer. Four shared sections explain historical ClaudeKit concepts, the AgentKit successor architecture, project/global scope, target-native Claude Code and Codex syntax, and next-guide routing. EN/VI copy lives in matched `what-is-claudekit.ts` translation modules. The content audit classifies both source and generated primer paths as active AgentKit guidance while the route manifest preserves their `legacy-slug` identity. See the [primer source record](./agentkit-what-is-claudekit-source-record.md).
 
 ### Legacy Provider-Skill Cleanup
 
@@ -220,6 +223,7 @@ npm run test:agentkit-content
 - `tests/agentkit-catalogs/`
 - `tests/content/`
 - `docs/agentkit-legacy-skill-cleanup-source-record.md`
+- `docs/agentkit-what-is-claudekit-source-record.md`
 
 ## Unresolved Questions
 

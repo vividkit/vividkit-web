@@ -1,92 +1,111 @@
 ---
-// Before/After comparison table with image
-import { useTranslations } from "@/i18n/utils";
-import { getLangFromUrl, type Language } from "@/i18n";
+import { ArrowRight, Folder, Globe2 } from 'lucide-astro';
+
+import type { Language } from '@/i18n';
+import { useTranslations } from '@/i18n/utils';
+import {
+  WHAT_IS_CLAUDEKIT_FACTS,
+  WHAT_IS_CLAUDEKIT_SCOPE_FACTS,
+} from '@/data/guides/agentkit/what-is-claudekit-facts';
 
 interface Props {
-  lang?: Language;
+  lang: Language;
 }
 
 const { lang } = Astro.props;
-const currentLang = lang || getLangFromUrl(Astro.url);
-const t = useTranslations(currentLang);
+const t = useTranslations(lang);
 
-const imgSuffix = currentLang === "vi" ? "-vi" : "";
-
-const icons = {
-  scale: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971z" /></svg>`,
-  x_mark: `<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>`,
-  check: `<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>`,
-};
-
-const comparisonItems = [
-  { without: t("guides.what_is_claudekit.compare_1_without"), with: t("guides.what_is_claudekit.compare_1_with") },
-  { without: t("guides.what_is_claudekit.compare_2_without"), with: t("guides.what_is_claudekit.compare_2_with") },
-  { without: t("guides.what_is_claudekit.compare_3_without"), with: t("guides.what_is_claudekit.compare_3_with") },
-  { without: t("guides.what_is_claudekit.compare_4_without"), with: t("guides.what_is_claudekit.compare_4_with") },
-  { without: t("guides.what_is_claudekit.compare_5_without"), with: t("guides.what_is_claudekit.compare_5_with") },
-  { without: t("guides.what_is_claudekit.compare_6_without"), with: t("guides.what_is_claudekit.compare_6_with") },
+const rows = [
+  {
+    label: t('what_is_ck.change.cli.label'),
+    before: t('what_is_ck.change.cli.before'),
+    after: t('what_is_ck.change.cli.after'),
+  },
+  {
+    label: t('what_is_ck.change.namespace.label'),
+    before: t('what_is_ck.change.namespace.before'),
+    after: t('what_is_ck.change.namespace.after'),
+  },
+  {
+    label: t('what_is_ck.change.targets.label'),
+    before: t('what_is_ck.change.targets.before'),
+    after: t('what_is_ck.change.targets.after'),
+  },
+  {
+    label: t('what_is_ck.change.lifecycle.label'),
+    before: t('what_is_ck.change.lifecycle.before'),
+    after: t('what_is_ck.change.lifecycle.after'),
+  },
 ];
+
+const scopeCards = WHAT_IS_CLAUDEKIT_SCOPE_FACTS.map((fact) => ({
+  ...fact,
+  icon: fact.scope === 'project' ? Folder : Globe2,
+  title: fact.scope === 'project'
+    ? t('what_is_ck.scope.project.title')
+    : t('what_is_ck.scope.global.title'),
+  body: fact.scope === 'project'
+    ? t('what_is_ck.scope.project.body')
+    : t('what_is_ck.scope.global.body'),
+}));
+
+const inlineCodeClass = 'inline-flex max-w-full overflow-x-auto rounded-md border border-slate-200 bg-slate-100 px-2 py-1 font-mono text-sm text-slate-800 dark:border-slate-700 dark:bg-slate-800/90 dark:text-slate-100';
 ---
 
-<div class="glass-card rounded-2xl overflow-hidden">
-  <div class="p-6 bg-gradient-to-r from-slate-500/5 to-slate-600/5 dark:from-slate-400/5 dark:to-slate-500/5 border-b border-slate-200 dark:border-slate-800">
-    <h3 class="text-2xl font-bold text-slate-700 dark:text-slate-300 flex items-center gap-3">
-      <span class="text-slate-600 dark:text-slate-400"><Fragment set:html={icons.scale} /></span>
-      {t("guides.what_is_claudekit.comparison_title")}
-    </h3>
+<section id="ck-to-agentkit" aria-labelledby="ck-to-agentkit-heading" class="pt-16">
+  <div class="max-w-3xl">
+    <h2 id="ck-to-agentkit-heading" class="font-heading text-3xl font-bold text-slate-950 dark:text-white">
+      {t('what_is_ck.change.heading')}
+    </h2>
+    <p class="mt-3 text-lg leading-relaxed text-slate-600 text-pretty dark:text-slate-300">
+      {t('what_is_ck.change.intro')}
+    </p>
   </div>
-  <div class="p-6">
-    <!-- Comparison Table -->
-    <div class="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700">
-      <!-- Header -->
-      <div class="grid grid-cols-[1fr_auto_1fr] bg-slate-100 dark:bg-slate-800/80">
-        <div class="p-4 text-center border-r border-slate-200 dark:border-slate-700">
-          <div class="flex items-center justify-center gap-2">
-            <div class="w-6 h-6 rounded-full bg-red-100 dark:bg-red-500/20 flex items-center justify-center text-red-600 dark:text-red-400">
-              <Fragment set:html={icons.x_mark} />
-            </div>
-            <span class="font-bold text-red-600 dark:text-red-400">{t("guides.what_is_claudekit.without")}</span>
-          </div>
-        </div>
-        <div class="w-px bg-slate-200 dark:bg-slate-700"></div>
-        <div class="p-4 text-center">
-          <div class="flex items-center justify-center gap-2">
-            <div class="w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
-              <Fragment set:html={icons.check} />
-            </div>
-            <span class="font-bold text-emerald-600 dark:text-emerald-400">{t("guides.what_is_claudekit.with")}</span>
-          </div>
-        </div>
-      </div>
-      <!-- Rows -->
-      {comparisonItems.map((item, index) => (
-        <div class={`grid grid-cols-[1fr_auto_1fr] ${index % 2 === 0 ? "bg-white dark:bg-slate-900/50" : "bg-slate-50/50 dark:bg-slate-800/30"}`}>
-          <div class="p-4 border-r border-slate-200 dark:border-slate-700 flex items-center gap-3">
-            <span class="w-5 h-5 rounded-full bg-red-100 dark:bg-red-500/20 flex items-center justify-center flex-shrink-0">
-              <span class="w-2 h-2 rounded-full bg-red-500" />
-            </span>
-            <span class="text-sm text-slate-600 dark:text-slate-400">{item.without}</span>
-          </div>
-          <div class="w-px bg-slate-200 dark:bg-slate-700" />
-          <div class="p-4 flex items-center gap-3">
-            <span class="w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
-              <span class="w-2 h-2 rounded-full bg-emerald-500" />
-            </span>
-            <span class="text-sm text-slate-700 dark:text-slate-300 font-medium">{item.with}</span>
-          </div>
-        </div>
+
+  <div class="mt-8 overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700">
+    <div class="hidden grid-cols-[minmax(8rem,0.45fr)_minmax(0,1fr)_auto_minmax(0,1fr)] gap-4 bg-slate-100 px-5 py-3 text-xs font-bold uppercase tracking-[0.08em] text-slate-600 dark:bg-slate-800/90 dark:text-slate-300 md:grid">
+      <span></span>
+      <span>ClaudeKit / CK</span>
+      <span></span>
+      <span>AgentKit / AK</span>
+    </div>
+    <div class="divide-y divide-slate-200 bg-white dark:divide-slate-800 dark:bg-slate-950/40">
+      {rows.map((row) => (
+        <article class="grid min-w-0 gap-3 p-5 md:grid-cols-[minmax(8rem,0.45fr)_minmax(0,1fr)_auto_minmax(0,1fr)] md:items-center md:gap-4">
+          <h3 class="text-sm font-bold text-slate-950 dark:text-white">{row.label}</h3>
+          <p class="text-sm leading-6 text-slate-600 dark:text-slate-300">{row.before}</p>
+          <ArrowRight class="h-4 w-4 text-violet-500" aria-hidden="true" />
+          <p class="text-sm font-medium leading-6 text-slate-800 dark:text-slate-100">{row.after}</p>
+        </article>
       ))}
     </div>
-    <!-- Comparison Image -->
-    <div class="mt-6 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700">
-      <img
-        src={`/guides/claudekit-comparison${imgSuffix}.png`}
-        alt="ClaudeKit Before vs After Comparison"
-        class="w-full h-auto"
-        loading="lazy"
-        decoding="async"
-      />
-    </div>
   </div>
-</div>
+
+  <div class="mt-5 flex flex-wrap gap-2 text-sm text-slate-600 dark:text-slate-300">
+    <code class={inlineCodeClass}>{WHAT_IS_CLAUDEKIT_FACTS.legacyBinary}</code>
+    <ArrowRight class="h-5 w-5 text-slate-400" aria-hidden="true" />
+    <code class={`${inlineCodeClass} text-violet-700 dark:text-violet-300`}>{WHAT_IS_CLAUDEKIT_FACTS.currentBinary}</code>
+  </div>
+</section>
+
+<section id="installation-scope" aria-labelledby="installation-scope-heading" class="pt-16">
+  <div class="max-w-3xl">
+    <h2 id="installation-scope-heading" class="font-heading text-3xl font-bold text-slate-950 dark:text-white">
+      {t('what_is_ck.scope.heading')}
+    </h2>
+    <p class="mt-3 text-lg leading-relaxed text-slate-600 text-pretty dark:text-slate-300">
+      {t('what_is_ck.scope.intro')}
+    </p>
+  </div>
+
+  <div class="mt-8 grid gap-5 lg:grid-cols-2">
+    {scopeCards.map(({ icon: Icon, title, body, path }) => (
+      <article class="min-w-0 rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-950/40">
+        <Icon class="h-5 w-5 text-violet-600 dark:text-violet-400" aria-hidden="true" />
+        <h3 class="mt-3 text-lg font-bold text-slate-950 dark:text-white">{title}</h3>
+        <code class={`${inlineCodeClass} mt-3`}>{path}</code>
+        <p class="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-300">{body}</p>
+      </article>
+    ))}
+  </div>
+</section>
