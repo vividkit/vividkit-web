@@ -1,0 +1,153 @@
+---
+// Section 2: Config Hierarchy - Visual diagram showing load order
+import { useTranslations } from "@/i18n/utils";
+import { type Language } from "@/i18n";
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const icon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3" /></svg>`;
+
+const hierarchyLevels = [
+  {
+    key: 'global',
+    path: '~/.claude/CLAUDE.md',
+    color: 'purple',
+    example: 'Global user config — applies to all projects',
+  },
+  {
+    key: 'project',
+    path: '<project>/CLAUDE.md + CLAUDE.local.md',
+    color: 'blue',
+    example: 'Project config (walk-up from CWD to git root)',
+  },
+  {
+    key: 'rules',
+    path: '~/.claude/rules/*.md → .claude/rules/*.md',
+    color: 'green',
+    example: 'User rules first, then project rules (concatenated)',
+  },
+  {
+    key: 'memory',
+    path: '~/.claude/projects/<project>/memory/MEMORY.md',
+    color: 'amber',
+    example: 'Auto-memory from past sessions (persistent)',
+  },
+];
+---
+
+<section id="config-hierarchy" class="space-y-6">
+  <!-- Section Header -->
+  <div class="flex items-center gap-3">
+    <div class="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400">
+      <Fragment set:html={icon} />
+    </div>
+    <h2 class="text-2xl font-bold text-slate-900 dark:text-white">
+      {t('guides.claude_mechanics.section_hierarchy')}
+    </h2>
+  </div>
+
+  <!-- Hierarchy Diagram -->
+  <div class="glass-card rounded-2xl p-6 space-y-6">
+    <div class="text-center">
+      <h3 class="text-lg font-semibold text-slate-700 dark:text-slate-300">
+        {t('guides.claude_mechanics.hierarchy.title')}
+      </h3>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+        {t('guides.claude_mechanics.hierarchy.desc')}
+      </p>
+    </div>
+
+    <!-- Visual Hierarchy -->
+    <div class="space-y-4">
+      {hierarchyLevels.map((level, index) => (
+        <div class="relative group">
+          <!-- Connector line -->
+          {index < hierarchyLevels.length - 1 && (
+            <div class="absolute left-6 top-full w-0.5 h-4 bg-gradient-to-b from-slate-300 to-slate-200 dark:from-slate-600 dark:to-slate-700"></div>
+          )}
+
+          <!-- Level card -->
+          <div class={`flex items-stretch gap-4 p-4 rounded-xl border-2 transition-all duration-300 hover:scale-[1.02] cursor-pointer
+            ${level.color === 'purple' ? 'border-purple-200 dark:border-purple-500/30 bg-purple-50/50 dark:bg-purple-500/5 hover:border-purple-400 dark:hover:border-purple-500/50' : ''}
+            ${level.color === 'blue' ? 'border-blue-200 dark:border-blue-500/30 bg-blue-50/50 dark:bg-blue-500/5 hover:border-blue-400 dark:hover:border-blue-500/50' : ''}
+            ${level.color === 'green' ? 'border-green-200 dark:border-green-500/30 bg-green-50/50 dark:bg-green-500/5 hover:border-green-400 dark:hover:border-green-500/50' : ''}
+            ${level.color === 'amber' ? 'border-amber-200 dark:border-amber-500/30 bg-amber-50/50 dark:bg-amber-500/5 hover:border-amber-400 dark:hover:border-amber-500/50' : ''}
+          `}>
+            <!-- Order number -->
+            <div class={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center text-xl font-bold
+              ${level.color === 'purple' ? 'bg-purple-200 dark:bg-purple-500/30 text-purple-700 dark:text-purple-300' : ''}
+              ${level.color === 'blue' ? 'bg-blue-200 dark:bg-blue-500/30 text-blue-700 dark:text-blue-300' : ''}
+              ${level.color === 'green' ? 'bg-green-200 dark:bg-green-500/30 text-green-700 dark:text-green-300' : ''}
+              ${level.color === 'amber' ? 'bg-amber-200 dark:bg-amber-500/30 text-amber-700 dark:text-amber-300' : ''}
+            `}>
+              {index + 1}
+            </div>
+
+            <!-- Content -->
+            <div class="flex-1 min-w-0">
+              <div class="flex flex-wrap items-center gap-2 mb-1">
+                <span class={`font-semibold
+                  ${level.color === 'purple' ? 'text-purple-700 dark:text-purple-400' : ''}
+                  ${level.color === 'blue' ? 'text-blue-700 dark:text-blue-400' : ''}
+                  ${level.color === 'green' ? 'text-green-700 dark:text-green-400' : ''}
+                  ${level.color === 'amber' ? 'text-amber-700 dark:text-amber-400' : ''}
+                `}>
+                  {t(`guides.claude_mechanics.hierarchy.${level.key}`)}
+                </span>
+                <code class="text-xs px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400 font-mono">
+                  {level.path}
+                </code>
+              </div>
+              <p class="text-sm text-slate-500 dark:text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                {level.example}
+              </p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Load order note -->
+    <div class="text-center p-4 rounded-xl bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+      <p class="text-sm font-medium text-slate-600 dark:text-slate-400">
+        {t('guides.claude_mechanics.hierarchy.load_order')}
+      </p>
+      <p class="text-xs text-slate-500 dark:text-slate-500 mt-1">
+        {t('guides.claude_mechanics.hierarchy.concat_note')}
+      </p>
+    </div>
+  </div>
+
+  <!-- Mini: Path-specific rules -->
+  <div class="glass-card rounded-2xl p-5 space-y-3 border-l-4 border-purple-400 dark:border-purple-500/60">
+    <div class="flex items-center gap-2">
+      <svg class="w-5 h-5 text-purple-600 dark:text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+      </svg>
+      <h4 class="font-semibold text-slate-800 dark:text-slate-200">
+        {t('guides.claude_mechanics.hierarchy.path_specific_title')}
+      </h4>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400">
+      {t('guides.claude_mechanics.hierarchy.path_specific_desc')}
+    </p>
+    <pre class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 p-4 rounded-lg text-xs font-mono overflow-x-auto leading-relaxed border border-slate-200 dark:border-slate-700"><code>{lang === 'vi'
+? `project/
+├── CLAUDE.md           # Áp dụng toàn project
+├── frontend/
+│   └── CLAUDE.md       # Chỉ load khi Claude edit trong frontend/
+└── backend/
+    └── CLAUDE.md       # Chỉ load khi Claude edit trong backend/`
+: `project/
+├── CLAUDE.md           # Applies to entire project
+├── frontend/
+│   └── CLAUDE.md       # Loaded only when Claude edits in frontend/
+└── backend/
+    └── CLAUDE.md       # Loaded only when Claude edits in backend/`}</code></pre>
+  </div>
+</section>

@@ -1,6 +1,9 @@
 ---
 import LegacyGuidesLayout from '@/layouts/LegacyGuidesLayout.astro';
 import LegacyGuideStub from '@/components/guides/legacy/LegacyGuideStub.astro';
+import LegacyClaudeMechanicsGuide from '@/components/guides/legacy/LegacyClaudeMechanicsGuide.astro';
+import LegacyCoexistenceGuide from '@/components/guides/legacy/LegacyCoexistenceGuide.astro';
+import LegacyCkWithCodexGuide from '@/components/guides/legacy/LegacyCkWithCodexGuide.astro';
 import {
   getLegacyGuideEntry,
   LEGACY_GUIDE_CATALOG,
@@ -14,17 +17,29 @@ export function getStaticPaths() {
 
 const suffix = Astro.params.slug ?? '';
 const entry = getLegacyGuideEntry(suffix);
+const frozen = entry?.freezeStatus === 'frozen';
 const title = entry
   ? `${entry.titleVi} (ClaudeKit archive)`
   : 'ClaudeKit archive';
+const description = frozen
+  ? 'Bản archive ClaudeKit đã freeze — nội dung lịch sử để tra cứu. Guide hiện tại nằm dưới /vi/guides.'
+  : 'Trang archive ClaudeKit (stub). Nội dung frozen sẽ được bổ sung ở batch sau.';
 ---
 
 <LegacyGuidesLayout
   title={title}
-  description="Trang archive ClaudeKit (stub). Nội dung frozen sẽ được bổ sung ở batch sau."
+  description={description}
   legacySuffix={suffix}
   currentGuideSuffix={entry?.currentGuideSuffix ?? suffix}
   lang="vi"
 >
-  <LegacyGuideStub suffix={suffix} lang="vi" />
+  {suffix === 'claude-mechanics' ? (
+    <LegacyClaudeMechanicsGuide lang="vi" />
+  ) : suffix === 'coexistence' ? (
+    <LegacyCoexistenceGuide lang="vi" />
+  ) : suffix === 'ck-with-codex' ? (
+    <LegacyCkWithCodexGuide lang="vi" />
+  ) : (
+    <LegacyGuideStub suffix={suffix} lang="vi" />
+  )}
 </LegacyGuidesLayout>

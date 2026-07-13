@@ -1,0 +1,52 @@
+---
+/**
+ * Frozen ClaudeKit coexistence guide (pre-AgentKit thin rewrite).
+ * Source sections moved from src/components/guides/coexistence/.
+ */
+import { getLangFromUrl, type Language } from '@/i18n';
+import CoexistenceHero from './coexistence/coexistence-hero.astro';
+import CoexistenceInstallScope from './coexistence/coexistence-install-scope.astro';
+import CoexistenceConflictResolution from './coexistence/coexistence-conflict-resolution.astro';
+import CoexistenceFreshWarning from './coexistence/coexistence-fresh-warning.astro';
+import CoexistenceRecipes from './coexistence/coexistence-recipes.astro';
+import CoexistenceMigrate from './coexistence/coexistence-migrate.astro';
+import CoexistenceFaq from './coexistence/coexistence-faq.astro';
+
+interface Props { lang?: Language }
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+---
+
+<div class="space-y-12 mt-6">
+  <CoexistenceHero lang={currentLang} />
+  <CoexistenceInstallScope lang={currentLang} />
+  <CoexistenceConflictResolution lang={currentLang} />
+  <CoexistenceFreshWarning lang={currentLang} />
+  <CoexistenceRecipes lang={currentLang} />
+  <CoexistenceMigrate lang={currentLang} />
+  <CoexistenceFaq lang={currentLang} />
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.copy-btn').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const code = btn.getAttribute('data-code');
+        if (!code) return;
+        try {
+          await navigator.clipboard.writeText(code);
+          const copyIcon = btn.querySelector('.copy-icon');
+          const checkIcon = btn.querySelector('.check-icon');
+          copyIcon?.classList.add('hidden');
+          checkIcon?.classList.remove('hidden');
+          setTimeout(() => {
+            copyIcon?.classList.remove('hidden');
+            checkIcon?.classList.add('hidden');
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy:', err);
+        }
+      });
+    });
+  });
+</script>

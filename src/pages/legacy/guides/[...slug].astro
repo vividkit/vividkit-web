@@ -1,6 +1,9 @@
 ---
 import LegacyGuidesLayout from '@/layouts/LegacyGuidesLayout.astro';
 import LegacyGuideStub from '@/components/guides/legacy/LegacyGuideStub.astro';
+import LegacyClaudeMechanicsGuide from '@/components/guides/legacy/LegacyClaudeMechanicsGuide.astro';
+import LegacyCoexistenceGuide from '@/components/guides/legacy/LegacyCoexistenceGuide.astro';
+import LegacyCkWithCodexGuide from '@/components/guides/legacy/LegacyCkWithCodexGuide.astro';
 import {
   getLegacyGuideEntry,
   LEGACY_GUIDE_CATALOG,
@@ -17,12 +20,17 @@ const lang = getLangFromUrl(Astro.url);
 const suffix = Astro.params.slug ?? '';
 const entry = getLegacyGuideEntry(suffix);
 const isVi = lang === 'vi';
+const frozen = entry?.freezeStatus === 'frozen';
 const title = entry
   ? `${isVi ? entry.titleVi : entry.titleEn} (ClaudeKit archive)`
   : 'ClaudeKit archive';
-const description = isVi
-  ? 'Trang archive ClaudeKit (stub). Nội dung frozen sẽ được bổ sung ở batch sau.'
-  : 'ClaudeKit archive stub. Frozen content will land in a follow-up freeze batch.';
+const description = frozen
+  ? (isVi
+    ? 'Bản archive ClaudeKit đã freeze — nội dung lịch sử để tra cứu. Guide hiện tại nằm dưới /guides.'
+    : 'Frozen ClaudeKit archive content for reference. Current guidance lives under /guides.')
+  : (isVi
+    ? 'Trang archive ClaudeKit (stub). Nội dung frozen sẽ được bổ sung ở batch sau.'
+    : 'ClaudeKit archive stub. Frozen content will land in a follow-up freeze batch.');
 ---
 
 <LegacyGuidesLayout
@@ -32,5 +40,13 @@ const description = isVi
   currentGuideSuffix={entry?.currentGuideSuffix ?? suffix}
   lang={lang}
 >
-  <LegacyGuideStub suffix={suffix} lang={lang} />
+  {suffix === 'claude-mechanics' ? (
+    <LegacyClaudeMechanicsGuide lang={lang} />
+  ) : suffix === 'coexistence' ? (
+    <LegacyCoexistenceGuide lang={lang} />
+  ) : suffix === 'ck-with-codex' ? (
+    <LegacyCkWithCodexGuide lang={lang} />
+  ) : (
+    <LegacyGuideStub suffix={suffix} lang={lang} />
+  )}
 </LegacyGuidesLayout>

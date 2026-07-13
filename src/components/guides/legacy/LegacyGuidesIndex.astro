@@ -26,8 +26,8 @@ const count = groups.reduce((sum, group) => sum + group.entries.length, 0);
     </h1>
     <p class="max-w-3xl text-base leading-7 text-slate-600 dark:text-slate-300">
       {isVi
-        ? `${count} guide đã được lên lịch archive dưới /legacy/guides. Wave này dựng index + stub; nội dung CK đầy đủ sẽ freeze theo batch.`
-        : `${count} guides are scheduled under /legacy/guides. This wave ships the index and stubs; full CK content freezes in follow-up batches.`}
+        ? `${count} guide trong catalog. Batch A đã freeze: Claude Mechanics, Coexistence, CK with Codex. Các slug còn lại vẫn là stub.`
+        : `${count} guides in the catalog. Batch A frozen: Claude Mechanics, Coexistence, CK with Codex. Remaining slugs are still stubs.`}
     </p>
   </header>
 
@@ -43,7 +43,18 @@ const count = groups.reduce((sum, group) => sum + group.entries.length, 0);
               href={legacyGuidePath(entry.suffix, currentLang)}
               class="flex min-h-12 items-center justify-between gap-4 px-4 py-3 text-sm font-medium text-slate-800 transition-colors hover:bg-slate-50 focus-visible:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-violet-500 dark:text-slate-100 dark:hover:bg-slate-800/80 dark:focus-visible:bg-slate-800/80"
             >
-              <span>{isVi ? entry.titleVi : entry.titleEn}</span>
+              <span class="flex min-w-0 flex-wrap items-center gap-2">
+                <span>{isVi ? entry.titleVi : entry.titleEn}</span>
+                {entry.freezeStatus === 'frozen' ? (
+                  <span class="rounded-md bg-emerald-100 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-300">
+                    {isVi ? 'Frozen' : 'Frozen'}
+                  </span>
+                ) : (
+                  <span class="rounded-md bg-slate-100 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-slate-500 dark:bg-slate-800 dark:text-slate-400">
+                    Stub
+                  </span>
+                )}
+              </span>
               <span class="shrink-0 font-mono text-xs text-slate-400">/{entry.suffix}</span>
             </a>
           </li>

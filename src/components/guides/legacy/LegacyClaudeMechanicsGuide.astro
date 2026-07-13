@@ -1,0 +1,38 @@
+---
+/**
+ * Frozen Claude Mechanics guide (CK-era ck init tree).
+ * Copied under legacy/ so later /guides/claude-mechanics AK rewrite cannot mutate the archive.
+ */
+import MechanicsWhatIsClaudeMd from './claude-mechanics/mechanics-what-is-claude-md.astro';
+import MechanicsConfigHierarchy from './claude-mechanics/mechanics-config-hierarchy.astro';
+import MechanicsCkInitTree from './claude-mechanics/mechanics-ck-init-tree.astro';
+import MechanicsKitVsYourConfig from './claude-mechanics/mechanics-kit-vs-your-config.astro';
+import MechanicsCommonConfusions from './claude-mechanics/mechanics-common-confusions.astro';
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+---
+
+<div class="space-y-12">
+  <div class="text-center space-y-4">
+    <h1 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
+      {t('guides.claude_mechanics.title')}
+    </h1>
+    <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+      {t('guides.claude_mechanics.subtitle')}
+    </p>
+  </div>
+
+  <MechanicsWhatIsClaudeMd lang={currentLang} />
+  <MechanicsConfigHierarchy lang={currentLang} />
+  <MechanicsCkInitTree lang={currentLang} />
+  <MechanicsKitVsYourConfig lang={currentLang} />
+  <MechanicsCommonConfusions lang={currentLang} />
+</div>
