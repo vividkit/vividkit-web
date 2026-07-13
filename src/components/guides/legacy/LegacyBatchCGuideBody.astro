@@ -1,0 +1,52 @@
+---
+/**
+ * Batch C archive bodies — remaining catalog stubs.
+ * Shared-component freeze: copy trees into legacy/ before rewriting live guides.
+ */
+import type { Language } from '@/i18n';
+import PermissionsGuide from '@/components/guides/PermissionsGuide.astro';
+import CustomHooksGuide from '@/components/guides/CustomHooksGuide.astro';
+import UIReviewGateGuide from '@/components/guides/UIReviewGateGuide.astro';
+import CCSGuide from '@/components/guides/CCSGuide.astro';
+import HappyCCSGuide from '@/components/guides/HappyCCSGuide.astro';
+import CodexAppGuide from '@/components/guides/CodexAppGuide.astro';
+import MigrateGuide from '@/components/guides/MigrateGuide.astro';
+import IDEConfigGuide from '@/components/guides/IDEConfigGuide.astro';
+import RemoteControlGuide from '@/components/guides/RemoteControlGuide.astro';
+import UIUXGuide from '@/components/guides/UIUXGuide.astro';
+import SessionRecoveryGuide from '@/components/guides/SessionRecoveryGuide.astro';
+import FixLogsGuide from '@/components/guides/FixLogsGuide.astro';
+
+interface Props {
+  suffix: string;
+  lang: Language;
+}
+
+const { suffix, lang } = Astro.props;
+---
+
+{suffix === 'permissions' ? (
+  <PermissionsGuide lang={lang} />
+) : suffix === 'hooks' ? (
+  <CustomHooksGuide lang={lang} />
+) : suffix === 'ui-review-gate' ? (
+  <UIReviewGateGuide lang={lang} />
+) : suffix === 'ccs' ? (
+  <CCSGuide lang={lang} />
+) : suffix === 'happy-ccs' ? (
+  <HappyCCSGuide lang={lang} />
+) : suffix === 'codex-app' ? (
+  <CodexAppGuide lang={lang} />
+) : suffix === 'migrate' ? (
+  <MigrateGuide lang={lang} />
+) : suffix === 'ide-config' ? (
+  <IDEConfigGuide lang={lang} />
+) : suffix === 'remote-control' ? (
+  <RemoteControlGuide lang={lang} />
+) : suffix === 'uiux' ? (
+  <UIUXGuide lang={lang} />
+) : suffix === 'session-recovery' ? (
+  <SessionRecoveryGuide lang={lang} />
+) : suffix === 'fix-logs' ? (
+  <FixLogsGuide lang={lang} />
+) : null}

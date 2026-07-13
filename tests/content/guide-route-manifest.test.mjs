@@ -76,14 +76,12 @@ test('legacy archive catalog is bilingual, excluded from sitemap/llms, and requi
   assert.equal(sitemapRouteIdentities.some((route) => route.includes('/legacy/')), false);
 
   const frozen = LEGACY_GUIDE_CATALOG.filter((entry) => entry.freezeStatus === 'frozen').map((entry) => entry.suffix).sort();
-  assert.equal(frozen.length, 16);
-  assert.ok(frozen.includes('cli'));
-  assert.ok(frozen.includes('commands'));
-  assert.ok(frozen.includes('how-ck-works'));
-  assert.ok(frozen.includes('inside-claudekit/plan-modes'));
+  assert.equal(frozen.length, LEGACY_GUIDE_CATALOG.length);
+  assert.equal(LEGACY_GUIDE_CATALOG.every((entry) => entry.freezeStatus === 'frozen'), true);
+  assert.ok(frozen.includes('migrate'));
+  assert.ok(frozen.includes('ccs'));
+  assert.ok(frozen.includes('hooks'));
   assert.ok(frozen.includes('claude-mechanics'));
-  assert.ok(frozen.includes('coexistence'));
-  assert.ok(frozen.includes('ck-with-codex'));
 });
 
 test('current build preserves every required identity and contains no unmanifested route', async (context) => {
