@@ -1,0 +1,207 @@
+---
+/**
+ * AgentKit onboarding + kit plugin tree — facts from agentkit-structure-facts / probe fixtures.
+ * Do not hardcode `ak kit init … --target` install strings; use the target adapter.
+ */
+import { useTranslations } from '@/i18n/utils';
+import { type Language } from '@/i18n';
+import {
+  AGENTKIT_KIT_STRUCTURE_BY_TARGET,
+  AGENTKIT_MECHANICS_TEACHING_STEPS,
+  AGENTKIT_PROJECT_ONBOARDING,
+  AGENTKIT_STRUCTURE_PROBE,
+} from '@/data/guides/claude-mechanics/agentkit-structure-facts';
+import { getAgentKitTargetView } from '@/data/guides/agentkit/agentkit-target-capabilities';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const isVi = lang === 'vi';
+
+const claudeStructure = AGENTKIT_KIT_STRUCTURE_BY_TARGET['claude-code'];
+const codexStructure = AGENTKIT_KIT_STRUCTURE_BY_TARGET.codex;
+const claudeTarget = getAgentKitTargetView('claude-code');
+const codexTarget = getAgentKitTargetView('codex');
+
+const legacyHref = isVi ? '/vi/legacy/guides/claude-mechanics' : '/legacy/guides/claude-mechanics';
+const migrateHref = isVi ? '/vi/guides/agentkit' : '/guides/agentkit';
+
+const icon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>`;
+
+function entryLabel(entry: string): { name: string; type: 'file' | 'folder' } {
+  const isFolder = entry.endsWith('/');
+  return { name: entry, type: isFolder ? 'folder' : 'file' };
+}
+
+const onboardingCreates = AGENTKIT_PROJECT_ONBOARDING.creates.map((path) => entryLabel(path));
+const claudeEntries = claudeStructure.topLevelEntries.map((path) => entryLabel(path));
+const codexEntries = codexStructure.topLevelEntries.map((path) => entryLabel(path));
+---
+
+<section id="agentkit-structure" class="space-y-6 scroll-mt-28">
+  <div class="flex items-center gap-3">
+    <div class="w-10 h-10 rounded-xl bg-green-100 dark:bg-green-500/20 flex items-center justify-center text-green-600 dark:text-green-400">
+      <Fragment set:html={icon} />
+    </div>
+    <h2 class="text-2xl font-bold text-slate-900 dark:text-white">
+      {t('guides.claude_mechanics.section_agentkit_setup')}
+    </h2>
+  </div>
+
+  <p class="text-sm text-slate-600 dark:text-slate-400 max-w-3xl">
+    {t('guides.claude_mechanics.agentkit_setup.intro')}
+  </p>
+
+  <!-- Teaching order -->
+  <ol class="grid gap-3 md:grid-cols-3">
+    {AGENTKIT_MECHANICS_TEACHING_STEPS.map((step, index) => (
+      <li class="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/50 p-4">
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-green-600 dark:text-green-400">
+          {String(index + 1).padStart(2, '0')}
+        </p>
+        <h3 class="mt-2 font-semibold text-slate-900 dark:text-white">
+          {isVi ? step.titleVi : step.titleEn}
+        </h3>
+        <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+          {isVi ? step.bodyVi : step.bodyEn}
+        </p>
+      </li>
+    ))}
+  </ol>
+
+  <!-- Step A: project onboarding -->
+  <div class="glass-card rounded-2xl overflow-hidden">
+    <div class="p-4 bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
+      <div class="flex flex-wrap items-center gap-2 text-sm font-mono text-slate-800 dark:text-white">
+        <span class="text-green-600 dark:text-green-400">$</span>
+        <code class="rounded bg-slate-100 dark:bg-slate-800/90 px-1.5 py-0.5 text-purple-600 dark:text-purple-400 border border-slate-200 dark:border-slate-700">
+          {AGENTKIT_PROJECT_ONBOARDING.newCommand}
+        </code>
+        <span class="text-slate-400">{isVi ? 'hoặc' : 'or'}</span>
+        <code class="rounded bg-slate-100 dark:bg-slate-800/90 px-1.5 py-0.5 text-purple-600 dark:text-purple-400 border border-slate-200 dark:border-slate-700">
+          {AGENTKIT_PROJECT_ONBOARDING.initCommand}
+        </code>
+      </div>
+      <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">
+        {t('guides.claude_mechanics.agentkit_setup.onboard_desc')}
+      </p>
+    </div>
+    <div class="p-6 space-y-4">
+      <div class="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-4 font-mono text-sm overflow-x-auto">
+        <div class="text-slate-400 text-xs mb-3">project/</div>
+        {onboardingCreates.map((item) => (
+          <div class="flex items-center gap-2 py-1">
+            {item.type === 'folder' ? (
+              <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
+              </svg>
+            ) : (
+              <svg class="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            )}
+            <span class="text-slate-600 dark:text-slate-300">{item.name}</span>
+          </div>
+        ))}
+        <p class="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700 text-xs text-slate-500 dark:text-slate-400 font-sans">
+          {AGENTKIT_PROJECT_ONBOARDING.note}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step B: kit plugin tree (Claude Code) -->
+  <div class="glass-card rounded-2xl overflow-hidden">
+    <div class="p-4 bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 space-y-2">
+      <div class="flex flex-wrap items-center gap-2 text-sm">
+        <span class="text-green-600 dark:text-green-400 font-mono">$</span>
+        <code class="rounded bg-slate-100 dark:bg-slate-800/90 px-1.5 py-0.5 font-mono text-purple-600 dark:text-purple-400 border border-slate-200 dark:border-slate-700">
+          {claudeTarget.installCommand}
+        </code>
+      </div>
+      <p class="text-sm text-slate-600 dark:text-slate-400">
+        {t('guides.claude_mechanics.agentkit_setup.kit_desc')}
+      </p>
+      <p class="text-xs text-slate-500 dark:text-slate-400">
+        {t('guides.claude_mechanics.agentkit_setup.probe_meta')
+          .replace('{version}', AGENTKIT_STRUCTURE_PROBE.akVersion)
+          .replace('{date}', AGENTKIT_STRUCTURE_PROBE.verifiedAt)}
+      </p>
+    </div>
+
+    <div class="p-6 space-y-6">
+      <div class="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-4 font-mono text-sm overflow-x-auto">
+        <div class="text-slate-400 text-xs mb-3">
+          {claudeStructure.pluginPackageName}/
+          <span class="ml-2 text-slate-500">→ {claudeStructure.installPathHint}</span>
+        </div>
+        {claudeEntries.map((item) => (
+          <div class="flex items-center gap-2 py-1">
+            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
+            </svg>
+            <span class="text-amber-600 dark:text-amber-400">{item.name}</span>
+          </div>
+        ))}
+        <div class="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700 text-xs text-slate-500 dark:text-slate-400 font-sans space-y-1">
+          <p>
+            {isVi ? 'Probe counts' : 'Probe counts'}: agents {claudeStructure.counts.agents}, hooks {claudeStructure.counts.hooksCjs}, rules {claudeStructure.counts.rules}, skills {claudeStructure.counts.skills} ({claudeStructure.counts.filesWritten} files)
+          </p>
+          {claudeStructure.gaps.map((gap) => (
+            <p class="text-amber-700 dark:text-amber-300">• {gap}</p>
+          ))}
+        </div>
+      </div>
+
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-slate-200 dark:border-slate-700 p-4 space-y-3">
+          <h4 class="font-semibold text-slate-800 dark:text-slate-200">
+            {t('guides.claude_mechanics.agentkit_setup.codex_title')}
+          </h4>
+          <code class="block text-xs rounded bg-slate-100 dark:bg-slate-800/90 px-2 py-1.5 font-mono text-purple-600 dark:text-purple-400 border border-slate-200 dark:border-slate-700 break-all">
+            {codexTarget.installCommand}
+          </code>
+          <div class="font-mono text-xs space-y-1">
+            {codexEntries.map((item) => (
+              <div class="text-amber-600 dark:text-amber-400">{item.name}</div>
+            ))}
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400">
+            skills {codexStructure.counts.skills} · {codexStructure.counts.filesWritten} files
+          </p>
+        </div>
+
+        <div class="rounded-xl border border-slate-200 dark:border-slate-700 p-4 space-y-3">
+          <h4 class="font-semibold text-slate-800 dark:text-slate-200">
+            {t('guides.claude_mechanics.agentkit_setup.build_only_title')}
+          </h4>
+          <p class="text-sm text-slate-600 dark:text-slate-400">
+            {t('guides.claude_mechanics.agentkit_setup.build_only_desc')}
+          </p>
+          <div class="flex flex-wrap gap-2">
+            {claudeStructure.buildOnlyFlags.map((flag) => (
+              <code class="text-xs px-2 py-1 rounded bg-green-100 dark:bg-green-500/20 text-green-700 dark:text-green-400 font-mono">
+                {flag}
+              </code>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <aside class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/40 p-4 text-sm">
+    <p class="text-slate-600 dark:text-slate-400" set:html={t('guides.claude_mechanics.agentkit_setup.legacy_note')} />
+    <div class="flex flex-wrap gap-3 shrink-0">
+      <a href={legacyHref} class="font-medium text-cyan-700 dark:text-cyan-300 underline hover:no-underline">
+        {t('guides.claude_mechanics.agentkit_setup.legacy_cta')}
+      </a>
+      <a href={migrateHref} class="font-medium text-cyan-700 dark:text-cyan-300 underline hover:no-underline">
+        {t('guides.claude_mechanics.agentkit_setup.migrate_cta')}
+      </a>
+    </div>
+  </aside>
+</section>

@@ -69,7 +69,7 @@ export const guideSections = [
       {
         title: 'Claude Mechanics',
         path: '/guides/claude-mechanics',
-        desc: 'How CLAUDE.md works, the config hierarchy, and what ck init creates.',
+        desc: 'How CLAUDE.md works, the config hierarchy, and what AgentKit project onboarding plus kit install create.',
       },
       {
         title: 'Permission Modes',

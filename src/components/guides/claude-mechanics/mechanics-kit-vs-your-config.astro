@@ -1,7 +1,8 @@
 ---
-// Section 4: Kit Config vs Your Config - Clear distinction table
-import { useTranslations } from "@/i18n/utils";
-import { type Language } from "@/i18n";
+// Kit-managed plugin content vs your Claude Code project files (AgentKit era)
+import { useTranslations } from '@/i18n/utils';
+import { type Language } from '@/i18n';
+import { AGENTKIT_KIT_STRUCTURE_BY_TARGET } from '@/data/guides/claude-mechanics/agentkit-structure-facts';
 
 interface Props {
   lang: Language;
@@ -12,23 +13,21 @@ const t = useTranslations(lang);
 
 const icon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" /></svg>`;
 
-const kitFiles = [
-  '.claude/skills/*',
-  '.claude/hooks/*',
-  '.claude/agents/*',
-  '.claude/settings.json',
-];
+const claude = AGENTKIT_KIT_STRUCTURE_BY_TARGET['claude-code'];
+const kitFiles = claude.topLevelEntries.filter((entry) =>
+  ['agents/', 'hooks/', 'rules/', 'skills/', '.claude-plugin/'].includes(entry),
+);
+const kitHint = claude.installPathHint;
 
 const yourFiles = [
-  'CLAUDE.md (your additions)',
-  '.claude/rules/*',
+  'CLAUDE.md',
   'CLAUDE.local.md',
+  '.claude/rules/* (project)',
   '.env (gitignored)',
 ];
 ---
 
 <section class="space-y-6">
-  <!-- Section Header -->
   <div class="flex items-center gap-3">
     <div class="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-500/20 flex items-center justify-center text-purple-600 dark:text-purple-400">
       <Fragment set:html={icon} />
@@ -38,9 +37,12 @@ const yourFiles = [
     </h2>
   </div>
 
+  <p class="text-sm text-slate-600 dark:text-slate-400 max-w-3xl">
+    {t('guides.claude_mechanics.kit_vs_you.intro')}
+  </p>
+
   <div class="glass-card rounded-2xl overflow-hidden">
     <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-200 dark:divide-slate-700">
-      <!-- Kit Config Side -->
       <div class="p-6 space-y-4">
         <div class="flex items-center gap-3">
           <div class="w-8 h-8 rounded-lg bg-red-100 dark:bg-red-500/20 flex items-center justify-center">
@@ -60,6 +62,9 @@ const yourFiles = [
 
         <p class="text-sm text-slate-500 dark:text-slate-400">
           {t('guides.claude_mechanics.kit_vs_you.kit_subtitle')}
+          <code class="ml-1 text-xs rounded bg-slate-100 dark:bg-slate-800/90 px-1 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700">
+            {kitHint}
+          </code>
         </p>
 
         <ul class="space-y-2">
@@ -78,7 +83,6 @@ const yourFiles = [
         </ul>
       </div>
 
-      <!-- Your Config Side -->
       <div class="p-6 space-y-4 bg-green-50/50 dark:bg-green-500/5">
         <div class="flex items-center gap-3">
           <div class="w-8 h-8 rounded-lg bg-green-100 dark:bg-green-500/20 flex items-center justify-center">
@@ -97,7 +101,7 @@ const yourFiles = [
         </div>
 
         <p class="text-sm text-slate-500 dark:text-slate-400">
-          Your customizations
+          {t('guides.claude_mechanics.kit_vs_you.you_customizations')}
         </p>
 
         <ul class="space-y-2">

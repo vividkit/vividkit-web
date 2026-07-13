@@ -108,6 +108,9 @@ function sourceMode(file) {
     || file.startsWith('src/components/guides/what-is-claudekit/')
     || file.startsWith('src/data/guides/how-ck-works/')
     || file.startsWith('src/components/guides/how-ck-works/')
+    || file.startsWith('src/data/guides/claude-mechanics/')
+    || (file.startsWith('src/components/guides/claude-mechanics/') && !file.includes('/legacy/'))
+    || file === 'src/components/guides/ClaudeMechanicsGuide.astro'
     || file === 'src/components/guides/WhatIsClaudeKitGuide.astro'
     || file === 'src/pages/guides/agentkit.astro'
     || file === 'src/pages/vi/guides/agentkit.astro'
@@ -117,6 +120,8 @@ function sourceMode(file) {
     || file === 'src/i18n/vi/what-is-claudekit.ts'
     || file === 'src/pages/guides/how-ck-works.astro'
     || file === 'src/pages/vi/guides/how-ck-works.astro'
+    || file === 'src/pages/guides/claude-mechanics.astro'
+    || file === 'src/pages/vi/guides/claude-mechanics.astro'
   ) ? 'agentkit-active' : 'legacy-backlog';
 }
 
@@ -126,6 +131,7 @@ function generatedMode(file) {
     file.includes('/guides/agentkit/')
     || file.includes('/guides/what-is-claudekit/')
     || file.includes('/guides/how-ck-works/')
+    || file.includes('/guides/claude-mechanics/')
   ) ? 'agentkit-active' : 'legacy-backlog';
 }
 

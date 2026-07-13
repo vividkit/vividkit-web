@@ -1,7 +1,7 @@
 ---
-// Section 5: Common Confusions - FAQ accordion
-import { useTranslations } from "@/i18n/utils";
-import { type Language } from "@/i18n";
+// Common confusions — AgentKit-aware FAQ
+import { useTranslations } from '@/i18n/utils';
+import { type Language } from '@/i18n';
 
 interface Props {
   lang: Language;
@@ -9,6 +9,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
+const isVi = lang === 'vi';
 
 const icon = `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" /></svg>`;
 
@@ -18,11 +19,14 @@ const faqs = [
   { q: 'q3', a: 'a3' },
   { q: 'q4', a: 'a4' },
   { q: 'q5', a: 'a5' },
+  { q: 'q6', a: 'a6' },
 ];
+
+const howWorksHref = isVi ? '/vi/guides/how-ck-works' : '/guides/how-ck-works';
+const legacyHref = isVi ? '/vi/legacy/guides/claude-mechanics' : '/legacy/guides/claude-mechanics';
 ---
 
 <section class="space-y-6">
-  <!-- Section Header -->
   <div class="flex items-center gap-3">
     <div class="w-10 h-10 rounded-xl bg-cyan-100 dark:bg-cyan-500/20 flex items-center justify-center text-cyan-600 dark:text-cyan-400">
       <Fragment set:html={icon} />
@@ -32,7 +36,6 @@ const faqs = [
     </h2>
   </div>
 
-  <!-- FAQ Accordion -->
   <div class="space-y-3">
     {faqs.map((faq) => (
       <details class="group glass-card rounded-xl overflow-hidden hover:border-cyan-300 dark:hover:border-cyan-700/60 transition-colors">
@@ -55,23 +58,34 @@ const faqs = [
         </summary>
         <div class="px-4 pb-4">
           <div class="pl-9 pt-2 border-t border-slate-200 dark:border-slate-700">
-            <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-              {t(`guides.claude_mechanics.faq.${faq.a}`)}
-            </p>
+            <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed" set:html={t(`guides.claude_mechanics.faq.${faq.a}`)} />
           </div>
         </div>
       </details>
     ))}
   </div>
 
-  <!-- Help tip -->
   <div class="flex items-start gap-3 p-4 rounded-xl bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20">
     <svg class="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
       <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
-    <p class="text-sm text-blue-700 dark:text-blue-400" set:html={lang === 'vi'
-        ? `Vẫn còn thắc mắc? Xem hướng dẫn "<a href="/vi/guides/how-ck-works" class="underline hover:text-blue-600 dark:hover:text-blue-300">How ClaudeKit Works</a>" để hiểu rõ hơn về cách các skills và hooks hoạt động.`
-        : `Still confused? Check out the "<a href="/guides/how-ck-works" class="underline hover:text-blue-600 dark:hover:text-blue-300">How ClaudeKit Works</a>" guide for a deeper dive into how skills and hooks work together.`} />
+    <p class="text-sm text-blue-700 dark:text-blue-400">
+      {isVi ? (
+        <>
+          Muốn đi sâu skills/hooks? Xem{' '}
+          <a href={howWorksHref} class="underline hover:text-blue-600 dark:hover:text-blue-300">How AgentKit Works</a>
+          . Tree install ClaudeKit lịch sử nằm ở{' '}
+          <a href={legacyHref} class="underline hover:text-blue-600 dark:hover:text-blue-300">/legacy/guides/claude-mechanics</a>.
+        </>
+      ) : (
+        <>
+          Want a deeper skills/hooks dive? See{' '}
+          <a href={howWorksHref} class="underline hover:text-blue-600 dark:hover:text-blue-300">How AgentKit Works</a>
+          . The historical ClaudeKit install tree lives under{' '}
+          <a href={legacyHref} class="underline hover:text-blue-600 dark:hover:text-blue-300">/legacy/guides/claude-mechanics</a>.
+        </>
+      )}
+    </p>
   </div>
 </section>
 

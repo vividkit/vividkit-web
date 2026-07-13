@@ -110,8 +110,8 @@ export const AGENTKIT_MECHANICS_TEACHING_STEPS = [
     id: 'kit',
     titleEn: 'Install a kit for a target',
     titleVi: 'Cài kit cho một target',
-    bodyEn: 'Use ak kit init with an explicit --target. Kit output is adapter plugin content (agents, hooks, rules, skills), not a CK-era ck init dump.',
-    bodyVi: 'Dùng ak kit init với --target rõ ràng. Output kit là nội dung plugin theo adapter (agents, hooks, rules, skills), không phải dump kiểu ck init cũ.',
+    bodyEn: 'Use ak kit init with an explicit --target. Kit output is adapter plugin content (agents, hooks, rules, skills), not a ClaudeKit-era project dump.',
+    bodyVi: 'Dùng ak kit init với --target rõ ràng. Output kit là nội dung plugin theo adapter (agents, hooks, rules, skills), không phải dump project kiểu ClaudeKit cũ.',
   },
   {
     id: 'refresh',

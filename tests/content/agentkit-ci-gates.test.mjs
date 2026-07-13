@@ -86,9 +86,10 @@ test('migrated target consumers import the canonical adapter instead of hardcodi
     'src/components/guides/CoexistenceGuide.astro',
     'src/components/guides/migrate/agentkit-target-matrix.astro',
     'src/components/guides/cli-guide/AgentKitCliSetup.astro',
+    'src/components/guides/claude-mechanics/mechanics-agentkit-structure.astro',
   ]) {
     const source = await readFile(new URL(file, ROOT), 'utf8');
-    assert.match(source, /agentkit-target-capabilities/);
+    assert.match(source, /agentkit-target-capabilities|agentkit-structure-facts/);
     assert.doesNotMatch(source, /ak kit (?:init|install) engineer --target/);
     assert.doesNotMatch(source, /['"]\/?\$?ak:\*['"]/);
     assert.doesNotMatch(source, /Verified stable targets · 2026-07-12/);
