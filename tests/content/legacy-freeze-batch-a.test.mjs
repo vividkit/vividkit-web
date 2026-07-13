@@ -7,11 +7,9 @@ import { LEGACY_FROZEN_SUFFIXES } from '../../src/data/guides/legacy-guide-catal
 const root = new URL('../..', import.meta.url);
 
 test('batch A freeze wires full CK composers for mechanics, coexistence, and ck-with-codex', async () => {
-  assert.deepEqual([...LEGACY_FROZEN_SUFFIXES].sort(), [
-    'ck-with-codex',
-    'claude-mechanics',
-    'coexistence',
-  ]);
+  for (const suffix of ['claude-mechanics', 'coexistence', 'ck-with-codex']) {
+    assert.ok(LEGACY_FROZEN_SUFFIXES.includes(suffix), `batch A missing ${suffix}`);
+  }
 
   const enSlugPage = await readFile(new URL('src/pages/legacy/guides/[...slug].astro', root), 'utf8');
   assert.match(enSlugPage, /LegacyClaudeMechanicsGuide/);

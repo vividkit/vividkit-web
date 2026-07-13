@@ -4,8 +4,10 @@ import LegacyGuideStub from '@/components/guides/legacy/LegacyGuideStub.astro';
 import LegacyClaudeMechanicsGuide from '@/components/guides/legacy/LegacyClaudeMechanicsGuide.astro';
 import LegacyCoexistenceGuide from '@/components/guides/legacy/LegacyCoexistenceGuide.astro';
 import LegacyCkWithCodexGuide from '@/components/guides/legacy/LegacyCkWithCodexGuide.astro';
+import LegacyBatchBGuideBody from '@/components/guides/legacy/LegacyBatchBGuideBody.astro';
 import {
   getLegacyGuideEntry,
+  LEGACY_BATCH_B_SUFFIXES,
   LEGACY_GUIDE_CATALOG,
 } from '@/data/guides/legacy-guide-catalog';
 
@@ -18,6 +20,7 @@ export function getStaticPaths() {
 const suffix = Astro.params.slug ?? '';
 const entry = getLegacyGuideEntry(suffix);
 const frozen = entry?.freezeStatus === 'frozen';
+const isBatchB = (LEGACY_BATCH_B_SUFFIXES as readonly string[]).includes(suffix);
 const title = entry
   ? `${entry.titleVi} (ClaudeKit archive)`
   : 'ClaudeKit archive';
@@ -39,6 +42,8 @@ const description = frozen
     <LegacyCoexistenceGuide lang="vi" />
   ) : suffix === 'ck-with-codex' ? (
     <LegacyCkWithCodexGuide lang="vi" />
+  ) : isBatchB ? (
+    <LegacyBatchBGuideBody suffix={suffix} lang="vi" />
   ) : (
     <LegacyGuideStub suffix={suffix} lang="vi" />
   )}

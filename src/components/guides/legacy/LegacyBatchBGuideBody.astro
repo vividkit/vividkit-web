@@ -1,0 +1,57 @@
+---
+/**
+ * Batch B archive bodies.
+ * Shared-component freeze: renders the current guide trees under /legacy.
+ * Before rewriting any of these live guides, copy their trees into legacy/ first
+ * (same discipline as Claude Mechanics in batch A).
+ */
+import type { Language } from '@/i18n';
+import CLIGuide from '@/components/guides/CLIGuide.astro';
+import CLICommandsGuide from '@/components/guides/CLICommandsGuide.astro';
+import CommandsGuide from '@/components/guides/CommandsGuide.astro';
+import WorkflowsGuide from '@/components/guides/WorkflowsGuide.astro';
+import FlowchartGuide from '@/components/guides/FlowchartGuide.astro';
+import FindingUnknownsGuide from '@/components/guides/FindingUnknownsGuide.astro';
+import WhatIsClaudeKitGuide from '@/components/guides/WhatIsClaudeKitGuide.astro';
+import HowCkWorksGuide from '@/components/guides/how-ck-works/HowCkWorksGuide.astro';
+import InsideClaudeKitGuide from '@/components/guides/InsideClaudeKitGuide.astro';
+import InsideClaudeKitFrontendDesignArticle from '@/components/guides/inside-claudekit/InsideClaudeKitFrontendDesignArticle.astro';
+import InsideClaudeKitGettingStartedArticle from '@/components/guides/inside-claudekit/InsideClaudeKitGettingStartedArticle.astro';
+import InsideClaudeKitGuardRailsArticle from '@/components/guides/inside-claudekit/InsideClaudeKitGuardRailsArticle.astro';
+import InsideClaudeKitPlanModesArticle from '@/components/guides/inside-claudekit/InsideClaudeKitPlanModesArticle.astro';
+
+interface Props {
+  suffix: string;
+  lang: Language;
+}
+
+const { suffix, lang } = Astro.props;
+---
+
+{suffix === 'cli' ? (
+  <CLIGuide lang={lang} />
+) : suffix === 'cli-commands' ? (
+  <CLICommandsGuide lang={lang} />
+) : suffix === 'commands' ? (
+  <CommandsGuide lang={lang} />
+) : suffix === 'workflows' ? (
+  <WorkflowsGuide lang={lang} />
+) : suffix === 'flowchart' ? (
+  <FlowchartGuide lang={lang} />
+) : suffix === 'finding-unknowns' ? (
+  <FindingUnknownsGuide lang={lang} />
+) : suffix === 'what-is-claudekit' ? (
+  <WhatIsClaudeKitGuide lang={lang} />
+) : suffix === 'how-ck-works' ? (
+  <div class="pb-8"><HowCkWorksGuide lang={lang} /></div>
+) : suffix === 'inside-claudekit' ? (
+  <InsideClaudeKitGuide lang={lang} />
+) : suffix === 'inside-claudekit/frontend-design' ? (
+  <InsideClaudeKitFrontendDesignArticle lang={lang} />
+) : suffix === 'inside-claudekit/getting-started' ? (
+  <InsideClaudeKitGettingStartedArticle lang={lang} />
+) : suffix === 'inside-claudekit/guard-rails' ? (
+  <InsideClaudeKitGuardRailsArticle lang={lang} />
+) : suffix === 'inside-claudekit/plan-modes' ? (
+  <InsideClaudeKitPlanModesArticle lang={lang} />
+) : null}
