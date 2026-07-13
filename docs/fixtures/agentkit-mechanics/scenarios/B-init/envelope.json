@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "kind": "init",
+  "data": {
+    "dir": "/tmp/ak-mechanics-probe-20260713/probe-b",
+    "project_id": "probe-b",
+    "manifest_version": 1,
+    "files_adopted": 0,
+    "files_tracked": 0,
+    "claude_snapshot": "20260713T101113Z-44fe3180"
+  }
+}

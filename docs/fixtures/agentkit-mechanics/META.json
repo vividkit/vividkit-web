@@ -1,0 +1,19 @@
+{
+  "ak_version": "ak 2.2.0-beta.17",
+  "probed_at": "2026-07-13T10:12:18Z",
+  "channel": "beta",
+  "registry": "https://agentkit.best",
+  "probe_root_note": "Local /tmp run; not committed. Trees and slim envelopes only.",
+  "commands": [
+    "ak new probe-a --no-interactive --json",
+    "ak init --json --no-interactive  # in empty probe-b",
+    "ak kit init engineer --target claude-code --build-only --out ./out --remote --yes --json --no-interactive",
+    "ak kit init engineer --target codex --build-only --out ./out --remote --yes --json --no-interactive",
+    "ak kit init engineer --target claude-code --remote --yes --json --no-interactive  # project scope failed: mixed native/plugin"
+  ],
+  "gaps": [
+    "Project-scoped Claude Code kit install blocked on this machine (native engineer already active at user scope).",
+    "Global install not re-run to avoid mutating ~/.claude.",
+    "ak new --template engineer not captured as primary fixture (secondary callout only)."
+  ]
+}

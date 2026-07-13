@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "kind": "kit.init",
+  "data": {
+    "kit": "engineer",
+    "target": "codex",
+    "mode": "build",
+    "installMode": "build",
+    "scope": "build",
+    "outDir": "out/engineer",
+    "filesWritten": 2747,
+    "skillsSelected": 91,
+    "skillsAvailable": 91,
+    "selectedSkills": [
+      "… 91 skills omitted"
+    ],
+    "skillSelectionMode": "all",
+    "success": true,
+    "hookEvents": [
+      "PostToolUse",
+      "PreToolUse",
+      "SessionStart",
+      "Stop",
+      "SubagentStart",
+      "SubagentStop",
+      "UserPromptSubmit"
+    ],
+    "hookScripts": 16,
+    "scriptAuditCommand": "ak audit scripts out/engineer",
+    "warnings": [
+      "codex emitter: dropped hook group (event=PostToolUse, matcher=\"Edit|Write\"): matcher not allowed in Codex",
+      "codex emitter: dropped hook group (event=PostToolUse, matcher=\"TodoWrite|TodoRead\"): matcher not allowed in Codex",
+      "codex emitter: dropped hook group (event=PreToolUse, matcher=\"Write\"): matcher not allowed in Codex",
+      "codex emitter: dropped hook event \"SubagentStart\" (no Codex equivalent)",
+      "codex emitter: dropped hook event \"SubagentStop\" (no Codex equivalent)"
+    ]
+  }
+}

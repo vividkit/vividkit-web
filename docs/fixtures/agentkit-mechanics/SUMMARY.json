@@ -1,0 +1,96 @@
+{
+  "ak_version": "ak 2.2.0-beta.17",
+  "probed_at": "2026-07-13T10:12:18.925Z",
+  "scenarios": {
+    "A_new": {
+      "ok": true,
+      "data": {
+        "project": "probe-a",
+        "dir": "/tmp/ak-mechanics-probe-20260713/probe-a",
+        "files_written": 2,
+        "manifest_version": 1
+      },
+      "tree": [
+        ".",
+        "./.agentkit",
+        "./.agentkit/.lock",
+        "./.agentkit/ownership.json",
+        "./.agentkit/project.yaml",
+        "./.agentkit/script-audit.json",
+        "./README.md"
+      ]
+    },
+    "B_init": {
+      "ok": true,
+      "data": {
+        "dir": "/tmp/ak-mechanics-probe-20260713/probe-b",
+        "project_id": "probe-b",
+        "manifest_version": 1,
+        "files_adopted": 0,
+        "files_tracked": 0,
+        "claude_snapshot": "20260713T101113Z-44fe3180"
+      },
+      "tree": [
+        ".",
+        "./.agentkit",
+        "./.agentkit/.lock",
+        "./.agentkit/ownership.json",
+        "./.agentkit/script-audit.json"
+      ]
+    },
+    "C_kit_project": {
+      "ok": false,
+      "error": "mixed_install_modes_native_blocks_plugin",
+      "note": "project install previewed destination ak-engineer but refused without --switch-to-plugin"
+    },
+    "D_global": {
+      "ok": false,
+      "skipped": true,
+      "reason": "user already has native engineer at user scope; avoid mutating ~/.claude in probe"
+    },
+    "E_codex_build": {
+      "ok": true,
+      "data": {
+        "kit": "engineer",
+        "target": "codex",
+        "mode": "build",
+        "outDir": "out/engineer",
+        "filesWritten": 2747,
+        "skillsSelected": 91
+      }
+    },
+    "F_claude_build": {
+      "ok": true,
+      "data": {
+        "kit": "engineer",
+        "target": "claude-code",
+        "mode": "build",
+        "outDir": "out/ak-engineer",
+        "filesWritten": 1404,
+        "skillsSelected": 91
+      },
+      "topLevelDirs": [
+        ".agentkit",
+        ".claude-plugin",
+        "agents",
+        "hooks",
+        "rules",
+        "skills"
+      ],
+      "counts": {
+        "agents": 16,
+        "hooks_cjs": 8,
+        "rules": 7,
+        "skills": 91,
+        "files": 1404
+      },
+      "pluginName": "ak-engineer",
+      "pluginVersion": "0.2.0"
+    },
+    "H_new_template": {
+      "ok": false,
+      "skipped": true,
+      "reason": "ak new --template engineer failed in probe; document as secondary callout only"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+.
+./.agentkit
+./.agentkit/.lock
+./.agentkit/ownership.json
+./.agentkit/project.yaml
+./.agentkit/script-audit.json
+./README.md

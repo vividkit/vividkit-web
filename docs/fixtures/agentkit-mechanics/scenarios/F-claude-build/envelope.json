@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "kind": "kit.init",
+  "data": {
+    "kit": "engineer",
+    "target": "claude-code",
+    "mode": "build",
+    "installMode": "build",
+    "scope": "build",
+    "outDir": "out/ak-engineer",
+    "filesWritten": 1404,
+    "skillsSelected": 91,
+    "skillsAvailable": 91,
+    "selectedSkills": [
+      "… 91 skills omitted"
+    ],
+    "skillSelectionMode": "all",
+    "success": true,
+    "hookEvents": [
+      "PostToolUse",
+      "PreToolUse",
+      "SessionStart",
+      "Stop",
+      "SubagentStart",
+      "SubagentStop",
+      "UserPromptSubmit"
+    ],
+    "hookScripts": 16,
+    "scriptAuditCommand": "ak audit scripts out/ak-engineer"
+  }
+}

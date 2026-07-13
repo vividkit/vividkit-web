@@ -1,0 +1,5 @@
+.
+./.agentkit
+./.agentkit/.lock
+./.agentkit/ownership.json
+./.agentkit/script-audit.json
