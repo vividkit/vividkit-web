@@ -1,0 +1,173 @@
+---
+import type { Language } from '@/i18n';
+import TerminalSnippet from '../TerminalSnippet.astro';
+import { CheckCircle2, Info } from 'lucide-astro';
+import { renderInlineCode } from './inline-code';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const isVi = lang === 'vi';
+const t = (en: string, vi: string) => isVi ? vi : en;
+
+// Concrete combined workflow: ClaudeKit produces the artifact, Plannotator is the human review gate.
+const workflow = [
+  {
+    step: t('Plan with ClaudeKit, then gate the artifact', 'Plan bằng ClaudeKit, rồi gate artifact'),
+    command: '/ck:plan → /plannotator-annotate plans/.../plan.md',
+    body: t(
+      '`/ck:plan` creates a CK plan artifact; it is not automatically the same as host plan mode. Open the generated `plan.md` file in Plannotator when you want a browser review gate.',
+      '`/ck:plan` tạo artifact plan của CK; nó không tự đồng nghĩa với plan mode của host. Khi cần browser review gate, mở file `plan.md` đã tạo bằng Plannotator.'
+    ),
+  },
+  {
+    step: t('Implement, then review the diff', 'Implement, rồi review diff'),
+    command: '/ck:cook → /plannotator-review',
+    body: t('Let `/ck:cook` handle the approved plan. Before you commit, open the diff with `/plannotator-review` and comment inline on the exact lines.', 'Để `/ck:cook` xử lý plan đã duyệt. Trước khi commit, mở diff bằng `/plannotator-review` và comment inline ngay các dòng cần sửa.'),
+  },
+  {
+    step: t('Review docs and artifacts', 'Review docs và artifact'),
+    command: '/plannotator-annotate ./docs',
+    body: t('Annotate Markdown, HTML, or folders such as `./docs` with the same review surface, no extra setup.', 'Annotate Markdown, HTML, hoặc folder như `./docs` trên cùng một review surface, không cần setup thêm.'),
+  },
+];
+
+const planGateCode = `# 1) Ask ClaudeKit to produce the plan artifact
+/ck:plan "Build the feature and save a phased implementation plan"
+
+# 2) Use the real path printed by /ck:plan
+/plannotator-annotate plans/<plan-slug>/plan.md
+
+# 3) In the browser, comment on:
+# - requirements, scope, assumptions, risks
+# - phase order and acceptance criteria per phase
+# - missing tests, rollback, docs impact
+# - unresolved questions before implementation
+
+# 4) Send feedback / finish the browser review
+# The annotations return to this agent session.
+# The agent should revise the plan from those notes before implementation.`;
+
+const downstreamGateCode = `# After the approved plan, let ClaudeKit implement
+/ck:cook
+
+# Review the actual working-tree diff before commit
+/plannotator-review
+
+# Review other artifacts CK or the agent produced
+/plannotator-annotate reports/<run>/test-report.md
+/plannotator-annotate reports/<run>/review.md
+/plannotator-annotate ./docs`;
+
+const reviewTargets = [
+  t('Comprehensive plan: requirements, scope, constraints, assumptions, risks, and unresolved questions.', 'Comprehensive plan: yêu cầu, scope, ràng buộc, giả định, rủi ro, và câu hỏi còn mở.'),
+  t('Phases: order, dependencies, acceptance criteria, rollback, test checkpoints, and docs impact per phase.', 'Phases: thứ tự, dependency, acceptance criteria, rollback, checkpoint test, và tác động docs cho từng phase.'),
+  t('Other flows: diff review after cook, test/report artifacts after test, and docs/output review before ship.', 'Các flow khác: review diff sau cook, artifact test/report sau test, và review docs/output trước ship.'),
+];
+---
+
+<section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950/75 sm:p-6">
+  <div class="max-w-3xl">
+    <p class="text-xs font-bold uppercase tracking-[0.16em] text-cyan-700 dark:text-cyan-300">
+      {t('ClaudeKit fit', 'Fit với ClaudeKit')}
+    </p>
+    <h2 class="mt-2 text-2xl font-bold tracking-tight text-slate-950 dark:text-white">
+      {t('Yes — run it beside ClaudeKit', 'Có — chạy song song với ClaudeKit')}
+    </h2>
+    <p class="mt-2 text-sm leading-7 text-slate-600 dark:text-slate-400">
+      {t(
+        'They do different jobs, so they pair cleanly. ClaudeKit drives the work — plan, cook, review, test. Plannotator is the human review gate: the browser surface where you inspect what CK produced and send precise feedback. Auto-blocking only happens when the host lifecycle hook fires.',
+        'Hai bên làm hai việc khác nhau nên ghép rất hợp. ClaudeKit lo phần chạy — plan, cook, review, test. Plannotator là cổng review của con người: surface trong browser để bạn kiểm thứ CK tạo ra và gửi feedback chính xác. Chỉ auto-block khi lifecycle hook của host được kích hoạt.'
+      )}
+    </p>
+  </div>
+
+  <div class="mt-5 flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50/70 p-4 dark:border-amber-500/25 dark:bg-amber-500/5">
+    <Info class="mt-0.5 h-5 w-5 shrink-0 text-amber-700 dark:text-amber-300" stroke-width={2.2} />
+    <p
+      class="text-sm leading-6 text-slate-700 dark:text-slate-300"
+      set:html={renderInlineCode(t(
+        'Rule of thumb: Claude Code `ExitPlanMode`, Codex `Stop`, OpenCode `submit_plan`, and Pi plan mode can auto-open Plannotator. A normal ClaudeKit `/ck:plan` run is a plan-producing command, so treat Plannotator as an explicit review step.',
+        'Quy tắc ngắn: Claude Code `ExitPlanMode`, Codex `Stop`, OpenCode `submit_plan`, và Pi plan mode có thể tự mở Plannotator. Một lần chạy `/ck:plan` bình thường của ClaudeKit là command tạo plan, nên xem Plannotator là bước review gọi rõ ràng.'
+      ))}
+    ></p>
+  </div>
+
+  <div class="mt-5">
+    <h3 class="text-sm font-bold text-slate-950 dark:text-white">{t('How to use them together', 'Cách dùng chung')}</h3>
+    <ol class="mt-3 space-y-3">
+      {workflow.map((item, i) => (
+        <li class="rounded-xl border border-slate-200 bg-slate-50/75 p-4 dark:border-slate-800 dark:bg-slate-900/55">
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
+            <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-cyan-50 text-sm font-bold text-cyan-700 dark:bg-cyan-500/10 dark:text-cyan-300">{i + 1}</span>
+            <h4 class="text-sm font-bold text-slate-950 dark:text-white">{item.step}</h4>
+            <code class="max-w-full break-all rounded-md border border-slate-200 bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-800 dark:border-slate-700 dark:bg-slate-800/90 dark:text-slate-100">
+              {item.command}
+            </code>
+          </div>
+          <p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400 sm:pl-10" set:html={renderInlineCode(item.body)}></p>
+        </li>
+      ))}
+    </ol>
+  </div>
+
+  <div class="mt-5 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(300px,0.72fr)]">
+    <div class="min-w-0 space-y-4">
+      <div class="rounded-xl border border-slate-200 bg-slate-50/75 p-4 dark:border-slate-800 dark:bg-slate-900/55">
+        <h4 class="text-sm font-bold text-slate-950 dark:text-white">
+          {t('Review the CK plan artifact', 'Review artifact plan của CK')}
+        </h4>
+        <p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
+          {t(
+            'After `/ck:plan` writes a plan file, open that exact `plan.md` with Plannotator. When you send feedback in the browser, annotations return to the current agent session and the agent should revise the plan before implementation starts. Ask again only if the review happened outside this session.',
+            'Sau khi `/ck:plan` ghi plan file, mở đúng file `plan.md` đó bằng Plannotator. Khi bạn send feedback trong browser, annotations sẽ quay lại session agent hiện tại và agent nên revise plan trước khi implement. Chỉ cần hỏi lại nếu review diễn ra ngoài session này.'
+          )}
+        </p>
+        <div class="mt-3">
+          <TerminalSnippet code={planGateCode} label="claude code · plan gate" compact prompt=">" />
+        </div>
+      </div>
+
+      <div class="rounded-xl border border-slate-200 bg-slate-50/75 p-4 dark:border-slate-800 dark:bg-slate-900/55">
+        <h4 class="text-sm font-bold text-slate-950 dark:text-white">
+          {t('Use the same gate for later flows', 'Dùng cùng gate cho các flow sau')}
+        </h4>
+        <p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
+          {t(
+            'The same pattern works after cook, test, code review, or docs generation. Open the diff or artifact that needs human judgement, annotate it, then send the feedback back to the agent.',
+            'Cùng pattern này dùng được sau cook, test, code review, hoặc docs generation. Mở diff hoặc artifact cần người đánh giá, annotate nó, rồi gửi feedback lại cho agent.'
+          )}
+        </p>
+        <div class="mt-3">
+          <TerminalSnippet code={downstreamGateCode} label="claude code · downstream gates" compact prompt=">" />
+        </div>
+      </div>
+    </div>
+
+    <aside class="min-w-0 rounded-xl border border-cyan-200 bg-cyan-50/60 p-4 dark:border-cyan-500/25 dark:bg-cyan-500/5">
+      <h4 class="text-sm font-bold text-slate-950 dark:text-white">
+        {t('What to comment on', 'Nên comment gì')}
+      </h4>
+      <ul class="mt-3 space-y-3">
+        {reviewTargets.map((item) => (
+          <li class="flex gap-2 text-sm leading-6 text-slate-700 dark:text-slate-300">
+            <CheckCircle2 class="mt-1 h-4 w-4 shrink-0 text-cyan-600 dark:text-cyan-300" stroke-width={2.2} />
+            <span set:html={renderInlineCode(item)}></span>
+          </li>
+        ))}
+      </ul>
+    </aside>
+  </div>
+
+  <div class="mt-5 flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50/60 p-4 dark:border-emerald-500/25 dark:bg-emerald-500/5">
+    <CheckCircle2 class="mt-0.5 h-5 w-5 shrink-0 text-emerald-600 dark:text-emerald-300" stroke-width={2.2} />
+    <p class="text-sm leading-6 text-slate-700 dark:text-slate-300">
+      {t(
+        'Keep them as separate tools. Use Plannotator beside ClaudeKit, not merged into it — that keeps CK free of a UI server and browser state, and lets each update on its own schedule.',
+        'Giữ chúng là hai tool riêng. Dùng Plannotator song song với ClaudeKit, không merge vào trong — như vậy CK không phải gánh UI server và browser state, và mỗi bên cập nhật theo nhịp riêng.'
+      )}
+    </p>
+  </div>
+</section>

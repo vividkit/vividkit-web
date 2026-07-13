@@ -1,0 +1,103 @@
+---
+/**
+ * Compact article card for Inside ClaudeKit hub grid.
+ * Left border accent colored by track. Filterable via data-track attribute.
+ */
+import { ArrowRight } from 'lucide-astro';
+import { useTranslatedPath, type Language } from '@/i18n';
+import { useTranslations } from '@legacy-ck/i18n/utils';
+import { trackMeta, type InsideClaudeKitTrack } from '@legacy-ck/data/guides/inside-claudekit';
+
+interface Props {
+  slug: string;
+  track: InsideClaudeKitTrack;
+  titleKey: string;
+  descKey: string;
+  navLabelKey: string;
+  lang: Language;
+  disabled?: boolean;
+}
+
+const { slug, track, titleKey, descKey, navLabelKey, lang, disabled = false } = Astro.props;
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+const meta = trackMeta[track];
+---
+
+{disabled ? (
+  <div
+    data-track={track}
+    data-title={t(titleKey).toLowerCase()}
+    data-desc={t(descKey).toLowerCase()}
+    class:list={[
+      'relative flex flex-col rounded-2xl border border-slate-200/50 border-l-[3px] bg-slate-50/50 p-5 opacity-60',
+      'dark:border-slate-800/50 dark:bg-slate-900/40',
+      meta.borderAccent,
+    ]}
+  >
+    <!-- Coming Soon badge -->
+    <div class="mb-3 flex items-center gap-2">
+      <span class:list={[
+        'inline-flex w-fit items-center rounded-full px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-[0.12em]',
+        meta.badgeBg, meta.badgeText,
+      ]}>
+        {t(meta.badgeKey)}
+      </span>
+      <span class="inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-amber-700 dark:bg-amber-900/50 dark:text-amber-300">
+        {t('guides.inside_claudekit.coming_soon')}
+      </span>
+    </div>
+
+    <!-- Title -->
+    <h3 class="mb-2 line-clamp-2 text-lg font-semibold leading-snug tracking-tight text-slate-500 dark:text-slate-500">
+      {t(titleKey)}
+    </h3>
+
+    <!-- Description -->
+    <p class="mb-4 line-clamp-2 flex-1 text-sm leading-relaxed text-slate-400 dark:text-slate-500">
+      {t(descKey)}
+    </p>
+
+    <!-- Disabled indicator -->
+    <span class="inline-flex items-center gap-1.5 text-sm font-medium text-slate-400 dark:text-slate-500">
+      {t('guides.inside_claudekit.coming_soon')}
+    </span>
+  </div>
+) : (
+  <a
+    href={translatePath(`/legacy/guides/inside-claudekit/${slug}`)}
+    data-track={track}
+    data-title={t(titleKey).toLowerCase()}
+    data-desc={t(descKey).toLowerCase()}
+    class:list={[
+      'group relative flex flex-col rounded-2xl border border-slate-200/70 border-l-[3px] bg-white p-5 transition-all duration-200',
+      'hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-[0_12px_32px_-16px_rgba(15,23,42,0.18)]',
+      'dark:border-slate-800 dark:bg-slate-900/70 dark:hover:border-slate-700 dark:hover:shadow-[0_12px_32px_-16px_rgba(0,0,0,0.4)]',
+      meta.borderAccent,
+    ]}
+  >
+    <!-- Track badge -->
+    <span class:list={[
+      'mb-3 inline-flex w-fit items-center rounded-full px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-[0.12em]',
+      meta.badgeBg, meta.badgeText,
+    ]}>
+      {t(meta.badgeKey)}
+    </span>
+
+    <!-- Title -->
+    <h3 class="mb-2 line-clamp-2 text-lg font-semibold leading-snug tracking-tight text-slate-900 transition-colors group-hover:text-slate-950 dark:text-white dark:group-hover:text-blue-50">
+      {t(titleKey)}
+    </h3>
+
+    <!-- Description -->
+    <p class="mb-4 line-clamp-2 flex-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+      {t(descKey)}
+    </p>
+
+    <!-- Read link -->
+    <span class="inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 transition-colors group-hover:text-slate-900 dark:text-slate-400 dark:group-hover:text-white">
+      {t('guides.inside_claudekit.read')}
+      <ArrowRight class="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+    </span>
+  </a>
+)}

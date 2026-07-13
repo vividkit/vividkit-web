@@ -1,21 +1,21 @@
 ---
 /**
- * Batch C archive bodies — remaining catalog stubs.
- * Shared-component freeze: copy trees into legacy/ before rewriting live guides.
+ * Isolated ClaudeKit archive bodies for Batch C.
+ * Imports @legacy-ck trees restored from commit 56524c9 — not live AgentKit guides.
  */
 import type { Language } from '@/i18n';
-import PermissionsGuide from '@/components/guides/PermissionsGuide.astro';
-import CustomHooksGuide from '@/components/guides/CustomHooksGuide.astro';
-import UIReviewGateGuide from '@/components/guides/UIReviewGateGuide.astro';
-import CCSGuide from '@/components/guides/CCSGuide.astro';
-import HappyCCSGuide from '@/components/guides/HappyCCSGuide.astro';
-import CodexAppGuide from '@/components/guides/CodexAppGuide.astro';
-import MigrateGuide from '@/components/guides/MigrateGuide.astro';
-import IDEConfigGuide from '@/components/guides/IDEConfigGuide.astro';
-import RemoteControlGuide from '@/components/guides/RemoteControlGuide.astro';
-import UIUXGuide from '@/components/guides/UIUXGuide.astro';
-import SessionRecoveryGuide from '@/components/guides/SessionRecoveryGuide.astro';
-import FixLogsGuide from '@/components/guides/FixLogsGuide.astro';
+import PermissionsGuide from '@legacy-ck/components/guides/PermissionsGuide.astro';
+import CustomHooksGuide from '@legacy-ck/components/guides/CustomHooksGuide.astro';
+import UIReviewGateGuide from '@legacy-ck/components/guides/UIReviewGateGuide.astro';
+import CCSGuide from '@legacy-ck/components/guides/CCSGuide.astro';
+import HappyCCSGuide from '@legacy-ck/components/guides/HappyCCSGuide.astro';
+import CodexAppGuide from '@legacy-ck/components/guides/CodexAppGuide.astro';
+import MigrateGuide from '@legacy-ck/components/guides/MigrateGuide.astro';
+import IDEConfigGuide from '@legacy-ck/components/guides/IDEConfigGuide.astro';
+import RemoteControlGuide from '@legacy-ck/components/guides/RemoteControlGuide.astro';
+import UIUXGuide from '@legacy-ck/components/guides/UIUXGuide.astro';
+import SessionRecoveryGuide from '@legacy-ck/components/guides/SessionRecoveryGuide.astro';
+import FixLogsGuide from '@legacy-ck/components/guides/FixLogsGuide.astro';
 
 interface Props {
   suffix: string;

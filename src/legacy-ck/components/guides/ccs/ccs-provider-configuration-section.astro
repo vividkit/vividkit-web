@@ -1,0 +1,892 @@
+---
+// CCSGuide provider configuration: all LLM provider setup instructions
+import { getLangFromUrl, type Language } from '@/i18n';
+import { useTranslations } from '@legacy-ck/i18n/utils';
+import LLMProviderIcon from "@/components/ui/LLMProviderIcon.astro";
+import PlatformPathSwitcher from "../PlatformPathSwitcher.astro";
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+---
+
+  <!-- Provider Configuration Section -->
+  <div class="glass-card rounded-xl border-slate-200 dark:border-slate-700 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border-b border-slate-200 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center font-bold text-blue-600 dark:text-blue-400 border-2 border-blue-500/50">
+          5
+        </div>
+        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-200">
+          {t('ccs.guide.provider_config_title')}
+        </h3>
+      </div>
+    </div>
+    <div class="p-6 space-y-6">
+      <p class="text-slate-700 dark:text-slate-300">
+        {t('ccs.guide.provider_config_desc')}
+      </p>
+
+      <!-- Google Ban Warning -->
+      <div class="flex items-start gap-3 p-4 rounded-xl bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-800/30">
+        <svg class="w-5 h-5 text-red-500 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/>
+        </svg>
+        <div class="text-sm text-red-800 dark:text-red-300">
+          <p class="font-medium mb-1">{t('ccs.guide.google_ban_warning_title')}</p>
+          <p>{t('ccs.guide.google_ban_warning_desc')}</p>
+        </div>
+      </div>
+
+      <!-- Antigravity Configuration -->
+      <details class="p-4 rounded-lg bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300/80 dark:border-slate-600/50 group">
+        <summary class="flex items-center gap-2 cursor-pointer list-none">
+          <LLMProviderIcon provider="google" size={24} />
+          <h4 class="font-bold text-slate-600 dark:text-slate-400 text-lg">{t('ccs.guide.agy_config_title')}</h4>
+          <span class="px-2 py-0.5 text-xs rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-400 font-medium">⚠️ High Risk</span>
+          <svg class="w-4 h-4 text-slate-400 ml-auto group-open:rotate-180 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 9l-7 7-7-7"/>
+          </svg>
+        </summary>
+        <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+        <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">
+          {t('ccs.guide.agy_config_desc')}
+        </p>
+        <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+          <code class="text-slate-700 dark:text-slate-300">ccs agy --config</code>
+        </div>
+
+        <!-- CLI Output Preview -->
+        <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto shadow-sm">
+          <div class="text-emerald-600 dark:text-emerald-400 mb-2">[OK] CLIProxy binary ready (0.5s)</div>
+          <div class="text-slate-800 dark:text-white font-bold mb-2">{t('ccs.guide.agy_config_header')}</div>
+          <div class="text-slate-500 dark:text-slate-400 text-[11px] mb-3">
+            {t('ccs.guide.agy_config_note')}
+          </div>
+          <div class="text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.select_model')}:</div>
+          <div class="space-y-1 ml-4">
+            <div><span class="inline-block w-4"></span>1. Claude Sonnet 4.5</div>
+            <div><span class="inline-block w-4"></span>2. Gemini 3 Pro</div>
+            <div class="text-emerald-600 dark:text-emerald-400">* 3. Claude Opus 4.5 Thinking <span class="text-yellow-600 dark:text-yellow-500"></span></div>
+            <div><span class="inline-block w-4"></span>4. Claude Sonnet 4.5 Thinking <span class="text-yellow-600 dark:text-yellow-500"></span></div>
+          </div>
+          <div class="mt-3 text-slate-500 dark:text-slate-400">
+            {t('ccs.guide.enter_choice')} [1-4] (default: 3): <span class="animate-pulse">_</span>
+          </div>
+        </div>
+
+        <!-- Pro Tip -->
+        <div class="mt-4 p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
+          <p class="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
+            <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+            <span><strong>{t('ccs.guide.pro_tip')}:</strong> {t('ccs.guide.agy_pro_tip')}</span>
+          </p>
+        </div>
+
+        <!-- Verification After Selection -->
+        <div class="mt-4">
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.agy_verify_title')}</h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.agy_verify_desc')}</p>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+            <code class="text-slate-700 dark:text-slate-300">ccs agy "What model are you using?"</code>
+          </div>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.agy_verify_output')}</p>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto shadow-sm">
+            <div class="text-slate-500 dark:text-slate-400 mb-2">&gt; What model are you using?</div>
+            <div class="text-cyan-600 dark:text-cyan-400">⏺ I'm powered by <span class="text-slate-800 dark:text-white font-bold">Gemini Claude Opus 4.5</span> (model ID: <span class="text-emerald-600 dark:text-emerald-400">gemini-claude-opus-4-5-thinking</span>).</div>
+          </div>
+        </div>
+
+        <!-- Logout Option -->
+        <div class="mt-4">
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.agy_logout_title')}</h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.agy_logout_desc')}</p>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+            <code class="text-slate-700 dark:text-slate-300">ccs agy --logout</code>
+          </div>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.agy_logout_output')}</p>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto shadow-sm">
+            <div class="text-emerald-600 dark:text-emerald-400">[OK] Logged out from Antigravity</div>
+          </div>
+        </div>
+
+        <!-- Multi-Account Management for Antigravity -->
+        <div class="mt-6">
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 flex items-center gap-2">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+            {t('ccs.guide.agy_multiaccount_title')}
+          </h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.agy_multiaccount_desc')}</p>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs space-y-3">
+            <div>
+              <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_first_account')}</div>
+              <code class="text-slate-700 dark:text-slate-300">ccs agy --auth</code>
+            </div>
+            <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
+              <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_add_nickname')}</div>
+              <code class="text-slate-700 dark:text-slate-300">ccs agy --auth --add --nickname work</code>
+            </div>
+            <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
+              <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_list_accounts')}</div>
+              <code class="text-slate-700 dark:text-slate-300">ccs agy --accounts</code>
+            </div>
+            <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
+              <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_switch_account')}</div>
+              <code class="text-slate-700 dark:text-slate-300">ccs agy --use work</code>
+            </div>
+            <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
+              <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_config_selected')}</div>
+              <code class="text-slate-700 dark:text-slate-300">ccs agy --config</code>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- OAuth Providers Grid -->
+      <div class="grid grid-cols-1 gap-4">
+        <!-- Gemini Config -->
+        <details class="p-4 rounded-lg bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300/80 dark:border-slate-600/50 group">
+          <summary class="flex items-center gap-2 cursor-pointer list-none">
+            <LLMProviderIcon provider="gemini" size={24} />
+            <h4 class="font-bold text-slate-600 dark:text-slate-400 text-lg">{t('ccs.guide.gemini_config_title')}</h4>
+            <span class="px-2 py-0.5 text-xs rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-400 font-medium">⚠️ High Risk</span>
+            <svg class="w-4 h-4 text-slate-400 ml-auto group-open:rotate-180 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 9l-7 7-7-7"/>
+            </svg>
+          </summary>
+          <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.gemini_config_desc')}</p>
+
+          <!-- Step 1: Auth Command -->
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.gemini_step1_title')}</h5>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+            <code class="text-slate-700 dark:text-slate-300">ccs gemini --auth</code>
+          </div>
+
+          <!-- Browser Auth Note -->
+          <div class="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20 mb-3">
+            <p class="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
+              <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 16v-4M12 8h.01"/>
+              </svg>
+              <span>{t('ccs.guide.gemini_browser_note')}</span>
+            </p>
+          </div>
+
+          <!-- Auth Expected Output -->
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.gemini_output_label')}</p>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+            <div class="text-emerald-600 dark:text-emerald-400">[OK] CLIProxy binary ready (0.0s)</div>
+            <div class="text-cyan-600 dark:text-cyan-400 mt-2">[i] Opening browser for Google Gemini authentication...</div>
+            <div class="text-cyan-600 dark:text-cyan-400">[i] Complete the login in your browser.</div>
+            <div class="text-emerald-600 dark:text-emerald-400 mt-2">[OK] Authenticated with Google Gemini (14.8s)</div>
+            <div class="text-emerald-600 dark:text-emerald-400">[OK] Authentication successful</div>
+          </div>
+
+          <!-- Step 2: Config Command -->
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.gemini_step2_title')}</h5>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+            <code class="text-slate-700 dark:text-slate-300">ccs gemini --config</code>
+          </div>
+
+          <!-- Config CLI Output -->
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-3 shadow-sm">
+            <div class="text-emerald-600 dark:text-emerald-400 mb-2">[OK] CLIProxy binary ready (0.0s)</div>
+            <div class="text-slate-800 dark:text-white font-bold mb-2">{t('ccs.guide.gemini_config_header')}</div>
+            <div class="text-slate-500 dark:text-slate-400 text-[11px] mb-3">
+              {t('ccs.guide.gemini_config_note')}
+            </div>
+            <div class="text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.select_model')}:</div>
+            <div class="space-y-1 ml-4">
+              <div class="text-emerald-600 dark:text-emerald-400">* 1. Gemini 3 Pro <span class="text-yellow-600 dark:text-yellow-500">[Paid Tier]</span></div>
+              <div><span class="inline-block w-4"></span>2. Gemini 2.5 Pro</div>
+            </div>
+            <div class="mt-3 text-slate-500 dark:text-slate-400">
+              {t('ccs.guide.enter_choice')} [1-2] (default: 1): <span class="animate-pulse">_</span>
+            </div>
+          </div>
+
+          <!-- Config Success Output -->
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.gemini_config_success')}</p>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+            <div class="text-emerald-600 dark:text-emerald-400">[OK] Model set to: Gemini 3 Pro</div>
+            <div class="text-slate-500 dark:text-slate-400 ml-5">Config saved: <span class="platform-path-display" data-macos="~/.ccs/gemini.settings.json" data-linux="~/.ccs/gemini.settings.json" data-windows="%USERPROFILE%\.ccs\gemini.settings.json">~/.ccs/gemini.settings.json</span></div>
+          </div>
+
+          <!-- Verification -->
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.gemini_verify_title')}</h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.gemini_verify_desc')}</p>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+            <code class="text-slate-700 dark:text-slate-300">ccs gemini "Which model are you using?"</code>
+          </div>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+            <div class="text-slate-500 dark:text-slate-400 mb-2">&gt; Which model are you using?</div>
+            <div class="text-cyan-600 dark:text-cyan-400">⏺ I am currently using the <span class="text-slate-800 dark:text-white font-bold">gemini-3-pro-preview</span> model.</div>
+          </div>
+
+          <!-- Logout Option -->
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.gemini_logout_title')}</h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.gemini_logout_desc')}</p>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs">
+            <code class="text-slate-700 dark:text-slate-300">ccs gemini --logout</code>
+          </div>
+
+          <!-- Multi-Account Management for Gemini -->
+          <div class="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700">
+            <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 flex items-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+              {t('ccs.guide.gemini_multiaccount_title')}
+            </h5>
+            <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.gemini_multiaccount_desc')}</p>
+            <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs space-y-3">
+              <div>
+                <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_first_account')}</div>
+                <code class="text-slate-700 dark:text-slate-300">ccs gemini --auth</code>
+              </div>
+              <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
+                <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_add_nickname')}</div>
+                <code class="text-slate-700 dark:text-slate-300">ccs gemini --auth --add --nickname work</code>
+              </div>
+              <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
+                <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_list_accounts')}</div>
+                <code class="text-slate-700 dark:text-slate-300">ccs gemini --accounts</code>
+              </div>
+              <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
+                <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_switch_account')}</div>
+                <code class="text-slate-700 dark:text-slate-300">ccs gemini --use work</code>
+              </div>
+              <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
+                <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_config_selected')}</div>
+                <code class="text-slate-700 dark:text-slate-300">ccs gemini --config</code>
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+        <!-- Codex Config -->
+        <details class="p-4 rounded-lg bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300/80 dark:border-slate-600/50 group">
+          <summary class="flex items-center gap-2 cursor-pointer list-none">
+            <LLMProviderIcon provider="openai" size={24} variant="mono" class="dark:invert" />
+            <h4 class="font-bold text-slate-600 dark:text-slate-400 text-lg">{t('ccs.guide.codex_config_title')}</h4>
+            <span class="px-2 py-0.5 text-[10px] rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-medium">OpenAI</span>
+            <svg class="w-4 h-4 text-slate-400 ml-auto group-open:rotate-180 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 9l-7 7-7-7"/>
+            </svg>
+          </summary>
+          <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.codex_config_desc')}</p>
+
+          <!-- Paid Account Note -->
+          <div class="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20 mb-3">
+            <p class="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
+              <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+              </svg>
+              <span>{t('ccs.guide.codex_paid_note')}</span>
+            </p>
+          </div>
+
+          <!-- Step 1: Auth Command -->
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.codex_step1_title')}</h5>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+            <code class="text-slate-700 dark:text-slate-300">ccs codex --auth</code>
+          </div>
+
+          <!-- Browser Auth Note -->
+          <div class="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20 mb-3">
+            <p class="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
+              <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 16v-4M12 8h.01"/>
+              </svg>
+              <span>{t('ccs.guide.codex_browser_note')}</span>
+            </p>
+          </div>
+
+          <!-- Auth Expected Output -->
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.codex_output_label')}</p>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+            <div class="text-emerald-600 dark:text-emerald-400">[OK] CLIProxy binary ready (0.0s)</div>
+            <div class="text-cyan-600 dark:text-cyan-400 mt-2">[i] Opening browser for OpenAI authentication...</div>
+            <div class="text-cyan-600 dark:text-cyan-400">[i] Complete the login in your browser.</div>
+            <div class="text-emerald-600 dark:text-emerald-400 mt-2">[OK] Authenticated with OpenAI (12.5s)</div>
+            <div class="text-emerald-600 dark:text-emerald-400">[OK] Authentication successful</div>
+          </div>
+
+          <!-- Verification -->
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.codex_verify_title')}</h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.codex_verify_desc')}</p>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+            <code class="text-slate-700 dark:text-slate-300">ccs codex "Hello, which model are you using?"</code>
+          </div>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+            <div class="text-slate-500 dark:text-slate-400 mb-2">&gt; Hello, which model are you using?</div>
+            <div class="text-cyan-600 dark:text-cyan-400">⏺ I'm running as <span class="text-slate-800 dark:text-white font-bold">GPT-5.1-Codex-Max-High</span> (model ID: <span class="text-emerald-600 dark:text-emerald-400">opus</span>).</div>
+          </div>
+
+          <!-- Logout Option -->
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.codex_logout_title')}</h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.codex_logout_desc')}</p>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs">
+            <code class="text-slate-700 dark:text-slate-300">ccs codex --logout</code>
+          </div>
+
+          <!-- Multi-Account Management for Codex -->
+          <div class="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700">
+            <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 flex items-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+              {t('ccs.guide.codex_multiaccount_title')}
+            </h5>
+            <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.codex_multiaccount_desc')}</p>
+            <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs space-y-3">
+              <div>
+                <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_first_account')}</div>
+                <code class="text-slate-700 dark:text-slate-300">ccs codex --auth</code>
+              </div>
+              <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
+                <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_add_another')}</div>
+                <code class="text-slate-700 dark:text-slate-300">ccs codex --auth --add</code>
+              </div>
+              <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
+                <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_add_nickname')}</div>
+                <code class="text-slate-700 dark:text-slate-300">ccs codex --auth --add --nickname work</code>
+              </div>
+              <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
+                <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.multiaccount_list_accounts')}</div>
+                <code class="text-slate-700 dark:text-slate-300">ccs codex --accounts</code>
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- API-Based Providers (GLM & Kimi) -->
+      <div class="grid grid-cols-1 gap-4">
+        <!-- GLM Config (Detailed) -->
+        <details class="p-4 rounded-lg bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300/80 dark:border-slate-600/50 group">
+          <summary class="flex items-center gap-2 cursor-pointer list-none">
+            <LLMProviderIcon provider="zai" size={24} class="dark:invert" />
+            <h4 class="font-bold text-slate-600 dark:text-slate-400 text-lg">{t('ccs.guide.glm_config_title')}</h4>
+            <span class="px-2 py-0.5 text-[10px] rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 font-medium">Z.AI</span>
+            <svg class="w-4 h-4 text-slate-400 ml-auto group-open:rotate-180 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 9l-7 7-7-7"/>
+            </svg>
+          </summary>
+          <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-3 font-medium" set:html={t('ccs.guide.glm_update_notice')}></p>
+          
+          <!-- GLM-5 Rollout Notice -->
+          <div class="p-4 rounded-lg bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800/30 mb-4">
+            <div class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-amber-500 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/>
+              </svg>
+              <div class="text-sm text-amber-800 dark:text-amber-300">
+                <p class="font-medium mb-2">GLM-5 Rollout Status</p>
+                <p class="text-xs" set:html={t('ccs.guide.glm_rollout_notice')}></p>
+              </div>
+            </div>
+          </div>
+
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.glm_config_desc')}</p>
+
+          <!-- Step 1: Create Settings File -->
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.glm_step1_title')}</h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.glm_step1_desc')}</p>
+          <PlatformPathSwitcher
+            lang={currentLang}
+            pathAfterHome=".ccs/glm.settings.json"
+            label="File:"
+            id="glm-settings-path"
+            color="slate"
+          />
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.glm_add_content')}</p>
+          <div class="relative group">
+            <button
+              class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+              data-code={`{
+    "alwaysThinkingEnabled": true,
+    "env": {
+        "ANTHROPIC_BASE_URL": "https://api.z.ai/api/anthropic",
+        "ANTHROPIC_AUTH_TOKEN": "<your_api_key>",
+        "ANTHROPIC_MODEL": "glm-5",
+        "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-5",
+        "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-5",
+        "ANTHROPIC_DEFAULT_HAIKU_MODEL": "glm-5"
+    }
+}`}
+              title="Copy to clipboard"
+            >
+              <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <svg class="w-4 h-4 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </button>
+            <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+              <pre><code>{`{
+    "alwaysThinkingEnabled": true,
+    "env": {
+        "ANTHROPIC_BASE_URL": "https://api.z.ai/api/anthropic",
+        "ANTHROPIC_AUTH_TOKEN": "<your_api_key>",
+        "ANTHROPIC_MODEL": "glm-5",
+        "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-5",
+        "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-5",
+        "ANTHROPIC_DEFAULT_HAIKU_MODEL": "glm-5"
+    }
+}`}</code></pre>
+            </div>
+          </div>
+
+          <!-- Step 2: Add to Config -->
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.glm_step2_title')}</h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.glm_step2_desc')}</p>
+          <PlatformPathSwitcher
+            lang={currentLang}
+            pathAfterHome=".ccs/config.yaml"
+            label="File:"
+            id="ccs-config-path-glm"
+            color="slate"
+          />
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+            <div><span class="text-cyan-600 dark:text-cyan-400">profiles</span>:</div>
+            <div class="ml-4"><span class="text-cyan-600 dark:text-cyan-400">glm</span>:</div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">type</span>: <span class="text-emerald-600 dark:text-emerald-400">api</span></div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">settings</span>: <span class="text-emerald-600 dark:text-emerald-400">~/.ccs/glm.settings.json</span> <span class="text-amber-600 dark:text-amber-400">&lt;-- {t('ccs.guide.add_this_line')}</span></div>
+
+          <!-- Step 3: Verification -->
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.glm_verify_title')}</h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.glm_verify_desc')}</p>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+            <code class="text-slate-700 dark:text-slate-300">ccs glm "Which model are you using?"</code>
+          </div>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto shadow-sm">
+            <div class="text-slate-500 dark:text-slate-400 mb-2">&gt; Which model are you using?</div>
+            <div class="text-cyan-600 dark:text-cyan-400">⏺ I'm using the <span class="text-slate-800 dark:text-white font-bold">GLM-5</span> model.</div>
+          </div>
+
+          <!-- GLM-5 Model Verification -->
+          <div class="mt-4 p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
+            <p class="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
+              <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 16v-4M12 8h.01"/>
+              </svg>
+              <span>{t('ccs.guide.glm_verify_note')}</span>
+            </p>
+          </div>
+
+                  </div>
+        </details>
+
+        <!-- Kimi Config (Detailed) -->
+        <details class="p-4 rounded-lg bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300/80 dark:border-slate-600/50 group">
+          <summary class="flex items-center gap-2 cursor-pointer list-none">
+            <LLMProviderIcon provider="kimi" size={24} variant="mono" class="shrink-0 dark:invert" />
+            <h4 class="font-bold text-slate-600 dark:text-slate-400 text-lg">{t('ccs.guide.kimi_config_title')}</h4>
+            <span class="px-2 py-0.5 text-[10px] rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 font-medium">Moonshot AI</span>
+            <svg class="w-4 h-4 text-slate-400 ml-auto group-open:rotate-180 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 9l-7 7-7-7"/>
+            </svg>
+          </summary>
+          <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.kimi_config_desc')}</p>
+
+          <!-- Step 1: Create Settings File -->
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.kimi_step1_title')}</h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.kimi_step1_desc')}</p>
+          <PlatformPathSwitcher
+            lang={currentLang}
+            pathAfterHome=".ccs/kimi.settings.json"
+            label="File:"
+            id="kimi-settings-path"
+            color="slate"
+          />
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.kimi_add_content')}</p>
+          <div class="relative group">
+            <button
+              class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+              data-code={`{
+    "env": {
+        "ANTHROPIC_BASE_URL": "https://api.kimi.com/coding/",
+        "ANTHROPIC_AUTH_TOKEN": "<your_api_key>",
+        "ANTHROPIC_MODEL": "kimi-k2-thinking-turbo"
+    },
+    "alwaysThinkingEnabled": true
+}`}
+              title="Copy to clipboard"
+            >
+              <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <svg class="w-4 h-4 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </button>
+            <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+              <pre><code>{`{
+    "env": {
+        "ANTHROPIC_BASE_URL": "https://api.kimi.com/coding/",
+        "ANTHROPIC_AUTH_TOKEN": "<your_api_key>",
+        "ANTHROPIC_MODEL": "kimi-k2-thinking-turbo"
+    },
+    "alwaysThinkingEnabled": true
+}`}</code></pre>
+            </div>
+          </div>
+
+          <!-- Step 2: Add to Config -->
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.kimi_step2_title')}</h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.kimi_step2_desc')}</p>
+          <PlatformPathSwitcher
+            lang={currentLang}
+            pathAfterHome=".ccs/config.yaml"
+            label="File:"
+            id="ccs-config-path-kimi"
+            color="slate"
+          />
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+            <div><span class="text-cyan-600 dark:text-cyan-400">profiles</span>:</div>
+            <div class="ml-4"><span class="text-cyan-600 dark:text-cyan-400">kimi</span>:</div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">type</span>: <span class="text-emerald-600 dark:text-emerald-400">api</span></div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">settings</span>: <span class="text-emerald-600 dark:text-emerald-400">~/.ccs/kimi.settings.json</span> <span class="text-amber-600 dark:text-amber-400">&lt;-- {t('ccs.guide.add_this_line')}</span></div>
+          </div>
+
+          <!-- Step 3: Verification -->
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.kimi_verify_title')}</h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.kimi_verify_desc')}</p>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+            <code class="text-slate-700 dark:text-slate-300">ccs kimi "Which model are you using?"</code>
+          </div>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-3 shadow-sm">
+            <div class="text-slate-500 dark:text-slate-400 mb-2">&gt; Which model are you using?</div>
+            <div class="text-cyan-600 dark:text-cyan-400">⏺ I'm using the <span class="text-slate-800 dark:text-white font-bold">Kimi K2 Thinking Turbo</span> model.</div>
+          </div>
+          <div class="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
+            <p class="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
+              <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 16v-4M12 8h.01"/>
+              </svg>
+              <span>{t('ccs.guide.kimi_verify_note')}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+
+        <!-- MiniMax Config (Detailed) -->
+        <details class="p-4 rounded-lg bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300/80 dark:border-slate-600/50 group">
+          <summary class="flex items-center gap-2 cursor-pointer list-none">
+            <LLMProviderIcon provider="minimax" size={24} />
+            <h4 class="font-bold text-slate-600 dark:text-slate-400 text-lg">{t('ccs.guide.minimax_config_title')}</h4>
+            <span class="px-2 py-0.5 text-[10px] rounded-full bg-purple-500/10 text-purple-600 dark:text-purple-400 font-medium">MiniMax AI</span>
+            <svg class="w-4 h-4 text-slate-400 ml-auto group-open:rotate-180 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 9l-7 7-7-7"/>
+            </svg>
+          </summary>
+          <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-3 font-medium" set:html={t('ccs.guide.minimax_update_notice')}></p>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.minimax_config_desc')}</p>
+
+          <!-- Step 1: Create Settings File -->
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.minimax_step1_title')}</h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.minimax_step1_desc')}</p>
+          <PlatformPathSwitcher
+            lang={currentLang}
+            pathAfterHome=".ccs/minimax.settings.json"
+            label="File:"
+            id="minimax-settings-path"
+            color="slate"
+          />
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.minimax_add_content')}</p>
+          <div class="relative group">
+            <button
+              class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+              data-code={`{\n    "env": {\n        "ANTHROPIC_BASE_URL": "https://api.minimax.io/anthropic",\n        "ANTHROPIC_AUTH_TOKEN": "<your_api_key>",\n        "ANTHROPIC_MODEL": "MiniMax-M2.1"\n    },\n    "alwaysThinkingEnabled": true\n}`}
+            >
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+            </button>
+            <pre class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto shadow-sm"><code>{`{
+    "env": {
+        "ANTHROPIC_BASE_URL": "https://api.minimax.io/anthropic",
+        "ANTHROPIC_AUTH_TOKEN": "<your_api_key>",
+        "ANTHROPIC_MODEL": "MiniMax-M2.1"
+    },
+    "alwaysThinkingEnabled": true
+}`}</code></pre>
+          </div>
+
+          <!-- Step 2: Add to Config -->
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.minimax_step2_title')}</h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.minimax_step2_desc')}</p>
+          <PlatformPathSwitcher
+            lang={currentLang}
+            pathAfterHome=".ccs/config.yaml"
+            label="File:"
+            id="ccs-config-path-minimax"
+            color="slate"
+          />
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+            <div><span class="text-cyan-600 dark:text-cyan-400">profiles</span>:</div>
+            <div class="ml-4"><span class="text-cyan-600 dark:text-cyan-400">minimax</span>:</div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">type</span>: <span class="text-emerald-600 dark:text-emerald-400">api</span></div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">settings</span>: <span class="text-emerald-600 dark:text-emerald-400">~/.ccs/minimax.settings.json</span> <span class="text-amber-600 dark:text-amber-400">&lt;-- add this line</span></div>
+          </div>
+
+          <!-- Step 3: Verification -->
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.minimax_verify_title')}</h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.minimax_verify_desc')}</p>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+            <code class="text-slate-700 dark:text-slate-300">ccs minimax "Which model are you using?"</code>
+          </div>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-3 shadow-sm">
+            <div class="text-slate-500 dark:text-slate-400 mb-2">&gt; Which model are you using?</div>
+            <div class="text-cyan-600 dark:text-cyan-400">⏺ I'm using the <span class="text-slate-800 dark:text-white font-bold">MiniMax-M2.1</span> model.</div>
+          </div>
+          <div class="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
+            <p class="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
+              <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 16v-4M12 8h.01"/>
+              </svg>
+              <span>{t('ccs.guide.minimax_verify_note')}</span>
+            </p>
+          </div>
+        </div>
+        </details>
+        <!-- Alibaba Qwen Coding Plan Config -->
+        <details class="p-4 rounded-lg bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300/80 dark:border-slate-600/50 group">
+          <summary class="flex items-center gap-2 cursor-pointer list-none">
+            <!-- Alibaba Qwen Icon -->
+            <img src="https://unpkg.com/@lobehub/icons-static-svg@latest/icons/qwen-color.svg" alt="qwen icon" width="20" height="20" class="inline-block shrink-0" loading="lazy" decoding="async">
+            <h4 class="font-bold text-slate-600 dark:text-slate-400 text-lg">{t('ccs.guide.qwen_config_title')}</h4>
+            <span class="px-2 py-0.5 text-[10px] rounded-full bg-orange-500/10 text-orange-600 dark:text-orange-400 font-medium">Alibaba Cloud</span>
+            <svg class="w-4 h-4 text-slate-400 ml-auto group-open:rotate-180 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 9l-7 7-7-7"/>
+            </svg>
+          </summary>
+          <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.qwen_config_desc')}</p>
+
+          <!-- Coding Plan Info -->
+          <div class="p-4 rounded-lg bg-orange-50 dark:bg-orange-900/10 border border-orange-200 dark:border-orange-800/30 mb-4">
+            <div class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-orange-500 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 16v-4M12 8h.01"/>
+              </svg>
+              <div class="text-sm text-orange-800 dark:text-orange-300">
+                <p class="font-medium mb-1">{t('ccs.guide.qwen_coding_plan_title')}</p>
+                <p class="text-xs" set:html={t('ccs.guide.qwen_coding_plan_desc')}></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 1: Create Settings File -->
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.qwen_step1_title')}</h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.qwen_step1_desc')}</p>
+          <PlatformPathSwitcher
+            lang={currentLang}
+            pathAfterHome=".ccs/qwen.settings.json"
+            label="File:"
+            id="qwen-settings-path"
+            color="slate"
+          />
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.qwen_add_content')}</p>
+          <div class="relative group">
+            <button
+              class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+              data-code={`{\n    "env": {\n        "ANTHROPIC_BASE_URL": "https://coding-intl.dashscope.aliyuncs.com/apps/anthropic",\n        "ANTHROPIC_AUTH_TOKEN": "<your_api_key>",\n        "ANTHROPIC_MODEL": "qwen3-coder-plus"\n    }\n}`}
+              title="Copy to clipboard"
+            >
+              <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+              <svg class="w-4 h-4 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </button>
+            <pre class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto shadow-sm"><code>{`{
+    "env": {
+        "ANTHROPIC_BASE_URL": "https://coding-intl.dashscope.aliyuncs.com/apps/anthropic",
+        "ANTHROPIC_AUTH_TOKEN": "<your_api_key>",
+        "ANTHROPIC_MODEL": "qwen3-coder-plus"
+    }
+}`}</code></pre>
+          </div>
+
+          <!-- API Key note -->
+          <div class="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20 mt-3 mb-4">
+            <p class="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
+              <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 16v-4M12 8h.01"/>
+              </svg>
+              <span set:html={t('ccs.guide.qwen_api_key_note')}></span>
+            </p>
+          </div>
+
+          <!-- Step 2: Add to Config -->
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.qwen_step2_title')}</h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.qwen_step2_desc')}</p>
+          <PlatformPathSwitcher
+            lang={currentLang}
+            pathAfterHome=".ccs/config.yaml"
+            label="File:"
+            id="ccs-config-path-qwen"
+            color="slate"
+          />
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+            <div><span class="text-cyan-600 dark:text-cyan-400">profiles</span>:</div>
+            <div class="ml-4"><span class="text-cyan-600 dark:text-cyan-400">qwen</span>:</div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">type</span>: <span class="text-emerald-600 dark:text-emerald-400">api</span></div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">settings</span>: <span class="text-emerald-600 dark:text-emerald-400">~/.ccs/qwen.settings.json</span> <span class="text-amber-600 dark:text-amber-400">&lt;-- {t('ccs.guide.add_this_line')}</span></div>
+          </div>
+
+          <!-- Step 3: Verification -->
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.qwen_verify_title')}</h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.qwen_verify_desc')}</p>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+            <code class="text-slate-700 dark:text-slate-300">ccs qwen "Which model are you using?"</code>
+          </div>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-3 shadow-sm">
+            <div class="text-slate-500 dark:text-slate-400 mb-2">&gt; Which model are you using?</div>
+            <div class="text-cyan-600 dark:text-cyan-400">⏺ I'm using the <span class="text-slate-800 dark:text-white font-bold">qwen3-coder-plus</span>.</div>
+          </div>
+          <div class="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
+            <p class="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
+              <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 16v-4M12 8h.01"/>
+              </svg>
+              <span>{t('ccs.guide.qwen_verify_note')}</span>
+            </p>
+          </div>
+        </div>
+        </details>
+
+        <!-- Ollama Cloud Config (Detailed) -->
+        <details class="p-4 rounded-lg bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300/80 dark:border-slate-600/50 group">
+          <summary class="flex items-center gap-2 cursor-pointer list-none">
+            <LLMProviderIcon provider="ollama" size={24} />
+            <h4 class="font-bold text-slate-600 dark:text-slate-400 text-lg">{t('ccs.guide.ollama_config_title')}</h4>
+            <span class="px-2 py-0.5 text-[10px] rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-medium">Ollama Cloud</span>
+            <svg class="w-4 h-4 text-slate-400 ml-auto group-open:rotate-180 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 9l-7 7-7-7"/>
+            </svg>
+          </summary>
+          <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-3">{t('ccs.guide.ollama_config_desc')}</p>
+
+          <!-- Step 1: Create Settings File -->
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.ollama_step1_title')}</h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.ollama_step1_desc')}</p>
+          <PlatformPathSwitcher
+            lang={currentLang}
+            pathAfterHome=".ccs/ollama-cloud.settings.json"
+            label="File:"
+            id="ollama-cloud-settings-path"
+            color="slate"
+          />
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.ollama_add_content')}</p>
+          <div class="relative group">
+            <button
+              class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+              data-code={`{\n    "env": {\n        "ANTHROPIC_BASE_URL": "https://ollama.com",\n        "ANTHROPIC_AUTH_TOKEN": "<your_ollama_cloud_api_key>",\n        "ANTHROPIC_MODEL": "glm-5:cloud",\n        "ANTHROPIC_DEFAULT_OPUS_MODEL": "qwen3-coder:480b",\n        "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-5:cloud",\n        "ANTHROPIC_DEFAULT_HAIKU_MODEL": "minimax-m2.1:cloud"\n    }\n}`}
+              title="Copy to clipboard"
+            >
+              <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+              <svg class="w-4 h-4 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </button>
+            <pre class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto shadow-sm"><code>{`{
+    "env": {
+        "ANTHROPIC_BASE_URL": "https://ollama.com",
+        "ANTHROPIC_AUTH_TOKEN": "<your_ollama_cloud_api_key>",
+        "ANTHROPIC_MODEL": "glm-5:cloud",
+        "ANTHROPIC_DEFAULT_OPUS_MODEL": "qwen3-coder:480b",
+        "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-5:cloud",
+        "ANTHROPIC_DEFAULT_HAIKU_MODEL": "minimax-m2.1:cloud"
+    }
+}`}</code></pre>
+          </div>
+
+          <!-- API Key note -->
+          <div class="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20 mt-3 mb-4">
+            <p class="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
+              <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 16v-4M12 8h.01"/>
+              </svg>
+              <span set:html={t('ccs.guide.ollama_api_key_note')}></span>
+            </p>
+          </div>
+
+          <!-- Step 2: Add to Config -->
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.ollama_step2_title')}</h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.ollama_step2_desc')}</p>
+          <PlatformPathSwitcher
+            lang={currentLang}
+            pathAfterHome=".ccs/config.yaml"
+            label="File:"
+            id="ccs-config-path-ollama-cloud"
+            color="slate"
+          />
+          <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-xs text-slate-700 dark:text-slate-300 overflow-x-auto mb-4 shadow-sm">
+            <div><span class="text-cyan-600 dark:text-cyan-400">profiles</span>:</div>
+            <div class="ml-4"><span class="text-cyan-600 dark:text-cyan-400">ollama-cloud</span>:</div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">type</span>: <span class="text-emerald-600 dark:text-emerald-400">api</span></div>
+            <div class="ml-8"><span class="text-cyan-600 dark:text-cyan-400">settings</span>: <span class="text-emerald-600 dark:text-emerald-400">~/.ccs/ollama-cloud.settings.json</span> <span class="text-amber-600 dark:text-amber-400">&lt;-- {t('ccs.guide.add_this_line')}</span></div>
+          </div>
+
+          <!-- Step 3: Verification -->
+          <h5 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">{t('ccs.guide.ollama_verify_title')}</h5>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mb-2">{t('ccs.guide.ollama_verify_desc')}</p>
+          <div class="bg-white dark:bg-[#0D0D0D] rounded p-3 border border-slate-200 dark:border-slate-700 font-mono text-xs mb-3">
+            <code class="text-slate-700 dark:text-slate-300">ccs ollama-cloud "Which model are you using?"</code>
+          </div>
+          <div class="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
+            <p class="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
+              <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 16v-4M12 8h.01"/>
+              </svg>
+              <span>{t('ccs.guide.ollama_verify_note')}</span>
+            </p>
+          </div>
+        </div>
+        </details>
+

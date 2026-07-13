@@ -1,0 +1,185 @@
+---
+import type { Language } from '@/i18n';
+import TerminalSnippet from '../TerminalSnippet.astro';
+import { renderInlineCode } from './inline-code';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const isVi = lang === 'vi';
+const t = (en: string, vi: string) => isVi ? vi : en;
+
+const installOptions = [
+  {
+    title: 'macOS / Linux / WSL',
+    body: t('Run this in your terminal.', 'Chạy lệnh này trong terminal.'),
+    code: 'curl -fsSL https://plannotator.ai/install.sh | bash',
+    label: 'macOS / Linux / WSL',
+  },
+  {
+    title: 'Windows PowerShell',
+    body: t('Run this in PowerShell.', 'Chạy lệnh này trong PowerShell.'),
+    code: 'irm https://plannotator.ai/install.ps1 | iex',
+    label: 'Windows PowerShell',
+  },
+];
+
+const manualHookCode = `{
+  "hooks": {
+    "PermissionRequest": [
+      {
+        "matcher": "ExitPlanMode",
+        "hooks": [
+          { "type": "command", "command": "plannotator", "timeout": 345600 }
+        ]
+      }
+    ]
+  }
+}`;
+
+const tryCommands = [
+  {
+    title: t('Last assistant reply', 'Reply mới nhất của assistant'),
+    body: t('Open the latest assistant message for comments.', 'Mở message mới nhất của assistant để comment.'),
+    code: '/plannotator-last',
+  },
+  {
+    title: t('Current diff', 'Diff hiện tại'),
+    body: t('Review your working tree like a small PR.', 'Review working tree như một PR nhỏ.'),
+    code: '/plannotator-review',
+  },
+  {
+    title: t('CK plan file', 'Plan file của CK'),
+    body: t('Open a ClaudeKit plan file manually when it was saved to disk.', 'Mở thủ công plan file do ClaudeKit lưu ra disk.'),
+    code: '/plannotator-annotate plans/<plan>/plan.md',
+  },
+  {
+    title: t('Any artifact', 'Artifact bất kỳ'),
+    body: t('Annotate Markdown, HTML, a folder, or a URL.', 'Annotate Markdown, HTML, folder, hoặc URL.'),
+    code: '/plannotator-annotate report.html',
+  },
+];
+
+// Mirrors the official install table (Plannotator README). auto = nothing to do after the installer.
+const agents = [
+  { name: 'Claude Code', step: t('Add the marketplace plugin, then install `plannotator@plannotator`, and restart.', 'Thêm marketplace plugin, rồi install `plannotator@plannotator`, và restart.'), auto: false },
+  { name: 'Codex', step: t('Nothing. Auto via the experimental `Stop` hook (macOS/Linux/WSL; off on Windows). `$plannotator-*` skills included.', 'Không cần gì. Tự động qua `Stop` hook experimental (macOS/Linux/WSL; tắt trên Windows). Có sẵn skill `$plannotator-*`.'), auto: true },
+  { name: 'Gemini CLI', step: t('Nothing — hook, policy, and slash commands are auto-configured. Requires `Gemini CLI 0.36.0+`.', 'Không cần gì — hook, policy, slash command tự cấu hình. Cần `Gemini CLI 0.36.0+`.'), auto: true },
+  { name: 'OpenCode', step: t('Add `@plannotator/opencode@latest` to the plugin list in `opencode.json`, then restart.', 'Thêm `@plannotator/opencode@latest` vào danh sách plugin trong `opencode.json`, rồi restart.'), auto: false },
+  { name: 'Copilot CLI', step: t('Add the marketplace, install `plannotator-copilot@plannotator`. Plan review runs in plan mode (`Shift+Tab`).', 'Thêm marketplace, install `plannotator-copilot@plannotator`. Plan review chạy trong plan mode (`Shift+Tab`).'), auto: false },
+  { name: 'Amp', step: t('Copy `plannotator.ts` into `~/.config/amp/plugins/` and reload. Workflows live in the command palette.', 'Copy `plannotator.ts` vào `~/.config/amp/plugins/` và reload. Workflow nằm trong command palette.'), auto: false },
+  { name: 'Droid', step: t('Add the marketplace, then install `plannotator@plannotator`. Commands only, no plan interception yet.', 'Thêm marketplace, rồi install `plannotator@plannotator`. Chỉ có commands, chưa chặn plan.'), auto: false },
+  { name: 'Kiro CLI', step: t('Nothing — skills and an example agent install automatically. Try `kiro-cli chat --agent plannotator`.', 'Không cần gì — skill và agent ví dụ tự cài. Thử `kiro-cli chat --agent plannotator`.'), auto: true },
+  { name: 'Pi', step: t('Skip the installer: `pi install npm:@plannotator/pi-extension`. Start with `--plan` or toggle `/plannotator`.', 'Bỏ qua installer: `pi install npm:@plannotator/pi-extension`. Khởi động `--plan` hoặc bật `/plannotator`.'), auto: false },
+];
+---
+
+<section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950/75 sm:p-6">
+  <div class="max-w-3xl">
+    <p class="text-xs font-bold uppercase tracking-[0.16em] text-cyan-700 dark:text-cyan-300">
+      {t('Install and setup', 'Cài đặt và setup')}
+    </p>
+    <h2 class="mt-2 text-2xl font-bold tracking-tight text-slate-950 dark:text-white">
+      {t('Set it up in three steps', 'Setup trong ba bước')}
+    </h2>
+    <p class="mt-2 text-sm leading-7 text-slate-600 dark:text-slate-400">
+      {t(
+        'One installer covers every agent. Run it, finish the one step your agent needs, then try a command. No deep config required.',
+        'Một installer lo cho mọi agent. Chạy nó, làm nốt một bước mà agent của bạn cần, rồi thử một command. Không cần cấu hình phức tạp.'
+      )}
+    </p>
+  </div>
+
+  <ol class="mt-6 space-y-6">
+    <li>
+      <div class="flex items-center gap-3">
+        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-cyan-50 text-sm font-bold text-cyan-700 dark:bg-cyan-500/10 dark:text-cyan-300">1</span>
+        <h3 class="text-base font-bold text-slate-950 dark:text-white">{t('Run the installer', 'Chạy installer')}</h3>
+      </div>
+      <p
+        class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400 lg:ml-10"
+        set:html={renderInlineCode(t('It adds the `plannotator` binary, auto-detects your installed agents, and wires up their hooks, skills, and slash commands.', 'Nó thêm binary `plannotator`, tự nhận diện agent đã cài, và tự nối hook, skill, slash command cho từng cái.'))}
+      ></p>
+      <div class="mt-3 grid min-w-0 gap-3 lg:ml-10 lg:grid-cols-2">
+        {installOptions.map((option) => (
+          <div class="min-w-0 rounded-xl border border-slate-200 bg-slate-50/75 p-3 dark:border-slate-800 dark:bg-slate-900/55">
+            <h4 class="text-sm font-bold text-slate-950 dark:text-white">{option.title}</h4>
+            <p class="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-400">{option.body}</p>
+            <div class="mt-3">
+              <TerminalSnippet code={option.code} label={option.label} compact />
+            </div>
+          </div>
+        ))}
+      </div>
+    </li>
+
+    <li>
+      <div class="flex items-center gap-3">
+        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-cyan-50 text-sm font-bold text-cyan-700 dark:bg-cyan-500/10 dark:text-cyan-300">2</span>
+        <h3 class="text-base font-bold text-slate-950 dark:text-white">{t('Set up your agent', 'Set up agent của bạn')}</h3>
+      </div>
+      <p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400 lg:ml-10">
+        {t('Find your agent below and do its one step. Agents marked', 'Tìm agent của bạn bên dưới và làm bước của nó. Agent gắn nhãn')}
+        <span class="mx-1 rounded-full bg-emerald-50 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300">{t('auto', 'tự động')}</span>
+        {t('need nothing after the installer.', 'thì không cần làm gì sau installer.')}
+      </p>
+      <div class="mt-3 grid min-w-0 gap-3 lg:ml-10 lg:grid-cols-2 xl:grid-cols-3">
+        {agents.map((agent) => (
+          <div class="min-w-0 rounded-xl border border-slate-200 bg-slate-50/75 p-4 dark:border-slate-800 dark:bg-slate-900/55">
+            <div class="flex items-center gap-2">
+              <code class="text-sm font-bold text-slate-950 dark:text-white">{agent.name}</code>
+              {agent.auto && (
+                <span class="rounded-full bg-emerald-50 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300">
+                  {t('auto', 'tự động')}
+                </span>
+              )}
+            </div>
+            <p class="mt-2 text-xs leading-5 text-slate-600 dark:text-slate-400" set:html={renderInlineCode(agent.step)}></p>
+          </div>
+        ))}
+      </div>
+      <details class="mt-3 min-w-0 rounded-xl border border-slate-200 bg-slate-50/75 p-4 dark:border-slate-800 dark:bg-slate-900/55 lg:ml-10">
+        <summary class="cursor-pointer text-sm font-bold text-slate-950 dark:text-white">
+          {t('Claude Code: manual hook (without the plugin system)', 'Claude Code: hook thủ công (không dùng plugin system)')}
+        </summary>
+        <p
+          class="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400"
+          set:html={renderInlineCode(t(
+            'Use this fallback only when the Claude Code plugin path is unavailable. Merge the block into `~/.claude/settings.json`, keep your existing settings, then restart Claude Code. To test it, enter the built-in plan mode and leave plan mode; Plannotator should open automatically.',
+            'Chỉ dùng fallback này khi không cài được plugin Claude Code. Merge block này vào `~/.claude/settings.json`, giữ nguyên settings đang có, rồi restart Claude Code. Để test, vào built-in plan mode rồi thoát plan mode; Plannotator sẽ tự mở.'
+          ))}
+        ></p>
+        <div class="mt-3">
+          <TerminalSnippet code={manualHookCode} label="~/.claude/settings.json" mode="plain" copyMode="raw" compact />
+        </div>
+      </details>
+    </li>
+
+    <li>
+      <div class="flex items-center gap-3">
+        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-cyan-50 text-sm font-bold text-cyan-700 dark:bg-cyan-500/10 dark:text-cyan-300">3</span>
+        <h3 class="text-base font-bold text-slate-950 dark:text-white">{t('Try it', 'Thử ngay')}</h3>
+      </div>
+      <p
+        class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400 lg:ml-10"
+        set:html={renderInlineCode(t(
+          'Invoke one command yourself when needed. Automatic plan review does not apply to every plan; it only runs in flows where a Plannotator hook is already enabled. For example, in the built-in plan mode, leaving plan mode triggers the review automatically. CK plan files should be opened manually for review.',
+          'Tự gọi một command khi cần. Auto plan review không áp dụng cho mọi plan; nó chỉ chạy trong flow đã bật Plannotator hook. Ví dụ: trong built-in plan mode, khi bạn thoát plan mode thì review sẽ tự mở. Plan file do CK tạo nên mở thủ công để review.'
+        ))}
+      ></p>
+      <div class="mt-3 grid min-w-0 gap-3 lg:ml-10 lg:grid-cols-2">
+        {tryCommands.map((item) => (
+          <div class="min-w-0 rounded-xl border border-slate-200 bg-slate-50/75 p-3 dark:border-slate-800 dark:bg-slate-900/55">
+            <h4 class="text-sm font-bold text-slate-950 dark:text-white">{item.title}</h4>
+            <p class="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-400">{item.body}</p>
+            <div class="mt-3">
+              <TerminalSnippet code={item.code} label="try it" mode="plain" copyMode="raw" compact />
+            </div>
+          </div>
+        ))}
+      </div>
+    </li>
+  </ol>
+</section>

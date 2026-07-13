@@ -1,0 +1,368 @@
+---
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+
+const translations = {
+  en: {
+    title: 'Fix from Logs',
+    subtitle: 'Intelligent debugging with /ck:fix — from error logs to working code in one command',
+    howItWorksTitle: 'How It Works',
+    howItWorksDesc: 'When logs.txt exists, /ck:fix routes to its log-analysis workflow — a 6-phase pipeline where each phase delegates to a specialized agent.',
+    flowSteps: [
+      { label: 'Analyze Logs', desc: 'debugger agent reads logs.txt' },
+      { label: 'Scout Code', desc: 'Explore agents find error locations' },
+      { label: 'Plan Fix', desc: 'planner agent creates fix strategy' },
+      { label: 'Implement', desc: 'Apply fix to source code' },
+      { label: 'Test', desc: 'tester agent verifies the fix' },
+      { label: 'Review', desc: 'code-reviewer checks quality' },
+    ],
+    quickStartTitle: 'Quick Start',
+    step1Title: '1. Pipe logs to file',
+    step1Desc: 'Redirect your app output to <code class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-sm">logs.txt</code> so the AI can read errors.',
+    step2Title: '2. Reproduce the error',
+    step2Desc: 'Run your app and trigger the issue. Ensure errors are captured in logs.txt.',
+    step3Title: '3. Run the fix command',
+    step3Desc: 'Tell the AI to analyze your logs:',
+    step3Template: '/ck:fix "analyze logs.txt and fix errors"',
+    step3Note: 'Mention logs.txt in the prompt to trigger log-analysis workflow',
+    teeNote: '<code class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs">tee</code> is built-in on macOS &amp; Linux. On Windows, use <code class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs">Tee-Object</code> in PowerShell.',
+    modesTitle: 'Modes',
+    modesDesc: 'Choose the right mode for your situation:',
+    modes: [
+      { cmd: '/ck:fix', flag: '--auto', desc: 'Autonomous — auto-approve if quality high (default)', when: 'Simple/moderate issues, let AI handle' },
+      { cmd: '/ck:fix', flag: '--quick', desc: 'Fast debug → fix → review cycle', when: 'Type errors, lint, trivial bugs' },
+      { cmd: '/ck:fix', flag: '--review', desc: 'Human-in-the-loop — pause at each step', when: 'Production/critical code, security' },
+      { cmd: '/ck:fix', flag: '--parallel', desc: 'Parallel fullstack-developer agents', when: '2+ independent issues in logs' },
+    ],
+    usageTitle: 'Usage Examples',
+    usages: [
+      { cmd: '/ck:fix "analyze logs.txt and fix errors"', desc: 'Full log analysis pipeline' },
+      { cmd: '/ck:fix "check logs.txt for auth errors" --auto', desc: 'Focused fix, autonomous mode' },
+      { cmd: '/ck:fix "fix errors in logs.txt" --quick', desc: 'Quick fix for simple log errors' },
+      { cmd: '/ck:fix "deploy pipeline error" --auto', desc: 'CI/CD fix (replaces /fix:ci)' },
+    ],
+    logSetupTitle: 'Log Piping Setup',
+    logSetupDesc: 'Different ways to capture logs depending on your stack:',
+    logExamples: [
+      { label: 'Node.js / npm', cmd: 'npm run dev 2>&1 | tee logs.txt' },
+      { label: 'Python', cmd: 'python app.py 2>&1 | tee logs.txt' },
+      { label: 'Go', cmd: 'go run . 2>&1 | tee logs.txt' },
+      { label: 'Docker', cmd: 'docker compose up 2>&1 | tee logs.txt' },
+      { label: 'PowerShell', cmd: 'npm run dev *>&1 | Tee-Object logs.txt' },
+    ],
+    logTipTitle: 'Pro Tip',
+    logTipDesc: 'Add log piping permanently to your package.json scripts:',
+    logTipExample: '"dev:log": "npm run dev 2>&1 | tee logs.txt"',
+    tipsTitle: 'Tips',
+    tips: [
+      { title: 'Focus on recent errors', desc: 'The debugger reads the last 30 lines first, then expands if needed. Keep logs.txt fresh — clear it before reproducing.' },
+      { title: 'Use tee, not redirect', desc: '<code class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs">2>&1 | tee logs.txt</code> lets you see output in terminal AND captures to file. Plain <code class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs">></code> redirect hides terminal output.' },
+      { title: '3-strike rule', desc: 'If 3+ fix attempts fail, the skill stops and asks you to reconsider the architecture. No infinite loops.' },
+      { title: 'Combine with /ck:debug', desc: 'For deeper investigation without auto-fixing, use <code class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs">/ck:debug</code> first, then <code class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs">/ck:fix</code> to apply.' },
+    ],
+    relatedTitle: 'Related Commands',
+    related: [
+      { cmd: '/ck:fix --quick', desc: 'Quick fix for type/lint errors' },
+      { cmd: '/ck:fix --parallel', desc: 'Fix multiple issues simultaneously' },
+      { cmd: '/ck:fix --review', desc: 'Human-in-the-loop review mode' },
+      { cmd: '/ck:debug', desc: 'Deep investigation without auto-fix' },
+    ],
+  },
+  vi: {
+    title: 'Sửa Lỗi Từ Log',
+    subtitle: 'Debug thông minh với /ck:fix — từ log lỗi đến code chạy được chỉ với một lệnh',
+    howItWorksTitle: 'Cách Hoạt Động',
+    howItWorksDesc: 'Khi có logs.txt, /ck:fix chuyển sang workflow phân tích log — pipeline 6 phase, mỗi phase dùng agent chuyên biệt.',
+    flowSteps: [
+      { label: 'Phân Tích Log', desc: 'debugger agent đọc logs.txt' },
+      { label: 'Tìm Code', desc: 'Explore agents tìm vị trí lỗi' },
+      { label: 'Lên Kế Hoạch', desc: 'planner agent tạo chiến lược' },
+      { label: 'Sửa Lỗi', desc: 'Áp dụng fix vào source code' },
+      { label: 'Kiểm Tra', desc: 'tester agent xác nhận fix' },
+      { label: 'Review', desc: 'code-reviewer kiểm tra chất lượng' },
+    ],
+    quickStartTitle: 'Bắt Đầu Nhanh',
+    step1Title: '1. Ghi log ra file',
+    step1Desc: 'Chuyển hướng output ứng dụng vào <code class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-sm">logs.txt</code> để AI đọc được lỗi.',
+    step2Title: '2. Tái tạo lỗi',
+    step2Desc: 'Chạy ứng dụng và kích hoạt lỗi. Đảm bảo log lỗi được ghi vào logs.txt.',
+    step3Title: '3. Chạy lệnh sửa',
+    step3Desc: 'Yêu cầu AI phân tích logs:',
+    step3Template: '/ck:fix "analyze logs.txt and fix errors"',
+    step3Note: 'Mention logs.txt trong prompt để trigger log-analysis workflow',
+    teeNote: '<code class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs">tee</code> chỉ có sẵn trên macOS &amp; Linux. Trên Windows, dùng <code class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs">Tee-Object</code> trong PowerShell.',
+    modesTitle: 'Các Chế Độ',
+    modesDesc: 'Chọn chế độ phù hợp với tình huống:',
+    modes: [
+      { cmd: '/ck:fix', flag: '--auto', desc: 'Tự động — auto-approve nếu chất lượng cao (mặc định)', when: 'Lỗi đơn giản/vừa, để AI xử lý' },
+      { cmd: '/ck:fix', flag: '--quick', desc: 'Nhanh: debug → fix → review', when: 'Type errors, lint, lỗi nhỏ' },
+      { cmd: '/ck:fix', flag: '--review', desc: 'Người duyệt — dừng ở mỗi bước', when: 'Code production/quan trọng, bảo mật' },
+      { cmd: '/ck:fix', flag: '--parallel', desc: 'Song song nhiều fullstack-developer agents', when: '2+ lỗi độc lập trong logs' },
+    ],
+    usageTitle: 'Ví Dụ Sử Dụng',
+    usages: [
+      { cmd: '/ck:fix "analyze logs.txt and fix errors"', desc: 'Full log analysis pipeline' },
+      { cmd: '/ck:fix "check logs.txt for auth errors" --auto', desc: 'Fix có focus, chế độ tự động' },
+      { cmd: '/ck:fix "fix errors in logs.txt" --quick', desc: 'Sửa nhanh lỗi đơn giản trong log' },
+      { cmd: '/ck:fix "deploy pipeline error" --auto', desc: 'Sửa CI/CD (thay /fix:ci)' },
+    ],
+    logSetupTitle: 'Cài Đặt Ghi Log',
+    logSetupDesc: 'Các cách capture log tùy theo stack:',
+    logExamples: [
+      { label: 'Node.js / npm', cmd: 'npm run dev 2>&1 | tee logs.txt' },
+      { label: 'Python', cmd: 'python app.py 2>&1 | tee logs.txt' },
+      { label: 'Go', cmd: 'go run . 2>&1 | tee logs.txt' },
+      { label: 'Docker', cmd: 'docker compose up 2>&1 | tee logs.txt' },
+      { label: 'PowerShell', cmd: 'npm run dev *>&1 | Tee-Object logs.txt' },
+    ],
+    logTipTitle: 'Mẹo Hay',
+    logTipDesc: 'Thêm log piping vĩnh viễn vào package.json scripts:',
+    logTipExample: '"dev:log": "npm run dev 2>&1 | tee logs.txt"',
+    tipsTitle: 'Mẹo',
+    tips: [
+      { title: 'Tập trung lỗi mới nhất', desc: 'Debugger đọc 30 dòng cuối trước, rồi mở rộng nếu cần. Giữ logs.txt sạch — xóa trước khi tái tạo lỗi.' },
+      { title: 'Dùng tee, không redirect', desc: '<code class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs">2>&1 | tee logs.txt</code> hiện output trên terminal VÀ ghi vào file. Redirect <code class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs">></code> ẩn terminal output.' },
+      { title: 'Quy tắc 3 lần', desc: 'Nếu 3+ lần sửa thất bại, skill dừng lại và yêu cầu xem xét kiến trúc. Không loop vô hạn.' },
+      { title: 'Kết hợp với /ck:debug', desc: 'Để điều tra sâu mà không auto-fix, dùng <code class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs">/ck:debug</code> trước, rồi <code class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs">/ck:fix</code> để áp dụng.' },
+    ],
+    relatedTitle: 'Lệnh Liên Quan',
+    related: [
+      { cmd: '/ck:fix --quick', desc: 'Sửa nhanh lỗi type/lint' },
+      { cmd: '/ck:fix --parallel', desc: 'Sửa nhiều lỗi cùng lúc' },
+      { cmd: '/ck:fix --review', desc: 'Chế độ review từng bước' },
+      { cmd: '/ck:debug', desc: 'Điều tra sâu không auto-fix' },
+    ],
+  }
+};
+
+const t = translations[currentLang] || translations.en;
+
+// Step colors for the workflow pipeline
+const stepColors = [
+  { bg: 'bg-red-500/20', text: 'text-red-600 dark:text-red-400', border: 'border-red-500/50' },
+  { bg: 'bg-orange-500/20', text: 'text-orange-600 dark:text-orange-400', border: 'border-orange-500/50' },
+  { bg: 'bg-amber-500/20', text: 'text-amber-600 dark:text-amber-400', border: 'border-amber-500/50' },
+  { bg: 'bg-blue-500/20', text: 'text-blue-600 dark:text-blue-400', border: 'border-blue-500/50' },
+  { bg: 'bg-green-500/20', text: 'text-green-600 dark:text-green-400', border: 'border-green-500/50' },
+  { bg: 'bg-purple-500/20', text: 'text-purple-600 dark:text-purple-400', border: 'border-purple-500/50' },
+];
+
+// Mode badge colors
+const modeColors = ['bg-blue-500/20 text-blue-600 dark:text-blue-400', 'bg-green-500/20 text-green-600 dark:text-green-400', 'bg-amber-500/20 text-amber-600 dark:text-amber-400', 'bg-purple-500/20 text-purple-600 dark:text-purple-400'];
+---
+
+<div class="space-y-8 mt-6">
+  <!-- Page Header -->
+  <div class="text-center space-y-4">
+    <h2 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
+      {t.title}
+    </h2>
+    <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+      {t.subtitle}
+    </p>
+  </div>
+
+  <!-- How It Works -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 border-b border-slate-100 dark:border-slate-800">
+      <h2 class="text-2xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+        <svg class="w-7 h-7 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+        {t.howItWorksTitle}
+      </h2>
+    </div>
+    <div class="p-6">
+      <p class="text-slate-600 dark:text-slate-400 mb-6">{t.howItWorksDesc}</p>
+      <!-- Workflow Pipeline -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+        {t.flowSteps.map((step, i) => (
+          <div class="relative text-center">
+            <div class={`w-10 h-10 mx-auto rounded-full ${stepColors[i].bg} ${stepColors[i].text} flex items-center justify-center font-bold text-sm border-2 ${stepColors[i].border}`}>
+              {i + 1}
+            </div>
+            <div class={`mt-2 font-semibold text-sm ${stepColors[i].text}`}>{step.label}</div>
+            <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">{step.desc}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Start -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-green-500/10 to-emerald-500/10 border-b border-slate-100 dark:border-slate-800">
+      <h2 class="text-2xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+        <svg class="w-7 h-7 text-green-600 dark:text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+        {t.quickStartTitle}
+      </h2>
+    </div>
+    <div class="p-6 space-y-4">
+      <!-- Step 1: Pipe logs -->
+      <div class="flex items-start gap-4">
+        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-green-500/20 text-green-600 dark:text-green-400 flex items-center justify-center font-bold text-sm border border-green-500/50">1</div>
+        <div class="flex-1">
+          <h3 class="font-bold text-slate-900 dark:text-white mb-1">{t.step1Title}</h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm mb-2" set:html={t.step1Desc}></p>
+          <div class="bg-slate-950 rounded-lg p-3 border border-slate-700">
+            <code class="text-sm font-mono text-green-400">npm run dev 2>&1 | tee logs.txt</code>
+          </div>
+        </div>
+      </div>
+      <!-- Step 2: Reproduce -->
+      <div class="flex items-start gap-4">
+        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-green-500/20 text-green-600 dark:text-green-400 flex items-center justify-center font-bold text-sm border border-green-500/50">2</div>
+        <div class="flex-1">
+          <h3 class="font-bold text-slate-900 dark:text-white mb-1">{t.step2Title}</h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm">{t.step2Desc}</p>
+        </div>
+      </div>
+      <!-- Step 3: Run fix -->
+      <div class="flex items-start gap-4">
+        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-green-500/20 text-green-600 dark:text-green-400 flex items-center justify-center font-bold text-sm border border-green-500/50">3</div>
+        <div class="flex-1">
+          <h3 class="font-bold text-slate-900 dark:text-white mb-1">{t.step3Title}</h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm mb-2">{t.step3Desc}</p>
+          <div class="bg-slate-950 rounded-lg p-3 border border-slate-700 space-y-2">
+            <div class="flex items-center justify-between">
+              <code class="font-mono text-sm text-green-400">/ck:fix</code>
+              <span class="text-xs text-slate-500 italic">{t.step3Note}</span>
+            </div>
+            <div class="border-t border-slate-700 pt-2">
+              <div class="text-xs text-slate-500 mb-1">Template:</div>
+              <code class="font-mono text-xs text-slate-400">{t.step3Template}</code>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modes -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-purple-500/10 to-pink-500/10 border-b border-slate-100 dark:border-slate-800">
+      <h2 class="text-2xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+        <svg class="w-7 h-7 text-purple-600 dark:text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+        </svg>
+        {t.modesTitle}
+      </h2>
+    </div>
+    <div class="p-6">
+      <p class="text-slate-600 dark:text-slate-400 mb-4">{t.modesDesc}</p>
+      <div class="space-y-3">
+        {t.modes.map((mode, i) => (
+          <div class="flex items-start gap-3 p-4 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+            <code class={`px-2 py-1 rounded font-mono text-xs font-bold whitespace-nowrap ${modeColors[i]}`}>{mode.flag}</code>
+            <div class="flex-1 min-w-0">
+              <div class="font-medium text-slate-900 dark:text-white text-sm">{mode.desc}</div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{mode.when}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Usage Examples -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border-b border-slate-100 dark:border-slate-800">
+      <h2 class="text-2xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+        <svg class="w-7 h-7 text-cyan-600 dark:text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+        {t.usageTitle}
+      </h2>
+    </div>
+    <div class="p-6 space-y-3">
+      {t.usages.map((usage) => (
+        <div class="flex items-center gap-4 p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+          <code class="font-mono text-sm text-blue-600 dark:text-blue-400 whitespace-nowrap">{usage.cmd}</code>
+          <span class="text-sm text-slate-500 dark:text-slate-400">{usage.desc}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- Log Piping Setup -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border-b border-slate-100 dark:border-slate-800">
+      <h2 class="text-2xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+        <svg class="w-7 h-7 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        {t.logSetupTitle}
+      </h2>
+    </div>
+    <div class="p-6">
+      <p class="text-slate-600 dark:text-slate-400 mb-4">{t.logSetupDesc}</p>
+      <div class="space-y-2">
+        {t.logExamples.map((ex) => (
+          <div class="flex items-center gap-3 p-3 rounded-lg bg-slate-950 border border-slate-700">
+            <span class="text-xs font-medium text-slate-400 w-28 flex-shrink-0">{ex.label}</span>
+            <code class="font-mono text-sm text-green-400">{ex.cmd}</code>
+          </div>
+        ))}
+      </div>
+      <!-- tee note -->
+      <p class="mt-3 text-xs text-slate-500 dark:text-slate-400" set:html={t.teeNote}></p>
+      <!-- Pro Tip -->
+      <div class="mt-4 p-4 rounded-lg bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20">
+        <div class="font-bold text-emerald-700 dark:text-emerald-400 text-sm mb-1">{t.logTipTitle}</div>
+        <p class="text-sm text-slate-600 dark:text-slate-400 mb-2">{t.logTipDesc}</p>
+        <code class="text-xs font-mono text-emerald-600 dark:text-emerald-400">{t.logTipExample}</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tips -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-indigo-500/10 to-violet-500/10 border-b border-slate-100 dark:border-slate-800">
+      <h2 class="text-2xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+        <svg class="w-7 h-7 text-indigo-600 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+        </svg>
+        {t.tipsTitle}
+      </h2>
+    </div>
+    <div class="p-6 space-y-4">
+      {t.tips.map((tip) => (
+        <div class="p-4 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+          <h3 class="font-bold text-slate-900 dark:text-white text-sm mb-1">{tip.title}</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-400" set:html={tip.desc}></p>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- Related Commands -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-slate-500/10 to-gray-500/10 border-b border-slate-100 dark:border-slate-800">
+      <h2 class="text-2xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+        <svg class="w-7 h-7 text-slate-600 dark:text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+        </svg>
+        {t.relatedTitle}
+      </h2>
+    </div>
+    <div class="p-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {t.related.map((rel) => (
+          <div class="flex items-center gap-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+            <code class="px-2 py-1 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs text-slate-700 dark:text-slate-300 whitespace-nowrap">{rel.cmd}</code>
+            <span class="text-sm text-slate-500 dark:text-slate-400">{rel.desc}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>

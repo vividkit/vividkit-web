@@ -1,0 +1,92 @@
+---
+import { getLangFromUrl, type Language } from '@/i18n';
+import { useTranslations } from '@legacy-ck/i18n/utils';
+import { useTranslatedPath } from '@/i18n';
+
+import HeroBanner from './cli-guide/HeroBanner.astro';
+import TerminalPreview from './cli-guide/TerminalPreview.astro';
+import InstallationSteps from './cli-guide/InstallationSteps.astro';
+import DailyRoutine from './cli-guide/DailyRoutine.astro';
+import CCSLink from './cli-guide/CCSLink.astro';
+import AdvancedSettings from './cli-guide/AdvancedSettings.astro';
+import ProTips from './cli-guide/ProTips.astro';
+import CLIFaq from './cli-guide/CLIFaq.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+const translatePath = useTranslatedPath(currentLang);
+---
+
+<div class="space-y-8 mt-6">
+  <HeroBanner lang={currentLang} />
+  <TerminalPreview lang={currentLang} />
+  <InstallationSteps lang={currentLang} />
+  <DailyRoutine lang={currentLang} />
+
+  <!-- Link card to CLI Commands cheatsheet page -->
+  <a
+    href={translatePath('/legacy/guides/cli-commands')}
+    class="group block glass-card rounded-xl overflow-hidden border border-violet-200 dark:border-violet-500/30 hover:border-violet-400 dark:hover:border-violet-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-violet-500/10"
+  >
+    <div class="p-6 bg-gradient-to-r from-violet-500/10 to-purple-500/10 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-4">
+        <div class="flex-shrink-0 p-3 bg-violet-100 dark:bg-violet-900/30 rounded-xl text-violet-600 dark:text-violet-400">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold text-violet-600 dark:text-violet-400 group-hover:text-violet-700 dark:group-hover:text-violet-300 transition-colors">
+            {t('cli.cheatsheet.title')}
+          </h3>
+          <p class="text-sm text-slate-600 dark:text-slate-400 mt-0.5">
+            {t('cli.cheatsheet.subtitle')}
+          </p>
+        </div>
+      </div>
+      <svg class="w-5 h-5 text-violet-400 dark:text-violet-500 group-hover:translate-x-1 transition-transform flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+      </svg>
+    </div>
+  </a>
+
+  <CCSLink lang={currentLang} />
+  <AdvancedSettings lang={currentLang} />
+  <ProTips lang={currentLang} />
+  <CLIFaq lang={currentLang} />
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const code = btn.getAttribute('data-code');
+        if (!code) return;
+
+        try {
+          await navigator.clipboard.writeText(code);
+
+          // Show check icon
+          const copyIcon = btn.querySelector('.copy-icon');
+          const checkIcon = btn.querySelector('.check-icon');
+
+          copyIcon?.classList.add('hidden');
+          checkIcon?.classList.remove('hidden');
+
+          // Reset after 2 seconds
+          setTimeout(() => {
+            copyIcon?.classList.remove('hidden');
+            checkIcon?.classList.add('hidden');
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy:', err);
+        }
+      });
+    });
+  });
+</script>

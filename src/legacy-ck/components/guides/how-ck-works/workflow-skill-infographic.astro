@@ -1,0 +1,45 @@
+---
+// Main wrapper for skill infographic one-page visual summary
+// Composes all infographic sub-components based on available data
+import { getLangFromUrl, type Language } from '@/i18n';
+import { getInfographicById } from '@legacy-ck/data/guides/how-ck-works';
+import InfographicPlanQuickRef from './infographic/infographic-plan-quick-ref.astro';
+import InfographicBrainstormQuickRef from './infographic/infographic-brainstorm-quick-ref.astro';
+import InfographicExecutionQuickRef from './infographic/infographic-execution-quick-ref.astro';
+import InfographicTeamQuickRef from './infographic/infographic-team-quick-ref.astro';
+import InfographicPreviewQuickRef from './infographic/infographic-preview-quick-ref.astro';
+import InfographicCodeReviewQuickRef from './infographic/infographic-code-review-quick-ref.astro';
+import InfographicBootstrapQuickRef from './infographic/infographic-bootstrap-quick-ref.astro';
+import InfographicGenericCommandQuickRef from './infographic/infographic-generic-command-quick-ref.astro';
+
+interface Props {
+  scenarioId: string;
+  lang?: Language;
+}
+
+const { scenarioId, lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+
+// Lookup infographic data by scenario ID
+const infographic = getInfographicById(scenarioId);
+---
+
+{infographic ? (
+  scenarioId === 'brainstorm' ? (
+    <InfographicBrainstormQuickRef data={infographic} lang={currentLang} />
+  ) : scenarioId === 'plan' ? (
+    <InfographicPlanQuickRef data={infographic} lang={currentLang} />
+  ) : scenarioId === 'cook' || scenarioId === 'fix' ? (
+    <InfographicExecutionQuickRef data={infographic} lang={currentLang} />
+  ) : scenarioId === 'team' ? (
+    <InfographicTeamQuickRef data={infographic} lang={currentLang} />
+  ) : scenarioId === 'preview' ? (
+    <InfographicPreviewQuickRef data={infographic} lang={currentLang} />
+  ) : scenarioId === 'code-review' ? (
+    <InfographicCodeReviewQuickRef data={infographic} lang={currentLang} />
+  ) : scenarioId === 'bootstrap' ? (
+    <InfographicBootstrapQuickRef data={infographic} lang={currentLang} />
+  ) : (
+    <InfographicGenericCommandQuickRef data={infographic} lang={currentLang} />
+  )
+) : null}

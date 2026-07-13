@@ -1,0 +1,63 @@
+---
+// Workflows Guide - Marketing Kit section: workflow cards grouped by category
+import { useTranslations } from '@legacy-ck/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+import WorkflowsWorkflowCard from './workflows-workflow-card.astro';
+
+interface Props {
+  workflows: any[];
+  lang?: Language;
+}
+
+const { workflows, lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+// Group workflows by category
+const categories = workflows.reduce((acc: Record<string, any[]>, workflow) => {
+  const cat = workflow.category || 'Uncategorized';
+  if (!acc[cat]) acc[cat] = [];
+  acc[cat].push(workflow);
+  return acc;
+}, {});
+
+// Category order and colors
+const categoryMeta: Record<string, { icon: string; color: string }> = {
+  'Content & Copy': { icon: '<path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>', color: 'pink' },
+  'Campaign & Analytics': { icon: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>', color: 'purple' },
+  'SEO & Growth': { icon: '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>', color: 'amber' },
+  'Design & Creative': { icon: '<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>', color: 'teal' },
+  'Strategy & Research': { icon: '<circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>', color: 'blue' },
+  'Video & Media': { icon: '<polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>', color: 'orange' },
+  'Playbook & Orchestration': { icon: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>', color: 'violet' }
+};
+---
+
+<div id="wf-categories-marketing" class="space-y-8">
+  {Object.entries(categories).map(([categoryName, categoryWorkflows]) => {
+    const meta = categoryMeta[categoryName] || { icon: '', color: 'slate' };
+    return (
+      <div class="space-y-4">
+        <!-- Category Header -->
+        <div class="flex items-center gap-3">
+          <div class={`p-2 rounded-lg bg-${meta.color}-500/10 dark:bg-${meta.color}-500/20`}>
+            <svg class={`w-5 h-5 text-${meta.color}-600 dark:text-${meta.color}-400`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={meta.icon} />
+          </div>
+          <h3 class={`text-lg font-semibold text-${meta.color}-700 dark:text-${meta.color}-300`}>
+            {categoryName}
+          </h3>
+          <span class="text-xs text-slate-500 dark:text-slate-400">
+            {categoryWorkflows.length} {currentLang === 'vi' ? 'quy trình' : 'workflows'}
+          </span>
+        </div>
+
+        <!-- Workflow Cards in this category -->
+        <div class="grid grid-cols-1 gap-6">
+          {categoryWorkflows.map((workflow: any) => (
+            <WorkflowsWorkflowCard workflow={workflow} lang={currentLang} />
+          ))}
+        </div>
+      </div>
+    );
+  })}
+</div>

@@ -1,0 +1,189 @@
+---
+// UIUX Guide - How It Works section (3 steps + result callout)
+import { useTranslations } from '@legacy-ck/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+---
+
+<!-- How It Works Section -->
+<div class="glass-card rounded-xl overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border-b border-slate-200 dark:border-slate-800">
+      <h2 class="text-2xl font-bold text-cyan-700 dark:text-cyan-400 flex items-center gap-3">
+        <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+        {t('uiux.guide.how_it_works.title')}
+      </h2>
+      <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">{t('uiux.guide.how_it_works.subtitle')}</p>
+    </div>
+
+    <div class="p-8 space-y-8">
+      <!-- Step 1 -->
+      <div class="flex items-start gap-4">
+        <div class="flex flex-col items-center flex-shrink-0">
+          <div class="flex items-center justify-center w-10 h-10 rounded-full bg-cyan-100 dark:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 font-bold text-lg border-2 border-cyan-500/50">1</div>
+          <div class="w-0.5 h-full bg-gradient-to-b from-cyan-500/50 to-blue-500/50 my-2 min-h-[50px]"></div>
+        </div>
+        <div class="flex-1 pb-4">
+           <div class="bg-surface-100 dark:bg-slate-900/50 rounded-xl border border-cyan-200 dark:border-cyan-500/30 p-6">
+              <h3 class="text-lg font-bold text-cyan-700 dark:text-cyan-400 mb-3 flex items-center gap-2">
+                  <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2-2z"/>
+                  </svg>
+                  {t('uiux.guide.step1.title')}
+              </h3>
+              <p class="text-slate-500 dark:text-slate-300 mb-4">{t('uiux.guide.step1.desc')}</p>
+              <div class="space-y-3">
+              <div class="bg-white dark:bg-slate-900 rounded-lg p-4 border border-cyan-500/20">
+                  <div class="flex items-center gap-3">
+                      <code class="px-3 py-1.5 rounded bg-cyan-100 dark:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 font-mono text-sm">{t('uiux.guide.step1.example_label')}</code>
+                      <div class="flex-1">
+                        <p class="text-sm text-slate-600 dark:text-slate-400">{t('uiux.guide.step1.example_text')}</p>
+                      </div>
+                  </div>
+              </div>
+              <div class="text-xs text-slate-500 dark:text-slate-500 flex items-center gap-2">
+                  <svg class="w-4 h-4 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                  {t('uiux.guide.step1.ai_understands')}
+              </div>
+              </div>
+           </div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="flex items-start gap-4">
+          <div class="flex flex-col items-center flex-shrink-0">
+            <div class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400 font-bold text-lg border-2 border-blue-500/50">2</div>
+            <div class="w-0.5 h-full bg-gradient-to-b from-blue-500/50 to-indigo-500/50 my-2 min-h-[50px]"></div>
+          </div>
+          <div class="flex-1 pb-4">
+             <div class="bg-surface-100 dark:bg-slate-900/50 rounded-xl border border-blue-200 dark:border-blue-500/30 p-6">
+                <h3 class="text-lg font-bold text-blue-700 dark:text-blue-400 mb-3 flex items-center gap-2">
+                  <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="m21 21-4.35-4.35"/>
+                  </svg>
+                  {t('uiux.guide.step2.title')}
+                </h3>
+                <p class="text-slate-600 dark:text-slate-300 mb-4 text-sm">{t('uiux.guide.step2.desc')}</p>
+
+                <div class="bg-blue-100 dark:bg-blue-500/10 rounded-lg p-4 border border-blue-200 dark:border-blue-500/20">
+                  <div class="text-xs font-medium text-blue-600 dark:text-blue-400 mb-3">{t('uiux.guide.step2.searching_for')}</div>
+                  <div class="grid grid-cols-2 gap-2 text-xs text-slate-600 dark:text-slate-400">
+                      <div class="flex items-center gap-2">
+                        <svg class="w-3 h-3 text-blue-500 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span><strong>{t('uiux.guide.step2.item1')}</strong> {t('uiux.guide.step2.item1_desc')}</span>
+                      </div>
+                      <div class="flex items-center gap-2">
+                        <svg class="w-3 h-3 text-blue-500 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span><strong>{t('uiux.guide.step2.item2')}</strong> {t('uiux.guide.step2.item2_desc')}</span>
+                      </div>
+                      <div class="flex items-center gap-2">
+                        <svg class="w-3 h-3 text-blue-500 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span><strong>{t('uiux.guide.step2.item3')}</strong> {t('uiux.guide.step2.item3_desc')}</span>
+                      </div>
+                      <div class="flex items-center gap-2">
+                        <svg class="w-3 h-3 text-blue-500 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span><strong>{t('uiux.guide.step2.item4')}</strong> {t('uiux.guide.step2.item4_desc')}</span>
+                      </div>
+                      <div class="flex items-center gap-2">
+                        <svg class="w-3 h-3 text-blue-500 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span><strong>{t('uiux.guide.step2.item5')}</strong> {t('uiux.guide.step2.item5_desc')}</span>
+                      </div>
+                      <div class="flex items-center gap-2">
+                        <svg class="w-3 h-3 text-blue-500 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span><strong>{t('uiux.guide.step2.item6')}</strong> {t('uiux.guide.step2.item6_desc')}</span>
+                      </div>
+                  </div>
+                </div>
+             </div>
+          </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="flex items-start gap-4">
+          <div class="flex flex-col items-center flex-shrink-0">
+            <div class="flex items-center justify-center w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-bold text-lg border-2 border-indigo-500/50">3</div>
+          </div>
+          <div class="flex-1">
+             <div class="bg-surface-100 dark:bg-slate-900/50 rounded-xl border border-indigo-200 dark:border-indigo-500/30 p-6">
+                <h3 class="text-lg font-bold text-indigo-700 dark:text-indigo-400 mb-3 flex items-center gap-2">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="16 18 22 12 16 6"/>
+                      <polyline points="8 6 2 12 8 18"/>
+                    </svg>
+                    {t('uiux.guide.step3.title')}
+                </h3>
+                <p class="text-slate-600 dark:text-slate-300 text-sm mb-3">
+                    {t('uiux.guide.step3.desc')}
+                </p>
+
+                <div class="bg-indigo-100 dark:bg-indigo-500/10 rounded-lg p-4 border border-indigo-200 dark:border-indigo-500/20">
+                  <div class="text-xs font-medium text-indigo-600 dark:text-indigo-400 mb-2">{t('uiux.guide.step3.receive_label')}</div>
+                  <ul class="space-y-1 text-xs text-slate-600 dark:text-slate-400">
+                    <li class="flex items-center gap-2">
+                      <svg class="w-3 h-3 text-indigo-500 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                      {t('uiux.guide.step3.item1')}
+                    </li>
+                    <li class="flex items-center gap-2">
+                      <svg class="w-3 h-3 text-indigo-500 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                      {t('uiux.guide.step3.item2')}
+                    </li>
+                    <li class="flex items-center gap-2">
+                      <svg class="w-3 h-3 text-indigo-500 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                      {t('uiux.guide.step3.item3')}
+                    </li>
+                    <li class="flex items-center gap-2">
+                      <svg class="w-3 h-3 text-indigo-500 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                      {t('uiux.guide.step3.item4')}
+                    </li>
+                    <li class="flex items-center gap-2">
+                      <svg class="w-3 h-3 text-indigo-500 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                      {t('uiux.guide.step3.item5')}
+                    </li>
+                  </ul>
+                </div>
+             </div>
+          </div>
+      </div>
+
+      <!-- Result Callout -->
+      <div class="mt-6 p-6 rounded-lg bg-gradient-to-r from-emerald-500/10 to-green-500/10 border border-emerald-500/30">
+          <div class="flex items-start gap-4">
+          <svg class="w-8 h-8 text-emerald-500 dark:text-emerald-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+          <div>
+              <h4 class="text-lg font-bold text-emerald-600 dark:text-emerald-400 mb-2">{t('uiux.guide.result.title')}</h4>
+              <p class="text-slate-600 dark:text-slate-300 mb-3 text-sm">{t('uiux.guide.result.desc')}</p>
+              <div class="bg-white/50 dark:bg-slate-900/50 rounded-lg p-4 border border-emerald-500/20">
+              <p class="text-xs text-slate-500 mb-2"><strong class="text-slate-600 dark:text-slate-300">{t('uiux.guide.result.time_saved')}</strong></p>
+              <div class="grid grid-cols-2 gap-2 text-xs">
+                  <div>
+                  <span class="text-slate-500">{t('uiux.guide.result.traditional')}</span>
+                  <span class="text-red-500 dark:text-red-400 font-medium ml-2">{t('uiux.guide.result.traditional_time')}</span>
+                  </div>
+                  <div>
+                  <span class="text-slate-500">{t('uiux.guide.result.with_tool')}</span>
+                  <span class="text-emerald-600 dark:text-emerald-400 font-medium ml-2">{t('uiux.guide.result.tool_time')}</span>
+                  </div>
+              </div>
+              </div>
+          </div>
+          </div>
+      </div>
+
+    </div>
+</div>

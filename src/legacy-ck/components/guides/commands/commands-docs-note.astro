@@ -1,0 +1,57 @@
+---
+// Official docs link note shown at the bottom of the commands guide
+import { useTranslations } from '@legacy-ck/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+---
+
+<div class="text-center pt-4">
+  <p class="text-sm text-slate-500 dark:text-slate-400">
+    {t("commands.docs.text")}
+    <a
+      id="commands-docs-link"
+      href="https://docs.claudekit.cc/docs/engineer/skills"
+      data-ek-href="https://docs.claudekit.cc/docs/engineer/skills"
+      data-mk-href="https://docs.claudekit.cc/docs/marketing/skills"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+      >{t("commands.docs.link")}</a
+    >
+  </p>
+</div>
+
+<script>
+  function initDocsLink() {
+    const link = document.getElementById("commands-docs-link") as HTMLAnchorElement | null;
+    const categoriesMarketing = document.getElementById("categories-marketing");
+    if (!link || !categoriesMarketing) return;
+
+    function updateLink() {
+      const isMkt = !categoriesMarketing!.classList.contains("hidden");
+      link!.href = isMkt
+        ? (link!.dataset.mkHref ?? link!.href)
+        : (link!.dataset.ekHref ?? link!.href);
+    }
+
+    // Sync on kit toggle via MutationObserver
+    const observer = new MutationObserver(updateLink);
+    observer.observe(categoriesMarketing, { attributes: true, attributeFilter: ["class"] });
+
+    // Restore saved preference on initial load
+    const saved = localStorage.getItem("commands-kit");
+    if (saved === "marketing") {
+      link.href = link.dataset.mkHref ?? link.href;
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", initDocsLink);
+  document.addEventListener("astro:page-load", initDocsLink);
+</script>

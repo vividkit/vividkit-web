@@ -1,0 +1,575 @@
+---
+import { getLangFromUrl, type Language } from '@/i18n';
+import { useTranslations } from '@legacy-ck/i18n/utils';
+import InsideClaudeKitArticleShell from './InsideClaudeKitArticleShell.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+const blogPostUrl = currentLang === 'en'
+  ? 'https://claudekit.thieunv.space/en/posts/claudekit-beginners-guide'
+  : 'https://claudekit.thieunv.space/posts/claudekit-beginners-guide';
+
+const copy = currentLang === 'vi'
+  ? {
+      kicker: 'Getting Started',
+      summary: 'Claude Code là môi trường lập trình agentic từ Anthropic. ClaudeKit Engineer Kit biến Claude từ assistant thành development partner với hệ thống skills, hooks, và workflows.',
+      sections: {
+        claudeCode: 'Claude Code là gì?',
+        claudeKit: 'ClaudeKit Engineer Kit là gì?',
+        coreCommands: '7 lệnh core cho người mới',
+        bestPractices: 'Nên làm',
+        badPractices: 'Không nên làm',
+        readMore: 'Đọc thêm chi tiết',
+      },
+      claudeCode: [
+        'Môi trường lập trình agentic: đọc files, chạy commands, tự động giải quyết problems.',
+        'Constraint quan trọng: context window sẽ đầy dần → hiệu suất giảm. Dùng /clear giữa các tasks không liên quan.',
+        'Claude Code hoạt động tốt nhất khi bạn hiểu cách nó quản lý context.',
+      ],
+      claudeKit: [
+        'Một thư mục .claude/ chứa workflow templates: Skills, Hooks, Agents, Rules.',
+        'Philosophy: YAGNI + KISS + DRY — đơn giản hóa công việc, không thêm complexity.',
+        'Engineer Kit biến Claude từ assistant thành development partner thực sự.',
+      ],
+      coreCommands: [
+        { cmd: '/ck:brainstorm', desc: 'Khám phá ý tưởng và giải pháp trước khi code' },
+        { cmd: '/ck:plan', desc: 'Tạo implementation plan chi tiết với phases' },
+        { cmd: '/ck:cook', desc: 'Execute plan — build features theo từng bước' },
+        { cmd: '/ck:fix', desc: 'Debug và fix bugs một cách có hệ thống' },
+        { cmd: '/ck:ask', desc: 'Hỏi đáp nhanh về code hoặc architecture' },
+        { cmd: '/ck:test', desc: 'Chạy tests và phân tích coverage' },
+        { cmd: '/ck:watzup', desc: 'Xem tóm tắt những gì đã làm trong session' },
+      ],
+      bestPractices: [
+        'Cho Claude tiêu chí verify rõ ràng để nó tự kiểm tra kết quả.',
+        'Theo flow: Brainstorm → Plan → Cook — không nhảy thẳng vào code.',
+        'Cung cấp context cụ thể: file paths, error messages, expected behavior.',
+        'Clear context thường xuyên giữa các tasks không liên quan.',
+      ],
+      badPractices: [
+        'Kitchen-sink sessions: dồn quá nhiều tasks vào một session.',
+        'Sửa đi sửa lại mà không clear context → Claude lặp lại sai lầm.',
+        'Bỏ qua planning, nhảy thẳng vào implementation.',
+        'Trust without verify — luôn kiểm tra output của Claude.',
+        'Prompts mơ hồ: "fix this" thay vì mô tả cụ thể vấn đề.',
+      ],
+      readMoreText: 'Đọc bài viết đầy đủ để hiểu sâu hơn về workflow patterns, skills roadmap theo tuần, và cheat sheet →',
+      rulesSection: {
+        title: 'Sự khác biệt: CLAUDE.md vs rules/',
+        comparison: [
+          { claudeMd: 'Instructions chung cho toàn project', rules: 'Instructions modular, chia theo topic/path' },
+          { claudeMd: 'Luôn load vào context từ launch', rules: 'Không paths: load từ launch · Có paths: lazy-load khi match files' },
+          { claudeMd: 'Target: under 200 dòng', rules: 'Mỗi file một topic (code-style.md, testing.md...)' },
+          { claudeMd: 'Build commands, conventions tổng quan', rules: 'Domain rules: API, frontend, security, DB...' },
+          { claudeMd: 'Một file duy nhất', rules: 'Nhiều files, subdirectories recursive' },
+        ],
+        pathSpecific: {
+          title: 'Path-specific rules',
+          desc: 'Dùng YAML frontmatter với field paths để rule chỉ active khi Claude đụng files match:',
+          note: 'Rules không có paths field load unconditionally. Có paths thì trigger khi Claude read files match pattern.',
+        },
+        bestPractices: {
+          title: 'Best Practices khi tạo rules',
+          doTitle: 'NÊN LÀM',
+          doList: [
+            'Chia rules theo domain/concern (i18n-rules.md, testing-rules.md...)',
+            'Viết ngắn gọn, bullet/checklist — Claude parse nhanh',
+            'Kebab-case, tên mô tả rõ (api-error-handling.md)',
+            'Include examples (good vs bad)',
+            'Reference paths chính xác khi apply cho folder cụ thể',
+          ],
+          dontTitle: 'KHÔNG NÊN',
+          dontList: [
+            'Viết rules dài dòng như documentation',
+            'Duplicate content giữa CLAUDE.md và rules/',
+            'Tạo rules cho những thứ YAGNI (1-time use)',
+          ],
+        },
+      },
+    }
+  : {
+      kicker: 'Getting Started',
+      summary: 'Claude Code is an agentic coding environment from Anthropic. ClaudeKit Engineer Kit transforms Claude from assistant into a true development partner with skills, hooks, and workflows.',
+      sections: {
+        claudeCode: 'What is Claude Code?',
+        claudeKit: 'What is ClaudeKit Engineer Kit?',
+        coreCommands: '7 core commands for beginners',
+        bestPractices: 'Do This',
+        badPractices: 'Avoid This',
+        readMore: 'Read more details',
+      },
+      claudeCode: [
+        'Agentic coding environment: reads files, runs commands, auto-solves problems.',
+        'Key constraint: context window fills up → performance degrades. Use /clear between unrelated tasks.',
+        'Claude Code works best when you understand how it manages context.',
+      ],
+      claudeKit: [
+        'A .claude/ folder containing workflow templates: Skills, Hooks, Agents, Rules.',
+        'Philosophy: YAGNI + KISS + DRY — simplify work, avoid unnecessary complexity.',
+        'Engineer Kit transforms Claude from assistant into a true development partner.',
+      ],
+      coreCommands: [
+        { cmd: '/ck:brainstorm', desc: 'Explore ideas and solutions before coding' },
+        { cmd: '/ck:plan', desc: 'Create detailed implementation plans with phases' },
+        { cmd: '/ck:cook', desc: 'Execute plan — build features step by step' },
+        { cmd: '/ck:fix', desc: 'Debug and fix bugs systematically' },
+        { cmd: '/ck:ask', desc: 'Quick Q&A about code or architecture' },
+        { cmd: '/ck:test', desc: 'Run tests and analyze coverage' },
+        { cmd: '/ck:watzup', desc: 'See summary of what was done in session' },
+      ],
+      bestPractices: [
+        'Give Claude clear verification criteria so it can self-check results.',
+        'Follow the flow: Brainstorm → Plan → Cook — don\'t jump straight to code.',
+        'Provide specific context: file paths, error messages, expected behavior.',
+        'Clear context frequently between unrelated tasks.',
+      ],
+      badPractices: [
+        'Kitchen-sink sessions: cramming too many tasks into one session.',
+        'Repeated corrections without clearing context → Claude repeats mistakes.',
+        'Skipping planning, jumping straight into implementation.',
+        'Trust without verify — always check Claude\'s output.',
+        'Vague prompts: "fix this" instead of describing the specific problem.',
+      ],
+      readMoreText: 'Read the full article for workflow patterns, weekly skills roadmap, and cheat sheet →',
+      rulesSection: {
+        title: 'CLAUDE.md vs rules/ — What\'s the difference?',
+        comparison: [
+          { claudeMd: 'General instructions for whole project', rules: 'Modular instructions, split by topic/path' },
+          { claudeMd: 'Always loads into context at launch', rules: 'No paths: load at launch · Has paths: lazy-load when files match' },
+          { claudeMd: 'Target: under 200 lines', rules: 'One file per topic (code-style.md, testing.md...)' },
+          { claudeMd: 'Build commands, general conventions', rules: 'Domain rules: API, frontend, security, DB...' },
+          { claudeMd: 'Single file only', rules: 'Multiple files, recursive subdirectories' },
+        ],
+        pathSpecific: {
+          title: 'Path-specific rules',
+          desc: 'Use YAML frontmatter with paths field so rules only activate when Claude touches matching files:',
+          note: 'Rules without paths field load unconditionally. With paths, triggers when Claude reads files matching pattern.',
+        },
+        bestPractices: {
+          title: 'Best Practices for Creating Rules',
+          doTitle: 'DO THIS',
+          doList: [
+            'Split rules by domain/concern (i18n-rules.md, testing-rules.md...)',
+            'Write concisely, bullet/checklist — Claude parses fast',
+            'Kebab-case, descriptive names (api-error-handling.md)',
+            'Include examples (good vs bad)',
+            'Reference exact paths when applying to specific folders',
+          ],
+          dontTitle: 'AVOID THIS',
+          dontList: [
+            'Writing verbose rules like documentation',
+            'Duplicate content between CLAUDE.md and rules/',
+            'Creating rules for YAGNI things (1-time use)',
+          ],
+        },
+      },
+    };
+---
+
+<InsideClaudeKitArticleShell
+  lang={currentLang}
+  kicker={copy.kicker}
+  title={t('guides.home.inside_claudekit.topic_3.title')}
+  summary={copy.summary}
+  slug="getting-started"
+>
+  <!-- Two-column intro: Claude Code + ClaudeKit -->
+  <div class="grid gap-4 md:grid-cols-2">
+    <!-- What is Claude Code -->
+    <section id="claude-code" class="rounded-2xl border-l-4 border-l-violet-500 bg-gradient-to-br from-violet-50 to-purple-50/50 p-5 dark:from-violet-950/30 dark:to-purple-950/20">
+      <div class="mb-3 flex items-center gap-2">
+        <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-violet-100 dark:bg-violet-900/50">
+          <svg class="h-4 w-4 text-violet-600 dark:text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+          </svg>
+        </div>
+        <h2 class="text-lg font-semibold text-slate-900 dark:text-white">{copy.sections.claudeCode}</h2>
+      </div>
+      <ul class="space-y-2">
+        {copy.claudeCode.map((item) => (
+          <li class="flex gap-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
+            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-violet-400"></span>
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- What is ClaudeKit -->
+    <section id="claudekit" class="rounded-2xl border-l-4 border-l-blue-500 bg-gradient-to-br from-blue-50 to-cyan-50/50 p-5 dark:from-blue-950/30 dark:to-cyan-950/20">
+      <div class="mb-3 flex items-center gap-2">
+        <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900/50">
+          <svg class="h-4 w-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+          </svg>
+        </div>
+        <h2 class="text-lg font-semibold text-slate-900 dark:text-white">{copy.sections.claudeKit}</h2>
+      </div>
+      <ul class="space-y-2">
+        {copy.claudeKit.map((item) => (
+          <li class="flex gap-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
+            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-400"></span>
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </div>
+
+  <!-- Memory Loading Order - Visual -->
+  <section id="memory-loading" class="rounded-2xl border border-amber-200/70 bg-gradient-to-br from-amber-50 to-orange-50/50 p-5 dark:border-amber-800/50 dark:from-amber-950/30 dark:to-orange-950/20">
+    <div class="mb-3 flex items-center gap-2">
+      <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-100 dark:bg-amber-900/50">
+        <svg class="h-4 w-4 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+        </svg>
+      </div>
+      <h2 class="text-lg font-semibold text-slate-900 dark:text-white">{currentLang === 'vi' ? 'Cơ chế Load Memory' : 'Memory Loading Order'}</h2>
+    </div>
+    <p class="mb-3 text-sm text-slate-600 dark:text-slate-300">
+      {currentLang === 'vi'
+        ? 'Claude đọc và nối (concatenate) các file theo thứ tự, từ global → project → path-specific:'
+        : 'Claude reads and concatenates files in order, from global → project → path-specific:'}
+    </p>
+    <!-- Loading order diagram -->
+    <div class="space-y-2">
+      <div class="flex items-center gap-3">
+        <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-amber-200 text-xs font-bold text-amber-800 dark:bg-amber-800 dark:text-amber-200">1</span>
+        <div class="flex-1 rounded-lg border border-amber-200/70 bg-white/50 px-3 py-2 dark:border-amber-800/50 dark:bg-amber-950/30">
+          <code class="text-xs font-medium text-amber-700 dark:text-amber-300">~/.claude/CLAUDE.md</code>
+          <span class="ml-2 text-xs text-slate-500 dark:text-slate-400">{currentLang === 'vi' ? 'Global — mọi project' : 'Global — all projects'}</span>
+        </div>
+      </div>
+      <div class="flex flex-col items-center py-1">
+        <div class="h-2 w-px bg-amber-300/60 dark:bg-amber-600/60"></div>
+        <svg class="h-3 w-3 text-amber-400/80 dark:text-amber-500/80" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+        </svg>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-amber-200 text-xs font-bold text-amber-800 dark:bg-amber-800 dark:text-amber-200">2</span>
+        <div class="flex-1 rounded-lg border border-amber-200/70 bg-white/50 px-3 py-2 dark:border-amber-800/50 dark:bg-amber-950/30">
+          <code class="text-xs font-medium text-amber-700 dark:text-amber-300">./CLAUDE.md</code>
+          <span class="mx-1 text-xs text-slate-400">+</span>
+          <code class="text-xs font-medium text-amber-700 dark:text-amber-300">CLAUDE.local.md</code>
+          <span class="ml-2 text-xs text-slate-500 dark:text-slate-400">{currentLang === 'vi' ? 'Project root' : 'Project root'}</span>
+        </div>
+      </div>
+      <div class="flex flex-col items-center py-1">
+        <div class="h-2 w-px bg-amber-300/60 dark:bg-amber-600/60"></div>
+        <svg class="h-3 w-3 text-amber-400/80 dark:text-amber-500/80" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+        </svg>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-amber-200 text-xs font-bold text-amber-800 dark:bg-amber-800 dark:text-amber-200">3</span>
+        <div class="flex-1 rounded-lg border border-amber-200/70 bg-white/50 px-3 py-2 dark:border-amber-800/50 dark:bg-amber-950/30">
+          <code class="text-xs font-medium text-amber-700 dark:text-amber-300">.claude/rules/*.md</code>
+          <span class="ml-2 text-xs text-slate-500 dark:text-slate-400">{currentLang === 'vi' ? 'Rules theo topic (lazy-load nếu có paths)' : 'Topic rules (lazy-load if path-scoped)'}</span>
+        </div>
+      </div>
+      <div class="flex flex-col items-center py-1">
+        <div class="h-2 w-px bg-emerald-300/60 dark:bg-emerald-600/60"></div>
+        <svg class="h-3 w-3 text-emerald-400/80 dark:text-emerald-500/80" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+        </svg>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-200 text-xs font-bold text-emerald-800 dark:bg-emerald-800 dark:text-emerald-200">✓</span>
+        <div class="flex-1 rounded-lg border border-emerald-300 bg-emerald-50 px-3 py-2 dark:border-emerald-700 dark:bg-emerald-950/40">
+          <span class="text-xs font-semibold text-emerald-700 dark:text-emerald-300">{currentLang === 'vi' ? '→ Session Context (đã nối)' : '→ Session Context (concatenated)'}</span>
+        </div>
+      </div>
+    </div>
+    <div class="mt-3 rounded-lg bg-amber-100/50 px-3 py-2 dark:bg-amber-900/30">
+      <p class="text-xs text-amber-800 dark:text-amber-200">
+        <strong>Tip:</strong> {currentLang === 'vi'
+          ? 'Giữ CLAUDE.md < 200 dòng. Tách domain rules (api, testing, security) sang .claude/rules/ để tránh context bloat.'
+          : 'Keep CLAUDE.md < 200 lines. Split domain rules (api, testing, security) into .claude/rules/ to avoid context bloat.'}
+      </p>
+    </div>
+  </section>
+
+  <!-- CLAUDE.md vs rules/ Comparison -->
+  <section id="rules-comparison" class="rounded-2xl border border-cyan-200/70 bg-gradient-to-br from-cyan-50 to-sky-50/50 p-5 dark:border-cyan-800/50 dark:from-cyan-950/30 dark:to-sky-950/20">
+    <div class="mb-4 flex items-center gap-2">
+      <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-100 dark:bg-cyan-900/50">
+        <svg class="h-4 w-4 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+        </svg>
+      </div>
+      <h2 class="text-lg font-semibold text-slate-900 dark:text-white">{copy.rulesSection.title}</h2>
+    </div>
+
+    <div class="overflow-hidden rounded-xl border border-cyan-200/70 dark:border-cyan-800/50">
+      <table class="w-full text-left text-sm">
+        <thead class="bg-cyan-100/70 dark:bg-cyan-900/50">
+          <tr>
+            <th class="px-3 py-2 font-semibold text-cyan-800 dark:text-cyan-200">CLAUDE.md</th>
+            <th class="px-3 py-2 font-semibold text-cyan-800 dark:text-cyan-200">.claude/rules/*.md</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-cyan-200/50 bg-white/50 dark:divide-cyan-800/50 dark:bg-cyan-950/30">
+          {copy.rulesSection.comparison.map((row) => (
+            <tr>
+              <td class="px-3 py-2 text-slate-600 dark:text-slate-300">{row.claudeMd}</td>
+              <td class="px-3 py-2 text-slate-600 dark:text-slate-300">{row.rules}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mt-4 rounded-xl border border-amber-200/70 bg-amber-50/50 p-4 dark:border-amber-800/50 dark:bg-amber-950/30">
+      <div class="mb-2 flex items-center gap-2">
+        <svg class="h-4 w-4 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+        </svg>
+        <span class="text-sm font-semibold text-amber-800 dark:text-amber-200">{copy.rulesSection.pathSpecific.title}</span>
+      </div>
+      <p class="mb-2 text-xs text-slate-600 dark:text-slate-300">{copy.rulesSection.pathSpecific.desc}</p>
+      <div class="rounded-lg bg-slate-100 p-3 font-mono text-xs text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+        <div class="text-slate-500 dark:text-slate-400"># .claude/rules/api-design.md</div>
+        <div class="text-cyan-600 dark:text-cyan-400">---</div>
+        <div><span class="text-purple-600 dark:text-purple-400">paths:</span></div>
+        <div class="pl-4">- <span class="text-green-600 dark:text-green-400">"src/api/**/*.ts"</span></div>
+        <div class="pl-4">- <span class="text-green-600 dark:text-green-400">"src/server/**/*.ts"</span></div>
+        <div class="text-cyan-600 dark:text-cyan-400">---</div>
+      </div>
+      <p class="mt-2 text-xs text-amber-700 dark:text-amber-300">{copy.rulesSection.pathSpecific.note}</p>
+    </div>
+  </section>
+
+  <!-- Best Practices khi tạo rules -->
+  <section id="rules-best-practices">
+    <h2 class="mb-4 flex items-center gap-2 text-lg font-semibold text-slate-900 dark:text-white">
+      <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-100 dark:bg-indigo-900/50">
+        <svg class="h-4 w-4 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+        </svg>
+      </div>
+      {copy.rulesSection.bestPractices.title}
+    </h2>
+    <div class="grid gap-4 md:grid-cols-2">
+    <div class="rounded-2xl border border-emerald-200/70 bg-gradient-to-br from-emerald-50 to-green-50/50 p-5 dark:border-emerald-800/50 dark:from-emerald-950/30 dark:to-green-950/20">
+      <div class="mb-3 flex items-center gap-2">
+        <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-100 dark:bg-emerald-900/50">
+          <svg class="h-4 w-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+        </div>
+        <h3 class="text-base font-semibold text-emerald-800 dark:text-emerald-200">{copy.rulesSection.bestPractices.doTitle}</h3>
+      </div>
+      <ul class="space-y-2">
+        {copy.rulesSection.bestPractices.doList.map((item) => (
+          <li class="flex gap-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
+            <svg class="mt-1 h-4 w-4 shrink-0 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+            </svg>
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="rounded-2xl border border-rose-200/70 bg-gradient-to-br from-rose-50 to-red-50/50 p-5 dark:border-rose-800/50 dark:from-rose-950/30 dark:to-red-950/20">
+      <div class="mb-3 flex items-center gap-2">
+        <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-rose-100 dark:bg-rose-900/50">
+          <svg class="h-4 w-4 text-rose-600 dark:text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </div>
+        <h3 class="text-base font-semibold text-rose-800 dark:text-rose-200">{copy.rulesSection.bestPractices.dontTitle}</h3>
+      </div>
+      <ul class="space-y-2">
+        {copy.rulesSection.bestPractices.dontList.map((item) => (
+          <li class="flex gap-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
+            <svg class="mt-1 h-4 w-4 shrink-0 text-rose-500" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+            </svg>
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+  </section>
+
+  <!-- 7 Core Commands - Grid layout -->
+  <section id="core-commands" class="rounded-2xl border border-slate-200/70 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/70">
+    <div class="mb-4 flex items-center gap-2">
+      <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-100 dark:bg-emerald-900/50">
+        <svg class="h-4 w-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+        </svg>
+      </div>
+      <h2 class="text-lg font-semibold text-slate-900 dark:text-white">{copy.sections.coreCommands}</h2>
+    </div>
+    <div class="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+      {copy.coreCommands.map((item, i) => (
+        <div class="flex items-start gap-3 rounded-xl bg-slate-50 p-3 dark:bg-slate-800/50">
+          <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-xs font-bold text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300">{i + 1}</span>
+          <div class="min-w-0">
+            <code class="block truncate font-mono text-sm font-medium text-emerald-700 dark:text-emerald-300">{item.cmd}</code>
+            <span class="text-xs text-slate-500 dark:text-slate-400">{item.desc}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Best vs Bad Practices - Side by side -->
+  <div class="grid gap-4 md:grid-cols-2">
+    <!-- Best Practices -->
+    <section id="best-practices" class="rounded-2xl border border-emerald-200/70 bg-gradient-to-br from-emerald-50 to-green-50/50 p-5 dark:border-emerald-800/50 dark:from-emerald-950/30 dark:to-green-950/20">
+      <div class="mb-3 flex items-center gap-2">
+        <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-100 dark:bg-emerald-900/50">
+          <svg class="h-4 w-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+        </div>
+        <h2 class="text-lg font-semibold text-emerald-800 dark:text-emerald-200">{copy.sections.bestPractices}</h2>
+      </div>
+      <ul class="space-y-2">
+        {copy.bestPractices.map((item) => (
+          <li class="flex gap-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
+            <svg class="mt-1 h-4 w-4 shrink-0 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+            </svg>
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- Bad Practices -->
+    <section id="bad-practices" class="rounded-2xl border border-rose-200/70 bg-gradient-to-br from-rose-50 to-red-50/50 p-5 dark:border-rose-800/50 dark:from-rose-950/30 dark:to-red-950/20">
+      <div class="mb-3 flex items-center gap-2">
+        <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-rose-100 dark:bg-rose-900/50">
+          <svg class="h-4 w-4 text-rose-600 dark:text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </div>
+        <h2 class="text-lg font-semibold text-rose-800 dark:text-rose-200">{copy.sections.badPractices}</h2>
+      </div>
+      <ul class="space-y-2">
+        {copy.badPractices.map((item) => (
+          <li class="flex gap-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
+            <svg class="mt-1 h-4 w-4 shrink-0 text-rose-500" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+            </svg>
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </div>
+
+  <!-- Real-World Use Cases - 2 column grid -->
+  <section id="use-cases">
+    <div class="mb-4 flex items-center gap-2">
+      <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-purple-100 dark:bg-purple-900/50">
+        <svg class="h-4 w-4 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+        </svg>
+      </div>
+      <h2 class="text-lg font-semibold text-slate-900 dark:text-white">{currentLang === 'vi' ? 'Use Cases Thực Tế' : 'Real-World Use Cases'}</h2>
+    </div>
+    <div class="grid gap-3 md:grid-cols-2">
+      <!-- UC1: Build feature -->
+      <div class="flex flex-col rounded-xl border border-emerald-200/70 bg-gradient-to-br from-emerald-50/50 to-green-50/30 p-4 dark:border-emerald-800/50 dark:from-emerald-950/20 dark:to-green-950/10">
+        <div class="mb-2 flex flex-wrap items-center gap-2">
+          <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-200 text-xs font-bold text-emerald-800 dark:bg-emerald-800 dark:text-emerald-200">1</span>
+          <span class="text-sm font-semibold text-slate-800 dark:text-slate-200">{currentLang === 'vi' ? 'Build feature mới' : 'Build new feature'}</span>
+          <span class="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-medium text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300">Beginner</span>
+        </div>
+        <p class="mb-2 text-xs italic text-slate-500 dark:text-slate-400">
+          {currentLang === 'vi' ? 'Thêm user settings page với dark mode toggle' : 'Add user settings page with dark mode toggle'}
+        </p>
+        <div class="flex-1 rounded-lg bg-slate-100 p-2.5 font-mono text-[11px] leading-relaxed text-slate-700 dark:bg-slate-800/90 dark:text-slate-200">
+          <div><span class="text-purple-600 dark:text-purple-400">/ck:brainstorm</span> User settings page với dark mode toggle</div>
+          <div class="text-slate-500 dark:text-slate-400">→ brainstorm-report.md</div>
+          <div class="mt-1 text-cyan-600 dark:text-cyan-400">/clear</div>
+          <div class="mt-1"><span class="text-purple-600 dark:text-purple-400">/ck:plan</span> plans/.../brainstorm-report.md</div>
+          <div class="text-slate-500 dark:text-slate-400">→ plan.md + phase-*.md</div>
+          <div class="mt-1 text-cyan-600 dark:text-cyan-400">/clear</div>
+          <div class="mt-1"><span class="text-purple-600 dark:text-purple-400">/ck:cook</span> plans/.../plan.md</div>
+        </div>
+      </div>
+      <!-- UC2: Fix bug -->
+      <div class="flex flex-col rounded-xl border border-rose-200/70 bg-gradient-to-br from-rose-50/50 to-red-50/30 p-4 dark:border-rose-800/50 dark:from-rose-950/20 dark:to-red-950/10">
+        <div class="mb-2 flex flex-wrap items-center gap-2">
+          <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-rose-200 text-xs font-bold text-rose-800 dark:bg-rose-800 dark:text-rose-200">2</span>
+          <span class="text-sm font-semibold text-slate-800 dark:text-slate-200">{currentLang === 'vi' ? 'Fix bug nhanh' : 'Quick bug fix'}</span>
+          <span class="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-medium text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300">Beginner</span>
+        </div>
+        <p class="mb-2 text-xs italic text-slate-500 dark:text-slate-400">
+          {currentLang === 'vi' ? 'Form validation không show error message' : 'Form validation not showing error'}
+        </p>
+        <div class="flex-1 rounded-lg bg-slate-100 p-2.5 font-mono text-[11px] leading-relaxed text-slate-700 dark:bg-slate-800/90 dark:text-slate-200">
+          <div><span class="text-purple-600 dark:text-purple-400">/ck:fix</span> Form validation trong src/components/LoginForm.tsx không hiện error message khi email invalid</div>
+        </div>
+      </div>
+      <!-- UC3: Onboard codebase -->
+      <div class="flex flex-col rounded-xl border border-blue-200/70 bg-gradient-to-br from-blue-50/50 to-cyan-50/30 p-4 dark:border-blue-800/50 dark:from-blue-950/20 dark:to-cyan-950/10">
+        <div class="mb-2 flex flex-wrap items-center gap-2">
+          <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-200 text-xs font-bold text-blue-800 dark:bg-blue-800 dark:text-blue-200">3</span>
+          <span class="text-sm font-semibold text-slate-800 dark:text-slate-200">{currentLang === 'vi' ? 'Onboard codebase' : 'Onboard codebase'}</span>
+          <span class="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-medium text-amber-700 dark:bg-amber-900/50 dark:text-amber-300">Intermediate</span>
+        </div>
+        <p class="mb-2 text-xs italic text-slate-500 dark:text-slate-400">
+          {currentLang === 'vi' ? 'Join team mới, cần hiểu codebase nhanh' : 'Join new team, understand codebase fast'}
+        </p>
+        <div class="flex-1 rounded-lg bg-slate-100 p-2.5 font-mono text-[11px] leading-relaxed text-slate-700 dark:bg-slate-800/90 dark:text-slate-200">
+          <div><span class="text-purple-600 dark:text-purple-400">/ck:scout</span> src/</div>
+          <div class="mt-1"><span class="text-purple-600 dark:text-purple-400">/ck:ask</span> Authentication flow hoạt động thế nào? Tokens lưu ở đâu?</div>
+        </div>
+        <p class="mt-2 text-xs font-medium text-emerald-600 dark:text-emerald-400">
+          {currentLang === 'vi' ? '→ 30 phút thay vì 2 ngày' : '→ 30min instead of 2 days'}
+        </p>
+      </div>
+      <!-- UC4: Refactor -->
+      <div class="flex flex-col rounded-xl border border-amber-200/70 bg-gradient-to-br from-amber-50/50 to-orange-50/30 p-4 dark:border-amber-800/50 dark:from-amber-950/20 dark:to-orange-950/10">
+        <div class="mb-2 flex flex-wrap items-center gap-2">
+          <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-amber-200 text-xs font-bold text-amber-800 dark:bg-amber-800 dark:text-amber-200">4</span>
+          <span class="text-sm font-semibold text-slate-800 dark:text-slate-200">{currentLang === 'vi' ? 'Refactor an toàn' : 'Safe refactoring'}</span>
+          <span class="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-medium text-amber-700 dark:bg-amber-900/50 dark:text-amber-300">Intermediate</span>
+        </div>
+        <p class="mb-2 text-xs italic text-slate-500 dark:text-slate-400">
+          {currentLang === 'vi' ? 'Module cũ 500 LOC cần cleanup' : 'Old 500 LOC module needs cleanup'}
+        </p>
+        <div class="flex-1 rounded-lg bg-slate-100 p-2.5 font-mono text-[11px] leading-relaxed text-slate-700 dark:bg-slate-800/90 dark:text-slate-200">
+          <div><span class="text-purple-600 dark:text-purple-400">/ck:ask</span> Analyze src/legacy/user.js — Hidden deps? Side effects?</div>
+          <div class="mt-1"><span class="text-purple-600 dark:text-purple-400">/ck:plan</span> Refactor user.js thành modules, giữ nguyên API</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Read More CTA -->
+  <section id="read-more" class="rounded-2xl border border-slate-200/70 bg-gradient-to-r from-slate-50 via-white to-emerald-50/50 p-6 dark:border-slate-800 dark:from-slate-900 dark:via-slate-900 dark:to-emerald-950/20">
+    <div class="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <h2 class="mb-1 text-lg font-semibold text-slate-900 dark:text-white">{copy.sections.readMore}</h2>
+        <p class="text-sm text-slate-600 dark:text-slate-300">{copy.readMoreText}</p>
+      </div>
+      <a
+        href={blogPostUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex shrink-0 items-center gap-2 rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600"
+      >
+        <span>{currentLang === 'vi' ? 'Đọc bài viết đầy đủ' : 'Read full article'}</span>
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+        </svg>
+      </a>
+    </div>
+  </section>
+</InsideClaudeKitArticleShell>

@@ -1,0 +1,114 @@
+---
+// WorkflowsGuide - composition parent, delegates to sub-components
+import { engineerKitWorkflows as engineerWorkflowsEn, marketingKitWorkflows as marketingWorkflowsEn } from '@legacy-ck/data/guides/workflows';
+import { engineerKitWorkflows as engineerWorkflowsVi, marketingKitWorkflows as marketingWorkflowsVi } from '@legacy-ck/data/vi/guides/workflows';
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
+import WorkflowsHeaderAndVersionToggle from './workflows/workflows-header-and-version-toggle.astro';
+import WorkflowsEngineerSection from './workflows/workflows-engineer-section.astro';
+import WorkflowsMarketingSection from './workflows/workflows-marketing-section.astro';
+import WorkflowsProTipsAndNavigation from './workflows/workflows-pro-tips-and-navigation.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(currentLang);
+const isVi = currentLang === 'vi';
+const t = (en: string, vi: string) => isVi ? vi : en;
+
+const engineerWorkflows = currentLang === 'vi' ? (engineerWorkflowsVi || engineerWorkflowsEn) : engineerWorkflowsEn;
+const marketingWorkflows = currentLang === 'vi' ? (marketingWorkflowsVi || marketingWorkflowsEn) : marketingWorkflowsEn;
+---
+
+<style>
+  @keyframes flow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+  .flow-arrow {
+    animation: flow 2s ease-in-out infinite;
+  }
+</style>
+
+<div class="space-y-8 mt-6">
+  <WorkflowsHeaderAndVersionToggle lang={currentLang} />
+
+  <!-- Engineer Kit Content -->
+  <div id="wf-engineer-content">
+    <WorkflowsEngineerSection workflows={engineerWorkflows} lang={currentLang} />
+    <WorkflowsProTipsAndNavigation lang={currentLang} />
+  </div>
+
+  <!-- Marketing Kit Content -->
+  <div id="wf-marketing-content" class="hidden">
+    <WorkflowsMarketingSection workflows={marketingWorkflows} lang={currentLang} />
+    <WorkflowsProTipsAndNavigation lang={currentLang} />
+  </div>
+
+  <section class="rounded-2xl border border-cyan-200 bg-cyan-50/80 p-5 dark:border-cyan-500/25 dark:bg-cyan-500/10">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div class="min-w-0">
+        <p class="text-xs font-bold uppercase tracking-[0.16em] text-cyan-700 dark:text-cyan-300">
+          {t('Related guide', 'Guide liên quan')}
+        </p>
+        <h2 class="mt-1 text-lg font-bold text-slate-950 dark:text-white">Finding Your Unknowns</h2>
+        <p class="mt-1 max-w-3xl text-sm leading-6 text-slate-700 dark:text-slate-300">
+          {t(
+            'Workflows are proven recipes for known situations. Finding Your Unknowns is what you reach for when no recipe fits yet — pinpoint which kind of unknown you are facing, then find or build the workflow.',
+            'Workflows là công thức đã được kiểm chứng cho tình huống đã biết. Finding Your Unknowns là thứ bạn cần khi chưa có công thức nào khớp — xác định bạn đang gặp loại unknown nào, rồi mới tìm hoặc tạo workflow phù hợp.'
+          )}
+        </p>
+      </div>
+      <a
+        href={translatePath('/legacy/guides/finding-unknowns')}
+        class="inline-flex min-h-10 shrink-0 items-center justify-center rounded-lg bg-cyan-600 px-4 text-sm font-bold text-white shadow-sm transition hover:bg-cyan-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-300"
+      >
+        {t('Open Finding Your Unknowns', 'Mở Finding Your Unknowns')}
+      </a>
+    </div>
+  </section>
+</div>
+
+<script>
+  // Kit toggle functionality for workflows (Engineer / Marketing)
+  document.addEventListener('DOMContentLoaded', () => {
+    const btnEngineer = document.getElementById('wf-btn-engineer');
+    const btnMarketing = document.getElementById('wf-btn-marketing');
+    const engineerContent = document.getElementById('wf-engineer-content');
+    const marketingContent = document.getElementById('wf-marketing-content');
+
+    if (!btnEngineer || !btnMarketing || !engineerContent || !marketingContent) return;
+
+    const activeClasses = 'bg-teal-500 text-white shadow-sm';
+    const inactiveClasses = 'text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700';
+    const activeMarketingClasses = 'bg-purple-500 text-white shadow-sm';
+
+    function setKit(kit: 'engineer' | 'marketing') {
+      if (kit === 'engineer') {
+        engineerContent.classList.remove('hidden');
+        marketingContent.classList.add('hidden');
+        btnEngineer.className = `wf-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${activeClasses}`;
+        btnMarketing.className = `wf-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${inactiveClasses}`;
+      } else {
+        engineerContent.classList.add('hidden');
+        marketingContent.classList.remove('hidden');
+        btnMarketing.className = `wf-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${activeMarketingClasses}`;
+        btnEngineer.className = `wf-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${inactiveClasses}`;
+      }
+      localStorage.setItem('workflows-kit', kit);
+    }
+
+    // Load saved preference (migrate old keys)
+    const savedKit = localStorage.getItem('workflows-kit') || localStorage.getItem('workflows-version');
+    if (savedKit === 'engineer' || savedKit === 'stable' || savedKit === 'v25') {
+      setKit('engineer');
+    } else if (savedKit === 'marketing' || savedKit === 'beta' || savedKit === 'v24') {
+      setKit('marketing');
+    }
+
+    btnEngineer.addEventListener('click', () => setKit('engineer'));
+    btnMarketing.addEventListener('click', () => setKit('marketing'));
+  });
+</script>

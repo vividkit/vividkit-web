@@ -1,0 +1,145 @@
+---
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
+import {
+  hookCategories,
+} from "@legacy-ck/data/guides/custom-hooks/custom-hooks-data";
+import { customHooksTranslations } from "@legacy-ck/data/guides/custom-hooks/custom-hooks-translations";
+import CustomHooksIntroduction from "./custom-hooks/custom-hooks-introduction.astro";
+import CustomHooksCategorySection from "./custom-hooks/custom-hooks-category-section.astro";
+import {
+  buildHookViewModels,
+  flattenHooks,
+} from "./custom-hooks/custom-hooks-ui";
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(currentLang);
+const t = customHooksTranslations[currentLang] || customHooksTranslations.en;
+const isVi = currentLang === "vi";
+
+const categoryModels = buildHookViewModels(hookCategories);
+const allHooks = flattenHooks(categoryModels);
+const totalHooks = allHooks.length;
+const totalCategories = categoryModels.length;
+
+const stats = [
+  { value: totalHooks, label: t.statHooks },
+  { value: totalCategories, label: t.statCategories },
+];
+
+const catalogHints = [
+  {
+    title: t.catalogHintDefaultTitle,
+    desc: t.catalogHintDefaultDesc,
+    accent: "border-emerald-200 bg-emerald-50/70 text-emerald-800 dark:border-emerald-500/25 dark:bg-emerald-500/10 dark:text-emerald-200",
+  },
+  {
+    title: t.catalogHintDisableTitle,
+    desc: t.catalogHintDisableDesc,
+    accent: "border-blue-200 bg-blue-50/70 text-blue-800 dark:border-blue-500/25 dark:bg-blue-500/10 dark:text-blue-200",
+  },
+  {
+    title: t.catalogHintFailureTitle,
+    desc: t.catalogHintFailureDesc,
+    accent: "border-amber-200 bg-amber-50/75 text-amber-900 dark:border-amber-500/25 dark:bg-amber-500/10 dark:text-amber-100",
+  },
+];
+---
+
+<div
+  id="custom-hooks-catalog"
+  class="mt-4 space-y-7"
+>
+  <CustomHooksIntroduction t={t} stats={stats} />
+
+  <section class="rounded-2xl border border-cyan-200 bg-cyan-50/80 p-5 dark:border-cyan-500/25 dark:bg-cyan-500/10">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div class="min-w-0">
+        <p class="text-xs font-bold uppercase tracking-[0.16em] text-cyan-700 dark:text-cyan-300">
+          {isVi ? 'Hook-based review gate' : 'Hook-based review gate'}
+        </p>
+        <h2 class="mt-1 text-lg font-bold text-slate-950 dark:text-white">UI Review Gate</h2>
+        <p class="mt-1 max-w-3xl text-sm leading-6 text-slate-700 dark:text-slate-300">
+          {isVi
+            ? 'Plannotator là ví dụ thực tế cho pattern hook mở browser review UI trước khi agent tiếp tục.'
+            : 'Plannotator is a concrete example of a hook opening a browser review UI before the agent continues.'}
+        </p>
+      </div>
+      <a
+        href={translatePath('/legacy/guides/ui-review-gate')}
+        class="inline-flex min-h-10 shrink-0 items-center justify-center rounded-lg bg-cyan-600 px-4 text-sm font-bold text-white shadow-sm transition hover:bg-cyan-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-300"
+      >
+        {isVi ? 'Mở UI Review Gate' : 'Open UI Review Gate'}
+      </a>
+    </div>
+  </section>
+
+  <section id="hook-list" class="scroll-mt-28 space-y-6">
+    <div class="border-y border-slate-200 py-6 dark:border-slate-800">
+      <div class="max-w-3xl">
+        <p class="text-xs font-semibold uppercase text-blue-600 dark:text-blue-400">
+          {t.catalogLabel}
+        </p>
+        <h2 class="mt-1 text-2xl font-bold tracking-tight text-slate-950 dark:text-white">
+          {t.catalogTitle}
+        </h2>
+        <p class="mt-2 text-base leading-7 text-slate-600 dark:text-slate-300">
+          {t.catalogDesc}
+        </p>
+      </div>
+
+      <div class="mt-5 grid gap-3 lg:grid-cols-3">
+        {catalogHints.map((item, index) => (
+          <div class:list={[
+            "min-w-0 rounded-lg border p-4",
+            item.accent,
+          ]}>
+            <div class="flex items-center gap-2">
+              <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-white/70 text-xs font-bold dark:bg-slate-950/35">
+                {index + 1}
+              </span>
+              <h3 class="text-sm font-bold">{item.title}</h3>
+            </div>
+            <p class="mt-2 text-sm leading-6 opacity-90">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-4 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 dark:border-slate-800 dark:bg-slate-900/55">
+        <h3 class="text-sm font-bold text-slate-950 dark:text-white">{t.failureExplainerTitle}</h3>
+        <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300">
+          {t.failureExplainerDesc}
+        </p>
+      </div>
+    </div>
+
+    <div class="space-y-8">
+      {categoryModels.map((category) => (
+        <CustomHooksCategorySection category={category} t={t} isVi={isVi} />
+      ))}
+    </div>
+  </section>
+
+  <div class="border-t border-slate-200 pt-6 text-center dark:border-slate-800">
+    <p class="text-sm text-slate-600 dark:text-slate-400">
+      {t.officialDocsText}
+      <a
+        href="https://docs.claudekit.cc/docs/engineer/configuration/hooks"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-1 font-medium text-blue-600 hover:underline focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-blue-400"
+      >
+        {t.officialDocsLink}
+        <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+          <polyline points="15 3 21 3 21 9"></polyline>
+          <line x1="10" y1="14" x2="21" y2="3"></line>
+        </svg>
+      </a>
+    </p>
+  </div>
+</div>

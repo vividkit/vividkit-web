@@ -1,0 +1,350 @@
+---
+import type { Language } from '@/i18n';
+import TerminalSnippet from '../TerminalSnippet.astro';
+import { CheckCircle2, Network, Route, Server, Smartphone, Wifi } from 'lucide-astro';
+import { renderInlineCode } from './inline-code';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const isVi = lang === 'vi';
+const t = (en: string, vi: string) => isVi ? vi : en;
+
+const providerEnvConfigs = [
+  {
+    title: 'Claude Code',
+    path: '~/.claude/settings.json',
+    body: t('Use user settings for every project, or `.claude/settings.local.json` for one repo only.', 'Dùng user settings cho mọi project, hoặc `.claude/settings.local.json` nếu chỉ muốn áp dụng cho một repo.'),
+    code: `{
+  "env": {
+    "PLANNOTATOR_REMOTE": "1",
+    "PLANNOTATOR_PORT": "9999"
+  }
+}`,
+    label: 'json · Claude Code env',
+    mode: 'plain' as const,
+  },
+  {
+    title: 'Codex',
+    path: '~/.codex/config.toml',
+    body: t('Use user config for every project, or `.codex/config.toml` inside a trusted repo. Merge into the existing table if it already exists.', 'Dùng user config cho mọi project, hoặc `.codex/config.toml` trong repo đã trusted. Nếu table đã có sẵn thì merge vào table hiện có.'),
+    code: `[shell_environment_policy]
+inherit = "core"
+set = { PLANNOTATOR_REMOTE = "1", PLANNOTATOR_PORT = "9999" }`,
+    label: 'toml · Codex command env',
+    mode: 'plain' as const,
+  },
+];
+
+const lanIpOptions = [
+  {
+    title: 'macOS',
+    code: 'ipconfig getifaddr en0',
+  },
+  {
+    title: 'Linux / WSL',
+    code: "hostname -I | awk '{print $1}'",
+  },
+  {
+    title: 'Windows PowerShell',
+    code: 'ipconfig | findstr IPv4',
+  },
+];
+
+const sameWifiUrl = `http://<host-lan-ip>:9999`;
+
+const tailscaleCode = `tailscale ip -4
+tailscale serve --bg --tcp=10000 9999`;
+
+const tailscaleUrl = `http://<tailscale-ip>:10000/`;
+
+const flowSteps = [
+  {
+    title: t('Start the review on desktop', 'Mở review trên desktop'),
+    body: t('Plannotator runs beside the agent and exposes a browser UI.', 'Plannotator chạy cạnh agent và mở một browser UI.'),
+  },
+  {
+    title: t('Open the reachable URL on phone', 'Mở URL phone truy cập được'),
+    body: t('Use LAN IP on the same Wi-Fi, or a tunnel when networks differ.', 'Dùng LAN IP nếu cùng Wi-Fi, hoặc tunnel nếu khác network.'),
+  },
+  {
+    title: t('Approve or comment from mobile', 'Approve hoặc comment từ mobile'),
+    body: t('The decision goes back to the desktop agent session.', 'Quyết định sẽ gửi ngược về session agent trên desktop.'),
+  },
+];
+
+const troubleshooting = [
+  t('Port not listening: start a fresh Plannotator session and check the printed `URL/port`.', 'Port chưa listen: mở session Plannotator mới và kiểm tra `URL/port` in ra terminal.'),
+  t('Phone cannot connect: confirm same `Wi-Fi`, firewall rules, or that `Tailscale/VPN` is connected on both devices.', 'Phone không connect: kiểm tra cùng `Wi-Fi`, firewall, hoặc `Tailscale/VPN` đã connect ở cả hai máy.'),
+  t('`MagicDNS` fails: use the raw `Tailscale IP` first, then fix DNS later.', '`MagicDNS` lỗi: dùng `Tailscale IP` trước, xử DNS sau.'),
+  t('`HTTP` vs `HTTPS`: local Plannotator URLs are usually `HTTP` unless your tunnel adds TLS.', '`HTTP` vs `HTTPS`: URL local của Plannotator thường là `HTTP` trừ khi tunnel thêm TLS.'),
+  t('Stale sessions: run `plannotator sessions --clean`, then open a new review.', 'Session cũ: chạy `plannotator sessions --clean`, rồi mở review mới.'),
+];
+---
+
+<section class="overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950/75 sm:p-6">
+  <div class="space-y-5">
+    <div class="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(280px,0.38fr)] lg:items-start">
+      <div class="min-w-0">
+        <div class="flex min-w-0 items-start gap-3">
+          <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-cyan-50 text-cyan-700 dark:bg-cyan-500/10 dark:text-cyan-300">
+            <Smartphone class="h-5 w-5" stroke-width={2.2} />
+          </span>
+          <div class="min-w-0">
+            <p class="text-xs font-bold uppercase tracking-[0.16em] text-cyan-700 dark:text-cyan-300">
+              {t('Mobile approval', 'Approve bằng mobile')}
+            </p>
+            <h2 class="mt-2 break-words text-2xl font-bold tracking-tight text-slate-950 dark:text-white">
+              {t('Remote control and Plannotator UI are separate channels', 'Remote control và Plannotator UI là hai kênh riêng')}
+            </h2>
+          </div>
+        </div>
+
+        <p class="mt-4 text-sm leading-7 text-slate-600 dark:text-slate-400">
+          {t(
+            'Codex or Claude Code mobile can approve agent actions through their own remote-control path. Plannotator approval happens in a browser pointed at the Plannotator server, so the phone must be able to reach that server.',
+            'Codex hoặc Claude Code mobile có thể approve hành động agent qua kênh remote-control riêng. Approval của Plannotator diễn ra trong browser trỏ tới server Plannotator, nên phone phải truy cập được server đó.'
+          )}
+        </p>
+      </div>
+      <aside class="min-w-0 rounded-xl border border-cyan-200 bg-cyan-50/60 p-4 dark:border-cyan-500/25 dark:bg-cyan-500/5">
+        <p class="text-xs font-bold uppercase tracking-[0.14em] text-cyan-700 dark:text-cyan-300">
+          {t('Mental model', 'Mental model')}
+        </p>
+        <p
+          class="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-300"
+          set:html={renderInlineCode(t(
+            'Mobile remote-control approves the agent. Plannotator mobile approval approves the review UI, so the phone needs the Plannotator URL.',
+            'Remote-control mobile approve agent. Plannotator mobile approval approve review UI, nên phone cần truy cập được URL của Plannotator.'
+          ))}
+        ></p>
+      </aside>
+    </div>
+
+    <div class="grid gap-3 md:grid-cols-3">
+      {flowSteps.map((step, index) => (
+        <div class="min-w-0 rounded-xl border border-slate-200 bg-slate-50/75 p-4 dark:border-slate-800 dark:bg-slate-900/55">
+          <div class="flex items-center gap-3">
+            <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-cyan-50 text-xs font-bold text-cyan-700 dark:bg-cyan-500/10 dark:text-cyan-300">
+              {index + 1}
+            </span>
+            <p class="text-sm font-bold leading-5 text-slate-950 dark:text-white">{step.title}</p>
+          </div>
+          <p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">{step.body}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="grid gap-5">
+      <article class="min-w-0 rounded-xl border border-slate-200 bg-slate-50/75 p-4 dark:border-slate-800 dark:bg-slate-900/55 sm:p-5 lg:p-6">
+        <div class="flex items-start gap-3">
+          <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-cyan-200 bg-cyan-50 text-cyan-700 dark:border-cyan-500/30 dark:bg-cyan-500/10 dark:text-cyan-200">
+            <Server class="h-5 w-5" stroke-width={2.2} />
+          </span>
+          <div class="min-w-0">
+            <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">{t('Host setup', 'Setup host')}</p>
+            <h3 class="mt-1 text-base font-bold text-slate-950 dark:text-white">{t('Expose the Plannotator server from the agent host', 'Mở Plannotator server từ máy host chạy agent')}</h3>
+            <p
+              class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400"
+              set:html={renderInlineCode(t(
+                'Set `PLANNOTATOR_REMOTE` and `PLANNOTATOR_PORT` where your host agent reads environment variables.',
+                'Set `PLANNOTATOR_REMOTE` và `PLANNOTATOR_PORT` ở nơi host agent đọc ENV.'
+              ))}
+            ></p>
+          </div>
+        </div>
+
+        <div class="mt-5 grid gap-4 lg:grid-cols-2">
+          {providerEnvConfigs.map((item) => (
+            <div class="min-w-0 rounded-lg border border-slate-200 bg-white/70 p-3 dark:border-slate-800 dark:bg-slate-950/45">
+              <div class="flex flex-wrap items-center gap-2">
+                <h4 class="text-xs font-bold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-300">{item.title}</h4>
+                <code class="max-w-full break-all rounded-md border border-slate-200 bg-slate-100 px-2 py-1 text-[11px] font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-800/90 dark:text-slate-100">
+                  {item.path}
+                </code>
+              </div>
+              <p class="mt-2 text-xs leading-5 text-slate-500 dark:text-slate-400" set:html={renderInlineCode(item.body)}></p>
+              <div class="mt-2">
+                <TerminalSnippet code={item.code} label={item.label} mode={item.mode} copyMode="raw" compact />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="mt-4 min-w-0 rounded-lg border border-slate-200 bg-white/60 p-3 dark:border-slate-800 dark:bg-slate-950/35">
+          <p
+            class="text-sm leading-6 text-slate-600 dark:text-slate-400"
+            set:html={renderInlineCode(t(
+              'After editing provider config, restart the host agent session so new Plannotator commands inherit the variables.',
+              'Sau khi sửa provider config, restart session host agent để các command Plannotator mới nhận được biến ENV.'
+            ))}
+          ></p>
+        </div>
+
+        <div class="mt-4 rounded-lg border border-emerald-200 bg-emerald-50/70 p-3 dark:border-emerald-900/60 dark:bg-emerald-950/25">
+          <h4 class="flex items-center gap-2 text-sm font-bold text-slate-950 dark:text-white">
+            <CheckCircle2 class="h-4 w-4 text-emerald-600 dark:text-emerald-300" stroke-width={2.2} />
+            {t('Verify it works', 'Verify đã chạy')}
+          </h4>
+          <p class="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-200">
+            {t('The phone should show the Plannotator review UI. Approve or add comments there; the decision is sent back to the desktop agent session.', 'Phone phải thấy UI review của Plannotator. Approve hoặc comment ở đó; quyết định sẽ gửi ngược về session agent trên desktop.')}
+          </p>
+        </div>
+      </article>
+
+      <article class="min-w-0 rounded-xl border border-slate-200 bg-slate-50/75 p-4 dark:border-slate-800 dark:bg-slate-900/55 sm:p-5 lg:p-6">
+        <div class="grid gap-4 lg:grid-cols-[minmax(0,0.95fr)_minmax(320px,1.05fr)] lg:items-start">
+          <div class="flex items-start gap-3">
+            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-200">
+              <Route class="h-5 w-5" stroke-width={2.2} />
+            </span>
+            <div class="min-w-0">
+              <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">{t('Phone route', 'Route trên phone')}</p>
+              <h3 class="mt-1 text-base font-bold text-slate-950 dark:text-white">{t('Open a reachable URL from the phone browser', 'Mở URL phone truy cập được trong browser')}</h3>
+              <p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
+                {t('Choose the shortest route first. Same Wi-Fi is simplest; Tailscale, VPN, or a tunnel is for different networks.', 'Chọn route ngắn nhất trước. Cùng Wi-Fi là đơn giản nhất; Tailscale, VPN, hoặc tunnel dùng khi khác network.')}
+              </p>
+            </div>
+          </div>
+
+          <div class="grid gap-3 sm:grid-cols-2">
+            <div class="min-w-0 rounded-lg border border-emerald-200 bg-white/70 p-3 dark:border-emerald-500/20 dark:bg-slate-950/45">
+              <Wifi class="h-5 w-5 text-emerald-600 dark:text-emerald-300" stroke-width={2.2} />
+              <h4 class="mt-2 text-sm font-bold text-slate-950 dark:text-white">{t('Same Wi-Fi', 'Cùng Wi-Fi')}</h4>
+              <p
+                class="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-400"
+                set:html={renderInlineCode(t('Open the host LAN URL. `127.0.0.1` points to the phone itself.', 'Mở host LAN URL. `127.0.0.1` trỏ về chính phone.'))}
+              ></p>
+            </div>
+            <div class="min-w-0 rounded-lg border border-amber-200 bg-white/70 p-3 dark:border-amber-500/20 dark:bg-slate-950/45">
+              <Network class="h-5 w-5 text-amber-600 dark:text-amber-300" stroke-width={2.2} />
+              <h4 class="mt-2 text-sm font-bold text-slate-950 dark:text-white">{t('Different network', 'Khác network')}</h4>
+              <p class="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-400">
+                {t('Use Tailscale, VPN, or a tunnel. The link lives only while that session runs.', 'Dùng Tailscale, VPN, hoặc tunnel. Link chỉ sống khi session đó còn chạy.')}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-5 grid gap-4">
+          <div class="min-w-0 rounded-xl border border-emerald-200 bg-emerald-50/45 p-4 dark:border-emerald-500/20 dark:bg-emerald-500/5">
+            <div class="flex items-start gap-3">
+              <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-xs font-bold text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-200">
+                <Wifi class="h-4 w-4" stroke-width={2.2} />
+              </span>
+              <div class="min-w-0">
+                <p class="text-xs font-bold uppercase tracking-[0.14em] text-emerald-700 dark:text-emerald-300">{t('Same Wi-Fi', 'Cùng Wi-Fi')}</p>
+                <h4 class="mt-1 text-base font-bold text-slate-950 dark:text-white">{t('Use the host LAN address', 'Dùng LAN address của máy host')}</h4>
+                <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400">
+                  {t('Find the host LAN IP first, then open the Plannotator URL from the phone browser.', 'Tìm LAN IP của máy host trước, rồi mở URL Plannotator trong browser trên phone.')}
+                </p>
+              </div>
+            </div>
+
+            <div class="mt-4 space-y-3">
+              <div class="min-w-0 rounded-lg border border-emerald-200/80 bg-white/65 p-3 dark:border-emerald-500/15 dark:bg-slate-950/35">
+                <div class="flex items-start gap-3">
+                  <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-xs font-bold text-white dark:bg-emerald-400 dark:text-emerald-950">
+                    1
+                  </span>
+                  <div class="min-w-0">
+                    <p class="text-sm font-bold text-slate-950 dark:text-white">{t('Find the host IP', 'Tìm IP host')}</p>
+                    <p class="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-400">
+                      {t('Run one command that matches the host OS.', 'Chạy một command đúng với OS của máy host.')}
+                    </p>
+                  </div>
+                </div>
+                <div class="mt-3 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                  {lanIpOptions.map((option) => (
+                    <TerminalSnippet code={option.code} label={option.title} compact />
+                  ))}
+                </div>
+              </div>
+
+              <div class="min-w-0 rounded-lg border border-emerald-200/80 bg-white/65 p-3 dark:border-emerald-500/15 dark:bg-slate-950/35">
+                <div class="grid gap-3 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,1fr)] lg:items-center">
+                  <div class="flex items-start gap-3">
+                    <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-xs font-bold text-white dark:bg-emerald-400 dark:text-emerald-950">
+                      2
+                    </span>
+                    <div class="min-w-0">
+                      <p class="text-sm font-bold text-slate-950 dark:text-white">{t('Open on phone', 'Mở trên phone')}</p>
+                      <p class="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-400">
+                        {t('Replace the placeholder with the IP from step 1.', 'Thay placeholder bằng IP lấy ở bước 1.')}
+                      </p>
+                    </div>
+                  </div>
+                  <TerminalSnippet code={sameWifiUrl} label="phone browser URL" mode="plain" copyMode="raw" compact />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="min-w-0 rounded-xl border border-amber-200 bg-amber-50/40 p-4 dark:border-amber-500/20 dark:bg-amber-500/5">
+            <div class="flex items-start gap-3">
+              <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-amber-100 text-xs font-bold text-amber-700 dark:bg-amber-500/15 dark:text-amber-200">
+                <Network class="h-4 w-4" stroke-width={2.2} />
+              </span>
+              <div class="min-w-0">
+                <p class="text-xs font-bold uppercase tracking-[0.14em] text-amber-700 dark:text-amber-300">{t('Different network', 'Khác network')}</p>
+                <h4 class="mt-1 text-base font-bold text-slate-950 dark:text-white">{t('Expose the port through a private route', 'Mở port qua private route')}</h4>
+                <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400">
+                  {t('Use this when the phone is not on the same Wi-Fi as the agent host.', 'Dùng cách này khi phone không cùng Wi-Fi với máy host chạy agent.')}
+                </p>
+              </div>
+            </div>
+
+            <div class="mt-4 space-y-3">
+              <div class="min-w-0 rounded-lg border border-amber-200/80 bg-white/65 p-3 dark:border-amber-500/15 dark:bg-slate-950/35">
+                <div class="grid gap-3 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,1fr)] lg:items-center">
+                  <div class="flex items-start gap-3">
+                    <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-amber-600 text-xs font-bold text-white dark:bg-amber-400 dark:text-amber-950">
+                      1
+                    </span>
+                    <div class="min-w-0">
+                      <p class="text-sm font-bold text-slate-950 dark:text-white">{t('Publish the local port', 'Mở local port')}</p>
+                      <p class="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-400">
+                        {t('Use a private route from the host machine.', 'Dùng private route từ máy host.')}
+                      </p>
+                    </div>
+                  </div>
+                  <TerminalSnippet code={tailscaleCode} label="Tailscale" compact />
+                </div>
+              </div>
+              <div class="min-w-0 rounded-lg border border-amber-200/80 bg-white/65 p-3 dark:border-amber-500/15 dark:bg-slate-950/35">
+                <div class="grid gap-3 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,1fr)] lg:items-center">
+                  <div class="flex items-start gap-3">
+                    <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-amber-600 text-xs font-bold text-white dark:bg-amber-400 dark:text-amber-950">
+                      2
+                    </span>
+                    <div class="min-w-0">
+                      <p class="text-sm font-bold text-slate-950 dark:text-white">{t('Open on phone', 'Mở trên phone')}</p>
+                      <p class="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-400">
+                        {t('Use the route IP while the tunnel is active.', 'Dùng route IP khi tunnel còn active.')}
+                      </p>
+                    </div>
+                  </div>
+                  <TerminalSnippet code={tailscaleUrl} label="phone browser URL" mode="plain" copyMode="raw" compact />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="min-w-0 rounded-xl border border-slate-200 bg-slate-50/75 p-4 dark:border-slate-800 dark:bg-slate-900/55">
+      <h3 class="text-sm font-bold text-slate-950 dark:text-white">{t('Troubleshooting checklist', 'Checklist debug')}</h3>
+      <ul class="mt-3 grid gap-x-5 gap-y-2 md:grid-cols-2">
+        {troubleshooting.map((item) => (
+          <li class="flex gap-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
+            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-500"></span>
+            <span set:html={renderInlineCode(item)}></span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>

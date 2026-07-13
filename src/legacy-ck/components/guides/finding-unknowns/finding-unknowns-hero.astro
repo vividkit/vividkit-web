@@ -1,0 +1,131 @@
+---
+import type { Language } from '@/i18n';
+import { Map, Compass, Coins, Lightbulb } from 'lucide-astro';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const isVi = lang === 'vi';
+const t = (en: string, vi: string) => isVi ? vi : en;
+
+const points = [
+  {
+    icon: Map,
+    title: t('The map is not the territory', 'Bản đồ không phải lãnh thổ'),
+    body: t(
+      'Your prompts, skills, and context are the map. The codebase and its real constraints are the territory. They never fully match.',
+      'Prompt, skill và context của bạn là bản đồ. Codebase và ràng buộc thực tế là lãnh thổ. Hai thứ không bao giờ khớp hoàn toàn.'
+    ),
+  },
+  {
+    icon: Compass,
+    title: t('Unknowns are the gap', 'Unknowns là khoảng cách'),
+    body: t(
+      'Wherever the map is blank, the agent guesses what you want. More work done means more guesses made.',
+      'Chỗ nào bản đồ để trắng, agent phải đoán ý bạn. Càng làm nhiều, càng đoán nhiều.'
+    ),
+  },
+  {
+    icon: Coins,
+    title: t('Finding them early is cheap', 'Tìm sớm thì rẻ'),
+    body: t(
+      'Every brainstorm, interview, prototype, and quiz is a cheap way to find out what you did not know — before it gets expensive to fix.',
+      'Mỗi lần brainstorm, interview, prototype, quiz là một cách rẻ để phát hiện điều bạn chưa biết — trước khi việc sửa trở nên đắt đỏ.'
+    ),
+  },
+];
+
+// Mini preview of the 2x2 unknowns matrix, expanded in the next section
+const quadrants = [
+  { label: t('Known knowns', 'Known knowns'), sub: t('In your prompt', 'Nằm trong prompt'), tone: 'slate' },
+  { label: t('Known unknowns', 'Known unknowns'), sub: t('Open decisions', 'Quyết định còn mở'), tone: 'blue' },
+  { label: t('Unknown knowns', 'Unknown knowns'), sub: t('Know it when you see it', 'Thấy mới biết đúng'), tone: 'amber' },
+  { label: t('Unknown unknowns', 'Unknown unknowns'), sub: t('Blind spots', 'Điểm mù'), tone: 'violet' },
+];
+
+const toneClasses: Record<string, string> = {
+  slate: 'border-slate-200 bg-white text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300',
+  blue: 'border-blue-200 bg-blue-50 text-blue-900 dark:border-blue-400/25 dark:bg-blue-500/10 dark:text-blue-200',
+  amber: 'border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-400/25 dark:bg-amber-500/10 dark:text-amber-200',
+  violet: 'border-violet-200 bg-violet-50 text-violet-900 dark:border-violet-400/25 dark:bg-violet-500/10 dark:text-violet-200',
+};
+---
+
+<section class="overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-violet-50/80 shadow-sm dark:border-slate-800 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900">
+  <div class="p-6 sm:p-8 lg:p-9">
+    <p class="inline-flex rounded-full border border-violet-200 bg-white/80 px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-violet-800 shadow-sm dark:border-violet-400/20 dark:bg-violet-400/10 dark:text-violet-200">
+      {t('Prompting method', 'Phương pháp prompt')}
+    </p>
+    <h1 class="mt-4 max-w-2xl text-3xl font-bold tracking-tight text-slate-950 text-balance dark:text-white sm:text-5xl">
+      Finding Your Unknowns
+    </h1>
+    <p class="mt-4 max-w-2xl text-lg leading-8 text-slate-700 dark:text-slate-300">
+      {t(
+        'With today\'s models, output quality is no longer limited by the model — it is limited by your ability to clarify your unknowns.',
+        'Với các model hiện nay, chất lượng output không còn bị giới hạn bởi model — mà bởi khả năng của bạn trong việc làm rõ unknowns.'
+      )}
+    </p>
+    <p class="mt-4 max-w-2xl text-sm leading-7 text-slate-600 dark:text-slate-400">
+      {t(
+        'This guide maps the "finding your unknowns" method onto ClaudeKit commands: an iterative loop of discovering what you do not know before, during, and after implementation.',
+        'Guide này ánh xạ phương pháp "finding your unknowns" vào các lệnh ClaudeKit: một vòng lặp tìm ra điều bạn chưa biết — trước, trong và sau khi implement.'
+      )}
+    </p>
+
+    <div class="mt-6 grid gap-3 sm:grid-cols-3">
+      {points.map((point) => {
+        const Icon = point.icon;
+        return (
+          <div class="rounded-xl border border-slate-200 bg-white/85 p-4 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md dark:border-slate-800 dark:bg-slate-900/70">
+            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-violet-100 bg-violet-50 text-violet-700 dark:border-violet-400/20 dark:bg-violet-500/10 dark:text-violet-300">
+              <Icon class="h-5 w-5" stroke-width={2.2} />
+            </span>
+            <h2 class="mt-3 text-sm font-bold text-slate-950 dark:text-white">{point.title}</h2>
+            <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400">{point.body}</p>
+          </div>
+        );
+      })}
+    </div>
+
+    <div class="mt-4 rounded-2xl border border-violet-100 bg-violet-50/60 p-5 dark:border-violet-400/15 dark:bg-violet-500/5 sm:p-6">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-start gap-3">
+          <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-violet-700 shadow-sm dark:bg-slate-950/60 dark:text-violet-300">
+            <Lightbulb class="h-5 w-5" stroke-width={2.3} />
+          </span>
+          <div>
+            <p class="text-xs font-bold uppercase tracking-[0.16em] text-violet-800 dark:text-violet-200">
+              {t('Four kinds of unknowns', 'Bốn loại unknowns')}
+            </p>
+            <p class="mt-1 text-sm leading-6 text-slate-700 dark:text-slate-300">
+              {t('Break every task down before prompting.', 'Phân rã mọi task theo ma trận này trước khi prompt.')}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-5 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+        {quadrants.map((q) => (
+          <div class={`rounded-xl border px-3.5 py-3 shadow-sm ${toneClasses[q.tone]}`}>
+            <p class="text-xs font-bold">{q.label}</p>
+            <p class="mt-1 text-[11px] leading-4 opacity-80">{q.sub}</p>
+          </div>
+        ))}
+      </div>
+
+      <p class="mt-4 rounded-xl border border-slate-200 bg-white/70 px-3.5 py-3 text-xs leading-5 text-slate-600 dark:border-slate-800 dark:bg-slate-950/40 dark:text-slate-400">
+        {t('Method credit:', 'Nguồn phương pháp:')}
+        <a
+          href="https://x.com/trq212/status/2073100352921215386"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="font-semibold text-violet-700 underline decoration-violet-300 underline-offset-2 hover:text-violet-800 dark:text-violet-300 dark:hover:text-violet-200"
+        >
+          {t('"A Field Guide to Fable: Finding Your Unknowns" — Thariq (@trq212)', '"A Field Guide to Fable: Finding Your Unknowns" — Thariq (@trq212)')}
+        </a>
+      </p>
+    </div>
+  </div>
+</section>

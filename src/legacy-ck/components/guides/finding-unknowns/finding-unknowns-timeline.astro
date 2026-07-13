@@ -1,0 +1,173 @@
+---
+import type { Language } from '@/i18n';
+import { Search, Hammer, PackageCheck } from 'lucide-astro';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const isVi = lang === 'vi';
+const t = (en: string, vi: string) => isVi ? vi : en;
+
+// Techniques from the method, grouped by when they pay off, each mapped to a command
+const phases = [
+  {
+    icon: Search,
+    tone: 'blue',
+    title: t('Before implementation', 'Trước khi implement'),
+    subtitle: t('Most unknowns are cheapest to find here.', 'Đa số unknowns tìm ở đây là rẻ nhất.'),
+    techniques: [
+      {
+        name: t('Blind spot pass', 'Blind spot pass'),
+        desc: t(
+          'Ask the agent to find your unknown unknowns in an unfamiliar area and teach you to prompt better.',
+          'Nhờ agent tìm unknown unknowns của bạn ở vùng lạ và dạy bạn prompt tốt hơn.'
+        ),
+        command: '/blindspot',
+        custom: true,
+      },
+      {
+        name: t('Brainstorm & prototype', 'Brainstorm & prototype'),
+        desc: t(
+          'Surface "know it when I see it" criteria with lightweight HTML mocks and competing approaches.',
+          'Lộ các tiêu chí "thấy mới biết" bằng mock HTML nhẹ, ít tốn kém và các approach cạnh tranh.'
+        ),
+        command: '/ck:brainstorm --html',
+        custom: false,
+      },
+      {
+        name: t('Interview', 'Interview'),
+        desc: t(
+          'Let the agent question you about ambiguities — built into brainstorm and plan validation.',
+          'Để agent phỏng vấn bạn về các điểm mơ hồ — có sẵn trong brainstorm và plan validation.'
+        ),
+        command: t('built-in', 'có sẵn'),
+        custom: false,
+      },
+      {
+        name: t('References over descriptions', 'Reference thay vì mô tả'),
+        desc: t(
+          'The best reference is source code. Point the agent at a repo that already does it right.',
+          'Reference tốt nhất là source code. Chỉ agent tới repo đã làm đúng thứ bạn muốn.'
+        ),
+        command: '/ck:xia',
+        custom: false,
+      },
+      {
+        name: t('Decisions-first plan', 'Plan xếp quyết định lên đầu'),
+        desc: t(
+          'Lead the plan with what you are most likely to tweak: data models, interfaces, UX flows.',
+          'Mở đầu plan bằng thứ bạn dễ đổi nhất: data model, interface, UX flow.'
+        ),
+        command: '/ck:plan --html',
+        custom: false,
+      },
+    ],
+  },
+  {
+    icon: Hammer,
+    tone: 'amber',
+    title: t('During implementation', 'Trong khi implement'),
+    subtitle: t('Unknown unknowns always lurk in the work itself.', 'Unknown unknowns luôn rình trong chính quá trình làm.'),
+    techniques: [
+      {
+        name: t('Implementation notes', 'Implementation notes'),
+        desc: t(
+          'When an edge case forces a deviation from plan: pick the conservative option, log it, keep going.',
+          'Khi edge case buộc lệch plan: chọn phương án bảo thủ, log lại, đi tiếp.'
+        ),
+        command: '/impl-notes',
+        custom: true,
+      },
+    ],
+  },
+  {
+    icon: PackageCheck,
+    tone: 'emerald',
+    title: t('After implementation', 'Sau khi implement'),
+    subtitle: t('Close the loop: understanding and buy-in.', 'Khép vòng lặp: hiểu biết và buy-in.'),
+    techniques: [
+      {
+        name: t('Pitch & explainer', 'Pitch & explainer'),
+        desc: t(
+          'Package spec, prototype, and notes into one artifact reviewers can absorb fast.',
+          'Gói spec, prototype và notes vào một artifact để reviewer nắm nhanh.'
+        ),
+        command: '/ck:preview',
+        custom: false,
+      },
+      {
+        name: t('Comprehension quiz', 'Quiz kiểm tra hiểu biết'),
+        desc: t(
+          'Get quizzed on the change and merge only after a perfect score.',
+          'Làm quiz về thay đổi, pass tuyệt đối mới merge.'
+        ),
+        command: '/quiz-gate',
+        custom: true,
+      },
+      {
+        name: t('Reflection', 'Hồi tưởng'),
+        desc: t(
+          'Journal what the session taught you — feed for the next map.',
+          'Ghi journal điều session dạy bạn — nguyên liệu cho bản đồ lần sau.'
+        ),
+        command: '/ck:journal',
+        custom: false,
+      },
+    ],
+  },
+];
+
+const toneHead: Record<string, string> = {
+  blue: 'border-blue-100 bg-blue-50 text-blue-700 dark:border-blue-400/20 dark:bg-blue-500/10 dark:text-blue-300',
+  amber: 'border-amber-100 bg-amber-50 text-amber-700 dark:border-amber-400/20 dark:bg-amber-500/10 dark:text-amber-300',
+  emerald: 'border-emerald-100 bg-emerald-50 text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-500/10 dark:text-emerald-300',
+};
+---
+
+<section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-950 sm:p-8">
+  <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-3xl">
+    {t('Techniques by phase', 'Kỹ thuật theo giai đoạn')}
+  </h2>
+  <p class="mt-3 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400">
+    {t(
+      'You will not use every technique every time. Treat this as a toolbox: pick what fits the unknowns you suspect.',
+      'Không phải lần nào cũng dùng hết. Xem đây là hộp đồ nghề: chọn thứ khớp với loại unknowns bạn nghi ngờ.'
+    )}
+  </p>
+
+  <div class="mt-6 space-y-4">
+    {phases.map((phase) => {
+      const Icon = phase.icon;
+      const gridCols = phase.techniques.length > 1 ? 'sm:grid-cols-2 lg:grid-cols-3' : '';
+      return (
+        <div class="rounded-xl border border-slate-200 bg-white/85 p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
+          <div class="flex items-center gap-3">
+            <span class={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border ${toneHead[phase.tone]}`}>
+              <Icon class="h-5 w-5" stroke-width={2.2} />
+            </span>
+            <div class="min-w-0">
+              <h3 class="text-sm font-bold text-slate-950 dark:text-white">{phase.title}</h3>
+              <p class="text-xs leading-5 text-slate-500 dark:text-slate-500">{phase.subtitle}</p>
+            </div>
+          </div>
+          <ul class={`mt-4 grid gap-3 ${gridCols}`}>
+            {phase.techniques.map((tech) => (
+              <li class="rounded-lg border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-950/55">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="text-[13px] font-bold text-slate-900 dark:text-slate-100">{tech.name}</span>
+                  <code class="rounded border border-slate-200 bg-white px-1.5 py-0.5 font-mono text-[11px] font-semibold text-purple-600 dark:border-slate-700 dark:bg-slate-900 dark:text-purple-400">{tech.command}</code>
+                  {tech.custom && (
+                    <span class="rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-amber-700 dark:border-amber-400/25 dark:bg-amber-500/10 dark:text-amber-300">custom</span>
+                  )}
+                </div>
+                <p class="mt-1.5 text-xs leading-5 text-slate-600 dark:text-slate-400">{tech.desc}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    })}
+  </div>
+</section>

@@ -1,0 +1,116 @@
+---
+import { useTranslations } from '@legacy-ck/i18n/utils';
+import type { Language } from '@/i18n';
+import { cliCommandsCheatsheet } from '@legacy-ck/data/guides/cli-commands-cheatsheet';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const totalCommands = cliCommandsCheatsheet.length;
+const categoryCount = new Set(cliCommandsCheatsheet.map(c => c.category)).size;
+const heroCommands = [
+  'ck init -g --kit engineer --yes',
+  'ck doctor --fix',
+  'ck migrate -a codex --dry-run',
+];
+const isVi = lang === 'vi';
+const terminalPath = isVi ? '/vi/legacy/guides/cli-commands' : '/legacy/guides/cli-commands';
+const cliVersion = 'v4.5.0';
+---
+
+<section class="relative overflow-hidden rounded-[2rem] border border-slate-200/80 bg-stone-50 shadow-sm dark:border-white/10 dark:bg-slate-950">
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(20,184,166,0.16),transparent_28%),radial-gradient(circle_at_88%_8%,rgba(245,158,11,0.16),transparent_24%),linear-gradient(135deg,rgba(15,23,42,0.04),transparent_48%)] dark:bg-[radial-gradient(circle_at_18%_20%,rgba(45,212,191,0.16),transparent_28%),radial-gradient(circle_at_88%_8%,rgba(251,191,36,0.12),transparent_24%),linear-gradient(135deg,rgba(15,23,42,0.65),transparent_48%)]"></div>
+  <div class="relative grid gap-8 p-6 sm:p-8 lg:grid-cols-[1.05fr_0.95fr] lg:p-10">
+    <div class="flex min-h-[360px] flex-col justify-between gap-8">
+      <div class="space-y-5">
+        <div class="inline-flex items-center gap-2 rounded-full border border-teal-200 bg-white/70 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.24em] text-teal-700 shadow-sm dark:border-teal-400/20 dark:bg-white/5 dark:text-teal-300">
+          <span class="h-2 w-2 rounded-full bg-teal-500"></span>
+          {isVi ? 'Bảng điều khiển CK CLI' : 'CK CLI command deck'}
+        </div>
+        <div class="max-w-2xl space-y-4">
+          <h1 class="font-heading text-4xl font-bold tracking-[-0.045em] text-slate-950 sm:text-5xl lg:text-6xl dark:text-white">
+            {t('cli.cheatsheet.title')}
+          </h1>
+          <p class="text-lg leading-8 text-slate-600 dark:text-slate-300">
+            {t('cli.cheatsheet.subtitle')}
+          </p>
+          <p class="max-w-xl text-sm leading-7 text-slate-500 dark:text-slate-400" set:html={t('cli.cheatsheet.hero.description')} />
+          <a href="https://github.com/mrgoonie/claudekit-cli" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white/70 px-2.5 py-1 text-[11px] font-semibold text-slate-500 transition hover:border-teal-300 hover:text-teal-700 dark:border-white/10 dark:bg-white/5 dark:text-slate-400 dark:hover:border-teal-400/30 dark:hover:text-teal-300">
+            <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            claudekit-cli <code class="font-mono text-teal-600 dark:text-teal-400">{cliVersion}</code>
+          </a>
+        </div>
+      </div>
+
+      <div class="grid gap-3 sm:grid-cols-3">
+        <div class="rounded-2xl border border-slate-200 bg-white/75 p-4 dark:border-white/10 dark:bg-white/[0.04]">
+          <div class="font-mono text-3xl font-bold text-slate-950 dark:text-white">{totalCommands}</div>
+          <div class="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">{t('cli.cheatsheet.hero.commands_label')}</div>
+        </div>
+        <div class="rounded-2xl border border-slate-200 bg-white/75 p-4 dark:border-white/10 dark:bg-white/[0.04]">
+          <div class="font-mono text-3xl font-bold text-slate-950 dark:text-white">{categoryCount}</div>
+          <div class="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">{t('cli.cheatsheet.hero.categories_label')}</div>
+        </div>
+        <div class="rounded-2xl border border-amber-200 bg-amber-50/80 p-4 dark:border-amber-400/20 dark:bg-amber-400/10">
+          <div class="font-mono text-2xl font-bold text-amber-700 dark:text-amber-300">{isVi ? 'Copy' : 'Copy'}</div>
+          <div class="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-amber-700/70 dark:text-amber-200/70">{isVi ? 'Mẫu lệnh' : 'Examples'}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="relative">
+      <div class="absolute -right-8 top-8 hidden h-28 w-28 rounded-full border border-dashed border-slate-300 dark:border-white/15 lg:block"></div>
+      <div class="relative mx-auto max-w-[390px] rounded-[1.6rem] border border-slate-200 bg-white/88 p-4 shadow-2xl shadow-slate-900/10 dark:border-white/10 dark:bg-slate-950 dark:shadow-slate-950/40 lg:ml-auto">
+        <div class="flex min-w-0 items-center justify-between gap-3 rounded-[1.05rem] border border-slate-200 bg-slate-100/80 px-3 py-2.5 shadow-inner shadow-white/50 dark:border-white/10 dark:bg-slate-900/80 dark:shadow-black/20">
+          <div class="flex min-w-0 items-center gap-3">
+            <div class="flex items-center gap-1.5">
+              <span class="h-2.5 w-2.5 rounded-full bg-rose-400"></span>
+              <span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span>
+              <span class="h-2.5 w-2.5 rounded-full bg-teal-400"></span>
+            </div>
+            <span class="hidden shrink-0 rounded-full border border-slate-200 bg-white px-2 py-0.5 font-mono text-[10px] font-semibold text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:inline-flex">
+              {cliVersion}
+            </span>
+          </div>
+          <span class="min-w-0 max-w-[190px] truncate rounded-full bg-white px-3 py-1 font-mono text-[11px] text-slate-500 dark:bg-white/[0.04] dark:text-slate-400">
+            {terminalPath}
+          </span>
+        </div>
+        <div class="space-y-3 pt-3">
+          <div class="rounded-[1.15rem] border border-slate-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-white/[0.04]">
+            <div class="mb-3 flex items-center justify-between text-xs">
+              <span class="font-mono text-teal-700 dark:text-teal-300">~/project</span>
+              <span class="rounded-full bg-teal-100 px-2 py-1 font-mono text-teal-700 dark:bg-teal-400/10 dark:text-teal-200">ready</span>
+            </div>
+            <div class="space-y-2.5">
+              {heroCommands.map((command, index) => (
+                <button class="copy-btn group flex w-full items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-left transition hover:border-teal-300 hover:bg-teal-50/60 dark:border-white/10 dark:bg-slate-900 dark:hover:border-teal-300/40 dark:hover:bg-slate-800" data-code={command} aria-label={`Copy ${command}`}>
+                  <span class="min-w-0 font-mono text-sm text-slate-700 dark:text-slate-200"><span class="text-amber-600 dark:text-amber-300">$</span> {command}</span>
+                  <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-slate-100 text-slate-500 group-hover:text-teal-700 dark:bg-white/5 dark:text-slate-500 dark:group-hover:text-teal-200">
+                    <svg class="copy-icon h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
+                    <svg class="check-icon hidden h-3.5 w-3.5 text-emerald-500 dark:text-emerald-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12" /></svg>
+                    <span class="sr-only">0{index + 1}</span>
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <a href="#cli-cat-setup" class="min-h-[84px] rounded-[1.15rem] border border-slate-200 bg-slate-50 p-3.5 transition hover:border-teal-300 hover:bg-teal-50/60 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-teal-300/40 dark:hover:bg-white/[0.07]">
+              <span class="block text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500">setup</span>
+              <span class="mt-2 block font-mono text-sm text-teal-700 dark:text-teal-200">ck new/init</span>
+            </a>
+            <a href="#cli-cat-workflow" class="min-h-[84px] rounded-[1.15rem] border border-slate-200 bg-slate-50 p-3.5 transition hover:border-amber-300 hover:bg-amber-50/60 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-amber-300/40 dark:hover:bg-white/[0.07]">
+              <span class="block text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500">workflow</span>
+              <span class="mt-2 block font-mono text-sm text-amber-700 dark:text-amber-200">ck plan</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

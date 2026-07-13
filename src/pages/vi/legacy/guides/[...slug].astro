@@ -21,15 +21,15 @@ export function getStaticPaths() {
 
 const suffix = Astro.params.slug ?? '';
 const entry = getLegacyGuideEntry(suffix);
-const frozen = entry?.freezeStatus === 'frozen';
+const frozen = entry?.freezeStatus === 'frozen' || entry?.freezeStatus === 'isolated';
 const isBatchB = (LEGACY_BATCH_B_SUFFIXES as readonly string[]).includes(suffix);
 const isBatchC = (LEGACY_BATCH_C_SUFFIXES as readonly string[]).includes(suffix);
 const title = entry
   ? `${entry.titleVi} (ClaudeKit archive)`
   : 'ClaudeKit archive';
 const description = frozen
-  ? 'Bản archive ClaudeKit đã freeze — nội dung lịch sử để tra cứu. Guide hiện tại nằm dưới /vi/guides.'
-  : 'Trang archive ClaudeKit (stub). Nội dung frozen sẽ được bổ sung ở batch sau.';
+  ? 'Bản archive ClaudeKit đã isolate — nội dung lịch sử để tra cứu. Guide hiện tại nằm dưới /vi/guides.'
+  : 'Trang archive ClaudeKit (stub). Nội dung isolated sẽ được bổ sung ở batch sau.';
 ---
 
 <LegacyGuidesLayout

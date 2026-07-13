@@ -1,0 +1,499 @@
+---
+// Purpose-built Quick Ref layout for /ck:brainstorm.
+// Mirrors the /ck:plan quick-ref structure while keeping brainstorm-specific gates.
+import type { SkillInfographic, ProcessFlowStep } from '@legacy-ck/data/guides/how-ck-works';
+import type { Language } from '@/i18n';
+
+interface Props {
+  data: SkillInfographic;
+  lang: Language;
+}
+
+type Tone = {
+  rail: string;
+  chip: string;
+  label: string;
+  surface: string;
+};
+
+interface ProcessGroup {
+  label: string;
+  kicker: string;
+  steps: ProcessFlowStep[];
+  tone: Tone;
+}
+
+const { data, lang } = Astro.props;
+const isVi = lang === 'vi';
+
+const text = {
+  eyebrow: isVi ? 'Tóm tắt nhanh / Lệnh brainstorm' : 'Quick Ref / Brainstorm command',
+  summary: isVi
+    ? 'Dùng khi hướng làm còn mơ hồ. Scout trước, chốt requirements cụ thể, tranh luận trade-off, rồi mới viết report và bàn giao sang /ck:plan.'
+    : 'Use it when the right approach is still unclear. Scout first, lock exact requirements, debate trade-offs, then write a report and hand off to /ck:plan.',
+  beforePlan: isVi ? 'Trước /ck:plan' : 'Before /ck:plan',
+  hardGate: isVi ? 'Gate bắt buộc' : 'Required Gate',
+  hardGateItems: isVi
+    ? [
+        { label: 'Không implementation', detail: 'Không code, không scaffold, không invoke implementation skill.' },
+        { label: 'Scout trước', detail: 'Phải scout trước câu hỏi.' },
+        { label: 'User gate', detail: 'Chốt 5 requirements cụ thể, trình bày design và được user duyệt.' },
+        { label: 'Trình bày trước khi hỏi', detail: 'Viết options & khuyến nghị trong text hiển thị trước mọi `AskUserQuestion`.' },
+      ]
+    : [
+        { label: 'No implementation', detail: 'No code, no scaffolding, no implementation skill.' },
+        { label: 'Scout first', detail: 'Scout before questions.' },
+        { label: 'Approval gate', detail: 'Capture 5 exact requirement fields, present a design, and get user approval.' },
+        { label: 'Present before ask', detail: 'Write options & recommendation in visible text before any `AskUserQuestion`.' },
+      ],
+  reportFirst: isVi ? 'Report trước' : 'Report first',
+  reportFirstDesc: isVi ? 'Bàn giao plan phải nhận path brainstorm report.' : 'The plan handoff receives the brainstorm report path.',
+  scoutFirst: isVi ? 'Scout trước' : 'Scout first',
+  scoutFirstDesc: isVi ? 'Tóm tắt 3-6 findings trước Discovery.' : 'Summarize 3-6 findings before Discovery.',
+  noTaskAgents: isVi ? 'Không Task-spawn' : 'No Task-spawn',
+  noTaskAgentsDesc: isVi ? 'planner/docs-manager là consultation inline.' : 'planner/docs-manager are inline consultation.',
+  process: isVi ? 'Bản đồ thực thi' : 'Execution Map',
+  processDesc: isVi ? 'Bốn lane: scout, làm rõ, đánh giá, rồi đóng bằng report/handoff.' : 'Four lanes: scout, clarify, evaluate, then close with report/handoff.',
+  samplePrompt: isVi ? 'Prompt mẫu' : 'Sample Prompt',
+  samplePromptDesc: isVi
+    ? 'Dùng prompt khác nhau cho brainstorm mới, plan trong cùng session, và plan từ session mới.'
+    : 'Use different prompts for a new brainstorm, a same-session plan handoff, and a fresh-session plan.',
+  useWhen: isVi ? 'Dùng khi' : 'Use when',
+  expected: isVi ? 'Kết quả' : 'Expected',
+  recommended: isVi ? 'Khuyến nghị' : 'Recommended',
+  handoff: isVi ? 'Bàn giao sang plan' : 'Plan Handoff',
+  handoffDesc: isVi
+    ? 'Trong session brainstorm, offer khi proposal đã duyệt, hết câu hỏi mở, report đã viết. Nếu đã clear/start session mới, phải có brainstorm artifact và mention đúng file path khi gọi plan.'
+    : 'Inside the brainstorm session, offer only after proposal approval, no open questions, and a written report. If starting a fresh session, make sure the brainstorm artifact exists and pass its file path to plan.',
+  option: isVi ? 'Lựa chọn' : 'Option',
+  recommend: isVi ? 'Recommend khi' : 'Recommend when',
+  result: isVi ? 'Kết quả' : 'Result',
+  currentSession: isVi ? 'Cùng session' : 'Same session',
+  newSession: isVi ? 'Session mới' : 'Fresh session',
+  output: isVi ? 'Artifact tạo ra' : 'Artifacts Produced',
+  artifactDesc: isVi
+    ? 'Brainstorm kết thúc bằng một file Markdown. File này là context chính để bàn giao sang /ck:plan.'
+    : 'Brainstorm ends with one Markdown file. This file is the primary context for the /ck:plan handoff.',
+  oneFile: isVi ? '1 file Markdown' : '1 Markdown file',
+  fullPath: isVi ? 'Đường dẫn cụ thể' : 'Concrete path',
+  reportContents: isVi ? 'Nội dung report gồm' : 'Report Contents',
+  reportContentsDesc: isVi
+    ? 'Đây là outline bên trong file report, không phải nhiều artifact riêng.'
+    : 'This is the outline inside the report file, not separate artifacts.',
+  guardrails: isVi ? 'Không bỏ qua design' : 'Do Not Skip Design',
+  guardrailsDesc: isVi
+    ? 'Các lý do nghe có vẻ hợp lý nhưng bị workflow chặn trước khi chuyển sang plan hoặc code.'
+    : 'Common-sounding excuses the workflow blocks before planning or coding.',
+  sourceSkill: isVi ? 'Quy tắc: Anti-Rationalization' : 'Rule: Anti-Rationalization',
+  thought: isVi ? 'Suy nghĩ' : 'Thought',
+  reality: isVi ? 'Thực tế' : 'Reality',
+  stack: isVi ? 'Stack được gọi khi cần' : 'Stack Used When Needed',
+  outputFlags: isVi ? 'Flags xuất & publish' : 'Output & Publish Flags',
+  outputFlagsDesc: isVi
+    ? 'Flags tùy chọn thêm report HTML hoặc publish lên AgentWiki. Strip khỏi topic trước khi phân tích.'
+    : 'Optional flags that add an HTML report or publish to AgentWiki. Stripped from the topic before analysis.',
+  sample: isVi ? 'Ví dụ' : 'Example',
+};
+
+const outputFlagAccent: Record<string, string> = {
+  '--html': 'border-violet-200 bg-violet-50/70 dark:border-violet-800/45 dark:bg-violet-950/18',
+  '--wiki': 'border-emerald-200 bg-emerald-50/70 dark:border-emerald-800/45 dark:bg-emerald-950/18',
+};
+const outputFlags = (data.outputFlags || []).map(f => ({
+  flag: f.flag,
+  title: isVi ? f.titleVi : f.titleEn,
+  desc: isVi ? f.descVi : f.descEn,
+  example: f.exampleCommand || '',
+  accent: outputFlagAccent[f.flag] || 'border-slate-200 bg-slate-50/80 dark:border-white/10 dark:bg-white/[0.04]',
+}));
+
+const heroFlow = isVi
+  ? ['Scout', 'Req rõ', 'Tranh luận', 'Path report']
+  : ['Scout', 'Exact reqs', 'Debate', 'Report path'];
+
+const tones: Record<string, Tone> = {
+  scout: {
+    rail: 'bg-emerald-400',
+    chip: 'bg-emerald-50 text-emerald-700 ring-emerald-200 dark:bg-emerald-950/35 dark:text-emerald-200 dark:ring-emerald-800/60',
+    label: 'text-emerald-700 dark:text-emerald-300',
+    surface: 'bg-emerald-50/55 ring-emerald-100 dark:bg-emerald-950/12 dark:ring-emerald-900/35',
+  },
+  clarify: {
+    rail: 'bg-sky-400',
+    chip: 'bg-sky-50 text-sky-700 ring-sky-200 dark:bg-sky-950/35 dark:text-sky-200 dark:ring-sky-800/60',
+    label: 'text-sky-700 dark:text-sky-300',
+    surface: 'bg-sky-50/55 ring-sky-100 dark:bg-sky-950/12 dark:ring-sky-900/35',
+  },
+  decide: {
+    rail: 'bg-amber-400',
+    chip: 'bg-amber-50 text-amber-800 ring-amber-200 dark:bg-amber-950/35 dark:text-amber-200 dark:ring-amber-800/60',
+    label: 'text-amber-700 dark:text-amber-300',
+    surface: 'bg-amber-50/55 ring-amber-100 dark:bg-amber-950/12 dark:ring-amber-900/35',
+  },
+  handoff: {
+    rail: 'bg-violet-400',
+    chip: 'bg-violet-50 text-violet-700 ring-violet-200 dark:bg-violet-950/35 dark:text-violet-200 dark:ring-violet-800/60',
+    label: 'text-violet-700 dark:text-violet-300',
+    surface: 'bg-violet-50/55 ring-violet-100 dark:bg-violet-950/12 dark:ring-violet-900/35',
+  },
+};
+
+const processGroups: ProcessGroup[] = [
+  { label: isVi ? 'Scout' : 'Scout', kicker: isVi ? 'Context trước câu hỏi' : 'Context before questions', steps: data.processFlow.slice(0, 1), tone: tones.scout },
+  { label: isVi ? 'Làm rõ' : 'Clarify', kicker: isVi ? 'Chốt 5 mục cụ thể' : 'Lock the 5 exact fields', steps: data.processFlow.slice(1, 3), tone: tones.clarify },
+  { label: isVi ? 'Đánh giá' : 'Evaluate', kicker: isVi ? 'Trade-off và brutal honesty' : 'Trade-offs and brutal honesty', steps: data.processFlow.slice(3, 7), tone: tones.decide },
+  { label: isVi ? 'Bàn giao' : 'Handoff', kicker: isVi ? 'Report rồi chọn plan/end' : 'Report, then plan/end', steps: data.processFlow.slice(7), tone: tones.handoff },
+];
+
+const handoffOptions = isVi
+  ? [
+      { command: '/ck:plan --tdd', when: 'Refactor, logic quan trọng, hoặc đã có test contract mạnh.', result: 'Cùng session: dùng context report vừa tạo. Session mới: gọi kèm path artifact.' },
+      { command: '/ck:plan', when: 'Feature mới hoặc thay đổi tiêu chuẩn.', result: 'Plan triển khai theo phase từ brainstorm report.' },
+      { command: 'End session', when: 'Muốn plan sau hoặc bàn giao nơi khác.', result: 'Dừng sau report/journal.' },
+    ]
+  : [
+      { command: '/ck:plan --tdd', when: 'Refactor, critical logic, or strong existing test contracts.', result: 'Same session: use the report context just created. Fresh session: include the artifact path.' },
+      { command: '/ck:plan', when: 'Standard new feature or moderate change.', result: 'Phase-by-phase implementation plan from the brainstorm report.' },
+      { command: 'End session', when: 'Plan later or hand off elsewhere.', result: 'Stop after report/journal.' },
+    ];
+
+const stackPreview = data.skillStack?.slice(0, 10) || [];
+const artifactPattern = (isVi ? data.reportOutput?.patternVi : data.reportOutput?.patternEn) || 'brainstorm-YYMMDD-HHMM-slug.md';
+const artifactLocation = (isVi ? data.reportOutput?.locationVi : data.reportOutput?.locationEn) || 'plans/reports/';
+const artifactPath = `${artifactLocation}${artifactPattern}`;
+const artifactExamplePath = 'plans/reports/brainstorm-260524-1908-auth-approach.md';
+const reportSections = isVi
+  ? [
+      { title: 'Mô tả vấn đề', desc: 'Vấn đề, mục tiêu, và bối cảnh repo đã scout.' },
+      { title: 'Các hướng đánh giá', desc: '2-3 approach khả thi cùng trade-off chính.' },
+      { title: 'Khuyến nghị cuối', desc: 'Hướng được chọn và lý do chọn.' },
+      { title: 'Rủi ro triển khai', desc: 'Điểm dễ fail, dependency, hoặc assumption cần kiểm chứng.' },
+      { title: 'Metrics thành công', desc: 'Tiêu chí biết giải pháp đã đúng và đủ.' },
+      { title: 'Bước tiếp theo', desc: 'Cách bàn giao sang /ck:plan hoặc dừng lại.' },
+    ]
+  : [
+      { title: 'Problem statement', desc: 'The problem, target outcome, and scouted repo context.' },
+      { title: 'Evaluated approaches', desc: '2-3 viable approaches with the main trade-offs.' },
+      { title: 'Final recommendation', desc: 'The selected direction and why it won.' },
+      { title: 'Implementation risks', desc: 'Failure points, dependencies, or assumptions to verify.' },
+      { title: 'Success metrics', desc: 'How to know the solution is correct and complete.' },
+      { title: 'Next steps', desc: 'How to hand off to /ck:plan or stop here.' },
+    ];
+const guardrailItems = isVi
+  ? [
+      {
+        thought: 'Việc này quá đơn giản, khỏi cần design',
+        reality: 'Việc nhỏ vẫn dễ phí thời gian khi assumptions bị ẩn.',
+        accent: 'border-amber-200 bg-amber-50/70 dark:border-amber-800/50 dark:bg-amber-950/18',
+      },
+      {
+        thought: 'Tôi biết giải pháp rồi',
+        reality: 'Vậy viết ra rất nhanh. Design bằng chữ là checkpoint để cùng hiểu đúng.',
+        accent: 'border-sky-200 bg-sky-50/70 dark:border-sky-800/50 dark:bg-sky-950/18',
+      },
+      {
+        thought: 'User muốn làm ngay, không muốn nói nhiều',
+        reality: 'Làm sai tốn thời gian hơn một vòng planning ngắn nhưng đúng.',
+        accent: 'border-rose-200 bg-rose-50/70 dark:border-rose-800/50 dark:bg-rose-950/18',
+      },
+      {
+        thought: 'Cứ explore code trước đã',
+        reality: 'Brainstorm quyết định cần explore theo hướng nào. Follow process trước.',
+        accent: 'border-violet-200 bg-violet-50/70 dark:border-violet-800/50 dark:bg-violet-950/18',
+      },
+      {
+        thought: 'Prototype nhanh thôi',
+        reality: 'Prototype thường thành production code. Design trước.',
+        accent: 'border-emerald-200 bg-emerald-50/70 dark:border-emerald-800/50 dark:bg-emerald-950/18',
+      },
+    ]
+  : [
+      {
+        thought: 'This is too simple to need a design',
+        reality: 'Simple work wastes time when assumptions stay implicit.',
+        accent: 'border-amber-200 bg-amber-50/70 dark:border-amber-800/50 dark:bg-amber-950/18',
+      },
+      {
+        thought: 'I already know the solution',
+        reality: 'Then writing it down is quick. The written design is the alignment checkpoint.',
+        accent: 'border-sky-200 bg-sky-50/70 dark:border-sky-800/50 dark:bg-sky-950/18',
+      },
+      {
+        thought: 'The user wants action, not talk',
+        reality: 'Bad action wastes more time than a short planning loop.',
+        accent: 'border-rose-200 bg-rose-50/70 dark:border-rose-800/50 dark:bg-rose-950/18',
+      },
+      {
+        thought: 'Let me explore the code first',
+        reality: 'Brainstorming decides how to explore. Follow the process first.',
+        accent: 'border-violet-200 bg-violet-50/70 dark:border-violet-800/50 dark:bg-violet-950/18',
+      },
+      {
+        thought: "I'll just prototype quickly",
+        reality: 'Prototypes become production code. Design first.',
+        accent: 'border-emerald-200 bg-emerald-50/70 dark:border-emerald-800/50 dark:bg-emerald-950/18',
+      },
+    ];
+const samplePrompts = (data.promptExamples || []).map(p => ({
+  label: isVi ? p.labelVi : p.labelEn,
+  command: p.command,
+  when: isVi ? p.whenVi : p.whenEn,
+  expected: isVi ? p.expectedVi : p.expectedEn,
+  recommended: p.recommended,
+}));
+
+const renderInlineCode = (value = '') => value
+  .replace(/&/g, '&amp;')
+  .replace(/</g, '&lt;')
+  .replace(/>/g, '&gt;')
+  .replace(/`([^`]+)`/g, '<code class="rounded bg-white/80 px-1.5 py-0.5 font-mono text-[0.82em] text-amber-950 ring-1 ring-amber-200 dark:bg-amber-950/45 dark:text-amber-100 dark:ring-amber-700/60">$1</code>');
+---
+
+<div class="space-y-8">
+  <header class="relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm ring-1 ring-white/60 dark:border-white/10 dark:bg-slate-950/55 dark:ring-white/5">
+    <div class="pointer-events-none absolute inset-0 opacity-80 dark:opacity-100">
+      <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-emerald-400 via-amber-300 to-violet-400"></div>
+      <div class="absolute inset-0 bg-[linear-gradient(115deg,rgba(16,185,129,0.10),transparent_30%,rgba(245,158,11,0.08)_60%,rgba(139,92,246,0.10))] dark:bg-[linear-gradient(115deg,rgba(16,185,129,0.16),transparent_30%,rgba(245,158,11,0.10)_62%,rgba(139,92,246,0.13))]"></div>
+      <div class="absolute inset-0 bg-[linear-gradient(rgba(148,163,184,0.10)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.10)_1px,transparent_1px)] bg-[size:28px_28px] [mask-image:linear-gradient(to_bottom,black,transparent_72%)]"></div>
+    </div>
+
+    <div class="relative grid gap-0 xl:grid-cols-[minmax(0,1fr)_330px]">
+      <div class="min-w-0 p-5 sm:p-6">
+        <div class="flex flex-wrap items-center gap-2">
+          <p class="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-emerald-700 ring-1 ring-emerald-500/20 dark:text-emerald-300">{text.eyebrow}</p>
+          <p class="rounded-full bg-white/70 px-3 py-1 text-xs font-medium text-slate-600 ring-1 ring-slate-200 dark:bg-white/[0.06] dark:text-slate-300 dark:ring-white/10">{text.beforePlan}</p>
+        </div>
+        <div class="mt-5">
+          <h2 class="font-mono text-3xl font-semibold leading-none text-slate-950 dark:text-white sm:text-4xl">{data.command}</h2>
+          <p class="mt-4 max-w-2xl text-sm leading-6 text-slate-650 dark:text-slate-300">{text.summary}</p>
+        </div>
+        <div class="mt-6 grid gap-2 sm:grid-cols-4">
+          {heroFlow.map((item, index) => (
+            <div class="relative rounded-xl border border-slate-200 bg-white/75 px-3 py-3 dark:border-white/10 dark:bg-white/[0.055]">
+              <span class="font-mono text-[11px] text-slate-400">0{index + 1}</span>
+              <p class="mt-1 text-sm font-semibold text-slate-900 dark:text-white">{item}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <aside class="relative border-t border-amber-200 bg-amber-50/80 p-5 dark:border-amber-800/50 dark:bg-amber-950/25 xl:border-l xl:border-t-0">
+        <div class="flex items-center gap-2">
+          <span class="relative flex h-2 w-2">
+            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-60"></span>
+            <span class="relative inline-flex h-2 w-2 rounded-full bg-amber-500"></span>
+          </span>
+          <p class="text-xs font-semibold uppercase tracking-wider text-amber-900 dark:text-amber-200">{text.hardGate}</p>
+        </div>
+        <ol class="mt-3 space-y-2">
+          {(text.hardGateItems as { label: string; detail: string }[]).map((item, index) => (
+            <li class="grid grid-cols-[1.5rem_minmax(0,1fr)] gap-2.5 rounded-lg border border-amber-200/70 bg-white/65 p-2.5 ring-1 ring-amber-100/60 dark:border-amber-800/40 dark:bg-amber-950/30 dark:ring-amber-900/30">
+              <span class="flex h-6 w-6 items-center justify-center rounded-full bg-amber-500 font-mono text-[11px] font-bold text-white shadow-sm shadow-amber-500/30 dark:bg-amber-400 dark:text-amber-950">{index + 1}</span>
+              <div class="min-w-0">
+                <p class="text-[11px] font-semibold uppercase tracking-wide text-amber-900 dark:text-amber-200">{item.label}</p>
+                <p class="mt-0.5 text-xs leading-5 text-amber-950/85 dark:text-amber-100/85" set:html={renderInlineCode(item.detail)} />
+              </div>
+            </li>
+          ))}
+        </ol>
+      </aside>
+    </div>
+
+    <div class="relative grid border-t border-slate-200 bg-slate-50/80 dark:border-white/10 dark:bg-slate-950/35 sm:grid-cols-3">
+      {[
+        { title: text.scoutFirst, desc: text.scoutFirstDesc, marker: 'bg-emerald-400' },
+        { title: text.reportFirst, desc: text.reportFirstDesc, marker: 'bg-violet-400' },
+        { title: text.noTaskAgents, desc: text.noTaskAgentsDesc, marker: 'bg-slate-400' },
+      ].map(rule => (
+        <div class="border-b border-slate-200 p-4 last:border-b-0 dark:border-white/10 sm:border-b-0 sm:border-r sm:last:border-r-0">
+          <div class="flex items-start gap-3">
+            <span class={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${rule.marker}`}></span>
+            <div>
+              <p class="text-sm font-semibold text-slate-900 dark:text-white">{rule.title}</p>
+              <p class="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-400">{rule.desc}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </header>
+
+  <section class="rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-white/10 dark:bg-slate-950/45">
+    <div class="border-b border-slate-200 p-5 dark:border-white/10">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.process}</h3>
+      <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300">{text.processDesc}</p>
+    </div>
+    <div class="divide-y divide-slate-200 dark:divide-white/10">
+      {processGroups.map((group, groupIndex) => (
+        <div class="relative grid gap-4 p-5 lg:grid-cols-[10rem_minmax(0,1fr)]">
+          <div class="flex items-start gap-3 lg:block">
+            <span class={`mt-1 block h-10 w-1.5 shrink-0 rounded-full ${group.tone.rail} lg:h-12 lg:w-2`}></span>
+            <div class="min-w-0 lg:mt-3">
+              <span class={`rounded-full px-2.5 py-1 text-[11px] font-semibold ring-1 ${group.tone.chip}`}>0{groupIndex + 1}</span>
+              <p class={`mt-2 text-base font-semibold ${group.tone.label}`}>{group.label}</p>
+              <p class="mt-1 text-xs leading-5 text-slate-500 dark:text-slate-400">{group.kicker}</p>
+            </div>
+          </div>
+          <ol class="grid gap-3 sm:grid-cols-2">
+            {group.steps.map(step => (
+              <li class={`grid grid-cols-[2.25rem_minmax(0,1fr)] gap-3 rounded-xl p-3.5 ring-1 transition duration-200 hover:-translate-y-0.5 hover:shadow-sm ${group.tone.surface}`}>
+                <span class="flex h-9 w-9 items-center justify-center rounded-full bg-white font-mono text-xs font-semibold text-slate-700 ring-1 ring-slate-200 dark:bg-slate-950/75 dark:text-slate-200 dark:ring-white/10">{step.number}</span>
+                <span class="min-w-0">
+                  <span class="block text-sm font-semibold leading-5 text-slate-950 dark:text-white">{isVi ? step.titleVi : step.titleEn}</span>
+                  {step.descEn && <span class="mt-1 block text-xs leading-5 text-slate-600 dark:text-slate-400">{isVi ? step.descVi : step.descEn}</span>}
+                </span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-slate-950/45">
+    <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.samplePrompt}</h3>
+    <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300">{text.samplePromptDesc}</p>
+    <div class="mt-4 space-y-3">
+      {samplePrompts.map(prompt => (
+        <article class={`grid gap-3 rounded-xl border p-4 ring-1 lg:grid-cols-[10rem_minmax(0,1fr)] ${prompt.recommended ? 'border-emerald-200 bg-emerald-50/65 ring-emerald-100 dark:border-emerald-700/45 dark:bg-emerald-950/15 dark:ring-emerald-900/30' : 'border-slate-200 bg-slate-50/80 ring-white/70 dark:border-white/10 dark:bg-white/[0.04] dark:ring-white/5'}`}>
+          <div class="min-w-0">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="rounded-full bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-600 ring-1 ring-slate-200 dark:bg-slate-950/60 dark:text-slate-300 dark:ring-white/10">{prompt.label}</span>
+              {prompt.recommended && <span class="rounded-full bg-emerald-500 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-white shadow-sm shadow-emerald-500/20 dark:bg-emerald-400 dark:text-emerald-950">{text.recommended}</span>}
+            </div>
+          </div>
+          <div class="min-w-0">
+            <code class="block whitespace-pre-wrap break-words rounded-lg bg-slate-100 px-3 py-2 font-mono text-xs leading-5 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-slate-200 dark:ring-white/10">{prompt.command}</code>
+            <div class="mt-3 grid gap-3 sm:grid-cols-2">
+              <p class="text-xs leading-5 text-slate-650 dark:text-slate-300"><span class="font-semibold text-slate-900 dark:text-white">{text.useWhen}: </span>{prompt.when}</p>
+              <p class="text-xs leading-5 text-slate-650 dark:text-slate-300"><span class="font-semibold text-slate-900 dark:text-white">{text.expected}: </span>{prompt.expected}</p>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  {outputFlags.length > 0 && (
+    <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-slate-950/45">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.outputFlags}</h3>
+      <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300">{text.outputFlagsDesc}</p>
+      <div class="mt-4 space-y-3">
+        {outputFlags.map(flag => (
+          <div class={`grid gap-3 rounded-xl border p-4 lg:grid-cols-[11rem_minmax(0,1fr)] ${flag.accent}`}>
+            <div class="min-w-0">
+              <code class="inline-flex max-w-full break-words rounded-lg bg-white/80 px-2.5 py-1 font-mono text-sm font-semibold text-purple-600 ring-1 ring-black/5 dark:bg-slate-800/90 dark:text-purple-400 dark:ring-white/10">{flag.flag}</code>
+              <p class="mt-2 text-sm font-semibold text-slate-900 dark:text-white">{flag.title}</p>
+            </div>
+            <div class="min-w-0">
+              <p class="text-xs leading-5 text-slate-650 dark:text-slate-300">{flag.desc}</p>
+              {flag.example && (
+                <>
+                  <p class="mt-3 text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{text.sample}</p>
+                  <code class="mt-1.5 block whitespace-pre-wrap break-words rounded-lg bg-slate-100 px-3 py-2 font-mono text-xs leading-5 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-slate-200 dark:ring-white/10">{flag.example}</code>
+                </>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_330px]">
+    <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-slate-950/45">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.handoff}</h3>
+      <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300">{text.handoffDesc}</p>
+      <div class="mt-4 space-y-3">
+        {handoffOptions.map(option => (
+          <article class="grid gap-3 rounded-xl border border-slate-200 bg-slate-50/80 p-4 ring-1 ring-white/70 dark:border-white/10 dark:bg-white/[0.04] dark:ring-white/5 lg:grid-cols-[11rem_minmax(0,1fr)]">
+            <code class="inline-flex max-w-full break-words rounded-lg bg-slate-100 px-2.5 py-1 font-mono text-sm font-semibold text-purple-600 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-purple-400 dark:ring-white/10">{option.command}</code>
+            <p class="text-xs leading-5 text-slate-650 dark:text-slate-300"><span class="font-semibold text-slate-900 dark:text-white">{text.recommend}: </span>{option.when}</p>
+            <p class="text-xs leading-5 text-slate-650 dark:text-slate-300 lg:col-start-2"><span class="font-semibold text-slate-900 dark:text-white">{text.result}: </span>{option.result}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+    <aside class="rounded-2xl border border-slate-200 bg-slate-50/80 p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.03]">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.stack}</h3>
+      <div class="mt-3 flex flex-wrap gap-2">
+        {stackPreview.map(item => (
+          <span class="rounded-full bg-white px-2.5 py-1 text-xs text-slate-700 ring-1 ring-slate-200 dark:bg-slate-950/60 dark:text-slate-300 dark:ring-white/10">{item.name}</span>
+        ))}
+      </div>
+    </aside>
+  </section>
+
+  <section class="space-y-5">
+    <article class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-white/10 dark:bg-slate-950/45">
+      <div class="border-b border-slate-200 p-5 dark:border-white/10">
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+          <div class="min-w-0">
+            <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.output}</h3>
+            <p class="mt-3 text-base font-semibold leading-6 text-slate-950 dark:text-white">{isVi ? data.reportOutput?.titleVi : data.reportOutput?.titleEn}</p>
+            <p class="mt-1 max-w-3xl text-sm leading-6 text-slate-600 dark:text-slate-300">{text.artifactDesc}</p>
+          </div>
+          <span class="inline-flex w-fit shrink-0 rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-emerald-700 ring-1 ring-emerald-200 dark:bg-emerald-950/30 dark:text-emerald-200 dark:ring-emerald-800/50">{text.oneFile}</span>
+        </div>
+      </div>
+
+      <div class="space-y-5 p-5">
+        <div class="rounded-xl border border-slate-200 bg-slate-50/80 p-4 dark:border-white/10 dark:bg-white/[0.035]">
+          <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{text.fullPath}</p>
+          <div class="mt-3 grid gap-3 lg:grid-cols-2">
+            <code class="block whitespace-normal break-words rounded-lg bg-white px-3 py-2.5 font-mono text-xs leading-5 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-900/70 dark:text-slate-300 dark:ring-white/10">{artifactPath}</code>
+            <code class="block whitespace-normal break-words rounded-lg bg-emerald-50 px-3 py-2.5 font-mono text-xs leading-5 text-emerald-800 ring-1 ring-emerald-200 dark:bg-emerald-950/25 dark:text-emerald-200 dark:ring-emerald-800/45">{artifactExamplePath}</code>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-slate-200 bg-white p-4 dark:border-white/10 dark:bg-white/[0.025]">
+          <div class="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{text.reportContents}</p>
+              <p class="mt-1 text-xs leading-5 text-slate-500 dark:text-slate-400">{text.reportContentsDesc}</p>
+            </div>
+          </div>
+          <ol class="mt-4 grid gap-3 lg:grid-cols-2">
+            {reportSections.map((section, index) => (
+              <li class="grid grid-cols-[2.25rem_minmax(0,1fr)] gap-3 rounded-lg border border-slate-200 bg-slate-50/70 p-3 dark:border-white/10 dark:bg-white/[0.035]">
+                <span class="flex h-9 w-9 items-center justify-center rounded-full bg-white font-mono text-xs font-semibold text-slate-600 ring-1 ring-slate-200 dark:bg-slate-950/65 dark:text-slate-300 dark:ring-white/10">{index + 1}</span>
+                <span class="min-w-0">
+                  <span class="block text-sm font-semibold leading-5 text-slate-900 dark:text-white">{section.title}</span>
+                  <span class="mt-1 block text-sm leading-6 text-slate-600 dark:text-slate-400">{section.desc}</span>
+                </span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    </article>
+
+    <article class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-white/10 dark:bg-slate-950/45">
+      <div class="border-b border-slate-200 p-5 dark:border-white/10">
+        <div class="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.guardrails}</h3>
+            <p class="mt-2 text-sm font-semibold leading-5 text-slate-950 dark:text-white">{text.sourceSkill}</p>
+            <p class="mt-1 max-w-3xl text-xs leading-5 text-slate-600 dark:text-slate-400">{text.guardrailsDesc}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="divide-y divide-slate-200 dark:divide-white/10">
+        {guardrailItems.map((item, index) => (
+          <div class={`grid gap-4 p-4 lg:grid-cols-[3rem_minmax(0,0.9fr)_minmax(0,1.15fr)] lg:items-start ${item.accent}`}>
+            <span class="flex h-8 w-8 items-center justify-center rounded-full bg-white font-mono text-[11px] font-semibold text-slate-600 ring-1 ring-black/5 dark:bg-slate-950/65 dark:text-slate-300 dark:ring-white/10">{index + 1}</span>
+            <div class="min-w-0">
+              <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{text.thought}</p>
+              <p class="mt-1 text-sm font-semibold leading-5 text-slate-950 dark:text-white">{item.thought}</p>
+            </div>
+            <div class="min-w-0">
+              <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{text.reality}</p>
+              <p class="mt-1 text-sm leading-6 text-slate-700 dark:text-slate-300">{item.reality}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </article>
+  </section>
+</div>

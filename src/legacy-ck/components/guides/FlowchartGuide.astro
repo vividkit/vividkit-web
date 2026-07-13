@@ -1,0 +1,121 @@
+---
+// FlowchartGuide - Main composition component
+// Assembles all flowchart guide sub-sections into a single page layout
+import { getLangFromUrl, type Language } from '@/i18n';
+
+import FlowchartHeaderSection from "./flowchart/flowchart-header-section.astro";
+import FlowchartCommandCategoriesNewProjectToGitOps from "./flowchart/flowchart-command-categories-new-project-to-git-ops.astro";
+import FlowchartCommandCategoriesDocsToPlanning from "./flowchart/flowchart-command-categories-docs-to-planning.astro";
+import FlowchartCommonWorkflowsSection from "./flowchart/flowchart-common-workflows-section.astro";
+import FlowchartProTipsAndComplexitySection from "./flowchart/flowchart-pro-tips-and-complexity-section.astro";
+import FlowchartSummaryAndHelpSection from "./flowchart/flowchart-summary-and-help-section.astro";
+import FlowchartInteractiveMarketing from "./FlowchartInteractiveMarketing.astro";
+// Marketing Kit sections
+import FlowchartMarketingCommandCategories from "./flowchart/flowchart-marketing-command-categories.astro";
+import FlowchartMarketingWorkflowsSection from "./flowchart/flowchart-marketing-workflows-section.astro";
+import FlowchartMarketingProTipsSection from "./flowchart/flowchart-marketing-pro-tips-section.astro";
+import FlowchartMarketingSummarySection from "./flowchart/flowchart-marketing-summary-section.astro";
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+---
+
+<div class="space-y-10 mt-6" id="flowchart-guide">
+  <FlowchartHeaderSection lang={currentLang} />
+
+  <!-- Engineer Kit Content -->
+  <div id="fc-engineer-content" class="space-y-8">
+    <!-- Command Categories -->
+    <div class="space-y-8">
+      <FlowchartCommandCategoriesNewProjectToGitOps lang={currentLang} />
+      <FlowchartCommandCategoriesDocsToPlanning lang={currentLang} />
+    </div>
+
+    <FlowchartCommonWorkflowsSection lang={currentLang} />
+    <FlowchartProTipsAndComplexitySection lang={currentLang} />
+    <FlowchartSummaryAndHelpSection lang={currentLang} />
+  </div>
+
+  <!-- Marketing Kit Content -->
+  <div id="fc-marketing-content" class="hidden space-y-8">
+    <!-- Marketing Kit Decision Tree -->
+    <div id="fc-marketing-decision-tree" class="glass-card rounded-2xl p-6 sm:p-8">
+      <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
+        <svg class="w-5 h-5 text-cyan-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 6h16M4 12h10M4 18h16" stroke-linecap="round" stroke-linejoin="round"></path>
+          <circle cx="18" cy="12" r="3"></circle>
+        </svg>
+        {currentLang === 'vi' ? 'Sơ Đồ Quyết Định Tương Tác' : 'Interactive Decision Tree'}
+      </h3>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">
+        {currentLang === 'vi'
+          ? 'Click vào bất kỳ node hoặc đường path nào để highlight lộ trình đến command. Hoặc click vào các command button ở trên để xem đường đi tương ứng.'
+          : 'Click on any node or path to highlight the route to that command. Or click the command buttons above to see their corresponding paths.'}
+      </p>
+      <FlowchartInteractiveMarketing lang={currentLang} />
+    </div>
+
+    <!-- Marketing Command Categories -->
+    <FlowchartMarketingCommandCategories lang={currentLang} />
+
+    <!-- Marketing Workflows -->
+    <FlowchartMarketingWorkflowsSection lang={currentLang} />
+
+    <!-- Marketing Pro Tips -->
+    <FlowchartMarketingProTipsSection lang={currentLang} />
+
+    <!-- Marketing Summary & Help -->
+    <FlowchartMarketingSummarySection lang={currentLang} />
+  </div>
+</div>
+
+<script>
+  // Kit toggle functionality for flowchart guide (Engineer / Marketing)
+  document.addEventListener("DOMContentLoaded", () => {
+    const btnEngineer = document.getElementById("fc-btn-engineer");
+    const btnMarketing = document.getElementById("fc-btn-marketing");
+    const engineerContent = document.getElementById("fc-engineer-content");
+    const marketingContent = document.getElementById("fc-marketing-content");
+    const decisionTree = document.getElementById("fc-decision-tree");
+
+    if (!btnEngineer || !btnMarketing || !engineerContent || !marketingContent) return;
+
+    const activeClasses = "bg-teal-500 text-white shadow-sm";
+    const inactiveClasses = "text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700";
+    const activeMarketingClasses = "bg-purple-500 text-white shadow-sm";
+
+    function setKit(kit: "engineer" | "marketing") {
+      if (kit === "engineer") {
+        engineerContent.classList.remove("hidden");
+        marketingContent.classList.add("hidden");
+        // Show decision tree for Engineer Kit
+        if (decisionTree) decisionTree.classList.remove("hidden");
+        btnEngineer.className = `fc-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${activeClasses}`;
+        btnMarketing.className = `fc-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${inactiveClasses}`;
+      } else {
+        engineerContent.classList.add("hidden");
+        marketingContent.classList.remove("hidden");
+        // Hide Engineer decision tree when Marketing Kit is active (Marketing has its own)
+        if (decisionTree) decisionTree.classList.add("hidden");
+        btnMarketing.className = `fc-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${activeMarketingClasses}`;
+        btnEngineer.className = `fc-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${inactiveClasses}`;
+      }
+
+      // Save preference
+      localStorage.setItem("flowchart-kit", kit);
+    }
+
+    // Load saved preference
+    const savedKit = localStorage.getItem("flowchart-kit") as "engineer" | "marketing" | null;
+    if (savedKit === "engineer" || savedKit === "marketing") {
+      setKit(savedKit);
+    }
+
+    btnEngineer.addEventListener("click", () => setKit("engineer"));
+    btnMarketing.addEventListener("click", () => setKit("marketing"));
+  });
+</script>

@@ -1,0 +1,92 @@
+---
+// Before/After comparison table with image
+import { useTranslations } from '@legacy-ck/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+const imgSuffix = currentLang === "vi" ? "-vi" : "";
+
+const icons = {
+  scale: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971z" /></svg>`,
+  x_mark: `<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>`,
+  check: `<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>`,
+};
+
+const comparisonItems = [
+  { without: t("guides.what_is_claudekit.compare_1_without"), with: t("guides.what_is_claudekit.compare_1_with") },
+  { without: t("guides.what_is_claudekit.compare_2_without"), with: t("guides.what_is_claudekit.compare_2_with") },
+  { without: t("guides.what_is_claudekit.compare_3_without"), with: t("guides.what_is_claudekit.compare_3_with") },
+  { without: t("guides.what_is_claudekit.compare_4_without"), with: t("guides.what_is_claudekit.compare_4_with") },
+  { without: t("guides.what_is_claudekit.compare_5_without"), with: t("guides.what_is_claudekit.compare_5_with") },
+  { without: t("guides.what_is_claudekit.compare_6_without"), with: t("guides.what_is_claudekit.compare_6_with") },
+];
+---
+
+<div class="glass-card rounded-2xl overflow-hidden">
+  <div class="p-6 bg-gradient-to-r from-slate-500/5 to-slate-600/5 dark:from-slate-400/5 dark:to-slate-500/5 border-b border-slate-200 dark:border-slate-800">
+    <h3 class="text-2xl font-bold text-slate-700 dark:text-slate-300 flex items-center gap-3">
+      <span class="text-slate-600 dark:text-slate-400"><Fragment set:html={icons.scale} /></span>
+      {t("guides.what_is_claudekit.comparison_title")}
+    </h3>
+  </div>
+  <div class="p-6">
+    <!-- Comparison Table -->
+    <div class="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700">
+      <!-- Header -->
+      <div class="grid grid-cols-[1fr_auto_1fr] bg-slate-100 dark:bg-slate-800/80">
+        <div class="p-4 text-center border-r border-slate-200 dark:border-slate-700">
+          <div class="flex items-center justify-center gap-2">
+            <div class="w-6 h-6 rounded-full bg-red-100 dark:bg-red-500/20 flex items-center justify-center text-red-600 dark:text-red-400">
+              <Fragment set:html={icons.x_mark} />
+            </div>
+            <span class="font-bold text-red-600 dark:text-red-400">{t("guides.what_is_claudekit.without")}</span>
+          </div>
+        </div>
+        <div class="w-px bg-slate-200 dark:bg-slate-700"></div>
+        <div class="p-4 text-center">
+          <div class="flex items-center justify-center gap-2">
+            <div class="w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+              <Fragment set:html={icons.check} />
+            </div>
+            <span class="font-bold text-emerald-600 dark:text-emerald-400">{t("guides.what_is_claudekit.with")}</span>
+          </div>
+        </div>
+      </div>
+      <!-- Rows -->
+      {comparisonItems.map((item, index) => (
+        <div class={`grid grid-cols-[1fr_auto_1fr] ${index % 2 === 0 ? "bg-white dark:bg-slate-900/50" : "bg-slate-50/50 dark:bg-slate-800/30"}`}>
+          <div class="p-4 border-r border-slate-200 dark:border-slate-700 flex items-center gap-3">
+            <span class="w-5 h-5 rounded-full bg-red-100 dark:bg-red-500/20 flex items-center justify-center flex-shrink-0">
+              <span class="w-2 h-2 rounded-full bg-red-500" />
+            </span>
+            <span class="text-sm text-slate-600 dark:text-slate-400">{item.without}</span>
+          </div>
+          <div class="w-px bg-slate-200 dark:bg-slate-700" />
+          <div class="p-4 flex items-center gap-3">
+            <span class="w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+              <span class="w-2 h-2 rounded-full bg-emerald-500" />
+            </span>
+            <span class="text-sm text-slate-700 dark:text-slate-300 font-medium">{item.with}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+    <!-- Comparison Image -->
+    <div class="mt-6 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700">
+      <img
+        src={`/legacy/guides/claudekit-comparison${imgSuffix}.png`}
+        alt="ClaudeKit Before vs After Comparison"
+        class="w-full h-auto"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+  </div>
+</div>

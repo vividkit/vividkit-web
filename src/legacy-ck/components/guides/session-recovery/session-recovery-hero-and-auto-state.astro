@@ -1,0 +1,79 @@
+---
+// Session Recovery Guide - Hero, auto session state banner, google ban warning
+import { useTranslations } from '@legacy-ck/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+---
+
+<!-- Hero Section -->
+<div class="text-center space-y-4">
+  <h2 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
+    {t('session_recovery.guide.title')}
+  </h2>
+  <p class="text-xl font-medium text-fuchsia-600 dark:text-fuchsia-400">
+    {t('session_recovery.guide.tagline')}
+  </p>
+  <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+    {t('session_recovery.guide.description')}
+  </p>
+</div>
+
+<!-- Auto Session State (Stable) -->
+<div class="bg-white dark:bg-slate-900/50 rounded-xl border-2 border-emerald-200 dark:border-emerald-500/30 overflow-hidden">
+  <div class="p-6 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border-b border-emerald-200 dark:border-slate-800">
+    <div class="flex items-center gap-3 flex-wrap">
+      <div class="w-9 h-9 rounded-full bg-emerald-500/20 flex items-center justify-center">
+        <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75M3.75 13.5v3.75" />
+        </svg>
+      </div>
+      <h4 class="text-lg font-bold text-slate-900 dark:text-slate-100">{t('session_recovery.guide.auto_state.title')}</h4>
+    </div>
+  </div>
+  <div class="p-6 space-y-4">
+    <p class="text-slate-600 dark:text-slate-400">{t('session_recovery.guide.auto_state.desc')}</p>
+
+    <ul class="space-y-2">
+      {[
+        t('session_recovery.guide.auto_state.point1'),
+        t('session_recovery.guide.auto_state.point2'),
+        t('session_recovery.guide.auto_state.point3'),
+        t('session_recovery.guide.auto_state.point4'),
+        t('session_recovery.guide.auto_state.point5'),
+        t('session_recovery.guide.auto_state.point6'),
+      ].map((point) => (
+        <li class="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-400">
+          <span class="text-emerald-500 mt-0.5 shrink-0">•</span>
+          <span>{point}</span>
+        </li>
+      ))}
+    </ul>
+
+    <div class="flex items-start gap-3 p-3 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30">
+      <svg class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="16" x2="12" y2="12"/>
+        <line x1="12" y1="8" x2="12.01" y2="8"/>
+      </svg>
+      <p class="text-sm text-slate-600 dark:text-slate-400">{t('session_recovery.guide.auto_state.migration')}</p>
+    </div>
+  </div>
+</div>
+
+<!-- Google Ban Warning -->
+<div class="flex items-start gap-3 p-4 rounded-xl bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-800/30">
+  <svg class="w-5 h-5 text-red-500 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/>
+  </svg>
+  <div class="text-sm text-red-800 dark:text-red-300">
+    <p class="font-medium mb-1">{t('session_recovery.guide.google_ban_warning_title')}</p>
+    <p>{t('session_recovery.guide.google_ban_warning_desc')}</p>
+  </div>
+</div>

@@ -1,0 +1,184 @@
+---
+import type { Language } from '@/i18n';
+import { HelpCircle, Eye, EyeOff, BookOpenText, PackageCheck } from 'lucide-astro';
+import TerminalSnippet from '../TerminalSnippet.astro';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const isVi = lang === 'vi';
+const t = (en: string, vi: string) => isVi ? vi : en;
+
+interface Prompt {
+  // Full, ready-to-run command line — pre-composed so flag/argument order
+  // always matches each command's real argument-hint.
+  line: string;
+  custom?: boolean;
+  // Shown above the line only when the command itself takes no free-text
+  // argument (e.g. quiz-gate) — clarifies how you'd actually say it.
+  caption?: string;
+}
+
+interface Group {
+  icon: typeof HelpCircle;
+  tone: string;
+  label: string;
+  prompts: Prompt[];
+}
+
+// 5 groups x 2 prompts = 10. Kept deliberately everyday (forgot-password, login,
+// cross-repo porting) so any reader level recognizes the scenario. Every `line`
+// matches the real argument-hint of its command — see each SKILL.md.
+const groups: Group[] = [
+  {
+    icon: HelpCircle,
+    tone: 'blue',
+    label: t('Known unknowns', 'Known unknowns'),
+    prompts: [
+      {
+        line: t(
+          '/ck:brainstorm "Before we start, ask me one question at a time about anything unclear — prioritize the ones that would change how you build this."',
+          '/ck:brainstorm "Trước khi bắt đầu, hỏi tôi từng câu một về chỗ nào còn chưa rõ — ưu tiên câu nào mà câu trả lời sẽ làm thay đổi cách bạn code."'
+        ),
+      },
+      {
+        line: t(
+          "/ck:brainstorm \"I want to add a 'forgot password' feature but haven't decided how to send the reset email. List the options from cheapest to best, with trade-offs.\"",
+          "/ck:brainstorm \"Tôi muốn thêm tính năng 'quên mật khẩu' nhưng chưa biết gửi email reset qua đâu. Liệt kê giúp tôi các lựa chọn từ rẻ đến tốt nhất, kèm ưu nhược điểm.\""
+        ),
+      },
+    ],
+  },
+  {
+    icon: Eye,
+    tone: 'amber',
+    label: t('Unknown knowns', 'Unknown knowns'),
+    prompts: [
+      {
+        line: t(
+          "/ck:brainstorm --html \"I want a dashboard for this data but I have no design taste and don't know what's possible. Make an HTML page with 4 completely different design directions so I can react to them.\"",
+          '/ck:brainstorm --html "Tôi cần dashboard cho data này nhưng không có gu thẩm mỹ và không biết cái gì khả thi. Làm giúp tôi 1 trang HTML với 4 hướng thiết kế khác biệt hoàn toàn để tôi phản hồi."'
+        ),
+      },
+      {
+        line: t(
+          '/ck:brainstorm --html "Before touching real code, mock the new homepage in a single HTML file with fake data. I want to react to the layout first."',
+          '/ck:brainstorm --html "Trước khi đụng vào code thật, làm giúp tôi 1 file HTML mock trang chủ mới với dữ liệu giả. Tôi muốn xem layout trước đã."'
+        ),
+      },
+    ],
+  },
+  {
+    icon: EyeOff,
+    tone: 'violet',
+    label: t('Unknown unknowns', 'Unknown unknowns'),
+    prompts: [
+      {
+        custom: true,
+        line: t(
+          "/blindspot \"I need to add 'Login with Google' but I've never touched the auth code in this project. Help me find the unknown unknowns before I start.\"",
+          "/blindspot \"Tôi cần thêm 'Đăng nhập bằng Google' nhưng chưa từng đụng vào phần auth của dự án này. Giúp tôi tìm các unknown unknowns trước khi bắt đầu.\""
+        ),
+      },
+      {
+        custom: true,
+        line: t(
+          '/blindspot "I don\'t know what color grading is but I need to color-grade this video. Teach me my unknown unknowns about it so I can ask for the right thing." --domain',
+          '/blindspot "Tôi không biết color grading là gì nhưng cần chỉnh màu video này. Dạy tôi hiểu các unknown unknowns về nó để tôi hỏi đúng thứ mình cần." --domain'
+        ),
+      },
+    ],
+  },
+  {
+    icon: BookOpenText,
+    tone: 'emerald',
+    label: t('References', 'References'),
+    prompts: [
+      {
+        // xia syntax: <repo-path-or-url> [feature] [--flag]. --port rewrites idiomatically.
+        line: '/ck:xia ~/projects/old-website "hiệu ứng loading" --port',
+      },
+      {
+        // --compare: evaluate before deciding to port, per xia's own mode table.
+        line: '/ck:xia shadcn-ui/ui "date picker component" --compare',
+      },
+    ],
+  },
+  {
+    icon: PackageCheck,
+    tone: 'slate',
+    label: t('Post-implementation', 'Sau khi implement'),
+    prompts: [
+      {
+        // preview always needs a generation flag — --explain fits "pitch a decision".
+        line: t(
+          '/ck:preview --html --explain "why we built it this way, demo GIF up top"',
+          '/ck:preview --html --explain "vì sao làm theo hướng này, demo GIF để lên đầu"'
+        ),
+      },
+      {
+        custom: true,
+        line: '/quiz-gate',
+        caption: t(
+          "No argument needed — it inspects your pending changes. Or just say it: \"I want to make sure I understand everything that changed — quiz me on it.\"",
+          "Không cần tham số — nó tự soi thay đổi đang chờ. Hoặc chỉ cần nói: \"Tôi muốn chắc chắn hiểu hết mọi thứ vừa thay đổi — quiz tôi đi.\""
+        ),
+      },
+    ],
+  },
+];
+
+const toneHead: Record<string, string> = {
+  blue: 'border-blue-100 bg-blue-50 text-blue-700 dark:border-blue-400/20 dark:bg-blue-500/10 dark:text-blue-300',
+  amber: 'border-amber-100 bg-amber-50 text-amber-700 dark:border-amber-400/20 dark:bg-amber-500/10 dark:text-amber-300',
+  violet: 'border-violet-100 bg-violet-50 text-violet-700 dark:border-violet-400/20 dark:bg-violet-500/10 dark:text-violet-300',
+  emerald: 'border-emerald-100 bg-emerald-50 text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-500/10 dark:text-emerald-300',
+  slate: 'border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300',
+};
+---
+
+<section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-950 sm:p-8">
+  <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-3xl">
+    {t('Example prompts', 'Ví dụ prompt')}
+  </h2>
+  <p class="mt-3 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400">
+    {t(
+      'Ten everyday, ready-to-run prompts grouped by the kind of unknown they resolve. Copy, adapt, and drop your own context in.',
+      'Mười ví dụ prompt đời thường, chạy được ngay, nhóm theo loại unknown mà chúng giải quyết. Copy, chỉnh sửa, và thêm context của bạn vào.'
+    )}
+  </p>
+
+  <div class="mt-6 space-y-6">
+    {groups.map((group) => {
+      const Icon = group.icon;
+      return (
+        <div>
+          <div class="flex items-center gap-2.5">
+            <span class={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border ${toneHead[group.tone]}`}>
+              <Icon class="h-4 w-4" stroke-width={2.2} />
+            </span>
+            <h3 class="text-sm font-bold text-slate-950 dark:text-white">{group.label}</h3>
+          </div>
+          <div class="mt-3 flex flex-col gap-3">
+            {group.prompts.map((item, pi) => (
+              <div>
+                {item.caption && (
+                  <p class="mb-1.5 text-xs leading-5 text-slate-500 dark:text-slate-500">{item.caption}</p>
+                )}
+                <TerminalSnippet
+                  code={item.line}
+                  label={item.custom ? `${group.label} #${pi + 1} · custom` : `${group.label} #${pi + 1}`}
+                  mode="plain"
+                  copyMode="raw"
+                  compact
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</section>

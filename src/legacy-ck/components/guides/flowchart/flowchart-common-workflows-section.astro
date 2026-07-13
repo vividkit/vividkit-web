@@ -1,0 +1,320 @@
+---
+// FlowchartGuide common workflows section
+import { getLangFromUrl, type Language } from '@/i18n';
+import { useTranslations } from '@legacy-ck/i18n/utils';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === "vi";
+const t = useTranslations(currentLang);
+---
+
+  <!-- Common Workflows -->
+  <div class="glass-card rounded-2xl p-6 sm:p-8">
+    <h3
+      class="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2"
+    >
+      <svg
+        class="w-5 h-5 text-teal-500"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <polyline
+          points="22 12 18 12 15 21 9 3 6 12 2 12"
+          stroke-linecap="round"
+          stroke-linejoin="round"></polyline>
+      </svg>
+      {isVi ? "Common Workflows" : "Common Workflows"}
+    </h3>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <!-- Workflow 1: Safe Approach (v2.5.0+) -->
+      <div
+        class="p-5 rounded-xl bg-purple-500/5 border border-purple-200 dark:border-purple-500/20 fc-stable-content"
+      >
+        <h4 class="font-bold text-purple-700 dark:text-purple-400 mb-3">
+          {
+            isVi
+              ? "Workflow 1: Build Feature (Safe)"
+              : "Workflow 1: Building a New Feature (Safe)"
+          }
+        </h4>
+        <div
+          class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono"
+        >
+          <p>
+            1. <code class="text-purple-600 dark:text-purple-400"
+              >/ck:brainstorm</code
+            > → {isVi ? "Khám phá options" : "Explore options"}
+          </p>
+          <p>
+            2. <code class="text-purple-600 dark:text-purple-400">/ck:plan</code> → {
+              isVi ? "Review plan" : "Review plan"
+            }
+          </p>
+          <p>
+            3. <code class="text-slate-500">/clear</code>
+            {isVi ? "hoặc" : "or"}
+            <code class="text-slate-500">/compact</code>
+          </p>
+          <p>
+            4. <code class="text-purple-600 dark:text-purple-400"
+              >/ck:cook @plan.md</code
+            > → {isVi ? "Implement" : "Implementation"}
+          </p>
+          <p>
+            5. <code class="text-indigo-600 dark:text-indigo-400">/ck:git cp</code> →
+            Push
+          </p>
+          <p>
+            6. <code class="text-indigo-600 dark:text-indigo-400">/ck:git pr</code> →
+            PR
+          </p>
+        </div>
+      </div>
+
+      <!-- Workflow 2: Fast Approach -->
+      <div
+        class="p-5 rounded-xl bg-emerald-500/5 border border-emerald-200 dark:border-emerald-500/20 fc-stable-content"
+      >
+        <h4 class="font-bold text-emerald-700 dark:text-emerald-400 mb-3">
+          {
+            isVi
+              ? "Workflow 2: Build Feature (Fast)"
+              : "Workflow 2: Building a Feature (Fast)"
+          }
+        </h4>
+        <div
+          class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono"
+        >
+          <p>
+            1. <code class="text-emerald-600 dark:text-emerald-400">/ck:cook</code> →
+            {
+              isVi
+                ? "Research → Plan → Implement → Test → Review"
+                : "Research → Plan → Implement → Test → Review"
+            }
+          </p>
+          <p>
+            2. <code class="text-indigo-600 dark:text-indigo-400">/ck:git cp</code> →
+            {
+              isVi
+                ? "Commit và push khi approved"
+                : "Commit and push when approved"
+            }
+          </p>
+        </div>
+      </div>
+
+      <!-- Workflow 3: Debugging -->
+      <div
+        class="p-5 rounded-xl bg-orange-500/5 border border-orange-200 dark:border-orange-500/20 fc-stable-content"
+      >
+        <h4 class="font-bold text-orange-700 dark:text-orange-400 mb-3">
+          {
+            isVi
+              ? "Workflow 3: Debugging & Fixing"
+              : "Workflow 3: Debugging & Fixing"
+          }
+        </h4>
+        <div
+          class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono"
+        >
+          <p>
+            1. <code class="text-orange-600 dark:text-orange-400">/ck:debug</code> →
+            {isVi ? "Tìm root cause" : "Find root cause"}
+          </p>
+          <p>
+            2. <code class="text-red-600 dark:text-red-400">/ck:fix</code> → {
+              isVi ? "Smart routing" : "Smart routing"
+            }
+          </p>
+          <p>
+            3. <code class="text-indigo-600 dark:text-indigo-400">/ck:git cm</code> →
+            {isVi ? "Commit fix locally" : "Commit fix locally"}
+          </p>
+        </div>
+      </div>
+
+      <!-- Workflow 4: New Project -->
+      <div
+        class="p-5 rounded-xl bg-amber-500/5 border border-amber-200 dark:border-amber-500/20"
+      >
+        <h4 class="font-bold text-amber-700 dark:text-amber-400 mb-3">
+          {
+            isVi
+              ? "Workflow 4: New Project Setup"
+              : "Workflow 4: New Project Setup"
+          }
+        </h4>
+        <div
+          class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono"
+        >
+          <p>
+            1. <code class="text-amber-600 dark:text-amber-400">/ck:bootstrap</code
+            > → {isVi ? "Full setup" : "Full setup"}
+          </p>
+          <p>
+            2. {isVi ? "Follow onboarding" : "Follow onboarding instructions"}
+          </p>
+        </div>
+      </div>
+
+      <!-- Workflow 5: Join Existing -->
+      <div
+        class="p-5 rounded-xl bg-cyan-500/5 border border-cyan-200 dark:border-cyan-500/20"
+      >
+        <h4 class="font-bold text-cyan-700 dark:text-cyan-400 mb-3">
+          {
+            isVi
+              ? "Workflow 5: Tham gia dự án"
+              : "Workflow 5: Joining Existing Project"
+          }
+        </h4>
+        <div
+          class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono"
+        >
+          <p>
+            1. <code class="text-cyan-600 dark:text-cyan-400">/ck:docs init</code> →
+            {isVi ? "Analyze codebase" : "Analyze codebase, create docs"}
+          </p>
+          <p>
+            2. <code class="text-cyan-600 dark:text-cyan-400">/ck:scout</code> → {
+              isVi ? "Explore structure" : "Explore codebase structure"
+            }
+          </p>
+        </div>
+      </div>
+
+      <!-- Workflow 6: Code Review -->
+      <div
+        class="p-5 rounded-xl bg-violet-500/5 border border-violet-200 dark:border-violet-500/20"
+      >
+        <h4 class="font-bold text-violet-700 dark:text-violet-400 mb-3">
+          {isVi ? "Workflow 6: Code Review" : "Workflow 6: Code Review"}
+        </h4>
+        <div
+          class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono"
+        >
+          <p>
+            1. <code class="text-green-600 dark:text-green-400">/ck:test</code> →
+            {isVi ? "Chạy tests" : "Run tests"}
+          </p>
+          <p>
+            2. <code class="text-violet-600 dark:text-violet-400">/ck:code-review</code> →
+            {isVi ? "Review toàn diện" : "Comprehensive review"}
+          </p>
+          <p>
+            3. <code class="text-indigo-600 dark:text-indigo-400">/ck:git pr</code> →
+            {isVi ? "Tạo PR" : "Create PR"}
+          </p>
+        </div>
+      </div>
+
+      <!-- Workflow 7: Design Implementation -->
+      <div
+        class="p-5 rounded-xl bg-pink-500/5 border border-pink-200 dark:border-pink-500/20"
+      >
+        <h4 class="font-bold text-pink-700 dark:text-pink-400 mb-3">
+          {isVi ? "Workflow 7: Design Implementation" : "Workflow 7: Design Implementation"}
+        </h4>
+        <div
+          class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono"
+        >
+          <p>
+            1. <code class="text-pink-600 dark:text-pink-400">/ck:frontend-design</code> →
+            {isVi ? "Tạo design" : "Create design"}
+          </p>
+          <p>
+            2. <code class="text-emerald-600 dark:text-emerald-400">/ck:cook</code> →
+            {isVi ? "Implement" : "Implement design"}
+          </p>
+          <p>
+            3. <code class="text-green-600 dark:text-green-400">/ck:test</code> →
+            {isVi ? "Verify" : "Verify implementation"}
+          </p>
+        </div>
+      </div>
+
+      <!-- Workflow 8: Research -->
+      <div
+        class="p-5 rounded-xl bg-blue-500/5 border border-blue-200 dark:border-blue-500/20"
+      >
+        <h4 class="font-bold text-blue-700 dark:text-blue-400 mb-3">
+          {isVi ? "Workflow 8: Research" : "Workflow 8: Research"}
+        </h4>
+        <div
+          class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono"
+        >
+          <p>
+            1. <code class="text-cyan-600 dark:text-cyan-400">/ck:scout</code> →
+            {isVi ? "Tìm files liên quan" : "Find relevant files"}
+          </p>
+          <p>
+            2. <code class="text-blue-600 dark:text-blue-400">/ck:research</code> →
+            {isVi ? "Deep dive topic" : "Deep dive into topic"}
+          </p>
+          <p>
+            3. <code class="text-blue-600 dark:text-blue-400">/ck:ask</code> →
+            {isVi ? "Hỏi chuyên gia" : "Get expert advice"}
+          </p>
+        </div>
+      </div>
+
+      <!-- Workflow 9: End-to-End Vibe -->
+      <div
+        class="p-5 rounded-xl bg-teal-500/5 border border-teal-200 dark:border-teal-500/20"
+      >
+        <h4 class="font-bold text-teal-700 dark:text-teal-400 mb-3">
+          {isVi ? "Workflow 9: End-to-End (Vibe)" : "Workflow 9: End-to-End (Vibe)"}
+        </h4>
+        <div
+          class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono"
+        >
+          <p>
+            1. <code class="text-teal-600 dark:text-teal-400">/ck:vibe</code> →
+            {isVi ? "issue → plan → implement → review → ship (worktree, TDD gate, CI watch)" : "issue → plan → implement → review → ship (worktree, TDD gate, CI watch)"}
+          </p>
+          <p class="text-xs text-slate-500 dark:text-slate-500 mt-1">
+            {isVi ? "Pipeline trọn gói — GitHub issue/feature đến ship tự động" : "Full automated pipeline from GitHub issue/feature to ship"}
+          </p>
+        </div>
+      </div>
+
+      <!-- Workflow 10: Ship & Review PR -->
+      <div
+        class="p-5 rounded-xl bg-sky-500/5 border border-sky-200 dark:border-sky-500/20"
+      >
+        <h4 class="font-bold text-sky-700 dark:text-sky-400 mb-3">
+          {isVi ? "Workflow 10: Ship & Review PR" : "Workflow 10: Ship & Review PR"}
+        </h4>
+        <div
+          class="text-sm text-slate-600 dark:text-slate-400 space-y-1 font-mono"
+        >
+          <p>
+            1. <code class="text-green-600 dark:text-green-400">/ck:test</code> →
+            {isVi ? "Xác minh trước khi ship" : "Verify before shipping"}
+          </p>
+          <p>
+            2. <code class="text-violet-600 dark:text-violet-400">/ck:code-review</code> →
+            {isVi ? "Review code" : "Review code"}
+          </p>
+          <p>
+            3. <code class="text-sky-600 dark:text-sky-400">/ck:ship</code> →
+            {isVi ? "test → review → commit → push → PR" : "test → review → commit → push → PR"}
+          </p>
+          <p>
+            4. <code class="text-sky-600 dark:text-sky-400">/ck:review-pr</code> →
+            {isVi ? "Review GitHub PR (security, breaking changes)" : "Review GitHub PR (security, breaking changes)"}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+

@@ -1,0 +1,431 @@
+---
+// "Understanding Symbols" section explaining command syntax chips and ⚡ token weight tiers
+import { useTranslations } from '@legacy-ck/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+const syntaxItems = [
+  {
+    sample: "/ck:plan",
+    classes: "bg-teal-100 text-teal-700 border-teal-200 dark:bg-teal-900/30 dark:text-teal-300 dark:border-teal-800",
+    title: t("commands.legend.syntax_base"),
+    desc: t("commands.legend.syntax_base_desc"),
+    requirement: t("commands.legend.req_required"),
+    requirementClasses: "bg-rose-50 text-rose-700 dark:bg-rose-900/30 dark:text-rose-300",
+  },
+  {
+    sample: "archive",
+    classes: "bg-purple-100 text-purple-700 border-purple-200 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-800",
+    title: t("commands.legend.syntax_subcommand"),
+    desc: t("commands.legend.syntax_subcommand_desc"),
+    requirement: t("commands.legend.req_when_needed"),
+    requirementClasses: "bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300",
+  },
+  {
+    sample: "--fast",
+    classes: "bg-teal-100 text-teal-700 border-teal-200 dark:bg-teal-900/30 dark:text-teal-300 dark:border-teal-800",
+    title: t("commands.legend.syntax_flag"),
+    desc: t("commands.legend.syntax_flag_desc"),
+    descType: "flag",
+    requirement: t("commands.legend.req_optional"),
+    requirementClasses: "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300",
+  },
+  {
+    sample: "[search-target]",
+    classes: "bg-slate-200 text-slate-700 border-slate-300 dark:bg-slate-700 dark:text-slate-300 dark:border-slate-600",
+    title: t("commands.legend.syntax_argument"),
+    desc: t("commands.legend.syntax_argument_desc"),
+    descType: "argument",
+    requirement: t("commands.legend.req_when_shown"),
+    requirementClasses: "bg-sky-50 text-sky-700 dark:bg-sky-900/30 dark:text-sky-300",
+  },
+  {
+    sample: "<template>",
+    classes: "bg-slate-200 text-slate-700 border-slate-300 dark:bg-slate-700 dark:text-slate-300 dark:border-slate-600",
+    title: t("commands.legend.syntax_placeholder"),
+    desc: t("commands.legend.syntax_placeholder_desc"),
+    descType: "placeholder",
+    requirement: t("commands.legend.req_required_when_shown"),
+    requirementClasses: "bg-rose-50 text-rose-700 dark:bg-rose-900/30 dark:text-rose-300",
+  },
+  {
+    sample: "/ckm:plan:*",
+    classes: "bg-purple-100 text-purple-700 border-purple-200 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-800",
+    title: t("commands.legend.syntax_wildcard"),
+    desc: t("commands.legend.syntax_wildcard_desc"),
+    requirement: t("commands.legend.req_not_literal"),
+    requirementClasses: "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300",
+  },
+];
+
+const orderItems = [
+  {
+    step: "1",
+    sample: "/ck:plan",
+    label: t("commands.legend.order_base"),
+    requirement: t("commands.legend.req_required"),
+    classes: "bg-teal-100 text-teal-700 border-teal-200 dark:bg-teal-900/30 dark:text-teal-300 dark:border-teal-800",
+  },
+  {
+    step: "2",
+    sample: "archive",
+    label: t("commands.legend.order_subcommand"),
+    requirement: t("commands.legend.req_when_needed"),
+    classes: "bg-purple-100 text-purple-700 border-purple-200 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-800",
+  },
+  {
+    step: "3",
+    sample: "[task]",
+    label: t("commands.legend.order_input"),
+    labelType: "input",
+    requirement: t("commands.legend.req_when_shown"),
+    classes: "bg-slate-200 text-slate-700 border-slate-300 dark:bg-slate-700 dark:text-slate-300 dark:border-slate-600",
+  },
+  {
+    step: "4",
+    sample: "--fast",
+    label: t("commands.legend.order_flag"),
+    labelType: "flag",
+    requirement: t("commands.legend.req_optional"),
+    classes: "bg-teal-100 text-teal-700 border-teal-200 dark:bg-teal-900/30 dark:text-teal-300 dark:border-teal-800",
+  },
+];
+
+const templateItems = [
+  {
+    sample: t("commands.legend.template_base"),
+    classes: "bg-teal-100 text-teal-700 border-teal-200 dark:bg-teal-900/30 dark:text-teal-300 dark:border-teal-800",
+  },
+  {
+    sample: t("commands.legend.template_subcommand"),
+    classes: "bg-purple-100 text-purple-700 border-purple-200 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-800",
+  },
+  {
+    sample: t("commands.legend.template_request"),
+    classes: "bg-slate-200 text-slate-700 border-slate-300 dark:bg-slate-700 dark:text-slate-300 dark:border-slate-600",
+  },
+  {
+    sample: "--flag",
+    classes: "bg-teal-100 text-teal-700 border-teal-200 dark:bg-teal-900/30 dark:text-teal-300 dark:border-teal-800",
+  },
+];
+
+const templateCommandCodeClasses =
+  "rounded border border-teal-200 bg-teal-100 px-1.5 py-0.5 font-mono text-[10px] font-semibold text-teal-700 dark:border-teal-800 dark:bg-teal-900/30 dark:text-teal-300";
+const inlineMarkerCodeClasses =
+  "rounded border border-slate-200 bg-slate-100 px-1 py-0.5 font-mono text-[10px] font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200";
+const inlineFlagCodeClasses =
+  "rounded border border-teal-200 bg-teal-100 px-1 py-0.5 font-mono text-[10px] font-semibold text-teal-700 dark:border-teal-800 dark:bg-teal-900/30 dark:text-teal-300";
+
+const chipItems = [
+  {
+    sample: "subcommand",
+    classes: "bg-purple-100 text-purple-700 border-purple-200 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-800",
+    desc: t("commands.legend.chip_subcommand"),
+  },
+  {
+    sample: "argument",
+    classes: "bg-slate-200 text-slate-700 border-slate-300 dark:bg-slate-700 dark:text-slate-300 dark:border-slate-600",
+    desc: t("commands.legend.chip_argument"),
+  },
+  {
+    sample: "--flag",
+    classes: "bg-teal-100 text-teal-700 border-teal-200 dark:bg-teal-900/30 dark:text-teal-300 dark:border-teal-800",
+    desc: t("commands.legend.chip_flag"),
+  },
+];
+
+const samplePromptItems = [
+  {
+    label: t("commands.legend.sample_plan_label"),
+    command: t("commands.legend.sample_plan_command"),
+    desc: t("commands.legend.sample_plan_desc"),
+  },
+  {
+    label: t("commands.legend.sample_fix_label"),
+    command: t("commands.legend.sample_fix_command"),
+    desc: t("commands.legend.sample_fix_desc"),
+  },
+  {
+    label: t("commands.legend.sample_git_label"),
+    command: t("commands.legend.sample_git_command"),
+    desc: t("commands.legend.sample_git_desc"),
+  },
+];
+---
+
+<style>
+  summary::-webkit-details-marker {
+    display: none;
+  }
+</style>
+
+<details
+  class="group rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800/50"
+>
+  <summary class="cursor-pointer list-none select-none">
+    <h4
+      class="mb-0 flex items-center gap-2 text-sm font-semibold text-slate-800 dark:text-slate-200"
+    >
+      <span class="flex h-6 w-6 items-center justify-center rounded-md bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="4" y="5" width="3.5" height="3.5" rx="0.6"></rect>
+          <path d="M10 6.75h10"></path>
+          <rect x="4" y="10.25" width="3.5" height="3.5" rx="0.6"></rect>
+          <path d="M10 12h10"></path>
+          <rect x="4" y="15.5" width="3.5" height="3.5" rx="0.6"></rect>
+          <path d="M10 17.25h10"></path>
+        </svg>
+      </span>
+      {t("commands.legend.title")}
+      <svg class="ml-auto h-4 w-4 text-slate-400 transition-transform duration-200 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m6 9 6 6 6-6"></path>
+      </svg>
+    </h4>
+  </summary>
+  <p class="mt-3 mb-4 max-w-3xl text-xs leading-relaxed text-slate-600 dark:text-slate-400">
+    {t("commands.legend.intro")}
+  </p>
+
+  <!-- Syntax reading guide -->
+  <div class="mb-4 grid gap-3">
+    <div class="rounded-lg border border-slate-200 bg-white p-3 dark:border-slate-700 dark:bg-slate-900/60">
+      <div class="mb-3 flex items-center justify-between gap-3">
+        <h5 class="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">
+          {t("commands.legend.syntax_title")}
+        </h5>
+      </div>
+
+      <div class="mb-3 rounded-xl border border-sky-200 bg-gradient-to-br from-sky-50 via-white to-slate-50 p-3 shadow-sm shadow-sky-100/70 dark:border-sky-900/60 dark:from-sky-950/30 dark:via-slate-950/30 dark:to-slate-950/40 dark:shadow-none">
+        <div class="mb-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-sky-700 dark:text-sky-300">
+          {t("commands.legend.example_template_label")}
+        </div>
+        <div class="flex flex-wrap items-center gap-1.5">
+          {templateItems.map((item) => (
+            <code class={`rounded border px-1.5 py-0.5 font-mono text-[10px] font-semibold ${item.classes}`}>
+              {item.sample}
+            </code>
+          ))}
+        </div>
+        <p class="mt-2 text-[11px] leading-relaxed text-sky-900/75 dark:text-sky-100/80">{t("commands.legend.example_template_note_intro")}<code class={templateCommandCodeClasses}>/ck:plan</code>{t("commands.legend.example_template_note_between")}<code class={templateCommandCodeClasses}>/ckm:seo</code>{t("commands.legend.example_template_note_after_intro")}<code class={inlineMarkerCodeClasses}>[]</code>{t("commands.legend.example_template_note_after_end")}</p>
+      </div>
+
+      <div class="mb-3 rounded-lg border border-slate-200 bg-slate-50 p-2 dark:border-slate-800 dark:bg-slate-950/40">
+        <div class="mb-2 text-[11px] font-semibold text-slate-700 dark:text-slate-200">
+          {t("commands.legend.order_title")}
+        </div>
+        <div class="grid gap-2 sm:grid-cols-4">
+          {orderItems.map((item, index) => (
+            <div class="relative rounded-md border border-slate-200 bg-white p-2 dark:border-slate-700 dark:bg-slate-900/70">
+              {index < orderItems.length - 1 && (
+                <span class="pointer-events-none absolute right-1 top-1/2 z-10 hidden h-5 w-5 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white text-[10px] text-slate-400 sm:flex dark:border-slate-700 dark:bg-slate-900 dark:text-slate-500">
+                  →
+                </span>
+              )}
+              <div class="mb-1 flex items-center justify-between gap-2">
+                <span class="flex h-5 w-5 items-center justify-center rounded-full bg-teal-100 text-[10px] font-bold text-teal-700 ring-1 ring-inset ring-teal-200 dark:bg-slate-100 dark:text-slate-900 dark:ring-slate-300">
+                  {item.step}
+                </span>
+                <span class="rounded-full bg-slate-100 px-1.5 py-0.5 text-[9px] font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+                  {item.requirement}
+                </span>
+              </div>
+              <code class={`inline-block rounded border px-1.5 py-0.5 font-mono text-[10px] font-semibold ${item.classes}`}>
+                {item.sample}
+              </code>
+              <div class="mt-1 text-[11px] font-medium leading-snug text-slate-700 dark:text-slate-200">
+                {item.labelType === "input" ? (
+                  <>
+                    {t("commands.legend.order_input_intro")}
+                    <code class={inlineMarkerCodeClasses}>[]</code>
+                    {t("commands.legend.order_input_between")}
+                    <code class={inlineMarkerCodeClasses}>{"<>"}</code>
+                    {t("commands.legend.order_input_after")}
+                  </>
+                ) : item.labelType === "flag" ? (
+                  <>
+                    {t("commands.legend.order_flag_intro")}
+                    <code class={inlineFlagCodeClasses}>--...</code>
+                    {t("commands.legend.order_flag_after")}
+                  </>
+                ) : (
+                  item.label
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+        <p class="mt-2 text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">{t("commands.legend.order_note_intro")}<code class={inlineMarkerCodeClasses}>[]</code>{t("commands.legend.order_note_between")}<code class={inlineMarkerCodeClasses}>{"<>"}</code>{t("commands.legend.order_note_after")}</p>
+      </div>
+
+      <div class="mb-3 rounded-lg border border-slate-200 bg-white p-3 dark:border-slate-700 dark:bg-slate-900/60">
+        <div class="mb-3 text-xs font-semibold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">
+          {t("commands.legend.explanation_title")}
+        </div>
+        <div class="grid gap-2 sm:grid-cols-2">
+          {syntaxItems.map((item) => (
+            <div class="flex gap-2 rounded-md border border-slate-100 bg-slate-50/80 p-2 dark:border-slate-800 dark:bg-slate-950/40">
+              <code class={`h-fit shrink-0 rounded border px-1.5 py-0.5 font-mono text-[10px] font-semibold ${item.classes}`}>
+                {item.sample}
+              </code>
+              <div class="min-w-0">
+                <div class="flex flex-wrap items-center gap-1.5">
+                  <span class="text-xs font-semibold text-slate-700 dark:text-slate-200">{item.title}</span>
+                  <span class={`rounded-full px-1.5 py-0.5 text-[9px] font-medium ${item.requirementClasses}`}>
+                    {item.requirement}
+                  </span>
+                </div>
+                <p class="mt-0.5 text-[11px] leading-snug text-slate-500 dark:text-slate-400">
+                  {item.descType === "flag" ? (
+                    <>
+                      {t("commands.legend.syntax_flag_desc_intro")}
+                      <code class={inlineFlagCodeClasses}>--</code>
+                      {t("commands.legend.syntax_flag_desc_after")}
+                    </>
+                  ) : item.descType === "argument" ? (
+                    <>
+                      {t("commands.legend.syntax_argument_desc_intro")}
+                      <code class={inlineMarkerCodeClasses}>[]</code>
+                      {t("commands.legend.syntax_argument_desc_middle")}
+                      <code class={inlineMarkerCodeClasses}>[]</code>
+                      {t("commands.legend.syntax_argument_desc_after")}
+                    </>
+                  ) : item.descType === "placeholder" ? (
+                    <>
+                      {t("commands.legend.syntax_placeholder_desc_intro")}
+                      <code class={inlineMarkerCodeClasses}>{"<>"}</code>
+                      {t("commands.legend.syntax_placeholder_desc_middle")}
+                      <code class={inlineMarkerCodeClasses}>{"<>"}</code>
+                      {t("commands.legend.syntax_placeholder_desc_after")}
+                    </>
+                  ) : (
+                    item.desc
+                  )}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="mb-3 rounded-lg border border-slate-200 bg-white p-3 dark:border-slate-700 dark:bg-slate-900/60">
+        <h5 class="mb-3 text-xs font-semibold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">
+          {t("commands.legend.card_chips_title")}
+        </h5>
+        <div class="grid gap-2 md:grid-cols-3">
+          {chipItems.map((item) => (
+            <div class="flex items-center gap-2">
+              <code class={`w-[84px] shrink-0 rounded border px-1.5 py-0.5 text-center font-mono text-[9px] font-semibold ${item.classes}`}>
+                {item.sample}
+              </code>
+              <span class="text-[11px] leading-snug text-slate-600 dark:text-slate-400">{item.desc}</span>
+            </div>
+          ))}
+        </div>
+        <div class="mt-3 rounded-md border border-slate-200 bg-slate-50 p-2 text-[11px] leading-relaxed text-slate-600 dark:border-slate-700 dark:bg-slate-950/40 dark:text-slate-400">
+          <span class="font-semibold text-slate-700 dark:text-slate-200">{t("commands.legend.card_color_note_title")}</span>
+          {t("commands.legend.card_color_note")}
+        </div>
+      </div>
+
+      <div class="rounded-lg border border-emerald-200 bg-emerald-50 p-3 dark:border-emerald-900/60 dark:bg-emerald-950/30">
+        <div class="mb-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-emerald-700 dark:text-emerald-300">
+          {t("commands.legend.samples_title")}
+        </div>
+        <div class="grid gap-2">
+          {samplePromptItems.map((item, index) => (
+            <div class="rounded-md border border-emerald-200 bg-white p-2 dark:border-emerald-900/70 dark:bg-slate-950/50">
+              <div class="mb-1 flex items-center gap-2">
+                <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-[10px] font-bold text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">
+                  {index + 1}
+                </span>
+                <span class="text-[10px] font-semibold text-slate-500 dark:text-slate-400">
+                  {item.label}
+                </span>
+              </div>
+              <code class="block whitespace-normal break-words font-mono text-[11px] font-semibold text-emerald-700 dark:text-emerald-300">
+                {item.command}
+              </code>
+              <p class="mt-1 text-[11px] leading-relaxed text-slate-600 dark:text-slate-400">
+                {item.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+        <p class="mt-2 text-[11px] leading-relaxed text-emerald-800/80 dark:text-emerald-200/80">
+          {t("commands.legend.example_note_intro")}
+          <code class="rounded border border-teal-200 bg-teal-100 px-1 py-0.5 font-mono text-[10px] font-semibold text-teal-700 dark:border-teal-800 dark:bg-teal-900/30 dark:text-teal-300">/ck:plan</code>
+          {t("commands.legend.example_note_request")}
+          <code class="rounded border border-teal-200 bg-teal-100 px-1 py-0.5 font-mono text-[10px] font-semibold text-teal-700 dark:border-teal-800 dark:bg-teal-900/30 dark:text-teal-300">--deep</code>
+          {t("commands.legend.example_note_flag")}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Weight-based token explanation -->
+  <div
+    class="mb-4 rounded-lg border border-blue-200 bg-blue-50 p-3 text-xs dark:border-blue-800 dark:bg-blue-900/20"
+  >
+    <div class="mb-1 flex items-center gap-2 font-semibold text-blue-800 dark:text-blue-200">
+      <span>⚡</span>
+      <span>{t("commands.legend.skillToken")}</span>
+    </div>
+    <p class="text-slate-700 dark:text-slate-300">
+      <strong>{t("commands.legend.skillTokenDesc")}</strong>
+      <span class="text-slate-500 dark:text-slate-400 italic ml-1"
+        >{t("commands.legend.skillTokenNote")}</span
+      >
+    </p>
+    <p class="text-slate-500 dark:text-slate-400 mt-1">
+      {t("commands.legend.weight_desc")}
+    </p>
+  </div>
+
+  <!-- Complexity tier grid -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
+    <div
+      class="flex items-center gap-2 p-2 rounded bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800"
+    >
+      <span class="text-base">⚡</span>
+      <div>
+        <div class="font-medium text-green-700 dark:text-green-400">&lt;5K</div>
+        <div class="text-[10px] text-slate-500">{t("commands.legend.context_free")}</div>
+      </div>
+    </div>
+    <div
+      class="flex items-center gap-2 p-2 rounded bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800"
+    >
+      <span class="text-base">⚡⚡</span>
+      <div>
+        <div class="font-medium text-blue-700 dark:text-blue-400">5K-20K</div>
+        <div class="text-[10px] text-slate-500">{t("commands.legend.context_light")}</div>
+      </div>
+    </div>
+    <div
+      class="flex items-center gap-2 p-2 rounded bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800"
+    >
+      <span class="text-base">⚡⚡⚡</span>
+      <div>
+        <div class="font-medium text-amber-700 dark:text-amber-400">20K-50K</div>
+        <div class="text-[10px] text-slate-500">{t("commands.legend.context_moderate")}</div>
+      </div>
+    </div>
+    <div
+      class="flex items-center gap-2 p-2 rounded bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800"
+    >
+      <span class="text-base">⚡⚡⚡⚡</span>
+      <div>
+        <div class="font-medium text-red-700 dark:text-red-400">50K-100K</div>
+        <div class="text-[10px] text-slate-500">{t("commands.legend.context_heavy")}</div>
+      </div>
+    </div>
+  </div>
+</details>

@@ -5,6 +5,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
+      "@legacy-ck/*": ["src/legacy-ck/*"],
       "@/components/*": ["src/components/*"],
       "@/layouts/*": ["src/layouts/*"],
       "@/data/*": ["src/data/*"],

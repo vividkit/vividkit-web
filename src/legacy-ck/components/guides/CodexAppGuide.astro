@@ -1,0 +1,797 @@
+---
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
+import TerminalSnippet from './TerminalSnippet.astro';
+import {
+  AlertTriangle,
+  ArrowRight,
+  CheckCircle2,
+  FileCog,
+  ExternalLink,
+  KeyRound,
+  MonitorUp,
+  Network,
+  Route,
+  ShieldCheck,
+  Shuffle,
+  Stethoscope,
+} from 'lucide-astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(currentLang);
+const isVi = currentLang === 'vi';
+const t = (en: string, vi: string) => isVi ? vi : en;
+const inlineCodeClass = 'rounded-md border border-slate-200 bg-slate-100 px-1.5 py-0.5 font-mono text-[0.92em] font-semibold text-slate-800 dark:border-slate-700 dark:bg-slate-800/90 dark:text-slate-100';
+
+function escapeHtml(value: string): string {
+  return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function renderInlineCode(value: string): string {
+  return escapeHtml(value).replace(/`([^`]+)`/g, `<code class="${inlineCodeClass}">$1</code>`);
+}
+
+const ccsSetupAndQuota = t(`# Skip this step if CCS is installed and Codex accounts are already in the pool.
+npm install -g @kaitranntt/ccs
+
+# Open CCS dashboard, then add accounts in CLIProxy -> Codex -> Accounts.
+ccs config
+
+# Confirm CLIProxyAPI can see Codex account state.
+ccs cliproxy quota --provider codex`, `# Bỏ qua nếu đã cài CCS và đã có Codex accounts trong pool.
+npm install -g @kaitranntt/ccs
+
+# Mở dashboard CCS, rồi thêm account ở CLIProxy -> Codex -> Accounts.
+ccs config
+
+# Kiểm tra CLIProxyAPI thấy được trạng thái Codex account.
+ccs cliproxy quota --provider codex`);
+
+const cliproxyConfig = t(`model = "gpt-5.5"
+# Optional for custom providers/proxies when Codex cannot infer model metadata.
+# Omit this when falling back to native OpenAI/OAuth; Codex auto-detects there.
+model_context_window = 272000
+model_provider = "cliproxy"
+
+[model_providers.cliproxy]
+name = "CLIProxy"
+base_url = "http://127.0.0.1:8317/api/provider/codex"
+wire_api = "responses"
+
+[model_providers.cliproxy.auth]
+# Created in step 3
+# If your Codex build does not expand $HOME here, replace it with the output of: echo "$HOME"
+command = "$HOME/.codex/bin/cliproxy-token"
+timeout_ms = 5000
+refresh_interval_ms = 300000`, `model = "gpt-5.5"
+# Tùy chọn cho custom provider/proxy khi Codex không tự suy ra metadata model.
+# Bỏ dòng này khi fallback về OpenAI/OAuth native; Codex sẽ tự detect.
+model_context_window = 272000
+model_provider = "cliproxy"
+
+[model_providers.cliproxy]
+name = "CLIProxy"
+base_url = "http://127.0.0.1:8317/api/provider/codex"
+wire_api = "responses"
+
+[model_providers.cliproxy.auth]
+# Tạo ở bước 3
+# Nếu bản Codex của bạn không mở rộng $HOME ở đây, thay bằng kết quả của: echo "$HOME"
+command = "$HOME/.codex/bin/cliproxy-token"
+timeout_ms = 5000
+refresh_interval_ms = 300000`);
+
+const cliproxyEnvConfig = `model_provider = "cliproxy"
+
+[model_providers.cliproxy]
+name = "CLIProxy"
+base_url = "http://127.0.0.1:8317/api/provider/codex"
+env_key = "CLIPROXY_API_KEY"
+wire_api = "responses"`;
+
+const keychainSave = `security add-generic-password \\
+  -a "$USER" \\
+  -s CLIPROXY_API_KEY \\
+  -w "$CLIPROXY_API_KEY" \\
+  -U`;
+
+const authHelper = `#!/bin/zsh
+set -euo pipefail
+
+service="CLIPROXY_API_KEY"
+account="\${USER:-$(id -un)}"
+
+token="$(security find-generic-password -a "$account" -s "$service" -w 2>/dev/null || true)"
+
+if [[ -z "$token" ]]; then
+  token="$(security find-generic-password -s "$service" -w 2>/dev/null || true)"
+fi
+
+if [[ -z "$token" ]]; then
+  print -u2 "Missing Keychain item: service=$service account=$account"
+  exit 1
+fi
+
+printf '%s\\n' "$token"
+`;
+
+const authHelperCreateFile = `mkdir -p "$HOME/.codex/bin"
+touch "$HOME/.codex/bin/cliproxy-token"`;
+
+const authHelperPermissions = `chmod 700 "$HOME/.codex/bin/cliproxy-token"`;
+
+const finalVerify = t(`# Verify the helper can read a non-empty token from Keychain.
+test -n "$("$HOME/.codex/bin/cliproxy-token")" && echo "Keychain helper OK"
+
+# Verify the Keychain item exists. This prints metadata, not the token.
+security find-generic-password -a "$USER" -s CLIPROXY_API_KEY
+
+# Verify local CLIProxyAPI is listening on port 8317.
+lsof -nP -iTCP:8317 -sTCP:LISTEN
+
+# Verify Codex config/auth/connectivity. The important part is "0 warn | 0 fail".
+codex doctor --summary --no-color --ascii`, `# Kiểm tra helper đọc được token không rỗng từ Keychain.
+test -n "$("$HOME/.codex/bin/cliproxy-token")" && echo "Keychain helper OK"
+
+# Kiểm tra mục Keychain tồn tại. Lệnh này in thông tin mô tả, không in token.
+security find-generic-password -a "$USER" -s CLIPROXY_API_KEY
+
+# Kiểm tra CLIProxyAPI local đang mở port 8317.
+lsof -nP -iTCP:8317 -sTCP:LISTEN
+
+# Kiểm tra cấu hình, xác thực và kết nối của Codex. Quan trọng nhất là "0 warn | 0 fail".
+codex doctor --summary --no-color --ascii`);
+
+const oauthFallbackConfig = t(`# Fast fallback when CLIProxyAPI feels slow
+# Codex defaults to OpenAI when model_provider is unset.
+# Either comment out/remove the CLIProxy selector, or set the fallback explicitly:
+model_provider = "openai"
+
+# Do not set model_context_window here.
+# Native OpenAI/OAuth lets Codex auto-detect model metadata.
+
+# Leave the [model_providers.cliproxy] block unchanged.
+# Only change or remove the active model_provider line above.`, `# Fallback nhanh khi CLIProxyAPI bị chậm
+# Codex mặc định dùng OpenAI khi model_provider bị bỏ trống.
+# Comment/xóa selector CLIProxy, hoặc set explicit fallback:
+model_provider = "openai"
+
+# Không set model_context_window ở đây.
+# OpenAI/OAuth native để Codex tự detect metadata model.
+
+# Để nguyên block [model_providers.cliproxy].
+# Chỉ đổi hoặc xóa dòng model_provider active ở trên.`);
+
+const cliproxySwitchConfig = t(`# Switch back after CLIProxyAPI quota/latency looks healthy
+model_provider = "cliproxy"
+
+# Reuse the existing [model_providers.cliproxy] block and auth helper.`, `# Bật lại khi quota/độ trễ của CLIProxyAPI đã ổn
+model_provider = "cliproxy"
+
+# Dùng lại khối [model_providers.cliproxy] và auth helper đã có.`);
+
+const providerSwitchVerify = t(`codex doctor --summary --no-color --ascii
+# OK when the summary ends with "0 warn | 0 fail".
+# Then quit Codex App completely and reopen it.`, `codex doctor --summary --no-color --ascii
+# Đạt khi dòng tổng kết kết thúc bằng "0 warn | 0 fail".
+# Sau đó thoát hẳn Codex App rồi mở lại.`);
+
+const unixEnv = `# zsh/bash
+export CLIPROXY_API_KEY="ccs-internal-managed"
+
+# fish
+set -gx CLIPROXY_API_KEY ccs-internal-managed`;
+
+const macAppEnv = `launchctl setenv CLIPROXY_API_KEY ccs-internal-managed
+launchctl getenv CLIPROXY_API_KEY`;
+
+const windowsEnv = t(`# PowerShell: current session
+$env:CLIPROXY_API_KEY = "ccs-internal-managed"
+
+# Persist for new Windows sessions
+setx CLIPROXY_API_KEY "ccs-internal-managed"
+
+# Verify in a new PowerShell after restarting the app
+[Environment]::GetEnvironmentVariable("CLIPROXY_API_KEY", "User")
+codex doctor --summary --no-color --ascii`, `# PowerShell: phiên hiện tại
+$env:CLIPROXY_API_KEY = "ccs-internal-managed"
+
+# Lưu cho các phiên Windows mới
+setx CLIPROXY_API_KEY "ccs-internal-managed"
+
+# Kiểm tra trong PowerShell mới sau khi mở lại Codex App
+[Environment]::GetEnvironmentVariable("CLIPROXY_API_KEY", "User")
+codex doctor --summary --no-color --ascii`);
+
+const setupSteps = [
+  {
+    icon: Shuffle,
+    accent: 'cyan',
+    title: t('Install and add Codex accounts', 'Cài đặt và add codex accounts'),
+    body: t('Skip if CCS and Codex accounts are already set. Otherwise add accounts in `ccs config`, then check quota.', 'Skip nếu đã có CCS và Codex accounts. Nếu chưa, add account trong `ccs config`, rồi check quota.'),
+    label: 'optional · ccs + accounts',
+    code: ccsSetupAndQuota,
+  },
+  {
+    icon: ShieldCheck,
+    accent: 'amber',
+    title: t('Save the current token in Keychain', 'Lưu token hiện có vào macOS Keychain'),
+    body: t('`CLIPROXY_API_KEY` is the CLIProxyAPI gateway token. With CCS, the usual value is `ccs-internal-managed`; self-hosted proxy uses its own key.', '`CLIPROXY_API_KEY` là token vào CLIProxyAPI. Với CCS thường là `ccs-internal-managed`; self-hosted proxy dùng key riêng.'),
+    label: 'shell · keychain',
+    code: keychainSave,
+    copyMode: 'raw' as const,
+  },
+  {
+    icon: KeyRound,
+    accent: 'emerald',
+    title: t('Create the auth helper', 'Tạo auth helper'),
+    body: t('Write this helper file. Codex runs it to read the Keychain token from stdout.', 'Ghi file helper này. Codex chạy nó để đọc token Keychain qua stdout.'),
+    beforeLabel: 'shell · create file',
+    beforeCode: authHelperCreateFile,
+    label: 'file · $HOME/.codex/bin/cliproxy-token',
+    code: authHelper,
+    mode: 'plain' as const,
+    extraLabel: 'shell · chmod 700',
+    extraCode: authHelperPermissions,
+  },
+  {
+    icon: FileCog,
+    accent: 'violet',
+    title: t('Point Codex App to CLIProxyAPI', 'Trỏ Codex App về CLIProxyAPI'),
+    body: t('Set `cliproxy` as provider and use the helper as auth command. `model_context_window` is only for custom proxy metadata; omit it on the native OpenAI/OAuth fallback.', 'Set provider là `cliproxy` và dùng helper làm auth command. `model_context_window` chỉ dành cho metadata của custom proxy; bỏ khi fallback về OpenAI/OAuth native.'),
+    label: 'toml · config.toml',
+    code: cliproxyConfig,
+    mode: 'plain' as const,
+  },
+  {
+    icon: Stethoscope,
+    accent: 'emerald',
+    title: t('Verify and restart Codex App', 'Verify rồi mở lại Codex App'),
+    body: t('Check helper, Keychain, port 8317, and doctor. Reopen Codex App only when doctor shows `0 warn | 0 fail`.', 'Check helper, Keychain, port 8317 và doctor. Chỉ mở lại app khi doctor báo `0 warn | 0 fail`.'),
+    label: 'shell · verify',
+    code: finalVerify,
+  },
+];
+
+const envCards = [
+  {
+    title: t('Terminal-launched Codex only', 'Chỉ cho Codex launch từ terminal'),
+    body: t('Use only when Codex is started from zsh, bash, fish, or terminal-launched scripts while the provider still uses `env_key`.', 'Chỉ dùng khi Codex được start từ zsh, bash, fish, hoặc script terminal và provider vẫn dùng `env_key`.'),
+    label: 'shell · env',
+    code: unixEnv,
+  },
+  {
+    title: t('macOS desktop fallback', 'Fallback cho app macOS desktop'),
+    body: t('Fallback only. Use this instead of the Keychain helper only if you intentionally keep `env_key`; you may need to repeat it after reboot.', 'Chỉ là fallback. Chỉ dùng thay auth helper Keychain nếu bạn cố tình giữ `env_key`; sau reboot có thể phải chạy lại.'),
+    label: 'shell · launchctl',
+    code: macAppEnv,
+  },
+];
+
+const setupAccentMap = {
+  cyan: {
+    rail: 'from-cyan-500 to-sky-500',
+    icon: 'border-cyan-200 bg-cyan-50 text-cyan-700 dark:border-cyan-500/30 dark:bg-cyan-500/10 dark:text-cyan-200',
+    number: 'bg-cyan-600 text-white dark:bg-cyan-400 dark:text-slate-950',
+  },
+  amber: {
+    rail: 'from-amber-500 to-orange-500',
+    icon: 'border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-200',
+    number: 'bg-amber-600 text-white dark:bg-amber-400 dark:text-slate-950',
+  },
+  violet: {
+    rail: 'from-violet-500 to-fuchsia-500',
+    icon: 'border-violet-200 bg-violet-50 text-violet-700 dark:border-violet-500/30 dark:bg-violet-500/10 dark:text-violet-200',
+    number: 'bg-violet-600 text-white dark:bg-violet-400 dark:text-slate-950',
+  },
+  emerald: {
+    rail: 'from-emerald-500 to-teal-500',
+    icon: 'border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-200',
+    number: 'bg-emerald-600 text-white dark:bg-emerald-400 dark:text-slate-950',
+  },
+} as const;
+---
+
+<div class="mt-6 space-y-7">
+  <section class="relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950/75">
+    <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-cyan-400/0 via-cyan-400/70 to-emerald-400/0" aria-hidden="true"></div>
+    <div class="grid gap-0 lg:grid-cols-[minmax(0,1.06fr)_minmax(320px,0.94fr)]">
+      <div class="p-5 sm:p-7 lg:p-9">
+        <div class="flex flex-wrap items-center gap-2">
+          <div class="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-cyan-50 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-cyan-800 dark:border-cyan-500/30 dark:bg-cyan-500/10 dark:text-cyan-200">
+            <Route class="h-3.5 w-3.5" stroke-width={2.2} />
+            CLIProxyAPI
+          </div>
+          <div class="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-bold text-slate-600 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-300">
+            macOS
+          </div>
+          <div class="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-bold text-slate-600 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-300">
+            Windows
+          </div>
+        </div>
+
+        <h2 class="mt-5 max-w-4xl text-4xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-5xl">
+          {t('Make Codex App share your CCS account pool', 'Cho Codex App dùng chung account pool của CCS')}
+        </h2>
+
+        <div class="mt-5 max-w-4xl space-y-3 text-base leading-7 text-slate-600 dark:text-slate-400">
+          <p>
+            {t('By default, Codex App signs in with one OpenAI OAuth identity. That is fine until you have several ChatGPT subscription accounts and want the app to use the same shared pool you already manage in CCS.', 'Mặc định Codex App chỉ OAuth với một OpenAI account. Cách đó ổn cho một tài khoản, nhưng sẽ vướng khi bạn có nhiều subscription accounts và muốn app dùng chung pool đang quản lý trong CCS.')}
+          </p>
+          <p>
+            {t('The practical fix: keep Codex App as the interface, point its provider config at local CLIProxyAPI, and let CCS handle account rotation, quota checks, pause/resume, and failover behind the scenes.', 'Giải pháp thực tế: giữ Codex App làm giao diện, trỏ provider config về CLIProxyAPI local, rồi để CCS xử lý rotation account, quota check, pause/resume, và failover phía sau.')}
+          </p>
+        </div>
+
+        <div class="mt-7 max-w-4xl rounded-xl border border-cyan-200 bg-cyan-50/70 p-4 dark:border-cyan-500/30 dark:bg-cyan-500/10">
+          <div class="flex items-start gap-3">
+            <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-cyan-200 bg-white text-cyan-700 dark:border-cyan-500/30 dark:bg-slate-950/70 dark:text-cyan-200">
+              <Shuffle class="h-4 w-4" stroke-width={2.2} />
+            </span>
+            <div class="min-w-0">
+              <p class="text-sm font-bold text-slate-950 dark:text-white">
+                {t('After setup: Codex App stays the UI; CCS handles routing behind the scenes.', 'Sau khi setup: Codex App vẫn là UI; CCS lo routing phía sau.')}
+              </p>
+              <p class="mt-1 text-sm leading-6 text-slate-700 dark:text-slate-300">
+                {t('Setup only changes provider routing and launch environment. It does not replace the app experience.', 'Phần setup chỉ đổi provider routing và launch environment. Không thay trải nghiệm app.')}
+                <a href="#routing-setup" class="ml-1 inline-flex font-bold text-cyan-700 underline decoration-cyan-300 underline-offset-4 transition hover:text-cyan-900 dark:text-cyan-300 dark:decoration-cyan-500/60 dark:hover:text-cyan-100">
+                  {t('Jump to setup.', 'Tới setup chính.')}
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-slate-200 bg-slate-50/75 p-5 dark:border-slate-800 dark:bg-slate-900/35 sm:p-7 lg:border-l lg:border-t-0 lg:p-8">
+        <div class="grid h-full content-center gap-4">
+          <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-950/70">
+            <div class="flex items-center justify-between gap-3">
+              <div class="flex items-center gap-2">
+                <span class="h-2.5 w-2.5 rounded-full bg-rose-400"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-amber-400"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span>
+              </div>
+              <span class="rounded-full border border-slate-200 px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500 dark:border-slate-800 dark:text-slate-400">config.toml</span>
+            </div>
+            <div class="mt-4 space-y-3 font-mono text-[12px] leading-6">
+              <div class="flex items-center justify-between gap-3 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 dark:border-slate-800 dark:bg-slate-900/70">
+                <span class="text-slate-500 dark:text-slate-400">model_provider</span>
+                <span class="font-bold text-cyan-700 dark:text-cyan-300">cliproxy</span>
+              </div>
+              <div class="flex items-center justify-between gap-3 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 dark:border-slate-800 dark:bg-slate-900/70">
+                <span class="text-slate-500 dark:text-slate-400">model_context_window</span>
+                <span class="font-bold text-violet-700 dark:text-violet-300">272000</span>
+              </div>
+              <div class="flex items-center justify-between gap-3 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 dark:border-slate-800 dark:bg-slate-900/70">
+                <span class="text-slate-500 dark:text-slate-400">wire_api</span>
+                <span class="font-bold text-emerald-700 dark:text-emerald-300">responses</span>
+              </div>
+              <div class="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-slate-700 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-200">
+                127.0.0.1:8317/api/provider/codex
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm dark:border-slate-800 dark:bg-slate-950/70">
+            <div class="flex flex-col gap-2">
+              <div class="min-w-0 rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-900/70">
+                <div class="flex items-start gap-3">
+                  <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200">
+                    <MonitorUp class="h-4 w-4" stroke-width={2.2} />
+                  </span>
+                  <div class="min-w-0">
+                    <div class="text-sm font-bold leading-tight text-slate-950 dark:text-white">{t('Codex App', 'Codex App')}</div>
+                    <div class="mt-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{t('desktop UI', 'desktop UI')}</div>
+                    <p class="mt-2 text-xs leading-5 text-slate-600 dark:text-slate-400">{t('User-facing app stays unchanged.', 'App người dùng thấy vẫn giữ nguyên.')}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-center py-0.5 text-slate-400 dark:text-slate-500">
+                <ArrowRight class="h-5 w-5 rotate-90" stroke-width={2.2} />
+              </div>
+
+              <div class="min-w-0 rounded-xl border border-cyan-200 bg-cyan-50 p-3 shadow-sm dark:border-cyan-500/30 dark:bg-cyan-500/10">
+                <div class="flex items-start gap-3">
+                  <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-cyan-200 bg-white text-cyan-700 dark:border-cyan-500/30 dark:bg-slate-950 dark:text-cyan-200">
+                    <Route class="h-4 w-4" stroke-width={2.2} />
+                  </span>
+                  <div class="min-w-0">
+                    <div class="text-sm font-bold leading-tight text-slate-950 dark:text-white">CLIProxyAPI</div>
+                    <div class="mt-1 font-mono text-[11px] font-bold text-cyan-700 dark:text-cyan-300">127.0.0.1:8317</div>
+                    <p class="mt-2 text-xs leading-5 text-slate-700 dark:text-slate-300">{t('Local route that speaks Codex Responses.', 'Route local nói đúng chuẩn Codex Responses.')}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-center py-0.5 text-slate-400 dark:text-slate-500">
+                <ArrowRight class="h-5 w-5 rotate-90" stroke-width={2.2} />
+              </div>
+
+              <div class="min-w-0 rounded-xl border border-emerald-200 bg-emerald-50 p-3 dark:border-emerald-500/30 dark:bg-emerald-500/10">
+                <div class="flex items-start gap-3">
+                  <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-emerald-200 bg-white text-emerald-700 dark:border-emerald-500/30 dark:bg-slate-950 dark:text-emerald-200">
+                    <Network class="h-4 w-4" stroke-width={2.2} />
+                  </span>
+                  <div class="min-w-0">
+                    <div class="text-sm font-bold leading-tight text-slate-950 dark:text-white">{t('CCS pool', 'CCS pool')}</div>
+                    <div class="mt-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-emerald-700 dark:text-emerald-300">{t('quota + routing', 'quota + routing')}</div>
+                    <p class="mt-2 text-xs leading-5 text-slate-700 dark:text-slate-300">{t('Rotation, pause/resume, quota checks.', 'Rotation, pause/resume, quota checks.')}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="install-codex-app" class="scroll-mt-28 rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950/70">
+    <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+      <div class="max-w-4xl">
+        <p class="text-[11px] font-bold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">{t('Install', 'Cài đặt')}</p>
+        <h3 class="mt-1 text-2xl font-bold text-slate-950 dark:text-white">{t('Install Codex App from OpenAI docs', 'Cài Codex App từ docs chính thức của OpenAI')}</h3>
+        <p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
+          {t('Use the official installation page for the current macOS and Windows app paths. After the app is installed, come back here for CLIProxyAPI routing.', 'Dùng trang cài đặt chính thức cho các luồng app macOS và Windows hiện tại. Sau khi cài xong, quay lại đây để cấu hình CLIProxyAPI routing.')}
+        </p>
+      </div>
+      <a href="https://developers.openai.com/codex/app" target="_blank" rel="noopener noreferrer" class="group inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-lg border border-slate-900 bg-slate-950 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:border-slate-600 dark:hover:bg-slate-800">
+        <span>{t('Open official install docs', 'Mở official install docs')}</span>
+        <ExternalLink class="h-4 w-4" stroke-width={2.2} />
+      </a>
+    </div>
+  </section>
+
+  <section id="ccs-primer" class="scroll-mt-28 overflow-hidden rounded-xl border border-violet-200 bg-violet-50/45 shadow-sm dark:border-violet-500/30 dark:bg-violet-950/15">
+    <div class="grid gap-5 p-5 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+      <div class="flex min-w-0 items-start gap-3">
+        <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-violet-200 bg-white text-violet-700 dark:border-violet-500/30 dark:bg-slate-950/70 dark:text-violet-300">
+          <Network class="h-[18px] w-[18px]" stroke-width={2.2} />
+        </span>
+        <div class="min-w-0">
+          <p class="text-[11px] font-bold uppercase tracking-[0.16em] text-violet-700 dark:text-violet-300">{t('New to CCS?', 'Chưa biết CCS?')}</p>
+          <h3 class="mt-1 text-xl font-bold text-slate-950 dark:text-white">{t('CCS sits behind the Codex App route', 'CCS đứng phía sau route của Codex App')}</h3>
+          <p class="mt-2 max-w-4xl text-sm leading-6 text-slate-700 dark:text-slate-300">
+            {t('CCS is the routing layer for Codex account pooling: it manages CLIProxyAPI, quota checks, pause/resume, and dashboard controls. The full Codex App setup is in the next section; the CCS guide is only extra background when you need the broader CCS workflow.', 'CCS là routing layer cho Codex account pool: quản lý CLIProxyAPI, quota checks, pause/resume và dashboard controls. Phần setup Codex App đầy đủ nằm ngay bên dưới; guide CCS chỉ là background thêm khi bạn cần hiểu workflow CCS rộng hơn.')}
+          </p>
+          <div class="mt-3 grid gap-2 text-xs leading-5 text-slate-700 dark:text-slate-300 sm:grid-cols-2">
+            <div class="rounded-lg border border-violet-200 bg-white/70 p-3 dark:border-violet-500/25 dark:bg-slate-950/45">
+              <span class="font-bold text-slate-950 dark:text-white">CCS</span>
+              <span class="mt-1 block">{t('Owns account pool, routing policy, quota visibility, and dashboard controls.', 'Giữ account pool, routing policy, quota visibility, và dashboard controls.')}</span>
+            </div>
+            <div class="rounded-lg border border-violet-200 bg-white/70 p-3 dark:border-violet-500/25 dark:bg-slate-950/45">
+              <span class="font-bold text-slate-950 dark:text-white">CLIProxyAPI</span>
+              <span class="mt-1 block">{t('Exposes the local Codex Responses endpoint on port 8317.', 'Expose Codex Responses endpoint local ở port 8317.')}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a href={translatePath('/legacy/guides/ccs')} class="group inline-flex min-h-12 items-center justify-between gap-4 rounded-lg border border-violet-900 bg-violet-950 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-violet-900 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-violet-300 dark:border-violet-600 dark:bg-violet-700 dark:hover:bg-violet-600">
+        <span class="inline-flex items-center gap-2">
+          <ExternalLink class="h-4 w-4" stroke-width={2.2} />
+          {t('Open CCS guide', 'Mở guide CCS')}
+        </span>
+        <ArrowRight class="h-4 w-4 shrink-0 transition group-hover:translate-x-0.5" stroke-width={2.2} />
+      </a>
+    </div>
+  </section>
+
+  <section id="routing-setup" class="scroll-mt-28 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950/70">
+    <div class="border-b border-slate-200 p-5 dark:border-slate-800">
+      <div class="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+        <div class="max-w-4xl">
+          <p class="text-[11px] font-bold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">{t('Setup Codex App with CCS/CLIProxyAPI', 'Setup Codex App với CCS/CLIProxyAPI')}</p>
+          <h3 class="text-2xl font-bold text-slate-950 dark:text-white">{t('Make the desktop app route through the shared pool', 'Cho desktop app route qua shared pool')}</h3>
+          <p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
+            {t('Keep the roles clear: Codex App stays the desktop interface, CLIProxyAPI is the local endpoint, and CCS manages routing, account rotation, and quota visibility.', 'Vai trò nên rõ ràng: Codex App vẫn là desktop interface, CLIProxyAPI là endpoint local, còn CCS quản lý routing, account rotation và quota visibility.')}
+          </p>
+          <p
+            class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400"
+            set:html={renderInlineCode(t('For macOS desktop, follow the steps below in order. After the final verify step, quit Codex App completely and reopen it.', 'Với macOS desktop, làm tuần tự các bước bên dưới. Sau bước verify cuối, quit hẳn Codex App rồi mở lại.'))}
+          />
+        </div>
+        <div class="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-semibold text-slate-600 dark:border-slate-800 dark:bg-slate-900/45 dark:text-slate-300">
+          127.0.0.1:8317/api/provider/codex
+        </div>
+      </div>
+    </div>
+
+    <div class="grid gap-4 p-5">
+      {setupSteps.map((step, index) => {
+        const Icon = step.icon;
+        return (
+          <article class="group min-w-0 overflow-hidden rounded-xl border border-slate-200 bg-slate-50/45 shadow-sm transition hover:border-slate-300 hover:bg-white dark:border-slate-800 dark:bg-slate-900/25 dark:hover:border-slate-700 dark:hover:bg-slate-900/40">
+            <div class={`h-1 bg-gradient-to-r ${setupAccentMap[step.accent].rail}`}></div>
+            <div class="grid min-w-0 gap-4 p-4 lg:grid-cols-[minmax(240px,0.58fr)_minmax(0,1.42fr)] lg:items-start">
+              <div class="flex items-start gap-3">
+                <span class={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold ${setupAccentMap[step.accent].number}`}>{String(index + 1).padStart(2, '0')}</span>
+                <div class="min-w-0 flex-1">
+                  <div class="flex min-w-0 items-start gap-2.5">
+                    <span class={`mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md border ${setupAccentMap[step.accent].icon}`}>
+                      <Icon class="h-3.5 w-3.5" stroke-width={2.2} />
+                    </span>
+                    <div class="min-w-0">
+                      <h4 class="text-[13px] font-bold leading-5 text-slate-950 dark:text-white sm:text-sm">{step.title}</h4>
+                    </div>
+                  </div>
+                  <p class="mt-3 text-xs leading-5 text-slate-600 dark:text-slate-400" set:html={renderInlineCode(step.body)}></p>
+                </div>
+              </div>
+              <div class="grid min-w-0 gap-3">
+                {step.beforeCode && (
+                  <TerminalSnippet code={step.beforeCode} label={step.beforeLabel} compact mode={step.beforeMode || 'shell'} />
+                )}
+                <TerminalSnippet code={step.code} label={step.label} compact mode={step.mode || 'shell'} copyMode={step.copyMode} />
+                {step.extraCode && (
+                  <TerminalSnippet code={step.extraCode} label={step.extraLabel} compact mode={step.extraMode || 'shell'} />
+                )}
+              </div>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+
+  <section id="oauth-fallback-switch" class="scroll-mt-28 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950/70">
+    <div class="border-b border-slate-200 p-5 dark:border-slate-800">
+      <div class="flex min-w-0 items-start gap-3">
+        <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-cyan-200 bg-cyan-50 text-cyan-700 dark:border-cyan-500/30 dark:bg-cyan-500/10 dark:text-cyan-200">
+          <Shuffle class="h-[18px] w-[18px]" stroke-width={2.2} />
+        </span>
+        <div class="min-w-0">
+          <p class="text-[11px] font-bold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">{t('Provider switch', 'Provider switch')}</p>
+          <h3 class="mt-1 text-xl font-bold text-slate-950 dark:text-white">{t('Keep a normal OAuth fallback when CLIProxyAPI is slow', 'Giữ fallback OAuth khi CLIProxyAPI chậm')}</h3>
+          <p
+            class="mt-2 max-w-4xl text-sm leading-6 text-slate-600 dark:text-slate-400"
+            set:html={renderInlineCode(t('Do not delete the CLIProxyAPI setup. Keep the `cliproxy` provider block, then either remove/comment out the active `model_provider` line or set it explicitly to `openai`. When unset, Codex defaults to the built-in `openai` provider. `openai` uses the normal Codex/OpenAI OAuth path and does not need `model_context_window`; `cliproxy` routes through CCS/CLIProxyAPI and may need it when metadata cannot be inferred.', 'Không cần xóa setup CLIProxyAPI. Giữ nguyên provider block `cliproxy`, rồi xóa/comment dòng `model_provider` active hoặc set explicit thành `openai`. Khi bỏ trống, Codex mặc định dùng provider built-in `openai`. `openai` dùng đường Codex/OpenAI OAuth bình thường và không cần `model_context_window`; `cliproxy` route qua CCS/CLIProxyAPI và có thể cần dòng này khi không suy ra được metadata.'))}
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="grid gap-4 p-5 lg:grid-cols-2">
+      <article class="min-w-0 rounded-xl border border-cyan-200 bg-cyan-50/45 p-4 dark:border-cyan-500/30 dark:bg-cyan-950/15">
+        <div class="mb-3 flex items-start gap-3">
+          <span class="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-cyan-200 bg-white text-cyan-700 dark:border-cyan-500/30 dark:bg-slate-950/70 dark:text-cyan-300">
+            <MonitorUp class="h-4 w-4" stroke-width={2.2} />
+          </span>
+          <div class="min-w-0">
+            <h4 class="text-sm font-bold text-slate-950 dark:text-white">{t('Use normal OAuth path', 'Dùng lại OAuth bình thường')}</h4>
+            <p
+              class="mt-1 text-xs leading-5 text-slate-700 dark:text-slate-300"
+              set:html={renderInlineCode(t('Use this when CLIProxyAPI adds noticeable latency or the local proxy is unhealthy. `model_provider = "openai"` is explicit but optional; omitting `model_provider` also falls back to OpenAI. Codex App must already be signed in with ChatGPT/OpenAI OAuth.', 'Dùng khi CLIProxyAPI bị latency rõ rệt hoặc local proxy không healthy. `model_provider = "openai"` là explicit nhưng không bắt buộc; bỏ trống `model_provider` cũng fallback về OpenAI. Codex App cần đã sign in bằng ChatGPT/OpenAI OAuth.'))}
+            />
+          </div>
+        </div>
+        <TerminalSnippet code={oauthFallbackConfig} label="toml · OAuth fallback" compact mode="plain" />
+      </article>
+
+      <article class="min-w-0 rounded-xl border border-emerald-200 bg-emerald-50/45 p-4 dark:border-emerald-500/30 dark:bg-emerald-950/15">
+        <div class="mb-3 flex items-start gap-3">
+          <span class="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-emerald-200 bg-white text-emerald-700 dark:border-emerald-500/30 dark:bg-slate-950/70 dark:text-emerald-300">
+            <Route class="h-4 w-4" stroke-width={2.2} />
+          </span>
+          <div class="min-w-0">
+            <h4 class="text-sm font-bold text-slate-950 dark:text-white">{t('Switch back to CLIProxyAPI', 'Bật lại CLIProxyAPI')}</h4>
+            <p
+              class="mt-1 text-xs leading-5 text-slate-700 dark:text-slate-300"
+              set:html={renderInlineCode(t('Use this again when you need CCS account rotation, quota checks, pause/resume, or failover.', 'Dùng lại khi cần CCS account rotation, quota checks, pause/resume, hoặc failover.'))}
+            />
+          </div>
+        </div>
+        <TerminalSnippet code={cliproxySwitchConfig} label="toml · CLIProxyAPI route" compact mode="plain" />
+      </article>
+
+      <article class="min-w-0 rounded-xl border border-slate-200 bg-slate-50/45 p-4 dark:border-slate-800 dark:bg-slate-900/25 lg:col-span-2">
+        <div class="grid min-w-0 gap-4 lg:grid-cols-[minmax(220px,0.48fr)_minmax(0,1.52fr)] lg:items-start">
+          <div class="min-w-0">
+            <h4 class="text-sm font-bold text-slate-950 dark:text-white">{t('Verify after every switch', 'Verify sau mỗi lần switch')}</h4>
+            <p
+              class="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-400"
+              set:html={renderInlineCode(t('After changing or removing `model_provider`, run doctor once. Pass signal: `0 warn | 0 fail`. Then fully quit and reopen Codex App so the desktop process reloads `~/.codex/config.toml`.', 'Sau khi đổi hoặc xóa `model_provider`, chạy doctor một lần. Pass signal: `0 warn | 0 fail`. Sau đó quit hẳn và mở lại Codex App để desktop process load lại `~/.codex/config.toml`.'))}
+            />
+          </div>
+          <TerminalSnippet code={providerSwitchVerify} label="shell · verify switch" compact />
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="macos-keychain-auth-helper" class="scroll-mt-28 overflow-hidden rounded-xl border border-amber-200 bg-white shadow-sm dark:border-amber-500/30 dark:bg-slate-950/70">
+    <div class="border-b border-amber-200 bg-amber-50/55 p-5 dark:border-amber-500/25 dark:bg-amber-950/15">
+      <div class="flex min-w-0 items-start gap-3">
+        <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-amber-200 bg-white text-amber-700 dark:border-amber-500/30 dark:bg-slate-950/70 dark:text-amber-300">
+          <AlertTriangle class="h-[18px] w-[18px]" stroke-width={2.2} />
+        </span>
+        <div class="min-w-0">
+          <p class="text-[11px] font-bold uppercase tracking-[0.16em] text-amber-700 dark:text-amber-300">{t('Troubleshooting', 'Troubleshooting')}</p>
+          <h3 class="mt-1 text-xl font-bold text-slate-950 dark:text-white">{t('Missing CLIPROXY_API_KEY on macOS', 'macOS báo thiếu CLIPROXY_API_KEY')}</h3>
+          <p
+            class="mt-2 max-w-4xl text-sm leading-6 text-slate-700 dark:text-slate-300"
+            set:html={renderInlineCode(t('This is the case fixed by steps 3-5 above. If Codex App still says `Missing environment variable: CLIPROXY_API_KEY`, the active provider is probably still reading `env_key` from `~/.codex/config.toml` instead of `[model_providers.cliproxy.auth]`.', 'Đây là case được fix bằng bước 3-5 ở trên. Nếu Codex App vẫn báo `Missing environment variable: CLIPROXY_API_KEY`, thường là active provider vẫn đọc `env_key` trong `~/.codex/config.toml` thay vì `[model_providers.cliproxy.auth]`.'))}
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="grid gap-4 p-5 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+      <article class="min-w-0 rounded-xl border border-slate-200 bg-slate-50/55 p-4 dark:border-slate-800 dark:bg-slate-900/25">
+        <div class="flex items-start gap-3">
+          <span class="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-emerald-200 bg-white text-emerald-700 dark:border-emerald-500/30 dark:bg-slate-950/70 dark:text-emerald-300">
+            <ShieldCheck class="h-4 w-4" stroke-width={2.2} />
+          </span>
+          <div class="min-w-0">
+            <h4 class="text-sm font-bold text-slate-950 dark:text-white">{t('Why the setup avoids env_key', 'Vì sao setup không dùng env_key')}</h4>
+            <p class="mt-2 text-xs leading-5 text-slate-700 dark:text-slate-300">
+              {t('CLI launches may work because zsh/bash has CLIPROXY_API_KEY. Dock, Finder, Spotlight, and Login Items do not reliably inherit that shell env.', 'CLI có thể chạy vì zsh/bash có CLIPROXY_API_KEY. Dock, Finder, Spotlight, và Login Items không luôn inherit shell env đó.')}
+            </p>
+            <p
+              class="mt-2 text-xs leading-5 text-slate-700 dark:text-slate-300"
+              set:html={renderInlineCode(t('That is why the main setup uses `[model_providers.cliproxy.auth]` instead of `env_key` for macOS desktop.', 'Vì vậy setup chính dùng `[model_providers.cliproxy.auth]` thay cho `env_key` trên macOS desktop.'))}
+            />
+          </div>
+        </div>
+      </article>
+
+      <TerminalSnippet code={cliproxyEnvConfig} label="toml · env_key mode to avoid on macOS desktop app" compact mode="plain" />
+    </div>
+  </section>
+
+  <section id="plugins-auth-mode" class="scroll-mt-28 overflow-hidden rounded-xl border border-sky-200 bg-white shadow-sm dark:border-sky-500/30 dark:bg-slate-950/70">
+    <div class="border-b border-sky-200 bg-sky-50/60 p-5 dark:border-sky-500/25 dark:bg-sky-950/15">
+      <div class="flex min-w-0 items-start gap-3">
+        <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-sky-200 bg-white text-sky-700 dark:border-sky-500/30 dark:bg-slate-950/70 dark:text-sky-300">
+          <FileCog class="h-[18px] w-[18px]" stroke-width={2.2} />
+        </span>
+        <div class="min-w-0">
+          <p class="text-[11px] font-bold uppercase tracking-[0.16em] text-sky-700 dark:text-sky-300">{t('Plugin behavior', 'Plugin behavior')}</p>
+          <h3 class="mt-1 text-xl font-bold text-slate-950 dark:text-white">{t('App plugin UI and CLI plugin runtime are gated differently', 'UI Plugins của app và plugin runtime của CLI bị gate khác nhau')}</h3>
+          <p
+            class="mt-2 max-w-4xl text-sm leading-6 text-slate-700 dark:text-slate-300"
+            set:html={renderInlineCode(t('CLIProxyAPI does not automatically break plugin runtime. The catch is the Codex App Plugins UI: the bundled app disables the Plugins tab/sidebar when `authMethod !== "chatgpt"` and shows a tooltip like `Please sign in with ChatGPT to use plugins`.', 'CLIProxyAPI không tự động làm hỏng plugin runtime. Điểm cần chú ý là UI Plugins của Codex App: bundle app disable tab/sidebar Plugins khi `authMethod !== "chatgpt"` và hiện tooltip kiểu `Please sign in with ChatGPT to use plugins`.'))}
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="grid gap-4 p-5 lg:grid-cols-2">
+      <article class="min-w-0 rounded-xl border border-amber-200 bg-amber-50/55 p-4 dark:border-amber-500/30 dark:bg-amber-950/15">
+        <div class="flex items-start gap-3">
+          <span class="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-amber-200 bg-white text-amber-700 dark:border-amber-500/30 dark:bg-slate-950/70 dark:text-amber-300">
+            <MonitorUp class="h-4 w-4" stroke-width={2.2} />
+          </span>
+          <div class="min-w-0">
+            <h4 class="text-sm font-bold text-slate-950 dark:text-white">{t('Codex App UI', 'Codex App UI')}</h4>
+            <p
+              class="mt-2 text-xs leading-5 text-slate-700 dark:text-slate-300"
+              set:html={renderInlineCode(t('If routing through CLIProxyAPI makes the app fall into API-key auth mode, the Plugins browser/management UI will be disabled. To make that UI active again, Codex App must be authenticated with ChatGPT.', 'Nếu route qua CLIProxyAPI làm app rơi vào API-key auth mode, UI browse/manage Plugins sẽ bị disabled. Muốn UI này sáng lại thì Codex App phải auth bằng ChatGPT.'))}
+            />
+          </div>
+        </div>
+      </article>
+
+      <article class="min-w-0 rounded-xl border border-emerald-200 bg-emerald-50/55 p-4 dark:border-emerald-500/30 dark:bg-emerald-950/15">
+        <div class="flex items-start gap-3">
+          <span class="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-emerald-200 bg-white text-emerald-700 dark:border-emerald-500/30 dark:bg-slate-950/70 dark:text-emerald-300">
+            <CheckCircle2 class="h-4 w-4" stroke-width={2.2} />
+          </span>
+          <div class="min-w-0">
+            <h4 class="text-sm font-bold text-slate-950 dark:text-white">{t('Codex CLI / agent runtime', 'Codex CLI / agent runtime')}</h4>
+            <p
+              class="mt-2 text-xs leading-5 text-slate-700 dark:text-slate-300"
+              set:html={renderInlineCode(t('Local plugins still work when config has `[plugins."..."] enabled = true` and the marketplace/cache files exist. This is separate from the Codex App Plugins browser UI.', 'Plugin local vẫn dùng được khi config có `[plugins."..."] enabled = true` và marketplace/cache tồn tại. Phần này tách biệt với UI browse/manage Plugins trong Codex App.'))}
+            />
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950/70">
+    <div class="border-b border-slate-200 p-5 dark:border-slate-800">
+      <div class="max-w-4xl">
+        <p class="text-[11px] font-bold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">CLIPROXY_API_KEY</p>
+        <h3 class="mt-1 text-xl font-bold text-slate-950 dark:text-white">{t('Fallback: env_key mode', 'Fallback: chế độ env_key')}</h3>
+        <p
+          class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400"
+          set:html={renderInlineCode(t('Skip this section if you completed the macOS Keychain helper setup above. Use it only when you intentionally keep `env_key = "CLIPROXY_API_KEY"` or when testing the unverified Windows path.', 'Skip section này nếu đã setup macOS Keychain helper ở trên. Chỉ dùng khi bạn cố tình giữ `env_key = "CLIPROXY_API_KEY"` hoặc đang test Windows path chưa verify.'))}
+        />
+        <div class="mt-3 flex flex-wrap gap-2">
+          <a href="#routing-setup" class="inline-flex min-h-9 items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-bold text-slate-700 transition hover:border-cyan-300 hover:text-cyan-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-cyan-500/50 dark:hover:text-cyan-300">
+            {t('Back to recommended setup', 'Quay lại setup khuyến nghị')}
+            <ArrowRight class="h-3.5 w-3.5" stroke-width={2.2} />
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid gap-4 p-5">
+      <div class="min-w-0 rounded-xl border border-amber-200 bg-amber-50/60 p-4 dark:border-amber-500/30 dark:bg-amber-950/15">
+        <div class="flex items-start gap-3">
+          <span class="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-amber-200 bg-white text-amber-700 dark:border-amber-500/30 dark:bg-slate-950/70 dark:text-amber-300">
+            <AlertTriangle class="h-4 w-4" stroke-width={2.2} />
+          </span>
+          <div class="min-w-0">
+            <div class="flex flex-wrap items-center gap-2">
+              <h4 class="text-sm font-bold text-slate-950 dark:text-white">{t('Windows expected path', 'Windows expected path')}</h4>
+              <span class="inline-flex rounded-full border border-amber-300 bg-white/75 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] text-amber-800 dark:border-amber-500/40 dark:bg-slate-950/50 dark:text-amber-200">
+                {t('Unverified', 'Chưa verify')}
+              </span>
+            </div>
+            <p
+              class="mt-2 text-xs leading-5 text-slate-700 dark:text-slate-300"
+              set:html={renderInlineCode(t('Use only if the Windows Codex App provider still uses `env_key = "CLIPROXY_API_KEY"`. This has not been tested end-to-end on a Windows Codex App environment yet; verify from a new PowerShell session and a fresh Codex App launch before relying on it.', 'Chỉ dùng nếu provider của Codex App trên Windows vẫn dùng `env_key = "CLIPROXY_API_KEY"`. Luồng này chưa được test end-to-end trên Windows Codex App; cần verify bằng PowerShell session mới và mở lại Codex App trước khi dùng chính thức.'))}
+            />
+            <ul class="mt-3 grid gap-1 text-xs leading-5 text-slate-700 dark:text-slate-300 sm:grid-cols-2">
+              <li>{t('Open a new PowerShell session.', 'Mở PowerShell session mới.')}</li>
+              <li>{t('Confirm the user env value exists.', 'Confirm user env value tồn tại.')}</li>
+              <li>{t('Restart Codex App.', 'Restart Codex App.')}</li>
+              <li>{t('Run `codex doctor` before relying on it.', 'Chạy `codex doctor` trước khi dùng chính thức.')}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {envCards.map((card) => (
+        <article class="min-w-0 rounded-xl border border-slate-200 bg-slate-50/45 p-4 dark:border-slate-800 dark:bg-slate-900/25">
+          <div class="grid min-w-0 gap-4 xl:grid-cols-[minmax(220px,0.55fr)_minmax(0,1.45fr)] xl:items-start">
+            <div class="min-w-0">
+              <h4 class="text-sm font-bold text-slate-950 dark:text-white">{card.title}</h4>
+              <p class="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-400">{card.body}</p>
+            </div>
+            <TerminalSnippet code={card.code} label={card.label} compact />
+          </div>
+        </article>
+      ))}
+
+      <article class="min-w-0 rounded-xl border border-amber-200 bg-amber-50/35 p-4 dark:border-amber-500/30 dark:bg-amber-950/10">
+        <div class="grid min-w-0 gap-4 xl:grid-cols-[minmax(220px,0.55fr)_minmax(0,1.45fr)] xl:items-start">
+          <div class="min-w-0">
+            <div class="flex flex-wrap items-center gap-2">
+              <h4 class="text-sm font-bold text-slate-950 dark:text-white">{t('Windows', 'Windows')}</h4>
+              <span class="inline-flex rounded-full border border-amber-300 bg-white/75 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] text-amber-800 dark:border-amber-500/40 dark:bg-slate-950/50 dark:text-amber-200">
+                {t('Unverified', 'Chưa verify')}
+              </span>
+            </div>
+            <p class="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-400">
+              {t('PowerShell guidance for env_key mode. Treat this as expected behavior until it is tested on Windows Codex App.', 'Guidance PowerShell cho chế độ env_key. Xem đây là expected behavior cho tới khi được test trên Windows Codex App.')}
+            </p>
+          </div>
+          <TerminalSnippet code={windowsEnv} label="powershell · unverified env_key" compact />
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="overflow-hidden rounded-xl border border-cyan-200 bg-cyan-50/45 shadow-sm dark:border-cyan-500/30 dark:bg-cyan-950/15">
+    <div class="grid gap-5 p-5 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+      <div class="flex min-w-0 items-start gap-3">
+        <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-cyan-200 bg-white text-cyan-700 dark:border-cyan-500/30 dark:bg-slate-950/70 dark:text-cyan-300">
+          <MonitorUp class="h-[18px] w-[18px]" stroke-width={2.2} />
+        </span>
+        <div class="min-w-0">
+          <h3 class="text-xl font-bold text-slate-950 dark:text-white">{t('Want Remote Control to share this route too?', 'Muốn Remote Control dùng chung route này?')}</h3>
+          <p class="mt-2 max-w-4xl text-sm leading-6 text-slate-700 dark:text-slate-300">
+            {t('This page only covers Codex App request routing. Remote Control has its own Codex path because it also needs an app server, remote identity checks, and session handoff behavior.', 'Page này chỉ cover request routing của Codex App. Remote Control có luồng Codex riêng vì còn cần app server, remote identity checks, và session handoff behavior.')}
+          </p>
+        </div>
+      </div>
+
+      <a href={`${translatePath('/legacy/guides/remote-control')}#codex`} class="group inline-flex min-h-12 items-center justify-between gap-4 rounded-lg border border-slate-900 bg-slate-950 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:border-slate-600 dark:hover:bg-slate-800">
+        <span class="inline-flex items-center gap-2">
+          <Network class="h-4 w-4" stroke-width={2.2} />
+          {t('Remote Control for Codex', 'Remote Control cho Codex')}
+        </span>
+        <ArrowRight class="h-4 w-4 shrink-0 transition group-hover:translate-x-0.5" stroke-width={2.2} />
+      </a>
+    </div>
+  </section>
+</div>

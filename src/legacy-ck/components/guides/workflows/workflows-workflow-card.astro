@@ -1,0 +1,334 @@
+---
+// Reusable workflow card used in both stable and beta workflow sections
+import { useTranslations } from '@legacy-ck/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  workflow: any;
+  lang?: Language;
+}
+
+const { workflow, lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+const levelColors: Record<string, string> = {
+  Beginner: 'bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20',
+  Intermediate: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20',
+  Advanced: 'bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20'
+};
+---
+
+<div class={`bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden ${workflow.hoverBorderColor} transition-all duration-200 hover:shadow-lg hover:-translate-y-1`}>
+  <!-- Card Header -->
+  <div class={`p-6 bg-gradient-to-r ${workflow.gradientHeader} border-b border-slate-100 dark:border-slate-800`}>
+    <div class="flex items-start justify-between mb-4">
+      <div>
+        <div class="flex items-center gap-2 mb-2 flex-wrap">
+          <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">{workflow.title}</h3>
+          <span class={`px-2 py-0.5 text-xs rounded-full font-medium ${levelColors[workflow.level]}`}>{workflow.level}</span>
+          {workflow.isBeta && (
+            <span class="px-2 py-0.5 text-xs rounded-full font-medium bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 uppercase">Beta</span>
+          )}
+        </div>
+        <p class="text-sm text-slate-500 dark:text-slate-400">{t('workflows.guide.best_for')} {workflow.bestFor}</p>
+      </div>
+      <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-white/50 dark:bg-slate-800/50 border border-white/50 dark:border-slate-700/50 flex-shrink-0 shadow-sm">
+        <svg class={`w-6 h-6 ${workflow.iconColor}`} viewBox="0 0 24 24" fill="currentColor">
+          <Fragment set:html={workflow.icon} />
+        </svg>
+      </div>
+    </div>
+    <div class="flex items-center gap-4 text-xs font-medium text-slate-500 dark:text-slate-500">
+      <span class="flex items-center gap-1.5">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+        {workflow.duration}
+      </span>
+      <span class="flex items-center gap-1.5">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+          <polyline points="22 4 12 14.01 9 11.01"/>
+        </svg>
+        {workflow.stepCount} {t('workflows.guide.steps')}
+      </span>
+    </div>
+  </div>
+
+  <!-- Workflow Steps -->
+  <div class="p-6 space-y-4">
+    {workflow.steps.map((step: any, index: number) => (
+      <>
+        <div class="flex items-start gap-4">
+          <div class={`flex items-center justify-center w-8 h-8 rounded-full ${step.color} font-bold text-sm flex-shrink-0 shadow-sm`}>
+            {step.number}
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1 flex-wrap">
+              {step.hasIcon ? (
+                <svg class="w-4 h-4 text-amber-500 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+              ) : (
+                <code class="px-2 py-1 text-xs rounded bg-slate-100 dark:bg-slate-800 font-mono text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-transparent">{step.command}</code>
+              )}
+              {step.isBeta && (
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">beta</span>
+              )}
+              <span class="text-xs font-medium text-slate-500 dark:text-slate-500">{step.typeLabel}</span>
+            </div>
+            <p class="text-sm text-slate-600 dark:text-slate-400 leading-snug">{step.description}</p>
+          </div>
+        </div>
+        {index < workflow.steps.length - 1 && (
+          <div class="flex justify-center">
+            <svg class="w-5 h-5 text-slate-300 dark:text-slate-700 flow-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style={`animation-delay: ${index * 0.3}s`}>
+              <line x1="12" y1="5" x2="12" y2="19"/>
+              <polyline points="19 12 12 19 5 12"/>
+            </svg>
+          </div>
+        )}
+      </>
+    ))}
+
+    {workflow.features && (
+      <div class="mt-4 p-4 rounded-lg bg-surface-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+        <div class={`text-xs font-bold mb-3 ${workflow.iconColor} uppercase tracking-wider`}>
+          {t('workflows.guide.auto_features').replace('{command}', workflow.featureCommand || workflow.steps[0].command || '')}
+        </div>
+        <ul class="space-y-2 text-xs text-slate-600 dark:text-slate-400">
+          {workflow.features.map((feature: string) => (
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-green-500 dark:text-green-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              <span>{feature}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    {workflow.cookMappings && (
+      <div class="mt-4 p-4 rounded-lg bg-amber-500/5 border border-amber-200 dark:border-amber-500/20">
+        <div class="flex items-center gap-2 mb-3">
+          <svg class="w-4 h-4 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+          </svg>
+          <span class="text-xs font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider">/cook Migration (Legacy → Current)</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs">
+            <thead>
+              <tr class="border-b border-amber-200 dark:border-amber-500/20">
+                <th class="text-left py-1.5 px-2 font-semibold text-slate-600 dark:text-slate-400">Legacy</th>
+                <th class="text-left py-1.5 px-2 font-semibold text-slate-600 dark:text-slate-400">Current</th>
+                <th class="text-left py-1.5 px-2 font-semibold text-slate-600 dark:text-slate-400 hidden sm:table-cell">Description</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-amber-100 dark:divide-amber-500/10">
+              {workflow.cookMappings.map((mapping: { old: string; new: string; desc: string }) => (
+                <tr>
+                  <td class="py-1.5 px-2"><code class="px-1 py-0.5 rounded bg-red-100 dark:bg-red-900/30 font-mono text-red-600 dark:text-red-400 text-[10px] line-through">{mapping.old}</code></td>
+                  <td class="py-1.5 px-2"><code class="px-1 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 font-mono text-teal-600 dark:text-teal-400 text-[10px]">{mapping.new}</code></td>
+                  <td class="py-1.5 px-2 text-slate-500 hidden sm:table-cell">{mapping.desc}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    )}
+
+    {workflow.cookFlags && (
+      <div class="mt-4 p-4 rounded-lg bg-white dark:bg-slate-900/50 border border-teal-200 dark:border-teal-500/20">
+        <div class="flex items-center gap-2 mb-3">
+          <svg class="w-5 h-5 text-teal-600 dark:text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+          <span class="font-bold text-slate-900 dark:text-slate-100 text-sm">/ck:cook Flags</span>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-2">
+          {workflow.cookFlags.map((f: { flag: string; desc: string; color: string; isBeta?: boolean }) => (
+            <div class="p-2 rounded bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+              <div class="flex items-center gap-1">
+                <code class={`text-xs font-mono font-bold ${f.color === 'teal' ? 'text-teal-600 dark:text-teal-400' : f.color === 'green' ? 'text-green-600 dark:text-green-400' : f.color === 'amber' ? 'text-amber-600 dark:text-amber-400' : f.color === 'purple' ? 'text-purple-600 dark:text-purple-400' : f.color === 'orange' ? 'text-orange-600 dark:text-orange-400' : f.color === 'cyan' ? 'text-cyan-600 dark:text-cyan-400' : 'text-blue-600 dark:text-blue-400'}`}>{f.flag}</code>
+                {f.isBeta && <span class="text-[8px] px-1 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-bold uppercase leading-none">Beta</span>}
+              </div>
+              <p class="text-[10px] text-slate-500 mt-1">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+
+    {workflow.planFlags && (
+      <div class="mt-4 p-4 rounded-lg bg-white dark:bg-slate-900/50 border border-blue-200 dark:border-blue-500/20">
+        <div class="flex items-center gap-2 mb-3">
+          <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+          </svg>
+          <span class="font-bold text-slate-900 dark:text-slate-100 text-sm">/ck:plan Flags</span>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+          {workflow.planFlags.map((f: { flag: string; desc: string; color: string; isBeta?: boolean }) => (
+            <div class="p-2 rounded bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+              <div class="flex items-center gap-1">
+                <code class={`text-xs font-mono font-bold ${f.color === 'green' ? 'text-green-600 dark:text-green-400' : f.color === 'amber' ? 'text-amber-600 dark:text-amber-400' : f.color === 'purple' ? 'text-purple-600 dark:text-purple-400' : f.color === 'cyan' ? 'text-cyan-600 dark:text-cyan-400' : f.color === 'red' ? 'text-red-600 dark:text-red-400' : f.color === 'teal' ? 'text-teal-600 dark:text-teal-400' : f.color === 'orange' ? 'text-orange-600 dark:text-orange-400' : f.color === 'indigo' ? 'text-indigo-600 dark:text-indigo-400' : 'text-blue-600 dark:text-blue-400'}`}>{f.flag}</code>
+                {f.isBeta && <span class="text-[8px] px-1 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-bold uppercase leading-none">Beta</span>}
+              </div>
+              <p class="text-[10px] text-slate-500 mt-1">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+
+    {workflow.teamFlags && (
+      <div class="mt-4 p-4 rounded-lg bg-white dark:bg-slate-900/50 border border-cyan-200 dark:border-cyan-500/20">
+        <div class="flex items-center gap-2 mb-3">
+          <svg class="w-5 h-5 text-cyan-600 dark:text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          <span class="font-bold text-slate-900 dark:text-slate-100 text-sm">/ck:team Flags</span>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+          {workflow.teamFlags.map((f: { flag: string; desc: string; color: string }) => (
+            <div class="p-2 rounded bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+              <code class={`text-xs font-mono font-bold ${f.color === 'teal' ? 'text-teal-600 dark:text-teal-400' : f.color === 'green' ? 'text-green-600 dark:text-green-400' : f.color === 'amber' ? 'text-amber-600 dark:text-amber-400' : f.color === 'purple' ? 'text-purple-600 dark:text-purple-400' : f.color === 'orange' ? 'text-orange-600 dark:text-orange-400' : 'text-blue-600 dark:text-blue-400'}`}>{f.flag}</code>
+              <p class="text-[10px] text-slate-500 mt-1">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+
+    {workflow.fixFlags && (
+      <div class="mt-4 p-4 rounded-lg bg-white dark:bg-slate-900/50 border border-red-200 dark:border-red-500/20">
+        <div class="flex items-center gap-2 mb-3">
+          <svg class="w-5 h-5 text-red-600 dark:text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          <span class="font-bold text-slate-900 dark:text-slate-100 text-sm">/ck:fix Flags</span>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+          {workflow.fixFlags.map((f: { flag: string; desc: string; color: string }) => (
+            <div class="p-2 rounded bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+              <code class={`text-xs font-mono font-bold ${f.color === 'green' ? 'text-green-600 dark:text-green-400' : f.color === 'amber' ? 'text-amber-600 dark:text-amber-400' : f.color === 'purple' ? 'text-purple-600 dark:text-purple-400' : f.color === 'orange' ? 'text-orange-600 dark:text-orange-400' : 'text-blue-600 dark:text-blue-400'}`}>{f.flag}</code>
+              <p class="text-[10px] text-slate-500 mt-1">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+
+    {(workflow.xiaModeFlags || workflow.xiaSpeedFlags) && (
+      <div class="mt-4 p-4 rounded-lg bg-white dark:bg-slate-900/50 border border-emerald-200 dark:border-emerald-500/20">
+        <div class="flex items-center gap-2 mb-3">
+          <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>
+          </svg>
+          <span class="font-bold text-slate-900 dark:text-slate-100 text-sm">/ck:xia Flags</span>
+        </div>
+        <div class="space-y-4">
+          {workflow.xiaModeFlags && (
+            <div>
+              <div class="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Mode</div>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                {workflow.xiaModeFlags.map((f: { flag: string; desc: string; color: string }) => (
+                  <div class="p-2 rounded bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                    <code class={`text-xs font-mono font-bold ${f.color === 'emerald' ? 'text-emerald-600 dark:text-emerald-400' : f.color === 'green' ? 'text-green-600 dark:text-green-400' : f.color === 'amber' ? 'text-amber-600 dark:text-amber-400' : f.color === 'purple' ? 'text-purple-600 dark:text-purple-400' : f.color === 'teal' ? 'text-teal-600 dark:text-teal-400' : f.color === 'orange' ? 'text-orange-600 dark:text-orange-400' : f.color === 'cyan' ? 'text-cyan-600 dark:text-cyan-400' : f.color === 'slate' ? 'text-slate-600 dark:text-slate-400' : 'text-blue-600 dark:text-blue-400'}`}>{f.flag}</code>
+                    <p class="text-[10px] text-slate-500 mt-1">{f.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          {workflow.xiaSpeedFlags && (
+            <div>
+              <div class="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">Speed</div>
+              <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+                {workflow.xiaSpeedFlags.map((f: { flag: string; desc: string; color: string }) => (
+                  <div class="p-2 rounded bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                    <code class={`text-xs font-mono font-bold ${f.color === 'emerald' ? 'text-emerald-600 dark:text-emerald-400' : f.color === 'green' ? 'text-green-600 dark:text-green-400' : f.color === 'amber' ? 'text-amber-600 dark:text-amber-400' : f.color === 'purple' ? 'text-purple-600 dark:text-purple-400' : f.color === 'teal' ? 'text-teal-600 dark:text-teal-400' : f.color === 'orange' ? 'text-orange-600 dark:text-orange-400' : f.color === 'cyan' ? 'text-cyan-600 dark:text-cyan-400' : f.color === 'slate' ? 'text-slate-600 dark:text-slate-400' : 'text-blue-600 dark:text-blue-400'}`}>{f.flag}</code>
+                    <p class="text-[10px] text-slate-500 mt-1">{f.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    )}
+
+    {workflow.fixMappings && (
+      <div class="mt-4 p-4 rounded-lg bg-red-500/5 border border-red-200 dark:border-red-500/20">
+        <div class="flex items-center gap-2 mb-3">
+          <svg class="w-4 h-4 text-red-600 dark:text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          <span class="text-xs font-bold text-red-700 dark:text-red-400 uppercase tracking-wider">/fix Migration (Legacy → Current)</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs">
+            <thead>
+              <tr class="border-b border-red-200 dark:border-red-500/20">
+                <th class="text-left py-1.5 px-2 font-semibold text-slate-600 dark:text-slate-400">Legacy</th>
+                <th class="text-left py-1.5 px-2 font-semibold text-slate-600 dark:text-slate-400">Current</th>
+                <th class="text-left py-1.5 px-2 font-semibold text-slate-600 dark:text-slate-400 hidden sm:table-cell">Description</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-red-100 dark:divide-red-500/10">
+              {workflow.fixMappings.map((mapping: { old: string; new: string; desc: string }) => (
+                <tr>
+                  <td class="py-1.5 px-2"><code class="px-1 py-0.5 rounded bg-red-100 dark:bg-red-900/30 font-mono text-red-600 dark:text-red-400 text-[10px] line-through">{mapping.old}</code></td>
+                  <td class="py-1.5 px-2"><code class="px-1 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 font-mono text-teal-600 dark:text-teal-400 text-[10px]">{mapping.new}</code></td>
+                  <td class="py-1.5 px-2 text-slate-500 hidden sm:table-cell">{mapping.desc}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    )}
+
+    {workflow.cookVariants && (
+      <div class="mt-4 p-4 rounded-lg bg-blue-500/5 border border-blue-200 dark:border-blue-500/20">
+        <div class="flex items-center gap-2 mb-3">
+          <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+          <span class="text-xs font-bold text-blue-700 dark:text-blue-400 uppercase tracking-wider">Command Variants</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs">
+            <thead>
+              <tr class="border-b border-blue-200 dark:border-blue-500/20">
+                <th class="text-left py-1.5 px-2 font-semibold text-slate-600 dark:text-slate-400">Command</th>
+                <th class="text-left py-1.5 px-2 font-semibold text-slate-600 dark:text-slate-400">Description</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-blue-100 dark:divide-blue-500/10">
+              {workflow.cookVariants.map((variant: { command: string; desc: string }) => (
+                <tr>
+                  <td class="py-1.5 px-2"><code class="px-1 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 font-mono text-blue-600 dark:text-blue-400 text-[10px]">{variant.command}</code></td>
+                  <td class="py-1.5 px-2 text-slate-500">{variant.desc}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    )}
+  </div>
+
+  <!-- Card Footer -->
+  <div class="px-6 py-4 bg-slate-50/80 dark:bg-slate-900/50 border-t border-slate-100 dark:border-slate-800 flex items-center">
+    <div class="text-xs text-slate-500 dark:text-slate-500 flex-1">
+      {workflow.tip}
+    </div>
+  </div>
+</div>

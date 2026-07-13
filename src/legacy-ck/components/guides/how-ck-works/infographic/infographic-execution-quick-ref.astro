@@ -1,0 +1,521 @@
+---
+// Purpose-built Quick Ref layout for execution commands: /ck:cook and /ck:fix.
+// Reuses the ck-brainstorm/ck-plan visual grammar while keeping command-specific gates.
+import type { SkillInfographic, ProcessFlowStep } from '@legacy-ck/data/guides/how-ck-works';
+import type { Language } from '@/i18n';
+
+interface Props {
+  data: SkillInfographic;
+  lang: Language;
+}
+
+type Tone = {
+  rail: string;
+  chip: string;
+  label: string;
+  surface: string;
+};
+
+interface ProcessGroup {
+  label: string;
+  kicker: string;
+  steps: ProcessFlowStep[];
+  tone: Tone;
+}
+
+type ModeCard = {
+  flag: string;
+  title: string;
+  desc: string;
+  prompt: string;
+  when: string;
+  expected: string;
+  accent: string;
+};
+
+type RuleCard = {
+  title: string;
+  desc: string;
+  marker: string;
+};
+
+type SamplePrompt = {
+  label: string;
+  command: string;
+  when: string;
+  expected: string;
+  recommended?: boolean;
+};
+
+type Guardrail = {
+  thought: string;
+  reality: string;
+  accent: string;
+};
+
+const { data, lang } = Astro.props;
+const isVi = lang === 'vi';
+const isFix = data.id === 'fix';
+const commandText = data.command;
+
+const commonText = {
+  hardGate: isVi ? 'Gate bắt buộc' : 'Required Gate',
+  process: isVi ? 'Bản đồ thực thi' : 'Execution Map',
+  modes: isVi ? 'Mode nên dùng' : 'Mode Selection',
+  samplePrompt: isVi ? 'Prompt mẫu' : 'Sample Prompt',
+  useWhen: isVi ? 'Dùng khi' : 'Use when',
+  expected: isVi ? 'Kết quả' : 'Expected',
+  recommended: isVi ? 'Khuyến nghị' : 'Recommended',
+  output: isVi ? 'Artifact tạo ra' : 'Artifacts Produced',
+  stack: isVi ? 'Stack được gọi khi cần' : 'Stack Used When Needed',
+  guardrails: isVi ? 'Shortcut bị chặn' : 'Shortcuts Blocked',
+  thought: isVi ? 'Suy nghĩ' : 'Thought',
+  reality: isVi ? 'Thực tế' : 'Reality',
+  finalProof: isVi ? 'Bằng chứng để kết thúc' : 'Proof Required To Finish',
+  modePrompt: isVi ? 'Lệnh mẫu' : 'Prompt',
+};
+
+const tones: Record<string, Tone> = {
+  scout: {
+    rail: 'bg-emerald-400',
+    chip: 'bg-emerald-50 text-emerald-700 ring-emerald-200 dark:bg-emerald-950/35 dark:text-emerald-200 dark:ring-emerald-800/60',
+    label: 'text-emerald-700 dark:text-emerald-300',
+    surface: 'bg-emerald-50/55 ring-emerald-100 dark:bg-emerald-950/12 dark:ring-emerald-900/35',
+  },
+  plan: {
+    rail: 'bg-sky-400',
+    chip: 'bg-sky-50 text-sky-700 ring-sky-200 dark:bg-sky-950/35 dark:text-sky-200 dark:ring-sky-800/60',
+    label: 'text-sky-700 dark:text-sky-300',
+    surface: 'bg-sky-50/55 ring-sky-100 dark:bg-sky-950/12 dark:ring-sky-900/35',
+  },
+  build: {
+    rail: 'bg-amber-400',
+    chip: 'bg-amber-50 text-amber-800 ring-amber-200 dark:bg-amber-950/35 dark:text-amber-200 dark:ring-amber-800/60',
+    label: 'text-amber-700 dark:text-amber-300',
+    surface: 'bg-amber-50/55 ring-amber-100 dark:bg-amber-950/12 dark:ring-amber-900/35',
+  },
+  review: {
+    rail: 'bg-violet-400',
+    chip: 'bg-violet-50 text-violet-700 ring-violet-200 dark:bg-violet-950/35 dark:text-violet-200 dark:ring-violet-800/60',
+    label: 'text-violet-700 dark:text-violet-300',
+    surface: 'bg-violet-50/55 ring-violet-100 dark:bg-violet-950/12 dark:ring-violet-900/35',
+  },
+  diagnose: {
+    rail: 'bg-rose-400',
+    chip: 'bg-rose-50 text-rose-700 ring-rose-200 dark:bg-rose-950/35 dark:text-rose-200 dark:ring-rose-800/60',
+    label: 'text-rose-700 dark:text-rose-300',
+    surface: 'bg-rose-50/55 ring-rose-100 dark:bg-rose-950/12 dark:ring-rose-900/35',
+  },
+};
+
+const cook = {
+  eyebrow: isVi ? 'Tóm tắt nhanh / Lệnh triển khai' : 'Quick Ref / Implementation command',
+  context: isVi ? 'Sau /ck:plan hoặc feature brief' : 'After /ck:plan or feature brief',
+  summary: isVi
+    ? 'Dùng khi đã có plan hoặc cần biến feature brief thành code. Scout trước, chốt 5 requirement, plan-gate, implement, test, review, rồi sync plan/docs/git/journal.'
+    : 'Use it when a plan or feature brief must become working code. Scout first, lock 5 requirements, pass plan gates, implement, test, review, then sync plan/docs/git/journal.',
+  hardGateItems: isVi
+    ? [
+        { label: 'Plan review', detail: 'Không code trước plan review.' },
+        { label: 'Scout + requirements', detail: 'Scout trước mọi câu hỏi. AskUser phải chốt output, acceptance, scope, constraints, touchpoints.' },
+        { label: 'Bằng chứng hoàn tất', detail: 'Chưa xong nếu code-review + tests chưa chứng minh không side effect.' },
+      ]
+    : [
+        { label: 'Plan review', detail: 'No code before plan review.' },
+        { label: 'Scout + requirements', detail: 'Scout before questions. AskUser must lock output, acceptance, scope, constraints, and touchpoints.' },
+        { label: 'Proof before done', detail: 'Not done until code-review + tests prove no side effects.' },
+      ],
+  processDesc: isVi
+    ? 'Bốn lane: định vị intent, lập plan có bằng chứng, implement/test, rồi review + sync lại artifacts.'
+    : 'Four lanes: orient intent, create an evidence-backed plan, implement/test, then review and sync artifacts.',
+  modesDesc: isVi
+    ? 'Interactive là mặc định. Dùng flag khi cần rút ngắn research, tự duyệt, chạy song song, hoặc thực thi plan path có sẵn.'
+    : 'Interactive is the default. Use flags to skip research, auto-approve, run in parallel, or execute an existing plan path.',
+  heroFlow: isVi
+    ? ['Plan path / brief', 'Scout + reqs', 'Code + test', 'Review + sync']
+    : ['Plan path / brief', 'Scout + reqs', 'Code + test', 'Review + sync'],
+  ruleCards: isVi
+    ? [
+        { title: 'Plan-first', desc: 'Kể cả việc nhỏ: review plan trước khi code.', marker: 'bg-sky-400' },
+        { title: 'Scout-first', desc: 'Tóm tắt repo 3-6 bullet trước mọi AskUser.', marker: 'bg-emerald-400' },
+        { title: 'No side effects', desc: 'Acceptance, tests, contracts, lint/type/build đều phải sạch.', marker: 'bg-violet-400' },
+      ]
+    : [
+        { title: 'Plan-first', desc: 'Even small work needs plan review before code.', marker: 'bg-sky-400' },
+        { title: 'Scout-first', desc: 'Summarize 3-6 repo findings before any AskUser.', marker: 'bg-emerald-400' },
+        { title: 'No side effects', desc: 'Acceptance, tests, contracts, lint/type/build must stay clean.', marker: 'bg-violet-400' },
+      ],
+  groups: [
+    { label: isVi ? 'Định vị' : 'Orient', kicker: isVi ? 'Mode, scout, requirements' : 'Mode, scout, requirements', steps: data.processFlow.slice(0, 4), tone: tones.scout },
+    { label: isVi ? 'Lập plan' : 'Plan', kicker: isVi ? 'Research + plan review' : 'Research + plan review', steps: data.processFlow.slice(4, 6), tone: tones.plan },
+    { label: isVi ? 'Build' : 'Build', kicker: isVi ? 'Implement, simplify, test' : 'Implement, simplify, test', steps: data.processFlow.slice(6, 8), tone: tones.build },
+    { label: isVi ? 'Đóng' : 'Close', kicker: isVi ? 'Review, sync, journal' : 'Review, sync, journal', steps: data.processFlow.slice(8), tone: tones.review },
+  ],
+  modes: isVi
+    ? [
+        { flag: 'plan path', title: 'Code mode', desc: 'Bỏ scout/research/plan, thực thi phase files có sẵn.', prompt: '/ck:cook /abs/plans/260524-auth/plan.md', when: 'Plan đã được review hoặc được bàn giao từ /ck:plan.', expected: 'Đọc phase files, implement từng phase, test/review/finalize.', accent: 'border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-800/55 dark:bg-emerald-950/25 dark:text-emerald-200' },
+        { flag: '--fast', title: 'Fast', desc: 'Bỏ research nặng nhưng vẫn phải scout -> plan -> code.', prompt: '/ck:cook --fast Đổi copy CTA trên Pricing', when: 'Scope nhỏ, rollback dễ, dependency ít.', expected: 'Plan ngắn, user gate vẫn giữ trước code.', accent: 'border-sky-200 bg-sky-50 text-sky-800 dark:border-sky-800/55 dark:bg-sky-950/25 dark:text-sky-200' },
+        { flag: '--auto', title: 'Auto', desc: 'Tự approve work low-risk khi artifact + validator pass; high-risk vẫn dừng để user duyệt trước finalize/commit/ship.', prompt: '/ck:cook --auto Thêm cache cho endpoint stats', when: 'Bạn tin agent, risk thấp, acceptance rõ.', expected: 'Chạy liên tục các phase low-risk, vẫn test/review; score chỉ tham khảo, không tự approve.', accent: 'border-violet-200 bg-violet-50 text-violet-800 dark:border-violet-800/55 dark:bg-violet-950/25 dark:text-violet-200' },
+        { flag: '--parallel', title: 'Parallel', desc: 'Nhiều feature độc lập được chia thành lane riêng.', prompt: '/ck:cook --parallel Implement search, filters, export CSV', when: '3+ workstream có file ownership rõ.', expected: 'Multi-agent theo lane, merge qua review gates.', accent: 'border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-800/55 dark:bg-amber-950/25 dark:text-amber-200' },
+      ]
+    : [
+        { flag: 'plan path', title: 'Code mode', desc: 'Skip scout/research/plan and execute existing phase files.', prompt: '/ck:cook /abs/plans/260524-auth/plan.md', when: 'A reviewed plan was produced by /ck:plan or handed off from another session.', expected: 'Reads phase files, implements each phase, then tests/reviews/finalizes.', accent: 'border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-800/55 dark:bg-emerald-950/25 dark:text-emerald-200' },
+        { flag: '--fast', title: 'Fast', desc: 'Skip heavy research but still run scout -> plan -> code.', prompt: '/ck:cook --fast Change CTA copy in Pricing', when: 'Small scope, easy rollback, few dependencies.', expected: 'Short plan with user gates still held before code.', accent: 'border-sky-200 bg-sky-50 text-sky-800 dark:border-sky-800/55 dark:bg-sky-950/25 dark:text-sky-200' },
+        { flag: '--auto', title: 'Auto', desc: 'Auto-approve low-risk work when artifacts + validator pass; high-risk changes still stop for user approval before finalize/commit/ship.', prompt: '/ck:cook --auto Add cache to the stats endpoint', when: 'You trust the agent, risk is low, and acceptance is clear.', expected: 'Runs low-risk phases continuously while still testing and reviewing; score is advisory, never approves on its own.', accent: 'border-violet-200 bg-violet-50 text-violet-800 dark:border-violet-800/55 dark:bg-violet-950/25 dark:text-violet-200' },
+        { flag: '--parallel', title: 'Parallel', desc: 'Split independent features into separate lanes.', prompt: '/ck:cook --parallel Implement search, filters, export CSV', when: '3+ workstreams have clear file ownership.', expected: 'Multi-agent lanes merge through review gates.', accent: 'border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-800/55 dark:bg-amber-950/25 dark:text-amber-200' },
+      ],
+  prompts: isVi
+    ? [
+        { label: 'Plan path', recommended: true, command: '/ck:cook /abs/plans/260524-auth/plan.md', when: 'Đã có plan.md và phase files.', expected: 'Dùng context trong plan, không hỏi lại từ đầu.' },
+        { label: 'Feature brief', command: '/ck:cook Thêm email/password login với httpOnly session', when: 'Chưa có plan nhưng output mong muốn rõ.', expected: 'Scout -> 5 requirements -> research/plan -> implement.' },
+        { label: '--tdd', command: '/ck:cook --tdd Refactor billing calculation giữ behavior hiện tại', when: 'Refactor hoặc logic quan trọng.', expected: 'Tests cho behavior hiện tại trước, verify lại sau implement.' },
+      ]
+    : [
+        { label: 'Plan path', recommended: true, command: '/ck:cook /abs/plans/260524-auth/plan.md', when: 'A plan.md and phase files already exist.', expected: 'Uses plan context instead of rediscovering the task.' },
+        { label: 'Feature brief', command: '/ck:cook Add email/password login with httpOnly session', when: 'No plan exists, but the desired output is clear.', expected: 'Scout -> 5 requirements -> research/plan -> implement.' },
+        { label: '--tdd', command: '/ck:cook --tdd Refactor billing calculation while preserving behavior', when: 'Refactor or critical logic.', expected: 'Tests current behavior first, then verifies after implementation.' },
+      ],
+  guardrails: isVi
+    ? [
+        { thought: 'Việc này đơn giản, code luôn', reality: 'Task đơn giản vẫn có hidden contracts. Plan mất ít hơn rewrite.', accent: 'border-sky-200 bg-sky-50/70 dark:border-sky-800/50 dark:bg-sky-950/18' },
+        { thought: 'Hỏi user trước khi đọc repo', reality: 'AskUser options phải dựa trên scout findings, không hỏi chung chung.', accent: 'border-emerald-200 bg-emerald-50/70 dark:border-emerald-800/50 dark:bg-emerald-950/18' },
+        { thought: 'Tests pass là xong', reality: 'Còn phải walk touchpoints, contracts, lint/type/build và code-review.', accent: 'border-violet-200 bg-violet-50/70 dark:border-violet-800/50 dark:bg-violet-950/18' },
+      ]
+    : [
+        { thought: 'This is simple, just code it', reality: 'Simple tasks still hide contracts. Planning is cheaper than rewriting.', accent: 'border-sky-200 bg-sky-50/70 dark:border-sky-800/50 dark:bg-sky-950/18' },
+        { thought: 'Ask the user before reading the repo', reality: 'AskUser options must come from scout findings, not generic questions.', accent: 'border-emerald-200 bg-emerald-50/70 dark:border-emerald-800/50 dark:bg-emerald-950/18' },
+        { thought: 'Tests pass, done', reality: 'Touchpoints, contracts, lint/type/build, and code-review still have to clear.', accent: 'border-violet-200 bg-violet-50/70 dark:border-violet-800/50 dark:bg-violet-950/18' },
+      ],
+};
+
+const fix = {
+  eyebrow: isVi ? 'Tóm tắt nhanh / Lệnh sửa lỗi' : 'Quick Ref / Fix command',
+  context: isVi ? 'Bug, CI đỏ, regression, production issue' : 'Bug, failing CI, regression, production issue',
+  summary: isVi
+    ? 'Dùng khi có lỗi cần sửa bằng bằng chứng. Chọn mode, scout trước, diagnose root cause, sửa đúng nguyên nhân, verify/prevent, review, rồi finalize.'
+    : 'Use it when a failure needs an evidence-based repair. Pick mode, scout first, diagnose root cause, fix the cause, verify/prevent, review, then finalize.',
+  hardGateItems: isVi
+    ? [
+        { label: 'Scout + Diagnose', detail: 'Không fix trước Scout + Diagnose.' },
+        { label: 'Root cause packet', detail: 'Root cause phải có symptom, repro, expected/actual, file:line, why now, blast radius.' },
+        { label: 'Regression proof', detail: 'Mọi fix phải chứng minh symptom hết và không regression.' },
+      ]
+    : [
+        { label: 'Scout + Diagnose', detail: 'No fix before Scout + Diagnose.' },
+        { label: 'Root cause packet', detail: 'Root cause must include symptom, repro, expected/actual, file:line, why now, and blast radius.' },
+        { label: 'Regression proof', detail: 'Every fix must prove the symptom is gone with no regression.' },
+      ],
+  processDesc: isVi
+    ? 'Bốn lane: mode/scout, diagnose root cause, fix đúng điểm, rồi verify/prevent + finalize.'
+    : 'Four lanes: mode/scout, root-cause diagnosis, targeted repair, then verify/prevent + finalize.',
+  modesDesc: isVi
+    ? 'Autonomous là mặc định. Dùng review khi high-risk, quick chỉ cho lint/type nhỏ, parallel khi có nhiều issue độc lập.'
+    : 'Autonomous is the default. Use review for high risk, quick only for tiny lint/type fixes, and parallel for independent issues.',
+  heroFlow: isVi
+    ? ['Mode', 'Scout + diagnose', 'Root-cause fix', 'Verify + prevent']
+    : ['Mode', 'Scout + diagnose', 'Root-cause fix', 'Verify + prevent'],
+  ruleCards: isVi
+    ? [
+        { title: 'Root cause first', desc: 'Không sửa symptom, không probably.', marker: 'bg-rose-400' },
+        { title: 'Exact repro', desc: 'Lưu lỗi pre-fix và chạy lại đúng lệnh.', marker: 'bg-amber-400' },
+        { title: 'Prevention', desc: 'Regression test, blast-radius, guard để lỗi không lặp lại.', marker: 'bg-emerald-400' },
+      ]
+    : [
+        { title: 'Root cause first', desc: 'No symptom patches, no probably.', marker: 'bg-rose-400' },
+        { title: 'Exact repro', desc: 'Capture pre-fix failure and rerun the same path.', marker: 'bg-amber-400' },
+        { title: 'Prevention', desc: 'Regression test, blast-radius sweep, guards against recurrence.', marker: 'bg-emerald-400' },
+      ],
+  groups: [
+    { label: isVi ? 'Khởi động' : 'Start', kicker: isVi ? 'Mode + scout evidence' : 'Mode + scout evidence', steps: data.processFlow.slice(0, 2), tone: tones.scout },
+    { label: isVi ? 'Chẩn đoán' : 'Diagnose', kicker: isVi ? 'RCA có file:line' : 'RCA with file:line', steps: data.processFlow.slice(2, 4), tone: tones.diagnose },
+    { label: isVi ? 'Sửa' : 'Repair', kicker: isVi ? 'Đúng nguyên nhân gốc' : 'Address the root cause', steps: data.processFlow.slice(4, 5), tone: tones.build },
+    { label: isVi ? 'Chứng minh' : 'Prove', kicker: isVi ? 'Verify, prevent, finalize' : 'Verify, prevent, finalize', steps: data.processFlow.slice(5), tone: tones.review },
+  ],
+  modes: isVi
+    ? [
+        { flag: '--auto', title: 'Autonomous', desc: 'Tự approve chỉ khi artifact + validator pass.', prompt: '/ck:fix --auto login button returns 500', when: 'Bug rõ, risk vừa/thấp, acceptance dễ verify.', expected: 'Vẫn scout/diagnose/review đầy đủ trước finalize.', accent: 'border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-800/55 dark:bg-emerald-950/25 dark:text-emerald-200' },
+        { flag: '--review', title: 'Human review', desc: 'Dừng ở mỗi step để user duyệt.', prompt: '/ck:fix --review webhook duplicate charge', when: 'Production, billing, auth, data loss, hoặc public contract.', expected: 'Pause sau diagnosis/fix/verify với findings rõ.', accent: 'border-rose-200 bg-rose-50 text-rose-800 dark:border-rose-800/55 dark:bg-rose-950/25 dark:text-rose-200' },
+        { flag: '--quick', title: 'Quick', desc: 'Scout -> diagnose -> fix -> review nhẹ.', prompt: '/ck:fix --quick TypeScript error in pricing card', when: 'Trivial lint/type/single-file issue.', expected: 'Nhanh hơn nhưng không bỏ root-cause check.', accent: 'border-sky-200 bg-sky-50 text-sky-800 dark:border-sky-800/55 dark:bg-sky-950/25 dark:text-sky-200' },
+        { flag: '--parallel', title: 'Parallel', desc: 'Mỗi issue độc lập một fullstack-developer lane.', prompt: '/ck:fix --parallel checkout errors and dashboard chart crash', when: '2+ lỗi độc lập, touchpoints tách nhau.', expected: 'Task tree riêng, conflict được main agent surface.', accent: 'border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-800/55 dark:bg-amber-950/25 dark:text-amber-200' },
+      ]
+    : [
+        { flag: '--auto', title: 'Autonomous', desc: 'Auto-approve only when artifacts + validator pass.', prompt: '/ck:fix --auto login button returns 500', when: 'The bug is clear, risk is low/moderate, and verification is straightforward.', expected: 'Still runs scout/diagnose/review before finalize.', accent: 'border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-800/55 dark:bg-emerald-950/25 dark:text-emerald-200' },
+        { flag: '--review', title: 'Human review', desc: 'Pause at each step for user approval.', prompt: '/ck:fix --review webhook duplicate charge', when: 'Production, billing, auth, data loss, or public contract risk.', expected: 'Stops after diagnosis/fix/verify with concrete findings.', accent: 'border-rose-200 bg-rose-50 text-rose-800 dark:border-rose-800/55 dark:bg-rose-950/25 dark:text-rose-200' },
+        { flag: '--quick', title: 'Quick', desc: 'Scout -> diagnose -> fix -> lighter review.', prompt: '/ck:fix --quick TypeScript error in pricing card', when: 'Trivial lint/type/single-file issue.', expected: 'Faster cycle without skipping root-cause checks.', accent: 'border-sky-200 bg-sky-50 text-sky-800 dark:border-sky-800/55 dark:bg-sky-950/25 dark:text-sky-200' },
+        { flag: '--parallel', title: 'Parallel', desc: 'One fullstack-developer lane per independent issue.', prompt: '/ck:fix --parallel checkout errors and dashboard chart crash', when: '2+ independent failures with separate touchpoints.', expected: 'Separate task trees; main agent surfaces cross-issue conflicts.', accent: 'border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-800/55 dark:bg-amber-950/25 dark:text-amber-200' },
+      ],
+  prompts: isVi
+    ? [
+        { label: 'Standard bug', recommended: true, command: '/ck:fix Login submit trả 500 trong local dev', when: 'Cần agent tự chọn mode và scout repo.', expected: 'Mode -> Scout -> Diagnose -> Root cause fix -> Verify.' },
+        { label: 'High risk', command: '/ck:fix --review Payment webhook double-charges paid orders', when: 'Muốn dừng user gate ở mỗi step.', expected: 'Không finalize/commit trước khi user duyệt.' },
+        { label: 'CI failure', command: '/ck:fix --quick npm run build fails after latest merge', when: 'Lỗi build/type/lint có dấu hiệu nhỏ.', expected: 'Fix nhanh nhưng vẫn rerun exact failing command.' },
+      ]
+    : [
+        { label: 'Standard bug', recommended: true, command: '/ck:fix Login submit returns 500 in local dev', when: 'Let the agent choose mode and scout the repo.', expected: 'Mode -> Scout -> Diagnose -> Root-cause fix -> Verify.' },
+        { label: 'High risk', command: '/ck:fix --review Payment webhook double-charges paid orders', when: 'You want a user gate at every step.', expected: 'No finalize/commit before user approval.' },
+        { label: 'CI failure', command: '/ck:fix --quick npm run build fails after latest merge', when: 'Build/type/lint failure appears small.', expected: 'Fast repair while rerunning the exact failing command.' },
+      ],
+  guardrails: isVi
+    ? [
+        { thought: 'Tôi thấy lỗi rồi, sửa luôn', reality: 'Thấy symptom không bằng hiểu root cause. Scout + diagnose trước.', accent: 'border-rose-200 bg-rose-50/70 dark:border-rose-800/50 dark:bg-rose-950/18' },
+        { thought: 'Thử đổi X xem sao', reality: 'Random fix tạo bug mới. Phải có evidence chain.', accent: 'border-amber-200 bg-amber-50/70 dark:border-amber-800/50 dark:bg-amber-950/18' },
+        { thought: 'Fix xong, tests pass', reality: 'Phải có prevention gate để bug class không lặp lại.', accent: 'border-emerald-200 bg-emerald-50/70 dark:border-emerald-800/50 dark:bg-emerald-950/18' },
+      ]
+    : [
+        { thought: 'I can see the bug, just fix it', reality: 'Seeing symptoms is not root cause. Scout + diagnose first.', accent: 'border-rose-200 bg-rose-50/70 dark:border-rose-800/50 dark:bg-rose-950/18' },
+        { thought: 'Try changing X and see', reality: 'Random fixes create new bugs. Build an evidence chain.', accent: 'border-amber-200 bg-amber-50/70 dark:border-amber-800/50 dark:bg-amber-950/18' },
+        { thought: 'Fixed, tests pass', reality: 'The prevention gate still needs to stop this bug class from recurring.', accent: 'border-emerald-200 bg-emerald-50/70 dark:border-emerald-800/50 dark:bg-emerald-950/18' },
+      ],
+};
+
+const config = isFix ? fix : cook;
+const ruleCards = config.ruleCards as RuleCard[];
+const processGroups = config.groups as ProcessGroup[];
+const modes = config.modes as ModeCard[];
+const samplePrompts = (data.promptExamples || []).map(p => ({
+  label: isVi ? p.labelVi : p.labelEn,
+  command: p.command,
+  when: isVi ? p.whenVi : p.whenEn,
+  expected: isVi ? p.expectedVi : p.expectedEn,
+  recommended: p.recommended,
+})) as SamplePrompt[];
+const guardrails = config.guardrails as Guardrail[];
+const modeListClass = 'mt-4 space-y-3';
+const modeCardClass = 'grid gap-4 rounded-xl border p-4 lg:grid-cols-[15rem_minmax(0,1fr)] lg:items-stretch';
+const stackPreview = data.skillStack?.slice(0, 10) || [];
+const outputItems = (isVi ? data.reportOutput?.descVi : data.reportOutput?.descEn)
+  ?.split('•')
+  .map(item => item.trim())
+  .filter(Boolean) || [];
+const outputPattern = isVi ? data.reportOutput?.patternVi : data.reportOutput?.patternEn;
+const proofItems = isFix
+  ? (isVi
+      ? ['Exact repro không còn fail', 'Regression test fail trước/pass sau', 'Blast-radius sạch', 'Prevention guard', 'Journal + docs/task sync']
+      : ['Exact repro no longer fails', 'Regression test fails before/passes after', 'Blast radius is clean', 'Prevention guard in place', 'Journal + docs/task sync'])
+  : (isVi
+      ? ['Acceptance criteria đạt', 'Tests pass hoặc risk --no-test được accept', 'No public contract regression', 'Lint/type/build sạch', 'Plan/docs/git/journal synced']
+      : ['Acceptance criteria met', 'Tests pass or --no-test risk accepted', 'No public contract regression', 'Lint/type/build clean', 'Plan/docs/git/journal synced']);
+
+const renderInlineCode = (value = '') => value
+  .replace(/&/g, '&amp;')
+  .replace(/</g, '&lt;')
+  .replace(/>/g, '&gt;')
+  .replace(/`([^`]+)`/g, '<code class="rounded bg-white/80 px-1.5 py-0.5 font-mono text-[0.82em] text-amber-950 ring-1 ring-amber-200 dark:bg-amber-950/45 dark:text-amber-100 dark:ring-amber-700/60">$1</code>');
+---
+
+<div class="space-y-8">
+  <header class="relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm ring-1 ring-white/60 dark:border-white/10 dark:bg-slate-950/55 dark:ring-white/5">
+    <div class="pointer-events-none absolute inset-0 opacity-80 dark:opacity-100">
+      <div class={`absolute inset-x-0 top-0 h-px ${isFix ? 'bg-gradient-to-r from-rose-400 via-amber-300 to-emerald-400' : 'bg-gradient-to-r from-emerald-400 via-sky-300 to-violet-400'}`}></div>
+      <div class={`absolute inset-0 ${isFix ? 'bg-[linear-gradient(115deg,rgba(244,63,94,0.10),transparent_30%,rgba(245,158,11,0.08)_60%,rgba(16,185,129,0.10))] dark:bg-[linear-gradient(115deg,rgba(244,63,94,0.15),transparent_30%,rgba(245,158,11,0.10)_62%,rgba(16,185,129,0.13))]' : 'bg-[linear-gradient(115deg,rgba(16,185,129,0.10),transparent_30%,rgba(14,165,233,0.08)_60%,rgba(139,92,246,0.10))] dark:bg-[linear-gradient(115deg,rgba(16,185,129,0.16),transparent_30%,rgba(14,165,233,0.10)_62%,rgba(139,92,246,0.13))]'}`}></div>
+      <div class="absolute inset-0 bg-[linear-gradient(rgba(148,163,184,0.10)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.10)_1px,transparent_1px)] bg-[size:28px_28px] [mask-image:linear-gradient(to_bottom,black,transparent_72%)]"></div>
+    </div>
+
+    <div class="relative grid gap-0 xl:grid-cols-[minmax(0,1fr)_330px]">
+      <div class="min-w-0 p-5 sm:p-6">
+        <div class="flex flex-wrap items-center gap-2">
+          <p class={`rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wider ring-1 ${isFix ? 'bg-rose-500/10 text-rose-700 ring-rose-500/20 dark:text-rose-300' : 'bg-emerald-500/10 text-emerald-700 ring-emerald-500/20 dark:text-emerald-300'}`}>{config.eyebrow}</p>
+          <p class="rounded-full bg-white/70 px-3 py-1 text-xs font-medium text-slate-600 ring-1 ring-slate-200 dark:bg-white/[0.06] dark:text-slate-300 dark:ring-white/10">{config.context}</p>
+        </div>
+
+        <div class="mt-5">
+          <h2 class="font-mono text-3xl font-semibold leading-none text-slate-950 dark:text-white sm:text-4xl">{commandText}</h2>
+          <p class="mt-4 max-w-2xl text-sm leading-6 text-slate-650 dark:text-slate-300">{config.summary}</p>
+        </div>
+
+        <div class="mt-6 grid gap-2 sm:grid-cols-4">
+          {config.heroFlow.map((item, index) => (
+            <div class="relative rounded-xl border border-slate-200 bg-white/75 px-3 py-3 dark:border-white/10 dark:bg-white/[0.055]">
+              {index < config.heroFlow.length - 1 && <span class="absolute right-[-9px] top-1/2 z-10 hidden h-px w-4 bg-slate-300 dark:bg-white/20 sm:block"></span>}
+              <span class="font-mono text-[11px] text-slate-400">0{index + 1}</span>
+              <p class="mt-1 text-sm font-semibold text-slate-900 dark:text-white">{item}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <aside class="relative border-t border-amber-200 bg-amber-50/80 p-5 dark:border-amber-800/50 dark:bg-amber-950/25 xl:border-l xl:border-t-0">
+        <div class="flex items-center gap-2">
+          <span class="relative flex h-2 w-2">
+            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-60"></span>
+            <span class="relative inline-flex h-2 w-2 rounded-full bg-amber-500"></span>
+          </span>
+          <p class="text-xs font-semibold uppercase tracking-wider text-amber-900 dark:text-amber-200">{commonText.hardGate}</p>
+        </div>
+        <ol class="mt-3 space-y-2">
+          {(config.hardGateItems as { label: string; detail: string }[]).map((item, index) => (
+            <li class="grid grid-cols-[1.5rem_minmax(0,1fr)] gap-2.5 rounded-lg border border-amber-200/70 bg-white/65 p-2.5 ring-1 ring-amber-100/60 dark:border-amber-800/40 dark:bg-amber-950/30 dark:ring-amber-900/30">
+              <span class="flex h-6 w-6 items-center justify-center rounded-full bg-amber-500 font-mono text-[11px] font-bold text-white shadow-sm shadow-amber-500/30 dark:bg-amber-400 dark:text-amber-950">{index + 1}</span>
+              <div class="min-w-0">
+                <p class="text-[11px] font-semibold uppercase tracking-wide text-amber-900 dark:text-amber-200">{item.label}</p>
+                <p class="mt-0.5 text-xs leading-5 text-amber-950/85 dark:text-amber-100/85" set:html={renderInlineCode(item.detail)} />
+              </div>
+            </li>
+          ))}
+        </ol>
+      </aside>
+    </div>
+
+    <div class="relative grid border-t border-slate-200 bg-slate-50/80 dark:border-white/10 dark:bg-slate-950/35 sm:grid-cols-3">
+      {ruleCards.map(rule => (
+        <div class="border-b border-slate-200 p-4 last:border-b-0 dark:border-white/10 sm:border-b-0 sm:border-r sm:last:border-r-0">
+          <div class="flex items-start gap-3">
+            <span class={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${rule.marker}`}></span>
+            <div>
+              <p class="text-sm font-semibold text-slate-900 dark:text-white">{rule.title}</p>
+              <p class="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-400">{rule.desc}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </header>
+
+  <section class="rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-white/10 dark:bg-slate-950/45">
+    <div class="border-b border-slate-200 p-5 dark:border-white/10">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{commonText.process}</h3>
+      <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300">{config.processDesc}</p>
+    </div>
+    <div class="divide-y divide-slate-200 dark:divide-white/10">
+      {processGroups.map((group, groupIndex) => (
+        <div class="relative grid gap-4 p-5 lg:grid-cols-[10rem_minmax(0,1fr)]">
+          <div class="flex items-start gap-3 lg:block">
+            <span class={`mt-1 block h-10 w-1.5 shrink-0 rounded-full ${group.tone.rail} lg:h-12 lg:w-2`}></span>
+            <div class="min-w-0 lg:mt-3">
+              <span class={`rounded-full px-2.5 py-1 text-[11px] font-semibold ring-1 ${group.tone.chip}`}>0{groupIndex + 1}</span>
+              <p class={`mt-2 text-base font-semibold ${group.tone.label}`}>{group.label}</p>
+              <p class="mt-1 text-xs leading-5 text-slate-500 dark:text-slate-400">{group.kicker}</p>
+            </div>
+          </div>
+          <ol class="grid gap-3 sm:grid-cols-2">
+            {group.steps.map(step => (
+              <li class={`grid grid-cols-[2.25rem_minmax(0,1fr)] gap-3 rounded-xl p-3.5 ring-1 transition duration-200 hover:-translate-y-0.5 hover:shadow-sm ${group.tone.surface}`}>
+                <span class="flex h-9 w-9 items-center justify-center rounded-full bg-white font-mono text-xs font-semibold text-slate-700 ring-1 ring-slate-200 dark:bg-slate-950/75 dark:text-slate-200 dark:ring-white/10">{step.number}</span>
+                <span class="min-w-0">
+                  <span class="block text-sm font-semibold leading-5 text-slate-950 dark:text-white">{isVi ? step.titleVi : step.titleEn}</span>
+                  {step.descEn && <span class="mt-1 block text-xs leading-5 text-slate-600 dark:text-slate-400">{isVi ? step.descVi : step.descEn}</span>}
+                </span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="space-y-5">
+    <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-slate-950/45">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{commonText.modes}</h3>
+      <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300">{config.modesDesc}</p>
+      <div class={modeListClass}>
+        {modes.map(mode => (
+          <article class={`${modeCardClass} ${mode.accent}`}>
+            <div class="min-w-0 rounded-lg bg-white/55 p-3 ring-1 ring-black/5 dark:bg-slate-950/24 dark:ring-white/10">
+              <div class="min-w-0">
+                <code class="inline-flex max-w-full break-words rounded-lg bg-white/75 px-2.5 py-1 font-mono text-sm font-semibold ring-1 ring-black/5 dark:bg-white/10 dark:ring-white/10">{mode.flag}</code>
+                <p class="mt-2 text-sm font-semibold">{mode.title}</p>
+              </div>
+              <p class="mt-3 text-xs leading-5 opacity-85">{mode.desc}</p>
+            </div>
+            <div class="min-w-0 rounded-lg bg-white/70 p-3 ring-1 ring-black/5 dark:bg-slate-950/30 dark:ring-white/10">
+              <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{commonText.modePrompt}</p>
+              <code class="mt-1.5 block whitespace-pre-wrap break-words rounded-lg bg-slate-100 px-3 py-2 font-mono text-xs leading-5 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-slate-200 dark:ring-white/10">{mode.prompt}</code>
+              <div class="mt-3 grid gap-2 sm:grid-cols-2">
+                <p class="text-xs leading-5 text-slate-650 dark:text-slate-300"><span class="font-semibold text-slate-900 dark:text-white">{commonText.useWhen}: </span>{mode.when}</p>
+                <p class="text-xs leading-5 text-slate-650 dark:text-slate-300"><span class="font-semibold text-slate-900 dark:text-white">{commonText.expected}: </span>{mode.expected}</p>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+
+    <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-slate-950/45">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{commonText.samplePrompt}</h3>
+      <div class="mt-4 space-y-3">
+        {samplePrompts.map(prompt => (
+          <article class={`grid gap-3 rounded-xl border p-4 ring-1 lg:grid-cols-[10rem_minmax(0,1fr)] ${prompt.recommended ? 'border-emerald-200 bg-emerald-50/65 ring-emerald-100 dark:border-emerald-700/45 dark:bg-emerald-950/15 dark:ring-emerald-900/30' : 'border-slate-200 bg-slate-50/80 ring-white/70 dark:border-white/10 dark:bg-white/[0.04] dark:ring-white/5'}`}>
+            <div class="min-w-0">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="rounded-full bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-600 ring-1 ring-slate-200 dark:bg-slate-950/60 dark:text-slate-300 dark:ring-white/10">{prompt.label}</span>
+                {prompt.recommended && <span class="rounded-full bg-emerald-500 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-white shadow-sm shadow-emerald-500/20 dark:bg-emerald-400 dark:text-emerald-950">{commonText.recommended}</span>}
+              </div>
+            </div>
+            <div class="min-w-0">
+              <code class="block whitespace-pre-wrap break-words rounded-lg bg-slate-100 px-3 py-2 font-mono text-xs leading-5 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-slate-200 dark:ring-white/10">{prompt.command}</code>
+              <div class="mt-3 grid gap-3 sm:grid-cols-2">
+                <p class="text-xs leading-5 text-slate-650 dark:text-slate-300"><span class="font-semibold text-slate-900 dark:text-white">{commonText.useWhen}: </span>{prompt.when}</p>
+                <p class="text-xs leading-5 text-slate-650 dark:text-slate-300"><span class="font-semibold text-slate-900 dark:text-white">{commonText.expected}: </span>{prompt.expected}</p>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="space-y-5">
+    <article class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-white/10 dark:bg-slate-950/45">
+      <div class="border-b border-slate-200 p-5 dark:border-white/10">
+        <div class="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+          <div class="min-w-0">
+            <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{commonText.output}</h3>
+            <p class="mt-3 text-base font-semibold leading-6 text-slate-900 dark:text-white">{isVi ? data.reportOutput?.titleVi : data.reportOutput?.titleEn}</p>
+          </div>
+          {outputPattern && <code class={`block w-fit max-w-full whitespace-normal break-words rounded-xl px-4 py-2.5 font-mono text-xs leading-5 ring-1 ${isFix ? 'bg-rose-50 text-rose-800 ring-rose-200 dark:bg-rose-950/25 dark:text-rose-200 dark:ring-rose-800/45' : 'bg-emerald-50 text-emerald-800 ring-emerald-200 dark:bg-emerald-950/25 dark:text-emerald-200 dark:ring-emerald-800/45'}`}>{outputPattern}</code>}
+        </div>
+      </div>
+      <div class="grid gap-3 p-5 md:grid-cols-2">
+        {outputItems.map((item, index) => (
+          <div class="grid grid-cols-[2rem_minmax(0,1fr)] gap-3 rounded-xl border border-slate-200 bg-slate-50/75 p-3 dark:border-white/10 dark:bg-white/[0.035]">
+            <span class={`flex h-8 w-8 items-center justify-center rounded-full font-mono text-[11px] font-semibold ring-1 ${isFix ? 'bg-rose-50 text-rose-700 ring-rose-200 dark:bg-rose-950/30 dark:text-rose-200 dark:ring-rose-800/45' : 'bg-emerald-50 text-emerald-700 ring-emerald-200 dark:bg-emerald-950/30 dark:text-emerald-200 dark:ring-emerald-800/45'}`}>{index + 1}</span>
+            <p class="text-sm leading-6 text-slate-650 dark:text-slate-300">{item}</p>
+          </div>
+        ))}
+      </div>
+    </article>
+
+    <aside class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_330px]">
+      <div class="rounded-2xl border border-slate-200 bg-slate-50/80 p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.03]">
+        <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{commonText.stack}</h3>
+        <div class="mt-3 flex flex-wrap gap-2">
+          {stackPreview.map(item => (
+            <span class="rounded-full bg-white px-2.5 py-1 text-xs text-slate-700 ring-1 ring-slate-200 dark:bg-slate-950/60 dark:text-slate-300 dark:ring-white/10">{item.name}</span>
+          ))}
+        </div>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-slate-950/45">
+        <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{commonText.finalProof}</h3>
+        <ol class="mt-3 space-y-2">
+          {proofItems.map((item, index) => (
+            <li class="grid grid-cols-[1.75rem_minmax(0,1fr)] gap-2 text-xs leading-5 text-slate-600 dark:text-slate-400">
+              <span class="flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 font-mono text-[10px] font-semibold text-slate-600 ring-1 ring-slate-200 dark:bg-slate-900 dark:text-slate-300 dark:ring-white/10">{index + 1}</span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </aside>
+  </section>
+
+  <section class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-white/10 dark:bg-slate-950/45">
+    <div class="border-b border-slate-200 p-5 dark:border-white/10">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{commonText.guardrails}</h3>
+    </div>
+    <div class="divide-y divide-slate-200 dark:divide-white/10">
+      {guardrails.map((item, index) => (
+        <div class={`grid gap-4 p-4 lg:grid-cols-[3rem_minmax(0,0.9fr)_minmax(0,1.15fr)] lg:items-start ${item.accent}`}>
+          <span class="flex h-8 w-8 items-center justify-center rounded-full bg-white font-mono text-[11px] font-semibold text-slate-600 ring-1 ring-black/5 dark:bg-slate-950/65 dark:text-slate-300 dark:ring-white/10">{index + 1}</span>
+          <div class="min-w-0">
+            <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{commonText.thought}</p>
+            <p class="mt-1 text-sm font-semibold leading-5 text-slate-950 dark:text-white">{item.thought}</p>
+          </div>
+          <div class="min-w-0">
+            <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{commonText.reality}</p>
+            <p class="mt-1 text-sm leading-6 text-slate-700 dark:text-slate-300">{item.reality}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</div>

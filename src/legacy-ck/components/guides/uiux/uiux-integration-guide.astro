@@ -1,0 +1,198 @@
+---
+// UIUX Integration Guide - Magic syntax, steps, and real examples with copy functionality
+import { useTranslations } from '@legacy-ck/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+// Prompt categories with colors
+const promptCategories = [
+  { id: 'landing', color: 'indigo' },
+  { id: 'dashboard', color: 'purple' },
+  { id: 'ecommerce', color: 'pink' },
+  { id: 'portfolio', color: 'cyan' },
+  { id: 'healthcare', color: 'emerald' },
+  { id: 'fintech', color: 'amber' },
+];
+
+const colorClasses: Record<string, { bg: string; border: string; text: string; codeBg: string }> = {
+  indigo: { bg: 'bg-indigo-50 dark:bg-indigo-500/5', border: 'border-indigo-100 dark:border-indigo-500/10', text: 'text-indigo-700 dark:text-indigo-300', codeBg: 'bg-indigo-100 dark:bg-indigo-500/10' },
+  purple: { bg: 'bg-purple-50 dark:bg-purple-500/5', border: 'border-purple-100 dark:border-purple-500/10', text: 'text-purple-700 dark:text-purple-300', codeBg: 'bg-purple-100 dark:bg-purple-500/10' },
+  pink: { bg: 'bg-pink-50 dark:bg-pink-500/5', border: 'border-pink-200 dark:border-pink-500/10', text: 'text-pink-700 dark:text-pink-300', codeBg: 'bg-pink-100 dark:bg-pink-500/10' },
+  cyan: { bg: 'bg-cyan-50 dark:bg-cyan-500/5', border: 'border-cyan-100 dark:border-cyan-500/10', text: 'text-cyan-700 dark:text-cyan-300', codeBg: 'bg-cyan-100 dark:bg-cyan-500/10' },
+  emerald: { bg: 'bg-emerald-50 dark:bg-emerald-500/5', border: 'border-emerald-100 dark:border-emerald-500/10', text: 'text-emerald-700 dark:text-emerald-300', codeBg: 'bg-emerald-100 dark:bg-emerald-500/10' },
+  amber: { bg: 'bg-amber-50 dark:bg-amber-500/5', border: 'border-amber-100 dark:border-amber-500/10', text: 'text-amber-700 dark:text-amber-300', codeBg: 'bg-amber-100 dark:bg-amber-500/10' },
+};
+---
+
+<!-- ClaudeKit Integration -->
+<div class="relative overflow-hidden glass-card rounded-xl border border-indigo-200 dark:border-indigo-500/40 shadow-lg shadow-indigo-500/10 dark:shadow-indigo-500/20">
+    <div class="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative z-10 p-8">
+      <!-- Header -->
+      <div class="flex items-start gap-4 mb-6">
+        <div class="flex items-center justify-center w-14 h-14 rounded-2xl bg-indigo-100 dark:bg-indigo-500/20 flex-shrink-0 float-animation">
+          <svg class="w-8 h-8 text-indigo-600 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+          </svg>
+        </div>
+        <div class="flex-1">
+          <h2 class="text-3xl font-bold font-heading text-indigo-700 dark:text-indigo-400 mb-2">{t('uiux.guide.integration.title')}</h2>
+          <p class="text-slate-600 dark:text-slate-300 text-lg">{t('uiux.guide.integration.subtitle')}</p>
+        </div>
+      </div>
+
+      <!-- The Magic Syntax -->
+      <div class="bg-gradient-to-r from-indigo-50/80 to-purple-50/80 dark:from-indigo-500/20 dark:to-purple-500/20 rounded-xl border border-indigo-200 dark:border-indigo-500/30 p-6 mb-6">
+        <div class="flex items-center gap-3 mb-4">
+          <svg class="w-6 h-6 text-indigo-600 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+          <h3 class="text-xl font-bold font-heading text-indigo-700 dark:text-indigo-300">{t('uiux.guide.integration.magic_phrase_label')}</h3>
+        </div>
+        <div class="bg-white dark:bg-slate-950 rounded-lg p-5 border border-indigo-200 dark:border-indigo-500/20">
+          <code class="text-lg text-indigo-700 dark:text-indigo-300 font-mono block mb-2">{t('uiux.guide.integration.magic_phrase_syntax')}</code>
+          <p class="text-xs text-slate-500">{t('uiux.guide.integration.syntax_note')}</p>
+        </div>
+      </div>
+
+      <!-- Step by Step -->
+      <div class="space-y-4 mb-6">
+        <h3 class="text-lg font-bold font-heading text-purple-700 dark:text-purple-400 flex items-center gap-2">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 11 12 14 22 4"/>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+          </svg>
+          {t('uiux.guide.integration.step_title')}
+        </h3>
+
+        <div class="flex items-start gap-3">
+          <div class="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-500/20 flex items-center justify-center text-sm text-indigo-600 dark:text-indigo-400 font-bold border-2 border-indigo-200 dark:border-indigo-500/40">1</div>
+          <div class="flex-1">
+            <div class="bg-surface-100 dark:bg-slate-950 rounded-lg p-4 border border-slate-200 dark:border-slate-800">
+              <p class="text-sm text-slate-700 dark:text-slate-300 mb-2"><strong>{t('uiux.guide.step.1.title')}</strong></p>
+              <code class="px-3 py-2 rounded bg-indigo-100 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 font-mono text-sm inline-block">{t('uiux.guide.step.1.code')}</code>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3">
+          <div class="flex-shrink-0 w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-500/20 flex items-center justify-center text-sm text-purple-600 dark:text-purple-400 font-bold border-2 border-purple-200 dark:border-purple-500/40">2</div>
+          <div class="flex-1">
+            <div class="bg-surface-100 dark:bg-slate-950 rounded-lg p-4 border border-slate-200 dark:border-slate-800">
+              <p class="text-sm text-slate-700 dark:text-slate-300 mb-2"><strong>{t('uiux.guide.step.2.title')}</strong></p>
+              <p class="text-xs text-slate-500 dark:text-slate-400">{t('uiux.guide.step.2.desc')}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3">
+          <div class="flex-shrink-0 w-8 h-8 rounded-full bg-pink-100 dark:bg-pink-500/20 flex items-center justify-center text-sm text-pink-600 dark:text-pink-400 font-bold border-2 border-pink-200 dark:border-pink-500/40">3</div>
+          <div class="flex-1">
+            <div class="bg-surface-100 dark:bg-slate-950 rounded-lg p-4 border border-slate-200 dark:border-slate-800">
+              <p class="text-sm text-slate-700 dark:text-slate-300 mb-2"><strong>{t('uiux.guide.step.3.title')}</strong></p>
+              <p class="text-xs text-slate-500 dark:text-slate-400">{t('uiux.guide.step.3.desc')}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Real Examples with Copy -->
+      <div class="bg-surface-100/50 dark:bg-slate-950/50 rounded-xl border border-indigo-200 dark:border-indigo-500/20 p-6">
+          <h3 class="text-lg font-bold font-heading text-indigo-700 dark:text-indigo-300 mb-4 flex items-center gap-2">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+              {t('uiux.guide.real_prompts.title')}
+          </h3>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {promptCategories.map((cat) => (
+              <div class="group p-4 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500/30 transition-all">
+                <div class="flex items-center justify-between mb-2">
+                  <span class={`text-xs font-medium ${colorClasses[cat.color].text}`}>{t(`uiux.guide.prompt.${cat.id}.label`)}</span>
+                  <button
+                    class="copy-btn opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded hover:bg-slate-100 dark:hover:bg-slate-800"
+                    data-prompt={t(`uiux.guide.prompt.${cat.id}.text`)}
+                    title={t('uiux.guide.copy')}
+                  >
+                    <svg class="w-4 h-4 text-slate-400 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                    </svg>
+                    <svg class="w-4 h-4 text-emerald-500 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class={`${colorClasses[cat.color].bg} rounded p-3 ${colorClasses[cat.color].border} border`}>
+                  <code class={`text-xs ${colorClasses[cat.color].text} font-mono block leading-relaxed`}>
+                    {t(`uiux.guide.prompt.${cat.id}.text`)}
+                  </code>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <!-- Pro Tips -->
+          <div class="mt-6 p-5 rounded-lg bg-gradient-to-r from-cyan-50/50 to-blue-50/50 dark:from-cyan-500/10 dark:to-blue-500/10 border border-cyan-200 dark:border-cyan-500/20">
+            <div class="flex items-start gap-3">
+              <svg class="w-6 h-6 text-cyan-600 dark:text-cyan-400 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+              <div class="flex-1">
+                <h4 class="text-sm font-bold text-cyan-700 dark:text-cyan-400 mb-2">{t('uiux.guide.pro_tips.title')}</h4>
+                <ul class="space-y-1 text-xs text-slate-600 dark:text-slate-400">
+                  <li class="flex items-start gap-2">
+                    <span class="text-cyan-500 dark:text-cyan-400 mt-0.5">•</span>
+                    <span>{t('uiux.guide.pro_tips.1')}</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-cyan-500 dark:text-cyan-400 mt-0.5">•</span>
+                    <span>{t('uiux.guide.pro_tips.2')}</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-cyan-500 dark:text-cyan-400 mt-0.5">•</span>
+                    <span>{t('uiux.guide.pro_tips.3')}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+</div>
+
+<script>
+  // Copy to clipboard functionality
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const prompt = btn.getAttribute('data-prompt');
+      if (!prompt) return;
+
+      try {
+        await navigator.clipboard.writeText(prompt);
+        const copyIcon = btn.querySelector('.copy-icon');
+        const checkIcon = btn.querySelector('.check-icon');
+
+        copyIcon?.classList.add('hidden');
+        checkIcon?.classList.remove('hidden');
+
+        setTimeout(() => {
+          copyIcon?.classList.remove('hidden');
+          checkIcon?.classList.add('hidden');
+        }, 2000);
+      } catch (err) {
+        console.error('Failed to copy:', err);
+      }
+    });
+  });
+</script>

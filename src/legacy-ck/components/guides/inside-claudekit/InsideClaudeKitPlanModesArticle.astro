@@ -1,0 +1,540 @@
+---
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
+import { useTranslations } from '@legacy-ck/i18n/utils';
+import InsideClaudeKitArticleShell from './InsideClaudeKitArticleShell.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+const translatePath = useTranslatedPath(currentLang);
+
+const blogPostUrl = currentLang === 'en'
+  ? 'https://claudekit.thieunv.space/en/posts/ck-plan-deep-tdd-when-to-use'
+  : 'https://claudekit.thieunv.space/posts/ck-plan-deep-tdd-when-to-use';
+
+const copy = currentLang === 'vi'
+  ? {
+      kicker: 'Planning Systems',
+      summary: 'Không phải task nào cũng cần mode nặng. Bài này tách rõ lúc nào cần --deep, lúc nào thêm --tdd, và lúc nào nên đi đường ngắn hơn.',
+      sections: {
+        modeVsFlag: 'Mode vs Flag',
+        deep: '--deep: Khi plan cần bản đồ',
+        tdd: '--tdd: Khi sợ refactor phá behavior',
+        whyTogether: 'Vì sao --deep --tdd hay đi chung',
+        decisionMatrix: 'Decision Matrix',
+        bestPractices: 'Nên làm trước khi cook',
+        pitfalls: 'Cần tránh',
+        readMore: 'Đọc chi tiết đầy đủ',
+      },
+      modeVsFlagDesc: '/ck:plan nhận 2 loại tham số khác nhau. Hiểu sai sẽ chọn sai.',
+      modes: [
+        { name: '--fast', desc: 'Chạy nhanh, plan ngắn gọn' },
+        { name: '--hard', desc: 'Nghiên cứu kỹ hơn, phù hợp domain phức tạp' },
+        { name: '--deep', desc: 'Scout từng phase, file inventory, dependency map' },
+        { name: '--parallel', desc: 'Nhiều module độc lập, chạy song song' },
+        { name: '--two', desc: 'Phân vân 2 approach, so sánh trước khi chọn' },
+      ],
+      flags: [
+        { name: '--tdd', desc: 'Thêm tests-first vào phase file và cook flow' },
+        { name: '--no-tasks', desc: 'Không tạo task list sau plan' },
+      ],
+      modeNote: 'Mỗi lệnh chỉ dùng MỘT mode. Flag có thể compose với bất kỳ mode nào.',
+      deepSolves: '--deep giải quyết rủi ro: không biết đủ scope',
+      deepPoints: [
+        'Chạy 2-3 researcher cho high-level architecture analysis',
+        'Scout TỪNG phase: file inventory, test gap, dependency map',
+        'Red-team review + post-plan validation',
+        'Phase file bao gồm: file inventory table, test scenario matrix, dependency map, function/interface checklist',
+      ],
+      deepRule: 'Major refactor, 5+ areas, architectural debt → dùng --deep',
+      tddSolves: '--tdd giải quyết rủi ro: refactor làm lệch behavior cũ',
+      tddPoints: [
+        'Phase file thêm: test trước refactor → refactor → test bổ sung → gate cuối phase',
+        'Cook chạy theo thứ tự: viết test bảo vệ behavior cũ → refactor → compile/test gate',
+        'Không tạo agent mới, chỉ đổi cấu trúc phase file và thứ tự cook',
+        'Chi phí thấp hơn --deep nhiều',
+      ],
+      tddBestFor: 'Có giá trị nhất ở: async pattern, stateful workflow, database transaction, public API contract',
+      togetherRisks: [
+        { risk: 'Không biết đủ scope', need: 'Scout từng phase, file inventory, dependency map', option: '--deep' },
+        { risk: 'Refactor lệch behavior cũ', need: 'Test trước refactor, regression gate lúc cook', option: '--tdd' },
+      ],
+      togetherNote: 'Task rộng → --deep. Có behavior cũ phải giữ → thêm --tdd. Có cả hai → bật cả cặp.',
+      decisionRows: [
+        { situation: 'Fix nhỏ 1-2 file', cmd: '/ck:plan --fast' },
+        { situation: 'Feature mới trung bình', cmd: '/ck:plan (auto)' },
+        { situation: 'Feature phức tạp, domain lạ', cmd: '/ck:plan --hard' },
+        { situation: '3+ module độc lập, song song', cmd: '/ck:plan --parallel' },
+        { situation: 'Phân vân 2 approach cụ thể', cmd: '/ck:plan --two' },
+        { situation: 'Refactor 5+ vùng, nợ kiến trúc', cmd: '/ck:plan --deep' },
+        { situation: 'Refactor code đang chạy, sợ regression', cmd: 'Any mode + --tdd' },
+        { situation: 'Major refactor, cần giữ behavior', cmd: '/ck:plan --deep --tdd' },
+      ],
+      bestPracticesList: [
+        { title: 'Worktree sạch', desc: 'Commit/stash trước khi plan lớn, hoặc dùng /ck:worktree' },
+        { title: 'Review phase file', desc: 'Đừng cook ngay khi chưa đọc lại plan.md và các phase file' },
+        { title: 'Khai báo test command', desc: 'Repo dùng tool lạ? Khai báo luôn trong task description' },
+        { title: '/clear giữa plan và cook', desc: 'Plan context nặng → /clear → /ck:cook {path}/plan.md' },
+      ],
+      pitfallsList: [
+        { trap: 'Quên --tdd ở /ck:cook', fix: 'Cook không enforce thứ tự test-first nếu thiếu flag' },
+        { trap: '--deep cho task nhỏ', fix: 'Dưới ~5 file thì dùng --hard hoặc --fast' },
+        { trap: '--tdd cho greenfield', fix: 'Code mới không có behavior cũ để chụp test' },
+        { trap: 'Tin tuyệt đối vào phase file', fix: 'Vẫn cần review: phase sau có phụ thuộc ngầm không?' },
+        { trap: '--tdd chụp code có bug sẵn', fix: 'Khai báo known bugs hoặc tách 2 plan: fix bug → refactor' },
+        { trap: 'Ghép --deep với --parallel', fix: 'Cả hai là mode, không compose. Dùng --parallel --tdd nếu cần' },
+      ],
+      readMoreText: 'Đọc bài viết đầy đủ với case study billing module, pipeline chi tiết, template command, và phân tích cơ chế bên trong →',
+    }
+  : {
+      kicker: 'Planning Systems',
+      summary: 'Not every task needs a heavy mode. This article clarifies when to use --deep, when to add --tdd, and when a lighter approach is enough.',
+      sections: {
+        modeVsFlag: 'Mode vs Flag',
+        deep: '--deep: When the plan needs a map',
+        tdd: '--tdd: When refactoring might break behavior',
+        whyTogether: 'Why --deep --tdd often go together',
+        decisionMatrix: 'Decision Matrix',
+        bestPractices: 'Best practices before cook',
+        pitfalls: 'Pitfalls to avoid',
+        readMore: 'Read the full article',
+      },
+      modeVsFlagDesc: '/ck:plan takes 2 types of parameters. Confusing them leads to wrong choices.',
+      modes: [
+        { name: '--fast', desc: 'Quick run, concise plan' },
+        { name: '--hard', desc: 'Deeper research, fits complex domains' },
+        { name: '--deep', desc: 'Per-phase scout, file inventory, dependency map' },
+        { name: '--parallel', desc: 'Multiple independent modules, run in parallel' },
+        { name: '--two', desc: 'Compare 2 approaches before choosing' },
+      ],
+      flags: [
+        { name: '--tdd', desc: 'Adds tests-first structure to phase files and cook flow' },
+        { name: '--no-tasks', desc: 'Skip task list creation after plan' },
+      ],
+      modeNote: 'Each command uses only ONE mode. Flags can compose with any mode.',
+      deepSolves: '--deep solves the risk: not knowing enough scope',
+      deepPoints: [
+        'Runs 2-3 researchers for high-level architecture analysis',
+        'Scouts EACH phase: file inventory, test gap, dependency map',
+        'Red-team review + post-plan validation',
+        'Phase files include: file inventory table, test scenario matrix, dependency map, function/interface checklist',
+      ],
+      deepRule: 'Major refactor, 5+ areas, architectural debt → use --deep',
+      tddSolves: '--tdd solves the risk: refactor breaking existing behavior',
+      tddPoints: [
+        'Phase files add: test before refactor → refactor → additional tests → end-of-phase gate',
+        'Cook runs in order: write tests protecting current behavior → refactor → compile/test gate',
+        'Doesn\'t create new agents, only changes phase file structure and cook order',
+        'Much lower cost than --deep',
+      ],
+      tddBestFor: 'Most valuable for: async patterns, stateful workflows, database transactions, public API contracts',
+      togetherRisks: [
+        { risk: 'Not knowing enough scope', need: 'Per-phase scout, file inventory, dependency map', option: '--deep' },
+        { risk: 'Refactor breaking behavior', need: 'Test before refactor, regression gate during cook', option: '--tdd' },
+      ],
+      togetherNote: 'Wide task → --deep. Must preserve behavior → add --tdd. Both → use the pair.',
+      decisionRows: [
+        { situation: 'Small fix, 1-2 files', cmd: '/ck:plan --fast' },
+        { situation: 'Medium new feature', cmd: '/ck:plan (auto)' },
+        { situation: 'Complex feature, unfamiliar domain', cmd: '/ck:plan --hard' },
+        { situation: '3+ independent modules', cmd: '/ck:plan --parallel' },
+        { situation: 'Torn between 2 approaches', cmd: '/ck:plan --two' },
+        { situation: 'Refactor 5+ areas, arch debt', cmd: '/ck:plan --deep' },
+        { situation: 'Refactor running code, fear regression', cmd: 'Any mode + --tdd' },
+        { situation: 'Major refactor, must preserve behavior', cmd: '/ck:plan --deep --tdd' },
+      ],
+      bestPracticesList: [
+        { title: 'Clean worktree', desc: 'Commit/stash before big plans, or use /ck:worktree' },
+        { title: 'Review phase files', desc: 'Don\'t cook before reading plan.md and phase files' },
+        { title: 'Declare test commands', desc: 'Repo uses unusual tools? Declare them in the task' },
+        { title: '/clear between plan and cook', desc: 'Plan context is heavy → /clear → /ck:cook {path}/plan.md' },
+      ],
+      pitfallsList: [
+        { trap: 'Forgetting --tdd on /ck:cook', fix: 'Cook won\'t enforce test-first order without the flag' },
+        { trap: '--deep for small tasks', fix: 'Under ~5 files, use --hard or --fast instead' },
+        { trap: '--tdd for greenfield', fix: 'New code has no existing behavior to capture in tests' },
+        { trap: 'Blindly trusting phase files', fix: 'Still review: does a later phase silently depend on an earlier one?' },
+        { trap: '--tdd capturing buggy code', fix: 'Declare known bugs or split into 2 plans: fix → refactor' },
+        { trap: 'Combining --deep + --parallel', fix: 'Both are modes, can\'t compose. Use --parallel --tdd if needed' },
+      ],
+      readMoreText: 'Read the full article with billing module case study, detailed pipeline, command templates, and internal mechanism analysis →',
+    };
+---
+
+<InsideClaudeKitArticleShell
+  lang={currentLang}
+  kicker={copy.kicker}
+  title={t('guides.home.inside_claudekit.topic_1.title')}
+  summary={copy.summary}
+  slug="plan-modes"
+>
+  <!-- Section 1: Mode vs Flag -->
+  <section id="mode-vs-flag" class="rounded-2xl border border-slate-200/70 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/70">
+    <div class="mb-4 flex items-center gap-2">
+      <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900/50">
+        <svg class="h-4 w-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+        </svg>
+      </div>
+      <h2 class="text-lg font-semibold text-slate-900 dark:text-white">{copy.sections.modeVsFlag}</h2>
+    </div>
+    <p class="mb-4 text-sm text-slate-600 dark:text-slate-300">{copy.modeVsFlagDesc}</p>
+
+    <div class="grid gap-4 md:grid-cols-2">
+      <!-- Modes column -->
+      <div class="rounded-xl border border-blue-200/70 bg-gradient-to-br from-blue-50 to-cyan-50/50 p-4 dark:border-blue-800/50 dark:from-blue-950/30 dark:to-cyan-950/20">
+        <h3 class="mb-3 text-sm font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-300">
+          Modes <span class="font-normal normal-case text-blue-500 dark:text-blue-400">({currentLang === 'vi' ? 'chọn 1' : 'pick one'})</span>
+        </h3>
+        <div class="space-y-2">
+          {copy.modes.map((m) => (
+            <div class="flex items-start gap-2 rounded-lg bg-white/60 px-3 py-2 dark:bg-blue-950/40">
+              <code class="shrink-0 text-xs font-semibold text-blue-700 dark:text-blue-300">{m.name}</code>
+              <span class="text-xs text-slate-600 dark:text-slate-400">{m.desc}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <!-- Flags column -->
+      <div class="rounded-xl border border-emerald-200/70 bg-gradient-to-br from-emerald-50 to-green-50/50 p-4 dark:border-emerald-800/50 dark:from-emerald-950/30 dark:to-green-950/20">
+        <h3 class="mb-3 text-sm font-semibold uppercase tracking-wider text-emerald-700 dark:text-emerald-300">
+          Flags <span class="font-normal normal-case text-emerald-500 dark:text-emerald-400">({currentLang === 'vi' ? 'compose được' : 'composable'})</span>
+        </h3>
+        <div class="space-y-2">
+          {copy.flags.map((f) => (
+            <div class="flex items-start gap-2 rounded-lg bg-white/60 px-3 py-2 dark:bg-emerald-950/40">
+              <code class="shrink-0 text-xs font-semibold text-emerald-700 dark:text-emerald-300">{f.name}</code>
+              <span class="text-xs text-slate-600 dark:text-slate-400">{f.desc}</span>
+            </div>
+          ))}
+        </div>
+        <div class="mt-3 rounded-lg bg-emerald-100/50 px-3 py-2 dark:bg-emerald-900/30">
+          <p class="text-xs text-emerald-800 dark:text-emerald-200">{copy.modeNote}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Syntax hint -->
+    <div class="mt-4 rounded-lg bg-slate-100 p-3 font-mono text-xs text-slate-700 dark:bg-slate-800/90 dark:text-slate-200">
+      <span class="text-purple-600 dark:text-purple-400">/ck:plan</span>
+      <span class="text-slate-500 dark:text-slate-400"> [task] </span>
+      <span class="text-blue-600 dark:text-blue-400">[--fast|--hard|--deep|--parallel|--two]</span>
+      <span class="text-slate-500 dark:text-slate-400"> </span>
+      <span class="text-emerald-600 dark:text-emerald-400">[--tdd|--no-tasks]</span>
+    </div>
+  </section>
+
+  <!-- Section 2: --deep explained -->
+  <div class="grid gap-4 md:grid-cols-2">
+    <section id="deep-mode" class="rounded-2xl border-l-4 border-l-blue-500 bg-gradient-to-br from-blue-50 to-indigo-50/50 p-5 dark:from-blue-950/30 dark:to-indigo-950/20">
+      <div class="mb-3 flex items-center gap-2">
+        <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900/50">
+          <svg class="h-4 w-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+          </svg>
+        </div>
+        <h2 class="text-lg font-semibold text-slate-900 dark:text-white">{copy.sections.deep}</h2>
+      </div>
+      <p class="mb-3 text-xs font-medium text-blue-700 dark:text-blue-300">{copy.deepSolves}</p>
+      <ul class="space-y-2">
+        {copy.deepPoints.map((item) => (
+          <li class="flex gap-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
+            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-400"></span>
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+      <div class="mt-4 rounded-lg bg-blue-100/50 px-3 py-2 dark:bg-blue-900/30">
+        <p class="text-xs font-medium text-blue-800 dark:text-blue-200">{copy.deepRule}</p>
+      </div>
+    </section>
+
+    <!-- Section 3: --tdd explained -->
+    <section id="tdd-flag" class="rounded-2xl border-l-4 border-l-emerald-500 bg-gradient-to-br from-emerald-50 to-green-50/50 p-5 dark:from-emerald-950/30 dark:to-green-950/20">
+      <div class="mb-3 flex items-center gap-2">
+        <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-100 dark:bg-emerald-900/50">
+          <svg class="h-4 w-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+          </svg>
+        </div>
+        <h2 class="text-lg font-semibold text-slate-900 dark:text-white">{copy.sections.tdd}</h2>
+      </div>
+      <p class="mb-3 text-xs font-medium text-emerald-700 dark:text-emerald-300">{copy.tddSolves}</p>
+      <ul class="space-y-2">
+        {copy.tddPoints.map((item) => (
+          <li class="flex gap-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
+            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400"></span>
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+      <div class="mt-4 rounded-lg bg-emerald-100/50 px-3 py-2 dark:bg-emerald-900/30">
+        <p class="text-xs font-medium text-emerald-800 dark:text-emerald-200">{copy.tddBestFor}</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Section 4: Why they go together -->
+  <section id="why-together" class="rounded-2xl border border-amber-200/70 bg-gradient-to-br from-amber-50 to-orange-50/50 p-5 dark:border-amber-800/50 dark:from-amber-950/30 dark:to-orange-950/20">
+    <div class="mb-4 flex items-center gap-2">
+      <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-100 dark:bg-amber-900/50">
+        <svg class="h-4 w-4 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+        </svg>
+      </div>
+      <h2 class="text-lg font-semibold text-slate-900 dark:text-white">{copy.sections.whyTogether}</h2>
+    </div>
+
+    <div class="overflow-hidden rounded-xl border border-amber-200/70 dark:border-amber-800/50">
+      <table class="w-full text-left text-sm">
+        <thead class="bg-amber-100/70 dark:bg-amber-900/50">
+          <tr>
+            <th class="px-3 py-2 font-semibold text-amber-800 dark:text-amber-200">{currentLang === 'vi' ? 'Rủi ro' : 'Risk'}</th>
+            <th class="px-3 py-2 font-semibold text-amber-800 dark:text-amber-200">{currentLang === 'vi' ? 'Cần gì' : 'Needs'}</th>
+            <th class="px-3 py-2 font-semibold text-amber-800 dark:text-amber-200">Option</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-amber-200/50 bg-white/50 dark:divide-amber-800/50 dark:bg-amber-950/30">
+          {copy.togetherRisks.map((row) => (
+            <tr>
+              <td class="px-3 py-2 text-slate-600 dark:text-slate-300">{row.risk}</td>
+              <td class="px-3 py-2 text-xs text-slate-500 dark:text-slate-400">{row.need}</td>
+              <td class="px-3 py-2">
+                <code class="rounded bg-amber-100 px-1.5 py-0.5 text-xs font-semibold text-amber-800 dark:bg-amber-800/50 dark:text-amber-200">{row.option}</code>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mt-4 rounded-lg bg-amber-100/50 px-3 py-2 dark:bg-amber-900/30">
+      <p class="text-xs font-medium text-amber-800 dark:text-amber-200">{copy.togetherNote}</p>
+    </div>
+  </section>
+
+  <!-- Section 5: Decision Matrix -->
+  <section id="decision-matrix" class="rounded-2xl border border-slate-200/70 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/70">
+    <div class="mb-4 flex items-center gap-2">
+      <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-purple-100 dark:bg-purple-900/50">
+        <svg class="h-4 w-4 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+        </svg>
+      </div>
+      <h2 class="text-lg font-semibold text-slate-900 dark:text-white">{copy.sections.decisionMatrix}</h2>
+    </div>
+
+    <div class="space-y-2">
+      {copy.decisionRows.map((row, i) => {
+        const isHighlight = row.cmd.includes('--deep') || row.cmd.includes('--tdd');
+        const bgClass = isHighlight
+          ? 'bg-gradient-to-r from-blue-50 to-emerald-50/50 dark:from-blue-950/30 dark:to-emerald-950/20 border-blue-200/70 dark:border-blue-800/50'
+          : 'bg-slate-50 dark:bg-slate-800/50 border-slate-200/50 dark:border-slate-700/50';
+        return (
+          <div class={`flex flex-col gap-1 rounded-xl border p-3 sm:flex-row sm:items-center sm:justify-between ${bgClass}`}>
+            <span class="text-sm text-slate-700 dark:text-slate-300">{row.situation}</span>
+            <code class={`shrink-0 rounded-lg px-2.5 py-1 text-xs font-semibold ${
+              isHighlight
+                ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200'
+                : 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200'
+            }`}>{row.cmd}</code>
+          </div>
+        );
+      })}
+    </div>
+  </section>
+
+  <!-- Section 6: Best Practices + Pitfalls side by side -->
+  <div class="grid gap-4 md:grid-cols-2">
+    <!-- Best Practices -->
+    <section id="best-practices" class="rounded-2xl border border-emerald-200/70 bg-gradient-to-br from-emerald-50 to-green-50/50 p-5 dark:border-emerald-800/50 dark:from-emerald-950/30 dark:to-green-950/20">
+      <div class="mb-3 flex items-center gap-2">
+        <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-100 dark:bg-emerald-900/50">
+          <svg class="h-4 w-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+        </div>
+        <h2 class="text-lg font-semibold text-emerald-800 dark:text-emerald-200">{copy.sections.bestPractices}</h2>
+      </div>
+      <ul class="space-y-3">
+        {copy.bestPracticesList.map((item) => (
+          <li class="rounded-lg bg-white/60 p-2.5 dark:bg-emerald-950/40">
+            <span class="block text-sm font-semibold text-emerald-800 dark:text-emerald-200">{item.title}</span>
+            <span class="text-xs text-slate-600 dark:text-slate-400">{item.desc}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- Pitfalls -->
+    <section id="pitfalls" class="rounded-2xl border border-rose-200/70 bg-gradient-to-br from-rose-50 to-red-50/50 p-5 dark:border-rose-800/50 dark:from-rose-950/30 dark:to-red-950/20">
+      <div class="mb-3 flex items-center gap-2">
+        <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-rose-100 dark:bg-rose-900/50">
+          <svg class="h-4 w-4 text-rose-600 dark:text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+          </svg>
+        </div>
+        <h2 class="text-lg font-semibold text-rose-800 dark:text-rose-200">{copy.sections.pitfalls}</h2>
+      </div>
+      <ul class="space-y-3">
+        {copy.pitfallsList.map((item) => (
+          <li class="rounded-lg bg-white/60 p-2.5 dark:bg-rose-950/40">
+            <span class="block text-sm font-semibold text-rose-800 dark:text-rose-200">{item.trap}</span>
+            <span class="text-xs text-slate-600 dark:text-slate-400">{item.fix}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </div>
+
+  <!-- TDD Cook Flow Visual -->
+  <section id="tdd-flow" class="rounded-2xl border border-cyan-200/70 bg-gradient-to-br from-cyan-50 to-sky-50/50 p-5 dark:border-cyan-800/50 dark:from-cyan-950/30 dark:to-sky-950/20">
+    <div class="mb-4 flex items-center gap-2">
+      <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-100 dark:bg-cyan-900/50">
+        <svg class="h-4 w-4 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+        </svg>
+      </div>
+      <h2 class="text-lg font-semibold text-slate-900 dark:text-white">{currentLang === 'vi' ? 'Flow khi --tdd bật' : '--tdd Cook Flow'}</h2>
+    </div>
+
+    <div class="space-y-2">
+      <!-- Step 1 -->
+      <div class="flex items-center gap-3">
+        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald-200 text-xs font-bold text-emerald-800 dark:bg-emerald-800 dark:text-emerald-200">1</span>
+        <div class="flex-1 rounded-lg border border-emerald-200/70 bg-white/50 px-3 py-2 dark:border-emerald-800/50 dark:bg-cyan-950/30">
+          <span class="text-sm font-medium text-emerald-700 dark:text-emerald-300">{currentLang === 'vi' ? 'Viết test bảo vệ behavior hiện tại' : 'Write tests protecting current behavior'}</span>
+        </div>
+      </div>
+      <!-- Arrow -->
+      <div class="flex flex-col items-center py-0.5">
+        <div class="h-2 w-px bg-cyan-300/60 dark:bg-cyan-600/60"></div>
+        <svg class="h-3 w-3 text-cyan-400/80 dark:text-cyan-500/80" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+        </svg>
+      </div>
+      <!-- Step 2 -->
+      <div class="flex items-center gap-3">
+        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-200 text-xs font-bold text-blue-800 dark:bg-blue-800 dark:text-blue-200">2</span>
+        <div class="flex-1 rounded-lg border border-blue-200/70 bg-white/50 px-3 py-2 dark:border-blue-800/50 dark:bg-cyan-950/30">
+          <span class="text-sm font-medium text-blue-700 dark:text-blue-300">{currentLang === 'vi' ? 'Refactor code' : 'Refactor code'}</span>
+        </div>
+      </div>
+      <!-- Arrow -->
+      <div class="flex flex-col items-center py-0.5">
+        <div class="h-2 w-px bg-cyan-300/60 dark:bg-cyan-600/60"></div>
+        <svg class="h-3 w-3 text-cyan-400/80 dark:text-cyan-500/80" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+        </svg>
+      </div>
+      <!-- Step 3 -->
+      <div class="flex items-center gap-3">
+        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-amber-200 text-xs font-bold text-amber-800 dark:bg-amber-800 dark:text-amber-200">3</span>
+        <div class="flex-1 rounded-lg border border-amber-200/70 bg-white/50 px-3 py-2 dark:border-amber-800/50 dark:bg-cyan-950/30">
+          <span class="text-sm font-medium text-amber-700 dark:text-amber-300">{currentLang === 'vi' ? 'Chạy compile + test gate' : 'Run compile + test gate'}</span>
+        </div>
+      </div>
+      <!-- Arrow -->
+      <div class="flex flex-col items-center py-0.5">
+        <div class="h-2 w-px bg-emerald-300/60 dark:bg-emerald-600/60"></div>
+        <svg class="h-3 w-3 text-emerald-400/80 dark:text-emerald-500/80" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+        </svg>
+      </div>
+      <!-- Result -->
+      <div class="flex items-center gap-3">
+        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald-200 text-xs font-bold text-emerald-800 dark:bg-emerald-800 dark:text-emerald-200">&#10003;</span>
+        <div class="flex-1 rounded-lg border border-emerald-300 bg-emerald-50 px-3 py-2 dark:border-emerald-700 dark:bg-emerald-950/40">
+          <span class="text-sm font-semibold text-emerald-700 dark:text-emerald-300">{currentLang === 'vi' ? '→ Behavior cũ được bảo vệ' : '→ Existing behavior protected'}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4 rounded-lg bg-cyan-100/50 px-3 py-2 dark:bg-cyan-900/30">
+      <p class="text-xs text-cyan-800 dark:text-cyan-200">
+        <strong>Tip:</strong> {currentLang === 'vi'
+          ? 'Regression Gate cần command cụ thể (vd: go test ./...). Nếu project dùng tool lạ, khai báo trong task description.'
+          : 'Regression Gate needs specific commands (e.g. go test ./...). If your project uses unusual tools, declare them in the task description.'}
+      </p>
+    </div>
+  </section>
+
+  <!-- Template command -->
+  <section id="template" class="rounded-2xl border border-slate-200/70 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/70">
+    <div class="mb-4 flex items-center gap-2">
+      <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-violet-100 dark:bg-violet-900/50">
+        <svg class="h-4 w-4 text-violet-600 dark:text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+        </svg>
+      </div>
+      <h2 class="text-lg font-semibold text-slate-900 dark:text-white">{currentLang === 'vi' ? 'Template tổng quát' : 'General Template'}</h2>
+    </div>
+
+    <div class="rounded-lg bg-slate-100 p-4 font-mono text-[11px] leading-relaxed text-slate-700 dark:bg-slate-800/90 dark:text-slate-200">
+      <div><span class="text-purple-600 dark:text-purple-400">/ck:plan</span> <span class="text-blue-600 dark:text-blue-400">[mode]</span> <span class="text-emerald-600 dark:text-emerald-400">[--tdd]</span> <span class="text-slate-500 dark:text-slate-400">"[{currentLang === 'vi' ? 'Việc cần làm' : 'What to do'}].</span></div>
+      <div class="text-slate-500 dark:text-slate-400 pl-2">{currentLang === 'vi' ? 'Phạm vi' : 'Scope'}: [{currentLang === 'vi' ? 'module/file/stack bị đụng' : 'affected module/file/stack'}].</div>
+      <div class="text-slate-500 dark:text-slate-400 pl-2">{currentLang === 'vi' ? 'Giữ nguyên' : 'Preserve'}: [{currentLang === 'vi' ? 'API contract, behavior cũ' : 'API contract, existing behavior'}].</div>
+      <div class="text-slate-500 dark:text-slate-400 pl-2">{currentLang === 'vi' ? 'Đụng' : 'Touches'}: [{currentLang === 'vi' ? 'database, job, route, UI' : 'database, job, route, UI'}].</div>
+      <div class="text-slate-500 dark:text-slate-400 pl-2">Tooling: [{currentLang === 'vi' ? 'compile/test command cụ thể' : 'specific compile/test command'}]."</div>
+    </div>
+
+    <div class="mt-3 rounded-lg bg-violet-50 p-3 dark:bg-violet-950/30">
+      <p class="mb-1 text-xs font-semibold text-violet-700 dark:text-violet-300">{currentLang === 'vi' ? 'Lưu ý:' : 'Note:'}</p>
+      <p class="text-xs text-slate-600 dark:text-slate-400">
+        {currentLang === 'vi'
+          ? 'Nếu plan dùng --tdd, khi chạy cook cũng thêm --tdd:'
+          : 'If the plan used --tdd, add --tdd to cook as well:'}
+      </p>
+      <div class="mt-1.5 rounded bg-slate-100 px-2 py-1 font-mono text-[11px] dark:bg-slate-800/90">
+        <span class="text-purple-600 dark:text-purple-400">/ck:cook</span>
+        <span class="text-slate-500 dark:text-slate-400"> /path/to/plan.md</span>
+        <span class="text-emerald-600 dark:text-emerald-400"> --tdd</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Link to How CK Works infographic -->
+  <a
+    href={`${translatePath('/legacy/guides/how-ck-works')}#ck-plan`}
+    class="group flex items-center gap-3 rounded-xl border border-cyan-200/70 bg-gradient-to-r from-cyan-50 to-sky-50/50 px-4 py-3 transition-all duration-200 hover:-translate-y-0.5 hover:border-cyan-300 hover:shadow-sm dark:border-cyan-800/50 dark:from-cyan-950/30 dark:to-sky-950/20 dark:hover:border-cyan-700"
+  >
+    <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-cyan-100 dark:bg-cyan-900/50">
+      <svg class="h-4 w-4 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
+      </svg>
+    </div>
+    <span class="text-sm font-medium text-cyan-700 group-hover:text-cyan-900 dark:text-cyan-300 dark:group-hover:text-cyan-100">
+      {currentLang === 'vi'
+        ? 'Xem infographic /ck:plan trong How ClaudeKit Works'
+        : 'See /ck:plan infographic in How ClaudeKit Works'}
+    </span>
+    <svg class="ml-auto h-4 w-4 text-cyan-400 transition-transform group-hover:translate-x-0.5 dark:text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+    </svg>
+  </a>
+
+  <!-- Read More CTA -->
+  <section id="read-more" class="rounded-2xl border border-slate-200/70 bg-gradient-to-r from-slate-50 via-white to-blue-50/50 p-6 dark:border-slate-800 dark:from-slate-900 dark:via-slate-900 dark:to-blue-950/20">
+    <div class="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <h2 class="mb-1 text-lg font-semibold text-slate-900 dark:text-white">{copy.sections.readMore}</h2>
+        <p class="text-sm text-slate-600 dark:text-slate-300">{copy.readMoreText}</p>
+      </div>
+      <a
+        href={blogPostUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex shrink-0 items-center gap-2 rounded-full bg-blue-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+      >
+        <span>{currentLang === 'vi' ? 'Đọc bài viết đầy đủ' : 'Read full article'}</span>
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+        </svg>
+      </a>
+    </div>
+  </section>
+</InsideClaudeKitArticleShell>

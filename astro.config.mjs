@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import vercel from '@astrojs/vercel';
 import tailwindcss from '@tailwindcss/vite';
+import { fileURLToPath } from 'node:url';
 
 // https://astro.build/config
 export default defineConfig({
@@ -20,6 +21,11 @@ export default defineConfig({
   },
   vite: {
     plugins: [tailwindcss()],
+    resolve: {
+      alias: {
+        '@legacy-ck': fileURLToPath(new URL('./src/legacy-ck', import.meta.url)),
+      },
+    },
     build: {
       cssMinify: 'lightningcss',
       rollupOptions: {

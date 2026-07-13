@@ -1,0 +1,68 @@
+---
+// WhatIsClaudeKitGuide: composition of what-is-claudekit sub-components
+import { getLangFromUrl, type Language } from '@/i18n';
+import WhatIsClaudeKitIntroAndMetaphors from "@legacy-ck/components/guides/what-is-claudekit/what-is-claudekit-intro-and-metaphors.astro";
+import WhatIsClaudeKitPillarsAndProcessFlow from "@legacy-ck/components/guides/what-is-claudekit/what-is-claudekit-pillars-and-process-flow.astro";
+import WhatIsClaudeKitBeforeAfterComparison from "@legacy-ck/components/guides/what-is-claudekit/what-is-claudekit-before-after-comparison.astro";
+import WhatIsClaudeKitCommandsAndSummary from "@legacy-ck/components/guides/what-is-claudekit/what-is-claudekit-commands-and-summary.astro";
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+---
+
+<div class="space-y-8 mt-6">
+  <!-- Header, intro banner, house metaphor, team metaphor with image -->
+  <WhatIsClaudeKitIntroAndMetaphors lang={currentLang} />
+
+  <!-- Building blocks grid + process flow steps with images -->
+  <WhatIsClaudeKitPillarsAndProcessFlow lang={currentLang} />
+
+  <!-- Before/After comparison table with image -->
+  <WhatIsClaudeKitBeforeAfterComparison lang={currentLang} />
+
+  <!-- Quick start commands (stable/beta toggle) + summary + CTA -->
+  <WhatIsClaudeKitCommandsAndSummary lang={currentLang} />
+</div>
+
+<script>
+  // Quick Start version toggle: ek vs mk commands
+  document.addEventListener("DOMContentLoaded", () => {
+    const btnStable = document.getElementById("qs-btn-ek");
+    const btnBeta = document.getElementById("qs-btn-mk");
+    const commandsStable = document.getElementById("qs-commands-ek");
+    const commandsBeta = document.getElementById("qs-commands-mk");
+
+    if (!btnStable || !btnBeta || !commandsStable || !commandsBeta) return;
+
+    const activeClasses = "bg-teal-500 text-white shadow-sm";
+    const activeBetaClasses = "bg-purple-500 text-white shadow-sm";
+    const inactiveClasses = "text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700";
+
+    function setVersion(version: "ek" | "mk") {
+      if (version === "ek") {
+        commandsStable.classList.remove("hidden");
+        commandsBeta.classList.add("hidden");
+        btnStable.className = `qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${activeClasses}`;
+        btnBeta.className = `qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${inactiveClasses}`;
+      } else {
+        commandsStable.classList.add("hidden");
+        commandsBeta.classList.remove("hidden");
+        btnBeta.className = `qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${activeBetaClasses}`;
+        btnStable.className = `qs-version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${inactiveClasses}`;
+      }
+      localStorage.setItem("what-is-claudekit-qs-version", version);
+    }
+
+    // Restore saved preference (migrate old keys)
+    const savedVersion = localStorage.getItem("what-is-claudekit-qs-version") as "stable" | "beta" | "v25" | "v24" | "ek" | "mk" | null;
+    if (savedVersion === "v25" || savedVersion === "stable" || savedVersion === "ek") setVersion("ek");
+    else if (savedVersion === "v24" || savedVersion === "beta" || savedVersion === "mk") setVersion("mk");
+
+    btnStable.addEventListener("click", () => setVersion("ek"));
+    btnBeta.addEventListener("click", () => setVersion("mk"));
+  });
+</script>

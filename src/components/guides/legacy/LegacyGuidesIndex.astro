@@ -26,8 +26,8 @@ const count = groups.reduce((sum, group) => sum + group.entries.length, 0);
     </h1>
     <p class="max-w-3xl text-base leading-7 text-slate-600 dark:text-slate-300">
       {isVi
-        ? `${count} guide — catalog đầy đủ đã freeze. Batch A = copy độc lập; Batch B/C = shared-component (copy trước khi rewrite live).`
-        : `${count} guides — full catalog frozen. Batch A = isolated copies; Batch B/C = shared-component freeze (copy before rewriting live guides).`}
+        ? `${count} guide — catalog ClaudeKit đã isolate vào @legacy-ck (restore CK-era). Live /guides giữ AgentKit.`
+        : `${count} guides — ClaudeKit catalog isolated under @legacy-ck (CK-era restore). Live /guides stays AgentKit.`}
     </p>
   </header>
 
@@ -45,9 +45,13 @@ const count = groups.reduce((sum, group) => sum + group.entries.length, 0);
             >
               <span class="flex min-w-0 flex-wrap items-center gap-2">
                 <span>{isVi ? entry.titleVi : entry.titleEn}</span>
-                {entry.freezeStatus === 'frozen' ? (
+                {entry.freezeStatus === 'isolated' ? (
                   <span class="rounded-md bg-emerald-100 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-300">
-                    {isVi ? 'Frozen' : 'Frozen'}
+                    Isolated
+                  </span>
+                ) : entry.freezeStatus === 'frozen' ? (
+                  <span class="rounded-md bg-amber-100 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-amber-800 dark:bg-amber-500/20 dark:text-amber-300">
+                    Frozen
                   </span>
                 ) : (
                   <span class="rounded-md bg-slate-100 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-slate-500 dark:bg-slate-800 dark:text-slate-400">

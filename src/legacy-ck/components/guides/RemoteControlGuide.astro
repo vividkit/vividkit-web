@@ -1,0 +1,145 @@
+---
+// RemoteControlGuide - Claude Code and Codex remote-control paths
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
+import RemoteControlHero from './remote-control/remote-control-hero.astro';
+import RemoteControlRuntimeTabs from './remote-control/remote-control-runtime-tabs.astro';
+import RemoteControlLimitsAndLinks from './remote-control/remote-control-limits-and-links.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(currentLang);
+const isVi = currentLang === 'vi';
+const t = (en: string, vi: string) => isVi ? vi : en;
+---
+
+<div class="mt-6 space-y-6" data-remote-control-tabs data-default-tab="claude">
+  <RemoteControlHero lang={currentLang} />
+  <RemoteControlRuntimeTabs lang={currentLang} />
+  <section class="rounded-2xl border border-cyan-200 bg-cyan-50/80 p-5 dark:border-cyan-500/25 dark:bg-cyan-500/10">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div class="min-w-0">
+        <p class="text-xs font-bold uppercase tracking-[0.16em] text-cyan-700 dark:text-cyan-300">
+          {t('Related guide', 'Guide liên quan')}
+        </p>
+        <h2 class="mt-1 text-lg font-bold text-slate-950 dark:text-white">UI Review Gate</h2>
+        <p class="mt-1 max-w-3xl text-sm leading-6 text-slate-700 dark:text-slate-300">
+          {t(
+            'Remote Control approves agent actions through Claude or Codex. Plannotator approval happens in a separate browser UI that your phone must reach by LAN IP, VPN, or tunnel.',
+            'Remote Control approve hành động agent qua Claude hoặc Codex. Approval của Plannotator diễn ra trong browser UI riêng, phone phải truy cập bằng LAN IP, VPN, hoặc tunnel.'
+          )}
+        </p>
+      </div>
+      <a
+        href={translatePath('/legacy/guides/ui-review-gate')}
+        class="inline-flex min-h-10 shrink-0 items-center justify-center rounded-lg bg-cyan-600 px-4 text-sm font-bold text-white shadow-sm transition hover:bg-cyan-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-300"
+      >
+        {t('Open UI Review Gate', 'Mở UI Review Gate')}
+      </a>
+    </div>
+  </section>
+  <RemoteControlLimitsAndLinks lang={currentLang} />
+</div>
+
+<script>
+  function bindRemoteControlTabs() {
+    document.querySelectorAll('[data-remote-control-tabs]').forEach(group => {
+      if (group.getAttribute('data-tabs-bound') === 'true') return;
+      group.setAttribute('data-tabs-bound', 'true');
+
+      const buttons = Array.from(group.querySelectorAll('[data-tab-button]'));
+      const panels = Array.from(group.querySelectorAll('[data-tab-panel]'));
+
+      const activate = (tab) => {
+        buttons.forEach(button => {
+          const active = button.getAttribute('data-tab-button') === tab;
+          button.setAttribute('aria-selected', String(active));
+          button.classList.toggle('remote-runtime-tab-active', active);
+          button.classList.toggle('remote-runtime-tab-idle', !active);
+        });
+
+        panels.forEach(panel => {
+          panel.hidden = panel.getAttribute('data-tab-panel') !== tab;
+        });
+      };
+
+      buttons.forEach(button => {
+        button.addEventListener('click', () => {
+          const tab = button.getAttribute('data-tab-button');
+          if (!tab) return;
+          activate(tab);
+          history.replaceState(null, '', `#${tab}`);
+        });
+      });
+
+      const hashTab = window.location.hash.replace('#', '');
+      const initialTab = buttons.some(button => button.getAttribute('data-tab-button') === hashTab)
+        ? hashTab
+        : group.getAttribute('data-default-tab') || buttons[0]?.getAttribute('data-tab-button');
+
+      if (initialTab) activate(initialTab);
+    });
+  }
+
+  bindRemoteControlTabs();
+  document.addEventListener('DOMContentLoaded', bindRemoteControlTabs);
+  document.addEventListener('astro:page-load', bindRemoteControlTabs);
+</script>
+
+<style>
+  :global(.remote-runtime-tab-active) {
+    border-color: rgba(14, 116, 144, 0.46);
+    background: linear-gradient(135deg, rgb(236 254 255), rgb(255 255 255));
+    color: rgb(15 23 42);
+    box-shadow: inset 0 0 0 1px rgba(34, 211, 238, 0.08), 0 16px 34px -28px rgba(14, 116, 144, 0.55);
+  }
+
+  :global(.dark .remote-runtime-tab-active) {
+    border-color: rgba(34, 211, 238, 0.28);
+    background: rgba(8, 47, 73, 0.42);
+    color: white;
+  }
+
+  :global(.remote-runtime-tab-idle) {
+    border-color: rgb(226 232 240);
+    background: rgb(248 250 252);
+    color: rgb(71 85 105);
+  }
+
+  :global(.remote-runtime-tab-idle:hover) {
+    border-color: rgba(14, 116, 144, 0.32);
+    background: rgb(255 255 255);
+    color: rgb(15 23 42);
+  }
+
+  :global(.dark .remote-runtime-tab-idle) {
+    border-color: rgb(30 41 59);
+    background: rgba(15, 23, 42, 0.48);
+    color: rgb(203 213 225);
+  }
+
+  :global(.dark .remote-runtime-tab-idle:hover) {
+    border-color: rgba(34, 211, 238, 0.26);
+    background: rgba(15, 23, 42, 0.76);
+    color: white;
+  }
+
+  :global(.remote-runtime-tab-current) {
+    display: none;
+  }
+
+  :global(.remote-runtime-tab-action) {
+    display: inline-flex;
+  }
+
+  :global(.remote-runtime-tab-active .remote-runtime-tab-current) {
+    display: inline-flex;
+  }
+
+  :global(.remote-runtime-tab-active .remote-runtime-tab-action) {
+    display: none;
+  }
+</style>

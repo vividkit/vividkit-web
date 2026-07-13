@@ -1,0 +1,145 @@
+---
+// UIUX Workflows - Pro workflows combining ui-ux-pro-max with other skills
+import { useTranslations } from '@legacy-ck/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+const workflows = [
+  {
+    id: 'redesign',
+    color: 'indigo',
+    icon: 'refresh',
+    hasSteps: true,
+  },
+  {
+    id: 'logo',
+    color: 'pink',
+    icon: 'image',
+    hasPrompt: true,
+  },
+  {
+    id: 'clone',
+    color: 'cyan',
+    icon: 'copy',
+    hasSteps: true,
+    hasNote: true,
+    step2Optional: true,
+  },
+  {
+    id: 'pencil',
+    color: 'amber',
+    icon: 'pencil',
+    hasSteps: true,
+    externalLink: 'https://www.pencil.dev/',
+  },
+  {
+    id: 'mobile',
+    color: 'emerald',
+    icon: 'smartphone',
+    hasPrompt: true,
+  },
+];
+
+const colorClasses: Record<string, { text: string; bg: string; border: string; gradient: string }> = {
+  indigo: { text: 'text-indigo-600 dark:text-indigo-400', bg: 'bg-indigo-100 dark:bg-indigo-500/20', border: 'border-indigo-200 dark:border-indigo-500/30', gradient: 'from-indigo-50/50 to-violet-50/50 dark:from-indigo-500/10 dark:to-violet-500/10' },
+  pink: { text: 'text-pink-600 dark:text-pink-400', bg: 'bg-pink-100 dark:bg-pink-500/20', border: 'border-pink-200 dark:border-pink-500/30', gradient: 'from-pink-50/50 to-rose-50/50 dark:from-pink-500/10 dark:to-rose-500/10' },
+  cyan: { text: 'text-cyan-600 dark:text-cyan-400', bg: 'bg-cyan-100 dark:bg-cyan-500/20', border: 'border-cyan-200 dark:border-cyan-500/30', gradient: 'from-cyan-50/50 to-blue-50/50 dark:from-cyan-500/10 dark:to-blue-500/10' },
+  amber: { text: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-100 dark:bg-amber-500/20', border: 'border-amber-200 dark:border-amber-500/30', gradient: 'from-amber-50/50 to-orange-50/50 dark:from-amber-500/10 dark:to-orange-500/10' },
+  emerald: { text: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-100 dark:bg-emerald-500/20', border: 'border-emerald-200 dark:border-emerald-500/30', gradient: 'from-emerald-50/50 to-green-50/50 dark:from-emerald-500/10 dark:to-green-500/10' },
+};
+---
+
+<!-- Pro Workflows Section -->
+<div class="glass-card rounded-xl overflow-hidden">
+  <div class="p-6 bg-gradient-to-r from-fuchsia-50/50 to-purple-50/50 dark:from-fuchsia-500/10 dark:to-purple-500/10 border-b border-slate-200 dark:border-slate-800">
+    <h2 class="text-2xl font-bold font-heading text-fuchsia-700 dark:text-fuchsia-400 flex items-center gap-3">
+      <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+      </svg>
+      {t('uiux.guide.workflows.title')}
+    </h2>
+    <p class="text-sm text-slate-600 dark:text-slate-500 mt-2">{t('uiux.guide.workflows.subtitle')}</p>
+  </div>
+
+  <div class="p-6 space-y-4">
+    {workflows.map((wf) => (
+      <div class={`p-5 rounded-xl bg-gradient-to-r ${colorClasses[wf.color].gradient} border ${colorClasses[wf.color].border}`}>
+        <div class="flex items-start gap-4">
+          <div class={`w-10 h-10 rounded-lg ${colorClasses[wf.color].bg} flex items-center justify-center flex-shrink-0`}>
+            {wf.icon === 'refresh' && (
+              <svg class={`w-5 h-5 ${colorClasses[wf.color].text}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 2v6h-6M3 12a9 9 0 0 1 15-6.7L21 8M3 22v-6h6M21 12a9 9 0 0 1-15 6.7L3 16"/>
+              </svg>
+            )}
+            {wf.icon === 'image' && (
+              <svg class={`w-5 h-5 ${colorClasses[wf.color].text}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+              </svg>
+            )}
+            {wf.icon === 'copy' && (
+              <svg class={`w-5 h-5 ${colorClasses[wf.color].text}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+            )}
+            {wf.icon === 'pencil' && (
+              <svg class={`w-5 h-5 ${colorClasses[wf.color].text}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+              </svg>
+            )}
+            {wf.icon === 'smartphone' && (
+              <svg class={`w-5 h-5 ${colorClasses[wf.color].text}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
+              </svg>
+            )}
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-2">
+              <h3 class={`text-lg font-bold ${colorClasses[wf.color].text}`}>
+                {t(`uiux.guide.workflow.${wf.id}.title`)}
+              </h3>
+              {wf.externalLink && (
+                <a href={wf.externalLink} target="_blank" rel="noopener noreferrer" class="text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-300">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                    <polyline points="15 3 21 3 21 9"/>
+                    <line x1="10" y1="14" x2="21" y2="3"/>
+                  </svg>
+                </a>
+              )}
+            </div>
+            <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">{t(`uiux.guide.workflow.${wf.id}.desc`)}</p>
+
+            {wf.hasSteps && (
+              <div class="space-y-2">
+                <div class="flex items-start gap-2">
+                  <span class={`px-2 py-0.5 text-xs rounded ${colorClasses[wf.color].bg} ${colorClasses[wf.color].text} font-medium`}>1</span>
+                  <code class="text-xs text-slate-700 dark:text-slate-300 font-mono bg-white/50 dark:bg-slate-800/50 px-2 py-1 rounded">{t(`uiux.guide.workflow.${wf.id}.step1`)}</code>
+                </div>
+                {wf.hasNote && (
+                  <p class="text-xs text-slate-500 dark:text-slate-400 italic ml-8">{t(`uiux.guide.workflow.${wf.id}.note`)}</p>
+                )}
+                <div class="flex items-start gap-2">
+                  <span class={`px-2 py-0.5 text-xs rounded ${wf.step2Optional ? 'bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400' : `${colorClasses[wf.color].bg} ${colorClasses[wf.color].text}`} font-medium`}>{wf.step2Optional ? '?' : '2'}</span>
+                  <code class={`text-xs font-mono bg-white/50 dark:bg-slate-800/50 px-2 py-1 rounded ${wf.step2Optional ? 'text-slate-500 dark:text-slate-400' : 'text-slate-700 dark:text-slate-300'}`}>{t(`uiux.guide.workflow.${wf.id}.step2`)}</code>
+                </div>
+              </div>
+            )}
+
+            {wf.hasPrompt && (
+              <div class="bg-white/50 dark:bg-slate-800/50 rounded-lg p-3 border border-slate-200 dark:border-slate-700">
+                <code class="text-xs text-slate-700 dark:text-slate-300 font-mono block leading-relaxed">{t(`uiux.guide.workflow.${wf.id}.prompt`)}</code>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>

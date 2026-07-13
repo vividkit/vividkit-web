@@ -1,0 +1,877 @@
+---
+// Main wrapper for the "How ClaudeKit Works" interactive workflow visualizer
+// Manages Alpine.js shared state for scenario selection, step navigation, and detail panel
+// Supports three views: Individual Skills, Workflow Combos, and Infographic
+import { getLangFromUrl, type Language } from '@/i18n';
+import { workflowScenarios, stepTypeColors, workflowCombos, hasInfographic } from '@legacy-ck/data/guides/how-ck-works';
+import WorkflowScenarioSelector from './workflow-scenario-selector.astro';
+import WorkflowPipelineView from './workflow-pipeline-view.astro';
+import WorkflowStepDetailPanel from './workflow-step-detail-panel.astro';
+import WorkflowComboGrid from './workflow-combo-grid.astro';
+import WorkflowComboPipeline from './workflow-combo-pipeline.astro';
+import WorkflowSkillInfographic from './workflow-skill-infographic.astro';
+import WorkflowCommandNav from './workflow-command-nav.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === 'vi';
+
+// Serialize data at build time — will be injected via <script> to avoid HTML escaping in x-data
+const scenariosJson = JSON.stringify(workflowScenarios);
+const typeColorsJson = JSON.stringify(stepTypeColors);
+const combosJson = JSON.stringify(workflowCombos);
+// List of scenario IDs that have infographics available
+const infographicIdsJson = JSON.stringify(workflowScenarios.filter(s => hasInfographic(s.id)).map(s => s.id));
+const engineerQuickRefIds = [
+  'brainstorm',
+  'predict',
+  'plan',
+  'cook',
+  'frontend-design',
+  'code-review',
+  'review-pr',
+  'test',
+  'fix',
+  'security-scan',
+  'ship',
+  'vibe',
+  'deploy',
+  'bootstrap',
+  'autoresearch',
+  'backend-development',
+  'better-auth',
+  'context-engineering',
+  'docs-seeker',
+  'ai-artist',
+  'agentize',
+  'cti-expert',
+  'retro',
+  'graphify',
+  'git',
+  'ghpm',
+  'debug',
+  'agent-browser',
+  'ai-multimodal',
+  'ask',
+  'security',
+  'repomix',
+  'llms',
+  'scenario',
+  'docs',
+  'xia',
+  'team',
+  'preview',
+  'chrome-profile',
+  'coding-level',
+  'copywriting',
+  'databases',
+  'devops',
+  'find-skills',
+  'frontend-development',
+  'gkg',
+  'google-adk-python',
+  'journal',
+  'loop',
+  'markdown-novel-viewer',
+  'mcp-builder',
+  'media-processing',
+  'mermaidjs-v11',
+  'mintlify',
+  'mobile-development',
+  'payment-integration',
+  'problem-solving',
+  'project-management',
+  'react-best-practices',
+  'remotion',
+  'html-video',
+  'research',
+  'scout',
+  'sequential-thinking',
+  'shader',
+  'shopify',
+  'show-off',
+  'skill-creator',
+  'stitch',
+  'tanstack',
+  'tech-graph',
+  'threejs',
+  'ui-styling',
+  'ui-ux-pro-max',
+  'watzup',
+  'web-design-guidelines',
+  'web-frameworks',
+  'web-testing',
+  'worktree',
+  'excalidraw',
+  'plans-kanban',
+  'project-organization',
+].filter(hasInfographic);
+const marketerQuickRefIds = [
+  'persona',
+  'campaign',
+  'write',
+  'design',
+  'seo',
+  'social',
+  'email',
+  'video',
+  'ckm-ask',
+  'ckm-docs',
+  'ckm-journal',
+  'ckm-plan',
+  'ckm-preview',
+  'ckm-test',
+  'ckm-watzup',
+  'ckm-worktree',
+  'ab-test-setup',
+  'ads-management',
+  'affiliate-marketing',
+  'analytics',
+  'analyze',
+  'assets-organizing',
+  'banner-design',
+  'brand',
+  'cip-design',
+  'claude-code',
+  'competitor',
+  'content-hub',
+  'content-marketing',
+  'creativity',
+  'dashboard',
+  'debugging',
+  'design-system',
+  'elevenlabs',
+  'form-cro',
+  'free-tool-strategy',
+  'funnel',
+  'gamification-marketing',
+  'hub',
+  'init',
+  'kit-builder',
+  'launch-strategy',
+  'logo-design',
+  'marketing-dashboard',
+  'marketing-ideas',
+  'marketing-planning',
+  'marketing-psychology',
+  'marketing-research',
+  'onboarding-cro',
+  'paid-ads',
+  'play',
+  'pricing-strategy',
+  'referral-program-building',
+  'slides',
+  'storage',
+  'youtube',
+  'youtube-thumbnail-design',
+  'kanban',
+  'skill',
+  'use-mcp',
+].filter(hasInfographic);
+const quickRefScenarioGroups = [engineerQuickRefIds, marketerQuickRefIds].filter(group => group.length > 0);
+const quickRefScenarioIds = quickRefScenarioGroups.flat();
+const getCommandNavItem = (id: string) => {
+  const scenario = workflowScenarios.find(s => s.id === id);
+  if (!scenario) throw new Error(`Missing workflow scenario for ${id}`);
+  return {
+    id: scenario.id,
+    command: scenario.command,
+    titleEn: scenario.titleEn,
+    titleVi: scenario.titleVi,
+    descEn: scenario.descEn,
+    descVi: scenario.descVi,
+  };
+};
+---
+
+{/* Inject data BEFORE Alpine processes x-data — avoids HTML entity escaping issue */}
+<script is:inline define:vars={{ scenariosJson, typeColorsJson, combosJson, infographicIdsJson, isVi }}>
+  window.__wfScenarios = JSON.parse(scenariosJson);
+  window.__wfTypeColors = JSON.parse(typeColorsJson);
+  window.__wfCombos = JSON.parse(combosJson);
+  window.__wfInfographicIds = JSON.parse(infographicIdsJson);
+  window.__wfIsVi = isVi;
+  // Format explain text: paragraphs on \n\n, bullet lines (•/-/*) as indented <ul><li>
+  window.__formatExplain = function(text) {
+    if (!text) return '';
+    var esc = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    // Inline code: wrap `…` segments in <code>. Skip if pair crosses a newline.
+    esc = esc.replace(/`([^`\n]+?)`/g, '<code class="explain-inline-code">$1</code>');
+    var paragraphs = esc.split(/\n\n+/);
+    return paragraphs.map(function(p) {
+      var lines = p.split(/\n/);
+      var hasBullets = lines.some(function(l) { return /^\s*[•\-\*]\s/.test(l); });
+      if (hasBullets) {
+        var html = '', inList = false;
+        for (var i = 0; i < lines.length; i++) {
+          var line = lines[i];
+          if (/^\s*[•\-\*]\s/.test(line)) {
+            if (!inList) { html += '<ul>'; inList = true; }
+            var content = line.replace(/^\s*[•\-\*]\s*/, '').replace(/^(\S[^—–]+)[—–]\s*/, '<strong>$1</strong>— ');
+            html += '<li>' + content + '</li>';
+          } else {
+            if (inList) { html += '</ul>'; inList = false; }
+            if (line.trim()) html += '<p>' + line + '</p>';
+          }
+        }
+        if (inList) html += '</ul>';
+        return html;
+      }
+      return '<p>' + p.replace(/\n/g, '<br>') + '</p>';
+    }).join('');
+  };
+</script>
+
+<div
+  x-cloak
+  x-data="{
+    viewType: 'individual',
+    activeKit: 'engineer',
+    selectedScenario: 'brainstorm',
+    isVi: false,
+    skillSearch: '',
+
+    // Individual scenario playback
+    currentStep: -1,
+    isPlaying: false,
+    expandedStep: null,
+    playInterval: null,
+
+    // Combo view state
+    selectedCombo: null,
+    comboPlayIndex: -1,
+    isComboPlaying: false,
+    comboPlayInterval: null,
+
+    // Quick Ref expandable state
+    showQuickRef: true,
+
+    // Skill catalog collapsed by default so the main workflow content stays above the fold
+    showCatalog: false,
+
+    // Data stores
+    scenarios: [],
+    typeColors: {},
+    combos: [],
+    infographicIds: [],
+    skillPickerSections: {},
+    hashChangeHandler: null,
+    colorMap: {
+      purple: { iconBg: 'bg-purple-500/10', iconText: 'text-purple-400', ring: 'ring-purple-500/50' },
+      blue:   { iconBg: 'bg-blue-500/10',   iconText: 'text-blue-400',   ring: 'ring-blue-500/50' },
+      green:  { iconBg: 'bg-green-500/10',  iconText: 'text-green-400',  ring: 'ring-green-500/50' },
+      amber:  { iconBg: 'bg-amber-500/10',  iconText: 'text-amber-400',  ring: 'ring-amber-500/50' },
+      red:    { iconBg: 'bg-red-500/10',    iconText: 'text-red-400',    ring: 'ring-red-500/50' },
+      emerald:{ iconBg: 'bg-emerald-500/10',iconText: 'text-emerald-400',ring: 'ring-emerald-500/50' },
+      rose:   { iconBg: 'bg-rose-500/10',   iconText: 'text-rose-400',   ring: 'ring-rose-500/50' },
+      violet: { iconBg: 'bg-violet-500/10', iconText: 'text-violet-400', ring: 'ring-violet-500/50' },
+      cyan:   { iconBg: 'bg-cyan-500/10',   iconText: 'text-cyan-400',   ring: 'ring-cyan-500/50' },
+      orange: { iconBg: 'bg-orange-500/10', iconText: 'text-orange-400', ring: 'ring-orange-500/50' },
+      lime:   { iconBg: 'bg-lime-500/10',   iconText: 'text-lime-400',   ring: 'ring-lime-500/50' },
+      pink:   { iconBg: 'bg-pink-500/10',   iconText: 'text-pink-400',   ring: 'ring-pink-500/50' },
+      teal:   { iconBg: 'bg-teal-500/10',   iconText: 'text-teal-400',   ring: 'ring-teal-500/50' },
+      fuchsia:{ iconBg: 'bg-fuchsia-500/10',iconText: 'text-fuchsia-400',ring: 'ring-fuchsia-500/50' },
+      indigo: { iconBg: 'bg-indigo-500/10', iconText: 'text-indigo-400', ring: 'ring-indigo-500/50' },
+      yellow: { iconBg: 'bg-yellow-500/10', iconText: 'text-yellow-400', ring: 'ring-yellow-500/50' },
+      slate:  { iconBg: 'bg-slate-500/10',  iconText: 'text-slate-400',  ring: 'ring-slate-500/50' },
+      sky:    { iconBg: 'bg-sky-500/10',    iconText: 'text-sky-400',    ring: 'ring-sky-500/50' },
+    },
+
+    init() {
+      this.scenarios = window.__wfScenarios || [];
+      this.typeColors = window.__wfTypeColors || {};
+      this.combos = window.__wfCombos || [];
+      this.infographicIds = window.__wfInfographicIds || [];
+      this.skillPickerSections = window.__ckSkillPickerSections || {};
+      this.isVi = window.__wfIsVi || false;
+
+      // Fresh load without hash keeps the default selection (brainstorm) and stays
+      // at the intro — writing a default hash here makes Chrome re-anchor mid-load.
+      this.syncScenarioFromHash({ behavior: 'auto' });
+      this.hashChangeHandler = () => this.syncScenarioFromHash({ behavior: 'smooth' });
+      window.addEventListener('hashchange', this.hashChangeHandler);
+
+      // Typing a search query should reveal the catalog so results are visible
+      this.$watch('skillSearch', value => {
+        if ((value || '').trim()) this.showCatalog = true;
+      });
+    },
+
+    destroy() {
+      if (this.hashChangeHandler) {
+        window.removeEventListener('hashchange', this.hashChangeHandler);
+      }
+    },
+
+    navigateToScenario(id) {
+      const hash = `ck-${id}`;
+      if (window.location.hash === `#${hash}`) {
+        this.syncScenarioFromHash({ behavior: 'smooth' });
+        return;
+      }
+      window.location.hash = hash;
+    },
+
+    syncScenarioFromHash({ behavior = 'smooth' } = {}) {
+      const hash = window.location.hash.replace('#', '');
+      if (!hash.startsWith('ck-')) return false;
+
+      const scenarioId = hash.replace('ck-', '');
+      const match = this.scenarios.find(s => s.id === scenarioId);
+      if (!match) return false;
+
+      this.activeKit = match.kit;
+      this.selectedScenario = scenarioId;
+      this.viewType = 'individual';
+      this.selectedCombo = null;
+      this.showQuickRef = this.infographicIds.includes(scenarioId);
+      this.showCatalog = false;
+      this.resetPipeline();
+      this.stopComboPlay();
+
+      this.$nextTick(() => {
+        window.requestAnimationFrame(() => {
+          const scrollToTarget = () => {
+            const el = document.getElementById('workflow-selected-scenario') || document.getElementById(hash);
+            if (!el) return;
+            el.scrollIntoView({ behavior, block: 'start' });
+            el.focus({ preventScroll: true });
+          };
+
+          scrollToTarget();
+          window.setTimeout(scrollToTarget, 250);
+          window.setTimeout(scrollToTarget, 750);
+        });
+      });
+      return true;
+    },
+
+    // Helper methods used by child components (pipeline-view, detail-panel)
+    stepState(index) {
+      if (this.currentStep < 0) return 'waiting';
+      if (index < this.currentStep) return 'completed';
+      if (index === this.currentStep) return 'active';
+      return 'waiting';
+    },
+    getColorClass(color, prop) {
+      return this.colorMap[color]?.[prop] || '';
+    },
+    getScenarioById(id) {
+      return this.scenarios.find(s => s.id === id);
+    },
+    formatExplain(text) { return window.__formatExplain?.(text) || text || ''; },
+    localizeStepName(name) {
+      if (!this.isVi || !name) return name;
+      const exact = {
+        'Context + Guardrails': 'Nạp context + ràng buộc',
+        'Audit Source + Scope': 'Rà nguồn + phạm vi',
+        'Execute Workflow': 'Chạy workflow',
+        'Validate + Deliver': 'Kiểm chứng + bàn giao',
+        'Hooks Fire': 'Hooks kích hoạt',
+        'Hooks + Brand Context': 'Hooks + context thương hiệu',
+        'QA Report': 'Báo cáo QA',
+        'Safety Gates': 'Cổng an toàn',
+        'Docs-Only Gate': 'Cổng chỉ-tài-liệu',
+        'Context + Permissions': 'Context + quyền',
+        'Audit Current State': 'Rà trạng thái hiện tại',
+        'Execute Scoped Action': 'Thực thi đúng phạm vi',
+        'Report + Handoff': 'Báo cáo + bàn giao',
+        'Scout First': 'Scout trước',
+        'Discovery + Exact Requirements': 'Khám phá + yêu cầu chính xác',
+        'Research + Evidence': 'Nghiên cứu + bằng chứng',
+        'Analyze + Debate': 'Phân tích + tranh luận',
+        'Report + Plan Handoff': 'Báo cáo + bàn giao sang plan',
+        'Diff Acquisition': 'Lấy diff',
+        'Review Report': 'Báo cáo review',
+        'Secret Scan': 'Quét secret',
+        'Dependency Audit': 'Audit dependency',
+        'Code Pattern Analysis': 'Phân tích pattern code',
+        'Security Scan Report': 'Báo cáo security scan',
+      };
+      if (exact[name]) return exact[name];
+      return name
+        .replace(/^Main Agent\b/, 'Agent chính')
+        .replace(/^Sub-Agent\b/, 'Agent phụ')
+        .replace(/\bPre-Check\b/g, 'Kiểm tra trước')
+        .replace(/\bResearch\b/g, 'Nghiên cứu')
+        .replace(/\bPlan Creation\b/g, 'Tạo plan')
+        .replace(/\bValidate\b/g, 'Kiểm chứng')
+        .replace(/\bTask Hydration\b/g, 'Hydrate task')
+        .replace(/\bPost-Plan Handoff\b/g, 'Bàn giao sau plan')
+        .replace(/\bScout\b/g, 'Scout')
+        .replace(/\bDiagnose\b/g, 'Chẩn đoán')
+        .replace(/\bFix\b/g, 'Sửa')
+        .replace(/\bVerify\b/g, 'Kiểm chứng')
+        .replace(/\bPrevent\b/g, 'Ngăn tái phát')
+        .replace(/\bFinalize\b/g, 'Hoàn tất')
+        .replace(/\bImplement\b/g, 'Triển khai')
+        .replace(/\bTesting\b/g, 'Kiểm thử')
+        .replace(/\bCode Review\b/g, 'Review code')
+        .replace(/\bReport\b/g, 'Báo cáo')
+        .replace(/\bHandoff\b/g, 'Bàn giao')
+        .replace(/\bInput\b/g, 'Đầu vào')
+        .replace(/\bOutput\b/g, 'Kết quả')
+        .replace(/\bRoute\b/g, 'Định tuyến')
+        .replace(/\bExecute\b/g, 'Thực thi')
+        .replace(/\bAssets\b/g, 'Asset')
+        .replace(/\bDelivered\b/g, 'Đã bàn giao');
+    },
+    get steps() {
+      return this.currentScenario?.steps || [];
+    },
+
+    get currentScenario() {
+      return this.scenarios.find(s => s.id === this.selectedScenario);
+    },
+    get totalSteps() {
+      return this.currentScenario?.steps?.length || 0;
+    },
+
+    switchKit(kit) {
+      this.activeKit = kit;
+      const firstOfKit = this.firstScenarioForKit(kit);
+      if (firstOfKit) {
+        this.selectedScenario = firstOfKit.id;
+        this.showQuickRef = this.infographicIds.includes(firstOfKit.id);
+        this.resetPipeline();
+      }
+    },
+
+    get filteredScenarios() {
+      return this.scenarios.filter(s => s.kit === this.activeKit);
+    },
+
+    get activeSkillSections() {
+      return this.skillPickerSections?.[this.activeKit] || [];
+    },
+
+    firstScenarioForKit(kit) {
+      const sections = this.skillPickerSections?.[kit] || [];
+      for (const section of sections) {
+        for (const id of section.ids || []) {
+          const scenario = this.scenarios.find(s => s.id === id && s.kit === kit);
+          if (scenario) return scenario;
+        }
+      }
+      return this.scenarios.find(s => s.kit === kit);
+    },
+
+    skillMatches(sc, section) {
+      const query = (this.skillSearch || '').trim().toLowerCase();
+      if (!query) return true;
+      const text = [
+        sc.id,
+        sc.command,
+        sc.titleEn,
+        sc.titleVi,
+        sc.descEn,
+        sc.descVi,
+        section?.labelEn,
+        section?.labelVi,
+        section?.descEn,
+        section?.descVi,
+      ].filter(Boolean).join(' ').toLowerCase();
+      return text.includes(query);
+    },
+
+    filteredSectionScenarios(section) {
+      return (section?.ids || [])
+        .map(id => this.scenarios.find(sc => sc.id === id))
+        .filter(Boolean)
+        .filter(sc => sc.kit === this.activeKit)
+        .filter(sc => this.skillMatches(sc, section));
+    },
+
+    visibleSkillCount() {
+      return this.activeSkillSections.reduce((total, section) => total + this.filteredSectionScenarios(section).length, 0);
+    },
+
+    scrollToSkillGroup(sectionId) {
+      // Scroll within the bounded catalog panel instead of the page
+      const container = document.getElementById('skill-catalog-scroll');
+      const target = document.getElementById('skill-group-' + sectionId);
+      if (!container || !target) return;
+      container.scrollTo({ top: Math.max(target.offsetTop - 4, 0), behavior: 'smooth' });
+    },
+
+    scenarioCountLabel(sc) {
+      const phaseCount = window.__ckPhaseCounts?.[sc.id];
+      if (phaseCount) return `${phaseCount} ${this.isVi ? 'giai đoạn' : 'phases'}`;
+      return `${sc.steps?.length || 0} ${this.isVi ? 'bước' : 'steps'}`;
+    },
+
+    selectScenario(id) {
+      this.selectedScenario = id;
+      this.showQuickRef = false; // Close Quick Ref when switching
+      this.resetPipeline();
+    },
+
+    toggleQuickRef() {
+      if (this.hasInfographic(this.selectedScenario)) {
+        this.showQuickRef = !this.showQuickRef;
+      }
+    },
+
+    nextStep() {
+      if (this.currentStep < this.totalSteps - 1) {
+        this.currentStep++;
+        this.expandedStep = this.currentStep;
+      } else {
+        this.stopPlay();
+      }
+    },
+
+    prevStep() {
+      if (this.currentStep > 0) {
+        this.currentStep--;
+        this.expandedStep = this.currentStep;
+      }
+    },
+
+    selectStep(index) {
+      if (this.currentStep < 0) this.currentStep = 0;
+      if (this.expandedStep === index) {
+        this.expandedStep = null;
+      } else {
+        this.currentStep = Math.max(this.currentStep, index);
+        this.expandedStep = index;
+      }
+    },
+
+    getActiveStep() {
+      if (this.expandedStep === null || !this.currentScenario) return null;
+      return this.currentScenario.steps[this.expandedStep] || null;
+    },
+
+    togglePlay() {
+      if (this.isPlaying) {
+        this.stopPlay();
+      } else {
+        this.startPlay();
+      }
+    },
+
+    startPlay() {
+      this.isPlaying = true;
+      if (this.currentStep >= this.totalSteps - 1 || this.currentStep < 0) {
+        this.currentStep = -1;
+        this.expandedStep = null;
+      }
+      this.playInterval = setInterval(() => {
+        this.nextStep();
+        if (this.currentStep >= this.totalSteps - 1) {
+          this.stopPlay();
+        }
+      }, 1500);
+      this.nextStep();
+    },
+
+    stopPlay() {
+      this.isPlaying = false;
+      if (this.playInterval) {
+        clearInterval(this.playInterval);
+        this.playInterval = null;
+      }
+    },
+
+    resetPipeline() {
+      this.stopPlay();
+      this.currentStep = -1;
+      this.expandedStep = null;
+    },
+
+    handleKeydown(e) {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        this.nextStep();
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        this.prevStep();
+      } else if (e.key === ' ') {
+        e.preventDefault();
+        this.togglePlay();
+      }
+    },
+
+    // === Combo view methods ===
+    get filteredCombos() {
+      return this.combos.filter(c => c.kit === this.activeKit);
+    },
+
+    getSelectedCombo() {
+      return this.combos.find(c => c.id === this.selectedCombo) || null;
+    },
+
+    selectCombo(comboId) {
+      this.selectedCombo = comboId;
+      this.comboPlayIndex = -1;
+      this.stopComboPlay();
+      // Auto-select first scenario in combo
+      const combo = this.getSelectedCombo();
+      if (combo && combo.scenarios.length > 0) {
+        this.selectedScenario = combo.scenarios[0];
+        this.resetPipeline();
+      }
+    },
+
+    jumpToComboScenario(index) {
+      const combo = this.getSelectedCombo();
+      if (combo && combo.scenarios[index]) {
+        this.comboPlayIndex = index;
+        this.selectedScenario = combo.scenarios[index];
+        this.resetPipeline();
+      }
+    },
+
+    toggleComboPlay() {
+      if (this.isComboPlaying) {
+        this.stopComboPlay();
+      } else {
+        this.startComboPlay();
+      }
+    },
+
+    startComboPlay() {
+      const combo = this.getSelectedCombo();
+      if (!combo) return;
+
+      this.isComboPlaying = true;
+      // Start from beginning if at end or not started
+      if (this.comboPlayIndex < 0 || this.comboPlayIndex >= combo.scenarios.length - 1) {
+        this.comboPlayIndex = -1;
+      }
+      // Advance immediately then set interval
+      this.nextComboScenario();
+      this.comboPlayInterval = setInterval(() => {
+        if (this.comboPlayIndex >= combo.scenarios.length - 1) {
+          this.stopComboPlay();
+        } else {
+          this.nextComboScenario();
+        }
+      }, 2500);
+    },
+
+    stopComboPlay() {
+      this.isComboPlaying = false;
+      if (this.comboPlayInterval) {
+        clearInterval(this.comboPlayInterval);
+        this.comboPlayInterval = null;
+      }
+    },
+
+    nextComboScenario() {
+      const combo = this.getSelectedCombo();
+      if (!combo) return;
+      if (this.comboPlayIndex < combo.scenarios.length - 1) {
+        this.comboPlayIndex++;
+        this.selectedScenario = combo.scenarios[this.comboPlayIndex];
+        this.resetPipeline();
+      }
+    },
+
+    resetComboPipeline() {
+      this.comboPlayIndex = -1;
+      this.stopComboPlay();
+      const combo = this.getSelectedCombo();
+      if (combo && combo.scenarios.length > 0) {
+        this.selectedScenario = combo.scenarios[0];
+        this.resetPipeline();
+      }
+    },
+
+    hasInfographic(scenarioId) {
+      return this.infographicIds.includes(scenarioId);
+    },
+  }"
+  x-on:keydown="handleKeydown($event)"
+  tabindex="0"
+  class="space-y-8"
+>
+  {/* Page header */}
+  <div class="mb-10 flex flex-col items-center text-center">
+    <h1 class="text-4xl font-bold text-gray-900 dark:text-white/90 mb-4 tracking-tight">
+      {isVi ? 'Cách ClaudeKit Hoạt Động' : 'How ClaudeKit Works'}
+    </h1>
+    
+    <div class="w-full space-y-6 text-sm text-gray-700 dark:text-white/70 leading-relaxed">
+      <p class="text-base text-gray-800 dark:text-white/80 max-w-3xl mx-auto">
+        {isVi
+          ? 'ClaudeKit không phải là một phần mềm độc lập hay IDE mới. Nó là một bộ khung (Framework) nâng cao được tích hợp thẳng vào cấu hình native (.claude) của Claude Code trên máy bạn, biến terminal chat thành một hệ thống tự động hóa tác vụ chuyên nghiệp.'
+          : 'ClaudeKit is not a standalone app or a new IDE. It is an advanced Framework integrated directly into your native Claude Code configuration (.claude) on your machine, transforming your terminal chat into a professional task automation system.'}
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 text-left">
+        <div class="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 shadow-sm dark:shadow-none rounded-xl p-4">
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center bg-blue-500/10 text-blue-500 dark:text-blue-400 mb-3">
+             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+          </div>
+          <h3 class="font-semibold text-gray-900 dark:text-white/90 mb-1">{isVi ? '1. Hooks (Hệ thống ngầm)' : '1. Hooks (Background System)'}</h3>
+          <p class="text-[13px] text-gray-600 dark:text-white/50">{isVi ? 'Các script chạy lót nền tự động. Khởi tạo config, rules dự án mà bạn không cần copy-paste thủ công mỗi lần.' : 'Background scripts that run automatically. They initialize configs and project rules so you don\'t have to copy-paste them manually.'}</p>
+        </div>
+
+        <div class="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 shadow-sm dark:shadow-none rounded-xl p-4">
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center bg-amber-500/10 text-amber-600 dark:text-amber-400 mb-3">
+             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" /></svg>
+          </div>
+          <h3 class="font-semibold text-gray-900 dark:text-white/90 mb-1">{isVi ? '2. Skills (Kiến thức có sẵn)' : '2. Skills (Pre-built Knowledge)'}</h3>
+          <p class="text-[13px] text-gray-600 dark:text-white/50">{isVi ? 'Các gói năng lực chuyên biệt kèm prompt, references và scripts. Là đơn vị thực thi chính khi bạn gõ /ck:*.' : 'Specialized capability packages with prompts, references, and scripts. The primary execution unit when you type /ck:* commands.'}</p>
+        </div>
+
+        <div class="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 shadow-sm dark:shadow-none rounded-xl p-4">
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center bg-green-500/10 text-green-600 dark:text-green-400 mb-3">
+             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+          </div>
+          <h3 class="font-semibold text-gray-900 dark:text-white/90 mb-1">{isVi ? '3. Agents (Các chuyên gia)' : '3. Agents (Specialists)'}</h3>
+          <p class="text-[13px] text-gray-600 dark:text-white/50">{isVi ? 'Các mô hình được thiết lập riêng (Planner, Tester, Reviewer) với prompt và tool nội bộ, tập trung vào 1 chuyên môn.' : 'Specialized models (Planner, Tester, Reviewer) with internal prompts and tools, focusing on a single task domain.'}</p>
+        </div>
+
+        <div class="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 shadow-sm dark:shadow-none rounded-xl p-4">
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center bg-purple-500/10 text-purple-600 dark:text-purple-400 mb-3">
+             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+          </div>
+          <h3 class="font-semibold text-gray-900 dark:text-white/90 mb-1">{isVi ? '4. Workflows (Quy trình)' : '4. Workflows (Pipelines)'}</h3>
+          <p class="text-[13px] text-gray-600 dark:text-white/50">{isVi ? 'Tổ hợp các Hooks, Skills và Agents chạy nối tiếp nhau từ lệnh nhập của bạn để xử lý luồng việc phức tạp trọn gói.' : 'Pipelines of Hooks, Skills and Agents running sequentially from your command input to handle complex workflows end-to-end.'}</p>
+        </div>
+      </div>
+      
+      <div class="mt-4 p-4 border border-blue-200 dark:border-blue-500/20 bg-blue-50 dark:bg-blue-500/5 rounded-lg flex items-start gap-3 text-left">
+        <svg class="w-5 h-5 text-blue-500 dark:text-blue-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <p class="text-sm text-blue-900 dark:text-white/70">
+          {isVi
+            ? 'Cùng xem chi tiết cách Hooks, Skills, Agents và Workflows điều phối một lệnh thực tế. Chọn quy trình bên dưới và nhấn Play để khám phá cơ chế bên trong.'
+            : 'Let\'s see how Hooks, Skills, Agents and Workflows coordinate a real command. Pick a workflow below and press Play to explore the internal mechanism.'}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  {/* Scenario selector (individual view) or Combo grid (combos view) */}
+  <section>
+    <div x-show="viewType === 'individual'" x-transition>
+      <WorkflowScenarioSelector lang={currentLang} />
+    </div>
+    <div x-show="activeKit === 'engineer' && viewType === 'combos'" x-transition>
+      <WorkflowComboGrid lang={currentLang} />
+    </div>
+    {/* Marketing Kit placeholder for combos view */}
+    <div x-show="activeKit === 'marketer' && viewType === 'combos'" x-transition class="py-12 text-center">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-purple-500/10 mb-4">
+        <svg class="w-8 h-8 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white/90 mb-2">
+        {isVi ? 'Hướng dẫn sắp ra mắt...' : 'Guide coming soon...'}
+      </h3>
+      <p class="text-sm text-gray-500 dark:text-white/50 max-w-md mx-auto">
+        {isVi
+          ? 'VividKit đang hoàn thiện hướng dẫn chi tiết cho Bộ Marketing.'
+          : 'VividKit is finalizing the detailed guide for Marketing Kit.'}
+      </p>
+    </div>
+  </section>
+
+  {/* Combo pipeline (shows when combo selected in combos view, Engineer Kit only) */}
+  <div x-show="activeKit === 'engineer'">
+    <WorkflowComboPipeline lang={currentLang} />
+  </div>
+
+  {/* Quick Ref expandable section (Individual Skills view) */}
+  <section
+    x-show="viewType === 'individual' && showQuickRef && hasInfographic(selectedScenario)"
+    x-transition:enter="transition ease-out duration-300"
+    x-transition:enter-start="opacity-0 -translate-y-4"
+    x-transition:enter-end="opacity-100 translate-y-0"
+    x-transition:leave="transition ease-in duration-200"
+    x-transition:leave-start="opacity-100 translate-y-0"
+    x-transition:leave-end="opacity-0 -translate-y-4"
+    class="relative"
+  >
+    {/* Close button */}
+    <button
+      @click="showQuickRef = false"
+      class="absolute top-2 right-2 z-10 p-2 rounded-lg bg-gray-100 dark:bg-white/10 hover:bg-gray-200 dark:hover:bg-white/20 text-gray-500 dark:text-white/50 transition-colors"
+      title={isVi ? 'Đóng' : 'Close'}
+    >
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+    {/* Quick Ref content */}
+    <div class="rounded-xl border border-blue-200 dark:border-blue-500/20 bg-blue-50/50 dark:bg-blue-500/5 p-6">
+      {quickRefScenarioIds.map((scenarioId, index) => {
+        const navGroup = quickRefScenarioGroups.find(group => group.includes(scenarioId)) || quickRefScenarioIds;
+        const groupIndex = navGroup.indexOf(scenarioId);
+        const previousId = navGroup[(groupIndex - 1 + navGroup.length) % navGroup.length];
+        const nextId = navGroup[(groupIndex + 1) % navGroup.length];
+        return (
+          <div id={`ck-${scenarioId}`} tabindex="-1" class="scroll-mt-24 focus:outline-none" x-show={`selectedScenario === '${scenarioId}'`}>
+            <WorkflowSkillInfographic scenarioId={scenarioId} lang={currentLang} />
+            <WorkflowCommandNav previous={getCommandNavItem(previousId)} next={getCommandNavItem(nextId)} lang={currentLang} />
+          </div>
+        );
+      })}
+    </div>
+  </section>
+
+  {/* Pipeline visualization */}
+  <section x-show="viewType !== 'combos' || selectedCombo" x-transition>
+    <h2 class="text-xs font-semibold text-gray-500 dark:text-white/30 uppercase tracking-wider mb-3">
+      {isVi ? 'Pipeline' : 'Pipeline'}
+    </h2>
+    <WorkflowPipelineView lang={currentLang} />
+  </section>
+
+  {/* Step detail panel */}
+  <div x-show="viewType === 'individual' || selectedCombo" x-transition>
+    <WorkflowStepDetailPanel lang={currentLang} />
+  </div>
+
+  {/* Keyboard hint */}
+  <p class="text-[10px] text-gray-400 dark:text-white/20 text-center pb-4 border-b border-gray-200 dark:border-white/5">
+    {isVi
+      ? 'Phím tắt: Space = Chạy/Tạm dừng · ← → = Bước trước/sau'
+      : 'Keyboard: Space = Play/Pause · ← → = Prev/Next step'}
+  </p>
+
+  {/* Next steps CTA */}
+  <div class="pt-6 pb-2">
+    <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90 mb-4 text-center">
+      {isVi ? 'Bạn đã sẵn sàng để trải nghiệm?' : 'Ready to experience it yourself?'}
+    </h2>
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a
+        href={isVi ? '/vi/legacy/guides/cli' : '/legacy/guides/cli'}
+        class="flex items-center gap-2 px-6 py-2.5 bg-blue-600 dark:bg-white text-white dark:text-black font-semibold rounded-lg hover:bg-blue-700 dark:hover:bg-white/90 transition-colors"
+      >
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
+        {isVi ? 'Cài đặt ClaudeKit ngay' : 'Install ClaudeKit Now'}
+      </a>
+      <a
+        href={isVi ? '/vi/legacy/guides/commands' : '/legacy/guides/commands'}
+        class="flex items-center gap-2 px-6 py-2.5 bg-white dark:bg-white/5 text-gray-700 dark:text-white/90 font-medium rounded-lg border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/10 hover:border-gray-300 dark:hover:border-white/20 shadow-sm dark:shadow-none transition-colors"
+      >
+        <svg class="w-4 h-4 text-gray-400 dark:text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+        {isVi ? 'Khám phá tất cả Lệnh' : 'Explore All Commands'}
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  [x-cloak] { display: none !important; }
+</style>
+
+<script>
+  import Alpine from 'alpinejs';
+
+  if (!window.Alpine) {
+    window.Alpine = Alpine;
+    Alpine.start();
+  }
+</script>

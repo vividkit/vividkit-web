@@ -75,9 +75,9 @@ test('legacy archive catalog is bilingual, excluded from sitemap/llms, and requi
   assert.equal(sitemapRouteIdentities.some((route) => route.startsWith('/legacy/')), false);
   assert.equal(sitemapRouteIdentities.some((route) => route.includes('/legacy/')), false);
 
-  const frozen = LEGACY_GUIDE_CATALOG.filter((entry) => entry.freezeStatus === 'frozen').map((entry) => entry.suffix).sort();
+  const frozen = LEGACY_GUIDE_CATALOG.filter((entry) => entry.freezeStatus === 'isolated' || entry.freezeStatus === 'frozen').map((entry) => entry.suffix).sort();
   assert.equal(frozen.length, LEGACY_GUIDE_CATALOG.length);
-  assert.equal(LEGACY_GUIDE_CATALOG.every((entry) => entry.freezeStatus === 'frozen'), true);
+  assert.equal(LEGACY_GUIDE_CATALOG.every((entry) => entry.freezeStatus === 'isolated'), true);
   assert.ok(frozen.includes('migrate'));
   assert.ok(frozen.includes('ccs'));
   assert.ok(frozen.includes('hooks'));

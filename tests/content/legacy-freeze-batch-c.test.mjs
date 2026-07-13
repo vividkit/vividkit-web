@@ -12,7 +12,7 @@ const root = new URL('../..', import.meta.url);
 
 test('batch C freezes remaining catalog stubs and completes the archive', async () => {
   assert.equal(LEGACY_BATCH_C_SUFFIXES.length, 12);
-  assert.equal(LEGACY_GUIDE_CATALOG.every((entry) => entry.freezeStatus === 'frozen'), true);
+  assert.equal(LEGACY_GUIDE_CATALOG.every((entry) => entry.freezeStatus === 'isolated'), true);
   assert.equal(LEGACY_FROZEN_SUFFIXES.length, LEGACY_GUIDE_CATALOG.length);
 
   for (const suffix of LEGACY_BATCH_C_SUFFIXES) {

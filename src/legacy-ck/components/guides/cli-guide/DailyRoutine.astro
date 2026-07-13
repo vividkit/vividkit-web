@@ -1,0 +1,269 @@
+---
+import { useTranslations } from '@legacy-ck/i18n/utils';
+import type { Language } from '@/i18n';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<div class="glass-card rounded-xl overflow-hidden border-green-200 dark:border-green-500/30">
+  <div class="p-6 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border-b border-slate-200 dark:border-slate-800">
+    <h2 class="text-2xl font-bold font-sans text-emerald-600 dark:text-emerald-400 flex items-center gap-3">
+      <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+      </svg>
+      {t('cli.guide.daily_routine')}
+    </h2>
+    <p class="text-sm text-emerald-700 dark:text-emerald-300 mt-2 font-medium">
+      💡 {t('cli.guide.daily_routine_description')}
+    </p>
+  </div>
+
+  <div class="p-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Logic for Command 1: Update CLI Tool -->
+    <div class="relative">
+      <div class="relative">
+        <h3 class="flex items-center gap-2 text-lg font-bold text-slate-800 dark:text-slate-200 mb-3">
+          <span class="flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 text-xs text-center border border-emerald-200 dark:border-emerald-800">1</span>
+          {t('cli.update.tool_title')}
+        </h3>
+        <div class="relative group">
+          <div class="absolute -inset-1 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 rounded-lg blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
+          <div class="relative bg-surface-100 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm mb-2 group-hover:border-emerald-500/30 transition-colors">
+            <button
+              class="copy-btn absolute top-2 right-2 p-1.5 rounded-md bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+              data-code="ck update"
+              title="Copy to clipboard"
+            >
+              <svg class="w-3.5 h-3.5 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <svg class="w-3.5 h-3.5 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </button>
+            <div class="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+              <span class="text-emerald-600 dark:text-emerald-400">$</span>
+              <span>ck update</span>
+            </div>
+            <!-- Quick tip: ck update --beta --yes -->
+            <div class="mt-2 pt-2 border-t border-slate-200 dark:border-slate-800/50">
+              <div class="group/line flex items-center gap-2 text-slate-500 dark:text-slate-400">
+                <span class="text-emerald-600 dark:text-emerald-400">$</span>
+                <span class="text-xs">ck update --beta --yes</span>
+                <button
+                  class="copy-btn ml-auto p-1 rounded bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-500 dark:text-slate-400 opacity-0 group-hover/line:opacity-100 transition-opacity"
+                  data-code="ck update --beta --yes"
+                  title="Copy to clipboard"
+                >
+                  <svg class="w-3 h-3 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                  <svg class="w-3 h-3 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="text-xs text-slate-500 dark:text-slate-400" set:html={t('cli.update.tool_desc')}></p>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mt-2" set:html={t('cli.update.quick_tip')}></p>
+      </div>
+    </div>
+
+    <!-- Logic for Command 2 -->
+    <div class="relative">
+      <div class="relative">
+        <h3 class="flex items-center gap-2 text-lg font-bold text-slate-800 dark:text-slate-200 mb-3">
+          <span class="flex items-center justify-center w-6 h-6 rounded-full bg-teal-100 dark:bg-teal-900/50 text-teal-600 dark:text-teal-400 text-xs text-center border border-teal-200 dark:border-teal-800">2</span>
+          {t('cli.update.kit_title')}
+        </h3>
+        <div class="relative group/main">
+          <div class="absolute -inset-1 bg-gradient-to-r from-teal-500/20 to-cyan-500/20 rounded-lg blur opacity-0 group-hover/main:opacity-100 transition duration-500"></div>
+          <div class="relative bg-surface-100 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm mb-2 group-hover/main:border-teal-500/30 transition-colors">
+            <button
+              class="copy-btn absolute top-2 right-2 p-1.5 rounded-md bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover/main:opacity-100 transition-opacity duration-200 z-10"
+              data-code="ck init --kit engineer"
+              title="Copy to clipboard"
+            >
+              <svg class="w-3.5 h-3.5 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <svg class="w-3.5 h-3.5 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </button>
+            <div class="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+              <span class="text-emerald-600 dark:text-emerald-400">$</span>
+              <span>ck init --kit engineer</span>
+            </div>
+             <div class="mt-2 pt-2 border-t border-slate-200 dark:border-slate-800/50">
+                <span class="text-xs text-slate-400 block mb-1">{t('cli.update.global_flag')}</span>
+                <div class="group/line flex items-center gap-2 text-slate-500 dark:text-slate-400">
+                  <span class="text-emerald-600 dark:text-emerald-400">$</span>
+                  <span>ck init -g --kit engineer</span>
+                  <button
+                    class="copy-btn ml-auto p-1 rounded bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-500 dark:text-slate-400 opacity-0 group-hover/line:opacity-100 transition-opacity"
+                    data-code="ck init -g --kit engineer"
+                    title="Copy to clipboard"
+                  >
+                    <svg class="w-3 h-3 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <svg class="w-3 h-3 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </button>
+                </div>
+             </div>
+             <div class="mt-2 pt-2 border-t border-slate-200 dark:border-slate-800/50">
+                <span class="text-xs text-slate-400 block mb-1">{t('cli.update.automated_flag')}</span>
+                <div class="group/line flex items-center gap-2 text-slate-500 dark:text-slate-400">
+                  <span class="text-emerald-600 dark:text-emerald-400">$</span>
+                  <span class="text-xs">ck init -g --kit engineer --yes --install-skills</span>
+                  <button
+                    class="copy-btn ml-auto p-1 rounded bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-500 dark:text-slate-400 opacity-0 group-hover/line:opacity-100 transition-opacity"
+                    data-code="ck init -g --kit engineer --yes --install-skills"
+                    title="Copy to clipboard"
+                  >
+                    <svg class="w-3 h-3 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <svg class="w-3 h-3 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </button>
+                </div>
+             </div>
+             <div class="mt-2 pt-2 border-t border-slate-200 dark:border-slate-800/50">
+                <span class="text-xs text-slate-400 block mb-1">{t('cli.update.beta_flag')}</span>
+                <div class="group/line flex items-center gap-2 text-slate-500 dark:text-slate-400">
+                  <span class="text-emerald-600 dark:text-emerald-400">$</span>
+                  <span class="text-xs">ck init -g --kit engineer --yes --install-skills --beta</span>
+                  <button
+                    class="copy-btn ml-auto p-1 rounded bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-500 dark:text-slate-400 opacity-0 group-hover/line:opacity-100 transition-opacity"
+                    data-code="ck init -g --kit engineer --yes --install-skills --beta"
+                    title="Copy to clipboard"
+                  >
+                    <svg class="w-3 h-3 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <svg class="w-3 h-3 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </button>
+                </div>
+             </div>
+          </div>
+        </div>
+        <p class="text-xs text-slate-500 dark:text-slate-400" set:html={t('cli.update.kit_desc')}>
+        </p>
+      </div>
+    </div>
+
+    <!-- Logic for Command 3: Update Marketing Kit -->
+    <div class="relative">
+      <div class="relative">
+        <h3 class="flex items-center gap-2 text-lg font-bold text-slate-800 dark:text-slate-200 mb-3">
+          <span class="flex items-center justify-center w-6 h-6 rounded-full bg-pink-100 dark:bg-pink-900/50 text-pink-600 dark:text-pink-400 text-xs text-center border border-pink-200 dark:border-pink-800">3</span>
+          {t('cli.update.marketing_kit_title')}
+        </h3>
+        <div class="relative group/main">
+          <div class="absolute -inset-1 bg-gradient-to-r from-pink-500/20 to-rose-500/20 rounded-lg blur opacity-0 group-hover/main:opacity-100 transition duration-500"></div>
+          <div class="relative bg-surface-100 dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700 font-mono text-sm mb-2 group-hover/main:border-pink-500/30 transition-colors">
+            <button
+              class="copy-btn absolute top-2 right-2 p-1.5 rounded-md bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover/main:opacity-100 transition-opacity duration-200 z-10"
+              data-code="ck init --kit marketing"
+              title="Copy to clipboard"
+            >
+              <svg class="w-3.5 h-3.5 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <svg class="w-3.5 h-3.5 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </button>
+            <div class="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+              <span class="text-pink-600 dark:text-pink-400">$</span>
+              <span>ck init --kit marketing</span>
+            </div>
+             <div class="mt-2 pt-2 border-t border-slate-200 dark:border-slate-800/50">
+                <span class="text-xs text-slate-400 block mb-1">{t('cli.update.global_flag')}</span>
+                <div class="group/line flex items-center gap-2 text-slate-500 dark:text-slate-400">
+                  <span class="text-pink-600 dark:text-pink-400">$</span>
+                  <span>ck init -g --kit marketing</span>
+                  <button
+                    class="copy-btn ml-auto p-1 rounded bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-500 dark:text-slate-400 opacity-0 group-hover/line:opacity-100 transition-opacity"
+                    data-code="ck init -g --kit marketing"
+                    title="Copy to clipboard"
+                  >
+                    <svg class="w-3 h-3 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <svg class="w-3 h-3 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </button>
+                </div>
+             </div>
+             <div class="mt-2 pt-2 border-t border-slate-200 dark:border-slate-800/50">
+                <span class="text-xs text-slate-400 block mb-1">{t('cli.update.automated_flag')}</span>
+                <div class="group/line flex items-center gap-2 text-slate-500 dark:text-slate-400">
+                  <span class="text-pink-600 dark:text-pink-400">$</span>
+                  <span class="text-xs">ck init -g --kit marketing --yes --install-skills</span>
+                  <button
+                    class="copy-btn ml-auto p-1 rounded bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-500 dark:text-slate-400 opacity-0 group-hover/line:opacity-100 transition-opacity"
+                    data-code="ck init -g --kit marketing --yes --install-skills"
+                    title="Copy to clipboard"
+                  >
+                    <svg class="w-3 h-3 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <svg class="w-3 h-3 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </button>
+                </div>
+             </div>
+             <div class="mt-2 pt-2 border-t border-slate-200 dark:border-slate-800/50">
+                <span class="text-xs text-slate-400 block mb-1">{t('cli.update.beta_flag')}</span>
+                <div class="group/line flex items-center gap-2 text-slate-500 dark:text-slate-400">
+                  <span class="text-pink-600 dark:text-pink-400">$</span>
+                  <span class="text-xs">ck init -g --kit marketing --yes --install-skills --beta</span>
+                  <button
+                    class="copy-btn ml-auto p-1 rounded bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-500 dark:text-slate-400 opacity-0 group-hover/line:opacity-100 transition-opacity"
+                    data-code="ck init -g --kit marketing --yes --install-skills --beta"
+                    title="Copy to clipboard"
+                  >
+                    <svg class="w-3 h-3 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <svg class="w-3 h-3 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </button>
+                </div>
+             </div>
+          </div>
+        </div>
+        <p class="text-xs text-slate-500 dark:text-slate-400" set:html={t('cli.update.marketing_kit_desc')}>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

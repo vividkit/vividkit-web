@@ -1,0 +1,70 @@
+---
+// Workflows Guide - Engineer Kit section: workflow cards grouped by category
+import { useTranslations } from '@legacy-ck/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+import WorkflowsWorkflowCard from './workflows-workflow-card.astro';
+
+interface Props {
+  workflows: any[];
+  lang?: Language;
+}
+
+const { workflows, lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+// Group workflows by category
+const categories = workflows.reduce((acc: Record<string, any[]>, workflow) => {
+  const cat = workflow.category || 'Uncategorized';
+  if (!acc[cat]) acc[cat] = [];
+  acc[cat].push(workflow);
+  return acc;
+}, {});
+
+// Category order and colors
+const categoryMeta: Record<string, { icon: string; color: string }> = {
+  'Getting Started': { icon: '<path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>', color: 'green' },
+  'Debugging & Fixes': { icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>', color: 'red' },
+  'Planning & Review': { icon: '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>', color: 'blue' },
+  'Research & Docs': { icon: '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>', color: 'orange' },
+  'Backend & Infra': { icon: '<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>', color: 'violet' },
+  'Shipping': { icon: '<path d="M5 12h14M12 5l7 7-7 7"/>', color: 'emerald' },
+  'Media & Creative': { icon: '<polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>', color: 'pink' },
+  'Advanced': { icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>', color: 'cyan' },
+  'Session & Management': { icon: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>', color: 'amber' },
+  'Design & Frontend': { icon: '<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>', color: 'fuchsia' }
+};
+
+// Category display order
+const categoryOrder = ['Getting Started', 'Design & Frontend', 'Debugging & Fixes', 'Planning & Review', 'Research & Docs', 'Shipping', 'Backend & Infra', 'Media & Creative', 'Session & Management', 'Advanced'];
+---
+
+<div id="wf-categories-engineer" class="space-y-8">
+  {categoryOrder.filter(cat => categories[cat]).map((categoryName) => {
+    const categoryWorkflows = categories[categoryName];
+    const meta = categoryMeta[categoryName] || { icon: '', color: 'slate' };
+    return (
+      <div class="space-y-4">
+        <!-- Category Header -->
+        <div class="flex items-center gap-3">
+          <div class={`p-2 rounded-lg bg-${meta.color}-500/10 dark:bg-${meta.color}-500/20`}>
+            <svg class={`w-5 h-5 text-${meta.color}-600 dark:text-${meta.color}-400`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={meta.icon} />
+          </div>
+          <h3 class={`text-lg font-semibold text-${meta.color}-700 dark:text-${meta.color}-300`}>
+            {categoryName}
+          </h3>
+          <span class="text-xs text-slate-500 dark:text-slate-400">
+            {categoryWorkflows.length} {currentLang === 'vi' ? 'quy trình' : 'workflows'}
+          </span>
+        </div>
+
+        <!-- Workflow Cards in this category -->
+        <div class="grid grid-cols-1 gap-6">
+          {categoryWorkflows.map((workflow: any) => (
+            <WorkflowsWorkflowCard workflow={workflow} lang={currentLang} />
+          ))}
+        </div>
+      </div>
+    );
+  })}
+</div>

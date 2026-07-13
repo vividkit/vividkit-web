@@ -1,0 +1,198 @@
+---
+import { FileCheck2, MessageSquareText, Plug, Settings2, ToggleLeft, Workflow } from 'lucide-astro';
+import { inlineCodeClass, renderInlineCode } from './inline-code';
+
+const { lang = 'en' } = Astro.props;
+const isVi = lang === 'vi';
+const t = (en: string, vi: string) => isVi ? vi : en;
+
+const hookCodeClass = `${inlineCodeClass} break-all`;
+
+const lifecycleHooks = [
+  {
+    agent: 'Claude Code',
+    hook: 'PermissionRequest -> ExitPlanMode',
+    phase: t('Before Claude leaves plan mode', 'Trước khi Claude thoát plan mode'),
+    role: t(
+      'Blocks the plan handoff, reads `tool_input.plan` from stdin, opens the browser review gate, then lets Claude continue only after approval.',
+      'Chặn bước bàn giao plan, đọc `tool_input.plan` từ stdin, mở review gate trên browser, rồi chỉ cho Claude đi tiếp sau khi approve.'
+    ),
+    enable: t(
+      'Install the Plannotator plugin from the Claude marketplace, or add a `PermissionRequest` hook matching `ExitPlanMode` in `~/.claude/settings.json`.',
+      'Cài Plannotator plugin từ Claude marketplace, hoặc thêm hook `PermissionRequest` match `ExitPlanMode` trong `~/.claude/settings.json`.'
+    ),
+    disable: t(
+      'Disable or uninstall the plugin, or remove that `PermissionRequest` hook entry. Restart Claude Code after changing hooks.',
+      'Tắt/gỡ plugin, hoặc xoá entry `PermissionRequest` đó. Restart Claude Code sau khi đổi hook.'
+    )
+  },
+  {
+    agent: 'Codex',
+    hook: 'Stop',
+    phase: t('After a Codex turn stops with a plan', 'Sau khi turn Codex dừng với plan'),
+    role: t(
+      'Reads `transcript_path`, extracts the latest plan or `<proposed_plan>`, opens review, and returns continuation feedback when annotations are sent.',
+      'Đọc `transcript_path`, lấy plan mới nhất hoặc `<proposed_plan>`, mở review, rồi trả feedback để Codex revise khi có annotation.'
+    ),
+    enable: t(
+      'Installer auto-enables on macOS/Linux/WSL when `~/.codex` exists. Manual setup uses `[features] hooks = true` plus a `Stop` hook in `hooks.json`.',
+      'Installer tự bật trên macOS/Linux/WSL khi có `~/.codex`. Setup tay dùng `[features] hooks = true` và `Stop` hook trong `hooks.json`.'
+    ),
+    disable: t(
+      'Remove the `Stop` hook entry, or turn hooks off for that Codex config layer when you want all Codex hooks disabled there.',
+      'Xoá entry `Stop` hook, hoặc tắt hooks ở config layer Codex đó nếu muốn disable toàn bộ hooks tại layer ấy.'
+    )
+  },
+  {
+    agent: 'OpenCode',
+    hook: 'plan-agent submit_plan',
+    phase: t('When the plan agent submits a plan', 'Khi plan agent submit plan'),
+    role: t(
+      'The npm plugin exposes `submit_plan` to the plan agent by default, so planning can be gated without giving build agents the same tool.',
+      'Plugin npm expose `submit_plan` cho plan agent mặc định, nên có thể gate bước planning mà không đưa tool này cho build agents.'
+    ),
+    enable: t(
+      'Add `@plannotator/opencode` to `opencode.json` and restart OpenCode. Run the installer too if you want the `/plannotator-*` commands.',
+      'Thêm `@plannotator/opencode` vào `opencode.json` rồi restart OpenCode. Chạy installer nếu muốn có thêm `/plannotator-*` commands.'
+    ),
+    disable: t(
+      'Remove the plugin or switch workflow to `manual` for commands-only mode. Use `all-agents` only when broad tool access is intentional.',
+      'Gỡ plugin hoặc chuyển workflow sang `manual` để chỉ dùng commands. Chỉ dùng `all-agents` khi thật sự muốn mở tool rộng.'
+    )
+  }
+];
+
+const optionalHooks = [
+  {
+    icon: FileCheck2,
+    title: '`PostToolUse -> Write`',
+    body: t(
+      'Review every file the agent writes. Useful for sensitive docs, generated HTML, or files where visual copy review matters.',
+      'Review mỗi file agent vừa ghi. Hợp với docs nhạy cảm, HTML generate, hoặc file cần soi copy/visual kỹ.'
+    )
+  },
+  {
+    icon: MessageSquareText,
+    title: '`Stop -> annotate-last`',
+    body: t(
+      'Review the agent response at turn end. Approve closes cleanly; annotations send feedback back into the agent loop.',
+      'Review câu trả lời cuối turn. Approve thì kết thúc sạch; annotation sẽ gửi feedback lại vào vòng agent.'
+    )
+  },
+  {
+    icon: ToggleLeft,
+    title: '`--hook` / `--gate` / `--json`',
+    body: t(
+      '`--hook` makes the command gate and emit hook-native JSON. `--gate` adds the approval button. `--json` is for wrappers and logs.',
+      '`--hook` biến command thành gate và xuất JSON đúng format hook. `--gate` thêm nút approve. `--json` dùng cho wrapper/log.'
+    )
+  }
+];
+
+const controls = [
+  t('Use `PLANNOTATOR_REMOTE=1` when the browser is on another device, VM, devcontainer, or Tailscale URL.', 'Dùng `PLANNOTATOR_REMOTE=1` khi browser ở máy khác, VM, devcontainer, hoặc URL Tailscale.'),
+  t('Pin `PLANNOTATOR_PORT` when mobile testing needs a stable QR/link.', 'Set `PLANNOTATOR_PORT` khi test mobile cần QR/link ổn định.'),
+  t('Set `PLANNOTATOR_BROWSER` or `BROWSER` when the hook should open a specific browser.', 'Set `PLANNOTATOR_BROWSER` hoặc `BROWSER` khi hook cần mở browser cụ thể.'),
+  t('Set `PLANNOTATOR_SHARE=disabled` when the gate must stay local-only.', 'Set `PLANNOTATOR_SHARE=disabled` khi gate phải local-only.'),
+  t('Re-run the installer or remove hook config when switching between automatic gates and commands-only workflow.', 'Chạy lại installer hoặc xoá config hook khi chuyển giữa automatic gate và workflow chỉ dùng command.')
+];
+---
+
+<section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-200/60 dark:border-slate-800 dark:bg-slate-950/80 dark:shadow-none sm:p-6 lg:p-8">
+  <div class="max-w-3xl">
+    <div>
+      <p class="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-purple-600 dark:text-purple-400">
+        <Workflow class="h-4 w-4" />
+        {t('Hook lifecycle', 'Hook lifecycle')}
+      </p>
+      <h2 class="text-2xl font-semibold tracking-tight text-slate-950 dark:text-white">
+        {t('Where Plannotator enters the agent loop', 'Plannotator chen vào lifecycle ở đâu')}
+      </h2>
+      <p class="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-300">
+        {t(
+          'The gate is not just a UI command. Each host wires it into a specific lifecycle point, then Plannotator turns approve/feedback into the native hook response for that host.',
+          'Gate này không chỉ là UI command. Mỗi host gắn nó vào một điểm lifecycle riêng, rồi Plannotator đổi approve/feedback thành response đúng kiểu hook của host đó.'
+        )}
+      </p>
+    </div>
+    <div class="mt-4 flex items-start gap-3 rounded-xl border border-purple-200 bg-purple-50 px-4 py-3 text-sm leading-6 text-purple-900 dark:border-purple-900/60 dark:bg-purple-950/35 dark:text-purple-100">
+      <Plug class="mt-0.5 h-4 w-4 shrink-0" />
+      {t('Default install favors plan review. File and response review hooks are opt-in recipes.', 'Cài mặc định ưu tiên review plan. Hook review file và response là recipe opt-in.')}
+    </div>
+  </div>
+
+  <div class="mt-7 space-y-4">
+    {lifecycleHooks.map((item, index) => (
+      <article class="grid gap-4 rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-900/50 sm:grid-cols-[2.5rem_minmax(0,1fr)] sm:p-5">
+        <div class="flex sm:block">
+          <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-purple-200 bg-white text-sm font-bold text-purple-700 shadow-sm dark:border-purple-700/60 dark:bg-slate-950 dark:text-purple-200">
+            {index + 1}
+          </span>
+        </div>
+        <div class="min-w-0">
+          <div class="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+            <div class="min-w-0">
+              <h3 class="text-base font-semibold text-slate-950 dark:text-white">{item.agent}</h3>
+              <p class="mt-1 text-sm leading-6 text-slate-500 dark:text-slate-400">{item.phase}</p>
+            </div>
+            <code class={`${hookCodeClass} w-fit max-w-full`}>{item.hook}</code>
+          </div>
+
+          <dl class="mt-4 space-y-3 text-sm leading-6">
+            <div class="rounded-lg border border-slate-200 bg-white p-3 dark:border-slate-800 dark:bg-slate-950/70">
+              <dt class="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">{t('Role', 'Vai trò')}</dt>
+              <dd class="mt-2 text-slate-700 dark:text-slate-200" set:html={renderInlineCode(item.role)}></dd>
+            </div>
+            <div class="grid gap-3 lg:grid-cols-2">
+              <div class="rounded-lg border border-emerald-200 bg-emerald-50/70 p-3 dark:border-emerald-900/60 dark:bg-emerald-950/25">
+                <dt class="text-xs font-semibold uppercase tracking-[0.14em] text-emerald-700 dark:text-emerald-300">{t('Enable', 'Bật')}</dt>
+                <dd class="mt-2 text-slate-700 dark:text-slate-200" set:html={renderInlineCode(item.enable)}></dd>
+              </div>
+              <div class="rounded-lg border border-amber-200 bg-amber-50/70 p-3 dark:border-amber-900/60 dark:bg-amber-950/25">
+                <dt class="text-xs font-semibold uppercase tracking-[0.14em] text-amber-700 dark:text-amber-300">{t('Disable', 'Tắt')}</dt>
+                <dd class="mt-2 text-slate-700 dark:text-slate-200" set:html={renderInlineCode(item.disable)}></dd>
+              </div>
+            </div>
+          </dl>
+        </div>
+      </article>
+    ))}
+  </div>
+
+  <div class="mt-6 space-y-4">
+    <div class="rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-900/50">
+      <h3 class="flex items-center gap-2 text-base font-semibold text-slate-950 dark:text-white">
+        <Settings2 class="h-4 w-4 text-purple-600 dark:text-purple-400" />
+        {t('Opt-in hook recipes', 'Recipe hook opt-in')}
+      </h3>
+      <div class="mt-4 space-y-3">
+        {optionalHooks.map((hook) => {
+          const Icon = hook.icon;
+          return (
+            <div class="flex gap-3 rounded-lg border border-slate-200 bg-white p-3 dark:border-slate-800 dark:bg-slate-950/70">
+              <Icon class="mt-1 h-4 w-4 shrink-0 text-purple-600 dark:text-purple-400" />
+              <div class="min-w-0">
+                <h4 class="text-sm font-semibold text-slate-900 dark:text-white" set:html={renderInlineCode(hook.title)}></h4>
+                <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300" set:html={renderInlineCode(hook.body)}></p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+
+    <div class="rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-900/50">
+      <h3 class="text-base font-semibold text-slate-950 dark:text-white">
+        {t('Runtime switches', 'Công tắc runtime')}
+      </h3>
+      <ul class="mt-4 space-y-3 text-sm leading-6 text-slate-600 dark:text-slate-300">
+        {controls.map((item) => (
+          <li class="flex gap-3">
+            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-purple-500"></span>
+            <span set:html={renderInlineCode(item)}></span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>

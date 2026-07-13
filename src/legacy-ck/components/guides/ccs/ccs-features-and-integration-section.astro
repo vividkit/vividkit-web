@@ -1,0 +1,126 @@
+---
+// CCSGuide core features and ClaudeKit integration (sections 3-4)
+import { getLangFromUrl, type Language } from '@/i18n';
+import { useTranslations } from '@legacy-ck/i18n/utils';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+---
+
+
+  <!-- ClaudeKit Integration Section -->
+  <div class="glass-card rounded-xl border-slate-200 dark:border-slate-700 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border-b border-slate-200 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center font-bold text-blue-600 dark:text-blue-400 border-2 border-blue-500/50">
+          4
+        </div>
+        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-200">
+          {t('ccs.guide.claudekit_title')}
+        </h3>
+      </div>
+    </div>
+    <div class="p-6 space-y-6">
+      <p class="text-slate-700 dark:text-slate-300">
+        {t('ccs.guide.claudekit_desc')}
+      </p>
+
+      <!-- Recommended Workflow -->
+      <div class="bg-white dark:bg-[#0D0D0D] rounded-lg p-4 border border-slate-200 dark:border-slate-700">
+        <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-4">
+          {t('ccs.guide.workflow_title')}
+        </h4>
+        <div class="space-y-3 font-mono text-sm">
+          <div class="flex items-start gap-3">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center text-xs font-bold text-blue-600 dark:text-blue-400 shrink-0">1</span>
+            <div>
+              <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.workflow_step1')}</div>
+              <code class="text-slate-700 dark:text-slate-300">ccs "/ck:plan add payment integration"</code>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center text-xs font-bold text-blue-600 dark:text-blue-400 shrink-0">2</span>
+            <div>
+              <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.workflow_step2')}</div>
+              <code class="text-amber-600 dark:text-amber-400">ccs glm "/ck:cook implement Stripe payment flow"</code>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center text-xs font-bold text-blue-600 dark:text-blue-400 shrink-0">3</span>
+            <div>
+              <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.workflow_step3')}</div>
+              <code class="text-amber-600 dark:text-amber-400">ccs glm "/ck:test run payment tests"</code>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center text-xs font-bold text-blue-600 dark:text-blue-400 shrink-0">4</span>
+            <div>
+              <div class="text-slate-500 text-xs mb-1"># {t('ccs.guide.workflow_step4')}</div>
+              <code class="text-slate-700 dark:text-slate-300">ccs "/ck:code-review check payment implementation"</code>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cost Optimization Strategy -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="p-4 rounded-lg bg-blue-500/5 border border-blue-200/50 dark:border-blue-500/20">
+          <h5 class="font-bold text-slate-700 dark:text-slate-300 mb-2 text-sm">{t('ccs.guide.use_claude_for')}</h5>
+          <ul class="text-xs text-slate-600 dark:text-slate-400 space-y-1">
+            <li class="flex items-center gap-2">
+              <svg class="w-3 h-3 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              {t('ccs.guide.claude_use1')}
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-3 h-3 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              {t('ccs.guide.claude_use2')}
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-3 h-3 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              {t('ccs.guide.claude_use3')}
+            </li>
+          </ul>
+        </div>
+        <div class="p-4 rounded-lg bg-blue-500/5 border border-blue-200/50 dark:border-blue-500/20">
+          <h5 class="font-bold text-slate-700 dark:text-slate-300 mb-2 text-sm">{t('ccs.guide.use_glm_for')}</h5>
+          <ul class="text-xs text-slate-600 dark:text-slate-400 space-y-1">
+            <li class="flex items-center gap-2">
+              <svg class="w-3 h-3 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              {t('ccs.guide.glm_use1')}
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-3 h-3 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              {t('ccs.guide.glm_use2')}
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-3 h-3 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              {t('ccs.guide.glm_use3')}
+            </li>
+          </ul>
+        </div>
+        <div class="p-4 rounded-lg bg-blue-500/5 border border-blue-200/50 dark:border-blue-500/20">
+          <h5 class="font-bold text-slate-700 dark:text-slate-300 mb-2 text-sm">{t('ccs.guide.use_kimi_for')}</h5>
+          <ul class="text-xs text-slate-600 dark:text-slate-400 space-y-1">
+            <li class="flex items-center gap-2">
+              <svg class="w-3 h-3 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              {t('ccs.guide.kimi_use1')}
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-3 h-3 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              {t('ccs.guide.kimi_use2')}
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-3 h-3 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              {t('ccs.guide.kimi_use3')}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+

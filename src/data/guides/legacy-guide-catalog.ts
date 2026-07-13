@@ -12,7 +12,7 @@ export type LegacyGuidePathwayId =
   | 'reliability'
   | 'deep';
 
-export type LegacyFreezeStatus = 'stub' | 'frozen';
+export type LegacyFreezeStatus = 'stub' | 'frozen' | 'isolated';
 
 export interface LegacyGuideCatalogEntry {
   /** Path suffix after /legacy/guides/ — empty string = archive home */
@@ -38,11 +38,11 @@ export const LEGACY_GUIDE_PATHWAY_META: Record<
   deep: { titleEn: 'Deep dives', titleVi: 'Đi sâu', order: 7 },
 };
 
-const frozen = {
-  freezeStatus: 'frozen' as const,
+const isolated = {
+  freezeStatus: 'isolated' as const,
 };
 
-/** Batch B shared-component freeze suffixes (copy before rewriting live guides). */
+/** Batch B suffixes — served from @legacy-ck trees (CK-era restore). */
 export const LEGACY_BATCH_B_SUFFIXES = [
   'what-is-claudekit',
   'how-ck-works',
@@ -59,7 +59,7 @@ export const LEGACY_BATCH_B_SUFFIXES = [
   'inside-claudekit/plan-modes',
 ] as const;
 
-/** Batch C shared-component freeze — completes the full archive catalog. */
+/** Batch C suffixes — served from @legacy-ck trees (CK-era restore). */
 export const LEGACY_BATCH_C_SUFFIXES = [
   'permissions',
   'hooks',
@@ -77,40 +77,40 @@ export const LEGACY_BATCH_C_SUFFIXES = [
 
 /** Content pages only (excludes archive index). */
 export const LEGACY_GUIDE_CATALOG = [
-  { suffix: 'what-is-claudekit', titleEn: 'What is ClaudeKit?', titleVi: 'ClaudeKit là gì?', pathway: 'start', currentGuideSuffix: 'what-is-claudekit', ...frozen },
-  { suffix: 'how-ck-works', titleEn: 'How ClaudeKit Works', titleVi: 'How ClaudeKit Works', pathway: 'start', currentGuideSuffix: 'how-ck-works', ...frozen },
-  { suffix: 'cli', titleEn: 'CLI Guide', titleVi: 'Hướng dẫn CLI', pathway: 'start', currentGuideSuffix: 'cli', ...frozen },
-  { suffix: 'cli-commands', titleEn: 'CLI Commands', titleVi: 'Lệnh CLI', pathway: 'start', currentGuideSuffix: 'cli-commands', ...frozen },
+  { suffix: 'what-is-claudekit', titleEn: 'What is ClaudeKit?', titleVi: 'ClaudeKit là gì?', pathway: 'start', currentGuideSuffix: 'what-is-claudekit', ...isolated },
+  { suffix: 'how-ck-works', titleEn: 'How ClaudeKit Works', titleVi: 'How ClaudeKit Works', pathway: 'start', currentGuideSuffix: 'how-ck-works', ...isolated },
+  { suffix: 'cli', titleEn: 'CLI Guide', titleVi: 'Hướng dẫn CLI', pathway: 'start', currentGuideSuffix: 'cli', ...isolated },
+  { suffix: 'cli-commands', titleEn: 'CLI Commands', titleVi: 'Lệnh CLI', pathway: 'start', currentGuideSuffix: 'cli-commands', ...isolated },
 
-  { suffix: 'commands', titleEn: 'Commands', titleVi: 'Commands', pathway: 'commands', currentGuideSuffix: 'commands', ...frozen },
-  { suffix: 'workflows', titleEn: 'Workflows', titleVi: 'Workflows', pathway: 'commands', currentGuideSuffix: 'workflows', ...frozen },
-  { suffix: 'flowchart', titleEn: 'Visual Flowchart', titleVi: 'Flowchart', pathway: 'commands', currentGuideSuffix: 'flowchart', ...frozen },
-  { suffix: 'finding-unknowns', titleEn: 'Finding Your Unknowns', titleVi: 'Finding Your Unknowns', pathway: 'commands', currentGuideSuffix: 'finding-unknowns', ...frozen },
+  { suffix: 'commands', titleEn: 'Commands', titleVi: 'Commands', pathway: 'commands', currentGuideSuffix: 'commands', ...isolated },
+  { suffix: 'workflows', titleEn: 'Workflows', titleVi: 'Workflows', pathway: 'commands', currentGuideSuffix: 'workflows', ...isolated },
+  { suffix: 'flowchart', titleEn: 'Visual Flowchart', titleVi: 'Flowchart', pathway: 'commands', currentGuideSuffix: 'flowchart', ...isolated },
+  { suffix: 'finding-unknowns', titleEn: 'Finding Your Unknowns', titleVi: 'Finding Your Unknowns', pathway: 'commands', currentGuideSuffix: 'finding-unknowns', ...isolated },
 
-  { suffix: 'claude-mechanics', titleEn: 'Claude Mechanics', titleVi: 'Claude Mechanics', pathway: 'config', currentGuideSuffix: 'claude-mechanics', ...frozen },
-  { suffix: 'permissions', titleEn: 'Permissions', titleVi: 'Permissions', pathway: 'config', currentGuideSuffix: 'permissions', ...frozen },
-  { suffix: 'hooks', titleEn: 'Hooks', titleVi: 'Hooks', pathway: 'config', currentGuideSuffix: 'hooks', ...frozen },
-  { suffix: 'ui-review-gate', titleEn: 'UI Review Gate', titleVi: 'UI Review Gate', pathway: 'config', currentGuideSuffix: 'ui-review-gate', ...frozen },
-  { suffix: 'coexistence', titleEn: 'Coexistence', titleVi: 'Coexistence', pathway: 'config', currentGuideSuffix: 'coexistence', ...frozen },
+  { suffix: 'claude-mechanics', titleEn: 'Claude Mechanics', titleVi: 'Claude Mechanics', pathway: 'config', currentGuideSuffix: 'claude-mechanics', ...isolated },
+  { suffix: 'permissions', titleEn: 'Permissions', titleVi: 'Permissions', pathway: 'config', currentGuideSuffix: 'permissions', ...isolated },
+  { suffix: 'hooks', titleEn: 'Hooks', titleVi: 'Hooks', pathway: 'config', currentGuideSuffix: 'hooks', ...isolated },
+  { suffix: 'ui-review-gate', titleEn: 'UI Review Gate', titleVi: 'UI Review Gate', pathway: 'config', currentGuideSuffix: 'ui-review-gate', ...isolated },
+  { suffix: 'coexistence', titleEn: 'Coexistence', titleVi: 'Coexistence', pathway: 'config', currentGuideSuffix: 'coexistence', ...isolated },
 
-  { suffix: 'ccs', titleEn: 'CCS', titleVi: 'CCS', pathway: 'providers', currentGuideSuffix: 'ccs', ...frozen },
-  { suffix: 'happy-ccs', titleEn: 'Happy CCS', titleVi: 'Happy CCS', pathway: 'providers', currentGuideSuffix: 'happy-ccs', ...frozen },
-  { suffix: 'ck-with-codex', titleEn: 'CK with Codex', titleVi: 'CK with Codex', pathway: 'providers', currentGuideSuffix: 'ck-with-codex', ...frozen },
-  { suffix: 'codex-app', titleEn: 'Codex App', titleVi: 'Codex App', pathway: 'providers', currentGuideSuffix: 'codex-app', ...frozen },
-  { suffix: 'migrate', titleEn: 'Migrate (CK provider migrate)', titleVi: 'Migrate (CK provider migrate)', pathway: 'providers', currentGuideSuffix: 'migrate', ...frozen },
+  { suffix: 'ccs', titleEn: 'CCS', titleVi: 'CCS', pathway: 'providers', currentGuideSuffix: 'ccs', ...isolated },
+  { suffix: 'happy-ccs', titleEn: 'Happy CCS', titleVi: 'Happy CCS', pathway: 'providers', currentGuideSuffix: 'happy-ccs', ...isolated },
+  { suffix: 'ck-with-codex', titleEn: 'CK with Codex', titleVi: 'CK with Codex', pathway: 'providers', currentGuideSuffix: 'ck-with-codex', ...isolated },
+  { suffix: 'codex-app', titleEn: 'Codex App', titleVi: 'Codex App', pathway: 'providers', currentGuideSuffix: 'codex-app', ...isolated },
+  { suffix: 'migrate', titleEn: 'Migrate (CK provider migrate)', titleVi: 'Migrate (CK provider migrate)', pathway: 'providers', currentGuideSuffix: 'migrate', ...isolated },
 
-  { suffix: 'ide-config', titleEn: 'IDE Config', titleVi: 'IDE Config', pathway: 'environments', currentGuideSuffix: 'ide-config', ...frozen },
-  { suffix: 'remote-control', titleEn: 'Remote Control', titleVi: 'Remote Control', pathway: 'environments', currentGuideSuffix: 'remote-control', ...frozen },
+  { suffix: 'ide-config', titleEn: 'IDE Config', titleVi: 'IDE Config', pathway: 'environments', currentGuideSuffix: 'ide-config', ...isolated },
+  { suffix: 'remote-control', titleEn: 'Remote Control', titleVi: 'Remote Control', pathway: 'environments', currentGuideSuffix: 'remote-control', ...isolated },
 
-  { suffix: 'uiux', titleEn: 'UI/UX', titleVi: 'UI/UX', pathway: 'reliability', currentGuideSuffix: 'uiux', ...frozen },
-  { suffix: 'session-recovery', titleEn: 'Session Recovery', titleVi: 'Session Recovery', pathway: 'reliability', currentGuideSuffix: 'session-recovery', ...frozen },
-  { suffix: 'fix-logs', titleEn: 'Fix from Logs', titleVi: 'Fix from Logs', pathway: 'reliability', currentGuideSuffix: 'fix-logs', ...frozen },
+  { suffix: 'uiux', titleEn: 'UI/UX', titleVi: 'UI/UX', pathway: 'reliability', currentGuideSuffix: 'uiux', ...isolated },
+  { suffix: 'session-recovery', titleEn: 'Session Recovery', titleVi: 'Session Recovery', pathway: 'reliability', currentGuideSuffix: 'session-recovery', ...isolated },
+  { suffix: 'fix-logs', titleEn: 'Fix from Logs', titleVi: 'Fix from Logs', pathway: 'reliability', currentGuideSuffix: 'fix-logs', ...isolated },
 
-  { suffix: 'inside-claudekit', titleEn: 'Inside ClaudeKit', titleVi: 'Inside ClaudeKit', pathway: 'deep', currentGuideSuffix: 'inside-claudekit', ...frozen },
-  { suffix: 'inside-claudekit/frontend-design', titleEn: 'Frontend Design', titleVi: 'Frontend Design', pathway: 'deep', currentGuideSuffix: 'inside-claudekit/frontend-design', ...frozen },
-  { suffix: 'inside-claudekit/getting-started', titleEn: 'Getting Started', titleVi: 'Getting Started', pathway: 'deep', currentGuideSuffix: 'inside-claudekit/getting-started', ...frozen },
-  { suffix: 'inside-claudekit/guard-rails', titleEn: 'Guard Rails', titleVi: 'Guard Rails', pathway: 'deep', currentGuideSuffix: 'inside-claudekit/guard-rails', ...frozen },
-  { suffix: 'inside-claudekit/plan-modes', titleEn: 'Plan Modes', titleVi: 'Plan Modes', pathway: 'deep', currentGuideSuffix: 'inside-claudekit/plan-modes', ...frozen },
+  { suffix: 'inside-claudekit', titleEn: 'Inside ClaudeKit', titleVi: 'Inside ClaudeKit', pathway: 'deep', currentGuideSuffix: 'inside-claudekit', ...isolated },
+  { suffix: 'inside-claudekit/frontend-design', titleEn: 'Frontend Design', titleVi: 'Frontend Design', pathway: 'deep', currentGuideSuffix: 'inside-claudekit/frontend-design', ...isolated },
+  { suffix: 'inside-claudekit/getting-started', titleEn: 'Getting Started', titleVi: 'Getting Started', pathway: 'deep', currentGuideSuffix: 'inside-claudekit/getting-started', ...isolated },
+  { suffix: 'inside-claudekit/guard-rails', titleEn: 'Guard Rails', titleVi: 'Guard Rails', pathway: 'deep', currentGuideSuffix: 'inside-claudekit/guard-rails', ...isolated },
+  { suffix: 'inside-claudekit/plan-modes', titleEn: 'Plan Modes', titleVi: 'Plan Modes', pathway: 'deep', currentGuideSuffix: 'inside-claudekit/plan-modes', ...isolated },
 ] as const satisfies readonly LegacyGuideCatalogEntry[];
 
 export type LegacyGuideSuffix = (typeof LEGACY_GUIDE_CATALOG)[number]['suffix'];
@@ -118,7 +118,11 @@ export type LegacyGuideSuffix = (typeof LEGACY_GUIDE_CATALOG)[number]['suffix'];
 export const LEGACY_GUIDE_SUFFIXES: readonly string[] = LEGACY_GUIDE_CATALOG.map((entry) => entry.suffix);
 
 export const LEGACY_FROZEN_SUFFIXES = LEGACY_GUIDE_CATALOG
-  .filter((entry) => entry.freezeStatus === 'frozen')
+  .filter((entry) => entry.freezeStatus === 'frozen' || entry.freezeStatus === 'isolated')
+  .map((entry) => entry.suffix);
+
+export const LEGACY_ISOLATED_SUFFIXES = LEGACY_GUIDE_CATALOG
+  .filter((entry) => entry.freezeStatus === 'isolated')
   .map((entry) => entry.suffix);
 
 export function getLegacyGuideEntry(suffix: string): LegacyGuideCatalogEntry | undefined {

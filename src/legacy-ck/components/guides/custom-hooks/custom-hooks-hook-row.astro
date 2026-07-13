@@ -1,0 +1,195 @@
+---
+import {
+  Archive,
+  ChevronDown,
+  Database,
+  Info,
+  Layers,
+  MessageSquare,
+  Power,
+  PowerOff,
+  Settings,
+  ShieldAlert,
+  TriangleAlert,
+} from "lucide-astro";
+import TerminalSnippet from "../TerminalSnippet.astro";
+import { colorMap, type HookViewModel } from "./custom-hooks-ui";
+import type { customHooksTranslations } from "@legacy-ck/data/guides/custom-hooks/custom-hooks-translations";
+
+interface Props {
+  hook: HookViewModel;
+  t: (typeof customHooksTranslations)["en"];
+  isVi: boolean;
+}
+
+const { hook, t, isVi } = Astro.props;
+const c = colorMap[hook.categoryColor] || colorMap.slate;
+const easyDesc = isVi ? hook.easyDescVi : hook.easyDescEn;
+const technicalDesc = isVi ? hook.descVi : hook.descEn;
+const example = isVi ? hook.exampleVi : hook.exampleEn;
+const stateLabel = isVi ? hook.defaultStateLabelVi : hook.defaultStateLabelEn;
+const stateReason = isVi ? hook.defaultReasonVi : hook.defaultReasonEn;
+const impactLabel = isVi ? hook.flowImpactLabelVi : hook.flowImpactLabelEn;
+const impactDesc = isVi ? hook.flowImpactDescVi : hook.flowImpactDescEn;
+const disableText = isVi ? hook.disableTextVi : hook.disableTextEn;
+const failureMode = isVi ? hook.failureModeVi : hook.failureModeEn;
+const kitLabel =
+  hook.kitToken === "both"
+    ? "Engineer Kit + Marketing Kit"
+    : hook.kitToken === "ek"
+      ? "Engineer Kit"
+      : "Marketing Kit";
+
+const stateClasses = {
+  on: "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-300",
+  off: "border-amber-200 bg-amber-50 text-amber-800 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-200",
+  removed: "border-slate-200 bg-slate-100 text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300",
+};
+
+const impactClasses = {
+  "policy-block": "border-red-200 bg-red-50 text-red-700 dark:border-red-500/30 dark:bg-red-500/10 dark:text-red-300",
+  guidance: "border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-500/30 dark:bg-blue-500/10 dark:text-blue-300",
+  context: "border-violet-200 bg-violet-50 text-violet-700 dark:border-violet-500/30 dark:bg-violet-500/10 dark:text-violet-300",
+  state: "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-300",
+  removed: "border-slate-200 bg-slate-100 text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300",
+};
+
+const stateIcons = {
+  on: Power,
+  off: PowerOff,
+  removed: Archive,
+};
+
+const impactIcons = {
+  "policy-block": ShieldAlert,
+  guidance: MessageSquare,
+  context: Layers,
+  state: Database,
+  removed: Archive,
+};
+
+const StateIcon = stateIcons[hook.defaultState];
+const ImpactIcon = impactIcons[hook.flowImpact];
+---
+
+<article
+  id={`hook-${hook.id}`}
+  data-hook-card
+  data-category={hook.categoryId}
+  data-kit={hook.kitToken}
+  data-kits={hook.kits.join(" ")}
+  data-beta={hook.isBeta ? "true" : "false"}
+  data-deprecated={hook.deprecated ? "true" : "false"}
+  class:list={[
+    "hook-row min-w-0 scroll-mt-28 overflow-hidden rounded-lg border bg-white shadow-sm shadow-slate-950/[0.03] transition hover:-translate-y-0.5 hover:shadow-md dark:bg-slate-900/70 dark:shadow-black/10",
+    hook.deprecated || hook.defaultState === "removed" ? "border-slate-200 opacity-85 dark:border-slate-700" : c.border,
+  ]}
+>
+  <details class="group">
+    <summary class="grid cursor-pointer list-none gap-4 px-4 py-4 marker:hidden lg:grid-cols-[minmax(0,1fr)_minmax(16rem,22rem)_auto] lg:items-center">
+      <span class="flex min-w-0 gap-3">
+        <span class:list={[
+          "mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border",
+          hook.deprecated || hook.defaultState === "removed" ? "border-slate-200 bg-slate-100 text-slate-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300" : `${c.border} ${c.bg} ${c.text}`,
+        ]}>
+          <ImpactIcon class="h-5 w-5" aria-hidden="true" />
+        </span>
+        <span class="min-w-0">
+          <span class="flex min-w-0 flex-wrap items-center gap-2">
+            <code class:list={[
+              "min-w-0 break-words font-mono text-sm font-bold",
+              hook.deprecated || hook.defaultState === "removed" ? "text-slate-500 line-through dark:text-slate-400" : c.text,
+            ]}>{hook.name}</code>
+            {hook.isBeta && (
+              <span class="rounded border border-violet-200 bg-violet-50 px-1.5 py-0.5 text-[10px] font-bold uppercase text-violet-700 dark:border-violet-500/30 dark:bg-violet-500/10 dark:text-violet-300">
+                beta
+              </span>
+            )}
+          </span>
+          <span class="mt-2 block text-sm leading-6 text-slate-700 dark:text-slate-300">{easyDesc}</span>
+          <span class="mt-2 flex flex-wrap items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
+            <span class="rounded border border-slate-200 px-2 py-0.5 dark:border-slate-700">{kitLabel}</span>
+            {hook.deprecated && <span class="rounded border border-slate-200 px-2 py-0.5 dark:border-slate-700">{t.deprecatedLabel}</span>}
+          </span>
+        </span>
+      </span>
+
+      <span class="grid min-w-0 gap-2 sm:grid-cols-2 lg:grid-cols-1">
+        <span class:list={[
+          "min-w-0 rounded-lg border px-3 py-2",
+          stateClasses[hook.defaultState],
+        ]}>
+          <span class="flex items-center gap-2 text-xs font-bold">
+            <StateIcon class="h-4 w-4 shrink-0" aria-hidden="true" />
+            <span>{stateLabel}</span>
+          </span>
+          <span class="mt-1 block text-xs leading-5 opacity-90">{stateReason}</span>
+        </span>
+        <span class:list={[
+          "min-w-0 rounded-lg border px-3 py-2",
+          impactClasses[hook.flowImpact],
+        ]}>
+          <span class="flex items-center gap-2 text-xs font-bold">
+            <ImpactIcon class="h-4 w-4 shrink-0" aria-hidden="true" />
+            <span>{impactLabel}</span>
+          </span>
+          <span class="mt-1 block text-xs leading-5 opacity-90">{impactDesc}</span>
+        </span>
+      </span>
+
+      <span class="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-md border border-slate-200 px-3 py-2 text-xs font-medium text-slate-600 transition group-open:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:group-open:bg-slate-800">
+        {t.detailsLabel}
+        <ChevronDown class="h-4 w-4 transition group-open:rotate-180" aria-hidden="true" />
+      </span>
+    </summary>
+
+    <div class="border-t border-slate-200 bg-slate-50/60 px-4 pb-4 pt-4 dark:border-slate-800 dark:bg-slate-950/20">
+      <dl class="grid gap-4 text-sm xl:grid-cols-2">
+        <div>
+          <dt class="flex items-center gap-2 font-semibold text-slate-900 dark:text-white">
+            <Info class="h-4 w-4 text-slate-500" aria-hidden="true" />
+            {t.triggerLabel}
+          </dt>
+          <dd class="mt-2 flex flex-wrap gap-1.5 text-slate-600 dark:text-slate-400">
+            {hook.triggers.map((trigger) => (
+              <span class="max-w-full whitespace-normal rounded border border-slate-200 bg-slate-50 px-2 py-1 font-mono text-[11px] [overflow-wrap:anywhere] dark:border-slate-700 dark:bg-slate-800/65">
+                {trigger}
+              </span>
+            ))}
+          </dd>
+        </div>
+        <div class="rounded-lg border border-slate-200 bg-white p-3 dark:border-slate-700 dark:bg-slate-900/55">
+          <dt class="font-semibold text-slate-900 dark:text-white">{t.exampleLabel}</dt>
+          <dd class="mt-1 leading-6 text-slate-600 dark:text-slate-400">{example}</dd>
+        </div>
+        <div class="rounded-lg border border-slate-200 bg-white p-3 dark:border-slate-700 dark:bg-slate-900/55 xl:col-span-2">
+          <dt class="flex items-center gap-2 font-semibold text-slate-900 dark:text-white">
+            <Settings class="h-4 w-4 text-slate-500" aria-hidden="true" />
+            {t.disableLabel}
+          </dt>
+          <dd class="mt-2 grid gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(17rem,24rem)] lg:items-start">
+            <p class="leading-6 text-slate-600 dark:text-slate-400">{disableText}</p>
+            <TerminalSnippet
+              code={hook.disableSnippet}
+              label={t.configSnippetLabel}
+              mode="plain"
+              compact
+              copyMode="raw"
+            />
+          </dd>
+        </div>
+        <div class="rounded-lg border border-amber-200 bg-amber-50/75 p-3 text-amber-900 dark:border-amber-500/25 dark:bg-amber-500/10 dark:text-amber-100 xl:col-span-2">
+          <dt class="flex items-center gap-2 font-semibold">
+            <TriangleAlert class="h-4 w-4" aria-hidden="true" />
+            {t.failureModeLabel}
+          </dt>
+          <dd class="mt-1 leading-6 opacity-90">{failureMode}</dd>
+        </div>
+        <div class="xl:col-span-2">
+          <dt class="font-semibold text-slate-900 dark:text-white">{t.technicalNoteLabel}</dt>
+          <dd class="mt-1 leading-6 text-slate-600 dark:text-slate-400">{technicalDesc}</dd>
+        </div>
+      </dl>
+    </div>
+  </details>
+</article>

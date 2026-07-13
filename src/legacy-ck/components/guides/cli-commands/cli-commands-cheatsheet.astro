@@ -1,0 +1,222 @@
+---
+import { useTranslations } from '@legacy-ck/i18n/utils';
+import type { Language } from '@/i18n';
+import { cliCommandsCheatsheet } from '@legacy-ck/data/guides/cli-commands-cheatsheet';
+import { getCliCommandNotes, getCommandNotes } from '@legacy-ck/data/guides/cli-command-notes';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const isVi = lang === 'vi';
+const notesTitle = isVi ? 'Ghi chú flags' : 'Flag notes';
+const notesToggle = isVi ? 'Mở giải thích đầy đủ' : 'Open full explanations';
+const cmdNotesTitle = isVi ? 'Lưu ý' : 'Notes';
+const commandAnchorId = (name: string) =>
+  `cli-cmd-${name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`;
+
+const categoryConfigs = [
+  {
+    id: 'setup',
+    labelKey: 'cli.cheatsheet.cat.setup',
+    iconSvg: '<path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />',
+    accent: 'bg-emerald-400',
+    panel: 'from-emerald-50 to-teal-50 dark:from-emerald-950/40 dark:to-teal-950/20',
+    text: 'text-emerald-700 dark:text-emerald-300',
+    chip: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-400/10 dark:text-emerald-200',
+    ring: 'border-emerald-200/80 dark:border-emerald-400/20',
+  },
+  {
+    id: 'management',
+    labelKey: 'cli.cheatsheet.cat.management',
+    iconSvg: '<path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" />',
+    accent: 'bg-sky-400',
+    panel: 'from-sky-50 to-blue-50 dark:from-sky-950/40 dark:to-blue-950/20',
+    text: 'text-sky-700 dark:text-sky-300',
+    chip: 'bg-sky-100 text-sky-800 dark:bg-sky-400/10 dark:text-sky-200',
+    ring: 'border-sky-200/80 dark:border-sky-400/20',
+  },
+  {
+    id: 'distribution',
+    labelKey: 'cli.cheatsheet.cat.distribution',
+    iconSvg: '<circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" /><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />',
+    accent: 'bg-fuchsia-400',
+    panel: 'from-fuchsia-50 to-rose-50 dark:from-fuchsia-950/30 dark:to-rose-950/20',
+    text: 'text-fuchsia-700 dark:text-fuchsia-300',
+    chip: 'bg-fuchsia-100 text-fuchsia-800 dark:bg-fuchsia-400/10 dark:text-fuchsia-200',
+    ring: 'border-fuchsia-200/80 dark:border-fuchsia-400/20',
+  },
+  {
+    id: 'workflow',
+    labelKey: 'cli.cheatsheet.cat.workflow',
+    iconSvg: '<path d="M13 10V3L4 14h7v7l9-11h-7z" />',
+    accent: 'bg-amber-400',
+    panel: 'from-amber-50 to-orange-50 dark:from-amber-950/35 dark:to-orange-950/20',
+    text: 'text-amber-700 dark:text-amber-300',
+    chip: 'bg-amber-100 text-amber-800 dark:bg-amber-400/10 dark:text-amber-200',
+    ring: 'border-amber-200/80 dark:border-amber-400/20',
+  },
+  {
+    id: 'integration',
+    labelKey: 'cli.cheatsheet.cat.integration',
+    iconSvg: '<path d="M18.36 6.64a9 9 0 11-12.73 0M12 2v10" />',
+    accent: 'bg-cyan-400',
+    panel: 'from-cyan-50 to-slate-50 dark:from-cyan-950/35 dark:to-slate-950/20',
+    text: 'text-cyan-700 dark:text-cyan-300',
+    chip: 'bg-cyan-100 text-cyan-800 dark:bg-cyan-400/10 dark:text-cyan-200',
+    ring: 'border-cyan-200/80 dark:border-cyan-400/20',
+  },
+] as const;
+---
+
+<div class="space-y-5">
+  {categoryConfigs.map((cat, categoryIndex) => {
+    const cmds = cliCommandsCheatsheet.filter(c => c.category === cat.id);
+    const leadingCommand = cmds[0]?.example || cmds[0]?.name;
+
+    return (
+      <section id={`cli-cat-${cat.id}`} class:list={['scroll-mt-32 overflow-hidden rounded-[1.65rem] border bg-gradient-to-br shadow-sm', cat.panel, cat.ring]}>
+        <div class="grid gap-0 lg:grid-cols-[220px_1fr]">
+          <div class="relative border-b border-slate-200/70 p-5 dark:border-white/10 lg:border-b-0 lg:border-r">
+            <div class:list={['absolute left-0 top-0 h-full w-1.5', cat.accent]}></div>
+            <div class="flex h-full flex-col justify-between gap-8 pl-2">
+              <div class="space-y-4">
+                <div class:list={['inline-flex h-11 w-11 items-center justify-center rounded-2xl border bg-white/75 shadow-sm dark:bg-white/[0.04]', cat.ring]}>
+                  <svg class:list={['h-5 w-5', cat.text]} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={cat.iconSvg} />
+                </div>
+                <div>
+                  <div class="font-mono text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">
+                    0{categoryIndex + 1}
+                  </div>
+                  <h2 class="mt-2 text-xl font-bold tracking-tight text-slate-950 dark:text-white">
+                    {t(cat.labelKey as any)}
+                  </h2>
+                </div>
+              </div>
+              <div class="space-y-3">
+                <div class="flex items-end gap-2">
+                  <span class="font-mono text-4xl font-bold text-slate-950 dark:text-white">{cmds.length}</span>
+                  <span class="pb-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                    {t('cli.cheatsheet.hero.commands_label')}
+                  </span>
+                </div>
+                {leadingCommand && (
+                  <button class="copy-btn w-full rounded-2xl border border-slate-200 bg-white px-3 py-3 text-left font-mono text-xs text-slate-700 shadow-sm transition hover:border-teal-300 hover:bg-teal-50/70 dark:border-white/10 dark:bg-slate-950 dark:text-slate-200 dark:hover:border-teal-400/30 dark:hover:bg-slate-900" data-code={leadingCommand} aria-label={`Copy ${leadingCommand}`}>
+                    <span class="text-amber-600 dark:text-amber-300">$</span> {leadingCommand}
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div class="grid gap-3 p-4 sm:p-5">
+            {cmds.map((cmd) => {
+              const copyValue = cmd.example || cmd.name;
+              const noteItems = getCliCommandNotes([...(cmd.subcommands || []), ...(cmd.keyFlags || [])], lang, cmd.name);
+              const cmdNotes = getCommandNotes(cmd.name, lang);
+
+              return (
+                <article id={commandAnchorId(cmd.name)} class="group relative scroll-mt-32 overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 p-4 shadow-sm transition duration-200 target:border-amber-400 target:bg-amber-50 target:ring-2 target:ring-amber-300/70 hover:-translate-y-0.5 hover:border-slate-300 hover:bg-white dark:border-white/10 dark:bg-slate-950/55 dark:target:border-amber-300/60 dark:target:bg-amber-950/40 dark:target:ring-amber-300/25 dark:hover:border-white/20 dark:hover:bg-slate-900/70">
+                  <div class:list={['absolute right-4 top-4 h-2 w-2 rounded-full', cat.accent]}></div>
+                  <div class="flex items-start justify-between gap-3">
+                    <div class="min-w-0 space-y-2">
+                      <code class:list={['inline-flex rounded-xl px-3 py-1.5 font-mono text-sm font-bold', cat.chip]}>
+                        {cmd.name}
+                      </code>
+                      <p class="text-sm leading-6 text-slate-600 dark:text-slate-300">
+                        {t(`cli.cheatsheet.cmd.${cmd.name.replace('ck ', '')}.desc` as any)}
+                      </p>
+                    </div>
+                    <button class="copy-btn flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 transition hover:border-teal-300 hover:bg-teal-50 hover:text-teal-700 group-hover:opacity-100 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 dark:hover:border-teal-400/30 dark:hover:bg-white/[0.08] dark:hover:text-teal-200 sm:opacity-70" data-code={copyValue} title="Copy" aria-label={`Copy ${copyValue}`}>
+                      <svg class="copy-icon h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
+                      <svg class="check-icon hidden h-4 w-4 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12" /></svg>
+                    </button>
+                  </div>
+
+                  {(cmd.subcommands || cmd.keyFlags) && (
+                    <div class="mt-4 flex flex-wrap gap-1.5">
+                      {cmd.subcommands?.map((sub) => (
+                        <span class:list={['inline-flex items-center rounded-full px-2 py-1 font-mono text-[10px] font-medium', cat.chip]}>
+                          {sub}
+                        </span>
+                      ))}
+                      {cmd.keyFlags?.map((flag) => (
+                        <span class="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-2 py-1 font-mono text-[10px] font-medium text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400">
+                          {flag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  {cmd.example && (
+                    <div class="mt-4 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 dark:border-white/10 dark:bg-slate-950">
+                      <div class="flex items-start gap-2 font-mono text-xs leading-5 text-slate-600 dark:text-slate-300">
+                        <span class="text-amber-600 dark:text-amber-300">$</span>
+                        <span class="break-words">{cmd.example}</span>
+                      </div>
+                    </div>
+                  )}
+
+                  {noteItems.length > 0 && (
+                    <div class="mt-3 rounded-xl border border-slate-200/80 bg-white/70 p-3 dark:border-white/10 dark:bg-white/[0.03]">
+                      {noteItems.length > 3 ? (
+                        <details class="group/notes">
+                          <summary class="flex cursor-pointer list-none items-center justify-between gap-3 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500 transition hover:text-slate-700 dark:text-slate-500 dark:hover:text-slate-300">
+                            <span>{notesTitle} · {noteItems.length}</span>
+                            <span class="rounded-full border border-slate-200 px-2 py-1 text-[9px] dark:border-white/10">{notesToggle}</span>
+                          </summary>
+                          <div class="mt-3 space-y-2">
+                            {noteItems.map((note) => (
+                              <div class="grid gap-1 sm:grid-cols-[230px_minmax(0,1fr)] sm:gap-3">
+                                <code class="min-w-0 break-words font-mono text-[11px] font-semibold text-slate-700 dark:text-slate-200 sm:break-normal">{note.label}</code>
+                                <span class="text-xs leading-5 text-slate-500 dark:text-slate-400">
+                                  {note.description}
+                                  {note.scope && <code class="ml-1 rounded bg-violet-100 px-1 py-0.5 text-[9px] font-medium text-violet-600 dark:bg-violet-400/10 dark:text-violet-300">{note.scope}</code>}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </details>
+                      ) : (
+                        <>
+                          <div class="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500">{notesTitle}</div>
+                          <div class="space-y-2">
+                            {noteItems.map((note) => (
+                              <div class="grid gap-1 sm:grid-cols-[230px_minmax(0,1fr)] sm:gap-3">
+                                <code class="min-w-0 break-words font-mono text-[11px] font-semibold text-slate-700 dark:text-slate-200 sm:break-normal">{note.label}</code>
+                                <span class="text-xs leading-5 text-slate-500 dark:text-slate-400">
+                                  {note.description}
+                                  {note.scope && <code class="ml-1 rounded bg-violet-100 px-1 py-0.5 text-[9px] font-medium text-violet-600 dark:bg-violet-400/10 dark:text-violet-300">{note.scope}</code>}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  )}
+
+                  {cmdNotes.length > 0 && (
+                    <div class="mt-3 rounded-xl border border-amber-200/60 bg-amber-50/40 p-3 dark:border-amber-400/10 dark:bg-amber-950/20">
+                      <div class="mb-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-amber-600 dark:text-amber-400">{cmdNotesTitle}</div>
+                      <ul class="space-y-1">
+                        {cmdNotes.map((note) => (
+                          <li class="flex items-start gap-1.5 text-xs leading-5 text-amber-800 dark:text-amber-200">
+                            <span class="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-amber-400 dark:bg-amber-500"></span>
+                            <span set:html={note} />
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+    );
+  })}
+</div>

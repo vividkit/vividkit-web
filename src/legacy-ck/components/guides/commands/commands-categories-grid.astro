@@ -1,0 +1,438 @@
+---
+// Version toggle + Engineer Kit / Marketing Kit category cards grid
+import { useTranslations } from '@legacy-ck/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+import { getEngineerKitCategories } from "@legacy-ck/data/guides/commands-engineer-kit";
+import { getMarketingKitCategories } from "@legacy-ck/data/guides/commands-marketing-kit";
+import { styles } from "@legacy-ck/data/guides/commands-styles";
+import { workflowScenarios } from "@legacy-ck/data/guides/how-ck-works";
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+const stableCategories = getEngineerKitCategories(t as any);
+const marketingCategories = getMarketingKitCategories(t as any);
+
+// ─── Deep-link each command card to its How-CK-Works infographic ──────────────
+// The How-CK-Works guide selects a scenario from the URL hash `#ck-<scenarioId>`,
+// so every card maps to that page anchored at its matching scenario.
+const howCkWorksBase = currentLang === "vi" ? "/vi/legacy/guides/how-ck-works" : "/legacy/guides/how-ck-works";
+
+// Reduce a command to its skill key: keep the prefix + first skill token, drop any
+// `:subcommand` / `:*` tail. e.g. `/ckm:write:good` → `/ckm:write`, `/ck:plan` → `/ck:plan`.
+function commandKey(command: string): string {
+  const match = command.match(/^(\/ckm?:[a-z0-9-]+)/i);
+  return (match ? match[1] : command).trim().toLowerCase();
+}
+
+// Build command-key → scenario-id map straight from the scenario data (source of truth).
+const scenarioIdByCommandKey = new Map<string, string>();
+for (const scenario of workflowScenarios) {
+  scenarioIdByCommandKey.set(commandKey(scenario.command), scenario.id);
+}
+
+// Aliases for cards whose grid command differs from the scenario command but is the
+// same skill (the scenario file uses a different prefix/slug).
+const commandKeyAliases: Record<string, string> = {
+  "/ck:ck-graphify": "/ck:graphify",
+  "/ck:use-mcp": "/ckm:use-mcp",
+};
+
+function getHowItWorksHref(command: string): string | null {
+  const key = commandKey(command);
+  const resolvedKey = commandKeyAliases[key] ?? key;
+  const scenarioId = scenarioIdByCommandKey.get(resolvedKey);
+  return scenarioId ? `${howCkWorksBase}#ck-${scenarioId}` : null;
+}
+---
+
+<div class="space-y-6">
+  <!-- Section header + version toggle buttons -->
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <h2 class="text-2xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+      <svg
+        class="w-7 h-7 text-cyan-600 dark:text-cyan-400"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <rect x="3" y="3" width="7" height="7"></rect>
+        <rect x="14" y="3" width="7" height="7"></rect>
+        <rect x="14" y="14" width="7" height="7"></rect>
+        <rect x="3" y="14" width="7" height="7"></rect>
+      </svg>
+      {t("commands.categories.title")}
+    </h2>
+
+    <div
+      class="flex items-center gap-2 p-1 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700"
+    >
+      <button
+        id="btn-engineer"
+        class="version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 bg-teal-500 text-white shadow-sm"
+        data-version="engineer"
+      >
+        <span class="flex items-center gap-1.5">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+          {t("commands.v25.tab_v25")}
+        </span>
+      </button>
+      <button
+        id="btn-marketing"
+        class="version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700"
+        data-version="marketing"
+      >
+        <span class="flex items-center gap-1.5">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+          </svg>
+          {t("commands.v25.tab_v24")}
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Engineer Kit (v2.20.0 stable / v2.20.1-beta.9 beta) categories panel -->
+  <div id="categories-engineer" class="space-y-6">
+    <!-- Stable version badge -->
+    <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+      <span class="px-2 py-0.5 rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 font-semibold"
+        >v2.20.0 Stable</span
+      >
+      <span class="px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 font-semibold"
+        >v2.20.1-beta.9 Beta</span
+      >
+      <span class="text-slate-400 dark:text-slate-500 italic">{t("commands.engineer_stable_note")}</span>
+    </div>
+
+    <!-- Beta preview card -->
+    <div
+      class="rounded-xl border-2 border-purple-400/60 dark:border-purple-500/40 overflow-hidden bg-gradient-to-br from-purple-500/10 via-violet-500/5 to-pink-500/10"
+    >
+      <div
+        class="p-4 border-b border-purple-300/30 dark:border-purple-600/30 bg-gradient-to-r from-purple-600/10 to-violet-500/10"
+      >
+        <h3 class="text-lg font-bold flex items-center gap-2 text-purple-600 dark:text-purple-400">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path>
+            <path d="M20 3v4"></path>
+            <path d="M22 5h-4"></path>
+          </svg>
+          {t("commands.beta_preview.title")}
+        </h3>
+        <p class="text-xs text-slate-500 mt-1">{t("commands.beta_preview.subtitle")}</p>
+      </div>
+      <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        {[
+          { cmd: "/ck:coding-agent-orchestration", labelKey: "commands.beta_coding_agent_orchestration.desc", detailKey: "commands.beta_coding_agent_orchestration.detail", type: "skill", badge: "new", args: ["[task or workflow]"], flags: ["--single", "--sequential", "--parallel", "--review-loop"] },
+          { cmd: "/ck:review-pr", labelKey: "commands.beta_review_pr.desc", detailKey: "commands.beta_review_pr.detail", type: "skill", badge: "enhanced", args: ["<PR/MR number or URL>"], flags: ["--fix", "--reply"] },
+        ].map((item) => (
+          <div class="p-3 rounded-lg border transition-all duration-200 hover:shadow-sm h-full flex flex-col bg-white/60 dark:bg-slate-900/50 border-purple-500/30">
+            <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <code class="text-xs font-mono px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium">{item.cmd}</code>
+                <span class={`text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400`}>{item.badge}</span>
+              </div>
+            </div>
+            <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">{t(item.labelKey)}</p>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400" set:html={t(item.detailKey)}></p>
+            {item.args && item.args.length > 0 && (
+              <div class="flex flex-wrap gap-1 mt-1.5">
+                {item.args.map((arg: string) => (
+                  <code class="text-[9px] px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400 font-mono">
+                    {arg}
+                  </code>
+                ))}
+              </div>
+            )}
+            {item.flags && item.flags.length > 0 && (
+              <div class="flex flex-wrap gap-1 mt-1.5">
+                {item.flags.map((flag: string) => (
+                  <code class="text-[9px] px-1 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-mono">
+                    {flag}
+                  </code>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Stable category cards -->
+    {stableCategories.map((category) => (
+      <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+        <div class={`p-4 border-b border-slate-100 dark:border-slate-800 ${styles[category.color].bg}`}>
+          <h3 class={`text-lg font-bold flex items-center gap-2 ${styles[category.color].text}`}>
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <Fragment set:html={category.icon} />
+            </svg>
+            {category.name}
+          </h3>
+          <p class="text-xs text-slate-500 mt-1">{category.description}</p>
+        </div>
+        <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+          {category.commands.map((cmd) => {
+            const howHref = getHowItWorksHref(cmd.command);
+            const CardTag = howHref ? "a" : "div";
+            return (
+            <CardTag
+              {...(howHref ? { href: howHref } : {})}
+              title={howHref ? t("commands.card_link_hint") : undefined}
+              class={`group relative p-3 rounded-lg border transition-all duration-200 h-full flex flex-col ${howHref ? 'cursor-pointer hover:-translate-y-0.5 hover:shadow-md hover:pb-11 hover:border-cyan-400/70 dark:hover:border-cyan-500/60 hover:bg-white dark:hover:bg-slate-800/70 hover:ring-1 hover:ring-cyan-400/30 dark:hover:ring-cyan-500/25' : 'hover:shadow-sm'} ${cmd.deprecated ? 'bg-slate-100 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 opacity-70' : `bg-slate-50 dark:bg-slate-900/50 ${styles[category.color].border}`}`}
+            >
+              <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  {/* Step indicator */}
+                  {cmd.step && (
+                    <span class={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${cmd.deprecated ? 'bg-slate-200 dark:bg-slate-700 text-slate-400 dark:text-slate-500' : `${styles[category.color].bg} ${styles[category.color].text}`}`}>
+                      {cmd.step}
+                    </span>
+                  )}
+                  <code class={`text-sm font-bold font-mono ${cmd.deprecated ? 'line-through text-slate-400 dark:text-slate-500' : styles[category.color].text}`}>{cmd.command}</code>
+                  {cmd.isBeta && (
+                    <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">beta</span>
+                  )}
+                  {cmd.deprecated && (
+                    <span class="text-[9px] px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700/40 text-slate-500 dark:text-slate-400 font-medium uppercase">deprecated</span>
+                  )}
+                  {cmd.isRouter && (
+                    <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium uppercase" title="Routes to specialized skills — invoke to learn which one fits your task">router</span>
+                  )}
+                </div>
+                <span class="text-[10px] opacity-70">{cmd.complexity}</span>
+              </div>
+              <p class={`text-xs font-medium text-slate-700 dark:text-slate-300 mb-1 ${cmd.deprecated ? 'opacity-60' : ''}`}>{cmd.desc}</p>
+              {cmd.detail && (
+                <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">
+                  {cmd.detail}
+                </p>
+              )}
+              {cmd.betaNote && (
+                <div class="mt-1 text-[10px] flex items-center gap-1">
+                  <span class="font-semibold text-purple-600 dark:text-purple-400">Beta:</span>
+                  <span class="text-purple-500 dark:text-purple-400">{cmd.betaNote}</span>
+                </div>
+              )}
+              {/* Subcommands (space-separated) */}
+              {cmd.subcommands && cmd.subcommands.length > 0 && (
+                <div class="flex flex-wrap gap-1 mt-1.5">
+                  {cmd.subcommands.map((sub: string) => (
+                    <code class="text-[9px] px-1 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-mono">
+                      {sub}
+                    </code>
+                  ))}
+                </div>
+              )}
+              {/* Arguments (space-separated) */}
+              {cmd.args && cmd.args.length > 0 && (
+                <div class="flex flex-wrap gap-1 mt-1.5">
+                  {cmd.args.map((arg: string) => (
+                    <code class="text-[9px] px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400 font-mono">
+                      {arg}
+                    </code>
+                  ))}
+                </div>
+              )}
+              {/* Flags (dash-prefixed) */}
+              {cmd.flags && cmd.flags.length > 0 && (
+                <div class="flex flex-wrap gap-1 mt-1.5">
+                  {cmd.flags.map((flag: string) => (
+                    <code class="text-[9px] px-1 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-mono">
+                      {flag}
+                    </code>
+                  ))}
+                  {cmd.betaFlags && cmd.betaFlags.map((flag: string) => (
+                    <code class="text-[9px] px-1 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-mono">
+                      {flag} <span class="text-[7px] font-bold uppercase">beta</span>
+                    </code>
+                  ))}
+                </div>
+              )}
+              {cmd.replacedCommand && (
+                <p class="text-[10px] text-slate-500 mt-1 flex items-center gap-1">
+                  <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 5l-7 7 7 7" />
+                  </svg>
+                  Replaces: <code class="text-red-500 line-through">{cmd.replacedCommand}</code>
+                </p>
+              )}
+              {/* Floating navigate affordance — absolute, adds no layout spacing */}
+              {howHref && (
+                <span class="absolute bottom-2 right-2 z-10 flex items-center gap-1 rounded-full bg-cyan-500/10 dark:bg-cyan-400/15 px-2 py-1 text-[10px] font-semibold text-cyan-600 dark:text-cyan-400 opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200" aria-hidden="true">
+                  {t("commands.card_link_hint")}
+                  <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M7 17L17 7M17 7H8M17 7v9" />
+                  </svg>
+                </span>
+              )}
+            </CardTag>
+            );
+          })}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- Marketing Kit categories panel -->
+  <div id="categories-marketing" class="space-y-6 hidden">
+    <!-- Stable + beta version badges -->
+    <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+      <span class="px-2 py-0.5 rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 font-semibold"
+        >v1.4.0 Stable</span
+      >
+      <span class="px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 font-semibold"
+        >v1.4.0-beta.5 Beta</span
+      >
+      <span>{t("commands.marketing_stable_note")}</span>
+    </div>
+
+    <!-- MK Beta Preview card -->
+    <div
+      class="rounded-xl border-2 border-purple-400/60 dark:border-purple-500/40 overflow-hidden bg-gradient-to-br from-purple-500/10 via-violet-500/5 to-pink-500/10"
+    >
+      <div
+        class="p-4 border-b border-purple-300/30 dark:border-purple-600/30 bg-gradient-to-r from-purple-600/10 to-violet-500/10"
+      >
+        <h3 class="text-lg font-bold flex items-center gap-2 text-purple-600 dark:text-purple-400">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path>
+            <path d="M20 3v4"></path>
+            <path d="M22 5h-4"></path>
+          </svg>
+          {t("commands.mkt_beta_preview.title")}
+        </h3>
+        <p class="text-xs text-slate-500 mt-1">{t("commands.mkt_beta_preview.subtitle")}</p>
+      </div>
+      <div class="p-6 flex flex-col items-center justify-center text-center gap-2">
+        <span class="text-2xl">🎉</span>
+        <p class="text-sm font-medium text-slate-700 dark:text-slate-300">{t("commands.mkt_beta_preview.empty_title")}</p>
+        <p class="text-xs text-slate-500 dark:text-slate-400 max-w-md">{t("commands.mkt_beta_preview.empty_desc")}</p>
+      </div>
+    </div>
+
+    <!-- Marketing category cards -->
+    {marketingCategories.map((category) => (
+      <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+        <div class={`p-4 border-b border-slate-100 dark:border-slate-800 ${styles[category.color].bg}`}>
+          <h3 class={`text-lg font-bold flex items-center gap-2 ${styles[category.color].text}`}>
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <Fragment set:html={category.icon} />
+            </svg>
+            {category.name}
+          </h3>
+          <p class="text-xs text-slate-500 mt-1">{category.description}</p>
+        </div>
+        <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+          {category.commands.map((cmd) => {
+            const howHref = getHowItWorksHref(cmd.command);
+            const CardTag = howHref ? "a" : "div";
+            return (
+            <CardTag
+              {...(howHref ? { href: howHref } : {})}
+              title={howHref ? t("commands.card_link_hint") : undefined}
+              class={`group relative p-3 rounded-lg border transition-all duration-200 h-full flex flex-col ${howHref ? 'cursor-pointer hover:-translate-y-0.5 hover:shadow-md hover:pb-11 hover:border-cyan-400/70 dark:hover:border-cyan-500/60 hover:bg-white dark:hover:bg-slate-800/70 hover:ring-1 hover:ring-cyan-400/30 dark:hover:ring-cyan-500/25' : 'hover:shadow-sm'} ${cmd.deprecated ? 'bg-slate-100 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 opacity-70' : `bg-slate-50 dark:bg-slate-900/50 ${styles[category.color].border}`}`}
+            >
+              <div class="flex items-center justify-between mb-1.5 flex-wrap gap-1">
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  {/* Step indicator */}
+                  {cmd.step && (
+                    <span class={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${cmd.deprecated ? 'bg-slate-200 dark:bg-slate-700 text-slate-400 dark:text-slate-500' : `${styles[category.color].bg} ${styles[category.color].text}`}`}>
+                      {cmd.step}
+                    </span>
+                  )}
+                    <code class={`text-sm font-bold font-mono ${cmd.deprecated ? 'line-through text-slate-400 dark:text-slate-500' : styles[category.color].text}`}>{cmd.command}</code>
+                  {cmd.isBeta && (
+                    <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-medium uppercase">beta</span>
+                  )}
+                  {cmd.deprecated && (
+                    <span class="text-[9px] px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700/40 text-slate-500 dark:text-slate-400 font-medium uppercase">deprecated</span>
+                  )}
+                  {cmd.isRouter && (
+                    <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-medium uppercase" title="Routes to specialized skills — invoke to learn which one fits your task">router</span>
+                  )}
+                </div>
+                <span class="text-[10px] opacity-70">{cmd.complexity}</span>
+              </div>
+              <p class={`text-xs font-medium text-slate-700 dark:text-slate-300 mb-1 ${cmd.deprecated ? 'opacity-60' : ''}`}>{cmd.desc}</p>
+              {cmd.detail && (
+                <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">
+                  {cmd.detail}
+                </p>
+              )}
+              {cmd.betaNote && (
+                <div class="mt-1 text-[10px] flex items-center gap-1">
+                  <span class="font-semibold text-purple-600 dark:text-purple-400">Beta:</span>
+                  <span class="text-purple-500 dark:text-purple-400">{cmd.betaNote}</span>
+                </div>
+              )}
+              {/* Subcommands (space-separated) */}
+              {cmd.subcommands && cmd.subcommands.length > 0 && (
+                <div class="flex flex-wrap gap-1 mt-1.5">
+                  {cmd.subcommands.map((sub: string) => (
+                    <code class="text-[9px] px-1 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-mono">
+                      {sub}
+                    </code>
+                  ))}
+                </div>
+              )}
+              {/* Arguments (space-separated) */}
+              {cmd.args && cmd.args.length > 0 && (
+                <div class="flex flex-wrap gap-1 mt-1.5">
+                  {cmd.args.map((arg: string) => (
+                    <code class="text-[9px] px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400 font-mono">
+                      {arg}
+                    </code>
+                  ))}
+                </div>
+              )}
+              {/* Flags (dash-prefixed) */}
+              {cmd.flags && cmd.flags.length > 0 && (
+                <div class="flex flex-wrap gap-1 mt-1.5">
+                  {cmd.flags.map((flag: string) => (
+                    <code class="text-[9px] px-1 py-0.5 rounded bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 font-mono">
+                      {flag}
+                    </code>
+                  ))}
+                  {cmd.betaFlags && cmd.betaFlags.map((flag: string) => (
+                    <code class="text-[9px] px-1 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 font-mono">
+                      {flag} <span class="text-[7px] font-bold uppercase">beta</span>
+                    </code>
+                  ))}
+                </div>
+              )}
+              {/* Beta syntax footer note */}
+              {cmd.betaSyntax && (
+                <div class="mt-1.5 pt-1.5 border-t border-purple-200/50 dark:border-purple-800/30 text-[10px] flex items-center gap-1">
+                  <span class="font-semibold text-purple-600 dark:text-purple-400">Beta:</span>
+                  <code class="px-1 py-0.5 rounded bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-mono">
+                    {cmd.betaSyntax}
+                  </code>
+                </div>
+              )}
+              {/* Floating navigate affordance — absolute, adds no layout spacing */}
+              {howHref && (
+                <span class="absolute bottom-2 right-2 z-10 flex items-center gap-1 rounded-full bg-cyan-500/10 dark:bg-cyan-400/15 px-2 py-1 text-[10px] font-semibold text-cyan-600 dark:text-cyan-400 opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200" aria-hidden="true">
+                  {t("commands.card_link_hint")}
+                  <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M7 17L17 7M17 7H8M17 7v9" />
+                  </svg>
+                </span>
+              )}
+            </CardTag>
+            );
+          })}
+        </div>
+      </div>
+    ))}
+  </div>
+</div>

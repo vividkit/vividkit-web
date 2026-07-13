@@ -9,15 +9,15 @@ import {
 
 const root = new URL('../..', import.meta.url);
 
-test('batch B freezes cli/commands/workflows/how-ck-works/inside-* via shared router', async () => {
+test('batch B freezes cli/commands/workflows/how-ck-works/inside-* via isolated @legacy-ck router', async () => {
   assert.equal(LEGACY_BATCH_B_SUFFIXES.length, 13);
   for (const suffix of LEGACY_BATCH_B_SUFFIXES) {
-    assert.ok(LEGACY_FROZEN_SUFFIXES.includes(suffix), `missing frozen mark for ${suffix}`);
+    assert.ok(LEGACY_FROZEN_SUFFIXES.includes(suffix), `missing frozen/isolated mark for ${suffix}`);
   }
 
   const body = await readFile(new URL('src/components/guides/legacy/LegacyBatchBGuideBody.astro', root), 'utf8');
-  assert.match(body, /CLIGuide/);
-  assert.match(body, /CommandsGuide/);
+  assert.match(body, /@legacy-ck\/components\/guides\/CLIGuide/);
+  assert.match(body, /@legacy-ck\/components\/guides\/CommandsGuide/);
   assert.match(body, /HowCkWorksGuide/);
   assert.match(body, /InsideClaudeKitPlanModesArticle/);
 

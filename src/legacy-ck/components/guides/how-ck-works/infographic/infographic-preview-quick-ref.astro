@@ -1,0 +1,540 @@
+---
+// Purpose-built Quick Ref layout for /ck:preview.
+// Mirrors the team/brainstorm quick-ref design system while surfacing the two
+// input shapes, the 8 flags grouped by role, and the visual output contract.
+import type { SkillInfographic, ProcessFlowStep, WorkflowModeRow } from '@legacy-ck/data/guides/how-ck-works';
+import type { Language } from '@/i18n';
+
+interface Props {
+  data: SkillInfographic;
+  lang: Language;
+}
+
+type Tone = {
+  rail: string;
+  chip: string;
+  label: string;
+  surface: string;
+};
+
+interface ProcessGroup {
+  label: string;
+  kicker: string;
+  steps: ProcessFlowStep[];
+  tone: Tone;
+}
+
+const { data, lang } = Astro.props;
+const isVi = lang === 'vi';
+
+const text = {
+  eyebrow: isVi ? 'Tóm tắt nhanh / Tiện ích visual' : 'Quick Ref / Visual utility',
+  readOnly: isVi ? 'Read-only · không sửa code' : 'Read-only · never modifies code',
+  summary: isVi ? data.header.taglineVi : data.header.taglineEn,
+  gate: isVi ? data.hardGate?.titleVi : data.hardGate?.titleEn,
+  gateNote: isVi
+    ? 'Output lưu vào {plan_dir}/visuals/ (fallback plans/visuals/).'
+    : 'Output saves to {plan_dir}/visuals/ (fallback plans/visuals/).',
+  samplePrompt: isVi ? 'Prompt mẫu' : 'Sample prompt',
+  process: isVi ? 'Luồng xử lý' : 'Execution Map',
+  processDesc: isVi
+    ? 'Một input (file path hoặc generate flag + topic) chạy qua bốn chặng: nhận input, định tuyến, tạo visual, rồi xuất ra browser hoặc HTML độc lập.'
+    : 'One input (file path or generate flag + topic) runs through four stages: receive, route, generate, then emit to the browser or a self-contained HTML page.',
+  flags: isVi ? 'Cách dùng theo vai trò' : 'Usage by Role',
+  flagsDesc: isVi
+    ? 'View (không flag) nhận path để đọc/walkthrough file. Tám flag chia ba nhóm: Generate chọn dạng output từ topic; --html bọc bất kỳ generate flag nào thành trang độc lập; nhóm Review bắt buộc đi kèm --html.'
+    : 'View (no flag) takes a path to read/walk through a file. Eight flags in three groups: Generate picks an output shape from a topic; --html wraps any generate flag into a standalone page; the Review group requires --html.',
+  delivery: isVi ? 'Hình thức xuất' : 'Delivery',
+  deliveryDesc: isVi
+    ? 'Chế độ nào cần local server, chế độ nào self-contained.'
+    : 'Which modes need a local server, which are self-contained.',
+  stopLabel: isVi ? 'Dừng server' : 'Stop server',
+  stopCmd: '/ck:preview --stop',
+  output_section: isVi ? 'Output trực quan' : 'Visual Output',
+  outputDesc: isVi ? data.reportOutput?.descVi : data.reportOutput?.descEn,
+  stack: isVi ? 'Stack được gọi khi cần' : 'Stack Used When Needed',
+  principles: isVi ? 'Nguyên tắc cốt lõi' : 'Core Principles',
+  principlesDesc: isVi
+    ? 'Năm điều định hình cách preview hoạt động — luôn an toàn, luôn chia sẻ được.'
+    : 'Five rules that shape how preview behaves — always safe, always shareable.',
+};
+
+const heroFlow = isVi
+  ? ['Đầu vào', 'Định tuyến', 'Tạo', 'Kết quả']
+  : ['Input', 'Route', 'Generate', 'Output'];
+
+interface GateRule {
+  leadEn: string;
+  leadVi: string;
+  bodyEn: string;
+  bodyVi: string;
+}
+
+const gateRules: GateRule[] = [
+  {
+    leadEn: 'Two input shapes',
+    leadVi: 'Hai dạng input',
+    bodyEn: 'A file path (view / walkthrough), OR a generate flag + topic.',
+    bodyVi: 'Một file path (view / walkthrough), HOẶC generate flag + topic.',
+  },
+  {
+    leadEn: '--html composes',
+    leadVi: '--html kết hợp',
+    bodyEn: 'Add --html to any generate flag for a self-contained browser page — no dev server.',
+    bodyVi: 'Thêm --html vào bất kỳ generate flag nào để có trang browser độc lập — không cần dev server.',
+  },
+  {
+    leadEn: 'Review flags imply --html',
+    leadVi: 'Review flag tự bật --html',
+    bodyEn: '--diff [ref], --plan-review [plan-file], and --recap [timeframe] auto-enable --html — you can omit it.',
+    bodyVi: '--diff [ref], --plan-review [plan-file], và --recap [timeframe] tự bật --html — có thể bỏ --html.',
+  },
+];
+
+const tones: Record<string, Tone> = {
+  input: {
+    rail: 'bg-cyan-400',
+    chip: 'bg-cyan-50 text-cyan-700 ring-cyan-200 dark:bg-cyan-950/35 dark:text-cyan-200 dark:ring-cyan-800/60',
+    label: 'text-cyan-700 dark:text-cyan-300',
+    surface: 'bg-cyan-50/55 ring-cyan-100 dark:bg-cyan-950/12 dark:ring-cyan-900/35',
+  },
+  generate: {
+    rail: 'bg-violet-400',
+    chip: 'bg-violet-50 text-violet-700 ring-violet-200 dark:bg-violet-950/35 dark:text-violet-200 dark:ring-violet-800/60',
+    label: 'text-violet-700 dark:text-violet-300',
+    surface: 'bg-violet-50/55 ring-violet-100 dark:bg-violet-950/12 dark:ring-violet-900/35',
+  },
+  output: {
+    rail: 'bg-emerald-400',
+    chip: 'bg-emerald-50 text-emerald-700 ring-emerald-200 dark:bg-emerald-950/35 dark:text-emerald-200 dark:ring-emerald-800/60',
+    label: 'text-emerald-700 dark:text-emerald-300',
+    surface: 'bg-emerald-50/55 ring-emerald-100 dark:bg-emerald-950/12 dark:ring-emerald-900/35',
+  },
+};
+
+const flow = data.processFlow ?? [];
+const processGroups: ProcessGroup[] = [
+  {
+    label: isVi ? 'Nhận input' : 'Receive',
+    kicker: isVi ? 'File path hoặc generate flag + topic' : 'File path or generate flag + topic',
+    steps: flow.slice(0, 2),
+    tone: tones.input,
+  },
+  {
+    label: isVi ? 'Định tuyến + tạo' : 'Route + generate',
+    kicker: isVi ? 'Chọn dạng, dựng prose + ASCII + Mermaid' : 'Pick a shape, build prose + ASCII + Mermaid',
+    steps: flow.slice(2, 4),
+    tone: tones.generate,
+  },
+  {
+    label: isVi ? 'Xuất' : 'Emit',
+    kicker: isVi ? 'Browser live hoặc HTML độc lập' : 'Live browser or self-contained HTML',
+    steps: flow.slice(4),
+    tone: tones.output,
+  },
+];
+
+// Build a lookup map from promptExamples keyed by labelEn for flag card prompts.
+const flagPromptMap = Object.fromEntries(
+  (data.promptExamples || []).map(p => [p.labelEn, p])
+);
+
+interface FlagItem {
+  flag: string;
+  // prompt and desc come from flagPromptMap (data.promptExamples)
+  altPromptEn?: string;
+  altPromptVi?: string;
+  altLabelEn?: string;
+  altLabelVi?: string;
+}
+
+interface FlagGroup {
+  labelEn: string;
+  labelVi: string;
+  kickerEn: string;
+  kickerVi: string;
+  items: FlagItem[];
+  accent: string;
+  badge: string;
+}
+
+const flagGroups: FlagGroup[] = [
+  {
+    labelEn: 'View · no flag',
+    labelVi: 'View · không flag',
+    kickerEn: 'Read an existing file/dir — plans in novel UI',
+    kickerVi: 'Đọc file/thư mục có sẵn — plan dạng novel',
+    items: [
+      { flag: '<file.md>' },
+      { flag: '<dir/>' },
+      { flag: '<path>' },
+    ],
+    accent: 'border-slate-200 bg-slate-50/70 ring-slate-100 dark:border-white/10 dark:bg-white/[0.04] dark:ring-white/5',
+    badge: 'bg-slate-600 text-white dark:bg-slate-500 dark:text-white',
+  },
+  {
+    labelEn: 'Generate',
+    labelVi: 'Tạo',
+    kickerEn: 'Pick one output shape from a topic',
+    kickerVi: 'Chọn một dạng output từ topic',
+    items: [
+      { flag: '--explain' },
+      { flag: '--diagram' },
+      { flag: '--slides' },
+      { flag: '--ascii' },
+    ],
+    accent: 'border-cyan-200 bg-cyan-50/65 ring-cyan-100 dark:border-cyan-800/55 dark:bg-cyan-950/20 dark:ring-cyan-900/35',
+    badge: 'bg-cyan-500 text-white dark:bg-cyan-400 dark:text-cyan-950',
+  },
+  {
+    labelEn: 'Output',
+    labelVi: 'Xuất',
+    kickerEn: 'Composes with any generate flag',
+    kickerVi: 'Kết hợp với mọi generate flag',
+    items: [
+      { flag: '--html' },
+    ],
+    accent: 'border-violet-200 bg-violet-50/65 ring-violet-100 dark:border-violet-800/55 dark:bg-violet-950/20 dark:ring-violet-900/35',
+    badge: 'bg-violet-500 text-white dark:bg-violet-400 dark:text-violet-950',
+  },
+  {
+    labelEn: 'Review · implies --html',
+    labelVi: 'Review · tự bật --html',
+    kickerEn: 'Diff, plan-vs-code, and recap views',
+    kickerVi: 'View diff, plan-vs-code, và recap',
+    items: [
+      { flag: '--diff [ref]' },
+      {
+        flag: '--plan-review [plan-file]',
+        altPromptEn: '/ck:preview --plan-review',
+        altPromptVi: '/ck:preview --plan-review',
+        altLabelEn: 'Omit path → active plan',
+        altLabelVi: 'Bỏ path → dùng plan active',
+      },
+      { flag: '--recap [timeframe]' },
+    ],
+    accent: 'border-amber-200 bg-amber-50/65 ring-amber-100 dark:border-amber-800/55 dark:bg-amber-950/20 dark:ring-amber-900/35',
+    badge: 'bg-amber-500 text-white dark:bg-amber-400 dark:text-amber-950',
+  },
+];
+
+const modeMap = new Map<string, WorkflowModeRow>((data.workflowModes ?? []).map(m => [m.flag, m]));
+
+interface DeliveryMode {
+  labelEn: string;
+  labelVi: string;
+  engineEn: string;
+  engineVi: string;
+  itemsEn: string[];
+  itemsVi: string[];
+  ring: string;
+  iconWrap: string;
+  iconPath: string;
+}
+
+const deliveryModes: DeliveryMode[] = [
+  {
+    labelEn: 'Local server',
+    labelVi: 'Local server',
+    engineEn: 'markdown-novel-viewer',
+    engineVi: 'markdown-novel-viewer',
+    itemsEn: ['View (file / dir)', 'Markdown generation'],
+    itemsVi: ['View (file / thư mục)', 'Markdown generation'],
+    ring: 'border-amber-200 bg-amber-50/65 dark:border-amber-800/55 dark:bg-amber-950/20',
+    iconWrap: 'bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300',
+    iconPath: 'M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01',
+  },
+  {
+    labelEn: 'Self-contained',
+    labelVi: 'Self-contained',
+    engineEn: 'No server — opens in browser',
+    engineVi: 'Không cần server — mở thẳng browser',
+    itemsEn: ['--html + generate flag', 'Review (--diff / --plan-review / --recap)'],
+    itemsVi: ['--html + generate flag', 'Review (--diff / --plan-review / --recap)'],
+    ring: 'border-emerald-200 bg-emerald-50/65 dark:border-emerald-800/55 dark:bg-emerald-950/20',
+    iconWrap: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300',
+    iconPath: 'M5 13l4 4L19 7',
+  },
+];
+
+const principles = isVi ? data.corePrinciplesVi || [] : data.corePrinciplesEn || [];
+const principleAccents = [
+  'border-cyan-200 bg-cyan-50/60 dark:border-cyan-800/50 dark:bg-cyan-950/18',
+  'border-violet-200 bg-violet-50/60 dark:border-violet-800/50 dark:bg-violet-950/18',
+  'border-emerald-200 bg-emerald-50/60 dark:border-emerald-800/50 dark:bg-emerald-950/18',
+  'border-amber-200 bg-amber-50/60 dark:border-amber-800/50 dark:bg-amber-950/18',
+  'border-sky-200 bg-sky-50/60 dark:border-sky-800/50 dark:bg-sky-950/18',
+];
+
+const stackPreview = data.skillStack?.slice(0, 12) || [];
+const outputPattern = isVi ? data.reportOutput?.patternVi : data.reportOutput?.patternEn;
+
+const outputDescItems = (text.outputDesc ?? '')
+  .split('•')
+  .map(part => part.trim())
+  .filter(Boolean);
+
+const locationRaw = isVi ? data.reportOutput?.locationVi : data.reportOutput?.locationEn;
+const locationRows = (locationRaw ?? '')
+  .split('•')
+  .map(part => {
+    const [label, ...rest] = part.split(':');
+    return { label: label.trim(), path: rest.join(':').trim() };
+  })
+  .filter(row => row.path);
+
+const locationNote = isVi
+  ? 'Có plan active → visuals nằm trong thư mục plan đó. Không có plan → rơi về plans/visuals/.'
+  : 'With an active plan, visuals live inside that plan folder. No plan → falls back to plans/visuals/.';
+---
+
+<div class="space-y-8">
+  <header class="relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm ring-1 ring-white/60 dark:border-white/10 dark:bg-slate-950/55 dark:ring-white/5">
+    <div class="pointer-events-none absolute inset-0 opacity-80 dark:opacity-100">
+      <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-cyan-400 via-violet-300 to-emerald-400"></div>
+      <div class="absolute inset-0 bg-[linear-gradient(115deg,rgba(6,182,212,0.10),transparent_32%,rgba(139,92,246,0.08)_60%,rgba(16,185,129,0.10))] dark:bg-[linear-gradient(115deg,rgba(6,182,212,0.16),transparent_32%,rgba(139,92,246,0.10)_60%,rgba(16,185,129,0.13))]"></div>
+      <div class="absolute inset-0 bg-[linear-gradient(rgba(148,163,184,0.10)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.10)_1px,transparent_1px)] bg-[size:28px_28px] [mask-image:linear-gradient(to_bottom,black,transparent_72%)]"></div>
+    </div>
+
+    <div class="relative grid gap-0 xl:grid-cols-[minmax(0,1fr)_380px]">
+      <div class="min-w-0 p-5 sm:p-6">
+        <div class="flex flex-wrap items-center gap-2">
+          <p class="rounded-full bg-cyan-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-cyan-700 ring-1 ring-cyan-500/20 dark:text-cyan-300">{text.eyebrow}</p>
+          <p class="rounded-full bg-white/70 px-3 py-1 text-xs font-medium text-slate-600 ring-1 ring-slate-200 dark:bg-white/[0.06] dark:text-slate-300 dark:ring-white/10">{text.readOnly}</p>
+        </div>
+        <div class="mt-5">
+          <h2 class="font-mono text-3xl font-semibold leading-none text-slate-950 dark:text-white sm:text-4xl">{data.command}</h2>
+          <p class="mt-4 max-w-2xl text-sm leading-6 text-slate-600 dark:text-slate-300">{text.summary}</p>
+        </div>
+        <div class="mt-6 grid gap-2 sm:grid-cols-4">
+          {heroFlow.map((item, index) => (
+            <div class="relative rounded-xl border border-slate-200 bg-white/75 px-3 py-3 dark:border-white/10 dark:bg-white/[0.055]">
+              {index < heroFlow.length - 1 && <span class="absolute right-[-9px] top-1/2 z-10 hidden h-px w-4 bg-slate-300 dark:bg-white/20 sm:block"></span>}
+              <span class="font-mono text-[11px] text-slate-400">0{index + 1}</span>
+              <p class="mt-1 text-sm font-semibold text-slate-900 dark:text-white">{item}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <aside class="relative border-t border-cyan-200 bg-cyan-50/80 p-5 dark:border-cyan-800/50 dark:bg-cyan-950/25 xl:border-l xl:border-t-0">
+        <div class="flex items-center gap-2">
+          <svg class="h-4 w-4 shrink-0 text-cyan-600 dark:text-cyan-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <p class="text-xs font-semibold uppercase tracking-wider text-cyan-900 dark:text-cyan-200">{text.gate}</p>
+        </div>
+        <ul class="mt-3 space-y-2.5">
+          {gateRules.map((rule, index) => (
+            <li class="grid grid-cols-[1.25rem_minmax(0,1fr)] gap-2">
+              <span class="mt-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-cyan-200 font-mono text-[10px] font-semibold text-cyan-900 dark:bg-cyan-900/60 dark:text-cyan-100">{index + 1}</span>
+              <div class="min-w-0">
+                <p class="text-xs font-semibold leading-5 text-cyan-950 dark:text-cyan-100">{isVi ? rule.leadVi : rule.leadEn}</p>
+                <p class="mt-0.5 text-xs leading-5 text-cyan-900/75 dark:text-cyan-100/70">{isVi ? rule.bodyVi : rule.bodyEn}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <p class="mt-3 border-t border-cyan-200/70 pt-2.5 font-mono text-[11px] leading-5 text-cyan-800/80 dark:border-cyan-800/40 dark:text-cyan-200/70">{text.gateNote}</p>
+      </aside>
+    </div>
+  </header>
+
+  <section class="rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-white/10 dark:bg-slate-950/45">
+    <div class="border-b border-slate-200 p-5 dark:border-white/10">
+      <div class="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.process}</h3>
+          <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300">{text.processDesc}</p>
+        </div>
+        <div class="hidden shrink-0 whitespace-nowrap font-mono text-xs text-slate-400 sm:block">01 -&gt; 05</div>
+      </div>
+    </div>
+    <div class="divide-y divide-slate-200 dark:divide-white/10">
+      {processGroups.map((group, groupIndex) => (
+        <div class="relative grid gap-4 p-5 lg:grid-cols-[10rem_minmax(0,1fr)]">
+          <div class="flex items-start gap-3 lg:block">
+            <span class={`mt-1 block h-10 w-1.5 shrink-0 rounded-full ${group.tone.rail} lg:h-12 lg:w-2`}></span>
+            <div class="min-w-0 lg:mt-3">
+              <span class={`rounded-full px-2.5 py-1 text-[11px] font-semibold ring-1 ${group.tone.chip}`}>0{groupIndex + 1}</span>
+              <p class={`mt-2 text-base font-semibold ${group.tone.label}`}>{group.label}</p>
+              <p class="mt-1 text-xs leading-5 text-slate-500 dark:text-slate-400">{group.kicker}</p>
+            </div>
+          </div>
+          <ol class="grid gap-3 sm:grid-cols-2">
+            {group.steps.map(step => (
+              <li class={`grid grid-cols-[2.25rem_minmax(0,1fr)] gap-3 rounded-xl p-3.5 ring-1 transition duration-200 hover:-translate-y-0.5 hover:shadow-sm ${group.tone.surface}`}>
+                <span class="flex h-9 w-9 items-center justify-center rounded-full bg-white font-mono text-xs font-semibold text-slate-700 ring-1 ring-slate-200 dark:bg-slate-950/75 dark:text-slate-200 dark:ring-white/10">{step.number}</span>
+                <span class="min-w-0">
+                  <span class="block text-sm font-semibold leading-5 text-slate-950 dark:text-white">{isVi ? step.titleVi : step.titleEn}</span>
+                  {step.descEn && <span class="mt-1 block text-xs leading-5 text-slate-600 dark:text-slate-400">{isVi ? step.descVi : step.descEn}</span>}
+                </span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-slate-950/45">
+    <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.flags}</h3>
+    <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300">{text.flagsDesc}</p>
+    <div class="mt-4 space-y-3">
+      {flagGroups.map(group => (
+        <article class={`rounded-xl border p-4 ring-1 ${group.accent}`}>
+          <div class="flex items-baseline justify-between gap-3">
+            <p class="text-sm font-semibold text-slate-950 dark:text-white">{isVi ? group.labelVi : group.labelEn}</p>
+            <p class="text-[11px] leading-5 text-slate-500 dark:text-slate-400">{isVi ? group.kickerVi : group.kickerEn}</p>
+          </div>
+          <ul class="mt-3 grid gap-2.5 sm:grid-cols-2">
+            {group.items.map(item => {
+              const mode = modeMap.get(item.flag);
+              const pd = flagPromptMap[item.flag];
+              const desc = mode ? (isVi ? mode.modeVi : mode.modeEn) : pd ? (isVi ? pd.whenVi : pd.whenEn) : '';
+              const prompt = pd ? pd.command : '';
+              return (
+                <li class="min-w-0 rounded-lg bg-white/70 p-3 ring-1 ring-slate-200/80 dark:bg-slate-950/35 dark:ring-white/10">
+                  <code class={`inline-flex max-w-full rounded-md px-2 py-0.5 font-mono text-xs font-semibold shadow-sm ${group.badge}`}>{item.flag}</code>
+                  <p class="mt-2 text-xs leading-5 text-slate-650 dark:text-slate-300">{desc}</p>
+                  <div class="mt-2">
+                    <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">{text.samplePrompt}</p>
+                    <code class="mt-1 block whitespace-pre-wrap break-words rounded-md bg-slate-100 px-2.5 py-1.5 font-mono text-[11px] leading-5 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-slate-200 dark:ring-white/10">{prompt}</code>
+                  </div>
+                  {item.altPromptEn && (
+                    <div class="mt-2">
+                      <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">{isVi ? item.altLabelVi : item.altLabelEn}</p>
+                      <code class="mt-1 block whitespace-pre-wrap break-words rounded-md bg-slate-100 px-2.5 py-1.5 font-mono text-[11px] leading-5 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-slate-200 dark:ring-white/10">{isVi ? item.altPromptVi : item.altPromptEn}</code>
+                    </div>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </article>
+      ))}
+    </div>
+    <div class="mt-5 rounded-xl border border-slate-200 bg-slate-50/55 p-4 dark:border-white/10 dark:bg-white/[0.03]">
+      <div class="flex items-baseline justify-between gap-3">
+        <h4 class="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.delivery}</h4>
+        <p class="text-[11px] leading-5 text-slate-500 dark:text-slate-400">{text.deliveryDesc}</p>
+      </div>
+      <div class="mt-3 grid gap-3 sm:grid-cols-2">
+        {deliveryModes.map(mode => (
+          <article class={`rounded-lg border p-3.5 ${mode.ring}`}>
+            <div class="flex items-center gap-2.5">
+              <span class={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg ${mode.iconWrap}`}>
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d={mode.iconPath} />
+                </svg>
+              </span>
+              <div class="min-w-0">
+                <p class="text-sm font-semibold text-slate-950 dark:text-white">{isVi ? mode.labelVi : mode.labelEn}</p>
+                <p class="truncate font-mono text-[11px] text-slate-500 dark:text-slate-400">{isVi ? mode.engineVi : mode.engineEn}</p>
+              </div>
+            </div>
+            <ul class="mt-2.5 space-y-1.5">
+              {(isVi ? mode.itemsVi : mode.itemsEn).map(item => (
+                <li class="flex items-start gap-2 text-xs leading-5 text-slate-600 dark:text-slate-300">
+                  <span class="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-slate-400 dark:bg-slate-500"></span>
+                  <span class="min-w-0 font-mono">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+      <div class="mt-3 flex flex-wrap items-center gap-2.5 border-t border-slate-200/70 pt-3 dark:border-white/10">
+        <span class="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-amber-700 dark:text-amber-400">
+          <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <rect x="9" y="9" width="6" height="6" rx="1" fill="currentColor" stroke="none" />
+          </svg>
+          {text.stopLabel}
+        </span>
+        <code class="rounded-md bg-slate-100 px-2.5 py-1 font-mono text-[11px] font-semibold text-purple-600 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-purple-400 dark:ring-white/10">{text.stopCmd}</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_330px]">
+    <article class="overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-slate-950/45">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.output_section}</h3>
+      {outputDescItems.length > 0 && (
+        <ul class="mt-3 space-y-2">
+          {outputDescItems.map(item => (
+            <li class="grid grid-cols-[0.875rem_minmax(0,1fr)] gap-2.5 text-sm leading-6 text-slate-600 dark:text-slate-300">
+              <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400 dark:bg-emerald-500"></span>
+              <span class="min-w-0">{item}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+      <dl class="mt-4 space-y-3 border-t border-slate-200 pt-4 dark:border-white/10">
+        {outputPattern && (
+          <div>
+            <dt class="text-[10px] font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">{isVi ? 'Tên file' : 'Pattern'}</dt>
+            <dd><code class="mt-1 block whitespace-pre-wrap break-words rounded-lg bg-slate-100 px-3 py-2 font-mono text-xs leading-6 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-slate-200 dark:ring-white/10">{outputPattern}</code></dd>
+          </div>
+        )}
+        {locationRows.length > 0 && (
+          <div>
+            <dt class="text-[10px] font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">{isVi ? 'Vị trí lưu' : 'Location'}</dt>
+            <dd class="mt-1 space-y-1.5">
+              {locationRows.map(row => (
+                <div class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                  <span class="text-[11px] font-medium text-slate-500 dark:text-slate-400">{row.label}</span>
+                  <code class="min-w-0 break-words rounded-md bg-emerald-50 px-2 py-0.5 font-mono text-[11px] leading-5 text-emerald-800 ring-1 ring-emerald-200 dark:bg-emerald-950/25 dark:text-emerald-200 dark:ring-emerald-800/50">{row.path}</code>
+                </div>
+              ))}
+            </dd>
+            <p class="mt-2 text-[11px] leading-5 text-slate-500 dark:text-slate-400">{locationNote}</p>
+          </div>
+        )}
+      </dl>
+    </article>
+
+    <aside class="rounded-2xl border border-slate-200 bg-slate-50/80 p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.03]">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.stack}</h3>
+      <div class="mt-3 flex flex-wrap gap-2">
+        {stackPreview.map(item => (
+          <span class="rounded-full bg-white px-2.5 py-1 text-xs text-slate-700 ring-1 ring-slate-200 dark:bg-slate-950/60 dark:text-slate-300 dark:ring-white/10">{item.name}</span>
+        ))}
+      </div>
+    </aside>
+  </section>
+
+  <section class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-white/10 dark:bg-slate-950/45">
+    <div class="border-b border-slate-200 p-5 dark:border-white/10">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.principles}</h3>
+      <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300">{text.principlesDesc}</p>
+    </div>
+    <ol class="grid gap-3 p-5 lg:grid-cols-2">
+      {principles.map((principle, index) => (
+        <li class={`grid grid-cols-[2.25rem_minmax(0,1fr)] gap-3 rounded-xl border p-3.5 ${principleAccents[index % principleAccents.length]}`}>
+          <span class="flex h-9 w-9 items-center justify-center rounded-full bg-white font-mono text-xs font-semibold text-slate-700 ring-1 ring-slate-200 dark:bg-slate-950/75 dark:text-slate-200 dark:ring-white/10">{index + 1}</span>
+          <span class="min-w-0 text-sm leading-6 text-slate-800 dark:text-slate-200">{principle}</span>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  {data.deepDiveLink && (
+    <a
+      href={isVi ? data.deepDiveLink.hrefVi : data.deepDiveLink.hrefEn}
+      class="group flex items-center gap-3 rounded-xl border border-cyan-200/70 bg-gradient-to-r from-cyan-50 to-emerald-50/50 px-4 py-3 transition-all duration-200 hover:-translate-y-0.5 hover:border-cyan-300 hover:shadow-sm dark:border-cyan-800/50 dark:from-cyan-950/30 dark:to-emerald-950/20 dark:hover:border-cyan-700"
+    >
+      <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-cyan-100 dark:bg-cyan-900/50">
+        <svg class="h-4 w-4 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+        </svg>
+      </div>
+      <span class="text-sm font-medium text-cyan-700 group-hover:text-cyan-900 dark:text-cyan-300 dark:group-hover:text-cyan-100">
+        {isVi ? data.deepDiveLink.labelVi : data.deepDiveLink.labelEn}
+      </span>
+      <svg class="ml-auto h-4 w-4 text-cyan-400 transition-transform group-hover:translate-x-0.5 dark:text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+      </svg>
+    </a>
+  )}
+</div>

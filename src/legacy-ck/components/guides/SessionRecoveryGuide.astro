@@ -1,0 +1,32 @@
+---
+// SessionRecoveryGuide - composition parent, delegates to sub-components
+import { getLangFromUrl, type Language } from '@/i18n';
+import SessionRecoveryHeroAndAutoState from './session-recovery/session-recovery-hero-and-auto-state.astro';
+import SessionRecoveryUnderstandingAndCliproxy from './session-recovery/session-recovery-understanding-and-cliproxy.astro';
+import SessionRecoveryResumeAndExport from './session-recovery/session-recovery-resume-and-export.astro';
+import SessionRecoveryProtipsAndEmergency from './session-recovery/session-recovery-protips-and-emergency.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+---
+
+<style>
+  @keyframes flow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+  .flow-arrow {
+    animation: flow 2s ease-in-out infinite;
+  }
+</style>
+
+<div class="space-y-8 mt-6">
+  <SessionRecoveryHeroAndAutoState lang={currentLang} />
+  <SessionRecoveryUnderstandingAndCliproxy lang={currentLang} />
+  <SessionRecoveryResumeAndExport lang={currentLang} />
+  <SessionRecoveryProtipsAndEmergency lang={currentLang} />
+</div>

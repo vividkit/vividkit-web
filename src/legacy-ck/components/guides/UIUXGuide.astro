@@ -1,0 +1,45 @@
+---
+// UIUXGuide - composition parent, delegates to sub-components
+import { getLangFromUrl, type Language } from '@/i18n';
+import UiuxHeaderAndHero from './uiux/uiux-header-and-hero.astro';
+import UiuxHowItWorks from './uiux/uiux-how-it-works.astro';
+import UiuxBuildShowcaseAndTips from './uiux/uiux-build-showcase-and-tips.astro';
+import UiuxIntegrationGuide from './uiux/uiux-integration-guide.astro';
+import UiuxQualityChecklist from './uiux/uiux-quality-checklist.astro';
+import UiuxSearchDomains from './uiux/uiux-search-domains.astro';
+import UiuxWorkflows from './uiux/uiux-workflows.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+---
+
+<style>
+  @keyframes pulse-slow {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+  .pulse-icon {
+    animation: pulse-slow 3s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+  .float-animation {
+    animation: float 3s ease-in-out infinite;
+  }
+</style>
+
+<div class="space-y-8 mt-6">
+  <UiuxHeaderAndHero lang={currentLang} />
+  <UiuxHowItWorks lang={currentLang} />
+  <UiuxSearchDomains lang={currentLang} />
+  <UiuxBuildShowcaseAndTips lang={currentLang} />
+  <UiuxIntegrationGuide lang={currentLang} />
+  <UiuxWorkflows lang={currentLang} />
+  <UiuxQualityChecklist lang={currentLang} />
+</div>

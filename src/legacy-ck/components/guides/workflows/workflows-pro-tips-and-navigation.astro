@@ -1,0 +1,350 @@
+---
+// Workflows Guide - Pro tips, cross-page navigation links, and footer
+import { useTranslations } from '@legacy-ck/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+---
+
+<!-- Additional Tips Section -->
+<div
+  class="glass-card rounded-2xl p-8 border border-slate-200 dark:border-slate-800 mt-8"
+>
+  <div class="flex items-center gap-4 mb-6">
+    <div
+      class="flex-shrink-0 p-3 bg-blue-100 dark:bg-blue-900/30 rounded-xl text-blue-600 dark:text-blue-400"
+    >
+      <svg
+        class="w-6 h-6"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+        ></path>
+      </svg>
+    </div>
+    <h3 class="text-lg font-semibold">{t("workflows.guide.pro_tips.title")}</h3>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div
+      class="flex items-start gap-3 p-4 rounded-lg bg-surface-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700"
+    >
+      <svg
+        class="w-6 h-6 text-blue-500 dark:text-blue-400 mt-0.5 flex-shrink-0"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      <div>
+        <div
+          class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1"
+        >
+          {t("commands.tip1.title")}
+        </div>
+        <div class="text-xs text-slate-600 dark:text-slate-400">
+          <Fragment
+            set:html={t("commands.tip1.description").replace(
+              "/clear",
+              '<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/clear</code>',
+            )}
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex items-start gap-3 p-4 rounded-lg bg-surface-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700"
+    >
+      <svg
+        class="w-6 h-6 text-purple-500 dark:text-purple-400 mt-0.5 flex-shrink-0"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      <div>
+        <div
+          class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1"
+        >
+          {t("commands.tip2.title")}
+        </div>
+        <div class="text-xs text-slate-600 dark:text-slate-400">
+          <Fragment
+            set:html={t("commands.tip2.description").replace(
+              "@plan.md",
+              '<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">@plan.md</code>',
+            )}
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex items-start gap-3 p-4 rounded-lg bg-surface-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700"
+    >
+      <svg
+        class="w-6 h-6 text-green-500 dark:text-green-400 mt-0.5 flex-shrink-0"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      <div>
+        <div
+          class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1"
+        >
+          {t("workflows.tip.cook.title")}
+        </div>
+        <div class="text-xs text-slate-600 dark:text-slate-400">
+          <Fragment
+            set:html={t("workflows.tip.cook.desc")
+              .replace(
+                "`/ck:plan`",
+                '<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/ck:plan</code>',
+              )
+              .replace(
+                "`/clear`",
+                '<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/clear</code>',
+              )
+              .replace(
+                "`/ck:cook`",
+                '<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/ck:cook</code>',
+              )}
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex items-start gap-3 p-4 rounded-lg bg-surface-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700"
+    >
+      <svg
+        class="w-6 h-6 text-cyan-500 dark:text-cyan-400 mt-0.5 flex-shrink-0"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      <div>
+        <div
+          class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1"
+        >
+          {t("workflows.tip.scout.title")}
+        </div>
+        <div class="text-xs text-slate-600 dark:text-slate-400">
+          <Fragment
+            set:html={t("workflows.tip.scout.desc").replace(
+              "`/ck:scout`",
+              '<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/ck:scout</code>',
+            )}
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex items-start gap-3 p-4 rounded-lg bg-surface-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700"
+    >
+      <svg
+        class="w-6 h-6 text-red-500 dark:text-red-400 mt-0.5 flex-shrink-0"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      <div>
+        <div
+          class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1"
+        >
+          {t("workflows.tip.debug.title")}
+        </div>
+        <div class="text-xs text-slate-600 dark:text-slate-400">
+          <Fragment
+            set:html={t("workflows.tip.debug.desc")
+              .replace(
+                "`/ck:debug`",
+                '<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/ck:debug</code>',
+              )
+              .replace(
+                "`/ck:fix`",
+                '<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/ck:fix</code>',
+              )}
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex items-start gap-3 p-4 rounded-lg bg-surface-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700"
+    >
+      <svg
+        class="w-6 h-6 text-orange-500 dark:text-orange-400 mt-0.5 flex-shrink-0"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      <div>
+        <div
+          class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1"
+        >
+          {t("workflows.tip.plan.title")}
+        </div>
+        <div class="text-xs text-slate-600 dark:text-slate-400">
+          <Fragment
+            set:html={t("workflows.tip.plan.desc")
+              .replace(
+                "`/ck:plan`",
+                '<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/ck:plan</code>',
+              )
+              .replace(
+                "`/ck:cook`",
+                '<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">/ck:cook</code>',
+              )}
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex items-start gap-3 p-4 rounded-lg bg-surface-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 md:col-span-2"
+    >
+      <svg
+        class="w-6 h-6 text-amber-500 dark:text-amber-400 mt-0.5 flex-shrink-0"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      <div>
+        <div
+          class="text-sm font-medium text-slate-900 dark:text-slate-200 mb-1"
+        >
+          {t("workflows.tip.checklists.title")}
+        </div>
+        <div class="text-xs text-slate-600 dark:text-slate-400">
+          <Fragment set:html={t("workflows.tip.checklists.desc")} />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Cross-page Navigation -->
+<div
+  class="mt-6 p-6 rounded-2xl bg-gradient-to-r from-cyan-500/5 to-purple-500/5 border border-slate-200 dark:border-slate-800"
+>
+  <div class="flex items-center gap-3 mb-3">
+    <svg
+      class="w-5 h-5 text-cyan-500"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path
+        d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+        stroke-linecap="round"
+        stroke-linejoin="round"></path>
+      <polyline
+        points="15 3 21 3 21 9"
+        stroke-linecap="round"
+        stroke-linejoin="round"></polyline>
+      <line
+        x1="10"
+        y1="14"
+        x2="21"
+        y2="3"
+        stroke-linecap="round"
+        stroke-linejoin="round"></line>
+    </svg>
+    <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100">
+      {t("workflows.related.title")}
+    </h3>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <a
+      href={currentLang === "vi" ? "/vi/legacy/guides/commands" : "/legacy/guides/commands"}
+      class="p-4 rounded-xl bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 hover:border-purple-300 dark:hover:border-purple-500/30 transition-colors group"
+    >
+      <div class="flex items-center gap-2 mb-1">
+        <code
+          class="text-sm text-purple-600 dark:text-purple-400 font-mono font-bold"
+          >{t("guides.commands.title")}</code
+        >
+        <svg
+          class="w-4 h-4 text-slate-400 group-hover:text-purple-500 transition-colors"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <polyline
+            points="9 18 15 12 9 6"
+            stroke-linecap="round"
+            stroke-linejoin="round"></polyline>
+        </svg>
+      </div>
+      <p class="text-xs text-slate-600 dark:text-slate-400">
+        {t("workflows.related.commands_desc")}
+      </p>
+    </a>
+    <a
+      href={currentLang === "vi" ? "/vi/legacy/guides/flowchart" : "/legacy/guides/flowchart"}
+      class="p-4 rounded-xl bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 hover:border-cyan-300 dark:hover:border-cyan-500/30 transition-colors group"
+    >
+      <div class="flex items-center gap-2 mb-1">
+        <code
+          class="text-sm text-cyan-600 dark:text-cyan-400 font-mono font-bold"
+          >{t("guides.flowchart.title")}</code
+        >
+        <svg
+          class="w-4 h-4 text-slate-400 group-hover:text-cyan-500 transition-colors"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <polyline
+            points="9 18 15 12 9 6"
+            stroke-linecap="round"
+            stroke-linejoin="round"></polyline>
+        </svg>
+      </div>
+      <p class="text-xs text-slate-600 dark:text-slate-400">
+        {t("workflows.related.flowchart_desc")}
+      </p>
+    </a>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="text-center pt-8">
+  <p class="text-slate-600 dark:text-slate-400 text-sm">
+    {t("workflows.more.text")}
+    <a
+      href="https://docs.claudekit.cc/docs/workflows"
+      target="_blank"
+      class="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+      >{t("workflows.more.link")}</a
+    >.
+  </p>
+</div>

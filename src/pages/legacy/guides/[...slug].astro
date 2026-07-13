@@ -24,7 +24,7 @@ const lang = getLangFromUrl(Astro.url);
 const suffix = Astro.params.slug ?? '';
 const entry = getLegacyGuideEntry(suffix);
 const isVi = lang === 'vi';
-const frozen = entry?.freezeStatus === 'frozen';
+const frozen = entry?.freezeStatus === 'frozen' || entry?.freezeStatus === 'isolated';
 const isBatchB = (LEGACY_BATCH_B_SUFFIXES as readonly string[]).includes(suffix);
 const isBatchC = (LEGACY_BATCH_C_SUFFIXES as readonly string[]).includes(suffix);
 const title = entry
@@ -32,11 +32,11 @@ const title = entry
   : 'ClaudeKit archive';
 const description = frozen
   ? (isVi
-    ? 'Bản archive ClaudeKit đã freeze — nội dung lịch sử để tra cứu. Guide hiện tại nằm dưới /guides.'
-    : 'Frozen ClaudeKit archive content for reference. Current guidance lives under /guides.')
+    ? 'Bản archive ClaudeKit đã isolate — nội dung lịch sử để tra cứu. Guide hiện tại nằm dưới /guides.'
+    : 'Isolated ClaudeKit archive content for reference. Current guidance lives under /guides.')
   : (isVi
-    ? 'Trang archive ClaudeKit (stub). Nội dung frozen sẽ được bổ sung ở batch sau.'
-    : 'ClaudeKit archive stub. Frozen content will land in a follow-up freeze batch.');
+    ? 'Trang archive ClaudeKit (stub). Nội dung isolated sẽ được bổ sung ở batch sau.'
+    : 'ClaudeKit archive stub. Isolated content will land in a follow-up batch.');
 ---
 
 <LegacyGuidesLayout

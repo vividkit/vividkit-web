@@ -1,0 +1,52 @@
+---
+import { useTranslations } from '@legacy-ck/i18n/utils';
+import type { Language } from '@/i18n';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const ccsGuideUrl = lang === 'vi' ? '/vi/legacy/guides/ccs' : '/legacy/guides/ccs';
+---
+
+<div class="glass-card rounded-xl border-amber-200 dark:border-amber-500/30 overflow-hidden hover:shadow-lg transition-all duration-300 group">
+  <div class="p-6 bg-gradient-to-r from-amber-500/10 to-orange-500/10 flex flex-col md:flex-row items-center justify-between gap-6">
+    <div class="flex-1">
+      <div class="flex items-center gap-3 mb-2">
+        <span class="px-3 py-1 text-xs rounded-full bg-amber-500/20 text-amber-700 dark:text-amber-400 font-bold border border-amber-500/40">{t('cli.ccs.power_tool')}</span>
+        <h2 class="text-xl font-bold font-sans text-amber-600 dark:text-amber-400 flex items-center gap-2">
+          {t('cli.guide.ccs_title')}
+        </h2>
+      </div>
+      <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4">
+        {t('cli.guide.ccs_description')}
+      </p>
+
+      <!-- Google Ban Warning -->
+      <div class="flex items-start gap-3 p-3 rounded-lg bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-800/30 mb-4">
+        <svg class="w-5 h-5 text-red-500 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/>
+        </svg>
+        <div class="text-sm text-red-800 dark:text-red-300">
+          <p class="font-medium mb-1">{t('cli.guide.google_warning_title')}</p>
+          <p class="text-xs">{t('cli.guide.google_warning_desc')}</p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-2 text-xs text-slate-500 dark:text-slate-500">
+        <span class="flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> {t('cli.ccs.save_costs')}</span>
+        <span class="flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg> {t('cli.ccs.multi_account')}</span>
+        <span class="flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7l-1 7l9-11h-7z"></path></svg> {t('cli.ccs.fast_delegation')}</span>
+      </div>
+    </div>
+
+    <a href={ccsGuideUrl} class="shrink-0 px-6 py-3 bg-white dark:bg-slate-900 text-amber-600 dark:text-amber-400 font-bold rounded-lg shadow-sm border border-amber-200 dark:border-amber-500/30 flex items-center gap-2 group-hover:scale-105 transition-transform">
+      {t('cli.ccs.view_guide')}
+      <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </a>
+  </div>
+</div>

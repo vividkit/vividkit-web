@@ -1,24 +1,22 @@
 ---
 /**
- * Batch B archive bodies.
- * Shared-component freeze: renders the current guide trees under /legacy.
- * Before rewriting any of these live guides, copy their trees into legacy/ first
- * (same discipline as Claude Mechanics in batch A).
+ * Isolated ClaudeKit archive bodies for Batch B.
+ * Imports @legacy-ck trees restored from commit 56524c9 — not live AgentKit guides.
  */
 import type { Language } from '@/i18n';
-import CLIGuide from '@/components/guides/CLIGuide.astro';
-import CLICommandsGuide from '@/components/guides/CLICommandsGuide.astro';
-import CommandsGuide from '@/components/guides/CommandsGuide.astro';
-import WorkflowsGuide from '@/components/guides/WorkflowsGuide.astro';
-import FlowchartGuide from '@/components/guides/FlowchartGuide.astro';
-import FindingUnknownsGuide from '@/components/guides/FindingUnknownsGuide.astro';
-import WhatIsClaudeKitGuide from '@/components/guides/WhatIsClaudeKitGuide.astro';
-import HowCkWorksGuide from '@/components/guides/how-ck-works/HowCkWorksGuide.astro';
-import InsideClaudeKitGuide from '@/components/guides/InsideClaudeKitGuide.astro';
-import InsideClaudeKitFrontendDesignArticle from '@/components/guides/inside-claudekit/InsideClaudeKitFrontendDesignArticle.astro';
-import InsideClaudeKitGettingStartedArticle from '@/components/guides/inside-claudekit/InsideClaudeKitGettingStartedArticle.astro';
-import InsideClaudeKitGuardRailsArticle from '@/components/guides/inside-claudekit/InsideClaudeKitGuardRailsArticle.astro';
-import InsideClaudeKitPlanModesArticle from '@/components/guides/inside-claudekit/InsideClaudeKitPlanModesArticle.astro';
+import CLIGuide from '@legacy-ck/components/guides/CLIGuide.astro';
+import CLICommandsGuide from '@legacy-ck/components/guides/CLICommandsGuide.astro';
+import CommandsGuide from '@legacy-ck/components/guides/CommandsGuide.astro';
+import WorkflowsGuide from '@legacy-ck/components/guides/WorkflowsGuide.astro';
+import FlowchartGuide from '@legacy-ck/components/guides/FlowchartGuide.astro';
+import FindingUnknownsGuide from '@legacy-ck/components/guides/FindingUnknownsGuide.astro';
+import WhatIsClaudeKitGuide from '@legacy-ck/components/guides/WhatIsClaudeKitGuide.astro';
+import HowCkWorksGuide from '@legacy-ck/components/guides/how-ck-works/HowCkWorksGuide.astro';
+import InsideClaudeKitGuide from '@legacy-ck/components/guides/InsideClaudeKitGuide.astro';
+import InsideClaudeKitFrontendDesignArticle from '@legacy-ck/components/guides/inside-claudekit/InsideClaudeKitFrontendDesignArticle.astro';
+import InsideClaudeKitGettingStartedArticle from '@legacy-ck/components/guides/inside-claudekit/InsideClaudeKitGettingStartedArticle.astro';
+import InsideClaudeKitGuardRailsArticle from '@legacy-ck/components/guides/inside-claudekit/InsideClaudeKitGuardRailsArticle.astro';
+import InsideClaudeKitPlanModesArticle from '@legacy-ck/components/guides/inside-claudekit/InsideClaudeKitPlanModesArticle.astro';
 
 interface Props {
   suffix: string;

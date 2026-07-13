@@ -1,0 +1,706 @@
+---
+import { useTranslations } from '@legacy-ck/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+// Code examples
+const autoModeStartCode = `claude --enable-auto-mode`;
+
+const autoModeSettingsCode = `{
+  "$schema": "https://claudekit.cc/schemas/ck-config.schema.json",
+  "permissions": {
+    "defaultMode": "auto"
+  }
+}`;
+
+const autoModeConfigCode = `{
+  "$schema": "https://claudekit.cc/schemas/ck-config.schema.json",
+  "autoMode": {
+    "environment": [
+      "Source control: github.com/your-org and all repos under it",
+      "Trusted internal domains: *.internal.example.com",
+      "Key services: Jenkins at ci.example.com"
+    ]
+  }
+}`;
+
+const autoModeCLICode = `claude auto-mode defaults  # built-in rules
+claude auto-mode config    # effective config
+claude auto-mode critique  # AI feedback on custom rules`;
+
+const bypassCLICode1 = `claude --dangerously-skip-permissions`;
+const bypassCLICode2 = `claude --permission-mode bypassPermissions`;
+
+const bypassCode = `{
+  "$schema": "https://claudekit.cc/schemas/ck-config.schema.json",
+  "permissions": {
+    "defaultMode": "bypassPermissions"
+  }
+}`;
+
+const granularCode = `{
+  "$schema": "https://claudekit.cc/schemas/ck-config.schema.json",
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(git commit *)",
+      "Bash(git diff *)"
+    ],
+    "ask": [
+      "Bash(git push *)",
+      "Bash(docker *)"
+    ],
+    "deny": [
+      "Bash(rm ~/)",
+      "Bash(rm /)",
+      "Bash(rm -rf /:*)",
+      "Bash(rm -rf ~:*)",
+      "Bash(sudo rm -rf :*::*)",
+      "Bash(git reset --hard:*)",
+      "Bash(git clean -fdx:*)",
+      "Bash(git push --force:*)",
+      "Bash(prisma db push)",
+      "Bash(prisma migrate reset:*)",
+      "Bash(docker system prune -af:*)",
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)"
+    ]
+  }
+}`;
+
+const syntaxExamples = [
+  { rule: 'Bash', effect: 'All Bash commands' },
+  { rule: 'Bash(npm run *)', effect: 'Commands starting with npm run' },
+  { rule: 'Read(./.env)', effect: 'Reading .env in project root' },
+  { rule: 'Read(./secrets/**)', effect: 'Reading any file under secrets/' },
+  { rule: 'Edit(/src/**/*.ts)', effect: 'Editing .ts files in src/' },
+  { rule: 'WebFetch(domain:example.com)', effect: 'Fetch requests to example.com' },
+  { rule: 'mcp__server__tool', effect: 'Specific MCP tool' },
+  { rule: 'Agent(Explore)', effect: 'The Explore subagent' },
+];
+
+// Permission modes data
+const modes = [
+  { key: 'default', badge: null, color: 'slate' },
+  { key: 'acceptEdits', badge: null, color: 'slate' },
+  { key: 'plan', badge: null, color: 'slate' },
+  { key: 'auto', badge: 'new', color: 'purple' },
+  { key: 'dontAsk', badge: null, color: 'slate' },
+  { key: 'bypassPermissions', badge: 'dangerous', color: 'red' },
+];
+---
+
+<div class="space-y-8 mt-6">
+  <!-- Page Header -->
+  <div class="text-center space-y-4">
+    <h2 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
+      {t('permissions.guide.title')}
+    </h2>
+    <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+      {t('permissions.guide.subtitle')}
+    </p>
+  </div>
+
+  <!-- Warning Banner -->
+  <div class="flex items-start gap-4 p-6 rounded-xl bg-amber-500/5 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20">
+    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-500/20 flex items-center justify-center">
+      <svg class="w-5 h-5 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+        <line x1="12" y1="9" x2="12" y2="13"/>
+        <line x1="12" y1="17" x2="12.01" y2="17"/>
+      </svg>
+    </div>
+    <div class="flex-1">
+      <div class="font-bold text-amber-700 dark:text-amber-400 mb-1 text-lg">{t('permissions.guide.warning.title')}</div>
+      <div class="text-slate-600 dark:text-slate-400 leading-relaxed">
+        {t('permissions.guide.warning.text')}
+        {' '}<strong>{t('permissions.guide.warning.caution')}</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 1: Modes Overview Table ==================== -->
+  <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+    <div class="p-6 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 border-b border-slate-100 dark:border-slate-800">
+      <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">
+        {t('permissions.guide.modes.title')}
+      </h3>
+      <p class="text-sm text-slate-600 dark:text-slate-400 mt-1" set:html={t('permissions.guide.modes.subtitle')} />
+    </div>
+    <div class="p-6 overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-slate-200 dark:border-slate-700">
+            <th class="text-left py-3 pr-4 font-semibold text-slate-700 dark:text-slate-300">{t('permissions.guide.modes.th_mode')}</th>
+            <th class="text-left py-3 pr-4 font-semibold text-slate-700 dark:text-slate-300">{t('permissions.guide.modes.th_auto_approved')}</th>
+            <th class="text-left py-3 font-semibold text-slate-700 dark:text-slate-300">{t('permissions.guide.modes.th_best_for')}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {modes.map((mode) => (
+            <tr class="border-b border-slate-100 dark:border-slate-800 last:border-0">
+              <td class="py-3 pr-4">
+                <div class="flex items-center gap-2">
+                  <code class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-xs font-mono text-slate-700 dark:text-slate-300">
+                    {t(`permissions.guide.modes.${mode.key}.name` as any)}
+                  </code>
+                  {mode.badge === 'new' && (
+                    <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-purple-100 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400">
+                      {t('permissions.guide.modes.new_badge')}
+                    </span>
+                  )}
+                  {mode.badge === 'dangerous' && (
+                    <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-red-100 dark:bg-red-500/20 text-red-600 dark:text-red-400">
+                      {t('permissions.guide.modes.dangerous_badge')}
+                    </span>
+                  )}
+                </div>
+              </td>
+              <td class="py-3 pr-4 text-slate-600 dark:text-slate-400">
+                {t(`permissions.guide.modes.${mode.key}.approved` as any)}
+              </td>
+              <td class="py-3 text-slate-600 dark:text-slate-400">
+                {t(`permissions.guide.modes.${mode.key}.best` as any)}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="space-y-8">
+    <!-- ==================== SECTION 2: Auto Mode ==================== -->
+    <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-purple-200 dark:border-purple-500/30 overflow-hidden">
+      <div class="p-6 bg-gradient-to-r from-purple-500/10 to-violet-500/10 border-b border-purple-100 dark:border-purple-500/20">
+        <div class="flex items-center gap-3">
+          <div class="flex items-center justify-center w-8 h-8 rounded-full bg-purple-500/20 text-purple-600 dark:text-purple-400 font-bold text-sm">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <h4 class="text-lg font-bold text-slate-900 dark:text-slate-100">{t('permissions.guide.auto.title')}</h4>
+            <span class="text-[10px] font-bold text-purple-600 dark:text-purple-400 bg-purple-100 dark:bg-purple-500/20 px-1.5 py-0.5 rounded">
+              {t('permissions.guide.modes.new_badge')}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="p-6 space-y-5">
+        <p class="text-slate-600 dark:text-slate-400">
+          {t('permissions.guide.auto.desc')}
+        </p>
+
+        <!-- How it works -->
+        <div>
+          <h5 class="font-semibold text-slate-800 dark:text-slate-200 mb-2">{t('permissions.guide.auto.how_title')}</h5>
+          <ul class="space-y-1.5 text-sm text-slate-600 dark:text-slate-400">
+            <li class="flex gap-2"><span class="text-purple-500 mt-0.5">&#x2022;</span> {t('permissions.guide.auto.how_1')}</li>
+            <li class="flex gap-2"><span class="text-purple-500 mt-0.5">&#x2022;</span> {t('permissions.guide.auto.how_2')}</li>
+            <li class="flex gap-2"><span class="text-purple-500 mt-0.5">&#x2022;</span> {t('permissions.guide.auto.how_3')}</li>
+            <li class="flex gap-2"><span class="text-purple-500 mt-0.5">&#x2022;</span> {t('permissions.guide.auto.how_4')}</li>
+          </ul>
+        </div>
+
+        <!-- Blocked / Allowed columns -->
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="p-4 rounded-lg bg-red-50 dark:bg-red-500/5 border border-red-200/50 dark:border-red-500/20">
+            <h5 class="font-semibold text-red-700 dark:text-red-400 text-sm mb-2">{t('permissions.guide.auto.blocked_title')}</h5>
+            <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">{t('permissions.guide.auto.blocked_items')}</p>
+          </div>
+          <div class="p-4 rounded-lg bg-green-50 dark:bg-green-500/5 border border-green-200/50 dark:border-green-500/20">
+            <h5 class="font-semibold text-green-700 dark:text-green-400 text-sm mb-2">{t('permissions.guide.auto.allowed_title')}</h5>
+            <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">{t('permissions.guide.auto.allowed_items')}</p>
+          </div>
+        </div>
+
+        <!-- Quick start code -->
+        <div class="space-y-3">
+          <div class="relative group">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-xs font-semibold text-slate-600 dark:text-slate-400">{t('permissions.guide.auto.cli_label')}</span>
+            </div>
+            <button
+              class="copy-btn absolute top-8 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+              data-code={autoModeStartCode}
+              title="Copy to clipboard"
+            >
+              <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <svg class="w-4 h-4 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </button>
+            <div class="bg-slate-50 dark:bg-slate-950 rounded-lg p-4 font-mono text-sm text-slate-800 dark:text-slate-300 overflow-x-auto border border-slate-200 dark:border-slate-800">
+              <pre><code>{autoModeStartCode}</code></pre>
+            </div>
+          </div>
+          <div class="relative group">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-xs font-semibold text-slate-600 dark:text-slate-400">{t('permissions.guide.auto.settings_label')}</span>
+            </div>
+            <button
+              class="copy-btn absolute top-8 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+              data-code={autoModeSettingsCode}
+              title="Copy to clipboard"
+            >
+              <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <svg class="w-4 h-4 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </button>
+            <div class="bg-slate-50 dark:bg-slate-950 rounded-lg p-4 font-mono text-sm text-slate-800 dark:text-slate-300 overflow-x-auto border border-slate-200 dark:border-slate-800">
+              <pre><code>{autoModeSettingsCode}</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Requirements -->
+        <div class="p-3 bg-blue-50 dark:bg-blue-500/10 rounded-lg border border-blue-200/50 dark:border-blue-500/20">
+          <div class="flex gap-2 items-start">
+            <svg class="w-4 h-4 text-blue-500 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+            </svg>
+            <p class="text-xs text-slate-600 dark:text-slate-400">
+              <span class="font-semibold text-blue-600 dark:text-blue-400">{t('permissions.guide.auto.requirements_title')}:</span>
+              {' '}{t('permissions.guide.auto.requirements_text')}
+              {' '}<a href="https://claude.ai/admin-settings/claude-code" target="_blank" rel="noopener noreferrer" class="text-purple-600 dark:text-purple-400 hover:underline">{t('permissions.guide.auto.requirements_link')}</a>.
+            </p>
+          </div>
+        </div>
+
+        <!-- Customize classifier -->
+        <div>
+          <h5 class="font-semibold text-slate-800 dark:text-slate-200 mb-2">{t('permissions.guide.auto.config_title')}</h5>
+          <p class="text-sm text-slate-600 dark:text-slate-400 mb-3" set:html={t('permissions.guide.auto.config_desc')} />
+          <div class="relative group">
+            <button
+              class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+              data-code={autoModeConfigCode}
+              title="Copy to clipboard"
+            >
+              <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <svg class="w-4 h-4 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </button>
+            <div class="bg-slate-50 dark:bg-slate-950 rounded-lg p-4 font-mono text-sm text-slate-800 dark:text-slate-300 overflow-x-auto border border-slate-200 dark:border-slate-800">
+              <pre><code>{autoModeConfigCode}</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- CLI inspect commands -->
+        <div>
+          <h5 class="font-semibold text-slate-800 dark:text-slate-200 mb-2">{t('permissions.guide.auto.cli_title')}</h5>
+          <div class="relative group">
+            <button
+              class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+              data-code={autoModeCLICode}
+              title="Copy to clipboard"
+            >
+              <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <svg class="w-4 h-4 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </button>
+            <div class="bg-slate-50 dark:bg-slate-950 rounded-lg p-4 font-mono text-sm text-slate-800 dark:text-slate-300 overflow-x-auto border border-slate-200 dark:border-slate-800">
+              <pre><code>{autoModeCLICode}</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Research preview note -->
+        <div class="p-3 bg-amber-50 dark:bg-amber-500/10 rounded-lg border border-amber-200/50 dark:border-amber-500/20">
+          <div class="flex gap-2 items-start">
+            <svg class="w-4 h-4 text-amber-500 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+              <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            <p class="text-xs text-slate-600 dark:text-slate-400">
+              <span class="font-semibold text-amber-600 dark:text-amber-400">{t('permissions.guide.auto.note_title')}:</span>
+              {' '}{t('permissions.guide.auto.note_text')}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== SECTION 3: Full Bypass ==================== -->
+    <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+      <div class="p-6 bg-gradient-to-r from-red-500/10 to-orange-500/10 border-b border-slate-100 dark:border-slate-800">
+        <div class="flex items-center gap-3">
+          <div class="flex items-center justify-center w-8 h-8 rounded-full bg-red-500/20 text-red-600 dark:text-red-400 font-bold text-sm">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            </svg>
+          </div>
+          <h4 class="text-lg font-bold text-slate-900 dark:text-slate-100">{t('permissions.guide.option1.title')}</h4>
+        </div>
+      </div>
+      <div class="p-6">
+        <p class="text-slate-600 dark:text-slate-400 mb-4" set:html={t('permissions.guide.option1.desc')} />
+
+        <!-- CLI command -->
+        <div class="flex items-center gap-2 mb-1">
+          <span class="text-xs font-semibold text-slate-600 dark:text-slate-400">{t('permissions.guide.option1.cli_label')}</span>
+        </div>
+        <div class="space-y-2 mb-4">
+          <div class="relative group">
+            <button
+              class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+              data-code={bypassCLICode1}
+              title="Copy to clipboard"
+            >
+              <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <svg class="w-4 h-4 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </button>
+            <div class="bg-slate-50 dark:bg-slate-950 rounded-lg p-4 font-mono text-sm text-slate-800 dark:text-slate-300 overflow-x-auto border border-slate-200 dark:border-slate-800">
+              <pre><code>{bypassCLICode1}</code></pre>
+            </div>
+          </div>
+          <div class="text-center text-xs text-slate-400 dark:text-slate-500">or</div>
+          <div class="relative group">
+            <button
+              class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+              data-code={bypassCLICode2}
+              title="Copy to clipboard"
+            >
+              <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <svg class="w-4 h-4 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </button>
+            <div class="bg-slate-50 dark:bg-slate-950 rounded-lg p-4 font-mono text-sm text-slate-800 dark:text-slate-300 overflow-x-auto border border-slate-200 dark:border-slate-800">
+              <pre><code>{bypassCLICode2}</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Settings file -->
+        <div class="flex items-center gap-2 mb-1">
+          <span class="text-xs font-semibold text-slate-600 dark:text-slate-400">{t('permissions.guide.option1.settings_label')}</span>
+        </div>
+        <div class="platform-path-switcher mb-4" data-id="permissions-option1-path" data-active-bg="bg-slate-200 dark:bg-slate-700" data-hover-bg="hover:bg-slate-100 dark:hover:bg-slate-800" data-active-text="text-slate-700 dark:text-slate-300">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-xs font-mono text-slate-500 dark:text-slate-400">File:</span>
+            <div class="flex gap-1 ml-auto">
+              <button class="platform-tab px-2 py-1 text-[10px] font-medium rounded transition-colors bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300" data-platform="macos" data-active="true">
+                <span class="flex items-center gap-1">macOS</span>
+              </button>
+              <button class="platform-tab px-2 py-1 text-[10px] font-medium rounded transition-colors text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800" data-platform="linux" data-active="false">
+                <span class="flex items-center gap-1">Linux</span>
+              </button>
+              <button class="platform-tab px-2 py-1 text-[10px] font-medium rounded transition-colors text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800" data-platform="windows" data-active="false">
+                <span class="flex items-center gap-1">Windows</span>
+              </button>
+            </div>
+          </div>
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-3 border border-slate-200 dark:border-slate-700 font-mono text-sm">
+            <code
+              class="platform-path text-slate-700 dark:text-slate-300"
+              data-macos="<project>/.claude/settings.local.json"
+              data-linux="<project>/.claude/settings.local.json"
+              data-windows="<project>\\.claude\\settings.local.json"
+            >&lt;project&gt;/.claude/settings.local.json</code>
+            <span class="text-slate-400 dark:text-slate-500 text-[10px] ml-2">({t('permissions.guide.project_local')})</span>
+          </div>
+        </div>
+
+        <div class="relative group">
+          <button
+            class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+            data-code={bypassCode}
+            title="Copy to clipboard"
+          >
+            <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <svg class="w-4 h-4 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <div class="bg-slate-50 dark:bg-slate-950 rounded-lg p-4 font-mono text-sm text-slate-800 dark:text-slate-300 overflow-x-auto border border-slate-200 dark:border-slate-800">
+            <pre><code>{bypassCode}</code></pre>
+          </div>
+        </div>
+
+        <div class="mt-4 p-3 bg-red-500/10 rounded-lg border border-red-200 dark:border-red-500/20">
+          <div class="flex gap-2 text-red-600 dark:text-red-400 text-sm font-bold items-center mb-1">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            {t('permissions.guide.option1.critical.title')}
+          </div>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            <span set:html={t('permissions.guide.option1.critical.text')}></span>
+            {' '}<strong>{t('permissions.guide.option1.critical.advice')}</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== SECTION 4: Granular Allow/Ask/Deny ==================== -->
+    <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+      <div class="p-6 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border-b border-slate-100 dark:border-slate-800">
+        <div class="flex items-center gap-3">
+          <div class="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold text-sm">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <h4 class="text-lg font-bold text-slate-900 dark:text-slate-100">{t('permissions.guide.option2.title')}</h4>
+        </div>
+      </div>
+      <div class="p-6">
+        <p class="text-slate-600 dark:text-slate-400 mb-4">
+          {t('permissions.guide.option2.desc')}
+        </p>
+
+        <!-- File path -->
+        <div class="platform-path-switcher mb-4" data-id="permissions-option2-path" data-active-bg="bg-emerald-500/20" data-hover-bg="hover:bg-emerald-500/10" data-active-text="text-emerald-600 dark:text-emerald-400">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-xs font-mono text-slate-500 dark:text-slate-400">File:</span>
+            <div class="flex gap-1 ml-auto">
+              <button class="platform-tab px-2 py-1 text-[10px] font-medium rounded transition-colors bg-emerald-500/20 text-emerald-600 dark:text-emerald-400" data-platform="macos" data-active="true">
+                <span class="flex items-center gap-1">macOS</span>
+              </button>
+              <button class="platform-tab px-2 py-1 text-[10px] font-medium rounded transition-colors text-slate-500 dark:text-slate-400 hover:bg-emerald-500/10" data-platform="linux" data-active="false">
+                <span class="flex items-center gap-1">Linux</span>
+              </button>
+              <button class="platform-tab px-2 py-1 text-[10px] font-medium rounded transition-colors text-slate-500 dark:text-slate-400 hover:bg-emerald-500/10" data-platform="windows" data-active="false">
+                <span class="flex items-center gap-1">Windows</span>
+              </button>
+            </div>
+          </div>
+          <div class="bg-slate-50 dark:bg-[#0D0D0D] rounded-lg p-3 border border-slate-200 dark:border-slate-700 font-mono text-sm">
+            <code
+              class="platform-path text-emerald-600 dark:text-emerald-400"
+              data-macos="<project>/.claude/settings.local.json"
+              data-linux="<project>/.claude/settings.local.json"
+              data-windows="<project>\\.claude\\settings.local.json"
+            >&lt;project&gt;/.claude/settings.local.json</code>
+            <span class="text-slate-400 dark:text-slate-500 text-[10px] ml-2">({t('permissions.guide.project_local')})</span>
+          </div>
+        </div>
+
+        <div class="relative group">
+          <button
+            class="copy-btn absolute top-2 right-2 p-2 rounded-lg bg-slate-200/80 dark:bg-slate-700/80 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+            data-code={granularCode}
+            title="Copy to clipboard"
+          >
+            <svg class="w-4 h-4 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <svg class="w-4 h-4 check-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <div class="bg-slate-50 dark:bg-slate-950 rounded-lg p-4 font-mono text-sm text-slate-800 dark:text-slate-300 overflow-x-auto border border-slate-200 dark:border-slate-800">
+            <pre><code>{granularCode}</code></pre>
+          </div>
+        </div>
+
+        <p class="mt-4 text-sm text-slate-600 dark:text-slate-400">
+          {t('permissions.guide.option2.explanation')}
+        </p>
+
+        <!-- Ask rules tip -->
+        <div class="mt-4 flex items-start gap-2 p-3 rounded-lg bg-blue-50 dark:bg-blue-500/10 border border-blue-200/50 dark:border-blue-500/20">
+          <svg class="w-4 h-4 text-blue-500 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+          <p class="text-xs text-slate-600 dark:text-slate-400" set:html={`<span class="font-semibold text-blue-600 dark:text-blue-400">${t('permissions.guide.option2.ask_title')}:</span> ${t('permissions.guide.option2.ask_desc')}`} />
+        </div>
+
+        <!-- JSON Schema tip -->
+        <div class="mt-4 flex items-start gap-2 p-3 rounded-lg bg-blue-50 dark:bg-blue-500/10 border border-blue-200/50 dark:border-blue-500/20">
+          <svg class="w-4 h-4 text-blue-500 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+          <p class="text-xs text-slate-600 dark:text-slate-400">
+            <span class="font-semibold text-blue-600 dark:text-blue-400">Tip:</span> settings.json supports a <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-[10px]">"$schema"</code> field for IDE autocompletion. Add <code class="px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-[10px]">"$schema": "https://claudekit.cc/schemas/ck-config.schema.json"</code>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== SECTION 5: Rule Syntax Reference ==================== -->
+    <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+      <div class="p-6 bg-gradient-to-r from-slate-500/10 to-gray-500/10 border-b border-slate-100 dark:border-slate-800">
+        <div class="flex items-center gap-3">
+          <div class="flex items-center justify-center w-8 h-8 rounded-full bg-slate-500/20 text-slate-600 dark:text-slate-400 font-bold text-sm">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+            </svg>
+          </div>
+          <h4 class="text-lg font-bold text-slate-900 dark:text-slate-100">{t('permissions.guide.syntax.title')}</h4>
+        </div>
+      </div>
+      <div class="p-6">
+        <p class="text-sm text-slate-600 dark:text-slate-400 mb-4" set:html={t('permissions.guide.syntax.desc')} />
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-slate-200 dark:border-slate-700">
+                <th class="text-left py-2 pr-4 font-semibold text-slate-700 dark:text-slate-300">{t('permissions.guide.syntax.th_rule')}</th>
+                <th class="text-left py-2 font-semibold text-slate-700 dark:text-slate-300">{t('permissions.guide.syntax.th_effect')}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {syntaxExamples.map((ex) => (
+                <tr class="border-b border-slate-100 dark:border-slate-800 last:border-0">
+                  <td class="py-2 pr-4">
+                    <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-xs font-mono text-slate-700 dark:text-slate-300">{ex.rule}</code>
+                  </td>
+                  <td class="py-2 text-slate-600 dark:text-slate-400">{ex.effect}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Official Docs Link -->
+  <div class="text-center pt-8 border-t border-slate-200 dark:border-slate-800">
+    <p class="text-slate-600 dark:text-slate-400 text-sm">
+      {t('permissions.guide.docs.text')}
+      {' '}<a href="https://code.claude.com/docs/en/permissions" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline font-medium inline-flex items-center gap-1">
+        {t('permissions.guide.docs.link')}
+        <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+          <polyline points="15 3 21 3 21 9"/>
+          <line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+      </a>
+    </p>
+  </div>
+</div>
+
+<script>
+  // Initialize platform path switchers
+  function initPermissionsPlatformSwitchers() {
+    document.querySelectorAll('.platform-path-switcher').forEach(switcher => {
+      const tabs = switcher.querySelectorAll('.platform-tab');
+      const pathElement = switcher.querySelector('.platform-path');
+
+      if (!pathElement) return;
+
+      const activeBgClasses = (switcher.getAttribute('data-active-bg') || '').split(' ').filter(Boolean);
+      const activeTextClasses = (switcher.getAttribute('data-active-text') || '').split(' ').filter(Boolean);
+      const inactiveTextClasses = ['text-slate-500', 'dark:text-slate-400'];
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const platform = tab.getAttribute('data-platform');
+          if (!platform) return;
+
+          const newPath = pathElement.getAttribute(`data-${platform}`);
+          if (newPath) {
+            pathElement.textContent = newPath;
+          }
+
+          tabs.forEach(t => {
+            const isActive = t === tab;
+            t.setAttribute('data-active', isActive.toString());
+
+            activeBgClasses.forEach(cls => t.classList.remove(cls));
+            activeTextClasses.forEach(cls => t.classList.remove(cls));
+            inactiveTextClasses.forEach(cls => t.classList.remove(cls));
+
+            if (isActive) {
+              activeBgClasses.forEach(cls => t.classList.add(cls));
+              activeTextClasses.forEach(cls => t.classList.add(cls));
+            } else {
+              inactiveTextClasses.forEach(cls => t.classList.add(cls));
+            }
+          });
+        });
+      });
+
+      const platform = detectPlatform();
+      const platformTab = switcher.querySelector(`[data-platform="${platform}"]`) as HTMLElement;
+      if (platformTab) {
+        platformTab.click();
+      }
+    });
+  }
+
+  function detectPlatform(): 'macos' | 'linux' | 'windows' {
+    const userAgent = navigator.userAgent.toLowerCase();
+    if (userAgent.includes('win')) return 'windows';
+    if (userAgent.includes('mac')) return 'macos';
+    return 'linux';
+  }
+
+  // Copy button functionality
+  function initCopyButtons() {
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const code = btn.getAttribute('data-code');
+        if (!code) return;
+
+        try {
+          await navigator.clipboard.writeText(code);
+
+          const copyIcon = btn.querySelector('.copy-icon');
+          const checkIcon = btn.querySelector('.check-icon');
+
+          copyIcon?.classList.add('hidden');
+          checkIcon?.classList.remove('hidden');
+
+          setTimeout(() => {
+            copyIcon?.classList.remove('hidden');
+            checkIcon?.classList.add('hidden');
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy:', err);
+        }
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initPermissionsPlatformSwitchers();
+    initCopyButtons();
+  });
+  document.addEventListener('astro:page-load', () => {
+    initPermissionsPlatformSwitchers();
+    initCopyButtons();
+  });
+</script>

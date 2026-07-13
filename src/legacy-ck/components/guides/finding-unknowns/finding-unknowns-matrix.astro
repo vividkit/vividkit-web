@@ -1,0 +1,151 @@
+---
+import type { Language } from '@/i18n';
+import { CheckCircle2, HelpCircle, Eye, EyeOff } from 'lucide-astro';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const isVi = lang === 'vi';
+const t = (en: string, vi: string) => isVi ? vi : en;
+
+// The 2x2 unknowns matrix: each quadrant maps to the ClaudeKit commands that resolve it
+const quadrants = [
+  {
+    icon: CheckCircle2,
+    tone: 'slate',
+    name: 'Known knowns',
+    definition: t(
+      'What you already state in your prompt: the requirements, constraints, and context you write down.',
+      'Những gì bạn đã viết trong prompt: yêu cầu, ràng buộc, context bạn ghi ra.'
+    ),
+    example: t(
+      '"Add a rate limiter to the API client, max 10 req/s."',
+      '"Thêm rate limiter cho API client, tối đa 10 req/s."'
+    ),
+    commands: ['/ck:cook', '/ck:fix', '/ck:plan'],
+    commandNote: t(
+      'No dedicated command — known knowns are just the task you hand to whatever you run next.',
+      'Không có lệnh riêng — known knowns chính là task bạn đưa cho bất kỳ lệnh nào bạn chạy tiếp theo.'
+    ),
+  },
+  {
+    icon: HelpCircle,
+    tone: 'blue',
+    name: 'Known unknowns',
+    definition: t(
+      'What you know you have not decided yet: open questions you are aware of.',
+      'Những gì bạn biết mình chưa quyết: các câu hỏi mở mà bạn ý thức được.'
+    ),
+    example: t(
+      '"Should retries use exponential backoff or a fixed delay? I have not picked."',
+      '"Retry nên dùng exponential backoff hay fixed delay? Tôi chưa chọn."'
+    ),
+    commands: ['/ck:brainstorm', '/ck:plan', '/ck:plan validate'],
+    commandNote: t(
+      'All three interview you with targeted questions before locking in a design or its assumptions.',
+      'Cả ba đều phỏng vấn bạn bằng câu hỏi trúng đích trước khi chốt design hoặc chốt assumption.'
+    ),
+  },
+  {
+    icon: Eye,
+    tone: 'amber',
+    name: 'Unknown knowns',
+    definition: t(
+      'Criteria so obvious you would never write them down — but you would recognize them on sight. Visual design lives here.',
+      'Tiêu chí hiển nhiên đến mức bạn không bao giờ viết ra — nhưng nhìn thấy là nhận ra ngay. Visual design nằm ở đây.'
+    ),
+    example: t(
+      '"I cannot describe the dashboard I want, but show me 4 directions and I will point."',
+      '"Tôi không tả được dashboard mình muốn, nhưng đưa 4 hướng design là tôi chỉ được ngay."'
+    ),
+    commands: ['/ck:brainstorm --html', '/ck:preview'],
+    commandNote: t(
+      'Prototype first, react second. Low-cost HTML mocks surface these before implementation locks them in.',
+      'Prototype trước, react sau. Mock HTML nhẹ, ít tốn kém giúp lộ tiêu chí trước khi implementation khoá cứng.'
+    ),
+  },
+  {
+    icon: EyeOff,
+    tone: 'violet',
+    name: 'Unknown unknowns',
+    definition: t(
+      'What you have not considered at all: questions you do not know to ask, potholes you cannot see, quality bars you cannot picture.',
+      'Những gì bạn chưa hề nghĩ tới: câu hỏi không biết để hỏi, ổ gà không nhìn thấy, chuẩn chất lượng không hình dung được.'
+    ),
+    example: t(
+      '"I am adding an auth provider but know nothing about the auth modules here."',
+      '"Tôi cần thêm auth provider nhưng chưa đụng module auth trong codebase này bao giờ."'
+    ),
+    commands: ['/blindspot', '/ck:scenario', '/ck:predict', '/ck:scout', '/ck:plan red-team'],
+    commandNote: t(
+      'The main target of this method. Ask the agent to find them for you — it reads the territory faster than you.',
+      'Mục tiêu chính của phương pháp. Nhờ agent tìm giúp — nó đọc lãnh thổ nhanh hơn bạn.'
+    ),
+  },
+];
+
+const toneCard: Record<string, string> = {
+  slate: 'border-slate-200 dark:border-slate-700',
+  blue: 'border-blue-200 dark:border-blue-400/25',
+  amber: 'border-amber-200 dark:border-amber-400/25',
+  violet: 'border-violet-200 dark:border-violet-400/25',
+};
+
+const toneIcon: Record<string, string> = {
+  slate: 'border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300',
+  blue: 'border-blue-100 bg-blue-50 text-blue-700 dark:border-blue-400/20 dark:bg-blue-500/10 dark:text-blue-300',
+  amber: 'border-amber-100 bg-amber-50 text-amber-700 dark:border-amber-400/20 dark:bg-amber-500/10 dark:text-amber-300',
+  violet: 'border-violet-100 bg-violet-50 text-violet-700 dark:border-violet-400/20 dark:bg-violet-500/10 dark:text-violet-300',
+};
+
+const toneChip: Record<string, string> = {
+  slate: 'border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800/90 dark:text-slate-200',
+  blue: 'border-blue-200 bg-blue-50 text-blue-800 dark:border-blue-400/25 dark:bg-blue-500/10 dark:text-blue-200',
+  amber: 'border-amber-200 bg-amber-50 text-amber-800 dark:border-amber-400/25 dark:bg-amber-500/10 dark:text-amber-200',
+  violet: 'border-violet-200 bg-violet-50 text-violet-800 dark:border-violet-400/25 dark:bg-violet-500/10 dark:text-violet-200',
+};
+---
+
+<section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-950 sm:p-8">
+  <h2 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-3xl">
+    {t('Which kind of stuck are you?', 'Bạn đang bí kiểu gì?')}
+  </h2>
+  <p class="mt-3 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400">
+    {t(
+      'Instead of browsing commands by category, start from the kind of unknown you are facing. Each quadrant has commands built to resolve it.',
+      'Thay vì duyệt lệnh theo category, hãy bắt đầu từ loại unknown bạn đang gặp. Mỗi quadrant có lệnh sinh ra để giải nó.'
+    )}
+  </p>
+
+  <div class="mt-6 grid gap-4 md:grid-cols-2">
+    {quadrants.map((q) => {
+      const Icon = q.icon;
+      return (
+        <div class={`flex flex-col rounded-xl border bg-white/85 p-5 shadow-sm dark:bg-slate-900/70 ${toneCard[q.tone]}`}>
+          <div class="flex items-center gap-3">
+            <span class={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border ${toneIcon[q.tone]}`}>
+              <Icon class="h-5 w-5" stroke-width={2.2} />
+            </span>
+            <h3 class="text-base font-bold text-slate-950 dark:text-white">{q.name}</h3>
+          </div>
+          <p class="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400">{q.definition}</p>
+          <p class="mt-3 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs italic leading-5 text-slate-600 dark:border-slate-800 dark:bg-slate-950/55 dark:text-slate-400">
+            {q.example}
+          </p>
+          <div class="mt-auto pt-4">
+            {q.commands.length > 0 && (
+              <div class="flex flex-wrap gap-2">
+                {q.commands.map((cmd) => (
+                  <code class={`rounded border px-2 py-1 font-mono text-[12px] font-semibold ${toneChip[q.tone]}`}>{cmd}</code>
+                ))}
+              </div>
+            )}
+            <p class="mt-2 text-xs leading-5 text-slate-500 dark:text-slate-500">{q.commandNote}</p>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</section>

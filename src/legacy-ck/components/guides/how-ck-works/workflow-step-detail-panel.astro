@@ -1,0 +1,156 @@
+---
+// Drill-down detail panel — Explain + Code for the active step
+// Includes prev/next navigation so users don't need to scroll back to pipeline
+// Content formatted with bullet indentation for readability
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === 'vi';
+---
+
+<div
+  x-show="expandedStep !== null && currentScenario"
+  x-transition:enter="transition ease-out duration-300"
+  x-transition:enter-start="opacity-0 -translate-y-2"
+  x-transition:enter-end="opacity-100 translate-y-0"
+  x-transition:leave="transition ease-in duration-200"
+  x-transition:leave-start="opacity-100 translate-y-0"
+  x-transition:leave-end="opacity-0 -translate-y-2"
+  class="mt-6 rounded-xl border border-gray-200 dark:border-white/10 backdrop-blur-md bg-white dark:bg-[#0d1117] overflow-hidden shadow-lg dark:shadow-2xl"
+  x-cloak
+>
+  {/* Terminal Header with prev/next navigation */}
+  <div class="flex items-center px-4 py-2.5 border-b border-gray-100 dark:border-white/5 bg-gray-50/50 dark:bg-white/5">
+    <div class="flex gap-1.5 shrink-0">
+      <div class="w-2.5 h-2.5 rounded-full bg-red-500/60"></div>
+      <div class="w-2.5 h-2.5 rounded-full bg-amber-500/60"></div>
+      <div class="w-2.5 h-2.5 rounded-full bg-green-500/60"></div>
+    </div>
+
+    {/* Center: command + step counter */}
+    <div class="flex-1 flex justify-center items-center gap-2">
+      <span class="text-[10px] font-mono text-gray-500 dark:text-white/30" x-text="currentScenario?.command + (isVi ? ' — Bước ' : ' — Step ') + (expandedStep + 1) + '/' + steps.length"></span>
+    </div>
+
+    {/* Prev / Next buttons */}
+    <div class="flex items-center gap-1 shrink-0">
+      <button
+        x-on:click="expandedStep > 0 && selectStep(expandedStep - 1)"
+        x-bind:disabled="expandedStep <= 0"
+        class="p-1.5 rounded-md hover:bg-gray-200 dark:hover:bg-white/10 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+        type="button"
+        x-bind:aria-label="isVi ? 'Bước trước' : 'Previous step'"
+      >
+        <svg class="w-3.5 h-3.5 text-gray-500 dark:text-white/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>
+      </button>
+      <button
+        x-on:click="expandedStep < steps.length - 1 && selectStep(expandedStep + 1)"
+        x-bind:disabled="expandedStep >= steps.length - 1"
+        class="p-1.5 rounded-md hover:bg-gray-200 dark:hover:bg-white/10 disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
+        type="button"
+        x-bind:aria-label="isVi ? 'Bước tiếp theo' : 'Next step'"
+      >
+        <svg class="w-3.5 h-3.5 text-gray-500 dark:text-white/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+
+  {/* Panel content */}
+  <div class="p-5 flex flex-col gap-5">
+    <template x-if="getActiveStep()">
+      <div class="flex items-start gap-4">
+        {/* Step icon */}
+        <div
+          x-bind:class="'shrink-0 w-10 h-10 rounded-lg flex items-center justify-center ' + (colorMap[getActiveStep().color]?.iconBg || '')"
+        >
+          <svg
+            x-bind:class="'w-5 h-5 ' + (colorMap[getActiveStep().color]?.iconText || '')"
+            fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+            x-html="getActiveStep().icon"
+          ></svg>
+        </div>
+
+        <div class="min-w-0 flex-1">
+          {/* Step name + type badge */}
+          <div class="flex items-center gap-2 mb-3">
+            <h4 class="text-sm font-semibold text-gray-900 dark:text-white/90" x-text="localizeStepName(getActiveStep().name)"></h4>
+            <span
+              x-bind:class="'text-[10px] font-medium px-2 py-0.5 rounded-full ' + (colorMap[getActiveStep().color]?.iconBg || '') + ' ' + (colorMap[getActiveStep().color]?.iconText || '')"
+              x-text="getActiveStep().type === 'agent' ? (getActiveStep().isSubAgent ? (isVi ? 'Agent phụ' : 'Sub-Agent') : (isVi ? 'Agent chính' : 'Main Agent')) : (isVi ? typeColors[getActiveStep().type]?.labelVi : typeColors[getActiveStep().type]?.label)"
+            ></span>
+          </div>
+
+          {/* Formatted explanation — paragraphs + indented bullets */}
+          <div class="explain-content text-sm text-gray-600 dark:text-white/60 leading-relaxed" x-html="formatExplain(isVi ? getActiveStep().explainVi : getActiveStep().explainEn)"></div>
+        </div>
+      </div>
+    </template>
+
+    {/* Terminal Code Snippet */}
+    <template x-if="getActiveStep()?.codeSnippet">
+      <div class="mt-2 pl-14">
+        <div class="relative bg-gray-900 dark:bg-black/40 rounded-lg border border-gray-800 dark:border-white/5 overflow-hidden shadow-inner">
+          <div class="absolute left-0 top-0 bottom-0 w-8 bg-gray-800/80 dark:bg-white/5 border-r border-gray-700/50 dark:border-white/5 flex flex-col items-center pt-3 gap-1">
+            <span class="text-[9px] text-gray-500 dark:text-white/20 font-mono">1</span>
+            <span class="text-[9px] text-gray-500 dark:text-white/20 font-mono">2</span>
+            <span class="text-[9px] text-gray-500 dark:text-white/20 font-mono">3</span>
+          </div>
+          <pre class="text-xs font-mono text-green-400 pl-12 pr-4 py-3 overflow-x-auto leading-relaxed whitespace-pre-wrap"><code x-text="getActiveStep().codeSnippet"></code></pre>
+        </div>
+      </div>
+    </template>
+  </div>
+</div>
+
+<style>
+  /* Formatted explanation content styles */
+  .explain-content p {
+    margin-bottom: 0.75rem;
+  }
+  .explain-content p:last-child {
+    margin-bottom: 0;
+  }
+  .explain-content ul {
+    list-style: none;
+    padding-left: 1rem;
+    margin: 0.25rem 0 0.75rem;
+  }
+  .explain-content li {
+    position: relative;
+    padding-left: 0.75rem;
+    margin-bottom: 0.25rem;
+  }
+  .explain-content li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    opacity: 0.5;
+  }
+  .explain-content strong {
+    font-weight: 600;
+    color: var(--explain-strong, inherit);
+  }
+  :global(.dark) .explain-content strong {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  :global(.explain-inline-code) {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.85em;
+    padding: 0.1em 0.4em;
+    border-radius: 0.3rem;
+    background: rgb(241 245 249);
+    color: rgb(126 34 206);
+    border: 1px solid rgb(226 232 240);
+    white-space: nowrap;
+  }
+  :global(.dark .explain-inline-code) {
+    background: rgba(30, 41, 59, 0.9);
+    color: rgb(192 132 252);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+</style>

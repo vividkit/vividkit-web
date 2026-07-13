@@ -1,0 +1,104 @@
+---
+// Grid of workflow combo cards filtered by active kit
+// Renders combos dynamically using Alpine.js state from HowCkWorksGuide
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === 'vi';
+---
+
+<div>
+  <!-- Kit tabs for combo view -->
+  <div class="flex justify-center gap-2 mb-6">
+    <button
+      @click="switchKit('engineer')"
+      :class="activeKit === 'engineer'
+        ? 'bg-blue-500 text-white'
+        : 'bg-gray-100 dark:bg-white/5 text-gray-700 dark:text-white/70 hover:bg-gray-200 dark:hover:bg-white/10'"
+      class="px-4 py-2 text-sm font-medium rounded-lg transition-colors"
+    >
+      {isVi ? 'Bộ Engineer' : 'Engineer Kit'}
+    </button>
+    <button
+      @click="switchKit('marketer')"
+      :class="activeKit === 'marketer'
+        ? 'bg-orange-500 text-white'
+        : 'bg-gray-100 dark:bg-white/5 text-gray-700 dark:text-white/70 hover:bg-gray-200 dark:hover:bg-white/10'"
+      class="px-4 py-2 text-sm font-medium rounded-lg transition-colors"
+    >
+      {isVi ? 'Bộ Marketing' : 'Marketing Kit'}
+    </button>
+  </div>
+
+  <!-- Combo cards grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <template x-for="combo in filteredCombos" :key="combo.id">
+      <div
+        class="group bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-5 cursor-pointer transition-all hover:shadow-lg dark:hover:shadow-none hover:border-gray-300 dark:hover:border-white/20"
+        :class="selectedCombo === combo.id ? 'ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-gray-900' : ''"
+        @click="selectCombo(combo.id)"
+      >
+        <!-- Header -->
+        <div class="flex items-start gap-3 mb-3">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-white/10 dark:to-white/5">
+            <svg
+              class="w-5 h-5 text-gray-600 dark:text-white/70"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+              x-html="combo.icon"
+            ></svg>
+          </div>
+          <div class="min-w-0 flex-1">
+            <h3 class="font-semibold text-gray-900 dark:text-white truncate" x-text="isVi ? combo.titleVi : combo.titleEn"></h3>
+            <p class="text-xs text-gray-500 dark:text-white/50">
+              <span x-text="combo.scenarios.length"></span>
+              <span>{isVi ? ' bước' : ' steps'}</span>
+              <span class="mx-1">•</span>
+              <span x-text="combo.category === 'sequential' ? (isVi ? 'tuần tự' : 'sequential') : combo.category"></span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <p class="text-sm text-gray-600 dark:text-white/70 mb-4 line-clamp-2" x-text="isVi ? combo.descVi : combo.descEn"></p>
+
+        <!-- Skill sequence badges -->
+        <div class="flex flex-wrap gap-1.5">
+          <template x-for="(scenarioId, i) in combo.scenarios" :key="scenarioId">
+            <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs rounded-full bg-gray-100 dark:bg-white/10 text-gray-700 dark:text-white/70 transition-colors group-hover:bg-gray-200 dark:group-hover:bg-white/15">
+              <span class="w-4 h-4 flex items-center justify-center rounded-full bg-blue-500 text-[10px] font-medium text-white" x-text="i + 1"></span>
+              <span x-text="'/ck:' + scenarioId"></span>
+            </span>
+          </template>
+        </div>
+
+        <!-- Tip -->
+        <template x-if="combo.tipEn">
+          <div class="mt-3 pt-3 border-t border-gray-100 dark:border-white/5">
+            <p class="text-xs text-gray-500 dark:text-white/40 flex items-start gap-1.5">
+              <svg class="w-3.5 h-3.5 shrink-0 mt-0.5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span x-text="isVi ? combo.tipVi : combo.tipEn"></span>
+            </p>
+          </div>
+        </template>
+      </div>
+    </template>
+  </div>
+
+  <!-- Empty state -->
+  <div x-show="filteredCombos.length === 0" class="text-center py-12 text-gray-500 dark:text-white/50">
+    <svg class="w-12 h-12 mx-auto mb-4 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+    </svg>
+    <p>{isVi ? 'Không có combos cho kit này' : 'No combos for this kit'}</p>
+  </div>
+</div>
