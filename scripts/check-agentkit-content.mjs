@@ -121,6 +121,7 @@ function sourceMode(file) {
 }
 
 function generatedMode(file) {
+  if (file.includes('/legacy/guides/')) return 'legacy-backlog';
   return (
     file.includes('/guides/agentkit/')
     || file.includes('/guides/what-is-claudekit/')

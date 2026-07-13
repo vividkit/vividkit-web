@@ -1,0 +1,77 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+import { getLangFromUrl, type Language } from '@/i18n';
+import { currentGuidePath, legacyGuidePath } from '@/data/guides/legacy-guide-catalog';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Suffix under /legacy/guides (empty = archive home) */
+  legacySuffix?: string;
+  /** Matching /guides path for CTA */
+  currentGuideSuffix?: string;
+  lang?: Language;
+}
+
+const {
+  title,
+  description,
+  legacySuffix = '',
+  currentGuideSuffix = legacySuffix,
+  lang,
+} = Astro.props;
+
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === 'vi';
+const canonical = legacyGuidePath(legacySuffix, currentLang);
+const currentHref = currentGuidePath(currentGuideSuffix || '', currentLang);
+const archiveHome = legacyGuidePath('', currentLang);
+---
+
+<MainLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  robots="noindex,follow"
+  lang={currentLang}
+>
+  <Header lang={currentLang} />
+
+  <div class="mx-auto max-w-5xl px-4 pt-28 pb-16 min-h-screen">
+    <aside
+      class="mb-8 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-4 text-sm leading-6 text-amber-950 dark:border-amber-500/30 dark:bg-amber-950/30 dark:text-amber-100 sm:px-5"
+      role="note"
+    >
+      <p class="font-semibold tracking-tight">
+        {isVi ? 'ClaudeKit docs archive (historical)' : 'ClaudeKit docs archive (historical)'}
+      </p>
+      <p class="mt-1 text-amber-900/90 dark:text-amber-100/90">
+        {isVi
+          ? 'Nội dung CK đã đóng băng để tra cứu. Hướng dẫn hiện tại dùng AgentKit trên /guides.'
+          : 'Frozen ClaudeKit material for reference. Current guidance lives under AgentKit on /guides.'}
+      </p>
+      <div class="mt-3 flex flex-wrap gap-x-4 gap-y-2">
+        <a
+          href={currentHref}
+          class="inline-flex min-h-11 items-center font-semibold text-violet-700 underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 dark:text-violet-300"
+        >
+          {isVi ? 'Mở bản AgentKit hiện tại' : 'Open current AgentKit guide'} →
+        </a>
+        {legacySuffix && (
+          <a
+            href={archiveHome}
+            class="inline-flex min-h-11 items-center font-semibold text-amber-900 underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2 dark:text-amber-100"
+          >
+            {isVi ? 'Mục lục archive' : 'Archive index'} →
+          </a>
+        )}
+      </div>
+    </aside>
+
+    <slot />
+  </div>
+
+  <Footer lang={currentLang} />
+</MainLayout>

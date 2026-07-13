@@ -1,4 +1,11 @@
-export type RouteCompatibilityPolicy = 'preserve' | 'legacy-slug' | 'planned' | 'internal-only';
+import { LEGACY_GUIDE_CATALOG } from './legacy-guide-catalog.ts';
+
+export type RouteCompatibilityPolicy =
+  | 'preserve'
+  | 'legacy-slug'
+  | 'legacy-archive'
+  | 'planned'
+  | 'internal-only';
 
 export interface GuideRouteManifestEntry {
   id: string;
@@ -83,6 +90,19 @@ function guideEntry(suffix: string, requiredBuild = true): GuideRouteManifestEnt
   };
 }
 
+function legacyArchiveEntry(suffix: string): GuideRouteManifestEntry {
+  const enPath = suffix ? `/legacy/guides/${suffix}` : '/legacy/guides';
+  return {
+    id: suffix ? `legacy:${suffix}` : 'legacy-guides-home',
+    enPath,
+    viPath: `/vi${enPath}`,
+    requiredBuild: true,
+    includeInSitemap: false,
+    includeInLlms: false,
+    compatibilityPolicy: 'legacy-archive',
+  };
+}
+
 export const GUIDE_ROUTE_MANIFEST = [
   {
     id: 'home',
@@ -95,6 +115,8 @@ export const GUIDE_ROUTE_MANIFEST = [
   },
   ...BASELINE_GUIDE_SUFFIXES.map((suffix) => guideEntry(suffix)),
   guideEntry('agentkit'),
+  legacyArchiveEntry(''),
+  ...LEGACY_GUIDE_CATALOG.map((entry) => legacyArchiveEntry(entry.suffix)),
   {
     id: 'not-found',
     enPath: '/404',
@@ -118,10 +140,18 @@ function flattenRoutes(entries: readonly GuideRouteManifestEntry[]): readonly st
 }
 
 export const BASELINE_ROUTE_IDENTITIES = flattenRoutes(
-  GUIDE_ROUTE_MANIFEST.filter(({ id, requiredBuild }) => id !== 'agentkit' && requiredBuild),
+  GUIDE_ROUTE_MANIFEST.filter(({ id, requiredBuild, compatibilityPolicy }) => (
+    id !== 'agentkit'
+    && requiredBuild
+    && compatibilityPolicy !== 'legacy-archive'
+  )),
 );
 
 export const AGENTKIT_ROUTE_IDENTITIES = ['/guides/agentkit', '/vi/guides/agentkit'] as const;
+
+export const LEGACY_ARCHIVE_ROUTE_IDENTITIES = flattenRoutes(
+  GUIDE_ROUTE_MANIFEST.filter(({ compatibilityPolicy }) => compatibilityPolicy === 'legacy-archive'),
+);
 
 export const requiredBuildRouteIdentities = flattenRoutes(
   GUIDE_ROUTE_MANIFEST.filter(({ requiredBuild }) => requiredBuild),

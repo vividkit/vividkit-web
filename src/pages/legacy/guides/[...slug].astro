@@ -1,0 +1,36 @@
+---
+import LegacyGuidesLayout from '@/layouts/LegacyGuidesLayout.astro';
+import LegacyGuideStub from '@/components/guides/legacy/LegacyGuideStub.astro';
+import {
+  getLegacyGuideEntry,
+  LEGACY_GUIDE_CATALOG,
+} from '@/data/guides/legacy-guide-catalog';
+import { getLangFromUrl } from '@/i18n';
+
+export function getStaticPaths() {
+  return LEGACY_GUIDE_CATALOG.map((entry) => ({
+    params: { slug: entry.suffix },
+  }));
+}
+
+const lang = getLangFromUrl(Astro.url);
+const suffix = Astro.params.slug ?? '';
+const entry = getLegacyGuideEntry(suffix);
+const isVi = lang === 'vi';
+const title = entry
+  ? `${isVi ? entry.titleVi : entry.titleEn} (ClaudeKit archive)`
+  : 'ClaudeKit archive';
+const description = isVi
+  ? 'Trang archive ClaudeKit (stub). Nội dung frozen sẽ được bổ sung ở batch sau.'
+  : 'ClaudeKit archive stub. Frozen content will land in a follow-up freeze batch.';
+---
+
+<LegacyGuidesLayout
+  title={title}
+  description={description}
+  legacySuffix={suffix}
+  currentGuideSuffix={entry?.currentGuideSuffix ?? suffix}
+  lang={lang}
+>
+  <LegacyGuideStub suffix={suffix} lang={lang} />
+</LegacyGuidesLayout>

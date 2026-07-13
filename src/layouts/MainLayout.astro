@@ -15,6 +15,7 @@ const {
   canonical,
   ogImage = '/og-image.png',
   ogType = 'website',
+  robots,
   lang = 'en'
 } = Astro.props;
 
@@ -65,6 +66,7 @@ const structuredDataJson = JSON.stringify(structuredData)
     <title>{fullTitle}</title>
     <meta name="title" content={fullTitle} />
     <meta name="description" content={description} />
+    {robots && <meta name="robots" content={robots} />}
     <link rel="canonical" href={fullCanonical} />
 
     <!-- hreflang tags for all pages -->

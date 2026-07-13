@@ -1,0 +1,54 @@
+---
+import {
+  legacyGuidePath,
+  legacyGuidesByPathway,
+} from '@/data/guides/legacy-guide-catalog';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === 'vi';
+const groups = legacyGuidesByPathway();
+const count = groups.reduce((sum, group) => sum + group.entries.length, 0);
+---
+
+<div class="space-y-10">
+  <header class="space-y-3">
+    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-amber-800 dark:text-amber-300">
+      ClaudeKit archive
+    </p>
+    <h1 class="text-3xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-4xl">
+      {isVi ? 'Toàn bộ catalog guide ClaudeKit cũ' : 'Full historical ClaudeKit guides catalog'}
+    </h1>
+    <p class="max-w-3xl text-base leading-7 text-slate-600 dark:text-slate-300">
+      {isVi
+        ? `${count} guide đã được lên lịch archive dưới /legacy/guides. Wave này dựng index + stub; nội dung CK đầy đủ sẽ freeze theo batch.`
+        : `${count} guides are scheduled under /legacy/guides. This wave ships the index and stubs; full CK content freezes in follow-up batches.`}
+    </p>
+  </header>
+
+  {groups.map((group) => (
+    <section class="space-y-4">
+      <h2 class="text-xl font-bold text-slate-950 dark:text-white">
+        {isVi ? group.meta.titleVi : group.meta.titleEn}
+      </h2>
+      <ul class="divide-y divide-slate-200 rounded-2xl border border-slate-200 bg-white dark:divide-slate-700 dark:border-slate-700 dark:bg-slate-900">
+        {group.entries.map((entry) => (
+          <li>
+            <a
+              href={legacyGuidePath(entry.suffix, currentLang)}
+              class="flex min-h-12 items-center justify-between gap-4 px-4 py-3 text-sm font-medium text-slate-800 transition-colors hover:bg-slate-50 focus-visible:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-violet-500 dark:text-slate-100 dark:hover:bg-slate-800/80 dark:focus-visible:bg-slate-800/80"
+            >
+              <span>{isVi ? entry.titleVi : entry.titleEn}</span>
+              <span class="shrink-0 font-mono text-xs text-slate-400">/{entry.suffix}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
+</div>

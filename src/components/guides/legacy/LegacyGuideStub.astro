@@ -1,0 +1,52 @@
+---
+import {
+  currentGuidePath,
+  getLegacyGuideEntry,
+  LEGACY_GUIDE_CATALOG,
+} from '@/data/guides/legacy-guide-catalog';
+import { getLangFromUrl, type Language } from '@/i18n';
+
+interface Props {
+  suffix: string;
+  lang?: Language;
+}
+
+const { suffix, lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === 'vi';
+const entry = getLegacyGuideEntry(suffix);
+const title = entry ? (isVi ? entry.titleVi : entry.titleEn) : suffix;
+const currentHref = currentGuidePath(entry?.currentGuideSuffix ?? suffix, currentLang);
+---
+
+<article class="space-y-6">
+  <header class="space-y-2">
+    <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+      {isVi ? 'Stub archive · freeze sắp tới' : 'Archive stub · freeze pending'}
+    </p>
+    <h1 class="text-3xl font-bold tracking-tight text-slate-950 dark:text-white">{title}</h1>
+    <p class="font-mono text-sm text-slate-500 dark:text-slate-400">/legacy/guides/{suffix}</p>
+  </header>
+
+  <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5 text-sm leading-6 text-slate-700 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-300">
+    <p>
+      {isVi
+        ? 'Trang này giữ chỗ trong catalog ClaudeKit đầy đủ. Nội dung CK frozen (sections đầy đủ) sẽ được chuyển vào đây ở batch freeze tiếp theo. Hiện tại hãy dùng bản AgentKit trên /guides hoặc chờ freeze.'
+        : 'This page reserves the slug in the full ClaudeKit archive catalog. Frozen CK content (full sections) lands in a follow-up freeze batch. For now use the AgentKit guide on /guides, or wait for the freeze.'}
+    </p>
+    <p class="mt-3">
+      <a
+        href={currentHref}
+        class="font-semibold text-violet-700 underline-offset-4 hover:underline dark:text-violet-300"
+      >
+        {isVi ? 'Đi tới guide hiện tại' : 'Go to current guide'} →
+      </a>
+    </p>
+  </div>
+
+  <p class="text-xs text-slate-500 dark:text-slate-400">
+    {isVi
+      ? `Catalog archive: ${LEGACY_GUIDE_CATALOG.length} guides (không gồm deals/donate/promotions/agentkit).`
+      : `Archive catalog: ${LEGACY_GUIDE_CATALOG.length} guides (excludes deals/donate/promotions/agentkit).`}
+  </p>
+</article>

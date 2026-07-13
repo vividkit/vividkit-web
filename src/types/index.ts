@@ -52,6 +52,8 @@ export interface SEOMeta {
   canonical: string;
   ogImage?: string;
   ogType?: 'website' | 'article';
+  /** Optional robots directive (e.g. legacy archive uses noindex,follow). */
+  robots?: string;
 }
 
 // Landing Page Guide Data Types

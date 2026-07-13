@@ -1,0 +1,30 @@
+---
+import LegacyGuidesLayout from '@/layouts/LegacyGuidesLayout.astro';
+import LegacyGuideStub from '@/components/guides/legacy/LegacyGuideStub.astro';
+import {
+  getLegacyGuideEntry,
+  LEGACY_GUIDE_CATALOG,
+} from '@/data/guides/legacy-guide-catalog';
+
+export function getStaticPaths() {
+  return LEGACY_GUIDE_CATALOG.map((entry) => ({
+    params: { slug: entry.suffix },
+  }));
+}
+
+const suffix = Astro.params.slug ?? '';
+const entry = getLegacyGuideEntry(suffix);
+const title = entry
+  ? `${entry.titleVi} (ClaudeKit archive)`
+  : 'ClaudeKit archive';
+---
+
+<LegacyGuidesLayout
+  title={title}
+  description="Trang archive ClaudeKit (stub). Nội dung frozen sẽ được bổ sung ở batch sau."
+  legacySuffix={suffix}
+  currentGuideSuffix={entry?.currentGuideSuffix ?? suffix}
+  lang="vi"
+>
+  <LegacyGuideStub suffix={suffix} lang="vi" />
+</LegacyGuidesLayout>

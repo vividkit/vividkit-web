@@ -1,0 +1,17 @@
+---
+import LegacyGuidesLayout from '@/layouts/LegacyGuidesLayout.astro';
+import LegacyGuidesIndex from '@/components/guides/legacy/LegacyGuidesIndex.astro';
+import { getLangFromUrl } from '@/i18n';
+
+const lang = getLangFromUrl(Astro.url);
+---
+
+<LegacyGuidesLayout
+  title="ClaudeKit Guides Archive"
+  description="Historical ClaudeKit documentation catalog. Current AgentKit guides live under /guides."
+  legacySuffix=""
+  currentGuideSuffix=""
+  lang={lang}
+>
+  <LegacyGuidesIndex lang={lang} />
+</LegacyGuidesLayout>
