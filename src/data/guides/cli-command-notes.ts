@@ -8,7 +8,7 @@ const NOTE_TEXT: Record<string, [string, string]> = {
   '--check': ['Inspect without applying a change.', 'Chỉ kiểm tra, không áp dụng thay đổi.'],
   '--json': ['Emit machine-readable output.', 'Xuất dữ liệu dạng máy đọc được.'],
   '--dry-run': ['Preview changes without writing files.', 'Xem trước thay đổi mà không ghi file.'],
-  '--channel': ['Select stable, beta, or dev explicitly.', 'Chọn rõ stable, beta hoặc dev.'],
+  '--channel': ['Select stable or beta explicitly.', 'Chọn rõ stable hoặc beta.'],
   '--yes': ['Apply after review; do not use before checking the preview.', 'Áp dụng sau khi review; không dùng trước khi xem preview.'],
   '--show-diff': ['Show the exact file diff before update.', 'Hiển thị diff file chính xác trước khi update.'],
   '--force': ['Overwrite user-modified managed files after a snapshot.', 'Ghi đè file managed đã chỉnh sửa sau khi tạo snapshot.'],

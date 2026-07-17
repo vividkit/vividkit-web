@@ -97,6 +97,9 @@ async function runAstroCheck(root) {
 
 async function main() {
   const baseline = JSON.parse(await readFile(BASELINE_PATH, 'utf8'));
+  if (!Number.isInteger(baseline.observedRepoWideErrors) || baseline.observedRepoWideErrors < 0) {
+    throw new Error('Invalid reviewed repo-wide diagnostic snapshot.');
+  }
   const run = await runAstroCheck(SCRIPT_ROOT);
   if (run.signal || typeof run.exitCode !== 'number') {
     throw new Error(`Astro check did not complete normally${run.signal ? ` (signal ${run.signal})` : ''}.`);
@@ -120,7 +123,9 @@ async function main() {
 
   console.log(`[agentkit-type-delta] scoped pass (${delta.scoped.length} allowed, ${baseline.allowedScopedFingerprints.length} baseline fingerprint(s))`);
   if (result.errorCount > 0) {
-    console.warn(`[agentkit-type-delta] repo-wide Astro check remains red: ${result.errorCount} error(s); recorded baseline was ${baseline.observedRepoWideErrors}. This is not a global green claim.`);
+    const repoWideDelta = result.errorCount - baseline.observedRepoWideErrors;
+    const deltaLabel = repoWideDelta === 0 ? 'matches' : `${repoWideDelta > 0 ? '+' : ''}${repoWideDelta} versus`;
+    console.warn(`[agentkit-type-delta] repo-wide Astro check remains red: ${result.errorCount} error(s); ${deltaLabel} reviewed snapshot ${baseline.observedRepoWideErrors}. This is not a global green claim.`);
   } else {
     console.log('[agentkit-type-delta] repo-wide Astro check is now green.');
   }

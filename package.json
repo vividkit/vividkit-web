@@ -5,12 +5,15 @@
   "scripts": {
     "dev": "astro dev",
     "build": "npm run verify:agentkit && astro build",
-    "postbuild": "node scripts/generate-llms-full.mjs && node scripts/check-agentkit-content.mjs --postbuild && npm run test:agentkit-postbuild",
+    "postbuild": "node scripts/sync-legacy-archive-assets.mjs && node scripts/generate-llms-full.mjs && node scripts/check-agentkit-content.mjs --postbuild && npm run test:agentkit-postbuild && node scripts/check-agentkit-dist-channel-isolation.mjs && node scripts/check-legacy-archive-boundary.mjs --postbuild --check",
     "check:agentkit-content": "node scripts/check-agentkit-content.mjs",
     "check:agentkit-types": "node scripts/check-agentkit-type-delta.mjs",
+    "check:agentkit-ui": "node scripts/check-agentkit-guide-ui.mjs",
+    "check:agentkit-truth-bundle": "node scripts/build-agentkit-truth-audit-bundle.mjs --check",
+    "check:legacy-archive": "node scripts/verify-legacy-archive-provenance.mjs --mode auto && node scripts/check-legacy-archive-boundary.mjs --check",
     "test:agentkit-content": "node --test tests/**/*.test.mjs",
-    "test:agentkit-postbuild": "node --test tests/content/guide-route-manifest.test.mjs",
-    "verify:agentkit": "npm run test:agentkit-content && npm run check:agentkit-content && npm run check:agentkit-types",
+    "test:agentkit-postbuild": "node --test tests/content/guide-route-manifest.test.mjs tests/content/agentkit-llm-export.test.mjs",
+    "verify:agentkit": "npm run test:agentkit-content && npm run check:agentkit-content && npm run check:agentkit-types && npm run check:agentkit-truth-bundle && npm run check:legacy-archive",
     "preview": "astro preview",
     "astro": "astro"
   },

@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-07-16T19:57:49Z",
+  "observations": [
+    {
+      "id": "agentkit-changelog-stable-v2.3.0-2026-07-17",
+      "requestedUrl": "https://agentkit.best/changelog",
+      "effectiveUrl": "https://agentkit.best/changelog",
+      "retrievedAt": "2026-07-16T19:39:47Z",
+      "retrievalMethod": "HTTPS GET without redirects",
+      "retrievalClient": "curl 8.7.1",
+      "httpStatus": 200,
+      "redirectCount": 0,
+      "rawResponseSha256": "86171db83beeb43a926e9519c3eb36eda3c659761ece97ce2d087f645e9b5914",
+      "observedMarker": "2.3.0",
+      "reviewer": "VividKit maintainer evidence capture"
+    },
+    {
+      "id": "agentkit-changelog-beta-v2.3.1-beta.1-2026-07-17",
+      "requestedUrl": "https://agentkit.best/changelog",
+      "effectiveUrl": "https://agentkit.best/changelog",
+      "retrievedAt": "2026-07-16T19:39:48Z",
+      "retrievalMethod": "HTTPS GET without redirects",
+      "retrievalClient": "curl 8.7.1",
+      "httpStatus": 200,
+      "redirectCount": 0,
+      "rawResponseSha256": "de38d5ee7cc37832bf5c59857336ace814d9fed4dcc95a4de086a2d27847f916",
+      "observedMarker": "2.3.1-beta.1",
+      "reviewer": "VividKit maintainer evidence capture"
+    },
+    {
+      "id": "agentkit-docs-migrate-2026-07-17",
+      "requestedUrl": "https://agentkit.best/docs",
+      "effectiveUrl": "https://agentkit.best/docs",
+      "retrievedAt": "2026-07-16T19:39:49Z",
+      "retrievalMethod": "HTTPS GET without redirects",
+      "retrievalClient": "curl 8.7.1",
+      "httpStatus": 200,
+      "redirectCount": 0,
+      "rawResponseSha256": "95f00c22c9dc809bcd5953989cffc350af5f1f348dcb4575f0bab820a9896f3b",
+      "observedMarker": "ak migrate",
+      "reviewer": "VividKit maintainer evidence capture"
+    },
+    {
+      "id": "agentkit-support-discord-2026-07-17",
+      "requestedUrl": "https://discord.com/invite/x7SwTSf3wc",
+      "effectiveUrl": "https://discord.com/invite/x7SwTSf3wc",
+      "retrievedAt": "2026-07-16T19:57:49Z",
+      "retrievalMethod": "HTTPS GET without redirects",
+      "retrievalClient": "curl 8.7.1",
+      "httpStatus": 200,
+      "redirectCount": 0,
+      "rawResponseSha256": "c536eb9a382b3b1f48027b09980ff3c0cbfd098e892723a1ff875b37c029e4d7",
+      "observedMarker": "ClaudeKit Discord invite",
+      "reviewer": "VividKit maintainer evidence capture"
+    },
+    {
+      "id": "agentkit-support-github-2026-07-17",
+      "requestedUrl": "https://github.com/bestagentkits/agentkit-support",
+      "effectiveUrl": "https://github.com/bestagentkits/agentkit-support",
+      "retrievedAt": "2026-07-16T19:57:49Z",
+      "retrievalMethod": "HTTPS GET without redirects",
+      "retrievalClient": "curl 8.7.1",
+      "httpStatus": 200,
+      "redirectCount": 0,
+      "rawResponseSha256": "342d94a419bd9f1d0392dd164a1eb7a8a91c7ee174d34da87161c7aa817a0d9f",
+      "observedMarker": "agentkit-support repository",
+      "reviewer": "VividKit maintainer evidence capture"
+    }
+  ]
+}

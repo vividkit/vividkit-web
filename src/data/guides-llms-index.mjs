@@ -9,6 +9,13 @@
  * integration can import it without a build step.
  */
 
+export const llmExportPolicy = Object.freeze({
+  channel: 'stable',
+  queryCreatesRouteIdentity: false,
+  betaArtifactPublished: false,
+  legacyArchiveIncluded: false,
+});
+
 /**
  * @typedef {{ title: string; path: string; desc: string; interactive?: boolean }} GuideLink
  *   `interactive: true` marks a visualizer page whose value is the live UI, not
@@ -24,7 +31,7 @@ export const guideSections = [
       {
         title: 'Migrate from ClaudeKit to AgentKit',
         path: '/guides/agentkit',
-        desc: 'Step-by-step CK-to-AK migration plus the unresolved public-availability signals for AgentKit Desktop App.',
+        desc: 'Decision router and seven-stage CK-to-AK lifecycle with support-assisted refusal, canary, observation, and detector-first removal boundaries.',
       },
       {
         title: 'What is ClaudeKit? From CK to AgentKit',
@@ -49,7 +56,7 @@ export const guideSections = [
       {
         title: 'Commands Cheat Sheet',
         path: '/guides/commands',
-        desc: 'AgentKit Engineer and Marketing skill reference with stable and beta metadata.',
+        desc: 'Stable AgentKit Engineer and Marketing skill reference; beta-only cards and flags are excluded from LLM exports.',
       },
       {
         title: 'Workflow Recipes',
@@ -84,7 +91,7 @@ export const guideSections = [
       {
         title: 'Coexistence',
         path: '/guides/coexistence',
-        desc: 'How AgentKit-managed kit content coexists with Claude Code, Codex, and CCS-owned runtime profiles.',
+        desc: 'Stable coexistence policy: same-scope installs are refused; the clean CK-global plus AK-project-local pilot is separately enrolled and low risk only.',
       },
     ],
   },
@@ -207,11 +214,6 @@ export const optionalLinks = [
     title: 'AI Promotions & Deals',
     path: '/guides/promotions',
     desc: 'Curated AI service deals and promotions to maximize your coding limits.',
-  },
-  {
-    title: 'Support VividKit',
-    path: '/guides/donate',
-    desc: 'Support VividKit through GitHub Sponsors.',
   },
 ];
 

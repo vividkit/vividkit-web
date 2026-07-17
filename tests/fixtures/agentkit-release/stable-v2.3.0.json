@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "agentkit-cli-stable-2.3.0",
+  "product": "agentkit-cli",
+  "channel": "stable",
+  "version": "2.3.0",
+  "releaseStatus": "stable",
+  "verifiedAt": "2026-07-17",
+  "sourceUrl": "https://agentkit.best/changelog",
+  "sourceObservationId": "agentkit-changelog-stable-v2.3.0-2026-07-17",
+  "evidenceClass": "public-release",
+  "claims": [
+    {
+      "id": "AK-RELEASE-STABLE-2.3.0",
+      "kind": "release-version",
+      "evidenceClass": "public-release",
+      "statement": "AgentKit CLI v2.3.0 is the stable release observed on 2026-07-17."
+    }
+  ],
+  "normalizedFactSha256": "89d582555208a790379f1f40a325375933265438288bf2c6ecbe9c6fe1646a12"
+}

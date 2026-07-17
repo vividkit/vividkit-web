@@ -1,5 +1,7 @@
 # build output
 dist/
+!scripts/dist/
+!scripts/dist/agentkit-truth-audit.bundle.mjs
 # generated types
 .astro/
 

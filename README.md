@@ -1,169 +1,110 @@
-# VividKit - Visual Guides for AgentKit
+# VividKit — Visual Guides for AgentKit
 
-> **AgentKit (`ak`) is the successor to ClaudeKit (`ck`).** Existing CK users should start with the [step-by-step migration guide](https://vividkit.dev/guides/agentkit). Legacy route names remain available for compatibility while their rendered guidance moves to AgentKit.
+> AgentKit (`ak`) succeeds ClaudeKit (`ck`). Existing CK users should begin with the [CK → AgentKit guide](https://vividkit.dev/guides/agentkit).
 
-> 🚧 **VividKit Desktop App Coming Soon!** Join our [early access waiting list](https://vividkit.dev) to be notified when we launch.
+VividKit is an English/Vietnamese visual guide hub for AgentKit, Claude Code, Codex, and related workflows. The current web product helps readers install AgentKit, choose a safe migration lane, use target-correct skill syntax, and preserve access to isolated ClaudeKit history.
 
-VividKit turns AgentKit skills and workflows into an intuitive visual layer for Claude Code and Codex. While the VividKit Desktop App is in development, use these guides to install `ak`, migrate from `ck`, and keep Engineer and Marketing kits working.
+The VividKit Desktop App is planned separately. It is not the AgentKit Desktop App documented at agentkit.best.
 
-## 🖥️ VividKit Desktop App (Coming Soon)
+> 🇻🇳 Tiếng Việt: [README.vi.md](./README.vi.md)
 
-**Visual Intelligence Layer for AgentKit**
+## Current Product Scope
 
-VividKit Desktop complements the AgentKit CLI (`ak`) with persistent visual dashboards and GUI-driven interactions. It is separate from the optional AgentKit Desktop App on agentkit.best.
+- Bilingual product and guide pages: English at root paths, Vietnamese under `/vi`.
+- Decision-router guidance for fresh install, clean cutover, closed-beta coexistence, recovery, and support-assisted cases.
+- A seven-stage CK → AK lifecycle: backup → CK ownership cleanup → clean-scope confirmation → AK install → canary verification → observation → CK control-plane removal review.
+- AgentKit CLI, CLI Commands, workflows, targets, coexistence, permissions, recovery, and troubleshooting guides.
+- Claude Code `/ak:*` and Codex `$ak:*` invocation examples.
+- An isolated, noindex ClaudeKit archive retained for historical access but excluded from sitemap and LLM exports.
 
-### Key Features (MVP)
+## Release and Safety Policy
 
-#### 1. Visual Catalog & Discovery
-- Browse all agents, skills, and commands in a visual interface
-- No more digging through markdown files
-- Searchable, filterable capability explorer
+- Stable AgentKit `2.3.0` is the default public fact set.
+- Beta `2.3.1-beta.1` is selected only by the exact `?channel=beta` query on AgentKit Hub, CLI Guide, CLI Commands, and Coexistence Guide. Invalid, repeated, or out-of-group channel state falls back to stable.
+- A published beta query is public early-access content, not closed-beta enrollment or execution authorization. The tracked publication record can hold the beta payload before review.
+- `/llms.txt` and `/llms-full.txt` remain stable-only.
+- The route manifest preserves 132 query-neutral identities; query parameters add no route or canonical identity.
+- `ak migrate` is stable, but VividKit presents it preview/smoke-first and does not provide a default apply action.
+- Mixed/custom ownership, corrupt/missing metadata, unknown package ownership, or critical data routes to support-assisted handling.
+- The only coexistence pilot topology is CK global plus AK project-local in one clean, noncritical project.
+- The 3–7 day observation input is an ephemeral operator declaration. The static site does not verify evidence, enforce elapsed time, or authorize removal.
+- CK removal is detector-first. Unknown ownership means no uninstall command.
 
-#### 2. Persistent Visual Dashboards
-- Live execution monitoring with graphs and timelines
-- Token usage visualization across runs
-- Agent performance metrics and trends
-- Progress tracking that persists after terminal closes
+Before sharing support output, remove usernames and home paths, repository remotes, credentials, account identifiers, proprietary filenames/content, and raw backup manifests. Share only the minimum version, detector classification, command category, and redacted error needed to reproduce.
 
-#### 3. Run History & Comparison
-- Archive of all past agent executions
-- Side-by-side run comparisons
-- Pattern recognition across multiple sessions
-- Execution timeline visualization
+Support:
 
-#### 4. Syntax-Free Interaction
-- GUI-driven agent launching (no command memorization)
-- Visual parameter configuration
-- Point-and-click workflow building
+- [ClaudeKit Discord](https://discord.com/invite/x7SwTSf3wc)
+- [AgentKit Support](https://github.com/bestagentkits/agentkit-support)
 
-#### 5. Non-Technical Accessibility
-- Stakeholder-friendly interface for PMs/designers
-- Read-only views for team members
-- Visual summaries of agent capabilities and results
+## Guides
 
-#### 6. Auto-Update ClaudeKit Projects
-- Automatic sync with latest ClaudeKit updates
-- No manual `update/init` commands required daily
-- Background updates with changelog notifications
+| Guide | Purpose |
+|---|---|
+| [CK → AgentKit](https://vividkit.dev/guides/agentkit) | Decision router, seven-stage lifecycle, target setup, rollback, and support boundaries |
+| [CLI Guide](https://vividkit.dev/guides/cli) | Stable AgentKit setup and lifecycle |
+| [CLI Commands](https://vividkit.dev/guides/cli-commands) | Canonical command facts and safety metadata |
+| [Commands](https://vividkit.dev/guides/commands) | Engineer and Marketing skill catalog |
+| [Workflows](https://vividkit.dev/guides/workflows) | AgentKit workflow patterns |
+| [AgentKit × Codex](https://vividkit.dev/guides/ck-with-codex) | Codex installation and `$ak:*` invocation |
+| [Coexistence](https://vividkit.dev/guides/coexistence) | Closed-beta scope boundary and recovery policy |
+| [Session Recovery](https://vividkit.dev/guides/session-recovery) | Session continuation and recovery |
 
-#### 7. Integrated CCS Delegation
-- Built-in [CCS (Claude Code Switcher)](https://github.com/kaitranntt/ccs) integration
-- Switch between Claude, Gemini, Codex & custom AI profiles instantly
-- Multi-account management with visual profile selector
-- One-click task delegation to save Claude API costs
+## Technology
 
-*"ClaudeKit's power, now with eyes."*
+- Astro `6.0.2` with static output
+- TypeScript `5.9.3` in strict mode
+- Tailwind CSS `4.1.17` and LightningCSS
+- Alpine.js `3.15.2` plus small local controllers
+- Vercel adapter `10.0.0` and Web Analytics
+- Astro i18n with English default and Vietnamese `/vi` routes
 
-**[→ Join the Waiting List](https://vividkit.dev)**
+## Development
 
----
-
-## 📚 AgentKit with Claude Code and Codex
-
-While waiting for VividKit Desktop, install AgentKit, migrate existing CK projects, and learn the Engineer/Marketing kits:
-
-| Guide | Description |
-|-------|-------------|
-| [CK → AgentKit](https://vividkit.dev/guides/agentkit) | Step-by-step migration for macOS, Linux, Windows, Claude Code, Codex, and CI |
-| [CLI Guide](https://vividkit.dev/guides) | Installation and setup |
-| [Commands](https://vividkit.dev/guides/commands) | All 60+ commands reference |
-| [Workflows](https://vividkit.dev/guides/workflows) | Best practices and patterns |
-| [CCS](https://vividkit.dev/guides/ccs) | Claude Code Switcher for multi-model delegation |
-| [UI/UX](https://vividkit.dev/guides/uiux) | Design skills and styling |
-| [Resume](https://vividkit.dev/guides/resume) | Session recovery and continuation |
-| [Permissions](https://vividkit.dev/guides/permissions) | Permission modes (auto, bypass, granular rules) |
-| [Fix Logs](https://vividkit.dev/guides/fix-logs) | Debugging strategies |
-
----
-
-## 🛠️ Tech Stack (This Website)
-
-- **Framework**: Astro 5.x with Static Site Generation (SSG)
-- **Styling**: Tailwind CSS v4 with custom glassmorphism design system
-- **Type Safety**: TypeScript with strict mode and comprehensive path aliasing
-- **Interactivity**: Alpine.js 3.15.2 for lightweight client-side interactions
-- **i18n**: Built-in Astro i18n with English (default) and Vietnamese support
-- **Deployment**: Vercel with integrated analytics
-- **Performance**: Sharp for image optimization, LightningCSS for CSS minification
-- **Design System**: Custom glassmorphism UI with three-font typography system
-
-## 🤖 VividKit Maintainer Skills & Commands (`/vk:*`)
-
-Repo-specific skills that keep VividKit guides in sync with upstream ClaudeKit. Invoke via Claude Code using the `/vk:` prefix.
-
-> 🇻🇳 Tiếng Việt: see [README.vi.md](./README.vi.md)
-
-| Skill | When to use | Example |
-|-------|-------------|---------|
-| `/vk:changelog-sync` | Detect new ClaudeKit changelog entries and sync Commands/Hooks/Workflows guides + i18n strings | `/vk:changelog-sync` |
-| `/vk:audit-ck-cli` | Compare upstream `claudekit-cli` against the CLI/Migrate guides; propose updates per command (`ck migrate`, `ck init`, …) | `/vk:audit-ck-cli` or `/vk:audit-ck-cli page=guides/migrate command=migrate` |
-| `/vk:audit-skill` | Audit upstream ClaudeKit skill changes against the skill catalog rendered on the site | `/vk:audit-skill <skill-name>` |
-| `/vk:add-scenario` | Add a new scenario entry for a ClaudeKit command into the guides | `/vk:add-scenario` |
-| `/project:vk:update-how-ck-works` | Project custom command: orchestrates `/vk:audit-skill` + `/vk:add-scenario` to update How-CK-Works pages with detailed explanation, graphic quick refs, pipeline data, and prompt examples; use `--include-local-missing` to cover CK skills not yet on the guide | `/project:vk:update-how-ck-works --include-local-missing --limit 3` |
-
-### Quick usage
-
-1. **Quick check** — no fetch, just compare current marker:
-   ```
-   /vk:audit-ck-cli
-   ```
-2. **Detailed report** — categorized diff + impact map + update proposals:
-   ```
-   /vk:audit-ck-cli report
-   ```
-3. **Full sync** — fetch latest, generate report, update marker:
-   ```
-   /vk:audit-ck-cli sync
-   ```
-4. **Target a specific page/command** — pass args as `page=<guide-slug> command=<ck-command>`:
-   ```
-   /vk:audit-ck-cli page=guides/migrate command=migrate
-   ```
-
-### Conventions
-
-- **Reference repos** are cloned under `reference/` (claudekit, claudekit-cli) — not committed; treated as source of truth during audits.
-- **Marker files** (`reference/.last-sync*`) store the commit SHA of the last successful sync.
-- **Reports** are written to `reference/changelog-reports/` (skill-generated).
-- Skills only **propose** changes — always review before applying them to `src/components/guides/*` or `src/data/guides/*`.
-
-See `.agents/skills/vk-*/SKILL.md` for per-skill details.
-
----
-
-## 🧞 Development Commands
-
-| Command | Action |
-|---------|--------|
-| `npm install` | Install dependencies |
-| `npm run dev` | Start local dev server at `localhost:4321` |
-| `npm run build` | Build production site to `./dist/` |
-| `npm run preview` | Preview build locally |
-
-## 📁 Project Structure
-
+```bash
+npm install
+npm run dev
+npm run build
+npm run preview
 ```
+
+Focused verification:
+
+```bash
+npm run verify:agentkit
+npm run check:agentkit-content
+npm run check:legacy-archive
+```
+
+`npm run build` runs the AgentKit verification suite before Astro and the generated-output checks after the build.
+
+## Project Structure
+
+```text
 vividkit-web/
-├── src/                    # Source code
-│   ├── components/         # Astro components (UI, sections, layouts, guides)
-│   ├── layouts/           # Page layouts (MainLayout, GuidesLayout)
-│   ├── pages/             # File-based routing (English + Vietnamese)
-│   ├── data/              # Content data (guides, features, navigation)
-│   ├── i18n/              # Translation utilities (en, vi)
-│   ├── scripts/           # JavaScript utilities
-│   ├── styles/            # Global styles and design system
-│   └── types/             # TypeScript type definitions
-├── docs/                  # Documentation files
-├── public/                # Static assets
-└── dist/                  # Build output
+├── src/
+│   ├── components/          # Shared Astro UI and guide sections
+│   ├── data/                # Typed guide, channel, route, and provenance facts
+│   ├── i18n/                # English and Vietnamese copy
+│   ├── legacy-ck/           # Isolated historical ClaudeKit source snapshot
+│   ├── pages/               # Static routes
+│   ├── scripts/             # Browser-side controllers
+│   └── styles/              # Tailwind and archive styles
+├── scripts/                 # Build, audit, release, LLM, and archive checks
+├── tests/                   # Contract and regression tests
+├── docs/                    # Project and source records
+└── public/                  # Static assets
 ```
 
-## 🔗 Links
+See [project overview](./docs/project-overview-pdr.md), [codebase summary](./docs/codebase-summary.md), and [migration validation](./docs/agentkit-migration-validation.md).
 
-- [VividKit Website](https://vividkit.dev) - Join the waiting list
-- [ClaudeKit CLI](https://github.com/mrgoonie/claudekit-cli) - Source repository
-- [Claude Code](https://claude.ai/code) - Anthropic's official CLI
+## Links
+
+- [VividKit](https://vividkit.dev)
+- [AgentKit documentation](https://agentkit.best/docs)
+- [AgentKit changelog](https://agentkit.best/changelog)
+- [Claude Code](https://claude.ai/code)
 
 ---
 
-*VividKit - Making AI coding crystal clear*
+*VividKit — making agentic development easier to see and safer to operate.*

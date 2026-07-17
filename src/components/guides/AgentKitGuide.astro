@@ -2,7 +2,6 @@
 import { getLangFromUrl, type Language } from '@/i18n';
 import { AGENTKIT_CLI_FACTS } from '@/data/guides/agentkit/agentkit-cli-facts';
 import { AGENTKIT_MIGRATION_MAPPING_BY_LOCALE } from '@/data/guides/agentkit/agentkit-migration-mapping';
-import { AGENTKIT_MIGRATION_OPERATIONAL_FACTS } from '@/data/guides/agentkit/agentkit-migration-operational-facts';
 import { AGENTKIT_SKILL_FACTS } from '@/data/guides/agentkit/agentkit-skill-facts';
 import { AGENTKIT_TARGET_CAPABILITIES } from '@/data/guides/agentkit/agentkit-target-capabilities';
 import AgentKitCommandMapping from './agentkit/agentkit-command-mapping.astro';
@@ -13,6 +12,8 @@ import AgentKitHeroAndPathSelector from './agentkit/agentkit-hero-and-path-selec
 import AgentKitKitTargets from './agentkit/agentkit-kit-targets.astro';
 import AgentKitLegacySkillCleanup from './agentkit/agentkit-legacy-skill-cleanup.astro';
 import AgentKitMigrationChecklist from './agentkit/agentkit-migration-checklist.astro';
+import AgentKitOperatorAttestation from './agentkit/agentkit-operator-attestation.astro';
+import AgentKitChannelSwitcher from './agentkit/agentkit-channel-switcher.astro';
 
 interface Props {
   lang?: Language;
@@ -21,24 +22,41 @@ interface Props {
 const { lang } = Astro.props;
 const currentLang = lang ?? getLangFromUrl(Astro.url);
 const mappingRows = AGENTKIT_MIGRATION_MAPPING_BY_LOCALE[currentLang];
+const includeStage7Details = import.meta.env.AGENTKIT_INCLUDE_STAGE7_DETAILS === 'true';
 ---
 
-<article class="mt-6 pb-8">
-  <AgentKitHeroAndPathSelector lang={currentLang} />
-  <AgentKitContinuityFaq lang={currentLang} />
-  <AgentKitMigrationChecklist
-    lang={currentLang}
-    cliFacts={AGENTKIT_CLI_FACTS}
-    operationalFacts={AGENTKIT_MIGRATION_OPERATIONAL_FACTS}
-  />
-  <AgentKitDesktopAppOverview lang={currentLang} />
-  <AgentKitKitTargets
-    lang={currentLang}
-    cliFacts={AGENTKIT_CLI_FACTS}
-    skillFacts={AGENTKIT_SKILL_FACTS}
-    targets={AGENTKIT_TARGET_CAPABILITIES}
-  />
-  <AgentKitLegacySkillCleanup lang={currentLang} />
-  <AgentKitCommandMapping lang={currentLang} rows={mappingRows} />
-  <AgentKitCompatibilityAndTroubleshooting lang={currentLang} />
+<article
+  class="mt-6 pb-8"
+  data-agentkit-lifecycle-guide
+  data-agentkit-channel-root
+  data-agentkit-surface="hub"
+  data-agentkit-locale={currentLang}
+  data-agentkit-active-channel="stable"
+  data-public-release-channel="stable"
+  data-stage-seven-details={includeStage7Details ? 'published' : 'hold'}
+>
+  <AgentKitChannelSwitcher lang={currentLang} />
+  <div data-agentkit-stable-facts>
+    <AgentKitHeroAndPathSelector lang={currentLang} />
+    <AgentKitContinuityFaq lang={currentLang} />
+    <AgentKitMigrationChecklist lang={currentLang} />
+    <AgentKitOperatorAttestation lang={currentLang} />
+    <AgentKitDesktopAppOverview lang={currentLang} />
+    <AgentKitKitTargets
+      lang={currentLang}
+      cliFacts={AGENTKIT_CLI_FACTS}
+      skillFacts={AGENTKIT_SKILL_FACTS}
+      targets={AGENTKIT_TARGET_CAPABILITIES}
+    />
+    <AgentKitLegacySkillCleanup lang={currentLang} includeStage7Details={includeStage7Details} />
+    <AgentKitCommandMapping lang={currentLang} rows={mappingRows} />
+    <AgentKitCompatibilityAndTroubleshooting lang={currentLang} />
+  </div>
 </article>
+
+<script>
+  import { initializeAgentKitLifecycleGuides } from '@/scripts/agentkit-lifecycle-guide-controller';
+
+  initializeAgentKitLifecycleGuides();
+  document.addEventListener('astro:page-load', initializeAgentKitLifecycleGuides);
+</script>

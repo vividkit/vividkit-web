@@ -1,0 +1,1262 @@
+{
+  "schemaVersion": 1,
+  "algorithm": "sha256-length-prefixed-path-null-type-null-mode-null-sha256",
+  "isolationCommit": "7d5ab60e9e706ba612a6202f3024685cfa32bea6",
+  "archiveTree": "src/legacy-ck",
+  "sourceCommit": "56524c98dbdd4d27632ffbcb9da96c77f936ab67",
+  "sourceDate": "2026-07-08",
+  "isolationDate": "2026-07-13",
+  "fileCount": 208,
+  "lineCount": 72777,
+  "rootSha256": "db895c072b46f6fb7f49dd7a84829e042c0bcd50de578a76170ceec4eb8cc05f",
+  "entries": [
+    {
+      "path": "components/guides/CCSGuide.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "f06b96eb810a39d3fc8f8ea940c504b461667a6c2e015ba42ba0ac38811cabf9"
+    },
+    {
+      "path": "components/guides/CLICommandsGuide.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "58160870aa9981fdf740c6bc522a2e14b9d9f98f45042f32b4ae16f68f7544c2"
+    },
+    {
+      "path": "components/guides/CLIGuide.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "595d11dbf52b3649851612f393d453d9c502f01d32d3e5277c607ea0d23a8ae0"
+    },
+    {
+      "path": "components/guides/CodexAppGuide.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "a0b162bf7297749ac9879bae0d75f15b1269ca09133a592c7a8ea8ba9193c287"
+    },
+    {
+      "path": "components/guides/CommandsGuide.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "661c7d27a90de4fc0014ce5b5323b711fd608a258568d4e00b061fa093163839"
+    },
+    {
+      "path": "components/guides/CustomHooksGuide.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "123be9102d7ce6a5d5a0f9e45987632ef9a64cd8990a623b85932e80045a2a5b"
+    },
+    {
+      "path": "components/guides/FindingUnknownsGuide.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "7d5bf301dd9cb4692d8008da0a6f5ba43260da7d2518e9a2ffa8a887fea4161f"
+    },
+    {
+      "path": "components/guides/FixLogsGuide.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "367f638834b9ae58c3ba289af44dc85cc9e4af9c47658c1964392a065b9af57b"
+    },
+    {
+      "path": "components/guides/FlowchartGuide.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "dcffdb63c3c5c1918b39699a8acadc94c62864dc47a3fc6b4dfa4f6def70240a"
+    },
+    {
+      "path": "components/guides/FlowchartInteractive.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "39d7394b295b397a34bd5cd9591a772d2cadeedae00059cf5f68049b87117aa3"
+    },
+    {
+      "path": "components/guides/FlowchartInteractiveCCS.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "e9812365b0a1597009cc21e36d521548918b5c53683e04ceddc099d69147ed7f"
+    },
+    {
+      "path": "components/guides/FlowchartInteractiveMarketing.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "f895f0966ecd1a76d95ce65dd3a445d668a7727dd0d88179ddf6a197e0ce8a2a"
+    },
+    {
+      "path": "components/guides/HappyCCSGuide.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "d57f45104fb39db552639430c41e968812be03c9b090873587308cc677a2b8ed"
+    },
+    {
+      "path": "components/guides/IDEConfigGuide.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "8ea1e6d7c48d6a74e1a96e157f508c00dbf2fda6bd7839f11f5bb8e10b2cef27"
+    },
+    {
+      "path": "components/guides/InsideClaudeKitGuide.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "3525020ee62fe878f7cbd686c1a7abb22f9de1a218cbce14a7495364b24babb2"
+    },
+    {
+      "path": "components/guides/MigrateGuide.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "5e75e75ae08906ab10f04854eda50185bd20cb51ce9fc580c91f11cc7f8a3e6d"
+    },
+    {
+      "path": "components/guides/PermissionsGuide.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "32b2da03ca6cfaac36e1a1f0e9472e33ff95a6a71177938f274068cee2686c0c"
+    },
+    {
+      "path": "components/guides/PlatformPathSwitcher.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "5af39dd5b88d856a555941a50d87784045d1934e52f9b1bdf8e62c8708f3de45"
+    },
+    {
+      "path": "components/guides/RemoteControlGuide.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "f1852d562b0b53e42ff178ae07790414c2e1385081d7e5ae1634c95b52080faf"
+    },
+    {
+      "path": "components/guides/SessionRecoveryGuide.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "d2ababebedb21a0e17ddd84bfe52042946aad1520a090ecf223a991b8b15539c"
+    },
+    {
+      "path": "components/guides/TerminalSnippet.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "c52a96795bfcf493e4a08aa555d6d874f1af3db084899e52b654b4bed3b34e06"
+    },
+    {
+      "path": "components/guides/UIReviewGateGuide.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "8e8690bc710e464bd64164e16ef1e3b634b5cafaa9e544c42bc06efd07372972"
+    },
+    {
+      "path": "components/guides/UIUXGuide.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "36b476594f97c04bb5381c689d790b284bf16a0a3fb49fffd57bb08a4da7e4c6"
+    },
+    {
+      "path": "components/guides/WhatIsClaudeKitGuide.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "c36001162b6902332199924f0a0c8bd4c83f63839966daf225c3245bc5683814"
+    },
+    {
+      "path": "components/guides/WorkflowsGuide.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "b245d2f98e8cf60977d979cf4cc4c5cc2780e3532303563bca9232fb04069c1f"
+    },
+    {
+      "path": "components/guides/ccs/ccs-cheatsheet-section.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "8b47f60261b0625a995d6749f08af3fc00d76a453dc119b19703508248cc9a96"
+    },
+    {
+      "path": "components/guides/ccs/ccs-configure-providers-section.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "ecbf1fb33577f0480aff66d4840776b67146bfddd32a4825ed64ec81f4b01c6c"
+    },
+    {
+      "path": "components/guides/ccs/ccs-dashboard-and-resources-section.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "948bc657af030d82f838267c25483546caf0e9c259e403b735157c19c8e42128"
+    },
+    {
+      "path": "components/guides/ccs/ccs-dashboard-section.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "644ce3fa332bd856b83b2e0eb4fe893c63bf938b451e3a3c30b52ac5e7707171"
+    },
+    {
+      "path": "components/guides/ccs/ccs-decision-tree-section.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "2c97223d88bec3749bb49fe2f2acdbcb20ed166823f31b2ec5bf9014ff5cf22c"
+    },
+    {
+      "path": "components/guides/ccs/ccs-features-and-integration-section.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "1ad21f0864ab9b623d5e79ad4c0b867da110282b62dded4cbf65ccc737bb40a4"
+    },
+    {
+      "path": "components/guides/ccs/ccs-key-features-section.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "ae0b7ef02f9b705f695335a80f33e65009e4c199d60ec2d912b72aed846e1d14"
+    },
+    {
+      "path": "components/guides/ccs/ccs-overview-section.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "69a75f8853acc41e545bf84e4a3df6865213f1c49b469002d5a362e2f0c1a4ef"
+    },
+    {
+      "path": "components/guides/ccs/ccs-provider-configuration-section.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "d4248deae3fd1d83d5ad0a4f3e26b7094f4edaec88848ac9a2942f88c3554681"
+    },
+    {
+      "path": "components/guides/ccs/ccs-workflows-section.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "1cff6397bb559676e5664e1e3db9825be076aeb683ef96725817d8086169ac55"
+    },
+    {
+      "path": "components/guides/ck-with-codex/shell-snippet-helpers.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "f57343fe1754af6490f55c3ece8d462530ecb157fad4191248f6d2dfa736729f"
+    },
+    {
+      "path": "components/guides/cli-commands/cli-commands-cheatsheet.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "6e83bcecc69b96b940781a5f7f18af8c9becbe659795867d44de30fa5bc279bc"
+    },
+    {
+      "path": "components/guides/cli-commands/cli-commands-hero.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "b8ce189f75251ff5d6861a9a6c543330d47ae7eb8e9e3e1a3d9f0ccf26f2662b"
+    },
+    {
+      "path": "components/guides/cli-guide/AdvancedSettings.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "e9ed0bdd5c92e8f2d3bb82094c2d7b6aacd830ba5ec3adbb5f1a468098b7ed94"
+    },
+    {
+      "path": "components/guides/cli-guide/CCSLink.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "0ae1282228fc6392ce84c21b86024e1801757ee80270026d12f34b26b28f4505"
+    },
+    {
+      "path": "components/guides/cli-guide/CLIFaq.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "b3254dfdc1356f414ccee22603218b5ff069a38f25e8aa367e2f7d41403aec2b"
+    },
+    {
+      "path": "components/guides/cli-guide/DailyRoutine.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "8dd546e0cf6850a8b7c56b9055978c79e9a78f0692abf99671f12048e41ad861"
+    },
+    {
+      "path": "components/guides/cli-guide/HeroBanner.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "bcd6ce2a6527b255a34e9dd64ddb660849d50c71ad9a5d3d4bbad4f4bb745dc6"
+    },
+    {
+      "path": "components/guides/cli-guide/InstallationSteps.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "0d89e00082ef940b96a0a54a33802fbd82f5cce0b54a209a006267ddd1888cfa"
+    },
+    {
+      "path": "components/guides/cli-guide/ProTips.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "17784834ac908e0c09a007e347ff64544f91c2bd6923d29e1affdf75149bf367"
+    },
+    {
+      "path": "components/guides/cli-guide/TerminalPreview.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "f8d116bf3a4706751b9dc3ad3024f46ba04d4435853a1cbf03c88833739141f2"
+    },
+    {
+      "path": "components/guides/commands/commands-categories-grid.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "797684f6e64679219e8411f4671335e1d92d254207b029038ade6607821fcb06"
+    },
+    {
+      "path": "components/guides/commands/commands-docs-note.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "2849ce20c3280ccd18300cf1c8876828171a7dbb80eca1a2cf947ed9d4d001e7"
+    },
+    {
+      "path": "components/guides/commands/commands-hero-banner.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "bb00cf0510748fe73817672c81bceee86efb6089e34d9eb42bddb36675ce7ec2"
+    },
+    {
+      "path": "components/guides/commands/commands-migration-table.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "a68ce92aa00e8b89897099e835518ed6680a51586079543c953c34419c44968d"
+    },
+    {
+      "path": "components/guides/commands/commands-symbols-legend.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "9cde1bdaadb75fe1d348923f39e356ddf0792b421fdfa70796943dfb0c51b0cd"
+    },
+    {
+      "path": "components/guides/custom-hooks/custom-hooks-category-section.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "c85ee1643ea4e7ebbdc2d5cfdbda5ddefd043b293c03aa16babcb98af93d968a"
+    },
+    {
+      "path": "components/guides/custom-hooks/custom-hooks-hook-row.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "e3195039d9610956989a6a1554fdf7cc9f6a82dabbbd420cea9552c857dd4b4b"
+    },
+    {
+      "path": "components/guides/custom-hooks/custom-hooks-introduction.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "96071406827a915d4c323b8b09e4e558890d36ae11b196b7450db3cdc217f36b"
+    },
+    {
+      "path": "components/guides/custom-hooks/custom-hooks-ui.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "9f4fe1ff2aaa2995a17889b900bdcb485f9ac02e5764f5104585a116a173a5ea"
+    },
+    {
+      "path": "components/guides/finding-unknowns/finding-unknowns-custom-skills.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "3bb5bee06378f77a01569866a99f35ede88fb5e9cf556a210a6682d900b37b80"
+    },
+    {
+      "path": "components/guides/finding-unknowns/finding-unknowns-hero.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "000d84e22a6d25ac8a4ac7e9ed7b097cb0583ef7da340de13ae029b91c918244"
+    },
+    {
+      "path": "components/guides/finding-unknowns/finding-unknowns-matrix.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "9141cce6057cdf6f1970afa1024cc832edecd47e17a4ce51a2f67d626fed2d0e"
+    },
+    {
+      "path": "components/guides/finding-unknowns/finding-unknowns-prompts.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "a0476da5bd2bdbc4eed187ebfadcf1f49d01e0462347217d067ae971f3f7e409"
+    },
+    {
+      "path": "components/guides/finding-unknowns/finding-unknowns-references.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "5c44325a1d7cdb85d77a5f73cf9094500f74cdde4cb888881b4e1e84c0fd3c5e"
+    },
+    {
+      "path": "components/guides/finding-unknowns/finding-unknowns-timeline.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "0b39c220f95c1bdca3796c0a766ac3770fd5c8e96ab1f37bb0320ae7dfe8a61b"
+    },
+    {
+      "path": "components/guides/finding-unknowns/finding-unknowns-workflow.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "e01a50336ab72f57b446160c74fedb243df237bf983aded6a9ffdc04cfcd6a1c"
+    },
+    {
+      "path": "components/guides/finding-unknowns/inline-code.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "ff77ea0f470e22d46befdf29e97928b61976b7bb808f95c097958bbf327b3e42"
+    },
+    {
+      "path": "components/guides/flowchart/flowchart-command-categories-docs-to-planning.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "a43a600c0ad075b11f72f498f49104e21427e1e8f3879fe3c8a94853f786f1bb"
+    },
+    {
+      "path": "components/guides/flowchart/flowchart-command-categories-new-project-to-git-ops.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "375089c17654ef10990b90716575e97e861bce2b603c03cdf9c24d23a657d17e"
+    },
+    {
+      "path": "components/guides/flowchart/flowchart-common-workflows-section.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "eccadc05da2d0824d2b09b2f81744ef2e105637d0acc2617138c9aed6c85606c"
+    },
+    {
+      "path": "components/guides/flowchart/flowchart-header-section.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "ea4739d8e32401e75bfb26791bc188f408df3235ad64fb4461940ae3cf2e7956"
+    },
+    {
+      "path": "components/guides/flowchart/flowchart-marketing-command-categories.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "4898918247bd3aaecbc7a355e8a30a38c919302d2dd0e88aa8042dde6cf73f61"
+    },
+    {
+      "path": "components/guides/flowchart/flowchart-marketing-pro-tips-section.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "66092dd914852ab9b3803fe9f1cb97697160fbb95fa9eb9bf2c0d6cbcb16625f"
+    },
+    {
+      "path": "components/guides/flowchart/flowchart-marketing-summary-section.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "33d88323437e84222a9118fa65928616b4f3f1d9cbae318b14f9462a2909a0f8"
+    },
+    {
+      "path": "components/guides/flowchart/flowchart-marketing-workflows-section.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "ec23cea16d1e7cb27b06c5762b74193a583da37242d1d5cb8712db41b2ae0288"
+    },
+    {
+      "path": "components/guides/flowchart/flowchart-pro-tips-and-complexity-section.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "5b41648309d56cc7e79b536451f3dea34ecdbfeff046a44e2c65f607aaa251cf"
+    },
+    {
+      "path": "components/guides/flowchart/flowchart-summary-and-help-section.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "18558332d02f8c7b0926d9734985b743636c7ea386431946f0d0a24efc909dc9"
+    },
+    {
+      "path": "components/guides/how-ck-works/HowCkWorksGuide.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "222e2a9eaa97ef79e37f1e639967621edc98492a8125a64d2575d34d8cca8717"
+    },
+    {
+      "path": "components/guides/how-ck-works/infographic/infographic-bootstrap-quick-ref.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "11ee66751e4554a4cbfd27243014cababf61ecfabbce18b4aeff7500156e81d5"
+    },
+    {
+      "path": "components/guides/how-ck-works/infographic/infographic-brainstorm-quick-ref.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "96938422a4c13a0a8a3049a3f1328628bebd9ac62b273ce211034764e9d1a457"
+    },
+    {
+      "path": "components/guides/how-ck-works/infographic/infographic-code-review-quick-ref.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "11dd8742d71a5ca239282aa33ca10a7ccc1af786e5bad366b13a4f15b6412290"
+    },
+    {
+      "path": "components/guides/how-ck-works/infographic/infographic-execution-quick-ref.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "d70c0820521e4207293853d523a12655d00328ae67367f14e1f719bc2e30461f"
+    },
+    {
+      "path": "components/guides/how-ck-works/infographic/infographic-generic-command-quick-ref.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "9312d81533696653c6adaceb39ab116f91177ee01ebb9208073eef5b6ace8afc"
+    },
+    {
+      "path": "components/guides/how-ck-works/infographic/infographic-header.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "4a810d62a3a288a8ab28c9b06aaf4dd59b59c069e0f6c3395547b2612c96d019"
+    },
+    {
+      "path": "components/guides/how-ck-works/infographic/infographic-modes-table.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "dd8a20572dc378266c2bddc93b87bfb6b89cfa4e9f8e2406a346b68034856dfb"
+    },
+    {
+      "path": "components/guides/how-ck-works/infographic/infographic-plan-quick-ref.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "5d2a0eaead0f77fa59a4f76486bd7645cbfe6592168bde77309091ddef60c94a"
+    },
+    {
+      "path": "components/guides/how-ck-works/infographic/infographic-preview-quick-ref.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "69df29a033b32c15d5f398e87f98396e3af1daf93f6ebe073614eb815c00e62b"
+    },
+    {
+      "path": "components/guides/how-ck-works/infographic/infographic-process-flow.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "d8d82b80eb46a9da44aae8fa0b3b93e01855aab140ea7e00fd16f580cf757a04"
+    },
+    {
+      "path": "components/guides/how-ck-works/infographic/infographic-report-output.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "a2c70e1fed1f4cadf0f1b5102bcc5dccf9ba63f9aae8c410407d2f018d479447"
+    },
+    {
+      "path": "components/guides/how-ck-works/infographic/infographic-skill-stack.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "94b5a93b5b4914a66dc626d2991d8d5cec24eeb679599b0b9bedc035b24a80bc"
+    },
+    {
+      "path": "components/guides/how-ck-works/infographic/infographic-special-ops.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "9afff1828736b8b5f70bc14e72eaf1dfd4d01381691e72aae2ecc5e30e731fc0"
+    },
+    {
+      "path": "components/guides/how-ck-works/infographic/infographic-team-quick-ref.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "4aaf6ef1b4dedb659f71292a997d756a1f8e8defee8f33e78d93a746728ab049"
+    },
+    {
+      "path": "components/guides/how-ck-works/infographic/infographic-two-column.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "074d087fda3505d49bfeb684828135bdeb68eba73bcd2e3d5f3e48ef60382534"
+    },
+    {
+      "path": "components/guides/how-ck-works/workflow-combo-card.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "55874ef2b8be2009b929a2618a71f44b6a8a3a6d931a26e029617de161a79a13"
+    },
+    {
+      "path": "components/guides/how-ck-works/workflow-combo-grid.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "0e9c7f21dd76d2a2bddf6e949a81a15b8cfca4ed9def6d9d82e088437bb94243"
+    },
+    {
+      "path": "components/guides/how-ck-works/workflow-combo-pipeline.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "862b7329c92ed238b2874c8d9d8c930795f9f68e6ad1cc419ef59d289b06db4c"
+    },
+    {
+      "path": "components/guides/how-ck-works/workflow-command-nav.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "5aa13ce6f3da1c2717a83f9b47146d8f45ad1c2049b54a554e2c19e9275ec250"
+    },
+    {
+      "path": "components/guides/how-ck-works/workflow-pipeline-view.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "a0e0cf588d5c75cf85645ccd0ba4753207a650bd6f714af22ef53f55ca120f6b"
+    },
+    {
+      "path": "components/guides/how-ck-works/workflow-scenario-selector.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "e5f41f4f7fe525e2254dca6fdabbd58884ac8f1b571ae95e0fb1572d634c997b"
+    },
+    {
+      "path": "components/guides/how-ck-works/workflow-skill-infographic.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "0d7061776d354db43e39ca8c21ea35707130b5a69258f8a4ccb88514b7c5d061"
+    },
+    {
+      "path": "components/guides/how-ck-works/workflow-step-detail-panel.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "d86b54b2ed284058f0d3008db376a27c089a1eecfffcd123518ca671662099a0"
+    },
+    {
+      "path": "components/guides/how-ck-works/workflow-view-toggle.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "d3a37716a8d62e6bcf0b89a0f865d79a7e74146f9c9300d9279efdf9a48fdfcd"
+    },
+    {
+      "path": "components/guides/ide-config/ide-config-advanced-and-footer.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "0a4a989bb50c1a2d93cba6349366797f8e72a1c1fe40887ec245c61c855ae81d"
+    },
+    {
+      "path": "components/guides/ide-config/ide-config-hero-and-setup.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "984166adfc3bd20d4affaf315725534ae81a1a7b2d9407280dbb788434a35f19"
+    },
+    {
+      "path": "components/guides/ide-config/ide-config-model-and-tips.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "acfe89b419cd10bc710bfe12fdaed29ae40f2be16298ab80a6b07a2af5290217"
+    },
+    {
+      "path": "components/guides/ide-config/ide-config-provider-configs.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "abf0866f3c0dc4693718080e4efcfbbef4625b4c2ee610c8e304620eb5c62535"
+    },
+    {
+      "path": "components/guides/inside-claudekit/InsideClaudeKitArticleShell.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "64d942d6e93002e752c11fa2a34669287213ac42927d3757e0cc0e34eeebbfda"
+    },
+    {
+      "path": "components/guides/inside-claudekit/InsideClaudeKitFrontendDesignArticle.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "5dce3cf3ac4006789fba09f2f9abeb3f21b35f35a2b7122ea8237e0b7a626739"
+    },
+    {
+      "path": "components/guides/inside-claudekit/InsideClaudeKitGettingStartedArticle.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "2821825a751ee7badbe9e04da610758c4d80aeccd1831adc350ae2a83393588d"
+    },
+    {
+      "path": "components/guides/inside-claudekit/InsideClaudeKitGuardRailsArticle.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "e308be51550b97184cf999b2cfbe1835a42db591a6c3b10feadfc20140b3c93a"
+    },
+    {
+      "path": "components/guides/inside-claudekit/InsideClaudeKitPlanModesArticle.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "91e166427b669a6ef13814bbeef4f66592455d6df100a371a43181a210c07104"
+    },
+    {
+      "path": "components/guides/inside-claudekit/inside-claudekit-article-card.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "0556ff0d9863d0369075b46ea12a6515ac6bb48ce1c278a5818a9e28f73f4de2"
+    },
+    {
+      "path": "components/guides/remote-control/remote-control-claude-panel.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "d33c3decae4177fefa2d7a3f38be45c91f25f027558c2d984f34386b3a4ad442"
+    },
+    {
+      "path": "components/guides/remote-control/remote-control-codex-panel.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "26dcc35f65fd542d8d6c70d938b9fb92b090e8650b42d177827492b16269d07f"
+    },
+    {
+      "path": "components/guides/remote-control/remote-control-hero.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "bd16dabea6794c9e0ccf4ac243d744fbb5d828c76cde8dbb93919d7c55311761"
+    },
+    {
+      "path": "components/guides/remote-control/remote-control-limits-and-links.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "6f20a5094f53c7e555a7acb23a03a36a9b45860d57f4390fa934b6e3ba1da5a6"
+    },
+    {
+      "path": "components/guides/remote-control/remote-control-runtime-tabs.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "97e1d42355ac367361c6ac6450a9c2d2042fef1ab9b3d71ab84b1af33700b02a"
+    },
+    {
+      "path": "components/guides/session-recovery/session-recovery-hero-and-auto-state.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "9df5e91cab5eb5ee60b6a382baf52b466fdc663e8703acb49d2044923148dbd7"
+    },
+    {
+      "path": "components/guides/session-recovery/session-recovery-protips-and-emergency.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "f155749643c8703fbd996947d1a3db7222eb04f756748eb36b0930ee9ccaa4c6"
+    },
+    {
+      "path": "components/guides/session-recovery/session-recovery-resume-and-export.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "f2a0cfe51dc5a7405e3d6e702ee58ce6925665f8de31949b48f01cb9d46aeb03"
+    },
+    {
+      "path": "components/guides/session-recovery/session-recovery-understanding-and-cliproxy.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "bf124daa500fd715c0aeb0fe14bd43005c78c02bb43405b850a384e10cf339c6"
+    },
+    {
+      "path": "components/guides/ui-review-gate/inline-code.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "ff77ea0f470e22d46befdf29e97928b61976b7bb808f95c097958bbf327b3e42"
+    },
+    {
+      "path": "components/guides/ui-review-gate/ui-review-gate-fit.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "422da568b0a30cc0abdecfabcf2cbc3e0a98a3c29ec403a460561a5505d8a1c4"
+    },
+    {
+      "path": "components/guides/ui-review-gate/ui-review-gate-hero.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "4ad7f214409efbed510851fd4ff2a998a0837d8a5c1674ec7fc1723946773f2e"
+    },
+    {
+      "path": "components/guides/ui-review-gate/ui-review-gate-hooks.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "ecae11180c05ab8405976b576fdbf96299db9ffb36cb95f4756c9297e629bf67"
+    },
+    {
+      "path": "components/guides/ui-review-gate/ui-review-gate-mechanism.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "2bf11155b697a3ae49db527669c9580bde2190ea9d9abcfbb167e8dac3a13ebd"
+    },
+    {
+      "path": "components/guides/ui-review-gate/ui-review-gate-mobile.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "5d5f6544c60505662cb578b00b54a8b0e9e5711c77f3206a7fec537e40ad802e"
+    },
+    {
+      "path": "components/guides/ui-review-gate/ui-review-gate-references.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "3cbfd2a980afca772c6a4378a6454a716816a27575b8ba74e23ed8dd03b14a88"
+    },
+    {
+      "path": "components/guides/ui-review-gate/ui-review-gate-usage.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "ce58632a91493fa5abba53682716f5be379cddd1f9578371e5bacd028e89f465"
+    },
+    {
+      "path": "components/guides/ui-review-gate/ui-review-gate-why.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "aa4b4682f168fbcdb7a2cbfaeeede49c59528374a57ba96d2794405f7b750582"
+    },
+    {
+      "path": "components/guides/uiux/uiux-build-showcase-and-tips.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "762bb322f13e068358452b5921ddce2b29ffe9adcb9ef481b690cb1ffe5a7e5b"
+    },
+    {
+      "path": "components/guides/uiux/uiux-header-and-hero.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "3e93271c0d71df162e220ecdab87d56a1e8113050a071cb054f3b19aa55a2690"
+    },
+    {
+      "path": "components/guides/uiux/uiux-how-it-works.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "493c3d97188d4d8d825e013b59f88ca93fca9a71f8f7150f9aaecb67da1b059e"
+    },
+    {
+      "path": "components/guides/uiux/uiux-integration-guide.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "ab2f54d38b1ab86881ba94a8845110779f45b1900725103db745e7743fa608ea"
+    },
+    {
+      "path": "components/guides/uiux/uiux-quality-checklist.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "498ab17a80cad8912b68950b715b1490e4efd9baec07fb1fa30252dec6226c2d"
+    },
+    {
+      "path": "components/guides/uiux/uiux-search-domains.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "c0a59f28c8c5e5a0dc5a1551a6d76495910c95d13ad9e3afd668f852b6fad037"
+    },
+    {
+      "path": "components/guides/uiux/uiux-workflows.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "e249e398968f37f8e77fcecfe97bb2c89ed79fafc33d509ad2d026293da29d83"
+    },
+    {
+      "path": "components/guides/what-is-claudekit/what-is-claudekit-before-after-comparison.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "e9ee29f170f19b5cb2a212d86cdc97bcc2c3939a4a86aa472810b6f41dd71bad"
+    },
+    {
+      "path": "components/guides/what-is-claudekit/what-is-claudekit-commands-and-summary.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "f257dc671d238edb3dc50ca2c4a11cf8a1d5bc8bd2e025cde75a4bd2c3ebca86"
+    },
+    {
+      "path": "components/guides/what-is-claudekit/what-is-claudekit-intro-and-metaphors.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "c0b99592660d152c5e70e8b2ff5c01c08600da08ea8a9f50574efd1228bc5850"
+    },
+    {
+      "path": "components/guides/what-is-claudekit/what-is-claudekit-pillars-and-process-flow.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "9e9b52d46af75f7f7c903e2957ef214ce151d7f8f843f0befdefc58abfe32ef9"
+    },
+    {
+      "path": "components/guides/workflows/workflows-engineer-section.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "5b322ab951d947aceb4182c21ed320e0feec0e55cc3431f7025c19d2ef91c2c4"
+    },
+    {
+      "path": "components/guides/workflows/workflows-header-and-version-toggle.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "c667291f3702b990ac6e49578ba43dbaaf5b389b7e377633acef7ed5f9c6635b"
+    },
+    {
+      "path": "components/guides/workflows/workflows-marketing-section.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "811073a1eced7e3e80a2202c6bb2e8f3ada0b1c0fec455468b8e14d5ea19e166"
+    },
+    {
+      "path": "components/guides/workflows/workflows-pro-tips-and-navigation.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "b88627ba753498f42b739e50019cbc4ba8fbf92d204eea143a22bf02426cf2b7"
+    },
+    {
+      "path": "components/guides/workflows/workflows-workflow-card.astro",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "b021ea5cd9a4217059f16b0e9cb6c25dcb8dfeb4819520c5c9eb349fc65f3cee"
+    },
+    {
+      "path": "data/guides/ccs-cheatsheet-data.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "30301da4cf80891861ca62395dcf20d9232c5dbb716918bd7855bd012d7d5d53"
+    },
+    {
+      "path": "data/guides/ccs-decision-tree-data.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "45e8096ca465a7bee2de0ea82f61ec65c5cc68ecf3ae328d0f1910450c9a6d42"
+    },
+    {
+      "path": "data/guides/ccs-decision-tree-types.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "26a1194dc55df938c07dc29046834dc881e09ba51938a82131595b98e63dadc5"
+    },
+    {
+      "path": "data/guides/cli-command-notes.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "e21bae3845197db0dcc2caef4ac45f605c36ff5a5f4a674164dc8fd09297f6e1"
+    },
+    {
+      "path": "data/guides/cli-commands-cheatsheet.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "bfee922d96eb2867d50d0f624044a68fda886c518532b76bea9f6c783e59cf57"
+    },
+    {
+      "path": "data/guides/commands-definitions.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "7da4984b07de2ccda714eaf6bece04e081764fd00d983778a0aff901f4cfefb7"
+    },
+    {
+      "path": "data/guides/commands-engineer-kit.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "21493ea61011274ada2de1059e9322f503c09e9a707bf6f24525c688a11d684a"
+    },
+    {
+      "path": "data/guides/commands-marketing-kit.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "b3ff7ced16c4e0d483859421fef0abc84ed31ac27fcf2a55b3e55f3ec16a4dbf"
+    },
+    {
+      "path": "data/guides/commands-migration.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "74d7510bb44684b0c41680bc279c7d8ffe7b7df4eda686fd9ecb250c62632af6"
+    },
+    {
+      "path": "data/guides/commands-styles.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "88d4dcb5c78b7282ae76df518a1a12f1ee973276c5f95f8ae52b30f513762fc3"
+    },
+    {
+      "path": "data/guides/commands-types.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "de19efffd60a371c632b8397cdf099250006005d1c6625f1cfde6749e0e8fb72"
+    },
+    {
+      "path": "data/guides/custom-hooks/custom-hooks-data.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "429f4b2ba753820efbab4245121c764fa470f0657cbc0b489d280d301d304ad6"
+    },
+    {
+      "path": "data/guides/custom-hooks/custom-hooks-translations.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "fac086f1fad18d8709739502f350a08726af346d82b4a69af62d19e050b1c230"
+    },
+    {
+      "path": "data/guides/flowchart-engineer-data.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "dbafa1530a285ed0a71712bb6bdbbc75b73c6cc211abde46564cf10cd4bd1878"
+    },
+    {
+      "path": "data/guides/flowchart-index.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "5b5574d2f94dfa35db9a53dea57c2deb8b194f49fdfd8a08c0929225e19e0237"
+    },
+    {
+      "path": "data/guides/flowchart-legacy-data.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "a26a9f0ef6c98fded6c4bb429cb068f5516ea7005a1d2fb6eea6ce4536321a3b"
+    },
+    {
+      "path": "data/guides/flowchart-marketing-data.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "467f647a8cf83b2072f4e5d894b60bce64be5f1961324a70f74742c224a054b9"
+    },
+    {
+      "path": "data/guides/flowchart-types.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "31880c6640306e72ef843496ce87c2dcfe67b77954b5416c10c7196d6a73d0da"
+    },
+    {
+      "path": "data/guides/flowchart.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "51a14f5f4b370e646789684e15e18d21f27fabbeef0bc2820cf7bc846ff4222e"
+    },
+    {
+      "path": "data/guides/how-ck-works/index.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "71eb6585b3242595826c4b1adaf9401b8863bacd134005595935d9f6ef51bc76"
+    },
+    {
+      "path": "data/guides/how-ck-works/skill-infographics-additional.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "0cf2b98917cabe4e404ac4e659292bd3c5fa3068b82a1b3e81a91b7deb0d04fe"
+    },
+    {
+      "path": "data/guides/how-ck-works/skill-infographics.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "d561a81c17cd59b12b67605c6aa10a05bdde6b3198c98796b8819efc9104a42c"
+    },
+    {
+      "path": "data/guides/how-ck-works/workflow-combos.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "08aa8da3b62ba052a833eadae48f780385e6c2068e5043d7a846d9868569c25f"
+    },
+    {
+      "path": "data/guides/how-ck-works/workflow-visualizer-scenarios.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "d36347b07a402987e48b661122be5c6c4e1a0ada51e488b7f231063252c50c8d"
+    },
+    {
+      "path": "data/guides/how-ck-works/workflow-visualizer-types.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "f3baa93d3113535814f52d35f7387bd1e058cd296b333d149721fd4259eb1dfe"
+    },
+    {
+      "path": "data/guides/ide-config/ide-config-provider-code-snippets.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "1c7715327695d76bc8b83e87ffcebbbebe3802162e2bfa770708eb61fcfcf679"
+    },
+    {
+      "path": "data/guides/inside-claudekit.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "7da241e5ee18c27cf1413503dc1442af674f714d0f6b30fc0c72d25fdd47143b"
+    },
+    {
+      "path": "data/guides/workflows-data/index.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "7ff6a47d5d2e8cbca201cde9917ffb17a5d84c0f4bfc987bda559ab08564fad3"
+    },
+    {
+      "path": "data/guides/workflows-data/workflows-beta-additions.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "71b8e445e5e15846349f144fce0dd8ae617f3013a6e1c992951f6215ad4a9ab9"
+    },
+    {
+      "path": "data/guides/workflows-data/workflows-legacy.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "d475c0e8390eff72fea9e21a1fb1c5bd24294b3b674cd74abeab42e1721b76c0"
+    },
+    {
+      "path": "data/guides/workflows-data/workflows-marketing-kit.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "a351971569eff5feea91d6c9706969ac107c9c4300a3e45feb370361c74ab0e3"
+    },
+    {
+      "path": "data/guides/workflows-data/workflows-stable.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "a5a2374f961911dfcad93f81fc27f3bab2a7868d6b5abd00690aae76b4671966"
+    },
+    {
+      "path": "data/guides/workflows.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "9e631a0e656df7f657ea58fbbea9e490043fdc96fcb2b70155279eac2f65ff2d"
+    },
+    {
+      "path": "data/vi/guides/workflows-data/index.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "abd3e2798c834642ecd09db47ce3be2bad1c6a930fd532531eefd0960a41e253"
+    },
+    {
+      "path": "data/vi/guides/workflows-data/workflows-beta-additions.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "c659d300771ab29cf4172785884c5e1bd713b3cef3674512c12756a9d58a1dd9"
+    },
+    {
+      "path": "data/vi/guides/workflows-data/workflows-legacy.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "75897c925ca5f6f62b30911030b5bf5979b133b88c798703aefcf842451c6552"
+    },
+    {
+      "path": "data/vi/guides/workflows-data/workflows-marketing-kit.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "105a269e7179e55cc5a02f27390b0b08035ec58fcbb722efc6b2e2d5d42a0ccd"
+    },
+    {
+      "path": "data/vi/guides/workflows-data/workflows-stable.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "eefa70331fe0a77798c680ba60a70500715935c2808eb54ba1c2d0dc144d3d17"
+    },
+    {
+      "path": "data/vi/guides/workflows.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "5b06886976c266f72149769a3f9b782209b0c7a1d4441c36c2d47db99144b079"
+    },
+    {
+      "path": "i18n/en/ccs.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "85d44ad6f5cbb712c47cd8c64fd62dfe31a26f057dee56b717ef4ce9b4bce43b"
+    },
+    {
+      "path": "i18n/en/ck-with-codex.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "242a478ed5fb386ebe3d70305c504ab8e09ebf533622b4e0c18a371a3208c31e"
+    },
+    {
+      "path": "i18n/en/cli.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "a849b775fe875bb9c8ec08612b9c3e57bc704ac9a4758047ba8d5c6a403839ea"
+    },
+    {
+      "path": "i18n/en/coexistence.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "9293c0c45d224cf294d1b8ff01975648e58f7a1e644a1b58ab88ec85fd442cfb"
+    },
+    {
+      "path": "i18n/en/commands.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "9d342eccaa5f0708ac566c4394dfff034a52fcf2d3bf755cea8940052ea40e5e"
+    },
+    {
+      "path": "i18n/en/common.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "447aa70faa1faa5a87d9846a5241ddf7ecc6fcb96b25b8e0bb3b5d3f343d49bd"
+    },
+    {
+      "path": "i18n/en/guides.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "cfa1ce63f4a2edca88f4caa8fee4df746502e2f7f22cb953dba6f2190c3057ae"
+    },
+    {
+      "path": "i18n/en/happy-ccs.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "da059d9f79be187e301b2de6d5ee6fb7ef953a0df2d408f03842a91eacc26050"
+    },
+    {
+      "path": "i18n/en/ide-config.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "91199e306c13e6252ab0a8b27a247b7969f3a9bb675918cbba066ce75be9525b"
+    },
+    {
+      "path": "i18n/en/session-recovery.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "efc5bac2a281f1c65115ac694d7a12d678f7413b7a3212f7298ceb18329f7d2f"
+    },
+    {
+      "path": "i18n/en/token-tips.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "992d1b92e0af9ca20675bc7ff7794537cbd595ce42f2e26fda28b8a323bdeb43"
+    },
+    {
+      "path": "i18n/en/uiux.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "019ad5e64e00c377adc29af5cc87ada0979e6f7b45a147cc7d494ffffae546dd"
+    },
+    {
+      "path": "i18n/en/workflows.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "da4e545bfc3aa05b1c903aa2642eef28b2b4e1e7a9f45b5caf49851891943952"
+    },
+    {
+      "path": "i18n/utils.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "2dcb8d82ae7870216f947da9c6349ede32da601f8efa6522a527ddc25e3ee4de"
+    },
+    {
+      "path": "i18n/vi/ccs.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "18c59780063be7acc0951a674a50be4943ac229b31bf437cd82a7747f7dd3d86"
+    },
+    {
+      "path": "i18n/vi/ck-with-codex.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "b0f9f787fe0b8969c51061f32e02631b44d0246f7d01423a5c24034c8eaa292a"
+    },
+    {
+      "path": "i18n/vi/cli.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "08f5b5a94a59ed00951f35ffd9649bd48e1294156cbd4217023c3794cf9a4709"
+    },
+    {
+      "path": "i18n/vi/coexistence.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "0d82ebfb534ad1bd292b59446c74f4c3a5cc082d8fd06cd1055699b05bef1555"
+    },
+    {
+      "path": "i18n/vi/commands.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "0cebe3ff6ea079c50cd1ff1a5b6a5a8579323d7d8937043b360a76ac9babc705"
+    },
+    {
+      "path": "i18n/vi/common.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "d48eb9b8a5a8d9129997b5ce7047f465597cade7ec06b020b8ff99cabfbfbaf8"
+    },
+    {
+      "path": "i18n/vi/guides.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "7c4f3da3a75d6ef87b5d97d1c1d381af00ea1b056340ac5d979da258bde77242"
+    },
+    {
+      "path": "i18n/vi/happy-ccs.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "7d14cdd6e45490dbd3979c7a1df86ac64270f560b2c20559ec0391a675e98842"
+    },
+    {
+      "path": "i18n/vi/ide-config.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "cedc4485bd378534637ef37cda2b089f761b0f913dfddeb7904b0504d42f4fa7"
+    },
+    {
+      "path": "i18n/vi/session-recovery.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "1ed30e0dc8a234685bf6e6e579d25ca8ce44b78b3fcadadaa2897ca0f514ba89"
+    },
+    {
+      "path": "i18n/vi/token-tips.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "208ac2ef2c642d410a35dfe3df6845ebbab727dc9dbd82a5e3c97a94b50c7b68"
+    },
+    {
+      "path": "i18n/vi/uiux.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "a50aae4e45bb00d4b52e1c175164ad33b2f254afbb1d39838e9d87c924736496"
+    },
+    {
+      "path": "i18n/vi/workflows.ts",
+      "type": "file",
+      "mode": "100644",
+      "sha256": "5e57abe952f8fff200db95d45e27bc77506541de8e0d6dbc836842421ce5ae81"
+    }
+  ]
+}

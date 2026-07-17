@@ -12,8 +12,14 @@
 @import '@fontsource/fira-code/500.css';
 
 /* Tailwind directives */
-@import 'tailwindcss';
+@import 'tailwindcss' source(none);
 @config "../../tailwind.config.mjs";
+@source "../";
+@source not "../legacy-ck";
+@source not "../components/guides/legacy";
+@source not "../pages/legacy";
+@source not "../pages/vi/legacy";
+@source not "../layouts/LegacyGuidesLayout.astro";
 
 @theme {
   --font-heading: 'Space Grotesk', sans-serif;

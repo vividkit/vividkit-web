@@ -1,10 +1,8 @@
 ---
 import { getLangFromUrl, type Language } from '@/i18n';
 import { getAgentKitCliFact } from '@/data/guides/agentkit/agentkit-cli-facts';
-import {
-  getAgentKitTargetView,
-  getAgentKitTargetViews,
-} from '@/data/guides/agentkit/agentkit-target-capabilities';
+import { getAgentKitTargetView } from '@/data/guides/agentkit/agentkit-target-capabilities';
+import AgentKitChannelSwitcher from './agentkit/agentkit-channel-switcher.astro';
 import TerminalSnippet from './TerminalSnippet.astro';
 
 interface Props { lang?: Language }
@@ -12,158 +10,79 @@ const { lang } = Astro.props;
 const currentLang = lang ?? getLangFromUrl(Astro.url);
 const isVi = currentLang === 'vi';
 const prefix = isVi ? '/vi' : '';
-const targets = getAgentKitTargetViews();
-const claudeTarget = getAgentKitTargetView('claude-code');
-const projectInstallCommand = claudeTarget.installCommand.replace(/\s+--global\b/, '');
-const refreshCommand = (getAgentKitCliFact('kit-refresh')?.command ?? 'ak kit refresh <kit>')
-  .replace('<kit>', 'engineer')
-  .replace(/\s+--yes\b/, '');
+const projectTarget = getAgentKitTargetView('claude-code', 'engineer', 'project-local');
+const doctorCommand = getAgentKitCliFact('doctor')?.command ?? '';
 
-const ownership = [
-  {
-    title: 'AgentKit',
-    body: isVi
-      ? 'Sở hữu generated kit content: skills, agents, hooks kit-managed, workflows.'
-      : 'Owns generated kit content: skills, agents, kit-managed hooks, and workflows.',
-  },
-  {
-    title: isVi ? 'Claude Code / Codex' : 'Claude Code / Codex',
-    body: isVi
-      ? 'Giữ settings, custom files và runtime riêng của từng target.'
-      : 'Keep their own settings, custom files, and target runtime.',
-  },
-  {
-    title: 'CCS',
-    body: isVi
-      ? 'Chỉ chọn runtime/profile. Không sở hữu kit content.'
-      : 'Selects runtime profiles only. Does not own kit content.',
-  },
-  {
-    title: isVi ? 'File của bạn' : 'Your files',
-    body: isVi
-      ? 'CLAUDE.md, custom skills/hooks và config cá nhân cần được bảo vệ khi refresh.'
-      : 'CLAUDE.md, custom skills/hooks, and personal config should stay protected during refresh.',
-  },
-] as const;
+const eligibility = [
+  isVi ? 'CK chỉ ở global scope; project pilot không có CK-owned content còn sót.' : 'CK exists only at global scope; the pilot project has no remaining CK-owned content.',
+  isVi ? 'AK chỉ cài project-local trong một project sạch, không dùng --global.' : 'AK is project-local in one clean project; no --global installation.',
+  isVi ? 'Project không critical, có backup/restore đã thử và owner đồng ý closed-beta.' : 'The project is noncritical, backup/restore is tested, and the owner approved closed-beta enrollment.',
+  isVi ? 'Detector, canary và observation record được giữ ngoài VividKit.' : 'Detector, canary, and observation records are kept outside VividKit.',
+];
 
-const links = [
-  { href: `${prefix}/guides/agentkit`, label: isVi ? 'Migration hub CK → AK' : 'CK → AK migration hub' },
-  { href: `${prefix}/guides/migrate`, label: isVi ? 'Chọn đúng migration lane' : 'Pick the right migration lane' },
-  { href: `${prefix}/guides/ccs`, label: isVi ? 'CCS runtime profiles' : 'CCS runtime profiles' },
-  { href: `${prefix}/guides/ck-with-codex`, label: isVi ? 'AgentKit × Codex' : 'AgentKit × Codex' },
-] as const;
+const exitCriteria = [
+  isVi ? 'Canary fail, unexpected diff hoặc ownership trở thành mixed/unknown.' : 'Canary failure, unexpected diff, or ownership becomes mixed/unknown.',
+  isVi ? 'Không thể chứng minh project-local boundary hoặc restore path.' : 'The project-local boundary or restore path cannot be demonstrated.',
+  isVi ? 'Observation có incident chưa xử lý hoặc chưa đủ 72 giờ.' : 'Observation has an unresolved incident or has not reached 72 hours.',
+];
 ---
 
-<div class="mt-6 space-y-10">
-  <section class="rounded-3xl border border-violet-200 bg-gradient-to-br from-violet-50 via-white to-amber-50 p-6 dark:border-violet-500/20 dark:from-violet-950/30 dark:via-slate-950 dark:to-amber-950/20 sm:p-8">
-    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-violet-700 dark:text-violet-300">AgentKit coexistence</p>
-    <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-5xl">
-      {isVi ? 'Cài AgentKit mà không phá setup sẵn có' : 'Install AgentKit without breaking your existing setup'}
-    </h1>
-    <p class="mt-4 max-w-3xl leading-7 text-slate-600 dark:text-slate-300">
-      {isVi
-        ? 'Trang này trả lời câu hỏi coexistence: kit content đi đâu, cái gì được giữ, và khi nào dùng --global hoặc refresh. Muốn migrate từ CK thì dùng migration hub.'
-        : 'This page answers the coexistence question: where kit content lives, what stays yours, and when to use --global or refresh. For CK migration, use the migration hub.'}
-    </p>
-  </section>
+<div class="mt-6" data-agentkit-channel-root data-agentkit-surface="coexistence" data-agentkit-locale={currentLang} data-agentkit-active-channel="stable">
+  <AgentKitChannelSwitcher lang={currentLang} />
+  <div class="space-y-10" data-agentkit-stable-facts>
+    <section class="rounded-3xl border border-violet-200 bg-gradient-to-br from-violet-50 via-white to-amber-50 p-6 dark:border-violet-500/20 dark:from-violet-950/30 dark:via-slate-950 dark:to-amber-950/20 sm:p-8">
+      <p class="text-xs font-semibold uppercase tracking-[0.2em] text-violet-700 dark:text-violet-300">AgentKit closed-beta coexistence</p>
+      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-5xl">
+        {isVi ? 'Một pilot hẹp, không phải hướng dẫn chạy chung mọi scope' : 'A narrow pilot, not a broad same-scope setup'}
+      </h1>
+      <p class="mt-4 max-w-3xl leading-7 text-slate-600 dark:text-slate-300">
+        {isVi
+          ? 'Topology duy nhất được hỗ trợ trong follow-up này là CK global + AK project-local trong một project sạch, low-risk. Query beta chỉ chọn nội dung công khai; nó không ghi danh hoặc cấp quyền pilot.'
+          : 'The only topology supported by this follow-up is CK global plus AK project-local in one clean, low-risk project. The beta query selects public content; it neither enrolls nor authorizes a pilot.'}
+      </p>
+    </section>
 
-  <section class="space-y-4">
-    <h2 class="text-2xl font-bold text-slate-950 dark:text-white">{isVi ? 'Ownership rõ ràng' : 'Clear ownership'}</h2>
-    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-      {ownership.map((item) => (
-        <article class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
-          <h3 class="font-bold text-slate-950 dark:text-white">{item.title}</h3>
-          <p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">{item.body}</p>
-        </article>
-      ))}
-    </div>
-    <div class="flex flex-wrap gap-x-4 gap-y-2 pt-1">
-      {links.map((link) => (
-        <a
-          href={link.href}
-          class="inline-flex min-h-11 items-center rounded-lg px-1 text-sm font-semibold text-violet-700 transition-colors duration-200 hover:text-violet-900 hover:underline focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 dark:text-violet-300 dark:hover:text-violet-100"
-        >
-          {link.label} →
-        </a>
-      ))}
-    </div>
-  </section>
-
-  <section class="space-y-4">
-    <h2 class="text-2xl font-bold text-slate-950 dark:text-white">{isVi ? 'Phạm vi cài đặt' : 'Install scope'}</h2>
-    <div class="grid gap-4 lg:grid-cols-2">
-      <article class="rounded-2xl border border-emerald-200 bg-emerald-50/60 p-5 dark:border-emerald-500/25 dark:bg-emerald-950/20">
-        <p class="text-xs font-bold uppercase tracking-[0.12em] text-emerald-700 dark:text-emerald-300">{isVi ? 'Mặc định · project' : 'Default · project'}</p>
-        <h3 class="mt-2 font-bold text-slate-950 dark:text-white">{isVi ? 'Chỉ project hiện tại' : 'Current project only'}</h3>
-        <p class="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-300">
-          {isVi
-            ? 'Ưu tiên project scope trước. Global setup và projects khác không bị đụng nếu bạn không opt-in.'
-            : 'Prefer project scope first. Your global setup and other projects stay untouched unless you opt in.'}
-        </p>
-        <div class="mt-4"><TerminalSnippet code={projectInstallCommand} label="shell · project-first" copyable={false} /></div>
+    <section class="grid gap-4 lg:grid-cols-2">
+      <article class="min-w-0 rounded-2xl border border-emerald-200 bg-emerald-50/60 p-5 dark:border-emerald-500/25 dark:bg-emerald-950/20">
+        <p class="text-xs font-bold uppercase tracking-[0.14em] text-emerald-700 dark:text-emerald-300">CK · global</p>
+        <h2 class="mt-2 text-xl font-bold text-slate-950 dark:text-white">{isVi ? 'Rollback control plane' : 'Rollback control plane'}</h2>
+        <p class="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-300">{isVi ? 'Giữ executable/control plane CK global trong suốt canary và observation. Không cài CK content vào project pilot.' : 'Keep the global CK executable/control plane through canary and observation. Do not install CK content into the pilot project.'}</p>
       </article>
-      <article class="rounded-2xl border border-amber-200 bg-amber-50/60 p-5 dark:border-amber-500/25 dark:bg-amber-950/20">
-        <p class="text-xs font-bold uppercase tracking-[0.12em] text-amber-800 dark:text-amber-300">{isVi ? 'Opt-in · --global' : 'Opt-in · --global'}</p>
-        <h3 class="mt-2 font-bold text-slate-950 dark:text-white">{isVi ? 'Áp dụng cho mọi project' : 'Applies across projects'}</h3>
-        <p class="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-300">
-          {isVi
-            ? 'Chỉ dùng --global khi bạn thật sự muốn kit ảnh hưởng toàn máy. Review command trước khi gõ.'
-            : 'Use --global only when you truly want machine-wide kit content. Review the command before typing it.'}
-        </p>
-        <div class="mt-4"><TerminalSnippet code={claudeTarget.installCommand} label="shell · review global scope" copyable={claudeTarget.installCopyable} /></div>
+      <article class="min-w-0 rounded-2xl border border-violet-200 bg-violet-50/60 p-5 dark:border-violet-500/25 dark:bg-violet-950/20">
+        <p class="text-xs font-bold uppercase tracking-[0.14em] text-violet-700 dark:text-violet-300">AK · project-local</p>
+        <h2 class="mt-2 text-xl font-bold text-slate-950 dark:text-white">{isVi ? 'Một project sạch' : 'One clean project'}</h2>
+        <p class="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-300">{isVi ? 'Chỉ tạo AgentKit-owned content trong project pilot. Không mở rộng sang global hoặc project khác.' : 'Create AgentKit-owned content only in the pilot project. Do not expand to global scope or another project.'}</p>
+        <div class="mt-4"><TerminalSnippet code={projectTarget.installCommand} label="shell · project-local review" copyable={projectTarget.installCopyable} /></div>
       </article>
-    </div>
-  </section>
+    </section>
 
-  <section class="grid gap-4 lg:grid-cols-2">
-    {targets.map((target) => (
-      <article class="rounded-2xl border border-slate-200 p-5 dark:border-slate-700">
-        <h2 class="font-bold text-slate-950 dark:text-white">{target.displayName}</h2>
-        <p class="mt-1 text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-300">{target.status} · {target.channel}</p>
-        <div class="mt-3"><TerminalSnippet code={target.installCommand} label="shell · review global scope" copyable={target.installCopyable} /></div>
-        <p class="mt-3 text-sm text-slate-600 dark:text-slate-300">
-          {target.target === 'claude-code'
-            ? (isVi ? `Giữ .claude settings và custom files của Claude Code; dùng ${target.invocationWildcard} và review preview trước force.` : `Keep Claude Code .claude settings and custom files; use ${target.invocationWildcard} and review previews before force.`)
-            : (isVi ? `Dùng ${target.invocationWildcard} ${target.invocationDescription} trong Codex, không dùng slash syntax Claude Code.` : `Use ${target.invocationWildcard} ${target.invocationDescription}s in Codex, not Claude Code slash syntax.`)}
-        </p>
+    <section class="space-y-4">
+      <h2 class="text-2xl font-bold text-slate-950 dark:text-white">{isVi ? 'Eligibility bắt buộc' : 'Required eligibility'}</h2>
+      <ul class="grid gap-3 md:grid-cols-2">
+        {eligibility.map((item) => <li class="rounded-2xl border border-slate-200 bg-white p-4 text-sm leading-6 text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">{item}</li>)}
+      </ul>
+      <aside class="rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm leading-6 text-amber-950 dark:border-amber-400/30 dark:bg-amber-950/30 dark:text-amber-100">
+        {isVi ? 'Mixed/custom/corrupt/missing metadata, critical data hoặc unknown package ownership không đủ điều kiện. Chuyển sang support-assisted; không dùng query để override.' : 'Mixed/custom/corrupt/missing metadata, critical data, or unknown package ownership is ineligible. Use support-assisted handling; a query cannot override this boundary.'}
+      </aside>
+    </section>
+
+    <section class="grid gap-4 lg:grid-cols-2">
+      <article class="rounded-2xl border border-rose-200 bg-rose-50 p-5 dark:border-rose-400/20 dark:bg-rose-950/20">
+        <h2 class="text-xl font-bold text-rose-950 dark:text-rose-100">{isVi ? 'Exit criteria' : 'Exit criteria'}</h2>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-sm leading-6 text-rose-900 dark:text-rose-200">
+          {exitCriteria.map((item) => <li>{item}</li>)}
+        </ul>
       </article>
-    ))}
-  </section>
+      <article class="rounded-2xl border border-cyan-200 bg-cyan-50 p-5 dark:border-cyan-400/20 dark:bg-cyan-950/20">
+        <h2 class="text-xl font-bold text-cyan-950 dark:text-cyan-100">{isVi ? 'Kill switch và recovery' : 'Kill switch and recovery'}</h2>
+        <p class="mt-3 text-sm leading-6 text-cyan-900 dark:text-cyan-200">{isVi ? 'Dừng AK mutation, giữ CK executable, restore project từ known-good backup và gửi sanitized detector/canary report cho support. Không gỡ CK trong recovery.' : 'Stop AK mutations, keep the CK executable, restore the project from a known-good backup, and send a sanitized detector/canary report to support. Do not remove CK during recovery.'}</p>
+        {doctorCommand && <div class="mt-4"><TerminalSnippet code={doctorCommand} label="shell · read-only detector" /></div>}
+      </article>
+    </section>
 
-  <section class="rounded-2xl border border-amber-200 bg-amber-50 p-5 dark:border-amber-400/20 dark:bg-amber-950/20">
-    <h2 class="text-xl font-bold text-amber-950 dark:text-amber-100">{isVi ? 'Quy tắc an toàn khi refresh' : 'Safe refresh rules'}</h2>
-    <p class="mt-2 text-sm leading-6 text-amber-900 dark:text-amber-200">
-      {isVi
-        ? 'Chạy refresh ở chế độ preview trước. Backup .claude/ nếu bạn sắp --force hoặc thao tác phá hủy.'
-        : 'Run refresh in preview first. Back up .claude/ if you are about to --force or run a destructive refresh.'}
-    </p>
-    <div class="mt-4 max-w-xl"><TerminalSnippet code={refreshCommand} label="shell · preview-first" /></div>
-    <ul class="mt-4 list-disc space-y-2 pl-5 text-sm leading-6 text-amber-900 dark:text-amber-200">
-      <li>{isVi ? 'Preview và đọc diff trước khi apply.' : 'Preview and inspect the diff before applying.'}</li>
-      <li>{isVi ? 'AgentKit snapshot managed files; custom files không được ghi đè âm thầm.' : 'AgentKit snapshots managed files; custom files are not silently overwritten.'}</li>
-      <li>{isVi ? 'Không dùng --force nếu chưa xác nhận rollback path.' : 'Do not use --force without a confirmed rollback path.'}</li>
-    </ul>
-  </section>
-
-  <section class="rounded-2xl border border-slate-200 bg-slate-50 p-5 dark:border-slate-700 dark:bg-slate-900/50">
-    <h2 class="text-xl font-bold text-slate-950 dark:text-white">{isVi ? 'FAQ ngắn' : 'Short FAQ'}</h2>
-    <dl class="mt-4 space-y-4 text-sm leading-6 text-slate-700 dark:text-slate-300">
-      <div>
-        <dt class="font-semibold text-slate-950 dark:text-white">{isVi ? 'CLAUDE.md có bị ghi đè không?' : 'Will CLAUDE.md be overwritten?'}</dt>
-        <dd class="mt-1">{isVi ? 'Không trong flow bình thường. Coi CLAUDE.md là user config và giữ bản của bạn.' : 'Not in the normal flow. Treat CLAUDE.md as user config and keep your copy.'}</dd>
-      </div>
-      <div>
-        <dt class="font-semibold text-slate-950 dark:text-white">{isVi ? 'Custom skills/hooks có mất khi refresh không?' : 'Do custom skills or hooks disappear on refresh?'}</dt>
-        <dd class="mt-1">{isVi ? 'Custom content ngoài kit-managed paths nên được giữ. Vẫn preview diff và backup trước thao tác force.' : 'Custom content outside kit-managed paths should remain. Still preview the diff and back up before force operations.'}</dd>
-      </div>
-      <div>
-        <dt class="font-semibold text-slate-950 dark:text-white">{isVi ? 'Đang migrate từ CK thì bắt đầu ở đâu?' : 'Where do I start if I am migrating from CK?'}</dt>
-        <dd class="mt-1">
-          {isVi ? 'Dùng migration hub để stage ak cạnh ck, rồi quay lại trang này cho coexistence rules.' : 'Use the migration hub to stage ak beside ck, then return here for coexistence rules.'}
-          {' '}
-          <a href={`${prefix}/guides/agentkit`} class="font-semibold text-violet-700 underline-offset-4 hover:underline dark:text-violet-300">{isVi ? 'Mở hub' : 'Open hub'} →</a>
-        </dd>
-      </div>
-    </dl>
-  </section>
+    <nav class="flex flex-wrap gap-3" aria-label={isVi ? 'Liên kết lifecycle' : 'Lifecycle links'}>
+      <a href={`${prefix}/guides/agentkit`} class="inline-flex min-h-11 items-center rounded-xl bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-700">{isVi ? 'Mở decision router' : 'Open decision router'}</a>
+      <a href="https://github.com/bestagentkits/agentkit-support" target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:border-violet-400 dark:border-slate-700 dark:text-slate-200">AgentKit Support</a>
+    </nav>
+  </div>
 </div>

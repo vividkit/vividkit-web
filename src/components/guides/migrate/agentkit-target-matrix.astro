@@ -26,7 +26,7 @@ const targets = getAgentKitTargetViews();
   </div>
   <div class="grid gap-4 lg:grid-cols-2">
     {targets.map((target) => (
-      <TerminalSnippet code={target.installCommand} label={`${target.displayName} · review global scope`} copyable={target.installCopyable} />
+      <TerminalSnippet code={target.installCommand} label={`${target.displayName} · review project scope`} copyable={target.installCopyable} />
     ))}
   </div>
   <p class="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm leading-6 text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">{isVi ? 'Các provider khác chỉ được hiển thị khi có source, channel và status rõ. VividKit không cung cấp copy button cho target chưa xác minh.' : 'Other providers appear only with explicit source, channel, and status. VividKit does not expose copy buttons for unverified targets.'}</p>

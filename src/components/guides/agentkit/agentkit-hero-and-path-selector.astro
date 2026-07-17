@@ -1,5 +1,5 @@
 ---
-import { ArrowRight, Bot, GitBranch, ShieldCheck } from 'lucide-astro';
+import { Route, ShieldCheck } from 'lucide-astro';
 
 import type { Language } from '@/i18n';
 import { useTranslations } from '@/i18n/utils';
@@ -11,29 +11,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
-
-const paths = [
-  {
-    id: 'legacy',
-    icon: GitBranch,
-    title: t('agentkit.paths.legacy.title'),
-    body: t('agentkit.paths.legacy.body'),
-    cta: t('agentkit.paths.legacy.cta'),
-    href: '#step-03-inventory',
-    className: 'border-purple-200 bg-purple-50/70 dark:border-purple-800/70 dark:bg-purple-950/20',
-    iconClass: 'bg-purple-100 text-purple-700 dark:bg-purple-900/50 dark:text-purple-300',
-  },
-  {
-    id: 'new',
-    icon: Bot,
-    title: t('agentkit.paths.new.title'),
-    body: t('agentkit.paths.new.body'),
-    cta: t('agentkit.paths.new.cta'),
-    href: '#step-04-stage-ak',
-    className: 'border-sky-200 bg-sky-50/70 dark:border-sky-800/70 dark:bg-sky-950/20',
-    iconClass: 'bg-sky-100 text-sky-700 dark:bg-sky-900/50 dark:text-sky-300',
-  },
-] as const;
+const inputClass = 'mt-2 min-h-11 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-base text-slate-900 focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 md:text-sm';
 ---
 
 <header class="grid gap-8 border-b border-slate-200 pb-12 dark:border-slate-800 lg:grid-cols-[minmax(0,1.4fr)_minmax(15rem,0.6fr)] lg:items-end">
@@ -41,10 +19,7 @@ const paths = [
     <p class="mb-4 text-xs font-bold uppercase tracking-[0.12em] text-purple-700 dark:text-purple-300">
       {t('agentkit.hero.eyebrow')}
     </p>
-    <h1
-      class="font-heading text-4xl font-bold leading-[1.1] tracking-[-0.03em] text-slate-950 text-balance dark:text-slate-50 md:text-5xl"
-      set:html={renderInlineCode(t('agentkit.hero.title'))}
-    ></h1>
+    <h1 class="font-heading text-4xl font-bold leading-[1.1] tracking-[-0.03em] text-slate-950 text-balance dark:text-slate-50 md:text-5xl" set:html={renderInlineCode(t('agentkit.hero.title'))}></h1>
     <p class="mt-5 max-w-2xl text-lg leading-relaxed text-slate-600 text-pretty dark:text-slate-300">
       {t('agentkit.hero.description')}
     </p>
@@ -56,30 +31,131 @@ const paths = [
   </div>
 </header>
 
-<section id="choose-path" aria-labelledby="choose-path-heading" class="pt-12">
-  <h2 id="choose-path-heading" class="font-heading text-2xl font-bold text-slate-950 dark:text-slate-50 md:text-3xl">
-    {t('agentkit.paths.heading')}
-  </h2>
+<section id="choose-path" aria-labelledby="choose-path-heading" class="scroll-mt-28 pt-12" data-agentkit-lifecycle-router>
+  <div class="max-w-3xl">
+    <div class="flex items-center gap-3">
+      <Route class="h-6 w-6 text-purple-600 dark:text-purple-400" aria-hidden="true" />
+      <h2 id="choose-path-heading" class="font-heading text-2xl font-bold text-slate-950 dark:text-slate-50 md:text-3xl">
+        {t('agentkit.router.heading')}
+      </h2>
+    </div>
+    <p class="mt-3 leading-relaxed text-slate-600 dark:text-slate-300">{t('agentkit.router.intro')}</p>
+  </div>
 
-  <div class="mt-6 grid gap-4 md:grid-cols-2">
-    {paths.map((path) => {
-      const Icon = path.icon;
-      return (
-        <article class={`rounded-2xl border p-6 ${path.className}`}>
-          <div class={`flex h-11 w-11 items-center justify-center rounded-xl ${path.iconClass}`}>
-            <Icon class="h-5 w-5" aria-hidden="true" />
-          </div>
-          <h3 class="mt-5 text-lg font-bold text-slate-950 dark:text-slate-50">{path.title}</h3>
-          <p class="mt-2 max-w-2xl leading-relaxed text-slate-600 text-pretty dark:text-slate-300" set:html={renderInlineCode(path.body)} ></p>
-          <a
-            href={path.href}
-            class="mt-5 inline-flex min-h-11 items-center gap-2 rounded-lg px-1 font-semibold text-purple-700 transition-colors duration-200 hover:text-purple-900 hover:underline focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 active:text-purple-600 dark:text-purple-300 dark:hover:text-purple-100"
-          >
-            {path.cta}
-            <ArrowRight class="h-4 w-4" aria-hidden="true" />
-          </a>
-        </article>
-      );
-    })}
+  <form class="mt-7 grid gap-5 rounded-2xl border border-slate-200 bg-slate-50/70 p-5 dark:border-slate-700 dark:bg-slate-900/50 md:grid-cols-2" data-agentkit-router-form autocomplete="off">
+    <label class="text-sm font-semibold text-slate-800 dark:text-slate-200">
+      {t('agentkit.router.goal')}
+      <select class={inputClass} name="goal" required>
+        <option value="">{t('agentkit.router.goal.placeholder')}</option>
+        <option value="install">{t('agentkit.router.goal.install')}</option>
+        <option value="cutover">{t('agentkit.router.goal.cutover')}</option>
+        <option value="coexistence">{t('agentkit.router.goal.coexistence')}</option>
+        <option value="recover">{t('agentkit.router.goal.recover')}</option>
+      </select>
+    </label>
+
+    <label class="text-sm font-semibold text-slate-800 dark:text-slate-200">
+      {t('agentkit.router.ownership')}
+      <select class={inputClass} name="legacyOwnershipState" required>
+        <option value="">{t('agentkit.router.ownership.placeholder')}</option>
+        <option value="absent">{t('agentkit.router.ownership.absent')}</option>
+        <option value="clean-single-scope">{t('agentkit.router.ownership.clean')}</option>
+        <option value="mixed">{t('agentkit.router.ownership.mixed')}</option>
+        <option value="custom">{t('agentkit.router.ownership.custom')}</option>
+      </select>
+    </label>
+
+    <label class="text-sm font-semibold text-slate-800 dark:text-slate-200" data-agentkit-router-field="metadata" hidden>
+      {t('agentkit.router.metadata')}
+      <select class={inputClass} name="metadataHealth" required>
+        <option value="">{t('agentkit.router.metadata.placeholder')}</option>
+        <option value="healthy">{t('agentkit.router.metadata.healthy')}</option>
+        <option value="corrupt">{t('agentkit.router.metadata.corrupt')}</option>
+        <option value="missing">{t('agentkit.router.metadata.missing')}</option>
+      </select>
+    </label>
+
+    <label class="text-sm font-semibold text-slate-800 dark:text-slate-200" data-agentkit-router-field="scope" hidden>
+      {t('agentkit.router.scope')}
+      <select class={inputClass} name="scopeRelationship" required>
+        <option value="">{t('agentkit.router.scope.placeholder')}</option>
+        <option value="none">{t('agentkit.router.scope.none')}</option>
+        <option value="ck-global-ak-project-local">{t('agentkit.router.scope.pilot')}</option>
+        <option value="same-scope">{t('agentkit.router.scope.same')}</option>
+        <option value="other-separate">{t('agentkit.router.scope.separate')}</option>
+        <option value="unknown">{t('agentkit.router.scope.unknown')}</option>
+      </select>
+    </label>
+
+    <label class="text-sm font-semibold text-slate-800 dark:text-slate-200" data-agentkit-router-field="preview" hidden>
+      {t('agentkit.router.preview')}
+      <select class={inputClass} name="cleanupPreviewResult" required>
+        <option value="">{t('agentkit.router.preview.placeholder')}</option>
+        <option value="clean">{t('agentkit.router.preview.clean')}</option>
+        <option value="dirty">{t('agentkit.router.preview.dirty')}</option>
+        <option value="unknown">{t('agentkit.router.preview.unknown')}</option>
+        <option value="not-applicable">{t('agentkit.router.preview.na')}</option>
+      </select>
+    </label>
+
+    <label class="text-sm font-semibold text-slate-800 dark:text-slate-200" data-agentkit-router-field="manager" hidden>
+      {t('agentkit.router.manager')}
+      <select class={inputClass} name="packageManagerEvidence" required>
+        <option value="">{t('agentkit.router.manager.placeholder')}</option>
+        <option value="bun">Bun</option>
+        <option value="npm">npm</option>
+        <option value="pnpm">pnpm</option>
+        <option value="yarn">Yarn Classic</option>
+        <option value="unknown">Unknown</option>
+        <option value="none">{t('agentkit.router.manager.none')}</option>
+      </select>
+    </label>
+
+    <fieldset class="rounded-xl border border-slate-200 p-4 dark:border-slate-700">
+      <legend class="px-1 text-sm font-semibold text-slate-800 dark:text-slate-200">{t('agentkit.router.criticality')}</legend>
+      <label class="mt-2 flex min-h-11 items-center gap-3 text-sm text-slate-700 dark:text-slate-300">
+        <input type="radio" name="dataCriticality" value="standard" required class="h-4 w-4" />
+        {t('agentkit.router.criticality.standard')}
+      </label>
+      <label class="flex min-h-11 items-center gap-3 text-sm text-slate-700 dark:text-slate-300">
+        <input type="radio" name="dataCriticality" value="critical" required class="h-4 w-4" />
+        {t('agentkit.router.criticality.critical')}
+      </label>
+    </fieldset>
+
+    <label class="flex min-h-11 items-center gap-3 self-end rounded-xl border border-slate-200 p-4 text-sm font-semibold text-slate-700 dark:border-slate-700 dark:text-slate-300" data-agentkit-router-field="pilot" hidden>
+      <input type="checkbox" name="pilotOptIn" class="h-4 w-4" />
+      {t('agentkit.router.pilot')}
+    </label>
+
+    <div class="md:col-span-2">
+      <button type="button" data-agentkit-router-evaluate class="inline-flex min-h-11 items-center justify-center rounded-lg bg-purple-700 px-5 py-2 text-sm font-bold text-white hover:bg-purple-800 focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 active:bg-purple-900 dark:bg-purple-600 dark:hover:bg-purple-500">
+        {t('agentkit.router.submit')}
+      </button>
+      <noscript>
+        <p class="mt-3 text-sm text-amber-800 dark:text-amber-200">{t('agentkit.router.javascriptRequired')}</p>
+      </noscript>
+    </div>
+  </form>
+
+  <div
+    class="mt-5 max-w-4xl rounded-xl border border-amber-300 bg-amber-50 p-5 text-amber-950 dark:border-amber-800 dark:bg-amber-950/30 dark:text-amber-100"
+    role="status"
+    aria-live="polite"
+    data-agentkit-router-result
+    data-agentkit-eligibility="blocked"
+    data-message-blocked={t('agentkit.router.result.blocked')}
+    data-message-input-changed={t('agentkit.router.result.changed')}
+    data-message-self-service={t('agentkit.router.result.selfService')}
+    data-message-support-assisted={t('agentkit.router.result.supportAssisted')}
+    data-message-recovery={t('agentkit.router.result.recovery')}
+    tabindex="-1"
+  >
+    <p class="font-bold">{t('agentkit.router.result.heading')}: <span data-agentkit-lane>support-assisted</span></p>
+    <p class="mt-1 text-sm"><span class="font-semibold">{t('agentkit.router.result.support')}:</span> <span data-agentkit-support-level>support-assisted</span></p>
+    <p class="mt-1 text-sm"><span class="font-semibold">{t('agentkit.router.result.reason')}:</span> <span data-agentkit-router-message>{t('agentkit.router.result.blocked')}</span></p>
+    <p class="mt-1 text-sm"><span class="font-semibold">{t('agentkit.router.result.copy')}:</span> <span data-agentkit-copy-policy>no-destructive-copy</span></p>
+    <p class="mt-1 text-sm"><span class="font-semibold">{t('agentkit.router.result.code')}:</span> <code data-agentkit-reason-code>router-input-required</code></p>
+    <p class="mt-2 text-xs">{t('agentkit.router.result.limit')}</p>
   </div>
 </section>

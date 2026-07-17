@@ -1,168 +1,110 @@
-# VividKit - Visual Guides cho AgentKit
+# VividKit — Visual Guides cho AgentKit
 
-> **AgentKit (`ak`) là phiên bản kế nhiệm ClaudeKit (`ck`).** Người dùng CK nên bắt đầu tại [migration guide từng bước](https://vividkit.dev/vi/guides/agentkit). Các route legacy vẫn được giữ để tương thích, trong khi nội dung render chuyển sang AgentKit.
+> AgentKit (`ak`) là phiên bản kế nhiệm ClaudeKit (`ck`). Người dùng CK nên bắt đầu tại [hướng dẫn CK → AgentKit](https://vividkit.dev/vi/guides/agentkit).
 
-> 🚧 **VividKit Desktop App sắp ra mắt!** Tham gia [danh sách early access](https://vividkit.dev) để được thông báo khi launch.
+VividKit là hub hướng dẫn trực quan song ngữ Anh/Việt cho AgentKit, Claude Code, Codex và các workflow liên quan. Sản phẩm web hiện tại giúp người đọc cài AgentKit, chọn lane migration an toàn, dùng đúng syntax theo target và truy cập lịch sử ClaudeKit đã được cô lập.
 
-> 🇬🇧 English: see [README.md](./README.md)
+VividKit Desktop App là sản phẩm riêng đang được lên kế hoạch. Đây không phải AgentKit Desktop App được tài liệu hóa tại agentkit.best.
 
-VividKit biến AgentKit skills và workflows thành lớp visual trực quan cho Claude Code và Codex. Trong khi VividKit Desktop App đang phát triển, dùng các guides này để cài `ak`, migrate từ `ck`, và giữ Engineer cùng Marketing hoạt động.
+> 🇬🇧 English: [README.md](./README.md)
 
-## 🖥️ VividKit Desktop App (Sắp ra mắt)
+## Phạm vi sản phẩm hiện tại
 
-**Lớp Visual Intelligence cho AgentKit**
+- Trang sản phẩm và guide song ngữ: English ở root path, Tiếng Việt dưới `/vi`.
+- Decision router cho fresh install, clean cutover, closed-beta coexistence, recovery và trường hợp cần support-assisted.
+- Lifecycle CK → AK gồm bảy giai đoạn: backup → dọn ownership CK → xác nhận scope sạch → cài AK → verify canary → observation → review gỡ CK control plane.
+- Guide cho AgentKit CLI, CLI Commands, workflows, targets, coexistence, permissions, recovery và troubleshooting.
+- Ví dụ Claude Code `/ak:*` và Codex `$ak:*` đúng theo target.
+- Archive ClaudeKit noindex được cô lập để tra cứu lịch sử, không đưa vào sitemap hoặc LLM exports.
 
-VividKit Desktop bổ sung cho AgentKit CLI (`ak`) bằng dashboard trực quan persistent và tương tác qua GUI. Nó tách biệt với AgentKit Desktop App tùy chọn trên agentkit.best.
+## Chính sách release và an toàn
 
-### Tính năng chính (MVP)
+- AgentKit stable `2.3.0` là fact set public mặc định.
+- Beta `2.3.1-beta.1` chỉ được chọn bằng query chính xác `?channel=beta` trên AgentKit Hub, CLI Guide, CLI Commands và Coexistence Guide. Channel sai, lặp hoặc đi ra ngoài nhóm này sẽ về stable.
+- Beta query đã publish là nội dung public early access, không phải đăng ký closed-beta hoặc quyền thực thi. Publication record được track có thể giữ beta payload trước khi review.
+- `/llms.txt` và `/llms-full.txt` chỉ xuất stable.
+- Route manifest giữ 132 identity không phụ thuộc query; query parameter không tạo route hoặc canonical identity mới.
+- `ak migrate` đã stable, nhưng VividKit hướng dẫn theo preview/smoke-first và không cung cấp apply action mặc định.
+- Ownership mixed/custom, metadata corrupt/missing, package ownership không rõ hoặc dữ liệu critical phải chuyển sang support-assisted.
+- Topology coexistence pilot duy nhất là CK global cùng AK project-local trong một project sạch, không critical.
+- Observation 3–7 ngày chỉ là operator declaration tạm thời. Static site không verify evidence, enforce thời gian hoặc authorize removal.
+- Gỡ CK theo detector-first. Ownership không rõ nghĩa là không có uninstall command.
 
-#### 1. Catalog & Discovery trực quan
-- Browse mọi agents, skills, commands qua giao diện trực quan
-- Không phải đào sâu file markdown nữa
-- Capability explorer có search + filter
+Trước khi gửi output cho support, hãy bỏ username và home path, repository remote, credential, account identifier, tên/nội dung file proprietary và raw backup manifest. Chỉ gửi version, detector classification, command category và lỗi đã redact ở mức tối thiểu cần để tái hiện.
 
-#### 2. Dashboard trực quan persistent
-- Live monitoring với graph và timeline
-- Trực quan hóa token usage qua các run
-- Metrics + xu hướng performance của agent
-- Progress tracking giữ nguyên kể cả khi đóng terminal
+Hỗ trợ:
 
-#### 3. Run History & So sánh
-- Archive toàn bộ agent execution trong quá khứ
-- So sánh side-by-side giữa các run
-- Nhận diện pattern qua nhiều session
-- Trực quan hóa execution timeline
+- [ClaudeKit Discord](https://discord.com/invite/x7SwTSf3wc)
+- [AgentKit Support](https://github.com/bestagentkits/agentkit-support)
 
-#### 4. Tương tác không cần nhớ syntax
-- Khởi chạy agent qua GUI (không phải nhớ command)
-- Cấu hình tham số trực quan
-- Build workflow theo kiểu point-and-click
+## Guides
 
-#### 5. Dễ tiếp cận cho người không chuyên
-- Giao diện thân thiện cho PM/designer
-- View read-only cho thành viên team
-- Tóm tắt trực quan capability + kết quả của agent
+| Guide | Mục đích |
+|---|---|
+| [CK → AgentKit](https://vividkit.dev/vi/guides/agentkit) | Decision router, lifecycle bảy giai đoạn, target setup, rollback và support boundary |
+| [CLI Guide](https://vividkit.dev/vi/guides/cli) | Setup và lifecycle AgentKit stable |
+| [CLI Commands](https://vividkit.dev/vi/guides/cli-commands) | Command facts chuẩn và safety metadata |
+| [Commands](https://vividkit.dev/vi/guides/commands) | Catalog skill Engineer và Marketing |
+| [Workflows](https://vividkit.dev/vi/guides/workflows) | AgentKit workflow patterns |
+| [AgentKit × Codex](https://vividkit.dev/vi/guides/ck-with-codex) | Cài cho Codex và invoke bằng `$ak:*` |
+| [Coexistence](https://vividkit.dev/vi/guides/coexistence) | Closed-beta scope boundary và recovery policy |
+| [Session Recovery](https://vividkit.dev/vi/guides/session-recovery) | Tiếp tục và khôi phục session |
 
-#### 6. Tự động cập nhật ClaudeKit Project
-- Tự sync với update mới nhất từ ClaudeKit
-- Không cần chạy `update/init` hằng ngày
-- Background updates kèm changelog notification
+## Công nghệ
 
-#### 7. Tích hợp CCS Delegation
-- Tích hợp [CCS (Claude Code Switcher)](https://github.com/kaitranntt/ccs) sẵn
-- Chuyển đổi giữa Claude, Gemini, Codex và profile AI tùy chỉnh tức thì
-- Quản lý nhiều account với visual profile selector
-- Delegate task chỉ với một click để tiết kiệm chi phí Claude API
+- Astro `6.0.2` với static output
+- TypeScript `5.9.3` ở strict mode
+- Tailwind CSS `4.1.17` và LightningCSS
+- Alpine.js `3.15.2` cùng các local controller nhỏ
+- Vercel adapter `10.0.0` và Web Analytics
+- Astro i18n với English mặc định và route Tiếng Việt `/vi`
 
-*"Sức mạnh của ClaudeKit, giờ có cả mắt."*
+## Development
 
-**[→ Tham gia Waiting List](https://vividkit.dev)**
-
----
-
-## 📚 AgentKit với Claude Code và Codex
-
-Trong lúc chờ VividKit Desktop, bạn có thể cài AgentKit, migrate project CK và học Engineer/Marketing kits:
-
-| Guide | Mô tả |
-|-------|-------|
-| [CK → AgentKit](https://vividkit.dev/vi/guides/agentkit) | Migration từng bước cho macOS, Linux, Windows, Claude Code, Codex và CI |
-| [CLI Guide](https://vividkit.dev/vi/guides) | Cài đặt và setup |
-| [Commands](https://vividkit.dev/vi/guides/commands) | Tham khảo 60+ commands |
-| [Workflows](https://vividkit.dev/vi/guides/workflows) | Best practices và patterns |
-| [CCS](https://vividkit.dev/vi/guides/ccs) | Claude Code Switcher cho multi-model delegation |
-| [UI/UX](https://vividkit.dev/vi/guides/uiux) | Skills design và styling |
-| [Resume](https://vividkit.dev/vi/guides/resume) | Khôi phục và tiếp tục session |
-| [Permissions](https://vividkit.dev/vi/guides/permissions) | Permission modes (auto, bypass, granular rules) |
-| [Fix Logs](https://vividkit.dev/vi/guides/fix-logs) | Chiến lược debug |
-
----
-
-## 🛠️ Tech Stack (Website này)
-
-- **Framework**: Astro 5.x với Static Site Generation (SSG)
-- **Styling**: Tailwind CSS v4 + design system glassmorphism tự build
-- **Type Safety**: TypeScript strict mode + path aliasing đầy đủ
-- **Interactivity**: Alpine.js 3.15.2 cho client-side interaction nhẹ
-- **i18n**: Astro i18n built-in, hỗ trợ English (mặc định) + Vietnamese
-- **Deployment**: Vercel (kèm analytics)
-- **Performance**: Sharp cho image optimization, LightningCSS cho CSS minify
-- **Design System**: Glassmorphism UI + hệ thống typography 3 font
-
-## 🤖 VividKit Maintainer Skills (`/vk:*`)
-
-Skills riêng cho repo này, dùng để giữ guides đồng bộ với upstream ClaudeKit. Gọi qua Claude Code bằng prefix `/vk:`.
-
-| Skill | Khi dùng | Lệnh ví dụ |
-|-------|----------|-----------|
-| `/vk:changelog-sync` | Phát hiện ClaudeKit changelog mới và đồng bộ Commands/Hooks/Workflows guides + i18n | `/vk:changelog-sync` |
-| `/vk:audit-ck-cli` | So sánh `claudekit-cli` upstream với CLI/Migrate guide; đề xuất update theo command (`ck migrate`, `ck init`, …) | `/vk:audit-ck-cli` hoặc `/vk:audit-ck-cli page=guides/migrate command=migrate` |
-| `/vk:audit-skill` | Audit thay đổi skill upstream ClaudeKit (so với catalog skill đang render trên site) | `/vk:audit-skill <skill-name>` |
-| `/vk:add-scenario` | Thêm scenario mới cho một ClaudeKit command vào guides | `/vk:add-scenario` |
-
-### Cách dùng nhanh
-
-1. **Quick check** — không fetch, chỉ so sánh marker hiện tại:
-   ```
-   /vk:audit-ck-cli
-   ```
-2. **Detailed report** — diff phân loại + impact map + đề xuất update:
-   ```
-   /vk:audit-ck-cli report
-   ```
-3. **Full sync** — fetch mới nhất, sinh report, update marker:
-   ```
-   /vk:audit-ck-cli sync
-   ```
-4. **Target page/command cụ thể** — truyền args dạng `page=<guide-slug> command=<ck-command>`:
-   ```
-   /vk:audit-ck-cli page=guides/migrate command=migrate
-   ```
-
-### Quy ước
-
-- **Reference repos** clone tại `reference/` (claudekit, claudekit-cli) — không commit; là source of truth khi audit.
-- **Marker files** (`reference/.last-sync*`) ghi commit SHA của lần sync gần nhất.
-- **Reports** xuất ra `reference/changelog-reports/` (skill tự tạo).
-- Skill chỉ **đề xuất** thay đổi — luôn review trước khi apply vào `src/components/guides/*` hoặc `src/data/guides/*`.
-
-Chi tiết từng skill xem `.claude/skills/vk-*/SKILL.md`.
-
----
-
-## 🧞 Lệnh Development
-
-| Lệnh | Tác dụng |
-|------|----------|
-| `npm install` | Cài đặt dependencies |
-| `npm run dev` | Chạy local dev server tại `localhost:4321` |
-| `npm run build` | Build production site sang `./dist/` |
-| `npm run preview` | Preview build local |
-
-## 📁 Cấu trúc dự án
-
+```bash
+npm install
+npm run dev
+npm run build
+npm run preview
 ```
+
+Verification tập trung:
+
+```bash
+npm run verify:agentkit
+npm run check:agentkit-content
+npm run check:legacy-archive
+```
+
+`npm run build` chạy AgentKit verification suite trước Astro và kiểm tra generated output sau build.
+
+## Cấu trúc dự án
+
+```text
 vividkit-web/
-├── src/                    # Source code
-│   ├── components/         # Astro components (UI, sections, layouts, guides)
-│   ├── layouts/           # Page layouts (MainLayout, GuidesLayout)
-│   ├── pages/             # File-based routing (English + Vietnamese)
-│   ├── data/              # Content data (guides, features, navigation)
-│   ├── i18n/              # Translation utilities (en, vi)
-│   ├── scripts/           # JavaScript utilities
-│   ├── styles/            # Global styles + design system
-│   └── types/             # TypeScript type definitions
-├── docs/                  # Documentation files
-├── public/                # Static assets
-└── dist/                  # Build output
+├── src/
+│   ├── components/          # Astro UI dùng chung và guide sections
+│   ├── data/                # Guide, channel, route và provenance facts có type
+│   ├── i18n/                # Copy English và Tiếng Việt
+│   ├── legacy-ck/           # Historical ClaudeKit source snapshot đã cô lập
+│   ├── pages/               # Static routes
+│   ├── scripts/             # Browser-side controllers
+│   └── styles/              # Tailwind và archive styles
+├── scripts/                 # Build, audit, release, LLM và archive checks
+├── tests/                   # Contract và regression tests
+├── docs/                    # Project docs và source records
+└── public/                  # Static assets
 ```
 
-## 🔗 Liên kết
+Xem [project overview](./docs/project-overview-pdr.md), [codebase summary](./docs/codebase-summary.md) và [migration validation](./docs/agentkit-migration-validation.md).
 
-- [Website VividKit](https://vividkit.dev) - Tham gia waiting list
-- [ClaudeKit CLI](https://github.com/mrgoonie/claudekit-cli) - Repo source
-- [Claude Code](https://claude.ai/code) - CLI chính thức của Anthropic
+## Liên kết
+
+- [VividKit](https://vividkit.dev)
+- [Tài liệu AgentKit](https://agentkit.best/docs)
+- [AgentKit changelog](https://agentkit.best/changelog)
+- [Claude Code](https://claude.ai/code)
 
 ---
 
-*VividKit - AI coding rõ ràng như pha lê*
+*VividKit — giúp agentic development dễ quan sát và vận hành an toàn hơn.*

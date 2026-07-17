@@ -18,9 +18,9 @@ const GENERATED_AGENTKIT_MAPPING_ALLOWLIST = GENERATED_AGENTKIT_MAPPING_FILES.fl
     file,
     detector: 'legacy-cli-command',
     pattern: '\\bck\\s+(?:new|init|update|setup|skills|agents|doctor|versions|config|migrate|uninstall)\\b',
-    maxCount: 18,
+    maxCount: 22,
     owner: 'AgentKit migration guide',
-    reason: 'The migration guide renders ten mapping rows plus eight bounded provider-inventory, dry-run, and cleanup-boundary references.',
+    reason: 'The migration guide renders ten mapping rows plus twelve bounded display/copy-payload occurrences for six preview-only lifecycle commands.',
   },
   {
     file,
@@ -50,12 +50,12 @@ export const AGENTKIT_LEGACY_ALLOWLIST = [
     reason: 'Each documented legacy CLI command appears once in the canonical mapping.',
   },
   {
-    file: 'src/data/guides/agentkit/agentkit-legacy-cleanup-facts.ts',
+    file: 'src/data/guides/agentkit/agentkit-lifecycle-guide-facts.ts',
     detector: 'legacy-cli-command',
     pattern: '\\bck\\s+(?:new|init|update|setup|skills|agents|doctor|versions|config|migrate|uninstall)\\b',
-    maxCount: 5,
+    maxCount: 6,
     owner: 'AgentKit migration guide',
-    reason: 'The typed cleanup facts contain one read-only provider inventory and four scope-specific cleanup commands; destructive apply facts remain source-record-only.',
+    reason: 'The canonical lifecycle facts contain two read-only preview commands for each supported platform; executable removal remains manual-only and package-manager-specific.',
   },
   {
     file: 'src/data/guides/agentkit/agentkit-migration-mapping.ts',

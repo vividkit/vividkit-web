@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { access, readFile, readdir } from 'node:fs/promises';
+import { access, readdir } from 'node:fs/promises';
 import { join, relative, sep } from 'node:path';
 import test from 'node:test';
 
@@ -8,10 +8,13 @@ import {
   BASELINE_ROUTE_IDENTITIES,
   GUIDE_ROUTE_MANIFEST,
   LEGACY_ARCHIVE_ROUTE_IDENTITIES,
+  llmsRouteIdentities,
   requiredBuildRouteIdentities,
   sitemapRouteIdentities,
 } from '../../src/data/guides/guide-route-manifest.ts';
 import { LEGACY_GUIDE_CATALOG } from '../../src/data/guides/legacy-guide-catalog.ts';
+import { LEGACY_ARCHIVE_PROVENANCE } from '../../src/data/guides/legacy-archive-provenance.ts';
+import { guideSections, optionalLinks } from '../../src/data/guides-llms-index.mjs';
 
 const projectRoot = new URL('../..', import.meta.url).pathname;
 
@@ -41,7 +44,7 @@ function routeFromBuiltFile(file) {
   return `/${built.replace(/\/index\.html$/, '')}`;
 }
 
-test('route manifest preserves the exact 72-page baseline and adds bilingual AgentKit routes', () => {
+test('route manifest preserves 132 required identities and query channels add no route identity', () => {
   assert.equal(BASELINE_ROUTE_IDENTITIES.length, 72);
   assert.equal(new Set(BASELINE_ROUTE_IDENTITIES).size, BASELINE_ROUTE_IDENTITIES.length);
   assert.deepEqual(AGENTKIT_ROUTE_IDENTITIES, ['/guides/agentkit', '/vi/guides/agentkit']);
@@ -53,6 +56,9 @@ test('route manifest preserves the exact 72-page baseline and adds bilingual Age
     [...manifestPaths].sort(),
     [...BASELINE_ROUTE_IDENTITIES, ...AGENTKIT_ROUTE_IDENTITIES, ...LEGACY_ARCHIVE_ROUTE_IDENTITIES].sort(),
   );
+  assert.equal(requiredBuildRouteIdentities.length, 132);
+  assert.equal(new Set(requiredBuildRouteIdentities).size, 132);
+  assert.equal(requiredBuildRouteIdentities.some((route) => route.includes('?channel=')), false);
 });
 
 test('legacy archive catalog is bilingual, excluded from sitemap/llms, and required to build', () => {
@@ -78,6 +84,7 @@ test('legacy archive catalog is bilingual, excluded from sitemap/llms, and requi
   const frozen = LEGACY_GUIDE_CATALOG.filter((entry) => entry.freezeStatus === 'isolated' || entry.freezeStatus === 'frozen').map((entry) => entry.suffix).sort();
   assert.equal(frozen.length, LEGACY_GUIDE_CATALOG.length);
   assert.equal(LEGACY_GUIDE_CATALOG.every((entry) => entry.freezeStatus === 'isolated'), true);
+  assert.deepEqual([...new Set(LEGACY_GUIDE_CATALOG.map((entry) => entry.provenanceId))], [LEGACY_ARCHIVE_PROVENANCE.id]);
   assert.ok(frozen.includes('migrate'));
   assert.ok(frozen.includes('ccs'));
   assert.ok(frozen.includes('hooks'));
@@ -127,29 +134,14 @@ test('sitemap consumer receives the exact manifest-classified route identities',
   assert.ok(sitemapRouteIdentities.includes('/vi/guides/agentkit'));
 });
 
-test('LLM full export retains the AgentKit App and legacy cleanup safety boundaries', async (context) => {
-  if (process.env.npm_lifecycle_event !== 'test:agentkit-postbuild') {
-    context.skip('postbuild-only LLM assertion');
-    return;
-  }
-  const output = join(projectRoot, 'dist', 'llms-full.txt');
-  assert.equal(await exists(output), true, 'postbuild llms-full.txt missing');
-
-  const text = await readFile(output, 'utf8');
-  assert.match(text, /Public availability is not established/);
-  assert.match(text, /CLI registry and Desktop App use separate sessions/);
-  assert.match(text, /linked release was unavailable when verified/);
-  assert.match(text, /No documented bulk cleanup for every migrated provider/);
-  assert.match(text, /Never delete an entire provider skills directory/);
-  assert.match(text, /ck uninstall does not document bulk removal there/);
-  assert.match(text, /ClaudeKit is historical context, not the current install path/);
-  assert.match(text, /One skill identity, target-correct syntax/);
-  assert.match(text, /ClaudeKit was the original toolkit/);
-
-  const primerStart = text.indexOf('## What is ClaudeKit? From CK to AgentKit');
-  const primerEnd = text.indexOf('\n## ', primerStart + 3);
-  assert.notEqual(primerStart, -1, 'what-is-claudekit LLM section missing');
-  const primer = text.slice(primerStart, primerEnd === -1 ? undefined : primerEnd);
-  assert.doesNotMatch(primer, /(?:\/|\$)(?:ck|ckm):/i);
-  assert.doesNotMatch(primer, /\bck\s+(?:new|init|update|setup|skills|agents|doctor|versions|config|migrate|uninstall)\b/i);
+test('LLM index paths exactly match manifest-classified English identities', () => {
+  const indexedPaths = [
+    ...guideSections.flatMap(({ links }) => links.map(({ path }) => path)),
+    ...optionalLinks.map(({ path }) => path),
+  ];
+  assert.equal(new Set(indexedPaths).size, indexedPaths.length);
+  assert.deepEqual(
+    [...indexedPaths].sort(),
+    llmsRouteIdentities.filter((route) => !route.startsWith('/vi/')).sort(),
+  );
 });

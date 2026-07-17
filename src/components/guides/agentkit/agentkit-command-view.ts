@@ -1,5 +1,5 @@
 import type { AgentKitCliFact } from '@/data/guides/agentkit/agentkit-source-contract';
-import type { AgentKitMigrationOperationalFact } from '@/data/guides/agentkit/agentkit-migration-operational-facts';
+import type { AgentKitLifecycleCommandFact } from '@/data/guides/agentkit/agentkit-lifecycle-policy';
 
 export type AgentKitPlatform = 'macos' | 'linux' | 'windows';
 export type AgentKitShell = 'zsh' | 'bash' | 'powershell';
@@ -58,16 +58,16 @@ export function viewsForPlatforms(
   ];
 }
 
-export function toOperationalCommandView(
-  fact: AgentKitMigrationOperationalFact,
+export function toLifecycleCommandView(
+  fact: AgentKitLifecycleCommandFact,
 ): AgentKitCommandView {
   return {
-    id: fact.id,
+    id: `${fact.id}-${fact.platform}`,
     platform: fact.platform,
     shell: fact.shell,
     display: fact.command,
     copyPayload: fact.command,
-    copyable: fact.copyable && fact.copyGate === 'safe',
+    copyable: fact.copyable && fact.safety === 'read-only',
     safety: fact.safety,
     sourceUrl: fact.sourceUrl,
   };

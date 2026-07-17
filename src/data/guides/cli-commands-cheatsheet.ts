@@ -1,5 +1,10 @@
+import {
+  getAgentKitCliFactsByChannel,
+} from './agentkit/agentkit-cli-facts.ts';
+import type { AgentKitCliReleaseChannel } from './agentkit/agentkit-source-contract.ts';
+
 export type CliCommandCategory = 'setup' | 'management' | 'distribution' | 'workflow' | 'integration';
-export type CliReleaseChannel = 'stable' | 'beta';
+export type CliReleaseChannel = AgentKitCliReleaseChannel;
 
 export interface CliCommand {
   id: string;
@@ -12,165 +17,57 @@ export interface CliCommand {
   verifiedAt: string;
   mutatesDisk: boolean;
   previewDefault?: boolean;
-  keyFlags?: string[];
+  keyFlags: string[];
   subcommands?: string[];
-  example?: string;
+  example: string;
 }
 
-const SOURCE_URL = 'https://agentkit.best/docs';
-const VERIFIED_AT = '2026-07-13';
+interface CliCommandPresentation {
+  id: string;
+  description: string;
+  descriptionVi: string;
+  category: CliCommandCategory;
+  subcommands?: string[];
+}
 
-export const cliCommandsCheatsheet: CliCommand[] = [
-  {
-    id: 'new',
-    name: 'ak new',
-    description: 'Bootstrap a new AgentKit-managed project.',
-    descriptionVi: 'Khởi tạo dự án mới do AgentKit quản lý.',
-    category: 'setup', channel: 'stable', sourceUrl: SOURCE_URL, verifiedAt: VERIFIED_AT, mutatesDisk: true,
-    example: 'ak new',
-  },
-  {
-    id: 'init',
-    name: 'ak init',
-    description: 'Initialize AgentKit in the current project.',
-    descriptionVi: 'Khởi tạo AgentKit trong dự án hiện tại.',
-    category: 'setup', channel: 'stable', sourceUrl: SOURCE_URL, verifiedAt: VERIFIED_AT, mutatesDisk: true,
-    example: 'ak init',
-  },
-  {
-    id: 'setup',
-    name: 'ak setup',
-    description: 'Run the guided first-time AgentKit setup.',
-    descriptionVi: 'Chạy hướng dẫn thiết lập AgentKit lần đầu.',
-    category: 'setup', channel: 'stable', sourceUrl: SOURCE_URL, verifiedAt: VERIFIED_AT, mutatesDisk: true,
-    example: 'ak setup',
-  },
-  {
-    id: 'login',
-    name: 'ak login',
-    description: 'Open a CLI session with email OTP or API key. Use --license-key only for Desktop App device activation.',
-    descriptionVi: 'Mở CLI session bằng email OTP hoặc API key. Chỉ dùng --license-key để kích hoạt thiết bị Desktop App.',
-    category: 'setup', channel: 'stable', sourceUrl: SOURCE_URL, verifiedAt: VERIFIED_AT, mutatesDisk: true,
-    keyFlags: ['--email <email>', '--api-key <key>', '--license-key <key>', '--no-interactive'],
-    example: 'ak login --email you@example.com',
-  },
-  {
-    id: 'doctor',
-    name: 'ak doctor',
-    description: 'Check the AgentKit installation, targets, and PATH collisions.',
-    descriptionVi: 'Kiểm tra cài đặt AgentKit, target và xung đột PATH.',
-    category: 'management', channel: 'stable', sourceUrl: SOURCE_URL, verifiedAt: VERIFIED_AT, mutatesDisk: false,
-    keyFlags: ['--check <name>', '--json'],
-    example: 'ak doctor',
-  },
-  {
-    id: 'self-update',
-    name: 'ak self-update',
-    description: 'Update the signed AgentKit CLI binary.',
-    descriptionVi: 'Cập nhật binary AgentKit CLI đã ký.',
-    category: 'management', channel: 'stable', sourceUrl: SOURCE_URL, verifiedAt: VERIFIED_AT, mutatesDisk: true,
-    keyFlags: ['--check', '--dry-run', '--channel <stable|beta|dev>', '--yes'],
-    example: 'ak self-update --check',
-  },
-  {
-    id: 'update',
-    name: 'ak update',
-    description: 'Preview or apply updates to AgentKit-owned project files.',
-    descriptionVi: 'Xem trước hoặc áp dụng cập nhật cho file dự án do AgentKit quản lý.',
-    category: 'management', channel: 'stable', sourceUrl: SOURCE_URL, verifiedAt: VERIFIED_AT, mutatesDisk: true, previewDefault: true,
-    keyFlags: ['--dry-run', '--show-diff', '--force', '--yes'],
-    example: 'ak update --dry-run',
-  },
-  {
-    id: 'config',
-    name: 'ak config',
-    description: 'Open the local AgentKit configuration dashboard.',
-    descriptionVi: 'Mở dashboard cấu hình AgentKit local.',
-    category: 'management', channel: 'stable', sourceUrl: SOURCE_URL, verifiedAt: VERIFIED_AT, mutatesDisk: false,
-    example: 'ak config',
-  },
-  {
-    id: 'versions',
-    name: 'ak versions',
-    description: 'List local AgentKit, kit, and skill versions.',
-    descriptionVi: 'Liệt kê phiên bản AgentKit, kit và skill local.',
-    category: 'management', channel: 'stable', sourceUrl: SOURCE_URL, verifiedAt: VERIFIED_AT, mutatesDisk: false,
-    example: 'ak versions',
-  },
-  {
-    id: 'uninstall',
-    name: 'ak uninstall',
-    description: 'Preview removal of AgentKit-owned project files.',
-    descriptionVi: 'Xem trước việc gỡ file dự án do AgentKit quản lý.',
-    category: 'management', channel: 'stable', sourceUrl: SOURCE_URL, verifiedAt: VERIFIED_AT, mutatesDisk: true, previewDefault: true,
-    keyFlags: ['--dry-run', '--yes'],
-    example: 'ak uninstall --dry-run',
-  },
-  {
-    id: 'kit',
-    name: 'ak kit',
-    description: 'Install, inspect, refresh, validate, or remove AgentKit kits.',
-    descriptionVi: 'Cài, kiểm tra, refresh, validate hoặc gỡ AgentKit kit.',
-    category: 'distribution', channel: 'stable', sourceUrl: SOURCE_URL, verifiedAt: VERIFIED_AT, mutatesDisk: true,
-    subcommands: ['init', 'install', 'list-kits', 'refresh', 'validate', 'uninstall'],
-    keyFlags: ['--target <claude-code|codex>', '--global', '--skills <ids>', '--exclude-skills <ids>', '--dry-run'],
-    example: 'ak kit init engineer --target claude-code --global',
-  },
-  {
-    id: 'skills',
-    name: 'ak skills',
-    description: 'Browse and manage installed kit skills.',
-    descriptionVi: 'Duyệt và quản lý các skill đã cài từ kit.',
-    category: 'distribution', channel: 'stable', sourceUrl: SOURCE_URL, verifiedAt: VERIFIED_AT, mutatesDisk: false,
-    example: 'ak skills',
-  },
-  {
-    id: 'agents',
-    name: 'ak agents',
-    description: 'Inspect and manage AgentKit agents.',
-    descriptionVi: 'Kiểm tra và quản lý AgentKit agents.',
-    category: 'distribution', channel: 'stable', sourceUrl: SOURCE_URL, verifiedAt: VERIFIED_AT, mutatesDisk: false,
-    example: 'ak agents',
-  },
-  {
-    id: 'plan',
-    name: 'ak plan',
-    description: 'Create and track implementation plan directories and phases.',
-    descriptionVi: 'Tạo và theo dõi thư mục plan cùng các phase triển khai.',
-    category: 'workflow', channel: 'stable', sourceUrl: SOURCE_URL, verifiedAt: VERIFIED_AT, mutatesDisk: true,
-    subcommands: ['create', 'add-phase', 'status', 'check', 'uncheck'],
-    example: 'ak plan status ./plans/my-plan',
-  },
-  {
-    id: 'audit',
-    name: 'ak audit',
-    description: 'Inspect installed kits for drift.',
-    descriptionVi: 'Kiểm tra drift trong các kit đã cài.',
-    category: 'workflow', channel: 'stable', sourceUrl: SOURCE_URL, verifiedAt: VERIFIED_AT, mutatesDisk: false,
-    example: 'ak audit',
-  },
-  {
-    id: 'gui',
-    name: 'ak gui',
-    description: 'Open the AgentKit desktop interface.',
-    descriptionVi: 'Mở giao diện desktop AgentKit.',
-    category: 'integration', channel: 'stable', sourceUrl: SOURCE_URL, verifiedAt: VERIFIED_AT, mutatesDisk: false,
-    example: 'ak gui',
-  },
-  {
-    id: 'whoami',
-    name: 'ak whoami',
-    description: 'Show the current account and licensed kits.',
-    descriptionVi: 'Hiển thị tài khoản hiện tại và các kit đã cấp phép.',
-    category: 'integration', channel: 'stable', sourceUrl: SOURCE_URL, verifiedAt: VERIFIED_AT, mutatesDisk: false,
-    example: 'ak whoami',
-  },
-  {
-    id: 'licenses',
-    name: 'ak licenses',
-    description: 'Show available AgentKit entitlements.',
-    descriptionVi: 'Hiển thị các entitlement AgentKit hiện có.',
-    category: 'integration', channel: 'stable', sourceUrl: SOURCE_URL, verifiedAt: VERIFIED_AT, mutatesDisk: false,
-    example: 'ak licenses',
-  },
-];
+const CLI_COMMAND_PRESENTATION = [
+  { id: 'new', description: 'Bootstrap a new AgentKit-managed project.', descriptionVi: 'Khởi tạo dự án mới do AgentKit quản lý.', category: 'setup' },
+  { id: 'init', description: 'Initialize AgentKit in the current project.', descriptionVi: 'Khởi tạo AgentKit trong dự án hiện tại.', category: 'setup' },
+  { id: 'setup', description: 'Run the guided first-time AgentKit setup.', descriptionVi: 'Chạy hướng dẫn thiết lập AgentKit lần đầu.', category: 'setup' },
+  { id: 'login-email', description: 'Open a local CLI session with email OTP.', descriptionVi: 'Mở CLI session local bằng email OTP.', category: 'setup' },
+  { id: 'doctor', description: 'Check the AgentKit installation, targets, and PATH collisions.', descriptionVi: 'Kiểm tra cài đặt AgentKit, target và xung đột PATH.', category: 'management' },
+  { id: 'self-update', description: 'Check or update the AgentKit CLI binary.', descriptionVi: 'Kiểm tra hoặc cập nhật AgentKit CLI binary.', category: 'management' },
+  { id: 'update', description: 'Preview or apply updates to AgentKit-owned project files.', descriptionVi: 'Xem trước hoặc áp dụng cập nhật cho file dự án do AgentKit quản lý.', category: 'management' },
+  { id: 'config', description: 'Open the local AgentKit configuration dashboard.', descriptionVi: 'Mở dashboard cấu hình AgentKit local.', category: 'management' },
+  { id: 'versions', description: 'List local AgentKit, kit, and skill versions.', descriptionVi: 'Liệt kê phiên bản AgentKit, kit và skill local.', category: 'management' },
+  { id: 'uninstall', description: 'Preview removal of AgentKit-owned project files.', descriptionVi: 'Xem trước việc gỡ file dự án do AgentKit quản lý.', category: 'management' },
+  { id: 'kit-init', description: 'Initialize an AgentKit kit for an explicit target.', descriptionVi: 'Khởi tạo AgentKit kit cho target được chỉ định.', category: 'distribution', subcommands: ['init'] },
+  { id: 'skills', description: 'Browse installed kit skills.', descriptionVi: 'Duyệt các skill từ kit đã cài.', category: 'distribution' },
+  { id: 'agents', description: 'Inspect installed AgentKit agents.', descriptionVi: 'Kiểm tra AgentKit agents đã cài.', category: 'distribution' },
+  { id: 'migrate', description: 'Preview CK-to-AK migration; important-data apply remains support-assisted.', descriptionVi: 'Preview migration CK sang AK; apply dữ liệu quan trọng vẫn cần support.', category: 'workflow' },
+  { id: 'audit', description: 'Inspect installed kits for drift.', descriptionVi: 'Kiểm tra drift trong các kit đã cài.', category: 'workflow' },
+  { id: 'gui', description: 'Open the AgentKit desktop interface.', descriptionVi: 'Mở giao diện desktop AgentKit.', category: 'integration' },
+  { id: 'whoami', description: 'Show the current CLI account.', descriptionVi: 'Hiển thị tài khoản CLI hiện tại.', category: 'integration' },
+  { id: 'licenses', description: 'Show available AgentKit entitlements.', descriptionVi: 'Hiển thị các entitlement AgentKit hiện có.', category: 'integration' },
+] as const satisfies readonly CliCommandPresentation[];
+
+export function getCliCommandsCheatsheet(channel: CliReleaseChannel): CliCommand[] {
+  const facts = new Map(getAgentKitCliFactsByChannel(channel).map((fact) => [fact.id, fact]));
+  return CLI_COMMAND_PRESENTATION.flatMap((presentation) => {
+    const fact = facts.get(presentation.id);
+    if (!fact) return [];
+    return [{
+      ...presentation,
+      name: fact.command,
+      channel: fact.channel,
+      sourceUrl: fact.sourceUrl,
+      verifiedAt: fact.verifiedAt,
+      mutatesDisk: fact.mutatesDisk,
+      previewDefault: fact.previewDefault,
+      keyFlags: [...fact.flags],
+      example: fact.command,
+    }];
+  });
+}
+
+export const cliCommandsCheatsheet = getCliCommandsCheatsheet('stable');

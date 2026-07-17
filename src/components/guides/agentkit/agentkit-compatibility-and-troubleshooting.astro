@@ -4,7 +4,6 @@ import { ArrowUpRight, KeyRound, RotateCcw, Route, ShieldAlert, Workflow } from 
 import type { Language } from '@/i18n';
 import { useTranslations } from '@/i18n/utils';
 import { getAgentKitCliFact } from '@/data/guides/agentkit/agentkit-cli-facts';
-import { getMigrationOperationalFact } from '@/data/guides/agentkit/agentkit-migration-operational-facts';
 import { inlineCodeClass, renderInlineCode } from './inline-code';
 
 interface Props {
@@ -14,11 +13,10 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 const prefix = lang === 'vi' ? '/vi' : '';
-const collisionCommand = getMigrationOperationalFact('collision-check', 'macos')?.command;
 const licensesCommand = getAgentKitCliFact('licenses')?.command;
 
 const topics = [
-  { id: 'shim', icon: Route, title: t('agentkit.compat.shim.title'), body: t('agentkit.compat.shim.body'), code: collisionCommand },
+  { id: 'shim', icon: Route, title: t('agentkit.compat.shim.title'), body: t('agentkit.compat.shim.body'), code: undefined },
   { id: 'path', icon: Route, title: t('agentkit.compat.path.title'), body: t('agentkit.compat.path.body'), code: 'PATH' },
   { id: 'auth', icon: KeyRound, title: t('agentkit.compat.auth.title'), body: t('agentkit.compat.auth.body'), code: licensesCommand },
   { id: 'checksum', icon: ShieldAlert, title: t('agentkit.compat.checksum.title'), body: t('agentkit.compat.checksum.body'), code: undefined },

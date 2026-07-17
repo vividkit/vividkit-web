@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "status": "approved",
+  "approvedAt": "2026-07-17T02:25:25+07:00",
+  "approvalSourceSha256": "16c117d15e4e3daf1409d8eb70ba850e932da97fc7eadcb760a8ff1d5ec0d69f",
+  "decisionPayloadSha256": "99d58124d3b15654b8800ad5f4c67fc163d82a4b0c54d107bee1ccf57f7cf968",
+  "decisions": [
+    {
+      "id": "O1-CHANNEL-SCOPE",
+      "status": "approved",
+      "betaQuerySurfaces": [
+        "agentkit-hub",
+        "cli-guide",
+        "cli-commands",
+        "coexistence-guide"
+      ],
+      "persistence": "bounded-group-only",
+      "outsideGroup": "drop"
+    },
+    {
+      "id": "O2-LLM-EXPORT",
+      "status": "approved",
+      "llmArtifacts": [
+        "llms.txt",
+        "llms-full.txt"
+      ],
+      "channel": "stable",
+      "betaArtifact": false
+    },
+    {
+      "id": "O3-SKILL-OWNERSHIP",
+      "status": "approved",
+      "visibility": "personal-private",
+      "duration": "through-pilot",
+      "canonicalRepository": "thieung-os",
+      "linkScope": "project-local-only",
+      "publicTeamFeature": false
+    },
+    {
+      "id": "O4-LEGACY-SKILLS",
+      "status": "approved",
+      "action": "deactivate-unlink",
+      "legacySkillCount": 6,
+      "moveOrDelete": false,
+      "archiveMetadataSkills": [
+        "vk-add-scenario",
+        "vk-audit-ck-cli",
+        "vk-audit-ck-hooks",
+        "vk-audit-skill",
+        "vk-changelog-sync"
+      ],
+      "cleanRoomBacklogSkills": [
+        "vk-audit-ccs"
+      ]
+    }
+  ]
+}

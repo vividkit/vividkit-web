@@ -52,6 +52,80 @@ test('active AgentKit prose rejects legacy install, CLI, and slash recommendatio
   assert.deepEqual(diagnostics.map(({ line }) => line), [1, 2, 3, 3]);
 });
 
+test('public lifecycle docs reject stale route, version, journey, coexistence and local-skill claims', () => {
+  const diagnostics = scanText({
+    file: 'README.md',
+    mode: 'public-docs',
+    text: [
+      'Follow the 10-step migration.',
+      'Verified against AgentKit 2.1.0.',
+      'The migration still covers 74 pages.',
+      'Stage ak alongside ck in the same scope.',
+      'Run /vk:any-local-command as a team feature.',
+      'Primary workflow: .Codex/workflows/primary-workflow.md',
+    ].join('\n'),
+    allowlist: [],
+  });
+  assert.deepEqual(diagnostics.map(({ detector }) => detector), [
+    'stale-ten-step',
+    'stale-agentkit-version',
+    'stale-route-count',
+    'stale-broad-coexistence',
+    'local-maintainer-skill-claim',
+    'dangling-governance-workflow',
+  ]);
+});
+
+test('public docs reject default apply and unconditional global install or removal commands', () => {
+  const diagnostics = scanText({
+    file: 'docs/project-overview-pdr.md',
+    mode: 'public-docs',
+    text: [
+      'Run ak migrate --apply.',
+      'npm uninstall -g claudekit-cli',
+      'npm install -g agentkit-cli',
+    ].join('\n'),
+    allowlist: [],
+  });
+  assert.deepEqual(diagnostics.map(({ detector }) => detector), [
+    'default-migrate-apply',
+    'unconditional-legacy-npm-uninstall',
+    'unconditional-agentkit-global-install',
+  ]);
+});
+
+test('English and Vietnamese READMEs preserve lifecycle, channel, route and support parity', async () => {
+  const [english, vietnamese] = await Promise.all([
+    readFile(new URL('../../README.md', import.meta.url), 'utf8'),
+    readFile(new URL('../../README.vi.md', import.meta.url), 'utf8'),
+  ]);
+  for (const text of [english, vietnamese]) {
+    for (const invariant of [
+      '2.3.0',
+      '2.3.1-beta.1',
+      '?channel=beta',
+      '/llms.txt',
+      '/llms-full.txt',
+      '132',
+      'https://discord.com/invite/x7SwTSf3wc',
+      'https://github.com/bestagentkits/agentkit-support',
+    ]) assert.ok(text.includes(invariant), invariant);
+    const lifecycleLine = text.split('\n').find((line) => /seven-stage CK|Lifecycle CK/.test(line));
+    assert.equal(lifecycleLine?.split(':').at(-1).split('→').length, 7);
+  }
+});
+
+test('release docs describe the observed offline snapshot without stale pre-commit status', async () => {
+  const [validation, pdr] = await Promise.all([
+    readFile(new URL('../../docs/agentkit-migration-validation.md', import.meta.url), 'utf8'),
+    readFile(new URL('../../docs/project-overview-pdr.md', import.meta.url), 'utf8'),
+  ]);
+  assert.doesNotMatch(validation, /authority was explicitly withheld|has an uncommitted implementation delta/i);
+  assert.doesNotMatch(pdr, /unpopulated Phase 8 result schema/i);
+  assert.match(validation, /pre-commit offline validation snapshot/i);
+  assert.match(pdr, /observed offline snapshot/i);
+});
+
 test('bounded exact allowlist permits only intentional migration mapping occurrences', () => {
   validateAllowlist(AGENTKIT_LEGACY_ALLOWLIST);
   const text = [
@@ -271,8 +345,39 @@ test('normal build cannot bypass source or generated-artifact audits', async () 
   assert.match(packageJson.scripts['verify:agentkit'], /check:agentkit-content/);
   assert.match(packageJson.scripts['verify:agentkit'], /check:agentkit-types/);
   assert.match(packageJson.scripts['verify:agentkit'], /test:agentkit-content/);
-  assert.match(packageJson.scripts.postbuild, /check-agentkit-content\.mjs --postbuild && npm run test:agentkit-postbuild$/);
+  assert.match(packageJson.scripts['verify:agentkit'], /check:legacy-archive/);
+  assert.match(packageJson.scripts.postbuild, /check-agentkit-content\.mjs --postbuild && npm run test:agentkit-postbuild/);
+  assert.match(packageJson.scripts.postbuild, /check-agentkit-dist-channel-isolation\.mjs/);
+  assert.match(packageJson.scripts.postbuild, /check-legacy-archive-boundary\.mjs --postbuild --check$/);
   assert.equal(packageJson.scripts['check:agentkit-content'], 'node scripts/check-agentkit-content.mjs');
   assert.equal(packageJson.scripts['test:agentkit-content'], 'node --test tests/**/*.test.mjs');
-  assert.equal(packageJson.scripts['test:agentkit-postbuild'], 'node --test tests/content/guide-route-manifest.test.mjs');
+  assert.equal(
+    packageJson.scripts['test:agentkit-postbuild'],
+    'node --test tests/content/guide-route-manifest.test.mjs tests/content/agentkit-llm-export.test.mjs',
+  );
+  assert.doesNotMatch(packageJson.scripts.build, /release-drift/);
+  assert.doesNotMatch(packageJson.scripts.postbuild, /release-drift/);
+  assert.doesNotMatch(packageJson.scripts['verify:agentkit'], /release-drift/);
+});
+
+test('active lifecycle UI rejects stale promises and gates exact removal details', async () => {
+  const files = [
+    '../../src/i18n/en/agentkit.ts',
+    '../../src/i18n/vi/agentkit.ts',
+    '../../src/components/guides/AgentKitGuide.astro',
+    '../../src/components/guides/agentkit/agentkit-hero-and-path-selector.astro',
+    '../../src/components/guides/agentkit/agentkit-migration-checklist.astro',
+    '../../src/components/guides/agentkit/agentkit-legacy-skill-cleanup.astro',
+    '../../src/scripts/agentkit-lifecycle-guide-controller.ts',
+  ];
+  const text = (await Promise.all(files.map((file) => readFile(new URL(file, import.meta.url), 'utf8')))).join('\n');
+
+  assert.doesNotMatch(text, /stage `?ak`? beside `?ck`?/i);
+  assert.doesNotMatch(text, /stage `?ak`? song song/i);
+  assert.doesNotMatch(text, /10-step|10 bước/i);
+  assert.doesNotMatch(text, /doctor green.*(?:safe|correct)/i);
+  assert.doesNotMatch(text, /migrate.*apply by default/i);
+  assert.match(text, /data-agentkit-removal-details hidden/);
+  assert.match(text, /result\.supportLevel !== 'self-service'/);
+  assert.match(text, /data-agentkit-stage-seven-unavailable/);
 });

@@ -8,13 +8,23 @@ import { fileURLToPath } from 'node:url';
 import { AGENTKIT_LEGACY_ALLOWLIST } from '../tests/content/agentkit-legacy-allowlist.mjs';
 
 const SCRIPT_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const SOURCE_INCLUDES = ['src', 'README.md', 'README.vi.md', 'docs'];
+const SOURCE_INCLUDES = ['src', 'README.md', 'README.vi.md', 'AGENTS.md', 'CLAUDE.md', 'docs'];
 const POSTBUILD_INCLUDES = ['dist', '.vercel/output/static'];
 const SCANNABLE_SOURCE_EXTENSIONS = new Set([
   '.astro', '.cjs', '.html', '.js', '.json', '.jsx', '.md', '.mdx', '.mjs', '.ts', '.tsx', '.txt', '.xml',
 ]);
 const SCANNABLE_GENERATED_EXTENSIONS = new Set(['.html', '.json', '.map', '.txt', '.xml']);
 const EXCLUDED_SEGMENTS = new Set(['.git', '.astro', 'archive', 'node_modules', 'plans', 'reference']);
+const CURRENT_PUBLIC_DOCS = new Set([
+  'README.md',
+  'README.vi.md',
+  'AGENTS.md',
+  'CLAUDE.md',
+  'docs/project-overview-pdr.md',
+  'docs/codebase-summary.md',
+  'docs/agentkit-migration-validation.md',
+  'docs/agentkit-legacy-skill-cleanup-source-record.md',
+]);
 
 export const CONTENT_DETECTORS = [
   {
@@ -42,39 +52,93 @@ export const CONTENT_DETECTORS = [
     pattern: /\$(?:ck|ckm):(?:[a-z][a-z0-9-]*|\*)/gi,
   },
   {
+    id: 'stale-ten-step',
+    category: 'stale-doc-claim',
+    modes: ['public-docs'],
+    pattern: /\b(?:10-step|10 step|ten-step|ten ordered stages|10 bước)\b/gi,
+  },
+  {
+    id: 'stale-agentkit-version',
+    category: 'stale-doc-claim',
+    modes: ['public-docs'],
+    pattern: /\b(?:AgentKit|ak)(?: CLI)?(?: v| )?2\.1\.0\b/gi,
+  },
+  {
+    id: 'stale-route-count',
+    category: 'stale-doc-claim',
+    modes: ['public-docs'],
+    pattern: /\b(?:74-route|74 routes?|74 pages?|74-page|74 trang|72-route baseline)\b/gi,
+  },
+  {
+    id: 'stale-broad-coexistence',
+    category: 'stale-doc-claim',
+    modes: ['public-docs'],
+    pattern: /\b(?:stage|run)?\s*`?(?:ak|AgentKit)`?\s+(?:alongside|beside|side-by-side with|song song (?:với|cùng))\s+`?(?:ck|ClaudeKit)`?(?:\s+in the same scope)?/gi,
+  },
+  {
+    id: 'local-maintainer-skill-claim',
+    category: 'stale-doc-claim',
+    modes: ['public-docs'],
+    pattern: /\/(?:project:)?vk:(?:[a-z][a-z0-9-]*|\*)/gi,
+  },
+  {
+    id: 'dangling-governance-workflow',
+    category: 'stale-doc-claim',
+    modes: ['public-docs'],
+    pattern: /\.(?:Codex|claude)\/workflows\//g,
+  },
+  {
+    id: 'default-migrate-apply',
+    category: 'stale-doc-claim',
+    modes: ['public-docs'],
+    pattern: /\bak\s+migrate\s+--apply\b|\bmigrate[^\n]{0,40}\bapply by default\b/gi,
+  },
+  {
+    id: 'unconditional-legacy-npm-uninstall',
+    category: 'stale-doc-claim',
+    modes: ['public-docs'],
+    pattern: /\bnpm\s+uninstall\s+-g\s+claudekit-cli\b/gi,
+  },
+  {
+    id: 'unconditional-agentkit-global-install',
+    category: 'stale-doc-claim',
+    modes: ['public-docs'],
+    pattern: /\b(?:npm|pnpm|yarn|bun)\s+(?:install|add)\s+(?:--global|-g)\s+[^\n]*agentkit[^\n]*/gi,
+  },
+  {
     id: 'github-token',
     category: 'credential',
-    modes: ['agentkit-active', 'legacy-backlog'],
+    modes: ['agentkit-active', 'legacy-backlog', 'public-docs'],
     pattern: /gh[pousr]_[A-Za-z0-9]{36,}/g,
   },
   {
     id: 'openai-token',
     category: 'credential',
-    modes: ['agentkit-active', 'legacy-backlog'],
+    modes: ['agentkit-active', 'legacy-backlog', 'public-docs'],
     pattern: /sk-[A-Za-z0-9]{24,}/g,
   },
   {
     id: 'google-api-key',
     category: 'credential',
-    modes: ['agentkit-active', 'legacy-backlog'],
+    modes: ['agentkit-active', 'legacy-backlog', 'public-docs'],
     pattern: /AIza[0-9A-Za-z_-]{35}/g,
   },
   {
     id: 'aws-access-key',
     category: 'credential',
-    modes: ['agentkit-active', 'legacy-backlog'],
+    modes: ['agentkit-active', 'legacy-backlog', 'public-docs'],
     pattern: /AKIA[0-9A-Z]{16}/g,
   },
   {
     id: 'agentkit-credential',
     category: 'credential',
-    modes: ['agentkit-active', 'legacy-backlog'],
+    modes: ['agentkit-active', 'legacy-backlog', 'public-docs'],
     pattern: /ak_(?:license|live)_[A-Za-z0-9_-]{16,}/g,
   },
   {
     id: 'private-key',
     category: 'credential',
-    modes: ['agentkit-active', 'legacy-backlog'],
+    modes: ['agentkit-active', 'legacy-backlog', 'public-docs'],
     pattern: /-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/g,
   },
 ];
@@ -102,6 +166,7 @@ function isExcludedSourcePath(path) {
 }
 
 function sourceMode(file) {
+  if (CURRENT_PUBLIC_DOCS.has(file)) return 'public-docs';
   return (
     file.startsWith('src/data/guides/agentkit/')
     || file.startsWith('src/components/guides/agentkit/')

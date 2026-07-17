@@ -1,85 +1,22 @@
 ---
-import { CheckCircle2 } from 'lucide-astro';
+import { AlertTriangle, CircleDashed, ShieldCheck } from 'lucide-astro';
 
 import type { Language } from '@/i18n';
 import { useTranslations } from '@/i18n/utils';
-import type { AgentKitCliFact } from '@/data/guides/agentkit/agentkit-source-contract';
-import type { AgentKitMigrationOperationalFact } from '@/data/guides/agentkit/agentkit-migration-operational-facts';
-import type { AgentKitCommandGroupView } from './agentkit-command-view';
-import { toOperationalCommandView, viewsForPlatforms } from './agentkit-command-view';
+import {
+  AGENTKIT_LIFECYCLE_COMMANDS,
+  AGENTKIT_LIFECYCLE_STAGE_FACTS,
+} from '@/data/guides/agentkit/agentkit-lifecycle-policy';
+import { toLifecycleCommandView } from './agentkit-command-view';
 import AgentKitPlatformCommandSwitcher from './agentkit-platform-command-switcher.astro';
 import { renderInlineCode } from './inline-code';
 
 interface Props {
   lang: Language;
-  cliFacts: readonly AgentKitCliFact[];
-  operationalFacts: readonly AgentKitMigrationOperationalFact[];
 }
 
-const { lang, cliFacts, operationalFacts } = Astro.props;
+const { lang } = Astro.props;
 const t = useTranslations(lang);
-const factsById = new Map(cliFacts.filter((fact) => fact.channel === 'stable').map((fact) => [fact.id, fact]));
-
-function commonPlatformViews(ids: string[]) {
-  return ids.flatMap((id) => {
-    const fact = factsById.get(id);
-    return fact ? viewsForPlatforms(fact) : [];
-  });
-}
-
-const commandGroups: AgentKitCommandGroupView[] = [];
-for (const [id, stage] of [['preflight', 'preflight']] as const) {
-  const commands = operationalFacts
-    .filter((fact) => fact.channel === 'stable' && fact.stage === stage)
-    .map(toOperationalCommandView);
-  if (commands.length > 0) commandGroups.push({ id, commands });
-}
-
-const cleanupStageOrder: readonly AgentKitMigrationOperationalFact['stage'][] = [
-  'legacy-removal',
-  'collision-check',
-];
-const cleanupCommands = cleanupStageOrder.flatMap((stage) => operationalFacts
-  .filter((fact) => fact.channel === 'stable' && fact.stage === stage)
-  .map(toOperationalCommandView));
-if (cleanupCommands.length > 0) commandGroups.push({ id: 'cleanup', commands: cleanupCommands });
-
-const installUnix = factsById.get('install-unix');
-const installWindows = factsById.get('install-windows');
-if (installUnix && installWindows) {
-  commandGroups.push({ id: 'install', commands: viewsForPlatforms(installUnix, installWindows) });
-}
-
-const verifyCommands = operationalFacts
-  .filter((fact) => fact.channel === 'stable' && fact.stage === 'verify-install')
-  .map(toOperationalCommandView);
-const doctor = factsById.get('doctor');
-if (doctor) verifyCommands.push(...viewsForPlatforms(doctor));
-if (verifyCommands.length > 0) commandGroups.push({ id: 'verify', commands: verifyCommands });
-
-for (const [id, factIds] of [
-  ['auth', ['login-email', 'login-api-key', 'login-license', 'whoami', 'licenses']],
-] as const) {
-  const commands = commonPlatformViews([...factIds]);
-  if (commands.length > 0) commandGroups.push({ id, commands });
-}
-
-const steps = [
-  { number: '01', id: 'step-01-choose-lane', commandGroup: undefined },
-  { number: '02', id: 'step-02-understand-boundary', commandGroup: undefined },
-  { number: '03', id: 'step-03-inventory', commandGroup: 'preflight' },
-  { number: '04', id: 'step-04-stage-ak', commandGroup: 'install' },
-  { number: '05', id: 'step-05-verify', commandGroup: 'verify' },
-  { number: '06', id: 'step-06-authenticate', commandGroup: 'auth' },
-  { number: '07', id: 'step-07-install-kit', commandGroup: undefined },
-  { number: '08', id: 'step-08-translate', commandGroup: undefined },
-  { number: '09', id: 'step-09-verify-targets', commandGroup: undefined },
-  { number: '10', id: 'step-10-clean-up', commandGroup: 'cleanup' },
-] as const;
-
-function commandsFor(groupId: string | undefined): AgentKitCommandGroupView | undefined {
-  return groupId ? commandGroups.find((group) => group.id === groupId) : undefined;
-}
 ---
 
 <section id="migration-journey" aria-labelledby="migration-journey-heading" class="scroll-mt-28 pt-16">
@@ -92,51 +29,103 @@ function commandsFor(groupId: string | undefined): AgentKitCommandGroupView | un
     </p>
   </div>
 
-  <ol class="mt-8 border-y border-slate-200 dark:border-slate-800">
-    {steps.map((step, index) => {
-      const group = commandsFor(step.commandGroup);
-      const isRemoval = step.number === '10';
+  <ol class="mt-8 border-y border-slate-200 dark:border-slate-800" data-agentkit-lifecycle-stages>
+    {AGENTKIT_LIFECYCLE_STAGE_FACTS.map((stage, index) => {
+      const commandIds = new Set(stage.commandIds);
+      const commands = AGENTKIT_LIFECYCLE_COMMANDS
+        .filter((command) => commandIds.has(command.id))
+        .map(toLifecycleCommandView);
+      const isRemoval = stage.id === 'remove-ck-control-plane';
       return (
         <li
-          id={step.id}
+          id={`stage-${stage.id}`}
+          data-agentkit-stage={stage.id}
+          data-agentkit-stage-state="blocked"
           class:list={[
             'grid scroll-mt-28 gap-5 py-8 md:grid-cols-[4rem_minmax(0,1fr)] md:gap-8',
             index > 0 && 'border-t border-slate-200 dark:border-slate-800',
           ]}
         >
-          <div
-            class:list={[
-              'flex h-12 w-12 items-center justify-center rounded-xl font-mono text-sm font-bold ring-1 ring-inset',
-              isRemoval
-                ? 'bg-rose-100 text-rose-700 ring-rose-200 dark:bg-rose-950/50 dark:text-rose-300 dark:ring-rose-900'
-                : 'bg-purple-100 text-purple-700 ring-purple-200 dark:bg-slate-100 dark:text-slate-950 dark:ring-slate-200',
-            ]}
-            aria-hidden="true"
-          >
-            {step.number}
+          <div class:list={[
+            'flex h-12 w-12 items-center justify-center rounded-xl font-mono text-sm font-bold ring-1 ring-inset',
+            isRemoval
+              ? 'bg-rose-100 text-rose-700 ring-rose-200 dark:bg-rose-950/50 dark:text-rose-300 dark:ring-rose-900'
+              : 'bg-purple-100 text-purple-700 ring-purple-200 dark:bg-slate-100 dark:text-slate-950 dark:ring-slate-200',
+          ]} aria-hidden="true">
+            {String(index + 1).padStart(2, '0')}
           </div>
 
-          <div class="min-w-0">
-            <h3 class="font-heading text-xl font-bold text-slate-950 dark:text-slate-50" set:html={renderInlineCode(t(`agentkit.step.${step.number}.title`))} ></h3>
-            <p class="mt-2 max-w-3xl leading-relaxed text-slate-600 text-pretty dark:text-slate-300" set:html={renderInlineCode(t(`agentkit.step.${step.number}.body`))} ></p>
+          <details class="group min-w-0" open={index === 0} data-agentkit-stage-details>
+            <summary class="flex min-h-12 cursor-pointer list-none flex-wrap items-start justify-between gap-3 rounded-lg focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2">
+              <span role="heading" aria-level="3" class="font-heading text-xl font-bold text-slate-950 dark:text-slate-50" set:html={renderInlineCode(t(`agentkit.lifecycle.stage.${stage.id}.title`))}></span>
+              <span class="flex items-center gap-2">
+                <span
+                  class="inline-flex items-center gap-1.5 rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-900 dark:bg-amber-950/50 dark:text-amber-200"
+                  data-agentkit-stage-label
+                  data-label-blocked={t('agentkit.lifecycle.status.blocked')}
+                  data-label-ready={t('agentkit.lifecycle.status.ready')}
+                  data-label-completed={t('agentkit.lifecycle.status.completed')}
+                  data-label-not-applicable={t('agentkit.lifecycle.status.notApplicable')}
+                  data-label-hold={t('agentkit.lifecycle.status.hold')}
+                >
+                  <CircleDashed class="h-3.5 w-3.5" aria-hidden="true" />
+                  <span data-agentkit-stage-label-text>{t('agentkit.lifecycle.status.blocked')}</span>
+                </span>
+                <span class="text-xl font-normal text-slate-400 transition-transform duration-200 group-open:rotate-45" aria-hidden="true">+</span>
+              </span>
+            </summary>
 
-            {group && (
-              <div class="mt-5 max-w-3xl">
-                <AgentKitPlatformCommandSwitcher
-                  id={`journey-${step.number}`}
-                  lang={lang}
-                  commands={group.commands}
-                />
+            <div class="pt-2">
+              <p class="max-w-3xl leading-relaxed text-slate-600 text-pretty dark:text-slate-300" set:html={renderInlineCode(t(`agentkit.lifecycle.stage.${stage.id}.body`))}></p>
+
+            <dl class="mt-5 grid gap-3 text-sm md:grid-cols-3">
+              <div class="rounded-xl bg-slate-50 p-4 dark:bg-slate-900/60">
+                <dt class="font-bold text-slate-900 dark:text-slate-100">{t('agentkit.lifecycle.prerequisite')}</dt>
+                <dd class="mt-1 leading-relaxed text-slate-600 dark:text-slate-300" set:html={renderInlineCode(t(`agentkit.lifecycle.stage.${stage.id}.prerequisite`))}></dd>
+              </div>
+              <div class="rounded-xl bg-emerald-50 p-4 dark:bg-emerald-950/20">
+                <dt class="font-bold text-emerald-900 dark:text-emerald-200">{t('agentkit.lifecycle.signal')}</dt>
+                <dd class="mt-1 leading-relaxed text-emerald-800 dark:text-emerald-300" set:html={renderInlineCode(t(`agentkit.lifecycle.stage.${stage.id}.signal`))}></dd>
+              </div>
+              <div class="rounded-xl bg-rose-50 p-4 dark:bg-rose-950/20">
+                <dt class="font-bold text-rose-900 dark:text-rose-200">{t('agentkit.lifecycle.failure')}</dt>
+                <dd class="mt-1 leading-relaxed text-rose-800 dark:text-rose-300" set:html={renderInlineCode(t(`agentkit.lifecycle.stage.${stage.id}.failure`))}></dd>
+              </div>
+            </dl>
+
+            {commands.length > 0 && (
+              <div class="mt-5 max-w-3xl" data-agentkit-stage-command-panel hidden>
+                <AgentKitPlatformCommandSwitcher id={`lifecycle-${stage.id}`} lang={lang} commands={commands} />
               </div>
             )}
 
-            <p class="mt-5 flex max-w-3xl gap-2 text-sm font-medium text-emerald-800 dark:text-emerald-300">
-              <CheckCircle2 class="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-              <span set:html={renderInlineCode(t(`agentkit.step.${step.number}.check`))} ></span>
-            </p>
-          </div>
+            <label class="mt-5 flex min-h-11 items-center gap-3 rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 dark:border-slate-700 dark:text-slate-300">
+              <input
+                type="checkbox"
+                name="completedStages"
+                value={stage.id}
+                class="h-4 w-4"
+                aria-label={`${t(`agentkit.lifecycle.stage.${stage.id}.title`)} — ${t('agentkit.lifecycle.complete')}`}
+                disabled
+              />
+              <span>{t('agentkit.lifecycle.complete')}</span>
+            </label>
+
+            {isRemoval && (
+              <p class="mt-4 flex gap-2 text-sm font-semibold text-rose-800 dark:text-rose-300">
+                <AlertTriangle class="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+                <span>{t('agentkit.router.result.limit')}</span>
+              </p>
+            )}
+            </div>
+          </details>
         </li>
       );
     })}
   </ol>
+
+  <p class="mt-5 flex max-w-3xl gap-2 text-sm text-slate-600 dark:text-slate-300">
+    <ShieldCheck class="mt-0.5 h-4 w-4 shrink-0 text-purple-600 dark:text-purple-400" aria-hidden="true" />
+    <span>{t('agentkit.router.result.limit')}</span>
+  </p>
 </section>

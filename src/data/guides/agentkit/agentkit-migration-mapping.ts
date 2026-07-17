@@ -8,10 +8,12 @@ export interface MigrationMappingRow {
   legacy: string;
   agentkit: string;
   status: MigrationStatus;
+  copyPolicy: 'concept-only' | 'preview-only';
+  defaultCta?: string;
   summary: string;
 }
 
-type ExecutableMapping = Omit<MigrationMappingRow, 'summary'>;
+type ExecutableMapping = Omit<MigrationMappingRow, 'summary' | 'copyPolicy' | 'defaultCta'>;
 
 const EXECUTABLE_MAPPING: readonly ExecutableMapping[] = [
   { id: 'install', category: 'binary-command', legacy: 'npm install -g claudekit-cli', agentkit: 'curl -fsSL https://agentkit.best/install.sh | sh', status: 'replace' },
@@ -41,7 +43,7 @@ const SUMMARIES: Record<MappingLocale, Record<string, string>> = {
     'engineer-prefix': 'Engineer skills move to the unified AgentKit namespace.',
     'marketing-prefix': 'Marketing skills move to the unified AgentKit namespace.',
     'kit-lifecycle': 'Install an entitled kit for a specific coding-agent target.',
-    migrate: 'Preview, then apply a ClaudeKit-to-AgentKit migration. Not a provider-conversion command.',
+    migrate: 'Preview and smoke-test a ClaudeKit-to-AgentKit migration. Apply remains support-assisted for important data.',
     'self-update': 'Update the signed ak binary itself.',
     gui: 'Launch the optional Desktop App shell when packaged for your platform.',
     default: 'Use the same command name through the AgentKit binary.',
@@ -52,7 +54,7 @@ const SUMMARIES: Record<MappingLocale, Record<string, string>> = {
     'engineer-prefix': 'Skill Engineer chuyển sang namespace AgentKit thống nhất.',
     'marketing-prefix': 'Skill Marketing chuyển sang namespace AgentKit thống nhất.',
     'kit-lifecycle': 'Cài kit được cấp quyền cho đúng coding-agent target.',
-    migrate: 'Xem trước rồi áp dụng migration ClaudeKit sang AgentKit. Không phải lệnh chuyển provider.',
+    migrate: 'Xem trước và smoke-test migration ClaudeKit sang AgentKit. Apply vẫn cần support cho dữ liệu quan trọng.',
     'self-update': 'Cập nhật chính binary ak đã ký.',
     gui: 'Mở Desktop App shell tùy chọn khi binary có GUI cho nền tảng của bạn.',
     default: 'Giữ tên lệnh và chuyển sang binary AgentKit.',
@@ -62,6 +64,8 @@ const SUMMARIES: Record<MappingLocale, Record<string, string>> = {
 function localize(locale: MappingLocale): readonly MigrationMappingRow[] {
   return EXECUTABLE_MAPPING.map((row) => ({
     ...row,
+    copyPolicy: row.id === 'migrate' ? 'preview-only' : 'concept-only',
+    ...(row.id === 'migrate' ? { defaultCta: 'ak migrate --from=ck' } : {}),
     summary: SUMMARIES[locale][row.id] ?? SUMMARIES[locale].default,
   }));
 }

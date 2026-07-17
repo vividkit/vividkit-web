@@ -1,11 +1,42 @@
-export type ReleaseChannel = 'stable' | 'beta' | 'dev' | 'legacy';
+export const PUBLIC_AGENTKIT_RELEASE_CHANNELS = ['stable', 'beta'] as const;
+export const AGENTKIT_TRUSTED_SOURCE_ORIGINS = ['https://agentkit.best'] as const;
+
+export type AgentKitCliReleaseChannel = typeof PUBLIC_AGENTKIT_RELEASE_CHANNELS[number];
+export type PublicAgentKitReleaseChannel = AgentKitCliReleaseChannel;
+export type AgentKitEvidenceChannel = AgentKitCliReleaseChannel | 'dev' | 'legacy';
+export type EvidenceClass =
+  | 'public-release'
+  | 'official-docs'
+  | 'implementation-audit'
+  | 'support-policy'
+  | 'legacy-snapshot'
+  | 'governance-prototype';
+export type LegacyStatus = 'current' | 'legacy' | 'archived' | 'not-applicable';
+export type ArtifactKind =
+  | 'agentkit-cli'
+  | 'engineer-kit'
+  | 'marketing-kit'
+  | 'agentkit-app'
+  | 'claudekit-cli'
+  | 'vividkit-policy';
 export type FactScope = 'binary' | 'project' | 'kit' | 'account' | 'diagnostic';
 
-export interface AgentKitSourceMetadata {
-  channel: ReleaseChannel;
+export interface AgentKitArtifactSourceMetadata {
   sourceUrl: string;
   verifiedAt: string;
+  evidenceClass: EvidenceClass;
+  artifactKind: ArtifactKind;
+  artifactVersion: string;
+  legacyStatus: LegacyStatus;
+}
+
+export interface AgentKitSourceMetadata extends AgentKitArtifactSourceMetadata {
+  channel: AgentKitCliReleaseChannel;
   releaseVersion?: string;
+}
+
+export interface AgentKitEvidenceSourceMetadata extends Omit<AgentKitSourceMetadata, 'channel'> {
+  channel: AgentKitEvidenceChannel;
 }
 
 export interface AgentKitCliFact extends AgentKitSourceMetadata {
@@ -47,12 +78,16 @@ export const AGENTKIT_SOURCE_SNAPSHOT = {
   channel: 'stable',
   sourceUrl: 'https://agentkit.best/docs',
   changelogUrl: 'https://agentkit.best/changelog',
-  verifiedAt: '2026-07-13',
-  releaseVersion: '2.1.0',
-  localBetaVersion: '1.2.0-beta.1',
+  verifiedAt: '2026-07-17',
+  releaseVersion: '2.3.0',
+  betaReleaseVersion: '2.3.1-beta.1',
+  evidenceClass: 'official-docs',
+  artifactKind: 'agentkit-cli',
+  artifactVersion: '2.3.0',
+  legacyStatus: 'current',
 } as const satisfies AgentKitSourceMetadata & {
   changelogUrl: string;
-  localBetaVersion: string;
+  betaReleaseVersion: string;
 };
 
 export const AGENTKIT_ARTIFACT_INTEGRITY_FACTS = [
@@ -61,6 +96,10 @@ export const AGENTKIT_ARTIFACT_INTEGRITY_FACTS = [
     channel: 'stable',
     sourceUrl: AGENTKIT_SOURCE_SNAPSHOT.sourceUrl,
     verifiedAt: AGENTKIT_SOURCE_SNAPSHOT.verifiedAt,
+    evidenceClass: AGENTKIT_SOURCE_SNAPSHOT.evidenceClass,
+    artifactKind: AGENTKIT_SOURCE_SNAPSHOT.artifactKind,
+    artifactVersion: AGENTKIT_SOURCE_SNAPSHOT.artifactVersion,
+    legacyStatus: AGENTKIT_SOURCE_SNAPSHOT.legacyStatus,
     pinned: false,
     verificationLevel: 'documented-signed-manifest',
     copyPolicy: 'trust-boundary-convenience',
@@ -89,13 +128,17 @@ const CREDENTIAL_SAFETY = {
 } as const;
 
 function credentialTransport(
-  transport: Omit<CredentialTransport, 'channel' | 'sourceUrl' | 'verifiedAt'>,
+  transport: Omit<CredentialTransport, keyof AgentKitSourceMetadata>,
 ): CredentialTransport {
   return {
     ...transport,
     channel: AGENTKIT_SOURCE_SNAPSHOT.channel,
     sourceUrl: AGENTKIT_SOURCE_SNAPSHOT.sourceUrl,
     verifiedAt: AGENTKIT_SOURCE_SNAPSHOT.verifiedAt,
+    evidenceClass: AGENTKIT_SOURCE_SNAPSHOT.evidenceClass,
+    artifactKind: AGENTKIT_SOURCE_SNAPSHOT.artifactKind,
+    artifactVersion: AGENTKIT_SOURCE_SNAPSHOT.artifactVersion,
+    legacyStatus: AGENTKIT_SOURCE_SNAPSHOT.legacyStatus,
   };
 }
 

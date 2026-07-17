@@ -1,0 +1,8 @@
+/* Route-scoped utilities for the immutable ClaudeKit archive. */
+@import 'tailwindcss' source(none);
+@config "../../tailwind.config.mjs";
+@source "../legacy-ck";
+@source "../components/guides/legacy";
+@source "../pages/legacy";
+@source "../pages/vi/legacy";
+@source "../layouts/LegacyGuidesLayout.astro";

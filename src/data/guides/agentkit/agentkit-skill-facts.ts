@@ -1,7 +1,7 @@
-import type { AgentKitSourceMetadata } from './agentkit-source-contract.ts';
+import type { AgentKitArtifactSourceMetadata } from './agentkit-source-contract.ts';
 import { AGENTKIT_SOURCE_SNAPSHOT } from './agentkit-source-contract.ts';
 
-export interface AgentKitSkillFact extends AgentKitSourceMetadata {
+export interface AgentKitSkillFact extends AgentKitArtifactSourceMetadata {
   id: `ak:${string}`;
   kit: 'engineer' | 'marketing';
   aliases: readonly string[];
@@ -15,6 +15,19 @@ export interface AgentKitSkillFact extends AgentKitSourceMetadata {
   };
 }
 
+export const AGENTKIT_KIT_SNAPSHOT_PROVENANCE = {
+  engineer: {
+    artifactKind: 'engineer-kit',
+    artifactVersion: '0.2.0',
+    evidenceStatus: 'captured-install-manifest',
+  },
+  marketing: {
+    artifactKind: 'marketing-kit',
+    artifactVersion: null,
+    evidenceStatus: 'reviewed-snapshot-unavailable',
+  },
+} as const;
+
 const skill = (
   id: AgentKitSkillFact['id'],
   upstreamVersion: string,
@@ -22,14 +35,17 @@ const skill = (
 ): AgentKitSkillFact => ({
   id,
   kit: 'engineer',
-  channel: 'stable',
   aliases: [id.slice(3)],
   upstreamVersion,
   upstreamSha256,
   snapshotProvenance: 'agentkit-install-manifest',
-  snapshotKitVersion: '0.2.0',
+  snapshotKitVersion: AGENTKIT_KIT_SNAPSHOT_PROVENANCE.engineer.artifactVersion,
   sourceUrl: AGENTKIT_SOURCE_SNAPSHOT.sourceUrl,
   verifiedAt: AGENTKIT_SOURCE_SNAPSHOT.verifiedAt,
+  evidenceClass: 'implementation-audit',
+  artifactKind: AGENTKIT_KIT_SNAPSHOT_PROVENANCE.engineer.artifactKind,
+  artifactVersion: AGENTKIT_KIT_SNAPSHOT_PROVENANCE.engineer.artifactVersion,
+  legacyStatus: 'current',
   invocations: {
     claudeCode: `/${id}`,
     codex: `$${id}`,

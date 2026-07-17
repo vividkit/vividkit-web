@@ -2,6 +2,8 @@
 import { useTranslations } from '@/i18n/utils';
 import type { Language } from '@/i18n';
 import { cliCommandsCheatsheet } from '@/data/guides/cli-commands-cheatsheet';
+import { getAgentKitCliFact } from '@/data/guides/agentkit/agentkit-cli-facts';
+import { AGENTKIT_SOURCE_SNAPSHOT } from '@/data/guides/agentkit/agentkit-source-contract';
 
 interface Props {
   lang: Language;
@@ -13,13 +15,13 @@ const t = useTranslations(lang);
 const totalCommands = cliCommandsCheatsheet.length;
 const categoryCount = new Set(cliCommandsCheatsheet.map(c => c.category)).size;
 const heroCommands = [
-  'ak doctor',
-  'ak self-update --check',
-  'ak update --dry-run',
-];
+  getAgentKitCliFact('doctor')?.command,
+  `${getAgentKitCliFact('self-update')?.command ?? ''} --check`,
+  `${getAgentKitCliFact('update')?.command ?? ''} --dry-run`,
+].filter(Boolean);
 const isVi = lang === 'vi';
 const terminalPath = isVi ? '/vi/guides/cli-commands' : '/guides/cli-commands';
-const cliVersion = 'stable';
+const cliVersion = AGENTKIT_SOURCE_SNAPSHOT.releaseVersion;
 ---
 
 <section class="relative overflow-hidden rounded-[2rem] border border-slate-200/80 bg-stone-50 shadow-sm dark:border-white/10 dark:bg-slate-950">

@@ -1,15 +1,25 @@
 ---
 import type { Language } from '@/i18n';
+import { getAgentKitCliFact } from '@/data/guides/agentkit/agentkit-cli-facts';
 import TerminalSnippet from '../TerminalSnippet.astro';
 
 interface Props { lang: Language }
 const { lang } = Astro.props;
 const isVi = lang === 'vi';
+const fact = (id: string) => {
+  const value = getAgentKitCliFact(id);
+  if (!value) throw new Error(`Missing canonical AgentKit CLI fact: ${id}`);
+  return value;
+};
+const selfUpdate = fact('self-update');
+const projectUpdate = fact('update');
+const kitRefresh = fact('kit-refresh');
+const withoutConfirmation = (command: string) => command.replace(/\s+--yes\b/, '');
 
 const layers = [
-  { title: isVi ? 'CLI binary' : 'CLI binary', command: 'ak self-update --check', apply: 'ak self-update --yes', detail: isVi ? 'Kiểm tra rồi cập nhật chính binary ak.' : 'Check and then update the ak binary itself.' },
-  { title: isVi ? 'Project files' : 'Project files', command: 'ak update --show-diff', apply: 'ak update --yes', detail: isVi ? 'Preview file do AK quản lý; snapshot được tạo trước khi apply.' : 'Preview AK-owned files; a snapshot is taken before apply.' },
-  { title: isVi ? 'Installed kit' : 'Installed kit', command: 'ak kit install engineer --target claude-code --global --dry-run', apply: 'ak kit install engineer --target claude-code --global --force', detail: isVi ? 'Refresh nội dung kit riêng biệt; chỉ dùng force sau khi review.' : 'Refresh kit content separately; use force only after review.' },
+  { title: 'CLI binary', command: `${selfUpdate.command} --check`, apply: `${selfUpdate.command} --yes`, detail: isVi ? 'Kiểm tra rồi cập nhật chính binary ak.' : 'Check and then update the ak binary itself.' },
+  { title: 'Project files', command: `${projectUpdate.command} --dry-run`, apply: projectUpdate.command, detail: isVi ? 'Preview file do AK quản lý; chỉ apply sau khi đọc diff và xác nhận rollback.' : 'Preview AK-owned files; apply only after reading the diff and confirming rollback.' },
+  { title: 'Installed kit', command: withoutConfirmation(kitRefresh.command), apply: kitRefresh.command, detail: isVi ? 'Refresh nội dung kit ở project scope; không chuyển sang global trong pilot.' : 'Refresh kit content at project scope; do not move to global scope during the pilot.' },
 ];
 ---
 

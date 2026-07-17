@@ -1,5 +1,6 @@
 ---
 import type { Language } from '@/i18n';
+import { getAgentKitCliFact } from '@/data/guides/agentkit/agentkit-cli-facts';
 import { getAgentKitTargetViews } from '@/data/guides/agentkit/agentkit-target-capabilities';
 import TerminalSnippet from '../TerminalSnippet.astro';
 
@@ -9,6 +10,25 @@ const isVi = lang === 'vi';
 const targets = getAgentKitTargetViews();
 const claudeTarget = targets.find((target) => target.target === 'claude-code')!;
 const codexTarget = targets.find((target) => target.target === 'codex')!;
+const fact = (id: string) => {
+  const value = getAgentKitCliFact(id);
+  if (!value) throw new Error(`Missing canonical AgentKit CLI fact: ${id}`);
+  return value;
+};
+const unixInstaller = fact('install-unix');
+const windowsInstaller = fact('install-windows');
+const doctor = fact('doctor');
+const versions = fact('versions');
+const loginEmail = fact('login-email');
+const whoami = fact('whoami');
+const licenses = fact('licenses');
+const urlFrom = (command: string) => command.match(/https:\/\/[^\s|]+/)?.[0] ?? '';
+const unixInstallerUrl = urlFrom(unixInstaller.command);
+const windowsInstallerUrl = urlFrom(windowsInstaller.command);
+const unixReview = `curl -fsSLo /tmp/agentkit-install.sh ${unixInstallerUrl}\nless /tmp/agentkit-install.sh\nsh /tmp/agentkit-install.sh`;
+const windowsReview = `Invoke-WebRequest ${windowsInstallerUrl} -OutFile $env:TEMP\\agentkit-install.ps1\nGet-Content $env:TEMP\\agentkit-install.ps1\npowershell -File $env:TEMP\\agentkit-install.ps1`;
+const verifyCommands = `${versions.command}\n${doctor.command}`;
+const entitlementCommands = `${whoami.command}\n${licenses.command}`;
 ---
 
 <section id="install" class="scroll-mt-28 space-y-5">
@@ -22,16 +42,16 @@ const codexTarget = targets.find((target) => target.target === 'codex')!;
   <div class="grid min-w-0 gap-4 lg:grid-cols-2">
     <div class="min-w-0 rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
       <h3 class="font-semibold text-slate-900 dark:text-white">macOS / Linux</h3>
-      <div class="mt-3"><TerminalSnippet code={'curl -fsSLo /tmp/agentkit-install.sh https://agentkit.best/install.sh\nless /tmp/agentkit-install.sh\nsh /tmp/agentkit-install.sh'} label="shell · inspect before run" /></div>
+      <div class="mt-3"><TerminalSnippet code={unixReview} label="shell · inspect before run" /></div>
     </div>
     <div class="min-w-0 rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">
       <h3 class="font-semibold text-slate-900 dark:text-white">Windows PowerShell</h3>
-      <div class="mt-3"><TerminalSnippet code={'Invoke-WebRequest https://agentkit.best/install.ps1 -OutFile $env:TEMP\\agentkit-install.ps1\nGet-Content $env:TEMP\\agentkit-install.ps1\npowershell -File $env:TEMP\\agentkit-install.ps1'} label="powershell · inspect before run" mode="plain" copyMode="raw" /></div>
+      <div class="mt-3"><TerminalSnippet code={windowsReview} label="powershell · inspect before run" mode="plain" copyMode="raw" /></div>
     </div>
   </div>
   <aside class="rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm leading-6 text-amber-900 dark:border-amber-400/30 dark:bg-amber-950/30 dark:text-amber-100">
     <strong>{isVi ? 'Official convenience path:' : 'Official convenience path:'}</strong>
-    <code class="mx-1 rounded-md border border-amber-300 bg-white px-1.5 py-0.5 text-amber-900 dark:border-amber-400/30 dark:bg-slate-800/90 dark:text-amber-100">curl -fsSL https://agentkit.best/install.sh | sh</code>
+    <code class="mx-1 rounded-md border border-amber-300 bg-white px-1.5 py-0.5 text-amber-900 dark:border-amber-400/30 dark:bg-slate-800/90 dark:text-amber-100">{unixInstaller.command}</code>
     {isVi ? 'chạy remote script trực tiếp. Chỉ dùng khi bạn chấp nhận trust boundary đó.' : 'executes a remote script directly. Use it only when you accept that trust boundary.'}
   </aside>
 </section>
@@ -41,9 +61,9 @@ const codexTarget = targets.find((target) => target.target === 'codex')!;
     <p class="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400">02 · verify + auth</p>
     <h2 class="mt-2 text-2xl font-bold text-slate-950 dark:text-white">{isVi ? 'Verify trước, đăng nhập sau' : 'Verify first, then authenticate'}</h2>
   </div>
-  <TerminalSnippet code={'ak --version\nak doctor'} label="shell · read-only checks" />
+  <TerminalSnippet code={verifyCommands} label="shell · read-only checks" />
   <div class="grid gap-3 md:grid-cols-3">
-    <div class="rounded-2xl border border-slate-200 p-4 dark:border-slate-700"><h3 class="font-semibold text-slate-900 dark:text-white">Email OTP</h3><p class="mt-2 text-sm text-slate-600 dark:text-slate-300">{isVi ? 'Khuyến nghị cho máy local. Mở CLI session:' : 'Recommended for local machines. Opens a CLI session:'} <code class="rounded-md border border-slate-200 bg-slate-100 px-1 text-slate-800 dark:border-slate-700 dark:bg-slate-800/90 dark:text-slate-100">ak login --email you@example.com</code></p></div>
+    <div class="rounded-2xl border border-slate-200 p-4 dark:border-slate-700"><h3 class="font-semibold text-slate-900 dark:text-white">Email OTP</h3><p class="mt-2 text-sm text-slate-600 dark:text-slate-300">{isVi ? 'Khuyến nghị cho máy local. Mở CLI session:' : 'Recommended for local machines. Opens a CLI session:'} <code class="rounded-md border border-slate-200 bg-slate-100 px-1 text-slate-800 dark:border-slate-700 dark:bg-slate-800/90 dark:text-slate-100">{loginEmail.command}</code></p></div>
     <div class="rounded-2xl border border-slate-200 p-4 dark:border-slate-700"><h3 class="font-semibold text-slate-900 dark:text-white">API key</h3><p class="mt-2 text-sm text-slate-600 dark:text-slate-300">{isVi ? 'Khuyến nghị cho CI. Inject từ secret store, mask logs, không chạy secrets trên fork PR.' : 'Recommended for CI. Inject from a secret store, mask logs, and do not expose secrets to fork PRs.'}</p></div>
     <div class="rounded-2xl border border-amber-200 bg-amber-50/60 p-4 dark:border-amber-800/60 dark:bg-amber-950/20"><h3 class="font-semibold text-slate-900 dark:text-white">License key</h3><p class="mt-2 text-sm text-slate-600 dark:text-slate-300">{isVi ? 'Chỉ kích hoạt thiết bị Desktop App — không mở CLI session. Không dùng thay email/API key khi cài kit.' : 'Desktop App device activation only — does not open a CLI session. Do not use it instead of email/API key when installing kits.'}</p></div>
   </div>
@@ -52,7 +72,7 @@ const codexTarget = targets.find((target) => target.target === 'codex')!;
       ? 'Nếu domain sản phẩm bị chặn, official docs ghi fallback installer tại releases.agentkit.best — vẫn phải giữ verification chain, không bypass checksum.'
       : 'If the product domain is blocked, official docs document a releases.agentkit.best installer fallback — keep the verification chain; never bypass checksums.'}
   </aside>
-  <TerminalSnippet code={'ak whoami\nak licenses'} label="shell · entitlement checks" />
+  <TerminalSnippet code={entitlementCommands} label="shell · entitlement checks" />
 </section>
 
 <section id="kits" class="scroll-mt-28 space-y-5">
@@ -62,7 +82,7 @@ const codexTarget = targets.find((target) => target.target === 'codex')!;
   </div>
   <div class="grid gap-4 lg:grid-cols-2">
     {targets.map((target) => (
-      <div><h3 class="mb-2 font-semibold text-slate-900 dark:text-white">{target.displayName}</h3><TerminalSnippet code={target.installCommand} label="shell · review global scope" copyable={target.installCopyable} /></div>
+      <div><h3 class="mb-2 font-semibold text-slate-900 dark:text-white">{target.displayName}</h3><TerminalSnippet code={target.installCommand} label="shell · review project scope" copyable={target.installCopyable} /></div>
     ))}
   </div>
   <p class="rounded-xl bg-slate-100 p-4 text-sm text-slate-700 dark:bg-slate-800/90 dark:text-slate-200">

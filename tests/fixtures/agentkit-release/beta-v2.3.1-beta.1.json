@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "agentkit-cli-beta-2.3.1-beta.1",
+  "product": "agentkit-cli",
+  "channel": "beta",
+  "version": "2.3.1-beta.1",
+  "releaseStatus": "pre-release",
+  "verifiedAt": "2026-07-17",
+  "sourceUrl": "https://agentkit.best/changelog",
+  "sourceObservationId": "agentkit-changelog-beta-v2.3.1-beta.1-2026-07-17",
+  "evidenceClass": "public-release",
+  "claims": [
+    {
+      "id": "AK-RELEASE-BETA-2.3.1-BETA.1",
+      "kind": "release-version",
+      "evidenceClass": "public-release",
+      "statement": "AgentKit CLI v2.3.1-beta.1 is the beta release observed on 2026-07-17."
+    }
+  ],
+  "normalizedFactSha256": "0772e9421526fa7cd62929153517b222d9b88c9d05be7136ff85567fc68cf8d5"
+}

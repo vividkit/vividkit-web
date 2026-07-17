@@ -1,99 +1,161 @@
-# AgentKit Legacy Provider-Skill Cleanup Source Record
+# AgentKit Legacy Cleanup Source Record
 
-## Overview
+**Verified:** July 17, 2026
 
-Claim-level source record for the legacy provider-skill cleanup section in the bilingual AgentKit migration hub. Sources were verified on 2026-07-12. Re-check them before changing command availability, provider coverage, destination paths, or removal behavior.
+**Status:** Active source boundary; Phase 8 release evidence remains separate
 
-The guide deliberately separates three operations:
+## Purpose
 
-1. inventory destinations previously written by ClaudeKit;
-2. verify replacement AgentKit skills in a fresh target session;
-3. remove only content proven to be ClaudeKit-owned.
+This record separates two operations that share legacy skill names but have different owners, risks, and evidence:
 
-## Official Sources
+1. **Product/provider-copy cleanup:** user-facing guidance for content that CK previously wrote into Claude Code, Codex, or other provider destinations.
+2. **Maintainer skill disposition:** owner-approved deactivation of six local VividKit maintenance skill mirrors.
 
-| Source | Status in this guide | Verified claims | Explicit limit |
+The second operation is not a migration instruction and must not be used as evidence that provider copies are safe to delete.
+
+## A. Product and Provider-Copy Cleanup
+
+### Official Sources
+
+| Source | Allowed claim | Limit |
+|---|---|---|
+| [AgentKit documentation](https://agentkit.best/docs) | Current AgentKit CLI, stable migration interface, kit targets, target-native invocation | Does not document automatic deletion of every provider copy previously written by CK |
+| [ClaudeKit migration reference](https://docs.claudekit.cc/docs/cli/migrate/) | Legacy dry-run inventory can report provider and destination evidence; Codex conversions may use `source-command-*` destinations | Deprecated lifecycle source; inventory evidence only |
+| [ClaudeKit uninstall reference](https://docs.claudekit.cc/docs/cli/uninstall/) | Local/global preview, ownership tracking, backup, and customization preservation behavior | Does not prove that co-located AgentKit files are CK-owned or that every migrated provider target is covered |
+
+`ak migrate` is stable in AgentKit 2.3.0. VividKit still presents it preview/smoke-first and provides no default apply CTA for important data. It is not treated as an automatic provider-cleanup command.
+
+### Verified AgentKit Targets
+
+Only Claude Code and Codex have current AgentKit target contracts in this repository.
+
+| Target | Fresh-session check | Legacy destination evidence | Cleanup boundary |
 |---|---|---|---|
-| [AgentKit documentation](https://agentkit.best/docs) | Current stable AgentKit guidance | `ak kit list-kits`; kit installation for Claude Code and Codex; target-native invocation; legacy CLI deprecation and binary migration guidance | Documents `ak migrate`; does not document automatic removal of every legacy provider copy |
-| [ClaudeKit `ck migrate`](https://docs.claudekit.cc/docs/cli/migrate/) | Deprecated first-party CLI reference | `ck migrate --dry-run` previews without writes; detects providers; reports source/destination and `WHERE / WHAT / NEXT`; Codex command conversion uses `source-command-*` skill destinations | Describes migration/reconciliation, not a bulk removal workflow for every destination previously written |
-| [ClaudeKit `ck uninstall`](https://docs.claudekit.cc/docs/cli/uninstall/) | Deprecated first-party CLI reference | Local/global scope, dry-run preview, ownership tracking, scoped backup, and preservation of detected customizations | Does not guarantee its legacy ownership model distinguishes AgentKit files installed later into the same `.claude` paths; apply commands are therefore not rendered |
+| Claude Code | `/ak:cook` | Project `.claude/` or global `~/.claude/` | Keep shared/custom/ambiguous candidates; do not promote same-scope CK/AK coexistence |
+| Codex | `$ak:cook` | Project `.agents/skills/source-command-*/SKILL.md` or global `~/.agents/skills/source-command-*/SKILL.md` | Use saved destination evidence; no documented bulk removal exists for these conversions |
 
-The ClaudeKit pages remain useful as first-party evidence for existing legacy installations, but they are not current AgentKit lifecycle recommendations.
+The legacy migration tool recognized additional providers. That historical list does not establish current AgentKit support or a safe cleanup workflow. Retain those copies until first-party AgentKit documentation and repository tests establish a target-specific contract.
 
-## Supported Boundary
+### Lifecycle Placement
 
-Only Claude Code and Codex are verified AgentKit targets in the current stable source and repository target contract.
-
-| Target | AgentKit verification example | Legacy destination evidence | Cleanup policy |
-|---|---|---|---|
-| Claude Code | `/ak:cook` in a fresh session | Project `.claude/` or global `~/.claude/` | Use the matching uninstall dry-run only as inventory; retain every co-located or ambiguous candidate and remove only individual entries proven legacy-only |
-| Codex | `$ak:cook` in a fresh session | Project `.agents/skills/source-command-*/SKILL.md` or global `~/.agents/skills/source-command-*/SKILL.md` | Use the saved migration destination summary to inventory entries; remove only entries independently proven to be ClaudeKit-owned |
-
-The legacy migration reference lists additional providers. This guide does not infer AgentKit support or a safe cleanup workflow for them. Their copies remain out of scope until first-party AgentKit documentation and repository tests establish an equivalent target contract.
-
-## Safety Model
-
-The rendered flow is intentionally fail-closed:
+Provider-copy cleanup is split across the seven-stage lifecycle:
 
 ```text
-legacy dry-run inventory
-  -> stable AgentKit kit inventory
-  -> fresh-session skill invocation
-  -> scope-specific uninstall preview
-  -> candidate-level ownership proof
-  -> individual cleanup and fresh-session re-verification
+backup
+  -> cleanup-ck-ownership
+  -> confirm-clean-scope
+  -> install-ak
+  -> verify-canary
+  -> observe
+  -> remove-ck-control-plane
 ```
 
-- `ck migrate --dry-run` is inventory evidence only. Do not apply another migration as cleanup.
-- `ak kit list-kits` confirms installed kits, but a fresh-session skill invocation is the functional gate.
-- `ck uninstall --local --dry-run` and `ck uninstall --global --dry-run` preview separate source scopes.
-- Destructive uninstall apply commands are retained only as source-record facts and are not rendered in the guide.
-- A successful AgentKit invocation before cleanup does not prove shared `.claude` candidates are safe to delete; every ambiguous or co-located candidate stays.
-- The guide does not emit recursive-delete commands and does not authorize deleting an entire provider skills directory.
-- No source documents one command that removes every migrated provider destination.
+- **Stage 2** inventories and classifies project content before AgentKit installation. `ck migrate --dry-run` and `ck uninstall --local --dry-run` are read-only evidence aids, not bulk-delete authorization.
+- **Stage 3** requires a clean final AgentKit scope. Mixed/custom ownership and corrupt/missing metadata are support-assisted.
+- **Stages 4–6** install AgentKit, verify a reversible canary, and collect an advisory operator declaration.
+- **Stage 7** addresses CK executable/control-plane review only after observation; it does not retroactively authorize deletion of provider copies.
 
-## Repository Architecture
+### Detector-First Removal
+
+The active lifecycle facts use `which -a ck` on macOS/Linux and `Get-Command ck -All` on Windows. These commands provide path evidence only.
+
+1. Detect every resolved CK executable.
+2. Match each path to exact Bun, npm, pnpm, or Yarn Classic package ownership.
+3. If ownership is unknown, conflicting, symlinked, or unowned, select no uninstall command.
+4. Keep removal actions manual and non-copyable.
+5. Re-run the AgentKit canary before considering CK control-plane data.
+
+Detailed Stage 7 removal rows are build-time publication-gated. Query or DOM state cannot unlock held content.
+
+### Support and Output Sanitization
+
+- [ClaudeKit Discord](https://discord.com/invite/x7SwTSf3wc)
+- [AgentKit Support](https://github.com/bestagentkits/agentkit-support)
+
+Do not paste raw stdout/stderr, stack traces, credentials, usernames, home paths, repository remotes, account/license identifiers, private filenames/content, credentialed URLs, or backup manifests. The support sanitizer retains only:
+
+- tool name/version;
+- stable/beta/unknown channel;
+- Bun/npm/pnpm/Yarn/unknown detector category;
+- lifecycle stage;
+- fixed expected and actual summaries;
+- allowlisted incident ID.
+
+## B. Maintainer Skill Disposition
+
+### Ownership Boundary
+
+The six former VividKit maintainer skills were ignored local provider copies. They are **not tracked by this repository, are not canonical public capabilities, and are not a supported team feature**. Their disposition is private maintainer governance and remains independent from VividKit Product GO.
+
+The approved `O4-LEGACY-SKILLS` decision required deactivation/unlink without moving or deleting any skill directory or payload.
+
+### Five Archive-Metadata Skills
+
+These CK-era skills receive archive metadata only:
+
+1. `vk-add-scenario`
+2. `vk-audit-ck-cli`
+3. `vk-audit-ck-hooks`
+4. `vk-audit-skill`
+5. `vk-changelog-sync`
+
+Archive metadata records origin and disposition; it does not make the skill canonical, public, installable, or executable.
+
+### Clean-Room Backlog
+
+`vk-audit-ccs` is recorded separately as clean-room backlog. Its topic may remain useful, but the former payload includes behavior that must not be adopted by copying or reactivating it. Any future implementation requires a new contract and independent clean-room review.
+
+### O4A Reversible Deactivation
+
+The owner-approved `O4A-REVERSIBLE-CONTRACT-RENAME` operation renamed exactly 12 discovery contracts across two existing runtime mirrors:
+
+```text
+SKILL.md -> SKILL.md.disabled
+```
+
+Verified target state:
+
+- active discovery contracts: zero;
+- disabled contracts: 12;
+- receipt entries/completions: 12/12;
+- skill directories removed: zero;
+- payload files removed: zero.
+
+The transaction checked preimage tree/file identity, file mode and size, authenticated receipt completion, interruption resume, stale-lock handling, refusal cases, and rollback behavior. Rollback exists but was not applied to the real target because that would re-enable discovery and needs separate authority.
+
+This physical deactivation is not provider-copy cleanup. It proves only that the named maintainer skill contracts no longer use the discovery filename in the two governed mirrors.
+
+## Repository Implementation
 
 | File | Responsibility |
 |---|---|
-| `src/data/guides/agentkit/agentkit-legacy-cleanup-facts.ts` | Canonical sources, staged commands, scope, safety, copyability, and target cleanup policies |
-| `src/data/guides/agentkit/agentkit-target-capabilities.ts` | Verified Claude Code/Codex target set and target-native invocation syntax |
-| `src/components/guides/agentkit/agentkit-legacy-skill-cleanup.astro` | Bilingual rendering from typed facts; verification precedes previews; external source links; destructive apply commands are not rendered |
-| `src/i18n/en/agentkit.ts` and `src/i18n/vi/agentkit.ts` | Structurally matched English and Vietnamese cleanup copy |
-| `tests/content/agentkit-contract.test.mjs` | Source metadata, stage order, destructive-command gating, provider boundary, and Codex destination contract |
-| `tests/agentkit-hub/agentkit-hub-contract.test.mjs` | Section composition, escaped rendering, source links, and absence of blind-copy/destructive-delete patterns |
-| `tests/content/agentkit-legacy-allowlist.mjs` | Bounded exceptions for labeled legacy commands used by the cleanup guide |
+| `src/data/guides/agentkit/agentkit-lifecycle-guide-facts.ts` | Seven stages, read-only preview/detector commands, manual removal conditions, provider boundaries, support contacts |
+| `src/data/guides/agentkit/agentkit-lifecycle-policy.ts` | Lane routing, support refusals, stage ordering, advisory declaration handling |
+| `src/data/guides/agentkit/agentkit-target-capabilities.ts` | Claude Code/Codex target and syntax contracts |
+| `src/data/guides/agentkit/agentkit-report-sanitizer.mjs` | Fixed allowlisted support/audit output |
+| `src/components/guides/agentkit/agentkit-legacy-skill-cleanup.astro` | Detector-first rendering, held Stage 7 details, support CTAs |
+| `tests/content/agentkit-lifecycle-policy.test.mjs` | Router, seven-stage, support, coexistence, and advisory-attestation contracts |
+| `tests/content/agentkit-report-sanitizer.test.mjs` | Raw/nested output exclusion and fixed schema |
+| `docs/agentkit-lifecycle-owner-decisions.json` | Machine-readable O4 disposition decision |
 
-The source record supports the implementation; executable facts remain centralized in the typed data modules rather than copied into component prose.
-
-## Verification Evidence
-
-Run on 2026-07-12 after the cleanup implementation:
-
-```bash
-npm run build
-```
-
-Results:
-
-- AgentKit suite: 52 tests, 50 pass plus two expected postbuild-only skips;
-- source content audit: 605 files pass;
-- scoped AgentKit diagnostic delta: zero new diagnostics against the unchanged 271-error repository baseline;
-- static production build: 74 pages;
-- generated artifact audit: 156 files pass;
-- postbuild route/LLM checks: 5/5 pass;
-- System Chrome: 8/8 EN/VI, light/dark, 375×812 and 1440×900 cases pass with no document or section overflow.
+The former `agentkit-legacy-cleanup-facts.ts` module is no longer the current implementation source.
 
 ## Maintenance Rules
 
-- Keep the stable AgentKit source separate from deprecated ClaudeKit references.
-- Do not promote `ak migrate` or automatic legacy provider cleanup without a stable first-party source.
-- Do not expand the AgentKit target list from the provider list in `ck migrate`.
-- Re-verify Codex destination patterns before changing inventory guidance.
-- Preserve the inventory → verification → preview → candidate-level proof → re-verification order.
-- Update this record, typed facts, EN/VI copy, and both focused contract files together.
+- Keep product/provider cleanup and maintainer disposition in separate sections and evidence chains.
+- Do not infer bulk provider removal from `ak migrate`, legacy migration inventory, or legacy uninstall scope.
+- Do not expand supported AgentKit targets from a historical provider list.
+- Route mixed/custom/corrupt/missing/unknown evidence to support-assisted handling.
+- Keep detector output non-authoritative until exact package ownership is proven.
+- Never publish a blind recursive delete or unconditional global uninstall action.
+- Do not reactivate, link, copy, or advertise the six maintainer skill payloads from this record.
+- Any O4A rollback or future clean-room implementation requires separate authority and validation.
+
+## Phase 8 Boundary
+
+This record contains source and disposition facts only. Final Product and maintainer-tooling commands, timestamps, counts, artifacts, observation outcomes, and GO/HOLD decisions belong in [the Phase 8 validation record](./agentkit-migration-validation.md) after execution.
 
 ## Unresolved Questions
 
-1. Will a stable AgentKit release document migration or ownership-aware cleanup for provider destinations?
-2. Will AgentKit publish verified target contracts beyond Claude Code and Codex?
+1. Will AgentKit publish ownership-aware cleanup for provider destinations beyond current Claude Code and Codex evidence?
+2. Will a future clean-room CCS audit capability receive separate owner, threat model, and public/private scope approval?

@@ -1,93 +1,65 @@
 # AGENTS.md
 
-This file provides guidance to Codex (Codex.ai/code) when working with code in this repository.
+Repository guidance for Codex contributors.
 
-## Role & Responsibilities
+## Start Here
 
-Your role is to analyze user requirements, delegate tasks to appropriate sub-agents, and ensure cohesive delivery of features that meet specifications and architectural standards.
+1. Read `README.md` before planning or implementation.
+2. Inspect the actual source, package scripts, and tests before documenting behavior.
+3. Use the skills available in the active Codex runtime when they fit the task.
 
-## Workflows
+This repository does not track a `.Codex/` workflow directory, repository-local skill runtime, or skill virtual environment. Do not create workflow stubs or infer commands from missing local files.
 
-- Primary workflow: `./.Codex/workflows/primary-workflow.md`
-- Development rules: `./.Codex/workflows/development-rules.md`
-- Orchestration protocols: `./.Codex/workflows/orchestration-protocol.md`
-- Documentation management: `./.Codex/workflows/documentation-management.md`
-- And other workflows: `./.Codex/workflows/*`
+## Working Rules
 
-**IMPORTANT:** Analyze the skills catalog and activate the skills that are needed for the task during the process.
-**IMPORTANT:** You must follow strictly the development rules in `./.Codex/workflows/development-rules.md` file.
-**IMPORTANT:** Before you plan or proceed any implementation, always read the `./README.md` file first to get context.
-**IMPORTANT:** Sacrifice grammar for the sake of concision when writing reports.
-**IMPORTANT:** In reports, list any unresolved questions at the end, if any.
+- Preserve unrelated changes in a dirty worktree.
+- Delegate only bounded work with explicit file ownership.
+- Verify paths, commands, route identities, and configuration against current code.
+- Keep reports concise and list unresolved questions last.
+- Keep important evergreen documentation under `docs/`; update related docs when code contracts change.
+- Do not present private or local maintainer tooling as a public VividKit capability.
 
-## Python Scripts (Skills)
+## UI and Styling
 
-When running Python scripts from `.Codex/skills/`, use the venv Python interpreter:
-- **Linux/macOS:** `.Codex/skills/.venv/bin/python3 scripts/xxx.py`
-- **Windows:** `.Codex\skills\.venv\Scripts\python.exe scripts\xxx.py`
+- Code snippet boxes must support light and dark modes:
+  - background: `bg-slate-100 dark:bg-slate-800/90`
+  - text: `text-slate-700 dark:text-slate-200`
+  - command highlight: `text-purple-600 dark:text-purple-400`
+  - secondary text: `text-slate-500 dark:text-slate-400`
+- Inline backtick content in rendered guide prose must become a real `<code>` element, not visible literal backticks. Use light/dark background, readable text, and a subtle border.
+- Interactive controls must remain keyboard reachable, focus-visible, and usable without JavaScript where the page defines a fallback.
 
-This ensures packages installed by `install.sh` (google-genai, pypdf, etc.) are available.
+## Bilingual Guide Contracts
 
-## UI/Styling Conventions
+- Update English and Vietnamese guide data together.
+- For workflow entries, translate `title`, `bestFor`, step `description`, `tip`, `features`, `typeLabel`, and duration units.
+- Keep workflow `category` and `level` in English because the renderers match English-keyed lookup tables.
+- Keep executable fields such as `command`, `color`, `icon`, and `gradientHeader` identical across locales.
+- AgentKit lifecycle translation modules must expose matching keys. Claude Code uses `/ak:*`; Codex uses `$ak:*`.
+- Beta channel state is bounded to AgentKit Hub, CLI Guide, CLI Commands, and Coexistence Guide; stable remains the default.
 
-- **Code snippet boxes**: Always support both light and dark mode
-  - Background: `bg-slate-100 dark:bg-slate-800/90`
-  - Text: `text-slate-700 dark:text-slate-200`
-  - Command highlights: `text-purple-600 dark:text-purple-400`
-  - Secondary text: `text-slate-500 dark:text-slate-400`
-- **Inline code in prose**: Text wrapped in backticks inside rendered guide copy must become a real `<code>` element, not visible literal backticks. Style it for both light and dark mode, e.g. `bg-slate-100 dark:bg-slate-800/90`, `text-slate-800 dark:text-slate-100`, and a subtle border.
+## Guide Data Synchronization
 
-## VividKit Guides - Changelog Sync
+When changing command or workflow catalogs, inspect every existing consumer:
 
-When running `/vk:changelog-sync`, update these locations:
+- command presentation: `src/components/guides/commands/commands-categories-grid.astro`
+- command data: `src/data/guides/commands-engineer-kit.ts`, `src/data/guides/commands-marketing-kit.ts`
+- command copy: `src/i18n/en/commands.ts`, `src/i18n/vi/commands.ts`
+- workflow data: `src/data/guides/workflows-data/`, `src/data/vi/guides/workflows-data/`
+- flowchart data: `src/data/guides/flowchart-index.ts`
+- hooks data: `src/data/guides/custom-hooks/custom-hooks-data.ts`
 
-### CommandsGuide (`src/components/guides/commands/`)
-1. **Version badges**: `commands-categories-grid.astro` - EK/MK version labels
-2. **Beta Preview section**: `commands-categories-grid.astro` lines ~99-122 - NEW/ENHANCED/DEPRECATED skills
-3. **Commands data**: `src/data/guides/commands-engineer-kit.ts`, `commands-marketing-kit.ts`
-4. **i18n strings**: `src/i18n/en/commands.ts`, `src/i18n/vi/commands.ts`
+Stable command detail fields render as plain text; do not insert HTML such as `<br/>`. Any beta-only metadata must stay channel-qualified and mirrored across all active consumers.
 
-### Other Guides
-- **Flowchart versions**: `flowchart-marketing-v12-data.ts`, `flowchart-marketing-summary-section.astro`
-- **Hooks data**: `src/data/guides/custom-hooks/custom-hooks-data.ts`
-- **Workflows data**: `src/data/guides/workflows-data/workflows-stable.ts`, `workflows-beta-additions.ts`
+## Documentation
 
-### Workflows - Bilingual Files
-When adding new workflow cards, update BOTH:
-- **EN**: `src/data/guides/workflows-data/workflows-*.ts`
-- **VI**: `src/data/vi/guides/workflows-data/workflows-*.ts`
+Core project docs:
 
-**VI translation convention for workflow entries:**
-- **Translate to Vietnamese:** `title`, `bestFor`, `description` (in steps), `tip`, `features`, `typeLabel`, time unit in `duration` (e.g. `phút` instead of `min`)
-- **Keep in English (verbatim):** `category`, `level` — these are matched against English-keyed lookup tables (`categoryOrder`, `categoryMeta` in `workflows-engineer-section.astro`). Translating them causes the workflow to silently disappear from the rendered page.
-- All other technical fields (`command`, `color`, `icon`, `gradientHeader`, etc.) stay verbatim.
+- `docs/project-overview-pdr.md`
+- `docs/codebase-summary.md`
+- `docs/code-standards.md`
+- `docs/design-guideline.md`
+- `docs/design-system.md`
+- `docs/agentkit-migration-validation.md`
 
-**IMPORTANT:** Beta Preview section is separate from main commands grid - don't forget to update both!
-
-### Beta-Only Skills - Dual Listing Convention
-When a skill is **beta-exclusive** (exists in beta branch only, not yet in stable), list it in BOTH places:
-1. **Beta Preview section** (`commands-categories-grid.astro` beta array) — surfaces the forward-looking signal
-2. **Stable category group** (`commands-engineer-kit.ts`) with `isBeta: true` flag — renders a purple BETA badge inline next to the command name, keeping it discoverable in its natural category
-
-When the skill graduates to stable: remove `isBeta: true` flag AND remove the Beta Preview entry. See `.Codex/skills/vk-changelog-sync/SKILL.md` → "Universal Beta-Badge Rule" for the full decision matrix.
-
-### HTML in Detail Fields
-- **Stable commands** (`commands-engineer-kit.ts`): Uses `{cmd.detail}` → **NO HTML rendering** → don't use `<br/>`
-- **Beta Preview** (`commands-categories-grid.astro`): Uses `set:html` → **renders HTML** → can use `<br/>`
-
-## Documentation Management
-
-We keep all important docs in `./docs` folder and keep updating them, structure like below:
-
-```
-./docs
-├── project-overview-pdr.md
-├── code-standards.md
-├── codebase-summary.md
-├── design-guidelines.md
-├── deployment-guide.md
-├── system-architecture.md
-└── project-roadmap.md
-```
-
-**IMPORTANT:** *MUST READ* and *MUST COMPLY* all *INSTRUCTIONS* in project `./AGENTS.md`, especially *WORKFLOWS* section is *CRITICALLY IMPORTANT*, this rule is *MANDATORY. NON-NEGOTIABLE. NO EXCEPTIONS. MUST REMEMBER AT ALL TIMES!!!*
+Run the repository’s documented verification commands after relevant changes. Record only observed results; never pre-fill release evidence.

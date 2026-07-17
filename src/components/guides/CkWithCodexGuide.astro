@@ -55,7 +55,7 @@ const workflows = [
     <div><p class="text-xs font-semibold uppercase tracking-[0.2em] text-violet-600 dark:text-violet-400">01 · install</p><h2 class="mt-2 text-2xl font-bold text-slate-950 dark:text-white">{isVi ? 'Đăng nhập và cài kit' : 'Authenticate and install the kit'}</h2></div>
     <div class="grid gap-4 lg:grid-cols-2">
       <div><h3 class="mb-2 font-semibold text-slate-900 dark:text-white">{isVi ? 'Kiểm tra account' : 'Verify account'}</h3><TerminalSnippet code={'ak whoami\nak licenses'} label="shell" /></div>
-      <div><h3 class="mb-2 font-semibold text-slate-900 dark:text-white">{codexTarget.displayName} target</h3><TerminalSnippet code={codexTarget.installCommand} label="shell · review global scope" copyable={codexTarget.installCopyable} /></div>
+      <div><h3 class="mb-2 font-semibold text-slate-900 dark:text-white">{codexTarget.displayName} target</h3><TerminalSnippet code={codexTarget.installCommand} label="shell · review project scope" copyable={codexTarget.installCopyable} /></div>
     </div>
   </section>
 

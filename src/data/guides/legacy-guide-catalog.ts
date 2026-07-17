@@ -3,6 +3,11 @@
  * Spec: full catalog In; Out = agentkit, deals*, donate, lucky-draw, promotions.
  */
 
+import {
+  LEGACY_ARCHIVE_PROVENANCE,
+  type LegacyArchiveProvenanceId,
+} from './legacy-archive-provenance.ts';
+
 export type LegacyGuidePathwayId =
   | 'start'
   | 'commands'
@@ -23,6 +28,8 @@ export interface LegacyGuideCatalogEntry {
   /** Matching live AgentKit (or retained) guide under /guides */
   currentGuideSuffix: string;
   freezeStatus: LegacyFreezeStatus;
+  /** Immutable record shared by every identity in this frozen snapshot. */
+  provenanceId: LegacyArchiveProvenanceId;
 }
 
 export const LEGACY_GUIDE_PATHWAY_META: Record<
@@ -40,6 +47,7 @@ export const LEGACY_GUIDE_PATHWAY_META: Record<
 
 const isolated = {
   freezeStatus: 'isolated' as const,
+  provenanceId: LEGACY_ARCHIVE_PROVENANCE.id,
 };
 
 /** Batch B suffixes — served from @legacy-ck trees (CK-era restore). */

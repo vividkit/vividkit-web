@@ -10,7 +10,7 @@
 
 import { readFile, writeFile, access } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
-import { dirname, join } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 import { guideSections, fallbackSiteUrl } from '../src/data/guides-llms-index.mjs';
 
 const projectRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -24,6 +24,45 @@ const OUTPUT_ROOTS = ['dist', '.vercel/output/static'];
 // DOM, e.g. How ClaudeKit Works) cannot dominate the file. Set above the
 // longest prose guide so normal pages are never truncated.
 const MAX_WORDS_PER_GUIDE = 6000;
+const VOID_ELEMENTS = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr']);
+
+function excludedOpeningTag(tag) {
+  return /\bdata-llms-exclude(?:\s|=|>)/i.test(tag)
+    || /\bdata-llms-channel=(?:"beta"|'beta')/i.test(tag)
+    || /\bdata-agentkit-channel-controls(?:\s|=|>)/i.test(tag)
+    || (/^<a\b/i.test(tag) && /\bhref=(?:"[^"]*\/legacy\/guides[^"]*"|'[^']*\/legacy\/guides[^']*')/i.test(tag));
+}
+
+export function stripStableExportExclusions(html) {
+  const stack = [];
+  const ranges = [];
+  const tags = /<\/?([a-z][\w:-]*)\b[^>]*>/gi;
+  for (const match of html.matchAll(tags)) {
+    const token = match[0];
+    const name = match[1].toLowerCase();
+    const closing = token.startsWith('</');
+    if (!closing) {
+      if (VOID_ELEMENTS.has(name) || token.endsWith('/>')) {
+        if (excludedOpeningTag(token)) ranges.push([match.index, match.index + token.length]);
+      } else stack.push({ name, start: match.index, excluded: excludedOpeningTag(token) });
+      continue;
+    }
+    const stackIndex = stack.findLastIndex((entry) => entry.name === name);
+    if (stackIndex < 0) continue;
+    const [node] = stack.splice(stackIndex, 1);
+    if (node.excluded) ranges.push([node.start, match.index + token.length]);
+  }
+
+  const merged = ranges.sort((left, right) => left[0] - right[0]).reduce((result, range) => {
+    const previous = result.at(-1);
+    if (previous && range[0] <= previous[1]) previous[1] = Math.max(previous[1], range[1]);
+    else result.push([...range]);
+    return result;
+  }, []);
+  let output = html;
+  for (const [start, end] of merged.reverse()) output = `${output.slice(0, start)}${output.slice(end)}`;
+  return output;
+}
 
 /** Decode the handful of HTML entities that survive tag stripping. */
 function decodeEntities(text) {
@@ -40,10 +79,10 @@ function decodeEntities(text) {
 }
 
 /** Extract readable prose from a built guide's HTML, dropping chrome/scripts. */
-function htmlToText(html) {
+export function htmlToText(html) {
   // Isolate the main content column; fall back to whole doc if absent.
   const mainMatch = html.match(/<main[^>]*>([\s\S]*?)<\/main>/i);
-  let content = mainMatch ? mainMatch[1] : html;
+  let content = stripStableExportExclusions(mainMatch ? mainMatch[1] : html);
 
   // Remove non-content blocks (scripts, styles, icons, in-page navigation).
   for (const tag of ['script', 'style', 'svg', 'nav', 'aside', 'button']) {
@@ -107,7 +146,7 @@ async function buildFullText() {
   const parts = [
     '# VividKit Guides — Full Text',
     '',
-    '> Full-text export of the VividKit AgentKit documentation for LLM agents. Legacy ClaudeKit references are retained only for migration or historical context. See /llms.txt for the curated link index.',
+    '> Stable-channel full-text export of the VividKit AgentKit documentation for LLM agents. Beta-channel controls/facts and isolated historical routes are excluded. See /llms.txt for the curated link index.',
     '',
   ];
 
@@ -165,7 +204,10 @@ async function main() {
   }
 }
 
-main().catch((err) => {
-  console.error('[llms-full] generation failed:', err);
-  process.exitCode = 1;
-});
+const isCli = process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1]);
+if (isCli) {
+  main().catch((err) => {
+    console.error('[llms-full] generation failed:', err);
+    process.exitCode = 1;
+  });
+}

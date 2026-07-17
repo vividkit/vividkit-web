@@ -3,6 +3,7 @@ import {
   guideSections,
   optionalLinks,
   fallbackSiteUrl,
+  llmExportPolicy,
 } from '@/data/guides-llms-index.mjs';
 
 /**
@@ -39,6 +40,8 @@ export const GET: APIRoute = () => {
     '# VividKit Guides',
     '',
     '> Comprehensive documentation for AgentKit — the successor to ClaudeKit — covering CK-to-AK migration, native CLI lifecycle, Engineer and Marketing kits, Claude Code, Codex, CCS, and troubleshooting.',
+    '',
+    `This index exports the ${llmExportPolicy.channel} channel only. Beta query content and isolated historical routes are not serialized as recommendations.`,
     '',
     `Each guide has a Vietnamese mirror at the same path prefixed with \`/vi\` (e.g. ${siteUrl}/vi/guides/commands). Current setup guidance uses AgentKit and target-native syntax; legacy ClaudeKit references are labeled migration or historical context. A full-text version is available at ${siteUrl}/llms-full.txt.`,
     '',

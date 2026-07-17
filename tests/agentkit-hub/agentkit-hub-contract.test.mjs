@@ -11,8 +11,11 @@ import {
   AGENTKIT_MIGRATION_MAPPING_BY_LOCALE,
 } from '../../src/data/guides/agentkit/agentkit-migration-mapping.ts';
 import {
-  AGENTKIT_MIGRATION_OPERATIONAL_FACTS,
-} from '../../src/data/guides/agentkit/agentkit-migration-operational-facts.ts';
+  AGENTKIT_CK_EXECUTABLE_DETECTORS,
+  AGENTKIT_CK_REMOVAL_POLICIES,
+  AGENTKIT_LIFECYCLE_STAGE_FACTS,
+  AGENTKIT_SUPPORT_CONTACTS,
+} from '../../src/data/guides/agentkit/agentkit-lifecycle-policy.ts';
 import {
   AGENTKIT_TARGET_CAPABILITIES,
 } from '../../src/data/guides/agentkit/agentkit-target-capabilities.ts';
@@ -22,7 +25,6 @@ import {
 } from '../../src/data/guides/agentkit/agentkit-app-facts.ts';
 import {
   isSafeCopyPayload,
-  toOperationalCommandView,
   toCommandView,
   viewsForPlatforms,
 } from '../../src/components/guides/agentkit/agentkit-command-view.ts';
@@ -93,29 +95,80 @@ test('Desktop App section keeps canonical links and rendered structure explicit'
   assert.match(source, /renderInlineCode/);
 });
 
-test('legacy cleanup section renders target verification and fail-closed removal boundaries', async () => {
+test('legacy cleanup section renders detector-first support and fail-closed removal boundaries', async () => {
   const guide = await readFile(new URL('AgentKitGuide.astro', COMPONENT_ROOT), 'utf8');
   const source = await readFile(new URL('agentkit/agentkit-legacy-skill-cleanup.astro', COMPONENT_ROOT), 'utf8');
 
-  assert.match(guide, /<AgentKitLegacySkillCleanup lang=\{currentLang\} \/>/);
+  assert.match(guide, /<AgentKitLegacySkillCleanup lang=\{currentLang\} includeStage7Details=\{includeStage7Details\} \/>/);
+  assert.match(guide, /import\.meta\.env\.AGENTKIT_INCLUDE_STAGE7_DETAILS/);
   assert.match(source, /id="legacy-skill-cleanup"/);
-  assert.match(source, /getAgentKitSkillInvocation/);
-  assert.match(source, /AGENTKIT_LEGACY_CLEANUP_SOURCES\.map/);
+  assert.match(source, /AGENTKIT_CK_EXECUTABLE_DETECTORS/);
+  assert.match(source, /AGENTKIT_CK_REMOVAL_POLICIES/);
+  assert.match(source, /AGENTKIT_SUPPORT_CONTACTS/);
   assert.match(source, /role="note"/);
   assert.match(source, /rel="noopener noreferrer"/);
-  assert.ok(source.indexOf('targetCards.map') < source.indexOf('previews.map'));
-  assert.ok(!source.includes('remove-local-ck-source'));
-  assert.ok(!source.includes('remove-global-ck-source'));
+  assert.match(source, /includeStage7Details/);
+  assert.match(source, /data-agentkit-stage-seven-unavailable/);
   assert.ok(!source.includes('rm -rf'));
   assert.ok(!source.includes('data-agentkit-copy'));
   assert.match(source, /renderInlineCode/);
 });
 
-test('the migration journey exposes exactly ten stable step ids', async () => {
+test('the migration journey renders exactly seven canonical stages in order', async () => {
   const source = await readFile(new URL('agentkit/agentkit-migration-checklist.astro', COMPONENT_ROOT), 'utf8');
-  const ids = [...source.matchAll(/id: 'step-(\d{2})-[^']+'/g)].map((match) => match[1]);
-  assert.deepEqual(ids, ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10']);
-  assert.match(source, /cleanupStageOrder[\s\S]*'legacy-removal',[\s\S]*'collision-check'/);
+  assert.match(source, /AGENTKIT_LIFECYCLE_STAGE_FACTS\.map/);
+  assert.deepEqual(
+    AGENTKIT_LIFECYCLE_STAGE_FACTS.map(({ id }) => id),
+    [
+      'backup',
+      'cleanup-ck-ownership',
+      'confirm-clean-scope',
+      'install-ak',
+      'verify-canary',
+      'observe',
+      'remove-ck-control-plane',
+    ],
+  );
+  assert.ok(AGENTKIT_LIFECYCLE_STAGE_FACTS.every((stage) => (
+    typeof stage.prerequisite === 'string'
+      && typeof stage.expectedSignal === 'string'
+      && typeof stage.failureAction === 'string'
+  )));
+});
+
+test('decision router and operator declaration precede every lifecycle action surface', async () => {
+  const guide = await readFile(new URL('AgentKitGuide.astro', COMPONENT_ROOT), 'utf8');
+  const hero = await readFile(new URL('agentkit/agentkit-hero-and-path-selector.astro', COMPONENT_ROOT), 'utf8');
+  const declaration = await readFile(new URL('agentkit/agentkit-operator-attestation.astro', COMPONENT_ROOT), 'utf8');
+  const mapping = await readFile(new URL('agentkit/agentkit-command-mapping.astro', COMPONENT_ROOT), 'utf8');
+
+  assert.ok(guide.indexOf('AgentKitHeroAndPathSelector') < guide.indexOf('AgentKitMigrationChecklist'));
+  assert.ok(guide.indexOf('AgentKitHeroAndPathSelector') < guide.indexOf('AgentKitKitTargets'));
+  assert.match(hero, /data-agentkit-lifecycle-router/);
+  assert.match(hero, /aria-live="polite"/);
+  for (const name of [
+    'goal',
+    'legacyOwnershipState',
+    'metadataHealth',
+    'scopeRelationship',
+    'cleanupPreviewResult',
+    'packageManagerEvidence',
+    'dataCriticality',
+    'pilotOptIn',
+  ]) assert.match(hero, new RegExp(`name="${name}"`));
+
+  for (const name of [
+    'canaryResult',
+    'startedAt',
+    'endedAt',
+    'incidentStatus',
+    'acknowledgedAdvisoryOnly',
+  ]) assert.match(declaration, new RegExp(`name="${name}"`));
+  assert.match(declaration, /data-agentkit-eligibility="blocked"/);
+  assert.match(mapping, /data-agentkit-downstream-actions hidden/);
+  assert.match(declaration, /advisory/i);
+  assert.doesNotMatch(declaration, /localStorage|sessionStorage|document\.cookie|history\.|URLSearchParams|CustomEvent/);
+  assert.doesNotMatch(declaration, />[^<]*(?:verified|authorized)[^<]*</i);
 });
 
 test('canonical commands can render macOS, Linux, and Windows views', () => {
@@ -134,23 +187,56 @@ test('copyable command payloads exactly match display and reject controls', () =
   }
 });
 
-test('remote installers and legacy removal are never blindly copyable', () => {
+test('remote installers and CK executable removal are never blindly copyable', () => {
   for (const id of ['install-unix', 'install-windows']) {
     const fact = AGENTKIT_CLI_FACTS.find((candidate) => candidate.id === id);
     assert.ok(fact);
     assert.equal(toCommandView(fact, 'macos', 'zsh').copyable, false);
   }
 
-  const removalFacts = AGENTKIT_MIGRATION_OPERATIONAL_FACTS.filter((fact) => fact.stage === 'legacy-removal');
-  assert.equal(removalFacts.length, 3);
-  assert.ok(removalFacts.every((fact) => !toOperationalCommandView(fact).copyable));
+  assert.ok(AGENTKIT_CK_REMOVAL_POLICIES.every((fact) => !fact.copyable));
 });
 
-test('operational stages preserve platform parity and staged removal safety', () => {
-  for (const stage of ['preflight', 'verify-install', 'collision-check', 'legacy-removal']) {
-    const facts = AGENTKIT_MIGRATION_OPERATIONAL_FACTS.filter((fact) => fact.stage === stage);
-    assert.deepEqual(facts.map((fact) => fact.platform).sort(), ['linux', 'macos', 'windows'], stage);
-  }
+test('detector-first removal covers supported managers and refuses unknown ownership', () => {
+  assert.deepEqual(
+    AGENTKIT_CK_EXECUTABLE_DETECTORS.map(({ platform }) => platform).sort(),
+    ['linux', 'macos', 'windows'],
+  );
+  assert.deepEqual(
+    AGENTKIT_CK_REMOVAL_POLICIES.map(({ packageManager }) => packageManager),
+    ['bun', 'npm', 'pnpm', 'yarn', 'unknown'],
+  );
+  assert.deepEqual(
+    Object.fromEntries(AGENTKIT_CK_REMOVAL_POLICIES.map((policy) => [policy.packageManager, policy.command])),
+    {
+      bun: 'bun remove -g claudekit-cli',
+      npm: 'npm uninstall -g claudekit-cli',
+      pnpm: 'pnpm remove -g claudekit-cli',
+      yarn: 'yarn global remove claudekit-cli',
+      unknown: null,
+    },
+  );
+  assert.ok(AGENTKIT_CK_REMOVAL_POLICIES.every(({ copyable }) => copyable === false));
+  assert.ok(AGENTKIT_CK_REMOVAL_POLICIES.every(({ packageManager }) => packageManager !== 'homebrew'));
+  assert.equal(
+    AGENTKIT_CK_REMOVAL_POLICIES.find(({ packageManager }) => packageManager === 'unknown')?.action,
+    'sanitize-and-escalate',
+  );
+});
+
+test('support lane has both official contacts and a sanitize-before-sharing contract', () => {
+  assert.deepEqual(AGENTKIT_SUPPORT_CONTACTS, [
+    {
+      id: 'claudekit-discord',
+      url: 'https://discord.com/invite/x7SwTSf3wc',
+      sharePolicy: 'sanitized-allowlist-only',
+    },
+    {
+      id: 'agentkit-support',
+      url: 'https://github.com/bestagentkits/agentkit-support',
+      sharePolicy: 'sanitized-allowlist-only',
+    },
+  ]);
 });
 
 test('legacy mappings resolve explicitly and Codex never uses Claude slash syntax', () => {

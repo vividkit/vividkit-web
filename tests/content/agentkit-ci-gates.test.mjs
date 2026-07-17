@@ -35,11 +35,16 @@ test('Astro output parser is ANSI-safe and rejects incomplete summaries', () => 
 test('type delta scope covers AgentKit data, routes, i18n, and migrated consumers', async () => {
   const baseline = JSON.parse(await readFile(new URL('scripts/agentkit-type-baseline.json', ROOT), 'utf8'));
   for (const file of [
+    'astro.config.mjs',
     'src/data/guides/agentkit/agentkit-cli-facts.ts',
+    'src/data/guides/cli-commands-cheatsheet.ts',
+    'src/scripts/agentkit-channel-controller.mjs',
     'src/i18n/en/agentkit.ts',
     'src/components/guides/agentkit/agentkit-kit-targets.astro',
     'src/components/guides/CkWithCodexGuide.astro',
     'src/components/guides/CoexistenceGuide.astro',
+    'src/components/guides/CLIGuide.astro',
+    'src/components/guides/CLICommandsGuide.astro',
     'src/components/guides/cli-guide/AgentKitCliSetup.astro',
     'src/components/guides/migrate/agentkit-target-matrix.astro',
     'src/pages/vi/guides/agentkit.astro',
@@ -47,7 +52,10 @@ test('type delta scope covers AgentKit data, routes, i18n, and migrated consumer
     assert.ok(baseline.scope.some((entry) => matchesScope(file, entry)), `${file} must be scoped`);
   }
   assert.deepEqual(baseline.allowedScopedFingerprints, []);
-  assert.equal(baseline.observedRepoWideErrors, 271);
+  assert.equal(baseline.historicalRepoWideErrors, 271);
+  assert.equal(baseline.observedRepoWideErrors, 485);
+  assert.equal(baseline.recordedAt, '2026-07-17');
+  assert.match(baseline.description, /not a global green claim/i);
 });
 
 test('type delta permits unrelated baseline errors and fails every new scoped diagnostic', () => {
@@ -72,12 +80,24 @@ test('type delta permits unrelated baseline errors and fails every new scoped di
 test('package scripts run every AgentKit suite and make verification part of build', async () => {
   const packageJson = JSON.parse(await readFile(new URL('package.json', ROOT), 'utf8'));
   assert.equal(packageJson.scripts['test:agentkit-content'], 'node --test tests/**/*.test.mjs');
-  assert.equal(packageJson.scripts['test:agentkit-postbuild'], 'node --test tests/content/guide-route-manifest.test.mjs');
+  assert.equal(
+    packageJson.scripts['test:agentkit-postbuild'],
+    'node --test tests/content/guide-route-manifest.test.mjs tests/content/agentkit-llm-export.test.mjs',
+  );
   assert.match(packageJson.scripts['verify:agentkit'], /test:agentkit-content/);
   assert.match(packageJson.scripts['verify:agentkit'], /check:agentkit-content/);
   assert.match(packageJson.scripts['verify:agentkit'], /check:agentkit-types/);
+  assert.equal(
+    packageJson.scripts['check:agentkit-truth-bundle'],
+    'node scripts/build-agentkit-truth-audit-bundle.mjs --check',
+  );
+  assert.match(packageJson.scripts['verify:agentkit'], /check:agentkit-truth-bundle/);
+  assert.match(packageJson.scripts['verify:agentkit'], /check:legacy-archive/);
   assert.match(packageJson.scripts.build, /^npm run verify:agentkit && astro build$/);
-  assert.match(packageJson.scripts.postbuild, /npm run test:agentkit-postbuild$/);
+  assert.match(packageJson.scripts.postbuild, /npm run test:agentkit-postbuild/);
+  assert.match(packageJson.scripts.postbuild, /check-agentkit-dist-channel-isolation\.mjs/);
+  assert.match(packageJson.scripts.postbuild, /^node scripts\/sync-legacy-archive-assets\.mjs/);
+  assert.match(packageJson.scripts.postbuild, /check-legacy-archive-boundary\.mjs --postbuild --check$/);
 });
 
 test('migrated target consumers import the canonical adapter instead of hardcoding resolved facts', async () => {
@@ -93,5 +113,14 @@ test('migrated target consumers import the canonical adapter instead of hardcodi
     assert.doesNotMatch(source, /ak kit (?:init|install) engineer --target/);
     assert.doesNotMatch(source, /['"]\/?\$?ak:\*['"]/);
     assert.doesNotMatch(source, /Verified stable targets · 2026-07-12/);
+    assert.doesNotMatch(source, /replace\([^\n]*--global/);
   }
+});
+
+test('public CLI command surfaces share the canonical release axis and never advertise a dev channel', async () => {
+  const cheatsheet = await readFile(new URL('src/data/guides/cli-commands-cheatsheet.ts', ROOT), 'utf8');
+  const notes = await readFile(new URL('src/data/guides/cli-command-notes.ts', ROOT), 'utf8');
+  assert.match(cheatsheet, /AgentKitCliReleaseChannel/);
+  assert.match(cheatsheet, /getAgentKitCliFactsByChannel/);
+  assert.doesNotMatch(`${cheatsheet}\n${notes}`, /stable\|beta\|dev|stable, beta, or dev|stable, beta hoặc dev/);
 });
