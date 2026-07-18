@@ -87,6 +87,7 @@ const AGENTKIT_PUBLICATION_IMPORT_ROOTS = [
   'tailwind.config.mjs',
   'package.json',
   'package-lock.json',
+  'vercel.json',
   'scripts/generate-llms-full.mjs',
   'scripts/agentkit-publication-source-closure.mjs',
   'scripts/check-agentkit-dist-channel-isolation.mjs',

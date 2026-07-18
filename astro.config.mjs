@@ -17,6 +17,26 @@ import {
 } from './scripts/agentkit-publication-source-closure.mjs';
 
 const PUBLICATION_FIXTURES = new Set(['hold', 'published']);
+const LEGACY_ARCHIVE_ROOT = fileURLToPath(new URL('./src/legacy-ck/', import.meta.url));
+const LEGACY_ARCHIVE_SITE_CONFIG = fileURLToPath(new URL(
+  './src/data/guides/legacy-archive-site-config.ts',
+  import.meta.url,
+));
+
+/** @returns {import('vite').Plugin} */
+function legacyArchiveSiteConfigPlugin() {
+  return {
+    name: 'legacy-archive-site-config',
+    enforce: 'pre',
+    /** @param {string} source @param {string | undefined} importer */
+    resolveId(source, importer) {
+      if (source === '@/data/constants' && importer?.startsWith(LEGACY_ARCHIVE_ROOT)) {
+        return LEGACY_ARCHIVE_SITE_CONFIG;
+      }
+      return null;
+    },
+  };
+}
 
 /** @param {Record<string, unknown>} fixture */
 function normalizedReleasePayload(fixture) {
@@ -103,7 +123,7 @@ export default defineConfig({
     }
   },
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [legacyArchiveSiteConfigPlugin(), tailwindcss()],
     define: {
       'import.meta.env.AGENTKIT_INCLUDE_STAGE7_DETAILS': JSON.stringify(String(publication.includeStage7Details)),
       'import.meta.env.AGENTKIT_PUBLICATION_STATUS': JSON.stringify(publication.status),

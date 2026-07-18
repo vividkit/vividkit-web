@@ -13,6 +13,7 @@ const ARCHIVE_ROOTS = [
 ];
 const CLOSURE_FILES = [
   'src/layouts/LegacyGuidesLayout.astro',
+  'src/layouts/MainLayout.astro',
   'src/data/guides/legacy-guide-catalog.ts',
   'src/data/guides/legacy-archive-provenance.ts',
   'src/data/guides/legacy-archive-coexistence-recipes.ts',
@@ -26,7 +27,7 @@ const CLOSURE_FILES = [
   'package-lock.json',
   'src/components/ui/animated-terminal-demo.astro',
   'src/components/ui/LLMProviderIcon.astro',
-  'src/data/constants.ts',
+  'src/data/guides/legacy-archive-site-config.ts',
   'scripts/sync-legacy-archive-assets.mjs',
   'public/guides/ccs_dashboard_dark.png',
   'public/guides/ccs_dashboard_light.png',
@@ -50,7 +51,7 @@ const ARCHIVE_EXTERNAL_IMPORT_ALLOWLIST = new Map([
   ['@/data/guides/legacy-archive-coexistence-recipes', { target: 'src/data/guides/legacy-archive-coexistence-recipes.ts', owner: 'legacy archive', reason: 'archive coexistence copy' }],
   ['@/components/ui/LLMProviderIcon.astro', { target: 'src/components/ui/LLMProviderIcon.astro', owner: 'legacy archive', reason: 'measured shared presentation primitive' }],
   ['@/components/ui/animated-terminal-demo.astro', { target: 'src/components/ui/animated-terminal-demo.astro', owner: 'legacy archive', reason: 'measured shared presentation primitive' }],
-  ['@/data/constants', { target: 'src/data/constants.ts', owner: 'legacy archive', reason: 'measured site identity constant' }],
+  ['@/data/constants', { target: 'src/data/guides/legacy-archive-site-config.ts', owner: 'legacy archive', reason: 'environment-independent historical site identity' }],
   ['lucide-astro', { target: 'package-lock.json', owner: 'legacy archive', reason: 'locked icon runtime' }],
   ['alpinejs', { target: 'package-lock.json', owner: 'legacy archive', reason: 'locked archived interaction runtime' }],
 ]);
