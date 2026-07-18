@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
@@ -102,12 +103,18 @@ test('package scripts run every AgentKit suite and make verification part of bui
 
 test('Vercel installs from the reviewed lockfile without mutating publication inputs', async () => {
   const vercelConfig = JSON.parse(await readFile(new URL('vercel.json', ROOT), 'utf8'));
+  const reviewedVercelConfig = JSON.parse(execFileSync(
+    'git',
+    ['show', 'HEAD:vercel.json'],
+    { cwd: ROOT, encoding: 'utf8' },
+  ));
   const publicationClosureSource = await readFile(
     new URL('scripts/agentkit-publication-source-closure.mjs', ROOT),
     'utf8',
   );
 
   assert.equal(vercelConfig.installCommand, 'npm ci');
+  assert.deepEqual(reviewedVercelConfig, { installCommand: 'npm ci' });
   assert.match(publicationClosureSource, /['"]vercel\.json['"]/);
 });
 

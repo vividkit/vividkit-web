@@ -20,5 +20,5 @@ export const AGENTKIT_TRUTH_AUDITED_SOURCE_PATHS = [...new Set([
   'scripts/agentkit-truth-audit-source-manifest.mjs',
   'scripts/audit-agentkit-truth.mjs',
   'scripts/build-agentkit-truth-audit-bundle.mjs',
-  ...AGENTKIT_PUBLICATION_SOURCE_CLOSURE,
+  ...AGENTKIT_PUBLICATION_SOURCE_CLOSURE.filter((relativePath) => relativePath !== 'vercel.json'),
 ])];
