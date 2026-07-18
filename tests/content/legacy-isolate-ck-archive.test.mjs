@@ -62,7 +62,36 @@ test('committed proof verifies current CK tree in auto and proof-only modes', as
   }
 });
 
-test('full-history lane verifies the reviewed Git object and ancestry', async () => {
+test('auto mode falls back to committed proof when only the isolation object is available', async () => {
+  const { selectLegacyArchiveVerificationLane } = await import(
+    '../../scripts/verify-legacy-archive-provenance.mjs'
+  );
+
+  assert.equal(typeof selectLegacyArchiveVerificationLane, 'function');
+  assert.equal(selectLegacyArchiveVerificationLane('auto', {
+    hasIsolationObject: true,
+    hasSourceObject: false,
+  }), 'proof-only');
+  assert.equal(selectLegacyArchiveVerificationLane('auto', {
+    hasIsolationObject: true,
+    hasSourceObject: true,
+  }), 'full-history');
+});
+
+test('full-history lane verifies the reviewed Git object and ancestry', async (t) => {
+  const objects = await Promise.all([sourceCommit, isolationCommit].map(async (commit) => {
+    try {
+      await execFileAsync('git', ['cat-file', '-e', `${commit}^{commit}`], { cwd: rootPath });
+      return true;
+    } catch {
+      return false;
+    }
+  }));
+  if (!objects.every(Boolean)) {
+    t.skip('reviewed Git objects are unavailable in this shallow checkout');
+    return;
+  }
+
   const { stdout } = await run('scripts/verify-legacy-archive-provenance.mjs', [
     '--repo', rootPath,
     '--mode', 'full-history',
@@ -149,6 +178,27 @@ test('legacy banner is fixed, immutable and marks normalized historical main', a
   assert.match(layout, /data-legacy-snapshot/);
   assert.match(layout, /noindex,follow/);
   assert.match(layout, /LEGACY_ARCHIVE_PROVENANCE/);
+});
+
+test('archive canonical verification uses the public vividkit.dev identity without environment overrides', async () => {
+  const mainLayout = await readFile(new URL('../../src/layouts/MainLayout.astro', import.meta.url), 'utf8');
+  const postbuildVerifier = await readFile(new URL('../../scripts/legacy-archive-postbuild.mjs', import.meta.url), 'utf8');
+  const boundaryVerifier = await readFile(new URL('../../scripts/check-legacy-archive-boundary.mjs', import.meta.url), 'utf8');
+  const astroConfig = await readFile(new URL('../../astro.config.mjs', import.meta.url), 'utf8');
+  const archiveSiteConfig = await readFile(
+    new URL('../../src/data/guides/legacy-archive-site-config.ts', import.meta.url),
+    'utf8',
+  ).catch(() => '');
+
+  assert.match(mainLayout, /PUBLIC_SITE_URL\s*\|\|\s*['"]https:\/\/vividkit\.dev['"]/);
+  assert.match(postbuildVerifier, /https:\/\/vividkit\.dev/);
+  assert.doesNotMatch(`${mainLayout}\n${postbuildVerifier}`, /https:\/\/vividkit\.com/);
+  assert.match(boundaryVerifier, /src\/layouts\/MainLayout\.astro/);
+  assert.match(boundaryVerifier, /src\/data\/guides\/legacy-archive-site-config\.ts/);
+  assert.match(astroConfig, /legacy-archive-site-config/);
+  assert.match(astroConfig, /src\/legacy-ck/);
+  assert.match(archiveSiteConfig, /claudekitReferralUrl:\s*['"]https:\/\/claudekit\.cc['"]/);
+  assert.doesNotMatch(archiveSiteConfig, /import\.meta\.env|process\.env/);
 });
 
 test('restore requires exact isolation commit and refuses historical source or ambiguous flags before mutation', async () => {

@@ -100,6 +100,17 @@ test('package scripts run every AgentKit suite and make verification part of bui
   assert.match(packageJson.scripts.postbuild, /check-legacy-archive-boundary\.mjs --postbuild --check$/);
 });
 
+test('Vercel installs from the reviewed lockfile without mutating publication inputs', async () => {
+  const vercelConfig = JSON.parse(await readFile(new URL('vercel.json', ROOT), 'utf8'));
+  const publicationClosureSource = await readFile(
+    new URL('scripts/agentkit-publication-source-closure.mjs', ROOT),
+    'utf8',
+  );
+
+  assert.equal(vercelConfig.installCommand, 'npm ci');
+  assert.match(publicationClosureSource, /['"]vercel\.json['"]/);
+});
+
 test('migrated target consumers import the canonical adapter instead of hardcoding resolved facts', async () => {
   for (const file of [
     'src/components/guides/CkWithCodexGuide.astro',
