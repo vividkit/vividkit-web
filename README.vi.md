@@ -52,12 +52,13 @@ Hỗ trợ:
 
 ## Công nghệ
 
-- Astro `6.0.2` với static output
+- Astro `7.1.0` với static output
 - TypeScript `5.9.3` ở strict mode
-- Tailwind CSS `4.1.17` và LightningCSS
+- Tailwind CSS `4.3.3` và LightningCSS
 - Alpine.js `3.15.2` cùng các local controller nhỏ
-- Vercel adapter `10.0.0` và Web Analytics
+- Vercel adapter `11.0.3` và Web Analytics
 - Astro i18n với English mặc định và route Tiếng Việt `/vi`
+- Build trên Vercel dùng Node `22.x` và npm `10.x` do Vercel quản lý. Bằng chứng release local/CI dùng đúng cặp Node `22.21.1` + npm `10.9.4` qua `.nvmrc`, `packageManager` và lệnh kiểm tra explicit bên dưới.
 
 ## Development
 
@@ -74,7 +75,10 @@ Verification tập trung:
 npm run verify:agentkit
 npm run check:agentkit-content
 npm run check:legacy-archive
+npm run verify:exact-toolchain
 ```
+
+Lệnh kiểm tra exact-toolchain là gate tái lập chạy explicit. Lệnh này không nằm trong install, `build` hoặc hosted path của Vercel.
 
 `npm run build` chạy AgentKit verification suite trước Astro và kiểm tra generated output sau build.
 

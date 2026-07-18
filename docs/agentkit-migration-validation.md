@@ -52,6 +52,63 @@ The browser matrix covered English/Vietnamese, Hub/CLI/CLI Commands/Coexistence,
 
 No dependency fix, production deploy, public beta publication, online release-drift report, real coexistence pilot, or real maintainer-runtime activation was performed.
 
+## Observed Offline Snapshot — 2026-07-18 (Astro 7 dependency remediation)
+
+Append-only checkpoint for the Astro `7.1.0` / Vercel `11.0.3` / Tailwind `4.3.3` dependency remediation on branch `codex/astro7-vercel11-grok-migration`. This block does **not** replace or amend the historical 2026-07-17 snapshot above.
+
+### Toolchain and direct pins (observed)
+
+| Item | Pin / version |
+|---|---|
+| Hosted Node | Vercel-managed `22.x`; minor/patch may roll within the selected major |
+| Hosted npm | Compatible `10.x` line |
+| Exact evidence pair | Node `22.21.1` + npm `10.9.4`; `.nvmrc`, `packageManager`, and explicit `npm run verify:exact-toolchain` |
+| Enforcement boundary | Exact verification is opt-in for local/CI evidence and is not part of install, `build`, or hosted Vercel execution |
+| `astro` | `7.1.0` (exact) |
+| `@astrojs/vercel` | `11.0.3` (exact) |
+| `@astrojs/check` | `0.9.9` (exact) |
+| `tailwindcss` / `@tailwindcss/vite` | `4.3.3` (exact) |
+| `puppeteer` | `24.43.1` (exact) |
+| `alpinejs` package.json range | `^3.15.2` (unchanged) |
+| `alpinejs` package-lock resolved | `3.15.2` (restored from unintended `3.15.12` via `npm install alpinejs@3.15.2 --package-lock-only --ignore-scripts`; no hand-edit; no force/override) |
+
+### Source identities after lock restore + closure/bundle regeneration
+
+| Evidence | SHA-256 / identity |
+|---|---|
+| Publication source closure | `b8ead47c32aad5ed59305c0e18f8691baf8ad9738ef81caa3b6f5056603e02be` |
+| Truth-audit bundle | `2e37dc922e4af30b3cd5da3df71270ee9b11e57ce167e3d673c5b9411b0a8502` |
+| Archive source closure root | `dd79f1aefb94c7e787fdb112d46db0ed1eae8ef2a22cf3b628cc0f8e6f61a3fe` (268 measured files) |
+| Archive renderedBody root | `a6184a05871e0834c15ad2dccf0e03e8fc1f7513929873ebfd02235c1ecec491` (routeCount 58) |
+| Archive CSS budget (live/archive bytes) | `613502` / `1085652` (asset/JS counts unchanged) |
+| Publication record status | `hold` (approval/pilot/reviewer/approver remain null) |
+
+### Product functional gates (remediation window)
+
+| Gate | Observed / claimed result |
+|---|---|
+| Clean installs | Exact Node `22.21.1` / npm `10.9.4` and compatible Node `22.19.0` / npm `10.9.3` both completed fresh `npm ci` proofs |
+| Exact verifier | Passes only for `22.21.1` / `10.9.4`; the explicit alternate-pair probe refuses both mismatches without affecting install/build |
+| Content suite | 172 total; 171 pass; 0 fail; 1 intentional skip |
+| Content/type scope | 876 source files; scoped type delta 0; reviewed repository-wide baseline remains 485 errors |
+| Static output | HOLD and published fixture both built 132 pages |
+| Postbuild and graph | 8/8; HOLD 540 files; published fixture 542 files |
+| Browser matrix | HOLD 274/274; published fixture 274/274 |
+| Tracked publication | remains **HOLD** |
+
+### Dependency audit (2026-07-18)
+
+| Scope | Result |
+|---|---|
+| Production-tree audit (`npm audit --omit=dev`) | **0** advisories |
+| Full all-deps audit (`npm audit`) | **3 high**, 0 critical/moderate/low |
+
+Full all-deps high path (build-only adapter chain, not production runtime tree):
+
+`@astrojs/vercel@11.0.3` → `@vercel/routing-utils@5.3.3` → `path-to-regexp@6.1.0` ([GHSA-9wv6-86v2-598j](https://github.com/advisories/GHSA-9wv6-86v2-598j)).
+
+**These 3 high findings are unresolved and are not risk-accepted.** No advisory disposition, override, force fix, or version unpin was performed in this checkpoint. The complete offline Product gate is green, but publication and release remain **HOLD** pending a separately reviewed release decision. No deploy or publication action was performed.
+
 ## Phase 8 Result Record Schema
 
 ### 1. Validation Identity

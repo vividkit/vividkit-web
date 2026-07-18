@@ -52,12 +52,13 @@ Support:
 
 ## Technology
 
-- Astro `6.0.2` with static output
+- Astro `7.1.0` with static output
 - TypeScript `5.9.3` in strict mode
-- Tailwind CSS `4.1.17` and LightningCSS
+- Tailwind CSS `4.3.3` and LightningCSS
 - Alpine.js `3.15.2` plus small local controllers
-- Vercel adapter `10.0.0` and Web Analytics
+- Vercel adapter `11.0.3` and Web Analytics
 - Astro i18n with English default and Vietnamese `/vi` routes
+- Hosted Vercel builds use Vercel-managed Node `22.x` and npm `10.x`. Local/CI release evidence uses the exact Node `22.21.1` + npm `10.9.4` pair through `.nvmrc`, `packageManager`, and the explicit verifier below.
 
 ## Development
 
@@ -74,7 +75,10 @@ Focused verification:
 npm run verify:agentkit
 npm run check:agentkit-content
 npm run check:legacy-archive
+npm run verify:exact-toolchain
 ```
+
+The exact-toolchain verifier is an explicit reproducibility gate. It is not part of install, `build`, or the hosted Vercel path.
 
 `npm run build` runs the AgentKit verification suite before Astro and the generated-output checks after the build.
 

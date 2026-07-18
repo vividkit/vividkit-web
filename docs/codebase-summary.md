@@ -1,8 +1,8 @@
 # VividKit Web — Codebase Summary
 
-**Last updated:** July 17, 2026
+**Last updated:** July 18, 2026
 
-**Framework:** Astro 6.0.2, static output
+**Framework:** Astro 7.1.0, static output
 
 **Language:** TypeScript 5.9.3, strict configuration
 
@@ -18,14 +18,15 @@ VividKit Web is a bilingual static site and guide system for AgentKit (`ak`). En
 
 | Concern | Verified implementation |
 |---|---|
-| Rendering | Astro 6.0.2 with `output: 'static'` |
+| Rendering | Astro 7.1.0 with `output: 'static'` |
 | Language | TypeScript 5.9.3; Astro strict config |
-| Styling | Tailwind CSS 4.1.17 through Vite; LightningCSS minification |
+| Styling | Tailwind CSS 4.3.3 through Vite; LightningCSS minification |
 | Interactivity | Alpine.js 3.15.2 and local browser controllers |
 | Images | Astro Sharp service |
-| Deployment | `@astrojs/vercel` 10.0.0 with Web Analytics |
+| Deployment | `@astrojs/vercel` 11.0.3 with Web Analytics |
 | Localization | Astro i18n; English default, Vietnamese `/vi` |
 | Tests | Node test runner plus browser/UI scripts |
+| Toolchain boundary | Vercel-managed Node `22.x` + npm `10.x` for hosted builds; explicit local/CI evidence pins Node `22.21.1` + npm `10.9.4` through `.nvmrc`, `packageManager`, and `npm run verify:exact-toolchain` |
 
 ## Repository Structure
 

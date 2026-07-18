@@ -3,17 +3,17 @@
   "sourceClosure": {
     "algorithm": "sha256-length-prefixed-source-closure-v1",
     "fileCount": 268,
-    "rootSha256": "65224ebb398098f16e7f3b1bb961386a56254f12d9901244a9a1ef5e005d7d20"
+    "rootSha256": "dd79f1aefb94c7e787fdb112d46db0ed1eae8ef2a22cf3b628cc0f8e6f61a3fe"
   },
   "renderedBody": {
     "algorithm": "sha256-normalized-main-v1",
     "routeCount": 58,
-    "rootSha256": "9307806eeff3c9c0436179f2ec67415bd0d3e0ec7fa75a8bab326a4cfe996779"
+    "rootSha256": "a6184a05871e0834c15ad2dccf0e03e8fc1f7513929873ebfd02235c1ecec491"
   },
   "cssBudget": {
     "sentinel": "--vividkit-legacy-tailwind-boundary:1",
-    "liveReachableBytes": 604317,
-    "archiveReachableBytes": 1071183,
+    "liveReachableBytes": 613502,
+    "archiveReachableBytes": 1085652,
     "liveAssetCount": 1,
     "archiveAssetCount": 3,
     "liveJsAssetCount": 4,

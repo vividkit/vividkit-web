@@ -1,6 +1,6 @@
 # What is VividKit?
 
-**Last Updated:** January 8, 2026
+**Last Updated:** July 18, 2026
 **Document Type:** Architecture Overview
 **Status:** Active
 
@@ -17,7 +17,7 @@
 
 ### B. VividKit Web (Production)
 - **Định nghĩa:** Marketing & documentation site cho VividKit Desktop
-- **Tech stack:** Astro 5.x SSG + Tailwind CSS v4 + TypeScript + Alpine.js
+- **Tech stack:** Astro 7.1.0 SSG + Tailwind CSS 4.3.3 + TypeScript + Alpine.js
 - **Vai trò hiện tại:**
   1. Product landing page (waitlist collection)
   2. Educational hub (60+ ClaudeKit CLI commands)
@@ -79,9 +79,9 @@
 ### 3.1 Technology Stack
 
 **Frontend Framework**
-- Astro 5.16.4: Static Site Generation
+- Astro 7.1.0: Static Site Generation
 - TypeScript 5.9.3: Strict mode type safety
-- Tailwind CSS 4.1.17: Utility-first styling
+- Tailwind CSS 4.3.3: Utility-first styling
 - Alpine.js 3.15.2: Lightweight interactivity
 
 **Styling & UI**
