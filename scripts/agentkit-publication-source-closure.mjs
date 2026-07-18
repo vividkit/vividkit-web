@@ -268,6 +268,18 @@ function currentTransitiveClosure() {
 export const AGENTKIT_PUBLICATION_SOURCE_CLOSURE = currentTransitiveClosure();
 
 export function canonicalizeAgentKitPublicationSource(relativePath, source) {
+  if (relativePath === 'vercel.json') {
+    let config;
+    try {
+      config = JSON.parse(source);
+    } catch {
+      throw new Error('Vercel publication config must be valid JSON');
+    }
+    if (!config || typeof config !== 'object' || Array.isArray(config) || config.installCommand !== 'npm ci') {
+      throw new Error('Vercel publication config must preserve the reviewed npm ci install contract');
+    }
+    return JSON.stringify({ installCommand: config.installCommand });
+  }
   if (relativePath !== 'src/data/guides/agentkit/agentkit-publication-policy.ts') return source;
   const start = source.indexOf(RECORD_START);
   const end = source.indexOf(RECORD_END);

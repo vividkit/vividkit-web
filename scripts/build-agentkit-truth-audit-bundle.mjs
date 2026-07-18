@@ -28,6 +28,39 @@ function sha256(value) {
   return createHash('sha256').update(value).digest('hex');
 }
 
+function embeddedJson(source, name) {
+  if (typeof source !== 'string') return null;
+  const prefix = `const ${name} = `;
+  const line = source.split('\n').find((candidate) => candidate.startsWith(prefix));
+  if (!line?.endsWith(';')) return null;
+  try {
+    return JSON.parse(line.slice(prefix.length, -1));
+  } catch {
+    return null;
+  }
+}
+
+export function describeAgentKitTruthBundleDrift(current, expected) {
+  if (current === null) return ['bundle-missing'];
+  const currentDigests = embeddedJson(current, 'EMBEDDED_SOURCE_DIGESTS');
+  const expectedDigests = embeddedJson(expected, 'EMBEDDED_SOURCE_DIGESTS');
+  if (!currentDigests || !expectedDigests) return ['bundle-structure-drift'];
+
+  const currentPaths = new Set(Object.keys(currentDigests));
+  const expectedPaths = new Set(Object.keys(expectedDigests));
+  const details = [];
+  for (const relativePath of [...expectedPaths].sort()) {
+    if (!currentPaths.has(relativePath)) details.push(`source-added:${relativePath}`);
+    else if (currentDigests[relativePath] !== expectedDigests[relativePath]) {
+      details.push(`source-changed:${relativePath}`);
+    }
+  }
+  for (const relativePath of [...currentPaths].sort()) {
+    if (!expectedPaths.has(relativePath)) details.push(`source-removed:${relativePath}`);
+  }
+  return details.length ? details : ['non-source-input-drift'];
+}
+
 function inlineSanitizer(source) {
   return source
     .replace(/^export const /gm, 'const ')
@@ -294,6 +327,9 @@ async function main() {
     const current = await readFile(options.output, 'utf8').catch(() => null);
     if (current !== expected) {
       process.stderr.write('AgentKit truth audit bundle is missing or stale.\n');
+      for (const detail of describeAgentKitTruthBundleDrift(current, expected).slice(0, 20)) {
+        process.stderr.write(`AgentKit truth audit drift: ${detail}\n`);
+      }
       process.exitCode = 1;
     }
     return;

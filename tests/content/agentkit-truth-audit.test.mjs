@@ -15,6 +15,7 @@ import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 
 import { AGENTKIT_TRUTH_AUDITED_SOURCE_PATHS } from '../../scripts/agentkit-truth-audit-source-manifest.mjs';
+import { describeAgentKitTruthBundleDrift } from '../../scripts/build-agentkit-truth-audit-bundle.mjs';
 
 const ROOT = fileURLToPath(new URL('../../', import.meta.url));
 const AUDIT = join(ROOT, 'scripts/audit-agentkit-truth.mjs');
@@ -48,6 +49,24 @@ function createAuditRepo() {
   cpSync(join(ROOT, 'package.json'), join(repo, 'package.json'));
   return repo;
 }
+
+test('bundle drift diagnostics disclose only bounded relative source identities', () => {
+  const bundle = (digests) => `const EMBEDDED_SOURCE_DIGESTS = ${JSON.stringify(digests)};\n`;
+  assert.deepEqual(describeAgentKitTruthBundleDrift(null, bundle({})), ['bundle-missing']);
+  assert.deepEqual(describeAgentKitTruthBundleDrift('invalid', bundle({})), ['bundle-structure-drift']);
+  assert.deepEqual(
+    describeAgentKitTruthBundleDrift(
+      bundle({ 'src/removed.ts': 'a', 'src/changed.ts': 'a' }),
+      bundle({ 'src/added.ts': 'b', 'src/changed.ts': 'b' }),
+    ),
+    [
+      'source-added:src/added.ts',
+      'source-changed:src/changed.ts',
+      'source-removed:src/removed.ts',
+    ],
+  );
+  assert.deepEqual(describeAgentKitTruthBundleDrift(bundle({}), bundle({})), ['non-source-input-drift']);
+});
 
 test('audit CLI accepts explicit worktree/channel/format/check and emits allowlisted JSON only', () => {
   for (const channel of ['stable', 'beta']) {

@@ -222,6 +222,22 @@ test('every enumerated publication source mutation changes the closure', async (
   for (const relativePath of AGENTKIT_PUBLICATION_SOURCE_CLOSURE) {
     const target = join(temp, relativePath);
     const original = await readFile(target);
+    if (relativePath === 'vercel.json') {
+      const config = JSON.parse(original);
+      await writeFile(target, `${JSON.stringify({ platformMetadata: true, ...config })}\n`);
+      assert.equal(
+        await computeAgentKitPublicationKnownSourceClosure(temp),
+        baseline,
+        'platform-added Vercel metadata must not rewrite the reviewed install contract',
+      );
+      await writeFile(target, `${JSON.stringify({ ...config, installCommand: 'npm install' })}\n`);
+      await assert.rejects(
+        computeAgentKitPublicationKnownSourceClosure(temp),
+        /reviewed npm ci install contract/,
+      );
+      await writeFile(target, original);
+      continue;
+    }
     await writeFile(target, Buffer.concat([original, Buffer.from('\n// publication-closure-mutation\n')]));
     assert.notEqual(await computeAgentKitPublicationKnownSourceClosure(temp), baseline, relativePath);
     await writeFile(target, original);
