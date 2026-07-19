@@ -1,5 +1,6 @@
 ---
 import { getLangFromUrl, type Language } from '@/i18n';
+import { getAgentKitSsrChannelState } from '@/data/guides/agentkit/agentkit-channel-policy.mjs';
 import AgentKitCliHero from './cli-guide/AgentKitCliHero.astro';
 import AgentKitCliSetup from './cli-guide/AgentKitCliSetup.astro';
 import AgentKitCliLifecycle from './cli-guide/AgentKitCliLifecycle.astro';
@@ -9,12 +10,22 @@ interface Props { lang?: Language }
 const { lang } = Astro.props;
 const currentLang = lang ?? getLangFromUrl(Astro.url);
 const isVi = currentLang === 'vi';
+const publicationStatus = import.meta.env.AGENTKIT_PUBLICATION_STATUS ?? 'hold';
+const channelState = getAgentKitSsrChannelState(Astro.url.search, publicationStatus);
 ---
 
-<div class="mt-6" data-agentkit-channel-root data-agentkit-surface="cli" data-agentkit-locale={currentLang} data-agentkit-active-channel="stable">
+<div
+  class="mt-6"
+  data-agentkit-channel-root
+  data-agentkit-surface="cli"
+  data-agentkit-locale={currentLang}
+  data-agentkit-requested-channel={channelState.requestedChannel}
+  data-agentkit-active-channel={channelState.activeChannel}
+  data-agentkit-channel-status={channelState.status}
+>
+  <AgentKitCliHero lang={currentLang} />
   <AgentKitChannelSwitcher lang={currentLang} />
   <div class="space-y-10" data-agentkit-stable-facts>
-    <AgentKitCliHero lang={currentLang} />
     <AgentKitCliSetup lang={currentLang} />
     <AgentKitCliLifecycle lang={currentLang} />
     <a href={isVi ? '/vi/guides/cli-commands' : '/guides/cli-commands'} class="block rounded-2xl border border-violet-200 bg-violet-50 p-5 transition-colors duration-200 hover:border-violet-400 hover:bg-violet-100 focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 active:bg-violet-200 dark:border-violet-500/20 dark:bg-violet-950/20 dark:hover:bg-violet-900/30 dark:active:bg-violet-900/40">

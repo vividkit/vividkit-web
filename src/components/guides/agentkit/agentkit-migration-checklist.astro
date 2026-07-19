@@ -19,7 +19,8 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<section id="migration-journey" aria-labelledby="migration-journey-heading" class="scroll-mt-28 pt-16">
+<section id="clean-cutover" aria-labelledby="migration-journey-heading" class="scroll-mt-40 pt-16 lg:scroll-mt-28">
+  <span id="migration-journey" class="block scroll-mt-40 lg:scroll-mt-28" aria-hidden="true"></span>
   <div class="max-w-3xl">
     <h2 id="migration-journey-heading" class="font-heading text-3xl font-bold text-slate-950 text-balance dark:text-slate-50">
       {t('agentkit.journey.heading')}
@@ -71,7 +72,9 @@ const t = useTranslations(lang);
                   <CircleDashed class="h-3.5 w-3.5" aria-hidden="true" />
                   <span data-agentkit-stage-label-text>{t('agentkit.lifecycle.status.blocked')}</span>
                 </span>
-                <span class="text-xl font-normal text-slate-400 transition-transform duration-200 group-open:rotate-45" aria-hidden="true">+</span>
+                <span class="flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden" aria-hidden="true">
+                  <span class="text-xl font-normal text-slate-400 transition-transform duration-200 motion-reduce:transition-none group-open:rotate-45">+</span>
+                </span>
               </span>
             </summary>
 

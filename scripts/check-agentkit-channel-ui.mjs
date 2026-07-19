@@ -11,11 +11,16 @@ export const AGENTKIT_CHANNEL_UI_FALLBACK_QUERIES = [
   '?channel=Beta',
   '?channel=BETA',
   '?channel=beta&channel=beta',
+  '?channel=stable&channel=beta',
 ];
 const SURFACE_PATHS = new Set(AGENTKIT_CHANNEL_UI_SURFACES.flatMap((path) => [path, `/vi${path}`]));
 const VIEW_CASES = [
-  { name: 'mobile-light', width: 375, height: 812, theme: 'light' },
-  { name: 'mobile-dark', width: 375, height: 812, theme: 'dark' },
+  { name: 'mobile-light', width: 390, height: 844, theme: 'light' },
+  { name: 'mobile-dark', width: 390, height: 844, theme: 'dark' },
+  { name: 'tablet-768-light', width: 768, height: 1024, theme: 'light' },
+  { name: 'tablet-768-dark', width: 768, height: 1024, theme: 'dark' },
+  { name: 'tablet-1024-light', width: 1024, height: 768, theme: 'light' },
+  { name: 'tablet-1024-dark', width: 1024, height: 768, theme: 'dark' },
   { name: 'desktop-light', width: 1440, height: 900, theme: 'light' },
   { name: 'desktop-dark', width: 1440, height: 900, theme: 'dark' },
 ];
@@ -77,6 +82,9 @@ async function inspectPage(page, expected, requestPaths) {
       stableHidden: stableFacts?.hasAttribute('hidden') ?? null,
       betaHidden: betaView?.hasAttribute('hidden') ?? null,
       noticeHidden: notice?.hasAttribute('hidden') ?? null,
+      noticeRole: notice?.getAttribute('role') ?? 'missing',
+      choiceCount: root?.querySelectorAll('[data-agentkit-channel-choice]').length ?? 0,
+      publicationState: root?.querySelector('[data-agentkit-publication-state]')?.getAttribute('data-agentkit-publication-state') ?? 'missing',
       betaVersionVisible: betaView?.textContent?.includes('2.3.1-beta.1') ?? false,
       canonical,
       path: location.pathname,
@@ -94,7 +102,7 @@ async function inspectPage(page, expected, requestPaths) {
   }, { expected, surfacePaths: [...SURFACE_PATHS], requestPaths });
 }
 
-async function runSurfaceCase({ browser, baseUrl, route, testCase, expected }) {
+async function runSurfaceCase({ browser, baseUrl, route, testCase, expected, publicationExpectation }) {
   const page = await browser.newPage();
   const failures = [];
   const requestPaths = [];
@@ -104,9 +112,11 @@ async function runSurfaceCase({ browser, baseUrl, route, testCase, expected }) {
   await page.setCacheEnabled(false);
   await page.setViewport({ width: testCase.width, height: testCase.height, deviceScaleFactor: 1 });
   await page.evaluateOnNewDocument((theme) => localStorage.setItem('theme', theme), testCase.theme);
-  const query = expected === 'stable' ? '' : '?channel=beta';
+  const isStableView = expected === 'stable';
+  const isPublishedView = expected === 'published';
+  const query = isStableView ? '' : '?channel=beta';
   const response = await page.goto(`${baseUrl}${route}${query}`, { waitUntil: 'domcontentloaded', timeout: 30_000 });
-  const expectedStatus = expected === 'published' ? 'published' : expected === 'hold' ? 'unavailable' : 'stable';
+  const expectedStatus = isPublishedView ? 'published' : isStableView ? 'stable' : 'unavailable';
   await page.waitForFunction(
     (status) => document.querySelector('[data-agentkit-channel-root]')?.dataset.agentkitChannelStatus === status,
     { timeout: 10_000 },
@@ -120,15 +130,18 @@ async function runSurfaceCase({ browser, baseUrl, route, testCase, expected }) {
   pushFailure(metrics.overflow > 1, failures, `overflow=${metrics.overflow}px`);
   pushFailure(pageErrorCount > 0, failures, `page-errors=${pageErrorCount}`);
   pushFailure(new URL(metrics.canonical).search !== '', failures, 'canonical-query');
-  pushFailure(metrics.stableHidden !== (expected === 'published'), failures, `stableHidden=${metrics.stableHidden}`);
-  pushFailure(metrics.betaHidden !== (expected !== 'published'), failures, `betaHidden=${metrics.betaHidden}`);
-  pushFailure(metrics.active !== (expected === 'published' ? 'beta' : 'stable'), failures, `active=${metrics.active}`);
-  pushFailure(metrics.requested !== (expected === 'stable' ? 'stable' : 'beta'), failures, `requested=${metrics.requested}`);
-  pushFailure(metrics.betaVersionVisible !== (expected === 'published'), failures, `betaVersionVisible=${metrics.betaVersionVisible}`);
-  pushFailure(metrics.betaRequests.length !== (expected === 'published' ? 1 : 0), failures, `betaRequests=${metrics.betaRequests.length}`);
+  pushFailure(metrics.stableHidden !== isPublishedView, failures, `stableHidden=${metrics.stableHidden}`);
+  pushFailure(metrics.betaHidden !== !isPublishedView, failures, `betaHidden=${metrics.betaHidden}`);
+  pushFailure(metrics.active !== (isPublishedView ? 'beta' : 'stable'), failures, `active=${metrics.active}`);
+  pushFailure(metrics.requested !== (isStableView ? 'stable' : 'beta'), failures, `requested=${metrics.requested}`);
+  pushFailure(metrics.betaVersionVisible !== isPublishedView, failures, `betaVersionVisible=${metrics.betaVersionVisible}`);
+  pushFailure(metrics.betaRequests.length !== (isPublishedView ? 1 : 0), failures, `betaRequests=${metrics.betaRequests.length}`);
+  pushFailure(metrics.choiceCount !== (publicationExpectation === 'hold' ? 0 : 2), failures, `choice-count=${metrics.choiceCount}`);
+  pushFailure(metrics.publicationState !== publicationExpectation, failures, `publication-state=${metrics.publicationState}`);
+  pushFailure(metrics.noticeRole !== 'status', failures, `notice-role=${metrics.noticeRole}`);
   pushFailure(metrics.surfaceLinkCount === 0, failures, 'surface-links-missing');
   if (expected !== 'stable') {
-    pushFailure(expected === 'published' && !metrics.surfaceLinksPreserveBeta, failures, 'surface-link-channel-drift');
+    pushFailure(isPublishedView && !metrics.surfaceLinksPreserveBeta, failures, 'surface-link-channel-drift');
     pushFailure(!metrics.offSurfaceLinksDropBeta, failures, 'off-surface-channel-leak');
   } else {
     pushFailure(!metrics.surfaceLinksDropBeta, failures, 'stable-surface-link-channel-leak');
@@ -141,9 +154,13 @@ async function runSurfaceCase({ browser, baseUrl, route, testCase, expected }) {
 async function runNavigationCase({ browser, baseUrl, route, expected }) {
   const page = await browser.newPage();
   const failures = [];
-  await page.goto(`${baseUrl}${route}`, { waitUntil: 'domcontentloaded' });
+  await page.goto(`${baseUrl}${route}?ref=nav#recovery`, { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => document.querySelector('[data-agentkit-channel-root]')?.dataset.agentkitChannelStatus === 'stable');
-  await page.click('[data-agentkit-channel-choice="beta"]');
+  if (expected === 'hold') {
+    await page.goto(`${baseUrl}${route}?ref=nav&channel=beta#recovery`, { waitUntil: 'domcontentloaded' });
+  } else {
+    await page.click('[data-agentkit-channel-choice="beta"]');
+  }
   const betaStatus = expected === 'published' ? 'published' : 'unavailable';
   await page.waitForFunction((status) => document.querySelector('[data-agentkit-channel-root]')?.dataset.agentkitChannelStatus === status, {}, betaStatus);
   await page.goBack({ waitUntil: 'domcontentloaded' });
@@ -154,8 +171,12 @@ async function runNavigationCase({ browser, baseUrl, route, expected }) {
     active: root.dataset.agentkitActiveChannel,
     status: root.dataset.agentkitChannelStatus,
     search: location.search,
+    hash: location.hash,
   }));
-  pushFailure(state.search !== '?channel=beta', failures, `history-search=${state.search}`);
+  const params = new URLSearchParams(state.search);
+  pushFailure(params.get('ref') !== 'nav', failures, `history-ref=${params.get('ref')}`);
+  pushFailure(params.get('channel') !== 'beta', failures, `history-channel=${params.get('channel')}`);
+  pushFailure(state.hash !== '#recovery', failures, `history-hash=${state.hash}`);
   pushFailure(state.status !== betaStatus, failures, `history-status=${state.status}`);
   await page.close();
   return { route, case: `history-${expected}`, ...state, failures };
@@ -166,6 +187,22 @@ async function runKeyboardCase({ browser, baseUrl, route, expected }) {
   const failures = [];
   await page.goto(`${baseUrl}${route}`, { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => document.querySelector('[data-agentkit-channel-root]')?.dataset.agentkitChannelStatus === 'stable');
+  if (expected === 'hold') {
+    await page.keyboard.press('Tab');
+    const holdState = await page.evaluate(() => ({
+      choiceCount: document.querySelectorAll('[data-agentkit-channel-choice]').length,
+      choice: document.activeElement?.getAttribute('data-agentkit-channel-choice') ?? 'missing',
+      focusVisible: document.activeElement?.matches(':focus-visible') ?? false,
+      status: document.querySelector('[data-agentkit-channel-root]')?.dataset.agentkitChannelStatus ?? 'missing',
+      search: location.search,
+      focusTarget: false,
+    }));
+    pushFailure(holdState.choiceCount !== 0, failures, `keyboard-choice-count=${holdState.choiceCount}`);
+    pushFailure(holdState.choice !== 'missing', failures, `keyboard-choice=${holdState.choice}`);
+    pushFailure(!holdState.focusVisible, failures, 'keyboard-focus-not-visible');
+    await page.close();
+    return { route, case: 'keyboard-hold', ...holdState, failures };
+  }
   await page.focus('[data-agentkit-channel-choice="stable"]');
   await page.keyboard.press('Tab');
   const beforeActivation = await page.evaluate(() => ({
@@ -196,7 +233,7 @@ async function runKeyboardCase({ browser, baseUrl, route, expected }) {
   return { route, case: `keyboard-${expected}`, ...beforeActivation, ...afterActivation, failures };
 }
 
-async function runFallbackCase({ browser, baseUrl, route, suffix, jsEnabled = true }) {
+async function runFallbackCase({ browser, baseUrl, route, suffix, expected, jsEnabled = true }) {
   const page = await browser.newPage();
   const failures = [];
   await page.setJavaScriptEnabled(jsEnabled);
@@ -211,12 +248,22 @@ async function runFallbackCase({ browser, baseUrl, route, suffix, jsEnabled = tr
     status: root.dataset.agentkitChannelStatus ?? 'ssr',
     stableHidden: root.querySelector('[data-agentkit-stable-facts]')?.hasAttribute('hidden'),
     betaHidden: root.querySelector('[data-agentkit-beta-view]')?.hasAttribute('hidden'),
+    noticeHidden: root.querySelector('[data-agentkit-channel-notice]')?.hasAttribute('hidden'),
+    noticeRole: root.querySelector('[data-agentkit-channel-notice]')?.getAttribute('role') ?? 'missing',
+    staticHoldNotice: document.querySelector('[data-agentkit-static-hold-notice]')?.textContent?.trim() ?? '',
+    choiceCount: root.querySelectorAll('[data-agentkit-channel-choice]').length,
     search: location.search,
   }));
   pushFailure(state.active !== 'stable', failures, `fallback-active=${state.active}`);
   pushFailure(state.stableHidden, failures, 'fallback-stable-hidden');
   pushFailure(!state.betaHidden, failures, 'fallback-beta-visible');
+  pushFailure(state.choiceCount !== (expected === 'hold' ? 0 : 2), failures, `fallback-choice-count=${state.choiceCount}`);
+  pushFailure(state.noticeRole !== 'status', failures, `fallback-notice-role=${state.noticeRole}`);
   pushFailure(betaRequests.length > 0, failures, `fallback-beta-requests=${betaRequests.length}`);
+  if (!jsEnabled && suffix === '?channel=beta' && expected === 'hold') {
+    pushFailure(state.status !== 'stable', failures, `fallback-status=${state.status}`);
+    pushFailure(!state.staticHoldNotice, failures, 'fallback-static-hold-notice-missing');
+  }
   if (jsEnabled) pushFailure(state.search !== '', failures, `normalized-search=${state.search}`);
   await page.close();
   return { route: `${route}${suffix}`, case: jsEnabled ? 'invalid-query' : 'no-js-beta', ...state, failures };
@@ -230,17 +277,31 @@ export async function runAgentKitChannelUiMatrix({ browser, baseUrl, evidenceDir
   ];
   for (const route of allSurfacePaths) {
     for (const testCase of VIEW_CASES) {
-      results.push(await runSurfaceCase({ browser, baseUrl, route, testCase, expected: 'stable' }));
-      results.push(await runSurfaceCase({ browser, baseUrl, route, testCase, expected }));
+      results.push(await runSurfaceCase({
+        browser,
+        baseUrl,
+        route,
+        testCase,
+        expected: 'stable',
+        publicationExpectation: expected,
+      }));
+      results.push(await runSurfaceCase({ browser, baseUrl, route, testCase, expected, publicationExpectation: expected }));
     }
   }
   for (const route of allSurfacePaths) {
     results.push(await runNavigationCase({ browser, baseUrl, route, expected }));
     results.push(await runKeyboardCase({ browser, baseUrl, route, expected }));
     for (const suffix of AGENTKIT_CHANNEL_UI_FALLBACK_QUERIES) {
-      results.push(await runFallbackCase({ browser, baseUrl, route, suffix }));
+      results.push(await runFallbackCase({ browser, baseUrl, route, suffix, expected }));
     }
-    results.push(await runFallbackCase({ browser, baseUrl, route, suffix: '?channel=beta', jsEnabled: false }));
+    results.push(await runFallbackCase({
+      browser,
+      baseUrl,
+      route,
+      suffix: '?channel=beta',
+      expected,
+      jsEnabled: false,
+    }));
   }
 
   for (const locale of ['en', 'vi']) {

@@ -1,0 +1,34 @@
+---
+import type { Language } from '@/i18n';
+
+interface Props {
+  command: string;
+  copyable: boolean;
+  lang: Language;
+  label: string;
+}
+
+const { command, copyable, lang, label } = Astro.props;
+const copyLabel = lang === 'vi' ? `Sao chép lệnh an toàn: ${command}` : `Copy safe command: ${command}`;
+---
+
+<div class="max-w-full rounded-xl border border-slate-200 bg-slate-100 p-3 dark:border-slate-700 dark:bg-slate-800/90" data-agentkit-command-snippet>
+  <div class="mb-2 text-xs font-semibold text-slate-500 dark:text-slate-400">{label}</div>
+  <div class="flex min-w-0 items-start gap-2">
+    <span class="pt-1 font-mono text-sm text-purple-600 dark:text-purple-400" aria-hidden="true">$</span>
+    <code class="min-w-0 flex-1 overflow-x-auto py-1 font-mono text-sm text-slate-700 dark:text-slate-200">{command}</code>
+    {copyable && (
+      <button
+        hidden
+        type="button"
+        class="h-11 w-11 shrink-0 touch-manipulation rounded-lg border border-slate-300 bg-white text-slate-600 focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-300"
+        data-agentkit-copy-button
+        data-agentkit-copy-payload={command}
+        aria-label={copyLabel}
+      >
+        <svg class="mx-auto h-4 w-4" data-agentkit-copy-icon viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
+        <svg hidden class="mx-auto h-4 w-4 text-emerald-600 dark:text-emerald-400" data-agentkit-copy-check viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
+      </button>
+    )}
+  </div>
+</div>

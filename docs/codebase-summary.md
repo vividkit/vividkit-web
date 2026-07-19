@@ -123,6 +123,20 @@ Fresh install uses only install, canary, and observation. Clean cutover follows 
 
 The 3–7 day form is ephemeral advisory input. The policy checks user-supplied timestamps and acknowledgment shape, but the site cannot verify the evidence, enforce time, or authorize removal.
 
+## Reader Journey and Command Presentation
+
+The AgentKit Hub leads with five keyboard-reachable, JavaScript-independent reader lanes: fresh install, clean cutover, coexistence pilot, recovery, and support. Their EN/VI links resolve to the exact `install`, `clean-cutover`, `pilot-steps`, `recovery`, and `support` anchors. The coexistence destination starts with ordered pilot steps before topology and eligibility detail; it is guidance, not access or removal authorization.
+
+CLI Commands derives **18 commands across 5 groups** from the shared presentation catalog. A typed projection over canonical CLI facts controls copy affordances:
+
+- approved non-mutating commands copy the exact canonical payload;
+- update flows prefer reviewed `--dry-run` or `--check` payloads;
+- commands whose canonical behavior is already preview-only may copy that preview command;
+- mutating commands without an approved preview have no copy control;
+- prompt markers, placeholders, control characters, shell chaining, destructive forms, and apply flags are rejected.
+
+Copy controls appear only after their client controller binds, remain at least 44 px, use localized labels and one polite live region, and rebind idempotently after Astro navigation. With JavaScript disabled, command text remains readable and copy controls remain hidden.
+
 ## Stable and Beta Architecture
 
 ### Facts
@@ -152,6 +166,8 @@ Links leaving that group lose the channel parameter. Canonical routes never incl
 - published loader: dynamically imports the beta view.
 
 The current tracked record is `hold`. Test-only fixture override is rejected outside `NODE_ENV=test`. The full-dist isolation scanner verifies both modes and rejects beta tokens in LLM output. Channel activation uses a request generation guard so a stale beta import cannot overwrite a newer stable navigation.
+
+Because output remains static, the no-JavaScript HOLD response is query-neutral and truthfully describes the Stable-only build. JavaScript handles an exact runtime `?channel=beta` request as unavailable under HOLD. Published channel controls derive their URL from the current location so unrelated query parameters and the fragment survive selection and browser history.
 
 ## Migration and Removal Safety
 
@@ -232,6 +248,8 @@ Private maintainer tooling and product delivery are independent. The public repo
 - Change source metadata and fixtures only through reviewed source observations.
 - Never fall back from an empty beta catalog to stable commands labeled as beta.
 - Update router facts, lifecycle UI, EN/VI copy, and contract tests together.
+- Keep reader-lane destinations, exact anchor IDs, coexistence pilot order, and EN/VI copy synchronized.
+- Derive CLI copy actions from canonical facts through the safe-copy projection; never add an ad hoc copy button for a mutating command.
 - Treat observation as advisory declaration, never verification or enforcement.
 - Detect all CK paths before selecting any manual removal condition.
 - Preserve archive provenance and import boundaries; do not use archive modules as live facts.

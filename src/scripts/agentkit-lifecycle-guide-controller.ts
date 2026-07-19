@@ -210,6 +210,7 @@ function bindGuide(root: GuideRoot): void {
   const attestationResult = root.querySelector<HTMLElement>('[data-agentkit-attestation-result]');
   const attestationMessage = root.querySelector<HTMLElement>('[data-agentkit-attestation-message]');
   if (!routerForm || !routerEvaluateButton || !attestationForm || !routerResult || !attestationResult) return;
+  routerEvaluateButton.disabled = false;
 
   let declaration: AgentKitOperatorAttestation | null = null;
   let canaryOutcome: AgentKitLifecycleInput['canaryOutcome'] = 'not-run';
@@ -240,6 +241,7 @@ function bindGuide(root: GuideRoot): void {
     routerEvaluationCurrent = false;
     routerForm.reset();
     attestationForm.reset();
+    routerResult.hidden = true;
     syncProgressiveRouterFields(root, routerForm);
     resetStageUi(root);
     setRouterBlocked('router-input-required');
@@ -278,6 +280,7 @@ function bindGuide(root: GuideRoot): void {
     });
 
     routerEvaluationCurrent = true;
+    routerResult.hidden = false;
     routerResult.dataset.agentkitEligibility = result.eligibility;
     routerResult.dataset.agentkitReason = result.blockedReason ?? 'none';
     if (laneOutput) laneOutput.textContent = result.lane;

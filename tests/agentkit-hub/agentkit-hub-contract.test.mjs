@@ -28,6 +28,9 @@ import {
   toCommandView,
   viewsForPlatforms,
 } from '../../src/components/guides/agentkit/agentkit-command-view.ts';
+import {
+  AGENTKIT_READER_LANES,
+} from '../../src/components/guides/agentkit/agentkit-reader-lanes.ts';
 
 const COMPONENT_ROOT = new URL('../../src/components/guides/', import.meta.url);
 
@@ -136,16 +139,54 @@ test('the migration journey renders exactly seven canonical stages in order', as
   )));
 });
 
-test('decision router and operator declaration precede every lifecycle action surface', async () => {
+test('Hub leads with hero, channel context, five reader lanes, optional evaluator, and continuity', async () => {
   const guide = await readFile(new URL('AgentKitGuide.astro', COMPONENT_ROOT), 'utf8');
   const hero = await readFile(new URL('agentkit/agentkit-hero-and-path-selector.astro', COMPONENT_ROOT), 'utf8');
+  const readerNavigation = await readFile(new URL('agentkit/agentkit-reader-decision-navigation.astro', COMPONENT_ROOT), 'utf8');
+  const evaluator = await readFile(new URL('agentkit/agentkit-advanced-path-evaluator.astro', COMPONENT_ROOT), 'utf8');
   const declaration = await readFile(new URL('agentkit/agentkit-operator-attestation.astro', COMPONENT_ROOT), 'utf8');
   const mapping = await readFile(new URL('agentkit/agentkit-command-mapping.astro', COMPONENT_ROOT), 'utf8');
 
-  assert.ok(guide.indexOf('AgentKitHeroAndPathSelector') < guide.indexOf('AgentKitMigrationChecklist'));
-  assert.ok(guide.indexOf('AgentKitHeroAndPathSelector') < guide.indexOf('AgentKitKitTargets'));
-  assert.match(hero, /data-agentkit-lifecycle-router/);
-  assert.match(hero, /aria-live="polite"/);
+  const composition = [
+    'AgentKitHeroAndPathSelector',
+    'AgentKitChannelSwitcher',
+    'AgentKitReaderDecisionNavigation',
+    'AgentKitAdvancedPathEvaluator',
+    'AgentKitContinuityFaq',
+    'AgentKitMigrationChecklist',
+  ];
+  for (let index = 1; index < composition.length; index += 1) {
+    assert.ok(
+      guide.indexOf(`<${composition[index - 1]}`) < guide.indexOf(`<${composition[index]}`),
+      `${composition[index - 1]} must render before ${composition[index]}`,
+    );
+  }
+
+  assert.doesNotMatch(hero, /data-agentkit-lifecycle-router|<form/);
+  assert.match(readerNavigation, /<nav[^>]*aria-labelledby=/);
+  assert.match(readerNavigation, /<ul/);
+  assert.match(readerNavigation, /<li/);
+  assert.match(readerNavigation, /focus-visible:/);
+  assert.match(readerNavigation, /grid-cols-1/);
+  assert.match(readerNavigation, /sm:grid-cols-2/);
+  assert.match(readerNavigation, /scroll-mt-40/);
+  assert.match(readerNavigation, /lg:scroll-mt-28/);
+  assert.match(readerNavigation, /min-w-0/);
+  assert.match(readerNavigation, /break-words/);
+  assert.match(readerNavigation, /motion-reduce:transition-none/);
+  assert.match(readerNavigation, /data-agentkit-reader-lane=/);
+  assert.doesNotMatch(readerNavigation, /aria-describedby=/);
+
+  assert.match(evaluator, /<section[^>]*aria-labelledby="advanced-evaluator-heading"/);
+  assert.match(evaluator, /<h2[^>]*id="advanced-evaluator-heading"/);
+  assert.match(evaluator, /<details[^>]*data-agentkit-lifecycle-router/);
+  assert.doesNotMatch(evaluator, /<details[^>]*\sopen(?:[=\s>])/);
+  assert.match(evaluator, /<summary[^>]*class=/);
+  assert.match(evaluator, /data-agentkit-router-result[^>]*hidden|hidden[^>]*data-agentkit-router-result/);
+  assert.doesNotMatch(evaluator, /data-agentkit-reason-code|data-agentkit-copy-policy|data-agentkit-support-level/);
+  assert.match(evaluator, /aria-live="polite"/);
+  assert.match(evaluator, /motion-reduce:transition-none/);
+  assert.match(evaluator, /data-agentkit-router-evaluate[^>]*disabled|disabled[^>]*data-agentkit-router-evaluate/);
   for (const name of [
     'goal',
     'legacyOwnershipState',
@@ -155,7 +196,7 @@ test('decision router and operator declaration precede every lifecycle action su
     'packageManagerEvidence',
     'dataCriticality',
     'pilotOptIn',
-  ]) assert.match(hero, new RegExp(`name="${name}"`));
+  ]) assert.match(evaluator, new RegExp(`name="${name}"`));
 
   for (const name of [
     'canaryResult',
@@ -169,6 +210,51 @@ test('decision router and operator declaration precede every lifecycle action su
   assert.match(declaration, /advisory/i);
   assert.doesNotMatch(declaration, /localStorage|sessionStorage|document\.cookie|history\.|URLSearchParams|CustomEvent/);
   assert.doesNotMatch(declaration, />[^<]*(?:verified|authorized)[^<]*</i);
+});
+
+test('reader navigation exposes exactly five localized, JS-free destination links', async () => {
+  const source = await readFile(new URL('agentkit/agentkit-reader-decision-navigation.astro', COMPONENT_ROOT), 'utf8');
+  const destinationModule = await readFile(new URL('agentkit/agentkit-reader-lanes.ts', COMPONENT_ROOT), 'utf8');
+
+  const expected = [
+    ['/guides/cli#install', '/vi/guides/cli#install'],
+    ['/guides/agentkit#clean-cutover', '/vi/guides/agentkit#clean-cutover'],
+    ['/guides/coexistence#pilot-steps', '/vi/guides/coexistence#pilot-steps'],
+    ['/guides/agentkit#recovery', '/vi/guides/agentkit#recovery'],
+    ['/guides/agentkit#support', '/vi/guides/agentkit#support'],
+  ];
+
+  assert.match(destinationModule, /satisfies ReadonlyArray<AgentKitReaderLane>/);
+  assert.equal(AGENTKIT_READER_LANES.length, 5);
+  for (const [index, [english, vietnamese]] of expected.entries()) {
+    assert.equal(AGENTKIT_READER_LANES[index]?.href.en, english);
+    assert.equal(AGENTKIT_READER_LANES[index]?.href.vi, vietnamese);
+  }
+
+  assert.match(source, /AGENTKIT_READER_LANES\.map/);
+  assert.match(source, /href=\{lane\.href\[lang\]\}/);
+  assert.doesNotMatch(source, /onclick=|data-agentkit-router-evaluate/);
+});
+
+test('all reader destinations exist once and provide fixed-header scroll clearance', async () => {
+  const migration = await readFile(new URL('agentkit/agentkit-migration-checklist.astro', COMPONENT_ROOT), 'utf8');
+  const coexistence = await readFile(new URL('CoexistenceGuide.astro', COMPONENT_ROOT), 'utf8');
+  const recoveryAndSupport = await readFile(new URL('agentkit/agentkit-recovery-and-support.astro', COMPONENT_ROOT), 'utf8');
+  const sources = `${migration}\n${coexistence}\n${recoveryAndSupport}`;
+
+  for (const id of ['clean-cutover', 'pilot-steps', 'recovery', 'support']) {
+    assert.equal((sources.match(new RegExp(`id="${id}"`, 'g')) ?? []).length, 1, id);
+  }
+  assert.equal((migration.match(/id="migration-journey"/g) ?? []).length, 1);
+  assert.match(migration, /id="migration-journey"[^>]*scroll-mt-40[^>]*lg:scroll-mt-28/);
+  assert.match(migration, /id="clean-cutover"[^>]*scroll-mt-40[^>]*lg:scroll-mt-28/);
+  assert.match(coexistence, /id="pilot-steps"[^>]*scroll-mt-40[^>]*lg:scroll-mt-28/);
+  assert.match(recoveryAndSupport, /id="recovery"[^>]*scroll-mt-40[^>]*lg:scroll-mt-28/);
+  assert.match(recoveryAndSupport, /id="support"[^>]*scroll-mt-40[^>]*lg:scroll-mt-28/);
+
+  assert.match(coexistence, /id="pilot-steps"[\s\S]*<ol/);
+  assert.ok(coexistence.indexOf('id="pilot-steps"') < coexistence.indexOf('data-agentkit-coexistence-topology'));
+  assert.ok(coexistence.indexOf('id="pilot-steps"') < coexistence.indexOf('data-agentkit-coexistence-eligibility'));
 });
 
 test('canonical commands can render macOS, Linux, and Windows views', () => {

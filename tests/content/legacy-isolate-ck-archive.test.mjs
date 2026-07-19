@@ -170,11 +170,17 @@ test('archive boundary rejects every unreviewed alias even when it is not an Age
   ]);
 });
 
-test('legacy banner is fixed, immutable and marks normalized historical main', async () => {
+test('legacy provenance notice is single, in normal flow, immutable and marks historical main', async () => {
   const layout = await readFile(new URL('../../src/layouts/LegacyGuidesLayout.astro', import.meta.url), 'utf8');
   assert.match(layout, /legacy-archive\.css/);
-  assert.match(layout, /data-legacy-archive-banner/);
-  assert.match(layout, /position:\s*fixed|fixed/);
+  assert.equal((layout.match(/data-legacy-archive-banner/g) ?? []).length, 1);
+  assert.equal((layout.match(/role="note"/g) ?? []).length, 1);
+  assert.doesNotMatch(layout, /class="[^"]*\b(?:fixed|sticky)\b/);
+  assert.match(layout, /data-legacy-archive-flow/);
+  assert.match(layout, /sourceDate/);
+  assert.match(layout, /sourceShortSha/);
+  assert.match(layout, /currentHref/);
+  assert.match(layout, /archiveHome/);
   assert.match(layout, /data-legacy-snapshot/);
   assert.match(layout, /noindex,follow/);
   assert.match(layout, /LEGACY_ARCHIVE_PROVENANCE/);

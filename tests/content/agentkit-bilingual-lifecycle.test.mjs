@@ -40,7 +40,7 @@ test('active bilingual lifecycle copy rejects stale and over-broad guarantees', 
 });
 
 test('operator declaration is ephemeral, advisory-only, and resets blocked without JavaScript', async () => {
-  const router = await readFile(new URL('agentkit/agentkit-hero-and-path-selector.astro', COMPONENT_ROOT), 'utf8');
+  const router = await readFile(new URL('agentkit/agentkit-advanced-path-evaluator.astro', COMPONENT_ROOT), 'utf8');
   const source = await readFile(new URL('agentkit/agentkit-operator-attestation.astro', COMPONENT_ROOT), 'utf8');
   const controller = await readFile(new URL('../../src/scripts/agentkit-lifecycle-guide-controller.ts', import.meta.url), 'utf8');
   assert.match(source, /data-agentkit-eligibility="blocked"/);
@@ -62,6 +62,7 @@ test('operator declaration is ephemeral, advisory-only, and resets blocked witho
   assert.match(router, /<noscript>[\s\S]*agentkit\.router\.javascriptRequired/);
   assert.doesNotMatch(router, /type="submit"[^>]*data-agentkit-router-evaluate|data-agentkit-router-evaluate[^>]*type="submit"/);
   assert.match(controller, /routerEvaluateButton\.addEventListener\('click'/);
+  assert.match(controller, /routerEvaluateButton\.disabled = false/);
   assert.doesNotMatch(source, />[^<]*(?:verified|authorized)[^<]*</i);
 });
 

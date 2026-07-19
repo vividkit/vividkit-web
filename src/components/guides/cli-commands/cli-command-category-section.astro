@@ -1,0 +1,67 @@
+---
+import type { Language } from '@/i18n';
+import { useTranslations } from '@/i18n/utils';
+import type { CliCommand } from '@/data/guides/cli-commands-cheatsheet';
+import { getAgentKitCliFact } from '@/data/guides/agentkit/agentkit-cli-facts';
+import { getAgentKitCliCopyPresentation } from '@/data/guides/agentkit/agentkit-cli-copy-presentation';
+import type { CliCommandCategoryConfig } from './cli-command-category-config';
+import CliCommandCard from './cli-command-card.astro';
+import CliCommandSnippet from './cli-command-snippet.astro';
+
+interface Props {
+  category: CliCommandCategoryConfig;
+  commands: CliCommand[];
+  index: number;
+  lang: Language;
+}
+
+const { category, commands, index, lang } = Astro.props;
+const t = useTranslations(lang);
+const isVi = lang === 'vi';
+
+function findLeadingCopy() {
+  for (const command of commands) {
+    const fact = getAgentKitCliFact(command.id, command.channel);
+    if (!fact) continue;
+
+    const copy = getAgentKitCliCopyPresentation(fact);
+    if (copy.copyable) return copy;
+  }
+
+  return null;
+}
+
+const leadingCopy = findLeadingCopy();
+---
+
+<section id={`cli-cat-${category.id}`} class:list={['scroll-mt-32 overflow-hidden rounded-[1.65rem] border bg-gradient-to-br shadow-sm', category.panel, category.ring]}>
+  <div class="grid gap-0 lg:grid-cols-[220px_1fr]">
+    <div class="relative border-b border-slate-200/70 p-5 dark:border-white/10 lg:border-b-0 lg:border-r">
+      <div class:list={['absolute left-0 top-0 h-full w-1.5', category.accent]}></div>
+      <div class="flex h-full min-w-0 flex-col justify-between gap-8 pl-2">
+        <div class="space-y-4">
+          <div class:list={['inline-flex h-11 w-11 items-center justify-center rounded-2xl border bg-white/75 shadow-sm dark:bg-white/[0.04]', category.ring]}>
+            <svg class:list={['h-5 w-5', category.text]} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={category.iconSvg} />
+          </div>
+          <div>
+            <div class="font-mono text-xs font-semibold uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">0{index + 1}</div>
+            <h2 class="mt-2 text-xl font-bold tracking-tight text-slate-950 dark:text-white">{t(category.labelKey as any)}</h2>
+          </div>
+        </div>
+        <div class="space-y-3">
+          <div class="flex items-end gap-2">
+            <span class="font-mono text-4xl font-bold text-slate-950 dark:text-white">{commands.length}</span>
+            <span class="pb-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">{t('cli.cheatsheet.hero.commands_label')}</span>
+          </div>
+          {leadingCopy?.copyPayload && (
+            <CliCommandSnippet command={leadingCopy.copyPayload} copyable={true} lang={lang} label={isVi ? 'Lệnh an toàn tiêu biểu' : 'Featured safe command'} />
+          )}
+        </div>
+      </div>
+    </div>
+
+    <div class="grid min-w-0 gap-3 p-4 sm:p-5">
+      {commands.map((command) => <CliCommandCard command={command} category={category} lang={lang} />)}
+    </div>
+  </div>
+</section>

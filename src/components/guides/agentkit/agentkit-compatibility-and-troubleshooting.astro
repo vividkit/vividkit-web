@@ -50,10 +50,12 @@ const links = [
           ]}
           open={index === 0}
         >
-          <summary class="flex min-h-16 cursor-pointer list-none items-center gap-3 py-4 font-semibold text-slate-900 transition-colors duration-200 hover:text-purple-700 focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 active:text-purple-600 dark:text-slate-100 dark:hover:text-purple-300">
+          <summary class="flex min-h-16 min-w-0 cursor-pointer list-none items-center gap-3 py-4 font-semibold text-slate-900 transition-colors duration-200 hover:text-purple-700 focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 active:text-purple-600 dark:text-slate-100 dark:hover:text-purple-300">
             <Icon class="h-5 w-5 shrink-0 text-purple-600 dark:text-purple-400" aria-hidden="true" />
-            <span set:html={renderInlineCode(topic.title)} ></span>
-            <span class="ml-auto text-xl font-normal text-slate-400 transition-transform duration-200 group-open:rotate-45" aria-hidden="true">+</span>
+            <span class="min-w-0 break-words" set:html={renderInlineCode(topic.title)} ></span>
+            <span class="ml-auto flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden text-xl font-normal text-slate-400" aria-hidden="true">
+              <span class="transition-transform duration-200 motion-reduce:transition-none group-open:rotate-45">+</span>
+            </span>
           </summary>
           <div class="pb-5 pl-8 pr-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
             <p set:html={renderInlineCode(topic.body)} ></p>

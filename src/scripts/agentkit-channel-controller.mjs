@@ -9,14 +9,14 @@ const ROOT_SELECTOR = '[data-agentkit-channel-root]';
 const CHOICE_SELECTOR = '[data-agentkit-channel-choice]';
 let channelRequestGeneration = 0;
 
-function resetRoot(root) {
+function resetRoot(root, { preserveNotice = false } = {}) {
   root.dataset.agentkitRequestedChannel = 'stable';
   root.dataset.agentkitActiveChannel = 'stable';
   root.dataset.agentkitChannelStatus = 'stable';
   delete root.dataset.agentkitBetaLoader;
   root.querySelector('[data-agentkit-stable-facts]')?.removeAttribute('hidden');
   const notice = root.querySelector('[data-agentkit-channel-notice]');
-  if (notice) notice.hidden = true;
+  if (notice && !preserveNotice) notice.hidden = true;
   const betaView = root.querySelector('[data-agentkit-beta-view]');
   if (betaView) {
     betaView.replaceChildren();
@@ -25,9 +25,12 @@ function resetRoot(root) {
 }
 
 function updateChoiceState(root, requestedChannel) {
+  const currentLocation = `${window.location.pathname}${window.location.search}${window.location.hash}`;
   for (const choice of root.querySelectorAll(CHOICE_SELECTOR)) {
     const channel = choice.dataset.agentkitChannelChoice;
+    if (channel !== 'stable' && channel !== 'beta') continue;
     const selected = channel === requestedChannel;
+    choice.setAttribute('href', withAgentKitChannel(currentLocation, channel));
     choice.setAttribute('aria-current', selected ? 'true' : 'false');
     choice.dataset.agentkitChannelSelected = selected ? 'true' : 'false';
   }
@@ -64,7 +67,10 @@ async function applyRequestedChannel({ focus = false } = {}) {
   let focusTarget = null;
 
   for (const root of document.querySelectorAll(ROOT_SELECTOR)) {
-    resetRoot(root);
+    const preserveNotice = requestedChannel === 'beta'
+      && root.dataset.agentkitRequestedChannel === 'beta'
+      && root.dataset.agentkitChannelStatus === 'unavailable';
+    resetRoot(root, { preserveNotice });
     root.dataset.agentkitRequestedChannel = requestedChannel;
     updateChoiceState(root, requestedChannel);
     if (requestedChannel === 'beta') {

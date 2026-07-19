@@ -6,6 +6,9 @@ import {
   createAgentKitUiEvidenceEnvelope,
   runAgentKitChannelUiMatrix,
 } from './check-agentkit-channel-ui.mjs';
+import { runAgentKitReaderJourneyUiMatrix } from './check-agentkit-reader-journey-ui.mjs';
+import { runAgentKitCliCopyUiMatrix } from './check-agentkit-cli-copy-ui.mjs';
+import { runLegacyArchiveUiMatrix } from './check-legacy-archive-ui.mjs';
 
 const BASE_URL = process.env.UI_BASE_URL ?? 'http://127.0.0.1:4321';
 const CHROME_PATH = process.env.CHROME_PATH ?? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
@@ -141,6 +144,11 @@ try {
     evidenceDir: EVIDENCE_DIR,
     expected: CHANNEL_EXPECTATION,
   }));
+  if (!CHANNEL_ONLY) {
+    results.push(...await runAgentKitReaderJourneyUiMatrix({ browser, baseUrl: BASE_URL }));
+    results.push(...await runAgentKitCliCopyUiMatrix({ browser, baseUrl: BASE_URL }));
+    results.push(...await runLegacyArchiveUiMatrix({ browser, baseUrl: BASE_URL }));
+  }
 } finally {
   await browser.close();
 }

@@ -3,7 +3,9 @@ import { useTranslations } from '@/i18n/utils';
 import type { Language } from '@/i18n';
 import { cliCommandsCheatsheet } from '@/data/guides/cli-commands-cheatsheet';
 import { getAgentKitCliFact } from '@/data/guides/agentkit/agentkit-cli-facts';
+import { getAgentKitCliCopyPresentation } from '@/data/guides/agentkit/agentkit-cli-copy-presentation';
 import { AGENTKIT_SOURCE_SNAPSHOT } from '@/data/guides/agentkit/agentkit-source-contract';
+import CliCommandSnippet from './cli-command-snippet.astro';
 
 interface Props {
   lang: Language;
@@ -14,11 +16,10 @@ const t = useTranslations(lang);
 
 const totalCommands = cliCommandsCheatsheet.length;
 const categoryCount = new Set(cliCommandsCheatsheet.map(c => c.category)).size;
-const heroCommands = [
-  getAgentKitCliFact('doctor')?.command,
-  `${getAgentKitCliFact('self-update')?.command ?? ''} --check`,
-  `${getAgentKitCliFact('update')?.command ?? ''} --dry-run`,
-].filter(Boolean);
+const heroCommands = ['doctor', 'self-update', 'update'].flatMap((id) => {
+  const fact = getAgentKitCliFact(id);
+  return fact ? [getAgentKitCliCopyPresentation(fact)] : [];
+});
 const isVi = lang === 'vi';
 const terminalPath = isVi ? '/vi/guides/cli-commands' : '/guides/cli-commands';
 const cliVersion = AGENTKIT_SOURCE_SNAPSHOT.releaseVersion;
@@ -38,12 +39,12 @@ const cliVersion = AGENTKIT_SOURCE_SNAPSHOT.releaseVersion;
             {isVi ? 'Tham chiếu AgentKit CLI' : 'AgentKit CLI reference'}
           </h1>
           <p class="text-lg leading-8 text-slate-600 dark:text-slate-300">
-            {isVi ? `${totalCommands} nhóm lệnh đã xác minh — lifecycle, kits, diagnostics và account.` : `${totalCommands} verified command groups — lifecycle, kits, diagnostics, and account.`}
+            {isVi ? `${totalCommands} lệnh trong ${categoryCount} nhóm — lifecycle, kits, diagnostics và account.` : `${totalCommands} commands across ${categoryCount} groups — lifecycle, kits, diagnostics, and account.`}
           </p>
           <p class="max-w-xl text-sm leading-7 text-slate-500 dark:text-slate-400">
             {isVi ? 'Phân biệt rõ binary update, project update và kit lifecycle. Lệnh beta chỉ xuất hiện khi được gắn nhãn.' : 'Keep binary updates, project updates, and kit lifecycle separate. Beta commands appear only when explicitly labeled.'}
           </p>
-          <a href="https://agentkit.best/docs" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white/70 px-2.5 py-1 text-[11px] font-semibold text-slate-500 transition hover:border-teal-300 hover:text-teal-700 dark:border-white/10 dark:bg-white/5 dark:text-slate-400 dark:hover:border-teal-400/30 dark:hover:text-teal-300">
+          <a href="https://agentkit.best/docs" target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-slate-200 bg-white/70 px-3 py-2 text-xs font-semibold text-slate-500 transition-colors hover:border-teal-300 hover:text-teal-700 focus-visible:ring-2 focus-visible:ring-purple-500 dark:border-white/10 dark:bg-white/5 dark:text-slate-400 dark:hover:border-teal-400/30 dark:hover:text-teal-300">
             <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
             AgentKit docs <code class="font-mono text-teal-600 dark:text-teal-400">{cliVersion}</code>
           </a>
@@ -60,8 +61,8 @@ const cliVersion = AGENTKIT_SOURCE_SNAPSHOT.releaseVersion;
           <div class="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">{t('cli.cheatsheet.hero.categories_label')}</div>
         </div>
         <div class="rounded-2xl border border-amber-200 bg-amber-50/80 p-4 dark:border-amber-400/20 dark:bg-amber-400/10">
-          <div class="font-mono text-2xl font-bold text-amber-700 dark:text-amber-300">{isVi ? 'Copy' : 'Copy'}</div>
-          <div class="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-amber-700/70 dark:text-amber-200/70">{isVi ? 'Mẫu lệnh' : 'Examples'}</div>
+          <div class="font-mono text-2xl font-bold text-amber-700 dark:text-amber-300">{isVi ? 'Xem trước' : 'Preview first'}</div>
+          <div class="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-amber-700/70 dark:text-amber-200/70">{isVi ? 'Chỉ copy payload an toàn' : 'Copy safe payloads only'}</div>
         </div>
       </div>
     </div>
@@ -91,15 +92,8 @@ const cliVersion = AGENTKIT_SOURCE_SNAPSHOT.releaseVersion;
               <span class="rounded-full bg-teal-100 px-2 py-1 font-mono text-teal-700 dark:bg-teal-400/10 dark:text-teal-200">ready</span>
             </div>
             <div class="space-y-2.5">
-              {heroCommands.map((command, index) => (
-                <button class="copy-btn group flex w-full items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-left transition hover:border-teal-300 hover:bg-teal-50/60 dark:border-white/10 dark:bg-slate-900 dark:hover:border-teal-300/40 dark:hover:bg-slate-800" data-code={command} aria-label={`Copy ${command}`}>
-                  <span class="min-w-0 font-mono text-sm text-slate-700 dark:text-slate-200"><span class="text-amber-600 dark:text-amber-300">$</span> {command}</span>
-                  <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-slate-100 text-slate-500 group-hover:text-teal-700 dark:bg-white/5 dark:text-slate-500 dark:group-hover:text-teal-200">
-                    <svg class="copy-icon h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
-                    <svg class="check-icon hidden h-3.5 w-3.5 text-emerald-500 dark:text-emerald-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12" /></svg>
-                    <span class="sr-only">0{index + 1}</span>
-                  </span>
-                </button>
+              {heroCommands.map((command) => (
+                command.copyPayload && <CliCommandSnippet command={command.copyPayload} copyable={command.copyable} lang={lang} label={isVi ? 'Payload an toàn' : 'Safe payload'} />
               ))}
             </div>
           </div>

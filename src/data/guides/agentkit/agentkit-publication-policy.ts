@@ -20,7 +20,7 @@ export const AGENTKIT_PUBLICATION_RECORD = {
   vividKitSha: '7d5ab60e9e706ba612a6202f3024685cfa32bea6',
   stableFixtureSha256: '89d582555208a790379f1f40a325375933265438288bf2c6ecbe9c6fe1646a12',
   betaFixtureSha256: '0772e9421526fa7cd62929153517b222d9b88c9d05be7136ff85567fc68cf8d5',
-  sourceClosureSha256: '0e209c2e7bddeff3bc7380f3bd0044b45e798acff0cca49bccb506f23614076c',
+  sourceClosureSha256: '824ed5d8e76db8c32b0e8468e00d140479985c1e20c3f36cb2912a7a0f0fc368',
   approvalRevisionSha: null,
   pilotStartedAt: null,
   pilotEndedAt: null,

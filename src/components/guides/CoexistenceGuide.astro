@@ -1,6 +1,7 @@
 ---
 import { getLangFromUrl, type Language } from '@/i18n';
 import { getAgentKitCliFact } from '@/data/guides/agentkit/agentkit-cli-facts';
+import { getAgentKitSsrChannelState } from '@/data/guides/agentkit/agentkit-channel-policy.mjs';
 import { getAgentKitTargetView } from '@/data/guides/agentkit/agentkit-target-capabilities';
 import AgentKitChannelSwitcher from './agentkit/agentkit-channel-switcher.astro';
 import TerminalSnippet from './TerminalSnippet.astro';
@@ -12,6 +13,8 @@ const isVi = currentLang === 'vi';
 const prefix = isVi ? '/vi' : '';
 const projectTarget = getAgentKitTargetView('claude-code', 'engineer', 'project-local');
 const doctorCommand = getAgentKitCliFact('doctor')?.command ?? '';
+const publicationStatus = import.meta.env.AGENTKIT_PUBLICATION_STATUS ?? 'hold';
+const channelState = getAgentKitSsrChannelState(Astro.url.search, publicationStatus);
 
 const eligibility = [
   isVi ? 'CK chỉ ở global scope; project pilot không có CK-owned content còn sót.' : 'CK exists only at global scope; the pilot project has no remaining CK-owned content.',
@@ -25,38 +28,71 @@ const exitCriteria = [
   isVi ? 'Không thể chứng minh project-local boundary hoặc restore path.' : 'The project-local boundary or restore path cannot be demonstrated.',
   isVi ? 'Observation có incident chưa xử lý hoặc chưa đủ 72 giờ.' : 'Observation has an unresolved incident or has not reached 72 hours.',
 ];
+
+const pilotSteps = [
+  isVi ? 'Xác nhận enrollment closed-beta với owner và support. Query channel không phải bằng chứng access.' : 'Confirm closed-beta enrollment with the owner and support. A channel query is not proof of access.',
+  isVi ? 'Chọn đúng một project sạch, không critical; thử restore từ backup trước khi thay đổi.' : 'Choose exactly one clean, noncritical project and test restoring its backup before any change.',
+  isVi ? 'Chứng minh CK chỉ ở global scope và project pilot không còn CK-owned content.' : 'Prove CK exists only at global scope and the pilot project contains no CK-owned content.',
+  isVi ? 'Giữ AK project-local trong project đó; chạy canary có thể rollback và inspect artifact thực tế.' : 'Keep AK project-local in that project; run a reversible canary and inspect the actual artifacts.',
+  isVi ? 'Giữ observation record bên ngoài VividKit. Khi có incident hoặc ownership mơ hồ, dừng mutation và restore.' : 'Keep the observation record outside VividKit. Stop mutations and restore when an incident or ambiguous ownership appears.',
+];
 ---
 
-<div class="mt-6" data-agentkit-channel-root data-agentkit-surface="coexistence" data-agentkit-locale={currentLang} data-agentkit-active-channel="stable">
+<div
+  class="mt-6"
+  data-agentkit-channel-root
+  data-agentkit-surface="coexistence"
+  data-agentkit-locale={currentLang}
+  data-agentkit-requested-channel={channelState.requestedChannel}
+  data-agentkit-active-channel={channelState.activeChannel}
+  data-agentkit-channel-status={channelState.status}
+>
+  <section class="rounded-3xl border border-violet-200 bg-gradient-to-br from-violet-50 via-white to-amber-50 p-6 dark:border-violet-500/20 dark:from-violet-950/30 dark:via-slate-950 dark:to-amber-950/20 sm:p-8" data-agentkit-surface-hero>
+    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-violet-700 dark:text-violet-300">{isVi ? 'Pilot coexistence closed-beta AgentKit' : 'AgentKit closed-beta coexistence'}</p>
+    <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-5xl">
+      {isVi ? 'Một pilot hẹp, không phải hướng dẫn chạy chung mọi scope' : 'A narrow pilot, not a broad same-scope setup'}
+    </h1>
+    <p class="mt-4 max-w-3xl leading-7 text-slate-600 dark:text-slate-300">
+      {isVi
+        ? 'Topology duy nhất được hỗ trợ trong follow-up này là CK global + AK project-local trong một project sạch, low-risk. Query beta chỉ chọn nội dung công khai; nó không ghi danh hoặc cấp quyền pilot.'
+        : 'The only topology supported by this follow-up is CK global plus AK project-local in one clean, low-risk project. The beta query selects public content; it neither enrolls nor authorizes a pilot.'}
+    </p>
+  </section>
+
   <AgentKitChannelSwitcher lang={currentLang} />
   <div class="space-y-10" data-agentkit-stable-facts>
-    <section class="rounded-3xl border border-violet-200 bg-gradient-to-br from-violet-50 via-white to-amber-50 p-6 dark:border-violet-500/20 dark:from-violet-950/30 dark:via-slate-950 dark:to-amber-950/20 sm:p-8">
-      <p class="text-xs font-semibold uppercase tracking-[0.2em] text-violet-700 dark:text-violet-300">AgentKit closed-beta coexistence</p>
-      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-5xl">
-        {isVi ? 'Một pilot hẹp, không phải hướng dẫn chạy chung mọi scope' : 'A narrow pilot, not a broad same-scope setup'}
-      </h1>
-      <p class="mt-4 max-w-3xl leading-7 text-slate-600 dark:text-slate-300">
-        {isVi
-          ? 'Topology duy nhất được hỗ trợ trong follow-up này là CK global + AK project-local trong một project sạch, low-risk. Query beta chỉ chọn nội dung công khai; nó không ghi danh hoặc cấp quyền pilot.'
-          : 'The only topology supported by this follow-up is CK global plus AK project-local in one clean, low-risk project. The beta query selects public content; it neither enrolls nor authorizes a pilot.'}
-      </p>
+    <section id="pilot-steps" class="scroll-mt-40 rounded-3xl border border-slate-200 bg-white p-6 dark:border-slate-700 dark:bg-slate-900 lg:scroll-mt-28" aria-labelledby="pilot-steps-heading">
+      <p class="text-xs font-bold uppercase tracking-[0.14em] text-violet-700 dark:text-violet-300">{isVi ? 'Bắt đầu pilot' : 'Start the pilot'}</p>
+      <h2 id="pilot-steps-heading" class="mt-2 text-2xl font-bold text-slate-950 dark:text-white">{isVi ? 'Các bước pilot theo thứ tự' : 'Ordered pilot steps'}</h2>
+      <p class="mt-3 max-w-3xl text-sm leading-6 text-slate-600 dark:text-slate-300">{isVi ? 'Đây là checklist vận hành sau khi enrollment đã được xác nhận, không phải cơ chế tự cấp quyền.' : 'This is an operating checklist after enrollment is confirmed, not a self-service authorization mechanism.'}</p>
+      <ol class="mt-5 grid gap-3">
+        {pilotSteps.map((step, index) => (
+          <li class="grid min-w-0 grid-cols-[2.5rem_minmax(0,1fr)] gap-3 rounded-2xl bg-slate-50 p-4 text-sm leading-6 text-slate-700 dark:bg-slate-800/70 dark:text-slate-200">
+            <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-100 font-mono text-sm font-bold text-violet-800 dark:bg-violet-950/60 dark:text-violet-200" aria-hidden="true">{index + 1}</span>
+            <span class="min-w-0 break-words">{step}</span>
+          </li>
+        ))}
+      </ol>
     </section>
 
-    <section class="grid gap-4 lg:grid-cols-2">
+    <section class="grid gap-4 lg:grid-cols-2" data-agentkit-coexistence-topology>
       <article class="min-w-0 rounded-2xl border border-emerald-200 bg-emerald-50/60 p-5 dark:border-emerald-500/25 dark:bg-emerald-950/20">
         <p class="text-xs font-bold uppercase tracking-[0.14em] text-emerald-700 dark:text-emerald-300">CK · global</p>
-        <h2 class="mt-2 text-xl font-bold text-slate-950 dark:text-white">{isVi ? 'Rollback control plane' : 'Rollback control plane'}</h2>
+        <h2 class="mt-2 text-xl font-bold text-slate-950 dark:text-white">{isVi ? 'Điểm kiểm soát rollback' : 'Rollback control plane'}</h2>
         <p class="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-300">{isVi ? 'Giữ executable/control plane CK global trong suốt canary và observation. Không cài CK content vào project pilot.' : 'Keep the global CK executable/control plane through canary and observation. Do not install CK content into the pilot project.'}</p>
       </article>
       <article class="min-w-0 rounded-2xl border border-violet-200 bg-violet-50/60 p-5 dark:border-violet-500/25 dark:bg-violet-950/20">
         <p class="text-xs font-bold uppercase tracking-[0.14em] text-violet-700 dark:text-violet-300">AK · project-local</p>
         <h2 class="mt-2 text-xl font-bold text-slate-950 dark:text-white">{isVi ? 'Một project sạch' : 'One clean project'}</h2>
         <p class="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-300">{isVi ? 'Chỉ tạo AgentKit-owned content trong project pilot. Không mở rộng sang global hoặc project khác.' : 'Create AgentKit-owned content only in the pilot project. Do not expand to global scope or another project.'}</p>
-        <div class="mt-4"><TerminalSnippet code={projectTarget.installCommand} label="shell · project-local review" copyable={projectTarget.installCopyable} /></div>
+        <div class="mt-4 rounded-xl border border-slate-200 bg-slate-100 p-3 dark:border-slate-700 dark:bg-slate-800/90">
+          <p class="text-xs font-semibold text-slate-500 dark:text-slate-400">{isVi ? 'Chỉ để tham khảo · review project-local' : 'Reference only · project-local review'}</p>
+          <code class="mt-2 block max-w-full overflow-x-auto font-mono text-sm text-slate-700 dark:text-slate-200"><span class="text-purple-600 dark:text-purple-400">$</span> {projectTarget.installCommand}</code>
+        </div>
       </article>
     </section>
 
-    <section class="space-y-4">
+    <section class="space-y-4" data-agentkit-coexistence-eligibility>
       <h2 class="text-2xl font-bold text-slate-950 dark:text-white">{isVi ? 'Eligibility bắt buộc' : 'Required eligibility'}</h2>
       <ul class="grid gap-3 md:grid-cols-2">
         {eligibility.map((item) => <li class="rounded-2xl border border-slate-200 bg-white p-4 text-sm leading-6 text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">{item}</li>)}
@@ -68,20 +104,20 @@ const exitCriteria = [
 
     <section class="grid gap-4 lg:grid-cols-2">
       <article class="rounded-2xl border border-rose-200 bg-rose-50 p-5 dark:border-rose-400/20 dark:bg-rose-950/20">
-        <h2 class="text-xl font-bold text-rose-950 dark:text-rose-100">{isVi ? 'Exit criteria' : 'Exit criteria'}</h2>
+        <h2 class="text-xl font-bold text-rose-950 dark:text-rose-100">{isVi ? 'Tiêu chí dừng pilot' : 'Exit criteria'}</h2>
         <ul class="mt-3 list-disc space-y-2 pl-5 text-sm leading-6 text-rose-900 dark:text-rose-200">
           {exitCriteria.map((item) => <li>{item}</li>)}
         </ul>
       </article>
       <article class="rounded-2xl border border-cyan-200 bg-cyan-50 p-5 dark:border-cyan-400/20 dark:bg-cyan-950/20">
-        <h2 class="text-xl font-bold text-cyan-950 dark:text-cyan-100">{isVi ? 'Kill switch và recovery' : 'Kill switch and recovery'}</h2>
+        <h2 class="text-xl font-bold text-cyan-950 dark:text-cyan-100">{isVi ? 'Dừng khẩn cấp và khôi phục' : 'Kill switch and recovery'}</h2>
         <p class="mt-3 text-sm leading-6 text-cyan-900 dark:text-cyan-200">{isVi ? 'Dừng AK mutation, giữ CK executable, restore project từ known-good backup và gửi sanitized detector/canary report cho support. Không gỡ CK trong recovery.' : 'Stop AK mutations, keep the CK executable, restore the project from a known-good backup, and send a sanitized detector/canary report to support. Do not remove CK during recovery.'}</p>
         {doctorCommand && <div class="mt-4"><TerminalSnippet code={doctorCommand} label="shell · read-only detector" /></div>}
       </article>
     </section>
 
     <nav class="flex flex-wrap gap-3" aria-label={isVi ? 'Liên kết lifecycle' : 'Lifecycle links'}>
-      <a href={`${prefix}/guides/agentkit`} class="inline-flex min-h-11 items-center rounded-xl bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-700">{isVi ? 'Mở decision router' : 'Open decision router'}</a>
+      <a href={`${prefix}/guides/agentkit#choose-path`} class="inline-flex min-h-11 items-center rounded-xl bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-700 focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2">{isVi ? 'Mở sơ đồ chọn hướng dẫn' : 'Open the guide decision map'}</a>
       <a href="https://github.com/bestagentkits/agentkit-support" target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:border-violet-400 dark:border-slate-700 dark:text-slate-200">AgentKit Support</a>
     </nav>
   </div>

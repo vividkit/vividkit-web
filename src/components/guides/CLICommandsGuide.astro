@@ -1,5 +1,6 @@
 ---
 import { getLangFromUrl, type Language } from '@/i18n';
+import { getAgentKitSsrChannelState } from '@/data/guides/agentkit/agentkit-channel-policy.mjs';
 import CLICommandsHero from './cli-commands/cli-commands-hero.astro';
 import CLICommandsCheatsheet from './cli-commands/cli-commands-cheatsheet.astro';
 import AgentKitChannelSwitcher from './agentkit/agentkit-channel-switcher.astro';
@@ -10,36 +11,42 @@ interface Props {
 
 const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
+const publicationStatus = import.meta.env.AGENTKIT_PUBLICATION_STATUS ?? 'hold';
+const channelState = getAgentKitSsrChannelState(Astro.url.search, publicationStatus);
+const copyStatusMessages = currentLang === 'vi'
+  ? {
+      success: 'Đã sao chép lệnh an toàn: {command}',
+      failure: 'Không thể sao chép. Hãy chọn và sao chép thủ công: {command}',
+    }
+  : {
+      success: 'Copied safe command: {command}',
+      failure: 'Copy failed. Select and copy manually: {command}',
+    };
 ---
 
-<div class="mt-6" data-agentkit-channel-root data-agentkit-surface="cli-commands" data-agentkit-locale={currentLang} data-agentkit-active-channel="stable">
+<div
+  class="mt-6"
+  data-agentkit-channel-root
+  data-agentkit-cli-copy-root
+  data-agentkit-surface="cli-commands"
+  data-agentkit-locale={currentLang}
+  data-agentkit-requested-channel={channelState.requestedChannel}
+  data-agentkit-active-channel={channelState.activeChannel}
+  data-agentkit-channel-status={channelState.status}
+  data-agentkit-copy-success={copyStatusMessages.success}
+  data-agentkit-copy-failure={copyStatusMessages.failure}
+>
+  <CLICommandsHero lang={currentLang} />
   <AgentKitChannelSwitcher lang={currentLang} />
   <div class="space-y-8" data-agentkit-stable-facts>
-    <CLICommandsHero lang={currentLang} />
     <CLICommandsCheatsheet lang={currentLang} />
+    <p class="sr-only" role="status" aria-live="polite" aria-atomic="true" data-agentkit-copy-status></p>
   </div>
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.copy-btn').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        const code = btn.getAttribute('data-code');
-        if (!code || /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/.test(code)) return;
-        try {
-          await navigator.clipboard.writeText(code);
-          const copyIcon = btn.querySelector('.copy-icon');
-          const checkIcon = btn.querySelector('.check-icon');
-          copyIcon?.classList.add('hidden');
-          checkIcon?.classList.remove('hidden');
-          setTimeout(() => {
-            copyIcon?.classList.remove('hidden');
-            checkIcon?.classList.add('hidden');
-          }, 2000);
-        } catch (err) {
-          console.error('Failed to copy:', err);
-        }
-      });
-    });
-  });
+  import { initializeAgentKitCliCopyController } from '@/scripts/agentkit-cli-copy-controller';
+
+  initializeAgentKitCliCopyController();
+  document.addEventListener('astro:page-load', initializeAgentKitCliCopyController);
 </script>

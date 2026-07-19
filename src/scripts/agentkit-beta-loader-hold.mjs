@@ -1,19 +1,18 @@
+import { getAgentKitHoldNotice } from '../data/guides/agentkit/agentkit-channel-copy.mjs';
+
 export const AGENTKIT_BETA_LOADER_MARKER = 'agentkit-beta-hold-v1';
 
 export async function activateAgentKitBetaChannel({ root, locale }) {
   const notice = root.querySelector('[data-agentkit-channel-notice]');
-  const title = locale === 'vi'
-    ? 'Beta chưa được xuất bản trong build này'
-    : 'Beta is not published in this build';
-  const body = locale === 'vi'
-    ? 'Bạn đang xem stable fallback. Query chỉ chọn nội dung công khai; nó không cấp quyền closed-beta.'
-    : 'You are seeing the stable fallback. The query selects public content; it does not grant closed-beta enrollment.';
+  const copy = getAgentKitHoldNotice(locale);
 
   root.dataset.agentkitBetaLoader = AGENTKIT_BETA_LOADER_MARKER;
   if (notice) {
-    notice.hidden = false;
-    notice.querySelector('[data-agentkit-channel-notice-title]').textContent = title;
-    notice.querySelector('[data-agentkit-channel-notice-body]').textContent = body;
+    const title = notice.querySelector('[data-agentkit-channel-notice-title]');
+    const body = notice.querySelector('[data-agentkit-channel-notice-body]');
+    if (title.textContent !== copy.title) title.textContent = copy.title;
+    if (body.textContent !== copy.body) body.textContent = copy.body;
+    if (notice.hidden) notice.hidden = false;
   }
   return { activeChannel: 'stable', status: 'unavailable', focusTarget: notice };
 }

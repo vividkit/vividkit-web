@@ -20,6 +20,17 @@ export function normalizeAgentKitChannel(input) {
   return values[0] === 'beta' ? 'beta' : 'stable';
 }
 
+export function getAgentKitSsrChannelState(input, publicationStatus) {
+  const requestedChannel = normalizeAgentKitChannel(input);
+  return {
+    requestedChannel,
+    activeChannel: 'stable',
+    status: requestedChannel === 'beta' && publicationStatus === 'hold'
+      ? 'unavailable'
+      : 'stable',
+  };
+}
+
 function canonicalSurfacePath(pathname) {
   const localeNeutral = pathname.startsWith('/vi/') ? pathname.slice(3) : pathname;
   return localeNeutral.length > 1 ? localeNeutral.replace(/\/+$/, '') : localeNeutral;

@@ -9,6 +9,8 @@ import {
   getAgentKitCliFact,
 } from '../../src/data/guides/agentkit/agentkit-cli-facts.ts';
 import { AGENTKIT_BETA_CHANNEL_FACTS } from '../../src/data/guides/agentkit/agentkit-beta-channel-facts.mjs';
+import { getAgentKitHoldNotice } from '../../src/data/guides/agentkit/agentkit-channel-copy.mjs';
+import { getAgentKitSsrChannelState } from '../../src/data/guides/agentkit/agentkit-channel-policy.mjs';
 
 const ROOT = new URL('../../', import.meta.url);
 
@@ -17,17 +19,75 @@ async function source(path) {
 }
 
 test('all four O1 surfaces share one channel shell and keep stable facts in the SSR fallback', async () => {
-  for (const file of [
-    'src/components/guides/AgentKitGuide.astro',
-    'src/components/guides/CLIGuide.astro',
-    'src/components/guides/CLICommandsGuide.astro',
-    'src/components/guides/CoexistenceGuide.astro',
-  ]) {
+  const surfaces = [
+    ['src/components/guides/AgentKitGuide.astro', 'AgentKitHeroAndPathSelector'],
+    ['src/components/guides/CLIGuide.astro', 'AgentKitCliHero'],
+    ['src/components/guides/CLICommandsGuide.astro', 'CLICommandsHero'],
+    ['src/components/guides/CoexistenceGuide.astro', 'data-agentkit-surface-hero'],
+  ];
+  for (const [file, heroToken] of surfaces) {
     const text = await source(file);
+    const heroIndex = text.indexOf(heroToken);
+    const channelIndex = text.indexOf('<AgentKitChannelSwitcher');
+    const stableFactsIndex = text.indexOf('data-agentkit-stable-facts');
     assert.match(text, /AgentKitChannelSwitcher/, file);
     assert.match(text, /data-agentkit-channel-root/, file);
     assert.match(text, /data-agentkit-stable-facts/, file);
+    assert.ok(heroIndex < channelIndex, `${file}: hero before channel`);
+    assert.ok(channelIndex < stableFactsIndex, `${file}: channel before stable facts`);
+    assert.match(text, /getAgentKitSsrChannelState/, file);
+    assert.match(text, /data-agentkit-requested-channel=\{channelState\.requestedChannel\}/, file);
+    assert.match(text, /data-agentkit-channel-status=\{channelState\.status\}/, file);
   }
+});
+
+test('SSR channel state keeps requested Beta separate from effective Stable under HOLD', () => {
+  assert.deepEqual(getAgentKitSsrChannelState('?channel=beta', 'hold'), {
+    requestedChannel: 'beta',
+    activeChannel: 'stable',
+    status: 'unavailable',
+  });
+  assert.deepEqual(getAgentKitSsrChannelState('?channel=Beta', 'hold'), {
+    requestedChannel: 'stable',
+    activeChannel: 'stable',
+    status: 'stable',
+  });
+  assert.deepEqual(getAgentKitSsrChannelState('?channel=beta', 'published'), {
+    requestedChannel: 'beta',
+    activeChannel: 'stable',
+    status: 'stable',
+  });
+});
+
+test('HOLD channel shell is a status surface, not an ordinary Stable/Beta selector', async () => {
+  const shell = await source('src/components/guides/agentkit/agentkit-channel-switcher.astro');
+  const holdLoader = await source('src/scripts/agentkit-beta-loader-hold.mjs');
+  assert.match(shell, /AGENTKIT_PUBLICATION_STATUS/);
+  assert.match(shell, /getAgentKitHoldNotice/);
+  assert.match(holdLoader, /getAgentKitHoldNotice/);
+  assert.match(shell, /role="status"/);
+  assert.match(shell, /isHold/);
+  assert.match(shell, /data-agentkit-publication-state=\{publicationStatus\}/);
+  assert.match(shell, /<noscript>[\s\S]*data-agentkit-static-hold-notice/);
+  assert.match(shell, /isHold\s*\?[\s\S]*data-agentkit-effective-channel="stable"[\s\S]*data-agentkit-channel-choice="beta"/);
+});
+
+test('HOLD notice copy is locale-complete and hydration preserves the SSR unavailable state', async () => {
+  assert.deepEqual(getAgentKitHoldNotice('en'), {
+    title: 'Beta is not published in this build',
+    body: 'You are seeing Stable content. The query only requests public content; it does not enroll or grant closed-beta access.',
+  });
+  assert.deepEqual(getAgentKitHoldNotice('vi'), {
+    title: 'Beta chưa được xuất bản trong build này',
+    body: 'Bạn đang xem nội dung Stable. Query chỉ yêu cầu nội dung công khai; nó không ghi danh hoặc cấp quyền closed-beta.',
+  });
+
+  const controller = await source('src/scripts/agentkit-channel-controller.mjs');
+  assert.match(controller, /preserveNotice/);
+  assert.match(controller, /agentkitChannelStatus === 'unavailable'/);
+  assert.doesNotMatch(controller, /resetRoot\(root\);/);
+  assert.match(controller, /withAgentKitChannel\(currentLocation, channel\)/);
+  assert.match(controller, /choice\.setAttribute\('href'/);
 });
 
 test('channel controller imports only the build alias and never stores or reports query state', async () => {

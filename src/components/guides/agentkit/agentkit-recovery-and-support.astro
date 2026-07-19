@@ -1,0 +1,54 @@
+---
+import { LifeBuoy, RotateCcw } from 'lucide-astro';
+
+import { AGENTKIT_SUPPORT_CONTACTS } from '@/data/guides/agentkit/agentkit-lifecycle-policy';
+import type { Language } from '@/i18n';
+import { useTranslations } from '@/i18n/utils';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const recoverySteps = [
+  t('agentkit.recovery.step.stop'),
+  t('agentkit.recovery.step.restore'),
+  t('agentkit.recovery.step.inspect'),
+  t('agentkit.recovery.step.retry'),
+];
+const supportLabels = {
+  'claudekit-discord': 'ClaudeKit Discord',
+  'agentkit-support': 'AgentKit Support',
+} as const;
+---
+
+<div class="grid gap-6 pt-16 lg:grid-cols-2">
+  <section id="recovery" class="scroll-mt-40 rounded-3xl border border-cyan-200 bg-cyan-50/60 p-6 dark:border-cyan-800/60 dark:bg-cyan-950/20 lg:scroll-mt-28" aria-labelledby="recovery-heading">
+    <RotateCcw class="h-7 w-7 text-cyan-700 dark:text-cyan-300" aria-hidden="true" />
+    <p class="mt-4 text-xs font-bold uppercase tracking-[0.14em] text-cyan-800 dark:text-cyan-300">{t('agentkit.recovery.eyebrow')}</p>
+    <h2 id="recovery-heading" class="mt-2 font-heading text-2xl font-bold text-slate-950 dark:text-slate-50">{t('agentkit.recovery.heading')}</h2>
+    <p class="mt-3 text-sm leading-6 text-slate-700 dark:text-slate-300">{t('agentkit.recovery.intro')}</p>
+    <ol class="mt-5 list-decimal space-y-3 pl-5 text-sm leading-6 text-slate-700 marker:font-bold marker:text-cyan-800 dark:text-slate-300 dark:marker:text-cyan-300">
+      {recoverySteps.map((step) => <li class="pl-1">{step}</li>)}
+    </ol>
+  </section>
+
+  <section id="support" class="scroll-mt-40 rounded-3xl border border-amber-200 bg-amber-50/60 p-6 dark:border-amber-800/60 dark:bg-amber-950/20 lg:scroll-mt-28" aria-labelledby="support-heading">
+    <LifeBuoy class="h-7 w-7 text-amber-700 dark:text-amber-300" aria-hidden="true" />
+    <p class="mt-4 text-xs font-bold uppercase tracking-[0.14em] text-amber-800 dark:text-amber-300">{t('agentkit.support.eyebrow')}</p>
+    <h2 id="support-heading" class="mt-2 font-heading text-2xl font-bold text-slate-950 dark:text-slate-50">{t('agentkit.support.heading')}</h2>
+    <p class="mt-3 text-sm leading-6 text-slate-700 dark:text-slate-300">{t('agentkit.support.intro')}</p>
+    <aside class="mt-5 rounded-2xl border border-amber-300 bg-white/70 p-4 text-sm leading-6 text-amber-950 dark:border-amber-700 dark:bg-slate-950/40 dark:text-amber-100" role="note">
+      <strong>{t('agentkit.support.redactHeading')}</strong>
+      <span class="mt-1 block">{t('agentkit.support.redactBody')}</span>
+    </aside>
+    <nav class="mt-5 flex flex-wrap gap-3" aria-label={t('agentkit.support.linksLabel')}>
+      {AGENTKIT_SUPPORT_CONTACTS.map((contact) => (
+        <a href={contact.url} target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center rounded-xl border border-amber-300 bg-white px-4 py-2 text-sm font-bold text-amber-900 transition-colors motion-reduce:transition-none hover:border-amber-500 hover:bg-amber-100 focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 dark:border-amber-700 dark:bg-slate-900 dark:text-amber-100 dark:hover:bg-amber-950/50">
+          {supportLabels[contact.id]}
+        </a>
+      ))}
+    </nav>
+  </section>
+</div>

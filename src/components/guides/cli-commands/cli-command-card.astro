@@ -1,0 +1,92 @@
+---
+import type { Language } from '@/i18n';
+import { getCliCommandNotes, getCommandNotes } from '@/data/guides/cli-command-notes';
+import type { CliCommand } from '@/data/guides/cli-commands-cheatsheet';
+import { getAgentKitCliFact } from '@/data/guides/agentkit/agentkit-cli-facts';
+import { getAgentKitCliCopyPresentation } from '@/data/guides/agentkit/agentkit-cli-copy-presentation';
+import type { CliCommandCategoryConfig } from './cli-command-category-config';
+import CliCommandSnippet from './cli-command-snippet.astro';
+
+interface Props {
+  command: CliCommand;
+  category: CliCommandCategoryConfig;
+  lang: Language;
+}
+
+const { command, category, lang } = Astro.props;
+const isVi = lang === 'vi';
+const fact = getAgentKitCliFact(command.id, command.channel);
+if (!fact) throw new Error(`Missing canonical AgentKit CLI fact: ${command.id}`);
+const copy = getAgentKitCliCopyPresentation(fact);
+const noteItems = getCliCommandNotes([...(command.subcommands || []), ...command.keyFlags], lang);
+const commandNotes = getCommandNotes(command.name, lang);
+const hasCommandMetadata = Boolean(command.subcommands?.length || command.keyFlags.length);
+const anchorId = `cli-cmd-${command.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`;
+const safetyLabels = {
+  'read-only': isVi ? 'Chỉ đọc' : 'Read-only',
+  'dry-run': isVi ? 'Xem trước bằng --dry-run' : 'Preview with --dry-run',
+  check: isVi ? 'Chỉ kiểm tra' : 'Check only',
+  'preview-default': isVi ? 'Mặc định là preview' : 'Preview by default',
+  manual: isVi ? 'Cần review thủ công' : 'Manual review required',
+};
+const primaryLabel = copy.copyable
+  ? safetyLabels[copy.safety]
+  : (isVi ? 'Chỉ để tham khảo · không có nút sao chép' : 'Reference only · no copy action');
+---
+
+<article id={anchorId} class="group relative scroll-mt-32 overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 p-4 shadow-sm target:border-amber-400 target:bg-amber-50 target:ring-2 target:ring-amber-300/70 dark:border-white/10 dark:bg-slate-950/55 dark:target:border-amber-300/60 dark:target:bg-amber-950/40 dark:target:ring-amber-300/25">
+  <div class:list={['absolute right-4 top-4 h-2 w-2 rounded-full', category.accent]}></div>
+  <div class="min-w-0 space-y-2 pr-5">
+    <div class="flex flex-wrap items-center gap-2">
+      <code class:list={['inline-flex max-w-full overflow-x-auto rounded-xl px-3 py-1.5 font-mono text-sm font-bold', category.chip]}>{command.name}</code>
+      <span class="rounded-full border border-slate-200 px-2.5 py-1 text-xs font-semibold text-slate-600 dark:border-slate-700 dark:text-slate-300">{safetyLabels[copy.safety]}</span>
+    </div>
+    <p class="break-words text-sm leading-6 text-slate-600 dark:text-slate-300">
+      {isVi ? command.descriptionVi : command.description}
+    </p>
+  </div>
+
+  <div class="mt-4">
+    <CliCommandSnippet command={copy.copyPayload ?? copy.rawCommand} copyable={copy.copyable} lang={lang} label={primaryLabel} />
+  </div>
+
+  {copy.copyable && copy.copyPayload !== copy.rawCommand && (
+    <details class="mt-3 rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
+      <summary class="flex min-h-11 cursor-pointer list-none items-center px-3 text-xs font-semibold text-slate-600 focus-visible:ring-2 focus-visible:ring-purple-500 dark:text-slate-300">
+        {isVi ? 'Lệnh apply để tham khảo · review trước khi chạy' : 'Apply reference · review before running'}
+      </summary>
+      <div class="px-3 pb-3">
+        <CliCommandSnippet command={copy.rawCommand} copyable={false} lang={lang} label={isVi ? 'Không sao chép mặc định' : 'No default copy action'} />
+      </div>
+    </details>
+  )}
+
+  {hasCommandMetadata && (
+    <div class="mt-4 flex flex-wrap gap-1.5">
+      {command.subcommands?.map((subcommand) => <span class:list={['rounded-full px-2 py-1 font-mono text-xs font-medium', category.chip]}>{subcommand}</span>)}
+      {command.keyFlags.map((flag) => <span class="rounded-full border border-slate-200 bg-slate-50 px-2 py-1 font-mono text-xs text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400">{flag}</span>)}
+    </div>
+  )}
+
+  {noteItems.length > 0 && (
+    <details class="mt-3 rounded-xl border border-slate-200/80 bg-white/70 dark:border-white/10 dark:bg-white/[0.03]">
+      <summary class="flex min-h-11 cursor-pointer list-none items-center px-3 text-xs font-bold uppercase tracking-[0.12em] text-slate-500 focus-visible:ring-2 focus-visible:ring-purple-500 dark:text-slate-400">
+        {isVi ? 'Giải thích flags' : 'Flag notes'} · {noteItems.length}
+      </summary>
+      <div class="space-y-2 px-3 pb-3">
+        {noteItems.map((note) => (
+          <div class="grid min-w-0 gap-1 sm:grid-cols-[230px_minmax(0,1fr)] sm:gap-3">
+            <code class="min-w-0 break-words font-mono text-xs font-semibold text-slate-700 dark:text-slate-200">{note.label}</code>
+            <span class="text-xs leading-5 text-slate-500 dark:text-slate-400">{note.description}</span>
+          </div>
+        ))}
+      </div>
+    </details>
+  )}
+
+  {commandNotes.length > 0 && (
+    <ul class="mt-3 space-y-1 rounded-xl border border-amber-200/60 bg-amber-50/40 p-3 text-xs leading-5 text-amber-800 dark:border-amber-400/10 dark:bg-amber-950/20 dark:text-amber-200">
+      {commandNotes.map((note) => <li>• {note}</li>)}
+    </ul>
+  )}
+</article>
