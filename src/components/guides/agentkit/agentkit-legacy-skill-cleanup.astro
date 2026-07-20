@@ -92,7 +92,7 @@ const codeClass = 'block max-w-full overflow-x-auto rounded-xl bg-slate-100 p-4 
     </div>
   ) : (
     <div class="mt-8 grid max-w-4xl gap-6" data-agentkit-stage-seven-details>
-      <section aria-labelledby="agentkit-removal-heading" class="rounded-2xl border border-slate-200 p-5 dark:border-slate-700" data-agentkit-removal-details hidden>
+      <section aria-labelledby="agentkit-removal-heading" class="rounded-2xl border border-slate-200 p-5 dark:border-slate-700" data-agentkit-removal-details>
         <div class="flex items-center gap-3">
           <ShieldCheck class="h-5 w-5 text-purple-600 dark:text-purple-400" aria-hidden="true" />
           <h3 id="agentkit-removal-heading" class="font-bold text-slate-950 dark:text-slate-50">{t('agentkit.cleanup.verify.title')}</h3>
@@ -100,7 +100,7 @@ const codeClass = 'block max-w-full overflow-x-auto rounded-xl bg-slate-100 p-4 
         <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{t('agentkit.cleanup.verify.body')}</p>
         <div class="mt-4 grid gap-4 sm:grid-cols-2">
           {AGENTKIT_CK_REMOVAL_POLICIES.map((policy) => (
-            <article class="min-w-0 rounded-xl border border-slate-200 p-4 dark:border-slate-700" data-agentkit-removal-policy={policy.packageManager} hidden>
+            <article class="min-w-0 rounded-xl border border-slate-200 p-4 dark:border-slate-700" data-agentkit-removal-policy={policy.packageManager}>
               <h4 class="font-bold text-slate-950 dark:text-slate-50">{policy.packageManager}</h4>
               <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300" set:html={renderInlineCode(t(`agentkit.cleanup.manager.${policy.packageManager}.evidence`))}></p>
               {policy.command ? (

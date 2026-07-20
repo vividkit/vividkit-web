@@ -48,19 +48,28 @@ async function runInteractiveCase({ browser, baseUrl, locale }) {
     if (index < 4) await page.keyboard.press('Tab');
   }
 
-  const summarySelector = '[data-agentkit-lifecycle-router] > summary';
-  await page.focus(summarySelector);
-  await page.keyboard.press('Enter');
-  const evaluatorOpened = await page.$eval('[data-agentkit-lifecycle-router]', (details) => details.open);
-  await page.select('[name="goal"]', 'install');
-  await page.select('[name="legacyOwnershipState"]', 'absent');
-  await page.click('[name="dataCriticality"][value="standard"]');
-  const evaluatorEnabled = await page.$eval('[data-agentkit-router-evaluate]', (button) => !button.disabled);
-  await page.click('[data-agentkit-router-evaluate]');
-  const evaluatorResult = await page.$eval('[data-agentkit-router-result]', (result) => ({
-    visible: !result.hidden,
-    focused: document.activeElement === result,
-    eligibility: result.getAttribute('data-agentkit-eligibility'),
+  const routeGroups = await page.$$eval('[data-agentkit-route-group]', (groups) => (
+    groups.map((group) => ({
+      id: group.getAttribute('data-agentkit-route-group'),
+      laneCount: group.querySelectorAll('[data-agentkit-reader-lane]').length,
+    }))
+  ));
+  const stageSelectors = [
+    '[data-agentkit-stage="backup"] [data-agentkit-stage-details]',
+    '[data-agentkit-stage="cleanup-ck-ownership"] [data-agentkit-stage-details]',
+  ];
+  for (const selector of stageSelectors) {
+    const open = await page.$eval(selector, (details) => details.open);
+    if (!open) await page.click(`${selector} > summary`);
+  }
+  const bothStagesOpen = await page.evaluate((selectors) => (
+    selectors.every((selector) => document.querySelector(selector)?.open === true)
+  ), stageSelectors);
+  const staticJourney = await page.evaluate(() => ({
+    checkboxCount: document.querySelectorAll('input[name="completedStages"]').length,
+    hiddenCommandPanelCount: [...document.querySelectorAll('[data-agentkit-stage-command-panel]')]
+      .filter((panel) => panel.hidden).length,
+    advancedReferencesOpen: document.querySelector('[data-agentkit-advanced-references]')?.open ?? null,
   }));
 
   const failures = [];
@@ -71,9 +80,14 @@ async function runInteractiveCase({ browser, baseUrl, locale }) {
   if (initial.mainScrollWidth > initial.mainClientWidth + 1) failures.push(`main-overflow=${initial.mainScrollWidth - initial.mainClientWidth}px`);
   if (!focusVisible) failures.push('focus-visible=false');
   if (keyboardOrder.join(',') !== 'fresh,clean,coexist,recovery,support') failures.push(`lane-tab-order=${keyboardOrder.join(',')}`);
-  if (!evaluatorOpened) failures.push('evaluator-keyboard-open=false');
-  if (!evaluatorEnabled) failures.push('evaluator-enabled=false');
-  if (!evaluatorResult.visible || !evaluatorResult.focused) failures.push('evaluator-result-not-visible-focused');
+  if (JSON.stringify(routeGroups) !== JSON.stringify([
+    { id: 'primary', laneCount: 3 },
+    { id: 'exception', laneCount: 2 },
+  ])) failures.push(`route-groups=${JSON.stringify(routeGroups)}`);
+  if (!bothStagesOpen) failures.push('stage-disclosures-exclusive');
+  if (staticJourney.checkboxCount !== 0) failures.push(`fake-progress=${staticJourney.checkboxCount}`);
+  if (staticJourney.hiddenCommandPanelCount !== 0) failures.push(`hidden-command-panels=${staticJourney.hiddenCommandPanelCount}`);
+  if (staticJourney.advancedReferencesOpen !== false) failures.push(`advanced-references-open=${staticJourney.advancedReferencesOpen}`);
 
   await page.close();
   return {
@@ -82,9 +96,9 @@ async function runInteractiveCase({ browser, baseUrl, locale }) {
     ...initial,
     focusVisible,
     keyboardOrder,
-    evaluatorOpened,
-    evaluatorEnabled,
-    evaluatorResult,
+    routeGroups,
+    bothStagesOpen,
+    staticJourney,
     failures,
   };
 }

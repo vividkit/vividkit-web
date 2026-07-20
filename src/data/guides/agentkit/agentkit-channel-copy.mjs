@@ -1,22 +1,22 @@
 const HOLD_NOTICE_BY_LOCALE = Object.freeze({
   en: Object.freeze({
-    title: 'Beta is not published in this build',
-    body: 'You are seeing Stable content. The query only requests public content; it does not enroll or grant closed-beta access.',
+    title: 'Beta is not published',
+    body: 'You are viewing Stable content; the URL parameter does not unlock Beta.',
   }),
   vi: Object.freeze({
-    title: 'Beta chưa được xuất bản trong build này',
-    body: 'Bạn đang xem nội dung Stable. Query chỉ yêu cầu nội dung công khai; nó không ghi danh hoặc cấp quyền closed-beta.',
+    title: 'Beta chưa được phát hành',
+    body: 'Bạn đang xem nội dung Stable; tham số URL không mở khóa nội dung Beta.',
   }),
 });
 
 const STATIC_HOLD_NOTICE_BY_LOCALE = Object.freeze({
   en: Object.freeze({
-    title: 'Stable-only fallback',
-    body: 'This static HOLD build contains Stable content only. Without JavaScript, channel queries cannot change the rendered page or grant beta access.',
+    title: 'Stable content',
+    body: 'Beta is not published. Without JavaScript, the URL parameter cannot change this page or unlock Beta.',
   }),
   vi: Object.freeze({
-    title: 'Chế độ dự phòng chỉ có Stable',
-    body: 'Build HOLD tĩnh này chỉ chứa nội dung Stable. Khi không có JavaScript, query channel không thể đổi nội dung hiển thị hoặc cấp quyền beta.',
+    title: 'Nội dung Stable',
+    body: 'Beta chưa được phát hành. Khi không có JavaScript, tham số URL không thể đổi trang này hoặc mở khóa Beta.',
   }),
 });
 
