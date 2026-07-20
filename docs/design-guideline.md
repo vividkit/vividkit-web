@@ -518,6 +518,18 @@ ease-in-out: Complex state changes
 - Skip links for screen readers
 - Focus traps in modals
 
+### Static Guide Journeys
+
+The AgentKit migration guide is documentation, not an evaluator:
+
+- Use ordinary localized links for the three primary and two exception decisions; preserve exact anchors and no-JavaScript navigation.
+- Render lifecycle stages as independent native `<details>` elements. Do not add completion checkboxes, hidden command gates, attestation forms, or controller-driven authorization states.
+- Keep advanced references collapsed by default while leaving recovery and support in the main reading flow.
+- Present HOLD as compact Stable/released metadata. An exact beta request may show an unavailable notice; `<noscript>` must explain the Stable-only fallback.
+- Apply visible focus, fixed-header scroll clearance, `motion-reduce:transition-none`, and narrow-screen overflow protection to every disclosure and destination.
+
+Stage 7 content remains a build-time publication decision. Query or DOM state must never reveal held removal details. See [the component contract](./design-system.md#agentkit-reader-journey) and [validation record](./agentkit-migration-validation.md).
+
 ### Color Contrast
 
 | Element | Light | Dark | Ratio | Status |

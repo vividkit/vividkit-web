@@ -1,16 +1,16 @@
 # VividKit Web — Project Overview and Product Development Requirements
 
-**Last updated:** July 17, 2026
+**Last updated:** July 20, 2026
 
 **Document version:** 2.0
 
-**Implementation state:** Lifecycle follow-up implemented in the current worktree; Phase 8 release evidence pending
+**Implementation state:** Static reader journey implemented and verified offline; operational release review pending
 
 ## Executive Summary
 
 VividKit Web is a statically generated, bilingual product site and visual guide hub for AgentKit (`ak`), Claude Code, Codex, and related workflows. AgentKit succeeds ClaudeKit (`ck`). Current guidance is AgentKit-first; isolated ClaudeKit pages remain available as noindex historical material.
 
-The current product contract replaces a fixed migration checklist with an evidence-driven decision router and seven ordered lifecycle stages. Stable AgentKit `2.3.0` is the default. Beta `2.3.1-beta.1` is a separately reviewed fact set available only through an exact, bounded query after publication approval. Mixed or unverifiable ownership fails closed to support.
+The current product contract uses five static decision links and seven ordered, independently expandable lifecycle stages. Stable AgentKit `2.3.0` is the default. Beta `2.3.1-beta.1` is a separately reviewed fact set available only through an exact, bounded query after publication approval. Mixed or unverifiable ownership is directed to support; the static guide does not evaluate evidence or authorize an action.
 
 ## Product Vision
 
@@ -27,7 +27,7 @@ Turn verified command behavior and conservative lifecycle policy into visual gui
 ### Value
 
 - **Evidence-backed facts:** release, command, target, and provenance metadata live in typed modules.
-- **Decision before action:** the router selects self-service, recovery, closed-beta, or support-assisted handling from stated evidence.
+- **Decision before action:** three primary and two exception links route readers to fresh install, clean cutover, coexistence, recovery, or support guidance.
 - **Ordered safety:** cleanup, installation, observation, and removal cannot be presented as interchangeable steps.
 - **Target clarity:** Claude Code uses `/ak:*`; Codex uses `$ak:*`.
 - **Bilingual parity:** executable facts remain shared while English and Vietnamese prose is localized.
@@ -54,19 +54,19 @@ Turn verified command behavior and conservative lifecycle policy into visual gui
 
 ## Lifecycle Contract
 
-### Decision Router
+### Static Decision Navigation
 
-The router evaluates goal, legacy ownership, metadata health, scope relationship, cleanup preview, package-manager evidence, data criticality, pilot opt-in, canary outcome, observation declaration, and completed stages.
+The Hub does not run an evaluator, attestation form, or lifecycle controller. It presents ordinary links that work without JavaScript:
 
-| Lane | Eligible case | Boundary |
+| Group | Choice | Exact English destination |
 |---|---|---|
-| `fresh-install` | No CK content in the selected scope | Apply only install, verify, and observation stages |
-| `clean-cutover` | Single-scope ownership, healthy metadata, clean preview, known package evidence | Follow every applicable stage in order |
-| `clean-coexistence-pilot` | Beta opt-in; CK global + AK project-local; clean, noncritical project | Closed-beta operational pilot only |
-| `recovery` | Explicit recovery goal or failed canary | Restore known-good state; keep CK removal blocked |
-| `support-assisted` | Mixed/custom ownership, corrupt/missing metadata, dirty/unknown preview, unknown manager, critical data, or inconsistent scope | No destructive copy action |
+| Primary | Fresh install | `/guides/cli#install` |
+| Primary | Clean cutover | `/guides/agentkit#clean-cutover` |
+| Primary | Coexistence pilot | `/guides/coexistence#pilot-steps` |
+| Exception | Recovery | `/guides/agentkit#recovery` |
+| Exception | Support | `/guides/agentkit#support` |
 
-The query channel cannot override lifecycle eligibility.
+Vietnamese destinations add `/vi` before `/guides`. Channel query state cannot evaluate eligibility or unlock held guidance.
 
 ### Seven Ordered Stages
 
@@ -77,17 +77,17 @@ The query channel cannot override lifecycle eligibility.
 | 3 | `confirm-clean-scope` | Refuse mixed/custom/corrupt/missing/unknown ownership before install |
 | 4 | `install-ak` | Install AgentKit only after reviewing the installer trust boundary |
 | 5 | `verify-canary` | Inspect expected artifacts and run a real workflow in a reversible target |
-| 6 | `observe` | Accept an ephemeral 3–7 day operator declaration as advisory input only |
+| 6 | `observe` | Record a 3–7 day observation externally; the page does not collect or validate it |
 | 7 | `remove-ck-control-plane` | Resolve every `ck` executable first; require exact package ownership before any manual removal review |
 
-The observation form validates declaration shape and range in memory. It does not persist, verify, enforce, or authorize anything. Reload and no-JavaScript states remain advisory-blocked.
+Each stage is static documentation in an independent `<details>` disclosure. The page has no completion checkboxes, hidden command gate, persisted progress, or observation form. It does not verify evidence, enforce elapsed time, or authorize removal.
 
 ### Migration and Removal Policy
 
 - `ak migrate` is a stable command. VividKit keeps it preview/smoke-first and exposes no default apply CTA for important data.
 - Project content, CK executable ownership, and CK control-plane data are separate boundaries.
 - Path detectors provide location evidence only. Separate read-only Bun/npm/pnpm/Yarn Classic probes must also match the global bin/root and direct `claudekit-cli` package entry; mismatch or symlink ambiguity fails to `unknown`.
-- Bun, npm, pnpm, and Yarn Classic removal rows remain manual and condition-labeled, and only the exact router-matched row is revealed at Stage 7.
+- Bun, npm, pnpm, and Yarn Classic removal rows remain manual and condition-labeled when Stage 7 detail is published; the page does not select a row from reader input.
 - Unknown, conflicting, symlinked, or unowned paths produce no uninstall command.
 - Stage 7 detail is controlled by the build-time publication record; a query cannot unlock held content.
 
@@ -121,9 +121,9 @@ The manifest requires **132 identities = 72 preserved live identities + 2 AgentK
 |---|---|---:|---|
 | FR-1 | Render static, responsive product and guide pages | P0 | Astro pages and layouts |
 | FR-2 | Maintain English/Vietnamese route and executable-fact parity | P0 | Astro i18n and bilingual contract tests |
-| FR-3 | Route users by lifecycle evidence before showing staged actions | P0 | `routeAgentKitLifecycle` and router UI |
+| FR-3 | Provide five JavaScript-independent decision links in a 3+2 primary/exception flow | P0 | reader-lane data, navigation component, and browser contract |
 | FR-4 | Preserve the exact seven-stage predecessor order | P0 | lifecycle facts and policy tests |
-| FR-5 | Fail mixed/custom/corrupt/missing/unknown cases to support-assisted | P0 | router refusal matrix |
+| FR-5 | Direct mixed/custom/corrupt/missing/unknown cases to support without presenting a guessed destructive action | P0 | lifecycle policy, support copy, and content audit |
 | FR-6 | Limit coexistence to CK global + AK project-local in a clean closed-beta project | P0 | lifecycle and coexistence contracts |
 | FR-7 | Keep stable default and exact beta query behavior bounded to four surfaces | P0 | channel policy/controller tests |
 | FR-8 | Keep both LLM artifacts stable-only | P0 | route and postbuild assertions |
@@ -161,7 +161,8 @@ Before sharing evidence, remove usernames/home paths, repository remotes, creden
 
 ### Implemented Contract
 
-- [x] Router exposes fresh-install, clean-cutover, closed-beta pilot, recovery, and support-assisted lanes.
+- [x] Static navigation exposes fresh install, clean cutover, coexistence pilot, recovery, and support destinations in a 3+2 flow.
+- [x] Lifecycle stages expand independently, show their available commands without progress gates, and keep advanced references collapsed by default.
 - [x] Stage IDs and predecessors match the seven-stage contract.
 - [x] Mixed/custom ownership and unhealthy/missing metadata fail closed.
 - [x] Stable/beta facts remain independent; the beta catalog does not borrow stable commands.
@@ -186,8 +187,8 @@ See [AgentKit migration validation](./agentkit-migration-validation.md) for the 
 | Risk | Mitigation |
 |---|---|
 | Beta facts leak into stable HTML or LLM output | Build alias, full-dist isolation scan, stable-only LLM assertions |
-| Query appears to grant pilot access | Copy states that query is public selection only; router independently checks opt-in and scope |
-| User treats operator declaration as enforcement | Ephemeral state, advisory labels, reload reset, no verified/authorized state |
+| Query appears to grant pilot access | Copy states that query is public selection only; publication remains a build-time decision |
+| User treats observation prose as enforcement | Static copy states that the declaration is external and cannot verify or authorize removal |
 | Incorrect CK package manager is guessed | Detector-first path evidence and manual exact-ownership condition |
 | Historical archive leaks into live bundles | Provenance digest, import boundary, postbuild JS/CSS reachability checks |
 | Support artifacts disclose private data | Fixed schema, allowlisted summaries, no raw child output |
@@ -197,6 +198,7 @@ See [AgentKit migration validation](./agentkit-migration-validation.md) for the 
 
 - Required build identity preservation: **132/132**.
 - Query-created route identities: **0**.
+- Static reader destinations: **5/5**, grouped as three primary and two exception paths.
 - Lifecycle stage identities: **7/7** in predecessor order.
 - Supported target syntax contracts: **2/2**.
 - Archive discovery exposure: **0** sitemap identities and **0** LLM identities.

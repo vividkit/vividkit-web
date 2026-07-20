@@ -13,24 +13,21 @@ Related evidence boundaries:
 - [Project overview and PDR](./project-overview-pdr.md)
 - [Codebase summary](./codebase-summary.md)
 
-## Observed Offline Snapshot — 2026-07-17
+## Observed Offline Snapshot — 2026-07-20
 
 ### Product functional gates
 
 | Gate | Observed result |
 |---|---|
-| Full AgentKit verification | 165 total; 164 pass; 0 fail; 1 intentional postbuild-only skip |
-| Content/type scope | 876 source files; AgentKit type delta 0 allowed / 0 new; repository-wide checker remains red at the reviewed 485-error snapshot |
-| Static output | 132 pages; zero query-created route identities; postbuild 8/8 |
-| Hold build graph | 540 generated files; beta module/token absent; exact beta query shows the unavailable fallback |
-| Published test graph | 542 generated files; beta loader/chunk present only with the explicit `NODE_ENV=test` publication fixture |
-| Archive | 208 full-history provenance files; 268 rendered-boundary files; no live archive import/bundle leak |
-| Truth audit | stable `2.3.0` and beta `2.3.1-beta.1` both returned `AK-TRUTH-OK` |
-| Hold browser matrix | Fresh pre-commit run 274/274 pass; local access-controlled artifact expires `2026-07-24T06:53:26.044Z` |
-| Published browser matrix | 274/274 pass; local access-controlled artifact expires `2026-07-24T02:58:33.505Z` |
-| Hold recovery matrix | published-to-hold rebuild and full graph scan pass; 120/120 browser checks; artifact expires `2026-07-24T03:03:16.889Z` |
+| Full AgentKit verification | 180 pass; 0 fail; 1 intentional postbuild-only skip |
+| Static reader journey | No evaluator, attestation form, or lifecycle controller; exact 3+2 links, independent stages, visible command panels, collapsed advanced references, and reduced-motion classes passed contract checks |
+| Content/type scope | AgentKit-scoped delta 0; repository-wide checker reported 486 unrelated errors and warned `+1` against the recorded 485 baseline |
+| HOLD browser matrix | 368/368 pass, including compact Stable metadata, exact-beta HOLD warning, no-JavaScript fallback/destinations, focus, and overflow checks |
+| Published-fixture static output | 132 pages; postbuild 8/8; query parameters created no route identity |
+| Published-fixture browser matrix | 368/368 pass |
+| Publication/export/archive | Stage 7 remained build-time gated; LLM output remained stable-only; archive remained noindex, canonicalized, and excluded from live discovery/bundles |
 
-The browser matrix covered English/Vietnamese, Hub/CLI/CLI Commands/Coexistence, stable/exact-beta/invalid/repeated/case-variant/no-JavaScript requests, mobile/desktop, light/dark, keyboard/focus, history and channel-link cleanup. The tracked publication record remained `hold`; the published result above is test evidence, not public release approval.
+The browser matrix covered English/Vietnamese, Hub/CLI/CLI Commands/Coexistence, stable/exact-beta/invalid/repeated/case-variant/no-JavaScript requests, mobile/desktop, light/dark, keyboard/focus, history and channel-link cleanup. The tracked publication record remained `hold`; the published-fixture results are test evidence, not publication or deployment evidence.
 
 ### Source identity
 
@@ -38,8 +35,8 @@ The browser matrix covered English/Vietnamese, Hub/CLI/CLI Commands/Coexistence,
 |---|---|
 | Stable normalized fixture | `89d582555208a790379f1f40a325375933265438288bf2c6ecbe9c6fe1646a12` |
 | Beta normalized fixture | `0772e9421526fa7cd62929153517b222d9b88c9d05be7136ff85567fc68cf8d5` |
-| Publication source closure | `1efc8393088d05dbd3cb5d50f8b9fee636f6c208e1fec7c3f1f35858aae25eab` |
-| Truth-audit bundle | `8db4f4c3a210db50e16ea87c1a1cc762f02af697edb5d1325ba9e8f330a8addb` |
+| Publication source closure | `74d382731cc5a4b83b92d371558d7904e0583ee6fb907a08abf022a980fb5a2e` |
+| Truth-audit bundle | `5ac25bd84d58c03eff28913a32584a0b646c22fe0ad8453a326cfffde7aedfe2` |
 | Embedded fixture root | `2dd3d878eafbd8e524b734f27ebc75f7717fae19d6141677cd8fb37eca2954b4` |
 
 ### Release holds
@@ -162,7 +159,7 @@ This operational record is distinct from the public beta query.
 | Stop conditions | Collision, scope drift, data mismatch, new metadata class, or archive leak |
 | Exit review | Continue/hold/rollback decision and reviewer |
 
-The 3–7 day range is an operator attestation checked for shape and range. It is not site enforcement, independent verification, or removal authorization.
+The 3–7 day observation is an external operational declaration. The static guide does not collect it, enforce elapsed time, independently verify evidence, or authorize removal.
 
 ### 8. Recovery Drills
 
@@ -233,7 +230,7 @@ A tooling failure rolls back or holds the local tooling only; it does not change
 
 Validation records dated July 11–13, 2026 covered the earlier migration foundation, provider-copy cleanup, compatibility primer, and UI follow-ups. Their route totals, journey totals, release observations, suite totals, generated-file totals, and browser aggregates describe those historical snapshots only.
 
-Those figures are intentionally removed from the current-state sections because the lifecycle router, route manifest, release fixtures, channel build graph, and archive boundary changed afterward. Use the Phase 8 schema above for the next release decision; do not cite the former figures as current evidence.
+Those figures are intentionally removed from the current-state sections because the reader journey, route manifest, release fixtures, channel build graph, and archive boundary changed afterward. Use the Phase 8 schema above for the next release decision; do not cite the former figures as current evidence.
 
 ## Unresolved Questions
 

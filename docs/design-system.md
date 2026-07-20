@@ -327,6 +327,20 @@ background: linear-gradient(135deg,
 <div class="step-indicator step-indicator--green">3</div>
 ```
 
+### AgentKit Reader Journey
+
+| Element | Contract |
+|---|---|
+| Decision navigation | Five plain EN/VI links in keyboard order: three primary, then recovery and support exceptions |
+| Destinations | `#install`, `#clean-cutover`, `#pilot-steps`, `#recovery`, and `#support` with fixed-header clearance |
+| Lifecycle stages | Seven independent native disclosures; first open initially; commands visible without progress state |
+| Advanced references | One native disclosure, collapsed by default |
+| HOLD metadata | Compact Stable/released line; exact-beta warning plus `<noscript>` fallback; no channel-choice controls |
+| Motion and layout | Focus-visible controls, reduced-motion transitions, wrapping/min-width guards, and no horizontal mobile overflow |
+| Stage 7 | Build-time publication gate only; query and client state have no authority |
+
+The Hub has no path evaluator, operator-attestation UI, or lifecycle browser controller. See [design guidance](./design-guideline.md#static-guide-journeys) and [the observed validation record](./agentkit-migration-validation.md).
+
 ### Skill Badges
 
 ```css

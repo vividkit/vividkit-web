@@ -1,6 +1,6 @@
 # VividKit Web — Codebase Summary
 
-**Last updated:** July 17, 2026
+**Last updated:** July 20, 2026
 
 **Framework:** Astro 6.0.2, static output
 
@@ -32,7 +32,7 @@ VividKit Web is a bilingual static site and guide system for AgentKit (`ak`). En
 ```text
 src/
 ├── components/
-│   ├── guides/agentkit/       # Lifecycle router, stages, channel UI, targets, cleanup
+│   ├── guides/agentkit/       # Static reader links, stages, channel UI, targets, cleanup
 │   ├── guides/                # Current guide shells and topic components
 │   ├── layout/                # Header, footer, navigation, shared chrome
 │   ├── sections/              # Product-page sections
@@ -46,7 +46,7 @@ src/
 ├── legacy-ck/                 # Isolated historical ClaudeKit source snapshot
 ├── layouts/                   # Main, guide, and legacy archive layouts
 ├── pages/                     # Static EN/VI and archive routes
-├── scripts/                   # Browser-side channel/lifecycle controllers
+├── scripts/                   # Browser-side channel, copy, and navigation controllers
 ├── styles/                    # Global and archive styles
 └── types/                     # Shared TypeScript declarations
 
@@ -70,7 +70,7 @@ The site does not treat component prose as command truth. Typed facts flow into 
 ```text
 reviewed official observations + owner decisions + archive provenance
   -> typed release, CLI, lifecycle, target, and publication facts
-  -> stable/beta selectors and decision router
+  -> stable/beta selectors and static reader decision links
   -> shared EN/VI Astro components
   -> static HTML + lazy channel asset when publication permits
   -> source, build-graph, postbuild, route, LLM, and archive checks
@@ -85,7 +85,7 @@ reviewed official observations + owner decisions + archive provenance
 | `agentkit-skill-facts.ts` | Verified skill identities and Claude Code/Codex invocation pairs |
 | `agentkit-target-capabilities.ts` | Claude Code and Codex install scopes, default project scope, invocation mode |
 | `agentkit-lifecycle-guide-facts.ts` | Seven stage IDs, predecessor facts, detector commands, manual removal conditions, support contacts |
-| `agentkit-lifecycle-policy.ts` | Evidence-driven lane router, sequential stage state, advisory attestation validation |
+| `agentkit-lifecycle-policy.ts` | Pure lifecycle routing and operational-declaration policy used by safety contracts; not a public Hub controller |
 | `agentkit-channel-policy.mjs` | Exact channel normalization and four-surface propagation boundary |
 | `agentkit-beta-channel-facts.mjs` | Independent beta release claim; zero beta command facts |
 | `agentkit-publication-policy.ts` | Hold/staging/published build decision and digest validation |
@@ -95,9 +95,9 @@ reviewed official observations + owner decisions + archive provenance
 
 The previously separate operational and legacy-cleanup fact modules are no longer current sources. Lifecycle and cleanup behavior now lives in `agentkit-lifecycle-guide-facts.ts` plus `agentkit-lifecycle-policy.ts`.
 
-## Lifecycle Router and Seven Stages
+## Lifecycle Policy and Seven Static Stages
 
-`routeAgentKitLifecycle` returns one of five lanes:
+`routeAgentKitLifecycle` remains a pure policy function covered by contract tests. The public Hub does not call it, collect evidence, or unlock UI state. Its five policy outcomes remain:
 
 - `fresh-install`
 - `clean-cutover`
@@ -119,13 +119,15 @@ backup
   -> remove-ck-control-plane
 ```
 
-Fresh install uses only install, canary, and observation. Clean cutover follows all applicable stages. Coexistence additionally requires beta, explicit pilot opt-in, clean single-scope evidence, and CK global with AK project-local. A failed canary enters recovery.
+Fresh install uses only install, canary, and observation policy stages. Clean cutover follows all applicable stages. Coexistence policy additionally requires beta, explicit pilot opt-in, clean single-scope evidence, and CK global with AK project-local. A failed canary enters recovery.
 
-The 3–7 day form is ephemeral advisory input. The policy checks user-supplied timestamps and acknowledgment shape, but the site cannot verify the evidence, enforce time, or authorize removal.
+The Hub renders all seven stages as independent native disclosures. Available command panels are present without checkboxes, completion state, evaluator output, or a lifecycle browser controller. The 3–7 day observation is an external operational declaration; the page cannot collect or verify it, enforce time, or authorize removal.
 
 ## Reader Journey and Command Presentation
 
-The AgentKit Hub leads with five keyboard-reachable, JavaScript-independent reader lanes: fresh install, clean cutover, coexistence pilot, recovery, and support. Their EN/VI links resolve to the exact `install`, `clean-cutover`, `pilot-steps`, `recovery`, and `support` anchors. The coexistence destination starts with ordered pilot steps before topology and eligibility detail; it is guidance, not access or removal authorization.
+The AgentKit Hub leads with five keyboard-reachable, JavaScript-independent links: three primary paths for fresh install, clean cutover, and coexistence, followed by two exception paths for recovery and support. Their EN/VI links resolve to the exact `install`, `clean-cutover`, `pilot-steps`, `recovery`, and `support` anchors. The coexistence destination starts with ordered pilot steps before topology and eligibility detail; it is guidance, not access or removal authorization.
+
+The first lifecycle stage is open initially; every stage can remain open independently. Advanced continuity, Desktop App, target, cleanup, command-mapping, and troubleshooting references live in one native disclosure that is collapsed by default. Disclosure motion has reduced-motion fallbacks, anchors clear fixed chrome, and the UI matrix checks mobile overflow and no-JavaScript destination visibility.
 
 CLI Commands derives **18 commands across 5 groups** from the shared presentation catalog. A typed projection over canonical CLI facts controls copy affordances:
 
@@ -167,7 +169,7 @@ Links leaving that group lose the channel parameter. Canonical routes never incl
 
 The current tracked record is `hold`. Test-only fixture override is rejected outside `NODE_ENV=test`. The full-dist isolation scanner verifies both modes and rejects beta tokens in LLM output. Channel activation uses a request generation guard so a stale beta import cannot overwrite a newer stable navigation.
 
-Because output remains static, the no-JavaScript HOLD response is query-neutral and truthfully describes the Stable-only build. JavaScript handles an exact runtime `?channel=beta` request as unavailable under HOLD. Published channel controls derive their URL from the current location so unrelated query parameters and the fragment survive selection and browser history.
+Because output remains static, HOLD renders compact Stable/released metadata and a `<noscript>` fallback. JavaScript handles an exact runtime `?channel=beta` request as unavailable under HOLD. Published channel controls derive their URL from the current location so unrelated query parameters and the fragment survive selection and browser history.
 
 ## Migration and Removal Safety
 
@@ -175,7 +177,7 @@ Because output remains static, the no-JavaScript HOLD response is query-neutral 
 - Project content cleanup occurs before AgentKit install; CK executable/control-plane review stays last.
 - `which -a ck` and `Get-Command ck -All` are path-evidence detectors, not ownership proof.
 - Read-only Bun/npm/pnpm/Yarn Classic probes then compare the resolved path with the manager's global bin/root and direct `claudekit-cli` package entry; any mismatch or symlink ambiguity becomes `unknown`.
-- Package-manager removal actions are manual and non-copyable, and the Stage 7 view renders only the row matched by the router's exact manager evidence.
+- Package-manager removal actions are manual, non-copyable, and condition-labeled. When Stage 7 detail is published, the static guide shows the reviewed rows without selecting one from reader input.
 - Unknown ownership maps to sanitization and support, not a guessed command.
 - Detailed Stage 7 removal rows are build-time publication-gated; query/DOM state cannot unlock them.
 - Claude Code `/ak:*` and Codex `$ak:*` remain separate target contracts.
@@ -247,7 +249,7 @@ Private maintainer tooling and product delivery are independent. The public repo
 
 - Change source metadata and fixtures only through reviewed source observations.
 - Never fall back from an empty beta catalog to stable commands labeled as beta.
-- Update router facts, lifecycle UI, EN/VI copy, and contract tests together.
+- Update reader destinations, lifecycle facts, static UI, EN/VI copy, and contract tests together.
 - Keep reader-lane destinations, exact anchor IDs, coexistence pilot order, and EN/VI copy synchronized.
 - Derive CLI copy actions from canonical facts through the safe-copy projection; never add an ad hoc copy button for a mutating command.
 - Treat observation as advisory declaration, never verification or enforcement.
