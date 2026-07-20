@@ -360,7 +360,7 @@ test('normal build cannot bypass source or generated-artifact audits', async () 
   assert.doesNotMatch(packageJson.scripts['verify:agentkit'], /release-drift/);
 });
 
-test('active lifecycle UI rejects stale promises and gates exact removal details', async () => {
+test('active lifecycle UI rejects stale promises and keeps exact removal details publication-gated', async () => {
   const files = [
     '../../src/i18n/en/agentkit.ts',
     '../../src/i18n/vi/agentkit.ts',
@@ -368,7 +368,6 @@ test('active lifecycle UI rejects stale promises and gates exact removal details
     '../../src/components/guides/agentkit/agentkit-hero-and-path-selector.astro',
     '../../src/components/guides/agentkit/agentkit-migration-checklist.astro',
     '../../src/components/guides/agentkit/agentkit-legacy-skill-cleanup.astro',
-    '../../src/scripts/agentkit-lifecycle-guide-controller.ts',
   ];
   const text = (await Promise.all(files.map((file) => readFile(new URL(file, import.meta.url), 'utf8')))).join('\n');
 
@@ -377,7 +376,7 @@ test('active lifecycle UI rejects stale promises and gates exact removal details
   assert.doesNotMatch(text, /10-step|10 bước/i);
   assert.doesNotMatch(text, /doctor green.*(?:safe|correct)/i);
   assert.doesNotMatch(text, /migrate.*apply by default/i);
-  assert.match(text, /data-agentkit-removal-details hidden/);
-  assert.match(text, /result\.supportLevel !== 'self-service'/);
+  assert.doesNotMatch(text, /completedStages|data-agentkit-stage-state|data-agentkit-router-form/);
+  assert.doesNotMatch(text, /data-agentkit-removal-details[^>]*hidden|hidden[^>]*data-agentkit-removal-details/);
   assert.match(text, /data-agentkit-stage-seven-unavailable/);
 });

@@ -68,18 +68,20 @@ test('HOLD channel shell is a status surface, not an ordinary Stable/Beta select
   assert.match(shell, /role="status"/);
   assert.match(shell, /isHold/);
   assert.match(shell, /data-agentkit-publication-state=\{publicationStatus\}/);
+  assert.match(shell, /data-agentkit-channel-summary/);
+  assert.match(shell, /You’re viewing released guidance|Bạn đang xem nội dung đã phát hành/);
   assert.match(shell, /<noscript>[\s\S]*data-agentkit-static-hold-notice/);
   assert.match(shell, /isHold\s*\?[\s\S]*data-agentkit-effective-channel="stable"[\s\S]*data-agentkit-channel-choice="beta"/);
 });
 
 test('HOLD notice copy is locale-complete and hydration preserves the SSR unavailable state', async () => {
   assert.deepEqual(getAgentKitHoldNotice('en'), {
-    title: 'Beta is not published in this build',
-    body: 'You are seeing Stable content. The query only requests public content; it does not enroll or grant closed-beta access.',
+    title: 'Beta is not published',
+    body: 'You are viewing Stable content; the URL parameter does not unlock Beta.',
   });
   assert.deepEqual(getAgentKitHoldNotice('vi'), {
-    title: 'Beta chưa được xuất bản trong build này',
-    body: 'Bạn đang xem nội dung Stable. Query chỉ yêu cầu nội dung công khai; nó không ghi danh hoặc cấp quyền closed-beta.',
+    title: 'Beta chưa được phát hành',
+    body: 'Bạn đang xem nội dung Stable; tham số URL không mở khóa nội dung Beta.',
   });
 
   const controller = await source('src/scripts/agentkit-channel-controller.mjs');

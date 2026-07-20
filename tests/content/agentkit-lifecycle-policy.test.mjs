@@ -161,12 +161,11 @@ test('publication closure measures lifecycle/removal code and separately binds t
   for (const path of [
     'src/components/guides/agentkit/agentkit-legacy-skill-cleanup.astro',
     'src/components/guides/agentkit/agentkit-migration-checklist.astro',
-    'src/components/guides/agentkit/agentkit-operator-attestation.astro',
+    'src/components/guides/agentkit/agentkit-advanced-references.astro',
     'src/data/guides/agentkit/agentkit-lifecycle-guide-facts.ts',
     'src/data/guides/agentkit/agentkit-lifecycle-policy.ts',
     'src/i18n/en/agentkit.ts',
     'src/i18n/vi/agentkit.ts',
-    'src/scripts/agentkit-lifecycle-guide-controller.ts',
     'src/components/guides/cli-guide/AgentKitCliSetup.astro',
     'src/components/guides/cli-guide/AgentKitCliLifecycle.astro',
     'src/components/guides/cli-commands/cli-commands-cheatsheet.astro',

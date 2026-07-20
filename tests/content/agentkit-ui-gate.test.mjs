@@ -93,7 +93,7 @@ test('package exposes the UI checker without coupling it to offline verify or bu
   assert.doesNotMatch(packageJson.scripts.build, /agentkit-ui/);
 });
 
-test('reader journey browser gate covers 390px, no-JS destinations, and evaluator runtime', async () => {
+test('reader journey browser gate covers 390px, no-JS destinations, and independent static stages', async () => {
   const guideChecker = await source('scripts/check-agentkit-guide-ui.mjs');
   const journeyChecker = await source('scripts/check-agentkit-reader-journey-ui.mjs');
 
@@ -101,8 +101,11 @@ test('reader journey browser gate covers 390px, no-JS destinations, and evaluato
   assert.match(journeyChecker, /width:\s*390/);
   assert.match(journeyChecker, /setJavaScriptEnabled\(false\)/);
   assert.match(journeyChecker, /data-agentkit-reader-lane/);
-  assert.match(journeyChecker, /data-agentkit-router-evaluate/);
-  assert.match(journeyChecker, /data-agentkit-router-result/);
+  assert.match(journeyChecker, /data-agentkit-route-group/);
+  assert.match(journeyChecker, /data-agentkit-stage-details/);
+  assert.match(journeyChecker, /bothStagesOpen/);
+  assert.match(journeyChecker, /data-agentkit-advanced-references/);
+  assert.doesNotMatch(journeyChecker, /data-agentkit-router-evaluate|data-agentkit-router-result/);
   assert.match(journeyChecker, /:focus-visible/);
   assert.match(journeyChecker, /mainScrollWidth\s*>\s*initial\.mainClientWidth/);
   assert.match(journeyChecker, /visibleChromeBottom/);

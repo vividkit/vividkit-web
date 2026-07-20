@@ -65,12 +65,12 @@ test('Desktop App facts preserve unresolved official availability boundaries', (
 });
 
 test('Continuity FAQ renders before Desktop App and answers entitlement confusion', async () => {
-  const guide = await readFile(new URL('AgentKitGuide.astro', COMPONENT_ROOT), 'utf8');
+  const guide = await readFile(new URL('agentkit/agentkit-advanced-references.astro', COMPONENT_ROOT), 'utf8');
   const source = await readFile(new URL('agentkit/agentkit-continuity-faq.astro', COMPONENT_ROOT), 'utf8');
 
-  assert.match(guide, /<AgentKitContinuityFaq lang=\{currentLang\} \/>/);
+  assert.match(guide, /<AgentKitContinuityFaq lang=\{lang\} \/>/);
   assert.ok(guide.indexOf('AgentKitContinuityFaq') < guide.indexOf('AgentKitDesktopAppOverview'));
-  assert.match(source, /id="continuity"/);
+  assert.match(guide, /id="continuity"/);
   assert.match(en['agentkit.continuity.desktop.body'], /optional/i);
   assert.match(en['agentkit.continuity.kits.body'], /two kits/i);
   assert.match(en['agentkit.continuity.boundary.body'], /App waitlist|license-key/i);
@@ -84,10 +84,10 @@ test('Continuity FAQ renders before Desktop App and answers entitlement confusio
 });
 
 test('Desktop App section keeps canonical links and rendered structure explicit', async () => {
-  const guide = await readFile(new URL('AgentKitGuide.astro', COMPONENT_ROOT), 'utf8');
+  const guide = await readFile(new URL('agentkit/agentkit-advanced-references.astro', COMPONENT_ROOT), 'utf8');
   const source = await readFile(new URL('agentkit/agentkit-desktop-app-overview.astro', COMPONENT_ROOT), 'utf8');
 
-  assert.match(guide, /<AgentKitDesktopAppOverview lang=\{currentLang\} \/>/);
+  assert.match(guide, /<AgentKitDesktopAppOverview lang=\{lang\} \/>/);
   assert.match(source, /id="desktop-app"/);
   assert.match(source, /href=\{`\$\{prefix\}\/guides\/cli`\}/);
   assert.match(source, /href=\{AGENTKIT_APP_FACTS\.ctaUrl\}/);
@@ -99,11 +99,10 @@ test('Desktop App section keeps canonical links and rendered structure explicit'
 });
 
 test('legacy cleanup section renders detector-first support and fail-closed removal boundaries', async () => {
-  const guide = await readFile(new URL('AgentKitGuide.astro', COMPONENT_ROOT), 'utf8');
+  const guide = await readFile(new URL('agentkit/agentkit-advanced-references.astro', COMPONENT_ROOT), 'utf8');
   const source = await readFile(new URL('agentkit/agentkit-legacy-skill-cleanup.astro', COMPONENT_ROOT), 'utf8');
 
-  assert.match(guide, /<AgentKitLegacySkillCleanup lang=\{currentLang\} includeStage7Details=\{includeStage7Details\} \/>/);
-  assert.match(guide, /import\.meta\.env\.AGENTKIT_INCLUDE_STAGE7_DETAILS/);
+  assert.match(guide, /<AgentKitLegacySkillCleanup lang=\{lang\} includeStage7Details=\{includeStage7Details\} \/>/);
   assert.match(source, /id="legacy-skill-cleanup"/);
   assert.match(source, /AGENTKIT_CK_EXECUTABLE_DETECTORS/);
   assert.match(source, /AGENTKIT_CK_REMOVAL_POLICIES/);
@@ -120,6 +119,9 @@ test('legacy cleanup section renders detector-first support and fail-closed remo
 test('the migration journey renders exactly seven canonical stages in order', async () => {
   const source = await readFile(new URL('agentkit/agentkit-migration-checklist.astro', COMPONENT_ROOT), 'utf8');
   assert.match(source, /AGENTKIT_LIFECYCLE_STAGE_FACTS\.map/);
+  assert.match(source, /includeStage7Details/);
+  assert.doesNotMatch(source, /completedStages|data-agentkit-stage-state|data-agentkit-stage-label/);
+  assert.doesNotMatch(source, /data-agentkit-stage-command-panel[^>]*hidden|hidden[^>]*data-agentkit-stage-command-panel/);
   assert.deepEqual(
     AGENTKIT_LIFECYCLE_STAGE_FACTS.map(({ id }) => id),
     [
@@ -139,21 +141,20 @@ test('the migration journey renders exactly seven canonical stages in order', as
   )));
 });
 
-test('Hub leads with hero, channel context, five reader lanes, optional evaluator, and continuity', async () => {
+test('Hub leads with a compact channel status, static decision flow, clean cutover, recovery, and collapsed references', async () => {
   const guide = await readFile(new URL('AgentKitGuide.astro', COMPONENT_ROOT), 'utf8');
   const hero = await readFile(new URL('agentkit/agentkit-hero-and-path-selector.astro', COMPONENT_ROOT), 'utf8');
   const readerNavigation = await readFile(new URL('agentkit/agentkit-reader-decision-navigation.astro', COMPONENT_ROOT), 'utf8');
-  const evaluator = await readFile(new URL('agentkit/agentkit-advanced-path-evaluator.astro', COMPONENT_ROOT), 'utf8');
-  const declaration = await readFile(new URL('agentkit/agentkit-operator-attestation.astro', COMPONENT_ROOT), 'utf8');
+  const references = await readFile(new URL('agentkit/agentkit-advanced-references.astro', COMPONENT_ROOT), 'utf8');
   const mapping = await readFile(new URL('agentkit/agentkit-command-mapping.astro', COMPONENT_ROOT), 'utf8');
 
   const composition = [
     'AgentKitHeroAndPathSelector',
     'AgentKitChannelSwitcher',
     'AgentKitReaderDecisionNavigation',
-    'AgentKitAdvancedPathEvaluator',
-    'AgentKitContinuityFaq',
     'AgentKitMigrationChecklist',
+    'AgentKitRecoveryAndSupport',
+    'AgentKitAdvancedReferences',
   ];
   for (let index = 1; index < composition.length; index += 1) {
     assert.ok(
@@ -163,53 +164,24 @@ test('Hub leads with hero, channel context, five reader lanes, optional evaluato
   }
 
   assert.doesNotMatch(hero, /data-agentkit-lifecycle-router|<form/);
+  assert.doesNotMatch(guide, /AgentKitAdvancedPathEvaluator|AgentKitOperatorAttestation|initializeAgentKitLifecycleGuides|data-agentkit-lifecycle-guide/);
+  assert.match(guide, /data-stage-seven-details=\{includeStage7Details \? 'published' : 'hold'\}/);
   assert.match(readerNavigation, /<nav[^>]*aria-labelledby=/);
-  assert.match(readerNavigation, /<ul/);
+  assert.match(readerNavigation, /<ol/);
   assert.match(readerNavigation, /<li/);
   assert.match(readerNavigation, /focus-visible:/);
-  assert.match(readerNavigation, /grid-cols-1/);
-  assert.match(readerNavigation, /sm:grid-cols-2/);
   assert.match(readerNavigation, /scroll-mt-40/);
   assert.match(readerNavigation, /lg:scroll-mt-28/);
   assert.match(readerNavigation, /min-w-0/);
   assert.match(readerNavigation, /break-words/);
   assert.match(readerNavigation, /motion-reduce:transition-none/);
   assert.match(readerNavigation, /data-agentkit-reader-lane=/);
-  assert.doesNotMatch(readerNavigation, /aria-describedby=/);
-
-  assert.match(evaluator, /<section[^>]*aria-labelledby="advanced-evaluator-heading"/);
-  assert.match(evaluator, /<h2[^>]*id="advanced-evaluator-heading"/);
-  assert.match(evaluator, /<details[^>]*data-agentkit-lifecycle-router/);
-  assert.doesNotMatch(evaluator, /<details[^>]*\sopen(?:[=\s>])/);
-  assert.match(evaluator, /<summary[^>]*class=/);
-  assert.match(evaluator, /data-agentkit-router-result[^>]*hidden|hidden[^>]*data-agentkit-router-result/);
-  assert.doesNotMatch(evaluator, /data-agentkit-reason-code|data-agentkit-copy-policy|data-agentkit-support-level/);
-  assert.match(evaluator, /aria-live="polite"/);
-  assert.match(evaluator, /motion-reduce:transition-none/);
-  assert.match(evaluator, /data-agentkit-router-evaluate[^>]*disabled|disabled[^>]*data-agentkit-router-evaluate/);
-  for (const name of [
-    'goal',
-    'legacyOwnershipState',
-    'metadataHealth',
-    'scopeRelationship',
-    'cleanupPreviewResult',
-    'packageManagerEvidence',
-    'dataCriticality',
-    'pilotOptIn',
-  ]) assert.match(evaluator, new RegExp(`name="${name}"`));
-
-  for (const name of [
-    'canaryResult',
-    'startedAt',
-    'endedAt',
-    'incidentStatus',
-    'acknowledgedAdvisoryOnly',
-  ]) assert.match(declaration, new RegExp(`name="${name}"`));
-  assert.match(declaration, /data-agentkit-eligibility="blocked"/);
-  assert.match(mapping, /data-agentkit-downstream-actions hidden/);
-  assert.match(declaration, /advisory/i);
-  assert.doesNotMatch(declaration, /localStorage|sessionStorage|document\.cookie|history\.|URLSearchParams|CustomEvent/);
-  assert.doesNotMatch(declaration, />[^<]*(?:verified|authorized)[^<]*</i);
+  assert.match(readerNavigation, /data-agentkit-route-group="primary"/);
+  assert.match(readerNavigation, /data-agentkit-route-group="exception"/);
+  assert.match(references, /<details[^>]*data-agentkit-advanced-references/);
+  assert.doesNotMatch(references, /<details[^>]*\sopen(?:[=\s>])/);
+  assert.match(references, /motion-reduce:transition-none/);
+  assert.doesNotMatch(mapping, /data-agentkit-downstream-actions[^>]*hidden|hidden[^>]*data-agentkit-downstream-actions/);
 });
 
 test('reader navigation exposes exactly five localized, JS-free destination links', async () => {
@@ -231,9 +203,12 @@ test('reader navigation exposes exactly five localized, JS-free destination link
     assert.equal(AGENTKIT_READER_LANES[index]?.href.vi, vietnamese);
   }
 
-  assert.match(source, /AGENTKIT_READER_LANES\.map/);
+  assert.match(source, /primaryLanes\.map/);
+  assert.match(source, /exceptionLanes\.map/);
   assert.match(source, /href=\{lane\.href\[lang\]\}/);
   assert.doesNotMatch(source, /onclick=|data-agentkit-router-evaluate/);
+  assert.equal(AGENTKIT_READER_LANES.filter(({ group }) => group === 'primary').length, 3);
+  assert.equal(AGENTKIT_READER_LANES.filter(({ group }) => group === 'exception').length, 2);
 });
 
 test('all reader destinations exist once and provide fixed-header scroll clearance', async () => {
