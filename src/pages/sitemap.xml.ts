@@ -1,12 +1,13 @@
 import type { APIRoute } from 'astro';
 import { GUIDE_ROUTE_MANIFEST } from '@/data/guides/guide-route-manifest';
+import { CANONICAL_SITE_ORIGIN } from '@/data/site-origin.mjs';
 
 function escapeXml(value: string): string {
   return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
 }
 
 export const GET: APIRoute = () => {
-  const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://vividkit.dev';
+  const siteUrl = CANONICAL_SITE_ORIGIN;
   const lastmod = new Date().toISOString().split('T')[0];
   const entries = GUIDE_ROUTE_MANIFEST.filter((entry) => entry.includeInSitemap && entry.viPath);
 

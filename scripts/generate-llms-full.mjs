@@ -11,10 +11,11 @@
 import { readFile, writeFile, access } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
-import { guideSections, fallbackSiteUrl } from '../src/data/guides-llms-index.mjs';
+import { guideSections } from '../src/data/guides-llms-index.mjs';
+import { CANONICAL_SITE_ORIGIN } from '../src/data/site-origin.mjs';
 
 const projectRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
-const siteUrl = process.env.PUBLIC_SITE_URL || fallbackSiteUrl;
+const siteUrl = CANONICAL_SITE_ORIGIN;
 
 // Output roots where a static file must land to be served. dist/ is the Astro
 // build output; .vercel/output/static/ is what the Vercel adapter deploys.

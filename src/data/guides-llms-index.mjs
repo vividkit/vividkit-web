@@ -216,6 +216,3 @@ export const optionalLinks = [
     desc: 'Curated AI service deals and promotions to maximize your coding limits.',
   },
 ];
-
-/** Fallback origin when PUBLIC_SITE_URL is not set (matches .env.example). */
-export const fallbackSiteUrl = 'https://vividkit.dev';

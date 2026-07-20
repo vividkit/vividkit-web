@@ -2,9 +2,9 @@ import type { APIRoute } from 'astro';
 import {
   guideSections,
   optionalLinks,
-  fallbackSiteUrl,
   llmExportPolicy,
 } from '@/data/guides-llms-index.mjs';
+import { CANONICAL_SITE_ORIGIN } from '@/data/site-origin.mjs';
 
 /**
  * Dynamic llms.txt generator (https://llmstxt.org spec)
@@ -28,7 +28,7 @@ interface GuideSection {
 }
 
 export const GET: APIRoute = () => {
-  const siteUrl = import.meta.env.PUBLIC_SITE_URL || fallbackSiteUrl;
+  const siteUrl = CANONICAL_SITE_ORIGIN;
 
   const renderLink = ({ title, path, desc }: GuideLink) =>
     `- [${title}](${siteUrl}${path}): ${desc}`;

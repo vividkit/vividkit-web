@@ -1,5 +1,6 @@
 import { lstat, readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { CANONICAL_SITE_ORIGIN } from '../src/data/site-origin.mjs';
 import { sha256, treeRoot } from './legacy-archive-integrity.mjs';
 
 const SENTINEL = '--vividkit-legacy-tailwind-boundary:1';
@@ -64,7 +65,7 @@ export async function postbuildEvidence(repo) {
     const body = html.match(/<main[^>]*data-legacy-snapshot[^>]*>([\s\S]*?)<\/main>/)?.[0];
     if (!body) throw new Error(`missing normalized legacy main: ${route}`);
     if (!/<meta name="robots" content="noindex,follow"/.test(html)) throw new Error(`archive robots contract failed: ${route}`);
-    if (!html.includes(`rel="canonical" href="https://vividkit.com${route}`)) throw new Error(`archive canonical contract failed: ${route}`);
+    if (!html.includes(`rel="canonical" href="${CANONICAL_SITE_ORIGIN}${route}"`)) throw new Error(`archive canonical contract failed: ${route}`);
     for (const [path, text] of css) archiveCss.set(path, text);
     for (const path of javascriptPaths(html)) archiveJsSeeds.add(path);
     if (![...css.values()].some((text) => text.includes(SENTINEL))) throw new Error(`archive CSS sentinel unreachable: ${route}`);

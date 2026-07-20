@@ -1,11 +1,12 @@
 import type { APIRoute } from 'astro';
+import { CANONICAL_SITE_ORIGIN } from '@/data/site-origin.mjs';
 
 /**
  * Dynamic robots.txt generator
  * Allows all crawlers and references sitemap
  */
 export const GET: APIRoute = () => {
-  const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://vividkit.dev';
+  const siteUrl = CANONICAL_SITE_ORIGIN;
 
   const robotsTxt = `# VividKit Robots.txt
 User-agent: *

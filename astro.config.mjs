@@ -10,6 +10,7 @@ import {
   evaluateAgentKitPublicationRecord,
 } from './src/data/guides/agentkit/agentkit-publication-policy.ts';
 import { AGENTKIT_SOURCE_SNAPSHOT } from './src/data/guides/agentkit/agentkit-source-contract.ts';
+import { CANONICAL_SITE_ORIGIN } from './src/data/site-origin.mjs';
 import {
   computeAgentKitPublicationSourceClosure,
   computeAgentKitPublicationSourceClosureFromGit,
@@ -90,6 +91,7 @@ const betaLoader = publication.includeBetaPayload
 
 // https://astro.build/config
 export default defineConfig({
+  site: CANONICAL_SITE_ORIGIN,
   output: 'static',
   adapter: vercel({
     webAnalytics: {

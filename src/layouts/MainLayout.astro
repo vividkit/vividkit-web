@@ -2,6 +2,7 @@
 import type { SEOMeta } from '@/types';
 import '@/styles/global.css';
 import type { Language } from '@/i18n';
+import { CANONICAL_SITE_ORIGIN } from '@/data/site-origin.mjs';
 import Analytics from '@vercel/analytics/astro';
 import ThirdPartyAnalytics from '@/components/layout/Analytics.astro';
 
@@ -20,7 +21,7 @@ const {
 } = Astro.props;
 
 const fullTitle = `${title} | VividKit`;
-const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://vividkit.com';
+const siteUrl = CANONICAL_SITE_ORIGIN;
 const fullCanonical = `${siteUrl}${canonical}`;
 const fullOgImage = `${siteUrl}${ogImage}`;
 
