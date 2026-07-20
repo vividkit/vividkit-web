@@ -4,6 +4,7 @@ import { cp, lstat, mkdir, mkdtemp, readFile, rename, symlink, writeFile } from 
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
+import { pathToFileURL } from 'node:url';
 import { promisify } from 'node:util';
 import test from 'node:test';
 import { forbiddenArchiveImports } from '../../scripts/check-legacy-archive-boundary.mjs';
@@ -29,6 +30,17 @@ async function runFailure(script, args = [], cwd = rootPath) {
   } catch (error) {
     assert.notEqual(error.code, 'ERR_ASSERTION');
     return error;
+  }
+}
+
+async function hasGitCommit(repo, commit) {
+  await execFileAsync('git', ['-C', repo, 'rev-parse', '--is-inside-work-tree']);
+  try {
+    await execFileAsync('git', ['-C', repo, 'cat-file', '-e', `${commit}^{commit}`]);
+    return true;
+  } catch (error) {
+    if (error.code === 128 && /Not a valid object name/.test(error.stderr)) return false;
+    throw error;
   }
 }
 
@@ -62,17 +74,23 @@ test('committed proof verifies current CK tree in auto and proof-only modes', as
   }
 });
 
-test('full-history lane verifies the reviewed Git object and ancestry', async () => {
-  const { stdout } = await run('scripts/verify-legacy-archive-provenance.mjs', [
-    '--repo', rootPath,
-    '--mode', 'full-history',
-    '--json',
-  ]);
-  const result = JSON.parse(stdout);
-  assert.equal(result.ok, true);
-  assert.equal(result.lane, 'full-history');
-  assert.equal(result.gitObjectVerified, true);
-  assert.equal(result.ancestryVerified, true);
+test('full-history lane verifies the reviewed Git object and ancestry', async (t) => {
+  if (!await hasGitCommit(rootPath, sourceCommit) || !await hasGitCommit(rootPath, isolationCommit)) {
+    t.skip('full reviewed history is unavailable; the exact-toolchain workflow enforces this lane');
+    return;
+  }
+  for (const mode of ['auto', 'full-history']) {
+    const { stdout } = await run('scripts/verify-legacy-archive-provenance.mjs', [
+      '--repo', rootPath,
+      '--mode', mode,
+      '--json',
+    ]);
+    const result = JSON.parse(stdout);
+    assert.equal(result.ok, true);
+    assert.equal(result.lane, 'full-history');
+    assert.equal(result.gitObjectVerified, true);
+    assert.equal(result.ancestryVerified, true);
+  }
 });
 
 test('proof-only source export works without .git and refuses symlinks', async (t) => {
@@ -99,6 +117,38 @@ test('proof-only source export works without .git and refuses symlinks', async (
   assert.match(`${error.stderr}${error.stdout}`, /symlink|unsupported entry/i);
   assert.equal((await lstat(target)).isSymbolicLink(), true);
   assert.ok(original.length > 0);
+});
+
+test('auto uses proof-only when a shallow clone has incomplete reviewed history', async (t) => {
+  const temp = await mkdtemp(join(tmpdir(), 'vk-legacy-shallow-'));
+  const clone = join(temp, 'repo');
+  t.after(async () => import('node:fs/promises').then(({ rm }) => rm(temp, { recursive: true, force: true })));
+
+  await execFileAsync('git', [
+    'clone',
+    '--quiet',
+    '--no-local',
+    '--depth', '1',
+    pathToFileURL(rootPath).href,
+    clone,
+  ]);
+  await execFileAsync('git', ['-C', clone, 'fetch', '--quiet', '--depth', '1', 'origin', isolationCommit]);
+
+  assert.equal((await execFileAsync('git', ['-C', clone, 'rev-parse', '--is-shallow-repository'])).stdout.trim(), 'true');
+  await execFileAsync('git', ['-C', clone, 'cat-file', '-e', `${isolationCommit}^{commit}`]);
+  await assert.rejects(
+    execFileAsync('git', ['-C', clone, 'cat-file', '-e', `${sourceCommit}^{commit}`]),
+  );
+
+  const verifyScript = new URL('../../scripts/verify-legacy-archive-provenance.mjs', import.meta.url).pathname;
+  const { stdout } = await run(verifyScript, ['--repo', clone, '--mode', 'auto', '--json'], clone);
+  const result = JSON.parse(stdout);
+  assert.equal(result.lane, 'proof-only');
+  assert.equal(result.gitObjectVerified, false);
+  assert.equal(result.ancestryVerified, false);
+
+  const fullHistoryError = await runFailure(verifyScript, ['--repo', clone, '--mode', 'full-history'], clone);
+  assert.match(`${fullHistoryError.stderr}${fullHistoryError.stdout}`, /missing historical source Git object/);
 });
 
 test('expected digest sidecar is excluded from measured closure and cannot self-attest', async () => {

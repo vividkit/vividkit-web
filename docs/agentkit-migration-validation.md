@@ -27,9 +27,11 @@ Related evidence boundaries:
 | Archive | 208 full-history provenance files; 268 source-boundary files; Astro 7 rendered body/CSS budgets reconciled to reviewed deterministic evidence; final postbuild boundary pass |
 | Truth audit | stable `2.4.0` and prerelease-provenance channel `2.4.0-beta.7` both returned `AK-TRUTH-OK`; this does not make beta active or published |
 | Security audit | `npm audit --omit=dev`: 0 vulnerabilities across 311 production dependencies, 543 total dependencies |
-| Exact toolchain | Verifier contract tests 8/8 pass and pin Node `22.21.1` / npm `10.9.4`; the clean GitHub Actions gate is configured but cannot execute until the change is pushed, while the observed Node `26.4.0` / npm 11 host remains correctly refused |
+| Exact toolchain | Verifier contract tests 8/8 pass and pin Node `22.21.1` / npm `10.9.4`; GitHub Actions run [`29735004189`](https://github.com/vividkit/vividkit-web/actions/runs/29735004189) passed every step in 2m16s on commit `57c53c3`, while the observed Node `26.4.0` / npm 11 host remains correctly refused |
 
 The first Astro 7 postbuild exposed an expected archive rendered-body/CSS sidecar mismatch. Review against the repository's existing Astro 7 migration evidence showed the exact same 58-route rendered root and CSS budgets; only the sidecar was updated, archive source stayed unchanged, and the complete build then passed. The tracked publication record remains `hold`. Stage 7 is still a build-time gate; the 3–7 day range remains a per-user advisory after cutover.
+
+The initial PR #42 Vercel preview failed in its shallow clone because the reviewed isolation object was present but the historical source object was absent. The unpushed follow-up makes `auto` capability-based: incomplete reviewed history uses proof-only verification, while explicit `full-history` remains fail-closed and is called directly by the exact-toolchain workflow after `fetch-depth: 0`. Vercel revalidation remains pending until that follow-up commit is pushed; no preview pass is recorded.
 
 ### Current source identity
 
@@ -45,12 +47,12 @@ The first Astro 7 postbuild exposed an expected archive rendered-body/CSS sideca
 
 ### Current release holds
 
-- Stable guide output and its publication closure pass the scoped product gates, but final publication remains REVISE/HOLD until the final gates are rerun and reviewed under Node `22.21.1` / npm `10.9.4`.
+- Stable guide output and its publication closure pass the scoped product gates, but final publication remains REVISE/HOLD pending review of the clean exact-toolchain pass and Vercel revalidation of the provenance follow-up.
 - Public beta remains HOLD because beta.7 was promoted into stable and there is no active beta newer than stable. Query state cannot publish a channel.
 - Migration apply/rollback for important data remains support-assisted because immutable reviewed-plan execution merged after v2.4.0.
 - Product coexistence remains HOLD because no eligible noncritical pilot or 3–7 day observation was executed.
 
-No deploy, public beta publication, real coexistence pilot, migration apply, binary removal, commit, push, or pull request was performed.
+No production deploy, public beta publication, real coexistence pilot, migration apply, or binary removal was performed.
 
 ## Historical Offline Snapshot — 2026-07-17
 
@@ -276,7 +278,7 @@ Those figures are intentionally removed from the current-state sections because 
 
 ## Unresolved Questions
 
-1. Who will review the first clean GitHub Actions result on Node `22.21.1` with npm `10.9.4` after an authorized push?
+1. Who will review GitHub Actions run `29735004189` and the Vercel revalidation after the provenance follow-up is pushed?
 2. Which clean disposable/noncritical project and operator will own the 3–7-day coexistence pilot?
 3. Who will review the final revision and tracked publication record for a later release decision?
 4. The retention location and expiry for final sanitized pilot artifacts must still be selected during release review.

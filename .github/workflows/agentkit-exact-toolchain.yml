@@ -42,6 +42,9 @@ jobs:
       - name: Verify exact toolchain
         run: npm run verify:exact-toolchain
 
+      - name: Verify legacy archive full history
+        run: node scripts/verify-legacy-archive-provenance.mjs --mode full-history
+
       - name: Build and run AgentKit gates
         run: npm run build
 

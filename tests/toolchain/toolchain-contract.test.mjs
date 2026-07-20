@@ -41,16 +41,18 @@ test('clean CI pins the approved toolchain before install, build, and audit', as
   const workflow = await readFile(new URL('.github/workflows/agentkit-exact-toolchain.yml', projectRoot), 'utf8');
   assert.match(workflow, /permissions:\s*\n\s+contents: read/);
   assert.match(workflow, /uses: actions\/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0\s+# v7\.0\.0/);
+  assert.match(workflow, /fetch-depth:\s*0/);
   assert.match(workflow, /uses: actions\/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e\s+# v6\.4\.0/);
   assert.match(workflow, /node-version-file: ['"]?\.nvmrc['"]?/);
   assert.match(workflow, /cache: ['"]?npm['"]?/);
   const npmPin = workflow.indexOf('npm install --global npm@10.9.4');
   const cleanInstall = workflow.indexOf('npm ci');
   const verifier = workflow.indexOf('npm run verify:exact-toolchain');
+  const fullHistory = workflow.indexOf('node scripts/verify-legacy-archive-provenance.mjs --mode full-history');
   const build = workflow.indexOf('npm run build');
   const audit = workflow.indexOf('npm audit --omit=dev');
   assert.ok(npmPin >= 0 && npmPin < cleanInstall);
-  assert.ok(cleanInstall < verifier && verifier < build && build < audit);
+  assert.ok(cleanInstall < verifier && verifier < fullHistory && fullHistory < build && build < audit);
   assert.doesNotMatch(workflow, /pnpm|engineer\//);
 });
 

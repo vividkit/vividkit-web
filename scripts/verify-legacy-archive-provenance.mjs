@@ -61,7 +61,9 @@ function assertTreeMatches(actual, expected, label) {
 
 export async function verifyLegacyArchive(options) {
   const hasIsolationObject = gitObjectExists(options.repo, ISOLATION_COMMIT);
-  const lane = options.mode === 'auto' ? (hasIsolationObject ? 'full-history' : 'proof-only') : options.mode === 'proof' ? 'proof-only' : 'full-history';
+  const hasSourceObject = gitObjectExists(options.repo, SOURCE_COMMIT);
+  const hasReviewedHistory = hasIsolationObject && hasSourceObject;
+  const lane = options.mode === 'auto' ? (hasReviewedHistory ? 'full-history' : 'proof-only') : options.mode === 'proof' ? 'proof-only' : 'full-history';
   if (lane === 'full-history' && !hasIsolationObject) throw new Error(`missing reviewed Git object ${ISOLATION_COMMIT}; use proof-only mode for source exports`);
 
   let proof;
@@ -85,7 +87,7 @@ export async function verifyLegacyArchive(options) {
   let ancestryVerified = false;
   let gitObjectVerified = false;
   if (lane === 'full-history') {
-    if (!gitObjectExists(options.repo, SOURCE_COMMIT)) throw new Error(`missing historical source Git object ${SOURCE_COMMIT}`);
+    if (!hasSourceObject) throw new Error(`missing historical source Git object ${SOURCE_COMMIT}`);
     if (gitCommitDate(options.repo, SOURCE_COMMIT) !== proof.sourceDate) throw new Error('source commit date mismatch');
     if (gitCommitDate(options.repo, ISOLATION_COMMIT) !== proof.isolationDate) throw new Error('isolation commit date mismatch');
     ancestryVerified = isAncestor(options.repo, SOURCE_COMMIT, ISOLATION_COMMIT);
