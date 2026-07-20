@@ -23,7 +23,7 @@ The second operation is not a migration instruction and must not be used as evid
 | [ClaudeKit migration reference](https://docs.claudekit.cc/docs/cli/migrate/) | Legacy dry-run inventory can report provider and destination evidence; Codex conversions may use `source-command-*` destinations | Deprecated lifecycle source; inventory evidence only |
 | [ClaudeKit uninstall reference](https://docs.claudekit.cc/docs/cli/uninstall/) | Local/global preview, ownership tracking, backup, and customization preservation behavior | Does not prove that co-located AgentKit files are CK-owned or that every migrated provider target is covered |
 
-`ak migrate` is stable in AgentKit 2.3.0. VividKit still presents it preview/smoke-first and provides no default apply CTA for important data. It is not treated as an automatic provider-cleanup command.
+`ak migrate` is stable in AgentKit 2.4.0. The release contains content-evidence binding for recognized CK mutations, but immutable reviewed-plan execution merged after the tag. VividKit therefore still presents migration preview/smoke-first and provides no default apply CTA for important data. It is not treated as an automatic provider-cleanup command.
 
 ### Verified AgentKit Targets
 

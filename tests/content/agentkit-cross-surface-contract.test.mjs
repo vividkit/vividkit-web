@@ -52,13 +52,12 @@ test('hold and published loaders have disjoint executable closures', async () =>
   assert.match(betaView, /agentkit-beta-channel-facts/);
 });
 
-test('published beta view consumes the independently reviewed release fixture without inventing commands', async () => {
-  const fixture = JSON.parse(await source('tests/fixtures/agentkit-release/beta-v2.3.1-beta.1.json'));
-  assert.equal(AGENTKIT_BETA_CHANNEL_FACTS.channel, fixture.channel);
-  assert.equal(AGENTKIT_BETA_CHANNEL_FACTS.version, fixture.version);
-  assert.equal(AGENTKIT_BETA_CHANNEL_FACTS.verifiedAt, fixture.verifiedAt);
-  assert.equal(AGENTKIT_BETA_CHANNEL_FACTS.sourceUrl, fixture.sourceUrl);
-  assert.equal(AGENTKIT_BETA_CHANNEL_FACTS.claimId, fixture.claims[0].id);
+test('beta view exposes no current release claim after prerelease promotion', () => {
+  assert.equal(AGENTKIT_BETA_CHANNEL_FACTS.channel, 'beta');
+  assert.equal(AGENTKIT_BETA_CHANNEL_FACTS.version, null);
+  assert.equal(AGENTKIT_BETA_CHANNEL_FACTS.activeBetaVersion, null);
+  assert.equal(AGENTKIT_BETA_CHANNEL_FACTS.releaseStatus, 'unavailable');
+  assert.equal(AGENTKIT_BETA_CHANNEL_FACTS.claimId, null);
   assert.equal(AGENTKIT_BETA_CHANNEL_FACTS.commandFactCount, 0);
 });
 

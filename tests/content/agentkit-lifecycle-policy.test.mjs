@@ -53,8 +53,8 @@ function digestNormalizedFixture(relativePath) {
 }
 
 const actualBuildInputs = {
-  stableFixtureSha256: digestNormalizedFixture('tests/fixtures/agentkit-release/stable-v2.3.0.json'),
-  betaFixtureSha256: digestNormalizedFixture('tests/fixtures/agentkit-release/beta-v2.3.1-beta.1.json'),
+  stableFixtureSha256: digestNormalizedFixture('tests/fixtures/agentkit-release/stable-v2.4.0.json'),
+  prereleaseFixtureSha256: digestNormalizedFixture('tests/fixtures/agentkit-release/prerelease-v2.4.0-beta.7.json'),
   sourceClosureSha256: await computeAgentKitPublicationSourceClosure(),
   publicationRecordSha256: await computeAgentKitPublicationRecordDigest(),
 };
@@ -595,7 +595,7 @@ test('publication record is build-time authority; query state cannot publish bet
     ...AGENTKIT_PUBLICATION_RECORD,
     vividKitSha: 'a'.repeat(40),
     stableFixtureSha256: 'b'.repeat(64),
-    betaFixtureSha256: 'c'.repeat(64),
+    prereleaseFixtureSha256: 'c'.repeat(64),
     sourceClosureSha256: 'd'.repeat(64),
     approvalRevisionSha: 'a'.repeat(40),
     pilotStartedAt: '2026-07-10T00:00:00Z',

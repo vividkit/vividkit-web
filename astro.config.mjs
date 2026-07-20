@@ -9,6 +9,7 @@ import {
   AGENTKIT_PUBLICATION_RECORD,
   evaluateAgentKitPublicationRecord,
 } from './src/data/guides/agentkit/agentkit-publication-policy.ts';
+import { AGENTKIT_SOURCE_SNAPSHOT } from './src/data/guides/agentkit/agentkit-source-contract.ts';
 import {
   computeAgentKitPublicationSourceClosure,
   computeAgentKitPublicationSourceClosureFromGit,
@@ -64,8 +65,8 @@ async function resolvePublicationBuild() {
       ? publicationRecordSha256
       : await computeAgentKitPublicationRecordDigestFromGit(record.approvalRevisionSha);
   const buildInputs = {
-    stableFixtureSha256: await fixtureDigest('./tests/fixtures/agentkit-release/stable-v2.3.0.json'),
-    betaFixtureSha256: await fixtureDigest('./tests/fixtures/agentkit-release/beta-v2.3.1-beta.1.json'),
+    stableFixtureSha256: await fixtureDigest('./tests/fixtures/agentkit-release/stable-v2.4.0.json'),
+    prereleaseFixtureSha256: await fixtureDigest('./tests/fixtures/agentkit-release/prerelease-v2.4.0-beta.7.json'),
     sourceClosureSha256: await computeAgentKitPublicationSourceClosure(),
     ...(record.status === 'hold' ? {} : {
       reviewedVividKitSha: record.vividKitSha,
@@ -107,6 +108,7 @@ export default defineConfig({
     define: {
       'import.meta.env.AGENTKIT_INCLUDE_STAGE7_DETAILS': JSON.stringify(String(publication.includeStage7Details)),
       'import.meta.env.AGENTKIT_PUBLICATION_STATUS': JSON.stringify(publication.status),
+      'import.meta.env.AGENTKIT_HAS_ACTIVE_BETA': JSON.stringify(String(AGENTKIT_SOURCE_SNAPSHOT.hasActiveBeta)),
     },
     resolve: {
       alias: [

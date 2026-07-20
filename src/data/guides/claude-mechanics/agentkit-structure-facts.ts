@@ -4,12 +4,14 @@
  * UI must import this module — do not hardcode kit trees in components.
  */
 
+import { AGENTKIT_OFFICIAL_LINKS } from '../agentkit/agentkit-official-links.mjs';
+
 export const AGENTKIT_STRUCTURE_PROBE = {
   akVersion: '2.2.0-beta.17',
   channel: 'beta' as const,
   verifiedAt: '2026-07-13',
   fixturePath: 'docs/fixtures/agentkit-mechanics',
-  sourceUrl: 'https://agentkit.best/docs',
+  sourceUrl: AGENTKIT_OFFICIAL_LINKS.docs,
 } as const;
 
 /** Project onboarding only — does not install kit skills. */

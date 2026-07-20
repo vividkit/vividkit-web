@@ -26,15 +26,15 @@ test('LLM extraction keeps stable guidance and strips beta, controls, and archiv
   });
   const text = htmlToText(`
     <main>
-      <p>Stable AgentKit 2.3.0 lifecycle and support-assisted boundary.</p>
+      <p>Stable AgentKit 2.4.0 lifecycle and support-assisted boundary.</p>
       <section data-agentkit-channel-controls><p>Stable/Beta selector ?channel=beta</p></section>
-      <section data-llms-exclude><p>Beta Preview 2.3.1-beta.1</p></section>
+      <section data-llms-exclude><p>Promoted prerelease 2.4.0-beta.7</p></section>
       <div data-llms-channel="beta">beta-only release facts</div>
       <p>Read <a href="/legacy/guides/migrate">ClaudeKit archive</a> only if requested.</p>
     </main>
   `);
-  assert.match(text, /Stable AgentKit 2\.3\.0 lifecycle and support-assisted boundary/);
-  assert.doesNotMatch(text, /2\.3\.1-beta\.1|\?channel=beta|beta-only release facts|ClaudeKit archive|\/legacy\/guides/);
+  assert.match(text, /Stable AgentKit 2\.4\.0 lifecycle and support-assisted boundary/);
+  assert.doesNotMatch(text, /2\.4\.0-beta\.7|\?channel=beta|beta-only release facts|ClaudeKit archive|\/legacy\/guides/);
 });
 
 test('LLM full export retains AgentKit App and legacy-cleanup safety boundaries', async (context) => {

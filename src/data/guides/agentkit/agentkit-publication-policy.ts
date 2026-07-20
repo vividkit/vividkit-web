@@ -4,7 +4,7 @@ export interface AgentKitPublicationRecord {
   schemaVersion: 1;
   vividKitSha: string;
   stableFixtureSha256: string;
-  betaFixtureSha256: string;
+  prereleaseFixtureSha256: string;
   sourceClosureSha256: string;
   approvalRevisionSha: string | null;
   pilotStartedAt: string | null;
@@ -14,13 +14,21 @@ export interface AgentKitPublicationRecord {
   status: AgentKitPublicationStatus;
 }
 
+export const AGENTKIT_CURRENT_RELEASE_EVIDENCE = {
+  latestStable: '2.4.0',
+  latestPrerelease: '2.4.0-beta.7',
+  promotedFromPrerelease: '2.4.0-beta.7',
+  activeBetaVersion: null,
+  hasActiveBeta: false,
+} as const;
+
 // agentkit-publication-record:start
 export const AGENTKIT_PUBLICATION_RECORD = {
   schemaVersion: 1,
   vividKitSha: '7d5ab60e9e706ba612a6202f3024685cfa32bea6',
-  stableFixtureSha256: '89d582555208a790379f1f40a325375933265438288bf2c6ecbe9c6fe1646a12',
-  betaFixtureSha256: '0772e9421526fa7cd62929153517b222d9b88c9d05be7136ff85567fc68cf8d5',
-  sourceClosureSha256: '1efc8393088d05dbd3cb5d50f8b9fee636f6c208e1fec7c3f1f35858aae25eab',
+  stableFixtureSha256: '83dc4f2b886707d57853a80bca17b439d754c8064e091b0aa942a68f75477370',
+  prereleaseFixtureSha256: '075a4fd1d8c024eba1ce4e550e8bdf88bb61f769e923e54755aa47f910cfea44',
+  sourceClosureSha256: '9a2804dd06ef0c20bd125898ddaad21c05cdedceea095774d8ff7e45cf2f7b0b',
   approvalRevisionSha: null,
   pilotStartedAt: null,
   pilotEndedAt: null,
@@ -43,7 +51,7 @@ export interface AgentKitPublicationBuildContext {
   queryChannel?: string;
   buildInputs?: {
     stableFixtureSha256: string;
-    betaFixtureSha256: string;
+    prereleaseFixtureSha256: string;
     sourceClosureSha256: string;
     reviewedVividKitSha?: string;
     reviewedSourceClosureSha256?: string;
@@ -66,7 +74,7 @@ export function evaluateAgentKitPublicationRecord(
   if (!['hold', 'staging', 'published'].includes(record.status)) errors.push('publication-status');
   if (!/^[a-f0-9]{40}$/.test(record.vividKitSha)) errors.push('vividkit-sha');
   if (!/^[a-f0-9]{64}$/.test(record.stableFixtureSha256)) errors.push('stable-fixture-digest');
-  if (!/^[a-f0-9]{64}$/.test(record.betaFixtureSha256)) errors.push('beta-fixture-digest');
+  if (!/^[a-f0-9]{64}$/.test(record.prereleaseFixtureSha256)) errors.push('prerelease-fixture-digest');
   if (!/^[a-f0-9]{64}$/.test(record.sourceClosureSha256)) errors.push('source-closure-digest');
   if (record.approvalRevisionSha !== null && !/^[a-f0-9]{40}$/.test(record.approvalRevisionSha)) {
     errors.push('approval-revision-sha');
@@ -77,8 +85,8 @@ export function evaluateAgentKitPublicationRecord(
   if (record.stableFixtureSha256 !== AGENTKIT_PUBLICATION_RECORD.stableFixtureSha256) {
     errors.push('unreviewed-stable-fixture');
   }
-  if (record.betaFixtureSha256 !== AGENTKIT_PUBLICATION_RECORD.betaFixtureSha256) {
-    errors.push('unreviewed-beta-fixture');
+  if (record.prereleaseFixtureSha256 !== AGENTKIT_PUBLICATION_RECORD.prereleaseFixtureSha256) {
+    errors.push('unreviewed-prerelease-fixture');
   }
   if (record.sourceClosureSha256 !== AGENTKIT_PUBLICATION_RECORD.sourceClosureSha256) {
     errors.push('unreviewed-source-closure');
@@ -88,8 +96,8 @@ export function evaluateAgentKitPublicationRecord(
     if (record.stableFixtureSha256 !== context.buildInputs.stableFixtureSha256) {
       errors.push('build-stable-fixture-mismatch');
     }
-    if (record.betaFixtureSha256 !== context.buildInputs.betaFixtureSha256) {
-      errors.push('build-beta-fixture-mismatch');
+    if (record.prereleaseFixtureSha256 !== context.buildInputs.prereleaseFixtureSha256) {
+      errors.push('build-prerelease-fixture-mismatch');
     }
     if (record.sourceClosureSha256 !== context.buildInputs.sourceClosureSha256) {
       errors.push('build-source-closure-mismatch');

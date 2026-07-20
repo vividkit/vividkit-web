@@ -1,5 +1,10 @@
+import { AGENTKIT_OFFICIAL_LINKS } from './agentkit-official-links.mjs';
+
 export const PUBLIC_AGENTKIT_RELEASE_CHANNELS = ['stable', 'beta'] as const;
-export const AGENTKIT_TRUSTED_SOURCE_ORIGINS = ['https://agentkit.best'] as const;
+export const AGENTKIT_TRUSTED_SOURCE_ORIGINS = [
+  'https://agentkit.best',
+  'https://releases.agentkit.best',
+] as const;
 
 export type AgentKitCliReleaseChannel = typeof PUBLIC_AGENTKIT_RELEASE_CHANNELS[number];
 export type PublicAgentKitReleaseChannel = AgentKitCliReleaseChannel;
@@ -76,18 +81,24 @@ export interface CredentialTransport extends AgentKitSourceMetadata {
 
 export const AGENTKIT_SOURCE_SNAPSHOT = {
   channel: 'stable',
-  sourceUrl: 'https://agentkit.best/docs',
-  changelogUrl: 'https://agentkit.best/changelog',
-  verifiedAt: '2026-07-17',
-  releaseVersion: '2.3.0',
-  betaReleaseVersion: '2.3.1-beta.1',
+  sourceUrl: AGENTKIT_OFFICIAL_LINKS.docs,
+  changelogUrl: AGENTKIT_OFFICIAL_LINKS.changelog,
+  verifiedAt: '2026-07-20',
+  releaseVersion: '2.4.0',
+  latestPrerelease: '2.4.0-beta.7',
+  promotedFromPrerelease: '2.4.0-beta.7',
+  activeBetaVersion: null,
+  hasActiveBeta: false,
   evidenceClass: 'official-docs',
   artifactKind: 'agentkit-cli',
-  artifactVersion: '2.3.0',
+  artifactVersion: '2.4.0',
   legacyStatus: 'current',
 } as const satisfies AgentKitSourceMetadata & {
   changelogUrl: string;
-  betaReleaseVersion: string;
+  latestPrerelease: string;
+  promotedFromPrerelease: string;
+  activeBetaVersion: string | null;
+  hasActiveBeta: boolean;
 };
 
 export const AGENTKIT_ARTIFACT_INTEGRITY_FACTS = [

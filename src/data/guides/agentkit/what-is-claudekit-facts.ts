@@ -29,6 +29,7 @@ export interface ClaudeKitFacts {
 
 const CLAUDEKIT_DOCS_URL = 'https://docs.claudekit.cc';
 const CLAUDEKIT_CLI_URL = 'https://github.com/mrgoonie/claudekit-cli';
+const CLAUDEKIT_LEGACY_VERIFIED_AT = '2026-07-17';
 
 const agentKitMetadata = {
   channel: 'stable',
@@ -43,7 +44,7 @@ const agentKitMetadata = {
 const claudeKitMetadata = (sourceUrl: string) => ({
   channel: 'legacy' as const,
   sourceUrl,
-  verifiedAt: AGENTKIT_SOURCE_SNAPSHOT.verifiedAt,
+  verifiedAt: CLAUDEKIT_LEGACY_VERIFIED_AT,
   evidenceClass: 'official-docs' as const,
   artifactKind: 'claudekit-cli' as const,
   artifactVersion: 'legacy-reference',

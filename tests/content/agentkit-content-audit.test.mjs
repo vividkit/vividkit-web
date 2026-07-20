@@ -101,8 +101,8 @@ test('English and Vietnamese READMEs preserve lifecycle, channel, route and supp
   ]);
   for (const text of [english, vietnamese]) {
     for (const invariant of [
-      '2.3.0',
-      '2.3.1-beta.1',
+      '2.4.0',
+      '2.4.0-beta.7',
       '?channel=beta',
       '/llms.txt',
       '/llms-full.txt',

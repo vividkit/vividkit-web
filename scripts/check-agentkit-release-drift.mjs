@@ -12,17 +12,21 @@ const SCRIPT_REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '
 const FIXTURES = [
   {
     channel: 'stable',
-    path: 'tests/fixtures/agentkit-release/stable-v2.3.0.json',
-    version: '2.3.0',
-    factSha256: '89d582555208a790379f1f40a325375933265438288bf2c6ecbe9c6fe1646a12',
-    fileSha256: '93acf231238a82d7aa3eaedc598571027ba7708a296bb561b33fbf4e36a22230',
+    policyDigestField: 'stableFixtureSha256',
+    fixtureChannel: 'stable',
+    path: 'tests/fixtures/agentkit-release/stable-v2.4.0.json',
+    version: '2.4.0',
+    factSha256: '83dc4f2b886707d57853a80bca17b439d754c8064e091b0aa942a68f75477370',
+    fileSha256: 'd9a57b1c393bc047676ecc9ea426cc08864a7d8515575239511b5e18cedd682b',
   },
   {
-    channel: 'beta',
-    path: 'tests/fixtures/agentkit-release/beta-v2.3.1-beta.1.json',
-    version: '2.3.1-beta.1',
-    factSha256: '0772e9421526fa7cd62929153517b222d9b88c9d05be7136ff85567fc68cf8d5',
-    fileSha256: '04ede1dc748a37ca2aae47fe09e166b271bd1e38c62967c5fe75a35df802f43a',
+    channel: 'prerelease',
+    policyDigestField: 'prereleaseFixtureSha256',
+    fixtureChannel: 'beta',
+    path: 'tests/fixtures/agentkit-release/prerelease-v2.4.0-beta.7.json',
+    version: '2.4.0-beta.7',
+    factSha256: '075a4fd1d8c024eba1ce4e550e8bdf88bb61f769e923e54755aa47f910cfea44',
+    fileSha256: '8ce13fe8ae26f868268a6408285e9a479385fd97ba87400822432841018a9bcb',
   },
 ];
 const MAX_RESPONSE_BYTES = 1024 * 1024;
@@ -56,36 +60,72 @@ function newest(matches) {
   return [...new Set(matches)].sort(compareVersions).at(-1) ?? null;
 }
 
-function releaseTextLines(body) {
+function releaseText(body) {
   return body
     .replace(/<script\b[\s\S]*?<\/script>/gi, ' ')
     .replace(/<style\b[\s\S]*?<\/style>/gi, ' ')
-    .replace(/<\/(?:article|div|h[1-6]|li|p|section)>|<br\s*\/?>/gi, '\n')
+    .replace(/<\/(?:div|h[1-6]|li|p|section)>|<br\s*\/?>/gi, '\n')
     .replace(/<[^>]+>/g, ' ')
     .replace(/&nbsp;|&#160;/gi, ' ')
     .replace(/&amp;/gi, '&')
-    .split(/\r?\n/)
-    .map((line) => line.replace(/\s+/g, ' ').trim())
-    .filter(Boolean);
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
 function extractReleaseVersions(body) {
   const candidates = [];
-  const lines = releaseTextLines(body);
-  for (let index = 0; index < lines.length; index += 1) {
-    if (lines[index] !== 'AgentKit CLI') continue;
-    for (let offset = 1; offset <= 3 && index - offset >= 0; offset += 1) {
-      const match = lines[index - offset].match(/\bv?(\d+\.\d+\.\d+(?:-beta\.\d+)?)\b/i);
-      if (match) {
-        candidates.push(match[1]);
-        break;
-      }
-    }
+  const articles = [...body.matchAll(/<article\b[^>]*>([\s\S]*?)<\/article>/gi)];
+  if (articles.length === 0) refuse('AK-RELEASE-PAYLOAD');
+
+  for (const [, article] of articles) {
+    const text = releaseText(article);
+    if (!/\bAgentKit CLI\b/i.test(text)) continue;
+    const versions = [...new Set(
+      [...article.matchAll(/<h[1-3]\b[^>]*>([\s\S]*?)<\/h[1-3]>/gi)]
+        .map((match) => releaseText(match[1]))
+        .map((heading) => heading.match(/^v?(\d+\.\d+\.\d+(?:-beta\.\d+)?)$/i)?.[1]?.toLowerCase())
+        .filter(Boolean),
+    )];
+    if (versions.length !== 1) refuse('AK-RELEASE-PAYLOAD');
+    candidates.push(versions[0]);
   }
-  const beta = newest(candidates.filter((version) => version.includes('-beta.')));
+
+  const prerelease = newest(candidates.filter((version) => version.includes('-beta.')));
   const stable = newest(candidates.filter((version) => !version.includes('-beta.')));
-  if (!stable || !beta) refuse('AK-RELEASE-PAYLOAD');
-  return { stable, beta };
+  if (!stable || !prerelease) refuse('AK-RELEASE-PAYLOAD');
+  return { stable, prerelease };
+}
+
+function releaseCore(version) {
+  return version.split('-')[0];
+}
+
+function releaseState({ stable, prerelease }) {
+  const prereleaseCore = releaseCore(prerelease);
+  const coreComparison = compareVersions(prereleaseCore, stable);
+  const promotedFromPrerelease = prereleaseCore === stable ? prerelease : null;
+  const activeBetaVersion = coreComparison > 0 ? prerelease : null;
+  return {
+    latestStable: stable,
+    latestPrerelease: prerelease,
+    promotedFromPrerelease,
+    activeBetaVersion,
+    hasActiveBeta: activeBetaVersion !== null,
+  };
+}
+
+function validReleaseState(value, observations) {
+  if (!exactKeys(value, [
+    'latestStable',
+    'latestPrerelease',
+    'promotedFromPrerelease',
+    'activeBetaVersion',
+    'hasActiveBeta',
+  ])) return false;
+  const stable = observations.find(({ channel }) => channel === 'stable')?.observedVersion;
+  const prerelease = observations.find(({ channel }) => channel === 'prerelease')?.observedVersion;
+  if (!stable || !prerelease) return false;
+  return JSON.stringify(value) === JSON.stringify(releaseState({ stable, prerelease }));
 }
 
 async function readRegularFileNoFollow(repo, relativePath, maxBytes = 1024 * 1024) {
@@ -122,7 +162,7 @@ async function expectedVersions(repo) {
     }
     let fixture;
     try { fixture = JSON.parse(source); } catch { refuse('AK-RELEASE-FIXTURE'); }
-    if (fixture.channel !== fixtureContract.channel
+    if (fixture.channel !== fixtureContract.fixtureChannel
       || fixture.version !== fixtureContract.version
       || fixture.normalizedFactSha256 !== fixtureContract.factSha256) {
       refuse('AK-RELEASE-FIXTURE');
@@ -221,8 +261,9 @@ async function canonicalRepo(repo) {
     );
   } catch { refuse('AK-RELEASE-REPO'); }
   for (const fixture of FIXTURES) {
-    const field = `${fixture.channel}FixtureSha256`;
-    if (!publicationPolicy.includes(`${field}: '${fixture.factSha256}'`)) refuse('AK-RELEASE-REPO');
+    if (!publicationPolicy.includes(`${fixture.policyDigestField}: '${fixture.factSha256}'`)) {
+      refuse('AK-RELEASE-REPO');
+    }
   }
   return root;
 }
@@ -239,7 +280,7 @@ export async function runAgentKitReleaseDriftCheck({
   const observed = await fetchObservation(fetchImpl, timeoutMs);
   const capturedAt = now().toISOString();
   const expiresAt = new Date(new Date(capturedAt).getTime() + RETENTION_DAYS * 86400_000).toISOString();
-  const observations = ['stable', 'beta'].map((channel) => ({
+  const observations = ['stable', 'prerelease'].map((channel) => ({
     channel,
     expectedVersion: expected[channel],
     observedVersion: observed[channel],
@@ -256,6 +297,7 @@ export async function runAgentKitReleaseDriftCheck({
     outcome,
     incidentId: outcome === 'match' ? 'AK-RELEASE-MATCH' : 'AK-RELEASE-DRIFT',
     observations,
+    releaseState: releaseState(observed),
   };
 }
 
@@ -271,7 +313,17 @@ function isCanonicalIsoTimestamp(value) {
 }
 
 function normalizeReleaseReport(report) {
-  const topLevel = ['schemaVersion', 'tool', 'source', 'capturedAt', 'retention', 'outcome', 'incidentId', 'observations'];
+  const topLevel = [
+    'schemaVersion',
+    'tool',
+    'source',
+    'capturedAt',
+    'retention',
+    'outcome',
+    'incidentId',
+    'observations',
+    'releaseState',
+  ];
   if (!exactKeys(report, topLevel) || report.schemaVersion !== 1) refuse('AK-RELEASE-REPORT');
   if (!exactKeys(report.tool, ['name', 'version'])
     || report.tool.name !== 'agentkit-release-drift' || report.tool.version !== '1.0.0') refuse('AK-RELEASE-REPORT');
@@ -310,6 +362,7 @@ function normalizeReleaseReport(report) {
   if ((observations.every(({ status }) => status === 'match') ? 'match' : 'drift') !== report.outcome) {
     refuse('AK-RELEASE-REPORT');
   }
+  if (!validReleaseState(report.releaseState, observations)) refuse('AK-RELEASE-REPORT');
   return {
     schemaVersion: 1,
     tool: { ...report.tool },
@@ -319,6 +372,7 @@ function normalizeReleaseReport(report) {
     outcome: report.outcome,
     incidentId: report.incidentId,
     observations,
+    releaseState: { ...report.releaseState },
   };
 }
 

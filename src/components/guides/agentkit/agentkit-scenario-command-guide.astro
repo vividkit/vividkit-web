@@ -1,0 +1,106 @@
+---
+import type { Language } from '@/i18n';
+import { useTranslations, type TranslationKey } from '@/i18n/utils';
+import type { AgentKitCliFact } from '@/data/guides/agentkit/agentkit-source-contract';
+import { getAgentKitCliFact } from '@/data/guides/agentkit/agentkit-cli-facts';
+import { AGENTKIT_OFFICIAL_LINKS } from '@/data/guides/agentkit/agentkit-official-links.mjs';
+
+interface Props {
+  lang: Language;
+}
+
+interface ScenarioGroup {
+  id: 'install' | 'account' | 'kits' | 'diagnostics' | 'offline' | 'recovery' | 'migration' | 'maintenance' | 'portable';
+  factIds: readonly string[];
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const groups: readonly ScenarioGroup[] = [
+  { id: 'install', factIds: ['install-unix', 'install-windows', 'verify-version'] },
+  { id: 'account', factIds: ['login-email', 'whoami', 'licenses'] },
+  { id: 'kits', factIds: ['kit-init', 'kit-init-global', 'kit-init-dual', 'kit-list', 'kit-refresh', 'kit-uninstall'] },
+  { id: 'diagnostics', factIds: ['doctor', 'audit'] },
+  { id: 'offline', factIds: ['versions-local', 'doctor-offline'] },
+  { id: 'recovery', factIds: ['backups-list', 'backups-verify', 'backups-restore', 'recover'] },
+  { id: 'migration', factIds: ['migrate'] },
+  { id: 'maintenance', factIds: ['self-update-check', 'uninstall'] },
+  { id: 'portable', factIds: ['portable-export'] },
+];
+
+function copyKey(groupId: ScenarioGroup['id'], field: 'title' | 'scenario' | 'default' | 'scope' | 'warning'): TranslationKey {
+  return `agentkit.recipes.${groupId}.${field}` as TranslationKey;
+}
+
+function factsFor(group: ScenarioGroup): readonly AgentKitCliFact[] {
+  return group.factIds
+    .map((id) => getAgentKitCliFact(id))
+    .filter((fact): fact is AgentKitCliFact => Boolean(fact));
+}
+---
+
+<section class="mt-12" aria-labelledby="agentkit-scenario-recipes-heading" data-agentkit-scenario-recipes>
+  <div class="rounded-3xl border border-violet-200 bg-gradient-to-br from-violet-50 via-white to-cyan-50 p-6 dark:border-violet-500/20 dark:from-violet-950/30 dark:via-slate-950 dark:to-cyan-950/20 sm:p-8">
+    <p class="text-xs font-bold uppercase tracking-[0.18em] text-violet-700 dark:text-violet-300">
+      {t('agentkit.recipes.eyebrow')}
+    </p>
+    <h2 id="agentkit-scenario-recipes-heading" class="mt-3 text-3xl font-bold tracking-tight text-slate-950 dark:text-white">
+      {t('agentkit.recipes.heading')}
+    </h2>
+    <p class="mt-3 max-w-3xl leading-7 text-slate-600 dark:text-slate-300">
+      {t('agentkit.recipes.intro')}
+    </p>
+  </div>
+
+  <div class="mt-6 grid min-w-0 gap-5 lg:grid-cols-2">
+    {groups.map((group) => {
+      const facts = factsFor(group);
+      const sourceUrl = facts[0]?.sourceUrl ?? AGENTKIT_OFFICIAL_LINKS.docs;
+      return (
+        <article class="flex min-w-0 flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900/70">
+          <h3 class="text-xl font-bold text-slate-950 dark:text-white">{t(copyKey(group.id, 'title'))}</h3>
+
+          <dl class="mt-4 space-y-3 text-sm leading-6">
+            <div>
+              <dt class="font-bold text-slate-900 dark:text-slate-100">{t('agentkit.recipes.scenario')}</dt>
+              <dd class="text-slate-600 dark:text-slate-300">{t(copyKey(group.id, 'scenario'))}</dd>
+            </div>
+            <div>
+              <dt class="font-bold text-emerald-700 dark:text-emerald-300">{t('agentkit.recipes.default')}</dt>
+              <dd class="text-slate-600 dark:text-slate-300">{t(copyKey(group.id, 'default'))}</dd>
+            </div>
+            <div>
+              <dt class="font-bold text-slate-900 dark:text-slate-100">{t('agentkit.recipes.scope')}</dt>
+              <dd class="text-slate-600 dark:text-slate-300">{t(copyKey(group.id, 'scope'))}</dd>
+            </div>
+          </dl>
+
+          <div class="mt-4 space-y-2">
+            {facts.map((fact) => (
+              <div class="rounded-xl border border-slate-200 bg-slate-100 px-3 py-2.5 dark:border-slate-700 dark:bg-slate-800/90">
+                <code class="block overflow-x-auto whitespace-nowrap font-mono text-sm text-slate-700 dark:text-slate-200">
+                  <span class="select-none text-slate-500 dark:text-slate-400">$ </span><span class="text-purple-600 dark:text-purple-400">{fact.command}</span>
+                </code>
+                <div class="mt-2 flex flex-wrap gap-2 text-[11px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                  <span>{fact.scope}</span>
+                  <span aria-hidden="true">·</span>
+                  <span>{fact.mutatesDisk ? t('agentkit.recipes.writes') : t('agentkit.recipes.readonly')}</span>
+                  {fact.previewDefault && <span class="text-amber-700 dark:text-amber-300">· {t('agentkit.recipes.preview')}</span>}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div class="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm leading-6 text-amber-950 dark:border-amber-400/20 dark:bg-amber-400/10 dark:text-amber-100">
+            <p class="font-bold">{t('agentkit.recipes.warning')}</p>
+            <p>{t(copyKey(group.id, 'warning'))}</p>
+          </div>
+
+          <a href={sourceUrl} target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex w-fit items-center rounded-lg text-sm font-bold text-violet-700 underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-violet-500 dark:text-violet-300">
+            {t('agentkit.recipes.official')} ↗
+          </a>
+        </article>
+      );
+    })}
+  </div>
+</section>

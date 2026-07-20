@@ -2,6 +2,7 @@ import { AGENTKIT_PUBLICATION_SOURCE_CLOSURE } from './agentkit-publication-sour
 
 export const AGENTKIT_TRUTH_AUDITED_SOURCE_PATHS = [...new Set([
   'src/data/guides/agentkit/agentkit-source-contract.ts',
+  'src/data/guides/agentkit/agentkit-official-links.mjs',
   'src/data/guides/agentkit/agentkit-cli-facts.ts',
   'src/data/guides/agentkit/agentkit-app-facts.ts',
   'src/data/guides/agentkit/agentkit-skill-facts.ts',
@@ -13,6 +14,11 @@ export const AGENTKIT_TRUTH_AUDITED_SOURCE_PATHS = [...new Set([
   'src/data/guides/agentkit/agentkit-target-capabilities.ts',
   'src/data/guides/agentkit/agentkit-migration-mapping.ts',
   'src/data/guides/agentkit/agentkit-report-sanitizer.mjs',
+  'src/components/guides/agentkit/agentkit-scenario-command-guide.astro',
+  'tests/fixtures/agentkit-release/current-release.json',
+  'tests/fixtures/agentkit-release/stable-v2.4.0.json',
+  'tests/fixtures/agentkit-release/prerelease-v2.4.0-beta.7.json',
+  'tests/fixtures/agentkit-release/source-observations-2026-07-20.json',
   'src/data/guides/cli-commands-cheatsheet.ts',
   'src/data/guides/cli-command-notes.ts',
   'src/i18n/en/agentkit.ts',

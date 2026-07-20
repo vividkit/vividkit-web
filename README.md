@@ -19,9 +19,9 @@ The VividKit Desktop App is planned separately. It is not the AgentKit Desktop A
 
 ## Release and Safety Policy
 
-- Stable AgentKit `2.3.0` is the default public fact set.
-- Beta `2.3.1-beta.1` is selected only by the exact `?channel=beta` query on AgentKit Hub, CLI Guide, CLI Commands, and Coexistence Guide. Invalid, repeated, or out-of-group channel state falls back to stable.
-- A published beta query is public early-access content, not closed-beta enrollment or execution authorization. The tracked publication record can hold the beta payload before review.
+- Stable AgentKit `2.4.0` is the default public fact set. The last prerelease, `2.4.0-beta.7`, was promoted into stable from the same source commit.
+- There is no active beta newer than stable in the 2026-07-20 observation. An exact `?channel=beta` request falls back to stable with an availability notice; invalid, repeated, or out-of-group state also resolves to stable.
+- A future published beta query would be public early-access content, not closed-beta enrollment or execution authorization. Query state cannot authorize held payloads or lifecycle actions.
 - `/llms.txt` and `/llms-full.txt` remain stable-only.
 - The route manifest preserves 132 query-neutral identities; query parameters add no route or canonical identity.
 - `ak migrate` is stable, but VividKit presents it preview/smoke-first and does not provide a default apply action.
@@ -42,6 +42,7 @@ Support:
 | Guide | Purpose |
 |---|---|
 | [CK → AgentKit](https://vividkit.dev/guides/agentkit) | Decision router, seven-stage lifecycle, target setup, rollback, and support boundaries |
+| [Scenario command guide](./docs/agentkit-scenario-command-guide.md) | Curated safe recipes by user intent; full flags remain in AgentKit Official Docs |
 | [CLI Guide](https://vividkit.dev/guides/cli) | Stable AgentKit setup and lifecycle |
 | [CLI Commands](https://vividkit.dev/guides/cli-commands) | Canonical command facts and safety metadata |
 | [Commands](https://vividkit.dev/guides/commands) | Engineer and Marketing skill catalog |
@@ -52,11 +53,11 @@ Support:
 
 ## Technology
 
-- Astro `6.0.2` with static output
+- Astro `7.1.0` with static output
 - TypeScript `5.9.3` in strict mode
-- Tailwind CSS `4.1.17` and LightningCSS
+- Tailwind CSS `4.3.3` and LightningCSS
 - Alpine.js `3.15.2` plus small local controllers
-- Vercel adapter `10.0.0` and Web Analytics
+- Vercel adapter `11.0.3` and Web Analytics
 - Astro i18n with English default and Vietnamese `/vi` routes
 
 ## Development

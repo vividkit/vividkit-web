@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-07-20T08:09:38Z",
+  "observations": [
+    {
+      "id": "agentkit-stable-catalog-v2.4.0-2026-07-20",
+      "requestedUrl": "https://releases.agentkit.best/channels/stable/release-catalog.json",
+      "effectiveUrl": "https://releases.agentkit.best/channels/stable/release-catalog.json",
+      "retrievedAt": "2026-07-20T08:09:38Z",
+      "retrievalMethod": "HTTPS GET without redirects",
+      "httpStatus": 200,
+      "redirectCount": 0,
+      "rawResponseSha256": "8f82fb0adbc1ccc0343752a9895ba378ae5d7a7e1bc40e30baebbffa247e8229",
+      "observedMarker": "2.4.0",
+      "reviewer": "VividKit maintainer evidence capture",
+      "catalogGeneratedAt": "2026-07-19T08:55:46.229332097Z",
+      "catalogPublishedAt": "2026-07-19T08:55:46.229332097Z",
+      "sourceCommit": "c8183754418b8bfd7be56155081394f85a340edb",
+      "isPrerelease": false,
+      "changelogSha256": "0b86861717356778f807f82d2d8dc731ec7a72e469f17f8cd6ce20a2c60f9c6c",
+      "tagRef": "v2.4.0",
+      "tagObjectSha": "352e61cecadf643beefc356e42aadf677eb48cb3",
+      "peeledCommitSha": "a3a1407fc94415139af679a5014856bf58e4c6d7",
+      "exactTagSha256": {
+        "INSTALL.md": "a923544591a3dfdeeb0528492e228ace662bc44cf22e968ea30e777aa506bbf7",
+        "parity": "198c9e4957b8f445496ed3714901a599f45c84667fdb0a6bb1a3f3c6b4e88c4c",
+        "commandTree": "b52eb55bfaf508ae362771f67858d9191b3a5d35e4ec13917f4206e12f394baf",
+        "runtimeYaml": "fbe63f9d50904c56884a7fbf33e5aa0d26834bc7c2d4ddbfa1cbecae29646d85",
+        "runtimeMarkdown": "95ce4b8cf00e5aeca72b3d4fb76d13064b4640f2864f218bfa7764d0c97ea139"
+      }
+    },
+    {
+      "id": "agentkit-beta-catalog-v2.4.0-beta.7-2026-07-20",
+      "requestedUrl": "https://releases.agentkit.best/channels/beta/release-catalog.json",
+      "effectiveUrl": "https://releases.agentkit.best/channels/beta/release-catalog.json",
+      "retrievedAt": "2026-07-20T08:09:38Z",
+      "retrievalMethod": "HTTPS GET without redirects",
+      "httpStatus": 200,
+      "redirectCount": 0,
+      "rawResponseSha256": "6a1bbdff9a54e5e3dd106c2e9d4057876a4194cce78ddc113ce30e04df5c5097",
+      "observedMarker": "2.4.0-beta.7",
+      "reviewer": "VividKit maintainer evidence capture",
+      "catalogGeneratedAt": "2026-07-19T08:40:40.651028715Z",
+      "catalogPublishedAt": "2026-07-19T08:40:40.651028715Z",
+      "sourceCommit": "c8183754418b8bfd7be56155081394f85a340edb",
+      "isPrerelease": true,
+      "changelogSha256": "579418acfeebb9b4454e97e39468e920ca02287744dbbc90bf77ce0667b95a16",
+      "tagRef": "v2.4.0-beta.7",
+      "tagObjectSha": "0e667722810c3a0469703a20bd83ee4b884f697a",
+      "peeledCommitSha": "c8183754418b8bfd7be56155081394f85a340edb"
+    }
+  ]
+}

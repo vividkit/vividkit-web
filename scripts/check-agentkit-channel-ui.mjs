@@ -28,7 +28,7 @@ export function createAgentKitUiEvidenceEnvelope({
   results,
   now = new Date(),
 }) {
-  if (!['hold', 'published'].includes(channelExpectation) || !Array.isArray(results)) {
+  if (!['inactive', 'hold', 'published'].includes(channelExpectation) || !Array.isArray(results)) {
     throw new Error('Unsafe UI evidence contract.');
   }
   const capturedAt = now.toISOString();
@@ -77,7 +77,7 @@ async function inspectPage(page, expected, requestPaths) {
       stableHidden: stableFacts?.hasAttribute('hidden') ?? null,
       betaHidden: betaView?.hasAttribute('hidden') ?? null,
       noticeHidden: notice?.hasAttribute('hidden') ?? null,
-      betaVersionVisible: betaView?.textContent?.includes('2.3.1-beta.1') ?? false,
+      betaClaimVisible: Boolean(betaView?.querySelector('[data-agentkit-beta-view-marker]')),
       canonical,
       path: location.pathname,
       search: location.search,
@@ -123,11 +123,11 @@ async function runSurfaceCase({ browser, baseUrl, route, testCase, expected }) {
   pushFailure(metrics.stableHidden !== (expected === 'published'), failures, `stableHidden=${metrics.stableHidden}`);
   pushFailure(metrics.betaHidden !== (expected !== 'published'), failures, `betaHidden=${metrics.betaHidden}`);
   pushFailure(metrics.active !== (expected === 'published' ? 'beta' : 'stable'), failures, `active=${metrics.active}`);
-  pushFailure(metrics.requested !== (expected === 'stable' ? 'stable' : 'beta'), failures, `requested=${metrics.requested}`);
-  pushFailure(metrics.betaVersionVisible !== (expected === 'published'), failures, `betaVersionVisible=${metrics.betaVersionVisible}`);
+  pushFailure(metrics.requested !== (['stable', 'inactive'].includes(expected) ? 'stable' : 'beta'), failures, `requested=${metrics.requested}`);
+  pushFailure(metrics.betaClaimVisible !== (expected === 'published'), failures, `betaClaimVisible=${metrics.betaClaimVisible}`);
   pushFailure(metrics.betaRequests.length !== (expected === 'published' ? 1 : 0), failures, `betaRequests=${metrics.betaRequests.length}`);
   pushFailure(metrics.surfaceLinkCount === 0, failures, 'surface-links-missing');
-  if (expected !== 'stable') {
+  if (!['stable', 'inactive'].includes(expected)) {
     pushFailure(expected === 'published' && !metrics.surfaceLinksPreserveBeta, failures, 'surface-link-channel-drift');
     pushFailure(!metrics.offSurfaceLinksDropBeta, failures, 'off-surface-channel-leak');
   } else {
@@ -235,8 +235,10 @@ export async function runAgentKitChannelUiMatrix({ browser, baseUrl, evidenceDir
     }
   }
   for (const route of allSurfacePaths) {
-    results.push(await runNavigationCase({ browser, baseUrl, route, expected }));
-    results.push(await runKeyboardCase({ browser, baseUrl, route, expected }));
+    if (expected !== 'inactive') {
+      results.push(await runNavigationCase({ browser, baseUrl, route, expected }));
+      results.push(await runKeyboardCase({ browser, baseUrl, route, expected }));
+    }
     for (const suffix of AGENTKIT_CHANNEL_UI_FALLBACK_QUERIES) {
       results.push(await runFallbackCase({ browser, baseUrl, route, suffix }));
     }

@@ -1,8 +1,8 @@
 # VividKit Web — Codebase Summary
 
-**Last updated:** July 17, 2026
+**Last updated:** July 20, 2026
 
-**Framework:** Astro 6.0.2, static output
+**Framework:** Astro 7.1.0, static output
 
 **Language:** TypeScript 5.9.3, strict configuration
 
@@ -18,12 +18,12 @@ VividKit Web is a bilingual static site and guide system for AgentKit (`ak`). En
 
 | Concern | Verified implementation |
 |---|---|
-| Rendering | Astro 6.0.2 with `output: 'static'` |
+| Rendering | Astro 7.1.0 with `output: 'static'` |
 | Language | TypeScript 5.9.3; Astro strict config |
-| Styling | Tailwind CSS 4.1.17 through Vite; LightningCSS minification |
+| Styling | Tailwind CSS 4.3.3 through Vite; LightningCSS minification |
 | Interactivity | Alpine.js 3.15.2 and local browser controllers |
 | Images | Astro Sharp service |
-| Deployment | `@astrojs/vercel` 10.0.0 with Web Analytics |
+| Deployment | `@astrojs/vercel` 11.0.3 with Web Analytics |
 | Localization | Astro i18n; English default, Vietnamese `/vi` |
 | Tests | Node test runner plus browser/UI scripts |
 
@@ -80,14 +80,15 @@ reviewed official observations + owner decisions + archive provenance
 
 | Module | Current responsibility |
 |---|---|
-| `agentkit-source-contract.ts` | Public channels, trusted origin, stable/beta snapshot, evidence metadata, credential policy |
-| `agentkit-cli-facts.ts` | Stable CLI catalog, empty reviewed beta command catalog, fact lookup by channel |
+| `agentkit-source-contract.ts` | Trusted origin, stable release, prerelease promotion, active-beta state, evidence metadata, credential policy |
+| `agentkit-official-links.mjs` | Central AgentKit Official Docs and changelog destinations for active source |
+| `agentkit-cli-facts.ts` | Stable curated scenario facts, empty current-beta facts, fact lookup by channel |
 | `agentkit-skill-facts.ts` | Verified skill identities and Claude Code/Codex invocation pairs |
 | `agentkit-target-capabilities.ts` | Claude Code and Codex install scopes, default project scope, invocation mode |
 | `agentkit-lifecycle-guide-facts.ts` | Seven stage IDs, predecessor facts, detector commands, manual removal conditions, support contacts |
 | `agentkit-lifecycle-policy.ts` | Evidence-driven lane router, sequential stage state, advisory attestation validation |
 | `agentkit-channel-policy.mjs` | Exact channel normalization and four-surface propagation boundary |
-| `agentkit-beta-channel-facts.mjs` | Independent beta release claim; zero beta command facts |
+| `agentkit-beta-channel-facts.mjs` | Current active-beta state only; promotion provenance remains in the source snapshot |
 | `agentkit-publication-policy.ts` | Hold/staging/published build decision and digest validation |
 | `agentkit-report-sanitizer.mjs` | Fixed support/audit output schemas that discard raw and nested input |
 | `guide-route-manifest.ts` | Required build, sitemap, LLM, compatibility, and archive classifications |
@@ -127,13 +128,14 @@ The 3–7 day form is ephemeral advisory input. The policy checks user-supplied 
 
 ### Facts
 
-- Stable: AgentKit 2.3.0; default SSR and command catalog.
-- Beta: AgentKit 2.3.1-beta.1; independent release claim only; current beta command fact count is zero.
+- Stable: AgentKit 2.4.0; default SSR and curated command facts.
+- Latest prerelease: AgentKit 2.4.0-beta.7; promoted into stable from the same source commit.
+- Active beta: none at the 2026-07-20 observation; current beta command fact count is zero.
 - `ak migrate` is stable. Its fact remains preview-first and public copy does not offer default apply.
 
 ### Query Controller
 
-`normalizeAgentKitChannel` accepts beta only for one exact `channel=beta` value. Missing, empty, repeated, conflicting, case-variant, or unsupported values resolve to stable.
+`normalizeAgentKitChannel` recognizes one exact `channel=beta` request, but selection also requires a reviewed active beta. With no active beta, it resolves to stable and may show an availability notice. Missing, empty, repeated, conflicting, case-variant, or unsupported values resolve to stable.
 
 Beta propagation is limited to these locale-neutral paths and their `/vi` mirrors:
 
@@ -230,7 +232,8 @@ Private maintainer tooling and product delivery are independent. The public repo
 ## Maintenance Rules
 
 - Change source metadata and fixtures only through reviewed source observations.
-- Never fall back from an empty beta catalog to stable commands labeled as beta.
+- Never fall back from empty current-beta facts to stable commands labeled as beta.
+- Keep the UI and tracked command guide curated by scenario; do not mirror the exact-release 120-path audit inventory.
 - Update router facts, lifecycle UI, EN/VI copy, and contract tests together.
 - Treat observation as advisory declaration, never verification or enforcement.
 - Detect all CK paths before selecting any manual removal condition.
@@ -249,5 +252,5 @@ Private maintainer tooling and product delivery are independent. The public repo
 ## Unresolved Questions
 
 1. Will AgentKit document automatic ownership-aware cleanup for provider destinations beyond the current target evidence?
-2. When will the reviewed beta catalog include command-level facts?
+2. Which later tagged release will first include immutable reviewed-plan execution from post-2.4.0 work?
 3. Which historical compatibility routes will eventually redirect or retire instead of remaining live?

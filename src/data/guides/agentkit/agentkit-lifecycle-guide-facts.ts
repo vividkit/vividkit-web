@@ -1,3 +1,5 @@
+import { AGENTKIT_OFFICIAL_LINKS } from './agentkit-official-links.mjs';
+
 export const AGENTKIT_LIFECYCLE_STAGE_IDS = [
   'backup',
   'cleanup-ck-ownership',
@@ -135,7 +137,7 @@ export const AGENTKIT_LIFECYCLE_STAGE_FACTS = [
   },
 ] as const satisfies readonly AgentKitLifecycleStageFact[];
 
-const AGENTKIT_DOCS = 'https://agentkit.best/docs';
+const AGENTKIT_DOCS = AGENTKIT_OFFICIAL_LINKS.docs;
 const CLAUDEKIT_MIGRATE_DOCS = 'https://docs.claudekit.cc/docs/cli/migrate/';
 const CLAUDEKIT_UNINSTALL_DOCS = 'https://docs.claudekit.cc/docs/cli/uninstall/';
 

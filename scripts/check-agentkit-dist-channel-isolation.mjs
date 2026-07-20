@@ -25,8 +25,13 @@ const PUBLISHED_MARKERS = [
 const PUBLISHED_LOADER_MARKER = PUBLISHED_MARKERS[0];
 const PUBLISHED_VIEW_MARKER = PUBLISHED_MARKERS[1];
 const PUBLISHED_VERSION = PUBLISHED_MARKERS[2];
+const PROMOTED_PRERELEASE_TOKENS = [
+  '2.4.0-beta.7',
+  'AK-RELEASE-PRERELEASE-2.4.0-BETA.7',
+];
 const HOLD_FORBIDDEN = [
   ...PUBLISHED_MARKERS,
+  ...PROMOTED_PRERELEASE_TOKENS,
   'AK-RELEASE-BETA-2.3.1-BETA.1',
   'agentkit-beta-view.mjs',
   'agentkit-beta-loader-published.mjs',
@@ -151,7 +156,11 @@ export async function scanAgentKitDistChannelIsolation({ root = PROJECT_ROOT, ex
   }
 
   for (const entry of entries.filter(({ relativeFile }) => /(?:^|\/)llms(?:-full)?\.txt$/.test(relativeFile))) {
-    for (const token of [...PUBLISHED_MARKERS, 'AK-RELEASE-BETA-2.3.1-BETA.1']) {
+    for (const token of [
+      ...PUBLISHED_MARKERS,
+      ...PROMOTED_PRERELEASE_TOKENS,
+      'AK-RELEASE-BETA-2.3.1-BETA.1',
+    ]) {
       if (contains(entry.body, token)) diagnostics.push({ id: 'llm-beta-token', file: entry.relativeFile, token });
     }
   }

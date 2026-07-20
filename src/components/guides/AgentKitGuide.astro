@@ -14,6 +14,7 @@ import AgentKitLegacySkillCleanup from './agentkit/agentkit-legacy-skill-cleanup
 import AgentKitMigrationChecklist from './agentkit/agentkit-migration-checklist.astro';
 import AgentKitOperatorAttestation from './agentkit/agentkit-operator-attestation.astro';
 import AgentKitChannelSwitcher from './agentkit/agentkit-channel-switcher.astro';
+import AgentKitScenarioCommandGuide from './agentkit/agentkit-scenario-command-guide.astro';
 
 interface Props {
   lang?: Language;
@@ -42,6 +43,7 @@ const includeStage7Details = import.meta.env.AGENTKIT_INCLUDE_STAGE7_DETAILS ===
     <AgentKitMigrationChecklist lang={currentLang} />
     <AgentKitOperatorAttestation lang={currentLang} />
     <AgentKitDesktopAppOverview lang={currentLang} />
+    <AgentKitScenarioCommandGuide lang={currentLang} />
     <AgentKitKitTargets
       lang={currentLang}
       cliFacts={AGENTKIT_CLI_FACTS}

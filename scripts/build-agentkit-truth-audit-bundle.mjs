@@ -7,10 +7,14 @@ import { AGENTKIT_TRUTH_AUDITED_SOURCE_PATHS } from './agentkit-truth-audit-sour
 
 const ROOT = fileURLToPath(new URL('../', import.meta.url));
 const DEFAULT_OUTPUT = resolve(ROOT, 'scripts/dist/agentkit-truth-audit.bundle.mjs');
-const STABLE_FIXTURE = resolve(ROOT, 'tests/fixtures/agentkit-release/stable-v2.3.0.json');
-const BETA_FIXTURE = resolve(ROOT, 'tests/fixtures/agentkit-release/beta-v2.3.1-beta.1.json');
+const STABLE_FIXTURE = resolve(ROOT, 'tests/fixtures/agentkit-release/stable-v2.4.0.json');
+const LATEST_PRERELEASE_FIXTURE = resolve(ROOT, 'tests/fixtures/agentkit-release/prerelease-v2.4.0-beta.7.json');
 const OWNER_DECISIONS = resolve(ROOT, 'docs/agentkit-lifecycle-owner-decisions.json');
 const SANITIZER_SOURCE = resolve(ROOT, 'src/data/guides/agentkit/agentkit-report-sanitizer.mjs');
+const CHANNEL_CANDIDATE_PATHS = new Set([
+  'tests/fixtures/agentkit-release/stable-v2.4.0.json',
+  'tests/fixtures/agentkit-release/prerelease-v2.4.0-beta.7.json',
+]);
 
 function canonicalize(value) {
   if (Array.isArray(value)) return value.map(canonicalize);
@@ -38,12 +42,15 @@ function inlineSanitizer(source) {
 export async function buildAgentKitTruthAuditBundleSource() {
   const [stable, beta, ownerDecisions, sanitizerSource] = await Promise.all([
     readFile(STABLE_FIXTURE, 'utf8').then(JSON.parse),
-    readFile(BETA_FIXTURE, 'utf8').then(JSON.parse),
+    readFile(LATEST_PRERELEASE_FIXTURE, 'utf8').then(JSON.parse),
     readFile(OWNER_DECISIONS, 'utf8').then(JSON.parse),
     readFile(SANITIZER_SOURCE, 'utf8'),
   ]);
   const fixtures = { stable, beta };
-  const sourceEntries = await Promise.all(AGENTKIT_TRUTH_AUDITED_SOURCE_PATHS.map(async (relativePath) => (
+  const auditedSourcePaths = AGENTKIT_TRUTH_AUDITED_SOURCE_PATHS.filter(
+    (relativePath) => !CHANNEL_CANDIDATE_PATHS.has(relativePath),
+  );
+  const sourceEntries = await Promise.all(auditedSourcePaths.map(async (relativePath) => (
     [relativePath, await readFile(resolve(ROOT, relativePath), 'utf8')]
   )));
   const sourceContents = Object.fromEntries(sourceEntries);
@@ -72,8 +79,8 @@ const crypto = process.getBuiltinModule('node:crypto');
 const TOOL = { name: 'agentkit-truth-audit', version: '1.0.0' };
 const MAX_AUDITED_SOURCE_BYTES = 2 * 1024 * 1024;
 const CANDIDATE_PATHS = {
-  stable: 'tests/fixtures/agentkit-release/stable-v2.3.0.json',
-  beta: 'tests/fixtures/agentkit-release/beta-v2.3.1-beta.1.json',
+  stable: 'tests/fixtures/agentkit-release/stable-v2.4.0.json',
+  beta: 'tests/fixtures/agentkit-release/prerelease-v2.4.0-beta.7.json',
 };
 
 function canonicalize(value) {
@@ -90,6 +97,17 @@ function canonicalJson(value) {
 
 function sha256(value) {
   return crypto.createHash('sha256').update(value).digest('hex');
+}
+
+function compareVersions(left, right) {
+  const parts = (value) => value.match(/\\d+/g).map(Number);
+  const leftParts = parts(left);
+  const rightParts = parts(right);
+  for (let index = 0; index < Math.max(leftParts.length, rightParts.length); index += 1) {
+    const delta = (leftParts[index] ?? 0) - (rightParts[index] ?? 0);
+    if (delta !== 0) return delta;
+  }
+  return 0;
 }
 
 function parseArgs(argv) {
@@ -260,6 +278,12 @@ function main() {
     return;
   }
 
+  const stableVersion = EMBEDDED_RELEASE_FIXTURES.stable.version;
+  const prereleaseVersion = EMBEDDED_RELEASE_FIXTURES.beta.version;
+  const prereleaseCore = prereleaseVersion.split('-')[0];
+  const hasActiveBeta = compareVersions(prereleaseCore, stableVersion) > 0;
+  const promotedPrerelease = prereleaseCore === stableVersion;
+
   render({
     category: 'source-truth',
     stage: 'complete',
@@ -269,6 +293,11 @@ function main() {
   }, options, 0, {
     channel: options.channel,
     releaseVersion: candidateFixture.version,
+    releaseRole: options.channel === 'stable'
+      ? 'stable'
+      : hasActiveBeta ? 'active-beta' : promotedPrerelease ? 'promoted-prerelease' : 'historical-prerelease',
+    hasActiveBeta,
+    promotedToStableVersion: options.channel === 'beta' && promotedPrerelease ? stableVersion : null,
     embeddedFixtureRoot: EMBEDDED_FIXTURE_ROOT,
   });
 }

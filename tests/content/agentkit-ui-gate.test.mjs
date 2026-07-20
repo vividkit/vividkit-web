@@ -30,6 +30,7 @@ test('browser contract covers all O1 surfaces, locales, invalid queries, history
   assert.match(source, /runKeyboardCase\(\{ browser, baseUrl, route, expected \}\)/);
   assert.match(source, /jsEnabled: false/);
   assert.match(source, /surfaceLinksDropBeta/);
+  assert.match(source, /expected !== 'inactive'/);
 });
 
 test('UI evidence envelope has bounded retention and rejects raw browser errors', () => {
@@ -48,6 +49,14 @@ test('UI evidence envelope has bounded retention and rejects raw browser errors'
   });
   assert.equal(envelope.capturedAt, '2026-07-17T03:00:00.000Z');
   assert.equal(envelope.baseOrigin, 'http://127.0.0.1:4321');
+
+  const inactive = createAgentKitUiEvidenceEnvelope({
+    baseUrl: 'http://127.0.0.1:4321',
+    channelExpectation: 'inactive',
+    results: [{ route: '/guides/agentkit?channel=beta', case: 'inactive', failures: [] }],
+    now: new Date('2026-07-20T08:47:38.356Z'),
+  });
+  assert.equal(inactive.channelExpectation, 'inactive');
 
   assert.throws(() => createAgentKitUiEvidenceEnvelope({
     baseUrl: 'http://127.0.0.1:4321',

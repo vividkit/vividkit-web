@@ -7,6 +7,7 @@ import {
 
 const ROOT_SELECTOR = '[data-agentkit-channel-root]';
 const CHOICE_SELECTOR = '[data-agentkit-channel-choice]';
+const HAS_ACTIVE_BETA = import.meta.env.AGENTKIT_HAS_ACTIVE_BETA === 'true';
 let channelRequestGeneration = 0;
 
 function resetRoot(root) {
@@ -49,7 +50,7 @@ function updateDocumentLinks(activeChannel) {
 function normalizeInvalidQuery() {
   const url = new URL(window.location.href);
   const values = url.searchParams.getAll('channel');
-  if (values.length === 0 || (values.length === 1 && values[0] === 'beta')) return;
+  if (values.length === 0 || (HAS_ACTIVE_BETA && values.length === 1 && values[0] === 'beta')) return;
   url.searchParams.delete('channel');
   window.history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
 }

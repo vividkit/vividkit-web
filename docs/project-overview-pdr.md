@@ -1,6 +1,6 @@
 # VividKit Web — Project Overview and Product Development Requirements
 
-**Last updated:** July 17, 2026
+**Last updated:** July 20, 2026
 
 **Document version:** 2.0
 
@@ -10,7 +10,7 @@
 
 VividKit Web is a statically generated, bilingual product site and visual guide hub for AgentKit (`ak`), Claude Code, Codex, and related workflows. AgentKit succeeds ClaudeKit (`ck`). Current guidance is AgentKit-first; isolated ClaudeKit pages remain available as noindex historical material.
 
-The current product contract replaces a fixed migration checklist with an evidence-driven decision router and seven ordered lifecycle stages. Stable AgentKit `2.3.0` is the default. Beta `2.3.1-beta.1` is a separately reviewed fact set available only through an exact, bounded query after publication approval. Mixed or unverifiable ownership fails closed to support.
+The current product contract replaces a fixed migration checklist with an evidence-driven decision router and seven ordered lifecycle stages. Stable AgentKit `2.4.0` is the default. Prerelease `2.4.0-beta.7` is retained as promotion provenance, not advertised as an active beta because it was promoted from the same source commit and no newer beta existed at the 2026-07-20 observation. Mixed or unverifiable ownership fails closed to support.
 
 ## Product Vision
 
@@ -40,6 +40,7 @@ Turn verified command behavior and conservative lifecycle policy into visual gui
 - Product pages at `/` and `/vi`.
 - AgentKit Hub at `/guides/agentkit` and `/vi/guides/agentkit`.
 - AgentKit CLI, CLI Commands, Commands, Workflows, targets, coexistence, permissions, recovery, and troubleshooting guides.
+- A curated scenario command guide for high-value safe journeys, with AgentKit Official Docs as the full reference destination.
 - Compatibility routes whose slugs retain ClaudeKit names while live guidance is AgentKit-oriented.
 - Noindex archive routes under `/legacy/guides` and `/vi/legacy/guides`.
 - Sitemap plus stable-only `/llms.txt` and `/llms-full.txt` exports.
@@ -51,6 +52,7 @@ Turn verified command behavior and conservative lifecycle policy into visual gui
 - Automatic deletion of legacy provider copies or CK control-plane data.
 - Public or team delivery of local maintainer skills.
 - Beta command claims that do not exist in the reviewed beta fact set.
+- A mirrored 120-path CLI catalog, command search route, or duplicated full flag reference.
 
 ## Lifecycle Contract
 
@@ -95,14 +97,14 @@ The observation form validates declaration shape and range in memory. It does no
 
 | Concern | Stable | Beta |
 |---|---|---|
-| Version | `2.3.0` | `2.3.1-beta.1` |
-| Selection | Default, including invalid or repeated query values | Exact single `?channel=beta` only |
-| Surfaces | All current guidance | AgentKit Hub, CLI Guide, CLI Commands, Coexistence Guide |
-| Commands | Reviewed stable command catalog | No reviewed beta command facts in the current snapshot |
+| Version | `2.4.0` | None active; `2.4.0-beta.7` is promoted provenance |
+| Selection | Default, including invalid or repeated query values | Exact single `?channel=beta` falls back to stable with an availability notice |
+| Surfaces | All current guidance | No current beta payload is rendered |
+| Commands | Reviewed stable curated command facts | Empty current-beta command facts |
 | LLM export | Included | Excluded |
 | Canonical identity | Path only | Same path; query creates no route identity |
 
-Leaving the four-surface group drops beta state. A deployed beta query is public early access, not access control or closed-beta enrollment. The current tracked publication record is `hold`; only a separately reviewed published build whose complete record matches its committed approval revision may include the beta payload and detailed Stage 7 content.
+Leaving the four-surface group drops beta state. A future deployed beta query would be public early access, not access control or closed-beta enrollment. The current tracked publication record is `hold`; query state cannot manufacture an active beta, include a held payload, or unlock detailed Stage 7 content.
 
 ## Route and Archive Contract
 
@@ -132,6 +134,7 @@ The manifest requires **132 identities = 72 preserved live identities + 2 AgentK
 | FR-11 | Gate CK removal behind detector and exact ownership evidence | P0 | lifecycle guide facts and removal UI |
 | FR-12 | Provide official escalation links and sanitized support guidance | P0 | support contacts and report sanitizer |
 | FR-13 | Audit source, build graph, generated output, release drift, and archive boundary without automatic fact mutation | P0 | package scripts, audit scripts, and tests |
+| FR-14 | Publish scenario-first safe recipes while delegating complete flags/reference coverage to AgentKit Official Docs | P0 | curated command facts, bilingual scenario component, tracked scenario guide |
 
 ## Non-Functional Requirements
 
@@ -164,7 +167,7 @@ Before sharing evidence, remove usernames/home paths, repository remotes, creden
 - [x] Router exposes fresh-install, clean-cutover, closed-beta pilot, recovery, and support-assisted lanes.
 - [x] Stage IDs and predecessors match the seven-stage contract.
 - [x] Mixed/custom ownership and unhealthy/missing metadata fail closed.
-- [x] Stable/beta facts remain independent; the beta catalog does not borrow stable commands.
+- [x] Stable, prerelease provenance, and active-beta state remain distinct; empty current-beta facts never borrow stable commands.
 - [x] Exact beta query propagation is bounded to four EN/VI surface pairs.
 - [x] Route manifest contains 132 required identities and no query identity.
 - [x] Archive identities are build-required but sitemap/LLM-excluded.

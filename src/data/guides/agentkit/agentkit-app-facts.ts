@@ -1,3 +1,5 @@
+import { AGENTKIT_OFFICIAL_LINKS } from './agentkit-official-links.mjs';
+
 export type AgentKitAppPlatform = 'windows' | 'macos' | 'linux';
 export type AgentKitAppTarget = 'claude-code' | 'codex' | 'other-coding-agents';
 export type AgentKitAppCapability =
@@ -27,7 +29,7 @@ export const AGENTKIT_APP_SOURCES = [
     id: 'stable-changelog',
     channel: 'stable',
     status: 'stable-release-notes',
-    sourceUrl: 'https://agentkit.best/changelog',
+    sourceUrl: AGENTKIT_OFFICIAL_LINKS.changelog,
     verifiedAt: '2026-07-12',
     releaseVersion: '2.0.0',
   },

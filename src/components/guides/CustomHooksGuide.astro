@@ -4,6 +4,7 @@ import {
   hookCategories,
 } from "@/data/guides/custom-hooks/custom-hooks-data";
 import { customHooksTranslations } from "@/data/guides/custom-hooks/custom-hooks-translations";
+import { AGENTKIT_OFFICIAL_LINKS } from "@/data/guides/agentkit/agentkit-official-links.mjs";
 import CustomHooksIntroduction from "./custom-hooks/custom-hooks-introduction.astro";
 import CustomHooksCategorySection from "./custom-hooks/custom-hooks-category-section.astro";
 import {
@@ -128,7 +129,7 @@ const catalogHints = [
     <p class="text-sm text-slate-600 dark:text-slate-400">
       {t.officialDocsText}
       <a
-        href="https://agentkit.best/docs"
+        href={AGENTKIT_OFFICIAL_LINKS.docs}
         target="_blank"
         rel="noopener noreferrer"
         class="inline-flex items-center gap-1 font-medium text-blue-600 hover:underline focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-blue-400"

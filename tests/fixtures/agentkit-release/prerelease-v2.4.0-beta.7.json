@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "agentkit-cli-beta-2.4.0-beta.7",
+  "product": "agentkit-cli",
+  "channel": "beta",
+  "version": "2.4.0-beta.7",
+  "releaseStatus": "pre-release",
+  "verifiedAt": "2026-07-20",
+  "sourceUrl": "https://releases.agentkit.best/channels/beta/release-catalog.json",
+  "sourceObservationId": "agentkit-beta-catalog-v2.4.0-beta.7-2026-07-20",
+  "evidenceClass": "public-release",
+  "claims": [
+    {
+      "id": "AK-RELEASE-PRERELEASE-2.4.0-BETA.7",
+      "kind": "release-version",
+      "evidenceClass": "public-release",
+      "statement": "AgentKit CLI v2.4.0-beta.7 is the latest observed prerelease and was promoted into stable v2.4.0."
+    }
+  ],
+  "normalizedFactSha256": "075a4fd1d8c024eba1ce4e550e8bdf88bb61f769e923e54755aa47f910cfea44"
+}

@@ -10,12 +10,12 @@ import {
 const BASE_URL = process.env.UI_BASE_URL ?? 'http://127.0.0.1:4321';
 const CHROME_PATH = process.env.CHROME_PATH ?? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const EVIDENCE_DIR = resolve('artifacts/agentkit-ui');
-const CHANNEL_EXPECTATION = process.env.UI_AGENTKIT_CHANNEL_EXPECT ?? 'published';
+const CHANNEL_EXPECTATION = process.env.UI_AGENTKIT_CHANNEL_EXPECT ?? 'inactive';
 const CHANNEL_ONLY = process.env.UI_SCOPE === 'channel';
 const EVIDENCE_VARIANT = process.env.UI_EVIDENCE_VARIANT ?? '';
 
-if (!['hold', 'published'].includes(CHANNEL_EXPECTATION)) {
-  throw new Error('UI_AGENTKIT_CHANNEL_EXPECT must be hold or published.');
+if (!['inactive', 'hold', 'published'].includes(CHANNEL_EXPECTATION)) {
+  throw new Error('UI_AGENTKIT_CHANNEL_EXPECT must be inactive, hold or published.');
 }
 if (EVIDENCE_VARIANT && !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(EVIDENCE_VARIANT)) {
   throw new Error('UI_EVIDENCE_VARIANT must be a kebab-case artifact suffix.');

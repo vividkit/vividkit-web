@@ -2,7 +2,7 @@
 
 ## Status
 
-This document records the observed Phase 8 offline validation snapshot and retains the schema required for the later operational release review. It does not claim production deployment, public beta publication, a closed-beta coexistence pilot, 72-hour observation, or final Product/Tooling GO.
+This document records the current AgentKit 2.4 guide validation and retains the historical Phase 8 snapshot plus the schema required for a later operational release review. It does not claim production deployment, public beta publication, a closed-beta coexistence pilot, 3–7 day observation, or final Product/Tooling GO.
 
 The pre-commit offline validation snapshot evaluated the implementation delta against base revision `7d5ab60e9e706ba612a6202f3024685cfa32bea6`. That SHA is the historical base identity, not the local checkpoint commit created after review; final release evidence must use the reviewed checkpoint revision.
 
@@ -13,7 +13,46 @@ Related evidence boundaries:
 - [Project overview and PDR](./project-overview-pdr.md)
 - [Codebase summary](./codebase-summary.md)
 
-## Observed Offline Snapshot — 2026-07-17
+## Observed Refresh Snapshot — 2026-07-20
+
+### Release and publication truth
+
+| Gate | Observed result |
+|---|---|
+| Live drift canary | `AK-RELEASE-MATCH` at `2026-07-20T09:09:40.260Z`: stable `2.4.0`, latest prerelease/promoted source `2.4.0-beta.7`, no active beta |
+| Full AgentKit verification in final build | 184 total; 183 pass; 0 fail; 1 intentional skip; content audit pass across 879 files |
+| Type scope | AgentKit scoped pass, 0 allowed and 0 baseline fingerprints; repository-wide Astro check remains red at 559 errors, +74 versus the reviewed 485-error snapshot because preserved untracked `engineer/` sources are scanned |
+| Static output | `npm run build` exit 0; 132 pages; postbuild content audit pass across 272 files; route/LLM suite 8/8 |
+| Hold build graph | 540 generated files; no current beta payload; stable HTML and LLM exports remain beta/archive-free |
+| Archive | 208 full-history provenance files; 268 source-boundary files; Astro 7 rendered body/CSS budgets reconciled to reviewed deterministic evidence; final postbuild boundary pass |
+| Truth audit | stable `2.4.0` and prerelease-provenance channel `2.4.0-beta.7` both returned `AK-TRUTH-OK`; this does not make beta active or published |
+| Security audit | `npm audit --omit=dev`: 0 vulnerabilities across 311 production dependencies, 543 total dependencies |
+| Exact toolchain | Verifier contract tests 8/8 pass and pin Node `22.21.1` / npm `10.9.4`; the clean GitHub Actions gate is configured but cannot execute until the change is pushed, while the observed Node `26.4.0` / npm 11 host remains correctly refused |
+
+The first Astro 7 postbuild exposed an expected archive rendered-body/CSS sidecar mismatch. Review against the repository's existing Astro 7 migration evidence showed the exact same 58-route rendered root and CSS budgets; only the sidecar was updated, archive source stayed unchanged, and the complete build then passed. The tracked publication record remains `hold`. Stage 7 is still a build-time gate; the 3–7 day range remains a per-user advisory after cutover.
+
+### Current source identity
+
+| Evidence | SHA-256 |
+|---|---|
+| Stable normalized fact | `83dc4f2b886707d57853a80bca17b439d754c8064e091b0aa942a68f75477370` |
+| Prerelease normalized fact | `075a4fd1d8c024eba1ce4e550e8bdf88bb61f769e923e54755aa47f910cfea44` |
+| Stable fixture file | `d9a57b1c393bc047676ecc9ea426cc08864a7d8515575239511b5e18cedd682b` |
+| Prerelease fixture file | `8ce13fe8ae26f868268a6408285e9a479385fd97ba87400822432841018a9bcb` |
+| Publication source closure | `9a2804dd06ef0c20bd125898ddaad21c05cdedceea095774d8ff7e45cf2f7b0b` |
+| Truth-audit bundle | `bcb010dc44efbf48d1f0224816933ea4eca872de53c93278d80accbda1a254e3` |
+| Embedded fixture root | `df646d98d5e6da12bc6cb040e738a346193b0bb5b416899b3daf91d648c543e6` |
+
+### Current release holds
+
+- Stable guide output and its publication closure pass the scoped product gates, but final publication remains REVISE/HOLD until the final gates are rerun and reviewed under Node `22.21.1` / npm `10.9.4`.
+- Public beta remains HOLD because beta.7 was promoted into stable and there is no active beta newer than stable. Query state cannot publish a channel.
+- Migration apply/rollback for important data remains support-assisted because immutable reviewed-plan execution merged after v2.4.0.
+- Product coexistence remains HOLD because no eligible noncritical pilot or 3–7 day observation was executed.
+
+No deploy, public beta publication, real coexistence pilot, migration apply, binary removal, commit, push, or pull request was performed.
+
+## Historical Offline Snapshot — 2026-07-17
 
 ### Product functional gates
 
@@ -237,6 +276,7 @@ Those figures are intentionally removed from the current-state sections because 
 
 ## Unresolved Questions
 
-1. Which clean disposable/noncritical project and operator will own the 3–7-day coexistence pilot?
-2. Who will review the final committed revision and tracked publication record for a later release decision?
-3. The retention location and expiry for final sanitized pilot artifacts must still be selected during release review.
+1. Who will review the first clean GitHub Actions result on Node `22.21.1` with npm `10.9.4` after an authorized push?
+2. Which clean disposable/noncritical project and operator will own the 3–7-day coexistence pilot?
+3. Who will review the final revision and tracked publication record for a later release decision?
+4. The retention location and expiry for final sanitized pilot artifacts must still be selected during release review.

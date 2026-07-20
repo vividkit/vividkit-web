@@ -37,8 +37,8 @@ function createAuditRepo() {
   const repo = mkdtempSync(join(tmpdir(), 'agentkit-truth-audit-'));
   for (const relativePath of [
     'docs/agentkit-lifecycle-owner-decisions.json',
-    'tests/fixtures/agentkit-release/stable-v2.3.0.json',
-    'tests/fixtures/agentkit-release/beta-v2.3.1-beta.1.json',
+    'tests/fixtures/agentkit-release/stable-v2.4.0.json',
+    'tests/fixtures/agentkit-release/prerelease-v2.4.0-beta.7.json',
     ...AGENTKIT_TRUTH_AUDITED_SOURCE_PATHS,
   ]) {
     const destination = join(repo, relativePath);
@@ -66,12 +66,18 @@ test('audit CLI accepts explicit worktree/channel/format/check and emits allowli
       'incidentId',
       'channel',
       'releaseVersion',
+      'releaseRole',
+      'hasActiveBeta',
+      'promotedToStableVersion',
       'embeddedFixtureRoot',
     ]);
     assert.equal(output.ok, true);
     assert.equal(output.channel, channel);
+    assert.equal(output.hasActiveBeta, false);
+    assert.equal(output.releaseRole, channel === 'stable' ? 'stable' : 'promoted-prerelease');
+    assert.equal(output.promotedToStableVersion, channel === 'stable' ? null : '2.4.0');
     assert.match(output.embeddedFixtureRoot, /^[a-f0-9]{64}$/);
-    assert.equal(output.releaseVersion, channel === 'stable' ? '2.3.0' : '2.3.1-beta.1');
+    assert.equal(output.releaseVersion, channel === 'stable' ? '2.4.0' : '2.4.0-beta.7');
   }
 });
 
@@ -111,7 +117,7 @@ test('audit refuses missing/mismatched contracts and symlinked allowlisted input
     const missingResult = runAudit(['--repo', missing, '--format', 'json', '--check'], { bundle: BUNDLE });
     assert.equal(missingResult.status, 4);
 
-    const betaPath = join(drifted, 'tests/fixtures/agentkit-release/beta-v2.3.1-beta.1.json');
+    const betaPath = join(drifted, 'tests/fixtures/agentkit-release/prerelease-v2.4.0-beta.7.json');
     const beta = JSON.parse(readFileSync(betaPath, 'utf8'));
     beta.version = '9.9.9-beta.1';
     writeFileSync(betaPath, `${JSON.stringify(beta, null, 2)}\n`);
@@ -122,7 +128,7 @@ test('audit refuses missing/mismatched contracts and symlinked allowlisted input
     const driftedResult = runAudit(['--repo', drifted, '--channel', 'beta', '--format', 'json', '--check'], { bundle: BUNDLE });
     assert.equal(driftedResult.status, 5);
 
-    const stablePath = join(symlinked, 'tests/fixtures/agentkit-release/stable-v2.3.0.json');
+    const stablePath = join(symlinked, 'tests/fixtures/agentkit-release/stable-v2.4.0.json');
     const targetPath = `${stablePath}.target`;
     cpSync(stablePath, targetPath);
     rmSync(stablePath);

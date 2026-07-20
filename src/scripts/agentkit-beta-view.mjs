@@ -22,6 +22,9 @@ export function renderAgentKitBetaView({ root, locale, surface, isCurrent }) {
   const stableFacts = root.querySelector('[data-agentkit-stable-facts]');
   const container = root.querySelector('[data-agentkit-beta-view]');
   if (!container) throw new Error('AgentKit beta view container is missing.');
+  if (!AGENTKIT_BETA_CHANNEL_FACTS.activeBetaVersion) {
+    return { activeChannel: 'stable', status: 'unavailable', focusTarget: null };
+  }
 
   const panel = document.createElement('section');
   panel.dataset.agentkitBetaViewMarker = AGENTKIT_BETA_VIEW_MARKER;
@@ -29,7 +32,7 @@ export function renderAgentKitBetaView({ root, locale, surface, isCurrent }) {
   panel.className = 'rounded-3xl border border-violet-300 bg-violet-50 p-6 text-slate-800 dark:border-violet-400/30 dark:bg-violet-950/30 dark:text-slate-100 sm:p-8';
   panel.append(
     textElement('p', `${SURFACE_LABELS[surface]?.[locale] ?? 'AgentKit'} · public early access`, 'text-xs font-bold uppercase tracking-[0.2em] text-violet-700 dark:text-violet-300'),
-    textElement('h2', `AgentKit CLI ${AGENTKIT_BETA_CHANNEL_FACTS.version}`, 'mt-3 text-2xl font-bold text-slate-950 dark:text-white'),
+    textElement('h2', `AgentKit CLI ${AGENTKIT_BETA_CHANNEL_FACTS.activeBetaVersion}`, 'mt-3 text-2xl font-bold text-slate-950 dark:text-white'),
     textElement(
       'p',
       isVi

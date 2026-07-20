@@ -1,8 +1,8 @@
 # VividKit Design System
 
-**Framework:** Astro 5.x + Tailwind CSS v4
+**Framework:** Astro 7.1.0 + Tailwind CSS 4.3.3
 **Version:** 1.0
-**Updated:** January 2026
+**Updated:** July 2026
 
 ---
 

@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "vividKitSha": "7d5ab60e9e706ba612a6202f3024685cfa32bea6",
-  "stableFixtureSha256": "89d582555208a790379f1f40a325375933265438288bf2c6ecbe9c6fe1646a12",
-  "betaFixtureSha256": "0772e9421526fa7cd62929153517b222d9b88c9d05be7136ff85567fc68cf8d5",
-  "sourceClosureSha256": "1efc8393088d05dbd3cb5d50f8b9fee636f6c208e1fec7c3f1f35858aae25eab",
+  "stableFixtureSha256": "83dc4f2b886707d57853a80bca17b439d754c8064e091b0aa942a68f75477370",
+  "prereleaseFixtureSha256": "075a4fd1d8c024eba1ce4e550e8bdf88bb61f769e923e54755aa47f910cfea44",
+  "sourceClosureSha256": "0750b87d0f6c1931dbab9d379f73ca81f200d3f70772a32794fc09e70c20d475",
   "approvalRevisionSha": null,
   "pilotStartedAt": null,
   "pilotEndedAt": null,

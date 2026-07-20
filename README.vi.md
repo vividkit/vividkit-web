@@ -19,9 +19,9 @@ VividKit Desktop App là sản phẩm riêng đang được lên kế hoạch. �
 
 ## Chính sách release và an toàn
 
-- AgentKit stable `2.3.0` là fact set public mặc định.
-- Beta `2.3.1-beta.1` chỉ được chọn bằng query chính xác `?channel=beta` trên AgentKit Hub, CLI Guide, CLI Commands và Coexistence Guide. Channel sai, lặp hoặc đi ra ngoài nhóm này sẽ về stable.
-- Beta query đã publish là nội dung public early access, không phải đăng ký closed-beta hoặc quyền thực thi. Publication record được track có thể giữ beta payload trước khi review.
+- AgentKit stable `2.4.0` là fact set public mặc định. Prerelease gần nhất `2.4.0-beta.7` đã được promote thành stable từ cùng source commit.
+- Observation 2026-07-20 không có active beta mới hơn stable. Query chính xác `?channel=beta` sẽ về stable kèm thông báo availability; channel sai, lặp hoặc ra ngoài nhóm cũng về stable.
+- Beta query được publish trong tương lai là nội dung public early access, không phải đăng ký closed-beta hoặc quyền thực thi. Query state không thể mở payload bị hold hoặc cho phép lifecycle action.
 - `/llms.txt` và `/llms-full.txt` chỉ xuất stable.
 - Route manifest giữ 132 identity không phụ thuộc query; query parameter không tạo route hoặc canonical identity mới.
 - `ak migrate` đã stable, nhưng VividKit hướng dẫn theo preview/smoke-first và không cung cấp apply action mặc định.
@@ -42,6 +42,7 @@ Hỗ trợ:
 | Guide | Mục đích |
 |---|---|
 | [CK → AgentKit](https://vividkit.dev/vi/guides/agentkit) | Decision router, lifecycle bảy giai đoạn, target setup, rollback và support boundary |
+| [Scenario command guide](./docs/agentkit-scenario-command-guide.md) | Safe recipe được curate theo user intent; full flags nằm trong AgentKit Official Docs |
 | [CLI Guide](https://vividkit.dev/vi/guides/cli) | Setup và lifecycle AgentKit stable |
 | [CLI Commands](https://vividkit.dev/vi/guides/cli-commands) | Command facts chuẩn và safety metadata |
 | [Commands](https://vividkit.dev/vi/guides/commands) | Catalog skill Engineer và Marketing |
@@ -52,11 +53,11 @@ Hỗ trợ:
 
 ## Công nghệ
 
-- Astro `6.0.2` với static output
+- Astro `7.1.0` với static output
 - TypeScript `5.9.3` ở strict mode
-- Tailwind CSS `4.1.17` và LightningCSS
+- Tailwind CSS `4.3.3` và LightningCSS
 - Alpine.js `3.15.2` cùng các local controller nhỏ
-- Vercel adapter `10.0.0` và Web Analytics
+- Vercel adapter `11.0.3` và Web Analytics
 - Astro i18n với English mặc định và route Tiếng Việt `/vi`
 
 ## Development

@@ -67,9 +67,9 @@ const REQUIRED_STABLE_CLI_IDS = [
 ];
 
 test('source snapshot and every CLI fact carry stable audit metadata', () => {
-  assert.equal(AGENTKIT_SOURCE_SNAPSHOT.verifiedAt, '2026-07-17');
-  assert.equal(AGENTKIT_SOURCE_SNAPSHOT.releaseVersion, '2.3.0');
-  assert.equal(AGENTKIT_SOURCE_SNAPSHOT.betaReleaseVersion, '2.3.1-beta.1');
+  assert.equal(AGENTKIT_SOURCE_SNAPSHOT.verifiedAt, '2026-07-20');
+  assert.equal(AGENTKIT_SOURCE_SNAPSHOT.releaseVersion, '2.4.0');
+  assert.equal(AGENTKIT_SOURCE_SNAPSHOT.activeBetaVersion, null);
   assert.deepEqual(PUBLIC_AGENTKIT_RELEASE_CHANNELS, ['stable', 'beta']);
   assert.match(AGENTKIT_SOURCE_SNAPSHOT.sourceUrl, /^https:\/\//);
 
@@ -81,7 +81,7 @@ test('source snapshot and every CLI fact carry stable audit metadata', () => {
     assert.ok(Array.isArray(fact.flags));
     assert.equal(fact.evidenceClass, 'official-docs');
     assert.equal(fact.artifactKind, 'agentkit-cli');
-    assert.equal(fact.artifactVersion, '2.3.0');
+    assert.equal(fact.artifactVersion, '2.4.0');
     assert.equal(fact.legacyStatus, 'current');
   }
 });
@@ -95,8 +95,9 @@ test('stable and beta CLI catalogs are independent and never fall through across
   assert.equal(AGENTKIT_CLI_FACTS.filter(({ channel }) => channel === 'beta').length, 0);
   assert.equal(getAgentKitCliCatalog('stable'), AGENTKIT_CLI_RELEASE_CATALOGS.stable);
   assert.equal(getAgentKitCliCatalog('beta'), AGENTKIT_CLI_RELEASE_CATALOGS.beta);
-  assert.equal(AGENTKIT_CLI_RELEASE_CATALOGS.stable.artifactVersion, '2.3.0');
-  assert.equal(AGENTKIT_CLI_RELEASE_CATALOGS.beta.artifactVersion, '2.3.1-beta.1');
+  assert.equal(AGENTKIT_CLI_RELEASE_CATALOGS.stable.artifactVersion, '2.4.0');
+  assert.equal(AGENTKIT_CLI_RELEASE_CATALOGS.beta.artifactVersion, null);
+  assert.equal(AGENTKIT_CLI_RELEASE_CATALOGS.beta.fixtureId, null);
   assert.equal(AGENTKIT_CLI_RELEASE_CATALOGS.beta.facts.length, 0);
   assert.notEqual(AGENTKIT_CLI_RELEASE_CATALOGS.stable.facts, AGENTKIT_CLI_RELEASE_CATALOGS.beta.facts);
 
