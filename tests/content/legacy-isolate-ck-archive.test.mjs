@@ -7,7 +7,10 @@ import { setTimeout as delay } from 'node:timers/promises';
 import { pathToFileURL } from 'node:url';
 import { promisify } from 'node:util';
 import test from 'node:test';
-import { forbiddenArchiveImports } from '../../scripts/check-legacy-archive-boundary.mjs';
+import {
+  forbiddenArchiveImports,
+  legacyArchivePostbuildMismatchSummary,
+} from '../../scripts/check-legacy-archive-boundary.mjs';
 
 const execFileAsync = promisify(execFile);
 const root = new URL('../..', import.meta.url);
@@ -163,6 +166,40 @@ test('expected digest sidecar is excluded from measured closure and cannot self-
   assert.equal(result.measuredExpectedDigestFieldCount, 0);
   assert.equal(result.liveToArchiveViolations.length, 0);
   assert.equal(result.archiveToLiveFactViolations.length, 0);
+});
+
+test('postbuild mismatch diagnostics expose only validated digests and the CSS byte delta', () => {
+  const expected = {
+    renderedBody: { rootSha256: 'a'.repeat(64) },
+    cssBudget: {
+      liveReachableBytes: 613_502,
+      sentinel: '--vividkit-legacy-tailwind-boundary:1',
+    },
+  };
+  const actual = {
+    renderedBody: { rootSha256: 'b'.repeat(64) },
+    cssBudget: {
+      liveReachableBytes: 614_018,
+      sentinel: '<style>secret-css</style>',
+    },
+  };
+
+  assert.equal(
+    legacyArchivePostbuildMismatchSummary(expected, actual),
+    `archive rendered-body or CSS budget mismatch: renderedBody.rootSha256 expected=${'a'.repeat(64)} actual=${'b'.repeat(64)}; cssBudget.liveReachableBytes delta=+516`,
+  );
+
+  const invalid = legacyArchivePostbuildMismatchSummary(expected, {
+    renderedBody: { rootSha256: '<main>secret-html</main>' },
+    cssBudget: {
+      liveReachableBytes: 'PUBLIC_SECRET=do-not-log',
+      sentinel: 'PUBLIC_SECRET=do-not-log',
+    },
+  });
+  assert.match(invalid, /actual=invalid/);
+  assert.match(invalid, /delta=invalid/);
+  assert.doesNotMatch(invalid, /secret|PUBLIC_SECRET|<main>/i);
+  assert.doesNotMatch(invalid, /sentinel|expected=613502/);
 });
 
 test('source boundary fails closed on AgentKit facts, mutable i18n, escapes and dynamic imports', () => {

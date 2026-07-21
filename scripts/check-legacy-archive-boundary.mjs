@@ -55,6 +55,28 @@ const ARCHIVE_EXTERNAL_IMPORT_ALLOWLIST = new Map([
   ['alpinejs', { target: 'package-lock.json', owner: 'legacy archive', reason: 'locked archived interaction runtime' }],
 ]);
 
+function safeSha256(value) {
+  return typeof value === 'string' && /^[a-f0-9]{64}$/.test(value) ? value : 'invalid';
+}
+
+function safeByteDelta(expected, actual) {
+  if (!Number.isSafeInteger(expected) || expected < 0 || !Number.isSafeInteger(actual) || actual < 0) return 'invalid';
+  const delta = actual - expected;
+  return delta >= 0 ? `+${delta}` : String(delta);
+}
+
+export function legacyArchivePostbuildMismatchSummary(expected, actual) {
+  const expectedDigest = safeSha256(expected?.renderedBody?.rootSha256);
+  const actualDigest = safeSha256(actual?.renderedBody?.rootSha256);
+  const expectedLiveCssBytes = expected?.cssBudget?.liveReachableBytes;
+  const actualLiveCssBytes = actual?.cssBudget?.liveReachableBytes;
+  return [
+    'archive rendered-body or CSS budget mismatch:',
+    `renderedBody.rootSha256 expected=${expectedDigest} actual=${actualDigest};`,
+    `cssBudget.liveReachableBytes delta=${safeByteDelta(expectedLiveCssBytes, actualLiveCssBytes)}`,
+  ].join(' ');
+}
+
 function isInsideArchiveRoot(path) {
   return ARCHIVE_ROOTS.some((root) => path === root || path.startsWith(`${root}/`));
 }
@@ -191,7 +213,7 @@ export async function checkLegacyArchive(options) {
       JSON.stringify(sidecar.renderedBody) !== JSON.stringify(generated.renderedBody)
       || generated.cssBudget.liveReachableBytes > sidecar.cssBudget.liveReachableBytes
       || generated.cssBudget.sentinel !== sidecar.cssBudget.sentinel
-    ) throw new Error('archive rendered-body or CSS budget mismatch');
+    ) throw new Error(legacyArchivePostbuildMismatchSummary(sidecar, generated));
   }
   return {
     ok: true,
