@@ -11,7 +11,7 @@ VividKit Desktop App là sản phẩm riêng đang được lên kế hoạch. �
 ## Phạm vi sản phẩm hiện tại
 
 - Trang sản phẩm và guide song ngữ: English ở root path, Tiếng Việt dưới `/vi`.
-- Decision router cho fresh install, clean cutover, closed-beta coexistence, recovery và trường hợp cần support-assisted.
+- Lifecycle guidance trực tiếp cho fresh install, clean cutover, closed-beta coexistence, recovery và trường hợp cần support-assisted.
 - Lifecycle CK → AK gồm bảy giai đoạn: backup → dọn ownership CK → xác nhận scope sạch → cài AK → verify canary → observation → review gỡ CK control plane.
 - Guide cho AgentKit CLI, CLI Commands, workflows, targets, coexistence, permissions, recovery và troubleshooting.
 - Ví dụ Claude Code `/ak:*` và Codex `$ak:*` đúng theo target.
@@ -27,7 +27,7 @@ VividKit Desktop App là sản phẩm riêng đang được lên kế hoạch. �
 - `ak migrate` đã stable, nhưng VividKit hướng dẫn theo preview/smoke-first và không cung cấp apply action mặc định.
 - Ownership mixed/custom, metadata corrupt/missing, package ownership không rõ hoặc dữ liệu critical phải chuyển sang support-assisted.
 - Topology coexistence pilot duy nhất là CK global cùng AK project-local trong một project sạch, không critical.
-- Observation 3–7 ngày chỉ là operator declaration tạm thời. Static site không verify evidence, enforce thời gian hoặc authorize removal.
+- Giữ authoritative observation record 3–7 ngày bên ngoài VividKit. Static site không thu thập hoặc verify evidence đó, enforce thời gian hoặc authorize removal.
 - Gỡ CK theo detector-first. Ownership không rõ nghĩa là không có uninstall command.
 
 Trước khi gửi output cho support, hãy bỏ username và home path, repository remote, credential, account identifier, tên/nội dung file proprietary và raw backup manifest. Chỉ gửi version, detector classification, command category và lỗi đã redact ở mức tối thiểu cần để tái hiện.
@@ -41,7 +41,7 @@ Hỗ trợ:
 
 | Guide | Mục đích |
 |---|---|
-| [CK → AgentKit](https://vividkit.dev/vi/guides/agentkit) | Decision router, lifecycle bảy giai đoạn, target setup, rollback và support boundary |
+| [CK → AgentKit](https://vividkit.dev/vi/guides/agentkit) | Curated commands trực tiếp, lifecycle bảy giai đoạn, target setup, rollback và support boundary |
 | [Scenario command guide](./docs/agentkit-scenario-command-guide.md) | Safe recipe được curate theo user intent; full flags nằm trong AgentKit Official Docs |
 | [CLI Guide](https://vividkit.dev/vi/guides/cli) | Setup và lifecycle AgentKit stable |
 | [CLI Commands](https://vividkit.dev/vi/guides/cli-commands) | Command facts chuẩn và safety metadata |

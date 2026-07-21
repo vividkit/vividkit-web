@@ -52,7 +52,7 @@ backup
 
 - **Stage 2** inventories and classifies project content before AgentKit installation. `ck migrate --dry-run` and `ck uninstall --local --dry-run` are read-only evidence aids, not bulk-delete authorization.
 - **Stage 3** requires a clean final AgentKit scope. Mixed/custom ownership and corrupt/missing metadata are support-assisted.
-- **Stages 4–6** install AgentKit, verify a reversible canary, and collect an advisory operator declaration.
+- **Stages 4–6** install AgentKit, verify a reversible canary, and require an authoritative external observation record. VividKit does not collect that record.
 - **Stage 7** addresses CK executable/control-plane review only after observation; it does not retroactively authorize deletion of provider copies.
 
 ### Detector-First Removal
@@ -130,11 +130,11 @@ This physical deactivation is not provider-copy cleanup. It proves only that the
 | File | Responsibility |
 |---|---|
 | `src/data/guides/agentkit/agentkit-lifecycle-guide-facts.ts` | Seven stages, read-only preview/detector commands, manual removal conditions, provider boundaries, support contacts |
-| `src/data/guides/agentkit/agentkit-lifecycle-policy.ts` | Lane routing, support refusals, stage ordering, advisory declaration handling |
+| `src/data/guides/agentkit/agentkit-lifecycle-policy.ts` | Internal lane routing, support refusals, stage ordering, and unverified observation-declaration shape/range validation |
 | `src/data/guides/agentkit/agentkit-target-capabilities.ts` | Claude Code/Codex target and syntax contracts |
 | `src/data/guides/agentkit/agentkit-report-sanitizer.mjs` | Fixed allowlisted support/audit output |
 | `src/components/guides/agentkit/agentkit-legacy-skill-cleanup.astro` | Detector-first rendering, held Stage 7 details, support CTAs |
-| `tests/content/agentkit-lifecycle-policy.test.mjs` | Router, seven-stage, support, coexistence, and advisory-attestation contracts |
+| `tests/content/agentkit-lifecycle-policy.test.mjs` | Internal policy, seven-stage, support, coexistence, and observation-record contracts |
 | `tests/content/agentkit-report-sanitizer.test.mjs` | Raw/nested output exclusion and fixed schema |
 | `docs/agentkit-lifecycle-owner-decisions.json` | Machine-readable O4 disposition decision |
 

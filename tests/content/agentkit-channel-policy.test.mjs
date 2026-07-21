@@ -53,12 +53,12 @@ test('O1 propagation is bounded to Hub, CLI, CLI Commands, and Coexistence in EN
 
 test('stable links remove channel identity while beta preserves unrelated query and hash state', () => {
   assert.equal(
-    propagateAgentKitChannel('/guides/agentkit?ref=nav&channel=beta#router', 'stable'),
-    '/guides/agentkit?ref=nav#router',
+    propagateAgentKitChannel('/guides/agentkit?ref=nav&channel=beta#lifecycle', 'stable'),
+    '/guides/agentkit?ref=nav#lifecycle',
   );
   assert.equal(
-    propagateAgentKitChannel('/guides/agentkit?ref=nav#router', 'beta'),
-    '/guides/agentkit?ref=nav&channel=beta#router',
+    propagateAgentKitChannel('/guides/agentkit?ref=nav#lifecycle', 'beta'),
+    '/guides/agentkit?ref=nav&channel=beta#lifecycle',
   );
   assert.equal(
     withAgentKitChannel('/vi/guides/cli/?ref=nav#install', 'beta'),

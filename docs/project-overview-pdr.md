@@ -1,6 +1,6 @@
 # VividKit Web — Project Overview and Product Development Requirements
 
-**Last updated:** July 20, 2026
+**Last updated:** July 21, 2026
 
 **Document version:** 2.0
 
@@ -10,7 +10,7 @@
 
 VividKit Web is a statically generated, bilingual product site and visual guide hub for AgentKit (`ak`), Claude Code, Codex, and related workflows. AgentKit succeeds ClaudeKit (`ck`). Current guidance is AgentKit-first; isolated ClaudeKit pages remain available as noindex historical material.
 
-The current product contract replaces a fixed migration checklist with an evidence-driven decision router and seven ordered lifecycle stages. Stable AgentKit `2.4.0` is the default. Prerelease `2.4.0-beta.7` is retained as promotion provenance, not advertised as an active beta because it was promoted from the same source commit and no newer beta existed at the 2026-07-20 observation. Mixed or unverifiable ownership fails closed to support.
+The current product contract presents curated commands directly within seven ordered lifecycle stages. The former reader-facing decision router has been removed; the underlying lifecycle policy remains a tested maintainer truth model. Stable AgentKit `2.4.0` is the default. Prerelease `2.4.0-beta.7` is retained as promotion provenance, not advertised as an active beta because it was promoted from the same source commit and no newer beta existed at the 2026-07-20 observation. Mixed or unverifiable ownership remains support-assisted.
 
 ## Product Vision
 
@@ -27,7 +27,7 @@ Turn verified command behavior and conservative lifecycle policy into visual gui
 ### Value
 
 - **Evidence-backed facts:** release, command, target, and provenance metadata live in typed modules.
-- **Decision before action:** the router selects self-service, recovery, closed-beta, or support-assisted handling from stated evidence.
+- **Direct, bounded guidance:** readers see curated commands with prerequisites, expected signals, and failure boundaries instead of completing a lane form.
 - **Ordered safety:** cleanup, installation, observation, and removal cannot be presented as interchangeable steps.
 - **Target clarity:** Claude Code uses `/ak:*`; Codex uses `$ak:*`.
 - **Bilingual parity:** executable facts remain shared while English and Vietnamese prose is localized.
@@ -56,9 +56,9 @@ Turn verified command behavior and conservative lifecycle policy into visual gui
 
 ## Lifecycle Contract
 
-### Decision Router
+### Lifecycle Policy Model
 
-The router evaluates goal, legacy ownership, metadata health, scope relationship, cleanup preview, package-manager evidence, data criticality, pilot opt-in, canary outcome, observation declaration, and completed stages.
+`routeAgentKitLifecycle` remains an internal, tested model for goal, ownership, metadata, scope, preview, package-manager, criticality, pilot, canary, unverified observation-declaration, and stage-order decisions. It is not rendered as a reader-facing gate and does not hide the curated command guidance.
 
 | Lane | Eligible case | Boundary |
 |---|---|---|
@@ -68,7 +68,7 @@ The router evaluates goal, legacy ownership, metadata health, scope relationship
 | `recovery` | Explicit recovery goal or failed canary | Restore known-good state; keep CK removal blocked |
 | `support-assisted` | Mixed/custom ownership, corrupt/missing metadata, dirty/unknown preview, unknown manager, critical data, or inconsistent scope | No destructive copy action |
 
-The query channel cannot override lifecycle eligibility.
+The query channel cannot override lifecycle policy or support boundaries.
 
 ### Seven Ordered Stages
 
@@ -79,17 +79,17 @@ The query channel cannot override lifecycle eligibility.
 | 3 | `confirm-clean-scope` | Refuse mixed/custom/corrupt/missing/unknown ownership before install |
 | 4 | `install-ak` | Install AgentKit only after reviewing the installer trust boundary |
 | 5 | `verify-canary` | Inspect expected artifacts and run a real workflow in a reversible target |
-| 6 | `observe` | Accept an ephemeral 3–7 day operator declaration as advisory input only |
+| 6 | `observe` | Keep an authoritative 3–7 day observation record outside VividKit |
 | 7 | `remove-ck-control-plane` | Resolve every `ck` executable first; require exact package ownership before any manual removal review |
 
-The observation form validates declaration shape and range in memory. It does not persist, verify, enforce, or authorize anything. Reload and no-JavaScript states remain advisory-blocked.
+VividKit does not collect, persist, or verify the observation record. The guide is advisory-only and does not enforce elapsed time or authorize removal.
 
 ### Migration and Removal Policy
 
 - `ak migrate` is a stable command. VividKit keeps it preview/smoke-first and exposes no default apply CTA for important data.
 - Project content, CK executable ownership, and CK control-plane data are separate boundaries.
 - Path detectors provide location evidence only. Separate read-only Bun/npm/pnpm/Yarn Classic probes must also match the global bin/root and direct `claudekit-cli` package entry; mismatch or symlink ambiguity fails to `unknown`.
-- Bun, npm, pnpm, and Yarn Classic removal rows remain manual and condition-labeled, and only the exact router-matched row is revealed at Stage 7.
+- Bun, npm, pnpm, and Yarn Classic removal rows remain manual and condition-labeled. Detailed Stage 7 removal commands remain held; if a separately reviewed publication changes that status, every row renders with its exact-ownership condition and readers must use only the matching row.
 - Unknown, conflicting, symlinked, or unowned paths produce no uninstall command.
 - Stage 7 detail is controlled by the build-time publication record; a query cannot unlock held content.
 
@@ -123,9 +123,9 @@ The manifest requires **132 identities = 72 preserved live identities + 2 AgentK
 |---|---|---:|---|
 | FR-1 | Render static, responsive product and guide pages | P0 | Astro pages and layouts |
 | FR-2 | Maintain English/Vietnamese route and executable-fact parity | P0 | Astro i18n and bilingual contract tests |
-| FR-3 | Route users by lifecycle evidence before showing staged actions | P0 | `routeAgentKitLifecycle` and router UI |
+| FR-3 | Show curated lifecycle commands directly with prerequisites, expected signals, and failure boundaries | P0 | static lifecycle and scenario components |
 | FR-4 | Preserve the exact seven-stage predecessor order | P0 | lifecycle facts and policy tests |
-| FR-5 | Fail mixed/custom/corrupt/missing/unknown cases to support-assisted | P0 | router refusal matrix |
+| FR-5 | Keep mixed/custom/corrupt/missing/unknown cases support-assisted | P0 | lifecycle policy refusal matrix and rendered warnings |
 | FR-6 | Limit coexistence to CK global + AK project-local in a clean closed-beta project | P0 | lifecycle and coexistence contracts |
 | FR-7 | Keep stable default and exact beta query behavior bounded to four surfaces | P0 | channel policy/controller tests |
 | FR-8 | Keep both LLM artifacts stable-only | P0 | route and postbuild assertions |
@@ -189,8 +189,8 @@ See [AgentKit migration validation](./agentkit-migration-validation.md) for the 
 | Risk | Mitigation |
 |---|---|
 | Beta facts leak into stable HTML or LLM output | Build alias, full-dist isolation scan, stable-only LLM assertions |
-| Query appears to grant pilot access | Copy states that query is public selection only; router independently checks opt-in and scope |
-| User treats operator declaration as enforcement | Ephemeral state, advisory labels, reload reset, no verified/authorized state |
+| Query appears to grant pilot access | Copy states that query is public selection only; lifecycle policy remains independent from channel selection |
+| User treats the guide as verification | Observation stays external; copy states that VividKit cannot verify evidence or authorize removal |
 | Incorrect CK package manager is guessed | Detector-first path evidence and manual exact-ownership condition |
 | Historical archive leaks into live bundles | Provenance digest, import boundary, postbuild JS/CSS reachability checks |
 | Support artifacts disclose private data | Fixed schema, allowlisted summaries, no raw child output |

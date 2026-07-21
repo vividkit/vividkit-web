@@ -48,7 +48,7 @@ The catalog and tag observations establish point-in-time release identity, but c
 | `AK-2.4-1075` / `AK-POST-2.4-1081` | `public-release` + `implementation-audit` | Stable 2.4.0 contains content-evidence migration binding. Immutable reviewed-plan execution merged after the tag, so apply/rollback for important data remains support-assisted. |
 | `ADR-0031` versus `v2.4.0` | `governance-prototype` + `public-release` | The owner decision defines `--fresh` semantics, but the stable CLI does not ship the flag. Public guidance must not render it or emulate it through broad deletion. |
 | `D-LC-01` / `E1-C02` | `implementation-audit` + `support-policy` | Use backup → CK ownership cleanup → clean-scope confirmation → AK install → verify/canary → 3–7 day observation → CK executable removal. This order is VividKit policy, not an upstream guarantee. |
-| `D-ROUTER-01` / `E1-C03` | `implementation-audit` + `support-policy` | Fresh and clean single-owner cases may be self-service. Mixed, custom, corrupt, missing-metadata or unknown-manager cases must refuse destructive commands and escalate. |
+| `D-ROUTER-01` / `E1-C03` | `implementation-audit` + `support-policy` | The internal policy model may classify fresh and clean single-owner cases as self-service. It is not a reader-facing gate. Mixed, custom, corrupt, missing-metadata or unknown-manager cases must still refuse destructive commands and escalate. |
 | `D-COEX-01` / `E1-C04` | `support-policy` | Coexistence is limited to a low-risk closed-beta pilot with CK global and AK project-local in a clean project; same-scope coexistence is not promoted. |
 | `doctor` exit behavior and audit limitations / `E2-C06` | `implementation-audit` | Public copy may describe observed outcomes only. It must not promise `doctor --exit-on-fail` or complete audit coverage without new official evidence. |
 | Internal references `#932`, `#933`, `#873` / `E1-C10` | `implementation-audit` | Treat as private or unverified-public references. Do not link them or publish open/fixed status unless an official public source is independently verified. |
@@ -56,6 +56,8 @@ The catalog and tag observations establish point-in-time release identity, but c
 ## Current changed consumers
 
 The 2026-07-20 observation changes the current-release pointer, stable and prerelease fixtures, source snapshot, CLI facts, beta availability facts, publication evaluation, online drift parser, truth bundle inputs, generated-output isolation tokens, bilingual AgentKit Hub recipes, LLM assertions, and publication source closure. Historical 2.3 fixtures remain immutable. The exact-release 120-path inventory is audit evidence only; the tracked and rendered product artifact is the curated [scenario command guide](./agentkit-scenario-command-guide.md).
+
+On 2026-07-21, the reader-facing decision router and its ephemeral operator-declaration form were removed as a product-presentation decision. The seven lifecycle stages, internal routing/refusal policy, support boundaries, Stage 7 build-time hold, release facts, LLM contracts, and archive boundary remain unchanged. EN/VI lifecycle commands now render directly with prerequisites, expected signals, failure boundaries, and the static-guide limitation. The publication source closure was recomputed after semantic review as `c4bb7a54552cee518f56362ac1fb3823c5c371aa604b21d892c7f6f51799bdf4`.
 
 ## Support boundary
 

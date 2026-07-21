@@ -11,7 +11,7 @@ The VividKit Desktop App is planned separately. It is not the AgentKit Desktop A
 ## Current Product Scope
 
 - Bilingual product and guide pages: English at root paths, Vietnamese under `/vi`.
-- Decision-router guidance for fresh install, clean cutover, closed-beta coexistence, recovery, and support-assisted cases.
+- Direct lifecycle guidance for fresh install, clean cutover, closed-beta coexistence, recovery, and support-assisted cases.
 - A seven-stage CK → AK lifecycle: backup → CK ownership cleanup → clean-scope confirmation → AK install → canary verification → observation → CK control-plane removal review.
 - AgentKit CLI, CLI Commands, workflows, targets, coexistence, permissions, recovery, and troubleshooting guides.
 - Claude Code `/ak:*` and Codex `$ak:*` invocation examples.
@@ -27,7 +27,7 @@ The VividKit Desktop App is planned separately. It is not the AgentKit Desktop A
 - `ak migrate` is stable, but VividKit presents it preview/smoke-first and does not provide a default apply action.
 - Mixed/custom ownership, corrupt/missing metadata, unknown package ownership, or critical data routes to support-assisted handling.
 - The only coexistence pilot topology is CK global plus AK project-local in one clean, noncritical project.
-- The 3–7 day observation input is an ephemeral operator declaration. The static site does not verify evidence, enforce elapsed time, or authorize removal.
+- Keep the authoritative 3–7 day observation record outside VividKit. The static site does not collect or verify that evidence, enforce elapsed time, or authorize removal.
 - CK removal is detector-first. Unknown ownership means no uninstall command.
 
 Before sharing support output, remove usernames and home paths, repository remotes, credentials, account identifiers, proprietary filenames/content, and raw backup manifests. Share only the minimum version, detector classification, command category, and redacted error needed to reproduce.
@@ -41,7 +41,7 @@ Support:
 
 | Guide | Purpose |
 |---|---|
-| [CK → AgentKit](https://vividkit.dev/guides/agentkit) | Decision router, seven-stage lifecycle, target setup, rollback, and support boundaries |
+| [CK → AgentKit](https://vividkit.dev/guides/agentkit) | Direct curated commands, seven-stage lifecycle, target setup, rollback, and support boundaries |
 | [Scenario command guide](./docs/agentkit-scenario-command-guide.md) | Curated safe recipes by user intent; full flags remain in AgentKit Official Docs |
 | [CLI Guide](https://vividkit.dev/guides/cli) | Stable AgentKit setup and lifecycle |
 | [CLI Commands](https://vividkit.dev/guides/cli-commands) | Canonical command facts and safety metadata |

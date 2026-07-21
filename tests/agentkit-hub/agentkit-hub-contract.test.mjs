@@ -68,6 +68,8 @@ test('Continuity FAQ renders before Desktop App and answers entitlement confusio
   assert.match(guide, /<AgentKitContinuityFaq lang=\{currentLang\} \/>/);
   assert.ok(guide.indexOf('AgentKitContinuityFaq') < guide.indexOf('AgentKitDesktopAppOverview'));
   assert.match(source, /id="continuity"/);
+  assert.match(source, /href="#stage-backup"/);
+  assert.doesNotMatch(source, /href="#stage-confirm-clean-scope"/);
   assert.match(en['agentkit.continuity.desktop.body'], /optional/i);
   assert.match(en['agentkit.continuity.kits.body'], /two kits/i);
   assert.match(en['agentkit.continuity.boundary.body'], /App waitlist|license-key/i);
@@ -136,16 +138,20 @@ test('the migration journey renders exactly seven canonical stages in order', as
   )));
 });
 
-test('decision router and operator declaration precede every lifecycle action surface', async () => {
+test('lifecycle guidance and commands render without a reader-facing decision router', async () => {
   const guide = await readFile(new URL('AgentKitGuide.astro', COMPONENT_ROOT), 'utf8');
-  const hero = await readFile(new URL('agentkit/agentkit-hero-and-path-selector.astro', COMPONENT_ROOT), 'utf8');
-  const declaration = await readFile(new URL('agentkit/agentkit-operator-attestation.astro', COMPONENT_ROOT), 'utf8');
+  const hero = await readFile(new URL('agentkit/agentkit-hero.astro', COMPONENT_ROOT), 'utf8');
+  const checklist = await readFile(new URL('agentkit/agentkit-migration-checklist.astro', COMPONENT_ROOT), 'utf8');
+  const targets = await readFile(new URL('agentkit/agentkit-kit-targets.astro', COMPONENT_ROOT), 'utf8');
   const mapping = await readFile(new URL('agentkit/agentkit-command-mapping.astro', COMPONENT_ROOT), 'utf8');
 
-  assert.ok(guide.indexOf('AgentKitHeroAndPathSelector') < guide.indexOf('AgentKitMigrationChecklist'));
-  assert.ok(guide.indexOf('AgentKitHeroAndPathSelector') < guide.indexOf('AgentKitKitTargets'));
-  assert.match(hero, /data-agentkit-lifecycle-router/);
-  assert.match(hero, /aria-live="polite"/);
+  assert.ok(guide.indexOf('AgentKitHero') < guide.indexOf('AgentKitMigrationChecklist'));
+  assert.ok(guide.indexOf('AgentKitHero') < guide.indexOf('AgentKitKitTargets'));
+  assert.doesNotMatch(guide, /AgentKitOperatorAttestation|initializeAgentKitLifecycleGuides/);
+  assert.doesNotMatch(hero, /data-agentkit-lifecycle-router|data-agentkit-router-|agentkit\.router\./);
+  assert.match(hero, /href="#stage-backup"/);
+  assert.match(hero, /href="#scenario-commands"/);
+  assert.match(guide, /AgentKitScenarioCommandGuide/);
   for (const name of [
     'goal',
     'legacyOwnershipState',
@@ -155,20 +161,11 @@ test('decision router and operator declaration precede every lifecycle action su
     'packageManagerEvidence',
     'dataCriticality',
     'pilotOptIn',
-  ]) assert.match(hero, new RegExp(`name="${name}"`));
-
-  for (const name of [
-    'canaryResult',
-    'startedAt',
-    'endedAt',
-    'incidentStatus',
-    'acknowledgedAdvisoryOnly',
-  ]) assert.match(declaration, new RegExp(`name="${name}"`));
-  assert.match(declaration, /data-agentkit-eligibility="blocked"/);
-  assert.match(mapping, /data-agentkit-downstream-actions hidden/);
-  assert.match(declaration, /advisory/i);
-  assert.doesNotMatch(declaration, /localStorage|sessionStorage|document\.cookie|history\.|URLSearchParams|CustomEvent/);
-  assert.doesNotMatch(declaration, />[^<]*(?:verified|authorized)[^<]*</i);
+  ]) assert.doesNotMatch(hero, new RegExp(`name="${name}"`));
+  assert.doesNotMatch(checklist, /data-agentkit-stage-command-panel hidden|name="completedStages"|data-agentkit-stage-label/);
+  assert.doesNotMatch(targets, /data-agentkit-downstream-actions hidden/);
+  assert.doesNotMatch(mapping, /data-agentkit-downstream-actions hidden/);
+  assert.doesNotMatch(mapping, /<th scope="col" class="w-12[^>]*>[\s\S]*agentkit\.mapping\.current/);
 });
 
 test('canonical commands can render macOS, Linux, and Windows views', () => {
@@ -264,7 +261,7 @@ test('AgentKit set:html prose always routes through escaping renderInlineCode', 
 
   const files = [
     'AgentKitGuide.astro',
-    'agentkit/agentkit-hero-and-path-selector.astro',
+    'agentkit/agentkit-hero.astro',
     'agentkit/agentkit-migration-checklist.astro',
     'agentkit/agentkit-command-mapping.astro',
     'agentkit/agentkit-kit-targets.astro',

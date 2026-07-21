@@ -1,5 +1,5 @@
 ---
-import { AlertTriangle, CircleDashed, ShieldCheck } from 'lucide-astro';
+import { AlertTriangle, ShieldCheck } from 'lucide-astro';
 
 import type { Language } from '@/i18n';
 import { useTranslations } from '@/i18n/utils';
@@ -40,7 +40,6 @@ const t = useTranslations(lang);
         <li
           id={`stage-${stage.id}`}
           data-agentkit-stage={stage.id}
-          data-agentkit-stage-state="blocked"
           class:list={[
             'grid scroll-mt-28 gap-5 py-8 md:grid-cols-[4rem_minmax(0,1fr)] md:gap-8',
             index > 0 && 'border-t border-slate-200 dark:border-slate-800',
@@ -58,21 +57,7 @@ const t = useTranslations(lang);
           <details class="group min-w-0" open={index === 0} data-agentkit-stage-details>
             <summary class="flex min-h-12 cursor-pointer list-none flex-wrap items-start justify-between gap-3 rounded-lg focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2">
               <span role="heading" aria-level="3" class="font-heading text-xl font-bold text-slate-950 dark:text-slate-50" set:html={renderInlineCode(t(`agentkit.lifecycle.stage.${stage.id}.title`))}></span>
-              <span class="flex items-center gap-2">
-                <span
-                  class="inline-flex items-center gap-1.5 rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-900 dark:bg-amber-950/50 dark:text-amber-200"
-                  data-agentkit-stage-label
-                  data-label-blocked={t('agentkit.lifecycle.status.blocked')}
-                  data-label-ready={t('agentkit.lifecycle.status.ready')}
-                  data-label-completed={t('agentkit.lifecycle.status.completed')}
-                  data-label-not-applicable={t('agentkit.lifecycle.status.notApplicable')}
-                  data-label-hold={t('agentkit.lifecycle.status.hold')}
-                >
-                  <CircleDashed class="h-3.5 w-3.5" aria-hidden="true" />
-                  <span data-agentkit-stage-label-text>{t('agentkit.lifecycle.status.blocked')}</span>
-                </span>
-                <span class="text-xl font-normal text-slate-400 transition-transform duration-200 group-open:rotate-45" aria-hidden="true">+</span>
-              </span>
+              <span class="text-xl font-normal text-slate-400 transition-transform duration-200 group-open:rotate-45" aria-hidden="true">+</span>
             </summary>
 
             <div class="pt-2">
@@ -94,27 +79,15 @@ const t = useTranslations(lang);
             </dl>
 
             {commands.length > 0 && (
-              <div class="mt-5 max-w-3xl" data-agentkit-stage-command-panel hidden>
+              <div class="mt-5 max-w-3xl" data-agentkit-stage-command-panel>
                 <AgentKitPlatformCommandSwitcher id={`lifecycle-${stage.id}`} lang={lang} commands={commands} />
               </div>
             )}
 
-            <label class="mt-5 flex min-h-11 items-center gap-3 rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 dark:border-slate-700 dark:text-slate-300">
-              <input
-                type="checkbox"
-                name="completedStages"
-                value={stage.id}
-                class="h-4 w-4"
-                aria-label={`${t(`agentkit.lifecycle.stage.${stage.id}.title`)} — ${t('agentkit.lifecycle.complete')}`}
-                disabled
-              />
-              <span>{t('agentkit.lifecycle.complete')}</span>
-            </label>
-
             {isRemoval && (
               <p class="mt-4 flex gap-2 text-sm font-semibold text-rose-800 dark:text-rose-300">
                 <AlertTriangle class="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-                <span>{t('agentkit.router.result.limit')}</span>
+                <span>{t('agentkit.lifecycle.limit')}</span>
               </p>
             )}
             </div>
@@ -126,6 +99,6 @@ const t = useTranslations(lang);
 
   <p class="mt-5 flex max-w-3xl gap-2 text-sm text-slate-600 dark:text-slate-300">
     <ShieldCheck class="mt-0.5 h-4 w-4 shrink-0 text-purple-600 dark:text-purple-400" aria-hidden="true" />
-    <span>{t('agentkit.router.result.limit')}</span>
+    <span>{t('agentkit.lifecycle.limit')}</span>
   </p>
 </section>

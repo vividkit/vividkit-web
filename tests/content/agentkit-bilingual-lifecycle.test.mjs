@@ -39,43 +39,36 @@ test('active bilingual lifecycle copy rejects stale and over-broad guarantees', 
   assert.doesNotMatch(active, /migrate.*apply by default/i);
 });
 
-test('operator declaration is ephemeral, advisory-only, and resets blocked without JavaScript', async () => {
-  const router = await readFile(new URL('agentkit/agentkit-hero-and-path-selector.astro', COMPONENT_ROOT), 'utf8');
-  const source = await readFile(new URL('agentkit/agentkit-operator-attestation.astro', COMPONENT_ROOT), 'utf8');
-  const controller = await readFile(new URL('../../src/scripts/agentkit-lifecycle-guide-controller.ts', import.meta.url), 'utf8');
-  assert.match(source, /data-agentkit-eligibility="blocked"/);
-  assert.match(source, /type="datetime-local"/);
-  assert.match(source, /aria-live="polite"/);
-  assert.match(source, /unverified-operator-declaration/);
-  assert.doesNotMatch(source, /localStorage|sessionStorage|document\.cookie|history\.|URLSearchParams|CustomEvent/);
-  assert.doesNotMatch(controller, /localStorage|sessionStorage|document\.cookie|history\.|URLSearchParams|CustomEvent/);
-  assert.match(controller, /window\.addEventListener\('pageshow'/);
-  assert.match(controller, /attestationForm\.reset\(\)/);
-  assert.match(controller, /awaitingCanaryDeclaration/);
-  assert.match(controller, /routerForm\.addEventListener\('input', invalidateRouterEvaluation\)/);
-  assert.match(controller, /routerForm\.addEventListener\('change', invalidateRouterEvaluation\)/);
-  assert.match(controller, /attestationForm\.addEventListener\('input', invalidateAttestation\)/);
-  assert.match(controller, /attestationForm\.addEventListener\('change', invalidateAttestation\)/);
-  assert.match(controller, /clearCompletionFrom\(root, 'verify-canary'\)/);
-  assert.match(controller, /router-input-changed/);
-  assert.match(router, /type="button"[^>]*data-agentkit-router-evaluate|data-agentkit-router-evaluate[^>]*type="button"/);
-  assert.match(router, /<noscript>[\s\S]*agentkit\.router\.javascriptRequired/);
-  assert.doesNotMatch(router, /type="submit"[^>]*data-agentkit-router-evaluate|data-agentkit-router-evaluate[^>]*type="submit"/);
-  assert.match(controller, /routerEvaluateButton\.addEventListener\('click'/);
-  assert.doesNotMatch(source, />[^<]*(?:verified|authorized)[^<]*</i);
+test('both locales omit the reader-facing lifecycle router while preserving static safety guidance', async () => {
+  const hero = await readFile(new URL('agentkit/agentkit-hero.astro', COMPONENT_ROOT), 'utf8');
+  const checklist = await readFile(new URL('agentkit/agentkit-migration-checklist.astro', COMPONENT_ROOT), 'utf8');
+  const [readmeEn, readmeVi, llmIndex] = await Promise.all([
+    readFile(new URL('../../README.md', import.meta.url), 'utf8'),
+    readFile(new URL('../../README.vi.md', import.meta.url), 'utf8'),
+    readFile(new URL('../../src/data/guides-llms-index.mjs', import.meta.url), 'utf8'),
+  ]);
+  const active = `${Object.values(en).join('\n')}\n${Object.values(vi).join('\n')}\n${readmeEn}\n${readmeVi}\n${llmIndex}`;
+
+  assert.ok(Object.keys(en).every((key) => !key.startsWith('agentkit.router.')));
+  assert.ok(Object.keys(vi).every((key) => !key.startsWith('agentkit.router.')));
+  assert.doesNotMatch(active, /Choose a lifecycle lane before commands appear|Chọn lifecycle lane trước khi command xuất hiện/i);
+  assert.doesNotMatch(active, /decision[- ]router|select .* in the router|chọn .* trong router/i);
+  assert.doesNotMatch(hero, /data-agentkit-lifecycle-router|data-agentkit-router-|agentkit\.router\./);
+  assert.match(hero, /href="#stage-backup"/);
+  assert.match(hero, /href="#scenario-commands"/);
+  assert.doesNotMatch(checklist, /data-agentkit-stage-command-panel hidden|name="completedStages"/);
+  assert.match(checklist, /agentkit\.lifecycle\.limit/);
 });
 
 test('support and removal UI refuses destructive actions when manager evidence is unknown', async () => {
   const source = await readFile(new URL('agentkit/agentkit-legacy-skill-cleanup.astro', COMPONENT_ROOT), 'utf8');
-  const controller = await readFile(new URL('../../src/scripts/agentkit-lifecycle-guide-controller.ts', import.meta.url), 'utf8');
   assert.match(source, /sanitizeAgentKitLifecycleReport/);
   assert.match(source, /AGENTKIT_SUPPORT_CONTACTS/);
   assert.match(source, /AGENTKIT_CK_OWNERSHIP_PROBES/);
   assert.match(source, /data-agentkit-ownership-probe={probe\.packageManager}/);
   assert.match(source, /unknown[\s\S]*sanitize-and-escalate/);
-  assert.match(source, /data-agentkit-removal-details hidden/);
-  assert.match(source, /data-agentkit-removal-policy={policy\.packageManager} hidden/);
-  assert.match(controller, /result\.removalPackageManager/);
-  assert.match(controller, /dataset\.agentkitRemovalPolicy === result\.removalPackageManager/);
+  assert.match(source, /!includeStage7Details/);
+  assert.doesNotMatch(source, /data-agentkit-removal-details hidden/);
+  assert.doesNotMatch(source, /data-agentkit-removal-policy={policy\.packageManager} hidden/);
   assert.doesNotMatch(source, /data-agentkit-copy/);
 });

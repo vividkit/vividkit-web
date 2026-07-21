@@ -31,7 +31,7 @@ export const guideSections = [
       {
         title: 'Migrate from ClaudeKit to AgentKit',
         path: '/guides/agentkit',
-        desc: 'Decision router and seven-stage CK-to-AK lifecycle with support-assisted refusal, canary, observation, and detector-first removal boundaries.',
+        desc: 'Direct curated guidance for the seven-stage CK-to-AK lifecycle, with support-assisted refusal, canary, observation, and detector-first removal boundaries.',
       },
       {
         title: 'What is ClaudeKit? From CK to AgentKit',

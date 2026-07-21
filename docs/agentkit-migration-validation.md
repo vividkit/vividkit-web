@@ -274,7 +274,7 @@ A tooling failure rolls back or holds the local tooling only; it does not change
 
 Validation records dated July 11–13, 2026 covered the earlier migration foundation, provider-copy cleanup, compatibility primer, and UI follow-ups. Their route totals, journey totals, release observations, suite totals, generated-file totals, and browser aggregates describe those historical snapshots only.
 
-Those figures are intentionally removed from the current-state sections because the lifecycle router, route manifest, release fixtures, channel build graph, and archive boundary changed afterward. Use the Phase 8 schema above for the next release decision; do not cite the former figures as current evidence.
+Those figures are intentionally removed from the current-state sections because the lifecycle presentation, route manifest, release fixtures, channel build graph, and archive boundary changed afterward. Use the Phase 8 schema above for the next release decision; do not cite the former figures as current evidence.
 
 ## Unresolved Questions
 

@@ -32,7 +32,7 @@ VividKit Web is a bilingual static site and guide system for AgentKit (`ak`). En
 ```text
 src/
 ├── components/
-│   ├── guides/agentkit/       # Lifecycle router, stages, channel UI, targets, cleanup
+│   ├── guides/agentkit/       # Static lifecycle stages, channel UI, targets, cleanup
 │   ├── guides/                # Current guide shells and topic components
 │   ├── layout/                # Header, footer, navigation, shared chrome
 │   ├── sections/              # Product-page sections
@@ -70,8 +70,8 @@ The site does not treat component prose as command truth. Typed facts flow into 
 ```text
 reviewed official observations + owner decisions + archive provenance
   -> typed release, CLI, lifecycle, target, and publication facts
-  -> stable/beta selectors and decision router
-  -> shared EN/VI Astro components
+  -> stable/beta selectors + internal lifecycle policy
+  -> shared EN/VI static guide components
   -> static HTML + lazy channel asset when publication permits
   -> source, build-graph, postbuild, route, LLM, and archive checks
 ```
@@ -86,7 +86,7 @@ reviewed official observations + owner decisions + archive provenance
 | `agentkit-skill-facts.ts` | Verified skill identities and Claude Code/Codex invocation pairs |
 | `agentkit-target-capabilities.ts` | Claude Code and Codex install scopes, default project scope, invocation mode |
 | `agentkit-lifecycle-guide-facts.ts` | Seven stage IDs, predecessor facts, detector commands, manual removal conditions, support contacts |
-| `agentkit-lifecycle-policy.ts` | Evidence-driven lane router, sequential stage state, advisory attestation validation |
+| `agentkit-lifecycle-policy.ts` | Internal evidence-driven lane policy, sequential stage state, and unverified observation-declaration shape/range validation |
 | `agentkit-channel-policy.mjs` | Exact channel normalization and four-surface propagation boundary |
 | `agentkit-beta-channel-facts.mjs` | Current active-beta state only; promotion provenance remains in the source snapshot |
 | `agentkit-publication-policy.ts` | Hold/staging/published build decision and digest validation |
@@ -96,7 +96,7 @@ reviewed official observations + owner decisions + archive provenance
 
 The previously separate operational and legacy-cleanup fact modules are no longer current sources. Lifecycle and cleanup behavior now lives in `agentkit-lifecycle-guide-facts.ts` plus `agentkit-lifecycle-policy.ts`.
 
-## Lifecycle Router and Seven Stages
+## Internal Lifecycle Policy and Seven Stages
 
 `routeAgentKitLifecycle` returns one of five lanes:
 
@@ -161,7 +161,7 @@ The current tracked record is `hold`. Test-only fixture override is rejected out
 - Project content cleanup occurs before AgentKit install; CK executable/control-plane review stays last.
 - `which -a ck` and `Get-Command ck -All` are path-evidence detectors, not ownership proof.
 - Read-only Bun/npm/pnpm/Yarn Classic probes then compare the resolved path with the manager's global bin/root and direct `claudekit-cli` package entry; any mismatch or symlink ambiguity becomes `unknown`.
-- Package-manager removal actions are manual and non-copyable, and the Stage 7 view renders only the row matched by the router's exact manager evidence.
+- Package-manager removal actions are manual and non-copyable. Detailed Stage 7 rows remain publication-held until an exact-ownership selection boundary is separately reviewed.
 - Unknown ownership maps to sanitization and support, not a guessed command.
 - Detailed Stage 7 removal rows are build-time publication-gated; query/DOM state cannot unlock them.
 - Claude Code `/ak:*` and Codex `$ak:*` remain separate target contracts.
@@ -234,8 +234,8 @@ Private maintainer tooling and product delivery are independent. The public repo
 - Change source metadata and fixtures only through reviewed source observations.
 - Never fall back from empty current-beta facts to stable commands labeled as beta.
 - Keep the UI and tracked command guide curated by scenario; do not mirror the exact-release 120-path audit inventory.
-- Update router facts, lifecycle UI, EN/VI copy, and contract tests together.
-- Treat observation as advisory declaration, never verification or enforcement.
+- Update lifecycle policy facts, static lifecycle UI, EN/VI copy, and contract tests together.
+- Keep observation evidence outside VividKit; the guide is advisory, never verification or enforcement.
 - Detect all CK paths before selecting any manual removal condition.
 - Preserve archive provenance and import boundaries; do not use archive modules as live facts.
 - Update manifest, sitemap, LLM, EN/VI routes, and postbuild tests together.
