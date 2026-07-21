@@ -47,6 +47,9 @@ jobs:
 
       - name: Build and run AgentKit gates
         run: npm run build
+        env:
+          PUBLIC_CLAUDEKIT_REFERRAL_URL: https://archive-isolation.invalid/ci
+          VERIFY_ARCHIVE_REFERRAL_ISOLATION: '1'
 
       - name: Audit production dependencies
         run: npm audit --omit=dev

@@ -2,7 +2,7 @@
 // deals-how-it-works: 3-step explainer for the claim flow
 import { useTranslations } from '@/i18n/utils';
 import { getLangFromUrl, type Language } from '@/i18n';
-import { SITE_CONFIG } from '@/data/constants';
+import { LIVE_CLAUDEKIT_REFERRAL_URL } from '@/data/constants';
 
 interface Props {
   lang?: Language;
@@ -11,17 +11,7 @@ interface Props {
 const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
-const authorReferralCode = 'OMG49S8R';
-const fallbackReferralUrl = 'https://claudekit.cc/?ref=OMG49S8R';
-const referralUrl = (() => {
-  try {
-    const url = new URL(SITE_CONFIG.claudekitReferralUrl);
-    url.searchParams.set('ref', authorReferralCode);
-    return url.toString();
-  } catch {
-    return fallbackReferralUrl;
-  }
-})();
+const referralUrl = LIVE_CLAUDEKIT_REFERRAL_URL;
 
 const steps = [
   {

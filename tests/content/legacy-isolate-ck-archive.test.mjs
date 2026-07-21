@@ -8,6 +8,11 @@ import { pathToFileURL } from 'node:url';
 import { promisify } from 'node:util';
 import test from 'node:test';
 import {
+  LIVE_CLAUDEKIT_REFERRAL_URL,
+  SITE_CONFIG,
+  resolveLiveClaudeKitReferralUrl,
+} from '../../src/data/constants.ts';
+import {
   forbiddenArchiveImports,
   legacyArchivePostbuildMismatchSummary,
 } from '../../scripts/check-legacy-archive-boundary.mjs';
@@ -200,6 +205,39 @@ test('postbuild mismatch diagnostics expose only validated digests and the CSS b
   assert.match(invalid, /delta=invalid/);
   assert.doesNotMatch(invalid, /secret|PUBLIC_SECRET|<main>/i);
   assert.doesNotMatch(invalid, /sentinel|expected=613502/);
+});
+
+test('legacy archive referral stays frozen while live referral consumers remain environment-aware', async () => {
+  const configuredUrl = 'https://example.invalid/live-referral?existing=1';
+  assert.equal(SITE_CONFIG.claudekitReferralUrl, 'https://claudekit.cc');
+  assert.equal(resolveLiveClaudeKitReferralUrl({}), 'https://claudekit.cc/?ref=OMG49S8R');
+  assert.equal(
+    resolveLiveClaudeKitReferralUrl({ PUBLIC_CLAUDEKIT_REFERRAL_URL: configuredUrl }),
+    'https://example.invalid/live-referral?existing=1&ref=OMG49S8R',
+  );
+  for (const unsafeUrl of ['javascript:alert(1)', 'http://example.invalid/referral', 'not a URL']) {
+    assert.equal(
+      resolveLiveClaudeKitReferralUrl({ PUBLIC_CLAUDEKIT_REFERRAL_URL: unsafeUrl }),
+      'https://claudekit.cc/?ref=OMG49S8R',
+    );
+  }
+  assert.equal(LIVE_CLAUDEKIT_REFERRAL_URL, 'https://claudekit.cc/?ref=OMG49S8R');
+
+  const [liveDealsHow, liveDealsHero, archivedCli, archivedSummary] = await Promise.all([
+    readFile(new URL('../../src/components/guides/deals/deals-how-it-works.astro', import.meta.url), 'utf8'),
+    readFile(new URL('../../src/components/guides/deals/deals-hero.astro', import.meta.url), 'utf8'),
+    readFile(new URL('../../src/legacy-ck/components/guides/cli-guide/HeroBanner.astro', import.meta.url), 'utf8'),
+    readFile(new URL('../../src/legacy-ck/components/guides/what-is-claudekit/what-is-claudekit-commands-and-summary.astro', import.meta.url), 'utf8'),
+  ]);
+  for (const source of [liveDealsHow, liveDealsHero]) {
+    assert.match(source, /LIVE_CLAUDEKIT_REFERRAL_URL/);
+    assert.doesNotMatch(source, /SITE_CONFIG\.claudekitReferralUrl/);
+    assert.doesNotMatch(source, /PUBLIC_CLAUDEKIT_REFERRAL_URL/);
+  }
+  for (const source of [archivedCli, archivedSummary]) {
+    assert.match(source, /SITE_CONFIG\.claudekitReferralUrl/);
+    assert.doesNotMatch(source, /LIVE_CLAUDEKIT_REFERRAL_URL/);
+  }
 });
 
 test('source boundary fails closed on AgentKit facts, mutable i18n, escapes and dynamic imports', () => {

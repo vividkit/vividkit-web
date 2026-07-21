@@ -6,6 +6,7 @@
 // PUBLIC_DEALS_CAMPAIGN_ENDED back to false restores the active-campaign hero.
 import { useTranslations } from '@/i18n/utils';
 import { getLangFromUrl, type Language } from '@/i18n';
+import { LIVE_CLAUDEKIT_REFERRAL_URL } from '@/data/constants';
 
 interface Props {
   lang?: Language;
@@ -16,7 +17,7 @@ const { lang, campaignEnded = false } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
 
-const referralUrl = import.meta.env.PUBLIC_CLAUDEKIT_REFERRAL_URL || 'https://claudekit.cc/';
+const referralUrl = LIVE_CLAUDEKIT_REFERRAL_URL;
 const claimedTotal = Number(import.meta.env.PUBLIC_DEALS_CAMPAIGN_CLAIMED || 80);
 const releasedTotal = Number(import.meta.env.PUBLIC_DEALS_CAMPAIGN_TOTAL || 80);
 const endedProgressPct = releasedTotal > 0 ? Math.min(100, (claimedTotal / releasedTotal) * 100) : 100;

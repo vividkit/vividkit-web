@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { access, readdir } from 'node:fs/promises';
+import { access, readFile, readdir } from 'node:fs/promises';
 import { join, relative, sep } from 'node:path';
 import test from 'node:test';
 
@@ -114,6 +114,23 @@ test('current build preserves every required identity and contains no unmanifest
     for (const route of LEGACY_ARCHIVE_ROUTE_IDENTITIES) assert.ok(builtRouteSet.has(route), `missing ${route}`);
   }
   assert.deepEqual(builtRoutes.filter((route) => !manifestRoutes.has(route)), []);
+});
+
+test('synthetic live referral reaches deals output but never the legacy archive', async (context) => {
+  if (process.env.npm_lifecycle_event !== 'test:agentkit-postbuild'
+    || process.env.VERIFY_ARCHIVE_REFERRAL_ISOLATION !== '1') {
+    context.skip('synthetic referral isolation is verified by the exact-toolchain postbuild lane');
+    return;
+  }
+
+  const sentinel = 'https://archive-isolation.invalid/ci';
+  const liveDeals = await readFile(join(projectRoot, 'dist/guides/deals/index.html'), 'utf8');
+  if (!liveDeals.includes(sentinel)) throw new Error('synthetic live referral missing from deals output');
+
+  for (const route of LEGACY_ARCHIVE_ROUTE_IDENTITIES) {
+    const archiveHtml = await readFile(join(projectRoot, 'dist', route.slice(1), 'index.html'), 'utf8');
+    if (archiveHtml.includes(sentinel)) throw new Error(`synthetic live referral reached archive route: ${route}`);
+  }
 });
 
 test('all bilingual guide entries preserve EN/VI suffix parity', () => {
