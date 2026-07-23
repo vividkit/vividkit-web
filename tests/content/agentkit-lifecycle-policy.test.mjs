@@ -54,7 +54,7 @@ function digestNormalizedFixture(relativePath) {
 
 const actualBuildInputs = {
   stableFixtureSha256: digestNormalizedFixture('tests/fixtures/agentkit-release/stable-v2.4.0.json'),
-  prereleaseFixtureSha256: digestNormalizedFixture('tests/fixtures/agentkit-release/prerelease-v2.4.0-beta.7.json'),
+  prereleaseFixtureSha256: digestNormalizedFixture('tests/fixtures/agentkit-release/prerelease-v2.5.0-beta.1.json'),
   sourceClosureSha256: await computeAgentKitPublicationSourceClosure(),
   publicationRecordSha256: await computeAgentKitPublicationRecordDigest(),
 };

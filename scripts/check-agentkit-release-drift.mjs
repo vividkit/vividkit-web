@@ -23,10 +23,10 @@ const FIXTURES = [
     channel: 'prerelease',
     policyDigestField: 'prereleaseFixtureSha256',
     fixtureChannel: 'beta',
-    path: 'tests/fixtures/agentkit-release/prerelease-v2.4.0-beta.7.json',
-    version: '2.4.0-beta.7',
-    factSha256: '075a4fd1d8c024eba1ce4e550e8bdf88bb61f769e923e54755aa47f910cfea44',
-    fileSha256: '8ce13fe8ae26f868268a6408285e9a479385fd97ba87400822432841018a9bcb',
+    path: 'tests/fixtures/agentkit-release/prerelease-v2.5.0-beta.1.json',
+    version: '2.5.0-beta.1',
+    factSha256: '4297c3803c1af714beeb51a193118830b28a8797d078e4797a69a9f9d32a544d',
+    fileSha256: '1b2be9f0c6306d0c5a006b2bc5c38152276f1ae916012870673e76f3e041224c',
   },
 ];
 const MAX_RESPONSE_BYTES = 1024 * 1024;

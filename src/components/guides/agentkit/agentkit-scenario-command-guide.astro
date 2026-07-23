@@ -4,6 +4,7 @@ import { useTranslations, type TranslationKey } from '@/i18n/utils';
 import type { AgentKitCliFact } from '@/data/guides/agentkit/agentkit-source-contract';
 import { getAgentKitCliFact } from '@/data/guides/agentkit/agentkit-cli-facts';
 import { AGENTKIT_OFFICIAL_LINKS } from '@/data/guides/agentkit/agentkit-official-links.mjs';
+import { renderInlineCode } from './inline-code';
 
 interface Props {
   lang: Language;
@@ -24,7 +25,7 @@ const groups: readonly ScenarioGroup[] = [
   { id: 'offline', factIds: ['versions-local', 'doctor-offline'] },
   { id: 'recovery', factIds: ['backups-list', 'backups-verify', 'backups-restore', 'recover'] },
   { id: 'migration', factIds: ['migrate'] },
-  { id: 'maintenance', factIds: ['self-update-check', 'uninstall'] },
+  { id: 'maintenance', factIds: ['self-update-check', 'self-update-apply', 'uninstall'] },
   { id: 'portable', factIds: ['portable-export'] },
 ];
 
@@ -93,7 +94,7 @@ function factsFor(group: ScenarioGroup): readonly AgentKitCliFact[] {
 
           <div class="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm leading-6 text-amber-950 dark:border-amber-400/20 dark:bg-amber-400/10 dark:text-amber-100">
             <p class="font-bold">{t('agentkit.recipes.warning')}</p>
-            <p>{t(copyKey(group.id, 'warning'))}</p>
+            <p set:html={renderInlineCode(t(copyKey(group.id, 'warning')))}></p>
           </div>
 
           <a href={sourceUrl} target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex w-fit items-center rounded-lg text-sm font-bold text-violet-700 underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-violet-500 dark:text-violet-300">

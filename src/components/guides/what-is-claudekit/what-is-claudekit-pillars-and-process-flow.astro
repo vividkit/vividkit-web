@@ -1,8 +1,9 @@
 ---
-import { Bot, Box, CheckCircle2, ChevronRight, Command, Layers3, ShieldCheck, Wrench } from 'lucide-astro';
+import { Bot, Box, CheckCircle2, ChevronDown, Command, Layers3, ShieldCheck, Wrench } from 'lucide-astro';
 
 import type { Language } from '@/i18n';
 import { useTranslations } from '@/i18n/utils';
+import { renderInlineCode } from '../agentkit/inline-code';
 
 interface Props {
   lang: Language;
@@ -36,25 +37,25 @@ const flow = [
     <h2 id="system-architecture-heading" class="mt-2 font-heading text-3xl font-bold text-slate-950 dark:text-white">
       {t('what_is_ck.arch.heading')}
     </h2>
-    <p class="mt-3 text-lg leading-relaxed text-slate-600 text-pretty dark:text-slate-300">
-      {t('what_is_ck.arch.intro')}
-    </p>
+    <p class="mt-3 text-lg leading-relaxed text-slate-600 text-pretty dark:text-slate-300" set:html={renderInlineCode(t('what_is_ck.arch.intro'))}></p>
   </div>
 
-  <ol class="mt-8 grid gap-3">
+  <div class="mt-8 grid gap-3">
     {layers.map(({ icon: Icon, title, body, color }, index) => (
-      <li class="grid min-w-0 gap-4 rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-950/40 sm:grid-cols-[3rem_minmax(0,1fr)_auto] sm:items-center">
-        <div class={`flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800 ${color}`}>
-          <Icon class="h-5 w-5" aria-hidden="true" />
+      <details class="group rounded-2xl border border-slate-200 bg-white open:shadow-sm dark:border-slate-700 dark:bg-slate-950/40" open={index === 0}>
+        <summary class="flex min-h-14 cursor-pointer list-none items-center gap-4 p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 [&::-webkit-details-marker]:hidden">
+          <div class={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800 ${color}`}>
+            <Icon class="h-5 w-5" aria-hidden="true" />
+          </div>
+          <h3 class="min-w-0 flex-1 font-bold text-slate-950 dark:text-white">{title}</h3>
+          <ChevronDown class="h-5 w-5 shrink-0 text-slate-400 transition-transform duration-200 group-open:rotate-180" aria-hidden="true" />
+        </summary>
+        <div class="border-t border-slate-200 px-5 pb-5 pt-3 dark:border-slate-800">
+          <p class="text-sm leading-6 text-slate-600 dark:text-slate-300" set:html={renderInlineCode(body)}></p>
         </div>
-        <div class="min-w-0">
-          <h3 class="font-bold text-slate-950 dark:text-white">{title}</h3>
-          <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300">{body}</p>
-        </div>
-        {index < layers.length - 1 && <ChevronRight class="hidden h-5 w-5 text-slate-400 sm:block" aria-hidden="true" />}
-      </li>
+      </details>
     ))}
-  </ol>
+  </div>
 
   <div class="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-5 dark:border-slate-700 dark:bg-slate-900/70 sm:p-6">
     <h3 class="font-heading text-xl font-bold text-slate-950 dark:text-white">{t('what_is_ck.flow.heading')}</h3>
@@ -62,7 +63,7 @@ const flow = [
       {flow.map((step, index) => (
         <li class="relative min-w-0 rounded-xl bg-white p-4 dark:bg-slate-950/60">
           <span class="font-mono text-xs font-bold text-violet-600 dark:text-violet-400">0{index + 1}</span>
-          <p class="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-200">{step}</p>
+          <p class="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-200" set:html={renderInlineCode(step)}></p>
           {index === flow.length - 1 && <CheckCircle2 class="mt-3 h-5 w-5 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />}
         </li>
       ))}

@@ -19,13 +19,13 @@ Related evidence boundaries:
 
 | Gate | Observed result |
 |---|---|
-| Live drift canary | `AK-RELEASE-MATCH` at `2026-07-20T09:09:40.260Z`: stable `2.4.0`, latest prerelease/promoted source `2.4.0-beta.7`, no active beta |
+| Live drift canary | Expected match after 2026-07-21 sync: stable `2.4.0`, active beta `2.5.0-beta.1` |
+| Truth audit | stable `2.4.0` and active-beta channel `2.5.0-beta.1` both return `AK-TRUTH-OK`; VividKit publication status remains HOLD so beta command payload is not rendered |
 | Full AgentKit verification in final build | 184 total; 183 pass; 0 fail; 1 intentional skip; content audit pass across 879 files |
 | Type scope | AgentKit scoped pass, 0 allowed and 0 baseline fingerprints; repository-wide Astro check remains red at 559 errors, +74 versus the reviewed 485-error snapshot because preserved untracked `engineer/` sources are scanned |
 | Static output | `npm run build` exit 0; 132 pages; postbuild content audit pass across 272 files; route/LLM suite 8/8 |
-| Hold build graph | 540 generated files; no current beta payload; stable HTML and LLM exports remain beta/archive-free |
+| Hold build graph | 540 generated files; active beta identity is recorded but publication status remains HOLD so beta command payload stays unpublished; stable HTML and LLM exports remain free of published beta view markers |
 | Archive | 208 full-history provenance files; 268 source-boundary files; Astro 7 rendered body/CSS budgets reconciled to reviewed deterministic evidence; final postbuild boundary pass |
-| Truth audit | stable `2.4.0` and prerelease-provenance channel `2.4.0-beta.7` both returned `AK-TRUTH-OK`; this does not make beta active or published |
 | Security audit | `npm audit --omit=dev`: 0 vulnerabilities across 311 production dependencies, 543 total dependencies |
 | Exact toolchain | Verifier contract tests 8/8 pass and pin Node `22.21.1` / npm `10.9.4`; GitHub Actions run [`29735004189`](https://github.com/vividkit/vividkit-web/actions/runs/29735004189) passed every step in 2m16s on commit `57c53c3`, while the observed Node `26.4.0` / npm 11 host remains correctly refused |
 
@@ -38,9 +38,9 @@ The initial PR #42 Vercel preview failed in its shallow clone because the review
 | Evidence | SHA-256 |
 |---|---|
 | Stable normalized fact | `83dc4f2b886707d57853a80bca17b439d754c8064e091b0aa942a68f75477370` |
-| Prerelease normalized fact | `075a4fd1d8c024eba1ce4e550e8bdf88bb61f769e923e54755aa47f910cfea44` |
+| Prerelease normalized fact | `4297c3803c1af714beeb51a193118830b28a8797d078e4797a69a9f9d32a544d` |
 | Stable fixture file | `d9a57b1c393bc047676ecc9ea426cc08864a7d8515575239511b5e18cedd682b` |
-| Prerelease fixture file | `8ce13fe8ae26f868268a6408285e9a479385fd97ba87400822432841018a9bcb` |
+| Prerelease fixture file | `1b2be9f0c6306d0c5a006b2bc5c38152276f1ae916012870673e76f3e041224c` |
 | Publication source closure | `9a2804dd06ef0c20bd125898ddaad21c05cdedceea095774d8ff7e45cf2f7b0b` |
 | Truth-audit bundle | `bcb010dc44efbf48d1f0224816933ea4eca872de53c93278d80accbda1a254e3` |
 | Embedded fixture root | `df646d98d5e6da12bc6cb040e738a346193b0bb5b416899b3daf91d648c543e6` |
@@ -48,7 +48,7 @@ The initial PR #42 Vercel preview failed in its shallow clone because the review
 ### Current release holds
 
 - Stable guide output and its publication closure pass the scoped product gates, but final publication remains REVISE/HOLD pending review of the clean exact-toolchain pass and Vercel revalidation of the provenance follow-up.
-- Public beta remains HOLD because beta.7 was promoted into stable and there is no active beta newer than stable. Query state cannot publish a channel.
+- Public beta identity is synced to upstream `2.5.0-beta.1`, but VividKit publication status remains HOLD: query state cannot publish beta command facts until staging/published attestation.
 - Migration apply/rollback for important data remains support-assisted because immutable reviewed-plan execution merged after v2.4.0.
 - Product coexistence remains HOLD because no eligible noncritical pilot or 3–7 day observation was executed.
 

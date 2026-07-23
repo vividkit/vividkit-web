@@ -23,13 +23,13 @@ const stable = (
 });
 
 const STABLE_AGENTKIT_CLI_FACTS = [
-  stable({ id: 'install-unix', command: 'curl -fsSL https://agentkit.best/install.sh | sh', scope: 'binary', mutatesDisk: true, flags: ['AK_CHANNEL', 'AK_INSTALL_DIR', 'AK_VERSION'], writesTo: ['~/.local/bin/ak'], integrityFactId: 'official-installer-latest', note: 'Primary installer. Fallback when the product domain is blocked: curl -fsSL https://releases.agentkit.best/install.sh | sh' }),
-  stable({ id: 'install-windows', command: 'irm https://agentkit.best/install.ps1 | iex', scope: 'binary', mutatesDisk: true, flags: ['AK_CHANNEL', 'AK_INSTALL_DIR', 'AK_VERSION'], writesTo: ['%USERPROFILE%\\bin\\ak.exe'], integrityFactId: 'official-installer-latest', note: 'Primary installer. Fallback when the product domain is blocked: irm https://releases.agentkit.best/install.ps1 | iex' }),
+  stable({ id: 'install-unix', command: 'curl -fsSL https://agentkit.best/install.sh | sh', scope: 'binary', mutatesDisk: true, flags: ['AK_CHANNEL', 'AK_INSTALL_DIR', 'AK_VERSION'], writesTo: ['~/.local/bin/ak'], integrityFactId: 'official-installer-latest', note: 'Primary installer. Default AK_INSTALL_DIR is ~/.local/bin; the Unix script warns when that directory is missing from PATH but does not edit your shell profile. Fallback when the product domain is blocked: curl -fsSL https://releases.agentkit.best/install.sh | sh' }),
+  stable({ id: 'install-windows', command: 'irm https://agentkit.best/install.ps1 | iex', scope: 'binary', mutatesDisk: true, flags: ['AK_CHANNEL', 'AK_INSTALL_DIR', 'AK_VERSION'], writesTo: ['%USERPROFILE%\\bin\\ak.exe'], integrityFactId: 'official-installer-latest', note: 'Primary installer. Default AK_INSTALL_DIR is %USERPROFILE%\\bin and the Windows script adds it to the user PATH when missing. Fallback when the product domain is blocked: irm https://releases.agentkit.best/install.ps1 | iex' }),
   stable({ id: 'verify-version', command: 'ak --version', scope: 'diagnostic', mutatesDisk: false, flags: [] }),
   stable({ id: 'new', command: 'ak new', scope: 'project', mutatesDisk: true, flags: [] }),
   stable({ id: 'init', command: 'ak init', scope: 'project', mutatesDisk: true, flags: [] }),
   stable({ id: 'update', command: 'ak update', scope: 'project', mutatesDisk: true, flags: ['--dry-run'] }),
-  stable({ id: 'setup', command: 'ak setup', scope: 'project', mutatesDisk: true, flags: [], note: 'Writes AgentKit configuration only. The command has no dry-run or config-only flag; back up the project first.' }),
+  stable({ id: 'setup', command: 'ak setup', scope: 'binary', mutatesDisk: true, flags: [], note: 'First-run wizard for ~/.agentkit/config.yaml (adapters, default kit, telemetry). It does not install kits or mutate project trees. Recommended after the first install; not promoted in scenario cards because there is no dry-run flag.' }),
   stable({ id: 'skills', command: 'ak skills', scope: 'project', mutatesDisk: false, flags: [] }),
   stable({ id: 'agents', command: 'ak agents', scope: 'project', mutatesDisk: false, flags: [] }),
   stable({ id: 'doctor', command: 'ak doctor', scope: 'diagnostic', mutatesDisk: false, flags: ['--fix'], note: 'The default command is read-only. --fix mutates configuration and should be reviewed separately.' }),
@@ -38,8 +38,8 @@ const STABLE_AGENTKIT_CLI_FACTS = [
   stable({ id: 'versions-local', command: 'ak versions --local-only', scope: 'diagnostic', mutatesDisk: false, flags: ['--local-only'], note: 'Lists local version evidence only. Cached availability does not prove the version is latest.' }),
   stable({ id: 'config', command: 'ak config', scope: 'project', mutatesDisk: true, flags: ['--dry-run'] }),
   stable({ id: 'uninstall', command: 'ak uninstall --dry-run', scope: 'project', mutatesDisk: true, previewDefault: true, flags: ['--dry-run', '--yes'], note: 'The shown form previews removal of AgentKit-owned project content. The uninstall family is treated as mutating and does not remove the ak binary or runtime home.' }),
-  stable({ id: 'login-email', command: 'ak login --email <account-email>', scope: 'account', mutatesDisk: true, flags: ['--email'], note: 'Recommended CLI session method for local use.' }),
-  stable({ id: 'login-api-key', command: 'ak login --api-key <api-key> --no-interactive', scope: 'account', mutatesDisk: true, flags: ['--api-key', '--no-interactive'], note: 'Recommended CLI session method for CI.' }),
+  stable({ id: 'login-email', command: 'ak login --email <account-email>', scope: 'account', mutatesDisk: true, flags: ['--email'], note: 'Recommended CLI session method for local use. Persists the registry session under ~/.agentkit/auth/session.json (mode 0600), not the OS keychain.' }),
+  stable({ id: 'login-api-key', command: 'ak login --api-key <api-key> --no-interactive', scope: 'account', mutatesDisk: true, flags: ['--api-key', '--no-interactive'], note: 'Recommended CLI session method for CI. May persist a re-mintable API key at ~/.agentkit/auth/api-key (mode 0600); inject secrets from a masked store.' }),
   stable({ id: 'login-license', command: 'ak login --license-key <license-key>', scope: 'account', mutatesDisk: true, flags: ['--license-key', '--device-name'], note: 'Desktop App device activation only — does not open a CLI registry session.' }),
   stable({ id: 'whoami', command: 'ak whoami', scope: 'account', mutatesDisk: false, flags: [] }),
   stable({ id: 'licenses', command: 'ak licenses', scope: 'account', mutatesDisk: false, flags: [] }),
@@ -56,11 +56,12 @@ const STABLE_AGENTKIT_CLI_FACTS = [
   stable({ id: 'backups-verify', command: 'ak backups verify <backup-id>', scope: 'diagnostic', mutatesDisk: false, flags: [] }),
   stable({ id: 'backups-restore', command: 'ak backups restore <backup-id> --dry-run', scope: 'project', mutatesDisk: false, previewDefault: true, flags: ['--dry-run', '--yes'], note: 'Inspect the restore preview before any write.' }),
   stable({ id: 'recover', command: 'ak recover --latest --dry-run', scope: 'project', mutatesDisk: false, previewDefault: true, flags: ['--latest', '--dry-run', '--yes'], note: 'Previews recovery from the latest available recovery point. Confirm the identifier before any write.' }),
-  stable({ id: 'migrate', command: 'ak migrate --from=ck', scope: 'project', mutatesDisk: true, previewDefault: true, flags: ['--from', '--dry-run', '--yes', '--no-interactive'], note: 'Preview/smoke is the VividKit default. Apply and rollback remain advanced, support-assisted operations for important data.' }),
-  stable({ id: 'self-update', command: 'ak self-update', scope: 'binary', mutatesDisk: true, flags: ['--check', '--yes', '--channel'] }),
-  stable({ id: 'self-update-check', command: 'ak self-update --check', scope: 'binary', mutatesDisk: false, flags: ['--check'], note: 'Checks availability without replacing the binary.' }),
+  stable({ id: 'migrate', command: 'ak migrate --from=ck', scope: 'project', mutatesDisk: true, previewDefault: true, flags: ['--from', '--dry-run', '--yes', '--no-interactive'], note: 'Preview/smoke is the VividKit default. Apply stays support-assisted for important data. Do not treat ak migrate rollback as a CK legacy restore path.' }),
+  stable({ id: 'self-update', command: 'ak self-update', scope: 'binary', mutatesDisk: false, flags: ['--check', '--yes', '--channel'], note: 'Without --yes, this checks only. Manual apply requires --yes. An empty --channel defaults to beta; stable users should pass --channel stable explicitly.' }),
+  stable({ id: 'self-update-check', command: 'ak self-update --check --channel stable', scope: 'binary', mutatesDisk: false, flags: ['--check', '--channel'], note: 'Read-only availability check on the stable channel. An empty channel defaults to beta.' }),
+  stable({ id: 'self-update-apply', command: 'ak self-update --channel stable --yes', scope: 'binary', mutatesDisk: true, flags: ['--yes', '--channel'], note: 'Applies a verified binary update. To roll back the binary, reinstall a previous release tag; ak backups restore rolls back project/lifecycle state only.' }),
   stable({ id: 'audit', command: 'ak audit', scope: 'diagnostic', mutatesDisk: false, flags: [] }),
-  stable({ id: 'portable-export', command: 'ak kit init engineer --target portable --build-only --out ./agentkit-portable', scope: 'kit', mutatesDisk: true, flags: ['--target', '--build-only', '--out'], writesTo: ['./agentkit-portable'], note: 'Builds an exact portable Engineer bundle in the selected output directory without installing into Claude Code or Codex.' }),
+  stable({ id: 'portable-export', command: 'ak kit init engineer --target portable --build-only --out ./agentkit-portable', scope: 'kit', mutatesDisk: true, flags: ['--target', '--build-only', '--out'], writesTo: ['./agentkit-portable/agentkit-portable'], note: 'Export-only portable target. Requires both --build-only and --out. Artifacts land in {--out}/agentkit-portable/, not directly in the --out root.' }),
   stable({ id: 'gui', command: 'ak gui', scope: 'binary', mutatesDisk: false, flags: [] }),
 ] as const satisfies readonly AgentKitCliFact[];
 
@@ -89,7 +90,7 @@ export const AGENTKIT_CLI_RELEASE_CATALOGS = {
     artifactKind: 'agentkit-cli',
     artifactVersion: AGENTKIT_SOURCE_SNAPSHOT.activeBetaVersion,
     evidenceClass: 'public-release',
-    fixtureId: null,
+    fixtureId: 'agentkit-cli-beta-2.5.0-beta.1',
     facts: BETA_AGENTKIT_CLI_FACTS,
   },
 } as const satisfies Record<AgentKitCliReleaseChannel, AgentKitCliReleaseCatalog>;

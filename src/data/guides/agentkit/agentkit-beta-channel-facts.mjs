@@ -2,11 +2,11 @@ import { AGENTKIT_OFFICIAL_LINKS } from './agentkit-official-links.mjs';
 
 export const AGENTKIT_BETA_CHANNEL_FACTS = Object.freeze({
   channel: 'beta',
-  activeBetaVersion: null,
-  version: null,
-  releaseStatus: 'unavailable',
-  verifiedAt: '2026-07-20',
+  activeBetaVersion: '2.5.0-beta.1',
+  version: '2.5.0-beta.1',
+  releaseStatus: 'pre-release',
+  verifiedAt: '2026-07-21',
   sourceUrl: AGENTKIT_OFFICIAL_LINKS.changelog,
-  claimId: null,
+  claimId: 'AK-RELEASE-BETA-2.5.0-BETA.1',
   commandFactCount: 0,
 });

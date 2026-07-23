@@ -1,0 +1,114 @@
+---
+import { ArrowRight, LifeBuoy, PackagePlus, RefreshCw, Wrench } from 'lucide-astro';
+
+import type { Language } from '@/i18n';
+import { useTranslations, type TranslationKey } from '@/i18n/utils';
+
+interface Props {
+  lang: Language;
+}
+
+interface PathLane {
+  id: 'fresh' | 'recipes' | 'cutover' | 'support';
+  href: string;
+  icon: typeof PackagePlus;
+  titleKey: TranslationKey;
+  bodyKey: TranslationKey;
+  ctaKey: TranslationKey;
+  accent: 'emerald' | 'violet' | 'amber' | 'slate';
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const lanes: readonly PathLane[] = [
+  {
+    id: 'fresh',
+    href: '#quick-start',
+    icon: PackagePlus,
+    titleKey: 'agentkit.lanes.fresh.title',
+    bodyKey: 'agentkit.lanes.fresh.body',
+    ctaKey: 'agentkit.lanes.fresh.cta',
+    accent: 'emerald',
+  },
+  {
+    id: 'recipes',
+    href: '#scenario-commands',
+    icon: Wrench,
+    titleKey: 'agentkit.lanes.recipes.title',
+    bodyKey: 'agentkit.lanes.recipes.body',
+    ctaKey: 'agentkit.lanes.recipes.cta',
+    accent: 'violet',
+  },
+  {
+    id: 'cutover',
+    href: '#migration-journey',
+    icon: RefreshCw,
+    titleKey: 'agentkit.lanes.cutover.title',
+    bodyKey: 'agentkit.lanes.cutover.body',
+    ctaKey: 'agentkit.lanes.cutover.cta',
+    accent: 'amber',
+  },
+  {
+    id: 'support',
+    href: '#troubleshooting',
+    icon: LifeBuoy,
+    titleKey: 'agentkit.lanes.support.title',
+    bodyKey: 'agentkit.lanes.support.body',
+    ctaKey: 'agentkit.lanes.support.cta',
+    accent: 'slate',
+  },
+];
+
+const accentClass: Record<PathLane['accent'], string> = {
+  emerald: 'border-emerald-200 bg-emerald-50/60 hover:border-emerald-300 dark:border-emerald-800/50 dark:bg-emerald-950/20 dark:hover:border-emerald-700',
+  violet: 'border-violet-200 bg-violet-50/60 hover:border-violet-300 dark:border-violet-800/50 dark:bg-violet-950/20 dark:hover:border-violet-700',
+  amber: 'border-amber-200 bg-amber-50/60 hover:border-amber-300 dark:border-amber-800/50 dark:bg-amber-950/20 dark:hover:border-amber-700',
+  slate: 'border-slate-200 bg-slate-50 hover:border-slate-300 dark:border-slate-700 dark:bg-slate-900/60 dark:hover:border-slate-600',
+};
+
+const iconClass: Record<PathLane['accent'], string> = {
+  emerald: 'text-emerald-700 dark:text-emerald-300',
+  violet: 'text-violet-700 dark:text-violet-300',
+  amber: 'text-amber-700 dark:text-amber-300',
+  slate: 'text-slate-600 dark:text-slate-300',
+};
+---
+
+<section id="choose-path" class="scroll-mt-28 border-b border-slate-200 pb-10 pt-8 dark:border-slate-800" aria-labelledby="choose-path-heading">
+  <div class="max-w-3xl">
+    <p class="text-xs font-bold uppercase tracking-[0.18em] text-purple-700 dark:text-purple-300">
+      {t('agentkit.lanes.eyebrow')}
+    </p>
+    <h2 id="choose-path-heading" class="mt-3 font-heading text-3xl font-bold text-slate-950 text-balance dark:text-slate-50">
+      {t('agentkit.lanes.heading')}
+    </h2>
+    <p class="mt-3 leading-relaxed text-slate-600 text-pretty dark:text-slate-300">
+      {t('agentkit.lanes.intro')}
+    </p>
+  </div>
+
+  <nav class="mt-7 grid gap-4 md:grid-cols-2" aria-labelledby="choose-path-heading">
+    {lanes.map((lane) => {
+      const Icon = lane.icon;
+      return (
+        <a
+          href={lane.href}
+          data-agentkit-path-lane={lane.id}
+          class:list={[
+            'group flex min-h-11 flex-col rounded-2xl border p-5 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2',
+            accentClass[lane.accent],
+          ]}
+        >
+          <div class="flex items-start justify-between gap-3">
+            <Icon class:list={['h-5 w-5 shrink-0', iconClass[lane.accent]]} aria-hidden="true" />
+            <ArrowRight class="h-4 w-4 shrink-0 text-slate-400 transition group-hover:translate-x-0.5 group-hover:text-purple-600 dark:group-hover:text-purple-300" aria-hidden="true" />
+          </div>
+          <h3 class="mt-3 font-heading text-lg font-bold text-slate-950 dark:text-slate-50">{t(lane.titleKey)}</h3>
+          <p class="mt-2 flex-1 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{t(lane.bodyKey)}</p>
+          <span class="mt-4 text-sm font-bold text-purple-700 dark:text-purple-300">{t(lane.ctaKey)}</span>
+        </a>
+      );
+    })}
+  </nav>
+</section>

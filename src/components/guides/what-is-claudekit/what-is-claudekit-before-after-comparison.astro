@@ -7,6 +7,7 @@ import {
   WHAT_IS_CLAUDEKIT_FACTS,
   WHAT_IS_CLAUDEKIT_SCOPE_FACTS,
 } from '@/data/guides/agentkit/what-is-claudekit-facts';
+import { renderInlineCode } from '../agentkit/inline-code';
 
 interface Props {
   lang: Language;
@@ -57,9 +58,7 @@ const inlineCodeClass = 'inline-flex max-w-full overflow-x-auto rounded-md borde
     <h2 id="ck-to-agentkit-heading" class="font-heading text-3xl font-bold text-slate-950 dark:text-white">
       {t('what_is_ck.change.heading')}
     </h2>
-    <p class="mt-3 text-lg leading-relaxed text-slate-600 text-pretty dark:text-slate-300">
-      {t('what_is_ck.change.intro')}
-    </p>
+    <p class="mt-3 text-lg leading-relaxed text-slate-600 text-pretty dark:text-slate-300" set:html={renderInlineCode(t('what_is_ck.change.intro'))}></p>
   </div>
 
   <div class="mt-8 overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700">
@@ -73,9 +72,9 @@ const inlineCodeClass = 'inline-flex max-w-full overflow-x-auto rounded-md borde
       {rows.map((row) => (
         <article class="grid min-w-0 gap-3 p-5 md:grid-cols-[minmax(8rem,0.45fr)_minmax(0,1fr)_auto_minmax(0,1fr)] md:items-center md:gap-4">
           <h3 class="text-sm font-bold text-slate-950 dark:text-white">{row.label}</h3>
-          <p class="text-sm leading-6 text-slate-600 dark:text-slate-300">{row.before}</p>
+          <p class="text-sm leading-6 text-slate-600 dark:text-slate-300" set:html={renderInlineCode(row.before)}></p>
           <ArrowRight class="h-4 w-4 text-violet-500" aria-hidden="true" />
-          <p class="text-sm font-medium leading-6 text-slate-800 dark:text-slate-100">{row.after}</p>
+          <p class="text-sm font-medium leading-6 text-slate-800 dark:text-slate-100" set:html={renderInlineCode(row.after)}></p>
         </article>
       ))}
     </div>
@@ -104,7 +103,7 @@ const inlineCodeClass = 'inline-flex max-w-full overflow-x-auto rounded-md borde
         <Icon class="h-5 w-5 text-violet-600 dark:text-violet-400" aria-hidden="true" />
         <h3 class="mt-3 text-lg font-bold text-slate-950 dark:text-white">{title}</h3>
         <code class={`${inlineCodeClass} mt-3`}>{path}</code>
-        <p class="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-300">{body}</p>
+        <p class="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-300" set:html={renderInlineCode(body)}></p>
       </article>
     ))}
   </div>

@@ -54,8 +54,9 @@ test('both locales omit the reader-facing lifecycle router while preserving stat
   assert.doesNotMatch(active, /Choose a lifecycle lane before commands appear|Chọn lifecycle lane trước khi command xuất hiện/i);
   assert.doesNotMatch(active, /decision[- ]router|select .* in the router|chọn .* trong router/i);
   assert.doesNotMatch(hero, /data-agentkit-lifecycle-router|data-agentkit-router-|agentkit\.router\./);
-  assert.match(hero, /href="#stage-backup"/);
-  assert.match(hero, /href="#scenario-commands"/);
+  assert.match(hero, /href="#migration-journey"/);
+  assert.match(hero, /guides\/cli/);
+  assert.match(hero, /guides\/what-is-agentkit/);
   assert.doesNotMatch(checklist, /data-agentkit-stage-command-panel hidden|name="completedStages"/);
   assert.match(checklist, /agentkit\.lifecycle\.limit/);
 });

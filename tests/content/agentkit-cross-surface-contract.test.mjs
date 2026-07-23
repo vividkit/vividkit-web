@@ -45,19 +45,28 @@ test('hold and published loaders have disjoint executable closures', async () =>
   const betaView = await source('src/scripts/agentkit-beta-view.mjs');
 
   assert.match(hold, /agentkit-beta-hold-v1/);
+  assert.match(hold, /agentkit-beta-guidance/);
   assert.doesNotMatch(hold, /agentkit-beta-view|agentkit-beta-loader-published|2\.3\.1-beta\.1/);
   assert.match(published, /import\(['"]\.\/agentkit-beta-view\.mjs['"]\)/);
   assert.doesNotMatch(published, /agentkit-beta-hold-v1/);
   assert.match(betaView, /agentkit-public-beta-view-v1/);
-  assert.match(betaView, /agentkit-beta-channel-facts/);
+  assert.match(betaView, /agentkit-beta-guidance/);
 });
 
-test('beta view exposes no current release claim after prerelease promotion', () => {
+test('beta guidance keeps stable install/setup/migrate facts visible', async () => {
+  const guidance = await source('src/scripts/agentkit-beta-guidance.mjs');
+  assert.match(guidance, /removeAttribute\(['"]hidden['"]\)/);
+  assert.match(guidance, /ak self-update --check --channel beta/);
+  assert.match(guidance, /commandFactCount/);
+  assert.doesNotMatch(guidance, /not published in this build|is not published/);
+});
+
+test('beta view exposes the active release claim without inventing beta command facts', () => {
   assert.equal(AGENTKIT_BETA_CHANNEL_FACTS.channel, 'beta');
-  assert.equal(AGENTKIT_BETA_CHANNEL_FACTS.version, null);
-  assert.equal(AGENTKIT_BETA_CHANNEL_FACTS.activeBetaVersion, null);
-  assert.equal(AGENTKIT_BETA_CHANNEL_FACTS.releaseStatus, 'unavailable');
-  assert.equal(AGENTKIT_BETA_CHANNEL_FACTS.claimId, null);
+  assert.equal(AGENTKIT_BETA_CHANNEL_FACTS.version, '2.5.0-beta.1');
+  assert.equal(AGENTKIT_BETA_CHANNEL_FACTS.activeBetaVersion, '2.5.0-beta.1');
+  assert.equal(AGENTKIT_BETA_CHANNEL_FACTS.releaseStatus, 'pre-release');
+  assert.equal(AGENTKIT_BETA_CHANNEL_FACTS.claimId, 'AK-RELEASE-BETA-2.5.0-BETA.1');
   assert.equal(AGENTKIT_BETA_CHANNEL_FACTS.commandFactCount, 0);
 });
 

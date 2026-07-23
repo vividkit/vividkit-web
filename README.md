@@ -1,8 +1,8 @@
 # VividKit — Visual Guides for AgentKit
 
-> AgentKit (`ak`) succeeds ClaudeKit (`ck`). Existing CK users should begin with the [CK → AgentKit guide](https://vividkit.dev/guides/agentkit).
+> AgentKit (`ak`) succeeds ClaudeKit (`ck`). Start with [What is AgentKit?](https://vividkit.dev/guides/what-is-agentkit), install via the [CLI guide](https://vividkit.dev/guides/cli), then use the [CK → AK migration guide](https://vividkit.dev/guides/agentkit) when needed.
 
-VividKit is an English/Vietnamese visual guide hub for AgentKit, Claude Code, Codex, and related workflows. The current web product helps readers install AgentKit, choose a safe migration lane, use target-correct skill syntax, and preserve access to isolated ClaudeKit history.
+VividKit is an English/Vietnamese visual guide hub for AgentKit, Claude Code, Codex, and related workflows. The current web product helps readers install AgentKit for common scenarios, follow a support-safe ClaudeKit cutover, use target-correct skill syntax, and preserve access to isolated ClaudeKit history.
 
 The VividKit Desktop App is planned separately. It is not the AgentKit Desktop App documented at agentkit.best.
 
@@ -11,7 +11,8 @@ The VividKit Desktop App is planned separately. It is not the AgentKit Desktop A
 ## Current Product Scope
 
 - Bilingual product and guide pages: English at root paths, Vietnamese under `/vi`.
-- Direct lifecycle guidance for fresh install, clean cutover, closed-beta coexistence, recovery, and support-assisted cases.
+- Product primer, CLI install + workarounds, and a migration-only CK → AK cutover guide.
+- Direct lifecycle guidance for clean cutover, closed-beta coexistence, recovery, and support-assisted cases.
 - A seven-stage CK → AK lifecycle: backup → CK ownership cleanup → clean-scope confirmation → AK install → canary verification → observation → CK control-plane removal review.
 - AgentKit CLI, CLI Commands, workflows, targets, coexistence, permissions, recovery, and troubleshooting guides.
 - Claude Code `/ak:*` and Codex `$ak:*` invocation examples.
@@ -19,11 +20,11 @@ The VividKit Desktop App is planned separately. It is not the AgentKit Desktop A
 
 ## Release and Safety Policy
 
-- Stable AgentKit `2.4.0` is the default public fact set. The last prerelease, `2.4.0-beta.7`, was promoted into stable from the same source commit.
+- Stable AgentKit `2.4.0` is the default public fact set. Active public beta is `2.5.0-beta.1` (opt-in via `?channel=beta` / `AK_CHANNEL=beta`). Historical `2.4.0-beta.7` remains the promotion provenance for stable 2.4.0.
 - There is no active beta newer than stable in the 2026-07-20 observation. An exact `?channel=beta` request falls back to stable with an availability notice; invalid, repeated, or out-of-group state also resolves to stable.
 - A future published beta query would be public early-access content, not closed-beta enrollment or execution authorization. Query state cannot authorize held payloads or lifecycle actions.
 - `/llms.txt` and `/llms-full.txt` remain stable-only.
-- The route manifest preserves 132 query-neutral identities; query parameters add no route or canonical identity.
+- The route manifest preserves 134 query-neutral identities; query parameters add no route or canonical identity.
 - `ak migrate` is stable, but VividKit presents it preview/smoke-first and does not provide a default apply action.
 - Mixed/custom ownership, corrupt/missing metadata, unknown package ownership, or critical data routes to support-assisted handling.
 - The only coexistence pilot topology is CK global plus AK project-local in one clean, noncritical project.
@@ -41,7 +42,9 @@ Support:
 
 | Guide | Purpose |
 |---|---|
-| [CK → AgentKit](https://vividkit.dev/guides/agentkit) | Direct curated commands, seven-stage lifecycle, target setup, rollback, and support boundaries |
+| [What is AgentKit?](https://vividkit.dev/guides/what-is-agentkit) | AgentKit successor model, Desktop App boundary, kits, and entitlements |
+| [AgentKit CLI Guide](https://vividkit.dev/guides/cli) | Install `ak`, auth, kits, install workarounds, and lifecycle updates |
+| [Migrate CK → AK](https://vividkit.dev/guides/agentkit) | Seven-stage cutover, command mapping, and detector-first CK cleanup |
 | [Scenario command guide](./docs/agentkit-scenario-command-guide.md) | Curated safe recipes by user intent; full flags remain in AgentKit Official Docs |
 | [CLI Guide](https://vividkit.dev/guides/cli) | Stable AgentKit setup and lifecycle |
 | [CLI Commands](https://vividkit.dev/guides/cli-commands) | Canonical command facts and safety metadata |

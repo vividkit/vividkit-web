@@ -50,7 +50,7 @@ function response(body, overrides = {}) {
   };
 }
 
-function changelog(stable = '2.4.0', prerelease = '2.4.0-beta.7') {
+function changelog(stable = '2.4.0', prerelease = '2.5.0-beta.1') {
   return `
     <article><h2>v${stable}</h2><p>v${stable}</p><p>AgentKit CLI <a href="/github">@ github-actions[bot]</a></p></article>
     <article><h2>v${prerelease}</h2><p>v${prerelease} Pre-release</p><p>AgentKit CLI <a href="/github">@ github-actions[bot]</a></p></article>
@@ -69,10 +69,10 @@ function liveShapedChangelog() {
       <p>Artifact: <a href="/releases/download/v2.4.0/release-provenance.json">release-provenance.json</a></p>
     </article>
     <article>
-      <h2 class="release-title">v2.4.0-beta.7</h2>
-      <span>v2.4.0-beta.7</span><span>Pre-release</span>
+      <h2 class="release-title">v2.5.0-beta.1</h2>
+      <span>v2.5.0-beta.1</span><span>Pre-release</span>
       <span class="product">AgentKit CLI</span>
-      <p>fix(cli): make force refresh interruption-safe (#1078)</p>
+      <p>fix(ci): raise full-suite Go workspace timeout (#1105)</p>
     </article>
   `;
 }
@@ -97,14 +97,14 @@ test('matching official observation emits only the bounded release schema', asyn
     [channel, expectedVersion, observedVersion]
   )), [
     ['stable', '2.4.0', '2.4.0'],
-    ['prerelease', '2.4.0-beta.7', '2.4.0-beta.7'],
+    ['prerelease', '2.5.0-beta.1', '2.5.0-beta.1'],
   ]);
   assert.deepEqual(report.releaseState, {
     latestStable: '2.4.0',
-    latestPrerelease: '2.4.0-beta.7',
-    promotedFromPrerelease: '2.4.0-beta.7',
-    activeBetaVersion: null,
-    hasActiveBeta: false,
+    latestPrerelease: '2.5.0-beta.1',
+    promotedFromPrerelease: null,
+    activeBetaVersion: '2.5.0-beta.1',
+    hasActiveBeta: true,
   });
   assert.deepEqual(report.retention, {
     classification: 'access-controlled',
@@ -125,7 +125,7 @@ test('multi-product changelog parsing ignores kit versions and date-like semvers
   assert.equal(report.outcome, 'match');
   assert.deepEqual(report.observations.map(({ observedVersion }) => observedVersion), [
     '2.4.0',
-    '2.4.0-beta.7',
+    '2.5.0-beta.1',
   ]);
 });
 
@@ -137,9 +137,9 @@ test('live-shaped release cards bind the version to the release heading, not pro
   });
   assert.deepEqual(report.observations.map(({ observedVersion }) => observedVersion), [
     '2.4.0',
-    '2.4.0-beta.7',
+    '2.5.0-beta.1',
   ]);
-  assert.equal(report.releaseState.hasActiveBeta, false);
+  assert.equal(report.releaseState.hasActiveBeta, true);
 });
 
 test('a prerelease newer than stable is retained as the active beta', async () => {
@@ -161,7 +161,7 @@ test('a prerelease newer than stable is retained as the active beta', async () =
 test('missing active beta is valid after promotion, while missing stable and ambiguous entries fail closed', async () => {
   const promoted = await runAgentKitReleaseDriftCheck({
     repo,
-    fetchImpl: async () => response(changelog()),
+    fetchImpl: async () => response(changelog('2.4.0', '2.4.0-beta.7')),
     now,
   });
   assert.equal(promoted.releaseState.hasActiveBeta, false);
@@ -181,7 +181,7 @@ test('missing active beta is valid after promotion, while missing stable and amb
 
 test('newer observation reports sanitized drift and never mutates release fixtures', async () => {
   const stable = path.join(repo, 'tests/fixtures/agentkit-release/stable-v2.4.0.json');
-  const prerelease = path.join(repo, 'tests/fixtures/agentkit-release/prerelease-v2.4.0-beta.7.json');
+  const prerelease = path.join(repo, 'tests/fixtures/agentkit-release/prerelease-v2.5.0-beta.1.json');
   const before = await Promise.all([readFile(stable), readFile(prerelease)]);
   const report = await runAgentKitReleaseDriftCheck({
     repo,
@@ -373,7 +373,7 @@ test('repository and fixture trust boundary refuses symlinked or unreviewed inpu
   const driftedRepo = await realpath(await mkdtemp(path.join(os.tmpdir(), 'agentkit-release-drifted-')));
   const fixturePaths = [
     'tests/fixtures/agentkit-release/stable-v2.4.0.json',
-    'tests/fixtures/agentkit-release/prerelease-v2.4.0-beta.7.json',
+    'tests/fixtures/agentkit-release/prerelease-v2.5.0-beta.1.json',
   ];
   try {
     for (const root of [symlinkedRepo, driftedRepo]) {

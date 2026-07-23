@@ -8,12 +8,12 @@ import { AGENTKIT_TRUTH_AUDITED_SOURCE_PATHS } from './agentkit-truth-audit-sour
 const ROOT = fileURLToPath(new URL('../', import.meta.url));
 const DEFAULT_OUTPUT = resolve(ROOT, 'scripts/dist/agentkit-truth-audit.bundle.mjs');
 const STABLE_FIXTURE = resolve(ROOT, 'tests/fixtures/agentkit-release/stable-v2.4.0.json');
-const LATEST_PRERELEASE_FIXTURE = resolve(ROOT, 'tests/fixtures/agentkit-release/prerelease-v2.4.0-beta.7.json');
+const LATEST_PRERELEASE_FIXTURE = resolve(ROOT, 'tests/fixtures/agentkit-release/prerelease-v2.5.0-beta.1.json');
 const OWNER_DECISIONS = resolve(ROOT, 'docs/agentkit-lifecycle-owner-decisions.json');
 const SANITIZER_SOURCE = resolve(ROOT, 'src/data/guides/agentkit/agentkit-report-sanitizer.mjs');
 const CHANNEL_CANDIDATE_PATHS = new Set([
   'tests/fixtures/agentkit-release/stable-v2.4.0.json',
-  'tests/fixtures/agentkit-release/prerelease-v2.4.0-beta.7.json',
+  'tests/fixtures/agentkit-release/prerelease-v2.5.0-beta.1.json',
 ]);
 
 function canonicalize(value) {
@@ -80,7 +80,7 @@ const TOOL = { name: 'agentkit-truth-audit', version: '1.0.0' };
 const MAX_AUDITED_SOURCE_BYTES = 2 * 1024 * 1024;
 const CANDIDATE_PATHS = {
   stable: 'tests/fixtures/agentkit-release/stable-v2.4.0.json',
-  beta: 'tests/fixtures/agentkit-release/prerelease-v2.4.0-beta.7.json',
+  beta: 'tests/fixtures/agentkit-release/prerelease-v2.5.0-beta.1.json',
 };
 
 function canonicalize(value) {

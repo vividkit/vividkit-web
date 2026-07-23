@@ -24,9 +24,7 @@ const inlineCodeClass = 'inline-flex rounded-md border border-slate-200 bg-slate
     <h2 id="command-mapping-heading" class="font-heading text-3xl font-bold text-slate-950 dark:text-slate-50">
       {t('agentkit.mapping.heading')}
     </h2>
-    <p class="mt-3 text-lg leading-relaxed text-slate-600 text-pretty dark:text-slate-300">
-      {t('agentkit.mapping.intro')}
-    </p>
+    <p class="mt-3 text-lg leading-relaxed text-slate-600 text-pretty dark:text-slate-300" set:html={renderInlineCode(t('agentkit.mapping.intro'))}></p>
   </div>
 
   <div class="mt-8 grid gap-8 xl:grid-cols-[minmax(0,1.45fr)_minmax(18rem,0.55fr)]">

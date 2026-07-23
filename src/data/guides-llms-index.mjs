@@ -29,19 +29,24 @@ export const guideSections = [
     heading: 'Getting Started',
     links: [
       {
-        title: 'Migrate from ClaudeKit to AgentKit',
+        title: 'What is AgentKit?',
+        path: '/guides/what-is-agentkit',
+        desc: 'AgentKit succeeds ClaudeKit. Learn the Desktop App boundary, kits, entitlements, and how CLI licenses differ from App licenses.',
+      },
+      {
+        title: 'AgentKit CLI Guide',
+        path: '/guides/cli',
+        desc: 'Install the native ak CLI, authenticate, install kits, use install workarounds, and manage binary, project, and kit updates safely.',
+      },
+      {
+        title: 'Migrate ClaudeKit to AgentKit',
         path: '/guides/agentkit',
-        desc: 'Direct curated guidance for the seven-stage CK-to-AK lifecycle, with support-assisted refusal, canary, observation, and detector-first removal boundaries.',
+        desc: 'Support-safe seven-stage CK → AK cutover, command mapping, and detector-first ClaudeKit cleanup. Migrate apply is preview-first for important data.',
       },
       {
         title: 'What is ClaudeKit? From CK to AgentKit',
         path: '/guides/what-is-claudekit',
         desc: 'Compatibility primer explaining ClaudeKit’s legacy concepts, AgentKit as its successor, project/global scope, target-native Claude Code and Codex syntax, and the correct next guide.',
-      },
-      {
-        title: 'AgentKit CLI Guide',
-        path: '/guides/cli',
-        desc: 'Install the native ak CLI, authenticate, install kits, and manage binary, project, and kit updates safely.',
       },
     ],
   },

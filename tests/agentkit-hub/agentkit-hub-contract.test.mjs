@@ -61,32 +61,44 @@ test('Desktop App facts preserve unresolved official availability boundaries', (
   assert.match(AGENTKIT_APP_FACTS.ctaUrl, /^https:\/\/agentkit\.best\/agentkit-app#pricing$/);
 });
 
-test('Continuity FAQ renders before Desktop App and answers entitlement confusion', async () => {
-  const guide = await readFile(new URL('AgentKitGuide.astro', COMPONENT_ROOT), 'utf8');
-  const source = await readFile(new URL('agentkit/agentkit-continuity-faq.astro', COMPONENT_ROOT), 'utf8');
+test('What is AgentKit owns continuity + desktop; migration hub stays cutover-only', async () => {
+  const [guide, whatIs, cli, faq] = await Promise.all([
+    readFile(new URL('AgentKitGuide.astro', COMPONENT_ROOT), 'utf8'),
+    readFile(new URL('WhatIsAgentKitGuide.astro', COMPONENT_ROOT), 'utf8'),
+    readFile(new URL('CLIGuide.astro', COMPONENT_ROOT), 'utf8'),
+    readFile(new URL('agentkit/agentkit-continuity-faq.astro', COMPONENT_ROOT), 'utf8'),
+  ]);
 
-  assert.match(guide, /<AgentKitContinuityFaq lang=\{currentLang\} \/>/);
-  assert.ok(guide.indexOf('AgentKitContinuityFaq') < guide.indexOf('AgentKitDesktopAppOverview'));
-  assert.match(source, /id="continuity"/);
-  assert.match(source, /href="#stage-backup"/);
-  assert.doesNotMatch(source, /href="#stage-confirm-clean-scope"/);
+  assert.match(whatIs, /<AgentKitContinuityFaq lang=\{currentLang\} \/>/);
+  assert.match(whatIs, /<AgentKitDesktopAppOverview lang=\{currentLang\} \/>/);
+  assert.ok(whatIs.indexOf('<AgentKitContinuityFaq') < whatIs.indexOf('<AgentKitDesktopAppOverview'));
+  assert.doesNotMatch(guide, /AgentKitContinuityFaq|AgentKitDesktopAppOverview|AgentKitQuickStart|AgentKitCompatibilityAndTroubleshooting/);
+  assert.match(cli, /AgentKitQuickStart/);
+  assert.match(cli, /AgentKitCompatibilityAndTroubleshooting/);
+  assert.ok(cli.indexOf('<AgentKitQuickStart') < cli.indexOf('<AgentKitCompatibilityAndTroubleshooting'));
+  assert.match(guide, /AgentKitMigrationChecklist/);
+  assert.match(guide, /AgentKitCommandMapping/);
+  assert.match(guide, /AgentKitLegacySkillCleanup/);
+  assert.ok(guide.indexOf('<AgentKitHero') < guide.indexOf('<AgentKitHubNav'));
+  assert.ok(guide.indexOf('<AgentKitHubNav') < guide.indexOf('<AgentKitMigrationChecklist'));
+  assert.ok(guide.indexOf('<AgentKitMigrationChecklist') < guide.indexOf('<AgentKitCommandMapping'));
+  assert.ok(guide.indexOf('<AgentKitCommandMapping') < guide.indexOf('<AgentKitLegacySkillCleanup'));
+  assert.match(faq, /id="continuity"/);
+  assert.match(faq, /guides\/cli#quick-start/);
+  assert.match(faq, /guides\/agentkit#migration-journey/);
   assert.match(en['agentkit.continuity.desktop.body'], /optional/i);
   assert.match(en['agentkit.continuity.kits.body'], /two kits/i);
   assert.match(en['agentkit.continuity.boundary.body'], /App waitlist|license-key/i);
   assert.match(en['agentkit.continuity.entitlements.body'], /`ak licenses`/);
-  assert.match(en['agentkit.continuity.kits.body'], /`ak kit init engineer`/);
-  assert.match(en['agentkit.continuity.kits.body'], /`ak kit init marketing`/);
-  assert.match(vi['agentkit.continuity.kits.body'], /`ak kit init engineer`/);
-  assert.match(vi['agentkit.continuity.kits.body'], /`ak kit init marketing`/);
-  assert.match(source, /renderInlineCode/);
-  assert.match(source, /set:html=\{renderInlineCode\(/);
+  assert.match(faq, /renderInlineCode/);
+  assert.match(faq, /set:html=\{renderInlineCode\(/);
 });
 
 test('Desktop App section keeps canonical links and rendered structure explicit', async () => {
-  const guide = await readFile(new URL('AgentKitGuide.astro', COMPONENT_ROOT), 'utf8');
+  const whatIs = await readFile(new URL('WhatIsAgentKitGuide.astro', COMPONENT_ROOT), 'utf8');
   const source = await readFile(new URL('agentkit/agentkit-desktop-app-overview.astro', COMPONENT_ROOT), 'utf8');
 
-  assert.match(guide, /<AgentKitDesktopAppOverview lang=\{currentLang\} \/>/);
+  assert.match(whatIs, /<AgentKitDesktopAppOverview lang=\{currentLang\} \/>/);
   assert.match(source, /id="desktop-app"/);
   assert.match(source, /href=\{`\$\{prefix\}\/guides\/cli`\}/);
   assert.match(source, /href=\{AGENTKIT_APP_FACTS\.ctaUrl\}/);
@@ -141,17 +153,22 @@ test('the migration journey renders exactly seven canonical stages in order', as
 test('lifecycle guidance and commands render without a reader-facing decision router', async () => {
   const guide = await readFile(new URL('AgentKitGuide.astro', COMPONENT_ROOT), 'utf8');
   const hero = await readFile(new URL('agentkit/agentkit-hero.astro', COMPONENT_ROOT), 'utf8');
+  const nav = await readFile(new URL('agentkit/agentkit-hub-nav.astro', COMPONENT_ROOT), 'utf8');
   const checklist = await readFile(new URL('agentkit/agentkit-migration-checklist.astro', COMPONENT_ROOT), 'utf8');
-  const targets = await readFile(new URL('agentkit/agentkit-kit-targets.astro', COMPONENT_ROOT), 'utf8');
   const mapping = await readFile(new URL('agentkit/agentkit-command-mapping.astro', COMPONENT_ROOT), 'utf8');
 
-  assert.ok(guide.indexOf('AgentKitHero') < guide.indexOf('AgentKitMigrationChecklist'));
-  assert.ok(guide.indexOf('AgentKitHero') < guide.indexOf('AgentKitKitTargets'));
+  assert.ok(guide.indexOf('<AgentKitHero') < guide.indexOf('<AgentKitHubNav'));
+  assert.ok(guide.indexOf('<AgentKitHubNav') < guide.indexOf('<AgentKitMigrationChecklist'));
   assert.doesNotMatch(guide, /AgentKitOperatorAttestation|initializeAgentKitLifecycleGuides/);
+  assert.doesNotMatch(guide, /AgentKitPathLanes|AgentKitScenarioCommandGuide|AgentKitKitTargets|AgentKitQuickStart|AgentKitContinuityFaq/);
   assert.doesNotMatch(hero, /data-agentkit-lifecycle-router|data-agentkit-router-|agentkit\.router\./);
-  assert.match(hero, /href="#stage-backup"/);
-  assert.match(hero, /href="#scenario-commands"/);
-  assert.match(guide, /AgentKitScenarioCommandGuide/);
+  assert.doesNotMatch(nav, /<form|name="|data-agentkit-lifecycle-router|data-agentkit-router-/);
+  assert.match(nav, /href: '#migration-journey'/);
+  assert.match(nav, /href: '#command-mapping'/);
+  assert.match(nav, /href: '#legacy-skill-cleanup'/);
+  assert.match(hero, /href="#migration-journey"/);
+  assert.match(hero, /guides\/cli/);
+  assert.match(hero, /guides\/what-is-agentkit/);
   for (const name of [
     'goal',
     'legacyOwnershipState',
@@ -163,7 +180,6 @@ test('lifecycle guidance and commands render without a reader-facing decision ro
     'pilotOptIn',
   ]) assert.doesNotMatch(hero, new RegExp(`name="${name}"`));
   assert.doesNotMatch(checklist, /data-agentkit-stage-command-panel hidden|name="completedStages"|data-agentkit-stage-label/);
-  assert.doesNotMatch(targets, /data-agentkit-downstream-actions hidden/);
   assert.doesNotMatch(mapping, /data-agentkit-downstream-actions hidden/);
   assert.doesNotMatch(mapping, /<th scope="col" class="w-12[^>]*>[\s\S]*agentkit\.mapping\.current/);
 });
@@ -261,10 +277,13 @@ test('AgentKit set:html prose always routes through escaping renderInlineCode', 
 
   const files = [
     'AgentKitGuide.astro',
+    'WhatIsAgentKitGuide.astro',
+    'CLIGuide.astro',
     'agentkit/agentkit-hero.astro',
+    'agentkit/agentkit-hub-nav.astro',
+    'agentkit/agentkit-quick-start.astro',
     'agentkit/agentkit-migration-checklist.astro',
     'agentkit/agentkit-command-mapping.astro',
-    'agentkit/agentkit-kit-targets.astro',
     'agentkit/agentkit-legacy-skill-cleanup.astro',
     'agentkit/agentkit-compatibility-and-troubleshooting.astro',
     'agentkit/agentkit-desktop-app-overview.astro',

@@ -29,7 +29,7 @@ test('ClaudeKit explainer facts preserve official successor and source boundarie
   assert.deepEqual(WHAT_IS_CLAUDEKIT_FACTS.currentTargets, ['claude-code', 'codex']);
   assert.deepEqual(WHAT_IS_CLAUDEKIT_SOURCES.map(({ channel }) => channel), ['stable', 'legacy', 'legacy']);
   assert.deepEqual(WHAT_IS_CLAUDEKIT_SOURCES.map(({ verifiedAt }) => verifiedAt), [
-    '2026-07-20',
+    '2026-07-21',
     '2026-07-17',
     '2026-07-17',
   ]);
@@ -60,10 +60,18 @@ test('the legacy slug composes four current fact-backed primer sections', async 
 
   for (const file of files) {
     const source = await readFile(new URL(file, COMPONENT_ROOT), 'utf8');
-    assert.ok(!source.includes('set:html'), file);
+    if (source.includes('set:html')) {
+      assert.match(source, /from ['"].*inline-code['"]/, file);
+      assert.match(source, /set:html=\{renderInlineCode\(/, file);
+      assert.ok(!/set:html=\{(?!renderInlineCode\()/.test(source), file);
+    }
     assert.doesNotMatch(source, /\/(?:ck|ckm):/i, file);
     assert.doesNotMatch(source, /discount|20% off|purchase ClaudeKit/i, file);
   }
+
+  const pillars = await readFile(new URL('what-is-claudekit/what-is-claudekit-pillars-and-process-flow.astro', COMPONENT_ROOT), 'utf8');
+  assert.match(pillars, /<details[\s\S]*<summary/);
+  assert.match(pillars, /open=\{index === 0\}/);
 });
 
 test('target examples resolve through canonical AgentKit adapters', () => {

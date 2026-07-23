@@ -19,7 +19,7 @@ const OWNER_SEMANTIC_RECORD = new URL(
 
 const RELEASE_FIXTURES = [
   'stable-v2.4.0.json',
-  'prerelease-v2.4.0-beta.7.json',
+  'prerelease-v2.5.0-beta.1.json',
 ];
 
 const SHA256_PATTERN = /^[a-f0-9]{64}$/;
@@ -28,7 +28,7 @@ const SEMVER_PATTERN = /^\d+\.\d+\.\d+(?:-beta\.\d+)?$/;
 
 const EXPECTED_OBSERVATION_URLS = {
   'agentkit-stable-catalog-v2.4.0-2026-07-20': 'https://releases.agentkit.best/channels/stable/release-catalog.json',
-  'agentkit-beta-catalog-v2.4.0-beta.7-2026-07-20': 'https://releases.agentkit.best/channels/beta/release-catalog.json',
+  'agentkit-changelog-beta-v2.5.0-beta.1-2026-07-21': 'https://agentkit.best/changelog',
 };
 
 const EXPECTED_OWNER_DECISIONS = [
@@ -170,8 +170,8 @@ function validateReleaseFixture(fixture, observations) {
   assert.doesNotMatch(serialized, /ak_(?:license|live)_[A-Za-z0-9_-]{16,}/);
 }
 
-test('stable and promoted prerelease fixtures are independently observed and normalized', async () => {
-  const observations = await readJson(new URL('source-observations-2026-07-20.json', FIXTURE_ROOT));
+test('stable and active beta fixtures are independently observed and normalized', async () => {
+  const observations = await readJson(new URL('source-observations-2026-07-21.json', FIXTURE_ROOT));
   const fixtures = await Promise.all(
     RELEASE_FIXTURES.map((file) => readJson(new URL(file, FIXTURE_ROOT))),
   );
@@ -179,14 +179,14 @@ test('stable and promoted prerelease fixtures are independently observed and nor
   for (const fixture of fixtures) validateReleaseFixture(fixture, observations.observations);
   assert.deepEqual(fixtures.map(({ channel, version }) => [channel, version]), [
     ['stable', '2.4.0'],
-    ['beta', '2.4.0-beta.7'],
+    ['beta', '2.5.0-beta.1'],
   ]);
   assert.notEqual(fixtures[0].sourceObservationId, fixtures[1].sourceObservationId);
   assert.notEqual(fixtures[0].normalizedFactSha256, fixtures[1].normalizedFactSha256);
 });
 
 test('every source observation is an exact-URL reviewer attestation with offline-safe metadata', async () => {
-  const document = await readJson(new URL('source-observations-2026-07-20.json', FIXTURE_ROOT));
+  const document = await readJson(new URL('source-observations-2026-07-21.json', FIXTURE_ROOT));
   assert.equal(document.schemaVersion, 1);
   assert.match(document.capturedAt, ISO_INSTANT_PATTERN);
   assert.equal(new Set(document.observations.map(({ id }) => id)).size, document.observations.length);
@@ -216,13 +216,14 @@ test('public release contract excludes development and legacy channels', () => {
     'https://releases.agentkit.best',
   ]);
   assert.equal(AGENTKIT_SOURCE_SNAPSHOT.releaseVersion, '2.4.0');
-  assert.equal(AGENTKIT_SOURCE_SNAPSHOT.activeBetaVersion, null);
-  assert.equal(AGENTKIT_SOURCE_SNAPSHOT.verifiedAt, '2026-07-20');
+  assert.equal(AGENTKIT_SOURCE_SNAPSHOT.activeBetaVersion, '2.5.0-beta.1');
+  assert.equal(AGENTKIT_SOURCE_SNAPSHOT.hasActiveBeta, true);
+  assert.equal(AGENTKIT_SOURCE_SNAPSHOT.verifiedAt, '2026-07-21');
 });
 
 test('release validator fails closed on provenance, origin, channel, digest, and claim violations', async () => {
   const observationsDocument = await readJson(
-    new URL('source-observations-2026-07-20.json', FIXTURE_ROOT),
+    new URL('source-observations-2026-07-21.json', FIXTURE_ROOT),
   );
   const stable = await readJson(new URL(RELEASE_FIXTURES[0], FIXTURE_ROOT));
   const clone = (value) => structuredClone(value);
@@ -309,7 +310,7 @@ test('release validator fails closed on provenance, origin, channel, digest, and
 test('tracked source record classifies claims without leaking private evidence paths', async () => {
   const record = await readFile(SOURCE_RECORD, 'utf8');
   const observationsDocument = await readJson(
-    new URL('source-observations-2026-07-20.json', FIXTURE_ROOT),
+    new URL('source-observations-2026-07-21.json', FIXTURE_ROOT),
   );
   const historicalObservations = await readJson(
     new URL('source-observations-2026-07-17.json', FIXTURE_ROOT),

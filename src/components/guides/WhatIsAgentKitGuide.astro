@@ -1,0 +1,17 @@
+---
+import { getLangFromUrl, type Language } from '@/i18n';
+import AgentKitContinuityFaq from './agentkit/agentkit-continuity-faq.astro';
+import AgentKitDesktopAppOverview from './agentkit/agentkit-desktop-app-overview.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang ?? getLangFromUrl(Astro.url);
+---
+
+<article class="mt-6 pb-8" data-agentkit-surface="what-is" data-agentkit-locale={currentLang}>
+  <AgentKitContinuityFaq lang={currentLang} />
+  <AgentKitDesktopAppOverview lang={currentLang} />
+</article>

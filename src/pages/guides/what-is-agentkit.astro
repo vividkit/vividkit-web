@@ -1,0 +1,16 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import WhatIsAgentKitGuide from '@/components/guides/WhatIsAgentKitGuide.astro';
+import { useTranslations } from '@/i18n/utils';
+
+const t = useTranslations('en');
+---
+
+<GuidesLayout
+  title={`${t('agentkit.meta.whatIsTitle')} - ${t('site.title')}`}
+  description={t('agentkit.meta.whatIsDescription')}
+  canonicalPath="/guides/what-is-agentkit"
+  activeTab="what-is-agentkit"
+>
+  <WhatIsAgentKitGuide lang="en" />
+</GuidesLayout>

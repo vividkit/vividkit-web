@@ -105,7 +105,7 @@ export const AGENTKIT_LIFECYCLE_STAGE_FACTS = [
     prerequisite: 'The selected scope is clean and the installer trust boundary was reviewed.',
     expectedSignal: 'The expected `ak` executable resolves without changing the CK control plane.',
     failureAction: 'Restore the pre-cutover state and investigate the installer or PATH.',
-    commandIds: [],
+    commandIds: ['install-ak-unix', 'install-ak-windows'],
     copyPolicy: 'manual-only',
   },
   {
@@ -151,6 +151,9 @@ export const AGENTKIT_LIFECYCLE_COMMANDS = [
   { id: 'detect-ck-macos', stage: 'confirm-clean-scope', platform: 'macos', shell: 'zsh', command: 'which -a ck', safety: 'read-only', copyable: true, sourceUrl: CLAUDEKIT_UNINSTALL_DOCS },
   { id: 'detect-ck-linux', stage: 'confirm-clean-scope', platform: 'linux', shell: 'bash', command: 'which -a ck', safety: 'read-only', copyable: true, sourceUrl: CLAUDEKIT_UNINSTALL_DOCS },
   { id: 'detect-ck-windows', stage: 'confirm-clean-scope', platform: 'windows', shell: 'powershell', command: 'Get-Command ck -All', safety: 'read-only', copyable: true, sourceUrl: CLAUDEKIT_UNINSTALL_DOCS },
+  { id: 'install-ak-unix', stage: 'install-ak', platform: 'macos', shell: 'zsh', command: 'curl -fsSL https://agentkit.best/install.sh | sh', safety: 'network-exec', copyable: false, sourceUrl: AGENTKIT_DOCS },
+  { id: 'install-ak-unix', stage: 'install-ak', platform: 'linux', shell: 'bash', command: 'curl -fsSL https://agentkit.best/install.sh | sh', safety: 'network-exec', copyable: false, sourceUrl: AGENTKIT_DOCS },
+  { id: 'install-ak-windows', stage: 'install-ak', platform: 'windows', shell: 'powershell', command: 'irm https://agentkit.best/install.ps1 | iex', safety: 'network-exec', copyable: false, sourceUrl: AGENTKIT_DOCS },
   { id: 'verify-ak-macos', stage: 'verify-canary', platform: 'macos', shell: 'zsh', command: 'ak --version', safety: 'read-only', copyable: true, sourceUrl: AGENTKIT_DOCS },
   { id: 'verify-ak-linux', stage: 'verify-canary', platform: 'linux', shell: 'bash', command: 'ak --version', safety: 'read-only', copyable: true, sourceUrl: AGENTKIT_DOCS },
   { id: 'verify-ak-windows', stage: 'verify-canary', platform: 'windows', shell: 'powershell', command: 'ak --version', safety: 'read-only', copyable: true, sourceUrl: AGENTKIT_DOCS },

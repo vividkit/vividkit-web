@@ -83,12 +83,12 @@ export const AGENTKIT_SOURCE_SNAPSHOT = {
   channel: 'stable',
   sourceUrl: AGENTKIT_OFFICIAL_LINKS.docs,
   changelogUrl: AGENTKIT_OFFICIAL_LINKS.changelog,
-  verifiedAt: '2026-07-20',
+  verifiedAt: '2026-07-21',
   releaseVersion: '2.4.0',
-  latestPrerelease: '2.4.0-beta.7',
-  promotedFromPrerelease: '2.4.0-beta.7',
-  activeBetaVersion: null,
-  hasActiveBeta: false,
+  latestPrerelease: '2.5.0-beta.1',
+  promotedFromPrerelease: null,
+  activeBetaVersion: '2.5.0-beta.1',
+  hasActiveBeta: true,
   evidenceClass: 'official-docs',
   artifactKind: 'agentkit-cli',
   artifactVersion: '2.4.0',
@@ -96,7 +96,7 @@ export const AGENTKIT_SOURCE_SNAPSHOT = {
 } as const satisfies AgentKitSourceMetadata & {
   changelogUrl: string;
   latestPrerelease: string;
-  promotedFromPrerelease: string;
+  promotedFromPrerelease: string | null;
   activeBetaVersion: string | null;
   hasActiveBeta: boolean;
 };
@@ -158,7 +158,7 @@ export const AGENTKIT_CREDENTIAL_TRANSPORTS = [
     id: 'email-otp',
     command: 'ak login --email <account-email>',
     officialMethod: 'Interactive email one-time-code sign-in for a CLI registry session.',
-    exposureNotes: 'The email address is visible in the command; the short-lived OTP is entered interactively.',
+    exposureNotes: 'The email address is visible in the command; the OTP is entered interactively. The CLI registry session is stored under ~/.agentkit/auth/session.json (mode 0600), not the OS keychain.',
     ciHandling: 'Interactive OTP is unsuitable for unattended CI.',
     ...CREDENTIAL_SAFETY,
   }),
@@ -166,7 +166,7 @@ export const AGENTKIT_CREDENTIAL_TRANSPORTS = [
     id: 'api-key',
     command: 'ak login --api-key <api-key> --no-interactive',
     officialMethod: 'User API key for a non-interactive CLI registry session and CI use.',
-    exposureNotes: 'A command-line argument can be retained by shell history, job logs, or process inspection.',
+    exposureNotes: 'A command-line argument can be retained by shell history, job logs, or process inspection. A re-mintable API key may be stored at ~/.agentkit/auth/api-key (mode 0600).',
     ciHandling: 'Inject through a masked CI secret and expand only in the trusted job; never print the command.',
     ...CREDENTIAL_SAFETY,
   }),

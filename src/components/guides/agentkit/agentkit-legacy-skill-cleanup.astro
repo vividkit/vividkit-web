@@ -33,7 +33,7 @@ const sanitizedBundleExample = sanitizeAgentKitLifecycleReport({
 const codeClass = 'block max-w-full overflow-x-auto rounded-xl bg-slate-100 p-4 font-mono text-sm text-purple-600 dark:bg-slate-800/90 dark:text-purple-400';
 ---
 
-<section id="legacy-skill-cleanup" aria-labelledby="legacy-skill-cleanup-heading" class="pt-16">
+<section id="legacy-skill-cleanup" aria-labelledby="legacy-skill-cleanup-heading" class="scroll-mt-28 pt-16">
   <div class="max-w-3xl">
     <p class="text-sm font-bold uppercase tracking-[0.12em] text-rose-700 dark:text-rose-300">{t('agentkit.cleanup.eyebrow')}</p>
     <h2 id="legacy-skill-cleanup-heading" class="mt-2 font-heading text-3xl font-bold text-slate-950 text-balance dark:text-slate-50">
@@ -55,7 +55,7 @@ const codeClass = 'block max-w-full overflow-x-auto rounded-xl bg-slate-100 p-4 
       <Search class="h-5 w-5 text-purple-600 dark:text-purple-400" aria-hidden="true" />
       <h3 id="agentkit-detector-heading" class="font-bold text-slate-950 dark:text-slate-50">{t('agentkit.cleanup.detect.title')}</h3>
     </div>
-    <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{t('agentkit.cleanup.detect.body')}</p>
+    <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300" set:html={renderInlineCode(t('agentkit.cleanup.detect.body'))}></p>
     <div class="mt-4 grid gap-3">
       {AGENTKIT_CK_EXECUTABLE_DETECTORS.map((detector) => (
         <article class="min-w-0 rounded-xl border border-slate-200 p-4 dark:border-slate-700">
@@ -69,14 +69,14 @@ const codeClass = 'block max-w-full overflow-x-auto rounded-xl bg-slate-100 p-4 
 
   <section aria-labelledby="agentkit-ownership-heading" class="mt-6 max-w-4xl rounded-2xl border border-slate-200 p-5 dark:border-slate-700">
     <h3 id="agentkit-ownership-heading" class="font-bold text-slate-950 dark:text-slate-50">{t('agentkit.cleanup.ownership.title')}</h3>
-    <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{t('agentkit.cleanup.ownership.body')}</p>
+    <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300" set:html={renderInlineCode(t('agentkit.cleanup.ownership.body'))}></p>
     <div class="mt-4 grid gap-4 sm:grid-cols-2">
       {AGENTKIT_CK_OWNERSHIP_PROBES.map((probe) => (
         <article class="min-w-0 rounded-xl border border-slate-200 p-4 dark:border-slate-700" data-agentkit-ownership-probe={probe.packageManager}>
           <h4 class="font-bold text-slate-950 dark:text-slate-50">{probe.packageManager}</h4>
           {probe.commands.map(({ command }) => <code class={`${codeClass} mt-3`}>{command}</code>)}
-          <p class="mt-3 text-xs leading-relaxed text-slate-500 dark:text-slate-400">{t(`agentkit.cleanup.ownership.${probe.packageManager}.evidence`)}</p>
-          <p class="mt-2 text-xs font-bold text-rose-700 dark:text-rose-300">{t('agentkit.cleanup.ownership.fallback')}</p>
+          <p class="mt-3 text-xs leading-relaxed text-slate-500 dark:text-slate-400" set:html={renderInlineCode(t(`agentkit.cleanup.ownership.${probe.packageManager}.evidence`))}></p>
+          <p class="mt-2 text-xs font-bold text-rose-700 dark:text-rose-300" set:html={renderInlineCode(t('agentkit.cleanup.ownership.fallback'))}></p>
           <a href={probe.sourceUrl} target="_blank" rel="noopener noreferrer" class="mt-3 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-purple-700 hover:underline focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:text-purple-300">
             {t('agentkit.links.official')} <ExternalLink class="h-4 w-4" aria-hidden="true" />
           </a>
@@ -97,7 +97,7 @@ const codeClass = 'block max-w-full overflow-x-auto rounded-xl bg-slate-100 p-4 
           <ShieldCheck class="h-5 w-5 text-purple-600 dark:text-purple-400" aria-hidden="true" />
           <h3 id="agentkit-removal-heading" class="font-bold text-slate-950 dark:text-slate-50">{t('agentkit.cleanup.verify.title')}</h3>
         </div>
-        <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{t('agentkit.cleanup.verify.body')}</p>
+        <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300" set:html={renderInlineCode(t('agentkit.cleanup.verify.body'))}></p>
         <div class="mt-4 grid gap-4 sm:grid-cols-2">
           {AGENTKIT_CK_REMOVAL_POLICIES.map((policy) => (
             <article class="min-w-0 rounded-xl border border-slate-200 p-4 dark:border-slate-700" data-agentkit-removal-policy={policy.packageManager}>
@@ -118,7 +118,7 @@ const codeClass = 'block max-w-full overflow-x-auto rounded-xl bg-slate-100 p-4 
         </div>
         <div class="mt-5 rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-900 dark:border-rose-900 dark:bg-rose-950/20 dark:text-rose-100">
           <p class="font-bold">{t('agentkit.cleanup.preview.title')}</p>
-          <p class="mt-1">{t('agentkit.cleanup.preview.body')}</p>
+          <p class="mt-1" set:html={renderInlineCode(t('agentkit.cleanup.preview.body'))}></p>
           <p class="mt-3 font-semibold">{t('agentkit.cleanup.remove.manual')}</p>
         </div>
         <div class="mt-5 rounded-xl border border-slate-200 p-4 text-sm text-slate-700 dark:border-slate-700 dark:text-slate-300">

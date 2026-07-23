@@ -12,7 +12,7 @@ export const GET: APIRoute = () => {
   const entries = GUIDE_ROUTE_MANIFEST.filter((entry) => entry.includeInSitemap && entry.viPath);
 
   const urlEntries = entries.flatMap((entry) => {
-    const priority = entry.enPath === '/' ? '1.0' : entry.enPath === '/guides' || entry.enPath === '/guides/agentkit' ? '0.9' : '0.7';
+    const priority = entry.enPath === '/' ? '1.0' : entry.enPath === '/guides' || entry.enPath === '/guides/agentkit' || entry.enPath === '/guides/what-is-agentkit' || entry.enPath === '/guides/cli' ? '0.9' : '0.7';
     const changefreq = entry.enPath === '/' || entry.enPath === '/guides' ? 'weekly' : 'monthly';
     const enUrl = escapeXml(`${siteUrl}${entry.enPath}`);
     const viUrl = escapeXml(`${siteUrl}${entry.viPath}`);

@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "latestStable": "2.4.0",
-  "latestPrerelease": "2.4.0-beta.7",
-  "promotedFromPrerelease": "2.4.0-beta.7",
-  "activeBetaVersion": null,
-  "hasActiveBeta": false,
+  "latestPrerelease": "2.5.0-beta.1",
+  "promotedFromPrerelease": null,
+  "activeBetaVersion": "2.5.0-beta.1",
+  "hasActiveBeta": true,
   "stableFixture": "stable-v2.4.0.json",
-  "prereleaseFixture": "prerelease-v2.4.0-beta.7.json",
-  "sourceObservationsFixture": "source-observations-2026-07-20.json",
+  "prereleaseFixture": "prerelease-v2.5.0-beta.1.json",
+  "sourceObservationsFixture": "source-observations-2026-07-21.json",
   "commandEvidence": {
     "exactTag": "v2.4.0",
     "parityManifestPath": "apps/cli/cmd/parity-check/parity-manifest.json",
@@ -34,6 +34,8 @@
     ]
   },
   "historicalFixtures": [
+    "prerelease-v2.4.0-beta.7.json",
+    "source-observations-2026-07-20.json",
     "stable-v2.3.0.json",
     "beta-v2.3.1-beta.1.json",
     "source-observations-2026-07-17.json"

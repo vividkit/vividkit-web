@@ -129,7 +129,7 @@ The 3–7 day form is ephemeral advisory input. The policy checks user-supplied 
 ### Facts
 
 - Stable: AgentKit 2.4.0; default SSR and curated command facts.
-- Latest prerelease: AgentKit 2.4.0-beta.7; promoted into stable from the same source commit.
+- Latest prerelease / active beta: AgentKit 2.5.0-beta.1; stable remains 2.4.0. Historical 2.4.0-beta.7 is promotion provenance for stable.
 - Active beta: none at the 2026-07-20 observation; current beta command fact count is zero.
 - `ak migrate` is stable. Its fact remains preview-first and public copy does not offer default apply.
 

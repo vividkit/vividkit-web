@@ -24,7 +24,7 @@ const LLM_GUIDE_SUFFIXES = new Set([
   'inside-claudekit/frontend-design', 'inside-claudekit/getting-started',
   'inside-claudekit/guard-rails', 'inside-claudekit/plan-modes', 'migrate', 'permissions',
   'promotions', 'remote-control', 'session-recovery', 'ui-review-gate', 'uiux',
-  'what-is-claudekit', 'workflows', 'agentkit',
+  'what-is-claudekit', 'what-is-agentkit', 'workflows', 'agentkit',
 ]);
 
 const LEGACY_SLUG_SUFFIXES = new Set([
@@ -71,6 +71,7 @@ const BASELINE_GUIDE_SUFFIXES = [
   'session-recovery',
   'ui-review-gate',
   'uiux',
+  'what-is-agentkit',
   'what-is-claudekit',
   'workflows',
 ] as const;

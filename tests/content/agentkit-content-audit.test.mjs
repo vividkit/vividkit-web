@@ -102,11 +102,11 @@ test('English and Vietnamese READMEs preserve lifecycle, channel, route and supp
   for (const text of [english, vietnamese]) {
     for (const invariant of [
       '2.4.0',
-      '2.4.0-beta.7',
+      '2.5.0-beta.1',
       '?channel=beta',
       '/llms.txt',
       '/llms-full.txt',
-      '132',
+      '134',
       'https://discord.com/invite/x7SwTSf3wc',
       'https://github.com/bestagentkits/agentkit-support',
     ]) assert.ok(text.includes(invariant), invariant);

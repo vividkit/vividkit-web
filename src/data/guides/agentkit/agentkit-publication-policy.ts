@@ -16,10 +16,10 @@ export interface AgentKitPublicationRecord {
 
 export const AGENTKIT_CURRENT_RELEASE_EVIDENCE = {
   latestStable: '2.4.0',
-  latestPrerelease: '2.4.0-beta.7',
-  promotedFromPrerelease: '2.4.0-beta.7',
-  activeBetaVersion: null,
-  hasActiveBeta: false,
+  latestPrerelease: '2.5.0-beta.1',
+  promotedFromPrerelease: null,
+  activeBetaVersion: '2.5.0-beta.1',
+  hasActiveBeta: true,
 } as const;
 
 // agentkit-publication-record:start
@@ -27,8 +27,8 @@ export const AGENTKIT_PUBLICATION_RECORD = {
   schemaVersion: 1,
   vividKitSha: '7d5ab60e9e706ba612a6202f3024685cfa32bea6',
   stableFixtureSha256: '83dc4f2b886707d57853a80bca17b439d754c8064e091b0aa942a68f75477370',
-  prereleaseFixtureSha256: '075a4fd1d8c024eba1ce4e550e8bdf88bb61f769e923e54755aa47f910cfea44',
-  sourceClosureSha256: 'c4bb7a54552cee518f56362ac1fb3823c5c371aa604b21d892c7f6f51799bdf4',
+  prereleaseFixtureSha256: '4297c3803c1af714beeb51a193118830b28a8797d078e4797a69a9f9d32a544d',
+  sourceClosureSha256: '0900f51f0da798e3f22ddef11720c01e7e0b1a51bbc278abdd599d8bbfd4cce6',
   approvalRevisionSha: null,
   pilotStartedAt: null,
   pilotEndedAt: null,

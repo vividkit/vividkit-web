@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-07-21T16:45:43Z",
+  "observations": [
+    {
+      "id": "agentkit-stable-catalog-v2.4.0-2026-07-20",
+      "requestedUrl": "https://releases.agentkit.best/channels/stable/release-catalog.json",
+      "effectiveUrl": "https://releases.agentkit.best/channels/stable/release-catalog.json",
+      "retrievedAt": "2026-07-20T08:09:38Z",
+      "retrievalMethod": "HTTPS GET without redirects",
+      "httpStatus": 200,
+      "redirectCount": 0,
+      "rawResponseSha256": "8f82fb0adbc1ccc0343752a9895ba378ae5d7a7e1bc40e30baebbffa247e8229",
+      "observedMarker": "2.4.0",
+      "reviewer": "VividKit maintainer evidence capture",
+      "catalogGeneratedAt": "2026-07-19T08:55:46.229332097Z",
+      "catalogPublishedAt": "2026-07-19T08:55:46.229332097Z",
+      "sourceCommit": "c8183754418b8bfd7be56155081394f85a340edb",
+      "isPrerelease": false,
+      "changelogSha256": "0b86861717356778f807f82d2d8dc731ec7a72e469f17f8cd6ce20a2c60f9c6c",
+      "tagRef": "v2.4.0",
+      "tagObjectSha": "352e61cecadf643beefc356e42aadf677eb48cb3",
+      "peeledCommitSha": "a3a1407fc94415139af679a5014856bf58e4c6d7"
+    },
+    {
+      "id": "agentkit-changelog-beta-v2.5.0-beta.1-2026-07-21",
+      "requestedUrl": "https://agentkit.best/changelog",
+      "effectiveUrl": "https://agentkit.best/changelog",
+      "retrievedAt": "2026-07-21T16:45:43Z",
+      "retrievalMethod": "HTTPS GET without redirects",
+      "httpStatus": 200,
+      "redirectCount": 0,
+      "rawResponseSha256": "1fd29521a914a7ae1c5021fa53fa154dee0c394a4137f39a1ba3ff4f24ef305d",
+      "observedMarker": "2.5.0-beta.1",
+      "reviewer": "VividKit maintainer evidence capture"
+    }
+  ]
+}

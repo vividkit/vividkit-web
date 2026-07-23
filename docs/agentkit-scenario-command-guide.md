@@ -17,8 +17,8 @@ The rendered source is `src/components/guides/agentkit/agentkit-scenario-command
 | Offline/cache | Inspect local versions and run offline diagnostics | Cold offline without a verified cache is unsupported; warm cache does not imply latest |
 | Recovery | List, verify, and preview a backup before recovery | Recovery writes project state |
 | CK migration | Use preview/smoke-first handling and stop on ambiguous or important data | No migration execution CTA; support-assisted boundary remains |
-| Maintenance | Check self-update availability and preview project uninstall | Project uninstall does not remove the binary |
-| Portable output | Build the exact Engineer portable bundle into a named output directory | Writes only the selected build output |
+| Maintenance | Check stable-channel self-update, apply only with `--yes`, and preview project uninstall | Project uninstall does not remove the binary; binary rollback is reinstalling a previous release tag |
+| Portable output | Build the exact Engineer portable bundle into a named output directory | Artifacts land in `{--out}/agentkit-portable/`, not directly in the `--out` root |
 
 ## Command policy
 
@@ -26,7 +26,7 @@ The rendered source is `src/components/guides/agentkit/agentkit-scenario-command
 - Public kit choices are `engineer` and `marketing`. Do not teach a generic core product.
 - `--force` preserves unselected extra files, but overwrites selected AgentKit-owned paths and collision paths.
 - Do not teach removed `--fresh` behavior.
-- `ak setup` writes AgentKit configuration only by behavior. It has neither a dry-run flag nor a config-only flag, so it is not promoted in the scenario cards.
+- `ak setup` writes user-level AgentKit configuration at `~/.agentkit/config.yaml`. It does not install kits or mutate project trees.
 - Kit uninstall begins with its preview form. A confirmed `--yes` run requires deliberate review of the selected project, plugin mode, and paths.
 - Project uninstall concerns AgentKit-owned project content. Binary removal must follow proven installer or package ownership.
 - Never present deletion of an AgentKit runtime home as a binary-removal shortcut.

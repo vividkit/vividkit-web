@@ -33,24 +33,24 @@ async function activeSourceFiles(directory = new URL('../../src/', import.meta.u
   return files;
 }
 
-test('current source snapshot preserves promotion provenance without inventing active beta facts', () => {
+test('current source snapshot preserves stable default with an active public beta', () => {
   assert.equal(AGENTKIT_SOURCE_SNAPSHOT.releaseVersion, '2.4.0');
-  assert.equal(AGENTKIT_SOURCE_SNAPSHOT.latestPrerelease, '2.4.0-beta.7');
-  assert.equal(AGENTKIT_SOURCE_SNAPSHOT.promotedFromPrerelease, '2.4.0-beta.7');
-  assert.equal(AGENTKIT_SOURCE_SNAPSHOT.hasActiveBeta, false);
-  assert.equal(AGENTKIT_SOURCE_SNAPSHOT.activeBetaVersion, null);
+  assert.equal(AGENTKIT_SOURCE_SNAPSHOT.latestPrerelease, '2.5.0-beta.1');
+  assert.equal(AGENTKIT_SOURCE_SNAPSHOT.promotedFromPrerelease, null);
+  assert.equal(AGENTKIT_SOURCE_SNAPSHOT.hasActiveBeta, true);
+  assert.equal(AGENTKIT_SOURCE_SNAPSHOT.activeBetaVersion, '2.5.0-beta.1');
 });
 
-test('current release index names 2.4 fixtures and keeps 2.3 fixtures as historical evidence', async () => {
+test('current release index names 2.4 stable and active 2.5 beta fixtures', async () => {
   const current = await readJson(new URL('current-release.json', FIXTURE_ROOT));
   assert.equal(current.schemaVersion, 1);
   assert.equal(current.latestStable, '2.4.0');
-  assert.equal(current.latestPrerelease, '2.4.0-beta.7');
-  assert.equal(current.promotedFromPrerelease, '2.4.0-beta.7');
-  assert.equal(current.activeBetaVersion, null);
-  assert.equal(current.hasActiveBeta, false);
+  assert.equal(current.latestPrerelease, '2.5.0-beta.1');
+  assert.equal(current.promotedFromPrerelease, null);
+  assert.equal(current.activeBetaVersion, '2.5.0-beta.1');
+  assert.equal(current.hasActiveBeta, true);
   assert.equal(current.stableFixture, 'stable-v2.4.0.json');
-  assert.equal(current.prereleaseFixture, 'prerelease-v2.4.0-beta.7.json');
+  assert.equal(current.prereleaseFixture, 'prerelease-v2.5.0-beta.1.json');
   assert.equal(current.commandEvidence.exactTag, 'v2.4.0');
   assert.equal(current.commandEvidence.parityManifestSha256, '198c9e4957b8f445496ed3714901a599f45c84667fdb0a6bb1a3f3c6b4e88c4c');
   assert.equal(current.commandEvidence.fullInventoryCount, 120);
@@ -62,6 +62,7 @@ test('current release index names 2.4 fixtures and keeps 2.3 fixtures as histori
 
   for (const name of [
     'stable-v2.4.0.json',
+    'prerelease-v2.5.0-beta.1.json',
     'prerelease-v2.4.0-beta.7.json',
     'stable-v2.3.0.json',
     'beta-v2.3.1-beta.1.json',
@@ -72,7 +73,7 @@ test('current release index names 2.4 fixtures and keeps 2.3 fixtures as histori
     readJson(new URL(current.prereleaseFixture, FIXTURE_ROOT)),
   ]);
   assert.deepEqual([stable.channel, stable.version], ['stable', '2.4.0']);
-  assert.deepEqual([prerelease.releaseStatus, prerelease.version], ['pre-release', '2.4.0-beta.7']);
+  assert.deepEqual([prerelease.releaseStatus, prerelease.version], ['pre-release', '2.5.0-beta.1']);
 });
 
 test('stable 2.4 facts contain the curated safe command subset', () => {
@@ -94,7 +95,8 @@ test('stable 2.4 facts contain the curated safe command subset', () => {
     ['backups-restore', 'ak backups restore <backup-id> --dry-run'],
     ['recover', 'ak recover --latest --dry-run'],
     ['migrate', 'ak migrate --from=ck'],
-    ['self-update-check', 'ak self-update --check'],
+    ['self-update-check', 'ak self-update --check --channel stable'],
+    ['self-update-apply', 'ak self-update --channel stable --yes'],
     ['versions-local', 'ak versions --local-only'],
     ['uninstall', 'ak uninstall --dry-run'],
     ['portable-export', 'ak kit init engineer --target portable --build-only --out ./agentkit-portable'],
@@ -112,16 +114,21 @@ test('stable 2.4 facts contain the curated safe command subset', () => {
   assert.match(getAgentKitCliFact('migrate', 'stable')?.note ?? '', /support/i);
 });
 
-test('AgentKitGuide renders one bilingual scenario component inside stable SSR facts', async () => {
-  const [guide, scenarios] = await Promise.all([
+test('AgentKit migration hub stays cutover-only while CLI and What-is own install/explain', async () => {
+  const [guide, cli, whatIs, scenarios] = await Promise.all([
     source('src/components/guides/AgentKitGuide.astro'),
+    source('src/components/guides/CLIGuide.astro'),
+    source('src/components/guides/WhatIsAgentKitGuide.astro'),
     source('src/components/guides/agentkit/agentkit-scenario-command-guide.astro'),
   ]);
-  assert.match(guide, /AgentKitScenarioCommandGuide/);
-  const stableStart = guide.indexOf('data-agentkit-stable-facts');
-  const stableEnd = guide.indexOf('</div>', stableStart);
-  const scenarioAt = guide.indexOf('<AgentKitScenarioCommandGuide', stableStart);
-  assert.ok(stableStart !== -1 && scenarioAt > stableStart && scenarioAt < stableEnd);
+  assert.doesNotMatch(guide, /AgentKitScenarioCommandGuide|AgentKitPathLanes|AgentKitKitTargets|AgentKitQuickStart|AgentKitContinuityFaq|AgentKitDesktopAppOverview|AgentKitCompatibilityAndTroubleshooting/);
+  assert.match(guide, /AgentKitMigrationChecklist/);
+  assert.match(guide, /AgentKitCommandMapping/);
+  assert.match(guide, /AgentKitLegacySkillCleanup/);
+  assert.match(cli, /AgentKitQuickStart/);
+  assert.match(cli, /AgentKitCompatibilityAndTroubleshooting/);
+  assert.match(whatIs, /AgentKitContinuityFaq/);
+  assert.match(whatIs, /AgentKitDesktopAppOverview/);
   assert.match(scenarios, /lang:\s*Language|lang=|isVi/);
   assert.match(scenarios, /getAgentKitCliFact|getStableAgentKitCliFacts|cliFacts/);
   assert.match(scenarios, /id:\s*'offline'/);
@@ -170,7 +177,7 @@ test('curated copy rejects known 2.4 command and safety traps', async () => {
   assert.doesNotMatch(scenarios, /ak migrate[^\n]*(?:--dry-run=false|--yes|\bapply\b)/i);
 });
 
-test('no-active-beta switcher falls back to stable while beta code remains lazy and isolated', async () => {
+test('active-beta switcher advertises public beta while hold builds keep stable rendered facts', async () => {
   const [switcher, controller, guide, betaFacts] = await Promise.all([
     source('src/components/guides/agentkit/agentkit-channel-switcher.astro'),
     source('src/scripts/agentkit-channel-controller.mjs'),
@@ -178,16 +185,18 @@ test('no-active-beta switcher falls back to stable while beta code remains lazy 
     source('src/data/guides/agentkit/agentkit-beta-channel-facts.mjs'),
   ]);
   assert.match(switcher, /hasActiveBeta|AGENTKIT_SOURCE_SNAPSHOT/);
-  assert.doesNotMatch(switcher, /const betaHref = `\$\{Astro\.url\.pathname\}\?channel=beta`/);
+  assert.match(switcher, /data-agentkit-channel-choice="beta"/);
+  assert.match(switcher, /\?channel=beta/);
+  assert.doesNotMatch(switcher, /cursor-not-allowed|aria-disabled="true"/);
   assert.match(controller, /import\(['"][^'"]*beta|@agentkit-beta-loader/);
   assert.doesNotMatch(guide, /agentkit-beta-view|agentkit-beta-channel-facts/);
   assert.match(guide, /data-agentkit-active-channel=["'{]stable/);
-  assert.match(betaFacts, /activeBetaVersion:\s*null|version:\s*null/);
+  assert.match(betaFacts, /activeBetaVersion:\s*'2\.5\.0-beta\.1'/);
   assert.match(betaFacts, /commandFactCount:\s*0/);
   assert.doesNotMatch(betaFacts, /2\.4\.0-beta\.7/);
 });
 
-test('truth and LLM source closures include stable 2.4 scenarios but no beta payload', async () => {
+test('truth and LLM source closures include stable 2.4 scenarios and active beta fixture identity', async () => {
   const [manifest, llmGenerator, llmIndex] = await Promise.all([
     source('scripts/agentkit-truth-audit-source-manifest.mjs'),
     source('scripts/generate-llms-full.mjs'),
@@ -198,8 +207,8 @@ test('truth and LLM source closures include stable 2.4 scenarios but no beta pay
     'src/data/guides/agentkit/agentkit-official-links.mjs',
     'tests/fixtures/agentkit-release/current-release.json',
     'tests/fixtures/agentkit-release/stable-v2.4.0.json',
-    'tests/fixtures/agentkit-release/prerelease-v2.4.0-beta.7.json',
+    'tests/fixtures/agentkit-release/prerelease-v2.5.0-beta.1.json',
   ]) assert.ok(manifest.includes(path), path);
   assert.match(`${llmGenerator}\n${llmIndex}`, /stable/i);
-  assert.doesNotMatch(`${llmGenerator}\n${llmIndex}`, /activeBetaVersion|2\.4\.0-beta\.7/);
+  assert.doesNotMatch(`${llmGenerator}\n${llmIndex}`, /activeBetaVersion|2\.5\.0-beta\.1/);
 });

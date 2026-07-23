@@ -1,19 +1,12 @@
 ---
 import { getLangFromUrl, type Language } from '@/i18n';
-import { AGENTKIT_CLI_FACTS } from '@/data/guides/agentkit/agentkit-cli-facts';
 import { AGENTKIT_MIGRATION_MAPPING_BY_LOCALE } from '@/data/guides/agentkit/agentkit-migration-mapping';
-import { AGENTKIT_SKILL_FACTS } from '@/data/guides/agentkit/agentkit-skill-facts';
-import { AGENTKIT_TARGET_CAPABILITIES } from '@/data/guides/agentkit/agentkit-target-capabilities';
 import AgentKitCommandMapping from './agentkit/agentkit-command-mapping.astro';
-import AgentKitCompatibilityAndTroubleshooting from './agentkit/agentkit-compatibility-and-troubleshooting.astro';
-import AgentKitContinuityFaq from './agentkit/agentkit-continuity-faq.astro';
-import AgentKitDesktopAppOverview from './agentkit/agentkit-desktop-app-overview.astro';
 import AgentKitHero from './agentkit/agentkit-hero.astro';
-import AgentKitKitTargets from './agentkit/agentkit-kit-targets.astro';
+import AgentKitHubNav from './agentkit/agentkit-hub-nav.astro';
 import AgentKitLegacySkillCleanup from './agentkit/agentkit-legacy-skill-cleanup.astro';
 import AgentKitMigrationChecklist from './agentkit/agentkit-migration-checklist.astro';
 import AgentKitChannelSwitcher from './agentkit/agentkit-channel-switcher.astro';
-import AgentKitScenarioCommandGuide from './agentkit/agentkit-scenario-command-guide.astro';
 
 interface Props {
   lang?: Language;
@@ -38,18 +31,9 @@ const includeStage7Details = import.meta.env.AGENTKIT_INCLUDE_STAGE7_DETAILS ===
   <AgentKitChannelSwitcher lang={currentLang} />
   <div data-agentkit-stable-facts>
     <AgentKitHero lang={currentLang} />
-    <AgentKitContinuityFaq lang={currentLang} />
+    <AgentKitHubNav lang={currentLang} />
     <AgentKitMigrationChecklist lang={currentLang} />
-    <AgentKitDesktopAppOverview lang={currentLang} />
-    <AgentKitScenarioCommandGuide lang={currentLang} />
-    <AgentKitKitTargets
-      lang={currentLang}
-      cliFacts={AGENTKIT_CLI_FACTS}
-      skillFacts={AGENTKIT_SKILL_FACTS}
-      targets={AGENTKIT_TARGET_CAPABILITIES}
-    />
-    <AgentKitLegacySkillCleanup lang={currentLang} includeStage7Details={includeStage7Details} />
     <AgentKitCommandMapping lang={currentLang} rows={mappingRows} />
-    <AgentKitCompatibilityAndTroubleshooting lang={currentLang} />
+    <AgentKitLegacySkillCleanup lang={currentLang} includeStage7Details={includeStage7Details} />
   </div>
 </article>

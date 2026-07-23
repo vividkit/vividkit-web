@@ -44,8 +44,8 @@ function routeFromBuiltFile(file) {
   return `/${built.replace(/\/index\.html$/, '')}`;
 }
 
-test('route manifest preserves 132 required identities and query channels add no route identity', () => {
-  assert.equal(BASELINE_ROUTE_IDENTITIES.length, 72);
+test('route manifest preserves 134 required identities and query channels add no route identity', () => {
+  assert.equal(BASELINE_ROUTE_IDENTITIES.length, 74);
   assert.equal(new Set(BASELINE_ROUTE_IDENTITIES).size, BASELINE_ROUTE_IDENTITIES.length);
   assert.deepEqual(AGENTKIT_ROUTE_IDENTITIES, ['/guides/agentkit', '/vi/guides/agentkit']);
 
@@ -56,8 +56,8 @@ test('route manifest preserves 132 required identities and query channels add no
     [...manifestPaths].sort(),
     [...BASELINE_ROUTE_IDENTITIES, ...AGENTKIT_ROUTE_IDENTITIES, ...LEGACY_ARCHIVE_ROUTE_IDENTITIES].sort(),
   );
-  assert.equal(requiredBuildRouteIdentities.length, 132);
-  assert.equal(new Set(requiredBuildRouteIdentities).size, 132);
+  assert.equal(requiredBuildRouteIdentities.length, 134);
+  assert.equal(new Set(requiredBuildRouteIdentities).size, 134);
   assert.equal(requiredBuildRouteIdentities.some((route) => route.includes('?channel=')), false);
 });
 

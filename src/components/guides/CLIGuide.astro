@@ -4,6 +4,8 @@ import AgentKitCliHero from './cli-guide/AgentKitCliHero.astro';
 import AgentKitCliSetup from './cli-guide/AgentKitCliSetup.astro';
 import AgentKitCliLifecycle from './cli-guide/AgentKitCliLifecycle.astro';
 import AgentKitChannelSwitcher from './agentkit/agentkit-channel-switcher.astro';
+import AgentKitQuickStart from './agentkit/agentkit-quick-start.astro';
+import AgentKitCompatibilityAndTroubleshooting from './agentkit/agentkit-compatibility-and-troubleshooting.astro';
 
 interface Props { lang?: Language }
 const { lang } = Astro.props;
@@ -15,7 +17,9 @@ const isVi = currentLang === 'vi';
   <AgentKitChannelSwitcher lang={currentLang} />
   <div class="space-y-10" data-agentkit-stable-facts>
     <AgentKitCliHero lang={currentLang} />
+    <AgentKitQuickStart lang={currentLang} />
     <AgentKitCliSetup lang={currentLang} />
+    <AgentKitCompatibilityAndTroubleshooting lang={currentLang} />
     <AgentKitCliLifecycle lang={currentLang} />
     <a href={isVi ? '/vi/guides/cli-commands' : '/guides/cli-commands'} class="block rounded-2xl border border-violet-200 bg-violet-50 p-5 transition-colors duration-200 hover:border-violet-400 hover:bg-violet-100 focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 active:bg-violet-200 dark:border-violet-500/20 dark:bg-violet-950/20 dark:hover:bg-violet-900/30 dark:active:bg-violet-900/40">
       <h2 class="text-lg font-bold text-violet-900 dark:text-violet-100">AgentKit CLI reference</h2>

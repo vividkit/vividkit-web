@@ -78,6 +78,7 @@ async function inspectPage(page, expected, requestPaths) {
       betaHidden: betaView?.hasAttribute('hidden') ?? null,
       noticeHidden: notice?.hasAttribute('hidden') ?? null,
       betaClaimVisible: Boolean(betaView?.querySelector('[data-agentkit-beta-view-marker]')),
+      betaGuidanceVisible: Boolean(betaView?.querySelector('[data-agentkit-beta-guidance]')),
       canonical,
       path: location.pathname,
       search: location.search,
@@ -94,6 +95,16 @@ async function inspectPage(page, expected, requestPaths) {
   }, { expected, surfacePaths: [...SURFACE_PATHS], requestPaths });
 }
 
+function betaChannelStatus(expected) {
+  if (expected === 'published') return 'published';
+  if (expected === 'hold' || expected === 'inactive') return 'guidance';
+  return 'stable';
+}
+
+function isBetaGuidanceExpected(expected) {
+  return expected === 'published' || expected === 'hold' || expected === 'inactive';
+}
+
 async function runSurfaceCase({ browser, baseUrl, route, testCase, expected }) {
   const page = await browser.newPage();
   const failures = [];
@@ -106,7 +117,7 @@ async function runSurfaceCase({ browser, baseUrl, route, testCase, expected }) {
   await page.evaluateOnNewDocument((theme) => localStorage.setItem('theme', theme), testCase.theme);
   const query = expected === 'stable' ? '' : '?channel=beta';
   const response = await page.goto(`${baseUrl}${route}${query}`, { waitUntil: 'domcontentloaded', timeout: 30_000 });
-  const expectedStatus = expected === 'published' ? 'published' : expected === 'hold' ? 'unavailable' : 'stable';
+  const expectedStatus = expected === 'stable' ? 'stable' : betaChannelStatus(expected);
   await page.waitForFunction(
     (status) => document.querySelector('[data-agentkit-channel-root]')?.dataset.agentkitChannelStatus === status,
     { timeout: 10_000 },
@@ -114,26 +125,28 @@ async function runSurfaceCase({ browser, baseUrl, route, testCase, expected }) {
   );
   const metrics = await inspectPage(page, expected, requestPaths);
   const status = response?.status() ?? 0;
+  const betaActive = isBetaGuidanceExpected(expected);
   pushFailure(status < 200 || status >= 400, failures, `HTTP ${status || 'unknown'}`);
   pushFailure(metrics.theme !== testCase.theme, failures, `theme=${metrics.theme}`);
   pushFailure(metrics.lang !== (route.startsWith('/vi/') ? 'vi' : 'en'), failures, `lang=${metrics.lang}`);
   pushFailure(metrics.overflow > 1, failures, `overflow=${metrics.overflow}px`);
   pushFailure(pageErrorCount > 0, failures, `page-errors=${pageErrorCount}`);
   pushFailure(new URL(metrics.canonical).search !== '', failures, 'canonical-query');
-  pushFailure(metrics.stableHidden !== (expected === 'published'), failures, `stableHidden=${metrics.stableHidden}`);
-  pushFailure(metrics.betaHidden !== (expected !== 'published'), failures, `betaHidden=${metrics.betaHidden}`);
-  pushFailure(metrics.active !== (expected === 'published' ? 'beta' : 'stable'), failures, `active=${metrics.active}`);
-  pushFailure(metrics.requested !== (['stable', 'inactive'].includes(expected) ? 'stable' : 'beta'), failures, `requested=${metrics.requested}`);
+  pushFailure(Boolean(metrics.stableHidden), failures, `stableHidden=${metrics.stableHidden}`);
+  pushFailure(metrics.betaHidden !== !betaActive, failures, `betaHidden=${metrics.betaHidden}`);
+  pushFailure(metrics.active !== (betaActive ? 'beta' : 'stable'), failures, `active=${metrics.active}`);
+  pushFailure(metrics.requested !== (expected === 'stable' ? 'stable' : 'beta'), failures, `requested=${metrics.requested}`);
   pushFailure(metrics.betaClaimVisible !== (expected === 'published'), failures, `betaClaimVisible=${metrics.betaClaimVisible}`);
+  pushFailure(metrics.betaGuidanceVisible !== betaActive, failures, `betaGuidanceVisible=${metrics.betaGuidanceVisible}`);
   pushFailure(metrics.betaRequests.length !== (expected === 'published' ? 1 : 0), failures, `betaRequests=${metrics.betaRequests.length}`);
   pushFailure(metrics.surfaceLinkCount === 0, failures, 'surface-links-missing');
-  if (!['stable', 'inactive'].includes(expected)) {
-    pushFailure(expected === 'published' && !metrics.surfaceLinksPreserveBeta, failures, 'surface-link-channel-drift');
-    pushFailure(!metrics.offSurfaceLinksDropBeta, failures, 'off-surface-channel-leak');
-  } else {
+  if (expected === 'stable') {
     pushFailure(!metrics.surfaceLinksDropBeta, failures, 'stable-surface-link-channel-leak');
+  } else {
+    pushFailure(!metrics.surfaceLinksPreserveBeta, failures, 'surface-link-channel-drift');
+    pushFailure(!metrics.offSurfaceLinksDropBeta, failures, 'off-surface-channel-leak');
   }
-  if (expected === 'hold') pushFailure(metrics.noticeHidden, failures, 'hold-notice-hidden');
+  if (betaActive) pushFailure(!metrics.noticeHidden, failures, 'beta-notice-visible');
   await page.close();
   return { route, case: `${testCase.name}-${expected}`, ...metrics, pageErrorCount, failures };
 }
@@ -144,7 +157,7 @@ async function runNavigationCase({ browser, baseUrl, route, expected }) {
   await page.goto(`${baseUrl}${route}`, { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => document.querySelector('[data-agentkit-channel-root]')?.dataset.agentkitChannelStatus === 'stable');
   await page.click('[data-agentkit-channel-choice="beta"]');
-  const betaStatus = expected === 'published' ? 'published' : 'unavailable';
+  const betaStatus = betaChannelStatus(expected);
   await page.waitForFunction((status) => document.querySelector('[data-agentkit-channel-root]')?.dataset.agentkitChannelStatus === status, {}, betaStatus);
   await page.goBack({ waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => document.querySelector('[data-agentkit-channel-root]')?.dataset.agentkitChannelStatus === 'stable');
@@ -176,7 +189,7 @@ async function runKeyboardCase({ browser, baseUrl, route, expected }) {
   pushFailure(!beforeActivation.focusVisible, failures, 'keyboard-focus-not-visible');
 
   await page.keyboard.press('Enter');
-  const expectedStatus = expected === 'published' ? 'published' : 'unavailable';
+  const expectedStatus = betaChannelStatus(expected);
   await page.waitForFunction(
     (status) => document.querySelector('[data-agentkit-channel-root]')?.dataset.agentkitChannelStatus === status,
     {},
@@ -186,7 +199,7 @@ async function runKeyboardCase({ browser, baseUrl, route, expected }) {
     status: document.querySelector('[data-agentkit-channel-root]')?.dataset.agentkitChannelStatus ?? 'missing',
     search: location.search,
     focusTarget: document.activeElement?.matches(
-      '[data-agentkit-channel-notice], [data-agentkit-beta-view-marker]',
+      '[data-agentkit-channel-notice], [data-agentkit-beta-view-marker], [data-agentkit-beta-guidance]',
     ) ?? false,
   }));
   pushFailure(afterActivation.status !== expectedStatus, failures, `keyboard-status=${afterActivation.status}`);

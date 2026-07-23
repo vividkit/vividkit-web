@@ -10,7 +10,7 @@
 
 VividKit Web is a statically generated, bilingual product site and visual guide hub for AgentKit (`ak`), Claude Code, Codex, and related workflows. AgentKit succeeds ClaudeKit (`ck`). Current guidance is AgentKit-first; isolated ClaudeKit pages remain available as noindex historical material.
 
-The current product contract presents curated commands directly within seven ordered lifecycle stages. The former reader-facing decision router has been removed; the underlying lifecycle policy remains a tested maintainer truth model. Stable AgentKit `2.4.0` is the default. Prerelease `2.4.0-beta.7` is retained as promotion provenance, not advertised as an active beta because it was promoted from the same source commit and no newer beta existed at the 2026-07-20 observation. Mixed or unverifiable ownership remains support-assisted.
+The current product contract presents curated commands directly within seven ordered lifecycle stages. The former reader-facing decision router has been removed; the underlying lifecycle policy remains a tested maintainer truth model. Stable AgentKit `2.4.0` is the default. Active public beta is `2.5.0-beta.1` (opt-in). Historical `2.4.0-beta.7` remains promotion provenance for stable. Mixed or unverifiable ownership remains support-assisted.
 
 ## Product Vision
 
@@ -97,7 +97,7 @@ VividKit does not collect, persist, or verify the observation record. The guide 
 
 | Concern | Stable | Beta |
 |---|---|---|
-| Version | `2.4.0` | None active; `2.4.0-beta.7` is promoted provenance |
+| Version | `2.4.0` | Active `2.5.0-beta.1`; `2.4.0-beta.7` remains historical promotion provenance |
 | Selection | Default, including invalid or repeated query values | Exact single `?channel=beta` falls back to stable with an availability notice |
 | Surfaces | All current guidance | No current beta payload is rendered |
 | Commands | Reviewed stable curated command facts | Empty current-beta command facts |

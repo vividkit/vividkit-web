@@ -1,5 +1,6 @@
 ---
 import { ShieldCheck } from 'lucide-astro';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
 import type { Language } from '@/i18n';
 import { useTranslations } from '@/i18n/utils';
@@ -11,6 +12,8 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
+const whatIsHref = getRelativeLocaleUrl(lang, 'guides/what-is-agentkit');
+const cliHref = getRelativeLocaleUrl(lang, 'guides/cli');
 ---
 
 <header class="grid gap-8 border-b border-slate-200 pb-12 dark:border-slate-800 lg:grid-cols-[minmax(0,1.4fr)_minmax(15rem,0.6fr)] lg:items-end">
@@ -19,21 +22,23 @@ const t = useTranslations(lang);
       {t('agentkit.hero.eyebrow')}
     </p>
     <h1 class="font-heading text-4xl font-bold leading-[1.1] tracking-[-0.03em] text-slate-950 text-balance dark:text-slate-50 md:text-5xl" set:html={renderInlineCode(t('agentkit.hero.title'))}></h1>
-    <p class="mt-5 max-w-2xl text-lg leading-relaxed text-slate-600 text-pretty dark:text-slate-300">
-      {t('agentkit.hero.description')}
-    </p>
+    <p class="mt-5 max-w-2xl text-lg leading-relaxed text-slate-600 text-pretty dark:text-slate-300" set:html={renderInlineCode(t('agentkit.hero.description'))}></p>
+    <p class="mt-3 max-w-2xl text-base leading-relaxed text-slate-500 text-pretty dark:text-slate-400" set:html={renderInlineCode(t('agentkit.hero.audience'))}></p>
     <nav class="mt-7 flex flex-wrap gap-3" aria-label={t('agentkit.paths.heading')}>
-      <a href="#stage-backup" class="inline-flex min-h-11 items-center justify-center rounded-lg bg-purple-700 px-5 py-2 text-sm font-bold text-white hover:bg-purple-800 focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:bg-purple-600 dark:hover:bg-purple-500">
+      <a href="#migration-journey" class="inline-flex min-h-11 items-center justify-center rounded-lg bg-purple-700 px-5 py-2 text-sm font-bold text-white hover:bg-purple-800 focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:bg-purple-600 dark:hover:bg-purple-500">
         {t('agentkit.paths.legacy.cta')}
       </a>
-      <a href="#scenario-commands" class="inline-flex min-h-11 items-center justify-center rounded-lg border border-slate-300 bg-white px-5 py-2 text-sm font-bold text-slate-800 hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800">
+      <a href={cliHref} class="inline-flex min-h-11 items-center justify-center rounded-lg border border-slate-300 bg-white px-5 py-2 text-sm font-bold text-slate-800 hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800">
         {t('agentkit.paths.new.cta')}
+      </a>
+      <a href={whatIsHref} class="inline-flex min-h-11 items-center justify-center rounded-lg border border-slate-200 bg-slate-50 px-5 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-300 dark:hover:bg-slate-800">
+        {t('agentkit.paths.explain.cta')}
       </a>
     </nav>
   </div>
 
   <div class="flex gap-3 rounded-xl border border-purple-200 bg-purple-50/70 p-4 text-sm leading-relaxed text-slate-700 dark:border-purple-800/60 dark:bg-purple-950/25 dark:text-slate-300">
     <ShieldCheck class="mt-0.5 h-5 w-5 shrink-0 text-purple-700 dark:text-purple-300" aria-hidden="true" />
-    <p>{t('agentkit.hero.notice')}</p>
+    <p set:html={renderInlineCode(t('agentkit.hero.notice'))}></p>
   </div>
 </header>

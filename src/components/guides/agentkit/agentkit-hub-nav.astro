@@ -1,0 +1,35 @@
+---
+import type { Language } from '@/i18n';
+import { useTranslations } from '@/i18n/utils';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const links = [
+  { href: '#migration-journey', label: t('agentkit.hubNav.migrate') },
+  { href: '#command-mapping', label: t('agentkit.hubNav.mapping') },
+  { href: '#legacy-skill-cleanup', label: t('agentkit.hubNav.cleanup') },
+] as const;
+---
+
+<nav
+  class="sticky top-16 z-20 -mx-1 mb-2 overflow-x-auto border-b border-slate-200 bg-white/90 px-1 py-3 backdrop-blur dark:border-slate-800 dark:bg-slate-950/90"
+  aria-label={t('agentkit.hubNav.label')}
+>
+  <ul class="flex min-w-max gap-2">
+    {links.map((link) => (
+      <li>
+        <a
+          href={link.href}
+          class="inline-flex min-h-10 items-center rounded-full border border-slate-200 bg-slate-50 px-3.5 text-sm font-semibold text-slate-700 hover:border-purple-300 hover:bg-purple-50 hover:text-purple-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-purple-700 dark:hover:bg-purple-950/40 dark:hover:text-purple-200"
+        >
+          {link.label}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
