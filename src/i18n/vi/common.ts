@@ -10,9 +10,9 @@ export const common = {
   'claudekit.feature2.description': 'Bootstrap, plan, code, fix, test, design — bộ công cụ hoàn chỉnh từ ý tưởng đến triển khai.',
   'claudekit.feature3.title': 'Skill UI/UX Pro Max',
   'claudekit.feature3.description': '50+ phong cách UI, 21+ màu sắc, 50+ phông chữ — thiết kế chuyên nghiệp tức thì.',
-  'claudekit.cta_title': 'Nhận ClaudeKit với Giảm Giá 20%',
-  'claudekit.cta_description': 'Bạn sẽ cần ClaudeKit để sử dụng VividKit. Mua qua link giới thiệu của chúng tôi để nhận giảm giá độc quyền 20%.',
-  'claudekit.cta_button': 'Nhận ClaudeKit (Giảm 20%)',
+  'claudekit.cta_title': 'Nhận ClaudeKit với Giảm Giá 30%',
+  'claudekit.cta_description': 'Bạn sẽ cần ClaudeKit để sử dụng VividKit. Mua qua link giới thiệu của chúng tôi để nhận giảm giá độc quyền 30%.',
+  'claudekit.cta_button': 'Nhận ClaudeKit (Giảm 30%)',
   // common
   // Common
   'common.loading': 'Đang tải...',
@@ -91,7 +91,7 @@ export const common = {
   // Footer component
   'footer.claudekit_discord': 'ClaudeKit Discord',
   'footer.get_started': 'Bắt Đầu',
-  'footer.claudekit_discount': 'ClaudeKit (Giảm 20%)',
+  'footer.claudekit_discount': 'ClaudeKit (Giảm 30%)',
   'footer.required_for_vividkit': 'Yêu cầu cho VividKit',
   // form
   // Waitlist form

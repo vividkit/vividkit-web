@@ -18,7 +18,7 @@ export const guides = {
   // CLI Guide Purchase Notice
   'guides.cli.purchase_notice.title': 'ClaudeKit Required',
   'guides.cli.purchase_notice.desc': 'Note: ClaudeKit CLI is a free tool that helps install kits. The Engineer Kit and Marketing Kit are paid products that you need to purchase separately.',
-  'guides.cli.purchase_notice.cta': 'Get ClaudeKit (20% OFF)',
+  'guides.cli.purchase_notice.cta': 'Get ClaudeKit (30% OFF)',
   // How It Works Guide
   'guides.how_ck_works.title': 'How ClaudeKit Works',
   // What is ClaudeKit Guide
@@ -97,7 +97,7 @@ export const guides = {
   'guides.what_is_claudekit.cmd_watzup': 'Review recent changes',
   'guides.what_is_claudekit.subscription_notice_title': 'Important:',
   'guides.what_is_claudekit.subscription_notice_desc': 'ClaudeKit is a paid product that does NOT include AI models. You need to purchase ClaudeKit separately AND subscribe to Claude (from Anthropic) to power the AI capabilities.',
-  'guides.what_is_claudekit.get_claudekit_discount': 'Get ClaudeKit (20% OFF)',
+  'guides.what_is_claudekit.get_claudekit_discount': 'Get ClaudeKit (30% OFF)',
   'guides.what_is_claudekit.cli_setup_title': 'Ready to Get Started?',
   'guides.what_is_claudekit.cli_setup_desc': 'After purchasing ClaudeKit, you can set up and install it via the CLI tool. Our detailed guide walks you through every step.',
   'guides.what_is_claudekit.cli_setup_cta': 'View CLI Installation Guide',

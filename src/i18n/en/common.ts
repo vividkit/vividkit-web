@@ -10,9 +10,9 @@ export const common = {
   'claudekit.feature2.description': 'Bootstrap, plan, code, fix, test, design — complete toolkit from idea to deployment.',
   'claudekit.feature3.title': 'UI/UX Pro Max Skill',
   'claudekit.feature3.description': '50+ UI styles, 21+ color, 50+ font — instant professional designs.',
-  'claudekit.cta_title': 'Get ClaudeKit with 20% Discount',
-  'claudekit.cta_description': 'You\'ll need ClaudeKit to use VividKit. Purchase through our referral link to get an exclusive 20% discount.',
-  'claudekit.cta_button': 'Get ClaudeKit (20% OFF)',
+  'claudekit.cta_title': 'Get ClaudeKit with 30% Discount',
+  'claudekit.cta_description': 'You\'ll need ClaudeKit to use VividKit. Purchase through our referral link to get an exclusive 30% discount.',
+  'claudekit.cta_button': 'Get ClaudeKit (30% OFF)',
   // common
   // Common
   'common.loading': 'Loading...',
@@ -91,7 +91,7 @@ export const common = {
   // Footer component
   'footer.claudekit_discord': 'ClaudeKit Discord',
   'footer.get_started': 'Get Started',
-  'footer.claudekit_discount': 'ClaudeKit (20% OFF)',
+  'footer.claudekit_discount': 'ClaudeKit (30% OFF)',
   'footer.required_for_vividkit': 'Required for VividKit',
   // form
   // Waitlist form
