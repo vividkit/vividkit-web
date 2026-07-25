@@ -1,0 +1,23 @@
+---
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+import { AGENTKIT_COMMANDS_SOURCED_FROM } from '@/data/guides/agentkit-commands-kit';
+import AgentKitCommandsCategoriesGrid from './agentkit-commands/agentkit-commands-categories-grid.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+---
+
+<div class="space-y-8 mt-6">
+  <header class="text-center space-y-3">
+    <h1 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">{t('guides.agentkit_commands.hero')}</h1>
+    <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">{t('guides.agentkit_commands.subtitle')}</p>
+    <p class="text-xs font-mono text-slate-500">{t('guides.agentkit_commands.source_note')} · {AGENTKIT_COMMANDS_SOURCED_FROM}</p>
+  </header>
+  <AgentKitCommandsCategoriesGrid lang={currentLang} />
+</div>

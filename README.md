@@ -94,6 +94,7 @@ Repo-specific skills that keep VividKit guides in sync with upstream ClaudeKit. 
 |-------|-------------|---------|
 | `/vk:changelog-sync` | Detect new ClaudeKit changelog entries and sync Commands/Hooks/Workflows guides + i18n strings | `/vk:changelog-sync` |
 | `/vk:audit-ck-cli` | Compare upstream `claudekit-cli` against the CLI/Migrate guides; propose updates per command (`ck migrate`, `ck init`, …) | `/vk:audit-ck-cli` or `/vk:audit-ck-cli page=guides/migrate command=migrate` |
+| `/vk:audit-ak` | Compare local `ak` help snapshots against AgentKit guides (CLI cheatsheet, install workarounds, commands catalog); propose-only report | `/vk:audit-ak` or `node .agents/skills/vk-audit-ak/scripts/detect-ak-changes.cjs --report` |
 | `/vk:audit-skill` | Audit upstream ClaudeKit skill changes against the skill catalog rendered on the site | `/vk:audit-skill <skill-name>` |
 | `/vk:add-scenario` | Add a new scenario entry for a ClaudeKit command into the guides | `/vk:add-scenario` |
 | `/project:vk:update-how-ck-works` | Project custom command: orchestrates `/vk:audit-skill` + `/vk:add-scenario` to update How-CK-Works pages with detailed explanation, graphic quick refs, pipeline data, and prompt examples; use `--include-local-missing` to cover CK skills not yet on the guide | `/project:vk:update-how-ck-works --include-local-missing --limit 3` |

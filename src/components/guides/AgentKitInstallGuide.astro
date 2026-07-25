@@ -1,0 +1,114 @@
+---
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
+import { useTranslations } from '@/i18n/utils';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+const translatePath = useTranslatedPath(currentLang);
+
+const codeClass = 'rounded border border-slate-200 bg-slate-100 px-1.5 py-0.5 font-mono text-xs text-slate-800 dark:border-slate-700 dark:bg-slate-800/90 dark:text-slate-100';
+---
+
+<div class="space-y-8 mt-6" data-ak-install-tabs data-default-tab="migrate">
+  <header class="space-y-3">
+    <a href={translatePath('/guides/what-is-agentkit')} class="text-sm font-medium text-indigo-600 hover:underline dark:text-indigo-400">{t('guides.agentkit_install.link_what')}</a>
+    <h1 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">{t('guides.agentkit_install.hero')}</h1>
+    <p class="text-lg text-slate-600 dark:text-slate-400">{t('guides.agentkit_install.subtitle')}</p>
+  </header>
+
+  <div class="flex flex-wrap gap-2 p-1 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 w-fit">
+    <button type="button" data-tab-button="migrate" class="ak-install-tab px-4 py-2 rounded-md text-sm font-medium transition bg-indigo-600 text-white shadow-sm"> {t('guides.agentkit_install.tab_migrate')} </button>
+    <button type="button" data-tab-button="install" class="ak-install-tab px-4 py-2 rounded-md text-sm font-medium transition text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700"> {t('guides.agentkit_install.tab_install')} </button>
+  </div>
+
+  <div data-tab-panel="migrate" class="space-y-6">
+    <section class="rounded-2xl border border-slate-200/80 p-5 dark:border-slate-800">
+      <h2 class="text-xl font-bold text-slate-900 dark:text-white">{t('guides.agentkit_install.migrate_decision_title')}</h2>
+      <ul class="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-300 list-disc pl-5">
+        <li>{t('guides.agentkit_install.migrate_clean')}</li>
+        <li>{t('guides.agentkit_install.migrate_ak')}</li>
+      </ul>
+    </section>
+    <section class="rounded-2xl border border-slate-200/80 p-5 dark:border-slate-800">
+      <h2 class="text-lg font-bold text-slate-900 dark:text-white">{t('guides.agentkit_install.migrate_steps_title')}</h2>
+      <ol class="mt-3 space-y-3 text-sm text-slate-600 dark:text-slate-300 list-decimal pl-5">
+        <li>Backup project <code class={codeClass}>.claude/</code> and any custom hooks.</li>
+        <li><code class={codeClass}>ak self-update --channel stable</code></li>
+        <li><code class={codeClass}>ak migrate --from=ck --dry-run</code> — review output; skip if statusline-dependent until upstream covers your setup.</li>
+        <li>Apply: <code class={codeClass}>ak migrate --from=ck --channel stable --yes</code> or clean cutover via <code class={codeClass}>ak kit init engineer --remote --target claude-code --channel stable</code></li>
+        <li>Verify: <code class={codeClass}>ak doctor</code> and run one <code class={codeClass}>/ak:plan</code> smoke test.</li>
+        <li>Rollback: restore backup or <code class={codeClass}>ak backups list</code> then restore if available.</li>
+      </ol>
+    </section>
+  </div>
+
+  <div data-tab-panel="install" hidden class="space-y-6">
+    <section class="rounded-2xl border border-slate-200/80 p-5 dark:border-slate-800">
+      <h2 class="text-lg font-bold text-slate-900 dark:text-white">{t('guides.agentkit_install.install_steps_title')}</h2>
+      <ol class="mt-3 space-y-3 text-sm text-slate-600 dark:text-slate-300 list-decimal pl-5">
+        <li>Install/update CLI: <code class={codeClass}>ak self-update --channel stable</code></li>
+        <li>First-run wizard: <code class={codeClass}>ak setup</code></li>
+        <li>Project onboard: <code class={codeClass}>ak init --channel stable</code> or greenfield <code class={codeClass}>ak new --channel stable</code></li>
+        <li>Engineer kit: <code class={codeClass}>ak kit init engineer --remote --target claude-code --channel stable --yes</code> (Codex: swap target)</li>
+        <li>Keep channel consistent across self-update, kit init, and refresh.</li>
+        <li>Verify: <code class={codeClass}>ak doctor</code></li>
+      </ol>
+    </section>
+  </div>
+
+  <section class="rounded-2xl border border-slate-200/80 p-5 dark:border-slate-800 space-y-3">
+    <h2 class="text-xl font-bold text-slate-900 dark:text-white">{t('guides.agentkit_install.arch_title')}</h2>
+    <p class="text-sm text-slate-600 dark:text-slate-300">{t('guides.agentkit_install.arch_body')}</p>
+    <h3 class="text-base font-semibold text-slate-900 dark:text-white">{t('guides.agentkit_install.scope_title')}</h3>
+    <ul class="text-sm text-slate-600 dark:text-slate-300 list-disc pl-5 space-y-1">
+      <li>{t('guides.agentkit_install.scope_global')}</li>
+      <li>{t('guides.agentkit_install.scope_project')}</li>
+    </ul>
+  </section>
+
+  <section class="rounded-2xl border border-amber-200/80 bg-amber-50/50 p-5 dark:border-amber-500/20 dark:bg-amber-950/20">
+    <h2 class="text-xl font-bold text-amber-900 dark:text-amber-100">{t('guides.agentkit_install.workarounds_title')}</h2>
+    <ul class="mt-3 space-y-2 text-sm text-amber-950/90 dark:text-amber-100/90 list-disc pl-5">
+      <li>{t('guides.agentkit_install.workaround_channel')}</li>
+      <li>{t('guides.agentkit_install.workaround_plugin')}</li>
+    </ul>
+  </section>
+</div>
+
+<script>
+  function bindAkInstallTabs() {
+    document.querySelectorAll('[data-ak-install-tabs]').forEach((group) => {
+      if (group.getAttribute('data-tabs-bound') === 'true') return;
+      group.setAttribute('data-tabs-bound', 'true');
+      const buttons = Array.from(group.querySelectorAll('[data-tab-button]'));
+      const panels = Array.from(group.querySelectorAll('[data-tab-panel]'));
+      const activeClasses = ['bg-indigo-600', 'text-white', 'shadow-sm'];
+      const idleClasses = ['text-slate-600', 'dark:text-slate-400', 'hover:bg-slate-200', 'dark:hover:bg-slate-700'];
+      const activate = (tab) => {
+        buttons.forEach((button) => {
+          const active = button.getAttribute('data-tab-button') === tab;
+          activeClasses.forEach((c) => button.classList.toggle(c, active));
+          idleClasses.forEach((c) => button.classList.toggle(c, !active));
+        });
+        panels.forEach((panel) => {
+          panel.hidden = panel.getAttribute('data-tab-panel') !== tab;
+        });
+      };
+      buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const tab = button.getAttribute('data-tab-button');
+          if (tab) activate(tab);
+        });
+      });
+      const defaultTab = group.getAttribute('data-default-tab') || 'migrate';
+      activate(defaultTab);
+    });
+  }
+  document.addEventListener('DOMContentLoaded', bindAkInstallTabs);
+  document.addEventListener('astro:page-load', bindAkInstallTabs);
+</script>

@@ -1,0 +1,16 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import WhatIsAgentKitGuide from '@/components/guides/WhatIsAgentKitGuide.astro';
+import { useTranslations } from '@/i18n/utils';
+
+const t = useTranslations('vi');
+---
+
+<GuidesLayout
+  title={`${t('guides.what_is_agentkit.title')} - VividKit Documentation`}
+  description={t('guides.what_is_agentkit.description')}
+  activeTab="what-is-agentkit"
+  lang="vi"
+>
+  <WhatIsAgentKitGuide lang="vi" />
+</GuidesLayout>

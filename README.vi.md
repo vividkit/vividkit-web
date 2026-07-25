@@ -94,6 +94,7 @@ Skills riêng cho repo này, dùng để giữ guides đồng bộ với upstrea
 |-------|----------|-----------|
 | `/vk:changelog-sync` | Phát hiện ClaudeKit changelog mới và đồng bộ Commands/Hooks/Workflows guides + i18n | `/vk:changelog-sync` |
 | `/vk:audit-ck-cli` | So sánh `claudekit-cli` upstream với CLI/Migrate guide; đề xuất update theo command (`ck migrate`, `ck init`, …) | `/vk:audit-ck-cli` hoặc `/vk:audit-ck-cli page=guides/migrate command=migrate` |
+| `/vk:audit-ak` | So sánh snapshot `ak help` local với guide AgentKit (CLI, install, commands); báo cáo đề xuất, không sửa `src/` | `/vk:audit-ak` hoặc `node .agents/skills/vk-audit-ak/scripts/detect-ak-changes.cjs --report` |
 | `/vk:audit-skill` | Audit thay đổi skill upstream ClaudeKit (so với catalog skill đang render trên site) | `/vk:audit-skill <skill-name>` |
 | `/vk:add-scenario` | Thêm scenario mới cho một ClaudeKit command vào guides | `/vk:add-scenario` |
 

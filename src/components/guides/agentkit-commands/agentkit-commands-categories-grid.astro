@@ -1,0 +1,42 @@
+---
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, type Language } from '@/i18n';
+import { getAgentKitCategories } from '@/data/guides/agentkit-commands-kit';
+import { styles } from '@/data/guides/commands-styles';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+const categories = getAgentKitCategories(t as any);
+---
+
+<div id="agentkit-commands-catalog" class="space-y-6 scroll-mt-32">
+  {categories.map((category) => (
+    <div class="bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+      <div class={`p-4 border-b border-slate-100 dark:border-slate-800 ${styles[category.color].bg}`}>
+        <h3 class={`text-lg font-bold flex items-center gap-2 ${styles[category.color].text}`}>
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <Fragment set:html={category.icon} />
+          </svg>
+          {category.name}
+        </h3>
+        <p class="text-xs text-slate-500 mt-1">{category.description}</p>
+      </div>
+      <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        {category.commands.map((cmd) => (
+          <div class={`p-3 rounded-lg border h-full flex flex-col bg-slate-50 dark:bg-slate-900/50 ${styles[category.color].border}`}>
+            <code class={`text-sm font-bold font-mono ${styles[category.color].text}`}>{cmd.command}</code>
+            <p class="text-xs font-medium text-slate-700 dark:text-slate-300 mt-2 mb-1">{cmd.desc}</p>
+            {cmd.detail && (
+              <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 mt-auto pt-1.5 border-t border-slate-100 dark:border-slate-800/50">{cmd.detail}</p>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  ))}
+</div>

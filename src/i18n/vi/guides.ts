@@ -1,4 +1,6 @@
 // VI translations - guides namespace
+import { agentkitGuides } from './agentkit-guides';
+
 export const guides = {
   // Guides Sidebar
   'guides.sidebar.title': 'HƯỚNG DẪN & MẸO',
@@ -334,4 +336,5 @@ export const guides = {
   'guides.claude_mechanics.faq.a4': 'Không. Rules chỉ là guidance — Claude cố gắng tuân thủ nhưng có thể bỏ sót. Muốn đảm bảo 100% (ví dụ: chặn lệnh nguy hiểm, auto-format trước commit), hãy dùng Hooks hoặc Permissions trong .claude/settings.json.',
   'guides.claude_mechanics.faq.q5': 'CLAUDE.md nên viết dài bao nhiêu?',
   'guides.claude_mechanics.faq.a5': 'Dưới 200 dòng là lý tưởng. File càng ngắn và cụ thể, Claude càng dễ follow. Nội dung dài hơn nên tách vào .claude/rules/*.md và link từ CLAUDE.md bằng @-references.',
+  ...agentkitGuides,
 } as const;

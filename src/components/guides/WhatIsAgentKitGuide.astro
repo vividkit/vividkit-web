@@ -1,0 +1,47 @@
+---
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
+import { useTranslations } from '@/i18n/utils';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+const translatePath = useTranslatedPath(currentLang);
+
+const questions = [
+  { titleKey: 'guides.what_is_agentkit.q1_title', bodyKey: 'guides.what_is_agentkit.q1_body' },
+  { titleKey: 'guides.what_is_agentkit.q2_title', bodyKey: 'guides.what_is_agentkit.q2_body' },
+  { titleKey: 'guides.what_is_agentkit.q3_title', bodyKey: 'guides.what_is_agentkit.q3_body' },
+  { titleKey: 'guides.what_is_agentkit.q4_title', bodyKey: 'guides.what_is_agentkit.q4_body' },
+  { titleKey: 'guides.what_is_agentkit.q5_title', bodyKey: 'guides.what_is_agentkit.q5_body' },
+] as const;
+---
+
+<div class="space-y-8 mt-6">
+  <header class="text-center space-y-3">
+    <h1 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">{t('guides.what_is_agentkit.hero')}</h1>
+    <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">{t('guides.what_is_agentkit.subtitle')}</p>
+  </header>
+
+  <div class="space-y-4">
+    {questions.map((q, i) => (
+      <section class="rounded-2xl border border-slate-200/80 bg-white/80 p-5 dark:border-slate-800 dark:bg-slate-950/50">
+        <h2 class="text-lg font-bold text-slate-900 dark:text-white">
+          <span class="mr-2 font-mono text-sm text-indigo-600 dark:text-indigo-400">{i + 1}.</span>
+          {t(q.titleKey)}
+        </h2>
+        <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{t(q.bodyKey)}</p>
+      </section>
+    ))}
+  </div>
+
+  <a
+    href={translatePath('/guides/agentkit-install')}
+    class="flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700"
+  >
+    {t('guides.what_is_agentkit.cta_install')}
+  </a>
+</div>

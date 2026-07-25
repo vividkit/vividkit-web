@@ -1,4 +1,6 @@
 // EN translations - guides namespace
+import { agentkitGuides } from './agentkit-guides';
+
 export const guides = {
   // Guides Sidebar
   'guides.sidebar.title': 'GUIDES & TIPS',
@@ -334,4 +336,5 @@ export const guides = {
   'guides.claude_mechanics.faq.a4': 'No. Rules are guidance — Claude tries to follow them but may miss some. For 100% guarantees (blocking dangerous commands, auto-formatting before commit), use Hooks or Permissions in .claude/settings.json.',
   'guides.claude_mechanics.faq.q5': 'How long should CLAUDE.md be?',
   'guides.claude_mechanics.faq.a5': 'Under 200 lines is ideal. The shorter and more specific, the easier for Claude to follow. Move longer content into .claude/rules/*.md and link from CLAUDE.md via @-references.',
+  ...agentkitGuides,
 } as const;
