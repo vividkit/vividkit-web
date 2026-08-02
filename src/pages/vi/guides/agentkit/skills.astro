@@ -1,0 +1,19 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import AkSkillsCheatsheetGuide from '@/components/guides/agentkit/AkSkillsCheatsheetGuide.astro';
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl } from '@/i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<GuidesLayout
+  title={`${t('guides.agentkit.skills.title')} - VividKit Guides`}
+  description={t('guides.agentkit.skills.description')}
+  canonicalPath="/guides/agentkit/skills"
+  activeTab="agentkit-skills"
+  lang={lang}
+>
+  <AkSkillsCheatsheetGuide lang={lang} />
+</GuidesLayout>

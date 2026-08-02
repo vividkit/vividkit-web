@@ -1,0 +1,38 @@
+---
+import { getLangFromUrl, type Language } from '@/i18n';
+import AkCliCommandsHero from './ak-cli-commands/ak-cli-commands-hero.astro';
+import AkCliCommandsCheatsheet from './ak-cli-commands/ak-cli-commands-cheatsheet.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+---
+
+<div class="space-y-8 mt-6">
+  <AkCliCommandsHero lang={currentLang} />
+  <AkCliCommandsCheatsheet lang={currentLang} />
+</div>
+
+<script>
+  function bindAkCopy() {
+    document.querySelectorAll<HTMLButtonElement>('.ak-copy-btn:not([data-bound])').forEach((btn) => {
+      btn.dataset.bound = '1';
+      btn.addEventListener('click', async () => {
+        const code = btn.getAttribute('data-code');
+        if (!code) return;
+        try {
+          await navigator.clipboard.writeText(code);
+          btn.classList.add('ring-2', 'ring-teal-400/50');
+          window.setTimeout(() => btn.classList.remove('ring-2', 'ring-teal-400/50'), 800);
+        } catch (e) {
+          console.error(e);
+        }
+      });
+    });
+  }
+  document.addEventListener('DOMContentLoaded', bindAkCopy);
+  document.addEventListener('astro:page-load', bindAkCopy);
+</script>

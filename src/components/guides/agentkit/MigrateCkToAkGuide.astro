@@ -1,0 +1,173 @@
+---
+import { getLangFromUrl, type Language } from '@/i18n';
+import AkPageHero from './AkPageHero.astro';
+import AkSection from './AkSection.astro';
+import AkStepRail from './AkStepRail.astro';
+import AkCodeBlock from './AkCodeBlock.astro';
+import AkCallout from './AkCallout.astro';
+import AkNextLinks from './AkNextLinks.astro';
+import AkInlineCode from './AkInlineCode.astro';
+import AkFeatureGrid from './AkFeatureGrid.astro';
+
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === 'vi';
+
+const whatItDoes = isVi
+  ? [
+      { icon: 'SCN', title: 'Scan', body: 'Quét install ClaudeKit (ck) và lập kế hoạch chuyển sang AgentKit.', accent: 'teal' as const },
+      { icon: 'CLS', title: 'Classify', body: 'CK-owned/standard, custom/unknown, conflict đang active.', accent: 'cyan' as const },
+      { icon: 'DRY', title: 'Dry-run default', body: 'Mặc định không ghi file cho đến khi bạn opt-in rõ ràng.', accent: 'emerald' as const },
+      { icon: 'BKP', title: 'Backup on apply', body: 'Khi apply: tạo backup, rồi ghi target sau safety gate và --yes.', accent: 'amber' as const },
+    ]
+  : [
+      { icon: 'SCN', title: 'Scan', body: 'Scans a ClaudeKit (ck) install and plans a transition to AgentKit.', accent: 'teal' as const },
+      { icon: 'CLS', title: 'Classify', body: 'CK-owned/standard, custom/unknown, and active conflicts.', accent: 'cyan' as const },
+      { icon: 'DRY', title: 'Dry-run default', body: 'Nothing is written until you explicitly opt in.', accent: 'emerald' as const },
+      { icon: 'BKP', title: 'Backup on apply', body: 'On apply: creates a backup, then writes the target after safety gates and --yes.', accent: 'amber' as const },
+    ];
+
+const recovery = isVi
+  ? [
+      { title: 'ak migrate rollback', body: 'Khôi phục pre-apply state từ journal migrate gần nhất (khi có).' },
+      { title: 'ak backups list / restore', body: 'Danh sách và restore backup AgentKit — scope restore có giới hạn.' },
+      { title: 'Bản sao thủ công', body: 'Thư mục agentkit-pre-migrate-backup là lớp an toàn ngoài tool.' },
+    ]
+  : [
+      { title: 'ak migrate rollback', body: 'Restores pre-apply state from the latest migration journal when available.' },
+      { title: 'ak backups list / restore', body: 'List and restore AgentKit backups — restore scope is limited.' },
+      { title: 'Manual copy', body: 'Your agentkit-pre-migrate-backup folder is the outside-the-tool safety net.' },
+    ];
+
+const macBackup = `mkdir -p "$HOME/agentkit-pre-migrate-backup"
+[ -d "$HOME/.claude" ] && cp -a "$HOME/.claude" "$HOME/agentkit-pre-migrate-backup/claude"
+[ -d "$HOME/.claudekit" ] && cp -a "$HOME/.claudekit" "$HOME/agentkit-pre-migrate-backup/claudekit"
+[ -d "$HOME/.agentkit" ] && cp -a "$HOME/.agentkit" "$HOME/agentkit-pre-migrate-backup/agentkit"`;
+
+const winBackup = `$dest = Join-Path $env:USERPROFILE 'agentkit-pre-migrate-backup'
+New-Item -ItemType Directory -Force -Path $dest | Out-Null
+@(
+  @{ Src = Join-Path $env:USERPROFILE '.claude';    ; Name = 'claude' },
+  @{ Src = Join-Path $env:USERPROFILE '.claudekit'; ; Name = 'claudekit' },
+  @{ Src = Join-Path $env:USERPROFILE '.agentkit';  ; Name = 'agentkit' }
+) | ForEach-Object {
+  if (Test-Path $_.Src) {
+    Copy-Item -Recurse -Force $_.Src (Join-Path $dest $_.Name)
+  }
+}`;
+---
+
+<div class="space-y-10 mt-6">
+  <AkPageHero
+    lang={currentLang}
+    accent="amber"
+    kicker={isVi ? 'Migration · tùy chọn' : 'Migration · optional'}
+    title={isVi ? 'Chuyển ClaudeKit sang AgentKit' : 'Migrate ClaudeKit to AgentKit'}
+    subtitle={isVi
+      ? 'Sao lưu trước. Dry-run mặc định. Không bắt buộc — ClaudeKit vẫn được hỗ trợ.'
+      : 'Back up first. Dry-run by default. Not required — ClaudeKit remains supported.'}
+    badges={isVi ? ['ak migrate --from=ck'] : ['ak migrate --from=ck']}
+  />
+
+  <AkCallout variant="danger" title={isVi ? 'Sao lưu trước khi thay đổi bất kỳ thứ gì' : 'Back up before changing anything'}>
+    {isVi
+      ? 'Tạo bản sao thủ công các thư mục cấu hình trước lệnh mutate đầu tiên. Apply migrate cũng tạo backup AgentKit, nhưng bản sao thủ công giúp khôi phục ngoài tool.'
+      : 'Create a manual copy of configuration directories before the first mutating command. Apply also creates an AgentKit backup, but a manual copy lets you recover outside the tool.'}
+  </AkCallout>
+
+  <AkSection
+    eyebrow={isVi ? 'Backup thủ công' : 'Manual backup'}
+    title={isVi ? 'Theo nền tảng' : 'By platform'}
+  >
+    <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+      {isVi ? (
+        <>
+          Discovery quét (khi có): <AkInlineCode text="~/.claude" />, <AkInlineCode text="~/.claudekit" />, project{' '}
+          <AkInlineCode text=".claude" /> / <AkInlineCode text=".claudekit" />, <AkInlineCode text="~/.agentkit" />. Windows:{' '}
+          <AkInlineCode text="%USERPROFILE%" />.
+        </>
+      ) : (
+        <>
+          Discovery scans when present: <AkInlineCode text="~/.claude" />, <AkInlineCode text="~/.claudekit" />, project{' '}
+          <AkInlineCode text=".claude" /> / <AkInlineCode text=".claudekit" />, <AkInlineCode text="~/.agentkit" />. Windows:{' '}
+          <AkInlineCode text="%USERPROFILE%" />.
+        </>
+      )}
+    </p>
+
+    <div class="grid gap-4 lg:grid-cols-2">
+      <div class="space-y-2">
+        <h3 class="text-sm font-semibold text-slate-900 dark:text-white">macOS / Linux</h3>
+        <AkCodeBlock title="bash" code={macBackup} />
+      </div>
+      <div class="space-y-2">
+        <h3 class="text-sm font-semibold text-slate-900 dark:text-white">Windows PowerShell</h3>
+        <AkCodeBlock title="powershell" code={winBackup} />
+      </div>
+    </div>
+  </AkSection>
+
+  <AkSection eyebrow={isVi ? 'Hành vi' : 'Behavior'} title={isVi ? 'Migrate làm gì' : 'What migration does'}>
+    <AkFeatureGrid features={whatItDoes} columns={2} />
+  </AkSection>
+
+  <AkSection eyebrow={isVi ? 'Preview' : 'Preview'} title={isVi ? 'Không mutate' : 'No mutation'}>
+    <AkCodeBlock
+      title="shell"
+      code={`ak migrate\nak migrate --from=ck\nak migrate --from=ck --json --no-interactive`}
+    />
+    <p class="text-sm text-slate-500 dark:text-slate-400">
+      {isVi
+        ? 'Mặc định --dry-run=true. Preview liệt kê category, conflict, recommended actions và recovery commands.'
+        : 'Default is --dry-run=true. The preview lists categories, conflicts, recommended actions, and recovery commands.'}
+    </p>
+  </AkSection>
+
+  <AkSection eyebrow={isVi ? 'Apply' : 'Apply'} title={isVi ? 'Ghi file — chỉ sau backup + preview ổn' : 'Writes files — only after backup + a good preview'}>
+    <AkCallout variant="warn" title={isVi ? 'Cảnh báo mutate' : 'Mutation warning'}>
+      {isVi
+        ? 'Lệnh dưới đây ghi file. Không chạy cho đến khi đã sao lưu và hiểu preview.'
+        : 'The commands below write files. Do not run them until you have backed up and understand the preview.'}
+    </AkCallout>
+    <AkCodeBlock
+      title="shell"
+      code={`ak migrate --from=ck --dry-run=false --yes\n# Claude Code project plugin delivery (only when intended):\n# ak migrate --from=ck --switch-to-plugin --dry-run=false --yes`}
+    />
+  </AkSection>
+
+  <AkSection eyebrow={isVi ? 'Verify' : 'Verify'} title={isVi ? 'Sau migrate' : 'After migration'}>
+    <AkCodeBlock
+      title="shell"
+      code={`ak doctor --json --offline\nak backups list\n# Confirm Skills in the assistant: /ak:… or $ak:…`}
+    />
+  </AkSection>
+
+  <AkSection eyebrow={isVi ? 'Recovery' : 'Recovery'} title={isVi ? 'Rollback boundaries' : 'Rollback boundaries'}>
+    <AkStepRail steps={recovery} accent="amber" />
+  </AkSection>
+
+  <AkCallout variant="tip" title={isVi ? 'Hai loại “migrate” khác nhau' : 'Two different “migrate” paths'}>
+    {isVi
+      ? 'Trang này: ClaudeKit → AgentKit (sản phẩm) qua '
+      : 'This page: ClaudeKit → AgentKit (product transition) via '}
+    <AkInlineCode text="ak migrate --from=ck" />
+    {isVi
+      ? '. Nếu bạn vẫn ở ClaudeKit và muốn đẩy workflow sang Codex / tool coding khác, dùng mục sidebar ClaudeKit → “CK → Tool coding khác”.'
+      : '. If you stay on ClaudeKit and want to push workflows to Codex or another coding tool, use the ClaudeKit sidebar item “CK → Other coding tools”.'}
+  </AkCallout>
+
+  <AkNextLinks
+    lang={currentLang}
+    title={isVi ? 'Tiếp theo' : 'Next'}
+    links={[
+      { href: '/guides/agentkit', label: isVi ? 'AgentKit là gì?' : 'What is AgentKit?' },
+      { href: '/guides/agentkit/getting-started', label: isVi ? 'Cài AgentKit' : 'Get started' },
+      { href: '/guides/agentkit/troubleshooting', label: isVi ? 'Sự cố' : 'Troubleshooting' },
+    ]}
+  />
+</div>

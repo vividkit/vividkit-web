@@ -1,0 +1,313 @@
+---
+import { getLangFromUrl, type Language } from '@/i18n';
+import AkPageHero from './AkPageHero.astro';
+import AkSection from './AkSection.astro';
+import AkCallout from './AkCallout.astro';
+import AkCodeBlock from './AkCodeBlock.astro';
+import AkNextLinks from './AkNextLinks.astro';
+import AkInlineCode from './AkInlineCode.astro';
+import AkCompare from './AkCompare.astro';
+import { akCode } from './ak-inline-code-class';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === 'vi';
+
+type Field = {
+  path: string;
+  type: string;
+  def: string;
+  options?: string;
+  meaning: string;
+};
+
+const setupFields: Field[] = isVi
+  ? [
+      { path: 'keys.anthropic', type: 'string', def: '—', meaning: 'API key Anthropic do ak setup ghi. Chỉ user config — không commit project config chứa key.' },
+      { path: 'keys.openai', type: 'string', def: '—', meaning: 'API key OpenAI do ak setup ghi. Chỉ user config.' },
+      { path: 'provider.default', type: 'string', def: '—', meaning: 'Provider mặc định (vd anthropic).' },
+      { path: 'provider.model', type: 'string', def: '—', meaning: 'Model text mặc định.' },
+      { path: 'provider.image', type: 'string', def: '—', meaning: 'Model dùng cho image generation.' },
+      { path: 'kit.default', type: 'string', def: '—', meaning: 'Kit mặc định (vd engineer) khi cài/setup.' },
+      { path: 'telemetry.enabled', type: 'boolean', def: 'false*', meaning: 'Gửi telemetry ẩn danh. *fixture setup thường false; bật chỉ khi bạn chọn.' },
+      { path: 'api.token', type: 'string', def: '—', meaning: 'Bearer token cho local API / dashboard khi bind ngoài loopback. Không commit.' },
+      { path: 'adapters.enabled', type: 'string', def: '—', options: 'claude-code, codex, cursor, …', meaning: 'Danh sách adapter bật, phân tách bằng dấu phẩy (vd claude-code,codex).' },
+      { path: 'codex.api_key_env_var', type: 'string', def: '—', meaning: 'Tên env var Codex đọc API key (vd OPENAI_API_KEY).' },
+      { path: 'codex.default_model', type: 'string', def: '—', meaning: 'Model ghi vào cấu hình Codex.' },
+      { path: 'codex.provider', type: 'string', def: '—', options: 'openai | azure | bedrock', meaning: 'Backend provider cho Codex.' },
+      { path: 'updates.enabled', type: 'boolean', def: '—', meaning: 'Opt-in auto-update Desktop / paired update.' },
+      { path: 'updates.channel', type: 'string', def: '—', options: 'stable | beta', meaning: 'Kênh binary update. Rỗng có thể mặc định theo binary.' },
+      { path: 'updates.registry_url', type: 'string', def: '—', meaning: 'Override root metadata update (staging).' },
+      { path: 'updates.cli_path', type: 'string', def: '—', meaning: 'Đường dẫn ak CLI đã verify ghép với Desktop auto-update.' },
+      { path: 'backups.scope', type: 'string', def: 'full', options: 'full | lean', meaning: 'Phạm vi snapshot user-home.' },
+      { path: 'backups.keep_last', type: 'integer', def: '20', meaning: 'Số snapshot giữ lại. 0 = tắt prune.' },
+    ]
+  : [
+      { path: 'keys.anthropic', type: 'string', def: '—', meaning: 'Anthropic API key written by ak setup. User config only — never commit secrets in project config.' },
+      { path: 'keys.openai', type: 'string', def: '—', meaning: 'OpenAI API key written by ak setup. User config only.' },
+      { path: 'provider.default', type: 'string', def: '—', meaning: 'Default provider id (for example anthropic).' },
+      { path: 'provider.model', type: 'string', def: '—', meaning: 'Default text model id.' },
+      { path: 'provider.image', type: 'string', def: '—', meaning: 'Model used for image generation.' },
+      { path: 'kit.default', type: 'string', def: '—', meaning: 'Default kit (for example engineer) for install/setup.' },
+      { path: 'telemetry.enabled', type: 'boolean', def: 'false*', meaning: 'Send anonymous usage telemetry. *setup fixtures often false; enable only if you opt in.' },
+      { path: 'api.token', type: 'string', def: '—', meaning: 'Bearer token for the local API/dashboard when binding beyond loopback. Do not commit.' },
+      { path: 'adapters.enabled', type: 'string', def: '—', options: 'claude-code, codex, cursor, …', meaning: 'Comma-separated enabled adapter ids (e.g. claude-code,codex).' },
+      { path: 'codex.api_key_env_var', type: 'string', def: '—', meaning: 'Env var name Codex reads for the API key (e.g. OPENAI_API_KEY).' },
+      { path: 'codex.default_model', type: 'string', def: '—', meaning: 'Model written into the Codex config.' },
+      { path: 'codex.provider', type: 'string', def: '—', options: 'openai | azure | bedrock', meaning: 'Codex backend provider.' },
+      { path: 'updates.enabled', type: 'boolean', def: '—', meaning: 'Opt in to Desktop auto-update / paired updates.' },
+      { path: 'updates.channel', type: 'string', def: '—', options: 'stable | beta', meaning: 'Binary update channel. Empty may fall back to binary defaults.' },
+      { path: 'updates.registry_url', type: 'string', def: '—', meaning: 'Override update metadata root (staging only).' },
+      { path: 'updates.cli_path', type: 'string', def: '—', meaning: 'Verified ak executable paired with Desktop auto-update.' },
+      { path: 'backups.scope', type: 'string', def: 'full', options: 'full | lean', meaning: 'Capture scope for user-home snapshots.' },
+      { path: 'backups.keep_last', type: 'integer', def: '20', meaning: 'Snapshots to retain. 0 disables pruning.' },
+    ];
+
+const prefFields: Field[] = isVi
+  ? [
+      { path: 'coding_level', type: 'integer', def: '-1', options: '-1…5', meaning: '-1 tắt · 0 eli5 · 1 junior · 2 mid · 3 senior · 4 tech-lead · 5 architect/god-mode. Độ sâu giải thích.' },
+      { path: 'privacy_block', type: 'boolean', def: 'true', meaning: 'Bật hook chặn đọc file nhạy cảm (.env, credentials, keys…).' },
+      { path: 'paths.docs', type: 'string', def: 'docs', meaning: 'Thư mục docs (relative project root hoặc absolute).' },
+      { path: 'paths.plans', type: 'string', def: 'plans', meaning: 'Thư mục plans.' },
+      { path: 'docs.max_loc', type: 'integer', def: '800', options: '100–5000', meaning: 'Giới hạn LOC gợi ý cho file docs.' },
+      { path: 'locale.response_language', type: 'string|null', def: 'null', meaning: 'Ngôn ngữ output cho user (null = theo user / English).' },
+      { path: 'locale.thinking_language', type: 'string|null', def: 'null', meaning: 'Ngôn ngữ suy luận nội bộ (null = English).' },
+      { path: 'plan.naming_format', type: 'string', def: '"{date}-{issue}-{slug}"', meaning: 'Mẫu tên thư mục plan. Token: {date}, {issue}, {slug}.' },
+      { path: 'plan.date_format', type: 'string', def: 'YYMMDD-HHmm', meaning: 'Format cho token {date}.' },
+      { path: 'plan.issue_prefix', type: 'string', def: 'GH-', meaning: 'Tiền tố issue (vd GH-, JIRA-).' },
+      { path: 'plan.reports_dir', type: 'string', def: 'reports', meaning: 'Subdir reports trong plan.' },
+      { path: 'plan.resolution.order', type: 'string[]', def: '["session","branch"]', options: 'session, branch, directory', meaning: 'Thứ tự resolve plan active.' },
+      { path: 'plan.validation.mode', type: 'string', def: 'prompt', options: 'prompt | auto | strict | none', meaning: 'Khi nào chạy validation interview cho plan.' },
+      { path: 'plan.validation.min_questions', type: 'integer', def: '3', meaning: 'Số câu hỏi validation tối thiểu.' },
+      { path: 'plan.validation.max_questions', type: 'integer', def: '8', meaning: 'Số câu hỏi validation tối đa.' },
+      { path: 'hooks.<name>', type: 'boolean', def: 'absent = on', options: 'true | false', meaning: 'Tắt từng hook theo basename script. Key vắng = hook bật.' },
+      { path: 'project.type', type: 'string', def: 'auto', options: 'auto | library | application | monorepo | cli | api | web | mobile', meaning: 'Ghi đè detect loại project.' },
+      { path: 'gemini.model', type: 'string', def: 'gemini-3-flash-preview', options: 'gemini-2.5-flash | gemini-2.5-pro | …', meaning: 'Model Gemini CLI khi skill dùng Gemini.' },
+    ]
+  : [
+      { path: 'coding_level', type: 'integer', def: '-1', options: '-1…5', meaning: '-1 off · 0 eli5 · 1 junior · 2 mid · 3 senior · 4 tech-lead · 5 architect/god-mode. Controls explanation depth.' },
+      { path: 'privacy_block', type: 'boolean', def: 'true', meaning: 'Privacy hook blocks reading sensitive files (.env, credentials, keys…).' },
+      { path: 'paths.docs', type: 'string', def: 'docs', meaning: 'Docs directory (project-relative or absolute).' },
+      { path: 'paths.plans', type: 'string', def: 'plans', meaning: 'Plans directory.' },
+      { path: 'docs.max_loc', type: 'integer', def: '800', options: '100–5000', meaning: 'Suggested max LOC per documentation file.' },
+      { path: 'locale.response_language', type: 'string|null', def: 'null', meaning: 'User-facing response language (null = match user / English).' },
+      { path: 'locale.thinking_language', type: 'string|null', def: 'null', meaning: 'Internal reasoning language (null = English).' },
+      { path: 'plan.naming_format', type: 'string', def: '"{date}-{issue}-{slug}"', meaning: 'Plan directory name template. Tokens: {date}, {issue}, {slug}.' },
+      { path: 'plan.date_format', type: 'string', def: 'YYMMDD-HHmm', meaning: 'Format for the {date} token.' },
+      { path: 'plan.issue_prefix', type: 'string', def: 'GH-', meaning: 'Issue prefix (e.g. GH-, JIRA-).' },
+      { path: 'plan.reports_dir', type: 'string', def: 'reports', meaning: 'Reports subdirectory inside a plan.' },
+      { path: 'plan.resolution.order', type: 'string[]', def: '["session","branch"]', options: 'session, branch, directory', meaning: 'Order of strategies to resolve the active plan.' },
+      { path: 'plan.validation.mode', type: 'string', def: 'prompt', options: 'prompt | auto | strict | none', meaning: 'When the plan validation interview runs.' },
+      { path: 'plan.validation.min_questions', type: 'integer', def: '3', meaning: 'Minimum validation questions.' },
+      { path: 'plan.validation.max_questions', type: 'integer', def: '8', meaning: 'Maximum validation questions.' },
+      { path: 'hooks.<name>', type: 'boolean', def: 'absent = on', options: 'true | false', meaning: 'Per-hook toggle by script basename. Missing key means the hook is enabled.' },
+      { path: 'project.type', type: 'string', def: 'auto', options: 'auto | library | application | monorepo | cli | api | web | mobile', meaning: 'Override project type detection.' },
+      { path: 'gemini.model', type: 'string', def: 'gemini-3-flash-preview', options: 'gemini-2.5-flash | gemini-2.5-pro | …', meaning: 'Gemini CLI model when skills use Gemini.' },
+    ];
+
+const sampleUser = `# ~/.agentkit/config.yaml  (user scope)
+telemetry:
+  enabled: false
+adapters:
+  enabled: claude-code,codex
+updates:
+  enabled: false
+  channel: stable
+backups:
+  scope: full
+  keep_last: 20
+coding_level: 2
+privacy_block: true
+locale:
+  response_language: vi
+  thinking_language: en`;
+
+const sampleProject = `# .agentkit/config.yaml  (project — safe to commit)
+# yaml-language-server: $schema=https://releases.agentkit.best/schemas/config/v1.json
+coding_level: 3
+paths:
+  docs: docs
+  plans: plans
+privacy_block: true
+hooks:
+  simplify-gate: false
+plan:
+  naming_format: "{date}-{slug}"
+  validation:
+    mode: prompt`;
+---
+
+<div class="space-y-10 mt-6">
+  <AkPageHero
+    lang={currentLang}
+    accent="violet"
+    kicker="config.yaml"
+    title={isVi ? 'Cấu Hình AgentKit' : 'AgentKit Configuration'}
+    subtitle={isVi
+      ? 'config.yaml lưu preference AgentKit: vị trí file, merge user/project, ý nghĩa từng setting, mặc định và options.'
+      : 'config.yaml stores AgentKit preferences: file locations, user/project merge, each setting’s meaning, defaults, and options.'}
+  />
+
+  <AkCallout variant="warn" title={isVi ? 'Secrets không thuộc project config' : 'Secrets do not belong in project config'}>
+    {isVi ? (
+      <>
+        <AkInlineCode text="keys.*" />, <AkInlineCode text="api.token" />, và passphrase trust chỉ để trong user config (
+        <AkInlineCode text="~/.agentkit/config.yaml" />
+        ). Project <AkInlineCode text=".agentkit/config.yaml" /> nên commit được — không chứa credential.
+      </>
+    ) : (
+      <>
+        <AkInlineCode text="keys.*" />, <AkInlineCode text="api.token" />, and trust passphrases belong only in user config (
+        <AkInlineCode text="~/.agentkit/config.yaml" />
+        ). Project <AkInlineCode text=".agentkit/config.yaml" /> is meant to be committed — no credentials.
+      </>
+    )}
+  </AkCallout>
+
+  <AkSection
+    eyebrow={isVi ? 'Vị trí' : 'Locations'}
+    title={isVi ? 'Hai scope, một schema' : 'Two scopes, one schema'}
+  >
+    <AkCompare
+      left={{
+        title: isVi ? 'User' : 'User',
+        body: isVi
+          ? `${akCode('~/.agentkit/config.yaml')} (hoặc ${akCode('$AGENTKIT_HOME/config.yaml')}). Máy cá nhân: keys, updates, adapters, telemetry…`
+          : `${akCode('~/.agentkit/config.yaml')} (or ${akCode('$AGENTKIT_HOME/config.yaml')}). Per-machine: keys, updates, adapters, telemetry…`,
+        tone: 'teal',
+      }}
+      right={{
+        title: isVi ? 'Project' : 'Project',
+        body: isVi
+          ? `${akCode('.agentkit/config.yaml')} trong repo. Deep-merge đè user cho repo này: coding_level, paths, hooks…`
+          : `${akCode('.agentkit/config.yaml')} in the repo. Deep-merges over user for this repo: coding_level, paths, hooks…`,
+        tone: 'slate',
+      }}
+    />
+    <p class="mt-3 text-sm text-slate-600 dark:text-slate-400">
+      {isVi
+        ? 'Field names là snake_case. Schema: https://releases.agentkit.best/schemas/config/v1.json — validate bằng '
+        : 'Field names are snake_case. Schema: https://releases.agentkit.best/schemas/config/v1.json — validate with '}
+      <AkInlineCode text="ak config prefs validate" />.
+    </p>
+  </AkSection>
+
+  <AkSection
+    eyebrow={isVi ? 'CLI' : 'CLI'}
+    title={isVi ? 'Xem và chỉnh' : 'View and edit'}
+  >
+    <AkCodeBlock
+      title="shell"
+      code={`# Dashboard / visual config
+ak config
+
+# Preferences (hook toggles, resolve effective config)
+ak config prefs resolve
+ak config prefs validate
+ak config prefs set hooks.simplify-gate false --scope project
+ak config prefs unset hooks.simplify-gate --scope project`}
+    />
+  </AkSection>
+
+  <AkSection
+    eyebrow={isVi ? 'Setup-owned' : 'Setup-owned'}
+    title={isVi ? 'Phần ak setup / lifecycle thường ghi' : 'Sections ak setup / lifecycle usually write'}
+    desc={isVi
+      ? 'Các key do CLI setup model trực tiếp. Giá trị “—” nghĩa là omit/empty cho đến khi setup ghi.'
+      : 'Keys the CLI setup model owns. “—” means omit/empty until setup writes them.'}
+  >
+    <div class="overflow-x-auto rounded-2xl border border-slate-200/80 dark:border-slate-700">
+      <table class="min-w-full text-left text-sm">
+        <thead class="bg-slate-900 text-slate-200">
+          <tr>
+            <th class="px-3 py-2.5 font-semibold">Path</th>
+            <th class="px-3 py-2.5 font-semibold">Type</th>
+            <th class="px-3 py-2.5 font-semibold">{isVi ? 'Mặc định' : 'Default'}</th>
+            <th class="px-3 py-2.5 font-semibold">Options</th>
+            <th class="px-3 py-2.5 font-semibold">{isVi ? 'Ý nghĩa' : 'Meaning'}</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200 bg-white dark:divide-slate-700 dark:bg-slate-900/50">
+          {setupFields.map((f) => (
+            <tr class="align-top">
+              <td class="px-3 py-2.5 font-mono text-xs text-teal-700 dark:text-teal-300 whitespace-nowrap">{f.path}</td>
+              <td class="px-3 py-2.5 text-xs text-slate-500">{f.type}</td>
+              <td class="px-3 py-2.5 font-mono text-xs text-slate-700 dark:text-slate-300">{f.def}</td>
+              <td class="px-3 py-2.5 text-xs text-slate-500">{f.options || '—'}</td>
+              <td class="px-3 py-2.5 text-slate-600 dark:text-slate-400">{f.meaning}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </AkSection>
+
+  <AkSection
+    eyebrow={isVi ? 'Preferences' : 'Preferences'}
+    title={isVi ? 'Preference workflow / kit (thường project)' : 'Workflow / kit preferences (often project)'}
+    desc={isVi
+      ? 'Template project và schema v1. Phù hợp commit để team dùng chung coding_level, paths, hooks.'
+      : 'From the project template and schema v1. Safe to commit so teams share coding_level, paths, and hooks.'}
+  >
+    <div class="overflow-x-auto rounded-2xl border border-slate-200/80 dark:border-slate-700">
+      <table class="min-w-full text-left text-sm">
+        <thead class="bg-slate-900 text-slate-200">
+          <tr>
+            <th class="px-3 py-2.5 font-semibold">Path</th>
+            <th class="px-3 py-2.5 font-semibold">Type</th>
+            <th class="px-3 py-2.5 font-semibold">{isVi ? 'Mặc định' : 'Default'}</th>
+            <th class="px-3 py-2.5 font-semibold">Options</th>
+            <th class="px-3 py-2.5 font-semibold">{isVi ? 'Ý nghĩa' : 'Meaning'}</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200 bg-white dark:divide-slate-700 dark:bg-slate-900/50">
+          {prefFields.map((f) => (
+            <tr class="align-top">
+              <td class="px-3 py-2.5 font-mono text-xs text-violet-700 dark:text-violet-300 whitespace-nowrap">{f.path}</td>
+              <td class="px-3 py-2.5 text-xs text-slate-500">{f.type}</td>
+              <td class="px-3 py-2.5 font-mono text-xs text-slate-700 dark:text-slate-300">{f.def}</td>
+              <td class="px-3 py-2.5 text-xs text-slate-500">{f.options || '—'}</td>
+              <td class="px-3 py-2.5 text-slate-600 dark:text-slate-400">{f.meaning}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <AkCallout variant="info" title={isVi ? 'Khác nữa trong schema' : 'More in the schema'}>
+      {isVi
+        ? 'Schema còn content.* (daemon content multi-channel), assertions, skills.<id>, simplify.gate, workflow_artifact_gate, extensions (escape hatch không validate). Xem full schema khi cần field hiếm.'
+        : 'The schema also includes content.* (multi-channel content daemon), assertions, skills.<id>, simplify.gate, workflow_artifact_gate, and extensions (unvalidated escape hatch). See the full schema for rare fields.'}
+    </AkCallout>
+  </AkSection>
+
+  <AkSection eyebrow={isVi ? 'Ví dụ' : 'Examples'} title={isVi ? 'Mẫu tối thiểu' : 'Minimal samples'}>
+    <div class="grid gap-4 lg:grid-cols-2">
+      <div class="space-y-2">
+        <h3 class="text-sm font-semibold text-slate-900 dark:text-white">
+          {isVi ? 'User (máy local)' : 'User (this machine)'}
+        </h3>
+        <AkCodeBlock title="config.yaml" code={sampleUser} />
+      </div>
+      <div class="space-y-2">
+        <h3 class="text-sm font-semibold text-slate-900 dark:text-white">
+          {isVi ? 'Project (commit được)' : 'Project (committable)'}
+        </h3>
+        <AkCodeBlock title=".agentkit/config.yaml" code={sampleProject} />
+      </div>
+    </div>
+  </AkSection>
+
+  <AkNextLinks
+    lang={currentLang}
+    title={isVi ? 'Tiếp theo' : 'Next'}
+    links={[
+      { href: '/guides/agentkit/getting-started', label: isVi ? 'Cài đặt & login' : 'Install & login' },
+      { href: '/guides/agentkit/updating', label: isVi ? 'Cập nhật' : 'Updating' },
+      { href: '/guides/agentkit/desktop-app', label: 'Desktop App' },
+    ]}
+  />
+</div>

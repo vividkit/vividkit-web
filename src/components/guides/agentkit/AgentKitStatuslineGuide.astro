@@ -1,0 +1,401 @@
+---
+import { getLangFromUrl, type Language } from '@/i18n';
+import AkPageHero from './AkPageHero.astro';
+import AkSection from './AkSection.astro';
+import AkCallout from './AkCallout.astro';
+import AkCodeBlock from './AkCodeBlock.astro';
+import AkNextLinks from './AkNextLinks.astro';
+import AkInlineCode from './AkInlineCode.astro';
+import AkFeatureGrid from './AkFeatureGrid.astro';
+import AkCompare from './AkCompare.astro';
+import { akCode } from './ak-inline-code-class';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === 'vi';
+
+const sections = isVi
+  ? [
+      { id: 'model', en: true, def: 'bật', icon: '🤖', meaning: 'Tên model Claude đang dùng' },
+      { id: 'context', en: true, def: 'bật', icon: '—', meaning: 'Thanh % context window' },
+      { id: 'quota', en: true, def: 'bật', icon: '⌛', meaning: 'Usage quota 5h / week (khi cache eligible)' },
+      { id: 'directory', en: true, def: 'bật', icon: '📁', meaning: 'Thư mục workspace (home → ~)' },
+      { id: 'git', en: true, def: 'bật', icon: '🌿', meaning: 'Branch + dirty/ahead/behind' },
+      { id: 'plan', en: true, def: 'bật', icon: '📋', meaning: 'Active plan label (nếu có)' },
+      { id: 'cost', en: false, def: 'tắt', icon: '💰', meaning: 'Chi phí API session (khi billing API)' },
+      { id: 'changes', en: true, def: 'bật', icon: '📝', meaning: 'Lines + / − trong session' },
+      { id: 'agents', en: true, def: 'bật', icon: '🔄', meaning: 'Luồng agents running/completed' },
+      { id: 'todos', en: true, def: 'bật', icon: '✅', meaning: 'Todo / task snapshot' },
+    ]
+  : [
+      { id: 'model', en: true, def: 'on', icon: '🤖', meaning: 'Active Claude model name' },
+      { id: 'context', en: true, def: 'on', icon: '—', meaning: 'Context-window usage bar %' },
+      { id: 'quota', en: true, def: 'on', icon: '⌛', meaning: 'Usage quota 5h / week (when cache eligible)' },
+      { id: 'directory', en: true, def: 'on', icon: '📁', meaning: 'Workspace path (home → ~)' },
+      { id: 'git', en: true, def: 'on', icon: '🌿', meaning: 'Branch + dirty/ahead/behind' },
+      { id: 'plan', en: true, def: 'on', icon: '📋', meaning: 'Active plan label (if any)' },
+      { id: 'cost', en: false, def: 'off', icon: '💰', meaning: 'Session API cost (when API billing)' },
+      { id: 'changes', en: true, def: 'on', icon: '📝', meaning: 'Lines + / − this session' },
+      { id: 'agents', en: true, def: 'on', icon: '🔄', meaning: 'Running / completed agent flow' },
+      { id: 'todos', en: true, def: 'on', icon: '✅', meaning: 'Todo / task snapshot' },
+    ];
+
+const modes = isVi
+  ? [
+      { icon: 'FULL', title: 'full (mặc định)', body: 'Hiển thị đầy đủ các dòng đã cấu hình: session rows + agents + todos (theo layout).', accent: 'teal' as const },
+      { icon: 'CMP', title: 'compact', body: 'Thu gọn — ít dòng hơn, ưu tiên thông tin cốt lõi khi terminal hẹp.', accent: 'cyan' as const },
+      { icon: 'MIN', title: 'minimal', body: 'Tối thiểu — chỉ vài section quan trọng.', accent: 'violet' as const },
+      { icon: 'OFF', title: 'none', body: 'Tắt render statusline (không in dòng status).', accent: 'amber' as const },
+    ]
+  : [
+      { icon: 'FULL', title: 'full (default)', body: 'Full configured lines: session rows + agents + todos per layout.', accent: 'teal' as const },
+      { icon: 'CMP', title: 'compact', body: 'Fewer lines — core info when the terminal is narrow.', accent: 'cyan' as const },
+      { icon: 'MIN', title: 'minimal', body: 'Minimal — only the most important sections.', accent: 'violet' as const },
+      { icon: 'OFF', title: 'none', body: 'Disable statusline output (prints no status lines).', accent: 'amber' as const },
+    ];
+
+const sampleYaml = `# ~/.agentkit/config.yaml  (user scope — typical)
+statuslineLayout:
+  baseMode: full          # full | compact | minimal | none
+  lines:
+    - [model, context, quota]
+    - [directory, git, cost, changes]
+    - [agents, todos]
+  sectionConfig:
+    model:
+      icon: "🤖"
+      color: cyan
+    cost:
+      # cost defaults to off in DEFAULT_SECTIONS; include it in lines to show
+      icon: "💰"
+      color: dim
+  theme:
+    contextLow: green
+    contextMid: yellow
+    contextHigh: red
+    accent: cyan
+    muted: dim
+    separator: dim
+    quotaLow: green
+    quotaHigh: red
+  responsiveBreakpoint: 0.85   # 0.5–1.0
+  maxAgentRows: 4
+  todoTruncation: 50
+
+# Optional legacy / related toggles (same config file):
+# statusline: full              # fallback mode if baseMode missing
+# statuslineQuota: false        # hide quota windows even if section on
+# statuslineColors: false       # disable ANSI colors`;
+---
+
+<div class="space-y-10 mt-6">
+  <AkPageHero
+    lang={currentLang}
+    accent="cyan"
+    kicker="Statusline"
+    title={isVi ? 'AgentKit Statusline' : 'AgentKit Statusline'}
+    subtitle={isVi
+      ? 'Dòng status trong Claude Code do kit Engineer/Marketing cài — mặc định là gì, custom thế nào, options nào được hỗ trợ.'
+      : 'The Claude Code status line installed by Engineer/Marketing kits — defaults, how to customize, and supported options.'}
+    badges={isVi ? ['Claude Code', 'statuslineLayout'] : ['Claude Code', 'statuslineLayout']}
+  />
+
+  <AkCallout variant="tip" title={isVi ? 'Statusline là gì?' : 'What is the statusline?'}>
+    {isVi ? (
+      <>
+        Mỗi lần Claude Code vẽ status, nó chạy script <AkInlineCode text="statusline.cjs" /> của kit (Node), đọc JSON session từ stdin và in ANSI ra terminal. AgentKit đăng ký script này khi cài kit cho runtime Claude Code — không chạy trong Codex/Cursor status line của AK.
+      </>
+    ) : (
+      <>
+        Each time Claude Code draws its status, it runs the kit’s <AkInlineCode text="statusline.cjs" /> (Node), reads session JSON from stdin, and prints ANSI to the terminal. AgentKit registers that script when installing a kit for the Claude Code runtime — it is not the Codex/Cursor status surface.
+      </>
+    )}
+  </AkCallout>
+
+  <AkSection
+    eyebrow={isVi ? 'Cài đặt' : 'Install'}
+    title={isVi ? 'Đến từ đâu?' : 'Where does it come from?'}
+  >
+    <AkCompare
+      left={{
+        title: isVi ? 'Kit export' : 'Kit export',
+        body: isVi
+          ? `Engineer / Marketing ship ${akCode('.config/statusline.cjs')} + lib hooks (render modes, section registry).`
+          : `Engineer / Marketing ship ${akCode('.config/statusline.cjs')} plus hook libs (render modes, section registry).`,
+        tone: 'teal',
+      }}
+      right={{
+        title: isVi ? 'Claude Code registration' : 'Claude Code registration',
+        body: isVi
+          ? `Adapter ghi ${akCode('statusLine')} trong settings Claude Code trỏ tới script đã cài (project hoặc global).`
+          : `The adapter writes ${akCode('statusLine')} in Claude Code settings pointing at the installed script (project or global).`,
+        tone: 'slate',
+      }}
+    />
+  </AkSection>
+
+  <AkSection
+    eyebrow={isVi ? 'Mặc định' : 'Defaults'}
+    title={isVi ? 'Default đang để gì?' : 'What is the default today?'}
+    desc={isVi
+      ? 'Khi chưa có statuslineLayout trong config, renderer dùng default giống pre-refactor — behavior ổn định.'
+      : 'With no statuslineLayout in config, the renderer uses defaults identical to pre-refactor behavior.'}
+  >
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {[
+        { k: isVi ? 'Mode' : 'Mode', v: 'full', d: isVi ? 'baseMode / legacy statusline' : 'baseMode / legacy statusline' },
+        { k: isVi ? 'Quota section' : 'Quota section', v: 'on', d: isVi ? 'trừ khi statuslineQuota: false' : 'unless statuslineQuota: false' },
+        { k: isVi ? 'Colors' : 'Colors', v: 'on', d: isVi ? 'trừ khi statuslineColors: false' : 'unless statuslineColors: false' },
+        { k: 'responsiveBreakpoint', v: '0.85', d: isVi ? 'wrap responsive (0.5–1.0)' : 'responsive wrap (0.5–1.0)' },
+        { k: 'maxAgentRows', v: '4', d: isVi ? 'số nhóm agent hiển thị' : 'agent groups shown' },
+        { k: 'todoTruncation', v: '50', d: isVi ? 'ký tự cắt todo' : 'todo char truncate' },
+      ].map((item) => (
+        <div class="rounded-2xl border border-slate-200/80 bg-white/80 p-4 dark:border-slate-700 dark:bg-slate-900/50">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-slate-500">{item.k}</div>
+          <div class="mt-1 font-mono text-lg font-bold text-teal-700 dark:text-teal-300">{item.v}</div>
+          <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">{item.d}</p>
+        </div>
+      ))}
+    </div>
+
+    <h3 class="mt-6 text-base font-semibold text-slate-900 dark:text-white">
+      {isVi ? 'Layout dòng mặc định (dashboard builder)' : 'Default line layout (dashboard builder)'}
+    </h3>
+    <AkCodeBlock
+      title="lines[][]"
+      code={`[
+  ["model", "context", "quota"],
+  ["directory", "git", "cost", "changes"],
+  ["agents", "todos"]
+]`}
+    />
+    <p class="text-sm text-slate-600 dark:text-slate-400">
+      {isVi
+        ? 'Lưu ý: section cost mặc định enabled: false trong DEFAULT_SECTIONS — chỉ hiện khi có data cost và được bật/include trong layout.'
+        : 'Note: cost defaults to enabled: false in DEFAULT_SECTIONS — it only shows when cost data exists and the section is enabled/included.'}
+    </p>
+  </AkSection>
+
+  <AkSection
+    eyebrow={isVi ? 'Sections' : 'Sections'}
+    title={isVi ? 'Section IDs được hỗ trợ' : 'Supported section IDs'}
+  >
+    <div class="overflow-x-auto rounded-2xl border border-slate-200/80 dark:border-slate-700">
+      <table class="min-w-full text-left text-sm">
+        <thead class="bg-slate-900 text-slate-200">
+          <tr>
+            <th class="px-3 py-2.5 font-semibold">id</th>
+            <th class="px-3 py-2.5 font-semibold">{isVi ? 'Mặc định' : 'Default'}</th>
+            <th class="px-3 py-2.5 font-semibold">Icon</th>
+            <th class="px-3 py-2.5 font-semibold">{isVi ? 'Ý nghĩa' : 'Meaning'}</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200 bg-white dark:divide-slate-700 dark:bg-slate-900/50">
+          {sections.map((s) => (
+            <tr>
+              <td class="px-3 py-2.5 font-mono text-xs text-cyan-700 dark:text-cyan-300">{s.id}</td>
+              <td class="px-3 py-2.5 text-xs">{s.def}</td>
+              <td class="px-3 py-2.5 text-sm">{s.icon}</td>
+              <td class="px-3 py-2.5 text-slate-600 dark:text-slate-400">{s.meaning}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="mt-3 text-sm text-slate-500 dark:text-slate-400">
+      {isVi
+        ? 'agents và todos là multi-line sections (render riêng, không nhét chung một dòng flat).'
+        : 'agents and todos are multi-line sections (rendered separately, not as a single flat row).'}
+    </p>
+  </AkSection>
+
+  <AkSection
+    eyebrow={isVi ? 'Modes' : 'Modes'}
+    title={isVi ? 'baseMode / statusline mode' : 'baseMode / statusline mode'}
+  >
+    <AkFeatureGrid features={modes} columns={2} />
+  </AkSection>
+
+  <AkSection
+    eyebrow={isVi ? 'Custom' : 'Customize'}
+    title={isVi ? 'Custom thế nào?' : 'How do you customize?'}
+  >
+    <div class="space-y-4">
+      <div class="rounded-2xl border border-teal-200/70 bg-teal-50/40 p-5 dark:border-teal-500/25 dark:bg-teal-950/20">
+        <h3 class="font-semibold text-teal-900 dark:text-teal-100">
+          {isVi ? '1. Dashboard Statusline Builder (khuyến nghị)' : '1. Dashboard Statusline Builder (recommended)'}
+        </h3>
+        <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">
+          {isVi ? (
+            <>
+              Mở <AkInlineCode text="ak config" /> (Desktop hoặc browser dashboard) → trang Statusline. Kéo thả sections, chọn theme preset, preview terminal, Save. Config ghi vào field{' '}
+              <AkInlineCode text="statuslineLayout" /> trong user config.
+            </>
+          ) : (
+            <>
+              Open <AkInlineCode text="ak config" /> (Desktop or browser dashboard) → Statusline page. Drag sections, pick a theme preset, preview the terminal, Save. Config writes the{' '}
+              <AkInlineCode text="statuslineLayout" /> field in user config.
+            </>
+          )}
+        </p>
+      </div>
+      <div class="rounded-2xl border border-slate-200/80 bg-white/80 p-5 dark:border-slate-700 dark:bg-slate-900/50">
+        <h3 class="font-semibold text-slate-900 dark:text-white">
+          {isVi ? '2. Sửa config.yaml trực tiếp' : '2. Edit config.yaml directly'}
+        </h3>
+        <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">
+          {isVi ? (
+            <>
+              Thêm object <AkInlineCode text="statuslineLayout" /> vào <AkInlineCode text="~/.agentkit/config.yaml" /> (user). Project config có thể override theo merge rules — secrets vẫn không thuộc project.
+            </>
+          ) : (
+            <>
+              Add a <AkInlineCode text="statuslineLayout" /> object to <AkInlineCode text="~/.agentkit/config.yaml" /> (user). Project config can override via merge rules — secrets still stay out of project files.
+            </>
+          )}
+        </p>
+      </div>
+    </div>
+  </AkSection>
+
+  <AkSection
+    eyebrow={isVi ? 'Options' : 'Options'}
+    title={isVi ? 'statuslineLayout — fields được support' : 'statuslineLayout — supported fields'}
+  >
+    <div class="overflow-x-auto rounded-2xl border border-slate-200/80 dark:border-slate-700">
+      <table class="min-w-full text-left text-sm">
+        <thead class="bg-slate-900 text-slate-200">
+          <tr>
+            <th class="px-3 py-2.5 font-semibold">Field</th>
+            <th class="px-3 py-2.5 font-semibold">{isVi ? 'Mặc định' : 'Default'}</th>
+            <th class="px-3 py-2.5 font-semibold">Options / type</th>
+            <th class="px-3 py-2.5 font-semibold">{isVi ? 'Ý nghĩa' : 'Meaning'}</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200 bg-white text-slate-600 dark:divide-slate-700 dark:bg-slate-900/50 dark:text-slate-400">
+          <tr>
+            <td class="px-3 py-2.5 font-mono text-xs text-cyan-700 dark:text-cyan-300">baseMode</td>
+            <td class="px-3 py-2.5 font-mono text-xs">full</td>
+            <td class="px-3 py-2.5 text-xs">full | compact | minimal | none</td>
+            <td class="px-3 py-2.5">{isVi ? 'Chế độ render chính' : 'Primary render mode'}</td>
+          </tr>
+          <tr>
+            <td class="px-3 py-2.5 font-mono text-xs text-cyan-700 dark:text-cyan-300">lines</td>
+            <td class="px-3 py-2.5 font-mono text-xs">3 rows (builder default)</td>
+            <td class="px-3 py-2.5 text-xs">string[][] of section ids</td>
+            <td class="px-3 py-2.5">{isVi ? 'Bố cục từng dòng status' : 'Per-line section layout'}</td>
+          </tr>
+          <tr>
+            <td class="px-3 py-2.5 font-mono text-xs text-cyan-700 dark:text-cyan-300">sections</td>
+            <td class="px-3 py-2.5 font-mono text-xs">DEFAULT_SECTIONS</td>
+            <td class="px-3 py-2.5 text-xs">legacy array {'{id,enabled,order,…}'}</td>
+            <td class="px-3 py-2.5">{isVi ? 'Format cũ (backward compat)' : 'Legacy format (backward compat)'}</td>
+          </tr>
+          <tr>
+            <td class="px-3 py-2.5 font-mono text-xs text-cyan-700 dark:text-cyan-300">sectionConfig</td>
+            <td class="px-3 py-2.5 font-mono text-xs">{'{} / icons'}</td>
+            <td class="px-3 py-2.5 text-xs">per id: icon, label, color, maxWidth</td>
+            <td class="px-3 py-2.5">{isVi ? 'Override hiển thị từng section' : 'Per-section display overrides'}</td>
+          </tr>
+          <tr>
+            <td class="px-3 py-2.5 font-mono text-xs text-cyan-700 dark:text-cyan-300">theme</td>
+            <td class="px-3 py-2.5 font-mono text-xs">Default theme</td>
+            <td class="px-3 py-2.5 text-xs">contextLow/Mid/High, accent, muted, separator, quotaLow/High</td>
+            <td class="px-3 py-2.5">{isVi ? 'Màu context/quota/accent' : 'Context/quota/accent colors'}</td>
+          </tr>
+          <tr>
+            <td class="px-3 py-2.5 font-mono text-xs text-cyan-700 dark:text-cyan-300">responsiveBreakpoint</td>
+            <td class="px-3 py-2.5 font-mono text-xs">0.85</td>
+            <td class="px-3 py-2.5 text-xs">number 0.5–1.0</td>
+            <td class="px-3 py-2.5">{isVi ? 'Ngưỡng wrap theo độ rộng terminal (legacy layout)' : 'Wrap threshold vs terminal width (legacy layout)'}</td>
+          </tr>
+          <tr>
+            <td class="px-3 py-2.5 font-mono text-xs text-cyan-700 dark:text-cyan-300">maxAgentRows</td>
+            <td class="px-3 py-2.5 font-mono text-xs">4</td>
+            <td class="px-3 py-2.5 text-xs">number (≥0; 0 = hide agents)</td>
+            <td class="px-3 py-2.5">{isVi ? 'Số nhóm agent collapse hiển thị' : 'Collapsed agent groups to show'}</td>
+          </tr>
+          <tr>
+            <td class="px-3 py-2.5 font-mono text-xs text-cyan-700 dark:text-cyan-300">todoTruncation</td>
+            <td class="px-3 py-2.5 font-mono text-xs">50</td>
+            <td class="px-3 py-2.5 text-xs">number</td>
+            <td class="px-3 py-2.5">{isVi ? 'Cắt text todo' : 'Todo text length cap'}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="mt-6 text-base font-semibold text-slate-900 dark:text-white">
+      {isVi ? 'sectionConfig per id' : 'sectionConfig per id'}
+    </h3>
+    <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-slate-600 dark:text-slate-400">
+      <li><AkInlineCode text="icon" /> — {isVi ? 'emoji/string prefix' : 'emoji/string prefix'}</li>
+      <li><AkInlineCode text="label" /> — {isVi ? 'nhãn tùy chọn' : 'optional label override'}</li>
+      <li><AkInlineCode text="color" /> — {isVi ? 'tên ANSI: green, cyan, brightMagenta, dim, …' : 'ANSI name: green, cyan, brightMagenta, dim, …'}</li>
+      <li><AkInlineCode text="maxWidth" /> — {isVi ? 'giới hạn độ rộng section (số)' : 'section width cap (number)'}</li>
+    </ul>
+
+    <h3 class="mt-6 text-base font-semibold text-slate-900 dark:text-white">
+      {isVi ? 'Theme presets (dashboard)' : 'Theme presets (dashboard)'}
+    </h3>
+    <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">
+      {isVi
+        ? 'Builder có preset: Default, Monochrome, Nord, Dracula, Catppuccin, Gruvbox, Tokyo Night, Solarized, Rose Pine, One Dark, Ayu — mỗi preset set theme + per-section colors.'
+        : 'The builder ships presets: Default, Monochrome, Nord, Dracula, Catppuccin, Gruvbox, Tokyo Night, Solarized, Rose Pine, One Dark, Ayu — each sets theme + per-section colors.'}
+    </p>
+  </AkSection>
+
+  <AkSection
+    eyebrow={isVi ? 'Ví dụ' : 'Example'}
+    title={isVi ? 'Mẫu statuslineLayout' : 'Sample statuslineLayout'}
+  >
+    <AkCodeBlock title="config.yaml" code={sampleYaml} />
+  </AkSection>
+
+  <AkSection
+    eyebrow={isVi ? 'Toggles liên quan' : 'Related toggles'}
+    title={isVi ? 'Ngoài statuslineLayout' : 'Outside statuslineLayout'}
+  >
+    <div class="grid gap-3 sm:grid-cols-3">
+      <div class="rounded-2xl border border-slate-200/80 p-4 dark:border-slate-700">
+        <AkInlineCode text="statusline" />
+        <p class="mt-2 text-xs text-slate-600 dark:text-slate-400">
+          {isVi ? 'Legacy mode string (full/compact/…) khi thiếu baseMode.' : 'Legacy mode string (full/compact/…) if baseMode missing.'}
+        </p>
+      </div>
+      <div class="rounded-2xl border border-slate-200/80 p-4 dark:border-slate-700">
+        <AkInlineCode text="statuslineQuota" />
+        <p class="mt-2 text-xs text-slate-600 dark:text-slate-400">
+          {isVi ? 'false = ẩn quota windows dù section quota bật.' : 'false = hide quota windows even if quota section is on.'}
+        </p>
+      </div>
+      <div class="rounded-2xl border border-slate-200/80 p-4 dark:border-slate-700">
+        <AkInlineCode text="statuslineColors" />
+        <p class="mt-2 text-xs text-slate-600 dark:text-slate-400">
+          {isVi ? 'false = tắt ANSI color output.' : 'false = disable ANSI color output.'}
+        </p>
+      </div>
+    </div>
+  </AkSection>
+
+  <AkCallout variant="info" title={isVi ? 'Runtime note' : 'Runtime note'}>
+    {isVi
+      ? 'Statusline AgentKit gắn Claude Code. Codex / Cursor không dùng surface statusline này — xem Runtime Support cho khác biệt adapter.'
+      : 'AgentKit statusline targets Claude Code. Codex / Cursor do not use this statusline surface — see Runtime Support for adapter differences.'}
+  </AkCallout>
+
+  <AkNextLinks
+    lang={currentLang}
+    title={isVi ? 'Liên quan' : 'Related'}
+    links={[
+      { href: '/guides/agentkit/configuration', label: isVi ? 'config.yaml' : 'config.yaml' },
+      { href: '/guides/agentkit/desktop-app', label: isVi ? 'Desktop / dashboard' : 'Desktop / dashboard' },
+      { href: '/guides/agentkit/runtime-support', label: isVi ? 'Runtime support' : 'Runtime support' },
+      { href: '/guides/agentkit/getting-started', label: isVi ? 'Cài kit' : 'Install a kit' },
+    ]}
+  />
+</div>

@@ -6,6 +6,7 @@ import CoexistenceInstallScope from './coexistence/coexistence-install-scope.ast
 import CoexistenceConflictResolution from './coexistence/coexistence-conflict-resolution.astro';
 import CoexistenceFreshWarning from './coexistence/coexistence-fresh-warning.astro';
 import CoexistenceFaq from './coexistence/coexistence-faq.astro';
+import CkSetupNotice from '@/components/guides/CkSetupNotice.astro';
 
 interface Props { lang?: Language }
 const { lang } = Astro.props;
@@ -13,7 +14,9 @@ const currentLang = lang || getLangFromUrl(Astro.url);
 ---
 
 <div class="space-y-12 mt-6">
-  <CoexistenceHero lang={currentLang} />
+  
+  <CkSetupNotice lang={currentLang} />
+<CoexistenceHero lang={currentLang} />
   <CoexistenceInstallScope lang={currentLang} />
   <CoexistenceConflictResolution lang={currentLang} />
   <CoexistenceFreshWarning lang={currentLang} />

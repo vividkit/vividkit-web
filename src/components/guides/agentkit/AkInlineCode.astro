@@ -1,0 +1,13 @@
+---
+/**
+ * Inline code / path chip for AgentKit guides.
+ * Use for commands and filesystem paths (e.g. ~/.agentkit/config.yaml).
+ */
+import { akInlineCodeClass } from './ak-inline-code-class';
+
+interface Props {
+  text: string;
+}
+const { text } = Astro.props;
+---
+<code class={akInlineCodeClass}>{text}</code>

@@ -62,7 +62,7 @@ export const common = {
   // fix_logs — translations moved to inline in FixLogsGuide.astro
   // footer
   // Footer
-  'footer.tagline': 'Xây dựng mọi thứ không cần terminal friction. Powered by ClaudeKit Framework.',
+  'footer.tagline': 'Xây dựng mọi thứ không cần terminal friction. Hướng dẫn cho AgentKit và ClaudeKit.',
   'footer.copyright': '© 2025 VividKit. All rights reserved.',
   'footer.sponsor': 'Ủng hộ trên GitHub',
   // Footer links
@@ -92,7 +92,7 @@ export const common = {
   'footer.claudekit_discord': 'ClaudeKit Discord',
   'footer.get_started': 'Bắt Đầu',
   'footer.claudekit_discount': 'ClaudeKit (Giảm 30%)',
-  'footer.required_for_vividkit': 'Yêu cầu cho VividKit',
+  'footer.required_for_vividkit': 'Hoạt động với AgentKit hoặc ClaudeKit',
   // form
   // Waitlist form
   'form.name': 'Tên của bạn',

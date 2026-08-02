@@ -1,6 +1,7 @@
 ---
 // MigrateGuide - Guide CK migrate to other AI coding tools
 import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
+import CkSetupNotice from '@/components/guides/CkSetupNotice.astro';
 
 interface Props {
   lang?: Language;
@@ -61,7 +62,9 @@ const migrationPhases = [
 ---
 
 <div class="space-y-8 mt-6">
-  <!-- Hero -->
+  
+  <CkSetupNotice lang={currentLang} />
+<!-- Hero -->
   <div class="text-center space-y-4">
     <h2 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
       {t('Migrate ClaudeKit to Any Tool', 'Chuyển ClaudeKit sang Công cụ Khác')}

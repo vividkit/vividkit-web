@@ -7,6 +7,7 @@ import CommandsMigrationTable from "./commands/commands-migration-table.astro";
 import CommandsSymbolsLegend from "./commands/commands-symbols-legend.astro";
 import CommandsCategoriesGrid from "./commands/commands-categories-grid.astro";
 import CommandsDocsNote from "./commands/commands-docs-note.astro";
+import CkSetupNotice from '@/components/guides/CkSetupNotice.astro';
 import {
   engineerMigrationExtra,
   marketingMigrationExtra,
@@ -73,7 +74,9 @@ const quickNavItems = [
 </style>
 
 <div class="space-y-8 mt-6">
-  <!-- Page Header -->
+  
+  <CkSetupNotice lang={currentLang} />
+<!-- Page Header -->
   <div class="text-center space-y-4">
     <h2
       class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight flex items-center justify-center gap-3"

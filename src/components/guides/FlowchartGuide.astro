@@ -15,6 +15,7 @@ import FlowchartMarketingCommandCategories from "./flowchart/flowchart-marketing
 import FlowchartMarketingWorkflowsSection from "./flowchart/flowchart-marketing-workflows-section.astro";
 import FlowchartMarketingProTipsSection from "./flowchart/flowchart-marketing-pro-tips-section.astro";
 import FlowchartMarketingSummarySection from "./flowchart/flowchart-marketing-summary-section.astro";
+import CkSetupNotice from '@/components/guides/CkSetupNotice.astro';
 
 interface Props {
   lang?: Language;
@@ -25,7 +26,9 @@ const currentLang = lang || getLangFromUrl(Astro.url);
 ---
 
 <div class="space-y-10 mt-6" id="flowchart-guide">
-  <FlowchartHeaderSection lang={currentLang} />
+  
+  <CkSetupNotice lang={currentLang} />
+<FlowchartHeaderSection lang={currentLang} />
 
   <!-- Engineer Kit Content -->
   <div id="fc-engineer-content" class="space-y-8">

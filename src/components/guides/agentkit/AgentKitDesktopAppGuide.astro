@@ -1,0 +1,157 @@
+---
+import { getLangFromUrl, type Language } from '@/i18n';
+import AkPageHero from './AkPageHero.astro';
+import AkSection from './AkSection.astro';
+import AkCallout from './AkCallout.astro';
+import AkFeatureGrid from './AkFeatureGrid.astro';
+import AkNextLinks from './AkNextLinks.astro';
+import AkInlineCode from './AkInlineCode.astro';
+import AkStepRail from './AkStepRail.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === 'vi';
+
+const canDo = isVi
+  ? [
+      { icon: '01', title: 'Scan local setup', body: 'Coding agent, project đã đăng ký, Kit, health, config và trạng thái update.', accent: 'teal' as const },
+      { icon: '02', title: 'Kits & skills', body: 'Duyệt, cài Kit được cấp phép, preview và apply update được hỗ trợ.', accent: 'cyan' as const },
+      { icon: '03', title: 'Projects', body: 'Đăng ký project local; xem install theo project và global.', accent: 'violet' as const },
+      { icon: '04', title: 'Activity & sessions', body: 'Activity local + session evidence Claude Code / Codex được hỗ trợ.', accent: 'amber' as const },
+      { icon: '05', title: 'MCP', body: 'List/verify server; preview thay đổi config trước khi apply.', accent: 'blue' as const },
+      { icon: '06', title: 'Config & stores', body: 'Sửa settings AgentKit, xem effective values, định vị data store local.', accent: 'emerald' as const },
+    ]
+  : [
+      { icon: '01', title: 'Scan local setup', body: 'Coding agents, registered projects, Kits, health, config, and update status.', accent: 'teal' as const },
+      { icon: '02', title: 'Kits & skills', body: 'Browse, install licensed Kits, preview and apply supported updates.', accent: 'cyan' as const },
+      { icon: '03', title: 'Projects', body: 'Register local projects; inspect project and global installs.', accent: 'violet' as const },
+      { icon: '04', title: 'Activity & sessions', body: 'Local activity plus supported Claude Code / Codex session evidence.', accent: 'amber' as const },
+      { icon: '05', title: 'MCP', body: 'List/verify servers; preview config changes before applying.', accent: 'blue' as const },
+      { icon: '06', title: 'Config & stores', body: 'Edit AgentKit settings, inspect effective values, locate local stores.', accent: 'emerald' as const },
+    ];
+
+const setup = isVi
+  ? [
+      { title: 'Tải & verify', body: 'Gói Desktop khớp platform từ release chính thức; so khớp SHA-256 trước khi mở.' },
+      { title: 'Kích hoạt App license', body: 'Session Desktop tách với CLI login — một bên không mở khóa bên kia.' },
+      { title: 'Onboarding scan', body: 'Review kết quả trước khi apply thay đổi local.' },
+      { title: 'Chạy Skill trong runtime', body: 'Desktop không thực thi Skill. Mở coding assistant để gọi workflow.' },
+    ]
+  : [
+      { title: 'Download & verify', body: 'Matching Desktop package from the official release; compare SHA-256 before opening.' },
+      { title: 'Activate App license', body: 'Desktop session is separate from CLI login — one does not unlock the other.' },
+      { title: 'Onboarding scan', body: 'Review results before applying local changes.' },
+      { title: 'Run Skills in the runtime', body: 'Desktop does not execute Skills. Open the coding assistant to invoke workflows.' },
+    ];
+---
+
+<div class="space-y-10 mt-6">
+  <AkPageHero
+    lang={currentLang}
+    accent="teal"
+    kicker="Desktop"
+    title={isVi ? 'Ứng Dụng AgentKit Desktop' : 'AgentKit Desktop App'}
+    subtitle={isVi
+      ? 'Trung tâm điều khiển trực quan cho trạng thái AgentKit trên máy bạn — không thay coding assistant.'
+      : 'A visual control center for local AgentKit state — not a replacement for your coding assistant.'}
+    badges={isVi ? ['v2.7.0 platforms'] : ['v2.7.0 platforms']}
+  />
+
+  <AkCallout variant="tip" title={isVi ? 'Ranh giới sản phẩm' : 'Product boundary'}>
+    {isVi
+      ? 'AgentKit Desktop quản lý trạng thái AgentKit local và lifecycle Kit qua UI. Nó không thay coding assistant và không trực tiếp thực thi Skill đã cài.'
+      : 'AgentKit Desktop manages local AgentKit state and Kit lifecycle through a UI. It does not replace the coding assistant and does not directly execute an installed Skill.'}
+  </AkCallout>
+
+  <AkSection
+    eyebrow={isVi ? 'Ba bề mặt' : 'Three surfaces'}
+    title={isVi ? 'Chọn đúng cửa sổ' : 'Pick the right surface'}
+  >
+    <div class="grid gap-4 lg:grid-cols-3">
+      {[
+        {
+          title: 'Desktop App',
+          body: isVi
+            ? 'Setup có hướng dẫn, quản lý visual, duyệt Kit/Skill, project, MCP, activity, update.'
+            : 'Guided setup, visual management, Kit/Skill browsing, projects, MCP, activity, updates.',
+          glow: 'from-teal-500/15 to-cyan-500/5',
+          edge: 'border-teal-200/70 dark:border-teal-500/30',
+        },
+        {
+          title: isVi ? 'ak CLI' : 'ak CLI',
+          body: isVi
+            ? 'Lệnh chính xác, automation, headless, full command coverage.'
+            : 'Exact commands, automation, headless hosts, full command coverage.',
+          glow: 'from-violet-500/15 to-fuchsia-500/5',
+          edge: 'border-violet-200/70 dark:border-violet-500/30',
+        },
+        {
+          title: isVi ? 'Browser dashboard' : 'Browser dashboard',
+          body: isVi
+            ? 'UI browser local khi bạn chủ động start và cấu hình an toàn (loopback mặc định).'
+            : 'Local browser UI when deliberately started and safely configured (loopback by default).',
+          glow: 'from-amber-500/15 to-orange-500/5',
+          edge: 'border-amber-200/70 dark:border-amber-500/30',
+        },
+      ].map((card) => (
+        <article class:list={['relative overflow-hidden rounded-2xl border bg-white/80 p-5 dark:bg-slate-900/50', card.edge]}>
+          <div class:list={['pointer-events-none absolute inset-0 bg-gradient-to-br', card.glow]}></div>
+          <div class="relative">
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">{card.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">{card.body}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+    <p class="text-sm text-slate-500 dark:text-slate-400">
+      {isVi ? 'Cài Desktop không cài ' : 'Installing Desktop does not put '}
+      <AkInlineCode text="ak" />
+      {isVi ? ' lên PATH. CLI chuẩn cũng không chứa cửa sổ Desktop.' : ' on PATH. The standard CLI package does not include the Desktop window.'}
+    </p>
+  </AkSection>
+
+  <AkSection
+    eyebrow="v2.7.0"
+    title={isVi ? 'Nền tảng Desktop' : 'Desktop platforms'}
+  >
+    <div class="grid gap-3 sm:grid-cols-3">
+      {[
+        { os: 'macOS', detail: 'Intel (amd64) · Apple silicon (arm64)' },
+        { os: 'Linux', detail: 'x64 (amd64) only' },
+        { os: 'Windows', detail: 'x64 (amd64) only' },
+      ].map((p) => (
+        <div class="rounded-2xl border border-slate-200/80 bg-slate-950 px-4 py-4 text-center dark:border-slate-700">
+          <div class="text-sm font-bold text-white">{p.os}</div>
+          <div class="mt-1 text-xs text-slate-400">{p.detail}</div>
+        </div>
+      ))}
+    </div>
+    <p class="text-xs text-slate-500 dark:text-slate-400">
+      {isVi
+        ? 'Không có gói Desktop v2.7.0 cho Linux ARM64 hoặc Windows ARM64.'
+        : 'No v2.7.0 Desktop package for Linux ARM64 or Windows ARM64.'}
+    </p>
+  </AkSection>
+
+  <AkSection eyebrow={isVi ? 'Khả năng' : 'Capabilities'} title={isVi ? 'Bạn có thể làm gì' : 'What you can do'}>
+    <AkFeatureGrid features={canDo} columns={3} />
+  </AkSection>
+
+  <AkSection eyebrow={isVi ? 'Setup' : 'Setup'} title={isVi ? 'Bắt đầu an toàn' : 'Start safely'}>
+    <AkStepRail steps={setup} accent="teal" />
+  </AkSection>
+
+  <AkNextLinks
+    lang={currentLang}
+    title={isVi ? 'Liên quan' : 'Related'}
+    links={[
+      { href: '/guides/agentkit/getting-started', label: isVi ? 'Cài CLI' : 'Install the CLI' },
+      { href: '/guides/agentkit/updating', label: isVi ? 'Cập nhật' : 'Updating' },
+      { href: '/guides/agentkit/troubleshooting', label: isVi ? 'Xử lý sự cố' : 'Troubleshooting' },
+    ]}
+  />
+</div>

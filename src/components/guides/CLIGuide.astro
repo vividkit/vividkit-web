@@ -11,6 +11,7 @@ import CCSLink from './cli-guide/CCSLink.astro';
 import AdvancedSettings from './cli-guide/AdvancedSettings.astro';
 import ProTips from './cli-guide/ProTips.astro';
 import CLIFaq from './cli-guide/CLIFaq.astro';
+import CkSetupNotice from '@/components/guides/CkSetupNotice.astro';
 
 interface Props {
   lang?: Language;
@@ -23,7 +24,9 @@ const translatePath = useTranslatedPath(currentLang);
 ---
 
 <div class="space-y-8 mt-6">
-  <HeroBanner lang={currentLang} />
+  
+  <CkSetupNotice lang={currentLang} />
+<HeroBanner lang={currentLang} />
   <TerminalPreview lang={currentLang} />
   <InstallationSteps lang={currentLang} />
   <DailyRoutine lang={currentLang} />

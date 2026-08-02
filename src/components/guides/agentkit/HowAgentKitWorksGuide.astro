@@ -1,0 +1,139 @@
+---
+import { getLangFromUrl, type Language } from '@/i18n';
+import AkPageHero from './AkPageHero.astro';
+import AkSection from './AkSection.astro';
+import AkStepRail from './AkStepRail.astro';
+import AkCompare from './AkCompare.astro';
+import AkCallout from './AkCallout.astro';
+import AkNextLinks from './AkNextLinks.astro';
+import AkInlineCode from './AkInlineCode.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === 'vi';
+
+const steps = isVi
+  ? [
+      { title: 'Registry đã xác thực', body: 'Cung cấp bản phát hành Kit đã verify — nguồn tin cậy cho gói workflow.' },
+      { title: 'AgentKit CLI (ak)', body: 'Xác thực, resolve, verify, cài, cập nhật, chẩn đoán, gỡ nội dung AgentKit.' },
+      { title: 'Runtime adapter', body: 'Chiếu nội dung được hỗ trợ sang cấu trúc coding agent (Claude Code, Codex, Cursor…).' },
+      { title: 'Coding agent', body: 'Khám phá Skill, Agent, Hook, rules và artifact hỗ trợ đã được cài.' },
+      { title: 'Skill / Agent workflow', body: 'Bạn gọi Skill hoặc yêu cầu runtime thực hiện outcome.' },
+      { title: 'Artifact dự án', body: 'Code, plan, test, report — do workflow tạo ra trong workspace.' },
+      { title: 'Bạn review', body: 'Quyết định giữ, commit, publish hoặc gửi đi. AgentKit không thay bạn.' },
+    ]
+  : [
+      { title: 'Authenticated registry', body: 'Provides a verified Kit release — the trusted source for workflow packages.' },
+      { title: 'AgentKit CLI (ak)', body: 'Authenticates, resolves, verifies, installs, updates, diagnoses, removes AgentKit content.' },
+      { title: 'Runtime adapter', body: 'Projects supported content into the coding agent’s structure (Claude Code, Codex, Cursor…).' },
+      { title: 'Coding agent', body: 'Discovers installed Skills, Agents, Hooks, rules, and supporting artifacts.' },
+      { title: 'Skill / Agent workflow', body: 'You invoke a Skill or ask the runtime for an outcome.' },
+      { title: 'Project artifacts', body: 'Code, plans, tests, reports produced by the workflow in your workspace.' },
+      { title: 'Your review', body: 'Decide what to keep, commit, publish, or send. AgentKit does not replace you.' },
+    ];
+---
+
+<div class="space-y-10 mt-6">
+  <AkPageHero
+    lang={currentLang}
+    accent="cyan"
+    kicker={isVi ? 'Kiến trúc' : 'Architecture'}
+    title={isVi ? 'AgentKit Hoạt Động Như Thế Nào?' : 'How AgentKit Works'}
+    subtitle={isVi
+      ? 'Từ bản phát hành Kit đã verify đến artifact đã review — và ranh giới giữa cài đặt với thực thi.'
+      : 'From a verified Kit release to reviewed artifacts — and the boundary between install and execution.'}
+  />
+
+  <!-- Visual pipeline strip -->
+  <div class="overflow-x-auto rounded-2xl border border-slate-200/80 bg-slate-950 p-4 shadow-lg dark:border-slate-700">
+    <div class="flex min-w-[640px] items-center gap-2 text-[11px] font-semibold uppercase tracking-wide text-slate-300">
+      {(isVi
+        ? ['Registry', 'ak CLI', 'Adapter', 'Runtime', 'Workflow', 'Artifacts', 'Review']
+        : ['Registry', 'ak CLI', 'Adapter', 'Runtime', 'Workflow', 'Artifacts', 'Review']
+      ).map((label, i, arr) => (
+        <>
+          <span class="rounded-lg bg-white/10 px-2.5 py-1.5 text-teal-200">{label}</span>
+          {i < arr.length - 1 && <span class="text-slate-600">→</span>}
+        </>
+      ))}
+    </div>
+  </div>
+
+  <AkSection
+    eyebrow={isVi ? 'Luồng' : 'Flow'}
+    title={isVi ? 'Bảy bước end-to-end' : 'Seven end-to-end steps'}
+    desc={isVi ? 'Đọc theo thứ tự — mỗi bước thuộc về một phần khác của hệ thống.' : 'Read in order — each step belongs to a different part of the system.'}
+  >
+    <AkStepRail steps={steps} accent="cyan" />
+  </AkSection>
+
+  <AkSection
+    eyebrow={isVi ? 'Trách nhiệm' : 'Ownership'}
+    title={isVi ? 'Cài đặt và thực thi tách biệt' : 'Installation and execution stay separate'}
+  >
+    <AkCompare
+      left={{
+        title: isVi ? 'AgentKit sở hữu install lifecycle' : 'AgentKit owns the install lifecycle',
+        body: isVi
+          ? 'CLI quản lý file nhận diện là nội dung AgentKit: cài, cập nhật, gỡ, snapshot recovery khi có.'
+          : 'The CLI manages files it can identify as AgentKit-owned: install, update, remove, and recovery snapshots when available.',
+        tone: 'teal',
+      }}
+      right={{
+        title: isVi ? 'Runtime sở hữu phiên AI' : 'The runtime owns the AI session',
+        body: isVi
+          ? 'Model access, tools, permissions và event lifecycle thuộc coding assistant — không phải CLI.'
+          : 'Model access, tools, permissions, and lifecycle events belong to the coding assistant — not the CLI.',
+        tone: 'slate',
+      }}
+    />
+  </AkSection>
+
+  <AkSection
+    eyebrow={isVi ? 'Scope' : 'Scope'}
+    title={isVi ? 'Project vs user (global)' : 'Project vs user (global)'}
+    desc={isVi
+      ? 'Phạm vi quyết định nơi nội dung có sẵn — không quyết định ownership của toàn bộ repo.'
+      : 'Scope answers where content is available — not who owns every file in the repo.'}
+  >
+    <div class="grid gap-4 sm:grid-cols-2">
+      <div class="rounded-2xl border border-teal-200/70 bg-teal-50/40 p-5 dark:border-teal-500/25 dark:bg-teal-950/20">
+        <div class="text-[11px] font-bold uppercase tracking-wider text-teal-700 dark:text-teal-300">
+          {isVi ? 'Mặc định' : 'Default'}
+        </div>
+        <h3 class="mt-1 text-lg font-bold text-slate-900 dark:text-white">{isVi ? 'Project scope' : 'Project scope'}</h3>
+        <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">
+          {isVi ? 'Có sẵn trong workspace hiện tại. Phù hợp khi Kit gắn với một project.' : 'Available in the current workspace. Use when the Kit should apply to one project.'}
+        </p>
+      </div>
+      <div class="rounded-2xl border border-slate-200/80 bg-white/80 p-5 dark:border-slate-700 dark:bg-slate-900/50">
+        <div class="text-[11px] font-bold uppercase tracking-wider text-slate-500">
+          <AkInlineCode text="--global" />
+        </div>
+        <h3 class="mt-1 text-lg font-bold text-slate-900 dark:text-white">{isVi ? 'User scope' : 'User scope'}</h3>
+        <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">
+          {isVi ? 'Thư mục user của runtime — dùng xuyên project. Cập nhật một scope không tự xóa scope kia.' : 'Runtime user directories — cross-project. Updating one scope does not delete the other.'}
+        </p>
+      </div>
+    </div>
+    <AkCallout variant="tip" title={isVi ? 'Mẹo' : 'Tip'}>
+      {isVi
+        ? 'Nếu Skill “xuất hiện hai lần” hoặc hành vi lạ, kiểm tra cả project và global scope.'
+        : 'If a Skill appears twice or behaves oddly, inspect both project and global scopes.'}
+    </AkCallout>
+  </AkSection>
+
+  <AkNextLinks
+    lang={currentLang}
+    title={isVi ? 'Đọc tiếp' : 'Read next'}
+    links={[
+      { href: '/guides/agentkit/building-blocks', label: isVi ? 'Kit, Skill, Agent, Hook' : 'Building blocks' },
+      { href: '/guides/agentkit/runtime-support', label: isVi ? 'Hỗ trợ runtime' : 'Runtime support' },
+      { href: '/guides/agentkit/getting-started', label: isVi ? 'Cài đặt' : 'Get started' },
+    ]}
+  />
+</div>

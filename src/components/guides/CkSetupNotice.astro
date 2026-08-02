@@ -1,0 +1,33 @@
+---
+/**
+ * Calm, non-blocking notice for ClaudeKit-specific guides.
+ * Does not auto-redirect; migration remains optional.
+ */
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+const translatePath = useTranslatedPath(currentLang);
+---
+
+<aside
+  class="mb-6 rounded-xl border border-slate-200/80 bg-slate-50/90 p-4 dark:border-slate-700/60 dark:bg-slate-900/50"
+  role="note"
+>
+  <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+    {t('guides.ck_notice.body')}
+    {' '}
+    <a
+      href={translatePath('/guides/agentkit')}
+      class="font-medium text-teal-700 underline decoration-teal-500/40 underline-offset-2 hover:text-teal-800 dark:text-teal-300 dark:hover:text-teal-200"
+    >
+      {t('guides.ck_notice.link')}
+    </a>
+  </p>
+</aside>

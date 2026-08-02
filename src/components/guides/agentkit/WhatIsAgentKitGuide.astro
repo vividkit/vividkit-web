@@ -1,0 +1,190 @@
+---
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
+import AkPageHero from './AkPageHero.astro';
+import AkSection from './AkSection.astro';
+import AkFeatureGrid from './AkFeatureGrid.astro';
+import AkCompare from './AkCompare.astro';
+import AkCallout from './AkCallout.astro';
+import AkNextLinks from './AkNextLinks.astro';
+import AkInlineCode from './AkInlineCode.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === 'vi';
+const translatePath = useTranslatedPath(currentLang);
+
+const surfaces = isVi
+  ? [
+      { icon: 'CLI', title: 'AgentKit CLI (ak)', body: 'Xác thực, resolve, verify, cài, cập nhật, chẩn đoán và gỡ nội dung do AgentKit quản lý.', accent: 'teal' as const },
+      { icon: 'KIT', title: 'Kits', body: 'Gói phiên bản chứa Skills, Agents, Hooks và artifact hỗ trợ — đơn vị bạn cài.', accent: 'cyan' as const },
+      { icon: 'ADP', title: 'Runtime adapters', body: 'Chiếu nội dung Kit sang cấu trúc mà coding agent hiểu được.', accent: 'violet' as const },
+      { icon: 'APP', title: 'Desktop App', body: 'Giao diện native để setup, duyệt Kit, đăng ký project và xem activity local.', accent: 'amber' as const },
+    ]
+  : [
+      { icon: 'CLI', title: 'AgentKit CLI (ak)', body: 'Authenticates, resolves, verifies, installs, updates, diagnoses, and removes AgentKit-owned content.', accent: 'teal' as const },
+      { icon: 'KIT', title: 'Kits', body: 'Versioned packages of Skills, Agents, Hooks, and supporting artifacts — the unit you install.', accent: 'cyan' as const },
+      { icon: 'ADP', title: 'Runtime adapters', body: 'Project Kit content into the structure a coding agent understands.', accent: 'violet' as const },
+      { icon: 'APP', title: 'Desktop App', body: 'Native UI for setup, Kit browsing, project registration, and local activity.', accent: 'amber' as const },
+    ];
+---
+
+<div class="space-y-10 mt-6">
+  <AkPageHero
+    lang={currentLang}
+    accent="teal"
+    kicker="AgentKit"
+    title={isVi ? 'AgentKit Là Gì?' : 'What Is AgentKit?'}
+    subtitle={isVi
+      ? 'Mental model cho người mới: AgentKit là thế hệ tiếp theo của ClaudeKit — kit-based workflows, nhiều runtime hơn, CLI ak và Desktop App.'
+      : 'A beginner mental model: AgentKit is the next generation of ClaudeKit — kit-based workflows, more runtimes, the ak CLI, and Desktop App.'}
+    badges={isVi ? ['Khuyến nghị cho setup mới', 'ak CLI'] : ['Recommended for new setups', 'ak CLI']}
+  />
+
+  <AkCallout variant="tip" title={isVi ? 'Định nghĩa ngắn' : 'In one sentence'}>
+    {isVi
+      ? 'AgentKit giữ workflow dựa trên Kit quen thuộc với ClaudeKit, mở rộng ra ngoài một coding assistant, cài & thích ứng Kit qua '
+      : 'AgentKit keeps kit-based workflows familiar from ClaudeKit, expands beyond a single coding assistant, installs and adapts Kits with '}
+    <AkInlineCode text="ak" />
+    {isVi
+      ? ', và cung cấp Desktop để quản lý trạng thái local — không chỉ là đổi tên.'
+      : ', and includes Desktop for local state — not just a rename.'}
+  </AkCallout>
+
+  <AkSection
+    eyebrow={isVi ? 'Bối cảnh' : 'Context'}
+    title={isVi ? 'ClaudeKit giờ là AgentKit' : 'ClaudeKit is now AgentKit'}
+    desc={isVi
+      ? 'Vừa rebrand vừa mở rộng. Kits, Skills, Agents, Hooks và workflow có cấu trúc vẫn ở trung tâm — nhưng bề mặt sản phẩm rộng hơn.'
+      : 'Both a rebrand and an expansion. Kits, Skills, Agents, Hooks, and structured workflows stay central — with a wider product surface.'}
+  >
+    <div class="grid gap-3 sm:grid-cols-3">
+      {[
+        { t: isVi ? 'CLI gốc mới' : 'New native CLI', d: isVi ? 'ak thay ck cho dòng sản phẩm mới' : 'ak replaces ck for the new line' },
+        { t: isVi ? 'Nhiều runtime' : 'More runtimes', d: isVi ? 'Qua adapters, không hứa parity' : 'Via adapters — no parity promise' },
+        { t: isVi ? 'Desktop App' : 'Desktop App', d: isVi ? 'Trung tâm điều khiển local' : 'Local visual control center' },
+      ].map((item) => (
+        <div class="rounded-2xl border border-slate-200/80 bg-white/70 p-4 dark:border-slate-700 dark:bg-slate-900/40">
+          <div class="text-sm font-semibold text-slate-900 dark:text-white">{item.t}</div>
+          <p class="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">{item.d}</p>
+        </div>
+      ))}
+    </div>
+  </AkSection>
+
+  <AkSection
+    eyebrow={isVi ? 'Vấn đề' : 'Why it exists'}
+    title={isVi ? 'AgentKit giải quyết gì?' : 'What problem does it solve?'}
+  >
+    <div class="rounded-2xl border border-slate-200/80 bg-gradient-to-br from-white to-slate-50 p-5 dark:border-slate-700 dark:from-slate-900 dark:to-slate-950">
+      <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-300 md:text-base">
+        {isVi
+          ? 'Bạn muốn cài workflow AI đã kiểm chứng vào coding assistant đang dùng, rồi chạy task với model, tool và permission của runtime đó — vẫn giữ quyền review plan, diff và hành động ra ngoài.'
+          : 'You want verified AI workflows installed into the coding assistant you already use, then run tasks with that runtime’s models, tools, and permissions — while you stay responsible for reviewing plans, diffs, and external actions.'}
+      </p>
+    </div>
+  </AkSection>
+
+  <AkSection
+    eyebrow={isVi ? 'Sản phẩm' : 'Product surface'}
+    title={isVi ? 'Bốn bề mặt chính' : 'Four main surfaces'}
+    desc={isVi ? 'Mỗi bề mặt có việc riêng. Đừng kỳ vọng Desktop thay terminal, hay CLI thay coding assistant.' : 'Each surface has a job. Desktop does not replace the terminal; the CLI does not replace your coding assistant.'}
+  >
+    <AkFeatureGrid features={surfaces} columns={2} />
+  </AkSection>
+
+  <AkSection
+    eyebrow={isVi ? 'Ranh giới quan trọng' : 'Critical boundary'}
+    title={isVi ? 'Cài Kit ≠ chạy workflow' : 'Install a Kit ≠ run a workflow'}
+  >
+    <AkCompare
+      left={{
+        title: isVi ? 'Cài Kit' : 'Install a Kit',
+        body: isVi
+          ? 'AgentKit cài và thích ứng nội dung. Không khởi chạy task.'
+          : 'AgentKit installs and adapts content. It does not start a task.',
+        tone: 'teal',
+        points: isVi
+          ? ['CLI / Desktop quản lý lifecycle', 'Adapter chiếu sang runtime', 'Bạn chọn scope project hoặc global']
+          : ['CLI / Desktop own lifecycle', 'Adapter projects into the runtime', 'You choose project or global scope'],
+      }}
+      right={{
+        title: isVi ? 'Gọi Skill' : 'Invoke a Skill',
+        body: isVi
+          ? 'Coding assistant chạy phiên AI với model, tool, permission của chính nó.'
+          : 'The coding assistant runs the AI session with its own model, tools, and permissions.',
+        tone: 'slate',
+        points: isVi
+          ? ['Cú pháp tùy runtime (/ak:…, $ak:…)', 'Hook / event không giống nhau', 'Bạn review kết quả']
+          : ['Syntax varies (/ak:…, $ak:…)', 'Hooks / events differ by runtime', 'You review the result'],
+      }}
+    />
+  </AkSection>
+
+  <AkSection
+    eyebrow={isVi ? 'Runtime' : 'Runtimes'}
+    title={isVi ? 'Mô hình hỗ trợ runtime' : 'Supported runtime model'}
+  >
+    <AkCallout variant="info">
+      {isVi
+        ? 'Claude Code và Codex là target hạng nhất. Cursor và portable targets có thể nhận nội dung qua adapter. Skills, Agents, Hooks, permissions và lifecycle events có thể khác nhau — đừng giả định parity.'
+        : 'Claude Code and Codex are first-class targets. Cursor and portable targets may receive content through adapters. Skills, Agents, Hooks, permissions, and lifecycle events can differ — do not assume parity.'}
+    </AkCallout>
+  </AkSection>
+
+  <AkSection
+    eyebrow={isVi ? 'Lộ trình' : 'Paths'}
+    title={isVi ? 'Bạn bắt đầu từ đâu?' : 'Where should you start?'}
+  >
+    <div class="grid gap-4 md:grid-cols-2">
+      <a
+        href={translatePath('/guides/agentkit/getting-started')}
+        class="group relative overflow-hidden rounded-2xl border border-teal-200/80 bg-gradient-to-br from-teal-50 via-white to-cyan-50/60 p-5 transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-teal-500/10 dark:border-teal-500/30 dark:from-teal-950/40 dark:via-slate-900 dark:to-cyan-950/20"
+      >
+        <div class="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-700 dark:text-teal-300">
+          {isVi ? 'Thiết lập mới' : 'New setup'}
+        </div>
+        <h3 class="mt-2 text-lg font-bold text-slate-900 dark:text-white">
+          {isVi ? 'Bắt đầu với AgentKit' : 'Start with AgentKit'}
+        </h3>
+        <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">
+          {isVi ? 'Cài ak → cài Kit → mở runtime → gọi Skill.' : 'Install ak → install a Kit → open runtime → invoke a Skill.'}
+        </p>
+        <span class="mt-4 inline-flex text-sm font-semibold text-teal-700 group-hover:underline dark:text-teal-300">
+          {isVi ? 'Cài đặt và onboarding →' : 'Installation and onboarding →'}
+        </span>
+      </a>
+      <a
+        href={translatePath('/guides/migrate-claudekit-to-agentkit')}
+        class="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 p-5 transition-all hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-lg dark:border-slate-700 dark:bg-slate-900/50"
+      >
+        <div class="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
+          {isVi ? 'Đang dùng ClaudeKit' : 'Already on ClaudeKit'}
+        </div>
+        <h3 class="mt-2 text-lg font-bold text-slate-900 dark:text-white">
+          {isVi ? 'ClaudeKit vẫn được hỗ trợ' : 'ClaudeKit remains supported'}
+        </h3>
+        <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">
+          {isVi ? 'Chuyển khi sẵn sàng — sao lưu trước. Không bắt buộc.' : 'Migrate when ready — back up first. Not required.'}
+        </p>
+        <span class="mt-4 inline-flex text-sm font-semibold text-slate-700 group-hover:underline dark:text-slate-300">
+          {isVi ? 'Hướng dẫn chuyển đổi →' : 'Migration guide →'}
+        </span>
+      </a>
+    </div>
+  </AkSection>
+
+  <AkNextLinks
+    lang={currentLang}
+    title={isVi ? 'Tiếp theo' : 'Continue learning'}
+    links={[
+      { href: '/guides/agentkit/how-it-works', label: isVi ? 'Cách AgentKit hoạt động' : 'How AgentKit works', desc: isVi ? 'Luồng registry → review' : 'Registry → review flow' },
+      { href: '/guides/agentkit/building-blocks', label: isVi ? 'Kit, Skill, Agent, Hook' : 'Kits, Skills, Agents, Hooks', desc: isVi ? 'Chọn đúng khối xây dựng' : 'Pick the right building block' },
+      { href: '/guides/agentkit/desktop-app', label: isVi ? 'Desktop App' : 'Desktop App', desc: isVi ? 'Quản lý visual local' : 'Visual local management' },
+      { href: '/guides/agentkit/getting-started', label: isVi ? 'Cài đặt' : 'Get started', desc: isVi ? 'Cài ak và Kit đầu tiên' : 'Install ak and your first Kit' },
+    ]}
+  />
+</div>

@@ -1,0 +1,19 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import AgentKitStatuslineGuide from '@/components/guides/agentkit/AgentKitStatuslineGuide.astro';
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl } from '@/i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<GuidesLayout
+  title={`${t('guides.agentkit.statusline.title')} - VividKit Guides`}
+  description={t('guides.agentkit.statusline.description')}
+  canonicalPath="/guides/agentkit/statusline"
+  activeTab="agentkit-statusline"
+  lang={lang}
+>
+  <AgentKitStatuslineGuide lang={lang} />
+</GuidesLayout>

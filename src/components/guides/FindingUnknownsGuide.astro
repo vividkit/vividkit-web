@@ -7,6 +7,7 @@ import FindingUnknownsWorkflow from './finding-unknowns/finding-unknowns-workflo
 import FindingUnknownsCustomSkills from './finding-unknowns/finding-unknowns-custom-skills.astro';
 import FindingUnknownsPrompts from './finding-unknowns/finding-unknowns-prompts.astro';
 import FindingUnknownsReferences from './finding-unknowns/finding-unknowns-references.astro';
+import CkSetupNotice from '@/components/guides/CkSetupNotice.astro';
 
 interface Props {
   lang?: Language;
@@ -17,7 +18,9 @@ const currentLang = lang || getLangFromUrl(Astro.url);
 ---
 
 <div class="mt-6 space-y-6">
-  <FindingUnknownsHero lang={currentLang} />
+  
+  <CkSetupNotice lang={currentLang} />
+<FindingUnknownsHero lang={currentLang} />
   <FindingUnknownsMatrix lang={currentLang} />
   <FindingUnknownsTimeline lang={currentLang} />
   <FindingUnknownsWorkflow lang={currentLang} />

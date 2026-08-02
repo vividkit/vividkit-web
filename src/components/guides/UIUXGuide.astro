@@ -8,6 +8,7 @@ import UiuxIntegrationGuide from './uiux/uiux-integration-guide.astro';
 import UiuxQualityChecklist from './uiux/uiux-quality-checklist.astro';
 import UiuxSearchDomains from './uiux/uiux-search-domains.astro';
 import UiuxWorkflows from './uiux/uiux-workflows.astro';
+import CkSetupNotice from '@/components/guides/CkSetupNotice.astro';
 
 interface Props {
   lang?: Language;
@@ -35,7 +36,9 @@ const currentLang = lang || getLangFromUrl(Astro.url);
 </style>
 
 <div class="space-y-8 mt-6">
-  <UiuxHeaderAndHero lang={currentLang} />
+  
+  <CkSetupNotice lang={currentLang} />
+<UiuxHeaderAndHero lang={currentLang} />
   <UiuxHowItWorks lang={currentLang} />
   <UiuxSearchDomains lang={currentLang} />
   <UiuxBuildShowcaseAndTips lang={currentLang} />

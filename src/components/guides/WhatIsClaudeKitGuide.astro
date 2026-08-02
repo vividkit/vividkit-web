@@ -5,6 +5,7 @@ import WhatIsClaudeKitIntroAndMetaphors from "@/components/guides/what-is-claude
 import WhatIsClaudeKitPillarsAndProcessFlow from "@/components/guides/what-is-claudekit/what-is-claudekit-pillars-and-process-flow.astro";
 import WhatIsClaudeKitBeforeAfterComparison from "@/components/guides/what-is-claudekit/what-is-claudekit-before-after-comparison.astro";
 import WhatIsClaudeKitCommandsAndSummary from "@/components/guides/what-is-claudekit/what-is-claudekit-commands-and-summary.astro";
+import CkSetupNotice from '@/components/guides/CkSetupNotice.astro';
 
 interface Props {
   lang?: Language;
@@ -15,7 +16,9 @@ const currentLang = lang || getLangFromUrl(Astro.url);
 ---
 
 <div class="space-y-8 mt-6">
-  <!-- Header, intro banner, house metaphor, team metaphor with image -->
+  
+  <CkSetupNotice lang={currentLang} />
+<!-- Header, intro banner, house metaphor, team metaphor with image -->
   <WhatIsClaudeKitIntroAndMetaphors lang={currentLang} />
 
   <!-- Building blocks grid + process flow steps with images -->

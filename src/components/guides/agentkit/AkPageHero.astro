@@ -1,0 +1,77 @@
+---
+import type { Language } from '@/i18n';
+
+interface Props {
+  lang: Language;
+  kicker: string;
+  title: string;
+  subtitle: string;
+  /** teal | cyan | violet | amber | rose */
+  accent?: 'teal' | 'cyan' | 'violet' | 'amber' | 'rose';
+  badges?: string[];
+}
+
+const { kicker, title, subtitle, accent = 'teal', badges = [] } = Astro.props;
+
+const accents = {
+  teal: {
+    glow: 'from-teal-500/20 via-cyan-500/10 to-transparent dark:from-teal-400/15 dark:via-cyan-500/10',
+    ring: 'border-teal-200/70 dark:border-teal-500/25',
+    kicker: 'bg-teal-100 text-teal-800 dark:bg-teal-500/15 dark:text-teal-300',
+    bar: 'from-teal-500 to-cyan-500',
+  },
+  cyan: {
+    glow: 'from-cyan-500/20 via-blue-500/10 to-transparent dark:from-cyan-400/15 dark:via-blue-500/10',
+    ring: 'border-cyan-200/70 dark:border-cyan-500/25',
+    kicker: 'bg-cyan-100 text-cyan-800 dark:bg-cyan-500/15 dark:text-cyan-300',
+    bar: 'from-cyan-500 to-blue-500',
+  },
+  violet: {
+    glow: 'from-violet-500/20 via-fuchsia-500/10 to-transparent dark:from-violet-400/15 dark:via-fuchsia-500/10',
+    ring: 'border-violet-200/70 dark:border-violet-500/25',
+    kicker: 'bg-violet-100 text-violet-800 dark:bg-violet-500/15 dark:text-violet-300',
+    bar: 'from-violet-500 to-fuchsia-500',
+  },
+  amber: {
+    glow: 'from-amber-500/20 via-orange-500/10 to-transparent dark:from-amber-400/15 dark:via-orange-500/10',
+    ring: 'border-amber-200/70 dark:border-amber-500/25',
+    kicker: 'bg-amber-100 text-amber-900 dark:bg-amber-500/15 dark:text-amber-300',
+    bar: 'from-amber-500 to-orange-500',
+  },
+  rose: {
+    glow: 'from-rose-500/20 via-red-500/10 to-transparent dark:from-rose-400/15 dark:via-red-500/10',
+    ring: 'border-rose-200/70 dark:border-rose-500/25',
+    kicker: 'bg-rose-100 text-rose-800 dark:bg-rose-500/15 dark:text-rose-300',
+    bar: 'from-rose-500 to-red-500',
+  },
+} as const;
+
+const a = accents[accent];
+---
+
+<header class:list={['relative overflow-hidden rounded-3xl border bg-white/70 p-6 md:p-8 dark:bg-slate-900/60', a.ring]}>
+  <div class:list={['pointer-events-none absolute inset-0 bg-gradient-to-br', a.glow]}></div>
+  <div class="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-white/40 blur-3xl dark:bg-white/5"></div>
+  <div class="pointer-events-none absolute -bottom-20 -left-10 h-40 w-40 rounded-full bg-slate-200/40 blur-3xl dark:bg-slate-700/20"></div>
+
+  <div class="relative space-y-4">
+    <div class="flex flex-wrap items-center gap-2">
+      <span class:list={['inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.14em]', a.kicker]}>
+        {kicker}
+      </span>
+      {badges.map((b) => (
+        <span class="inline-flex items-center rounded-full border border-slate-200/80 bg-white/80 px-2.5 py-1 text-[11px] font-semibold text-slate-600 dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-300">
+          {b}
+        </span>
+      ))}
+    </div>
+    <div class:list={['h-1 w-14 rounded-full bg-gradient-to-r', a.bar]}></div>
+    <h1 class="max-w-3xl text-3xl font-bold tracking-tight text-slate-900 dark:text-white md:text-4xl lg:text-[2.6rem] lg:leading-[1.15]">
+      {title}
+    </h1>
+    <p class="max-w-2xl text-base leading-relaxed text-slate-600 dark:text-slate-300 md:text-lg">
+      {subtitle}
+    </p>
+    <slot name="actions" />
+  </div>
+</header>

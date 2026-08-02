@@ -1,0 +1,19 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import AgentKitTroubleshootingGuide from '@/components/guides/agentkit/AgentKitTroubleshootingGuide.astro';
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl } from '@/i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<GuidesLayout
+  title={`${t('guides.agentkit.troubleshooting.title')} - VividKit Guides`}
+  description={t('guides.agentkit.troubleshooting.description')}
+  canonicalPath="/guides/agentkit/troubleshooting"
+  activeTab="agentkit-troubleshooting"
+  lang={lang}
+>
+  <AgentKitTroubleshootingGuide lang={lang} />
+</GuidesLayout>

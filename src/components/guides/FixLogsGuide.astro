@@ -1,5 +1,6 @@
 ---
 import { getLangFromUrl, type Language } from '@/i18n';
+import CkSetupNotice from '@/components/guides/CkSetupNotice.astro';
 
 interface Props {
   lang?: Language;
@@ -158,7 +159,9 @@ const modeColors = ['bg-blue-500/20 text-blue-600 dark:text-blue-400', 'bg-green
 ---
 
 <div class="space-y-8 mt-6">
-  <!-- Page Header -->
+  
+  <CkSetupNotice lang={currentLang} />
+<!-- Page Header -->
   <div class="text-center space-y-4">
     <h2 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
       {t.title}

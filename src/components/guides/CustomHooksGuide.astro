@@ -6,6 +6,7 @@ import {
 import { customHooksTranslations } from "@/data/guides/custom-hooks/custom-hooks-translations";
 import CustomHooksIntroduction from "./custom-hooks/custom-hooks-introduction.astro";
 import CustomHooksCategorySection from "./custom-hooks/custom-hooks-category-section.astro";
+import CkSetupNotice from '@/components/guides/CkSetupNotice.astro';
 import {
   buildHookViewModels,
   flattenHooks,
@@ -118,7 +119,9 @@ const catalogHints = [
     </div>
 
     <div class="space-y-8">
-      {categoryModels.map((category) => (
+      
+  <CkSetupNotice lang={currentLang} />
+{categoryModels.map((category) => (
         <CustomHooksCategorySection category={category} t={t} isVi={isVi} />
       ))}
     </div>

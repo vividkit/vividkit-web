@@ -7,6 +7,7 @@ import MechanicsKitVsYourConfig from './claude-mechanics/mechanics-kit-vs-your-c
 import MechanicsCommonConfusions from './claude-mechanics/mechanics-common-confusions.astro';
 import { useTranslations } from '@/i18n/utils';
 import { getLangFromUrl, type Language } from '@/i18n';
+import CkSetupNotice from '@/components/guides/CkSetupNotice.astro';
 
 interface Props {
   lang?: Language;
@@ -18,7 +19,9 @@ const t = useTranslations(currentLang);
 ---
 
 <div class="space-y-12">
-  <!-- Page Header -->
+  
+  <CkSetupNotice lang={currentLang} />
+<!-- Page Header -->
   <div class="text-center space-y-4">
     <h1 class="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
       {t('guides.claude_mechanics.title')}

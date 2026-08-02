@@ -1,0 +1,52 @@
+---
+interface Feature {
+  title: string;
+  body: string;
+  /** lucide icon name handled by parent via iconHtml, or emoji-ish short label */
+  icon?: string;
+  accent?: 'teal' | 'cyan' | 'violet' | 'amber' | 'blue' | 'rose' | 'emerald';
+}
+
+interface Props {
+  features: Feature[];
+  columns?: 2 | 3;
+}
+
+const { features, columns = 2 } = Astro.props;
+
+const accentMap = {
+  teal: 'from-teal-500 to-cyan-600 shadow-teal-500/25 text-teal-600 dark:text-teal-300 bg-teal-50 dark:bg-teal-900/30',
+  cyan: 'from-cyan-500 to-blue-600 shadow-cyan-500/25 text-cyan-600 dark:text-cyan-300 bg-cyan-50 dark:bg-cyan-900/30',
+  violet: 'from-violet-500 to-fuchsia-600 shadow-violet-500/25 text-violet-600 dark:text-violet-300 bg-violet-50 dark:bg-violet-900/30',
+  amber: 'from-amber-500 to-orange-600 shadow-amber-500/25 text-amber-600 dark:text-amber-300 bg-amber-50 dark:bg-amber-900/30',
+  blue: 'from-blue-500 to-indigo-600 shadow-blue-500/25 text-blue-600 dark:text-blue-300 bg-blue-50 dark:bg-blue-900/30',
+  rose: 'from-rose-500 to-red-600 shadow-rose-500/25 text-rose-600 dark:text-rose-300 bg-rose-50 dark:bg-rose-900/30',
+  emerald: 'from-emerald-500 to-teal-600 shadow-emerald-500/25 text-emerald-600 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-900/30',
+} as const;
+---
+
+<div class:list={['grid gap-4', columns === 3 ? 'sm:grid-cols-2 lg:grid-cols-3' : 'sm:grid-cols-2']}>
+  {features.map((f, i) => {
+    const accent = f.accent || (['teal', 'cyan', 'violet', 'amber', 'blue', 'emerald'] as const)[i % 6];
+    const parts = accentMap[accent].split(' ');
+    const iconWell = `bg-gradient-to-br ${parts[0]} ${parts[1]} shadow-md ${parts[2]}`;
+    return (
+      <article class="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-lg dark:border-slate-700/70 dark:bg-slate-900/50 dark:hover:border-slate-600">
+        <div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-slate-300/80 to-transparent dark:via-slate-600/50"></div>
+        <div class="flex items-start gap-4">
+          <div class:list={['flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white', iconWell]}>
+            {f.icon ? (
+              <span class="text-sm font-bold tracking-wide">{f.icon}</span>
+            ) : (
+              <span class="text-sm font-bold">{String(i + 1).padStart(2, '0')}</span>
+            )}
+          </div>
+          <div class="min-w-0 space-y-1.5">
+            <h3 class="text-base font-semibold text-slate-900 dark:text-white">{f.title}</h3>
+            <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">{f.body}</p>
+          </div>
+        </div>
+      </article>
+    );
+  })}
+</div>

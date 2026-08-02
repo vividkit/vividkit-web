@@ -11,6 +11,7 @@ import WorkflowComboGrid from './workflow-combo-grid.astro';
 import WorkflowComboPipeline from './workflow-combo-pipeline.astro';
 import WorkflowSkillInfographic from './workflow-skill-infographic.astro';
 import WorkflowCommandNav from './workflow-command-nav.astro';
+import CkSetupNotice from '@/components/guides/CkSetupNotice.astro';
 
 interface Props {
   lang?: Language;
@@ -750,6 +751,8 @@ const getCommandNavItem = (id: string) => {
   </div>
 
   {/* Scenario selector (individual view) or Combo grid (combos view) */}
+  
+  <CkSetupNotice lang={currentLang} />
   <section>
     <div x-show="viewType === 'individual'" x-transition>
       <WorkflowScenarioSelector lang={currentLang} />

@@ -8,6 +8,7 @@ import { getLangFromUrl, type Language } from '@/i18n';
 import { useTranslations } from '@/i18n/utils';
 import { insideClaudeKitTopics, trackMeta } from '@/data/guides/inside-claudekit';
 import InsideClaudeKitArticleCard from './inside-claudekit/inside-claudekit-article-card.astro';
+import CkSetupNotice from '@/components/guides/CkSetupNotice.astro';
 
 interface Props {
   lang?: Language;
@@ -25,7 +26,9 @@ const tracks = [...new Set(insideClaudeKitTopics.map((topic) => topic.track))];
 ---
 
 <div class="mt-6 space-y-6">
-  <!-- Compact Header -->
+  
+  <CkSetupNotice lang={currentLang} />
+<!-- Compact Header -->
   <section class="relative overflow-hidden rounded-2xl border border-slate-200/70 bg-gradient-to-br from-slate-50 via-white to-emerald-50/60 px-6 py-6 md:px-8 dark:border-slate-800 dark:from-slate-950 dark:via-slate-950 dark:to-emerald-950/30">
     <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.12),transparent_28%)] dark:bg-[radial-gradient(circle_at_top_right,rgba(52,211,153,0.10),transparent_32%)]"></div>
     <div class="relative flex flex-wrap items-start justify-between gap-4">

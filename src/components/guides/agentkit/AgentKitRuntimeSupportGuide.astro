@@ -1,0 +1,111 @@
+---
+import { getLangFromUrl, type Language } from '@/i18n';
+import AkPageHero from './AkPageHero.astro';
+import AkSection from './AkSection.astro';
+import AkCallout from './AkCallout.astro';
+import AkNextLinks from './AkNextLinks.astro';
+import AkInlineCode from './AkInlineCode.astro';
+import AkFeatureGrid from './AkFeatureGrid.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === 'vi';
+
+const runtimes = isVi
+  ? [
+      { icon: 'CC', title: 'Claude Code', body: 'Native hoặc plugin delivery (plugin cần chọn rõ). Skills, agents, slash commands, rules, hooks và status line có thể active ở project hoặc user scope.', accent: 'teal' as const },
+      { icon: 'CX', title: 'Codex', body: 'Native skill discovery và agent dispatch. Hook support partial — một số group drop/narrow. Không status line. Command files có thể chỉ là supporting content.', accent: 'violet' as const },
+      { icon: 'CR', title: 'Cursor', body: 'Adapter chiếu skills, agents, rules, hooks. Coverage live install/update/invocation có thể chưa đầy đủ — đừng suy ra full parity.', accent: 'cyan' as const },
+    ]
+  : [
+      { icon: 'CC', title: 'Claude Code', body: 'Native or explicit plugin delivery. Skills, agents, slash commands, rules, hooks, and status line can be active at project or user scope.', accent: 'teal' as const },
+      { icon: 'CX', title: 'Codex', body: 'Native skill discovery and agent dispatch. Partial Hook support — some groups drop/narrow. No status line. Command files may stay supporting content.', accent: 'violet' as const },
+      { icon: 'CR', title: 'Cursor', body: 'Projects skills, agents, rules, hooks. Live install/update/invocation coverage is incomplete across setups — do not infer full parity.', accent: 'cyan' as const },
+    ];
+---
+
+<div class="space-y-10 mt-6">
+  <AkPageHero
+    lang={currentLang}
+    accent="cyan"
+    kicker={isVi ? 'Adapters' : 'Adapters'}
+    title={isVi ? 'Hỗ Trợ Runtime' : 'Runtime Support'}
+    subtitle={isVi
+      ? 'Adapter đưa Kit vào coding agent — không phải bảng parity đầy đủ.'
+      : 'How adapters deliver Kits into coding agents — not a full parity matrix.'}
+  />
+
+  <AkSection
+    eyebrow={isVi ? 'Mô hình' : 'Model'}
+    title={isVi ? 'Adapter là ranh giới tương thích' : 'An adapter is a compatibility boundary'}
+  >
+    <div class="rounded-2xl border border-slate-200/80 bg-gradient-to-br from-white via-slate-50 to-cyan-50/40 p-6 dark:border-slate-700 dark:from-slate-900 dark:via-slate-950 dark:to-cyan-950/20">
+      <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-300 md:text-base">
+        {isVi
+          ? 'Coding assistants không chia sẻ một layout file, bộ tool hay model lifecycle event. Runtime adapter chuyển Kit thành bề mặt assistant có thể khám phá và dùng. Nếu không có tương đương, AgentKit có thể giữ supporting content, bỏ qua kèm cảnh báo, hoặc báo unsupported.'
+          : 'Coding assistants do not share one file layout, tool set, or lifecycle model. A runtime adapter converts a Kit into surfaces that assistant can discover and use. Without an equivalent, AgentKit may keep supporting content, drop with a warning, or report unsupported.'}
+      </p>
+    </div>
+  </AkSection>
+
+  <AkSection
+    eyebrow={isVi ? 'Gọi Skill' : 'Invocation'}
+    title={isVi ? 'Cú pháp đã xác nhận' : 'Confirmed invocation syntax'}
+    desc={isVi ? 'Cú pháp và bề mặt hỗ trợ thay đổi theo runtime.' : 'Syntax and supported surfaces vary by runtime.'}
+  >
+    <div class="overflow-hidden rounded-2xl border border-slate-200/80 shadow-sm dark:border-slate-700">
+      <table class="min-w-full text-left text-sm">
+        <thead>
+          <tr class="bg-slate-900 text-slate-200">
+            <th class="px-4 py-3 font-semibold">Runtime</th>
+            <th class="px-4 py-3 font-semibold">{isVi ? 'Cú pháp' : 'Syntax'}</th>
+            <th class="px-4 py-3 font-semibold">{isVi ? 'Ví dụ' : 'Examples'}</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200 bg-white dark:divide-slate-700 dark:bg-slate-900/60">
+          <tr class="transition hover:bg-teal-50/50 dark:hover:bg-teal-950/20">
+            <td class="px-4 py-3.5 font-medium text-slate-900 dark:text-white">Claude Code</td>
+            <td class="px-4 py-3.5"><AkInlineCode text="/ak:<skill>" /></td>
+            <td class="px-4 py-3.5 space-x-2"><AkInlineCode text="/ak:cook" /> <AkInlineCode text="/ak:plan" /></td>
+          </tr>
+          <tr class="transition hover:bg-cyan-50/50 dark:hover:bg-cyan-950/20">
+            <td class="px-4 py-3.5 font-medium text-slate-900 dark:text-white">Cursor</td>
+            <td class="px-4 py-3.5"><AkInlineCode text="/ak:<skill>" /></td>
+            <td class="px-4 py-3.5 space-x-2"><AkInlineCode text="/ak:cook" /> <AkInlineCode text="/ak:plan" /></td>
+          </tr>
+          <tr class="transition hover:bg-violet-50/50 dark:hover:bg-violet-950/20">
+            <td class="px-4 py-3.5 font-medium text-slate-900 dark:text-white">Codex</td>
+            <td class="px-4 py-3.5"><AkInlineCode text="$ak:<skill>" /></td>
+            <td class="px-4 py-3.5 space-x-2"><AkInlineCode text="$ak:cook" /> <AkInlineCode text="$ak:plan" /></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </AkSection>
+
+  <AkSection
+    eyebrow={isVi ? 'Kỳ vọng' : 'Expectations'}
+    title={isVi ? 'Mỗi runtime một thực tế' : 'Each runtime has its own reality'}
+  >
+    <AkFeatureGrid features={runtimes} columns={3} />
+  </AkSection>
+
+  <AkCallout variant="warn" title={isVi ? 'Đừng suy luận mù' : 'Do not guess from filenames'}>
+    {isVi
+      ? 'Đừng suy ra hỗ trợ từ tên file hay hành vi runtime khác. Cảnh báo về nội dung bị bỏ/giữ thường là kết quả capability — không nhất thiết cài đặt thất bại. Đọc install summary sau mỗi lần cài.'
+      : 'Do not infer support from a file name or another runtime’s behavior. Warnings about omitted/preserved content are usually capability results — not necessarily a failed install. Read the install summary after each install.'}
+  </AkCallout>
+
+  <AkNextLinks
+    lang={currentLang}
+    title={isVi ? 'Tiếp theo' : 'Next'}
+    links={[
+      { href: '/guides/agentkit/getting-started', label: isVi ? 'Cài đặt' : 'Get started' },
+      { href: '/guides/agentkit/building-blocks', label: isVi ? 'Building blocks' : 'Building blocks' },
+    ]}
+  />
+</div>

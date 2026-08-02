@@ -3,45 +3,14 @@ import MainLayout from '@/layouts/MainLayout.astro';
 import Header from '@/components/layout/Header.astro';
 import Footer from '@/components/layout/Footer.astro';
 import TabNavigation from '@/components/guides/TabNavigation.astro';
+import type { GuideActiveTab } from '@/types/guides';
 import { getLangFromUrl, type Language } from '@/i18n';
 
 interface Props {
   title: string;
   description: string;
   canonicalPath?: string;
-  activeTab:
-    | 'index'
-    | 'cli'
-    | 'ccs'
-    | 'ck-with-codex'
-    | 'codex-app'
-    | 'remote-control'
-    | 'ui-review-gate'
-    | 'finding-unknowns'
-    | 'ide-config'
-    | 'coexistence'
-    | 'workflows'
-    | 'flowchart'
-    | 'commands'
-    | 'cli-commands'
-    | 'uiux'
-    | 'session-recovery'
-    | 'permissions'
-    | 'hooks'
-    | 'promotions'
-    | 'donate'
-    | 'what-is-claudekit'
-    | 'fix-logs'
-    | 'migrate'
-    | 'how-ck-works'
-    | 'claude-mechanics'
-    | 'inside-claudekit'
-    | 'inside-claudekit-plan-modes'
-    | 'inside-claudekit-frontend-design'
-    | 'inside-claudekit-getting-started'
-    | 'inside-claudekit-guard-rails'
-    | 'deals'
-    | 'lucky-draw';
+  activeTab: GuideActiveTab;
   lang?: Language;
 }
 
@@ -56,12 +25,33 @@ const isInsideClaudeKitArticle = [
 ].includes(activeTab);
 const showSidebar = !isInsideClaudeKitArticle;
 const isWideSidebarGuide = activeTab === 'codex-app';
+
+const agentkitCanonicalMap: Record<string, string> = {
+  agentkit: '/guides/agentkit',
+  'agentkit-how-it-works': '/guides/agentkit/how-it-works',
+  'agentkit-building-blocks': '/guides/agentkit/building-blocks',
+  'agentkit-runtime-support': '/guides/agentkit/runtime-support',
+  'agentkit-desktop-app': '/guides/agentkit/desktop-app',
+  'agentkit-getting-started': '/guides/agentkit/getting-started',
+  'agentkit-configuration': '/guides/agentkit/configuration',
+  'agentkit-cli-commands': '/guides/agentkit/cli-commands',
+  'agentkit-skills': '/guides/agentkit/skills',
+  'agentkit-statusline': '/guides/agentkit/statusline',
+  'agentkit-updating': '/guides/agentkit/updating',
+  'agentkit-troubleshooting': '/guides/agentkit/troubleshooting',
+  'migrate-claudekit-to-agentkit': '/guides/migrate-claudekit-to-agentkit',
+};
+
+const resolvedCanonical =
+  canonicalPath ||
+  agentkitCanonicalMap[activeTab] ||
+  (activeTab === 'index' ? '/guides' : `/guides/${activeTab}`);
 ---
 
 <MainLayout
   title={title}
   description={description}
-  canonical={canonicalPath || `/guides${activeTab !== 'index' ? '/' + activeTab : ''}`}
+  canonical={resolvedCanonical}
   lang={currentLang}
 >
   <Header lang={currentLang} />

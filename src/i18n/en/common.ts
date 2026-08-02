@@ -62,7 +62,7 @@ export const common = {
   // fix_logs — translations moved to inline in FixLogsGuide.astro
   // footer
   // Footer
-  'footer.tagline': 'Build anything without terminal friction. Powered by ClaudeKit Framework.',
+  'footer.tagline': 'Build anything without terminal friction. Guides for AgentKit and ClaudeKit.',
   'footer.copyright': '© 2025 VividKit. All rights reserved.',
   'footer.sponsor': 'Sponsor on GitHub',
   // Footer links
@@ -92,7 +92,7 @@ export const common = {
   'footer.claudekit_discord': 'ClaudeKit Discord',
   'footer.get_started': 'Get Started',
   'footer.claudekit_discount': 'ClaudeKit (30% OFF)',
-  'footer.required_for_vividkit': 'Required for VividKit',
+  'footer.required_for_vividkit': 'Works with AgentKit or ClaudeKit',
   // form
   // Waitlist form
   'form.name': 'Your name',
