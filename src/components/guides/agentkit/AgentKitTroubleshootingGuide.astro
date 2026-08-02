@@ -1,0 +1,123 @@
+---
+import { getLangFromUrl, type Language } from '@/i18n';
+import AkPageHero from './AkPageHero.astro';
+import AkSection from './AkSection.astro';
+import AkCodeBlock from './AkCodeBlock.astro';
+import AkCallout from './AkCallout.astro';
+import AkNextLinks from './AkNextLinks.astro';
+import AkInlineCode from './AkInlineCode.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === 'vi';
+
+const skillMissing = isVi
+  ? [
+      'Xác nhận Kit đã cài đúng runtime và đúng scope (project vs global).',
+      'Restart coding assistant hoặc mở session mới sau khi cài.',
+      'Dùng đúng cú pháp runtime (/ak:… vs $ak:…).',
+      'Đọc warning adapter: component có thể bị drop hoặc chỉ là supporting content.',
+    ]
+  : [
+      'Confirm the Kit installed for the correct runtime and scope (project vs global).',
+      'Restart the coding assistant or open a new session after install.',
+      'Use the correct runtime syntax (/ak:… vs $ak:…).',
+      'Read adapter warnings: a component may be dropped or kept as supporting content only.',
+    ];
+
+const desktopTips = isVi
+  ? [
+      'Verify SHA-256 trước khi mở; đừng tắt Gatekeeper toàn hệ thống.',
+      'Session App license tách với CLI login.',
+      'Desktop không chạy Skill — kiểm tra coding assistant nếu thiếu workflow.',
+    ]
+  : [
+      'Verify SHA-256 before opening; do not disable Gatekeeper system-wide.',
+      'App license session is separate from CLI login.',
+      'Desktop does not run Skills — check the coding assistant if a workflow is missing.',
+    ];
+---
+
+<div class="space-y-10 mt-6">
+  <AkPageHero
+    lang={currentLang}
+    accent="amber"
+    kicker={isVi ? 'Support' : 'Support'}
+    title={isVi ? 'Xử Lý Sự Cố' : 'Troubleshooting'}
+    subtitle={isVi
+      ? 'Checklist nhanh khi CLI, Desktop hoặc runtime không như kỳ vọng.'
+      : 'A quick checklist when the CLI, Desktop, or runtime misbehaves.'}
+  />
+
+  <div class="grid gap-4 md:grid-cols-2">
+    <section class="rounded-2xl border border-slate-200/80 bg-white/80 p-5 dark:border-slate-700 dark:bg-slate-900/50">
+      <h2 class="text-lg font-bold text-slate-900 dark:text-white">
+        {isVi ? 'CLI không tìm thấy' : 'CLI not found'}
+      </h2>
+      <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">
+        {isVi
+          ? 'Xác nhận thư mục cài nằm trên PATH, mở terminal mới, rồi chạy '
+          : 'Confirm the install directory is on PATH, open a new terminal, then run '}
+        <AkInlineCode text="ak --version" />.
+      </p>
+    </section>
+    <section class="rounded-2xl border border-slate-200/80 bg-white/80 p-5 dark:border-slate-700 dark:bg-slate-900/50">
+      <h2 class="text-lg font-bold text-slate-900 dark:text-white">
+        {isVi ? 'Chẩn đoán nhanh' : 'Quick diagnostics'}
+      </h2>
+      <div class="mt-3">
+        <AkCodeBlock title="doctor" code={`ak doctor --json\nak doctor --json --offline`} />
+      </div>
+    </section>
+  </div>
+
+  <AkSection
+    eyebrow={isVi ? 'Runtime' : 'Runtime'}
+    title={isVi ? 'Skill không xuất hiện' : 'Skill not visible'}
+  >
+    <ul class="space-y-2">
+      {skillMissing.map((item, i) => (
+        <li class="flex gap-3 rounded-xl border border-slate-200/70 bg-slate-50/80 px-4 py-3 text-sm text-slate-700 dark:border-slate-700 dark:bg-slate-900/40 dark:text-slate-300">
+          <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-amber-500 text-xs font-bold text-white">{i + 1}</span>
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  </AkSection>
+
+  <AkSection eyebrow="Desktop" title={isVi ? 'Desktop' : 'Desktop'}>
+    <ul class="grid gap-3 sm:grid-cols-3">
+      {desktopTips.map((t) => (
+        <li class="rounded-2xl border border-amber-200/60 bg-amber-50/50 p-4 text-sm text-amber-950 dark:border-amber-500/25 dark:bg-amber-950/20 dark:text-amber-100">
+          {t}
+        </li>
+      ))}
+    </ul>
+  </AkSection>
+
+  <AkSection eyebrow={isVi ? 'Migrate' : 'Migrate'} title={isVi ? 'Sau khi chuyển CK → AK' : 'After CK → AK migration'}>
+    <AkCallout variant="info">
+      {isVi
+        ? 'Recovery gợi ý thường gồm '
+        : 'Recovery hints often include '}
+      <AkInlineCode text="ak migrate rollback" />
+      {isVi ? ' và ' : ' and '}
+      <AkInlineCode text="ak backups list" />
+      {isVi ? '. Xem hướng dẫn migrate cho dry-run và backup.' : '. See the migration guide for dry-run and backup.'}
+    </AkCallout>
+  </AkSection>
+
+  <AkNextLinks
+    lang={currentLang}
+    title={isVi ? 'Tài liệu liên quan' : 'Related guides'}
+    links={[
+      { href: '/guides/migrate-claudekit-to-agentkit', label: isVi ? 'Migrate CK → AK' : 'Migrate CK → AK' },
+      { href: '/guides/agentkit/getting-started', label: isVi ? 'Cài đặt lại' : 'Getting started' },
+      { href: '/guides/agentkit/runtime-support', label: isVi ? 'Runtime' : 'Runtime support' },
+    ]}
+  />
+</div>

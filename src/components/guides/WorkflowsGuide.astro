@@ -7,6 +7,7 @@ import WorkflowsHeaderAndVersionToggle from './workflows/workflows-header-and-ve
 import WorkflowsEngineerSection from './workflows/workflows-engineer-section.astro';
 import WorkflowsMarketingSection from './workflows/workflows-marketing-section.astro';
 import WorkflowsProTipsAndNavigation from './workflows/workflows-pro-tips-and-navigation.astro';
+import CkSetupNotice from '@/components/guides/CkSetupNotice.astro';
 
 interface Props {
   lang?: Language;
@@ -33,7 +34,9 @@ const marketingWorkflows = currentLang === 'vi' ? (marketingWorkflowsVi || marke
 </style>
 
 <div class="space-y-8 mt-6">
-  <WorkflowsHeaderAndVersionToggle lang={currentLang} />
+  
+  <CkSetupNotice lang={currentLang} />
+<WorkflowsHeaderAndVersionToggle lang={currentLang} />
 
   <!-- Engineer Kit Content -->
   <div id="wf-engineer-content">

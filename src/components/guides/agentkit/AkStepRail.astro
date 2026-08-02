@@ -1,0 +1,44 @@
+---
+interface Step {
+  title: string;
+  body: string;
+}
+
+interface Props {
+  steps: Step[];
+  accent?: 'teal' | 'cyan' | 'violet' | 'amber';
+}
+
+const { steps, accent = 'teal' } = Astro.props;
+
+const dot = {
+  teal: 'bg-gradient-to-br from-teal-500 to-cyan-600 shadow-teal-500/30 ring-teal-100 dark:ring-teal-900/50',
+  cyan: 'bg-gradient-to-br from-cyan-500 to-blue-600 shadow-cyan-500/30 ring-cyan-100 dark:ring-cyan-900/50',
+  violet: 'bg-gradient-to-br from-violet-500 to-fuchsia-600 shadow-violet-500/30 ring-violet-100 dark:ring-violet-900/50',
+  amber: 'bg-gradient-to-br from-amber-500 to-orange-600 shadow-amber-500/30 ring-amber-100 dark:ring-amber-900/50',
+}[accent];
+
+const line = {
+  teal: 'bg-gradient-to-b from-teal-400/70 to-cyan-400/20 dark:from-teal-500/50 dark:to-cyan-500/10',
+  cyan: 'bg-gradient-to-b from-cyan-400/70 to-blue-400/20 dark:from-cyan-500/50 dark:to-blue-500/10',
+  violet: 'bg-gradient-to-b from-violet-400/70 to-fuchsia-400/20 dark:from-violet-500/50 dark:to-fuchsia-500/10',
+  amber: 'bg-gradient-to-b from-amber-400/70 to-orange-400/20 dark:from-amber-500/50 dark:to-orange-500/10',
+}[accent];
+---
+
+<ol class="relative space-y-0">
+  {steps.map((s, i) => (
+    <li class="relative flex gap-4 pb-6 last:pb-0">
+      {i < steps.length - 1 && (
+        <span class:list={['absolute left-[1.15rem] top-10 bottom-0 w-0.5', line]} aria-hidden="true"></span>
+      )}
+      <div class:list={['relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white shadow-lg ring-4', dot]}>
+        {i + 1}
+      </div>
+      <div class="min-w-0 flex-1 rounded-2xl border border-slate-200/80 bg-white/80 p-4 shadow-sm dark:border-slate-700/70 dark:bg-slate-900/50">
+        <h3 class="font-semibold text-slate-900 dark:text-white">{s.title}</h3>
+        <p class="mt-1.5 text-sm leading-relaxed text-slate-600 dark:text-slate-400">{s.body}</p>
+      </div>
+    </li>
+  ))}
+</ol>

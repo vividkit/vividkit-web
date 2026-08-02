@@ -1,0 +1,19 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import HowAgentKitWorksGuide from '@/components/guides/agentkit/HowAgentKitWorksGuide.astro';
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl } from '@/i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<GuidesLayout
+  title={`${t('guides.agentkit.how_it_works.title')} - VividKit Guides`}
+  description={t('guides.agentkit.how_it_works.description')}
+  canonicalPath="/guides/agentkit/how-it-works"
+  activeTab="agentkit-how-it-works"
+  lang={lang}
+>
+  <HowAgentKitWorksGuide lang={lang} />
+</GuidesLayout>

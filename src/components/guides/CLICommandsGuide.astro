@@ -2,6 +2,7 @@
 import { getLangFromUrl, type Language } from '@/i18n';
 import CLICommandsHero from './cli-commands/cli-commands-hero.astro';
 import CLICommandsCheatsheet from './cli-commands/cli-commands-cheatsheet.astro';
+import CkSetupNotice from '@/components/guides/CkSetupNotice.astro';
 
 interface Props {
   lang?: Language;
@@ -12,7 +13,9 @@ const currentLang = lang || getLangFromUrl(Astro.url);
 ---
 
 <div class="space-y-8 mt-6">
-  <CLICommandsHero lang={currentLang} />
+  
+  <CkSetupNotice lang={currentLang} />
+<CLICommandsHero lang={currentLang} />
   <CLICommandsCheatsheet lang={currentLang} />
 </div>
 

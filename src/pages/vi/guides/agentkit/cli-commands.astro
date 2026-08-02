@@ -1,0 +1,19 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import AkCliCommandsGuide from '@/components/guides/agentkit/AkCliCommandsGuide.astro';
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl } from '@/i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<GuidesLayout
+  title={`${t('guides.agentkit.cli_commands.title')} - VividKit Guides`}
+  description={t('guides.agentkit.cli_commands.description')}
+  canonicalPath="/guides/agentkit/cli-commands"
+  activeTab="agentkit-cli-commands"
+  lang={lang}
+>
+  <AkCliCommandsGuide lang={lang} />
+</GuidesLayout>

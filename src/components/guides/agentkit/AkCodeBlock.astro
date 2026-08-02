@@ -1,0 +1,113 @@
+---
+import { Copy, Check } from 'lucide-astro';
+
+interface Props {
+  title?: string;
+  code: string;
+  /** Accessible label for the copy control */
+  copyLabel?: string;
+}
+
+const { title, code, copyLabel = 'Copy to clipboard' } = Astro.props;
+const blockId = `ak-code-${Math.random().toString(36).slice(2, 10)}`;
+
+/** Split shell/yaml-style full-line comments from commands for contrast. */
+const renderedLines = code.split('\n').map((line) => {
+  const commentOnly = /^\s*#/.test(line);
+  if (commentOnly) {
+    return { kind: 'comment' as const, text: line };
+  }
+  // Trailing comment: `cmd  # note` (ignore # inside simple quotes loosely)
+  const trail = line.match(/^([^#'"]*?(?:'[^']*'|"[^"]*")*[^#'"]*?)(\s+#.*)$/);
+  if (trail && trail[1].trim().length > 0) {
+    return { kind: 'mixed' as const, code: trail[1], comment: trail[2] };
+  }
+  return { kind: 'code' as const, text: line };
+});
+---
+
+<div class="overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-950 shadow-lg shadow-slate-900/10 dark:border-slate-700 dark:shadow-black/30">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 bg-slate-900/90 px-3 py-2 sm:px-4 sm:py-2.5">
+    <div class="flex min-w-0 items-center gap-2">
+      <div class="flex shrink-0 items-center gap-1.5">
+        <span class="h-2.5 w-2.5 rounded-full bg-rose-400/90"></span>
+        <span class="h-2.5 w-2.5 rounded-full bg-amber-400/90"></span>
+        <span class="h-2.5 w-2.5 rounded-full bg-emerald-400/90"></span>
+      </div>
+      {title && (
+        <span class="truncate text-[11px] font-medium uppercase tracking-wider text-slate-400">
+          {title}
+        </span>
+      )}
+    </div>
+    <button
+      type="button"
+      class="ak-code-copy group inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-2 py-1.5 text-slate-300 transition hover:border-white/20 hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400/70"
+      data-code={code}
+      aria-label={copyLabel}
+      title={copyLabel}
+    >
+      <Copy class="copy-icon h-3.5 w-3.5" stroke-width={2.2} aria-hidden="true" />
+      <Check class="check-icon hidden h-3.5 w-3.5 text-emerald-400" stroke-width={2.4} aria-hidden="true" />
+      <span class="copy-label text-[11px] font-medium hidden sm:inline">Copy</span>
+      <span class="copied-label text-[11px] font-medium text-emerald-400 hidden">Copied</span>
+    </button>
+  </div>
+  <pre
+    id={blockId}
+    class="m-0 max-w-full overflow-x-auto p-4 text-[13px] leading-relaxed"
+  ><code class="block max-w-full whitespace-pre-wrap break-words font-mono [overflow-wrap:anywhere]">{renderedLines.map((line, i) => (
+      <>
+        {line.kind === 'comment' && (
+          <span class="text-slate-500 dark:text-slate-500">{line.text}</span>
+        )}
+        {line.kind === 'code' && (
+          <span class="text-purple-300">{line.text}</span>
+        )}
+        {line.kind === 'mixed' && (
+          <>
+            <span class="text-purple-300">{line.code}</span>
+            <span class="text-slate-500 dark:text-slate-500">{line.comment}</span>
+          </>
+        )}
+        {i < renderedLines.length - 1 ? '\n' : ''}
+      </>
+    ))}</code></pre>
+</div>
+
+<script>
+  function bindAkCodeCopy(root: ParentNode = document) {
+    root.querySelectorAll<HTMLButtonElement>('.ak-code-copy:not([data-bound])').forEach((btn) => {
+      btn.dataset.bound = '1';
+      btn.addEventListener('click', async () => {
+        const code = btn.getAttribute('data-code');
+        if (!code) return;
+        try {
+          await navigator.clipboard.writeText(code);
+          const copyIcon = btn.querySelector('.copy-icon');
+          const checkIcon = btn.querySelector('.check-icon');
+          const copyLabel = btn.querySelector('.copy-label');
+          const copiedLabel = btn.querySelector('.copied-label');
+          copyIcon?.classList.add('hidden');
+          checkIcon?.classList.remove('hidden');
+          copyLabel?.classList.add('hidden');
+          copiedLabel?.classList.remove('hidden');
+          btn.setAttribute('aria-label', 'Copied');
+          window.setTimeout(() => {
+            copyIcon?.classList.remove('hidden');
+            checkIcon?.classList.add('hidden');
+            copyLabel?.classList.remove('hidden');
+            copiedLabel?.classList.add('hidden');
+            btn.setAttribute('aria-label', btn.getAttribute('title') || 'Copy to clipboard');
+          }, 1800);
+        } catch (err) {
+          console.error('Failed to copy:', err);
+        }
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => bindAkCodeCopy());
+  // Astro view transitions / partial re-render safety
+  document.addEventListener('astro:page-load', () => bindAkCodeCopy());
+</script>

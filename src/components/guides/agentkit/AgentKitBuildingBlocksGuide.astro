@@ -1,0 +1,108 @@
+---
+import { getLangFromUrl, type Language } from '@/i18n';
+import AkPageHero from './AkPageHero.astro';
+import AkSection from './AkSection.astro';
+import AkFeatureGrid from './AkFeatureGrid.astro';
+import AkCallout from './AkCallout.astro';
+import AkNextLinks from './AkNextLinks.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === 'vi';
+
+const blocks = isVi
+  ? [
+      { icon: 'KIT', title: 'Kit', body: 'Gói phiên bản bạn cài. Gom Skills, Agents, Hooks, rules và file hỗ trợ. Cài Kit không chạy mọi component.', accent: 'teal' as const },
+      { icon: 'SKL', title: 'Skill', body: 'Workflow tái sử dụng cho một outcome cụ thể. Bạn thường gọi có chủ đích rồi đưa goal hoặc input.', accent: 'cyan' as const },
+      { icon: 'AGT', title: 'Agent', body: 'Vai trò chuyên biệt cho công việc tập trung hoặc ủy thác. Không tự “thẩm quyền hơn” Skill.', accent: 'violet' as const },
+      { icon: 'HK', title: 'Hook', body: 'Tự động hóa gắn lifecycle event runtime hỗ trợ. Không phải ranh giới bảo mật. Có file ≠ đã chạy.', accent: 'amber' as const },
+      { icon: 'ART', title: 'Artifact hỗ trợ', body: 'Rules, references, scripts, config và templates kèm workflow.', accent: 'emerald' as const },
+    ]
+  : [
+      { icon: 'KIT', title: 'Kit', body: 'The versioned package you install. Groups Skills, Agents, Hooks, rules, and support files. Installing does not run every component.', accent: 'teal' as const },
+      { icon: 'SKL', title: 'Skill', body: 'A reusable workflow for a specific outcome. You normally invoke it deliberately, then give a goal or input.', accent: 'cyan' as const },
+      { icon: 'AGT', title: 'Agent', body: 'A specialized role for focused work or delegation. Not automatically more authoritative than Skills.', accent: 'violet' as const },
+      { icon: 'HK', title: 'Hook', body: 'Automation on a runtime lifecycle event. Not a security boundary. A file alone does not prove execution.', accent: 'amber' as const },
+      { icon: 'ART', title: 'Supporting artifacts', body: 'Rules, references, scripts, configuration, and templates that support workflows.', accent: 'emerald' as const },
+    ];
+
+const faqs = isVi
+  ? [
+      { q: 'Khi nào chọn Kit?', a: 'Khi bạn muốn một nhóm workflow cho một lĩnh vực công việc (ví dụ engineer kit).' },
+      { q: 'Khi nào gọi Skill?', a: 'Khi bạn đã gọi tên được outcome: plan, cook, fix, review…' },
+      { q: 'Có cần gọi Agent trực tiếp không?', a: 'Thường thì không. Bắt đầu bằng Skill; để workflow ủy thác khi cần.' },
+      { q: 'Hook có chạy ở mọi runtime không?', a: 'Không. Adapter có thể dịch, thu hẹp matcher, hoặc bỏ event không hỗ trợ kèm cảnh báo.' },
+      { q: 'Vì sao cùng Kit hành xử khác nhau?', a: 'Mỗi runtime có layout, tool set và model event riêng. Adapter là ranh giới tương thích, không phải lời hứa parity.' },
+    ]
+  : [
+      { q: 'When should I choose a Kit?', a: 'When you want a family of workflows for a work area (for example an engineer kit).' },
+      { q: 'When should I invoke a Skill?', a: 'When you can name the outcome: plan, cook, fix, review…' },
+      { q: 'Do I need to call Agents directly?', a: 'Usually no. Start with a Skill; let the workflow delegate when useful.' },
+      { q: 'Do Hooks run everywhere?', a: 'No. An adapter may translate, narrow matchers, or omit unsupported events with a warning.' },
+      { q: 'Why can the same Kit differ across runtimes?', a: 'Each runtime has its own layout, tools, and events. An adapter is a compatibility boundary, not a parity promise.' },
+    ];
+---
+
+<div class="space-y-10 mt-6">
+  <AkPageHero
+    lang={currentLang}
+    accent="violet"
+    kicker={isVi ? 'Building blocks' : 'Building blocks'}
+    title={isVi ? 'Kit, Skill, Agent và Hook' : 'Kits, Skills, Agents, and Hooks'}
+    subtitle={isVi
+      ? 'Hiểu từng khối — rồi chọn điểm bắt đầu đúng cho task của bạn.'
+      : 'Understand each block — then pick the right starting point for your task.'}
+  />
+
+  <AkSection
+    eyebrow={isVi ? 'Từ vựng' : 'Vocabulary'}
+    title={isVi ? 'Năm khối xây dựng' : 'Five building blocks'}
+  >
+    <AkFeatureGrid features={blocks} columns={2} />
+  </AkSection>
+
+  <AkCallout variant="warn" title={isVi ? 'Hook không phải security boundary' : 'Hooks are not security boundaries'}>
+    {isVi
+      ? 'Hook giúp đồng bộ state, chạy check, hoặc feedback. Runtime event models khác nhau — file Hook tồn tại không chứng minh đã được đăng ký hoặc đã chạy.'
+      : 'Hooks help keep state in sync, run checks, or provide feedback. Runtime event models differ — a Hook file does not prove registration or execution.'}
+  </AkCallout>
+
+  <AkSection
+    eyebrow={isVi ? 'Thực tế' : 'Practical'}
+    title={isVi ? 'Câu hỏi nhanh' : 'Quick answers'}
+  >
+    <div class="space-y-3">
+      {faqs.map((item, i) => (
+        <details class="group rounded-2xl border border-slate-200/80 bg-white/80 open:shadow-md dark:border-slate-700 dark:bg-slate-900/50">
+          <summary class="cursor-pointer list-none px-5 py-4 font-semibold text-slate-900 marker:content-none dark:text-white">
+            <span class="flex items-center justify-between gap-3">
+              <span class="flex items-center gap-3">
+                <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-violet-100 text-xs font-bold text-violet-700 dark:bg-violet-500/20 dark:text-violet-300">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                {item.q}
+              </span>
+              <span class="text-slate-400 transition group-open:rotate-45">+</span>
+            </span>
+          </summary>
+          <div class="border-t border-slate-100 px-5 py-4 text-sm leading-relaxed text-slate-600 dark:border-slate-800 dark:text-slate-400">
+            {item.a}
+          </div>
+        </details>
+      ))}
+    </div>
+  </AkSection>
+
+  <AkNextLinks
+    lang={currentLang}
+    title={isVi ? 'Tiếp theo' : 'Next'}
+    links={[
+      { href: '/guides/agentkit/runtime-support', label: isVi ? 'Hỗ trợ runtime' : 'Runtime support' },
+      { href: '/guides/agentkit/how-it-works', label: isVi ? 'Cách hoạt động' : 'How it works' },
+    ]}
+  />
+</div>

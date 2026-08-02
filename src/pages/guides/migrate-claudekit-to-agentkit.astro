@@ -1,0 +1,19 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import MigrateCkToAkGuide from '@/components/guides/agentkit/MigrateCkToAkGuide.astro';
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl } from '@/i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<GuidesLayout
+  title={`${t('guides.migrate_ck_to_ak.title')} - VividKit Guides`}
+  description={t('guides.migrate_ck_to_ak.description')}
+  canonicalPath="/guides/migrate-claudekit-to-agentkit"
+  activeTab="migrate-claudekit-to-agentkit"
+  lang={lang}
+>
+  <MigrateCkToAkGuide lang={lang} />
+</GuidesLayout>

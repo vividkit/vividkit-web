@@ -1,0 +1,19 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import AgentKitRuntimeSupportGuide from '@/components/guides/agentkit/AgentKitRuntimeSupportGuide.astro';
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl } from '@/i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<GuidesLayout
+  title={`${t('guides.agentkit.runtime_support.title')} - VividKit Guides`}
+  description={t('guides.agentkit.runtime_support.description')}
+  canonicalPath="/guides/agentkit/runtime-support"
+  activeTab="agentkit-runtime-support"
+  lang={lang}
+>
+  <AgentKitRuntimeSupportGuide lang={lang} />
+</GuidesLayout>

@@ -19,32 +19,103 @@
 /** Documentation sections mirror the on-site TabNavigation grouping. */
 export const guideSections = [
   {
-    heading: 'Getting Started',
+    heading: 'Start Here',
     links: [
+      {
+        title: 'What Is AgentKit?',
+        path: '/guides/agentkit',
+        desc: 'Beginner-friendly introduction to AgentKit as the next generation of ClaudeKit.',
+      },
+      {
+        title: 'Get Started with AgentKit',
+        path: '/guides/agentkit/getting-started',
+        desc: 'Install the ak CLI and onboard a first Kit (recommended for new setups).',
+      },
       {
         title: 'What is ClaudeKit?',
         path: '/guides/what-is-claudekit',
-        desc: 'Beginner-friendly introduction to how ClaudeKit turns Claude into a professional coding assistant.',
+        desc: 'Beginner-friendly introduction for existing ClaudeKit setups.',
       },
+      {
+        title: 'Migrate ClaudeKit to AgentKit',
+        path: '/guides/migrate-claudekit-to-agentkit',
+        desc: 'Optional, backup-first transition from ClaudeKit to AgentKit via ak migrate.',
+      },
+    ],
+  },
+  {
+    heading: 'AgentKit',
+    links: [
+      {
+        title: 'How AgentKit Works',
+        path: '/guides/agentkit/how-it-works',
+        desc: 'From verified Kit releases through adapters to reviewed project artifacts.',
+      },
+      {
+        title: 'Kits, Skills, Agents, and Hooks',
+        path: '/guides/agentkit/building-blocks',
+        desc: 'Building blocks of AgentKit and when to use each one.',
+      },
+      {
+        title: 'Runtime Support',
+        path: '/guides/agentkit/runtime-support',
+        desc: 'How runtime adapters deliver Kit content without promising full parity.',
+      },
+      {
+        title: 'AgentKit Desktop App',
+        path: '/guides/agentkit/desktop-app',
+        desc: 'Visual control center for local AgentKit state (does not execute Skills).',
+      },
+      {
+        title: 'AK CLI Quick Reference',
+        path: '/guides/agentkit/cli-commands',
+        desc: 'AgentKit ak CLI commands cheatsheet — flags, subcommands, and examples.',
+      },
+      {
+        title: 'Skills Cheatsheet',
+        path: '/guides/agentkit/skills',
+        desc: 'Engineer and Marketing Kit skills with subcommands, args, flags, and bilingual descriptions.',
+      },
+      {
+        title: 'Statusline',
+        path: '/guides/agentkit/statusline',
+        desc: 'Claude Code statusline defaults, statuslineLayout options, and customization.',
+      },
+      {
+        title: 'Configuration (config.yaml)',
+        path: '/guides/agentkit/configuration',
+        desc: 'AgentKit config.yaml: user vs project scope, settings, defaults, and options.',
+      },
+      {
+        title: 'Updating',
+        path: '/guides/agentkit/updating',
+        desc: 'Update CLI & Kits: ak self-update vs ak update vs kit refresh — scope of each command.',
+      },
+      {
+        title: 'Troubleshooting',
+        path: '/guides/agentkit/troubleshooting',
+        desc: 'Common CLI, Desktop, and runtime setup issues.',
+      },
+    ],
+  },
+  {
+    heading: 'ClaudeKit (existing setups)',
+    links: [
       {
         title: 'ClaudeKit CLI Guide',
         path: '/guides/cli',
         desc: 'Install and use the ClaudeKit CLI to supercharge your development workflow.',
       },
-    ],
-  },
-  {
-    heading: 'Core Features',
-    links: [
       {
         title: 'Command Finder',
         path: '/guides/flowchart',
         desc: 'Interactive decision tree to find the right ClaudeKit command for your task.',
+        interactive: true,
       },
       {
         title: 'Commands Cheat Sheet',
         path: '/guides/commands',
-        desc: 'Quick reference for 73 ClaudeKit slash commands & skills with complexity ratings.',
+        desc: 'Quick reference for ClaudeKit slash commands and skills.',
       },
       {
         title: 'Workflow Recipes',
@@ -54,13 +125,8 @@ export const guideSections = [
       {
         title: 'CLI Quick Reference',
         path: '/guides/cli-commands',
-        desc: 'All 18 ClaudeKit CLI commands at a glance — flags, subcommands, and quick examples.',
+        desc: 'ClaudeKit CLI commands at a glance — flags, subcommands, and quick examples.',
       },
-    ],
-  },
-  {
-    heading: 'Configuration',
-    links: [
       {
         title: 'Claude Mechanics',
         path: '/guides/claude-mechanics',
@@ -69,38 +135,33 @@ export const guideSections = [
       {
         title: 'Permission Modes',
         path: '/guides/permissions',
-        desc: 'Configure Claude Code permission modes: auto mode with safety classifier and granular allow/ask/deny rules.',
+        desc: 'Configure Claude Code permission modes: auto mode and granular allow/ask/deny rules.',
       },
       {
         title: 'ClaudeKit Hooks',
         path: '/guides/hooks',
-        desc: 'ClaudeKit hooks as guard rails around Claude Code: when they run, how they inspect context, and how each hook helps.',
+        desc: 'ClaudeKit hooks as guard rails around Claude Code.',
       },
       {
         title: 'Coexistence',
         path: '/guides/coexistence',
-        desc: 'Whether ClaudeKit breaks an existing Claude Code setup — how ck init installs into ./.claude/ and preserves existing config.',
+        desc: 'Run ClaudeKit alongside your existing Claude Code setup safely.',
       },
-    ],
-  },
-  {
-    heading: 'Deep Dives',
-    links: [
+      {
+        title: 'ClaudeKit x Codex',
+        path: '/guides/ck-with-codex',
+        desc: 'Use ClaudeKit workflows with Codex.',
+      },
+      {
+        title: 'Migrate to Other Tools',
+        path: '/guides/migrate',
+        desc: 'Migrate ClaudeKit content to other tools and providers.',
+      },
       {
         title: 'How ClaudeKit Works',
         path: '/guides/how-ck-works',
-        desc: 'Interactive visualizer of how ClaudeKit orchestrates tools, hooks, and multi-agent workflows.',
+        desc: 'Interactive visualizer for ClaudeKit skills and workflows.',
         interactive: true,
-      },
-      {
-        title: 'UI Review Gate',
-        path: '/guides/ui-review-gate',
-        desc: 'Review agent plans and diffs in the browser with Plannotator.',
-      },
-      {
-        title: 'Finding Your Unknowns',
-        path: '/guides/finding-unknowns',
-        desc: "A prompting method for surfacing what you don't know you don't know, mapped to ClaudeKit commands.",
       },
       {
         title: 'Inside ClaudeKit',
@@ -108,84 +169,69 @@ export const guideSections = [
         desc: 'Deep dives into ClaudeKit commands, skills, and practical workflows.',
       },
       {
-        title: 'Unlocking /ck:plan with --deep and --tdd',
-        path: '/guides/inside-claudekit/plan-modes',
-        desc: 'When to use --deep, when to add --tdd, and when a lighter approach is enough, with a decision matrix.',
+        title: 'UI Review Gate',
+        path: '/guides/ui-review-gate',
+        desc: 'Review agent plans and diffs in the browser (ClaudeKit-oriented).',
       },
       {
-        title: 'Using the /ck:frontend-design skill effectively',
-        path: '/guides/inside-claudekit/frontend-design',
-        desc: 'When this skill is the right tool, how to prompt it, and how to get stronger UI outcomes.',
+        title: 'Finding Your Unknowns',
+        path: '/guides/finding-unknowns',
+        desc: 'A prompting method for surfacing what you do not know you do not know.',
       },
       {
-        title: 'Getting Started with Claude Code & Engineer Kit',
-        path: '/guides/inside-claudekit/getting-started',
-        desc: 'Set up ClaudeKit, learn the 7 core commands, and ship features and fix bugs faster.',
+        title: 'Session Recovery',
+        path: '/guides/session-recovery',
+        desc: 'Recover sessions, resume work, and transfer context.',
       },
       {
-        title: 'Guard rails: the brake layer between model and action',
-        path: '/guides/inside-claudekit/guard-rails',
-        desc: 'The 4 guard layers, 7 guard-rail groups, and the gaps that remain in ClaudeKit.',
+        title: 'Fix from Logs',
+        path: '/guides/fix-logs',
+        desc: 'Intelligent debugging with ClaudeKit log analysis workflows.',
+      },
+      {
+        title: 'UI/UX Guide',
+        path: '/guides/uiux',
+        desc: 'Design and implementation guidelines with ClaudeKit UI skills.',
       },
     ],
   },
   {
-    heading: 'Multi-Provider & Integrations',
+    heading: 'AI Tools & Runtimes',
     links: [
       {
-        title: 'CCS — Claude Code Switch',
+        title: 'Accounts Switcher',
         path: '/guides/ccs',
-        desc: 'Switch between accounts and models, save on tokens, and optimize your AI workflow.',
+        desc: 'Switch between AI providers and accounts.',
       },
       {
-        title: 'IDE Extensions',
+        title: 'IDE Config',
         path: '/guides/ide-config',
-        desc: 'Configure the Claude Code extension and track the upcoming Codex extension setup.',
+        desc: 'Configure Claude Code extension and related IDE setup.',
       },
       {
         title: 'Remote Control',
         path: '/guides/remote-control',
-        desc: 'Use Remote Control with Claude Code or Codex, including standalone Codex app-server and optional CLIProxy routing.',
+        desc: 'Control coding sessions from remote and mobile setups.',
       },
       {
-        title: 'Codex App with CLIProxyAPI',
+        title: 'Codex App',
         path: '/guides/codex-app',
-        desc: 'Route Codex App requests through CCS CLIProxyAPI with account rotation and config setup.',
-      },
-      {
-        title: 'ClaudeKit x Codex',
-        path: '/guides/ck-with-codex',
-        desc: 'Run ClaudeKit workflows in native Codex CLI via ck migrate -a codex and CCS launch (ccsx / ccsxp).',
-      },
-      {
-        title: 'Migrate to Other Tools',
-        path: '/guides/migrate',
-        desc: 'Migrate ClaudeKit agents, commands, skills, config, rules, and hooks to Cursor, Windsurf, Copilot, and 12+ other AI tools.',
-      },
-      {
-        title: 'Happy-CCS Bridge',
-        path: '/guides/happy-ccs',
-        desc: 'Switch between AI providers (Gemini, GLM, Kimi) while keeping Happy CLI features like mobile control and daemon mode.',
+        desc: 'Route Codex App requests through CLIProxyAPI with Keychain auth helper.',
       },
     ],
   },
   {
-    heading: 'Troubleshooting',
+    heading: 'Resources',
     links: [
       {
-        title: 'Session Recovery',
-        path: '/guides/session-recovery',
-        desc: 'Recover and continue sessions when hitting rate limits, model errors, or switching providers mid-task.',
+        title: 'Promotions',
+        path: '/guides/promotions',
+        desc: 'AI service deals and promotions.',
       },
       {
-        title: 'Fix Logs',
-        path: '/guides/fix-logs',
-        desc: 'Use /fix:logs to automatically analyze and fix errors in your application logs.',
-      },
-      {
-        title: 'UI/UX Pro Max',
-        path: '/guides/uiux',
-        desc: 'Define, iterate, and generate beautiful UI/UX designs with ClaudeKit.',
+        title: 'Support VividKit',
+        path: '/guides/donate',
+        desc: 'Support public VividKit guide maintenance.',
       },
     ],
   },

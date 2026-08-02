@@ -1,0 +1,197 @@
+---
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
+import AkPageHero from './AkPageHero.astro';
+import AkSection from './AkSection.astro';
+import AkStepRail from './AkStepRail.astro';
+import AkCodeBlock from './AkCodeBlock.astro';
+import AkCallout from './AkCallout.astro';
+import AkNextLinks from './AkNextLinks.astro';
+import AkInlineCode from './AkInlineCode.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === 'vi';
+const translatePath = useTranslatedPath(currentLang);
+
+const overview = isVi
+  ? [
+      { title: 'Cài ak CLI', body: 'Installer đã ký — macOS/Linux hoặc Windows PowerShell.' },
+      { title: 'Xác nhận', body: 'ak --version và ak doctor để chắc cài đặt sạch.' },
+      { title: 'Đăng nhập & cài Kit', body: 'ak login (email + OTP, API key, hoặc license key), rồi cài Kit cho runtime.' },
+      { title: 'Gọi Skill trong runtime', body: 'Cài Kit không chạy workflow — mở coding assistant.' },
+    ]
+  : [
+      { title: 'Install ak CLI', body: 'Signed installer — macOS/Linux or Windows PowerShell.' },
+      { title: 'Verify', body: 'ak --version and ak doctor to confirm a clean install.' },
+      { title: 'Log in & install a Kit', body: 'ak login (email + OTP, API key, or license key), then install a Kit for your runtime.' },
+      { title: 'Invoke a Skill in the runtime', body: 'Installing a Kit does not run a workflow — open the assistant.' },
+    ];
+---
+
+<div class="space-y-10 mt-6">
+  <AkPageHero
+    lang={currentLang}
+    accent="teal"
+    kicker={isVi ? 'Onboarding' : 'Onboarding'}
+    title={isVi ? 'Cài Đặt và Onboarding' : 'Installation and Onboarding'}
+    subtitle={isVi
+      ? 'Từ zero đến Skill đầu tiên: cài CLI, verify, cài Kit, gọi trong runtime.'
+      : 'From zero to a first Skill: install the CLI, verify, install a Kit, invoke in your runtime.'}
+    badges={isVi ? ['Khuyến nghị'] : ['Recommended']}
+  />
+
+  <AkSection eyebrow={isVi ? 'Tổng quan' : 'Overview'} title={isVi ? 'Bốn bước' : 'Four steps'}>
+    <AkStepRail steps={overview} accent="teal" />
+  </AkSection>
+
+  <AkSection eyebrow="01" title={isVi ? 'Cài AgentKit CLI' : 'Install the AgentKit CLI'}>
+    <div class="grid gap-4 lg:grid-cols-2">
+      <div class="space-y-3">
+        <h3 class="text-sm font-semibold text-slate-900 dark:text-white">macOS / Linux</h3>
+        <AkCodeBlock title="install.sh" code={`curl -fsSL https://agentkit.best/install.sh | sh`} />
+        <p class="text-xs text-slate-500 dark:text-slate-400">
+          {isVi ? 'Fallback host phát hành:' : 'Release-host fallback:'}
+        </p>
+        <AkCodeBlock title="releases host" code={`curl -fsSL https://releases.agentkit.best/install.sh | sh`} />
+      </div>
+      <div class="space-y-3">
+        <h3 class="text-sm font-semibold text-slate-900 dark:text-white">Windows PowerShell</h3>
+        <AkCodeBlock title="install.ps1" code={`irm https://agentkit.best/install.ps1 | iex`} />
+        <AkCallout variant="info">
+          {isVi ? (
+            <>
+              Mặc định: <AkInlineCode text="~/.local/bin" /> (Unix) · <AkInlineCode text="%USERPROFILE%\bin" /> (Windows). Mở terminal mới sau khi cài.
+            </>
+          ) : (
+            <>
+              Defaults: <AkInlineCode text="~/.local/bin" /> (Unix) · <AkInlineCode text="%USERPROFILE%\bin" /> (Windows). Open a new terminal after install.
+            </>
+          )}
+        </AkCallout>
+      </div>
+    </div>
+  </AkSection>
+
+  <AkSection eyebrow="02" title={isVi ? 'Xác nhận' : 'Verify'}>
+    <AkCodeBlock title="shell" code={`ak --version\nak doctor --json`} />
+  </AkSection>
+
+  <AkSection
+    eyebrow="03"
+    title={isVi ? 'Đăng nhập (ak login) rồi cài Kit' : 'Log in (ak login), then install a Kit'}
+    desc={isVi
+      ? 'Trước khi cài Kit remote có license, đăng nhập registry bằng một trong các cách sau. Khuyến nghị cho hầu hết người dùng: email + OTP.'
+      : 'Before installing licensed remote Kits, authenticate to the registry with one of the methods below. Recommended for most users: email + OTP.'}
+  >
+    <div class="space-y-5">
+      <div class="space-y-3">
+        <div class="flex flex-wrap items-center gap-2">
+          <h3 class="text-sm font-semibold text-slate-900 dark:text-white">
+            {isVi ? 'Email + OTP (khuyến nghị)' : 'Email + OTP (recommended)'}
+          </h3>
+          <span class="rounded-full bg-teal-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-teal-800 dark:bg-teal-500/15 dark:text-teal-300">
+            {isVi ? 'Phổ biến' : 'Common'}
+          </span>
+        </div>
+        <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+          {isVi
+            ? 'Gửi mã một lần (OTP) tới email của bạn. CLI hỏi Enter OTP code — nhập mã từ hộp thư. Mã OTP không được lưu trên máy; session CLI lưu credential refresh (không phải mã OTP).'
+            : 'Sends a one-time password (OTP) to your email. The CLI prompts Enter OTP code — type the code from your inbox. The OTP is not stored on disk; the CLI session keeps a rotating refresh credential (not the OTP itself).'}
+        </p>
+        <AkCodeBlock title="shell" code={`ak login --email you@example.com\n# Prompt: Enter OTP code:\nak whoami`} />
+      </div>
+
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="space-y-3 rounded-2xl border border-slate-200/80 bg-white/80 p-4 dark:border-slate-700 dark:bg-slate-900/50">
+          <h3 class="text-sm font-semibold text-slate-900 dark:text-white">
+            {isVi ? 'API key (script / CI)' : 'API key (scripts / CI)'}
+          </h3>
+          <p class="text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+            {isVi
+              ? 'Key từ web profile. Phù hợp môi trường không tương tác. Key được lưu trong session private.'
+              : 'Key from your web profile. Suited to non-interactive hosts. The private API key is stored in the session.'}
+          </p>
+          <AkCodeBlock title="shell" code={`ak login --api-key ak_live_... --no-interactive`} />
+        </div>
+        <div class="space-y-3 rounded-2xl border border-slate-200/80 bg-white/80 p-4 dark:border-slate-700 dark:bg-slate-900/50">
+          <h3 class="text-sm font-semibold text-slate-900 dark:text-white">
+            {isVi ? 'License key (App / device)' : 'License key (App / device)'}
+          </h3>
+          <p class="text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+            {isVi
+              ? 'Kích hoạt thiết bị cho App session (khác slot CLI email/API). Dùng khi kích hoạt Desktop / device grant.'
+              : 'Activates a device for an App session (separate from the CLI email/API slot). Use when activating Desktop / device grants.'}
+          </p>
+          <AkCodeBlock title="shell" code={`ak login --license-key ak_license_... --no-interactive`} />
+        </div>
+      </div>
+
+      <AkCallout variant="info" title={isVi ? 'Kiểm tra & đăng xuất' : 'Check status & sign out'}>
+        <span class="inline-flex flex-wrap items-center gap-x-1 gap-y-1">
+          <AkInlineCode text="ak whoami" />
+          {isVi ? ' xác nhận account và kit được license. ' : ' confirms the account and licensed kits. '}
+          <AkInlineCode text="ak logout" />
+          {isVi
+            ? ' xóa credential CLI local (giữ App device session nếu có).'
+            : ' clears the local CLI credential (preserves any App device session).'}
+        </span>
+      </AkCallout>
+
+      <div class="rounded-2xl border border-slate-200/80 bg-gradient-to-br from-slate-50 to-white p-5 dark:border-slate-700 dark:from-slate-900 dark:to-slate-950">
+        <h3 class="text-sm font-semibold text-slate-900 dark:text-white">
+          {isVi ? 'Sau khi đăng nhập: cài Kit' : 'After login: install a Kit'}
+        </h3>
+        <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+          {isVi
+            ? 'Cài Kit cho runtime bạn dùng. Project scope là mặc định; thêm '
+            : 'Install a Kit for the runtime you use. Project scope is the default; add '}
+          <AkInlineCode text="--global" />
+          {isVi
+            ? ' khi cần phạm vi user. Cài Kit không chạy workflow — restart coding assistant hoặc mở session mới, rồi gọi Skill (ví dụ /ak:plan hoặc $ak:plan).'
+            : ' for user-wide availability. Installing a Kit does not run a workflow — restart the coding assistant or open a new session, then invoke a Skill (for example /ak:plan or $ak:plan).'}
+        </p>
+      </div>
+    </div>
+  </AkSection>
+
+  <AkSection eyebrow="04" title={isVi ? 'Tuỳ chọn: Desktop App' : 'Optional: Desktop App'}>
+    <div class="flex flex-col gap-4 rounded-2xl border border-teal-200/70 bg-gradient-to-br from-teal-50/80 to-white p-5 sm:flex-row sm:items-center sm:justify-between dark:border-teal-500/25 dark:from-teal-950/30 dark:to-slate-900">
+      <p class="text-sm text-slate-600 dark:text-slate-300">
+        {isVi
+          ? 'Desktop là gói riêng — tải, verify checksum, kích hoạt App license. Xem trang Desktop để biết platform.'
+          : 'Desktop is a separate package — download, verify checksums, activate an App license. See the Desktop page for platforms.'}
+      </p>
+      <a
+        href={translatePath('/guides/agentkit/desktop-app')}
+        class="inline-flex shrink-0 items-center justify-center rounded-xl bg-gradient-to-r from-teal-500 to-cyan-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-teal-500/25 transition hover:from-teal-600 hover:to-cyan-700"
+      >
+        {isVi ? 'Desktop App →' : 'Desktop App →'}
+      </a>
+    </div>
+  </AkSection>
+
+  <AkCallout variant="info" title={isVi ? 'Đang dùng ClaudeKit?' : 'Already on ClaudeKit?'}>
+    {isVi
+      ? 'Không bắt buộc migrate. Khi sẵn sàng, dùng hướng dẫn chuyển đổi (sao lưu trước).'
+      : 'Migration is optional. When ready, use the migration guide (back up first).'}
+    {' '}
+    <a class="font-semibold text-teal-700 underline-offset-2 hover:underline dark:text-teal-300" href={translatePath('/guides/migrate-claudekit-to-agentkit')}>
+      {isVi ? 'Migrate →' : 'Migrate →'}
+    </a>
+  </AkCallout>
+
+  <AkNextLinks
+    lang={currentLang}
+    title={isVi ? 'Tiếp theo' : 'Next'}
+    links={[
+      { href: '/guides/agentkit/configuration', label: isVi ? 'config.yaml' : 'config.yaml' },
+      { href: '/guides/agentkit/runtime-support', label: isVi ? 'Runtime support' : 'Runtime support' },
+      { href: '/guides/agentkit/updating', label: isVi ? 'Cập nhật' : 'Updating' },
+      { href: '/guides/agentkit/troubleshooting', label: isVi ? 'Sự cố' : 'Troubleshooting' },
+    ]}
+  />
+</div>

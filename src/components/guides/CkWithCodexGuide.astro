@@ -6,6 +6,7 @@ import Setup from './ck-with-codex/ck-with-codex-setup.astro';
 import InteractiveMode from './ck-with-codex/ck-with-codex-interactive-mode.astro';
 import Workflows from './ck-with-codex/ck-with-codex-workflows.astro';
 import WhyCCS from './ck-with-codex/ck-with-codex-why-ccs.astro';
+import CkSetupNotice from '@/components/guides/CkSetupNotice.astro';
 
 interface Props { lang?: Language }
 const { lang } = Astro.props;
@@ -13,7 +14,9 @@ const currentLang = lang || getLangFromUrl(Astro.url);
 ---
 
 <div class="space-y-12 mt-6">
-  <Hero lang={currentLang} />
+  
+  <CkSetupNotice lang={currentLang} />
+<Hero lang={currentLang} />
   <Architecture lang={currentLang} />
   <WhyCCS lang={currentLang} />
   <Setup lang={currentLang} />
