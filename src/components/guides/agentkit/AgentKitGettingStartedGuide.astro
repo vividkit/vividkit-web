@@ -48,31 +48,92 @@ const overview = isVi
     <AkStepRail steps={overview} accent="teal" />
   </AkSection>
 
-  <AkSection eyebrow="01" title={isVi ? 'Cài AgentKit CLI' : 'Install the AgentKit CLI'}>
-    <div class="grid gap-4 lg:grid-cols-2">
-      <div class="space-y-3">
-        <h3 class="text-sm font-semibold text-slate-900 dark:text-white">macOS / Linux</h3>
-        <AkCodeBlock title="install.sh" code={`curl -fsSL https://agentkit.best/install.sh | sh`} />
-        <p class="text-xs text-slate-500 dark:text-slate-400">
-          {isVi ? 'Fallback host phát hành:' : 'Release-host fallback:'}
-        </p>
-        <AkCodeBlock title="releases host" code={`curl -fsSL https://releases.agentkit.best/install.sh | sh`} />
+  <AkSection
+    eyebrow="01"
+    title={isVi ? 'Cài AgentKit CLI' : 'Install the AgentKit CLI'}
+    desc={isVi
+      ? 'Chọn platform của bạn, chạy một lệnh, rồi mở terminal mới.'
+      : 'Pick your platform, run one command, then open a new terminal.'}
+  >
+    <div class="space-y-4">
+      <div class="grid gap-4 lg:grid-cols-2 lg:items-stretch">
+        {/* macOS / Linux */}
+        <article class="relative flex flex-col overflow-hidden rounded-2xl border border-teal-200/70 bg-gradient-to-br from-teal-50/70 via-white to-white p-4 sm:p-5 dark:border-teal-500/25 dark:from-teal-950/40 dark:via-slate-900/80 dark:to-slate-900/60">
+          <div class="mb-4 flex items-center justify-between gap-3">
+            <div class="min-w-0">
+              <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-600 dark:text-teal-400">
+                Unix
+              </p>
+              <h3 class="mt-0.5 text-base font-bold text-slate-900 dark:text-white">
+                macOS / Linux
+              </h3>
+            </div>
+            <span class="shrink-0 rounded-full bg-teal-500/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-teal-700 dark:bg-teal-500/20 dark:text-teal-300">
+              install.sh
+            </span>
+          </div>
+          <div class="flex flex-1 flex-col gap-3">
+            <AkCodeBlock title="install.sh" code={`curl -fsSL https://agentkit.best/install.sh | sh`} />
+            <details class="group rounded-xl border border-slate-200/80 bg-white/70 open:bg-white dark:border-slate-700/80 dark:bg-slate-950/40 dark:open:bg-slate-950/70">
+              <summary class="cursor-pointer list-none px-3.5 py-2.5 text-xs font-medium text-slate-600 marker:content-none [&::-webkit-details-marker]:hidden dark:text-slate-400">
+                <span class="inline-flex items-center gap-2">
+                  <span class="inline-flex h-5 w-5 items-center justify-center rounded-md bg-slate-100 text-[10px] font-bold text-slate-500 transition group-open:rotate-90 dark:bg-slate-800 dark:text-slate-400">
+                    ›
+                  </span>
+                  {isVi ? 'Fallback nếu host chính lỗi' : 'Fallback if the primary host fails'}
+                </span>
+              </summary>
+              <div class="space-y-2 border-t border-slate-200/70 px-3 pb-3 pt-2 dark:border-slate-700/70">
+                <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">
+                  {isVi
+                    ? 'Dùng release host khi agentkit.best không truy cập được.'
+                    : 'Use the release host when agentkit.best is unreachable.'}
+                </p>
+                <AkCodeBlock title="releases host" code={`curl -fsSL https://releases.agentkit.best/install.sh | sh`} />
+              </div>
+            </details>
+          </div>
+        </article>
+
+        {/* Windows */}
+        <article class="relative flex flex-col overflow-hidden rounded-2xl border border-violet-200/70 bg-gradient-to-br from-violet-50/70 via-white to-white p-4 sm:p-5 dark:border-violet-500/25 dark:from-violet-950/35 dark:via-slate-900/80 dark:to-slate-900/60">
+          <div class="mb-4 flex items-center justify-between gap-3">
+            <div class="min-w-0">
+              <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-violet-600 dark:text-violet-400">
+                Windows
+              </p>
+              <h3 class="mt-0.5 text-base font-bold text-slate-900 dark:text-white">
+                PowerShell
+              </h3>
+            </div>
+            <span class="shrink-0 rounded-full bg-violet-500/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-violet-700 dark:bg-violet-500/20 dark:text-violet-300">
+              install.ps1
+            </span>
+          </div>
+          <div class="flex flex-1 flex-col gap-3">
+            <AkCodeBlock title="install.ps1" code={`irm https://agentkit.best/install.ps1 | iex`} />
+            <p class="mt-auto rounded-xl border border-violet-200/50 bg-violet-50/60 px-3.5 py-2.5 text-xs leading-relaxed text-slate-600 dark:border-violet-500/20 dark:bg-violet-950/20 dark:text-slate-400">
+              {isVi
+                ? 'Chạy trong PowerShell (không phải CMD). Sau khi cài, mở cửa sổ terminal mới.'
+                : 'Run in PowerShell (not CMD). After install, open a new terminal window.'}
+            </p>
+          </div>
+        </article>
       </div>
-      <div class="space-y-3">
-        <h3 class="text-sm font-semibold text-slate-900 dark:text-white">Windows PowerShell</h3>
-        <AkCodeBlock title="install.ps1" code={`irm https://agentkit.best/install.ps1 | iex`} />
-        <AkCallout variant="info">
-          {isVi ? (
-            <>
-              Mặc định: <AkInlineCode text="~/.local/bin" /> (Unix) · <AkInlineCode text="%USERPROFILE%\bin" /> (Windows). Mở terminal mới sau khi cài.
-            </>
-          ) : (
-            <>
-              Defaults: <AkInlineCode text="~/.local/bin" /> (Unix) · <AkInlineCode text="%USERPROFILE%\bin" /> (Windows). Open a new terminal after install.
-            </>
-          )}
-        </AkCallout>
-      </div>
+
+      <AkCallout variant="info" title={isVi ? 'PATH mặc định' : 'Default PATH'}>
+        {isVi ? (
+          <>
+            Binary vào <AkInlineCode text="~/.local/bin" /> (Unix) hoặc <AkInlineCode text="%USERPROFILE%\bin" /> (Windows).
+            Mở terminal mới sau khi cài để nhận PATH.
+          </>
+        ) : (
+          <>
+            Binary lands in <AkInlineCode text="~/.local/bin" /> (Unix) or <AkInlineCode text="%USERPROFILE%\bin" /> (Windows).
+            Open a new terminal after install so PATH picks it up.
+          </>
+        )}
+      </AkCallout>
     </div>
   </AkSection>
 
@@ -123,17 +184,45 @@ const overview = isVi
           </h3>
           <p class="text-xs leading-relaxed text-slate-500 dark:text-slate-400">
             {isVi
-              ? 'Kích hoạt thiết bị cho App session (khác slot CLI email/API). Dùng khi kích hoạt Desktop / device grant.'
-              : 'Activates a device for an App session (separate from the CLI email/API slot). Use when activating Desktop / device grants.'}
+              ? 'Kích hoạt thiết bị cho App session (khác slot CLI email/API). Chủ yếu dùng cho Desktop — không tự cấp Kit Engineer / Marketing.'
+              : 'Activates a device for an App session (separate from the CLI email/API slot). Mainly for Desktop — does not grant Engineer / Marketing Kits by itself.'}
           </p>
           <AkCodeBlock title="shell" code={`ak login --license-key ak_license_... --no-interactive`} />
         </div>
       </div>
 
+      <AkCallout variant="warn" title={isVi ? 'Kit license ≠ Desktop license' : 'Kit license ≠ Desktop license'}>
+        {isVi ? (
+          <>
+            Có hai entitlement riêng: Kit mở Engineer / Marketing; Desktop mở app và quản lý device. Mua một bên không mặc định có bên kia — trừ bundle ghi rõ “Desktop + Kits”. Chi tiết:{' '}
+            <a
+              class="font-semibold text-amber-900 underline-offset-2 hover:underline dark:text-amber-100"
+              href={translatePath('/guides/agentkit/desktop-app')}
+            >
+              trang Desktop App
+            </a>
+            . Kiểm tra Kit đã cấp bằng <AkInlineCode text="ak licenses" />.
+          </>
+        ) : (
+          <>
+            Two separate entitlements: Kit unlocks Engineer / Marketing; Desktop unlocks the app and device management. Buying one does not include the other by default — unless a bundle explicitly says “Desktop + Kits”. Details on the{' '}
+            <a
+              class="font-semibold text-amber-900 underline-offset-2 hover:underline dark:text-amber-100"
+              href={translatePath('/guides/agentkit/desktop-app')}
+            >
+              Desktop App page
+            </a>
+            . Check licensed Kits with <AkInlineCode text="ak licenses" />.
+          </>
+        )}
+      </AkCallout>
+
       <AkCallout variant="info" title={isVi ? 'Kiểm tra & đăng xuất' : 'Check status & sign out'}>
         <span class="inline-flex flex-wrap items-center gap-x-1 gap-y-1">
           <AkInlineCode text="ak whoami" />
           {isVi ? ' xác nhận account và kit được license. ' : ' confirms the account and licensed kits. '}
+          <AkInlineCode text="ak licenses" />
+          {isVi ? ' liệt kê Kit được cấp. ' : ' lists licensed Kits. '}
           <AkInlineCode text="ak logout" />
           {isVi
             ? ' xóa credential CLI local (giữ App device session nếu có).'

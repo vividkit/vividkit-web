@@ -1,6 +1,7 @@
 ---
 import type { Language } from '@/i18n';
 import { akCliCommandsCheatsheet } from '@/data/guides/agentkit-cli-cheatsheet';
+import AkInlineCode from '../AkInlineCode.astro';
 
 interface Props {
   lang: Language;
@@ -16,6 +17,11 @@ const heroCommands = [
   'ak update --yes',
   'ak doctor --json',
 ];
+
+const topicCmds = isVi
+  ? ['setup', 'kit', 'account', 'inspect', 'config']
+  : ['setup', 'kits', 'account', 'inspect', 'config'];
+const universalFlags = ['--json', '--yes', '--no-interactive', '--quiet'];
 ---
 
 <section class="relative overflow-hidden rounded-[2rem] border border-slate-200/80 bg-stone-50 shadow-sm dark:border-white/10 dark:bg-slate-950">
@@ -32,14 +38,35 @@ const heroCommands = [
             {isVi ? 'AgentKit CLI Quick Reference' : 'AgentKit CLI Quick Reference'}
           </h1>
           <p class="text-lg leading-8 text-slate-600 dark:text-slate-300">
-            {isVi
-              ? 'Danh sách lệnh `ak` — setup, kit, account, inspect, config. Copy mẫu lệnh; xem flag chính.'
-              : 'List of `ak` commands — setup, kits, account, inspect, config. Copy examples; scan key flags.'}
+            {isVi ? 'Danh sách lệnh' : 'List of'}
+            {' '}
+            <AkInlineCode text="ak" />
+            {' '}
+            {isVi ? '—' : 'commands —'}
+            {' '}
+            {topicCmds.map((cmd, i) => (
+              <>
+                <AkInlineCode text={cmd} />
+                {i < topicCmds.length - 1 ? <span class="text-slate-400 dark:text-slate-500">, </span> : null}
+              </>
+            ))}
+            {'. '}
+            {isVi ? 'Copy mẫu lệnh; xem flag chính.' : 'Copy examples; scan key flags.'}
           </p>
           <p class="max-w-xl text-sm leading-7 text-slate-500 dark:text-slate-400">
-            {isVi
-              ? 'Nguồn: `ak --help` (AgentKit CLI). Universal flags: --json, --yes, --no-interactive, --quiet.'
-              : 'Source: `ak --help` (AgentKit CLI). Universal flags: --json, --yes, --no-interactive, --quiet.'}
+            {isVi ? 'Nguồn:' : 'Source:'}
+            {' '}
+            <AkInlineCode text="ak --help" />
+            {' '}
+            (AgentKit CLI). {isVi ? 'Universal flags:' : 'Universal flags:'}
+            {' '}
+            {universalFlags.map((flag, i) => (
+              <>
+                <AkInlineCode text={flag} />
+                {i < universalFlags.length - 1 ? <span class="text-slate-400 dark:text-slate-500">, </span> : null}
+              </>
+            ))}
+            .
           </p>
         </div>
       </div>
