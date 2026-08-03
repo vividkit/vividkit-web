@@ -36,6 +36,54 @@ This ensures packages installed by `install.sh` (google-genai, pypdf, etc.) are 
   - Command highlights: `text-purple-600 dark:text-purple-400`
   - Secondary text: `text-slate-500 dark:text-slate-400`
 - **Inline code in prose**: Text wrapped in backticks inside rendered guide copy must become a real `<code>` element, not visible literal backticks. Style it for both light and dark mode, e.g. `bg-slate-100 dark:bg-slate-800/90`, `text-slate-800 dark:text-slate-100`, and a subtle border.
+- **Paths / commands in guide body**: Prefer real `<code>` chips (not bare monospace spans). For AgentKit pages use `AkInlineCode` / `akCode()` from `src/components/guides/agentkit/`.
+
+## AgentKit Guides (dual-track IA)
+
+AgentKit and ClaudeKit both ship on VividKit Guides. **Do not deprecate or redirect CK URLs.** New setups are steered to AgentKit; CK stays a first-class track.
+
+### Positioning
+- AgentKit = next-gen of ClaudeKit (multi-runtime, `ak` CLI, kits). Not a copy-paste of CK docs.
+- Conceptual AK pages are rewritten for AK reality; CK Methods / inventory pages stay CK-specific.
+- Migration (CK→AK) is backup-first and non-shaming; coexistence is allowed.
+
+### File layout
+| Layer | Location |
+|-------|----------|
+| Guide components | `src/components/guides/agentkit/` (`Ak*` primitives + `*Guide.astro`) |
+| EN routes | `src/pages/guides/agentkit/*`, migrate: `src/pages/guides/migrate-claudekit-to-agentkit.astro` |
+| VI routes | `src/pages/vi/guides/agentkit/*`, migrate mirror under `vi/` |
+| Cheatsheet data | `src/data/guides/agentkit-cli-cheatsheet.ts`, `agentkit-skills-cheatsheet.ts` |
+| Sidebar tabs | `src/components/guides/TabNavigation.astro` + `src/types/guides.ts` |
+| Layout map | `src/layouts/GuidesLayout.astro` (`agentkit-*` → path) |
+| i18n | `src/i18n/en/guides.ts`, `src/i18n/vi/guides.ts` (`guides.agentkit.*`) |
+| LLM index | `src/data/guides-llms-index.mjs` |
+| CK banner on CK pages | `src/components/guides/CkSetupNotice.astro` |
+
+New AK page checklist: EN page + VI page + guide component + TabNavigation entry + GuidesLayout path + `GuideActiveTab` type + EN/VI i18n title+description + llms index entry.
+
+### Visual direction (AK track)
+- **Brand accent**: teal/cyan for AgentKit; **Marketing kit** accents fuchsia/pink when kit-scoped (skills/CLI kit tabs). Keep CK greens where CK-only.
+- **Reuse primitives** — do not reinvent cards/callouts/code: `AkPageHero`, `AkSection`, `AkCallout`, `AkCodeBlock`, `AkFeatureGrid`, `AkStepRail`, `AkCompare`, `AkNextLinks`, `AkInlineCode`.
+- **Callouts**: Lucide icons (`AkCallout`), not plain letter “i” / emoji-only headers.
+- **Code blocks** (`AkCodeBlock`): dark shell (traffic lights + Copy). **Comments (`#…`) must contrast** from commands — muted slate vs purple command text. Prefer one command (or one labeled group) per readable block; multi-command summaries use one row/list item per command.
+- **Skills / CLI chips** (match CommandsGuide legend): subcommand purple, arg slate, flag teal.
+- **Landing cards**: equal height (`flex` + `h-full` on card roots). Avoid loud “NEW/BETA” pill badges in sidebar — section tone + copy only.
+- **Always light + dark** on every surface (borders, gradients, chips).
+
+### Content / fact sources
+- Prefer live kit truth under `~/.agentkit/cache/kits/**` + `ak --help` / pinned CLI notes over guessing. Do not invent flags.
+- **Update matrix**: `ak self-update` = binary; `ak update` = AgentKit-owned kit content (wizard may include CLI); `ak kit refresh <kit>` = force re-emit one kit. Never collapse these into one command.
+- **Statusline**: Claude Code only (`statusline.cjs` + `statuslineLayout`). Not Codex/Cursor status surface.
+- **Skills cheatsheet**: bilingual `description` + `descriptionVi`; surface `argumentHint`, `subcommands`, `args`, `flags` from kit `SKILL.md`. Do **not** assume 1:1 with `/ck:*`.
+- Invocation: Claude Code / Cursor `/ak:<skill>`; Codex `$ak:<skill>`.
+- **Do not commit** local `.agentkit/` install trees or kit cache into this repo.
+
+### Skills / CLI cheatsheet refresh
+When kit or CLI surface changes:
+1. Re-extract from latest Engineer + Marketing kit `SKILL.md` / CLI help.
+2. Update `agentkit-skills-cheatsheet.ts` / `agentkit-cli-cheatsheet.ts` (flags, args, subcommands, VI copy).
+3. Keep card UI chips + legend in sync with CommandsGuide color language.
 
 ## VividKit Guides - Changelog Sync
 
