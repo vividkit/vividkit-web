@@ -60,7 +60,8 @@ const modes = isVi
 
 const sampleYaml = `# ~/.agentkit/config.yaml  (user scope — typical)
 statuslineLayout:
-  baseMode: full          # full | compact | minimal | none
+  # full | compact | minimal | none
+  baseMode: full
   lines:
     - [model, context, quota]
     - [directory, git, cost, changes]
@@ -82,14 +83,15 @@ statuslineLayout:
     separator: dim
     quotaLow: green
     quotaHigh: red
-  responsiveBreakpoint: 0.85   # 0.5–1.0
+  # 0.5–1.0
+  responsiveBreakpoint: 0.85
   maxAgentRows: 4
   todoTruncation: 50
 
 # Optional legacy / related toggles (same config file):
-# statusline: full              # fallback mode if baseMode missing
-# statuslineQuota: false        # hide quota windows even if section on
-# statuslineColors: false       # disable ANSI colors`;
+# statusline: full           # fallback if baseMode missing
+# statuslineQuota: false     # hide quota windows even if section on
+# statuslineColors: false    # disable ANSI colors`;
 ---
 
 <div class="space-y-10 mt-6">
