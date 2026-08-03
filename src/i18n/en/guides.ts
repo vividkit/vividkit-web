@@ -21,6 +21,7 @@ export const guides = {
   'guides.nav.get_started_agentkit': 'Get Started with AgentKit',
   'guides.nav.continue_claudekit': 'Continue with ClaudeKit',
   'guides.nav.migrate_ck_to_ak': 'Migrate from ClaudeKit to AgentKit',
+  'guides.nav.clean_cutover_ck_to_ak': 'Clean cutover from ClaudeKit',
   'guides.sidebar.purchase_notice.title': 'Kits available',
   'guides.sidebar.purchase_notice.desc': 'These guides cover AgentKit and ClaudeKit. Paid kits are sold separately from the free CLI tools.',
   'guides.sidebar.purchase_notice.cta': 'Explore AgentKit',
@@ -58,7 +59,9 @@ export const guides = {
   'guides.agentkit.troubleshooting.title': 'Troubleshooting',
   'guides.agentkit.troubleshooting.description': 'Common AgentKit setup and runtime issues',
   'guides.migrate_ck_to_ak.title': 'Migrate ClaudeKit to AgentKit',
-  'guides.migrate_ck_to_ak.description': 'Optional, backup-first transition from ClaudeKit to AgentKit',
+  'guides.migrate_ck_to_ak.description': 'Optional, backup-first soft transition from ClaudeKit to AgentKit via ak migrate',
+  'guides.agentkit.clean_cutover.title': 'Clean Cutover from ClaudeKit',
+  'guides.agentkit.clean_cutover.description': 'Multi-step, backup-first path to leave ClaudeKit and install AgentKit with as little CK residue as possible',
   // How It Works Guide
   'guides.how_ck_works.title': 'How ClaudeKit Works',
   // What is ClaudeKit Guide

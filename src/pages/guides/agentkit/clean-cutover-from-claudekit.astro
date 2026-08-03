@@ -1,0 +1,19 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import CleanCutoverCkToAkGuide from '@/components/guides/agentkit/CleanCutoverCkToAkGuide.astro';
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl } from '@/i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<GuidesLayout
+  title={`${t('guides.agentkit.clean_cutover.title')} - VividKit Guides`}
+  description={t('guides.agentkit.clean_cutover.description')}
+  canonicalPath="/guides/agentkit/clean-cutover-from-claudekit"
+  activeTab="agentkit-clean-cutover-from-claudekit"
+  lang={lang}
+>
+  <CleanCutoverCkToAkGuide lang={lang} />
+</GuidesLayout>

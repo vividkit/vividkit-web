@@ -1,0 +1,463 @@
+---
+// Internal sources (do not publish on the page):
+// - ak-cli migrate dry-run default: apps/cli/internal/commands/migratecmd/migrate.go
+// - global ClaudeKit takeover (narrow): apps/cli/internal/commands/kitcmd/ownership.go (ckLooseFiles: .ck.json, statusline.cjs + settings residue only)
+// - residual_ck_content advisory, empty FixCmd: apps/cli/internal/runtime/doctor/checks/residual_ck.go
+// - complete cleanup phases / control plane: reports/audit-20260714-ck-to-ak-migration-and-cleanup.md
+// - INSTALL.md: never delete whole ~/.claude or ~/.codex; ak kit uninstall is AK-owned only
+// - ck uninstall scope (cwd local + global only, not fleet): reference/claudekit-cli/src/commands/uninstall/installation-detector.ts
+// - --force-overwrite still preserves user-owned: reference/claudekit-cli/src/commands/uninstall/analysis-handler.ts
+// - USER_CONFIG preserve patterns (CLAUDE.md, .mcp.json, …): reference/claudekit-cli/src/types/kit.ts
+// - ck uninstall recovery backups live under ~/.claudekit/backups — delay purge of ~/.claudekit
+
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
+import AkPageHero from './AkPageHero.astro';
+import AkSection from './AkSection.astro';
+import AkStepRail from './AkStepRail.astro';
+import AkCodeBlock from './AkCodeBlock.astro';
+import AkCallout from './AkCallout.astro';
+import AkNextLinks from './AkNextLinks.astro';
+import AkInlineCode from './AkInlineCode.astro';
+import AkFeatureGrid from './AkFeatureGrid.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === 'vi';
+const translatePath = useTranslatedPath(currentLang);
+
+const leftoverAfterUninstall = isVi
+  ? [
+      { icon: 'USR', title: 'File user-owned', body: 'File không do CK track, hoặc ownership = user — luôn được preserve, kể cả --force-overwrite.', accent: 'amber' as const },
+      { icon: 'CFG', title: 'User config patterns', body: 'CLAUDE.md, .mcp.json, .ck.json, .ckignore, … thường được giữ.', accent: 'cyan' as const },
+      { icon: 'CTL', title: '~/.claudekit/', body: 'State CLI: config, registry, locks, cache, và recovery backup của ck uninstall.', accent: 'teal' as const },
+      { icon: 'BIN', title: 'Binary ck', body: 'Package claudekit-cli (npm/pnpm/yarn/bun) — không bị ck uninstall gỡ.', accent: 'emerald' as const },
+    ]
+  : [
+      { icon: 'USR', title: 'User-owned files', body: 'Untracked or ownership=user files are always preserved — even with --force-overwrite.', accent: 'amber' as const },
+      { icon: 'CFG', title: 'User config patterns', body: 'CLAUDE.md, .mcp.json, .ck.json, .ckignore, and similar are typically kept.', accent: 'cyan' as const },
+      { icon: 'CTL', title: '~/.claudekit/', body: 'CLI state: config, registries, locks, cache, and ck uninstall recovery backups.', accent: 'teal' as const },
+      { icon: 'BIN', title: 'ck binary', body: 'The claudekit-cli package (npm/pnpm/yarn/bun) is not removed by ck uninstall.', accent: 'emerald' as const },
+    ];
+
+const phases = isVi
+  ? [
+      { title: 'Backup thủ công', body: 'Bắt buộc trước mọi lệnh mutate. Copy ra ngoài tree agent.' },
+      { title: 'Inventory', body: 'Xác định binary ck, global, và từng project có CK (registry không auto-gỡ fleet).' },
+      { title: 'ck uninstall', body: 'Dry-run rồi apply theo scope — lặp mỗi project; --all ≠ mọi repo.' },
+      { title: 'Cài AgentKit', body: 'Installer ak → doctor → login → kit init.' },
+      { title: 'Gỡ binary CK', body: 'npm/pnpm/… uninstall claudekit-cli — phân biệt shim ak tùy chọn.' },
+      { title: 'Leftover + postflight', body: 'Delay purge ~/.claudekit; rà portable surfaces; ak doctor.' },
+    ]
+  : [
+      { title: 'Manual backup', body: 'Required before any mutating command. Copy outside agent trees.' },
+      { title: 'Inventory', body: 'Find the ck binary, global install, and each project with CK (no fleet auto-uninstall).' },
+      { title: 'ck uninstall', body: 'Dry-run then apply per scope — repeat per project; --all is not every repo.' },
+      { title: 'Install AgentKit', body: 'ak installer → doctor → login → kit init.' },
+      { title: 'Remove CK binary', body: 'npm/pnpm/… uninstall claudekit-cli — do not confuse with an optional ak ck shim.' },
+      { title: 'Leftovers + postflight', body: 'Delay purging ~/.claudekit; review portable surfaces; ak doctor.' },
+    ];
+
+const macBackup = `STAMP=$(date +%Y%m%d-%H%M%S)
+DEST="$HOME/agentkit-pre-cutover-backup-$STAMP"
+mkdir -p "$DEST"
+
+[ -d "$HOME/.claude" ] && cp -a "$HOME/.claude" "$DEST/claude"
+[ -d "$HOME/.claudekit" ] && cp -a "$HOME/.claudekit" "$DEST/claudekit"
+[ -d "$HOME/.agentkit" ] && cp -a "$HOME/.agentkit" "$DEST/agentkit"
+[ -d "$HOME/.codex" ] && cp -a "$HOME/.codex" "$DEST/codex"
+[ -d "$HOME/.agents" ] && cp -a "$HOME/.agents" "$DEST/agents"
+
+# Current project (if it has a local CK install)
+[ -d .claude ] && cp -a .claude "$DEST/project-claude"
+[ -d .claudekit ] && cp -a .claudekit "$DEST/project-claudekit"
+
+echo "Backup at: $DEST"`;
+
+const winBackup = `$stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
+$dest = Join-Path $env:USERPROFILE "agentkit-pre-cutover-backup-$stamp"
+New-Item -ItemType Directory -Force -Path $dest | Out-Null
+@(
+  @{ Src = Join-Path $env:USERPROFILE '.claude';    ; Name = 'claude' },
+  @{ Src = Join-Path $env:USERPROFILE '.claudekit'; ; Name = 'claudekit' },
+  @{ Src = Join-Path $env:USERPROFILE '.agentkit';  ; Name = 'agentkit' },
+  @{ Src = Join-Path $env:USERPROFILE '.codex';     ; Name = 'codex' },
+  @{ Src = Join-Path $env:USERPROFILE '.agents';    ; Name = 'agents' }
+) | ForEach-Object {
+  if (Test-Path $_.Src) {
+    Copy-Item -Recurse -Force $_.Src (Join-Path $dest $_.Name)
+  }
+}
+if (Test-Path '.claude') { Copy-Item -Recurse -Force '.claude' (Join-Path $dest 'project-claude') }
+if (Test-Path '.claudekit') { Copy-Item -Recurse -Force '.claudekit' (Join-Path $dest 'project-claudekit') }
+Write-Host "Backup at: $dest"`;
+
+const inventoryCode = `command -v ck
+type -a ck 2>/dev/null || true
+ck --version 2>/dev/null || true
+
+# Preview what ck would remove for THIS cwd + global (read-only)
+ck uninstall --all --dry-run
+
+# Optional: list registered projects (read only — each still needs its own uninstall)
+# cat ~/.claudekit/projects.json`;
+
+const uninstallGlobal = `# Always dry-run first
+ck uninstall --global --dry-run
+# After backup + dry-run look correct:
+ck uninstall --global --force-overwrite -y`;
+
+const uninstallLocal = `cd /path/to/project-with-ck
+ck uninstall --local --dry-run
+ck uninstall --local --force-overwrite -y
+
+# Or cwd + global in one shot for this directory only:
+# ck uninstall --all --dry-run
+# ck uninstall --all --force-overwrite -y`;
+
+const installAk = `curl -fsSL https://agentkit.best/install.sh | sh
+# Windows PowerShell: irm https://agentkit.best/install.ps1 | iex
+
+ak --version
+ak doctor
+
+ak login
+ak kit init engineer --remote --yes
+# + marketing kit if licensed
+
+# Global Claude Code native (optional):
+# ak kit init engineer --remote --global --yes
+# Default path snapshots foreign ~/.claude and removes only narrow CK loose files
+# (.ck.json, statusline.cjs) + CK settings residue — not full kit trees.
+# Avoid --no-backup unless you intentionally leave CK residue active.`;
+
+const removeBinary = `type -a ck
+# Only remove the ClaudeKit package. Do not delete a path that is an intentional
+# AgentKit "ck" shim pointing at the same binary as ak (optional install).
+
+npm uninstall -g claudekit-cli
+# or: pnpm remove -g claudekit-cli
+# or: yarn global remove claudekit-cli
+# or: bun remove -g claudekit-cli`;
+
+const leftovers = `# Review — do not blind-delete. Recovery backups from ck uninstall live here:
+ls -la ~/.claudekit
+# ls ~/.claudekit/backups
+
+# After a grace period (when you no longer need CK rollback):
+# rm -rf ~/.claudekit
+
+# If you once ran ck migrate -a <provider>, review portable surfaces carefully
+# (for example ~/.codex, ~/.agents/skills). Remove only proven CK-owned entries.
+# Never: rm -rf ~/.claude   or   rm -rf ~/.codex`;
+
+const postflight = `ak doctor --json
+ak doctor --check residual_ck_content
+ak doctor --check ck_shim_collision
+# If a kit is installed:
+# ak audit engineer --json
+
+# Open a real Claude Code / Codex session — confirm no leftover /ck: skills or CK hooks.`;
+---
+
+<div class="space-y-10 mt-6">
+  <AkPageHero
+    lang={currentLang}
+    accent="rose"
+    kicker={isVi ? 'Advanced · multi-step · destructive' : 'Advanced · multi-step · destructive'}
+    title={isVi ? 'Rời ClaudeKit sạch để dùng AgentKit' : 'Clean cutover from ClaudeKit to AgentKit'}
+    subtitle={isVi
+      ? 'Không có lệnh one-shot. Backup thủ công trước. Gỡ CK theo từng scope, rồi cài AK.'
+      : 'There is no one-shot command. Manual backup first. Remove CK per scope, then install AK.'}
+    badges={isVi ? ['ck uninstall', 'ak kit init', 'backup first'] : ['ck uninstall', 'ak kit init', 'backup first']}
+  />
+
+  <AkCallout variant="danger" title={isVi ? 'Bắt buộc: sao lưu trước khi thay đổi bất kỳ thứ gì' : 'Required: back up before changing anything'}>
+    {isVi ? (
+      <>
+        Tạo bản sao thủ công <strong>ra ngoài</strong> các tree agent trước lệnh mutate đầu tiên.
+        Backup trong tool (<AkInlineCode text="ck uninstall" /> recovery, snapshot <AkInlineCode text="ak" />){' '}
+        <strong>không thay</strong> bản sao này. Recovery của <AkInlineCode text="ck uninstall" /> nằm dưới{' '}
+        <AkInlineCode text="~/.claudekit/backups/" /> — đừng xóa <AkInlineCode text="~/.claudekit" /> ngay nếu còn muốn restore.
+      </>
+    ) : (
+      <>
+        Create a manual copy <strong>outside</strong> agent trees before the first mutating command.
+        In-tool backups (<AkInlineCode text="ck uninstall" /> recovery, <AkInlineCode text="ak" /> snapshots) do{' '}
+        <strong>not</strong> replace that copy. <AkInlineCode text="ck uninstall" /> recovery lives under{' '}
+        <AkInlineCode text="~/.claudekit/backups/" /> — do not delete <AkInlineCode text="~/.claudekit" /> immediately if you might restore.
+      </>
+    )}
+  </AkCallout>
+
+  <AkCallout variant="info" title={isVi ? 'Đây không phải soft migrate' : 'This is not the soft migrate path'}>
+    {isVi ? (
+      <>
+        Muốn giữ custom và chuyển dần? Dùng{' '}
+        <a class="font-semibold text-teal-700 underline-offset-2 hover:underline dark:text-teal-300" href={translatePath('/guides/migrate-claudekit-to-agentkit')}>
+          Migrate ClaudeKit → AgentKit
+        </a>{' '}
+        (<AkInlineCode text="ak migrate --from=ck" /> — dry-run mặc định, preserve custom). Trang này là clean cutover: multi-step, chủ động rời CK.
+      </>
+    ) : (
+      <>
+        Want to keep customizations and transition gradually? Use{' '}
+        <a class="font-semibold text-teal-700 underline-offset-2 hover:underline dark:text-teal-300" href={translatePath('/guides/migrate-claudekit-to-agentkit')}>
+          Migrate ClaudeKit → AgentKit
+        </a>{' '}
+        (<AkInlineCode text="ak migrate --from=ck" /> — dry-run by default, preserves custom). This page is clean cutover: multi-step, intentionally leaving CK.
+      </>
+    )}
+  </AkCallout>
+
+  <AkSection
+    eyebrow={isVi ? 'Tổng quan' : 'Overview'}
+    title={isVi ? 'Sáu phase' : 'Six phases'}
+    desc={isVi
+      ? 'Complete clean = pipeline. Không có ak purge-ck hay wipe toàn bộ runtime home.'
+      : 'Complete clean is a pipeline. There is no ak purge-ck or whole-runtime-home wipe.'}
+  >
+    <AkStepRail steps={phases} accent="amber" />
+  </AkSection>
+
+  <AkSection eyebrow="00" title={isVi ? 'Backup thủ công (bắt buộc)' : 'Manual backup (required)'}>
+    <AkCallout variant="danger" title={isVi ? 'Làm bước này trước' : 'Do this first'}>
+      {isVi
+        ? 'Chạy script backup trước ck uninstall, ak kit init, npm uninstall, hoặc mọi rm thủ công.'
+        : 'Run the backup script before ck uninstall, ak kit init, npm uninstall, or any manual rm.'}
+    </AkCallout>
+    <div class="mt-4 grid gap-4 lg:grid-cols-2 lg:items-stretch">
+      <article class="relative flex flex-col overflow-hidden rounded-2xl border border-teal-200/70 bg-gradient-to-br from-teal-50/70 via-white to-white p-4 sm:p-5 dark:border-teal-500/25 dark:from-teal-950/40 dark:via-slate-900/80 dark:to-slate-900/60">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <div class="min-w-0">
+            <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-600 dark:text-teal-400">
+              Unix
+            </p>
+            <h3 class="mt-0.5 text-base font-bold text-slate-900 dark:text-white">
+              macOS / Linux
+            </h3>
+          </div>
+          <span class="shrink-0 rounded-full bg-teal-500/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-teal-700 dark:bg-teal-500/20 dark:text-teal-300">
+            bash
+          </span>
+        </div>
+        <AkCodeBlock title="bash" code={macBackup} />
+      </article>
+
+      <article class="relative flex flex-col overflow-hidden rounded-2xl border border-violet-200/70 bg-gradient-to-br from-violet-50/70 via-white to-white p-4 sm:p-5 dark:border-violet-500/25 dark:from-violet-950/35 dark:via-slate-900/80 dark:to-slate-900/60">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <div class="min-w-0">
+            <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-violet-600 dark:text-violet-400">
+              Windows
+            </p>
+            <h3 class="mt-0.5 text-base font-bold text-slate-900 dark:text-white">
+              PowerShell
+            </h3>
+          </div>
+          <span class="shrink-0 rounded-full bg-violet-500/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-violet-700 dark:bg-violet-500/20 dark:text-violet-300">
+            pwsh
+          </span>
+        </div>
+        <div class="flex flex-1 flex-col gap-3">
+          <AkCodeBlock title="powershell" code={winBackup} />
+          <p class="mt-auto rounded-xl border border-violet-200/50 bg-violet-50/60 px-3.5 py-2.5 text-xs leading-relaxed text-slate-600 dark:border-violet-500/20 dark:bg-violet-950/20 dark:text-slate-400">
+            {isVi
+              ? 'Chạy trong PowerShell (không phải CMD). Paths dưới %USERPROFILE%.'
+              : 'Run in PowerShell (not CMD). Paths under %USERPROFILE%.'}
+          </p>
+        </div>
+      </article>
+    </div>
+    <AkCallout variant="warn" title={isVi ? 'Không làm' : 'Do not'}>
+      {isVi ? (
+        <>
+          Không <AkInlineCode text="rm -rf ~/.claude" /> hay <AkInlineCode text="rm -rf ~/.codex" /> để “cho sạch”.
+          Có thể xóa session, project state, và nội dung không thuộc CK.
+        </>
+      ) : (
+        <>
+          Do not <AkInlineCode text="rm -rf ~/.claude" /> or <AkInlineCode text="rm -rf ~/.codex" /> “to make it clean”.
+          That can destroy sessions, project state, and non-CK content.
+        </>
+      )}
+    </AkCallout>
+  </AkSection>
+
+  <AkSection eyebrow="01" title={isVi ? 'Inventory (read-only)' : 'Inventory (read-only)'}>
+    <AkCodeBlock title="shell" code={inventoryCode} />
+    <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+      {isVi ? (
+        <>
+          <AkInlineCode text="ck uninstall --all" /> chỉ phủ <strong>project hiện tại (cwd)</strong> + global —{' '}
+          <strong>không</strong> gỡ mọi repo trong <AkInlineCode text="~/.claudekit/projects.json" />.
+          Lặp phase 2 cho từng project còn CK.
+        </>
+      ) : (
+        <>
+          <AkInlineCode text="ck uninstall --all" /> covers only the <strong>current project (cwd)</strong> plus global —{' '}
+          <strong>not</strong> every repo in <AkInlineCode text="~/.claudekit/projects.json" />.
+          Repeat phase 2 for each project that still has CK.
+        </>
+      )}
+    </p>
+  </AkSection>
+
+  <AkSection eyebrow="02" title={isVi ? 'Gỡ nội dung ClaudeKit' : 'Remove ClaudeKit content'}>
+    <AkCallout variant="danger" title={isVi ? 'Backup đã xong?' : 'Backup done?'}>
+      {isVi
+        ? 'Chỉ tiếp tục sau khi đã có thư mục agentkit-pre-cutover-backup-* và dry-run trông đúng.'
+        : 'Continue only after you have an agentkit-pre-cutover-backup-* folder and a dry-run that looks correct.'}
+    </AkCallout>
+
+    <h3 class="mt-6 text-sm font-semibold text-slate-900 dark:text-white">
+      {isVi ? 'Global' : 'Global'}
+    </h3>
+    <AkCodeBlock title="shell" code={uninstallGlobal} />
+
+    <h3 class="mt-6 text-sm font-semibold text-slate-900 dark:text-white">
+      {isVi ? 'Mỗi project (lặp lại)' : 'Each project (repeat)'}
+    </h3>
+    <AkCodeBlock title="shell" code={uninstallLocal} />
+
+    <AkCallout variant="warn" title={isVi ? '--force-overwrite không phải nuclear' : '--force-overwrite is not nuclear'}>
+      {isVi ? (
+        <>
+          Flag này chỉ force xóa file <strong>CK-tracked đã bị user sửa</strong> (<AkInlineCode text="ck-modified" />).
+          File <strong>user-owned</strong> vẫn được giữ. Xem dry-run “PRESERVE” trước khi <AkInlineCode text="-y" />.
+        </>
+      ) : (
+        <>
+          This flag only forces deletion of <strong>CK-tracked files you modified</strong> (<AkInlineCode text="ck-modified" />).
+          <strong>User-owned</strong> files stay. Read the dry-run PRESERVE list before <AkInlineCode text="-y" />.
+        </>
+      )}
+    </AkCallout>
+
+    <div class="mt-6">
+      <h3 class="mb-3 text-sm font-semibold text-slate-900 dark:text-white">
+        {isVi ? 'Sau uninstall, vẫn có thể còn' : 'After uninstall, you may still have'}
+      </h3>
+      <AkFeatureGrid features={leftoverAfterUninstall} columns={2} />
+    </div>
+  </AkSection>
+
+  <AkSection eyebrow="03" title={isVi ? 'Cài AgentKit' : 'Install AgentKit'}>
+    <AkCallout variant="danger" title={isVi ? 'Vẫn giữ bản backup' : 'Keep your backup'}>
+      {isVi
+        ? 'Kit init / global install có thể snapshot và ghi runtime. Đừng xóa bản sao thủ công.'
+        : 'Kit init / global install may snapshot and write runtime files. Do not delete the manual copy yet.'}
+    </AkCallout>
+    <AkCodeBlock title="shell" code={installAk} />
+    <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+      {isVi ? (
+        <>
+          <AkInlineCode text="ak kit uninstall" /> / <AkInlineCode text="ak uninstall" /> chỉ gỡ nội dung{' '}
+          <strong>AgentKit-owned</strong> — không thay <AkInlineCode text="ck uninstall" /> để dọn CK.
+          Global takeover (nếu có) chỉ gỡ loose file CK hẹp + residue settings, không xóa cả cây skills/agents/hooks.
+        </>
+      ) : (
+        <>
+          <AkInlineCode text="ak kit uninstall" /> / <AkInlineCode text="ak uninstall" /> remove only{' '}
+          <strong>AgentKit-owned</strong> content — they do not replace <AkInlineCode text="ck uninstall" /> for CK cleanup.
+          Global takeover (when it runs) only removes narrow CK loose files and settings residue, not full skills/agents/hooks trees.
+        </>
+      )}
+    </p>
+  </AkSection>
+
+  <AkSection eyebrow="04" title={isVi ? 'Gỡ binary ClaudeKit CLI' : 'Remove the ClaudeKit CLI binary'}>
+    <AkCodeBlock title="shell" code={removeBinary} />
+  </AkSection>
+
+  <AkSection eyebrow="05" title={isVi ? 'Leftover thủ công + postflight' : 'Manual leftovers + postflight'}>
+    <AkCallout variant="warn" title={isVi ? 'Delay purge ~/.claudekit' : 'Delay purging ~/.claudekit'}>
+      {isVi
+        ? 'Chỉ sau khi AK ổn và bạn không cần rollback CK. Dir này chứa recovery backup uninstall.'
+        : 'Only after AK is healthy and you no longer need CK rollback. This directory holds uninstall recovery backups.'}
+    </AkCallout>
+    <AkCodeBlock title="shell" code={leftovers} />
+
+    <h3 class="mt-6 text-sm font-semibold text-slate-900 dark:text-white">
+      {isVi ? 'Verify' : 'Verify'}
+    </h3>
+    <AkCodeBlock title="shell" code={postflight} />
+    <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+      {isVi ? (
+        <>
+          <AkInlineCode text="residual_ck_content" /> chỉ <strong>cảnh báo</strong> (không auto-fix).
+          Residue trên home đã gắn marker AK cần review thủ công hoặc restore snapshot nếu cần.
+        </>
+      ) : (
+        <>
+          <AkInlineCode text="residual_ck_content" /> is <strong>advisory only</strong> (no auto-fix).
+          Residue on an AK-marked home needs manual review or a snapshot restore if required.
+        </>
+      )}
+    </p>
+  </AkSection>
+
+  <AkCallout variant="tip" title={isVi ? 'Soft migrate vs clean cutover' : 'Soft migrate vs clean cutover'}>
+    <ul class="mt-1 list-disc space-y-1 pl-5 text-sm">
+      <li>
+        {isVi ? (
+          <>
+            <strong>Soft:</strong>{' '}
+            <a class="font-semibold underline-offset-2 hover:underline" href={translatePath('/guides/migrate-claudekit-to-agentkit')}>
+              ak migrate
+            </a>{' '}
+            — giữ custom, dry-run mặc định.
+          </>
+        ) : (
+          <>
+            <strong>Soft:</strong>{' '}
+            <a class="font-semibold underline-offset-2 hover:underline" href={translatePath('/guides/migrate-claudekit-to-agentkit')}>
+              ak migrate
+            </a>{' '}
+            — keeps customizations, dry-run by default.
+          </>
+        )}
+      </li>
+      <li>
+        {isVi ? (
+          <>
+            <strong>Clean:</strong> trang này — <AkInlineCode text="ck uninstall" /> multi-scope + AK fresh + manual leftovers.
+          </>
+        ) : (
+          <>
+            <strong>Clean:</strong> this page — multi-scope <AkInlineCode text="ck uninstall" /> + fresh AK + manual leftovers.
+          </>
+        )}
+      </li>
+    </ul>
+  </AkCallout>
+
+  <AkNextLinks
+    lang={currentLang}
+    title={isVi ? 'Tiếp theo' : 'Next'}
+    links={[
+      {
+        href: '/guides/migrate-claudekit-to-agentkit',
+        label: isVi ? 'Soft migrate (ak migrate)' : 'Soft migrate (ak migrate)',
+        desc: isVi ? 'Giữ custom, dry-run mặc định' : 'Keep custom; dry-run by default',
+      },
+      {
+        href: '/guides/agentkit/getting-started',
+        label: isVi ? 'Cài đặt AgentKit' : 'AgentKit getting started',
+        desc: isVi ? 'Installer, login, kit init' : 'Installer, login, kit init',
+      },
+      {
+        href: '/guides/agentkit/troubleshooting',
+        label: isVi ? 'Sự cố' : 'Troubleshooting',
+        desc: isVi ? 'Doctor, residual, recovery' : 'Doctor, residual, recovery',
+      },
+      {
+        href: '/guides/agentkit',
+        label: isVi ? 'AgentKit là gì?' : 'What is AgentKit?',
+        desc: isVi ? 'Mental model' : 'Mental model',
+      },
+    ]}
+  />
+</div>
