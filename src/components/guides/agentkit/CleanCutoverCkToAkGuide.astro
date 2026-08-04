@@ -229,8 +229,8 @@ ak doctor --check ck_shim_collision
         ? 'Chạy script backup trước ck uninstall, ak kit init, npm uninstall, hoặc mọi rm thủ công.'
         : 'Run the backup script before ck uninstall, ak kit init, npm uninstall, or any manual rm.'}
     </AkCallout>
-    <div class="mt-4 grid gap-4 lg:grid-cols-2 lg:items-stretch">
-      <article class="relative flex flex-col overflow-hidden rounded-2xl border border-teal-200/70 bg-gradient-to-br from-teal-50/70 via-white to-white p-4 sm:p-5 dark:border-teal-500/25 dark:from-teal-950/40 dark:via-slate-900/80 dark:to-slate-900/60">
+    <div class="mt-4 flex flex-col gap-4">
+      <article class="relative overflow-hidden rounded-2xl border border-teal-200/70 bg-gradient-to-br from-teal-50/70 via-white to-white p-4 sm:p-5 dark:border-teal-500/25 dark:from-teal-950/40 dark:via-slate-900/80 dark:to-slate-900/60">
         <div class="mb-4 flex items-center justify-between gap-3">
           <div class="min-w-0">
             <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-600 dark:text-teal-400">
@@ -247,7 +247,7 @@ ak doctor --check ck_shim_collision
         <AkCodeBlock title="bash" code={macBackup} />
       </article>
 
-      <article class="relative flex flex-col overflow-hidden rounded-2xl border border-violet-200/70 bg-gradient-to-br from-violet-50/70 via-white to-white p-4 sm:p-5 dark:border-violet-500/25 dark:from-violet-950/35 dark:via-slate-900/80 dark:to-slate-900/60">
+      <article class="relative overflow-hidden rounded-2xl border border-violet-200/70 bg-gradient-to-br from-violet-50/70 via-white to-white p-4 sm:p-5 dark:border-violet-500/25 dark:from-violet-950/35 dark:via-slate-900/80 dark:to-slate-900/60">
         <div class="mb-4 flex items-center justify-between gap-3">
           <div class="min-w-0">
             <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-violet-600 dark:text-violet-400">
@@ -261,9 +261,9 @@ ak doctor --check ck_shim_collision
             pwsh
           </span>
         </div>
-        <div class="flex flex-1 flex-col gap-3">
+        <div class="flex flex-col gap-3">
           <AkCodeBlock title="powershell" code={winBackup} />
-          <p class="mt-auto rounded-xl border border-violet-200/50 bg-violet-50/60 px-3.5 py-2.5 text-xs leading-relaxed text-slate-600 dark:border-violet-500/20 dark:bg-violet-950/20 dark:text-slate-400">
+          <p class="rounded-xl border border-violet-200/50 bg-violet-50/60 px-3.5 py-2.5 text-xs leading-relaxed text-slate-600 dark:border-violet-500/20 dark:bg-violet-950/20 dark:text-slate-400">
             {isVi
               ? 'Chạy trong PowerShell (không phải CMD). Paths dưới %USERPROFILE%.'
               : 'Run in PowerShell (not CMD). Paths under %USERPROFILE%.'}
