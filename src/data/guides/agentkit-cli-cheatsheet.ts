@@ -54,10 +54,10 @@ export const akCliCommandsCheatsheet: AkCliCommand[] = [
   },
   {
     name: "ak uninstall",
-    description: "Remove an AK-managed project (preview by default)",
-    descriptionVi: "G\u1ee1 project do AK qu\u1ea3n l\u00fd (m\u1eb7c \u0111\u1ecbnh preview)",
+    description: "Remove an AK-managed project (preview by default) — not for global kit removal",
+    descriptionVi: "G\u1ee1 project do AK qu\u1ea3n l\u00fd (m\u1eb7c \u0111\u1ecbnh preview) — kh\u00f4ng d\u00f9ng \u0111\u1ec3 g\u1ee1 kit global",
     category: "setup",
-    keyFlags: ["--yes", "--dry-run", "--global"],
+    keyFlags: ["--yes", "--dry-run", "--force"],
     example: "ak uninstall --dry-run",
   },
   {
@@ -87,11 +87,11 @@ export const akCliCommandsCheatsheet: AkCliCommand[] = [
   },
   {
     name: "ak kit uninstall",
-    description: "Uninstall a kit from project or global scope",
-    descriptionVi: "G\u1ee1 kit kh\u1ecfi project ho\u1eb7c global",
+    description: "Remove AgentKit-owned kit content (global/project, native/plugin); preview-first",
+    descriptionVi: "G\u1ee1 n\u1ed9i dung kit do AgentKit s\u1edf h\u1eefu (global/project, native/plugin); preview tr\u01b0\u1edbc",
     category: "kits",
-    keyFlags: ["--global", "--yes", "--dry-run"],
-    example: "ak kit uninstall engineer --dry-run",
+    keyFlags: ["--global", "--plugin-mode", "--project-dir <path>", "--yes", "--dry-run"],
+    example: "ak kit uninstall engineer --global --dry-run",
   },
   {
     name: "ak skills",

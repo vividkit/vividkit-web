@@ -1,0 +1,874 @@
+---
+// Clean reinstall of AgentKit stable (ownership-aware kit uninstall → optional state reset → CLI + kits).
+// Stable pointer: https://releases.agentkit.best/channels/stable/binary-update.json (2026-08-04 → 2.7.0).
+// Known issue (source-verified on tag v2.7.0):
+//   apps/cli/internal/runtime/backups/snapshot.go uses strings.HasPrefix(rel, "..") and errors with
+//   "backups: walk produced path outside scope".
+//   kit uninstall wraps as "kit uninstall: snapshot config dir: …" before mutation (uninstall.go).
+//   Same HasPrefix check still present on main/dev as of 2026-08-04 fact-check — no published fix claim.
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
+import AkPageHero from './AkPageHero.astro';
+import AkSection from './AkSection.astro';
+import AkCodeBlock from './AkCodeBlock.astro';
+import AkCallout from './AkCallout.astro';
+import AkNextLinks from './AkNextLinks.astro';
+import AkInlineCode from './AkInlineCode.astro';
+import AkStepRail from './AkStepRail.astro';
+import AkCompare from './AkCompare.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === 'vi';
+const translatePath = useTranslatedPath(currentLang);
+
+const reinstallPhases = isVi
+  ? [
+      {
+        title: 'Dừng tiến trình đang ghi',
+        body: 'Đóng Codex, Claude Code và mọi lệnh lifecycle AgentKit đang chạy trước khi đụng file tạm hoặc gỡ kit.',
+      },
+      {
+        title: 'Xác nhận CLI ak + kênh stable',
+        body: 'type -a ak, ak --version, ak self-update --check --channel stable. Nâng CLI nếu cần — nhưng chưa xóa ~/.agentkit.',
+      },
+      {
+        title: 'Workaround file ..* (2.7.0)',
+        body: 'Nếu gặp lỗi snapshot outside scope: đóng Codex, list rồi move (không xóa) file tạm khớp pattern hẹp sang quarantine.',
+      },
+      {
+        title: 'Audit + gỡ kit đã sở hữu',
+        body: 'Chỉ gỡ scope/mode thật sự đã cài: global native, user plugin, project native, project plugin. Preview (--dry-run) rồi --yes.',
+      },
+      {
+        title: 'Xác minh bằng chứng gỡ',
+        body: 'ak audit --json và ak backups list --json. Snapshot recovery còn lại là bằng chứng — giữ đến khi cài lại xong.',
+      },
+      {
+        title: 'Reset state AgentKit (tùy chọn)',
+        body: 'Chỉ sau khi gỡ kit xong: ak logout, rồi mv ~/.agentkit sang tên phục hồi — không xóa ngay.',
+      },
+      {
+        title: 'Cài lại CLI stable',
+        body: 'Installer stable, hash -r, type -a ak, ak --version, ak doctor --json. Giải quyết trùng binary trên PATH.',
+      },
+      {
+        title: 'Login + cài lại kit',
+        body: 'ak login, ak licenses, ak kit init … --channel stable --yes, rồi audit/doctor trước khi restart Codex.',
+      },
+    ]
+  : [
+      {
+        title: 'Stop active writers',
+        body: 'Close Codex, Claude Code, and any running AgentKit lifecycle command before touching temp files or uninstalling kits.',
+      },
+      {
+        title: 'Confirm ak CLI + stable channel',
+        body: 'type -a ak, ak --version, ak self-update --check --channel stable. Upgrade the CLI if needed — but do not delete ~/.agentkit yet.',
+      },
+      {
+        title: 'Work around ..* filename (2.7.0)',
+        body: 'If you hit the snapshot outside-scope error: close Codex, list then move (do not delete) matching temp files into quarantine.',
+      },
+      {
+        title: 'Audit + uninstall owned kits',
+        body: 'Only the scopes/modes you actually installed: global native, user plugin, project native, project plugin. Preview (--dry-run), then --yes.',
+      },
+      {
+        title: 'Verify uninstall evidence',
+        body: 'ak audit --json and ak backups list --json. Retained recovery snapshots are expected — keep them until reinstall verification passes.',
+      },
+      {
+        title: 'Reset AgentKit state (optional)',
+        body: 'Only after ownership-aware kit uninstall: ak logout, then mv ~/.agentkit to a recovery name — do not delete it yet.',
+      },
+      {
+        title: 'Install stable CLI',
+        body: 'Stable installer, hash -r, type -a ak, ak --version, ak doctor --json. Resolve duplicate binaries on PATH.',
+      },
+      {
+        title: 'Login + reinstall kits',
+        body: 'ak login, ak licenses, ak kit init … --channel stable --yes, then audit/doctor before restarting Codex.',
+      },
+    ];
+
+const cliCheckCode = isVi
+  ? `type -a ak
+ak --version
+ak self-update --check --channel stable
+
+# Nâng CLI (không xóa ~/.agentkit — ownership vẫn cần cho uninstall)
+ak self-update --channel stable --yes
+
+# Hoặc cài lại binary từ installer stable
+# curl -fsSL https://agentkit.best/install.sh | AK_CHANNEL=stable sh
+# hash -r
+# ak --version`
+  : `type -a ak
+ak --version
+ak self-update --check --channel stable
+
+# Upgrade CLI (do not delete ~/.agentkit — ownership is still needed for uninstall)
+ak self-update --channel stable --yes
+
+# Or reinstall the binary from the stable installer
+# curl -fsSL https://agentkit.best/install.sh | AK_CHANNEL=stable sh
+# hash -r
+# ak --version`;
+
+const listTmpCode = `find "$HOME/.codex" -maxdepth 1 -type f \\
+  -name '..codex-global-state.json.bak.tmp-*' -print`;
+
+const quarantineCode = isVi
+  ? `quarantine="$HOME/.agentkit/manual-quarantine/codex-temp-$(date +%Y%m%d-%H%M%S)"
+mkdir -p "$quarantine"
+
+find "$HOME/.codex" -maxdepth 1 -type f \\
+  -name '..codex-global-state.json.bak.tmp-*' \\
+  -exec mv -n {} "$quarantine"/ \\;`
+  : `quarantine="$HOME/.agentkit/manual-quarantine/codex-temp-$(date +%Y%m%d-%H%M%S)"
+mkdir -p "$quarantine"
+
+find "$HOME/.codex" -maxdepth 1 -type f \\
+  -name '..codex-global-state.json.bak.tmp-*' \\
+  -exec mv -n {} "$quarantine"/ \\;`;
+
+const uninstallGlobalNative = isVi
+  ? `# Global native (ví dụ Engineer Kit)
+ak audit --json
+
+ak kit uninstall engineer --global --dry-run
+ak kit uninstall engineer --global --yes
+
+# Lặp cho kit khác đã cài (ví dụ marketing) — cùng scope
+# ak kit uninstall marketing --global --dry-run
+# ak kit uninstall marketing --global --yes`
+  : `# Global native (example: Engineer Kit)
+ak audit --json
+
+ak kit uninstall engineer --global --dry-run
+ak kit uninstall engineer --global --yes
+
+# Repeat for other installed kits (e.g. marketing) — same scope
+# ak kit uninstall marketing --global --dry-run
+# ak kit uninstall marketing --global --yes`;
+
+const uninstallPluginGlobal = isVi
+  ? `# Claude Code user plugin
+ak kit uninstall engineer --global --plugin-mode --dry-run
+ak kit uninstall engineer --global --plugin-mode --yes`
+  : `# Claude Code user plugin
+ak kit uninstall engineer --global --plugin-mode --dry-run
+ak kit uninstall engineer --global --plugin-mode --yes`;
+
+const uninstallProjectNative = isVi
+  ? `# Native project — dùng đường dẫn tuyệt đối
+ak kit uninstall engineer \\
+  --project-dir /absolute/path/to/project \\
+  --dry-run
+
+ak kit uninstall engineer \\
+  --project-dir /absolute/path/to/project \\
+  --yes`
+  : `# Native project — use an absolute path
+ak kit uninstall engineer \\
+  --project-dir /absolute/path/to/project \\
+  --dry-run
+
+ak kit uninstall engineer \\
+  --project-dir /absolute/path/to/project \\
+  --yes`;
+
+const uninstallProjectPlugin = isVi
+  ? `# Project plugin
+ak kit uninstall engineer \\
+  --plugin-mode \\
+  --project-dir /absolute/path/to/project \\
+  --dry-run
+
+ak kit uninstall engineer \\
+  --plugin-mode \\
+  --project-dir /absolute/path/to/project \\
+  --yes`
+  : `# Project plugin
+ak kit uninstall engineer \\
+  --plugin-mode \\
+  --project-dir /absolute/path/to/project \\
+  --dry-run
+
+ak kit uninstall engineer \\
+  --plugin-mode \\
+  --project-dir /absolute/path/to/project \\
+  --yes`;
+
+const verifyUninstallCode = `ak audit --json
+ak backups list --json`;
+
+const resetStateCode = isVi
+  ? `# Chỉ sau khi ownership-aware kit uninstall đã xong
+ak logout
+
+stamp=$(date +%Y%m%d-%H%M%S)
+mv "$HOME/.agentkit" "$HOME/.agentkit.pre-stable-$stamp"
+
+# Giữ thư mục đổi tên cho đến khi cài stable + audit/doctor pass
+# Không xóa ngay — trong đó có backup, quarantine, registry, auth state`
+  : `# Only after ownership-aware kit uninstall has finished
+ak logout
+
+stamp=$(date +%Y%m%d-%H%M%S)
+mv "$HOME/.agentkit" "$HOME/.agentkit.pre-stable-$stamp"
+
+# Keep the renamed directory until stable install + audit/doctor pass
+# Do not delete yet — it holds backups, quarantine, registry, and auth state`;
+
+const installStableCode = isVi
+  ? `curl -fsSL https://agentkit.best/install.sh | AK_CHANNEL=stable sh
+hash -r
+
+type -a ak
+ak --version
+ak doctor --json
+
+# Nếu type -a ak hiện nhiều binary: sửa PATH trước khi tiếp tục`
+  : `curl -fsSL https://agentkit.best/install.sh | AK_CHANNEL=stable sh
+hash -r
+
+type -a ak
+ak --version
+ak doctor --json
+
+# If type -a ak shows multiple binaries: fix PATH before continuing`;
+
+const reinstallKitCode = isVi
+  ? `ak login
+ak licenses
+
+# Ví dụ: Engineer Kit trên Codex global, kênh stable
+ak kit init engineer \\
+  --target codex \\
+  --global \\
+  --channel stable \\
+  --yes
+
+ak audit engineer --strict --json
+ak doctor --adapter codex --json
+
+# Chỉ restart Codex sau khi các check trên xong`
+  : `ak login
+ak licenses
+
+# Example: Engineer Kit on global Codex, stable channel
+ak kit init engineer \\
+  --target codex \\
+  --global \\
+  --channel stable \\
+  --yes
+
+ak audit engineer --strict --json
+ak doctor --adapter codex --json
+
+# Restart Codex only after the checks above complete`;
+
+const winQuarantineCode = isVi
+  ? `# PowerShell — đóng Codex trước. Chỉ file tạm khớp pattern hẹp.
+$codex = Join-Path $env:USERPROFILE '.codex'
+$stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
+$quarantine = Join-Path $env:USERPROFILE ".agentkit\\manual-quarantine\\codex-temp-$stamp"
+New-Item -ItemType Directory -Force -Path $quarantine | Out-Null
+
+Get-ChildItem -LiteralPath $codex -File -Force |
+  Where-Object { $_.Name -like '..codex-global-state.json.bak.tmp-*' } |
+  ForEach-Object {
+    Move-Item -LiteralPath $_.FullName -Destination $quarantine -ErrorAction Stop
+  }
+
+Get-ChildItem -LiteralPath $quarantine -Force`
+  : `# PowerShell — close Codex first. Only temp files matching the narrow pattern.
+$codex = Join-Path $env:USERPROFILE '.codex'
+$stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
+$quarantine = Join-Path $env:USERPROFILE ".agentkit\\manual-quarantine\\codex-temp-$stamp"
+New-Item -ItemType Directory -Force -Path $quarantine | Out-Null
+
+Get-ChildItem -LiteralPath $codex -File -Force |
+  Where-Object { $_.Name -like '..codex-global-state.json.bak.tmp-*' } |
+  ForEach-Object {
+    Move-Item -LiteralPath $_.FullName -Destination $quarantine -ErrorAction Stop
+  }
+
+Get-ChildItem -LiteralPath $quarantine -Force`;
+
+const winResetStateCode = isVi
+  ? `# PowerShell — chỉ sau kit uninstall ownership-aware
+ak logout
+$stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
+$homeAk = Join-Path $env:USERPROFILE '.agentkit'
+$dest = Join-Path $env:USERPROFILE ".agentkit.pre-stable-$stamp"
+Move-Item -LiteralPath $homeAk -Destination $dest`
+  : `# PowerShell — only after ownership-aware kit uninstall
+ak logout
+$stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
+$homeAk = Join-Path $env:USERPROFILE '.agentkit'
+$dest = Join-Path $env:USERPROFILE ".agentkit.pre-stable-$stamp"
+Move-Item -LiteralPath $homeAk -Destination $dest`;
+
+const winInstallCode = isVi
+  ? `# PowerShell
+irm https://agentkit.best/install.ps1 | iex
+# Mở terminal mới, rồi:
+Get-Command ak -All
+ak --version
+ak doctor --json`
+  : `# PowerShell
+irm https://agentkit.best/install.ps1 | iex
+# Open a new terminal, then:
+Get-Command ak -All
+ak --version
+ak doctor --json`;
+---
+
+<div class="space-y-10 mt-6">
+  <AkPageHero
+    lang={currentLang}
+    accent="teal"
+    kicker={isVi ? 'Lifecycle' : 'Lifecycle'}
+    title={isVi ? 'Cài lại clean AgentKit' : 'Clean reinstall of AgentKit'}
+    subtitle={isVi
+      ? 'Gỡ kit có ownership → (tuỳ chọn) reset state → cài CLI stable → login + kit init. Không xóa ~/.codex hay ~/.claude.'
+      : 'Ownership-aware kit uninstall → (optional) state reset → install stable CLI → login + kit init. Never wipe ~/.codex or ~/.claude.'}
+    badges={isVi ? ['stable', 'ownership-aware'] : ['stable', 'ownership-aware']}
+  />
+
+  <AkCallout variant="tip" title={isVi ? 'Khi nào dùng trang này' : 'When to use this page'}>
+    {isVi
+      ? 'Bạn muốn gỡ cài đặt AgentKit cũ rồi cài lại kênh stable “sạch” — không chỉ ak update / self-update. Cần cài lần đầu? Xem Getting started.'
+      : 'You want to remove a previous AgentKit install and reinstall the latest stable cleanly — not only ak update / self-update. First-time install? See Getting started.'}
+    {' '}
+    <a
+      class="font-semibold text-teal-700 underline-offset-2 hover:underline dark:text-teal-300"
+      href={translatePath('/guides/agentkit/getting-started')}
+    >
+      {isVi ? 'Cài đặt →' : 'Getting started →'}
+    </a>
+  </AkCallout>
+
+  {/* ---- Known issue (top of page) ---- */}
+  <AkCallout
+    variant="warn"
+    title={
+      isVi
+        ? 'Known issue AgentKit 2.7.0: snapshot uninstall có thể từ chối tên file ..* hợp lệ'
+        : 'Known issue in AgentKit 2.7.0: uninstall snapshot can reject a valid `..*` filename'
+    }
+  >
+    <div class="space-y-3">
+      <p>
+        {isVi
+          ? 'AgentKit 2.7.0 có thể dừng ak kit uninstall với thông báo chứa:'
+          : 'AgentKit 2.7.0 may stop ak kit uninstall with a message containing:'}
+      </p>
+      <AkCodeBlock title="error" code={`backups: walk produced path outside scope`} />
+      <p>
+        {isVi ? (
+          <>
+            Thường gặp khi <AkInlineCode text="~/.codex" /> có file thường có basename bắt đầu hai dấu chấm, ví dụ{' '}
+            <AkInlineCode text="~/.codex/..codex-global-state.json.bak.tmp-*" />. File vẫn nằm trong{' '}
+            <AkInlineCode text="~/.codex" />; guard snapshot 2.7.0 có thể nhầm tiền tố <AkInlineCode text=".." /> trong
+            tên file với parent-directory traversal.
+          </>
+        ) : (
+          <>
+            This can occur when <AkInlineCode text="~/.codex" /> contains a regular file whose basename begins with two
+            dots, for example <AkInlineCode text="~/.codex/..codex-global-state.json.bak.tmp-*" />. The file is inside{' '}
+            <AkInlineCode text="~/.codex" />; however, the 2.7.0 snapshot guard can mistake the leading{' '}
+            <AkInlineCode text=".." /> in its basename for parent-directory traversal.
+          </>
+        )}
+      </p>
+      <p>
+        {isVi ? (
+          <>
+            Trên đường uninstall confirmed (<AkInlineCode text="--yes" />): lỗi bọc ngoài thường là{' '}
+            <code class="rounded bg-amber-100/80 px-1 font-mono text-[0.85em] dark:bg-amber-950/50">
+              kit uninstall: snapshot config dir:
+            </code>{' '}
+            rồi substring <AkInlineCode text="backups: walk produced path outside scope" />. Snapshot config dir chạy{' '}
+            <strong>trước</strong> pha xóa. Snapshot từ bước trước (nếu có) có thể còn. Dry-run chỉ lập plan — thường{' '}
+            <strong>không</strong> chạm walker này, nên dry-run có thể “ok” rồi --yes mới fail. Đây là lỗi
+            lifecycle/cleanup (fail closed), không được mô tả là mất dữ liệu đã xác nhận, cũng không phải CVE.
+          </>
+        ) : (
+          <>
+            On a confirmed uninstall (<AkInlineCode text="--yes" />), the outer error is often{' '}
+            <code class="rounded bg-amber-100/80 px-1 font-mono text-[0.85em] dark:bg-amber-950/50">
+              kit uninstall: snapshot config dir:
+            </code>{' '}
+            wrapping <AkInlineCode text="backups: walk produced path outside scope" />. That config-dir snapshot runs{' '}
+            <strong>before</strong> the deletion phase. Snapshots from earlier steps (if any) may be retained. Dry-run
+            only plans — it usually <strong>does not</strong> hit this walker, so dry-run can succeed and --yes still
+            fail. Lifecycle/cleanup bug (fails closed) — not confirmed data loss, not a CVE.
+          </>
+        )}
+      </p>
+      <p class="text-xs leading-relaxed opacity-90">
+        {isVi
+          ? 'Xác nhận bị ảnh hưởng: AgentKit stable 2.7.0 (tag v2.7.0: check strings.HasPrefix(rel, "..") trong snapshot walk). Cùng check vẫn thấy trên nhánh main/dev lúc fact-check 2026-08-04. Changelog stable 2.7.0 không ghi fix. Không gán “đã sửa ở phiên bản X” nếu chưa có release pointer + evidence mới.'
+          : 'Confirmed affected: AgentKit stable 2.7.0 (tag v2.7.0: strings.HasPrefix(rel, "..") in the snapshot walk). The same check was still present on main/dev at fact-check 2026-08-04. Stable 2.7.0 changelog does not document a fix. Do not claim “fixed in version X” without a newer release pointer and evidence.'}
+      </p>
+      <p class="text-sm">
+        {isVi ? 'Workaround an toàn (tóm tắt): đóng Codex → list → move (không xóa) file khớp pattern → dry-run → --yes. Chi tiết ở Phase 3 bên dưới.' : 'Safe workaround (summary): close Codex → list → move (do not delete) matching files → dry-run → --yes. Full steps in Phase 3 below.'}
+      </p>
+    </div>
+  </AkCallout>
+
+  {/* ---- Command distinctions ---- */}
+  <AkSection
+    eyebrow={isVi ? 'Ranh giới lệnh' : 'Command boundaries'}
+    title={isVi ? 'ak uninstall ≠ gỡ kit global' : 'ak uninstall ≠ remove a global kit'}
+    desc={isVi
+      ? 'Nhầm lệnh này là nguyên nhân hay gặp khi “gỡ AgentKit” thất bại hoặc gỡ nhầm scope.'
+      : 'Mixing these up is a common reason “remove AgentKit” fails or targets the wrong scope.'}
+  >
+    <AkCompare
+      left={{
+        title: 'ak uninstall',
+        body: isVi
+          ? 'Gỡ project do AgentKit quản lý (ak new / project bootstrap). Cần AK project tại hoặc phía trên thư mục hiện tại. Không phải lệnh gỡ kit cài global trên máy.'
+          : 'Removes an AgentKit-managed project (ak new / project bootstrap). Requires an AK project at or above the current directory. Not the command for removing a globally installed kit.',
+        tone: 'slate',
+        points: isVi
+          ? ['Cần project AK', 'Preview mặc định', 'Không thay kit uninstall']
+          : ['Needs an AK project', 'Preview by default', 'Does not replace kit uninstall'],
+      }}
+      right={{
+        title: 'ak kit uninstall <kit>',
+        body: isVi
+          ? 'Gỡ nội dung do kit sở hữu (AgentKit-owned) theo scope/mode bạn chọn. Dùng khi muốn gỡ engineer/marketing (global, project, native, plugin).'
+          : 'Removes kit-owned (AgentKit-owned) content for the scope/mode you select. Use this to remove engineer/marketing (global, project, native, plugin).',
+        tone: 'teal',
+        points: isVi
+          ? ['Theo từng kit', 'Theo từng scope/mode', 'Cần ownership records']
+          : ['Per kit', 'Per scope/mode', 'Needs ownership records'],
+      }}
+    />
+
+    <div class="mt-4 grid gap-3 sm:grid-cols-2">
+      <div class="rounded-2xl border border-slate-200/80 bg-white/80 p-4 dark:border-slate-700 dark:bg-slate-900/50">
+        <h3 class="text-sm font-semibold text-slate-900 dark:text-white">
+          {isVi ? 'Uninstall là preview-first' : 'Uninstall is preview-first'}
+        </h3>
+        <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+          {isVi ? (
+            <>
+              Chạy không có <AkInlineCode text="--yes" /> có thể kết thúc bằng thông báo kiểu{' '}
+              <code class="rounded bg-slate-100 px-1 font-mono text-[0.85em] text-slate-800 dark:bg-slate-800/90 dark:text-slate-100">
+                kit uninstall dry-run complete; re-run with --yes to execute
+              </code>
+              . Đó là hành vi mong đợi — chưa gỡ, không phải uninstall fail.
+            </>
+          ) : (
+            <>
+              A run without <AkInlineCode text="--yes" /> may finish with{' '}
+              <code class="rounded bg-slate-100 px-1 font-mono text-[0.85em] text-slate-800 dark:bg-slate-800/90 dark:text-slate-100">
+                kit uninstall dry-run complete; re-run with --yes to execute
+              </code>
+              . That is expected — nothing was removed; it is not an uninstall failure.
+            </>
+          )}
+        </p>
+      </div>
+      <div class="rounded-2xl border border-amber-200/70 bg-amber-50/50 p-4 dark:border-amber-500/25 dark:bg-amber-950/20">
+        <h3 class="text-sm font-semibold text-amber-950 dark:text-amber-100">
+          {isVi ? '--force không phải delete-all' : '--force is not delete-all'}
+        </h3>
+        <p class="mt-2 text-sm leading-relaxed text-amber-950/90 dark:text-amber-50/90">
+          {isVi ? (
+            <>
+              <AkInlineCode text="ak kit uninstall" /> <strong>không</strong> có flag <AkInlineCode text="--force" />.
+              Trên <AkInlineCode text="ak update" /> / <AkInlineCode text="ak kit init" /> / project{' '}
+              <AkInlineCode text="ak uninstall" />, <AkInlineCode text="--force" /> chỉ nới collision/overwrite có kiểm
+              soát — không phải “xóa sạch mọi thứ”, không bypass snapshot recovery.
+            </>
+          ) : (
+            <>
+              <AkInlineCode text="ak kit uninstall" /> has <strong>no</strong> <AkInlineCode text="--force" /> flag. On{' '}
+              <AkInlineCode text="ak update" /> / <AkInlineCode text="ak kit init" /> / project{' '}
+              <AkInlineCode text="ak uninstall" />, <AkInlineCode text="--force" /> only authorizes controlled
+              collision/overwrite — not a clean-reset or delete-all, and not a way to skip recovery snapshots.
+            </>
+          )}
+        </p>
+      </div>
+    </div>
+
+    <AkCallout variant="danger" title={isVi ? 'Không làm theo cách “xóa cả home”' : 'Do not wipe runtime homes'}>
+      <ul class="mt-1 list-disc space-y-1.5 pl-5">
+        <li>
+          {isVi ? (
+            <>
+              Đừng bắt đầu bằng xóa <AkInlineCode text="~/.agentkit" /> — trong đó có ownership, recovery snapshot, registry, cache, auth, skill env. Uninstall cần ownership.
+            </>
+          ) : (
+            <>
+              Do not start by deleting <AkInlineCode text="~/.agentkit" /> — it holds ownership records, recovery snapshots, registry state, caches, authentication, and skill environments. Uninstall needs ownership evidence.
+            </>
+          )}
+        </li>
+        <li>
+          {isVi ? (
+            <>
+              Không bao giờ xóa cả <AkInlineCode text="~/.codex" /> hoặc <AkInlineCode text="~/.claude" /> chỉ để gỡ AgentKit.
+            </>
+          ) : (
+            <>
+              Never delete the entire <AkInlineCode text="~/.codex" /> or <AkInlineCode text="~/.claude" /> directory to remove AgentKit.
+            </>
+          )}
+        </li>
+        <li>
+          {isVi
+            ? 'Không xóa tay thư mục skill chỉ vì trùng tên — AgentKit phân biệt file managed vs nội dung user bằng ownership evidence.'
+            : 'Do not manually delete skill directories based only on their names — AgentKit uses ownership evidence to distinguish managed files from unrelated user content.'}
+        </li>
+        <li>
+          {isVi ? (
+            <>
+              AgentKit 2.7.0 stable không expose <AkInlineCode text="--fresh" />. Đừng document hoặc mô phỏng bằng xóa filesystem rộng.
+            </>
+          ) : (
+            <>
+              AgentKit 2.7.0 stable does not expose <AkInlineCode text="--fresh" />. Do not document it or emulate it with broad filesystem deletion.
+            </>
+          )}
+        </li>
+      </ul>
+    </AkCallout>
+  </AkSection>
+
+  {/* ---- Four layers ---- */}
+  <AkSection
+    eyebrow={isVi ? 'Tách lớp' : 'Separate layers'}
+    title={isVi ? 'Gỡ kit · reset state · thay binary · cài lại kit' : 'Uninstall kits · reset state · replace CLI · reinstall kits'}
+    desc={isVi
+      ? 'Bốn việc khác nhau. Làm đúng thứ tự: gỡ kit (còn ownership) → (tuỳ chọn) dời state AgentKit → cài CLI stable → login + kit init.'
+      : 'Four different jobs. Correct order: uninstall kits (while ownership exists) → (optional) move AgentKit state → install stable CLI → login + kit init.'}
+  >
+    <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      {(
+        isVi
+          ? [
+              { t: '1. Gỡ kit', d: 'ak kit uninstall … theo scope thật đã cài' },
+              { t: '2. Reset state AK', d: 'logout + mv ~/.agentkit (sau khi gỡ kit)' },
+              { t: '3. Thay CLI', d: 'self-update hoặc install.sh kênh stable' },
+              { t: '4. Cài lại kit', d: 'login + kit init --channel stable' },
+            ]
+          : [
+              { t: '1. Uninstall kits', d: 'ak kit uninstall … for scopes you actually used' },
+              { t: '2. Reset AK state', d: 'logout + mv ~/.agentkit (after kit uninstall)' },
+              { t: '3. Replace CLI', d: 'self-update or install.sh on stable' },
+              { t: '4. Reinstall kits', d: 'login + kit init --channel stable' },
+            ]
+      ).map((item) => (
+        <div class="rounded-2xl border border-slate-200/80 bg-white/80 p-4 dark:border-slate-700 dark:bg-slate-900/50">
+          <div class="text-sm font-semibold text-slate-900 dark:text-white">{item.t}</div>
+          <p class="mt-1.5 text-xs leading-relaxed text-slate-500 dark:text-slate-400">{item.d}</p>
+        </div>
+      ))}
+    </div>
+    <p class="mt-3 text-sm text-slate-600 dark:text-slate-400">
+      {isVi
+        ? 'Binary channel và kit channel tách nhau. Ghi rõ --channel stable khi muốn chắc cài/cập nhật từ stable.'
+        : 'Binary and kit channels are separate. Use --channel stable explicitly when you want the stable path.'}
+    </p>
+  </AkSection>
+
+  {/* ---- Clean reinstall ---- */}
+  <AkSection
+    eyebrow={isVi ? 'Cài lại clean' : 'Clean reinstall'}
+    title={isVi ? 'Cài lại clean AgentKit stable' : 'Clean reinstall of AgentKit stable'}
+    desc={isVi
+      ? 'Quy trình macOS/Linux khuyến nghị. Giữ ownership đến khi gỡ kit xong; ưu tiên move/quarantine hơn delete; giữ state cũ đến khi audit/doctor pass.'
+      : 'Recommended macOS/Linux flow. Keep ownership until kits are removed; prefer move/quarantine over delete; keep old state until audit/doctor pass.'}
+  >
+    <AkStepRail steps={reinstallPhases} accent="amber" />
+  </AkSection>
+
+  <AkSection eyebrow="01" title={isVi ? 'Phase 1: dừng tiến trình đang ghi' : 'Phase 1: stop active processes'}>
+    <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+      {isVi
+        ? 'Đóng Codex, Claude Code, và mọi lệnh lifecycle AgentKit đang chạy trước khi đụng file tạm trong ~/.codex hoặc chạy uninstall. Không chồng lifecycle, không kill giữa chừng pha mutation.'
+        : 'Close Codex, Claude Code, and any running AgentKit lifecycle command before touching temp files under ~/.codex or running uninstall. Do not overlap lifecycle commands or kill an active mutation mid-flight.'}
+    </p>
+  </AkSection>
+
+  <AkSection
+    eyebrow="02"
+    title={isVi ? 'Phase 2: CLI đã cài + kênh stable' : 'Phase 2: installed CLI and stable channel'}
+  >
+    <AkCodeBlock title="shell" code={cliCheckCode} />
+    <AkCallout variant="info" title={isVi ? 'Nâng CLI ≠ xóa ownership' : 'CLI upgrade ≠ wipe ownership'}>
+      {isVi
+        ? 'Cập nhật hoặc cài lại binary CLI không được xóa ~/.agentkit trước khi gỡ kit — uninstall cần ownership evidence. Nếu ak do package manager sở hữu, làm theo lệnh upgrade native mà AgentKit báo (Homebrew/Scoop…), không ép replace in-product.'
+        : 'Updating or reinstalling the CLI binary must not erase ~/.agentkit before kit uninstall — uninstall needs ownership evidence. If ak is package-manager-owned, follow the manager-native upgrade command AgentKit reports rather than forcing in-product replacement.'}
+    </AkCallout>
+  </AkSection>
+
+  <AkSection
+    eyebrow="03"
+    title={isVi ? 'Phase 3: workaround file ..* (2.7.0)' : 'Phase 3: workaround for the 2.7.0 double-dot filename bug'}
+    desc={isVi
+      ? 'Chỉ khi bạn thấy backups: walk produced path outside scope (hoặc list thấy file khớp). Move, không xóa.'
+      : 'Only if you see backups: walk produced path outside scope (or list finds matching files). Move, do not delete.'}
+  >
+    <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+      {isVi
+        ? 'Trước hết list file khớp pattern hẹp (maxdepth 1, type file):'
+        : 'First list files matching the narrow pattern (maxdepth 1, regular files only):'}
+    </p>
+    <AkCodeBlock title="shell" code={listTmpCode} />
+    <p class="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+      {isVi
+        ? 'Sau khi Codex đã đóng, move các file khớp sang quarantine có thể phục hồi ngoài cây ~/.codex (nhưng vẫn trong ~/.agentkit để dễ tìm):'
+        : 'After Codex is closed, move matching files to a recoverable quarantine outside the ~/.codex tree (still under ~/.agentkit for easy discovery):'}
+    </p>
+    <AkCodeBlock title="shell" code={quarantineCode} />
+    <div class="mt-4 grid gap-3 sm:grid-cols-2">
+      {(
+        isVi
+          ? [
+              'Move; không delete.',
+              'Chỉ pattern hẹp ..codex-global-state.json.bak.tmp-*',
+              'Không đụng config.toml, skills, hooks, credentials, session state, dotfile khác.',
+              'Giữ quarantine đến khi reinstall verify pass.',
+              'File xuất hiện lại khi Codex đã đóng, hoặc không phải regular file → dừng, escalate — không nới cleanup.',
+              'Không bypass tạo backup của AgentKit; không --no-backup.',
+            ]
+          : [
+              'Move; do not delete.',
+              'Match only ..codex-global-state.json.bak.tmp-*',
+              'Do not move config.toml, skills, hooks, credentials, session state, or unrelated dotfiles.',
+              'Keep the quarantine until reinstall verification succeeds.',
+              'If the file reappears while Codex is closed, or is not a regular file — stop and escalate; do not broaden cleanup.',
+              'Do not bypass AgentKit backup creation; do not use --no-backup as a workaround.',
+            ]
+      ).map((t) => (
+        <div class="rounded-xl border border-slate-200/80 bg-slate-50/80 px-3 py-2.5 text-sm text-slate-700 dark:border-slate-700 dark:bg-slate-900/40 dark:text-slate-300">
+          {t}
+        </div>
+      ))}
+    </div>
+    <p class="mt-4 text-sm text-slate-600 dark:text-slate-400">
+      {isVi
+        ? 'Sau quarantine, chạy lại dry-run rồi uninstall có --yes (đúng scope bạn dùng — xem Phase 4).'
+        : 'After quarantine, rerun dry-run then confirmed uninstall (correct scope — see Phase 4).'}
+    </p>
+  </AkSection>
+
+  <AkSection
+    eyebrow="04"
+    title={isVi ? 'Phase 4: audit và gỡ kit đã sở hữu' : 'Phase 4: audit and uninstall owned kits'}
+    desc={isVi
+      ? 'Chỉ chạy mode bạn thật sự đã cài. Xem dry-run trước mỗi --yes. Lặp cho từng kit (engineer, marketing, …).'
+      : 'Run only modes you actually installed. Review each dry-run before --yes. Repeat for each kit (engineer, marketing, …).'}
+  >
+    <div class="space-y-5">
+      <div>
+        <h3 class="mb-2 text-sm font-semibold text-slate-900 dark:text-white">
+          {isVi ? 'Global native' : 'Global native'}
+        </h3>
+        <AkCodeBlock title="shell" code={uninstallGlobalNative} />
+      </div>
+      <div>
+        <h3 class="mb-2 text-sm font-semibold text-slate-900 dark:text-white">
+          {isVi ? 'Claude Code user plugin' : 'Claude Code user plugin'}
+        </h3>
+        <AkCodeBlock title="shell" code={uninstallPluginGlobal} />
+      </div>
+      <div>
+        <h3 class="mb-2 text-sm font-semibold text-slate-900 dark:text-white">
+          {isVi ? 'Native project' : 'Native project'}
+        </h3>
+        <AkCodeBlock title="shell" code={uninstallProjectNative} />
+      </div>
+      <div>
+        <h3 class="mb-2 text-sm font-semibold text-slate-900 dark:text-white">
+          {isVi ? 'Project plugin' : 'Project plugin'}
+        </h3>
+        <AkCodeBlock title="shell" code={uninstallProjectPlugin} />
+      </div>
+    </div>
+    <AkCallout variant="warn" title={isVi ? 'Không chạy mù mọi scope' : 'Do not run every scope blindly'}>
+      {isVi
+        ? 'Chỉ scope/delivery mode đã cài. Dry-run trước. Uninstall phải chạy khi AgentKit vẫn còn ownership records — đừng dời ~/.agentkit trước bước này.'
+        : 'Only the scopes and delivery modes you installed. Dry-run first. Uninstall must run while AgentKit still has ownership records — do not move ~/.agentkit before this step.'}
+    </AkCallout>
+  </AkSection>
+
+  <AkSection eyebrow="05" title={isVi ? 'Phase 5: xác minh bằng chứng gỡ' : 'Phase 5: verify uninstall evidence'}>
+    <AkCodeBlock title="shell" code={verifyUninstallCode} />
+    <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+      {isVi
+        ? 'Recovery snapshot còn lại là bằng chứng mong đợi — không xóa cho đến khi lifecycle và cài lại đã verify. Chỉ mô tả uninstall “đã gỡ” khi lệnh confirmed (--yes) thành công.'
+        : 'Retained recovery snapshots are expected evidence — do not delete them until the lifecycle result and reinstall are verified. Only describe uninstall as completed when the confirmed (--yes) command succeeded.'}
+    </p>
+  </AkSection>
+
+  <AkSection
+    eyebrow="06"
+    title={isVi ? 'Phase 6: reset state nội bộ AgentKit (cố ý)' : 'Phase 6: intentionally reset AgentKit internal state'}
+    desc={isVi
+      ? 'Chỉ khi bạn thật sự muốn state AgentKit sạch. Sau khi ownership-aware kit uninstall xong.'
+      : 'Only if you truly want a clean AgentKit state. After ownership-aware kit uninstall has completed.'}
+  >
+    <AkCodeBlock title="shell" code={resetStateCode} />
+    <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-slate-600 dark:text-slate-400">
+      <li>
+        {isVi
+          ? 'Reset state AgentKit nhưng vẫn giữ bản phục hồi (mv, không rm).'
+          : 'Resets AgentKit state while retaining a recovery copy (mv, not rm).'}
+      </li>
+      <li>
+        {isVi
+          ? 'Cũng dời backups và quarantine file tạm đã tạo ở Phase 3 (nằm trong ~/.agentkit).'
+          : 'Also moves backups and the temporary-file quarantine from Phase 3 (under ~/.agentkit).'}
+      </li>
+      <li>
+        {isVi
+          ? 'Không xóa thư mục đổi tên cho đến khi cài stable + kit audit pass.'
+          : 'Do not delete the renamed directory until the new stable installation and kit audit pass.'}
+      </li>
+    </ul>
+  </AkSection>
+
+  <AkSection eyebrow="07" title={isVi ? 'Phase 7: cài stable' : 'Phase 7: install stable'}>
+    <AkCodeBlock title="shell" code={installStableCode} />
+    <AkCallout variant="info" title={isVi ? 'Không hard-code “latest”' : 'Do not hard-code “latest”'}>
+      {isVi
+        ? 'Không gắn cứng một số phiên bản là “mới nhất” nếu chưa kiểm tra live stable pointer. Kiểm tra: https://releases.agentkit.best/channels/stable/binary-update.json'
+        : 'Do not hard-code a version number as “latest” without rechecking the live stable pointer: https://releases.agentkit.best/channels/stable/binary-update.json'}
+    </AkCallout>
+  </AkSection>
+
+  <AkSection eyebrow="08" title={isVi ? 'Phase 8: authenticate và cài lại kit' : 'Phase 8: authenticate and reinstall the kit'}>
+    <AkCodeBlock title="shell" code={reinstallKitCode} />
+    <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+      {isVi
+        ? 'Giữ quarantine và ~/.agentkit.pre-stable-* cho đến khi ak audit / ak doctor pass. Sau đó mới cân nhắc dọn bản phục hồi.'
+        : 'Keep the quarantine and ~/.agentkit.pre-stable-* until ak audit / ak doctor pass. Only then consider removing recovery copies.'}
+    </p>
+  </AkSection>
+
+  <AkSection
+    eyebrow="Windows"
+    title={isVi ? 'Windows (PowerShell) — nguyên tắc an toàn' : 'Windows (PowerShell) — safety invariants'}
+    desc={isVi
+      ? 'Không dịch máy lệnh Unix sang Remove-Item -Recurse trên cả runtime home. Giữ ownership-aware uninstall trước khi reset state.'
+      : 'Do not mechanically translate Unix commands into recursive deletes of entire runtime homes. Keep ownership-aware kit uninstall before any state reset.'}
+  >
+    <div class="grid gap-3 sm:grid-cols-2">
+      {(
+        isVi
+          ? [
+              'Inspect mọi ak.exe trên PATH (Get-Command ak -All) trước khi replace.',
+              'Chỉ gỡ/thay executable AgentKit đã xác minh — không xóa cả thư mục PATH nếu có thể chứa tool khác.',
+              'Không xóa %USERPROFILE%\\.codex hoặc %USERPROFILE%\\.claude.',
+              'Quarantine state (Move-Item) thay vì xóa rộng.',
+              'ak kit uninstall ownership-aware trước khi dời %USERPROFILE%\\.agentkit.',
+            ]
+          : [
+              'Inspect every ak.exe resolution (Get-Command ak -All) before replacement.',
+              'Remove or replace only the verified AgentKit executable — do not remove a PATH directory that may hold other programs.',
+              'Do not delete %USERPROFILE%\\.codex or %USERPROFILE%\\.claude.',
+              'Quarantine state (Move-Item) instead of broad deletion.',
+              'Ownership-aware ak kit uninstall before moving %USERPROFILE%\\.agentkit.',
+            ]
+      ).map((t) => (
+        <div class="rounded-xl border border-violet-200/60 bg-violet-50/40 px-3 py-2.5 text-sm text-slate-700 dark:border-violet-500/25 dark:bg-violet-950/20 dark:text-slate-300">
+          {t}
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-5 space-y-4">
+      <div>
+        <h3 class="mb-2 text-sm font-semibold text-slate-900 dark:text-white">
+          {isVi ? 'Quarantine file tạm ..* (tương đương Phase 3)' : 'Quarantine ..* temp files (Phase 3 equivalent)'}
+        </h3>
+        <AkCodeBlock title="powershell" code={winQuarantineCode} />
+      </div>
+      <div>
+        <h3 class="mb-2 text-sm font-semibold text-slate-900 dark:text-white">
+          {isVi ? 'Dời state AgentKit (tương đương Phase 6)' : 'Move AgentKit state (Phase 6 equivalent)'}
+        </h3>
+        <AkCodeBlock title="powershell" code={winResetStateCode} />
+      </div>
+      <div>
+        <h3 class="mb-2 text-sm font-semibold text-slate-900 dark:text-white">
+          {isVi ? 'Cài lại CLI (installer Windows)' : 'Reinstall CLI (Windows installer)'}
+        </h3>
+        <AkCodeBlock title="powershell" code={winInstallCode} />
+      </div>
+    </div>
+    <p class="mt-3 text-sm text-slate-600 dark:text-slate-400">
+      {isVi
+        ? 'Các lệnh ak kit uninstall / audit / kit init giống Unix (cùng flags). Thay $HOME bằng %USERPROFILE% khi nói path; dùng đường dẫn project tuyệt đối cho --project-dir.'
+        : 'ak kit uninstall / audit / kit init flags match Unix. Prefer absolute project paths for --project-dir. Use %USERPROFILE% when referring to home paths.'}
+    </p>
+  </AkSection>
+
+  <AkCallout variant="info" title={isVi ? 'Khác clean cutover ClaudeKit' : 'Not the same as ClaudeKit clean cutover'}>
+    {isVi ? (
+      <>
+        Trang này gỡ / cài lại <strong>AgentKit</strong>. Để gỡ hẳn ClaudeKit rồi sang AgentKit, dùng{' '}
+        <a
+          class="font-semibold text-teal-700 underline-offset-2 hover:underline dark:text-teal-300"
+          href={translatePath('/guides/agentkit/clean-cutover-from-claudekit')}
+        >
+          clean cutover CK → AK
+        </a>
+        .
+      </>
+    ) : (
+      <>
+        This page removes / reinstalls <strong>AgentKit</strong>. To leave ClaudeKit entirely and move to AgentKit, use{' '}
+        <a
+          class="font-semibold text-teal-700 underline-offset-2 hover:underline dark:text-teal-300"
+          href={translatePath('/guides/agentkit/clean-cutover-from-claudekit')}
+        >
+          clean cutover CK → AK
+        </a>
+        .
+      </>
+    )}
+  </AkCallout>
+
+  <AkNextLinks
+    lang={currentLang}
+    title={isVi ? 'Tài liệu liên quan' : 'Related guides'}
+    links={[
+      {
+        href: '/guides/agentkit/getting-started',
+        label: isVi ? 'Cài đặt & onboarding' : 'Getting started',
+        desc: isVi ? 'Installer, login, kit init' : 'Installer, login, kit init',
+      },
+      {
+        href: '/guides/agentkit/updating',
+        label: isVi ? 'Cập nhật CLI & kits' : 'Update CLI & kits',
+        desc: isVi ? 'self-update vs update vs refresh' : 'self-update vs update vs refresh',
+      },
+      {
+        href: '/guides/agentkit/troubleshooting',
+        label: isVi ? 'Xử lý sự cố' : 'Troubleshooting',
+        desc: isVi ? 'Doctor, skill missing, desktop' : 'Doctor, skill missing, desktop',
+      },
+      {
+        href: '/guides/agentkit/cli-commands',
+        label: isVi ? 'Cheatsheet CLI' : 'CLI cheatsheet',
+        desc: isVi ? 'ak uninstall vs kit uninstall' : 'ak uninstall vs kit uninstall',
+      },
+    ]}
+  />
+</div>

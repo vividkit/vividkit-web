@@ -43,6 +43,7 @@ export type GuideActiveTab =
   | 'agentkit-skills'
   | 'agentkit-statusline'
   | 'agentkit-updating'
+  | 'agentkit-clean-reinstall'
   | 'agentkit-troubleshooting'
   | 'agentkit-clean-cutover-from-claudekit'
   | 'migrate-claudekit-to-agentkit';

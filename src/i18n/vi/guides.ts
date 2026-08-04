@@ -56,6 +56,8 @@ export const guides = {
   'guides.nav.ck_migrate_other_tools': 'CK → Tool coding khác',
   'guides.agentkit.updating.title': 'Cập Nhật CLI & Kits',
   'guides.agentkit.updating.description': 'ak self-update vs ak update vs kit refresh — lệnh nào update gì',
+  'guides.agentkit.clean_reinstall.title': 'Cài lại clean AgentKit',
+  'guides.agentkit.clean_reinstall.description': 'Gỡ kit có ownership, tùy chọn reset state, cài lại AgentKit stable — kèm known issue snapshot uninstall 2.7.0',
   'guides.agentkit.troubleshooting.title': 'Xử Lý Sự Cố',
   'guides.agentkit.troubleshooting.description': 'Các vấn đề setup và runtime AgentKit thường gặp',
   'guides.migrate_ck_to_ak.title': 'Chuyển ClaudeKit sang AgentKit',

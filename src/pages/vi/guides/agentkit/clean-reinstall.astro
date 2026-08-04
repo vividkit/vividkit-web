@@ -1,0 +1,19 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import AgentKitCleanReinstallGuide from '@/components/guides/agentkit/AgentKitCleanReinstallGuide.astro';
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl } from '@/i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<GuidesLayout
+  title={`${t('guides.agentkit.clean_reinstall.title')} - VividKit Guides`}
+  description={t('guides.agentkit.clean_reinstall.description')}
+  canonicalPath="/guides/agentkit/clean-reinstall"
+  activeTab="agentkit-clean-reinstall"
+  lang={lang}
+>
+  <AgentKitCleanReinstallGuide lang={lang} />
+</GuidesLayout>

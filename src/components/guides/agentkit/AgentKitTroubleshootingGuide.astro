@@ -1,5 +1,6 @@
 ---
-import { getLangFromUrl, type Language } from '@/i18n';
+// AgentKit troubleshooting (quick checks). Clean reinstall lives on its own page.
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
 import AkPageHero from './AkPageHero.astro';
 import AkSection from './AkSection.astro';
 import AkCodeBlock from './AkCodeBlock.astro';
@@ -14,6 +15,7 @@ interface Props {
 const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const isVi = currentLang === 'vi';
+const translatePath = useTranslatedPath(currentLang);
 
 const skillMissing = isVi
   ? [
@@ -53,6 +55,89 @@ const desktopTips = isVi
       : 'A quick checklist when the CLI, Desktop, or runtime misbehaves.'}
   />
 
+  <AkCallout
+    variant="warn"
+    title={
+      isVi
+        ? 'Known issue 2.7.0: uninstall snapshot từ chối tên file ..*'
+        : 'Known issue 2.7.0: uninstall snapshot rejects a `..*` filename'
+    }
+  >
+    {isVi ? (
+      <>
+        Nếu <AkInlineCode text="ak kit uninstall … --yes" /> dừng với{' '}
+        <code class="rounded bg-amber-100/80 px-1 font-mono text-[0.85em] dark:bg-amber-950/50">
+          kit uninstall: snapshot config dir
+        </code>
+        {' / '}
+        <code class="rounded bg-amber-100/80 px-1 font-mono text-[0.85em] dark:bg-amber-950/50">
+          backups: walk produced path outside scope
+        </code>
+        {' '}
+        (thường file tạm <AkInlineCode text="~/.codex/..codex-global-state.json.bak.tmp-*" />; dry-run có thể vẫn ok):
+        xem workaround + cài lại clean — đừng xóa{' '}
+        <AkInlineCode text="~/.codex" /> / <AkInlineCode text="~/.claude" />.
+        {' '}
+        <a
+          class="font-semibold text-amber-900 underline-offset-2 hover:underline dark:text-amber-100"
+          href={translatePath('/guides/agentkit/clean-reinstall')}
+        >
+          Cài lại clean AgentKit →
+        </a>
+      </>
+    ) : (
+      <>
+        If <AkInlineCode text="ak kit uninstall … --yes" /> stops with{' '}
+        <code class="rounded bg-amber-100/80 px-1 font-mono text-[0.85em] dark:bg-amber-950/50">
+          kit uninstall: snapshot config dir
+        </code>
+        {' / '}
+        <code class="rounded bg-amber-100/80 px-1 font-mono text-[0.85em] dark:bg-amber-950/50">
+          backups: walk produced path outside scope
+        </code>
+        {' '}
+        (often <AkInlineCode text="~/.codex/..codex-global-state.json.bak.tmp-*" />; dry-run may still succeed):
+        use the quarantine workaround and clean reinstall page — do not delete{' '}
+        <AkInlineCode text="~/.codex" /> / <AkInlineCode text="~/.claude" />.
+        {' '}
+        <a
+          class="font-semibold text-amber-900 underline-offset-2 hover:underline dark:text-amber-100"
+          href={translatePath('/guides/agentkit/clean-reinstall')}
+        >
+          Clean reinstall of AgentKit →
+        </a>
+      </>
+    )}
+  </AkCallout>
+
+  <AkCallout variant="tip" title={isVi ? 'Cần gỡ sạch rồi cài lại stable?' : 'Need a clean reinstall of stable?'}>
+    {isVi ? (
+      <>
+        Trang này chỉ checklist sự cố. Quy trình ownership-aware (kit uninstall → tùy chọn dời state → cài stable)
+        nằm ở{' '}
+        <a
+          class="font-semibold text-teal-700 underline-offset-2 hover:underline dark:text-teal-300"
+          href={translatePath('/guides/agentkit/clean-reinstall')}
+        >
+          Cài lại clean AgentKit
+        </a>
+        .
+      </>
+    ) : (
+      <>
+        This page is a quick checklist. The ownership-aware flow (kit uninstall → optional state move → install stable)
+        is on{' '}
+        <a
+          class="font-semibold text-teal-700 underline-offset-2 hover:underline dark:text-teal-300"
+          href={translatePath('/guides/agentkit/clean-reinstall')}
+        >
+          Clean reinstall of AgentKit
+        </a>
+        .
+      </>
+    )}
+  </AkCallout>
+
   <div class="grid gap-4 md:grid-cols-2">
     <section class="rounded-2xl border border-slate-200/80 bg-white/80 p-5 dark:border-slate-700 dark:bg-slate-900/50">
       <h2 class="text-lg font-bold text-slate-900 dark:text-white">
@@ -74,6 +159,42 @@ const desktopTips = isVi
       </div>
     </section>
   </div>
+
+  <AkSection
+    eyebrow={isVi ? 'Lệnh gỡ' : 'Uninstall commands'}
+    title={isVi ? 'ak uninstall ≠ gỡ kit global' : 'ak uninstall ≠ remove a global kit'}
+  >
+    <div class="grid gap-3 sm:grid-cols-2">
+      <div class="rounded-2xl border border-slate-200/80 bg-white/80 p-4 dark:border-slate-700 dark:bg-slate-900/50">
+        <h3 class="text-sm font-semibold text-slate-900 dark:text-white">
+          <AkInlineCode text="ak uninstall" />
+        </h3>
+        <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+          {isVi
+            ? 'Gỡ project do AgentKit quản lý. Cần AK project tại/trên cwd — không phải lệnh gỡ kit global.'
+            : 'Removes an AgentKit-managed project. Needs an AK project at/above cwd — not for removing a global kit.'}
+        </p>
+      </div>
+      <div class="rounded-2xl border border-teal-200/70 bg-teal-50/40 p-4 dark:border-teal-500/25 dark:bg-teal-950/20">
+        <h3 class="text-sm font-semibold text-teal-900 dark:text-teal-100">
+          <AkInlineCode text="ak kit uninstall <kit>" />
+        </h3>
+        <p class="mt-2 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+          {isVi
+            ? 'Gỡ nội dung kit AgentKit-owned theo scope/mode. Chi tiết flags + clean reinstall:'
+            : 'Removes AgentKit-owned kit content by scope/mode. Flags + full clean reinstall:'}
+          {' '}
+          <a
+            class="font-semibold text-teal-800 underline-offset-2 hover:underline dark:text-teal-200"
+            href={translatePath('/guides/agentkit/clean-reinstall')}
+          >
+            {isVi ? 'cài lại clean' : 'clean reinstall'}
+          </a>
+          .
+        </p>
+      </div>
+    </div>
+  </AkSection>
 
   <AkSection
     eyebrow={isVi ? 'Runtime' : 'Runtime'}
@@ -107,7 +228,24 @@ const desktopTips = isVi
       <AkInlineCode text="ak migrate rollback" />
       {isVi ? ' và ' : ' and '}
       <AkInlineCode text="ak backups list" />
-      {isVi ? '. Xem hướng dẫn migrate cho dry-run và backup.' : '. See the migration guide for dry-run and backup.'}
+      {isVi ? '. Xem hướng dẫn migrate cho dry-run và backup. ' : '. See the migration guide for dry-run and backup. '}
+      {isVi ? (
+        <>
+          Gỡ hẳn ClaudeKit:{' '}
+          <a class="font-semibold text-teal-700 underline-offset-2 hover:underline dark:text-teal-300" href={translatePath('/guides/agentkit/clean-cutover-from-claudekit')}>
+            clean cutover
+          </a>
+          .
+        </>
+      ) : (
+        <>
+          Leaving ClaudeKit:{' '}
+          <a class="font-semibold text-teal-700 underline-offset-2 hover:underline dark:text-teal-300" href={translatePath('/guides/agentkit/clean-cutover-from-claudekit')}>
+            clean cutover
+          </a>
+          .
+        </>
+      )}
     </AkCallout>
   </AkSection>
 
@@ -115,8 +253,13 @@ const desktopTips = isVi
     lang={currentLang}
     title={isVi ? 'Tài liệu liên quan' : 'Related guides'}
     links={[
+      {
+        href: '/guides/agentkit/clean-reinstall',
+        label: isVi ? 'Cài lại clean AgentKit' : 'Clean reinstall of AgentKit',
+        desc: isVi ? 'Gỡ kit + cài stable an toàn' : 'Safe kit uninstall + stable reinstall',
+      },
       { href: '/guides/migrate-claudekit-to-agentkit', label: isVi ? 'Migrate CK → AK' : 'Migrate CK → AK' },
-      { href: '/guides/agentkit/getting-started', label: isVi ? 'Cài đặt lại' : 'Getting started' },
+      { href: '/guides/agentkit/getting-started', label: isVi ? 'Cài đặt' : 'Getting started' },
       { href: '/guides/agentkit/runtime-support', label: isVi ? 'Runtime' : 'Runtime support' },
     ]}
   />

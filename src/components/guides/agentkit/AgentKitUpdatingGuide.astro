@@ -1,5 +1,5 @@
 ---
-import { getLangFromUrl, type Language } from '@/i18n';
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
 import AkPageHero from './AkPageHero.astro';
 import AkSection from './AkSection.astro';
 import AkCodeBlock from './AkCodeBlock.astro';
@@ -16,6 +16,7 @@ interface Props {
 const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const isVi = currentLang === 'vi';
+const translatePath = useTranslatedPath(currentLang);
 
 const matrix = isVi
   ? [
@@ -456,12 +457,40 @@ ak kit refresh engineer --local --kits-dir ./kits --yes`}
       : '0 = ok · 1 = runtime error / partial failure · 2 = invalid flags · 3 = preview only (no --yes / no confirm) — safe, no files written.'}
   </AkCallout>
 
+  <AkCallout variant="warn" title={isVi ? 'Cập nhật ≠ cài lại clean' : 'Update ≠ clean reinstall'}>
+    {isVi ? (
+      <>
+        <AkInlineCode text="ak update" /> / <AkInlineCode text="ak self-update" /> làm mới kit hoặc CLI — không thay quy trình gỡ kit ownership-aware rồi reset state.
+        Muốn gỡ sạch và cài lại stable (kèm known issue snapshot 2.7.0): xem{' '}
+        <a
+          class="font-semibold text-amber-900 underline-offset-2 hover:underline dark:text-amber-100"
+          href={translatePath('/guides/agentkit/clean-reinstall')}
+        >
+          Cài lại clean AgentKit
+        </a>
+        .
+      </>
+    ) : (
+      <>
+        <AkInlineCode text="ak update" /> / <AkInlineCode text="ak self-update" /> refresh kits or the CLI — they do not replace an ownership-aware kit uninstall plus state reset.
+        For clean reinstall of stable (including the 2.7.0 uninstall snapshot known issue), see{' '}
+        <a
+          class="font-semibold text-amber-900 underline-offset-2 hover:underline dark:text-amber-100"
+          href={translatePath('/guides/agentkit/clean-reinstall')}
+        >
+          Clean reinstall of AgentKit
+        </a>
+        .
+      </>
+    )}
+  </AkCallout>
+
   <AkNextLinks
     lang={currentLang}
     title={isVi ? 'Liên quan' : 'Related'}
     links={[
       { href: '/guides/agentkit/configuration', label: isVi ? 'config.yaml (updates.*)' : 'config.yaml (updates.*)' },
-      { href: '/guides/agentkit/desktop-app', label: 'Desktop App' },
+      { href: '/guides/agentkit/clean-reinstall', label: isVi ? 'Cài lại clean' : 'Clean reinstall' },
       { href: '/guides/agentkit/troubleshooting', label: isVi ? 'Xử lý sự cố' : 'Troubleshooting' },
       { href: '/guides/agentkit/getting-started', label: isVi ? 'Cài đặt' : 'Getting started' },
     ]}
