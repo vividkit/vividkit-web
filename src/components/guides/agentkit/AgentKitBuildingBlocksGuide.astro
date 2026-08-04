@@ -1,10 +1,11 @@
 ---
-import { getLangFromUrl, type Language } from '@/i18n';
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
 import AkPageHero from './AkPageHero.astro';
 import AkSection from './AkSection.astro';
 import AkFeatureGrid from './AkFeatureGrid.astro';
 import AkCallout from './AkCallout.astro';
 import AkNextLinks from './AkNextLinks.astro';
+import AkInlineCode from './AkInlineCode.astro';
 
 interface Props {
   lang?: Language;
@@ -13,6 +14,7 @@ interface Props {
 const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const isVi = currentLang === 'vi';
+const translatePath = useTranslatedPath(currentLang);
 
 const blocks = isVi
   ? [
@@ -51,12 +53,44 @@ const faqs = isVi
   <AkPageHero
     lang={currentLang}
     accent="violet"
-    kicker={isVi ? 'Building blocks' : 'Building blocks'}
-    title={isVi ? 'Kit, Skill, Agent và Hook' : 'Kits, Skills, Agents, and Hooks'}
+    kicker={isVi ? 'AgentKit · Building blocks' : 'AgentKit · Building blocks'}
+    title={isVi ? 'Kit, Skill, Agent & Hook AgentKit' : 'AgentKit Kits, Skills, Agents & Hooks'}
     subtitle={isVi
-      ? 'Hiểu từng khối — rồi chọn điểm bắt đầu đúng cho task của bạn.'
-      : 'Understand each block — then pick the right starting point for your task.'}
+      ? 'Hiểu từng khối AgentKit — rồi chọn điểm bắt đầu đúng cho task của bạn.'
+      : 'Understand each AgentKit block — then pick the right starting point for your task.'}
   />
+
+  <AkCallout variant="tip" title={isVi ? 'Người dùng ClaudeKit: Kits vẫn dùng bình thường' : 'ClaudeKit users: Kits still work as usual'}>
+    {isVi ? (
+      <>
+        Engineer / Marketing Kit bạn đã mua vẫn là entitlement Kit trên AgentKit. Cài CLI ak,{' '}
+        <AkInlineCode text="ak login" /> bằng <strong>cùng tài khoản mua ClaudeKit</strong>, rồi{' '}
+        <AkInlineCode text="ak licenses" /> / <AkInlineCode text="ak kit init" /> như trước.
+        Không cần mua lại Kit chỉ vì đổi tên sản phẩm. Ứng dụng <strong>Desktop</strong> là gói riêng — xem{' '}
+        <a
+          class="font-semibold text-teal-700 underline-offset-2 hover:underline dark:text-teal-300"
+          href={translatePath('/guides/agentkit/desktop-app')}
+        >
+          AgentKit Desktop App
+        </a>
+        .
+      </>
+    ) : (
+      <>
+        Engineer / Marketing Kits you already purchased remain Kit entitlements on AgentKit. Install the ak CLI,{' '}
+        <AkInlineCode text="ak login" /> with the <strong>same account used for ClaudeKit</strong>, then{' '}
+        <AkInlineCode text="ak licenses" /> / <AkInlineCode text="ak kit init" /> as before.
+        You do not rebuy Kits for the rebrand. The <strong>Desktop</strong> app is a separate product — see{' '}
+        <a
+          class="font-semibold text-teal-700 underline-offset-2 hover:underline dark:text-teal-300"
+          href={translatePath('/guides/agentkit/desktop-app')}
+        >
+          AgentKit Desktop App
+        </a>
+        .
+      </>
+    )}
+  </AkCallout>
 
   <AkSection
     eyebrow={isVi ? 'Từ vựng' : 'Vocabulary'}

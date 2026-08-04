@@ -17,14 +17,44 @@ const isVi = currentLang === 'vi';
 
 const runtimes = isVi
   ? [
-      { icon: 'CC', title: 'Claude Code', body: 'Native hoặc plugin delivery (plugin cần chọn rõ). Skills, agents, slash commands, rules, hooks và status line có thể active ở project hoặc user scope.', accent: 'teal' as const },
-      { icon: 'CX', title: 'Codex', body: 'Native skill discovery và agent dispatch. Hook support partial — một số group drop/narrow. Không status line. Command files có thể chỉ là supporting content.', accent: 'violet' as const },
-      { icon: 'CR', title: 'Cursor', body: 'Adapter chiếu skills, agents, rules, hooks. Coverage live install/update/invocation có thể chưa đầy đủ — đừng suy ra full parity.', accent: 'cyan' as const },
+      {
+        brandProvider: 'claude' as const,
+        title: 'Claude Code',
+        body: 'Native hoặc plugin delivery (plugin cần chọn rõ). Skills, agents, slash commands, rules, hooks và status line có thể active ở project hoặc user scope.',
+        accent: 'teal' as const,
+      },
+      {
+        brandProvider: 'openai' as const,
+        title: 'Codex',
+        body: 'Native skill discovery và agent dispatch. Hook support partial — một số group drop/narrow. Không status line. Command files có thể chỉ là supporting content.',
+        accent: 'violet' as const,
+      },
+      {
+        brandProvider: 'cursor' as const,
+        title: 'Cursor',
+        body: 'Adapter chiếu skills, agents, rules, hooks. Coverage live install/update/invocation có thể chưa đầy đủ — đừng suy ra full parity.',
+        accent: 'cyan' as const,
+      },
     ]
   : [
-      { icon: 'CC', title: 'Claude Code', body: 'Native or explicit plugin delivery. Skills, agents, slash commands, rules, hooks, and status line can be active at project or user scope.', accent: 'teal' as const },
-      { icon: 'CX', title: 'Codex', body: 'Native skill discovery and agent dispatch. Partial Hook support — some groups drop/narrow. No status line. Command files may stay supporting content.', accent: 'violet' as const },
-      { icon: 'CR', title: 'Cursor', body: 'Projects skills, agents, rules, hooks. Live install/update/invocation coverage is incomplete across setups — do not infer full parity.', accent: 'cyan' as const },
+      {
+        brandProvider: 'claude' as const,
+        title: 'Claude Code',
+        body: 'Native or explicit plugin delivery. Skills, agents, slash commands, rules, hooks, and status line can be active at project or user scope.',
+        accent: 'teal' as const,
+      },
+      {
+        brandProvider: 'openai' as const,
+        title: 'Codex',
+        body: 'Native skill discovery and agent dispatch. Partial Hook support — some groups drop/narrow. No status line. Command files may stay supporting content.',
+        accent: 'violet' as const,
+      },
+      {
+        brandProvider: 'cursor' as const,
+        title: 'Cursor',
+        body: 'Projects skills, agents, rules, hooks. Live install/update/invocation coverage is incomplete across setups — do not infer full parity.',
+        accent: 'cyan' as const,
+      },
     ];
 ---
 
@@ -32,8 +62,8 @@ const runtimes = isVi
   <AkPageHero
     lang={currentLang}
     accent="cyan"
-    kicker={isVi ? 'Adapters' : 'Adapters'}
-    title={isVi ? 'Hỗ Trợ Runtime' : 'Runtime Support'}
+    kicker={isVi ? 'AgentKit · Adapters' : 'AgentKit · Adapters'}
+    title={isVi ? 'Hỗ Trợ Runtime AgentKit' : 'AgentKit Runtime Support'}
     subtitle={isVi
       ? 'Adapter đưa Kit vào coding agent — không phải bảng parity đầy đủ.'
       : 'How adapters deliver Kits into coding agents — not a full parity matrix.'}

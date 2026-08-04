@@ -36,11 +36,11 @@ const overview = isVi
   <AkPageHero
     lang={currentLang}
     accent="teal"
-    kicker={isVi ? 'Onboarding' : 'Onboarding'}
-    title={isVi ? 'Cài Đặt và Onboarding' : 'Installation and Onboarding'}
+    kicker={isVi ? 'AgentKit · Onboarding' : 'AgentKit · Onboarding'}
+    title={isVi ? 'Cài Đặt AgentKit' : 'AgentKit Installation'}
     subtitle={isVi
-      ? 'Từ zero đến Skill đầu tiên: cài CLI, verify, cài Kit, gọi trong runtime.'
-      : 'From zero to a first Skill: install the CLI, verify, install a Kit, invoke in your runtime.'}
+      ? 'Từ zero đến Skill đầu tiên với AgentKit: cài CLI ak, verify, đăng nhập, cài Kit, gọi trong runtime.'
+      : 'From zero to a first Skill with AgentKit: install the ak CLI, verify, sign in, install a Kit, invoke in your runtime.'}
     badges={isVi ? ['Khuyến nghị'] : ['Recommended']}
   />
 
@@ -191,6 +191,24 @@ const overview = isVi
         </div>
       </div>
 
+      <AkCallout variant="tip" title={isVi ? 'Đã mua ClaudeKit / Kit trước đây?' : 'Already bought ClaudeKit / Kits?'}>
+        {isVi ? (
+          <>
+            Bạn vẫn dùng <strong>AgentKit Kits</strong> bình thường: cài CLI ak, rồi{' '}
+            <AkInlineCode text="ak login" /> bằng <strong>cùng tài khoản</strong> đã mua ClaudeKit (email + OTP hoặc API key).
+            Kiểm tra quyền Kit bằng <AkInlineCode text="ak licenses" /> — không cần mua lại Kit chỉ vì rebrand AgentKit.
+            <strong> AgentKit Desktop App</strong> là sản phẩm riêng: chỉ cần mua thêm nếu muốn UI Desktop.
+          </>
+        ) : (
+          <>
+            You keep using <strong>AgentKit Kits</strong> as usual: install the ak CLI, then{' '}
+            <AkInlineCode text="ak login" /> with the <strong>same account</strong> you used to buy ClaudeKit (email + OTP or API key).
+            Check grants with <AkInlineCode text="ak licenses" /> — you do not rebuy Kits just because of the AgentKit rebrand.
+            The <strong>AgentKit Desktop App</strong> is separate: buy it only if you want the Desktop UI.
+          </>
+        )}
+      </AkCallout>
+
       <AkCallout variant="warn" title={isVi ? 'Kit license ≠ Desktop license' : 'Kit license ≠ Desktop license'}>
         {isVi ? (
           <>
@@ -247,26 +265,36 @@ const overview = isVi
     </div>
   </AkSection>
 
-  <AkSection eyebrow="04" title={isVi ? 'Tuỳ chọn: Desktop App' : 'Optional: Desktop App'}>
+  <AkSection eyebrow="04" title={isVi ? 'Tuỳ chọn: Desktop App (mua thêm)' : 'Optional: Desktop App (extra purchase)'}>
     <div class="flex flex-col gap-4 rounded-2xl border border-teal-200/70 bg-gradient-to-br from-teal-50/80 to-white p-5 sm:flex-row sm:items-center sm:justify-between dark:border-teal-500/25 dark:from-teal-950/30 dark:to-slate-900">
       <p class="text-sm text-slate-600 dark:text-slate-300">
         {isVi
-          ? 'Desktop là gói riêng — tải, verify checksum, kích hoạt App license. Xem trang Desktop để biết platform.'
-          : 'Desktop is a separate package — download, verify checksums, activate an App license. See the Desktop page for platforms.'}
+          ? 'Desktop không bắt buộc để dùng Kits. Chỉ mua nếu muốn UI quản lý local — license App tách với Kit. Referral VividKit: giảm 30%.'
+          : 'Desktop is not required to use Kits. Buy it only if you want the local management UI — App license is separate from Kits. VividKit referral: 30% off.'}
       </p>
-      <a
-        href={translatePath('/guides/agentkit/desktop-app')}
-        class="inline-flex shrink-0 items-center justify-center rounded-xl bg-gradient-to-r from-teal-500 to-cyan-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-teal-500/25 transition hover:from-teal-600 hover:to-cyan-700"
-      >
-        {isVi ? 'Desktop App →' : 'Desktop App →'}
-      </a>
+      <div class="flex shrink-0 flex-col gap-2 sm:items-end">
+        <a
+          href="https://agentkit.best/?ref=OMG49S8R"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-teal-500 to-cyan-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-teal-500/25 transition hover:from-teal-600 hover:to-cyan-700"
+        >
+          {isVi ? 'Mua Desktop (giảm 30%) →' : 'Get Desktop (30% OFF) →'}
+        </a>
+        <a
+          href={translatePath('/guides/agentkit/desktop-app')}
+          class="text-center text-xs font-semibold text-teal-700 underline-offset-2 hover:underline dark:text-teal-300"
+        >
+          {isVi ? 'Hướng dẫn Desktop App' : 'Desktop App guide'}
+        </a>
+      </div>
     </div>
   </AkSection>
 
-  <AkCallout variant="info" title={isVi ? 'Đang dùng ClaudeKit?' : 'Already on ClaudeKit?'}>
+  <AkCallout variant="info" title={isVi ? 'Đang dùng ClaudeKit (cài đặt cũ)?' : 'Already on ClaudeKit (existing install)?'}>
     {isVi
-      ? 'Không bắt buộc migrate. Khi sẵn sàng, dùng hướng dẫn chuyển đổi (sao lưu trước).'
-      : 'Migration is optional. When ready, use the migration guide (back up first).'}
+      ? 'Kit entitlement vẫn dùng qua ak login cùng account. Chuyển file/cấu hình (migrate / clean cutover) là tùy chọn — luôn sao lưu trước.'
+      : 'Kit entitlements continue via ak login on the same account. Moving files/config (migrate / clean cutover) is optional — always back up first.'}
     {' '}
     <a class="font-semibold text-teal-700 underline-offset-2 hover:underline dark:text-teal-300" href={translatePath('/guides/migrate-claudekit-to-agentkit')}>
       {isVi ? 'Migrate →' : 'Migrate →'}

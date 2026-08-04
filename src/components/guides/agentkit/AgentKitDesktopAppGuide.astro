@@ -16,6 +16,9 @@ const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const isVi = currentLang === 'vi';
 
+/** VividKit referral — 30% off AgentKit storefront (Desktop / promotions as offered). */
+const agentKitReferralUrl = 'https://agentkit.best/?ref=OMG49S8R';
+
 const canDo = isVi
   ? [
       { icon: '01', title: 'Scan local setup', body: 'Coding agent, project đã đăng ký, Kit, health, config và trạng thái update.', accent: 'teal' as const },
@@ -53,13 +56,13 @@ const licenseTypes = isVi
       {
         icon: 'KIT',
         title: 'Kit license',
-        body: 'Mở quyền tải và sử dụng Engineer / Marketing Kit qua CLI hoặc Desktop.',
+        body: 'Mở Engineer / Marketing Kit qua CLI (và browse trong Desktop nếu có App). Tài khoản đã mua ClaudeKit vẫn dùng Kit qua ak login.',
         accent: 'cyan' as const,
       },
       {
         icon: 'APP',
         title: 'Desktop App license',
-        body: 'Mở ứng dụng AgentKit Desktop và quản lý device; không tự bao gồm Kit.',
+        body: 'Mở ứng dụng AgentKit Desktop và quản lý device — mua thêm nếu muốn UI. Không tự bao gồm Kit.',
         accent: 'amber' as const,
       },
     ]
@@ -67,13 +70,13 @@ const licenseTypes = isVi
       {
         icon: 'KIT',
         title: 'Kit license',
-        body: 'Unlocks download and use of Engineer / Marketing Kits via CLI or Desktop.',
+        body: 'Unlocks Engineer / Marketing Kits via CLI (and browse in Desktop if you have the App). Existing ClaudeKit purchase accounts keep Kits via ak login.',
         accent: 'cyan' as const,
       },
       {
         icon: 'APP',
         title: 'Desktop App license',
-        body: 'Unlocks the AgentKit Desktop app and device management; does not include Kits by itself.',
+        body: 'Unlocks the AgentKit Desktop app and device management — buy separately if you want the UI. Does not include Kits by itself.',
         accent: 'amber' as const,
       },
     ];
@@ -83,13 +86,47 @@ const licenseTypes = isVi
   <AkPageHero
     lang={currentLang}
     accent="teal"
-    kicker="Desktop"
+    kicker={isVi ? 'AgentKit · Desktop' : 'AgentKit · Desktop'}
     title={isVi ? 'Ứng Dụng AgentKit Desktop' : 'AgentKit Desktop App'}
     subtitle={isVi
-      ? 'Trung tâm điều khiển trực quan cho trạng thái AgentKit trên máy bạn — không thay coding assistant.'
-      : 'A visual control center for local AgentKit state — not a replacement for your coding assistant.'}
-    badges={isVi ? ['v2.7.0 platforms'] : ['v2.7.0 platforms']}
+      ? 'UI quản lý trạng thái AgentKit trên máy — tùy chọn, mua riêng. Không thay coding assistant; không bắt buộc để dùng Kits.'
+      : 'Optional visual control center for local AgentKit state — separate purchase. Not a coding-assistant replacement; not required to use Kits.'}
+    badges={isVi ? ['mua thêm', 'giảm 30%'] : ['extra purchase', '30% OFF']}
   />
+
+  <AkCallout variant="warn" title={isVi ? 'ClaudeKit users: Kits ≠ Desktop' : 'ClaudeKit users: Kits ≠ Desktop'}>
+    {isVi ? (
+      <>
+        <strong>Kits vẫn dùng bình thường</strong> với CLI ak: <AkInlineCode text="ak login" /> bằng tài khoản đã mua ClaudeKit,
+        rồi <AkInlineCode text="ak licenses" /> / cài Kit. <strong>Desktop App là thứ cần mua thêm</strong> nếu muốn giao diện
+        quản lý local — mua Kit (hoặc đã có ClaudeKit) không mặc định mở Desktop.
+        {' '}
+        <a
+          class="font-semibold text-amber-900 underline-offset-2 hover:underline dark:text-amber-100"
+          href={agentKitReferralUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Mua / xem AgentKit (giảm 30%) →
+        </a>
+      </>
+    ) : (
+      <>
+        <strong>Kits still work as usual</strong> with the ak CLI: <AkInlineCode text="ak login" /> with the account that bought ClaudeKit,
+        then <AkInlineCode text="ak licenses" /> / install Kits. The <strong>Desktop App is an extra purchase</strong> if you want the local
+        management UI — owning Kits (or prior ClaudeKit) does not unlock Desktop by default.
+        {' '}
+        <a
+          class="font-semibold text-amber-900 underline-offset-2 hover:underline dark:text-amber-100"
+          href={agentKitReferralUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Get / view AgentKit (30% OFF) →
+        </a>
+      </>
+    )}
+  </AkCallout>
 
   <AkCallout variant="tip" title={isVi ? 'Ranh giới sản phẩm' : 'Product boundary'}>
     {isVi
@@ -189,7 +226,7 @@ const licenseTypes = isVi
             {' '}
             <a
               class="font-semibold text-teal-700 underline-offset-2 hover:underline dark:text-teal-300"
-              href="https://agentkit.best/docs"
+              href="https://docs.agentkit.best"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -198,11 +235,11 @@ const licenseTypes = isVi
             {' · '}
             <a
               class="font-semibold text-teal-700 underline-offset-2 hover:underline dark:text-teal-300"
-              href="https://agentkit.best/agentkit-app"
+              href={agentKitReferralUrl}
               target="_blank"
               rel="noopener noreferrer"
             >
-              Desktop App
+              Store (giảm 30%)
             </a>
           </>
         ) : (
@@ -212,7 +249,7 @@ const licenseTypes = isVi
             {' '}
             <a
               class="font-semibold text-teal-700 underline-offset-2 hover:underline dark:text-teal-300"
-              href="https://agentkit.best/docs"
+              href="https://docs.agentkit.best"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -221,12 +258,42 @@ const licenseTypes = isVi
             {' · '}
             <a
               class="font-semibold text-teal-700 underline-offset-2 hover:underline dark:text-teal-300"
-              href="https://agentkit.best/agentkit-app"
+              href={agentKitReferralUrl}
               target="_blank"
               rel="noopener noreferrer"
             >
-              Desktop App
+              Store (30% OFF)
             </a>
+          </>
+        )}
+      </AkCallout>
+
+      <AkCallout variant="tip" title={isVi ? 'Mua Desktop qua referral VividKit' : 'Buy Desktop via VividKit referral'}>
+        {isVi ? (
+          <>
+            Cần Desktop? Dùng link referral (giảm 30%):{' '}
+            <a
+              class="font-semibold text-teal-700 underline-offset-2 hover:underline dark:text-teal-300"
+              href={agentKitReferralUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              agentkit.best/?ref=OMG49S8R
+            </a>
+            . Sau khi mua App license, kích hoạt device theo hướng dẫn store / app — Kit CLI vẫn login account cũ.
+          </>
+        ) : (
+          <>
+            Need Desktop? Use the VividKit referral link (30% OFF):{' '}
+            <a
+              class="font-semibold text-teal-700 underline-offset-2 hover:underline dark:text-teal-300"
+              href={agentKitReferralUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              agentkit.best/?ref=OMG49S8R
+            </a>
+            . After you buy an App license, activate the device per the store / app flow — Kit CLI login stays on your existing account.
           </>
         )}
       </AkCallout>
@@ -268,9 +335,10 @@ const licenseTypes = isVi
     lang={currentLang}
     title={isVi ? 'Liên quan' : 'Related'}
     links={[
-      { href: '/guides/agentkit/getting-started', label: isVi ? 'Cài CLI' : 'Install the CLI' },
-      { href: '/guides/agentkit/updating', label: isVi ? 'Cập nhật' : 'Updating' },
-      { href: '/guides/agentkit/troubleshooting', label: isVi ? 'Xử lý sự cố' : 'Troubleshooting' },
+      { href: '/guides/agentkit/getting-started', label: isVi ? 'Cài CLI & Kits' : 'Install CLI & Kits' },
+      { href: '/guides/agentkit/building-blocks', label: isVi ? 'Kit / Skill / Agent' : 'Kits / Skills / Agents' },
+      { href: '/guides/agentkit/updating', label: isVi ? 'Cập nhật AgentKit' : 'Update AgentKit' },
+      { href: '/guides/agentkit/troubleshooting', label: isVi ? 'Xử lý sự cố AgentKit' : 'AgentKit troubleshooting' },
     ]}
   />
 </div>
