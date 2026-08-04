@@ -98,15 +98,15 @@ Write-Host "Safety copy completed at: $dest"`;
     kicker={isVi ? 'Migration · soft · tùy chọn' : 'Migration · soft · optional'}
     title={isVi ? 'Chuyển ClaudeKit sang AgentKit' : 'Migrate ClaudeKit to AgentKit'}
     subtitle={isVi
-      ? 'Sao lưu trước. Dry-run mặc định. Thường giữ custom/modified theo classify — không phải wipe sạch CK.'
-      : 'Back up first. Dry-run by default. Usually keeps custom/modified by classification — not a full CK wipe.'}
+      ? 'Sao lưu trước. Mặc định chỉ xem trước (chưa ghi). Thường giữ file bạn đã chỉnh — không phải xóa sạch ClaudeKit.'
+      : 'Back up first. Preview by default (no writes yet). Usually keeps files you customized — not a full ClaudeKit wipe.'}
     badges={isVi ? ['ak migrate --from=ck'] : ['ak migrate --from=ck']}
   />
 
   <AkCallout variant="danger" title={isVi ? 'Sao lưu trước khi thay đổi bất kỳ thứ gì' : 'Back up before changing anything'}>
     {isVi
-      ? 'Tạo bản sao thủ công các thư mục cấu hình trước lệnh mutate đầu tiên. Apply migrate cũng tạo backup AgentKit, nhưng bản sao thủ công giúp khôi phục ngoài tool.'
-      : 'Create a manual copy of configuration directories before the first mutating command. Apply also creates an AgentKit backup, but a manual copy lets you recover outside the tool.'}
+      ? 'Tự copy thư mục cấu hình ra chỗ an toàn trước lệnh ghi đầu tiên. Khi apply, AgentKit cũng tạo backup — nhưng bản copy tay giúp bạn khôi phục ngoài tool.'
+      : 'Copy configuration folders somewhere safe yourself before the first write. Apply also creates an AgentKit backup — but your manual copy lets you recover outside the tool.'}
   </AkCallout>
 
   <AkSection
@@ -119,15 +119,15 @@ Write-Host "Safety copy completed at: $dest"`;
           {isVi ? 'Path A · trang này' : 'Path A · this page'}
         </p>
         <h3 class="mt-1 text-base font-bold text-slate-900 dark:text-white">
-          {isVi ? 'Soft transition' : 'Soft transition'}
+          {isVi ? 'Chuyển dần' : 'Move gradually'}
         </h3>
         <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
           {isVi
-            ? 'ak migrate --from=ck: scan, classify, dry-run mặc định. Custom/modified thường được classify để giữ (không phải “always”). ClaudeKit vẫn được hỗ trợ nếu bạn chưa sẵn sàng.'
-            : 'ak migrate --from=ck: scan, classify, dry-run by default. Custom/modified files are usually classified to keep (not an “always” contract). ClaudeKit remains supported if you are not ready.'}
+            ? 'ak migrate --from=ck: quét cài đặt, đề xuất kế hoạch, mặc định chỉ xem trước. File bạn đã chỉnh thường được giữ (không phải cam kết “luôn luôn”). ClaudeKit vẫn dùng được nếu chưa sẵn sàng rời hẳn.'
+            : 'ak migrate --from=ck: scans your install, proposes a plan, previews by default. Files you customized are usually kept (not an “always” promise). ClaudeKit still works if you are not ready to leave fully.'}
         </p>
         <p class="mt-3 text-xs font-medium text-amber-800 dark:text-amber-200">
-          {isVi ? 'Phù hợp khi muốn chuyển dần và giữ customization.' : 'Best when you want a gradual transition and keep customizations.'}
+          {isVi ? 'Phù hợp khi muốn chuyển từ từ và giữ setting cũ.' : 'Best when you want a gradual move and keep your custom setup.'}
         </p>
       </div>
 
@@ -143,8 +143,8 @@ Write-Host "Safety copy completed at: $dest"`;
         </h3>
         <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
           {isVi
-            ? 'Multi-step: backup → ck uninstall theo scope → cài AK → gỡ binary → leftover thủ công. Không one-shot; --all không gỡ mọi project.'
-            : 'Multi-step: backup → ck uninstall per scope → install AK → remove binary → manual leftovers. Not one-shot; --all is not every project.'}
+            ? 'Nhiều bước: sao lưu → gỡ CK từng chỗ → cài AgentKit → gỡ lệnh ck → dọn thủ công. Không có lệnh “một phát xong”; --all không gỡ mọi project.'
+            : 'Many steps: back up → remove CK place by place → install AgentKit → remove the ck command → clean leftovers by hand. No one-shot command; --all is not every project.'}
         </p>
         <span class="mt-3 inline-flex text-sm font-semibold text-rose-700 group-hover:underline dark:text-rose-300">
           {isVi ? 'Mở hướng dẫn gỡ hẳn →' : 'Open clean cutover →'}
@@ -154,13 +154,13 @@ Write-Host "Safety copy completed at: $dest"`;
     <p class="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
       {isVi ? (
         <>
-          <AkInlineCode text="ak migrate" /> <strong>không</strong> xóa hết tàn tích CK: neutralize artifact pristine có evidence; custom/modified thường được classify để giữ.
+          <AkInlineCode text="ak migrate" /> <strong>không</strong> xóa sạch mọi dấu vết ClaudeKit: nó vô hiệu hóa phần CK còn “nguyên” (có ghi nhận), còn file bạn đã chỉnh thường được giữ.
           Muốn gỡ hẳn → Path B.
         </>
       ) : (
         <>
-          <AkInlineCode text="ak migrate" /> does <strong>not</strong> wipe all CK residue: it neutralizes pristine artifacts with evidence and usually keeps custom/modified content by classification.
-          Want a cleaner leave → Path B.
+          <AkInlineCode text="ak migrate" /> does <strong>not</strong> wipe every ClaudeKit leftover: it disables still-pristine CK pieces (with a record), and usually keeps files you customized.
+          Want a full remove → Path B.
         </>
       )}
     </p>
