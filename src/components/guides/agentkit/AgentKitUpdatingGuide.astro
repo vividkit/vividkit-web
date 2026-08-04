@@ -148,13 +148,13 @@ const wizardSteps = isVi
         <AkInlineCode text="ak update" />
         <span>
           {isVi
-            ? '= làm mới Kit / content AgentKit-owned (wizard có thể gồm CLI trước).'
-            : '= refresh AgentKit-owned Kit content (wizard may include CLI first).'}
+            ? '= làm mới kit (có thể hỏi nâng tool ak trước).'
+            : '= refresh kits (may ask to upgrade the ak tool first).'}
         </span>
       </li>
       <li class="flex flex-wrap items-baseline gap-x-1.5 gap-y-1">
         <AkInlineCode text="ak kit refresh <kit>" />
-        <span>{isVi ? '= force re-emit đúng một kit.' : '= force re-emit exactly one kit.'}</span>
+        <span>{isVi ? '= ép làm mới đúng một kit.' : '= force-refresh exactly one kit.'}</span>
       </li>
     </ul>
   </AkCallout>
