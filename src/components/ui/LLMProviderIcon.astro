@@ -25,7 +25,9 @@ interface Props {
     | "windsurf"
     | "alibabacloud"
     | "qwen"
-    | "ollama";
+    | "ollama"
+    | "opencode"
+    | "cline";
   size?: number;
   variant?: "color" | "mono" | "text";
   class?: string;
@@ -61,12 +63,25 @@ const iconMap: Record<string, string> = {
   alibabacloud: "alibabacloud",
   qwen: "qwen",
   ollama: "ollama",
+  opencode: "opencode",
+  cline: "cline",
 };
 
 const iconName = iconMap[provider] || provider;
 
 // Icons that don't have a -color variant (use mono instead)
-const noColorVariant = ["zai", "moonshot", "cursor", "windsurf", "openai", "kimi", "ollama"];
+const noColorVariant = [
+  "zai",
+  "moonshot",
+  "cursor",
+  "windsurf",
+  "openai",
+  "kimi",
+  "ollama",
+  "opencode",
+  "cline",
+  "grok",
+];
 
 // Whether this icon uses mono variant (needs dark mode inversion)
 const isMono = variant === "color" && noColorVariant.includes(iconName);
