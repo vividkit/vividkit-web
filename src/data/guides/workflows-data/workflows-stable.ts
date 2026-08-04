@@ -1415,5 +1415,258 @@ export const stableWorkflows = [
     ],
     tip: 'Use chrome-profile when automation needs your real cookies/account; use web-testing for clean-room E2E',
     borderColor: 'border-blue-500/20'
+  },
+  {
+    title: 'Advise → Plan → Cook',
+    category: 'Planning & Review',
+    level: 'Intermediate',
+    duration: '~25-45 min',
+    stepCount: 4,
+    bestFor: 'Pressure-testing a fuzzy idea before committing to plan and implementation',
+    gradientHeader: 'from-violet-500/10 to-purple-500/10',
+    hoverBorderColor: 'hover:border-violet-500/50',
+    buttonColor: 'bg-violet-500 hover:bg-violet-600',
+    icon: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+    iconColor: 'text-violet-600 dark:text-violet-400',
+    isBeta: true,
+    steps: [
+      {
+        command: '/ck:advise',
+        typeLabel: 'Reframe + advise',
+        description: 'Interview the raw idea into exact requirements and goals; honest advice only (no code)',
+        color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      },
+      {
+        command: '/ck:plan',
+        typeLabel: 'Implementation plan',
+        description: 'Turn confirmed requirements into a validated plan (--html/--wiki optional)',
+        color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
+        number: 2,
+        isSkill: true
+      },
+      {
+        typeLabel: 'Review → /clear',
+        description: 'Approve the plan, then /clear to free context before cook',
+        color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
+        number: 3,
+        hasIcon: true
+      },
+      {
+        command: '/ck:cook @plan.md',
+        typeLabel: 'Implement',
+        description: 'Execute the plan with tests and review gates',
+        color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
+        number: 4,
+        isSkill: true
+      }
+    ],
+    tip: 'Use /ck:advise --agent for single-run counsel without interview; still plan before cook',
+    features: [
+      'Requirement reframing before planning',
+      'Advisory-only hard gate (no implement)',
+      'Optional --html/--wiki/--github advisory reports',
+      'Standard plan → clear → cook handoff'
+    ],
+    borderColor: 'border-violet-500/20'
+  },
+  {
+    title: 'Issue → Audited Plan Branch',
+    category: 'Planning & Review',
+    level: 'Advanced',
+    duration: '~20-40 min',
+    stepCount: 3,
+    bestFor: 'Turning one GitHub issue into a gated, validated plan branch without implementing',
+    gradientHeader: 'from-sky-500/10 to-blue-500/10',
+    hoverBorderColor: 'hover:border-sky-500/50',
+    buttonColor: 'bg-sky-500 hover:bg-sky-600',
+    icon: '<circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 9v6a3 3 0 0 0 3 3h6"/>',
+    iconColor: 'text-sky-600 dark:text-sky-400',
+    isBeta: true,
+    steps: [
+      {
+        command: '/ck:issue-to-plan <issue>',
+        typeLabel: 'Scout + hard gate + plan',
+        description: 'Reads issue, scouts codebase, runs audit/brainstorm gate; only on pass: plan, validate, red-team, push plan branch',
+        color: 'bg-sky-500/10 dark:bg-sky-500/20 text-sky-600 dark:text-sky-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      },
+      {
+        typeLabel: 'Review plan branch',
+        description: 'Human reviews plan.md + phases on the plan branch; reject returns to issue labels',
+        color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
+        number: 2,
+        hasIcon: true
+      },
+      {
+        command: '/ck:cook @plan.md',
+        typeLabel: 'Implement later',
+        description: 'Only after plan approval — issue-to-plan itself never cooks or opens a PR',
+        color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
+        number: 3,
+        isSkill: true
+      }
+    ],
+    tip: 'Planning-only pipeline — stop at plan branch + issue handoff; use /ck:vibe when you want issue→PR autonomous',
+    features: [
+      'Hard audit gate before any plan file',
+      'ck:scout + validate + red-team baked in',
+      'Pushed plan branch + issue comment',
+      'No cook/ship/PR from issue-to-plan'
+    ],
+    borderColor: 'border-sky-500/20'
+  },
+  {
+    title: 'Long-Run Goal Preflight',
+    category: 'Advanced',
+    level: 'Advanced',
+    duration: '~10-25 min',
+    stepCount: 3,
+    bestFor: 'Locking outcome and blockers before expensive Codex /goal or multi-hour autonomous runs',
+    gradientHeader: 'from-amber-500/10 to-orange-500/10',
+    hoverBorderColor: 'hover:border-amber-500/50',
+    buttonColor: 'bg-amber-500 hover:bg-amber-600',
+    icon: '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+    iconColor: 'text-amber-600 dark:text-amber-400',
+    isBeta: true,
+    steps: [
+      {
+        command: '/ck:advise',
+        typeLabel: 'Optional reframe',
+        description: 'Only if the goal is fuzzy or contested — full advisory interview first. Skip when the objective is already exact; goal-warmup can restate a clear brief into the Outcome Contract itself',
+        color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      },
+      {
+        command: '/ck:goal-warmup "<goal>"',
+        typeLabel: 'Outcome Contract + matrix',
+        description: 'Required preflight: locks end-state, surfaces blockers/env gaps; ends Ready, Blocked, or Decision required — never auto-starts /goal',
+        color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
+        number: 2,
+        isSkill: true,
+        isBeta: true
+      },
+      {
+        command: '/ck:codex-goal',
+        typeLabel: 'Draft /goal wording',
+        description: 'Only when Ready: draft Codex /goal text with a verifiable stop condition — you start /goal yourself',
+        color: 'bg-cyan-500/10 dark:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400',
+        number: 3,
+        isSkill: true,
+        isBeta: true
+      }
+    ],
+    tip: 'Happy path when the goal is already clear: skip advise → /ck:goal-warmup only → if Ready, /ck:codex-goal then you start Codex /goal. Use /ck:advise first only when the goal is fuzzy (second opinion / requirement reframe). goal-warmup never auto-starts /goal; do not continue past Blocked or Decision required.',
+    features: [
+      'advise is optional (fuzzy goals only)',
+      'Outcome Contract before long-run',
+      'Blocker matrix (env present|missing only)',
+      'Terminal Ready / Blocked / Decision',
+      'Codex /goal stop-condition drafting'
+    ],
+    borderColor: 'border-amber-500/20'
+  },
+  {
+    title: 'Session Continuity Pack',
+    category: 'Session & Management',
+    level: 'Beginner',
+    duration: '~5-15 min',
+    stepCount: 3,
+    bestFor: 'Ending a session cleanly and giving the next agent durable local context',
+    gradientHeader: 'from-orange-500/10 to-rose-500/10',
+    hoverBorderColor: 'hover:border-orange-500/50',
+    buttonColor: 'bg-orange-500 hover:bg-orange-600',
+    icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>',
+    iconColor: 'text-orange-600 dark:text-orange-400',
+    isBeta: true,
+    steps: [
+      {
+        command: '/ck:handoff',
+        typeLabel: 'Conversation handoff',
+        description: 'Compact redacted handoff of decisions and blockers (not a command list; distinct from /ck:watzup)',
+        color: 'bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      },
+      {
+        command: '/ck:watzup',
+        typeLabel: 'Git-derived status',
+        description: 'Optional branch/worktree/plan status report for human or next session',
+        color: 'bg-teal-500/10 dark:bg-teal-500/20 text-teal-600 dark:text-teal-400',
+        number: 2,
+        isSkill: true
+      },
+      {
+        command: '/ck:folder-context <path>',
+        typeLabel: 'Local conventions',
+        description: 'When a subfolder needs durable agent context: CLAUDE.md + AGENTS.md (never touches root)',
+        color: 'bg-lime-500/10 dark:bg-lime-500/20 text-lime-600 dark:text-lime-400',
+        number: 3,
+        isSkill: true,
+        isBeta: true
+      }
+    ],
+    tip: 'handoff = conversation state; watzup = git status; folder-context = durable subfolder conventions',
+    features: [
+      'Redacted conversation handoff file',
+      'Git/worktree status via watzup',
+      'Subfolder CLAUDE.md without root edits'
+    ],
+    borderColor: 'border-orange-500/20'
+  },
+  {
+    title: 'Multi-Agent Coding Orchestration',
+    category: 'Advanced',
+    level: 'Advanced',
+    duration: '~30-90 min',
+    stepCount: 3,
+    bestFor: 'Splitting plan/implement/review across Claude Code, Codex, Cursor, OpenCode with one integrator',
+    gradientHeader: 'from-purple-500/10 to-fuchsia-500/10',
+    hoverBorderColor: 'hover:border-purple-500/50',
+    buttonColor: 'bg-purple-500 hover:bg-purple-600',
+    icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+    iconColor: 'text-purple-600 dark:text-purple-400',
+    isBeta: true,
+    steps: [
+      {
+        command: '/ck:coding-agent-orchestration',
+        typeLabel: 'Shape + ownership',
+        description: 'Pick --single/--sequential/--parallel/--review-loop; assign roles and file ownership before work starts',
+        color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      },
+      {
+        typeLabel: 'Execute agents',
+        description: 'Each agent runs its stage with required evidence; parallel lanes respect blocked paths',
+        color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
+        number: 2,
+        hasIcon: true
+      },
+      {
+        command: '/ck:code-review + /ck:test',
+        typeLabel: 'Integrate + verify',
+        description: 'One integrator reconciles on repo truth; review and tests before done',
+        color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
+        number: 3,
+        isSkill: true
+      }
+    ],
+    tip: 'Never average conflicting agent opinions — reconcile against repo truth, tests, and user requirements',
+    features: [
+      'Multi-CLI agent selection',
+      'Explicit ownership before parallel',
+      'Evidence-gated handoffs',
+      'Single final integrator package'
+    ],
+    borderColor: 'border-purple-500/20'
   }
 ];

@@ -10074,4 +10074,742 @@ export const additionalSkillInfographics: SkillInfographic[] = [
     },
     deepDiveLink: commonLink,
   },
+  {
+    id: 'advise',
+    command: '/ck:advise',
+    kit: 'engineer',
+    header: {
+      titleEn: '/ck:advise',
+      titleVi: '/ck:advise',
+      taglineEn: 'Interview a raw idea or URL into exact requirements, then deliver honest unfiltered advice',
+      taglineVi: 'Phỏng vấn ý tưởng thô hoặc URL thành requirements chính xác, rồi đưa lời khuyên thẳng thắn',
+    },
+    hardGate: {
+      type: 'warning',
+      titleEn: 'HARD GATE',
+      titleVi: 'HARD GATE',
+      contentEn: 'Advisory only — does not implement code or execute the advice it produces. Present analysis before every AskUserQuestion.',
+      contentVi: 'Chỉ advisory — không implement code hay thực thi lời khuyên. Trình bày analysis trước mọi AskUserQuestion.',
+    },
+    processFlow: [
+      { number: 1, titleEn: 'Analyze', titleVi: 'Phân tích', descEn: 'Parse prompt or URL', descVi: 'Parse prompt hoặc URL' },
+      { number: 2, titleEn: 'Scout', titleVi: 'Scout', descEn: 'Ground in codebase if needed', descVi: 'Bám codebase nếu cần' },
+      { number: 3, titleEn: 'Interview', titleVi: 'Phỏng vấn', descEn: 'One question until exact goals', descVi: 'Một câu đến khi goals chính xác' },
+      { number: 4, titleEn: 'Confirm', titleVi: 'Xác nhận', descEn: 'User confirms reframing', descVi: 'User xác nhận reframe' },
+      { number: 5, titleEn: 'Advise', titleVi: 'Tư vấn', descEn: 'Honest unfiltered advice', descVi: 'Lời khuyên thẳng thắn' },
+      { number: 6, titleEn: 'Emit', titleVi: 'Xuất', descEn: 'Optional HTML/wiki/GitHub', descVi: 'HTML/wiki/GitHub tùy chọn' }
+    ],
+    outputFlags: [
+      { flag: '--html', titleEn: 'Editorial HTML', titleVi: 'HTML editorial', descEn: 'Self-contained HTML report', descVi: 'Report HTML tự đủ', exampleCommand: '/ck:advise "..." --html' },
+      { flag: '--md', titleEn: 'Markdown file', titleVi: 'File Markdown', descEn: 'Write markdown to disk', descVi: 'Ghi markdown ra disk', exampleCommand: '/ck:advise "..." --md' },
+      { flag: '--wiki', titleEn: 'AgentWiki', titleVi: 'AgentWiki', descEn: 'Publish when AgentWiki available', descVi: 'Publish khi có AgentWiki', exampleCommand: '/ck:advise "..." --wiki' },
+      { flag: '--github', titleEn: 'GitHub reply', titleVi: 'Trả lời GitHub', descEn: 'Comment on source issue/PR', descVi: 'Comment lên issue/PR nguồn', exampleCommand: '/ck:advise <url> --github' },
+      { flag: '--agent', titleEn: 'Autonomous', titleVi: 'Tự trị', descEn: 'Single-run counsel, no interview', descVi: 'Counsel một lần, không interview', exampleCommand: '/ck:advise "..." --agent' }
+    ],
+    promptExamples: [
+      {
+        labelEn: 'Default',
+        labelVi: 'Default',
+        command: '/ck:advise Should we build our own job queue?',
+        whenEn: 'Second opinion before planning.',
+        whenVi: 'Second opinion trước khi plan.',
+        expectedEn: 'Reframed requirements + honest recommendation.',
+        expectedVi: 'Requirements đã reframe + khuyến nghị thẳng.',
+        recommended: true,
+      },
+      {
+        labelEn: 'GitHub issue',
+        labelVi: 'GitHub issue',
+        command: '/ck:advise https://github.com/org/repo/issues/42 --html',
+        whenEn: 'Pressure-test an issue.',
+        whenVi: 'Pressure-test một issue.',
+        expectedEn: 'HTML advisory report.',
+        expectedVi: 'Advisory report HTML.',
+        recommended: false,
+      },
+      {
+        labelEn: '--agent',
+        labelVi: '--agent',
+        command: '/ck:advise --agent Is this architecture worth the complexity?',
+        whenEn: 'Autonomous counsel without interview.',
+        whenVi: 'Counsel tự trị không interview.',
+        expectedEn: 'Single-run advice with assumptions.',
+        expectedVi: 'Advice một lần kèm assumptions.',
+        recommended: false,
+      }
+    ],
+    corePrinciplesEn: ['Present analysis before questions', 'Exact requirements before advice', 'Never implement', 'Evidence over opinion', 'List assumptions when autonomous'],
+    corePrinciplesVi: ['Analysis trước câu hỏi', 'Requirements trước advice', 'Không implement', 'Evidence hơn ý kiến', 'Liệt kê assumptions khi autonomous'],
+    expertiseAreasEn: ['Requirement reframing', 'Trade-off review', 'Second opinions', 'GitHub issue intake', 'Advisory reports'],
+    expertiseAreasVi: ['Reframe requirements', 'Review trade-off', 'Second opinion', 'Intake GitHub issue', 'Report advisory'],
+    skillStack: [
+      { name: 'Explore', type: 'agent' },
+      { name: 'gh', type: 'tool' },
+      { name: 'WebFetch', type: 'tool' },
+      { name: 'kongming', type: 'agent' }
+    ],
+    reportOutput: {
+      titleEn: 'Advise Before You Plan Result',
+      titleVi: 'Kết quả Tư Vấn Trước Khi Plan',
+      patternEn: 'In-session report + optional artifact paths',
+      patternVi: 'Report trong session + đường dẫn artifact tùy chọn',
+      descEn: 'Interview a raw idea or URL into exact requirements, then deliver honest unfiltered advice',
+      descVi: 'Phỏng vấn ý tưởng thô hoặc URL thành requirements chính xác, rồi đưa lời khuyên thẳng thắn',
+    },
+    deepDiveLink: commonLink,
+  },
+
+  {
+    id: 'fable-thinking',
+    command: '/ck:fable-thinking',
+    kit: 'engineer',
+    header: {
+      titleEn: '/ck:fable-thinking',
+      titleVi: '/ck:fable-thinking',
+      taglineEn: 'Evidence-grounded multi-hypothesis reasoning for high-stakes analysis',
+      taglineVi: 'Reasoning đa giả thuyết bám bằng chứng cho phân tích rủi ro cao',
+    },
+    hardGate: {
+      type: 'warning',
+      titleEn: 'HARD GATE',
+      titleVi: 'HARD GATE',
+      contentEn: 'Floor checks (goal, follow-through, counterexample) run before EVERY answer — never skipped.',
+      contentVi: 'Floor checks (goal, follow-through, counterexample) chạy trước MỌI câu trả lời — không bao giờ bỏ.',
+    },
+    processFlow: [
+      { number: 1, titleEn: 'Floor', titleVi: 'Floor', descEn: 'Goal, follow-through, counterexample', descVi: 'Goal, follow-through, counterexample' },
+      { number: 2, titleEn: 'Proportion', titleVi: 'Tỷ lệ', descEn: 'Direct / Constraint / Full', descVi: 'Direct / Constraint / Full' },
+      { number: 3, titleEn: 'Hypothesize', titleVi: 'Giả thuyết', descEn: 'Competing explanations', descVi: 'Giải thích cạnh tranh' },
+      { number: 4, titleEn: 'Evidence', titleVi: 'Evidence', descEn: 'Ground in code and facts', descVi: 'Bám code và facts' },
+      { number: 5, titleEn: 'Adversarial', titleVi: 'Đối kháng', descEn: 'Attack own answer', descVi: 'Tấn công câu trả lời của mình' },
+      { number: 6, titleEn: 'Deliver', titleVi: 'Giao', descEn: 'Calibrated outcome-first answer', descVi: 'Answer outcome-first đã hiệu chỉnh' }
+    ],
+    promptExamples: [
+      {
+        labelEn: 'Debug RCA',
+        labelVi: 'Debug RCA',
+        command: '/ck:fable-thinking Why do webhook retries double-charge?',
+        whenEn: 'Root cause must be proven.',
+        whenVi: 'Root cause phải được chứng minh.',
+        expectedEn: 'Multi-hypothesis RCA with evidence.',
+        expectedVi: 'RCA đa giả thuyết kèm evidence.',
+        recommended: true,
+      },
+      {
+        labelEn: 'Architecture',
+        labelVi: 'Kiến trúc',
+        command: '/ck:fable-thinking Should checkout use sagas or a state machine?',
+        whenEn: 'High-stakes design trade-off.',
+        whenVi: 'Trade-off design rủi ro cao.',
+        expectedEn: 'Calibrated recommendation with falsifiers.',
+        expectedVi: 'Khuyến nghị hiệu chỉnh kèm falsifiers.',
+        recommended: false,
+      },
+      {
+        labelEn: 'Contested claim',
+        labelVi: 'Claim tranh luận',
+        command: '/ck:fable-thinking Is our cache invalidation actually correct?',
+        whenEn: 'A confident claim needs pressure.',
+        whenVi: 'Claim tự tin cần pressure-test.',
+        expectedEn: 'Adversarial review of the claim.',
+        expectedVi: 'Review đối kháng claim.',
+        recommended: false,
+      }
+    ],
+    corePrinciplesEn: ['Floor never skipped', 'Multiple hypotheses', 'Evidence over fluency', 'Adversarial self-review', 'Calibrate uncertainty'],
+    corePrinciplesVi: ['Floor không bao giờ bỏ', 'Nhiều giả thuyết', 'Evidence hơn fluency', 'Tự review đối kháng', 'Hiệu chỉnh uncertainty'],
+    expertiseAreasEn: ['Root-cause analysis', 'Architecture trade-offs', 'Contested claims', 'Constrained writing', 'High-stakes review'],
+    expertiseAreasVi: ['Root-cause analysis', 'Trade-off kiến trúc', 'Claim tranh luận', 'Viết có ràng buộc', 'Review rủi ro cao'],
+    skillStack: [
+      { name: 'Read', type: 'tool' },
+      { name: 'Grep', type: 'tool' },
+      { name: 'WebSearch', type: 'tool' }
+    ],
+    reportOutput: {
+      titleEn: 'Fable Thinking Protocol Result',
+      titleVi: 'Kết quả Giao Thức Fable Thinking',
+      patternEn: 'In-session report + optional artifact paths',
+      patternVi: 'Report trong session + đường dẫn artifact tùy chọn',
+      descEn: 'Evidence-grounded multi-hypothesis reasoning for high-stakes analysis',
+      descVi: 'Reasoning đa giả thuyết bám bằng chứng cho phân tích rủi ro cao',
+    },
+    deepDiveLink: commonLink,
+  },
+
+  {
+    id: 'issue-to-plan',
+    command: '/ck:issue-to-plan',
+    kit: 'engineer',
+    header: {
+      titleEn: '/ck:issue-to-plan',
+      titleVi: '/ck:issue-to-plan',
+      taglineEn: 'GitHub issue → scout → hard audit gate → plan validate/red-team → plan branch (no implement)',
+      taglineVi: 'GitHub issue → scout → hard gate audit → plan validate/red-team → plan branch (không implement)',
+    },
+    hardGate: {
+      type: 'warning',
+      titleEn: 'HARD GATE',
+      titleVi: 'HARD GATE',
+      contentEn: 'Hard audit/brainstorm gate BEFORE any planning. Planning-only — stops before cook/ship/PR.',
+      contentVi: 'Hard gate audit/brainstorm TRƯỚC mọi planning. Chỉ planning — dừng trước cook/ship/PR.',
+    },
+    processFlow: [
+      { number: 1, titleEn: 'Read', titleVi: 'Đọc', descEn: 'Classify issue', descVi: 'Phân loại issue' },
+      { number: 2, titleEn: 'Scout', titleVi: 'Scout', descEn: 'Verify scope + evidence', descVi: 'Xác minh scope + evidence' },
+      { number: 3, titleEn: 'Gate', titleVi: 'Gate', descEn: 'Hard audit/brainstorm', descVi: 'Hard audit/brainstorm' },
+      { number: 4, titleEn: 'Plan', titleVi: 'Plan', descEn: 'Generate + validate + red-team', descVi: 'Generate + validate + red-team' },
+      { number: 5, titleEn: 'Push', titleVi: 'Push', descEn: 'Plan branch', descVi: 'Plan branch' },
+      { number: 6, titleEn: 'Handoff', titleVi: 'Handoff', descEn: 'Issue comment; stop', descVi: 'Comment issue; dừng' }
+    ],
+    promptExamples: [
+      {
+        labelEn: 'Issue URL',
+        labelVi: 'Issue URL',
+        command: '/ck:issue-to-plan https://github.com/org/repo/issues/42',
+        whenEn: 'Turn one issue into a validated plan.',
+        whenVi: 'Biến một issue thành plan đã validate.',
+        expectedEn: 'Plan branch + issue handoff; no PR.',
+        expectedVi: 'Plan branch + handoff issue; không PR.',
+        recommended: true,
+      },
+      {
+        labelEn: 'With labels',
+        labelVi: 'Kèm labels',
+        command: '/ck:issue-to-plan 57 --plan-ready-label "ready to cook"',
+        whenEn: 'Custom label on pass.',
+        whenVi: 'Label tùy chỉnh khi pass.',
+        expectedEn: 'Labeled issue + validated plan.',
+        expectedVi: 'Issue đã label + plan đã validate.',
+        recommended: false,
+      }
+    ],
+    corePrinciplesEn: ['Gate before plan', 'Planning only', 'Evidence required', 'Zero contradictions', 'No silent implement'],
+    corePrinciplesVi: ['Gate trước plan', 'Chỉ planning', 'Cần evidence', 'Không contradiction', 'Không implement lén'],
+    expertiseAreasEn: ['Issue intake', 'Codebase scouting', 'Brainstorm gates', 'Plan validation', 'GitHub handoff'],
+    expertiseAreasVi: ['Intake issue', 'Scout codebase', 'Gate brainstorm', 'Validate plan', 'Handoff GitHub'],
+    skillStack: [
+      { name: 'ck:scout', type: 'skill' },
+      { name: 'ck:brainstorm', type: 'skill' },
+      { name: 'ck:plan', type: 'skill' },
+      { name: 'gh', type: 'tool' },
+      { name: 'ck:worktree', type: 'skill' }
+    ],
+    reportOutput: {
+      titleEn: 'Issue to Validated Plan Result',
+      titleVi: 'Kết quả Issue Thành Plan Đã Validate',
+      patternEn: 'In-session report + optional artifact paths',
+      patternVi: 'Report trong session + đường dẫn artifact tùy chọn',
+      descEn: 'GitHub issue → scout → hard audit gate → plan validate/red-team → plan branch (no implement)',
+      descVi: 'GitHub issue → scout → hard gate audit → plan validate/red-team → plan branch (không implement)',
+    },
+    deepDiveLink: commonLink,
+  },
+
+  {
+    id: 'goal-warmup',
+    command: '/ck:goal-warmup',
+    kit: 'engineer',
+    header: {
+      titleEn: '/ck:goal-warmup',
+      titleVi: '/ck:goal-warmup',
+      taglineEn: 'Lock Outcome Contract, surface blockers, end Ready / Blocked / Decision — never auto-starts /goal',
+      taglineVi: 'Khóa Outcome Contract, lộ blocker, kết thúc Ready / Blocked / Decision — không bao giờ tự start /goal',
+    },
+    hardGate: {
+      type: 'warning',
+      titleEn: 'HARD GATE',
+      titleVi: 'HARD GATE',
+      contentEn: 'Never auto-starts /goal or long-run sessions. Ends in exactly one of Ready, Blocked, or Decision required.',
+      contentVi: 'Không bao giờ tự start /goal hay long-run. Kết thúc đúng một trong Ready, Blocked, hoặc Decision required.',
+    },
+    processFlow: [
+      { number: 1, titleEn: 'Intake', titleVi: 'Intake', descEn: 'Capture goal', descVi: 'Nhận goal' },
+      { number: 2, titleEn: 'Contract', titleVi: 'Contract', descEn: 'Lock outcome', descVi: 'Khóa outcome' },
+      { number: 3, titleEn: 'Matrix', titleVi: 'Matrix', descEn: 'Blockers + env', descVi: 'Blockers + env' },
+      { number: 4, titleEn: 'Status', titleVi: 'Status', descEn: 'Ready/Blocked/Decision', descVi: 'Ready/Blocked/Decision' },
+      { number: 5, titleEn: 'Handoff', titleVi: 'Handoff', descEn: 'Report for next step', descVi: 'Report cho bước tiếp' }
+    ],
+    workflowModes: [
+      { flag: '--fast', modeEn: 'Lighter preflight matrix', modeVi: 'Matrix preflight nhẹ hơn', research: 'less', redTeam: '', validation: 'Ready|Blocked|Decision' }
+    ],
+    promptExamples: [
+      {
+        labelEn: 'Default',
+        labelVi: 'Default',
+        command: '/ck:goal-warmup "Green integration tests for giveaway worker"',
+        whenEn: 'Before expensive long-run.',
+        whenVi: 'Trước long-run tốn kém.',
+        expectedEn: 'Ready/Blocked/Decision + contract.',
+        expectedVi: 'Ready/Blocked/Decision + contract.',
+        recommended: true,
+      },
+      {
+        labelEn: '--fast',
+        labelVi: '--fast',
+        command: '/ck:goal-warmup "Ship docs site" --fast',
+        whenEn: 'Lighter preflight.',
+        whenVi: 'Preflight nhẹ hơn.',
+        expectedEn: 'Faster matrix, same terminal status.',
+        expectedVi: 'Matrix nhanh hơn, cùng status cuối.',
+        recommended: false,
+      }
+    ],
+    corePrinciplesEn: ['Never auto-start /goal', 'One terminal status', 'No silent scope drift', 'Redact secrets', 'Contract before long-run'],
+    corePrinciplesVi: ['Không tự start /goal', 'Một status cuối', 'Không scope drift lén', 'Redact secrets', 'Contract trước long-run'],
+    expertiseAreasEn: ['Outcome contracts', 'Blocker discovery', 'Scope drift review', 'Long-run preflight', 'Goal handoffs'],
+    expertiseAreasVi: ['Outcome contract', 'Phát hiện blocker', 'Review scope drift', 'Preflight long-run', 'Handoff goal'],
+    skillStack: [
+      { name: 'ck:advise', type: 'skill' },
+      { name: 'ck:codex-goal', type: 'skill' },
+      { name: 'Read', type: 'tool' }
+    ],
+    reportOutput: {
+      titleEn: 'Goal Warmup Preflight Result',
+      titleVi: 'Kết quả Preflight Goal Warmup',
+      patternEn: 'In-session report + optional artifact paths',
+      patternVi: 'Report trong session + đường dẫn artifact tùy chọn',
+      descEn: 'Lock Outcome Contract, surface blockers, end Ready / Blocked / Decision — never auto-starts /goal',
+      descVi: 'Khóa Outcome Contract, lộ blocker, kết thúc Ready / Blocked / Decision — không bao giờ tự start /goal',
+    },
+    deepDiveLink: commonLink,
+  },
+
+  {
+    id: 'codex-goal',
+    command: '/ck:codex-goal',
+    kit: 'engineer',
+    header: {
+      titleEn: '/ck:codex-goal',
+      titleVi: '/ck:codex-goal',
+      taglineEn: 'Draft a durable Codex goal with a verifiable stop condition',
+      taglineVi: 'Soạn Codex goal bền với điều kiện dừng kiểm chứng được',
+    },
+    hardGate: {
+      type: 'warning',
+      titleEn: 'HARD GATE',
+      titleVi: 'HARD GATE',
+      contentEn: 'Not a safety boundary or unbounded backlog runner. Use only when stop condition is verifiable.',
+      contentVi: 'Không phải safety boundary hay runner backlog vô hạn. Chỉ dùng khi stop condition kiểm chứng được.',
+    },
+    processFlow: [
+      { number: 1, titleEn: 'Check', titleVi: 'Check', descEn: '/goal available?', descVi: '/goal có sẵn?' },
+      { number: 2, titleEn: 'Use test', titleVi: 'Use test', descEn: 'Mechanical + verifiable?', descVi: 'Mechanical + kiểm chứng?' },
+      { number: 3, titleEn: 'Draft', titleVi: 'Draft', descEn: 'Stop + validation', descVi: 'Stop + validation' },
+      { number: 4, titleEn: 'Emit', titleVi: 'Emit', descEn: '/goal wording', descVi: 'Wording /goal' }
+    ],
+    promptExamples: [
+      {
+        labelEn: 'Default',
+        labelVi: 'Default',
+        command: '/ck:codex-goal Green integration tests without flaking',
+        whenEn: 'Codex long-run objective.',
+        whenVi: 'Objective long-run Codex.',
+        expectedEn: '/goal-ready wording with stop condition.',
+        expectedVi: 'Wording /goal với stop condition.',
+        recommended: true,
+      }
+    ],
+    corePrinciplesEn: ['Verifiable stop only', 'Not a safety boundary', 'Mechanical scope', 'Pair with goal-warmup', 'No unbounded backlog'],
+    corePrinciplesVi: ['Chỉ stop kiểm chứng được', 'Không phải safety boundary', 'Scope mechanical', 'Ghép goal-warmup', 'Không backlog vô hạn'],
+    expertiseAreasEn: ['Codex /goal', 'Stop conditions', 'Validation loops', 'Long-run objectives'],
+    expertiseAreasVi: ['Codex /goal', 'Stop conditions', 'Vòng validate', 'Objective long-run'],
+    skillStack: [
+      { name: 'ck:goal-warmup', type: 'skill' },
+      { name: 'codex', type: 'tool' }
+    ],
+    reportOutput: {
+      titleEn: 'Codex /goal Guidance Result',
+      titleVi: 'Kết quả Hướng Dẫn Codex /goal',
+      patternEn: 'In-session report + optional artifact paths',
+      patternVi: 'Report trong session + đường dẫn artifact tùy chọn',
+      descEn: 'Draft a durable Codex goal with a verifiable stop condition',
+      descVi: 'Soạn Codex goal bền với điều kiện dừng kiểm chứng được',
+    },
+    deepDiveLink: commonLink,
+  },
+
+  {
+    id: 'handoff',
+    command: '/ck:handoff',
+    kit: 'engineer',
+    header: {
+      titleEn: '/ck:handoff',
+      titleVi: '/ck:handoff',
+      taglineEn: 'Compact redacted conversation handoff for a fresh agent session',
+      taglineVi: 'Handoff hội thoại gọn, đã redact cho agent session mới',
+    },
+    hardGate: {
+      type: 'warning',
+      titleEn: 'HARD GATE',
+      titleVi: 'HARD GATE',
+      contentEn: 'Preserve decisions and blockers — not a command list. Distinct from /ck:watzup (git-derived).',
+      contentVi: 'Giữ quyết định và blocker — không phải danh sách lệnh. Khác /ck:watzup (lấy từ git).',
+    },
+    processFlow: [
+      { number: 1, titleEn: 'Read', titleVi: 'Đọc', descEn: 'Plans + prior handoff', descVi: 'Plans + handoff trước' },
+      { number: 2, titleEn: 'Capture', titleVi: 'Ghi', descEn: 'Decisions + blockers', descVi: 'Quyết định + blocker' },
+      { number: 3, titleEn: 'Redact', titleVi: 'Redact', descEn: 'Strip secrets', descVi: 'Gỡ secrets' },
+      { number: 4, titleEn: 'Write', titleVi: 'Ghi file', descEn: 'Fenced MD + file', descVi: 'MD fenced + file' }
+    ],
+    promptExamples: [
+      {
+        labelEn: 'Default',
+        labelVi: 'Default',
+        command: '/ck:handoff continue payment webhook work',
+        whenEn: 'Switching chat mid-feature.',
+        whenVi: 'Đổi chat giữa feature.',
+        expectedEn: 'Compact handoff file for next agent.',
+        expectedVi: 'File handoff gọn cho agent sau.',
+        recommended: true,
+      }
+    ],
+    corePrinciplesEn: ['State not commands', 'Reference artifacts', 'Redact secrets', 'One fenced block', 'Not git watzup'],
+    corePrinciplesVi: ['State không phải lệnh', 'Reference artifacts', 'Redact secrets', 'Một block fenced', 'Không phải watzup git'],
+    expertiseAreasEn: ['Session compaction', 'Decision capture', 'Secret redaction', 'Agent continuity'],
+    expertiseAreasVi: ['Nén session', 'Ghi quyết định', 'Redact secret', 'Liên tục agent'],
+    skillStack: [
+      { name: 'Read', type: 'tool' },
+      { name: 'plans/reports', type: 'tool' }
+    ],
+    reportOutput: {
+      titleEn: 'Session Handoff Result',
+      titleVi: 'Kết quả Handoff Session',
+      patternEn: 'In-session report + optional artifact paths',
+      patternVi: 'Report trong session + đường dẫn artifact tùy chọn',
+      descEn: 'Compact redacted conversation handoff for a fresh agent session',
+      descVi: 'Handoff hội thoại gọn, đã redact cho agent session mới',
+    },
+    deepDiveLink: commonLink,
+  },
+
+  {
+    id: 'interview-docs',
+    command: '/ck:interview-docs',
+    kit: 'engineer',
+    header: {
+      titleEn: '/ck:interview-docs',
+      titleVi: '/ck:interview-docs',
+      taglineEn: 'Turn user vision and decisions into README, ADRs, and structured docs',
+      taglineVi: 'Biến vision và quyết định của user thành README, ADR, và docs có cấu trúc',
+    },
+    hardGate: {
+      type: 'warning',
+      titleEn: 'HARD GATE',
+      titleVi: 'HARD GATE',
+      contentEn: 'Content comes from user answers — not AI invention or code scanning.',
+      contentVi: 'Nội dung từ câu trả lời user — không bịa từ AI hay quét code.',
+    },
+    processFlow: [
+      { number: 1, titleEn: 'Mode', titleVi: 'Mode', descEn: 'Vision or structured', descVi: 'Vision hoặc structured' },
+      { number: 2, titleEn: 'Read', titleVi: 'Đọc', descEn: 'Existing docs first', descVi: 'Docs hiện có trước' },
+      { number: 3, titleEn: 'Interview', titleVi: 'Phỏng vấn', descEn: 'Batch questions', descVi: 'Hỏi theo batch' },
+      { number: 4, titleEn: 'Patch', titleVi: 'Patch', descEn: 'User words into docs', descVi: 'Lời user vào docs' },
+      { number: 5, titleEn: 'Continue', titleVi: 'Tiếp', descEn: 'Until user stops', descVi: 'Đến khi user dừng' }
+    ],
+    promptExamples: [
+      {
+        labelEn: 'Vision',
+        labelVi: 'Vision',
+        command: '/ck:interview-docs project vision',
+        whenEn: 'Shape README + ADRs from answers.',
+        whenVi: 'Định hình README + ADR từ câu trả lời.',
+        expectedEn: 'Updated README and numbered ADRs.',
+        expectedVi: 'README và ADR đánh số đã cập nhật.',
+        recommended: true,
+      },
+      {
+        labelEn: 'Structured',
+        labelVi: 'Structured',
+        command: '/ck:interview-docs docs/principles.md',
+        whenEn: 'Author one structured doc.',
+        whenVi: 'Soạn một doc có cấu trúc.',
+        expectedEn: 'Doc filled only with user decisions.',
+        expectedVi: 'Doc chỉ chứa quyết định user.',
+        recommended: false,
+      }
+    ],
+    corePrinciplesEn: ['User answers only', 'Patch after each answer', 'README is vision', 'ADRs hold decisions', 'No invent from code'],
+    corePrinciplesVi: ['Chỉ câu trả lời user', 'Patch sau mỗi câu', 'README là vision', 'ADR giữ quyết định', 'Không bịa từ code'],
+    expertiseAreasEn: ['Vision interviews', 'ADR authoring', 'README direction', 'Structured docs'],
+    expertiseAreasVi: ['Interview vision', 'Soạn ADR', 'Hướng README', 'Docs có cấu trúc'],
+    skillStack: [
+      { name: 'Read', type: 'tool' },
+      { name: 'Write', type: 'tool' }
+    ],
+    reportOutput: {
+      titleEn: 'Interview-Driven Docs Result',
+      titleVi: 'Kết quả Docs Qua Phỏng Vấn',
+      patternEn: 'In-session report + optional artifact paths',
+      patternVi: 'Report trong session + đường dẫn artifact tùy chọn',
+      descEn: 'Turn user vision and decisions into README, ADRs, and structured docs',
+      descVi: 'Biến vision và quyết định của user thành README, ADR, và docs có cấu trúc',
+    },
+    deepDiveLink: commonLink,
+  },
+
+  {
+    id: 'folder-context',
+    command: '/ck:folder-context',
+    kit: 'engineer',
+    header: {
+      titleEn: '/ck:folder-context',
+      titleVi: '/ck:folder-context',
+      taglineEn: 'Compact subfolder CLAUDE.md + linked AGENTS.md for local conventions',
+      taglineVi: 'CLAUDE.md gọn + AGENTS.md liên kết cho convention local theo subfolder',
+    },
+    hardGate: {
+      type: 'warning',
+      titleEn: 'HARD GATE',
+      titleVi: 'HARD GATE',
+      contentEn: 'Never edits root CLAUDE.md or AGENTS.md. Sanity gate skips static/reference folders.',
+      contentVi: 'Không bao giờ sửa CLAUDE.md/AGENTS.md root. Sanity gate bỏ folder static/reference.',
+    },
+    processFlow: [
+      { number: 1, titleEn: 'Inspect', titleVi: 'Inspect', descEn: 'Folder evidence', descVi: 'Evidence folder' },
+      { number: 2, titleEn: 'Gate', titleVi: 'Gate', descEn: 'Sanity check', descVi: 'Sanity check' },
+      { number: 3, titleEn: 'Outline', titleVi: 'Outline', descEn: 'User confirms', descVi: 'User confirm' },
+      { number: 4, titleEn: 'Write', titleVi: 'Write', descEn: 'CLAUDE.md + AGENTS.md', descVi: 'CLAUDE.md + AGENTS.md' }
+    ],
+    promptExamples: [
+      {
+        labelEn: 'Default',
+        labelVi: 'Default',
+        command: '/ck:folder-context src/workers/giveaway',
+        whenEn: 'Folder needs durable local conventions.',
+        whenVi: 'Folder cần convention local bền.',
+        expectedEn: 'Subfolder CLAUDE.md + AGENTS.md link.',
+        expectedVi: 'CLAUDE.md subfolder + link AGENTS.md.',
+        recommended: true,
+      }
+    ],
+    corePrinciplesEn: ['Subfolder only', 'Never touch root', 'Evidence-based sections', 'Confirm before write', 'Symlink AGENTS.md'],
+    corePrinciplesVi: ['Chỉ subfolder', 'Không đụng root', 'Section bám evidence', 'Confirm trước khi ghi', 'Symlink AGENTS.md'],
+    expertiseAreasEn: ['Local conventions', 'Agent context', 'Folder CLAUDE.md', 'AGENTS.md linking'],
+    expertiseAreasVi: ['Convention local', 'Context agent', 'CLAUDE.md folder', 'Link AGENTS.md'],
+    skillStack: [
+      { name: 'Read', type: 'tool' },
+      { name: 'Write', type: 'tool' }
+    ],
+    reportOutput: {
+      titleEn: 'Subfolder Agent Context Result',
+      titleVi: 'Kết quả Context Agent Theo Subfolder',
+      patternEn: 'In-session report + optional artifact paths',
+      patternVi: 'Report trong session + đường dẫn artifact tùy chọn',
+      descEn: 'Compact subfolder CLAUDE.md + linked AGENTS.md for local conventions',
+      descVi: 'CLAUDE.md gọn + AGENTS.md liên kết cho convention local theo subfolder',
+    },
+    deepDiveLink: commonLink,
+  },
+
+  {
+    id: 'research-prompt',
+    command: '/ck:research-prompt',
+    kit: 'engineer',
+    header: {
+      titleEn: '/ck:research-prompt',
+      titleVi: '/ck:research-prompt',
+      taglineEn: 'One self-contained paragraph a researcher can execute without follow-up',
+      taglineVi: 'Một đoạn tự đủ để researcher thực thi không cần hỏi lại',
+    },
+    hardGate: {
+      type: 'warning',
+      titleEn: 'HARD GATE',
+      titleVi: 'HARD GATE',
+      contentEn: 'Writes the brief only — does not perform the research.',
+      contentVi: 'Chỉ viết brief — không thực hiện research.',
+    },
+    processFlow: [
+      { number: 1, titleEn: 'Gather', titleVi: 'Gom', descEn: 'Context for decision', descVi: 'Context cho quyết định' },
+      { number: 2, titleEn: 'Question', titleVi: 'Câu hỏi', descEn: 'One primary question', descVi: 'Một câu hỏi chính' },
+      { number: 3, titleEn: 'Sub-Qs', titleVi: 'Sub-Qs', descEn: '3-6 coverage items', descVi: '3-6 mục cover' },
+      { number: 4, titleEn: 'Emit', titleVi: 'Xuất', descEn: 'Single paragraph brief', descVi: 'Brief một đoạn' }
+    ],
+    promptExamples: [
+      {
+        labelEn: 'Default',
+        labelVi: 'Default',
+        command: '/ck:research-prompt Compare Durable Objects vs KV for sessions',
+        whenEn: 'Hand off deep research.',
+        whenVi: 'Bàn giao deep research.',
+        expectedEn: 'One paragraph ready for a researcher.',
+        expectedVi: 'Một đoạn sẵn cho researcher.',
+        recommended: true,
+      }
+    ],
+    corePrinciplesEn: ['Write brief only', 'One paragraph', 'Primary sources first', 'Decision-linked question', 'No research execution'],
+    corePrinciplesVi: ['Chỉ viết brief', 'Một đoạn', 'Primary sources trước', 'Câu hỏi gắn quyết định', 'Không chạy research'],
+    expertiseAreasEn: ['Research briefs', 'Decision framing', 'Source hierarchy', 'Handoff prompts'],
+    expertiseAreasVi: ['Research brief', 'Framing quyết định', 'Hierarchy nguồn', 'Prompt handoff'],
+    skillStack: [
+      { name: 'Read', type: 'tool' },
+      { name: 'ck:research', type: 'skill' }
+    ],
+    reportOutput: {
+      titleEn: 'Research Brief Writer Result',
+      titleVi: 'Kết quả Viết Research Brief',
+      patternEn: 'In-session report + optional artifact paths',
+      patternVi: 'Report trong session + đường dẫn artifact tùy chọn',
+      descEn: 'One self-contained paragraph a researcher can execute without follow-up',
+      descVi: 'Một đoạn tự đủ để researcher thực thi không cần hỏi lại',
+    },
+    deepDiveLink: commonLink,
+  },
+
+  {
+    id: 'document-skills',
+    command: '/ck:document-skills',
+    kit: 'engineer',
+    header: {
+      titleEn: '/ck:document-skills',
+      titleVi: '/ck:document-skills',
+      taglineEn: 'Route Word/PDF/PowerPoint/spreadsheet tasks to the right CK document skill',
+      taglineVi: 'Định tuyến task Word/PDF/PowerPoint/spreadsheet tới skill document CK đúng',
+    },
+    hardGate: {
+      type: 'warning',
+      titleEn: 'HARD GATE',
+      titleVi: 'HARD GATE',
+      contentEn: 'Router only — dispatches to docx/pdf/pptx/xlsx specialists.',
+      contentVi: 'Chỉ router — chuyển tới specialist docx/pdf/pptx/xlsx.',
+    },
+    processFlow: [
+      { number: 1, titleEn: 'Detect', titleVi: 'Detect', descEn: 'Document type', descVi: 'Loại document' },
+      { number: 2, titleEn: 'Route', titleVi: 'Route', descEn: 'Pick specialist', descVi: 'Chọn specialist' },
+      { number: 3, titleEn: 'Execute', titleVi: 'Execute', descEn: 'Specialist skill', descVi: 'Skill specialist' },
+      { number: 4, titleEn: 'Return', titleVi: 'Return', descEn: 'Specialist artifacts', descVi: 'Artifacts specialist' }
+    ],
+    workflowModes: [
+      { flag: 'docx', modeEn: 'Word documents', modeVi: 'Tài liệu Word', research: '', redTeam: '', validation: '' },
+      { flag: 'pdf', modeEn: 'PDF extract/create/forms', modeVi: 'PDF extract/create/forms', research: '', redTeam: '', validation: '' },
+      { flag: 'pptx', modeEn: 'PowerPoint decks', modeVi: 'Deck PowerPoint', research: '', redTeam: '', validation: '' },
+      { flag: 'xlsx', modeEn: 'Spreadsheets', modeVi: 'Spreadsheet', research: '', redTeam: '', validation: '' }
+    ],
+    promptExamples: [
+      {
+        labelEn: 'PDF form',
+        labelVi: 'PDF form',
+        command: '/ck:document-skills Fill @form.pdf and list fields',
+        whenEn: 'PDF form work.',
+        whenVi: 'Công việc form PDF.',
+        expectedEn: 'Routed to /ck:pdf.',
+        expectedVi: 'Route sang /ck:pdf.',
+        recommended: true,
+      },
+      {
+        labelEn: 'Spreadsheet',
+        labelVi: 'Spreadsheet',
+        command: '/ck:document-skills Build a budget workbook with formulas',
+        whenEn: 'Spreadsheet task.',
+        whenVi: 'Task spreadsheet.',
+        expectedEn: 'Routed to /ck:xlsx.',
+        expectedVi: 'Route sang /ck:xlsx.',
+        recommended: false,
+      }
+    ],
+    corePrinciplesEn: ['Route not implement', 'Detect then dispatch', 'Preserve task context', 'Specialist owns artifact'],
+    corePrinciplesVi: ['Route không implement', 'Detect rồi dispatch', 'Giữ context task', 'Specialist sở hữu artifact'],
+    expertiseAreasEn: ['Office routing', 'docx', 'pdf', 'pptx', 'xlsx'],
+    expertiseAreasVi: ['Route Office', 'docx', 'pdf', 'pptx', 'xlsx'],
+    skillStack: [
+      { name: 'ck:docx', type: 'skill' },
+      { name: 'ck:pdf', type: 'skill' },
+      { name: 'ck:pptx', type: 'skill' },
+      { name: 'ck:xlsx', type: 'skill' }
+    ],
+    reportOutput: {
+      titleEn: 'Office Document Router Result',
+      titleVi: 'Kết quả Router Office Document',
+      patternEn: 'In-session report + optional artifact paths',
+      patternVi: 'Report trong session + đường dẫn artifact tùy chọn',
+      descEn: 'Route Word/PDF/PowerPoint/spreadsheet tasks to the right CK document skill',
+      descVi: 'Định tuyến task Word/PDF/PowerPoint/spreadsheet tới skill document CK đúng',
+    },
+    deepDiveLink: commonLink,
+  },
+
+  {
+    id: 'coding-agent-orchestration',
+    command: '/ck:coding-agent-orchestration',
+    kit: 'engineer',
+    header: {
+      titleEn: '/ck:coding-agent-orchestration',
+      titleVi: '/ck:coding-agent-orchestration',
+      taglineEn: 'Coordinate Claude Code, Codex, Gemini, OpenCode, Cursor and more behind one integrator',
+      taglineVi: 'Điều phối Claude Code, Codex, Gemini, OpenCode, Cursor… sau một integrator',
+    },
+    hardGate: {
+      type: 'warning',
+      titleEn: 'HARD GATE',
+      titleVi: 'HARD GATE',
+      contentEn: 'One final integrator. Explicit file ownership before parallel work. Evidence gates before completion.',
+      contentVi: 'Một integrator cuối. File ownership rõ trước parallel. Evidence gate trước khi hoàn tất.',
+    },
+    processFlow: [
+      { number: 1, titleEn: 'Clarify', titleVi: 'Clarify', descEn: 'Objective + risk', descVi: 'Objective + risk' },
+      { number: 2, titleEn: 'Shape', titleVi: 'Shape', descEn: 'single/seq/par/loop', descVi: 'single/seq/par/loop' },
+      { number: 3, titleEn: 'Assign', titleVi: 'Assign', descEn: 'Roles + ownership', descVi: 'Roles + ownership' },
+      { number: 4, titleEn: 'Execute', titleVi: 'Execute', descEn: 'Agents with evidence', descVi: 'Agents kèm evidence' },
+      { number: 5, titleEn: 'Reconcile', titleVi: 'Reconcile', descEn: 'Repo truth wins', descVi: 'Repo truth thắng' },
+      { number: 6, titleEn: 'Integrate', titleVi: 'Integrate', descEn: 'One final package', descVi: 'Một package cuối' }
+    ],
+    workflowModes: [
+      { flag: '--single', modeEn: 'One agent, low risk', modeVi: 'Một agent, rủi ro thấp', research: '', redTeam: '', validation: '' },
+      { flag: '--sequential', modeEn: 'Plan→impl→review→fix→verify', modeVi: 'Plan→impl→review→fix→verify', research: '', redTeam: '', validation: '' },
+      { flag: '--parallel', modeEn: 'Independent ownership lanes', modeVi: 'Lane ownership độc lập', research: '', redTeam: '', validation: 'ownership' },
+      { flag: '--review-loop', modeEn: 'Implement exists or high risk', modeVi: 'Đã có impl hoặc rủi ro cao', research: '', redTeam: '', validation: 'review' }
+    ],
+    promptExamples: [
+      {
+        labelEn: '--parallel',
+        labelVi: '--parallel',
+        command: '/ck:coding-agent-orchestration implement settings + billing UI --parallel',
+        whenEn: 'Independent modules.',
+        whenVi: 'Modules độc lập.',
+        expectedEn: 'Ownership map + parallel handoffs.',
+        expectedVi: 'Ownership map + handoff parallel.',
+        recommended: true,
+      },
+      {
+        labelEn: '--review-loop',
+        labelVi: '--review-loop',
+        command: '/ck:coding-agent-orchestration harden auth --review-loop',
+        whenEn: 'High risk change.',
+        whenVi: 'Thay đổi rủi ro cao.',
+        expectedEn: 'Implement → review → fix loop.',
+        expectedVi: 'Vòng implement → review → fix.',
+        recommended: false,
+      },
+      {
+        labelEn: '--sequential',
+        labelVi: '--sequential',
+        command: '/ck:coding-agent-orchestration migrate sessions to Redis --sequential',
+        whenEn: 'Plan→implement→review chain.',
+        whenVi: 'Chuỗi plan→implement→review.',
+        expectedEn: 'Staged handoffs with evidence.',
+        expectedVi: 'Handoff theo stage kèm evidence.',
+        recommended: false,
+      }
+    ],
+    corePrinciplesEn: ['One integrator', 'Ownership before parallel', 'Evidence before done', 'Repo truth over opinion average', 'Right agent per stage'],
+    corePrinciplesVi: ['Một integrator', 'Ownership trước parallel', 'Evidence trước khi xong', 'Repo truth hơn average ý kiến', 'Đúng agent mỗi giai đoạn'],
+    expertiseAreasEn: ['Agent selection', 'Parallel ownership', 'Handoff contracts', 'Review loops', 'Multi-CLI orchestration'],
+    expertiseAreasVi: ['Chọn agent', 'Ownership parallel', 'Hợp đồng handoff', 'Vòng review', 'Điều phối multi-CLI'],
+    skillStack: [
+      { name: 'Claude Code', type: 'tool' },
+      { name: 'Codex', type: 'tool' },
+      { name: 'OpenCode', type: 'tool' },
+      { name: 'Cursor', type: 'tool' },
+      { name: 'ck:code-review', type: 'skill' },
+      { name: 'ck:test', type: 'skill' }
+    ],
+    reportOutput: {
+      titleEn: 'Multi-Agent Orchestration Result',
+      titleVi: 'Kết quả Điều Phối Multi-Agent',
+      patternEn: 'In-session report + optional artifact paths',
+      patternVi: 'Report trong session + đường dẫn artifact tùy chọn',
+      descEn: 'Coordinate Claude Code, Codex, Gemini, OpenCode, Cursor and more behind one integrator',
+      descVi: 'Điều phối Claude Code, Codex, Gemini, OpenCode, Cursor… sau một integrator',
+    },
+    deepDiveLink: commonLink,
+  },
 ];

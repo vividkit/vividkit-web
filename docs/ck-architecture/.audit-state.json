@@ -1,5 +1,5 @@
 {
-  "lastAuditDate": "2026-06-15",
+  "lastAuditDate": "2026-08-03",
   "sourceRoot": "reference/stable/claude",
   "guide": "src/data/guides/how-ck-works/workflow-visualizer-scenarios.ts",
   "status": "pass",
@@ -15,7 +15,8 @@
     "How-CK-Works full Engineer and Marketing coverage synced visible guide/UI.",
     "2026-06-12 fact-check: removed mcp-manager from shared-concepts agent list (upstream has 13 agents); rewrote ck-code-review.md to SKILL.md v2.0.0 (adversarial Stage 3 removed upstream).",
     "How-CK-Works add-scenario synced: new beta skills (ghpm, html-video, review-pr, vibe) + tech-graph scenario; architecture/scenario/infographic/UI registration.",
-    "Renamed from chrome-devtools (engineer); real Chrome profile automation via Chrome DevTools MCP; scenario+infographic+arch doc+catalog updated."
+    "Renamed from chrome-devtools (engineer); real Chrome profile automation via Chrome DevTools MCP; scenario+infographic+arch doc+catalog updated.",
+    "How-CK-Works: scenarios + infographics + arch docs for EK beta.12 new skills (vk-add-scenario / vk-audit-skill sync)."
   ],
   "auditedScenarios": {
     "brainstorm": {
@@ -2334,15 +2335,155 @@
       "guideHashes": {
         "docs/ck-architecture/ck-chrome-profile.md": "sha256:8492fce2c5ac624eef07b3e61c9f18a0668135e3bee96c88c9a2798ffcb71c71"
       }
+    },
+    "advise": {
+      "date": "2026-08-03",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/beta/claude/skills/advise/SKILL.md": "sha256:732bcfb082a6e7572f54f3e330647c47d70baee501824b93bf42d846f171759c"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-advise.md": "sha256:d2ed7acf4be6a5867512dab21760ae26436ddb2762bea94c4199207832fc590a"
+      }
+    },
+    "fable-thinking": {
+      "date": "2026-08-03",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/beta/claude/skills/fable-thinking/SKILL.md": "sha256:f0072b7cc014928da8609829f8c74a5915ebbdec4585956766e6c452180bc470",
+        "reference/beta/claude/skills/fable-thinking/references/content-taste.md": "sha256:3466fab5a841db917a8dea252b0fc5dd869f13010d1667091b1ffa74305bcc33",
+        "reference/beta/claude/skills/fable-thinking/references/design-taste.md": "sha256:0b2cb9d2a2b92d081fec2b8ecb97a230aa81e5ac918f6c74213df4a504521a3f",
+        "reference/beta/claude/skills/fable-thinking/references/worked-examples.md": "sha256:b0a84f590749d91df3e804b9771335156d3f13aa56dd7d5b5f8b0c7b62e9b7af"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-fable-thinking.md": "sha256:b30a0637bc4ca90f8738ddc57e8f1467e87717de1dc064d761ca7396a151340f"
+      }
+    },
+    "issue-to-plan": {
+      "date": "2026-08-03",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/beta/claude/skills/issue-to-plan/SKILL.md": "sha256:18cda3ab07ab2e8f312e04b4da1c035f7e650ea8d66c3889036ec9873f2da806"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-issue-to-plan.md": "sha256:2eb42cd336059f0236b0c3c3aaa1164d34af9f860f379560897c72db282bb094"
+      }
+    },
+    "goal-warmup": {
+      "date": "2026-08-03",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/beta/claude/skills/goal-warmup/SKILL.md": "sha256:8e86c91cb66674e6a7b9ea3f4cb2c79c3c4233c49e3435e6c21c8a3a655e1dab",
+        "reference/beta/claude/skills/goal-warmup/references/contract-preserving-review.md": "sha256:5bfcf91e4bdaa9c701bf4cceb30ae6ce5800a36f6122346d263cb74ccdef5c9a",
+        "reference/beta/claude/skills/goal-warmup/references/decisions.md": "sha256:e9c1d27ce8afa4cab7570264fcaf7a728cdcabcbffbe601c176855afd8bf1b15",
+        "reference/beta/claude/skills/goal-warmup/references/fast-path.md": "sha256:84a190b20e14c3b43084df80d5b5caaa536f2b573bcf5e822be2a8b75a485b5a",
+        "reference/beta/claude/skills/goal-warmup/references/handoff-packet.md": "sha256:3dc47b04352cb35a426145df0ccd58a04fc8404ba50dc1c07aa389eac4e60f6b",
+        "reference/beta/claude/skills/goal-warmup/references/outcome-contract.md": "sha256:09e0b56eb0692f4d0e1db1a64800678c4055a6d75f5b4032643b6a2229e0d996",
+        "reference/beta/claude/skills/goal-warmup/references/preflight-matrix.md": "sha256:e95460f6982b82b32dac15b7818846e988c8082b8e9743db8ccb2c3e8732cffc"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-goal-warmup.md": "sha256:7827646274b47a37f910809198e8d264e5b904f2f9ce0f3998ae311b4c61d217"
+      }
+    },
+    "codex-goal": {
+      "date": "2026-08-03",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/beta/claude/skills/codex-goal/SKILL.md": "sha256:899191a6a52abdeebd51d2f51c613f411b81f5173ebe2b7a989add988791f845"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-codex-goal.md": "sha256:7021d11153bff0e0c3722fa9733a9920ec903edae3f089cae097d153b6a91dd2"
+      }
+    },
+    "handoff": {
+      "date": "2026-08-03",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/beta/claude/skills/handoff/SKILL.md": "sha256:2acecbdd125da9009aa365b7d0732c8bfd6a4b00dda92f4bee9e8ac6ad129da2"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-handoff.md": "sha256:ecad842e68092ecbd21a9319de4379f1de9fe26ec3d1da736e0618c40ee6e57c"
+      }
+    },
+    "interview-docs": {
+      "date": "2026-08-03",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/beta/claude/skills/interview-docs/SKILL.md": "sha256:0c8d9281f1358aea659f698ee7cb42fc8e39226f48d9a25aa36aa2dfb592cef1"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-interview-docs.md": "sha256:3ba30ea65b6a430f939baff3416a2af18c5424686d1e10ba2c83fa482f5b5d9f"
+      }
+    },
+    "folder-context": {
+      "date": "2026-08-03",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/beta/claude/skills/folder-context/SKILL.md": "sha256:b67fb03d39e220b2f78866c20d467d690695f28207a4150282d22303a6d09381"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-folder-context.md": "sha256:449d56e4cc0846099fdb25df4ee5f6538f1f2f216648e71e9b78727029801a53"
+      }
+    },
+    "research-prompt": {
+      "date": "2026-08-03",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/beta/claude/skills/research-prompt/SKILL.md": "sha256:1eabdae2f98a1c6b60a79490b5f69a53991f0e29262f8d2857f5082b70c08d2e"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-research-prompt.md": "sha256:a19dadb60556377996662f8cb84e36bb4f042e7ef9ec6573c5933e349331da14"
+      }
+    },
+    "document-skills": {
+      "date": "2026-08-03",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/beta/claude/skills/document-skills/SKILL.md": "sha256:83c97ff3510047f5250ed75df6f46c50dd5ea3ac67abb7ddc006db0308ea726c"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-document-skills.md": "sha256:57a1ac80af25b15883e1a1840d6a8046d003648947540ee886a382f08db51173"
+      }
+    },
+    "coding-agent-orchestration": {
+      "date": "2026-08-03",
+      "status": "pass",
+      "source": "reference",
+      "referenceSourceHashes": {
+        "reference/beta/claude/skills/coding-agent-orchestration/SKILL.md": "sha256:92f7f5e5bf277cd23a12fab14b6299480c497ca0c6fa1af85c8464058b958f47"
+      },
+      "guideHashes": {
+        "docs/ck-architecture/ck-coding-agent-orchestration.md": "sha256:db0224a03abf67a5e72db6335597e8417e4229774351f5a43a75b4d2991077e7"
+      }
     }
   },
   "report": "plans/reports/audit-guide-260526-how-ck-works.md",
   "lastHowCkWorksSync": {
-    "date": "2026-06-15",
+    "date": "2026-08-03",
     "status": "pass",
     "targets": [
-      "chrome-profile"
+      "advise",
+      "fable-thinking",
+      "issue-to-plan",
+      "goal-warmup",
+      "codex-goal",
+      "handoff",
+      "interview-docs",
+      "folder-context",
+      "research-prompt",
+      "document-skills",
+      "coding-agent-orchestration"
     ],
-    "note": "Renamed from chrome-devtools (engineer); real Chrome profile automation via Chrome DevTools MCP; scenario+infographic+arch doc+catalog updated."
+    "note": "How-CK-Works: scenarios + infographics + arch docs for EK beta.12 new skills (vk-add-scenario / vk-audit-skill sync)."
   }
 }

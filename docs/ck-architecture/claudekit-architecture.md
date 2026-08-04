@@ -45,6 +45,17 @@ Reference docs for VividKit "How ClaudeKit Works" guide accuracy.
 - [ck-ghpm.md](ck-ghpm.md) — /ck:ghpm GitHub project management for humans and AI agents
 - [ck-tech-graph.md](ck-tech-graph.md) — /ck:tech-graph publish-grade SVG+PNG diagrams across 8 styles
 - [ck-html-video.md](ck-html-video.md) — /ck:html-video HTML/CSS/JS templates rendered to local MP4
+- [ck-advise.md](ck-advise.md) — /ck:advise Honest advisory interview before planning (beta)
+- [ck-fable-thinking.md](ck-fable-thinking.md) — /ck:fable-thinking Evidence-grounded reasoning protocol (beta)
+- [ck-issue-to-plan.md](ck-issue-to-plan.md) — /ck:issue-to-plan Audited issue-to-plan pipeline (planning only) (beta)
+- [ck-goal-warmup.md](ck-goal-warmup.md) — /ck:goal-warmup Outcome-locked preflight before long-run goals (beta)
+- [ck-codex-goal.md](ck-codex-goal.md) — /ck:codex-goal Codex-native /goal with verifiable stop (beta)
+- [ck-handoff.md](ck-handoff.md) — /ck:handoff Conversation-state handoff (not git status) (beta)
+- [ck-interview-docs.md](ck-interview-docs.md) — /ck:interview-docs User-answer-driven documentation (beta)
+- [ck-folder-context.md](ck-folder-context.md) — /ck:folder-context Subfolder-scoped CLAUDE.md / AGENTS.md (beta)
+- [ck-research-prompt.md](ck-research-prompt.md) — /ck:research-prompt Write the research assignment, not the research (beta)
+- [ck-document-skills.md](ck-document-skills.md) — /ck:document-skills Office document skill router (beta)
+- [ck-coding-agent-orchestration.md](ck-coding-agent-orchestration.md) — /ck:coding-agent-orchestration Multi coding-agent workflow orchestration (beta)
 
 - [ckm-ab-test-setup.md](ckm-ab-test-setup.md) — /ckm:ab-test-setup When the user wants to plan, design, or implement an A/B test or experiment. Also use when the user mentions "A/B test," "split test," "experiment," "test this change," "variant copy," "multivariate test," or "hypothesis." For tracking implementation, see analytics-tracking.
 - [ckm-ads-management.md](ckm-ads-management.md) — /ckm:ads-management Activate for paid advertising campaigns on Google Ads, Meta Ads, LinkedIn Ads, TikTok Ads. Includes ad copywriting, audience targeting, budget optimization, A/B testing, ROAS tracking, and AI creative asset generation (images & videos) with ai-multimodal and ai-artist skills using Gemini Nano Banana Pro and Veo 3.1.

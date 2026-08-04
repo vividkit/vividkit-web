@@ -1415,5 +1415,258 @@ export const stableWorkflows = [
     ],
     tip: 'Dùng chrome-profile khi tự động hóa cần cookie/tài khoản thật; dùng web-testing cho E2E môi trường sạch',
     borderColor: 'border-blue-500/20'
+  },
+  {
+    title: 'Advise → Plan → Cook',
+    category: 'Planning & Review',
+    level: 'Intermediate',
+    duration: '~25-45 phút',
+    stepCount: 4,
+    bestFor: 'Pressure-test ý tưởng mơ hồ trước khi commit plan và implement',
+    gradientHeader: 'from-violet-500/10 to-purple-500/10',
+    hoverBorderColor: 'hover:border-violet-500/50',
+    buttonColor: 'bg-violet-500 hover:bg-violet-600',
+    icon: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+    iconColor: 'text-violet-600 dark:text-violet-400',
+    isBeta: true,
+    steps: [
+      {
+        command: '/ck:advise',
+        typeLabel: 'Reframe + tư vấn',
+        description: 'Phỏng vấn ý tưởng thô thành requirements và goals chính xác; chỉ advice (không code)',
+        color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      },
+      {
+        command: '/ck:plan',
+        typeLabel: 'Plan triển khai',
+        description: 'Biến requirements đã confirm thành plan đã validate (--html/--wiki tùy chọn)',
+        color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
+        number: 2,
+        isSkill: true
+      },
+      {
+        typeLabel: 'Review → /clear',
+        description: 'Duyệt plan, rồi /clear để giải phóng context trước cook',
+        color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
+        number: 3,
+        hasIcon: true
+      },
+      {
+        command: '/ck:cook @plan.md',
+        typeLabel: 'Implement',
+        description: 'Thực thi plan với tests và review gates',
+        color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
+        number: 4,
+        isSkill: true
+      }
+    ],
+    tip: 'Dùng /ck:advise --agent cho counsel một lần không interview; vẫn plan trước cook',
+    features: [
+      'Reframe requirements trước planning',
+      'Hard gate chỉ advisory (không implement)',
+      'Report advisory --html/--wiki/--github tùy chọn',
+      'Handoff plan → clear → cook chuẩn'
+    ],
+    borderColor: 'border-violet-500/20'
+  },
+  {
+    title: 'Issue → Plan Branch Đã Audit',
+    category: 'Planning & Review',
+    level: 'Advanced',
+    duration: '~20-40 phút',
+    stepCount: 3,
+    bestFor: 'Biến một GitHub issue thành plan branch đã gate/validate mà không implement',
+    gradientHeader: 'from-sky-500/10 to-blue-500/10',
+    hoverBorderColor: 'hover:border-sky-500/50',
+    buttonColor: 'bg-sky-500 hover:bg-sky-600',
+    icon: '<circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 9v6a3 3 0 0 0 3 3h6"/>',
+    iconColor: 'text-sky-600 dark:text-sky-400',
+    isBeta: true,
+    steps: [
+      {
+        command: '/ck:issue-to-plan <issue>',
+        typeLabel: 'Scout + hard gate + plan',
+        description: 'Đọc issue, scout codebase, chạy gate audit/brainstorm; chỉ khi pass: plan, validate, red-team, push plan branch',
+        color: 'bg-sky-500/10 dark:bg-sky-500/20 text-sky-600 dark:text-sky-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      },
+      {
+        typeLabel: 'Review plan branch',
+        description: 'Người review plan.md + phases trên plan branch; reject thì quay lại label issue',
+        color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
+        number: 2,
+        hasIcon: true
+      },
+      {
+        command: '/ck:cook @plan.md',
+        typeLabel: 'Implement sau',
+        description: 'Chỉ sau khi duyệt plan — issue-to-plan không bao giờ cook hay mở PR',
+        color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
+        number: 3,
+        isSkill: true
+      }
+    ],
+    tip: 'Pipeline chỉ planning — dừng ở plan branch + handoff issue; dùng /ck:vibe khi muốn issue→PR tự trị',
+    features: [
+      'Hard gate audit trước mọi file plan',
+      'ck:scout + validate + red-team tích hợp',
+      'Push plan branch + comment issue',
+      'issue-to-plan không cook/ship/PR'
+    ],
+    borderColor: 'border-sky-500/20'
+  },
+  {
+    title: 'Preflight Goal Long-Run',
+    category: 'Advanced',
+    level: 'Advanced',
+    duration: '~10-25 phút',
+    stepCount: 3,
+    bestFor: 'Khóa outcome và blocker trước Codex /goal hoặc long-run tốn kém',
+    gradientHeader: 'from-amber-500/10 to-orange-500/10',
+    hoverBorderColor: 'hover:border-amber-500/50',
+    buttonColor: 'bg-amber-500 hover:bg-amber-600',
+    icon: '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+    iconColor: 'text-amber-600 dark:text-amber-400',
+    isBeta: true,
+    steps: [
+      {
+        command: '/ck:advise',
+        typeLabel: 'Reframe tùy chọn',
+        description: 'Chỉ khi goal mơ hồ hoặc còn tranh luận — full interview tư vấn trước. Bỏ qua nếu objective đã chính xác; goal-warmup có thể restate brief rõ thành Outcome Contract',
+        color: 'bg-violet-500/10 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      },
+      {
+        command: '/ck:goal-warmup "<goal>"',
+        typeLabel: 'Outcome Contract + matrix',
+        description: 'Preflight bắt buộc: khóa end-state, lộ blocker/env; kết thúc Ready, Blocked, hoặc Decision required — không bao giờ tự start /goal',
+        color: 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400',
+        number: 2,
+        isSkill: true,
+        isBeta: true
+      },
+      {
+        command: '/ck:codex-goal',
+        typeLabel: 'Soạn wording /goal',
+        description: 'Chỉ khi Ready: soạn text Codex /goal với stop condition kiểm chứng được — bạn tự start /goal',
+        color: 'bg-cyan-500/10 dark:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400',
+        number: 3,
+        isSkill: true,
+        isBeta: true
+      }
+    ],
+    tip: 'Happy path khi goal đã rõ: bỏ advise → chỉ /ck:goal-warmup → nếu Ready thì /ck:codex-goal rồi bạn start Codex /goal. Chỉ dùng /ck:advise trước khi goal còn mơ hồ (second opinion / reframe requirements). goal-warmup không bao giờ tự start /goal; đừng tiếp tục khi Blocked hoặc Decision required.',
+    features: [
+      'advise tùy chọn (chỉ goal mơ hồ)',
+      'Outcome Contract trước long-run',
+      'Matrix blocker (env chỉ present|missing)',
+      'Status cuối Ready / Blocked / Decision',
+      'Soạn stop condition cho Codex /goal'
+    ],
+    borderColor: 'border-amber-500/20'
+  },
+  {
+    title: 'Gói Liên Tục Session',
+    category: 'Session & Management',
+    level: 'Beginner',
+    duration: '~5-15 phút',
+    stepCount: 3,
+    bestFor: 'Kết thúc session sạch và trao context local bền cho agent tiếp theo',
+    gradientHeader: 'from-orange-500/10 to-rose-500/10',
+    hoverBorderColor: 'hover:border-orange-500/50',
+    buttonColor: 'bg-orange-500 hover:bg-orange-600',
+    icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>',
+    iconColor: 'text-orange-600 dark:text-orange-400',
+    isBeta: true,
+    steps: [
+      {
+        command: '/ck:handoff',
+        typeLabel: 'Handoff hội thoại',
+        description: 'Handoff gọn, đã redact về quyết định và blocker (không phải danh sách lệnh; khác /ck:watzup)',
+        color: 'bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      },
+      {
+        command: '/ck:watzup',
+        typeLabel: 'Status từ git',
+        description: 'Report status branch/worktree/plan tùy chọn cho người hoặc session sau',
+        color: 'bg-teal-500/10 dark:bg-teal-500/20 text-teal-600 dark:text-teal-400',
+        number: 2,
+        isSkill: true
+      },
+      {
+        command: '/ck:folder-context <path>',
+        typeLabel: 'Convention local',
+        description: 'Khi subfolder cần context agent bền: CLAUDE.md + AGENTS.md (không đụng root)',
+        color: 'bg-lime-500/10 dark:bg-lime-500/20 text-lime-600 dark:text-lime-400',
+        number: 3,
+        isSkill: true,
+        isBeta: true
+      }
+    ],
+    tip: 'handoff = state hội thoại; watzup = status git; folder-context = convention subfolder bền',
+    features: [
+      'File handoff hội thoại đã redact',
+      'Status git/worktree qua watzup',
+      'CLAUDE.md subfolder không sửa root'
+    ],
+    borderColor: 'border-orange-500/20'
+  },
+  {
+    title: 'Điều Phối Multi-Agent Coding',
+    category: 'Advanced',
+    level: 'Advanced',
+    duration: '~30-90 phút',
+    stepCount: 3,
+    bestFor: 'Tách plan/implement/review giữa Claude Code, Codex, Cursor, OpenCode với một integrator',
+    gradientHeader: 'from-purple-500/10 to-fuchsia-500/10',
+    hoverBorderColor: 'hover:border-purple-500/50',
+    buttonColor: 'bg-purple-500 hover:bg-purple-600',
+    icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+    iconColor: 'text-purple-600 dark:text-purple-400',
+    isBeta: true,
+    steps: [
+      {
+        command: '/ck:coding-agent-orchestration',
+        typeLabel: 'Shape + ownership',
+        description: 'Chọn --single/--sequential/--parallel/--review-loop; gán role và file ownership trước khi làm',
+        color: 'bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400',
+        number: 1,
+        isSkill: true,
+        isBeta: true
+      },
+      {
+        typeLabel: 'Chạy agents',
+        description: 'Mỗi agent chạy stage với evidence bắt buộc; lane parallel tôn trọng path bị chặn',
+        color: 'bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400',
+        number: 2,
+        hasIcon: true
+      },
+      {
+        command: '/ck:code-review + /ck:test',
+        typeLabel: 'Integrate + verify',
+        description: 'Một integrator reconcile theo repo truth; review và test trước khi xong',
+        color: 'bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400',
+        number: 3,
+        isSkill: true
+      }
+    ],
+    tip: 'Không bao giờ average ý kiến agent xung đột — reconcile theo repo truth, tests, và requirements user',
+    features: [
+      'Chọn multi-CLI agent',
+      'Ownership rõ trước parallel',
+      'Handoff có evidence gate',
+      'Một package integrator cuối'
+    ],
+    borderColor: 'border-purple-500/20'
   }
 ];
