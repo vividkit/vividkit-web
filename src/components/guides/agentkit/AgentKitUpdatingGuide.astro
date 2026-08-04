@@ -97,14 +97,32 @@ const matrix = isVi
 
 const wizardSteps = isVi
   ? [
-      { title: 'Bước CLI (self-update)', body: 'Kiểm tra / apply binary đã ký khi cần. Mỗi bước wizard mặc định N — pass --yes để accept tất cả.' },
-      { title: 'Bước kits global', body: 'Refresh install user/global AgentKit-owned (preserve-only; --force không overwrite edit user ở global).' },
-      { title: 'Bước kits project', body: 'Refresh file owned trong project hiện tại: clean overwrite; user-modified skip trừ --force.' },
+      {
+        title: '1. Tool ak (CLI)',
+        body: 'Hỏi có nâng cấp chương trình ak không. Mặc định là No; gõ Yes hoặc dùng --yes để đồng ý cả wizard.',
+      },
+      {
+        title: '2. Kit trên máy (global)',
+        body: 'Làm mới kit cài sẵn cho user/máy. File bạn đã sửa tay thường được giữ.',
+      },
+      {
+        title: '3. Kit trong project',
+        body: 'Làm mới kit trong thư mục project hiện tại. File AgentKit “còn nguyên” được cập nhật; file bạn đã sửa thì bỏ qua trừ khi thêm --force.',
+      },
     ]
   : [
-      { title: 'CLI step (self-update)', body: 'Check / apply the signed binary when needed. Each wizard step defaults to N — pass --yes to accept every step.' },
-      { title: 'Global kits step', body: 'Refresh AgentKit-owned user/global installs (preserve-only; --force does not overwrite user edits at global scope).' },
-      { title: 'Project kits step', body: 'Refresh owned files in the current project: clean files overwrite; user-modified skipped unless --force.' },
+      {
+        title: '1. The ak tool (CLI)',
+        body: 'Asks whether to upgrade the ak program. Default is No; answer Yes or use --yes to accept the whole wizard.',
+      },
+      {
+        title: '2. Kits on this machine (global)',
+        body: 'Refreshes kits installed for your user/machine. Files you edited by hand are usually kept.',
+      },
+      {
+        title: '3. Kits in the project',
+        body: 'Refreshes kits in the current project folder. Untouched AgentKit files update; files you changed are skipped unless you add --force.',
+      },
     ];
 ---
 
@@ -213,37 +231,45 @@ ak self-update --disable-auto-update`}
   <!-- ========== Kits via ak update ========== -->
   <AkSection
     eyebrow="2 · Kits"
-    title={isVi ? 'Refresh Kit content: ak update' : 'Refresh Kit content: ak update'}
+    title={isVi ? 'Làm mới nội dung Kit: ak update' : 'Refresh Kit content: ak update'}
     desc={isVi
-      ? 'Ownership-aware: chỉ ghi file AgentKit nhận là của mình. Preview mặc định khi không --yes (scripted); TTY wizard từng bước.'
-      : 'Ownership-aware: only writes files AgentKit owns. Preview by default without --yes (scripted); TTY uses a step wizard.'}
+      ? 'Chỉ sửa file do AgentKit cài (không đụng file bạn tự tạo). Không thêm --yes thì thường chỉ xem trước; thêm --yes mới ghi thật.'
+      : 'Only updates files AgentKit installed (not files you created yourself). Without --yes you usually get a preview; add --yes to apply for real.'}
   >
     <AkCompare
       left={{
-        title: isVi ? 'Update “all” (wizard)' : 'Update “all” (wizard)',
+        title: isVi ? 'Cập nhật theo từng bước (hỏi lần lượt)' : 'Update step by step (asks each time)',
         body: isVi
-          ? 'Trên TTY, bare ak update chạy CLI → global kits → project kits. Mỗi bước hỏi; --yes accept mọi bước.'
-          : 'On a TTY, bare ak update runs CLI → global kits → project kits. Each step asks; --yes accepts every step.',
+          ? 'Gõ ak update trong terminal (có màn hình tương tác). CLI hỏi lần lượt: nâng tool ak → kit trên máy → kit trong project. Mỗi bước bạn Yes/No. Muốn “đồng ý hết” thì thêm --yes.'
+          : 'Run bare ak update in an interactive terminal. It walks you through: upgrade the ak tool → kits on this machine → kits in the current project. You answer Yes/No each step. Add --yes to accept every step.',
         tone: 'teal',
         points: isVi
-          ? ['ak update', 'ak update --yes']
-          : ['ak update', 'ak update --yes'],
+          ? ['ak update  → hỏi từng bước', 'ak update --yes  → đồng ý tất cả bước']
+          : ['ak update  → ask each step', 'ak update --yes  → accept every step'],
       }}
       right={{
-        title: isVi ? 'Chỉ Kit (pin scope)' : 'Kits only (pin scope)',
+        title: isVi ? 'Chỉ một chỗ / một kit (bỏ qua wizard dài)' : 'Only one place / one kit (skip the long wizard)',
         body: isVi
-          ? 'Pin --global hoặc project-dir để không chạy full wizard. --kits giới hạn tên kit.'
-          : 'Pin --global or a project-dir to skip the full wizard. --kits limits kit names.',
+          ? 'Thêm cờ để nói rõ “chỉ chỗ này”, không đi hết 3 bước wizard. --global = kit cài trên máy; đường dẫn project = một repo; --kits = chỉ kit tên đó.'
+          : 'Add flags to say “only this scope” so you skip the full three-step wizard. --global = machine-wide kits; a project path = one repo; --kits = only that kit name.',
         tone: 'slate',
         points: isVi
-          ? ['ak update --global --yes', 'ak update ./myproj --yes', 'ak update --kits engineer --yes']
-          : ['ak update --global --yes', 'ak update ./myproj --yes', 'ak update --kits engineer --yes'],
+          ? [
+              'ak update --global --yes  → chỉ kit trên máy',
+              'ak update ./myproj --yes  → chỉ một project',
+              'ak update --kits engineer --yes  → chỉ kit engineer',
+            ]
+          : [
+              'ak update --global --yes  → machine kits only',
+              'ak update ./myproj --yes  → one project only',
+              'ak update --kits engineer --yes  → engineer kit only',
+            ],
       }}
     />
 
     <div class="mt-6 space-y-4">
       <h3 class="text-base font-semibold text-slate-900 dark:text-white">
-        {isVi ? 'Wizard TTY (bare ak update)' : 'TTY wizard (bare ak update)'}
+        {isVi ? 'Ba bước khi gõ ak update (terminal tương tác)' : 'Three steps when you run bare ak update (interactive terminal)'}
       </h3>
       <AkStepRail steps={wizardSteps} accent="violet" />
     </div>
