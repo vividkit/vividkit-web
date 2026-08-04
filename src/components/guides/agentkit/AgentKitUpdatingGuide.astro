@@ -21,13 +21,13 @@ const matrix = isVi
   ? [
       {
         cmd: 'ak self-update',
-        updates: 'Chương trình ak (và Desktop nếu bạn bật)',
+        updates: 'CLI ak (và Desktop nếu bạn bật)',
         not: 'Không làm mới skill/hook trong project',
-        when: 'Chỉ muốn tool ak mới hơn',
+        when: 'Chỉ muốn CLI ak mới hơn',
       },
       {
         cmd: 'ak update',
-        updates: 'Hỏi từng bước: tool ak → kit trên máy → kit project',
+        updates: 'Hỏi từng bước: CLI ak → kit trên máy → kit project',
         not: 'Bỏ qua bước nào thì không đụng phần đó',
         when: 'Sau bản release: muốn làm mới theo hướng dẫn từng bước',
       },
@@ -52,20 +52,20 @@ const matrix = isVi
       {
         cmd: 'ak kit refresh <kit>',
         updates: 'Ép làm mới lại một kit đã cài; gỡ file generate cũ thừa',
-        not: 'Không hỏi 3 bước như ak update; không nâng tool ak',
+        not: 'Không hỏi 3 bước như ak update; không nâng CLI ak',
         when: 'Một kit lệch / cần force refresh',
       },
     ]
   : [
       {
         cmd: 'ak self-update',
-        updates: 'The ak program (and Desktop if you opt in)',
+        updates: 'The ak CLI (and Desktop if you opt in)',
         not: 'Does not refresh skills/hooks in projects',
-        when: 'You only want a newer ak tool',
+        when: 'You only want a newer ak CLI',
       },
       {
         cmd: 'ak update',
-        updates: 'Walks through: ak tool → machine kits → project kits',
+        updates: 'Walks through: ak CLI → machine kits → project kits',
         not: 'Skips any step you decline',
         when: 'After a release: refresh guided step by step',
       },
@@ -90,7 +90,7 @@ const matrix = isVi
       {
         cmd: 'ak kit refresh <kit>',
         updates: 'Force re-apply one installed kit; drop leftover generated files',
-        not: 'Not the multi-step ak update walkthrough; not a tool upgrade',
+        not: 'Not the multi-step ak update walkthrough; not a CLI upgrade',
         when: 'One kit is out of date or needs a hard refresh',
       },
     ];
@@ -98,8 +98,8 @@ const matrix = isVi
 const wizardSteps = isVi
   ? [
       {
-        title: '1. Tool ak (CLI)',
-        body: 'Hỏi có nâng cấp chương trình ak không. Mặc định là No; gõ Yes hoặc dùng --yes để đồng ý cả wizard.',
+        title: '1. CLI ak',
+        body: 'Hỏi có nâng cấp CLI ak không. Mặc định là No; gõ Yes hoặc dùng --yes để đồng ý cả wizard.',
       },
       {
         title: '2. Kit trên máy (global)',
@@ -112,8 +112,8 @@ const wizardSteps = isVi
     ]
   : [
       {
-        title: '1. The ak tool (CLI)',
-        body: 'Asks whether to upgrade the ak program. Default is No; answer Yes or use --yes to accept the whole wizard.',
+        title: '1. The ak CLI',
+        body: 'Asks whether to upgrade the ak CLI. Default is No; answer Yes or use --yes to accept the whole wizard.',
       },
       {
         title: '2. Kits on this machine (global)',
@@ -133,8 +133,8 @@ const wizardSteps = isVi
     kicker={isVi ? 'CLI & Kits' : 'CLI & Kits'}
     title={isVi ? 'Cập Nhật CLI & Kits' : 'Update CLI & Kits'}
     subtitle={isVi
-      ? 'Phân biệt rõ: lệnh nào chỉ nâng binary ak, lệnh nào refresh Kit, và lệnh nào chỉ nhắm một kit.'
-      : 'Know which command upgrades the ak binary, which refreshes Kits, and which targets a single kit.'}
+      ? 'Phân biệt rõ: lệnh nào chỉ nâng CLI ak, lệnh nào làm mới Kit, và lệnh nào chỉ nhắm một kit.'
+      : 'Know which command upgrades the ak CLI, which refreshes Kits, and which targets a single kit.'}
     badges={isVi ? ['self-update ≠ update'] : ['self-update ≠ update']}
   />
 
@@ -142,14 +142,14 @@ const wizardSteps = isVi
     <ul class="space-y-2">
       <li class="flex flex-wrap items-baseline gap-x-1.5 gap-y-1">
         <AkInlineCode text="ak self-update" />
-        <span>{isVi ? '= cập nhật tool (binary).' : '= update the tool (binary).'}</span>
+        <span>{isVi ? '= cập nhật CLI ak.' : '= update the ak CLI.'}</span>
       </li>
       <li class="flex flex-wrap items-baseline gap-x-1.5 gap-y-1">
         <AkInlineCode text="ak update" />
         <span>
           {isVi
-            ? '= làm mới kit (có thể hỏi nâng tool ak trước).'
-            : '= refresh kits (may ask to upgrade the ak tool first).'}
+            ? '= làm mới kit (có thể hỏi nâng CLI ak trước).'
+            : '= refresh kits (may ask to upgrade the ak CLI first).'}
         </span>
       </li>
       <li class="flex flex-wrap items-baseline gap-x-1.5 gap-y-1">
@@ -190,10 +190,10 @@ const wizardSteps = isVi
   <!-- ========== CLI only ========== -->
   <AkSection
     eyebrow="1 · CLI"
-    title={isVi ? 'Chỉ cập nhật binary: ak self-update' : 'Binary only: ak self-update'}
+    title={isVi ? 'Chỉ nâng CLI ak: ak self-update' : 'ak CLI only: ak self-update'}
     desc={isVi
-      ? 'Dùng khi bạn chỉ muốn ak mới hơn (hoặc stage Desktop). Không refresh skills/hooks trong project.'
-      : 'Use when you only want a newer ak (or staged Desktop). Does not refresh skills/hooks in projects.'}
+      ? 'Dùng khi bạn chỉ muốn CLI ak mới hơn (hoặc stage Desktop). Không làm mới skills/hooks trong project.'
+      : 'Use when you only want a newer ak CLI (or staged Desktop). Does not refresh skills/hooks in projects.'}
   >
     <AkCodeBlock
       title="shell"
@@ -240,8 +240,8 @@ ak self-update --disable-auto-update`}
       left={{
         title: isVi ? 'Cập nhật theo từng bước (hỏi lần lượt)' : 'Update step by step (asks each time)',
         body: isVi
-          ? 'Gõ ak update trong terminal (có màn hình tương tác). CLI hỏi lần lượt: nâng tool ak → kit trên máy → kit trong project. Mỗi bước bạn Yes/No. Muốn “đồng ý hết” thì thêm --yes.'
-          : 'Run bare ak update in an interactive terminal. It walks you through: upgrade the ak tool → kits on this machine → kits in the current project. You answer Yes/No each step. Add --yes to accept every step.',
+          ? 'Gõ ak update trong terminal (có màn hình tương tác). CLI hỏi lần lượt: nâng CLI ak → kit trên máy → kit trong project. Mỗi bước bạn Yes/No. Muốn “đồng ý hết” thì thêm --yes.'
+          : 'Run bare ak update in an interactive terminal. It walks you through: upgrade the ak CLI → kits on this machine → kits in the current project. You answer Yes/No each step. Add --yes to accept every step.',
         tone: 'teal',
         points: isVi
           ? ['ak update  → hỏi từng bước', 'ak update --yes  → đồng ý tất cả bước']
@@ -386,7 +386,7 @@ ak kit refresh engineer --local --kits-dir ./kits --yes`}
     <div class="grid gap-3 sm:grid-cols-2">
       {[
         {
-          q: isVi ? 'Chỉ muốn ak binary mới' : 'Only want a newer ak binary',
+          q: isVi ? 'Chỉ muốn CLI ak mới' : 'Only want a newer ak CLI',
           a: 'ak self-update --check → ak self-update --yes',
         },
         {
