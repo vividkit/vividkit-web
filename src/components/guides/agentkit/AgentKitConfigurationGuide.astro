@@ -277,10 +277,10 @@ ak config prefs unset hooks.simplify-gate --scope project`}
         </tbody>
       </table>
     </div>
-    <AkCallout variant="info" title={isVi ? 'Khác nữa trong schema' : 'More in the schema'}>
+    <AkCallout variant="info" title={isVi ? 'Các key khác trong schema' : 'More keys in the schema'}>
       {isVi
-        ? 'Schema còn content.* (daemon content multi-channel), assertions, skills.<id>, simplify.gate, workflow_artifact_gate, extensions (escape hatch không validate). Xem full schema khi cần field hiếm.'
-        : 'The schema also includes content.* (multi-channel content daemon), assertions, skills.<id>, simplify.gate, workflow_artifact_gate, and extensions (unvalidated escape hatch). See the full schema for rare fields.'}
+        ? 'Ngoài bảng trên, schema còn một số key không liệt kê hết ở đây — ví dụ content.* (daemon nội dung đa kênh), assertions, skills.<id>, simplify.gate, workflow_artifact_gate, extensions (lối thoát không validate). Muốn chỉnh những mục đó thì mở schema đầy đủ.'
+        : 'Beyond the table above, the schema has more keys not listed here — for example content.* (multi-channel content daemon), assertions, skills.<id>, simplify.gate, workflow_artifact_gate, and extensions (unvalidated escape hatch). Open the full schema if you need those.'}
     </AkCallout>
   </AkSection>
 
