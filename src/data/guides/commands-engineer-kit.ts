@@ -171,7 +171,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.predict.desc"),
           detail: t("commands.stable.predict.detail"),
           isSkill: true,
-          flags: ["--chain reason", "--chain probe"],
+          flags: ["--files", "--chain reason", "--chain probe"],
         },
         {
           command: "/ck:xia",
@@ -346,7 +346,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.ai_artist.desc"),
           detail: t("commands.stable.ai_artist.detail"),
           isSkill: true,
-          flags: ["--mode search", "--mode creative", "--mode wild", "--mode all", "--skip"],
+          flags: ["--mode search", "--mode creative", "--mode wild", "--mode all", "--provider auto", "--provider google", "--provider openrouter", "--skip"],
         },
         {
           command: "/ck:media-processing",
@@ -455,7 +455,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.ship.desc"),
           detail: t("commands.stable.ship.detail"),
           isSkill: true,
-          flags: ["--official", "--beta", "--skip-tests", "--skip-review"],
+          flags: ["official", "beta", "--skip-tests", "--skip-review", "--skip-journal", "--skip-docs", "--dry-run"],
         },
         {
           command: "/ck:mobile-development",
@@ -743,6 +743,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.llms.desc"),
           detail: t("commands.stable.llms.detail"),
           isSkill: true,
+          flags: ["--full", "--output"],
         },
         {
           command: "/ck:interview-docs",
@@ -809,7 +810,7 @@ export function getEngineerKitCategories(t: TranslationFn): CommandCategory[] {
           desc: t("commands.stable.agentize.desc"),
           detail: t("commands.stable.agentize.detail"),
           isSkill: true,
-          flags: ["--both", "--mcp", "--cli"],
+          flags: ["--both", "--mcp", "--cli", "--auto", "--ask"],
         },
       ],
     },

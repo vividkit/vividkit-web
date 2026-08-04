@@ -1,25 +1,53 @@
 {
   "$schema": "./skills-registry.schema.json",
-  "lastBuilt": "2026-06-23T07:00:51Z",
+  "lastBuilt": "2026-08-04T10:00:33Z",
   "upstreamShas": {
     "stable": "ed8a1fa7a9dbc7135311fdd334c762dbe63e2c91",
-    "beta": "9180f95d579fbcd73500dad5db3555e61b9288e5",
+    "beta": "7aaf382cb98ed379e5463756435174c04530ae3e",
     "marketing-stable": "11c5eb055e7b0e6061bbaccfd0a468a8dac73c0c",
-    "marketing-beta": "570b4003299b85af6ebf1af99409762b645a6ba9"
+    "marketing-beta": "e59097c59462b67f5518a36b80a6445c6b317a1e"
   },
   "summary": {
-    "totalSkills": 136,
-    "engineerSkills": 87,
+    "totalSkills": 148,
+    "engineerSkills": 99,
     "marketerSkills": 49,
-    "deprecatedSkills": 6,
+    "deprecatedSkills": 0,
     "totalCommands": 78,
     "marketerCommands": 78,
     "engineerCommands": 0,
-    "totalAgents": 44,
-    "engineerAgents": 13,
+    "totalAgents": 45,
+    "engineerAgents": 14,
     "marketerAgents": 31
   },
   "skills": [
+    {
+      "name": "ck:advise",
+      "kit": "engineer",
+      "channels": {
+        "beta": {
+          "version": "1.2.0",
+          "argumentHint": "[prompt-or-url] [--html] [--md] [--wiki] [--github] [--agent]",
+          "args": [
+            "[prompt-or-url]",
+            "[--html]",
+            "[--md]",
+            "[--wiki]",
+            "[--github]",
+            "[--agent]"
+          ],
+          "flags": [
+            "--agent",
+            "--github",
+            "--html",
+            "--md",
+            "--wiki"
+          ],
+          "deprecated": false,
+          "description": "Analyze prompts, issues, specs, or docs before planning."
+        }
+      },
+      "deprecated": false
+    },
     {
       "name": "ck:agent-browser",
       "kit": "engineer",
@@ -35,7 +63,7 @@
           "description": "Automate browsers and apps with agent-browser."
         },
         "beta": {
-          "version": "2.0.0",
+          "version": "2.0.1",
           "argumentHint": "[url or task]",
           "args": [
             "[url or task]"
@@ -129,7 +157,7 @@
           "description": "Generate product mockups, marketing assets, brand visuals, and concept art via Nano Banana with 129 curated prompts."
         },
         "marketing-stable": {
-          "version": null,
+          "version": "3.1.0",
           "argumentHint": "[concept] [--mode search|creative|wild|all] [--skip]",
           "args": [
             "[concept]",
@@ -144,7 +172,7 @@
           "description": "Generate images via Nano Banana with 129 curated prompts."
         },
         "marketing-beta": {
-          "version": null,
+          "version": "3.1.0",
           "argumentHint": "[concept] [--mode search|creative|wild|all] [--skip]",
           "args": [
             "[concept]",
@@ -185,7 +213,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Analyze images/audio/video with Gemini API (better vision than Claude)."
+          "description": "Analyze and generate image, audio, video, and document content through the pinned Multix CLI and live provider catalogs."
         },
         "marketing-stable": {
           "version": null,
@@ -268,7 +296,7 @@
           "argumentHint": "",
           "args": [],
           "flags": [],
-          "deprecated": true,
+          "deprecated": false,
           "description": "Autoresearch is the upstream meta-framework (Udit Goenka, MIT) for autonomous goal-directed iteration with safety guardrails."
         },
         "beta": {
@@ -276,11 +304,11 @@
           "argumentHint": "",
           "args": [],
           "flags": [],
-          "deprecated": true,
+          "deprecated": false,
           "description": "Autoresearch is the upstream meta-framework (Udit Goenka, MIT) for autonomous goal-directed iteration with safety guardrails."
         }
       },
-      "deprecated": true
+      "deprecated": false
     },
     {
       "name": "ck:backend-development",
@@ -317,7 +345,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Build robust backend systems with modern technologies (Node.js, Python, Go, Rust), frameworks (NestJS, FastAPI, Django), databases (PostgreSQL, MongoDB, Redis), APIs (REST, GraphQL, gRPC), authentication (OAuth 2.1, JWT), testing strategies, security best practices (OWASP Top 10), performance optimization, scalability patterns (microservices, caching, sharding), DevOps practices (Docker, Kubernetes, CI/CD), and monitoring."
+          "description": "Build robust backend systems with modern technologies (Node.js, Python, Go, Rust), frameworks (NestJS, FastAPI, Django), databases (PostgreSQL, MongoDB, Redis), APIs (REST, GraphQL, gRPC), authentication (OAuth 2.1, JWT), testing strategies, security best practices (OWASP Top 10), performance optimi"
         },
         "marketing-beta": {
           "version": "1.0.0",
@@ -328,7 +356,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Build robust backend systems with modern technologies (Node.js, Python, Go, Rust), frameworks (NestJS, FastAPI, Django), databases (PostgreSQL, MongoDB, Redis), APIs (REST, GraphQL, gRPC), authentication (OAuth 2.1, JWT), testing strategies, security best practices (OWASP Top 10), performance optimization, scalability patterns (microservices, caching, sharding), DevOps practices (Docker, Kubernetes, CI/CD), and monitoring."
+          "description": "Build robust backend systems with modern technologies (Node.js, Python, Go, Rust), frameworks (NestJS, FastAPI, Django), databases (PostgreSQL, MongoDB, Redis), APIs (REST, GraphQL, gRPC), authentication (OAuth 2.1, JWT), testing strategies, security best practices (OWASP Top 10), performance optimi"
         }
       },
       "deprecated": false
@@ -439,14 +467,16 @@
           "description": "Brainstorm solutions with trade-off analysis and brutal honesty."
         },
         "beta": {
-          "version": "2.4.0",
-          "argumentHint": "[--html] [--wiki] [topic or problem]",
+          "version": "2.5.0",
+          "argumentHint": "[--html] [--wiki] [--advice] [topic or problem]",
           "args": [
             "[--html]",
             "[--wiki]",
+            "[--advice]",
             "[topic or problem]"
           ],
           "flags": [
+            "--advice",
             "--html",
             "--wiki"
           ],
@@ -580,6 +610,44 @@
       "deprecated": false
     },
     {
+      "name": "ck:codex-goal",
+      "kit": "engineer",
+      "channels": {
+        "beta": {
+          "version": "1.0.0",
+          "argumentHint": "<objective | goal draft>",
+          "args": [],
+          "flags": [],
+          "deprecated": false,
+          "description": "Guide long-running Codex goal work with a verifiable stop condition."
+        }
+      },
+      "deprecated": false
+    },
+    {
+      "name": "ck:coding-agent-orchestration",
+      "kit": "engineer",
+      "channels": {
+        "beta": {
+          "version": "1.0.0",
+          "argumentHint": "[task or workflow] [--single|--sequential|--parallel|--review-loop]",
+          "args": [
+            "[task or workflow]",
+            "[--single|--sequential|--parallel|--review-loop]"
+          ],
+          "flags": [
+            "--parallel",
+            "--review-loop",
+            "--sequential",
+            "--single"
+          ],
+          "deprecated": false,
+          "description": "Coordinate multiple coding agents and AI developer tools across one engineering workflow."
+        }
+      },
+      "deprecated": false
+    },
+    {
       "name": "ck:coding-level",
       "kit": "engineer",
       "channels": {
@@ -629,6 +697,26 @@
           "flags": [],
           "deprecated": false,
           "description": "Check context usage limits, monitor time remaining, optimize token consumption, debug context failures."
+        },
+        "marketing-stable": {
+          "version": "1.0.0",
+          "argumentHint": "[topic or question]",
+          "args": [
+            "[topic or question]"
+          ],
+          "flags": [],
+          "deprecated": false,
+          "description": ""
+        },
+        "marketing-beta": {
+          "version": "1.0.0",
+          "argumentHint": "[topic or question]",
+          "args": [
+            "[topic or question]"
+          ],
+          "flags": [],
+          "deprecated": false,
+          "description": ""
         }
       },
       "deprecated": false
@@ -657,14 +745,16 @@
           "description": "Implement features, plans, and fixes with structured workflow."
         },
         "beta": {
-          "version": "2.2.0",
-          "argumentHint": "[task|plan-path] [--interactive|--fast|--parallel|--auto|--no-test] [--tdd]",
+          "version": "2.3.0",
+          "argumentHint": "[task|plan-path] [--interactive|--fast|--parallel|--auto|--no-test] [--tdd] [--advice]",
           "args": [
             "[task|plan-path]",
             "[--interactive|--fast|--parallel|--auto|--no-test]",
-            "[--tdd]"
+            "[--tdd]",
+            "[--advice]"
           ],
           "flags": [
+            "--advice",
             "--auto",
             "--fast",
             "--interactive",
@@ -782,7 +872,7 @@
             "--sweep",
             "--yolo"
           ],
-          "deprecated": true,
+          "deprecated": false,
           "description": "Analyze cyber threat intelligence and OSINT cases."
         },
         "beta": {
@@ -804,7 +894,7 @@
           "description": "Analyze cyber threat intelligence and OSINT cases."
         }
       },
-      "deprecated": true
+      "deprecated": false
     },
     {
       "name": "ck:databases",
@@ -905,6 +995,24 @@
           "flags": [],
           "deprecated": false,
           "description": "Deploy projects to any platform with auto-detection."
+        }
+      },
+      "deprecated": false
+    },
+    {
+      "name": "ck:design",
+      "kit": "engineer",
+      "channels": {
+        "beta": {
+          "version": "2.2.0",
+          "argumentHint": "[design-type] [context]",
+          "args": [
+            "[design-type]",
+            "[context]"
+          ],
+          "flags": [],
+          "deprecated": false,
+          "description": "Design brand identity, logos, banners, posters, and visual assets."
         }
       },
       "deprecated": false
@@ -1057,6 +1165,40 @@
       "deprecated": false
     },
     {
+      "name": "ck:document-skills",
+      "kit": "engineer",
+      "channels": {
+        "beta": {
+          "version": "1.0.0",
+          "argumentHint": "[document task]",
+          "args": [
+            "[document task]"
+          ],
+          "flags": [],
+          "deprecated": false,
+          "description": "Route Office document work to CK document skills."
+        }
+      },
+      "deprecated": false
+    },
+    {
+      "name": "ck:fable-thinking",
+      "kit": "engineer",
+      "channels": {
+        "beta": {
+          "version": "1.4.0",
+          "argumentHint": "[task or question to reason through]",
+          "args": [
+            "[task or question to reason through]"
+          ],
+          "flags": [],
+          "deprecated": false,
+          "description": "Evidence-grounded reasoning protocol for debugging, reviews, architecture decisions, contested claims, constrained writing, and high-stakes analysis."
+        }
+      },
+      "deprecated": false
+    },
+    {
       "name": "ck:find-skills",
       "kit": "engineer",
       "channels": {
@@ -1103,12 +1245,14 @@
           "description": "Fix bugs, errors, test failures, and CI/CD issues with intelligent routing."
         },
         "beta": {
-          "version": "2.1.0",
-          "argumentHint": "[issue] --auto|--review|--quick|--parallel",
+          "version": "2.2.0",
+          "argumentHint": "[issue] --auto|--review|--quick|--parallel [--advice]",
           "args": [
-            "[issue]"
+            "[issue]",
+            "[--advice]"
           ],
           "flags": [
+            "--advice",
             "--auto",
             "--parallel",
             "--quick",
@@ -1151,6 +1295,21 @@
       "deprecated": false
     },
     {
+      "name": "ck:folder-context",
+      "kit": "engineer",
+      "channels": {
+        "beta": {
+          "version": "1.0.0",
+          "argumentHint": "<target-folder>",
+          "args": [],
+          "flags": [],
+          "deprecated": false,
+          "description": "Create a compact subfolder CLAUDE.md and linked AGENTS.md for durable local conventions."
+        }
+      },
+      "deprecated": false
+    },
+    {
       "name": "ck:frontend-design",
       "kit": "engineer",
       "channels": {
@@ -1163,7 +1322,7 @@
           "description": "Create polished frontend interfaces from designs/screenshots/videos."
         },
         "beta": {
-          "version": "1.0.0",
+          "version": "2.0.0",
           "argumentHint": "",
           "args": [],
           "flags": [],
@@ -1251,14 +1410,14 @@
           "description": "Manage git commits, pushes, PRs, branch merges, and PR review-and-merge automation."
         },
         "beta": {
-          "version": "1.0.0",
+          "version": "1.1.0",
           "argumentHint": "cm|cp|pr|merge|merge-pr [args]",
           "args": [
             "[args]"
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Manage git commits, pushes, PRs, branch merges, and PR review-and-merge automation."
+          "description": "Git operations with conventional commits."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -1306,6 +1465,25 @@
           "flags": [],
           "deprecated": false,
           "description": "Semantic code analysis with GitLab Knowledge Graph."
+        }
+      },
+      "deprecated": false
+    },
+    {
+      "name": "ck:goal-warmup",
+      "kit": "engineer",
+      "channels": {
+        "beta": {
+          "version": "1.0.0",
+          "argumentHint": "\\\"<goal>\\\" [--fast]",
+          "args": [
+            "[--fast]"
+          ],
+          "flags": [
+            "--fast"
+          ],
+          "deprecated": false,
+          "description": "Prepare long-running goal work before execution."
         }
       },
       "deprecated": false
@@ -1395,6 +1573,23 @@
       "deprecated": false
     },
     {
+      "name": "ck:handoff",
+      "kit": "engineer",
+      "channels": {
+        "beta": {
+          "version": "1.0.0",
+          "argumentHint": "[next-session focus]",
+          "args": [
+            "[next-session focus]"
+          ],
+          "flags": [],
+          "deprecated": false,
+          "description": "Create a concise, redacted conversation handoff for a fresh agent session."
+        }
+      },
+      "deprecated": false
+    },
+    {
       "name": "ck:html-video",
       "kit": "engineer",
       "channels": {
@@ -1417,6 +1612,44 @@
           "flags": [],
           "deprecated": false,
           "description": "Create local MP4 videos from HTML/CSS/JS templates with nexu-io/html-video."
+        }
+      },
+      "deprecated": false
+    },
+    {
+      "name": "ck:interview-docs",
+      "kit": "engineer",
+      "channels": {
+        "beta": {
+          "version": "1.0.0",
+          "argumentHint": "<vision | document-path | topic>",
+          "args": [],
+          "flags": [],
+          "deprecated": false,
+          "description": "Extract a user's vision and decisions into durable project documents through a guided interview."
+        }
+      },
+      "deprecated": false
+    },
+    {
+      "name": "ck:issue-to-plan",
+      "kit": "engineer",
+      "channels": {
+        "beta": {
+          "version": "1.1.0",
+          "argumentHint": "<github-issue-url | issue-number> [--repo owner/name] [--plan-ready-label <name>] [--decision-label <name>]",
+          "args": [
+            "[--repo owner/name]",
+            "[--plan-ready-label <name>]",
+            "[--decision-label <name>]"
+          ],
+          "flags": [
+            "--decision-label",
+            "--plan-ready-label",
+            "--repo"
+          ],
+          "deprecated": false,
+          "description": "Convert a GitHub issue into a validated implementation plan."
         }
       },
       "deprecated": false
@@ -1656,7 +1889,7 @@
             "[task or server-name]"
           ],
           "flags": [],
-          "deprecated": true,
+          "deprecated": false,
           "description": "Manage Model Context Protocol (MCP) servers - discover, analyze, and execute tools/prompts/resources from configured MCP servers."
         },
         "marketing-beta": {
@@ -1666,11 +1899,11 @@
             "[task or server-name]"
           ],
           "flags": [],
-          "deprecated": true,
+          "deprecated": false,
           "description": "Manage Model Context Protocol (MCP) servers - discover, analyze, and execute tools/prompts/resources from configured MCP servers."
         }
       },
-      "deprecated": true
+      "deprecated": false
     },
     {
       "name": "ck:media-processing",
@@ -1911,8 +2144,8 @@
           "description": "Plan implementations, design architectures, create technical roadmaps with detailed phases."
         },
         "beta": {
-          "version": "1.1.0",
-          "argumentHint": "[task] [--fast|--hard|--deep|--parallel|--two] [--tdd|--no-tasks] [--html] [--github] [--wiki] OR [archive|red-team|validate]",
+          "version": "1.3.0",
+          "argumentHint": "[task] [--fast|--hard|--deep|--parallel|--two] [--tdd|--no-tasks] [--html] [--github] [--wiki] [--advice] OR [archive|red-team|validate]",
           "args": [
             "[task]",
             "[--fast|--hard|--deep|--parallel|--two]",
@@ -1920,9 +2153,11 @@
             "[--html]",
             "[--github]",
             "[--wiki]",
+            "[--advice]",
             "[archive|red-team|validate]"
           ],
           "flags": [
+            "--advice",
             "--deep",
             "--fast",
             "--github",
@@ -1973,7 +2208,7 @@
             "[deprecated flags are accepted with warnings]"
           ],
           "flags": [],
-          "deprecated": true,
+          "deprecated": false,
           "description": "Open the ClaudeKit plans dashboard in the CLI config UI."
         },
         "beta": {
@@ -1983,7 +2218,7 @@
             "[deprecated flags are accepted with warnings]"
           ],
           "flags": [],
-          "deprecated": true,
+          "deprecated": false,
           "description": "Open the ClaudeKit plans dashboard in the CLI config UI."
         },
         "marketing-stable": {
@@ -2007,7 +2242,7 @@
           "description": "Plans dashboard server with progress tracking and timeline visualization."
         }
       },
-      "deprecated": true
+      "deprecated": false
     },
     {
       "name": "ck:predict",
@@ -2194,7 +2429,7 @@
             "[directories or files to organize]"
           ],
           "flags": [],
-          "deprecated": true,
+          "deprecated": false,
           "description": "Organize files, directories, and content structure in any project."
         },
         "beta": {
@@ -2208,7 +2443,7 @@
           "description": "Organize files, directories, and content structure in any project."
         }
       },
-      "deprecated": true
+      "deprecated": false
     },
     {
       "name": "ck:react-best-practices",
@@ -2371,6 +2606,21 @@
       "deprecated": false
     },
     {
+      "name": "ck:research-prompt",
+      "kit": "engineer",
+      "channels": {
+        "beta": {
+          "version": "1.0.0",
+          "argumentHint": "<research topic | decision>",
+          "args": [],
+          "flags": [],
+          "deprecated": false,
+          "description": "Draft a self-contained research brief for a human or AI researcher."
+        }
+      },
+      "deprecated": false
+    },
+    {
       "name": "ck:retro",
       "kit": "engineer",
       "channels": {
@@ -2430,18 +2680,20 @@
           "description": "Review GitHub PRs for duplicate prior work, project standards, strategic necessity, correctness, security, breaking changes, code quality, and AI-slop patterns."
         },
         "beta": {
-          "version": "2.0.0",
-          "argumentHint": "<PR number or URL> [--fix] [--reply]",
+          "version": "2.2.0",
+          "argumentHint": "<PR number or URL> [--fix] [--reply] [--merge]",
           "args": [
             "[--fix]",
-            "[--reply]"
+            "[--reply]",
+            "[--merge]"
           ],
           "flags": [
             "--fix",
+            "--merge",
             "--reply"
           ],
           "deprecated": false,
-          "description": "Review GitHub PRs for duplicate prior work, project standards, strategic necessity, correctness, security, breaking changes, code quality, and AI-slop patterns."
+          "description": "Review a GitHub pull request thoroughly — analyze diff for correctness, security, breaking changes, code quality, and AI-slop patterns."
         }
       },
       "deprecated": false
@@ -2505,7 +2757,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Fast codebase scouting using parallel agents."
+          "description": "Fast codebase scouting using native search, optional Explore agents, and user-permitted OpenCode probes."
         },
         "marketing-stable": {
           "version": "1.0.0",
@@ -2732,7 +2984,7 @@
           "description": "Ship pipeline: merge target, test, review, journal, optional AgentWiki publish, commit, push, PR."
         },
         "beta": {
-          "version": "2.0.0",
+          "version": "2.1.0",
           "argumentHint": "[official|beta] [--skip-tests] [--skip-review] [--skip-journal] [--skip-docs] [--dry-run]",
           "args": [
             "[official|beta]",
@@ -2750,7 +3002,7 @@
             "--skip-tests"
           ],
           "deprecated": false,
-          "description": "Ship pipeline: merge target, test, review, journal, optional AgentWiki publish, commit, push, PR."
+          "description": "Ship pipeline: merge main, test, review, commit, push, PR."
         }
       },
       "deprecated": false
@@ -3180,7 +3432,7 @@
           "args": [],
           "flags": [],
           "deprecated": false,
-          "description": "UI/UX design intelligence for web and mobile: style selection, color systems, typography, layout, accessibility, interaction states, responsive behavior, forms, charts, design systems, and code review across React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind, shadcn/ui, and HTML/CSS."
+          "description": "UI/UX design intelligence for web and mobile: style selection, color systems, typography, layout, accessibility, interaction states, responsive behavior, forms, charts, design systems, and code review across React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind, shadcn/ui, and HTML/C"
         },
         "beta": {
           "version": "1.1.0",
@@ -3188,7 +3440,7 @@
           "args": [],
           "flags": [],
           "deprecated": false,
-          "description": "UI/UX design intelligence for web and mobile: style selection, color systems, typography, layout, accessibility, interaction states, responsive behavior, forms, charts, design systems, and code review across React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind, shadcn/ui, and HTML/CSS."
+          "description": "UI/UX design intelligence for web and mobile: style selection, color systems, typography, layout, accessibility, interaction states, responsive behavior, forms, charts, design systems, and code review across React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind, shadcn/ui, and HTML/C"
         },
         "marketing-stable": {
           "version": "1.1.0",
@@ -3240,7 +3492,7 @@
             "[task]"
           ],
           "flags": [],
-          "deprecated": true,
+          "deprecated": false,
           "description": "Utilize tools of Model Context Protocol (MCP) servers"
         },
         "marketing-beta": {
@@ -3250,11 +3502,11 @@
             "[task]"
           ],
           "flags": [],
-          "deprecated": true,
+          "deprecated": false,
           "description": "Utilize tools of Model Context Protocol (MCP) servers"
         }
       },
-      "deprecated": true
+      "deprecated": false
     },
     {
       "name": "ck:vibe",
@@ -3275,13 +3527,15 @@
           "description": "Run the full vibe pipeline."
         },
         "beta": {
-          "version": "1.0.0",
-          "argumentHint": "[--ship] [--beta] <github-issue-url | feature request>",
+          "version": "1.1.0",
+          "argumentHint": "[--ship] [--beta] [--advice] <github-issue-url | feature request>",
           "args": [
             "[--ship]",
-            "[--beta]"
+            "[--beta]",
+            "[--advice]"
           ],
           "flags": [
+            "--advice",
             "--beta",
             "--ship"
           ],
@@ -3845,7 +4099,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Activate when users ask about Claude Code installation, slash commands (/plan, /fix, /content, /docs, /design, /git), creating/managing Agent Skills, configuring MCP servers, setting up hooks/plugins, IDE integration (VS Code, JetBrains), CI/CD workflows, enterprise deployment (SSO, RBAC, sandboxing), troubleshooting authentication/performance issues, or advanced features (extended thinking, caching, checkpointing)."
+          "description": "Activate when users ask about Claude Code installation, slash commands (/plan, /fix, /content, /docs, /design, /git), creating/managing Agent Skills, configuring MCP servers, setting up hooks/plugins, IDE integration (VS Code, JetBrains), CI/CD workflows, enterprise deployment (SSO, RBAC, sandboxing"
         },
         "marketing-beta": {
           "version": "1.0.0",
@@ -3855,7 +4109,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Activate when users ask about Claude Code installation, slash commands (/plan, /fix, /content, /docs, /design, /git), creating/managing Agent Skills, configuring MCP servers, setting up hooks/plugins, IDE integration (VS Code, JetBrains), CI/CD workflows, enterprise deployment (SSO, RBAC, sandboxing), troubleshooting authentication/performance issues, or advanced features (extended thinking, caching, checkpointing)."
+          "description": "Activate when users ask about Claude Code installation, slash commands (/plan, /fix, /content, /docs, /design, /git), creating/managing Agent Skills, configuring MCP servers, setting up hooks/plugins, IDE integration (VS Code, JetBrains), CI/CD workflows, enterprise deployment (SSO, RBAC, sandboxing"
         }
       },
       "deprecated": false
@@ -4043,17 +4297,6 @@
           "deprecated": false,
           "description": "Design brand identity, logos, banners, and visual assets."
         },
-        "beta": {
-          "version": "2.1.0",
-          "argumentHint": "[design-type] [context]",
-          "args": [
-            "[design-type]",
-            "[context]"
-          ],
-          "flags": [],
-          "deprecated": false,
-          "description": "Design brand identity, logos, banners, and visual assets."
-        },
         "marketing-stable": {
           "version": "2.2.0",
           "argumentHint": "[design-type] [context]",
@@ -4063,7 +4306,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Comprehensive design skill: brand identity, design tokens, UI styling, logo generation (55 styles, Gemini AI), corporate identity program (50 deliverables, CIP mockups), HTML presentations (Chart.js), banner design (22 styles, social/ads/web/print), icon design (15 styles, SVG, Gemini 3.1 Pro), social photos (HTML→screenshot, multi-platform), poster design (20-30 styles, 4 recombinable axes, model-agnostic prompt emission)."
+          "description": "Comprehensive design skill: brand identity, design tokens, UI styling, logo generation (55 styles, Gemini AI), corporate identity program (50 deliverables, CIP mockups), HTML presentations (Chart.js), banner design (22 styles, social/ads/web/print), icon design (15 styles, SVG, Gemini 3.1 Pro), soci"
         },
         "marketing-beta": {
           "version": "2.2.0",
@@ -4074,7 +4317,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Comprehensive design skill: brand identity, design tokens, UI styling, logo generation (55 styles, Gemini AI), corporate identity program (50 deliverables, CIP mockups), HTML presentations (Chart.js), banner design (22 styles, social/ads/web/print), icon design (15 styles, SVG, Gemini 3.1 Pro), social photos (HTML→screenshot, multi-platform), poster design (20-30 styles, 4 recombinable axes, model-agnostic prompt emission)."
+          "description": "Comprehensive design skill: brand identity, design tokens, UI styling, logo generation (55 styles, Gemini AI), corporate identity program (50 deliverables, CIP mockups), HTML presentations (Chart.js), banner design (22 styles, social/ads/web/print), icon design (15 styles, SVG, Gemini 3.1 Pro), soci"
         }
       },
       "deprecated": false
@@ -4811,25 +5054,19 @@
       "channels": {
         "marketing-stable": {
           "version": "1.0.0",
-          "argumentHint": "[list|sync|upload|url] [args]",
-          "args": [
-            "[list|sync|upload|url]",
-            "[args]"
-          ],
+          "argumentHint": "",
+          "args": [],
           "flags": [],
           "deprecated": false,
-          "description": "S3 storage operations - upload, sync, list, get URLs"
+          "description": "S3-compatible object storage integration for marketing assets."
         },
         "marketing-beta": {
           "version": "1.0.0",
-          "argumentHint": "[list|sync|upload|url] [args]",
-          "args": [
-            "[list|sync|upload|url]",
-            "[args]"
-          ],
+          "argumentHint": "",
+          "args": [],
           "flags": [],
           "deprecated": false,
-          "description": "S3 storage operations - upload, sync, list, get URLs"
+          "description": "S3-compatible object storage integration for marketing assets."
         }
       },
       "deprecated": false
@@ -7229,6 +7466,27 @@
       }
     },
     {
+      "name": "kongming",
+      "kit": "engineer",
+      "channels": {
+        "beta": {
+          "description": "Autonomous counsel from the strongest model (`fable`) in one run - no session model switch, no user interview. Mention `@kongming` from a lower tier (opus/sonnet) or spawn it from a stuck workflow for hard design, debugging, or trade-off calls. Advisory-only; returns advice, not code.",
+          "model": "fable",
+          "memory": "project",
+          "tools": [
+            "Glob",
+            "Grep",
+            "Read",
+            "Bash",
+            "WebFetch",
+            "WebSearch",
+            "Write",
+            "Task(Explore)"
+          ]
+        }
+      }
+    },
+    {
       "name": "planner",
       "kit": "engineer",
       "channels": {
@@ -7277,7 +7535,7 @@
             "TaskList",
             "SendMessage",
             "Task(Explore)",
-            "Task(researcher)"
+            "Task(ck:researcher)"
           ]
         }
       }
@@ -7483,7 +7741,7 @@
             "TaskList",
             "SendMessage",
             "Task(Explore)",
-            "Task(researcher)"
+            "Task(ck:researcher)"
           ]
         }
       }
@@ -8027,7 +8285,7 @@
           ]
         },
         "marketing-beta": {
-          "description": "Use this agent when you need to quickly locate relevant files across a large codebase to complete a specific task using external agentic tools (Gemini, OpenCode, etc.). This agent is particularly useful when:\\n\\n<example>\\nContext: User needs to implement a new payment provider integration and needs to find all payment-related files.\\nuser: \"I need to add Stripe as a new payment provider. Can you help me find all the relevant files?\"\\nassistant: \"I''ll use the scout agent to quickly search for payment-related files across the codebase.\"\\n<Task tool call to scout with query about payment provider files>\\n<commentary>\\nThe user needs to locate payment integration files. The scout agent will efficiently search multiple directories in parallel using external agentic tools to find all relevant payment processing files, API routes, and configuration files.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User is debugging an authentication issue and needs to find all auth-related components.\\nuser: \"There''s a bug in the login flow. I need to review all authentication files.\"\\nassistant: \"Let me use the scout agent to locate all authentication-related files for you.\"\\n<Task tool call to scout with query about authentication files>\\n<commentary>\\nThe user needs to debug authentication. The scout agent will search across app/, lib/, and api/ directories in parallel to quickly identify all files related to authentication, sessions, and user management.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User wants to understand how database migrations work in the project.\\nuser: \"How are database migrations structured in this project?\"\\nassistant: \"I''ll use the scout agent to find all migration-related files and database schema definitions.\"\\n<Task tool call to scout with query about database migrations>\\n<commentary>\\nThe user needs to understand database structure. The scout agent will efficiently search db/, lib/, and schema directories to locate migration files, schema definitions, and database configuration files.\\n</commentary>\\n</example>\\n\\nProactively use this agent when:\\n- Beginning work on a feature that spans multiple directories\\n- User mentions needing to \"find\", \"locate\", or \"search for\" files\\n- Starting a debugging session that requires understanding file relationships\\n- User asks about project structure or where specific functionality lives\\n- Before making changes that might affect multiple parts of the codebase",
+          "description": "Use this agent when you need to quickly locate relevant files across a large codebase to complete a specific task using external agentic tools (Antigravity/agy, OpenCode, etc.). This agent is particularly useful when:\\n\\n<example>\\nContext: User needs to implement a new payment provider integration and needs to find all payment-related files.\\nuser: \"I need to add Stripe as a new payment provider. Can you help me find all the relevant files?\"\\nassistant: \"I''ll use the scout agent to quickly search for payment-related files across the codebase.\"\\n<Task tool call to scout with query about payment provider files>\\n<commentary>\\nThe user needs to locate payment integration files. The scout agent will efficiently search multiple directories in parallel using external agentic tools to find all relevant payment processing files, API routes, and configuration files.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User is debugging an authentication issue and needs to find all auth-related components.\\nuser: \"There''s a bug in the login flow. I need to review all authentication files.\"\\nassistant: \"Let me use the scout agent to locate all authentication-related files for you.\"\\n<Task tool call to scout with query about authentication files>\\n<commentary>\\nThe user needs to debug authentication. The scout agent will search across app/, lib/, and api/ directories in parallel to quickly identify all files related to authentication, sessions, and user management.\\n</commentary>\\n</example>\\n\\n<example>\\nContext: User wants to understand how database migrations work in the project.\\nuser: \"How are database migrations structured in this project?\"\\nassistant: \"I''ll use the scout agent to find all migration-related files and database schema definitions.\"\\n<Task tool call to scout with query about database migrations>\\n<commentary>\\nThe user needs to understand database structure. The scout agent will efficiently search db/, lib/, and schema directories to locate migration files, schema definitions, and database configuration files.\\n</commentary>\\n</example>\\n\\nProactively use this agent when:\\n- Beginning work on a feature that spans multiple directories\\n- User mentions needing to \"find\", \"locate\", or \"search for\" files\\n- Starting a debugging session that requires understanding file relationships\\n- User asks about project structure or where specific functionality lives\\n- Before making changes that might affect multiple parts of the codebase",
           "model": "haiku",
           "memory": null,
           "tools": [

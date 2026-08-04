@@ -33,10 +33,10 @@ BRANCH_LAYOUT = {
 }
 
 SKILL_SCOUT_FILES = {
-    "stable": "scout-260623-1357-skills-stable.json",
-    "beta": "scout-260623-1357-skills-beta.json",
-    "marketing-stable": "scout-260623-1357-skills-marketing-stable.json",
-    "marketing-beta": "scout-260623-1357-skills-marketing-beta.json",
+    "stable": "scout-260804-1700-skills-stable.json",
+    "beta": "scout-260804-1700-skills-beta.json",
+    "marketing-stable": "scout-260804-1700-skills-marketing-stable.json",
+    "marketing-beta": "scout-260804-1700-skills-marketing-beta.json",
 }
 
 
