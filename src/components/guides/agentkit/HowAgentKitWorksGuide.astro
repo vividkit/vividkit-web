@@ -49,15 +49,15 @@ const steps = isVi
   />
 
   <!-- Visual pipeline strip -->
-  <div class="overflow-x-auto rounded-2xl border border-slate-200/80 bg-slate-950 p-4 shadow-lg dark:border-slate-700">
-    <div class="flex min-w-[640px] items-center gap-2 text-[11px] font-semibold uppercase tracking-wide text-slate-300">
+  <div class="overflow-x-auto rounded-2xl border border-cyan-200/70 bg-gradient-to-r from-cyan-50/90 via-white to-teal-50/60 p-4 shadow-sm dark:border-slate-700 dark:bg-slate-950 dark:bg-none dark:shadow-lg">
+    <div class="flex min-w-[640px] items-center gap-2 text-[11px] font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">
       {(isVi
         ? ['Registry', 'ak CLI', 'Adapter', 'Runtime', 'Workflow', 'Artifacts', 'Review']
         : ['Registry', 'ak CLI', 'Adapter', 'Runtime', 'Workflow', 'Artifacts', 'Review']
       ).map((label, i, arr) => (
         <>
-          <span class="rounded-lg bg-white/10 px-2.5 py-1.5 text-teal-200">{label}</span>
-          {i < arr.length - 1 && <span class="text-slate-600">→</span>}
+          <span class="rounded-lg border border-teal-200/80 bg-teal-50/90 px-2.5 py-1.5 text-teal-800 dark:border-transparent dark:bg-white/10 dark:text-teal-200">{label}</span>
+          {i < arr.length - 1 && <span class="text-slate-300 dark:text-slate-600">→</span>}
         </>
       ))}
     </div>

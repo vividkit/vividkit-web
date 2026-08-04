@@ -89,24 +89,24 @@ const universalFlags = ['--json', '--yes', '--no-interactive', '--quiet'];
         </div>
       </div>
     </div>
-    <div class="rounded-[1.5rem] border border-slate-800 bg-slate-950 p-4 shadow-xl shadow-slate-900/20">
+    <div class="rounded-[1.5rem] border border-slate-200/90 bg-slate-100 p-4 shadow-sm shadow-slate-900/5 dark:border-slate-700 dark:bg-slate-800/90 dark:shadow-xl dark:shadow-black/30">
       <div class="mb-3 flex items-center justify-between">
         <div class="flex gap-1.5">
           <span class="h-2.5 w-2.5 rounded-full bg-rose-400/90"></span>
           <span class="h-2.5 w-2.5 rounded-full bg-amber-400/90"></span>
           <span class="h-2.5 w-2.5 rounded-full bg-emerald-400/90"></span>
         </div>
-        <span class="text-[10px] font-semibold uppercase tracking-wider text-slate-500">quick copy</span>
+        <span class="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">quick copy</span>
       </div>
       <div class="space-y-2">
         {heroCommands.map((cmd) => (
           <button
             type="button"
-            class="ak-copy-btn group flex w-full items-start gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5 text-left font-mono text-xs text-slate-200 transition hover:border-teal-400/40 hover:bg-white/[0.07]"
+            class="ak-copy-btn group flex w-full items-start gap-2 rounded-xl border border-slate-200/80 bg-white/80 px-3 py-2.5 text-left font-mono text-xs text-slate-700 transition hover:border-teal-300 hover:bg-teal-50/70 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:border-teal-400/40 dark:hover:bg-white/[0.07]"
             data-code={cmd}
           >
-            <span class="text-amber-400">$</span>
-            <span class="min-w-0 flex-1 break-words text-purple-300">{cmd}</span>
+            <span class="text-amber-600 dark:text-amber-400">$</span>
+            <span class="min-w-0 flex-1 break-words text-purple-600 dark:text-purple-300">{cmd}</span>
           </button>
         ))}
       </div>

@@ -243,9 +243,9 @@ const licenseTypes = isVi
         { os: 'Linux', detail: 'x64 (amd64) only' },
         { os: 'Windows', detail: 'x64 (amd64) only' },
       ].map((p) => (
-        <div class="rounded-2xl border border-slate-200/80 bg-slate-950 px-4 py-4 text-center dark:border-slate-700">
-          <div class="text-sm font-bold text-white">{p.os}</div>
-          <div class="mt-1 text-xs text-slate-400">{p.detail}</div>
+        <div class="rounded-2xl border border-slate-200/80 bg-white/90 px-4 py-4 text-center shadow-sm dark:border-slate-700 dark:bg-slate-950 dark:shadow-none">
+          <div class="text-sm font-bold text-slate-900 dark:text-white">{p.os}</div>
+          <div class="mt-1 text-xs text-slate-500 dark:text-slate-400">{p.detail}</div>
         </div>
       ))}
     </div>
