@@ -3,7 +3,7 @@
 // - Soft path: ak migrate --from=ck (dry-run default true) — apps/cli/internal/commands/migratecmd/migrate.go
 // - Clean cutover is a separate guide — uses ck uninstall + ak kit init; not this page's primary flow
 // - Discovery probes ~/.claude, ~/.claudekit, project paths — migrate help + discovery.go
-// - Complete clean is multi-step; ak migrate preserves modified/custom — see clean-cutover guide
+// - Soft path classifies custom/modified to keep; not an "always" contract. Stable v2.7.0 paid remote preflight caveat; beta v2.8.0-beta.4 fixes it.
 
 import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
 import AkPageHero from './AkPageHero.astro';
@@ -50,22 +50,45 @@ const recovery = isVi
       { title: 'Manual copy', body: 'Your agentkit-pre-migrate-backup folder is the outside-the-tool safety net.' },
     ];
 
-const macBackup = `mkdir -p "$HOME/agentkit-pre-migrate-backup"
-[ -d "$HOME/.claude" ] && cp -a "$HOME/.claude" "$HOME/agentkit-pre-migrate-backup/claude"
-[ -d "$HOME/.claudekit" ] && cp -a "$HOME/.claudekit" "$HOME/agentkit-pre-migrate-backup/claudekit"
-[ -d "$HOME/.agentkit" ] && cp -a "$HOME/.agentkit" "$HOME/agentkit-pre-migrate-backup/agentkit"`;
+const macBackup = `set -Eeuo pipefail
+umask 077
+STAMP=$(date +%Y%m%d-%H%M%S)
+DEST=$(mktemp -d "$HOME/agentkit-pre-migrate-backup-$STAMP.XXXXXX")
 
-const winBackup = `$dest = Join-Path $env:USERPROFILE 'agentkit-pre-migrate-backup'
-New-Item -ItemType Directory -Force -Path $dest | Out-Null
-@(
-  @{ Src = Join-Path $env:USERPROFILE '.claude';    ; Name = 'claude' },
-  @{ Src = Join-Path $env:USERPROFILE '.claudekit'; ; Name = 'claudekit' },
-  @{ Src = Join-Path $env:USERPROFILE '.agentkit';  ; Name = 'agentkit' }
-) | ForEach-Object {
-  if (Test-Path $_.Src) {
-    Copy-Item -Recurse -Force $_.Src (Join-Path $dest $_.Name)
+copy_tree() {
+  src=$1
+  name=$2
+  [ -d "$src" ] || return 0
+  [ ! -e "$DEST/$name" ] || { echo "Refusing existing destination: $DEST/$name" >&2; return 1; }
+  cp -a "$src" "$DEST/$name"
+  [ -d "$DEST/$name" ] || { echo "Backup verification failed: $DEST/$name" >&2; return 1; }
+}
+
+copy_tree "$HOME/.claude" claude
+copy_tree "$HOME/.claudekit" claudekit
+copy_tree "$HOME/.agentkit" agentkit
+echo "Safety copy completed at: $DEST"`;
+
+const winBackup = `Set-StrictMode -Version Latest
+$ErrorActionPreference = 'Stop'
+$stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
+$dest = Join-Path $env:USERPROFILE "agentkit-pre-migrate-backup-$stamp-$([guid]::NewGuid().ToString('N').Substring(0, 8))"
+if (Test-Path -LiteralPath $dest) { throw "Refusing existing destination: $dest" }
+New-Item -ItemType Directory -Path $dest -ErrorAction Stop | Out-Null
+$items = @(
+  @{ Src = (Join-Path $env:USERPROFILE '.claude'); Name = 'claude' }
+  @{ Src = (Join-Path $env:USERPROFILE '.claudekit'); Name = 'claudekit' }
+  @{ Src = (Join-Path $env:USERPROFILE '.agentkit'); Name = 'agentkit' }
+)
+foreach ($item in $items) {
+  if (Test-Path -LiteralPath $item.Src -PathType Container) {
+    $target = Join-Path $dest $item.Name
+    if (Test-Path -LiteralPath $target) { throw "Refusing existing destination: $target" }
+    Copy-Item -LiteralPath $item.Src -Destination $target -Recurse -Force -ErrorAction Stop
+    if (-not (Test-Path -LiteralPath $target -PathType Container)) { throw "Backup verification failed: $target" }
   }
-}`;
+}
+Write-Host "Safety copy completed at: $dest"`;
 ---
 
 <div class="space-y-10 mt-6">
@@ -75,8 +98,8 @@ New-Item -ItemType Directory -Force -Path $dest | Out-Null
     kicker={isVi ? 'Migration · soft · tùy chọn' : 'Migration · soft · optional'}
     title={isVi ? 'Chuyển ClaudeKit sang AgentKit' : 'Migrate ClaudeKit to AgentKit'}
     subtitle={isVi
-      ? 'Sao lưu trước. Dry-run mặc định. Giữ custom — không phải wipe sạch CK.'
-      : 'Back up first. Dry-run by default. Keeps customizations — not a full CK wipe.'}
+      ? 'Sao lưu trước. Dry-run mặc định. Thường giữ custom/modified theo classify — không phải wipe sạch CK.'
+      : 'Back up first. Dry-run by default. Usually keeps custom/modified by classification — not a full CK wipe.'}
     badges={isVi ? ['ak migrate --from=ck'] : ['ak migrate --from=ck']}
   />
 
@@ -100,8 +123,8 @@ New-Item -ItemType Directory -Force -Path $dest | Out-Null
         </h3>
         <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
           {isVi
-            ? 'ak migrate --from=ck: scan, classify, dry-run mặc định. Giữ file custom / modified. ClaudeKit vẫn được hỗ trợ nếu bạn chưa sẵn sàng.'
-            : 'ak migrate --from=ck: scan, classify, dry-run by default. Keeps custom/modified files. ClaudeKit remains supported if you are not ready.'}
+            ? 'ak migrate --from=ck: scan, classify, dry-run mặc định. Custom/modified thường được classify để giữ (không phải “always”). ClaudeKit vẫn được hỗ trợ nếu bạn chưa sẵn sàng.'
+            : 'ak migrate --from=ck: scan, classify, dry-run by default. Custom/modified files are usually classified to keep (not an “always” contract). ClaudeKit remains supported if you are not ready.'}
         </p>
         <p class="mt-3 text-xs font-medium text-amber-800 dark:text-amber-200">
           {isVi ? 'Phù hợp khi muốn chuyển dần và giữ customization.' : 'Best when you want a gradual transition and keep customizations.'}
@@ -116,7 +139,7 @@ New-Item -ItemType Directory -Force -Path $dest | Out-Null
           {isVi ? 'Path B · page riêng' : 'Path B · separate guide'}
         </p>
         <h3 class="mt-1 text-base font-bold text-slate-900 group-hover:text-rose-800 dark:text-white dark:group-hover:text-rose-200">
-          {isVi ? 'Clean cutover' : 'Clean cutover'}
+          {isVi ? 'Gỡ hẳn ClaudeKit' : 'Clean cutover'}
         </h3>
         <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
           {isVi
@@ -124,23 +147,66 @@ New-Item -ItemType Directory -Force -Path $dest | Out-Null
             : 'Multi-step: backup → ck uninstall per scope → install AK → remove binary → manual leftovers. Not one-shot; --all is not every project.'}
         </p>
         <span class="mt-3 inline-flex text-sm font-semibold text-rose-700 group-hover:underline dark:text-rose-300">
-          {isVi ? 'Mở clean cutover →' : 'Open clean cutover →'}
+          {isVi ? 'Mở hướng dẫn gỡ hẳn →' : 'Open clean cutover →'}
         </span>
       </a>
     </div>
     <p class="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
       {isVi ? (
         <>
-          <AkInlineCode text="ak migrate" /> <strong>không</strong> xóa hết tàn tích CK: chỉ neutralize artifact pristine có evidence; custom/modified được preserve.
-          Muốn sạch hơn → Path B.
+          <AkInlineCode text="ak migrate" /> <strong>không</strong> xóa hết tàn tích CK: neutralize artifact pristine có evidence; custom/modified thường được classify để giữ.
+          Muốn gỡ hẳn → Path B.
         </>
       ) : (
         <>
-          <AkInlineCode text="ak migrate" /> does <strong>not</strong> wipe all CK residue: it neutralizes pristine artifacts with evidence and preserves custom/modified content.
+          <AkInlineCode text="ak migrate" /> does <strong>not</strong> wipe all CK residue: it neutralizes pristine artifacts with evidence and usually keeps custom/modified content by classification.
           Want a cleaner leave → Path B.
         </>
       )}
     </p>
+    <AkCallout variant="warn" title={isVi ? 'Bug stable: apply migrate kit trả phí có thể fail' : 'Stable bug: paid-kit migrate apply can fail'}>
+      {isVi ? (
+        <>
+          <p class="mb-2">
+            <strong>Chỉ khi bạn bật apply</strong> (không phải dry-run). Engineer Kit (và kit trả phí khác) cài từ registry sau khi{' '}
+            <AkInlineCode text="ak login" />. Trên AgentKit <strong>stable v2.7.0</strong>, bước kiểm tra trước khi cài đôi khi chạy nhầm luật “cài kit local/dev”
+            — luật đó <strong>luôn từ chối kit trả phí</strong>, kể cả khi bạn đã login và có quyền.
+          </p>
+          <p class="mb-2">
+            <strong>Bạn thấy gì:</strong> lỗi kiểu <em>paid remote-only kit</em> / migrate dừng giữa chừng; có thể còn skill CK lẫn skill AK dở.
+            <strong> Dry-run vẫn dùng được</strong> để xem plan.
+          </p>
+          <p class="mb-0">
+            <strong>Làm gì:</strong> (1) rollback / dùng safety copy nếu apply đã chạy dở; (2) chờ bản stable sau khi fix, hoặc tạm dùng beta{' '}
+            <AkInlineCode text="v2.8.0-beta.4" /> (opt-in <AkInlineCode text="AK_CHANNEL=beta" />, có thể đổi); (3) hoặc bỏ soft migrate, làm{' '}
+            <a class="font-semibold underline-offset-2 hover:underline" href={translatePath('/guides/agentkit/clean-cutover-from-claudekit')}>
+              gỡ hẳn ClaudeKit
+            </a>{' '}
+            rồi <AkInlineCode text="ak kit init engineer" />. Trang này vẫn hướng dẫn stable làm mặc định.
+          </p>
+        </>
+      ) : (
+        <>
+          <p class="mb-2">
+            <strong>Only on apply</strong> (not dry-run). Paid kits such as Engineer install from the registry after{' '}
+            <AkInlineCode text="ak login" />. On AgentKit <strong>stable v2.7.0</strong>, the pre-install check sometimes runs the{' '}
+            <strong>local/dev paid-kit rule by mistake</strong> — that rule <strong>always rejects paid kits</strong>, even when you are logged in and entitled.
+          </p>
+          <p class="mb-2">
+            <strong>What you see:</strong> an error like <em>paid remote-only kit</em> / migrate stops mid-flight; you may get mixed leftover CK and partial AK skills.
+            <strong> Dry-run still works</strong> to review the plan.
+          </p>
+          <p class="mb-0">
+            <strong>What to do:</strong> (1) roll back / use your safety copy if apply already mutated; (2) wait for a stable release with the fix, or temporarily use beta{' '}
+            <AkInlineCode text="v2.8.0-beta.4" /> (opt-in <AkInlineCode text="AK_CHANNEL=beta" />; may change); (3) or skip soft migrate and use{' '}
+            <a class="font-semibold underline-offset-2 hover:underline" href={translatePath('/guides/agentkit/clean-cutover-from-claudekit')}>
+              clean cutover
+            </a>{' '}
+            then <AkInlineCode text="ak kit init engineer" />. This page still documents stable as the default.
+          </p>
+        </>
+      )}
+    </AkCallout>
   </AkSection>
 
   <AkSection
@@ -264,7 +330,7 @@ New-Item -ItemType Directory -Force -Path $dest | Out-Null
   <AkSection eyebrow={isVi ? 'Verify' : 'Verify'} title={isVi ? 'Sau migrate' : 'After migration'}>
     <AkCodeBlock
       title="shell"
-      code={`ak doctor --json --offline\nak backups list\n# Confirm Skills in the assistant: /ak:… or $ak:…`}
+      code={`ak doctor --json --exit-on-fail --offline\nak backups list\n# Confirm Skills in the assistant: /ak:… or $ak:…`}
     />
   </AkSection>
 
@@ -278,10 +344,10 @@ New-Item -ItemType Directory -Force -Path $dest | Out-Null
       : 'This page: ClaudeKit → AgentKit (soft product transition) via '}
     <AkInlineCode text="ak migrate --from=ck" />
     {isVi
-      ? '. Muốn rời CK sạch hơn: '
+      ? '. Muốn gỡ hẳn CK: '
       : '. For a cleaner leave: '}
     <a class="font-semibold text-teal-700 underline-offset-2 hover:underline dark:text-teal-300" href={translatePath('/guides/agentkit/clean-cutover-from-claudekit')}>
-      {isVi ? 'clean cutover' : 'clean cutover'}
+      {isVi ? 'gỡ hẳn ClaudeKit' : 'clean cutover'}
     </a>
     {isVi
       ? '. Nếu vẫn ở ClaudeKit và muốn đẩy workflow sang Codex / tool coding khác, dùng sidebar ClaudeKit → “CK → Tool coding khác”.'
@@ -294,8 +360,8 @@ New-Item -ItemType Directory -Force -Path $dest | Out-Null
     links={[
       {
         href: '/guides/agentkit/clean-cutover-from-claudekit',
-        label: isVi ? 'Clean cutover' : 'Clean cutover',
-        desc: isVi ? 'Rời CK multi-step, backup trước' : 'Leave CK multi-step; backup first',
+        label: isVi ? 'Gỡ hẳn ClaudeKit' : 'Clean cutover',
+        desc: isVi ? 'Gỡ CK multi-step, backup trước' : 'Leave CK multi-step; backup first',
       },
       { href: '/guides/agentkit', label: isVi ? 'AgentKit là gì?' : 'What is AgentKit?' },
       { href: '/guides/agentkit/getting-started', label: isVi ? 'Cài AgentKit' : 'Get started' },

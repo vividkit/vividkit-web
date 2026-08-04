@@ -21,7 +21,7 @@ export const guides = {
   'guides.nav.get_started_agentkit': 'Bắt Đầu với AgentKit',
   'guides.nav.continue_claudekit': 'Tiếp Tục với ClaudeKit',
   'guides.nav.migrate_ck_to_ak': 'Chuyển từ ClaudeKit sang AgentKit',
-  'guides.nav.clean_cutover_ck_to_ak': 'Rời ClaudeKit sạch (clean cutover)',
+  'guides.nav.clean_cutover_ck_to_ak': 'Gỡ hẳn ClaudeKit',
   'guides.sidebar.purchase_notice.title': 'Các kit có sẵn',
   'guides.sidebar.purchase_notice.desc': 'Các hướng dẫn này bao gồm AgentKit và ClaudeKit. Kit trả phí được bán riêng so với CLI miễn phí.',
   'guides.sidebar.purchase_notice.cta': 'Khám phá AgentKit',
@@ -60,8 +60,8 @@ export const guides = {
   'guides.agentkit.troubleshooting.description': 'Các vấn đề setup và runtime AgentKit thường gặp',
   'guides.migrate_ck_to_ak.title': 'Chuyển ClaudeKit sang AgentKit',
   'guides.migrate_ck_to_ak.description': 'Chuyển soft tùy chọn, backup trước, từ ClaudeKit sang AgentKit qua ak migrate',
-  'guides.agentkit.clean_cutover.title': 'Rời ClaudeKit Sạch (Clean Cutover)',
-  'guides.agentkit.clean_cutover.description': 'Multi-step, backup trước: rời ClaudeKit và cài AgentKit với càng ít tàn tích CK càng tốt',
+  'guides.agentkit.clean_cutover.title': 'Gỡ hẳn ClaudeKit',
+  'guides.agentkit.clean_cutover.description': 'Multi-step, backup trước: gỡ ClaudeKit theo từng scope rồi cài AgentKit, giảm tàn tích CK tối đa',
   // How It Works Guide
   'guides.how_ck_works.title': 'Cách ClaudeKit Hoạt Động',
   // What is ClaudeKit Guide
