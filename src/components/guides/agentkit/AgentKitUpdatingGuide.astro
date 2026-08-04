@@ -21,85 +21,85 @@ const matrix = isVi
   ? [
       {
         cmd: 'ak self-update',
-        updates: 'Binary CLI (ak) — và Desktop nếu bật cờ',
-        not: 'Không refresh nội dung Kit đã cài',
-        when: 'Chỉ muốn nâng cấp tool ak / stage Desktop',
+        updates: 'CLI ak (và Desktop nếu bạn bật)',
+        not: 'Không làm mới skill/hook trong project',
+        when: 'Chỉ muốn CLI ak mới hơn',
       },
       {
         cmd: 'ak update',
-        updates: 'Wizard TTY: CLI → kits global → kits project (từng bước)',
-        not: 'Không thay binary nếu bạn bỏ qua bước CLI / dùng scope pin',
-        when: 'Sau release: muốn “làm mới” install theo ownership',
+        updates: 'Hỏi từng bước: CLI ak → kit trên máy → kit project',
+        not: 'Bỏ qua bước nào thì không đụng phần đó',
+        when: 'Sau bản release: muốn làm mới theo hướng dẫn từng bước',
       },
       {
         cmd: 'ak update --global',
-        updates: 'Chỉ Kit cài user/global (mọi runtime đã install, hoặc lọc --target)',
-        not: 'Không đụng project workspace; không chỉ-self-update binary',
-        when: 'Làm mới kits cài sẵn trên máy, không mở project',
+        updates: 'Chỉ kit cài sẵn trên máy (mọi runtime, hoặc lọc --target)',
+        not: 'Không đụng file trong project',
+        when: 'Làm mới kit “toàn máy”, không mở repo',
       },
       {
         cmd: 'ak update [project-dir]',
-        updates: 'Chỉ file AgentKit-owned trong project đó',
-        not: 'Không refresh global kits; không thay binary (trừ hard-gate lifecycle)',
-        when: 'Cập nhật Kit content trong một repo',
+        updates: 'Chỉ file do AgentKit cài trong project đó',
+        not: 'Không làm mới kit global trên máy',
+        when: 'Cập nhật kit trong một repo',
       },
       {
         cmd: 'ak update --kits <name>',
-        updates: 'Chỉ kit(s) được liệt kê (project hoặc kèm --global)',
-        not: 'Không update “tất cả” kit khác',
+        updates: 'Chỉ kit tên đó (trong project, hoặc kèm --global)',
+        not: 'Không đụng kit khác',
         when: 'Chỉ engineer / marketing / …',
       },
       {
         cmd: 'ak kit refresh <kit>',
-        updates: 'Re-emit một kit đã cài (force), gỡ file generated stale',
-        not: 'Không phải wizard multi-step; không self-update binary',
-        when: 'Sau đổi export kit, audit drift, hoặc cần force refresh 1 kit',
+        updates: 'Ép làm mới lại một kit đã cài; gỡ file generate cũ thừa',
+        not: 'Không hỏi 3 bước như ak update; không nâng CLI ak',
+        when: 'Một kit lệch / cần force refresh',
       },
     ]
   : [
       {
         cmd: 'ak self-update',
-        updates: 'The ak CLI binary — and Desktop if you opt flags',
-        not: 'Does not refresh installed Kit content',
-        when: 'You only want the tool itself / Desktop staging',
+        updates: 'The ak CLI (and Desktop if you opt in)',
+        not: 'Does not refresh skills/hooks in projects',
+        when: 'You only want a newer ak CLI',
       },
       {
         cmd: 'ak update',
-        updates: 'TTY wizard: CLI → global kits → project kits (step by step)',
-        not: 'Skips binary if you decline the CLI step / pin scope',
-        when: 'After a release: refresh installs with ownership safety',
+        updates: 'Walks through: ak CLI → machine kits → project kits',
+        not: 'Skips any step you decline',
+        when: 'After a release: refresh guided step by step',
       },
       {
         cmd: 'ak update --global',
-        updates: 'Only user/global Kit installs (all runtimes found, or --target filter)',
-        not: 'Does not touch project workspaces; not binary-only',
-        when: 'Refresh machine-wide kits without opening a project',
+        updates: 'Only kits installed machine-wide (or filter with --target)',
+        not: 'Does not touch project folders',
+        when: 'Refresh machine kits without opening a repo',
       },
       {
         cmd: 'ak update [project-dir]',
-        updates: 'Only AgentKit-owned files in that project',
-        not: 'Does not refresh global kits; binary only via lifecycle hard-gate',
-        when: 'Refresh Kit content inside one repo',
+        updates: 'Only AgentKit-installed files in that project',
+        not: 'Does not refresh machine-wide kits',
+        when: 'Update kits inside one repo',
       },
       {
         cmd: 'ak update --kits <name>',
-        updates: 'Only the listed kit(s) (project, or with --global)',
-        not: 'Does not update every other installed kit',
-        when: 'Target engineer / marketing / … only',
+        updates: 'Only that kit name (in the project, or with --global)',
+        not: 'Does not touch other kits',
+        when: 'Only engineer / marketing / …',
       },
       {
         cmd: 'ak kit refresh <kit>',
-        updates: 'Force re-emit one installed kit; drop stale generated files',
-        not: 'Not the multi-step wizard; not a binary self-update',
-        when: 'After kit export changes, audit drift, or one-kit force refresh',
+        updates: 'Force re-apply one installed kit; drop leftover generated files',
+        not: 'Not the multi-step ak update walkthrough; not a CLI upgrade',
+        when: 'One kit is out of date or needs a hard refresh',
       },
     ];
 
 const wizardSteps = isVi
   ? [
       {
-        title: '1. Tool ak (CLI)',
-        body: 'Hỏi có nâng cấp chương trình ak không. Mặc định là No; gõ Yes hoặc dùng --yes để đồng ý cả wizard.',
+        title: '1. CLI ak',
+        body: 'Hỏi có nâng cấp CLI ak không. Mặc định là No; gõ Yes hoặc dùng --yes để đồng ý cả wizard.',
       },
       {
         title: '2. Kit trên máy (global)',
@@ -112,8 +112,8 @@ const wizardSteps = isVi
     ]
   : [
       {
-        title: '1. The ak tool (CLI)',
-        body: 'Asks whether to upgrade the ak program. Default is No; answer Yes or use --yes to accept the whole wizard.',
+        title: '1. The ak CLI',
+        body: 'Asks whether to upgrade the ak CLI. Default is No; answer Yes or use --yes to accept the whole wizard.',
       },
       {
         title: '2. Kits on this machine (global)',
@@ -133,8 +133,8 @@ const wizardSteps = isVi
     kicker={isVi ? 'CLI & Kits' : 'CLI & Kits'}
     title={isVi ? 'Cập Nhật CLI & Kits' : 'Update CLI & Kits'}
     subtitle={isVi
-      ? 'Phân biệt rõ: lệnh nào chỉ nâng binary ak, lệnh nào refresh Kit, và lệnh nào chỉ nhắm một kit.'
-      : 'Know which command upgrades the ak binary, which refreshes Kits, and which targets a single kit.'}
+      ? 'Phân biệt rõ: lệnh nào chỉ nâng CLI ak, lệnh nào làm mới Kit, và lệnh nào chỉ nhắm một kit.'
+      : 'Know which command upgrades the ak CLI, which refreshes Kits, and which targets a single kit.'}
     badges={isVi ? ['self-update ≠ update'] : ['self-update ≠ update']}
   />
 
@@ -142,19 +142,19 @@ const wizardSteps = isVi
     <ul class="space-y-2">
       <li class="flex flex-wrap items-baseline gap-x-1.5 gap-y-1">
         <AkInlineCode text="ak self-update" />
-        <span>{isVi ? '= cập nhật tool (binary).' : '= update the tool (binary).'}</span>
+        <span>{isVi ? '= cập nhật CLI ak.' : '= update the ak CLI.'}</span>
       </li>
       <li class="flex flex-wrap items-baseline gap-x-1.5 gap-y-1">
         <AkInlineCode text="ak update" />
         <span>
           {isVi
-            ? '= làm mới Kit / content AgentKit-owned (wizard có thể gồm CLI trước).'
-            : '= refresh AgentKit-owned Kit content (wizard may include CLI first).'}
+            ? '= làm mới kit (có thể hỏi nâng CLI ak trước).'
+            : '= refresh kits (may ask to upgrade the ak CLI first).'}
         </span>
       </li>
       <li class="flex flex-wrap items-baseline gap-x-1.5 gap-y-1">
         <AkInlineCode text="ak kit refresh <kit>" />
-        <span>{isVi ? '= force re-emit đúng một kit.' : '= force re-emit exactly one kit.'}</span>
+        <span>{isVi ? '= ép làm mới đúng một kit.' : '= force-refresh exactly one kit.'}</span>
       </li>
     </ul>
   </AkCallout>
@@ -190,10 +190,10 @@ const wizardSteps = isVi
   <!-- ========== CLI only ========== -->
   <AkSection
     eyebrow="1 · CLI"
-    title={isVi ? 'Chỉ cập nhật binary: ak self-update' : 'Binary only: ak self-update'}
+    title={isVi ? 'Chỉ nâng CLI ak: ak self-update' : 'ak CLI only: ak self-update'}
     desc={isVi
-      ? 'Dùng khi bạn chỉ muốn ak mới hơn (hoặc stage Desktop). Không refresh skills/hooks trong project.'
-      : 'Use when you only want a newer ak (or staged Desktop). Does not refresh skills/hooks in projects.'}
+      ? 'Dùng khi bạn chỉ muốn CLI ak mới hơn (hoặc stage Desktop). Không làm mới skills/hooks trong project.'
+      : 'Use when you only want a newer ak CLI (or staged Desktop). Does not refresh skills/hooks in projects.'}
   >
     <AkCodeBlock
       title="shell"
@@ -240,8 +240,8 @@ ak self-update --disable-auto-update`}
       left={{
         title: isVi ? 'Cập nhật theo từng bước (hỏi lần lượt)' : 'Update step by step (asks each time)',
         body: isVi
-          ? 'Gõ ak update trong terminal (có màn hình tương tác). CLI hỏi lần lượt: nâng tool ak → kit trên máy → kit trong project. Mỗi bước bạn Yes/No. Muốn “đồng ý hết” thì thêm --yes.'
-          : 'Run bare ak update in an interactive terminal. It walks you through: upgrade the ak tool → kits on this machine → kits in the current project. You answer Yes/No each step. Add --yes to accept every step.',
+          ? 'Gõ ak update trong terminal (có màn hình tương tác). CLI hỏi lần lượt: nâng CLI ak → kit trên máy → kit trong project. Mỗi bước bạn Yes/No. Muốn “đồng ý hết” thì thêm --yes.'
+          : 'Run bare ak update in an interactive terminal. It walks you through: upgrade the ak CLI → kits on this machine → kits in the current project. You answer Yes/No each step. Add --yes to accept every step.',
         tone: 'teal',
         points: isVi
           ? ['ak update  → hỏi từng bước', 'ak update --yes  → đồng ý tất cả bước']
@@ -295,8 +295,8 @@ ak update --global --target claude-code,codex --yes`}
       />
       <p class="text-sm text-slate-600 dark:text-slate-400">
         {isVi
-          ? 'Global refresh preserve-only: --force không overwrite file user đã sửa; chỉ authorize archive legacy trong một số path. Claude Code user-plugin-only được report, không silent refresh — dùng ak kit refresh … --global --switch-to-plugin.'
-          : 'Global refresh is preserve-only: --force does not overwrite user-modified files; it only authorizes certain legacy archives. Claude Code user-plugin-only installs are reported, not silently refreshed — use ak kit refresh … --global --switch-to-plugin.'}
+          ? 'Trên máy (global): file bạn đã sửa tay thường được giữ — --force cũng không tự ghi đè kiểu project. Install Claude Code chỉ dạng user-plugin được báo ra, không tự refresh âm thầm; nếu cần thì dùng ak kit refresh … --global --switch-to-plugin.'
+          : 'On the machine (global): files you edited by hand are usually kept — --force does not overwrite them the way it can in a project. Claude Code user-plugin-only installs are reported, not silently refreshed; use ak kit refresh … --global --switch-to-plugin when you need that path.'}
       </p>
     </div>
 
@@ -326,10 +326,10 @@ ak update --show-diff
 # Scripted envelope
 ak update --kits engineer --yes --json --no-interactive`}
       />
-      <AkCallout variant="warn" title={isVi ? 'Clean vs modified' : 'Clean vs modified'}>
+      <AkCallout variant="warn" title={isVi ? 'File còn nguyên vs file bạn đã sửa' : 'Unchanged files vs files you edited'}>
         {isVi
-          ? 'File clean (hash khớp manifest) → overwrite. File user-modified → skip trừ --force. Luôn có pre-update project snapshot trước khi mutate. Snapshot project nằm ngoài ak backups restore — recover bằng copy từ thư mục snapshot.'
-          : 'Clean files (hash matches manifest) → overwrite. User-modified files → skipped unless --force. A pre-update project snapshot is always taken before mutation. Project snapshots are outside ak backups restore — recover by copying from the snapshot files path.'}
+          ? 'File AgentKit vẫn như lúc cài → được cập nhật. File bạn đã sửa tay → bỏ qua, trừ khi thêm --force. Trước khi ghi, CLI chụp một bản snapshot project (để phòng hờ). Snapshot đó không nằm trong ak backups restore — muốn lấy lại thì copy từ thư mục snapshot.'
+          : 'Files still as AgentKit installed them → get updated. Files you edited by hand → skipped unless you add --force. Before writing, the CLI takes a project snapshot as a safety net. That snapshot is not restored via ak backups restore — copy files back from the snapshot folder if needed.'}
       </AkCallout>
     </div>
 
@@ -384,36 +384,76 @@ ak kit refresh engineer --local --kits-dir ./kits --yes`}
     title={isVi ? 'Chọn nhanh' : 'Quick pick'}
   >
     <div class="grid gap-3 sm:grid-cols-2">
-      {[
-        {
-          q: isVi ? 'Chỉ muốn ak binary mới' : 'Only want a newer ak binary',
-          a: 'ak self-update --check → ak self-update --yes',
-        },
-        {
-          q: isVi ? 'Sau release, làm mới “hết” (CLI + kits)' : 'After release, refresh “everything” (CLI + kits)',
-          a: isVi ? 'ak update --yes (TTY wizard accept all)' : 'ak update --yes (TTY wizard accept all)',
-        },
-        {
-          q: isVi ? 'Chỉ kits cài global trên máy' : 'Only global kits on this machine',
-          a: 'ak update --global --yes',
-        },
-        {
-          q: isVi ? 'Chỉ repo hiện tại / một kit' : 'Only this repo / one kit',
-          a: 'ak update --kits engineer --yes  ·  or  ak kit refresh engineer --yes',
-        },
-      ].map((item) => (
+      {(
+        [
+          {
+            q: isVi ? 'Chỉ muốn CLI ak mới' : 'Only want a newer ak CLI',
+            parts: [
+              { kind: 'cmd' as const, text: 'ak self-update --check' },
+              { kind: 'sep' as const, text: '→' },
+              { kind: 'cmd' as const, text: 'ak self-update --yes' },
+            ],
+          },
+          {
+            q: isVi ? 'Sau release, làm mới “hết” (CLI + kits)' : 'After release, refresh “everything” (CLI + kits)',
+            parts: [
+              { kind: 'cmd' as const, text: 'ak update --yes' },
+              {
+                kind: 'note' as const,
+                text: isVi ? '(đồng ý hết các bước hỏi)' : '(accept every step)',
+              },
+            ],
+          },
+          {
+            q: isVi ? 'Chỉ kits cài global trên máy' : 'Only global kits on this machine',
+            parts: [{ kind: 'cmd' as const, text: 'ak update --global --yes' }],
+            hint: isVi
+              ? 'Không nâng CLI ak — dùng ak self-update nếu cần.'
+              : 'Does not upgrade the ak CLI — use ak self-update if you need that.',
+          },
+          {
+            q: isVi ? 'Chỉ repo hiện tại / một kit' : 'Only this repo / one kit',
+            parts: [
+              { kind: 'cmd' as const, text: 'ak update --kits engineer --yes' },
+              { kind: 'or' as const, text: isVi ? 'hoặc' : 'or' },
+              { kind: 'cmd' as const, text: 'ak kit refresh engineer --yes' },
+            ],
+          },
+        ] as const
+      ).map((item) => (
         <div class="rounded-2xl border border-slate-200/80 bg-white/80 p-4 dark:border-slate-700 dark:bg-slate-900/50">
           <div class="text-sm font-semibold text-slate-900 dark:text-white">{item.q}</div>
-          <p class="mt-2 font-mono text-xs leading-relaxed text-teal-700 dark:text-teal-300">{item.a}</p>
+          <p class="mt-2 flex flex-wrap items-baseline gap-x-1.5 gap-y-1 text-xs leading-relaxed">
+            {item.parts.map((part) =>
+              part.kind === 'cmd' ? (
+                <code class="rounded-md border border-slate-200/80 bg-slate-100 px-1.5 py-0.5 font-mono text-[0.85em] text-teal-700 dark:border-slate-700 dark:bg-slate-800/90 dark:text-teal-300">
+                  {part.text}
+                </code>
+              ) : part.kind === 'or' ? (
+                <span class="font-sans text-[11px] font-medium uppercase tracking-wide text-slate-400 dark:text-slate-500">
+                  {part.text}
+                </span>
+              ) : part.kind === 'note' ? (
+                <span class="font-sans text-[11px] text-slate-500 dark:text-slate-400">{part.text}</span>
+              ) : (
+                <span class="font-sans text-slate-400 dark:text-slate-500" aria-hidden="true">
+                  {part.text}
+                </span>
+              ),
+            )}
+          </p>
+          {'hint' in item && item.hint ? (
+            <p class="mt-2 text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">{item.hint}</p>
+          ) : null}
         </div>
       ))}
     </div>
   </AkSection>
 
-  <AkCallout variant="info" title={isVi ? 'Exit codes (ak update)' : 'Exit codes (ak update)'}>
+  <AkCallout variant="info" title={isVi ? 'Mã thoát (ak update)' : 'Exit codes (ak update)'}>
     {isVi
-      ? '0 ok · 1 runtime/hard-gate/partial failure · 2 invalid flags · 3 preview only (chưa --yes / chưa confirm) — an toàn, chưa ghi file.'
-      : '0 ok · 1 runtime/hard-gate/partial failure · 2 invalid flags · 3 preview only (no --yes / no confirm) — safe, no files written.'}
+      ? '0 = xong ổn · 1 = lỗi khi chạy / một phần fail · 2 = flag sai · 3 = chỉ xem trước (chưa --yes / chưa confirm) — an toàn, chưa ghi file.'
+      : '0 = ok · 1 = runtime error / partial failure · 2 = invalid flags · 3 = preview only (no --yes / no confirm) — safe, no files written.'}
   </AkCallout>
 
   <AkNextLinks

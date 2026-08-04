@@ -36,52 +36,52 @@ const leftoverAfterUninstall = isVi
   ? [
       {
         icon: 'USR',
-        title: 'File user-owned (manifest)',
-        body: 'Trên install có manifest: ownership=user được giữ; ck-modified chỉ xóa thêm với --force-overwrite. Legacy / thiếu metadata: không có guarantee này.',
+        title: 'File của bạn',
+        body: 'File bạn tự tạo thường được giữ. File ClaudeKit đã sửa: chỉ xóa thêm khi dùng --force-overwrite. Install cũ thiếu danh sách file: xem dry-run kỹ — có thể xóa cả thư mục.',
         accent: 'amber' as const,
       },
       {
         icon: 'CFG',
-        title: 'User config patterns',
-        body: 'Stable giữ: .gitignore, .repomixignore, .mcp.json, .ckignore, .ck.json, CLAUDE.md (khi path manifest-backed).',
+        title: 'File cấu hình hay gặp',
+        body: 'Thường giữ: .gitignore, .repomixignore, .mcp.json, .ckignore, .ck.json, CLAUDE.md (khi cài đặt còn “nhớ” file nào là của CK).',
         accent: 'cyan' as const,
       },
       {
         icon: 'CTL',
         title: '~/.claudekit/',
-        body: 'State CLI: config, registry (kể cả portable-registry), locks, cache, recovery backup uninstall.',
+        body: 'Thư mục state ClaudeKit: config, danh sách project, cache, bản phục hồi sau uninstall. Không biến mất chỉ vì ck uninstall.',
         accent: 'teal' as const,
       },
       {
         icon: 'BIN',
-        title: 'Binary ck',
-        body: 'Package claudekit-cli (npm/pnpm/Yarn Classic/bun) — ck uninstall không gỡ. Gỡ bằng đúng package manager sở hữu.',
+        title: 'Lệnh ck trên máy',
+        body: 'Gói claudekit-cli (npm/pnpm/yarn/bun) vẫn còn. ck uninstall không gỡ gói — gỡ bằng đúng package manager đã cài.',
         accent: 'emerald' as const,
       },
     ]
   : [
       {
         icon: 'USR',
-        title: 'User-owned (manifest path)',
-        body: 'On a manifest-backed install: ownership=user is preserved; --force-overwrite also removes ck-modified. Legacy / missing metadata: that guarantee does not apply.',
+        title: 'Your own files',
+        body: 'Files you created are usually kept. ClaudeKit files you edited are only removed with --force-overwrite. Older installs without a file list: read the dry-run carefully — whole folders may be marked for removal.',
         accent: 'amber' as const,
       },
       {
         icon: 'CFG',
-        title: 'User config patterns',
-        body: 'Stable typically keeps: .gitignore, .repomixignore, .mcp.json, .ckignore, .ck.json, CLAUDE.md (on the manifest-backed path).',
+        title: 'Common config files',
+        body: 'Often kept: .gitignore, .repomixignore, .mcp.json, .ckignore, .ck.json, CLAUDE.md (when the install still knows which files were ClaudeKit’s).',
         accent: 'cyan' as const,
       },
       {
         icon: 'CTL',
         title: '~/.claudekit/',
-        body: 'CLI state: config, registries (including portable-registry), locks, cache, uninstall recovery backups.',
+        body: 'ClaudeKit state: config, project list, cache, uninstall recovery copies. It does not go away from ck uninstall alone.',
         accent: 'teal' as const,
       },
       {
         icon: 'BIN',
-        title: 'ck binary',
-        body: 'The claudekit-cli package (npm/pnpm/Yarn Classic/bun) is not removed by ck uninstall. Remove it with the owning package manager only.',
+        title: 'The ck command',
+        body: 'The claudekit-cli package (npm/pnpm/yarn/bun) stays installed. ck uninstall does not remove it — uninstall with the same package manager you used to install.',
         accent: 'emerald' as const,
       },
     ];
@@ -815,20 +815,20 @@ ak audit engineer --project-dir . --json
     </h3>
     <AkCodeBlock title="shell" code={uninstallLocal} />
 
-    <AkCallout variant="warn" title={isVi ? 'Ownership có điều kiện' : 'Ownership is conditional'}>
+    <AkCallout variant="warn" title={isVi ? 'Xem dry-run trước khi gõ -y' : 'Read the dry-run before -y'}>
       {isVi ? (
         <>
-          Trên install <strong>manifest-backed</strong>: file user-owned được giữ;{' '}
-          <AkInlineCode text="--force-overwrite" /> thêm xóa file CK-tracked đã sửa (<AkInlineCode text="ck-modified" />).
-          Nếu preview báo <strong>legacy mode</strong>, missing metadata, hoặc xóa cả thư mục component —{' '}
-          <strong>dừng</strong>, inspect/copy thủ công; guarantee preserve không áp dụng.
+          Cài đặt “bình thường” (còn danh sách file): file của bạn được giữ;{' '}
+          <AkInlineCode text="--force-overwrite" /> mới xóa thêm file ClaudeKit mà bạn đã sửa.
+          Nếu dry-run báo <strong>legacy</strong>, thiếu metadata, hoặc sẽ xóa cả thư mục lớn —{' '}
+          <strong>dừng</strong>, copy thư mục đó ra trước; đừng tin “luôn giữ file user”.
         </>
       ) : (
         <>
-          For a <strong>manifest-backed</strong> install: user-owned files are preserved;{' '}
-          <AkInlineCode text="--force-overwrite" /> also removes CK-tracked files you modified (<AkInlineCode text="ck-modified" />).
-          If preview reports <strong>legacy mode</strong>, missing metadata, or whole-directory removal —{' '}
-          <strong>stop</strong>, inspect and copy those directories first; the same preservation guarantee does not apply.
+          On a normal install (with a file list): your files are kept;{' '}
+          <AkInlineCode text="--force-overwrite" /> also removes ClaudeKit files you edited.
+          If the dry-run says <strong>legacy</strong>, missing metadata, or whole folders will be deleted —{' '}
+          <strong>stop</strong>, copy those folders first; do not assume “user files always stay”.
         </>
       )}
     </AkCallout>
@@ -851,25 +851,25 @@ ak audit engineer --project-dir . --json
     <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
       {isVi ? (
         <>
-          <AkInlineCode text="ak kit uninstall" /> và root <AkInlineCode text="ak uninstall" /> là lifecycle khác nhau;
-          cả hai chỉ nhắm nội dung AgentKit-managed — không thay <AkInlineCode text="ck uninstall" />.
-          Global takeover (native Claude Code matching) chỉ gỡ loose CK hẹp + residue settings — không generalize cho mọi runtime.
+          <AkInlineCode text="ak kit uninstall" /> / <AkInlineCode text="ak uninstall" /> chỉ gỡ thứ AgentKit đã cài —
+          <strong> không</strong> thay <AkInlineCode text="ck uninstall" /> để dọn ClaudeKit.
+          Khi cài global Claude Code, AgentKit có thể dọn vài file lẻ ClaudeKit (vd. statusline) — không xóa hết cây skill/agent.
         </>
       ) : (
         <>
-          <AkInlineCode text="ak kit uninstall" /> and root <AkInlineCode text="ak uninstall" /> are different lifecycle commands;
-          both target AgentKit-managed content only — they do not replace <AkInlineCode text="ck uninstall" />.
-          Global takeover (matching native Claude Code case) only removes narrow CK loose files and settings residue — do not generalize it to every runtime/scope.
+          <AkInlineCode text="ak kit uninstall" /> / <AkInlineCode text="ak uninstall" /> only remove what AgentKit installed —
+          they do <strong>not</strong> replace <AkInlineCode text="ck uninstall" /> for ClaudeKit cleanup.
+          On a global Claude Code install, AgentKit may clean a few loose ClaudeKit files (e.g. statusline) — not whole skill/agent trees.
         </>
       )}
     </p>
   </AkSection>
 
-  <AkSection eyebrow="04" title={isVi ? 'Portable + leftovers (trước khi gỡ binary)' : 'Portable + leftovers (before binary removal)'}>
-    <AkCallout variant="warn" title={isVi ? 'Review portable khi ck còn' : 'Review portable while ck still exists'}>
+  <AkSection eyebrow="04" title={isVi ? 'Rà leftover (trước khi gỡ lệnh ck)' : 'Review leftovers (before removing ck)'}>
+    <AkCallout variant="warn" title={isVi ? 'Xem danh sách portable khi ck còn' : 'Review portable lists while ck still works'}>
       {isVi
-        ? 'Archive/review portable-registry và provenance trước khi gỡ package ck hoặc quarantine ~/.claudekit — nếu không mất mapping ownership exact.'
-        : 'Archive/review portable-registry and provenance before removing the ck package or quarantining ~/.claudekit — otherwise exact ownership mapping is lost.'}
+        ? 'Trước khi gỡ gói ck hoặc dời ~/.claudekit: xem (và nếu cần, copy) file portable-registry — sau này mới biết entry nào do ClaudeKit ghi sang Codex/tool khác.'
+        : 'Before removing the ck package or moving ~/.claudekit: open (and copy if needed) portable-registry — later you will still know which entries ClaudeKit wrote into Codex/other tools.'}
     </AkCallout>
     <div class="mt-4 flex flex-col gap-4">
       <AkCodeBlock title="bash" code={portableReviewPosix} />
@@ -884,20 +884,20 @@ ak audit engineer --project-dir . --json
     </div>
   </AkSection>
 
-  <AkSection eyebrow="06" title={isVi ? 'Postflight' : 'Postflight'}>
+  <AkSection eyebrow="06" title={isVi ? 'Kiểm tra sau cùng' : 'Final checks'}>
     <AkCodeBlock title="shell" code={postflight} />
     <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
       {isVi ? (
         <>
-          <AkInlineCode text="residual_ck_content" /> chỉ <strong>advisory</strong> (không có fix command): quét hẹp loose CK + settings residue trên Claude home đã gắn marker AK — không thay audit fleet / portable / alias / hook-tree.
-          <AkInlineCode text="ak doctor --json" /> có thể exit 0 khi unhealthy trừ khi dùng <AkInlineCode text="--exit-on-fail" />.
-          Giữ bản sao lưu và state CK vài ngày đến khi chắc không cần quay lại.
+          <AkInlineCode text="residual_ck_content" /> chỉ <strong>cảnh báo</strong> (không tự sửa): tìm vài file ClaudeKit còn sót trong home Claude đã gắn AgentKit — không thay việc bạn tự rà project / portable / alias.
+          <AkInlineCode text="ak doctor --json" /> có thể báo “xong” (exit 0) dù còn cảnh báo; muốn script fail khi lỗi thì thêm <AkInlineCode text="--exit-on-fail" />.
+          Giữ bản sao lưu vài ngày đến khi chắc không cần quay lại.
         </>
       ) : (
         <>
-          <AkInlineCode text="residual_ck_content" /> is <strong>advisory only</strong> (no fix command): it scans narrow top-level CK loose files and settings residue on an AK-marked Claude home — not a full fleet, portable, alias, or hook-tree audit.
-          <AkInlineCode text="ak doctor --json" /> can exit 0 when checks are unhealthy unless you pass <AkInlineCode text="--exit-on-fail" />.
-          Keep your backup and CK state for a few days until you are sure you will not undo.
+          <AkInlineCode text="residual_ck_content" /> only <strong>warns</strong> (no auto-fix): it looks for a few leftover ClaudeKit files in an AgentKit-managed Claude home — not a full check of every project, portable install, or alias.
+          <AkInlineCode text="ak doctor --json" /> can still exit 0 when checks look unhealthy; add <AkInlineCode text="--exit-on-fail" /> if a script must fail on problems.
+          Keep your backup for a few days until you are sure you will not undo.
         </>
       )}
     </p>
@@ -912,7 +912,7 @@ ak audit engineer --project-dir . --json
             <a class="font-semibold underline-offset-2 hover:underline" href={translatePath('/guides/migrate-claudekit-to-agentkit')}>
               ak migrate
             </a>{' '}
-            — dry-run mặc định; thường giữ custom/modified theo classify. Chi tiết (kể cả bug apply kit trả phí trên stable) nằm ở trang soft migrate.
+            — xem trước mặc định; thường giữ file bạn đã chỉnh. Chi tiết (kể cả bug kit trả phí trên stable) nằm ở trang soft migrate.
           </>
         ) : (
           <>
@@ -920,7 +920,7 @@ ak audit engineer --project-dir . --json
             <a class="font-semibold underline-offset-2 hover:underline" href={translatePath('/guides/migrate-claudekit-to-agentkit')}>
               ak migrate
             </a>{' '}
-            — dry-run by default; usually keeps custom/modified by classification. Details (including the stable paid-kit apply bug) live on the soft-migrate page.
+            — preview by default; usually keeps files you customized. Details (including the stable paid-kit apply bug) live on the soft-migrate page.
           </>
         )}
       </li>
