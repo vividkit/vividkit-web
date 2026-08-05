@@ -5,6 +5,12 @@
 // No BETA badge for --advice alone (Validation Session 1).
 
 import type { AkWorkflow } from "./types";
+import { akWorkflowPublicIds } from "./publish";
+
+function isPublicWorkflow(w: AkWorkflow): boolean {
+  if (akWorkflowPublicIds === null) return true;
+  return akWorkflowPublicIds.includes(w.id);
+}
 
 export const akEngineerWorkflows: AkWorkflow[] = [
 {
@@ -2327,9 +2333,15 @@ export const akEngineerWorkflows: AkWorkflow[] = [
   },
 ];
 
-export const akEngineerFlagshipWorkflows = akEngineerWorkflows.filter((w) => w.featured);
-export const akEngineerMoreWorkflows = akEngineerWorkflows.filter((w) => !w.featured);
+/** Full catalog (ignore publish gate) — for audits / maintainers */
+export const akEngineerAllFlagshipWorkflows = akEngineerWorkflows.filter((w) => w.featured);
+export const akEngineerAllMoreWorkflows = akEngineerWorkflows.filter((w) => !w.featured);
 
-export const akEngineerWorkflowCount = akEngineerWorkflows.length;
+/** Public page lists — gated by akWorkflowPublicIds */
+export const akEngineerFlagshipWorkflows = akEngineerAllFlagshipWorkflows.filter(isPublicWorkflow);
+export const akEngineerMoreWorkflows = akEngineerAllMoreWorkflows.filter(isPublicWorkflow);
+
+export const akEngineerWorkflowCount = akEngineerWorkflows.filter(isPublicWorkflow).length;
 export const akEngineerFlagshipCount = akEngineerFlagshipWorkflows.length;
 export const akEngineerMoreCount = akEngineerMoreWorkflows.length;
+export const akEngineerCatalogCount = akEngineerWorkflows.length;

@@ -11,6 +11,7 @@ import {
   akWorkflowCategoryOrder,
   akWorkflowPageChrome,
   akWorkflowInvocationHint,
+  akWorkflowPublicIds,
   type AkWorkflow,
   type AkWorkflowStep,
 } from '@/data/guides/agentkit-workflows';
@@ -76,6 +77,14 @@ function groupByCategory(list: AkWorkflow[]) {
 
 const flagshipGroups = groupByCategory(akEngineerFlagshipWorkflows);
 const moreGroups = groupByCategory(akEngineerMoreWorkflows);
+const isProgressiveReveal = akWorkflowPublicIds !== null;
+const visibleCategoryKeys = new Set([
+  ...flagshipGroups.map((g) => g.key),
+  ...moreGroups.map((g) => g.key),
+]);
+const visibleCategoryOrder = akWorkflowCategoryOrder.filter((c) => visibleCategoryKeys.has(c.key));
+const showCategoryFilters = visibleCategoryOrder.length > 1;
+const showMoreSection = akEngineerMoreCount > 0;
 
 const stages = (isVi ? chrome.skeleton.stagesVi : chrome.skeleton.stagesEn)
   .split('·')
@@ -110,6 +119,10 @@ const copy = {
   moreDesc: isVi ? chrome.moreSection.bodyVi : chrome.moreSection.bodyEn,
   moreCount: isVi ? `${akEngineerMoreCount} workflow` : `${akEngineerMoreCount} workflows`,
   moreOpen: isVi ? 'Xem thêm workflow' : 'More workflows',
+  moreComingTitle: isVi ? 'Thêm workflow sắp có' : 'More workflows coming soon',
+  moreComingBody: isVi
+    ? 'Hiện mở 2 workflow hay dùng nhất. Các recipe khác (bug, review, ship, --advice…) sẽ hiện dần trên trang này.'
+    : 'Right now we surface the two most common workflows. More recipes (bugs, review, ship, --advice…) will unlock here gradually.',
   antiTitle: isVi ? 'Hay sai — làm thế này thay vì thế kia' : 'Common mistakes — try this instead',
   antiDont: isVi ? 'Hay làm' : 'Common habit',
   antiPrefer: isVi ? 'Nên làm' : 'Better',
@@ -132,6 +145,13 @@ const levelOptions = [
   { key: 'Intermediate', label: levelLabel.Intermediate, hintEn: 'Multi-step everyday work', hintVi: 'Việc hằng ngày nhiều bước' },
   { key: 'Advanced', label: levelLabel.Advanced, hintEn: 'Autonomy, security, money', hintVi: 'Tự trị, bảo mật, tiền' },
 ] as const;
+
+const visibleLevels = new Set([
+  ...akEngineerFlagshipWorkflows.map((w) => w.level),
+  ...akEngineerMoreWorkflows.map((w) => w.level),
+]);
+const visibleLevelOptions = levelOptions.filter((lv) => visibleLevels.has(lv.key));
+const showLevelFilters = visibleLevelOptions.length > 1;
 
 const nextLinks = [
   {
@@ -168,9 +188,15 @@ const softPill =
     accent="teal"
     kicker={isVi ? 'AgentKit · Workflow tham khảo' : 'AgentKit · Reference workflows'}
     title={isVi ? 'Workflow tham khảo cho AgentKit' : 'Reference workflows for AgentKit'}
-    subtitle={isVi
-      ? 'Các chuỗi skill /ak: gợi ý theo việc bạn đang làm — feature, bug, review, ship… Xem rồi chỉnh cho phù hợp, không bắt buộc làm y hệt.'
-      : 'Suggested /ak: skill sequences for common jobs — features, bugs, review, ship… Use them as a starting point and adapt as needed.'}
+    subtitle={
+      isProgressiveReveal
+        ? isVi
+          ? 'Bắt đầu với 2 workflow hay dùng nhất. Các recipe khác sẽ mở dần — xem rồi chỉnh cho phù hợp, không bắt buộc làm y hệt.'
+          : 'Start with the two most common workflows. More recipes will unlock gradually — use them as a starting point and adapt as needed.'
+        : isVi
+          ? 'Các chuỗi skill /ak: gợi ý theo việc bạn đang làm — feature, bug, review, ship… Xem rồi chỉnh cho phù hợp, không bắt buộc làm y hệt.'
+          : 'Suggested /ak: skill sequences for common jobs — features, bugs, review, ship… Use them as a starting point and adapt as needed.'
+    }
     badges={[]}
   >
     <div slot="actions" class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
@@ -293,70 +319,74 @@ const softPill =
 
     <!-- Filters: category then level -->
     <div class="space-y-6">
-      <div class="space-y-2">
-        <p class="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
-          {copy.filterLabel}
-        </p>
-        <div class="flex flex-wrap gap-2" data-ak-wf-filters role="group" aria-label={copy.filterLabel}>
-          <button
-            type="button"
-            data-ak-wf-filter="all"
-            class="ak-wf-filter rounded-full border border-teal-400 bg-teal-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-sm dark:border-teal-500"
-          >
-            {copy.filterAll}
-          </button>
-          {akWorkflowCategoryOrder.map((c) => (
+      {showCategoryFilters && (
+        <div class="space-y-2">
+          <p class="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+            {copy.filterLabel}
+          </p>
+          <div class="flex flex-wrap gap-2" data-ak-wf-filters role="group" aria-label={copy.filterLabel}>
             <button
               type="button"
-              data-ak-wf-filter={c.key}
-              class="ak-wf-filter rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-600 hover:border-teal-300 hover:text-teal-800 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-teal-500/40"
+              data-ak-wf-filter="all"
+              class="ak-wf-filter rounded-full border border-teal-400 bg-teal-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-sm dark:border-teal-500"
             >
-              {isVi ? c.labelVi : c.labelEn}
+              {copy.filterAll}
             </button>
-          ))}
+            {visibleCategoryOrder.map((c) => (
+              <button
+                type="button"
+                data-ak-wf-filter={c.key}
+                class="ak-wf-filter rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-600 hover:border-teal-300 hover:text-teal-800 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-teal-500/40"
+              >
+                {isVi ? c.labelVi : c.labelEn}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
-      <section
-        class="rounded-3xl border border-slate-200/90 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900/50 md:p-6"
-        aria-labelledby="ak-wf-level-heading"
-      >
-        <div>
-          <h2 id="ak-wf-level-heading" class="text-base font-bold text-slate-900 dark:text-white">
-            {copy.levelLabel}
-          </h2>
-          <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">{copy.levelHint}</p>
-        </div>
-        <div
-          class="mt-4 grid gap-2 sm:grid-cols-4"
-          data-ak-wf-level-filters
-          role="group"
-          aria-label={copy.levelLabel}
+      {showLevelFilters && (
+        <section
+          class="rounded-3xl border border-slate-200/90 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900/50 md:p-6"
+          aria-labelledby="ak-wf-level-heading"
         >
-          <button
-            type="button"
-            data-ak-wf-level="all"
-            class="ak-wf-level rounded-2xl border border-teal-400 bg-teal-600 px-3 py-3 text-left shadow-sm dark:border-teal-500"
+          <div>
+            <h2 id="ak-wf-level-heading" class="text-base font-bold text-slate-900 dark:text-white">
+              {copy.levelLabel}
+            </h2>
+            <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">{copy.levelHint}</p>
+          </div>
+          <div
+            class="mt-4 grid gap-2 sm:grid-cols-4"
+            data-ak-wf-level-filters
+            role="group"
+            aria-label={copy.levelLabel}
           >
-            <span class="block text-sm font-semibold text-white">{copy.levelAll}</span>
-            <span class="mt-0.5 block text-[11px] text-teal-100/90">
-              {isVi ? 'Xem toàn bộ workflow' : 'Show every workflow'}
-            </span>
-          </button>
-          {levelOptions.map((lv) => (
             <button
               type="button"
-              data-ak-wf-level={lv.key}
-              class="ak-wf-level rounded-2xl border border-slate-200 bg-slate-50 px-3 py-3 text-left hover:border-teal-300 dark:border-slate-700 dark:bg-slate-950/40 dark:hover:border-teal-500/40"
+              data-ak-wf-level="all"
+              class="ak-wf-level rounded-2xl border border-teal-400 bg-teal-600 px-3 py-3 text-left shadow-sm dark:border-teal-500"
             >
-              <span class="block text-sm font-semibold text-slate-900 dark:text-white">{lv.label}</span>
-              <span class="mt-0.5 block text-[11px] text-slate-500 dark:text-slate-400">
-                {isVi ? lv.hintVi : lv.hintEn}
+              <span class="block text-sm font-semibold text-white">{copy.levelAll}</span>
+              <span class="mt-0.5 block text-[11px] text-teal-100/90">
+                {isVi ? 'Xem toàn bộ workflow' : 'Show every workflow'}
               </span>
             </button>
-          ))}
-        </div>
-      </section>
+            {visibleLevelOptions.map((lv) => (
+              <button
+                type="button"
+                data-ak-wf-level={lv.key}
+                class="ak-wf-level rounded-2xl border border-slate-200 bg-slate-50 px-3 py-3 text-left hover:border-teal-300 dark:border-slate-700 dark:bg-slate-950/40 dark:hover:border-teal-500/40"
+              >
+                <span class="block text-sm font-semibold text-slate-900 dark:text-white">{lv.label}</span>
+                <span class="mt-0.5 block text-[11px] text-slate-500 dark:text-slate-400">
+                  {isVi ? lv.hintVi : lv.hintEn}
+                </span>
+              </button>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
 
     <!-- Start here recipes -->
@@ -495,91 +525,105 @@ const softPill =
       </div>
     </AkSection>
 
-    <!-- More recipes -->
-    <AkSection eyebrow={isVi ? 'Thêm' : 'More'} title={copy.moreTitle} desc={copy.moreDesc}>
-      <details class="group overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900/40">
-        <summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 select-none hover:bg-slate-50 dark:hover:bg-slate-800/40">
-          <span>
-            <span class="block font-semibold text-slate-900 dark:text-white">
-              {copy.moreOpen}
-              <span class="ml-2 text-sm font-normal text-slate-500">({copy.moreCount})</span>
+    <!-- More recipes (or coming-soon while progressive reveal) -->
+    {showMoreSection ? (
+      <AkSection eyebrow={isVi ? 'Thêm' : 'More'} title={copy.moreTitle} desc={copy.moreDesc}>
+        <details class="group overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900/40">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 select-none hover:bg-slate-50 dark:hover:bg-slate-800/40">
+            <span>
+              <span class="block font-semibold text-slate-900 dark:text-white">
+                {copy.moreOpen}
+                <span class="ml-2 text-sm font-normal text-slate-500">({copy.moreCount})</span>
+              </span>
+              <span class="mt-0.5 block text-xs text-slate-500 dark:text-slate-400">
+                {isVi ? 'Bấm để xem thêm tình huống' : 'Click to browse more situations'}
+              </span>
             </span>
-            <span class="mt-0.5 block text-xs text-slate-500 dark:text-slate-400">
-              {isVi ? 'Bấm để xem thêm tình huống' : 'Click to browse more situations'}
+            <span
+              class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-slate-200 text-slate-400 transition-transform group-open:rotate-180 dark:border-slate-700"
+              aria-hidden="true"
+            >
+              ▼
             </span>
-          </span>
-          <span
-            class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-slate-200 text-slate-400 transition-transform group-open:rotate-180 dark:border-slate-700"
-            aria-hidden="true"
-          >
-            ▼
-          </span>
-        </summary>
-        <div class="space-y-10 border-t border-slate-100 px-5 py-6 dark:border-slate-800">
-          {moreGroups.map((group) => (
-            <div data-ak-wf-category={group.key} class="space-y-3">
-              <h2 class="text-sm font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
-                {group.label}
-              </h2>
-              <div class="grid gap-4 lg:grid-cols-2">
-                {group.items.map((w) => (
-                  <article
-                    class="rounded-xl border border-slate-200 bg-slate-50/50 p-4 dark:border-slate-800 dark:bg-slate-950/40"
-                    data-ak-wf-card
-                    data-category={w.category}
-                    data-level={w.level}
-                    data-id={w.id}
-                  >
-                    <div class="flex flex-wrap items-center gap-2">
-                      <span class:list={[softPill, levelColors[w.level] || '']}>
-                        {levelLabel[w.level] || w.level}
-                      </span>
-                      {w.powerUserWarning && (
-                        <span class:list={[softPill, 'border border-amber-200 text-amber-800 dark:border-amber-500/40 dark:text-amber-200']}>
-                          {copy.powerUser}
+          </summary>
+          <div class="space-y-10 border-t border-slate-100 px-5 py-6 dark:border-slate-800">
+            {moreGroups.map((group) => (
+              <div data-ak-wf-category={group.key} class="space-y-3">
+                <h2 class="text-sm font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                  {group.label}
+                </h2>
+                <div class="grid gap-4 lg:grid-cols-2">
+                  {group.items.map((w) => (
+                    <article
+                      class="rounded-xl border border-slate-200 bg-slate-50/50 p-4 dark:border-slate-800 dark:bg-slate-950/40"
+                      data-ak-wf-card
+                      data-category={w.category}
+                      data-level={w.level}
+                      data-id={w.id}
+                    >
+                      <div class="flex flex-wrap items-center gap-2">
+                        <span class:list={[softPill, levelColors[w.level] || '']}>
+                          {levelLabel[w.level] || w.level}
                         </span>
-                      )}
-                    </div>
-                    <h3 class="mt-2 text-base font-bold text-slate-900 dark:text-white">{tTitle(w)}</h3>
-                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
-                      <span class="font-medium">{copy.bestFor}:</span> {tBestFor(w)}
-                    </p>
-                    <p class="mt-1 text-xs text-slate-400">
-                      {tDuration(w)} · {w.steps.length} {copy.steps}
-                    </p>
-                    <ol class="mt-3 space-y-2.5">
-                      {w.steps.map((step) => (
-                        <li class="flex gap-2 text-sm">
-                          <span class="w-5 shrink-0 text-xs font-bold text-slate-400">{step.number}.</span>
-                          <div class="min-w-0">
-                            {step.command ? (
-                              <code class={cmdChip}>{step.command}</code>
-                            ) : (
-                              <span class="text-xs font-semibold text-slate-700 dark:text-slate-200">
-                                {tStepLabel(step)}
-                              </span>
-                            )}
-                            <p class="mt-0.5 text-xs leading-snug text-slate-500 dark:text-slate-400">
-                              {step.command ? tStepLabel(step) + ' — ' : ''}
-                              {tStepDesc(step)}
-                            </p>
-                          </div>
-                        </li>
-                      ))}
-                    </ol>
-                    {tTip(w) && (
-                      <p class="mt-3 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
-                        <span class="font-semibold">{copy.tip}:</span> {tTip(w)}
+                        {w.powerUserWarning && (
+                          <span class:list={[softPill, 'border border-amber-200 text-amber-800 dark:border-amber-500/40 dark:text-amber-200']}>
+                            {copy.powerUser}
+                          </span>
+                        )}
+                      </div>
+                      <h3 class="mt-2 text-base font-bold text-slate-900 dark:text-white">{tTitle(w)}</h3>
+                      <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
+                        <span class="font-medium">{copy.bestFor}:</span> {tBestFor(w)}
                       </p>
-                    )}
-                  </article>
-                ))}
+                      <p class="mt-1 text-xs text-slate-400">
+                        {tDuration(w)} · {w.steps.length} {copy.steps}
+                      </p>
+                      <ol class="mt-3 space-y-2.5">
+                        {w.steps.map((step) => (
+                          <li class="flex gap-2 text-sm">
+                            <span class="w-5 shrink-0 text-xs font-bold text-slate-400">{step.number}.</span>
+                            <div class="min-w-0">
+                              {step.command ? (
+                                <code class={cmdChip}>{step.command}</code>
+                              ) : (
+                                <span class="text-xs font-semibold text-slate-700 dark:text-slate-200">
+                                  {tStepLabel(step)}
+                                </span>
+                              )}
+                              <p class="mt-0.5 text-xs leading-snug text-slate-500 dark:text-slate-400">
+                                {step.command ? tStepLabel(step) + ' — ' : ''}
+                                {tStepDesc(step)}
+                              </p>
+                            </div>
+                          </li>
+                        ))}
+                      </ol>
+                      {tTip(w) && (
+                        <p class="mt-3 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+                          <span class="font-semibold">{copy.tip}:</span> {tTip(w)}
+                        </p>
+                      )}
+                    </article>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      </details>
-    </AkSection>
+            ))}
+          </div>
+        </details>
+      </AkSection>
+    ) : isProgressiveReveal ? (
+      <div class="rounded-3xl border border-dashed border-slate-300/80 bg-gradient-to-br from-slate-50 via-white to-teal-50/40 px-6 py-12 text-center dark:border-slate-600 dark:from-slate-900 dark:via-slate-900 dark:to-teal-950/20">
+        <p class="text-xs font-bold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+          {isVi ? 'Thêm' : 'More'}
+        </p>
+        <h2 class="mt-3 text-xl font-bold text-slate-900 dark:text-white sm:text-2xl">
+          {copy.moreComingTitle}
+        </h2>
+        <p class="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+          {copy.moreComingBody}
+        </p>
+      </div>
+    ) : null}
 
     <!-- Anti-patterns as cards -->
     <AkSection eyebrow={isVi ? 'Tránh lỗi' : 'Avoid traps'} title={copy.antiTitle}>

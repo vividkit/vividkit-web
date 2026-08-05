@@ -20,7 +20,10 @@ export {
   akEngineerWorkflowCount,
   akEngineerFlagshipCount,
   akEngineerMoreCount,
+  akEngineerCatalogCount,
 } from "./engineer";
+
+export { akWorkflowPublicIds } from "./publish";
 
 export { akMarketingWorkflows, akMarketingWorkflowCount } from "./marketing";
 
