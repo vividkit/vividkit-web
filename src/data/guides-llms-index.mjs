@@ -82,6 +82,11 @@ export const guideSections = [
         desc: 'Engineer and Marketing Kit skills with subcommands, args, flags, and bilingual descriptions.',
       },
       {
+        title: 'AgentKit Workflows',
+        path: '/guides/agentkit/workflows',
+        desc: 'Recommended /ak: skill chains (flagship + more recipes) — when and how to combine plan, cook, fix, review, ship, and --advice compose. Marketing tab Coming soon.',
+      },
+      {
         title: 'Statusline',
         path: '/guides/agentkit/statusline',
         desc: 'Claude Code statusline defaults, statuslineLayout options, and customization.',

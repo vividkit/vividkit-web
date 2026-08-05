@@ -13,6 +13,7 @@ import {
   type AkBetaPreviewItem,
   type AkGroupMeta,
 } from '@/data/guides/agentkit-skills-cheatsheet';
+import AkNextLinks from './AkNextLinks.astro';
 
 interface Props {
   lang?: Language;
@@ -658,6 +659,35 @@ const accent = {
       </section>
     ))}
   </div>
+
+  <AkNextLinks
+    lang={currentLang}
+    title={isVi ? 'Tiếp theo' : 'Related guides'}
+    links={[
+      {
+        href: '/guides/agentkit/workflows',
+        label: isVi ? 'Workflows — chuỗi skill' : 'Workflows — skill chains',
+        desc: isVi
+          ? 'Khi nào xâu plan → cook → fix → ship (và --advice)'
+          : 'When to chain plan → cook → fix → ship (and --advice)',
+      },
+      {
+        href: '/guides/agentkit/cli-commands',
+        label: isVi ? 'CLI ak nhanh' : 'AgentKit CLI quick ref',
+        desc: isVi ? 'Lệnh ak: install, update, kit…' : 'ak commands: install, update, kit…',
+      },
+      {
+        href: '/guides/agentkit/building-blocks',
+        label: isVi ? 'Kit, Skill, Agent, Hook' : 'Kits, Skills, Agents, Hooks',
+        desc: isVi ? 'Chọn đúng khối xây dựng' : 'Pick the right building block',
+      },
+      {
+        href: '/guides/agentkit/getting-started',
+        label: isVi ? 'Cài AgentKit' : 'Install AgentKit',
+        desc: isVi ? 'Cài CLI ak và kit đầu tiên' : 'Install ak CLI and your first kit',
+      },
+    ]}
+  />
 </div>
 
 <script>

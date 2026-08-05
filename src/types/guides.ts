@@ -41,6 +41,7 @@ export type GuideActiveTab =
   | 'agentkit-configuration'
   | 'agentkit-cli-commands'
   | 'agentkit-skills'
+  | 'agentkit-workflows'
   | 'agentkit-statusline'
   | 'agentkit-updating'
   | 'agentkit-clean-reinstall'

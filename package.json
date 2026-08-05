@@ -7,7 +7,8 @@
     "build": "astro build",
     "postbuild": "node scripts/generate-llms-full.mjs",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "audit:ak-workflows": "node .agents/skills/vk-audit-ak-workflows/scripts/detect-workflow-skill-drift.cjs --check"
   },
   "dependencies": {
     "@fontsource/dm-sans": "^5.2.8",

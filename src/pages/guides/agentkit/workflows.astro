@@ -1,0 +1,19 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import AkWorkflowsGuide from '@/components/guides/agentkit/AkWorkflowsGuide.astro';
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl } from '@/i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<GuidesLayout
+  title={`${t('guides.agentkit.workflows.title')} - VividKit Guides`}
+  description={t('guides.agentkit.workflows.description')}
+  canonicalPath="/guides/agentkit/workflows"
+  activeTab="agentkit-workflows"
+  lang={lang}
+>
+  <AkWorkflowsGuide lang={lang} />
+</GuidesLayout>

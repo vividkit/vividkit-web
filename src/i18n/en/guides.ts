@@ -51,6 +51,8 @@ export const guides = {
   'guides.agentkit.cli_commands.description': 'AgentKit ak CLI commands cheatsheet — flags, subcommands, and examples',
   'guides.agentkit.skills.title': 'AgentKit Skills Cheatsheet',
   'guides.agentkit.skills.description': 'Engineer and Marketing Kit skills with subcommands, args, and flags — /ak: and $ak:',
+  'guides.agentkit.workflows.title': 'AgentKit Workflows',
+  'guides.agentkit.workflows.description': 'Reference /ak: skill sequences for features, bugs, reviews, and shipping — adapt to your context',
   'guides.agentkit.statusline.title': 'AgentKit Statusline',
   'guides.agentkit.statusline.description': 'AgentKit statusline defaults for Claude Code, statuslineLayout options, and how to customize',
   'guides.nav.ck_migrate_other_tools': 'CK → Other coding tools',

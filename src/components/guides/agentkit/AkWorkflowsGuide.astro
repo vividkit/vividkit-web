@@ -1,0 +1,738 @@
+---
+/**
+ * AgentKit Workflows guide — user-facing recipes for chaining /ak: skills.
+ * Data: src/data/guides/agentkit-workflows
+ */
+import { getLangFromUrl, type Language } from '@/i18n';
+import {
+  akEngineerFlagshipWorkflows,
+  akEngineerMoreWorkflows,
+  akEngineerMoreCount,
+  akWorkflowCategoryOrder,
+  akWorkflowPageChrome,
+  akWorkflowInvocationHint,
+  type AkWorkflow,
+  type AkWorkflowStep,
+} from '@/data/guides/agentkit-workflows';
+import AkPageHero from './AkPageHero.astro';
+import AkSection from './AkSection.astro';
+import AkCallout from './AkCallout.astro';
+import AkNextLinks from './AkNextLinks.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === 'vi';
+const chrome = akWorkflowPageChrome;
+
+const levelLabel: Record<string, string> = isVi
+  ? { Beginner: 'Dễ bắt đầu', Intermediate: 'Cần quen một chút', Advanced: 'Nâng cao' }
+  : { Beginner: 'Easy start', Intermediate: 'Some practice', Advanced: 'Advanced' };
+
+const levelColors: Record<string, string> = {
+  Beginner: 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/25',
+  Intermediate: 'bg-sky-500/10 text-sky-700 dark:text-sky-300 border border-sky-500/25',
+  Advanced: 'bg-slate-500/10 text-slate-700 dark:text-slate-300 border border-slate-500/25',
+};
+
+function tTitle(w: AkWorkflow) {
+  return isVi && w.titleVi ? w.titleVi : w.title;
+}
+function tBestFor(w: AkWorkflow) {
+  return isVi && w.bestForVi ? w.bestForVi : w.bestFor;
+}
+function tTip(w: AkWorkflow) {
+  if (!w.tip) return '';
+  return isVi && w.tipVi ? w.tipVi : w.tip;
+}
+function tDuration(w: AkWorkflow) {
+  return isVi && w.durationVi ? w.durationVi : w.duration;
+}
+function tStepLabel(s: AkWorkflowStep) {
+  return isVi && s.typeLabelVi ? s.typeLabelVi : s.typeLabel;
+}
+function tStepDesc(s: AkWorkflowStep) {
+  return isVi && s.descriptionVi ? s.descriptionVi : s.description;
+}
+
+function groupByCategory(list: AkWorkflow[]) {
+  const map = new Map<string, AkWorkflow[]>();
+  for (const w of list) {
+    const arr = map.get(w.category) || [];
+    arr.push(w);
+    map.set(w.category, arr);
+  }
+  return akWorkflowCategoryOrder
+    .filter((c) => (map.get(c.key)?.length || 0) > 0)
+    .map((c) => ({
+      key: c.key,
+      label: isVi ? c.labelVi : c.labelEn,
+      items: map.get(c.key) || [],
+    }));
+}
+
+const flagshipGroups = groupByCategory(akEngineerFlagshipWorkflows);
+const moreGroups = groupByCategory(akEngineerMoreWorkflows);
+
+const stages = (isVi ? chrome.skeleton.stagesVi : chrome.skeleton.stagesEn)
+  .split('·')
+  .map((s) => s.trim())
+  .filter(Boolean);
+
+const copy = {
+  bestFor: isVi ? 'Dùng khi' : 'Use when',
+  steps: isVi ? 'bước' : 'steps',
+  optional: isVi ? 'Tuỳ chọn' : 'Optional',
+  human: isVi ? 'Bạn làm bước này' : 'Your turn',
+  tip: isVi ? 'Mẹo' : 'Tip',
+  powerUser: isVi ? 'Tốn token hơn' : 'Uses more tokens',
+  riskHigh: isVi ? 'Cẩn thận' : 'Go carefully',
+  howTitle: isVi ? 'Cách dùng workflow tham khảo' : 'How to use a reference workflow',
+  how: isVi
+    ? [
+        { n: '1', t: 'Chọn workflow gần với việc bạn đang làm', d: 'Feature, bug, review, ship…' },
+        { n: '2', t: 'Xem chuỗi skill gợi ý', d: 'Đây là tham khảo — được phép rút gọn hoặc thêm bước' },
+        { n: '3', t: 'Chạy từng lệnh /ak: theo thứ tự hợp lý', d: 'Claude Code / Cursor: /ak:… · Codex: $ak:…' },
+      ]
+    : [
+        { n: '1', t: 'Pick the workflow closest to your job', d: 'Feature, bug, review, ship…' },
+        { n: '2', t: 'Read the suggested skill sequence', d: 'It is a reference — shorten or extend as needed' },
+        { n: '3', t: 'Run /ak: commands in a sensible order', d: 'Claude Code / Cursor: /ak:… · Codex: $ak:…' },
+      ],
+  flagshipTitle: isVi ? 'Workflow thường dùng' : 'Common workflows',
+  flagshipDesc: isVi
+    ? 'Các chuỗi skill hay dùng — chọn việc gần nhất, rồi chỉnh bước cho đúng context của bạn.'
+    : 'Frequently useful skill sequences — pick the closest job, then adapt steps to your context.',
+  moreTitle: isVi ? chrome.moreSection.titleVi : chrome.moreSection.titleEn,
+  moreDesc: isVi ? chrome.moreSection.bodyVi : chrome.moreSection.bodyEn,
+  moreCount: isVi ? `${akEngineerMoreCount} workflow` : `${akEngineerMoreCount} workflows`,
+  moreOpen: isVi ? 'Xem thêm workflow' : 'More workflows',
+  antiTitle: isVi ? 'Hay sai — làm thế này thay vì thế kia' : 'Common mistakes — try this instead',
+  antiDont: isVi ? 'Hay làm' : 'Common habit',
+  antiPrefer: isVi ? 'Nên làm' : 'Better',
+  engTab: isVi ? 'Coding' : 'Coding',
+  mktTab: isVi ? 'Marketing' : 'Marketing',
+  filterLabel: isVi ? 'Lọc theo loại việc' : 'Filter by kind of work',
+  levelLabel: isVi ? 'Chọn theo level' : 'Choose by level',
+  levelAll: isVi ? 'Mọi level' : 'All levels',
+  levelHint: isVi
+    ? 'Bắt đầu với level dễ nếu bạn mới dùng AgentKit.'
+    : 'Start with the easy level if you are new to AgentKit.',
+  filterAll: isVi ? 'Tất cả' : 'All',
+  nextTitle: isVi ? 'Xem thêm' : 'Explore next',
+  adviceBox: isVi ? 'Tuỳ chọn: thêm --advice' : 'Optional: add --advice',
+  invokeNote: isVi ? 'Cách gọi lệnh' : 'How to type commands',
+};
+
+const levelOptions = [
+  { key: 'Beginner', label: levelLabel.Beginner, hintEn: 'Short chains, low risk', hintVi: 'Chuỗi ngắn, ít rủi ro' },
+  { key: 'Intermediate', label: levelLabel.Intermediate, hintEn: 'Multi-step everyday work', hintVi: 'Việc hằng ngày nhiều bước' },
+  { key: 'Advanced', label: levelLabel.Advanced, hintEn: 'Autonomy, security, money', hintVi: 'Tự trị, bảo mật, tiền' },
+] as const;
+
+const nextLinks = [
+  {
+    href: '/guides/agentkit/skills',
+    label: isVi ? 'Danh sách mọi skill' : 'Full skills list',
+    desc: isVi ? 'Từng /ak: skill kèm flag' : 'Every /ak: skill and its flags',
+  },
+  {
+    href: '/guides/agentkit/getting-started',
+    label: isVi ? 'Cài AgentKit' : 'Install AgentKit',
+    desc: isVi ? 'Cài CLI ak và kit đầu tiên' : 'Install the ak CLI and your first kit',
+  },
+  {
+    href: '/guides/agentkit/cli-commands',
+    label: isVi ? 'Lệnh CLI ak' : 'ak CLI commands',
+    desc: isVi ? 'install, update, kit…' : 'install, update, kit…',
+  },
+  {
+    href: '/guides/workflows',
+    label: isVi ? 'Workflows ClaudeKit' : 'ClaudeKit Workflows',
+    desc: isVi ? 'Track /ck: (khác trang này)' : 'The /ck: track (different from this page)',
+  },
+];
+
+const cmdChip =
+  'inline-flex max-w-full items-center rounded-lg border border-slate-200/90 bg-slate-100 px-2 py-1 font-mono text-[11px] sm:text-xs font-medium text-teal-700 break-all dark:border-slate-600 dark:bg-slate-800/90 dark:text-teal-300';
+const softPill =
+  'inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold tracking-wide';
+---
+
+<div class="space-y-10 mt-6" data-ak-workflows-root>
+  <AkPageHero
+    lang={currentLang}
+    accent="teal"
+    kicker={isVi ? 'AgentKit · Workflow tham khảo' : 'AgentKit · Reference workflows'}
+    title={isVi ? 'Workflow tham khảo cho AgentKit' : 'Reference workflows for AgentKit'}
+    subtitle={isVi
+      ? 'Các chuỗi skill /ak: gợi ý theo việc bạn đang làm — feature, bug, review, ship… Xem rồi chỉnh cho phù hợp, không bắt buộc làm y hệt.'
+      : 'Suggested /ak: skill sequences for common jobs — features, bugs, review, ship… Use them as a starting point and adapt as needed.'}
+    badges={[]}
+  >
+    <div slot="actions" class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+      <p class="text-sm text-slate-600 dark:text-slate-300">
+        <span class="font-medium text-slate-800 dark:text-slate-100">{copy.invokeNote}:</span>{' '}
+        {isVi ? akWorkflowInvocationHint.vi : akWorkflowInvocationHint.en}
+      </p>
+    </div>
+  </AkPageHero>
+
+  <!-- How to use -->
+  <section aria-labelledby="ak-wf-how">
+    <h2 id="ak-wf-how" class="sr-only">{copy.howTitle}</h2>
+    <div class="grid gap-3 sm:grid-cols-3">
+      {copy.how.map((h) => (
+        <div class="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900/50">
+          <div class="flex h-8 w-8 items-center justify-center rounded-full bg-teal-600 text-sm font-bold text-white">
+            {h.n}
+          </div>
+          <p class="mt-3 text-sm font-semibold text-slate-900 dark:text-white">{h.t}</p>
+          <p class="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">{h.d}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Kit tabs -->
+  <div
+    class="inline-flex flex-wrap gap-1 rounded-2xl border border-slate-200 bg-slate-100/80 p-1 dark:border-slate-700 dark:bg-slate-900/80"
+    role="tablist"
+    aria-label={isVi ? 'Loại recipe' : 'Recipe type'}
+  >
+    <button
+      type="button"
+      role="tab"
+      aria-selected="true"
+      data-ak-wf-tab="engineer"
+      class="ak-wf-tab rounded-xl px-4 py-2 text-sm font-semibold bg-teal-600 text-white shadow-sm"
+    >
+      {copy.engTab}
+    </button>
+    <button
+      type="button"
+      role="tab"
+      aria-selected="false"
+      data-ak-wf-tab="marketing"
+      class="ak-wf-tab rounded-xl px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-white/80 dark:text-slate-300 dark:hover:bg-slate-800"
+    >
+      {copy.mktTab}
+      <span class="ml-1.5 text-[10px] font-medium opacity-70">{isVi ? 'sắp có' : 'soon'}</span>
+    </button>
+  </div>
+
+  <div data-ak-wf-panel="engineer" class="space-y-10">
+    <!-- Pipeline skeleton -->
+    <div class="rounded-3xl border border-teal-200/70 bg-gradient-to-br from-teal-50/90 via-white to-cyan-50/50 p-5 md:p-6 dark:border-teal-500/20 dark:from-teal-950/40 dark:via-slate-900 dark:to-cyan-950/20">
+      <p class="text-[11px] font-bold uppercase tracking-[0.16em] text-teal-700 dark:text-teal-300">
+        {isVi ? chrome.skeleton.titleVi : chrome.skeleton.titleEn}
+      </p>
+      <p class="mt-2 max-w-2xl text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+        {isVi ? chrome.skeleton.bodyVi : chrome.skeleton.bodyEn}
+      </p>
+      <ol class="mt-4 flex flex-wrap items-center gap-2">
+        {stages.map((stage, i) => (
+          <>
+            <li class="rounded-full border border-teal-200/80 bg-white/90 px-3 py-1.5 text-xs font-semibold text-teal-900 shadow-sm dark:border-teal-500/30 dark:bg-slate-900/70 dark:text-teal-100">
+              {stage}
+            </li>
+            {i < stages.length - 1 && (
+              <li class="text-teal-400 dark:text-teal-600" aria-hidden="true">→</li>
+            )}
+          </>
+        ))}
+      </ol>
+    </div>
+
+    <!-- Two advice paths -->
+    <AkSection
+      eyebrow={isVi ? 'Tư vấn' : 'Advice'}
+      title={isVi ? chrome.adviseVsAdvice.titleVi : chrome.adviseVsAdvice.titleEn}
+      desc={isVi ? chrome.adviseVsAdvice.badgeNoteVi : chrome.adviseVsAdvice.badgeNoteEn}
+    >
+      <div class="grid gap-4 md:grid-cols-2">
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-900/50">
+          <p class="text-sm font-bold text-slate-900 dark:text-white">
+            {isVi ? chrome.adviseVsAdvice.adviseLabelVi : chrome.adviseVsAdvice.adviseLabelEn}
+          </p>
+          <code class:list={['mt-3', cmdChip]}>/ak:advise</code>
+          <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+            {isVi ? chrome.adviseVsAdvice.adviseBodyVi : chrome.adviseVsAdvice.adviseBodyEn}
+          </p>
+        </div>
+        <div class="rounded-2xl border border-teal-200/80 bg-teal-50/40 p-5 dark:border-teal-500/25 dark:bg-teal-950/25">
+          <p class="text-sm font-bold text-teal-950 dark:text-teal-100">
+            {isVi ? chrome.adviseVsAdvice.adviceLabelVi : chrome.adviseVsAdvice.adviceLabelEn}
+          </p>
+          <div class="mt-3 flex flex-wrap items-center gap-2">
+            <code class={cmdChip}>--advice</code>
+            <span class="text-xs text-slate-500 dark:text-slate-400">
+              {isVi ? 'thêm vào plan, cook, fix…' : 'add on plan, cook, fix…'}
+            </span>
+          </div>
+          <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+            {isVi ? chrome.adviseVsAdvice.adviceBodyVi : chrome.adviseVsAdvice.adviceBodyEn}
+          </p>
+          <p class="mt-2 text-xs text-slate-500 dark:text-slate-400">
+            {isVi ? chrome.adviseVsAdvice.whenSkipVi : chrome.adviseVsAdvice.whenSkipEn}
+          </p>
+        </div>
+      </div>
+    </AkSection>
+
+    <!-- Router -->
+    <AkCallout variant="tip" title={isVi ? chrome.router.titleVi : chrome.router.titleEn}>
+      <p>{isVi ? chrome.router.bodyVi : chrome.router.bodyEn}</p>
+      <p class="mt-3">
+        <code class={cmdChip}>/ak:agentkit "your task"</code>
+      </p>
+    </AkCallout>
+
+    <!-- Filters: category then level -->
+    <div class="space-y-6">
+      <div class="space-y-2">
+        <p class="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+          {copy.filterLabel}
+        </p>
+        <div class="flex flex-wrap gap-2" data-ak-wf-filters role="group" aria-label={copy.filterLabel}>
+          <button
+            type="button"
+            data-ak-wf-filter="all"
+            class="ak-wf-filter rounded-full border border-teal-400 bg-teal-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-sm dark:border-teal-500"
+          >
+            {copy.filterAll}
+          </button>
+          {akWorkflowCategoryOrder.map((c) => (
+            <button
+              type="button"
+              data-ak-wf-filter={c.key}
+              class="ak-wf-filter rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-600 hover:border-teal-300 hover:text-teal-800 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-teal-500/40"
+            >
+              {isVi ? c.labelVi : c.labelEn}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <section
+        class="rounded-3xl border border-slate-200/90 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900/50 md:p-6"
+        aria-labelledby="ak-wf-level-heading"
+      >
+        <div>
+          <h2 id="ak-wf-level-heading" class="text-base font-bold text-slate-900 dark:text-white">
+            {copy.levelLabel}
+          </h2>
+          <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">{copy.levelHint}</p>
+        </div>
+        <div
+          class="mt-4 grid gap-2 sm:grid-cols-4"
+          data-ak-wf-level-filters
+          role="group"
+          aria-label={copy.levelLabel}
+        >
+          <button
+            type="button"
+            data-ak-wf-level="all"
+            class="ak-wf-level rounded-2xl border border-teal-400 bg-teal-600 px-3 py-3 text-left shadow-sm dark:border-teal-500"
+          >
+            <span class="block text-sm font-semibold text-white">{copy.levelAll}</span>
+            <span class="mt-0.5 block text-[11px] text-teal-100/90">
+              {isVi ? 'Xem toàn bộ workflow' : 'Show every workflow'}
+            </span>
+          </button>
+          {levelOptions.map((lv) => (
+            <button
+              type="button"
+              data-ak-wf-level={lv.key}
+              class="ak-wf-level rounded-2xl border border-slate-200 bg-slate-50 px-3 py-3 text-left hover:border-teal-300 dark:border-slate-700 dark:bg-slate-950/40 dark:hover:border-teal-500/40"
+            >
+              <span class="block text-sm font-semibold text-slate-900 dark:text-white">{lv.label}</span>
+              <span class="mt-0.5 block text-[11px] text-slate-500 dark:text-slate-400">
+                {isVi ? lv.hintVi : lv.hintEn}
+              </span>
+            </button>
+          ))}
+        </div>
+      </section>
+    </div>
+
+    <!-- Start here recipes -->
+    <AkSection eyebrow={isVi ? 'Nên thử trước' : 'Recommended'} title={copy.flagshipTitle} desc={copy.flagshipDesc}>
+      <div class="space-y-12">
+        {flagshipGroups.map((group) => (
+          <div data-ak-wf-category={group.key} class="space-y-4">
+            <h2 class="flex items-center gap-2 text-base font-bold text-slate-900 dark:text-white">
+              <span class="h-1.5 w-1.5 rounded-full bg-teal-500" aria-hidden="true"></span>
+              {group.label}
+            </h2>
+            <div class="grid gap-5 lg:grid-cols-2">
+              {group.items.map((w) => (
+                <article
+                  class="flex flex-col overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm transition-shadow duration-200 hover:shadow-md dark:border-slate-800 dark:bg-slate-900/60"
+                  data-ak-wf-card
+                  data-category={w.category}
+                  data-level={w.level}
+                  data-id={w.id}
+                >
+                  <header class:list={['space-y-3 border-b border-slate-100 p-5 dark:border-slate-800 bg-gradient-to-br', w.gradientHeader || 'from-teal-500/10 to-cyan-500/5']}>
+                    <div class="flex flex-wrap items-center gap-2">
+                      <span class:list={[softPill, levelColors[w.level] || levelColors.Beginner]}>
+                        {levelLabel[w.level] || w.level}
+                      </span>
+                      {w.risk === 'high' && (
+                        <span class:list={[softPill, 'border border-rose-200 bg-rose-50 text-rose-800 dark:border-rose-500/30 dark:bg-rose-950/40 dark:text-rose-200']}>
+                          {copy.riskHigh}
+                        </span>
+                      )}
+                      {w.powerUserWarning && (
+                        <span class:list={[softPill, 'border border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-500/30 dark:bg-amber-950/40 dark:text-amber-100']}>
+                          {copy.powerUser}
+                        </span>
+                      )}
+                    </div>
+                    <div>
+                      <h3 class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">
+                        {tTitle(w)}
+                      </h3>
+                      <p class="mt-1.5 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+                        <span class="font-medium text-slate-800 dark:text-slate-100">{copy.bestFor}:</span>{' '}
+                        {tBestFor(w)}
+                      </p>
+                    </div>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">
+                      {tDuration(w)}
+                      <span class="mx-1.5 opacity-50">·</span>
+                      {w.stepCount ?? w.steps.length} {copy.steps}
+                    </p>
+                  </header>
+
+                  <div class="flex flex-1 flex-col gap-0 p-5">
+                    <ol class="space-y-0">
+                      {w.steps.map((step, index) => (
+                        <li class="relative flex gap-3 pb-4 last:pb-0">
+                          {index < w.steps.length - 1 && (
+                            <span
+                              class="absolute left-[13px] top-7 bottom-0 w-px bg-slate-200 dark:bg-slate-700"
+                              aria-hidden="true"
+                            ></span>
+                          )}
+                          <span
+                            class:list={[
+                              'relative z-[1] flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold ring-4 ring-white dark:ring-slate-900/60',
+                              step.human
+                                ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-200'
+                                : step.color || 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200',
+                            ]}
+                          >
+                            {step.number}
+                          </span>
+                          <div class="min-w-0 flex-1 space-y-1.5 pt-0.5">
+                            <div class="flex flex-wrap items-center gap-1.5">
+                              {step.command ? (
+                                <code class={cmdChip}>{step.command}</code>
+                              ) : (
+                                <span class="text-sm font-semibold text-slate-800 dark:text-slate-100">
+                                  {tStepLabel(step)}
+                                </span>
+                              )}
+                              {step.human && (
+                                <span class:list={[softPill, 'bg-amber-50 text-amber-800 border border-amber-200/80 dark:bg-amber-950/40 dark:text-amber-200 dark:border-amber-500/30']}>
+                                  {copy.human}
+                                </span>
+                              )}
+                              {step.optional && (
+                                <span class:list={[softPill, 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300']}>
+                                  {copy.optional}
+                                </span>
+                              )}
+                            </div>
+                            {step.command && (
+                              <p class="text-xs font-medium text-slate-500 dark:text-slate-400">
+                                {tStepLabel(step)}
+                              </p>
+                            )}
+                            <p class="text-sm leading-snug text-slate-600 dark:text-slate-400">
+                              {tStepDesc(step)}
+                            </p>
+                          </div>
+                        </li>
+                      ))}
+                    </ol>
+
+                    {w.adviceVariant?.commands?.length ? (
+                      <div class="mt-4 rounded-xl border border-dashed border-teal-300/70 bg-teal-50/50 p-3 dark:border-teal-500/30 dark:bg-teal-950/20">
+                        <p class="text-xs font-semibold text-teal-800 dark:text-teal-200">
+                          {copy.adviceBox}
+                        </p>
+                        <div class="mt-2 flex flex-col gap-1.5">
+                          {w.adviceVariant.commands.map((c) => (
+                            <code class={cmdChip}>{c}</code>
+                          ))}
+                        </div>
+                        {(w.adviceVariant.note || w.adviceVariant.noteVi) && (
+                          <p class="mt-2 text-xs leading-relaxed text-slate-600 dark:text-slate-400">
+                            {isVi && w.adviceVariant.noteVi ? w.adviceVariant.noteVi : w.adviceVariant.note}
+                          </p>
+                        )}
+                      </div>
+                    ) : null}
+
+                    {tTip(w) && (
+                      <div class="mt-4 rounded-xl bg-slate-50 px-3 py-2.5 text-xs leading-relaxed text-slate-600 dark:bg-slate-800/50 dark:text-slate-300">
+                        <span class="font-semibold text-slate-800 dark:text-slate-100">{copy.tip}:</span>{' '}
+                        {tTip(w)}
+                      </div>
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </AkSection>
+
+    <!-- More recipes -->
+    <AkSection eyebrow={isVi ? 'Thêm' : 'More'} title={copy.moreTitle} desc={copy.moreDesc}>
+      <details class="group overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900/40">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 select-none hover:bg-slate-50 dark:hover:bg-slate-800/40">
+          <span>
+            <span class="block font-semibold text-slate-900 dark:text-white">
+              {copy.moreOpen}
+              <span class="ml-2 text-sm font-normal text-slate-500">({copy.moreCount})</span>
+            </span>
+            <span class="mt-0.5 block text-xs text-slate-500 dark:text-slate-400">
+              {isVi ? 'Bấm để xem thêm tình huống' : 'Click to browse more situations'}
+            </span>
+          </span>
+          <span
+            class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-slate-200 text-slate-400 transition-transform group-open:rotate-180 dark:border-slate-700"
+            aria-hidden="true"
+          >
+            ▼
+          </span>
+        </summary>
+        <div class="space-y-10 border-t border-slate-100 px-5 py-6 dark:border-slate-800">
+          {moreGroups.map((group) => (
+            <div data-ak-wf-category={group.key} class="space-y-3">
+              <h2 class="text-sm font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                {group.label}
+              </h2>
+              <div class="grid gap-4 lg:grid-cols-2">
+                {group.items.map((w) => (
+                  <article
+                    class="rounded-xl border border-slate-200 bg-slate-50/50 p-4 dark:border-slate-800 dark:bg-slate-950/40"
+                    data-ak-wf-card
+                    data-category={w.category}
+                    data-level={w.level}
+                    data-id={w.id}
+                  >
+                    <div class="flex flex-wrap items-center gap-2">
+                      <span class:list={[softPill, levelColors[w.level] || '']}>
+                        {levelLabel[w.level] || w.level}
+                      </span>
+                      {w.powerUserWarning && (
+                        <span class:list={[softPill, 'border border-amber-200 text-amber-800 dark:border-amber-500/40 dark:text-amber-200']}>
+                          {copy.powerUser}
+                        </span>
+                      )}
+                    </div>
+                    <h3 class="mt-2 text-base font-bold text-slate-900 dark:text-white">{tTitle(w)}</h3>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
+                      <span class="font-medium">{copy.bestFor}:</span> {tBestFor(w)}
+                    </p>
+                    <p class="mt-1 text-xs text-slate-400">
+                      {tDuration(w)} · {w.steps.length} {copy.steps}
+                    </p>
+                    <ol class="mt-3 space-y-2.5">
+                      {w.steps.map((step) => (
+                        <li class="flex gap-2 text-sm">
+                          <span class="w-5 shrink-0 text-xs font-bold text-slate-400">{step.number}.</span>
+                          <div class="min-w-0">
+                            {step.command ? (
+                              <code class={cmdChip}>{step.command}</code>
+                            ) : (
+                              <span class="text-xs font-semibold text-slate-700 dark:text-slate-200">
+                                {tStepLabel(step)}
+                              </span>
+                            )}
+                            <p class="mt-0.5 text-xs leading-snug text-slate-500 dark:text-slate-400">
+                              {step.command ? tStepLabel(step) + ' — ' : ''}
+                              {tStepDesc(step)}
+                            </p>
+                          </div>
+                        </li>
+                      ))}
+                    </ol>
+                    {tTip(w) && (
+                      <p class="mt-3 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+                        <span class="font-semibold">{copy.tip}:</span> {tTip(w)}
+                      </p>
+                    )}
+                  </article>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </details>
+    </AkSection>
+
+    <!-- Anti-patterns as cards -->
+    <AkSection eyebrow={isVi ? 'Tránh lỗi' : 'Avoid traps'} title={copy.antiTitle}>
+      <ul class="grid gap-3 sm:grid-cols-2">
+        {chrome.antiPatterns.map((ap) => (
+          <li class="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/50">
+            <p class="text-[11px] font-bold uppercase tracking-wide text-rose-600 dark:text-rose-400">
+              {copy.antiDont}
+            </p>
+            <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">
+              {isVi ? ap.dontVi : ap.dontEn}
+            </p>
+            <p class="mt-3 text-[11px] font-bold uppercase tracking-wide text-emerald-700 dark:text-emerald-400">
+              {copy.antiPrefer}
+            </p>
+            <p class="mt-1 text-sm font-medium text-slate-800 dark:text-slate-100">
+              {isVi ? ap.preferVi : ap.preferEn}
+            </p>
+          </li>
+        ))}
+      </ul>
+    </AkSection>
+  </div>
+
+  <!-- Marketing empty -->
+  <div data-ak-wf-panel="marketing" class="hidden">
+    <div class="rounded-3xl border border-dashed border-slate-300/80 bg-gradient-to-br from-slate-50 via-white to-cyan-50/40 px-6 py-16 text-center dark:border-slate-600 dark:from-slate-900 dark:via-slate-900 dark:to-cyan-950/20">
+      <p class="text-xs font-bold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+        Marketing
+      </p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-900 dark:text-white">
+        {isVi ? chrome.marketingEmpty.titleVi : chrome.marketingEmpty.titleEn}
+      </h2>
+      <p class="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+        {isVi ? chrome.marketingEmpty.bodyVi : chrome.marketingEmpty.bodyEn}
+      </p>
+      <p class="mt-6 text-sm text-slate-500">
+        {isVi ? 'Trong lúc chờ, xem tab Coding ở trên.' : 'Meanwhile, use the Coding tab above.'}
+      </p>
+    </div>
+  </div>
+
+  <AkNextLinks lang={currentLang} title={copy.nextTitle} links={nextLinks} />
+</div>
+
+<script>
+  function initAkWorkflows(root: HTMLElement) {
+    const tabs = root.querySelectorAll<HTMLButtonElement>('[data-ak-wf-tab]');
+    const panels = root.querySelectorAll<HTMLElement>('[data-ak-wf-panel]');
+    const catFilters = root.querySelectorAll<HTMLButtonElement>('[data-ak-wf-filter]');
+    const levelFilters = root.querySelectorAll<HTMLButtonElement>('[data-ak-wf-level]');
+    const cards = root.querySelectorAll<HTMLElement>('[data-ak-wf-card]');
+    const categoryBlocks = root.querySelectorAll<HTMLElement>('[data-ak-wf-category]');
+
+    let category = 'all';
+    let level = 'all';
+
+    const tabOn =
+      'ak-wf-tab rounded-xl px-4 py-2 text-sm font-semibold bg-teal-600 text-white shadow-sm';
+    const tabOff =
+      'ak-wf-tab rounded-xl px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-white/80 dark:text-slate-300 dark:hover:bg-slate-800';
+
+    const levelOn =
+      'ak-wf-level rounded-2xl border border-teal-400 bg-teal-600 px-3 py-3 text-left shadow-sm dark:border-teal-500';
+    const levelOff =
+      'ak-wf-level rounded-2xl border border-slate-200 bg-slate-50 px-3 py-3 text-left hover:border-teal-300 dark:border-slate-700 dark:bg-slate-950/40 dark:hover:border-teal-500/40';
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const id = tab.dataset.akWfTab;
+        tabs.forEach((t) => {
+          const on = t === tab;
+          t.setAttribute('aria-selected', on ? 'true' : 'false');
+          t.className = on ? tabOn : tabOff;
+        });
+        panels.forEach((p) => {
+          p.classList.toggle('hidden', p.dataset.akWfPanel !== id);
+        });
+      });
+    });
+
+    function applyFilters() {
+      catFilters.forEach((f) => {
+        const on = f.dataset.akWfFilter === category;
+        f.classList.toggle('bg-teal-600', on);
+        f.classList.toggle('text-white', on);
+        f.classList.toggle('border-teal-400', on);
+        f.classList.toggle('shadow-sm', on);
+        f.classList.toggle('bg-white', !on);
+        f.classList.toggle('text-slate-600', !on);
+        f.classList.toggle('border-slate-200', !on);
+      });
+
+      levelFilters.forEach((f) => {
+        const on = f.dataset.akWfLevel === level;
+        f.className = on ? levelOn : levelOff;
+        // title/hint colors when selected
+        const title = f.querySelector('span:first-child');
+        const hint = f.querySelector('span:last-child');
+        if (title) {
+          title.className = on
+            ? 'block text-sm font-semibold text-white'
+            : 'block text-sm font-semibold text-slate-900 dark:text-white';
+        }
+        if (hint) {
+          hint.className = on
+            ? 'mt-0.5 block text-[11px] text-teal-100/90'
+            : 'mt-0.5 block text-[11px] text-slate-500 dark:text-slate-400';
+        }
+      });
+
+      cards.forEach((card) => {
+        const catOk = category === 'all' || card.dataset.category === category;
+        const levelOk = level === 'all' || card.dataset.level === level;
+        card.classList.toggle('hidden', !(catOk && levelOk));
+      });
+
+      categoryBlocks.forEach((block) => {
+        const hasVisible = Array.from(block.querySelectorAll<HTMLElement>('[data-ak-wf-card]')).some(
+          (c) => !c.classList.contains('hidden'),
+        );
+        block.classList.toggle('hidden', !hasVisible);
+      });
+    }
+
+    catFilters.forEach((f) => {
+      f.addEventListener('click', () => {
+        category = f.dataset.akWfFilter || 'all';
+        applyFilters();
+      });
+    });
+
+    levelFilters.forEach((f) => {
+      f.addEventListener('click', () => {
+        level = f.dataset.akWfLevel || 'all';
+        applyFilters();
+      });
+    });
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-ak-workflows-root]').forEach(initAkWorkflows);
+</script>
+
+<style>
+  details > summary::-webkit-details-marker {
+    display: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-ak-wf-card] {
+      transition: none !important;
+    }
+    summary span {
+      transition: none !important;
+    }
+  }
+</style>

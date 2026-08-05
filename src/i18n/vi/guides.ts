@@ -51,6 +51,8 @@ export const guides = {
   'guides.agentkit.cli_commands.description': 'Cheatsheet lệnh ak — flags, subcommands, và ví dụ',
   'guides.agentkit.skills.title': 'Bảng Skills AgentKit',
   'guides.agentkit.skills.description': 'Skills Engineer & Marketing Kit kèm subcommand, arg, flag — /ak: và $ak:',
+  'guides.agentkit.workflows.title': 'Workflows AgentKit',
+  'guides.agentkit.workflows.description': 'Workflow tham khảo: chuỗi skill /ak: cho feature, bug, review và ship — chỉnh theo context của bạn',
   'guides.agentkit.statusline.title': 'Statusline AgentKit',
   'guides.agentkit.statusline.description': 'Statusline AgentKit trên Claude Code: mặc định, options statuslineLayout, và cách custom',
   'guides.nav.ck_migrate_other_tools': 'CK → Tool coding khác',
