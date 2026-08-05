@@ -48,6 +48,7 @@ When editing AgentKit guides under `src/components/guides/agentkit/` (and relate
 - Prefer concrete verbs: *sao lưu / copy tay*, *xem trước (dry-run)*, *ghi thật (--yes)*, *gỡ hẳn*, *chuyển dần* — not calques like “Rời ClaudeKit sạch”, “Update all (wizard)”, “Khác nữa trong schema”.
 - Do **not** invent vague labels. Instead of “field hiếm”, say **keys not listed in the table above** / **key không liệt kê hết ở bảng trên**.
 - When a flag **narrows scope**, say what it does **and** what it does **not** (e.g. `ak update --global` refreshes machine kits only — **does not** upgrade CLI ak; use `ak self-update` for that). Put that as a short muted hint under the relevant card/command.
+- **No internal maintainer notes in UI copy.** Never surface audit/sync jargon to readers: `ak-docs`, `meta.json`, `pages[]`, channel delta, dual-list, SKILL metadata, snapshot, Fumadocs, “curated for docs”. Put that only in `reference/`, data-file comments, or skill instructions. Reader-facing empty states should say plain outcomes, e.g. *Stable and beta currently ship the same skills* / *Stable và beta đang có cùng bộ skill* — not *ak-docs stable/beta cùng pages[]*. Keep product terms **stable** / **beta** in VI copy (do not calque as “bản ổn định”).
 
 ### Terminology (keep consistent)
 

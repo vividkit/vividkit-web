@@ -5,7 +5,13 @@ import {
   akMarketingSkills,
   akEngineerSkillCount,
   akMarketingSkillCount,
+  akEngineerGroupOrder,
+  akMarketingGroupOrder,
+  akEngineerBetaPreview,
+  akMarketingBetaPreview,
   type AkSkillEntry,
+  type AkBetaPreviewItem,
+  type AkGroupMeta,
 } from '@/data/guides/agentkit-skills-cheatsheet';
 
 interface Props {
@@ -16,62 +22,299 @@ const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const isVi = currentLang === 'vi';
 
-const categoryLabels: Record<string, { en: string; vi: string }> = {
-  utilities: { en: 'Utilities', vi: 'Tiện ích' },
-  'dev-tools': { en: 'Dev tools', vi: 'Công cụ dev' },
-  frontend: { en: 'Frontend', vi: 'Frontend' },
-  backend: { en: 'Backend', vi: 'Backend' },
-  database: { en: 'Database', vi: 'Database' },
-  security: { en: 'Security', vi: 'Bảo mật' },
-  infrastructure: { en: 'Infrastructure', vi: 'Hạ tầng' },
-  'ai-ml': { en: 'AI / ML', vi: 'AI / ML' },
-  frameworks: { en: 'Frameworks', vi: 'Frameworks' },
-  multimedia: { en: 'Multimedia', vi: 'Multimedia' },
-  marketing: { en: 'Marketing', vi: 'Marketing' },
-  other: { en: 'Other', vi: 'Khác' },
+/** Workflow/GTM labels — not SKILL.md metadata. */
+const groupLabels: Record<string, { en: string; vi: string; descEn: string; descVi: string }> = {
+  essentials: {
+    en: 'Start Here (Essentials)',
+    vi: 'Bắt đầu (Essentials)',
+    descEn: 'Core path: Level → Ask → Brainstorm → Plan → Execute',
+    descVi: 'Lộ trình cốt lõi: Level → Ask → Brainstorm → Plan → Execute',
+  },
+  planResearch: {
+    en: 'Plan & Research',
+    vi: 'Lên kế hoạch & Nghiên cứu',
+    descEn: 'Brainstorming, planning, advisory, and codebase exploration',
+    descVi: 'Brainstorm, planning, tư vấn và khám phá codebase',
+  },
+  designFrontend: {
+    en: 'Design & Frontend',
+    vi: 'Design & Frontend',
+    descEn: 'UI/UX, frontend, diagrams, and visual tools',
+    descVi: 'UI/UX, frontend, diagram và công cụ visual',
+  },
+  aiMultimodal: {
+    en: 'AI Generation & Multimodal',
+    vi: 'AI Generation & Multimodal',
+    descEn: 'Image/video generation, vision, and media processing',
+    descVi: 'Tạo image/video, vision và xử lý media',
+  },
+  buildShip: {
+    en: 'Build & Ship',
+    vi: 'Build & Ship',
+    descEn: 'Backend, frameworks, deploy, and ship pipelines',
+    descVi: 'Backend, framework, deploy và pipeline ship',
+  },
+  gitVersionControl: {
+    en: 'Git & Version Control',
+    vi: 'Git & Version Control',
+    descEn: 'Git ops, worktrees, and PR review',
+    descVi: 'Git, worktree và review PR',
+  },
+  testDebug: {
+    en: 'Test & Debug',
+    vi: 'Test & Debug',
+    descEn: 'Testing, debugging, review, and scenarios',
+    descVi: 'Test, debug, review và scenario',
+  },
+  securityIntel: {
+    en: 'Security & Intelligence',
+    vi: 'Bảo mật & Intelligence',
+    descEn: 'Security audits, scans, and threat intel',
+    descVi: 'Audit bảo mật, scan và threat intel',
+  },
+  docsContent: {
+    en: 'Docs & Content',
+    vi: 'Docs & Nội dung',
+    descEn: 'Documentation, writing, and content tools',
+    descVi: 'Tài liệu, viết và công cụ nội dung',
+  },
+  mcpIntegration: {
+    en: 'MCP & Integration',
+    vi: 'MCP & Tích hợp',
+    descEn: 'MCP servers, agents, payments, and integrations',
+    descVi: 'MCP server, agent, thanh toán và tích hợp',
+  },
+  sessionMgmt: {
+    en: 'Session Management',
+    vi: 'Quản lý session',
+    descEn: 'Handoffs, journals, and context',
+    descVi: 'Handoff, journal và context',
+  },
+  projectTracking: {
+    en: 'Project Tracking',
+    vi: 'Theo dõi dự án',
+    descEn: 'Progress, kanban, and project organization',
+    descVi: 'Tiến độ, kanban và tổ chức dự án',
+  },
+  utilities: {
+    en: 'Utilities',
+    vi: 'Tiện ích',
+    descEn: 'Skill tools, packaging, and general utilities',
+    descVi: 'Công cụ skill, packaging và tiện ích chung',
+  },
+  strategyResearch: {
+    en: 'Strategy & Research',
+    vi: 'Chiến lược & Nghiên cứu',
+    descEn: 'Market research, personas, and planning',
+    descVi: 'Research thị trường, persona và planning',
+  },
+  contentCopy: {
+    en: 'Content & Copy',
+    vi: 'Content & Copy',
+    descEn: 'Content hubs, marketing copy, and playbooks',
+    descVi: 'Content hub, copy marketing và playbook',
+  },
+  campaign: {
+    en: 'Campaign Management',
+    vi: 'Quản lý campaign',
+    descEn: 'Campaigns, ads, and affiliate channels',
+    descVi: 'Campaign, ads và kênh affiliate',
+  },
+  seoAnalytics: {
+    en: 'SEO & Analytics',
+    vi: 'SEO & Analytics',
+    descEn: 'Search optimization and performance dashboards',
+    descVi: 'Tối ưu tìm kiếm và dashboard hiệu suất',
+  },
+  designVisual: {
+    en: 'Design & Visual',
+    vi: 'Design & Visual',
+    descEn: 'Brand, logos, banners, and marketing visuals',
+    descVi: 'Brand, logo, banner và visual marketing',
+  },
+  emailSocial: {
+    en: 'Email & Social',
+    vi: 'Email & Social',
+    descEn: 'Email sequences and social outreach',
+    descVi: 'Chuỗi email và social outreach',
+  },
+  growthCro: {
+    en: 'Growth & CRO',
+    vi: 'Growth & CRO',
+    descEn: 'Launch, pricing, funnels, and conversion',
+    descVi: 'Launch, pricing, funnel và conversion',
+  },
+  videoMedia: {
+    en: 'Video & Media',
+    vi: 'Video & Media',
+    descEn: 'Video, YouTube, slides, and multimodal media',
+    descVi: 'Video, YouTube, slide và media đa phương thức',
+  },
 };
 
-function catLabel(cat: string) {
-  const row = categoryLabels[cat];
-  if (!row) return cat;
-  return isVi ? row.vi : row.en;
+const colorStyles: Record<string, { bg: string; text: string; border: string; header: string }> = {
+  green: {
+    bg: 'bg-emerald-50 dark:bg-emerald-950/30',
+    text: 'text-emerald-700 dark:text-emerald-300',
+    border: 'border-emerald-200/80 dark:border-emerald-500/25',
+    header: 'border-emerald-200/60 dark:border-emerald-500/20',
+  },
+  blue: {
+    bg: 'bg-blue-50 dark:bg-blue-950/30',
+    text: 'text-blue-700 dark:text-blue-300',
+    border: 'border-blue-200/80 dark:border-blue-500/25',
+    header: 'border-blue-200/60 dark:border-blue-500/20',
+  },
+  pink: {
+    bg: 'bg-pink-50 dark:bg-pink-950/30',
+    text: 'text-pink-700 dark:text-pink-300',
+    border: 'border-pink-200/80 dark:border-pink-500/25',
+    header: 'border-pink-200/60 dark:border-pink-500/20',
+  },
+  violet: {
+    bg: 'bg-violet-50 dark:bg-violet-950/30',
+    text: 'text-violet-700 dark:text-violet-300',
+    border: 'border-violet-200/80 dark:border-violet-500/25',
+    header: 'border-violet-200/60 dark:border-violet-500/20',
+  },
+  orange: {
+    bg: 'bg-orange-50 dark:bg-orange-950/30',
+    text: 'text-orange-700 dark:text-orange-300',
+    border: 'border-orange-200/80 dark:border-orange-500/25',
+    header: 'border-orange-200/60 dark:border-orange-500/20',
+  },
+  slate: {
+    bg: 'bg-slate-100 dark:bg-slate-800/50',
+    text: 'text-slate-700 dark:text-slate-300',
+    border: 'border-slate-200/80 dark:border-slate-600/40',
+    header: 'border-slate-200/60 dark:border-slate-600/30',
+  },
+  amber: {
+    bg: 'bg-amber-50 dark:bg-amber-950/30',
+    text: 'text-amber-800 dark:text-amber-300',
+    border: 'border-amber-200/80 dark:border-amber-500/25',
+    header: 'border-amber-200/60 dark:border-amber-500/20',
+  },
+  red: {
+    bg: 'bg-red-50 dark:bg-red-950/30',
+    text: 'text-red-700 dark:text-red-300',
+    border: 'border-red-200/80 dark:border-red-500/25',
+    header: 'border-red-200/60 dark:border-red-500/20',
+  },
+  cyan: {
+    bg: 'bg-cyan-50 dark:bg-cyan-950/30',
+    text: 'text-cyan-700 dark:text-cyan-300',
+    border: 'border-cyan-200/80 dark:border-cyan-500/25',
+    header: 'border-cyan-200/60 dark:border-cyan-500/20',
+  },
+  indigo: {
+    bg: 'bg-indigo-50 dark:bg-indigo-950/30',
+    text: 'text-indigo-700 dark:text-indigo-300',
+    border: 'border-indigo-200/80 dark:border-indigo-500/25',
+    header: 'border-indigo-200/60 dark:border-indigo-500/20',
+  },
+  teal: {
+    bg: 'bg-teal-50 dark:bg-teal-950/30',
+    text: 'text-teal-700 dark:text-teal-300',
+    border: 'border-teal-200/80 dark:border-teal-500/25',
+    header: 'border-teal-200/60 dark:border-teal-500/20',
+  },
+  lime: {
+    bg: 'bg-lime-50 dark:bg-lime-950/30',
+    text: 'text-lime-800 dark:text-lime-300',
+    border: 'border-lime-200/80 dark:border-lime-500/25',
+    header: 'border-lime-200/60 dark:border-lime-500/20',
+  },
+  gray: {
+    bg: 'bg-slate-50 dark:bg-slate-900/40',
+    text: 'text-slate-600 dark:text-slate-300',
+    border: 'border-slate-200/80 dark:border-white/10',
+    header: 'border-slate-200/60 dark:border-white/10',
+  },
+  fuchsia: {
+    bg: 'bg-fuchsia-50 dark:bg-fuchsia-950/30',
+    text: 'text-fuchsia-700 dark:text-fuchsia-300',
+    border: 'border-fuchsia-200/80 dark:border-fuchsia-500/25',
+    header: 'border-fuchsia-200/60 dark:border-fuchsia-500/20',
+  },
+  sky: {
+    bg: 'bg-sky-50 dark:bg-sky-950/30',
+    text: 'text-sky-700 dark:text-sky-300',
+    border: 'border-sky-200/80 dark:border-sky-500/25',
+    header: 'border-sky-200/60 dark:border-sky-500/20',
+  },
+  emerald: {
+    bg: 'bg-emerald-50 dark:bg-emerald-950/30',
+    text: 'text-emerald-700 dark:text-emerald-300',
+    border: 'border-emerald-200/80 dark:border-emerald-500/25',
+    header: 'border-emerald-200/60 dark:border-emerald-500/20',
+  },
+};
+
+const groupIcons: Record<string, string> = {
+  essentials: '<path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>',
+  plan: '<circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>',
+  design: '<path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/>',
+  ai: '<path d="M12 2a4 4 0 0 1 4 4v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2V6a4 4 0 0 1 4-4z"/><circle cx="9" cy="14" r="1"/><circle cx="15" cy="14" r="1"/>',
+  build: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
+  git: '<circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/>',
+  test: '<path d="M9 2v6l-2 7a3 3 0 0 0 3 4h4a3 3 0 0 0 3-4l-2-7V2"/><path d="M8 2h8"/>',
+  security: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+  docs: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/>',
+  mcp: '<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/>',
+  session: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+  project: '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>',
+  utils: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>',
+  content: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',
+  campaign: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
+  seo: '<path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-6"/>',
+  social: '<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>',
+  growth: '<path d="M22 7l-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/>',
+  video: '<polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/>',
+};
+
+function groupLabel(key: string) {
+  const row = groupLabels[key];
+  if (!row) return { title: key, desc: '' };
+  return {
+    title: isVi ? row.vi : row.en,
+    desc: isVi ? row.descVi : row.descEn,
+  };
 }
 
-function skillDesc(s: AkSkillEntry) {
+function skillDesc(s: AkSkillEntry | AkBetaPreviewItem) {
   if (isVi && s.descriptionVi) return s.descriptionVi;
   return s.description;
 }
 
-function groupByCategory(skills: AkSkillEntry[]) {
+function groupSkills(skills: AkSkillEntry[], order: AkGroupMeta[]) {
   const map = new Map<string, AkSkillEntry[]>();
   for (const s of skills) {
     const list = map.get(s.category) || [];
     list.push(s);
     map.set(s.category, list);
   }
-  const preferred = [
-    'utilities',
-    'dev-tools',
-    'frontend',
-    'backend',
-    'database',
-    'infrastructure',
-    'security',
-    'ai-ml',
-    'frameworks',
-    'multimedia',
-    'marketing',
-    'other',
-  ];
-  const keys = [
-    ...preferred.filter((k) => map.has(k)),
-    ...[...map.keys()].filter((k) => !preferred.includes(k)).sort(),
-  ];
-  return keys.map((k) => ({ cat: k, skills: map.get(k) || [] }));
+  for (const list of map.values()) {
+    list.sort((a, b) => {
+      const sa = a.step ?? 999;
+      const sb = b.step ?? 999;
+      if (sa !== sb) return sa - sb;
+      return a.command.localeCompare(b.command);
+    });
+  }
+  return order
+    .filter((g) => map.has(g.key) && (map.get(g.key)?.length || 0) > 0)
+    .map((g) => ({
+      meta: g,
+      skills: map.get(g.key) || [],
+      label: groupLabel(g.key),
+      styles: colorStyles[g.color] || colorStyles.gray,
+      icon: groupIcons[g.icon] || groupIcons.utils,
+    }));
 }
 
-const engGroups = groupByCategory(akEngineerSkills);
-const mktGroups = groupByCategory(akMarketingSkills);
+const engGroups = groupSkills(akEngineerSkills, akEngineerGroupOrder);
+const mktGroups = groupSkills(akMarketingSkills, akMarketingGroupOrder);
 
 const legend = isVi
   ? [
@@ -93,6 +336,19 @@ const chipTone: Record<string, string> = {
   teal: 'bg-teal-100 text-teal-700 border-teal-200 dark:bg-teal-900/30 dark:text-teal-300 dark:border-teal-800',
   amber: 'bg-amber-100 text-amber-800 border-amber-200 dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-800',
 };
+
+const accent = {
+  engineer: {
+    chip: 'bg-teal-100 text-teal-800 dark:bg-teal-500/15 dark:text-teal-200',
+    hover: 'hover:border-teal-300 dark:hover:border-teal-500/30',
+    tabOn: 'bg-teal-600 text-white shadow-md shadow-teal-500/20',
+  },
+  marketing: {
+    chip: 'bg-fuchsia-100 text-fuchsia-800 dark:bg-fuchsia-500/15 dark:text-fuchsia-200',
+    hover: 'hover:border-fuchsia-300 dark:hover:border-fuchsia-500/30',
+    tabOn: 'bg-fuchsia-600 text-white shadow-md shadow-fuchsia-500/20',
+  },
+};
 ---
 
 <div class="space-y-8 mt-6" data-ak-skills-root>
@@ -109,13 +365,13 @@ const chipTone: Record<string, string> = {
         </h1>
         <p class="text-lg text-slate-600 dark:text-slate-300">
           {isVi
-            ? 'Catalog skill theo kit, kèm subcommand / argument / flag. Claude Code & Cursor: /ak:<skill> · Codex: $ak:<skill>.'
-            : 'Skill catalog by kit with subcommands, args, and flags. Claude Code & Cursor: /ak:<skill> · Codex: $ak:<skill>.'}
+            ? 'Catalog skill theo nhóm workflow, kèm subcommand / argument / flag. Claude Code & Cursor: /ak:<skill> · Codex: $ak:<skill>.'
+            : 'Skill catalog by workflow group, with subcommands, args, and flags. Claude Code & Cursor: /ak:<skill> · Codex: $ak:<skill>.'}
         </p>
         <p class="text-sm text-slate-500 dark:text-slate-400">
           {isVi
-            ? 'Engineer = core + skill engineer. Marketing có skill domain riêng. Không giả định 1:1 với /ck:*. Metadata lấy từ argument-hint và SKILL.md của kit.'
-            : 'Engineer = core + engineer skills. Marketing owns domain skills. Do not assume 1:1 with /ck:*. Metadata from kit argument-hint and SKILL.md.'}
+            ? 'Engineer = core + skill engineer. Marketing = skill domain. Không giả định 1:1 với /ck:*. Cú pháp lấy từ argument-hint và SKILL.md của kit.'
+            : 'Engineer = core + engineer skills. Marketing owns domain skills. Do not assume 1:1 with /ck:*. Syntax from kit argument-hint and SKILL.md.'}
         </p>
       </div>
       <div class="grid gap-3 sm:grid-cols-3">
@@ -149,7 +405,7 @@ const chipTone: Record<string, string> = {
       </div>
 
       <div class="flex flex-wrap gap-2" role="tablist" aria-label="Kit">
-        <button type="button" data-ak-kit-tab="engineer" class="ak-kit-tab rounded-full px-4 py-2 text-sm font-semibold transition bg-teal-600 text-white shadow-md shadow-teal-500/20" aria-selected="true">
+        <button type="button" data-ak-kit-tab="engineer" class={`ak-kit-tab rounded-full px-4 py-2 text-sm font-semibold transition ${accent.engineer.tabOn}`} aria-selected="true">
           Engineer Kit
         </button>
         <button type="button" data-ak-kit-tab="marketing" class="ak-kit-tab rounded-full px-4 py-2 text-sm font-semibold transition bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300" aria-selected="false">
@@ -161,24 +417,98 @@ const chipTone: Record<string, string> = {
 
   {/* Engineer panel */}
   <div data-ak-kit-panel="engineer" class="space-y-5">
-    {engGroups.map(({ cat, skills }) => (
-      <section class="scroll-mt-32 overflow-hidden rounded-[1.65rem] border border-teal-200/70 bg-gradient-to-br from-teal-50/50 to-white shadow-sm dark:border-teal-500/20 dark:from-teal-950/20 dark:to-slate-950">
-        <div class="flex items-center justify-between border-b border-teal-200/50 px-5 py-4 dark:border-teal-500/15">
-          <h2 class="text-lg font-bold text-slate-900 dark:text-white">{catLabel(cat)}</h2>
-          <span class="font-mono text-sm text-teal-700 dark:text-teal-300">{skills.length}</span>
+    {/* Beta Preview */}
+    <div class="overflow-hidden rounded-xl border-2 border-purple-400/60 bg-gradient-to-br from-purple-500/10 via-violet-500/5 to-pink-500/10 dark:border-purple-500/40">
+      <div class="border-b border-purple-300/30 bg-gradient-to-r from-purple-600/10 to-violet-500/10 p-4 dark:border-purple-600/30">
+        <h2 class="flex items-center gap-2 text-lg font-bold text-purple-600 dark:text-purple-400">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path>
+            <path d="M20 3v4"></path>
+            <path d="M22 5h-4"></path>
+          </svg>
+          {isVi ? 'Beta Preview — skill mới trên beta' : 'Beta Preview — what is new in beta'}
+        </h2>
+        <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">
+          {isVi
+            ? 'Skill mới chỉ có trên bản beta (chưa lên stable). Trong danh sách bên dưới sẽ có badge BETA.'
+            : 'Skills that are new in beta and not yet in the stable kit. They also get a BETA badge in the groups below.'}
+        </p>
+      </div>
+      <div class="p-4">
+        {akEngineerBetaPreview.length > 0 ? (
+          <div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+            {akEngineerBetaPreview.map((item) => (
+              <div class="flex h-full flex-col rounded-lg border border-purple-500/30 bg-white/60 p-3 transition hover:shadow-sm dark:bg-slate-900/50">
+                <div class="mb-1.5 flex flex-wrap items-center gap-1.5">
+                  <code class="rounded bg-purple-100 px-1.5 py-0.5 font-mono text-xs font-medium text-purple-600 dark:bg-purple-900/30 dark:text-purple-400">{item.command}</code>
+                  <span class="rounded-full bg-emerald-100 px-1.5 py-0.5 text-[9px] font-bold uppercase text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400">{item.badge}</span>
+                </div>
+                <p class="font-mono text-[10px] text-slate-400">{item.commandCodex}</p>
+                <p class="mt-1 text-xs font-medium text-slate-700 dark:text-slate-300">{skillDesc(item)}</p>
+                {item.args && item.args.length > 0 && (
+                  <div class="mt-1.5 flex flex-wrap gap-1">
+                    {item.args.map((arg) => (
+                      <code class="rounded bg-slate-200 px-1 py-0.5 font-mono text-[9px] text-slate-600 dark:bg-slate-700 dark:text-slate-400">{arg}</code>
+                    ))}
+                  </div>
+                )}
+                {item.flags && item.flags.length > 0 && (
+                  <div class="mt-1.5 flex flex-wrap gap-1">
+                    {item.flags.map((flag) => (
+                      <code class="rounded bg-teal-100 px-1 py-0.5 font-mono text-[9px] text-teal-600 dark:bg-teal-900/30 dark:text-teal-400">{flag}</code>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div class="rounded-lg border border-dashed border-purple-300/50 bg-white/40 px-4 py-8 text-center dark:border-purple-600/30 dark:bg-slate-900/30">
+            <p class="text-sm font-medium text-slate-700 dark:text-slate-300">
+              {isVi ? 'Hiện chưa có skill Engineer mới chỉ trên beta' : 'No new Engineer-only beta skills right now'}
+            </p>
+            <p class="mx-auto mt-1 max-w-md text-xs text-slate-500 dark:text-slate-400">
+              {isVi
+                ? 'Stable và beta đang có cùng bộ skill. Khi có skill mới trên beta, sẽ hiện ở đây.'
+                : 'Stable and beta currently ship the same skills. When beta adds something new, it will show up here.'}
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+
+    {engGroups.map(({ skills, label, styles, icon }) => (
+      <section class={`scroll-mt-32 overflow-hidden rounded-[1.65rem] border bg-white shadow-sm dark:bg-slate-950/40 ${styles.border}`}>
+        <div class={`flex items-start justify-between gap-3 border-b px-5 py-4 ${styles.header} ${styles.bg}`}>
+          <div class="min-w-0">
+            <h2 class={`flex items-center gap-2 text-lg font-bold ${styles.text}`}>
+              <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={icon} />
+              {label.title}
+            </h2>
+            <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">{label.desc}</p>
+          </div>
+          <span class={`shrink-0 font-mono text-sm ${styles.text}`}>{skills.length}</span>
         </div>
-        <div class="grid gap-3 p-4 sm:grid-cols-2 xl:grid-cols-3 sm:p-5">
+        <div class="grid gap-3 p-4 sm:grid-cols-2 sm:p-5 xl:grid-cols-3">
           {skills.map((s) => (
-            <article class="group flex flex-col rounded-2xl border border-slate-200/80 bg-white/90 p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-teal-300 dark:border-white/10 dark:bg-slate-950/60 dark:hover:border-teal-500/30">
+            <article class={`group flex flex-col rounded-2xl border border-slate-200/80 bg-white/90 p-4 shadow-sm transition hover:-translate-y-0.5 dark:border-white/10 dark:bg-slate-950/60 ${accent.engineer.hover}`}>
               <div class="flex items-start justify-between gap-2">
-                <code class="rounded-lg bg-teal-100 px-2 py-1 font-mono text-xs font-bold text-teal-800 dark:bg-teal-500/15 dark:text-teal-200">{s.command}</code>
+                <div class="flex min-w-0 flex-wrap items-center gap-1.5">
+                  {s.step && (
+                    <span class={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold ${styles.bg} ${styles.text}`}>{s.step}</span>
+                  )}
+                  <code class={`rounded-lg px-2 py-1 font-mono text-xs font-bold ${accent.engineer.chip}`}>{s.command}</code>
+                  {s.isBeta && (
+                    <span class="rounded bg-purple-100 px-1.5 py-0.5 text-[9px] font-medium uppercase text-purple-600 dark:bg-purple-900/30 dark:text-purple-400">beta</span>
+                  )}
+                </div>
                 <button type="button" class="ak-copy-btn shrink-0 rounded-lg border border-slate-200 p-1.5 text-slate-400 hover:border-teal-300 hover:text-teal-600 dark:border-white/10 dark:hover:border-teal-400/30" data-code={s.command} title="Copy" aria-label={`Copy ${s.command}`}>
                   <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                 </button>
               </div>
               <p class="mt-1 font-mono text-[10px] text-slate-400">{s.commandCodex}</p>
               {s.argumentHint && (
-                <p class="mt-1.5 font-mono text-[10px] leading-4 text-amber-700/90 dark:text-amber-300/90 break-all">
+                <p class="mt-1.5 break-all font-mono text-[10px] leading-4 text-amber-700/90 dark:text-amber-300/90">
                   <span class="opacity-60">{s.command}</span>{' '}{s.argumentHint}
                 </p>
               )}
@@ -217,24 +547,82 @@ const chipTone: Record<string, string> = {
 
   {/* Marketing panel */}
   <div data-ak-kit-panel="marketing" class="hidden space-y-5">
-    {mktGroups.map(({ cat, skills }) => (
-      <section class="scroll-mt-32 overflow-hidden rounded-[1.65rem] border border-fuchsia-200/70 bg-gradient-to-br from-fuchsia-50/50 to-white shadow-sm dark:border-fuchsia-500/20 dark:from-fuchsia-950/20 dark:to-slate-950">
-        <div class="flex items-center justify-between border-b border-fuchsia-200/50 px-5 py-4 dark:border-fuchsia-500/15">
-          <h2 class="text-lg font-bold text-slate-900 dark:text-white">{catLabel(cat)}</h2>
-          <span class="font-mono text-sm text-fuchsia-700 dark:text-fuchsia-300">{skills.length}</span>
+    <div class="overflow-hidden rounded-xl border-2 border-purple-400/60 bg-gradient-to-br from-purple-500/10 via-violet-500/5 to-pink-500/10 dark:border-purple-500/40">
+      <div class="border-b border-purple-300/30 bg-gradient-to-r from-purple-600/10 to-violet-500/10 p-4 dark:border-purple-600/30">
+        <h2 class="flex items-center gap-2 text-lg font-bold text-purple-600 dark:text-purple-400">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path>
+            <path d="M20 3v4"></path>
+            <path d="M22 5h-4"></path>
+          </svg>
+          {isVi ? 'Beta Preview — skill mới trên beta' : 'Beta Preview — what is new in beta'}
+        </h2>
+        <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">
+          {isVi
+            ? 'Skill mới chỉ có trên bản beta (chưa lên stable). Trong danh sách bên dưới sẽ có badge BETA.'
+            : 'Skills that are new in beta and not yet in the stable kit. They also get a BETA badge in the groups below.'}
+        </p>
+      </div>
+      <div class="p-4">
+        {akMarketingBetaPreview.length > 0 ? (
+          <div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+            {akMarketingBetaPreview.map((item) => (
+              <div class="flex h-full flex-col rounded-lg border border-purple-500/30 bg-white/60 p-3 transition hover:shadow-sm dark:bg-slate-900/50">
+                <div class="mb-1.5 flex flex-wrap items-center gap-1.5">
+                  <code class="rounded bg-purple-100 px-1.5 py-0.5 font-mono text-xs font-medium text-purple-600 dark:bg-purple-900/30 dark:text-purple-400">{item.command}</code>
+                  <span class="rounded-full bg-emerald-100 px-1.5 py-0.5 text-[9px] font-bold uppercase text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400">{item.badge}</span>
+                </div>
+                <p class="mt-1 text-xs font-medium text-slate-700 dark:text-slate-300">{skillDesc(item)}</p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div class="rounded-lg border border-dashed border-purple-300/50 bg-white/40 px-4 py-8 text-center dark:border-purple-600/30 dark:bg-slate-900/30">
+            <p class="text-sm font-medium text-slate-700 dark:text-slate-300">
+              {isVi ? 'Hiện chưa có skill Marketing mới chỉ trên beta' : 'No new Marketing-only beta skills right now'}
+            </p>
+            <p class="mx-auto mt-1 max-w-md text-xs text-slate-500 dark:text-slate-400">
+              {isVi
+                ? 'Stable và beta đang có cùng bộ skill. Khi có skill mới trên beta, sẽ hiện ở đây.'
+                : 'Stable and beta currently ship the same skills. When beta adds something new, it will show up here.'}
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+
+    {mktGroups.map(({ skills, label, styles, icon }) => (
+      <section class={`scroll-mt-32 overflow-hidden rounded-[1.65rem] border bg-white shadow-sm dark:bg-slate-950/40 ${styles.border}`}>
+        <div class={`flex items-start justify-between gap-3 border-b px-5 py-4 ${styles.header} ${styles.bg}`}>
+          <div class="min-w-0">
+            <h2 class={`flex items-center gap-2 text-lg font-bold ${styles.text}`}>
+              <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={icon} />
+              {label.title}
+            </h2>
+            <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">{label.desc}</p>
+          </div>
+          <span class={`shrink-0 font-mono text-sm ${styles.text}`}>{skills.length}</span>
         </div>
-        <div class="grid gap-3 p-4 sm:grid-cols-2 xl:grid-cols-3 sm:p-5">
+        <div class="grid gap-3 p-4 sm:grid-cols-2 sm:p-5 xl:grid-cols-3">
           {skills.map((s) => (
-            <article class="group flex flex-col rounded-2xl border border-slate-200/80 bg-white/90 p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-fuchsia-300 dark:border-white/10 dark:bg-slate-950/60 dark:hover:border-fuchsia-500/30">
+            <article class={`group flex flex-col rounded-2xl border border-slate-200/80 bg-white/90 p-4 shadow-sm transition hover:-translate-y-0.5 dark:border-white/10 dark:bg-slate-950/60 ${accent.marketing.hover}`}>
               <div class="flex items-start justify-between gap-2">
-                <code class="rounded-lg bg-fuchsia-100 px-2 py-1 font-mono text-xs font-bold text-fuchsia-800 dark:bg-fuchsia-500/15 dark:text-fuchsia-200">{s.command}</code>
+                <div class="flex min-w-0 flex-wrap items-center gap-1.5">
+                  {s.step && (
+                    <span class={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold ${styles.bg} ${styles.text}`}>{s.step}</span>
+                  )}
+                  <code class={`rounded-lg px-2 py-1 font-mono text-xs font-bold ${accent.marketing.chip}`}>{s.command}</code>
+                  {s.isBeta && (
+                    <span class="rounded bg-purple-100 px-1.5 py-0.5 text-[9px] font-medium uppercase text-purple-600 dark:bg-purple-900/30 dark:text-purple-400">beta</span>
+                  )}
+                </div>
                 <button type="button" class="ak-copy-btn shrink-0 rounded-lg border border-slate-200 p-1.5 text-slate-400 hover:border-fuchsia-300 hover:text-fuchsia-600 dark:border-white/10 dark:hover:border-fuchsia-400/30" data-code={s.command} title="Copy" aria-label={`Copy ${s.command}`}>
                   <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                 </button>
               </div>
               <p class="mt-1 font-mono text-[10px] text-slate-400">{s.commandCodex}</p>
               {s.argumentHint && (
-                <p class="mt-1.5 font-mono text-[10px] leading-4 text-amber-700/90 dark:text-amber-300/90 break-all">
+                <p class="mt-1.5 break-all font-mono text-[10px] leading-4 text-amber-700/90 dark:text-amber-300/90">
                   <span class="opacity-60">{s.command}</span>{' '}{s.argumentHint}
                 </p>
               )}
@@ -287,11 +675,13 @@ const chipTone: Record<string, string> = {
         tabs.forEach((t) => {
           const on = t === tab;
           t.setAttribute('aria-selected', on ? 'true' : 'false');
-          t.className = on
-            ? 'ak-kit-tab rounded-full px-4 py-2 text-sm font-semibold transition bg-teal-600 text-white shadow-md shadow-teal-500/20'
-            : 'ak-kit-tab rounded-full px-4 py-2 text-sm font-semibold transition bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300';
-          if (t.getAttribute('data-ak-kit-tab') === 'marketing' && on) {
+          const kit = t.getAttribute('data-ak-kit-tab');
+          if (on && kit === 'engineer') {
+            t.className = 'ak-kit-tab rounded-full px-4 py-2 text-sm font-semibold transition bg-teal-600 text-white shadow-md shadow-teal-500/20';
+          } else if (on && kit === 'marketing') {
             t.className = 'ak-kit-tab rounded-full px-4 py-2 text-sm font-semibold transition bg-fuchsia-600 text-white shadow-md shadow-fuchsia-500/20';
+          } else {
+            t.className = 'ak-kit-tab rounded-full px-4 py-2 text-sm font-semibold transition bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300';
           }
         });
         panels.forEach((p) => {
