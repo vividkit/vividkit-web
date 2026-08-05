@@ -140,6 +140,21 @@ const translatePath = useTranslatedPath(currentLang);
   const navLinks = document.querySelectorAll('.nav-link');
   const clearActive = () => navLinks.forEach(l => l.classList.remove('active'));
 
+  // Strip locale prefix so EN + VI share the same path checks
+  function normalizePath(pathname) {
+    return pathname.replace(/^\/vi(?=\/|$)/, '') || '/';
+  }
+
+  function isHomePath(pathname) {
+    const p = normalizePath(pathname);
+    return p === '/' || p === '/index.html';
+  }
+
+  function isGuidesPath(pathname) {
+    const p = normalizePath(pathname);
+    return p.startsWith('/guides') || p.startsWith('/ck-guides');
+  }
+
   function setActiveByHash(hash) {
     if (!hash) return;
     clearActive();
@@ -158,8 +173,8 @@ const translatePath = useTranslatedPath(currentLang);
     const path = window.location.pathname;
     const hash = window.location.hash;
 
-    // 1. Guides Page
-    if (path.startsWith('/guides') || path.startsWith('/ck-guides')) {
+    // 1. Guides Page (EN: /guides..., VI: /vi/guides...)
+    if (isGuidesPath(path)) {
       clearActive();
       navLinks.forEach(link => {
         if (link.getAttribute('href').includes('/guides')) {
@@ -169,8 +184,8 @@ const translatePath = useTranslatedPath(currentLang);
       return;
     }
 
-    // 2. Landing Page (Home)
-    if (path === '/' || path === '/index.html') {
+    // 2. Landing Page (EN: /, VI: /vi or /vi/)
+    if (isHomePath(path)) {
       // If there is a hash on load, use it immediately
       if (hash) {
         setActiveByHash(hash);
@@ -228,7 +243,7 @@ const translatePath = useTranslatedPath(currentLang);
 
   // Handle hash changes (manual or otherwise)
   window.addEventListener('hashchange', () => {
-    if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+    if (isHomePath(window.location.pathname)) {
        setActiveByHash(window.location.hash);
     }
   });

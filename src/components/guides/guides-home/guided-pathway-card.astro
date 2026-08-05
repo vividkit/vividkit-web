@@ -16,9 +16,11 @@ interface Props {
   links: PathwayLink[];
   accentColor: 'green' | 'blue' | 'amber' | 'purple' | 'cyan' | 'rose';
   lang: Language;
+  /** Optional corner badge; rendered inside the card so it moves with hover transform */
+  badgeKey?: string;
 }
 
-const { id, icon: Icon, titleKey, descKey, links, accentColor, lang } = Astro.props;
+const { id, icon: Icon, titleKey, descKey, links, accentColor, lang, badgeKey } = Astro.props;
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 
@@ -105,6 +107,11 @@ const colors = colorClasses[accentColor];
   ]}
   data-pathway={id}
 >
+  {badgeKey && (
+    <span class="pointer-events-none absolute -top-2.5 left-4 z-10 inline-flex items-center rounded-full bg-teal-100 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-teal-700 shadow-sm dark:bg-teal-500/20 dark:text-teal-300">
+      {t(badgeKey)}
+    </span>
+  )}
   <!-- Header: icon + title (min height keeps 1-line / 2-line titles aligned across cards) -->
   <div class="flex items-start gap-4 px-6 pt-6 pb-3">
     <div

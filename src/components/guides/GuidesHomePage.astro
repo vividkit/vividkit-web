@@ -106,22 +106,16 @@ const morePathways = [
   <!-- Three primary entry cards — equal height via stretch + card h-full flex -->
   <div class="grid grid-cols-1 items-stretch gap-6 md:grid-cols-3">
     {entryCards.map((card) => (
-      <div class="relative flex h-full min-h-0 flex-col">
-        {'badgeKey' in card && card.badgeKey && (
-          <span class="absolute -top-2 left-4 z-10 inline-flex items-center rounded-full bg-teal-100 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-teal-700 dark:bg-teal-500/20 dark:text-teal-300">
-            {t(card.badgeKey)}
-          </span>
-        )}
-        <GuidedPathwayCard
-          id={card.id}
-          icon={card.icon}
-          titleKey={card.titleKey}
-          descKey={card.descKey}
-          links={card.links}
-          accentColor={card.accentColor}
-          lang={currentLang}
-        />
-      </div>
+      <GuidedPathwayCard
+        id={card.id}
+        icon={card.icon}
+        titleKey={card.titleKey}
+        descKey={card.descKey}
+        links={card.links}
+        accentColor={card.accentColor}
+        lang={currentLang}
+        badgeKey={'badgeKey' in card ? card.badgeKey : undefined}
+      />
     ))}
   </div>
 
