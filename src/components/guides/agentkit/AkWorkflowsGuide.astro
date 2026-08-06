@@ -49,6 +49,13 @@ function tTip(w: AkWorkflow) {
   if (!w.tip) return '';
   return isVi && w.tipVi ? w.tipVi : w.tip;
 }
+function tTipBullets(w: AkWorkflow): string[] {
+  if (isVi && w.tipBulletsVi?.length) return w.tipBulletsVi;
+  return w.tipBullets ?? [];
+}
+function hasTip(w: AkWorkflow) {
+  return Boolean(tTip(w) || tTipBullets(w).length);
+}
 function tDuration(w: AkWorkflow) {
   return isVi && w.durationVi ? w.durationVi : w.duration;
 }
@@ -57,6 +64,15 @@ function tStepLabel(s: AkWorkflowStep) {
 }
 function tStepDesc(s: AkWorkflowStep) {
   return isVi && s.descriptionVi ? s.descriptionVi : s.description;
+}
+function tOptionalModeNote(mode: { note: string; noteVi?: string }) {
+  return isVi && mode.noteVi ? mode.noteVi : mode.note;
+}
+function getOptionalModes(s: AkWorkflowStep): Array<{ flag: string; note: string; noteVi?: string }> {
+  if (s.optionalModes?.length) return s.optionalModes;
+  if (!s.optionalFlags?.length) return [];
+  const note = isVi && s.optionalFlagsNoteVi ? s.optionalFlagsNoteVi : s.optionalFlagsNote;
+  return s.optionalFlags.map((flag) => ({ flag, note: note || '', noteVi: note || '' }));
 }
 
 function groupByCategory(list: AkWorkflow[]) {
@@ -96,7 +112,8 @@ const copy = {
   steps: isVi ? 'bước' : 'steps',
   optional: isVi ? 'Tuỳ chọn' : 'Optional',
   human: isVi ? 'Bạn làm bước này' : 'Your turn',
-  tip: isVi ? 'Mẹo' : 'Tip',
+  tip: isVi ? 'Lưu ý' : 'Notes',
+  tipOpen: isVi ? 'Bấm để xem các lưu ý' : 'Click to read the notes',
   powerUser: isVi ? 'Tốn token hơn' : 'Uses more tokens',
   riskHigh: isVi ? 'Cẩn thận' : 'Go carefully',
   howTitle: isVi ? 'Cách dùng workflow tham khảo' : 'How to use a reference workflow',
@@ -178,6 +195,8 @@ const nextLinks = [
 
 const cmdChip =
   'inline-flex max-w-full items-center rounded-lg border border-slate-200/90 bg-slate-100 px-2 py-1 font-mono text-[11px] sm:text-xs font-medium text-teal-700 break-all dark:border-slate-600 dark:bg-slate-800/90 dark:text-teal-300';
+const flagChip =
+  'inline-flex items-center rounded-md border border-slate-200/90 bg-slate-100 px-1.5 py-0.5 font-mono text-[11px] font-medium text-purple-600 dark:border-slate-600 dark:bg-slate-800/90 dark:text-purple-400';
 const softPill =
   'inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold tracking-wide';
 ---
@@ -296,7 +315,7 @@ const softPill =
           <div class="mt-3 flex flex-wrap items-center gap-2">
             <code class={cmdChip}>--advice</code>
             <span class="text-xs text-slate-500 dark:text-slate-400">
-              {isVi ? 'thêm vào plan, cook, fix…' : 'add on plan, cook, fix…'}
+              {isVi ? 'kongming trên plan, cook, fix…' : 'kongming on plan, cook, fix…'}
             </span>
           </div>
           <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
@@ -308,6 +327,38 @@ const softPill =
         </div>
       </div>
     </AkSection>
+
+    <!-- /ak:advise vs --agent -->
+    <AkCallout variant="info" title={isVi ? chrome.adviseAgent.titleVi : chrome.adviseAgent.titleEn}>
+      <p class="mb-4">{isVi ? chrome.adviseAgent.bodyVi : chrome.adviseAgent.bodyEn}</p>
+      <div class="grid gap-3 md:grid-cols-2">
+        <div class="rounded-xl border border-slate-200/90 bg-white/80 p-3 dark:border-slate-700 dark:bg-slate-950/40">
+          <code class={cmdChip}>{chrome.adviseAgent.inlineCmd}</code>
+          <ul class="mt-2 space-y-1 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+            {(isVi ? chrome.adviseAgent.inlinePointsVi : chrome.adviseAgent.inlinePointsEn).map((p) => (
+              <li>• {p}</li>
+            ))}
+          </ul>
+          <p class="mt-2 text-xs font-medium text-slate-800 dark:text-slate-100">
+            {isVi ? chrome.adviseAgent.whenInlineVi : chrome.adviseAgent.whenInlineEn}
+          </p>
+        </div>
+        <div class="rounded-xl border border-slate-200/90 bg-white/80 p-3 dark:border-slate-700 dark:bg-slate-950/40">
+          <code class={cmdChip}>{chrome.adviseAgent.agentCmd}</code>
+          <ul class="mt-2 space-y-1 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+            {(isVi ? chrome.adviseAgent.agentPointsVi : chrome.adviseAgent.agentPointsEn).map((p) => (
+              <li>• {p}</li>
+            ))}
+          </ul>
+          <p class="mt-2 text-xs font-medium text-slate-800 dark:text-slate-100">
+            {isVi ? chrome.adviseAgent.whenAgentVi : chrome.adviseAgent.whenAgentEn}
+          </p>
+        </div>
+      </div>
+      <p class="mt-3 text-xs text-slate-500 dark:text-slate-400">
+        {isVi ? chrome.adviseAgent.footerVi : chrome.adviseAgent.footerEn}
+      </p>
+    </AkCallout>
 
     <!-- Router -->
     <AkCallout variant="tip" title={isVi ? chrome.router.titleVi : chrome.router.titleEn}>
@@ -484,6 +535,23 @@ const softPill =
                                 {tStepLabel(step)}
                               </p>
                             )}
+                            {getOptionalModes(step).length > 0 && (
+                              <div class="rounded-lg border border-dashed border-slate-200/90 bg-slate-50/80 px-2.5 py-2 dark:border-slate-700 dark:bg-slate-800/40">
+                                <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                                  {copy.optional}
+                                </p>
+                                <ul class="mt-1.5 space-y-1.5">
+                                  {getOptionalModes(step).map((mode) => (
+                                    <li class="flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5 text-xs leading-snug text-slate-600 dark:text-slate-300">
+                                      <code class={flagChip}>{mode.flag}</code>
+                                      <span class="text-slate-500 dark:text-slate-400">
+                                        — {tOptionalModeNote(mode)}
+                                      </span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
                             <p class="text-sm leading-snug text-slate-600 dark:text-slate-400">
                               {tStepDesc(step)}
                             </p>
@@ -509,14 +577,44 @@ const softPill =
                         )}
                       </div>
                     ) : null}
-
-                    {tTip(w) && (
-                      <div class="mt-4 rounded-xl bg-slate-50 px-3 py-2.5 text-xs leading-relaxed text-slate-600 dark:bg-slate-800/50 dark:text-slate-300">
-                        <span class="font-semibold text-slate-800 dark:text-slate-100">{copy.tip}:</span>{' '}
-                        {tTip(w)}
-                      </div>
-                    )}
                   </div>
+
+                  {hasTip(w) && (
+                    <details class="group border-t border-slate-100 dark:border-slate-800">
+                      <summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-3 select-none hover:bg-slate-50 dark:hover:bg-slate-800/40">
+                        <span>
+                          <span class="block text-sm font-semibold text-slate-900 dark:text-white">
+                            {copy.tip}
+                          </span>
+                          <span class="mt-0.5 block text-[11px] text-slate-500 dark:text-slate-400">
+                            {copy.tipOpen}
+                          </span>
+                        </span>
+                        <span
+                          class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-slate-200 text-[10px] text-slate-400 transition-transform group-open:rotate-180 dark:border-slate-700"
+                          aria-hidden="true"
+                        >
+                          ▼
+                        </span>
+                      </summary>
+                      <div class="space-y-2 border-t border-slate-100 px-5 py-3 dark:border-slate-800">
+                        {tTipBullets(w).length > 0 ? (
+                          <ul class="space-y-2 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+                            {tTipBullets(w).map((line) => (
+                              <li class="flex gap-2">
+                                <span class="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-teal-500" aria-hidden="true" />
+                                <span>{line}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <p class="text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+                            {tTip(w)}
+                          </p>
+                        )}
+                      </div>
+                    </details>
+                  )}
                 </article>
               ))}
             </div>
@@ -590,6 +688,17 @@ const softPill =
                                   {tStepLabel(step)}
                                 </span>
                               )}
+                              {getOptionalModes(step).length > 0 && (
+                                <ul class="mt-1 space-y-1.5 text-xs leading-snug text-slate-500 dark:text-slate-400">
+                                  {getOptionalModes(step).map((mode) => (
+                                    <li class="flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5">
+                                      <span class="font-medium text-slate-600 dark:text-slate-300">{copy.optional}</span>
+                                      <code class={flagChip}>{mode.flag}</code>
+                                      <span>— {tOptionalModeNote(mode)}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              )}
                               <p class="mt-0.5 text-xs leading-snug text-slate-500 dark:text-slate-400">
                                 {step.command ? tStepLabel(step) + ' — ' : ''}
                                 {tStepDesc(step)}
@@ -598,10 +707,36 @@ const softPill =
                           </li>
                         ))}
                       </ol>
-                      {tTip(w) && (
-                        <p class="mt-3 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
-                          <span class="font-semibold">{copy.tip}:</span> {tTip(w)}
-                        </p>
+                      {hasTip(w) && (
+                        <details class="group mt-3 rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900/50">
+                          <summary class="flex cursor-pointer list-none items-center justify-between gap-2 px-3 py-2 select-none hover:bg-slate-50 dark:hover:bg-slate-800/40">
+                            <span class="text-xs font-semibold text-slate-800 dark:text-slate-100">
+                              {copy.tip}
+                            </span>
+                            <span
+                              class="text-[10px] text-slate-400 transition-transform group-open:rotate-180"
+                              aria-hidden="true"
+                            >
+                              ▼
+                            </span>
+                          </summary>
+                          <div class="border-t border-slate-100 px-3 py-2 dark:border-slate-800">
+                            {tTipBullets(w).length > 0 ? (
+                              <ul class="space-y-1.5 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+                                {tTipBullets(w).map((line) => (
+                                  <li class="flex gap-2">
+                                    <span class="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-teal-500" aria-hidden="true" />
+                                    <span>{line}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            ) : (
+                              <p class="text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+                                {tTip(w)}
+                              </p>
+                            )}
+                          </div>
+                        </details>
                       )}
                     </article>
                   ))}

@@ -39,6 +39,19 @@ export interface AkWorkflowStep {
   optional?: boolean;
   /** Human gate (review, approve) — no command */
   human?: boolean;
+  /**
+   * Optional modes/flags annotated under the command chip.
+   * Prefer this over baking every flag into `command`.
+   */
+  optionalModes?: Array<{
+    flag: string;
+    note: string;
+    noteVi?: string;
+  }>;
+  /** @deprecated Prefer optionalModes — kept for simple single-note cases */
+  optionalFlags?: string[];
+  optionalFlagsNote?: string;
+  optionalFlagsNoteVi?: string;
   /** Optional card accent classes (UI phase) */
   color?: string;
 }
@@ -65,6 +78,9 @@ export interface AkWorkflow {
   bestForVi?: string;
   tip?: string;
   tipVi?: string;
+  /** Structured tip lines — prefer for long tips (UI renders a separate tip box) */
+  tipBullets?: string[];
+  tipBulletsVi?: string[];
   features?: string[];
   powerUserWarning?: boolean;
   adviceVariant?: AkWorkflowAdviceVariant;
@@ -110,6 +126,24 @@ export interface AkWorkflowPageChrome {
     badgeNoteVi: string;
     whenSkipEn: string;
     whenSkipVi: string;
+  };
+  adviseAgent: {
+    titleEn: string;
+    titleVi: string;
+    bodyEn: string;
+    bodyVi: string;
+    inlineCmd: string;
+    agentCmd: string;
+    inlinePointsEn: string[];
+    inlinePointsVi: string[];
+    agentPointsEn: string[];
+    agentPointsVi: string[];
+    whenInlineEn: string;
+    whenInlineVi: string;
+    whenAgentEn: string;
+    whenAgentVi: string;
+    footerEn: string;
+    footerVi: string;
   };
   router: {
     titleEn: string;

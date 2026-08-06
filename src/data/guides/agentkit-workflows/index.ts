@@ -44,7 +44,7 @@ import { akMarketingWorkflows } from "./marketing";
 /** Category order for Engineer tab filters / section headers */
 export const akWorkflowCategoryOrder: AkWorkflowCategoryMeta[] = [
   { key: "Getting Started", order: 1, labelEn: "Getting started", labelVi: "Bắt đầu" },
-  { key: "Plan & Research", order: 2, labelEn: "Plan & research", labelVi: "Lên plan & research" },
+  { key: "Plan & Research", order: 2, labelEn: "Plan & advise", labelVi: "Lên plan & tư vấn" },
   { key: "Debug & Fix", order: 3, labelEn: "Debug & fix", labelVi: "Debug & sửa lỗi" },
   { key: "Review & Ship", order: 4, labelEn: "Review & ship", labelVi: "Review & ship" },
   { key: "Security", order: 5, labelEn: "Security", labelVi: "Bảo mật" },
@@ -70,22 +70,66 @@ export const akWorkflowPageChrome: AkWorkflowPageChrome = {
   adviseVsAdvice: {
     titleEn: "Two ways to get advice",
     titleVi: "Hai cách nhờ tư vấn",
-    adviseLabelEn: "Talk it through first",
-    adviseLabelVi: "Nói chuyện làm rõ trước",
+    adviseLabelEn: "Pressure-test before you commit",
+    adviseLabelVi: "Thử thách hướng đi trước khi cam kết",
     adviseBodyEn:
-      "Use /ak:advise when the problem is fuzzy. It asks questions and helps you reframe the goal. It does not write code.",
+      "Use /ak:advise for an honest second opinion before you lock a direction. It runs on the main session model (not kongming), interviews you one question at a time, you confirm the reframing, then you get actionable advice and a checklist — no code.",
     adviseBodyVi:
-      "Dùng /ak:advise khi bài toán còn mơ hồ. Skill sẽ hỏi để làm rõ mục tiêu. Không viết code.",
-    adviceLabelEn: "Second opinion while you work",
-    adviceLabelVi: "Ý kiến thứ hai khi đang làm",
+      "Dùng /ak:advise để nhận second opinion thẳng thắn trước khi cam kết một hướng. Chạy bằng model của main session (không phải kongming), hỏi từng câu, bạn xác nhận reframing, rồi nhận advice + checklist có thể hành động — không viết code.",
+    adviceLabelEn: "Kongming checkpoint while you work",
+    adviceLabelVi: "Checkpoint kongming khi đang làm",
     adviceBodyEn:
-      "Add --advice to /ak:brainstorm, /ak:plan, /ak:cook, /ak:fix, or /ak:vibe when you want extra challenge mid-pipeline. Different from /ak:advise.",
+      "Add --advice to /ak:brainstorm, /ak:plan, /ak:cook, /ak:fix, or /ak:vibe so kongming supervises mid-run. It cannot approve or replace your plan review. Different from /ak:advise (and from --agent).",
     adviceBodyVi:
-      "Thêm --advice vào /ak:brainstorm, /ak:plan, /ak:cook, /ak:fix hoặc /ak:vibe khi muốn bị thách thức giữa chừng. Khác với /ak:advise.",
+      "Thêm --advice vào /ak:brainstorm, /ak:plan, /ak:cook, /ak:fix hoặc /ak:vibe để kongming giám sát giữa chừng. Không phê duyệt hay thay bước bạn duyệt plan. Khác với /ak:advise (và khác --agent).",
     badgeNoteEn: "Pick one path that fits — you do not need both every time.",
     badgeNoteVi: "Chọn một cách phù hợp — không cần dùng cả hai mọi lúc.",
-    whenSkipEn: "Skip --advice for tiny one-file edits.",
-    whenSkipVi: "Đừng gắn --advice cho sửa một file nhỏ.",
+    whenSkipEn: "Skip --advice for tiny one-file edits. --hard --advice is expensive — keep for high-risk work.",
+    whenSkipVi: "Đừng gắn --advice cho sửa một file nhỏ. --hard --advice rất nặng — giữ cho việc high-risk.",
+  },
+  adviseAgent: {
+    titleEn: "/ak:advise vs /ak:advise --agent",
+    titleVi: "/ak:advise vs /ak:advise --agent",
+    bodyEn:
+      "Same advisory logic. Different mainly in model, context isolation, and how questions are asked. Neither summons kongming.",
+    bodyVi:
+      "Logic tư vấn cuối cùng giống nhau. Khác chủ yếu ở model, context isolation và cách hỏi đáp. Cả hai đều không gọi kongming.",
+    inlineCmd: '/ak:advise "problem"',
+    agentCmd: '/ak:advise "problem" --agent',
+    inlinePointsEn: [
+      "Main agent + current session model",
+      "Uses full conversation context",
+      "Faster and cheaper — default for most cases",
+      "Works the same on Claude Code and Codex",
+    ],
+    inlinePointsVi: [
+      "Main agent + model session hiện tại",
+      "Dùng toàn bộ conversation context",
+      "Nhanh và rẻ hơn — mặc định cho hầu hết case",
+      "Giống nhau trên Claude Code và Codex",
+    ],
+    agentPointsEn: [
+      "Fully supported on Claude Code only",
+      "Subagent advisor on fable + AskUserQuestion relay + state file re-spawn",
+      "Isolated context; slower / more tokens",
+      "On Codex: falls back to inline — no advisor/fable isolation",
+    ],
+    agentPointsVi: [
+      "Chỉ hỗ trợ đầy đủ trên Claude Code",
+      "Subagent advisor / fable + relay AskUserQuestion + state file re-spawn",
+      "Context cô lập; chậm / tốn token hơn",
+      "Trên Codex: fallback về inline — không có isolation advisor/fable",
+    ],
+    whenInlineEn: "Use inline for ~80–90% of cases.",
+    whenInlineVi: "Dùng inline cho khoảng 80–90% trường hợp.",
+    whenAgentEn:
+      "Use --agent on Claude Code when stakes are high, the interview will be long, you want an independent second look, or you want to keep the main context clean for plan/cook.",
+    whenAgentVi:
+      "Dùng --agent trên Claude Code khi stakes cao, phỏng vấn dài, muốn góc nhìn độc lập, hoặc muốn giữ main context sạch cho plan/cook.",
+    footerEn:
+      "Codex can still spawn other subagents — only the advise --agent relay workflow is not ported yet, so --agent falls back to inline. kongming appears with plan/cook --advice — not with advise.",
+    footerVi:
+      "Codex vẫn spawn được subagent khác — chỉ workflow relay của advise --agent chưa port, nên --agent fallback về inline. kongming xuất hiện với plan/cook --advice — không phải với advise.",
   },
   router: {
     titleEn: "Not sure where to start?",
@@ -147,10 +191,12 @@ export const akWorkflowPageChrome: AkWorkflowPageChrome = {
     },
     {
       id: "AP6",
-      dontEn: "Mix up /ak:advise and --advice",
-      preferEn: "/ak:advise = reframe first · --advice = supervise another skill",
-      dontVi: "Nhầm /ak:advise với --advice",
-      preferVi: "/ak:advise = làm rõ trước · --advice = giám sát skill khác",
+      dontEn: "Mix up /ak:advise, --agent, and --advice",
+      preferEn:
+        "/ak:advise = main model · --agent = advisor/fable · plan/cook --advice = kongming",
+      dontVi: "Nhầm /ak:advise, --agent, và --advice",
+      preferVi:
+        "/ak:advise = model main · --agent = advisor/fable · plan/cook --advice = kongming",
     },
     {
       id: "AP7",
@@ -158,6 +204,15 @@ export const akWorkflowPageChrome: AkWorkflowPageChrome = {
       preferEn: "Use it when the decision is hard or the blast radius is big",
       dontVi: "Gắn --advice mọi sửa nhỏ",
       preferVi: "Chỉ khi quyết định khó hoặc ảnh hưởng lớn",
+    },
+    {
+      id: "AP8",
+      dontEn: "Always chain cook → test → code-review → ship",
+      preferEn:
+        "cook already runs tester + reviewer; extra gates only when you want an independent check",
+      dontVi: "Luôn xâu cook → test → code-review → ship",
+      preferVi:
+        "cook đã chạy tester + reviewer; cổng thêm chỉ khi muốn kiểm độc lập",
     },
   ],
 };
