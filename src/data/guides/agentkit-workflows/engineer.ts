@@ -419,8 +419,10 @@ export const akEngineerWorkflows: AkWorkflow[] = [
     durationVi: "~45–120 phút",
     title: "Advised feature chain",
     titleVi: "Chuỗi feature có tư vấn",
-    bestFor: "High blast radius, or continuous advisory supervision mid-pipeline",
-    bestForVi: "Ảnh hưởng lớn, hoặc cần giám sát tư vấn giữa pipeline",
+    bestFor:
+      "Multi-module features, large refactors, or important user flows — when you want a strong reasoning model supervising plan/cook",
+    bestForVi:
+      "Feature đụng nhiều module, refactor lớn, hoặc đổi flow quan trọng — khi cần model reasoning mạnh giám sát lúc plan/cook",
     tip: "Skip /ak:advise when requirements are already crisp; keep --advice on plan/cook only. Not the same as running /ak:advise alone.",
     tipVi: "Bỏ /ak:advise khi yêu cầu đã rõ; chỉ giữ --advice trên plan/cook. Khác với chỉ chạy /ak:advise.",
     features: ["Primary --advice flagship", "no BETA badge for flag"],
@@ -518,8 +520,8 @@ export const akEngineerWorkflows: AkWorkflow[] = [
     durationVi: "~30–60 phút",
     title: "Plan with gates",
     titleVi: "Plan có cổng kiểm",
-    bestFor: "Architecture, public API, money, or security surface",
-    bestForVi: "Kiến trúc, API công khai, tiền, hoặc bề mặt bảo mật",
+    bestFor: "Architecture, database, public API, payment, or security issues",
+    bestForVi: "Các vấn đề liên quan kiến trúc, database, public API, payment, hoặc security",
     tip: "Optional multi-persona debate first: /ak:predict. Add --advice on plan when you want supervision mid-pipeline.",
     tipVi: "Tùy chọn tranh luận đa persona trước: /ak:predict. Thêm --advice trên plan nếu cần giám sát giữa pipeline.",
     features: ["red-team", "validate", "hard/deep modes"],

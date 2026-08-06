@@ -9,4 +9,6 @@
 export const akWorkflowPublicIds: readonly string[] | null = [
   "A1", // Xây feature mới / Build a new feature
   "A2", // Implement nhanh / Quick implement
+  "L1", // Chuỗi feature có tư vấn / Advised feature chain
+  "B2", // Plan có cổng kiểm / Plan with gates
 ];
