@@ -36,6 +36,32 @@ const runtimes = isVi
         body: 'Adapter chiếu skills, agents, rules, hooks. Coverage live install/update/invocation có thể chưa đầy đủ — đừng suy ra full parity.',
         accent: 'cyan' as const,
       },
+      {
+        brandProvider: 'grok' as const,
+        title: 'Grok',
+        body: 'Có trên ak update --target/--runtime (cùng claude-code, codex, cursor) ở stable 2.14.0 và beta 2.15.0-beta.4. ak doctor --adapter chưa liệt kê grok.',
+        accent: 'amber' as const,
+      },
+      {
+        brandSrc: '/guides/agentkit/pi.svg',
+        brandAlt: 'Pi',
+        title: 'Pi',
+        body: 'Native harness pi. Adapter chiếu Kit vào Pi coding agent.',
+        accent: 'blue' as const,
+      },
+      {
+        brandSrc: '/guides/agentkit/omp.svg',
+        brandAlt: 'Oh My Pi',
+        title: 'Oh My Pi',
+        body: 'Native harness omp. Adapter chiếu Kit vào Oh My Pi.',
+        accent: 'rose' as const,
+      },
+      {
+        brandProvider: 'deepseek' as const,
+        title: 'DeepSeek Harness',
+        body: 'Native harness dsh. Adapter chiếu Kit vào DeepSeek Harness.',
+        accent: 'emerald' as const,
+      },
     ]
   : [
       {
@@ -55,6 +81,32 @@ const runtimes = isVi
         title: 'Cursor',
         body: 'Projects skills, agents, rules, hooks. Live install/update/invocation coverage is incomplete across setups — do not infer full parity.',
         accent: 'cyan' as const,
+      },
+      {
+        brandProvider: 'grok' as const,
+        title: 'Grok',
+        body: 'Listed on ak update --target/--runtime (with claude-code, codex, cursor) on stable 2.14.0 and beta 2.15.0-beta.4. ak doctor --adapter still lists only codex, claude-code, cursor.',
+        accent: 'amber' as const,
+      },
+      {
+        brandSrc: '/guides/agentkit/pi.svg',
+        brandAlt: 'Pi',
+        title: 'Pi',
+        body: 'Native harness pi. Adapter delivers the Kit into the Pi coding agent.',
+        accent: 'blue' as const,
+      },
+      {
+        brandSrc: '/guides/agentkit/omp.svg',
+        brandAlt: 'Oh My Pi',
+        title: 'Oh My Pi',
+        body: 'Native harness omp. Adapter delivers the Kit into Oh My Pi.',
+        accent: 'rose' as const,
+      },
+      {
+        brandProvider: 'deepseek' as const,
+        title: 'DeepSeek Harness',
+        body: 'Native harness dsh. Adapter delivers the Kit into DeepSeek Harness.',
+        accent: 'emerald' as const,
       },
     ];
 ---
@@ -122,43 +174,49 @@ const runtimes = isVi
     eyebrow={isVi ? 'Kỳ vọng' : 'Expectations'}
     title={isVi ? 'Mỗi runtime một thực tế' : 'Each runtime has its own reality'}
   >
-    <AkFeatureGrid features={runtimes} columns={3} />
+    <AkFeatureGrid features={runtimes} columns={2} />
+
+    <div class="mt-4">
+      <AkCallout variant="info" title={isVi ? 'Chú ý' : 'Note'}>
+        {isVi
+          ? 'Pi, Oh My Pi và DeepSeek Harness chưa thấy trên ak update --target hay ak doctor --adapter (2.14.0 / 2.15.0-beta.4).'
+          : 'Pi, Oh My Pi, and DeepSeek Harness are not on ak update --target or ak doctor --adapter (2.14.0 / 2.15.0-beta.4).'}
+      </AkCallout>
+    </div>
 
     <article class="mt-4 overflow-hidden rounded-2xl border border-slate-200/80 bg-gradient-to-br from-slate-50 via-white to-amber-50/40 p-5 shadow-sm dark:border-slate-700 dark:from-slate-900/80 dark:via-slate-900/50 dark:to-amber-950/20 sm:p-6">
       <div class="flex flex-wrap items-start justify-between gap-3">
         <div class="min-w-0 space-y-1.5">
           <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-amber-700 dark:text-amber-400">
-            {isVi ? 'Ngoài 3 runtime trên' : 'Beyond the three above'}
+            {isVi ? 'Chỉ load skill' : 'Portable targets'}
           </p>
           <h3 class="text-base font-bold text-slate-900 dark:text-white">
             {isVi
-              ? 'Runtime khác vẫn load được skill AgentKit'
-              : 'Other runtimes can still load AgentKit skills'}
+              ? 'Runtime khác vẫn có thể load skill AgentKit'
+              : 'Other runtimes may still load AgentKit skills'}
           </h3>
         </div>
         <span class="shrink-0 rounded-full border border-amber-300/70 bg-amber-500/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-amber-800 dark:border-amber-500/30 dark:bg-amber-500/15 dark:text-amber-200">
-          {isVi ? 'Chưa full harness' : 'Not full harness'}
+          {isVi ? 'Không phải native harness' : 'Not a native harness'}
         </span>
       </div>
 
       <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
         {isVi
-          ? 'Một số coding agent vẫn đọc/discover skill AgentKit (thường qua thư mục skill chuẩn), nhưng AgentKit chưa cam kết full-support harness: hooks, adapter install/update, status line, hay parity command như Claude Code / Codex / Cursor. Load được skill ≠ support chính thức.'
-          : 'Some coding agents can still read/discover AgentKit skills (often via standard skill folders), but AgentKit does not commit full harness support: hooks, adapter install/update, status line, or command parity like Claude Code / Codex / Cursor. Loading skills ≠ official support.'}
+          ? 'Một số coding agent vẫn đọc hoặc discover skill AgentKit qua thư mục skill chuẩn. Load được skill không chứng minh adapter install/update, Hooks, status line hay command parity.'
+          : 'Some coding agents can still read or discover AgentKit skills through standard skill folders. Loading a skill does not prove adapter install/update, Hooks, status line, or command parity.'}
       </p>
 
       <div class="mt-4 flex flex-wrap gap-2">
         {(
           isVi
             ? [
-                { name: 'OpenCode', brand: 'opencode' as const, tip: 'Load skill — chưa full harness' },
-                { name: 'Grok', brand: 'grok' as const, tip: 'Load skill — chưa full harness' },
-                { name: 'Cline', brand: 'cline' as const, tip: 'Load skill — chưa full harness' },
+                { name: 'OpenCode', brand: 'opencode' as const, tip: 'Load skill — không phải native harness' },
+                { name: 'Cline', brand: 'cline' as const, tip: 'Load skill — không phải native harness' },
               ]
             : [
-                { name: 'OpenCode', brand: 'opencode' as const, tip: 'Skills load — not full harness' },
-                { name: 'Grok', brand: 'grok' as const, tip: 'Skills load — not full harness' },
-                { name: 'Cline', brand: 'cline' as const, tip: 'Skills load — not full harness' },
+                { name: 'OpenCode', brand: 'opencode' as const, tip: 'Skills load — not a native harness' },
+                { name: 'Cline', brand: 'cline' as const, tip: 'Skills load — not a native harness' },
               ]
         ).map((chip) => (
           <span

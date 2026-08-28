@@ -1,9 +1,10 @@
 ---
 // Internal sources (do not publish on the page):
-// - Soft path: ak migrate --from=ck (dry-run default true) — apps/cli/internal/commands/migratecmd/migrate.go
-// - Clean cutover is a separate guide — uses ck uninstall + ak kit init; not this page's primary flow
-// - Discovery probes ~/.claude, ~/.claudekit, project paths — migrate help + discovery.go
-// - Soft path classifies custom/modified to keep; not an "always" contract. Stable v2.7.0 paid remote preflight caveat; beta v2.8.0-beta.4 fixes it.
+// Authority: AgentKit stable v2.14.0 (405ea37). PreflightRemoteMigrateKit in
+// kitcmd/paid_kit_gate.go does not call ValidateProductLocalKitActivation —
+// logged-in remote migrate of paid kits is the supported path on 2.14.0.
+// - Soft path: ak migrate --from=ck (dry-run default true)
+// - Clean cutover is a separate guide — ck uninstall + ak kit init
 
 import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
 import AkPageHero from './AkPageHero.astro';
@@ -164,46 +165,26 @@ Write-Host "Safety copy completed at: $dest"`;
         </>
       )}
     </p>
-    <AkCallout variant="warn" title={isVi ? 'Bug stable: apply migrate kit trả phí có thể fail' : 'Stable bug: paid-kit migrate apply can fail'}>
+    <AkCallout variant="info" title={isVi ? 'Apply kit trả phí' : 'Paid-kit apply'}>
       {isVi ? (
         <>
-          <p class="mb-2">
-            <strong>Chỉ khi bạn bật apply</strong> (không phải dry-run). Engineer Kit (và kit trả phí khác) cài từ registry sau khi{' '}
-            <AkInlineCode text="ak login" />. Trên AgentKit <strong>stable v2.7.0</strong>, bước kiểm tra trước khi cài đôi khi chạy nhầm luật “cài kit local/dev”
-            — luật đó <strong>luôn từ chối kit trả phí</strong>, kể cả khi bạn đã login và có quyền.
-          </p>
-          <p class="mb-2">
-            <strong>Bạn thấy gì:</strong> lỗi kiểu <em>paid remote-only kit</em> / migrate dừng giữa chừng; có thể còn skill CK lẫn skill AK dở.
-            <strong> Dry-run vẫn dùng được</strong> để xem plan.
-          </p>
-          <p class="mb-0">
-            <strong>Làm gì:</strong> (1) rollback / dùng safety copy nếu apply đã chạy dở; (2) chờ bản stable sau khi fix, hoặc tạm dùng beta{' '}
-            <AkInlineCode text="v2.8.0-beta.4" /> (opt-in <AkInlineCode text="AK_CHANNEL=beta" />, có thể đổi); (3) hoặc bỏ soft migrate, làm{' '}
-            <a class="font-semibold underline-offset-2 hover:underline" href={translatePath('/guides/agentkit/clean-cutover-from-claudekit')}>
-              gỡ hẳn ClaudeKit
-            </a>{' '}
-            rồi <AkInlineCode text="ak kit init engineer" />. Trang này vẫn hướng dẫn stable làm mặc định.
-          </p>
+          Ghi thật cần <AkInlineCode text="--yes" /> (dry-run vẫn mặc định). Kit trả phí (Engineer, …) cài từ registry sau{' '}
+          <AkInlineCode text="ak login" />. Trên stable <AkInlineCode text="2.14.0" />, preflight migrate remote không còn chặn kit trả phí bằng luật local/dev.
+          Nếu apply dở: <AkInlineCode text="ak migrate rollback" /> hoặc bản sao thủ công, rồi xem{' '}
+          <a class="font-semibold underline-offset-2 hover:underline" href={translatePath('/guides/agentkit/clean-cutover-from-claudekit')}>
+            gỡ hẳn ClaudeKit
+          </a>
+          .
         </>
       ) : (
         <>
-          <p class="mb-2">
-            <strong>Only on apply</strong> (not dry-run). Paid kits such as Engineer install from the registry after{' '}
-            <AkInlineCode text="ak login" />. On AgentKit <strong>stable v2.7.0</strong>, the pre-install check sometimes runs the{' '}
-            <strong>local/dev paid-kit rule by mistake</strong> — that rule <strong>always rejects paid kits</strong>, even when you are logged in and entitled.
-          </p>
-          <p class="mb-2">
-            <strong>What you see:</strong> an error like <em>paid remote-only kit</em> / migrate stops mid-flight; you may get mixed leftover CK and partial AK skills.
-            <strong> Dry-run still works</strong> to review the plan.
-          </p>
-          <p class="mb-0">
-            <strong>What to do:</strong> (1) roll back / use your safety copy if apply already mutated; (2) wait for a stable release with the fix, or temporarily use beta{' '}
-            <AkInlineCode text="v2.8.0-beta.4" /> (opt-in <AkInlineCode text="AK_CHANNEL=beta" />; may change); (3) or skip soft migrate and use{' '}
-            <a class="font-semibold underline-offset-2 hover:underline" href={translatePath('/guides/agentkit/clean-cutover-from-claudekit')}>
-              clean cutover
-            </a>{' '}
-            then <AkInlineCode text="ak kit init engineer" />. This page still documents stable as the default.
-          </p>
+          Writes need <AkInlineCode text="--yes" /> (dry-run stays the default). Paid kits (Engineer, …) install from the registry after{' '}
+          <AkInlineCode text="ak login" />. On stable <AkInlineCode text="2.14.0" />, remote migrate preflight no longer rejects paid kits with the local/dev rule.
+          If apply stops mid-flight: <AkInlineCode text="ak migrate rollback" /> or your manual copy, then see{' '}
+          <a class="font-semibold underline-offset-2 hover:underline" href={translatePath('/guides/agentkit/clean-cutover-from-claudekit')}>
+            clean cutover
+          </a>
+          .
         </>
       )}
     </AkCallout>
@@ -323,7 +304,13 @@ Write-Host "Safety copy completed at: $dest"`;
     </AkCallout>
     <AkCodeBlock
       title="shell"
-      code={`ak migrate --from=ck --dry-run=false --yes\n# Claude Code project plugin delivery (only when intended):\n# ak migrate --from=ck --switch-to-plugin --dry-run=false --yes`}
+      code={`ak migrate --from=ck --dry-run=false --yes
+# Stale lock from a crashed apply:
+# ak migrate --from=ck --force-unlock --dry-run=false --yes
+# Claude Code project plugin delivery (only when intended):
+# ak migrate --from=ck --switch-to-plugin --dry-run=false --yes
+# Legacy ClaudeKit prefs into AgentKit config.yaml:
+# ak migrate prefs`}
     />
   </AkSection>
 

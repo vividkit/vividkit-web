@@ -39,7 +39,7 @@ export const guideSections = [
       {
         title: 'Migrate ClaudeKit to AgentKit',
         path: '/guides/migrate-claudekit-to-agentkit',
-        desc: 'Optional, backup-first soft transition from ClaudeKit to AgentKit via ak migrate (usually keeps custom/modified by classification). Stable v2.7.0: paid-kit apply can fail mid-flight even after login; dry-run is fine.',
+        desc: 'Optional, backup-first soft transition from ClaudeKit to AgentKit via ak migrate (usually keeps custom/modified by classification). Dry-run by default; apply with --yes.',
       },
       {
         title: 'Clean Cutover from ClaudeKit',
