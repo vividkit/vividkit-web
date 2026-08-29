@@ -8,170 +8,6 @@ interface Props {
 const { lang = 'en' } = Astro.props;
 const isVi = lang === 'vi';
 
-type Item = { label: string; active?: boolean; checked?: boolean };
-type Frame = {
-  prompt: string;
-  items?: Item[];
-  commands?: string[];
-  status?: string;
-  hint: string;
-  key: 'updown' | 'space' | 'enter' | 'esc';
-};
-
-const frames: Frame[] = isVi
-  ? [
-      {
-        prompt: 'Chọn ngôn ngữ giao diện',
-        items: [
-          { label: 'Tiếng Việt', active: true },
-          { label: 'English' },
-        ],
-        hint: '↑/↓ di chuyển · Enter xác nhận',
-        key: 'updown',
-      },
-      {
-        prompt: 'Bạn muốn làm gì?',
-        items: [
-          { label: 'Cài Kit', active: true },
-          { label: 'Cập nhật Kit' },
-          { label: 'Cập nhật mọi install đã detect' },
-          { label: 'Chạy health check' },
-        ],
-        hint: '↑/↓ · Enter',
-        key: 'enter',
-      },
-      {
-        prompt: 'Scope',
-        items: [
-          { label: 'Project (thư mục hiện tại)', active: true },
-          { label: 'User / global của runtime' },
-        ],
-        hint: '↑/↓ · Enter · Esc về bước trước',
-        key: 'updown',
-      },
-      {
-        prompt: 'Kit',
-        items: [
-          { label: 'Engineer', active: true },
-          { label: 'Marketing' },
-        ],
-        hint: '↑/↓ · Enter',
-        key: 'enter',
-      },
-      {
-        prompt: 'Runtime — Space để chọn nhiều',
-        items: [
-          { label: 'codex', checked: true, active: true },
-          { label: 'claude-code' },
-          { label: 'omp', checked: true },
-          { label: 'pi' },
-          { label: 'cursor' },
-        ],
-        hint: 'Space chọn · Enter xác nhận',
-        key: 'space',
-      },
-      {
-        prompt: 'Kênh',
-        items: [
-          { label: 'stable', active: true },
-          { label: 'beta' },
-        ],
-        hint: '↑/↓ · Enter',
-        key: 'enter',
-      },
-      {
-        prompt: 'Lệnh CLI ak sẽ chạy',
-        commands: [
-          'ak kit install engineer --target codex --channel stable --yes --verbose',
-          'ak kit install engineer --target omp --channel stable --yes --verbose',
-        ],
-        hint: 'Enter để chạy · Esc hủy',
-        key: 'enter',
-      },
-      {
-        prompt: 'Đang gọi CLI ak…',
-        status: 'ak đang ghi file Kit. AgentKit lo xác minh, ownership và snapshot.',
-        hint: 'Một lệnh --target cho mỗi runtime đã chọn',
-        key: 'enter',
-      },
-    ]
-  : [
-      {
-        prompt: 'Choose interface language',
-        items: [
-          { label: 'Tiếng Việt' },
-          { label: 'English', active: true },
-        ],
-        hint: '↑/↓ to move · Enter to confirm',
-        key: 'updown',
-      },
-      {
-        prompt: 'What do you want to do?',
-        items: [
-          { label: 'Install a Kit', active: true },
-          { label: 'Update a Kit' },
-          { label: 'Update every detected install' },
-          { label: 'Run a health check' },
-        ],
-        hint: '↑/↓ · Enter',
-        key: 'enter',
-      },
-      {
-        prompt: 'Scope',
-        items: [
-          { label: 'Project (this directory)', active: true },
-          { label: 'Runtime user / global' },
-        ],
-        hint: '↑/↓ · Enter · Esc to go back',
-        key: 'updown',
-      },
-      {
-        prompt: 'Kit',
-        items: [
-          { label: 'Engineer', active: true },
-          { label: 'Marketing' },
-        ],
-        hint: '↑/↓ · Enter',
-        key: 'enter',
-      },
-      {
-        prompt: 'Runtimes — Space to select several',
-        items: [
-          { label: 'codex', checked: true, active: true },
-          { label: 'claude-code' },
-          { label: 'omp', checked: true },
-          { label: 'pi' },
-          { label: 'cursor' },
-        ],
-        hint: 'Space to toggle · Enter to confirm',
-        key: 'space',
-      },
-      {
-        prompt: 'Channel',
-        items: [
-          { label: 'stable', active: true },
-          { label: 'beta' },
-        ],
-        hint: '↑/↓ · Enter',
-        key: 'enter',
-      },
-      {
-        prompt: 'ak CLI command that will run',
-        commands: [
-          'ak kit install engineer --target codex --channel stable --yes --verbose',
-          'ak kit install engineer --target omp --channel stable --yes --verbose',
-        ],
-        hint: 'Enter to run · Esc to cancel',
-        key: 'enter',
-      },
-      {
-        prompt: 'Calling the ak CLI…',
-        status: 'ak writes Kit files as it runs. AgentKit still owns verification, ownership, and snapshots.',
-        hint: 'One --target command per selected runtime',
-        key: 'enter',
-      },
-    ];
-
 const keys = isVi
   ? [
       { id: 'updown', k: '↑ / ↓', d: 'Di chuyển' },
@@ -185,15 +21,82 @@ const keys = isVi
       { id: 'enter', k: 'Enter', d: 'Confirm this step' },
       { id: 'esc', k: 'Esc', d: 'Back to the previous step' },
     ];
+
+const copy = isVi
+  ? {
+      label: 'Mô phỏng TUI AgentKit Helper',
+      langPrompt: 'Chọn ngôn ngữ giao diện',
+      actionPrompt: 'Bạn muốn làm gì?',
+      scopePrompt: 'Scope',
+      kitPrompt: 'Kit',
+      runtimePrompt: 'Runtime — Space để chọn nhiều',
+      channelPrompt: 'Kênh',
+      cmdPrompt: 'Lệnh CLI ak sẽ chạy',
+      runPrompt: 'Đang gọi CLI ak…',
+      vi: 'Tiếng Việt',
+      en: 'English',
+      install: 'Cài Kit',
+      update: 'Cập nhật Kit',
+      updateAll: 'Cập nhật mọi install đã detect',
+      doctor: 'Chạy health check',
+      project: 'Project (thư mục hiện tại)',
+      global: 'User / global của runtime',
+      engineer: 'Engineer',
+      marketing: 'Marketing',
+      stable: 'stable',
+      beta: 'beta',
+      status: 'ak đang ghi file Kit. AgentKit lo xác minh, ownership và snapshot.',
+      hintLang: '↑/↓ di chuyển · Enter xác nhận',
+      hintAction: '↑/↓ · Enter',
+      hintScope: '↑/↓ · Enter · Esc về bước trước',
+      hintKit: '↑/↓ · Enter',
+      hintRuntime: 'Space chọn · Enter xác nhận',
+      hintChannel: '↑/↓ · Enter',
+      hintCmd: 'Enter để chạy · Esc hủy',
+      hintRun: 'Một lệnh --target cho mỗi runtime đã chọn',
+    }
+  : {
+      label: 'AgentKit Helper TUI walkthrough',
+      langPrompt: 'Choose interface language',
+      actionPrompt: 'What do you want to do?',
+      scopePrompt: 'Scope',
+      kitPrompt: 'Kit',
+      runtimePrompt: 'Runtimes — Space to select several',
+      channelPrompt: 'Channel',
+      cmdPrompt: 'ak CLI command that will run',
+      runPrompt: 'Calling the ak CLI…',
+      vi: 'Tiếng Việt',
+      en: 'English',
+      install: 'Install a Kit',
+      update: 'Update a Kit',
+      updateAll: 'Update every detected install',
+      doctor: 'Run a health check',
+      project: 'Project (this directory)',
+      global: 'Runtime user / global',
+      engineer: 'Engineer',
+      marketing: 'Marketing',
+      stable: 'stable',
+      beta: 'beta',
+      status: 'ak writes Kit files as it runs. AgentKit still owns verification, ownership, and snapshots.',
+      hintLang: '↑/↓ to move · Enter to confirm',
+      hintAction: '↑/↓ · Enter',
+      hintScope: '↑/↓ · Enter · Esc to go back',
+      hintKit: '↑/↓ · Enter',
+      hintRuntime: 'Space to toggle · Enter to confirm',
+      hintChannel: '↑/↓ · Enter',
+      hintCmd: 'Enter to run · Esc to cancel',
+      hintRun: 'One --target command per selected runtime',
+    };
+
+const cmd1 = 'ak kit install engineer --target codex --channel stable --yes --verbose';
+const cmd2 = 'ak kit install engineer --target omp --channel stable --yes --verbose';
 ---
 
-<div class="akh-tui-demo space-y-4" data-akh-tui>
-  <script type="application/json" data-akh-frames is:inline set:html={JSON.stringify(frames)}></script>
-
+<div class="akh-tui-demo space-y-4">
   <div
     class="overflow-hidden rounded-2xl border border-zinc-300 bg-zinc-950 shadow-sm dark:border-zinc-700"
     role="img"
-    aria-label={isVi ? 'Mô phỏng TUI AgentKit Helper' : 'AgentKit Helper TUI walkthrough'}
+    aria-label={copy.label}
   >
     <div class="flex items-center gap-2 border-b border-zinc-800 px-4 py-2.5">
       <span class="h-2.5 w-2.5 rounded-full bg-[#ff5f57]"></span>
@@ -201,23 +104,191 @@ const keys = isVi
       <span class="h-2.5 w-2.5 rounded-full bg-[#28c840]"></span>
       <span class="ml-2 font-mono text-[11px] text-zinc-400">akh</span>
     </div>
-    <div
-      class="akh-tui-screen min-h-[17.5rem] px-4 py-4 font-mono text-[13px] leading-7 text-zinc-200 sm:text-sm"
-      data-akh-screen
+
+    <svg
+      class="akh-svg block h-auto w-full"
+      viewBox="0 0 720 300"
+      xmlns="http://www.w3.org/2000/svg"
     >
-    </div>
-    <div
-      class="border-t border-zinc-800 px-4 py-2 font-mono text-[11px] text-zinc-500"
-      data-akh-hint
-    >
-    </div>
+      <style>
+        {`
+          .akh-svg { --ease-out: cubic-bezier(0.23, 1, 0.32, 1); }
+          .akh-scene {
+            opacity: 0;
+            animation: akh-scene 16s var(--ease-out) infinite both;
+          }
+          .akh-s1 { animation-delay: 0s; }
+          .akh-s2 { animation-delay: 2s; }
+          .akh-s3 { animation-delay: 4s; }
+          .akh-s4 { animation-delay: 6s; }
+          .akh-s5 { animation-delay: 8s; }
+          .akh-s6 { animation-delay: 10s; }
+          .akh-s7 { animation-delay: 12s; }
+          .akh-s8 { animation-delay: 14s; }
+          @keyframes akh-scene {
+            0% { opacity: 0; }
+            2% { opacity: 1; }
+            11% { opacity: 1; }
+            13% { opacity: 0; }
+            100% { opacity: 0; }
+          }
+          .akh-bar {
+            fill: #27272a;
+            transform-box: fill-box;
+            transform-origin: top left;
+          }
+          .akh-s5 .akh-bar {
+            animation: akh-rt 2s var(--ease-out) infinite both;
+            animation-delay: 8s;
+          }
+          @keyframes akh-rt {
+            0%, 28% { transform: translateY(0); }
+            40%, 58% { transform: translateY(28px); }
+            72%, 100% { transform: translateY(56px); }
+          }
+          .akh-check {
+            opacity: 0;
+          }
+          .akh-check-a {
+            animation: akh-check 16s linear infinite both;
+            animation-delay: 8.5s;
+          }
+          .akh-check-b {
+            animation: akh-check 16s linear infinite both;
+            animation-delay: 9.3s;
+          }
+          @keyframes akh-check {
+            0%, 4% { opacity: 0; }
+            6%, 11% { opacity: 1; }
+            13%, 100% { opacity: 0; }
+          }
+          .akh-cmd-a, .akh-cmd-b {
+            opacity: 0;
+          }
+          .akh-s7 .akh-cmd-a {
+            animation: akh-cmd 16s var(--ease-out) infinite both;
+            animation-delay: 12.15s;
+          }
+          .akh-s7 .akh-cmd-b {
+            animation: akh-cmd 16s var(--ease-out) infinite both;
+            animation-delay: 12.35s;
+          }
+          @keyframes akh-cmd {
+            0% { opacity: 0; transform: translateY(4px); }
+            3%, 11% { opacity: 1; transform: translateY(0); }
+            13%, 100% { opacity: 0; transform: translateY(0); }
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .akh-scene,
+            .akh-s5 .akh-bar,
+            .akh-check-a,
+            .akh-check-b,
+            .akh-s7 .akh-cmd-a,
+            .akh-s7 .akh-cmd-b {
+              animation: none;
+            }
+            .akh-scene { opacity: 0; }
+            .akh-s7 { opacity: 1; }
+            .akh-s7 .akh-cmd-a, .akh-s7 .akh-cmd-b { opacity: 1; transform: none; }
+          }
+        `}
+      </style>
+
+      <text x="24" y="28" fill="#d4d4d8" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13">┌  AgentKit Helper</text>
+
+      {/* 1 language */}
+      <g class="akh-scene akh-s1">
+        <text x="24" y="56" fill="#a7f3d0" font-family="ui-monospace, Menlo, monospace" font-size="13">◇  {copy.langPrompt}</text>
+        <rect class="akh-bar" x="20" y="68" width="400" height="26" rx="6"></rect>
+        <text x="36" y="86" fill="#fbbf24" font-family="ui-monospace, Menlo, monospace" font-size="13">▶</text>
+        <text x="56" y="86" fill="#86efac" font-family="ui-monospace, Menlo, monospace" font-size="13">●  {isVi ? copy.vi : copy.en}</text>
+        <text x="56" y="114" fill="#a1a1aa" font-family="ui-monospace, Menlo, monospace" font-size="13">○  {isVi ? copy.en : copy.vi}</text>
+        <text x="24" y="280" fill="#71717a" font-family="ui-monospace, Menlo, monospace" font-size="11">{copy.hintLang}</text>
+      </g>
+
+      {/* 2 action */}
+      <g class="akh-scene akh-s2">
+        <text x="24" y="56" fill="#a7f3d0" font-family="ui-monospace, Menlo, monospace" font-size="13">◇  {copy.actionPrompt}</text>
+        <rect class="akh-bar" x="20" y="68" width="520" height="26" rx="6"></rect>
+        <text x="36" y="86" fill="#fbbf24" font-family="ui-monospace, Menlo, monospace" font-size="13">▶</text>
+        <text x="56" y="86" fill="#fafafa" font-family="ui-monospace, Menlo, monospace" font-size="13">●  {copy.install}</text>
+        <text x="56" y="114" fill="#a1a1aa" font-family="ui-monospace, Menlo, monospace" font-size="13">○  {copy.update}</text>
+        <text x="56" y="142" fill="#a1a1aa" font-family="ui-monospace, Menlo, monospace" font-size="13">○  {copy.updateAll}</text>
+        <text x="56" y="170" fill="#a1a1aa" font-family="ui-monospace, Menlo, monospace" font-size="13">○  {copy.doctor}</text>
+        <text x="24" y="280" fill="#71717a" font-family="ui-monospace, Menlo, monospace" font-size="11">{copy.hintAction}</text>
+      </g>
+
+      {/* 3 scope */}
+      <g class="akh-scene akh-s3">
+        <text x="24" y="56" fill="#a7f3d0" font-family="ui-monospace, Menlo, monospace" font-size="13">◇  {copy.scopePrompt}</text>
+        <rect class="akh-bar" x="20" y="68" width="420" height="26" rx="6"></rect>
+        <text x="36" y="86" fill="#fbbf24" font-family="ui-monospace, Menlo, monospace" font-size="13">▶</text>
+        <text x="56" y="86" fill="#fafafa" font-family="ui-monospace, Menlo, monospace" font-size="13">●  {copy.project}</text>
+        <text x="56" y="114" fill="#a1a1aa" font-family="ui-monospace, Menlo, monospace" font-size="13">○  {copy.global}</text>
+        <text x="24" y="280" fill="#71717a" font-family="ui-monospace, Menlo, monospace" font-size="11">{copy.hintScope}</text>
+      </g>
+
+      {/* 4 kit */}
+      <g class="akh-scene akh-s4">
+        <text x="24" y="56" fill="#a7f3d0" font-family="ui-monospace, Menlo, monospace" font-size="13">◇  {copy.kitPrompt}</text>
+        <rect class="akh-bar" x="20" y="68" width="280" height="26" rx="6"></rect>
+        <text x="36" y="86" fill="#fbbf24" font-family="ui-monospace, Menlo, monospace" font-size="13">▶</text>
+        <text x="56" y="86" fill="#fafafa" font-family="ui-monospace, Menlo, monospace" font-size="13">●  {copy.engineer}</text>
+        <text x="56" y="114" fill="#a1a1aa" font-family="ui-monospace, Menlo, monospace" font-size="13">○  {copy.marketing}</text>
+        <text x="24" y="280" fill="#71717a" font-family="ui-monospace, Menlo, monospace" font-size="11">{copy.hintKit}</text>
+      </g>
+
+      {/* 5 runtime */}
+      <g class="akh-scene akh-s5">
+        <text x="24" y="56" fill="#a7f3d0" font-family="ui-monospace, Menlo, monospace" font-size="13">◇  {copy.runtimePrompt}</text>
+        <rect class="akh-bar" x="20" y="68" width="240" height="26" rx="6"></rect>
+        <text x="36" y="86" fill="#fbbf24" font-family="ui-monospace, Menlo, monospace" font-size="13">▶</text>
+        <text x="56" y="86" fill="#fafafa" font-family="ui-monospace, Menlo, monospace" font-size="13">●  codex</text>
+        <text class="akh-check akh-check-a" x="200" y="86" fill="#86efac" font-family="ui-monospace, Menlo, monospace" font-size="13">◉</text>
+        <text x="56" y="114" fill="#a1a1aa" font-family="ui-monospace, Menlo, monospace" font-size="13">○  claude-code</text>
+        <text x="56" y="142" fill="#a1a1aa" font-family="ui-monospace, Menlo, monospace" font-size="13">○  omp</text>
+        <text class="akh-check akh-check-b" x="200" y="142" fill="#86efac" font-family="ui-monospace, Menlo, monospace" font-size="13">◉</text>
+        <text x="56" y="170" fill="#a1a1aa" font-family="ui-monospace, Menlo, monospace" font-size="13">○  pi</text>
+        <text x="56" y="198" fill="#a1a1aa" font-family="ui-monospace, Menlo, monospace" font-size="13">○  cursor</text>
+        <text x="24" y="280" fill="#71717a" font-family="ui-monospace, Menlo, monospace" font-size="11">{copy.hintRuntime}</text>
+      </g>
+
+      {/* 6 channel */}
+      <g class="akh-scene akh-s6">
+        <text x="24" y="56" fill="#a7f3d0" font-family="ui-monospace, Menlo, monospace" font-size="13">◇  {copy.channelPrompt}</text>
+        <rect class="akh-bar" x="20" y="68" width="220" height="26" rx="6"></rect>
+        <text x="36" y="86" fill="#fbbf24" font-family="ui-monospace, Menlo, monospace" font-size="13">▶</text>
+        <text x="56" y="86" fill="#fafafa" font-family="ui-monospace, Menlo, monospace" font-size="13">●  {copy.stable}</text>
+        <text x="56" y="114" fill="#a1a1aa" font-family="ui-monospace, Menlo, monospace" font-size="13">○  {copy.beta}</text>
+        <text x="24" y="280" fill="#71717a" font-family="ui-monospace, Menlo, monospace" font-size="11">{copy.hintChannel}</text>
+      </g>
+
+      {/* 7 commands */}
+      <g class="akh-scene akh-s7">
+        <text x="24" y="56" fill="#a7f3d0" font-family="ui-monospace, Menlo, monospace" font-size="13">◇  {copy.cmdPrompt}</text>
+        <text class="akh-cmd-a" x="24" y="92" fill="#7dd3fc" font-family="ui-monospace, Menlo, monospace" font-size="11">{cmd1}</text>
+        <text class="akh-cmd-b" x="24" y="116" fill="#7dd3fc" font-family="ui-monospace, Menlo, monospace" font-size="11">{cmd2}</text>
+        <text x="24" y="280" fill="#71717a" font-family="ui-monospace, Menlo, monospace" font-size="11">{copy.hintCmd}</text>
+      </g>
+
+      {/* 8 running */}
+      <g class="akh-scene akh-s8">
+        <text x="24" y="56" fill="#a7f3d0" font-family="ui-monospace, Menlo, monospace" font-size="13">◇  {copy.runPrompt}</text>
+        <text x="24" y="92" fill="#a1a1aa" font-family="ui-monospace, Menlo, monospace" font-size="13">{copy.status}</text>
+        <text x="24" y="280" fill="#71717a" font-family="ui-monospace, Menlo, monospace" font-size="11">{copy.hintRun}</text>
+      </g>
+
+      <text x="24" y="298" fill="#3f3f46" font-family="ui-monospace, Menlo, monospace" font-size="13">└</text>
+    </svg>
   </div>
 
   <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
     {keys.map((item) => (
       <div
-        class="akh-tui-key rounded-2xl border border-slate-200/80 bg-white/80 p-4 dark:border-slate-700 dark:bg-slate-900/50"
-        data-akh-key={item.id}
+        class:list={[
+          'akh-tui-key rounded-2xl border border-slate-200/80 bg-white/80 p-4 dark:border-slate-700 dark:bg-slate-900/50',
+          `akh-key-${item.id}`,
+        ]}
       >
         <code class="rounded-md border border-slate-200/80 bg-slate-100 px-1.5 py-0.5 font-mono text-[0.85em] text-teal-700 dark:border-slate-700 dark:bg-slate-800/90 dark:text-teal-300">
           {item.k}
@@ -232,332 +303,30 @@ const keys = isVi
   .akh-tui-demo {
     --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   }
-  .akh-body {
-    transition: opacity 160ms var(--ease-out);
-  }
   .akh-tui-key {
     transition: transform 120ms var(--ease-out);
   }
-  .akh-tui-key[data-hot='1'] {
-    border-color: rgb(45 212 191 / 0.55);
-    box-shadow: 0 0 0 1px rgb(45 212 191 / 0.35);
-    transform: translateY(-1px);
-  }
-  .akh-list {
-    position: relative;
-  }
-  .akh-bar {
-    position: absolute;
-    left: -0.5rem;
-    right: -0.5rem;
-    top: 0;
-    height: 1.75rem;
-    border-radius: 0.5rem;
-    background: #27272a;
-    opacity: 0;
-    pointer-events: none;
-    transition:
-      transform 180ms var(--ease-out),
-      opacity 160ms var(--ease-out);
-  }
-  .akh-opt {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    margin: 0 -0.5rem;
-    padding: 0 0.5rem;
-    border-radius: 0.5rem;
-    color: #a1a1aa;
-    transition: color 160ms var(--ease-out);
-  }
-  .akh-opt[data-on='1'] {
-    color: #fafafa;
-  }
-  .akh-cursor {
-    width: 0.75rem;
-    color: #fbbf24;
-    opacity: 0;
-    transition: opacity 160ms var(--ease-out);
-  }
-  .akh-opt[data-on='1'] .akh-cursor {
-    opacity: 1;
-  }
-  .akh-mark {
-    width: 1rem;
-    color: #71717a;
-    transition: color 160ms var(--ease-out);
-  }
-  .akh-opt[data-on='1'] .akh-mark,
-  .akh-opt[data-checked='1'] .akh-mark {
-    color: #86efac;
-  }
-  .akh-cmd {
-    color: #7dd3fc;
-    white-space: pre-wrap;
-    word-break: break-all;
-    opacity: 0;
-    transform: translateY(0.35em);
-    transition:
-      opacity 180ms var(--ease-out),
-      transform 180ms var(--ease-out);
-  }
-  .akh-cmd[data-in='1'] {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .akh-status {
-    color: #a1a1aa;
-    opacity: 0;
-    transition: opacity 180ms var(--ease-out);
-  }
-  .akh-status[data-in='1'] {
-    opacity: 1;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .akh-body,
-    .akh-tui-key,
-    .akh-opt,
-    .akh-cursor,
-    .akh-mark,
-    .akh-bar,
-    .akh-cmd,
-    .akh-status {
-      transition: none;
+  .akh-key-updown { animation: akh-key 16s var(--ease-out) infinite both; animation-delay: 0s; }
+  .akh-key-enter { animation: akh-key 16s var(--ease-out) infinite both; animation-delay: 2s; }
+  .akh-key-space { animation: akh-key 16s var(--ease-out) infinite both; animation-delay: 8s; }
+  .akh-key-esc { animation: akh-key 16s var(--ease-out) infinite both; animation-delay: 4s; }
+  @keyframes akh-key {
+    0%, 11% {
+      border-color: rgb(45 212 191 / 0.55);
+      transform: translateY(-1px);
     }
-    .akh-tui-key[data-hot='1'] {
+    13%, 100% {
+      border-color: rgb(226 232 240 / 0.8);
       transform: none;
     }
-    .akh-cmd,
-    .akh-status {
-      opacity: 1;
+  }
+  :global(.dark) .akh-tui-key {
+    /* keep dark border as default; animation overrides when hot */
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .akh-tui-key {
+      animation: none;
       transform: none;
     }
   }
 </style>
-
-<script>
-  type Item = { label: string; active?: boolean; checked?: boolean };
-  type Frame = {
-    prompt: string;
-    items?: Item[];
-    commands?: string[];
-    status?: string;
-    hint: string;
-    key: string;
-  };
-
-  const sleep = (ms: number) => new Promise((resolve) => window.setTimeout(resolve, ms));
-
-  function el(tag: string, className: string, text?: string) {
-    const node = document.createElement(tag);
-    if (className) node.className = className;
-    if (text !== undefined) node.textContent = text;
-    return node;
-  }
-
-  function setHot(keys: NodeListOf<HTMLElement>, key: string) {
-    keys.forEach((node) => {
-      node.dataset.hot = node.dataset.akhKey === key ? '1' : '0';
-    });
-  }
-
-  function ensureLayout(screen: HTMLElement) {
-    if (screen.dataset.ready === '1') return;
-    screen.replaceChildren();
-    screen.append(el('div', 'text-zinc-300', '┌  AgentKit Helper'));
-    screen.append(el('div', 'text-zinc-600', '│'));
-    const prompt = el('div', 'text-emerald-200 akh-prompt');
-    screen.append(prompt);
-    screen.append(el('div', 'text-zinc-600', '│'));
-    screen.append(el('div', 'akh-body'));
-    screen.append(el('div', 'text-zinc-300', '└'));
-    screen.dataset.ready = '1';
-  }
-
-  function fillBody(screen: HTMLElement, hint: HTMLElement, frame: Frame, commands?: string[]) {
-    ensureLayout(screen);
-    const prompt = screen.querySelector('.akh-prompt');
-    if (prompt) prompt.textContent = `◇  ${frame.prompt}`;
-    const body = screen.querySelector('.akh-body');
-    if (!body) return;
-    body.replaceChildren();
-
-    if (frame.items) {
-      const list = el('div', 'akh-list');
-      list.append(el('div', 'akh-bar'));
-      for (const item of frame.items) {
-        const row = el('div', 'akh-opt');
-        row.append(el('span', 'akh-cursor', '▶'));
-        row.append(el('span', 'akh-mark', '○'));
-        row.append(el('span', '', item.label));
-        list.append(row);
-      }
-      body.append(list);
-      body.append(el('div', 'text-zinc-600', '│'));
-    }
-
-    const lines = commands ?? frame.commands;
-    if (lines?.length) {
-      for (const command of lines) {
-        const line = el('div', 'akh-cmd');
-        line.textContent = `│  ${command}`;
-        body.append(line);
-      }
-      body.append(el('div', 'text-zinc-600', '│'));
-    }
-
-    if (frame.status) {
-      const status = el('div', 'akh-status');
-      status.textContent = `│  ${frame.status}`;
-      body.append(status);
-      body.append(el('div', 'text-zinc-600', '│'));
-    }
-
-    hint.textContent = frame.hint;
-  }
-
-  function slideBar(screen: HTMLElement, index: number) {
-    const bar = screen.querySelector<HTMLElement>('.akh-bar');
-    const rows = [...screen.querySelectorAll<HTMLElement>('.akh-opt')];
-    if (!bar || !rows[index]) {
-      if (bar) bar.style.opacity = '0';
-      return;
-    }
-    bar.style.opacity = '1';
-    bar.style.transform = `translateY(${index * 100}%)`;
-  }
-
-  function syncItems(screen: HTMLElement, items: Item[]) {
-    const rows = [...screen.querySelectorAll<HTMLElement>('.akh-opt')];
-    let active = 0;
-    items.forEach((item, index) => {
-      const row = rows[index];
-      if (!row) return;
-      row.dataset.on = item.active ? '1' : '0';
-      row.dataset.checked = item.checked ? '1' : '0';
-      if (item.active) active = index;
-      const mark = row.querySelector('.akh-mark');
-      if (mark) mark.textContent = item.checked ? '◉' : item.active ? '●' : '○';
-    });
-    slideBar(screen, active);
-  }
-
-  function itemsAt(frame: Frame, cursor: number, checked: number[]): Item[] {
-    return (frame.items ?? []).map((item, index) => ({
-      ...item,
-      active: index === cursor,
-      checked: checked.includes(index),
-    }));
-  }
-
-  async function playFrame(
-    screen: HTMLElement,
-    hint: HTMLElement,
-    keys: NodeListOf<HTMLElement>,
-    frame: Frame,
-    reduced: boolean,
-  ) {
-    const body = screen.querySelector<HTMLElement>('.akh-body');
-    if (body && !reduced) {
-      body.style.opacity = '0';
-      await sleep(160);
-    }
-    fillBody(screen, hint, frame, frame.commands);
-    const nextBody = screen.querySelector<HTMLElement>('.akh-body');
-    if (nextBody) nextBody.style.opacity = '1';
-    syncItems(screen, itemsAt(frame, 0, []));
-    setHot(keys, 'updown');
-    if (reduced) {
-      syncItems(screen, frame.items ?? []);
-      setHot(keys, frame.key);
-      screen.querySelectorAll('.akh-cmd, .akh-status').forEach((node) => {
-        (node as HTMLElement).dataset.in = '1';
-      });
-      return;
-    }
-
-    const items = frame.items ?? [];
-    const activeIdx = Math.max(0, items.findIndex((item) => item.active));
-    const checkedIdx = items.map((item, index) => (item.checked ? index : -1)).filter((index) => index >= 0);
-
-    if (items.length) {
-      if (checkedIdx.length > 1) {
-        const checked: number[] = [];
-        const last = Math.max(activeIdx, ...checkedIdx);
-        for (let i = 0; i <= last; i++) {
-          syncItems(screen, itemsAt(frame, i, checked));
-          setHot(keys, 'updown');
-          await sleep(180);
-          if (items[i]?.checked) {
-            checked.push(i);
-            syncItems(screen, itemsAt(frame, i, checked));
-            setHot(keys, 'space');
-            await sleep(200);
-          }
-        }
-        setHot(keys, 'enter');
-        await sleep(220);
-      } else {
-        for (let i = 0; i <= activeIdx; i++) {
-          syncItems(screen, itemsAt(frame, i, []));
-          setHot(keys, i === activeIdx ? frame.key : 'updown');
-          await sleep(i === activeIdx ? 220 : 180);
-        }
-      }
-    }
-
-    if (frame.commands?.length || frame.status) {
-      setHot(keys, 'enter');
-      const reveal = [...screen.querySelectorAll<HTMLElement>('.akh-cmd, .akh-status')];
-      for (let i = 0; i < reveal.length; i += 1) {
-        reveal[i].dataset.in = '1';
-        await sleep(50);
-      }
-      await sleep(500);
-      return;
-    }
-
-    setHot(keys, frame.key);
-    await sleep(420);
-  }
-
-  function startDemo(root: HTMLElement) {
-    if (root.dataset.akhBound === '1') return;
-    const json = root.querySelector('[data-akh-frames]');
-    const screen = root.querySelector<HTMLElement>('[data-akh-screen]');
-    const hint = root.querySelector<HTMLElement>('[data-akh-hint]');
-    if (!json || !screen || !hint) return;
-    let frames: Frame[] = [];
-    try {
-      frames = JSON.parse(json.textContent || '[]');
-    } catch {
-      return;
-    }
-    if (!frames.length) return;
-    root.dataset.akhBound = '1';
-    const keys = root.querySelectorAll<HTMLElement>('[data-akh-key]');
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    const run = async () => {
-      if (reduced) {
-        await playFrame(screen, hint, keys, frames[Math.min(6, frames.length - 1)], true);
-        return;
-      }
-      while (root.isConnected) {
-        for (const frame of frames) {
-          if (!root.isConnected) return;
-          await playFrame(screen, hint, keys, frame, false);
-        }
-      }
-    };
-    void run();
-  }
-
-  const boot = () => {
-    document.querySelectorAll<HTMLElement>('[data-akh-tui]').forEach(startDemo);
-  };
-  document.addEventListener('DOMContentLoaded', boot);
-  document.addEventListener('astro:page-load', boot);
-</script>
