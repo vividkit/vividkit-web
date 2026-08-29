@@ -55,60 +55,6 @@ const desktopTips = isVi
       : 'Quick checks when the ak CLI, Desktop App, or AgentKit runtime adapters misbehave — not the ClaudeKit troubleshooting surface.'}
   />
 
-  <AkCallout
-    variant="warn"
-    title={
-      isVi
-        ? 'Known issue 2.7.0: uninstall snapshot từ chối tên file ..*'
-        : 'Known issue 2.7.0: uninstall snapshot rejects a `..*` filename'
-    }
-  >
-    {isVi ? (
-      <>
-        Nếu <AkInlineCode text="ak kit uninstall … --yes" /> dừng với{' '}
-        <code class="rounded bg-amber-100/80 px-1 font-mono text-[0.85em] dark:bg-amber-950/50">
-          kit uninstall: snapshot config dir
-        </code>
-        {' / '}
-        <code class="rounded bg-amber-100/80 px-1 font-mono text-[0.85em] dark:bg-amber-950/50">
-          backups: walk produced path outside scope
-        </code>
-        {' '}
-        (thường file tạm <AkInlineCode text="~/.codex/..codex-global-state.json.bak.tmp-*" />; dry-run có thể vẫn ok):
-        xem workaround + cài lại clean — đừng xóa{' '}
-        <AkInlineCode text="~/.codex" /> / <AkInlineCode text="~/.claude" />.
-        {' '}
-        <a
-          class="font-semibold text-amber-900 underline-offset-2 hover:underline dark:text-amber-100"
-          href={translatePath('/guides/agentkit/clean-reinstall')}
-        >
-          Cài lại clean AgentKit →
-        </a>
-      </>
-    ) : (
-      <>
-        If <AkInlineCode text="ak kit uninstall … --yes" /> stops with{' '}
-        <code class="rounded bg-amber-100/80 px-1 font-mono text-[0.85em] dark:bg-amber-950/50">
-          kit uninstall: snapshot config dir
-        </code>
-        {' / '}
-        <code class="rounded bg-amber-100/80 px-1 font-mono text-[0.85em] dark:bg-amber-950/50">
-          backups: walk produced path outside scope
-        </code>
-        {' '}
-        (often <AkInlineCode text="~/.codex/..codex-global-state.json.bak.tmp-*" />; dry-run may still succeed):
-        use the quarantine workaround and clean reinstall page — do not delete{' '}
-        <AkInlineCode text="~/.codex" /> / <AkInlineCode text="~/.claude" />.
-        {' '}
-        <a
-          class="font-semibold text-amber-900 underline-offset-2 hover:underline dark:text-amber-100"
-          href={translatePath('/guides/agentkit/clean-reinstall')}
-        >
-          Clean reinstall of AgentKit →
-        </a>
-      </>
-    )}
-  </AkCallout>
 
   <AkCallout variant="tip" title={isVi ? 'Cần gỡ sạch rồi cài lại stable?' : 'Need a clean reinstall of stable?'}>
     {isVi ? (

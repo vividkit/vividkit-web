@@ -28,9 +28,9 @@ const matrix = isVi
       },
       {
         cmd: 'ak update',
-        updates: 'Hỏi từng bước: CLI ak → kit trên máy → kit project',
+        updates: 'Làm mới kit do AgentKit cài. TTY: wizard CLI → kit máy → kit project',
         not: 'Bỏ qua bước nào thì không đụng phần đó',
-        when: 'Sau bản release: muốn làm mới theo hướng dẫn từng bước',
+        when: 'Sau bản release: xem trước rồi ghi (--yes)',
       },
       {
         cmd: 'ak update --global',
@@ -66,9 +66,9 @@ const matrix = isVi
       },
       {
         cmd: 'ak update',
-        updates: 'Walks through: ak CLI → machine kits → project kits',
+        updates: 'AgentKit-owned kit refreshes. TTY wizard: CLI → machine kits → project kits',
         not: 'Skips any step you decline',
-        when: 'After a release: refresh guided step by step',
+        when: 'After a release: preview, then apply with --yes',
       },
       {
         cmd: 'ak update --global',
@@ -201,6 +201,12 @@ const wizardSteps = isVi
       code={`# Check only — no install
 ak self-update --check
 
+# Verified changelog, no install
+ak self-update --changelog
+
+# Plan without writing
+ak self-update --dry-run
+
 # Apply signed CLI update
 ak self-update --yes
 
@@ -234,8 +240,8 @@ ak self-update --disable-auto-update`}
     eyebrow="2 · Kits"
     title={isVi ? 'Làm mới nội dung Kit: ak update' : 'Refresh Kit content: ak update'}
     desc={isVi
-      ? 'Chỉ sửa file do AgentKit cài (không đụng file bạn tự tạo). Không thêm --yes thì thường chỉ xem trước; thêm --yes mới ghi thật.'
-      : 'Only updates files AgentKit installed (not files you created yourself). Without --yes you usually get a preview; add --yes to apply for real.'}
+      ? 'Chỉ sửa file do AgentKit cài (không đụng file bạn tự tạo). Không --yes trên non-TTY thì chỉ xem trước (exit 3). TTY: wizard từng bước; --yes đồng ý hết.'
+      : 'Only updates files AgentKit installed (not files you created). Without --yes, non-TTY stays preview (exit 3). TTY: step-by-step wizard; --yes accepts every step.'}
   >
     <AkCompare
       left={{
@@ -307,7 +313,10 @@ ak update --global --target claude-code,codex --yes`}
       </h3>
       <AkCodeBlock
         title="shell"
-        code={`# Preview current directory project
+      code={`# Force preview (exit 0) even if you would apply
+ak update --dry-run
+
+# Preview current directory project
 ak update ./myproj
 # or from inside the project:
 ak update
@@ -323,6 +332,10 @@ ak update --kits engineer --force --yes
 
 # Show unified diffs in preview
 ak update --show-diff
+
+# Remote registry (default) vs local kit source
+ak update --remote --yes
+ak update --local --kits-dir ./kits --yes
 
 # Scripted envelope
 ak update --kits engineer --yes --json --no-interactive`}
@@ -343,7 +356,8 @@ ak update --kits engineer --yes --json --no-interactive`}
         code={`# shorthand --channel beta
 ak update --beta --yes
 ak update --channel stable --yes
-# --beta conflicts with --channel stable`}
+# --beta conflicts with --channel stable
+ak update --dry-run --channel stable`}
       />
     </div>
   </AkSection>
@@ -396,13 +410,11 @@ ak kit refresh engineer --local --kits-dir ./kits --yes`}
             ],
           },
           {
-            q: isVi ? 'Sau release, làm mới “hết” (CLI + kits)' : 'After release, refresh “everything” (CLI + kits)',
+            q: isVi ? 'Sau release, làm mới CLI + kits' : 'After release, refresh CLI + kits',
             parts: [
+              { kind: 'cmd' as const, text: 'ak update --dry-run' },
+              { kind: 'sep' as const, text: '→' },
               { kind: 'cmd' as const, text: 'ak update --yes' },
-              {
-                kind: 'note' as const,
-                text: isVi ? '(đồng ý hết các bước hỏi)' : '(accept every step)',
-              },
             ],
           },
           {
@@ -461,7 +473,7 @@ ak kit refresh engineer --local --kits-dir ./kits --yes`}
     {isVi ? (
       <>
         <AkInlineCode text="ak update" /> / <AkInlineCode text="ak self-update" /> làm mới kit hoặc CLI — không thay quy trình gỡ kit ownership-aware rồi reset state.
-        Muốn gỡ sạch và cài lại stable (kèm known issue snapshot 2.7.0): xem{' '}
+        Muốn gỡ sạch rồi cài lại stable: xem{' '}
         <a
           class="font-semibold text-amber-900 underline-offset-2 hover:underline dark:text-amber-100"
           href={translatePath('/guides/agentkit/clean-reinstall')}
@@ -473,7 +485,7 @@ ak kit refresh engineer --local --kits-dir ./kits --yes`}
     ) : (
       <>
         <AkInlineCode text="ak update" /> / <AkInlineCode text="ak self-update" /> refresh kits or the CLI — they do not replace an ownership-aware kit uninstall plus state reset.
-        For clean reinstall of stable (including the 2.7.0 uninstall snapshot known issue), see{' '}
+        For a clean reinstall of stable, see{' '}
         <a
           class="font-semibold text-amber-900 underline-offset-2 hover:underline dark:text-amber-100"
           href={translatePath('/guides/agentkit/clean-reinstall')}

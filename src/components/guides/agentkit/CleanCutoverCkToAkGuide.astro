@@ -1,7 +1,7 @@
 ---
 // Internal sources (do not publish on the page):
-// Authority: AgentKit stable v2.7.0 (58e75f4), ClaudeKit stable v4.5.2 (07d8c24).
-// Beta-only note: AK v2.8.0-beta.4 paid remote migrate preflight fix (afe0cf68).
+// Authority: AgentKit stable v2.14.0 (405ea37), ClaudeKit stable v4.5.2 (07d8c24).
+// Paid remote migrate preflight: PreflightRemoteMigrateKit on 2.14.0 (not v2.8.0-beta.4).
 // - ak login requires --email | --license-key | --api-key: apps/cli/internal/commands/authcmd/commands.go
 // - --remote is release default; explicit flag deprecates: apps/cli/internal/commands/kitcmd/init.go
 // - doctor exits 0 unless --exit-on-fail: apps/cli/internal/commands/doctorcmd/doctor.go
@@ -912,7 +912,7 @@ ak audit engineer --project-dir . --json
             <a class="font-semibold underline-offset-2 hover:underline" href={translatePath('/guides/migrate-claudekit-to-agentkit')}>
               ak migrate
             </a>{' '}
-            — xem trước mặc định; thường giữ file bạn đã chỉnh. Chi tiết (kể cả bug kit trả phí trên stable) nằm ở trang soft migrate.
+            — xem trước mặc định; thường giữ file bạn đã chỉnh. Chi tiết nằm ở trang soft migrate. Trên 2.14.0, preflight migrate remote không còn chặn kit trả phí bằng luật local/dev.
           </>
         ) : (
           <>
@@ -920,7 +920,7 @@ ak audit engineer --project-dir . --json
             <a class="font-semibold underline-offset-2 hover:underline" href={translatePath('/guides/migrate-claudekit-to-agentkit')}>
               ak migrate
             </a>{' '}
-            — preview by default; usually keeps files you customized. Details (including the stable paid-kit apply bug) live on the soft-migrate page.
+            — preview by default; usually keeps files you customized. Details live on the soft-migrate page. On 2.14.0, remote migrate preflight no longer rejects paid kits with the local/dev rule.
           </>
         )}
       </li>

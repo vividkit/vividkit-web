@@ -27,129 +27,129 @@ const isVi = currentLang === 'vi';
 const groupLabels: Record<string, { en: string; vi: string; descEn: string; descVi: string }> = {
   essentials: {
     en: 'Start Here (Essentials)',
-    vi: 'Bắt đầu (Essentials)',
+    vi: 'Bắt đầu từ đây',
     descEn: 'Core path: Level → Ask → Brainstorm → Plan → Execute',
-    descVi: 'Lộ trình cốt lõi: Level → Ask → Brainstorm → Plan → Execute',
+    descVi: 'Lộ trình chính: Level → Ask → Brainstorm → Plan → Execute',
   },
   planResearch: {
     en: 'Plan & Research',
-    vi: 'Lên kế hoạch & Nghiên cứu',
+    vi: 'Lên kế hoạch & nghiên cứu',
     descEn: 'Brainstorming, planning, advisory, and codebase exploration',
-    descVi: 'Brainstorm, planning, tư vấn và khám phá codebase',
+    descVi: 'Lên ý tưởng, lập kế hoạch, xin lời khuyên, và đọc mã nguồn',
   },
   designFrontend: {
     en: 'Design & Frontend',
-    vi: 'Design & Frontend',
+    vi: 'Design & frontend',
     descEn: 'UI/UX, frontend, diagrams, and visual tools',
-    descVi: 'UI/UX, frontend, diagram và công cụ visual',
+    descVi: 'Giao diện, frontend, sơ đồ, và công cụ hình ảnh',
   },
   aiMultimodal: {
     en: 'AI Generation & Multimodal',
-    vi: 'AI Generation & Multimodal',
+    vi: 'Tạo nội dung AI',
     descEn: 'Image/video generation, vision, and media processing',
-    descVi: 'Tạo image/video, vision và xử lý media',
+    descVi: 'Tạo ảnh/video, đọc hình, và xử lý media',
   },
   buildShip: {
     en: 'Build & Ship',
-    vi: 'Build & Ship',
+    vi: 'Xây và ship',
     descEn: 'Backend, frameworks, deploy, and ship pipelines',
-    descVi: 'Backend, framework, deploy và pipeline ship',
+    descVi: 'Backend, framework, deploy, và đưa lên production',
   },
   gitVersionControl: {
     en: 'Git & Version Control',
-    vi: 'Git & Version Control',
-    descEn: 'Git ops, worktrees, and PR review',
-    descVi: 'Git, worktree và review PR',
+    vi: 'Git & phiên bản',
+    descEn: 'Git ops, GitHub via gh, worktrees, and PR review',
+    descVi: 'Git, GitHub (gh), worktree, và review pull request',
   },
   testDebug: {
     en: 'Test & Debug',
-    vi: 'Test & Debug',
+    vi: 'Test & debug',
     descEn: 'Testing, debugging, review, and scenarios',
-    descVi: 'Test, debug, review và scenario',
+    descVi: 'Viết test, gỡ lỗi, review, và kịch bản kiểm thử',
   },
   securityIntel: {
     en: 'Security & Intelligence',
-    vi: 'Bảo mật & Intelligence',
+    vi: 'Bảo mật',
     descEn: 'Security audits, scans, and threat intel',
-    descVi: 'Audit bảo mật, scan và threat intel',
+    descVi: 'Rà soát bảo mật, quét lỗ hổng, và thông tin mối đe dọa',
   },
   docsContent: {
     en: 'Docs & Content',
-    vi: 'Docs & Nội dung',
+    vi: 'Tài liệu & nội dung',
     descEn: 'Documentation, writing, and content tools',
-    descVi: 'Tài liệu, viết và công cụ nội dung',
+    descVi: 'Viết tài liệu, soạn nội dung, và công cụ chữ',
   },
   mcpIntegration: {
     en: 'MCP & Integration',
-    vi: 'MCP & Tích hợp',
+    vi: 'MCP & tích hợp',
     descEn: 'MCP servers, agents, payments, and integrations',
-    descVi: 'MCP server, agent, thanh toán và tích hợp',
+    descVi: 'Máy chủ MCP, agent, thanh toán, và tích hợp',
   },
   sessionMgmt: {
     en: 'Session Management',
-    vi: 'Quản lý session',
-    descEn: 'Handoffs, journals, and context',
-    descVi: 'Handoff, journal và context',
+    vi: 'Quản lý phiên làm việc',
+    descEn: 'Handoffs, handover to another runtime, journals, and context',
+    descVi: 'Bàn giao việc, chuyển sang runtime khác, nhật ký, và ngữ cảnh',
   },
   projectTracking: {
     en: 'Project Tracking',
     vi: 'Theo dõi dự án',
     descEn: 'Progress, kanban, and project organization',
-    descVi: 'Tiến độ, kanban và tổ chức dự án',
+    descVi: 'Theo dõi tiến độ, bảng kanban, và sắp xếp dự án',
   },
   utilities: {
     en: 'Utilities',
     vi: 'Tiện ích',
-    descEn: 'Skill tools, packaging, and general utilities',
-    descVi: 'Công cụ skill, packaging và tiện ích chung',
+    descEn: 'ak CLI, skill tools, packaging, and general utilities',
+    descVi: 'CLI ak, công cụ skill, đóng gói, và tiện ích chung',
   },
   strategyResearch: {
     en: 'Strategy & Research',
-    vi: 'Chiến lược & Nghiên cứu',
+    vi: 'Chiến lược & nghiên cứu',
     descEn: 'Market research, personas, and planning',
-    descVi: 'Research thị trường, persona và planning',
+    descVi: 'Nghiên cứu thị trường, chân dung khách, và lập kế hoạch',
   },
   contentCopy: {
     en: 'Content & Copy',
-    vi: 'Content & Copy',
+    vi: 'Nội dung & copy',
     descEn: 'Content hubs, marketing copy, and playbooks',
-    descVi: 'Content hub, copy marketing và playbook',
+    descVi: 'Kho nội dung, copy marketing, và playbook',
   },
   campaign: {
     en: 'Campaign Management',
-    vi: 'Quản lý campaign',
+    vi: 'Quản lý chiến dịch',
     descEn: 'Campaigns, ads, and affiliate channels',
-    descVi: 'Campaign, ads và kênh affiliate',
+    descVi: 'Chiến dịch, quảng cáo, và kênh affiliate',
   },
   seoAnalytics: {
     en: 'SEO & Analytics',
-    vi: 'SEO & Analytics',
+    vi: 'SEO & phân tích',
     descEn: 'Search optimization and performance dashboards',
-    descVi: 'Tối ưu tìm kiếm và dashboard hiệu suất',
+    descVi: 'Tối ưu tìm kiếm và bảng theo dõi hiệu suất',
   },
   designVisual: {
     en: 'Design & Visual',
-    vi: 'Design & Visual',
-    descEn: 'Brand, logos, banners, and marketing visuals',
-    descVi: 'Brand, logo, banner và visual marketing',
+    vi: 'Thiết kế & hình ảnh',
+    descEn: 'Brand, logos, banners, motion design, and marketing visuals',
+    descVi: 'Thương hiệu, logo, banner, chuyển động, và hình marketing',
   },
   emailSocial: {
     en: 'Email & Social',
-    vi: 'Email & Social',
+    vi: 'Email & mạng xã hội',
     descEn: 'Email sequences and social outreach',
-    descVi: 'Chuỗi email và social outreach',
+    descVi: 'Chuỗi email và tiếp cận trên mạng xã hội',
   },
   growthCro: {
     en: 'Growth & CRO',
-    vi: 'Growth & CRO',
+    vi: 'Tăng trưởng & CRO',
     descEn: 'Launch, pricing, funnels, and conversion',
-    descVi: 'Launch, pricing, funnel và conversion',
+    descVi: 'Ra mắt, giá, funnel, và tối ưu chuyển đổi',
   },
   videoMedia: {
     en: 'Video & Media',
-    vi: 'Video & Media',
-    descEn: 'Video, YouTube, slides, and multimodal media',
-    descVi: 'Video, YouTube, slide và media đa phương thức',
+    vi: 'Video & media',
+    descEn: 'Video, motion graphics routing, YouTube, slides, and multimodal media',
+    descVi: 'Video, đồ họa chuyển động, YouTube, slide, và media đa dạng',
   },
 };
 
@@ -319,10 +319,10 @@ const mktGroups = groupSkills(akMarketingSkills, akMarketingGroupOrder);
 
 const legend = isVi
   ? [
-      { sample: 'archive', label: 'Subcommand', desc: 'Nhánh skill: /ak:plan archive', tone: 'purple' },
-      { sample: '[task]', label: 'Argument', desc: 'Tham số vị trí / placeholder', tone: 'slate' },
+      { sample: 'archive', label: 'Nhánh lệnh', desc: 'Ví dụ: /ak:plan archive', tone: 'purple' },
+      { sample: '[task]', label: 'Tham số', desc: 'Chỗ điền nội dung, ví dụ [task]', tone: 'slate' },
       { sample: '--fast', label: 'Flag', desc: 'Tùy chọn dạng --flag', tone: 'teal' },
-      { sample: 'hint', label: 'argument-hint', desc: 'Cú pháp đầy đủ từ SKILL.md', tone: 'amber' },
+      { sample: 'hint', label: 'Cú pháp đầy đủ', desc: 'argument-hint trong kit', tone: 'amber' },
     ]
   : [
       { sample: 'archive', label: 'Subcommand', desc: 'Skill branch: /ak:plan archive', tone: 'purple' },
@@ -352,26 +352,27 @@ const accent = {
 };
 ---
 
+{/* browse-by-category find-by-goal — required AgentKit commands discovery modes */}
 <div class="space-y-8 mt-6" data-ak-skills-root>
   <section class="relative overflow-hidden rounded-[2rem] border border-slate-200/80 bg-stone-50 shadow-sm dark:border-white/10 dark:bg-slate-950">
     <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(20,184,166,0.14),transparent_30%),radial-gradient(circle_at_85%_10%,rgba(168,85,247,0.12),transparent_28%)]"></div>
     <div class="relative space-y-6 p-6 sm:p-8 lg:p-10">
       <div class="inline-flex items-center gap-2 rounded-full border border-violet-200 bg-white/70 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.24em] text-violet-700 shadow-sm dark:border-violet-400/20 dark:bg-white/5 dark:text-violet-300">
         <span class="h-2 w-2 rounded-full bg-violet-500"></span>
-        {isVi ? 'Bảng skill' : 'Skills cheatsheet'}
+        {isVi ? 'Cheatsheet skill' : 'Skills cheatsheet'}
       </div>
       <div class="max-w-3xl space-y-3">
         <h1 class="font-heading text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl dark:text-white">
-          {isVi ? 'AgentKit Skills — Engineer & Marketing' : 'AgentKit Skills — Engineer & Marketing'}
+          {isVi ? 'Skill AgentKit — Engineer & Marketing' : 'AgentKit Skills — Engineer & Marketing'}
         </h1>
         <p class="text-lg text-slate-600 dark:text-slate-300">
           {isVi
-            ? 'Catalog skill theo nhóm workflow, kèm subcommand / argument / flag. Claude Code & Cursor: /ak:<skill> · Codex: $ak:<skill>.'
+            ? 'Danh sách skill của Engineer Kit và Marketing Kit, xếp theo việc bạn đang làm, kèm nhánh lệnh, tham số và flag. Claude Code & Cursor: /ak:<skill> · Codex: $ak:<skill>.'
             : 'Skill catalog by workflow group, with subcommands, args, and flags. Claude Code & Cursor: /ak:<skill> · Codex: $ak:<skill>.'}
         </p>
         <p class="text-sm text-slate-500 dark:text-slate-400">
           {isVi
-            ? 'Engineer = core + skill engineer. Marketing = skill domain. Không giả định 1:1 với /ck:*. Cú pháp lấy từ argument-hint và SKILL.md của kit.'
+            ? 'Engineer Kit: skill cốt lõi + kỹ thuật. Marketing Kit: skill marketing. Đừng giả định trùng 1:1 với /ck:*. Cú pháp lấy từ kit đang cài.'
             : 'Engineer = core + engineer skills. Marketing owns domain skills. Do not assume 1:1 with /ck:*. Syntax from kit argument-hint and SKILL.md.'}
         </p>
       </div>
@@ -668,13 +669,13 @@ const accent = {
         href: '/guides/agentkit/workflows',
         label: isVi ? 'Workflows — chuỗi skill' : 'Workflows — skill chains',
         desc: isVi
-          ? 'Khi nào xâu plan → cook → fix → ship (và --advice)'
+          ? 'Khi nào nối plan → cook → fix → ship (và --advice)'
           : 'When to chain plan → cook → fix → ship (and --advice)',
       },
       {
         href: '/guides/agentkit/cli-commands',
         label: isVi ? 'CLI ak nhanh' : 'AgentKit CLI quick ref',
-        desc: isVi ? 'Lệnh ak: install, update, kit…' : 'ak commands: install, update, kit…',
+        desc: isVi ? 'Các lệnh ak: install, update, kit…' : 'ak commands: install, update, kit…',
       },
       {
         href: '/guides/agentkit/building-blocks',

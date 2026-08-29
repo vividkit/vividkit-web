@@ -38,6 +38,20 @@ pnpm-debug.log*
 reference/**/*
 !reference/skills-registry.json
 !reference/skills-registry-index.json
+!reference/ak-tracking/
+!reference/ak-tracking/manifest.json
+!reference/ak-tracking/baselines/
+!reference/ak-tracking/baselines/stable/
+!reference/ak-tracking/baselines/stable/accepted.json
+!reference/ak-tracking/baselines/beta/
+!reference/ak-tracking/baselines/beta/accepted.json
+!reference/ak-tracking/receipts/
+!reference/ak-tracking/receipts/pages/
+!reference/ak-tracking/receipts/pages/*.json
+!reference/ak-tracking/receipts/workarounds/
+!reference/ak-tracking/receipts/workarounds/*.json
+!reference/ak-tracking/receipts/releases/
+!reference/ak-tracking/receipts/releases/*.json
 plans/**/*
 !plans/templates/*
 

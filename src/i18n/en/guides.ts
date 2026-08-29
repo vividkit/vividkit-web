@@ -59,7 +59,7 @@ export const guides = {
   'guides.agentkit.updating.title': 'Update AgentKit CLI & Kits',
   'guides.agentkit.updating.description': 'ak self-update vs ak update vs kit refresh — what each AgentKit command updates',
   'guides.agentkit.clean_reinstall.title': 'Clean reinstall of AgentKit',
-  'guides.agentkit.clean_reinstall.description': 'Ownership-aware kit uninstall, optional state reset, and reinstall of AgentKit stable — including the 2.7.0 uninstall snapshot known issue',
+  'guides.agentkit.clean_reinstall.description': 'Ownership-aware kit uninstall, optional state reset, and reinstall of AgentKit stable',
   'guides.agentkit.troubleshooting.title': 'AgentKit Troubleshooting',
   'guides.agentkit.troubleshooting.description': 'Quick checks when the AgentKit CLI, Desktop App, or runtime adapters misbehave',
   'guides.migrate_ck_to_ak.title': 'Migrate ClaudeKit to AgentKit',

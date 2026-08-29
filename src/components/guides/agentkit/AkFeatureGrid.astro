@@ -1,7 +1,7 @@
 ---
 import LLMProviderIcon from '@/components/ui/LLMProviderIcon.astro';
 
-type BrandProvider = 'claude' | 'openai' | 'cursor' | 'windsurf' | 'gemini' | 'google';
+type BrandProvider = 'claude' | 'openai' | 'cursor' | 'windsurf' | 'gemini' | 'google' | 'grok' | 'deepseek';
 
 interface Feature {
   title: string;
@@ -10,6 +10,9 @@ interface Feature {
   icon?: string;
   /** lobe-icons brand mark via LLMProviderIcon (claude, openai/Codex, cursor, …) */
   brandProvider?: BrandProvider;
+  /** Local or absolute brand mark when lobe-icons has no provider. */
+  brandSrc?: string;
+  brandAlt?: string;
   accent?: 'teal' | 'cyan' | 'violet' | 'amber' | 'blue' | 'rose' | 'emerald';
 }
 
@@ -56,7 +59,7 @@ const accentMap = {
   {features.map((f, i) => {
     const accent = f.accent || (['teal', 'cyan', 'violet', 'amber', 'blue', 'emerald'] as const)[i % 6];
     const tones = accentMap[accent];
-    const useBrand = Boolean(f.brandProvider);
+    const useBrand = Boolean(f.brandProvider || f.brandSrc);
     return (
       <article class="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-lg dark:border-slate-700/70 dark:bg-slate-900/50 dark:hover:border-slate-600">
         <div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-slate-300/80 to-transparent dark:via-slate-600/50"></div>
@@ -64,11 +67,13 @@ const accentMap = {
           <div
             class:list={[
               'flex h-11 w-11 shrink-0 items-center justify-center rounded-xl',
-              useBrand ? ['border', tones.brandWell] : ['text-white', tones.well],
+              useBrand ? ['border', 'overflow-hidden', tones.brandWell] : ['text-white', tones.well],
             ]}
           >
             {f.brandProvider ? (
               <LLMProviderIcon provider={f.brandProvider} size={22} class="shrink-0" />
+            ) : f.brandSrc ? (
+              <img src={f.brandSrc} alt={f.brandAlt || f.title} width="44" height="44" class="h-11 w-11 object-cover" />
             ) : f.icon ? (
               <span class="text-sm font-bold tracking-wide">{f.icon}</span>
             ) : (
