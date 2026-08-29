@@ -21,45 +21,45 @@ const runtimes = isVi
       {
         brandProvider: 'claude' as const,
         title: 'Claude Code',
-        body: 'Native hoặc plugin delivery (plugin cần chọn rõ). Skills, agents, slash commands, rules, hooks và status line có thể active ở project hoặc user scope.',
+        body: 'Đưa kit vào Claude Code (native hoặc plugin — plugin phải chọn rõ). Skills, agents, slash commands, rules, hooks và status line có thể bật ở project hoặc user.',
         accent: 'teal' as const,
       },
       {
         brandProvider: 'openai' as const,
         title: 'Codex',
-        body: 'Native skill discovery và agent dispatch. Hook support partial — một số group drop/narrow. Không status line. Command files có thể chỉ là supporting content.',
+        body: 'Đưa kit vào Codex: tìm skill và gọi agent. Hook chỉ một phần — một số nhóm bị bỏ hoặc thu hẹp. Không có status line. File command có thể chỉ là nội dung hỗ trợ.',
         accent: 'violet' as const,
       },
       {
         brandProvider: 'cursor' as const,
         title: 'Cursor',
-        body: 'Adapter chiếu skills, agents, rules, hooks. Coverage live install/update/invocation có thể chưa đầy đủ — đừng suy ra full parity.',
+        body: 'Đưa kit vào Cursor: skills, agents, rules, hooks. Cài, cập nhật và gọi live có thể chưa đủ trên mọi setup — đừng suy ra ngang Claude Code.',
         accent: 'cyan' as const,
       },
       {
         brandProvider: 'grok' as const,
         title: 'Grok',
-        body: 'Có trên ak update --target/--runtime (cùng claude-code, codex, cursor) ở stable 2.14.0 và beta 2.15.0-beta.4. ak doctor --adapter chưa liệt kê grok.',
+        body: 'Đưa kit vào Grok. Skills và agents theo bề mặt Grok hỗ trợ — đừng giả định đủ hook, status line hay slash command như Claude Code.',
         accent: 'amber' as const,
       },
       {
         brandSrc: '/guides/agentkit/pi.svg',
         brandAlt: 'Pi',
         title: 'Pi',
-        body: 'Native harness pi. Adapter chiếu Kit vào Pi coding agent.',
+        body: 'Đưa kit vào Pi ở phạm vi project. Không dùng cho cài global từ registry remote.',
         accent: 'blue' as const,
       },
       {
         brandSrc: '/guides/agentkit/omp.svg',
         brandAlt: 'Oh My Pi',
         title: 'Oh My Pi',
-        body: 'Native harness omp. Adapter chiếu Kit vào Oh My Pi.',
+        body: 'Đưa kit vào Oh My Pi ở project và trên máy (user/global). Khác Pi — không gộp thành một runtime.',
         accent: 'rose' as const,
       },
       {
         brandProvider: 'deepseek' as const,
         title: 'DeepSeek Harness',
-        body: 'Native harness dsh. Adapter chiếu Kit vào DeepSeek Harness.',
+        body: 'Đưa kit vào DeepSeek Harness từ kit đã có trên máy. Không lấy kit từ registry remote.',
         accent: 'emerald' as const,
       },
     ]
@@ -67,45 +67,45 @@ const runtimes = isVi
       {
         brandProvider: 'claude' as const,
         title: 'Claude Code',
-        body: 'Native or explicit plugin delivery. Skills, agents, slash commands, rules, hooks, and status line can be active at project or user scope.',
+        body: 'Delivers the Kit into Claude Code (native or plugin — pick the plugin path explicitly). Skills, agents, slash commands, rules, hooks, and status line can be active at project or user scope.',
         accent: 'teal' as const,
       },
       {
         brandProvider: 'openai' as const,
         title: 'Codex',
-        body: 'Native skill discovery and agent dispatch. Partial Hook support — some groups drop/narrow. No status line. Command files may stay supporting content.',
+        body: 'Delivers the Kit into Codex: skill discovery and agent dispatch. Hook support is partial — some groups drop or narrow. No status line. Command files may stay supporting content.',
         accent: 'violet' as const,
       },
       {
         brandProvider: 'cursor' as const,
         title: 'Cursor',
-        body: 'Projects skills, agents, rules, hooks. Live install/update/invocation coverage is incomplete across setups — do not infer full parity.',
+        body: 'Delivers the Kit into Cursor: skills, agents, rules, hooks. Live install, update, and invocation can be incomplete across setups — do not infer Claude Code parity.',
         accent: 'cyan' as const,
       },
       {
         brandProvider: 'grok' as const,
         title: 'Grok',
-        body: 'Listed on ak update --target/--runtime (with claude-code, codex, cursor) on stable 2.14.0 and beta 2.15.0-beta.4. ak doctor --adapter still lists only codex, claude-code, cursor.',
+        body: 'Delivers the Kit into Grok. Skills and agents follow what Grok actually exposes — do not assume Claude Code hook, status line, or slash-command coverage.',
         accent: 'amber' as const,
       },
       {
         brandSrc: '/guides/agentkit/pi.svg',
         brandAlt: 'Pi',
         title: 'Pi',
-        body: 'Native harness pi. Adapter delivers the Kit into the Pi coding agent.',
+        body: 'Delivers the Kit into Pi at project scope. Not for global install from the remote registry.',
         accent: 'blue' as const,
       },
       {
         brandSrc: '/guides/agentkit/omp.svg',
         brandAlt: 'Oh My Pi',
         title: 'Oh My Pi',
-        body: 'Native harness omp. Adapter delivers the Kit into Oh My Pi.',
+        body: 'Delivers the Kit into Oh My Pi at project and machine (user/global) scope. Separate from Pi — do not treat them as one runtime.',
         accent: 'rose' as const,
       },
       {
         brandProvider: 'deepseek' as const,
         title: 'DeepSeek Harness',
-        body: 'Native harness dsh. Adapter delivers the Kit into DeepSeek Harness.',
+        body: 'Delivers the Kit into DeepSeek Harness from kits already on the machine. Does not fetch kits from the remote registry.',
         accent: 'emerald' as const,
       },
     ];
@@ -175,14 +175,6 @@ const runtimes = isVi
     title={isVi ? 'Mỗi runtime một thực tế' : 'Each runtime has its own reality'}
   >
     <AkFeatureGrid features={runtimes} columns={2} />
-
-    <div class="mt-4">
-      <AkCallout variant="info" title={isVi ? 'Chú ý' : 'Note'}>
-        {isVi
-          ? 'Pi, Oh My Pi và DeepSeek Harness chưa thấy trên ak update --target hay ak doctor --adapter (2.14.0 / 2.15.0-beta.4).'
-          : 'Pi, Oh My Pi, and DeepSeek Harness are not on ak update --target or ak doctor --adapter (2.14.0 / 2.15.0-beta.4).'}
-      </AkCallout>
-    </div>
 
     <article class="mt-4 overflow-hidden rounded-2xl border border-slate-200/80 bg-gradient-to-br from-slate-50 via-white to-amber-50/40 p-5 shadow-sm dark:border-slate-700 dark:from-slate-900/80 dark:via-slate-900/50 dark:to-amber-950/20 sm:p-6">
       <div class="flex flex-wrap items-start justify-between gap-3">
