@@ -43,6 +43,8 @@ export const guides = {
   'guides.agentkit.runtime_support.description': 'How AgentKit adapters deliver Kit content to coding agents',
   'guides.agentkit.desktop_app.title': 'AgentKit Desktop App',
   'guides.agentkit.desktop_app.description': 'Visual control center for local AgentKit state — separate purchase from Kits',
+  'guides.agentkit.helper.title': 'AgentKit Helper',
+  'guides.agentkit.helper.description': 'Community TUI that asks a few choices, shows the official ak command, and runs it',
   'guides.agentkit.getting_started.title': 'AgentKit Installation',
   'guides.agentkit.getting_started.description': 'Install the ak CLI, sign in, and run your first AgentKit Kit',
   'guides.agentkit.configuration.title': 'AgentKit Configuration',
