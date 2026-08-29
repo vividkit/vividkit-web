@@ -1,0 +1,93 @@
+import type { SkillInfographic } from '@/data/guides/how-ck-works';
+
+const data: SkillInfographic = {
+  id: "ak-git",
+  command: "/ak:git",
+  kit: "engineer",
+  header: {
+    titleEn: "/ak:git",
+    titleVi: "/ak:git",
+    taglineEn: "Git operations through isolated git-manager workflows for commits, pushes, PRs, merges, merge-PR CI watches, and GitHub native stacked PRs.",
+    taglineVi: "Thao tác Git qua workflow git-manager tách biệt cho commit, push, PR, merge, merge PR kèm CI watch và stacked PR native của GitHub.",
+  },
+  hardGate: {
+    type: "critical",
+    titleEn: "SECRET SCAN STOPS COMMIT",
+    titleVi: "QUÉT SECRET CHẶN COMMIT",
+    contentEn: "Stage and inspect changes, scan staged diff for secrets before committing, split mixed commits, and stop if secrets are detected. Default mode asks the user to choose cm, cp, pr, merge, merge-pr, or stack.",
+    contentVi: "Stage và kiểm tra thay đổi, quét secret trong diff đã stage trước khi commit, tách commit khi nội dung bị trộn và dừng nếu phát hiện secret. Khi không có argument, hỏi user chọn cm, cp, pr, merge, merge-pr hoặc stack.",
+  },
+  processFlow: [
+    { number: 1, titleEn: "Select Operation", titleVi: "Chọn thao tác", descEn: "If no arguments are supplied, ask the user to choose cm, cp, pr, merge, merge-pr, or stack.", descVi: "Nếu không có argument, hỏi user chọn cm, cp, pr, merge, merge-pr hoặc stack." },
+    { number: 2, titleEn: "Delegate Git Manager", titleVi: "Giao git-manager", descEn: "Execute git workflows via the git-manager subagent to isolate verbose output and pass concision/context-engineering rules.", descVi: "Chạy workflow Git qua subagent git-manager để tách output dài và truyền quy tắc súc tích/context-engineering." },
+    { number: 3, titleEn: "Stage + Analyze", titleVi: "Stage + phân tích", descEn: "Stage changes, inspect cached stat and file list, then understand scope before creating commits or PRs.", descVi: "Stage thay đổi, xem stat và danh sách file đã cached, rồi hiểu phạm vi trước khi tạo commit hoặc PR." },
+    { number: 4, titleEn: "Security Check", titleVi: "Kiểm tra bảo mật", descEn: "Scan staged diff for api keys, tokens, passwords, secrets, and credentials; if found, stop and warn the user.", descVi: "Quét diff đã stage để tìm API key, token, password, secret và credential; nếu thấy thì dừng và cảnh báo user." },
+    { number: 5, titleEn: "Decide Split", titleVi: "Quyết định tách commit", descEn: "Split when types, scopes, config/deps, or many unrelated files are mixed; keep single when same type/scope and small.", descVi: "Tách khi trộn type, scope, config/deps hoặc nhiều file không liên quan; giữ một commit khi cùng type/scope và nhỏ." },
+    { number: 6, titleEn: "Commit Conventionally", titleVi: "Commit đúng chuẩn", descEn: "Use type(scope): description and only feat, fix, or perf prefixes for .claude directory changes.", descVi: "Dùng dạng type(scope): description và với thay đổi trong .claude chỉ dùng prefix feat, fix hoặc perf." },
+    { number: 7, titleEn: "Push or PR", titleVi: "Push hoặc PR", descEn: "For cp and pr, push or create the PR using the target/source branch semantics and linked issue evidence.", descVi: "Với cp và pr, push hoặc tạo PR theo ngữ nghĩa branch đích/nguồn và bằng chứng issue liên quan." },
+    { number: 8, titleEn: "Merge or Stack", titleVi: "Merge hoặc stack", descEn: "For merge-pr, refuse conflicts/red CI/CHANGES_REQUESTED and watch post-merge CI; for stack, use gh stack lifecycle with gated history rewrites.", descVi: "Với merge-pr, từ chối conflict/CI đỏ/CHANGES_REQUESTED và theo dõi CI sau merge; với stack, dùng lifecycle gh stack và gate khi rewrite lịch sử." },
+    { number: 9, titleEn: "Report Status", titleVi: "Báo trạng thái", descEn: "Return staged counts, security result, commit hash/message, and push status in the documented compact output format.", descVi: "Trả số file đã stage, kết quả bảo mật, hash/message commit và trạng thái push theo format ngắn đã định." },
+  ],
+  corePrinciplesEn: [
+    "Git operations run through git-manager for isolation and concise reporting.",
+    "Security scan happens before commit, and secrets stop the workflow.",
+    "Commit split follows type, scope, dependency/config boundaries, and unrelated-file count.",
+    "Stacked PR history rewrites and multi-PR merges are user-gated.",
+    "Report only what command output proves.",
+  ],
+  corePrinciplesVi: [
+    "Thao tác Git chạy qua git-manager để cách ly và báo cáo gọn.",
+    "Quét bảo mật xảy ra trước commit, và secret sẽ chặn workflow.",
+    "Tách commit theo type, scope, ranh giới dependency/config và số file không liên quan.",
+    "Rewrite lịch sử stacked PR và merge nhiều PR phải có gate từ user.",
+    "Chỉ báo những gì output lệnh chứng minh được.",
+  ],
+  expertiseAreasEn: [
+    "Staging, conventional commits, and split-commit decisions",
+    "Commit plus push workflows",
+    "Pull request creation with remote diff and issue linking",
+    "Branch merge and PR merge with CI readiness/watch",
+    "GitHub native stacked PRs through gh stack",
+  ],
+  expertiseAreasVi: [
+    "Stage, conventional commit và quyết định tách commit",
+    "Workflow commit kèm push",
+    "Tạo pull request với remote diff và link issue",
+    "Merge branch và merge PR kèm kiểm tra/theo dõi CI",
+    "Stacked PR native của GitHub qua gh stack",
+  ],
+  workflowModes: [
+    { flag: "cm", modeEn: "Commit", modeVi: "Commit", research: "workflow-commit", redTeam: "Secret scan + split decision", validation: "Commit hash", cookFlag: "stage + commit" },
+    { flag: "cp", modeEn: "Commit + push", modeVi: "Commit + push", research: "workflow-push", redTeam: "Push rejection handling", validation: "Remote push output", cookFlag: "stage + commit + push" },
+    { flag: "pr", modeEn: "Pull request", modeVi: "Pull request", research: "workflow-pr", redTeam: "Remote diff + issue links", validation: "PR URL", cookFlag: "to/from branch" },
+    { flag: "merge", modeEn: "Branch merge", modeVi: "Merge branch", research: "workflow-merge", redTeam: "Conflict handling", validation: "Merge result", cookFlag: "to/from branch" },
+    { flag: "merge-pr", modeEn: "Merge PR + CI", modeVi: "Merge PR + CI", research: "workflow-merge-pr", redTeam: "Conflicts/red CI/review state", validation: "Post-merge CI green", cookFlag: "PR ref required" },
+    { flag: "stack", modeEn: "Stacked PRs", modeVi: "Stacked PR", research: "workflow-stacked-prs", redTeam: "User-gated rewrites", validation: "gh stack lifecycle state", cookFlag: "init/add/submit/sync/rebase/merge" },
+  ],
+  skillStack: [
+    { name: "git-manager", type: "agent" },
+    { name: "ak:context-engineering", type: "skill" },
+    { name: "git", type: "tool" },
+    { name: "gh", type: "tool" },
+    { name: "gh stack", type: "tool" },
+  ],
+  reportOutput: {
+    titleEn: "Compact Git Status",
+    titleVi: "Trạng thái Git ngắn gọn",
+    patternEn: "✓ staged / ✓ security / ✓ commit / ✓ pushed",
+    patternVi: "✓ staged / ✓ security / ✓ commit / ✓ pushed",
+    locationEn: "Final response",
+    locationVi: "Phản hồi cuối",
+    descEn: "Documents staged file count and line delta, secret-scan result, commit hash and message, and push status.",
+    descVi: "Ghi số file và delta dòng đã stage, kết quả quét secret, hash và message commit, cùng trạng thái push.",
+  },
+  promptExamples: [
+    { labelEn: "Commit changes", labelVi: "Commit thay đổi", command: "/ak:git cm", whenEn: "Local changes need staging, split decision, secret scan, and conventional commit messages.", whenVi: "Thay đổi local cần stage, quyết định tách commit, quét secret và message conventional commit.", expectedEn: "Stages, scans, splits if needed, commits, and reports hash/message compactly.", expectedVi: "Stage, quét, tách nếu cần, commit và báo hash/message ngắn gọn.", recommended: true },
+    { labelEn: "Commit and push", labelVi: "Commit và push", command: "/ak:git cp", whenEn: "Changes should be committed and pushed after the same safety checks.", whenVi: "Thay đổi cần commit rồi push sau cùng các kiểm tra an toàn.", expectedEn: "Runs commit workflow plus push handling, including push rejection advice if needed.", expectedVi: "Chạy workflow commit kèm xử lý push, gồm gợi ý khi push bị reject nếu có." },
+    { labelEn: "Open PR", labelVi: "Mở PR", command: "/ak:git pr main feature/auth-cleanup", whenEn: "A branch needs a pull request to a target branch.", whenVi: "Một branch cần mở pull request vào branch đích.", expectedEn: "Uses PR workflow, target/source branch semantics, remote diff, and related issue search.", expectedVi: "Dùng workflow PR, ngữ nghĩa branch đích/nguồn, remote diff và tìm issue liên quan." },
+    { labelEn: "Merge PR", labelVi: "Merge PR", command: "/ak:git merge-pr 42", whenEn: "A GitHub PR should be merged only after readiness gates pass.", whenVi: "GitHub PR chỉ nên merge sau khi vượt các gate sẵn sàng.", expectedEn: "Refuses conflicts, red CI, or CHANGES_REQUESTED, merges via gh when ready, and watches post-merge CI.", expectedVi: "Từ chối conflict, CI đỏ hoặc CHANGES_REQUESTED, merge bằng gh khi sẵn sàng và theo dõi CI sau merge." },
+    { labelEn: "Stacked PRs", labelVi: "Stacked PR", command: "/ak:git stack", whenEn: "The workflow uses GitHub native stacked PRs.", whenVi: "Workflow dùng stacked PR native của GitHub.", expectedEn: "Drives gh stack lifecycle and gates history-rewriting or multi-PR merge steps with the user.", expectedVi: "Điều khiển lifecycle gh stack và xin gate user cho rewrite lịch sử hoặc merge nhiều PR." },
+  ],
+};
+
+export default data;

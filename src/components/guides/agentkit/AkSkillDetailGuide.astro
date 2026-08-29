@@ -1,0 +1,45 @@
+---
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
+import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import InfographicGenericCommandQuickRef from '@/components/guides/how-ck-works/infographic/infographic-generic-command-quick-ref.astro';
+import AkNextLinks from './AkNextLinks.astro';
+
+interface Props {
+  lang?: Language;
+  kit: 'engineer' | 'marketing';
+  data: SkillInfographic;
+}
+
+const { lang, kit, data } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === 'vi';
+const translatePath = useTranslatedPath(currentLang);
+const cheatsheetHref = translatePath('/guides/agentkit/skills');
+const kitLabel = kit === 'marketing'
+  ? (isVi ? 'Marketing Kit' : 'Marketing Kit')
+  : (isVi ? 'Engineer Kit' : 'Engineer Kit');
+---
+
+<div class="space-y-8 mt-6">
+  <nav class="flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+    <a class="font-semibold underline-offset-2 hover:underline hover:text-teal-700 dark:hover:text-teal-300" href={cheatsheetHref}>
+      {isVi ? 'Cheatsheet skill' : 'Skills cheatsheet'}
+    </a>
+    <span aria-hidden="true">/</span>
+    <span>{kitLabel}</span>
+    <span aria-hidden="true">/</span>
+    <span class="font-mono text-slate-700 dark:text-slate-200">{data.command}</span>
+  </nav>
+
+  <InfographicGenericCommandQuickRef data={data} lang={currentLang} plainHeadline />
+
+  <AkNextLinks
+    lang={currentLang}
+    title={isVi ? 'Tiếp theo' : 'Next'}
+    links={[
+      { href: '/guides/agentkit/skills', label: isVi ? 'Tất cả skill' : 'All skills', desc: isVi ? 'Cheatsheet Engineer + Marketing' : 'Engineer + Marketing cheatsheet' },
+      { href: '/guides/agentkit/workflows', label: isVi ? 'Workflows' : 'Workflows', desc: isVi ? 'Chuỗi skill theo việc' : 'Skill sequences by job' },
+      { href: '/guides/agentkit/how-it-works', label: isVi ? 'Cách AgentKit hoạt động' : 'How AgentKit works', desc: isVi ? 'Registry → review' : 'Registry → review' },
+    ]}
+  />
+</div>

@@ -1,5 +1,5 @@
 ---
-import { getLangFromUrl, type Language } from '@/i18n';
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
 import {
   akEngineerSkills,
   akMarketingSkills,
@@ -22,6 +22,7 @@ interface Props {
 const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const isVi = currentLang === 'vi';
+const translatePath = useTranslatedPath(currentLang);
 
 /** Workflow/GTM labels — not SKILL.md metadata. */
 const groupLabels: Record<string, { en: string; vi: string; descEn: string; descVi: string }> = {
@@ -499,7 +500,9 @@ const accent = {
                   {s.step && (
                     <span class={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold ${styles.bg} ${styles.text}`}>{s.step}</span>
                   )}
-                  <code class={`rounded-lg px-2 py-1 font-mono text-xs font-bold ${accent.engineer.chip}`}>{s.command}</code>
+                  <a href={translatePath(`/guides/agentkit/skills/engineer/${s.id}`)} class={`rounded-lg px-2 py-1 font-mono text-xs font-bold ${accent.engineer.chip} hover:underline`}>
+                    {s.command}
+                  </a>
                   {s.isBeta && (
                     <span class="rounded bg-purple-100 px-1.5 py-0.5 text-[9px] font-medium uppercase text-purple-600 dark:bg-purple-900/30 dark:text-purple-400">beta</span>
                   )}
@@ -515,6 +518,9 @@ const accent = {
                 </p>
               )}
               <p class="mt-2 flex-1 text-xs leading-5 text-slate-600 dark:text-slate-400">{skillDesc(s)}</p>
+              <a href={translatePath(`/guides/agentkit/skills/engineer/${s.id}`)} class="mt-2 text-[11px] font-semibold text-teal-700 hover:underline dark:text-teal-300">
+                {isVi ? 'Xem giải thích trực quan →' : 'Open visual guide →'}
+              </a>
               {(s.subcommands?.length || s.args?.length || s.flags?.length) ? (
                 <div class="mt-2 space-y-1.5 border-t border-slate-100 pt-2 dark:border-slate-800/60">
                   {s.subcommands && s.subcommands.length > 0 && (
@@ -613,7 +619,9 @@ const accent = {
                   {s.step && (
                     <span class={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold ${styles.bg} ${styles.text}`}>{s.step}</span>
                   )}
-                  <code class={`rounded-lg px-2 py-1 font-mono text-xs font-bold ${accent.marketing.chip}`}>{s.command}</code>
+                  <a href={translatePath(`/guides/agentkit/skills/marketing/${s.id}`)} class={`rounded-lg px-2 py-1 font-mono text-xs font-bold ${accent.marketing.chip} hover:underline`}>
+                    {s.command}
+                  </a>
                   {s.isBeta && (
                     <span class="rounded bg-purple-100 px-1.5 py-0.5 text-[9px] font-medium uppercase text-purple-600 dark:bg-purple-900/30 dark:text-purple-400">beta</span>
                   )}
@@ -629,6 +637,9 @@ const accent = {
                 </p>
               )}
               <p class="mt-2 flex-1 text-xs leading-5 text-slate-600 dark:text-slate-400">{skillDesc(s)}</p>
+              <a href={translatePath(`/guides/agentkit/skills/marketing/${s.id}`)} class="mt-2 text-[11px] font-semibold text-fuchsia-700 hover:underline dark:text-fuchsia-300">
+                {isVi ? 'Xem giải thích trực quan →' : 'Open visual guide →'}
+              </a>
               {(s.subcommands?.length || s.args?.length || s.flags?.length) ? (
                 <div class="mt-2 space-y-1.5 border-t border-slate-100 pt-2 dark:border-slate-800/60">
                   {s.subcommands && s.subcommands.length > 0 && (

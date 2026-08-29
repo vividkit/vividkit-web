@@ -1,0 +1,98 @@
+import type { SkillInfographic } from '@/data/guides/how-ck-works';
+
+const data: SkillInfographic = {
+  id: "ak-fix",
+  command: "/ak:fix",
+  kit: "engineer",
+  header: {
+    titleEn: "/ak:fix",
+    titleVi: "/ak:fix",
+    taglineEn: "Root-cause bug fixing for errors, tests, lint, CI/CD, UI bugs, and code issues with scout, diagnosis, verification, and prevention gates.",
+    taglineVi: "Sửa lỗi theo nguyên nhân gốc cho error, test, lint, CI/CD, bug UI và vấn đề code với các cổng scout, chẩn đoán, xác minh và phòng ngừa.",
+  },
+  hardGate: {
+    type: "critical",
+    titleEn: "ROOT CAUSE FIRST",
+    titleVi: "NGUYÊN NHÂN GỐC TRƯỚC",
+    contentEn: "Do not propose or implement fixes before Scout + Diagnose. Capture exact symptom, repro, expected vs actual, root cause with file evidence, why now, and blast radius. Three failed attempts means stop and question the architecture.",
+    contentVi: "Không đề xuất hoặc triển khai fix trước Scout + Diagnose. Phải có triệu chứng chính xác, repro, expected/actual, nguyên nhân gốc kèm bằng chứng file, lý do xuất hiện bây giờ và blast radius. Ba lần thử hỏng thì dừng và xem lại kiến trúc.",
+  },
+  processFlow: [
+    { number: 1, titleEn: "Frame Intent", titleVi: "Đóng khung ý định", descEn: "Capture outcome, constraints, non-goals, and acceptance criteria before choosing a mode or diagnosis path.", descVi: "Ghi outcome, ràng buộc, non-goal và tiêu chí chấp nhận trước khi chọn mode hoặc hướng chẩn đoán." },
+    { number: 2, titleEn: "Select Mode", titleVi: "Chọn mode", descEn: "Use auto by default, review for critical production work, quick for trivial lint/type issues, parallel for independent issues, or ultra for five read-only fix plans.", descVi: "Mặc định dùng auto, review cho việc production quan trọng, quick cho lint/type nhỏ, parallel cho lỗi độc lập, hoặc ultra để lấy năm kế hoạch fix read-only." },
+    { number: 3, titleEn: "Scout First", titleVi: "Scout trước", descEn: "Map project type, affected files, callers, tests, recent commits, and matching code conventions before hypotheses.", descVi: "Map loại project, file bị ảnh hưởng, caller, test, commit gần đây và convention code liên quan trước khi lập giả thuyết." },
+    { number: 4, titleEn: "Diagnose", titleVi: "Chẩn đoán", descEn: "Capture pre-fix state, exact error, reproduction, expected versus actual, cause evidence, why now, and blast radius.", descVi: "Ghi trạng thái trước fix, lỗi chính xác, cách tái hiện, expected so với actual, bằng chứng nguyên nhân, lý do hiện tại và blast radius." },
+    { number: 5, titleEn: "Assess Complexity", titleVi: "Đánh giá độ phức tạp", descEn: "Classify simple, moderate, complex, or parallel and select the corresponding workflow and orchestration depth.", descVi: "Phân loại simple, moderate, complex hoặc parallel rồi chọn workflow và mức orchestration tương ứng." },
+    { number: 6, titleEn: "Select Cause-Aligned Fix", titleVi: "Chọn fix đúng nguyên nhân", descEn: "For a direct safe repair, proceed; for multiple options or architecture impact, brainstorm and plan after diagnosis.", descVi: "Nếu sửa trực tiếp an toàn thì làm; nếu có nhiều phương án hoặc ảnh hưởng kiến trúc, brainstorm và lập plan sau chẩn đoán." },
+    { number: 7, titleEn: "Implement Minimally", titleVi: "Triển khai tối thiểu", descEn: "Fix the root cause using existing patterns while preserving non-goals and avoiding adjacent symptoms.", descVi: "Sửa nguyên nhân gốc theo pattern sẵn có, giữ non-goal và không ôm thêm triệu chứng lân cận." },
+    { number: 8, titleEn: "Verify + Prevent", titleVi: "Xác minh + phòng ngừa", descEn: "Re-run exact repro, affected tests, blast-radius checks, lint/type/build where required, public contract checks, and add regression/prevention guards.", descVi: "Chạy lại repro đúng như cũ, test liên quan, kiểm tra blast-radius, lint/type/build khi cần, kiểm tra public contract và thêm regression/prevention guard." },
+    { number: 9, titleEn: "Finalize", titleVi: "Hoàn tất", descEn: "Report confidence, root cause, changed files, prevention, side-effect sweep, docs impact, project status, and journal unless skipped.", descVi: "Báo độ tự tin, nguyên nhân gốc, file đã đổi, biện pháp phòng ngừa, quét side-effect, tác động docs, trạng thái project và journal trừ khi được bỏ qua." },
+  ],
+  corePrinciplesEn: [
+    "Scout and diagnose before any fix proposal.",
+    "Symptoms are not root causes; probably is not evidence.",
+    "Fix the smallest cause-aligned surface that preserves stated non-goals.",
+    "Verification must prove the original symptom is gone and the blast radius is safe.",
+    "Failed attempts change the framing; they do not justify more guessing.",
+  ],
+  corePrinciplesVi: [
+    "Scout và chẩn đoán trước mọi đề xuất fix.",
+    "Triệu chứng không phải nguyên nhân gốc; có lẽ không phải bằng chứng.",
+    "Sửa bề mặt nhỏ nhất đúng nguyên nhân và giữ non-goal đã nêu.",
+    "Xác minh phải chứng minh triệu chứng gốc đã hết và blast radius an toàn.",
+    "Các lần thử thất bại buộc đổi framing, không biện minh cho đoán mò thêm.",
+  ],
+  expertiseAreasEn: [
+    "Bug, error, lint, type, test, CI/CD, and UI issue repair",
+    "Codebase scout, recent-change analysis, and affected-test mapping",
+    "Structured diagnosis with debug and sequential-thinking techniques",
+    "Complexity routing across quick, standard, deep, parallel, and ultra workflows",
+    "Regression prevention, blast-radius side-effect sweeps, and final reporting",
+  ],
+  expertiseAreasVi: [
+    "Sửa bug, error, lint, type, test, CI/CD và lỗi UI",
+    "Scout codebase, phân tích thay đổi gần đây và map test bị ảnh hưởng",
+    "Chẩn đoán có cấu trúc bằng kỹ thuật debug và sequential-thinking",
+    "Định tuyến độ phức tạp qua workflow quick, standard, deep, parallel và ultra",
+    "Phòng ngừa regression, quét side-effect theo blast radius và báo cáo cuối",
+  ],
+  workflowModes: [
+    { flag: "--auto", modeEn: "Autonomous default", modeVi: "Tự động mặc định", research: "Scout + Diagnose", redTeam: "Auto-approve high-score safe fixes", validation: "Full Step 5", cookFlag: "default" },
+    { flag: "--review", modeEn: "Human-in-loop", modeVi: "Có người duyệt", research: "Scout + Diagnose", redTeam: "Pause at each step", validation: "Full Step 5", cookFlag: "critical/production" },
+    { flag: "--quick", modeEn: "Trivial issues", modeVi: "Lỗi nhỏ", research: "Minimal scout", redTeam: "No deep orchestration", validation: "Exact repro + affected checks", cookFlag: "lint/type/simple" },
+    { flag: "--parallel", modeEn: "Independent issues", modeVi: "Nhiều lỗi độc lập", research: "Per-issue scout", redTeam: "Separate dependency trees", validation: "Per-issue blast radius", cookFlag: "fullstack agents" },
+    { flag: "--ultra", modeEn: "Best-of-5 plan", modeVi: "Chọn plan tốt nhất trong 5", research: "Steps 0-2 once", redTeam: "Five read-only candidates + verifier", validation: "Winner only executes", cookFlag: "conflicts with quick/parallel" },
+  ],
+  outputFlags: [
+    { flag: "--auto", titleEn: "Autonomous mode", titleVi: "Chế độ tự động", descEn: "Default route for simple or moderate issues where the agent can proceed from evidence.", descVi: "Tuyến mặc định cho lỗi đơn giản hoặc vừa phải khi agent có thể tự làm dựa trên bằng chứng.", exampleCommand: "/ak:fix --auto failing login test" },
+    { flag: "--review", titleEn: "Human review mode", titleVi: "Chế độ người duyệt", descEn: "Pause for approval at each step for critical or production-sensitive work.", descVi: "Tạm dừng để duyệt từng bước với việc quan trọng hoặc nhạy cảm production.", exampleCommand: "/ak:fix --review production checkout regression" },
+    { flag: "--quick", titleEn: "Quick mode", titleVi: "Chế độ nhanh", descEn: "Fast scout to diagnose to fix loop for trivial lint, type, or obvious small bugs.", descVi: "Vòng scout, chẩn đoán, fix nhanh cho lint, type hoặc lỗi nhỏ rõ ràng.", exampleCommand: "/ak:fix --quick TypeScript compile error" },
+    { flag: "--parallel", titleEn: "Parallel mode", titleVi: "Chế độ song song", descEn: "Route two or more independent issues to parallel fullstack-developer agents.", descVi: "Chuyển hai hoặc nhiều lỗi độc lập cho các fullstack-developer agent chạy song song.", exampleCommand: "/ak:fix --parallel three unrelated CI failures" },
+    { flag: "--ultra", titleEn: "Ultra verifier mode", titleVi: "Chế độ verifier ultra", descEn: "After one confirmed diagnosis, fan out exactly five read-only fix-plan candidates and let a verifier choose one.", descVi: "Sau một chẩn đoán đã xác nhận, fan out đúng năm ứng viên kế hoạch fix read-only để verifier chọn một.", exampleCommand: "/ak:fix --ultra flaky payment reconciliation bug" },
+    { flag: "--advice", titleEn: "Advisory supervision", titleVi: "Giám sát cố vấn", descEn: "Run under kongming supervision after phases, when stuck, and before high-stakes decisions.", descVi: "Chạy dưới giám sát kongming sau các phase, khi mắc kẹt và trước quyết định rủi ro cao.", exampleCommand: "/ak:fix --advice intermittent production incident" },
+    { flag: "--skip-journal", titleEn: "Skip journal", titleVi: "Bỏ qua journal", descEn: "Skip the automatic /ak:journal finalization step while keeping the rest of finalize mandatory.", descVi: "Bỏ bước /ak:journal tự động ở cuối nhưng vẫn giữ các phần finalize còn lại.", exampleCommand: "/ak:fix --skip-journal typo in validation message" },
+  ],
+  guardrails: [
+    { thoughtEn: "I can see the problem, let me fix it.", thoughtVi: "Tôi thấy lỗi rồi, sửa luôn.", realityEn: "Seeing symptoms is not root cause analysis. Scout first.", realityVi: "Thấy triệu chứng chưa phải phân tích nguyên nhân gốc. Scout trước.", accent: "red" },
+    { thoughtEn: "Quick fix now, investigate later.", thoughtVi: "Sửa nhanh trước, điều tra sau.", realityEn: "Later never comes. Diagnose properly now.", realityVi: "Sau này thường không đến. Chẩn đoán đúng ngay bây giờ.", accent: "amber" },
+    { thoughtEn: "Tests pass, so done.", thoughtVi: "Test pass là xong.", realityEn: "Without prevention and side-effect sweep, the same class can recur or regress elsewhere.", realityVi: "Không có phòng ngừa và quét side-effect thì cùng lớp lỗi có thể tái diễn hoặc gây regression nơi khác.", accent: "violet" },
+  ],
+  skillStack: [
+    { name: "ak:scout", type: "skill" },
+    { name: "ak:debug", type: "skill" },
+    { name: "ak:sequential-thinking", type: "skill" },
+    { name: "ak:problem-solving", type: "skill" },
+    { name: "ak:brainstorm", type: "skill" },
+    { name: "code-reviewer", type: "agent" },
+    { name: "kongming", type: "agent" },
+    { name: "ak:journal", type: "skill" },
+  ],
+  promptExamples: [
+    { labelEn: "Default bug fix", labelVi: "Sửa bug mặc định", command: "/ak:fix login redirects to the wrong page after SSO", whenEn: "There is a concrete bug but no explicit workflow mode.", whenVi: "Có bug cụ thể nhưng chưa chỉ định workflow mode.", expectedEn: "Uses auto mode, frames intent, scouts, diagnoses root cause, fixes minimally, verifies, and finalizes.", expectedVi: "Dùng auto mode, đóng khung ý định, scout, chẩn đoán nguyên nhân gốc, fix tối thiểu, xác minh và hoàn tất.", recommended: true },
+    { labelEn: "Quick compile fix", labelVi: "Sửa compile nhanh", command: "/ak:fix --quick TypeScript error in UserTable", whenEn: "A trivial type or lint issue needs the shorter scout-diagnose-fix loop.", whenVi: "Lỗi type hoặc lint nhỏ cần vòng scout-chẩn đoán-fix ngắn hơn.", expectedEn: "Performs minimal scout, captures exact error, fixes the cause, and reruns the targeted repro.", expectedVi: "Scout tối thiểu, ghi lỗi chính xác, sửa nguyên nhân và chạy lại repro mục tiêu." },
+    { labelEn: "Critical review mode", labelVi: "Chế độ review cho lỗi quan trọng", command: "/ak:fix --review production payment timeout", whenEn: "Production or critical paths require approval checkpoints.", whenVi: "Production hoặc đường quan trọng cần các checkpoint phê duyệt.", expectedEn: "Pauses at each step, never bypasses root-cause gates, and proves blast-radius safety.", expectedVi: "Dừng ở từng bước, không vượt cổng nguyên nhân gốc và chứng minh blast radius an toàn." },
+    { labelEn: "Ultra plan selection", labelVi: "Chọn plan bằng ultra", command: "/ak:fix --ultra race condition in websocket reconnect", whenEn: "The diagnosis is known but fix selection is risky or subtle.", whenVi: "Đã biết chẩn đoán nhưng chọn hướng sửa rủi ro hoặc tinh tế.", expectedEn: "Runs one diagnosis packet, five read-only candidate plans, verifier selection, then one implementation path.", expectedVi: "Chạy một gói chẩn đoán, năm plan ứng viên read-only, verifier chọn, rồi triển khai một đường duy nhất." },
+  ],
+};
+
+export default data;

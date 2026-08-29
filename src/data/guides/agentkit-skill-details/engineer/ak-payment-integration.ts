@@ -1,0 +1,31 @@
+import type { SkillInfographic } from '@/data/guides/how-ck-works';
+
+const data: SkillInfographic = {
+  id: 'ak-payment-integration',
+  command: '/ak:payment-integration',
+  kit: 'engineer',
+  header: { titleEn: '/ak:payment-integration', titleVi: '/ak:payment-integration', taglineEn: 'Integrate checkout, QR payments, subscriptions, webhooks, and multi-provider order flows across SePay, Polar, and Stripe.', taglineVi: 'Tích hợp checkout, thanh toán QR, subscription, webhook và luồng đơn hàng đa provider với SePay, Polar và Stripe.' },
+  processFlow: [
+    { number: 1, titleEn: 'Define payment job', titleVi: 'Xác định việc thanh toán', descEn: 'Clarify checkout, subscription, webhook, VietQR, order management, benefits, or enterprise payment needs.', descVi: 'Làm rõ nhu cầu checkout, subscription, webhook, VietQR, quản lý đơn hàng, benefit hoặc thanh toán enterprise.' },
+    { number: 2, titleEn: 'Select provider', titleVi: 'Chọn provider', descEn: 'Choose SePay for Vietnam/VND bank transfer and VietQR, Polar for global SaaS subscriptions and benefits, or Stripe for enterprise and Connect.', descVi: 'Chọn SePay cho thị trường Việt Nam/VND/chuyển khoản/VietQR, Polar cho SaaS global và benefit, hoặc Stripe cho enterprise và Connect.' },
+    { number: 3, titleEn: 'Read provider refs', titleVi: 'Đọc tài liệu provider', descEn: 'Load the relevant overview, API, SDK, webhook, product, checkout, subscription, or best-practices references.', descVi: 'Đọc reference phù hợp: overview, API, SDK, webhook, product, checkout, subscription hoặc best practices.' },
+    { number: 4, titleEn: 'Model orders', titleVi: 'Mô hình hóa đơn hàng', descEn: 'Design products, pricing, currency, order state, transaction mapping, subscription lifecycle, and multi-provider normalization.', descVi: 'Thiết kế product, giá, tiền tệ, trạng thái đơn hàng, mapping giao dịch, vòng đời subscription và chuẩn hóa đa provider.' },
+    { number: 5, titleEn: 'Build checkout', titleVi: 'Xây checkout', descEn: 'Create provider-specific checkout sessions, QR code flows, payment elements, or hosted checkout based on the selected platform.', descVi: 'Tạo checkout session, luồng QR code, payment element hoặc hosted checkout theo provider đã chọn.' },
+    { number: 6, titleEn: 'Handle webhooks', titleVi: 'Xử lý webhook', descEn: 'Verify signatures or provider payloads, make handlers idempotent, map events to orders, and persist state transitions.', descVi: 'Xác minh chữ ký hoặc payload provider, làm handler idempotent, map event vào đơn hàng và lưu chuyển trạng thái.' },
+    { number: 7, titleEn: 'Deliver benefits', titleVi: 'Cấp quyền lợi', descEn: 'Provision SaaS access, GitHub/Discord benefits, receipts, renewal state, upgrade/downgrade paths, and failure recovery.', descVi: 'Cấp quyền truy cập SaaS, benefit GitHub/Discord, hóa đơn, trạng thái gia hạn, nâng/hạ gói và khôi phục khi lỗi.' },
+    { number: 8, titleEn: 'Verify production', titleVi: 'Xác minh production', descEn: 'Test provider sandbox or local webhooks, rate limits, retries, duplicate events, currency rounding, and reconciliation.', descVi: 'Kiểm tra sandbox hoặc webhook local, rate limit, retry, event trùng, làm tròn tiền tệ và đối soát.' },
+  ],
+  corePrinciplesEn: ['Provider choice follows market and product model', 'Webhooks must be verified and idempotent', 'Order state is the durable source of truth', 'Multi-provider flows require explicit currency and lifecycle mapping'],
+  corePrinciplesVi: ['Chọn provider theo thị trường và mô hình sản phẩm', 'Webhook phải được xác minh và idempotent', 'Trạng thái đơn hàng là nguồn sự thật bền vững', 'Luồng đa provider cần mapping tiền tệ và vòng đời rõ ràng'],
+  expertiseAreasEn: ['SePay VietQR and bank transfers', 'Polar subscriptions and benefits', 'Stripe Checkout, Billing, and Connect', 'Webhook verification', 'Multi-provider order management'],
+  expertiseAreasVi: ['SePay VietQR và chuyển khoản ngân hàng', 'Subscription và benefit của Polar', 'Stripe Checkout, Billing và Connect', 'Xác minh webhook', 'Quản lý đơn hàng đa provider'],
+  promptExamples: [
+    { labelEn: 'SePay QR', labelVi: 'QR SePay', command: '/ak:payment-integration SePay VietQR checkout for VND orders', whenEn: 'Use for Vietnamese bank-transfer payments and QR codes.', whenVi: 'Dùng cho thanh toán chuyển khoản ngân hàng Việt Nam và QR code.', expectedEn: 'SePay references, QR flow, webhook verification, and order-state plan.', expectedVi: 'Tài liệu SePay, luồng QR, xác minh webhook và kế hoạch trạng thái đơn hàng.', recommended: true },
+    { labelEn: 'Polar SaaS', labelVi: 'SaaS với Polar', command: '/ak:payment-integration Polar subscriptions with GitHub benefits', whenEn: 'Use for SaaS subscriptions and automated benefit delivery.', whenVi: 'Dùng cho subscription SaaS và cấp benefit tự động.', expectedEn: 'Polar checkout, subscription lifecycle, benefits, and webhook design.', expectedVi: 'Thiết kế checkout Polar, vòng đời subscription, benefit và webhook.' },
+    { labelEn: 'Stripe enterprise', labelVi: 'Stripe enterprise', command: '/ak:payment-integration Stripe Connect marketplace payouts', whenEn: 'Use for complex global payment infrastructure or Connect platforms.', whenVi: 'Dùng cho hạ tầng thanh toán global phức tạp hoặc nền tảng Connect.', expectedEn: 'Stripe integration path with checkout, Connect, and local testing.', expectedVi: 'Hướng tích hợp Stripe với checkout, Connect và kiểm thử cục bộ.' },
+  ],
+  skillStack: [{ name: 'SePay', type: 'tool' }, { name: 'Polar', type: 'tool' }, { name: 'Stripe', type: 'tool' }, { name: 'Webhook verifiers', type: 'tool' }, { name: 'checkout-helper.js', type: 'tool' }],
+  reportOutput: { titleEn: 'Payment Integration Output', titleVi: 'Output tích hợp thanh toán', patternEn: 'Provider-specific checkout + webhook + order-state implementation', patternVi: 'Checkout + webhook + trạng thái đơn hàng theo provider', descEn: 'A production payment change should include provider rationale, secure webhook handling, idempotent state transitions, and reconciliation/testing notes.', descVi: 'Thay đổi thanh toán production cần có lý do chọn provider, xử lý webhook an toàn, chuyển trạng thái idempotent và ghi chú đối soát/test.' },
+};
+
+export default data;
