@@ -323,14 +323,26 @@ const keys = isVi
     });
   }
 
-  function mount(screen: HTMLElement, hint: HTMLElement, frame: Frame, commands?: string[]) {
+  function ensureLayout(screen: HTMLElement) {
+    if (screen.dataset.ready === '1') return;
     screen.replaceChildren();
     screen.append(el('div', 'text-zinc-300', '┌  AgentKit Helper'));
     screen.append(el('div', 'text-zinc-600', '│'));
-    const prompt = el('div', 'text-emerald-200');
-    prompt.textContent = `◇  ${frame.prompt}`;
+    const prompt = el('div', 'text-emerald-200 akh-prompt');
     screen.append(prompt);
     screen.append(el('div', 'text-zinc-600', '│'));
+    screen.append(el('div', 'akh-body'));
+    screen.append(el('div', 'text-zinc-300', '└'));
+    screen.dataset.ready = '1';
+  }
+
+  function fillBody(screen: HTMLElement, hint: HTMLElement, frame: Frame, commands?: string[]) {
+    ensureLayout(screen);
+    const prompt = screen.querySelector('.akh-prompt');
+    if (prompt) prompt.textContent = `◇  ${frame.prompt}`;
+    const body = screen.querySelector('.akh-body');
+    if (!body) return;
+    body.replaceChildren();
 
     if (frame.items) {
       for (const item of frame.items) {
@@ -338,9 +350,9 @@ const keys = isVi
         row.append(el('span', 'akh-cursor', '▶'));
         row.append(el('span', 'akh-mark', '○'));
         row.append(el('span', '', item.label));
-        screen.append(row);
+        body.append(row);
       }
-      screen.append(el('div', 'text-zinc-600', '│'));
+      body.append(el('div', 'text-zinc-600', '│'));
     }
 
     const lines = commands ?? frame.commands;
@@ -348,19 +360,18 @@ const keys = isVi
       for (const command of lines) {
         const line = el('div', 'akh-cmd');
         line.textContent = `│  ${command}`;
-        screen.append(line);
+        body.append(line);
       }
-      screen.append(el('div', 'text-zinc-600', '│'));
+      body.append(el('div', 'text-zinc-600', '│'));
     }
 
     if (frame.status) {
       const status = el('div', 'text-zinc-400');
       status.textContent = `│  ${frame.status}`;
-      screen.append(status);
-      screen.append(el('div', 'text-zinc-600', '│'));
+      body.append(status);
+      body.append(el('div', 'text-zinc-600', '│'));
     }
 
-    screen.append(el('div', 'text-zinc-300', '└'));
     hint.textContent = frame.hint;
   }
 
@@ -391,7 +402,7 @@ const keys = isVi
     frame: Frame,
     reduced: boolean,
   ) {
-    mount(screen, hint, frame, frame.commands?.map(() => ''));
+    fillBody(screen, hint, frame, frame.commands?.map(() => ''));
     syncItems(screen, itemsAt(frame, 0, []));
     setHot(keys, 'updown');
     if (reduced) {
