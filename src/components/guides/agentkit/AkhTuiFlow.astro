@@ -108,120 +108,6 @@ const copy = isVi
       viewBox="0 0 720 300"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <style>
-        {`
-          .akh-scene {
-            opacity: 0;
-            visibility: hidden;
-            animation-duration: 16s;
-            animation-timing-function: linear;
-            animation-iteration-count: infinite;
-          }
-          .akh-s1 { animation-name: akh-w1; }
-          .akh-s2 { animation-name: akh-w2; }
-          .akh-s3 { animation-name: akh-w3; }
-          .akh-s4 { animation-name: akh-w4; }
-          .akh-s5 { animation-name: akh-w5; }
-          .akh-s6 { animation-name: akh-w6; }
-          .akh-s7 { animation-name: akh-w7; }
-          .akh-s8 { animation-name: akh-w8; }
-          @keyframes akh-w1 {
-            0% { opacity: 0; visibility: hidden; }
-            1% { opacity: 1; visibility: visible; }
-            11.5% { opacity: 1; visibility: visible; }
-            12.5%, 100% { opacity: 0; visibility: hidden; }
-          }
-          @keyframes akh-w2 {
-            0%, 12.5% { opacity: 0; visibility: hidden; }
-            13.5% { opacity: 1; visibility: visible; }
-            24% { opacity: 1; visibility: visible; }
-            25%, 100% { opacity: 0; visibility: hidden; }
-          }
-          @keyframes akh-w3 {
-            0%, 25% { opacity: 0; visibility: hidden; }
-            26% { opacity: 1; visibility: visible; }
-            36.5% { opacity: 1; visibility: visible; }
-            37.5%, 100% { opacity: 0; visibility: hidden; }
-          }
-          @keyframes akh-w4 {
-            0%, 37.5% { opacity: 0; visibility: hidden; }
-            38.5% { opacity: 1; visibility: visible; }
-            49% { opacity: 1; visibility: visible; }
-            50%, 100% { opacity: 0; visibility: hidden; }
-          }
-          @keyframes akh-w5 {
-            0%, 50% { opacity: 0; visibility: hidden; }
-            51% { opacity: 1; visibility: visible; }
-            61.5% { opacity: 1; visibility: visible; }
-            62.5%, 100% { opacity: 0; visibility: hidden; }
-          }
-          @keyframes akh-w6 {
-            0%, 62.5% { opacity: 0; visibility: hidden; }
-            63.5% { opacity: 1; visibility: visible; }
-            74% { opacity: 1; visibility: visible; }
-            75%, 100% { opacity: 0; visibility: hidden; }
-          }
-          @keyframes akh-w7 {
-            0%, 75% { opacity: 0; visibility: hidden; }
-            76% { opacity: 1; visibility: visible; }
-            86.5% { opacity: 1; visibility: visible; }
-            87.5%, 100% { opacity: 0; visibility: hidden; }
-          }
-          @keyframes akh-w8 {
-            0%, 87.5% { opacity: 0; visibility: hidden; }
-            88.5% { opacity: 1; visibility: visible; }
-            99% { opacity: 1; visibility: visible; }
-            100% { opacity: 0; visibility: hidden; }
-          }
-          .akh-bar {
-            fill: #27272a;
-            transform-box: fill-box;
-            transform-origin: top left;
-          }
-          .akh-s5 .akh-bar {
-            animation: akh-rt 16s cubic-bezier(0.23, 1, 0.32, 1) infinite;
-          }
-          @keyframes akh-rt {
-            0%, 51% { transform: translateY(0); }
-            55%, 57% { transform: translateY(28px); }
-            61%, 100% { transform: translateY(56px); }
-          }
-          .akh-check { opacity: 0; }
-          .akh-check-a { animation: akh-check-a 16s linear infinite; }
-          .akh-check-b { animation: akh-check-b 16s linear infinite; }
-          @keyframes akh-check-a {
-            0%, 52% { opacity: 0; }
-            54%, 62% { opacity: 1; }
-            62.5%, 100% { opacity: 0; }
-          }
-          @keyframes akh-check-b {
-            0%, 58% { opacity: 0; }
-            60%, 62% { opacity: 1; }
-            62.5%, 100% { opacity: 0; }
-          }
-          .akh-cmd-a, .akh-cmd-b { opacity: 0; }
-          .akh-cmd-a { animation: akh-cmd-a 16s cubic-bezier(0.23, 1, 0.32, 1) infinite; }
-          .akh-cmd-b { animation: akh-cmd-b 16s cubic-bezier(0.23, 1, 0.32, 1) infinite; }
-          @keyframes akh-cmd-a {
-            0%, 76% { opacity: 0; transform: translateY(4px); }
-            78%, 86.5% { opacity: 1; transform: translateY(0); }
-            87.5%, 100% { opacity: 0; transform: translateY(0); }
-          }
-          @keyframes akh-cmd-b {
-            0%, 77.5% { opacity: 0; transform: translateY(4px); }
-            79.5%, 86.5% { opacity: 1; transform: translateY(0); }
-            87.5%, 100% { opacity: 0; transform: translateY(0); }
-          }
-          @media (prefers-reduced-motion: reduce) {
-            .akh-scene, .akh-s5 .akh-bar, .akh-check-a, .akh-check-b, .akh-cmd-a, .akh-cmd-b {
-              animation: none;
-            }
-            .akh-scene { opacity: 0; visibility: hidden; }
-            .akh-s7 { opacity: 1; visibility: visible; }
-            .akh-cmd-a, .akh-cmd-b { opacity: 1; transform: none; }
-          }
-        `}
-      </style>
 
       <text x="24" y="28" fill="#d4d4d8" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13">┌  AgentKit Helper</text>
 
@@ -337,37 +223,166 @@ const copy = isVi
   </div>
 </div>
 
-<style>
+<style is:global>
   .akh-tui-demo {
     --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   }
-  .akh-tui-key {
+  .akh-tui-demo .akh-scene {
+    opacity: 0;
+    animation-duration: 16s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  .akh-tui-demo .akh-s1 { animation-name: akh-w1; }
+  .akh-tui-demo .akh-s2 { animation-name: akh-w2; }
+  .akh-tui-demo .akh-s3 { animation-name: akh-w3; }
+  .akh-tui-demo .akh-s4 { animation-name: akh-w4; }
+  .akh-tui-demo .akh-s5 { animation-name: akh-w5; }
+  .akh-tui-demo .akh-s6 { animation-name: akh-w6; }
+  .akh-tui-demo .akh-s7 { animation-name: akh-w7; }
+  .akh-tui-demo .akh-s8 { animation-name: akh-w8; }
+  @keyframes akh-w1 {
+    0% { opacity: 0; }
+    1%, 11.5% { opacity: 1; }
+    12.5%, 100% { opacity: 0; }
+  }
+  @keyframes akh-w2 {
+    0%, 12.5% { opacity: 0; }
+    13.5%, 24% { opacity: 1; }
+    25%, 100% { opacity: 0; }
+  }
+  @keyframes akh-w3 {
+    0%, 25% { opacity: 0; }
+    26%, 36.5% { opacity: 1; }
+    37.5%, 100% { opacity: 0; }
+  }
+  @keyframes akh-w4 {
+    0%, 37.5% { opacity: 0; }
+    38.5%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+  }
+  @keyframes akh-w5 {
+    0%, 50% { opacity: 0; }
+    51%, 61.5% { opacity: 1; }
+    62.5%, 100% { opacity: 0; }
+  }
+  @keyframes akh-w6 {
+    0%, 62.5% { opacity: 0; }
+    63.5%, 74% { opacity: 1; }
+    75%, 100% { opacity: 0; }
+  }
+  @keyframes akh-w7 {
+    0%, 75% { opacity: 0; }
+    76%, 86.5% { opacity: 1; }
+    87.5%, 100% { opacity: 0; }
+  }
+  @keyframes akh-w8 {
+    0%, 87.5% { opacity: 0; }
+    88.5%, 99% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+  .akh-tui-demo .akh-bar {
+    fill: #27272a;
+    transform-box: fill-box;
+    transform-origin: top left;
+  }
+  .akh-tui-demo .akh-s5 .akh-bar {
+    animation: akh-rt 16s cubic-bezier(0.23, 1, 0.32, 1) infinite;
+  }
+  @keyframes akh-rt {
+    0%, 51% { transform: translateY(0); }
+    52.25%, 56% { transform: translateY(28px); }
+    57.25%, 100% { transform: translateY(56px); }
+  }
+  .akh-tui-demo .akh-check { opacity: 0; }
+  .akh-tui-demo .akh-check-a { animation: akh-check-a 16s linear infinite; }
+  .akh-tui-demo .akh-check-b { animation: akh-check-b 16s linear infinite; }
+  @keyframes akh-check-a {
+    0%, 52% { opacity: 0; }
+    53.25%, 62% { opacity: 1; }
+    62.5%, 100% { opacity: 0; }
+  }
+  @keyframes akh-check-b {
+    0%, 58% { opacity: 0; }
+    59.25%, 62% { opacity: 1; }
+    62.5%, 100% { opacity: 0; }
+  }
+  .akh-tui-demo .akh-cmd-a,
+  .akh-tui-demo .akh-cmd-b { opacity: 0; }
+  .akh-tui-demo .akh-cmd-a { animation: akh-cmd-a 16s var(--ease-out) infinite; }
+  .akh-tui-demo .akh-cmd-b { animation: akh-cmd-b 16s var(--ease-out) infinite; }
+  @keyframes akh-cmd-a {
+    0%, 76% { opacity: 0; }
+    77.25%, 86.5% { opacity: 1; }
+    87.5%, 100% { opacity: 0; }
+  }
+  @keyframes akh-cmd-b {
+    0%, 77.5% { opacity: 0; }
+    78.75%, 86.5% { opacity: 1; }
+    87.5%, 100% { opacity: 0; }
+  }
+  .akh-tui-demo .akh-tui-key {
     transition: transform 120ms var(--ease-out);
   }
-  .akh-key-updown { animation: akh-hot-lang 16s linear infinite; }
-  .akh-key-enter { animation: akh-hot-enter 16s linear infinite; }
-  .akh-key-space { animation: akh-hot-space 16s linear infinite; }
-  .akh-key-esc { animation: akh-hot-esc 16s linear infinite; }
+  .akh-tui-demo .akh-key-updown { animation: akh-hot-lang 16s linear infinite; }
+  .akh-tui-demo .akh-key-enter { animation: akh-hot-enter 16s linear infinite; }
+  .akh-tui-demo .akh-key-space { animation: akh-hot-space 16s linear infinite; }
+  .akh-tui-demo .akh-key-esc { animation: akh-hot-esc 16s linear infinite; }
   @keyframes akh-hot-lang {
     1%, 11.5% { transform: translateY(-1px); border-color: rgb(45 212 191 / 0.55); }
-    0%, 12.5%, 100% { transform: none; }
+    0%, 12.5%, 100% { transform: none; border-color: rgb(226 232 240 / 0.8); }
   }
   @keyframes akh-hot-enter {
     13.5%, 24%, 76%, 86.5% { transform: translateY(-1px); border-color: rgb(45 212 191 / 0.55); }
-    0%, 12.5%, 25%, 75%, 87.5%, 100% { transform: none; }
+    0%, 12.5%, 25%, 75%, 87.5%, 100% { transform: none; border-color: rgb(226 232 240 / 0.8); }
   }
   @keyframes akh-hot-space {
     51%, 61.5% { transform: translateY(-1px); border-color: rgb(45 212 191 / 0.55); }
-    0%, 50%, 62.5%, 100% { transform: none; }
+    0%, 50%, 62.5%, 100% { transform: none; border-color: rgb(226 232 240 / 0.8); }
   }
   @keyframes akh-hot-esc {
     26%, 36.5% { transform: translateY(-1px); border-color: rgb(45 212 191 / 0.55); }
-    0%, 25%, 37.5%, 100% { transform: none; }
+    0%, 25%, 37.5%, 100% { transform: none; border-color: rgb(226 232 240 / 0.8); }
+  }
+  :is(.dark) .akh-tui-demo .akh-key-updown,
+  :is(.dark) .akh-tui-demo .akh-key-enter,
+  :is(.dark) .akh-tui-demo .akh-key-space,
+  :is(.dark) .akh-tui-demo .akh-key-esc {
+    animation-name: akh-hot-lang-dark;
+  }
+  :is(.dark) .akh-tui-demo .akh-key-enter { animation-name: akh-hot-enter-dark; }
+  :is(.dark) .akh-tui-demo .akh-key-space { animation-name: akh-hot-space-dark; }
+  :is(.dark) .akh-tui-demo .akh-key-esc { animation-name: akh-hot-esc-dark; }
+  @keyframes akh-hot-lang-dark {
+    1%, 11.5% { transform: translateY(-1px); border-color: rgb(45 212 191 / 0.55); }
+    0%, 12.5%, 100% { transform: none; border-color: rgb(51 65 85); }
+  }
+  @keyframes akh-hot-enter-dark {
+    13.5%, 24%, 76%, 86.5% { transform: translateY(-1px); border-color: rgb(45 212 191 / 0.55); }
+    0%, 12.5%, 25%, 75%, 87.5%, 100% { transform: none; border-color: rgb(51 65 85); }
+  }
+  @keyframes akh-hot-space-dark {
+    51%, 61.5% { transform: translateY(-1px); border-color: rgb(45 212 191 / 0.55); }
+    0%, 50%, 62.5%, 100% { transform: none; border-color: rgb(51 65 85); }
+  }
+  @keyframes akh-hot-esc-dark {
+    26%, 36.5% { transform: translateY(-1px); border-color: rgb(45 212 191 / 0.55); }
+    0%, 25%, 37.5%, 100% { transform: none; border-color: rgb(51 65 85); }
   }
   @media (prefers-reduced-motion: reduce) {
-    .akh-tui-key {
+    .akh-tui-demo .akh-scene,
+    .akh-tui-demo .akh-s5 .akh-bar,
+    .akh-tui-demo .akh-check-a,
+    .akh-tui-demo .akh-check-b,
+    .akh-tui-demo .akh-cmd-a,
+    .akh-tui-demo .akh-cmd-b,
+    .akh-tui-demo .akh-tui-key {
       animation: none;
-      transform: none;
     }
+    .akh-tui-demo .akh-scene { opacity: 0; }
+    .akh-tui-demo .akh-s7 { opacity: 1; }
+    .akh-tui-demo .akh-cmd-a,
+    .akh-tui-demo .akh-cmd-b { opacity: 1; }
+    .akh-tui-demo .akh-tui-key { transform: none; }
   }
 </style>
