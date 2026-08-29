@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:markdown-novel-viewer',
   kit: 'engineer',
   header: {
-    titleEn: '/ak:markdown-novel-viewer',
-    titleVi: '/ak:markdown-novel-viewer',
+    titleEn: '/ak:markdown-novel-viewer — Book-like Markdown reader',
+    titleVi: '/ak:markdown-novel-viewer — Đọc Markdown kiểu sách',
     taglineEn: 'Serve long Markdown files and plan folders as a calm, book-like browser reader with live Mermaid, progress, navigation, and keyboard shortcuts.',
     taglineVi: 'Mở file Markdown dài và thư mục kế hoạch trong trình đọc kiểu sách, nhẹ mắt, có Mermaid trực tiếp, thanh tiến độ, điều hướng và phím tắt.',
   },

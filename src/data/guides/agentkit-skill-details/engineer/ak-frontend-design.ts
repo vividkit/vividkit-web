@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:frontend-design",
   kit: "engineer",
   header: {
-    titleEn: "/ak:frontend-design",
-    titleVi: "/ak:frontend-design",
+    titleEn: "/ak:frontend-design — Production frontend interfaces",
+    titleVi: "/ak:frontend-design — Giao diện frontend production",
     taglineEn: "Create polished, distinctive production frontend interfaces from briefs, screenshots, videos, 3D requests, and redesign goals without AI slop.",
     taglineVi: "Tạo giao diện frontend production chỉn chu, khác biệt từ brief, screenshot, video, yêu cầu 3D hoặc redesign mà không rơi vào AI slop.",
   },

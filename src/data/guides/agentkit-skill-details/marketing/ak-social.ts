@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:social',
   kit: 'marketer',
   header: {
-    titleEn: '/ak:social',
-    titleVi: '/ak:social',
+    titleEn: '/ak:social — Social content and publishing',
+    titleVi: '/ak:social — Nội dung và publish social',
     taglineEn: 'Social media creation, scheduling, and real publishing through provider adapters for X, LinkedIn, Instagram, TikTok, YouTube, Facebook, Threads, Bluesky, Mastodon, and more.',
     taglineVi: 'Tạo nội dung, lên lịch và publish thật qua provider adapter cho X, LinkedIn, Instagram, TikTok, YouTube, Facebook, Threads, Bluesky, Mastodon và nhiều kênh khác.',
   },

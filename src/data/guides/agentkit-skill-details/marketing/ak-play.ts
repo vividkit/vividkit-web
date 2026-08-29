@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:play',
   kit: 'marketer',
   header: {
-    titleEn: '/ak:play',
-    titleVi: '/ak:play',
+    titleEn: '/ak:play — Marketing playbook orchestrator',
+    titleVi: '/ak:play — Điều phối playbook marketing',
     taglineEn: 'Marketing playbook orchestrator with dependency graph routing, template management, goal tracking, quality gates, smart suggestions, and stateful manifest updates.',
     taglineVi: 'Bộ điều phối playbook marketing với dependency graph, template, goal tracking, quality gate, gợi ý thông minh và cập nhật manifest có trạng thái.',
   },

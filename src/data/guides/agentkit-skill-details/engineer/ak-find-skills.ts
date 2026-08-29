@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:find-skills",
   kit: "engineer",
   header: {
-    titleEn: "/ak:find-skills",
-    titleVi: "/ak:find-skills",
+    titleEn: "/ak:find-skills — Discover and install skills",
+    titleVi: "/ak:find-skills — Tìm và cài Agent Skills",
     taglineEn: "Discover and install Agent Skills when users ask for a capability that may already exist in the skills ecosystem.",
     taglineVi: "Tìm và cài Agent Skills khi người dùng cần một năng lực có thể đã tồn tại trong hệ sinh thái skills.",
   },

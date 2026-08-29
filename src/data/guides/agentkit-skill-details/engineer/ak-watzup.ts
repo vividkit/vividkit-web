@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:watzup',
   kit: 'engineer',
   header: {
-    titleEn: '/ak:watzup',
-    titleVi: '/ak:watzup',
+    titleEn: '/ak:watzup — Evidence-backed project handoff',
+    titleVi: '/ak:watzup — Báo cáo bàn giao có bằng chứng',
     taglineEn: 'Generate a short, evidence-backed project handoff from branches, refs, worktrees, unfinished plans, and roadmap docs with priority-ranked next steps.',
     taglineVi: 'Tạo báo cáo bàn giao ngắn có bằng chứng từ branch, ref, worktree, plan dang dở và roadmap, kèm bước tiếp theo xếp theo ưu tiên.',
   },

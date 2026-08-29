@@ -4,7 +4,7 @@ const data: SkillInfographic = {
   id: 'ak-mermaidjs-v11',
   command: '/ak:mermaidjs-v11',
   kit: 'engineer',
-  header: { titleEn: '/ak:mermaidjs-v11', titleVi: '/ak:mermaidjs-v11', taglineEn: 'Create Mermaid v11 diagrams for architecture, APIs, data models, timelines, states, journeys, and project plans.', taglineVi: 'Tạo sơ đồ Mermaid v11 cho kiến trúc, API, mô hình dữ liệu, timeline, state, journey và kế hoạch dự án.' },
+  header: { titleEn: '/ak:mermaidjs-v11 — Mermaid v11 diagrams', titleVi: '/ak:mermaidjs-v11 — Sơ đồ Mermaid v11', taglineEn: 'Create Mermaid v11 diagrams for architecture, APIs, data models, timelines, states, journeys, and project plans.', taglineVi: 'Tạo sơ đồ Mermaid v11 cho kiến trúc, API, mô hình dữ liệu, timeline, state, journey và kế hoạch dự án.' },
   processFlow: [
     { number: 1, titleEn: 'Choose diagram type', titleVi: 'Chọn loại sơ đồ', descEn: 'Map the need to flowchart, sequenceDiagram, classDiagram, stateDiagram, erDiagram, gantt, journey, or another v11 type.', descVi: 'Ghép nhu cầu với flowchart, sequenceDiagram, classDiagram, stateDiagram, erDiagram, gantt, journey hoặc loại v11 khác.' },
     { number: 2, titleEn: 'Structure syntax', titleVi: 'Dựng cú pháp', descEn: 'Start with the diagram declaration and keep content valid for that diagram family.', descVi: 'Bắt đầu bằng khai báo loại diagram và giữ nội dung đúng cú pháp của nhóm đó.' },

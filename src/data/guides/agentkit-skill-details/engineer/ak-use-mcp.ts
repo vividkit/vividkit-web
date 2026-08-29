@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:use-mcp',
   kit: 'engineer',
   header: {
-    titleEn: '/ak:use-mcp',
-    titleVi: '/ak:use-mcp',
+    titleEn: '/ak:use-mcp — Run existing MCP tools',
+    titleVi: '/ak:use-mcp — Chạy tool MCP đã có',
     taglineEn: 'Discover and execute existing MCP server tools through the narrowest runtime-native path or deterministic direct scripts, without copying credentials across runtimes.',
     taglineVi: 'Tìm và chạy các tool MCP đã có bằng đường runtime-native hẹp nhất hoặc script trực tiếp có thể lặp lại, không sao chép credential sang runtime khác.',
   },

@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:context-engineering',
   kit: 'engineer',
   header: {
-    titleEn: '/ak:context-engineering',
-    titleVi: '/ak:context-engineering',
+    titleEn: '/ak:context-engineering — Optimize LLM context quality',
+    titleVi: '/ak:context-engineering — Tối ưu chất lượng context',
     taglineEn: 'Optimize LLM context quality, token budgets, memory, tool design, and multi-agent isolation when context limits or degradation matter.',
     taglineVi: 'Tối ưu chất lượng context, ngân sách token, bộ nhớ, thiết kế tool và cách cô lập đa agent khi giới hạn context hoặc suy giảm chất lượng trở nên quan trọng.',
   },

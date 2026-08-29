@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:paid-ads',
   kit: 'marketer',
   header: {
-    titleEn: '/ak:paid-ads',
-    titleVi: '/ak:paid-ads',
+    titleEn: '/ak:paid-ads — Performance ads strategy',
+    titleVi: '/ak:paid-ads — Chiến lược quảng cáo performance',
     taglineEn: 'Performance marketing campaign strategy for Google Ads, Meta, LinkedIn, X, TikTok, and retargeting — from goal, offer, audience, creative, budget, and optimization to weekly reporting.',
     taglineVi: 'Chiến lược performance marketing cho Google Ads, Meta, LinkedIn, X, TikTok và retargeting — từ mục tiêu, offer, audience, creative, ngân sách, tối ưu đến báo cáo hằng tuần.',
   },

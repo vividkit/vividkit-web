@@ -4,7 +4,7 @@ const data: SkillInfographic = {
   id: 'ak-mintlify',
   command: '/ak:mintlify',
   kit: 'engineer',
-  header: { titleEn: '/ak:mintlify', titleVi: '/ak:mintlify', taglineEn: 'Build and maintain Mintlify documentation sites: docs.json, MDX, navigation, API docs, AI assets, theming, validation, and deployment.', taglineVi: 'Xây và bảo trì site tài liệu Mintlify: docs.json, MDX, navigation, tài liệu API, asset AI, theme, validate và deploy.' },
+  header: { titleEn: '/ak:mintlify — Mintlify documentation sites', titleVi: '/ak:mintlify — Site tài liệu Mintlify', taglineEn: 'Build and maintain Mintlify documentation sites: docs.json, MDX, navigation, API docs, AI assets, theming, validation, and deployment.', taglineVi: 'Xây và bảo trì site tài liệu Mintlify: docs.json, MDX, navigation, tài liệu API, asset AI, theme, validate và deploy.' },
   processFlow: [
     { number: 1, titleEn: 'Identify docs task', titleVi: 'Xác định việc docs', descEn: 'Clarify whether the work is site setup, docs.json, MDX pages, navigation, API docs, AI assets, validation, or deployment.', descVi: 'Làm rõ việc là tạo site, docs.json, trang MDX, navigation, tài liệu API, asset AI, validate hay deploy.' },
     { number: 2, titleEn: 'Inspect structure', titleVi: 'Kiểm tra cấu trúc', descEn: 'Read docs.json, page frontmatter, navigation groups, tabs, products, versions, languages, and existing component patterns.', descVi: 'Đọc docs.json, frontmatter trang, nhóm navigation, tab, product, version, ngôn ngữ và pattern component hiện có.' },

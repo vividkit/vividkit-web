@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:common',
   kit: 'engineer',
   header: {
-    titleEn: '/ak:common',
-    titleVi: '/ak:common',
+    titleEn: '/ak:common — Shared AgentKit utilities',
+    titleVi: '/ak:common — Tiện ích dùng chung của AgentKit',
     taglineEn: 'Internal shared utilities and conventions loaded by other AgentKit skills; not a user-facing workflow.',
     taglineVi: 'Tiện ích và quy ước dùng chung được các skill AgentKit khác nạp; không phải workflow dành cho người dùng gọi trực tiếp.',
   },

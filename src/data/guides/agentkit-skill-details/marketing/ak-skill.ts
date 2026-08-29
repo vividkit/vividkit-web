@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:skill',
   kit: 'marketer',
   header: {
-    titleEn: '/ak:skill',
-    titleVi: '/ak:skill',
+    titleEn: '/ak:skill — Marketing skill lifecycle',
+    titleVi: '/ak:skill — Vòng đời skill marketing',
     taglineEn: 'Marketing skill lifecycle manager for creating, adding references, optimizing, fixing logs, planning, and updating practical AgentKit marketing skills.',
     taglineVi: 'Trình quản lý vòng đời skill marketing để tạo, thêm reference, tối ưu, sửa từ log, lập plan và cập nhật skill AgentKit marketing thực dụng.',
   },

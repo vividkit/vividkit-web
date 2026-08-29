@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:persona',
   kit: 'marketer',
   header: {
-    titleEn: '/ak:persona',
-    titleVi: '/ak:persona',
+    titleEn: '/ak:persona — Customer persona lifecycle',
+    titleVi: '/ak:persona — Vòng đời persona khách hàng',
     taglineEn: 'Customer persona lifecycle helper for creating ICP profiles, analyzing audience data, updating existing personas, and listing saved profiles.',
     taglineVi: 'Trợ lý vòng đời persona khách hàng để tạo ICP profile, phân tích audience data, cập nhật persona hiện có và liệt kê hồ sơ đã lưu.',
   },

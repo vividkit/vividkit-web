@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:debug',
   kit: 'engineer',
   header: {
-    titleEn: '/ak:debug',
-    titleVi: '/ak:debug',
+    titleEn: '/ak:debug — Systematic debugging',
+    titleVi: '/ak:debug — Gỡ lỗi có hệ thống',
     taglineEn: 'Systematic debugging and investigation: prove root cause, trace backward, validate layers, inspect logs/CI/databases/performance, and verify before claiming success.',
     taglineVi: 'Gỡ lỗi và điều tra có hệ thống: chứng minh nguyên nhân gốc, truy ngược, kiểm từng lớp, xem log/CI/database/hiệu năng và xác minh trước khi kết luận.',
   },

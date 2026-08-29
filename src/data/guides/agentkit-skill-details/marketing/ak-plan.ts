@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:plan',
   kit: 'marketer',
   header: {
-    titleEn: '/ak:plan',
-    titleVi: '/ak:plan',
+    titleEn: '/ak:plan — Marketing-kit plan router',
+    titleVi: '/ak:plan — Định tuyến plan Marketing Kit',
     taglineEn: 'Marketing-kit plan creator and router for fast, hard, parallel, two-approach, validation, CI, CRO, and archive workflows — creates plans, not implementation.',
     taglineVi: 'Bộ tạo và định tuyến plan trong marketing kit cho fast, hard, parallel, two-approach, validate, CI, CRO và archive — tạo kế hoạch, không triển khai.',
   },

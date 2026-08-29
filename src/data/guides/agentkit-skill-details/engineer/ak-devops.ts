@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:devops",
   kit: "engineer",
   header: {
-    titleEn: "/ak:devops",
-    titleVi: "/ak:devops",
+    titleEn: "/ak:devops — Deploy and operate infrastructure",
+    titleVi: "/ak:devops — Triển khai và vận hành hạ tầng",
     taglineEn: "Deploy and manage infrastructure across Cloudflare, Docker, Google Cloud, Kubernetes, CI/CD, GitOps, and security audits.",
     taglineVi: "Triển khai và vận hành hạ tầng trên Cloudflare, Docker, Google Cloud, Kubernetes, CI/CD, GitOps và rà soát bảo mật.",
   },

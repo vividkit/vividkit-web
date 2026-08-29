@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:deep-swe',
   kit: 'engineer',
   header: {
-    titleEn: '/ak:deep-swe',
-    titleVi: '/ak:deep-swe',
+    titleEn: '/ak:deep-swe — DeepSWE coding-agent benchmark',
+    titleVi: '/ak:deep-swe — Benchmark coding-agent DeepSWE',
     taglineEn: 'Run a costed external coding-agent benchmark on DeepSWE through Pier and OpenRouter, with safe setup, single-task smoke, subset/full run controls, and exact reporting.',
     taglineVi: 'Chạy benchmark coding-agent bên ngoài trên DeepSWE qua Pier và OpenRouter, có thiết lập an toàn, smoke một task, kiểm soát subset/full run và báo cáo chính xác.',
   },

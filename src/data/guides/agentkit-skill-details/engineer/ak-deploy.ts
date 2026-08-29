@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:deploy',
   kit: 'engineer',
   header: {
-    titleEn: '/ak:deploy',
-    titleVi: '/ak:deploy',
+    titleEn: '/ak:deploy — Detect and run deploys',
+    titleVi: '/ak:deploy — Phát hiện và chạy deploy',
     taglineEn: 'Auto-detect deployment targets, choose cost-optimized hosting, run the platform-specific deploy path, verify the URL, and maintain docs/deployment.md.',
     taglineVi: 'Tự phát hiện đích deploy, chọn hosting tối ưu chi phí, chạy đúng quy trình từng platform, xác minh URL và duy trì docs/deployment.md.',
   },

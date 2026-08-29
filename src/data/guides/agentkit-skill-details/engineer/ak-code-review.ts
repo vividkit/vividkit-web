@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:code-review',
   kit: 'engineer',
   header: {
-    titleEn: '/ak:code-review',
-    titleVi: '/ak:code-review',
+    titleEn: '/ak:code-review — Production-readiness code review',
+    titleVi: '/ak:code-review — Rà soát sẵn sàng production',
     taglineEn: 'Evidence-based production-readiness review for diffs, PRs, commits, pending changes, and full codebases.',
     taglineVi: 'Rà soát mức sẵn sàng production dựa trên bằng chứng cho diff, PR, commit, thay đổi pending và toàn bộ codebase.',
   },

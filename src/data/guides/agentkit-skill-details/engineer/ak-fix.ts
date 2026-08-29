@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:fix",
   kit: "engineer",
   header: {
-    titleEn: "/ak:fix",
-    titleVi: "/ak:fix",
+    titleEn: "/ak:fix — Root-cause bug fixing",
+    titleVi: "/ak:fix — Sửa lỗi theo nguyên nhân gốc",
     taglineEn: "Root-cause bug fixing for errors, tests, lint, CI/CD, UI bugs, and code issues with scout, diagnosis, verification, and prevention gates.",
     taglineVi: "Sửa lỗi theo nguyên nhân gốc cho error, test, lint, CI/CD, bug UI và vấn đề code với các cổng scout, chẩn đoán, xác minh và phòng ngừa.",
   },

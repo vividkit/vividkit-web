@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:storage',
   kit: 'marketer',
   header: {
-    titleEn: '/ak:storage',
-    titleVi: '/ak:storage',
+    titleEn: '/ak:storage — S3-compatible object storage',
+    titleVi: '/ak:storage — Object storage tương thích S3',
     taglineEn: 'S3-compatible object storage helper for marketing assets across Cloudflare R2, AWS S3, MinIO, Backblaze B2, and DigitalOcean Spaces.',
     taglineVi: 'Trợ lý object storage tương thích S3 cho asset marketing trên Cloudflare R2, AWS S3, MinIO, Backblaze B2 và DigitalOcean Spaces.',
   },

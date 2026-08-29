@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:excalidraw",
   kit: "engineer",
   header: {
-    titleEn: "/ak:excalidraw",
-    titleVi: "/ak:excalidraw",
+    titleEn: "/ak:excalidraw — Editable Excalidraw diagrams",
+    titleVi: "/ak:excalidraw — Sơ đồ Excalidraw chỉnh sửa được",
     taglineEn: "Create editable Excalidraw architecture, data-flow, workflow, and codebase maps through live MCP canvas or file-based rendering.",
     taglineVi: "Tạo sơ đồ Excalidraw chỉnh sửa được cho kiến trúc, luồng dữ liệu, workflow và bản đồ codebase qua MCP canvas live hoặc render bằng file.",
   },

@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:folder-context",
   kit: "engineer",
   header: {
-    titleEn: "/ak:folder-context",
-    titleVi: "/ak:folder-context",
+    titleEn: "/ak:folder-context — Subfolder CLAUDE.md files",
+    titleVi: "/ak:folder-context — CLAUDE.md trong subfolder",
     taglineEn: "Create compact subfolder CLAUDE.md and linked AGENTS.md files for durable local conventions that root docs cannot safely carry.",
     taglineVi: "Tạo CLAUDE.md gọn trong subfolder và AGENTS.md liên kết cho convention cục bộ bền vững mà root docs không nên gánh.",
   },

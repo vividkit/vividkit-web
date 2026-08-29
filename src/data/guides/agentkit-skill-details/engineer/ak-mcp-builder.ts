@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:mcp-builder',
   kit: 'engineer',
   header: {
-    titleEn: '/ak:mcp-builder',
-    titleVi: '/ak:mcp-builder',
+    titleEn: '/ak:mcp-builder — High-signal MCP servers',
+    titleVi: '/ak:mcp-builder — Xây MCP server có ích',
     taglineEn: 'Design and build high-signal MCP servers around real agent workflows, not thin endpoint wrappers.',
     taglineVi: 'Thiết kế và xây MCP server có ích cho workflow thật của agent, không chỉ bọc API endpoint một cách máy móc.',
   },

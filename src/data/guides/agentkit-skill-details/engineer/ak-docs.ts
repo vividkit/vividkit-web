@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:docs",
   kit: "engineer",
   header: {
-    titleEn: "/ak:docs",
-    titleVi: "/ak:docs",
+    titleEn: "/ak:docs — Create and audit project docs",
+    titleVi: "/ak:docs — Tạo và audit tài liệu dự án",
     taglineEn: "Create, refresh, summarize, audit, and optimize project documentation and root agent context from current evidence.",
     taglineVi: "Tạo, làm mới, tóm tắt, audit và tối ưu tài liệu dự án cùng root agent context dựa trên bằng chứng hiện tại.",
   },

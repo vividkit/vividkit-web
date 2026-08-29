@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:design',
   kit: 'engineer',
   header: {
-    titleEn: '/ak:design',
-    titleVi: '/ak:design',
+    titleEn: '/ak:design — Unified brand and visual design',
+    titleVi: '/ak:design — Thiết kế nhận diện và hình ảnh',
     taglineEn: 'Unified brand and visual design skill for identity, logos, CIP, slides, banners, social photos, icons, posters, and design-system routing — not UI code patterns.',
     taglineVi: 'Skill thiết kế hình ảnh và thương hiệu thống nhất cho identity, logo, CIP, slide, banner, social photo, icon, poster và routing design-system — không dùng cho pattern code UI.',
   },

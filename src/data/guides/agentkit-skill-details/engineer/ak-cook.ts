@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:cook',
   kit: 'engineer',
   header: {
-    titleEn: '/ak:cook',
-    titleVi: '/ak:cook',
+    titleEn: '/ak:cook — Smart feature implementation',
+    titleVi: '/ak:cook — Triển khai tính năng có hệ thống',
     taglineEn: 'Smart feature implementation with brainstorm contract, mandatory scout, reviewed plan, implementation, review, testing, finalize sync, and optional workflow modes.',
     taglineVi: 'Triển khai tính năng có hệ thống: chốt contract brainstorm, scout bắt buộc, plan được review, code, review, test, đồng bộ finalize và các mode tuỳ chọn.',
   },

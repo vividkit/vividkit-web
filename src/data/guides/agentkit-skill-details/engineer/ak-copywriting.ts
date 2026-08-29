@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:copywriting',
   kit: 'engineer',
   header: {
-    titleEn: '/ak:copywriting',
-    titleVi: '/ak:copywriting',
+    titleEn: '/ak:copywriting — Conversion copywriting formulas',
+    titleVi: '/ak:copywriting — Công thức copy chuyển đổi',
     taglineEn: 'Conversion copywriting formulas, headline templates, email patterns, landing-page structures, CTA optimization, and writing-style extraction.',
     taglineVi: 'Công thức copy chuyển đổi, mẫu headline, pattern email, cấu trúc landing page, tối ưu CTA và trích xuất phong cách viết.',
   },

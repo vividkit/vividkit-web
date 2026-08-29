@@ -4,7 +4,7 @@ const data: SkillInfographic = {
   id: 'ak-payment-integration',
   command: '/ak:payment-integration',
   kit: 'engineer',
-  header: { titleEn: '/ak:payment-integration', titleVi: '/ak:payment-integration', taglineEn: 'Integrate checkout, QR payments, subscriptions, webhooks, and multi-provider order flows across SePay, Polar, and Stripe.', taglineVi: 'Tích hợp checkout, thanh toán QR, subscription, webhook và luồng đơn hàng đa provider với SePay, Polar và Stripe.' },
+  header: { titleEn: '/ak:payment-integration — Checkout and payment integrations', titleVi: '/ak:payment-integration — Tích hợp thanh toán', taglineEn: 'Integrate checkout, QR payments, subscriptions, webhooks, and multi-provider order flows across SePay, Polar, and Stripe.', taglineVi: 'Tích hợp checkout, thanh toán QR, subscription, webhook và luồng đơn hàng đa provider với SePay, Polar và Stripe.' },
   processFlow: [
     { number: 1, titleEn: 'Define payment job', titleVi: 'Xác định việc thanh toán', descEn: 'Clarify checkout, subscription, webhook, VietQR, order management, benefits, or enterprise payment needs.', descVi: 'Làm rõ nhu cầu checkout, subscription, webhook, VietQR, quản lý đơn hàng, benefit hoặc thanh toán enterprise.' },
     { number: 2, titleEn: 'Select provider', titleVi: 'Chọn provider', descEn: 'Choose SePay for Vietnam/VND bank transfer and VietQR, Polar for global SaaS subscriptions and benefits, or Stripe for enterprise and Connect.', descVi: 'Chọn SePay cho thị trường Việt Nam/VND/chuyển khoản/VietQR, Polar cho SaaS global và benefit, hoặc Stripe cho enterprise và Connect.' },
