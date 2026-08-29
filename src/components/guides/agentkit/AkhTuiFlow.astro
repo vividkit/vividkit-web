@@ -391,12 +391,9 @@ const keys = isVi
     frame: Frame,
     reduced: boolean,
   ) {
-    screen.style.opacity = '0';
-    await sleep(reduced ? 0 : 220);
-    mount(screen, hint, frame, frame.commands ? [''] : undefined);
+    mount(screen, hint, frame, frame.commands?.map(() => ''));
     syncItems(screen, itemsAt(frame, 0, []));
     setHot(keys, 'updown');
-    screen.style.opacity = '1';
     if (reduced) {
       syncItems(screen, frame.items ?? []);
       setHot(keys, frame.key);
@@ -439,25 +436,16 @@ const keys = isVi
     }
 
     if (frame.commands?.length) {
-      const cmdNodes = [...screen.querySelectorAll('.akh-cmd')];
-      if (!cmdNodes.length) {
-        mount(screen, hint, frame, ['']);
-      }
       setHot(keys, 'enter');
-      const lines: string[] = [];
-      for (const command of frame.commands) {
-        lines.push('');
-        const node = screen.querySelectorAll('.akh-cmd')[lines.length - 1] ?? el('div', 'akh-cmd');
-        if (!node.parentElement) screen.insertBefore(node, screen.lastChild);
-        for (const char of command) {
-          lines[lines.length - 1] += char;
-          node.textContent = `│  ${lines[lines.length - 1]}`;
+      const nodes = [...screen.querySelectorAll('.akh-cmd')];
+      for (let i = 0; i < frame.commands.length; i += 1) {
+        const node = nodes[i];
+        if (!node) continue;
+        let current = '';
+        for (const char of frame.commands[i]) {
+          current += char;
+          node.textContent = `│  ${current}`;
           await sleep(13);
-        }
-        if (lines.length < frame.commands.length) {
-          const next = el('div', 'akh-cmd');
-          next.textContent = '│  ';
-          screen.insertBefore(next, screen.lastChild);
         }
       }
       await sleep(900);
