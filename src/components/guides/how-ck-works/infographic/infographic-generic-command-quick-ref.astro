@@ -39,13 +39,12 @@ const humanizeHeadline = (headline: string, blurb: string) => {
     .replace(/^[/\$]ak:[^\s—–]+(?:\s*[—–-]\s*)?/i, '')
     .trim();
   if (stripped && !/^[/\$]ak:/i.test(stripped)) return stripped;
-  const next = (blurb.split(/(?<=[.!?])\s+/)[0] || blurb).replace(/[.]$/, '').trim();
-  const words = next.split(/\s+/).filter(Boolean);
-  const clause = next.split(/[,—–:]/)[0].trim();
-  if (clause.length >= 10 && clause.length <= 36) return clause;
-  return words.slice(0, 5).join(' ');
+  const first = (blurb.split(/(?<=[.!?])\s+/)[0] || blurb).replace(/[.]$/, '').trim();
+  const clause = first.split(/[—–:]/)[0].trim();
+  return clause.length >= 12 ? clause : first;
 };
 const title = plainHeadline ? humanizeHeadline(rawTitle, tagline) : rawTitle;
+const showTagline = tagline.replace(/[.]$/, '').trim() !== title;
 const principles = (isVi ? data.corePrinciplesVi : data.corePrinciplesEn) || [];
 const expertise = (isVi ? data.expertiseAreasVi : data.expertiseAreasEn)?.filter(Boolean) || [];
 const modes = data.workflowModes || [];
@@ -249,9 +248,11 @@ const getOutputPattern = () => (isVi ? output?.patternVi : output?.patternEn)?.t
           >
             {title}
           </h2>
-          <p class="mt-4 max-w-2xl text-sm leading-6 text-slate-600 dark:text-slate-300">
-            {tagline}
-          </p>
+          {showTagline && (
+            <p class="mt-4 max-w-2xl text-sm leading-6 text-slate-600 dark:text-slate-300">
+              {tagline}
+            </p>
+          )}
         </div>
 
         <div class="mt-6 grid gap-2 sm:grid-cols-4">
