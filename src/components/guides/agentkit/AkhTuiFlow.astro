@@ -201,9 +201,11 @@ const keys = isVi
       <span class="h-2.5 w-2.5 rounded-full bg-[#28c840]"></span>
       <span class="ml-2 font-mono text-[11px] text-zinc-400">akh</span>
     </div>
-    <pre
-      class="akh-tui-screen min-h-[17.5rem] overflow-x-auto px-4 py-4 font-mono text-[13px] leading-7 text-zinc-200 sm:text-sm"
-      data-akh-screen></pre>
+    <div
+      class="akh-tui-screen min-h-[17.5rem] px-4 py-4 font-mono text-[13px] leading-7 text-zinc-200 sm:text-sm"
+      data-akh-screen
+    >
+    </div>
     <div
       class="border-t border-zinc-800 px-4 py-2 font-mono text-[11px] text-zinc-500"
       data-akh-hint
@@ -214,7 +216,7 @@ const keys = isVi
   <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
     {keys.map((item) => (
       <div
-        class="akh-tui-key rounded-2xl border border-slate-200/80 bg-white/80 p-4 transition dark:border-slate-700 dark:bg-slate-900/50"
+        class="akh-tui-key rounded-2xl border border-slate-200/80 bg-white/80 p-4 dark:border-slate-700 dark:bg-slate-900/50"
         data-akh-key={item.id}
       >
         <code class="rounded-md border border-slate-200/80 bg-slate-100 px-1.5 py-0.5 font-mono text-[0.85em] text-teal-700 dark:border-slate-700 dark:bg-slate-800/90 dark:text-teal-300">
@@ -227,51 +229,243 @@ const keys = isVi
 </div>
 
 <style>
+  .akh-tui-screen {
+    transition: opacity 240ms ease;
+  }
+  .akh-tui-key {
+    transition:
+      border-color 220ms ease,
+      box-shadow 220ms ease,
+      transform 180ms ease;
+  }
   .akh-tui-key[data-hot='1'] {
     border-color: rgb(45 212 191 / 0.55);
     box-shadow: 0 0 0 1px rgb(45 212 191 / 0.35);
+    transform: translateY(-1px);
+  }
+  .akh-opt {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0 -0.5rem;
+    padding: 0 0.5rem;
+    border-radius: 0.5rem;
+    color: #a1a1aa;
+    transition:
+      background-color 220ms ease,
+      color 220ms ease;
+  }
+  .akh-opt[data-on='1'] {
+    background: #27272a;
+    color: #fafafa;
+  }
+  .akh-cursor {
+    width: 0.75rem;
+    color: #fbbf24;
+    opacity: 0;
+    transform: translateX(-4px);
+    transition:
+      opacity 180ms ease,
+      transform 180ms ease;
+  }
+  .akh-opt[data-on='1'] .akh-cursor {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .akh-mark {
+    width: 1rem;
+    color: #71717a;
+    transition: color 180ms ease;
+  }
+  .akh-opt[data-on='1'] .akh-mark,
+  .akh-opt[data-checked='1'] .akh-mark {
+    color: #86efac;
+  }
+  .akh-cmd {
+    color: #7dd3fc;
+    white-space: pre-wrap;
+    word-break: break-all;
   }
   @media (prefers-reduced-motion: reduce) {
-    .akh-tui-demo {
-      --akh-static: 1;
+    .akh-tui-screen,
+    .akh-tui-key,
+    .akh-opt,
+    .akh-cursor,
+    .akh-mark {
+      transition: none;
     }
   }
 </style>
 
 <script>
-  function renderFrame(
-    screen: HTMLElement,
-    hint: HTMLElement,
-    frame: {
-      prompt: string;
-      items?: { label: string; active?: boolean; checked?: boolean }[];
-      commands?: string[];
-      status?: string;
-      hint: string;
-    },
-  ) {
-    const lines = ['┌  AgentKit Helper', '│', `◇  ${frame.prompt}`, '│'];
+  type Item = { label: string; active?: boolean; checked?: boolean };
+  type Frame = {
+    prompt: string;
+    items?: Item[];
+    commands?: string[];
+    status?: string;
+    hint: string;
+    key: string;
+  };
+
+  const sleep = (ms: number) => new Promise((resolve) => window.setTimeout(resolve, ms));
+
+  function el(tag: string, className: string, text?: string) {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text !== undefined) node.textContent = text;
+    return node;
+  }
+
+  function setHot(keys: NodeListOf<HTMLElement>, key: string) {
+    keys.forEach((node) => {
+      node.dataset.hot = node.dataset.akhKey === key ? '1' : '0';
+    });
+  }
+
+  function mount(screen: HTMLElement, hint: HTMLElement, frame: Frame, commands?: string[]) {
+    screen.replaceChildren();
+    screen.append(el('div', 'text-zinc-300', '┌  AgentKit Helper'));
+    screen.append(el('div', 'text-zinc-600', '│'));
+    const prompt = el('div', 'text-emerald-200');
+    prompt.textContent = `◇  ${frame.prompt}`;
+    screen.append(prompt);
+    screen.append(el('div', 'text-zinc-600', '│'));
+
     if (frame.items) {
       for (const item of frame.items) {
-        const mark = item.checked ? '◉' : item.active ? '●' : '○';
-        const prefix = item.active ? '│ ▶' : '│  ';
-        lines.push(`${prefix} ${mark}  ${item.label}`);
+        const row = el('div', 'akh-opt');
+        row.append(el('span', 'akh-cursor', '▶'));
+        row.append(el('span', 'akh-mark', '○'));
+        row.append(el('span', '', item.label));
+        screen.append(row);
       }
-      lines.push('│');
+      screen.append(el('div', 'text-zinc-600', '│'));
     }
-    if (frame.commands?.length) {
-      for (const command of frame.commands) {
-        lines.push(`│  ${command}`);
+
+    const lines = commands ?? frame.commands;
+    if (lines?.length) {
+      for (const command of lines) {
+        const line = el('div', 'akh-cmd');
+        line.textContent = `│  ${command}`;
+        screen.append(line);
       }
-      lines.push('│');
+      screen.append(el('div', 'text-zinc-600', '│'));
     }
+
     if (frame.status) {
-      lines.push(`│  ${frame.status}`);
-      lines.push('│');
+      const status = el('div', 'text-zinc-400');
+      status.textContent = `│  ${frame.status}`;
+      screen.append(status);
+      screen.append(el('div', 'text-zinc-600', '│'));
     }
-    lines.push('└');
-    screen.textContent = lines.join('\n');
+
+    screen.append(el('div', 'text-zinc-300', '└'));
     hint.textContent = frame.hint;
+  }
+
+  function syncItems(screen: HTMLElement, items: Item[]) {
+    const rows = [...screen.querySelectorAll<HTMLElement>('.akh-opt')];
+    items.forEach((item, index) => {
+      const row = rows[index];
+      if (!row) return;
+      row.dataset.on = item.active ? '1' : '0';
+      row.dataset.checked = item.checked ? '1' : '0';
+      const mark = row.querySelector('.akh-mark');
+      if (mark) mark.textContent = item.checked ? '◉' : item.active ? '●' : '○';
+    });
+  }
+
+  function itemsAt(frame: Frame, cursor: number, checked: number[]): Item[] {
+    return (frame.items ?? []).map((item, index) => ({
+      ...item,
+      active: index === cursor,
+      checked: checked.includes(index),
+    }));
+  }
+
+  async function playFrame(
+    screen: HTMLElement,
+    hint: HTMLElement,
+    keys: NodeListOf<HTMLElement>,
+    frame: Frame,
+    reduced: boolean,
+  ) {
+    screen.style.opacity = '0';
+    await sleep(reduced ? 0 : 220);
+    mount(screen, hint, frame, frame.commands ? [''] : undefined);
+    syncItems(screen, itemsAt(frame, 0, []));
+    setHot(keys, 'updown');
+    screen.style.opacity = '1';
+    if (reduced) {
+      syncItems(screen, frame.items ?? []);
+      setHot(keys, frame.key);
+      if (frame.commands) {
+        screen.querySelectorAll('.akh-cmd').forEach((node, index) => {
+          node.textContent = `│  ${frame.commands?.[index] ?? ''}`;
+        });
+      }
+      return;
+    }
+
+    const items = frame.items ?? [];
+    const activeIdx = Math.max(0, items.findIndex((item) => item.active));
+    const checkedIdx = items.map((item, index) => (item.checked ? index : -1)).filter((index) => index >= 0);
+
+    if (items.length) {
+      if (checkedIdx.length > 1) {
+        const checked: number[] = [];
+        const last = Math.max(activeIdx, ...checkedIdx);
+        for (let i = 0; i <= last; i++) {
+          syncItems(screen, itemsAt(frame, i, checked));
+          setHot(keys, 'updown');
+          await sleep(400);
+          if (items[i]?.checked) {
+            checked.push(i);
+            syncItems(screen, itemsAt(frame, i, checked));
+            setHot(keys, 'space');
+            await sleep(480);
+          }
+        }
+        setHot(keys, 'enter');
+        await sleep(520);
+      } else {
+        for (let i = 0; i <= activeIdx; i++) {
+          syncItems(screen, itemsAt(frame, i, []));
+          setHot(keys, i === activeIdx ? frame.key : 'updown');
+          await sleep(i === activeIdx ? 560 : 360);
+        }
+      }
+    }
+
+    if (frame.commands?.length) {
+      const cmdNodes = [...screen.querySelectorAll('.akh-cmd')];
+      if (!cmdNodes.length) {
+        mount(screen, hint, frame, ['']);
+      }
+      setHot(keys, 'enter');
+      const lines: string[] = [];
+      for (const command of frame.commands) {
+        lines.push('');
+        const node = screen.querySelectorAll('.akh-cmd')[lines.length - 1] ?? el('div', 'akh-cmd');
+        if (!node.parentElement) screen.insertBefore(node, screen.lastChild);
+        for (const char of command) {
+          lines[lines.length - 1] += char;
+          node.textContent = `│  ${lines[lines.length - 1]}`;
+          await sleep(13);
+        }
+        if (lines.length < frame.commands.length) {
+          const next = el('div', 'akh-cmd');
+          next.textContent = '│  ';
+          screen.insertBefore(next, screen.lastChild);
+        }
+      }
+      await sleep(900);
+      return;
+    }
+
+    setHot(keys, frame.key);
+    await sleep(900);
   }
 
   function startDemo(root: HTMLElement) {
@@ -280,14 +474,7 @@ const keys = isVi
     const screen = root.querySelector<HTMLElement>('[data-akh-screen]');
     const hint = root.querySelector<HTMLElement>('[data-akh-hint]');
     if (!json || !screen || !hint) return;
-    let frames: Array<{
-      prompt: string;
-      items?: { label: string; active?: boolean; checked?: boolean }[];
-      commands?: string[];
-      status?: string;
-      hint: string;
-      key: string;
-    }> = [];
+    let frames: Frame[] = [];
     try {
       frames = JSON.parse(json.textContent || '[]');
     } catch {
@@ -295,24 +482,22 @@ const keys = isVi
     }
     if (!frames.length) return;
     root.dataset.akhBound = '1';
-
     const keys = root.querySelectorAll<HTMLElement>('[data-akh-key]');
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let i = reduced ? Math.min(6, frames.length - 1) : 0;
 
-    const paint = () => {
-      const frame = frames[i];
-      renderFrame(screen, hint, frame);
-      keys.forEach((el) => {
-        el.dataset.hot = el.dataset.akhKey === frame.key ? '1' : '0';
-      });
+    const run = async () => {
+      if (reduced) {
+        await playFrame(screen, hint, keys, frames[Math.min(6, frames.length - 1)], true);
+        return;
+      }
+      while (root.isConnected) {
+        for (const frame of frames) {
+          if (!root.isConnected) return;
+          await playFrame(screen, hint, keys, frame, false);
+        }
+      }
     };
-    paint();
-    if (reduced) return;
-    window.setInterval(() => {
-      i = (i + 1) % frames.length;
-      paint();
-    }, 1800);
+    void run();
   }
 
   const boot = () => {
