@@ -229,14 +229,17 @@ const keys = isVi
 </div>
 
 <style>
+  .akh-tui-demo {
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  }
   .akh-tui-screen {
-    transition: opacity 240ms ease;
+    transition: opacity 200ms var(--ease-out);
   }
   .akh-tui-key {
     transition:
-      border-color 220ms ease,
-      box-shadow 220ms ease,
-      transform 180ms ease;
+      border-color 160ms var(--ease-out),
+      box-shadow 160ms var(--ease-out),
+      transform 160ms var(--ease-out);
   }
   .akh-tui-key[data-hot='1'] {
     border-color: rgb(45 212 191 / 0.55);
@@ -257,9 +260,8 @@ const keys = isVi
     opacity: 0;
     pointer-events: none;
     transition:
-      transform 220ms ease,
-      height 220ms ease,
-      opacity 180ms ease;
+      transform 200ms var(--ease-out),
+      opacity 160ms var(--ease-out);
   }
   .akh-opt {
     position: relative;
@@ -271,7 +273,7 @@ const keys = isVi
     padding: 0 0.5rem;
     border-radius: 0.5rem;
     color: #a1a1aa;
-    transition: color 220ms ease;
+    transition: color 160ms var(--ease-out);
   }
   .akh-opt[data-on='1'] {
     color: #fafafa;
@@ -282,8 +284,8 @@ const keys = isVi
     opacity: 0;
     transform: translateX(-4px);
     transition:
-      opacity 180ms ease,
-      transform 180ms ease;
+      opacity 160ms var(--ease-out),
+      transform 160ms var(--ease-out);
   }
   .akh-opt[data-on='1'] .akh-cursor {
     opacity: 1;
@@ -292,7 +294,7 @@ const keys = isVi
   .akh-mark {
     width: 1rem;
     color: #71717a;
-    transition: color 180ms ease;
+    transition: color 160ms var(--ease-out);
   }
   .akh-opt[data-on='1'] .akh-mark,
   .akh-opt[data-checked='1'] .akh-mark {
@@ -407,7 +409,6 @@ const keys = isVi
     }
     const top = row.getBoundingClientRect().top - list.getBoundingClientRect().top;
     bar.style.opacity = '1';
-    bar.style.height = `${row.getBoundingClientRect().height}px`;
     bar.style.transform = `translateY(${top}px)`;
   }
 
