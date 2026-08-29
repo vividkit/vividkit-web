@@ -1,7 +1,8 @@
 // AgentKit kit skills cheatsheet.
-// Inventory authority: kits/{core|engineer|marketing}/skills/*/SKILL.md (top-level only).
-// Drift: node scripts/check-ak-skill-details.mjs --kit-root <agentkit>
-// Flags/argument-hint/descriptions: kit SKILL.md. Not CLI version.
+// User-facing skill page inventory authority: ak-docs Fumadocs meta.json pages[]
+//   content/docs/{stable|beta}/kits/{engineer|marketing}/skills/meta.json
+// Snapshots + notes: reference/ak-docs-skills-meta/. Drift check: node scripts/check-ak-skill-details.mjs --kit-root <agentkit>
+// Flags/argument-hint/descriptions: kit SKILL.md (ak-cli kits). Not CLI version.
 // Nested docx/pdf/pptx/xlsx under document-skills are not separate top-level pages.
 // UI groups: Engineer = workflow (CK-like); Marketing = GTM lifecycle.
 // Invoke: Claude Code/Cursor /ak:<skill>, Codex $ak:<skill>.

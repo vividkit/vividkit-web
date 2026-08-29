@@ -6,7 +6,7 @@ const data: SkillInfographic = {
   kit: 'engineer',
   header: {
     titleEn: '/ak:vibe — Autonomous development pipeline',
-    titleVi: '/ak:vibe — Pipeline phát triển tự động',
+    titleVi: '/ak:vibe — Chạy pipeline phát triển tự động',
     taglineEn: 'Run the full autonomous development pipeline from issue or feature request through worktree, plan, implementation, review, PR, ready labels, and optional merge/CI convergence.',
     taglineVi: 'Chạy pipeline phát triển tự động từ issue hoặc yêu cầu feature qua worktree, plan, triển khai, review, PR, label sẵn sàng và tùy chọn merge/đưa CI về xanh.',
   },
