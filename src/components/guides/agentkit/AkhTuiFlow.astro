@@ -88,8 +88,6 @@ const copy = isVi
       hintRun: 'One --target command per selected runtime',
     };
 
-const cmd1 = 'ak kit install engineer --target codex --channel stable --yes --verbose';
-const cmd2 = 'ak kit install engineer --target omp --channel stable --yes --verbose';
 ---
 
 <div class="akh-tui-demo space-y-4">
@@ -112,25 +110,68 @@ const cmd2 = 'ak kit install engineer --target omp --channel stable --yes --verb
     >
       <style>
         {`
-          .akh-svg { --ease-out: cubic-bezier(0.23, 1, 0.32, 1); }
           .akh-scene {
             opacity: 0;
-            animation: akh-scene 16s var(--ease-out) infinite both;
+            visibility: hidden;
+            animation-duration: 16s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
           }
-          .akh-s1 { animation-delay: 0s; }
-          .akh-s2 { animation-delay: 2s; }
-          .akh-s3 { animation-delay: 4s; }
-          .akh-s4 { animation-delay: 6s; }
-          .akh-s5 { animation-delay: 8s; }
-          .akh-s6 { animation-delay: 10s; }
-          .akh-s7 { animation-delay: 12s; }
-          .akh-s8 { animation-delay: 14s; }
-          @keyframes akh-scene {
-            0% { opacity: 0; }
-            2% { opacity: 1; }
-            11% { opacity: 1; }
-            13% { opacity: 0; }
-            100% { opacity: 0; }
+          .akh-s1 { animation-name: akh-w1; }
+          .akh-s2 { animation-name: akh-w2; }
+          .akh-s3 { animation-name: akh-w3; }
+          .akh-s4 { animation-name: akh-w4; }
+          .akh-s5 { animation-name: akh-w5; }
+          .akh-s6 { animation-name: akh-w6; }
+          .akh-s7 { animation-name: akh-w7; }
+          .akh-s8 { animation-name: akh-w8; }
+          @keyframes akh-w1 {
+            0% { opacity: 0; visibility: hidden; }
+            1% { opacity: 1; visibility: visible; }
+            11.5% { opacity: 1; visibility: visible; }
+            12.5%, 100% { opacity: 0; visibility: hidden; }
+          }
+          @keyframes akh-w2 {
+            0%, 12.5% { opacity: 0; visibility: hidden; }
+            13.5% { opacity: 1; visibility: visible; }
+            24% { opacity: 1; visibility: visible; }
+            25%, 100% { opacity: 0; visibility: hidden; }
+          }
+          @keyframes akh-w3 {
+            0%, 25% { opacity: 0; visibility: hidden; }
+            26% { opacity: 1; visibility: visible; }
+            36.5% { opacity: 1; visibility: visible; }
+            37.5%, 100% { opacity: 0; visibility: hidden; }
+          }
+          @keyframes akh-w4 {
+            0%, 37.5% { opacity: 0; visibility: hidden; }
+            38.5% { opacity: 1; visibility: visible; }
+            49% { opacity: 1; visibility: visible; }
+            50%, 100% { opacity: 0; visibility: hidden; }
+          }
+          @keyframes akh-w5 {
+            0%, 50% { opacity: 0; visibility: hidden; }
+            51% { opacity: 1; visibility: visible; }
+            61.5% { opacity: 1; visibility: visible; }
+            62.5%, 100% { opacity: 0; visibility: hidden; }
+          }
+          @keyframes akh-w6 {
+            0%, 62.5% { opacity: 0; visibility: hidden; }
+            63.5% { opacity: 1; visibility: visible; }
+            74% { opacity: 1; visibility: visible; }
+            75%, 100% { opacity: 0; visibility: hidden; }
+          }
+          @keyframes akh-w7 {
+            0%, 75% { opacity: 0; visibility: hidden; }
+            76% { opacity: 1; visibility: visible; }
+            86.5% { opacity: 1; visibility: visible; }
+            87.5%, 100% { opacity: 0; visibility: hidden; }
+          }
+          @keyframes akh-w8 {
+            0%, 87.5% { opacity: 0; visibility: hidden; }
+            88.5% { opacity: 1; visibility: visible; }
+            99% { opacity: 1; visibility: visible; }
+            100% { opacity: 0; visibility: hidden; }
           }
           .akh-bar {
             fill: #27272a;
@@ -138,58 +179,46 @@ const cmd2 = 'ak kit install engineer --target omp --channel stable --yes --verb
             transform-origin: top left;
           }
           .akh-s5 .akh-bar {
-            animation: akh-rt 2s var(--ease-out) infinite both;
-            animation-delay: 8s;
+            animation: akh-rt 16s cubic-bezier(0.23, 1, 0.32, 1) infinite;
           }
           @keyframes akh-rt {
-            0%, 28% { transform: translateY(0); }
-            40%, 58% { transform: translateY(28px); }
-            72%, 100% { transform: translateY(56px); }
+            0%, 51% { transform: translateY(0); }
+            55%, 57% { transform: translateY(28px); }
+            61%, 100% { transform: translateY(56px); }
           }
-          .akh-check {
-            opacity: 0;
+          .akh-check { opacity: 0; }
+          .akh-check-a { animation: akh-check-a 16s linear infinite; }
+          .akh-check-b { animation: akh-check-b 16s linear infinite; }
+          @keyframes akh-check-a {
+            0%, 52% { opacity: 0; }
+            54%, 62% { opacity: 1; }
+            62.5%, 100% { opacity: 0; }
           }
-          .akh-check-a {
-            animation: akh-check 16s linear infinite both;
-            animation-delay: 8.5s;
+          @keyframes akh-check-b {
+            0%, 58% { opacity: 0; }
+            60%, 62% { opacity: 1; }
+            62.5%, 100% { opacity: 0; }
           }
-          .akh-check-b {
-            animation: akh-check 16s linear infinite both;
-            animation-delay: 9.3s;
+          .akh-cmd-a, .akh-cmd-b { opacity: 0; }
+          .akh-cmd-a { animation: akh-cmd-a 16s cubic-bezier(0.23, 1, 0.32, 1) infinite; }
+          .akh-cmd-b { animation: akh-cmd-b 16s cubic-bezier(0.23, 1, 0.32, 1) infinite; }
+          @keyframes akh-cmd-a {
+            0%, 76% { opacity: 0; transform: translateY(4px); }
+            78%, 86.5% { opacity: 1; transform: translateY(0); }
+            87.5%, 100% { opacity: 0; transform: translateY(0); }
           }
-          @keyframes akh-check {
-            0%, 4% { opacity: 0; }
-            6%, 11% { opacity: 1; }
-            13%, 100% { opacity: 0; }
-          }
-          .akh-cmd-a, .akh-cmd-b {
-            opacity: 0;
-          }
-          .akh-s7 .akh-cmd-a {
-            animation: akh-cmd 16s var(--ease-out) infinite both;
-            animation-delay: 12.15s;
-          }
-          .akh-s7 .akh-cmd-b {
-            animation: akh-cmd 16s var(--ease-out) infinite both;
-            animation-delay: 12.35s;
-          }
-          @keyframes akh-cmd {
-            0% { opacity: 0; transform: translateY(4px); }
-            3%, 11% { opacity: 1; transform: translateY(0); }
-            13%, 100% { opacity: 0; transform: translateY(0); }
+          @keyframes akh-cmd-b {
+            0%, 77.5% { opacity: 0; transform: translateY(4px); }
+            79.5%, 86.5% { opacity: 1; transform: translateY(0); }
+            87.5%, 100% { opacity: 0; transform: translateY(0); }
           }
           @media (prefers-reduced-motion: reduce) {
-            .akh-scene,
-            .akh-s5 .akh-bar,
-            .akh-check-a,
-            .akh-check-b,
-            .akh-s7 .akh-cmd-a,
-            .akh-s7 .akh-cmd-b {
+            .akh-scene, .akh-s5 .akh-bar, .akh-check-a, .akh-check-b, .akh-cmd-a, .akh-cmd-b {
               animation: none;
             }
-            .akh-scene { opacity: 0; }
-            .akh-s7 { opacity: 1; }
-            .akh-s7 .akh-cmd-a, .akh-s7 .akh-cmd-b { opacity: 1; transform: none; }
+            .akh-scene { opacity: 0; visibility: hidden; }
+            .akh-s7 { opacity: 1; visibility: visible; }
+            .akh-cmd-a, .akh-cmd-b { opacity: 1; transform: none; }
           }
         `}
       </style>
@@ -266,15 +295,24 @@ const cmd2 = 'ak kit install engineer --target omp --channel stable --yes --verb
       {/* 7 commands */}
       <g class="akh-scene akh-s7">
         <text x="24" y="56" fill="#a7f3d0" font-family="ui-monospace, Menlo, monospace" font-size="13">◇  {copy.cmdPrompt}</text>
-        <text class="akh-cmd-a" x="24" y="92" fill="#7dd3fc" font-family="ui-monospace, Menlo, monospace" font-size="11">{cmd1}</text>
-        <text class="akh-cmd-b" x="24" y="116" fill="#7dd3fc" font-family="ui-monospace, Menlo, monospace" font-size="11">{cmd2}</text>
+        <text class="akh-cmd-a" fill="#7dd3fc" font-family="ui-monospace, Menlo, monospace" font-size="11">
+          <tspan x="24" y="88">ak kit install engineer --target codex</tspan>
+          <tspan x="24" y="108">  --channel stable --yes --verbose</tspan>
+        </text>
+        <text class="akh-cmd-b" fill="#7dd3fc" font-family="ui-monospace, Menlo, monospace" font-size="11">
+          <tspan x="24" y="136">ak kit install engineer --target omp</tspan>
+          <tspan x="24" y="156">  --channel stable --yes --verbose</tspan>
+        </text>
         <text x="24" y="280" fill="#71717a" font-family="ui-monospace, Menlo, monospace" font-size="11">{copy.hintCmd}</text>
       </g>
 
       {/* 8 running */}
       <g class="akh-scene akh-s8">
         <text x="24" y="56" fill="#a7f3d0" font-family="ui-monospace, Menlo, monospace" font-size="13">◇  {copy.runPrompt}</text>
-        <text x="24" y="92" fill="#a1a1aa" font-family="ui-monospace, Menlo, monospace" font-size="13">{copy.status}</text>
+        <text fill="#a1a1aa" font-family="ui-monospace, Menlo, monospace" font-size="12">
+          <tspan x="24" y="88">{isVi ? 'ak đang ghi file Kit.' : 'ak writes Kit files as it runs.'}</tspan>
+          <tspan x="24" y="110">{isVi ? 'AgentKit lo xác minh, ownership và snapshot.' : 'AgentKit still owns verification, ownership, and snapshots.'}</tspan>
+        </text>
         <text x="24" y="280" fill="#71717a" font-family="ui-monospace, Menlo, monospace" font-size="11">{copy.hintRun}</text>
       </g>
 
@@ -306,22 +344,25 @@ const cmd2 = 'ak kit install engineer --target omp --channel stable --yes --verb
   .akh-tui-key {
     transition: transform 120ms var(--ease-out);
   }
-  .akh-key-updown { animation: akh-key 16s var(--ease-out) infinite both; animation-delay: 0s; }
-  .akh-key-enter { animation: akh-key 16s var(--ease-out) infinite both; animation-delay: 2s; }
-  .akh-key-space { animation: akh-key 16s var(--ease-out) infinite both; animation-delay: 8s; }
-  .akh-key-esc { animation: akh-key 16s var(--ease-out) infinite both; animation-delay: 4s; }
-  @keyframes akh-key {
-    0%, 11% {
-      border-color: rgb(45 212 191 / 0.55);
-      transform: translateY(-1px);
-    }
-    13%, 100% {
-      border-color: rgb(226 232 240 / 0.8);
-      transform: none;
-    }
+  .akh-key-updown { animation: akh-hot-lang 16s linear infinite; }
+  .akh-key-enter { animation: akh-hot-enter 16s linear infinite; }
+  .akh-key-space { animation: akh-hot-space 16s linear infinite; }
+  .akh-key-esc { animation: akh-hot-esc 16s linear infinite; }
+  @keyframes akh-hot-lang {
+    1%, 11.5% { transform: translateY(-1px); border-color: rgb(45 212 191 / 0.55); }
+    0%, 12.5%, 100% { transform: none; }
   }
-  :global(.dark) .akh-tui-key {
-    /* keep dark border as default; animation overrides when hot */
+  @keyframes akh-hot-enter {
+    13.5%, 24%, 76%, 86.5% { transform: translateY(-1px); border-color: rgb(45 212 191 / 0.55); }
+    0%, 12.5%, 25%, 75%, 87.5%, 100% { transform: none; }
+  }
+  @keyframes akh-hot-space {
+    51%, 61.5% { transform: translateY(-1px); border-color: rgb(45 212 191 / 0.55); }
+    0%, 50%, 62.5%, 100% { transform: none; }
+  }
+  @keyframes akh-hot-esc {
+    26%, 36.5% { transform: translateY(-1px); border-color: rgb(45 212 191 / 0.55); }
+    0%, 25%, 37.5%, 100% { transform: none; }
   }
   @media (prefers-reduced-motion: reduce) {
     .akh-tui-key {
