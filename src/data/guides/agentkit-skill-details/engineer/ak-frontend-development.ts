@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:frontend-development",
   kit: "engineer",
   header: {
-    titleEn: "/ak:frontend-development",
-    titleVi: "/ak:frontend-development",
+    titleEn: "/ak:frontend-development — Modern React and TypeScript UI",
+    titleVi: "/ak:frontend-development — Frontend React và TypeScript",
     taglineEn: "Modern React and TypeScript frontend implementation with Suspense, lazy loading, TanStack Query/Router, MUI v7, performance, and file organization patterns.",
     taglineVi: "Triển khai frontend React và TypeScript hiện đại với Suspense, lazy loading, TanStack Query/Router, MUI v7, hiệu năng và pattern tổ chức file.",
   },

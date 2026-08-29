@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:fable-thinking",
   kit: "engineer",
   header: {
-    titleEn: "/ak:fable-thinking",
-    titleVi: "/ak:fable-thinking",
+    titleEn: "/ak:fable-thinking — Evidence-grounded reasoning",
+    titleVi: "/ak:fable-thinking — Suy luận dựa trên bằng chứng",
     taglineEn: "Evidence-grounded reasoning protocol for hard diagnosis, review, decisions, constrained writing, and calibrated outcome-first delivery.",
     taglineVi: "Giao thức suy luận dựa trên bằng chứng cho chẩn đoán khó, review, quyết định, viết có ràng buộc và bàn giao đúng mức tự tin.",
   },

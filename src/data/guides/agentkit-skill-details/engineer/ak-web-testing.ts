@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:web-testing',
   kit: 'engineer',
   header: {
-    titleEn: '/ak:web-testing',
-    titleVi: '/ak:web-testing',
+    titleEn: '/ak:web-testing — Web test automation',
+    titleVi: '/ak:web-testing — Tự động hóa test web',
     taglineEn: 'Design and run web test automation across Vitest, Playwright, k6, axe-core, Lighthouse, visual regression, flakiness, mobile gestures, and cross-browser quality.',
     taglineVi: 'Thiết kế và chạy tự động hóa test web với Vitest, Playwright, k6, axe-core, Lighthouse, visual regression, xử lý flakiness, gesture mobile và đa trình duyệt.',
   },

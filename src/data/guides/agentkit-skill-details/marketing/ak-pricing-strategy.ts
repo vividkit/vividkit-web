@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:pricing-strategy',
   kit: 'marketer',
   header: {
-    titleEn: '/ak:pricing-strategy',
-    titleVi: '/ak:pricing-strategy',
+    titleEn: '/ak:pricing-strategy — SaaS pricing strategy',
+    titleVi: '/ak:pricing-strategy — Chiến lược giá SaaS',
     taglineEn: 'SaaS and digital-product pricing strategy for packaging, value metrics, tier design, willingness-to-pay research, price increases, pricing pages, and tests.',
     taglineVi: 'Chiến lược pricing cho SaaS và sản phẩm số: packaging, value metric, tier, willingness-to-pay research, tăng giá, pricing page và test.',
   },

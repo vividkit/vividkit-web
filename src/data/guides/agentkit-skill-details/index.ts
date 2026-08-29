@@ -34,3 +34,26 @@ export function getAkSkillInfographic(
 export function hasAkSkillInfographic(kit: AkSkillDetailKit, skill: string): boolean {
   return byKey.has(`${kit}/${skill}`);
 }
+
+function normalizeAkSkillId(name: string): string | null {
+  let slug = name.trim().toLowerCase();
+  slug = slug.replace(/^[/$@]+/, '');
+  slug = slug.replace(/^(ak:|ak-)/, '');
+  slug = slug.replace(/[^a-z0-9-]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+  if (!slug) return null;
+  return `ak-${slug}`;
+}
+
+export function resolveAkSkillDetail(
+  name: string,
+  preferredKit: AkSkillDetailKit,
+): { kit: AkSkillDetailKit; skill: string } | undefined {
+  const id = normalizeAkSkillId(name);
+  if (!id) return undefined;
+  const kits: AkSkillDetailKit[] =
+    preferredKit === 'marketing' ? ['marketing', 'engineer'] : ['engineer', 'marketing'];
+  for (const kit of kits) {
+    if (byKey.has(`${kit}/${id}`)) return { kit, skill: id };
+  }
+  return undefined;
+}

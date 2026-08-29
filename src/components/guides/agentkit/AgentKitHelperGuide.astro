@@ -1,0 +1,363 @@
+---
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
+import AkPageHero from './AkPageHero.astro';
+import AkSection from './AkSection.astro';
+import AkCallout from './AkCallout.astro';
+import AkFeatureGrid from './AkFeatureGrid.astro';
+import AkNextLinks from './AkNextLinks.astro';
+import AkInlineCode from './AkInlineCode.astro';
+import AkCodeBlock from './AkCodeBlock.astro';
+import AkStepRail from './AkStepRail.astro';
+import AkCompare from './AkCompare.astro';
+import AkhTuiFlow from './AkhTuiFlow.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === 'vi';
+const translatePath = useTranslatedPath(currentLang);
+const repoUrl = 'https://github.com/thieung/agentkit-helper';
+const npmPkg = '@thieung/agentkit-helper';
+
+const roles = isVi
+  ? [
+      {
+        icon: '01',
+        title: 'Hỏi vài lựa chọn',
+        body: 'Scope project hoặc user/global, Engineer hoặc Marketing Kit, runtime, kênh stable hoặc beta.',
+        accent: 'teal' as const,
+      },
+      {
+        icon: '02',
+        title: 'Hiện lệnh ak',
+        body: 'Helper in đúng lệnh CLI ak sẽ chạy — bạn thấy trước khi ghi file.',
+        accent: 'cyan' as const,
+      },
+      {
+        icon: '03',
+        title: 'Chạy giúp bạn',
+        body: 'Gọi CLI ak đã cài. AgentKit vẫn lo xác minh Kit, ownership, snapshot và file theo runtime.',
+        accent: 'violet' as const,
+      },
+    ]
+  : [
+      {
+        icon: '01',
+        title: 'Ask a few choices',
+        body: 'Project or user/global scope, Engineer or Marketing Kit, runtimes, stable or beta channel.',
+        accent: 'teal' as const,
+      },
+      {
+        icon: '02',
+        title: 'Show the ak command',
+        body: 'The helper prints the official ak CLI command before it writes anything.',
+        accent: 'cyan' as const,
+      },
+      {
+        icon: '03',
+        title: 'Run it for you',
+        body: 'It calls the ak CLI you already have. AgentKit still owns Kit verification, ownership, snapshots, and runtime files.',
+        accent: 'violet' as const,
+      },
+    ];
+
+
+const safety = isVi
+  ? [
+      {
+        title: 'Cài global: không --force trước',
+        body: 'Helper chạy lần đầu không có --force. Nếu target đã có hoặc lệch file, TUI hiện WARNING và hỏi riêng — mặc định No. Chỉ retry --force khi bạn chọn Yes.',
+      },
+      {
+        title: 'Update global: preserve-only',
+        body: 'File user đã sửa thì bỏ qua. Helper không thêm --force cho global update.',
+      },
+      {
+        title: 'Xem trước trước khi ghi',
+        body: 'akh update --dry-run lập kế hoạch, không ghi. --yes chỉ bỏ bước xác nhận của helper — không phải xóa sạch.',
+      },
+    ]
+  : [
+      {
+        title: 'Global install: no --force first',
+        body: 'The helper first runs without --force. If the target exists or files drifted, the TUI shows a WARNING and asks separately — default No. It retries with --force only after Yes.',
+      },
+      {
+        title: 'Global update: preserve-only',
+        body: 'User-modified files are skipped. The helper never adds --force on a global update.',
+      },
+      {
+        title: 'Preview before write',
+        body: 'akh update --dry-run plans without writing. --yes only skips the helper confirmation — it is not a wipe.',
+      },
+    ];
+
+const platforms = isVi
+  ? [
+      { os: 'macOS', detail: 'Đã verify trên máy local' },
+      { os: 'Linux', detail: 'Hỗ trợ qua Node.js portable' },
+      { os: 'Windows', detail: 'PowerShell experimental — chưa smoke-test máy thật' },
+    ]
+  : [
+      { os: 'macOS', detail: 'Verified on a local machine' },
+      { os: 'Linux', detail: 'Supported via the portable Node.js path' },
+      { os: 'Windows', detail: 'PowerShell experimental — no real-machine smoke test yet' },
+    ];
+
+const advancedCards = isVi
+  ? [
+      {
+        title: 'Cài vào project',
+        code: `akh install --project /path/to/project --kit engineer \\
+  --runtime codex --channel stable`,
+      },
+      {
+        title: 'Cài user/global của runtime',
+        code: `akh install --global --kit engineer \\
+  --runtime codex,omp,pi --channel stable`,
+      },
+      {
+        title: 'Cập nhật Kit trong project',
+        code: `akh update --project /path/to/project`,
+      },
+      {
+        title: 'Cập nhật mọi install đã biết',
+        code: `akh update-all --channel stable`,
+      },
+      {
+        title: 'Chỉ binary ak',
+        code: `akh self-update --channel stable`,
+      },
+      {
+        title: 'Xem trước, không ghi',
+        code: `akh update --project /path/to/project --dry-run`,
+      },
+    ]
+  : [
+      {
+        title: 'Install into a project',
+        code: `akh install --project /path/to/project --kit engineer \\
+  --runtime codex --channel stable`,
+      },
+      {
+        title: 'Install into runtime user/global',
+        code: `akh install --global --kit engineer \\
+  --runtime codex,omp,pi --channel stable`,
+      },
+      {
+        title: 'Update Kit in a project',
+        code: `akh update --project /path/to/project`,
+      },
+      {
+        title: 'Update every known install',
+        code: `akh update-all --channel stable`,
+      },
+      {
+        title: 'ak binary only',
+        code: `akh self-update --channel stable`,
+      },
+      {
+        title: 'Preview without writing',
+        code: `akh update --project /path/to/project --dry-run`,
+      },
+    ];
+---
+
+<div class="space-y-10 mt-6">
+  <AkPageHero
+    lang={currentLang}
+    accent="teal"
+    kicker={isVi ? 'AgentKit · Community TUI' : 'AgentKit · Community TUI'}
+    title="AgentKit Helper"
+    subtitle={isVi
+      ? 'TUI cộng đồng: detect CLI ak, hỏi lựa chọn, hiện lệnh chính thức, rồi chạy giúp bạn.'
+      : 'Community TUI: detect the ak CLI, ask a few choices, show the official command, then run it.'}
+    badges={isVi ? ['không phải CLI ak', 'MIT'] : ['not the ak CLI', 'MIT']}
+  />
+
+  <AkCallout variant="info" title={isVi ? 'Đây không phải sản phẩm AgentKit' : 'This is not an AgentKit product'}>
+    {isVi ? (
+      <>
+        AgentKit Helper là tool cộng đồng (MIT) trên{' '}
+        <a class="font-semibold text-teal-800 underline-offset-2 hover:underline dark:text-teal-200" href={repoUrl} target="_blank" rel="noreferrer">
+          GitHub
+        </a>
+        . Nó gọi CLI ak — không thay Desktop App, không thay ownership/uninstall của AgentKit.
+        Cần Node.js 20.12+ và CLI ak đã cài.
+      </>
+    ) : (
+      <>
+        AgentKit Helper is a community MIT tool on{' '}
+        <a class="font-semibold text-teal-800 underline-offset-2 hover:underline dark:text-teal-200" href={repoUrl} target="_blank" rel="noreferrer">
+          GitHub
+        </a>
+        . It calls the ak CLI — it does not replace the Desktop App or AgentKit ownership/uninstall.
+        Requires Node.js 20.12+ and an installed ak CLI.
+      </>
+    )}
+  </AkCallout>
+
+  <AkSection eyebrow={isVi ? 'Bắt đầu' : 'Start'} title={isVi ? 'Chạy TUI' : 'Run the TUI'}>
+    <div class="grid gap-4 lg:grid-cols-2">
+      <div class="space-y-2">
+        <p class="text-sm font-semibold text-slate-800 dark:text-slate-100">npx</p>
+        <AkCodeBlock title="npx" code={`npx --yes ${npmPkg}`} />
+      </div>
+      <div class="space-y-2">
+        <p class="text-sm font-semibold text-slate-800 dark:text-slate-100">
+          {isVi ? 'Cài global → lệnh ngắn' : 'Global install → short command'}
+        </p>
+        <AkCodeBlock title="akh" code={`npm install --global ${npmPkg}\nakh`} />
+      </div>
+    </div>
+    <div class="mt-5">
+      <AkhTuiFlow lang={currentLang} />
+    </div>
+  </AkSection>
+
+  <AkSection eyebrow={isVi ? 'Việc helper làm' : 'What it does'} title={isVi ? 'Bọc CLI ak, không thay CLI ak' : 'Wraps the ak CLI, does not replace it'}>
+    <AkFeatureGrid features={roles} columns={3} />
+  </AkSection>
+
+  <AkSection eyebrow={isVi ? 'So sánh' : 'Compare'} title={isVi ? 'Helper vs CLI ak vs Desktop' : 'Helper vs ak CLI vs Desktop'}>
+    <AkCompare
+      left={{
+        title: isVi ? 'CLI ak (chính thức)' : 'ak CLI (official)',
+        body: isVi
+          ? 'Nguồn sự thật: cài Kit, update, ownership, snapshot. Mọi lệnh helper chạy đều là lệnh ak.'
+          : 'Source of truth: Kit install, update, ownership, snapshots. Every helper run is an ak command.',
+        tone: 'teal',
+        points: isVi
+          ? ['ak kit init / ak update / ak self-update', 'AgentKit vẫn lo ownership, snapshot và file theo runtime.']
+          : ['ak kit init / ak update / ak self-update', 'AgentKit remains responsible for ownership, snapshots, and runtime files.'],
+      }}
+      right={{
+        title: isVi ? 'Helper (cộng đồng)' : 'Helper (community)',
+        body: isVi
+          ? 'TUI hỏi lựa chọn rồi gọi ak. Desktop App là GUI chính thức, mua riêng — không phải tool này.'
+          : 'TUI asks choices then calls ak. Desktop App is the official GUI, sold separately — not this tool.',
+        tone: 'amber',
+        points: isVi
+          ? ['npx / akh — MIT, không phải sản phẩm AgentKit', 'Desktop: xem trang Desktop App']
+          : ['npx / akh — MIT, not an AgentKit product', 'Desktop: see the Desktop App page'],
+      }}
+    />
+    <p class="mt-3 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+      {isVi ? (
+        <>
+          Desktop App:{' '}
+          <a class="font-semibold text-teal-800 underline-offset-2 hover:underline dark:text-teal-200" href={translatePath('/guides/agentkit/desktop-app')}>
+            hướng dẫn Desktop
+          </a>
+          . Cập nhật CLI/kit bằng tay:{' '}
+          <a class="font-semibold text-teal-800 underline-offset-2 hover:underline dark:text-teal-200" href={translatePath('/guides/agentkit/updating')}>
+            cập nhật AgentKit
+          </a>
+          .
+        </>
+      ) : (
+        <>
+          Desktop App:{' '}
+          <a class="font-semibold text-teal-800 underline-offset-2 hover:underline dark:text-teal-200" href={translatePath('/guides/agentkit/desktop-app')}>
+            Desktop guide
+          </a>
+          . Manual CLI/kit updates:{' '}
+          <a class="font-semibold text-teal-800 underline-offset-2 hover:underline dark:text-teal-200" href={translatePath('/guides/agentkit/updating')}>
+            Update AgentKit
+          </a>
+          .
+        </>
+      )}
+    </p>
+  </AkSection>
+
+  <AkSection eyebrow={isVi ? 'An toàn' : 'Safety'} title={isVi ? '--force không mặc định' : '--force is not the default'}>
+    <AkStepRail steps={safety} accent="amber" />
+  </AkSection>
+
+  <AkSection eyebrow={isVi ? 'Nền tảng' : 'Platforms'} title={isVi ? 'macOS / Linux / Windows' : 'macOS / Linux / Windows'}>
+    <div class="grid gap-3 sm:grid-cols-3">
+      {platforms.map((p) => (
+        <div class="rounded-2xl border border-slate-200/80 bg-white/90 px-4 py-4 text-center shadow-sm dark:border-slate-700 dark:bg-slate-950 dark:shadow-none">
+          <div class="text-sm font-bold text-slate-900 dark:text-white">{p.os}</div>
+          <div class="mt-1 text-xs text-slate-500 dark:text-slate-400">{p.detail}</div>
+        </div>
+      ))}
+    </div>
+  </AkSection>
+
+  <AkSection eyebrow={isVi ? 'CLI' : 'CLI'} title={isVi ? 'Lệnh nâng cao' : 'Advanced commands'}>
+    <div class="grid gap-4 sm:grid-cols-2">
+      {advancedCards.map((card) => (
+        <div class="flex flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 dark:border-slate-700 dark:bg-slate-900/50">
+          <p class="px-4 pt-4 text-sm font-semibold text-slate-900 dark:text-white">{card.title}</p>
+          <div class="p-3 pt-2">
+            <AkCodeBlock title="akh" code={card.code} />
+          </div>
+        </div>
+      ))}
+    </div>
+    <div class="mt-4 grid gap-3 sm:grid-cols-3">
+      {(
+        [
+          {
+            label: isVi ? 'Cài' : 'Install',
+            chips: ['claude-code', 'codex', 'cursor', 'dsh', 'grok', 'omp', 'pi'],
+            note: null as string | null,
+          },
+          {
+            label: isVi ? 'Cập nhật' : 'Update',
+            chips: ['claude-code', 'codex', 'cursor', 'grok', 'omp', 'pi'],
+            note: isVi ? 'dsh không hỗ trợ update' : 'dsh is unsupported for update',
+          },
+          {
+            label: 'Export',
+            chips: ['agy', 'portable'],
+            note: null as string | null,
+          },
+        ]
+      ).map((group) => (
+        <div class="rounded-2xl border border-slate-200/80 bg-white/80 p-4 dark:border-slate-700 dark:bg-slate-900/50">
+          <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
+            {group.label}
+          </p>
+          <div class="mt-3 flex flex-wrap gap-1.5">
+            {group.chips.map((chip) => (
+              <code class="rounded-md border border-slate-200/80 bg-slate-100 px-1.5 py-0.5 font-mono text-[0.8em] text-slate-800 dark:border-slate-700 dark:bg-slate-800/90 dark:text-slate-100">
+                {chip}
+              </code>
+            ))}
+          </div>
+          {group.note ? (
+            <p class="mt-2 text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">{group.note}</p>
+          ) : null}
+        </div>
+      ))}
+    </div>
+    <p class="mt-3 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+      {isVi ? (
+        <>
+          Đủ flag: <AkInlineCode text="akh --help" />.
+        </>
+      ) : (
+        <>
+          Every flag: <AkInlineCode text="akh --help" />.
+        </>
+      )}
+    </p>
+  </AkSection>
+
+  <AkNextLinks
+    lang={currentLang}
+    title={isVi ? 'Liên quan' : 'Related'}
+    links={[
+      { href: '/guides/agentkit/getting-started', label: isVi ? 'Cài CLI ak' : 'Install the ak CLI' },
+      { href: '/guides/agentkit/updating', label: isVi ? 'Cập nhật CLI & Kits' : 'Update CLI & Kits' },
+      { href: '/guides/agentkit/runtime-support', label: isVi ? 'Runtime' : 'Runtime support' },
+      { href: '/guides/agentkit/desktop-app', label: isVi ? 'Desktop App' : 'Desktop App' },
+    ]}
+  />
+</div>

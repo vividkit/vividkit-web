@@ -2,8 +2,8 @@
 // Generic Quick Ref layout for audited How ClaudeKit Works commands.
 // Matches the visual grammar used by ck-brainstorm, ck-plan, and ck-cook.
 import type { ProcessFlowStep, PromptExample, SkillInfographic, GuardrailItem, ModeCardData, SpecialOpCard, ProcessGroupLabel } from '@/data/guides/how-ck-works';
-import type { Language } from '@/i18n';
-
+import { useTranslatedPath, type Language } from '@/i18n';
+import { resolveAkSkillDetail, type AkSkillDetailKit } from '@/data/guides/agentkit-skill-details';
 interface Props {
   data: SkillInfographic;
   lang: Language;
@@ -28,6 +28,9 @@ type ProcessGroup = {
 
 const { data, lang, plainHeadline = false } = Astro.props;
 const isVi = lang === 'vi';
+const translatePath = useTranslatedPath(lang);
+const preferredKit: AkSkillDetailKit = data.kit === 'marketer' ? 'marketing' : 'engineer';
+
 
 const rawTitle = isVi ? data.header.titleVi : data.header.titleEn;
 const tagline = isVi ? data.header.taglineVi : data.header.taglineEn;
@@ -35,30 +38,38 @@ const humanizeHeadline = (headline: string, blurb: string) => {
   const stripped = headline
     .replace(/^[/\$]ak:[^\s—–]+(?:\s*[—–-]\s*)?/i, '')
     .trim();
-  let next = stripped && !/^[/\$]ak:/i.test(stripped) ? stripped : '';
-  if (!next && /^[/\$]ak:/i.test(headline.trim())) {
-    next = (blurb.split(/(?<=[.!?])\s+/)[0] || blurb).replace(/[.]$/, '');
-  }
-  if (!next) next = headline;
-  const words = next.split(/\s+/).filter(Boolean);
-  const sameAsBlurb = next === blurb.trim() || (next.length > 36 && blurb.trim().startsWith(next));
-  if (!sameAsBlurb && next.length <= 40 && words.length <= 5) return next;
-  const clause = next.split(/[,—–:]/)[0].trim();
-  if (!sameAsBlurb && clause.length >= 10 && clause.length <= 36) return clause;
-  return words.slice(0, 5).join(' ');
+  if (stripped && !/^[/\$]ak:/i.test(stripped)) return stripped;
+  const first = (blurb.split(/(?<=[.!?])\s+/)[0] || blurb).replace(/[.]$/, '').trim();
+  const clause = first.split(/[—–:]/)[0].trim();
+  return clause.length >= 12 ? clause : first;
 };
 const title = plainHeadline ? humanizeHeadline(rawTitle, tagline) : rawTitle;
 const principles = (isVi ? data.corePrinciplesVi : data.corePrinciplesEn) || [];
-const expertise = (isVi ? data.expertiseAreasVi : data.expertiseAreasEn) || [];
+const expertise = (isVi ? data.expertiseAreasVi : data.expertiseAreasEn)?.filter(Boolean) || [];
 const modes = data.workflowModes || [];
 const promptExamples = data.promptExamples || [];
-const stack = data.skillStack || [];
+const stack = (data.skillStack || []).map((badge) => {
+  const target =
+    plainHeadline && badge.type === 'skill'
+      ? resolveAkSkillDetail(badge.name, preferredKit)
+      : undefined;
+  const isSelf = target && target.skill === data.id && preferredKit === target.kit;
+  return {
+    ...badge,
+    href: target && !isSelf
+      ? translatePath(`/guides/agentkit/skills/${target.kit}/${target.skill}`)
+      : undefined,
+  };
+});
 const output = data.reportOutput;
 const guardrails = data.guardrails || [];
 const modeCards = data.modeCards || [];
 const specialOps = data.specialOperations || [];
 const customGroupLabels = data.processGroupLabels || [];
 const processFlow = data.processFlow || [];
+const scopeItems = expertise.length > 0
+  ? expertise
+  : processFlow.map((step) => (isVi ? step.titleVi : step.titleEn)).filter(Boolean).slice(0, 6);
 
 const text = {
   eyebrow: isVi ? 'Tóm tắt nhanh / Lệnh' : 'Quick Ref / Command',
@@ -470,11 +481,13 @@ const getOutputPattern = () => (isVi ? output?.patternVi : output?.patternEn)?.t
     </section>
   )}
 
-  <section class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_330px]">
+  {(scopeItems.length > 0 || stack.length > 0) && (
+  <section class:list={['grid gap-5', stack.length > 0 && scopeItems.length > 0 && 'lg:grid-cols-[minmax(0,1fr)_330px]']}>
+    {scopeItems.length > 0 && (
     <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-slate-950/45">
       <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.scope}</h3>
       <ul class="mt-3 grid gap-2.5 sm:grid-cols-2">
-        {expertise.map((item, index) => (
+        {scopeItems.map((item, index) => (
           <li class="grid grid-cols-[0.875rem_minmax(0,1fr)] gap-2.5 text-sm leading-6 text-slate-600 dark:text-slate-300">
             <span class={`mt-2 h-1.5 w-1.5 shrink-0 rounded-full ${tones[index % tones.length].dot}`}></span>
             <span class="min-w-0">{item}</span>
@@ -482,19 +495,31 @@ const getOutputPattern = () => (isVi ? output?.patternVi : output?.patternEn)?.t
         ))}
       </ul>
     </article>
+    )}
 
-    <aside class="rounded-2xl border border-slate-200 bg-slate-50/80 p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.03]">
-      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.stack}</h3>
-      <div class="mt-3 flex flex-wrap gap-2">
-        {stack.map(badge => (
-          <span class="rounded-full bg-white px-2.5 py-1 text-xs text-slate-700 ring-1 ring-slate-200 dark:bg-slate-950/60 dark:text-slate-300 dark:ring-white/10">
-            {badge.name}
-          </span>
-        ))}
-      </div>
-    </aside>
+    {stack.length > 0 && (
+      <aside class="rounded-2xl border border-slate-200 bg-slate-50/80 p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.03]">
+        <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.stack}</h3>
+        <div class="mt-3 flex flex-wrap gap-2">
+          {stack.map(badge => (
+            badge.href ? (
+              <a
+                href={badge.href}
+                class="rounded-full bg-white px-2.5 py-1 text-xs text-teal-800 ring-1 ring-teal-200/80 transition-colors hover:bg-teal-50 hover:ring-teal-300 dark:bg-slate-950/60 dark:text-teal-200 dark:ring-teal-400/25 dark:hover:bg-teal-950/40"
+              >
+                {badge.name}
+              </a>
+            ) : (
+              <span class="rounded-full bg-white px-2.5 py-1 text-xs text-slate-700 ring-1 ring-slate-200 dark:bg-slate-950/60 dark:text-slate-300 dark:ring-white/10">
+                {badge.name}
+              </span>
+            )
+          ))}
+        </div>
+      </aside>
+    )}
   </section>
-
+  )}
   {output && (
     <section>
       <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-slate-950/45">

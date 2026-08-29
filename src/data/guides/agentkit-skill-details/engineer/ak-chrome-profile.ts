@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:chrome-profile',
   kit: 'engineer',
   header: {
-    titleEn: '/ak:chrome-profile',
-    titleVi: '/ak:chrome-profile',
+    titleEn: '/ak:chrome-profile — Profile-aware Chrome automation',
+    titleVi: '/ak:chrome-profile — Tự động hoá trình duyệt theo hồ sơ Chrome',
     taglineEn: 'Profile-aware browser automation for real Chrome state: the right Google account, cookies, workspace, tenant, or deterministic profile target.',
     taglineVi: 'Tự động hoá trình duyệt theo đúng hồ sơ Chrome thật: đúng tài khoản Google, cookie, workspace, tenant hoặc profile đã định danh.',
   },

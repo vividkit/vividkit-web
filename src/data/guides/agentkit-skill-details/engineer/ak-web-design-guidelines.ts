@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:web-design-guidelines',
   kit: 'engineer',
   header: {
-    titleEn: '/ak:web-design-guidelines',
-    titleVi: '/ak:web-design-guidelines',
+    titleEn: '/ak:web-design-guidelines — Review UI against Web Interface Guidelines',
+    titleVi: '/ak:web-design-guidelines — Rà soát UI theo Web Interface Guidelines',
     taglineEn: 'Review UI code against the latest Web Interface Guidelines for accessibility, UX, and design best-practice compliance, then report terse file:line findings.',
     taglineVi: 'Rà soát mã UI theo Web Interface Guidelines mới nhất về accessibility, UX và best practice thiết kế, rồi báo lỗi ngắn gọn dạng file:line.',
   },

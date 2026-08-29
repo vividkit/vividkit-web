@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:referral-program-building',
   kit: 'marketer',
   header: {
-    titleEn: '/ak:referral-program-building',
-    titleVi: '/ak:referral-program-building',
+    titleEn: '/ak:referral-program-building — Referral program strategy',
+    titleVi: '/ak:referral-program-building — Chiến lược chương trình referral',
     taglineEn: 'Referral program strategy and implementation for SaaS and digital products: rewards, platform selection, attribution, fraud prevention, email templates, and KPI tracking.',
     taglineVi: 'Chiến lược và triển khai referral program cho SaaS/sản phẩm số: reward, chọn nền tảng, attribution, chống gian lận, email template và theo dõi KPI.',
   },

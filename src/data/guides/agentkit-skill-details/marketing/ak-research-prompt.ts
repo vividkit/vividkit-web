@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:research-prompt',
   kit: 'marketer',
   header: {
-    titleEn: '/ak:research-prompt',
-    titleVi: '/ak:research-prompt',
+    titleEn: '/ak:research-prompt — Self-contained research brief',
+    titleVi: '/ak:research-prompt — Research brief tự đủ ngữ cảnh',
     taglineEn: 'Writes one self-contained research brief for a human or AI researcher so the next research pass can produce decision-ready, source-backed findings.',
     taglineVi: 'Viết một research brief tự đủ ngữ cảnh cho người hoặc AI researcher để lượt research tiếp theo tạo kết luận có nguồn và dùng được cho quyết định.',
   },

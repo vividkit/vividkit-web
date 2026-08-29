@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:coding-level',
   kit: 'engineer',
   header: {
-    titleEn: '/ak:coding-level',
-    titleVi: '/ak:coding-level',
+    titleEn: '/ak:coding-level — Set coding experience level',
+    titleVi: '/ak:coding-level — Đặt mức kinh nghiệm lập trình',
     taglineEn: 'Set coding experience level 0–5 so explanations, complexity, jargon, and output format match the user.',
     taglineVi: 'Đặt mức kinh nghiệm lập trình 0–5 để độ sâu giải thích, độ phức tạp, thuật ngữ và định dạng trả lời khớp với người dùng.',
   },

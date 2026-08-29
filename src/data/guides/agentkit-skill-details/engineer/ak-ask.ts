@@ -48,6 +48,9 @@ const data: SkillInfographic = {
     { labelEn: 'YAGNI architecture challenge', labelVi: 'Phản biện kiến trúc bằng YAGNI', command: '/ak:ask "Do we need event sourcing for audit trails?" --yagni', whenEn: 'Use when you want unnecessary scope challenged and cut from the recommendation.', whenVi: 'Dùng khi muốn khuyến nghị phản biện và cắt phạm vi không cần thiết.', expectedEn: 'Evaluates the full question, then cuts only what is not needed for the stated outcome.', expectedVi: 'Đánh giá đủ câu hỏi, rồi chỉ cắt phần không cần cho kết quả đã nêu.' },
     { labelEn: 'Best-practice review', labelVi: 'Đánh giá best practice', command: '/ak:ask "What auth boundary should our admin dashboard use?"', whenEn: 'Use for implementation strategy, proof-of-concept criteria, and validation points without edits.', whenVi: 'Dùng để có chiến lược triển khai, tiêu chí thử nghiệm và điểm kiểm chứng mà không sửa file.', expectedEn: 'Returns recommendations, alternatives, risks, and next actions rather than a code patch.', expectedVi: 'Trả khuyến nghị, phương án khác, rủi ro và bước tiếp theo thay vì patch mã.' },
   ],
+  skillStack: [
+    { name: 'ak:scout', type: 'skill' },
+  ],
 };
 
 export default data;

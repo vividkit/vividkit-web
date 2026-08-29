@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:web-frameworks',
   kit: 'engineer',
   header: {
-    titleEn: '/ak:web-frameworks',
-    titleVi: '/ak:web-frameworks',
+    titleEn: '/ak:web-frameworks — Modern React web apps',
+    titleVi: '/ak:web-frameworks — App React hiện đại',
     taglineEn: 'Build modern React web apps with Next.js App Router, RSC, SSR/SSG/ISR, Turborepo monorepos, shared packages, caching, and RemixIcon UI polish.',
     taglineVi: 'Xây app React hiện đại với Next.js App Router, RSC, SSR/SSG/ISR, monorepo Turborepo, package dùng chung, cache và polish UI bằng RemixIcon.',
   },

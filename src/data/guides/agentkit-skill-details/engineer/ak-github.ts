@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:github",
   kit: "engineer",
   header: {
-    titleEn: "/ak:github",
-    titleVi: "/ak:github",
+    titleEn: "/ak:github — Evidence-first GitHub operations",
+    titleVi: "/ak:github — Thao tác GitHub theo bằng chứng",
     taglineEn: "Evidence-first GitHub operations via gh for issues, labels, PRs, Projects, Actions, workflows, orgs, repos, environments, secrets, and variables.",
     taglineVi: "Thao tác GitHub theo bằng chứng qua gh cho issue, label, PR, Projects, Actions, workflow, org, repo, environment, secret và variable.",
   },

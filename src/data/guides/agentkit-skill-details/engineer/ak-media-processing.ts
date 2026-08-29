@@ -4,7 +4,7 @@ const data: SkillInfographic = {
   id: 'ak-media-processing',
   command: '/ak:media-processing',
   kit: 'engineer',
-  header: { titleEn: '/ak:media-processing', titleVi: '/ak:media-processing', taglineEn: 'Process video, audio, images, thumbnails, streams, GIFs, and AI background removal with the right CLI for the media job.', taglineVi: 'Xử lý video, audio, ảnh, thumbnail, streaming, GIF và tách nền AI bằng đúng công cụ CLI cho từng loại media.' },
+  header: { titleEn: '/ak:media-processing — Process video, audio, and images', titleVi: '/ak:media-processing — Xử lý video, audio và ảnh', taglineEn: 'Process video, audio, images, thumbnails, streams, GIFs, and AI background removal with the right CLI for the media job.', taglineVi: 'Xử lý video, audio, ảnh, thumbnail, streaming, GIF và tách nền AI bằng đúng công cụ CLI cho từng loại media.' },
   processFlow: [
     { number: 1, titleEn: 'Classify media task', titleVi: 'Phân loại tác vụ', descEn: 'Decide whether the job is video, audio, still image, batch image, thumbnail, GIF, streaming, or background removal.', descVi: 'Xác định việc thuộc video, audio, ảnh tĩnh, ảnh hàng loạt, thumbnail, GIF, streaming hay tách nền.' },
     { number: 2, titleEn: 'Select tool', titleVi: 'Chọn công cụ', descEn: 'Use FFmpeg for video/audio/streams/thumbnails, ImageMagick for images/batch effects, and RMBG for local AI cutouts.', descVi: 'Dùng FFmpeg cho video/audio/stream/thumbnail, ImageMagick cho ảnh và batch, RMBG cho tách nền AI cục bộ.' },

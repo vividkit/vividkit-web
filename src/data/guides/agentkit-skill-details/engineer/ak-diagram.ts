@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:diagram",
   kit: "engineer",
   header: {
-    titleEn: "/ak:diagram",
-    titleVi: "/ak:diagram",
+    titleEn: "/ak:diagram — Editorial Mermaid diagrams",
+    titleVi: "/ak:diagram — Sơ đồ editorial Mermaid",
     taglineEn: "A deterministic editorial diagram surface for Mermaid, HTML templates, SVG/PNG stills, and MP4/GIF animated connector flows.",
     taglineVi: "Bề mặt tạo sơ đồ editorial có tính quyết định cho Mermaid, template HTML, ảnh SVG/PNG và luồng connector động MP4/GIF.",
   },

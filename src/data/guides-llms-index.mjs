@@ -72,6 +72,11 @@ export const guideSections = [
         desc: 'Visual control center for local AgentKit state (does not execute Skills).',
       },
       {
+        title: 'AgentKit Helper',
+        path: '/guides/agentkit/helper',
+        desc: 'Community TUI that wraps the official ak CLI for install and update.',
+      },
+      {
         title: 'AK CLI Quick Reference',
         path: '/guides/agentkit/cli-commands',
         desc: 'AgentKit ak CLI commands cheatsheet — flags, subcommands, and examples.',

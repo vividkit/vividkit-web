@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:cti-expert',
   kit: 'engineer',
   header: {
-    titleEn: '/ak:cti-expert',
-    titleVi: '/ak:cti-expert',
+    titleEn: '/ak:cti-expert — Cyber threat intelligence and OSINT',
+    titleVi: '/ak:cti-expert — Phân tích CTI và OSINT',
     taglineEn: 'Cyber threat intelligence and OSINT analysis for exposure reviews, recon, breach checks, forensics, cloud tenant recon, threat modeling, and structured reports.',
     taglineVi: 'Phân tích CTI và OSINT cho rà soát lộ diện, recon, kiểm tra rò rỉ, pháp chứng, recon tenant cloud, threat model và báo cáo có cấu trúc.',
   },

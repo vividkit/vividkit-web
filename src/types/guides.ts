@@ -37,6 +37,7 @@ export type GuideActiveTab =
   | 'agentkit-building-blocks'
   | 'agentkit-runtime-support'
   | 'agentkit-desktop-app'
+  | 'agentkit-helper'
   | 'agentkit-getting-started'
   | 'agentkit-configuration'
   | 'agentkit-cli-commands'

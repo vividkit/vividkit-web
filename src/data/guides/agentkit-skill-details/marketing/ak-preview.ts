@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:preview',
   kit: 'marketer',
   header: {
-    titleEn: '/ak:preview',
-    titleVi: '/ak:preview',
+    titleEn: '/ak:preview — Universal visual viewer',
+    titleVi: '/ak:preview — Trình xem visual đa năng',
     taglineEn: 'Universal viewer and visual generator for files, diagrams, slide decks, HTML explanations, visual diffs, plan reviews, and project recaps.',
     taglineVi: 'Trình xem và tạo visual đa năng cho file, sơ đồ, slide deck, giải thích HTML, visual diff, plan review và recap dự án.',
   },

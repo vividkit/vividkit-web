@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:codex-goal',
   kit: 'engineer',
   header: {
-    titleEn: '/ak:codex-goal',
-    titleVi: '/ak:codex-goal',
+    titleEn: '/ak:codex-goal — Guide Codex /goal work',
+    titleVi: '/ak:codex-goal — Dẫn dắt công việc Codex /goal',
     taglineEn: 'Guide Codex /goal work with one durable objective, explicit checkpoints, validation commands, and a verifiable stop condition.',
     taglineVi: 'Dẫn dắt Codex /goal bằng một mục tiêu bền vững, checkpoint rõ, lệnh kiểm chứng và điều kiện dừng có thể xác minh.',
   },

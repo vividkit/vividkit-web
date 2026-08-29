@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:worktree',
   kit: 'engineer',
   header: {
-    titleEn: '/ak:worktree',
-    titleVi: '/ak:worktree',
+    titleEn: '/ak:worktree — Isolated Git worktrees',
+    titleVi: '/ak:worktree — Git worktree tách biệt',
     taglineEn: 'Create, inspect, and clean isolated Git worktrees for feature isolation, health audits, stale cleanup, monorepos, submodules, and parallel development.',
     taglineVi: 'Tạo, kiểm tra và dọn Git worktree tách biệt cho feature riêng, audit sức khỏe, cleanup stale, monorepo, submodule và phát triển song song.',
   },

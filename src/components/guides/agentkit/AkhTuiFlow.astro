@@ -1,0 +1,388 @@
+---
+import type { Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang = 'en' } = Astro.props;
+const isVi = lang === 'vi';
+
+const keys = isVi
+  ? [
+      { id: 'updown', k: '↑ / ↓', d: 'Di chuyển' },
+      { id: 'space', k: 'Space', d: 'Chọn nhiều runtime' },
+      { id: 'enter', k: 'Enter', d: 'Xác nhận bước này' },
+      { id: 'esc', k: 'Esc', d: 'Về bước trước' },
+    ]
+  : [
+      { id: 'updown', k: '↑ / ↓', d: 'Move' },
+      { id: 'space', k: 'Space', d: 'Select multiple runtimes' },
+      { id: 'enter', k: 'Enter', d: 'Confirm this step' },
+      { id: 'esc', k: 'Esc', d: 'Back to the previous step' },
+    ];
+
+const copy = isVi
+  ? {
+      label: 'Mô phỏng TUI AgentKit Helper',
+      langPrompt: 'Chọn ngôn ngữ giao diện',
+      actionPrompt: 'Bạn muốn làm gì?',
+      scopePrompt: 'Scope',
+      kitPrompt: 'Kit',
+      runtimePrompt: 'Runtime — Space để chọn nhiều',
+      channelPrompt: 'Kênh',
+      cmdPrompt: 'Lệnh CLI ak sẽ chạy',
+      runPrompt: 'Đang gọi CLI ak…',
+      vi: 'Tiếng Việt',
+      en: 'English',
+      install: 'Cài Kit',
+      update: 'Cập nhật Kit',
+      updateAll: 'Cập nhật mọi install đã detect',
+      doctor: 'Chạy health check',
+      project: 'Project (thư mục hiện tại)',
+      global: 'User / global của runtime',
+      engineer: 'Engineer',
+      marketing: 'Marketing',
+      stable: 'stable',
+      beta: 'beta',
+      status: 'ak đang ghi file Kit. AgentKit lo xác minh, ownership và snapshot.',
+      hintLang: '↑/↓ di chuyển · Enter xác nhận',
+      hintAction: '↑/↓ · Enter',
+      hintScope: '↑/↓ · Enter · Esc về bước trước',
+      hintKit: '↑/↓ · Enter',
+      hintRuntime: 'Space chọn · Enter xác nhận',
+      hintChannel: '↑/↓ · Enter',
+      hintCmd: 'Enter để chạy · Esc hủy',
+      hintRun: 'Một lệnh --target cho mỗi runtime đã chọn',
+    }
+  : {
+      label: 'AgentKit Helper TUI walkthrough',
+      langPrompt: 'Choose interface language',
+      actionPrompt: 'What do you want to do?',
+      scopePrompt: 'Scope',
+      kitPrompt: 'Kit',
+      runtimePrompt: 'Runtimes — Space to select several',
+      channelPrompt: 'Channel',
+      cmdPrompt: 'ak CLI command that will run',
+      runPrompt: 'Calling the ak CLI…',
+      vi: 'Tiếng Việt',
+      en: 'English',
+      install: 'Install a Kit',
+      update: 'Update a Kit',
+      updateAll: 'Update every detected install',
+      doctor: 'Run a health check',
+      project: 'Project (this directory)',
+      global: 'Runtime user / global',
+      engineer: 'Engineer',
+      marketing: 'Marketing',
+      stable: 'stable',
+      beta: 'beta',
+      status: 'ak writes Kit files as it runs. AgentKit still owns verification, ownership, and snapshots.',
+      hintLang: '↑/↓ to move · Enter to confirm',
+      hintAction: '↑/↓ · Enter',
+      hintScope: '↑/↓ · Enter · Esc to go back',
+      hintKit: '↑/↓ · Enter',
+      hintRuntime: 'Space to toggle · Enter to confirm',
+      hintChannel: '↑/↓ · Enter',
+      hintCmd: 'Enter to run · Esc to cancel',
+      hintRun: 'One --target command per selected runtime',
+    };
+
+---
+
+<div class="akh-tui-demo space-y-4">
+  <div
+    class="overflow-hidden rounded-2xl border border-zinc-300 bg-zinc-950 shadow-sm dark:border-zinc-700"
+    role="img"
+    aria-label={copy.label}
+  >
+    <div class="flex items-center gap-2 border-b border-zinc-800 px-4 py-2.5">
+      <span class="h-2.5 w-2.5 rounded-full bg-[#ff5f57]"></span>
+      <span class="h-2.5 w-2.5 rounded-full bg-[#febc2e]"></span>
+      <span class="h-2.5 w-2.5 rounded-full bg-[#28c840]"></span>
+      <span class="ml-2 font-mono text-[11px] text-zinc-400">akh</span>
+    </div>
+
+    <svg
+      class="akh-svg block h-auto w-full"
+      viewBox="0 0 720 300"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+
+      <text x="24" y="28" fill="#d4d4d8" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13">┌  AgentKit Helper</text>
+
+      {/* 1 language */}
+      <g class="akh-scene akh-s1">
+        <text x="24" y="56" fill="#a7f3d0" font-family="ui-monospace, Menlo, monospace" font-size="13">◇  {copy.langPrompt}</text>
+        <rect class="akh-bar" x="20" y="68" width="400" height="26" rx="6"></rect>
+        <text x="36" y="86" fill="#fbbf24" font-family="ui-monospace, Menlo, monospace" font-size="13">▶</text>
+        <text x="56" y="86" fill="#86efac" font-family="ui-monospace, Menlo, monospace" font-size="13">●  {isVi ? copy.vi : copy.en}</text>
+        <text x="56" y="114" fill="#a1a1aa" font-family="ui-monospace, Menlo, monospace" font-size="13">○  {isVi ? copy.en : copy.vi}</text>
+        <text x="24" y="280" fill="#71717a" font-family="ui-monospace, Menlo, monospace" font-size="11">{copy.hintLang}</text>
+      </g>
+
+      {/* 2 action */}
+      <g class="akh-scene akh-s2">
+        <text x="24" y="56" fill="#a7f3d0" font-family="ui-monospace, Menlo, monospace" font-size="13">◇  {copy.actionPrompt}</text>
+        <rect class="akh-bar" x="20" y="68" width="520" height="26" rx="6"></rect>
+        <text x="36" y="86" fill="#fbbf24" font-family="ui-monospace, Menlo, monospace" font-size="13">▶</text>
+        <text x="56" y="86" fill="#fafafa" font-family="ui-monospace, Menlo, monospace" font-size="13">●  {copy.install}</text>
+        <text x="56" y="114" fill="#a1a1aa" font-family="ui-monospace, Menlo, monospace" font-size="13">○  {copy.update}</text>
+        <text x="56" y="142" fill="#a1a1aa" font-family="ui-monospace, Menlo, monospace" font-size="13">○  {copy.updateAll}</text>
+        <text x="56" y="170" fill="#a1a1aa" font-family="ui-monospace, Menlo, monospace" font-size="13">○  {copy.doctor}</text>
+        <text x="24" y="280" fill="#71717a" font-family="ui-monospace, Menlo, monospace" font-size="11">{copy.hintAction}</text>
+      </g>
+
+      {/* 3 scope */}
+      <g class="akh-scene akh-s3">
+        <text x="24" y="56" fill="#a7f3d0" font-family="ui-monospace, Menlo, monospace" font-size="13">◇  {copy.scopePrompt}</text>
+        <rect class="akh-bar" x="20" y="68" width="420" height="26" rx="6"></rect>
+        <text x="36" y="86" fill="#fbbf24" font-family="ui-monospace, Menlo, monospace" font-size="13">▶</text>
+        <text x="56" y="86" fill="#fafafa" font-family="ui-monospace, Menlo, monospace" font-size="13">●  {copy.project}</text>
+        <text x="56" y="114" fill="#a1a1aa" font-family="ui-monospace, Menlo, monospace" font-size="13">○  {copy.global}</text>
+        <text x="24" y="280" fill="#71717a" font-family="ui-monospace, Menlo, monospace" font-size="11">{copy.hintScope}</text>
+      </g>
+
+      {/* 4 kit */}
+      <g class="akh-scene akh-s4">
+        <text x="24" y="56" fill="#a7f3d0" font-family="ui-monospace, Menlo, monospace" font-size="13">◇  {copy.kitPrompt}</text>
+        <rect class="akh-bar" x="20" y="68" width="280" height="26" rx="6"></rect>
+        <text x="36" y="86" fill="#fbbf24" font-family="ui-monospace, Menlo, monospace" font-size="13">▶</text>
+        <text x="56" y="86" fill="#fafafa" font-family="ui-monospace, Menlo, monospace" font-size="13">●  {copy.engineer}</text>
+        <text x="56" y="114" fill="#a1a1aa" font-family="ui-monospace, Menlo, monospace" font-size="13">○  {copy.marketing}</text>
+        <text x="24" y="280" fill="#71717a" font-family="ui-monospace, Menlo, monospace" font-size="11">{copy.hintKit}</text>
+      </g>
+
+      {/* 5 runtime */}
+      <g class="akh-scene akh-s5">
+        <text x="24" y="56" fill="#a7f3d0" font-family="ui-monospace, Menlo, monospace" font-size="13">◇  {copy.runtimePrompt}</text>
+        <rect class="akh-bar" x="20" y="68" width="240" height="26" rx="6"></rect>
+        <text x="36" y="86" fill="#fbbf24" font-family="ui-monospace, Menlo, monospace" font-size="13">▶</text>
+        <text x="56" y="86" fill="#fafafa" font-family="ui-monospace, Menlo, monospace" font-size="13">●  codex</text>
+        <text class="akh-check akh-check-a" x="200" y="86" fill="#86efac" font-family="ui-monospace, Menlo, monospace" font-size="13">◉</text>
+        <text x="56" y="114" fill="#a1a1aa" font-family="ui-monospace, Menlo, monospace" font-size="13">○  claude-code</text>
+        <text x="56" y="142" fill="#a1a1aa" font-family="ui-monospace, Menlo, monospace" font-size="13">○  omp</text>
+        <text class="akh-check akh-check-b" x="200" y="142" fill="#86efac" font-family="ui-monospace, Menlo, monospace" font-size="13">◉</text>
+        <text x="56" y="170" fill="#a1a1aa" font-family="ui-monospace, Menlo, monospace" font-size="13">○  pi</text>
+        <text x="56" y="198" fill="#a1a1aa" font-family="ui-monospace, Menlo, monospace" font-size="13">○  cursor</text>
+        <text x="24" y="280" fill="#71717a" font-family="ui-monospace, Menlo, monospace" font-size="11">{copy.hintRuntime}</text>
+      </g>
+
+      {/* 6 channel */}
+      <g class="akh-scene akh-s6">
+        <text x="24" y="56" fill="#a7f3d0" font-family="ui-monospace, Menlo, monospace" font-size="13">◇  {copy.channelPrompt}</text>
+        <rect class="akh-bar" x="20" y="68" width="220" height="26" rx="6"></rect>
+        <text x="36" y="86" fill="#fbbf24" font-family="ui-monospace, Menlo, monospace" font-size="13">▶</text>
+        <text x="56" y="86" fill="#fafafa" font-family="ui-monospace, Menlo, monospace" font-size="13">●  {copy.stable}</text>
+        <text x="56" y="114" fill="#a1a1aa" font-family="ui-monospace, Menlo, monospace" font-size="13">○  {copy.beta}</text>
+        <text x="24" y="280" fill="#71717a" font-family="ui-monospace, Menlo, monospace" font-size="11">{copy.hintChannel}</text>
+      </g>
+
+      {/* 7 commands */}
+      <g class="akh-scene akh-s7">
+        <text x="24" y="56" fill="#a7f3d0" font-family="ui-monospace, Menlo, monospace" font-size="13">◇  {copy.cmdPrompt}</text>
+        <text class="akh-cmd-a" fill="#7dd3fc" font-family="ui-monospace, Menlo, monospace" font-size="11">
+          <tspan x="24" y="88">ak kit install engineer --target codex</tspan>
+          <tspan x="24" y="108">  --channel stable --yes --verbose</tspan>
+        </text>
+        <text class="akh-cmd-b" fill="#7dd3fc" font-family="ui-monospace, Menlo, monospace" font-size="11">
+          <tspan x="24" y="136">ak kit install engineer --target omp</tspan>
+          <tspan x="24" y="156">  --channel stable --yes --verbose</tspan>
+        </text>
+        <text x="24" y="280" fill="#71717a" font-family="ui-monospace, Menlo, monospace" font-size="11">{copy.hintCmd}</text>
+      </g>
+
+      {/* 8 running */}
+      <g class="akh-scene akh-s8">
+        <text x="24" y="56" fill="#a7f3d0" font-family="ui-monospace, Menlo, monospace" font-size="13">◇  {copy.runPrompt}</text>
+        <text fill="#a1a1aa" font-family="ui-monospace, Menlo, monospace" font-size="12">
+          <tspan x="24" y="88">{isVi ? 'ak đang ghi file Kit.' : 'ak writes Kit files as it runs.'}</tspan>
+          <tspan x="24" y="110">{isVi ? 'AgentKit lo xác minh, ownership và snapshot.' : 'AgentKit still owns verification, ownership, and snapshots.'}</tspan>
+        </text>
+        <text x="24" y="280" fill="#71717a" font-family="ui-monospace, Menlo, monospace" font-size="11">{copy.hintRun}</text>
+      </g>
+
+      <text x="24" y="298" fill="#3f3f46" font-family="ui-monospace, Menlo, monospace" font-size="13">└</text>
+    </svg>
+  </div>
+
+  <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    {keys.map((item) => (
+      <div
+        class:list={[
+          'akh-tui-key rounded-2xl border border-slate-200/80 bg-white/80 p-4 dark:border-slate-700 dark:bg-slate-900/50',
+          `akh-key-${item.id}`,
+        ]}
+      >
+        <code class="rounded-md border border-slate-200/80 bg-slate-100 px-1.5 py-0.5 font-mono text-[0.85em] text-teal-700 dark:border-slate-700 dark:bg-slate-800/90 dark:text-teal-300">
+          {item.k}
+        </code>
+        <p class="mt-2 text-xs leading-relaxed text-slate-600 dark:text-slate-400">{item.d}</p>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style is:global>
+  .akh-tui-demo {
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .akh-tui-demo .akh-scene {
+    opacity: 0;
+    animation-duration: 16s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  .akh-tui-demo .akh-s1 { animation-name: akh-w1; }
+  .akh-tui-demo .akh-s2 { animation-name: akh-w2; }
+  .akh-tui-demo .akh-s3 { animation-name: akh-w3; }
+  .akh-tui-demo .akh-s4 { animation-name: akh-w4; }
+  .akh-tui-demo .akh-s5 { animation-name: akh-w5; }
+  .akh-tui-demo .akh-s6 { animation-name: akh-w6; }
+  .akh-tui-demo .akh-s7 { animation-name: akh-w7; }
+  .akh-tui-demo .akh-s8 { animation-name: akh-w8; }
+  @keyframes akh-w1 {
+    0% { opacity: 0; }
+    1%, 11.5% { opacity: 1; }
+    12.5%, 100% { opacity: 0; }
+  }
+  @keyframes akh-w2 {
+    0%, 12.5% { opacity: 0; }
+    13.5%, 24% { opacity: 1; }
+    25%, 100% { opacity: 0; }
+  }
+  @keyframes akh-w3 {
+    0%, 25% { opacity: 0; }
+    26%, 36.5% { opacity: 1; }
+    37.5%, 100% { opacity: 0; }
+  }
+  @keyframes akh-w4 {
+    0%, 37.5% { opacity: 0; }
+    38.5%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+  }
+  @keyframes akh-w5 {
+    0%, 50% { opacity: 0; }
+    51%, 61.5% { opacity: 1; }
+    62.5%, 100% { opacity: 0; }
+  }
+  @keyframes akh-w6 {
+    0%, 62.5% { opacity: 0; }
+    63.5%, 74% { opacity: 1; }
+    75%, 100% { opacity: 0; }
+  }
+  @keyframes akh-w7 {
+    0%, 75% { opacity: 0; }
+    76%, 86.5% { opacity: 1; }
+    87.5%, 100% { opacity: 0; }
+  }
+  @keyframes akh-w8 {
+    0%, 87.5% { opacity: 0; }
+    88.5%, 99% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+  .akh-tui-demo .akh-bar {
+    fill: #27272a;
+    transform-box: fill-box;
+    transform-origin: top left;
+  }
+  .akh-tui-demo .akh-s5 .akh-bar {
+    animation: akh-rt 16s cubic-bezier(0.23, 1, 0.32, 1) infinite;
+  }
+  @keyframes akh-rt {
+    0%, 51% { transform: translateY(0); }
+    52.25%, 56% { transform: translateY(28px); }
+    57.25%, 100% { transform: translateY(56px); }
+  }
+  .akh-tui-demo .akh-check { opacity: 0; }
+  .akh-tui-demo .akh-check-a { animation: akh-check-a 16s linear infinite; }
+  .akh-tui-demo .akh-check-b { animation: akh-check-b 16s linear infinite; }
+  @keyframes akh-check-a {
+    0%, 52% { opacity: 0; }
+    53.25%, 62% { opacity: 1; }
+    62.5%, 100% { opacity: 0; }
+  }
+  @keyframes akh-check-b {
+    0%, 58% { opacity: 0; }
+    59.25%, 62% { opacity: 1; }
+    62.5%, 100% { opacity: 0; }
+  }
+  .akh-tui-demo .akh-cmd-a,
+  .akh-tui-demo .akh-cmd-b { opacity: 0; }
+  .akh-tui-demo .akh-cmd-a { animation: akh-cmd-a 16s var(--ease-out) infinite; }
+  .akh-tui-demo .akh-cmd-b { animation: akh-cmd-b 16s var(--ease-out) infinite; }
+  @keyframes akh-cmd-a {
+    0%, 76% { opacity: 0; }
+    77.25%, 86.5% { opacity: 1; }
+    87.5%, 100% { opacity: 0; }
+  }
+  @keyframes akh-cmd-b {
+    0%, 77.5% { opacity: 0; }
+    78.75%, 86.5% { opacity: 1; }
+    87.5%, 100% { opacity: 0; }
+  }
+  .akh-tui-demo .akh-tui-key {
+    transition: transform 120ms var(--ease-out);
+  }
+  .akh-tui-demo .akh-key-updown { animation: akh-hot-lang 16s linear infinite; }
+  .akh-tui-demo .akh-key-enter { animation: akh-hot-enter 16s linear infinite; }
+  .akh-tui-demo .akh-key-space { animation: akh-hot-space 16s linear infinite; }
+  .akh-tui-demo .akh-key-esc { animation: akh-hot-esc 16s linear infinite; }
+  @keyframes akh-hot-lang {
+    1%, 11.5% { transform: translateY(-1px); border-color: rgb(45 212 191 / 0.55); }
+    0%, 12.5%, 100% { transform: none; border-color: rgb(226 232 240 / 0.8); }
+  }
+  @keyframes akh-hot-enter {
+    13.5%, 24%, 76%, 86.5% { transform: translateY(-1px); border-color: rgb(45 212 191 / 0.55); }
+    0%, 12.5%, 25%, 75%, 87.5%, 100% { transform: none; border-color: rgb(226 232 240 / 0.8); }
+  }
+  @keyframes akh-hot-space {
+    51%, 61.5% { transform: translateY(-1px); border-color: rgb(45 212 191 / 0.55); }
+    0%, 50%, 62.5%, 100% { transform: none; border-color: rgb(226 232 240 / 0.8); }
+  }
+  @keyframes akh-hot-esc {
+    26%, 36.5% { transform: translateY(-1px); border-color: rgb(45 212 191 / 0.55); }
+    0%, 25%, 37.5%, 100% { transform: none; border-color: rgb(226 232 240 / 0.8); }
+  }
+  :is(.dark) .akh-tui-demo .akh-key-updown,
+  :is(.dark) .akh-tui-demo .akh-key-enter,
+  :is(.dark) .akh-tui-demo .akh-key-space,
+  :is(.dark) .akh-tui-demo .akh-key-esc {
+    animation-name: akh-hot-lang-dark;
+  }
+  :is(.dark) .akh-tui-demo .akh-key-enter { animation-name: akh-hot-enter-dark; }
+  :is(.dark) .akh-tui-demo .akh-key-space { animation-name: akh-hot-space-dark; }
+  :is(.dark) .akh-tui-demo .akh-key-esc { animation-name: akh-hot-esc-dark; }
+  @keyframes akh-hot-lang-dark {
+    1%, 11.5% { transform: translateY(-1px); border-color: rgb(45 212 191 / 0.55); }
+    0%, 12.5%, 100% { transform: none; border-color: rgb(51 65 85); }
+  }
+  @keyframes akh-hot-enter-dark {
+    13.5%, 24%, 76%, 86.5% { transform: translateY(-1px); border-color: rgb(45 212 191 / 0.55); }
+    0%, 12.5%, 25%, 75%, 87.5%, 100% { transform: none; border-color: rgb(51 65 85); }
+  }
+  @keyframes akh-hot-space-dark {
+    51%, 61.5% { transform: translateY(-1px); border-color: rgb(45 212 191 / 0.55); }
+    0%, 50%, 62.5%, 100% { transform: none; border-color: rgb(51 65 85); }
+  }
+  @keyframes akh-hot-esc-dark {
+    26%, 36.5% { transform: translateY(-1px); border-color: rgb(45 212 191 / 0.55); }
+    0%, 25%, 37.5%, 100% { transform: none; border-color: rgb(51 65 85); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .akh-tui-demo .akh-scene,
+    .akh-tui-demo .akh-s5 .akh-bar,
+    .akh-tui-demo .akh-check-a,
+    .akh-tui-demo .akh-check-b,
+    .akh-tui-demo .akh-cmd-a,
+    .akh-tui-demo .akh-cmd-b,
+    .akh-tui-demo .akh-tui-key {
+      animation: none;
+    }
+    .akh-tui-demo .akh-scene { opacity: 0; }
+    .akh-tui-demo .akh-s7 { opacity: 1; }
+    .akh-tui-demo .akh-cmd-a,
+    .akh-tui-demo .akh-cmd-b { opacity: 1; }
+    .akh-tui-demo .akh-tui-key { transform: none; }
+  }
+</style>

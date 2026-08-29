@@ -91,7 +91,7 @@ export const common = {
   // Footer component
   'footer.claudekit_discord': 'ClaudeKit Discord',
   'footer.get_started': 'Bắt Đầu',
-  'footer.claudekit_discount': 'ClaudeKit (Giảm 30%)',
+  'footer.claudekit_discount': 'AgentKit (Giảm 30%)',
   'footer.required_for_vividkit': 'Hoạt động với AgentKit hoặc ClaudeKit',
   // form
   // Waitlist form

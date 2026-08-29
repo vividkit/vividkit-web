@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:scout',
   kit: 'marketer',
   header: {
-    titleEn: '/ak:scout',
-    titleVi: '/ak:scout',
+    titleEn: '/ak:scout — Fast codebase scouting',
+    titleVi: '/ak:scout — Scout codebase nhanh',
     taglineEn: 'Fast, token-efficient codebase scouting for file discovery, task context gathering, scoped searches, optional external OpenCode probes, and ultra verification.',
     taglineVi: 'Scouting codebase nhanh và tiết kiệm token để tìm file, gom context cho task, search có phạm vi, tùy chọn probe OpenCode bên ngoài và ultra verification.',
   },

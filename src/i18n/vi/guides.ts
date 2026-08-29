@@ -43,6 +43,8 @@ export const guides = {
   'guides.agentkit.runtime_support.description': 'Cách adapter AgentKit đưa nội dung Kit vào coding agent',
   'guides.agentkit.desktop_app.title': 'Ứng Dụng AgentKit Desktop',
   'guides.agentkit.desktop_app.description': 'Trung tâm điều khiển visual cho trạng thái AgentKit local — mua riêng, không gói sẵn với Kit',
+  'guides.agentkit.helper.title': 'AgentKit Helper',
+  'guides.agentkit.helper.description': 'TUI cộng đồng: hỏi lựa chọn, hiện lệnh ak chính thức, rồi chạy giúp bạn',
   'guides.agentkit.getting_started.title': 'Cài Đặt AgentKit',
   'guides.agentkit.getting_started.description': 'Cài CLI ak, đăng nhập, và chạy Kit AgentKit đầu tiên',
   'guides.agentkit.configuration.title': 'Cấu Hình AgentKit',

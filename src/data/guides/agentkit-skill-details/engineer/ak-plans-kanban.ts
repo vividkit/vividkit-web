@@ -4,7 +4,7 @@ const data: SkillInfographic = {
   id: 'ak-plans-kanban',
   command: '/ak:plans-kanban',
   kit: 'engineer',
-  header: { titleEn: '/ak:plans-kanban', titleVi: '/ak:plans-kanban', taglineEn: 'Open the AgentKit plans dashboard for kanban/grid progress views, timeline checks, and quick navigation into plan and phase files.', taglineVi: 'Mở dashboard kế hoạch AgentKit để xem kanban/grid, kiểm tra timeline và điều hướng nhanh vào plan/phase file.' },
+  header: { titleEn: '/ak:plans-kanban — AgentKit plans dashboard', titleVi: '/ak:plans-kanban — Dashboard kế hoạch AgentKit', taglineEn: 'Open the AgentKit plans dashboard for kanban/grid progress views, timeline checks, and quick navigation into plan and phase files.', taglineVi: 'Mở dashboard kế hoạch AgentKit để xem kanban/grid, kiểm tra timeline và điều hướng nhanh vào plan/phase file.' },
   hardGate: { type: 'info', titleEn: 'LAUNCHER ONLY', titleVi: 'CHỈ LÀ LAUNCHER', contentEn: 'plans-kanban opens the integrated dashboard; live ak plan --help remains authoritative for dependency, status, and mutation operations. Deprecated launcher inputs are warned, ignored, or translated by the script.', contentVi: 'plans-kanban chỉ mở dashboard tích hợp; ak plan --help đang chạy mới là nguồn chuẩn cho thao tác dependency, status và mutation. Input launcher cũ được script cảnh báo, bỏ qua hoặc chuyển đổi.' },
   processFlow: [
     { number: 1, titleEn: 'Check dashboard status', titleVi: 'Kiểm tra dashboard', descEn: 'Read AgentKit config status and reuse an already-running dashboard port when one exists.', descVi: 'Đọc trạng thái config AgentKit và dùng lại cổng dashboard đang chạy nếu có.' },

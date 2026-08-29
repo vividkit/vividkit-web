@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:slides',
   kit: 'marketer',
   header: {
-    titleEn: '/ak:slides',
-    titleVi: '/ak:slides',
+    titleEn: '/ak:slides — Strategic HTML presentations',
+    titleVi: '/ak:slides — Presentation HTML chiến lược',
     taglineEn: 'Strategic HTML presentation builder with Chart.js, design tokens, responsive layouts, copywriting formulas, layout patterns, and contextual slide strategy.',
     taglineVi: 'Trình tạo presentation HTML chiến lược với Chart.js, design token, layout responsive, công thức copywriting, pattern bố cục và chiến lược slide theo ngữ cảnh.',
   },

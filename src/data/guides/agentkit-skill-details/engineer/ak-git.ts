@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:git",
   kit: "engineer",
   header: {
-    titleEn: "/ak:git",
-    titleVi: "/ak:git",
+    titleEn: "/ak:git — Isolated Git operations",
+    titleVi: "/ak:git — Thao tác Git tách biệt",
     taglineEn: "Git operations through isolated git-manager workflows for commits, pushes, PRs, merges, merge-PR CI watches, and GitHub native stacked PRs.",
     taglineVi: "Thao tác Git qua workflow git-manager tách biệt cho commit, push, PR, merge, merge PR kèm CI watch và stacked PR native của GitHub.",
   },

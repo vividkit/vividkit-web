@@ -138,6 +138,74 @@ const wizardSteps = isVi
       : 'Know which AgentKit command upgrades the ak CLI, refreshes Kits, or targets a single kit.'}
     badges={isVi ? ['self-update ≠ update'] : ['self-update ≠ update']}
   />
+  <AkSection
+    eyebrow={isVi ? 'Thực hành' : 'Practice'}
+    title={isVi ? 'Chọn nhanh' : 'Quick pick'}
+  >
+    <div class="grid gap-3 sm:grid-cols-2">
+      {(
+        [
+          {
+            q: isVi ? 'Chỉ muốn CLI ak mới' : 'Only want a newer ak CLI',
+            parts: [
+              { kind: 'cmd' as const, text: 'ak self-update --check' },
+              { kind: 'sep' as const, text: '→' },
+              { kind: 'cmd' as const, text: 'ak self-update --yes' },
+            ],
+          },
+          {
+            q: isVi ? 'Sau release, làm mới CLI + kits' : 'After release, refresh CLI + kits',
+            parts: [
+              { kind: 'cmd' as const, text: 'ak update --dry-run' },
+              { kind: 'sep' as const, text: '→' },
+              { kind: 'cmd' as const, text: 'ak update --yes' },
+            ],
+          },
+          {
+            q: isVi ? 'Chỉ kits cài global trên máy' : 'Only global kits on this machine',
+            parts: [{ kind: 'cmd' as const, text: 'ak update --global --yes' }],
+            hint: isVi
+              ? 'Không nâng CLI ak — dùng ak self-update nếu cần.'
+              : 'Does not upgrade the ak CLI — use ak self-update if you need that.',
+          },
+          {
+            q: isVi ? 'Chỉ repo hiện tại / một kit' : 'Only this repo / one kit',
+            parts: [
+              { kind: 'cmd' as const, text: 'ak update --kits engineer --yes' },
+              { kind: 'or' as const, text: isVi ? 'hoặc' : 'or' },
+              { kind: 'cmd' as const, text: 'ak kit refresh engineer --yes' },
+            ],
+          },
+        ] as const
+      ).map((item) => (
+        <div class="rounded-2xl border border-slate-200/80 bg-white/80 p-4 dark:border-slate-700 dark:bg-slate-900/50">
+          <div class="text-sm font-semibold text-slate-900 dark:text-white">{item.q}</div>
+          <p class="mt-2 flex flex-wrap items-baseline gap-x-1.5 gap-y-1 text-xs leading-relaxed">
+            {item.parts.map((part) =>
+              part.kind === 'cmd' ? (
+                <code class="rounded-md border border-slate-200/80 bg-slate-100 px-1.5 py-0.5 font-mono text-[0.85em] text-teal-700 dark:border-slate-700 dark:bg-slate-800/90 dark:text-teal-300">
+                  {part.text}
+                </code>
+              ) : part.kind === 'or' ? (
+                <span class="font-sans text-[11px] font-medium uppercase tracking-wide text-slate-400 dark:text-slate-500">
+                  {part.text}
+                </span>
+              ) : part.kind === 'note' ? (
+                <span class="font-sans text-[11px] text-slate-500 dark:text-slate-400">{part.text}</span>
+              ) : (
+                <span class="font-sans text-slate-400 dark:text-slate-500" aria-hidden="true">
+                  {part.text}
+                </span>
+              ),
+            )}
+          </p>
+          {'hint' in item && item.hint ? (
+            <p class="mt-2 text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">{item.hint}</p>
+          ) : null}
+        </div>
+      ))}
+    </div>
+  </AkSection>
 
   <AkCallout variant="tip" title={isVi ? 'Tóm tắt nhanh' : 'Quick summary'}>
     <ul class="space-y-2">
@@ -394,74 +462,6 @@ ak kit refresh engineer --local --kits-dir ./kits --yes`}
     </p>
   </AkSection>
 
-  <AkSection
-    eyebrow={isVi ? 'Thực hành' : 'Practice'}
-    title={isVi ? 'Chọn nhanh' : 'Quick pick'}
-  >
-    <div class="grid gap-3 sm:grid-cols-2">
-      {(
-        [
-          {
-            q: isVi ? 'Chỉ muốn CLI ak mới' : 'Only want a newer ak CLI',
-            parts: [
-              { kind: 'cmd' as const, text: 'ak self-update --check' },
-              { kind: 'sep' as const, text: '→' },
-              { kind: 'cmd' as const, text: 'ak self-update --yes' },
-            ],
-          },
-          {
-            q: isVi ? 'Sau release, làm mới CLI + kits' : 'After release, refresh CLI + kits',
-            parts: [
-              { kind: 'cmd' as const, text: 'ak update --dry-run' },
-              { kind: 'sep' as const, text: '→' },
-              { kind: 'cmd' as const, text: 'ak update --yes' },
-            ],
-          },
-          {
-            q: isVi ? 'Chỉ kits cài global trên máy' : 'Only global kits on this machine',
-            parts: [{ kind: 'cmd' as const, text: 'ak update --global --yes' }],
-            hint: isVi
-              ? 'Không nâng CLI ak — dùng ak self-update nếu cần.'
-              : 'Does not upgrade the ak CLI — use ak self-update if you need that.',
-          },
-          {
-            q: isVi ? 'Chỉ repo hiện tại / một kit' : 'Only this repo / one kit',
-            parts: [
-              { kind: 'cmd' as const, text: 'ak update --kits engineer --yes' },
-              { kind: 'or' as const, text: isVi ? 'hoặc' : 'or' },
-              { kind: 'cmd' as const, text: 'ak kit refresh engineer --yes' },
-            ],
-          },
-        ] as const
-      ).map((item) => (
-        <div class="rounded-2xl border border-slate-200/80 bg-white/80 p-4 dark:border-slate-700 dark:bg-slate-900/50">
-          <div class="text-sm font-semibold text-slate-900 dark:text-white">{item.q}</div>
-          <p class="mt-2 flex flex-wrap items-baseline gap-x-1.5 gap-y-1 text-xs leading-relaxed">
-            {item.parts.map((part) =>
-              part.kind === 'cmd' ? (
-                <code class="rounded-md border border-slate-200/80 bg-slate-100 px-1.5 py-0.5 font-mono text-[0.85em] text-teal-700 dark:border-slate-700 dark:bg-slate-800/90 dark:text-teal-300">
-                  {part.text}
-                </code>
-              ) : part.kind === 'or' ? (
-                <span class="font-sans text-[11px] font-medium uppercase tracking-wide text-slate-400 dark:text-slate-500">
-                  {part.text}
-                </span>
-              ) : part.kind === 'note' ? (
-                <span class="font-sans text-[11px] text-slate-500 dark:text-slate-400">{part.text}</span>
-              ) : (
-                <span class="font-sans text-slate-400 dark:text-slate-500" aria-hidden="true">
-                  {part.text}
-                </span>
-              ),
-            )}
-          </p>
-          {'hint' in item && item.hint ? (
-            <p class="mt-2 text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">{item.hint}</p>
-          ) : null}
-        </div>
-      ))}
-    </div>
-  </AkSection>
 
   <AkCallout variant="info" title={isVi ? 'Mã thoát (ak update)' : 'Exit codes (ak update)'}>
     {isVi
@@ -502,6 +502,7 @@ ak kit refresh engineer --local --kits-dir ./kits --yes`}
     title={isVi ? 'Liên quan' : 'Related'}
     links={[
       { href: '/guides/agentkit/configuration', label: isVi ? 'config.yaml (updates.*)' : 'config.yaml (updates.*)' },
+      { href: '/guides/agentkit/helper', label: isVi ? 'AgentKit Helper (TUI)' : 'AgentKit Helper (TUI)' },
       { href: '/guides/agentkit/clean-reinstall', label: isVi ? 'Cài lại clean' : 'Clean reinstall' },
       { href: '/guides/agentkit/troubleshooting', label: isVi ? 'Xử lý sự cố' : 'Troubleshooting' },
       { href: '/guides/agentkit/getting-started', label: isVi ? 'Cài đặt' : 'Getting started' },

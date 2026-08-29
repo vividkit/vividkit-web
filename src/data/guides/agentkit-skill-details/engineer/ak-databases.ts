@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:databases',
   kit: 'engineer',
   header: {
-    titleEn: '/ak:databases',
-    titleVi: '/ak:databases',
+    titleEn: '/ak:databases — MongoDB and PostgreSQL guidance',
+    titleVi: '/ak:databases — Hướng dẫn MongoDB và PostgreSQL',
     taglineEn: 'Unified MongoDB and PostgreSQL guidance for schema design, queries, aggregation, indexes, migrations, replication, backups, administration, and performance.',
     taglineVi: 'Hướng dẫn thống nhất cho MongoDB và PostgreSQL về thiết kế schema, query, aggregation, index, migration, replication, backup, quản trị và hiệu năng.',
   },

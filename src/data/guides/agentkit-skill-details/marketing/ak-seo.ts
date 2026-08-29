@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:seo',
   kit: 'marketer',
   header: {
-    titleEn: '/ak:seo',
-    titleVi: '/ak:seo',
+    titleEn: '/ak:seo — SEO audit and optimization toolkit',
+    titleVi: '/ak:seo — Bộ công cụ SEO',
     taglineEn: 'SEO toolkit for audits, keyword research, programmatic SEO, on-page optimization, JSON-LD schema, Google Search Console data, and Core Web Vitals.',
     taglineVi: 'Bộ công cụ SEO cho audit, keyword research, programmatic SEO, tối ưu on-page, schema JSON-LD, dữ liệu Google Search Console và Core Web Vitals.',
   },

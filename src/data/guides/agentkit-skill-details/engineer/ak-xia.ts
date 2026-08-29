@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:xia',
   kit: 'engineer',
   header: {
-    titleEn: '/ak:xia',
-    titleVi: '/ak:xia',
+    titleEn: '/ak:xia — Port a feature from another repo',
+    titleVi: '/ak:xia — Port tính năng từ repo khác',
     taglineEn: 'Extract, compare, and port a feature from a GitHub repository or local repo path by understanding source behavior, challenging assumptions, then handing off an idiomatic local plan.',
     taglineVi: 'Trích xuất, so sánh và port tính năng từ GitHub hoặc repo local bằng cách hiểu hành vi nguồn, thách thức giả định, rồi bàn giao plan phù hợp với codebase hiện tại.',
   },

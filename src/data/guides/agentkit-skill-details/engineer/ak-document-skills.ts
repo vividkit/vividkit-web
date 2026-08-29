@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:document-skills",
   kit: "engineer",
   header: {
-    titleEn: "/ak:document-skills",
-    titleVi: "/ak:document-skills",
+    titleEn: "/ak:document-skills — Edit Office-style documents",
+    titleVi: "/ak:document-skills — Chỉnh sửa tài liệu kiểu Office",
     taglineEn: "Read, create, and edit Office-style documents: docx, pdf, pptx, xlsx, tables, forms, slides, and spreadsheets.",
     taglineVi: "Đọc, tạo và chỉnh sửa tài liệu kiểu Office: docx, pdf, pptx, xlsx, bảng, biểu mẫu, slide và spreadsheet.",
   },

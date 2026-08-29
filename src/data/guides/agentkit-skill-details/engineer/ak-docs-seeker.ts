@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:docs-seeker",
   kit: "engineer",
   header: {
-    titleEn: "/ak:docs-seeker",
-    titleVi: "/ak:docs-seeker",
+    titleEn: "/ak:docs-seeker — Find current library docs",
+    titleVi: "/ak:docs-seeker — Tìm tài liệu thư viện hiện hành",
     taglineEn: "Script-first discovery for current library, framework, API, and repository documentation through llms.txt and context7.",
     taglineVi: "Tìm tài liệu thư viện, framework, API và repository mới nhất theo hướng script-first qua llms.txt và context7.",
   },
