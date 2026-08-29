@@ -7,7 +7,9 @@ import type { Language } from '@/i18n';
 interface Props {
   data: SkillInfographic;
   lang: Language;
-}
+  /** CK pages keep mono command titles. AgentKit skill details use a plain human headline. */
+  plainHeadline?: boolean;
+};
 
 type Tone = {
   rail: string;
@@ -24,13 +26,30 @@ type ProcessGroup = {
   tone: Tone;
 };
 
-const { data, lang } = Astro.props;
+const { data, lang, plainHeadline = false } = Astro.props;
 const isVi = lang === 'vi';
 
-const title = isVi ? data.header.titleVi : data.header.titleEn;
+const rawTitle = isVi ? data.header.titleVi : data.header.titleEn;
 const tagline = isVi ? data.header.taglineVi : data.header.taglineEn;
-const principles = isVi ? data.corePrinciplesVi : data.corePrinciplesEn;
-const expertise = isVi ? data.expertiseAreasVi : data.expertiseAreasEn;
+const humanizeHeadline = (headline: string, blurb: string) => {
+  const stripped = headline
+    .replace(/^[/\$]ak:[^\s—–]+(?:\s*[—–-]\s*)?/i, '')
+    .trim();
+  let next = stripped && !/^[/\$]ak:/i.test(stripped) ? stripped : '';
+  if (!next && /^[/\$]ak:/i.test(headline.trim())) {
+    next = (blurb.split(/(?<=[.!?])\s+/)[0] || blurb).replace(/[.]$/, '');
+  }
+  if (!next) next = headline;
+  const words = next.split(/\s+/).filter(Boolean);
+  const sameAsBlurb = next === blurb.trim() || (next.length > 36 && blurb.trim().startsWith(next));
+  if (!sameAsBlurb && next.length <= 40 && words.length <= 5) return next;
+  const clause = next.split(/[,—–:]/)[0].trim();
+  if (!sameAsBlurb && clause.length >= 10 && clause.length <= 36) return clause;
+  return words.slice(0, 5).join(' ');
+};
+const title = plainHeadline ? humanizeHeadline(rawTitle, tagline) : rawTitle;
+const principles = (isVi ? data.corePrinciplesVi : data.corePrinciplesEn) || [];
+const expertise = (isVi ? data.expertiseAreasVi : data.expertiseAreasEn) || [];
 const modes = data.workflowModes || [];
 const promptExamples = data.promptExamples || [];
 const stack = data.skillStack || [];
@@ -39,6 +58,7 @@ const guardrails = data.guardrails || [];
 const modeCards = data.modeCards || [];
 const specialOps = data.specialOperations || [];
 const customGroupLabels = data.processGroupLabels || [];
+const processFlow = data.processFlow || [];
 
 const text = {
   eyebrow: isVi ? 'Tóm tắt nhanh / Lệnh' : 'Quick Ref / Command',
@@ -108,7 +128,7 @@ const heroWash = data.kit === 'marketer'
   ? 'bg-[linear-gradient(115deg,rgba(217,70,239,0.10),transparent_30%,rgba(245,158,11,0.08)_60%,rgba(14,165,233,0.10))] dark:bg-[linear-gradient(115deg,rgba(217,70,239,0.15),transparent_30%,rgba(245,158,11,0.10)_62%,rgba(14,165,233,0.14))]'
   : 'bg-[linear-gradient(115deg,rgba(16,185,129,0.10),transparent_30%,rgba(245,158,11,0.08)_60%,rgba(139,92,246,0.10))] dark:bg-[linear-gradient(115deg,rgba(16,185,129,0.16),transparent_30%,rgba(245,158,11,0.10)_62%,rgba(139,92,246,0.13))]';
 
-const heroFlow = data.processFlow.slice(0, 4).map(step => isVi ? step.titleVi : step.titleEn);
+const heroFlow = processFlow.slice(0, 4).map(step => isVi ? step.titleVi : step.titleEn);
 const fallbackHeroFlow = isVi ? ['Đầu vào', 'Định tuyến', 'Thực thi', 'Báo cáo'] : ['Input', 'Route', 'Execute', 'Report'];
 const heroSteps = heroFlow.length > 0 ? heroFlow : fallbackHeroFlow;
 
@@ -130,15 +150,15 @@ const processGroups: ProcessGroup[] = customGroupLabels.length > 0
   ? customGroupLabels.map((g, i) => ({
       label: isVi ? g.labelVi : g.labelEn,
       kicker: isVi ? g.kickerVi : g.kickerEn,
-      steps: data.processFlow.slice(g.stepSlice[0], g.stepSlice[1]),
+      steps: processFlow.slice(g.stepSlice?.[0] ?? 0, g.stepSlice?.[1] ?? processFlow.length),
       tone: tones[i % tones.length],
     })).filter(g => g.steps.length > 0)
   : (() => {
-      const groupSize = Math.max(1, Math.ceil(data.processFlow.length / 4));
+      const groupSize = Math.max(1, Math.ceil(processFlow.length / 4));
       return groupLabels
         .map((group, index) => ({
           ...group,
-          steps: data.processFlow.slice(index * groupSize, (index + 1) * groupSize),
+          steps: processFlow.slice(index * groupSize, (index + 1) * groupSize),
           tone: tones[index],
         }))
         .filter(group => group.steps.length > 0);
@@ -203,10 +223,20 @@ const getOutputPattern = () => (isVi ? output?.patternVi : output?.patternEn)?.t
         </div>
 
         <div class="mt-5">
-          <h2 class="break-words font-mono text-3xl font-semibold leading-none text-slate-950 dark:text-white sm:text-4xl">
+          {plainHeadline && data.command && (
+            <p class="font-mono text-sm font-semibold tracking-tight text-teal-700 dark:text-teal-300">
+              {data.command}
+            </p>
+          )}
+          <h2
+            class:list={[
+              'break-words text-3xl font-semibold text-slate-950 dark:text-white sm:text-4xl',
+              plainHeadline ? 'mt-2 leading-[1.12] tracking-tight' : 'font-mono leading-none',
+            ]}
+          >
             {title}
           </h2>
-          <p class="mt-4 max-w-2xl text-sm leading-6 text-slate-650 dark:text-slate-300">
+          <p class="mt-4 max-w-2xl text-sm leading-6 text-slate-600 dark:text-slate-300">
             {tagline}
           </p>
         </div>

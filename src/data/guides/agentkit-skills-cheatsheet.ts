@@ -1,7 +1,7 @@
 // AgentKit kit skills cheatsheet.
 // User-facing skill page inventory authority: ak-docs Fumadocs meta.json pages[]
 //   content/docs/{stable|beta}/kits/{engineer|marketing}/skills/meta.json
-// Snapshots + notes: reference/ak-docs-skills-meta/ (see README.md). Audit: /vk:audit-ak.
+// Snapshots + notes: reference/ak-docs-skills-meta/. Drift check: node scripts/check-ak-skill-details.mjs --kit-root <agentkit>
 // Flags/argument-hint/descriptions: kit SKILL.md (ak-cli kits). Not CLI version.
 // Nested docx/pdf/pptx/xlsx under document-skills are not separate top-level pages.
 // UI groups: Engineer = workflow (CK-like); Marketing = GTM lifecycle.
@@ -171,7 +171,7 @@ export const akEngineerSkills: AkSkillEntry[] = [
     command: "/ak:bro",
     commandCodex: "$ak:bro",
     description: "Restate the assistant's last message in simpler, shorter, jargon-free language. Use when the user says ak:bro, simplify that, say it plainly, or explain it like a human.",
-    descriptionVi: "Viết lại tin nhắn trước của trợ lý cho gọn, dễ hiểu, bỏ thuật ngữ. Dùng khi bảo nói lại cho dễ, nói thường, hoặc giải thích như người.",
+    descriptionVi: "Viết lại câu trả lời trước của AI cho gọn, dễ hiểu, bỏ thuật ngữ. Dùng khi muốn nói lại cho dễ, nói thường, hoặc giải thích như người.",
     category: "utilities",
   },
   {

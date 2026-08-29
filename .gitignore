@@ -38,6 +38,9 @@ pnpm-debug.log*
 reference/**/*
 !reference/skills-registry.json
 !reference/skills-registry-index.json
+!reference/ak-docs-skills-meta/
+!reference/ak-docs-skills-meta/README.md
+!reference/ak-docs-skills-meta/skill-details-lock.json
 !reference/ak-tracking/
 !reference/ak-tracking/manifest.json
 !reference/ak-tracking/baselines/

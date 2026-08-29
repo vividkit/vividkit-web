@@ -1,0 +1,152 @@
+import type { SkillInfographic } from '@/data/guides/how-ck-works';
+
+const data: SkillInfographic = {
+  "id": "ak-scenario",
+  "command": "/ak:scenario",
+  "kit": "engineer",
+  "header": {
+    "titleEn": "/ak:scenario",
+    "titleVi": "/ak:scenario",
+    "taglineEn": "Expand a feature or code path into edge cases and test scenarios across 12 dimensions, with one-shot or iterative saturation modes.",
+    "taglineVi": "Mở rộng một feature hoặc code path thành edge case và kịch bản test qua 12 chiều, bằng chế độ one-shot hoặc lặp đến bão hòa."
+  },
+  "processFlow": [
+    {
+      "number": 1,
+      "titleEn": "Read target",
+      "titleVi": "Đọc mục tiêu",
+      "descEn": "Read the file path or parse the feature description to identify actors, components, preconditions, and scope.",
+      "descVi": "Đọc đường dẫn file hoặc phân tích mô tả feature để xác định actor, component, tiền điều kiện và phạm vi."
+    },
+    {
+      "number": 2,
+      "titleEn": "Filter dimensions",
+      "titleVi": "Lọc 12 chiều",
+      "descEn": "Decide which dimensions apply; explicitly skip irrelevant ones and state the assumption behind each skip.",
+      "descVi": "Quyết định chiều nào phù hợp; bỏ qua chiều không liên quan một cách rõ ràng và nêu giả định phía sau."
+    },
+    {
+      "number": 3,
+      "titleEn": "Generate scenarios",
+      "titleVi": "Sinh kịch bản",
+      "descEn": "In one-shot mode, create 3–5 scenarios per relevant dimension with expected behavior.",
+      "descVi": "Ở chế độ one-shot, tạo 3–5 kịch bản cho mỗi chiều liên quan kèm hành vi kỳ vọng."
+    },
+    {
+      "number": 4,
+      "titleEn": "Classify severity",
+      "titleVi": "Xếp mức độ",
+      "descEn": "Rate Critical, High, Medium, or Low based on data loss, security, broken subsets, recoverable UX, or minor glitches.",
+      "descVi": "Xếp Critical, High, Medium hoặc Low theo mất dữ liệu, bảo mật, lỗi với nhóm người dùng, UX hồi phục được hoặc lỗi nhỏ."
+    },
+    {
+      "number": 5,
+      "titleEn": "Iterate when requested",
+      "titleVi": "Lặp khi được yêu cầu",
+      "descEn": "With `--iterations N` or `--saturation`, loop through dimensions, combinations, negations, personas, and temporal shifts while logging novelty.",
+      "descVi": "Với `--iterations N` hoặc `--saturation`, lặp qua chiều, tổ hợp, phủ định, persona và dịch chuyển thời gian trong khi ghi nhận độ mới."
+    },
+    {
+      "number": 6,
+      "titleEn": "Track novelty",
+      "titleVi": "Theo dõi độ mới",
+      "descEn": "Keep new and useful variants, discard duplicates or out-of-scope rows, rotate dimensions after three same-dimension iterations.",
+      "descVi": "Giữ trường hợp mới và biến thể hữu ích, loại trùng hoặc ngoài phạm vi, đổi chiều sau ba lượt liên tiếp cùng chiều."
+    },
+    {
+      "number": 7,
+      "titleEn": "Output coverage",
+      "titleVi": "Xuất độ phủ",
+      "descEn": "Return a scenario report with analyzed/skipped dimensions, table, severity totals, and coverage matrix for iterative runs.",
+      "descVi": "Trả báo cáo scenario gồm chiều đã phân tích/bỏ qua, bảng kịch bản, tổng theo severity và ma trận độ phủ cho chế độ lặp."
+    }
+  ],
+  "corePrinciplesEn": [
+    "A skipped dimension needs a stated assumption",
+    "An unsafe skip becomes its own scenario",
+    "Iterative mode values novelty over raw volume",
+    "Critical and High rows should feed test planning or implementation risk"
+  ],
+  "corePrinciplesVi": [
+    "Mỗi chiều bị bỏ qua phải có giả định rõ ràng",
+    "Nếu giả định bỏ qua có thể gây rủi ro, nó trở thành một scenario",
+    "Chế độ lặp coi độ mới quan trọng hơn số lượng thô",
+    "Dòng Critical và High nên đưa vào kế hoạch test hoặc rủi ro triển khai"
+  ],
+  "workflowModes": [
+    {
+      "flag": "default",
+      "modeEn": "One-shot scenario table",
+      "modeVi": "Bảng scenario một lượt",
+      "research": "Read target once",
+      "redTeam": "Security dimension when relevant",
+      "validation": "Severity summary"
+    },
+    {
+      "flag": "--iterations N",
+      "modeEn": "Bounded iteration",
+      "modeVi": "Lặp có giới hạn",
+      "research": "Repeated novelty loop",
+      "redTeam": "Security focus possible",
+      "validation": "Stops exactly at N iterations"
+    },
+    {
+      "flag": "--saturation",
+      "modeEn": "Saturation loop",
+      "modeVi": "Lặp đến bão hòa",
+      "research": "Continues until novelty exhausted",
+      "redTeam": "Security focus possible",
+      "validation": "Stops after two zero-novelty iterations"
+    }
+  ],
+  "outputFlags": [
+    {
+      "flag": "--iterations N",
+      "titleEn": "Bounded loop",
+      "titleVi": "Vòng lặp hữu hạn",
+      "descEn": "Runs exactly N scenario-generation iterations.",
+      "descVi": "Chạy đúng N lượt tạo scenario.",
+      "exampleCommand": "/ak:scenario src/api/payment.ts --iterations 25"
+    },
+    {
+      "flag": "--saturation",
+      "titleEn": "Novelty saturation",
+      "titleVi": "Bão hòa độ mới",
+      "descEn": "Iterates until two consecutive iterations produce no novel scenarios.",
+      "descVi": "Lặp đến khi hai lượt liên tiếp không sinh scenario mới.",
+      "exampleCommand": "/ak:scenario \"Add multi-tenancy to the database layer\" --saturation"
+    }
+  ],
+  "promptExamples": [
+    {
+      "labelEn": "API edge cases",
+      "labelVi": "Edge case cho API",
+      "command": "/ak:scenario src/api/payment.ts",
+      "whenEn": "Use before implementing or testing a risky flow.",
+      "whenVi": "Dùng trước khi triển khai hoặc test một luồng rủi ro.",
+      "expectedEn": "A table of scenarios grouped by relevant dimensions and severity.",
+      "expectedVi": "Bảng scenario theo chiều liên quan và mức độ.",
+      "recommended": true
+    },
+    {
+      "labelEn": "Saturation audit",
+      "labelVi": "Audit đến bão hòa",
+      "command": "/ak:scenario src/middleware/auth.ts --saturation --domain security",
+      "whenEn": "Use when coverage must continue until new scenarios dry up.",
+      "whenVi": "Dùng khi cần tiếp tục mở rộng độ phủ đến khi hết scenario mới.",
+      "expectedEn": "Progress summaries, novelty decisions, coverage matrix, and final score.",
+      "expectedVi": "Có tóm tắt tiến độ, quyết định độ mới, ma trận độ phủ và điểm cuối."
+    },
+    {
+      "labelEn": "Test format",
+      "labelVi": "Định dạng test scenario",
+      "command": "/ak:scenario \"User registration with OAuth providers\" --format test-scenarios",
+      "whenEn": "Use when the immediate next consumer is a test plan.",
+      "whenVi": "Dùng khi đầu ra sẽ được đưa ngay vào kế hoạch test.",
+      "expectedEn": "Scenario rows shaped for test-case drafting.",
+      "expectedVi": "Các dòng scenario được định hình để soạn test case."
+    }
+  ]
+};
+
+export default data;
