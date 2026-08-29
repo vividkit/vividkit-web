@@ -106,6 +106,64 @@ const platforms = isVi
       { os: 'Linux', detail: 'Supported via the portable Node.js path' },
       { os: 'Windows', detail: 'PowerShell experimental — no real-machine smoke test yet' },
     ];
+
+const advancedCards = isVi
+  ? [
+      {
+        title: 'Cài vào project',
+        code: `akh install --project /path/to/project --kit engineer \\
+  --runtime codex --channel stable`,
+      },
+      {
+        title: 'Cài user/global của runtime',
+        code: `akh install --global --kit engineer \\
+  --runtime codex,omp,pi --channel stable`,
+      },
+      {
+        title: 'Cập nhật Kit trong project',
+        code: `akh update --project /path/to/project`,
+      },
+      {
+        title: 'Cập nhật mọi install đã biết',
+        code: `akh update-all --channel stable`,
+      },
+      {
+        title: 'Chỉ binary ak',
+        code: `akh self-update --channel stable`,
+      },
+      {
+        title: 'Xem trước, không ghi',
+        code: `akh update --project /path/to/project --dry-run`,
+      },
+    ]
+  : [
+      {
+        title: 'Install into a project',
+        code: `akh install --project /path/to/project --kit engineer \\
+  --runtime codex --channel stable`,
+      },
+      {
+        title: 'Install into runtime user/global',
+        code: `akh install --global --kit engineer \\
+  --runtime codex,omp,pi --channel stable`,
+      },
+      {
+        title: 'Update Kit in a project',
+        code: `akh update --project /path/to/project`,
+      },
+      {
+        title: 'Update every known install',
+        code: `akh update-all --channel stable`,
+      },
+      {
+        title: 'ak binary only',
+        code: `akh self-update --channel stable`,
+      },
+      {
+        title: 'Preview without writing',
+        code: `akh update --project /path/to/project --dry-run`,
+      },
+    ];
 ---
 
 <div class="space-y-10 mt-6">
@@ -232,40 +290,16 @@ const platforms = isVi
   </AkSection>
 
   <AkSection eyebrow={isVi ? 'CLI' : 'CLI'} title={isVi ? 'Lệnh nâng cao' : 'Advanced commands'}>
-    <AkCodeBlock
-      title="akh"
-      code={isVi
-        ? `# Cài vào project
-akh install --project /path/to/project --kit engineer \\
-  --runtime codex --channel stable
-
-# Cài user/global của runtime
-akh install --global --kit engineer \\
-  --runtime codex,omp,pi --channel stable
-
-# Cập nhật Kit, mọi install đã biết, hoặc chỉ binary ak
-akh update --project /path/to/project
-akh update-all --channel stable
-akh self-update --channel stable
-
-# Xem trước, không ghi
-akh update --project /path/to/project --dry-run`
-        : `# Install into a project
-akh install --project /path/to/project --kit engineer \\
-  --runtime codex --channel stable
-
-# Install into runtime user/global scope
-akh install --global --kit engineer \\
-  --runtime codex,omp,pi --channel stable
-
-# Update Kit installs, every known install, or only the ak binary
-akh update --project /path/to/project
-akh update-all --channel stable
-akh self-update --channel stable
-
-# Preview without writing
-akh update --project /path/to/project --dry-run`}
-    />
+    <div class="grid gap-4 sm:grid-cols-2">
+      {advancedCards.map((card) => (
+        <div class="flex flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 dark:border-slate-700 dark:bg-slate-900/50">
+          <p class="px-4 pt-4 text-sm font-semibold text-slate-900 dark:text-white">{card.title}</p>
+          <div class="p-3 pt-2">
+            <AkCodeBlock title="akh" code={card.code} />
+          </div>
+        </div>
+      ))}
+    </div>
     <div class="mt-4 grid gap-3 sm:grid-cols-3">
       {(
         [
