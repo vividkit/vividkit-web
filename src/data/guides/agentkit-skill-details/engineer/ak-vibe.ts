@@ -1,0 +1,81 @@
+import type { SkillInfographic } from '@/data/guides/how-ck-works';
+
+const data: SkillInfographic = {
+  id: 'ak-vibe',
+  command: '/ak:vibe',
+  kit: 'engineer',
+  header: {
+    titleEn: '/ak:vibe',
+    titleVi: '/ak:vibe',
+    taglineEn: 'Run the full autonomous development pipeline from issue or feature request through worktree, plan, implementation, review, PR, ready labels, and optional merge/CI convergence.',
+    taglineVi: 'Chạy pipeline phát triển tự động từ issue hoặc yêu cầu feature qua worktree, plan, triển khai, review, PR, label sẵn sàng và tùy chọn merge/đưa CI về xanh.',
+  },
+  hardGate: {
+    type: 'critical',
+    titleEn: 'No gate bypass',
+    titleVi: 'Không bỏ qua gate',
+    contentEn: 'Vibe orchestrates other skills but never bypasses their approval gates, tests, code-review blockers, branch protections, security policies, or CI requirements. Never work directly on main, master, dev, beta, or develop.',
+    contentVi: 'Vibe chỉ điều phối các skill khác, tuyệt đối không bỏ qua gate duyệt, test, blocker code review, branch protection, chính sách bảo mật hoặc yêu cầu CI của chúng. Không làm trực tiếp trên main, master, dev, beta hoặc develop.',
+  },
+  processFlow: [
+    { number: 1, titleEn: 'Parse request', titleVi: 'Phân tích yêu cầu', descEn: 'Strip flags, resolve stable/beta/both mode, read the GitHub issue or natural-language request, and extract outcomes, acceptance, scope, constraints, and blockers.', descVi: 'Tách flag, quyết định mode stable/beta/both, đọc GitHub issue hoặc yêu cầu tự nhiên, rồi trích outcome, acceptance, scope, ràng buộc và blocker.' },
+    { number: 2, titleEn: 'Create worktree', titleVi: 'Tạo worktree', descEn: 'Use ak:worktree to create or reuse a clean isolated branch/worktree that matches the request.', descVi: 'Dùng ak:worktree để tạo hoặc tái sử dụng branch/worktree tách biệt, sạch và khớp yêu cầu.' },
+    { number: 3, titleEn: 'Plan gates', titleVi: 'Gate kế hoạch', descEn: 'Reuse a valid existing plan or run ak:plan --tdd, then validate, red-team, and sweep whole-plan consistency before implementation.', descVi: 'Tái sử dụng plan hợp lệ hoặc chạy ak:plan --tdd, sau đó validate, red-team và quét nhất quán toàn plan trước triển khai.' },
+    { number: 4, titleEn: 'Sync issue', titleVi: 'Đồng bộ issue', descEn: 'Create or update GitHub labels, issue body/comment, branch, route, plan link, ship mode, acceptance criteria, and plan index linkage.', descVi: 'Tạo hoặc cập nhật label GitHub, body/comment issue, branch, route, link plan, ship mode, acceptance criteria và liên kết plan index.' },
+    { number: 5, titleEn: 'Implement route', titleVi: 'Triển khai theo route', descEn: 'Label in progress, then run ak:fix --auto for bugs or ak:cook --tdd --auto for feature work with the validated plan.', descVi: 'Gắn label in progress, rồi chạy ak:fix --auto cho bug hoặc ak:cook --tdd --auto cho feature với plan đã validate.' },
+    { number: 6, titleEn: 'Local review', titleVi: 'Review local', descEn: 'Run ak:code-review --pending and fix Critical and Important findings before shipping.', descVi: 'Chạy ak:code-review --pending và sửa các finding Critical/Important trước khi ship.' },
+    { number: 7, titleEn: 'Open PR', titleVi: 'Mở PR', descEn: 'Ship beta or official PR according to mode; in both mode, beta ships first and stable waits for beta merge and green CI.', descVi: 'Ship PR beta hoặc official theo mode; với both mode, ship beta trước và stable phải chờ beta merge cùng CI xanh.' },
+    { number: 8, titleEn: 'Review PR', titleVi: 'Review PR', descEn: 'Run ak:review-pr with fix and reply, resolve actionable findings, and require terminal green checks unless an external blocker is documented.', descVi: 'Chạy ak:review-pr với fix và reply, xử lý finding hành động được, và yêu cầu check xanh hoàn tất trừ khi có blocker ngoài đã ghi rõ.' },
+    { number: 9, titleEn: 'Mark ready', titleVi: 'Đánh dấu sẵn sàng', descEn: 'Apply ready-to-ship beta or stable labels to the source issue and PR, then remove stale ready-to-cook and in-progress labels.', descVi: 'Gắn label ready-to-ship beta hoặc stable cho issue nguồn và PR, rồi gỡ label ready-to-cook và in-progress cũ.' },
+    { number: 10, titleEn: 'Merge and converge', titleVi: 'Merge và đưa CI xanh', descEn: 'When ship mode requests it, merge through GitHub rules, watch target-branch CI, create follow-up fix loops for deterministic failures, and close the plan index.', descVi: 'Khi ship mode yêu cầu, merge theo luật GitHub, theo dõi CI trên branch đích, tạo vòng fix tiếp theo cho lỗi xác định được và đóng plan index.' },
+  ],
+  corePrinciplesEn: [
+    'One command owns the pipeline, but each underlying skill keeps its own gates.',
+    'GitHub issues are source of truth; do not duplicate an existing issue.',
+    'Work happens in an isolated worktree, never directly on protected base branches.',
+    'Bugfix routes go through ak:fix; feature routes go through ak:cook.',
+    'Ready labels mean reviewed, fixed, replied, and CI/accountable blockers handled.',
+  ],
+  corePrinciplesVi: [
+    'Một lệnh sở hữu pipeline, nhưng từng skill bên dưới vẫn giữ gate riêng.',
+    'GitHub issue là nguồn sự thật; không tạo trùng issue đã có.',
+    'Công việc diễn ra trong worktree tách biệt, không làm trực tiếp trên branch nền được bảo vệ.',
+    'Route bugfix đi qua ak:fix; route feature đi qua ak:cook.',
+    'Label ready nghĩa là đã review, đã fix, đã reply và CI/blocker đã được xử lý có trách nhiệm.',
+  ],
+  workflowModes: [
+    { flag: 'default', modeEn: 'Stable PR readiness', modeVi: 'Sẵn sàng PR stable', research: 'Full plan gates', redTeam: 'Required', validation: 'Review and checks', cookFlag: 'no merge' },
+    { flag: '--beta', modeEn: 'Beta PR readiness', modeVi: 'Sẵn sàng PR beta', research: 'Full plan gates', redTeam: 'Required', validation: 'Beta review and checks', cookFlag: 'no merge' },
+    { flag: '--ship', modeEn: 'Merge and converge', modeVi: 'Merge và đưa CI xanh', research: 'Full pipeline', redTeam: 'Required', validation: 'Post-merge CI loop', cookFlag: 'merge enabled' },
+    { flag: '--both', modeEn: 'Beta then stable', modeVi: 'Beta rồi stable', research: 'Two-stage pipeline', redTeam: 'Per stage', validation: 'Beta CI before stable', cookFlag: 'implies ship' },
+  ],
+  skillStack: [
+    { name: 'ak:worktree', type: 'skill' },
+    { name: 'ak:plan', type: 'skill' },
+    { name: 'ak:cook', type: 'skill' },
+    { name: 'ak:fix', type: 'skill' },
+    { name: 'ak:code-review', type: 'skill' },
+    { name: 'ak:ship', type: 'skill' },
+    { name: 'ak:review-pr', type: 'skill' },
+    { name: 'kongming', type: 'agent' },
+  ],
+  outputFlags: [
+    { flag: '--ship', titleEn: 'Merge after review', titleVi: 'Merge sau review', descEn: 'After PR review/fix/reply, merge the PR and watch or fix CI until success or a true external blocker.', descVi: 'Sau review/fix/reply PR, merge PR rồi theo dõi hoặc sửa CI đến khi thành công hoặc gặp blocker ngoài thật.', exampleCommand: '/ak:vibe --ship https://github.com/acme/app/issues/42' },
+    { flag: '--beta', titleEn: 'Ship beta target', titleVi: 'Ship đích beta', descEn: 'Ship through the beta/dev target and finish with the ready-to-ship beta label.', descVi: 'Ship qua đích beta/dev và kết thúc bằng label ready-to-ship beta.', exampleCommand: '/ak:vibe --beta https://github.com/acme/app/issues/42' },
+    { flag: '--both', titleEn: 'Beta then stable', titleVi: 'Beta rồi stable', descEn: 'Run the complete beta stage first, require beta CI green, then run the stable stage; supersedes beta and implies ship.', descVi: 'Chạy trọn stage beta trước, yêu cầu CI beta xanh, rồi chạy stage stable; supersedes beta và ngầm bật ship.', exampleCommand: '/ak:vibe --both https://github.com/acme/app/issues/42' },
+    { flag: '--advice', titleEn: 'Kongming advisory supervision', titleVi: 'Giám sát tư vấn Kongming', descEn: 'Ask kongming for counsel at phase checkpoints, stuck points, high-stakes decisions, and post-PR green-check gates.', descVi: 'Nhờ kongming tư vấn ở checkpoint từng phase, lúc kẹt, quyết định rủi ro cao và gate sau khi PR đã xanh check.', exampleCommand: '/ak:vibe --advice --ship https://github.com/acme/app/issues/42' },
+  ],
+  specialOperations: [
+    { id: 'issue-source', titleEn: 'Issue is source of truth', titleVi: 'Issue là nguồn sự thật', descEn: 'Issue URL inputs must match the current repo; otherwise stop and ask for the matching repo/worktree.', descVi: 'Issue URL phải khớp repo hiện tại; nếu không, dừng và yêu cầu repo/worktree đúng.', color: 'amber' },
+    { id: 'dual-stage', titleEn: 'Dual-stage ship', titleVi: 'Ship hai stage', descEn: 'Both mode runs beta to merge and green CI before stable; stable is skipped if beta remains blocked.', descVi: 'Both mode merge beta và đưa CI xanh trước stable; nếu beta còn blocked thì bỏ qua stable.', color: 'violet' },
+    { id: 'advice', titleEn: 'Advice is counsel', titleVi: 'Tư vấn chỉ là tư vấn', descEn: 'Kongming returns counsel, never code; the main agent remains responsible for decisions, edits, and gates.', descVi: 'Kongming chỉ đưa lời khuyên, không viết code; agent chính vẫn chịu trách nhiệm quyết định, edit và gate.', color: 'sky' },
+  ],
+  promptExamples: [
+    { labelEn: 'PR readiness from issue', labelVi: 'Đưa issue tới trạng thái sẵn PR', command: '/ak:vibe https://github.com/acme/app/issues/42', whenEn: 'A GitHub issue should be planned, implemented, reviewed, and labeled ready without automatic merge.', whenVi: 'Một GitHub issue cần được lập plan, triển khai, review và gắn ready nhưng chưa tự merge.', expectedEn: 'Creates an isolated worktree, validates plan gates, ships a reviewed PR, and applies ready-to-ship stable.', expectedVi: 'Tạo worktree tách biệt, validate gate plan, ship PR đã review và gắn ready-to-ship stable.', recommended: true },
+    { labelEn: 'Autonomous merge', labelVi: 'Tự merge có kiểm CI', command: '/ak:vibe --ship fix flaky checkout redirect', whenEn: 'A request should continue through merge and target-branch CI convergence.', whenVi: 'Yêu cầu cần chạy tiếp qua merge và đưa CI branch đích về xanh.', expectedEn: 'Creates or updates the issue, implements through the right route, merges, and loops on deterministic CI failures.', expectedVi: 'Tạo hoặc cập nhật issue, triển khai qua route đúng, merge và lặp fix lỗi CI xác định được.' },
+    { labelEn: 'Beta then stable', labelVi: 'Beta rồi stable', command: '/ak:vibe --both https://github.com/acme/app/issues/42', whenEn: 'The repo requires a beta/dev promotion before stable release.', whenVi: 'Repo yêu cầu qua beta/dev trước khi release stable.', expectedEn: 'Completes beta merge and green CI before starting the stable stage.', expectedVi: 'Hoàn tất merge beta và CI xanh trước khi bắt đầu stage stable.' },
+    { labelEn: 'Advisory supervision', labelVi: 'Có giám sát tư vấn', command: '/ak:vibe --advice --ship https://github.com/acme/app/issues/42', whenEn: 'A high-stakes pipeline needs extra counsel without surrendering ownership.', whenVi: 'Pipeline rủi ro cao cần thêm tư vấn nhưng không chuyển quyền sở hữu.', expectedEn: 'Adds kongming counsel at required checkpoints while still honoring every gate.', expectedVi: 'Thêm tư vấn kongming tại các checkpoint bắt buộc nhưng vẫn giữ toàn bộ gate.' },
+  ],
+};
+
+export default data;

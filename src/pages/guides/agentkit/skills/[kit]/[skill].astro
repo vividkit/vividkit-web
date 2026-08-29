@@ -1,0 +1,32 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import AkSkillDetailGuide from '@/components/guides/agentkit/AkSkillDetailGuide.astro';
+import { getAkSkillInfographic, listAkSkillDetails } from '@/data/guides/agentkit-skill-details';
+
+export function getStaticPaths() {
+  return listAkSkillDetails().map(({ kit, skill }) => ({
+    params: { kit, skill },
+  }));
+}
+
+const kit = Astro.params.kit === 'marketing' ? 'marketing' : 'engineer';
+const skill = Astro.params.skill || '';
+const data = getAkSkillInfographic(kit, skill);
+
+if (!data) {
+  return Astro.redirect('/guides/agentkit/skills');
+}
+
+const title = `${data.command} — AgentKit Skills`;
+const description = data.header.taglineEn;
+---
+
+<GuidesLayout
+  title={`${title} - VividKit Guides`}
+  description={description}
+  canonicalPath={`/guides/agentkit/skills/${kit}/${skill}`}
+  activeTab="agentkit-skills"
+  lang="en"
+>
+  <AkSkillDetailGuide lang="en" kit={kit} data={data} />
+</GuidesLayout>
