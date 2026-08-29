@@ -243,7 +243,27 @@ const keys = isVi
     box-shadow: 0 0 0 1px rgb(45 212 191 / 0.35);
     transform: translateY(-1px);
   }
+  .akh-list {
+    position: relative;
+  }
+  .akh-bar {
+    position: absolute;
+    left: -0.5rem;
+    right: -0.5rem;
+    top: 0;
+    height: 1.75rem;
+    border-radius: 0.5rem;
+    background: #27272a;
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      transform 220ms ease,
+      height 220ms ease,
+      opacity 180ms ease;
+  }
   .akh-opt {
+    position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
     gap: 0.6rem;
@@ -251,12 +271,9 @@ const keys = isVi
     padding: 0 0.5rem;
     border-radius: 0.5rem;
     color: #a1a1aa;
-    transition:
-      background-color 220ms ease,
-      color 220ms ease;
+    transition: color 220ms ease;
   }
   .akh-opt[data-on='1'] {
-    background: #27272a;
     color: #fafafa;
   }
   .akh-cursor {
@@ -291,7 +308,8 @@ const keys = isVi
     .akh-tui-key,
     .akh-opt,
     .akh-cursor,
-    .akh-mark {
+    .akh-mark,
+    .akh-bar {
       transition: none;
     }
   }
@@ -345,13 +363,16 @@ const keys = isVi
     body.replaceChildren();
 
     if (frame.items) {
+      const list = el('div', 'akh-list');
+      list.append(el('div', 'akh-bar'));
       for (const item of frame.items) {
         const row = el('div', 'akh-opt');
         row.append(el('span', 'akh-cursor', '▶'));
         row.append(el('span', 'akh-mark', '○'));
         row.append(el('span', '', item.label));
-        body.append(row);
+        list.append(row);
       }
+      body.append(list);
       body.append(el('div', 'text-zinc-600', '│'));
     }
 
@@ -375,16 +396,34 @@ const keys = isVi
     hint.textContent = frame.hint;
   }
 
+  function slideBar(screen: HTMLElement, index: number) {
+    const list = screen.querySelector<HTMLElement>('.akh-list');
+    const bar = screen.querySelector<HTMLElement>('.akh-bar');
+    const rows = [...screen.querySelectorAll<HTMLElement>('.akh-opt')];
+    const row = rows[index];
+    if (!bar || !list || !row) {
+      if (bar) bar.style.opacity = '0';
+      return;
+    }
+    const top = row.getBoundingClientRect().top - list.getBoundingClientRect().top;
+    bar.style.opacity = '1';
+    bar.style.height = `${row.getBoundingClientRect().height}px`;
+    bar.style.transform = `translateY(${top}px)`;
+  }
+
   function syncItems(screen: HTMLElement, items: Item[]) {
     const rows = [...screen.querySelectorAll<HTMLElement>('.akh-opt')];
+    let active = 0;
     items.forEach((item, index) => {
       const row = rows[index];
       if (!row) return;
       row.dataset.on = item.active ? '1' : '0';
       row.dataset.checked = item.checked ? '1' : '0';
+      if (item.active) active = index;
       const mark = row.querySelector('.akh-mark');
       if (mark) mark.textContent = item.checked ? '◉' : item.active ? '●' : '○';
     });
+    slideBar(screen, active);
   }
 
   function itemsAt(frame: Frame, cursor: number, checked: number[]): Item[] {
@@ -403,6 +442,7 @@ const keys = isVi
     reduced: boolean,
   ) {
     fillBody(screen, hint, frame, frame.commands?.map(() => ''));
+    await sleep(reduced ? 0 : 16);
     syncItems(screen, itemsAt(frame, 0, []));
     setHot(keys, 'updown');
     if (reduced) {
