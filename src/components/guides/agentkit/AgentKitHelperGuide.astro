@@ -9,6 +9,7 @@ import AkInlineCode from './AkInlineCode.astro';
 import AkCodeBlock from './AkCodeBlock.astro';
 import AkStepRail from './AkStepRail.astro';
 import AkCompare from './AkCompare.astro';
+import AkhTuiFlow from './AkhTuiFlow.astro';
 
 interface Props {
   lang?: Language;
@@ -63,19 +64,6 @@ const roles = isVi
       },
     ];
 
-const tuiKeys = isVi
-  ? [
-      { k: '↑ / ↓', d: 'Di chuyển' },
-      { k: 'Space', d: 'Chọn nhiều runtime' },
-      { k: 'Enter', d: 'Xác nhận bước này' },
-      { k: 'Esc', d: 'Về bước trước' },
-    ]
-  : [
-      { k: '↑ / ↓', d: 'Move' },
-      { k: 'Space', d: 'Select multiple runtimes' },
-      { k: 'Enter', d: 'Confirm this step' },
-      { k: 'Esc', d: 'Back to the previous step' },
-    ];
 
 const safety = isVi
   ? [
@@ -167,15 +155,8 @@ const platforms = isVi
         <AkCodeBlock title="akh" code={`npm install --global ${npmPkg}\nakh`} />
       </div>
     </div>
-    <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-      {tuiKeys.map((item) => (
-        <div class="rounded-2xl border border-slate-200/80 bg-white/80 px-4 py-3 dark:border-slate-700 dark:bg-slate-900/50">
-          <code class="rounded-md border border-slate-200/80 bg-slate-100 px-1.5 py-0.5 font-mono text-[0.85em] text-teal-700 dark:border-slate-700 dark:bg-slate-800/90 dark:text-teal-300">
-            {item.k}
-          </code>
-          <p class="mt-2 text-xs leading-relaxed text-slate-600 dark:text-slate-400">{item.d}</p>
-        </div>
-      ))}
+    <div class="mt-5">
+      <AkhTuiFlow lang={currentLang} />
     </div>
   </AkSection>
 
@@ -285,20 +266,51 @@ akh self-update --channel stable
 # Preview without writing
 akh update --project /path/to/project --dry-run`}
     />
-    <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+    <div class="mt-4 grid gap-3 sm:grid-cols-3">
+      {(
+        [
+          {
+            label: isVi ? 'Cài' : 'Install',
+            chips: ['claude-code', 'codex', 'cursor', 'dsh', 'grok', 'omp', 'pi'],
+            note: null as string | null,
+          },
+          {
+            label: isVi ? 'Cập nhật' : 'Update',
+            chips: ['claude-code', 'codex', 'cursor', 'grok', 'omp', 'pi'],
+            note: isVi ? 'dsh không hỗ trợ update' : 'dsh is unsupported for update',
+          },
+          {
+            label: 'Export',
+            chips: ['agy', 'portable'],
+            note: null as string | null,
+          },
+        ]
+      ).map((group) => (
+        <div class="rounded-2xl border border-slate-200/80 bg-white/80 p-4 dark:border-slate-700 dark:bg-slate-900/50">
+          <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
+            {group.label}
+          </p>
+          <div class="mt-3 flex flex-wrap gap-1.5">
+            {group.chips.map((chip) => (
+              <code class="rounded-md border border-slate-200/80 bg-slate-100 px-1.5 py-0.5 font-mono text-[0.8em] text-slate-800 dark:border-slate-700 dark:bg-slate-800/90 dark:text-slate-100">
+                {chip}
+              </code>
+            ))}
+          </div>
+          {group.note ? (
+            <p class="mt-2 text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">{group.note}</p>
+          ) : null}
+        </div>
+      ))}
+    </div>
+    <p class="mt-3 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
       {isVi ? (
         <>
-          Cài: <AkInlineCode text="claude-code" />, <AkInlineCode text="codex" />, <AkInlineCode text="cursor" />,{' '}
-          <AkInlineCode text="dsh" />, <AkInlineCode text="grok" />, <AkInlineCode text="omp" />, <AkInlineCode text="pi" />.
-          Cập nhật: cùng list trừ <AkInlineCode text="dsh" /> (không hỗ trợ). Export: <AkInlineCode text="agy" />,{' '}
-          <AkInlineCode text="portable" />. Chạy <AkInlineCode text="akh --help" /> cho đủ flag.
+          Đủ flag: <AkInlineCode text="akh --help" />.
         </>
       ) : (
         <>
-          Install: <AkInlineCode text="claude-code" />, <AkInlineCode text="codex" />, <AkInlineCode text="cursor" />,{' '}
-          <AkInlineCode text="dsh" />, <AkInlineCode text="grok" />, <AkInlineCode text="omp" />, <AkInlineCode text="pi" />.
-          Update: same list except <AkInlineCode text="dsh" /> (unsupported). Export: <AkInlineCode text="agy" />,{' '}
-          <AkInlineCode text="portable" />. Run <AkInlineCode text="akh --help" /> for every flag.
+          Every flag: <AkInlineCode text="akh --help" />.
         </>
       )}
     </p>

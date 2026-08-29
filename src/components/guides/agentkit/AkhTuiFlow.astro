@@ -1,0 +1,323 @@
+---
+import type { Language } from '@/i18n';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang = 'en' } = Astro.props;
+const isVi = lang === 'vi';
+
+type Item = { label: string; active?: boolean; checked?: boolean };
+type Frame = {
+  prompt: string;
+  items?: Item[];
+  commands?: string[];
+  status?: string;
+  hint: string;
+  key: 'updown' | 'space' | 'enter' | 'esc';
+};
+
+const frames: Frame[] = isVi
+  ? [
+      {
+        prompt: 'Chọn ngôn ngữ giao diện',
+        items: [
+          { label: 'Tiếng Việt', active: true },
+          { label: 'English' },
+        ],
+        hint: '↑/↓ di chuyển · Enter xác nhận',
+        key: 'updown',
+      },
+      {
+        prompt: 'Bạn muốn làm gì?',
+        items: [
+          { label: 'Cài Kit', active: true },
+          { label: 'Cập nhật Kit' },
+          { label: 'Cập nhật mọi install đã detect' },
+          { label: 'Chạy health check' },
+        ],
+        hint: '↑/↓ · Enter',
+        key: 'enter',
+      },
+      {
+        prompt: 'Scope',
+        items: [
+          { label: 'Project (thư mục hiện tại)', active: true },
+          { label: 'User / global của runtime' },
+        ],
+        hint: '↑/↓ · Enter · Esc về bước trước',
+        key: 'updown',
+      },
+      {
+        prompt: 'Kit',
+        items: [
+          { label: 'Engineer', active: true },
+          { label: 'Marketing' },
+        ],
+        hint: '↑/↓ · Enter',
+        key: 'enter',
+      },
+      {
+        prompt: 'Runtime — Space để chọn nhiều',
+        items: [
+          { label: 'codex', checked: true, active: true },
+          { label: 'claude-code' },
+          { label: 'omp', checked: true },
+          { label: 'pi' },
+          { label: 'cursor' },
+        ],
+        hint: 'Space chọn · Enter xác nhận',
+        key: 'space',
+      },
+      {
+        prompt: 'Kênh',
+        items: [
+          { label: 'stable', active: true },
+          { label: 'beta' },
+        ],
+        hint: '↑/↓ · Enter',
+        key: 'enter',
+      },
+      {
+        prompt: 'Lệnh CLI ak sẽ chạy',
+        commands: [
+          'ak kit install engineer --target codex --channel stable --yes --verbose',
+          'ak kit install engineer --target omp --channel stable --yes --verbose',
+        ],
+        hint: 'Enter để chạy · Esc hủy',
+        key: 'enter',
+      },
+      {
+        prompt: 'Đang gọi CLI ak…',
+        status: 'ak đang ghi file Kit. AgentKit lo xác minh, ownership và snapshot.',
+        hint: 'Một lệnh --target cho mỗi runtime đã chọn',
+        key: 'enter',
+      },
+    ]
+  : [
+      {
+        prompt: 'Choose interface language',
+        items: [
+          { label: 'Tiếng Việt' },
+          { label: 'English', active: true },
+        ],
+        hint: '↑/↓ to move · Enter to confirm',
+        key: 'updown',
+      },
+      {
+        prompt: 'What do you want to do?',
+        items: [
+          { label: 'Install a Kit', active: true },
+          { label: 'Update a Kit' },
+          { label: 'Update every detected install' },
+          { label: 'Run a health check' },
+        ],
+        hint: '↑/↓ · Enter',
+        key: 'enter',
+      },
+      {
+        prompt: 'Scope',
+        items: [
+          { label: 'Project (this directory)', active: true },
+          { label: 'Runtime user / global' },
+        ],
+        hint: '↑/↓ · Enter · Esc to go back',
+        key: 'updown',
+      },
+      {
+        prompt: 'Kit',
+        items: [
+          { label: 'Engineer', active: true },
+          { label: 'Marketing' },
+        ],
+        hint: '↑/↓ · Enter',
+        key: 'enter',
+      },
+      {
+        prompt: 'Runtimes — Space to select several',
+        items: [
+          { label: 'codex', checked: true, active: true },
+          { label: 'claude-code' },
+          { label: 'omp', checked: true },
+          { label: 'pi' },
+          { label: 'cursor' },
+        ],
+        hint: 'Space to toggle · Enter to confirm',
+        key: 'space',
+      },
+      {
+        prompt: 'Channel',
+        items: [
+          { label: 'stable', active: true },
+          { label: 'beta' },
+        ],
+        hint: '↑/↓ · Enter',
+        key: 'enter',
+      },
+      {
+        prompt: 'ak CLI command that will run',
+        commands: [
+          'ak kit install engineer --target codex --channel stable --yes --verbose',
+          'ak kit install engineer --target omp --channel stable --yes --verbose',
+        ],
+        hint: 'Enter to run · Esc to cancel',
+        key: 'enter',
+      },
+      {
+        prompt: 'Calling the ak CLI…',
+        status: 'ak writes Kit files as it runs. AgentKit still owns verification, ownership, and snapshots.',
+        hint: 'One --target command per selected runtime',
+        key: 'enter',
+      },
+    ];
+
+const keys = isVi
+  ? [
+      { id: 'updown', k: '↑ / ↓', d: 'Di chuyển' },
+      { id: 'space', k: 'Space', d: 'Chọn nhiều runtime' },
+      { id: 'enter', k: 'Enter', d: 'Xác nhận bước này' },
+      { id: 'esc', k: 'Esc', d: 'Về bước trước' },
+    ]
+  : [
+      { id: 'updown', k: '↑ / ↓', d: 'Move' },
+      { id: 'space', k: 'Space', d: 'Select multiple runtimes' },
+      { id: 'enter', k: 'Enter', d: 'Confirm this step' },
+      { id: 'esc', k: 'Esc', d: 'Back to the previous step' },
+    ];
+---
+
+<div class="akh-tui-demo space-y-4" data-akh-tui>
+  <script type="application/json" data-akh-frames is:inline set:html={JSON.stringify(frames)}></script>
+
+  <div
+    class="overflow-hidden rounded-2xl border border-zinc-300 bg-zinc-950 shadow-sm dark:border-zinc-700"
+    role="img"
+    aria-label={isVi ? 'Mô phỏng TUI AgentKit Helper' : 'AgentKit Helper TUI walkthrough'}
+  >
+    <div class="flex items-center gap-2 border-b border-zinc-800 px-4 py-2.5">
+      <span class="h-2.5 w-2.5 rounded-full bg-[#ff5f57]"></span>
+      <span class="h-2.5 w-2.5 rounded-full bg-[#febc2e]"></span>
+      <span class="h-2.5 w-2.5 rounded-full bg-[#28c840]"></span>
+      <span class="ml-2 font-mono text-[11px] text-zinc-400">akh</span>
+    </div>
+    <pre
+      class="akh-tui-screen min-h-[17.5rem] overflow-x-auto px-4 py-4 font-mono text-[13px] leading-7 text-zinc-200 sm:text-sm"
+      data-akh-screen></pre>
+    <div
+      class="border-t border-zinc-800 px-4 py-2 font-mono text-[11px] text-zinc-500"
+      data-akh-hint
+    >
+    </div>
+  </div>
+
+  <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    {keys.map((item) => (
+      <div
+        class="akh-tui-key rounded-2xl border border-slate-200/80 bg-white/80 p-4 transition dark:border-slate-700 dark:bg-slate-900/50"
+        data-akh-key={item.id}
+      >
+        <code class="rounded-md border border-slate-200/80 bg-slate-100 px-1.5 py-0.5 font-mono text-[0.85em] text-teal-700 dark:border-slate-700 dark:bg-slate-800/90 dark:text-teal-300">
+          {item.k}
+        </code>
+        <p class="mt-2 text-xs leading-relaxed text-slate-600 dark:text-slate-400">{item.d}</p>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .akh-tui-key[data-hot='1'] {
+    border-color: rgb(45 212 191 / 0.55);
+    box-shadow: 0 0 0 1px rgb(45 212 191 / 0.35);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .akh-tui-demo {
+      --akh-static: 1;
+    }
+  }
+</style>
+
+<script>
+  function renderFrame(
+    screen: HTMLElement,
+    hint: HTMLElement,
+    frame: {
+      prompt: string;
+      items?: { label: string; active?: boolean; checked?: boolean }[];
+      commands?: string[];
+      status?: string;
+      hint: string;
+    },
+  ) {
+    const lines = ['┌  AgentKit Helper', '│', `◇  ${frame.prompt}`, '│'];
+    if (frame.items) {
+      for (const item of frame.items) {
+        const mark = item.checked ? '◉' : item.active ? '●' : '○';
+        const prefix = item.active ? '│ ▶' : '│  ';
+        lines.push(`${prefix} ${mark}  ${item.label}`);
+      }
+      lines.push('│');
+    }
+    if (frame.commands?.length) {
+      for (const command of frame.commands) {
+        lines.push(`│  ${command}`);
+      }
+      lines.push('│');
+    }
+    if (frame.status) {
+      lines.push(`│  ${frame.status}`);
+      lines.push('│');
+    }
+    lines.push('└');
+    screen.textContent = lines.join('\n');
+    hint.textContent = frame.hint;
+  }
+
+  function startDemo(root: HTMLElement) {
+    if (root.dataset.akhBound === '1') return;
+    const json = root.querySelector('[data-akh-frames]');
+    const screen = root.querySelector<HTMLElement>('[data-akh-screen]');
+    const hint = root.querySelector<HTMLElement>('[data-akh-hint]');
+    if (!json || !screen || !hint) return;
+    let frames: Array<{
+      prompt: string;
+      items?: { label: string; active?: boolean; checked?: boolean }[];
+      commands?: string[];
+      status?: string;
+      hint: string;
+      key: string;
+    }> = [];
+    try {
+      frames = JSON.parse(json.textContent || '[]');
+    } catch {
+      return;
+    }
+    if (!frames.length) return;
+    root.dataset.akhBound = '1';
+
+    const keys = root.querySelectorAll<HTMLElement>('[data-akh-key]');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let i = reduced ? Math.min(6, frames.length - 1) : 0;
+
+    const paint = () => {
+      const frame = frames[i];
+      renderFrame(screen, hint, frame);
+      keys.forEach((el) => {
+        el.dataset.hot = el.dataset.akhKey === frame.key ? '1' : '0';
+      });
+    };
+    paint();
+    if (reduced) return;
+    window.setInterval(() => {
+      i = (i + 1) % frames.length;
+      paint();
+    }, 1800);
+  }
+
+  const boot = () => {
+    document.querySelectorAll<HTMLElement>('[data-akh-tui]').forEach(startDemo);
+  };
+  document.addEventListener('DOMContentLoaded', boot);
+  document.addEventListener('astro:page-load', boot);
+</script>
