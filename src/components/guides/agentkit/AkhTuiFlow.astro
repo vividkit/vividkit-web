@@ -232,14 +232,11 @@ const keys = isVi
   .akh-tui-demo {
     --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   }
-  .akh-tui-screen {
-    transition: opacity 200ms var(--ease-out);
+  .akh-body {
+    transition: opacity 160ms var(--ease-out);
   }
   .akh-tui-key {
-    transition:
-      border-color 160ms var(--ease-out),
-      box-shadow 160ms var(--ease-out),
-      transform 160ms var(--ease-out);
+    transition: transform 120ms var(--ease-out);
   }
   .akh-tui-key[data-hot='1'] {
     border-color: rgb(45 212 191 / 0.55);
@@ -260,7 +257,7 @@ const keys = isVi
     opacity: 0;
     pointer-events: none;
     transition:
-      transform 200ms var(--ease-out),
+      transform 180ms var(--ease-out),
       opacity 160ms var(--ease-out);
   }
   .akh-opt {
@@ -282,14 +279,10 @@ const keys = isVi
     width: 0.75rem;
     color: #fbbf24;
     opacity: 0;
-    transform: translateX(-4px);
-    transition:
-      opacity 160ms var(--ease-out),
-      transform 160ms var(--ease-out);
+    transition: opacity 160ms var(--ease-out);
   }
   .akh-opt[data-on='1'] .akh-cursor {
     opacity: 1;
-    transform: translateX(0);
   }
   .akh-mark {
     width: 1rem;
@@ -304,15 +297,42 @@ const keys = isVi
     color: #7dd3fc;
     white-space: pre-wrap;
     word-break: break-all;
+    opacity: 0;
+    transform: translateY(0.35em);
+    transition:
+      opacity 180ms var(--ease-out),
+      transform 180ms var(--ease-out);
+  }
+  .akh-cmd[data-in='1'] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .akh-status {
+    color: #a1a1aa;
+    opacity: 0;
+    transition: opacity 180ms var(--ease-out);
+  }
+  .akh-status[data-in='1'] {
+    opacity: 1;
   }
   @media (prefers-reduced-motion: reduce) {
-    .akh-tui-screen,
+    .akh-body,
     .akh-tui-key,
     .akh-opt,
     .akh-cursor,
     .akh-mark,
-    .akh-bar {
+    .akh-bar,
+    .akh-cmd,
+    .akh-status {
       transition: none;
+    }
+    .akh-tui-key[data-hot='1'] {
+      transform: none;
+    }
+    .akh-cmd,
+    .akh-status {
+      opacity: 1;
+      transform: none;
     }
   }
 </style>
@@ -389,7 +409,7 @@ const keys = isVi
     }
 
     if (frame.status) {
-      const status = el('div', 'text-zinc-400');
+      const status = el('div', 'akh-status');
       status.textContent = `│  ${frame.status}`;
       body.append(status);
       body.append(el('div', 'text-zinc-600', '│'));
@@ -399,17 +419,14 @@ const keys = isVi
   }
 
   function slideBar(screen: HTMLElement, index: number) {
-    const list = screen.querySelector<HTMLElement>('.akh-list');
     const bar = screen.querySelector<HTMLElement>('.akh-bar');
     const rows = [...screen.querySelectorAll<HTMLElement>('.akh-opt')];
-    const row = rows[index];
-    if (!bar || !list || !row) {
+    if (!bar || !rows[index]) {
       if (bar) bar.style.opacity = '0';
       return;
     }
-    const top = row.getBoundingClientRect().top - list.getBoundingClientRect().top;
     bar.style.opacity = '1';
-    bar.style.transform = `translateY(${top}px)`;
+    bar.style.transform = `translateY(${index * 100}%)`;
   }
 
   function syncItems(screen: HTMLElement, items: Item[]) {
@@ -442,18 +459,22 @@ const keys = isVi
     frame: Frame,
     reduced: boolean,
   ) {
-    fillBody(screen, hint, frame, frame.commands?.map(() => ''));
-    await sleep(reduced ? 0 : 16);
+    const body = screen.querySelector<HTMLElement>('.akh-body');
+    if (body && !reduced) {
+      body.style.opacity = '0';
+      await sleep(160);
+    }
+    fillBody(screen, hint, frame, frame.commands);
+    const nextBody = screen.querySelector<HTMLElement>('.akh-body');
+    if (nextBody) nextBody.style.opacity = '1';
     syncItems(screen, itemsAt(frame, 0, []));
     setHot(keys, 'updown');
     if (reduced) {
       syncItems(screen, frame.items ?? []);
       setHot(keys, frame.key);
-      if (frame.commands) {
-        screen.querySelectorAll('.akh-cmd').forEach((node, index) => {
-          node.textContent = `│  ${frame.commands?.[index] ?? ''}`;
-        });
-      }
+      screen.querySelectorAll('.akh-cmd, .akh-status').forEach((node) => {
+        (node as HTMLElement).dataset.in = '1';
+      });
       return;
     }
 
@@ -468,44 +489,38 @@ const keys = isVi
         for (let i = 0; i <= last; i++) {
           syncItems(screen, itemsAt(frame, i, checked));
           setHot(keys, 'updown');
-          await sleep(400);
+          await sleep(180);
           if (items[i]?.checked) {
             checked.push(i);
             syncItems(screen, itemsAt(frame, i, checked));
             setHot(keys, 'space');
-            await sleep(480);
+            await sleep(200);
           }
         }
         setHot(keys, 'enter');
-        await sleep(520);
+        await sleep(220);
       } else {
         for (let i = 0; i <= activeIdx; i++) {
           syncItems(screen, itemsAt(frame, i, []));
           setHot(keys, i === activeIdx ? frame.key : 'updown');
-          await sleep(i === activeIdx ? 560 : 360);
+          await sleep(i === activeIdx ? 220 : 180);
         }
       }
     }
 
-    if (frame.commands?.length) {
+    if (frame.commands?.length || frame.status) {
       setHot(keys, 'enter');
-      const nodes = [...screen.querySelectorAll('.akh-cmd')];
-      for (let i = 0; i < frame.commands.length; i += 1) {
-        const node = nodes[i];
-        if (!node) continue;
-        let current = '';
-        for (const char of frame.commands[i]) {
-          current += char;
-          node.textContent = `│  ${current}`;
-          await sleep(13);
-        }
+      const reveal = [...screen.querySelectorAll<HTMLElement>('.akh-cmd, .akh-status')];
+      for (let i = 0; i < reveal.length; i += 1) {
+        reveal[i].dataset.in = '1';
+        await sleep(50);
       }
-      await sleep(900);
+      await sleep(500);
       return;
     }
 
     setHot(keys, frame.key);
-    await sleep(900);
+    await sleep(420);
   }
 
   function startDemo(root: HTMLElement) {
