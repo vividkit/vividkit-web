@@ -84,8 +84,8 @@ const safety = isVi
         body: 'Helper chạy lần đầu không có --force. Nếu target đã có hoặc lệch file, TUI hiện WARNING và hỏi riêng — mặc định No. Chỉ retry --force khi bạn chọn Yes.',
       },
       {
-        title: 'Update global: chỉ giữ file bạn sửa',
-        body: 'File user đã sửa thì bỏ qua. Helper không thêm --force cho global update.',
+        title: 'Update global: preserve-only (manifest)',
+        body: 'ak update theo manifest: file AgentKit bạn đã sửa thì bỏ qua; helper không thêm --force. Nếu preview không phải đường ownership đó, hoặc báo xóa cả thư mục — dừng.',
       },
       {
         title: 'Xem trước trước khi ghi',
@@ -98,8 +98,8 @@ const safety = isVi
         body: 'The helper first runs without --force. If the target exists or files drifted, the TUI shows a WARNING and asks separately — default No. It retries with --force only after Yes.',
       },
       {
-        title: 'Global update: preserve-only',
-        body: 'User-modified files are skipped. The helper never adds --force on a global update.',
+        title: 'Global update: preserve-only (manifest)',
+        body: 'On a manifest-backed ak update, files you edited are skipped; the helper never adds --force. If the preview is not that ownership path, or marks whole folders for deletion — stop.',
       },
       {
         title: 'Preview before write',
@@ -192,8 +192,8 @@ const platforms = isVi
           : 'Source of truth: Kit install, update, ownership, snapshots. Every helper run is an ak command.',
         tone: 'teal',
         points: isVi
-          ? ['ak kit init / ak update / ak self-update', 'Giữ file user trừ khi bạn --force']
-          : ['ak kit init / ak update / ak self-update', 'Keeps user files unless you --force'],
+          ? ['ak kit init / ak update / ak self-update', 'Update theo manifest: bỏ qua file bạn sửa trừ khi --force. Thiếu ownership / xóa cả thư mục → dừng.']
+          : ['ak kit init / ak update / ak self-update', 'Manifest-backed update: skips files you edited unless --force. Missing ownership or whole-folder deletes → stop.'],
       }}
       right={{
         title: isVi ? 'Helper (cộng đồng)' : 'Helper (community)',
