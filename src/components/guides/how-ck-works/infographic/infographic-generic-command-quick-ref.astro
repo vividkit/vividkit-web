@@ -250,6 +250,11 @@ const wrapCommandTokens = (value = '') =>
   renderInlineCode(value)
     .replace(new RegExp(LONG_TOKEN_RE.source, 'g'), (flag) => `<code class="rounded-md bg-white px-1.5 py-0.5 font-mono text-[0.82em] font-semibold text-purple-600 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-purple-400 dark:ring-white/10">${flag}</code>`)
     .replace(new RegExp(SHORT_FLAG_RE.source, 'g'), (all, pre, flag) => `${pre}<code class="rounded-md bg-white px-1.5 py-0.5 font-mono text-[0.82em] font-semibold text-purple-600 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-purple-400 dark:ring-white/10">${flag}</code>`);
+const syntaxAlts = String(invocation?.syntax || '')
+  .split(/\s+OR\s+/)
+  .map((part) => part.trim())
+  .filter(Boolean);
+const syntaxBoxClass = 'block whitespace-pre-wrap break-words rounded-xl bg-slate-100 px-3 py-2.5 font-mono text-xs leading-6 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-slate-200 dark:ring-white/10';
 const composableRaw = (isVi ? data.composableFlagsVi : data.composableFlagsEn) || '';
 const composableCards = composableRaw
   .split(/(?<=[.。;；])\s+| · /)
@@ -427,8 +432,18 @@ const composableCards = composableRaw
 
       <div class="mt-4">
         <p class="text-[10px] font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">{text.syntax}</p>
-        <code class="mt-1 block whitespace-pre-wrap break-words rounded-lg bg-slate-100 px-3 py-2 font-mono text-xs leading-5 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-slate-200 dark:ring-white/10">{invocation.syntax}</code>
+        <div class="mt-2 flex flex-col gap-2">
+          {syntaxAlts.map((alt, index) => (
+            <>
+              {index > 0 && (
+                <p class="text-center text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400 dark:text-slate-500">{text.situationOr}</p>
+              )}
+              <div class={syntaxBoxClass} set:html={wrapCommandTokens(alt)} />
+            </>
+          ))}
+        </div>
       </div>
+
 
       {(invocation.arguments?.length ?? 0) > 0 && (
         <div class="mt-5">

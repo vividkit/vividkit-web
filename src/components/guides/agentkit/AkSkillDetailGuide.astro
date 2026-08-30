@@ -62,11 +62,17 @@ const jumpItems = listAkSkillJumpItems().map((item) => ({
 
   <InfographicGenericCommandQuickRef data={data} lang={currentLang} plainHeadline />
 
+  {relatedLinks.length > 0 && (
+    <AkNextLinks
+      lang={currentLang}
+      title={isVi ? 'Skill liên quan' : 'Related skills'}
+      links={relatedLinks}
+    />
+  )}
   <AkNextLinks
     lang={currentLang}
     title={isVi ? 'Tiếp theo' : 'Next'}
     links={[
-      ...relatedLinks,
       { href: '/guides/agentkit/skills', label: isVi ? 'Tất cả skill' : 'All skills', desc: isVi ? 'Cheatsheet Engineer + Marketing' : 'Engineer + Marketing cheatsheet' },
       { href: '/guides/agentkit/workflows', label: isVi ? 'Workflows' : 'Workflows', desc: isVi ? 'Chuỗi skill theo việc' : 'Skill sequences by job' },
       { href: '/guides/agentkit/how-it-works', label: isVi ? 'Cách AgentKit hoạt động' : 'How AgentKit works', desc: isVi ? 'Registry → review' : 'Registry → review' },
