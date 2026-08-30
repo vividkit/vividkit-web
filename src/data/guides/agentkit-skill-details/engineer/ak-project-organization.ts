@@ -114,32 +114,50 @@ const data: SkillInfographic = {
   ],
   "promptExamples": [
     {
-      "labelEn": "Path decision",
-      "labelVi": "Quyết định đường dẫn",
-      "command": "/ak:project-organization plans and reports for the auth refactor",
-      "whenEn": "Use when another skill needs the canonical location before writing.",
-      "whenVi": "Dùng khi skill khác cần vị trí chuẩn trước khi ghi file.",
-      "expectedEn": "A correct category, path pattern, and naming mode.",
-      "expectedVi": "Trả về nhóm, mẫu đường dẫn và kiểu đặt tên phù hợp.",
+      "labelEn": "Choose output paths",
+      "labelVi": "Chọn đường dẫn đầu ra",
+      "command": "/ak:project-organization where should I save an implementation plan and scout report for the auth refactor?",
+      "whenEn": "Use when creating files that need consistent output paths.",
+      "whenVi": "Dùng khi tạo file cần đường dẫn đầu ra nhất quán.",
+      "expectedEn": "Classifies the artifacts, selects plans/{date-slug}/ and plan-scoped reports/, then explains timestamped naming.",
+      "expectedVi": "Phân loại đầu ra, chọn plans/{date-slug}/ và reports/ theo plan, rồi giải thích cách đặt tên có thời gian.",
       "recommended": true
     },
     {
-      "labelEn": "Organize folder",
-      "labelVi": "Sắp xếp thư mục",
+      "labelEn": "Organize targets",
+      "labelVi": "Sắp xếp mục tiêu",
       "command": "/ak:project-organization docs/ plans/",
-      "whenEn": "Use when existing files need a proposed migration table.",
-      "whenVi": "Dùng khi các file hiện có cần bảng đề xuất di chuyển.",
-      "expectedEn": "A scan, violations, from-to plan, approval gate, and final verification after approval.",
-      "expectedVi": "Có quét thư mục, lỗi quy ước, kế hoạch từ-đến, bước xin duyệt và kiểm tra cuối sau khi được duyệt."
+      "whenEn": "Use when organizing existing project files and directories.",
+      "whenVi": "Dùng khi sắp xếp file và thư mục hiện có trong dự án.",
+      "expectedEn": "Scans the targets, categorizes files, reports naming or placement issues, and proposes a from-to migration table before confirmation.",
+      "expectedVi": "Quét mục tiêu, phân loại file, báo lỗi đặt tên hoặc vị trí, và đề xuất bảng chuyển từ-đến trước bước xác nhận."
+    },
+    {
+      "labelEn": "Shape markdown",
+      "labelVi": "Định dạng Markdown",
+      "command": "/ak:project-organization markdown structure for a technical journal and an ADR",
+      "whenEn": "Use when structuring markdown content such as plans, journals, reports, or docs.",
+      "whenVi": "Dùng khi cần cấu trúc nội dung Markdown như plan, journal, report hoặc tài liệu.",
+      "expectedEn": "Returns the required H1/frontmatter guidance and the correct ordered sections for each requested markdown document type.",
+      "expectedVi": "Trả hướng dẫn H1/frontmatter cần thiết và thứ tự mục đúng cho từng loại tài liệu Markdown được yêu cầu."
+    },
+    {
+      "labelEn": "Name assets and scripts",
+      "labelVi": "Đặt tên asset và script",
+      "command": "/ak:project-organization paths for a dark logo variant and a release helper script",
+      "whenEn": "Use when determining where to save assets, scripts, docs, plans, reports, or tests.",
+      "whenVi": "Dùng khi xác định nơi lưu asset, script, tài liệu, plan, report hoặc test.",
+      "expectedEn": "Applies the asset/script directory categories, kebab-case slug rules, and variant suffix naming without touching existing files.",
+      "expectedVi": "Áp dụng nhóm thư mục asset/script, quy tắc slug kebab-case và hậu tố biến thể mà không chạm vào file hiện có."
     }
   ],
   "reportOutput": {
-    "titleEn": "Canonical paths",
-    "titleVi": "Đường dẫn chuẩn",
-    "patternEn": "plans/{date-slug}/, plans/reports/, docs/, assets/{type}/, scripts/",
-    "patternVi": "plans/{date-slug}/, plans/reports/, docs/, assets/{type}/, scripts/",
-    "descEn": "The deliverable is either path advice or a confirmed migration table with final structure.",
-    "descVi": "Đầu ra là hướng dẫn đường dẫn hoặc bảng di chuyển đã được xác nhận kèm cấu trúc cuối."
+    "titleEn": "Organization guidance",
+    "titleVi": "Hướng dẫn tổ chức",
+    "patternEn": "src/ or root, tests/ or test/, plans/{date-slug}/, plans/reports/, docs/, docs/decisions/, assets/{type}/, scripts/, guide(s)/, .config/",
+    "patternVi": "src/ hoặc gốc, tests/ hoặc test/, plans/{date-slug}/, plans/reports/, docs/, docs/decisions/, assets/{type}/, scripts/, guide(s)/, .config/",
+    "descEn": "The deliverable is path and naming guidance, or an organize-mode scan with a proposed migration table that executes only after approval.",
+    "descVi": "Đầu ra là hướng dẫn đường dẫn và đặt tên, hoặc bản quét organize-mode kèm bảng đề xuất di chuyển chỉ thực thi sau khi được duyệt."
   }
 };
 

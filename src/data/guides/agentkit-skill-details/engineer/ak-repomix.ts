@@ -7,124 +7,188 @@ const data: SkillInfographic = {
   "header": {
     "titleEn": "/ak:repomix",
     "titleVi": "/ak:repomix",
-    "taglineEn": "Pack local or remote repositories into AI-friendly XML, Markdown, JSON, or plain-text context with filters, token counts, and secret checks.",
-    "taglineVi": "Đóng gói repo local hoặc remote thành ngữ cảnh XML, Markdown, JSON hoặc plain text thân thiện với AI, có filter, đếm token và kiểm tra bí mật."
+    "taglineEn": "Pack local, remote, or third-party repositories into AI-friendly XML, Markdown, JSON, or plain-text context with token counts and security checks.",
+    "taglineVi": "Đóng gói repo local, remote hoặc bên thứ ba thành ngữ cảnh XML, Markdown, JSON hoặc plain text thân thiện với AI, có đếm token và kiểm tra bảo mật."
   },
   "hardGate": {
     "type": "warning",
     "titleEn": "Review packed output before sharing",
-    "titleVi": "Xem lại gói đầu ra trước khi chia sẻ",
-    "contentEn": "Repomix can include sensitive files. Review the generated summary and output, avoid .env files, use .repomixignore, and confirm no credentials are exposed.",
-    "contentVi": "Repomix có thể gom cả file nhạy cảm. Hãy xem lại tóm tắt và nội dung tạo ra, tránh file .env, dùng .repomixignore và bảo đảm không lộ credential."
+    "titleVi": "Rà soát gói đầu ra trước khi chia sẻ",
+    "contentEn": "Repomix uses Secretlint checks, but the skill still requires manual review of the generated file, token summary, and warnings before you share code with another LLM or auditor.",
+    "contentVi": "Repomix dùng kiểm tra Secretlint, nhưng skill vẫn yêu cầu rà thủ công file đã tạo, tóm tắt token và cảnh báo trước khi chia sẻ code cho LLM hoặc người audit khác."
   },
   "processFlow": [
     {
       "number": 1,
-      "titleEn": "Assess context need",
-      "titleVi": "Đánh giá nhu cầu ngữ cảnh",
-      "descEn": "Identify whether the target is local or remote, the intended LLM use, output format, and sensitivity level.",
-      "descVi": "Xác định mục tiêu là local hay remote, mục đích đưa cho LLM, định dạng đầu ra và mức nhạy cảm."
+      "titleEn": "Assess requirements",
+      "titleVi": "Đánh giá yêu cầu",
+      "descEn": "Identify the local path or remote repository, the intended AI analysis or audit, the output format, and sensitive-data concerns.",
+      "descVi": "Xác định path local hoặc repo remote, mục đích phân tích hay audit bằng AI, định dạng đầu ra và rủi ro dữ liệu nhạy cảm."
     },
     {
       "number": 2,
-      "titleEn": "Select scope",
-      "titleVi": "Chọn phạm vi",
-      "descEn": "Use include and ignore patterns to keep only relevant modules, docs, packages, or audit targets.",
-      "descVi": "Dùng include và ignore pattern để giữ đúng module, tài liệu, package hoặc mục tiêu audit cần thiết."
+      "titleEn": "Configure filters",
+      "titleVi": "Cấu hình bộ lọc",
+      "descEn": "Set include and ignore patterns, decide whether to respect .gitignore, and enable comment removal only when it helps the target task.",
+      "descVi": "Đặt pattern include và ignore, quyết định có theo .gitignore không và chỉ bật loại bỏ comment khi có ích cho nhiệm vụ đích."
     },
     {
       "number": 3,
-      "titleEn": "Choose style",
-      "titleVi": "Chọn định dạng",
-      "descEn": "Set `--style xml|markdown|plain|json` based on the consumer and whether humans will inspect the pack.",
-      "descVi": "Đặt `--style xml|markdown|plain|json` theo nơi tiêu thụ và việc con người có cần đọc gói đó hay không."
+      "titleEn": "Execute packaging",
+      "titleVi": "Chạy đóng gói",
+      "descEn": "Run Repomix locally or with `npx repomix --remote`, choose `--style xml|markdown|plain|json`, and write or copy the output file.",
+      "descVi": "Chạy Repomix local hoặc với `npx repomix --remote`, chọn `--style xml|markdown|plain|json`, rồi ghi hoặc copy file đầu ra."
     },
     {
       "number": 4,
-      "titleEn": "Optimize tokens",
-      "titleVi": "Tối ưu token",
-      "descEn": "Run token-count summaries or tree views, narrow large monorepos, and reserve space for instructions, tools, and response.",
-      "descVi": "Chạy tóm tắt hoặc cây đếm token, thu hẹp monorepo lớn và chừa chỗ cho instruction, tool và phản hồi."
+      "titleEn": "Validate output",
+      "titleVi": "Xác thực đầu ra",
+      "descEn": "Review the generated file, token counts or token-count tree, security warnings, and target model context limits before delivery.",
+      "descVi": "Rà file đã tạo, số token hoặc cây token, cảnh báo bảo mật và giới hạn context của model đích trước khi bàn giao."
     },
     {
       "number": 5,
-      "titleEn": "Run packaging",
-      "titleVi": "Chạy đóng gói",
-      "descEn": "Execute Repomix locally or through `npx repomix --remote`, optionally removing comments or copying output.",
-      "descVi": "Chạy Repomix local hoặc qua `npx repomix --remote`, có thể bỏ comment hoặc copy đầu ra nếu cần."
-    },
-    {
-      "number": 6,
-      "titleEn": "Validate security",
-      "titleVi": "Kiểm tra bảo mật",
-      "descEn": "Read security warnings, inspect output for secrets, and disable security checks only with a deliberate reason.",
-      "descVi": "Đọc cảnh báo bảo mật, kiểm tra nội dung có secret không và chỉ tắt security check khi có lý do rõ ràng."
-    },
-    {
-      "number": 7,
       "titleEn": "Deliver context",
       "titleVi": "Bàn giao ngữ cảnh",
-      "descEn": "Provide the output file, token summary, selected filters, and any warnings or omitted areas.",
-      "descVi": "Cung cấp file đầu ra, tóm tắt token, filter đã dùng và các cảnh báo hoặc vùng bị bỏ qua."
+      "descEn": "Provide the packaged file, token count summary, selected filters, and any omitted areas, warnings, or security caveats.",
+      "descVi": "Cung cấp file đã đóng gói, tóm tắt token, bộ lọc đã chọn và các vùng bị bỏ qua, cảnh báo hoặc lưu ý bảo mật."
     }
   ],
   "corePrinciplesEn": [
-    "Package only the context the next analysis truly needs",
-    "Token count is a review gate, not trivia",
-    "Security checks and manual review happen before sharing",
-    "Remote repositories can be packed without cloning"
+    "Package only the repository context the next AI task truly needs",
+    "Use include and ignore patterns to keep large codebases focused",
+    "Token counts are a delivery gate for the target model context",
+    "Security checks and manual output review happen before sharing",
+    "Remote repositories can be packed for analysis without cloning"
   ],
   "corePrinciplesVi": [
-    "Chỉ đóng gói phần ngữ cảnh mà phân tích tiếp theo thật sự cần",
-    "Đếm token là cổng kiểm tra, không phải thông tin phụ",
-    "Kiểm tra bảo mật và rà thủ công trước khi chia sẻ",
-    "Có thể đóng gói repo remote mà không cần clone"
+    "Chỉ đóng gói phần ngữ cảnh repo mà tác vụ AI tiếp theo thật sự cần",
+    "Dùng pattern include và ignore để giữ codebase lớn đúng trọng tâm",
+    "Đếm token là cổng bàn giao theo context của model đích",
+    "Kiểm tra bảo mật và rà thủ công đầu ra trước khi chia sẻ",
+    "Có thể đóng gói repo remote để phân tích mà không cần clone"
   ],
   "expertiseAreasEn": [
-    "AI context files",
-    "Remote repository snapshots",
-    "Monorepo filtering",
-    "Token budgeting",
-    "Secretlint-style checks",
-    "Comment removal"
+    "AI-friendly repository snapshots",
+    "Remote repository packaging",
+    "Include and ignore pattern design",
+    "Token-count tree analysis",
+    "Secretlint-backed security checks",
+    "Comment removal and output formatting"
   ],
   "expertiseAreasVi": [
-    "File ngữ cảnh cho AI",
-    "Snapshot repo remote",
-    "Lọc trong monorepo",
-    "Lập ngân sách token",
-    "Kiểm tra kiểu Secretlint",
-    "Loại bỏ comment"
+    "Snapshot repo thân thiện với AI",
+    "Đóng gói repo remote",
+    "Thiết kế pattern include và ignore",
+    "Phân tích cây đếm token",
+    "Kiểm tra bảo mật dựa trên Secretlint",
+    "Loại bỏ comment và định dạng đầu ra"
   ],
   "outputFlags": [
     {
       "flag": "--style xml|markdown|plain|json",
-      "titleEn": "Output style",
+      "titleEn": "Output format",
       "titleVi": "Định dạng đầu ra",
-      "descEn": "Selects the Repomix output representation from the documented argument hint.",
-      "descVi": "Chọn dạng đầu ra Repomix theo argument-hint đã ghi.",
-      "exampleCommand": "/ak:repomix src --style markdown"
+      "descEn": "Selects XML, Markdown, JSON, or plain-text packaging for the intended LLM or human reviewer.",
+      "descVi": "Chọn gói XML, Markdown, JSON hoặc plain text theo LLM hoặc người review sẽ đọc.",
+      "exampleCommand": "/ak:repomix . --style markdown"
+    },
+    {
+      "flag": "--include patterns",
+      "titleEn": "Focused include set",
+      "titleVi": "Tập include có trọng tâm",
+      "descEn": "Packages only matching files such as source modules, docs, or package folders that matter for the task.",
+      "descVi": "Chỉ đóng gói các file khớp pattern như module source, docs hoặc thư mục package liên quan đến nhiệm vụ.",
+      "exampleCommand": "/ak:repomix . --include \"src/**/*.ts,*.md\""
+    },
+    {
+      "flag": "-i patterns",
+      "titleEn": "Additional ignores",
+      "titleVi": "Bỏ qua bổ sung",
+      "descEn": "Excludes extra paths beyond the repository defaults, such as tests, generated files, or noisy fixtures.",
+      "descVi": "Loại thêm các path ngoài mặc định của repo, như test, file sinh tự động hoặc fixture nhiễu.",
+      "exampleCommand": "/ak:repomix . -i \"tests/**,*.test.js\""
+    },
+    {
+      "flag": "--remote owner/repo",
+      "titleEn": "Remote repository",
+      "titleVi": "Repo remote",
+      "descEn": "Processes a GitHub repository, URL, or commit without cloning it into the current workspace.",
+      "descVi": "Xử lý repo GitHub, URL hoặc commit mà không cần clone vào workspace hiện tại.",
+      "exampleCommand": "/ak:repomix --remote yamadashy/repomix --style xml"
+    },
+    {
+      "flag": "--token-count-tree [min]",
+      "titleEn": "Token tree",
+      "titleVi": "Cây token",
+      "descEn": "Shows token-heavy directories and files so the pack can be narrowed before sharing with an LLM.",
+      "descVi": "Hiển thị thư mục và file nặng token để thu hẹp gói trước khi chia sẻ với LLM.",
+      "exampleCommand": "/ak:repomix . --token-count-tree 1000"
+    },
+    {
+      "flag": "--remove-comments",
+      "titleEn": "Comment removal",
+      "titleVi": "Loại bỏ comment",
+      "descEn": "Strips supported-language comments when smaller context is more useful than preserving commentary.",
+      "descVi": "Loại comment của các ngôn ngữ được hỗ trợ khi ngữ cảnh gọn quan trọng hơn việc giữ chú thích.",
+      "exampleCommand": "/ak:repomix src --remove-comments --style markdown"
+    }
+  ],
+  "skillStack": [
+    {
+      "name": "Repomix CLI",
+      "type": "tool"
+    },
+    {
+      "name": "Secretlint security checks",
+      "type": "tool"
+    },
+    {
+      "name": ".repomixignore",
+      "type": "tool"
+    },
+    {
+      "name": "repomix.config.json",
+      "type": "tool"
     }
   ],
   "promptExamples": [
     {
-      "labelEn": "Default pack",
-      "labelVi": "Đóng gói mặc định",
+      "labelEn": "Default codebase snapshot",
+      "labelVi": "Snapshot codebase mặc định",
       "command": "/ak:repomix . --style xml",
-      "whenEn": "Use for a full AI-readable codebase snapshot.",
-      "whenVi": "Dùng để tạo snapshot codebase cho AI đọc.",
-      "expectedEn": "A packed repository file plus token and security summary.",
-      "expectedVi": "Một file repo đã đóng gói kèm tóm tắt token và bảo mật.",
+      "whenEn": "Use when the whole current repository should become AI-readable context for analysis or planning.",
+      "whenVi": "Dùng khi toàn bộ repo hiện tại cần trở thành ngữ cảnh AI đọc được để phân tích hoặc lập kế hoạch.",
+      "expectedEn": "Assesses sensitivity and target use, runs a standard XML pack, reviews token counts and security warnings, then returns the output file with caveats.",
+      "expectedVi": "Đánh giá độ nhạy và mục đích dùng, chạy gói XML chuẩn, rà số token và cảnh báo bảo mật, rồi trả file đầu ra kèm lưu ý.",
       "recommended": true
     },
     {
-      "labelEn": "Markdown review pack",
-      "labelVi": "Gói review dạng Markdown",
-      "command": "/ak:repomix src --style markdown",
-      "whenEn": "Use when humans and LLMs both need to inspect the packed context.",
-      "whenVi": "Dùng khi cả người và LLM cần đọc gói ngữ cảnh.",
-      "expectedEn": "A filtered Markdown pack suitable for code review or documentation work.",
-      "expectedVi": "Gói Markdown đã lọc, phù hợp cho review code hoặc viết tài liệu."
+      "labelEn": "Focused review pack",
+      "labelVi": "Gói review có trọng tâm",
+      "command": "/ak:repomix . --include \"src/**/*.ts,*.md\" --remove-comments --style markdown",
+      "whenEn": "Use when a human reviewer and an LLM both need a smaller source-and-docs context pack.",
+      "whenVi": "Dùng khi cả người review và LLM cần một gói ngữ cảnh source và docs nhỏ hơn.",
+      "expectedEn": "Configures include filters, removes supported comments, emits a Markdown pack for inspection, and reports token count plus any omitted or risky areas.",
+      "expectedVi": "Cấu hình bộ lọc include, loại comment được hỗ trợ, xuất gói Markdown để đọc và báo số token cùng vùng bị bỏ qua hoặc có rủi ro."
+    },
+    {
+      "labelEn": "Remote library audit",
+      "labelVi": "Audit thư viện remote",
+      "command": "/ak:repomix --remote vendor/library --style xml -o audit.xml",
+      "whenEn": "Use when a third-party GitHub repository needs to be packaged for security audit or library evaluation without cloning.",
+      "whenVi": "Dùng khi cần đóng gói repo GitHub bên thứ ba để audit bảo mật hoặc đánh giá thư viện mà không clone.",
+      "expectedEn": "Packages the remote repository into audit.xml, keeps Repomix security checks active, reviews the generated summary, and highlights credentials or warnings before handoff.",
+      "expectedVi": "Đóng gói repo remote thành audit.xml, giữ kiểm tra bảo mật của Repomix, rà tóm tắt được tạo và nêu credential hoặc cảnh báo trước khi bàn giao."
+    },
+    {
+      "labelEn": "Token-heavy monorepo scan",
+      "labelVi": "Scan monorepo nặng token",
+      "command": "/ak:repomix . --token-count-tree 1000",
+      "whenEn": "Use before packing a large monorepo when the biggest token contributors must be found first.",
+      "whenVi": "Dùng trước khi đóng gói monorepo lớn khi cần tìm phần chiếm nhiều token nhất trước.",
+      "expectedEn": "Generates a token-count tree filtered to large entries, identifies directories or files to include or ignore, and uses that summary to narrow the final pack.",
+      "expectedVi": "Tạo cây đếm token chỉ gồm mục lớn, xác định thư mục hoặc file nên include hoặc ignore và dùng tóm tắt đó để thu hẹp gói cuối."
     }
   ]
 };

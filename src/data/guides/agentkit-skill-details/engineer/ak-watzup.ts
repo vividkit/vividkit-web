@@ -5,17 +5,17 @@ const data: SkillInfographic = {
   command: '/ak:watzup',
   kit: 'engineer',
   header: {
-    titleEn: '/ak:watzup — Evidence-backed project handoff',
-    titleVi: '/ak:watzup — Báo cáo bàn giao có bằng chứng',
-    taglineEn: 'Generate a short, evidence-backed project handoff from branches, refs, worktrees, unfinished plans, and roadmap docs with priority-ranked next steps.',
-    taglineVi: 'Tạo báo cáo bàn giao ngắn có bằng chứng từ branch, ref, worktree, plan dang dở và roadmap, kèm bước tiếp theo xếp theo ưu tiên.',
+    titleEn: '/ak:watzup — Project status handoff',
+    titleVi: '/ak:watzup — Bàn giao trạng thái dự án',
+    taglineEn: 'Generate a short, evidence-backed handoff from Git refs, worktrees, unfinished plans, and roadmap docs, with prioritized next steps and rationale.',
+    taglineVi: 'Tạo báo cáo bàn giao ngắn có bằng chứng từ Git ref, worktree, plan chưa xong và roadmap, kèm bước tiếp theo ưu tiên và lý do.',
   },
   hardGate: {
     type: 'warning',
-    titleEn: 'Read-only handoff',
-    titleVi: 'Bàn giao chỉ đọc',
-    contentEn: 'This skill reports status only. It does not implement, edit, commit, checkout, merge, push, fetch, or mutate the checkout unless the user explicitly requested fresh remote refs.',
-    contentVi: 'Skill này chỉ báo cáo trạng thái. Không triển khai, sửa file, commit, checkout, merge, push, fetch hoặc thay đổi checkout, trừ khi người dùng yêu cầu làm mới remote refs.',
+    titleEn: 'Status only; fetch only on request',
+    titleVi: 'Chỉ báo trạng thái; chỉ fetch khi được yêu cầu',
+    contentEn: 'This skill reports status and handoff evidence only. It does not implement, edit, commit, checkout, merge, push, fetch, or mutate the checkout unless the user explicitly asks to refresh remotes.',
+    contentVi: 'Skill này chỉ báo cáo trạng thái và bằng chứng bàn giao. Không triển khai, sửa file, commit, checkout, merge, push, fetch hoặc thay đổi checkout, trừ khi người dùng yêu cầu làm mới remote.',
   },
   processFlow: [
     { number: 1, titleEn: 'Run scanner', titleVi: 'Chạy scanner', descEn: 'From the project root, run scripts/watzup-scan.cjs with JSON output before writing the report.', descVi: 'Từ root dự án, chạy scripts/watzup-scan.cjs với JSON output trước khi viết báo cáo.' },
@@ -40,12 +40,12 @@ const data: SkillInfographic = {
     'Không giả vờ full scan thành công khi thực ra chỉ dùng cách dự phòng.',
   ],
   skillStack: [
-    { name: 'scripts/watzup-scan.cjs', type: 'tool' },
-    { name: 'Git branches', type: 'tool' },
-    { name: 'git worktree', type: 'tool' },
-    { name: 'plan checkbox progress', type: 'tool' },
-    { name: 'roadmap docs', type: 'tool' },
-    { name: 'ak-handoff', type: 'skill' },
+    { name: 'node scripts/watzup-scan.cjs', type: 'tool' },
+    { name: 'git status --short --branch', type: 'tool' },
+    { name: 'git worktree list --porcelain', type: 'tool' },
+    { name: 'git for-each-ref', type: 'tool' },
+    { name: 'plan.md + phase-*.md checkbox scan', type: 'tool' },
+    { name: 'docs/*roadmap*.md + docs/*milestones*.md', type: 'tool' },
   ],
   specialOperations: [
     { id: 'hygiene-first', titleEn: 'Hygiene ranks first', titleVi: 'Vệ sinh repo ưu tiên trước', descEn: 'Dirty worktrees and detached HEAD states outrank normal roadmap work because they can lose context.', descVi: 'Worktree dirty và detached HEAD được xếp trước roadmap vì chúng dễ làm mất ngữ cảnh.', color: 'amber' },
@@ -63,8 +63,10 @@ const data: SkillInfographic = {
     descVi: 'Trạng thái ngắn có chú thích tiến độ và năm đến sáu hành động theo thứ tự ưu tiên.',
   },
   promptExamples: [
-    { labelEn: 'End-of-session handoff', labelVi: 'Bàn giao cuối phiên', command: '/ak:watzup', whenEn: 'You need to know what is in flight and what to do next in the current project.', whenVi: 'Cần biết dự án đang dở việc gì và nên làm gì tiếp.', expectedEn: 'Returns a concise status report with prioritized next steps and warnings.', expectedVi: 'Trả về báo cáo ngắn với bước tiếp theo theo ưu tiên và các cảnh báo.', recommended: true },
-    { labelEn: 'Fresh checkout orientation', labelVi: 'Định hướng trong checkout mới', command: '/ak:watzup', whenEn: 'You entered a worktree or detached checkout and need the local situation quickly.', whenVi: 'Vừa vào worktree hoặc checkout tách và cần nắm tình hình local nhanh.', expectedEn: 'Highlights branch/worktree state, unfinished plans, and likely highest-value action.' , expectedVi: 'Nêu trạng thái branch/worktree, plan chưa xong và hành động có giá trị cao nhất.' },
+    { labelEn: 'End-of-session handoff', labelVi: 'Bàn giao cuối phiên', command: '/ak:watzup', whenEn: 'You need a short local snapshot of what is in flight and what to do next.', whenVi: 'Cần snapshot local ngắn về việc đang dở và bước tiếp theo.', expectedEn: 'Runs the JSON scanner, reports branch or detached HEAD, dirty state, in-flight plans with checkbox progress, ranked next steps, and warnings.', expectedVi: 'Chạy JSON scanner, báo branch hoặc detached HEAD, dirty state, plan đang dở với tiến độ checkbox, bước tiếp theo theo ưu tiên và warning.', recommended: true },
+    { labelEn: 'Refresh remote refs first', labelVi: 'Làm mới remote ref trước', command: '/ak:watzup --fetch', whenEn: 'You explicitly authorize a remote refresh before the handoff because local remote-tracking refs may be stale.', whenVi: 'Bạn cho phép làm mới remote trước báo cáo vì remote-tracking ref local có thể đã cũ.', expectedEn: 'Runs the scanner with fetch enabled, then separates fresh ref evidence from checkout status, plans, roadmap milestones, next steps, and warnings.', expectedVi: 'Chạy scanner có fetch, rồi tách bằng chứng ref mới khỏi trạng thái checkout, plan, milestone roadmap, bước tiếp theo và warning.' },
+    { labelEn: 'Fresh worktree orientation', labelVi: 'Định hướng trong worktree mới', command: '/ak:watzup', whenEn: 'You entered a worktree or detached checkout and need the local situation quickly.', whenVi: 'Vừa vào worktree hoặc checkout tách và cần nắm tình hình local nhanh.', expectedEn: 'Highlights the active worktree, branch or detached commit, dirty-tree or detached-HEAD hygiene, unfinished plans, and the highest-ranked action.', expectedVi: 'Nêu worktree hiện tại, branch hoặc detached commit, việc vệ sinh dirty tree hoặc detached HEAD, plan chưa xong và hành động ưu tiên cao nhất.' },
+    { labelEn: 'Cross-branch plan scan', labelVi: 'Quét plan qua branch', command: '/ak:watzup', whenEn: 'You want visible worktrees and tracked refs checked for unfinished plans and checklist progress.', whenVi: 'Muốn kiểm tra worktree hiển thị và tracked ref để tìm plan chưa xong cùng tiến độ checklist.', expectedEn: 'Deduplicates visible and tracked plan evidence, counts plan.md plus phase-file checkboxes, and ranks next steps by status, alignment, provenance, and momentum.', expectedVi: 'Khử trùng lặp bằng chứng plan từ worktree và ref, đếm checkbox trong plan.md cùng phase file, rồi xếp bước tiếp theo theo trạng thái, độ khớp, nguồn và đà tiến độ.' },
   ],
 };
 

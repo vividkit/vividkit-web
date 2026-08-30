@@ -5,10 +5,10 @@ const data: SkillInfographic = {
   "command": "/ak:handoff",
   "kit": "engineer",
   "header": {
-    "titleEn": "Portable Handoff Contract",
-    "titleVi": "Hợp đồng bàn giao di động",
-    "taglineEn": "Capture a redacted Markdown continuation contract for a successor agent: mission, guardrails, state, decisions, work, verification, blockers, exact next actions, and source pointers.",
-    "taglineVi": "Ghi lại một continuation contract Markdown đã redact cho agent kế tiếp: mission, guardrail, trạng thái, quyết định, việc đã làm, verification, blocker, bước kế tiếp và nguồn tham chiếu."
+    "titleEn": "Agent Continuation Contract",
+    "titleVi": "Hợp đồng tiếp tục cho agent",
+    "taglineEn": "Create one redacted Markdown handoff that lets a fresh coding agent resume safely, with mission, guardrails, workspace state, decisions, verification, blockers, exact next actions, and source pointers.",
+    "taglineVi": "Tạo một bản bàn giao Markdown đã redact để agent coding mới tiếp tục an toàn, gồm mission, guardrail, trạng thái workspace, quyết định, verification, blocker, bước kế tiếp chính xác và nguồn tham chiếu."
   },
   "processFlow": [
     {
@@ -20,10 +20,10 @@ const data: SkillInfographic = {
     },
     {
       "number": 2,
-      "titleEn": "Choose destination",
-      "titleVi": "Chọn nơi ghi",
-      "descEn": "Write to plans/handoffs/<slug>-<YYYYMMDD-HHmm>.md by default, or a workspace-local --output path.",
-      "descVi": "Mặc định ghi vào plans/handoffs/<slug>-<YYYYMMDD-HHmm>.md, hoặc path --output nằm trong workspace."
+      "titleEn": "Resolve destination",
+      "titleVi": "Xác định nơi ghi",
+      "descEn": "Use plans/handoffs/<slug>-<YYYYMMDD-HHmm>.md when a plans root exists, or an explicit workspace-local --output path; ask before writing if no plans root exists.",
+      "descVi": "Dùng plans/handoffs/<slug>-<YYYYMMDD-HHmm>.md khi có plans root, hoặc path --output nằm trong workspace; hỏi trước khi ghi nếu không có plans root."
     },
     {
       "number": 3,
@@ -154,8 +154,8 @@ const data: SkillInfographic = {
       "command": "/ak:handoff",
       "whenEn": "You are about to switch sessions and need a successor-ready contract.",
       "whenVi": "Khi sắp chuyển session và cần contract cho agent kế tiếp.",
-      "expectedEn": "Writes a plans/handoffs artifact with all nine sections and returns the path plus continuation instruction.",
-      "expectedVi": "Ghi artifact trong plans/handoffs đủ chín section và trả path cùng câu hướng dẫn tiếp tục.",
+      "expectedEn": "Creates a workspace-local plans/handoffs Markdown artifact with the required nine H2 sections, fills unknowns as “Not captured in this session,” and returns only the absolute path plus continuation instruction.",
+      "expectedVi": "Tạo artifact Markdown trong plans/handoffs của workspace với đủ chín H2 section bắt buộc, ghi phần chưa biết là “Not captured in this session,” và chỉ trả path tuyệt đối cùng câu hướng dẫn tiếp tục.",
       "recommended": true
     },
     {
@@ -164,8 +164,8 @@ const data: SkillInfographic = {
       "command": "/ak:handoff \"continue the OAuth callback fix\"",
       "whenEn": "The successor should focus on one known thread of work.",
       "whenVi": "Khi agent kế tiếp cần tập trung vào một mạch việc cụ thể.",
-      "expectedEn": "Includes the focus in Mission and filename slug after credential screening.",
-      "expectedVi": "Đưa focus vào Mission và slug tên file sau khi kiểm tra credential."
+      "expectedEn": "Screens the focus for credential-looking values, then uses the safe text in the Mission section and filename slug so the successor agent knows the exact thread to resume.",
+      "expectedVi": "Kiểm tra focus để phát hiện giá trị giống credential, rồi dùng nội dung an toàn trong Mission và slug tên file để agent kế tiếp biết đúng mạch việc cần tiếp tục."
     },
     {
       "labelEn": "Explicit artifact",
@@ -173,8 +173,17 @@ const data: SkillInfographic = {
       "command": "/ak:handoff --output plans/handoffs/oauth-callback.md",
       "whenEn": "You need a stable handoff path instead of an auto timestamped slug.",
       "whenVi": "Khi cần path handoff ổn định thay vì slug có timestamp tự động.",
-      "expectedEn": "Writes exactly there if it does not exist; otherwise refuses unless --force is added.",
-      "expectedVi": "Ghi đúng path nếu chưa tồn tại; nếu tồn tại thì từ chối trừ khi thêm --force."
+      "expectedEn": "Writes to the exact workspace-local path and creates the parent directory if needed; if that target already exists, it refuses with mtime guidance unless --force is explicitly added.",
+      "expectedVi": "Ghi đúng path nằm trong workspace và tạo thư mục cha nếu cần; nếu target đã tồn tại, skill từ chối kèm hướng dẫn mtime trừ khi thêm --force rõ ràng."
+    },
+    {
+      "labelEn": "Dirty-worktree evidence",
+      "labelVi": "Bằng chứng worktree bẩn",
+      "command": "/ak:handoff --include-diff --include-status",
+      "whenEn": "The successor needs bounded, redacted workspace evidence about modified or untracked files.",
+      "whenVi": "Khi agent kế tiếp cần bằng chứng workspace đã redact và giới hạn về file modified hoặc untracked.",
+      "expectedEn": "Adds redacted git status --short plus git diff --stat and the first 200 diff lines with truncation marked, while keeping the main handoff schema and return value unchanged.",
+      "expectedVi": "Thêm git status --short đã redact cùng git diff --stat và 200 dòng diff đầu có đánh dấu nếu bị cắt, đồng thời giữ nguyên schema bàn giao và giá trị trả về."
     }
   ],
   "reportOutput": {

@@ -105,32 +105,50 @@ const data: SkillInfographic = {
   ],
   "promptExamples": [
     {
-      "labelEn": "Start route and loader",
-      "labelVi": "Route và loader Start",
-      "command": "/ak:tanstack start posts route with loader",
+      "labelEn": "Create Start project",
+      "labelVi": "Tạo project Start",
+      "command": "/ak:tanstack start new project with routes and server functions",
+      "whenEn": "Starting a TanStack Start full-stack React app with file routing.",
+      "whenVi": "Bắt đầu app React full-stack bằng TanStack Start với file routing.",
+      "expectedEn": "Uses npm create @tanstack/start@latest, lays out __root.tsx, router.tsx, routeTree.gen.ts, start.ts, and app.config.ts, then keeps the generated route tree untouched.",
+      "expectedVi": "Dùng npm create @tanstack/start@latest, đặt đúng __root.tsx, router.tsx, routeTree.gen.ts, start.ts và app.config.ts, rồi không sửa file route tree sinh tự động.",
+      "recommended": true
+    },
+    {
+      "labelEn": "Route, loader, server function",
+      "labelVi": "Route, loader, server function",
+      "command": "/ak:tanstack start posts route loader server function",
       "whenEn": "A TanStack Start page needs typed params and server-loaded data.",
       "whenVi": "Một trang TanStack Start cần params typed và dữ liệu load từ server.",
-      "expectedEn": "Produces file-route, loader, component, and server-function patterns.",
-      "expectedVi": "Đưa mẫu file-route, loader, component và server-function.",
-      "recommended": true
+      "expectedEn": "Defines a createFileRoute loader that calls a createServerFn with method, Zod validation, and a handler so Route.useLoaderData keeps end-to-end inference.",
+      "expectedVi": "Định nghĩa loader bằng createFileRoute gọi createServerFn có method, validation Zod và handler để Route.useLoaderData giữ inference xuyên suốt."
     },
     {
       "labelEn": "Type-safe form",
       "labelVi": "Form type-safe",
       "command": "/ak:tanstack form signup validation with zod",
-      "whenEn": "A form needs field-level validation and reliable submit state.",
-      "whenVi": "Một form cần validation theo field và trạng thái submit đáng tin cậy.",
-      "expectedEn": "Uses TanStack Form with validators, async debounce where needed, and form.Subscribe.",
-      "expectedVi": "Dùng TanStack Form với validator, debounce async khi cần và form.Subscribe."
+      "whenEn": "Creating forms with type-safe validation in a TanStack app.",
+      "whenVi": "Tạo form có validation type-safe trong app TanStack.",
+      "expectedEn": "Builds a headless TanStack Form with default values, a Zod adapter, sync or async validators, onBlurAsyncDebounceMs when useful, and form.Subscribe for submit state.",
+      "expectedVi": "Xây TanStack Form headless với default values, adapter Zod, validator sync hoặc async, onBlurAsyncDebounceMs khi hữu ích và form.Subscribe cho trạng thái submit."
     },
     {
-      "labelEn": "Streaming chat",
-      "labelVi": "Chat streaming",
+      "labelEn": "AI chat streaming",
+      "labelVi": "Chat AI streaming",
       "command": "/ak:tanstack ai streaming chat endpoint",
-      "whenEn": "Adding AI chat to a TanStack Start application.",
-      "whenVi": "Thêm chat AI vào app TanStack Start.",
-      "expectedEn": "Shows client useChat and server route streaming through a provider adapter.",
-      "expectedVi": "Nêu useChat phía client và route server stream qua provider adapter."
+      "whenEn": "Adding AI chat or streaming to a TanStack Start application.",
+      "whenVi": "Thêm chat AI hoặc streaming vào app TanStack Start.",
+      "expectedEn": "Connects client useChat to a Start API file route that streams with @tanstack/ai chat, toStreamResponse, and the selected provider adapter such as OpenAI or Anthropic.",
+      "expectedVi": "Nối useChat phía client với API file route của Start, stream bằng @tanstack/ai chat, toStreamResponse và adapter nhà cung cấp đã chọn như OpenAI hoặc Anthropic."
+    },
+    {
+      "labelEn": "Framework comparison",
+      "labelVi": "So sánh framework",
+      "command": "/ak:tanstack compare start vs next remix",
+      "whenEn": "Comparing TanStack Start vs Next.js or Remix for an app choice.",
+      "whenVi": "So sánh TanStack Start với Next.js hoặc Remix để chọn framework cho app.",
+      "expectedEn": "Compares philosophy, end-to-end type inference, Nitro deployment, and RSC status accurately, including that TanStack Start RSC support is planned rather than current.",
+      "expectedVi": "So sánh đúng triết lý, inference type xuyên suốt, deploy qua Nitro và trạng thái RSC, gồm việc RSC của TanStack Start là dự kiến chứ chưa hiện hữu."
     }
   ]
 };

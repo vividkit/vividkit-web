@@ -98,32 +98,41 @@ const data: SkillInfographic = {
   ],
   "promptExamples": [
     {
-      "labelEn": "Checkout extension",
-      "labelVi": "Extension checkout",
+      "labelEn": "Checkout UI extension",
+      "labelVi": "Extension Checkout UI",
       "command": "/ak:shopify checkout_ui_extension gift message field",
-      "whenEn": "A checkout customization should be built as an extension.",
-      "whenVi": "Cần tùy biến checkout bằng extension.",
-      "expectedEn": "Explains generation, implementation, local dev, testing, and deploy steps.",
-      "expectedVi": "Nêu cách tạo, triển khai, chạy dev, kiểm thử và deploy.",
+      "whenEn": "Customizing checkout flow with a Shopify checkout extension.",
+      "whenVi": "Tùy biến luồng checkout bằng Shopify checkout extension.",
+      "expectedEn": "Guides Shopify CLI extension generation, React checkout UI implementation, app dev testing, extension target checks, and app deploy.",
+      "expectedVi": "Hướng dẫn tạo extension bằng Shopify CLI, triển khai React checkout UI, kiểm thử bằng app dev, kiểm tra target và app deploy.",
       "recommended": true
     },
     {
-      "labelEn": "Merchant app",
-      "labelVi": "App cho merchant",
+      "labelEn": "Merchant app with billing",
+      "labelVi": "App merchant có billing",
       "command": "/ak:shopify app product sync with billing",
-      "whenEn": "Building a merchant-facing app with data access and paid functionality.",
-      "whenVi": "Xây app cho merchant có truy cập dữ liệu và chức năng trả phí.",
-      "expectedEn": "Covers app init, access scopes, GraphQL, OAuth, billing, and webhook/security checks.",
-      "expectedVi": "Bao gồm init app, access scope, GraphQL, OAuth, billing và kiểm tra webhook/bảo mật."
+      "whenEn": "Building a merchant-facing app that accesses store data and charges for functionality.",
+      "whenVi": "Xây app cho merchant cần truy cập dữ liệu store và thu phí chức năng.",
+      "expectedEn": "Covers app init, access scopes in shopify.app.toml, GraphQL Admin API queries, OAuth, billing, webhooks, and credential handling.",
+      "expectedVi": "Bao gồm app init, access scope trong shopify.app.toml, truy vấn GraphQL Admin API, OAuth, billing, webhook và xử lý credential."
     },
     {
-      "labelEn": "Theme work",
-      "labelVi": "Làm theme",
+      "labelEn": "Liquid theme customization",
+      "labelVi": "Tùy biến theme Liquid",
       "command": "/ak:shopify theme product page customization",
-      "whenEn": "Custom storefront design or product page changes belong in Liquid/theme work.",
-      "whenVi": "Tùy biến giao diện storefront hoặc trang sản phẩm thuộc phần Liquid/theme.",
-      "expectedEn": "Uses theme init/dev/pull/push patterns and Liquid performance/accessibility guidance.",
-      "expectedVi": "Dùng mẫu theme init/dev/pull/push cùng hướng dẫn hiệu năng và accessibility cho Liquid."
+      "whenEn": "Custom storefront design or product page changes belong in a Shopify theme.",
+      "whenVi": "Thiết kế storefront riêng hoặc đổi trang sản phẩm thuộc về Shopify theme.",
+      "expectedEn": "Uses theme init/dev/pull/push workflows, Liquid product patterns, local preview, image optimization, accessibility, and safe publish steps.",
+      "expectedVi": "Dùng quy trình theme init/dev/pull/push, mẫu sản phẩm Liquid, local preview, tối ưu ảnh, accessibility và bước publish an toàn."
+    },
+    {
+      "labelEn": "Function extension",
+      "labelVi": "Extension Function",
+      "command": "/ak:shopify function delivery rule",
+      "whenEn": "Implementing discount, payment, delivery, or validation rules as a Shopify Function.",
+      "whenVi": "Triển khai rule discount, payment, delivery hoặc validation bằng Shopify Function.",
+      "expectedEn": "Selects the function extension path, runs Shopify CLI generation, keeps the app dev/deploy loop, and applies testing and troubleshooting checks.",
+      "expectedVi": "Chọn hướng function extension, chạy tạo bằng Shopify CLI, giữ vòng lặp app dev/deploy và áp dụng kiểm thử cùng kiểm tra troubleshooting."
     }
   ],
   "guardrails": [

@@ -152,20 +152,38 @@ const data: SkillInfographic = {
       "labelEn": "Build current graph",
       "labelVi": "Dựng graph hiện tại",
       "command": "/ak:graphify .",
-      "whenEn": "You need a first architecture map of the current repository.",
-      "whenVi": "Khi cần bản đồ kiến trúc đầu tiên của repo hiện tại.",
-      "expectedEn": "Builds graphify-out artifacts and summarizes the report, god nodes, and caveats.",
-      "expectedVi": "Tạo artifact graphify-out và tóm tắt report, god node cùng caveat.",
+      "whenEn": "You need a first architecture map of an unfamiliar repository before planning.",
+      "whenVi": "Khi cần bản đồ kiến trúc đầu tiên của repo lạ trước khi lập kế hoạch.",
+      "expectedEn": "Builds graphify-out/graph.html, GRAPH_REPORT.md, graph.json, and cache artifacts, then uses the report to surface god nodes, surprising connections, and useful follow-up questions.",
+      "expectedVi": "Tạo graphify-out/graph.html, GRAPH_REPORT.md, graph.json và cache, rồi dùng report để nêu god node, liên kết bất ngờ và câu hỏi follow-up hữu ích.",
       "recommended": true
     },
     {
-      "labelEn": "Watch mode",
-      "labelVi": "Chế độ watch",
+      "labelEn": "Report-focused analysis",
+      "labelVi": "Phân tích tập trung vào report",
+      "command": "/ak:graphify src --report",
+      "whenEn": "You mainly want the GRAPH_REPORT.md summary for architecture, dependency chains, and god-node review.",
+      "whenVi": "Khi chủ yếu cần tóm tắt GRAPH_REPORT.md cho kiến trúc, chuỗi phụ thuộc và rà soát god-node.",
+      "expectedEn": "Runs Graphify against src and centers the answer on GRAPH_REPORT.md findings: most-connected concepts, surprising relationships, and suggested questions for source inspection.",
+      "expectedVi": "Chạy Graphify trên src và tập trung câu trả lời vào phát hiện trong GRAPH_REPORT.md: khái niệm liên kết nhiều nhất, quan hệ bất ngờ và câu hỏi gợi ý để kiểm tra source."
+    },
+    {
+      "labelEn": "Prepare MCP queries",
+      "labelVi": "Chuẩn bị truy vấn MCP",
+      "command": "/ak:graphify . --mcp",
+      "whenEn": "You want Claude to query the generated graph across sessions through MCP graph tools.",
+      "whenVi": "Khi muốn Claude truy vấn graph đã tạo qua các công cụ MCP graph giữa nhiều phiên.",
+      "expectedEn": "Builds graphify-out/graph.json and prepares MCP use with python -m graphify.serve so query_graph, get_node, get_neighbors, and shortest_path can inspect relationships.",
+      "expectedVi": "Tạo graphify-out/graph.json và chuẩn bị dùng MCP bằng python -m graphify.serve để query_graph, get_node, get_neighbors và shortest_path kiểm tra quan hệ."
+    },
+    {
+      "labelEn": "Watch incremental rebuilds",
+      "labelVi": "Theo dõi rebuild tăng dần",
       "command": "/ak:graphify . --watch",
-      "whenEn": "You are iterating and want the graph refreshed as files change.",
-      "whenVi": "Khi đang iterate và muốn graph được cập nhật theo thay đổi file.",
-      "expectedEn": "Runs the documented watch rebuild flow with incremental cache.",
-      "expectedVi": "Chạy luồng watch rebuild đã ghi với cache incremental."
+      "whenEn": "You are changing files while exploring and want the graph refreshed as the project evolves.",
+      "whenVi": "Khi đang sửa file trong lúc khám phá và muốn graph được làm mới theo thay đổi của dự án.",
+      "expectedEn": "Runs watch mode and relies on the graphify-out/cache SHA256 hashes so rebuilds reprocess only changed files while keeping graph outputs current.",
+      "expectedVi": "Chạy watch mode và dựa vào hash SHA256 trong graphify-out/cache để rebuild chỉ xử lý file đã đổi trong khi giữ graph output luôn cập nhật."
     }
   ],
   "reportOutput": {

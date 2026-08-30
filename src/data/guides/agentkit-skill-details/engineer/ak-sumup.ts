@@ -22,50 +22,36 @@ const data: SkillInfographic = {
       "number": 1,
       "titleEn": "Gather evidence",
       "titleVi": "Gom bằng chứng",
-      "descEn": "Use conversation, accepted decisions, current diff, tests, and issue or plan state as the strongest available evidence.",
-      "descVi": "Dùng hội thoại, quyết định đã chấp nhận, diff hiện tại, test và trạng thái issue/plan làm bằng chứng mạnh nhất."
+      "descEn": "Use the conversation, accepted decisions, current diff, tests, and relevant issue or plan state as the strongest available evidence.",
+      "descVi": "Dùng hội thoại, quyết định đã chấp nhận, diff hiện tại, test và trạng thái issue/plan liên quan làm bằng chứng mạnh nhất."
     },
     {
       "number": 2,
-      "titleEn": "Separate states",
-      "titleVi": "Tách trạng thái",
-      "descEn": "Separate implemented and verified work from proposed, inferred, untested, unshipped, or unresolved work.",
-      "descVi": "Tách phần đã làm và đã kiểm khỏi phần mới đề xuất, suy luận, chưa test, chưa ship hoặc còn mở."
+      "titleEn": "Separate evidence states",
+      "titleVi": "Tách trạng thái bằng chứng",
+      "descEn": "Separate implemented and verified work from proposed, inferred, untested, unshipped, or still-unresolved work.",
+      "descVi": "Tách phần đã triển khai và đã kiểm khỏi phần mới đề xuất, suy luận, chưa test, chưa ship hoặc vẫn còn mở."
     },
     {
       "number": 3,
-      "titleEn": "Extract highlights",
-      "titleVi": "Rút điểm chính",
-      "descEn": "Identify the highest-value changes, user-visible behavior, architecture, database, and UI/UX details only when applicable.",
-      "descVi": "Chọn các thay đổi giá trị nhất, hành vi thấy được, kiến trúc, database và UI/UX chỉ khi có liên quan."
+      "titleEn": "Highlight relevant substance",
+      "titleVi": "Nêu phần quan trọng liên quan",
+      "descEn": "Summarize outcomes, high-value changes, failures and workarounds, decisions, how the result works, practical usage, follow-ups, and next steps.",
+      "descVi": "Tóm tắt outcome, thay đổi giá trị cao, lỗi và workaround, quyết định, cách kết quả hoạt động, cách dùng thực tế, follow-up và bước tiếp."
     },
     {
       "number": 4,
-      "titleEn": "Record failures",
-      "titleVi": "Ghi lỗi và phục hồi",
-      "descEn": "Summarize failed attempts, workarounds, results, and remaining blockers before they disappear from memory.",
-      "descVi": "Tóm tắt các lần thử lỗi, workaround, kết quả và blocker còn lại trước khi bị mất khỏi ngữ cảnh."
+      "titleEn": "Add a clarifying visual",
+      "titleVi": "Thêm visual làm rõ",
+      "descEn": "Use a compact table, chart, Mermaid diagram, or ASCII flow when it clarifies behavior, user flow, architecture, database, or UI/UX; otherwise briefly say why no visual helps.",
+      "descVi": "Dùng bảng, chart, Mermaid hoặc ASCII flow ngắn khi nó làm rõ hành vi, user flow, kiến trúc, database hoặc UI/UX; nếu không hữu ích thì nói ngắn lý do."
     },
     {
       "number": 5,
-      "titleEn": "Explain decisions",
-      "titleVi": "Giải thích quyết định",
-      "descEn": "Name important trade-offs and why the implementation chose them.",
-      "descVi": "Nêu các đánh đổi quan trọng và lý do cách triển khai đã chọn chúng."
-    },
-    {
-      "number": 6,
-      "titleEn": "Add useful visual",
-      "titleVi": "Thêm visual hữu ích",
-      "descEn": "Include a compact table, chart, Mermaid, or ASCII flow when it clarifies behavior, architecture, database, or user flow.",
-      "descVi": "Thêm bảng, chart, Mermaid hoặc ASCII flow ngắn khi nó làm rõ hành vi, kiến trúc, database hoặc user flow."
-    },
-    {
-      "number": 7,
-      "titleEn": "End with next steps",
-      "titleVi": "Kết bằng bước tiếp",
-      "descEn": "Keep the answer concise, omit empty sections, and place unresolved items or follow-ups last.",
-      "descVi": "Giữ câu trả lời gọn, bỏ mục rỗng và đặt phần còn mở hoặc việc tiếp theo ở cuối."
+      "titleEn": "Keep unresolved work last",
+      "titleVi": "Đặt phần còn mở ở cuối",
+      "descEn": "Keep the recap concise, use the user's language, omit empty sections, and put unresolved items last.",
+      "descVi": "Giữ bản tóm tắt gọn, dùng ngôn ngữ của người dùng, bỏ mục rỗng và đặt các phần còn mở ở cuối."
     }
   ],
   "corePrinciplesEn": [
@@ -96,23 +82,32 @@ const data: SkillInfographic = {
   ],
   "promptExamples": [
     {
-      "labelEn": "Technical recap",
-      "labelVi": "Tóm tắt kỹ thuật",
+      "labelEn": "Implementation recap",
+      "labelVi": "Tóm tắt triển khai",
       "command": "/ak:sumup summarize the auth refactor and remaining blockers",
-      "whenEn": "A human needs the outcome without replaying the implementation session.",
-      "whenVi": "Người đọc cần hiểu kết quả mà không xem lại toàn bộ phiên triển khai.",
-      "expectedEn": "Returns outcome, highlights, failures/recovery, decisions, how it works, usage, and follow-ups as relevant.",
-      "expectedVi": "Trả outcome, điểm chính, lỗi/phục hồi, quyết định, cách hoạt động, cách dùng và follow-up khi phù hợp.",
+      "whenEn": "Use after implementation when a human needs the outcome without replaying the work session.",
+      "whenVi": "Dùng sau khi triển khai khi người đọc cần hiểu kết quả mà không xem lại toàn bộ phiên làm việc.",
+      "expectedEn": "Produces a concise recap with outcome, strongest evidence, key implemented changes, verification boundaries, unresolved blockers, and actionable next steps.",
+      "expectedVi": "Tạo bản tóm tắt gọn gồm outcome, bằng chứng mạnh nhất, thay đổi đã triển khai, ranh giới verification, blocker còn mở và bước tiếp có thể hành động.",
       "recommended": true
     },
     {
-      "labelEn": "Architecture recap",
-      "labelVi": "Tóm tắt kiến trúc",
-      "command": "/ak:sumup explain how the new queue worker works",
-      "whenEn": "The implementation changed behavior or architecture that benefits from a compact flow.",
-      "whenVi": "Phần triển khai đổi hành vi hoặc kiến trúc và cần một flow ngắn để dễ hiểu.",
-      "expectedEn": "Includes a concise behavior or architecture visual plus evidence boundaries.",
-      "expectedVi": "Bao gồm visual hành vi/kiến trúc ngắn và ranh giới bằng chứng."
+      "labelEn": "Failure and workaround recap",
+      "labelVi": "Tóm tắt lỗi và workaround",
+      "command": "/ak:sumup recap what failed during the queue worker implementation and what remains",
+      "whenEn": "Use when failed attempts, workaround choices, or unresolved blockers need to be preserved clearly.",
+      "whenVi": "Dùng khi cần giữ lại rõ ràng các lần thử lỗi, lựa chọn workaround hoặc blocker chưa giải quyết.",
+      "expectedEn": "Separates resolved recovery steps from unresolved failures, names the evidence for each result, and keeps remaining blockers last.",
+      "expectedVi": "Tách các bước phục hồi đã xong khỏi lỗi còn mở, nêu bằng chứng cho từng kết quả và đặt blocker còn lại ở cuối."
+    },
+    {
+      "labelEn": "Behavior or architecture recap",
+      "labelVi": "Tóm tắt hành vi hoặc kiến trúc",
+      "command": "/ak:sumup explain how the new queue worker works and how to use it",
+      "whenEn": "Use when changed behavior, user flow, architecture, database, or UI/UX benefits from a compact explanation.",
+      "whenVi": "Dùng khi hành vi, user flow, kiến trúc, database hoặc UI/UX đã đổi và cần giải thích ngắn gọn.",
+      "expectedEn": "Explains only applicable operation details, includes a compact clarifying visual when useful, and adds minimal usage steps or commands.",
+      "expectedVi": "Chỉ giải thích các chi tiết vận hành có liên quan, thêm visual ngắn khi hữu ích và đưa bước hoặc lệnh sử dụng tối thiểu."
     }
   ]
 };

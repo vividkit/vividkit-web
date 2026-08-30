@@ -141,32 +141,41 @@ const data: SkillInfographic = {
   ],
   "promptExamples": [
     {
-      "labelEn": "Default scan",
-      "labelVi": "Scan mặc định",
+      "labelEn": "Default full scan",
+      "labelVi": "Scan đầy đủ mặc định",
       "command": "/ak:security-scan",
-      "whenEn": "Use for a full lightweight scan of the current project.",
-      "whenVi": "Dùng để scan nhẹ đầy đủ dự án hiện tại.",
-      "expectedEn": "A Markdown report covering secrets, dependencies, code patterns, and .env exposure.",
-      "expectedVi": "Báo cáo Markdown về secret, dependency, pattern code và lộ .env.",
+      "whenEn": "Use when asked to security scan, check for secrets, audit security, or prepare a project for release.",
+      "whenVi": "Dùng khi cần security scan, kiểm tra secret, audit bảo mật hoặc chuẩn bị release dự án.",
+      "expectedEn": "Detects the project stack, scans secrets first, runs applicable dependency audits, checks vulnerable code patterns and .env exposure, then returns a Markdown report with severities and fixes.",
+      "expectedVi": "Nhận diện stack dự án, quét secret trước, chạy audit dependency phù hợp, kiểm tra pattern code dễ tổn thương và lộ .env, rồi trả báo cáo Markdown có severity và cách sửa.",
       "recommended": true
     },
     {
       "labelEn": "Secrets only",
       "labelVi": "Chỉ quét secret",
       "command": "/ak:security-scan --secrets-only",
-      "whenEn": "Use when the immediate risk is leaked credentials.",
-      "whenVi": "Dùng khi rủi ro chính là credential bị lộ.",
-      "expectedEn": "Redacted findings and rotation guidance for real secrets.",
-      "expectedVi": "Finding đã che secret và hướng dẫn rotate nếu secret thật."
+      "whenEn": "Use when the immediate risk is leaked credentials, API keys, private keys, connection strings, or hardcoded passwords.",
+      "whenVi": "Dùng khi rủi ro trước mắt là credential, API key, private key, connection string hoặc mật khẩu hardcode bị lộ.",
+      "expectedEn": "Searches secret-pattern references, excludes examples and build artifacts, verifies placeholders versus real credentials, redacts evidence, and recommends immediate rotation for real secrets.",
+      "expectedVi": "Tìm theo reference pattern secret, loại trừ example và artifact build, phân biệt placeholder với credential thật, che bằng chứng và khuyến nghị rotate ngay secret thật."
+    },
+    {
+      "labelEn": "Dependencies only",
+      "labelVi": "Chỉ audit dependency",
+      "command": "/ak:security-scan --deps-only",
+      "whenEn": "Use when you only need dependency advisory coverage for a Node.js or Python project.",
+      "whenVi": "Dùng khi chỉ cần kiểm tra cảnh báo dependency cho dự án Node.js hoặc Python.",
+      "expectedEn": "Runs the applicable npm audit or pip audit command, treats unavailable tooling as unavailable rather than clean, and categorizes dependency findings by severity.",
+      "expectedVi": "Chạy lệnh npm audit hoặc pip audit phù hợp, xem công cụ không khả dụng là không khả dụng chứ không phải sạch, và phân loại finding dependency theo severity."
     },
     {
       "labelEn": "Scoped directory",
       "labelVi": "Scan thư mục",
       "command": "/ak:security-scan src/api/",
-      "whenEn": "Use for a specific high-risk boundary such as API handlers.",
-      "whenVi": "Dùng cho ranh giới rủi ro cao như API handler.",
-      "expectedEn": "Findings limited to the requested scope, with fix suggestions.",
-      "expectedVi": "Finding giới hạn trong phạm vi yêu cầu, kèm gợi ý sửa."
+      "whenEn": "Use for a specific high-risk boundary such as API handlers, auth code, or payment integration paths.",
+      "whenVi": "Dùng cho ranh giới rủi ro cao cụ thể như API handler, code auth hoặc đường tích hợp thanh toán.",
+      "expectedEn": "Limits scanning to the requested scope while still following the security-scan workflow: secrets first, dependency checks when applicable, dangerous pattern review, .env exposure check, and report-only recommendations.",
+      "expectedVi": "Giới hạn scan trong phạm vi yêu cầu nhưng vẫn theo workflow security-scan: quét secret trước, kiểm tra dependency khi phù hợp, rà pattern nguy hiểm, kiểm tra lộ .env và chỉ báo cáo khuyến nghị."
     }
   ],
   "reportOutput": {

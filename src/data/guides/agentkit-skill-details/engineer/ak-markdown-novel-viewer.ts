@@ -5,10 +5,10 @@ const data: SkillInfographic = {
   command: '/ak:markdown-novel-viewer',
   kit: 'engineer',
   header: {
-    titleEn: '/ak:markdown-novel-viewer — Book-like Markdown reader',
-    titleVi: '/ak:markdown-novel-viewer — Đọc Markdown kiểu sách',
-    taglineEn: 'Serve long Markdown files and plan folders as a calm, book-like browser reader with live Mermaid, progress, navigation, and keyboard shortcuts.',
-    taglineVi: 'Mở file Markdown dài và thư mục kế hoạch trong trình đọc kiểu sách, nhẹ mắt, có Mermaid trực tiếp, thanh tiến độ, điều hướng và phím tắt.',
+    titleEn: '/ak:markdown-novel-viewer — Calm Markdown reader',
+    titleVi: '/ak:markdown-novel-viewer — Trình đọc Markdown nhẹ mắt',
+    taglineEn: 'Serve Markdown files and directories as a calm browser reader with warm themes, progress, plan navigation, keyboard shortcuts, and live Mermaid diagrams.',
+    taglineVi: 'Mở file Markdown và thư mục trong trình đọc browser nhẹ mắt, có theme ấm, thanh tiến độ, điều hướng plan, phím tắt và Mermaid trực tiếp.',
   },
   processFlow: [
     { number: 1, titleEn: 'Install dependencies', titleVi: 'Cài phụ thuộc', descEn: 'Ensure the skill directory has npm dependencies installed: marked, highlight.js, and gray-matter.', descVi: 'Đảm bảo thư mục skill đã cài các gói npm: marked, highlight.js và gray-matter.' },
@@ -35,9 +35,10 @@ const data: SkillInfographic = {
   expertiseAreasEn: ['Long-form Markdown review', 'Plan folder navigation', 'Live Mermaid rendering', 'Responsive reader UI', 'Local HTTP file browsing'],
   expertiseAreasVi: ['Đọc Markdown dài', 'Điều hướng thư mục plan', 'Render Mermaid trực tiếp', 'Giao diện đọc responsive', 'Duyệt file qua HTTP nội bộ'],
   promptExamples: [
-    { labelEn: 'Read a plan', labelVi: 'Đọc một plan', command: '/ak:markdown-novel-viewer plans/feature-auth/plan.md', whenEn: 'Use when a long plan or report is easier to review in the browser.', whenVi: 'Dùng khi plan hoặc report dài đọc trong browser sẽ dễ hơn.', expectedEn: 'The Markdown opens in a calm reader with progress and live diagrams.', expectedVi: 'Markdown mở trong trình đọc nhẹ mắt, có thanh tiến độ và sơ đồ trực tiếp.', recommended: true },
-    { labelEn: 'Browse a folder', labelVi: 'Duyệt thư mục', command: '/ak:markdown-novel-viewer plans/feature-auth', whenEn: 'Use when you need to jump between plan.md and phase files.', whenVi: 'Dùng khi cần chuyển nhanh giữa plan.md và các file phase.', expectedEn: 'A directory browser with links into each document.', expectedVi: 'Một trang duyệt thư mục có liên kết vào từng tài liệu.' },
-    { labelEn: 'Review documentation', labelVi: 'Review tài liệu', command: '/ak:markdown-novel-viewer docs/runbooks', whenEn: 'Use for RFCs, runbooks, specs, reports, or book-length docs.', whenVi: 'Dùng cho RFC, runbook, spec, report hoặc tài liệu dài như sách.', expectedEn: 'Folder contents are browsable and Markdown files render in reader mode.', expectedVi: 'Có thể duyệt nội dung thư mục và mở Markdown bằng chế độ đọc.' },
+    { labelEn: 'Read a long Markdown file', labelVi: 'Đọc file Markdown dài', command: '/ak:markdown-novel-viewer plans/feature-auth/plan.md', whenEn: 'Use when long Markdown is easier to review in a distraction-free browser reader.', whenVi: 'Dùng khi Markdown dài dễ review hơn trong trình đọc browser ít nhiễu.', expectedEn: 'The skill serves the file in reader mode with warm light/dark themes, reading progress, auto-hiding header, syntax highlighting, and Mermaid blocks rendered live.', expectedVi: 'Skill mở file ở chế độ đọc với theme sáng/tối ấm, thanh tiến độ, header tự ẩn, highlight code và render Mermaid trực tiếp.', recommended: true },
+    { labelEn: 'Browse a directory', labelVi: 'Duyệt thư mục', command: '/ak:markdown-novel-viewer plans/feature-auth', whenEn: 'Use when you need a clickable browser view for a folder of Markdown files and subfolders.', whenVi: 'Dùng khi cần xem thư mục Markdown và thư mục con bằng danh sách liên kết trong browser.', expectedEn: 'The skill serves a directory browser with parent navigation, folder links, Markdown links that open in the reader, and matching light/dark styling.', expectedVi: 'Skill mở trình duyệt thư mục có điều hướng lên cấp cha, link thư mục, link Markdown mở bằng chế độ đọc và giao diện sáng/tối đồng bộ.' },
+    { labelEn: 'Review a plan folder', labelVi: 'Review thư mục plan', command: '/ak:markdown-novel-viewer plans/feature-auth', whenEn: 'Use when a plan directory has phase files and you want structured navigation while reading.', whenVi: 'Dùng khi thư mục plan có các file phase và cần điều hướng có cấu trúc khi đọc.', expectedEn: 'The viewer detects plan structure and adds accordion sidebar navigation, status badges, previous/next phase buttons, and a mobile bottom sheet/FAB.', expectedVi: 'Trình đọc nhận diện cấu trúc plan rồi thêm sidebar accordion, badge trạng thái, nút phase trước/sau và bottom sheet/FAB trên mobile.' },
+    { labelEn: 'Read docs with diagrams', labelVi: 'Đọc tài liệu có sơ đồ', command: '/ak:markdown-novel-viewer docs/runbooks', whenEn: 'Use for RFCs, runbooks, specs, reports, or book-length docs that include Mermaid diagrams.', whenVi: 'Dùng cho RFC, runbook, spec, report hoặc tài liệu dài có sơ đồ Mermaid.', expectedEn: 'Markdown documents open in the book-like reader; Mermaid diagrams render theme-aware, can expand full width, and show source/error details when parsing fails.', expectedVi: 'Tài liệu Markdown mở trong trình đọc kiểu sách; Mermaid render theo theme, có thể phóng rộng và hiển thị nguồn/lỗi khi parse thất bại.' },
   ],
   skillStack: [
     { name: 'Node HTTP server', type: 'tool' },

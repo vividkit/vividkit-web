@@ -119,32 +119,41 @@ const data: SkillInfographic = {
   ],
   "promptExamples": [
     {
-      "labelEn": "API edge cases",
-      "labelVi": "Edge case cho API",
+      "labelEn": "One-shot API review",
+      "labelVi": "Rà soát API một lượt",
       "command": "/ak:scenario src/api/payment.ts",
-      "whenEn": "Use before implementing or testing a risky flow.",
-      "whenVi": "Dùng trước khi triển khai hoặc test một luồng rủi ro.",
-      "expectedEn": "A table of scenarios grouped by relevant dimensions and severity.",
-      "expectedVi": "Bảng scenario theo chiều liên quan và mức độ.",
+      "whenEn": "Use before implementing or testing a complex API path.",
+      "whenVi": "Dùng trước khi triển khai hoặc test một luồng API phức tạp.",
+      "expectedEn": "A Scenario Report that filters the 12 dimensions, lists skipped assumptions, groups 3–5 scenarios per relevant dimension, and summarizes severity totals.",
+      "expectedVi": "Một Scenario Report lọc 12 chiều, liệt kê giả định cho chiều bị bỏ qua, nhóm 3–5 scenario cho mỗi chiều liên quan và tổng kết theo severity.",
       "recommended": true
     },
     {
-      "labelEn": "Saturation audit",
-      "labelVi": "Audit đến bão hòa",
-      "command": "/ak:scenario src/middleware/auth.ts --saturation --domain security",
-      "whenEn": "Use when coverage must continue until new scenarios dry up.",
-      "whenVi": "Dùng khi cần tiếp tục mở rộng độ phủ đến khi hết scenario mới.",
-      "expectedEn": "Progress summaries, novelty decisions, coverage matrix, and final score.",
-      "expectedVi": "Có tóm tắt tiến độ, quyết định độ mới, ma trận độ phủ và điểm cuối."
+      "labelEn": "Bounded iteration",
+      "labelVi": "Lặp có giới hạn",
+      "command": "/ak:scenario src/api/payment.ts --iterations 25",
+      "whenEn": "Use when you want exhaustive exploration but need an exact stop count.",
+      "whenVi": "Dùng khi cần khám phá sâu nhưng phải dừng ở số vòng chính xác.",
+      "expectedEn": "An iterative run that keeps new or variant situations, discards duplicates with reasons, prints progress every 5 iterations, and stops after exactly 25 iterations.",
+      "expectedVi": "Một lượt chạy lặp giữ tình huống mới hoặc biến thể, loại trùng kèm lý do, in tiến độ mỗi 5 vòng và dừng đúng sau 25 vòng."
     },
     {
-      "labelEn": "Test format",
-      "labelVi": "Định dạng test scenario",
+      "labelEn": "Security saturation",
+      "labelVi": "Bão hòa bảo mật",
+      "command": "/ak:scenario src/middleware/auth.ts --saturation --domain security --focus security",
+      "whenEn": "Use for a deep pre-release coverage audit where novelty should decide the stop point.",
+      "whenVi": "Dùng cho audit độ phủ sâu trước release khi điểm dừng phải dựa trên độ mới.",
+      "expectedEn": "A saturation loop that prioritizes security-relevant dimensions, logs kept and discarded cases to `scenario-results.tsv`, then halts after two consecutive zero-novelty iterations.",
+      "expectedVi": "Một vòng lặp bão hòa ưu tiên các chiều liên quan đến security, ghi case được giữ và bị loại vào `scenario-results.tsv`, rồi dừng sau hai vòng liên tiếp không có độ mới."
+    },
+    {
+      "labelEn": "Test scenario output",
+      "labelVi": "Đầu ra test scenario",
       "command": "/ak:scenario \"User registration with OAuth providers\" --format test-scenarios",
-      "whenEn": "Use when the immediate next consumer is a test plan.",
-      "whenVi": "Dùng khi đầu ra sẽ được đưa ngay vào kế hoạch test.",
-      "expectedEn": "Scenario rows shaped for test-case drafting.",
-      "expectedVi": "Các dòng scenario được định hình để soạn test case."
+      "whenEn": "Use before writing tests when the immediate consumer is a QA or regression plan.",
+      "whenVi": "Dùng trước khi viết test khi đầu ra sẽ đi thẳng vào kế hoạch QA hoặc regression.",
+      "expectedEn": "Scenario rows shaped for test planning, including actor or input context, preconditions, expected behavior, severity, and the relevant decomposition dimension.",
+      "expectedVi": "Các dòng scenario được định dạng cho kế hoạch test, gồm actor hoặc ngữ cảnh input, tiền điều kiện, hành vi kỳ vọng, severity và chiều phân rã liên quan."
     }
   ]
 };

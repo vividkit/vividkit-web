@@ -7,8 +7,8 @@ const data: SkillInfographic = {
   "header": {
     "titleEn": "/ak:security",
     "titleVi": "/ak:security",
-    "taglineEn": "Threat-model a scope with STRIDE and OWASP, optional red-team personas, severity-ranked findings, and iterative fixes for confirmed high-impact issues.",
-    "taglineVi": "Threat-model một phạm vi bằng STRIDE và OWASP, có persona red-team tùy chọn, findings theo severity và vòng sửa lặp cho lỗi tác động cao đã xác nhận."
+    "taglineEn": "Threat-model a scope with STRIDE and OWASP, optional red-team personas, severity-ranked findings, credential masking, and iterative fixes when authorized.",
+    "taglineVi": "Threat-model một phạm vi bằng STRIDE và OWASP, có persona red-team tùy chọn, findings theo severity, che credential và sửa lặp khi được phép."
   },
   "hardGate": {
     "type": "critical",
@@ -22,43 +22,43 @@ const data: SkillInfographic = {
       "number": 1,
       "titleEn": "Resolve scope",
       "titleVi": "Xác định phạm vi",
-      "descEn": "Expand the provided glob or `full` keyword into files and read the in-scope code before analysis.",
-      "descVi": "Mở rộng glob hoặc từ khóa `full` thành danh sách file và đọc code trong phạm vi trước khi phân tích."
+      "descEn": "Expand the provided glob or `full` keyword into an in-scope file list and read the relevant code before analysis.",
+      "descVi": "Mở rộng glob hoặc từ khóa `full` thành danh sách file trong phạm vi và đọc code liên quan trước khi phân tích."
     },
     {
       "number": 2,
-      "titleEn": "Run STRIDE",
-      "titleVi": "Chạy STRIDE",
-      "descEn": "Evaluate spoofing, tampering, repudiation, information disclosure, denial of service, and elevation of privilege.",
-      "descVi": "Đánh giá spoofing, tampering, repudiation, information disclosure, denial of service và elevation of privilege."
+      "titleEn": "Run red-team loop when requested",
+      "titleVi": "Chạy vòng red-team khi được yêu cầu",
+      "descEn": "With `--red-team`, iterate through security adversary, supply-chain, insider, and infrastructure attacker personas before the standard sweep.",
+      "descVi": "Với `--red-team`, lặp qua persona security adversary, supply-chain, insider và infrastructure attacker trước lượt quét chuẩn."
     },
     {
       "number": 3,
-      "titleEn": "Map OWASP",
-      "titleVi": "Ánh xạ OWASP",
-      "descEn": "Check each finding against OWASP Top 10 categories and the detailed checklist reference.",
-      "descVi": "Đối chiếu từng finding với nhóm OWASP Top 10 và checklist chi tiết."
+      "titleEn": "Sweep STRIDE",
+      "titleVi": "Quét STRIDE",
+      "descEn": "Evaluate spoofing, tampering, repudiation, information disclosure, denial of service, and elevation of privilege systematically.",
+      "descVi": "Đánh giá có hệ thống spoofing, tampering, repudiation, information disclosure, denial of service và elevation of privilege."
     },
     {
       "number": 4,
+      "titleEn": "Map OWASP",
+      "titleVi": "Ánh xạ OWASP",
+      "descEn": "Map validated issues to OWASP Top 10 categories and fill remaining coverage gaps with the checklist reference.",
+      "descVi": "Ánh xạ issue đã xác thực vào nhóm OWASP Top 10 và lấp khoảng trống coverage bằng checklist tham chiếu."
+    },
+    {
+      "number": 5,
       "titleEn": "Audit dependencies",
       "titleVi": "Audit dependency",
       "descEn": "Run stack-appropriate audit tooling such as npm audit, pip-audit, govulncheck, or bundle audit.",
       "descVi": "Chạy công cụ audit phù hợp stack như npm audit, pip-audit, govulncheck hoặc bundle audit."
     },
     {
-      "number": 5,
-      "titleEn": "Detect secrets",
-      "titleVi": "Tìm secret",
-      "descEn": "Scan for API keys, passwords, tokens, and private keys, then mask every credential before logging.",
-      "descVi": "Quét API key, mật khẩu, token và private key, rồi che mọi credential trước khi ghi log."
-    },
-    {
       "number": 6,
-      "titleEn": "Red-team if requested",
-      "titleVi": "Red-team khi được yêu cầu",
-      "descEn": "With `--red-team`, iterate through external hacker, supply chain, insider, and infrastructure attacker personas before the final sweep.",
-      "descVi": "Với `--red-team`, lặp qua persona hacker bên ngoài, supply chain, insider và infrastructure attacker trước lượt quét cuối."
+      "titleEn": "Detect and mask secrets",
+      "titleVi": "Tìm và che secret",
+      "descEn": "Scan for API keys, passwords, tokens, and private keys, then mask credential values before any finding or log output.",
+      "descVi": "Quét API key, mật khẩu, token và private key, rồi che giá trị credential trước mọi finding hoặc log output."
     },
     {
       "number": 7,
@@ -69,10 +69,10 @@ const data: SkillInfographic = {
     },
     {
       "number": 8,
-      "titleEn": "Fix iteratively",
-      "titleVi": "Sửa lặp nếu có",
-      "descEn": "With `--fix`, sort by severity, apply one targeted fix, run a guard, commit, and stop on failed verification.",
-      "descVi": "Với `--fix`, sắp theo severity, sửa từng lỗi mục tiêu, chạy guard, commit và dừng nếu kiểm chứng fail."
+      "titleEn": "Fix iteratively when authorized",
+      "titleVi": "Sửa lặp khi được phép",
+      "descEn": "With `--fix`, sort findings by severity, apply one targeted fix at a time, run a guard, commit, and stop if verification fails.",
+      "descVi": "Với `--fix`, sắp finding theo severity, sửa từng lỗi mục tiêu, chạy guard, commit và dừng nếu kiểm chứng fail."
     }
   ],
   "corePrinciplesEn": [
@@ -108,17 +108,17 @@ const data: SkillInfographic = {
       "flag": "--fix",
       "modeEn": "Audit + fix",
       "modeVi": "Audit rồi sửa",
-      "research": "Findings sorted by severity",
-      "redTeam": "Fix confirmed high-impact issues",
-      "validation": "Guard after each targeted fix"
+      "research": "Findings sorted Critical through Low",
+      "redTeam": "No persona loop unless combined with --red-team",
+      "validation": "Guard after each targeted fix; stop on failure"
     },
     {
       "flag": "--iterations N",
       "modeEn": "Bounded loop",
       "modeVi": "Vòng lặp hữu hạn",
-      "research": "Caps red-team or fix iteration count",
-      "redTeam": "Caps discovery personas loop",
-      "validation": "Stops at N"
+      "research": "Caps red-team discovery or fix iterations",
+      "redTeam": "Caps persona discovery when paired with --red-team",
+      "validation": "Stops at N iterations"
     }
   ],
   "outputFlags": [
@@ -149,32 +149,41 @@ const data: SkillInfographic = {
   ],
   "promptExamples": [
     {
-      "labelEn": "API audit",
-      "labelVi": "Audit API",
+      "labelEn": "Scoped API audit",
+      "labelVi": "Audit API theo phạm vi",
       "command": "/ak:security src/api/**/*.ts",
-      "whenEn": "Use for a scoped STRIDE + OWASP pass before release.",
-      "whenVi": "Dùng để chạy STRIDE + OWASP theo phạm vi trước release.",
-      "expectedEn": "Severity-ranked security audit report with file-line evidence.",
-      "expectedVi": "Báo cáo audit bảo mật theo severity, có bằng chứng file:line.",
+      "whenEn": "Use for a scoped STRIDE + OWASP pass before a release or after API data-handling changes.",
+      "whenVi": "Dùng để chạy STRIDE + OWASP theo phạm vi trước release hoặc sau thay đổi xử lý dữ liệu API.",
+      "expectedEn": "Expands the API glob, reads in-scope files, runs STRIDE/OWASP, dependency and secret checks, then returns a severity-ranked report with file-line evidence.",
+      "expectedVi": "Mở rộng glob API, đọc file trong phạm vi, chạy STRIDE/OWASP, kiểm tra dependency và secret, rồi trả báo cáo xếp theo severity với bằng chứng file:line.",
       "recommended": true
     },
     {
-      "labelEn": "Full red-team",
-      "labelVi": "Red-team toàn bộ",
+      "labelEn": "Full red-team discovery",
+      "labelVi": "Khám phá red-team toàn bộ",
       "command": "/ak:security full --red-team",
-      "whenEn": "Use when attacker-perspective discovery is needed across the full codebase.",
-      "whenVi": "Dùng khi cần khám phá theo góc nhìn attacker trên toàn codebase.",
-      "expectedEn": "Findings from four personas plus final STRIDE/OWASP gap sweep.",
-      "expectedVi": "Finding từ bốn persona và lượt quét bổ sung STRIDE/OWASP cuối."
+      "whenEn": "Use when attacker-perspective discovery is needed across the full codebase before the final STRIDE/OWASP sweep.",
+      "whenVi": "Dùng khi cần khám phá theo góc nhìn attacker trên toàn codebase trước lượt quét STRIDE/OWASP cuối.",
+      "expectedEn": "Runs the four-persona discovery loop, masks credential values in logged evidence, chains persona findings, then fills gaps with the standard security sweep.",
+      "expectedVi": "Chạy vòng khám phá bốn persona, che giá trị credential trong bằng chứng ghi log, nối tiếp finding giữa các persona, rồi lấp khoảng trống bằng lượt quét bảo mật chuẩn."
     },
     {
-      "labelEn": "Bounded fix",
-      "labelVi": "Sửa có giới hạn",
+      "labelEn": "Bounded red-team pass",
+      "labelVi": "Red-team có giới hạn",
+      "command": "/ak:security src/ --red-team --iterations 20",
+      "whenEn": "Use when red-team discovery is useful but the persona loop needs a hard iteration cap.",
+      "whenVi": "Dùng khi cần khám phá red-team nhưng vòng persona phải có giới hạn số lần lặp.",
+      "expectedEn": "Caps persona discovery at 20 iterations, validates each finding with file-line proof and attack scenario, then reports remaining STRIDE/OWASP coverage.",
+      "expectedVi": "Giới hạn khám phá persona ở 20 vòng, xác thực mỗi finding bằng bằng chứng file:line và kịch bản tấn công, rồi báo cáo coverage STRIDE/OWASP còn lại."
+    },
+    {
+      "labelEn": "Bounded fix loop",
+      "labelVi": "Vòng sửa có giới hạn",
       "command": "/ak:security src/ --fix --iterations 15",
-      "whenEn": "Use when authorized to fix findings but the loop needs a cap.",
-      "whenVi": "Dùng khi được phép sửa finding nhưng cần giới hạn số vòng.",
-      "expectedEn": "Targeted fixes with verification guard or an explicit stop reason.",
-      "expectedVi": "Các sửa đổi mục tiêu có guard kiểm chứng hoặc lý do dừng rõ ràng."
+      "whenEn": "Use when authorized to remediate audit findings but the fix loop needs a maximum iteration count.",
+      "whenVi": "Dùng khi được phép sửa finding audit nhưng vòng fix cần số lần lặp tối đa.",
+      "expectedEn": "Sorts findings by severity, applies up to 15 targeted fixes one at a time, runs a guard after each fix, and stops with the failure reason if verification breaks.",
+      "expectedVi": "Sắp finding theo severity, áp dụng tối đa 15 sửa đổi mục tiêu từng cái một, chạy guard sau mỗi fix và dừng kèm lý do nếu kiểm chứng fail."
     }
   ],
   "reportOutput": {

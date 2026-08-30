@@ -107,50 +107,50 @@ const data: SkillInfographic = {
   ],
   "promptExamples": [
     {
-      "labelEn": "Run scoped tests",
-      "labelVi": "Chạy test theo scope",
+      "labelEn": "Run changed-scope tests",
+      "labelVi": "Chạy test theo phạm vi đổi",
       "command": "/ak:test checkout payment flow",
-      "whenEn": "A feature or bug fix needs unit/integration/e2e validation.",
-      "whenVi": "Một tính năng hoặc bug fix cần kiểm bằng unit/integration/e2e.",
-      "expectedEn": "Finds the right runner, runs relevant suites, analyzes failures, and reports evidence.",
-      "expectedVi": "Tìm runner phù hợp, chạy suite liên quan, phân tích lỗi và báo bằng chứng.",
+      "whenEn": "Use after implementation or a bug fix when a validation suite should run for a concrete scope.",
+      "whenVi": "Dùng sau khi triển khai hoặc sửa lỗi khi cần chạy suite kiểm thử cho một phạm vi cụ thể.",
+      "expectedEn": "Identifies the relevant scope, runs early typecheck/analyze commands when useful, executes the matching project suites, treats failures as blockers, and returns a structured QA summary.",
+      "expectedVi": "Xác định phạm vi liên quan, chạy typecheck/analyze sớm khi hữu ích, chạy suite phù hợp của dự án, xem test lỗi là blocker và trả báo cáo QA có cấu trúc.",
       "recommended": true
     },
     {
-      "labelEn": "UI test",
-      "labelVi": "Test UI",
+      "labelEn": "Check a live UI",
+      "labelVi": "Kiểm UI đang chạy",
       "command": "/ak:test ui http://localhost:3000/checkout",
-      "whenEn": "A live UI needs visual, responsive, accessibility, form, and console-error checks.",
-      "whenVi": "Một UI đang chạy cần kiểm visual, responsive, accessibility, form và console error.",
-      "expectedEn": "Uses browser-capable testing and returns a structured UI QA report.",
-      "expectedVi": "Dùng kiểm thử có browser và trả báo cáo QA UI có cấu trúc."
+      "whenEn": "Use when a website or app screen needs visual, responsive, accessibility, form, or console-error validation.",
+      "whenVi": "Dùng khi một website hoặc màn hình app cần kiểm visual, responsive, accessibility, form hoặc console error.",
+      "expectedEn": "Loads the UI testing workflow, uses browser-capable tooling or project-native browser tests, captures the relevant evidence, and reports UI QA findings in the standard format.",
+      "expectedVi": "Nạp workflow test UI, dùng công cụ có browser hoặc browser test gốc của dự án, thu bằng chứng liên quan và báo phát hiện QA UI theo format chuẩn."
     },
     {
-      "labelEn": "Create suite",
-      "labelVi": "Tạo test suite",
+      "labelEn": "Create missing coverage",
+      "labelVi": "Tạo coverage còn thiếu",
       "command": "/ak:test create auth module --ultra",
-      "whenEn": "A feature area lacks meaningful tests and needs a coverage design.",
-      "whenVi": "Một vùng tính năng thiếu test có ý nghĩa và cần thiết kế coverage.",
-      "expectedEn": "Runs best-of-5 verifier analysis for suite design, then implements the selected suite once.",
-      "expectedVi": "Chạy phân tích best-of-5 verifier cho thiết kế suite rồi triển khai suite được chọn một lần."
+      "whenEn": "Use when a feature area lacks meaningful tests and needs a designed validation suite.",
+      "whenVi": "Dùng khi một vùng tính năng thiếu test có ý nghĩa và cần thiết kế suite kiểm thử.",
+      "expectedEn": "Scouts the codebase and docs, builds a coverage matrix, runs the ultra best-of-5 verifier for the design, then implements the selected test suite once.",
+      "expectedVi": "Scout codebase và docs, lập ma trận coverage, chạy ultra best-of-5 verifier cho thiết kế rồi triển khai suite test được chọn một lần."
     },
     {
-      "labelEn": "Optimize suite",
-      "labelVi": "Tối ưu suite",
+      "labelEn": "Optimize CI testing",
+      "labelVi": "Tối ưu test CI",
       "command": "/ak:test optimize CI suite --interview",
-      "whenEn": "CI is too slow or expensive and changes need user approval.",
-      "whenVi": "CI quá chậm/tốn kém và thay đổi cần người dùng duyệt.",
-      "expectedEn": "Lists proposed optimizations with reasons and applies only approved change groups.",
-      "expectedVi": "Liệt kê đề xuất tối ưu kèm lý do và chỉ áp dụng nhóm thay đổi đã được duyệt."
+      "whenEn": "Use when test cost or runtime is high and suite/CI changes should be approved before applying.",
+      "whenVi": "Dùng khi chi phí hoặc thời gian chạy test cao và thay đổi suite/CI cần được duyệt trước khi áp dụng.",
+      "expectedEn": "Parallel-scouts CI/CD, git history, codebase, and docs; proposes speed or cost reductions that preserve safety; and applies only approved change groups.",
+      "expectedVi": "Scout song song CI/CD, lịch sử git, codebase và docs; đề xuất giảm thời gian hoặc chi phí mà vẫn giữ an toàn; và chỉ áp dụng nhóm thay đổi đã duyệt."
     },
     {
       "labelEn": "Audit weak tests",
       "labelVi": "Audit test yếu",
       "command": "/ak:test audit frontend tests --advice",
-      "whenEn": "The suite may contain skipped, deceptive, redundant, outdated, or security-gap tests.",
-      "whenVi": "Suite có thể có test bị skip, gian lận, trùng lặp, lỗi thời hoặc thiếu lỗ hổng bảo mật.",
-      "expectedEn": "Uses parallel scout/audit evidence and Kongming checkpoints before repairs.",
-      "expectedVi": "Dùng bằng chứng scout/audit song song và các điểm cố vấn Kongming trước khi sửa."
+      "whenEn": "Use when a suite may contain skipped, deceptive, redundant, outdated, unfinished, or security-gap tests.",
+      "whenVi": "Dùng khi suite có thể có test bị skip, gian lận, trùng lặp, lỗi thời, chưa hoàn tất hoặc thiếu kiểm lỗ hổng bảo mật.",
+      "expectedEn": "Parallel-scouts the suite and CI, gathers evidence for weak or deceptive tests, asks Kongming for advisory checkpoints, then repairs validated issues without bypassing failing-test gates.",
+      "expectedVi": "Scout song song suite và CI, thu bằng chứng về test yếu hoặc gian lận, hỏi Kongming ở các điểm cố vấn rồi sửa vấn đề đã xác thực mà không lách gate test lỗi."
     }
   ],
   "outputFlags": [

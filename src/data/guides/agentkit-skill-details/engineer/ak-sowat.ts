@@ -89,23 +89,41 @@ const data: SkillInfographic = {
   ],
   "promptExamples": [
     {
-      "labelEn": "Post-implementation priority",
-      "labelVi": "Ưu tiên sau triển khai",
-      "command": "/ak:sowat after the checkout refactor and open payment issues",
-      "whenEn": "You need the product meaning of recent work and what to do next.",
-      "whenVi": "Cần hiểu ý nghĩa sản phẩm của phần vừa làm và nên làm gì tiếp.",
-      "expectedEn": "Returns a brief so-what, optional priority correction, and up to three ordered next steps.",
-      "expectedVi": "Trả nhận định ngắn, chỉnh ưu tiên nếu cần và tối đa ba bước tiếp theo.",
+      "labelEn": "Post-implementation priority call",
+      "labelVi": "Kết luận ưu tiên sau triển khai",
+      "command": "/ak:sowat Review the completed onboarding changes and related open issues. Tell me what matters now, correct my priority if needed, and give at most three next steps with success signals.",
+      "whenEn": "After implementation, when you need the user or business meaning of the work and what matters next.",
+      "whenVi": "Sau implementation, khi cần hiểu ý nghĩa với người dùng/kinh doanh và điều gì quan trọng tiếp theo.",
+      "expectedEn": "Separates implemented, verified, shipped, and still-open evidence; connects only related issues; then returns a brief so-what judgment with up to three ordered next steps and observable success signals.",
+      "expectedVi": "Tách evidence đã implement, đã verify, đã ship và còn mở; chỉ nối issue liên quan; rồi trả judgment “so what” ngắn với tối đa ba bước theo thứ tự và success signal quan sát được.",
       "recommended": true
     },
     {
-      "labelEn": "Challenge focus",
-      "labelVi": "Thử thách trọng tâm",
-      "command": "/ak:sowat are we focusing on the wrong thing after this release?",
-      "whenEn": "The team may be polishing lower-value work while blockers remain.",
-      "whenVi": "Đội có thể đang polish phần ít giá trị trong khi blocker vẫn còn.",
-      "expectedEn": "Uses evidence to correct focus directly without inventing metrics.",
-      "expectedVi": "Dùng bằng chứng để chỉnh trọng tâm thẳng thắn mà không bịa metric."
+      "labelEn": "Challenge weak focus",
+      "labelVi": "Challenge trọng tâm yếu",
+      "command": "/ak:sowat Are we focusing on the wrong thing after this release, or should the remaining adoption blockers take priority?",
+      "whenEn": "When polish or internal improvements may be distracting from blockers, regressions, or higher-impact outcomes.",
+      "whenVi": "Khi polish hoặc cải tiến nội bộ có thể làm phân tâm khỏi blocker, regression hoặc outcome impact cao hơn.",
+      "expectedEn": "Judges candidates by impact, urgency, confidence, effort, risk, dependency leverage, and learning value, then corrects the current focus only if evidence shows a concrete trade-off.",
+      "expectedVi": "Đánh giá candidate theo impact, urgency, confidence, effort, risk, dependency leverage và learning value, rồi chỉ chỉnh trọng tâm hiện tại nếu evidence cho thấy trade-off cụ thể."
+    },
+    {
+      "labelEn": "Rank related issues",
+      "labelVi": "Xếp hạng issue liên quan",
+      "command": "/ak:sowat Compare the follow-on checkout issues with the regression reports and tell me the top product-impact actions to take next.",
+      "whenEn": "When several related dependencies, regressions, blockers, or opportunities compete for attention.",
+      "whenVi": "Khi nhiều dependency, regression, blocker hoặc opportunity liên quan cùng tranh ưu tiên.",
+      "expectedEn": "Connects only genuinely related work, deprioritizes busywork that does not change the outcome, and recommends no more than three actions with why-now rationale and success signals.",
+      "expectedVi": "Chỉ kết nối việc thật sự liên quan, hạ ưu tiên busywork không đổi outcome, và đề xuất tối đa ba hành động kèm lý do làm ngay cùng success signal."
+    },
+    {
+      "labelEn": "Name missing evidence",
+      "labelVi": "Nêu evidence còn thiếu",
+      "command": "/ak:sowat We shipped the trial upgrade flow, but analytics are incomplete. What can we conclude, what is inference, and what should we do next?",
+      "whenEn": "When shipment, usage, customer, or verification evidence is incomplete but you still need a priority call.",
+      "whenVi": "Khi evidence về shipment, usage, customer hoặc verification chưa đủ nhưng vẫn cần kết luận ưu tiên.",
+      "expectedEn": "Keeps facts separate from inference, refuses to invent product evidence, names what evidence is missing, and frames next steps around observable learning or delivery signals.",
+      "expectedVi": "Tách fact khỏi inference, không bịa product evidence, nêu rõ evidence còn thiếu và định khung bước tiếp theo quanh tín hiệu learning hoặc delivery quan sát được."
     }
   ]
 };

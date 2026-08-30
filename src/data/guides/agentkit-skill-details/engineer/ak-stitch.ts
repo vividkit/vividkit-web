@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   "hardGate": {
     "type": "warning",
-    "titleEn": "Quota and secret handling",
-    "titleVi": "Quota và bảo mật khóa",
-    "contentEn": "Requires a configured STITCH_API_KEY and respects the free daily quota; when exhausted, use ui-ux-pro-max fallback instead of pretending Stitch ran.",
-    "contentVi": "Cần STITCH_API_KEY đã cấu hình và phải tôn trọng quota miễn phí hằng ngày; khi hết quota, dùng ui-ux-pro-max thay thế thay vì giả vờ Stitch đã chạy."
+    "titleEn": "Provider, key, and quota boundary",
+    "titleVi": "Ranh giới provider, khóa và quota",
+    "contentEn": "Stitch generation requires STITCH_API_KEY, sends the prompt to Google Stitch, and is bounded by daily credits; if quota is exhausted, use the ui-ux-pro-max fallback instead of claiming a run happened.",
+    "contentVi": "Generation bằng Stitch cần STITCH_API_KEY, gửi prompt tới Google Stitch và bị giới hạn bởi credit hằng ngày; nếu hết quota, dùng fallback ui-ux-pro-max thay vì nói rằng đã chạy."
   },
   "processFlow": [
     {
@@ -103,32 +103,41 @@ const data: SkillInfographic = {
   ],
   "promptExamples": [
     {
-      "labelEn": "Generate screen",
-      "labelVi": "Sinh màn hình",
-      "command": "/ak:stitch generate checkout page with payment form and cart summary",
-      "whenEn": "You need quick high-fidelity UI exploration from a prompt.",
-      "whenVi": "Cần khám phá UI chất lượng cao thật nhanh từ prompt.",
-      "expectedEn": "Checks quota, generates a Stitch screen, and returns the screen ID plus preview.",
-      "expectedVi": "Kiểm tra quota, sinh màn hình Stitch và trả screen ID cùng preview.",
+      "labelEn": "Generate and export concept",
+      "labelVi": "Sinh và export concept",
+      "command": "/ak:stitch generate \"A desktop checkout page with payment form and cart summary\" --device DESKTOP --variants 2 --project-name \"my-saas/checkout\"",
+      "whenEn": "You need provider-backed UI generation plus a reviewable handoff artifact before implementation.",
+      "whenVi": "Cần sinh UI qua provider và có artifact bàn giao để review trước khi triển khai.",
+      "expectedEn": "Checks local quota, resolves the Stitch project, generates two desktop variants, shows preview URLs for review, and prepares the selected screen for HTML/image/DESIGN.md export.",
+      "expectedVi": "Kiểm tra quota local, xác định project Stitch, sinh hai variant desktop, hiển thị preview để review và chuẩn bị screen đã chọn cho export HTML/ảnh/DESIGN.md.",
       "recommended": true
     },
     {
-      "labelEn": "Export design",
-      "labelVi": "Export thiết kế",
-      "command": "/ak:stitch export screen-123",
-      "whenEn": "A generated screen should be handed to implementation.",
-      "whenVi": "Một màn hình đã sinh cần được bàn giao để triển khai.",
-      "expectedEn": "Exports HTML, image, and DESIGN.md for downstream UI work.",
-      "expectedVi": "Export HTML, ảnh và DESIGN.md cho bước làm UI tiếp theo."
+      "labelEn": "Generate mobile variants",
+      "labelVi": "Sinh variant mobile",
+      "command": "/ak:stitch generate \"Mobile onboarding flow for a finance app with three calm trust-building screens\" --device MOBILE --variants 3",
+      "whenEn": "You want rapid UI design exploration from a concrete prompt before choosing a direction.",
+      "whenVi": "Muốn khám phá thiết kế UI nhanh từ prompt cụ thể trước khi chọn hướng.",
+      "expectedEn": "Uses the generation action with the mobile device target, spends only approved variant credits, and returns screen or variant IDs with preview image URLs for user selection.",
+      "expectedVi": "Dùng action generate với target mobile, chỉ dùng credit variant đã duyệt và trả screen hoặc variant ID cùng URL ảnh preview để người dùng chọn."
     },
     {
-      "labelEn": "Quota check",
-      "labelVi": "Kiểm tra quota",
-      "command": "/ak:stitch quota",
-      "whenEn": "Before generating variants or redesigns near the daily cap.",
-      "whenVi": "Trước khi sinh variant hoặc redesign khi gần chạm quota ngày.",
-      "expectedEn": "Reports remaining credits and suggests fallback if exhausted.",
-      "expectedVi": "Báo credit còn lại và gợi ý fallback nếu đã hết."
+      "labelEn": "Export existing screen",
+      "labelVi": "Export screen có sẵn",
+      "command": "/ak:stitch export screen-123 --format all --output ./stitch-exports/",
+      "whenEn": "A generated screen has been approved and should become concrete implementation input.",
+      "whenVi": "Một screen đã sinh đã được duyệt và cần trở thành đầu vào triển khai cụ thể.",
+      "expectedEn": "Runs the export action for the selected screen and writes design.html, design.png, and DESIGN.md so frontend-design, ui-ux-pro-max, or ui-styling can consume the design spec.",
+      "expectedVi": "Chạy action export cho screen đã chọn và ghi design.html, design.png cùng DESIGN.md để frontend-design, ui-ux-pro-max hoặc ui-styling dùng đặc tả thiết kế."
+    },
+    {
+      "labelEn": "Check quota first",
+      "labelVi": "Kiểm tra quota trước",
+      "command": "/ak:stitch quota check",
+      "whenEn": "Before generating concepts, variants, or redesigns near the daily Stitch credit cap.",
+      "whenVi": "Trước khi sinh concept, variant hoặc redesign khi gần giới hạn credit Stitch hằng ngày.",
+      "expectedEn": "Runs the quota action, reports local remaining daily and redesign credits, and recommends the ui-ux-pro-max fallback when generation should stop.",
+      "expectedVi": "Chạy action quota, báo credit local còn lại theo ngày và redesign, rồi gợi ý fallback ui-ux-pro-max khi nên dừng generation."
     }
   ],
   "specialOperations": [

@@ -85,23 +85,41 @@ const data: SkillInfographic = {
   },
   "promptExamples": [
     {
-      "labelEn": "General help",
-      "labelVi": "Trợ giúp chung",
+      "labelEn": "Open help index",
+      "labelVi": "Mở chỉ mục trợ giúp",
       "command": "/ak:help",
-      "whenEn": "The user wants the AgentKit help index or does not know where to start.",
-      "whenVi": "Khi user cần chỉ mục trợ giúp AgentKit hoặc chưa biết bắt đầu từ đâu.",
-      "expectedEn": "Uses installed-skill discovery and gives a concise, current index or next route.",
-      "expectedVi": "Dùng discovery skill đã cài và đưa chỉ mục hiện tại hoặc hướng đi tiếp ngắn gọn.",
+      "whenEn": "The user asks how to use AgentKit or wants a starting point.",
+      "whenVi": "Khi user hỏi cách dùng AgentKit hoặc cần điểm bắt đầu.",
+      "expectedEn": "Opens with the installed AgentKit help context, prefers the live skill catalog, and gives a concise index or next best route.",
+      "expectedVi": "Mở bằng ngữ cảnh trợ giúp AgentKit đã cài, ưu tiên catalog skill sống, rồi đưa chỉ mục ngắn gọn hoặc hướng đi phù hợp tiếp theo.",
       "recommended": true
     },
     {
-      "labelEn": "Workflow choice",
+      "labelEn": "Choose workflow",
       "labelVi": "Chọn workflow",
       "command": "/ak:help which workflow should I run for a bug with unknown root cause?",
-      "whenEn": "The user describes a task but not the skill name.",
-      "whenVi": "Khi user mô tả việc cần làm nhưng không biết tên skill.",
-      "expectedEn": "Routes to the most specific installed debugging or investigation workflow and explains why.",
-      "expectedVi": "Định tuyến tới workflow debug hoặc điều tra cụ thể nhất đã cài và giải thích lý do."
+      "whenEn": "The user describes a task but does not know which installed skill fits.",
+      "whenVi": "Khi user mô tả việc cần làm nhưng chưa biết skill đã cài nào phù hợp.",
+      "expectedEn": "Filters the installed candidates to the task, routes to the most specific debugging or investigation skill, and briefly explains the fit.",
+      "expectedVi": "Lọc các candidate đã cài theo task, định tuyến tới skill debug hoặc điều tra cụ thể nhất, rồi giải thích ngắn gọn vì sao phù hợp."
+    },
+    {
+      "labelEn": "Check skill availability",
+      "labelVi": "Kiểm tra skill có sẵn",
+      "command": "/ak:help do I have a skill for creating project documentation?",
+      "whenEn": "The user asks whether a capability exists in the current installation.",
+      "whenVi": "Khi user hỏi một năng lực có tồn tại trong bản cài hiện tại hay không.",
+      "expectedEn": "Uses the runtime catalog or relevant SKILL.md frontmatter, reports matching installed skills only, and says plainly if none are installed.",
+      "expectedVi": "Dùng catalog runtime hoặc frontmatter SKILL.md liên quan, chỉ báo skill đã cài khớp yêu cầu, và nói thẳng nếu chưa có skill nào."
+    },
+    {
+      "labelEn": "Need command syntax",
+      "labelVi": "Cần cú pháp lệnh",
+      "command": "/ak:help how do I list installed skills from the CLI?",
+      "whenEn": "The user needs an exact command shape rather than a broad skill recommendation.",
+      "whenVi": "Khi user cần cú pháp lệnh chính xác thay vì đề xuất skill tổng quát.",
+      "expectedEn": "Reads current ak help or the relevant subcommand help before giving syntax, and keeps examples scoped to the installed kit.",
+      "expectedVi": "Đọc ak help hiện tại hoặc help của subcommand liên quan trước khi đưa cú pháp, và giữ ví dụ trong phạm vi kit đã cài."
     }
   ],
   "reportOutput": {
