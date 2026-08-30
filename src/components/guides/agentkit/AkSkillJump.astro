@@ -1,0 +1,214 @@
+---
+import type { Language } from '@/i18n';
+import type { AkSkillJumpItem } from '@/data/guides/agentkit-skill-details';
+
+interface JumpItem extends AkSkillJumpItem {
+  href: string;
+  title: string;
+}
+
+interface Props {
+  lang: Language;
+  currentSkill: string;
+  currentKit: 'engineer' | 'marketing';
+  items: JumpItem[];
+}
+
+const { lang, currentSkill, currentKit, items } = Astro.props;
+const isVi = lang === 'vi';
+const copy = {
+  label: isVi ? 'Nhảy tới skill' : 'Jump to skill',
+  placeholder: isVi ? 'Gõ /ak:plan, bro, cook' : 'Type /ak:plan, bro, cook',
+  empty: isVi ? 'Không khớp skill nào' : 'No matching skill',
+  engineer: 'Engineer',
+  marketing: 'Marketing',
+  here: isVi ? 'Đang xem' : 'Current',
+  hint: 'Ctrl K',
+};
+const payload = JSON.stringify(items).replace(/</g, '\\u003c');
+---
+
+<div
+  class="ak-skill-jump relative min-w-0 w-full sm:max-w-md"
+  data-current-skill={currentSkill}
+  data-current-kit={currentKit}
+  data-empty={copy.empty}
+  data-engineer={copy.engineer}
+  data-marketing={copy.marketing}
+  data-here={copy.here}
+>
+  <label class="sr-only" for="ak-skill-jump-input">{copy.label}</label>
+  <div class="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 ring-1 ring-slate-100 focus-within:border-teal-400 focus-within:ring-teal-100 dark:border-white/10 dark:bg-slate-950/70 dark:ring-white/5 dark:focus-within:border-teal-500 dark:focus-within:ring-teal-900/40">
+    <span class="shrink-0 font-mono text-[11px] font-semibold text-teal-700 dark:text-teal-300" aria-hidden="true">/ak:</span>
+    <input
+      id="ak-skill-jump-input"
+      type="search"
+      autocomplete="off"
+      spellcheck="false"
+      placeholder={copy.placeholder}
+      class="min-w-0 flex-1 bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400 dark:text-slate-100 dark:placeholder:text-slate-500"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="ak-skill-jump-list"
+      aria-autocomplete="list"
+    />
+    <kbd class="hidden shrink-0 rounded-md bg-slate-100 px-1.5 py-0.5 font-mono text-[10px] text-slate-500 ring-1 ring-slate-200 sm:inline dark:bg-slate-800 dark:text-slate-400 dark:ring-white/10">{copy.hint}</kbd>
+  </div>
+  <div
+    id="ak-skill-jump-list"
+    hidden
+    role="listbox"
+    class="absolute z-40 mt-2 max-h-72 w-full overflow-auto rounded-xl border border-slate-200 bg-white p-1 shadow-lg shadow-slate-900/10 ring-1 ring-slate-100 dark:border-white/10 dark:bg-slate-950 dark:shadow-black/40 dark:ring-white/5"
+  ></div>
+  <script type="application/json" set:html={payload}></script>
+</div>
+
+<script is:inline>
+(function () {
+  var root = document.querySelector('.ak-skill-jump');
+  if (!root) return;
+  var input = root.querySelector('#ak-skill-jump-input');
+  var list = root.querySelector('#ak-skill-jump-list');
+  var jsonEl = root.querySelector('script[type="application/json"]');
+  if (!input || !list || !jsonEl) return;
+
+  var items = [];
+  try { items = JSON.parse(jsonEl.textContent || '[]'); } catch (e) { return; }
+
+  var currentSkill = root.getAttribute('data-current-skill') || '';
+  var currentKit = root.getAttribute('data-current-kit') || '';
+  var emptyText = root.getAttribute('data-empty') || '';
+  var hereText = root.getAttribute('data-here') || '';
+  var kitLabel = { engineer: root.getAttribute('data-engineer') || 'Engineer', marketing: root.getAttribute('data-marketing') || 'Marketing' };
+  var activeIndex = 0;
+  var visible = [];
+
+  function fold(value) {
+    return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  }
+
+  function score(item, q) {
+    if (!q) return item.kit === currentKit ? 1 : 2;
+    var command = fold(item.command);
+    var skill = fold(item.skill);
+    var title = fold((item.title || '') + ' ' + (item.titleEn || '') + ' ' + (item.titleVi || ''));
+    if (command === q || command === '/ak:' + q || skill === 'ak-' + q) return 0;
+    if (command.indexOf(q) === 0 || command.indexOf('/ak:' + q) === 0) return 1;
+    if (command.indexOf(q) !== -1 || skill.indexOf(q) !== -1) return 2;
+    if (title.indexOf(q) !== -1) return 3;
+    return 99;
+  }
+
+  function matches() {
+    var raw = input.value.trim();
+    var q = fold(raw).replace(/^[/$@]*ak[:\-]?/, '');
+    var ranked = items
+      .map(function (item) { return { item: item, s: score(item, q) }; })
+      .filter(function (row) { return row.s < 99; })
+      .sort(function (a, b) {
+        if (a.s !== b.s) return a.s - b.s;
+        if (a.item.kit === currentKit && b.item.kit !== currentKit) return -1;
+        if (b.item.kit === currentKit && a.item.kit !== currentKit) return 1;
+        return a.item.command.localeCompare(b.item.command);
+      })
+      .slice(0, 12)
+      .map(function (row) { return row.item; });
+    return ranked;
+  }
+
+  function closeList() {
+    list.hidden = true;
+    input.setAttribute('aria-expanded', 'false');
+  }
+
+  function render() {
+    visible = matches();
+    list.textContent = '';
+    if (!visible.length) {
+      var empty = document.createElement('p');
+      empty.className = 'px-3 py-2 text-xs text-slate-500 dark:text-slate-400';
+      empty.textContent = emptyText;
+      list.appendChild(empty);
+      list.hidden = false;
+      input.setAttribute('aria-expanded', 'true');
+      return;
+    }
+    var lastKit = '';
+    visible.forEach(function (item, index) {
+      if (item.kit !== lastKit) {
+        lastKit = item.kit;
+        var heading = document.createElement('p');
+        heading.className = 'px-3 pt-2 pb-1 text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500';
+        heading.textContent = kitLabel[item.kit] || item.kit;
+        list.appendChild(heading);
+      }
+      var option = document.createElement('a');
+      option.setAttribute('role', 'option');
+      option.href = item.href;
+      option.dataset.index = String(index);
+      var isCurrent = item.skill === currentSkill && item.kit === currentKit;
+      option.className = 'flex items-start justify-between gap-3 rounded-lg px-3 py-2 text-left no-underline hover:bg-slate-100 dark:hover:bg-white/5' + (index === activeIndex ? ' bg-slate-100 dark:bg-white/5' : '');
+      var left = document.createElement('span');
+      var cmd = document.createElement('span');
+      cmd.className = 'block font-mono text-xs font-semibold text-teal-700 dark:text-teal-300';
+      if (item.kit === 'marketing') cmd.className = 'block font-mono text-xs font-semibold text-fuchsia-700 dark:text-fuchsia-300';
+      cmd.textContent = item.command;
+      var title = document.createElement('span');
+      title.className = 'mt-0.5 block text-[11px] leading-4 text-slate-500 dark:text-slate-400';
+      title.textContent = item.title || item.titleEn || item.command;
+      left.appendChild(cmd);
+      left.appendChild(title);
+      option.appendChild(left);
+      if (isCurrent) {
+        var badge = document.createElement('span');
+        badge.className = 'shrink-0 rounded-full bg-teal-50 px-2 py-0.5 text-[10px] font-semibold text-teal-800 dark:bg-teal-950/50 dark:text-teal-200';
+        badge.textContent = hereText;
+        option.appendChild(badge);
+      }
+      list.appendChild(option);
+    });
+    list.hidden = false;
+    input.setAttribute('aria-expanded', 'true');
+  }
+
+  function move(delta) {
+    if (!visible.length) return;
+    activeIndex = (activeIndex + delta + visible.length) % visible.length;
+    render();
+    var active = list.querySelector('[data-index="' + activeIndex + '"]');
+    if (active && active.scrollIntoView) active.scrollIntoView({ block: 'nearest' });
+  }
+
+  input.addEventListener('focus', function () {
+    activeIndex = 0;
+    render();
+  });
+  input.addEventListener('input', function () {
+    activeIndex = 0;
+    render();
+  });
+  input.addEventListener('keydown', function (event) {
+    if (event.key === 'ArrowDown') { event.preventDefault(); move(1); }
+    else if (event.key === 'ArrowUp') { event.preventDefault(); move(-1); }
+    else if (event.key === 'Enter' && visible[activeIndex]) {
+      event.preventDefault();
+      window.location.href = visible[activeIndex].href;
+    } else if (event.key === 'Escape') {
+      closeList();
+      input.blur();
+    }
+  });
+  document.addEventListener('click', function (event) {
+    if (!root.contains(event.target)) closeList();
+  });
+  document.addEventListener('keydown', function (event) {
+    if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+      var tag = (event.target && event.target.tagName) || '';
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+      event.preventDefault();
+      input.focus();
+      input.select();
+    }
+  });
+})();
+</script>

@@ -2,7 +2,8 @@
 import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
 import type { SkillInfographic } from '@/data/guides/how-ck-works';
 import InfographicGenericCommandQuickRef from '@/components/guides/how-ck-works/infographic/infographic-generic-command-quick-ref.astro';
-import { getAkSkillInfographic, resolveAkSkillDetail } from '@/data/guides/agentkit-skill-details';
+import { getAkSkillInfographic, listAkSkillJumpItems, resolveAkSkillDetail } from '@/data/guides/agentkit-skill-details';
+import AkSkillJump from './AkSkillJump.astro';
 import AkNextLinks from './AkNextLinks.astro';
 
 interface Props {
@@ -37,18 +38,27 @@ const relatedLinks = (data.skillStack || [])
     }];
   })
   .slice(0, 3);
+
+const jumpItems = listAkSkillJumpItems().map((item) => ({
+  ...item,
+  title: isVi ? item.titleVi : item.titleEn,
+  href: translatePath(`/guides/agentkit/skills/${item.kit}/${item.skill}`),
+}));
 ---
 
 <div class="space-y-8 mt-6">
-  <nav class="flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-    <a class="font-semibold underline-offset-2 hover:underline hover:text-teal-700 dark:hover:text-teal-300" href={cheatsheetHref}>
-      {isVi ? 'Cheatsheet skill' : 'Skills cheatsheet'}
-    </a>
-    <span aria-hidden="true">/</span>
-    <span>{kitLabel}</span>
-    <span aria-hidden="true">/</span>
-    <span class="font-mono text-slate-700 dark:text-slate-200">{data.command}</span>
-  </nav>
+  <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <nav class="flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+      <a class="font-semibold underline-offset-2 hover:underline hover:text-teal-700 dark:hover:text-teal-300" href={cheatsheetHref}>
+        {isVi ? 'Cheatsheet skill' : 'Skills cheatsheet'}
+      </a>
+      <span aria-hidden="true">/</span>
+      <span>{kitLabel}</span>
+      <span aria-hidden="true">/</span>
+      <span class="font-mono text-slate-700 dark:text-slate-200">{data.command}</span>
+    </nav>
+    <AkSkillJump lang={currentLang} currentKit={kit} currentSkill={data.id} items={jumpItems} />
+  </div>
 
   <InfographicGenericCommandQuickRef data={data} lang={currentLang} plainHeadline />
 
