@@ -27,7 +27,7 @@ function parseArgs(argv) {
     else if (a === '--self-test') out.selfTest = true;
     else if (a === '--help' || a === '-h') {
       process.stdout.write(
-        'Usage: check-ak-skill-detail-claims --kit-root <ak-cli> [--ak-docs <ak-docs>] [--kit engineer] [--self-test]\n',
+        'Usage: check-ak-skill-detail-claims --kit-root <ak-cli> [--ak-docs <ak-docs>] [--kit engineer|marketing|all] [--self-test]\n',
       );
       process.exit(0);
     }
@@ -89,6 +89,17 @@ function extractAllowedFlags(argumentHint, skillMd) {
       continue;
     }
     for (const f of extractFlagsFromText(line)) flags.add(f);
+  }
+  return flags;
+}
+
+function extractDocTableFlags(mdx) {
+  const flags = new Set();
+  const tables = String(mdx || '').match(/(?:^|\n)(?:\|.*\|\n)+/g) || [];
+  for (const table of tables) {
+    const header = table.split('\n').find((line) => line.includes('|')) || '';
+    if (!/\b(option|flag|mode|input)\b/i.test(header)) continue;
+    for (const f of extractFlagsFromText(table)) flags.add(f);
   }
   return flags;
 }
@@ -210,7 +221,7 @@ function firstInvoke(tokens) {
   return '';
 }
 
-function checkFile({ id, src, skillMd, argumentHint }) {
+function checkFile({ id, kit, src, skillMd, argumentHint, extraAllowedFlags }) {
   const violations = [];
   const slug = slugFromId(id);
   const declared = extractDeclaredCommand(src);
@@ -220,6 +231,7 @@ function checkFile({ id, src, skillMd, argumentHint }) {
   }
 
   const allowedFlags = extractAllowedFlags(argumentHint, skillMd);
+  for (const f of extraAllowedFlags || []) allowedFlags.add(f);
   const allowedSubs = extractSubcommands(argumentHint, skillMd);
   const invokes = allowedInvokes(id);
   const commands = [
@@ -284,7 +296,7 @@ function checkFile({ id, src, skillMd, argumentHint }) {
     }
   }
 
-  if (isUserFacing(skillMd)) {
+  if (isUserFacing(skillMd) && kit !== 'marketing') {
     const prompts = extractPromptCommands(src, expectedCmd);
     if (prompts.length < 2) {
       violations.push(`user-facing skill needs >=2 promptExamples, found ${prompts.length}`);
@@ -427,51 +439,56 @@ function main() {
     process.stderr.write('Missing --kit-root\n');
     process.exit(2);
   }
-  const kit = args.kit;
-  const dir = join(DETAILS, kit);
-  if (!existsSync(dir)) {
-    process.stderr.write(`No details dir ${dir}\n`);
-    process.exit(2);
-  }
-
-  const files = readdirSync(dir)
-    .filter((n) => n.startsWith('ak-') && n.endsWith('.ts'))
-    .sort();
+  const kitList = args.kit === 'all' ? ['engineer', 'marketing'] : [args.kit];
   const rows = [];
-  const warnings = [];
-  for (const name of files) {
-    const id = name.slice(0, -3);
-    const srcPath = join(dir, name);
-    const src = readFileSync(srcPath, 'utf8');
-    const skill = resolveSource(args.kitRoot, kit, id);
-    if (!skill) {
-      rows.push({ id, violations: ['missing SKILL.md'] });
-      continue;
+  let fileCount = 0;
+  for (const kit of kitList) {
+    const dir = join(DETAILS, kit);
+    if (!existsSync(dir)) {
+      process.stderr.write(`No details dir ${dir}\n`);
+      process.exit(2);
     }
-    const skillMd = readFileSync(skill.abs, 'utf8');
-    const fm = extractFrontmatter(skillMd);
-    const violations = checkFile({
-      id,
-      kit,
-      src,
-      skillMd,
-      argumentHint: fm.argumentHint,
-    });
-    if (violations.length) rows.push({ id, violations });
-    if (args.akDocs) {
-      warnings.push(
-        ...warnAkDocs(
+    const files = readdirSync(dir)
+      .filter((n) => n.startsWith('ak-') && n.endsWith('.ts'))
+      .sort();
+    fileCount += files.length;
+    for (const name of files) {
+      const id = name.slice(0, -3);
+      const src = readFileSync(join(dir, name), 'utf8');
+      const skill = resolveSource(args.kitRoot, kit, id);
+      if (!skill) {
+        rows.push({ id: `${kit}/${id}`, violations: ['missing SKILL.md'] });
+        continue;
+      }
+      const skillMd = readFileSync(skill.abs, 'utf8');
+      const fm = extractFrontmatter(skillMd);
+      const extraAllowedFlags = new Set();
+      if (args.akDocs) {
+        const mdx = join(
           args.akDocs,
-          id,
-          extractDetailFlags(src),
-        ),
-      );
+          'content/docs/stable/kits',
+          kit,
+          'skills',
+          `${slugFromId(id)}.en.mdx`,
+        );
+        if (existsSync(mdx)) {
+          for (const f of extractDocTableFlags(readFileSync(mdx, 'utf8'))) extraAllowedFlags.add(f);
+        }
+      }
+      const violations = checkFile({
+        id,
+        kit,
+        src,
+        skillMd,
+        argumentHint: fm.argumentHint,
+        extraAllowedFlags,
+      });
+      if (violations.length) rows.push({ id: `${kit}/${id}`, violations });
     }
   }
 
-  for (const w of warnings) process.stderr.write(`${w}\n`);
   if (!rows.length) {
-    process.stdout.write(`ok ${files.length} ${kit} skill-detail files\n`);
+    process.stdout.write(`ok ${fileCount} ${args.kit} skill-detail files\n`);
     return;
   }
   process.stdout.write(`${rows.length} files with claim violations\n`);

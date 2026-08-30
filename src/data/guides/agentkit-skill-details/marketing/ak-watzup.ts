@@ -91,15 +91,9 @@ const data: SkillInfographic = {
       "type": "tool"
     }
   ],
-  "outputFlags": [
-    {
-      "flag": "--redact-paths",
-      "titleEn": "Redact absolute paths",
-      "titleVi": "Ẩn path tuyệt đối",
-      "descEn": "Replace absolute filesystem paths with stable labels when the handoff will leave the current trusted context.",
-      "descVi": "Thay path filesystem tuyệt đối bằng label ổn định khi report bàn giao sẽ rời khỏi ngữ cảnh tin cậy hiện tại."
-    }
-  ],
+  "invocation": {
+    "syntax": "/ak:watzup [--fetch]",
+  },
   "promptExamples": [
     {
       "labelEn": "Session handoff",

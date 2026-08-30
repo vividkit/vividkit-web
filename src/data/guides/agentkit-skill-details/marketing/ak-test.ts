@@ -91,29 +91,14 @@ const data: SkillInfographic = {
       "cookFlag": "references/workflow.md"
     }
   ],
-  "outputFlags": [
-    {
-      "flag": "--headless",
-      "titleEn": "Headless UI route",
-      "titleVi": "Tuyến UI headless",
-      "descEn": "Run the UI route without a visible browser when the current test scope allows it.",
-      "descVi": "Chạy tuyến UI không hiện browser khi scope test hiện tại cho phép."
-    },
-    {
-      "flag": "--mobile",
-      "titleEn": "Mobile viewport",
-      "titleVi": "Viewport mobile",
-      "descEn": "Exercise the UI route with a mobile viewport and report the actual environment tested.",
-      "descVi": "Chạy tuyến UI với viewport mobile và báo đúng môi trường đã test."
-    },
-    {
-      "flag": "--auth",
-      "titleEn": "Approved auth state",
-      "titleVi": "Trạng thái auth đã duyệt",
-      "descEn": "Use only an approved protected-route state boundary without exposing cookies, tokens, or credentials.",
-      "descVi": "Chỉ dùng ranh giới state route bảo vệ đã được duyệt mà không lộ cookie, token hoặc credential."
-    }
-  ],
+  "invocation": {
+    "syntax": "/ak:test [ui|workflow] [--headless] [--mobile] [--auth]",
+    "options": [
+      { "token": "--headless", "titleEn": "Headless UI route", "titleVi": "Tuyến UI headless", "descEn": "Run the UI route without a visible browser when the current test scope allows it.", "descVi": "Chạy tuyến UI không hiện browser khi scope test hiện tại cho phép." },
+      { "token": "--mobile", "titleEn": "Mobile viewport", "titleVi": "Viewport mobile", "descEn": "Exercise the UI route with a mobile viewport and report the actual environment tested.", "descVi": "Chạy tuyến UI với viewport mobile và báo đúng môi trường đã test." },
+      { "token": "--auth", "titleEn": "Approved auth state", "titleVi": "Trạng thái auth đã duyệt", "descEn": "Use only an approved protected-route state boundary without exposing cookies, tokens, or credentials.", "descVi": "Chỉ dùng ranh giới state route bảo vệ đã được duyệt mà không lộ cookie, token hoặc credential." }
+    ]
+  },
   "skillStack": [
     {
       "name": "scan-components.py",

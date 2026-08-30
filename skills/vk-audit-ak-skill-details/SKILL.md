@@ -50,33 +50,35 @@ node <skill-dir>/scripts/run.mjs check \
 
 ### `--check`
 
-CI-friendly. Runs, in order, and fails on the first non-zero:
+CI-friendly. Fails on the first non-zero:
 
-1. `scripts/check-ak-skill-details.mjs --kit-root <ak-cli>` — inventory/lock vs kit `SKILL.md`
-2. `scripts/check-ak-skill-detail-principles.mjs` — EN/VI principle counts, no dummy copy
-3. `scripts/check-ak-skill-detail-claims.mjs --kit-root <ak-cli> --kit <kit>` — invented flags vs `SKILL.md`
-4. `scripts/check-ak-skill-detail-ak-docs.mjs --ak-docs <ak-docs> --kit <kit>` — same-kit structured docs tables
+1. `scripts/check-ak-skill-detail-principles.mjs`
+2. `scripts/check-ak-skill-details.mjs --kit-root <ak-cli>`
+3. `scripts/check-ak-skill-detail-claims.mjs --kit-root <ak-cli> --ak-docs <ak-docs> --kit all`
 
-Does not write `src/`. Does not `--write-lock`.
+Allowed invocation tokens = kit `SKILL.md` ∪ same-kit ak-docs Option/Mode/Input tables.
+Marketing pages without an `invocation` block are report-only until those pages gain one.
+
+Does not write `src/`. Does not `--write-lock`. Same-kit table *missed* tokens are `--report` only (helper CLIs stay off skill pages).
 
 ### `--report`
 
-Same checkers as `--check`, continue after failures, write
+Runs `--check` checkers plus `scripts/check-ak-skill-detail-ak-docs.mjs`, continues after failures, writes
 `reference/changelog-reports/{YYYY-MM-DD}-ak-skill-details-audit.md`
-with dirty ids, missing same-kit mdx, and suggested review files.
+with checker exits, **dirty IDs**, and **missing same-kit MDX**.
 
-Coverage snapshot (187 ids): `scripts/ak-docs-skill-detail-coverage.json`.
+Coverage snapshot: `scripts/ak-docs-skill-detail-coverage.json`.
 
 ### `--update`
 
-Only after `--check` or `--report` named dirty pages. Re-author those
-`src/data/guides/agentkit-skill-details/{kit}/ak-*.ts` files using
-[references/authoring.md](references/authoring.md). Then:
+Runs `--report`, prints dirty IDs to author using
+[references/authoring.md](references/authoring.md), then stop for re-authoring.
+After edits, re-run `--check` and `npm run build`.
+
 
 ```bash
 node <vividkit-root>/scripts/check-ak-skill-details.mjs --kit-root <ak-cli> --write-lock
-node <vividkit-root>/scripts/check-ak-skill-detail-principles.mjs
-node <vividkit-root>/scripts/check-ak-skill-detail-claims.mjs --kit-root <ak-cli> --kit all
+node skills/vk-audit-ak-skill-details/scripts/run.mjs check --kit-root <ak-cli> --ak-docs <ak-docs> --kit all
 npm run build
 ```
 

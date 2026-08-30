@@ -39,13 +39,25 @@ function findRepo(start) {
 
 function run(nodeArgs, cwd) {
   const r = spawnSync(process.execPath, nodeArgs, { cwd, encoding: 'utf8' });
-  if (r.stdout) process.stdout.write(r.stdout);
-  if (r.stderr) process.stderr.write(r.stderr);
-  return r.status ?? 1;
+  const stdout = r.stdout || '';
+  const stderr = r.stderr || '';
+  if (stdout) process.stdout.write(stdout);
+  if (stderr) process.stderr.write(stderr);
+  return { code: r.status ?? 1, stdout, stderr };
 }
 
-function kits(kit) {
-  return kit === 'all' ? ['engineer', 'marketing'] : [kit];
+function parseDirty(text) {
+  const dirty = [];
+  const missing = [];
+  for (const line of String(text).split('\n')) {
+    const miss = line.match(/^missing-docs\s+(\S+)/);
+    if (miss) missing.push(miss[1]);
+    const id = line.match(/^(?:engineer|marketing)\/ak-[a-z0-9-]+$/);
+    if (id) dirty.push(id[0]);
+    const bare = line.match(/^ak-[a-z0-9-]+$/);
+    if (bare) dirty.push(bare[0]);
+  }
+  return { dirty: [...new Set(dirty)], missing: [...new Set(missing)] };
 }
 
 function main(argv) {
@@ -59,51 +71,63 @@ function main(argv) {
 `);
     process.exit(0);
   }
-  if (args.cmd === 'update') {
-    process.stdout.write(
-      'update is an authoring workflow. Re-author dirty src/data/guides/agentkit-skill-details files, then re-run check. See references/authoring.md.\n',
-    );
-    process.exit(0);
-  }
 
   const repo = resolve(args.repo || findRepo(SKILL_DIR));
   if (!existsSync(join(repo, 'scripts/check-ak-skill-details.mjs'))) {
     process.stderr.write(`Not a VividKit root: ${repo}\n`);
     process.exit(2);
   }
-  if ((args.cmd === 'check' || args.cmd === 'report') && !args.kitRoot) {
+  if (!args.kitRoot) {
     process.stderr.write('Missing --kit-root\n');
     process.exit(2);
   }
 
-  const logs = [];
+  const claims = [
+    'scripts/check-ak-skill-detail-claims.mjs',
+    '--kit-root',
+    args.kitRoot,
+    '--kit',
+    args.kit,
+  ];
+  if (args.akDocs) claims.push('--ak-docs', args.akDocs);
+
   const steps = [
     ['scripts/check-ak-skill-detail-principles.mjs', '--self-test'],
     ['scripts/check-ak-skill-detail-principles.mjs'],
+    ['scripts/check-ak-skill-details.mjs', '--kit-root', args.kitRoot],
+    ['scripts/check-ak-skill-detail-claims.mjs', '--self-test'],
+    claims,
   ];
-  if (args.kitRoot) {
-    steps.push(['scripts/check-ak-skill-details.mjs', '--kit-root', args.kitRoot]);
-    steps.push(['scripts/check-ak-skill-detail-claims.mjs', '--self-test']);
-    for (const k of kits(args.kit)) {
-      steps.push(['scripts/check-ak-skill-detail-claims.mjs', '--kit-root', args.kitRoot, '--kit', k]);
-    }
-  }
-  if (args.akDocs) {
+  if (args.akDocs && args.cmd !== 'check') {
     steps.push(['scripts/check-ak-skill-detail-ak-docs.mjs', '--self-test']);
-    steps.push(['scripts/check-ak-skill-detail-ak-docs.mjs', '--ak-docs', args.akDocs, '--kit', args.kit]);
+    steps.push([
+      'scripts/check-ak-skill-detail-ak-docs.mjs',
+      '--ak-docs',
+      args.akDocs,
+      '--kit',
+      args.kit,
+    ]);
   }
 
+  const logs = [];
   let failed = 0;
+  let dirty = [];
+  let missing = [];
   for (const step of steps) {
-    const code = run(step, repo);
-    logs.push({ step: step.join(' '), code });
-    if (code !== 0) {
-      failed = code;
-      if (args.cmd === 'check') process.exit(code);
+    const result = run(step, repo);
+    const parsed = parseDirty(`${result.stdout}\n${result.stderr}`);
+    dirty.push(...parsed.dirty);
+    missing.push(...parsed.missing);
+    logs.push({ step: step.join(' '), code: result.code, dirty: parsed.dirty, missing: parsed.missing });
+    if (result.code !== 0) {
+      failed = result.code;
+      if (args.cmd === 'check') process.exit(result.code);
     }
   }
+  dirty = [...new Set(dirty)];
+  missing = [...new Set(missing)];
 
-  if (args.cmd === 'report') {
+  if (args.cmd === 'report' || args.cmd === 'update') {
     const dir = join(repo, 'reference/changelog-reports');
     mkdirSync(dir, { recursive: true });
     const day = new Date().toISOString().slice(0, 10);
@@ -113,13 +137,28 @@ function main(argv) {
       [
         `# AgentKit skill-detail audit ${day}`,
         '',
+        '## Checker exits',
         ...logs.map((l) => `- \`${l.step}\` → exit ${l.code}`),
+        '',
+        '## Dirty IDs',
+        ...(dirty.length ? dirty.map((id) => `- ${id}`) : ['- none']),
+        '',
+        '## Missing same-kit MDX',
+        ...(missing.length ? missing.map((id) => `- ${id}`) : ['- none']),
         '',
         'Re-author dirty `src/data/guides/agentkit-skill-details/` files, then `--write-lock`.',
         '',
       ].join('\n'),
     );
     process.stdout.write(`wrote ${out}\n`);
+    process.stdout.write(`dirty ${dirty.length}; missing-mdx ${missing.length}\n`);
+    if (args.cmd === 'update') {
+      process.stdout.write(
+        dirty.length
+          ? `Author these IDs using references/authoring.md:\n${dirty.map((id) => `- ${id}`).join('\n')}\n`
+          : 'No dirty IDs. Working tree matches checkers.\n',
+      );
+    }
   }
 
   process.exit(failed);

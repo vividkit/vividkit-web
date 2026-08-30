@@ -20,9 +20,8 @@ const data: SkillInfographic = {
   expertiseAreasEn: ['Plans dashboard launch', 'Kanban and grid views', 'Timeline and progress visibility', 'Plan file navigation', 'CLI compatibility probing'],
   expertiseAreasVi: ['Mở dashboard plan', 'View kanban và grid', 'Theo dõi timeline và tiến độ', 'Điều hướng file plan', 'Probe tương thích CLI'],
   invocation: {
-    syntax: '/ak:plans-kanban [--open|--no-open|--stop]',
+    syntax: '/ak:plans-kanban [--no-open|--stop]',
     options: [
-      { token: '--open', titleEn: 'Open dashboard', titleVi: 'Mở dashboard', descEn: 'Explicitly request the default behavior: find or start the dashboard, probe plans support, open /plans, and print JSON.', descVi: 'Yêu cầu rõ hành vi mặc định: tìm hoặc khởi động dashboard, probe hỗ trợ plans, mở /plans và in JSON.', exampleCommand: '/ak:plans-kanban --open' },
       { token: '--no-open', titleEn: 'Report URL only', titleVi: 'Chỉ báo URL', descEn: 'Perform discovery and capability checks, then report the /plans URL without opening a browser.', descVi: 'Thực hiện discovery và kiểm tra capability, rồi báo URL /plans mà không mở browser.', exampleCommand: '/ak:plans-kanban --no-open' },
       { token: '--stop', titleEn: 'Stop dashboard', titleVi: 'Dừng dashboard', descEn: 'Delegate to ak config stop and return that command result instead of opening /plans.', descVi: 'Ủy quyền cho ak config stop và trả kết quả lệnh đó thay vì mở /plans.', exampleCommand: '/ak:plans-kanban --stop' },
     ],
