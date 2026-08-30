@@ -244,6 +244,15 @@ export interface ProcessGroupLabel {
   kickerVi: string;
   stepSlice: [number, number];
 }
+/** Mutually exclusive reader-facing situations for the same invocation */
+export interface SituationCard {
+  titleEn: string;
+  titleVi: string;
+  whenEn: string;
+  whenVi: string;
+  outcomeEn: string;
+  outcomeVi: string;
+}
 
 /** Hard gate warning type */
 export type HardGateType = 'warning' | 'critical' | 'info';
@@ -272,7 +281,8 @@ export interface SkillInfographic {
   };
 
   processFlow: ProcessFlowStep[];
-
+  /** Mutually exclusive cases for the same command; not sequential process steps */
+  situations?: SituationCard[];
   corePrinciplesEn?: string[];
   corePrinciplesVi?: string[];
   expertiseAreasEn?: string[];
