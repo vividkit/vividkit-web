@@ -118,6 +118,10 @@ const text = {
   outputFlagsDesc: isVi
     ? 'Chỉ các flag đổi artifact hoặc publish. Không phải toàn bộ option của skill.'
     : 'Only flags that change the artifact or publish it. Not the full option set.',
+  composable: isVi ? 'Flag kết hợp' : 'Composable flags',
+  composableDesc: isVi
+    ? 'Cách các option đi cùng nhau trên cùng một lần gọi. Không thay thế bảng option ở trên.'
+    : 'How options work together on one invocation. This does not replace the option cards above.',
   sample: isVi ? 'Ví dụ' : 'Example',
 };
 
@@ -234,6 +238,20 @@ const getPromptLabel = (prompt: PromptExample) => isVi ? prompt.labelVi : prompt
 const getPromptWhen = (prompt: PromptExample) => isVi ? prompt.whenVi : prompt.whenEn;
 const getPromptExpected = (prompt: PromptExample) => isVi ? prompt.expectedVi : prompt.expectedEn;
 const getOutputPattern = () => (isVi ? output?.patternVi : output?.patternEn)?.trim() || '';
+const TOKEN_RE = /(?:\/ak:[a-z0-9-]+|\$ak:[a-z0-9-]+|--[a-z0-9][a-z0-9-]*|-[a-z][a-z0-9]*)/g;
+const composableRaw = (isVi ? data.composableFlagsVi : data.composableFlagsEn) || '';
+const composableCards = composableRaw
+  .split(/(?<=[.。;；])\s+| · /)
+  .map((sentence) => sentence.trim())
+  .filter(Boolean)
+  .map((sentence) => {
+    const flags = [...new Set(sentence.match(new RegExp(TOKEN_RE.source, 'g')) || [])];
+    const html = renderInlineCode(sentence).replace(
+      new RegExp(TOKEN_RE.source, 'g'),
+      (flag) => `<code class="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-[0.82em] text-purple-600 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-purple-400 dark:ring-white/10">${flag}</code>`,
+    );
+    return { flags, html };
+  });
 ---
 
 <div class="space-y-8">
@@ -480,10 +498,25 @@ const getOutputPattern = () => (isVi ? output?.patternVi : output?.patternEn)?.t
     </section>
   )}
 
-  {(isVi ? data.composableFlagsVi : data.composableFlagsEn) && (
-    <p class="rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-xs leading-5 text-slate-600 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-300">
-      {isVi ? data.composableFlagsVi : data.composableFlagsEn}
-    </p>
+  {composableCards.length > 0 && (
+    <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-slate-950/45">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.composable}</h3>
+      <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300">{text.composableDesc}</p>
+      <div class="mt-4 grid gap-3 md:grid-cols-2">
+        {composableCards.map((card) => (
+          <article class="rounded-xl border border-slate-200 bg-slate-50/80 p-4 ring-1 ring-white/70 dark:border-white/10 dark:bg-white/[0.04] dark:ring-white/5">
+            {card.flags.length > 0 && (
+              <div class="flex flex-wrap gap-1.5">
+                {card.flags.map((flag) => (
+                  <code class="rounded-md bg-white px-2 py-1 font-mono text-xs font-semibold text-purple-600 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-purple-400 dark:ring-white/10">{flag}</code>
+                ))}
+              </div>
+            )}
+            <p class:list={['text-xs leading-5 text-slate-600 dark:text-slate-300', card.flags.length > 0 && 'mt-2']} set:html={card.html} />
+          </article>
+        ))}
+      </div>
+    </section>
   )}
 
   {modeCards.length > 0 ? (

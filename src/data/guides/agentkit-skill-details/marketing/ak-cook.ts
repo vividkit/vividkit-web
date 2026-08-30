@@ -44,6 +44,21 @@ const data: SkillInfographic = {
     { flag: "--auto", modeEn: "Auto-approve steps", modeVi: "Tự duyệt bước", research: "Yes", redTeam: "Review-cycle rules", validation: "Testing required" },
     { flag: "--no-test", modeEn: "Skip testing step", modeVi: "Bỏ bước test", research: "Yes", redTeam: "Risk must be surfaced", validation: "Tests skipped warning" },
   ],
+  invocation: {
+    syntax: '/ak:cook [task|plan-path] [--interactive|--fast|--parallel|--auto|--no-test] [--tdd] [--advice]',
+    arguments: [
+      { token: '[task|plan-path]', titleEn: 'Task or plan path', titleVi: 'Task hoặc đường dẫn plan', descEn: 'A concrete technical task, or an approved plan.md path. A plan path loads that plan and skips creating another.', descVi: 'Một việc kỹ thuật cụ thể, hoặc đường dẫn plan.md đã duyệt. Đường dẫn plan sẽ load plan đó và không tạo plan mới.', required: false, exampleCommand: '/ak:cook ./plans/utm-capture/plan.md' },
+    ],
+    options: [
+      { token: '--interactive', titleEn: 'Full workflow', titleVi: 'Workflow đầy đủ', descEn: 'Default. Full workflow with human review gates. Still requires the opening contract, plan, implementation, testing, review, and finalization.', descVi: 'Mặc định. Workflow đầy đủ với cổng review của người. Vẫn cần contract mở đầu, plan, triển khai, test, review và hoàn tất.' },
+      { token: '--fast', titleEn: 'Skip research', titleVi: 'Bỏ research', descEn: 'Skips research and moves from scout to a concise plan. A plan, tests, and review are still required.', descVi: 'Bỏ research và đi từ scout tới plan gọn. Vẫn cần plan, test và review.', exampleCommand: '/ak:cook "Add consent-aware UTM capture to the signup form" --fast' },
+      { token: '--parallel', titleEn: 'Concurrent phases', titleVi: 'Phase chạy song song', descEn: 'Allows independent phases to execute concurrently. Requires explicit dependencies and non-overlapping file ownership.', descVi: 'Cho phép các phase độc lập chạy song song. Cần dependency rõ và ownership file không chồng lấn.' },
+      { token: '--auto', titleEn: 'Fewer review pauses', titleVi: 'Bớt dừng review', descEn: 'Removes routine human review pauses. Tests, code review, and security policy still apply. Does not authorize publish, deploy, or Git.', descVi: 'Bỏ các điểm dừng review thường lệ. Test, code review và chính sách bảo mật vẫn bắt buộc. Không cấp quyền publish, deploy hay Git.', exampleCommand: '/ak:cook ./plans/utm-capture/plan.md --auto' },
+      { token: '--no-test', titleEn: 'Skip tests', titleVi: 'Bỏ test', descEn: 'Skips the testing stage. Code review stays mandatory and missing test evidence must be warned.', descVi: 'Bỏ giai đoạn test. Code review vẫn bắt buộc và phải cảnh báo thiếu bằng chứng test.' },
+      { token: '--tdd', titleEn: 'Tests-first phases', titleVi: 'Phase test-first', descEn: 'Adds tests-first behavior within each relevant phase. Does not replace the selected base mode.', descVi: 'Thêm hành vi test-first trong từng phase liên quan. Không thay mode nền.', exampleCommand: '/ak:cook "Refactor auth middleware" --tdd' },
+      { token: '--advice', titleEn: 'Advisory checkpoints', titleVi: 'Checkpoint cố vấn', descEn: 'Adds kongming advisory checkpoints. Advice does not implement, approve, or expand authority.', descVi: 'Thêm checkpoint cố vấn kongming. Advice không triển khai, phê duyệt hay mở rộng quyền.', exampleCommand: '/ak:cook "Add consent-aware UTM capture" --advice' },
+    ],
+  },
   composableFlagsEn: "Composable flags documented by the skill: --tdd for tests-first refactoring, --advice for kongming supervision, --yagni to cut unnecessary scope, and --skip-journal to skip the automatic journal step.",
   composableFlagsVi: "Các flag kết hợp được ghi trong skill: --tdd để làm tests-first khi refactor, --advice để có kongming giám sát, --yagni để cắt phạm vi không cần thiết, và --skip-journal để bỏ bước journal tự động.",
   promptExamples: [
