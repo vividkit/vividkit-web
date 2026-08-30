@@ -10,6 +10,20 @@ const data: SkillInfographic = {
     "taglineEn": "Provides searchable, packaged UI/UX design intelligence for product fit, style, color palettes, typography, landing structure, charts, accessibility, interaction, responsive behavior, app polish, and React Native stack guidance.",
     "taglineVi": "Cung cấp trí tuệ thiết kế UI/UX đóng gói, có thể tìm kiếm cho độ hợp product, style, palette màu, typography, cấu trúc landing, chart, accessibility, tương tác, responsive, polish app và hướng dẫn stack React Native."
   },
+  "invocation": {
+    "syntax": "/ak:ui-ux-pro-max [UI/UX task brief]",
+    "arguments": [
+      {
+        "token": "[UI/UX task brief]",
+        "titleEn": "UI/UX task brief",
+        "titleVi": "Brief tác vụ UI/UX",
+        "descEn": "Optional natural-language brief describing the visible experience to design, review, fix, improve, or turn into a design system. Include product type, audience, stack, page or component, style keywords, constraints, and desired artifact when known.",
+        "descVi": "Brief ngôn ngữ tự nhiên tùy chọn mô tả trải nghiệm hiển thị cần thiết kế, review, sửa, cải thiện hoặc chuyển thành design system. Nên nêu loại sản phẩm, người dùng, stack, page hoặc component, từ khóa phong cách, ràng buộc và artifact mong muốn khi biết.",
+        "required": false,
+        "exampleCommand": "/ak:ui-ux-pro-max design an accessible mobile-first checkout system for a subscription app with dark mode"
+      }
+    ]
+  },
   "hardGate": {
     "type": "warning",
     "titleEn": "Pre-delivery checklist, not a visual-only pass",

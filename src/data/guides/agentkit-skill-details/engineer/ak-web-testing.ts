@@ -10,6 +10,13 @@ const data: SkillInfographic = {
     taglineEn: 'Design and run web test automation across Vitest, Playwright, k6, axe-core, Lighthouse, visual regression, flakiness, mobile gestures, and cross-browser quality.',
     taglineVi: 'Thiết kế và chạy tự động hóa test web với Vitest, Playwright, k6, axe-core, Lighthouse, visual regression, xử lý flakiness, gesture mobile và đa trình duyệt.',
   },
+  invocation: {
+    syntax: '/ak:web-testing [test-type] [target]',
+    arguments: [
+      { token: '[test-type]', titleEn: 'Test surface', titleVi: 'Bề mặt test', descEn: 'Optional testing area such as unit, integration, component, E2E, API, contract, accessibility, visual, performance, load, or security. This release does not define a fixed parser or enumerated values, so state the desired runner and evidence directly.', descVi: 'Mảng test tùy chọn như unit, integration, component, E2E, API, contract, accessibility, visual, performance, load hoặc security. Bản này không định nghĩa parser cố định hay danh sách giá trị, nên hãy nêu rõ runner và bằng chứng mong muốn.', exampleCommand: '/ak:web-testing e2e "Test checkout on http://localhost:3000 with Chromium and mobile Safari emulation; use seeded test data and never contact payment production."' },
+      { token: '[target]', titleEn: 'Target and evidence', titleVi: 'Target và bằng chứng', descEn: 'Optional URL, module, flow, environment, auth method, test data, browsers or devices, expected behavior, and cleanup boundary. It does not grant permission to run load, security, or mutating tests against unsafe systems.', descVi: 'URL, module, luồng, environment, phương thức auth, test data, browser hoặc device, hành vi kỳ vọng và ranh giới cleanup tùy chọn. Token này không cấp quyền chạy load, security hoặc test làm thay đổi dữ liệu trên hệ thống không an toàn.', exampleCommand: '/ak:web-testing load "Measure API latency and error-rate thresholds with k6 against the staging endpoints only"' },
+    ],
+  },
   processFlow: [
     { number: 1, titleEn: 'Choose model', titleVi: 'Chọn mô hình', descEn: 'Select pyramid, trophy, or honeycomb testing strategy based on monolith, SPA, or microservice shape.', descVi: 'Chọn chiến lược pyramid, trophy hoặc honeycomb theo dạng monolith, SPA hay microservice.' },
     { number: 2, titleEn: 'Pick layer', titleVi: 'Chọn tầng test', descEn: 'Map the request to unit, integration, E2E, component, contract, API, load, visual, accessibility, performance, or security testing.', descVi: 'Ánh xạ yêu cầu vào unit, integration, E2E, component, contract, API, load, visual, accessibility, performance hoặc security testing.' },

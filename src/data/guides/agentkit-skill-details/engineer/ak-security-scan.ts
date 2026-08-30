@@ -1,4 +1,44 @@
-import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-works';
+
+const invocation: SkillInvocation = {
+  syntax: '/ak:security-scan [scope] [--secrets-only] [--deps-only] [--full]',
+  arguments: [
+    {
+      token: '[scope]',
+      titleEn: 'Scan scope',
+      titleVi: 'Phạm vi scan',
+      descEn: 'Optional path, directory, or repository scope to scan. Omit to scan the current project from the active root.',
+      descVi: 'Đường dẫn, thư mục hoặc phạm vi repository tùy chọn cần scan. Bỏ qua để scan project hiện tại từ root đang active.',
+      exampleCommand: '/ak:security-scan src/api/',
+    },
+  ],
+  options: [
+    {
+      token: '--secrets-only',
+      titleEn: 'Secrets only',
+      titleVi: 'Chỉ secret',
+      descEn: 'Limit coverage to hardcoded credentials and private-key patterns with local context checks.',
+      descVi: 'Giới hạn coverage vào credential hardcode và pattern private key với kiểm tra ngữ cảnh local.',
+      exampleCommand: '/ak:security-scan --secrets-only',
+    },
+    {
+      token: '--deps-only',
+      titleEn: 'Dependencies only',
+      titleVi: 'Chỉ dependency',
+      descEn: 'Run the supported package-audit path for the detected Node.js or Python project; unavailable tooling is reported, not treated as clean.',
+      descVi: 'Chạy đường package audit được hỗ trợ cho project Node.js hoặc Python đã phát hiện; tool không khả dụng được báo rõ, không xem là sạch.',
+      exampleCommand: '/ak:security-scan --deps-only',
+    },
+    {
+      token: '--full',
+      titleEn: 'Full scan',
+      titleVi: 'Scan đầy đủ',
+      descEn: 'Declare the normal full workflow: secrets first, supported dependency audit, vulnerable code patterns, and .env exposure checks.',
+      descVi: 'Chạy workflow đầy đủ thông thường: secret trước, audit dependency được hỗ trợ, pattern code dễ tổn thương và kiểm tra lộ .env.',
+      exampleCommand: '/ak:security-scan src/api/ --full',
+    },
+  ],
+};
 
 const data: SkillInfographic = {
   "id": "ak-security-scan",
@@ -113,6 +153,7 @@ const data: SkillInfographic = {
       "validation": "Report only"
     }
   ],
+  "invocation": invocation,
   "outputFlags": [
     {
       "flag": "--secrets-only",

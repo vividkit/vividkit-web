@@ -1,9 +1,32 @@
-import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-works';
+
+const invocation: SkillInvocation = {
+  syntax: '/ak:web-frameworks [framework] [feature]',
+  arguments: [
+    {
+      token: '[framework]',
+      titleEn: 'Framework or stack focus',
+      titleVi: 'Framework hoặc stack cần tập trung',
+      descEn: 'Optional focus such as Next.js, Turborepo, RemixIcon, App Router, RSC, SSR, ISR, or caching. It does not set a default framework, version, package manager, hosting provider, or deployment mode.',
+      descVi: 'Trọng tâm tùy chọn như Next.js, Turborepo, RemixIcon, App Router, RSC, SSR, ISR hoặc caching. Trường này không đặt framework, version, package manager, nhà cung cấp hosting hay chế độ deploy mặc định.',
+      exampleCommand: '/ak:web-frameworks nextjs "Add an App Router product page in the existing pinned Next.js version"',
+    },
+    {
+      token: '[feature]',
+      titleEn: 'Feature or architecture request',
+      titleVi: 'Yêu cầu tính năng hoặc kiến trúc',
+      descEn: 'Natural-language work request covering routes, layouts, Server or Client Component boundaries, data-fetching policy, cache freshness, monorepo packages, Turborepo tasks, or RemixIcon integration.',
+      descVi: 'Yêu cầu bằng ngôn ngữ tự nhiên về route, layout, ranh giới Server hoặc Client Component, chính sách data fetching, độ mới cache, package monorepo, task Turborepo hoặc tích hợp RemixIcon.',
+      exampleCommand: '/ak:web-frameworks Turborepo monorepo for web, admin, docs, and shared UI packages',
+    },
+  ],
+};
 
 const data: SkillInfographic = {
   id: 'ak-web-frameworks',
   command: '/ak:web-frameworks',
   kit: 'engineer',
+  invocation,
   header: {
     titleEn: '/ak:web-frameworks — Modern React web apps',
     titleVi: '/ak:web-frameworks — App React hiện đại',

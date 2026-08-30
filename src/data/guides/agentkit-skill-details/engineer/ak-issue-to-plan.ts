@@ -139,6 +139,46 @@ const data: SkillInfographic = {
       "exampleCommand": "/ak:issue-to-plan 123 --repo bestagentkits/agentkit --decision-label \"need decisions\""
     }
   ],
+  "invocation": {
+    "syntax": "/ak:issue-to-plan <github-issue-url | issue-number> [--repo owner/name] [--plan-ready-label <name>] [--decision-label <name>]",
+    "arguments": [
+      {
+        "token": "<github-issue-url | issue-number>",
+        "titleEn": "GitHub issue",
+        "titleVi": "GitHub issue",
+        "descEn": "Issue URL or issue number to audit and convert into a plan. A bare number requires --repo so the workflow can resolve the correct repository.",
+        "descVi": "URL issue hoặc số issue cần audit rồi chuyển thành plan. Nếu chỉ nhập số thì cần --repo để workflow resolve đúng repository.",
+        "required": true,
+        "exampleCommand": "/ak:issue-to-plan https://github.com/bestagentkits/agentkit/issues/123"
+      }
+    ],
+    "options": [
+      {
+        "token": "--repo owner/name",
+        "titleEn": "Target repository",
+        "titleVi": "Repo mục tiêu",
+        "descEn": "Explicit repository used for issue lookup and mismatch checks. Required when the invocation uses an issue number instead of a full URL.",
+        "descVi": "Repository rõ ràng dùng để lookup issue và kiểm tra mismatch. Bắt buộc khi invocation dùng số issue thay vì URL đầy đủ.",
+        "exampleCommand": "/ak:issue-to-plan 123 --repo bestagentkits/agentkit"
+      },
+      {
+        "token": "--plan-ready-label <name>",
+        "titleEn": "Plan-ready label",
+        "titleVi": "Label plan-ready",
+        "descEn": "Label applied after the plan is validated, red-teamed, pushed, and has no blocking decisions. Defaults to ready for plan audit.",
+        "descVi": "Label gắn sau khi plan đã validate, red-team, push và không còn quyết định blocking. Mặc định là ready for plan audit.",
+        "exampleCommand": "/ak:issue-to-plan 123 --repo bestagentkits/agentkit --plan-ready-label \"ready for plan audit\""
+      },
+      {
+        "token": "--decision-label <name>",
+        "titleEn": "Decision label",
+        "titleVi": "Label cần quyết định",
+        "descEn": "Label applied when human, product, or architecture decisions are needed before planning or downstream implementation. Defaults to need decisions.",
+        "descVi": "Label gắn khi cần quyết định từ human, product hoặc architecture trước khi lập plan hoặc implementation downstream. Mặc định là need decisions.",
+        "exampleCommand": "/ak:issue-to-plan 123 --repo bestagentkits/agentkit --decision-label \"need decisions\""
+      }
+    ]
+  },
   "skillStack": [
     {
       "name": "ak:scout",

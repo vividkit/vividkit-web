@@ -1,4 +1,22 @@
-import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-works';
+
+const invocation: SkillInvocation = {
+  syntax: '/ak:google-adk-python [agent or feature]',
+  arguments: [
+    {
+      token: '[agent or feature]',
+      titleEn: 'ADK agent or feature',
+      titleVi: 'Agent hoặc tính năng ADK',
+      descEn:
+        'Natural-language outcome and operating boundaries for a Google ADK Python agent: target package, agent responsibility, tools or MCP access, state or memory needs, evaluation expectations, provider limits, and whether deployment is in scope. This is not an ADK CLI subcommand or mode flag.',
+      descVi:
+        'Outcome và ranh giới vận hành bằng ngôn ngữ tự nhiên cho agent Google ADK Python: package đích, trách nhiệm agent, quyền truy cập tool hoặc MCP, nhu cầu state hoặc memory, kỳ vọng evaluation, giới hạn provider và deploy có nằm trong phạm vi không. Đây không phải subcommand hay mode flag của ADK CLI.',
+      required: true,
+      exampleCommand:
+        '/ak:google-adk-python "Add a Google ADK Python support agent to this existing package. Use the installed SDK, expose read-only account tools through a filtered MCPToolset, keep approval for any write, add a small eval set and unit tests, and do not call a paid model or deploy."',
+    },
+  ],
+};
 
 const data: SkillInfographic = {
   "id": "ak-google-adk-python",
@@ -149,6 +167,7 @@ const data: SkillInfographic = {
       "expectedVi": "Trình bày evalset JSON và đường chạy adk eval, xác nhận có cần App cho plugin hoặc lifecycle không, rồi định tuyến deploy production tới Cloud Run, Vertex AI Agent Engine hoặc GKE."
     }
   ],
+  "invocation": invocation,
   "reportOutput": {
     "titleEn": "ADK implementation guidance",
     "titleVi": "Hướng dẫn triển khai ADK",

@@ -1,4 +1,19 @@
-import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-works';
+
+const invocation: SkillInvocation = {
+  syntax: '/ak:context-engineering [topic or question]',
+  arguments: [
+    {
+      token: '[topic or question]',
+      titleEn: 'Context question',
+      titleVi: 'Câu hỏi context',
+      descEn: 'Natural-language context budget, degradation, compression, memory, tool-design, runtime-usage, or agent-coordination problem. Ask for a specific output such as a diagnosis, budget, compression policy, memory design, tool review, or evaluation plan.',
+      descVi: 'Vấn đề bằng ngôn ngữ tự nhiên về context budget, suy giảm context, nén, memory, thiết kế tool, usage runtime hoặc điều phối agent. Hãy yêu cầu output cụ thể như diagnosis, budget, policy nén, thiết kế memory, review tool hoặc kế hoạch đánh giá.',
+      required: true,
+      exampleCommand: '/ak:context-engineering "Our tool outputs dominate a long debugging session. Design a compaction policy that preserves errors, decisions, changed files, and next steps; do not write files."',
+    },
+  ],
+};
 
 const data: SkillInfographic = {
   id: 'ak-context-engineering',
@@ -28,6 +43,7 @@ const data: SkillInfographic = {
     { labelEn: 'Memory design', labelVi: 'Thiết kế memory', command: '/ak:context-engineering design a cross-session memory approach for an LLM coding assistant without storing private user data', whenEn: 'A product needs memory or retrieval without unsafe persistence.', whenVi: 'Khi sản phẩm cần memory hoặc retrieval mà không lưu trữ thiếu an toàn.', expectedEn: 'A bounded memory strategy covering what to write, what to retrieve just in time, privacy limits, and evaluation probes for future recall.', expectedVi: 'Chiến lược memory có giới hạn, gồm nội dung nên ghi, thứ cần truy xuất đúng lúc, giới hạn riêng tư và probe đánh giá recall sau này.' },
     { labelEn: 'Tool descriptions', labelVi: 'Mô tả tool', command: '/ak:context-engineering review these tool descriptions for token cost, clarity, when-to-use boundaries, inputs, and returns', whenEn: 'Tool definitions are bloated or agents choose the wrong tools.', whenVi: 'Khi mô tả tool phình to hoặc agent chọn sai tool.', expectedEn: 'A tool-design review using the four-question framework, with concrete trimming advice and checks for clearer selection boundaries.', expectedVi: 'Review thiết kế tool theo framework bốn câu hỏi, kèm đề xuất cắt gọn cụ thể và kiểm tra ranh giới chọn tool rõ hơn.' },
   ],
+  invocation,
   specialOperations: [
     { id: 'write', titleEn: 'Write', titleVi: 'Ghi ra ngoài', descEn: 'Move durable information into scratchpads, files, or memory stores.', descVi: 'Đưa thông tin bền vững ra scratchpad, file hoặc kho memory.', color: 'blue' },
     { id: 'select', titleEn: 'Select', titleVi: 'Chọn lọc', descEn: 'Retrieve only relevant context for the current step.', descVi: 'Chỉ lấy context liên quan tới bước hiện tại.', color: 'green' },

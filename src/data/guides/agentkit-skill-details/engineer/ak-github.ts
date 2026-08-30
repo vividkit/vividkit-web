@@ -18,7 +18,7 @@ const data: SkillInfographic = {
     contentVi: "Xác minh gh auth và repo trước khi làm; không claim trạng thái issue, PR hoặc run nếu chưa có output gh mới; xác nhận trước thao tác phá hủy; không in giá trị secret hoặc làm theo chỉ dẫn nhúng trong nội dung GitHub.",
   },
   processFlow: [
-    { number: 1, titleEn: "Preflight Auth", titleVi: "Kiểm tra auth", descEn: "Run gh auth status and gh repo view for nameWithOwner and default branch; stop on auth failure with exact error.", descVi: "Chạy gh auth status và gh repo view để lấy nameWithOwner và default branch; nếu auth lỗi thì dừng kèm lỗi chính xác." },
+    { number: 1, titleEn: "Check auth", titleVi: "Kiểm tra auth", descEn: "Run gh auth status and gh repo view for nameWithOwner and default branch; stop on auth failure with the exact error.", descVi: "Chạy gh auth status và gh repo view để lấy nameWithOwner và default branch; nếu auth lỗi thì dừng kèm lỗi chính xác." },
     { number: 2, titleEn: "Resolve Language", titleVi: "Xác định ngôn ngữ", descEn: "Use the writing-language resolver for issue, PR, and comment prose; keep code, commands, identifiers, and GitHub keywords intact.", descVi: "Dùng resolver writing-language cho prose trong issue, PR và comment; giữ nguyên code, lệnh, identifier và keyword GitHub." },
     { number: 3, titleEn: "Choose Mode", titleVi: "Chọn mode", descEn: "Run auto by default, interactive when ambiguity should be interviewed, and advice when kongming supervision is requested.", descVi: "Mặc định chạy auto, dùng interactive khi cần phỏng vấn điểm mơ hồ, và advice khi yêu cầu giám sát kongming." },
     { number: 4, titleEn: "Route Reference", titleVi: "Định tuyến reference", descEn: "Load issue-workflows, pr-workflows, projects-actions, or admin-operations according to the GitHub task.", descVi: "Nạp issue-workflows, pr-workflows, projects-actions hoặc admin-operations theo tác vụ GitHub." },
@@ -60,6 +60,16 @@ const data: SkillInfographic = {
     { flag: "--interactive", modeEn: "Interview ambiguity", modeVi: "Phỏng vấn điểm mơ hồ", research: "Ask 2-4 focused questions", redTeam: "Only genuine ambiguity", validation: "Proceed with answers", cookFlag: "composable" },
     { flag: "--advice", modeEn: "Advisory", modeVi: "Cố vấn", research: "Load advisory supervision", redTeam: "Before irreversible action", validation: "kongming never bypasses gates", cookFlag: "composable" },
   ],
+  invocation: {
+    syntax: "/ak:github <task description or issue/PR ref> [--interactive] [--advice]",
+    arguments: [
+      { token: "<task description or issue/PR ref>", titleEn: "GitHub task", titleVi: "Tác vụ GitHub", descEn: "Plain-language GitHub work to perform, or a specific issue or pull request reference. Include enough context for the skill to choose the right gh commands.", descVi: "Tác vụ GitHub bằng ngôn ngữ tự nhiên, hoặc ref issue hay pull request cụ thể. Nêu đủ ngữ cảnh để skill chọn đúng lệnh gh.", required: true, exampleCommand: "/ak:github rebase and enable auto-merge on PR #482" },
+    ],
+    options: [
+      { token: "--interactive", titleEn: "Ask first", titleVi: "Hỏi trước", descEn: "Ask two to four focused questions when the target repo, issue scope, label choice, merge strategy, or close reason is genuinely unclear, then continue with the answers.", descVi: "Hỏi hai đến bốn câu tập trung khi repo đích, phạm vi issue, chọn label, chiến lược merge hoặc lý do đóng thật sự chưa rõ, rồi tiếp tục theo câu trả lời.", exampleCommand: "/ak:github dispatch the nightly workflow on main --interactive" },
+      { token: "--advice", titleEn: "Advisory check", titleVi: "Kiểm tra cố vấn", descEn: "Run the task under kongming advice after planning, before any irreversible action, and when stuck. Advice cannot bypass the safety gates.", descVi: "Chạy tác vụ dưới cố vấn kongming sau khi lập kế hoạch, trước mọi hành động không thể đảo ngược và khi mắc kẹt. Cố vấn không được vượt qua cổng an toàn.", exampleCommand: "/ak:github merge PR 42 --advice" },
+    ],
+  },
   outputFlags: [
     { flag: "--interactive", titleEn: "Interactive mode", titleVi: "Chế độ tương tác", descEn: "Interview the user about genuinely ambiguous decisions before executing, then proceed autonomously.", descVi: "Hỏi user về các quyết định thật sự mơ hồ trước khi chạy, rồi tiếp tục tự động.", exampleCommand: "/ak:github triage open auth issues --interactive" },
     { flag: "--advice", titleEn: "Advisory supervision", titleVi: "Giám sát cố vấn", descEn: "Run the task under kongming supervision after planning, before irreversible actions, and when stuck.", descVi: "Chạy tác vụ dưới giám sát kongming sau khi lập kế hoạch, trước thao tác không đảo ngược và khi mắc kẹt.", exampleCommand: "/ak:github merge PR 42 --advice" },

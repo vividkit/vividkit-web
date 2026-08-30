@@ -106,6 +106,38 @@ const data: SkillInfographic = {
       "validation": "Only keeps work needed for stated outcome"
     }
   ],
+  "invocation": {
+    "syntax": "/ak:research [topic] [--ultra] [--yagni]",
+    "arguments": [
+      {
+        "token": "[topic]",
+        "titleEn": "Research question",
+        "titleVi": "Câu hỏi nghiên cứu",
+        "descEn": "Free-form technical decision or comparison to research. Include alternatives, constraints, criteria, recency window, research-call budget, and the approved Report path when available; this argument does not authorize implementation or publication.",
+        "descVi": "Quyết định kỹ thuật hoặc phần so sánh cần nghiên cứu bằng ngôn ngữ tự nhiên. Nêu alternative, ràng buộc, tiêu chí, khoảng thời gian cần độ mới, budget research call và đường dẫn Report đã duyệt khi có; tham số này không cấp quyền triển khai hay publish.",
+        "required": true,
+        "exampleCommand": "/ak:research \"Compare Postgres RLS and service-layer authorization for a multi-tenant B2B API; max 4 research calls; Report: plans/research/tenant-authorization.md\""
+      }
+    ],
+    "options": [
+      {
+        "token": "--ultra",
+        "titleEn": "Best-of-5 verifier",
+        "titleVi": "Verifier best-of-5",
+        "descEn": "Runs five independent read-only candidate researchers from one evidence packet, then a verifier selects one report unchanged or rejects all. It keeps the per-run research-call budget.",
+        "descVi": "Chạy năm candidate researcher độc lập chỉ đọc từ cùng một gói bằng chứng, rồi verifier chọn nguyên trạng một report hoặc loại hết. Vẫn giữ budget research call cho từng lượt.",
+        "exampleCommand": "/ak:research OAuth device flow security --ultra"
+      },
+      {
+        "token": "--yagni",
+        "titleEn": "Cut unneeded scope",
+        "titleVi": "Cắt scope thừa",
+        "descEn": "Challenges and removes research scope that is not needed for the stated decision or outcome. It must not drop anything the user explicitly requires.",
+        "descVi": "Chất vấn và bỏ phần phạm vi nghiên cứu không cần cho quyết định hoặc outcome đã nêu. Không được bỏ nội dung người dùng yêu cầu rõ.",
+        "exampleCommand": "/ak:research vector database options for 10k docs --yagni"
+      }
+    ]
+  },
   "outputFlags": [
     {
       "flag": "--ultra",

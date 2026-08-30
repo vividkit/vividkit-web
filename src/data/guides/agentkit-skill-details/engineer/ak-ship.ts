@@ -147,6 +147,109 @@ const data: SkillInfographic = {
       "expectedVi": "Tạo PR ship, soạn nháp build-in-public có journal từ bối cảnh PR/issue/plan, và in bài cho từng kênh mà không gọi API đăng trừ khi cũng có --yes-post."
     }
   ],
+  "invocation": {
+    "syntax": "/ak:ship [official|stable|main|beta|dev|next] [--both] [--advice] [--merge] [--skip-tests] [--skip-review] [--skip-journal] [--skip-docs] [--social] [--yes-post] [--yes-post-private] [--dry-run]",
+    "arguments": [
+      {
+        "token": "[official|stable|main|beta|dev|next]",
+        "titleEn": "Release mode",
+        "titleVi": "Mode phát hành",
+        "descEn": "Optional mode token. official, stable, and main normalize to the official path and target the detected default branch; beta, dev, and next normalize to the beta path and target the detected development branch. Omit it only when branch naming can safely choose the mode.",
+        "descVi": "Token mode tùy chọn. official, stable và main được chuẩn hóa thành luồng official và nhắm tới nhánh mặc định đã phát hiện; beta, dev và next được chuẩn hóa thành luồng beta và nhắm tới nhánh phát triển đã phát hiện. Chỉ bỏ token này khi tên nhánh có thể chọn mode an toàn.",
+        "exampleCommand": "/ak:ship official"
+      }
+    ],
+    "options": [
+      {
+        "token": "--both",
+        "titleEn": "Ship both targets",
+        "titleVi": "Ship cả hai đích",
+        "descEn": "Runs the beta stage first, then a gated stable stage. It supersedes any positional mode token and never bypasses branch protection.",
+        "descVi": "Chạy stage beta trước, rồi đến stage stable có gate. Cờ này ưu tiên hơn mọi token mode vị trí và không bao giờ bỏ qua branch protection.",
+        "exampleCommand": "/ak:ship --both --merge"
+      },
+      {
+        "token": "--advice",
+        "titleEn": "Ask Kongming",
+        "titleVi": "Hỏi Kongming",
+        "descEn": "Adds advisory-only Kongming checkpoints to the local ship-to-PR path. Advice cannot replace tests, review, or ownership by the main agent.",
+        "descVi": "Thêm các checkpoint Kongming chỉ tư vấn vào luồng ship-to-PR cục bộ. Lời khuyên không thay thế test, review hoặc quyền quyết định của agent chính.",
+        "exampleCommand": "/ak:ship beta --advice"
+      },
+      {
+        "token": "--merge",
+        "titleEn": "Reviewed merge",
+        "titleVi": "Merge có review",
+        "descEn": "After PR creation, delegates to ak:review-pr with fix, reply, merge, and post-merge CI convergence. Without this flag, ak:ship does not merge the PR.",
+        "descVi": "Sau khi tạo PR, giao cho ak:review-pr xử lý fix, reply, merge và đưa CI sau merge về xanh. Nếu thiếu cờ này, ak:ship không merge PR.",
+        "exampleCommand": "/ak:ship official --merge"
+      },
+      {
+        "token": "--skip-tests",
+        "titleEn": "Skip tests",
+        "titleVi": "Bỏ test",
+        "descEn": "Omits the test gate only when equivalent evidence already exists; the PR must record that skip evidence honestly.",
+        "descVi": "Bỏ gate test chỉ khi đã có bằng chứng tương đương; PR phải ghi trung thực bằng chứng cho việc bỏ qua.",
+        "exampleCommand": "/ak:ship --skip-tests"
+      },
+      {
+        "token": "--skip-review",
+        "titleEn": "Skip local review",
+        "titleVi": "Bỏ review local",
+        "descEn": "Omits the pre-landing review step. It does not approve the PR and does not skip the downstream ak:review-pr path requested by --merge.",
+        "descVi": "Bỏ bước review trước khi tạo PR. Cờ này không phê duyệt PR và không bỏ luồng ak:review-pr hạ nguồn khi có --merge.",
+        "exampleCommand": "/ak:ship --skip-review"
+      },
+      {
+        "token": "--skip-journal",
+        "titleEn": "Skip journal and social",
+        "titleVi": "Bỏ journal và social",
+        "descEn": "Omits the background technical journal and suppresses the entire social step; code and PR evidence gates still apply.",
+        "descVi": "Bỏ technical journal chạy nền và tắt toàn bộ bước social; các gate code và bằng chứng PR vẫn giữ nguyên.",
+        "exampleCommand": "/ak:ship --skip-journal"
+      },
+      {
+        "token": "--skip-docs",
+        "titleEn": "Skip docs update",
+        "titleVi": "Bỏ cập nhật docs",
+        "descEn": "Omits the official-mode docs update. Beta mode skips that docs step automatically.",
+        "descVi": "Bỏ cập nhật docs trong mode official. Mode beta tự động bỏ bước docs đó.",
+        "exampleCommand": "/ak:ship official --skip-docs"
+      },
+      {
+        "token": "--social",
+        "titleEn": "Social draft",
+        "titleVi": "Nháp social",
+        "descEn": "After the required green PR gate, composes build-in-public posts from PR, issue, and plan context. Without --yes-post, it renders only and makes no API call.",
+        "descVi": "Sau gate PR xanh bắt buộc, soạn bài build-in-public từ bối cảnh PR, issue và plan. Nếu thiếu --yes-post, chỉ render nội dung và không gọi API.",
+        "exampleCommand": "/ak:ship --social"
+      },
+      {
+        "token": "--yes-post",
+        "titleEn": "Publish social",
+        "titleVi": "Đăng social",
+        "descEn": "Allows --social to publish instead of rendering only. It has no publishing effect without --social.",
+        "descVi": "Cho phép --social đăng thật thay vì chỉ render. Cờ này không có tác dụng đăng nếu thiếu --social.",
+        "exampleCommand": "/ak:ship --social --yes-post"
+      },
+      {
+        "token": "--yes-post-private",
+        "titleEn": "Private post opt-in",
+        "titleVi": "Xác nhận đăng repo private",
+        "descEn": "Second explicit opt-in required before publishing social posts about a private repository. It requires --social and --yes-post.",
+        "descVi": "Xác nhận rõ lần hai trước khi đăng social về repository private. Cờ này cần --social và --yes-post.",
+        "exampleCommand": "/ak:ship --social --yes-post --yes-post-private"
+      },
+      {
+        "token": "--dry-run",
+        "titleEn": "Preview only",
+        "titleVi": "Chỉ xem trước",
+        "descEn": "Reads pre-flight state and prints the proposed pipeline without delegation, review-merge, social publishing, mutation, or stable-stage simulation for --both.",
+        "descVi": "Đọc trạng thái tiền kiểm và in pipeline dự kiến, không ủy quyền, không review-merge, không đăng social, không mutate và không mô phỏng stable stage cho --both.",
+        "exampleCommand": "/ak:ship --dry-run"
+      }
+    ]
+  },
   "outputFlags": [
     {
       "flag": "--both",

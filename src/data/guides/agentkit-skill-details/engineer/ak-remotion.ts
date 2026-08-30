@@ -1,4 +1,22 @@
-import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-works';
+
+const invocation: SkillInvocation = {
+  syntax: '/ak:remotion [video or component]',
+  arguments: [
+    {
+      token: '[video or component]',
+      titleEn: 'Video or component brief',
+      titleVi: 'Brief video hoặc component',
+      descEn:
+        'Natural-language Remotion video, still, scene, chart, caption, media, 3D, or component task. Include composition ID, dimensions, fps, duration, assets, timing, acceptance frames, and whether final rendering is approved; the Skill has no top-level mode flags.',
+      descVi:
+        'Yêu cầu bằng ngôn ngữ tự nhiên cho video, still, scene, chart, caption, media, 3D hoặc component Remotion. Nêu composition ID, kích thước, fps, duration, asset, timing, frame nghiệm thu và final render đã được duyệt hay chưa; Skill không có mode flag cấp cao nhất.',
+      required: true,
+      exampleCommand:
+        '/ak:remotion "Create a 15-second 1080x1080 product update video at 30 fps using existing brand tokens and local assets; include captions, reduced-motion-safe transitions, deterministic tests at key frames, and stop before the final render"',
+    },
+  ],
+};
 
 const data: SkillInfographic = {
   "id": "ak-remotion",
@@ -115,6 +133,7 @@ const data: SkillInfographic = {
       "type": "tool"
     }
   ],
+  "invocation": invocation,
   "promptExamples": [
     {
       "labelEn": "Animated React video",

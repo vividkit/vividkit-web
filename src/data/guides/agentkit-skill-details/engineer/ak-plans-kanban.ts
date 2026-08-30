@@ -19,6 +19,12 @@ const data: SkillInfographic = {
   corePrinciplesVi: ['Chỉ là launcher mỏng, không phải nơi sửa plan', 'Dùng dashboard config tích hợp của AgentKit', 'Probe khả năng trước khi mở browser', 'Root plan theo scope đến từ dashboard context'],
   expertiseAreasEn: ['Plans dashboard launch', 'Kanban and grid views', 'Timeline and progress visibility', 'Plan file navigation', 'CLI compatibility probing'],
   expertiseAreasVi: ['Mở dashboard plan', 'View kanban và grid', 'Theo dõi timeline và tiến độ', 'Điều hướng file plan', 'Probe tương thích CLI'],
+  invocation: {
+    syntax: '/ak:plans-kanban [--stop]',
+    options: [
+      { token: '--stop', titleEn: 'Stop dashboard', titleVi: 'Dừng dashboard', descEn: 'Stop the launcher-started dashboard instead of opening /plans.', descVi: 'Dừng dashboard do launcher khởi động thay vì mở /plans.', exampleCommand: '/ak:plans-kanban --stop' },
+    ],
+  },
   promptExamples: [
     { labelEn: 'Open dashboard', labelVi: 'Mở dashboard', command: '/ak:plans-kanban', whenEn: 'Use when you want to open the visual plans dashboard.', whenVi: 'Dùng khi muốn mở dashboard kế hoạch trực quan.', expectedEn: 'The launcher reuses a running config dashboard or starts one on port 8766, probes plans support, then opens /plans in the browser.', expectedVi: 'Launcher dùng lại dashboard config đang chạy hoặc khởi động cổng 8766, probe hỗ trợ plans rồi mở /plans trong browser.', recommended: true },
     { labelEn: 'Inspect plan progress', labelVi: 'Kiểm tra tiến độ plan', command: '/ak:plans-kanban', whenEn: 'Use when you need kanban, grid, timeline, or progress views for plans.', whenVi: 'Dùng khi cần view kanban, grid, timeline hoặc tiến độ cho các plan.', expectedEn: 'The integrated dashboard shows active and completed plan visibility with links into plan.md and phase-*.md files.', expectedVi: 'Dashboard tích hợp hiển thị plan active/completed và có link vào các file plan.md cùng phase-*.md.' },

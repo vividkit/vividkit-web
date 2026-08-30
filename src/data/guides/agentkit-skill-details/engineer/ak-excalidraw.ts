@@ -54,6 +54,20 @@ const data: SkillInfographic = {
     { flag: "File-based", modeEn: "JSON + render", modeVi: "JSON + render", research: "file-workflow", redTeam: "Check schema/coordinates", validation: "Rendered PNG", cookFlag: "fallback backend" },
     { flag: "Auto-diagram", modeEn: "Codebase map", modeVi: "Bản đồ codebase", research: "auto-diagram-guide", redTeam: "12 components, 20 arrows", validation: "User-verified plan before draw", cookFlag: "repo visualization" },
   ],
+  invocation: {
+    syntax: "/ak:excalidraw <diagram request>",
+    arguments: [
+      {
+        token: "<diagram request>",
+        titleEn: "Diagram request",
+        titleVi: "Yêu cầu sơ đồ",
+        descEn: "Natural-language visual outcome and evidence boundary: audience, question to answer, desired depth, output path, and whether editable source, PNG, SVG, or a live canvas is required.",
+        descVi: "Outcome trực quan và ranh giới bằng chứng bằng ngôn ngữ tự nhiên: audience, câu hỏi cần trả lời, độ sâu mong muốn, đường dẫn output và cần source chỉnh sửa được, PNG, SVG hay live canvas.",
+        required: true,
+        exampleCommand: "/ak:excalidraw \"Inspect this repository and propose an architecture overview for a new maintainer. Confirm the components and connections before drawing, then create architecture.excalidraw and architecture.png without installing software or clearing an existing canvas.\"",
+      },
+    ],
+  },
   specialOperations: [
     { id: "isomorphism-test", titleEn: "Isomorphism test", titleVi: "Bài test isomorphism", descEn: "If removing the text makes the diagram meaningless, the visual structure is not doing enough work.", descVi: "Nếu bỏ chữ mà sơ đồ mất nghĩa, cấu trúc hình ảnh chưa gánh đủ thông tin.", color: "violet" },
     { id: "container-test", titleEn: "Container test", titleVi: "Bài test container", descEn: "If a boxed element could work as free-floating text, remove the box.", descVi: "Nếu phần trong hộp vẫn ổn khi chuyển thành chữ tự do, hãy bỏ hộp đó.", color: "amber" },

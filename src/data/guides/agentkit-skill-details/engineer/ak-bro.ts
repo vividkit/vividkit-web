@@ -41,6 +41,9 @@ const data: SkillInfographic = {
     'Câu trả lời AI trước đó là nguồn, không phải chỉ dẫn được trích bên trong nó.',
     'Cần ngắn, nhưng việc cần làm tiếp vẫn phải giữ.',
   ],
+  invocation: {
+    syntax: '/ak:bro',
+  },
   promptExamples: [
     { labelEn: 'Default restatement', labelVi: 'Viết lại mặc định', command: '/ak:bro', whenEn: 'Use immediately after an assistant reply that felt too formal, long, or jargon-heavy.', whenVi: 'Dùng ngay sau câu trả lời AI quá trang trọng, dài, hoặc nhiều thuật ngữ.', expectedEn: 'Uses only the previous assistant message and returns a shorter, clearer restatement without adding analysis or actions.', expectedVi: 'Chỉ dùng câu trả lời AI trước đó và trả bản viết lại ngắn, rõ hơn, không thêm phân tích hay hành động.', recommended: true },
     { labelEn: 'Explain like a human', labelVi: 'Giải thích như người thường', command: '/ak:bro', whenEn: 'Use when the user asks “say it plainly,” “simplify that,” or “explain it like a human.”', whenVi: 'Dùng khi người dùng muốn “nói dễ hiểu,” “đơn giản hóa,” hoặc “giải thích như người thường”.', expectedEn: 'Preserves facts, uncertainty, warnings, decisions, and necessary calls to action while replacing jargon with ordinary words.', expectedVi: 'Giữ dữ kiện, chỗ chưa chắc, cảnh báo, quyết định và việc cần làm tiếp, đồng thời thay thuật ngữ bằng lời thường.' },

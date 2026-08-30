@@ -99,6 +99,45 @@ const data: SkillInfographic = {
     "Truy vấn graph qua MCP",
     "Bản đồ ngữ cảnh tiết kiệm token"
   ],
+  "invocation": {
+    "syntax": "/ak:graphify [path] [--mcp|--report|--watch]",
+    "arguments": [
+      {
+        "token": "[path]",
+        "titleEn": "Input path",
+        "titleVi": "Đường dẫn đầu vào",
+        "descEn": "Folder or bounded document set to graph. Choose the smallest useful scope; the command writes graphify-out/ relative to the run location and does not automatically include unrelated secrets, build output, or archives.",
+        "descVi": "Thư mục hoặc tập tài liệu có giới hạn cần dựng graph. Chọn phạm vi nhỏ nhất đủ dùng; lệnh ghi graphify-out/ tương đối với nơi chạy và không tự động đưa secret, build output hoặc archive không liên quan vào.",
+        "exampleCommand": "/ak:graphify ./src --report"
+      }
+    ],
+    "options": [
+      {
+        "token": "--report",
+        "titleEn": "Report emphasis",
+        "titleVi": "Nhấn mạnh report",
+        "descEn": "Center the result on GRAPH_REPORT.md findings such as prominent nodes, surprising relationships, and suggested questions. Report claims still need source review.",
+        "descVi": "Tập trung kết quả vào phát hiện trong GRAPH_REPORT.md như node nổi bật, quan hệ bất ngờ và câu hỏi gợi ý. Claim trong report vẫn cần đối chiếu source.",
+        "exampleCommand": "/ak:graphify ./src --report"
+      },
+      {
+        "token": "--watch",
+        "titleEn": "Watch rebuilds",
+        "titleVi": "Theo dõi rebuild",
+        "descEn": "Rebuild incrementally as files change. This starts ongoing observation and repeated writes; it does not authorize a background process beyond the requested run.",
+        "descVi": "Rebuild tăng dần khi file thay đổi. Tùy chọn này bắt đầu theo dõi liên tục và ghi lặp lại; không cho phép process nền ngoài lần chạy đã yêu cầu.",
+        "exampleCommand": "/ak:graphify . --watch"
+      },
+      {
+        "token": "--mcp",
+        "titleEn": "MCP graph queries",
+        "titleVi": "Truy vấn graph qua MCP",
+        "descEn": "Prepare graphify-out/graph.json for MCP-backed query tools such as query_graph, get_node, get_neighbors, and shortest_path. Server installation and client configuration remain separate requirements.",
+        "descVi": "Chuẩn bị graphify-out/graph.json cho các tool truy vấn qua MCP như query_graph, get_node, get_neighbors và shortest_path. Việc cài server và cấu hình client vẫn là yêu cầu riêng.",
+        "exampleCommand": "/ak:graphify . --mcp"
+      }
+    ]
+  },
   "outputFlags": [
     {
       "flag": "--mcp",

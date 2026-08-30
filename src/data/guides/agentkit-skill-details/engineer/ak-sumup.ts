@@ -80,6 +80,19 @@ const data: SkillInfographic = {
     "giải thích kiến trúc",
     "ưu tiên follow-up"
   ],
+  "invocation": {
+    "syntax": "/ak:sumup [recap request]",
+    "arguments": [
+      {
+        "token": "[recap request]",
+        "titleEn": "Recap focus",
+        "titleVi": "Trọng tâm tóm tắt",
+        "descEn": "Natural-language implementation period, feature, or question to recap. Include the evidence boundary or emphasis you want; it does not trigger implementation, deployment, or a live status check.",
+        "descVi": "Khoảng implementation, feature hoặc câu hỏi cần tóm tắt bằng ngôn ngữ tự nhiên. Nêu ranh giới bằng chứng hoặc trọng tâm mong muốn; phần này không kích hoạt triển khai, deploy hay live status check.",
+        "exampleCommand": "/ak:sumup \"Recap the implementation we just completed. Separate verified work from untested or unresolved work, explain the main flow, and keep next steps last.\""
+      }
+    ]
+  },
   "promptExamples": [
     {
       "labelEn": "Implementation recap",

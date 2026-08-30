@@ -1,4 +1,27 @@
-import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-works';
+
+const invocation: SkillInvocation = {
+  syntax: "/ak:docs-seeker [library-name] [topic]",
+  arguments: [
+    {
+      token: "[library-name]",
+      titleEn: "Library or framework",
+      titleVi: "Thư viện hoặc framework",
+      descEn: "Name the package, framework, API, docs site, or repository whose current documentation should be found.",
+      descVi: "Nêu package, framework, API, site tài liệu hoặc repository cần tìm tài liệu hiện hành.",
+      required: true,
+      exampleCommand: "/ak:docs-seeker \"Next.js 16 cache invalidation APIs\"",
+    },
+    {
+      token: "[topic]",
+      titleEn: "Topic",
+      titleVi: "Chủ đề",
+      descEn: "Optional feature, API, version, target language, or question to narrow the search. Omit it for broader library coverage that may need URL prioritization.",
+      descVi: "Tính năng, API, version, ngôn ngữ đích hoặc câu hỏi tùy chọn để thu hẹp tìm kiếm. Bỏ qua khi cần độ phủ thư viện rộng hơn và có thể phải ưu tiên URL.",
+      exampleCommand: "/ak:docs-seeker \"shadcn date picker\"",
+    },
+  ],
+};
 
 const data: SkillInfographic = {
   id: "ak-docs-seeker",
@@ -39,6 +62,7 @@ const data: SkillInfographic = {
     "Chỉ nạp dần workflow reference khi truy vấn cần đến.",
     "Tài liệu hiện tại đáng tin hơn trí nhớ với API, tính năng và hành vi repository.",
   ],
+  invocation,
   expertiseAreasEn: [
     "llms.txt and context7 documentation lookup",
     "Topic-specific versus general library search",

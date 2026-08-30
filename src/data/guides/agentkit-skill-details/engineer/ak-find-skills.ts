@@ -1,4 +1,19 @@
-import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-works';
+
+const invocation: SkillInvocation = {
+  syntax: "/ak:find-skills [capability or task description]",
+  arguments: [
+    {
+      token: "[capability or task description]",
+      titleEn: "Capability to find",
+      titleVi: "Năng lực cần tìm",
+      descEn: "Describe the domain, task, framework, language, platform, and whether you want local routing, recommendations only, or installation after review. Do not include credentials, private source, or unrelated workspace details.",
+      descVi: "Mô tả domain, tác vụ, framework, ngôn ngữ, nền tảng và việc bạn muốn định tuyến local, chỉ nhận recommendation, hay cài sau khi review. Không đưa credential, source riêng tư hoặc chi tiết workspace không liên quan.",
+      required: true,
+      exampleCommand: "/ak:find-skills \"Audit a Next.js checkout for accessibility and keyboard navigation\"",
+    },
+  ],
+};
 
 const data: SkillInfographic = {
   id: "ak-find-skills",
@@ -51,6 +66,7 @@ const data: SkillInfographic = {
     { name: "skills.sh", type: "tool" },
     { name: "domain-routing.md", type: "tool" },
   ],
+  invocation,
   promptExamples: [
     { labelEn: "Find React help", labelVi: "Tìm skill React", command: "/ak:find-skills react performance", whenEn: "The user asks how to make a React app faster and a reusable skill may already exist.", whenVi: "User hỏi cách làm app React nhanh hơn và có thể đã có skill tái sử dụng.", expectedEn: "Identifies React performance as the domain and task, runs a targeted Skills CLI search, then presents relevant matches with exact install commands and skills.sh links.", expectedVi: "Xác định domain và tác vụ là tối ưu hiệu năng React, chạy tìm kiếm Skills CLI có từ khóa cụ thể, rồi trình bày kết quả phù hợp cùng lệnh cài chính xác và link skills.sh.", recommended: true },
     { labelEn: "PR review skill", labelVi: "Skill review PR", command: "/ak:find-skills pr review", whenEn: "The user wants help with a specialized workflow such as pull request review.", whenVi: "User muốn hỗ trợ một workflow chuyên biệt như review pull request.", expectedEn: "Searches with the PR review query, checks whether the result fits the requested workflow, and summarizes the skill name, purpose, install command, and learn-more link.", expectedVi: "Tìm bằng truy vấn review PR, kiểm tra kết quả có khớp workflow cần làm không, rồi tóm tắt tên skill, công dụng, lệnh cài và link tìm hiểu thêm." },

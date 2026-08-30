@@ -162,6 +162,80 @@ const data: SkillInfographic = {
       "type": "tool"
     }
   ],
+  "invocation": {
+    "syntax": "/ak:loop [Goal/Metric description] or inline config block",
+    "arguments": [
+      {
+        "token": "Goal:",
+        "titleEn": "Goal",
+        "titleVi": "Mục tiêu",
+        "descEn": "Human-readable metric outcome and target to improve. Subjective cleanup goals are rejected; use ak:cook for those.",
+        "descVi": "Outcome metric và target cần cải thiện bằng ngôn ngữ rõ ràng. Mục tiêu dọn dẹp cảm tính bị từ chối; hãy dùng ak:cook cho trường hợp đó.",
+        "required": true,
+        "exampleCommand": "/ak:loop\nGoal: Reduce TypeScript errors in src/api to zero"
+      },
+      {
+        "token": "Scope:",
+        "titleEn": "Editable scope",
+        "titleVi": "Phạm vi được sửa",
+        "descEn": "Glob or search-files patterns for files the loop may edit. The Skill does not widen this scope or edit files owned by the Guard command.",
+        "descVi": "Glob hoặc pattern search-files cho các file loop được phép sửa. Skill không mở rộng phạm vi này hoặc sửa file thuộc lệnh Guard.",
+        "required": true,
+        "exampleCommand": "/ak:loop\nScope: src/api/**/*.ts"
+      },
+      {
+        "token": "Verify:",
+        "titleEn": "Metric command",
+        "titleVi": "Lệnh đo metric",
+        "descEn": "Shell command that exits successfully and prints exactly one numeric metric quickly enough to run every iteration.",
+        "descVi": "Lệnh shell thoát thành công và in đúng một metric dạng số đủ nhanh để chạy ở mỗi iteration.",
+        "required": true,
+        "exampleCommand": "/ak:loop\nVerify: npx tsc --noEmit 2>&1 | grep -c '^src/api/.*error TS' || true"
+      }
+    ],
+    "options": [
+      {
+        "token": "Guard:",
+        "titleEn": "Regression guard",
+        "titleVi": "Guard chống hồi quy",
+        "descEn": "Optional command that must exit 0 for a trial to be kept. Its files are treated as read-only for the loop.",
+        "descVi": "Lệnh tùy chọn phải thoát 0 để trial được giữ. Các file của lệnh này được xem là read-only với loop.",
+        "exampleCommand": "/ak:loop\nGuard: npm test"
+      },
+      {
+        "token": "Iterations:",
+        "titleEn": "Iteration cap",
+        "titleVi": "Giới hạn iteration",
+        "descEn": "Maximum trial count; defaults to 10 when omitted.",
+        "descVi": "Số trial tối đa; mặc định là 10 nếu bỏ trống.",
+        "exampleCommand": "/ak:loop\nIterations: 12"
+      },
+      {
+        "token": "Direction:",
+        "titleEn": "Metric direction",
+        "titleVi": "Chiều tốt của metric",
+        "descEn": "Whether higher or lower metric values are better; defaults to higher.",
+        "descVi": "Cho biết giá trị metric cao hơn hay thấp hơn là tốt hơn; mặc định là higher.",
+        "exampleCommand": "/ak:loop\nDirection: lower"
+      },
+      {
+        "token": "Noise:",
+        "titleEn": "Measurement noise",
+        "titleVi": "Độ nhiễu phép đo",
+        "descEn": "Measurement treatment: low, medium, or high. Use it to decide repeat and aggregation behavior, not to hide regressions.",
+        "descVi": "Cách xử lý phép đo: low, medium hoặc high. Dùng để quyết định lặp và tổng hợp kết quả, không phải để che hồi quy.",
+        "exampleCommand": "/ak:loop\nNoise: low"
+      },
+      {
+        "token": "Min-Delta:",
+        "titleEn": "Minimum progress",
+        "titleVi": "Mức tiến bộ tối thiểu",
+        "descEn": "Smallest improvement that counts as progress; defaults to 0.",
+        "descVi": "Mức cải thiện nhỏ nhất được tính là tiến bộ; mặc định là 0.",
+        "exampleCommand": "/ak:loop\nMin-Delta: 1"
+      }
+    ]
+  },
   "promptExamples": [
     {
       "labelEn": "Coverage loop",

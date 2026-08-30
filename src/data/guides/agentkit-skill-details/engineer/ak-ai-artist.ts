@@ -1,4 +1,95 @@
-import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-works';
+
+const invocation: SkillInvocation = {
+  syntax:
+    '/ak:ai-artist [concept] [--mode search|creative|wild|all] [--provider auto|google|openrouter] [--skip]',
+  arguments: [
+    {
+      token: '[concept]',
+      titleEn: 'Visual concept',
+      titleVi: 'Ý tưởng hình ảnh',
+      descEn:
+        'Subject, use case, audience, style, mood, palette, composition, aspect ratio, exact in-image text, exclusions, and output location for the asset to generate.',
+      descVi:
+        'Subject, use case, người xem, style, mood, bảng màu, bố cục, aspect ratio, text chính xác trong ảnh, phần loại trừ và nơi lưu asset cần tạo.',
+      required: true,
+      exampleCommand:
+        '/ak:ai-artist "16:9 launch banner for a developer CLI, dark steel-blue terminal geometry, no logos, no people, no text"',
+    },
+  ],
+  options: [
+    {
+      token: '--mode search|creative|wild|all',
+      titleEn: 'Generation mode',
+      titleVi: 'Mode tạo ảnh',
+      descEn:
+        'Select search for the closest curated prompt, creative to remix top matches, wild for one random artistic transform, or all for three variations.',
+      descVi:
+        'Chọn search để lấy prompt tuyển chọn gần nhất, creative để remix các kết quả khớp đầu, wild để tạo một biến đổi nghệ thuật ngẫu nhiên, hoặc all để tạo ba biến thể.',
+      exampleCommand: '/ak:ai-artist "AI workshop hero image" --mode creative',
+    },
+    {
+      token: '--provider auto|google|openrouter',
+      titleEn: 'Provider route',
+      titleVi: 'Tuyến provider',
+      descEn:
+        'Choose automatic provider resolution, direct Google generation, or OpenRouter-backed Google generation. Does not supply credentials or approve spend.',
+      descVi:
+        'Chọn tự resolve provider, tạo ảnh Google trực tiếp, hoặc tạo ảnh Google qua OpenRouter. Không cung cấp credential hay phê duyệt chi phí.',
+      exampleCommand: '/ak:ai-artist "tech conference banner" --provider openrouter',
+    },
+    {
+      token: '-ar, --aspect-ratio',
+      titleEn: 'Aspect ratio',
+      titleVi: 'Tỉ lệ khung hình',
+      descEn:
+        'Pass a supported ratio such as 1:1, 16:9, or 9:16 to the renderer. The concept should still state composition needs.',
+      descVi:
+        'Truyền ratio được hỗ trợ như 1:1, 16:9 hoặc 9:16 cho renderer. Concept vẫn nên nêu nhu cầu bố cục.',
+      exampleCommand: '/ak:ai-artist "product showcase" -ar 1:1',
+    },
+    {
+      token: '--model',
+      titleEn: 'Model alias',
+      titleVi: 'Alias model',
+      descEn:
+        'Choose flash2, flash, or pro for the renderer. flash2 is the script default; provider availability and cost still apply.',
+      descVi:
+        'Chọn flash2, flash hoặc pro cho renderer. flash2 là mặc định của script; availability và chi phí của provider vẫn áp dụng.',
+      exampleCommand: '/ak:ai-artist "premium product render" --model pro',
+    },
+    {
+      token: '-v, --verbose',
+      titleEn: 'Verbose evidence',
+      titleVi: 'Bằng chứng chi tiết',
+      descEn:
+        'Show matched prompt details, provider, and model evidence. Does not approve the generated pixels.',
+      descVi:
+        'Hiển thị chi tiết prompt khớp, provider và model. Không thay thế bước duyệt pixel đã tạo.',
+      exampleCommand: '/ak:ai-artist "social launch graphic" --mode search -v',
+    },
+    {
+      token: '--dry-run',
+      titleEn: 'Prompt only',
+      titleVi: 'Chỉ tạo prompt',
+      descEn:
+        'Build and print the final prompt without calling the image provider or writing an image file.',
+      descVi:
+        'Lắp ghép và in prompt cuối cùng mà không gọi provider tạo ảnh hay ghi tệp ảnh.',
+      exampleCommand: '/ak:ai-artist "campaign banner" --dry-run',
+    },
+    {
+      token: '--skip',
+      titleEn: 'Skip validation interview',
+      titleVi: 'Bỏ phỏng vấn kiểm chứng',
+      descEn:
+        'Bypass the required style, mood, color, and intent interview only when the brief is already precise or the user explicitly accepts the bypass.',
+      descVi:
+        'Bỏ qua phỏng vấn bắt buộc về style, mood, màu sắc và ý định chỉ khi brief đã rõ hoặc người dùng chấp nhận bỏ qua.',
+      exampleCommand: '/ak:ai-artist "minimal hardware wallet showcase" --mode wild --skip',
+    },
+  ],
+};
 
 const data: SkillInfographic = {
   id: 'ak-ai-artist',
@@ -60,6 +151,7 @@ const data: SkillInfographic = {
   ],
   composableFlagsEn: '--mode accepts search, creative, wild, or all. --provider accepts auto, google, or openrouter. -ar/--aspect-ratio, --model, -v/--verbose, and --dry-run pass through to the generation script; --skip belongs to the Skill invocation and bypasses the required validation interview.',
   composableFlagsVi: '--mode nhận search, creative, wild hoặc all. --provider nhận auto, google hoặc openrouter. -ar/--aspect-ratio, --model, -v/--verbose và --dry-run được chuyển cho generation script; --skip thuộc invocation của Skill và bỏ qua validation interview bắt buộc.',
+  invocation,
 };
 
 export default data;

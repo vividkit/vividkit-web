@@ -1,4 +1,22 @@
-import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-works';
+
+const invocation: SkillInvocation = {
+  syntax: '/ak:ui-styling [component or layout]',
+  arguments: [
+    {
+      token: '[component or layout]',
+      titleEn: 'UI surface or styling request',
+      titleVi: 'Bề mặt UI hoặc yêu cầu styling',
+      descEn:
+        'Component, page, layout, visual artifact, theme, token, responsive behavior, accessibility state, and file boundary to implement or refine. Include protected files, package-change approval, target breakpoints, light/dark expectations, and the checks that prove the UI works.',
+      descVi:
+        'Component, page, layout, visual artifact, theme, token, hành vi responsive, trạng thái accessibility và ranh giới tệp cần triển khai hoặc tinh chỉnh. Nêu tệp được bảo vệ, quyền đổi package, breakpoint mục tiêu, kỳ vọng light/dark và check chứng minh UI hoạt động.',
+      required: true,
+      exampleCommand:
+        '/ak:ui-styling "Add an accessible account dialog using existing tokens; preserve components.json, support keyboard focus and reduced motion, test light/dark at mobile and desktop, and do not overwrite existing UI files"',
+    },
+  ],
+};
 
 const data: SkillInfographic = {
   "id": "ak-ui-styling",
@@ -100,6 +118,7 @@ const data: SkillInfographic = {
     "form",
     "hệ visual"
   ],
+  "invocation": invocation,
   "promptExamples": [
     {
       "labelEn": "Accessible dialog form",

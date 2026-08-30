@@ -98,6 +98,45 @@ const data: SkillInfographic = {
     "Validate link",
     "Index tài liệu thân thiện với AI"
   ],
+  "invocation": {
+    "syntax": "/ak:llms [path|url] [--full] [--output path] [--url base]",
+    "arguments": [
+      {
+        "token": "[path|url]",
+        "titleEn": "Source path or URL",
+        "titleVi": "Đường dẫn hoặc URL nguồn",
+        "descEn": "Documentation source to index. Omit it to scan ./docs; when the source is a URL, fetch or map it before running the bundled generator because the script itself scans local directories.",
+        "descVi": "Nguồn tài liệu cần lập index. Bỏ qua để scan ./docs; nếu nguồn là URL, cần fetch hoặc map trước khi chạy generator được bundle vì script chỉ scan directory local.",
+        "exampleCommand": "/ak:llms docs/reference"
+      }
+    ],
+    "options": [
+      {
+        "token": "--full",
+        "titleEn": "Full artifact",
+        "titleVi": "Artifact full",
+        "descEn": "Also write llms-full.txt with inline documentation content. Review size and private content before publication.",
+        "descVi": "Ghi thêm llms-full.txt có nội dung tài liệu inline. Review kích thước và nội dung riêng tư trước khi publish.",
+        "exampleCommand": "/ak:llms docs --full"
+      },
+      {
+        "token": "--output path",
+        "titleEn": "Output directory",
+        "titleVi": "Thư mục output",
+        "descEn": "Write llms.txt and any llms-full.txt to this directory instead of the project root. It does not publish or deploy files.",
+        "descVi": "Ghi llms.txt và mọi llms-full.txt vào thư mục này thay vì root project. Flag này không publish hay deploy file.",
+        "exampleCommand": "/ak:llms docs --output public"
+      },
+      {
+        "token": "--url base",
+        "titleEn": "Base URL",
+        "titleVi": "URL gốc",
+        "descEn": "Use this public base URL for generated Markdown links. Direct script runs use --base-url; this option does not perform HTTP link checks.",
+        "descVi": "Dùng URL public gốc này cho các link Markdown được tạo. Khi chạy script trực tiếp dùng --base-url; option này không kiểm HTTP link.",
+        "exampleCommand": "/ak:llms docs --url https://example.com/docs"
+      }
+    ]
+  },
   "outputFlags": [
     {
       "flag": "--full",

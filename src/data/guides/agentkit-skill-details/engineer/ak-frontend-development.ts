@@ -63,6 +63,12 @@ const data: SkillInfographic = {
     { flag: "styling", modeEn: "MUI styling", modeVi: "Style MUI", research: "styling-guide.md", redTeam: "sx/Grid/style threshold", validation: "Visual state", cookFlag: "MUI v7" },
     { flag: "performance", modeEn: "Performance", modeVi: "Hiệu năng", research: "performance.md", redTeam: "Memoization justified", validation: "Observable improvement", cookFlag: "useMemo/useCallback" },
   ],
+  invocation: {
+    syntax: "/ak:frontend-development [component or feature]",
+    arguments: [
+      { token: "[component or feature]", titleEn: "Component or feature", titleVi: "Component hoặc feature", descEn: "Natural-language React/TypeScript implementation request. Include the user-visible outcome, existing component or data contracts, required states, responsive and accessibility boundaries, allowed files or dependencies, and focused verification target; the Skill defines no default stack, flags, or named modes.", descVi: "Yêu cầu triển khai React/TypeScript bằng ngôn ngữ tự nhiên. Nêu outcome người dùng thấy được, contract component hoặc dữ liệu hiện có, state bắt buộc, ranh giới responsive và accessibility, tệp hoặc dependency được phép và mục tiêu xác minh tập trung; Skill không định nghĩa stack mặc định, flag hay mode có tên.", required: true, exampleCommand: "/ak:frontend-development \"Add an order-status filter to the existing React page. Reuse its query keys, router, design tokens, and loading boundary; cover empty, error, keyboard, and mobile states; do not install packages or publish.\"" },
+    ],
+  },
   skillStack: [
     { name: "React", type: "tool" },
     { name: "TypeScript", type: "tool" },

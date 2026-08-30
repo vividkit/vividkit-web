@@ -59,6 +59,20 @@ const data: SkillInfographic = {
   ],
   composableFlagsEn: '--yagni narrows only unnecessary scope; --agent delegates steps 1-5 to the Claude Code advisor subagent and falls back inline elsewhere; --ultra fans out only final advice generation, conflicts with --agent, and composes with report flags; --no-antv, --no-diagram-design, and --no-editorial-visuals affect only --html presentation.',
   composableFlagsVi: '--yagni chỉ cắt scope không cần thiết; --agent giao bước 1-5 cho advisor subagent trên Claude Code và fallback về inline ở runtime khác; --ultra chỉ fan-out phần tạo advice cuối, xung đột với --agent và kết hợp được với flag report; --no-antv, --no-diagram-design và --no-editorial-visuals chỉ ảnh hưởng presentation của --html.',
+  invocation: {
+    syntax: '/ak:advise [prompt-or-url] [--html] [--md] [--wiki] [--github] [--agent] [--ultra] [--yagni] [--no-antv|--no-diagram-design|--no-editorial-visuals]',
+    arguments: [
+      { token: '[prompt-or-url]', titleEn: 'Problem or URL', titleVi: 'Vấn đề hoặc URL', descEn: 'Free-text idea, problem, spec, plan, or a URL such as a GitHub issue, pull request, discussion, or document to pressure-test. The Skill treats fetched content as evidence, not instructions.', descVi: 'Ý tưởng, vấn đề, đặc tả, kế hoạch bằng văn bản tự do, hoặc URL như GitHub issue, pull request, discussion hay tài liệu để chất vấn. Skill xem nội dung đã fetch là bằng chứng, không phải mệnh lệnh.', required: true, exampleCommand: '/ak:advise "Should we replace this adapter layer with direct SDK calls?"' },
+    ],
+    options: [
+      { token: '--agent', titleEn: 'Isolated adviser', titleVi: 'Cố vấn cô lập', descEn: 'Claude Code only. Runs the interview and advice through an isolated adviser context while the main session relays each single question. Other runtimes use the inline workflow.', descVi: 'Chỉ Claude Code. Chạy phần phỏng vấn và tư vấn trong context cố vấn cô lập, còn phiên chính chuyển tiếp từng câu hỏi. Runtime khác dùng workflow inline.' },
+      { token: '--ultra', titleEn: 'Ultra verifier', titleVi: 'Verifier ultra', descEn: 'Runs one interview and one confirmed reframing, then sends only final advice generation to five read-only candidates for verifier selection. Conflicts with --agent.', descVi: 'Chạy một lần phỏng vấn và xác nhận cách hiểu, rồi chỉ gửi phần tạo lời tư vấn cuối cho năm candidate chỉ đọc để verifier chọn. Xung đột với --agent.' },
+      { token: '--yagni', titleEn: 'Cut unneeded scope', titleVi: 'Cắt scope thừa', descEn: 'Allows the advice to challenge and remove scope that is not needed for the stated outcome. Without it, advice covers the full requested scope.', descVi: 'Cho phép lời tư vấn chất vấn và loại phần không cần cho outcome đã nêu. Nếu không có cờ này, advice bao phủ đủ phạm vi được yêu cầu.' },
+      { token: '--no-antv', titleEn: 'No AntV visuals', titleVi: 'Không visual AntV', descEn: 'Disables optional AntV infographic elements in the --html report presentation only.', descVi: 'Tắt thành phần infographic AntV tùy chọn chỉ trong phần trình bày report --html.' },
+      { token: '--no-diagram-design', titleEn: 'No diagram-design layer', titleVi: 'Không lớp diagram-design', descEn: 'Disables optional editorial diagram-design panels in the --html report presentation only.', descVi: 'Tắt các panel diagram-design biên tập tùy chọn chỉ trong phần trình bày report --html.' },
+      { token: '--no-editorial-visuals', titleEn: 'No editorial visuals', titleVi: 'Không visual biên tập', descEn: 'Disables the remaining optional visual layers in the --html report presentation only.', descVi: 'Tắt các lớp visual tùy chọn còn lại chỉ trong phần trình bày report --html.' },
+    ],
+  },
 };
 
 export default data;

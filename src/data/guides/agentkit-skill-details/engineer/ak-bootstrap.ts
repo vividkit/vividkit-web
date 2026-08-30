@@ -57,6 +57,21 @@ const data: SkillInfographic = {
   ],
   composableFlagsEn: '--ultra changes only the planning phase to /ak:plan --ultra and cannot combine with --parallel. --yagni passes through to plan and cook. --skip-journal only affects the final journal step.',
   composableFlagsVi: '--ultra chỉ đổi pha lập kế hoạch sang /ak:plan --ultra và không thể đi cùng --parallel. --yagni được truyền sang plan và cook. --skip-journal chỉ ảnh hưởng bước journal cuối.',
+  invocation: {
+    syntax: '/ak:bootstrap [requirements] [--full|--auto|--fast|--parallel] [--ultra] [--yagni] [--skip-journal]',
+    arguments: [
+      { token: '[requirements]', titleEn: 'Project requirements', titleVi: 'Yêu cầu project', descEn: 'Natural-language product outcome, constraints, non-goals, and acceptance criteria. The Skill asks for missing decisions before setup work starts.', descVi: 'Outcome sản phẩm, ràng buộc, ngoài phạm vi và tiêu chí chấp nhận bằng ngôn ngữ tự nhiên. Skill hỏi phần quyết định còn thiếu trước khi bắt đầu setup.', required: true, exampleCommand: '/ak:bootstrap "Create a private incident-response dashboard with SSO, an audit log, and no billing in v1" --full' },
+    ],
+    options: [
+      { token: '--full', titleEn: 'Full interactive', titleVi: 'Đầy đủ có tương tác', descEn: 'Default mode. Runs requirements refinement, research, stack choice, optional design, detailed planning, and interactive implementation with pauses for major decisions.', descVi: 'Mode mặc định. Chạy làm rõ yêu cầu, research, chọn stack, design tùy chọn, lập plan chi tiết và triển khai có tương tác với các lần dừng ở quyết định lớn.' },
+      { token: '--auto', titleEn: 'Automatic', titleVi: 'Tự động', descEn: 'Explicit opt-in for automatic research, stack selection, planning, and implementation after the opening contract. Does not grant unrelated authority such as commits, publication, or deployment.', descVi: 'Opt-in rõ ràng cho research, chọn stack, lập plan và triển khai tự động sau hợp đồng mở đầu. Không cấp thêm quyền ngoài scope như commit, publish hoặc deploy.' },
+      { token: '--fast', titleEn: 'Fast', titleVi: 'Nhanh', descEn: 'Uses a lean research and design path before /ak:plan --fast, then keeps normal cook review gates. Does not reduce implementation verification.', descVi: 'Dùng đường research và design gọn trước /ak:plan --fast, rồi giữ review gate bình thường của cook. Không giảm phần kiểm chứng triển khai.' },
+      { token: '--parallel', titleEn: 'Parallel', titleVi: 'Song song', descEn: 'Creates a dependency graph and exclusive file ownership for independent implementation streams, then runs parallel cook. Does not make overlapping edits safe.', descVi: 'Tạo graph phụ thuộc và ownership file riêng cho các luồng triển khai độc lập, rồi chạy cook song song. Không làm edit chồng lấn trở nên an toàn.' },
+      { token: '--ultra', titleEn: 'Ultra planning', titleVi: 'Plan ultra', descEn: 'Replaces the planning phase with /ak:plan --ultra. Cannot combine with --parallel, and bootstrap itself does not fan out.', descVi: 'Thay pha lập plan bằng /ak:plan --ultra. Không thể đi cùng --parallel, và bootstrap không tự tách nhánh agent.' },
+      { token: '--yagni', titleEn: 'Cut unneeded scope', titleVi: 'Cắt scope thừa', descEn: 'Challenge and cut requested work that is not needed for the stated outcome. Without this flag, bootstrap builds the full requested scope.', descVi: 'Chất vấn và cắt phần việc đã yêu cầu nhưng không cần cho outcome đã nêu. Khi không có flag này, bootstrap làm đủ phạm vi được yêu cầu.' },
+      { token: '--skip-journal', titleEn: 'Skip journal', titleVi: 'Bỏ journal', descEn: 'Skip only the automatic /ak:journal step at completion. Explicit journal commands still work.', descVi: 'Chỉ bỏ bước /ak:journal tự động khi hoàn tất. Lệnh journal được gọi rõ vẫn chạy bình thường.' },
+    ],
+  },
 };
 
 export default data;

@@ -30,6 +30,19 @@ const data: SkillInfographic = {
     'Phát hiện phải hành động được và có dòng cụ thể.',
     'Kiểm accessibility và UX theo guideline nguồn, không theo gu cá nhân.',
   ],
+  invocation: {
+    syntax: '/ak:web-design-guidelines [file-or-pattern]',
+    arguments: [
+      {
+        token: '[file-or-pattern]',
+        titleEn: 'Files to review',
+        titleVi: 'File cần review',
+        descEn: 'One or more exact UI files or a narrow pattern to check. If omitted, the skill asks for the review scope instead of defaulting to the whole repository.',
+        descVi: 'Một hoặc nhiều file UI cụ thể hoặc pattern hẹp cần kiểm. Nếu bỏ trống, skill hỏi phạm vi review thay vì mặc định quét toàn bộ repository.',
+        exampleCommand: '/ak:web-design-guidelines "src/components/account-dialog.tsx src/styles/theme.css"',
+      },
+    ],
+  },
   skillStack: [
     { name: 'Web Interface Guidelines', type: 'tool' },
     { name: 'web_search', type: 'tool' },

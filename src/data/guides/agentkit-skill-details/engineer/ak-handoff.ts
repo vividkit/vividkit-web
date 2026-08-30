@@ -97,6 +97,53 @@ const data: SkillInfographic = {
     "Bàn giao bước kế tiếp chính xác",
     "Artifact Markdown nằm trong workspace"
   ],
+  "invocation": {
+    "syntax": "/ak:handoff [task focus] [--output PATH] [--include-diff] [--include-status] [--force]",
+    "arguments": [
+      {
+        "token": "[task focus]",
+        "titleEn": "Next-session focus",
+        "titleVi": "Trọng tâm phiên kế tiếp",
+        "descEn": "Optional one-line focus for the successor agent. It is used in the Mission section and filename slug after credential-looking values are refused.",
+        "descVi": "Trọng tâm một dòng tùy chọn cho agent kế tiếp. Nội dung này được dùng trong mục Mission và slug tên file sau khi từ chối giá trị giống credential.",
+        "exampleCommand": "/ak:handoff \"Continue the authentication migration after the failing integration test is diagnosed\""
+      }
+    ],
+    "options": [
+      {
+        "token": "--output PATH",
+        "titleEn": "Exact output path",
+        "titleVi": "Path output chính xác",
+        "descEn": "Write the handoff to this workspace-local path instead of the auto timestamped plans/handoffs path. It does not imply overwrite permission.",
+        "descVi": "Ghi handoff vào path nằm trong workspace này thay vì path plans/handoffs có timestamp tự động. Cờ này không tự cho phép ghi đè.",
+        "exampleCommand": "/ak:handoff --output plans/handoffs/oauth-callback.md"
+      },
+      {
+        "token": "--include-diff",
+        "titleEn": "Include diff evidence",
+        "titleVi": "Kèm bằng chứng diff",
+        "descEn": "Append redacted git diff --stat and the first 200 diff lines, with truncation marked when the diff is longer.",
+        "descVi": "Thêm git diff --stat và 200 dòng diff đầu đã redact, có đánh dấu khi diff dài hơn.",
+        "exampleCommand": "/ak:handoff --include-diff --include-status"
+      },
+      {
+        "token": "--include-status",
+        "titleEn": "Include status snapshot",
+        "titleVi": "Kèm snapshot status",
+        "descEn": "Append a redacted git status --short snapshot without turning the handoff into a full repository status report.",
+        "descVi": "Thêm snapshot git status --short đã redact mà không biến handoff thành report trạng thái repo đầy đủ.",
+        "exampleCommand": "/ak:handoff --include-status"
+      },
+      {
+        "token": "--force",
+        "titleEn": "Allow overwrite",
+        "titleVi": "Cho phép ghi đè",
+        "descEn": "Explicitly allow overwriting an existing handoff target. Without it, an existing file is refused with guidance.",
+        "descVi": "Cho phép ghi đè target handoff đã tồn tại một cách rõ ràng. Nếu thiếu cờ này, file có sẵn sẽ bị từ chối kèm hướng dẫn.",
+        "exampleCommand": "/ak:handoff --force --output plans/handoffs/oauth-callback.md"
+      }
+    ]
+  },
   "outputFlags": [
     {
       "flag": "--output PATH",

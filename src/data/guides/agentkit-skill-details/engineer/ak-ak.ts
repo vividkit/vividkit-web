@@ -44,9 +44,25 @@ const data: SkillInfographic = {
   ],
   expertiseAreasEn: ['Kit lifecycle', 'Skill inventory', 'Plan and journal CLI', 'Diagnostics and recovery', 'Scope and adapter safety'],
   expertiseAreasVi: ['Vòng đời kit', 'Kiểm kê skill', 'CLI plan và journal', 'Chẩn đoán và phục hồi', 'An toàn scope và adapter'],
+  invocation: {
+    syntax: '/ak:ak [goal or subcommand]',
+    arguments: [
+      {
+        token: '[goal or subcommand]',
+        titleEn: 'Goal or ak subcommand',
+        titleVi: 'Mục tiêu hoặc subcommand ak',
+        descEn:
+          'Natural-language request or exact ak subcommand to run, inspect, or interpret. Include the intended project or user/global scope when relevant; this does not author skills or route generic work.',
+        descVi:
+          'Yêu cầu bằng ngôn ngữ tự nhiên hoặc subcommand ak cụ thể cần chạy, kiểm tra hoặc diễn giải. Nêu scope dự án hoặc user/global khi liên quan; mục này không dùng để viết skill hay định tuyến việc chung.',
+        required: true,
+        exampleCommand: '/ak:ak "inspect ak kit list-kits as a read-only JSON command"',
+      },
+    ],
+  },
   promptExamples: [
     { labelEn: 'Inspect installed kits', labelVi: 'Kiểm tra kit đã cài', command: '/ak:ak "run ak kit list-kits as a read-only JSON inspection"', whenEn: 'Use when the next action is inventorying installed kits or interpreting parseable ak output.', whenVi: 'Dùng khi bước tiếp theo là kiểm kê kit đã cài hoặc diễn giải output ak parse được.', expectedEn: 'Inspects ak kit help, classifies list-kits as read-only, uses --json --no-interactive when scripted, and explains schema_version, kind, and data.', expectedVi: 'Inspect help của ak kit, phân loại list-kits là chỉ đọc, dùng --json --no-interactive khi script và giải thích schema_version, kind, data.', recommended: true },
-    { labelEn: 'Prepare a kit refresh', labelVi: 'Chuẩn bị refresh kit', command: '/ak:ak "prepare ak kit refresh for engineer after validating scope"', whenEn: 'Use before a mutating kit lifecycle command so scope and preflight checks are explicit.', whenVi: 'Dùng trước lệnh vòng đời kit có mutation để scope và preflight được nêu rõ.', expectedEn: 'Runs the read-only doctor/list-kits/validate path first, resolves project versus user/global scope, and keeps confirmations unless the user explicitly approves suppression.', expectedVi: 'Chạy trước đường doctor/list-kits/validate chỉ đọc, xác định scope project hay user/global và giữ xác nhận trừ khi người dùng duyệt tắt rõ ràng.' },
+    { labelEn: 'Prepare a kit refresh', labelVi: 'Chuẩn bị refresh kit', command: '/ak:ak "prepare ak kit refresh for engineer after validating scope"', whenEn: 'Use before a mutating kit lifecycle command so scope and read-only checks are explicit.', whenVi: 'Dùng trước lệnh vòng đời kit có mutation để scope và bước kiểm tra chỉ đọc được nêu rõ.', expectedEn: 'Runs the read-only doctor/list-kits/validate path first, resolves project versus user/global scope, and keeps confirmations unless the user explicitly approves suppression.', expectedVi: 'Chạy trước đường doctor/list-kits/validate chỉ đọc, xác định scope project hay user/global và giữ xác nhận trừ khi người dùng duyệt tắt rõ ràng.' },
     { labelEn: 'Recover safely', labelVi: 'Phục hồi an toàn', command: '/ak:ak "recover this project AgentKit install safely"', whenEn: 'Use when recovery or backup restoration is requested and backup/scope discipline is mandatory.', whenVi: 'Dùng khi cần recover hoặc restore backup và bắt buộc giữ kỷ luật backup/scope.', expectedEn: 'Checks recover help, confirms the target scope, verifies or creates a current backup before mutation, previews conflicts, and reports exactly what changed.', expectedVi: 'Kiểm tra help của recover, xác nhận scope đích, xác minh hoặc tạo backup hiện thời trước mutation, preview conflict và báo chính xác phần đã đổi.' },
   ],
   guardrails: [

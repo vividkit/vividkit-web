@@ -90,6 +90,20 @@ const data: SkillInfographic = {
     "Vẽ kiến trúc và đồ thị phụ thuộc",
     "Truy vấn đồ thị qua MCP/HTTP"
   ],
+  "invocation": {
+    "syntax": "/ak:gkg [symbol or query]",
+    "arguments": [
+      {
+        "token": "[symbol or query]",
+        "titleEn": "Symbol or graph question",
+        "titleVi": "Ký hiệu hoặc câu hỏi đồ thị",
+        "descEn": "Symbol name, qualified member, or natural-language code question to resolve with the current repository graph. Include the target repository or constraints when context is ambiguous.",
+        "descVi": "Tên ký hiệu, member đầy đủ hoặc câu hỏi code bằng ngôn ngữ tự nhiên cần giải bằng đồ thị repository hiện tại. Nêu repository hoặc ràng buộc khi ngữ cảnh chưa rõ.",
+        "required": true,
+        "exampleCommand": "/ak:gkg AuthService.createSession"
+      }
+    ]
+  },
   "skillStack": [
     {
       "name": "gkg index",

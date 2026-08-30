@@ -10,6 +10,20 @@ const data: SkillInfographic = {
     "taglineEn": "Use reflective step-by-step analysis with dynamic expansion, contraction, revision, branching, hypothesis verification, and explicit final convergence.",
     "taglineVi": "Dùng phân tích từng bước có phản tư, tự mở rộng/thu gọn, sửa nhận định, rẽ nhánh, kiểm chứng giả thuyết và hội tụ cuối rõ ràng."
   },
+  "invocation": {
+    "syntax": "/ak:sequential-thinking [problem to analyze step-by-step]",
+    "arguments": [
+      {
+        "token": "[problem to analyze step-by-step]",
+        "titleEn": "Problem to analyze",
+        "titleVi": "Vấn đề cần phân tích",
+        "descEn": "States the concrete decision, diagnosis, constraints, available evidence, rejected alternatives, authority boundary, and useful response bound for revisable step-by-step reasoning.",
+        "descVi": "Nêu decision hoặc diagnosis cụ thể, constraint, evidence hiện có, alternative đã loại, ranh giới quyền hạn và giới hạn phản hồi hữu ích cho suy luận từng bước có thể revision.",
+        "required": true,
+        "exampleCommand": "/ak:sequential-thinking \"Choose a migration strategy for splitting the audit log from the primary database. Use at most 8 concise checkpoints, compare dual-write and change-data-capture branches, revise assumptions when evidence conflicts, and finish with a decision, verification plan, and unresolved questions.\""
+      }
+    ]
+  },
   "processFlow": [
     {
       "number": 1,

@@ -23,6 +23,20 @@ const data: SkillInfographic = {
   ],
   corePrinciplesEn: ['Build workflow tools, not endpoint wrappers', 'Optimize every response for scarce agent context', 'Errors must teach the next action', 'Evaluate with realistic tasks before calling the server useful'],
   corePrinciplesVi: ['Xây tool theo workflow, không chỉ bọc endpoint', 'Tối ưu từng phản hồi vì context của agent có hạn', 'Lỗi phải chỉ rõ bước xử lý tiếp theo', 'Phải đánh giá bằng tác vụ thực tế trước khi xem server là hữu dụng'],
+  invocation: {
+    syntax: '/ak:mcp-builder [service or API to integrate]',
+    arguments: [
+      {
+        token: '[service or API to integrate]',
+        titleEn: 'Target integration',
+        titleVi: 'Integration đích',
+        descEn: 'External service or API to turn into a new MCP server or expanded tool/resource surface. Include intended workflows, language, transport, auth model, permissions, rate limits, data volume, and allowed external effects when known.',
+        descVi: 'Dịch vụ hoặc API bên ngoài cần biến thành MCP server mới hoặc mở rộng bề mặt tool/resource. Nêu workflow dự kiến, ngôn ngữ, transport, auth, quyền, rate limit, khối lượng dữ liệu và tác động ngoài được phép nếu đã biết.',
+        required: true,
+        exampleCommand: '/ak:mcp-builder "Build a TypeScript MCP server for the Acme tickets API with read-only search first, cursor pagination, and stdio transport"',
+      },
+    ],
+  },
   expertiseAreasEn: ['FastMCP Python servers', 'TypeScript MCP SDK servers', 'Agent-centric tool design', 'Schema validation and annotations', 'Evaluation-driven server refinement'],
   expertiseAreasVi: ['Server FastMCP bằng Python', 'Server MCP SDK bằng TypeScript', 'Thiết kế tool xoay quanh agent', 'Schema validation và annotation', 'Cải thiện server bằng evaluation'],
   promptExamples: [

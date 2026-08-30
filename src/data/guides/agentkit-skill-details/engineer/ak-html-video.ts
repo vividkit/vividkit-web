@@ -85,6 +85,20 @@ const data: SkillInfographic = {
     "Inspect template trước khi chọn; schema biến rỗng cần Studio hoặc sửa project.",
     "Không commit MP4 lớn sinh ra trừ khi user muốn version artifact đó."
   ],
+  "invocation": {
+    "syntax": "/ak:html-video [video brief, source URL, repo, template id, or project id]",
+    "arguments": [
+      {
+        "token": "[video brief, source URL, repo, template id, or project id]",
+        "titleEn": "Video request or source",
+        "titleVi": "Yêu cầu video hoặc nguồn",
+        "descEn": "Natural-language brief, source URL, repository, template ID, or existing project ID/path. Include audience, goal, duration, aspect ratio, assets, template preference, output path, and whether the result is a draft proof or polished export.",
+        "descVi": "Brief bằng ngôn ngữ tự nhiên, URL nguồn, repository, template ID hoặc project ID/path hiện có. Nêu audience, goal, duration, aspect ratio, asset, template preference, output path và kết quả là draft proof hay polished export.",
+        "required": true,
+        "exampleCommand": "/ak:html-video \"Create a 12-second 16:9 draft product promo from ./assets/cli-screenshot.png and the headline 'Ship with evidence'; use a discovered template, preview before rendering, write ./artifacts/ship-with-evidence.mp4, make no network asset requests, and do not commit or publish the video\""
+      }
+    ]
+  },
   "expertiseAreasEn": [
     "Template discovery",
     "HTML/CSS/JS video projects",

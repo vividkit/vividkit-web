@@ -242,6 +242,95 @@ const data: SkillInfographic = {
       "validation": "Root-cause report"
     }
   ],
+  "invocation": {
+    "syntax": "/ak:team <template> <context> [--devs N|--researchers N|--reviewers N|--debuggers N] [--plan-approval|--no-plan-approval] [--delegate] [--worktree]",
+    "arguments": [
+      {
+        "token": "<template>",
+        "titleEn": "Team template",
+        "titleVi": "Template đội",
+        "descEn": "Required workflow template: research, cook, review, or debug. It selects the teammate pattern; it does not prove the live team surface exists.",
+        "descVi": "Template workflow bắt buộc: research, cook, review hoặc debug. Token này chọn pattern teammate; không chứng minh team surface live tồn tại.",
+        "required": true,
+        "exampleCommand": "/ak:team review \"Review checkout failure paths\" --reviewers 3"
+      },
+      {
+        "token": "<context>",
+        "titleEn": "Team context",
+        "titleVi": "Ngữ cảnh đội",
+        "descEn": "Required outcome, scope, ownership, dependencies, evidence format, and authority boundary for the lead to decompose into independent teammate work.",
+        "descVi": "Outcome, scope, ownership, dependency, định dạng bằng chứng và ranh giới quyền hạn bắt buộc để lead chia thành việc teammate độc lập.",
+        "required": true,
+        "exampleCommand": "/ak:team cook \"Implement accepted auth plan; checkout owns src/checkout, settings owns src/settings\" --devs 2"
+      }
+    ],
+    "options": [
+      {
+        "token": "--devs N",
+        "titleEn": "Developer count",
+        "titleVi": "Số developer",
+        "descEn": "Requests N implementation teammates for cook. Use only when implementation ownership can be split without overlapping files.",
+        "descVi": "Yêu cầu N teammate triển khai cho cook. Chỉ dùng khi ownership triển khai có thể tách không chồng lấn file.",
+        "exampleCommand": "/ak:team cook \"Implement dashboard plan\" --devs 3"
+      },
+      {
+        "token": "--researchers N",
+        "titleEn": "Researcher count",
+        "titleVi": "Số researcher",
+        "descEn": "Requests N independent research angles before the lead synthesizes trade-offs, recommendations, and unresolved questions.",
+        "descVi": "Yêu cầu N góc research độc lập trước khi lead tổng hợp trade-off, khuyến nghị và câu hỏi còn mở.",
+        "exampleCommand": "/ak:team research \"Compare billing providers\" --researchers 3"
+      },
+      {
+        "token": "--reviewers N",
+        "titleEn": "Reviewer count",
+        "titleVi": "Số reviewer",
+        "descEn": "Requests N read-only review focuses with severity, evidence, impact, and recommendation for every finding.",
+        "descVi": "Yêu cầu N trọng tâm review chỉ đọc, mỗi finding phải có mức độ, bằng chứng, tác động và khuyến nghị.",
+        "exampleCommand": "/ak:team review \"Review checkout for security, accessibility, and failures\" --reviewers 3 --delegate"
+      },
+      {
+        "token": "--debuggers N",
+        "titleEn": "Debugger count",
+        "titleVi": "Số debugger",
+        "descEn": "Requests N competing, testable root-cause hypotheses with evidence for and against each one.",
+        "descVi": "Yêu cầu N giả thuyết root-cause cạnh tranh, có thể kiểm thử, kèm bằng chứng ủng hộ và phản bác từng giả thuyết.",
+        "exampleCommand": "/ak:team debug \"Diagnose intermittent checkout timeout\" --debuggers 3"
+      },
+      {
+        "token": "--plan-approval",
+        "titleEn": "Require plan approval",
+        "titleVi": "Yêu cầu duyệt plan",
+        "descEn": "Keeps implementation teammates read-only until their scope, ownership, validation, risks, and rollback notes are approved through the live approval surface.",
+        "descVi": "Giữ teammate triển khai ở chế độ chỉ đọc cho đến khi scope, ownership, validation, risk và rollback note được duyệt qua approval surface live.",
+        "exampleCommand": "/ak:team cook \"Implement accepted plan\" --devs 3 --plan-approval"
+      },
+      {
+        "token": "--no-plan-approval",
+        "titleEn": "Skip plan approval gate",
+        "titleVi": "Bỏ gate duyệt plan",
+        "descEn": "Omits the dedicated plan gate. Normal scope, ownership, safety, and verification boundaries still apply.",
+        "descVi": "Bỏ gate duyệt plan riêng. Scope, ownership, safety và verification boundary bình thường vẫn áp dụng.",
+        "exampleCommand": "/ak:team cook \"Implement accepted plan\" --devs 2 --no-plan-approval"
+      },
+      {
+        "token": "--delegate",
+        "titleEn": "Delegate lead actions",
+        "titleVi": "Lead chỉ giao việc",
+        "descEn": "Keeps the lead in coordination, approval, synthesis, and reporting mode without implementation edits, commands, tests, or merges.",
+        "descVi": "Giữ lead ở chế độ điều phối, phê duyệt, tổng hợp và báo cáo, không sửa file, chạy lệnh triển khai, test hoặc merge.",
+        "exampleCommand": "/ak:team review \"Audit checkout changes\" --reviewers 4 --delegate"
+      },
+      {
+        "token": "--worktree",
+        "titleEn": "Request worktree isolation",
+        "titleVi": "Yêu cầu tách worktree",
+        "descEn": "Requests isolated worktrees for implementation teammates when the live runtime supports them. It does not replace distinct file ownership.",
+        "descVi": "Yêu cầu worktree tách biệt cho teammate triển khai khi runtime live hỗ trợ. Cờ này không thay ownership file riêng.",
+        "exampleCommand": "/ak:team cook \"Implement dashboard groups\" --devs 3 --worktree"
+      }
+    ]
+  },
   "skillStack": [
     {
       "name": "/ak:journal",

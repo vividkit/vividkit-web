@@ -1,4 +1,22 @@
-import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-works';
+
+const invocation: SkillInvocation = {
+  syntax: '/ak:sowat [priority question or evidence]',
+  arguments: [
+    {
+      token: '[priority question or evidence]',
+      titleEn: 'Priority question or evidence',
+      titleVi: 'Câu hỏi ưu tiên hoặc bằng chứng',
+      descEn:
+        'Natural-language product priority request with the intended user outcome, implemented work, verification or shipment evidence, and related issues to evaluate. It guides analysis only; it does not authorize code changes or issue updates.',
+      descVi:
+        'Yêu cầu ưu tiên sản phẩm bằng ngôn ngữ tự nhiên, gồm outcome người dùng dự định, phần đã triển khai, bằng chứng verification hoặc shipment và issue liên quan cần đánh giá. Nội dung này chỉ định hướng phân tích; không cho phép sửa code hoặc cập nhật issue.',
+      required: true,
+      exampleCommand:
+        '/ak:sowat "Review the completed onboarding changes and related open issues. Tell me what matters now, correct my priority if needed, and give at most three next steps with success signals."',
+    },
+  ],
+};
 
 const data: SkillInfographic = {
   "id": "ak-sowat",
@@ -87,6 +105,7 @@ const data: SkillInfographic = {
     "định khung outcome",
     "tín hiệu thành công"
   ],
+  "invocation": invocation,
   "promptExamples": [
     {
       "labelEn": "Post-implementation priority call",

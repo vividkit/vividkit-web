@@ -85,6 +85,20 @@ const data: SkillInfographic = {
     "Hỏi trước khi xếp hạng, sắp thứ tự hoặc ưu tiên nội dung user đưa.",
     "Dùng ak-brainstorm khi cần AI đề xuất và ak-docs khi tài liệu phải suy từ code."
   ],
+  "invocation": {
+    "syntax": "/ak:interview-docs <vision | document-path | topic>",
+    "arguments": [
+      {
+        "token": "<vision | document-path | topic>",
+        "titleEn": "Interview target",
+        "titleVi": "Đích phỏng vấn",
+        "descEn": "Intent hint for the interview: name vision mode, a document path, or a topic, plus audience, scope, protected sections, and when to stop. It is not a fixed parser and does not authorize the Skill to invent decisions.",
+        "descVi": "Gợi ý intent cho cuộc phỏng vấn: nêu vision mode, đường dẫn tài liệu hoặc topic, kèm audience, scope, section được bảo vệ và lúc cần dừng. Đây không phải parser cố định và không cho phép Skill tự bịa quyết định.",
+        "required": true,
+        "exampleCommand": "/ak:interview-docs ./docs/product-principles.md \"Interview me to capture five product principles in my wording.\""
+      }
+    ]
+  },
   "expertiseAreasEn": [
     "Guided documentation interviews",
     "README vision updates",

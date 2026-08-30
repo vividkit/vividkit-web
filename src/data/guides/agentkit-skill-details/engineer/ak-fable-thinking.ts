@@ -60,6 +60,12 @@ const data: SkillInfographic = {
     { flag: "Standard", modeEn: "Normal work", modeVi: "Việc thông thường", research: "All five moves internally", redTeam: "Attack pass", validation: "Evidence-grounded deliverable", cookFlag: "bugfix/review/analysis" },
     { flag: "Full", modeEn: "High stakes", modeVi: "Rủi ro cao", research: "Written five moves", redTeam: "Mandatory Attack", validation: "Weakest link stated", cookFlag: "irreversible/contested" },
   ],
+  invocation: {
+    syntax: "/ak:fable-thinking [task or question to reason through]",
+    arguments: [
+      { token: "[task or question to reason through]", titleEn: "Reasoning target", titleVi: "Đối tượng suy luận", descEn: "Natural-language question, diagnosis, review, decision, or constrained-writing task. Include evidence, scope, authority boundary, success criteria, and any mechanical output rule; this guides reasoning and does not authorize edits or external action.", descVi: "Câu hỏi, chẩn đoán, review, quyết định hoặc bài viết có ràng buộc bằng ngôn ngữ tự nhiên. Nêu evidence, phạm vi, ranh giới quyền hạn, tiêu chí thành công và mọi quy tắc output có thể kiểm cơ học; phần này hướng dẫn suy luận và không cấp quyền sửa file hay hành động bên ngoài.", required: true, exampleCommand: "/ak:fable-thinking \"Assess whether the proposed retry change addresses Friday's checkout failures. Use the diff and incident logs, hold at least two hypotheses, and lead with GO, CAUTION, or STOP plus the weakest link.\"" },
+    ],
+  },
   guardrails: [
     { thoughtEn: "This looks like a standard case.", thoughtVi: "Việc này giống case quen thuộc.", realityEn: "Template hijack is most likely when the surface looks familiar. Run the Floor first.", realityVi: "Template hijack dễ xảy ra nhất khi bề mặt có vẻ quen. Chạy Floor trước.", accent: "amber" },
     { thoughtEn: "The wording satisfies the constraint.", thoughtVi: "Câu chữ có vẻ đúng ràng buộc.", realityEn: "Surface constraints require enumeration or tooling. Re-reading is the failure mode.", realityVi: "Ràng buộc bề mặt cần đếm hoặc dùng tool. Đọc lại chính là lỗi.", accent: "red" },

@@ -1,4 +1,19 @@
-import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-works';
+
+const invocation: SkillInvocation = {
+  syntax: '/ak:document-skills "<document task>"',
+  arguments: [
+    {
+      token: '"<document task>"',
+      titleEn: 'Document task',
+      titleVi: 'Tác vụ tài liệu',
+      descEn: 'Natural-language request naming the source file, target output, operation, preservation needs, and verification standard. The Skill declares no separate positional arguments or default output directory.',
+      descVi: 'Yêu cầu bằng ngôn ngữ tự nhiên nêu source file, output đích, thao tác, phần cần giữ và chuẩn xác minh. Skill không khai báo argument vị trí riêng hay thư mục output mặc định.',
+      required: true,
+      exampleCommand: '/ak:document-skills "Create board-report.xlsx from approved-metrics.csv with formulas for totals and growth, preserve source precision, add a Sources sheet, recalculate with LibreOffice, scan every formula result for errors, and save to ./deliverables without changing the CSV."',
+    },
+  ],
+};
 
 const data: SkillInfographic = {
   id: "ak-document-skills",
@@ -52,6 +67,7 @@ const data: SkillInfographic = {
     { flag: "pptx", modeEn: "Slides", modeVi: "Slide", research: "Load pptx resources", redTeam: "Check hierarchy and layout", validation: "Review generated deck", cookFlag: "pptx" },
     { flag: "xlsx", modeEn: "Spreadsheet", modeVi: "Spreadsheet", research: "Load xlsx resources", redTeam: "Check sheets/tables/formulas", validation: "Inspect workbook data", cookFlag: "xlsx" },
   ],
+  invocation,
   skillStack: [
     { name: "references/", type: "tool" },
     { name: "scripts/", type: "tool" },

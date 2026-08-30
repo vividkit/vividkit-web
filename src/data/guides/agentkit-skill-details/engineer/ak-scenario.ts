@@ -99,6 +99,62 @@ const data: SkillInfographic = {
       "validation": "Stops after two zero-novelty iterations"
     }
   ],
+  "invocation": {
+    "syntax": "/ak:scenario <file path or feature description> [--iterations N] [--saturation] [--domain <type>] [--focus <dim>] [--format <type>]",
+    "arguments": [
+      {
+        "token": "<file path or feature description>",
+        "titleEn": "Target to explore",
+        "titleVi": "Mục tiêu cần khám phá",
+        "descEn": "A narrow code path, file path, or natural-language feature description that defines the behavior and evidence scope. Include actors, state, data, integrations, constraints, and known failure modes when they are not obvious from the file.",
+        "descVi": "Code path, file path hẹp hoặc mô tả feature bằng ngôn ngữ tự nhiên để xác định behavior và evidence scope. Nêu actor, state, data, integration, constraint và known failure mode khi chúng không rõ từ file.",
+        "required": true,
+        "exampleCommand": "/ak:scenario src/api/account-recovery.ts"
+      }
+    ],
+    "options": [
+      {
+        "token": "--iterations N",
+        "titleEn": "Fixed iteration count",
+        "titleVi": "Số iteration cố định",
+        "descEn": "Run exactly N scenario iterations, then summarize. This is a budget and hard ceiling, not proof of exhaustive coverage.",
+        "descVi": "Chạy đúng N iteration tạo scenario rồi summarize. Đây là budget và hard ceiling, không phải bằng chứng coverage exhaustive.",
+        "exampleCommand": "/ak:scenario src/api/payment.ts --iterations 25"
+      },
+      {
+        "token": "--saturation",
+        "titleEn": "Novelty stop",
+        "titleVi": "Dừng theo độ mới",
+        "descEn": "Continue until two consecutive iterations produce no New classification. It has no separate numeric maximum in the shipped contract.",
+        "descVi": "Tiếp tục đến khi hai iteration liên tiếp không sinh classification New. Shipped contract không có numeric maximum riêng.",
+        "exampleCommand": "/ak:scenario \"Add multi-tenancy to the database layer\" --saturation"
+      },
+      {
+        "token": "--domain <type>",
+        "titleEn": "Domain hint",
+        "titleVi": "Gợi ý domain",
+        "descEn": "Prioritize software, product, business, security, or marketing context. It guides ordering and emphasis; it does not narrow the evidence scope by itself.",
+        "descVi": "Ưu tiên context software, product, business, security hoặc marketing. Flag này định hướng thứ tự và trọng tâm; tự nó không thu hẹp evidence scope.",
+        "exampleCommand": "/ak:scenario src/middleware/auth.ts --saturation --domain security"
+      },
+      {
+        "token": "--focus <dim>",
+        "titleEn": "Focus dimension",
+        "titleVi": "Dimension trọng tâm",
+        "descEn": "Prioritize edge-cases, failures, security, or scale during exploration while still reporting analyzed and skipped dimensions.",
+        "descVi": "Ưu tiên edge-cases, failures, security hoặc scale trong exploration nhưng vẫn báo dimension đã analyze và đã skip.",
+        "exampleCommand": "/ak:scenario \"Account recovery\" --focus failures"
+      },
+      {
+        "token": "--format <type>",
+        "titleEn": "Report shape",
+        "titleVi": "Dạng report",
+        "descEn": "Select table, use-cases, test-scenarios, or threat-scenarios output. The option changes report shape, not whether scenarios are verified.",
+        "descVi": "Chọn output table, use-cases, test-scenarios hoặc threat-scenarios. Tùy chọn này đổi dạng report, không biến scenario thành kết quả đã xác minh.",
+        "exampleCommand": "/ak:scenario \"User registration with OAuth providers\" --format test-scenarios"
+      }
+    ]
+  },
   "outputFlags": [
     {
       "flag": "--iterations N",

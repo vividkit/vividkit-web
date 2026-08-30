@@ -1,4 +1,74 @@
-import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-works';
+
+const invocation: SkillInvocation = {
+  syntax: '/ak:threejs [3D scene or feature]',
+  arguments: [
+    {
+      token: '[3D scene or feature]',
+      titleEn: '3D scene or feature',
+      titleVi: 'Scene hoặc tính năng 3D',
+      descEn:
+        'Natural-language Three.js task covering the framework and version, target browsers or devices, WebGL/WebGPU fallback policy, canvas size, interaction model, asset formats, performance budget, accessibility alternatives, and expected runtime evidence. The Skill has no documented top-level modes.',
+      descVi:
+        'Yêu cầu Three.js bằng ngôn ngữ tự nhiên, gồm framework và version, browser hoặc thiết bị đích, chính sách fallback WebGL/WebGPU, kích thước canvas, kiểu tương tác, định dạng asset, ngân sách hiệu năng, phương án accessibility và bằng chứng runtime mong đợi. Skill không có mode cấp cao nhất được tài liệu hóa.',
+      required: true,
+      exampleCommand:
+        '/ak:threejs "Add an accessible GLTF product viewer with OrbitControls, loading and error states, WebGL fallback, keyboard alternatives, disposal on unmount, and a 60 fps target on mid-range mobile"',
+    },
+  ],
+  options: [
+    {
+      token: '--domain examples|api|use-cases|categories',
+      titleEn: 'Search domain',
+      titleVi: 'Miền tìm kiếm',
+      descEn:
+        'Limit the packaged search helper to examples, API summaries, use-case recommendations, or categories. It searches local CSV indexes and does not fetch live example source.',
+      descVi:
+        'Giới hạn helper search đóng gói vào example, API summary, gợi ý use case hoặc category. Helper tìm trong CSV local và không tải source example live.',
+      exampleCommand: '/ak:threejs "Search camera --domain api before adding a PerspectiveCamera walkthrough"',
+    },
+    {
+      token: '--use-case',
+      titleEn: 'Use-case lookup',
+      titleVi: 'Tra use case',
+      descEn:
+        'Resolve one packaged use-case row to recommended examples. This is reference discovery only, not implementation or source download.',
+      descVi:
+        'Resolve một dòng use case đóng gói thành example được đề xuất. Đây chỉ là khám phá reference, không triển khai hay tải source.',
+      exampleCommand: '/ak:threejs "Find product configurator references --use-case before implementation"',
+    },
+    {
+      token: '--category <name>',
+      titleEn: 'Example category',
+      titleVi: 'Category example',
+      descEn:
+        'Filter packaged examples by category such as webgpu, webxr, physics, or webgl postprocessing.',
+      descVi:
+        'Lọc example đóng gói theo category như webgpu, webxr, physics hoặc webgl postprocessing.',
+      exampleCommand: '/ak:threejs "List WebGPU particle patterns --category webgpu -n 10"',
+    },
+    {
+      token: '--complexity low|medium|high',
+      titleEn: 'Complexity filter',
+      titleVi: 'Lọc độ phức tạp',
+      descEn:
+        'Filter packaged examples by the bundled complexity label. The label is guidance, not a measured runtime cost.',
+      descVi:
+        'Lọc example đóng gói theo nhãn độ phức tạp đi kèm. Nhãn này là hướng dẫn, không phải chi phí runtime đã đo.',
+      exampleCommand: '/ak:threejs "Find high-complexity architectural visualization examples --complexity high"',
+    },
+    {
+      token: '-n <max_results>',
+      titleEn: 'Result count',
+      titleVi: 'Số kết quả',
+      descEn:
+        'Change how many packaged search matches are returned by the local helper.',
+      descVi:
+        'Đổi số match search đóng gói mà helper local trả về.',
+      exampleCommand: '/ak:threejs "Find webgl postprocessing depth of field examples -n 10"',
+    },
+  ],
+};
 
 const data: SkillInfographic = {
   "id": "ak-threejs",
@@ -96,6 +166,7 @@ const data: SkillInfographic = {
     "Physics và trải nghiệm WebXR",
     "Particle, custom GLSL shader và hiệu năng render"
   ],
+  "invocation": invocation,
   "promptExamples": [
     {
       "labelEn": "Accessible product viewer",

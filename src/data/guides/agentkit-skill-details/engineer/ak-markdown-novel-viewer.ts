@@ -32,6 +32,21 @@ const data: SkillInfographic = {
     'Khi Mermaid lỗi, phải cho thấy nguồn lỗi và hướng sửa',
     'Điều hướng plan phải dễ dùng trên cả desktop và mobile',
   ],
+  invocation: {
+    syntax: '/ak:markdown-novel-viewer [file-or-directory] [--file <path>|--dir <path>] [--port <number>] [--host <addr>] [--open] [--background] [--stop]',
+    arguments: [
+      { token: '[file-or-directory]', titleEn: 'Markdown file or directory', titleVi: 'File Markdown hoặc thư mục', descEn: 'Path to one Markdown file for reader mode or one directory for browsing. Relative paths resolve from the current working directory; omit when stopping running viewers.', descVi: 'Đường dẫn tới một file Markdown để đọc hoặc một thư mục để duyệt. Đường dẫn tương đối resolve từ current working directory; bỏ qua khi dừng viewer đang chạy.', required: false },
+    ],
+    options: [
+      { token: '--file <path>', titleEn: 'Serve file', titleVi: 'Serve file', descEn: 'Serve an explicit Markdown file at the reader route and allow its parent directory for local assets.', descVi: 'Serve rõ một file Markdown tại route đọc và cho phép parent directory của file để tải asset nội bộ.', exampleCommand: '/ak:markdown-novel-viewer --file ./plans/my-plan/plan.md --open' },
+      { token: '--dir <path>', titleEn: 'Browse directory', titleVi: 'Duyệt thư mục', descEn: 'Serve an explicit directory browser. Hidden entries and directories named deprecated are omitted from the listing.', descVi: 'Serve rõ một directory browser. Entry ẩn và thư mục tên deprecated bị loại khỏi danh sách.', exampleCommand: '/ak:markdown-novel-viewer --dir ./plans --open' },
+      { token: '--port <number>', titleEn: 'Starting port', titleVi: 'Cổng bắt đầu', descEn: 'Request the starting HTTP port. The default is 3456 and occupied ports are scanned upward through 3500.', descVi: 'Yêu cầu cổng HTTP bắt đầu. Mặc định là 3456 và nếu bận sẽ quét tăng dần tới 3500.', exampleCommand: '/ak:markdown-novel-viewer ./README.md --port 3460 --open' },
+      { token: '--host <addr>', titleEn: 'Bind host', titleVi: 'Host bind', descEn: 'Choose the bind address. Keep localhost for local-only reading; 0.0.0.0 exposes the viewer on available network interfaces.', descVi: 'Chọn địa chỉ bind. Giữ localhost để chỉ đọc nội bộ; 0.0.0.0 expose viewer trên các network interface khả dụng.', exampleCommand: '/ak:markdown-novel-viewer ./README.md --host 0.0.0.0 --open' },
+      { token: '--open', titleEn: 'Open browser', titleVi: 'Mở browser', descEn: 'Launch the browser after the server is ready.', descVi: 'Mở browser sau khi server sẵn sàng.', exampleCommand: '/ak:markdown-novel-viewer ./README.md --open' },
+      { token: '--background', titleEn: 'Background server', titleVi: 'Server chạy nền', descEn: 'Spawn a detached child process, write PID state under the system temporary directory, and return JSON startup details.', descVi: 'Spawn child process tách rời, ghi PID state trong thư mục tạm của hệ thống và trả chi tiết khởi động dạng JSON.', exampleCommand: '/ak:markdown-novel-viewer ./README.md --background --open' },
+      { token: '--stop', titleEn: 'Stop viewers', titleVi: 'Dừng viewer', descEn: 'Stop every markdown-novel-viewer instance represented by discovered PID files; confirm shared instances before using it.', descVi: 'Dừng mọi instance markdown-novel-viewer được đại diện bởi PID file tìm thấy; kiểm tra instance dùng chung trước khi dùng.', exampleCommand: '/ak:markdown-novel-viewer --stop' },
+    ],
+  },
   expertiseAreasEn: ['Long-form Markdown review', 'Plan folder navigation', 'Live Mermaid rendering', 'Responsive reader UI', 'Local HTTP file browsing'],
   expertiseAreasVi: ['Đọc Markdown dài', 'Điều hướng thư mục plan', 'Render Mermaid trực tiếp', 'Giao diện đọc responsive', 'Duyệt file qua HTTP nội bộ'],
   promptExamples: [

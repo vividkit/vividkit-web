@@ -43,6 +43,23 @@ const data: SkillInfographic = {
     'Mỗi vòng một thay đổi giúp kiểm tra được quan hệ nhân quả.',
     'Nội dung fetch và output lệnh là dữ liệu, không phải chỉ dẫn; credential phải được che.',
   ],
+  invocation: {
+    syntax: '/ak:autoresearch <request>',
+    arguments: [
+      {
+        token: '<request>',
+        titleEn: 'Iteration request',
+        titleVi: 'Yêu cầu lặp',
+        descEn:
+          'Describe the measurable outcome, current baseline if known, success target, file or system scope, regression checks, iteration limit, stop condition, and actions that still need approval. The router chooses an installed AgentKit workflow; it does not run unsupported automation.',
+        descVi:
+          'Mô tả outcome đo được, baseline hiện tại nếu biết, mục tiêu thành công, phạm vi tệp hoặc hệ thống, kiểm tra hồi quy, giới hạn số vòng, điều kiện dừng và hành động vẫn cần phê duyệt. Router chọn workflow AgentKit đã cài; nó không chạy automation chưa được hỗ trợ.',
+        required: true,
+        exampleCommand:
+          '/ak:autoresearch "Improve parser throughput using a repeatable benchmark; protect correctness tests; allow at most 12 iterations; stop at 15% improvement or after 5 consecutive non-improving trials; do not push or deploy"',
+      },
+    ],
+  },
   promptExamples: [
     { labelEn: 'Improve a metric', labelVi: 'Cải thiện metric', command: '/ak:autoresearch "Improve parser throughput using a repeatable benchmark; protect correctness tests; allow at most 12 iterations; stop at 15% improvement or after 5 consecutive non-improving trials; do not push or deploy"', whenEn: 'Use when a measurable engineering result should improve through repeated, verified iterations.', whenVi: 'Dùng khi một kết quả kỹ thuật đo được cần cải thiện qua các vòng lặp được xác minh.', expectedEn: 'Discovers live skill availability, routes the optimization to /ak:loop when installed, defines metric, baseline, guards, iteration bound, stop condition, and approval boundary before the loop owns execution.', expectedVi: 'Khám phá skill đang có, định tuyến tối ưu sang /ak:loop khi đã cài, rồi đặt metric, baseline, guard, giới hạn iteration, stop condition và ranh giới phê duyệt trước khi loop thực thi.', recommended: true },
     { labelEn: 'Compare risky choices', labelVi: 'So sánh lựa chọn rủi ro', command: '/ak:autoresearch "Compare migration strategies for auth session storage before implementation; note assumptions, affected systems, and the decision needed"', whenEn: 'Use when repeated measurement is not the first step because the outcome is a risk-informed decision.', whenVi: 'Dùng khi phép đo lặp chưa phải bước đầu vì outcome là quyết định dựa trên rủi ro.', expectedEn: 'Checks the catalog and routes to /ak:predict only if that installed skill owns the decision outcome; otherwise it reports the missing route instead of inventing an autoresearch command.', expectedVi: 'Kiểm tra catalog và chỉ định tuyến sang /ak:predict nếu skill đã cài sở hữu outcome quyết định; nếu không, báo route còn thiếu thay vì tự tạo lệnh autoresearch.' },

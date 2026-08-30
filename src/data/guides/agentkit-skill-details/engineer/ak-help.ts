@@ -83,6 +83,20 @@ const data: SkillInfographic = {
     "contentEn": "The skill must use the runtime catalog when available, or discover current SKILL.md frontmatter; copied counts and remembered skill lists are not authoritative.",
     "contentVi": "Skill phải dùng catalog runtime nếu có, hoặc khám phá frontmatter SKILL.md hiện tại; số lượng copy sẵn và danh sách nhớ được không có thẩm quyền."
   },
+  "invocation": {
+    "syntax": "/ak:help [help request]",
+    "arguments": [
+      {
+        "token": "[help request]",
+        "titleEn": "Help request",
+        "titleVi": "Yêu cầu trợ giúp",
+        "descEn": "Optional natural-language task, capability, named skill, or CLI help question to route against the currently installed AgentKit catalog.",
+        "descVi": "Tác vụ, năng lực, skill được nêu tên hoặc câu hỏi help CLI tùy chọn để định tuyến theo catalog AgentKit đang cài.",
+        "required": false,
+        "exampleCommand": "/ak:help which workflow should I run for a bug with unknown root cause?"
+      }
+    ]
+  },
   "promptExamples": [
     {
       "labelEn": "Open help index",

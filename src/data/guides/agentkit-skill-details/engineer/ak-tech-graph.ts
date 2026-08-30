@@ -10,12 +10,26 @@ const data: SkillInfographic = {
     "taglineEn": "Generates and validates production-quality architecture, data flow, flowchart, sequence, agent/memory, UML, network, timeline, matrix, and concept diagrams across seven visual styles.",
     "taglineVi": "Sinh và kiểm tra sơ đồ chất lượng production cho kiến trúc, data flow, flowchart, sequence, agent/memory, UML, network, timeline, matrix và concept map với bảy phong cách hình ảnh."
   },
+  "invocation": {
+    "syntax": "/ak:tech-graph [diagram-type or system description]",
+    "arguments": [
+      {
+        "token": "[diagram-type or system description]",
+        "titleEn": "Diagram brief",
+        "titleVi": "Brief sơ đồ",
+        "descEn": "Names the desired diagram type or describes the system, flow, architecture, memory model, UML structure, network, timeline, matrix, or concept map to render as publish-grade SVG and PNG.",
+        "descVi": "Nêu loại sơ đồ mong muốn hoặc mô tả hệ thống, luồng, kiến trúc, mô hình memory, cấu trúc UML, network, timeline, matrix hoặc concept map cần render thành SVG và PNG chất lượng xuất bản.",
+        "required": false,
+        "exampleCommand": "/ak:tech-graph architecture diagram for the auth service"
+      }
+    ]
+  },
   "hardGate": {
     "type": "critical",
-    "titleEn": "Validate SVG, export PNG, inspect render",
-    "titleVi": "Phải validate SVG, export PNG, kiểm hình render",
-    "contentEn": "Verify rsvg-convert is available before use, write complete SVG with the mandatory Python list method, validate with rsvg-convert, export the 1920px PNG, and visually self-review when image reading is available. Do not treat syntax validity as proof of visual correctness.",
-    "contentVi": "Phải xác minh rsvg-convert có sẵn trước khi dùng, viết SVG đầy đủ bằng Python list method bắt buộc, validate bằng rsvg-convert, export PNG 1920px và tự review hình khi đọc được ảnh. Không xem việc đúng cú pháp là bằng chứng hình render đã đúng."
+    "titleEn": "Validate SVG and inspect visuals",
+    "titleVi": "Phải kiểm SVG và hình render",
+    "contentEn": "Verify rsvg-convert before use, generate complete SVGs with the Python list method for complex work, validate with rsvg-convert, export PNG, and visually self-review when image reading is available. Do not guess that syntax-valid diagrams are visually correct.",
+    "contentVi": "Phải kiểm rsvg-convert trước khi dùng, sinh SVG đầy đủ bằng phương pháp Python list cho việc phức tạp, validate bằng rsvg-convert, export PNG và tự review hình khi có thể đọc ảnh. Không đoán rằng sơ đồ đúng cú pháp là đã đúng về hình ảnh."
   },
   "processFlow": [
     {
@@ -55,45 +69,31 @@ const data: SkillInfographic = {
     },
     {
       "number": 6,
-      "titleEn": "Check icons",
-      "titleVi": "Kiểm icon",
-      "descEn": "Load the icon reference when known products need recognizable symbols before SVG generation begins.",
-      "descVi": "Nạp icon reference khi sản phẩm quen thuộc cần ký hiệu nhận diện trước khi bắt đầu sinh SVG."
+      "titleEn": "Route arrows",
+      "titleVi": "Định tuyến mũi tên",
+      "descEn": "Assign arrow semantics, add legends for two or more flow types, route around nodes, and use jump-over arcs for crossings.",
+      "descVi": "Gán ý nghĩa cho mũi tên, thêm legend khi có từ hai loại flow, đi vòng quanh node và dùng cung nhảy khi đường giao nhau."
     },
     {
       "number": 7,
       "titleEn": "Write SVG",
       "titleVi": "Viết SVG",
-      "descEn": "Use the mandatory Python list method for complete SVG content; helper scripts can create templates or validate complex diagrams.",
-      "descVi": "Dùng Python list method bắt buộc để ghi SVG đầy đủ; script hỗ trợ có thể tạo template hoặc validate sơ đồ phức tạp."
+      "descEn": "Use helper scripts or the mandatory Python list method, with defs, markers, embedded fonts, label backgrounds, and complete closing tags.",
+      "descVi": "Dùng script hỗ trợ hoặc phương pháp Python list bắt buộc, kèm defs, marker, font nhúng, nền cho nhãn và thẻ đóng đầy đủ."
     },
     {
       "number": 8,
-      "titleEn": "Validate SVG",
-      "titleVi": "Validate SVG",
-      "descEn": "Run rsvg-convert against the SVG to verify syntax and renderer compatibility before producing the final PNG.",
-      "descVi": "Chạy rsvg-convert với SVG để kiểm cú pháp và khả năng render tương thích trước khi tạo PNG cuối."
+      "titleEn": "Validate and export",
+      "titleVi": "Validate và export",
+      "descEn": "Run rsvg-convert syntax validation, export a 1920px PNG, then inspect for collisions, overflow, label issues, and clutter.",
+      "descVi": "Chạy rsvg-convert để kiểm cú pháp, export PNG 1920px, rồi kiểm va chạm, tràn chữ, lỗi nhãn và bố cục rối."
     },
     {
       "number": 9,
-      "titleEn": "Export PNG",
-      "titleVi": "Export PNG",
-      "descEn": "Render the same SVG to a 1920px PNG artifact after validation succeeds.",
-      "descVi": "Render chính SVG đó thành artifact PNG 1920px sau khi validation pass."
-    },
-    {
-      "number": 10,
       "titleEn": "Report paths",
       "titleVi": "Báo đường dẫn",
-      "descEn": "Return the generated SVG and PNG file paths after export.",
-      "descVi": "Trả đường dẫn tệp SVG và PNG đã tạo sau khi export."
-    },
-    {
-      "number": 11,
-      "titleEn": "Self-review render",
-      "titleVi": "Tự review hình render",
-      "descEn": "When image reading is available, inspect the PNG for collisions, label overlap, clipped text, clutter, and legend placement; revise and re-export if needed.",
-      "descVi": "Khi đọc được ảnh, kiểm PNG để tìm va chạm, nhãn chồng nhau, chữ bị cắt, bố cục rối và vị trí legend; sửa rồi export lại nếu cần."
+      "descEn": "Return the SVG and PNG paths plus any visual limitations if the self-review could not be performed.",
+      "descVi": "Trả đường dẫn SVG và PNG cùng hạn chế hình ảnh nếu không thể tự review được."
     }
   ],
   "corePrinciplesEn": [
@@ -126,41 +126,32 @@ const data: SkillInfographic = {
   ],
   "promptExamples": [
     {
-      "labelEn": "Evidence-backed data flow",
-      "labelVi": "Data flow có bằng chứng",
-      "command": "/ak:tech-graph create a data-flow diagram for auth from current docs and deployment config; show browser, gateway, auth service, session store, and audit sink; label payloads and assumptions; style 1; write ./artifacts/auth-flow.svg and PNG",
-      "whenEn": "Use when a durable SVG and PNG pair should explain verified system data movement for publication.",
-      "whenVi": "Dùng khi cần cặp SVG và PNG bền vững để giải thích luồng dữ liệu hệ thống đã xác minh cho mục đích xuất bản.",
-      "expectedEn": "Establishes source-backed scope, classifies data-flow layout, plans semantic arrows and legend, writes SVG, validates it with rsvg-convert, exports PNG, visually reviews when possible, and reports both artifact paths.",
-      "expectedVi": "Thiết lập phạm vi có bằng chứng, phân loại layout data-flow, lập mũi tên ngữ nghĩa và legend, viết SVG, validate bằng rsvg-convert, export PNG, review hình khi có thể và báo cả hai artifact path.",
+      "labelEn": "Architecture diagram",
+      "labelVi": "Sơ đồ kiến trúc",
+      "command": "/ak:tech-graph draw the payment service architecture",
+      "whenEn": "A publish-grade system architecture diagram is needed.",
+      "whenVi": "Cần sơ đồ kiến trúc hệ thống đủ chất lượng để xuất bản.",
+      "expectedEn": "Classifies the layout, writes SVG, validates it, exports PNG, and reports both paths.",
+      "expectedVi": "Phân loại layout, viết SVG, validate, export PNG và báo cả hai đường dẫn.",
       "recommended": true
     },
     {
-      "labelEn": "Agent memory architecture",
-      "labelVi": "Kiến trúc memory agent",
-      "command": "/ak:tech-graph visualize agent memory write and read paths for a support bot with working memory, vector store, graph store, retrieval, ranking, and context assembly",
-      "whenEn": "Use when memory reads, writes, retrieval, and context assembly need separate visual treatment.",
-      "whenVi": "Dùng khi đường đọc, ghi, retrieve và ghép context của memory cần được thể hiện riêng.",
-      "expectedEn": "Uses the memory architecture rules, separates write and read paths, labels store and retrieve operations, applies semantic arrow styles, includes a legend for multiple flow types, then validates and exports SVG plus PNG.",
-      "expectedVi": "Dùng luật kiến trúc memory, tách đường ghi và đọc, gắn nhãn thao tác store và retrieve, áp dụng style mũi tên ngữ nghĩa, thêm legend cho nhiều loại flow, rồi validate và export SVG cùng PNG."
+      "labelEn": "Agent memory flow",
+      "labelVi": "Luồng memory agent",
+      "command": "/ak:tech-graph visualize agent memory write and read paths",
+      "whenEn": "The diagram must separate memory writes, reads, retrieval, and context assembly.",
+      "whenVi": "Sơ đồ cần tách đường ghi memory, đọc memory, retrieve và ghép context.",
+      "expectedEn": "Uses memory architecture rules and semantic arrows with a legend.",
+      "expectedVi": "Dùng luật kiến trúc memory và mũi tên có ngữ nghĩa kèm legend."
     },
     {
       "labelEn": "Sequence diagram",
       "labelVi": "Sơ đồ sequence",
-      "command": "/ak:tech-graph sequence diagram for checkout authorization between browser, API gateway, payment service, provider, and ledger; include success and declined alt frames",
-      "whenEn": "Use when ordered participant interactions should be shown with lifelines and message timing.",
-      "whenVi": "Dùng khi cần thể hiện tương tác theo thứ tự thời gian giữa các participant bằng lifeline và message.",
-      "expectedEn": "Applies sequence-diagram rules for participants, lifelines, activation boxes, messages, and alt frames, sizes the viewBox from message count, writes complete SVG, validates with rsvg-convert, exports PNG, and reports paths.",
-      "expectedVi": "Áp dụng luật sequence diagram cho participant, lifeline, activation box, message và alt frame, tính viewBox theo số message, viết SVG đầy đủ, validate bằng rsvg-convert, export PNG và báo path."
-    },
-    {
-      "labelEn": "UML class diagram",
-      "labelVi": "Sơ đồ class UML",
-      "command": "/ak:tech-graph create a UML class diagram for the billing domain with Customer, Subscription, Invoice, PaymentAttempt, and ProviderAdapter relationships",
-      "whenEn": "Use when static classes, attributes, methods, and typed relationships need publish-grade UML notation.",
-      "whenVi": "Dùng khi class tĩnh, attribute, method và relationship có kiểu cần ký pháp UML đủ chất lượng xuất bản.",
-      "expectedEn": "Classifies the request as a class diagram, uses compartment boxes with UML visibility and relationship notation, lays parents and implementors consistently, writes and validates the SVG, exports PNG, and reports the deliverable paths.",
-      "expectedVi": "Phân loại yêu cầu là class diagram, dùng box nhiều ngăn với visibility và ký pháp relationship UML, sắp parent và implementor nhất quán, viết và validate SVG, export PNG và báo các path bàn giao."
+      "command": "/ak:tech-graph sequence diagram for checkout authorization",
+      "whenEn": "A time-ordered interaction between participants should be illustrated.",
+      "whenVi": "Cần minh họa tương tác theo thời gian giữa các participant.",
+      "expectedEn": "Uses lifelines, activation boxes, messages, and optional loop/alt frames.",
+      "expectedVi": "Dùng lifeline, activation box, message và frame loop/alt khi cần."
     }
   ]
 };

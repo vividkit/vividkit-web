@@ -7,7 +7,7 @@ const data: SkillInfographic = {
   "header": {
     "titleEn": "Goal Warmup Outcome Lock",
     "titleVi": "Khóa mục tiêu trước khi chạy dài",
-    "taglineEn": "Preflight an expensive /goal or autonomous run by interviewing to an approved Outcome Contract, planning inside that contract, reviewing drift risks, and ending Ready, Blocked, or Decision required without auto-starting execution.",
+    "taglineEn": "Prepare an expensive /goal or autonomous run by interviewing to an approved Outcome Contract, planning inside that contract, reviewing drift risks, and ending Ready, Blocked, or Decision required without auto-starting execution.",
     "taglineVi": "Chuẩn bị trước cho /goal hoặc phiên tự động dài bằng Outcome Contract đã được duyệt, plan không lệch hợp đồng, review rủi ro drift và kết thúc Ready, Blocked hoặc Decision required mà không tự chạy."
   },
   "processFlow": [
@@ -111,6 +111,30 @@ const data: SkillInfographic = {
     "Review giữ nguyên hợp đồng",
     "Packet bàn giao cho Codex /goal và Claude long-run"
   ],
+  "invocation": {
+    "syntax": "/ak:goal-warmup \"<goal>\" [--fast]",
+    "arguments": [
+      {
+        "token": "\"<goal>\"",
+        "titleEn": "Goal to prepare",
+        "titleVi": "Goal cần chuẩn bị",
+        "descEn": "Natural-language long-run outcome, must-have deliverables, exclusions, acceptance signals, constraints, allowed substitutions, and known dependencies. It is treated as input for a handoff packet, not permission to start /goal.",
+        "descVi": "Goal chạy dài bằng ngôn ngữ tự nhiên, gồm deliverable bắt buộc, phần loại trừ, tín hiệu chấp nhận, ràng buộc, thay thế được phép và dependency đã biết. Đây là input cho packet bàn giao, không phải quyền tự bắt đầu /goal.",
+        "required": true,
+        "exampleCommand": "/ak:goal-warmup \"Migrate billing webhooks without payment regressions\""
+      }
+    ],
+    "options": [
+      {
+        "token": "--fast",
+        "titleEn": "Fast check",
+        "titleVi": "Kiểm tra nhanh",
+        "descEn": "Requests the reduced review path for small local work only. The skill still requires contract approval, planning, readiness checks, final confirmation, and no auto-start.",
+        "descVi": "Yêu cầu nhánh review rút gọn chỉ cho việc nhỏ và local. Skill vẫn bắt buộc duyệt contract, lập plan, kiểm tra sẵn sàng, xác nhận cuối và không tự khởi chạy.",
+        "exampleCommand": "/ak:goal-warmup \"Clean up stale internal docs links\" --fast"
+      }
+    ]
+  },
   "outputFlags": [
     {
       "flag": "--fast",

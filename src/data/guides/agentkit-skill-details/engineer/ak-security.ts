@@ -121,6 +121,46 @@ const data: SkillInfographic = {
       "validation": "Stops at N iterations"
     }
   ],
+  "invocation": {
+    "syntax": "/ak:security <scope glob or 'full'> [--fix] [--red-team] [--iterations N]",
+    "arguments": [
+      {
+        "token": "<scope glob or 'full'>",
+        "titleEn": "Audit scope",
+        "titleVi": "Phạm vi audit",
+        "descEn": "File glob, directory, or exact keyword `full` to audit. Keep it bounded to the relevant trust boundary unless a full-project review is intended.",
+        "descVi": "Glob file, thư mục hoặc đúng keyword `full` cần audit. Giữ phạm vi trong ranh giới tin cậy liên quan trừ khi muốn review toàn project.",
+        "required": true,
+        "exampleCommand": "/ak:security src/auth/"
+      }
+    ],
+    "options": [
+      {
+        "token": "--fix",
+        "titleEn": "Fix findings",
+        "titleVi": "Sửa finding",
+        "descEn": "Authorize local targeted fixes after the audit. Each successful iteration runs a guard and creates a local commit; it does not authorize push, PR, merge, release, or deployment.",
+        "descVi": "Cho phép sửa cục bộ có mục tiêu sau audit. Mỗi iteration thành công chạy guard và tạo commit local; không cho phép push, PR, merge, release hay deploy.",
+        "exampleCommand": "/ak:security src/ --fix --iterations 15"
+      },
+      {
+        "token": "--red-team",
+        "titleEn": "Red-team discovery",
+        "titleVi": "Khám phá red-team",
+        "descEn": "Add attacker-persona discovery before the final STRIDE and OWASP sweep: external adversary, supply-chain, insider, and infrastructure perspectives.",
+        "descVi": "Thêm khám phá theo persona attacker trước lượt quét STRIDE và OWASP cuối: external adversary, supply-chain, insider và infrastructure.",
+        "exampleCommand": "/ak:security full --red-team"
+      },
+      {
+        "token": "--iterations N",
+        "titleEn": "Iteration cap",
+        "titleVi": "Giới hạn số vòng",
+        "descEn": "Cap red-team discovery or fix iterations for the selected mode. `N` is user-chosen; no default numeric cap is documented.",
+        "descVi": "Giới hạn số vòng discovery red-team hoặc fix cho mode đã chọn. `N` do người dùng chọn; source không định nghĩa giới hạn số mặc định.",
+        "exampleCommand": "/ak:security src/ --red-team --iterations 20"
+      }
+    ]
+  },
   "outputFlags": [
     {
       "flag": "--fix",

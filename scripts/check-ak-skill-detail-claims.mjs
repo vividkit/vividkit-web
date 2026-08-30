@@ -98,17 +98,31 @@ function extractSubcommands(argumentHint, skillMd) {
   const hint = argumentHint || '';
   const or = hint.match(/OR\s*\[([^\]]+)\]/i);
   if (or) {
-    for (const part of or[1].split('|')) {
-      const s = part.trim();
-      if (s && !s.startsWith('--') && !s.startsWith('<') && !s.startsWith('[')) {
-        subs.add(s);
-      }
+    const parts = or[1].split('|').map((p) => p.trim());
+    if (parts.length > 1 && parts.every((p) => /^[a-z][a-z0-9-]*$/.test(p))) {
+      for (const p of parts) subs.add(p);
     }
   }
   const heading = /^#{2,3}\s+`?\/ak:[a-z0-9-]+\s+([a-z0-9][a-z0-9-]*)`?/gim;
   let m;
   while ((m = heading.exec(skillMd))) subs.add(m[1]);
   return subs;
+}
+
+function objectSlice(src, key) {
+  const re = new RegExp(`["']?${key}["']?\\s*:\\s*\\{`);
+  const m = re.exec(src);
+  if (!m) return '';
+  let depth = 0;
+  for (let i = m.index + m[0].length - 1; i < src.length; i++) {
+    const ch = src[i];
+    if (ch === '{') depth++;
+    else if (ch === '}') {
+      depth--;
+      if (depth === 0) return src.slice(m.index, i + 1);
+    }
+  }
+  return '';
 }
 
 function tokenizeCommand(command) {
@@ -208,11 +222,28 @@ function checkFile({ id, src, skillMd, argumentHint }) {
   const allowedFlags = extractAllowedFlags(argumentHint, skillMd);
   const allowedSubs = extractSubcommands(argumentHint, skillMd);
   const invokes = allowedInvokes(id);
-  const commands = extractDetailCommands(src);
+  const commands = [
+    ...extractDetailCommands(src),
+    ...extractQuotedFields(src, 'syntax'),
+  ];
 
   for (const flag of extractDetailFlags(src)) {
     if (!allowedFlags.has(flag)) {
       violations.push(`invented flag field ${flag}`);
+    }
+  }
+  for (const token of extractQuotedFields(src, 'token')) {
+    if (FLAG_RE.test(token) && !allowedFlags.has(token)) {
+      violations.push(`invented invocation token ${token}`);
+    }
+  }
+
+  const slice = objectSlice(src, 'invocation');
+  if (slice) {
+    for (const name of extractQuotedFields(slice, 'name')) {
+      if (/^[a-z][a-z0-9-]*$/.test(name) && allowedSubs.size && !allowedSubs.has(name)) {
+        violations.push(`invented subcommand ${name}`);
+      }
     }
   }
 
@@ -264,6 +295,9 @@ function checkFile({ id, src, skillMd, argumentHint }) {
         violations.push(`prompt expectedEn[${i}] too thin: ${ex}`);
       }
     }
+    if (!/["']?invocation["']?\s*:/.test(src)) {
+      violations.push('user-facing skill needs an invocation block (syntax, arguments, options, subcommands)');
+    }
   }
 
   return violations;
@@ -282,6 +316,7 @@ argument-hint: "[task] [--fast|--html] OR [archive|validate]"
 const data = {
   id: 'ak-plan',
   command: '/ak:plan',
+  invocation: { syntax: '/ak:plan [task] [--fast|--html] OR /ak:plan validate <plan.md>' },
   promptExamples: [
     { command: '/ak:plan Rename settings route --fast', expectedEn: 'Focused plan.md and phase files without research overhead for a small rename.' },
     { command: '/ak:plan validate plans/x/plan.md', expectedEn: 'Critical questions against the existing plan and updates or unresolved blockers.' },
@@ -289,7 +324,10 @@ const data = {
   outputFlags: [{ flag: '--html', exampleCommand: '/ak:plan flow --html' }],
 };
 `;
-  const invented = good.replace('--fast', '--not-a-real-flag');
+  const invented = good.replace(
+    '/ak:plan Rename settings route --fast',
+    '/ak:plan Rename settings route --not-a-real-flag',
+  );
   const wrongSkill = good.replace('/ak:plan Rename', '/ak:cook Rename');
   const jsonInvented = `{
   "id": "ak-plan",
@@ -326,12 +364,34 @@ const data = {
     skillMd,
     argumentHint: '[task] [--fast|--html] OR [archive|validate]',
   });
+  const invOpt = good.replace(
+    "syntax: '/ak:plan [task] [--fast|--html] OR /ak:plan validate <plan.md>'",
+    "syntax: '/ak:plan [task]', options: [{ token: '--not-a-real-flag', titleEn: 'x', titleVi: 'x', descEn: 'long enough description for the option token.', descVi: 'mo ta option du dai.' }]",
+  );
+  const invSub = good.replace(
+    "syntax: '/ak:plan [task] [--fast|--html] OR /ak:plan validate <plan.md>'",
+    "syntax: '/ak:plan validate x', subcommands: [{ name: 'explode', syntax: '/ak:plan explode x', titleEn: 'x', titleVi: 'x', descEn: 'x', descVi: 'x', outcomeEn: 'x', outcomeVi: 'x' }]",
+  );
+  const e = checkFile({
+    id: 'ak-plan',
+    src: invOpt,
+    skillMd,
+    argumentHint: '[task] [--fast|--html] OR [archive|validate]',
+  });
+  const f = checkFile({
+    id: 'ak-plan',
+    src: invSub,
+    skillMd,
+    argumentHint: '[task] [--fast|--html] OR [archive|validate]',
+  });
 
   const fail = [];
   if (!a.some((v) => v.includes('--not-a-real-flag'))) fail.push('invented-flag case');
   if (!b.some((v) => v.includes('wrong-skill'))) fail.push('wrong-skill case');
   if (c.length) fail.push(`allowed case had ${c.join('; ')}`);
   if (!d.some((v) => v.includes('--not-a-real-flag'))) fail.push('json-style invented-flag case');
+  if (!e.some((v) => v.includes('--not-a-real-flag'))) fail.push('invented invocation option');
+  if (!f.some((v) => v.includes('explode'))) fail.push('invented subcommand');
   if (fail.length) {
     process.stderr.write(`self-test failed: ${fail.join(', ')}\n`);
     process.exit(1);

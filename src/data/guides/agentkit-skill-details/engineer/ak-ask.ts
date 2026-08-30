@@ -1,4 +1,34 @@
-import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-works';
+
+const invocation: SkillInvocation = {
+  syntax: '/ak:ask [technical-question] [--yagni]',
+  arguments: [
+    {
+      token: '[technical-question]',
+      titleEn: 'Technical question',
+      titleVi: 'Câu hỏi kỹ thuật',
+      descEn:
+        'Architecture or technology question to answer, including the decision, constraints, alternatives, and evidence to ground the consultation.',
+      descVi:
+        'Câu hỏi kiến trúc hoặc công nghệ cần trả lời, gồm quyết định, ràng buộc, phương án và bằng chứng để làm nền cho phần tư vấn.',
+      required: true,
+      exampleCommand:
+        '/ak:ask "Should this service publish domain events directly, or write an outbox record first?"',
+    },
+  ],
+  options: [
+    {
+      token: '--yagni',
+      titleEn: 'Cut unneeded scope',
+      titleVi: 'Cắt scope thừa',
+      descEn:
+        'Challenge and remove scope that is not needed for the stated outcome. Does not remove work required to answer the question.',
+      descVi:
+        'Chất vấn và bỏ phần phạm vi không cần cho outcome đã nêu. Không bỏ phần cần thiết để trả lời câu hỏi.',
+      exampleCommand: '/ak:ask "Do we need event sourcing for audit trails?" --yagni',
+    },
+  ],
+};
 
 const data: SkillInfographic = {
   id: 'ak-ask',
@@ -43,6 +73,7 @@ const data: SkillInfographic = {
   ],
   expertiseAreasEn: ['System boundaries', 'Technology strategy', 'Scalability and reliability', 'Risk analysis', 'Decision trade-offs'],
   expertiseAreasVi: ['Ranh giới hệ thống', 'Chiến lược công nghệ', 'Mở rộng và độ tin cậy', 'Phân tích rủi ro', 'Đánh đổi quyết định'],
+  invocation,
   promptExamples: [
     { labelEn: 'Architecture decision', labelVi: 'Quyết định kiến trúc', command: '/ak:ask "Should this service stay REST or move to gRPC for internal calls?"', whenEn: 'Use when you need a strategic answer before planning or coding.', whenVi: 'Dùng khi cần câu trả lời chiến lược trước khi lập kế hoạch hoặc viết mã.', expectedEn: 'Gathers context, compares boundaries and trade-offs, and returns direct guidance.', expectedVi: 'Thu thập bối cảnh, so sánh ranh giới và đánh đổi, rồi trả hướng dẫn trực diện.', recommended: true },
     { labelEn: 'YAGNI architecture challenge', labelVi: 'Phản biện kiến trúc bằng YAGNI', command: '/ak:ask "Do we need event sourcing for audit trails?" --yagni', whenEn: 'Use when you want unnecessary scope challenged and cut from the recommendation.', whenVi: 'Dùng khi muốn khuyến nghị phản biện và cắt phạm vi không cần thiết.', expectedEn: 'Evaluates the full question, then cuts only what is not needed for the stated outcome.', expectedVi: 'Đánh giá đủ câu hỏi, rồi chỉ cắt phần không cần cho kết quả đã nêu.' },

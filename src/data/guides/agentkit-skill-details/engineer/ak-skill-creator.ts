@@ -10,6 +10,30 @@ const data: SkillInfographic = {
     "taglineEn": "Creates or updates Claude skills through intent capture, research, progressive-disclosure planning, scaffolding, SKILL.md/resources, evals, description optimization, packaging, and optional Kongming advice.",
     "taglineVi": "Tạo hoặc cập nhật Claude skill qua ghi nhận intent, research, lập progressive disclosure, scaffold, SKILL.md/tài nguyên, eval, tối ưu description, đóng gói và cố vấn Kongming tùy chọn."
   },
+  "invocation": {
+    "syntax": "/ak:skill-creator [skill-name or description] [--advice]",
+    "arguments": [
+      {
+        "token": "[skill-name or description]",
+        "titleEn": "Skill name or description",
+        "titleVi": "Tên hoặc mô tả Skill",
+        "descEn": "Names the Skill to create or update, or describes the repeatable workflow that should become a Skill. Include scope, triggers, expected output, and non-goals when known.",
+        "descVi": "Nêu Skill cần tạo hoặc cập nhật, hoặc mô tả workflow lặp lại cần chuyển thành Skill. Kèm scope, trigger, output mong đợi và non-goal nếu đã biết.",
+        "required": false,
+        "exampleCommand": "/ak:skill-creator \"Create a project-scoped release-notes Skill that validates headings and never publishes\""
+      }
+    ],
+    "options": [
+      {
+        "token": "--advice",
+        "titleEn": "Advisory supervision",
+        "titleVi": "Giám sát tư vấn",
+        "descEn": "Requests Kongming advisory review after planning, after the SKILL.md draft and evaluation results, before packaging or distribution, or when repeated failures block progress. It does not transfer decisions or bypass validation and security checks.",
+        "descVi": "Yêu cầu Kongming review tư vấn sau planning, sau bản nháp SKILL.md cùng kết quả evaluation, trước packaging hoặc distribution, hoặc khi lỗi lặp lại chặn tiến độ. Tùy chọn này không chuyển quyền quyết định và không bỏ qua validation hay kiểm tra bảo mật.",
+        "exampleCommand": "/ak:skill-creator \"Create a project-scoped release-notes Skill that validates headings and never publishes\" --advice"
+      }
+    ]
+  },
   "hardGate": {
     "type": "warning",
     "titleEn": "Project scope and security are mandatory",

@@ -1,4 +1,19 @@
-import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-works';
+
+const invocation: SkillInvocation = {
+  syntax: "/ak:diagram [request]",
+  arguments: [
+    {
+      token: "[request]",
+      titleEn: "Diagram request",
+      titleVi: "Yêu cầu sơ đồ",
+      descEn: "Natural-language source, target artifact, diagram type or visual goal, output destination, and permission boundaries for browser rendering, video capture, or dependency installation.",
+      descVi: "Source, artifact cần tạo, loại sơ đồ hoặc mục tiêu visual, thư mục output và ranh giới cho phép browser rendering, video capture hoặc cài dependency bằng ngôn ngữ tự nhiên.",
+      required: true,
+      exampleCommand: "/ak:diagram Render checkout-flow.mmd as an editorial PNG and SVG in ./artifacts",
+    },
+  ],
+};
 
 const data: SkillInfographic = {
   id: "ak-diagram",
@@ -37,7 +52,7 @@ const data: SkillInfographic = {
     "Twenty-four editorial diagram base types with light, dark, and full variants",
     "Self-contained HTML, PNG screenshots, SVG extraction, and video recording",
     "Zero-dependency connector effects and reduced-motion handling",
-    "Snapshot hashes, pinned renderer profiles, and vendored template provenance",
+    "Snapshot hashes, pinned renderer profiles, and vendored template source records",
   ],
   expertiseAreasVi: [
     "Bọc Mermaid v11 và trích xuất SVG",
@@ -51,6 +66,7 @@ const data: SkillInfographic = {
     { flag: "JSON spec + type", modeEn: "Tier 2", modeVi: "Tầng 2", research: "Read per-type schema", redTeam: "Check template slot limitation", validation: "Template render output", cookFlag: "type slug" },
     { flag: "Raw HTML", modeEn: "Tier 3", modeVi: "Tầng 3", research: "Inspect composed page", redTeam: "Check mobile and animation", validation: "Rendered artifact output", cookFlag: ".html input" },
   ],
+  invocation,
   specialOperations: [
     { id: "template-limitation", titleEn: "Tier 2 caveat", titleVi: "Lưu ý Tier 2", descEn: "JSON specs are wired, but current vendored templates are finished exemplars without declared replacement slots.", descVi: "JSON spec đã được nối, nhưng template vendored hiện là ví dụ hoàn chỉnh chưa khai báo slot thay thế.", color: "amber" },
     { id: "reduced-motion", titleEn: "Reduced motion", titleVi: "Giảm chuyển động", descEn: "Connector effects freeze automatically under prefers-reduced-motion for accessible animated output.", descVi: "Hiệu ứng connector tự đóng băng khi người dùng bật prefers-reduced-motion để artifact động vẫn dễ tiếp cận.", color: "sky" },

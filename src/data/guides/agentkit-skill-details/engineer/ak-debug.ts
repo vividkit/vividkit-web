@@ -1,4 +1,12 @@
-import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-works';
+
+const invocation: SkillInvocation = {
+  syntax: '/ak:debug [error or issue description] [--ultra]',
+  arguments: [
+    { token: '[error or issue description]', titleEn: 'Failure to investigate', titleVi: 'Lỗi cần điều tra', descEn: 'Exact symptom, reproduction command, expected and actual behavior, timing, environment, logs, stack trace, and authority boundary. The skill uses this evidence to prove root cause before changing code.', descVi: 'Triệu chứng chính xác, lệnh tái hiện, behavior mong đợi và thực tế, thời điểm, môi trường, log, stack trace và ranh giới quyền hạn. Skill dùng bằng chứng này để chứng minh nguyên nhân gốc trước khi sửa code.', required: true, exampleCommand: '/ak:debug "pnpm test fails in session-cache.test.ts with expected 1 write, received 2"' },
+  ],
+};
+
 
 const data: SkillInfographic = {
   id: 'ak-debug',
@@ -31,6 +39,7 @@ const data: SkillInfographic = {
   corePrinciplesVi: ['Tìm nguyên nhân gốc trước khi sửa.', 'Sửa nguồn lỗi, không vá triệu chứng.', 'Sau khi biết nguyên nhân, thêm validation nhiều lớp.', 'Phải có bằng chứng kiểm chứng mới trước khi kết luận hoàn tất.', 'Khi kẹt, dùng problem-solving thay vì đoán mò.'],
   expertiseAreasEn: ['Systematic debugging', 'Root-cause tracing', 'Defense-in-depth validation', 'CI/CD log analysis', 'Database diagnostics', 'Performance profiling', 'Frontend verification'],
   expertiseAreasVi: ['Gỡ lỗi có hệ thống', 'Truy nguyên nhân gốc', 'Validation nhiều lớp', 'Phân tích log CI/CD', 'Chẩn đoán database', 'Phân tích hiệu năng', 'Kiểm chứng frontend'],
+  invocation,
   promptExamples: [
     { labelEn: 'Failing test', labelVi: 'Test đang fail', command: '/ak:debug this test fails only when the full suite runs', whenEn: 'Use when root cause must be proven before fixing a test failure, especially with shared state, ordering, or hidden dependencies.', whenVi: 'Dùng khi phải chứng minh nguyên nhân gốc trước khi sửa test fail, nhất là với shared state, thứ tự chạy hoặc dependency ẩn.', expectedEn: 'Runs systematic debugging first, traces the polluter or original trigger when needed, eliminates rival hypotheses, then fixes at source and verifies with fresh evidence.', expectedVi: 'Chạy quy trình gỡ lỗi hệ thống trước, truy polluter hoặc trigger gốc khi cần, loại giả thuyết đối thủ, rồi sửa tại nguồn và kiểm chứng bằng bằng chứng mới.', recommended: true },
     { labelEn: 'CI failure', labelVi: 'CI đang fail', command: '/ak:debug GitHub Actions deploy job fails after migration step', whenEn: 'Use when a CI/CD or deployment failure needs log evidence, correlation across pipeline steps, and a proven root cause before changes.', whenVi: 'Dùng khi lỗi CI/CD hoặc deploy cần bằng chứng log, đối chiếu các bước pipeline và chứng minh nguyên nhân gốc trước khi sửa.', expectedEn: 'Collects the failing command, GitHub Actions logs, and relevant environment clues, identifies the root cause, proposes the source fix, and reports verification evidence.', expectedVi: 'Thu lệnh fail, log GitHub Actions và tín hiệu môi trường liên quan, xác định nguyên nhân gốc, đề xuất sửa tại nguồn và báo bằng chứng kiểm chứng.' },

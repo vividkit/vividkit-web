@@ -28,6 +28,12 @@ const data: SkillInfographic = {
     { flag: '4', modeEn: 'Tech Lead', modeVi: 'Tech Lead', research: 'Risk assessment', redTeam: 'Business impact', validation: 'Strategy' },
     { flag: '5', modeEn: 'God Mode', modeVi: 'Chuyên gia', research: 'Maximum efficiency', redTeam: 'Minimal exposition', validation: 'Direct output' },
   ],
+  invocation: {
+    syntax: '/ak:coding-level [0-5]',
+    arguments: [
+      { token: '[0-5]', titleEn: 'Level', titleVi: 'Level', descEn: 'One integer from 0 through 5. The skill stores it in .claude/.ck.json and does not change repo rules or safety.', descVi: 'Một số nguyên từ 0 đến 5. Skill lưu vào .claude/.ck.json và không đổi rule repo hay safety.', required: true, exampleCommand: '/ak:coding-level 2' },
+    ],
+  },
   promptExamples: [
     { labelEn: 'Junior teaching mode', labelVi: 'Chế độ dạy junior', command: '/ak:coding-level 1', whenEn: 'Explanations feel too terse and you want WHY, common mistakes, and takeaways in later sessions.', whenVi: 'Khi giải thích quá ngắn và bạn muốn WHY, lỗi thường gặp cùng takeaways trong các session sau.', expectedEn: 'The Skill stores codingLevel: 1 in .claude/.ck.json; after a supported fresh session starts, responses should explain concepts clearly and teach why before how.', expectedVi: 'Skill lưu codingLevel: 1 trong .claude/.ck.json; sau khi mở fresh session được hỗ trợ, response nên giải thích concept rõ và dạy why trước how.', recommended: true },
     { labelEn: 'Mid-level system thinking', labelVi: 'System thinking mức mid', command: '/ak:coding-level 2', whenEn: 'You want less beginner scaffolding and more design patterns, system thinking, and explicit trade-offs.', whenVi: 'Khi muốn bớt hướng dẫn kiểu beginner và có thêm design pattern, system thinking cùng trade-off rõ ràng.', expectedEn: 'The persisted level becomes 2, so supported sessions should frame answers around patterns, testability, system effects, and practical trade-offs.', expectedVi: 'Level được lưu thành 2, nên session được hỗ trợ sẽ đặt response quanh pattern, testability, tác động hệ thống và trade-off thực tế.' },

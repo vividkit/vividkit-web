@@ -41,6 +41,20 @@ const data: SkillInfographic = {
   ],
   expertiseAreasEn: ['Chrome profile mapping', 'DevTools MCP bridge probing', 'Exact URL-anchor tab binding', 'Real-account automation safety'],
   expertiseAreasVi: ['Ánh xạ profile Chrome', 'Dò cầu Chrome DevTools MCP', 'Bám tab bằng anchor URL chính xác', 'An toàn khi tự động hoá tài khoản thật'],
+  invocation: {
+    syntax: '/ak:chrome-profile "<profile-scoped browser task>"',
+    arguments: [
+      {
+        token: '<profile-scoped browser task>',
+        titleEn: 'Browser task',
+        titleVi: 'Tác vụ browser',
+        descEn: 'Natural-language request that names the approved profile key, target URL, intended actions, forbidden changes, and required evidence.',
+        descVi: 'Yêu cầu bằng ngôn ngữ tự nhiên nêu profile key đã được duyệt, URL đích, hành động cần làm, thay đổi bị cấm và bằng chứng cần trả.',
+        required: true,
+        exampleCommand: '/ak:chrome-profile "Use profile work to open https://github.com/example/repo/pulls, bind the exact opened tab, summarize failing checks, and do not comment, approve, merge, or change account settings"',
+      },
+    ],
+  },
   promptExamples: [
     { labelEn: 'Open work profile', labelVi: 'Mở profile công việc', command: '/ak:chrome-profile "Use profile work to open https://github.com/org/repo/pulls, bind the exact opened tab, summarize failing checks, and do not comment, approve, merge, or change account settings"', whenEn: 'A task must use the user\'s signed-in work Chrome account.', whenVi: 'Khi nhiệm vụ cần đúng tài khoản Chrome công việc đã đăng nhập.', expectedEn: 'Checks profile mapping and live bridge reachability, opens with JSON binding data, selects the exact cdp-open tab, then performs only the requested browser work.', expectedVi: 'Kiểm tra mapping profile và bridge live, mở tab bằng dữ liệu JSON để bind, chọn đúng tab cdp-open rồi chỉ làm phần browser đã yêu cầu.', recommended: true },
     { labelEn: 'Setup help', labelVi: 'Hỗ trợ thiết lập', command: '/ak:chrome-profile help me configure the profile bridge for my personal account', whenEn: 'The profile key or readable DevTools bridge is missing.', whenVi: 'Khi thiếu key profile hoặc cầu DevTools có thể đọc được.', expectedEn: 'Runs the documented checks, separates profile-mapping failures from browser-bridge failures, and gives the next concrete setup command or Chrome action.', expectedVi: 'Chạy các bước kiểm tra đã ghi, tách lỗi mapping profile khỏi lỗi browser bridge và đưa lệnh setup hoặc thao tác Chrome cụ thể tiếp theo.' },

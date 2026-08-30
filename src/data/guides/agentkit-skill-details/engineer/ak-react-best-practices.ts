@@ -1,4 +1,19 @@
-import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-works';
+
+const invocation: SkillInvocation = {
+  syntax: '/ak:react-best-practices [component or pattern]',
+  arguments: [
+    {
+      token: '[component or pattern]',
+      titleEn: 'React surface or rule focus',
+      titleVi: 'Bề mặt React hoặc rule cần tập trung',
+      descEn: 'Component, route, server function, bundle problem, data-fetching path, render symptom, or named optimization pattern to audit or improve. Include baseline evidence, compatibility constraints, mutation boundary, and the measurement or test threshold that defines success.',
+      descVi: 'Component, route, server function, vấn đề bundle, đường data fetching, triệu chứng render hoặc pattern tối ưu cần audit hay cải thiện. Nêu bằng chứng baseline, ràng buộc tương thích, ranh giới được sửa và ngưỡng measurement hoặc test định nghĩa thành công.',
+      required: true,
+      exampleCommand: '/ak:react-best-practices "Audit the existing Next.js product route for server waterfalls and client bundle cost; propose ranked changes first and implement only approved files."',
+    },
+  ],
+};
 
 const data: SkillInfographic = {
   "id": "ak-react-best-practices",
@@ -89,6 +104,7 @@ const data: SkillInfographic = {
     "Khử lặp dữ liệu phía server và client",
     "Hiệu năng rendering và đường nóng JavaScript"
   ],
+  "invocation": invocation,
   "promptExamples": [
     {
       "labelEn": "Default component review",

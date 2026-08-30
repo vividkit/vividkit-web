@@ -99,6 +99,20 @@ const data: SkillInfographic = {
     "Luồng init/preview/lint/render đã pin",
     "Định tuyến render local, cloud, lambda và cloudrun"
   ],
+  "invocation": {
+    "syntax": "/ak:hyperframes [composition or command]",
+    "arguments": [
+      {
+        "token": "[composition or command]",
+        "titleEn": "Composition brief or command",
+        "titleVi": "Brief composition hoặc lệnh",
+        "descEn": "Natural-language request for a HyperFrames HTML composition, scaffold, preview, lint, local render, cloud render, or troubleshooting run. Include aspect ratio, duration, assets, output path, and local/cloud boundary; it is not a fixed parser command.",
+        "descVi": "Yêu cầu bằng ngôn ngữ tự nhiên cho composition HTML HyperFrames, scaffold, preview, lint, render local, render cloud hoặc gỡ lỗi. Nêu aspect ratio, duration, asset, output path và ranh giới local/cloud; đây không phải lệnh parser cố định.",
+        "required": true,
+        "exampleCommand": "/ak:hyperframes \"Scaffold a 6-second 1080x1920 draft product-launch loop under ./assets/videos/launch/, preview locally, lint before rendering, and render an MP4 to ./assets/videos/launch/launch.mp4 without contacting the HeyGen cloud endpoint\""
+      }
+    ]
+  },
   "skillStack": [
     {
       "name": "npx",

@@ -1,4 +1,26 @@
-import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-works';
+
+const invocation: SkillInvocation = {
+  syntax: "/ak:devops [platform] [task]",
+  arguments: [
+    {
+      token: "[platform]",
+      titleEn: "Platform",
+      titleVi: "Nền tảng",
+      descEn: "Infrastructure surface to work on, such as Cloudflare, Docker, Google Cloud, Kubernetes, Helm, CI/CD, or GitOps. This selects the operational context; it does not choose a default environment or grant deployment approval.",
+      descVi: "Bề mặt hạ tầng cần xử lý, như Cloudflare, Docker, Google Cloud, Kubernetes, Helm, CI/CD hoặc GitOps. Đối số này chọn bối cảnh vận hành; nó không chọn môi trường mặc định hay cấp quyền deploy.",
+      exampleCommand: "/ak:devops cloudflare \"review this Worker staging config\"",
+    },
+    {
+      token: "[task]",
+      titleEn: "Task",
+      titleVi: "Tác vụ",
+      descEn: "Operational request to design, review, implement, troubleshoot, build, deploy, audit, or prepare rollback steps. Include the account, project, region, environment, resource, allowed effect, and validation boundary when known.",
+      descVi: "Yêu cầu vận hành để thiết kế, rà soát, triển khai, xử lý sự cố, build, deploy, audit hoặc chuẩn bị rollback. Nêu account, project, region, environment, resource, tác động được phép và ranh giới xác minh khi đã biết.",
+      exampleCommand: "/ak:devops kubernetes \"review manifests for RBAC, resources, rollout checks, and rollback commands\"",
+    },
+  ],
+};
 
 const data: SkillInfographic = {
   id: "ak-devops",
@@ -46,6 +68,7 @@ const data: SkillInfographic = {
     "Vận hành Kubernetes với kubectl, Helm, RBAC và network policy",
     "CI/CD, GitOps, triển khai đa vùng và rà soát bảo mật",
   ],
+  invocation,
   workflowModes: [
     { flag: "cloudflare", modeEn: "Edge/serverless", modeVi: "Edge/serverless", research: "Load Cloudflare references", redTeam: "Check bindings, latency, egress", validation: "wrangler deploy/dev evidence", cookFlag: "Workers/Pages/R2/D1" },
     { flag: "docker", modeEn: "Container", modeVi: "Container", research: "Load Docker guides", redTeam: "Check non-root, image size, ports", validation: "docker build/run evidence", cookFlag: "Docker/Compose" },

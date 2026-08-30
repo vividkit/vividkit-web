@@ -137,6 +137,62 @@ const data: SkillInfographic = {
       "validation": "Deduplicated validated findings"
     }
   ],
+  "invocation": {
+    "syntax": "/ak:review-pr <PR number or URL> [<PR number or URL> ...] [--fix] [--reply] [--merge] [--advice] [--ultra]",
+    "arguments": [
+      {
+        "token": "<PR number or URL>",
+        "titleEn": "PR reference",
+        "titleVi": "Tham chiếu PR",
+        "descEn": "GitHub pull request to review. Use a bare number, #number, or full PR URL; repeat or comma-separate refs to process multiple PRs sequentially.",
+        "descVi": "Pull request GitHub cần review. Dùng số thuần, #số hoặc URL PR đầy đủ; lặp lại hoặc phân tách bằng dấu phẩy để xử lý nhiều PR tuần tự.",
+        "required": true,
+        "exampleCommand": "/ak:review-pr 482"
+      }
+    ],
+    "options": [
+      {
+        "token": "--fix",
+        "titleEn": "Fix findings",
+        "titleVi": "Sửa finding",
+        "descEn": "Authorizes the fix loop: repair actionable findings, verify, commit, push, then re-review. It must not include unrelated changes or bypass failed verification.",
+        "descVi": "Cho phép vòng sửa: sửa finding có thể hành động, xác minh, commit, push rồi review lại. Không được đưa thay đổi không liên quan vào hoặc bỏ qua xác minh thất bại.",
+        "exampleCommand": "/ak:review-pr 482 --fix"
+      },
+      {
+        "token": "--reply",
+        "titleEn": "Post review",
+        "titleVi": "Đăng review",
+        "descEn": "Posts the final review result to GitHub as an approve, request-changes, or comment review. It does not deduplicate earlier replies.",
+        "descVi": "Đăng kết quả review cuối lên GitHub dưới dạng approve, request-changes hoặc comment review. Không khử trùng lặp các reply trước đó.",
+        "exampleCommand": "/ak:review-pr 482 --reply"
+      },
+      {
+        "token": "--merge",
+        "titleEn": "Merge ready PR",
+        "titleVi": "Merge PR sẵn sàng",
+        "descEn": "Runs the merge stage after review, fix, and reply stages only when readiness gates pass, then watches target-branch CI. It never forces red checks, conflicts, or branch protection.",
+        "descVi": "Chạy giai đoạn merge sau review, sửa và reply chỉ khi các cổng sẵn sàng đạt, rồi theo dõi CI nhánh đích. Không ép qua check đỏ, conflict hoặc branch protection.",
+        "exampleCommand": "/ak:review-pr 482 --fix --reply --merge"
+      },
+      {
+        "token": "--advice",
+        "titleEn": "Advisory supervision",
+        "titleVi": "Giám sát cố vấn",
+        "descEn": "Adds kongming checkpoints for verdict, fix scope, review body, merge risk, and CI-green follow-up. Advice cannot override the review or merge gates.",
+        "descVi": "Thêm checkpoint kongming cho verdict, phạm vi sửa, body review, rủi ro merge và bước sau CI xanh. Lời khuyên không thể ghi đè cổng review hoặc merge.",
+        "exampleCommand": "/ak:review-pr 482 --advice"
+      },
+      {
+        "token": "--ultra",
+        "titleEn": "Best-of-five review",
+        "titleVi": "Review best-of-five",
+        "descEn": "Runs only the initial review through five read-only candidates and an evidence-checking verifier; later fix-loop re-reviews remain single-pass.",
+        "descVi": "Chỉ chạy review ban đầu qua năm candidate chỉ đọc và verifier kiểm chứng bằng chứng; các lượt review lại trong fix loop vẫn là single-pass.",
+        "exampleCommand": "/ak:review-pr 482 --ultra"
+      }
+    ]
+  },
   "outputFlags": [
     {
       "flag": "--fix",

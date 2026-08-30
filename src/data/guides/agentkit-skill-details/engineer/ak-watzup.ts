@@ -17,6 +17,12 @@ const data: SkillInfographic = {
     contentEn: 'This skill reports status and handoff evidence only. It does not implement, edit, commit, checkout, merge, push, fetch, or mutate the checkout unless the user explicitly asks to refresh remotes.',
     contentVi: 'Skill này chỉ báo cáo trạng thái và bằng chứng bàn giao. Không triển khai, sửa file, commit, checkout, merge, push, fetch hoặc thay đổi checkout, trừ khi người dùng yêu cầu làm mới remote.',
   },
+  invocation: {
+    syntax: '/ak:watzup [--fetch]',
+    options: [
+      { token: '--fetch', titleEn: 'Refresh remotes', titleVi: 'Làm mới remote', descEn: 'Refresh remote branch data before scanning. This contacts configured remotes; omit for the default local-only report.', descVi: 'Làm mới dữ liệu branch remote trước khi quét. Tùy chọn này liên hệ remote đã cấu hình; bỏ qua để dùng báo cáo mặc định chỉ đọc local.', exampleCommand: '/ak:watzup --fetch' },
+    ],
+  },
   processFlow: [
     { number: 1, titleEn: 'Run scanner', titleVi: 'Chạy scanner', descEn: 'From the project root, run scripts/watzup-scan.cjs with JSON output before writing the report.', descVi: 'Từ root dự án, chạy scripts/watzup-scan.cjs với JSON output trước khi viết báo cáo.' },
     { number: 2, titleEn: 'Read state', titleVi: 'Đọc trạng thái', descEn: 'Capture branch or detached HEAD, dirty/clean state, active worktree, and scanner warnings.', descVi: 'Ghi nhận branch hoặc detached HEAD, trạng thái dirty/clean, worktree đang dùng và cảnh báo của scanner.' },

@@ -43,6 +43,23 @@ const data: SkillInfographic = {
     'Kiểm kê năng lực đã cài đáng tin hơn trí nhớ và định tuyến theo mong muốn.',
     'Rủi ro quyết định gate kiểm chứng và review; càng tự tin ở việc rủi ro cao càng không được bỏ review.',
   ],
+  invocation: {
+    syntax: '/ak:agentkit [task to route]',
+    arguments: [
+      {
+        token: '[task to route]',
+        titleEn: 'Task to route',
+        titleVi: 'Việc cần định tuyến',
+        descEn:
+          'Natural-language work request, outcome, constraints, domains, and authority boundaries. The router uses it to choose installed skills, sequence a short workflow, and match verification to risk.',
+        descVi:
+          'Yêu cầu công việc bằng ngôn ngữ tự nhiên, outcome, ràng buộc, miền liên quan và ranh giới quyền hạn. Router dùng nội dung này để chọn skill đã cài, sắp workflow ngắn và chọn kiểm chứng theo rủi ro.',
+        required: true,
+        exampleCommand:
+          '/ak:agentkit "Add subscription billing and a settings page; require tests and stop before deployment"',
+      },
+    ],
+  },
   promptExamples: [
     {
       labelEn: 'Ambiguous multi-domain feature',

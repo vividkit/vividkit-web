@@ -44,6 +44,23 @@ const data: SkillInfographic = {
   ],
   expertiseAreasEn: ['Email/password auth', 'OAuth providers', 'Sessions and protected routes', '2FA and passkeys', 'Organizations and RBAC', 'Auth schema migrations'],
   expertiseAreasVi: ['Auth email/password', 'Provider OAuth', 'Session và route bảo vệ', '2FA và passkey', 'Organization và RBAC', 'Migration schema auth'],
+  invocation: {
+    syntax: '/ak:better-auth [auth-method or feature]',
+    arguments: [
+      {
+        token: '[auth-method or feature]',
+        titleEn: 'Auth method or feature',
+        titleVi: 'Phương thức hoặc tính năng auth',
+        descEn:
+          'Name the Better Auth method or feature to add or refine, such as email/password, OAuth, sessions, MFA, passkeys, magic links, organizations, or RBAC. Include the existing stack, security policy, allowed schema or migration changes, and required verification evidence.',
+        descVi:
+          'Nêu phương thức hoặc tính năng Better Auth cần thêm hoặc chỉnh, như email/password, OAuth, session, MFA, passkey, magic link, organization hoặc RBAC. Bao gồm stack hiện có, chính sách bảo mật, thay đổi schema hoặc migration được phép và bằng chứng xác minh cần có.',
+        required: true,
+        exampleCommand:
+          '/ak:better-auth "Add GitHub OAuth to the existing Next.js app, preserve email/password login, generate but do not apply migrations, and verify callback and account-linking behavior."',
+      },
+    ],
+  },
   promptExamples: [
     { labelEn: 'Email/password setup', labelVi: 'Thiết lập email/password', command: '/ak:better-auth "Add email/password auth to this TypeScript app with Better Auth, including env names, schema generation, session reads, protected routes, and focused flow tests."', whenEn: 'Use when a TypeScript or JavaScript app has selected Better Auth and needs traditional account sign-up, sign-in, and session handling.', whenVi: 'Dùng khi app TypeScript hoặc JavaScript đã chọn Better Auth và cần đăng ký, đăng nhập cùng session bằng tài khoản truyền thống.', expectedEn: 'Maps the existing framework and database, installs and configures Better Auth, adds server and client wiring, generates schema artifacts, protects routes, and reports focused auth-flow evidence.', expectedVi: 'Lập bản đồ framework và database hiện có, cài và cấu hình Better Auth, nối server/client, sinh schema artifact, bảo vệ route và báo cáo bằng chứng flow auth tập trung.', recommended: true },
     { labelEn: 'Social OAuth', labelVi: 'OAuth mạng xã hội', command: '/ak:better-auth "Add GitHub and Google OAuth while preserving email/password login, using minimal scopes, safe callback handling, account-linking checks, and no production credentials."', whenEn: 'Use when social login is required and provider callbacks, scopes, redirects, secrets, and account linking need an explicit boundary.', whenVi: 'Dùng khi cần social login và phải nêu rõ ranh giới cho callback provider, scope, redirect, secret và account linking.', expectedEn: 'Adds provider configuration and client sign-in calls, constrains redirects and scopes, keeps secrets server-side, verifies callback/session behavior, and reports any provider-console steps left undone.', expectedVi: 'Thêm cấu hình provider và lời gọi đăng nhập client, giới hạn redirect và scope, giữ secret ở server, kiểm tra callback/session và báo cáo bước provider-console chưa làm.' },

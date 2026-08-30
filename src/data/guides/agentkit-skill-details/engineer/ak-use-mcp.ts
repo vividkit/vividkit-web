@@ -44,6 +44,12 @@ const data: SkillInfographic = {
     { name: 'assets/tools.json', type: 'tool' },
     { name: 'ak:chrome-profile', type: 'skill' },
   ],
+  invocation: {
+    syntax: '/ak:use-mcp [task]',
+    arguments: [
+      { token: '[task]', titleEn: 'MCP task', titleVi: 'Task MCP', descEn: 'Natural-language request to discover MCP tools, inspect schemas, or call an existing server tool. Include the server name, read-only boundary, or approved external write when relevant.', descVi: 'Yêu cầu bằng ngôn ngữ tự nhiên để khám phá MCP tool, kiểm schema hoặc gọi tool của server hiện có. Nêu tên server, ranh giới read-only hoặc external write đã duyệt khi phù hợp.', required: true, exampleCommand: '/ak:use-mcp "List the issue tools available from the registered project server; do not call a mutating tool"' },
+    ],
+  },
   specialOperations: [
     { id: 'native-first', titleEn: 'Runtime-native first', titleVi: 'Ưu tiên runtime-native', descEn: 'Lowest setup cost when the server is already registered in the active assistant runtime.', descVi: 'Tốn ít thiết lập nhất khi server đã được đăng ký trong runtime assistant hiện tại.', color: 'sky' },
     { id: 'direct-script', titleEn: 'Direct scripts', titleVi: 'Script trực tiếp', descEn: 'Use cli.ts when you need explicit server names, JSON arguments, persisted schemas, or CI-friendly repetition.', descVi: 'Dùng cli.ts khi cần tên server rõ ràng, tham số JSON, schema được lưu, hoặc quy trình lặp lại được trong CI.', color: 'violet' },

@@ -10,6 +10,17 @@ const data: SkillInfographic = {
     taglineEn: 'Extract, compare, adapt, or plan a bounded feature port from a GitHub repository or local path by mapping source behavior, challenging assumptions, and handing off to the right local workflow.',
     taglineVi: 'Trích xuất, so sánh, điều chỉnh hoặc lập plan port một feature có giới hạn từ GitHub repository hoặc local path bằng cách map hành vi nguồn, thách thức assumption và handoff sang workflow local phù hợp.',
   },
+  invocation: {
+    syntax: '/ak:xia <github-url-or-owner/repo|local-path> [feature] [--compare|--copy|--improve|--port] [--auto|--fast]',
+    arguments: [
+      { token: '<github-url-or-owner/repo|local-path>', titleEn: 'Source repository', titleVi: 'Repository nguồn', descEn: 'GitHub URL, owner/repo shorthand, or local path to the repository that contains the feature. Use only a source you are allowed to inspect; a file or path URL narrows the read scope.', descVi: 'GitHub URL, dạng owner/repo hoặc đường dẫn local tới repository chứa feature. Chỉ dùng source bạn có quyền kiểm tra; URL tới file hoặc path sẽ thu hẹp phạm vi đọc.', required: true, exampleCommand: '/ak:xia ../reference-service "webhook signature verification and replay protection" --port' },
+      { token: '[feature]', titleEn: 'Feature boundary', titleVi: 'Ranh giới feature', descEn: 'Names the behavior to compare, copy, improve, or port, plus the local expectation or integration boundary when known. It is not a request to clone the whole product.', descVi: 'Nêu behavior cần so sánh, copy, cải tiến hoặc port, cùng kỳ vọng local hoặc ranh giới tích hợp nếu đã biết. Đây không phải yêu cầu clone toàn bộ product.', exampleCommand: '/ak:xia vercel/ai chat persistence --compare' },
+    ],
+    options: [
+      { token: '--compare|--copy|--improve|--port', titleEn: 'Adoption mode', titleVi: 'Mode tiếp nhận', descEn: 'Chooses analysis only, minimal transplant, copy-plus-refactor, or idiomatic rewrite. Omit it only when the intent is already clear; ambiguous requests should start with comparison.', descVi: 'Chọn chỉ phân tích, bê sang tối thiểu, copy kèm refactor hoặc viết lại đúng idiom. Chỉ bỏ qua khi intent đã rõ; request mơ hồ nên bắt đầu bằng so sánh.', exampleCommand: '/ak:xia owner/repo auth middleware --copy' },
+      { token: '--auto|--fast', titleEn: 'Gate handling', titleVi: 'Cách xử lý gate', descEn: '--auto keeps the full workflow but approves routine gates. --fast is present in the Skill source, but its skip-research behavior conflicts with the Challenge hard gate and should not be treated as a safe adoption path.', descVi: '--auto giữ đầy đủ workflow nhưng duyệt các gate thường lệ. --fast có trong source của Skill, nhưng hành vi bỏ research mâu thuẫn với hard gate Challenge nên không nên xem là đường tiếp nhận an toàn.', exampleCommand: '/ak:xia owner/repo search feature --auto' },
+    ],
+  },
   hardGate: {
     type: 'critical',
     titleEn: 'Challenge before planning',

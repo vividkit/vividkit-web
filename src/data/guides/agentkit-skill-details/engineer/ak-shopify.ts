@@ -1,4 +1,27 @@
-import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-works';
+
+const invocation: SkillInvocation = {
+  "syntax": "/ak:shopify [extension-type] [feature]",
+  "arguments": [
+    {
+      "token": "[extension-type]",
+      "titleEn": "Shopify surface",
+      "titleVi": "Bề mặt Shopify",
+      "descEn": "Target surface or extension type, such as app, checkout_ui_extension, admin_action, admin_block, pos_ui_extension, function, theme, or a more specific Shopify target. This chooses the workflow; it does not authorize store sync, deploy, push, or publish.",
+      "descVi": "Bề mặt hoặc loại extension đích, như app, checkout_ui_extension, admin_action, admin_block, pos_ui_extension, function, theme hoặc mục tiêu Shopify cụ thể hơn. Đối số này chọn workflow; nó không cấp quyền sync store, deploy, push hoặc publish.",
+      "exampleCommand": "/ak:shopify checkout_ui_extension \"Add an optional gift message to the existing app\""
+    },
+    {
+      "token": "[feature]",
+      "titleEn": "Feature brief",
+      "titleVi": "Brief tính năng",
+      "descEn": "Merchant or shopper outcome plus constraints: existing app or theme files, pinned CLI and API versions, store boundary, scopes, webhook, billing, privacy, data-retention needs, tests, and explicit authority for any remote mutation. Keep secrets out of the prompt.",
+      "descVi": "Outcome cho merchant hoặc người mua cùng ràng buộc: file app hoặc theme hiện có, phiên bản CLI và API đã pin, ranh giới store, scope, webhook, billing, privacy, nhu cầu lưu dữ liệu, test và quyền rõ ràng cho mọi remote mutation. Không đưa secret vào prompt.",
+      "required": true,
+      "exampleCommand": "/ak:shopify theme \"Customize the product page in the current Liquid theme without pushing or publishing\""
+    }
+  ]
+};
 
 const data: SkillInfographic = {
   "id": "ak-shopify",
@@ -96,6 +119,7 @@ const data: SkillInfographic = {
     "Polaris UI",
     "webhook và billing"
   ],
+  "invocation": invocation,
   "promptExamples": [
     {
       "labelEn": "Checkout UI extension",

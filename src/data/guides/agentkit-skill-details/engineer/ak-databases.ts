@@ -29,6 +29,12 @@ const data: SkillInfographic = {
     { labelEn: 'Slow PostgreSQL query', labelVi: 'Query PostgreSQL chậm', command: '/ak:databases optimize this PostgreSQL query using my EXPLAIN ANALYZE output and recommend safe indexes', whenEn: 'Performance or latency is the central database problem and query-plan evidence is available.', whenVi: 'Khi hiệu năng hoặc độ trễ là vấn đề database chính và đã có bằng chứng query plan.', expectedEn: 'Plan interpretation, likely bottlenecks, concrete index or query rewrites, VACUUM/ANALYZE checks, and validation steps for the changed plan.', expectedVi: 'Phần giải thích plan, bottleneck có khả năng xảy ra, index hoặc cách viết lại query cụ thể, kiểm tra VACUUM/ANALYZE và bước xác minh plan đã đổi.' },
     { labelEn: 'Backup and administration', labelVi: 'Backup và quản trị', command: '/ak:databases plan a PostgreSQL backup and restore rehearsal with user permissions and disaster recovery checks', whenEn: 'Backup, restore, permissions, replication, or production administration is the database boundary.', whenVi: 'Khi backup, restore, permission, replication hoặc quản trị production là ranh giới database.', expectedEn: 'A safety-first operations plan covering required local tools, least-privilege access, backup and restore evidence, permissions, and remaining approval points.', expectedVi: 'Một kế hoạch vận hành ưu tiên an toàn bao gồm tool local cần có, access least-privilege, bằng chứng backup và restore, permission và các điểm còn cần duyệt.' },
   ],
+  invocation: {
+    syntax: '/ak:databases [query or schema task]',
+    arguments: [
+      { token: '[query or schema task]', titleEn: 'Database task', titleVi: 'Tác vụ database', descEn: 'Natural-language schema, query, aggregation, index, migration, backup, replication, permission, or performance request. It does not choose a default database or connect automatically.', descVi: 'Yêu cầu bằng ngôn ngữ tự nhiên về schema, query, aggregation, index, migration, backup, replication, permission hoặc hiệu năng. Không tự chọn database mặc định hay tự kết nối.', required: true, exampleCommand: '/ak:databases "Design a backward-compatible PostgreSQL migration for order.external_id with SQL, lock analysis, rollback limits, and verification queries; do not connect or apply it."' },
+    ],
+  },
   skillStack: [{ name: 'PostgreSQL', type: 'tool' }, { name: 'MongoDB', type: 'tool' }, { name: 'psql CLI', type: 'tool' }, { name: 'db_migrate.py', type: 'tool' }, { name: 'db_backup.py', type: 'tool' }, { name: 'db_performance_check.py', type: 'tool' }],
 };
 

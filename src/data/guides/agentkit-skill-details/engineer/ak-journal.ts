@@ -78,6 +78,20 @@ const data: SkillInfographic = {
     "Lưu bằng ak journal create; không để journal chỉ nằm trong chat.",
     "Bước journal tự động do flag rõ ràng và thứ tự config điều khiển."
   ],
+  "invocation": {
+    "syntax": "/ak:journal [topic or reflection]",
+    "arguments": [
+      {
+        "token": "[topic or reflection]",
+        "titleEn": "Journal topic",
+        "titleVi": "Chủ đề journal",
+        "descEn": "Natural-language session topic, reflection, or record request. Include concrete errors, paths, outcomes, decisions, and remaining work; the Skill has no published mode flag.",
+        "descVi": "Chủ đề phiên, reflection hoặc yêu cầu ghi lại bằng ngôn ngữ tự nhiên. Nêu lỗi cụ thể, path, outcome, quyết định và việc còn lại; Skill không có mode flag được công bố.",
+        "required": true,
+        "exampleCommand": "/ak:journal \"Record today's session-cache repair: duplicate invalidation root cause, rejected timer workaround, affected API behavior, regression evidence, and follow-up monitoring.\""
+      }
+    ]
+  },
   "expertiseAreasEn": [
     "Session reflection",
     "Chronological work records",

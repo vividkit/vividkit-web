@@ -80,6 +80,38 @@ const data: SkillInfographic = {
     "Delegation phải được phép và đáng chi phí; `--ultra` fail-closed",
     "Báo cáo cần nêu file liên quan, quan hệ, phạm vi timeout và khoảng trống thật"
   ],
+  "invocation": {
+    "syntax": "/ak:scout [search-target] [ext] [--ultra]",
+    "arguments": [
+      {
+        "token": "[search-target]",
+        "titleEn": "Search target",
+        "titleVi": "Mục tiêu tìm kiếm",
+        "descEn": "Bounded behavior, symbol, feature, configuration, relationship, directory, or file type to map. Include scope, exclusions, expected evidence, and whether delegation or external probing is allowed when that matters.",
+        "descVi": "Behavior, symbol, tính năng, cấu hình, quan hệ, thư mục hoặc loại file có giới hạn cần lập bản đồ. Nêu scope, phần loại trừ, bằng chứng mong đợi và có cho phép delegation hoặc probe bên ngoài không khi điều đó quan trọng.",
+        "required": true,
+        "exampleCommand": "/ak:scout \"Find the editor draft persistence entry points, storage adapter, recovery UI, and focused tests. Search src/ and tests/ only.\""
+      }
+    ],
+    "options": [
+      {
+        "token": "ext",
+        "titleEn": "External probe",
+        "titleVi": "Probe bên ngoài",
+        "descEn": "Use user-permitted OpenCode probes only after native/local search is insufficient. It does not authorize sending secrets, unrelated private files, or broad unbounded scopes.",
+        "descVi": "Dùng probe OpenCode đã được người dùng cho phép chỉ sau khi tìm kiếm native/local không đủ. Token này không cho phép gửi secret, file riêng tư không liên quan hoặc scope rộng không giới hạn.",
+        "exampleCommand": "/ak:scout \"Find payment webhook ownership across api/ and lib/; read-only\" ext"
+      },
+      {
+        "token": "--ultra",
+        "titleEn": "Verifier scout",
+        "titleVi": "Scout có verifier",
+        "descEn": "Run exactly five parallel read-only candidate scout passes from the same evidence packet, then have a strongest-model verifier return only evidence-validated findings. Hard-stops if that dispatch is unavailable.",
+        "descVi": "Chạy đúng năm candidate scout chỉ đọc song song từ cùng một evidence packet, rồi dùng verifier model mạnh nhất chỉ trả về phát hiện xác thực bằng bằng chứng. Dừng cứng nếu không dispatch được.",
+        "exampleCommand": "/ak:scout \"Find payment webhook ownership across api/ and lib/; read-only\" --ultra"
+      }
+    ]
+  },
   "workflowModes": [
     {
       "flag": "default",

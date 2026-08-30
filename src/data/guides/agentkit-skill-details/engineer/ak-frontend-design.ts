@@ -62,6 +62,20 @@ const data: SkillInfographic = {
     { flag: "3D/WebGL", modeEn: "Immersive", modeVi: "Immersive", research: "workflow-3d", redTeam: "Performance and controls", validation: "Actual surface run", cookFlag: "Three.js" },
     { flag: "From scratch", modeEn: "Decision procedure", modeVi: "Decision procedure", research: "aesthetic direction menu", redTeam: "Anti-slop bans", validation: "Self-review gate", cookFlag: "brief input" },
   ],
+  invocation: {
+    syntax: '/ak:frontend-design [design request and constraints]',
+    arguments: [
+      {
+        token: '[design request and constraints]',
+        titleEn: 'Design request',
+        titleVi: 'Yêu cầu thiết kế',
+        descEn: 'Natural-language brief, screenshot/video replication goal, 3D/WebGL request, quick prototype, or description-only task. Include audience, purpose, content, brand assets, framework, editable files, allowed tools, viewport targets, and approval boundaries for packages, generated assets, browser testing, and documentation updates.',
+        descVi: 'Brief bằng ngôn ngữ tự nhiên, mục tiêu tái tạo screenshot/video, yêu cầu 3D/WebGL, prototype nhanh hoặc tác vụ chỉ mô tả. Nêu audience, mục đích, nội dung, brand asset, framework, file được sửa, công cụ được phép, viewport cần kiểm và ranh giới phê duyệt cho cài package, tạo asset, kiểm thử browser và cập nhật tài liệu.',
+        required: true,
+        exampleCommand: '/ak:frontend-design "Implement the supplied 1440 px landing-page screenshot in the existing stack. Preserve layout and brand assets, include responsive behavior at 375 px, all interaction states, reduced motion, and a visual comparison. Do not install packages, generate assets, or update design guidelines without approval."',
+      },
+    ],
+  },
   guardrails: [
     { thoughtEn: "A centered hero with three cards is safe.", thoughtVi: "Hero giữa trang với ba card là an toàn.", realityEn: "It is explicitly banned as the common AI template. Re-derive layout from the content.", realityVi: "Đó là template AI bị cấm rõ ràng. Hãy suy lại layout từ nội dung.", accent: "red" },
     { thoughtEn: "Decorations make it designed.", thoughtVi: "Thêm trang trí là có design.", realityEn: "Decoration is cheaper than design. Delete ornament unless it carries composition or meaning.", realityVi: "Trang trí rẻ hơn design. Xóa ornament nếu nó không gánh bố cục hoặc ý nghĩa.", accent: "amber" },

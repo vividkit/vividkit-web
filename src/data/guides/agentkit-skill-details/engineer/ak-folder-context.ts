@@ -39,6 +39,20 @@ const data: SkillInfographic = {
     "Bullet gọn tốt hơn cây file và tài liệu dự án chung chung.",
     "Mọi chỉ dẫn cục bộ phải dựa trên bằng chứng hoặc quyết định rõ của user.",
   ],
+  invocation: {
+    syntax: "/ak:folder-context <target-folder>",
+    arguments: [
+      {
+        token: "<target-folder>",
+        titleEn: "Target subfolder",
+        titleVi: "Subfolder đích",
+        descEn: "Existing subfolder that should receive local agent context. It cannot be the project root or a general docs request; extra evidence may guide the proposed outline but does not change the positional folder target.",
+        descVi: "Subfolder hiện có cần nhận context agent cục bộ. Không được là root dự án hoặc yêu cầu docs chung; bằng chứng bổ sung có thể định hướng outline đề xuất nhưng không đổi target folder dạng positional.",
+        required: true,
+        exampleCommand: "/ak:folder-context packages/payments",
+      },
+    ],
+  },
   expertiseAreasEn: [
     "Subfolder-scoped CLAUDE.md creation",
     "AGENTS.md symlink or pointer fallback",

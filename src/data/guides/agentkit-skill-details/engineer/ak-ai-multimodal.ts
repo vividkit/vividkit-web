@@ -1,4 +1,33 @@
-import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-works';
+
+const invocation: SkillInvocation = {
+  syntax: '/ak:ai-multimodal [file-path] [prompt]',
+  arguments: [
+    {
+      token: '[file-path]',
+      titleEn: 'Input file path',
+      titleVi: 'Đường dẫn file đầu vào',
+      descEn:
+        'Optional local image, audio, video, or document to analyze, transcribe, extract from, convert, optimize, or use as context. Name every file that may be uploaded; omit when generating from a text-only brief.',
+      descVi:
+        'Ảnh, audio, video hoặc tài liệu local tùy chọn để phân tích, chép lời, trích xuất, chuyển đổi, tối ưu hoặc dùng làm ngữ cảnh. Nêu rõ mọi file có thể được upload; bỏ qua khi tạo nội dung chỉ từ brief văn bản.',
+      exampleCommand:
+        '/ak:ai-multimodal ./assets/receipt.png "Extract merchant, date, currency, total, and line items to ./artifacts/receipt.json"',
+    },
+    {
+      token: '[prompt]',
+      titleEn: 'Task prompt',
+      titleVi: 'Prompt tác vụ',
+      descEn:
+        'Natural-language analysis, transcription, extraction, conversion, optimization, or generation request with output path, format, allowed upload, redaction, rights, and cleanup boundaries. The Skill does not pick a default provider model for generation without live checks.',
+      descVi:
+        'Yêu cầu bằng ngôn ngữ tự nhiên về phân tích, chép lời, trích xuất, chuyển đổi, tối ưu hoặc tạo nội dung, kèm đường dẫn output, định dạng, ranh giới upload, che dữ liệu, quyền sử dụng và cleanup. Skill không chọn model provider mặc định để tạo nội dung nếu chưa kiểm tra live.',
+      required: true,
+      exampleCommand:
+        '/ak:ai-multimodal "Generate a 15-second product demo video to ./artifacts/demo.mp4 after resolving a currently available provider model, duration, resolution, aspect ratio, pricing, and retention"',
+    },
+  ],
+};
 
 const data: SkillInfographic = {
   id: 'ak-ai-multimodal',
@@ -50,6 +79,7 @@ const data: SkillInfographic = {
     { labelEn: 'Convert a document', labelVi: 'Chuyển đổi tài liệu', command: '/ak:ai-multimodal ./docs/report.pdf "Convert this supported document to Markdown at ./artifacts/report.md and include any conversion warnings"', whenEn: 'Use when the artifact is a document that should become Markdown through Multix doc convert.', whenVi: 'Dùng khi hiện vật là document cần chuyển thành Markdown qua Multix doc convert.', expectedEn: 'Checks the npm-latest Multix document command, writes the requested Markdown file, and includes conversion warnings or unsupported-format limits instead of inventing missing content.', expectedVi: 'Kiểm tra lệnh document của Multix npm-latest, ghi file Markdown được yêu cầu và nêu warning chuyển đổi hoặc giới hạn format không hỗ trợ thay vì bịa nội dung thiếu.' },
     { labelEn: 'Generate provider-backed media', labelVi: 'Tạo media qua provider', command: '/ak:ai-multimodal "Generate a 15-second product demo video to ./artifacts/demo.mp4 after resolving a currently available provider model, duration, resolution, aspect ratio, pricing, and retention"', whenEn: 'Use when image, video, speech, or music generation needs live provider and model capability checks.', whenVi: 'Dùng khi tạo ảnh, video, speech hoặc music cần kiểm tra live năng lực provider và model.', expectedEn: 'Inspects current Multix help and provider catalogs before choosing explicit generation controls, records the selected model, and reviews the generated artifact against the brief.', expectedVi: 'Xem help Multix và catalog provider hiện tại trước khi chọn tham số tạo nội dung rõ ràng, ghi lại model đã chọn và review artifact theo brief.' },
   ],
+  invocation,
   specialOperations: [
     { id: 'npx-latest', titleEn: 'npm-latest contract', titleVi: 'Hợp đồng npm-latest', descEn: 'Every command resolves @mrgoonie/multix@latest with prefer-online when networking is available.', descVi: 'Mỗi lệnh dùng @mrgoonie/multix@latest với prefer-online khi có mạng.', color: 'blue' },
     { id: 'provider-catalog', titleEn: 'Provider catalog check', titleVi: 'Kiểm tra catalog provider', descEn: 'Generation controls come from live provider docs, not from static memory.', descVi: 'Tham số tạo nội dung lấy từ tài liệu provider hiện hành, không lấy từ trí nhớ tĩnh.', color: 'amber' },

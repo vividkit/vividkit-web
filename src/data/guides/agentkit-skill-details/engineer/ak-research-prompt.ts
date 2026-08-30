@@ -94,6 +94,20 @@ const data: SkillInfographic = {
     "Xử lý nguồn mâu thuẫn",
     "Định dạng trích nguồn cho từng phát hiện"
   ],
+  "invocation": {
+    "syntax": "/ak:research-prompt <research topic | decision>",
+    "arguments": [
+      {
+        "token": "<research topic | decision>",
+        "titleEn": "Research topic or decision",
+        "titleVi": "Chủ đề hoặc quyết định cần nghiên cứu",
+        "descEn": "Free-form context for one focused research assignment: project situation, decision, audience, deadline, known facts, constraints, intended use, source preferences, and non-goals. The Skill writes the brief; it does not run the research or choose an answer.",
+        "descVi": "Ngữ cảnh tự do cho một assignment nghiên cứu tập trung: tình huống dự án, quyết định, độc giả, hạn chót, fact đã biết, ràng buộc, cách dùng dự kiến, ưu tiên nguồn và non-goal. Skill viết brief; không chạy nghiên cứu hoặc chọn đáp án.",
+        "required": true,
+        "exampleCommand": "/ak:research-prompt \"Decision: choose an authorization model for our multi-tenant API. Audience: architecture review. Deadline: Friday. Compare database RLS and service-layer checks; require current primary sources, security failure modes, migration cost, and unresolved gaps.\""
+      }
+    ]
+  },
   "promptExamples": [
     {
       "labelEn": "Decision research brief",

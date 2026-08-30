@@ -85,6 +85,69 @@ const data: SkillInfographic = {
     "User chọn runtime; skill chỉ nối và xác thực, không tư vấn “agent tốt nhất”.",
     "Tham chiếu artifact và run log bằng path thay vì dán inline."
   ],
+  "invocation": {
+    "syntax": "/ak:handover [task] --agent <id> [--cwd PATH] [--task TEXT] [--handoff PATH] [--model NAME] [--yes]",
+    "arguments": [
+      {
+        "token": "[task]",
+        "titleEn": "Successor focus",
+        "titleVi": "Trọng tâm cho agent kế nhiệm",
+        "descEn": "Optional natural-language focus for the coding agent that continues the work. It is written into the handoff mission and the orchestrate job prompt; use --task TEXT as the flag form.",
+        "descVi": "Trọng tâm tùy chọn bằng ngôn ngữ tự nhiên cho coding agent tiếp tục công việc. Nội dung này được đưa vào mission của handoff và prompt job orchestrate; dùng --task TEXT nếu muốn dạng flag.",
+        "exampleCommand": "/ak:handover --agent claude-code \"continue the OAuth callback fix\""
+      }
+    ],
+    "options": [
+      {
+        "token": "--agent <id>",
+        "titleEn": "Coding runtime",
+        "titleVi": "Runtime code",
+        "descEn": "Required selected runtime such as claude-code, codex, opencode, cursor, or internal. It must resolve in the runtime catalog; the skill never picks a fallback silently.",
+        "descVi": "Runtime được chọn và bắt buộc, ví dụ claude-code, codex, opencode, cursor hoặc internal. Runtime phải resolve trong runtime catalog; skill không bao giờ tự chọn fallback im lặng.",
+        "exampleCommand": "/ak:handover --agent codex --task \"implement the next action in the handoff\""
+      },
+      {
+        "token": "--cwd PATH",
+        "titleEn": "Workspace root",
+        "titleVi": "Root workspace",
+        "descEn": "Workspace root for the dispatched job. Defaults to the current workspace root and is passed to ak:orchestrate as cwd.",
+        "descVi": "Root workspace cho job được dispatch. Mặc định là root workspace hiện tại và được truyền sang ak:orchestrate dưới dạng cwd.",
+        "exampleCommand": "/ak:handover --agent codex --cwd . --task \"implement the next action in the handoff\""
+      },
+      {
+        "token": "--task TEXT",
+        "titleEn": "Flag task text",
+        "titleVi": "Task text dạng flag",
+        "descEn": "Alternative to the positional task text. If both are provided, the positional task wins and --task is ignored with a warning.",
+        "descVi": "Dạng thay thế cho task positional. Nếu cả hai cùng có, task positional thắng và --task bị bỏ qua kèm cảnh báo.",
+        "exampleCommand": "/ak:handover --agent codex --task \"implement the next action in the handoff\""
+      },
+      {
+        "token": "--handoff PATH",
+        "titleEn": "Existing handoff",
+        "titleVi": "Handoff có sẵn",
+        "descEn": "Use an existing handoff artifact instead of generating a new one. The path must exist and pass schema and redaction validation before dispatch.",
+        "descVi": "Dùng artifact handoff có sẵn thay vì tạo mới. Path phải tồn tại và pass validation schema và redaction trước khi dispatch.",
+        "exampleCommand": "/ak:handover --agent cursor --handoff plans/handoffs/oauth-callback.md"
+      },
+      {
+        "token": "--model NAME",
+        "titleEn": "CLI model",
+        "titleVi": "Model CLI",
+        "descEn": "Model override for CLI-runtime jobs only. Rejected with --agent internal because internal jobs omit model.",
+        "descVi": "Override model chỉ cho job chạy bằng runtime CLI. Bị từ chối với --agent internal vì job internal không đặt model.",
+        "exampleCommand": "/ak:handover --agent opencode --model anthropic/claude-sonnet-5"
+      },
+      {
+        "token": "--yes",
+        "titleEn": "Approve continuation",
+        "titleVi": "Duyệt tiếp tục",
+        "descEn": "Explicitly approve write or destructive continuation work by changing the generated job approval from require to inherit.",
+        "descVi": "Duyệt rõ việc tiếp tục có ghi hoặc phá hủy bằng cách đổi approval của job được tạo từ require sang inherit.",
+        "exampleCommand": "/ak:handover --agent opencode --model anthropic/claude-sonnet-5 --yes"
+      }
+    ]
+  },
   "expertiseAreasEn": [
     "Single-job orchestration specs",
     "Runtime-catalog handover",

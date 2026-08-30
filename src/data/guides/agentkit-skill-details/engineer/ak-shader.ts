@@ -111,6 +111,20 @@ const data: SkillInfographic = {
       "type": "tool"
     }
   ],
+  "invocation": {
+    "syntax": "/ak:shader [effect or pattern]",
+    "arguments": [
+      {
+        "token": "[effect or pattern]",
+        "titleEn": "Effect or pattern",
+        "titleVi": "Hiệu ứng hoặc pattern",
+        "descEn": "Natural-language shader brief describing the visual outcome plus the host graphics contract: GLSL/WebGL version, uniforms, coordinate conventions, material or texture inputs, motion, performance boundary, fallback needs, and required compile or render evidence. The Skill declares no fixed flags or output path.",
+        "descVi": "Brief shader bằng ngôn ngữ tự nhiên mô tả kết quả hình ảnh cùng hợp đồng graphics của host: version GLSL/WebGL, uniform, quy ước tọa độ, material hoặc texture input, chuyển động, giới hạn hiệu năng, nhu cầu fallback và bằng chứng compile hoặc render bắt buộc. Skill không khai báo flag hoặc output path cố định.",
+        "required": true,
+        "exampleCommand": "/ak:shader \"Create a WebGL 1 fragment shader for a subtle animated marble background using the project's u_time and u_resolution uniforms. Keep motion slow, preserve text contrast, add a reduced-motion static path, and verify it in the existing preview without adding dependencies.\""
+      }
+    ]
+  },
   "promptExamples": [
     {
       "labelEn": "Procedural texture",

@@ -16,6 +16,12 @@ const data: SkillInfographic = {
   ],
   corePrinciplesEn: ['Choose the Mermaid diagram family before writing syntax', 'Keep inline code blocks renderable in Markdown or browsers', 'Use comments, frontmatter, and config only when they improve clarity', 'For publish-grade output, render-check spacing, routing, and readability'],
   corePrinciplesVi: ['Chọn đúng họ sơ đồ Mermaid trước khi viết cú pháp', 'Giữ code block inline render được trong Markdown hoặc browser', 'Chỉ dùng comment, frontmatter và config khi chúng làm rõ sơ đồ', 'Với output để xuất bản, phải kiểm tra khoảng cách, đường nối và độ dễ đọc sau khi render'],
+  invocation: {
+    syntax: '/ak:mermaidjs-v11 [diagram-type or description]',
+    arguments: [
+      { token: '[diagram-type or description]', titleEn: 'Diagram request', titleVi: 'Yêu cầu diagram', descEn: 'Mermaid diagram family or natural-language description of the diagram to create. State the type when known; otherwise provide relationships, facts, output target, and constraints so the Skill can choose without inventing missing details.', descVi: 'Họ diagram Mermaid hoặc mô tả bằng ngôn ngữ tự nhiên về diagram cần tạo. Nêu loại diagram khi đã biết; nếu chưa, cung cấp relationship, fact, output target và ràng buộc để Skill chọn mà không bịa chi tiết còn thiếu.', required: true, exampleCommand: '/ak:mermaidjs-v11 "Create a left-to-right sequence diagram for the supplied checkout events, add accTitle and accDescr, return a fenced Mermaid block and checkout-sequence.mmd, parse it with Mermaid v11, render SVG with a pinned v11 CLI if available, and report any unverified layout."' },
+    ],
+  },
   expertiseAreasEn: ['Flowcharts and decision trees', 'Sequence diagrams and API flows', 'Class and ER diagrams', 'Gantt timelines', 'State machines and user journeys', 'Markdown, HTML, and CLI exports'],
   expertiseAreasVi: ['Flowchart và cây quyết định', 'Sequence diagram và luồng API', 'Class diagram và ERD', 'Timeline Gantt', 'State machine và user journey', 'Markdown, HTML và xuất file bằng CLI'],
   promptExamples: [
