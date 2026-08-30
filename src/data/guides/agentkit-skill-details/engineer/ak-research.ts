@@ -64,8 +64,8 @@ const data: SkillInfographic = {
       "number": 7,
       "titleEn": "Organize output",
       "titleVi": "Sắp xếp đầu ra",
-      "descEn": "Use project-organization to choose the report path, include timestamp, navigation, diagrams when helpful, next steps, and unresolved questions.",
-      "descVi": "Dùng project-organization để chọn đường dẫn báo cáo, thêm thời điểm, mục lục, sơ đồ khi hữu ích, bước tiếp theo và câu hỏi còn mở."
+      "descEn": "Invoke project-organization to organize outputs, then save the report at the Naming section's Report path; ask the main agent if that path is missing.",
+      "descVi": "Gọi project-organization để sắp xếp đầu ra, rồi lưu báo cáo vào đường dẫn Report trong phần Naming; hỏi main agent nếu thiếu đường dẫn đó."
     }
   ],
   "corePrinciplesEn": [
@@ -106,6 +106,38 @@ const data: SkillInfographic = {
       "validation": "Only keeps work needed for stated outcome"
     }
   ],
+  "invocation": {
+    "syntax": "/ak:research [topic] [--ultra] [--yagni]",
+    "arguments": [
+      {
+        "token": "[topic]",
+        "titleEn": "Research question",
+        "titleVi": "Câu hỏi nghiên cứu",
+        "descEn": "Free-form technical decision or comparison to research. Include alternatives, constraints, criteria, recency window, research-call budget, and the approved Report path when available; this argument does not authorize implementation or publication.",
+        "descVi": "Quyết định kỹ thuật hoặc phần so sánh cần nghiên cứu bằng ngôn ngữ tự nhiên. Nêu alternative, ràng buộc, tiêu chí, khoảng thời gian cần độ mới, budget research call và đường dẫn Report đã duyệt khi có; tham số này không cấp quyền triển khai hay publish.",
+        "required": true,
+        "exampleCommand": "/ak:research \"Compare Postgres RLS and service-layer authorization for a multi-tenant B2B API; max 4 research calls; Report: plans/research/tenant-authorization.md\""
+      }
+    ],
+    "options": [
+      {
+        "token": "--ultra",
+        "titleEn": "Best-of-5 verifier",
+        "titleVi": "Verifier best-of-5",
+        "descEn": "Runs five independent read-only candidate researchers from one evidence packet, then a verifier selects one report unchanged or rejects all. It keeps the per-run research-call budget.",
+        "descVi": "Chạy năm candidate researcher độc lập chỉ đọc từ cùng một gói bằng chứng, rồi verifier chọn nguyên trạng một report hoặc loại hết. Vẫn giữ budget research call cho từng lượt.",
+        "exampleCommand": "/ak:research OAuth device flow security --ultra"
+      },
+      {
+        "token": "--yagni",
+        "titleEn": "Cut unneeded scope",
+        "titleVi": "Cắt scope thừa",
+        "descEn": "Challenges and removes research scope that is not needed for the stated decision or outcome. It must not drop anything the user explicitly requires.",
+        "descVi": "Chất vấn và bỏ phần phạm vi nghiên cứu không cần cho quyết định hoặc outcome đã nêu. Không được bỏ nội dung người dùng yêu cầu rõ.",
+        "exampleCommand": "/ak:research vector database options for 10k docs --yagni"
+      }
+    ]
+  },
   "outputFlags": [
     {
       "flag": "--ultra",
@@ -131,8 +163,8 @@ const data: SkillInfographic = {
       "command": "/ak:research choose a durable queue for Next.js background jobs",
       "whenEn": "Use before implementation when architecture, compatibility, security, and maintenance tradeoffs matter.",
       "whenVi": "Dùng trước khi triển khai nếu cần cân nhắc kiến trúc, tương thích, bảo mật và bảo trì.",
-      "expectedEn": "A cited decision-ready report with tradeoffs and next steps.",
-      "expectedVi": "Báo cáo có nguồn dẫn, đủ để ra quyết định, kèm tradeoff và bước tiếp theo.",
+      "expectedEn": "A markdown report that defines scope, cites authoritative sources, compares queue options, calls out security/performance tradeoffs, and ends with concrete next steps.",
+      "expectedVi": "Báo cáo Markdown xác định phạm vi, dẫn nguồn uy tín, so sánh các lựa chọn queue, nêu tradeoff bảo mật/hiệu năng và kết thúc bằng bước tiếp theo cụ thể.",
       "recommended": true
     },
     {
@@ -141,8 +173,8 @@ const data: SkillInfographic = {
       "command": "/ak:research OAuth device flow security --ultra",
       "whenEn": "Use when the answer is high-risk and worth five independent candidate passes.",
       "whenVi": "Dùng khi câu trả lời rủi ro cao và đáng chạy năm lượt ứng viên độc lập.",
-      "expectedEn": "A winning report or reject-all result with ranking appendix.",
-      "expectedVi": "Một báo cáo thắng hoặc kết quả reject-all kèm phụ lục xếp hạng."
+      "expectedEn": "Five independent candidate reports are scored by a verifier, which either preserves the winning report with a ranking appendix or stops with reject-all reasoning.",
+      "expectedVi": "Năm báo cáo ứng viên độc lập được verifier chấm điểm; verifier giữ nguyên báo cáo thắng kèm phụ lục xếp hạng hoặc dừng với lý do reject-all."
     },
     {
       "labelEn": "YAGNI research",
@@ -150,15 +182,15 @@ const data: SkillInfographic = {
       "command": "/ak:research vector database options for 10k docs --yagni",
       "whenEn": "Use when the likely risk is over-building beyond the stated outcome.",
       "whenVi": "Dùng khi rủi ro chính là thiết kế quá tay so với kết quả cần đạt.",
-      "expectedEn": "A lean recommendation that removes unnecessary scope.",
-      "expectedVi": "Khuyến nghị gọn, loại bỏ phần không cần."
+      "expectedEn": "A focused report that challenges excess scope, keeps only research needed for the stated decision, cites sources, and lists unresolved questions.",
+      "expectedVi": "Báo cáo tập trung, chất vấn phần phạm vi dư thừa, chỉ giữ nghiên cứu cần cho quyết định đã nêu, dẫn nguồn và liệt kê câu hỏi còn mở."
     }
   ],
   "reportOutput": {
     "titleEn": "Research report",
     "titleVi": "Báo cáo nghiên cứu",
-    "patternEn": "Report path from project-organization or plans/research/ when configured",
-    "patternVi": "Đường dẫn Report từ project-organization hoặc plans/research/ khi được cấu hình",
+    "patternEn": "Report path from the Naming section; if absent, ask the main agent for the output path",
+    "patternVi": "Đường dẫn Report trong phần Naming; nếu thiếu thì hỏi main agent về đường dẫn đầu ra",
     "descEn": "Markdown report with sources, methodology, findings, recommendations, references, and unresolved questions.",
     "descVi": "Báo cáo Markdown có nguồn, phương pháp, phát hiện, khuyến nghị, tài liệu tham khảo và câu hỏi chưa giải quyết."
   }

@@ -1,4 +1,22 @@
-import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-works';
+
+const invocation: SkillInvocation = {
+  syntax: '/ak:google-adk-python [agent or feature]',
+  arguments: [
+    {
+      token: '[agent or feature]',
+      titleEn: 'ADK agent or feature',
+      titleVi: 'Agent hoặc tính năng ADK',
+      descEn:
+        'Natural-language outcome and operating boundaries for a Google ADK Python agent: target package, agent responsibility, tools or MCP access, state or memory needs, evaluation expectations, provider limits, and whether deployment is in scope. This is not an ADK CLI subcommand or mode flag.',
+      descVi:
+        'Outcome và ranh giới vận hành bằng ngôn ngữ tự nhiên cho agent Google ADK Python: package đích, trách nhiệm agent, quyền truy cập tool hoặc MCP, nhu cầu state hoặc memory, kỳ vọng evaluation, giới hạn provider và deploy có nằm trong phạm vi không. Đây không phải subcommand hay mode flag của ADK CLI.',
+      required: true,
+      exampleCommand:
+        '/ak:google-adk-python "Add a Google ADK Python support agent to this existing package. Use the installed SDK, expose read-only account tools through a filtered MCPToolset, keep approval for any write, add a small eval set and unit tests, and do not call a paid model or deploy."',
+    },
+  ],
+};
 
 const data: SkillInfographic = {
   "id": "ak-google-adk-python",
@@ -112,25 +130,44 @@ const data: SkillInfographic = {
   ],
   "promptExamples": [
     {
-      "labelEn": "MCP-enabled agent",
-      "labelVi": "Agent có MCP",
-      "command": "/ak:google-adk-python build a support triage agent with MCP tools and persistent session state",
-      "whenEn": "You need ADK architecture and code shape for tool-using agents.",
-      "whenVi": "Khi cần kiến trúc ADK và cấu trúc code cho agent dùng tool.",
-      "expectedEn": "Selects Agent/App patterns, shows package shape, wires MCP tools and state, and recommends local test/eval commands.",
-      "expectedVi": "Chọn pattern Agent/App, đưa cấu trúc package, nối MCP tools và state, rồi đề xuất lệnh test/eval local.",
+      "labelEn": "Tool-using support agent",
+      "labelVi": "Agent hỗ trợ dùng tool",
+      "command": "/ak:google-adk-python build a support triage agent with MCP tools, session state, and artifact output",
+      "whenEn": "You are building a Google ADK agent that needs MCP tools, state, or artifact handling.",
+      "whenVi": "Khi cần xây agent Google ADK có MCP tool, state hoặc xử lý artifact.",
+      "expectedEn": "Defines the ADK package shape, chooses root_agent or App, wires MCPToolset and ToolContext state, and names the adk web/run/eval checks to exercise the agent.",
+      "expectedVi": "Định nghĩa cấu trúc package ADK, chọn root_agent hoặc App, nối MCPToolset và ToolContext state, rồi nêu các lệnh adk web/run/eval để chạy thử agent.",
       "recommended": true
     },
     {
-      "labelEn": "A2A system",
-      "labelVi": "Hệ A2A",
+      "labelEn": "Workflow pipeline",
+      "labelVi": "Pipeline workflow",
+      "command": "/ak:google-adk-python design a SequentialAgent pipeline with a ParallelAgent research step and LoopAgent refinement",
+      "whenEn": "You need workflow agents for predictable sequential, parallel, or iterative processing.",
+      "whenVi": "Khi cần workflow agent cho xử lý tuần tự, song song hoặc lặp có thể dự đoán.",
+      "expectedEn": "Maps the pipeline to SequentialAgent, ParallelAgent, and LoopAgent roles, explains when not to use dynamic LlmAgent routing, and keeps the agent.py export discoverable by ADK.",
+      "expectedVi": "Ánh xạ pipeline vào vai trò SequentialAgent, ParallelAgent và LoopAgent, giải thích khi nào không dùng routing LlmAgent động, và giữ export agent.py để ADK phát hiện được."
+    },
+    {
+      "labelEn": "A2A coordinator",
+      "labelVi": "Coordinator A2A",
       "command": "/ak:google-adk-python design a RemoteA2aAgent coordinator for two remote domain agents",
-      "whenEn": "You are connecting remote agents via A2A instead of local sub-agents.",
-      "whenVi": "Khi cần nối agent từ xa qua A2A thay vì sub-agent local.",
-      "expectedEn": "Explains the RemoteA2aAgent role, coordinator shape, and testing/deployment considerations.",
-      "expectedVi": "Giải thích vai trò RemoteA2aAgent, hình dạng coordinator và lưu ý test/deploy."
+      "whenEn": "You are connecting remote agents through the A2A protocol instead of local sub-agents.",
+      "whenVi": "Khi cần nối agent từ xa qua giao thức A2A thay vì sub-agent local.",
+      "expectedEn": "Explains the RemoteA2aAgent coordinator role, how it differs from local sub_agents composition, and what local CLI or deployment checks should prove the connection path.",
+      "expectedVi": "Giải thích vai trò coordinator RemoteA2aAgent, điểm khác với cách ghép sub_agents local, và các bước CLI hoặc deploy cần kiểm tra để chứng minh đường kết nối."
+    },
+    {
+      "labelEn": "Eval and Vertex deployment",
+      "labelVi": "Eval và deploy Vertex",
+      "command": "/ak:google-adk-python prepare my ADK agent for adk eval and Vertex AI Agent Engine deployment",
+      "whenEn": "You need to harden an ADK agent with evaluation and production deployment guidance.",
+      "whenVi": "Khi cần làm chắc agent ADK bằng evaluation và hướng dẫn deploy production.",
+      "expectedEn": "Lays out the evalset JSON and adk eval path, confirms whether App is needed for plugins or lifecycle handling, and routes production deployment to Cloud Run, Vertex AI Agent Engine, or GKE.",
+      "expectedVi": "Trình bày evalset JSON và đường chạy adk eval, xác nhận có cần App cho plugin hoặc lifecycle không, rồi định tuyến deploy production tới Cloud Run, Vertex AI Agent Engine hoặc GKE."
     }
   ],
+  "invocation": invocation,
   "reportOutput": {
     "titleEn": "ADK implementation guidance",
     "titleVi": "Hướng dẫn triển khai ADK",

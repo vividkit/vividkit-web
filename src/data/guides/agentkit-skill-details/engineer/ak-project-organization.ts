@@ -10,6 +10,20 @@ const data: SkillInfographic = {
     "taglineEn": "Single source of truth for file placement, kebab-case naming, plan/report/doc templates, and safe organize-mode migrations.",
     "taglineVi": "Nguồn chuẩn duy nhất để chọn vị trí file, đặt tên kebab-case, dùng mẫu plan/report/doc và di chuyển cấu trúc dự án an toàn."
   },
+  "invocation": {
+    "syntax": "/ak:project-organization [directories or files to organize]",
+    "arguments": [
+      {
+        "token": "[directories or files to organize]",
+        "titleEn": "Targets",
+        "titleVi": "Mục tiêu",
+        "descEn": "Optional directories or files to organize. Direct targets trigger scan → analyze → propose → confirm → execute → verify; omitted or cross-skill use returns path and naming guidance.",
+        "descVi": "Các thư mục hoặc file tùy chọn cần sắp xếp. Mục tiêu trực tiếp kích hoạt quét → phân tích → đề xuất → xác nhận → thực thi → kiểm tra; bỏ trống hoặc dùng từ skill khác thì trả hướng dẫn đường dẫn và đặt tên.",
+        "required": false,
+        "exampleCommand": "/ak:project-organization docs/ plans/"
+      }
+    ]
+  },
   "hardGate": {
     "type": "warning",
     "titleEn": "Confirm before moving files",
@@ -119,8 +133,8 @@ const data: SkillInfographic = {
       "command": "/ak:project-organization plans and reports for the auth refactor",
       "whenEn": "Use when another skill needs the canonical location before writing.",
       "whenVi": "Dùng khi skill khác cần vị trí chuẩn trước khi ghi file.",
-      "expectedEn": "A correct category, path pattern, and naming mode.",
-      "expectedVi": "Trả về nhóm, mẫu đường dẫn và kiểu đặt tên phù hợp.",
+      "expectedEn": "Returns the correct category, path pattern, naming mode, and placement rationale before any file is written.",
+      "expectedVi": "Trả về nhóm đúng, mẫu đường dẫn, kiểu đặt tên và lý do đặt chỗ trước khi ghi file.",
       "recommended": true
     },
     {

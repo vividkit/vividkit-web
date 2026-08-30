@@ -10,6 +10,13 @@ const data: SkillInfographic = {
     "taglineEn": "Creative and conversion copywriting router for audits, SEO blogs, YouTube-to-blog, CRO, enhancement, formulas, fast drafts, good drafts, and publish-ready output.",
     "taglineVi": "Router copywriting sáng tạo và chuyển đổi cho audit, blog SEO, YouTube-to-blog, CRO, enhance, công thức copy, bản nháp nhanh, bản tốt và nội dung sẵn publish."
   },
+  "hardGate": {
+    "type": "warning",
+    "titleEn": "The publish route does not publish",
+    "titleVi": "Tuyến publish không tự đăng",
+    "contentEn": "The publish route is a local quality gate only. It does not authorize CMS, email, network, media-buy, account, or external publication actions.",
+    "contentVi": "Tuyến publish chỉ là quality gate local. Nó không cấp quyền thao tác CMS, email, network, media-buy, account hoặc publish bên ngoài."
+  },
   "processFlow": [
     {
       "number": 1,
@@ -69,8 +76,8 @@ const data: SkillInfographic = {
   "workflowModes": [
     {
       "flag": "audit",
-      "modeEn": "Content audit",
-      "modeVi": "Audit nội dung",
+      "modeEn": "Content, search, platform, and brand review.",
+      "modeVi": "Review content, search, platform và brand.",
       "research": "Copywriting/SEO/platform standards",
       "redTeam": "Quality gaps",
       "validation": "Audit findings",
@@ -78,28 +85,73 @@ const data: SkillInfographic = {
     },
     {
       "flag": "blog",
-      "modeEn": "SEO blog",
-      "modeVi": "Blog SEO",
+      "modeEn": "SEO article with metadata and optional illustrations.",
+      "modeVi": "Bài SEO có metadata và illustration tùy chọn.",
       "research": "Topic and SEO intent",
       "redTeam": "Search-fit gaps",
       "validation": "SEO article",
       "cookFlag": "references/blog.md"
     },
     {
+      "flag": "blog-youtube",
+      "modeEn": "Article derived from a YouTube source.",
+      "modeVi": "Bài viết chuyển thể từ nguồn YouTube.",
+      "research": "Video metadata/captions",
+      "redTeam": "Source fidelity",
+      "validation": "Adapted article",
+      "cookFlag": "references/blog-youtube.md"
+    },
+    {
       "flag": "cro",
-      "modeEn": "Conversion optimization",
-      "modeVi": "Tối ưu chuyển đổi",
+      "modeEn": "Conversion-focused analysis and revised copy.",
+      "modeVi": "Phân tích conversion và copy đã sửa.",
       "research": "Current content and funnel",
       "redTeam": "Conversion friction",
       "validation": "Improved copy",
       "cookFlag": "references/cro.md"
     },
     {
+      "flag": "enhance",
+      "modeEn": "Revise located copy from stated issues.",
+      "modeVi": "Sửa copy đã tìm thấy theo issue đã nêu.",
+      "research": "Located copy",
+      "redTeam": "Over-editing",
+      "validation": "Enhanced copy",
+      "cookFlag": "references/enhance.md"
+    },
+    {
+      "flag": "fast",
+      "modeEn": "Quick creative draft with a lower deliberation bar.",
+      "modeVi": "Bản nháp sáng tạo nhanh với mức cân nhắc thấp hơn.",
+      "research": "Prompt context",
+      "redTeam": "Generic copy",
+      "validation": "Fast draft",
+      "cookFlag": "references/fast.md"
+    },
+    {
+      "flag": "formula",
+      "modeEn": "Copywriting formula output such as AIDA, PAS, or BAB.",
+      "modeVi": "Output theo công thức copywriting như AIDA, PAS hoặc BAB.",
+      "research": "Formula choice",
+      "redTeam": "Formula mismatch",
+      "validation": "Formula draft",
+      "cookFlag": "references/formula.md"
+    },
+    {
+      "flag": "good",
+      "modeEn": "Higher-quality draft with stronger structure and review.",
+      "modeVi": "Bản nháp chất lượng cao hơn với cấu trúc và review mạnh hơn.",
+      "research": "Brief quality",
+      "redTeam": "Weak evidence",
+      "validation": "Good draft",
+      "cookFlag": "references/good.md"
+    },
+    {
       "flag": "publish",
-      "modeEn": "Publish-ready",
-      "modeVi": "Sẵn publish",
+      "modeEn": "Local publish-readiness quality gate that does not publish externally.",
+      "modeVi": "Quality gate sẵn publish ở local, không publish ra ngoài.",
       "research": "Content issues",
-      "redTeam": "Auto-fix quality risks",
+      "redTeam": "False publication",
       "validation": "Final version",
       "cookFlag": "references/publish.md"
     }
@@ -146,12 +198,12 @@ const data: SkillInfographic = {
   "reportOutput": {
     "titleEn": "Copy deliverable",
     "titleVi": "Sản phẩm copy",
-    "patternEn": "Route-specific audit, draft, enhancement, formula, or publish-ready version",
-    "patternVi": "Output theo tuyến: audit, bản nháp, enhance, formula hoặc bản sẵn publish",
-    "locationEn": "Response output",
-    "locationVi": "Nội dung phản hồi",
-    "descEn": "The first argument controls the reference and expected output shape.",
-    "descVi": "Tham số đầu quyết định reference và hình dạng output mong đợi."
+    "patternEn": "formula → assets/copy/{date}-{formula}-{slug}.md; blog → assets/articles/{date}-{slug}/; blog-youtube → content/blog/",
+    "patternVi": "formula → assets/copy/{date}-{formula}-{slug}.md; blog → assets/articles/{date}-{slug}/; blog-youtube → content/blog/",
+    "locationEn": "Route-specific response output, modified source file, assets/copy/, assets/articles/, or content/blog/",
+    "locationVi": "Output phản hồi theo route, file nguồn đã sửa, assets/copy/, assets/articles/ hoặc content/blog/",
+    "descEn": "The first argument controls the reference and expected output shape; confirm the actual route path before downstream automation.",
+    "descVi": "Tham số đầu quyết định reference và hình dạng output; hãy xác nhận path route thực tế trước khi tự động hóa downstream."
   }
 };
 

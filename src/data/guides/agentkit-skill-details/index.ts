@@ -24,6 +24,31 @@ export function listAkSkillDetails(): Array<{ kit: AkSkillDetailKit; skill: stri
   });
 }
 
+export type AkSkillJumpItem = {
+  kit: AkSkillDetailKit;
+  skill: string;
+  command: string;
+  titleEn: string;
+  titleVi: string;
+};
+
+export function listAkSkillJumpItems(): AkSkillJumpItem[] {
+  return [...byKey.values()]
+    .map((data) => {
+      const kit: AkSkillDetailKit = data.kit === 'marketer' ? 'marketing' : 'engineer';
+      const titleEn = data.header.titleEn.replace(/^[/$@]*ak:[^\s]+(?:\s*[-–—]\s*)?/i, '').trim();
+      const titleVi = data.header.titleVi.replace(/^[/$@]*ak:[^\s]+(?:\s*[-–—]\s*)?/i, '').trim();
+      return {
+        kit,
+        skill: data.id,
+        command: data.command,
+        titleEn: titleEn || data.command,
+        titleVi: titleVi || data.command,
+      };
+    })
+    .sort((a, b) => a.command.localeCompare(b.command));
+}
+
 export function getAkSkillInfographic(
   kit: AkSkillDetailKit,
   skill: string,

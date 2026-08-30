@@ -78,6 +78,20 @@ const data: SkillInfographic = {
     "Lưu bằng ak journal create; không để journal chỉ nằm trong chat.",
     "Bước journal tự động do flag rõ ràng và thứ tự config điều khiển."
   ],
+  "invocation": {
+    "syntax": "/ak:journal [topic or reflection]",
+    "arguments": [
+      {
+        "token": "[topic or reflection]",
+        "titleEn": "Journal topic",
+        "titleVi": "Chủ đề journal",
+        "descEn": "Natural-language session topic, reflection, or record request. Include concrete errors, paths, outcomes, decisions, and remaining work; the Skill has no published mode flag.",
+        "descVi": "Chủ đề phiên, reflection hoặc yêu cầu ghi lại bằng ngôn ngữ tự nhiên. Nêu lỗi cụ thể, path, outcome, quyết định và việc còn lại; Skill không có mode flag được công bố.",
+        "required": true,
+        "exampleCommand": "/ak:journal \"Record today's session-cache repair: duplicate invalidation root cause, rejected timer workaround, affected API behavior, regression evidence, and follow-up monitoring.\""
+      }
+    ]
+  },
   "expertiseAreasEn": [
     "Session reflection",
     "Chronological work records",
@@ -119,20 +133,38 @@ const data: SkillInfographic = {
       "labelEn": "Session reflection",
       "labelVi": "Reflection phiên làm việc",
       "command": "/ak:journal after fixing the OAuth callback race condition",
-      "whenEn": "You want to preserve a concise technical record after implementation or debugging.",
-      "whenVi": "Khi muốn lưu bản ghi kỹ thuật ngắn sau khi implement hoặc debug.",
-      "expectedEn": "Captures what happened, decisions, next steps, persists under plans/journals, and notes AgentWiki publish skipped.",
-      "expectedVi": "Ghi chuyện đã xảy ra, quyết định, bước tiếp, lưu dưới plans/journals và ghi AgentWiki publish skipped.",
+      "whenEn": "You want a concise chronological work record after implementation or debugging.",
+      "whenVi": "Khi muốn có bản ghi công việc theo thời gian sau khi implement hoặc debug.",
+      "expectedEn": "Gathers root cause, key changes, impacts, decisions, and next steps; drafts a concrete markdown entry; persists it with ak journal create under plans/journals; reports AgentWiki publish skipped.",
+      "expectedVi": "Thu thập root cause, thay đổi chính, tác động, quyết định và bước tiếp theo; soạn entry Markdown cụ thể; lưu bằng ak journal create dưới plans/journals; báo AgentWiki publish skipped.",
       "recommended": true
     },
     {
       "labelEn": "Failure archaeology",
       "labelVi": "Đào lại failure",
       "command": "/ak:journal why the deployment rollback was necessary",
-      "whenEn": "The entry should explain root cause, impact, and lessons for future sessions.",
-      "whenVi": "Khi entry cần giải thích root cause, ảnh hưởng và bài học cho session sau.",
-      "expectedEn": "May invoke journal-writer for honesty, but still persists through ak journal create.",
-      "expectedVi": "Có thể gọi journal-writer để viết thẳng thắn hơn, nhưng vẫn lưu qua ak journal create."
+      "whenEn": "The entry should emphasize honest root cause, impact, and lessons from a failure.",
+      "whenVi": "Khi entry cần nhấn mạnh root cause trung thực, tác động và bài học từ failure.",
+      "expectedEn": "May invoke the journal-writer subagent when emotional honesty is the point, then still writes the journal through ak journal create and keeps it as local work history rather than a decision authority.",
+      "expectedVi": "Có thể gọi subagent journal-writer khi mục tiêu là sự thẳng thắn cảm xúc, rồi vẫn ghi journal qua ak journal create và giữ nó làm lịch sử công việc local thay vì nguồn quyết định."
+    },
+    {
+      "labelEn": "Backdated project entry",
+      "labelVi": "Entry theo ngày và project",
+      "command": "/ak:journal record yesterday's API migration notes dated 2026-08-29 for project vividkit-web",
+      "whenEn": "You need the journal file tied to a specific date or AgentKit project registry name.",
+      "whenVi": "Khi cần gắn file journal với một ngày cụ thể hoặc tên project trong registry AgentKit.",
+      "expectedEn": "Uses the optional ak journal create --date and --project inputs while preserving the same gather, draft, validate-when-needed, and AgentWiki-skipped workflow.",
+      "expectedVi": "Dùng input tuỳ chọn ak journal create --date và --project nhưng vẫn giữ workflow thu thập, soạn, validate khi cần và báo AgentWiki skipped."
+    },
+    {
+      "labelEn": "Configured social post",
+      "labelVi": "Bài social đã cấu hình",
+      "command": "/ak:journal turn today's release journal into configured social posts with image ./release-card.png",
+      "whenEn": "You have journal social channels configured and want per-channel copy after the local journal exists.",
+      "whenVi": "Khi đã cấu hình channel social cho journal và muốn copy theo từng channel sau khi journal local tồn tại.",
+      "expectedEn": "Creates the journal first, resolves .agentkit journal/config settings and writing style, drafts per-channel bodies, runs post-social with --dry-run --json for inspection, then publishes only after the dry-run output is accepted.",
+      "expectedVi": "Tạo journal trước, resolve cấu hình .agentkit journal/config và writing style, soạn body theo từng channel, chạy post-social với --dry-run --json để kiểm tra, rồi chỉ publish sau khi output dry-run được chấp nhận."
     }
   ],
   "reportOutput": {

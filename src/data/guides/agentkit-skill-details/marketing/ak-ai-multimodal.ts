@@ -43,7 +43,7 @@ const data: SkillInfographic = {
   expertiseAreasVi: ["Phân tích hình ảnh", "OCR và trích xuất", "Chép lời", "Chuyển tài liệu", "Tạo ảnh", "Tạo video", "Tạo audio và nhạc"],
   promptExamples: [
     { labelEn: "Analyze an image", labelVi: "Phân tích ảnh", command: "/ak:ai-multimodal input.png Analyze this content", whenEn: "You need vision analysis, OCR, or design extraction from an image.", whenVi: "Khi cần phân tích hình ảnh, OCR hoặc trích xuất thiết kế từ ảnh.", expectedEn: "A Multix-based analysis path with setup checks, limits, and an explicit output format.", expectedVi: "Một hướng phân tích bằng Multix có kiểm tra setup, giới hạn và định dạng output rõ ràng.", recommended: true },
-    { labelEn: "Transcribe media", labelVi: "Chép lời media", command: "/ak:ai-multimodal interview.mp4 Generate a transcript with timestamps", whenEn: "A video or audio file needs timestamped transcript output.", whenVi: "Khi file video hoặc audio cần transcript có timestamp.", expectedEn: "A transcription workflow that resolves limits and produces markdown transcript structure.", expectedVi: "Workflow transcription xác minh giới hạn và tạo cấu trúc transcript markdown." },
+    { labelEn: "Transcribe media", labelVi: "Chép lời media", command: "/ak:ai-multimodal interview.mp4 Generate a transcript with timestamps", whenEn: "A video or audio file needs timestamped transcript output.", whenVi: "Khi file video hoặc audio cần transcript có timestamp.", expectedEn: "A transcription workflow that resolves provider limits and produces a timestamped markdown transcript structure for review.", expectedVi: "Workflow transcription xác minh giới hạn và tạo cấu trúc transcript markdown." },
   ],
   skillStack: [
     { name: "Multix CLI", type: 'tool' },

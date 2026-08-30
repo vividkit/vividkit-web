@@ -1,4 +1,26 @@
-import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-works';
+
+const invocation: SkillInvocation = {
+  syntax: "/ak:devops [platform] [task]",
+  arguments: [
+    {
+      token: "[platform]",
+      titleEn: "Platform",
+      titleVi: "Nền tảng",
+      descEn: "Infrastructure surface to work on, such as Cloudflare, Docker, Google Cloud, Kubernetes, Helm, CI/CD, or GitOps. This selects the operational context; it does not choose a default environment or grant deployment approval.",
+      descVi: "Bề mặt hạ tầng cần xử lý, như Cloudflare, Docker, Google Cloud, Kubernetes, Helm, CI/CD hoặc GitOps. Đối số này chọn bối cảnh vận hành; nó không chọn môi trường mặc định hay cấp quyền deploy.",
+      exampleCommand: "/ak:devops cloudflare \"review this Worker staging config\"",
+    },
+    {
+      token: "[task]",
+      titleEn: "Task",
+      titleVi: "Tác vụ",
+      descEn: "Operational request to design, review, implement, troubleshoot, build, deploy, audit, or prepare rollback steps. Include the account, project, region, environment, resource, allowed effect, and validation boundary when known.",
+      descVi: "Yêu cầu vận hành để thiết kế, rà soát, triển khai, xử lý sự cố, build, deploy, audit hoặc chuẩn bị rollback. Nêu account, project, region, environment, resource, tác động được phép và ranh giới xác minh khi đã biết.",
+      exampleCommand: "/ak:devops kubernetes \"review manifests for RBAC, resources, rollout checks, and rollback commands\"",
+    },
+  ],
+};
 
 const data: SkillInfographic = {
   id: "ak-devops",
@@ -46,6 +68,7 @@ const data: SkillInfographic = {
     "Vận hành Kubernetes với kubectl, Helm, RBAC và network policy",
     "CI/CD, GitOps, triển khai đa vùng và rà soát bảo mật",
   ],
+  invocation,
   workflowModes: [
     { flag: "cloudflare", modeEn: "Edge/serverless", modeVi: "Edge/serverless", research: "Load Cloudflare references", redTeam: "Check bindings, latency, egress", validation: "wrangler deploy/dev evidence", cookFlag: "Workers/Pages/R2/D1" },
     { flag: "docker", modeEn: "Container", modeVi: "Container", research: "Load Docker guides", redTeam: "Check non-root, image size, ports", validation: "docker build/run evidence", cookFlag: "Docker/Compose" },
@@ -60,9 +83,10 @@ const data: SkillInfographic = {
     { name: "helm", type: "tool" },
   ],
   promptExamples: [
-    { labelEn: "Cloudflare deploy", labelVi: "Triển khai Cloudflare", command: "/ak:devops cloudflare deploy our API worker", whenEn: "A serverless edge app needs deployment through Cloudflare tooling.", whenVi: "Ứng dụng serverless ở edge cần triển khai bằng công cụ Cloudflare.", expectedEn: "Chooses Workers or Pages, loads the Cloudflare reference, runs or prepares wrangler commands, and reports security/performance notes.", expectedVi: "Chọn Workers hoặc Pages, mở tài liệu Cloudflare, chạy hoặc chuẩn bị lệnh wrangler và báo cáo ghi chú bảo mật/hiệu năng.", recommended: true },
-    { labelEn: "Containerize app", labelVi: "Đóng gói container", command: "/ak:devops docker containerize this service", whenEn: "A service needs Docker or Docker Compose for local or deployable runtime.", whenVi: "Một service cần Docker hoặc Docker Compose cho môi trường chạy local hay triển khai.", expectedEn: "Uses Docker references, favors multi-stage and non-root patterns, then verifies build/run behavior.", expectedVi: "Dùng tài liệu Docker, ưu tiên multi-stage và không chạy root, rồi xác minh build/run." },
-    { labelEn: "Kubernetes audit", labelVi: "Rà soát Kubernetes", command: "/ak:devops kubernetes audit RBAC and resource limits", whenEn: "A cluster or manifests need security and operations review.", whenVi: "Cụm hoặc manifest cần rà soát bảo mật và vận hành.", expectedEn: "Checks RBAC, network policies, image/security posture, and resource limits with kubectl/Helm evidence.", expectedVi: "Kiểm tra RBAC, network policy, trạng thái image/bảo mật và giới hạn tài nguyên bằng bằng chứng kubectl/Helm." },
+    { labelEn: "Cloudflare review", labelVi: "Rà soát Cloudflare", command: "/ak:devops cloudflare \"review this Worker staging config and prepare deploy, dry-run, and rollback steps\"", whenEn: "Cloudflare Workers, Pages, R2, D1, KV, or Browser Rendering is central to the infrastructure task.", whenVi: "Cloudflare Workers, Pages, R2, D1, KV hoặc Browser Rendering là trọng tâm của việc hạ tầng.", expectedEn: "Maps the target to the right Cloudflare surface, loads the relevant references, prepares wrangler-oriented commands, and reports bindings, routes, limits, cost, and rollback evidence.", expectedVi: "Gắn đích với đúng phần Cloudflare, mở tài liệu liên quan, chuẩn bị lệnh theo wrangler và báo cáo binding, route, limit, chi phí cùng bằng chứng rollback.", recommended: true },
+    { labelEn: "Docker review", labelVi: "Rà soát Docker", command: "/ak:devops docker \"analyze this Dockerfile and propose build/run improvements\"", whenEn: "A service needs Dockerfile or Docker Compose review before local development or deployment.", whenVi: "Một service cần rà soát Dockerfile hoặc Docker Compose trước khi phát triển local hay deploy.", expectedEn: "Uses Docker references and the analyzer-oriented workflow to check build context, ports, volumes, health checks, multi-stage builds, non-root runtime, and secret handling.", expectedVi: "Dùng tài liệu Docker và workflow kiểu analyzer để kiểm tra build context, port, volume, health check, multi-stage build, runtime không chạy root và cách xử lý secret." },
+    { labelEn: "GCP deploy plan", labelVi: "Kế hoạch deploy GCP", command: "/ak:devops gcp \"prepare a Cloud Run deployment plan for this container image\"", whenEn: "Google Cloud Run, GKE, Cloud SQL, IAM, region, quota, or gcloud operations define the release risk.", whenVi: "Google Cloud Run, GKE, Cloud SQL, IAM, region, quota hoặc thao tác gcloud quyết định rủi ro phát hành.", expectedEn: "Loads Google Cloud and gcloud guidance, resolves project, region, service account, APIs, cost and rollback boundaries, then proposes verifiable Cloud Run or GKE commands.", expectedVi: "Mở hướng dẫn Google Cloud và gcloud, phân giải project, region, service account, API, ranh giới chi phí và rollback, rồi đề xuất lệnh Cloud Run hoặc GKE có thể xác minh." },
+    { labelEn: "Kubernetes audit", labelVi: "Rà soát Kubernetes", command: "/ak:devops kubernetes \"review manifests for RBAC, network policies, resources, and Helm rollout risk\"", whenEn: "A Kubernetes cluster, manifest set, Helm release, RBAC policy, or GitOps workflow needs operational review.", whenVi: "Một cluster Kubernetes, bộ manifest, Helm release, policy RBAC hoặc workflow GitOps cần rà soát vận hành.", expectedEn: "Uses upstream Kubernetes and Helm references, checks context and namespace, then reviews RBAC, secrets, network policies, resources, rollout checks, and rollback commands.", expectedVi: "Dùng tài liệu upstream Kubernetes và Helm, kiểm tra context và namespace, rồi rà soát RBAC, secret, network policy, resource, kiểm tra rollout và lệnh rollback." },
   ],
 };
 

@@ -14,12 +14,12 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'warning',
-    titleEn: 'Verify security-sensitive plugin fixes',
-    titleVi: 'Phải kiểm tra bản vá cho plugin nhạy cảm',
+    titleEn: 'Authentication setup can change identity data',
+    titleVi: 'Thiết lập xác thực có thể thay đổi dữ liệu định danh',
     contentEn:
-      'When enabling oidc-provider, mcp, magicLink, organizations, invitations, or device authorization paths, verify the installed Better Auth version includes current fixes and keep safer defaults unless the threat model explicitly says otherwise.',
+      'Schema migrations, verification emails, OAuth callbacks, account linking, session revocation, and deletion flows can mutate persistent or external state. Use isolated accounts and databases until you explicitly approve a production operation.',
     contentVi:
-      'Khi bật oidc-provider, mcp, magicLink, organization, invitation hoặc device authorization, phải kiểm tra phiên bản Better Auth đã có bản vá hiện hành và giữ mặc định an toàn trừ khi threat model cho phép khác.',
+      'Migration schema, email xác minh, callback OAuth, liên kết tài khoản, thu hồi session và luồng xoá có thể thay đổi trạng thái bền vững hoặc bên ngoài. Dùng tài khoản và database cô lập cho tới khi bạn phê duyệt rõ thao tác production.',
   },
   processFlow: [
     { number: 1, titleEn: 'Choose auth method', titleVi: 'Chọn cách đăng nhập', descEn: 'Pick email/password, OAuth, passkeys, magic link, organizations, rate limiting, or a combination based on user friction, security, browser support, and enterprise needs.', descVi: 'Chọn email/password, OAuth, passkey, magic link, organization, rate limit hoặc kết hợp theo ma sát người dùng, bảo mật, hỗ trợ trình duyệt và nhu cầu doanh nghiệp.' },
@@ -44,10 +44,27 @@ const data: SkillInfographic = {
   ],
   expertiseAreasEn: ['Email/password auth', 'OAuth providers', 'Sessions and protected routes', '2FA and passkeys', 'Organizations and RBAC', 'Auth schema migrations'],
   expertiseAreasVi: ['Auth email/password', 'Provider OAuth', 'Session và route bảo vệ', '2FA và passkey', 'Organization và RBAC', 'Migration schema auth'],
+  invocation: {
+    syntax: '/ak:better-auth [auth-method or feature]',
+    arguments: [
+      {
+        token: '[auth-method or feature]',
+        titleEn: 'Auth method or feature',
+        titleVi: 'Phương thức hoặc tính năng auth',
+        descEn:
+          'Name the Better Auth method or feature to add or refine, such as email/password, OAuth, sessions, MFA, passkeys, magic links, organizations, or RBAC. Include the existing stack, security policy, allowed schema or migration changes, and required verification evidence.',
+        descVi:
+          'Nêu phương thức hoặc tính năng Better Auth cần thêm hoặc chỉnh, như email/password, OAuth, session, MFA, passkey, magic link, organization hoặc RBAC. Bao gồm stack hiện có, chính sách bảo mật, thay đổi schema hoặc migration được phép và bằng chứng xác minh cần có.',
+        required: true,
+        exampleCommand:
+          '/ak:better-auth "Add GitHub OAuth to the existing Next.js app, preserve email/password login, generate but do not apply migrations, and verify callback and account-linking behavior."',
+      },
+    ],
+  },
   promptExamples: [
-    { labelEn: 'Email/password setup', labelVi: 'Thiết lập email/password', command: '/ak:better-auth email-password', whenEn: 'Use for a standard TypeScript app with traditional accounts and session handling.', whenVi: 'Dùng cho app TypeScript tiêu chuẩn với tài khoản truyền thống và session.', expectedEn: 'Installs Better Auth, configures env, server, schema, handler, client, UI, routes, and tests.', expectedVi: 'Cài Better Auth, cấu hình env, server, schema, handler, client, UI, route và test.', recommended: true },
-    { labelEn: 'Social OAuth', labelVi: 'OAuth mạng xã hội', command: '/ak:better-auth "GitHub and Google OAuth"', whenEn: 'Use when fast signup with social providers is the primary requirement.', whenVi: 'Dùng khi yêu cầu chính là đăng ký nhanh bằng provider xã hội.', expectedEn: 'Adds provider config, secrets, login calls, callback handling, session reads, and protected route checks.', expectedVi: 'Thêm cấu hình provider, secret, lời gọi login, xử lý callback, đọc session và kiểm tra route bảo vệ.' },
-    { labelEn: 'Advanced auth', labelVi: 'Auth nâng cao', command: '/ak:better-auth "organizations with passkeys and 2FA"', whenEn: 'Use for team or enterprise auth where plugins and current security notes matter.', whenVi: 'Dùng cho auth nhóm/doanh nghiệp khi plugin và ghi chú bảo mật hiện hành quan trọng.', expectedEn: 'Selects plugins, regenerates schema, and verifies safer defaults for sensitive flows.', expectedVi: 'Chọn plugin, sinh lại schema và kiểm tra mặc định an toàn cho luồng nhạy cảm.' },
+    { labelEn: 'Email/password setup', labelVi: 'Thiết lập email/password', command: '/ak:better-auth "Add email/password auth to this TypeScript app with Better Auth, including env names, schema generation, session reads, protected routes, and focused flow tests."', whenEn: 'Use when a TypeScript or JavaScript app has selected Better Auth and needs traditional account sign-up, sign-in, and session handling.', whenVi: 'Dùng khi app TypeScript hoặc JavaScript đã chọn Better Auth và cần đăng ký, đăng nhập cùng session bằng tài khoản truyền thống.', expectedEn: 'Maps the existing framework and database, installs and configures Better Auth, adds server and client wiring, generates schema artifacts, protects routes, and reports focused auth-flow evidence.', expectedVi: 'Lập bản đồ framework và database hiện có, cài và cấu hình Better Auth, nối server/client, sinh schema artifact, bảo vệ route và báo cáo bằng chứng flow auth tập trung.', recommended: true },
+    { labelEn: 'Social OAuth', labelVi: 'OAuth mạng xã hội', command: '/ak:better-auth "Add GitHub and Google OAuth while preserving email/password login, using minimal scopes, safe callback handling, account-linking checks, and no production credentials."', whenEn: 'Use when social login is required and provider callbacks, scopes, redirects, secrets, and account linking need an explicit boundary.', whenVi: 'Dùng khi cần social login và phải nêu rõ ranh giới cho callback provider, scope, redirect, secret và account linking.', expectedEn: 'Adds provider configuration and client sign-in calls, constrains redirects and scopes, keeps secrets server-side, verifies callback/session behavior, and reports any provider-console steps left undone.', expectedVi: 'Thêm cấu hình provider và lời gọi đăng nhập client, giới hạn redirect và scope, giữ secret ở server, kiểm tra callback/session và báo cáo bước provider-console chưa làm.' },
+    { labelEn: 'Plugin-heavy auth', labelVi: 'Auth nhiều plugin', command: '/ak:better-auth "Add organizations with passkeys and 2FA; review schema impact, regenerate artifacts, keep safer plugin defaults, and verify invitation and recovery flows."', whenEn: 'Use for team or enterprise auth where organizations, MFA, passkeys, schema changes, and current security notes all matter.', whenVi: 'Dùng cho auth nhóm/doanh nghiệp khi organization, MFA, passkey, thay đổi schema và ghi chú bảo mật hiện hành đều quan trọng.', expectedEn: 'Selects compatible built-in methods and plugins, reviews schema and migration impact before applying changes, preserves safer defaults, and verifies invitation, session, and recovery edge cases.', expectedVi: 'Chọn method tích hợp sẵn và plugin tương thích, review ảnh hưởng schema/migration trước khi áp dụng, giữ mặc định an toàn và kiểm tra cạnh invitation, session, recovery.' },
   ],
 };
 

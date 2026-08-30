@@ -94,25 +94,48 @@ const data: SkillInfographic = {
     "Xử lý nguồn mâu thuẫn",
     "Định dạng trích nguồn cho từng phát hiện"
   ],
+  "invocation": {
+    "syntax": "/ak:research-prompt <research topic | decision>",
+    "arguments": [
+      {
+        "token": "<research topic | decision>",
+        "titleEn": "Research topic or decision",
+        "titleVi": "Chủ đề hoặc quyết định cần nghiên cứu",
+        "descEn": "Free-form context for one focused research assignment: project situation, decision, audience, deadline, known facts, constraints, intended use, source preferences, and non-goals. The Skill writes the brief; it does not run the research or choose an answer.",
+        "descVi": "Ngữ cảnh tự do cho một assignment nghiên cứu tập trung: tình huống dự án, quyết định, độc giả, hạn chót, fact đã biết, ràng buộc, cách dùng dự kiến, ưu tiên nguồn và non-goal. Skill viết brief; không chạy nghiên cứu hoặc chọn đáp án.",
+        "required": true,
+        "exampleCommand": "/ak:research-prompt \"Decision: choose an authorization model for our multi-tenant API. Audience: architecture review. Deadline: Friday. Compare database RLS and service-layer checks; require current primary sources, security failure modes, migration cost, and unresolved gaps.\""
+      }
+    ]
+  },
   "promptExamples": [
     {
-      "labelEn": "Decision brief",
-      "labelVi": "Brief cho quyết định",
+      "labelEn": "Decision research brief",
+      "labelVi": "Brief nghiên cứu cho quyết định",
       "command": "/ak:research-prompt whether to adopt Turbopack for this Next.js app",
-      "whenEn": "Use when you need to hand off research instead of doing it now.",
-      "whenVi": "Dùng khi cần giao nghiên cứu cho người khác thay vì tự làm ngay.",
-      "expectedEn": "Exactly one self-contained paragraph with question, sub-questions, source rules, and output requirements.",
-      "expectedVi": "Đúng một đoạn tự đủ ngữ cảnh, có câu hỏi, câu hỏi con, quy tắc nguồn và yêu cầu đầu ra.",
+      "whenEn": "Use when you need a research assignment, not the research itself.",
+      "whenVi": "Dùng khi bạn cần đề bài nghiên cứu, không phải kết quả nghiên cứu.",
+      "expectedEn": "One self-contained paragraph that states project context, one research question, three to six inline sub-questions, source hierarchy, contradiction handling, gap round, completion bar, and per-finding URL/claim/decision-relevance requirements.",
+      "expectedVi": "Một đoạn tự đủ ngữ cảnh nêu bối cảnh dự án, một câu hỏi nghiên cứu, ba đến sáu câu hỏi con inline, thứ tự ưu tiên nguồn, cách xử lý mâu thuẫn, vòng tìm lỗ hổng, tiêu chuẩn hoàn tất và yêu cầu mỗi phát hiện có URL/claim/liên hệ với quyết định.",
       "recommended": true
     },
     {
-      "labelEn": "Architecture handoff",
-      "labelVi": "Handoff nghiên cứu kiến trúc",
+      "labelEn": "Deep-research handoff",
+      "labelVi": "Handoff cho nghiên cứu sâu",
       "command": "/ak:research-prompt compare queue options for our image rendering pipeline",
-      "whenEn": "Use when another researcher needs project context and decision criteria.",
-      "whenVi": "Dùng khi researcher khác cần bối cảnh dự án và tiêu chí quyết định.",
-      "expectedEn": "A brief that asks for source-backed findings, contradictions, gaps, and decision relevance.",
-      "expectedVi": "Brief yêu cầu phát hiện có nguồn, mâu thuẫn, lỗ hổng và liên hệ với quyết định."
+      "whenEn": "Use when a human or AI researcher needs enough context to proceed without asking follow-up questions.",
+      "whenVi": "Dùng khi người hoặc AI researcher cần đủ ngữ cảnh để làm tiếp mà không phải hỏi lại.",
+      "expectedEn": "A single-paragraph brief that frames the pipeline decision, separates include and avoid constraints, requires primary sources over weak signals, and asks for one detailed Markdown result with evidence-backed findings.",
+      "expectedVi": "Một brief một đoạn đóng khung quyết định về pipeline, tách rõ điều cần bao gồm và cần tránh, yêu cầu ưu tiên nguồn chính thống hơn tín hiệu yếu, và yêu cầu một kết quả Markdown chi tiết với phát hiện có bằng chứng."
+    },
+    {
+      "labelEn": "Source-backed product choice",
+      "labelVi": "Chọn sản phẩm dựa trên nguồn",
+      "command": "/ak:research-prompt evaluate whether Polar or Stripe is a better fit for our subscription launch",
+      "whenEn": "Use when the next step is to hand off a decision-focused research brief to a research runner such as ak-research.",
+      "whenVi": "Dùng khi bước tiếp theo là giao một brief nghiên cứu tập trung vào quyết định cho research runner như ak-research.",
+      "expectedEn": "Exactly one paragraph that gives a cold researcher the decision, audience, constraints, source expectations, conflict rules, and output format needed to produce decision-ready findings.",
+      "expectedVi": "Đúng một đoạn cung cấp cho researcher chưa biết ngữ cảnh quyết định cần hỗ trợ, độc giả, ràng buộc, kỳ vọng về nguồn, quy tắc xử lý xung đột và định dạng đầu ra để tạo phát hiện sẵn sàng cho quyết định."
     }
   ]
 };

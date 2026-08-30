@@ -27,6 +27,9 @@ const data: SkillInfographic = {
   corePrinciplesVi: ['Chỉ là vật liệu hỗ trợ dùng chung.', 'Không có chế độ chạy độc lập cho người dùng.', 'Contract của skill sở hữu quyết định hành vi.', 'Dùng references, scripts và resources để hỗ trợ triển khai.'],
   expertiseAreasEn: ['Shared conventions', 'Reusable references', 'Support scripts', 'Cross-skill resources'],
   expertiseAreasVi: ['Quy ước dùng chung', 'Tài liệu tham chiếu tái sử dụng', 'Script hỗ trợ', 'Tài nguyên liên skill'],
+  invocation: {
+    syntax: 'Loaded by other skills only; not a standalone user command',
+  },
 };
 
 export default data;

@@ -30,6 +30,19 @@ const data: SkillInfographic = {
     'Phát hiện phải hành động được và có dòng cụ thể.',
     'Kiểm accessibility và UX theo guideline nguồn, không theo gu cá nhân.',
   ],
+  invocation: {
+    syntax: '/ak:web-design-guidelines [file-or-pattern]',
+    arguments: [
+      {
+        token: '[file-or-pattern]',
+        titleEn: 'Files to review',
+        titleVi: 'File cần review',
+        descEn: 'One or more exact UI files or a narrow pattern to check. If omitted, the skill asks for the review scope instead of defaulting to the whole repository.',
+        descVi: 'Một hoặc nhiều file UI cụ thể hoặc pattern hẹp cần kiểm. Nếu bỏ trống, skill hỏi phạm vi review thay vì mặc định quét toàn bộ repository.',
+        exampleCommand: '/ak:web-design-guidelines "src/components/account-dialog.tsx src/styles/theme.css"',
+      },
+    ],
+  },
   skillStack: [
     { name: 'Web Interface Guidelines', type: 'tool' },
     { name: 'web_search', type: 'tool' },
@@ -46,8 +59,9 @@ const data: SkillInfographic = {
     descVi: 'Mỗi phát hiện trỏ tới mã UI vi phạm và theo đúng format output của guideline vừa lấy.',
   },
   promptExamples: [
-    { labelEn: 'Audit one component', labelVi: 'Audit một component', command: '/ak:web-design-guidelines src/components/AppHeader.tsx', whenEn: 'A specific UI file needs accessibility or UX review.', whenVi: 'Một file UI cụ thể cần review accessibility hoặc UX.', expectedEn: 'Fetches current guidelines, reviews that file, and emits terse file:line findings.', expectedVi: 'Lấy guideline hiện tại, review file đó và xuất phát hiện ngắn dạng file:line.', recommended: true },
-    { labelEn: 'Audit a pattern', labelVi: 'Audit theo pattern', command: '/ak:web-design-guidelines "src/app/**/*.tsx"', whenEn: 'A bounded route or component set needs guideline compliance review.', whenVi: 'Một nhóm route hoặc component có phạm vi rõ cần kiểm theo guideline.', expectedEn: 'Applies all fetched rules across the matched UI files without expanding beyond the pattern.', expectedVi: 'Áp toàn bộ luật đã fetch cho các file UI khớp pattern, không tự mở rộng ngoài pattern.' },
+    { labelEn: 'Audit one component', labelVi: 'Audit một component', command: '/ak:web-design-guidelines src/components/AppHeader.tsx', whenEn: 'A UI file needs an accessibility or UX guideline review.', whenVi: 'Một file UI cần được review theo guideline về accessibility hoặc UX.', expectedEn: 'Fetches the fresh Web Interface Guidelines, reads only the component file, applies every rule, and reports terse file:line findings.', expectedVi: 'Lấy Web Interface Guidelines mới nhất, chỉ đọc file component đó, áp toàn bộ luật và báo phát hiện ngắn dạng file:line.', recommended: true },
+    { labelEn: 'Audit a route set', labelVi: 'Audit nhóm route', command: '/ak:web-design-guidelines "src/app/**/*.tsx"', whenEn: 'A bounded route or component set needs Web Interface Guidelines compliance review.', whenVi: 'Một nhóm route hoặc component có phạm vi rõ cần review theo Web Interface Guidelines.', expectedEn: 'Fetches the guideline source, reads the matched UI files, checks all fetched rules, and keeps output limited to guideline-specified findings.', expectedVi: 'Lấy nguồn guideline, đọc các file UI khớp pattern, kiểm toàn bộ luật đã fetch và chỉ xuất phát hiện theo format guideline.' },
+    { labelEn: 'Ask for scope first', labelVi: 'Hỏi phạm vi trước', command: '/ak:web-design-guidelines', whenEn: 'You want a UI review but have not chosen the files or pattern yet.', whenVi: 'Bạn muốn review UI nhưng chưa chọn file hoặc pattern cần kiểm.', expectedEn: 'Asks which files or pattern to review before fetching the current guidelines and checking the selected UI code against them.', expectedVi: 'Hỏi cần review file hoặc pattern nào trước khi lấy guideline hiện tại và kiểm mã UI đã chọn theo các luật đó.' },
   ],
 };
 

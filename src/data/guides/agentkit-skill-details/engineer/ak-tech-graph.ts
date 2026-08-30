@@ -10,6 +10,20 @@ const data: SkillInfographic = {
     "taglineEn": "Generates and validates production-quality architecture, data flow, flowchart, sequence, agent/memory, UML, network, timeline, matrix, and concept diagrams across seven visual styles.",
     "taglineVi": "Sinh và kiểm tra sơ đồ chất lượng production cho kiến trúc, data flow, flowchart, sequence, agent/memory, UML, network, timeline, matrix và concept map với bảy phong cách hình ảnh."
   },
+  "invocation": {
+    "syntax": "/ak:tech-graph [diagram-type or system description]",
+    "arguments": [
+      {
+        "token": "[diagram-type or system description]",
+        "titleEn": "Diagram brief",
+        "titleVi": "Brief sơ đồ",
+        "descEn": "Names the desired diagram type or describes the system, flow, architecture, memory model, UML structure, network, timeline, matrix, or concept map to render as publish-grade SVG and PNG.",
+        "descVi": "Nêu loại sơ đồ mong muốn hoặc mô tả hệ thống, luồng, kiến trúc, mô hình memory, cấu trúc UML, network, timeline, matrix hoặc concept map cần render thành SVG và PNG chất lượng xuất bản.",
+        "required": false,
+        "exampleCommand": "/ak:tech-graph architecture diagram for the auth service"
+      }
+    ]
+  },
   "hardGate": {
     "type": "critical",
     "titleEn": "Validate SVG and inspect visuals",
@@ -127,8 +141,8 @@ const data: SkillInfographic = {
       "command": "/ak:tech-graph visualize agent memory write and read paths",
       "whenEn": "The diagram must separate memory writes, reads, retrieval, and context assembly.",
       "whenVi": "Sơ đồ cần tách đường ghi memory, đọc memory, retrieve và ghép context.",
-      "expectedEn": "Uses memory architecture rules and semantic arrows with a legend.",
-      "expectedVi": "Dùng luật kiến trúc memory và mũi tên có ngữ nghĩa kèm legend."
+      "expectedEn": "Uses memory architecture rules, semantic arrows, separated read/write paths, and a clear legend.",
+      "expectedVi": "Dùng luật kiến trúc memory, mũi tên có ngữ nghĩa, tách read/write path và legend rõ ràng."
     },
     {
       "labelEn": "Sequence diagram",
@@ -136,8 +150,8 @@ const data: SkillInfographic = {
       "command": "/ak:tech-graph sequence diagram for checkout authorization",
       "whenEn": "A time-ordered interaction between participants should be illustrated.",
       "whenVi": "Cần minh họa tương tác theo thời gian giữa các participant.",
-      "expectedEn": "Uses lifelines, activation boxes, messages, and optional loop/alt frames.",
-      "expectedVi": "Dùng lifeline, activation box, message và frame loop/alt khi cần."
+      "expectedEn": "Uses lifelines, activation boxes, ordered messages, and optional loop or alt frames when needed.",
+      "expectedVi": "Dùng lifeline, activation box, message có thứ tự và frame loop hoặc alt khi cần."
     }
   ]
 };

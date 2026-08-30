@@ -1,4 +1,22 @@
-import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-works';
+
+const invocation: SkillInvocation = {
+  syntax: '/ak:remotion [video or component]',
+  arguments: [
+    {
+      token: '[video or component]',
+      titleEn: 'Video or component brief',
+      titleVi: 'Brief video hoặc component',
+      descEn:
+        'Natural-language Remotion video, still, scene, chart, caption, media, 3D, or component task. Include composition ID, dimensions, fps, duration, assets, timing, acceptance frames, and whether final rendering is approved; the Skill has no top-level mode flags.',
+      descVi:
+        'Yêu cầu bằng ngôn ngữ tự nhiên cho video, still, scene, chart, caption, media, 3D hoặc component Remotion. Nêu composition ID, kích thước, fps, duration, asset, timing, frame nghiệm thu và final render đã được duyệt hay chưa; Skill không có mode flag cấp cao nhất.',
+      required: true,
+      exampleCommand:
+        '/ak:remotion "Create a 15-second 1080x1080 product update video at 30 fps using existing brand tokens and local assets; include captions, reduced-motion-safe transitions, deterministic tests at key frames, and stop before the final render"',
+    },
+  ],
+};
 
 const data: SkillInfographic = {
   "id": "ak-remotion",
@@ -105,27 +123,54 @@ const data: SkillInfographic = {
     {
       "name": "Three.js",
       "type": "tool"
+    },
+    {
+      "name": "React Three Fiber",
+      "type": "tool"
+    },
+    {
+      "name": "@remotion/captions",
+      "type": "tool"
     }
   ],
+  "invocation": invocation,
   "promptExamples": [
     {
-      "labelEn": "Animated explainer",
-      "labelVi": "Video giải thích có animation",
+      "labelEn": "Animated React video",
+      "labelVi": "Video React có animation",
       "command": "/ak:remotion onboarding explainer with captions",
-      "whenEn": "Use for React-authored video with scenes, captions, and timed motion.",
-      "whenVi": "Dùng cho video viết bằng React có nhiều cảnh, caption và chuyển động theo thời gian.",
-      "expectedEn": "Composition, sequencing, caption, timing, and asset guidance.",
-      "expectedVi": "Hướng dẫn về composition, sequencing, caption, timing và asset.",
+      "whenEn": "Use when a programmatic video should be authored as React components in Remotion.",
+      "whenVi": "Dùng khi cần viết video lập trình bằng React component trong Remotion.",
+      "expectedEn": "Rule-backed guidance for Remotion compositions, sequencing, timing curves, captions, assets, and render-ready scene structure.",
+      "expectedVi": "Hướng dẫn theo rule cho Remotion composition, sequencing, đường cong timing, caption, asset và cấu trúc scene sẵn sàng render.",
       "recommended": true
     },
     {
-      "labelEn": "Media-heavy composition",
-      "labelVi": "Composition nhiều media",
+      "labelEn": "Media metadata and trims",
+      "labelVi": "Metadata và cắt media",
       "command": "/ak:remotion product demo using video clips and audio",
-      "whenEn": "Use before mixing uploaded video, audio, duration metadata, and trimming.",
-      "whenVi": "Dùng trước khi trộn video tải lên, âm thanh, metadata thời lượng và trimming.",
-      "expectedEn": "Rules for decode checks, metadata, trim windows, and synchronized playback.",
-      "expectedVi": "Quy tắc kiểm tra decode, metadata, khoảng cắt và phát đồng bộ."
+      "whenEn": "Use before mixing uploaded video, audio, duration metadata, decode checks, and trims.",
+      "whenVi": "Dùng trước khi trộn video tải lên, audio, metadata thời lượng, kiểm tra decode và trimming.",
+      "expectedEn": "Applies the audio, video, Mediabunny metadata, can-decode, frame extraction, and trimming rules so playback stays synchronized.",
+      "expectedVi": "Áp dụng rule audio, video, metadata Mediabunny, can-decode, trích frame và trimming để playback luôn đồng bộ."
+    },
+    {
+      "labelEn": "Dynamic data render",
+      "labelVi": "Render theo dữ liệu động",
+      "command": "/ak:remotion data-driven sales chart video",
+      "whenEn": "Use when charts, dynamic props, measured text, or calculated composition metadata affect the render.",
+      "whenVi": "Dùng khi chart, prop động, đo text hoặc metadata composition được tính toán ảnh hưởng tới render.",
+      "expectedEn": "Combines chart, calculateMetadata, measuring-text, and DOM measurement rules to keep dynamic layouts sized and timed correctly.",
+      "expectedVi": "Kết hợp rule chart, calculateMetadata, đo text và đo DOM để layout động có kích thước và timing đúng."
+    },
+    {
+      "labelEn": "3D or effects sequence",
+      "labelVi": "Sequence 3D hoặc effect",
+      "command": "/ak:remotion hero video with 3D objects and blur effects",
+      "whenEn": "Use when Remotion scenes need Three.js, React Three Fiber, blur, wave, effect chains, or Tailwind styling.",
+      "whenVi": "Dùng khi scene Remotion cần Three.js, React Three Fiber, blur, wave, chuỗi effect hoặc styling Tailwind.",
+      "expectedEn": "Uses the 3D, effects, Tailwind, animation, and transition rules to place advanced visuals on a coherent Remotion timeline.",
+      "expectedVi": "Dùng rule 3D, effect, Tailwind, animation và transition để đặt visual nâng cao trên timeline Remotion mạch lạc."
     }
   ]
 };

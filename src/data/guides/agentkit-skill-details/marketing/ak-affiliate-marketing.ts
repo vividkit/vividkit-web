@@ -10,6 +10,13 @@ const data: SkillInfographic = {
     taglineEn: "Design and scale SaaS affiliate programs with commission strategy, platform selection, KOL/KOC recruiting, fraud controls, compliance, partner enablement, and ROI optimization.",
     taglineVi: "Thiết kế và scale chương trình affiliate SaaS với chiến lược hoa hồng, chọn nền tảng, tuyển KOL/KOC, kiểm soát fraud, compliance, enablement cho partner và tối ưu ROI.",
   },
+  hardGate: {
+    type: 'warning',
+    titleEn: "Partner economics create real obligations",
+    titleVi: "Kinh tế partner tạo nghĩa vụ thật",
+    contentEn: "Keep outreach, contracts, platform commitments, commission terms, payout holds, clawbacks, tax handling, disclosures, and partner termination behind finance, legal, privacy, brand, and program-owner approval.",
+    contentVi: "Giữ outreach, hợp đồng, cam kết platform, điều khoản hoa hồng, hold payout, clawback, xử lý thuế, disclosure và chấm dứt partner sau phê duyệt của finance, legal, privacy, brand và chủ chương trình.",
+  },
   processFlow: [
     { number: 1, titleEn: "Define program", titleVi: "Định nghĩa chương trình", descEn: "Choose launch, scale, enterprise, fraud-reduction, or ROI-optimization goal, then match the program shape to business stage and ICP.", descVi: "Chọn mục tiêu launch, scale, enterprise, giảm fraud hoặc tối ưu ROI, rồi khớp cấu trúc chương trình với giai đoạn kinh doanh và ICP." },
     { number: 2, titleEn: "Set commissions", titleVi: "Chốt hoa hồng", descEn: "Pick recurring, one-time, tiered, or hybrid compensation with rates, cookie windows, holds, and advancement rules.", descVi: "Chọn hoa hồng recurring, one-time, tiered hoặc hybrid cùng mức trả, cookie window, thời gian hold và luật lên tier." },

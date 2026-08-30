@@ -20,17 +20,17 @@ const data: SkillInfographic = {
     },
     {
       "number": 2,
+      "titleEn": "Diagnose setup",
+      "titleVi": "Chẩn đoán setup",
+      "descEn": "Prefer an existing html-video binary; otherwise use a source checkout without vendoring upstream into the user project, then run html_video doctor and list-engines before workflow work.",
+      "descVi": "Ưu tiên binary html-video sẵn có; nếu không có thì dùng source checkout mà không vendor upstream vào project user, rồi chạy html_video doctor và list-engines trước workflow."
+    },
+    {
+      "number": 3,
       "titleEn": "Pin brief",
       "titleVi": "Khóa brief",
       "descEn": "Before creating anything, capture audience, goal, duration, aspect ratio, assets or URLs, template preference, output path, and draft-versus-polished target.",
       "descVi": "Trước khi tạo, chốt audience, goal, duration, aspect ratio, asset hoặc URL, template mong muốn, output path và mức draft hay polished."
-    },
-    {
-      "number": 3,
-      "titleEn": "Diagnose setup",
-      "titleVi": "Chẩn đoán setup",
-      "descEn": "Prefer a global html-video binary; otherwise use a source checkout without vendoring upstream into the user project, then run html_video doctor and list-engines.",
-      "descVi": "Ưu tiên binary html-video global; nếu không có thì dùng source checkout mà không vendor upstream vào project user, rồi chạy html_video doctor và list-engines."
     },
     {
       "number": 4,
@@ -72,19 +72,33 @@ const data: SkillInfographic = {
     "type": "warning",
     "titleEn": "MP4 is not complete until ffprobe passes",
     "titleVi": "MP4 chưa hoàn tất nếu ffprobe chưa đạt",
-    "contentEn": "The skill’s proof requires ffprobe to report nonzero duration and expected dimensions; do not treat a render command alone as completion.",
-    "contentVi": "Bằng chứng hoàn tất cần ffprobe báo duration khác 0 và dimension đúng; chỉ chạy lệnh render chưa đủ để coi là xong."
+    "contentEn": "The skill’s proof requires ffprobe to report nonzero duration and expected video dimensions; do not treat a render command alone as completion.",
+    "contentVi": "Bằng chứng hoàn tất cần ffprobe báo duration khác 0 và kích thước video đúng; chỉ chạy lệnh render chưa đủ để coi là xong."
   },
   "corePrinciplesEn": [
-    "HTML-first video work starts with a pinned brief, not an immediate render.",
+    "Run html_video diagnostics before workflow work; creation still starts with a pinned brief, not an immediate render.",
     "Inspect templates before choosing; empty variable schemas require Studio or project editing.",
     "Do not commit large generated MP4 files unless the user explicitly wants them versioned."
   ],
   "corePrinciplesVi": [
-    "Video HTML-first bắt đầu bằng brief đã chốt, không render ngay.",
+    "Chạy diagnostics html_video trước workflow; phần tạo vẫn bắt đầu bằng brief đã chốt, không render ngay.",
     "Inspect template trước khi chọn; schema biến rỗng cần Studio hoặc sửa project.",
     "Không commit MP4 lớn sinh ra trừ khi user muốn version artifact đó."
   ],
+  "invocation": {
+    "syntax": "/ak:html-video [video brief, source URL, repo, template id, or project id]",
+    "arguments": [
+      {
+        "token": "[video brief, source URL, repo, template id, or project id]",
+        "titleEn": "Video request or source",
+        "titleVi": "Yêu cầu video hoặc nguồn",
+        "descEn": "Natural-language brief, source URL, repository, template ID, or existing project ID/path. Include audience, goal, duration, aspect ratio, assets, template preference, output path, and whether the result is a draft proof or polished export.",
+        "descVi": "Brief bằng ngôn ngữ tự nhiên, URL nguồn, repository, template ID hoặc project ID/path hiện có. Nêu audience, goal, duration, aspect ratio, asset, template preference, output path và kết quả là draft proof hay polished export.",
+        "required": true,
+        "exampleCommand": "/ak:html-video \"Create a 12-second 16:9 draft product promo from ./assets/cli-screenshot.png and the headline 'Ship with evidence'; use a discovered template, preview before rendering, write ./artifacts/ship-with-evidence.mp4, make no network asset requests, and do not commit or publish the video\""
+      }
+    ]
+  },
   "expertiseAreasEn": [
     "Template discovery",
     "HTML/CSS/JS video projects",
@@ -105,41 +119,67 @@ const data: SkillInfographic = {
       "type": "tool"
     },
     {
-      "name": "search-templates",
+      "name": "list-engines",
       "type": "tool"
     },
     {
-      "name": "project-preview",
+      "name": "search-templates / inspect-template",
       "type": "tool"
     },
     {
-      "name": "studio",
+      "name": "project-create / project-set-template",
       "type": "tool"
     },
     {
-      "name": "ffprobe",
+      "name": "project-add-asset / project-set-vars",
+      "type": "tool"
+    },
+    {
+      "name": "project-preview / studio",
+      "type": "tool"
+    },
+    {
+      "name": "project-render / ffprobe",
       "type": "tool"
     }
   ],
   "promptExamples": [
     {
-      "labelEn": "Product promo brief",
-      "labelVi": "Brief promo sản phẩm",
+      "labelEn": "Template product promo",
+      "labelVi": "Promo sản phẩm bằng template",
       "command": "/ak:html-video short product promo for a developer tool, 16:9, draft proof to ./assets/videos/agentkit-promo.mp4",
-      "whenEn": "You need a local MP4 from an HTML-video template.",
-      "whenVi": "Khi cần MP4 local từ template html-video.",
-      "expectedEn": "Pins the brief, diagnoses setup, searches and inspects templates, previews, renders, and verifies the MP4.",
-      "expectedVi": "Chốt brief, chẩn đoán setup, tìm/inspect template, preview, render và kiểm MP4.",
+      "whenEn": "Use when a product or feature needs a local MP4 built from an HTML/CSS/JS template rather than a Remotion composition.",
+      "whenVi": "Dùng khi sản phẩm hoặc tính năng cần MP4 local từ template HTML/CSS/JS thay vì composition Remotion.",
+      "expectedEn": "Runs html_video diagnostics, pins the brief, searches and inspects templates, creates a project, previews html_path, renders to the requested MP4, then verifies duration and dimensions with ffprobe.",
+      "expectedVi": "Chạy diagnostics html_video, chốt brief, tìm và inspect template, tạo project, preview html_path, render ra MP4 đã yêu cầu, rồi kiểm duration và dimensions bằng ffprobe.",
       "recommended": true
     },
     {
-      "labelEn": "Use source URL",
-      "labelVi": "Dùng URL nguồn",
+      "labelEn": "Explainer from URL",
+      "labelVi": "Explainer từ URL",
       "command": "/ak:html-video create a 30 second explainer from https://example.com/article using a clean social clip template",
-      "whenEn": "The video should summarize a source URL into a local HTML-first clip.",
-      "whenVi": "Khi video cần tóm tắt URL nguồn thành clip HTML-first local.",
-      "expectedEn": "Treats the URL as source material, selects a template, and keeps generated scratch/output paths organized.",
-      "expectedVi": "Xem URL là tư liệu nguồn, chọn template và tổ chức path scratch/output rõ ràng."
+      "whenEn": "Use when a source URL should become a local HTML-first explainer or social clip rendered through Chromium and ffmpeg.",
+      "whenVi": "Dùng khi một URL nguồn cần thành explainer hoặc social clip HTML-first local được render qua Chromium và ffmpeg.",
+      "expectedEn": "Treats the URL as source material, selects and inspects a suitable template, organizes scratch and output paths, previews the HTML, renders an MP4, and checks the ffprobe proof.",
+      "expectedVi": "Xem URL là tư liệu nguồn, chọn và inspect template phù hợp, tổ chức path scratch/output, preview HTML, render MP4 và kiểm proof ffprobe."
+    },
+    {
+      "labelEn": "Studio customization",
+      "labelVi": "Tùy chỉnh bằng Studio",
+      "command": "/ak:html-video customize an existing project in Studio for a square launch teaser and export the finished MP4",
+      "whenEn": "Use when template variables are missing or layout/copy needs interactive Studio tuning before rendering.",
+      "whenVi": "Dùng khi template không có biến hoặc layout/copy cần tinh chỉnh tương tác trong Studio trước khi render.",
+      "expectedEn": "Opens the preview or Studio flow, uses Studio for rewrite and layout tuning, exports or renders the finished project, and reports the verified MP4 path with ffprobe duration and dimensions.",
+      "expectedVi": "Mở preview hoặc Studio, dùng Studio để chỉnh rewrite và layout, export hoặc render project hoàn tất, rồi báo path MP4 đã kiểm cùng duration và dimensions từ ffprobe."
+    },
+    {
+      "labelEn": "Existing project render",
+      "labelVi": "Render project sẵn có",
+      "command": "/ak:html-video render project prj_123 to ./plans/launch/visuals/launch-proof.mp4 with stream progress",
+      "whenEn": "Use when an html-video project already exists and the task is to render it with an explicit output path.",
+      "whenVi": "Dùng khi project html-video đã tồn tại và nhiệm vụ là render với output path rõ ràng.",
+      "expectedEn": "Shows or confirms the project and template, runs project-render with stream progress and the requested output path, then treats ffprobe duration and expected dimensions as the completion proof.",
+      "expectedVi": "Hiển thị hoặc xác nhận project và template, chạy project-render với stream progress và output path đã yêu cầu, rồi dùng duration và dimensions đúng từ ffprobe làm proof hoàn tất."
     }
   ],
   "reportOutput": {

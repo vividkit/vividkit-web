@@ -1,4 +1,19 @@
-import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-works';
+
+const invocation: SkillInvocation = {
+  syntax: '/ak:document-skills "<document task>"',
+  arguments: [
+    {
+      token: '"<document task>"',
+      titleEn: 'Document task',
+      titleVi: 'Tác vụ tài liệu',
+      descEn: 'Natural-language request naming the source file, target output, operation, preservation needs, and verification standard. The Skill declares no separate positional arguments or default output directory.',
+      descVi: 'Yêu cầu bằng ngôn ngữ tự nhiên nêu source file, output đích, thao tác, phần cần giữ và chuẩn xác minh. Skill không khai báo argument vị trí riêng hay thư mục output mặc định.',
+      required: true,
+      exampleCommand: '/ak:document-skills "Create board-report.xlsx from approved-metrics.csv with formulas for totals and growth, preserve source precision, add a Sources sheet, recalculate with LibreOffice, scan every formula result for errors, and save to ./deliverables without changing the CSV."',
+    },
+  ],
+};
 
 const data: SkillInfographic = {
   id: "ak-document-skills",
@@ -52,15 +67,17 @@ const data: SkillInfographic = {
     { flag: "pptx", modeEn: "Slides", modeVi: "Slide", research: "Load pptx resources", redTeam: "Check hierarchy and layout", validation: "Review generated deck", cookFlag: "pptx" },
     { flag: "xlsx", modeEn: "Spreadsheet", modeVi: "Spreadsheet", research: "Load xlsx resources", redTeam: "Check sheets/tables/formulas", validation: "Inspect workbook data", cookFlag: "xlsx" },
   ],
+  invocation,
   skillStack: [
     { name: "references/", type: "tool" },
     { name: "scripts/", type: "tool" },
     { name: "resources/", type: "tool" },
   ],
   promptExamples: [
-    { labelEn: "Edit Word doc", labelVi: "Sửa tài liệu Word", command: "/ak:document-skills update the headings and summary in this docx", whenEn: "A Word document needs targeted content or structure updates.", whenVi: "Tài liệu Word cần cập nhật nội dung hoặc cấu trúc có mục tiêu.", expectedEn: "Loads docx material, preserves document structure, edits the file, and verifies the result.", expectedVi: "Nạp vật liệu docx, giữ cấu trúc tài liệu, sửa file và xác minh kết quả.", recommended: true },
-    { labelEn: "Extract PDF", labelVi: "Trích xuất PDF", command: "/ak:document-skills read this pdf and extract the form fields", whenEn: "A PDF needs structured reading rather than plain prose summary.", whenVi: "PDF cần đọc có cấu trúc thay vì chỉ tóm tắt văn bản.", expectedEn: "Inspects the PDF, extracts requested structure, and reports extraction limits if present.", expectedVi: "Kiểm tra PDF, trích cấu trúc được yêu cầu và báo giới hạn trích xuất nếu có." },
-    { labelEn: "Build spreadsheet", labelVi: "Tạo spreadsheet", command: "/ak:document-skills create an xlsx budget table from these rows", whenEn: "Rows, forms, or calculations need a usable workbook.", whenVi: "Các dòng dữ liệu, form hoặc phép tính cần thành workbook dùng được.", expectedEn: "Creates an xlsx artifact with the requested tables or sheets and verifies cell placement.", expectedVi: "Tạo artifact xlsx với bảng hoặc sheet được yêu cầu và xác minh vị trí ô." },
+    { labelEn: "Create spreadsheet", labelVi: "Tạo spreadsheet", command: "/ak:document-skills \"Create board-report.xlsx from approved-metrics.csv with formulas for totals and growth, add a Sources sheet, and verify the workbook before returning the output path.\"", whenEn: "Use when tabular source data needs to become a real XLSX workbook rather than a prose table.", whenVi: "Dùng khi dữ liệu dạng bảng cần thành workbook XLSX thật thay vì bảng văn bản.", expectedEn: "Classifies the request as xlsx work, uses the bundled document material for spreadsheets, creates the workbook artifact, and inspects formulas, sheets, and cell placement before delivery.", expectedVi: "Phân loại yêu cầu là công việc xlsx, dùng tài liệu document đi kèm cho spreadsheet, tạo workbook artifact và kiểm tra formula, sheet cùng vị trí ô trước khi bàn giao.", recommended: true },
+    { labelEn: "Edit Word document", labelVi: "Sửa tài liệu Word", command: "/ak:document-skills \"Update proposal.docx with the approved executive summary, preserve existing headings and tables, and return a verified edited copy instead of overwriting the original.\"", whenEn: "Use when a DOCX needs targeted content or structure edits while retaining Office document semantics.", whenVi: "Dùng khi DOCX cần sửa nội dung hoặc cấu trúc có mục tiêu mà vẫn giữ ngữ nghĩa tài liệu Office.", expectedEn: "Routes the task to docx handling, inspects the existing document structure, applies the requested edits to a separate artifact, and verifies that headings, tables, and requested content survived.", expectedVi: "Route tác vụ sang xử lý docx, kiểm tra cấu trúc tài liệu hiện có, áp dụng chỉnh sửa vào artifact riêng và xác minh heading, bảng cùng nội dung yêu cầu vẫn được giữ." },
+    { labelEn: "Read PDF form", labelVi: "Đọc form PDF", command: "/ak:document-skills \"Read intake-form.pdf, extract its form fields and table content, and report any extraction limits or fields that require visual inspection.\"", whenEn: "Use when a PDF needs structured extraction, form-field reading, or artifact inspection instead of a plain summary.", whenVi: "Dùng khi PDF cần trích xuất có cấu trúc, đọc field biểu mẫu hoặc kiểm tra artifact thay vì chỉ tóm tắt.", expectedEn: "Uses the PDF route, inspects the file for structured content and form fields, extracts the requested data, and names any conversion or inspection limits in the result.", expectedVi: "Dùng route PDF, kiểm tra file để tìm nội dung có cấu trúc và field biểu mẫu, trích dữ liệu được yêu cầu rồi nêu mọi giới hạn chuyển đổi hoặc kiểm tra trong kết quả." },
+    { labelEn: "Build slide deck", labelVi: "Tạo slide deck", command: "/ak:document-skills \"Create a 10-slide project-update.pptx from outline.md, use the supplied template, keep speaker notes where provided, and verify the deck layout before delivery.\"", whenEn: "Use when a PowerPoint deliverable must be created or updated as a PPTX artifact with slide structure.", whenVi: "Dùng khi cần tạo hoặc cập nhật deliverable PowerPoint dưới dạng artifact PPTX có cấu trúc slide.", expectedEn: "Routes the request to pptx handling, uses the bundled document guidance for slides, creates the deck artifact, and reviews slide structure, notes, and layout surface before returning it.", expectedVi: "Route yêu cầu sang xử lý pptx, dùng hướng dẫn document đi kèm cho slide, tạo deck artifact và review cấu trúc slide, note cùng bề mặt layout trước khi trả file." },
   ],
 };
 

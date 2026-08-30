@@ -1,4 +1,22 @@
-import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-works';
+
+const invocation: SkillInvocation = {
+  syntax: '/ak:ui-styling [component or layout]',
+  arguments: [
+    {
+      token: '[component or layout]',
+      titleEn: 'UI surface or styling request',
+      titleVi: 'Bề mặt UI hoặc yêu cầu styling',
+      descEn:
+        'Component, page, layout, visual artifact, theme, token, responsive behavior, accessibility state, and file boundary to implement or refine. Include protected files, package-change approval, target breakpoints, light/dark expectations, and the checks that prove the UI works.',
+      descVi:
+        'Component, page, layout, visual artifact, theme, token, hành vi responsive, trạng thái accessibility và ranh giới tệp cần triển khai hoặc tinh chỉnh. Nêu tệp được bảo vệ, quyền đổi package, breakpoint mục tiêu, kỳ vọng light/dark và check chứng minh UI hoạt động.',
+      required: true,
+      exampleCommand:
+        '/ak:ui-styling "Add an accessible account dialog using existing tokens; preserve components.json, support keyboard focus and reduced motion, test light/dark at mobile and desktop, and do not overwrite existing UI files"',
+    },
+  ],
+};
 
 const data: SkillInfographic = {
   "id": "ak-ui-styling",
@@ -100,34 +118,44 @@ const data: SkillInfographic = {
     "form",
     "hệ visual"
   ],
+  "invocation": invocation,
   "promptExamples": [
     {
-      "labelEn": "Accessible form",
-      "labelVi": "Form accessible",
-      "command": "/ak:ui-styling login form with validation and dark mode",
-      "whenEn": "A React form needs shadcn components, Tailwind layout, and accessibility patterns.",
-      "whenVi": "Một form React cần component shadcn, layout Tailwind và mẫu accessibility.",
-      "expectedEn": "Uses Form/Input/Button composition, validation messages, focus management, responsive spacing, and dark classes.",
-      "expectedVi": "Dùng Form/Input/Button, thông báo validation, quản lý focus, spacing responsive và class dark.",
+      "labelEn": "Accessible dialog form",
+      "labelVi": "Form dialog accessible",
+      "command": "/ak:ui-styling build an accessible account dialog form with validation, focus return, dark mode, and mobile layout",
+      "whenEn": "A React UI needs shadcn/Radix form and dialog primitives styled with Tailwind utilities.",
+      "whenVi": "UI React cần primitive form và dialog shadcn/Radix được style bằng utility Tailwind.",
+      "expectedEn": "Selects shadcn components, composes Form/Input/Button/Dialog patterns, adds validation messages, keyboard focus behavior, responsive spacing, and dark-mode classes.",
+      "expectedVi": "Chọn component shadcn, ghép mẫu Form/Input/Button/Dialog, thêm thông báo validation, hành vi focus bằng bàn phím, spacing responsive và class dark mode.",
       "recommended": true
     },
     {
-      "labelEn": "Theme system",
-      "labelVi": "Hệ theme",
-      "command": "/ak:ui-styling dashboard theme tokens with next-themes",
-      "whenEn": "The UI needs consistent colors, typography, variants, and light/dark behavior.",
-      "whenVi": "UI cần màu, typography, variant và hành vi light/dark nhất quán.",
-      "expectedEn": "Defines CSS variables, semantic tokens, theme toggle behavior, and component variants.",
-      "expectedVi": "Định nghĩa CSS variable, token ngữ nghĩa, hành vi đổi theme và variant component."
+      "labelEn": "Theme tokens",
+      "labelVi": "Token theme",
+      "command": "/ak:ui-styling customize dashboard theme tokens, color palette, typography, component variants, and a theme toggle",
+      "whenEn": "An interface needs consistent theme customization across colors, fonts, variants, and light/dark behavior.",
+      "whenVi": "Giao diện cần tùy biến theme nhất quán cho màu, font, variant và hành vi light/dark.",
+      "expectedEn": "Uses the theme guidance to define CSS variables and semantic tokens, wire dark-mode behavior, and keep component variants aligned with the design system.",
+      "expectedVi": "Dùng hướng dẫn theme để định nghĩa CSS variable và token ngữ nghĩa, nối hành vi dark mode và giữ variant component khớp design system."
     },
     {
-      "labelEn": "Responsive layout",
-      "labelVi": "Layout responsive",
-      "command": "/ak:ui-styling responsive analytics cards and data table",
-      "whenEn": "A page needs mobile-first grids, cards, tables, and visual hierarchy.",
-      "whenVi": "Một trang cần grid mobile-first, card, table và phân cấp thị giác.",
-      "expectedEn": "Builds composable cards/tables with Tailwind breakpoints and accessibility-friendly structure.",
-      "expectedVi": "Dựng card/table ghép được với breakpoint Tailwind và cấu trúc thân thiện accessibility."
+      "labelEn": "Responsive data UI",
+      "labelVi": "UI dữ liệu responsive",
+      "command": "/ak:ui-styling create responsive analytics cards, a data table, loading states, and command palette styling",
+      "whenEn": "A data-heavy screen needs mobile-first Tailwind layout, shadcn display components, and visual hierarchy.",
+      "whenVi": "Màn hình nhiều dữ liệu cần layout Tailwind mobile-first, component hiển thị shadcn và phân cấp thị giác.",
+      "expectedEn": "Builds cards, tables, and command patterns from composable primitives with Tailwind breakpoints, state styling, accessible structure, and dark-mode parity.",
+      "expectedVi": "Dựng card, table và command pattern từ primitive ghép được với breakpoint Tailwind, styling theo state, cấu trúc accessible và dark mode tương đương."
+    },
+    {
+      "labelEn": "Canvas visual system",
+      "labelVi": "Hệ visual canvas",
+      "command": "/ak:ui-styling design a canvas-based launch poster system with minimal text, refined composition, and reusable visual tokens",
+      "whenEn": "The task asks for a polished visual design, poster, brand material, or prototype with immediate visual feedback.",
+      "whenVi": "Task cần visual design, poster, brand material hoặc prototype polished với phản hồi visual nhanh.",
+      "expectedEn": "Applies the canvas design-system references for philosophy-driven composition, color and spatial systems, minimal text, and presentation-quality visual output.",
+      "expectedVi": "Áp dụng reference canvas design-system cho bố cục theo triết lý, hệ màu và không gian, ít chữ và output visual chất lượng trình bày."
     }
   ],
   "skillStack": [

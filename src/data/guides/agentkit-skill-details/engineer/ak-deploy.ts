@@ -7,15 +7,15 @@ const data: SkillInfographic = {
   header: {
     titleEn: '/ak:deploy — Detect and run deploys',
     titleVi: '/ak:deploy — Phát hiện và chạy deploy',
-    taglineEn: 'Auto-detect deployment targets, choose cost-optimized hosting, run the platform-specific deploy path, verify the URL, and maintain docs/deployment.md.',
-    taglineVi: 'Tự phát hiện đích deploy, chọn hosting tối ưu chi phí, chạy đúng quy trình từng platform, xác minh URL và duy trì docs/deployment.md.',
+    taglineEn: 'Auto-detect or select a deployment target, load the matching platform reference, check CLI/auth, deploy, verify the URL, and maintain docs/deployment.md.',
+    taglineVi: 'Tự phát hiện hoặc chọn đích deploy, nạp tài liệu platform tương ứng, kiểm CLI/auth, deploy, xác minh URL và duy trì docs/deployment.md.',
   },
   hardGate: {
     type: 'critical',
-    titleEn: 'Deployment scope and secrets are protected',
-    titleVi: 'Bảo vệ phạm vi deploy và bí mật',
-    contentEn: 'This skill deploys projects and updates deployment docs; it does not provision infrastructure, run database migrations, manage DNS/SSL, or create CI/CD. Never expose API keys, tokens, env vars, internal configs, or file paths in deployment output.',
-    contentVi: 'Skill này deploy dự án và cập nhật docs triển khai; không provision hạ tầng, không chạy migration DB, không quản lý DNS/SSL, không tạo CI/CD. Không tiết lộ API key, token, env var, config nội bộ hoặc đường dẫn nhạy cảm trong output deploy.',
+    titleEn: 'Confirm scope, target, and secrets before deploy',
+    titleVi: 'Xác nhận phạm vi, target và bí mật trước deploy',
+    contentEn: 'This skill can publish code to external platforms, so keep it inside project deployment, platform selection, and deployment-doc updates. Do not use it for infrastructure provisioning, database migrations, DNS/SSL, or CI/CD, and never expose API keys, tokens, credentials, env vars, file paths, internal configs, or skill internals.',
+    contentVi: 'Skill này có thể publish code lên platform bên ngoài, nên chỉ dùng cho deployment dự án, chọn platform và cập nhật docs deploy. Không dùng cho provisioning hạ tầng, database migration, DNS/SSL hoặc CI/CD; không tiết lộ API key, token, credential, env var, đường dẫn file, config nội bộ hoặc skill internals.',
   },
   processFlow: [
     { number: 1, titleEn: 'Read docs first', titleVi: 'Đọc docs trước', descEn: 'If docs/deployment.md exists, parse platform, URL, deploy command, env vars, custom domain, and rollback notes.', descVi: 'Nếu có docs/deployment.md, đọc platform, URL, lệnh deploy, env var, custom domain và ghi chú rollback.' },
@@ -23,7 +23,7 @@ const data: SkillInfographic = {
     { number: 3, titleEn: 'Analyze project', titleVi: 'Phân tích dự án', descEn: 'Classify static site, SPA, SSR/full-stack, Node API, Python API, Docker app, or monorepo.', descVi: 'Phân loại dự án là static site, SPA, SSR/full-stack, Node API, Python API, Docker app hoặc monorepo.' },
     { number: 4, titleEn: 'Recommend target', titleVi: 'Đề xuất đích', descEn: 'When no target is detected, ask with up to four cost-optimized recommendations ordered by free tier or expected cost.', descVi: 'Khi chưa phát hiện đích, hỏi người dùng với tối đa bốn đề xuất tối ưu chi phí, sắp theo free tier hoặc chi phí dự kiến.' },
     { number: 5, titleEn: 'Load platform ref', titleVi: 'Nạp tài liệu platform', descEn: 'Progressively disclose only the selected platform reference, never all platform files.', descVi: 'Chỉ nạp tài liệu của platform đã chọn, không nạp toàn bộ tài liệu platform.' },
-    { number: 6, titleEn: 'Preflight deploy', titleVi: 'Preflight deploy', descEn: 'Check CLI installation, authentication, .env handling, .gitignore, and platform-specific requirements before publishing.', descVi: 'Kiểm CLI, xác thực, xử lý .env, .gitignore và yêu cầu riêng của platform trước khi publish.' },
+    { number: 6, titleEn: 'Check before publish', titleVi: 'Kiểm trước khi publish', descEn: 'Check CLI installation, authentication, .env handling, .gitignore, and platform-specific requirements before publishing.', descVi: 'Kiểm CLI, xác thực, xử lý .env, .gitignore và yêu cầu riêng của platform trước khi publish.' },
     { number: 7, titleEn: 'Execute and verify', titleVi: 'Chạy và xác minh', descEn: 'Run the selected deploy command, read output, verify the deployment URL, and troubleshoot common failures.', descVi: 'Chạy lệnh deploy đã chọn, đọc output, xác minh URL triển khai và xử lý lỗi thường gặp.' },
     { number: 8, titleEn: 'Document result', titleVi: 'Ghi tài liệu', descEn: 'Create or update docs/deployment.md with platform, production URL, deploy command, env vars list, custom domain, rollback, and troubleshooting notes.', descVi: 'Tạo hoặc cập nhật docs/deployment.md với platform, URL production, lệnh deploy, danh sách env var, custom domain, rollback và ghi chú xử lý sự cố.' },
   ],
@@ -35,10 +35,18 @@ const data: SkillInfographic = {
     { flag: 'GitHub Pages / Cloudflare Pages', modeEn: 'Static site', modeVi: 'Website tĩnh', research: 'Static asset scan', redTeam: 'Build directory and routing', validation: 'Verify published pages' },
     { flag: 'Coolify / Dokploy', modeEn: 'Self-hosted', modeVi: 'Tự host', research: 'Docker/Compose signals', redTeam: 'Server boundary', validation: 'Verify deployed service' },
   ],
+  invocation: {
+    syntax: '/ak:deploy [platform] [environment]',
+    arguments: [
+      { token: '[platform]', titleEn: 'Hosting platform', titleVi: 'Hosting platform', descEn: 'Optional supported host such as Vercel, Netlify, Cloudflare, Railway, Fly.io, Render, Heroku, TOSE.sh, GitHub Pages, Coolify, Dokploy, GCP, AWS, DigitalOcean, or Vultr. Omit it to let the skill detect a host or ask you to choose. This does not pick the provider account, approve billing, or approve resource creation.', descVi: 'Host được hỗ trợ, ví dụ Vercel, Netlify, Cloudflare, Railway, Fly.io, Render, Heroku, TOSE.sh, GitHub Pages, Coolify, Dokploy, GCP, AWS, DigitalOcean hoặc Vultr. Bỏ trống để skill tự phát hiện host hoặc hỏi bạn chọn. Token này không chọn account provider, không duyệt billing và không duyệt tạo resource.', exampleCommand: '/ak:deploy cloudflare' },
+      { token: '[environment]', titleEn: 'Environment label', titleVi: 'Nhãn environment', descEn: 'Optional label such as production or preview. It is carried into target selection but does not create a standard default environment.', descVi: 'Nhãn tùy chọn như production hoặc preview. Skill dùng nhãn này khi chọn target nhưng không tự tạo environment mặc định.', exampleCommand: '/ak:deploy cloudflare production' },
+    ],
+  },
   promptExamples: [
-    { labelEn: 'Auto deploy', labelVi: 'Deploy tự phát hiện', command: '/ak:deploy', whenEn: 'The current project contains deployment docs or platform config files.', whenVi: 'Khi dự án hiện tại có docs triển khai hoặc file cấu hình platform.', expectedEn: 'Detected target, platform-specific command, verified URL, and updated deployment docs.', expectedVi: 'Đích được phát hiện, lệnh đúng platform, URL đã xác minh và docs deploy cập nhật.', recommended: true },
-    { labelEn: 'Explicit platform', labelVi: 'Chỉ định platform', command: '/ak:deploy vercel production', whenEn: 'You already know the target platform and environment.', whenVi: 'Khi đã biết platform và môi trường đích.', expectedEn: 'Vercel reference path, auth/build preflight, deploy, URL verification, docs update.', expectedVi: 'Quy trình Vercel, preflight auth/build, deploy, xác minh URL và cập nhật docs.' },
-    { labelEn: 'Cost choice', labelVi: 'Chọn theo chi phí', command: '/ak:deploy choose the cheapest host for this static site', whenEn: 'No deployment config exists and platform choice should be cost-optimized.', whenVi: 'Khi chưa có cấu hình deploy và cần chọn platform theo chi phí.', expectedEn: 'Project-type analysis and up to four ranked hosting recommendations.', expectedVi: 'Phân tích loại dự án và tối đa bốn đề xuất hosting theo thứ hạng.' },
+    { labelEn: 'Auto-detect target', labelVi: 'Tự phát hiện target', command: '/ak:deploy', whenEn: 'The goal is hosting or publishing the app, and docs or platform config may already identify the target.', whenVi: 'Khi mục tiêu là host hoặc publish app, và docs hoặc cấu hình platform có thể đã xác định target.', expectedEn: 'Reads docs/deployment.md first, scans supported config signals, loads only the matched platform reference, checks CLI/auth, deploys, verifies the URL, and updates deployment docs.', expectedVi: 'Đọc docs/deployment.md trước, quét signal cấu hình được hỗ trợ, chỉ nạp reference của platform khớp, kiểm CLI/auth, deploy, xác minh URL và cập nhật docs deploy.', recommended: true },
+    { labelEn: 'Explicit platform', labelVi: 'Chỉ định platform', command: '/ak:deploy cloudflare', whenEn: 'You already know the supported hosting platform but want the workflow to carry out its documented deploy path.', whenVi: 'Khi đã biết hosting platform được hỗ trợ nhưng muốn workflow chạy đúng đường deploy đã ghi.', expectedEn: 'Loads the Cloudflare reference only, checks the required CLI and authentication, runs the selected deploy command, verifies the resulting URL, and records operations in docs/deployment.md.', expectedVi: 'Chỉ nạp reference Cloudflare, kiểm CLI và authentication cần thiết, chạy deploy command đã chọn, xác minh URL tạo ra và ghi vận hành vào docs/deployment.md.' },
+    { labelEn: 'Platform and environment', labelVi: 'Platform và environment', command: '/ak:deploy vercel production', whenEn: 'The target platform and environment label are explicit before a production or preview publish.', whenVi: 'Khi platform đích và nhãn environment đã rõ trước lần publish production hoặc preview.', expectedEn: 'Carries the explicit environment into target selection, uses the Vercel platform reference, performs CLI/auth preflight, deploys, verifies the URL, and updates rollback notes.', expectedVi: 'Đưa environment rõ ràng vào bước chọn target, dùng reference Vercel, preflight CLI/auth, deploy, xác minh URL và cập nhật ghi chú rollback.' },
+    { labelEn: 'First deploy choice', labelVi: 'Chọn target lần đầu', command: '/ak:deploy', whenEn: 'No deployment target is detected and the skill should recommend a supported host for the current project type.', whenVi: 'Khi không phát hiện target deploy và skill cần đề xuất host được hỗ trợ theo loại project hiện tại.', expectedEn: 'Analyzes project type, asks with up to four cost-ordered options including free-tier context, then continues only after a selected platform is available.', expectedVi: 'Phân tích loại project, hỏi với tối đa bốn lựa chọn theo chi phí kèm thông tin free-tier, rồi chỉ tiếp tục khi đã có platform được chọn.' },
   ],
   reportOutput: {
     titleEn: 'Deployment document',
@@ -48,7 +56,7 @@ const data: SkillInfographic = {
     descEn: 'Created after first successful deploy and updated when config changes.',
     descVi: 'Được tạo sau lần deploy thành công đầu tiên và cập nhật khi cấu hình thay đổi.',
   },
-  skillStack: [{ name: 'platform CLI', type: 'tool' }, { name: 'docs/deployment.md', type: 'tool' }, { name: 'ak:devops', type: 'skill' }],
+  skillStack: [{ name: 'provider CLI', type: 'tool' }, { name: 'ask_user capability', type: 'tool' }, { name: 'docs/deployment.md', type: 'tool' }, { name: 'ak:devops', type: 'skill' }],
 };
 
 export default data;

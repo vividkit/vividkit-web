@@ -10,6 +10,13 @@ const data: SkillInfographic = {
     "taglineEn": "Repurpose YouTube videos into SEO blogs, visual infographics, and social posts with VidCap captions, downloads, summaries, and comment analysis.",
     "taglineVi": "Tái sử dụng video YouTube thành blog SEO, infographic và bài social bằng VidCap captions, download, summary và phân tích comment."
   },
+  "hardGate": {
+    "type": "warning",
+    "titleEn": "A source URL is not permission",
+    "titleVi": "URL nguồn không phải quyền sử dụng",
+    "contentEn": "Only process, download, quote, transform, or redistribute material you are allowed to use; obtain consent before reusing likeness, voice, or private information and review copyright, platform, publicity, privacy, and advertising requirements.",
+    "contentVi": "Chỉ process, download, quote, transform hoặc redistribute nội dung bạn được phép dùng; xin consent trước khi dùng lại likeness, voice hoặc thông tin riêng tư và review yêu cầu copyright, platform, publicity, privacy và advertising."
+  },
   "processFlow": [
     {
       "number": 1,
@@ -144,11 +151,11 @@ const data: SkillInfographic = {
   "reportOutput": {
     "titleEn": "Repurposed YouTube content",
     "titleVi": "Nội dung YouTube tái sử dụng",
-    "patternEn": "blog | infographic | social deliverable from youtube-url",
-    "patternVi": "sản phẩm blog | infographic | social từ youtube-url",
-    "locationEn": "Response output or generated assets",
-    "locationVi": "Phản hồi hoặc asset đã tạo",
-    "descEn": "VidCap-backed source extraction feeds the selected transformation route.",
+    "patternEn": "blog → assets/articles/{date}-{slug}.md; infographic → assets/infographic/{date}-{slug}.{html,png,json}; social → assets/posts/{platform}/{date}-{slug}.md and assets/posts/{date}-{slug}-all-platforms.md",
+    "patternVi": "blog → assets/articles/{date}-{slug}.md; infographic → assets/infographic/{date}-{slug}.{html,png,json}; social → assets/posts/{platform}/{date}-{slug}.md và assets/posts/{date}-{slug}-all-platforms.md",
+    "locationEn": "assets/articles/, assets/infographic/, and assets/posts/",
+    "locationVi": "assets/articles/, assets/infographic/ và assets/posts/",
+    "descEn": "VidCap-backed source extraction feeds the selected transformation route and its packaged output convention.",
     "descVi": "Phần trích nguồn bằng VidCap cung cấp dữ liệu cho tuyến chuyển thể đã chọn."
   }
 };

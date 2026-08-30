@@ -1,4 +1,19 @@
-import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-works';
+
+const invocation: SkillInvocation = {
+  syntax: "/ak:find-skills [capability or task description]",
+  arguments: [
+    {
+      token: "[capability or task description]",
+      titleEn: "Capability to find",
+      titleVi: "Năng lực cần tìm",
+      descEn: "Describe the domain, task, framework, language, platform, and whether you want local routing, recommendations only, or installation after review. Do not include credentials, private source, or unrelated workspace details.",
+      descVi: "Mô tả domain, tác vụ, framework, ngôn ngữ, nền tảng và việc bạn muốn định tuyến local, chỉ nhận recommendation, hay cài sau khi review. Không đưa credential, source riêng tư hoặc chi tiết workspace không liên quan.",
+      required: true,
+      exampleCommand: "/ak:find-skills \"Audit a Next.js checkout for accessibility and keyboard navigation\"",
+    },
+  ],
+};
 
 const data: SkillInfographic = {
   id: "ak-find-skills",
@@ -51,10 +66,12 @@ const data: SkillInfographic = {
     { name: "skills.sh", type: "tool" },
     { name: "domain-routing.md", type: "tool" },
   ],
+  invocation,
   promptExamples: [
-    { labelEn: "Find React help", labelVi: "Tìm skill React", command: "/ak:find-skills React performance", whenEn: "The user asks how to make a React app faster and an external skill may exist.", whenVi: "User hỏi cách làm app React nhanh hơn và có thể đã có skill bên ngoài.", expectedEn: "Searches with targeted keywords and presents matching skills with install commands and links.", expectedVi: "Tìm bằng từ khóa tập trung và trình bày skill phù hợp cùng lệnh cài và link.", recommended: true },
-    { labelEn: "PR review skill", labelVi: "Skill review PR", command: "/ak:find-skills PR review", whenEn: "The user wants help with a specialized workflow like pull request review.", whenVi: "User muốn hỗ trợ workflow chuyên biệt như review pull request.", expectedEn: "Runs the Skills CLI search and summarizes useful options or installed routing if local skills already fit.", expectedVi: "Chạy Skills CLI search và tóm tắt lựa chọn hữu ích hoặc định tuyến local nếu skill đã cài đã phù hợp." },
-    { labelEn: "No match", labelVi: "Không có kết quả", command: "/ak:find-skills custom changelog automation for our release process", whenEn: "The capability may be niche or organization-specific.", whenVi: "Năng lực cần tìm có thể hẹp hoặc đặc thù tổ chức.", expectedEn: "Acknowledges no relevant match if search fails, offers direct help, and suggests npx skills init for repeat work.", expectedVi: "Nếu không tìm được, nói rõ không có kết quả phù hợp, đề nghị hỗ trợ trực tiếp và gợi ý npx skills init cho việc lặp lại." },
+    { labelEn: "Find React help", labelVi: "Tìm skill React", command: "/ak:find-skills react performance", whenEn: "The user asks how to make a React app faster and a reusable skill may already exist.", whenVi: "User hỏi cách làm app React nhanh hơn và có thể đã có skill tái sử dụng.", expectedEn: "Identifies React performance as the domain and task, runs a targeted Skills CLI search, then presents relevant matches with exact install commands and skills.sh links.", expectedVi: "Xác định domain và tác vụ là tối ưu hiệu năng React, chạy tìm kiếm Skills CLI có từ khóa cụ thể, rồi trình bày kết quả phù hợp cùng lệnh cài chính xác và link skills.sh.", recommended: true },
+    { labelEn: "PR review skill", labelVi: "Skill review PR", command: "/ak:find-skills pr review", whenEn: "The user wants help with a specialized workflow such as pull request review.", whenVi: "User muốn hỗ trợ một workflow chuyên biệt như review pull request.", expectedEn: "Searches with the PR review query, checks whether the result fits the requested workflow, and summarizes the skill name, purpose, install command, and learn-more link.", expectedVi: "Tìm bằng truy vấn review PR, kiểm tra kết quả có khớp workflow cần làm không, rồi tóm tắt tên skill, công dụng, lệnh cài và link tìm hiểu thêm." },
+    { labelEn: "Changelog discovery", labelVi: "Tìm skill changelog", command: "/ak:find-skills changelog", whenEn: "The user asks for tooling or a reusable workflow around creating changelogs.", whenVi: "User hỏi về công cụ hoặc workflow tái sử dụng để tạo changelog.", expectedEn: "Treats changelog generation as a documentation or release-workflow capability, searches by the specific keyword, and recommends any relevant installable skill with package evidence.", expectedVi: "Xem việc tạo changelog là năng lực tài liệu hoặc workflow phát hành, tìm bằng từ khóa cụ thể, rồi khuyến nghị skill cài được nếu có kèm bằng chứng package." },
+    { labelEn: "No matching skill", labelVi: "Không có skill phù hợp", command: "/ak:find-skills custom release ritual for our internal approval board", whenEn: "The requested capability is niche or organization-specific and may not have a public skill.", whenVi: "Năng lực cần tìm hẹp hoặc đặc thù tổ chức nên có thể không có skill công khai.", expectedEn: "If targeted and alternative searches do not find a relevant skill, says no match was found, offers direct help, and suggests creating a custom skill with npx skills init for repeated work.", expectedVi: "Nếu tìm bằng từ khóa cụ thể và từ khóa thay thế vẫn không có skill phù hợp, nói rõ không tìm được, đề nghị hỗ trợ trực tiếp và gợi ý tạo skill riêng bằng npx skills init cho việc lặp lại." },
   ],
 };
 

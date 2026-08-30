@@ -89,27 +89,54 @@ const data: SkillInfographic = {
   ],
   "workflowModes": [
     {
-      "flag": "create",
-      "modeEn": "Create isolated worktree",
-      "modeVi": "Tạo worktree cô lập",
-      "research": "repo info + naming",
-      "redTeam": "root/base warnings",
-      "validation": "worktreePath JSON",
-      "cookFlag": "create [project] <feature>"
+      "flag": "info",
+      "modeEn": "Report repository type, projects, base branch, worktree root, and dirty state.",
+      "modeVi": "Báo repo type, project, base branch, worktree root và dirty state.",
+      "research": "Repo metadata",
+      "redTeam": "Wrong root",
+      "validation": "Info JSON",
+      "cookFlag": "info"
+    },
+    {
+      "flag": "list",
+      "modeEn": "List known worktrees and branches before removal or reuse.",
+      "modeVi": "Liệt kê worktree và branch đã biết trước khi remove hoặc reuse.",
+      "research": "Worktree registry",
+      "redTeam": "Ambiguous target",
+      "validation": "Worktree list",
+      "cookFlag": "list"
     },
     {
       "flag": "status",
-      "modeEn": "Health audit",
-      "modeVi": "Audit sức khỏe",
+      "modeEn": "Health audit with dirty state, base branch, and ahead/behind counts.",
+      "modeVi": "Audit sức khỏe với dirty state, base branch và số ahead/behind.",
       "research": "normalized paths",
       "redTeam": "dirty/detached/divergence",
       "validation": "status JSON",
       "cookFlag": "status"
     },
     {
+      "flag": "create [project] <feature> [options]",
+      "modeEn": "Create an isolated worktree; options include --prefix, --base, --checkout-submodules, --no-prefix, --worktree-root, --json, --dry-run, and legacy --env.",
+      "modeVi": "Tạo worktree cô lập; option gồm --prefix, --base, --checkout-submodules, --no-prefix, --worktree-root, --json, --dry-run và --env legacy.",
+      "research": "repo info + naming",
+      "redTeam": "root/base warnings",
+      "validation": "worktreePath JSON",
+      "cookFlag": "create [project] <feature>"
+    },
+    {
+      "flag": "remove <name-or-path>",
+      "modeEn": "Force-remove one exact approved worktree and then try branch deletion.",
+      "modeVi": "Force-remove đúng một worktree đã duyệt rồi thử xóa branch.",
+      "research": "Exact target",
+      "redTeam": "Uncommitted work",
+      "validation": "Removal result",
+      "cookFlag": "remove <name-or-path>"
+    },
+    {
       "flag": "prune",
-      "modeEn": "Stale cleanup",
-      "modeVi": "Dọn stale",
+      "modeEn": "Remove stale Git worktree metadata; run prune --dry-run before applying.",
+      "modeVi": "Xóa metadata Git worktree cũ; chạy prune --dry-run trước khi áp dụng.",
       "research": "metadata entries",
       "redTeam": "dry-run first",
       "validation": "entries JSON",
@@ -134,21 +161,21 @@ const data: SkillInfographic = {
     {
       "labelEn": "Feature worktree",
       "labelVi": "Worktree tính năng",
-      "command": "/ak:worktree add onboarding email flow",
+      "command": "/ak:worktree create onboarding email flow",
       "whenEn": "Use before implementation that should be isolated from the current checkout.",
       "whenVi": "Dùng trước khi implement việc cần tách khỏi checkout hiện tại.",
-      "expectedEn": "New worktree path with inferred branch prefix and dependency bootstrap guidance.",
+      "expectedEn": "New worktree path with inferred branch prefix, dependency bootstrap guidance, and next safe command.",
       "expectedVi": "Path worktree mới kèm prefix branch đã suy ra và hướng dẫn bootstrap dependency.",
       "recommended": true
     },
     {
       "labelEn": "Exact branch",
       "labelVi": "Branch chính xác",
-      "command": "/ak:worktree ND-1377-cleanup-docs",
+      "command": "/ak:worktree create --no-prefix ND-1377-cleanup-docs",
       "whenEn": "Use when the branch name must preserve tracker casing or slashes.",
       "whenVi": "Dùng khi tên branch phải giữ nguyên casing mã ticket hoặc slash.",
-      "expectedEn": "Worktree created with preserved branch name semantics.",
-      "expectedVi": "Worktree được tạo với ngữ nghĩa giữ nguyên branch name."
+      "expectedEn": "Worktree created with preserved branch name semantics and clear instructions for entering the folder.",
+      "expectedVi": "Worktree được tạo với ngữ nghĩa giữ nguyên branch name và hướng dẫn vào thư mục rõ ràng."
     }
   ],
   "reportOutput": {

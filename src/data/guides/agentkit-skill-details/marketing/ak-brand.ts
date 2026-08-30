@@ -24,7 +24,7 @@ const data: SkillInfographic = {
     { number: 4, titleEn: "Shape voice", titleVi: "Định hình giọng", descEn: "Apply the voice framework for tone, vocabulary, personality, audience fit, do/don't examples, and content consistency.", descVi: "Áp dụng voice framework cho tone, từ vựng, tính cách, độ khớp audience, ví dụ nên/không nên và tính nhất quán nội dung." },
     { number: 5, titleEn: "Shape visuals", titleVi: "Định hình visual", descEn: "Use visual identity, color palette, typography specs, logo rules, and design tokens to keep creative assets consistent.", descVi: "Dùng visual identity, color palette, typography spec, luật logo và design token để creative asset nhất quán." },
     { number: 6, titleEn: "Build messaging", titleVi: "Xây messaging", descEn: "Create or review positioning, value proposition, proof points, claims, narrative, and campaign message hierarchy.", descVi: "Tạo hoặc review positioning, value proposition, proof point, claim, narrative và thứ bậc thông điệp campaign." },
-    { number: 7, titleEn: "Sync tokens", titleVi: "Sync token", descEn: "For updates, sync brand guidelines to generated design-token JSON and CSS variables, then verify extracted JSON context.", descVi: "Khi update, sync brand guideline sang design-token JSON và CSS variable sinh ra, rồi xác minh context JSON đã trích." },
+    { number: 7, titleEn: "Sync tokens", titleVi: "Sync token", descEn: "For updates, edit docs/brand-guidelines.md, sync approved values into assets/design-tokens.json, and attempt to regenerate assets/design-tokens.css.", descVi: "Khi update, sửa docs/brand-guidelines.md, sync giá trị đã duyệt vào assets/design-tokens.json và thử sinh lại assets/design-tokens.css." },
     { number: 8, titleEn: "Validate assets", titleVi: "Validate asset", descEn: "Use validation and color extraction scripts to check asset naming, size, format, palette alignment, and approval readiness.", descVi: "Dùng script validate và extract color để kiểm tra tên asset, kích thước, format, độ khớp palette và readiness cho approval." },
     { number: 9, titleEn: "Deliver standards", titleVi: "Bàn giao chuẩn", descEn: "Return updated guidelines, review findings, messaging frameworks, asset rules, or approval checklist with clear next actions.", descVi: "Bàn giao guideline đã update, phát hiện review, framework messaging, luật asset hoặc checklist approval kèm hành động tiếp theo rõ ràng." },
   ],
@@ -43,9 +43,9 @@ const data: SkillInfographic = {
   expertiseAreasEn: ["Brand voice", "Visual identity", "Messaging frameworks", "Brand consistency audits", "Asset approval", "Color palettes", "Typography", "Logo rules", "Design-token sync"],
   expertiseAreasVi: ["Giọng thương hiệu", "Nhận diện hình ảnh", "Framework messaging", "Audit nhất quán brand", "Duyệt asset", "Bảng màu", "Typography", "Luật dùng logo", "Sync design token"],
   promptExamples: [
-    { labelEn: "Update brand", labelVi: "Cập nhật brand", command: "/ak:brand update", whenEn: "Brand guidelines need to change and sync into design tokens.", whenVi: "Khi guideline brand cần thay đổi và sync vào design token.", expectedEn: "Updated brand source, token sync guidance, verification, and affected standards.", expectedVi: "Nguồn brand cập nhật, hướng sync token, xác minh và các chuẩn bị ảnh hưởng.", recommended: true },
-    { labelEn: "Review asset", labelVi: "Review asset", command: "/ak:brand review campaign banner", whenEn: "A marketing asset needs brand-consistency review.", whenVi: "Khi một asset marketing cần review độ nhất quán với brand.", expectedEn: "Voice, visual, messaging, color, typography, logo, and approval findings.", expectedVi: "Phát hiện về voice, visual, messaging, màu, typography, logo và approval." },
-    { labelEn: "Create guidelines", labelVi: "Tạo guideline", command: "/ak:brand create guidelines", whenEn: "A new brand needs starter standards and messaging structure.", whenVi: "Khi brand mới cần bộ chuẩn khởi đầu và cấu trúc messaging.", expectedEn: "A starter direction for guidelines, voice, visual identity, messaging, and asset rules.", expectedVi: "Hướng khởi đầu cho guideline, voice, visual identity, messaging và luật asset." },
+    { labelEn: "Update brand", labelVi: "Cập nhật brand", command: "/ak:brand update", whenEn: "Brand guidelines need to change and sync into design tokens.", whenVi: "Khi guideline brand cần thay đổi và sync vào design token.", expectedEn: "Updated docs/brand-guidelines.md plus assets/design-tokens.json and assets/design-tokens.css sync evidence.", expectedVi: "docs/brand-guidelines.md đã cập nhật cùng bằng chứng sync assets/design-tokens.json và assets/design-tokens.css.", recommended: true },
+    { labelEn: "Review asset", labelVi: "Review asset", command: "/ak:brand Review this campaign banner against current brand guidelines", whenEn: "A marketing asset needs brand-consistency review.", whenVi: "Khi một asset marketing cần review độ nhất quán với brand.", expectedEn: "Voice, visual, messaging, color, typography, logo, and approval findings. Review is a natural-language outcome, not a dedicated /ak:brand review route unless the install adds one.", expectedVi: "Phát hiện về voice, visual, messaging, màu, typography, logo và approval. Review là outcome bằng ngôn ngữ tự nhiên, không phải route /ak:brand review trừ khi bản cài đặt thêm route đó." },
+    { labelEn: "Create guidelines", labelVi: "Tạo guideline", command: "/ak:brand Draft starter brand guidelines and messaging structure for a new brand", whenEn: "A new brand needs starter standards and messaging structure.", whenVi: "Khi brand mới cần bộ chuẩn khởi đầu và cấu trúc messaging.", expectedEn: "A starter direction for guidelines, voice, visual identity, messaging, and asset rules. Create is a natural-language outcome unless the install adds a dedicated route.", expectedVi: "Hướng khởi đầu cho guideline, voice, visual identity, messaging và luật asset. Create là outcome bằng ngôn ngữ tự nhiên trừ khi bản cài đặt thêm route riêng." },
   ],
   skillStack: [
     { name: "inject-brand-context.cjs", type: 'tool' },
@@ -53,6 +53,14 @@ const data: SkillInfographic = {
     { name: "validate-asset.cjs", type: 'tool' },
     { name: "extract-colors.cjs", type: 'tool' },
   ],
+  reportOutput: {
+    titleEn: "Brand update paths",
+    titleVi: "Đường dẫn cập nhật brand",
+    patternEn: "docs/brand-guidelines.md, assets/design-tokens.json, and assets/design-tokens.css",
+    patternVi: "docs/brand-guidelines.md, assets/design-tokens.json và assets/design-tokens.css",
+    descEn: "The documented update route mutates the brand authority and derived token files; review all three paths before use.",
+    descVi: "Route update đã ghi trong docs chỉnh source brand và file token dẫn xuất; review cả ba đường dẫn trước khi dùng.",
+  },
 };
 
 export default data;

@@ -85,6 +85,20 @@ const data: SkillInfographic = {
     "Hỏi trước khi xếp hạng, sắp thứ tự hoặc ưu tiên nội dung user đưa.",
     "Dùng ak-brainstorm khi cần AI đề xuất và ak-docs khi tài liệu phải suy từ code."
   ],
+  "invocation": {
+    "syntax": "/ak:interview-docs <vision | document-path | topic>",
+    "arguments": [
+      {
+        "token": "<vision | document-path | topic>",
+        "titleEn": "Interview target",
+        "titleVi": "Đích phỏng vấn",
+        "descEn": "Intent hint for the interview: name vision mode, a document path, or a topic, plus audience, scope, protected sections, and when to stop. It is not a fixed parser and does not authorize the Skill to invent decisions.",
+        "descVi": "Gợi ý intent cho cuộc phỏng vấn: nêu vision mode, đường dẫn tài liệu hoặc topic, kèm audience, scope, section được bảo vệ và lúc cần dừng. Đây không phải parser cố định và không cho phép Skill tự bịa quyết định.",
+        "required": true,
+        "exampleCommand": "/ak:interview-docs ./docs/product-principles.md \"Interview me to capture five product principles in my wording.\""
+      }
+    ]
+  },
   "expertiseAreasEn": [
     "Guided documentation interviews",
     "README vision updates",
@@ -119,21 +133,39 @@ const data: SkillInfographic = {
     {
       "labelEn": "Vision interview",
       "labelVi": "Phỏng vấn vision",
-      "command": "/ak:interview-docs project vision for the README and first ADRs",
-      "whenEn": "The user’s vision and decisions should shape README/ADR content.",
-      "whenVi": "Khi vision và quyết định của user cần định hình README/ADR.",
-      "expectedEn": "Reads existing docs, asks high-variety questions, and patches user wording after each answer.",
-      "expectedVi": "Đọc docs hiện có, hỏi câu đa dạng và patch wording của user sau mỗi câu trả lời.",
+      "command": "/ak:interview-docs vision for README direction and first ADRs",
+      "whenEn": "The user’s own answers should become the project vision, README direction, and recorded decisions.",
+      "whenVi": "Khi câu trả lời của user cần trở thành vision dự án, hướng README và các quyết định được ghi nhận.",
+      "expectedEn": "Reads README.md and docs/adr first, asks a batch of five varied questions, then patches user wording into README or numbered ADRs after each answer.",
+      "expectedVi": "Đọc README.md và docs/adr trước, hỏi năm câu đa dạng, rồi patch wording của user vào README hoặc ADR đánh số sau mỗi câu trả lời.",
       "recommended": true
+    },
+    {
+      "labelEn": "Focused vision area",
+      "labelVi": "Mảng vision tập trung",
+      "command": "/ak:interview-docs vision focused on product principles",
+      "whenEn": "The interview should stay on a requested focus area instead of a broad project vision pass.",
+      "whenVi": "Khi cuộc phỏng vấn cần bám vào một mảng trọng tâm được yêu cầu thay vì quét rộng toàn bộ vision dự án.",
+      "expectedEn": "Uses vision mode with the requested focus, asks an adjusted question batch, and keeps README content separate from explicit ADR decisions.",
+      "expectedVi": "Dùng vision mode với trọng tâm đã yêu cầu, điều chỉnh cụm câu hỏi và tách nội dung README khỏi các quyết định ADR rõ ràng."
     },
     {
       "labelEn": "Structured document",
       "labelVi": "Tài liệu có cấu trúc",
       "command": "/ak:interview-docs docs/principles.md",
-      "whenEn": "One durable document should be built through one-question-at-a-time interviewing.",
-      "whenVi": "Khi cần xây một tài liệu bền vững bằng phỏng vấn từng câu.",
-      "expectedEn": "Creates a minimal skeleton if needed, asks exactly one open question, and preserves edits.",
-      "expectedVi": "Tạo skeleton tối thiểu nếu cần, hỏi đúng một câu mở và giữ edits."
+      "whenEn": "One durable user-authored document should be built through one-question-at-a-time interviewing.",
+      "whenVi": "Khi cần xây một tài liệu bền vững do user làm chủ bằng phỏng vấn từng câu một.",
+      "expectedEn": "Reads nearby documents, creates the minimal skeleton once, asks exactly one specific open question, then re-reads and patches the target section.",
+      "expectedVi": "Đọc tài liệu gần đó, tạo skeleton tối thiểu một lần, hỏi đúng một câu mở cụ thể, rồi đọc lại và patch section đích."
+    },
+    {
+      "labelEn": "Decision capture",
+      "labelVi": "Ghi nhận quyết định",
+      "command": "/ak:interview-docs ADR for the deployment approach",
+      "whenEn": "A user-approved architectural decision should be recorded without letting the assistant decide architecture.",
+      "whenVi": "Khi một quyết định kiến trúc đã được user duyệt cần được ghi lại mà không để assistant tự quyết kiến trúc.",
+      "expectedEn": "Confirms the decision from the user’s answer and records only approved content in a short ADR with Status, Context, Decision, and Consequences.",
+      "expectedVi": "Xác nhận quyết định từ câu trả lời của user và chỉ ghi nội dung đã duyệt vào ADR ngắn có Status, Context, Decision và Consequences."
     }
   ],
   "reportOutput": {

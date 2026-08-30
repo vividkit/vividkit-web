@@ -99,6 +99,62 @@ const data: SkillInfographic = {
       "validation": "Stops after two zero-novelty iterations"
     }
   ],
+  "invocation": {
+    "syntax": "/ak:scenario <file path or feature description> [--iterations N] [--saturation] [--domain <type>] [--focus <dim>] [--format <type>]",
+    "arguments": [
+      {
+        "token": "<file path or feature description>",
+        "titleEn": "Target to explore",
+        "titleVi": "Mục tiêu cần khám phá",
+        "descEn": "A narrow code path, file path, or natural-language feature description that defines the behavior and evidence scope. Include actors, state, data, integrations, constraints, and known failure modes when they are not obvious from the file.",
+        "descVi": "Code path, file path hẹp hoặc mô tả feature bằng ngôn ngữ tự nhiên để xác định behavior và evidence scope. Nêu actor, state, data, integration, constraint và known failure mode khi chúng không rõ từ file.",
+        "required": true,
+        "exampleCommand": "/ak:scenario src/api/account-recovery.ts"
+      }
+    ],
+    "options": [
+      {
+        "token": "--iterations N",
+        "titleEn": "Fixed iteration count",
+        "titleVi": "Số iteration cố định",
+        "descEn": "Run exactly N scenario iterations, then summarize. This is a budget and hard ceiling, not proof of exhaustive coverage.",
+        "descVi": "Chạy đúng N iteration tạo scenario rồi summarize. Đây là budget và hard ceiling, không phải bằng chứng coverage exhaustive.",
+        "exampleCommand": "/ak:scenario src/api/payment.ts --iterations 25"
+      },
+      {
+        "token": "--saturation",
+        "titleEn": "Novelty stop",
+        "titleVi": "Dừng theo độ mới",
+        "descEn": "Continue until two consecutive iterations produce no New classification. It has no separate numeric maximum in the shipped contract.",
+        "descVi": "Tiếp tục đến khi hai iteration liên tiếp không sinh classification New. Shipped contract không có numeric maximum riêng.",
+        "exampleCommand": "/ak:scenario \"Add multi-tenancy to the database layer\" --saturation"
+      },
+      {
+        "token": "--domain <type>",
+        "titleEn": "Domain hint",
+        "titleVi": "Gợi ý domain",
+        "descEn": "Prioritize software, product, business, security, or marketing context. It guides ordering and emphasis; it does not narrow the evidence scope by itself.",
+        "descVi": "Ưu tiên context software, product, business, security hoặc marketing. Flag này định hướng thứ tự và trọng tâm; tự nó không thu hẹp evidence scope.",
+        "exampleCommand": "/ak:scenario src/middleware/auth.ts --saturation --domain security"
+      },
+      {
+        "token": "--focus <dim>",
+        "titleEn": "Focus dimension",
+        "titleVi": "Dimension trọng tâm",
+        "descEn": "Prioritize edge-cases, failures, security, or scale during exploration while still reporting analyzed and skipped dimensions.",
+        "descVi": "Ưu tiên edge-cases, failures, security hoặc scale trong exploration nhưng vẫn báo dimension đã analyze và đã skip.",
+        "exampleCommand": "/ak:scenario \"Account recovery\" --focus failures"
+      },
+      {
+        "token": "--format <type>",
+        "titleEn": "Report shape",
+        "titleVi": "Dạng report",
+        "descEn": "Select table, use-cases, test-scenarios, or threat-scenarios output. The option changes report shape, not whether scenarios are verified.",
+        "descVi": "Chọn output table, use-cases, test-scenarios hoặc threat-scenarios. Tùy chọn này đổi dạng report, không biến scenario thành kết quả đã xác minh.",
+        "exampleCommand": "/ak:scenario \"User registration with OAuth providers\" --format test-scenarios"
+      }
+    ]
+  },
   "outputFlags": [
     {
       "flag": "--iterations N",
@@ -119,32 +175,41 @@ const data: SkillInfographic = {
   ],
   "promptExamples": [
     {
-      "labelEn": "API edge cases",
-      "labelVi": "Edge case cho API",
+      "labelEn": "One-shot API review",
+      "labelVi": "Rà soát API một lượt",
       "command": "/ak:scenario src/api/payment.ts",
-      "whenEn": "Use before implementing or testing a risky flow.",
-      "whenVi": "Dùng trước khi triển khai hoặc test một luồng rủi ro.",
-      "expectedEn": "A table of scenarios grouped by relevant dimensions and severity.",
-      "expectedVi": "Bảng scenario theo chiều liên quan và mức độ.",
+      "whenEn": "Use before implementing or testing a complex API path.",
+      "whenVi": "Dùng trước khi triển khai hoặc test một luồng API phức tạp.",
+      "expectedEn": "A Scenario Report that filters the 12 dimensions, lists skipped assumptions, groups 3–5 scenarios per relevant dimension, and summarizes severity totals.",
+      "expectedVi": "Một Scenario Report lọc 12 chiều, liệt kê giả định cho chiều bị bỏ qua, nhóm 3–5 scenario cho mỗi chiều liên quan và tổng kết theo severity.",
       "recommended": true
     },
     {
-      "labelEn": "Saturation audit",
-      "labelVi": "Audit đến bão hòa",
-      "command": "/ak:scenario src/middleware/auth.ts --saturation --domain security",
-      "whenEn": "Use when coverage must continue until new scenarios dry up.",
-      "whenVi": "Dùng khi cần tiếp tục mở rộng độ phủ đến khi hết scenario mới.",
-      "expectedEn": "Progress summaries, novelty decisions, coverage matrix, and final score.",
-      "expectedVi": "Có tóm tắt tiến độ, quyết định độ mới, ma trận độ phủ và điểm cuối."
+      "labelEn": "Bounded iteration",
+      "labelVi": "Lặp có giới hạn",
+      "command": "/ak:scenario src/api/payment.ts --iterations 25",
+      "whenEn": "Use when you want exhaustive exploration but need an exact stop count.",
+      "whenVi": "Dùng khi cần khám phá sâu nhưng phải dừng ở số vòng chính xác.",
+      "expectedEn": "An iterative run that keeps new or variant situations, discards duplicates with reasons, prints progress every 5 iterations, and stops after exactly 25 iterations.",
+      "expectedVi": "Một lượt chạy lặp giữ tình huống mới hoặc biến thể, loại trùng kèm lý do, in tiến độ mỗi 5 vòng và dừng đúng sau 25 vòng."
     },
     {
-      "labelEn": "Test format",
-      "labelVi": "Định dạng test scenario",
+      "labelEn": "Security saturation",
+      "labelVi": "Bão hòa bảo mật",
+      "command": "/ak:scenario src/middleware/auth.ts --saturation --domain security --focus security",
+      "whenEn": "Use for a deep pre-release coverage audit where novelty should decide the stop point.",
+      "whenVi": "Dùng cho audit độ phủ sâu trước release khi điểm dừng phải dựa trên độ mới.",
+      "expectedEn": "A saturation loop that prioritizes security-relevant dimensions, logs kept and discarded cases to `scenario-results.tsv`, then halts after two consecutive zero-novelty iterations.",
+      "expectedVi": "Một vòng lặp bão hòa ưu tiên các chiều liên quan đến security, ghi case được giữ và bị loại vào `scenario-results.tsv`, rồi dừng sau hai vòng liên tiếp không có độ mới."
+    },
+    {
+      "labelEn": "Test scenario output",
+      "labelVi": "Đầu ra test scenario",
       "command": "/ak:scenario \"User registration with OAuth providers\" --format test-scenarios",
-      "whenEn": "Use when the immediate next consumer is a test plan.",
-      "whenVi": "Dùng khi đầu ra sẽ được đưa ngay vào kế hoạch test.",
-      "expectedEn": "Scenario rows shaped for test-case drafting.",
-      "expectedVi": "Các dòng scenario được định hình để soạn test case."
+      "whenEn": "Use before writing tests when the immediate consumer is a QA or regression plan.",
+      "whenVi": "Dùng trước khi viết test khi đầu ra sẽ đi thẳng vào kế hoạch QA hoặc regression.",
+      "expectedEn": "Scenario rows shaped for test planning, including actor or input context, preconditions, expected behavior, severity, and the relevant decomposition dimension.",
+      "expectedVi": "Các dòng scenario được định dạng cho kế hoạch test, gồm actor hoặc ngữ cảnh input, tiền điều kiện, hành vi kỳ vọng, severity và chiều phân rã liên quan."
     }
   ]
 };

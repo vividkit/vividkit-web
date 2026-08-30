@@ -16,7 +16,7 @@ const data: SkillInfographic = {
     { number: 3, titleEn: 'Load reference', titleVi: 'Nạp tham chiếu', descEn: 'For flow or sequence, load the matching reference; otherwise use the email templates and subject-line formulas.', descVi: 'Với flow hoặc sequence thì nạp đúng tham chiếu; trường hợp khác dùng template email và công thức tiêu đề.' },
     { number: 4, titleEn: 'Draft variants', titleVi: 'Soạn biến thể', descEn: 'Use email-wizard and copywriter patterns to produce the email body and 3 to 5 subject-line options.', descVi: 'Dùng mẫu email-wizard và copywriter để viết thân email cùng 3 đến 5 phương án tiêu đề.' },
     { number: 5, titleEn: 'Add envelope', titleVi: 'Thêm lớp gửi', descEn: 'Attach preview text, CTA, deliverability notes, and A/B test candidates where useful.', descVi: 'Bổ sung preview text, CTA, ghi chú vào inbox và phương án A/B test khi phù hợp.' },
-    { number: 6, titleEn: 'Save asset', titleVi: 'Lưu asset', descEn: 'Write the output to assets/copy/emails/{date}-{type}-{slug}.md.', descVi: 'Lưu kết quả vào assets/copy/emails/{date}-{type}-{slug}.md.' },
+    { number: 6, titleEn: 'Save asset', titleVi: 'Lưu asset', descEn: 'Write single emails, flows, or sequences to their documented email artifact paths.', descVi: 'Lưu email đơn, flow hoặc sequence vào đúng đường dẫn artifact email đã ghi.' },
   ],
   corePrinciplesEn: [
     'Email work starts with audience, message, and CTA, not with a template.',
@@ -47,10 +47,10 @@ const data: SkillInfographic = {
   reportOutput: {
     titleEn: 'Email asset',
     titleVi: 'Asset email',
-    patternEn: 'assets/copy/emails/{date}-{type}-{slug}.md',
-    patternVi: 'assets/copy/emails/{date}-{type}-{slug}.md',
-    descEn: 'Stores the campaign copy, subject variants, preview text, CTA, and deliverability notes.',
-    descVi: 'Lưu nội dung chiến dịch, các biến thể tiêu đề, preview text, CTA và ghi chú deliverability.',
+    patternEn: 'single email → assets/copy/emails/{date}-{type}-{slug}.md; flow → assets/emails/flows/{flow-type}-{date}.md; sequence → assets/copy/emails/{date}-{type}-sequence/',
+    patternVi: 'email đơn → assets/copy/emails/{date}-{type}-{slug}.md; flow → assets/emails/flows/{flow-type}-{date}.md; sequence → assets/copy/emails/{date}-{type}-sequence/',
+    descEn: 'Stores campaign copy, automation flow plans, or sequence directories with subject variants, preview text, CTA, timing, and deliverability notes.',
+    descVi: 'Lưu nội dung chiến dịch, kế hoạch flow tự động hoặc thư mục sequence cùng tiêu đề, preview text, CTA, nhịp gửi và ghi chú deliverability.',
   },
 };
 

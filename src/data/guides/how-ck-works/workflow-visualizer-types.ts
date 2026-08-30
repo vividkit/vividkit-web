@@ -186,6 +186,40 @@ export interface OutputFlag {
   exampleCommand?: string;
 }
 
+/** One positional argument or generic option on the skill or a subcommand */
+export interface InvocationParam {
+  token: string;
+  titleEn: string;
+  titleVi: string;
+  descEn: string;
+  descVi: string;
+  required?: boolean;
+  exampleCommand?: string;
+}
+
+/** One skill branch with its own syntax, arguments, options, and outcome */
+export interface SkillSubcommand {
+  name: string;
+  syntax: string;
+  titleEn: string;
+  titleVi: string;
+  descEn: string;
+  descVi: string;
+  arguments?: InvocationParam[];
+  options?: InvocationParam[];
+  outcomeEn: string;
+  outcomeVi: string;
+  exampleCommand?: string;
+}
+
+/** Reader-facing invocation reference: syntax, arguments, options, subcommands */
+export interface SkillInvocation {
+  syntax: string;
+  arguments?: InvocationParam[];
+  options?: InvocationParam[];
+  subcommands?: SkillSubcommand[];
+}
+
 /** Enriched mode card with inline prompt example */
 export interface ModeCardData {
   flag: string;
@@ -209,6 +243,15 @@ export interface ProcessGroupLabel {
   kickerEn: string;
   kickerVi: string;
   stepSlice: [number, number];
+}
+/** Mutually exclusive reader-facing situations for the same invocation */
+export interface SituationCard {
+  titleEn: string;
+  titleVi: string;
+  whenEn: string;
+  whenVi: string;
+  outcomeEn: string;
+  outcomeVi: string;
 }
 
 /** Hard gate warning type */
@@ -238,7 +281,8 @@ export interface SkillInfographic {
   };
 
   processFlow: ProcessFlowStep[];
-
+  /** Mutually exclusive cases for the same command; not sequential process steps */
+  situations?: SituationCard[];
   corePrinciplesEn?: string[];
   corePrinciplesVi?: string[];
   expertiseAreasEn?: string[];
@@ -248,6 +292,8 @@ export interface SkillInfographic {
   promptExamples?: PromptExample[];
   composableFlagsEn?: string;
   composableFlagsVi?: string;
+  /** First-class syntax / arguments / options / subcommands for readers */
+  invocation?: SkillInvocation;
   /** Conditional output / publish flags (--html, --github, --wiki) */
   outputFlags?: OutputFlag[];
 

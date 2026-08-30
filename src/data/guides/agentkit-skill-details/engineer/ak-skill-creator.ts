@@ -5,10 +5,34 @@ const data: SkillInfographic = {
   "command": "/ak:skill-creator",
   "kit": "engineer",
   "header": {
-    "titleEn": "/ak:skill-creator — Claude Skill Authoring",
-    "titleVi": "/ak:skill-creator — Tạo Claude skill",
-    "taglineEn": "Creates and refines Claude skills with progressive disclosure, scoped structure, validation-driven iteration, benchmark-aware descriptions, scripts, references, packaging, and optional Kongming advice.",
-    "taglineVi": "Tạo và cải tiến Claude skill bằng progressive disclosure, cấu trúc đúng scope, lặp theo validation, tối ưu description cho benchmark, script, reference, đóng gói và tùy chọn cố vấn Kongming."
+    "titleEn": "/ak:skill-creator — Skill Creator",
+    "titleVi": "/ak:skill-creator — Tạo Skill",
+    "taglineEn": "Creates or updates Claude skills through intent capture, research, progressive-disclosure planning, scaffolding, SKILL.md/resources, evals, description optimization, packaging, and optional Kongming advice.",
+    "taglineVi": "Tạo hoặc cập nhật Claude skill qua ghi nhận intent, research, lập progressive disclosure, scaffold, SKILL.md/tài nguyên, eval, tối ưu description, đóng gói và cố vấn Kongming tùy chọn."
+  },
+  "invocation": {
+    "syntax": "/ak:skill-creator [skill-name or description] [--advice]",
+    "arguments": [
+      {
+        "token": "[skill-name or description]",
+        "titleEn": "Skill name or description",
+        "titleVi": "Tên hoặc mô tả Skill",
+        "descEn": "Names the Skill to create or update, or describes the repeatable workflow that should become a Skill. Include scope, triggers, expected output, and non-goals when known.",
+        "descVi": "Nêu Skill cần tạo hoặc cập nhật, hoặc mô tả workflow lặp lại cần chuyển thành Skill. Kèm scope, trigger, output mong đợi và non-goal nếu đã biết.",
+        "required": false,
+        "exampleCommand": "/ak:skill-creator \"Create a project-scoped release-notes Skill that validates headings and never publishes\""
+      }
+    ],
+    "options": [
+      {
+        "token": "--advice",
+        "titleEn": "Advisory supervision",
+        "titleVi": "Giám sát tư vấn",
+        "descEn": "Requests Kongming advisory review after planning, after the SKILL.md draft and evaluation results, before packaging or distribution, or when repeated failures block progress. It does not transfer decisions or bypass validation and security checks.",
+        "descVi": "Yêu cầu Kongming review tư vấn sau planning, sau bản nháp SKILL.md cùng kết quả evaluation, trước packaging hoặc distribution, hoặc khi lỗi lặp lại chặn tiến độ. Tùy chọn này không chuyển quyền quyết định và không bỏ qua validation hay kiểm tra bảo mật.",
+        "exampleCommand": "/ak:skill-creator \"Create a project-scoped release-notes Skill that validates headings and never publishes\" --advice"
+      }
+    ]
   },
   "hardGate": {
     "type": "warning",
@@ -55,20 +79,27 @@ const data: SkillInfographic = {
     },
     {
       "number": 6,
-      "titleEn": "Evaluate and optimize",
-      "titleVi": "Đánh giá và tối ưu",
-      "descEn": "Run validation and evals, compare with and without the skill, then refine description and workflows for benchmark accuracy.",
-      "descVi": "Chạy validation và eval, so sánh có/không có skill, rồi tinh chỉnh description và workflow để tăng độ chính xác benchmark."
+      "titleEn": "Test and evaluate",
+      "titleVi": "Test và evaluate",
+      "descEn": "Run validation and evals, then compare baseline behavior with and without the skill.",
+      "descVi": "Chạy validation và eval, rồi so sánh baseline khi có và không có skill."
     },
     {
       "number": 7,
-      "titleEn": "Package and review",
-      "titleVi": "Đóng gói và review",
-      "descEn": "Validate metadata, token use, script dependencies, structure, portability, and marketplace readiness before packaging.",
-      "descVi": "Kiểm tra metadata, token, dependency script, cấu trúc, tính portable và mức sẵn sàng marketplace trước khi đóng gói."
+      "titleEn": "Optimize description",
+      "titleVi": "Tối ưu description",
+      "descEn": "Refine pushy metadata, standard terminology, examples, and scope language for trigger accuracy and benchmark scoring.",
+      "descVi": "Tinh chỉnh metadata kích hoạt mạnh, thuật ngữ chuẩn, ví dụ và ngôn ngữ scope để tăng độ chính xác trigger và điểm benchmark."
     },
     {
       "number": 8,
+      "titleEn": "Package",
+      "titleVi": "Đóng gói",
+      "descEn": "Validate metadata, token use, script dependencies, structure, portability, and marketplace readiness before producing a zip.",
+      "descVi": "Kiểm tra metadata, token, dependency script, cấu trúc, tính portable và mức sẵn sàng marketplace trước khi tạo zip."
+    },
+    {
+      "number": 9,
       "titleEn": "Iterate from feedback",
       "titleVi": "Lặp theo phản hồi",
       "descEn": "Generalize from failures or user feedback instead of adding one-off workaround instructions.",
@@ -107,30 +138,39 @@ const data: SkillInfographic = {
     {
       "labelEn": "Create a project skill",
       "labelVi": "Tạo skill trong dự án",
-      "command": "/ak:skill-creator csv reconciliation skill",
-      "whenEn": "A new scoped capability should be added to the current project.",
-      "whenVi": "Cần thêm một năng lực mới trong scope dự án hiện tại.",
-      "expectedEn": "Captures intent, initializes structure, writes SKILL.md/resources, validates, and packages when ready.",
-      "expectedVi": "Nắm ý định, khởi tạo cấu trúc, viết SKILL.md/tài nguyên, validate và đóng gói khi sẵn sàng.",
+      "command": "/ak:skill-creator project-scoped release notes skill",
+      "whenEn": "A repeatable workflow should become a versioned Claude Skill in the current project.",
+      "whenVi": "Một workflow lặp lại cần trở thành Claude Skill được version hóa trong project hiện tại.",
+      "expectedEn": "Captures tasks, triggers, outputs, scope, refusal behavior, and test cases; scaffolds the project skill directory, writes concise SKILL.md/resources, validates structure, and packages only when requested.",
+      "expectedVi": "Ghi nhận task, trigger, output, scope, refusal behavior và test case; scaffold thư mục skill trong project, viết SKILL.md/tài nguyên ngắn gọn, validate cấu trúc và chỉ đóng gói khi được yêu cầu.",
       "recommended": true
     },
     {
       "labelEn": "Refine trigger accuracy",
-      "labelVi": "Cải thiện kích hoạt",
+      "labelVi": "Cải thiện độ chính xác trigger",
       "command": "/ak:skill-creator improve the deployment skill description",
-      "whenEn": "A skill undertriggers or triggers too broadly.",
-      "whenVi": "Một skill kích hoạt thiếu hoặc kích hoạt quá rộng.",
-      "expectedEn": "Optimizes description wording, examples, scope boundaries, and eval coverage.",
-      "expectedVi": "Tối ưu wording description, ví dụ, ranh giới scope và coverage eval."
+      "whenEn": "An existing skill undertriggers, overtriggers, or has vague discovery metadata.",
+      "whenVi": "Một skill hiện có kích hoạt thiếu, kích hoạt quá rộng hoặc có discovery metadata mơ hồ.",
+      "expectedEn": "Audits when-to-use language, sharpens pushy description wording, adds clear use and non-use boundaries, preserves progressive disclosure, and checks eval coverage against the intended trigger contexts.",
+      "expectedVi": "Audit ngôn ngữ when-to-use, làm rõ description kích hoạt mạnh, thêm ranh giới dùng/không dùng, giữ progressive disclosure và kiểm tra coverage eval theo trigger context mong muốn."
+    },
+    {
+      "labelEn": "Add packaging readiness",
+      "labelVi": "Bổ sung sẵn sàng đóng gói",
+      "command": "/ak:skill-creator package the data-cleaning skill for Claude Code distribution",
+      "whenEn": "A skill needs validation evidence and a reviewable distribution zip.",
+      "whenVi": "Một skill cần bằng chứng validation và file zip phân phối có thể review.",
+      "expectedEn": "Runs the bundled quick validator, reviews metadata, token use, script dependencies, structure, portability, placeholder files, and output destination before producing or replacing any distribution archive.",
+      "expectedVi": "Chạy quick validator đi kèm, review metadata, token, dependency script, cấu trúc, tính portable, file placeholder và nơi xuất trước khi tạo hoặc thay archive phân phối."
     },
     {
       "labelEn": "Advised authoring",
       "labelVi": "Tạo skill có cố vấn",
       "command": "/ak:skill-creator browser automation skill --advice",
-      "whenEn": "The skill design or distribution target is high stakes.",
-      "whenVi": "Thiết kế skill hoặc mục tiêu phân phối có rủi ro cao.",
-      "expectedEn": "Adds Kongming checkpoints after planning, after draft/evals, before distribution, or when stuck.",
-      "expectedVi": "Thêm các điểm cố vấn Kongming sau plan, sau draft/eval, trước phân phối hoặc khi bị kẹt."
+      "whenEn": "The skill design, eval results, packaging step, or distribution target needs advisory supervision.",
+      "whenVi": "Thiết kế skill, kết quả eval, bước đóng gói hoặc mục tiêu phân phối cần cố vấn giám sát.",
+      "expectedEn": "Adds advisory-only Kongming checkpoints after intent capture and planning, after the SKILL.md draft and eval results, before packaging or distribution, and when repeated failures block progress.",
+      "expectedVi": "Thêm checkpoint Kongming chỉ tư vấn sau intent capture và planning, sau bản nháp SKILL.md cùng kết quả eval, trước packaging hoặc distribution và khi lỗi lặp lại chặn tiến độ."
     }
   ],
   "outputFlags": [

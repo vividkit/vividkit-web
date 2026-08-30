@@ -20,64 +20,64 @@ const data: SkillInfographic = {
   "processFlow": [
     {
       "number": 1,
-      "titleEn": "Detect mode",
-      "titleVi": "Nhận diện mode",
-      "descEn": "Normalize official/stable/main or beta/dev/next, let --both supersede positional mode, and ask instead of guessing on unknown tokens.",
-      "descVi": "Chuẩn hóa official/stable/main hoặc beta/dev/next, để --both ưu tiên hơn mode vị trí, và hỏi thay vì đoán khi token không rõ."
+      "titleEn": "Pre-flight and mode",
+      "titleVi": "Tiền kiểm và mode",
+      "descEn": "Check the branch, normalize official/stable/main or beta/dev/next, let --both supersede mode tokens, inspect status/diff, and include uncommitted work.",
+      "descVi": "Kiểm tra nhánh, chuẩn hóa official/stable/main hoặc beta/dev/next, để --both ưu tiên hơn token mode, xem status/diff và đưa cả thay đổi chưa commit vào phạm vi."
     },
     {
       "number": 2,
-      "titleEn": "Pre-flight branch",
-      "titleVi": "Kiểm tra nhánh",
-      "descEn": "Confirm the current branch is not already the target, inspect status and diff, and include uncommitted work in the shipping scope.",
-      "descVi": "Xác nhận nhánh hiện tại không phải nhánh đích, xem trạng thái và diff, rồi đưa cả thay đổi chưa commit vào phạm vi ship."
+      "titleEn": "Link issues",
+      "titleVi": "Liên kết issue",
+      "descEn": "Find or create related GitHub issues in one batch, then carry the linked issues into the structured PR body.",
+      "descVi": "Tìm hoặc tạo issue GitHub liên quan bằng một lượt gọn, rồi đưa các issue đã liên kết vào PR body có cấu trúc."
     },
     {
       "number": 3,
-      "titleEn": "Link issues",
-      "titleVi": "Liên kết issue",
-      "descEn": "Find or create related GitHub issues in a single batch and carry them into the PR body contract.",
-      "descVi": "Tìm hoặc tạo issue GitHub liên quan bằng một lượt gọn, rồi đưa chúng vào hợp đồng nội dung PR."
-    },
-    {
-      "number": 4,
       "titleEn": "Merge target",
       "titleVi": "Merge nhánh đích",
-      "descEn": "Fetch and merge origin/<target>; stop with conflicts instead of hiding or force-resolving unrelated work.",
+      "descEn": "Fetch and merge origin/<target-branch>; stop with conflicts instead of hiding or force-resolving unrelated work.",
       "descVi": "Fetch rồi merge origin/<nhánh-đích>; dừng và báo conflict thay vì che giấu hoặc ép xử lý phần việc không liên quan."
     },
     {
+      "number": 4,
+      "titleEn": "Run tests",
+      "titleVi": "Chạy test",
+      "descEn": "Auto-detect the test runner, delegate execution, and stop on failures unless the user explicitly passed --skip-tests.",
+      "descVi": "Tự nhận diện test runner, giao chạy test, và dừng khi có lỗi trừ khi người dùng đã truyền rõ --skip-tests."
+    },
+    {
       "number": 5,
-      "titleEn": "Test and review",
-      "titleVi": "Test và review",
-      "descEn": "Auto-detect the runner, delegate tests and two-pass review, then stop on failures or critical findings unless the documented skip flag applies.",
-      "descVi": "Tự nhận diện test runner, giao test và review hai lượt, rồi dừng khi có lỗi hoặc phát hiện nghiêm trọng trừ khi cờ bỏ qua đã được nêu rõ."
+      "titleEn": "Review",
+      "titleVi": "Review",
+      "descEn": "Run the two-pass pre-landing review, treating critical issues as blockers while informational findings remain evidence.",
+      "descVi": "Chạy review trước khi tạo PR theo hai lượt, coi vấn đề nghiêm trọng là blocker còn phát hiện thông tin là bằng chứng."
     },
     {
       "number": 6,
-      "titleEn": "Version evidence",
-      "titleVi": "Cập nhật bằng chứng",
-      "descEn": "Auto-detect version and changelog files, bump patch automatically, and ask only for major/minor version changes.",
-      "descVi": "Tự tìm file version và changelog, tự tăng patch, và chỉ hỏi khi cần tăng major/minor."
+      "titleEn": "Version and changelog",
+      "titleVi": "Version và changelog",
+      "descEn": "Auto-detect version and changelog files, bump patch automatically, ask on major/minor bumps, and silently skip missing files.",
+      "descVi": "Tự tìm file version và changelog, tự tăng patch, hỏi khi cần major/minor, và âm thầm bỏ qua file không tồn tại."
     },
     {
       "number": 7,
-      "titleEn": "Journal and docs",
-      "titleVi": "Journal và tài liệu",
-      "descEn": "Run journal and official-mode docs updates in the background unless --skip-journal, journal.auto=false, beta mode, or --skip-docs disables them.",
-      "descVi": "Chạy journal và cập nhật tài liệu cho official mode ở nền, trừ khi --skip-journal, journal.auto=false, beta mode hoặc --skip-docs đã tắt bước đó."
+      "titleEn": "Journal, docs, plan",
+      "titleVi": "Journal, tài liệu, plan",
+      "descEn": "Run journal and official-mode docs updates in the background unless skipped, and finalize/link a plan when the ship is plan-backed.",
+      "descVi": "Chạy journal và cập nhật tài liệu cho official mode ở nền trừ khi bị bỏ qua, và hoàn tất/liên kết plan khi lượt ship có plan."
     },
     {
       "number": 8,
       "titleEn": "Commit, push, PR",
       "titleVi": "Commit, push, PR",
-      "descEn": "Create the conventional commit, push the current branch normally, and create a PR with honest evidence sections and linked issues.",
-      "descVi": "Tạo commit theo conventional commit, push nhánh hiện tại theo cách thường, rồi tạo PR có các mục bằng chứng trung thực và issue liên kết."
+      "descEn": "Create the conventional commit, push the current branch normally, and create a PR with honest evidence, linked issues, and ship mode.",
+      "descVi": "Tạo commit theo conventional commit, push nhánh hiện tại theo cách thường, rồi tạo PR có bằng chứng trung thực, issue liên kết và ship mode."
     },
     {
       "number": 9,
-      "titleEn": "Optional landing",
-      "titleVi": "Hoàn tất tùy chọn",
+      "titleEn": "Optional merge/social",
+      "titleVi": "Merge/social tùy chọn",
       "descEn": "If --merge is present, hand the PR to ak:review-pr --fix --reply --merge; if --social is present, publish only after green gates and required opt-ins.",
       "descVi": "Nếu có --merge, giao PR cho ak:review-pr --fix --reply --merge; nếu có --social, chỉ đăng sau khi các cổng xanh và các xác nhận bắt buộc đã đủ."
     }
@@ -113,40 +113,143 @@ const data: SkillInfographic = {
       "labelEn": "Auto-detect ship",
       "labelVi": "Ship tự nhận diện",
       "command": "/ak:ship",
-      "whenEn": "The branch is done and the skill should infer official or beta mode.",
-      "whenVi": "Nhánh đã xong và skill cần tự suy ra official hay beta.",
-      "expectedEn": "Runs the full ship-to-PR pipeline and returns the PR URL or exact blocker.",
-      "expectedVi": "Chạy toàn bộ luồng ship đến PR và trả URL PR hoặc điểm chặn cụ thể.",
+      "whenEn": "A completed branch needs the standard PR shipping workflow.",
+      "whenVi": "Một nhánh đã hoàn tất cần quy trình ship PR tiêu chuẩn.",
+      "expectedEn": "Runs pre-flight mode detection, issue linking, target merge, tests, review, version/changelog updates, commit, push, and PR creation, then returns the PR URL or exact blocker.",
+      "expectedVi": "Chạy tiền kiểm mode, liên kết issue, merge nhánh đích, test, review, cập nhật version/changelog, commit, push và tạo PR, rồi trả URL PR hoặc blocker cụ thể.",
       "recommended": true
     },
     {
       "labelEn": "Beta supervised merge",
       "labelVi": "Beta có cố vấn và merge",
       "command": "/ak:ship beta --advice --merge",
-      "whenEn": "Shipping toward a development branch with Kongming advice and downstream PR landing.",
-      "whenVi": "Ship về nhánh phát triển với cố vấn Kongming và merge PR hạ nguồn.",
-      "expectedEn": "Performs advice checkpoints, creates the beta PR, then delegates reviewed merge readiness.",
-      "expectedVi": "Chạy các điểm cố vấn, tạo PR beta, rồi giao bước sẵn sàng merge có review."
+      "whenEn": "A completed branch should ship toward a development branch with Kongming advice and reviewed landing.",
+      "whenVi": "Một nhánh đã hoàn tất cần ship về nhánh phát triển với cố vấn Kongming và merge có review.",
+      "expectedEn": "Normalizes beta mode, runs required advisory checkpoints during the local ship-to-PR path, creates the PR, then delegates reviewed merge and CI convergence to ak:review-pr.",
+      "expectedVi": "Chuẩn hóa beta mode, chạy các điểm cố vấn bắt buộc trong luồng ship-to-PR cục bộ, tạo PR, rồi giao merge có review và CI xanh cho ak:review-pr."
     },
     {
       "labelEn": "Dual target",
       "labelVi": "Hai đích",
       "command": "/ak:ship --both --merge",
-      "whenEn": "A change needs beta first and a gated stable promotion after green beta.",
-      "whenVi": "Thay đổi cần đi beta trước rồi mới promote stable sau khi beta xanh.",
-      "expectedEn": "Runs the beta stage, gates the stable stage, and refuses unrelated promotion work.",
-      "expectedVi": "Chạy chặng beta, đặt cổng cho chặng stable, và từ chối phần promote kéo theo việc không liên quan."
+      "whenEn": "A completed change needs beta first and a gated stable promotion after green beta.",
+      "whenVi": "Một thay đổi đã hoàn tất cần đi beta trước rồi mới promote stable sau khi beta xanh.",
+      "expectedEn": "Runs the beta stage first, requires the stable-stage gate before promotion, delegates requested reviewed merge, and stops if the promotion would sweep unrelated work.",
+      "expectedVi": "Chạy chặng beta trước, yêu cầu cổng stable trước khi promote, giao merge có review khi được yêu cầu, và dừng nếu phần promote sẽ cuốn theo việc không liên quan."
     },
     {
       "labelEn": "Social dry run",
       "labelVi": "Nháp social",
       "command": "/ak:ship official --social",
-      "whenEn": "You want build-in-public copy rendered after PR creation without posting APIs.",
-      "whenVi": "Muốn dựng nội dung build-in-public sau khi tạo PR nhưng chưa gọi API đăng bài.",
-      "expectedEn": "Creates the ship PR and renders social posts in dry-run mode.",
-      "expectedVi": "Tạo PR ship và hiển thị bài social ở chế độ dry-run."
+      "whenEn": "A completed official-mode ship should also render build-in-public copy after PR creation.",
+      "whenVi": "Một lượt ship official đã hoàn tất cũng cần dựng nội dung build-in-public sau khi tạo PR.",
+      "expectedEn": "Creates the ship PR, composes a journal-backed build-in-public draft from PR/issue/plan context, and prints channel posts without calling publishing APIs unless --yes-post is also present.",
+      "expectedVi": "Tạo PR ship, soạn nháp build-in-public có journal từ bối cảnh PR/issue/plan, và in bài cho từng kênh mà không gọi API đăng trừ khi cũng có --yes-post."
     }
   ],
+  "invocation": {
+    "syntax": "/ak:ship [official|stable|main|beta|dev|next] [--both] [--advice] [--merge] [--skip-tests] [--skip-review] [--skip-journal] [--skip-docs] [--social] [--yes-post] [--yes-post-private] [--dry-run]",
+    "arguments": [
+      {
+        "token": "[official|stable|main|beta|dev|next]",
+        "titleEn": "Release mode",
+        "titleVi": "Mode phát hành",
+        "descEn": "Optional mode token. official, stable, and main normalize to the official path and target the detected default branch; beta, dev, and next normalize to the beta path and target the detected development branch. Omit it only when branch naming can safely choose the mode.",
+        "descVi": "Token mode tùy chọn. official, stable và main được chuẩn hóa thành luồng official và nhắm tới nhánh mặc định đã phát hiện; beta, dev và next được chuẩn hóa thành luồng beta và nhắm tới nhánh phát triển đã phát hiện. Chỉ bỏ token này khi tên nhánh có thể chọn mode an toàn.",
+        "exampleCommand": "/ak:ship official"
+      }
+    ],
+    "options": [
+      {
+        "token": "--both",
+        "titleEn": "Ship both targets",
+        "titleVi": "Ship cả hai đích",
+        "descEn": "Runs the beta stage first, then a gated stable stage. It supersedes any positional mode token and never bypasses branch protection.",
+        "descVi": "Chạy stage beta trước, rồi đến stage stable có gate. Cờ này ưu tiên hơn mọi token mode vị trí và không bao giờ bỏ qua branch protection.",
+        "exampleCommand": "/ak:ship --both --merge"
+      },
+      {
+        "token": "--advice",
+        "titleEn": "Ask Kongming",
+        "titleVi": "Hỏi Kongming",
+        "descEn": "Adds advisory-only Kongming checkpoints to the local ship-to-PR path. Advice cannot replace tests, review, or ownership by the main agent.",
+        "descVi": "Thêm các checkpoint Kongming chỉ tư vấn vào luồng ship-to-PR cục bộ. Lời khuyên không thay thế test, review hoặc quyền quyết định của agent chính.",
+        "exampleCommand": "/ak:ship beta --advice"
+      },
+      {
+        "token": "--merge",
+        "titleEn": "Reviewed merge",
+        "titleVi": "Merge có review",
+        "descEn": "After PR creation, delegates to ak:review-pr with fix, reply, merge, and post-merge CI convergence. Without this flag, ak:ship does not merge the PR.",
+        "descVi": "Sau khi tạo PR, giao cho ak:review-pr xử lý fix, reply, merge và đưa CI sau merge về xanh. Nếu thiếu cờ này, ak:ship không merge PR.",
+        "exampleCommand": "/ak:ship official --merge"
+      },
+      {
+        "token": "--skip-tests",
+        "titleEn": "Skip tests",
+        "titleVi": "Bỏ test",
+        "descEn": "Omits the test gate only when equivalent evidence already exists; the PR must record that skip evidence honestly.",
+        "descVi": "Bỏ gate test chỉ khi đã có bằng chứng tương đương; PR phải ghi trung thực bằng chứng cho việc bỏ qua.",
+        "exampleCommand": "/ak:ship --skip-tests"
+      },
+      {
+        "token": "--skip-review",
+        "titleEn": "Skip local review",
+        "titleVi": "Bỏ review local",
+        "descEn": "Omits the pre-landing review step. It does not approve the PR and does not skip the downstream ak:review-pr path requested by --merge.",
+        "descVi": "Bỏ bước review trước khi tạo PR. Cờ này không phê duyệt PR và không bỏ luồng ak:review-pr hạ nguồn khi có --merge.",
+        "exampleCommand": "/ak:ship --skip-review"
+      },
+      {
+        "token": "--skip-journal",
+        "titleEn": "Skip journal and social",
+        "titleVi": "Bỏ journal và social",
+        "descEn": "Omits the background technical journal and suppresses the entire social step; code and PR evidence gates still apply.",
+        "descVi": "Bỏ technical journal chạy nền và tắt toàn bộ bước social; các gate code và bằng chứng PR vẫn giữ nguyên.",
+        "exampleCommand": "/ak:ship --skip-journal"
+      },
+      {
+        "token": "--skip-docs",
+        "titleEn": "Skip docs update",
+        "titleVi": "Bỏ cập nhật docs",
+        "descEn": "Omits the official-mode docs update. Beta mode skips that docs step automatically.",
+        "descVi": "Bỏ cập nhật docs trong mode official. Mode beta tự động bỏ bước docs đó.",
+        "exampleCommand": "/ak:ship official --skip-docs"
+      },
+      {
+        "token": "--social",
+        "titleEn": "Social draft",
+        "titleVi": "Nháp social",
+        "descEn": "After the required green PR gate, composes build-in-public posts from PR, issue, and plan context. Without --yes-post, it renders only and makes no API call.",
+        "descVi": "Sau gate PR xanh bắt buộc, soạn bài build-in-public từ bối cảnh PR, issue và plan. Nếu thiếu --yes-post, chỉ render nội dung và không gọi API.",
+        "exampleCommand": "/ak:ship --social"
+      },
+      {
+        "token": "--yes-post",
+        "titleEn": "Publish social",
+        "titleVi": "Đăng social",
+        "descEn": "Allows --social to publish instead of rendering only. It has no publishing effect without --social.",
+        "descVi": "Cho phép --social đăng thật thay vì chỉ render. Cờ này không có tác dụng đăng nếu thiếu --social.",
+        "exampleCommand": "/ak:ship --social --yes-post"
+      },
+      {
+        "token": "--yes-post-private",
+        "titleEn": "Private post opt-in",
+        "titleVi": "Xác nhận đăng repo private",
+        "descEn": "Second explicit opt-in required before publishing social posts about a private repository. It requires --social and --yes-post.",
+        "descVi": "Xác nhận rõ lần hai trước khi đăng social về repository private. Cờ này cần --social và --yes-post.",
+        "exampleCommand": "/ak:ship --social --yes-post --yes-post-private"
+      },
+      {
+        "token": "--dry-run",
+        "titleEn": "Preview only",
+        "titleVi": "Chỉ xem trước",
+        "descEn": "Reads pre-flight state and prints the proposed pipeline without delegation, review-merge, social publishing, mutation, or stable-stage simulation for --both.",
+        "descVi": "Đọc trạng thái tiền kiểm và in pipeline dự kiến, không ủy quyền, không review-merge, không đăng social, không mutate và không mô phỏng stable stage cho --both.",
+        "exampleCommand": "/ak:ship --dry-run"
+      }
+    ]
+  },
   "outputFlags": [
     {
       "flag": "--both",

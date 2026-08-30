@@ -10,6 +10,20 @@ const data: SkillInfographic = {
     "taglineEn": "Use reflective step-by-step analysis with dynamic expansion, contraction, revision, branching, hypothesis verification, and explicit final convergence.",
     "taglineVi": "Dùng phân tích từng bước có phản tư, tự mở rộng/thu gọn, sửa nhận định, rẽ nhánh, kiểm chứng giả thuyết và hội tụ cuối rõ ràng."
   },
+  "invocation": {
+    "syntax": "/ak:sequential-thinking [problem to analyze step-by-step]",
+    "arguments": [
+      {
+        "token": "[problem to analyze step-by-step]",
+        "titleEn": "Problem to analyze",
+        "titleVi": "Vấn đề cần phân tích",
+        "descEn": "States the concrete decision, diagnosis, constraints, available evidence, rejected alternatives, authority boundary, and useful response bound for revisable step-by-step reasoning.",
+        "descVi": "Nêu decision hoặc diagnosis cụ thể, constraint, evidence hiện có, alternative đã loại, ranh giới quyền hạn và giới hạn phản hồi hữu ích cho suy luận từng bước có thể revision.",
+        "required": true,
+        "exampleCommand": "/ak:sequential-thinking \"Choose a migration strategy for splitting the audit log from the primary database. Use at most 8 concise checkpoints, compare dual-write and change-data-capture branches, revise assumptions when evidence conflicts, and finish with a decision, verification plan, and unresolved questions.\""
+      }
+    ]
+  },
   "processFlow": [
     {
       "number": 1,
@@ -109,23 +123,41 @@ const data: SkillInfographic = {
   ],
   "promptExamples": [
     {
-      "labelEn": "Architecture reasoning",
-      "labelVi": "Suy luận kiến trúc",
+      "labelEn": "Architecture tradeoff",
+      "labelVi": "Đánh đổi kiến trúc",
       "command": "/ak:sequential-thinking compare event sourcing vs audit-log tables for this service",
-      "whenEn": "Use when a problem has multiple dependent tradeoffs and may need revision.",
-      "whenVi": "Dùng khi vấn đề có nhiều tradeoff phụ thuộc nhau và có thể cần sửa nhận định.",
-      "expectedEn": "Stepwise analysis with assumptions, branches, verification, and final rationale.",
-      "expectedVi": "Phân tích từng bước có giả định, nhánh, kiểm chứng và lý do chốt.",
+      "whenEn": "Use when a complex decision has dependent tradeoffs and may need branching or revision.",
+      "whenVi": "Dùng khi quyết định phức tạp có nhiều đánh đổi phụ thuộc nhau và có thể cần rẽ nhánh hoặc sửa nhận định.",
+      "expectedEn": "Starts with a loose thought estimate, structures assumptions and alternatives, branches the competing approaches, verifies the strongest option, and finishes with a final decision rationale.",
+      "expectedVi": "Bắt đầu bằng ước lượng số thought lỏng, cấu trúc giả định và phương án, rẽ nhánh các hướng cạnh tranh, kiểm chứng lựa chọn mạnh nhất rồi chốt bằng lý do quyết định.",
       "recommended": true
     },
     {
       "labelEn": "Debug hypothesis",
       "labelVi": "Giả thuyết debug",
       "command": "/ak:sequential-thinking analyze why uploads intermittently fail after deploy",
-      "whenEn": "Use for unclear failures where hypotheses need testing and revision.",
-      "whenVi": "Dùng cho lỗi chưa rõ nguyên nhân, cần kiểm tra và sửa giả thuyết.",
-      "expectedEn": "Hypothesis and verification thoughts until the likely cause is supported.",
-      "expectedVi": "Các thought giả thuyết và kiểm chứng đến khi nguyên nhân có bằng chứng hỗ trợ."
+      "whenEn": "Use for unclear failures where hypotheses need verification and course correction.",
+      "whenVi": "Dùng cho lỗi chưa rõ nguyên nhân, nơi giả thuyết cần được kiểm chứng và điều chỉnh hướng.",
+      "expectedEn": "Builds a thought sequence around likely causes, marks revised assumptions when evidence changes the model, records verification steps, and stops only when the supported cause is clear.",
+      "expectedVi": "Xây dựng chuỗi thought quanh các nguyên nhân khả dĩ, đánh dấu giả định được sửa khi bằng chứng thay đổi mô hình, ghi bước kiểm chứng và chỉ dừng khi nguyên nhân có hỗ trợ rõ ràng."
+    },
+    {
+      "labelEn": "Adaptive implementation plan",
+      "labelVi": "Kế hoạch triển khai thích ứng",
+      "command": "/ak:sequential-thinking plan a safe migration from REST polling to webhook delivery",
+      "whenEn": "Use when scope may expand or contract as risks, dependencies, and rollout constraints become clearer.",
+      "whenVi": "Dùng khi phạm vi có thể mở rộng hoặc thu gọn khi rủi ro, phụ thuộc và ràng buộc rollout rõ hơn.",
+      "expectedEn": "Produces a step-by-step plan that can adjust its thought count, names uncertainties and next areas to inspect, revises invalidated steps, and ends with verified readiness criteria.",
+      "expectedVi": "Tạo kế hoạch từng bước có thể điều chỉnh số thought, nêu bất định và vùng cần xem tiếp, sửa các bước bị bác bỏ và kết thúc bằng tiêu chí sẵn sàng đã kiểm chứng."
+    },
+    {
+      "labelEn": "Branch alternatives",
+      "labelVi": "Rẽ nhánh phương án",
+      "command": "/ak:sequential-thinking choose between queue-backed retries, cron repair, and synchronous retry for payments",
+      "whenEn": "Use when several approaches deserve separate exploration before convergence.",
+      "whenVi": "Dùng khi nhiều hướng giải đáng được khảo sát riêng trước khi hội tụ.",
+      "expectedEn": "Labels branches from a parent thought, compares the alternatives explicitly, captures any revisions from new insights, verifies the preferred path, and marks a final thought only when uncertainties are resolved.",
+      "expectedVi": "Gắn nhãn các nhánh từ thought cha, so sánh phương án rõ ràng, ghi các sửa đổi từ insight mới, kiểm chứng hướng ưu tiên và chỉ đánh dấu final khi bất định đã được giải quyết."
     }
   ]
 };

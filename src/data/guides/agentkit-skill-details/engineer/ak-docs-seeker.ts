@@ -1,4 +1,27 @@
-import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-works';
+
+const invocation: SkillInvocation = {
+  syntax: "/ak:docs-seeker [library-name] [topic]",
+  arguments: [
+    {
+      token: "[library-name]",
+      titleEn: "Library or framework",
+      titleVi: "Thư viện hoặc framework",
+      descEn: "Name the package, framework, API, docs site, or repository whose current documentation should be found.",
+      descVi: "Nêu package, framework, API, site tài liệu hoặc repository cần tìm tài liệu hiện hành.",
+      required: true,
+      exampleCommand: "/ak:docs-seeker \"Next.js 16 cache invalidation APIs\"",
+    },
+    {
+      token: "[topic]",
+      titleEn: "Topic",
+      titleVi: "Chủ đề",
+      descEn: "Optional feature, API, version, target language, or question to narrow the search. Omit it for broader library coverage that may need URL prioritization.",
+      descVi: "Tính năng, API, version, ngôn ngữ đích hoặc câu hỏi tùy chọn để thu hẹp tìm kiếm. Bỏ qua khi cần độ phủ thư viện rộng hơn và có thể phải ưu tiên URL.",
+      exampleCommand: "/ak:docs-seeker \"shadcn date picker\"",
+    },
+  ],
+};
 
 const data: SkillInfographic = {
   id: "ak-docs-seeker",
@@ -14,14 +37,14 @@ const data: SkillInfographic = {
     type: "info",
     titleEn: "SCRIPT-FIRST ROUTE",
     titleVi: "TUYẾN SCRIPT-FIRST",
-    contentEn: "Always run detect-topic.js, then fetch-docs.js, then analyze-llms-txt.js when multiple URLs are returned. Do not manually construct context7 URLs first.",
-    contentVi: "Luôn chạy detect-topic.js, rồi fetch-docs.js, rồi analyze-llms-txt.js khi có nhiều URL. Không tự dựng URL context7 trước.",
+    contentEn: "Always run detect-topic.js, then fetch-docs.js, and analyze the fetched llms.txt content when multiple URLs need prioritization. Do not manually construct context7 URLs first.",
+    contentVi: "Luôn chạy detect-topic.js, rồi fetch-docs.js, và phân tích nội dung llms.txt đã tải khi nhiều URL cần được ưu tiên hóa. Không tự dựng URL context7 trước.",
   },
   processFlow: [
     { number: 1, titleEn: "Read Query", titleVi: "Đọc truy vấn", descEn: "Capture the library or framework and the topic the user needs, such as an API, feature, or repository behavior.", descVi: "Xác định thư viện hoặc framework và chủ đề người dùng cần, như API, tính năng hoặc hành vi repository." },
     { number: 2, titleEn: "Detect Topic", titleVi: "Nhận diện chủ đề", descEn: "Run detect-topic.js to classify topic-specific versus general documentation and extract library plus topic.", descVi: "Chạy detect-topic.js để phân loại tài liệu theo chủ đề cụ thể hay tổng quát và trích library cùng topic." },
     { number: 3, titleEn: "Fetch Docs", titleVi: "Tải tài liệu", descEn: "Run fetch-docs.js with the original query so scripts handle context7 URL construction, fallback chains, and errors.", descVi: "Chạy fetch-docs.js với truy vấn gốc để script tự dựng URL context7, xử lý fallback và lỗi." },
-    { number: 4, titleEn: "Analyze Coverage", titleVi: "Phân tích độ phủ", descEn: "When multiple llms.txt URLs return, pipe content to analyze-llms-txt.js for critical/important/supplementary categories and agent distribution.", descVi: "Khi trả về nhiều URL llms.txt, pipe nội dung vào analyze-llms-txt.js để phân loại critical/important/supplementary và đề xuất phân phối agent." },
+    { number: 4, titleEn: "Analyze Coverage", titleVi: "Phân tích độ phủ", descEn: "When fetched llms.txt content contains multiple URLs, pipe the content to analyze-llms-txt.js for critical/important/supplementary categories and agent distribution.", descVi: "Khi nội dung llms.txt đã tải chứa nhiều URL, pipe nội dung vào analyze-llms-txt.js để phân loại critical/important/supplementary và đề xuất phân phối agent." },
     { number: 5, titleEn: "Load Targeted References", titleVi: "Nạp tham chiếu đúng chỗ", descEn: "Open topic-search, library-search, repo-analysis, context7-patterns, errors, or advanced guidance only when needed.", descVi: "Chỉ mở topic-search, library-search, repo-analysis, context7-patterns, errors hoặc advanced khi thật sự cần." },
     { number: 6, titleEn: "Read Primary Pages", titleVi: "Đọc trang chính", descEn: "Use returned URLs and web reading to ground answers in current documentation rather than memory.", descVi: "Dùng các URL trả về và đọc web để câu trả lời dựa trên tài liệu hiện tại thay vì trí nhớ." },
     { number: 7, titleEn: "Distribute if Broad", titleVi: "Phân phối khi rộng", descEn: "Follow the script's recommended strategy: one agent, three agents, seven agents, or phased research.", descVi: "Theo chiến lược script đề xuất: một agent, ba agent, bảy agent hoặc nghiên cứu theo phase." },
@@ -39,6 +62,7 @@ const data: SkillInfographic = {
     "Chỉ nạp dần workflow reference khi truy vấn cần đến.",
     "Tài liệu hiện tại đáng tin hơn trí nhớ với API, tính năng và hành vi repository.",
   ],
+  invocation,
   expertiseAreasEn: [
     "llms.txt and context7 documentation lookup",
     "Topic-specific versus general library search",
@@ -72,13 +96,13 @@ const data: SkillInfographic = {
     patternVi: "Phân loại thư viện/chủ đề + URL đã tải + chiến lược phân tích",
     locationEn: "In response or delegated research notes",
     locationVi: "Trong phản hồi hoặc ghi chú nghiên cứu được giao",
-    descEn: "Includes detected topic, primary docs read, fallback path, URL priority, and recommended agent distribution when broad.",
-    descVi: "Gồm chủ đề đã nhận diện, docs chính đã đọc, đường fallback, độ ưu tiên URL và đề xuất phân phối agent khi phạm vi rộng.",
+    descEn: "Includes detected topic or general query, the Context7 source URL, primary docs read from the returned index, fallback path, URL priority, and recommended agent distribution when broad.",
+    descVi: "Gồm topic đã nhận diện hoặc query tổng quát, URL nguồn Context7, docs chính đã đọc từ index trả về, đường fallback, độ ưu tiên URL và đề xuất phân phối agent khi phạm vi rộng.",
   },
   promptExamples: [
-    { labelEn: "Topic lookup", labelVi: "Tra cứu theo chủ đề", command: "/ak:docs-seeker shadcn date picker", whenEn: "You need current docs for one feature or API pattern.", whenVi: "Cần tài liệu hiện tại cho một tính năng hoặc mẫu API cụ thể.", expectedEn: "detect-topic marks it topic-specific, fetch-docs returns focused URLs, and the answer cites the relevant docs.", expectedVi: "detect-topic đánh dấu là truy vấn theo chủ đề, fetch-docs trả URL tập trung và câu trả lời trích dẫn docs liên quan.", recommended: true },
-    { labelEn: "General docs", labelVi: "Docs tổng quát", command: "/ak:docs-seeker Next.js documentation", whenEn: "You need broad coverage for a library or framework.", whenVi: "Cần độ phủ rộng cho một thư viện hoặc framework.", expectedEn: "fetch-docs returns a larger set, analyzer ranks URLs, and research is distributed if needed.", expectedVi: "fetch-docs trả tập URL lớn hơn, analyzer xếp hạng URL và phân phối nghiên cứu nếu cần." },
-    { labelEn: "Repository analysis", labelVi: "Phân tích repository", command: "/ak:docs-seeker GitHub repository analysis for a poorly documented library", whenEn: "llms.txt or context7 coverage is missing or insufficient.", whenVi: "llms.txt hoặc context7 thiếu hoặc không đủ thông tin.", expectedEn: "Uses repository-analysis fallback and reports direct source/documentation evidence.", expectedVi: "Dùng fallback repo-analysis và báo cáo bằng chứng trực tiếp từ source/tài liệu." },
+    { labelEn: "Topic lookup", labelVi: "Tra cứu theo chủ đề", command: "/ak:docs-seeker \"How do I use date picker in shadcn?\"", whenEn: "You need current docs for one feature, component, or API pattern.", whenVi: "Cần tài liệu hiện hành cho một tính năng, component hoặc mẫu API cụ thể.", expectedEn: "The skill classifies the query as topic-specific, fetches the Context7 topic index with automatic general fallback, reads the few relevant pages, and cites the docs that support the answer.", expectedVi: "Skill phân loại query là theo topic, fetch index Context7 theo topic với fallback tự động sang general, đọc vài trang liên quan và cite tài liệu hỗ trợ câu trả lời.", recommended: true },
+    { labelEn: "General library coverage", labelVi: "Độ phủ thư viện tổng quát", command: "/ak:docs-seeker \"Documentation for Astro\"", whenEn: "You need broad library or framework coverage before choosing which pages to read.", whenVi: "Cần độ phủ rộng cho thư viện hoặc framework trước khi chọn trang cần đọc.", expectedEn: "The skill detects a general query, fetches the library llms.txt index, runs the analyzer to group URLs and suggest distribution, then synthesizes installation, concepts, APIs, and examples from primary pages.", expectedVi: "Skill nhận diện query tổng quát, fetch index llms.txt của thư viện, chạy analyzer để nhóm URL và gợi ý phân phối, rồi tổng hợp installation, concept, API và ví dụ từ trang chính." },
+    { labelEn: "Repository fallback", labelVi: "Fallback repository", command: "/ak:docs-seeker \"Find current docs for github.com/pacocoursey/cmdk. If Context7 has no llms.txt, use repository analysis; cloning to /tmp/docs-analysis is allowed.\"", whenEn: "Context7 or official llms.txt coverage is missing and repository evidence is allowed.", whenVi: "Context7 hoặc llms.txt chính thức thiếu coverage và được phép dùng bằng chứng repository.", expectedEn: "The skill follows the repository-analysis fallback: find and verify the official repo, optionally clone and pack it with Repomix, extract README/docs/examples/API evidence, and label code-based claims as fallback evidence.", expectedVi: "Skill theo fallback repo-analysis: tìm và xác minh repo chính thức, tùy chọn clone và pack bằng Repomix, trích bằng chứng từ README/docs/examples/API và ghi nhãn claim dựa trên code là bằng chứng fallback." },
   ],
 };
 

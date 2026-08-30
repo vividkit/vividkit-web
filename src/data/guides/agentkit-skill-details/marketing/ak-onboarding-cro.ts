@@ -10,6 +10,13 @@ const data: SkillInfographic = {
     "taglineEn": "Optimize post-signup onboarding, activation, first-run experience, empty states, checklists, aha moments, and time-to-value.",
     "taglineVi": "Tối ưu onboarding sau signup, activation, trải nghiệm lần đầu, empty state, checklist, khoảnh khắc aha và time-to-value."
   },
+  "hardGate": {
+    "type": "warning",
+    "titleEn": "Motivation must not become manipulation",
+    "titleVi": "Động lực không được trở thành thao túng",
+    "contentEn": "Do not fake progress, manufacture urgency, punish dismissal, hide skip paths, request notification permission without context, or make unrelated product access depend on onboarding completion.",
+    "contentVi": "Không giả tiến độ, tạo khẩn cấp giả, phạt việc bỏ qua, giấu đường skip, xin quyền thông báo thiếu ngữ cảnh hoặc buộc quyền truy cập sản phẩm không liên quan phụ thuộc vào hoàn tất onboarding."
+  },
   "processFlow": [
     {
       "number": 1,

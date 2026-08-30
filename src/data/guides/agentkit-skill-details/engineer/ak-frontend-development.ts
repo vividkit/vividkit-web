@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: "warning",
-    titleEn: "NO EARLY LOADING RETURNS",
-    titleVi: "KHÔNG RETURN LOADING SỚM",
-    contentEn: "Use SuspenseLoader and Suspense-based data fetching. Avoid early loading-spinner returns that cause layout shift. Use useMuiSnackbar, never react-toastify.",
-    contentVi: "Dùng SuspenseLoader và data fetching dựa trên Suspense. Tránh return loading spinner sớm gây layout shift. Dùng useMuiSnackbar, không dùng react-toastify.",
+    titleEn: "NO DEFAULT PROJECT STACK",
+    titleVi: "KHÔNG ÁP STACK MẶC ĐỊNH",
+    contentEn: "The Skill defines no default stack, flags, or named modes. Treat bundled names such as SuspenseLoader, useMuiSnackbar, apiClient, import aliases, and route formats as patterns only when the current project provides those contracts.",
+    contentVi: "Skill không định nghĩa stack mặc định, flag hay mode có tên. Chỉ xem các tên đi kèm như SuspenseLoader, useMuiSnackbar, apiClient, alias import và format route là pattern khi dự án hiện tại có đúng các contract đó.",
   },
   processFlow: [
     { number: 1, titleEn: "Classify Work", titleVi: "Phân loại việc", descEn: "Decide whether the request is a component, page, feature, data-fetching path, route, styling task, performance pass, or TypeScript cleanup.", descVi: "Xác định yêu cầu là component, page, feature, data fetching, route, styling, tối ưu hiệu năng hay dọn TypeScript." },
@@ -63,6 +63,12 @@ const data: SkillInfographic = {
     { flag: "styling", modeEn: "MUI styling", modeVi: "Style MUI", research: "styling-guide.md", redTeam: "sx/Grid/style threshold", validation: "Visual state", cookFlag: "MUI v7" },
     { flag: "performance", modeEn: "Performance", modeVi: "Hiệu năng", research: "performance.md", redTeam: "Memoization justified", validation: "Observable improvement", cookFlag: "useMemo/useCallback" },
   ],
+  invocation: {
+    syntax: "/ak:frontend-development [component or feature]",
+    arguments: [
+      { token: "[component or feature]", titleEn: "Component or feature", titleVi: "Component hoặc feature", descEn: "Natural-language React/TypeScript implementation request. Include the user-visible outcome, existing component or data contracts, required states, responsive and accessibility boundaries, allowed files or dependencies, and focused verification target; the Skill defines no default stack, flags, or named modes.", descVi: "Yêu cầu triển khai React/TypeScript bằng ngôn ngữ tự nhiên. Nêu outcome người dùng thấy được, contract component hoặc dữ liệu hiện có, state bắt buộc, ranh giới responsive và accessibility, tệp hoặc dependency được phép và mục tiêu xác minh tập trung; Skill không định nghĩa stack mặc định, flag hay mode có tên.", required: true, exampleCommand: "/ak:frontend-development \"Add an order-status filter to the existing React page. Reuse its query keys, router, design tokens, and loading boundary; cover empty, error, keyboard, and mobile states; do not install packages or publish.\"" },
+    ],
+  },
   skillStack: [
     { name: "React", type: "tool" },
     { name: "TypeScript", type: "tool" },
@@ -72,9 +78,10 @@ const data: SkillInfographic = {
     { name: "SuspenseLoader", type: "tool" },
   ],
   promptExamples: [
-    { labelEn: "New feature", labelVi: "Feature mới", command: "/ak:frontend-development build a users management feature", whenEn: "A feature needs domain folders, API service, route, components, hooks, and types.", whenVi: "Feature cần folder domain, API service, route, component, hook và type.", expectedEn: "Creates the feature structure, uses lazy routes and Suspense boundaries, and exports the public API.", expectedVi: "Tạo cấu trúc feature, dùng route lazy và Suspense boundary, rồi export API công khai.", recommended: true },
-    { labelEn: "Data component", labelVi: "Component dữ liệu", command: "/ak:frontend-development create a Suspense data table for orders", whenEn: "A component fetches server data and needs stable loading/error behavior.", whenVi: "Component fetch dữ liệu server và cần loading/error ổn định.", expectedEn: "Uses useSuspenseQuery with a feature API service and SuspenseLoader instead of early loading returns.", expectedVi: "Dùng useSuspenseQuery với API service theo feature và SuspenseLoader thay vì return loading sớm." },
-    { labelEn: "MUI styling", labelVi: "Style MUI", command: "/ak:frontend-development style the dashboard cards with MUI v7", whenEn: "The task is visual implementation inside an existing MUI stack.", whenVi: "Tác vụ là triển khai giao diện trong stack MUI hiện có.", expectedEn: "Uses sx, SxProps<Theme>, the style-file threshold, and Grid size syntax where needed.", expectedVi: "Dùng sx, SxProps<Theme>, ngưỡng tách file style và cú pháp Grid size khi cần." },
+    { labelEn: "New feature slice", labelVi: "Lát cắt feature mới", command: "/ak:frontend-development \"Build an account-settings feature with route, typed API service, feature components, hooks, helpers, types, lazy loading, and Suspense boundaries.\"", whenEn: "Use when creating a React/TypeScript feature that needs domain folders, route wiring, and a public feature API.", whenVi: "Dùng khi tạo feature React/TypeScript cần folder domain, nối route và API công khai của feature.", expectedEn: "Sets up the features/{name} structure from the Skill checklist, adds the route, lazy-loads heavy UI, wraps loading with SuspenseLoader, and exports the feature boundary.", expectedVi: "Thiết lập cấu trúc features/{name} theo checklist của Skill, thêm route, lazy-load UI nặng, bọc loading bằng SuspenseLoader và export boundary của feature.", recommended: true },
+    { labelEn: "Suspense data component", labelVi: "Component dữ liệu Suspense", command: "/ak:frontend-development \"Create an orders table that fetches with TanStack Query, uses the existing apiClient service layer, and handles loading and errors without early spinner returns.\"", whenEn: "Use when a component fetches server data and must replace isLoading branches with Suspense-based behavior.", whenVi: "Dùng khi component fetch dữ liệu server và phải thay nhánh isLoading bằng hành vi dựa trên Suspense.", expectedEn: "Implements useSuspenseQuery with typed query keys and a feature API service, keeps layout stable through SuspenseLoader, and routes user feedback through useMuiSnackbar.", expectedVi: "Triển khai useSuspenseQuery với query key có type và API service theo feature, giữ layout ổn định bằng SuspenseLoader và đưa phản hồi user qua useMuiSnackbar." },
+    { labelEn: "TanStack route", labelVi: "Route TanStack", command: "/ak:frontend-development \"Add a /reports route that lazy-loads the Reports page, uses createFileRoute, and returns breadcrumb data from the loader.\"", whenEn: "Use when setting up folder-based TanStack Router pages in an existing React app.", whenVi: "Dùng khi thiết lập page TanStack Router theo folder trong app React hiện có.", expectedEn: "Creates the route file in the Skill’s routes/{name}/index.tsx pattern, lazy-loads the feature page, and keeps loader metadata such as breadcrumbs explicit.", expectedVi: "Tạo file route theo pattern routes/{name}/index.tsx của Skill, lazy-load page của feature và giữ metadata loader như breadcrumb rõ ràng." },
+    { labelEn: "MUI styling pass", labelVi: "Lượt style MUI", command: "/ak:frontend-development \"Refactor the dashboard cards to MUI v7 sx styles, typed SxProps<Theme>, and Grid size syntax without changing product behavior.\"", whenEn: "Use when the work is implementation inside a MUI v7 stack rather than visual concept selection.", whenVi: "Dùng khi công việc là triển khai trong stack MUI v7, không phải chọn concept thị giác.", expectedEn: "Uses the Skill’s styling guide: sx as the primary method, SxProps<Theme> for type-safe theme access, separate .styles.ts only past the size threshold, and Grid size props.", expectedVi: "Dùng styling guide của Skill: sx là phương thức chính, SxProps<Theme> để truy cập theme có type, chỉ tách .styles.ts khi vượt ngưỡng và dùng prop Grid size." },
   ],
 };
 

@@ -41,15 +41,31 @@ const data: SkillInfographic = {
   ],
   expertiseAreasEn: ['Chrome profile mapping', 'DevTools MCP bridge probing', 'Exact URL-anchor tab binding', 'Real-account automation safety'],
   expertiseAreasVi: ['Ánh xạ profile Chrome', 'Dò cầu Chrome DevTools MCP', 'Bám tab bằng anchor URL chính xác', 'An toàn khi tự động hoá tài khoản thật'],
+  invocation: {
+    syntax: '/ak:chrome-profile "<profile-scoped browser task>"',
+    arguments: [
+      {
+        token: '<profile-scoped browser task>',
+        titleEn: 'Browser task',
+        titleVi: 'Tác vụ browser',
+        descEn: 'Natural-language request that names the approved profile key, target URL, intended actions, forbidden changes, and required evidence.',
+        descVi: 'Yêu cầu bằng ngôn ngữ tự nhiên nêu profile key đã được duyệt, URL đích, hành động cần làm, thay đổi bị cấm và bằng chứng cần trả.',
+        required: true,
+        exampleCommand: '/ak:chrome-profile "Use profile work to open https://github.com/example/repo/pulls, bind the exact opened tab, summarize failing checks, and do not comment, approve, merge, or change account settings"',
+      },
+    ],
+  },
   promptExamples: [
-    { labelEn: 'Open work profile', labelVi: 'Mở profile công việc', command: '/ak:chrome-profile work https://github.com/org/repo/pulls', whenEn: 'A task must use the user\'s signed-in work Chrome account.', whenVi: 'Khi nhiệm vụ cần đúng tài khoản Chrome công việc đã đăng nhập.', expectedEn: 'Profile mapping, bridge readiness, exact tab binding, then safe browser operation.', expectedVi: 'Kiểm tra ánh xạ, cầu đọc, bám đúng tab rồi mới thao tác trình duyệt an toàn.', recommended: true },
-    { labelEn: 'Setup help', labelVi: 'Hỗ trợ thiết lập', command: '/ak:chrome-profile help me configure the profile bridge for my personal account', whenEn: 'The profile key or readable DevTools bridge is missing.', whenVi: 'Khi thiếu key profile hoặc cầu DevTools có thể đọc được.', expectedEn: 'Layer-specific setup guidance instead of a generic “configure MCP” answer.', expectedVi: 'Hướng dẫn đúng lớp đang hỏng thay vì trả lời chung chung “hãy cấu hình MCP”.' },
+    { labelEn: 'Open work profile', labelVi: 'Mở profile công việc', command: '/ak:chrome-profile "Use profile work to open https://github.com/org/repo/pulls, bind the exact opened tab, summarize failing checks, and do not comment, approve, merge, or change account settings"', whenEn: 'A task must use the user\'s signed-in work Chrome account.', whenVi: 'Khi nhiệm vụ cần đúng tài khoản Chrome công việc đã đăng nhập.', expectedEn: 'Checks profile mapping and live bridge reachability, opens with JSON binding data, selects the exact cdp-open tab, then performs only the requested browser work.', expectedVi: 'Kiểm tra mapping profile và bridge live, mở tab bằng dữ liệu JSON để bind, chọn đúng tab cdp-open rồi chỉ làm phần browser đã yêu cầu.', recommended: true },
+    { labelEn: 'Setup help', labelVi: 'Hỗ trợ thiết lập', command: '/ak:chrome-profile help me configure the profile bridge for my personal account', whenEn: 'The profile key or readable DevTools bridge is missing.', whenVi: 'Khi thiếu key profile hoặc cầu DevTools có thể đọc được.', expectedEn: 'Runs the documented checks, separates profile-mapping failures from browser-bridge failures, and gives the next concrete setup command or Chrome action.', expectedVi: 'Chạy các bước kiểm tra đã ghi, tách lỗi mapping profile khỏi lỗi browser bridge và đưa lệnh setup hoặc thao tác Chrome cụ thể tiếp theo.' },
+    { labelEn: 'Background open on macOS', labelVi: 'Mở nền trên macOS', command: '/ak:chrome-profile "Use profile work to open https://linear.app/acme/team/ENG without stealing focus if macOS supports it, bind the exact tab, and summarize open bugs"', whenEn: 'Real profile state is required but the user wants the current app focus preserved.', whenVi: 'Khi cần profile thật nhưng người dùng muốn giữ focus ở app hiện tại.', expectedEn: 'Uses the documented background-open option where supported, still opens through chrome-profile open --json, captures the binding marker, and reports evidence without exposing profile metadata.', expectedVi: 'Dùng tùy chọn mở nền đã ghi khi được hỗ trợ, vẫn mở bằng chrome-profile open --json, giữ marker để bind và báo bằng chứng mà không lộ metadata profile.' },
+    { labelEn: 'Handle conservative doctor', labelVi: 'Xử lý doctor bảo thủ', command: '/ak:chrome-profile "Doctor says the bridge is unavailable, but Chrome DevTools MCP tools are exposed; probe live pages first, then open https://example.com with profile work only if binding can be proven"', whenEn: 'Static doctor output disagrees with an apparently available Chrome DevTools MCP bridge.', whenVi: 'Khi kết quả doctor tĩnh mâu thuẫn với Chrome DevTools MCP bridge có vẻ khả dụng.', expectedEn: 'Treats doctor as a heuristic, performs the live page-list or read probe, uses --force only for the documented proven-bridge exception, and stops for setup if binding cannot be verified.', expectedVi: 'Xem doctor là heuristic, probe live bằng page-list hoặc read, chỉ dùng --force cho ngoại lệ bridge đã chứng minh, và dừng để setup nếu không xác minh được binding.' },
   ],
   skillStack: [
     { name: 'chrome-profile CLI', type: 'tool' },
     { name: 'Chrome DevTools MCP', type: 'tool' },
-    { name: 'ak:agent-browser', type: 'skill' },
-    { name: 'ak:web-testing', type: 'skill' },
+    { name: 'Bash install/setup scripts', type: 'tool' },
+    { name: 'Python 3.9+ runtime', type: 'tool' },
   ],
 };
 

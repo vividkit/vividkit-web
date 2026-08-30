@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   "hardGate": {
     "type": "warning",
-    "titleEn": "Quota and secret handling",
-    "titleVi": "Quota và bảo mật khóa",
-    "contentEn": "Requires a configured STITCH_API_KEY and respects the free daily quota; when exhausted, use ui-ux-pro-max fallback instead of pretending Stitch ran.",
-    "contentVi": "Cần STITCH_API_KEY đã cấu hình và phải tôn trọng quota miễn phí hằng ngày; khi hết quota, dùng ui-ux-pro-max thay thế thay vì giả vờ Stitch đã chạy."
+    "titleEn": "Provider, key, and quota boundary",
+    "titleVi": "Ranh giới provider, khóa và quota",
+    "contentEn": "Stitch generation requires STITCH_API_KEY, sends the prompt to Google Stitch, and depends on current provider quota and API availability; if quota is exhausted, stop generation or use an approved non-provider workflow instead of claiming a run happened.",
+    "contentVi": "Generation bằng Stitch cần STITCH_API_KEY, gửi prompt tới Google Stitch và phụ thuộc quota cùng khả dụng API hiện tại của provider; nếu hết quota, dừng generation hoặc dùng workflow không qua provider đã được duyệt thay vì nói rằng đã chạy."
   },
   "processFlow": [
     {
@@ -29,8 +29,8 @@ const data: SkillInfographic = {
       "number": 2,
       "titleEn": "Check quota",
       "titleVi": "Kiểm tra quota",
-      "descEn": "Run the quota check before generation and warn when remaining credits are low or exhausted.",
-      "descVi": "Chạy kiểm tra quota trước khi sinh thiết kế và cảnh báo khi credit còn ít hoặc đã hết."
+      "descEn": "Run the local advisory quota check before generation and explain that provider-side enforcement remains authoritative.",
+      "descVi": "Chạy kiểm tra quota local để tham khảo trước khi sinh và giải thích rằng enforcement phía provider vẫn là nguồn quyết định."
     },
     {
       "number": 3,
@@ -50,8 +50,8 @@ const data: SkillInfographic = {
       "number": 5,
       "titleEn": "Review image",
       "titleVi": "Review hình ảnh",
-      "descEn": "Show the generated design preview and capture user feedback before spending redesign credits.",
-      "descVi": "Hiển thị preview thiết kế và lấy phản hồi người dùng trước khi dùng credit redesign."
+      "descEn": "Show the generated design preview and capture user feedback before requesting redesigns or additional variants.",
+      "descVi": "Hiển thị preview thiết kế và lấy phản hồi người dùng trước khi yêu cầu redesign hoặc variant bổ sung."
     },
     {
       "number": 6,
@@ -101,34 +101,168 @@ const data: SkillInfographic = {
     "theo dõi quota",
     "biến thể thiết kế"
   ],
+  "invocation": {
+    "syntax": "/ak:stitch [design prompt or action] OR /ak:stitch <generate|export|quota> ...",
+    "arguments": [
+      {
+        "token": "[design prompt or action]",
+        "titleEn": "Design prompt or action",
+        "titleVi": "Prompt thiết kế hoặc action",
+        "descEn": "Natural-language screen brief, constraints, device, content, variant, export, or quota request. Do not include secrets, customer data, or unapproved brand assets.",
+        "descVi": "Brief màn hình, ràng buộc, thiết bị, nội dung, variant, export hoặc yêu cầu quota bằng ngôn ngữ tự nhiên. Không đưa secret, dữ liệu khách hàng hoặc brand asset chưa duyệt.",
+        "required": true,
+        "exampleCommand": "/ak:stitch \"Generate two desktop checkout concepts, show previews, and export the selected screen to ./stitch-exports without implementing it\""
+      }
+    ],
+    "subcommands": [
+      {
+        "name": "generate",
+        "syntax": "/ak:stitch generate <prompt> [--project <id>|--project-name <title>] [--device MOBILE|DESKTOP|TABLET] [--variants <count>]",
+        "titleEn": "Generate",
+        "titleVi": "Sinh thiết kế",
+        "descEn": "Create one Stitch screen or approved variants from a concrete prompt after checking access, quota, and safe content boundaries.",
+        "descVi": "Tạo một Stitch screen hoặc các variant đã duyệt từ prompt cụ thể sau khi kiểm tra quyền truy cập, quota và ranh giới nội dung an toàn.",
+        "arguments": [
+          {
+            "token": "<prompt>",
+            "titleEn": "Screen brief",
+            "titleVi": "Brief màn hình",
+            "descEn": "The UI concept to generate, including audience, content, device, and brand constraints. Remove secrets and sensitive data before sending.",
+            "descVi": "Concept UI cần sinh, gồm audience, nội dung, thiết bị và ràng buộc brand. Loại secret và dữ liệu nhạy cảm trước khi gửi.",
+            "required": true
+          }
+        ],
+        "options": [
+          {
+            "token": "--project <id>",
+            "titleEn": "Project ID",
+            "titleVi": "ID project",
+            "descEn": "Reuse an exact existing Stitch project ID instead of lookup or auto-create.",
+            "descVi": "Dùng lại đúng ID project Stitch hiện có thay vì lookup hoặc tự tạo."
+          },
+          {
+            "token": "--project-name <title>",
+            "titleEn": "Project name",
+            "titleVi": "Tên project",
+            "descEn": "Look up or create a bounded Stitch project name, commonly repo/plan for traceable design sessions.",
+            "descVi": "Lookup hoặc tạo tên project Stitch có giới hạn, thường là repo/plan để truy vết phiên thiết kế."
+          },
+          {
+            "token": "--device MOBILE|DESKTOP|TABLET",
+            "titleEn": "Device target",
+            "titleVi": "Thiết bị đích",
+            "descEn": "Ask Stitch for a mobile, desktop, or tablet layout. It does not make the exported HTML production responsive.",
+            "descVi": "Yêu cầu Stitch tạo layout mobile, desktop hoặc tablet. Tùy chọn này không biến HTML export thành responsive production."
+          },
+          {
+            "token": "--variants <count>",
+            "titleEn": "Variant count",
+            "titleVi": "Số variant",
+            "descEn": "Request additional design alternatives only when variants are intentionally approved.",
+            "descVi": "Chỉ yêu cầu thêm phương án thiết kế khi variant đã được duyệt rõ."
+          }
+        ],
+        "outcomeEn": "Screen ID, project ID, preview image URL, and optional variant IDs for visual review.",
+        "outcomeVi": "Screen ID, project ID, URL ảnh preview và variant ID tùy chọn để review visual.",
+        "exampleCommand": "/ak:stitch generate \"A desktop checkout page with payment form and cart summary\" --device DESKTOP --variants 2"
+      },
+      {
+        "name": "export",
+        "syntax": "/ak:stitch export <screen-id> [--format html|image|all] [--output <dir>]",
+        "titleEn": "Export",
+        "titleVi": "Export",
+        "descEn": "Download an approved generated screen as HTML, image, or both plus a local DESIGN.md handoff.",
+        "descVi": "Tải screen đã sinh và được duyệt thành HTML, ảnh hoặc cả hai kèm DESIGN.md bàn giao local.",
+        "arguments": [
+          {
+            "token": "<screen-id>",
+            "titleEn": "Screen ID",
+            "titleVi": "ID screen",
+            "descEn": "Generated Stitch screen to export. Use the project ID or project-name path from generation when needed.",
+            "descVi": "Screen Stitch đã sinh cần export. Dùng project ID hoặc project-name từ lần sinh khi cần.",
+            "required": true
+          }
+        ],
+        "options": [
+          {
+            "token": "--format html|image|all",
+            "titleEn": "Export format",
+            "titleVi": "Định dạng export",
+            "descEn": "Choose provider HTML, preview image, or all outputs including derived DESIGN.md.",
+            "descVi": "Chọn HTML từ provider, ảnh preview hoặc tất cả output gồm DESIGN.md được suy ra."
+          },
+          {
+            "token": "--output <dir>",
+            "titleEn": "Output directory",
+            "titleVi": "Thư mục output",
+            "descEn": "Directory for design.html, design.png, and DESIGN.md; confirm before overwriting existing exports.",
+            "descVi": "Thư mục chứa design.html, design.png và DESIGN.md; xác nhận trước khi ghi đè export có sẵn."
+          }
+        ],
+        "outcomeEn": "Exact exported file paths for design.html, design.png, and DESIGN.md when requested.",
+        "outcomeVi": "Đường dẫn file export chính xác cho design.html, design.png và DESIGN.md khi được yêu cầu.",
+        "exampleCommand": "/ak:stitch export screen-123 --format all --output ./stitch-exports/"
+      },
+      {
+        "name": "quota",
+        "syntax": "/ak:stitch quota <check|increment|reset>",
+        "titleEn": "Quota",
+        "titleVi": "Quota",
+        "descEn": "Read or adjust the local advisory credit counter; provider-side quota remains the authority.",
+        "descVi": "Đọc hoặc chỉnh bộ đếm credit local để tham khảo; quota phía provider vẫn là nguồn quyết định.",
+        "arguments": [
+          {
+            "token": "<check|increment|reset>",
+            "titleEn": "Quota action",
+            "titleVi": "Action quota",
+            "descEn": "Use check before generation; do not run increment again after a bundled generation already counted usage.",
+            "descVi": "Dùng check trước khi sinh; không chạy increment lần nữa sau khi generation bundle đã tự đếm usage.",
+            "required": true
+          }
+        ],
+        "outcomeEn": "Local JSON-style quota summary or an explicit note that provider limits blocked generation.",
+        "outcomeVi": "Tóm tắt quota local dạng JSON hoặc ghi chú rõ rằng giới hạn provider đã chặn generation.",
+        "exampleCommand": "/ak:stitch quota check"
+      }
+    ]
+  },
   "promptExamples": [
     {
-      "labelEn": "Generate screen",
-      "labelVi": "Sinh màn hình",
-      "command": "/ak:stitch generate checkout page with payment form and cart summary",
-      "whenEn": "You need quick high-fidelity UI exploration from a prompt.",
-      "whenVi": "Cần khám phá UI chất lượng cao thật nhanh từ prompt.",
-      "expectedEn": "Checks quota, generates a Stitch screen, and returns the screen ID plus preview.",
-      "expectedVi": "Kiểm tra quota, sinh màn hình Stitch và trả screen ID cùng preview.",
+      "labelEn": "Generate and export concept",
+      "labelVi": "Sinh và export concept",
+      "command": "/ak:stitch generate \"A desktop checkout page with payment form and cart summary\" --device DESKTOP --variants 2 --project-name \"my-saas/checkout\"",
+      "whenEn": "You need provider-backed UI generation plus a reviewable handoff artifact before implementation.",
+      "whenVi": "Cần sinh UI qua provider và có artifact bàn giao để review trước khi triển khai.",
+      "expectedEn": "Checks local quota, resolves the Stitch project, generates two desktop variants, shows preview URLs for review, and prepares the selected screen for HTML/image/DESIGN.md export.",
+      "expectedVi": "Kiểm tra quota local, xác định project Stitch, sinh hai variant desktop, hiển thị preview để review và chuẩn bị screen đã chọn cho export HTML/ảnh/DESIGN.md.",
       "recommended": true
     },
     {
-      "labelEn": "Export design",
-      "labelVi": "Export thiết kế",
-      "command": "/ak:stitch export screen-123",
-      "whenEn": "A generated screen should be handed to implementation.",
-      "whenVi": "Một màn hình đã sinh cần được bàn giao để triển khai.",
-      "expectedEn": "Exports HTML, image, and DESIGN.md for downstream UI work.",
-      "expectedVi": "Export HTML, ảnh và DESIGN.md cho bước làm UI tiếp theo."
+      "labelEn": "Generate mobile variants",
+      "labelVi": "Sinh variant mobile",
+      "command": "/ak:stitch generate \"Mobile onboarding flow for a finance app with three calm trust-building screens\" --device MOBILE --variants 3",
+      "whenEn": "You want rapid UI design exploration from a concrete prompt before choosing a direction.",
+      "whenVi": "Muốn khám phá thiết kế UI nhanh từ prompt cụ thể trước khi chọn hướng.",
+      "expectedEn": "Uses the generation action with the mobile device target, requests only approved variants, and returns screen or variant IDs with preview image URLs for user selection.",
+      "expectedVi": "Dùng action generate với target mobile, chỉ yêu cầu variant đã duyệt và trả screen hoặc variant ID cùng URL ảnh preview để người dùng chọn."
     },
     {
-      "labelEn": "Quota check",
-      "labelVi": "Kiểm tra quota",
-      "command": "/ak:stitch quota",
-      "whenEn": "Before generating variants or redesigns near the daily cap.",
-      "whenVi": "Trước khi sinh variant hoặc redesign khi gần chạm quota ngày.",
-      "expectedEn": "Reports remaining credits and suggests fallback if exhausted.",
-      "expectedVi": "Báo credit còn lại và gợi ý fallback nếu đã hết."
+      "labelEn": "Export existing screen",
+      "labelVi": "Export screen có sẵn",
+      "command": "/ak:stitch export screen-123 --format all --output ./stitch-exports/",
+      "whenEn": "A generated screen has been approved and should become concrete implementation input.",
+      "whenVi": "Một screen đã sinh đã được duyệt và cần trở thành đầu vào triển khai cụ thể.",
+      "expectedEn": "Runs the export action for the selected screen and writes design.html, design.png, and DESIGN.md so frontend-design, ui-ux-pro-max, or ui-styling can consume the design spec.",
+      "expectedVi": "Chạy action export cho screen đã chọn và ghi design.html, design.png cùng DESIGN.md để frontend-design, ui-ux-pro-max hoặc ui-styling dùng đặc tả thiết kế."
+    },
+    {
+      "labelEn": "Check quota first",
+      "labelVi": "Kiểm tra quota trước",
+      "command": "/ak:stitch quota check",
+      "whenEn": "Before generating concepts, variants, or redesigns when local advisory quota or provider availability may block the run.",
+      "whenVi": "Trước khi sinh concept, variant hoặc redesign khi quota local tham khảo hoặc khả dụng provider có thể chặn lần chạy.",
+      "expectedEn": "Runs the quota action, reports local advisory usage and remaining state, and stops or chooses an approved non-provider workflow when generation should not continue.",
+      "expectedVi": "Chạy action quota, báo usage và trạng thái còn lại theo bộ đếm local tham khảo, rồi dừng hoặc chọn workflow không qua provider đã duyệt khi không nên tiếp tục generation."
     }
   ],
   "specialOperations": [
@@ -152,8 +286,8 @@ const data: SkillInfographic = {
       "id": "quota",
       "titleEn": "Quota",
       "titleVi": "Quota",
-      "descEn": "Tracks free daily credits and redesign credit limits.",
-      "descVi": "Theo dõi credit miễn phí hằng ngày và giới hạn redesign.",
+      "descEn": "Tracks a local advisory counter; provider-side quota remains authoritative.",
+      "descVi": "Theo dõi bộ đếm local để tham khảo; quota phía provider vẫn là nguồn quyết định.",
       "color": "amber"
     }
   ]

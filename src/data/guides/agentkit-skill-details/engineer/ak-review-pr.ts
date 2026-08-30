@@ -7,8 +7,8 @@ const data: SkillInfographic = {
   "header": {
     "titleEn": "/ak:review-pr",
     "titleVi": "/ak:review-pr",
-    "taglineEn": "Review one or many GitHub PRs for correctness, security, breaking changes, project rules, tests, and AI-slop, with optional fix, reply, advice, ultra, and merge loops.",
-    "taglineVi": "Review một hoặc nhiều PR GitHub về đúng sai, bảo mật, breaking change, quy tắc dự án, test và AI-slop, có tùy chọn fix, reply, advice, ultra và merge."
+    "taglineEn": "Review one or more GitHub PRs for correctness, security, breaking changes, code quality, project rules, tests, and AI-slop, with optional fix, reply, merge, advice, ultra, and REST fallback paths.",
+    "taglineVi": "Review một hoặc nhiều PR GitHub về đúng sai, bảo mật, breaking change, chất lượng code, quy tắc dự án, test và AI-slop, có tùy chọn fix, reply, merge, advice, ultra và fallback REST."
   },
   "hardGate": {
     "type": "critical",
@@ -137,6 +137,62 @@ const data: SkillInfographic = {
       "validation": "Deduplicated validated findings"
     }
   ],
+  "invocation": {
+    "syntax": "/ak:review-pr <PR number or URL> [<PR number or URL> ...] [--fix] [--reply] [--merge] [--advice] [--ultra]",
+    "arguments": [
+      {
+        "token": "<PR number or URL>",
+        "titleEn": "PR reference",
+        "titleVi": "Tham chiếu PR",
+        "descEn": "GitHub pull request to review. Use a bare number, #number, or full PR URL; repeat or comma-separate refs to process multiple PRs sequentially.",
+        "descVi": "Pull request GitHub cần review. Dùng số thuần, #số hoặc URL PR đầy đủ; lặp lại hoặc phân tách bằng dấu phẩy để xử lý nhiều PR tuần tự.",
+        "required": true,
+        "exampleCommand": "/ak:review-pr 482"
+      }
+    ],
+    "options": [
+      {
+        "token": "--fix",
+        "titleEn": "Fix findings",
+        "titleVi": "Sửa finding",
+        "descEn": "Authorizes the fix loop: repair actionable findings, verify, commit, push, then re-review. It must not include unrelated changes or bypass failed verification.",
+        "descVi": "Cho phép vòng sửa: sửa finding có thể hành động, xác minh, commit, push rồi review lại. Không được đưa thay đổi không liên quan vào hoặc bỏ qua xác minh thất bại.",
+        "exampleCommand": "/ak:review-pr 482 --fix"
+      },
+      {
+        "token": "--reply",
+        "titleEn": "Post review",
+        "titleVi": "Đăng review",
+        "descEn": "Posts the final review result to GitHub as an approve, request-changes, or comment review. It does not deduplicate earlier replies.",
+        "descVi": "Đăng kết quả review cuối lên GitHub dưới dạng approve, request-changes hoặc comment review. Không khử trùng lặp các reply trước đó.",
+        "exampleCommand": "/ak:review-pr 482 --reply"
+      },
+      {
+        "token": "--merge",
+        "titleEn": "Merge ready PR",
+        "titleVi": "Merge PR sẵn sàng",
+        "descEn": "Runs the merge stage after review, fix, and reply stages only when readiness gates pass, then watches target-branch CI. It never forces red checks, conflicts, or branch protection.",
+        "descVi": "Chạy giai đoạn merge sau review, sửa và reply chỉ khi các cổng sẵn sàng đạt, rồi theo dõi CI nhánh đích. Không ép qua check đỏ, conflict hoặc branch protection.",
+        "exampleCommand": "/ak:review-pr 482 --fix --reply --merge"
+      },
+      {
+        "token": "--advice",
+        "titleEn": "Advisory supervision",
+        "titleVi": "Giám sát cố vấn",
+        "descEn": "Adds kongming checkpoints for verdict, fix scope, review body, merge risk, and CI-green follow-up. Advice cannot override the review or merge gates.",
+        "descVi": "Thêm checkpoint kongming cho verdict, phạm vi sửa, body review, rủi ro merge và bước sau CI xanh. Lời khuyên không thể ghi đè cổng review hoặc merge.",
+        "exampleCommand": "/ak:review-pr 482 --advice"
+      },
+      {
+        "token": "--ultra",
+        "titleEn": "Best-of-five review",
+        "titleVi": "Review best-of-five",
+        "descEn": "Runs only the initial review through five read-only candidates and an evidence-checking verifier; later fix-loop re-reviews remain single-pass.",
+        "descVi": "Chỉ chạy review ban đầu qua năm candidate chỉ đọc và verifier kiểm chứng bằng chứng; các lượt review lại trong fix loop vẫn là single-pass.",
+        "exampleCommand": "/ak:review-pr 482 --ultra"
+      }
+    ]
+  },
   "outputFlags": [
     {
       "flag": "--fix",
@@ -181,32 +237,41 @@ const data: SkillInfographic = {
   ],
   "promptExamples": [
     {
-      "labelEn": "Single PR review",
-      "labelVi": "Review một PR",
+      "labelEn": "Review a PR locally",
+      "labelVi": "Review PR cục bộ",
       "command": "/ak:review-pr 123",
-      "whenEn": "Use for a local review without posting or mutating.",
-      "whenVi": "Dùng để review cục bộ, không đăng và không sửa.",
-      "expectedEn": "Summary, risk, findings, and verdict.",
-      "expectedVi": "Có summary, mức rủi ro, findings và verdict.",
+      "whenEn": "Use when you need a thorough PR review by number or URL without editing, posting, or merging.",
+      "whenVi": "Dùng khi cần review kỹ một PR bằng số hoặc URL mà không sửa, đăng hay merge.",
+      "expectedEn": "The skill resolves language and PR context, validates the PR body, reads metadata, diff, changed files, checks, then returns summary, risk, findings by severity, and verdict.",
+      "expectedVi": "Skill xác định ngôn ngữ và ngữ cảnh PR, kiểm tra body PR, đọc metadata, diff, file đổi, checks, rồi trả summary, rủi ro, findings theo severity và verdict.",
       "recommended": true
     },
     {
-      "labelEn": "Fix and reply",
-      "labelVi": "Sửa rồi đăng",
+      "labelEn": "Fix findings and post",
+      "labelVi": "Sửa finding rồi đăng",
       "command": "/ak:review-pr 123 --fix --reply",
-      "whenEn": "Use when you are authorized to remediate actionable findings and post the final review.",
-      "whenVi": "Dùng khi được phép sửa finding có thể hành động và đăng review cuối.",
-      "expectedEn": "Fix loop converges or reports blocker, then final review is posted or printed locally.",
-      "expectedVi": "Vòng sửa hội tụ hoặc báo blocker, rồi review cuối được đăng hoặc in cục bộ."
+      "whenEn": "Use when you are allowed to remediate actionable review findings and post the final review to GitHub.",
+      "whenVi": "Dùng khi được phép sửa các finding review có thể hành động và đăng review cuối lên GitHub.",
+      "expectedEn": "After review, actionable Critical/Important findings go through ak:fix, verified fixes are committed and pushed with ak:git cp, then only the final re-review is posted or printed locally on fallback.",
+      "expectedVi": "Sau review, các finding Critical/Important có thể hành động đi qua ak:fix, bản sửa đã verify được commit và push bằng ak:git cp, rồi chỉ re-review cuối được đăng hoặc in cục bộ khi fallback."
     },
     {
-      "labelEn": "Multi-PR merge run",
-      "labelVi": "Review nhiều PR và merge",
+      "labelEn": "Review and merge multiple PRs",
+      "labelVi": "Review và merge nhiều PR",
       "command": "/ak:review-pr 123 456 --reply --merge",
-      "whenEn": "Use when multiple PRs should be processed deterministically one by one.",
-      "whenVi": "Dùng khi cần xử lý nhiều PR tuần tự, dễ truy vết.",
-      "expectedEn": "Per-PR table with reply, merge, CI, and blocker state.",
-      "expectedVi": "Bảng từng PR với trạng thái reply, merge, CI và blocker."
+      "whenEn": "Use when several PR refs should be processed sequentially with a posted review and merge attempt for each ready PR.",
+      "whenVi": "Dùng khi nhiều PR ref cần được xử lý tuần tự, đăng review và thử merge cho từng PR đã sẵn sàng.",
+      "expectedEn": "Each PR completes its full review, reply, merge-readiness gate, ak:git merge-pr handoff, and target-branch CI watch before the next PR starts; final output includes the per-PR table.",
+      "expectedVi": "Mỗi PR hoàn tất review, reply, cổng sẵn sàng merge, bàn giao ak:git merge-pr và theo dõi CI nhánh đích trước khi sang PR tiếp theo; đầu ra cuối có bảng từng PR."
+    },
+    {
+      "labelEn": "Ultra review with advice",
+      "labelVi": "Review ultra có cố vấn",
+      "command": "/ak:review-pr 789 --ultra --advice",
+      "whenEn": "Use for a higher-assurance review where the initial pass should use five read-only candidates plus a verifier and kongming checkpoints.",
+      "whenVi": "Dùng cho review cần độ tin cậy cao hơn, khi lượt đầu cần năm candidate chỉ đọc cộng verifier và các checkpoint kongming.",
+      "expectedEn": "The initial review is built from an evidence-validated union of five candidate reviews, then advisory checkpoints can sanity-check verdicts, fix scope, reply body, merge risk, and CI-green follow-up.",
+      "expectedVi": "Review ban đầu được tạo từ hợp tuyển năm candidate đã được verifier kiểm chứng bằng evidence, rồi các checkpoint cố vấn có thể kiểm tra verdict, phạm vi sửa, body reply, rủi ro merge và bước sau CI xanh."
     }
   ],
   "reportOutput": {

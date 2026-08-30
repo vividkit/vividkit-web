@@ -1,9 +1,32 @@
-import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-works';
+
+const invocation: SkillInvocation = {
+  syntax: '/ak:web-frameworks [framework] [feature]',
+  arguments: [
+    {
+      token: '[framework]',
+      titleEn: 'Framework or stack focus',
+      titleVi: 'Framework hoặc stack cần tập trung',
+      descEn: 'Optional focus such as Next.js, Turborepo, RemixIcon, App Router, RSC, SSR, ISR, or caching. It does not set a default framework, version, package manager, hosting provider, or deployment mode.',
+      descVi: 'Trọng tâm tùy chọn như Next.js, Turborepo, RemixIcon, App Router, RSC, SSR, ISR hoặc caching. Trường này không đặt framework, version, package manager, nhà cung cấp hosting hay chế độ deploy mặc định.',
+      exampleCommand: '/ak:web-frameworks nextjs "Add an App Router product page in the existing pinned Next.js version"',
+    },
+    {
+      token: '[feature]',
+      titleEn: 'Feature or architecture request',
+      titleVi: 'Yêu cầu tính năng hoặc kiến trúc',
+      descEn: 'Natural-language work request covering routes, layouts, Server or Client Component boundaries, data-fetching policy, cache freshness, monorepo packages, Turborepo tasks, or RemixIcon integration.',
+      descVi: 'Yêu cầu bằng ngôn ngữ tự nhiên về route, layout, ranh giới Server hoặc Client Component, chính sách data fetching, độ mới cache, package monorepo, task Turborepo hoặc tích hợp RemixIcon.',
+      exampleCommand: '/ak:web-frameworks Turborepo monorepo for web, admin, docs, and shared UI packages',
+    },
+  ],
+};
 
 const data: SkillInfographic = {
   id: 'ak-web-frameworks',
   command: '/ak:web-frameworks',
   kit: 'engineer',
+  invocation,
   header: {
     titleEn: '/ak:web-frameworks — Modern React web apps',
     titleVi: '/ak:web-frameworks — App React hiện đại',
@@ -48,9 +71,10 @@ const data: SkillInfographic = {
     { id: 'cache-strategy', titleEn: 'Caching strategy', titleVi: 'Chiến lược cache', descEn: 'Use force-cache, revalidate, or no-store deliberately based on freshness and performance needs.', descVi: 'Chọn force-cache, revalidate hoặc no-store có chủ ý theo nhu cầu độ mới dữ liệu và hiệu năng.', color: 'amber' },
   ],
   promptExamples: [
-    { labelEn: 'Plan a Next app', labelVi: 'Lên hướng app Next', command: '/ak:web-frameworks Next.js SaaS dashboard with App Router and cached data fetching', whenEn: 'You are starting or restructuring a standalone React product.', whenVi: 'Đang bắt đầu hoặc tái cấu trúc một sản phẩm React đơn lẻ.', expectedEn: 'Recommends App Router structure, RSC/client boundaries, caching, loading/error states, and optimization steps.', expectedVi: 'Đề xuất cấu trúc App Router, ranh giới RSC/client, cache, loading/error state và các bước tối ưu.', recommended: true },
-    { labelEn: 'Plan a monorepo', labelVi: 'Lên hướng monorepo', command: '/ak:web-frameworks Turborepo shared UI package for web and admin apps', whenEn: 'Several apps need shared UI, config, types, or API client packages.', whenVi: 'Nhiều app cần dùng chung UI, config, types hoặc API client.', expectedEn: 'Maps apps/packages layout, turbo task dependencies, outputs, filters, and remote caching.', expectedVi: 'Vạch layout apps/packages, dependency task turbo, outputs, filter và remote cache.' },
-    { labelEn: 'Add icons', labelVi: 'Thêm icon', command: '/ak:web-frameworks RemixIcon integration for our navigation and buttons', whenEn: 'A UI needs consistent line/fill icons with accessibility guidance.', whenVi: 'UI cần icon line/fill nhất quán kèm hướng dẫn accessibility.', expectedEn: 'Shows RemixIcon import/use patterns and accessibility constraints.', expectedVi: 'Chỉ ra cách import/dùng RemixIcon và ràng buộc accessibility.' },
+    { labelEn: 'Start a Next app', labelVi: 'Khởi động app Next', command: '/ak:web-frameworks Next.js SaaS dashboard with App Router, Server Components, and RemixIcon', whenEn: 'You are building a standalone modern React application.', whenVi: 'Đang xây một ứng dụng React hiện đại dạng standalone.', expectedEn: 'Guides the single-app setup with create-next-app, App Router layouts/pages, Server Component defaults, loading/error states, metadata, optimization, and RemixIcon usage.', expectedVi: 'Hướng dẫn setup app đơn bằng create-next-app, layout/page App Router, mặc định Server Component, loading/error state, metadata, tối ưu và cách dùng RemixIcon.', recommended: true },
+    { labelEn: 'Design a monorepo', labelVi: 'Thiết kế monorepo', command: '/ak:web-frameworks Turborepo monorepo for web, admin, docs, and shared UI packages', whenEn: 'Multiple apps need shared UI, config, types, or API-client packages.', whenVi: 'Nhiều app cần chia sẻ UI, config, types hoặc package API client.', expectedEn: 'Maps the apps/packages structure, shared component library, workspace dependencies, turbo task dependencies, outputs, persistent dev tasks, filters, remote cache, and CI/CD pipeline.', expectedVi: 'Vạch cấu trúc apps/packages, thư viện component dùng chung, dependency workspace, dependency task turbo, outputs, task dev persistent, filter, remote cache và pipeline CI/CD.' },
+    { labelEn: 'Tune data caching', labelVi: 'Tinh chỉnh cache dữ liệu', command: '/ak:web-frameworks Next.js data fetching strategy with ISR, force-cache, revalidate, and no-store', whenEn: 'A Next.js app needs deliberate freshness and performance behavior.', whenVi: 'App Next.js cần kiểm soát rõ độ mới dữ liệu và hiệu năng.', expectedEn: 'Explains fetch caching choices, ISR/revalidation patterns, static params, notFound handling, loading and error states, and when to avoid caching with no-store.', expectedVi: 'Giải thích lựa chọn cache cho fetch, pattern ISR/revalidation, static params, xử lý notFound, loading/error state và khi nào tránh cache bằng no-store.' },
+    { labelEn: 'Integrate icons', labelVi: 'Tích hợp icon', command: '/ak:web-frameworks RemixIcon integration for navigation, buttons, and shared UI components', whenEn: 'The UI needs consistent line/fill iconography across components.', whenVi: 'UI cần hệ icon line/fill nhất quán xuyên suốt component.', expectedEn: 'Shows webfont and React component integration, package placement for shared UI, line versus fill usage, 24x24 alignment, currentColor theming, and aria-label accessibility.', expectedVi: 'Chỉ ra cách tích hợp webfont và React component, vị trí package cho UI dùng chung, cách chọn line/fill, căn 24x24, theme bằng currentColor và accessibility bằng aria-label.' },
   ],
 };
 

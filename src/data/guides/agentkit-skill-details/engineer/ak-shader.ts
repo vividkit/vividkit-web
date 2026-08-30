@@ -95,11 +95,15 @@ const data: SkillInfographic = {
       "type": "tool"
     },
     {
-      "name": "WebGL",
+      "name": "The Book of Shaders editor",
       "type": "tool"
     },
     {
-      "name": "Three.js",
+      "name": "glslViewer",
+      "type": "tool"
+    },
+    {
+      "name": "glslCanvas",
       "type": "tool"
     },
     {
@@ -107,34 +111,57 @@ const data: SkillInfographic = {
       "type": "tool"
     }
   ],
+  "invocation": {
+    "syntax": "/ak:shader [effect or pattern]",
+    "arguments": [
+      {
+        "token": "[effect or pattern]",
+        "titleEn": "Effect or pattern",
+        "titleVi": "Hiệu ứng hoặc pattern",
+        "descEn": "Natural-language shader brief describing the visual outcome plus the host graphics contract: GLSL/WebGL version, uniforms, coordinate conventions, material or texture inputs, motion, performance boundary, fallback needs, and required compile or render evidence. The Skill declares no fixed flags or output path.",
+        "descVi": "Brief shader bằng ngôn ngữ tự nhiên mô tả kết quả hình ảnh cùng hợp đồng graphics của host: version GLSL/WebGL, uniform, quy ước tọa độ, material hoặc texture input, chuyển động, giới hạn hiệu năng, nhu cầu fallback và bằng chứng compile hoặc render bắt buộc. Skill không khai báo flag hoặc output path cố định.",
+        "required": true,
+        "exampleCommand": "/ak:shader \"Create a WebGL 1 fragment shader for a subtle animated marble background using the project's u_time and u_resolution uniforms. Keep motion slow, preserve text contrast, add a reduced-motion static path, and verify it in the existing preview without adding dependencies.\""
+      }
+    ]
+  },
   "promptExamples": [
     {
       "labelEn": "Procedural texture",
       "labelVi": "Texture thủ tục",
-      "command": "/ak:shader marble texture with slow flowing veins",
-      "whenEn": "Use for formula-driven textures such as marble, wood, clouds, or terrain.",
-      "whenVi": "Dùng cho texture dựa trên công thức như marble, gỗ, mây hoặc địa hình.",
-      "expectedEn": "GLSL using normalized coordinates, noise or fBm, color gradients, and time controls.",
-      "expectedVi": "GLSL dùng tọa độ chuẩn hóa, noise hoặc fBm, gradient màu và điều khiển thời gian.",
+      "command": "/ak:shader animated marble texture with slow flowing veins",
+      "whenEn": "Use when you need GLSL for a formula-driven texture such as marble, wood, clouds, or terrain.",
+      "whenVi": "Dùng khi bạn cần GLSL cho texture dựa trên công thức như marble, gỗ, mây hoặc địa hình.",
+      "expectedEn": "Returns fragment-shader logic built from normalized coordinates, noise or fBm, gradients, u_time animation, and a gl_FragColor output.",
+      "expectedVi": "Trả về logic fragment shader dựng từ tọa độ chuẩn hóa, noise hoặc fBm, gradient, animation u_time và đầu ra gl_FragColor.",
       "recommended": true
     },
     {
-      "labelEn": "SDF visual",
+      "labelEn": "SDF shape",
       "labelVi": "Hình SDF",
-      "command": "/ak:shader pulsing neon circle field",
-      "whenEn": "Use when the visual is built from distance-field shapes and animation.",
-      "whenVi": "Dùng khi hình ảnh được dựng từ SDF và animation.",
-      "expectedEn": "Shape primitives with smoothstep edges, time-based motion, and composited color.",
-      "expectedVi": "Primitive hình với cạnh smoothstep, chuyển động theo thời gian và màu được compose."
+      "command": "/ak:shader pulsing neon circle field with smooth edges",
+      "whenEn": "Use when the visual should be drawn from distance-field shapes rather than image assets.",
+      "whenVi": "Dùng khi hình ảnh nên được vẽ từ shape theo distance field thay vì asset ảnh.",
+      "expectedEn": "Produces GLSL that measures pixel distance, applies step or smoothstep thresholds, layers color with mix, and animates each pixel statelessly.",
+      "expectedVi": "Tạo GLSL đo khoảng cách pixel, áp dụng ngưỡng step hoặc smoothstep, xếp lớp màu bằng mix và animate từng pixel không trạng thái."
     },
     {
-      "labelEn": "Three.js effect",
-      "labelVi": "Hiệu ứng Three.js",
+      "labelEn": "ShaderToy-style effect",
+      "labelVi": "Hiệu ứng kiểu ShaderToy",
+      "command": "/ak:shader ShaderToy-style cellular Voronoi energy field",
+      "whenEn": "Use for procedural WebGL effects that depend on time, resolution, or mouse-style uniforms.",
+      "whenVi": "Dùng cho hiệu ứng WebGL thủ tục phụ thuộc vào uniform kiểu thời gian, độ phân giải hoặc chuột.",
+      "expectedEn": "Outlines the standard uniforms, normalizes gl_FragCoord, combines cellular or Voronoi noise with color shaping, and notes ShaderToy uniform mapping.",
+      "expectedVi": "Nêu các uniform chuẩn, chuẩn hóa gl_FragCoord, kết hợp cellular hoặc Voronoi noise với tạo màu và ghi chú ánh xạ uniform ShaderToy."
+    },
+    {
+      "labelEn": "Three.js material",
+      "labelVi": "Material Three.js",
       "command": "/ak:shader fragment shader for a Three.js hologram material",
-      "whenEn": "Use for custom material effects in WebGL or Three.js.",
-      "whenVi": "Dùng cho hiệu ứng material tùy biến trong WebGL hoặc Three.js.",
-      "expectedEn": "A shader structure with uniforms and fragment color logic ready to integrate.",
-      "expectedVi": "Cấu trúc shader có uniform và logic màu fragment sẵn để tích hợp."
+      "whenEn": "Use when integrating a custom fragment shader into a Three.js or WebGL material.",
+      "whenVi": "Dùng khi tích hợp fragment shader tùy chỉnh vào material Three.js hoặc WebGL.",
+      "expectedEn": "Provides shader code and integration-minded uniform choices for resolution, elapsed time, and optional mouse input, ready to adapt inside a material.",
+      "expectedVi": "Cung cấp mã shader và lựa chọn uniform hướng tích hợp cho độ phân giải, thời gian trôi qua và chuột tùy chọn, sẵn để đưa vào material."
     }
   ]
 };
