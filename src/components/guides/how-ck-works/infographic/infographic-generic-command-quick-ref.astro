@@ -239,16 +239,18 @@ const getPromptWhen = (prompt: PromptExample) => isVi ? prompt.whenVi : prompt.w
 const getPromptExpected = (prompt: PromptExample) => isVi ? prompt.expectedVi : prompt.expectedEn;
 const getOutputPattern = () => (isVi ? output?.patternVi : output?.patternEn)?.trim() || '';
 const TOKEN_RE = /(?:\/ak:[a-z0-9-]+|\$ak:[a-z0-9-]+|--[a-z0-9][a-z0-9-]*|-[a-z][a-z0-9]*)/g;
+const wrapCommandTokens = (value = '') =>
+  renderInlineCode(value).replace(
+    new RegExp(TOKEN_RE.source, 'g'),
+    (flag) => `<code class="rounded-md bg-white px-1.5 py-0.5 font-mono text-[0.82em] font-semibold text-purple-600 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-purple-400 dark:ring-white/10">${flag}</code>`,
+  );
 const composableRaw = (isVi ? data.composableFlagsVi : data.composableFlagsEn) || '';
 const composableCards = composableRaw
   .split(/(?<=[.。;；])\s+| · /)
   .map((sentence) => sentence.trim())
   .filter(Boolean)
   .map((sentence) => ({
-    html: renderInlineCode(sentence).replace(
-      new RegExp(TOKEN_RE.source, 'g'),
-      (flag) => `<code class="rounded-md bg-slate-100 px-1.5 py-0.5 font-mono text-[0.82em] font-semibold text-purple-600 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-purple-400 dark:ring-white/10">${flag}</code>`,
-    ),
+    html: wrapCommandTokens(sentence),
   }));
 ---
 
@@ -628,9 +630,7 @@ const composableCards = composableRaw
               </div>
 
               <div class="min-w-0">
-                <code class="block whitespace-pre-wrap break-words rounded-lg bg-slate-100 px-3 py-2 font-mono text-xs leading-5 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-slate-200 dark:ring-white/10">
-                  {prompt.command}
-                </code>
+                <pre class="block whitespace-pre-wrap break-words rounded-lg bg-slate-100 px-3 py-2 font-mono text-xs leading-5 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-slate-200 dark:ring-white/10" set:html={wrapCommandTokens(prompt.command)} />
 
                 <dl class="mt-3 grid gap-3 text-xs leading-5 text-slate-650 dark:text-slate-300 sm:grid-cols-2">
                   <div class="min-w-0">

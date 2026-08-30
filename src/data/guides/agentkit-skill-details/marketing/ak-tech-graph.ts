@@ -144,7 +144,7 @@ const data: SkillInfographic = {
       "command": "/ak:tech-graph sequence diagram of checkout payment flow",
       "whenEn": "Use for time-ordered interactions between participants.",
       "whenVi": "Dùng cho tương tác theo trình tự thời gian giữa các bên.",
-      "expectedEn": "Participant lifelines, message arrows, activation boxes, and correctly scaled height.",
+      "expectedEn": "Participant lifelines, message arrows, activation boxes, and correctly scaled height for the described interaction.",
       "expectedVi": "Có lifeline, mũi tên message, activation box và chiều cao phù hợp."
     },
     {
@@ -153,7 +153,7 @@ const data: SkillInfographic = {
       "command": "/ak:tech-graph concept map for agent memory types",
       "whenEn": "Use when relationships are conceptual rather than procedural.",
       "whenVi": "Dùng khi quan hệ là ý niệm thay vì quy trình.",
-      "expectedEn": "Radial or branch-based SVG with clean labels and curved connections.",
+      "expectedEn": "Radial or branch-based SVG with clean labels, curved connections, and balanced spacing between concepts.",
       "expectedVi": "SVG dạng radial hoặc phân nhánh, nhãn dễ đọc và đường nối cong gọn."
     }
   ],

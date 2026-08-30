@@ -17,7 +17,15 @@ Shared renderer:
 - Flags only from kit `argument-hint` plus ak-docs Option/Mode tables
 - `[task]` in brackets is optional unless docs say required
 - Subcommands from `OR [a|b|c]` hints or `## /ak:skill name` headings
-- `promptExamples` ≥ 2 for user-facing skills; `expectedEn` must be a full outcome sentence
+
+## Prompt mẫu
+
+- User-facing skills: ≥2 examples; exactly one `recommended: true`
+- Cover the default invocation plus each documented **mode** and **subcommand**. Remaining options: add cards until the distinctive ones are shown, cap 6
+- `command` is copy-pasteable English/verbatim. Renderer wraps `/ak:…` and `--flags` as `<code>`
+- `whenEn`/`whenVi`: when to run this variant (not a restatement of the command)
+- `expectedEn`/`expectedVi`: observable outcome, ≥12 words, semantically equivalent, no fake routes
+- Scanner/helper flags (`--redact-paths` on `watzup-scan.cjs`) belong in expected/process copy, not as slash options unless argument-hint lists them
 
 ## Hard gates
 

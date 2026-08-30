@@ -133,8 +133,8 @@ const data: SkillInfographic = {
       "command": "/ak:project-organization plans and reports for the auth refactor",
       "whenEn": "Use when another skill needs the canonical location before writing.",
       "whenVi": "Dùng khi skill khác cần vị trí chuẩn trước khi ghi file.",
-      "expectedEn": "A correct category, path pattern, and naming mode.",
-      "expectedVi": "Trả về nhóm, mẫu đường dẫn và kiểu đặt tên phù hợp.",
+      "expectedEn": "Returns the correct category, path pattern, naming mode, and placement rationale before any file is written.",
+      "expectedVi": "Trả về nhóm đúng, mẫu đường dẫn, kiểu đặt tên và lý do đặt chỗ trước khi ghi file.",
       "recommended": true
     },
     {

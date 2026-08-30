@@ -101,7 +101,7 @@ const data: SkillInfographic = {
       "command": "/ak:watzup",
       "whenEn": "Use at the end of a session or when entering a fresh worktree.",
       "whenVi": "Dùng cuối phiên hoặc khi vừa vào worktree mới.",
-      "expectedEn": "Brief report with current state, in-flight plans, next steps, and warnings.",
+      "expectedEn": "Brief report with current state, in-flight plans, next steps, warnings, and confidence notes.",
       "expectedVi": "Báo cáo ngắn gồm trạng thái hiện tại, plan đang chạy, bước tiếp theo và cảnh báo.",
       "recommended": true
     },
@@ -111,7 +111,7 @@ const data: SkillInfographic = {
       "command": "/ak:watzup refresh remotes before reporting",
       "whenEn": "Use only when the user explicitly requests remote refresh before status.",
       "whenVi": "Chỉ dùng khi người dùng yêu cầu refresh remote trước khi báo trạng thái.",
-      "expectedEn": "Scanner path may include fetch, then reports stale-ref caveats if any.",
+      "expectedEn": "Scanner path may include fetch, then reports stale-ref caveats and branch-specific next steps if any.",
       "expectedVi": "Scanner có thể kèm fetch rồi báo các lưu ý stale-ref nếu có."
     }
   ],

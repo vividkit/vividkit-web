@@ -302,18 +302,20 @@ function checkFile({ id, kit, src, skillMd, argumentHint, extraAllowedFlags }) {
     }
   }
 
-  if (isUserFacing(skillMd) && kit !== 'marketing') {
+  if (isUserFacing(skillMd)) {
     const prompts = extractPromptCommands(src, expectedCmd);
     if (prompts.length < 2) {
       violations.push(`user-facing skill needs >=2 promptExamples, found ${prompts.length}`);
     }
-    const expecteds = extractQuotedFields(src, 'expectedEn');
-    for (const [i, ex] of expecteds.entries()) {
-      if (ex.trim().length < 48) {
-        violations.push(`prompt expectedEn[${i}] too thin: ${ex}`);
+    for (const field of ['expectedEn', 'expectedVi']) {
+      const values = extractQuotedFields(src, field);
+      for (const [i, ex] of values.entries()) {
+        if (ex.trim().split(/\s+/).filter(Boolean).length < 12) {
+          violations.push(`prompt ${field}[${i}] too thin: ${ex}`);
+        }
       }
     }
-    if (!/["']?invocation["']?\s*:/.test(src)) {
+    if (kit !== 'marketing' && !/["']?invocation["']?\s*:/.test(src)) {
       violations.push('user-facing skill needs an invocation block (syntax, arguments, options, subcommands)');
     }
   }
@@ -336,8 +338,8 @@ const data = {
   command: '/ak:plan',
   invocation: { syntax: '/ak:plan [task] [--fast|--html] OR /ak:plan validate <plan.md>' },
   promptExamples: [
-    { command: '/ak:plan Rename settings route --fast', expectedEn: 'Focused plan.md and phase files without research overhead for a small rename.' },
-    { command: '/ak:plan validate plans/x/plan.md', expectedEn: 'Critical questions against the existing plan and updates or unresolved blockers.' },
+    { command: '/ak:plan Rename settings route --fast', expectedEn: 'A compact plan.md and phase files with research skipped for this already-understood rename, and no implementation code.' },
+    { command: '/ak:plan validate plans/x/plan.md', expectedEn: 'Critical questions against the existing plan, then file updates or an explicit list of unresolved blockers.' },
   ],
   outputFlags: [{ flag: '--html', exampleCommand: '/ak:plan flow --html' }],
 };

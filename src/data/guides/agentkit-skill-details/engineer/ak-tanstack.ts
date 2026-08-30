@@ -133,8 +133,8 @@ const data: SkillInfographic = {
       "command": "/ak:tanstack start posts route with loader",
       "whenEn": "A TanStack Start page needs typed params and server-loaded data.",
       "whenVi": "Một trang TanStack Start cần params typed và dữ liệu load từ server.",
-      "expectedEn": "Produces file-route, loader, component, and server-function patterns.",
-      "expectedVi": "Đưa mẫu file-route, loader, component và server-function.",
+      "expectedEn": "Produces file-route, loader, component, and server-function patterns with typed params and data boundaries.",
+      "expectedVi": "Đưa mẫu file-route, loader, component và server-function kèm params typed và ranh giới dữ liệu.",
       "recommended": true
     },
     {
@@ -143,8 +143,8 @@ const data: SkillInfographic = {
       "command": "/ak:tanstack form signup validation with zod",
       "whenEn": "A form needs field-level validation and reliable submit state.",
       "whenVi": "Một form cần validation theo field và trạng thái submit đáng tin cậy.",
-      "expectedEn": "Uses TanStack Form with validators, async debounce where needed, and form.Subscribe.",
-      "expectedVi": "Dùng TanStack Form với validator, debounce async khi cần và form.Subscribe."
+      "expectedEn": "Uses TanStack Form with validators, async debouncing where needed, and form.Subscribe for targeted reactive UI updates.",
+      "expectedVi": "Dùng TanStack Form với validator, debounce async khi cần và form.Subscribe cho cập nhật UI phản ứng có mục tiêu."
     },
     {
       "labelEn": "Streaming chat",
@@ -152,8 +152,8 @@ const data: SkillInfographic = {
       "command": "/ak:tanstack ai streaming chat endpoint",
       "whenEn": "Adding AI chat to a TanStack Start application.",
       "whenVi": "Thêm chat AI vào app TanStack Start.",
-      "expectedEn": "Shows client useChat and server route streaming through a provider adapter.",
-      "expectedVi": "Nêu useChat phía client và route server stream qua provider adapter."
+      "expectedEn": "Shows client useChat wiring and a server route streaming through the appropriate provider adapter.",
+      "expectedVi": "Nêu wiring useChat phía client và route server stream qua provider adapter phù hợp."
     }
   ]
 };

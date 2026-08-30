@@ -130,7 +130,7 @@ const data: SkillInfographic = {
       "command": "/ak:use-mcp discover the available browser automation tools",
       "whenEn": "Use when you need to know what MCP capabilities are available before choosing one.",
       "whenVi": "Dùng khi cần biết capability MCP nào đang có trước khi chọn tool.",
-      "expectedEn": "A minimal catalog of relevant tools and argument requirements.",
+      "expectedEn": "A minimal catalog of relevant tools, argument requirements, and safe execution boundaries for the requested integration.",
       "expectedVi": "Catalog tối thiểu các tool liên quan và yêu cầu tham số.",
       "recommended": true
     },
@@ -140,7 +140,7 @@ const data: SkillInfographic = {
       "command": "/ak:use-mcp call the notebook source list tool for this project",
       "whenEn": "Use when the task requires executing a specific MCP capability safely.",
       "whenVi": "Dùng khi tác vụ cần chạy an toàn một capability MCP cụ thể.",
-      "expectedEn": "Validated MCP call path with result or visibility caveat.",
+      "expectedEn": "Validated MCP call path with the observed result or a clear visibility caveat when unavailable.",
       "expectedVi": "Đường gọi MCP đã xác thực kèm kết quả hoặc lưu ý về visibility."
     }
   ],

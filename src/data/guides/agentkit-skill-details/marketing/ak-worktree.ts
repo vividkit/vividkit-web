@@ -164,7 +164,7 @@ const data: SkillInfographic = {
       "command": "/ak:worktree create onboarding email flow",
       "whenEn": "Use before implementation that should be isolated from the current checkout.",
       "whenVi": "Dùng trước khi implement việc cần tách khỏi checkout hiện tại.",
-      "expectedEn": "New worktree path with inferred branch prefix and dependency bootstrap guidance.",
+      "expectedEn": "New worktree path with inferred branch prefix, dependency bootstrap guidance, and next safe command.",
       "expectedVi": "Path worktree mới kèm prefix branch đã suy ra và hướng dẫn bootstrap dependency.",
       "recommended": true
     },
@@ -174,8 +174,8 @@ const data: SkillInfographic = {
       "command": "/ak:worktree create --no-prefix ND-1377-cleanup-docs",
       "whenEn": "Use when the branch name must preserve tracker casing or slashes.",
       "whenVi": "Dùng khi tên branch phải giữ nguyên casing mã ticket hoặc slash.",
-      "expectedEn": "Worktree created with preserved branch name semantics.",
-      "expectedVi": "Worktree được tạo với ngữ nghĩa giữ nguyên branch name."
+      "expectedEn": "Worktree created with preserved branch name semantics and clear instructions for entering the folder.",
+      "expectedVi": "Worktree được tạo với ngữ nghĩa giữ nguyên branch name và hướng dẫn vào thư mục rõ ràng."
     }
   ],
   "reportOutput": {

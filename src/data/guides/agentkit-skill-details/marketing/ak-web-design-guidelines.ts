@@ -95,8 +95,8 @@ const data: SkillInfographic = {
       "command": "/ak:web-design-guidelines src/app/page.tsx",
       "whenEn": "Use when the user points to a concrete UI file or pattern.",
       "whenVi": "Dùng khi người dùng chỉ rõ file hoặc pattern UI.",
-      "expectedEn": "Fresh guideline findings in file:line format.",
-      "expectedVi": "Phát hiện theo guideline mới nhất ở định dạng file:line.",
+      "expectedEn": "Fresh guideline findings in file:line format with concise evidence and practical remediation notes.",
+      "expectedVi": "Phát hiện theo guideline mới nhất ở định dạng file:line kèm evidence ngắn và hướng sửa thực tế.",
       "recommended": true
     },
     {
@@ -105,8 +105,8 @@ const data: SkillInfographic = {
       "command": "/ak:web-design-guidelines src/components/**/*.tsx",
       "whenEn": "Use when auditing multiple UI components against current guidelines.",
       "whenVi": "Dùng khi audit nhiều component UI theo guideline hiện hành.",
-      "expectedEn": "Terse list of concrete violations and locations.",
-      "expectedVi": "Danh sách ngắn các vi phạm cụ thể và vị trí."
+      "expectedEn": "Terse list of concrete violations, affected locations, and the guideline principle behind each issue.",
+      "expectedVi": "Danh sách ngắn các vi phạm cụ thể, vị trí bị ảnh hưởng và nguyên tắc guideline liên quan."
     }
   ],
   "reportOutput": {

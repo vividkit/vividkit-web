@@ -122,8 +122,8 @@ const data: SkillInfographic = {
       "command": "/ak:ui-ux-pro-max build a SaaS landing page design system",
       "whenEn": "Use before creating a visible page or product UI direction.",
       "whenVi": "Dùng trước khi tạo page hiển thị hoặc định hướng UI sản phẩm.",
-      "expectedEn": "Design-system recommendations with style, colors, typography, effects, and anti-patterns.",
-      "expectedVi": "Khuyến nghị design-system gồm style, màu, typography, effect và anti-pattern.",
+      "expectedEn": "Design system recommendations cover style, colors, typography, effects, anti patterns, implementation cautions, and visual priorities.",
+      "expectedVi": "Khuyến nghị design-system gồm style, màu, typography, effect, anti-pattern và lưu ý triển khai.",
       "recommended": true
     },
     {
@@ -132,7 +132,7 @@ const data: SkillInfographic = {
       "command": "/ak:ui-ux-pro-max review this mobile app screen for accessibility and polish",
       "whenEn": "Use when the UI feels unprofessional or needs pre-launch review.",
       "whenVi": "Dùng khi UI chưa đủ chuyên nghiệp hoặc cần review trước launch.",
-      "expectedEn": "Prioritized UX, accessibility, responsive, and visual-consistency findings.",
+      "expectedEn": "Prioritized UX, accessibility, responsive behavior, and visual consistency findings include concrete remediation guidance for developers.",
       "expectedVi": "Các phát hiện UX, accessibility, responsive và visual consistency theo mức ưu tiên."
     },
     {
@@ -141,8 +141,8 @@ const data: SkillInfographic = {
       "command": "/ak:ui-ux-pro-max add an analytics dashboard chart",
       "whenEn": "Use when the task includes data visualization choices.",
       "whenVi": "Dùng khi tác vụ có lựa chọn trực quan hóa dữ liệu.",
-      "expectedEn": "Chart type, legend, tooltip, color, accessibility, and responsive guidance.",
-      "expectedVi": "Hướng dẫn loại chart, legend, tooltip, màu, accessibility và responsive."
+      "expectedEn": "Chart type, legend, tooltip, color, accessibility, and responsive guidance for the dashboard context.",
+      "expectedVi": "Hướng dẫn loại chart, legend, tooltip, màu, accessibility và responsive cho bối cảnh dashboard."
     }
   ],
   "guardrails": [

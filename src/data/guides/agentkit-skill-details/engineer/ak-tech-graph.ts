@@ -141,8 +141,8 @@ const data: SkillInfographic = {
       "command": "/ak:tech-graph visualize agent memory write and read paths",
       "whenEn": "The diagram must separate memory writes, reads, retrieval, and context assembly.",
       "whenVi": "Sơ đồ cần tách đường ghi memory, đọc memory, retrieve và ghép context.",
-      "expectedEn": "Uses memory architecture rules and semantic arrows with a legend.",
-      "expectedVi": "Dùng luật kiến trúc memory và mũi tên có ngữ nghĩa kèm legend."
+      "expectedEn": "Uses memory architecture rules, semantic arrows, separated read/write paths, and a clear legend.",
+      "expectedVi": "Dùng luật kiến trúc memory, mũi tên có ngữ nghĩa, tách read/write path và legend rõ ràng."
     },
     {
       "labelEn": "Sequence diagram",
@@ -150,8 +150,8 @@ const data: SkillInfographic = {
       "command": "/ak:tech-graph sequence diagram for checkout authorization",
       "whenEn": "A time-ordered interaction between participants should be illustrated.",
       "whenVi": "Cần minh họa tương tác theo thời gian giữa các participant.",
-      "expectedEn": "Uses lifelines, activation boxes, messages, and optional loop/alt frames.",
-      "expectedVi": "Dùng lifeline, activation box, message và frame loop/alt khi cần."
+      "expectedEn": "Uses lifelines, activation boxes, ordered messages, and optional loop or alt frames when needed.",
+      "expectedVi": "Dùng lifeline, activation box, message có thứ tự và frame loop hoặc alt khi cần."
     }
   ]
 };
