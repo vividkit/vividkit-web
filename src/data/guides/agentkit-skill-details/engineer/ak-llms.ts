@@ -35,6 +35,7 @@ const data: SkillInfographic = {
     {
       "number": 4,
       "titleEn": "Generate index",
+      "titleVi": "Sinh index",
       "descEn": "Run scripts/generate-llms-txt.py with --source, --output, --base-url, and optionally --full, or manually follow the referenced llms.txt spec.",
       "descVi": "Chạy scripts/generate-llms-txt.py với --source, --output, --base-url và tùy chọn --full, hoặc làm thủ công theo spec llms.txt được tham chiếu."
     },

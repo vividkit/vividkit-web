@@ -34,7 +34,7 @@ const data: SkillInfographic = {
   invocation: {
     syntax: '/ak:plan [task] [--fast|--hard|--deep|--parallel|--two|--debate|--ultra] [--tdd|--no-tasks] [--html] [--github] [--wiki] [--advice] [--yagni] [--skip-journal] [--no-antv|--no-diagram-design|--no-editorial-visuals] OR /ak:plan <archive|red-team|validate> <plan.md>',
     arguments: [
-      { token: '[task]', titleEn: 'Work to plan', titleVi: 'Việc cần lập plan', descEn: 'Natural-language outcome, constraints, and acceptance criteria. Omit only when running a maintenance subcommand.', descVi: 'Outcome, ràng buộc và tiêu chí chấp nhận bằng ngôn ngữ tự nhiên. Chỉ bỏ khi chạy subcommand bảo trì.', required: true, exampleCommand: '/ak:plan Add webhook replay protection to payments' },
+      { token: '[task]', titleEn: 'Work to plan', titleVi: 'Việc cần lập plan', descEn: 'Optional natural-language outcome, constraints, and acceptance criteria. With no clear task, the Skill asks whether to create a new plan or run archive, red-team, or validate.', descVi: 'Outcome, ràng buộc và tiêu chí chấp nhận bằng ngôn ngữ tự nhiên; không bắt buộc. Khi chưa có việc rõ, Skill hỏi tạo plan mới hay chạy archive, red-team hoặc validate.', required: false, exampleCommand: '/ak:plan Add webhook replay protection to payments' },
     ],
     options: [
       { token: '--auto', titleEn: 'Auto-detect mode', titleVi: 'Tự chọn mode', descEn: 'Default. Picks one planning mode from scope and uncertainty. Never selects --debate or --ultra.', descVi: 'Mặc định. Chọn một mode lập plan theo phạm vi và độ bất định. Không bao giờ tự chọn --debate hoặc --ultra.' },
