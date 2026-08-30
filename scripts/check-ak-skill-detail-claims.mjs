@@ -6,6 +6,7 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { selfTestWrapCommandTokens } from './wrap-command-tokens.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DETAILS = join(ROOT, 'src/data/guides/agentkit-skill-details');
@@ -302,28 +303,59 @@ function checkFile({ id, kit, src, skillMd, argumentHint, extraAllowedFlags }) {
     }
   }
 
-  if (isUserFacing(skillMd)) {
+  const hasPrompts = /["']?promptExamples["']?\s*:/.test(src);
+  if (hasPrompts) {
     const prompts = extractPromptCommands(src, expectedCmd);
-    if (prompts.length < 2) {
-      violations.push(`user-facing skill needs >=2 promptExamples, found ${prompts.length}`);
-    }
-    for (const field of ['expectedEn', 'expectedVi']) {
-      const values = extractQuotedFields(src, field);
-      for (const [i, ex] of values.entries()) {
-        if (ex.trim().split(/\s+/).filter(Boolean).length < 12) {
-          violations.push(`prompt ${field}[${i}] too thin: ${ex}`);
+    const promptStart = src.search(/["']?promptExamples["']?\s*:/);
+    const promptSlice = promptStart >= 0 ? src.slice(promptStart) : src;
+    if (isUserFacing(skillMd)) {
+      if (prompts.length < 2) {
+        violations.push(`user-facing skill needs >=2 promptExamples, found ${prompts.length}`);
+      }
+      for (const field of ['expectedEn', 'expectedVi']) {
+        const values = extractQuotedFields(promptSlice, field);
+        for (const [i, ex] of values.entries()) {
+          if (ex.trim().split(/\s+/).filter(Boolean).length < 12) {
+            violations.push(`prompt ${field}[${i}] too thin: ${ex}`);
+          }
         }
       }
     }
-    if (kit !== 'marketing' && !/["']?invocation["']?\s*:/.test(src)) {
+    const rec = (promptSlice.match(/recommended:\s*true/g) || []).length;
+    if (rec > 1) {
+      violations.push(`promptExamples need at most one recommended: true, found ${rec}`);
+    }
+    const modeSliceStart = src.search(/["']?workflowModes["']?\s*:/);
+    if (modeSliceStart >= 0) {
+      const modeSlice = src.slice(modeSliceStart, modeSliceStart + 8000);
+      const blob = [
+        ...prompts,
+        ...extractQuotedFields(promptSlice, 'labelEn'),
+        ...extractQuotedFields(promptSlice, 'labelVi'),
+      ].join('\n').toLowerCase();
+      for (const raw of extractQuotedFields(modeSlice, 'flag')) {
+        const op = String(raw).match(/^([a-zA-Z][a-zA-Z0-9]*)\s*\(/);
+        if (!op) continue;
+        const key = op[1];
+        const spaced = key.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase();
+        const withoutGet = spaced.replace(/^get /, '');
+        if (![key.toLowerCase(), spaced, withoutGet, withoutGet.replace(/\s+/g, '')].some((k) => k && blob.includes(k))) {
+          violations.push(`promptExamples miss documented operation ${key}`);
+        }
+      }
+    }
+    if (kit !== 'marketing' && isUserFacing(skillMd) && !/["']?invocation["']?\s*:/.test(src)) {
       violations.push('user-facing skill needs an invocation block (syntax, arguments, options, subcommands)');
     }
+  } else if (isUserFacing(skillMd) && kit !== 'marketing') {
+    violations.push('user-facing skill needs >=2 promptExamples, found 0');
   }
 
   return violations;
 }
 
 function selfTest() {
+  selfTestWrapCommandTokens();
   const skillMd = `---
 name: ak:plan
 user-invocable: true
@@ -338,7 +370,7 @@ const data = {
   command: '/ak:plan',
   invocation: { syntax: '/ak:plan [task] [--fast|--html] OR /ak:plan validate <plan.md>' },
   promptExamples: [
-    { command: '/ak:plan Rename settings route --fast', expectedEn: 'A compact plan.md and phase files with research skipped for this already-understood rename, and no implementation code.' },
+    { command: '/ak:plan Rename settings route --fast', expectedEn: 'A compact plan.md and phase files with research skipped for this already-understood rename, and no implementation code.', recommended: true },
     { command: '/ak:plan validate plans/x/plan.md', expectedEn: 'Critical questions against the existing plan, then file updates or an explicit list of unresolved blockers.' },
   ],
   outputFlags: [{ flag: '--html', exampleCommand: '/ak:plan flow --html' }],

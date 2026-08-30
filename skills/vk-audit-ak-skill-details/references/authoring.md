@@ -21,10 +21,11 @@ Shared renderer:
 ## Prompt mẫu
 
 - User-facing skills: ≥2 examples; exactly one `recommended: true`
-- Cover the default invocation plus each documented **mode** and **subcommand**. Remaining options: add cards until the distinctive ones are shown, cap 6
-- `command` is copy-pasteable English/verbatim. Renderer wraps `/ak:…` and `--flags` as `<code>`
+- Cover the default invocation plus each documented **mode** and **subcommand**. Client operations named `upload(...)` style must each appear in a prompt command or label. Cap 8 cards
+- `command` is copy-pasteable English/verbatim. Renderer wraps `/ak:…` and `--flags` as `<code>`; hyphenated prose (`privacy-first`) is not a short flag
 - `whenEn`/`whenVi`: when to run this variant (not a restatement of the command)
 - `expectedEn`/`expectedVi`: observable outcome, ≥12 words, semantically equivalent, no fake routes
+- Audit every file that has `promptExamples`, including helper skills, not only `user-invocable: true`
 - Scanner/helper flags (`--redact-paths` on `watzup-scan.cjs`) belong in expected/process copy, not as slash options unless argument-hint lists them
 
 ## Hard gates
