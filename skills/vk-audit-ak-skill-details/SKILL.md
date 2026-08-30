@@ -65,15 +65,15 @@ Does not write `src/`. Does not `--write-lock`. Same-kit table *missed* tokens a
 
 Runs `--check` checkers plus `scripts/check-ak-skill-detail-ak-docs.mjs`, continues after failures, writes
 `reference/changelog-reports/{YYYY-MM-DD}-ak-skill-details-audit.md`
-with checker exits, **dirty IDs**, and **missing same-kit MDX**.
+with checker exits, **review candidates** (advisory table/locale deltas), and **missing same-kit MDX**.
+Do not author every review candidate wholesale.
 
 Coverage snapshot: `scripts/ak-docs-skill-detail-coverage.json`.
 
 ### `--update`
 
-Runs `--report`, prints dirty IDs to author using
-[references/authoring.md](references/authoring.md), then stop for re-authoring.
-After edits, re-run `--check` and `npm run build`.
+Runs `--report` and prints review candidates. Re-author only verified `wrong`/`missed` skill-level facts using
+[references/authoring.md](references/authoring.md). After edits, re-run `--check` and `npm run build`.
 
 
 ```bash

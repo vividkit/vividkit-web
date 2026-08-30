@@ -140,23 +140,22 @@ function main(argv) {
         '## Checker exits',
         ...logs.map((l) => `- \`${l.step}\` → exit ${l.code}`),
         '',
-        '## Dirty IDs',
+        '## Review candidates (advisory)',
+        'Do not author every ID below. Treat table/locale deltas as review, then patch only verified skill-level wrong/missed facts.',
         ...(dirty.length ? dirty.map((id) => `- ${id}`) : ['- none']),
         '',
         '## Missing same-kit MDX',
         ...(missing.length ? missing.map((id) => `- ${id}`) : ['- none']),
         '',
-        'Re-author dirty `src/data/guides/agentkit-skill-details/` files, then `--write-lock`.',
-        '',
       ].join('\n'),
     );
     process.stdout.write(`wrote ${out}\n`);
-    process.stdout.write(`dirty ${dirty.length}; missing-mdx ${missing.length}\n`);
+    process.stdout.write(`review-candidates ${dirty.length}; missing-mdx ${missing.length}\n`);
     if (args.cmd === 'update') {
       process.stdout.write(
         dirty.length
-          ? `Author these IDs using references/authoring.md:\n${dirty.map((id) => `- ${id}`).join('\n')}\n`
-          : 'No dirty IDs. Working tree matches checkers.\n',
+          ? `Review candidates (not a wholesale author list):\n${dirty.map((id) => `- ${id}`).join('\n')}\n`
+          : 'No review candidates from checkers.\n',
       );
     }
   }

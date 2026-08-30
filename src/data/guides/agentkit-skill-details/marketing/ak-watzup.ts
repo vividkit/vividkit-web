@@ -22,8 +22,8 @@ const data: SkillInfographic = {
       "number": 1,
       "titleEn": "Run scanner",
       "titleVi": "Chạy scanner",
-      "descEn": "Start at project root with node scripts/watzup-scan.cjs --json; add --fetch only when the user asked to refresh remotes.",
-      "descVi": "Bắt đầu ở project root bằng node scripts/watzup-scan.cjs --json; chỉ thêm --fetch khi người dùng yêu cầu refresh remote."
+      "descEn": "Start at project root with node scripts/watzup-scan.cjs --json; add --fetch only when the user asked to refresh remotes. The scanner supports --redact-paths to replace absolute paths with stable labels; it does not redact branch names, commit subjects, plan titles, or status text.",
+      "descVi": "Bắt đầu ở project root bằng node scripts/watzup-scan.cjs --json; chỉ thêm --fetch khi người dùng yêu cầu refresh remote. Scanner hỗ trợ --redact-paths để thay path tuyệt đối bằng nhãn ổn định; không che branch name, commit subject, plan title hay dòng status.",
     },
     {
       "number": 2,

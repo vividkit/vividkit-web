@@ -98,7 +98,13 @@ function extractDocTableFlags(mdx) {
   const tables = String(mdx || '').match(/(?:^|\n)(?:\|.*\|\n)+/g) || [];
   for (const table of tables) {
     const header = table.split('\n').find((line) => line.includes('|')) || '';
-    if (!/\b(option|flag|mode|input)\b/i.test(header)) continue;
+    if (
+      !/\b(options?|flags?|modes?|inputs?|controls?|operations?|arguments?)\b/i.test(
+        header,
+      )
+    ) {
+      continue;
+    }
     for (const f of extractFlagsFromText(table)) flags.add(f);
   }
   return flags;
