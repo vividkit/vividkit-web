@@ -127,6 +127,20 @@ function extractSubcommands(argumentHint, skillMd) {
   return subs;
 }
 
+function takesFollowOnPrompt(src, argumentHint, skillMd) {
+  if (extractAllowedFlags(argumentHint, skillMd).size) return true;
+  if (extractSubcommands(argumentHint, skillMd).size) return true;
+  if (extractQuotedFields(blockSlice(src, 'arguments'), 'token').length) return true;
+  if (extractQuotedFields(blockSlice(src, 'options'), 'token').length) return true;
+  if (extractQuotedFields(blockSlice(src, 'subcommands'), 'name').length) return true;
+  if (extractQuotedFields(blockSlice(src, 'workflowModes'), 'flag').some((f) => /^--/.test(String(f).trim()))) {
+    return true;
+  }
+  const syntax = extractQuotedFields(src, 'syntax')[0] || '';
+  if (/\[|</.test(syntax)) return true;
+  return /\[[^\]]+\]|<[a-z]/.test(argumentHint || '');
+}
+
 function objectSlice(src, key) {
   const re = new RegExp(`["']?${key}["']?\\s*:\\s*\\{`);
   const m = re.exec(src);
@@ -444,8 +458,9 @@ function checkFile({ id, kit, src, skillMd, argumentHint, extraAllowedFlags }) {
     const promptStart = src.search(/["']?promptExamples["']?\s*:/);
     const promptSlice = promptStart >= 0 ? src.slice(promptStart) : src;
     if (isUserFacing(skillMd)) {
-      if (prompts.length < 2) {
-        violations.push(`user-facing skill needs >=2 promptExamples, found ${prompts.length}`);
+      const minPrompts = takesFollowOnPrompt(src, argumentHint, skillMd) ? 2 : 1;
+      if (prompts.length < minPrompts) {
+        violations.push(`user-facing skill needs >=${minPrompts} promptExamples, found ${prompts.length}`);
       }
       for (const field of ['expectedEn', 'expectedVi']) {
         const values = extractQuotedFields(promptSlice, field);
@@ -469,7 +484,8 @@ function checkFile({ id, kit, src, skillMd, argumentHint, extraAllowedFlags }) {
       violations.push('user-facing skill needs an invocation block (syntax, arguments, options, subcommands)');
     }
   } else if (isUserFacing(skillMd) && kit !== 'marketing') {
-    violations.push('user-facing skill needs >=2 promptExamples, found 0');
+    const minPrompts = takesFollowOnPrompt(src, argumentHint, skillMd) ? 2 : 1;
+    violations.push(`user-facing skill needs >=${minPrompts} promptExamples, found 0`);
   }
 
   return violations;
@@ -643,6 +659,38 @@ const data = {
     skillMd: artistMd,
     argumentHint: '[task] [--mode]',
   });
+  const broMd = `---
+name: ak:bro
+user-invocable: true
+---
+# Bro
+`;
+  const broOne = `
+const data = {
+  id: 'ak-bro',
+  command: '/ak:bro',
+  invocation: { syntax: '/ak:bro' },
+  promptExamples: [
+    { command: '/ak:bro', expectedEn: 'Uses only the previous assistant message and returns a shorter restatement without adding analysis or actions.', recommended: true },
+  ],
+};
+`;
+  const broHit = checkFile({
+    id: 'ak-bro',
+    src: broOne,
+    skillMd: broMd,
+    argumentHint: '',
+  });
+  const planOne = good.replace(
+    "    { command: '/ak:plan validate plans/x/plan.md', expectedEn: 'Critical questions against the existing plan, then file updates or an explicit list of unresolved blockers.' },\n    { command: '/ak:plan archive plans/x/plan.md', expectedEn: 'Moves the completed plan into the archive location and records the archived path without editing implementation code.' },\n",
+    '',
+  );
+  const planOneHit = checkFile({
+    id: 'ak-plan',
+    src: planOne,
+    skillMd,
+    argumentHint: '[task] [--fast|--html] OR [archive|validate]',
+  });
 
   const fail = [];
   if (!a.some((v) => v.includes('--not-a-real-flag'))) fail.push('invented-flag case');
@@ -655,6 +703,8 @@ const data = {
   if (!h.some((v) => v.includes('subcommand archive'))) fail.push('missing-subcommand coverage');
   if (!prHit.some((v) => v.includes('subcommand pr'))) fail.push('pr vs project substring');
   if (!modeHit.some((v) => v.includes('mode --mode wild'))) fail.push('--mode search vs wild');
+  if (broHit.length) fail.push(`no-arg one prompt: ${broHit.join('; ')}`);
+  if (!planOneHit.some((v) => /needs >=2 promptExamples/.test(v))) fail.push('flag skill still needs 2 prompts');
   if (fail.length) {
     process.stderr.write(`self-test failed: ${fail.join(', ')}\n`);
     process.exit(1);
