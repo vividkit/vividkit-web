@@ -10,6 +10,13 @@ const data: SkillInfographic = {
     taglineEn: 'Referral program strategy and implementation for SaaS and digital products: rewards, platform selection, attribution, fraud prevention, email templates, and KPI tracking.',
     taglineVi: 'Chiến lược và triển khai referral program cho SaaS/sản phẩm số: reward, chọn nền tảng, attribution, chống gian lận, email template và theo dõi KPI.',
   },
+  hardGate: {
+    type: 'warning',
+    titleEn: 'The reference schema is not a production contract',
+    titleVi: 'Schema tham khảo không phải contract production',
+    contentEn: 'The packaged SQL and JavaScript are illustrative sketches that include email, IP address, and device fingerprint fields; review auth, consent, minimization, retention, reward liability, abuse, audit, observability, and recovery before implementation.',
+    contentVi: 'SQL và JavaScript đóng gói chỉ là sketch minh họa có field email, IP address và device fingerprint; phải review auth, consent, minimization, retention, trách nhiệm reward, abuse, audit, observability và recovery trước khi triển khai.',
+  },
   processFlow: [
     { number: 1, titleEn: 'Define Program', titleVi: 'Định nghĩa chương trình', descEn: 'Choose program type and reward structure that fit the product, business model, and customer motivation.', descVi: 'Chọn loại chương trình và cấu trúc reward phù hợp sản phẩm, mô hình kinh doanh và động lực khách hàng.' },
     { number: 2, titleEn: 'Design Rewards', titleVi: 'Thiết kế reward', descEn: 'Use two-sided, tiered, multi-step, product-aligned, cash, credit, storage, or commission incentives.', descVi: 'Dùng incentive hai phía, tiered, multi-step, gắn với sản phẩm, tiền mặt, credit, dung lượng hoặc commission.' },

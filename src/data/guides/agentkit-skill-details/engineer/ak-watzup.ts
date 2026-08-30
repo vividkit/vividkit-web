@@ -18,9 +18,15 @@ const data: SkillInfographic = {
     contentVi: 'Skill này chỉ báo cáo trạng thái và bằng chứng bàn giao. Không triển khai, sửa file, commit, checkout, merge, push, fetch hoặc thay đổi checkout, trừ khi người dùng yêu cầu làm mới remote.',
   },
   invocation: {
-    syntax: '/ak:watzup [--fetch]',
+    syntax: '/ak:watzup [--json] [--fetch] [--since <date>] [--max-branches <n>] [--plan-limit <n>] [--max-plan-refs <n>] [--redact-paths]',
     options: [
-      { token: '--fetch', titleEn: 'Refresh remotes', titleVi: 'Làm mới remote', descEn: 'Refresh remote branch data before scanning. This contacts configured remotes; omit for the default local-only report.', descVi: 'Làm mới dữ liệu branch remote trước khi quét. Tùy chọn này liên hệ remote đã cấu hình; bỏ qua để dùng báo cáo mặc định chỉ đọc local.', exampleCommand: '/ak:watzup --fetch' },
+      { token: '--json', titleEn: 'Structured evidence', titleVi: 'Bằng chứng có cấu trúc', descEn: 'Emit structured evidence for the handoff. This does not refresh remote refs.', descVi: 'Xuất bằng chứng có cấu trúc cho bản bàn giao. Tùy chọn này không làm mới remote ref.', exampleCommand: '/ak:watzup --json' },
+      { token: '--fetch', titleEn: 'Refresh remotes', titleVi: 'Làm mới remote', descEn: 'Run git fetch --all --prune before scanning. This contacts configured remotes and updates/prunes local remote-tracking refs; omit for the default local-only report.', descVi: 'Chạy git fetch --all --prune trước khi quét. Tùy chọn này liên hệ remote đã cấu hình và cập nhật/prune remote-tracking ref local; bỏ qua để dùng báo cáo mặc định chỉ đọc local.', exampleCommand: '/ak:watzup --fetch' },
+      { token: '--since <date>', titleEn: 'Commit sample window', titleVi: 'Khoảng lấy mẫu commit', descEn: 'Limit sampled commits per branch. This does not limit plan or roadmap discovery.', descVi: 'Giới hạn commit được lấy mẫu trên mỗi branch. Tùy chọn này không giới hạn discovery plan hoặc roadmap.', exampleCommand: '/ak:watzup --since 2026-08-01' },
+      { token: '--max-branches <n>', titleEn: 'Branch summary limit', titleVi: 'Giới hạn tóm tắt branch', descEn: 'Limit branches summarized. Omitted branches still exist.', descVi: 'Giới hạn số branch được tóm tắt. Các branch bị bỏ qua vẫn tồn tại.', exampleCommand: '/ak:watzup --max-branches 20' },
+      { token: '--plan-limit <n>', titleEn: 'Short-output plan limit', titleVi: 'Giới hạn plan trong output ngắn', descEn: 'Limit unfinished plans included in short output. This does not prove excluded plans are complete.', descVi: 'Giới hạn số plan chưa xong đưa vào output ngắn. Điều này không chứng minh các plan bị loại đã hoàn tất.', exampleCommand: '/ak:watzup --plan-limit 8' },
+      { token: '--max-plan-refs <n>', titleEn: 'Tracked plan ref limit', titleVi: 'Giới hạn ref plan tracked', descEn: 'Limit ranked refs inspected for tracked plan files. A warning records truncation.', descVi: 'Giới hạn số ref đã xếp hạng được kiểm tra để tìm plan file tracked. Warning sẽ ghi lại việc cắt bớt.', exampleCommand: '/ak:watzup --max-plan-refs 40' },
+      { token: '--redact-paths', titleEn: 'Redact absolute paths', titleVi: 'Che đường dẫn tuyệt đối', descEn: 'Replace absolute paths with stable labels. This does not redact branch names, commit subjects, or document content.', descVi: 'Thay đường dẫn tuyệt đối bằng nhãn ổn định. Tùy chọn này không che tên branch, tiêu đề commit hoặc nội dung tài liệu.', exampleCommand: '/ak:watzup --redact-paths' },
     ],
   },
   processFlow: [

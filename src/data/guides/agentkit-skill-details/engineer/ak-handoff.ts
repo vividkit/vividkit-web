@@ -22,8 +22,8 @@ const data: SkillInfographic = {
       "number": 2,
       "titleEn": "Resolve destination",
       "titleVi": "Xác định nơi ghi",
-      "descEn": "Use plans/handoffs/<slug>-<YYYYMMDD-HHmm>.md when a plans root exists, or an explicit workspace-local --output path; ask before writing if no plans root exists.",
-      "descVi": "Dùng plans/handoffs/<slug>-<YYYYMMDD-HHmm>.md khi có plans root, hoặc path --output nằm trong workspace; hỏi trước khi ghi nếu không có plans root."
+      "descEn": "Use plans/reports/handoff-<YYYYMMDD-HHmm>-<slug>.md by default, or a workspace-local explicit output path; ask before writing if no plans root exists.",
+      "descVi": "Mặc định dùng plans/reports/handoff-<YYYYMMDD-HHmm>-<slug>.md, hoặc path output chỉ định nằm trong workspace; hỏi trước khi ghi nếu không có plans root."
     },
     {
       "number": 3,
@@ -41,10 +41,10 @@ const data: SkillInfographic = {
     },
     {
       "number": 5,
-      "titleEn": "Fill nine sections",
-      "titleVi": "Điền chín mục",
-      "descEn": "Emit the required H2 sections in order, including exact next actions with a bold **First safe step** marker.",
-      "descVi": "Xuất đủ chín H2 section theo thứ tự, gồm exact next actions với marker **First safe step** in đậm."
+      "titleEn": "Fill report schema",
+      "titleVi": "Điền schema report",
+      "descEn": "Include the verified handoff content: title, time, focus, goal, current state, decisions and rejected approaches, verification, files and pointers, open work, and a fresh-agent prompt.",
+      "descVi": "Gồm nội dung handoff đã xác minh: tiêu đề, thời gian, trọng tâm, mục tiêu, trạng thái hiện tại, quyết định và hướng bị loại, verification, file và pointer, việc còn mở, và prompt cho agent mới."
     },
     {
       "number": 6,
@@ -62,10 +62,10 @@ const data: SkillInfographic = {
     },
     {
       "number": 8,
-      "titleEn": "Return pointer only",
-      "titleVi": "Chỉ trả con trỏ",
-      "descEn": "Print the absolute artifact path and one continuation instruction; do not inline the artifact body.",
-      "descVi": "In path tuyệt đối của artifact và một câu hướng dẫn tiếp tục; không dán nội dung artifact vào output."
+      "titleEn": "Write matching outputs",
+      "titleVi": "Ghi hai output khớp nhau",
+      "descEn": "Return one fenced Markdown block in the response and save the same content as the timestamped report.",
+      "descVi": "Trả về một fenced Markdown block trong response và lưu cùng nội dung đó thành report có timestamp."
     }
   ],
   "hardGate": {
@@ -114,8 +114,8 @@ const data: SkillInfographic = {
         "token": "--output PATH",
         "titleEn": "Exact output path",
         "titleVi": "Path output chính xác",
-        "descEn": "Write the handoff to this workspace-local path instead of the auto timestamped plans/handoffs path. It does not imply overwrite permission.",
-        "descVi": "Ghi handoff vào path nằm trong workspace này thay vì path plans/handoffs có timestamp tự động. Cờ này không tự cho phép ghi đè.",
+        "descEn": "Write the handoff to this workspace-local path instead of the auto timestamped plans/reports path. It does not imply overwrite permission.",
+        "descVi": "Ghi handoff vào path nằm trong workspace này thay vì path plans/reports có timestamp tự động. Cờ này không tự cho phép ghi đè.",
         "exampleCommand": "/ak:handoff --output plans/handoffs/oauth-callback.md"
       },
       {
@@ -201,8 +201,8 @@ const data: SkillInfographic = {
       "command": "/ak:handoff",
       "whenEn": "You are about to switch sessions and need a successor-ready contract.",
       "whenVi": "Khi sắp chuyển session và cần contract cho agent kế tiếp.",
-      "expectedEn": "Creates a workspace-local plans/handoffs Markdown artifact with the required nine H2 sections, fills unknowns as “Not captured in this session,” and returns only the absolute path plus continuation instruction.",
-      "expectedVi": "Tạo artifact Markdown trong plans/handoffs của workspace với đủ chín H2 section bắt buộc, ghi phần chưa biết là “Not captured in this session,” và chỉ trả path tuyệt đối cùng câu hướng dẫn tiếp tục.",
+      "expectedEn": "Creates a workspace-local plans/reports Markdown artifact with the verified handoff schema, fills unknowns as “Not captured in this session,” and returns the same content as a fenced Markdown block.",
+      "expectedVi": "Tạo artifact Markdown trong plans/reports của workspace với schema handoff đã xác minh, ghi phần chưa biết là “Not captured in this session,” và trả cùng nội dung dưới dạng fenced Markdown block.",
       "recommended": true
     },
     {
@@ -234,14 +234,14 @@ const data: SkillInfographic = {
     }
   ],
   "reportOutput": {
-    "titleEn": "Handoff return value",
-    "titleVi": "Giá trị trả về của handoff",
-    "patternEn": "Absolute artifact path plus: Read <path> and verify the Current state section against the repo before acting.",
-    "patternVi": "Path tuyệt đối của artifact kèm câu: Read <path> and verify the Current state section against the repo before acting.",
-    "locationEn": "plans/handoffs/ by default.",
-    "locationVi": "Mặc định trong plans/handoffs/.",
-    "descEn": "The body stays in the file so the terminal output remains safe and copyable.",
-    "descVi": "Nội dung nằm trong file để output terminal vẫn an toàn và dễ copy."
+    "titleEn": "Handoff report output",
+    "titleVi": "Output report handoff",
+    "patternEn": "One fenced Markdown block in the response, matching the content saved to the timestamped report.",
+    "patternVi": "Một fenced Markdown block trong response, khớp với nội dung được lưu vào report có timestamp.",
+    "locationEn": "plans/reports/handoff-YYYYMMDD-HHmm-<slug>.md by default.",
+    "locationVi": "Mặc định là plans/reports/handoff-YYYYMMDD-HHmm-<slug>.md.",
+    "descEn": "The response block and saved report must match, and redacted values must not be reconstructable.",
+    "descVi": "Block trong response và report đã lưu phải khớp nhau, và giá trị đã redact không được khôi phục ngược."
   }
 };
 

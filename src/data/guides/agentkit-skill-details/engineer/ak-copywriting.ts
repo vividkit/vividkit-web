@@ -10,6 +10,15 @@ const data: SkillInfographic = {
     taglineEn: 'Conversion copywriting formulas, headline templates, email patterns, landing-page structures, CTA optimization, and writing-style extraction.',
     taglineVi: 'Công thức copy chuyển đổi, mẫu headline, pattern email, cấu trúc landing page, tối ưu CTA và trích xuất phong cách viết.',
   },
+  hardGate: {
+    type: 'warning',
+    titleEn: 'A persuasive pattern is not evidence',
+    titleVi: 'Mẫu thuyết phục không phải bằng chứng',
+    contentEn:
+      'Do not turn a template’s sample numbers, guarantees, urgency, testimonials, or superiority language into real claims. Each factual statement needs approved support, and regulated or contractual copy still needs the appropriate human review.',
+    contentVi:
+      'Không biến số mẫu, cam kết, sự khẩn cấp, testimonial hoặc ngôn ngữ vượt trội trong template thành claim thật. Mỗi phát biểu sự thật cần có bằng chứng đã duyệt, và copy chịu quản lý hoặc ràng buộc hợp đồng vẫn cần review phù hợp của con người.',
+  },
   processFlow: [
     { number: 1, titleEn: 'Classify copy', titleVi: 'Phân loại copy', descEn: 'Identify whether the user needs headlines, subject lines, landing page copy, emails, social posts, product descriptions, CTAs, A/B variants, or style transfer.', descVi: 'Xác định người dùng cần headline, subject line, landing page, email, bài social, mô tả sản phẩm, CTA, biến thể A/B hay chuyển phong cách viết.' },
     { number: 2, titleEn: 'Load style evidence', titleVi: 'Nạp bằng chứng phong cách', descEn: 'Load the bundled writing-styles reference or run extract-writing-styles.py on approved assets in supported formats, noting when document or media extraction needs GEMINI_API_KEY.', descVi: 'Nạp tài liệu writing-styles hoặc chạy extract-writing-styles.py trên asset đã được duyệt ở định dạng hỗ trợ, ghi rõ khi trích xuất tài liệu/media cần GEMINI_API_KEY.' },

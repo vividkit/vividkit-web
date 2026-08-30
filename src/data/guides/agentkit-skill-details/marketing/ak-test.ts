@@ -10,6 +10,13 @@ const data: SkillInfographic = {
     "taglineEn": "Marketing UI and workflow validation for websites, AgentKit commands, agents, skills, and step-by-step verification reports.",
     "taglineVi": "Kiểm thử UI và workflow cho website, command, agent, skill của Marketing AgentKit, kèm báo cáo xác minh từng bước."
   },
+  "hardGate": {
+    "type": "warning",
+    "titleEn": "Test access is not publication or mutation authority",
+    "titleVi": "Quyền test không phải quyền publish hoặc mutate",
+    "contentEn": "Do not paste credentials into prompts or reports. Authorization to view a route does not permit form submission, messages, account changes, load, security probing, provider spend, or publishing content without separate approval.",
+    "contentVi": "Không dán credential vào prompt hoặc report. Quyền xem route không cho phép submit form, gửi message, đổi account, tạo load, probe security, tiêu provider credit hoặc publish content nếu chưa duyệt riêng."
+  },
   "processFlow": [
     {
       "number": 1,
@@ -29,8 +36,8 @@ const data: SkillInfographic = {
       "number": 3,
       "titleEn": "Define target",
       "titleVi": "Xác định mục tiêu",
-      "descEn": "Treat the remaining arguments as the website, component set, command, agent, skill, or workflow to validate.",
-      "descVi": "Dùng phần tham số còn lại làm website, bộ component, command, agent, skill hoặc workflow cần xác minh."
+      "descEn": "Treat the remaining arguments as an authorized website or one of the supported workflow targets: youtube, content, email, brand, or all.",
+      "descVi": "Dùng phần tham số còn lại làm website đã được phép hoặc một workflow target được hỗ trợ: youtube, content, email, brand hoặc all."
     },
     {
       "number": 4,
@@ -75,13 +82,36 @@ const data: SkillInfographic = {
       "cookFlag": "references/ui.md"
     },
     {
-      "flag": "workflow",
-      "modeEn": "Workflow test",
-      "modeVi": "Kiểm thử workflow",
-      "research": "Command/agent/skill target",
+      "flag": "workflow <youtube|content|email|brand|all>",
+      "modeEn": "Workflow test for the fixed Marketing workflow target set.",
+      "modeVi": "Kiểm thử workflow cho tập target Marketing cố định.",
+      "research": "Selected workflow target",
       "redTeam": "Step gaps and scenario failures",
       "validation": "Workflow report",
       "cookFlag": "references/workflow.md"
+    }
+  ],
+  "outputFlags": [
+    {
+      "flag": "--headless",
+      "titleEn": "Headless UI route",
+      "titleVi": "Tuyến UI headless",
+      "descEn": "Run the UI route without a visible browser when the current test scope allows it.",
+      "descVi": "Chạy tuyến UI không hiện browser khi scope test hiện tại cho phép."
+    },
+    {
+      "flag": "--mobile",
+      "titleEn": "Mobile viewport",
+      "titleVi": "Viewport mobile",
+      "descEn": "Exercise the UI route with a mobile viewport and report the actual environment tested.",
+      "descVi": "Chạy tuyến UI với viewport mobile và báo đúng môi trường đã test."
+    },
+    {
+      "flag": "--auth",
+      "titleEn": "Approved auth state",
+      "titleVi": "Trạng thái auth đã duyệt",
+      "descEn": "Use only an approved protected-route state boundary without exposing cookies, tokens, or credentials.",
+      "descVi": "Chỉ dùng ranh giới state route bảo vệ đã được duyệt mà không lộ cookie, token hoặc credential."
     }
   ],
   "skillStack": [
@@ -104,9 +134,9 @@ const data: SkillInfographic = {
     {
       "labelEn": "Workflow route",
       "labelVi": "Tuyến workflow",
-      "command": "/ak:test workflow ak:video",
-      "whenEn": "Use when validating a marketing command, agent, skill, or workflow path.",
-      "whenVi": "Dùng khi xác minh command, agent, skill hoặc luồng marketing.",
+      "command": "/ak:test workflow youtube",
+      "whenEn": "Use when validating one supported Marketing workflow target: youtube, content, email, brand, or all.",
+      "whenVi": "Dùng khi xác minh một workflow target Marketing được hỗ trợ: youtube, content, email, brand hoặc all.",
       "expectedEn": "Step-by-step verification and scenario findings.",
       "expectedVi": "Xác minh từng bước và các phát hiện theo kịch bản."
     }

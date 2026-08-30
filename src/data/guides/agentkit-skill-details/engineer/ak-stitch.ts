@@ -14,8 +14,8 @@ const data: SkillInfographic = {
     "type": "warning",
     "titleEn": "Provider, key, and quota boundary",
     "titleVi": "Ranh giới provider, khóa và quota",
-    "contentEn": "Stitch generation requires STITCH_API_KEY, sends the prompt to Google Stitch, and is bounded by daily credits; if quota is exhausted, use the ui-ux-pro-max fallback instead of claiming a run happened.",
-    "contentVi": "Generation bằng Stitch cần STITCH_API_KEY, gửi prompt tới Google Stitch và bị giới hạn bởi credit hằng ngày; nếu hết quota, dùng fallback ui-ux-pro-max thay vì nói rằng đã chạy."
+    "contentEn": "Stitch generation requires STITCH_API_KEY, sends the prompt to Google Stitch, and depends on current provider quota and API availability; if quota is exhausted, stop generation or use an approved non-provider workflow instead of claiming a run happened.",
+    "contentVi": "Generation bằng Stitch cần STITCH_API_KEY, gửi prompt tới Google Stitch và phụ thuộc quota cùng khả dụng API hiện tại của provider; nếu hết quota, dừng generation hoặc dùng workflow không qua provider đã được duyệt thay vì nói rằng đã chạy."
   },
   "processFlow": [
     {
@@ -29,8 +29,8 @@ const data: SkillInfographic = {
       "number": 2,
       "titleEn": "Check quota",
       "titleVi": "Kiểm tra quota",
-      "descEn": "Run the quota check before generation and warn when remaining credits are low or exhausted.",
-      "descVi": "Chạy kiểm tra quota trước khi sinh thiết kế và cảnh báo khi credit còn ít hoặc đã hết."
+      "descEn": "Run the local advisory quota check before generation and explain that provider-side enforcement remains authoritative.",
+      "descVi": "Chạy kiểm tra quota local để tham khảo trước khi sinh và giải thích rằng enforcement phía provider vẫn là nguồn quyết định."
     },
     {
       "number": 3,
@@ -50,8 +50,8 @@ const data: SkillInfographic = {
       "number": 5,
       "titleEn": "Review image",
       "titleVi": "Review hình ảnh",
-      "descEn": "Show the generated design preview and capture user feedback before spending redesign credits.",
-      "descVi": "Hiển thị preview thiết kế và lấy phản hồi người dùng trước khi dùng credit redesign."
+      "descEn": "Show the generated design preview and capture user feedback before requesting redesigns or additional variants.",
+      "descVi": "Hiển thị preview thiết kế và lấy phản hồi người dùng trước khi yêu cầu redesign hoặc variant bổ sung."
     },
     {
       "number": 6,
@@ -158,8 +158,8 @@ const data: SkillInfographic = {
             "token": "--variants <count>",
             "titleEn": "Variant count",
             "titleVi": "Số variant",
-            "descEn": "Request additional design alternatives and spend only intentionally approved variant credits.",
-            "descVi": "Yêu cầu thêm phương án thiết kế và chỉ dùng credit variant đã được duyệt rõ."
+            "descEn": "Request additional design alternatives only when variants are intentionally approved.",
+            "descVi": "Chỉ yêu cầu thêm phương án thiết kế khi variant đã được duyệt rõ."
           }
         ],
         "outcomeEn": "Screen ID, project ID, preview image URL, and optional variant IDs for visual review.",
@@ -243,8 +243,8 @@ const data: SkillInfographic = {
       "command": "/ak:stitch generate \"Mobile onboarding flow for a finance app with three calm trust-building screens\" --device MOBILE --variants 3",
       "whenEn": "You want rapid UI design exploration from a concrete prompt before choosing a direction.",
       "whenVi": "Muốn khám phá thiết kế UI nhanh từ prompt cụ thể trước khi chọn hướng.",
-      "expectedEn": "Uses the generation action with the mobile device target, spends only approved variant credits, and returns screen or variant IDs with preview image URLs for user selection.",
-      "expectedVi": "Dùng action generate với target mobile, chỉ dùng credit variant đã duyệt và trả screen hoặc variant ID cùng URL ảnh preview để người dùng chọn."
+      "expectedEn": "Uses the generation action with the mobile device target, requests only approved variants, and returns screen or variant IDs with preview image URLs for user selection.",
+      "expectedVi": "Dùng action generate với target mobile, chỉ yêu cầu variant đã duyệt và trả screen hoặc variant ID cùng URL ảnh preview để người dùng chọn."
     },
     {
       "labelEn": "Export existing screen",
@@ -259,10 +259,10 @@ const data: SkillInfographic = {
       "labelEn": "Check quota first",
       "labelVi": "Kiểm tra quota trước",
       "command": "/ak:stitch quota check",
-      "whenEn": "Before generating concepts, variants, or redesigns near the daily Stitch credit cap.",
-      "whenVi": "Trước khi sinh concept, variant hoặc redesign khi gần giới hạn credit Stitch hằng ngày.",
-      "expectedEn": "Runs the quota action, reports local remaining daily and redesign credits, and recommends the ui-ux-pro-max fallback when generation should stop.",
-      "expectedVi": "Chạy action quota, báo credit local còn lại theo ngày và redesign, rồi gợi ý fallback ui-ux-pro-max khi nên dừng generation."
+      "whenEn": "Before generating concepts, variants, or redesigns when local advisory quota or provider availability may block the run.",
+      "whenVi": "Trước khi sinh concept, variant hoặc redesign khi quota local tham khảo hoặc khả dụng provider có thể chặn lần chạy.",
+      "expectedEn": "Runs the quota action, reports local advisory usage and remaining state, and stops or chooses an approved non-provider workflow when generation should not continue.",
+      "expectedVi": "Chạy action quota, báo usage và trạng thái còn lại theo bộ đếm local tham khảo, rồi dừng hoặc chọn workflow không qua provider đã duyệt khi không nên tiếp tục generation."
     }
   ],
   "specialOperations": [
@@ -286,8 +286,8 @@ const data: SkillInfographic = {
       "id": "quota",
       "titleEn": "Quota",
       "titleVi": "Quota",
-      "descEn": "Tracks free daily credits and redesign credit limits.",
-      "descVi": "Theo dõi credit miễn phí hằng ngày và giới hạn redesign.",
+      "descEn": "Tracks a local advisory counter; provider-side quota remains authoritative.",
+      "descVi": "Theo dõi bộ đếm local để tham khảo; quota phía provider vẫn là nguồn quyết định.",
       "color": "amber"
     }
   ]

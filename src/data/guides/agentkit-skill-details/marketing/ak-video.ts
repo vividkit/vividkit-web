@@ -10,6 +10,13 @@ const data: SkillInfographic = {
     "taglineEn": "Video marketing hub for Veo 3.1 creation, production scripts, storyboards, platform specs, thumbnails, SEO, optimization, and repurposing.",
     "taglineVi": "Trung tâm video marketing cho tạo video Veo 3.1, script sản xuất, storyboard, spec nền tảng, thumbnail, SEO, tối ưu và tái sử dụng nội dung."
   },
+  "hardGate": {
+    "type": "warning",
+    "titleEn": "A production brief does not authorize provider spend",
+    "titleVi": "Brief production không cấp quyền tiêu provider",
+    "contentEn": "Approve each external generation stage separately. Batch scenes, retries, frame pairs, voiceover, music, analysis, and npx fetches can create provider requests, quota use, cost, or executable-code downloads.",
+    "contentVi": "Duyệt riêng từng stage generate bên ngoài. Batch scene, retry, cặp frame, voiceover, music, analysis và npx fetch có thể tạo provider request, dùng quota, phát sinh chi phí hoặc tải executable code."
+  },
   "processFlow": [
     {
       "number": 1,
@@ -162,12 +169,12 @@ const data: SkillInfographic = {
   "reportOutput": {
     "titleEn": "Video deliverable",
     "titleVi": "Sản phẩm video",
-    "patternEn": "Route-specific script, storyboard, video, caption, or optimization output",
-    "patternVi": "Output theo tuyến: script, storyboard, video, caption hoặc tối ưu",
-    "locationEn": "Response or generated assets",
-    "locationVi": "Phản hồi hoặc asset đã tạo",
-    "descEn": "Final output follows the chosen subcommand and loaded reference.",
-    "descVi": "Output cuối đi theo subcommand đã chọn và reference đã nạp."
+    "patternEn": "content/video/{type}/{date}-{slug}/script.md • assets/storyboards/{date}-{slug}/ • assets/videos/{date}-{slug}/",
+    "patternVi": "content/video/{type}/{date}-{slug}/script.md • assets/storyboards/{date}-{slug}/ • assets/videos/{date}-{slug}/",
+    "locationEn": "content/video/, assets/storyboards/, and assets/videos/",
+    "locationVi": "content/video/, assets/storyboards/ và assets/videos/",
+    "descEn": "The selected route may create scripts, storyboards, scene frames, clips, audio, captions, master video, and analysis files; report the actual artifacts.",
+    "descVi": "Route đã chọn có thể tạo script, storyboard, frame cảnh, clip, audio, caption, master video và file analysis; hãy báo artifact thực tế."
   }
 };
 

@@ -192,7 +192,17 @@ const data: SkillInfographic = {
     "locationVi": "Thư mục hiện tại hoặc đường dẫn output người dùng chỉ định",
     "descEn": "Final response reports generated SVG and PNG paths after validation/export.",
     "descVi": "Phản hồi cuối báo đường dẫn SVG và PNG sau khi đã xác thực và xuất file."
-  }
+  },
+  "outputFlags": [
+    {
+      "flag": "--output /path/",
+      "titleEn": "Custom artifact destination",
+      "titleVi": "Đích artifact tùy chỉnh",
+      "descEn": "Write the generated SVG and PNG under an approved custom path instead of the current directory.",
+      "descVi": "Ghi SVG và PNG đã tạo vào path tùy chỉnh đã duyệt thay vì thư mục hiện tại.",
+      "exampleCommand": "/ak:tech-graph Draw a data-flow diagram --output ./docs/diagrams/"
+    }
+  ]
 };
 
 export default data;

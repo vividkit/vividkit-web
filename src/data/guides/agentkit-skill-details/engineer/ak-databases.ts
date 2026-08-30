@@ -10,6 +10,15 @@ const data: SkillInfographic = {
     taglineEn: 'Unified MongoDB and PostgreSQL guidance for schema design, queries, aggregation, indexes, migrations, replication, backups, administration, and performance.',
     taglineVi: 'Hướng dẫn thống nhất cho MongoDB và PostgreSQL về thiết kế schema, query, aggregation, index, migration, replication, backup, quản trị và hiệu năng.',
   },
+  hardGate: {
+    type: 'warning',
+    titleEn: 'A dry run is not always read-only',
+    titleVi: 'Dry run không phải lúc nào cũng chỉ đọc',
+    contentEn:
+      'Migration status, apply --dry-run, and rollback --dry-run connect first. For PostgreSQL, the utility ensures and commits the migration tracking table before handling the requested command. Do not point these modes at a database unless that write is authorized.',
+    contentVi:
+      'Migration status, apply --dry-run và rollback --dry-run sẽ kết nối trước. Với PostgreSQL, utility bảo đảm và commit bảng tracking migration trước khi xử lý lệnh được yêu cầu. Không trỏ các mode này tới database nếu thao tác ghi đó chưa được cho phép.',
+  },
   processFlow: [
     { number: 1, titleEn: 'Classify work', titleVi: 'Phân loại việc', descEn: 'Determine whether the task is schema design, SQL/NoSQL query writing, aggregation, index tuning, migration, backup, replication, permissions, or production admin.', descVi: 'Xác định nhiệm vụ là thiết kế schema, viết SQL/NoSQL query, aggregation, tối ưu index, migration, backup, replication, phân quyền hay quản trị production.' },
     { number: 2, titleEn: 'Choose engine', titleVi: 'Chọn hệ CSDL', descEn: 'Route relational integrity and joins to PostgreSQL, document-oriented 1-to-few models to MongoDB, or compare trade-offs when unclear.', descVi: 'Đưa dữ liệu cần ràng buộc quan hệ và join sang PostgreSQL, mô hình document 1-vài sang MongoDB, hoặc so sánh trade-off khi chưa rõ.' },

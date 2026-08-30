@@ -45,6 +45,7 @@ const data: SkillInfographic = {
     { flag: '--quick', modeEn: 'Quick', modeVi: 'Nhanh', research: 'Minimal scout', redTeam: 'Trivial issue only', validation: 'Exact repro plus direct dependents' },
     { flag: '--parallel', modeEn: 'Parallel', modeVi: 'Song song', research: 'Per-issue scout', redTeam: 'Independent ownership', validation: 'Per-issue and integrated checks' },
     { flag: '--ultra', modeEn: 'Ultra verifier', modeVi: 'Ultra verifier', research: 'Shared diagnosis packet', redTeam: 'Five read-only fix plans', validation: 'Winning plan only then full verify' },
+    { flag: '--advice', modeEn: 'Advisory', modeVi: 'Có cố vấn', research: 'Selected base mode', redTeam: 'kongming advisory supervision', validation: 'Base mode verification; advice cannot approve gates or edit code' },
   ],
   promptExamples: [
     { labelEn: 'Default fix', labelVi: 'Sửa mặc định', command: '/ak:fix "checkout submit throws TypeError" --auto', whenEn: 'A concrete bug can be handled autonomously.', whenVi: 'Có lỗi cụ thể có thể để skill tự xử lý.', expectedEn: 'Frames intent, scouts, diagnoses, implements, verifies, and finalizes.', expectedVi: 'Đóng khung, khảo sát, chẩn đoán, sửa, kiểm chứng và kết thúc.', recommended: true },

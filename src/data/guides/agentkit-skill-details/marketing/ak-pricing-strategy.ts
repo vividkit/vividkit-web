@@ -10,6 +10,13 @@ const data: SkillInfographic = {
     taglineEn: 'SaaS and digital-product pricing strategy for packaging, value metrics, tier design, willingness-to-pay research, price increases, pricing pages, and tests.',
     taglineVi: 'Chiến lược pricing cho SaaS và sản phẩm số: packaging, value metric, tier, willingness-to-pay research, tăng giá, pricing page và test.',
   },
+  hardGate: {
+    type: 'warning',
+    titleEn: 'A recommendation is not a price change',
+    titleVi: 'Khuyến nghị không phải thay đổi giá',
+    contentEn: 'The Skill does not authorize billing edits, subscription migration, discounts, sales quotes, customer communication, geographic pricing, taxes, provider access, publication, or rollout; pricing decisions need commercial, finance, legal, product, and operations approval.',
+    contentVi: 'Skill không cấp quyền sửa billing, migration subscription, discount, quote bán hàng, giao tiếp khách hàng, giá theo vùng, thuế, provider access, publication hoặc rollout; quyết định pricing cần duyệt từ commercial, finance, legal, product và operations.',
+  },
   processFlow: [
     { number: 1, titleEn: 'Gather Context', titleVi: 'Thu thập bối cảnh', descEn: 'Ask for product type, current pricing, market, GTM motion, goals, performance, and constraints.', descVi: 'Hỏi loại sản phẩm, giá hiện tại, thị trường, GTM motion, mục tiêu, hiệu suất và ràng buộc.' },
     { number: 2, titleEn: 'Map Value', titleVi: 'Lập bản đồ giá trị', descEn: 'Compare perceived value, next-best alternative, price, consumer surplus, and cost floor.', descVi: 'So sánh perceived value, lựa chọn thay thế tốt nhất, mức giá, phần giá trị khách giữ lại và cost floor.' },

@@ -13,13 +13,13 @@ const data: SkillInfographic = {
       'Khởi tạo dự án mới bằng hợp đồng brainstorm mở đầu, thiết lập Git, nghiên cứu tùy mode, quyết định stack và thiết kế, lập kế hoạch, giao triển khai, test, review, tài liệu, onboarding và báo cáo cuối.',
   },
   hardGate: {
-    type: 'critical',
-    titleEn: '--ultra and --parallel hard-conflict',
-    titleVi: '--ultra và --parallel xung đột cứng',
+    type: 'warning',
+    titleEn: 'Fast and automatic modes can change repository state',
+    titleVi: 'Mode nhanh và tự động có thể đổi trạng thái repository',
     contentEn:
-      'If both flags are present, stop and ask the user to drop one. Bootstrap also does not implement directly; it delegates through plan and cook after the opening contract is concrete.',
+      'When Git is missing, --auto, --fast, and --parallel initialize it without the dedicated Git-init question used by --full. Choose --full or initialize the repository yourself when that decision needs review; --ultra still cannot combine with --parallel.',
     contentVi:
-      'Nếu có cả hai cờ, phải dừng và yêu cầu người dùng bỏ một cờ. Bootstrap cũng không tự triển khai trực tiếp; nó giao qua plan và cook sau khi hợp đồng mở đầu đã rõ.',
+      'Khi thiếu Git, --auto, --fast và --parallel sẽ khởi tạo mà không có câu hỏi Git-init riêng như --full. Chọn --full hoặc tự khởi tạo repository khi quyết định đó cần được review; --ultra vẫn không thể đi cùng --parallel.',
   },
   processFlow: [
     { number: 1, titleEn: 'Capture contract', titleVi: 'Chốt hợp đồng mở đầu', descEn: 'Before Git, research, design, planning, or scaffolding, capture outcome, constraints, non-goals, and observable acceptance criteria.', descVi: 'Trước Git, nghiên cứu, thiết kế, lập kế hoạch hoặc scaffold, ghi rõ kết quả cần đạt, ràng buộc, ngoài phạm vi và tiêu chí nghiệm thu quan sát được.' },

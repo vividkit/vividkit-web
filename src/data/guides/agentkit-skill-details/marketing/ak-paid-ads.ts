@@ -10,6 +10,13 @@ const data: SkillInfographic = {
     taglineEn: 'Performance marketing campaign strategy for Google Ads, Meta, LinkedIn, X, TikTok, and retargeting — from goal, offer, audience, creative, budget, and optimization to weekly reporting.',
     taglineVi: 'Chiến lược performance marketing cho Google Ads, Meta, LinkedIn, X, TikTok và retargeting — từ mục tiêu, offer, audience, creative, ngân sách, tối ưu đến báo cáo hằng tuần.',
   },
+  hardGate: {
+    type: 'warning',
+    titleEn: 'Strategy does not grant platform authority',
+    titleVi: 'Chiến lược không cấp quyền trên nền tảng',
+    contentEn: 'Creating audiences, uploading customer lists, installing pixels, creating campaigns, publishing ads, changing bids or budgets, and enabling delivery are separate external mutations that require account, credential, policy, spend, and human approval.',
+    contentVi: 'Tạo audience, upload danh sách khách hàng, cài pixel, tạo campaign, publish ads, đổi bid hoặc budget và bật delivery là các mutation bên ngoài riêng, cần duyệt account, credential, policy, spend và con người.',
+  },
   processFlow: [
     { number: 1, titleEn: 'Clarify Goal', titleVi: 'Chốt mục tiêu', descEn: 'Identify objective, target CPA or ROAS, budget, compliance, geography, and success definition.', descVi: 'Xác định mục tiêu, CPA hoặc ROAS đích, ngân sách, ràng buộc compliance, khu vực và tiêu chí thành công.' },
     { number: 2, titleEn: 'Frame Offer', titleVi: 'Đóng khung offer', descEn: 'Capture product, landing page, value proposition, promotion, urgency, and post-click expectation.', descVi: 'Ghi rõ sản phẩm, landing page, lời hứa giá trị, ưu đãi, tính khẩn cấp và kỳ vọng sau khi click.' },

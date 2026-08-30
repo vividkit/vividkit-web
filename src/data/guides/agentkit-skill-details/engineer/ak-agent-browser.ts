@@ -12,6 +12,15 @@ const data: SkillInfographic = {
     taglineVi:
       'Dùng CLI agent-browser cho duyệt web tự động, snapshot, ảnh chụp, điền form, scraping, app Electron, Slack, săn lỗi, trình duyệt cloud và QA khi không cần trạng thái Chrome thật của người dùng.',
   },
+  hardGate: {
+    type: 'warning',
+    titleEn: 'A fresh browser can still handle sensitive state',
+    titleVi: 'Trình duyệt mới vẫn có thể chứa trạng thái nhạy cảm',
+    contentEn:
+      'The workflow avoids the user’s everyday Chrome profile, but credentials, downloads, authentication vault entries, persisted session state, screenshots, recordings, and extracted data can still be sensitive. Approve what may be entered, retained, uploaded, and deleted.',
+    contentVi:
+      'Workflow tránh profile Chrome hằng ngày của người dùng, nhưng credential, tệp tải xuống, mục vault xác thực, trạng thái phiên lưu lại, ảnh chụp, bản ghi và dữ liệu trích xuất vẫn có thể nhạy cảm. Phải phê duyệt nội dung được nhập, giữ lại, tải lên và xoá.',
+  },
   processFlow: [
     { number: 1, titleEn: 'Choose the browser owner', titleVi: 'Chọn chủ quản trình duyệt', descEn: 'Use agent-browser for fresh or tool-managed sessions; switch to ak:chrome-profile when cookies, accounts, tenants, or existing real Chrome state matter.', descVi: 'Dùng agent-browser cho phiên mới hoặc do công cụ quản lý; chuyển sang ak:chrome-profile khi cần cookie, tài khoản, tenant hoặc trạng thái Chrome thật đang có.' },
     { number: 2, titleEn: 'Install and verify', titleVi: 'Cài và kiểm tra', descEn: 'Install or upgrade with npm, download Chromium once, and confirm the binary version before relying on commands.', descVi: 'Cài hoặc nâng cấp bằng npm, tải Chromium một lần, rồi kiểm tra phiên bản binary trước khi dùng lệnh.' },

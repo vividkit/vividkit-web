@@ -11,11 +11,13 @@ const data: SkillInfographic = {
     taglineVi: 'Triển khai tính năng có hệ thống: chốt contract brainstorm, scout bắt buộc, plan được review, code, review, test, đồng bộ finalize và các mode tuỳ chọn.',
   },
   hardGate: {
-    type: 'critical',
-    titleEn: 'No implementation before plan and current context',
-    titleVi: 'Không code trước khi có plan và context hiện tại',
-    contentEn: 'Capture outcome, constraints, non-goals, and acceptance criteria; scout codebase unless an accepted plan already has current evidence; do not write implementation code until a reviewed plan exists.',
-    contentVi: 'Phải chốt outcome, ràng buộc, non-goal và tiêu chí chấp nhận; scout codebase trừ khi plan đã duyệt có bằng chứng hiện tại; không viết code triển khai trước khi có plan đã review.',
+    type: 'warning',
+    titleEn: 'Automation does not expand authority',
+    titleVi: 'Tự động hoá không mở rộng quyền hạn',
+    contentEn:
+      '--auto removes routine review pauses. It does not authorize secret access, external cost, publication, deployment, destructive operations, a breaking public-contract change, or accepting a regression. Give those permissions separately and only when intended.',
+    contentVi:
+      '--auto bỏ các lần dừng review thường lệ. Nó không cấp quyền truy cập secret, phát sinh chi phí bên ngoài, publish, deploy, thao tác phá huỷ, thay đổi public contract gây breaking, hoặc chấp nhận hồi quy. Cấp các quyền đó riêng và chỉ khi thật sự muốn.',
   },
   processFlow: [
     { number: 1, titleEn: 'Contract', titleVi: 'Chốt contract', descEn: 'Capture or reuse outcome, constraints, non-goals, and observable acceptance criteria before planning.', descVi: 'Chốt hoặc tái dùng outcome, ràng buộc, non-goal và tiêu chí chấp nhận quan sát được trước khi lập plan.' },

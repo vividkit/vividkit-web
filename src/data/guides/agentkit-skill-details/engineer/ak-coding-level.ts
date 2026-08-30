@@ -10,6 +10,15 @@ const data: SkillInfographic = {
     taglineEn: 'Persist a 0–5 codingLevel preference so future supported sessions tailor explanation depth, code complexity, and response format.',
     taglineVi: 'Lưu preference codingLevel 0–5 để các session được hỗ trợ về sau điều chỉnh độ sâu giải thích, độ phức tạp code và định dạng trả lời.',
   },
+  hardGate: {
+    type: 'warning',
+    titleEn: 'Communication style is not authority',
+    titleVi: 'Phong cách giao tiếp không phải quyền hạn',
+    contentEn:
+      'A higher expertise level does not authorize edits, commands, secret access, external calls, Git actions, publication, or deployment. A lower level does not weaken project rules or verification requirements.',
+    contentVi:
+      'Mức chuyên môn cao hơn không cấp quyền sửa code, chạy lệnh, truy cập secret, gọi bên ngoài, thao tác Git, publish hoặc deploy. Mức thấp hơn không làm yếu đi rule dự án hay yêu cầu kiểm chứng.',
+  },
   processFlow: [
     { number: 1, titleEn: 'Invoke explicitly', titleVi: 'Gọi rõ ràng', descEn: 'Run /ak:coding-level with one valid integer from 0 through 5; the Skill disables automatic model invocation.', descVi: 'Chạy /ak:coding-level với một số nguyên hợp lệ từ 0 đến 5; Skill tắt automatic model invocation.' },
     { number: 2, titleEn: 'Persist config', titleVi: 'Lưu cấu hình', descEn: 'Update codingLevel in .claude/.ck.json while preserving unrelated project configuration.', descVi: 'Cập nhật codingLevel trong .claude/.ck.json và giữ nguyên cấu hình project không liên quan.' },

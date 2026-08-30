@@ -1,0 +1,942 @@
+{
+  "generated": "2026-08-30T14:10:25.687Z",
+  "total": 187,
+  "patchedThisRound": 47,
+  "rows": [
+    {
+      "kit": "engineer",
+      "id": "ak-advise",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-agent-browser",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-agentize",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-agentkit",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-ai-artist",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-ai-multimodal",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-ak",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-ask",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-autoresearch",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-backend-development",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-better-auth",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-bootstrap",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-brainstorm",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-bro",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-chrome-profile",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-code-review",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-codex-goal",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-coding-level",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-common",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-context-engineering",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-cook",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-copywriting",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-cti-expert",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-databases",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-debug",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-deep-swe",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-deploy",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-design",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-devops",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-diagram",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-docs-seeker",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-docs",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-document-skills",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-excalidraw",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-fable-thinking",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-find-skills",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-fix",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-folder-context",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-frontend-design",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-frontend-development",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-git",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-github",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-gkg",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-goal-warmup",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-google-adk-python",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-graphify",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-handoff",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-handover",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-help",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-html-video",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-hyperframes",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-interview-docs",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-issue-to-plan",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-journal",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-llms",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-loop",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-markdown-novel-viewer",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-mcp-builder",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-media-processing",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-mermaidjs-v11",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-mintlify",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-mobile-development",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-orchestrate",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-payment-integration",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-plan",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-plans-kanban",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-predict",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-preview",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-problem-solving",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-project-management",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-project-organization",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-react-best-practices",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-remotion",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-repomix",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-research-prompt",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-research",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-retro",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-review-pr",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-scenario",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-scout",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-security-scan",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-security",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-sequential-thinking",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-shader",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-ship",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-shopify",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-show-off",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-skill-creator",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-sowat",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-stitch",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-sumup",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-tanstack",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-team",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-tech-graph",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-test",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-threejs",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-ui-styling",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-ui-ux-pro-max",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-use-mcp",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-vibe",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-watzup",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-web-design-guidelines",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-web-frameworks",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-web-testing",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-worktree",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-xia",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-ab-test-setup",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-ads-management",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-affiliate-marketing",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-agent-browser",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-agentkit",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-ai-multimodal",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-ak",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-analytics",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-analyze",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-ask",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-assets-organizing",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-banner-design",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-brainstorm",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-brand",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-campaign",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-cip-design",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-ckm-storage",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-claude-code",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-codex-goal",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-competitor",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-content-hub",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-content-marketing",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-cook",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-creativity",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-dashboard",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-debugging",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-design-system",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-design",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-docs",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-elevenlabs",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-email",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-fix",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-folder-context",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-form-cro",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-free-tool-strategy",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-frontend-design",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-funnel",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-gamification-marketing",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-google-adk-python",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-handoff",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-hub",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-init",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-interview-docs",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-journal",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-kit-builder",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-launch-strategy",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-logo-design",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-marketing-dashboard",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-marketing-ideas",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-marketing-planning",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-marketing-psychology",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-marketing-research",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-mermaidjs-v11",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-motion-design",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-motion-graphics",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-onboarding-cro",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-paid-ads",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-persona",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-plan",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-play",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-preview",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-pricing-strategy",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-referral-program-building",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-research-prompt",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-scout",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-seo",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-skill",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-slides",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-social",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-storage",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-tech-graph",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-test",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-ui-ux-pro-max",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-use-mcp",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-video",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-watzup",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-web-design-guidelines",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-worktree",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-write",
+      "patchedThisRound": true
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-youtube-thumbnail-design",
+      "patchedThisRound": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-youtube",
+      "patchedThisRound": true
+    }
+  ]
+}

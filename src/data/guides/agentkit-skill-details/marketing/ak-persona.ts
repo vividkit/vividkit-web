@@ -10,6 +10,13 @@ const data: SkillInfographic = {
     taglineEn: 'Customer persona lifecycle helper for creating ICP profiles, analyzing audience data, updating existing personas, and listing saved profiles.',
     taglineVi: 'Trợ lý vòng đời persona khách hàng để tạo ICP profile, phân tích audience data, cập nhật persona hiện có và liệt kê hồ sơ đã lưu.',
   },
+  hardGate: {
+    type: 'warning',
+    titleEn: 'A persona is not permission to profile a person',
+    titleVi: 'Persona không phải quyền profiling một người',
+    contentEn: 'Do not infer sensitive traits such as health, race, ethnicity, religion, politics, sexuality, or precise location; do not use personas for eligibility, pricing, employment, credit, access decisions, or unfair targeting.',
+    contentVi: 'Không suy luận thuộc tính nhạy cảm như sức khỏe, chủng tộc, sắc tộc, tôn giáo, chính trị, xu hướng tính dục hoặc vị trí chính xác; không dùng persona cho quyết định eligibility, pricing, employment, credit, access hoặc targeting không công bằng.',
+  },
   processFlow: [
     { number: 1, titleEn: 'Parse Action', titleVi: 'Đọc action', descEn: 'Read create, analyze, update, or list from the invocation and route the workflow.', descVi: 'Đọc create, analyze, update hoặc list từ lệnh gọi và định tuyến workflow.' },
     { number: 2, titleEn: 'Gather Inputs', titleVi: 'Thu thập đầu vào', descEn: 'Ask for demographics, role, industry, pains, goals, motivations, buying behavior, and preferred channels.', descVi: 'Hỏi demographics, vai trò, ngành, pain point, mục tiêu, động lực, hành vi mua và kênh ưa thích.' },

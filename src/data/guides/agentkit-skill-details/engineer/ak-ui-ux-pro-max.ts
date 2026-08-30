@@ -162,62 +162,38 @@ const data: SkillInfographic = {
       "expectedVi": "Ghép loại chart với task trend, comparison, proportion hoặc funnel và kèm giản lược responsive, legend, tooltip, khả năng dùng bằng keyboard, contrast, bảng hoặc text thay thế và xử lý lỗi."
     }
   ],
-  "modeCards": [
+  "specialOperations": [
     {
-      "flag": "--design-system",
-      "titleEn": "Design system baseline",
-      "titleVi": "Baseline design system",
-      "descEn": "Combines packaged product, style, color, landing, typography, and reasoning data before deeper domain searches.",
-      "descVi": "Kết hợp dữ liệu đóng gói về product, style, màu, landing, typography và reasoning trước khi search domain sâu hơn.",
-      "promptEn": "AI search tool modern minimal",
-      "promptVi": "AI search tool modern minimal",
-      "whenEn": "Starting a new product, page, or design direction.",
-      "whenVi": "Khi bắt đầu product, page hoặc hướng thiết kế mới.",
-      "expectedEn": "A complete pattern, style, color, typography, effects, reasoning, and anti-pattern recommendation.",
-      "expectedVi": "Khuyến nghị đầy đủ về pattern, style, màu, typography, effect, reasoning và anti-pattern.",
-      "accent": "purple"
+      "id": "bundled-cli-design-system",
+      "titleEn": "Bundled CLI design-system search",
+      "titleVi": "Search design-system của CLI đóng gói",
+      "descEn": "The Skill has no documented top-level mode flags. Its bundled search CLI can combine packaged product, style, color, landing, typography, and reasoning data for a baseline recommendation.",
+      "descVi": "Skill không có mode flag top-level được tài liệu hóa. CLI search đi kèm có thể kết hợp dữ liệu product, style, màu, landing, typography và reasoning đóng gói để tạo khuyến nghị baseline.",
+      "color": "purple"
     },
     {
-      "flag": "--domain <domain>",
-      "titleEn": "Focused domain search",
-      "titleVi": "Search domain tập trung",
-      "descEn": "Searches one packaged dataset such as product, style, color, typography, chart, ux, google-fonts, landing, react, web, or prompt.",
-      "descVi": "Tìm trong một dataset đóng gói như product, style, color, typography, chart, ux, google-fonts, landing, react, web hoặc prompt.",
-      "promptEn": "animation accessibility z-index loading",
-      "promptVi": "animation accessibility z-index loading",
-      "whenEn": "A specific UX, visual, chart, typography, or platform decision needs more detail.",
-      "whenVi": "Khi một quyết định UX, visual, chart, typography hoặc platform cần thêm chi tiết.",
-      "expectedEn": "Focused rules, examples, and anti-patterns for the selected dataset.",
-      "expectedVi": "Luật, ví dụ và anti-pattern tập trung cho dataset được chọn.",
-      "accent": "blue"
+      "id": "bundled-cli-domain-search",
+      "titleEn": "Bundled CLI focused domains",
+      "titleVi": "Domain tập trung của CLI đóng gói",
+      "descEn": "Focused searches belong to the packaged CLI datasets such as style, color, typography, chart, ux, react, or web; use them as point-in-time guidance, not live standards.",
+      "descVi": "Search tập trung thuộc các dataset CLI đóng gói như style, color, typography, chart, ux, react hoặc web; dùng chúng như hướng dẫn tại một thời điểm, không phải chuẩn live.",
+      "color": "blue"
     },
     {
-      "flag": "--persist -p / --page",
-      "titleEn": "Persist approved hierarchy",
-      "titleVi": "Lưu phân cấp đã duyệt",
-      "descEn": "Writes a project-scoped MASTER.md and optional page override files under design-system after the rules are approved.",
-      "descVi": "Ghi MASTER.md theo project và file override theo page trong design-system sau khi các rule đã được duyệt.",
-      "promptEn": "wellness booking service --page checkout",
-      "promptVi": "wellness booking service --page checkout",
-      "whenEn": "The design system should survive across sessions or vary by page.",
-      "whenVi": "Khi design system cần tồn tại qua nhiều session hoặc khác nhau theo page.",
-      "expectedEn": "A master source of truth plus page-specific deviations that override the master only for that page.",
-      "expectedVi": "Một nguồn sự thật master và deviation riêng theo page, chỉ override master cho page đó.",
-      "accent": "green"
+      "id": "bundled-cli-persistence",
+      "titleEn": "Approved persistence only",
+      "titleVi": "Chỉ persist khi đã duyệt",
+      "descEn": "The bundled CLI can persist an approved master design system and page overrides under design-system; review names, paths, tokens, and migration impact before writing.",
+      "descVi": "CLI đóng gói có thể persist master design system đã duyệt và override theo page dưới design-system; review tên, path, token và ảnh hưởng migration trước khi ghi.",
+      "color": "green"
     },
     {
-      "flag": "--stack react-native",
-      "titleEn": "React Native stack guidance",
-      "titleVi": "Hướng dẫn stack React Native",
-      "descEn": "Searches the only packaged stack-specific dataset for component, navigation, and list guidance.",
-      "descVi": "Tìm trong dataset stack-specific duy nhất được đóng gói cho component, navigation và list.",
-      "promptEn": "list performance navigation",
-      "promptVi": "list performance navigation",
-      "whenEn": "Implementation decisions need React Native-specific UX constraints.",
-      "whenVi": "Khi quyết định triển khai cần ràng buộc UX riêng của React Native.",
-      "expectedEn": "React Native-specific guidance without inferring support for undocumented stacks.",
-      "expectedVi": "Hướng dẫn riêng cho React Native mà không suy diễn hỗ trợ các stack chưa được tài liệu hóa.",
-      "accent": "orange"
+      "id": "bundled-cli-react-native",
+      "titleEn": "React Native dataset boundary",
+      "titleVi": "Ranh giới dataset React Native",
+      "descEn": "React Native is the only packaged stack-specific dataset in the bundled CLI. Do not infer support for undocumented stacks from the Skill description.",
+      "descVi": "React Native là dataset stack-specific duy nhất trong CLI đóng gói. Không suy diễn hỗ trợ các stack chưa được tài liệu hóa từ mô tả Skill.",
+      "color": "orange"
     }
   ]
 };

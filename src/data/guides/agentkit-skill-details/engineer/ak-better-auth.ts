@@ -14,12 +14,12 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'warning',
-    titleEn: 'Verify security-sensitive plugin fixes',
-    titleVi: 'Phải kiểm tra bản vá cho plugin nhạy cảm',
+    titleEn: 'Authentication setup can change identity data',
+    titleVi: 'Thiết lập xác thực có thể thay đổi dữ liệu định danh',
     contentEn:
-      'When enabling oidc-provider, mcp, magicLink, organizations, invitations, or device authorization paths, verify the installed Better Auth version includes current fixes and keep safer defaults unless the threat model explicitly says otherwise.',
+      'Schema migrations, verification emails, OAuth callbacks, account linking, session revocation, and deletion flows can mutate persistent or external state. Use isolated accounts and databases until you explicitly approve a production operation.',
     contentVi:
-      'Khi bật oidc-provider, mcp, magicLink, organization, invitation hoặc device authorization, phải kiểm tra phiên bản Better Auth đã có bản vá hiện hành và giữ mặc định an toàn trừ khi threat model cho phép khác.',
+      'Migration schema, email xác minh, callback OAuth, liên kết tài khoản, thu hồi session và luồng xoá có thể thay đổi trạng thái bền vững hoặc bên ngoài. Dùng tài khoản và database cô lập cho tới khi bạn phê duyệt rõ thao tác production.',
   },
   processFlow: [
     { number: 1, titleEn: 'Choose auth method', titleVi: 'Chọn cách đăng nhập', descEn: 'Pick email/password, OAuth, passkeys, magic link, organizations, rate limiting, or a combination based on user friction, security, browser support, and enterprise needs.', descVi: 'Chọn email/password, OAuth, passkey, magic link, organization, rate limit hoặc kết hợp theo ma sát người dùng, bảo mật, hỗ trợ trình duyệt và nhu cầu doanh nghiệp.' },

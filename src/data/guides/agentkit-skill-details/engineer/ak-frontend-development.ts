@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: "warning",
-    titleEn: "NO EARLY LOADING RETURNS",
-    titleVi: "KHÔNG RETURN LOADING SỚM",
-    contentEn: "Use SuspenseLoader and Suspense-based data fetching. Avoid early loading-spinner returns that cause layout shift. Use useMuiSnackbar, never react-toastify.",
-    contentVi: "Dùng SuspenseLoader và data fetching dựa trên Suspense. Tránh return loading spinner sớm gây layout shift. Dùng useMuiSnackbar, không dùng react-toastify.",
+    titleEn: "NO DEFAULT PROJECT STACK",
+    titleVi: "KHÔNG ÁP STACK MẶC ĐỊNH",
+    contentEn: "The Skill defines no default stack, flags, or named modes. Treat bundled names such as SuspenseLoader, useMuiSnackbar, apiClient, import aliases, and route formats as patterns only when the current project provides those contracts.",
+    contentVi: "Skill không định nghĩa stack mặc định, flag hay mode có tên. Chỉ xem các tên đi kèm như SuspenseLoader, useMuiSnackbar, apiClient, alias import và format route là pattern khi dự án hiện tại có đúng các contract đó.",
   },
   processFlow: [
     { number: 1, titleEn: "Classify Work", titleVi: "Phân loại việc", descEn: "Decide whether the request is a component, page, feature, data-fetching path, route, styling task, performance pass, or TypeScript cleanup.", descVi: "Xác định yêu cầu là component, page, feature, data fetching, route, styling, tối ưu hiệu năng hay dọn TypeScript." },

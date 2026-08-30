@@ -2,7 +2,7 @@ import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-wor
 
 const invocation: SkillInvocation = {
   syntax:
-    '/ak:ai-artist [concept] [--mode search|creative|wild|all] [--provider auto|google|openrouter] [--skip]',
+    '/ak:ai-artist [concept] [--mode search|creative|wild|all] [--provider auto|google|openrouter] [--size 1K|2K|4K] [--skip]',
   arguments: [
     {
       token: '[concept]',
@@ -47,6 +47,16 @@ const invocation: SkillInvocation = {
       descVi:
         'Truyền ratio được hỗ trợ như 1:1, 16:9 hoặc 9:16 cho renderer. Concept vẫn nên nêu nhu cầu bố cục.',
       exampleCommand: '/ak:ai-artist "product showcase" -ar 1:1',
+    },
+    {
+      token: '--size 1K|2K|4K',
+      titleEn: 'Image size',
+      titleVi: 'Kích thước ảnh',
+      descEn:
+        'Select provider image size. The documented default is 2K, and provider availability still applies.',
+      descVi:
+        'Chọn kích thước ảnh của provider. Mặc định được document là 2K, và vẫn phụ thuộc khả năng provider.',
+      exampleCommand: '/ak:ai-artist "hero image" --size 2K',
     },
     {
       token: '--model',
@@ -149,8 +159,8 @@ const data: SkillInfographic = {
     { id: 'prompt-bank', titleEn: '129 curated prompts', titleVi: '129 prompt tuyển chọn', descEn: 'The prompt bank covers commercial, social, infographic, avatar, artistic, and character styles.', descVi: 'Kho prompt bao phủ phong cách thương mại, social, infographic, avatar, nghệ thuật và nhân vật.', color: 'purple' },
     { id: 'wild-styles', titleEn: 'Wild transforms', titleVi: 'Biến tấu wild', descEn: 'Ukiyo-e, Bento grid, patent document, cyberpunk, chalkboard, diorama, poster, vaporwave, and more.', descVi: 'Ukiyo-e, Bento grid, tài liệu bằng sáng chế, cyberpunk, bảng phấn, diorama, poster, vaporwave và nhiều kiểu khác.', color: 'pink' },
   ],
-  composableFlagsEn: '--mode accepts search, creative, wild, or all. --provider accepts auto, google, or openrouter. -ar/--aspect-ratio, --model, -v/--verbose, and --dry-run pass through to the generation script; --skip belongs to the Skill invocation and bypasses the required validation interview.',
-  composableFlagsVi: '--mode nhận search, creative, wild hoặc all. --provider nhận auto, google hoặc openrouter. -ar/--aspect-ratio, --model, -v/--verbose và --dry-run được chuyển cho generation script; --skip thuộc invocation của Skill và bỏ qua validation interview bắt buộc.',
+  composableFlagsEn: '--mode accepts search, creative, wild, or all. --provider accepts auto, google, or openrouter. -ar/--aspect-ratio, --size, --model, -v/--verbose, and --dry-run pass through to the generation script; --skip belongs to the Skill invocation and bypasses the required validation interview.',
+  composableFlagsVi: '--mode nhận search, creative, wild hoặc all. --provider nhận auto, google hoặc openrouter. -ar/--aspect-ratio, --size, --model, -v/--verbose và --dry-run được chuyển cho generation script; --skip thuộc invocation của Skill và bỏ qua validation interview bắt buộc.',
   invocation,
 };
 

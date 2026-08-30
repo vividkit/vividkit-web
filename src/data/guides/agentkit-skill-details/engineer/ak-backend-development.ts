@@ -12,6 +12,15 @@ const data: SkillInfographic = {
     taglineVi:
       'Dẫn dắt công việc backend production cho REST, GraphQL, gRPC, auth, database, cache, microservice, bảo mật OWASP, testing, CI/CD, Docker/Kubernetes, quan sát và debug.',
   },
+  hardGate: {
+    type: 'warning',
+    titleEn: 'Backend guidance does not grant production authority',
+    titleVi: 'Hướng dẫn backend không tự cấp quyền production',
+    contentEn:
+      'The Skill can be implementation-capable when the runtime has write and process tools, but its source defines no automatic migration or deployment. Approve database, credential, provider, network, and production actions separately.',
+    contentVi:
+      'Skill có thể triển khai khi runtime có công cụ ghi và chạy process, nhưng nguồn của nó không định nghĩa migration hay deploy tự động. Phải phê duyệt riêng các hành động database, credential, provider, network và production.',
+  },
   processFlow: [
     { number: 1, titleEn: 'Frame backend surface', titleVi: 'Định khung bề mặt backend', descEn: 'Identify whether the work is API design, auth, database, caching, microservice architecture, security, testing, deployment, or production debugging.', descVi: 'Xác định việc thuộc thiết kế API, auth, database, cache, kiến trúc microservice, bảo mật, testing, deploy hay debug production.' },
     { number: 2, titleEn: 'Select stack', titleVi: 'Chọn stack', descEn: 'Choose language, framework, database, and API style from project context and trade-offs: Node/NestJS, Python/FastAPI, Go/Gin, Rust/Axum, PostgreSQL, MongoDB, Redis, REST, GraphQL, or gRPC.', descVi: 'Chọn ngôn ngữ, framework, database và kiểu API từ bối cảnh dự án và đánh đổi: Node/NestJS, Python/FastAPI, Go/Gin, Rust/Axum, PostgreSQL, MongoDB, Redis, REST, GraphQL hoặc gRPC.' },

@@ -25,6 +25,15 @@ const data: SkillInfographic = {
     taglineEn: 'Optimize LLM context quality, token budgets, memory, tool design, and multi-agent isolation when context limits or degradation matter.',
     taglineVi: 'Tối ưu chất lượng context, ngân sách token, bộ nhớ, thiết kế tool và cách cô lập đa agent khi giới hạn context hoặc suy giảm chất lượng trở nên quan trọng.',
   },
+  hardGate: {
+    type: 'warning',
+    titleEn: 'A smaller context can still expose sensitive data',
+    titleVi: 'Context nhỏ hơn vẫn có thể lộ dữ liệu nhạy cảm',
+    contentEn:
+      'Compression changes size, not sensitivity. Remove or redact secrets and private data before writing a context bundle, sharing it with another agent, or sending it to a model provider.',
+    contentVi:
+      'Nén chỉ đổi kích thước, không đổi độ nhạy cảm. Xoá hoặc che secret và dữ liệu riêng tư trước khi ghi bundle context, chia sẻ với agent khác hoặc gửi tới provider model.',
+  },
   processFlow: [
     { number: 1, titleEn: 'Identify failure', titleVi: 'Nhận diện lỗi', descEn: 'Start from the observed context problem: limit pressure, lost-in-middle behavior, poisoning, noisy context, memory gaps, or agent architecture trouble.', descVi: 'Bắt đầu từ vấn đề context quan sát được: áp lực giới hạn, lost-in-middle, poisoning, context nhiễu, thiếu memory hoặc lỗi kiến trúc agent.' },
     { number: 2, titleEn: 'Measure baseline', titleVi: 'Đo hiện trạng', descEn: 'Use available runtime awareness, supplied context, token utilization, variance, cache signals, and cost or latency evidence before optimizing.', descVi: 'Dùng runtime awareness có sẵn, context được cung cấp, mức dùng token, độ dao động, tín hiệu cache và bằng chứng chi phí hoặc độ trễ trước khi tối ưu.' },

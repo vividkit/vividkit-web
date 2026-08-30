@@ -51,6 +51,9 @@ const data: SkillInfographic = {
   ],
   outputFlags: [
     { flag: '--html', titleEn: 'Self-contained HTML', titleVi: 'HTML độc lập', descEn: 'Switch generation output to a single inline HTML file that opens directly in a browser.', descVi: 'Chuyển output tạo mới sang một file HTML inline, mở trực tiếp trong browser.', exampleCommand: '/ak:preview --html --diagram "Landing page funnel"' },
+    { flag: '--no-editorial-visuals', titleEn: 'Disable editorial engines', titleVi: 'Tắt engine editorial', descEn: 'Disable both additive HTML editorial visual engines and use fallback rendering.', descVi: 'Tắt cả hai engine editorial visual bổ sung cho HTML và dùng renderer fallback.', exampleCommand: '/ak:preview --html --diagram "Launch flow" --no-editorial-visuals' },
+    { flag: '--no-antv', titleEn: 'Disable AntV Infographic', titleVi: 'Tắt AntV Infographic', descEn: 'Disable only the AntV Infographic layer while leaving other eligible visual engines available.', descVi: 'Chỉ tắt lớp AntV Infographic trong khi vẫn cho phép engine visual phù hợp khác.', exampleCommand: '/ak:preview --html --recap "last week" --no-antv' },
+    { flag: '--no-diagram-design', titleEn: 'Disable diagram-design', titleVi: 'Tắt diagram-design', descEn: 'Disable only the diagram-design layer and fall back to Mermaid or Chart.js where appropriate.', descVi: 'Chỉ tắt lớp diagram-design và fallback sang Mermaid hoặc Chart.js khi phù hợp.', exampleCommand: '/ak:preview --html --diagram "System map" --no-diagram-design' },
   ],
   promptExamples: [
     { labelEn: 'View file', labelVi: 'Xem file', command: '/ak:preview assets/reports/seo/launch-audit.md', whenEn: 'You want to view an existing Markdown or file output.', whenVi: 'Khi muốn xem Markdown hoặc file output đã có.', expectedEn: 'File opens in the preview viewer.', expectedVi: 'File mở trong trình preview.', recommended: true },

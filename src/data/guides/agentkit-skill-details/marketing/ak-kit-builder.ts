@@ -134,8 +134,8 @@ const data: SkillInfographic = {
       "command": "/ak:kit-builder skill competitor-signal",
       "whenEn": "You need reusable marketing domain knowledge or tool guidance.",
       "whenVi": "Khi cần kiến thức marketing tái dùng hoặc hướng dẫn công cụ.",
-      "expectedEn": "Loads the skill guide, initializes skills/{name}/SKILL.md, and fills the skill template.",
-      "expectedVi": "Mở skill guide, khởi tạo skills/{name}/SKILL.md và điền template skill.",
+      "expectedEn": "Loads the skill guide, initializes .claude/skills/{name}/SKILL.md, and fills the skill template.",
+      "expectedVi": "Mở skill guide, khởi tạo .claude/skills/{name}/SKILL.md và điền template skill.",
       "recommended": true
     },
     {
@@ -151,8 +151,8 @@ const data: SkillInfographic = {
   "reportOutput": {
     "titleEn": "AgentKit component",
     "titleVi": "Component AgentKit",
-    "patternEn": "skills/{name}/SKILL.md, agents/{name}.md, commands/{path}.md, or workflows/{name}.md",
-    "patternVi": "skills/{name}/SKILL.md, agents/{name}.md, commands/{path}.md hoặc workflows/{name}.md",
+    "patternEn": ".claude/skills/{name}/SKILL.md, .claude/agents/{name}.md, .claude/commands/{path}.md, or .claude/workflows/{name}.md",
+    "patternVi": ".claude/skills/{name}/SKILL.md, .claude/agents/{name}.md, .claude/commands/{path}.md hoặc .claude/workflows/{name}.md",
     "descEn": "Generated component scaffold plus filled domain behavior and references",
     "descVi": "Khung component được tạo cùng hành vi domain và tài liệu tham chiếu đã điền"
   }
