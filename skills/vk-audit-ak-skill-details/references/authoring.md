@@ -21,7 +21,7 @@ Shared renderer:
 ## Prompt mẫu
 
 - User-facing skills: ≥2 examples; exactly one `recommended: true`
-- Cover the default invocation plus each documented **mode** and **subcommand**. Client operations named `upload(...)` style must each appear in a prompt command or label. Cap 8 cards
+- Cover the default invocation plus documented **CLI modes** (`--flag` sequences in `workflowModes`) and **authored** `invocation.subcommands`. In-run aliases such as `/sweep` count. Do not dump every SKILL heading. Cap 8 cards. The claims checker fails when a documented `--flag` sequence or authored subcommand is absent from every prompt
 - `command` is copy-pasteable English/verbatim. Renderer wraps `/ak:…` and `--flags` as `<code>`; hyphenated prose (`privacy-first`) is not a short flag
 - `whenEn`/`whenVi`: when to run this variant (not a restatement of the command)
 - `expectedEn`/`expectedVi`: observable outcome, ≥12 words, semantically equivalent, no fake routes

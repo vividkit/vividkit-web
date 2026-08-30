@@ -143,6 +143,141 @@ function objectSlice(src, key) {
   return '';
 }
 
+function blockSlice(src, key) {
+  const re = new RegExp(`["']?${key}["']?\\s*:\\s*`);
+  const m = re.exec(src);
+  if (!m) return '';
+  let i = m.index + m[0].length;
+  while (i < src.length && /\s/.test(src[i])) i++;
+  const open = src[i];
+  if (open !== '{' && open !== '[') return '';
+  const start = i;
+  let braces = 0;
+  let brackets = 0;
+  let quote = '';
+  let escape = false;
+  for (; i < src.length; i++) {
+    const ch = src[i];
+    if (quote) {
+      if (escape) {
+        escape = false;
+        continue;
+      }
+      if (ch === '\\') {
+        escape = true;
+        continue;
+      }
+      if (ch === quote) quote = '';
+      continue;
+    }
+    if (ch === '"' || ch === "'" || ch === '`') {
+      quote = ch;
+      continue;
+    }
+    if (ch === '{') braces++;
+    else if (ch === '}') braces--;
+    else if (ch === '[') brackets++;
+    else if (ch === ']') brackets--;
+    if (open === '{' && braces === 0) return src.slice(start, i + 1);
+    if (open === '[' && brackets === 0) return src.slice(start, i + 1);
+  }
+  return '';
+}
+
+function expandModeSequences(raw) {
+  const text = String(raw).trim();
+  const op = text.match(/^([a-zA-Z][a-zA-Z0-9]*)\s*\(/);
+  if (op) return [{ kind: 'operation', token: op[1] }];
+  const out = [];
+  const re = /(--[a-z0-9][a-z0-9-]*)(?:\s+([a-z0-9][a-z0-9.|-]*))?/gi;
+  let m;
+  while ((m = re.exec(text))) {
+    const flag = m[1];
+    const rest = m[2] || '';
+    if (rest.includes('|')) {
+      for (const alt of rest.split('|').filter(Boolean)) {
+        out.push({ kind: 'mode', seq: [flag, alt], label: `${flag} ${alt}` });
+      }
+      continue;
+    }
+    if (rest && !/^[A-Z][A-Z0-9]*$/.test(rest) && rest !== 'N') {
+      out.push({ kind: 'mode', seq: [flag, rest], label: `${flag} ${rest}` });
+      continue;
+    }
+    out.push({ kind: 'mode', seq: [flag], label: flag });
+  }
+  return out;
+}
+
+function requiredPromptCoverage(src, allowedSubs = new Set()) {
+  const required = [];
+  for (const raw of extractQuotedFields(blockSlice(src, 'workflowModes'), 'flag')) {
+    required.push(...expandModeSequences(raw));
+  }
+  const authored = [];
+  for (const name of extractQuotedFields(blockSlice(src, 'subcommands'), 'name')) {
+    if (!/^[a-z][a-z0-9-]*$/.test(name)) continue;
+    if (allowedSubs.size && !allowedSubs.has(name)) continue;
+    authored.push(name);
+  }
+  if (authored.length <= 6) {
+    for (const name of authored) required.push({ kind: 'subcommand', token: name });
+  }
+  return required;
+}
+
+function commandHasSequence(parts, seq) {
+  const hay = parts.map((t) => t.toLowerCase());
+  const needle = seq.map((t) => t.toLowerCase());
+  if (!needle.length) return false;
+  for (let i = 0; i <= hay.length - needle.length; i++) {
+    if (needle.every((t, j) => hay[i + j] === t)) return true;
+  }
+  return false;
+}
+
+function promptCoversRequired(required, prompts, labels) {
+  const tokenized = prompts.map((command) => tokenizeCommand(command));
+  const afterInvoke = new Set();
+  for (const parts of tokenized) {
+    let seenInvoke = false;
+    for (const token of parts) {
+      if (!seenInvoke) {
+        if (/^[/$@]*ak[:\-]/i.test(token) || token === 'ak') seenInvoke = true;
+        continue;
+      }
+      if (token.startsWith('-')) continue;
+      afterInvoke.add(token.toLowerCase());
+      break;
+    }
+  }
+  const blob = `${prompts.join('\n')}\n${labels.join('\n')}`.toLowerCase();
+  const misses = [];
+  for (const item of required) {
+    if (item.kind === 'operation') {
+      const key = item.token;
+      const spaced = key.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase();
+      const withoutGet = spaced.replace(/^get /, '');
+      const ok = [key.toLowerCase(), spaced, withoutGet, withoutGet.replace(/\s+/g, '')].some(
+        (k) => k && blob.includes(k),
+      );
+      if (!ok) misses.push(`promptExamples miss documented operation ${key}`);
+      continue;
+    }
+    if (item.kind === 'mode') {
+      const ok = tokenized.some((parts) => commandHasSequence(parts, item.seq));
+      if (!ok) misses.push(`promptExamples miss documented mode ${item.label}`);
+      continue;
+    }
+    const token = item.token.toLowerCase();
+    const inRun = tokenized.some((parts) => (parts[0] || '').toLowerCase() === `/${token}`);
+    if (!(afterInvoke.has(token) || inRun)) {
+      misses.push(`promptExamples miss documented subcommand ${item.token}`);
+    }
+  }
+  return misses;
+}
+
 function tokenizeCommand(command) {
   const head = String(command).split(/\r?\n/)[0];
   return head
@@ -325,25 +460,11 @@ function checkFile({ id, kit, src, skillMd, argumentHint, extraAllowedFlags }) {
     if (rec > 1) {
       violations.push(`promptExamples need at most one recommended: true, found ${rec}`);
     }
-    const modeSliceStart = src.search(/["']?workflowModes["']?\s*:/);
-    if (modeSliceStart >= 0) {
-      const modeSlice = src.slice(modeSliceStart, modeSliceStart + 8000);
-      const blob = [
-        ...prompts,
-        ...extractQuotedFields(promptSlice, 'labelEn'),
-        ...extractQuotedFields(promptSlice, 'labelVi'),
-      ].join('\n').toLowerCase();
-      for (const raw of extractQuotedFields(modeSlice, 'flag')) {
-        const op = String(raw).match(/^([a-zA-Z][a-zA-Z0-9]*)\s*\(/);
-        if (!op) continue;
-        const key = op[1];
-        const spaced = key.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase();
-        const withoutGet = spaced.replace(/^get /, '');
-        if (![key.toLowerCase(), spaced, withoutGet, withoutGet.replace(/\s+/g, '')].some((k) => k && blob.includes(k))) {
-          violations.push(`promptExamples miss documented operation ${key}`);
-        }
-      }
-    }
+    const labels = [
+      ...extractQuotedFields(promptSlice, 'labelEn'),
+      ...extractQuotedFields(promptSlice, 'labelVi'),
+    ];
+    violations.push(...promptCoversRequired(requiredPromptCoverage(src, allowedSubs, argumentHint), prompts, labels));
     if (kit !== 'marketing' && isUserFacing(skillMd) && !/["']?invocation["']?\s*:/.test(src)) {
       violations.push('user-facing skill needs an invocation block (syntax, arguments, options, subcommands)');
     }
@@ -353,9 +474,17 @@ function checkFile({ id, kit, src, skillMd, argumentHint, extraAllowedFlags }) {
 
   return violations;
 }
-
 function selfTest() {
   selfTestWrapCommandTokens();
+  const nestedSubs = `subcommands: [
+  { name: 'codebase', syntax: '/ak:code-review codebase [--ultra]' },
+  { name: 'pr-diff', syntax: '/ak:code-review pr' },
+]`;
+  const nestedSlice = blockSlice(nestedSubs, 'subcommands');
+  if (!nestedSlice.includes('pr-diff')) {
+    process.stderr.write('self-test failed: blockSlice truncated on ] inside syntax string\n');
+    process.exit(1);
+  }
   const skillMd = `---
 name: ak:plan
 user-invocable: true
@@ -372,6 +501,7 @@ const data = {
   promptExamples: [
     { command: '/ak:plan Rename settings route --fast', expectedEn: 'A compact plan.md and phase files with research skipped for this already-understood rename, and no implementation code.', recommended: true },
     { command: '/ak:plan validate plans/x/plan.md', expectedEn: 'Critical questions against the existing plan, then file updates or an explicit list of unresolved blockers.' },
+    { command: '/ak:plan archive plans/x/plan.md', expectedEn: 'Moves the completed plan into the archive location and records the archived path without editing implementation code.' },
   ],
   outputFlags: [{ flag: '--html', exampleCommand: '/ak:plan flow --html' }],
 };
@@ -437,6 +567,83 @@ const data = {
     argumentHint: '[task] [--fast|--html] OR [archive|validate]',
   });
 
+  const missingMode = good.replace(
+    'outputFlags:',
+    "workflowModes: [{ flag: '--html', modeEn: 'html brief' }],\n  outputFlags:",
+  );
+  const missingSub = good
+    .replace(
+      "    { command: '/ak:plan archive plans/x/plan.md', expectedEn: 'Moves the completed plan into the archive location and records the archived path without editing implementation code.' },\n",
+      '',
+    )
+    .replace(
+      'invocation: { syntax:',
+      "invocation: { subcommands: [{ name: 'archive', syntax: '/ak:plan archive x', titleEn: 'x', titleVi: 'x', descEn: 'x', descVi: 'x', outcomeEn: 'x', outcomeVi: 'x' }], syntax:",
+    );
+  const g = checkFile({
+    id: 'ak-plan',
+    src: missingMode,
+    skillMd,
+    argumentHint: '[task] [--fast|--html] OR [archive|validate]',
+  });
+  const h = checkFile({
+    id: 'ak-plan',
+    src: missingSub,
+    skillMd,
+    argumentHint: '[task] [--fast|--html] OR [archive|validate]',
+  });
+  const prMd = `---
+name: ak:code-review
+user-invocable: true
+argument-hint: "[target] [--pending]"
+---
+# Review
+--pending
+`;
+  const prSrc = `
+const data = {
+  id: 'ak-code-review',
+  command: '/ak:code-review',
+  invocation: { syntax: '/ak:code-review pr', subcommands: [{ name: 'pr', syntax: '/ak:code-review pr [--ultra]', titleEn: 'x', titleVi: 'x', descEn: 'x', descVi: 'x', outcomeEn: 'x', outcomeVi: 'x' }] },
+  promptExamples: [
+    { command: '/ak:code-review project --pending', expectedEn: 'Reviews the project branch and writes findings with evidence for each issue found in the current diff.', recommended: true },
+    { command: '/ak:code-review --pending', expectedEn: 'Reviews pending local changes and writes findings with evidence for each issue found in the current diff.' },
+  ],
+};
+`;
+  const prHit = checkFile({
+    id: 'ak-code-review',
+    src: prSrc,
+    skillMd: prMd,
+    argumentHint: '[target] [--pending]',
+  });
+  const artistMd = `---
+name: ak:ai-artist
+user-invocable: true
+argument-hint: "[task] [--mode]"
+---
+# Artist
+--mode
+`;
+  const artistSrc = `
+const data = {
+  id: 'ak-ai-artist',
+  command: '/ak:ai-artist',
+  invocation: { syntax: '/ak:ai-artist [task] [--mode]' },
+  workflowModes: [{ flag: '--mode search|creative|wild|all', modeEn: 'generation mode' }],
+  promptExamples: [
+    { command: '/ak:ai-artist "wallet" --mode search', expectedEn: 'Generates one search-mode image from the brief and writes the artifact path plus the selected prompt match.', recommended: true },
+    { command: '/ak:ai-artist "wallet" --mode creative', expectedEn: 'Generates one creative-mode image from the brief and writes the artifact path plus the remix notes.' },
+  ],
+};
+`;
+  const modeHit = checkFile({
+    id: 'ak-ai-artist',
+    src: artistSrc,
+    skillMd: artistMd,
+    argumentHint: '[task] [--mode]',
+  });
+
   const fail = [];
   if (!a.some((v) => v.includes('--not-a-real-flag'))) fail.push('invented-flag case');
   if (!b.some((v) => v.includes('wrong-skill'))) fail.push('wrong-skill case');
@@ -444,6 +651,10 @@ const data = {
   if (!d.some((v) => v.includes('--not-a-real-flag'))) fail.push('json-style invented-flag case');
   if (!e.some((v) => v.includes('--not-a-real-flag'))) fail.push('invented invocation option');
   if (!f.some((v) => v.includes('explode'))) fail.push('invented subcommand');
+  if (!g.some((v) => v.includes('mode --html'))) fail.push('missing-mode coverage');
+  if (!h.some((v) => v.includes('subcommand archive'))) fail.push('missing-subcommand coverage');
+  if (!prHit.some((v) => v.includes('subcommand pr'))) fail.push('pr vs project substring');
+  if (!modeHit.some((v) => v.includes('mode --mode wild'))) fail.push('--mode search vs wild');
   if (fail.length) {
     process.stderr.write(`self-test failed: ${fail.join(', ')}\n`);
     process.exit(1);

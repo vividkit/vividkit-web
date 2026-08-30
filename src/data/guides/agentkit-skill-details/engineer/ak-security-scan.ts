@@ -217,6 +217,15 @@ const data: SkillInfographic = {
       "whenVi": "Dùng cho ranh giới rủi ro cao cụ thể như API handler, code auth hoặc đường tích hợp thanh toán.",
       "expectedEn": "Limits scanning to the requested scope while still following the security-scan workflow: secrets first, dependency checks when applicable, dangerous pattern review, .env exposure check, and report-only recommendations.",
       "expectedVi": "Giới hạn scan trong phạm vi yêu cầu nhưng vẫn theo workflow security-scan: quét secret trước, kiểm tra dependency khi phù hợp, rà pattern nguy hiểm, kiểm tra lộ .env và chỉ báo cáo khuyến nghị."
+    },
+    {
+      "labelEn": "Explicit full scan",
+      "labelVi": "Scan đầy đủ tường minh",
+      "command": "/ak:security-scan --full",
+      "whenEn": "You want the complete secrets, dependency, pattern, and .env pass named as --full.",
+      "whenVi": "Khi muốn lượt secrets, dependency, pattern và .env đầy đủ được gọi tên là --full.",
+      "expectedEn": "Runs the full security-scan workflow with secrets first, dependency audits, dangerous-pattern review, and .env exposure checks, then writes a redacted Markdown report.",
+      "expectedVi": "Chạy workflow security-scan đầy đủ với secret trước, audit dependency, rà pattern nguy hiểm và kiểm tra lộ .env, rồi ghi báo cáo Markdown đã che."
     }
   ],
   "reportOutput": {
