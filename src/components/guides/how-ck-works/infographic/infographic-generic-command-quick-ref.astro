@@ -195,9 +195,9 @@ const processGroups: ProcessGroup[] = customGroupLabels.length > 0
         .filter(group => group.steps.length > 0);
     })();
 
-const ruleCards = principles.slice(0, 3).map((item, index) => ({
+const ruleCards = principles.slice(0, 4).map((item, index) => ({
   title: item,
-  desc: expertise[index] || (isVi ? 'Giữ command chạy đúng ranh giới của workflow.' : 'Keeps the command inside its intended workflow boundary.'),
+  desc: expertise[index] || '',
   marker: tones[index % tones.length].rail,
 }));
 
@@ -314,7 +314,9 @@ const getOutputPattern = () => (isVi ? output?.patternVi : output?.patternEn)?.t
               <span class={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${rule.marker}`}></span>
               <div class="min-w-0">
                 <p class="break-words text-sm font-semibold text-slate-900 dark:text-white">{rule.title}</p>
-                <p class="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-400">{rule.desc}</p>
+                {rule.desc && (
+                  <p class="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-400">{rule.desc}</p>
+                )}
               </div>
             </div>
           </div>
