@@ -53,10 +53,14 @@ const data: SkillInfographic = {
     { name: 'Google Search Console API', type: 'tool' },
   ],
   promptExamples: [
-    { labelEn: 'Audit', labelVi: 'Audit', command: '/ak:seo audit https://example.com', whenEn: 'You need a technical SEO review for a site or page.', whenVi: 'Khi cần review technical SEO cho site hoặc page.', expectedEn: 'SEO audit report covering crawl, index, technical, on-page, and CWV issues.', expectedVi: 'Báo cáo SEO audit bao gồm crawl, index, technical, on-page và vấn đề CWV.', recommended: true },
-    { labelEn: 'Keywords', labelVi: 'Keyword', command: '/ak:seo keywords product analytics software', whenEn: 'You need keyword demand, clusters, and content planning.', whenVi: 'Khi cần demand keyword, cluster và kế hoạch content.', expectedEn: 'Keyword report with volume, difficulty, CPC, clusters, and gaps.', expectedVi: 'Báo cáo keyword có volume, difficulty, CPC, cluster và gap.' },
-    { labelEn: 'pSEO', labelVi: 'pSEO', command: '/ak:seo pseo city landing pages', whenEn: 'You want scalable page templates for programmatic SEO.', whenVi: 'Khi muốn template page scale được cho programmatic SEO.', expectedEn: 'pSEO template and URL strategy.', expectedVi: 'Template pSEO và chiến lược URL.' },
-    { labelEn: 'Schema request', labelVi: 'Request schema', command: '/ak:seo schema pricing page', whenEn: 'Use only as a scoped JSON-LD request after checking the bundled tool effect.', whenVi: 'Chỉ dùng như request JSON-LD có scope rõ sau khi kiểm tra effect của tool đóng gói.', expectedEn: 'Schema guidance or artifact path with effect boundary noted.', expectedVi: 'Hướng dẫn schema hoặc path artifact kèm ranh giới effect.' },
+    { labelEn: 'Audit', labelVi: 'Audit', command: '/ak:seo audit https://example.com',
+      commandVi: '/ak:seo audit https://example.com', whenEn: 'You need a technical SEO review for a site or page.', whenVi: 'Khi cần review technical SEO cho site hoặc page.', expectedEn: 'SEO audit report covering crawl, index, technical, on-page, and CWV issues.', expectedVi: 'Báo cáo SEO audit bao gồm crawl, index, technical, on-page và vấn đề CWV.', recommended: true },
+    { labelEn: 'Keywords', labelVi: 'Keyword', command: '/ak:seo keywords product analytics software',
+      commandVi: '/ak:seo keywords phần mềm phân tích sản phẩm', whenEn: 'You need keyword demand, clusters, and content planning.', whenVi: 'Khi cần demand keyword, cluster và kế hoạch content.', expectedEn: 'Keyword report with volume, difficulty, CPC, clusters, and gaps.', expectedVi: 'Báo cáo keyword có volume, difficulty, CPC, cluster và gap.' },
+    { labelEn: 'pSEO', labelVi: 'pSEO', command: '/ak:seo pseo city landing pages',
+      commandVi: '/ak:seo pseo trang đích theo thành phố', whenEn: 'You want scalable page templates for programmatic SEO.', whenVi: 'Khi muốn template page scale được cho programmatic SEO.', expectedEn: 'pSEO template and URL strategy.', expectedVi: 'Template pSEO và chiến lược URL.' },
+    { labelEn: 'Schema request', labelVi: 'Request schema', command: '/ak:seo schema pricing page',
+      commandVi: '/ak:seo schema trang định giá', whenEn: 'Use only as a scoped JSON-LD request after checking the bundled tool effect.', whenVi: 'Chỉ dùng như request JSON-LD có scope rõ sau khi kiểm tra effect của tool đóng gói.', expectedEn: 'Schema guidance or artifact path with effect boundary noted.', expectedVi: 'Hướng dẫn schema hoặc path artifact kèm ranh giới effect.' },
   ],
   reportOutput: {
     titleEn: 'SEO Outputs',

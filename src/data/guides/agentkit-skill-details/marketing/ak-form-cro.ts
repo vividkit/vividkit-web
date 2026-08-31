@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:form-cro',
   kit: 'marketer',
   header: {
-    titleEn: 'Form Conversion Optimization',
-    titleVi: 'Tối ưu chuyển đổi form',
+    titleEn: '/ak:form-cro — Form Conversion Optimization',
+    titleVi: '/ak:form-cro — Tối ưu chuyển đổi form',
     taglineEn: 'Audits and redesigns non-signup forms to increase completion while keeping the data the business actually needs.',
     taglineVi: 'Kiểm tra và thiết kế lại các form không phải đăng ký để tăng tỷ lệ hoàn tất mà vẫn giữ dữ liệu doanh nghiệp thật sự cần.',
   },
@@ -35,9 +35,12 @@ const data: SkillInfographic = {
   expertiseAreasEn: ['Field reduction', 'Multi-step forms', 'Inline validation', 'CTA copy', 'Trust cues', 'Mobile form UX'],
   expertiseAreasVi: ['Giảm field', 'Form nhiều bước', 'Validation inline', 'Copy CTA', 'Tín hiệu tin cậy', 'UX form trên mobile'],
   promptExamples: [
-    { labelEn: 'Demo form audit', labelVi: 'Audit form demo', command: '/ak:form-cro "demo request form with 9 fields"', whenEn: 'A sales or demo form feels too long or underperforms.', whenVi: 'Form sales hoặc demo quá dài hoặc chuyển đổi kém.', expectedEn: 'Produces issues, impact, fixes, priority, recommended field order, copy, errors, layout, and test ideas.', expectedVi: 'Đưa ra lỗi, tác động, cách sửa, ưu tiên, thứ tự field, copy, thông báo lỗi, layout và ý tưởng test.', recommended: true },
-    { labelEn: 'Lead capture', labelVi: 'Lead capture', command: '/ak:form-cro "lead magnet download form"', whenEn: 'A gated-content form needs more submissions without hurting lead quality.', whenVi: 'Form tải tài liệu cần nhiều submission hơn mà không làm giảm chất lượng lead.', expectedEn: 'Balances minimum viable fields, value proposition, gating, and enrichment options.', expectedVi: 'Cân bằng field tối thiểu, lời hứa giá trị, cách gate và phương án làm giàu dữ liệu.' },
-    { labelEn: 'Contact form', labelVi: 'Form liên hệ', command: '/ak:form-cro "contact form for agency website"', whenEn: 'A contact form needs clearer expectations and lower friction.', whenVi: 'Form liên hệ cần kỳ vọng rõ hơn và ít ma sát hơn.', expectedEn: 'Recommends essential fields, optional phone, message handling, and response-time trust copy.', expectedVi: 'Đề xuất field thiết yếu, phone tùy chọn, xử lý message và copy về thời gian phản hồi.' },
+    { labelEn: 'Demo form audit', labelVi: 'Audit form demo', command: '/ak:form-cro "demo request form with 9 fields"',
+      commandVi: '/ak:form-cro "form yêu cầu demo với 9 trường"', whenEn: 'A sales or demo form feels too long or underperforms.', whenVi: 'Form sales hoặc demo quá dài hoặc chuyển đổi kém.', expectedEn: 'Produces issues, impact, fixes, priority, recommended field order, copy, errors, layout, and test ideas.', expectedVi: 'Đưa ra lỗi, tác động, cách sửa, ưu tiên, thứ tự field, copy, thông báo lỗi, layout và ý tưởng test.', recommended: true },
+    { labelEn: 'Lead capture', labelVi: 'Lead capture', command: '/ak:form-cro "lead magnet download form"',
+      commandVi: '/ak:form-cro "form tải lead magnet"', whenEn: 'A gated-content form needs more submissions without hurting lead quality.', whenVi: 'Form tải tài liệu cần nhiều submission hơn mà không làm giảm chất lượng lead.', expectedEn: 'Balances minimum viable fields, value proposition, gating, and enrichment options.', expectedVi: 'Cân bằng field tối thiểu, lời hứa giá trị, cách gate và phương án làm giàu dữ liệu.' },
+    { labelEn: 'Contact form', labelVi: 'Form liên hệ', command: '/ak:form-cro "contact form for agency website"',
+      commandVi: '/ak:form-cro "form liên hệ cho website agency"', whenEn: 'A contact form needs clearer expectations and lower friction.', whenVi: 'Form liên hệ cần kỳ vọng rõ hơn và ít ma sát hơn.', expectedEn: 'Recommends essential fields, optional phone, message handling, and response-time trust copy.', expectedVi: 'Đề xuất field thiết yếu, phone tùy chọn, xử lý message và copy về thời gian phản hồi.' },
   ],
   specialOperations: [
     { id: 'audit', titleEn: 'Form audit', titleVi: 'Audit form', descEn: 'Each issue includes what is wrong, estimated conversion impact, the fix, and priority.', descVi: 'Mỗi vấn đề nêu phần sai, tác động ước tính lên chuyển đổi, cách sửa và mức ưu tiên.', color: 'rose' },

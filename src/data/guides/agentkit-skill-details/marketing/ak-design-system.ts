@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:design-system",
   kit: 'marketer',
   header: {
-    titleEn: "Token architecture and slide system",
-    titleVi: "Kiến trúc token và hệ thống slide",
+    titleEn: '/ak:design-system — Token architecture and slide system',
+    titleVi: '/ak:design-system — Kiến trúc token và hệ thống slide',
     taglineEn: "Builds three-layer design tokens, CSS variables, component specs, Tailwind handoff, and brand-compliant slide presentations with token validation.",
     taglineVi: "Xây design token ba lớp, biến CSS, đặc tả component, handoff Tailwind và slide đúng brand có kiểm tra token.",
   },
@@ -40,9 +40,12 @@ const data: SkillInfographic = {
   expertiseAreasEn: ["Primitive tokens", "Semantic tokens", "Component tokens", "CSS variables", "Component states", "Tailwind integration", "Slide strategies", "Chart.js decks", "Token validation"],
   expertiseAreasVi: ["Token primitive", "Token semantic", "Token component", "Biến CSS", "Trạng thái component", "Tích hợp Tailwind", "Chiến lược slide", "Deck Chart.js", "Kiểm tra token"],
   promptExamples: [
-    { labelEn: "Token system", labelVi: "Hệ token", command: "/ak:design-system button tokens for SaaS dashboard", whenEn: "Use when component styling needs reusable token layers.", whenVi: "Dùng khi styling component cần các lớp token tái sử dụng được.", expectedEn: "Primitive, semantic, and component token guidance with state specs.", expectedVi: "Hướng dẫn token primitive, semantic, component kèm đặc tả state.", recommended: true },
-    { labelEn: "CSS variables", labelVi: "Biến CSS", command: "/ak:design-system CSS variables for brand colors and typography", whenEn: "Use when a design system needs implementation-ready variables.", whenVi: "Dùng khi design system cần biến sẵn sàng để triển khai.", expectedEn: "Token-to-CSS variable structure and validation approach.", expectedVi: "Cấu trúc chuyển token sang biến CSS và cách kiểm tra." },
-    { labelEn: "Slide deck", labelVi: "Deck slide", command: "/ak:design-system 10-slide investor pitch for AgentKit Marketing", whenEn: "Use when presentation generation must stay brand-compliant and persuasive.", whenVi: "Dùng khi cần tạo presentation vừa đúng brand vừa có tính thuyết phục.", expectedEn: "Strategy, emotion arc, layouts, token-compliant HTML, Chart.js charts, and navigation.", expectedVi: "Strategy, cung cảm xúc, layout, HTML đúng token, chart Chart.js và điều hướng." },
+    { labelEn: "Token system", labelVi: "Hệ token", command: "/ak:design-system button tokens for SaaS dashboard",
+      commandVi: '/ak:design-system token nút cho bảng điều khiển SaaS', whenEn: "Use when component styling needs reusable token layers.", whenVi: "Dùng khi styling component cần các lớp token tái sử dụng được.", expectedEn: "Primitive, semantic, and component token guidance with state specs.", expectedVi: "Hướng dẫn token primitive, semantic, component kèm đặc tả state.", recommended: true },
+    { labelEn: "CSS variables", labelVi: "Biến CSS", command: "/ak:design-system CSS variables for brand colors and typography",
+      commandVi: '/ak:design-system biến CSS cho màu thương hiệu và typography', whenEn: "Use when a design system needs implementation-ready variables.", whenVi: "Dùng khi design system cần biến sẵn sàng để triển khai.", expectedEn: "Token-to-CSS variable structure and validation approach.", expectedVi: "Cấu trúc chuyển token sang biến CSS và cách kiểm tra." },
+    { labelEn: "Slide deck", labelVi: "Deck slide", command: "/ak:design-system 10-slide investor pitch for AgentKit Marketing",
+      commandVi: '/ak:design-system bài thuyết trình nhà đầu tư 10 slide cho AgentKit Marketing', whenEn: "Use when presentation generation must stay brand-compliant and persuasive.", whenVi: "Dùng khi cần tạo presentation vừa đúng brand vừa có tính thuyết phục.", expectedEn: "Strategy, emotion arc, layouts, token-compliant HTML, Chart.js charts, and navigation.", expectedVi: "Strategy, cung cảm xúc, layout, HTML đúng token, chart Chart.js và điều hướng." },
   ],
   skillStack: [
     { name: "brand", type: "skill" },

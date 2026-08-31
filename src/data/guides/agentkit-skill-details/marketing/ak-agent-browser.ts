@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:agent-browser",
   kit: 'marketer',
   header: {
-    titleEn: "Agent Browser",
-    titleVi: "Agent Browser",
+    titleEn: '/ak:agent-browser — Profile-independent browser automation',
+    titleVi: '/ak:agent-browser — Tự động hóa trình duyệt không phụ thuộc profile thật',
     taglineEn: "Use the agent-browser CLI for profile-independent browser and desktop automation: compact snapshots, screenshots, form fills, scraping, exploratory QA, cloud browsers, Electron apps, and Slack workflows.",
     taglineVi: "Dùng CLI agent-browser cho tự động hóa browser và desktop không phụ thuộc profile thật: snapshot gọn, screenshot, điền form, scraping, QA khám phá, cloud browser, app Electron và workflow Slack.",
   },
@@ -42,8 +42,12 @@ const data: SkillInfographic = {
   expertiseAreasEn: ["Browser automation", "Accessibility snapshots", "Screenshots and forms", "Scraping", "Exploratory QA", "Cloud browsers", "Electron and Slack automation"],
   expertiseAreasVi: ["Tự động hóa browser", "Snapshot accessibility", "Screenshot và form", "Scraping", "QA khám phá", "Cloud browser", "Tự động hóa Electron và Slack"],
   promptExamples: [
-    { labelEn: "Inspect a site", labelVi: "Kiểm tra một website", command: "/ak:agent-browser https://example.com", whenEn: "A page can be opened in a fresh managed browser for observation or screenshots.", whenVi: "Khi trang có thể mở trong browser mới do tool quản lý để quan sát hoặc chụp ảnh.", expectedEn: "Live CLI guidance, a browser session, snapshots, interactions, and evidence from the page.", expectedVi: "Nhận hướng dẫn CLI live, session browser, snapshot, thao tác và bằng chứng từ trang.", recommended: true },
-    { labelEn: "Automate a task", labelVi: "Tự động hóa một tác vụ", command: "/ak:agent-browser fill signup form on staging", whenEn: "You need clicks or form fills without using the user's real Chrome login state.", whenVi: "Khi cần click hoặc điền form mà không dùng trạng thái đăng nhập Chrome thật của người dùng.", expectedEn: "A profile-independent automation flow with compact snapshots, browser evidence, and recovery steps for blocked navigation.", expectedVi: "Một flow tự động độc lập profile, có snapshot và bước phục hồi khi cần." },
+    { labelEn: "Inspect a site", labelVi: "Kiểm tra một website", command: "/ak:agent-browser https://example.com",
+      commandVi: '/ak:agent-browser https://example.com', whenEn: "A page can be opened in a fresh managed browser for observation or screenshots.", whenVi: "Khi trang có thể mở trong browser mới do tool quản lý để quan sát hoặc chụp ảnh.", expectedEn: "Live CLI guidance, a browser session, snapshots, interactions, and evidence from the page.", expectedVi: "Nhận hướng dẫn CLI live, session browser, snapshot, thao tác và bằng chứng từ trang.", recommended: true },
+    { labelEn: "Automate a task", labelVi: "Tự động hóa một tác vụ", command: "/ak:agent-browser fill signup form on staging",
+      commandVi: '/ak:agent-browser điền form đăng ký trên staging', whenEn: "You need clicks or form fills without using the user's real Chrome login state.", whenVi: "Khi cần click hoặc điền form mà không dùng trạng thái đăng nhập Chrome thật của người dùng.", expectedEn: "A profile-independent automation flow with compact snapshots, browser evidence, and recovery steps for blocked navigation.", expectedVi: "Một flow tự động độc lập profile, có snapshot và bước phục hồi khi cần." },
+    { labelEn: 'Scrape a page', labelVi: 'Scrape một trang', command: '/ak:agent-browser scrape the pricing table from https://example.com',
+      commandVi: '/ak:agent-browser scrape bảng giá từ https://example.com', whenEn: 'You need compact page data or screenshots without the user\'s real Chrome profile.', whenVi: 'Khi cần dữ liệu trang gọn hoặc screenshot mà không dùng profile Chrome thật.', expectedEn: 'A managed browser session with snapshot refs, extracted table evidence, and saved artifacts.', expectedVi: 'Session browser do tool quản lý, snapshot ref, bằng chứng bảng đã trích và artifact đã lưu.' }
   ],
   skillStack: [
     { name: "agent-browser CLI", type: 'tool' },

@@ -10,6 +10,7 @@ const invocation: SkillInvocation = {
       descEn: 'Local repository or folder to pack. Omit it to package the active working directory; use remote options only when the source is not local.',
       descVi: 'Repo hoặc thư mục local cần đóng gói. Bỏ qua để pack working directory hiện hành; chỉ dùng tùy chọn remote khi nguồn không nằm local.',
       exampleCommand: '/ak:repomix packages/auth --style markdown',
+          exampleCommandVi: '/ak:repomix packages/auth --style markdown',
     },
   ],
   options: [
@@ -20,6 +21,7 @@ const invocation: SkillInvocation = {
       descEn: 'Selects XML, Markdown, JSON, or plain text. It changes the bundle format, not the source files being included.',
       descVi: 'Chọn XML, Markdown, JSON hoặc plain text. Tùy chọn này đổi định dạng bundle, không đổi tập file nguồn được đưa vào.',
       exampleCommand: '/ak:repomix . --style markdown',
+          exampleCommandVi: '/ak:repomix . --style markdown',
     },
     {
       token: '--include <patterns>',
@@ -28,6 +30,7 @@ const invocation: SkillInvocation = {
       descEn: 'Narrows the pack to matching files or folders, such as source modules, docs, manifests, or one package in a monorepo.',
       descVi: 'Thu hẹp gói vào file hoặc thư mục khớp pattern, như module source, docs, manifest hoặc một package trong monorepo.',
       exampleCommand: '/ak:repomix . --include "src/**/*.ts,*.md"',
+          exampleCommandVi: '/ak:repomix . --include "src/**/*.ts,*.md"',
     },
     {
       token: '-i <patterns>',
@@ -36,6 +39,7 @@ const invocation: SkillInvocation = {
       descEn: 'Adds ignore patterns for noisy, generated, or sensitive paths. It should not be used to hide unresolved security warnings.',
       descVi: 'Thêm pattern bỏ qua cho path nhiễu, sinh tự động hoặc nhạy cảm. Không dùng để che cảnh báo bảo mật chưa xử lý.',
       exampleCommand: '/ak:repomix . -i "tests/**,*.test.js"',
+          exampleCommandVi: '/ak:repomix . -i "tests/**,*.test.js"',
     },
     {
       token: '-o <file>',
@@ -44,6 +48,7 @@ const invocation: SkillInvocation = {
       descEn: 'Writes the generated bundle to an explicit file instead of the default repomix-output.xml in the working directory.',
       descVi: 'Ghi bundle đã tạo vào file rõ ràng thay vì mặc định repomix-output.xml trong working directory.',
       exampleCommand: '/ak:repomix src -o artifacts/src-context.md --style markdown',
+          exampleCommandVi: '/ak:repomix src -o artifacts/src-context.md --style markdown',
     },
     {
       token: '--remote <repo-or-url>',
@@ -52,6 +57,7 @@ const invocation: SkillInvocation = {
       descEn: 'Packages a public repository shorthand, URL, or commit through Repomix remote processing. Use an authorized local clone for private code.',
       descVi: 'Đóng gói repository public dạng shorthand, URL hoặc commit qua xử lý remote của Repomix. Với code private, dùng clone local đã được cấp quyền.',
       exampleCommand: '/ak:repomix --remote yamadashy/repomix --style xml',
+          exampleCommandVi: '/ak:repomix --remote yamadashy/repomix --style xml',
     },
     {
       token: '--remove-comments',
@@ -60,6 +66,7 @@ const invocation: SkillInvocation = {
       descEn: 'Removes supported-language comments to reduce context size, but may discard licenses, rationale, generated-file notices, or safety constraints.',
       descVi: 'Xóa comment của ngôn ngữ được hỗ trợ để giảm kích thước context, nhưng có thể mất license, rationale, ghi chú file sinh tự động hoặc ràng buộc an toàn.',
       exampleCommand: '/ak:repomix src --remove-comments --style markdown',
+          exampleCommandVi: '/ak:repomix src --remove-comments --style markdown',
     },
     {
       token: '--copy',
@@ -68,6 +75,7 @@ const invocation: SkillInvocation = {
       descEn: 'Copies the generated bundle to the system clipboard in addition to normal processing. Review sensitive content before using it.',
       descVi: 'Copy bundle đã tạo vào system clipboard ngoài xử lý thông thường. Rà soát nội dung nhạy cảm trước khi dùng.',
       exampleCommand: '/ak:repomix . --copy',
+          exampleCommandVi: '/ak:repomix . --copy',
     },
     {
       token: '--init',
@@ -76,6 +84,7 @@ const invocation: SkillInvocation = {
       descEn: 'Creates repomix.config.json for reusable packaging settings. It does not create the repository bundle by itself.',
       descVi: 'Tạo repomix.config.json cho thiết lập đóng gói tái sử dụng. Tùy chọn này không tự tạo bundle repository.',
       exampleCommand: '/ak:repomix --init',
+          exampleCommandVi: '/ak:repomix --init',
     },
     {
       token: '--token-count-tree [min]',
@@ -84,6 +93,7 @@ const invocation: SkillInvocation = {
       descEn: 'Shows token-heavy files and directories, optionally above a minimum threshold, so the bundle can be narrowed before sharing.',
       descVi: 'Hiển thị file và thư mục nặng token, có thể lọc theo ngưỡng tối thiểu, để thu hẹp bundle trước khi chia sẻ.',
       exampleCommand: '/ak:repomix . --token-count-tree 1000',
+          exampleCommandVi: '/ak:repomix . --token-count-tree 1000',
     },
     {
       token: '--no-security-check',
@@ -92,6 +102,7 @@ const invocation: SkillInvocation = {
       descEn: 'Disables Secretlint-based scanning. Use only after an explicit risk decision; it is not proof that the bundle is safe to share.',
       descVi: 'Tắt scan dựa trên Secretlint. Chỉ dùng sau quyết định rủi ro rõ ràng; đây không phải bằng chứng bundle an toàn để chia sẻ.',
       exampleCommand: '/ak:repomix . --no-security-check',
+          exampleCommandVi: '/ak:repomix . --no-security-check',
     },
   ],
 };

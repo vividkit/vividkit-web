@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:ads-management",
   kit: 'marketer',
   header: {
-    titleEn: "Ads Management",
-    titleVi: "Quản lý quảng cáo trả phí",
+    titleEn: '/ak:ads-management — Ads Management',
+    titleVi: '/ak:ads-management — Quản lý quảng cáo trả phí',
     taglineEn: "Build, launch, measure, and optimize paid campaigns across Google, Meta, LinkedIn, and TikTok, including copy, audiences, bidding, tracking, A/B testing, ROAS, and AI-generated creatives.",
     taglineVi: "Xây, launch, đo lường và tối ưu campaign trả phí trên Google, Meta, LinkedIn và TikTok, gồm copy, audience, bidding, tracking, A/B test, ROAS và creative tạo bằng AI.",
   },
@@ -46,9 +46,12 @@ const data: SkillInfographic = {
     { name: "ai-multimodal", type: 'skill' },
     { name: "assets-organizing", type: 'skill' },
   ],
-  promptExamples: [
-    { labelEn: "Meta conversion campaign", labelVi: "Campaign conversion trên Meta", command: "/ak:ads-management Meta conversions", whenEn: "You need a full paid-social conversion campaign plan and assets.", whenVi: "Khi cần kế hoạch và asset cho campaign paid social tối ưu conversion.", expectedEn: "Objective, audience segments, copy variants, creative plan, tracking, metrics, and optimization steps.", expectedVi: "Nhận mục tiêu, segment audience, biến thể copy, kế hoạch creative, tracking, metric và bước tối ưu.", recommended: true },
-    { labelEn: "Google search campaign", labelVi: "Campaign Google Search", command: "/ak:ads-management Google Ads search", whenEn: "Search intent, competitor keywords, and bidding need to be planned together.", whenVi: "Khi cần lập keyword theo intent tìm kiếm, đối thủ và chiến lược bid cùng lúc.", expectedEn: "A paid-search setup with keyword research, budget, bidding, copy, and reporting guidance.", expectedVi: "Bản setup paid search gồm nghiên cứu keyword, ngân sách, bidding, copy và hướng báo cáo." },
+  promptExamples: [{ labelEn: "Meta conversion campaign", labelVi: "Campaign conversion trên Meta", command: "/ak:ads-management Meta conversions",
+      commandVi: '/ak:ads-management Meta chuyển đổi', whenEn: "You need a full paid-social conversion campaign plan and assets.", whenVi: "Khi cần kế hoạch và asset cho campaign paid social tối ưu conversion.", expectedEn: "Objective, audience segments, copy variants, creative plan, tracking, metrics, and optimization steps.", expectedVi: "Nhận mục tiêu, segment audience, biến thể copy, kế hoạch creative, tracking, metric và bước tối ưu.", recommended: true },
+    { labelEn: "Google search campaign", labelVi: "Campaign Google Search", command: "/ak:ads-management Google Ads search",
+      commandVi: '/ak:ads-management Tìm kiếm Google Ads', whenEn: "Search intent, competitor keywords, and bidding need to be planned together.", whenVi: "Khi cần lập keyword theo intent tìm kiếm, đối thủ và chiến lược bid cùng lúc.", expectedEn: "A paid-search setup with keyword research, budget, bidding, copy, and reporting guidance.", expectedVi: "Bản setup paid search gồm nghiên cứu keyword, ngân sách, bidding, copy và hướng báo cáo." },
+    { labelEn: 'Meta retargeting', labelVi: 'Retargeting Meta', command: '/ak:ads-management Meta retargeting for trial users',
+      commandVi: '/ak:ads-management Retargeting Meta cho người dùng dùng thử', whenEn: 'You need a paid campaign brief for a specific platform and audience.', whenVi: 'Khi cần brief chiến dịch trả phí cho một nền tảng và audience cụ thể.', expectedEn: 'Objective, audience, budget, copy variants, creative specs, and tracking notes for Meta retargeting.', expectedVi: 'Mục tiêu, audience, ngân sách, biến thể copy, spec creative và ghi chú tracking cho retargeting Meta.' }
   ],
   reportOutput: {
     titleEn: "Ads report",

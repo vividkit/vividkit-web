@@ -14,6 +14,7 @@ const invocation: SkillInvocation = {
       required: true,
       exampleCommand:
         '/ak:ui-styling "Add an accessible account dialog using existing tokens; preserve components.json, support keyboard focus and reduced motion, test light/dark at mobile and desktop, and do not overwrite existing UI files"',
+          exampleCommandVi: '/ak:ui-styling "Thêm dialog tài khoản accessible dùng tokens hiện có; preserve components.json, hỗ trợ keyboard focus và reduced motion, test light/dark trên mobile và desktop, và không overwrite các file UI hiện có"',
     },
   ],
 };

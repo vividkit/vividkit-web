@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:brand",
   kit: 'marketer',
   header: {
-    titleEn: "Brand",
-    titleVi: "Thương hiệu",
+    titleEn: '/ak:brand — Brand identity and voice',
+    titleVi: '/ak:brand — Nhận diện và giọng thương hiệu',
     taglineEn: "Manage brand voice, visual identity, messaging frameworks, asset standards, color, typography, logo rules, approvals, and design-token sync for consistent branded output.",
     taglineVi: "Quản lý giọng thương hiệu, nhận diện hình ảnh, framework messaging, chuẩn asset, màu sắc, typography, luật dùng logo, approval và sync design token để output luôn nhất quán với brand.",
   },
@@ -43,9 +43,12 @@ const data: SkillInfographic = {
   expertiseAreasEn: ["Brand voice", "Visual identity", "Messaging frameworks", "Brand consistency audits", "Asset approval", "Color palettes", "Typography", "Logo rules", "Design-token sync"],
   expertiseAreasVi: ["Giọng thương hiệu", "Nhận diện hình ảnh", "Framework messaging", "Audit nhất quán brand", "Duyệt asset", "Bảng màu", "Typography", "Luật dùng logo", "Sync design token"],
   promptExamples: [
-    { labelEn: "Update brand", labelVi: "Cập nhật brand", command: "/ak:brand update", whenEn: "Brand guidelines need to change and sync into design tokens.", whenVi: "Khi guideline brand cần thay đổi và sync vào design token.", expectedEn: "Updated docs/brand-guidelines.md plus assets/design-tokens.json and assets/design-tokens.css sync evidence.", expectedVi: "docs/brand-guidelines.md đã cập nhật cùng bằng chứng sync assets/design-tokens.json và assets/design-tokens.css.", recommended: true },
-    { labelEn: "Review asset", labelVi: "Review asset", command: "/ak:brand Review this campaign banner against current brand guidelines", whenEn: "A marketing asset needs brand-consistency review.", whenVi: "Khi một asset marketing cần review độ nhất quán với brand.", expectedEn: "Voice, visual, messaging, color, typography, logo, and approval findings. Review is a natural-language outcome, not a dedicated /ak:brand review route unless the install adds one.", expectedVi: "Phát hiện về voice, visual, messaging, màu, typography, logo và approval. Review là outcome bằng ngôn ngữ tự nhiên, không phải route /ak:brand review trừ khi bản cài đặt thêm route đó." },
-    { labelEn: "Create guidelines", labelVi: "Tạo guideline", command: "/ak:brand Draft starter brand guidelines and messaging structure for a new brand", whenEn: "A new brand needs starter standards and messaging structure.", whenVi: "Khi brand mới cần bộ chuẩn khởi đầu và cấu trúc messaging.", expectedEn: "A starter direction for guidelines, voice, visual identity, messaging, and asset rules. Create is a natural-language outcome unless the install adds a dedicated route.", expectedVi: "Hướng khởi đầu cho guideline, voice, visual identity, messaging và luật asset. Create là outcome bằng ngôn ngữ tự nhiên trừ khi bản cài đặt thêm route riêng." },
+    { labelEn: "Update brand", labelVi: "Cập nhật brand", command: "/ak:brand update",
+      commandVi: '/ak:brand update', whenEn: "Brand guidelines need to change and sync into design tokens.", whenVi: "Khi guideline brand cần thay đổi và sync vào design token.", expectedEn: "Updated docs/brand-guidelines.md plus assets/design-tokens.json and assets/design-tokens.css sync evidence.", expectedVi: "docs/brand-guidelines.md đã cập nhật cùng bằng chứng sync assets/design-tokens.json và assets/design-tokens.css.", recommended: true },
+    { labelEn: "Review asset", labelVi: "Review asset", command: "/ak:brand Review this campaign banner against current brand guidelines",
+      commandVi: '/ak:brand Xem xét banner chiến dịch này so với hướng dẫn thương hiệu hiện tại', whenEn: "A marketing asset needs brand-consistency review.", whenVi: "Khi một asset marketing cần review độ nhất quán với brand.", expectedEn: "Voice, visual, messaging, color, typography, logo, and approval findings. Review is a natural-language outcome, not a dedicated /ak:brand review route unless the install adds one.", expectedVi: "Phát hiện về voice, visual, messaging, màu, typography, logo và approval. Review là outcome bằng ngôn ngữ tự nhiên, không phải route /ak:brand review trừ khi bản cài đặt thêm route đó." },
+    { labelEn: "Create guidelines", labelVi: "Tạo guideline", command: "/ak:brand Draft starter brand guidelines and messaging structure for a new brand",
+      commandVi: '/ak:brand Soạn thảo hướng dẫn thương hiệu khởi đầu và cấu trúc thông điệp cho thương hiệu mới', whenEn: "A new brand needs starter standards and messaging structure.", whenVi: "Khi brand mới cần bộ chuẩn khởi đầu và cấu trúc messaging.", expectedEn: "A starter direction for guidelines, voice, visual identity, messaging, and asset rules. Create is a natural-language outcome unless the install adds a dedicated route.", expectedVi: "Hướng khởi đầu cho guideline, voice, visual identity, messaging và luật asset. Create là outcome bằng ngôn ngữ tự nhiên trừ khi bản cài đặt thêm route riêng." },
   ],
   skillStack: [
     { name: "inject-brand-context.cjs", type: 'tool' },

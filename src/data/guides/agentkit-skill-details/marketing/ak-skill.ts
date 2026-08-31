@@ -54,10 +54,14 @@ const data: SkillInfographic = {
     { name: 'sequential-thinking', type: 'tool' },
   ],
   promptExamples: [
-    { labelEn: 'Create', labelVi: 'Tạo', command: '/ak:skill create Build a marketing skill for webinar funnel planning', whenEn: 'You need a new marketing automation skill from a description.', whenVi: 'Khi cần skill marketing automation mới từ mô tả.', expectedEn: 'New practical skill structure with concise SKILL.md and references as needed.', expectedVi: 'Cấu trúc skill thực dụng mới với SKILL.md ngắn và reference khi cần.', recommended: true },
-    { labelEn: 'Add refs', labelVi: 'Thêm reference', command: '/ak:skill add ak-webinar-funnel Add email sequence templates and launch checklist', whenEn: 'An existing skill needs supporting references or scripts.', whenVi: 'Khi skill hiện có cần reference hoặc script hỗ trợ.', expectedEn: 'Reference additions routed through the add workflow.', expectedVi: 'Phần bổ sung reference được định tuyến qua workflow add.' },
-    { labelEn: 'Optimize', labelVi: 'Tối ưu', command: '/ak:skill optimize ak-social reduce root SKILL.md token load', whenEn: 'A skill is too large or inefficient and needs progressive disclosure.', whenVi: 'Khi skill quá lớn hoặc kém hiệu quả và cần progressive disclosure.', expectedEn: 'Optimization plan and approved concise skill update.', expectedVi: 'Plan tối ưu và update skill súc tích sau khi được duyệt.' },
-    { labelEn: 'Fix logs', labelVi: 'Sửa log', command: '/ak:skill fix-logs ak-social', whenEn: 'A skill has failing log output that should drive a fix.', whenVi: 'Khi skill có log lỗi cần dùng để sửa.', expectedEn: 'Log-grounded repair of the target skill.', expectedVi: 'Sửa skill mục tiêu dựa trên log.' },
+    { labelEn: 'Create', labelVi: 'Tạo', command: '/ak:skill create Build a marketing skill for webinar funnel planning',
+      commandVi: '/ak:skill create Xây dựng skill marketing cho lập kế hoạch phễu webinar', whenEn: 'You need a new marketing automation skill from a description.', whenVi: 'Khi cần skill marketing automation mới từ mô tả.', expectedEn: 'New practical skill structure with concise SKILL.md and references as needed.', expectedVi: 'Cấu trúc skill thực dụng mới với SKILL.md ngắn và reference khi cần.', recommended: true },
+    { labelEn: 'Add refs', labelVi: 'Thêm reference', command: '/ak:skill add ak-webinar-funnel Add email sequence templates and launch checklist',
+      commandVi: '/ak:skill add ak-webinar-funnel Thêm mẫu chuỗi email và checklist ra mắt', whenEn: 'An existing skill needs supporting references or scripts.', whenVi: 'Khi skill hiện có cần reference hoặc script hỗ trợ.', expectedEn: 'Reference additions routed through the add workflow.', expectedVi: 'Phần bổ sung reference được định tuyến qua workflow add.' },
+    { labelEn: 'Optimize', labelVi: 'Tối ưu', command: '/ak:skill optimize ak-social reduce root SKILL.md token load',
+      commandVi: '/ak:skill optimize ak-social giảm tải token của SKILL.md gốc', whenEn: 'A skill is too large or inefficient and needs progressive disclosure.', whenVi: 'Khi skill quá lớn hoặc kém hiệu quả và cần progressive disclosure.', expectedEn: 'Optimization plan and approved concise skill update.', expectedVi: 'Plan tối ưu và update skill súc tích sau khi được duyệt.' },
+    { labelEn: 'Fix logs', labelVi: 'Sửa log', command: '/ak:skill fix-logs ak-social',
+      commandVi: '/ak:skill fix-logs ak-social', whenEn: 'A skill has failing log output that should drive a fix.', whenVi: 'Khi skill có log lỗi cần dùng để sửa.', expectedEn: 'Log-grounded repair of the target skill.', expectedVi: 'Sửa skill mục tiêu dựa trên log.' },
   ],
 };
 

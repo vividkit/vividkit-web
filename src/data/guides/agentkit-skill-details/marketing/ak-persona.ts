@@ -54,10 +54,14 @@ const data: SkillInfographic = {
     { name: 'assets-organizing', type: 'skill' },
   ],
   promptExamples: [
-    { labelEn: 'Create', labelVi: 'Tạo mới', command: '/ak:persona create', whenEn: 'You need a fresh ICP/persona profile for a market, segment, or campaign.', whenVi: 'Khi cần ICP/persona mới cho một thị trường, phân khúc hoặc campaign.', expectedEn: 'A structured persona built from demographics, pains, goals, motivations, buying behavior, and channels.', expectedVi: 'Persona có cấu trúc dựa trên demographics, pain, mục tiêu, động lực, hành vi mua và kênh.', recommended: true },
-    { labelEn: 'Analyze', labelVi: 'Phân tích', command: '/ak:persona analyze', whenEn: 'You have audience behavior or customer data and need segments or insights.', whenVi: 'Khi có dữ liệu hành vi audience hoặc khách hàng và cần segment/insight.', expectedEn: 'Audience analysis report with segments, patterns, and implications.', expectedVi: 'Báo cáo phân tích audience với segment, mẫu hình và hàm ý.' },
-    { labelEn: 'Update', labelVi: 'Cập nhật', command: '/ak:persona update "Tech Startup Founder"', whenEn: 'You need to revise a known persona with new evidence.', whenVi: 'Khi cần chỉnh persona đã có bằng bằng chứng mới.', expectedEn: 'Updated ICP profile with incorporated data and validation notes.', expectedVi: 'ICP profile đã cập nhật kèm dữ liệu mới và ghi chú kiểm chứng.' },
-    { labelEn: 'List', labelVi: 'Liệt kê', command: '/ak:persona list', whenEn: 'You need to see which personas already exist.', whenVi: 'Khi cần xem các persona đã có.', expectedEn: 'List of available persona profiles.', expectedVi: 'Danh sách persona profile hiện có.' },
+    { labelEn: 'Create', labelVi: 'Tạo mới', command: '/ak:persona create',
+      commandVi: '/ak:persona create', whenEn: 'You need a fresh ICP/persona profile for a market, segment, or campaign.', whenVi: 'Khi cần ICP/persona mới cho một thị trường, phân khúc hoặc campaign.', expectedEn: 'A structured persona built from demographics, pains, goals, motivations, buying behavior, and channels.', expectedVi: 'Persona có cấu trúc dựa trên demographics, pain, mục tiêu, động lực, hành vi mua và kênh.', recommended: true },
+    { labelEn: 'Analyze', labelVi: 'Phân tích', command: '/ak:persona analyze',
+      commandVi: '/ak:persona analyze', whenEn: 'You have audience behavior or customer data and need segments or insights.', whenVi: 'Khi có dữ liệu hành vi audience hoặc khách hàng và cần segment/insight.', expectedEn: 'Audience analysis report with segments, patterns, and implications.', expectedVi: 'Báo cáo phân tích audience với segment, mẫu hình và hàm ý.' },
+    { labelEn: 'Update', labelVi: 'Cập nhật', command: '/ak:persona update "Tech Startup Founder"',
+      commandVi: '/ak:persona update "Người sáng lập Startup Công nghệ"', whenEn: 'You need to revise a known persona with new evidence.', whenVi: 'Khi cần chỉnh persona đã có bằng bằng chứng mới.', expectedEn: 'Updated ICP profile with incorporated data and validation notes.', expectedVi: 'ICP profile đã cập nhật kèm dữ liệu mới và ghi chú kiểm chứng.' },
+    { labelEn: 'List', labelVi: 'Liệt kê', command: '/ak:persona list',
+      commandVi: '/ak:persona list', whenEn: 'You need to see which personas already exist.', whenVi: 'Khi cần xem các persona đã có.', expectedEn: 'List of available persona profiles.', expectedVi: 'Danh sách persona profile hiện có.' },
   ],
   reportOutput: {
     titleEn: 'ICP Profile Output',

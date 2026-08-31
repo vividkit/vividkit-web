@@ -105,9 +105,12 @@ const text = {
   stack: isVi ? 'Stack được gọi khi cần' : 'Stack Used When Needed',
   output: isVi ? 'Artifact tạo ra' : 'Artifacts Produced',
   artifactPath: isVi ? 'Mẫu đường dẫn' : 'Pattern',
-  guardrails: isVi ? 'Shortcut bị chặn' : 'Shortcuts Blocked',
-  thought: isVi ? 'Suy nghĩ' : 'Thought',
-  reality: isVi ? 'Thực tế' : 'Reality',
+  guardrails: isVi ? 'Đừng bỏ qua bước bắt buộc' : "Don't skip the required step",
+  guardrailsDesc: isVi
+    ? 'Mỗi mục đối chiếu một lối tắt dễ mắc với cách làm đúng mà skill yêu cầu.'
+    : 'Each item contrasts a tempting shortcut with the required approach.',
+  thought: isVi ? 'Lối tắt dễ mắc' : 'Tempting shortcut',
+  reality: isVi ? 'Cách làm đúng' : 'Do this instead',
   modeSelection: isVi ? 'Mode nên dùng' : 'Mode Selection',
   modePromptLabel: isVi ? 'Lệnh mẫu' : 'Prompt',
   specialOps: isVi ? 'Tính năng đặc biệt' : 'Special Operations',
@@ -161,6 +164,46 @@ const tones: Tone[] = [
     dot: 'bg-violet-400',
   },
 ];
+
+const guardrailLooks: Record<string, { rail: string; thoughtChip: string; realityChip: string; surface: string }> = {
+  red: {
+    rail: 'bg-rose-500',
+    thoughtChip: 'bg-rose-50 text-rose-800 ring-rose-200 dark:bg-rose-950/40 dark:text-rose-100 dark:ring-rose-800/50',
+    realityChip: 'bg-emerald-50 text-emerald-800 ring-emerald-200 dark:bg-emerald-950/35 dark:text-emerald-100 dark:ring-emerald-800/50',
+    surface: 'border-rose-200/80 bg-rose-50/40 dark:border-rose-800/40 dark:bg-rose-950/15',
+  },
+  rose: {
+    rail: 'bg-rose-500',
+    thoughtChip: 'bg-rose-50 text-rose-800 ring-rose-200 dark:bg-rose-950/40 dark:text-rose-100 dark:ring-rose-800/50',
+    realityChip: 'bg-emerald-50 text-emerald-800 ring-emerald-200 dark:bg-emerald-950/35 dark:text-emerald-100 dark:ring-emerald-800/50',
+    surface: 'border-rose-200/80 bg-rose-50/40 dark:border-rose-800/40 dark:bg-rose-950/15',
+  },
+  amber: {
+    rail: 'bg-amber-500',
+    thoughtChip: 'bg-amber-50 text-amber-900 ring-amber-200 dark:bg-amber-950/40 dark:text-amber-100 dark:ring-amber-800/50',
+    realityChip: 'bg-emerald-50 text-emerald-800 ring-emerald-200 dark:bg-emerald-950/35 dark:text-emerald-100 dark:ring-emerald-800/50',
+    surface: 'border-amber-200/80 bg-amber-50/40 dark:border-amber-800/40 dark:bg-amber-950/15',
+  },
+  blue: {
+    rail: 'bg-sky-500',
+    thoughtChip: 'bg-sky-50 text-sky-900 ring-sky-200 dark:bg-sky-950/40 dark:text-sky-100 dark:ring-sky-800/50',
+    realityChip: 'bg-emerald-50 text-emerald-800 ring-emerald-200 dark:bg-emerald-950/35 dark:text-emerald-100 dark:ring-emerald-800/50',
+    surface: 'border-sky-200/80 bg-sky-50/40 dark:border-sky-800/40 dark:bg-sky-950/15',
+  },
+  sky: {
+    rail: 'bg-sky-500',
+    thoughtChip: 'bg-sky-50 text-sky-900 ring-sky-200 dark:bg-sky-950/40 dark:text-sky-100 dark:ring-sky-800/50',
+    realityChip: 'bg-emerald-50 text-emerald-800 ring-emerald-200 dark:bg-emerald-950/35 dark:text-emerald-100 dark:ring-emerald-800/50',
+    surface: 'border-sky-200/80 bg-sky-50/40 dark:border-sky-800/40 dark:bg-sky-950/15',
+  },
+  violet: {
+    rail: 'bg-violet-500',
+    thoughtChip: 'bg-violet-50 text-violet-900 ring-violet-200 dark:bg-violet-950/40 dark:text-violet-100 dark:ring-violet-800/50',
+    realityChip: 'bg-emerald-50 text-emerald-800 ring-emerald-200 dark:bg-emerald-950/35 dark:text-emerald-100 dark:ring-emerald-800/50',
+    surface: 'border-violet-200/80 bg-violet-50/40 dark:border-violet-800/40 dark:bg-violet-950/15',
+  },
+};
+const defaultGuardrailLook = guardrailLooks.amber;
 
 const heroAccent = data.kit === 'marketer'
   ? 'from-fuchsia-400 via-amber-300 to-sky-400'
@@ -243,6 +286,7 @@ const renderInlineCode = (value = '') => value
 const getPromptLabel = (prompt: PromptExample) => isVi ? prompt.labelVi : prompt.labelEn;
 const getPromptWhen = (prompt: PromptExample) => isVi ? prompt.whenVi : prompt.whenEn;
 const getPromptExpected = (prompt: PromptExample) => isVi ? prompt.expectedVi : prompt.expectedEn;
+const getPromptCommand = (prompt: PromptExample) => (isVi ? prompt.commandVi : prompt.command);
 const getOutputPattern = () => (isVi ? output?.patternVi : output?.patternEn)?.trim() || '';
 const LONG_TOKEN_RE = /(?:\/ak:[a-z0-9-]+|\$ak:[a-z0-9-]+|--[a-z0-9][a-z0-9-]*)/g;
 const SHORT_FLAG_RE = /(^|[\s"'`])(-[a-z]{1,3})(?=[\s"'`|,)]|$)/g;
@@ -460,7 +504,7 @@ const composableCards = composableRaw
                 <p class="mt-2 text-sm font-semibold text-slate-950 dark:text-white">{isVi ? item.titleVi : item.titleEn}</p>
                 <p class="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-300">{isVi ? item.descVi : item.descEn}</p>
                 {item.exampleCommand && (
-                  <code class="mt-2 block whitespace-pre-wrap break-words rounded-lg bg-slate-100 px-3 py-2 font-mono text-[11px] leading-5 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-slate-200 dark:ring-white/10">{item.exampleCommand}</code>
+                  <code class="mt-2 block whitespace-pre-wrap break-words rounded-lg bg-slate-100 px-3 py-2 font-mono text-[11px] leading-5 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-slate-200 dark:ring-white/10" set:html={wrapCommandTokens(isVi ? (item.exampleCommandVi || item.exampleCommand) : item.exampleCommand)} />
                 )}
               </article>
             ))}
@@ -478,7 +522,7 @@ const composableCards = composableRaw
                 <p class="mt-2 text-sm font-semibold text-slate-950 dark:text-white">{isVi ? item.titleVi : item.titleEn}</p>
                 <p class="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-300">{isVi ? item.descVi : item.descEn}</p>
                 {item.exampleCommand && (
-                  <code class="mt-2 block whitespace-pre-wrap break-words rounded-lg bg-slate-100 px-3 py-2 font-mono text-[11px] leading-5 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-slate-200 dark:ring-white/10">{item.exampleCommand}</code>
+                  <code class="mt-2 block whitespace-pre-wrap break-words rounded-lg bg-slate-100 px-3 py-2 font-mono text-[11px] leading-5 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-slate-200 dark:ring-white/10" set:html={wrapCommandTokens(isVi ? (item.exampleCommandVi || item.exampleCommand) : item.exampleCommand)} />
                 )}
               </article>
             ))}
@@ -516,7 +560,7 @@ const composableCards = composableRaw
                 ) : null}
                 <p class="mt-2 text-xs leading-5 text-slate-600 dark:text-slate-300"><span class="font-semibold text-slate-900 dark:text-white">{text.outcome}: </span>{isVi ? sub.outcomeVi : sub.outcomeEn}</p>
                 {sub.exampleCommand && (
-                  <code class="mt-2 block whitespace-pre-wrap break-words rounded-lg bg-slate-100 px-3 py-2 font-mono text-[11px] leading-5 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-slate-200 dark:ring-white/10">{sub.exampleCommand}</code>
+                  <code class="mt-2 block whitespace-pre-wrap break-words rounded-lg bg-slate-100 px-3 py-2 font-mono text-[11px] leading-5 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-slate-200 dark:ring-white/10" set:html={wrapCommandTokens(isVi ? (sub.exampleCommandVi || sub.exampleCommand) : sub.exampleCommand)} />
                 )}
               </article>
             ))}
@@ -626,20 +670,41 @@ const composableCards = composableRaw
 
   {guardrails.length > 0 && (
     <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-slate-950/45">
-      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.guardrails}</h3>
-      <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {guardrails.map(g => (
-          <article class={`rounded-xl border p-4 ring-1 ring-slate-200/70 dark:ring-white/10 ${g.accent}`}>
-            <div class="flex items-start gap-2">
-              <span class="mt-0.5 text-base">💭</span>
-              <p class="text-sm font-medium italic text-slate-700 dark:text-slate-200">"{isVi ? g.thoughtVi : g.thoughtEn}"</p>
-            </div>
-            <div class="mt-3 flex items-start gap-2">
-              <span class="mt-0.5 text-base">⚡</span>
-              <p class="text-xs leading-5 text-slate-600 dark:text-slate-300">{isVi ? g.realityVi : g.realityEn}</p>
-            </div>
-          </article>
-        ))}
+      <div>
+        <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{text.guardrails}</h3>
+        <p class="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300">{text.guardrailsDesc}</p>
+      </div>
+      <div class="mt-4 space-y-3">
+        {guardrails.map((g) => {
+          const look = guardrailLooks[g.accent] || defaultGuardrailLook;
+          return (
+            <article class={`relative overflow-hidden rounded-xl border p-4 ${look.surface}`}>
+              <span class={`absolute inset-y-0 left-0 w-1 ${look.rail}`} aria-hidden="true"></span>
+              <div class="grid gap-3 pl-3 sm:grid-cols-[minmax(0,1fr)_2.5rem_minmax(0,1.15fr)] sm:items-stretch">
+                <div class="min-w-0">
+                  <p class={`inline-flex rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ring-1 ${look.thoughtChip}`}>
+                    {text.thought}
+                  </p>
+                  <p class="mt-2 text-sm font-medium leading-6 text-slate-800 dark:text-slate-100">
+                    {isVi ? g.thoughtVi : g.thoughtEn}
+                  </p>
+                </div>
+                <div class="flex items-center justify-center" aria-hidden="true">
+                  <span class="sm:hidden text-xs font-semibold text-slate-400">↓</span>
+                  <span class="hidden sm:inline text-sm font-semibold text-slate-400">→</span>
+                </div>
+                <div class="min-w-0">
+                  <p class={`inline-flex rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ring-1 ${look.realityChip}`}>
+                    {text.reality}
+                  </p>
+                  <p class="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-200">
+                    {isVi ? g.realityVi : g.realityEn}
+                  </p>
+                </div>
+              </div>
+            </article>
+          );
+        })}
       </div>
     </section>
   )}
@@ -684,7 +749,7 @@ const composableCards = composableRaw
               </div>
 
               <div class="min-w-0">
-                <pre class="block whitespace-pre-wrap break-words rounded-lg bg-slate-100 px-3 py-2 font-mono text-xs leading-5 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-slate-200 dark:ring-white/10" set:html={wrapCommandTokens(prompt.command)} />
+                <pre class="block whitespace-pre-wrap break-words rounded-lg bg-slate-100 px-3 py-2 font-mono text-xs leading-5 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-slate-200 dark:ring-white/10" set:html={wrapCommandTokens(getPromptCommand(prompt))} />
 
                 <dl class="mt-3 grid gap-3 text-xs leading-5 text-slate-650 dark:text-slate-300 sm:grid-cols-2">
                   <div class="min-w-0">

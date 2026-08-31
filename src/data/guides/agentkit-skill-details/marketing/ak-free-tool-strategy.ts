@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:free-tool-strategy',
   kit: 'marketer',
   header: {
-    titleEn: 'Free Tool Strategy',
-    titleVi: 'Chiến lược free tool',
+    titleEn: '/ak:free-tool-strategy — Free Tool Strategy',
+    titleVi: '/ak:free-tool-strategy — Chiến lược free tool',
     taglineEn: 'Plans and evaluates engineering-as-marketing tools that create lead generation, SEO value, brand awareness, or product education.',
     taglineVi: 'Lập kế hoạch và đánh giá free tool theo hướng engineering-as-marketing để tạo lead, SEO, nhận diện thương hiệu hoặc giáo dục sản phẩm.',
   },
@@ -36,9 +36,12 @@ const data: SkillInfographic = {
   expertiseAreasEn: ['Engineering as marketing', 'Tool ideation', 'SEO opportunity', 'Lead capture', 'MVP scoping', 'Promotion and ROI'],
   expertiseAreasVi: ['Engineering as marketing', 'Ý tưởng free tool', 'Cơ hội SEO', 'Thu lead', 'Khoanh MVP', 'Quảng bá và ROI'],
   promptExamples: [
-    { labelEn: 'Calculator strategy', labelVi: 'Chiến lược calculator', command: '/ak:free-tool-strategy ROI calculator for HR software', whenEn: 'A numeric decision can become a lead-generating calculator.', whenVi: 'Một quyết định có số liệu có thể trở thành calculator lấy lead.', expectedEn: 'Scores the concept, defines SEO angle, lead capture, MVP, and ROI projection.', expectedVi: 'Chấm điểm ý tưởng, xác định góc SEO, cách thu lead, MVP và dự phóng ROI.', recommended: true },
-    { labelEn: 'Generator idea', labelVi: 'Ý tưởng generator', command: '/ak:free-tool-strategy policy generator for small businesses', whenEn: 'The audience repeatedly creates the same asset manually.', whenVi: 'Audience thường xuyên tạo thủ công cùng một loại tài sản.', expectedEn: 'Evaluates usefulness, buyer adjacency, build path, and follow-up sequence.', expectedVi: 'Đánh giá giá trị sử dụng, độ gần với buyer, cách xây và chuỗi follow-up.' },
-    { labelEn: 'Interactive resource', labelVi: 'Tài nguyên tương tác', command: '/ak:free-tool-strategy interactive tutorial for developer onboarding', whenEn: 'Product education and authority are stronger goals than direct lead capture.', whenVi: 'Giáo dục sản phẩm và xây dựng uy tín quan trọng hơn lấy lead trực tiếp.', expectedEn: 'Plans an educational tool with SEO, sharing, and product integration.', expectedVi: 'Lập kế hoạch tool giáo dục với SEO, chia sẻ và tích hợp vào sản phẩm.' },
+    { labelEn: 'Calculator strategy', labelVi: 'Chiến lược calculator', command: '/ak:free-tool-strategy ROI calculator for HR software',
+      commandVi: '/ak:free-tool-strategy máy tính ROI cho phần mềm HR', whenEn: 'A numeric decision can become a lead-generating calculator.', whenVi: 'Một quyết định có số liệu có thể trở thành calculator lấy lead.', expectedEn: 'Scores the concept, defines SEO angle, lead capture, MVP, and ROI projection.', expectedVi: 'Chấm điểm ý tưởng, xác định góc SEO, cách thu lead, MVP và dự phóng ROI.', recommended: true },
+    { labelEn: 'Generator idea', labelVi: 'Ý tưởng generator', command: '/ak:free-tool-strategy policy generator for small businesses',
+      commandVi: '/ak:free-tool-strategy trình tạo chính sách cho doanh nghiệp nhỏ', whenEn: 'The audience repeatedly creates the same asset manually.', whenVi: 'Audience thường xuyên tạo thủ công cùng một loại tài sản.', expectedEn: 'Evaluates usefulness, buyer adjacency, build path, and follow-up sequence.', expectedVi: 'Đánh giá giá trị sử dụng, độ gần với buyer, cách xây và chuỗi follow-up.' },
+    { labelEn: 'Interactive resource', labelVi: 'Tài nguyên tương tác', command: '/ak:free-tool-strategy interactive tutorial for developer onboarding',
+      commandVi: '/ak:free-tool-strategy hướng dẫn tương tác cho onboarding nhà phát triển', whenEn: 'Product education and authority are stronger goals than direct lead capture.', whenVi: 'Giáo dục sản phẩm và xây dựng uy tín quan trọng hơn lấy lead trực tiếp.', expectedEn: 'Plans an educational tool with SEO, sharing, and product integration.', expectedVi: 'Lập kế hoạch tool giáo dục với SEO, chia sẻ và tích hợp vào sản phẩm.' },
   ],
   specialOperations: [
     { id: 'scorecard', titleEn: 'Idea scorecard', titleVi: 'Bảng điểm ý tưởng', descEn: 'Rates search demand, buyer fit, uniqueness, product path, feasibility, maintenance, link potential, and share-worthiness.', descVi: 'Chấm nhu cầu tìm kiếm, độ khớp buyer, khác biệt, đường tới sản phẩm, khả năng xây, bảo trì, backlink và khả năng chia sẻ.', color: 'amber' },

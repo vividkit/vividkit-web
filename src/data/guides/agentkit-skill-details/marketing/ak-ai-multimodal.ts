@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:ai-multimodal",
   kit: 'marketer',
   header: {
-    titleEn: "AI Multimodal",
-    titleVi: "AI đa phương thức",
+    titleEn: '/ak:ai-multimodal — Multix media analysis and generation',
+    titleVi: '/ak:ai-multimodal — Phân tích và tạo media bằng Multix',
     taglineEn: "Analyze, transcribe, OCR, extract, convert, and generate images, audio, video, and documents through the npm-latest Multix CLI with live provider catalogs.",
     taglineVi: "Phân tích, chép lời, OCR, trích xuất, chuyển đổi và tạo ảnh, audio, video, tài liệu qua Multix CLI bản npm-latest cùng catalog provider đang live.",
   },
@@ -42,8 +42,12 @@ const data: SkillInfographic = {
   expertiseAreasEn: ["Vision analysis", "OCR and extraction", "Transcription", "Document conversion", "Image generation", "Video generation", "Audio and music generation"],
   expertiseAreasVi: ["Phân tích hình ảnh", "OCR và trích xuất", "Chép lời", "Chuyển tài liệu", "Tạo ảnh", "Tạo video", "Tạo audio và nhạc"],
   promptExamples: [
-    { labelEn: "Analyze an image", labelVi: "Phân tích ảnh", command: "/ak:ai-multimodal input.png Analyze this content", whenEn: "You need vision analysis, OCR, or design extraction from an image.", whenVi: "Khi cần phân tích hình ảnh, OCR hoặc trích xuất thiết kế từ ảnh.", expectedEn: "A Multix-based analysis path with setup checks, limits, and an explicit output format.", expectedVi: "Một hướng phân tích bằng Multix có kiểm tra setup, giới hạn và định dạng output rõ ràng.", recommended: true },
-    { labelEn: "Transcribe media", labelVi: "Chép lời media", command: "/ak:ai-multimodal interview.mp4 Generate a transcript with timestamps", whenEn: "A video or audio file needs timestamped transcript output.", whenVi: "Khi file video hoặc audio cần transcript có timestamp.", expectedEn: "A transcription workflow that resolves provider limits and produces a timestamped markdown transcript structure for review.", expectedVi: "Workflow transcription xác minh giới hạn và tạo cấu trúc transcript markdown." },
+    { labelEn: "Analyze an image", labelVi: "Phân tích ảnh", command: "/ak:ai-multimodal input.png Analyze this content",
+      commandVi: '/ak:ai-multimodal input.png Analyze nội dung này', whenEn: "You need vision analysis, OCR, or design extraction from an image.", whenVi: "Khi cần phân tích hình ảnh, OCR hoặc trích xuất thiết kế từ ảnh.", expectedEn: "A Multix-based analysis path with setup checks, limits, and an explicit output format.", expectedVi: "Một hướng phân tích bằng Multix có kiểm tra setup, giới hạn và định dạng output rõ ràng.", recommended: true },
+    { labelEn: "Transcribe media", labelVi: "Chép lời media", command: "/ak:ai-multimodal interview.mp4 Generate a transcript with timestamps",
+      commandVi: '/ak:ai-multimodal interview.mp4 Tạo bản chép lời có dấu thời gian', whenEn: "A video or audio file needs timestamped transcript output.", whenVi: "Khi file video hoặc audio cần transcript có timestamp.", expectedEn: "A transcription workflow that resolves provider limits and produces a timestamped markdown transcript structure for review.", expectedVi: "Workflow transcription xác minh giới hạn và tạo cấu trúc transcript markdown." },
+    { labelEn: 'Generate from image', labelVi: 'Tạo nội dung từ ảnh', command: '/ak:ai-multimodal hero.png Write a LinkedIn caption from this screenshot',
+      commandVi: '/ak:ai-multimodal hero.png Viết chú thích LinkedIn từ ảnh chụp màn hình này', whenEn: 'An existing image should become copy or another media artifact via Multix.', whenVi: 'Khi một ảnh có sẵn cần biến thành copy hoặc artifact media khác qua Multix.', expectedEn: 'A generation path with provider/setup checks and an explicit caption or media output.', expectedVi: 'Đường sinh nội dung có kiểm setup/provider và output caption hoặc media rõ ràng.' }
   ],
   skillStack: [
     { name: "Multix CLI", type: 'tool' },

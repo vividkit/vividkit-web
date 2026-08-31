@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:analyze",
   kit: 'marketer',
   header: {
-    titleEn: "Analyze Reports",
-    titleVi: "Tạo báo cáo phân tích",
+    titleEn: '/ak:analyze — Analyze Reports',
+    titleVi: '/ak:analyze — Tạo báo cáo phân tích',
     taglineEn: "Generate focused analytics and performance reports for traffic, campaigns, conversions, funnels, content, and engagement using real data where available.",
     taglineVi: "Tạo báo cáo analytics và hiệu suất tập trung cho traffic, campaign, conversion, funnel, content và engagement, ưu tiên dữ liệu thật khi có.",
   },
@@ -35,9 +35,12 @@ const data: SkillInfographic = {
   expertiseAreasEn: ["Traffic analysis", "Campaign performance", "Conversion funnels", "Content performance", "Engagement metrics", "Periodic reports"],
   expertiseAreasVi: ["Phân tích traffic", "Hiệu suất campaign", "Funnel conversion", "Hiệu suất content", "Metric engagement", "Báo cáo định kỳ"],
   promptExamples: [
-    { labelEn: "Traffic report", labelVi: "Báo cáo traffic", command: "/ak:analyze traffic", whenEn: "You need sources, pages, and trend analysis.", whenVi: "Khi cần phân tích nguồn traffic, trang và xu hướng.", expectedEn: "A traffic report grounded in available metrics with trends and recommendations.", expectedVi: "Báo cáo traffic dựa trên metric sẵn có, có trend và khuyến nghị.", recommended: true },
-    { labelEn: "Campaign overview", labelVi: "Tổng quan campaign", command: "/ak:analyze campaigns", whenEn: "Campaign ROI, conversions, and costs need review.", whenVi: "Khi cần review ROI, conversion và chi phí campaign.", expectedEn: "A campaign-performance overview with benchmarks, anomalies, and next actions.", expectedVi: "Tổng quan hiệu suất campaign với benchmark, anomaly và hành động tiếp theo." },
-    { labelEn: "Periodic report", labelVi: "Báo cáo định kỳ", command: "/ak:analyze report weekly", whenEn: "You need a documented daily, weekly, monthly, or quarterly report route.", whenVi: "Khi cần route báo cáo daily, weekly, monthly hoặc quarterly đã được ghi trong skill.", expectedEn: "The report reference writes reports/periodic/{date}-{period}.md with available metrics, gaps, and recommendations.", expectedVi: "Reference report ghi reports/periodic/{date}-{period}.md với metric sẵn có, khoảng trống và khuyến nghị." },
+    { labelEn: "Traffic report", labelVi: "Báo cáo traffic", command: "/ak:analyze traffic",
+      commandVi: '/ak:analyze traffic', whenEn: "You need sources, pages, and trend analysis.", whenVi: "Khi cần phân tích nguồn traffic, trang và xu hướng.", expectedEn: "A traffic report grounded in available metrics with trends and recommendations.", expectedVi: "Báo cáo traffic dựa trên metric sẵn có, có trend và khuyến nghị.", recommended: true },
+    { labelEn: "Campaign overview", labelVi: "Tổng quan campaign", command: "/ak:analyze campaigns",
+      commandVi: '/ak:analyze campaigns', whenEn: "Campaign ROI, conversions, and costs need review.", whenVi: "Khi cần review ROI, conversion và chi phí campaign.", expectedEn: "A campaign-performance overview with benchmarks, anomalies, and next actions.", expectedVi: "Tổng quan hiệu suất campaign với benchmark, anomaly và hành động tiếp theo." },
+    { labelEn: "Periodic report", labelVi: "Báo cáo định kỳ", command: "/ak:analyze report weekly",
+      commandVi: '/ak:analyze báo cáo hàng tuần', whenEn: "You need a documented daily, weekly, monthly, or quarterly report route.", whenVi: "Khi cần route báo cáo daily, weekly, monthly hoặc quarterly đã được ghi trong skill.", expectedEn: "The report reference writes reports/periodic/{date}-{period}.md with available metrics, gaps, and recommendations.", expectedVi: "Reference report ghi reports/periodic/{date}-{period}.md với metric sẵn có, khoảng trống và khuyến nghị." },
   ],
   skillStack: [
     { name: "analytics", type: 'skill' },

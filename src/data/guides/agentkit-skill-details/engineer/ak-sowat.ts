@@ -14,6 +14,7 @@ const invocation: SkillInvocation = {
       required: true,
       exampleCommand:
         '/ak:sowat "Review the completed onboarding changes and related open issues. Tell me what matters now, correct my priority if needed, and give at most three next steps with success signals."',
+          exampleCommandVi: '/ak:sowat "Xem xét các thay đổi onboarding đã hoàn thành và các open issues liên quan. Cho tôi biết điều gì quan trọng lúc này, chỉnh lại độ ưu tiên của tôi nếu cần, và đưa ra tối đa ba next steps kèm success signals."',
     },
   ],
 };

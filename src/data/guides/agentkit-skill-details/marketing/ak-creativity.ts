@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:creativity",
   kit: 'marketer',
   header: {
-    titleEn: "Creative direction intelligence",
-    titleVi: "Trí tuệ định hướng creative",
+    titleEn: '/ak:creativity — Creative direction intelligence',
+    titleVi: '/ak:creativity — Trí tuệ định hướng creative',
     taglineEn: "Guides campaign creative across 55 styles, 18 platforms, voiceover, music, color, effects, audience fit, and anti-patterns.",
     taglineVi: "Định hướng creative cho campaign qua 55 phong cách, 18 nền tảng, voiceover, âm nhạc, màu sắc, hiệu ứng, độ hợp audience và anti-pattern.",
   },
@@ -40,9 +40,12 @@ const data: SkillInfographic = {
   expertiseAreasEn: ["Creative briefs", "Visual styles", "Platform specs", "Voiceover", "Music direction", "Color psychology", "Campaign reasoning", "Pre-production checks"],
   expertiseAreasVi: ["Creative brief", "Phong cách hình ảnh", "Spec nền tảng", "Voiceover", "Định hướng âm nhạc", "Tâm lý màu sắc", "Reasoning campaign", "Checklist tiền kỳ"],
   promptExamples: [
-    { labelEn: "Campaign direction", labelVi: "Định hướng campaign", command: "/ak:creativity TikTok campaign for Gen Z SaaS product launch", whenEn: "Use when a campaign needs style, platform, voice, audio, and effects direction.", whenVi: "Dùng khi campaign cần định hướng style, nền tảng, giọng, âm thanh và hiệu ứng.", expectedEn: "A creative brief with recommendations and anti-patterns.", expectedVi: "Creative brief có khuyến nghị và anti-pattern.", recommended: true },
-    { labelEn: "Luxury style", labelVi: "Phong cách luxury", command: "/ak:creativity luxury premium hotel video", whenEn: "Use when the brand goal is premium perception.", whenVi: "Dùng khi mục tiêu brand là tạo cảm nhận cao cấp.", expectedEn: "Style, color, music, and platform guidance suitable for premium audiences.", expectedVi: "Hướng dẫn style, màu sắc, âm nhạc và nền tảng phù hợp audience cao cấp." },
-    { labelEn: "UGC direction", labelVi: "Định hướng UGC", command: "/ak:creativity authentic UGC community campaign", whenEn: "Use when relatability and community trust matter more than polish.", whenVi: "Dùng khi sự gần gũi và niềm tin cộng đồng quan trọng hơn độ bóng bẩy.", expectedEn: "Raw, relatable creative direction with production checks.", expectedVi: "Định hướng creative thô mộc, dễ đồng cảm kèm checklist sản xuất." },
+    { labelEn: "Campaign direction", labelVi: "Định hướng campaign", command: "/ak:creativity TikTok campaign for Gen Z SaaS product launch",
+      commandVi: '/ak:creativity chiến dịch TikTok cho ra mắt sản phẩm SaaS Gen Z', whenEn: "Use when a campaign needs style, platform, voice, audio, and effects direction.", whenVi: "Dùng khi campaign cần định hướng style, nền tảng, giọng, âm thanh và hiệu ứng.", expectedEn: "A creative brief with recommendations and anti-patterns.", expectedVi: "Creative brief có khuyến nghị và anti-pattern.", recommended: true },
+    { labelEn: "Luxury style", labelVi: "Phong cách luxury", command: "/ak:creativity luxury premium hotel video",
+      commandVi: '/ak:creativity video khách sạn sang trọng cao cấp', whenEn: "Use when the brand goal is premium perception.", whenVi: "Dùng khi mục tiêu brand là tạo cảm nhận cao cấp.", expectedEn: "Style, color, music, and platform guidance suitable for premium audiences.", expectedVi: "Hướng dẫn style, màu sắc, âm nhạc và nền tảng phù hợp audience cao cấp." },
+    { labelEn: "UGC direction", labelVi: "Định hướng UGC", command: "/ak:creativity authentic UGC community campaign",
+      commandVi: '/ak:creativity chiến dịch cộng đồng UGC chân thực', whenEn: "Use when relatability and community trust matter more than polish.", whenVi: "Dùng khi sự gần gũi và niềm tin cộng đồng quan trọng hơn độ bóng bẩy.", expectedEn: "Raw, relatable creative direction with production checks.", expectedVi: "Định hướng creative thô mộc, dễ đồng cảm kèm checklist sản xuất." },
   ],
 };
 

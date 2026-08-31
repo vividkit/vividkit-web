@@ -140,6 +140,8 @@ export interface PromptExample {
   labelEn: string;
   labelVi: string;
   command: string;
+  /** Vietnamese sample invocation; keep /ak flags/paths in English. */
+  commandVi: string;
   whenEn: string;
   whenVi: string;
   expectedEn: string;
@@ -195,9 +197,9 @@ export interface InvocationParam {
   descVi: string;
   required?: boolean;
   exampleCommand?: string;
+  exampleCommandVi?: string;
 }
 
-/** One skill branch with its own syntax, arguments, options, and outcome */
 export interface SkillSubcommand {
   name: string;
   syntax: string;
@@ -210,6 +212,7 @@ export interface SkillSubcommand {
   outcomeEn: string;
   outcomeVi: string;
   exampleCommand?: string;
+  exampleCommandVi?: string;
 }
 
 /** Reader-facing invocation reference: syntax, arguments, options, subcommands */

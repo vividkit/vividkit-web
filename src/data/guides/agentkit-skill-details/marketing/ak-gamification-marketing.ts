@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:gamification-marketing',
   kit: 'marketer',
   header: {
-    titleEn: 'Gamification Marketing',
-    titleVi: 'Gamification cho marketing',
+    titleEn: '/ak:gamification-marketing — Gamification Marketing',
+    titleVi: '/ak:gamification-marketing — Gamification cho marketing',
     taglineEn: 'Designs gamified campaigns with points, badges, leaderboards, streaks, challenges, rewards, psychology alignment, templates, and KPIs.',
     taglineVi: 'Thiết kế chiến dịch gamification bằng điểm, badge, leaderboard, streak, challenge, reward, căn chỉnh tâm lý, template và KPI.',
   },
@@ -35,9 +35,12 @@ const data: SkillInfographic = {
   expertiseAreasEn: ['Loyalty programs', 'Referral campaigns', 'Onboarding gamification', 'Engagement boosts', 'Email gamification', 'KPI tracking'],
   expertiseAreasVi: ['Chương trình loyalty', 'Chiến dịch referral', 'Gamification onboarding', 'Tăng tương tác', 'Gamification trong email', 'Theo dõi KPI'],
   promptExamples: [
-    { labelEn: 'Retention streaks', labelVi: 'Streak giữ chân', command: '/ak:gamification-marketing streaks for retention campaign', whenEn: 'The goal is habit formation or repeat usage.', whenVi: 'Mục tiêu là tạo thói quen hoặc tăng sử dụng lặp lại.', expectedEn: 'Maps retention to streaks, tiers, loyalty points, and loss-aversion safeguards.', expectedVi: 'Ghép retention với streak, tier, điểm loyalty và hàng rào tránh lạm dụng loss aversion.', recommended: true },
-    { labelEn: 'Referral leaderboard', labelVi: 'Leaderboard referral', command: '/ak:gamification-marketing referral leaderboard for acquisition', whenEn: 'Acquisition should use referrals, dual rewards, and social proof.', whenVi: 'Acquisition cần dùng referral, thưởng hai phía và social proof.', expectedEn: 'Designs mechanics, psychology, reward rules, and toxicity safeguards.', expectedVi: 'Thiết kế cơ chế, tâm lý, luật thưởng và cách tránh cạnh tranh độc hại.' },
-    { labelEn: 'Onboarding progress', labelVi: 'Tiến độ onboarding', command: '/ak:gamification-marketing onboarding progress bars and micro-badges', whenEn: 'New users need momentum through setup or activation.', whenVi: 'Người dùng mới cần cảm giác tiến triển qua bước setup hoặc activation.', expectedEn: 'Uses progress bars, micro-badges, unlockables, templates, and activation KPIs.', expectedVi: 'Dùng progress bar, micro-badge, unlockable, template và KPI activation.' },
+    { labelEn: 'Retention streaks', labelVi: 'Streak giữ chân', command: '/ak:gamification-marketing streaks for retention campaign',
+      commandVi: '/ak:gamification-marketing streaks cho chiến dịch giữ chân', whenEn: 'The goal is habit formation or repeat usage.', whenVi: 'Mục tiêu là tạo thói quen hoặc tăng sử dụng lặp lại.', expectedEn: 'Maps retention to streaks, tiers, loyalty points, and loss-aversion safeguards.', expectedVi: 'Ghép retention với streak, tier, điểm loyalty và hàng rào tránh lạm dụng loss aversion.', recommended: true },
+    { labelEn: 'Referral leaderboard', labelVi: 'Leaderboard referral', command: '/ak:gamification-marketing referral leaderboard for acquisition',
+      commandVi: '/ak:gamification-marketing bảng xếp hạng referral cho acquisition', whenEn: 'Acquisition should use referrals, dual rewards, and social proof.', whenVi: 'Acquisition cần dùng referral, thưởng hai phía và social proof.', expectedEn: 'Designs mechanics, psychology, reward rules, and toxicity safeguards.', expectedVi: 'Thiết kế cơ chế, tâm lý, luật thưởng và cách tránh cạnh tranh độc hại.' },
+    { labelEn: 'Onboarding progress', labelVi: 'Tiến độ onboarding', command: '/ak:gamification-marketing onboarding progress bars and micro-badges',
+      commandVi: '/ak:gamification-marketing thanh tiến trình onboarding và micro-badges', whenEn: 'New users need momentum through setup or activation.', whenVi: 'Người dùng mới cần cảm giác tiến triển qua bước setup hoặc activation.', expectedEn: 'Uses progress bars, micro-badges, unlockables, templates, and activation KPIs.', expectedVi: 'Dùng progress bar, micro-badge, unlockable, template và KPI activation.' },
   ],
   specialOperations: [
     { id: 'goal-map', titleEn: 'Goal to mechanic map', titleVi: 'Ghép mục tiêu với cơ chế', descEn: 'Acquisition, retention, engagement, conversion, and onboarding each get different mechanics.', descVi: 'Acquisition, retention, engagement, conversion và onboarding dùng các cơ chế khác nhau.', color: 'blue' },

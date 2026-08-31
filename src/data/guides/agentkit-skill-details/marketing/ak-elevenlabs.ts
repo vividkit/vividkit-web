@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:elevenlabs',
   kit: 'marketer',
   header: {
-    titleEn: 'ElevenLabs Audio Generation',
-    titleVi: 'Tạo âm thanh bằng ElevenLabs',
+    titleEn: '/ak:elevenlabs — ElevenLabs audio generation',
+    titleVi: '/ak:elevenlabs — Tạo âm thanh bằng ElevenLabs',
     taglineEn: 'Guides speech generation, authorized instant voice cloning, and sound-effect creation with ElevenLabs models and scripts; music and voice-agent topics are reference-only.',
     taglineVi: 'Hướng dẫn tạo giọng nói, clone giọng tức thời có uỷ quyền và hiệu ứng âm thanh bằng model/script ElevenLabs; nhạc và voice agent chỉ là tham chiếu.',
   },
@@ -34,9 +34,12 @@ const data: SkillInfographic = {
   expertiseAreasEn: ['Text-to-speech', 'Authorized instant voice cloning', 'Sound effects', 'Consent and rights review', 'Provider cost boundaries'],
   expertiseAreasVi: ['Chuyển văn bản thành giọng nói', 'Clone giọng tức thời có uỷ quyền', 'Hiệu ứng âm thanh', 'Rà soát đồng ý và quyền sử dụng', 'Ranh giới chi phí provider'],
   promptExamples: [
-    { labelEn: 'Generate speech', labelVi: 'Tạo giọng đọc', command: '/ak:elevenlabs speak "Welcome to the product tour"', whenEn: 'You need lifelike spoken audio from text.', whenVi: 'Cần biến văn bản thành giọng đọc tự nhiên.', expectedEn: 'Chooses a TTS model, voice settings, and generation path.', expectedVi: 'Chọn model TTS, thiết lập voice và cách tạo âm thanh.', recommended: true },
-    { labelEn: 'Clone voice', labelVi: 'Nhân bản giọng', command: '/ak:elevenlabs clone voice-sample.wav', whenEn: 'Authorized recordings should become an instant clone in the provider account.', whenVi: 'Bản ghi đã được uỷ quyền cần tạo clone tức thời trong tài khoản provider.', expectedEn: 'Applies instant voice-cloning requirements, consent checks, and recording best practices.', expectedVi: 'Áp dụng yêu cầu clone giọng tức thời, kiểm tra đồng ý và cách chuẩn bị bản ghi.' },
-    { labelEn: 'Sound effect', labelVi: 'Hiệu ứng âm thanh', command: '/ak:elevenlabs sfx "short success chime for checkout"', whenEn: 'A short generated sound effect is needed.', whenVi: 'Cần hiệu ứng âm thanh ngắn được tạo bằng mô tả.', expectedEn: 'Uses the sound-effects guidance, duration limits, and prompt structure.', expectedVi: 'Dùng hướng dẫn hiệu ứng âm thanh, giới hạn thời lượng và cấu trúc prompt.' },
+    { labelEn: 'Generate speech', labelVi: 'Tạo giọng đọc', command: '/ak:elevenlabs speak "Welcome to the product tour"',
+      commandVi: '/ak:elevenlabs speak "Chào mừng đến với tour sản phẩm"', whenEn: 'You need lifelike spoken audio from text.', whenVi: 'Cần biến văn bản thành giọng đọc tự nhiên.', expectedEn: 'Chooses a TTS model, voice settings, and generation path.', expectedVi: 'Chọn model TTS, thiết lập voice và cách tạo âm thanh.', recommended: true },
+    { labelEn: 'Clone voice', labelVi: 'Nhân bản giọng', command: '/ak:elevenlabs clone voice-sample.wav',
+      commandVi: '/ak:elevenlabs clone voice-sample.wav', whenEn: 'Authorized recordings should become an instant clone in the provider account.', whenVi: 'Bản ghi đã được uỷ quyền cần tạo clone tức thời trong tài khoản provider.', expectedEn: 'Applies instant voice-cloning requirements, consent checks, and recording best practices.', expectedVi: 'Áp dụng yêu cầu clone giọng tức thời, kiểm tra đồng ý và cách chuẩn bị bản ghi.' },
+    { labelEn: 'Sound effect', labelVi: 'Hiệu ứng âm thanh', command: '/ak:elevenlabs sfx "short success chime for checkout"',
+      commandVi: '/ak:elevenlabs sfx "tiếng chuông thành công ngắn cho checkout"', whenEn: 'A short generated sound effect is needed.', whenVi: 'Cần hiệu ứng âm thanh ngắn được tạo bằng mô tả.', expectedEn: 'Uses the sound-effects guidance, duration limits, and prompt structure.', expectedVi: 'Dùng hướng dẫn hiệu ứng âm thanh, giới hạn thời lượng và cấu trúc prompt.' },
   ],
   skillStack: [
     { name: 'elevenlabs-text-to-speech-generator.py', type: 'tool' },

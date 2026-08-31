@@ -1,192 +1,196 @@
 import type { SkillInfographic } from '@/data/guides/how-ck-works';
 
 const data: SkillInfographic = {
-  "id": "ak-worktree",
-  "command": "/ak:worktree",
-  "kit": "marketer",
-  "header": {
-    "titleEn": "/ak:worktree",
-    "titleVi": "/ak:worktree",
-    "taglineEn": "Create, inspect, configure, and clean isolated git worktrees for feature isolation, stale cleanup, health audits, monorepos, and submodules.",
-    "taglineVi": "Tạo, kiểm tra, cấu hình và dọn git worktree cô lập cho feature isolation, stale cleanup, health audit, monorepo và submodule."
+  id: "ak-worktree",
+  command: "/ak:worktree",
+  kit: 'marketer',
+  header: {
+    titleEn: '/ak:worktree — Isolated Git worktrees',
+    titleVi: '/ak:worktree — Git worktree tách biệt',
+    taglineEn: "Create, inspect, configure, and clean isolated git worktrees for feature isolation, stale cleanup, health audits, monorepos, and submodules.",
+    taglineVi: "Tạo, kiểm tra, cấu hình và dọn git worktree cô lập cho feature isolation, stale cleanup, health audit, monorepo và submodule."
   },
-  "hardGate": {
-    "type": "warning",
-    "titleEn": "Respect branch and root safety",
-    "titleVi": "Tôn trọng an toàn branch và root",
-    "contentEn": "Use --no-prefix for exact pre-formed branch names; project-scope worktree.root must be relative, because committed absolute paths from untrusted clones are skipped with a warning.",
-    "contentVi": "Dùng --no-prefix cho branch name đã định dạng sẵn cần giữ nguyên; worktree.root cấp project phải là đường dẫn tương đối vì absolute path trong repo lạ sẽ bị bỏ qua kèm cảnh báo."
+  hardGate: {
+    type: "warning",
+    titleEn: "Respect branch and root safety",
+    titleVi: "Tôn trọng an toàn branch và root",
+    contentEn: "Use --no-prefix for exact pre-formed branch names; project-scope worktree.root must be relative, because committed absolute paths from untrusted clones are skipped with a warning.",
+    contentVi: "Dùng --no-prefix cho branch name đã định dạng sẵn cần giữ nguyên; worktree.root cấp project phải là đường dẫn tương đối vì absolute path trong repo lạ sẽ bị bỏ qua kèm cảnh báo."
   },
-  "processFlow": [
+  processFlow: [
     {
-      "number": 1,
-      "titleEn": "Inspect repo",
-      "titleVi": "Kiểm repo",
-      "descEn": "Run the info command and parse repoType, baseBranch, projects, worktreeRoot, dirtyState, and warnings.",
-      "descVi": "Chạy lệnh info và đọc repoType, baseBranch, projects, worktreeRoot, dirtyState và warnings."
+      number: 1,
+      titleEn: "Inspect repo",
+      titleVi: "Kiểm repo",
+      descEn: "Run the info command and parse repoType, baseBranch, projects, worktreeRoot, dirtyState, and warnings.",
+      descVi: "Chạy lệnh info và đọc repoType, baseBranch, projects, worktreeRoot, dirtyState và warnings."
     },
     {
-      "number": 2,
-      "titleEn": "Detect naming",
-      "titleVi": "Nhận diện tên",
-      "descEn": "If the request provides an exact branch with uppercase, tracker key, slashes, or says exact name, preserve it with no prefix.",
-      "descVi": "Nếu yêu cầu đưa branch chính xác có chữ hoa, mã ticket, dấu slash hoặc nói dùng đúng tên, giữ nguyên bằng no prefix."
+      number: 2,
+      titleEn: "Detect naming",
+      titleVi: "Nhận diện tên",
+      descEn: "If the request provides an exact branch with uppercase, tracker key, slashes, or says exact name, preserve it with no prefix.",
+      descVi: "Nếu yêu cầu đưa branch chính xác có chữ hoa, mã ticket, dấu slash hoặc nói dùng đúng tên, giữ nguyên bằng no prefix."
     },
     {
-      "number": 3,
-      "titleEn": "Prefix and slug",
-      "titleVi": "Prefix và slug",
-      "descEn": "Otherwise infer feat/fix/refactor/docs/test/chore/perf from the description and convert the feature to a max-50-character kebab slug.",
-      "descVi": "Ngược lại suy ra feat/fix/refactor/docs/test/chore/perf từ mô tả và đổi feature thành slug kebab tối đa 50 ký tự."
+      number: 3,
+      titleEn: "Prefix and slug",
+      titleVi: "Prefix và slug",
+      descEn: "Otherwise infer feat/fix/refactor/docs/test/chore/perf from the description and convert the feature to a max-50-character kebab slug.",
+      descVi: "Ngược lại suy ra feat/fix/refactor/docs/test/chore/perf từ mô tả và đổi feature thành slug kebab tối đa 50 ký tự."
     },
     {
-      "number": 4,
-      "titleEn": "Resolve project",
-      "titleVi": "Chọn project",
-      "descEn": "For monorepos without a specified project, ask the user to choose from detected projects.",
-      "descVi": "Với monorepo chưa chỉ rõ project, hỏi người dùng chọn trong danh sách project đã phát hiện."
+      number: 4,
+      titleEn: "Resolve project",
+      titleVi: "Chọn project",
+      descEn: "For monorepos without a specified project, ask the user to choose from detected projects.",
+      descVi: "Với monorepo chưa chỉ rõ project, hỏi người dùng chọn trong danh sách project đã phát hiện."
     },
     {
-      "number": 5,
-      "titleEn": "Create",
-      "titleVi": "Tạo worktree",
-      "descEn": "Run the create command in standalone or monorepo form, using base, submodule, worktree-root, json, dry-run, or no-prefix options only when needed.",
-      "descVi": "Chạy lệnh create dạng standalone hoặc monorepo, chỉ dùng tùy chọn base, submodule, worktree-root, json, dry-run hoặc no-prefix khi cần."
+      number: 5,
+      titleEn: "Create",
+      titleVi: "Tạo worktree",
+      descEn: "Run the create command in standalone or monorepo form, using base, submodule, worktree-root, json, dry-run, or no-prefix options only when needed.",
+      descVi: "Chạy lệnh create dạng standalone hoặc monorepo, chỉ dùng tùy chọn base, submodule, worktree-root, json, dry-run hoặc no-prefix khi cần."
     },
     {
-      "number": 6,
-      "titleEn": "Bootstrap deps",
-      "titleVi": "Cài dependency",
-      "descEn": "Install dependencies based on lockfiles and language manifests in the new worktree.",
-      "descVi": "Cài dependency theo lockfile và manifest ngôn ngữ trong worktree mới."
+      number: 6,
+      titleEn: "Bootstrap deps",
+      titleVi: "Cài dependency",
+      descEn: "Install dependencies based on lockfiles and language manifests in the new worktree.",
+      descVi: "Cài dependency theo lockfile và manifest ngôn ngữ trong worktree mới."
     },
     {
-      "number": 7,
-      "titleEn": "Audit/clean",
-      "titleVi": "Audit/dọn dẹp",
-      "descEn": "Use list, status, prune, or remove for health checks and stale cleanup; start prune with dry-run when auditing metadata.",
-      "descVi": "Dùng list, status, prune hoặc remove để health check và dọn stale; bắt đầu prune bằng dry-run khi audit metadata."
+      number: 7,
+      titleEn: "Audit/clean",
+      titleVi: "Audit/dọn dẹp",
+      descEn: "Use list, status, prune, or remove for health checks and stale cleanup; start prune with dry-run when auditing metadata.",
+      descVi: "Dùng list, status, prune hoặc remove để health check và dọn stale; bắt đầu prune bằng dry-run khi audit metadata."
     },
     {
-      "number": 8,
-      "titleEn": "Report",
-      "titleVi": "Báo cáo",
-      "descEn": "Return created path, branch/base info, dependency action, warnings, and any health or cleanup results.",
-      "descVi": "Trả path đã tạo, thông tin branch/base, thao tác dependency, warning và kết quả health/cleanup nếu có."
+      number: 8,
+      titleEn: "Report",
+      titleVi: "Báo cáo",
+      descEn: "Return created path, branch/base info, dependency action, warnings, and any health or cleanup results.",
+      descVi: "Trả path đã tạo, thông tin branch/base, thao tác dependency, warning và kết quả health/cleanup nếu có."
     }
   ],
-  "corePrinciplesEn": [
+  corePrinciplesEn: [
     "Info first: repo type, base branch, projects, and root source drive the create command.",
     "Preserve exact branch names when the user provides one; otherwise infer a boring prefix and short slug.",
     "Dry-run stale cleanup before pruning metadata.",
     "Host-native worktree systems are separate from ak:worktree's own root preference."
   ],
-  "corePrinciplesVi": [
+  corePrinciplesVi: [
     "Info trước: repo type, base branch, projects và root source quyết định lệnh create.",
     "Giữ nguyên branch name khi người dùng đưa tên chính xác; nếu không thì suy prefix đơn giản và slug ngắn.",
     "Dry-run trước khi prune metadata stale.",
     "Hệ worktree native của host tách biệt với preference root của ak:worktree."
   ],
-  "workflowModes": [
+  workflowModes: [
     {
-      "flag": "info",
-      "modeEn": "Report repository type, projects, base branch, worktree root, and dirty state.",
-      "modeVi": "Báo repo type, project, base branch, worktree root và dirty state.",
-      "research": "Repo metadata",
-      "redTeam": "Wrong root",
-      "validation": "Info JSON",
-      "cookFlag": "info"
+      flag: "info",
+      modeEn: "Report repository type, projects, base branch, worktree root, and dirty state.",
+      modeVi: "Báo repo type, project, base branch, worktree root và dirty state.",
+      research: "Repo metadata",
+      redTeam: "Wrong root",
+      validation: "Info JSON",
+      cookFlag: "info"
     },
     {
-      "flag": "list",
-      "modeEn": "List known worktrees and branches before removal or reuse.",
-      "modeVi": "Liệt kê worktree và branch đã biết trước khi remove hoặc reuse.",
-      "research": "Worktree registry",
-      "redTeam": "Ambiguous target",
-      "validation": "Worktree list",
-      "cookFlag": "list"
+      flag: "list",
+      modeEn: "List known worktrees and branches before removal or reuse.",
+      modeVi: "Liệt kê worktree và branch đã biết trước khi remove hoặc reuse.",
+      research: "Worktree registry",
+      redTeam: "Ambiguous target",
+      validation: "Worktree list",
+      cookFlag: "list"
     },
     {
-      "flag": "status",
-      "modeEn": "Health audit with dirty state, base branch, and ahead/behind counts.",
-      "modeVi": "Audit sức khỏe với dirty state, base branch và số ahead/behind.",
-      "research": "normalized paths",
-      "redTeam": "dirty/detached/divergence",
-      "validation": "status JSON",
-      "cookFlag": "status"
+      flag: "status",
+      modeEn: "Health audit with dirty state, base branch, and ahead/behind counts.",
+      modeVi: "Audit sức khỏe với dirty state, base branch và số ahead/behind.",
+      research: "normalized paths",
+      redTeam: "dirty/detached/divergence",
+      validation: "status JSON",
+      cookFlag: "status"
     },
     {
-      "flag": "create [project] <feature> [options]",
-      "modeEn": "Create an isolated worktree; options include --prefix, --base, --checkout-submodules, --no-prefix, --worktree-root, --json, --dry-run, and legacy --env.",
-      "modeVi": "Tạo worktree cô lập; option gồm --prefix, --base, --checkout-submodules, --no-prefix, --worktree-root, --json, --dry-run và --env legacy.",
-      "research": "repo info + naming",
-      "redTeam": "root/base warnings",
-      "validation": "worktreePath JSON",
-      "cookFlag": "create [project] <feature>"
+      flag: "create [project] <feature> [options]",
+      modeEn: "Create an isolated worktree; options include --prefix, --base, --checkout-submodules, --no-prefix, --worktree-root, --json, --dry-run, and legacy --env.",
+      modeVi: "Tạo worktree cô lập; option gồm --prefix, --base, --checkout-submodules, --no-prefix, --worktree-root, --json, --dry-run và --env legacy.",
+      research: "repo info + naming",
+      redTeam: "root/base warnings",
+      validation: "worktreePath JSON",
+      cookFlag: "create [project] <feature>"
     },
     {
-      "flag": "remove <name-or-path>",
-      "modeEn": "Force-remove one exact approved worktree and then try branch deletion.",
-      "modeVi": "Force-remove đúng một worktree đã duyệt rồi thử xóa branch.",
-      "research": "Exact target",
-      "redTeam": "Uncommitted work",
-      "validation": "Removal result",
-      "cookFlag": "remove <name-or-path>"
+      flag: "remove <name-or-path>",
+      modeEn: "Force-remove one exact approved worktree and then try branch deletion.",
+      modeVi: "Force-remove đúng một worktree đã duyệt rồi thử xóa branch.",
+      research: "Exact target",
+      redTeam: "Uncommitted work",
+      validation: "Removal result",
+      cookFlag: "remove <name-or-path>"
     },
     {
-      "flag": "prune",
-      "modeEn": "Remove stale Git worktree metadata; run prune --dry-run before applying.",
-      "modeVi": "Xóa metadata Git worktree cũ; chạy prune --dry-run trước khi áp dụng.",
-      "research": "metadata entries",
-      "redTeam": "dry-run first",
-      "validation": "entries JSON",
-      "cookFlag": "prune"
+      flag: "prune",
+      modeEn: "Remove stale Git worktree metadata; run prune --dry-run before applying.",
+      modeVi: "Xóa metadata Git worktree cũ; chạy prune --dry-run trước khi áp dụng.",
+      research: "metadata entries",
+      redTeam: "dry-run first",
+      validation: "entries JSON",
+      cookFlag: "prune"
     }
   ],
-  "skillStack": [
+  skillStack: [
     {
-      "name": "worktree.cjs",
-      "type": "tool"
+      name: "worktree.cjs",
+      type: "tool"
     },
     {
-      "name": "git worktree",
-      "type": "tool"
+      name: "git worktree",
+      type: "tool"
     },
     {
-      "name": "ak config prefs",
-      "type": "tool"
+      name: "ak config prefs",
+      type: "tool"
     }
   ],
-  "promptExamples": [
+  promptExamples: [
     {
-      "labelEn": "Feature worktree",
-      "labelVi": "Worktree tính năng",
-      "command": "/ak:worktree create onboarding email flow",
-      "whenEn": "Use before implementation that should be isolated from the current checkout.",
-      "whenVi": "Dùng trước khi implement việc cần tách khỏi checkout hiện tại.",
-      "expectedEn": "New worktree path with inferred branch prefix, dependency bootstrap guidance, and next safe command.",
-      "expectedVi": "Path worktree mới kèm prefix branch đã suy ra và hướng dẫn bootstrap dependency.",
-      "recommended": true
+      labelEn: "Feature worktree",
+      labelVi: "Worktree tính năng",
+      command: "/ak:worktree create onboarding email flow",
+      commandVi: '/ak:worktree create luồng email onboarding',
+      whenEn: "Use before implementation that should be isolated from the current checkout.",
+      whenVi: "Dùng trước khi implement việc cần tách khỏi checkout hiện tại.",
+      expectedEn: "New worktree path with inferred branch prefix, dependency bootstrap guidance, and next safe command.",
+      expectedVi: "Path worktree mới kèm prefix branch đã suy ra và hướng dẫn bootstrap dependency.",
+      recommended: true
     },
     {
-      "labelEn": "Exact branch",
-      "labelVi": "Branch chính xác",
-      "command": "/ak:worktree create --no-prefix ND-1377-cleanup-docs",
-      "whenEn": "Use when the branch name must preserve tracker casing or slashes.",
-      "whenVi": "Dùng khi tên branch phải giữ nguyên casing mã ticket hoặc slash.",
-      "expectedEn": "Worktree created with preserved branch name semantics and clear instructions for entering the folder.",
-      "expectedVi": "Worktree được tạo với ngữ nghĩa giữ nguyên branch name và hướng dẫn vào thư mục rõ ràng."
-    }
+      labelEn: "Exact branch",
+      labelVi: "Branch chính xác",
+      command: "/ak:worktree create --no-prefix ND-1377-cleanup-docs",
+      commandVi: '/ak:worktree create --no-prefix ND-1377-cleanup-docs',
+      whenEn: "Use when the branch name must preserve tracker casing or slashes.",
+      whenVi: "Dùng khi tên branch phải giữ nguyên casing mã ticket hoặc slash.",
+      expectedEn: "Worktree created with preserved branch name semantics and clear instructions for entering the folder.",
+      expectedVi: "Worktree được tạo với ngữ nghĩa giữ nguyên branch name và hướng dẫn vào thư mục rõ ràng."
+    },
+    { labelEn: 'Inspect status', labelVi: 'Xem trạng thái', command: '/ak:worktree status',
+      commandVi: '/ak:worktree status', whenEn: 'You need worktree health, dirty state, or base-branch divergence before reuse or cleanup.', whenVi: 'Khi cần sức khỏe worktree, dirty state hoặc độ lệch base branch trước khi reuse hoặc dọn.', expectedEn: 'Health audit with normalized paths, dirty state, and ahead/behind counts.', expectedVi: 'Audit sức khỏe với path chuẩn hóa, dirty state và số ahead/behind.' }
   ],
-  "reportOutput": {
-    "titleEn": "Worktree result",
-    "titleVi": "Kết quả worktree",
-    "patternEn": "worktreePath • baseBranch • warnings • dependency action",
-    "patternVi": "worktreePath • baseBranch • warnings • thao tác dependency",
-    "locationEn": "Response output",
-    "locationVi": "Nội dung phản hồi",
-    "descEn": "JSON-backed fields make branch, path, root source, and warnings explicit.",
-    "descVi": "Các field từ JSON làm rõ branch, path, nguồn root và cảnh báo."
+  reportOutput: {
+    titleEn: "Worktree result",
+    titleVi: "Kết quả worktree",
+    patternEn: "worktreePath • baseBranch • warnings • dependency action",
+    patternVi: "worktreePath • baseBranch • warnings • thao tác dependency",
+    locationEn: "Response output",
+    locationVi: "Nội dung phản hồi",
+    descEn: "JSON-backed fields make branch, path, root source, and warnings explicit.",
+    descVi: "Các field từ JSON làm rõ branch, path, nguồn root và cảnh báo."
   }
 };
 

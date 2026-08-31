@@ -1,122 +1,152 @@
 import type { SkillInfographic } from '@/data/guides/how-ck-works';
 
 const data: SkillInfographic = {
-  "id": "ak-journal",
-  "command": "/ak:journal",
-  "kit": "marketer",
-  "header": {
-    "titleEn": "/ak:journal",
-    "titleVi": "/ak:journal",
-    "taglineEn": "Chronological technical journal for session reflection, root-cause history, changes, decisions, and next steps stored under plans/journals/.",
-    "taglineVi": "Nhật ký kỹ thuật theo thời gian cho phản tư phiên làm việc, lịch sử nguyên nhân gốc, thay đổi, quyết định và bước tiếp theo trong plans/journals/."
+  id: "ak-journal",
+  command: "/ak:journal",
+  kit: 'marketer',
+  header: {
+    titleEn: '/ak:journal — Technical Session Journal',
+    titleVi: '/ak:journal — Nhật ký kỹ thuật theo phiên',
+    taglineEn: "Persist chronological technical journals under plans/journals using the first-class CLI, preserving work history without replacing current docs, ADRs, or product decision sources.",
+    taglineVi: "Lưu nhật ký kỹ thuật theo thời gian dưới plans/journals bằng CLI chính thức, giữ lịch sử công việc mà không thay thế docs hiện tại, ADR hoặc nguồn quyết định sản phẩm."
   },
-  "processFlow": [
+  processFlow: [
     {
-      "number": 1,
-      "titleEn": "Gather events",
-      "titleVi": "Gom sự kiện",
-      "descEn": "Collect root cause, key changes, impacts, decisions, and next steps from the current session.",
-      "descVi": "Gom nguyên nhân gốc, thay đổi chính, tác động, quyết định và bước tiếp theo từ phiên hiện tại."
+      number: 1,
+      titleEn: "Gather events",
+      titleVi: "Thu thập sự kiện",
+      descEn: "Collect root cause, key changes, impacts, decisions, next steps, concrete errors, paths, and outcomes from the session.",
+      descVi: "Thu thập root cause, thay đổi chính, ảnh hưởng, quyết định, bước tiếp theo, lỗi cụ thể, path và outcome của session."
     },
     {
-      "number": 2,
-      "titleEn": "Draft concise entry",
-      "titleVi": "Soạn entry ngắn",
-      "descEn": "Write a short title and markdown body with concrete errors, paths, outcomes, and decisions.",
-      "descVi": "Viết tiêu đề ngắn và thân markdown với lỗi, đường dẫn, kết quả và quyết định cụ thể."
+      number: 2,
+      titleEn: "Draft concise entry",
+      titleVi: "Soạn entry ngắn",
+      descEn: "Write a short title and markdown body with concrete evidence instead of vague summaries.",
+      descVi: "Viết title ngắn và body Markdown có bằng chứng cụ thể thay vì tóm tắt mơ hồ."
     },
     {
-      "number": 3,
-      "titleEn": "Persist locally",
-      "titleVi": "Lưu cục bộ",
-      "descEn": "Use the first-class CLI: ak journal create with title, --summary, and stdin body.",
-      "descVi": "Dùng CLI chính thức: ak journal create kèm tiêu đề, --summary và nội dung qua stdin."
+      number: 3,
+      titleEn: "Persist with CLI",
+      titleVi: "Lưu bằng CLI",
+      descEn: "Use ak journal create with title, summary, and stdin so no interactive editor is required.",
+      descVi: "Dùng ak journal create với title, summary và stdin để không cần editor tương tác."
     },
     {
-      "number": 4,
-      "titleEn": "Validate if needed",
-      "titleVi": "Kiểm tra khi cần",
-      "descEn": "Run ak journal validate for a slug or filename stem when validation matters.",
-      "descVi": "Chạy ak journal validate với slug hoặc stem tên file khi cần kiểm tra."
+      number: 4,
+      titleEn: "Validate when needed",
+      titleVi: "Validate khi cần",
+      descEn: "Run ak journal validate <slug-or-filename-stem> for entries that need checking.",
+      descVi: "Chạy ak journal validate <slug-or-filename-stem> cho entry cần kiểm tra."
     },
     {
-      "number": 5,
-      "titleEn": "Skip AgentWiki",
-      "titleVi": "Bỏ qua AgentWiki",
-      "descEn": "Publishing from this skill is deferred; report AgentWiki publish skipped and keep the local file as truth.",
-      "descVi": "Publish từ skill này đang hoãn; báo AgentWiki publish skipped và giữ file local làm nguồn đúng."
+      number: 5,
+      titleEn: "Skip AgentWiki publish",
+      titleVi: "Bỏ qua publish AgentWiki",
+      descEn: "Report “AgentWiki publish skipped” because publishing from this skill is deferred and the local file remains source of truth.",
+      descVi: "Báo “AgentWiki publish skipped” vì publish từ skill này đang deferred và file local vẫn là source of truth."
     },
     {
-      "number": 6,
-      "titleEn": "Browse history",
-      "titleVi": "Xem lịch sử",
-      "descEn": "Use ak journal list/show or the dashboard Journals page to review existing entries.",
-      "descVi": "Dùng ak journal list/show hoặc trang Journals trên dashboard để xem entry cũ."
+      number: 6,
+      titleEn: "Browse history",
+      titleVi: "Duyệt lịch sử",
+      descEn: "Use ak journal list, ak journal show <slug>, or the Journals page to inspect existing entries.",
+      descVi: "Dùng ak journal list, ak journal show <slug> hoặc trang Journals để xem entry hiện có."
     },
     {
-      "number": 7,
-      "titleEn": "Respect auto skip",
-      "titleVi": "Tôn trọng tự động bỏ qua",
-      "descEn": "Automatic journal steps honor --skip-journal and journal.auto precedence; explicit /ak:journal remains available.",
-      "descVi": "Bước journal tự động tôn trọng --skip-journal và thứ tự journal.auto; /ak:journal gọi trực tiếp vẫn luôn dùng được."
+      number: 7,
+      titleEn: "Respect auto policy",
+      titleVi: "Tôn trọng chính sách tự động",
+      descEn: "When run automatically after other workflows, honor --skip-journal, journal.auto config, and precedence: flag > project config > user config > default true.",
+      descVi: "Khi chạy tự động sau workflow khác, tôn trọng --skip-journal, config journal.auto và thứ tự ưu tiên: flag > project config > user config > default true."
+    },
+    {
+      number: 8,
+      titleEn: "Publish socially only when configured",
+      titleVi: "Chỉ đăng social khi cấu hình đủ",
+      descEn: "For social posts, resolve config, draft per-channel bodies, dry-run post-social first, then publish only after inspecting dry-run output.",
+      descVi: "Với social post, resolve config, soạn body từng channel, dry-run post-social trước, rồi chỉ publish sau khi xem output dry-run."
     }
   ],
-  "corePrinciplesEn": [
-    "Journals preserve work history, not product authority",
-    "Prefer concrete errors, paths, outcomes, and decisions",
-    "Persist through ak journal create instead of editor flows",
-    "Explicit journal creation is always available"
+  corePrinciplesEn: [
+    "Prefer concrete errors, paths, outcomes, and decisions over vague retrospectives.",
+    "Persist through ak journal create; do not leave the journal only in chat.",
+    "Automatic journal steps are controlled by explicit flags and config precedence."
   ],
-  "corePrinciplesVi": [
-    "Journal lưu lịch sử công việc, không thay tài liệu sản phẩm có thẩm quyền",
-    "Ưu tiên lỗi, path, kết quả và quyết định cụ thể",
-    "Lưu bằng ak journal create thay vì luồng mở editor",
-    "Tạo journal trực tiếp luôn khả dụng"
+  corePrinciplesVi: [
+    "Ưu tiên lỗi, path, outcome và quyết định cụ thể hơn retrospective mơ hồ.",
+    "Lưu bằng ak journal create; không để journal chỉ nằm trong chat.",
+    "Bước journal tự động do flag rõ ràng và thứ tự config điều khiển."
   ],
-  "expertiseAreasEn": [
+  expertiseAreasEn: [
     "Session reflection",
-    "Change analysis",
-    "Decision chronology",
-    "Local journal persistence",
-    "Optional social publishing preparation"
+    "Chronological work records",
+    "Journal CLI persistence",
+    "Auto-journal preferences",
+    "Social-publishing dry runs"
   ],
-  "expertiseAreasVi": [
-    "Phản tư phiên làm việc",
-    "Phân tích thay đổi",
-    "Trình tự quyết định",
-    "Lưu journal cục bộ",
-    "Chuẩn bị nội dung social nếu cần"
+  expertiseAreasVi: [
+    "Reflection theo session",
+    "Bản ghi công việc theo thời gian",
+    "Lưu bằng journal CLI",
+    "Preference auto-journal",
+    "Dry-run publish social"
   ],
-  "promptExamples": [
+  skillStack: [
     {
-      "labelEn": "Session reflection",
-      "labelVi": "Phản tư phiên",
-      "command": "/ak:journal summarize today's checkout refactor and remaining risks",
-      "whenEn": "You want a durable chronological record after implementation or debugging.",
-      "whenVi": "Khi cần bản ghi theo thời gian sau khi triển khai hoặc sửa lỗi.",
-      "expectedEn": "Creates a concise journal entry under plans/journals/ with title, summary, and markdown body.",
-      "expectedVi": "Tạo entry ngắn trong plans/journals/ với tiêu đề, summary và thân markdown.",
-      "recommended": true
+      name: "ak journal create",
+      type: "tool"
     },
     {
-      "labelEn": "Focused topic",
-      "labelVi": "Chủ đề hẹp",
-      "command": "/ak:journal root cause and fix path for the Stripe webhook failure",
-      "whenEn": "A narrow incident or bug fix needs historical context.",
-      "whenVi": "Khi một incident hoặc bug fix hẹp cần lưu bối cảnh lịch sử.",
-      "expectedEn": "Captures root cause, fix, impact, and next steps without replacing ADRs or current docs.",
-      "expectedVi": "Ghi nguyên nhân gốc, cách sửa, tác động và bước tiếp theo mà không thay ADR hay docs hiện hành."
+      name: "ak journal validate",
+      type: "tool"
+    },
+    {
+      name: "resolve-config.cjs",
+      type: "tool"
+    },
+    {
+      name: "post-social.cjs",
+      type: "tool"
+    },
+    {
+      name: "journal-writer",
+      type: "agent"
     }
   ],
-  "reportOutput": {
-    "titleEn": "Chronological journal entry",
-    "titleVi": "Entry nhật ký theo thời gian",
-    "patternEn": "YYYY-MM-DD-<slug>.md with collision suffixes",
-    "patternVi": "YYYY-MM-DD-<slug>.md có hậu tố chống trùng",
-    "locationEn": "plans/journals/",
-    "locationVi": "plans/journals/",
-    "descEn": "What happened • decisions • next steps • concrete paths and outcomes",
-    "descVi": "Chuyện đã xảy ra • quyết định • bước tiếp theo • path và kết quả cụ thể"
+  promptExamples: [{
+      labelEn: "Session reflection",
+      labelVi: "Reflection phiên làm việc",
+      command: "/ak:journal after fixing the OAuth callback race condition",
+      commandVi: '/ak:journal sau khi sửa điều kiện đua callback OAuth',
+      whenEn: "You want to preserve a concise technical record after implementation or debugging.",
+      whenVi: "Khi muốn lưu bản ghi kỹ thuật ngắn sau khi implement hoặc debug.",
+      expectedEn: "Captures what happened, decisions, next steps, persists under plans/journals, and notes AgentWiki publish skipped.",
+      expectedVi: "Ghi chuyện đã xảy ra, quyết định, bước tiếp, lưu dưới plans/journals và ghi AgentWiki publish skipped.",
+      recommended: true
+    },
+    {
+      labelEn: "Failure archaeology",
+      labelVi: "Đào lại failure",
+      command: "/ak:journal why the deployment rollback was necessary",
+      commandVi: '/ak:journal tại sao việc rollback triển khai là cần thiết',
+      whenEn: "The entry should explain root cause, impact, and lessons for future sessions.",
+      whenVi: "Khi entry cần giải thích root cause, ảnh hưởng và bài học cho session sau.",
+      expectedEn: "May invoke journal-writer for honesty, but still persists through ak journal create.",
+      expectedVi: "Có thể gọi journal-writer để viết thẳng thắn hơn, nhưng vẫn lưu qua ak journal create."
+    },
+    { labelEn: 'Campaign-audit journal', labelVi: 'Journal audit chiến dịch', command: '/ak:journal capture this campaign-audit session',
+      commandVi: '/ak:journal ghi lại phiên kiểm toán chiến dịch này', whenEn: 'A working session should leave a dated technical journal, not a status slide.', whenVi: 'Một session làm việc cần journal kỹ thuật có ngày, không phải slide status.', expectedEn: 'Journal entry with changes, decisions, paths, and next steps.', expectedVi: 'Journal ghi thay đổi, quyết định, path và bước tiếp theo.' }
+  ],
+  reportOutput: {
+    titleEn: "Journal result",
+    titleVi: "Kết quả journal",
+    patternEn: "Created file path, one-line summary, validation status when run, AgentWiki publish skipped.",
+    patternVi: "Path file đã tạo, summary một dòng, trạng thái validate nếu chạy, AgentWiki publish skipped.",
+    locationEn: "<project>/plans/journals/YYYY-MM-DD-<slug>.md with collision suffixes as needed.",
+    locationVi: "<project>/plans/journals/YYYY-MM-DD-<slug>.md với hậu tố chống trùng khi cần.",
+    descEn: "The journal preserves work history; it should not be cited as the durable product spec.",
+    descVi: "Journal giữ lịch sử công việc; không nên dùng nó như spec sản phẩm bền vững."
   }
 };
 

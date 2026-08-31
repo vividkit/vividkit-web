@@ -21,6 +21,7 @@ const data: SkillInfographic = {
         descVi: 'Cung cấp GitHub issue làm nguồn sự thật, hoặc một yêu cầu feature cụ thể sẽ trở thành issue sau khi plan được validate; cần đủ outcome, phạm vi, ràng buộc và bối cảnh nghiệm thu để triển khai.',
         required: true,
         exampleCommand: '/ak:vibe https://github.com/acme/app/issues/42',
+          exampleCommandVi: '/ak:vibe https://github.com/acme/app/issues/42',
       },
     ],
     options: [
@@ -31,6 +32,7 @@ const data: SkillInfographic = {
         descEn: 'After PR review, fixes, replies, and green required checks, authorizes merging the PR through repository rules and watching or fixing target-branch CI until success or a documented external blocker.',
         descVi: 'Sau khi PR được review, sửa, reply và các check bắt buộc xanh, cho phép merge PR theo luật repository rồi theo dõi hoặc sửa CI trên branch đích đến khi thành công hoặc có blocker ngoài đã ghi rõ.',
         exampleCommand: '/ak:vibe --ship fix flaky checkout redirect',
+          exampleCommandVi: '/ak:vibe --ship fix flaky checkout redirect',
       },
       {
         token: '--beta',
@@ -39,6 +41,7 @@ const data: SkillInfographic = {
         descEn: 'Ships to the beta/dev target through ak:ship beta and finishes with the ready-to-ship beta label; without --ship it stops at reviewed PR readiness.',
         descVi: 'Ship tới đích beta/dev qua ak:ship beta và kết thúc bằng label ready-to-ship beta; nếu không có --ship thì dừng ở trạng thái PR đã review và sẵn sàng.',
         exampleCommand: '/ak:vibe --beta https://github.com/acme/app/issues/42',
+          exampleCommandVi: '/ak:vibe --beta https://github.com/acme/app/issues/42',
       },
       {
         token: '--both',
@@ -47,6 +50,7 @@ const data: SkillInfographic = {
         descEn: 'Runs the full beta stage first, including merge and green CI, then runs the stable stage; it implies --ship and supersedes --beta when both are present.',
         descVi: 'Chạy trọn stage beta trước, gồm merge và CI xanh, rồi mới chạy stage stable; flag này ngầm bật --ship và ưu tiên hơn --beta khi cả hai cùng xuất hiện.',
         exampleCommand: '/ak:vibe --both https://github.com/acme/app/issues/42',
+          exampleCommandVi: '/ak:vibe --both https://github.com/acme/app/issues/42',
       },
       {
         token: '--advice',
@@ -55,6 +59,7 @@ const data: SkillInfographic = {
         descEn: 'Adds advisory-only Kongming checkpoints after major phases, when stuck, before high-stakes decisions, and after PR CI is green; it composes with every ship mode and never bypasses gates.',
         descVi: 'Thêm các checkpoint Kongming chỉ tư vấn sau các phase lớn, khi bị kẹt, trước quyết định rủi ro cao và sau khi CI của PR xanh; kết hợp được với mọi ship mode và không bao giờ bỏ qua gate.',
         exampleCommand: '/ak:vibe --advice --ship https://github.com/acme/app/issues/42',
+          exampleCommandVi: '/ak:vibe --advice --ship https://github.com/acme/app/issues/42',
       },
     ],
   },
@@ -108,10 +113,14 @@ const data: SkillInfographic = {
     { name: 'kongming', type: 'agent' },
   ],
   outputFlags: [
-    { flag: '--ship', titleEn: 'Merge after review', titleVi: 'Merge sau review', descEn: 'After PR review/fix/reply, merge the PR and watch or fix CI until success or a true external blocker.', descVi: 'Sau review/fix/reply PR, merge PR rồi theo dõi hoặc sửa CI đến khi thành công hoặc gặp blocker ngoài thật.', exampleCommand: '/ak:vibe --ship https://github.com/acme/app/issues/42' },
-    { flag: '--beta', titleEn: 'Ship beta target', titleVi: 'Ship đích beta', descEn: 'Ship through the beta/dev target and finish with the ready-to-ship beta label.', descVi: 'Ship qua đích beta/dev và kết thúc bằng label ready-to-ship beta.', exampleCommand: '/ak:vibe --beta https://github.com/acme/app/issues/42' },
-    { flag: '--both', titleEn: 'Beta then stable', titleVi: 'Beta rồi stable', descEn: 'Run the complete beta stage first, require beta CI green, then run the stable stage; supersedes beta and implies ship.', descVi: 'Chạy trọn stage beta trước, yêu cầu CI beta xanh, rồi chạy stage stable; supersedes beta và ngầm bật ship.', exampleCommand: '/ak:vibe --both https://github.com/acme/app/issues/42' },
-    { flag: '--advice', titleEn: 'Kongming advisory supervision', titleVi: 'Giám sát tư vấn Kongming', descEn: 'Ask kongming for counsel at phase checkpoints, stuck points, high-stakes decisions, and post-PR green-check gates.', descVi: 'Nhờ kongming tư vấn ở checkpoint từng phase, lúc kẹt, quyết định rủi ro cao và gate sau khi PR đã xanh check.', exampleCommand: '/ak:vibe --advice --ship https://github.com/acme/app/issues/42' },
+    { flag: '--ship', titleEn: 'Merge after review', titleVi: 'Merge sau review', descEn: 'After PR review/fix/reply, merge the PR and watch or fix CI until success or a true external blocker.', descVi: 'Sau review/fix/reply PR, merge PR rồi theo dõi hoặc sửa CI đến khi thành công hoặc gặp blocker ngoài thật.', exampleCommand: '/ak:vibe --ship https://github.com/acme/app/issues/42',
+          exampleCommandVi: '/ak:vibe --ship https://github.com/acme/app/issues/42' },
+    { flag: '--beta', titleEn: 'Ship beta target', titleVi: 'Ship đích beta', descEn: 'Ship through the beta/dev target and finish with the ready-to-ship beta label.', descVi: 'Ship qua đích beta/dev và kết thúc bằng label ready-to-ship beta.', exampleCommand: '/ak:vibe --beta https://github.com/acme/app/issues/42',
+          exampleCommandVi: '/ak:vibe --beta https://github.com/acme/app/issues/42' },
+    { flag: '--both', titleEn: 'Beta then stable', titleVi: 'Beta rồi stable', descEn: 'Run the complete beta stage first, require beta CI green, then run the stable stage; supersedes beta and implies ship.', descVi: 'Chạy trọn stage beta trước, yêu cầu CI beta xanh, rồi chạy stage stable; supersedes beta và ngầm bật ship.', exampleCommand: '/ak:vibe --both https://github.com/acme/app/issues/42',
+          exampleCommandVi: '/ak:vibe --both https://github.com/acme/app/issues/42' },
+    { flag: '--advice', titleEn: 'Kongming advisory supervision', titleVi: 'Giám sát tư vấn Kongming', descEn: 'Ask kongming for counsel at phase checkpoints, stuck points, high-stakes decisions, and post-PR green-check gates.', descVi: 'Nhờ kongming tư vấn ở checkpoint từng phase, lúc kẹt, quyết định rủi ro cao và gate sau khi PR đã xanh check.', exampleCommand: '/ak:vibe --advice --ship https://github.com/acme/app/issues/42',
+          exampleCommandVi: '/ak:vibe --advice --ship https://github.com/acme/app/issues/42' },
   ],
   specialOperations: [
     { id: 'issue-source', titleEn: 'Issue is source of truth', titleVi: 'Issue là nguồn sự thật', descEn: 'Issue URL inputs must match the current repo; otherwise stop and ask for the matching repo/worktree.', descVi: 'Issue URL phải khớp repo hiện tại; nếu không, dừng và yêu cầu repo/worktree đúng.', color: 'amber' },
@@ -119,11 +128,16 @@ const data: SkillInfographic = {
     { id: 'advice', titleEn: 'Advice is counsel', titleVi: 'Tư vấn chỉ là tư vấn', descEn: 'Kongming returns counsel, never code; the main agent remains responsible for decisions, edits, and gates.', descVi: 'Kongming chỉ đưa lời khuyên, không viết code; agent chính vẫn chịu trách nhiệm quyết định, edit và gate.', color: 'sky' },
   ],
   promptExamples: [
-    { labelEn: 'PR readiness from issue', labelVi: 'Đưa issue tới trạng thái sẵn PR', command: '/ak:vibe https://github.com/acme/app/issues/42', whenEn: 'A GitHub issue should be planned, implemented, reviewed, and labeled ready without automatic merge.', whenVi: 'Một GitHub issue cần được lập plan, triển khai, review và gắn ready nhưng chưa tự merge.', expectedEn: 'Creates an isolated worktree, validates plan gates, ships a reviewed PR, and applies ready-to-ship stable.', expectedVi: 'Tạo worktree tách biệt, validate gate plan, ship PR đã review và gắn ready-to-ship stable.', recommended: true },
-    { labelEn: 'Autonomous merge', labelVi: 'Tự merge có kiểm CI', command: '/ak:vibe --ship fix flaky checkout redirect', whenEn: 'A request should continue through merge and target-branch CI convergence.', whenVi: 'Yêu cầu cần chạy tiếp qua merge và đưa CI branch đích về xanh.', expectedEn: 'Creates or updates the issue, implements through the right route, merges, and loops on deterministic CI failures.', expectedVi: 'Tạo hoặc cập nhật issue, triển khai qua route đúng, merge và lặp fix lỗi CI xác định được.' },
-    { labelEn: 'Beta PR readiness', labelVi: 'Đưa PR beta tới trạng thái ready', command: '/ak:vibe --beta https://github.com/acme/app/issues/42', whenEn: 'The request should ship through the beta or dev target without automatic merge.', whenVi: 'Yêu cầu cần ship qua đích beta hoặc dev nhưng chưa tự merge.', expectedEn: 'Ships a reviewed beta-target PR, applies ready-to-ship beta, and leaves merge disabled.', expectedVi: 'Ship PR đích beta đã review, gắn ready-to-ship beta và để merge ở trạng thái tắt.' },
-    { labelEn: 'Beta then stable', labelVi: 'Beta rồi stable', command: '/ak:vibe --both https://github.com/acme/app/issues/42', whenEn: 'The repo requires a beta/dev promotion before stable release.', whenVi: 'Repo yêu cầu qua beta/dev trước khi release stable.', expectedEn: 'Completes beta merge and green CI before starting the stable stage and stable PR review.', expectedVi: 'Hoàn tất merge beta và CI xanh trước khi bắt đầu stage stable cùng review PR stable.' },
-    { labelEn: 'Advisory supervision', labelVi: 'Có giám sát tư vấn', command: '/ak:vibe --advice --ship https://github.com/acme/app/issues/42', whenEn: 'A high-stakes pipeline needs extra counsel without surrendering ownership.', whenVi: 'Pipeline rủi ro cao cần thêm tư vấn nhưng không chuyển quyền sở hữu.', expectedEn: 'Adds kongming counsel at required checkpoints while still honoring every pipeline gate and owner decision.', expectedVi: 'Thêm tư vấn kongming tại các checkpoint bắt buộc nhưng vẫn giữ mọi gate pipeline và quyết định của owner.' },
+    { labelEn: 'PR readiness from issue', labelVi: 'Đưa issue tới trạng thái sẵn PR', command: '/ak:vibe https://github.com/acme/app/issues/42',
+      commandVi: '/ak:vibe https://github.com/acme/app/issues/42', whenEn: 'A GitHub issue should be planned, implemented, reviewed, and labeled ready without automatic merge.', whenVi: 'Một GitHub issue cần được lập plan, triển khai, review và gắn ready nhưng chưa tự merge.', expectedEn: 'Creates an isolated worktree, validates plan gates, ships a reviewed PR, and applies ready-to-ship stable.', expectedVi: 'Tạo worktree tách biệt, validate gate plan, ship PR đã review và gắn ready-to-ship stable.', recommended: true },
+    { labelEn: 'Autonomous merge', labelVi: 'Tự merge có kiểm CI', command: '/ak:vibe --ship fix flaky checkout redirect',
+      commandVi: '/ak:vibe --ship sửa redirect checkout flaky', whenEn: 'A request should continue through merge and target-branch CI convergence.', whenVi: 'Yêu cầu cần chạy tiếp qua merge và đưa CI branch đích về xanh.', expectedEn: 'Creates or updates the issue, implements through the right route, merges, and loops on deterministic CI failures.', expectedVi: 'Tạo hoặc cập nhật issue, triển khai qua route đúng, merge và lặp fix lỗi CI xác định được.' },
+    { labelEn: 'Beta PR readiness', labelVi: 'Đưa PR beta tới trạng thái ready', command: '/ak:vibe --beta https://github.com/acme/app/issues/42',
+      commandVi: '/ak:vibe --beta https://github.com/acme/app/issues/42', whenEn: 'The request should ship through the beta or dev target without automatic merge.', whenVi: 'Yêu cầu cần ship qua đích beta hoặc dev nhưng chưa tự merge.', expectedEn: 'Ships a reviewed beta-target PR, applies ready-to-ship beta, and leaves merge disabled.', expectedVi: 'Ship PR đích beta đã review, gắn ready-to-ship beta và để merge ở trạng thái tắt.' },
+    { labelEn: 'Beta then stable', labelVi: 'Beta rồi stable', command: '/ak:vibe --both https://github.com/acme/app/issues/42',
+      commandVi: '/ak:vibe --both https://github.com/acme/app/issues/42', whenEn: 'The repo requires a beta/dev promotion before stable release.', whenVi: 'Repo yêu cầu qua beta/dev trước khi release stable.', expectedEn: 'Completes beta merge and green CI before starting the stable stage and stable PR review.', expectedVi: 'Hoàn tất merge beta và CI xanh trước khi bắt đầu stage stable cùng review PR stable.' },
+    { labelEn: 'Advisory supervision', labelVi: 'Có giám sát tư vấn', command: '/ak:vibe --advice --ship https://github.com/acme/app/issues/42',
+      commandVi: '/ak:vibe --advice --ship https://github.com/acme/app/issues/42', whenEn: 'A high-stakes pipeline needs extra counsel without surrendering ownership.', whenVi: 'Pipeline rủi ro cao cần thêm tư vấn nhưng không chuyển quyền sở hữu.', expectedEn: 'Adds kongming counsel at required checkpoints while still honoring every pipeline gate and owner decision.', expectedVi: 'Thêm tư vấn kongming tại các checkpoint bắt buộc nhưng vẫn giữ mọi gate pipeline và quyết định của owner.' },
   ],
 };
 

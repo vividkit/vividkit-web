@@ -14,6 +14,7 @@ const invocation: SkillInvocation = {
       required: true,
       exampleCommand:
         '/ak:google-adk-python "Add a Google ADK Python support agent to this existing package. Use the installed SDK, expose read-only account tools through a filtered MCPToolset, keep approval for any write, add a small eval set and unit tests, and do not call a paid model or deploy."',
+          exampleCommandVi: '/ak:google-adk-python "Thêm một agent hỗ trợ Google ADK Python vào package hiện có này. Dùng SDK đã cài, expose các tool tài khoản read-only qua MCPToolset đã lọc, giữ approval cho mọi thao tác ghi, thêm một eval set nhỏ và unit tests, và không gọi model trả phí hay deploy."',
     },
   ],
 };

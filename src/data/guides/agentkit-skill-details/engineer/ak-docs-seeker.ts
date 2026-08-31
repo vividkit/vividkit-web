@@ -11,6 +11,7 @@ const invocation: SkillInvocation = {
       descVi: "Nêu package, framework, API, site tài liệu hoặc repository cần tìm tài liệu hiện hành.",
       required: true,
       exampleCommand: "/ak:docs-seeker \"Next.js 16 cache invalidation APIs\"",
+          exampleCommandVi: '/ak:docs-seeker "Next.js 16 cache invalidation APIs"',
     },
     {
       token: "[topic]",
@@ -19,6 +20,7 @@ const invocation: SkillInvocation = {
       descEn: "Optional feature, API, version, target language, or question to narrow the search. Omit it for broader library coverage that may need URL prioritization.",
       descVi: "Tính năng, API, version, ngôn ngữ đích hoặc câu hỏi tùy chọn để thu hẹp tìm kiếm. Bỏ qua khi cần độ phủ thư viện rộng hơn và có thể phải ưu tiên URL.",
       exampleCommand: "/ak:docs-seeker \"shadcn date picker\"",
+          exampleCommandVi: '/ak:docs-seeker "shadcn date picker"',
     },
   ],
 };
@@ -100,9 +102,12 @@ const data: SkillInfographic = {
     descVi: "Gồm topic đã nhận diện hoặc query tổng quát, URL nguồn Context7, docs chính đã đọc từ index trả về, đường fallback, độ ưu tiên URL và đề xuất phân phối agent khi phạm vi rộng.",
   },
   promptExamples: [
-    { labelEn: "Topic lookup", labelVi: "Tra cứu theo chủ đề", command: "/ak:docs-seeker \"How do I use date picker in shadcn?\"", whenEn: "You need current docs for one feature, component, or API pattern.", whenVi: "Cần tài liệu hiện hành cho một tính năng, component hoặc mẫu API cụ thể.", expectedEn: "The skill classifies the query as topic-specific, fetches the Context7 topic index with automatic general fallback, reads the few relevant pages, and cites the docs that support the answer.", expectedVi: "Skill phân loại query là theo topic, fetch index Context7 theo topic với fallback tự động sang general, đọc vài trang liên quan và cite tài liệu hỗ trợ câu trả lời.", recommended: true },
-    { labelEn: "General library coverage", labelVi: "Độ phủ thư viện tổng quát", command: "/ak:docs-seeker \"Documentation for Astro\"", whenEn: "You need broad library or framework coverage before choosing which pages to read.", whenVi: "Cần độ phủ rộng cho thư viện hoặc framework trước khi chọn trang cần đọc.", expectedEn: "The skill detects a general query, fetches the library llms.txt index, runs the analyzer to group URLs and suggest distribution, then synthesizes installation, concepts, APIs, and examples from primary pages.", expectedVi: "Skill nhận diện query tổng quát, fetch index llms.txt của thư viện, chạy analyzer để nhóm URL và gợi ý phân phối, rồi tổng hợp installation, concept, API và ví dụ từ trang chính." },
-    { labelEn: "Repository fallback", labelVi: "Fallback repository", command: "/ak:docs-seeker \"Find current docs for github.com/pacocoursey/cmdk. If Context7 has no llms.txt, use repository analysis; cloning to /tmp/docs-analysis is allowed.\"", whenEn: "Context7 or official llms.txt coverage is missing and repository evidence is allowed.", whenVi: "Context7 hoặc llms.txt chính thức thiếu coverage và được phép dùng bằng chứng repository.", expectedEn: "The skill follows the repository-analysis fallback: find and verify the official repo, optionally clone and pack it with Repomix, extract README/docs/examples/API evidence, and label code-based claims as fallback evidence.", expectedVi: "Skill theo fallback repo-analysis: tìm và xác minh repo chính thức, tùy chọn clone và pack bằng Repomix, trích bằng chứng từ README/docs/examples/API và ghi nhãn claim dựa trên code là bằng chứng fallback." },
+    { labelEn: "Topic lookup", labelVi: "Tra cứu theo chủ đề", command: "/ak:docs-seeker \"How do I use date picker in shadcn?\"",
+      commandVi: '/ak:docs-seeker "Làm thế nào để sử dụng date picker trong shadcn?"', whenEn: "You need current docs for one feature, component, or API pattern.", whenVi: "Cần tài liệu hiện hành cho một tính năng, component hoặc mẫu API cụ thể.", expectedEn: "The skill classifies the query as topic-specific, fetches the Context7 topic index with automatic general fallback, reads the few relevant pages, and cites the docs that support the answer.", expectedVi: "Skill phân loại query là theo topic, fetch index Context7 theo topic với fallback tự động sang general, đọc vài trang liên quan và cite tài liệu hỗ trợ câu trả lời.", recommended: true },
+    { labelEn: "General library coverage", labelVi: "Độ phủ thư viện tổng quát", command: "/ak:docs-seeker \"Documentation for Astro\"",
+      commandVi: '/ak:docs-seeker "Tài liệu cho Astro"', whenEn: "You need broad library or framework coverage before choosing which pages to read.", whenVi: "Cần độ phủ rộng cho thư viện hoặc framework trước khi chọn trang cần đọc.", expectedEn: "The skill detects a general query, fetches the library llms.txt index, runs the analyzer to group URLs and suggest distribution, then synthesizes installation, concepts, APIs, and examples from primary pages.", expectedVi: "Skill nhận diện query tổng quát, fetch index llms.txt của thư viện, chạy analyzer để nhóm URL và gợi ý phân phối, rồi tổng hợp installation, concept, API và ví dụ từ trang chính." },
+    { labelEn: "Repository fallback", labelVi: "Fallback repository", command: "/ak:docs-seeker \"Find current docs for github.com/pacocoursey/cmdk. If Context7 has no llms.txt, use repository analysis; cloning to /tmp/docs-analysis is allowed.\"",
+      commandVi: '/ak:docs-seeker "Tìm docs hiện tại cho github.com/pacocoursey/cmdk. Nếu Context7 không có llms.txt, hãy dùng phân tích repository; cloning vào /tmp/docs-analysis được phép."', whenEn: "Context7 or official llms.txt coverage is missing and repository evidence is allowed.", whenVi: "Context7 hoặc llms.txt chính thức thiếu coverage và được phép dùng bằng chứng repository.", expectedEn: "The skill follows the repository-analysis fallback: find and verify the official repo, optionally clone and pack it with Repomix, extract README/docs/examples/API evidence, and label code-based claims as fallback evidence.", expectedVi: "Skill theo fallback repo-analysis: tìm và xác minh repo chính thức, tùy chọn clone và pack bằng Repomix, trích bằng chứng từ README/docs/examples/API và ghi nhãn claim dựa trên code là bằng chứng fallback." },
   ],
 };
 

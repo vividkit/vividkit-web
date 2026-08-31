@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:affiliate-marketing",
   kit: 'marketer',
   header: {
-    titleEn: "Affiliate Marketing",
-    titleVi: "Affiliate marketing",
+    titleEn: '/ak:affiliate-marketing — Affiliate Marketing',
+    titleVi: '/ak:affiliate-marketing — Affiliate marketing',
     taglineEn: "Design and scale SaaS affiliate programs with commission strategy, platform selection, KOL/KOC recruiting, fraud controls, compliance, partner enablement, and ROI optimization.",
     taglineVi: "Thiết kế và scale chương trình affiliate SaaS với chiến lược hoa hồng, chọn nền tảng, tuyển KOL/KOC, kiểm soát fraud, compliance, enablement cho partner và tối ưu ROI.",
   },
@@ -42,9 +42,12 @@ const data: SkillInfographic = {
   ],
   expertiseAreasEn: ["SaaS commission models", "Partner platform selection", "KOL/KOC recruiting", "Fraud prevention", "FTC/GDPR compliance", "Affiliate ROI"],
   expertiseAreasVi: ["Mô hình hoa hồng SaaS", "Chọn platform partner", "Tuyển KOL/KOC", "Phòng chống fraud", "Compliance FTC/GDPR", "ROI affiliate"],
-  promptExamples: [
-    { labelEn: "Launch a SaaS program", labelVi: "Launch chương trình SaaS", command: "/ak:affiliate-marketing launch program", whenEn: "You need the first affiliate program structure for an early SaaS product.", whenVi: "Khi cần cấu trúc chương trình affiliate đầu tiên cho SaaS giai đoạn sớm.", expectedEn: "Commission model, platform recommendation, partner profile, fraud controls, and first recruiting plan.", expectedVi: "Nhận mô hình hoa hồng, gợi ý platform, chân dung partner, kiểm soát fraud và kế hoạch tuyển ban đầu.", recommended: true },
-    { labelEn: "Optimize ROI", labelVi: "Tối ưu ROI", command: "/ak:affiliate-marketing optimize ROI", whenEn: "An existing partner program needs better EPC, retention, or revenue quality.", whenVi: "Khi chương trình hiện có cần cải thiện EPC, retention hoặc chất lượng doanh thu.", expectedEn: "A KPI diagnosis with partner-tier actions, incentive changes, and enablement improvements.", expectedVi: "Chẩn đoán KPI kèm hành động theo tier partner, chỉnh incentive và cải thiện enablement." },
+  promptExamples: [{ labelEn: "Launch a SaaS program", labelVi: "Launch chương trình SaaS", command: "/ak:affiliate-marketing launch program",
+      commandVi: '/ak:affiliate-marketing khởi chạy chương trình', whenEn: "You need the first affiliate program structure for an early SaaS product.", whenVi: "Khi cần cấu trúc chương trình affiliate đầu tiên cho SaaS giai đoạn sớm.", expectedEn: "Commission model, platform recommendation, partner profile, fraud controls, and first recruiting plan.", expectedVi: "Nhận mô hình hoa hồng, gợi ý platform, chân dung partner, kiểm soát fraud và kế hoạch tuyển ban đầu.", recommended: true },
+    { labelEn: "Optimize ROI", labelVi: "Tối ưu ROI", command: "/ak:affiliate-marketing optimize ROI",
+      commandVi: '/ak:affiliate-marketing tối ưu hóa ROI', whenEn: "An existing partner program needs better EPC, retention, or revenue quality.", whenVi: "Khi chương trình hiện có cần cải thiện EPC, retention hoặc chất lượng doanh thu.", expectedEn: "A KPI diagnosis with partner-tier actions, incentive changes, and enablement improvements.", expectedVi: "Chẩn đoán KPI kèm hành động theo tier partner, chỉnh incentive và cải thiện enablement." },
+    { labelEn: 'Recurring SaaS program', labelVi: 'Chương trình SaaS định kỳ', command: '/ak:affiliate-marketing launch a 25% recurring SaaS affiliate program',
+      commandVi: '/ak:affiliate-marketing khởi chạy chương trình affiliate SaaS định kỳ 25%', whenEn: 'You are designing a new affiliate program around commission and partner fit.', whenVi: 'Khi thiết kế chương trình affiliate mới quanh hoa hồng và partner phù hợp.', expectedEn: 'Program shape, platform options, commission structure, outreach, and fraud/compliance notes.', expectedVi: 'Hình dạng chương trình, lựa chọn nền tảng, cấu trúc hoa hồng, outreach và ghi chú fraud/compliance.' }
   ],
   reportOutput: {
     titleEn: "Affiliate program report",
