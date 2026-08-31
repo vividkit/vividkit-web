@@ -179,6 +179,7 @@ export const akEngineerSkills: AkSkillEntry[] = [
     descriptionVi: "Viết lại câu trả lời trước của AI cho gọn, dễ hiểu, bỏ thuật ngữ. Dùng khi muốn nói lại cho dễ, nói thường, hoặc giải thích như người.",
     category: "essentials",
     isNew: true,
+    order: 3,
   },
   {
     id: "ak-chrome-profile",
@@ -528,8 +529,7 @@ export const akEngineerSkills: AkSkillEntry[] = [
     commandCodex: "$ak:help",
     description: "Open the AgentKit help index. Use when users ask how to use ak, what skills are available, or which workflow to run.",
     descriptionVi: "Mở mục lục trợ giúp AgentKit. Dùng khi hỏi cách dùng CLI ak, skill nào có sẵn, hoặc nên chạy quy trình nào.",
-    category: "essentials",
-    order: 3,
+    category: "utilities",
   },
   {
     id: "ak-html-video",
