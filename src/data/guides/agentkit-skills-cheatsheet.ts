@@ -25,8 +25,10 @@ export interface AkSkillEntry {
   flags?: string[];
   /** Dual-list with Beta Preview (CK convention) */
   isBeta?: boolean;
-  /** Emerald NEW badge on cheatsheet cards — distinct from isBeta */
+  /** Amber NEW badge on cheatsheet cards — distinct from isBeta */
   isNew?: boolean;
+  /** Sky COMMON badge for daily-use skills — do not combine with isNew */
+  isCommon?: boolean;
   /** Ordered essentials path (1-based) */
   step?: number;
   /** Unnumbered essentials rank after step (lower first) */
@@ -166,6 +168,7 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "Turn unclear intent into an accepted outcome and compare viable approaches before delivery.",
     descriptionVi: "Biến ý định còn mơ hồ thành kết quả đã chốt và so sánh các hướng khả thi trước khi làm xong.",
     category: "essentials",
+    isCommon: true,
     step: 3,
     argumentHint: "[topic or problem] [--advice] [--html] [--report] [--ultra] [--yagni] [--no-antv|--no-diagram-design|--no-editorial-visuals]",
     args: ["[topic or problem]"],
@@ -196,6 +199,7 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "Review code quality with evidence-based rigor. Supports input modes: pending changes, PR number, commit hash, and codebase scan. Focuses on bugs, regressions, maintainability, reliability, and verification gaps.",
     descriptionVi: "Rà soát chất lượng mã theo bằng chứng, nhận thay đổi đang chờ, số PR, hash commit hoặc quét mã nguồn, tập trung bug, hồi quy, khả năng bảo trì, độ tin cậy, và chỗ thiếu kiểm chứng.",
     category: "testDebug",
+    isCommon: true,
     argumentHint: "[#PR | COMMIT | --pending | codebase [parallel]] [--ultra] [--advice] [--yagni]",
     args: ["[#PR]", "[COMMIT]", "[codebase]"],
     flags: ["--advice", "--pending", "--ultra", "--yagni"],
@@ -246,6 +250,7 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "Implement features, plans, and fixes with structured workflow. Use for feature development, plan execution, code implementation pipelines.",
     descriptionVi: "Làm tính năng, thực hiện kế hoạch và sửa lỗi theo quy trình có bước rõ. Dùng khi phát triển tính năng, chạy kế hoạch, hoặc viết mã theo pipeline.",
     category: "essentials",
+    isCommon: true,
     step: 6,
     argumentHint: "[task|plan-path] [--interactive|--fast|--parallel|--auto|--no-test] [--tdd] [--advice] [--yagni] [--skip-journal]",
     args: ["[task|plan-path]"],
@@ -289,6 +294,7 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "Debug systematically with root cause analysis before fixes. Use for bugs, test failures, unexpected behavior, performance issues, call stack tracing, multi-layer validation, log analysis, CI/CD failures, database diagnostics, system investigation.",
     descriptionVi: "Gỡ lỗi có hệ thống, tìm nguyên nhân gốc trước khi sửa. Dùng khi gặp lỗi, test fail, hành vi lạ, chậm máy, lần call stack, kiểm nhiều lớp, đọc log, CI/CD hỏng, chẩn đoán cơ sở dữ liệu, hoặc điều tra hệ thống.",
     category: "testDebug",
+    isCommon: true,
     argumentHint: "[error or issue description] [--ultra]",
     args: ["[error or issue description]"],
     flags: ["--ultra"],
@@ -404,6 +410,7 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "Fix bugs, errors, test failures, and CI/CD issues with intelligent routing. Use for type errors, lint issues, log errors, UI bugs, code problems.",
     descriptionVi: "Sửa bug, lỗi, test thất bại và sự cố CI/CD, tự chọn đường xử lý phù hợp. Dùng khi gặp lỗi kiểu, lint, log, bug giao diện, hoặc vấn đề trong mã.",
     category: "buildShip",
+    isCommon: true,
     argumentHint: "[issue] --auto|--review|--quick|--parallel [--ultra] [--advice] [--skip-journal]",
     args: ["[issue]"],
     flags: ["--advice", "--auto", "--parallel", "--quick", "--review", "--skip-journal", "--ultra"],
@@ -443,6 +450,7 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "Git operations with conventional commits. Use for staging, committing, pushing, PRs, merges, and stacked PRs. Auto-splits commits by type/scope. Security scans for secrets.",
     descriptionVi: "Làm thao tác Git với conventional commit, gồm stage, commit, push, PR, merge và stacked PR. Tự tách commit theo type/scope và rà secret.",
     category: "gitVersionControl",
+    isCommon: true,
     argumentHint: "cm|cp|pr|merge|merge-pr|stack [args]",
     subcommands: ["cm", "cp", "pr", "merge", "merge-pr", "stack"],
     args: ["[args]"],
@@ -692,6 +700,7 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "Plan implementations, design architectures, create technical roadmaps with detailed phases. Use for feature planning, system design, solution architecture, implementation strategy, phase documentation, editorial self-contained HTML plan artifacts with --html, and AgentWiki publishing with --wiki.",
     descriptionVi: "Lập kế hoạch implement, thiết kế kiến trúc, roadmap kỹ thuật theo pha. Dùng khi plan feature, thiết kế hệ thống, chiến lược implement, tài liệu pha, HTML plan với --html, và publish AgentWiki với --wiki.",
     category: "essentials",
+    isCommon: true,
     step: 4,
     argumentHint: "[task] [--fast|--hard|--deep|--parallel|--two|--debate|--ultra] [--tdd|--no-tasks] [--html] [--github] [--wiki] [--advice] [--yagni] [--skip-journal] [--no-antv|--no-diagram-design|--no-editorial-visuals] OR [archive|red-team|validate]",
     subcommands: ["archive", "red-team", "validate"],
@@ -854,6 +863,7 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "Fast codebase scouting using native search, optional Explore agents, and user-permitted OpenCode probes. Use for file discovery, task context gathering, and scoped searches across directories.",
     descriptionVi: "Rà nhanh mã nguồn bằng tìm kiếm sẵn có, agent Explore tùy chọn, và OpenCode probe khi được phép. Dùng khi cần tìm file, gom ngữ cảnh cho việc, hoặc tìm có phạm vi trong thư mục.",
     category: "planResearch",
+    isCommon: true,
     argumentHint: "[search-target] [ext] [--ultra]",
     args: ["[search-target]", "[ext]"],
     flags: ["--ultra"],
@@ -907,6 +917,7 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "Ship a completed branch through tests, review, commit, push, and PR creation. Supports official/beta aliases, Kongming advice, optional reviewed merge with CI convergence, dual-target --both, and social posting flags.",
     descriptionVi: "Đưa nhánh đã xong qua test, rà soát, commit, push và tạo PR. Hỗ trợ alias official/beta, khuyên Kongming (--advice), merge kèm theo CI, --both hai đích, và cờ đăng social.",
     category: "buildShip",
+    isCommon: true,
     argumentHint: "[official|stable|main|beta|dev|next] [--both] [--advice] [--merge] [--skip-tests] [--skip-review] [--skip-journal] [--skip-docs] [--social] [--yes-post] [--yes-post-private] [--dry-run]",
     subcommands: ["official", "stable", "main", "beta", "dev", "next"],
     flags: ["--advice", "--both", "--dry-run", "--merge", "--skip-docs", "--skip-journal", "--skip-review", "--skip-tests", "--social", "--yes-post", "--yes-post-private"],
@@ -1009,6 +1020,7 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "Run unit, integration, e2e, and UI tests. Use for test execution, coverage analysis, build verification, visual regression, and QA reports.",
     descriptionVi: "Chạy unit, integration, e2e và UI test. Dùng khi chạy test, xem coverage, kiểm build, visual regression hoặc báo cáo QA.",
     category: "testDebug",
+    isCommon: true,
     argumentHint: "[context] OR ui [url] OR create|optimize|audit [scope] [--advice] [--ultra] [--interview]",
     subcommands: ["ui", "create", "optimize", "audit"],
     args: ["[context]", "[url]"],
