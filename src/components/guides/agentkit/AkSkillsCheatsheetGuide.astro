@@ -322,6 +322,8 @@ const engGroups = groupSkills(akEngineerSkills, akEngineerGroupOrder);
 const mktGroups = groupSkills(akMarketingSkills, akMarketingGroupOrder);
 const engNewCount = akEngineerSkills.filter((s) => s.isNew).length;
 const mktNewCount = akMarketingSkills.filter((s) => s.isNew).length;
+const engCommonCount = akEngineerSkills.filter((s) => s.isCommon).length;
+const mktCommonCount = akMarketingSkills.filter((s) => s.isCommon).length;
 
 
 const legend = isVi
@@ -435,6 +437,18 @@ const accent = {
           NEW
           <span data-ak-new-count class="rounded bg-amber-200/80 px-1 font-mono text-[10px] font-semibold normal-case tracking-normal text-amber-900 dark:bg-amber-500/20 dark:text-amber-100">{engNewCount}</span>
         </button>
+        <button
+          type="button"
+          data-ak-common-filter
+          aria-pressed="false"
+          data-count-engineer={String(engCommonCount)}
+          data-count-marketing={String(mktCommonCount)}
+          aria-label={isVi ? 'Chỉ hiện skill COMMON' : 'Show only COMMON skills'}
+          class="inline-flex items-center gap-1.5 rounded-md border border-sky-300 bg-sky-50 px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wide text-sky-800 transition hover:border-sky-400 dark:border-sky-500/40 dark:bg-sky-950/40 dark:text-sky-200"
+        >
+          COMMON
+          <span data-ak-common-count class="rounded bg-sky-200/80 px-1 font-mono text-[10px] font-semibold normal-case tracking-normal text-sky-900 dark:bg-sky-500/20 dark:text-sky-100">{engCommonCount}</span>
+        </button>
       </div>
     </div>
   </section>
@@ -515,7 +529,7 @@ const accent = {
         </div>
         <div class="grid gap-3 p-4 sm:grid-cols-2 sm:p-5 xl:grid-cols-3">
           {skills.map((s) => (
-            <article data-ak-skill-card data-new={s.isNew ? 'true' : 'false'} class={`group flex flex-col rounded-2xl border border-slate-200/80 bg-white/90 p-4 shadow-sm transition hover:-translate-y-0.5 dark:border-white/10 dark:bg-slate-950/60 ${accent.engineer.hover}`}>
+            <article data-ak-skill-card data-new={s.isNew ? 'true' : 'false'} data-common={s.isCommon ? 'true' : 'false'} class={`group flex flex-col rounded-2xl border border-slate-200/80 bg-white/90 p-4 shadow-sm transition hover:-translate-y-0.5 dark:border-white/10 dark:bg-slate-950/60 ${accent.engineer.hover}`}>
               <div class="flex items-start justify-between gap-2">
                 <div class="flex min-w-0 flex-wrap items-center gap-1.5">
                   {s.step && (
@@ -529,6 +543,9 @@ const accent = {
                   )}
                   {s.isNew && (
                     <span class="rounded bg-amber-100 px-1.5 py-0.5 text-[9px] font-medium uppercase text-amber-700 dark:bg-amber-900/30 dark:text-amber-300">NEW</span>
+                  )}
+                  {s.isCommon && (
+                    <span class="rounded bg-sky-100 px-1.5 py-0.5 text-[9px] font-medium uppercase text-sky-700 dark:bg-sky-900/30 dark:text-sky-300">COMMON</span>
                   )}
                 </div>
                 <button type="button" class="ak-copy-btn shrink-0 rounded-lg border border-slate-200 p-1.5 text-slate-400 hover:border-teal-300 hover:text-teal-600 dark:border-white/10 dark:hover:border-teal-400/30" data-code={s.command} title="Copy" aria-label={`Copy ${s.command}`}>
@@ -577,6 +594,9 @@ const accent = {
     ))}
     <p data-ak-new-empty class="hidden rounded-2xl border border-dashed border-amber-300/70 bg-amber-50/50 px-4 py-8 text-center text-sm text-slate-600 dark:border-amber-500/30 dark:bg-amber-950/20 dark:text-slate-300">
       {isVi ? 'Không có skill NEW trong kit này' : 'No NEW skills in this kit'}
+    </p>
+    <p data-ak-common-empty class="hidden rounded-2xl border border-dashed border-sky-300/70 bg-sky-50/50 px-4 py-8 text-center text-sm text-slate-600 dark:border-sky-500/30 dark:bg-sky-950/20 dark:text-slate-300">
+      {isVi ? 'Không có skill COMMON trong kit này' : 'No COMMON skills in this kit'}
     </p>
   </div>
 
@@ -640,7 +660,7 @@ const accent = {
         </div>
         <div class="grid gap-3 p-4 sm:grid-cols-2 sm:p-5 xl:grid-cols-3">
           {skills.map((s) => (
-            <article data-ak-skill-card data-new={s.isNew ? 'true' : 'false'} class={`group flex flex-col rounded-2xl border border-slate-200/80 bg-white/90 p-4 shadow-sm transition hover:-translate-y-0.5 dark:border-white/10 dark:bg-slate-950/60 ${accent.marketing.hover}`}>
+            <article data-ak-skill-card data-new={s.isNew ? 'true' : 'false'} data-common={s.isCommon ? 'true' : 'false'} class={`group flex flex-col rounded-2xl border border-slate-200/80 bg-white/90 p-4 shadow-sm transition hover:-translate-y-0.5 dark:border-white/10 dark:bg-slate-950/60 ${accent.marketing.hover}`}>
               <div class="flex items-start justify-between gap-2">
                 <div class="flex min-w-0 flex-wrap items-center gap-1.5">
                   {s.step && (
@@ -654,6 +674,9 @@ const accent = {
                   )}
                   {s.isNew && (
                     <span class="rounded bg-amber-100 px-1.5 py-0.5 text-[9px] font-medium uppercase text-amber-700 dark:bg-amber-900/30 dark:text-amber-300">NEW</span>
+                  )}
+                  {s.isCommon && (
+                    <span class="rounded bg-sky-100 px-1.5 py-0.5 text-[9px] font-medium uppercase text-sky-700 dark:bg-sky-900/30 dark:text-sky-300">COMMON</span>
                   )}
                 </div>
                 <button type="button" class="ak-copy-btn shrink-0 rounded-lg border border-slate-200 p-1.5 text-slate-400 hover:border-fuchsia-300 hover:text-fuchsia-600 dark:border-white/10 dark:hover:border-fuchsia-400/30" data-code={s.command} title="Copy" aria-label={`Copy ${s.command}`}>
@@ -703,6 +726,9 @@ const accent = {
     <p data-ak-new-empty class="hidden rounded-2xl border border-dashed border-amber-300/70 bg-amber-50/50 px-4 py-8 text-center text-sm text-slate-600 dark:border-amber-500/30 dark:bg-amber-950/20 dark:text-slate-300">
       {isVi ? 'Không có skill NEW trong kit này' : 'No NEW skills in this kit'}
     </p>
+    <p data-ak-common-empty class="hidden rounded-2xl border border-dashed border-sky-300/70 bg-sky-50/50 px-4 py-8 text-center text-sm text-slate-600 dark:border-sky-500/30 dark:bg-sky-950/20 dark:text-slate-300">
+      {isVi ? 'Không có skill COMMON trong kit này' : 'No COMMON skills in this kit'}
+    </p>
   </div>
 
   <AkNextLinks
@@ -743,48 +769,80 @@ const accent = {
 
     const tabs = root.querySelectorAll<HTMLButtonElement>('[data-ak-kit-tab]');
     const panels = root.querySelectorAll<HTMLElement>('[data-ak-kit-panel]');
-    const filterBtn = root.querySelector<HTMLButtonElement>('[data-ak-new-filter]');
+    const newBtn = root.querySelector<HTMLButtonElement>('[data-ak-new-filter]');
+    const commonBtn = root.querySelector<HTMLButtonElement>('[data-ak-common-filter]');
 
-    const applyNewFilter = () => {
-      const on = filterBtn?.getAttribute('aria-pressed') === 'true';
+    const styleChip = (
+      btn: HTMLButtonElement | null,
+      on: boolean,
+      countSel: string,
+      onBtn: string,
+      offBtn: string,
+      onCount: string,
+      offCount: string,
+    ) => {
+      if (!btn) return;
       const activeKit = root.querySelector('[data-ak-kit-tab][aria-selected="true"]')?.getAttribute('data-ak-kit-tab') || 'engineer';
-      const countEl = filterBtn?.querySelector('[data-ak-new-count]');
-      if (countEl && filterBtn) {
-        countEl.textContent = filterBtn.getAttribute(activeKit === 'marketing' ? 'data-count-marketing' : 'data-count-engineer') || '0';
+      const countEl = btn.querySelector(countSel);
+      if (countEl) {
+        countEl.textContent = btn.getAttribute(activeKit === 'marketing' ? 'data-count-marketing' : 'data-count-engineer') || '0';
+        countEl.className = on ? onCount : offCount;
       }
-      if (filterBtn) {
-        filterBtn.className = on
-          ? 'inline-flex items-center gap-1.5 rounded-md border border-amber-500 bg-amber-500 px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wide text-white shadow-sm shadow-amber-500/30 transition'
-          : 'inline-flex items-center gap-1.5 rounded-md border border-amber-300 bg-amber-50 px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wide text-amber-800 transition hover:border-amber-400 dark:border-amber-500/40 dark:bg-amber-950/40 dark:text-amber-200';
-        const countChip = filterBtn.querySelector('[data-ak-new-count]');
-        if (countChip) {
-          countChip.className = on
-            ? 'rounded bg-white/25 px-1 font-mono text-[10px] font-semibold normal-case tracking-normal text-white'
-            : 'rounded bg-amber-200/80 px-1 font-mono text-[10px] font-semibold normal-case tracking-normal text-amber-900 dark:bg-amber-500/20 dark:text-amber-100';
-        }
-      }
+      btn.className = on ? onBtn : offBtn;
+    };
+
+    const applySkillFilters = () => {
+      const newOn = newBtn?.getAttribute('aria-pressed') === 'true';
+      const commonOn = commonBtn?.getAttribute('aria-pressed') === 'true';
+      const filtering = newOn || commonOn;
+      const attr = newOn ? 'data-new' : commonOn ? 'data-common' : '';
+
+      styleChip(
+        newBtn,
+        newOn,
+        '[data-ak-new-count]',
+        'inline-flex items-center gap-1.5 rounded-md border border-amber-500 bg-amber-500 px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wide text-white shadow-sm shadow-amber-500/30 transition',
+        'inline-flex items-center gap-1.5 rounded-md border border-amber-300 bg-amber-50 px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wide text-amber-800 transition hover:border-amber-400 dark:border-amber-500/40 dark:bg-amber-950/40 dark:text-amber-200',
+        'rounded bg-white/25 px-1 font-mono text-[10px] font-semibold normal-case tracking-normal text-white',
+        'rounded bg-amber-200/80 px-1 font-mono text-[10px] font-semibold normal-case tracking-normal text-amber-900 dark:bg-amber-500/20 dark:text-amber-100',
+      );
+      styleChip(
+        commonBtn,
+        commonOn,
+        '[data-ak-common-count]',
+        'inline-flex items-center gap-1.5 rounded-md border border-sky-600 bg-sky-600 px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wide text-white shadow-sm shadow-sky-500/30 transition',
+        'inline-flex items-center gap-1.5 rounded-md border border-sky-300 bg-sky-50 px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wide text-sky-800 transition hover:border-sky-400 dark:border-sky-500/40 dark:bg-sky-950/40 dark:text-sky-200',
+        'rounded bg-white/25 px-1 font-mono text-[10px] font-semibold normal-case tracking-normal text-white',
+        'rounded bg-sky-200/80 px-1 font-mono text-[10px] font-semibold normal-case tracking-normal text-sky-900 dark:bg-sky-500/20 dark:text-sky-100',
+      );
+
       root.querySelectorAll('[data-ak-kit-panel]').forEach((panel) => {
         panel.querySelectorAll('[data-ak-skill-card]').forEach((card) => {
-          const isNew = card.getAttribute('data-new') === 'true';
-          card.classList.toggle('hidden', Boolean(on && !isNew));
+          const match = !attr || card.getAttribute(attr) === 'true';
+          card.classList.toggle('hidden', Boolean(filtering && !match));
         });
         panel.querySelectorAll('[data-ak-skill-group]').forEach((group) => {
           const visible = [...group.querySelectorAll('[data-ak-skill-card]')].some((c) => !c.classList.contains('hidden'));
-          group.classList.toggle('hidden', Boolean(on && !visible));
+          group.classList.toggle('hidden', Boolean(filtering && !visible));
           const count = group.querySelector('[data-ak-group-count]');
           if (count) {
-            count.textContent = on
-              ? String(group.querySelectorAll('[data-ak-skill-card][data-new="true"]').length)
+            count.textContent = filtering && attr
+              ? String(group.querySelectorAll(`[data-ak-skill-card][${attr}="true"]`).length)
               : (count.getAttribute('data-total') || '0');
           }
         });
         panel.querySelectorAll('[data-ak-beta-preview]').forEach((el) => {
-          el.classList.toggle('hidden', Boolean(on));
+          el.classList.toggle('hidden', filtering);
         });
-        const empty = panel.querySelector('[data-ak-new-empty]');
-        if (empty) {
+        const newEmpty = panel.querySelector('[data-ak-new-empty]');
+        if (newEmpty) {
           const any = panel.querySelectorAll('[data-ak-skill-card][data-new="true"]').length > 0;
-          empty.classList.toggle('hidden', !on || any);
+          newEmpty.classList.toggle('hidden', !newOn || any);
+        }
+        const commonEmpty = panel.querySelector('[data-ak-common-empty]');
+        if (commonEmpty) {
+          const any = panel.querySelectorAll('[data-ak-skill-card][data-common="true"]').length > 0;
+          commonEmpty.classList.toggle('hidden', !commonOn || any);
         }
       });
     };
@@ -807,14 +865,21 @@ const accent = {
         panels.forEach((p) => {
           p.classList.toggle('hidden', p.getAttribute('data-ak-kit-panel') !== id);
         });
-        applyNewFilter();
+        applySkillFilters();
       });
     });
 
-    filterBtn?.addEventListener('click', () => {
-      const next = filterBtn.getAttribute('aria-pressed') !== 'true';
-      filterBtn.setAttribute('aria-pressed', next ? 'true' : 'false');
-      applyNewFilter();
+    newBtn?.addEventListener('click', () => {
+      const next = newBtn.getAttribute('aria-pressed') !== 'true';
+      newBtn.setAttribute('aria-pressed', next ? 'true' : 'false');
+      if (next) commonBtn?.setAttribute('aria-pressed', 'false');
+      applySkillFilters();
+    });
+    commonBtn?.addEventListener('click', () => {
+      const next = commonBtn.getAttribute('aria-pressed') !== 'true';
+      commonBtn.setAttribute('aria-pressed', next ? 'true' : 'false');
+      if (next) newBtn?.setAttribute('aria-pressed', 'false');
+      applySkillFilters();
     });
 
     root.querySelectorAll<HTMLButtonElement>('.ak-copy-btn:not([data-bound])').forEach((btn) => {

@@ -6,6 +6,7 @@ Agent skill: `/vk:sync-ak-skill-details`.
 | File | Role |
 | --- | --- |
 | `skill-details-lock.json` | Per-page source path + sha256 of the SKILL.md used to author `/guides/agentkit/skills/{engineer\|marketing}/{id}` |
+| `cheatsheet-badges.json` | Editorial NEW / COMMON ids for `agentkit-skills-cheatsheet.ts` (not kit facts) |
 Guide prose lives in `src/data/guides/agentkit-skill-details/`. The lock does not publish copy.
 
 ## After an AgentKit kit bump
@@ -19,5 +20,16 @@ node scripts/check-ak-skill-details.mjs --kit-root /path/to/agentkit
 
 3. For each `~ kit/id` line, re-author that detail TS file from the new `SKILL.md` (do not invent flags).
 4. Re-run with `--write-lock`.
+5. Re-apply cheatsheet badges (after any hint/flag rewrite):
+
+```bash
+node scripts/check-ak-cheatsheet-badges.mjs --write
+```
+
+Badge check without writing:
+
+```bash
+node scripts/check-ak-cheatsheet-badges.mjs
+```
 
 Current lock: AgentKit **2.14.0** (`405ea37`).

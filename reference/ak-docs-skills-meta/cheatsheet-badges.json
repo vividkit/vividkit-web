@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "kit": "engineer",
+  "source": "src/data/guides/agentkit-skills-cheatsheet.ts",
+  "rules": [
+    "isNew and isCommon never share a row",
+    "NEW is editorial callout for recently added skills",
+    "COMMON is daily-use Engineer skills",
+    "Re-apply after kit SKILL.md / cheatsheet hint-flag rewrites"
+  ],
+  "new": [
+    "ak-bro",
+    "ak-sowat",
+    "ak-sumup",
+    "ak-handover",
+    "ak-orchestrate"
+  ],
+  "common": [
+    "ak-brainstorm",
+    "ak-plan",
+    "ak-cook",
+    "ak-scout",
+    "ak-fix",
+    "ak-ship",
+    "ak-git",
+    "ak-code-review",
+    "ak-debug",
+    "ak-test"
+  ]
+}
