@@ -25,8 +25,12 @@ export interface AkSkillEntry {
   flags?: string[];
   /** Dual-list with Beta Preview (CK convention) */
   isBeta?: boolean;
+  /** Emerald NEW badge on cheatsheet cards — distinct from isBeta */
+  isNew?: boolean;
   /** Ordered essentials path (1-based) */
   step?: number;
+  /** Unnumbered essentials rank after step (lower first) */
+  order?: number;
 }
 
 export const akEngineerSkills: AkSkillEntry[] = [
@@ -36,7 +40,8 @@ export const akEngineerSkills: AkSkillEntry[] = [
     commandCodex: "$ak:advise",
     description: "Interview-driven advisory skill. Analyzes a prompt or URL (GitHub issue, spec, doc), scouts the codebase, interviews the user one question at a time to reframe the problem into exact requirements and goals, then delivers honest advice: what to do, what to avoid, better alternatives, benefits and trade-offs. Use when the user asks for advice, a second opinion, a sanity check, requirement reframing before committing to a direction, or wants an existing plan or design pressure-tested (grilled) one question at a time.",
     descriptionVi: "Phân tích prompt hoặc URL (issue GitHub, spec, tài liệu), rà soát mã nguồn, rồi hỏi từng câu một để viết lại vấn đề thành yêu cầu và mục tiêu rõ, sau đó khuyên thẳng nên làm gì, nên tránh gì, phương án tốt hơn cùng lợi ích và đánh đổi. Dùng khi cần lời khuyên, ý kiến thứ hai, kiểm tra lại, viết lại yêu cầu trước khi chọn hướng, hoặc muốn soi kỹ kế hoạch hay thiết kế hiện có từng câu một.",
-    category: "planResearch",
+    category: "essentials",
+    order: 1,
     argumentHint: "[prompt-or-url] [--html] [--md] [--wiki] [--github] [--agent] [--ultra] [--yagni] [--no-antv|--no-diagram-design|--no-editorial-visuals]",
     args: ["[prompt-or-url]"],
     flags: ["--agent", "--github", "--html", "--md", "--no-antv", "--no-diagram-design", "--no-editorial-visuals", "--ultra", "--wiki", "--yagni"],
@@ -149,7 +154,7 @@ export const akEngineerSkills: AkSkillEntry[] = [
     commandCodex: "$ak:bootstrap",
     description: "Bootstrap new projects with research, tech stack, design, planning, and implementation. Modes: full (default interactive), auto (explicit autonomous), fast (skip research), parallel (multi-agent).",
     descriptionVi: "Khởi tạo dự án mới kèm nghiên cứu, tech stack, thiết kế, lập kế hoạch và triển khai, với các mode full (mặc định hỏi từng bước), auto (tự chạy khi chỉ rõ), fast (bỏ nghiên cứu), parallel (nhiều agent).",
-    category: "essentials",
+    category: "buildShip",
     argumentHint: "[requirements] [--full|--auto|--fast|--parallel] [--ultra] [--yagni] [--skip-journal]",
     args: ["[requirements]"],
     flags: ["--auto", "--fast", "--full", "--parallel", "--skip-journal", "--ultra", "--yagni"],
@@ -172,7 +177,8 @@ export const akEngineerSkills: AkSkillEntry[] = [
     commandCodex: "$ak:bro",
     description: "Restate the assistant's last message in simpler, shorter, jargon-free language. Use when the user says ak:bro, simplify that, say it plainly, or explain it like a human.",
     descriptionVi: "Viết lại câu trả lời trước của AI cho gọn, dễ hiểu, bỏ thuật ngữ. Dùng khi muốn nói lại cho dễ, nói thường, hoặc giải thích như người.",
-    category: "utilities",
+    category: "essentials",
+    isNew: true,
   },
   {
     id: "ak-chrome-profile",
@@ -239,7 +245,7 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "Implement features, plans, and fixes with structured workflow. Use for feature development, plan execution, code implementation pipelines.",
     descriptionVi: "Làm tính năng, thực hiện kế hoạch và sửa lỗi theo quy trình có bước rõ. Dùng khi phát triển tính năng, chạy kế hoạch, hoặc viết mã theo pipeline.",
     category: "essentials",
-    step: 5,
+    step: 6,
     argumentHint: "[task|plan-path] [--interactive|--fast|--parallel|--auto|--no-test] [--tdd] [--advice] [--yagni] [--skip-journal]",
     args: ["[task|plan-path]"],
     flags: ["--advice", "--auto", "--fast", "--interactive", "--no-test", "--parallel", "--skip-journal", "--tdd", "--yagni"],
@@ -511,6 +517,7 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "Hand off in-progress work to a specifically selected coding agent by first capturing a portable handoff, then dispatching one single-job orchestration spec that points that agent at the captured artifact. Thin composition over /ak:handoff and /ak:orchestrate. Not for multi-job orchestration (use /ak:orchestrate) and not capture-only (use /ak:handoff).",
     descriptionVi: "Bàn giao việc đang làm sang đúng một coding agent đã chọn: ghi bản handoff mang đi được, rồi gửi một spec một việc trỏ agent đó vào bản ghi. Ghép mỏng trên /ak:handoff và /ak:orchestrate — không dùng để điều phối nhiều việc (dùng /ak:orchestrate) và không chỉ ghi bản (dùng /ak:handoff).",
     category: "sessionMgmt",
+    isNew: true,
     argumentHint: "[task] --agent <id> [--cwd PATH] [--task TEXT] [--handoff PATH] [--model NAME] [--yes]",
     args: ["[task]", "--agent <id>"],
     flags: ["--agent", "--cwd", "--handoff", "--model", "--task", "--yes"],
@@ -522,6 +529,7 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "Open the AgentKit help index. Use when users ask how to use ak, what skills are available, or which workflow to run.",
     descriptionVi: "Mở mục lục trợ giúp AgentKit. Dùng khi hỏi cách dùng CLI ak, skill nào có sẵn, hoặc nên chạy quy trình nào.",
     category: "essentials",
+    order: 3,
   },
   {
     id: "ak-html-video",
@@ -661,7 +669,8 @@ export const akEngineerSkills: AkSkillEntry[] = [
     commandCodex: "$ak:orchestrate",
     description: "Coordinate staged or parallel jobs across live-verified coding-agent runtimes and in-session subagents, using capability- and risk-based routing, worktree-isolated writes, resumable state, capture, safety gates, and independent arbiter review.",
     descriptionVi: "Điều phối việc theo giai đoạn hoặc song song trên runtime agent lập trình đã xác thực đang chạy và subagent trong phiên: chọn theo năng lực và rủi ro, ghi tách worktree, trạng thái nối lại được, ghi lại, cổng an toàn, và rà soát arbiter độc lập.",
-    category: "mcpIntegration",
+    category: "sessionMgmt",
+    isNew: true,
     argumentHint: "<job-spec.yaml | task description | --resume <run-dir>> [--yes] [--internal]",
     args: ["<job-spec.yaml | task description | --resume <run-dir>"],
     flags: ["--internal", "--resume", "--yes"],
@@ -716,7 +725,8 @@ export const akEngineerSkills: AkSkillEntry[] = [
     commandCodex: "$ak:preview",
     description: "View files or generate visual explanations, slides, and diagrams. Use for code walkthroughs, architecture visualization, HTML/Markdown presentations.",
     descriptionVi: "Xem file hoặc tạo giải thích bằng hình, slide và sơ đồ. Dùng khi cần đi từng phần mã nguồn, hình dung kiến trúc, hoặc làm bài trình bày HTML/Markdown.",
-    category: "aiMultimodal",
+    category: "essentials",
+    step: 5,
     argumentHint: "[path] OR [--html] --explain|--slides|--diagram|--ascii [topic] OR --html --diff|--plan-review|--recap [--no-antv|--no-diagram-design|--no-editorial-visuals]",
     args: ["[path]", "[topic]"],
     flags: ["--ascii", "--diagram", "--diff", "--explain", "--html", "--no-antv", "--no-diagram-design", "--no-editorial-visuals", "--plan-review", "--recap", "--slides"],
@@ -940,6 +950,7 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "Analyze recently implemented work and related issues like a product owner. Use to identify high-impact next steps, challenge weak priorities, and explain what matters now.",
     descriptionVi: "Xem việc vừa làm và issue liên quan như product owner: chọn bước tiếp theo đáng làm, phản biện ưu tiên yếu, và nói rõ điều quan trọng lúc này.",
     category: "planResearch",
+    isNew: true,
   },
   {
     id: "ak-stitch",
@@ -958,6 +969,7 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "Summarize completed implementation, failures, workarounds, decisions, behavior, architecture, usage, follow-ups, and next steps. Use after implementation or for a technical recap.",
     descriptionVi: "Tóm việc đã làm: kết quả, chỗ fail, cách xử lý tạm, quyết định, hành vi, kiến trúc, cách dùng, việc còn lại và bước tiếp. Dùng sau khi implement hoặc khi cần recap kỹ thuật.",
     category: "sessionMgmt",
+    isNew: true,
   },
   {
     id: "ak-tanstack",
@@ -1047,6 +1059,7 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "Run the full vibe pipeline from request intake to PR readiness, with optional merge and post-merge CI convergence. Orchestrates worktree, plan, cook/fix, code-review, ship, and review-pr. Supports dual-stage beta-then-stable ships via --both and kongming advisory supervision via --advice. Use for GitHub issues, feature requests, bug fixes, or autonomous ship runs.",
     descriptionVi: "Chạy pipeline vibe từ nhận yêu cầu tới sẵn sàng PR, tùy chọn gộp nhánh và chờ CI khớp sau khi gộp; điều phối worktree, plan, cook/fix, code-review, ship và review-pr, hỗ trợ ship beta rồi ổn định bằng --both và giám sát tư vấn kongming bằng --advice. Dùng khi xử lý GitHub issue, yêu cầu tính năng, sửa lỗi hoặc lần ship tự chạy.",
     category: "essentials",
+    order: 2,
     argumentHint: "[--ship] [--beta] [--both] [--advice] <github-issue-url | feature request>",
     args: ["<github-issue-url | feature request>"],
     flags: ["--ship", "--beta", "--both", "--advice"],

@@ -29,8 +29,8 @@ const groupLabels: Record<string, { en: string; vi: string; descEn: string; desc
   essentials: {
     en: 'Start Here (Essentials)',
     vi: 'Bắt đầu từ đây',
-    descEn: 'Core path: Level → Ask → Brainstorm → Plan → Execute',
-    descVi: 'Lộ trình chính: Level → Ask → Brainstorm → Plan → Execute',
+    descEn: 'Core path: Level → Ask → Brainstorm → Plan → Preview → Execute',
+    descVi: 'Lộ trình chính: Level → Ask → Brainstorm → Plan → Preview → Execute',
   },
   planResearch: {
     en: 'Plan & Research',
@@ -89,8 +89,8 @@ const groupLabels: Record<string, { en: string; vi: string; descEn: string; desc
   sessionMgmt: {
     en: 'Session Management',
     vi: 'Quản lý phiên làm việc',
-    descEn: 'Handoffs, handover to another runtime, journals, and context',
-    descVi: 'Bàn giao việc, chuyển sang runtime khác, nhật ký, và ngữ cảnh',
+    descEn: 'Handoffs, handover, orchestration, journals, and context',
+    descVi: 'Bàn giao việc, điều phối agent, nhật ký, và ngữ cảnh',
   },
   projectTracking: {
     en: 'Project Tracking',
@@ -301,6 +301,9 @@ function groupSkills(skills: AkSkillEntry[], order: AkGroupMeta[]) {
       const sa = a.step ?? 999;
       const sb = b.step ?? 999;
       if (sa !== sb) return sa - sb;
+      const oa = a.order ?? 999;
+      const ob = b.order ?? 999;
+      if (oa !== ob) return oa - ob;
       return a.command.localeCompare(b.command);
     });
   }
@@ -317,6 +320,9 @@ function groupSkills(skills: AkSkillEntry[], order: AkGroupMeta[]) {
 
 const engGroups = groupSkills(akEngineerSkills, akEngineerGroupOrder);
 const mktGroups = groupSkills(akMarketingSkills, akMarketingGroupOrder);
+const engNewCount = akEngineerSkills.filter((s) => s.isNew).length;
+const mktNewCount = akMarketingSkills.filter((s) => s.isNew).length;
+
 
 const legend = isVi
   ? [
@@ -407,12 +413,27 @@ const accent = {
         </div>
       </div>
 
-      <div class="flex flex-wrap gap-2" role="tablist" aria-label="Kit">
-        <button type="button" data-ak-kit-tab="engineer" class={`ak-kit-tab rounded-full px-4 py-2 text-sm font-semibold transition ${accent.engineer.tabOn}`} aria-selected="true">
-          Engineer Kit
-        </button>
-        <button type="button" data-ak-kit-tab="marketing" class="ak-kit-tab rounded-full px-4 py-2 text-sm font-semibold transition bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300" aria-selected="false">
-          Marketing Kit
+      <div class="flex flex-wrap items-center gap-2">
+        <div class="flex flex-wrap gap-2" role="tablist" aria-label="Kit">
+          <button type="button" data-ak-kit-tab="engineer" class={`ak-kit-tab rounded-full px-4 py-2 text-sm font-semibold transition ${accent.engineer.tabOn}`} aria-selected="true">
+            Engineer Kit
+          </button>
+          <button type="button" data-ak-kit-tab="marketing" class="ak-kit-tab rounded-full px-4 py-2 text-sm font-semibold transition bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300" aria-selected="false">
+            Marketing Kit
+          </button>
+        </div>
+        <span class="hidden h-5 w-px bg-slate-200 sm:block dark:bg-white/15" aria-hidden="true"></span>
+        <button
+          type="button"
+          data-ak-new-filter
+          aria-pressed="false"
+          data-count-engineer={String(engNewCount)}
+          data-count-marketing={String(mktNewCount)}
+          aria-label={isVi ? 'Chỉ hiện skill NEW' : 'Show only NEW skills'}
+          class="inline-flex items-center gap-1.5 rounded-md border border-amber-300 bg-amber-50 px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wide text-amber-800 transition hover:border-amber-400 dark:border-amber-500/40 dark:bg-amber-950/40 dark:text-amber-200"
+        >
+          NEW
+          <span data-ak-new-count class="rounded bg-amber-200/80 px-1 font-mono text-[10px] font-semibold normal-case tracking-normal text-amber-900 dark:bg-amber-500/20 dark:text-amber-100">{engNewCount}</span>
         </button>
       </div>
     </div>
@@ -421,7 +442,7 @@ const accent = {
   {/* Engineer panel */}
   <div data-ak-kit-panel="engineer" class="space-y-5">
     {/* Beta Preview */}
-    <div class="overflow-hidden rounded-xl border-2 border-purple-400/60 bg-gradient-to-br from-purple-500/10 via-violet-500/5 to-pink-500/10 dark:border-purple-500/40">
+    <div data-ak-beta-preview class="overflow-hidden rounded-xl border-2 border-purple-400/60 bg-gradient-to-br from-purple-500/10 via-violet-500/5 to-pink-500/10 dark:border-purple-500/40">
       <div class="border-b border-purple-300/30 bg-gradient-to-r from-purple-600/10 to-violet-500/10 p-4 dark:border-purple-600/30">
         <h2 class="flex items-center gap-2 text-lg font-bold text-purple-600 dark:text-purple-400">
           <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -481,7 +502,7 @@ const accent = {
     </div>
 
     {engGroups.map(({ skills, label, styles, icon }) => (
-      <section class={`scroll-mt-32 overflow-hidden rounded-[1.65rem] border bg-white shadow-sm dark:bg-slate-950/40 ${styles.border}`}>
+      <section data-ak-skill-group class={`scroll-mt-32 overflow-hidden rounded-[1.65rem] border bg-white shadow-sm dark:bg-slate-950/40 ${styles.border}`}>
         <div class={`flex items-start justify-between gap-3 border-b px-5 py-4 ${styles.header} ${styles.bg}`}>
           <div class="min-w-0">
             <h2 class={`flex items-center gap-2 text-lg font-bold ${styles.text}`}>
@@ -490,11 +511,11 @@ const accent = {
             </h2>
             <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">{label.desc}</p>
           </div>
-          <span class={`shrink-0 font-mono text-sm ${styles.text}`}>{skills.length}</span>
+          <span class={`shrink-0 font-mono text-sm ${styles.text}`} data-ak-group-count data-total={skills.length}>{skills.length}</span>
         </div>
         <div class="grid gap-3 p-4 sm:grid-cols-2 sm:p-5 xl:grid-cols-3">
           {skills.map((s) => (
-            <article class={`group flex flex-col rounded-2xl border border-slate-200/80 bg-white/90 p-4 shadow-sm transition hover:-translate-y-0.5 dark:border-white/10 dark:bg-slate-950/60 ${accent.engineer.hover}`}>
+            <article data-ak-skill-card data-new={s.isNew ? 'true' : 'false'} class={`group flex flex-col rounded-2xl border border-slate-200/80 bg-white/90 p-4 shadow-sm transition hover:-translate-y-0.5 dark:border-white/10 dark:bg-slate-950/60 ${accent.engineer.hover}`}>
               <div class="flex items-start justify-between gap-2">
                 <div class="flex min-w-0 flex-wrap items-center gap-1.5">
                   {s.step && (
@@ -505,6 +526,9 @@ const accent = {
                   </a>
                   {s.isBeta && (
                     <span class="rounded bg-purple-100 px-1.5 py-0.5 text-[9px] font-medium uppercase text-purple-600 dark:bg-purple-900/30 dark:text-purple-400">beta</span>
+                  )}
+                  {s.isNew && (
+                    <span class="rounded bg-amber-100 px-1.5 py-0.5 text-[9px] font-medium uppercase text-amber-700 dark:bg-amber-900/30 dark:text-amber-300">NEW</span>
                   )}
                 </div>
                 <button type="button" class="ak-copy-btn shrink-0 rounded-lg border border-slate-200 p-1.5 text-slate-400 hover:border-teal-300 hover:text-teal-600 dark:border-white/10 dark:hover:border-teal-400/30" data-code={s.command} title="Copy" aria-label={`Copy ${s.command}`}>
@@ -551,11 +575,14 @@ const accent = {
         </div>
       </section>
     ))}
+    <p data-ak-new-empty class="hidden rounded-2xl border border-dashed border-amber-300/70 bg-amber-50/50 px-4 py-8 text-center text-sm text-slate-600 dark:border-amber-500/30 dark:bg-amber-950/20 dark:text-slate-300">
+      {isVi ? 'Không có skill NEW trong kit này' : 'No NEW skills in this kit'}
+    </p>
   </div>
 
   {/* Marketing panel */}
   <div data-ak-kit-panel="marketing" class="hidden space-y-5">
-    <div class="overflow-hidden rounded-xl border-2 border-purple-400/60 bg-gradient-to-br from-purple-500/10 via-violet-500/5 to-pink-500/10 dark:border-purple-500/40">
+    <div data-ak-beta-preview class="overflow-hidden rounded-xl border-2 border-purple-400/60 bg-gradient-to-br from-purple-500/10 via-violet-500/5 to-pink-500/10 dark:border-purple-500/40">
       <div class="border-b border-purple-300/30 bg-gradient-to-r from-purple-600/10 to-violet-500/10 p-4 dark:border-purple-600/30">
         <h2 class="flex items-center gap-2 text-lg font-bold text-purple-600 dark:text-purple-400">
           <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -600,7 +627,7 @@ const accent = {
     </div>
 
     {mktGroups.map(({ skills, label, styles, icon }) => (
-      <section class={`scroll-mt-32 overflow-hidden rounded-[1.65rem] border bg-white shadow-sm dark:bg-slate-950/40 ${styles.border}`}>
+      <section data-ak-skill-group class={`scroll-mt-32 overflow-hidden rounded-[1.65rem] border bg-white shadow-sm dark:bg-slate-950/40 ${styles.border}`}>
         <div class={`flex items-start justify-between gap-3 border-b px-5 py-4 ${styles.header} ${styles.bg}`}>
           <div class="min-w-0">
             <h2 class={`flex items-center gap-2 text-lg font-bold ${styles.text}`}>
@@ -609,11 +636,11 @@ const accent = {
             </h2>
             <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">{label.desc}</p>
           </div>
-          <span class={`shrink-0 font-mono text-sm ${styles.text}`}>{skills.length}</span>
+          <span class={`shrink-0 font-mono text-sm ${styles.text}`} data-ak-group-count data-total={skills.length}>{skills.length}</span>
         </div>
         <div class="grid gap-3 p-4 sm:grid-cols-2 sm:p-5 xl:grid-cols-3">
           {skills.map((s) => (
-            <article class={`group flex flex-col rounded-2xl border border-slate-200/80 bg-white/90 p-4 shadow-sm transition hover:-translate-y-0.5 dark:border-white/10 dark:bg-slate-950/60 ${accent.marketing.hover}`}>
+            <article data-ak-skill-card data-new={s.isNew ? 'true' : 'false'} class={`group flex flex-col rounded-2xl border border-slate-200/80 bg-white/90 p-4 shadow-sm transition hover:-translate-y-0.5 dark:border-white/10 dark:bg-slate-950/60 ${accent.marketing.hover}`}>
               <div class="flex items-start justify-between gap-2">
                 <div class="flex min-w-0 flex-wrap items-center gap-1.5">
                   {s.step && (
@@ -624,6 +651,9 @@ const accent = {
                   </a>
                   {s.isBeta && (
                     <span class="rounded bg-purple-100 px-1.5 py-0.5 text-[9px] font-medium uppercase text-purple-600 dark:bg-purple-900/30 dark:text-purple-400">beta</span>
+                  )}
+                  {s.isNew && (
+                    <span class="rounded bg-amber-100 px-1.5 py-0.5 text-[9px] font-medium uppercase text-amber-700 dark:bg-amber-900/30 dark:text-amber-300">NEW</span>
                   )}
                 </div>
                 <button type="button" class="ak-copy-btn shrink-0 rounded-lg border border-slate-200 p-1.5 text-slate-400 hover:border-fuchsia-300 hover:text-fuchsia-600 dark:border-white/10 dark:hover:border-fuchsia-400/30" data-code={s.command} title="Copy" aria-label={`Copy ${s.command}`}>
@@ -670,6 +700,9 @@ const accent = {
         </div>
       </section>
     ))}
+    <p data-ak-new-empty class="hidden rounded-2xl border border-dashed border-amber-300/70 bg-amber-50/50 px-4 py-8 text-center text-sm text-slate-600 dark:border-amber-500/30 dark:bg-amber-950/20 dark:text-slate-300">
+      {isVi ? 'Không có skill NEW trong kit này' : 'No NEW skills in this kit'}
+    </p>
   </div>
 
   <AkNextLinks
@@ -710,17 +743,62 @@ const accent = {
 
     const tabs = root.querySelectorAll<HTMLButtonElement>('[data-ak-kit-tab]');
     const panels = root.querySelectorAll<HTMLElement>('[data-ak-kit-panel]');
+    const filterBtn = root.querySelector<HTMLButtonElement>('[data-ak-new-filter]');
+
+    const applyNewFilter = () => {
+      const on = filterBtn?.getAttribute('aria-pressed') === 'true';
+      const activeKit = root.querySelector('[data-ak-kit-tab][aria-selected="true"]')?.getAttribute('data-ak-kit-tab') || 'engineer';
+      const countEl = filterBtn?.querySelector('[data-ak-new-count]');
+      if (countEl && filterBtn) {
+        countEl.textContent = filterBtn.getAttribute(activeKit === 'marketing' ? 'data-count-marketing' : 'data-count-engineer') || '0';
+      }
+      if (filterBtn) {
+        filterBtn.className = on
+          ? 'inline-flex items-center gap-1.5 rounded-md border border-amber-500 bg-amber-500 px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wide text-white shadow-sm shadow-amber-500/30 transition'
+          : 'inline-flex items-center gap-1.5 rounded-md border border-amber-300 bg-amber-50 px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wide text-amber-800 transition hover:border-amber-400 dark:border-amber-500/40 dark:bg-amber-950/40 dark:text-amber-200';
+        const countChip = filterBtn.querySelector('[data-ak-new-count]');
+        if (countChip) {
+          countChip.className = on
+            ? 'rounded bg-white/25 px-1 font-mono text-[10px] font-semibold normal-case tracking-normal text-white'
+            : 'rounded bg-amber-200/80 px-1 font-mono text-[10px] font-semibold normal-case tracking-normal text-amber-900 dark:bg-amber-500/20 dark:text-amber-100';
+        }
+      }
+      root.querySelectorAll('[data-ak-kit-panel]').forEach((panel) => {
+        panel.querySelectorAll('[data-ak-skill-card]').forEach((card) => {
+          const isNew = card.getAttribute('data-new') === 'true';
+          card.classList.toggle('hidden', Boolean(on && !isNew));
+        });
+        panel.querySelectorAll('[data-ak-skill-group]').forEach((group) => {
+          const visible = [...group.querySelectorAll('[data-ak-skill-card]')].some((c) => !c.classList.contains('hidden'));
+          group.classList.toggle('hidden', Boolean(on && !visible));
+          const count = group.querySelector('[data-ak-group-count]');
+          if (count) {
+            count.textContent = on
+              ? String(group.querySelectorAll('[data-ak-skill-card][data-new="true"]').length)
+              : (count.getAttribute('data-total') || '0');
+          }
+        });
+        panel.querySelectorAll('[data-ak-beta-preview]').forEach((el) => {
+          el.classList.toggle('hidden', Boolean(on));
+        });
+        const empty = panel.querySelector('[data-ak-new-empty]');
+        if (empty) {
+          const any = panel.querySelectorAll('[data-ak-skill-card][data-new="true"]').length > 0;
+          empty.classList.toggle('hidden', !on || any);
+        }
+      });
+    };
 
     tabs.forEach((tab) => {
       tab.addEventListener('click', () => {
         const id = tab.getAttribute('data-ak-kit-tab');
         tabs.forEach((t) => {
-          const on = t === tab;
-          t.setAttribute('aria-selected', on ? 'true' : 'false');
+          const selected = t === tab;
+          t.setAttribute('aria-selected', selected ? 'true' : 'false');
           const kit = t.getAttribute('data-ak-kit-tab');
-          if (on && kit === 'engineer') {
+          if (selected && kit === 'engineer') {
             t.className = 'ak-kit-tab rounded-full px-4 py-2 text-sm font-semibold transition bg-teal-600 text-white shadow-md shadow-teal-500/20';
-          } else if (on && kit === 'marketing') {
+          } else if (selected && kit === 'marketing') {
             t.className = 'ak-kit-tab rounded-full px-4 py-2 text-sm font-semibold transition bg-fuchsia-600 text-white shadow-md shadow-fuchsia-500/20';
           } else {
             t.className = 'ak-kit-tab rounded-full px-4 py-2 text-sm font-semibold transition bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300';
@@ -729,7 +807,14 @@ const accent = {
         panels.forEach((p) => {
           p.classList.toggle('hidden', p.getAttribute('data-ak-kit-panel') !== id);
         });
+        applyNewFilter();
       });
+    });
+
+    filterBtn?.addEventListener('click', () => {
+      const next = filterBtn.getAttribute('aria-pressed') !== 'true';
+      filterBtn.setAttribute('aria-pressed', next ? 'true' : 'false');
+      applyNewFilter();
     });
 
     root.querySelectorAll<HTMLButtonElement>('.ak-copy-btn:not([data-bound])').forEach((btn) => {

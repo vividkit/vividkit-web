@@ -138,6 +138,46 @@ const wizardSteps = isVi
       : 'Know which AgentKit command upgrades the ak CLI, refreshes Kits, or targets a single kit.'}
     badges={isVi ? ['self-update ≠ update'] : ['self-update ≠ update']}
   />
+  <AkCallout variant="tip" title={isVi ? 'Không rành dòng lệnh? Dùng AgentKit Helper' : 'Not comfortable with the command line? Use AgentKit Helper'}>
+    {isVi ? (
+      <>
+        <p>
+          Helper hiện menu từng bước: bạn chọn, nó hiện đúng lệnh CLI ak rồi chạy giúp.
+          Không thay CLI ak hay Desktop App. Cần Node.js 20.12+ và CLI ak đã cài.
+        </p>
+        <div class="mt-3">
+          <AkCodeBlock title="npx" code="npx --yes @thieung/agentkit-helper" />
+        </div>
+        <p class="mt-3">
+          <a
+            class="font-semibold text-teal-800 underline-offset-2 hover:underline dark:text-teal-200"
+            href={translatePath('/guides/agentkit/helper')}
+          >
+            Xem hướng dẫn AgentKit Helper →
+          </a>
+        </p>
+      </>
+    ) : (
+      <>
+        <p>
+          Helper shows a step-by-step menu: you pick options, it shows the official ak CLI command, then runs it.
+          It does not replace the ak CLI or Desktop App. Needs Node.js 20.12+ and an installed ak CLI.
+        </p>
+        <div class="mt-3">
+          <AkCodeBlock title="npx" code="npx --yes @thieung/agentkit-helper" />
+        </div>
+        <p class="mt-3">
+          <a
+            class="font-semibold text-teal-800 underline-offset-2 hover:underline dark:text-teal-200"
+            href={translatePath('/guides/agentkit/helper')}
+          >
+            Open the AgentKit Helper guide →
+          </a>
+        </p>
+      </>
+    )}
+  </AkCallout>
+
   <AkSection
     eyebrow={isVi ? 'Thực hành' : 'Practice'}
     title={isVi ? 'Chọn nhanh' : 'Quick pick'}
@@ -502,7 +542,7 @@ ak kit refresh engineer --local --kits-dir ./kits --yes`}
     title={isVi ? 'Liên quan' : 'Related'}
     links={[
       { href: '/guides/agentkit/configuration', label: isVi ? 'config.yaml (updates.*)' : 'config.yaml (updates.*)' },
-      { href: '/guides/agentkit/helper', label: isVi ? 'AgentKit Helper (TUI)' : 'AgentKit Helper (TUI)' },
+      { href: '/guides/agentkit/helper', label: 'AgentKit Helper', desc: isVi ? 'Menu từng bước: hỏi rồi chạy lệnh CLI ak giúp bạn' : 'Step-by-step menu: asks, then runs the ak CLI for you' },
       { href: '/guides/agentkit/clean-reinstall', label: isVi ? 'Cài lại clean' : 'Clean reinstall' },
       { href: '/guides/agentkit/troubleshooting', label: isVi ? 'Xử lý sự cố' : 'Troubleshooting' },
       { href: '/guides/agentkit/getting-started', label: isVi ? 'Cài đặt' : 'Getting started' },
