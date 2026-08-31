@@ -10,6 +10,7 @@ const invocation: SkillInvocation = {
       descEn: 'Period to analyze. Accepts 7d, 2w, 1m, sprint, or YYYY-MM-DD:YYYY-MM-DD; defaults to 7d, and sprint asks for a start date when tags cannot define it.',
       descVi: 'Giai đoạn cần phân tích. Nhận 7d, 2w, 1m, sprint hoặc YYYY-MM-DD:YYYY-MM-DD; mặc định là 7d, và sprint sẽ hỏi ngày bắt đầu khi tag không xác định được.',
       exampleCommand: '/ak:retro 2026-07-15:2026-07-28',
+          exampleCommandVi: '/ak:retro 2026-07-15:2026-07-28',
     },
   ],
   options: [
@@ -20,6 +21,7 @@ const invocation: SkillInvocation = {
       descEn: 'Adds the preceding equal-length period and delta columns. It does not invent deltas when the previous window has no data.',
       descVi: 'Thêm giai đoạn liền trước có độ dài bằng nhau và cột delta. Không tạo delta khi cửa sổ trước không có dữ liệu.',
       exampleCommand: '/ak:retro 2w --compare',
+          exampleCommandVi: '/ak:retro 2w --compare',
     },
     {
       token: '--team',
@@ -28,6 +30,7 @@ const invocation: SkillInvocation = {
       descEn: 'Adds per-author commit counts and team velocity signals from Git email history; review privacy before sharing.',
       descVi: 'Thêm số commit theo tác giả và tín hiệu velocity của đội từ lịch sử email Git; cần xem xét riêng tư trước khi chia sẻ.',
       exampleCommand: '/ak:retro sprint --team',
+          exampleCommandVi: '/ak:retro sprint --team',
     },
     {
       token: '--format html|md',
@@ -36,6 +39,7 @@ const invocation: SkillInvocation = {
       descEn: 'Chooses Markdown or self-contained HTML output. HTML uses inline CSS and may include the additive editorial visual layer.',
       descVi: 'Chọn output Markdown hoặc HTML tự chứa. HTML dùng CSS inline và có thể thêm lớp trực quan biên tập bổ sung.',
       exampleCommand: '/ak:retro 1m --format html',
+          exampleCommandVi: '/ak:retro 1m --format html',
     },
     {
       token: '--no-antv',
@@ -44,6 +48,7 @@ const invocation: SkillInvocation = {
       descEn: 'Disables optional AntV panels for HTML output. Markdown output is unchanged.',
       descVi: 'Tắt các panel AntV tùy chọn cho output HTML. Output Markdown không đổi.',
       exampleCommand: '/ak:retro 1m --format html --no-antv',
+          exampleCommandVi: '/ak:retro 1m --format html --no-antv',
     },
     {
       token: '--no-diagram-design',
@@ -52,6 +57,7 @@ const invocation: SkillInvocation = {
       descEn: 'Disables the optional diagram-design treatment for HTML timelines, hotspots, or radar visuals.',
       descVi: 'Tắt treatment diagram-design tùy chọn cho timeline, hotspot hoặc radar trong HTML.',
       exampleCommand: '/ak:retro 1m --format html --no-diagram-design',
+          exampleCommandVi: '/ak:retro 1m --format html --no-diagram-design',
     },
     {
       token: '--no-editorial-visuals',
@@ -60,6 +66,7 @@ const invocation: SkillInvocation = {
       descEn: 'Disables all additive editorial visual layers for this HTML run; metric tables and formulas still render.',
       descVi: 'Tắt toàn bộ lớp trực quan biên tập bổ sung cho lần chạy HTML này; bảng chỉ số và công thức vẫn hiển thị.',
       exampleCommand: '/ak:retro 1m --format html --no-editorial-visuals',
+          exampleCommandVi: '/ak:retro 1m --format html --no-editorial-visuals',
     },
   ],
 };

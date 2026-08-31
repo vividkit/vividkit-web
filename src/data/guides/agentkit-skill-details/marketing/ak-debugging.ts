@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:debugging",
   kit: 'marketer',
   header: {
-    titleEn: "Root-cause debugging discipline",
-    titleVi: "Kỷ luật debug tận gốc",
+    titleEn: '/ak:debugging — Root-cause debugging discipline',
+    titleVi: '/ak:debugging — Kỷ luật debug tận gốc',
     taglineEn: "Forces root-cause investigation, backward tracing, defense-in-depth validation, and fresh verification before claiming bugs, tests, builds, or performance issues are fixed.",
     taglineVi: "Bắt buộc điều tra nguyên nhân gốc, truy vết ngược, validation nhiều lớp và xác minh mới trước khi tuyên bố đã sửa bug, test, build hoặc lỗi hiệu năng.",
   },
@@ -40,9 +40,12 @@ const data: SkillInfographic = {
   expertiseAreasEn: ["Systematic debugging", "Root-cause tracing", "Defense-in-depth", "Verification protocols", "Test failures", "Performance issues", "Build failures"],
   expertiseAreasVi: ["Debug có hệ thống", "Truy vết nguyên nhân gốc", "Phòng thủ nhiều lớp", "Quy trình xác minh", "Test failure", "Lỗi hiệu năng", "Build failure"],
   promptExamples: [
-    { labelEn: "Bug investigation", labelVi: "Điều tra bug", command: "/ak:debugging checkout submit fails with 500", whenEn: "Use when behavior is broken and the cause is not proven.", whenVi: "Dùng khi hành vi bị lỗi và nguyên nhân chưa được chứng minh.", expectedEn: "A root-cause-first investigation and source fix path.", expectedVi: "Luồng điều tra nguyên nhân gốc trước rồi sửa tại nguồn.", recommended: true },
-    { labelEn: "Test failure", labelVi: "Test fail", command: "/ak:debugging failing auth middleware tests", whenEn: "Use when a test failure needs evidence before code changes.", whenVi: "Dùng khi test fail cần bằng chứng trước khi sửa code.", expectedEn: "Failure reading, pattern comparison, hypothesis testing, and fresh verification.", expectedVi: "Đọc lỗi, so sánh pattern, kiểm giả thuyết và xác minh mới." },
-    { labelEn: "Performance issue", labelVi: "Lỗi hiệu năng", command: "/ak:debugging dashboard loads slowly", whenEn: "Use when performance is unexpectedly poor.", whenVi: "Dùng khi hiệu năng kém bất thường.", expectedEn: "Evidence-based tracing to the real bottleneck before optimization.", expectedVi: "Truy vết dựa trên bằng chứng đến đúng bottleneck trước khi tối ưu." },
+    { labelEn: "Bug investigation", labelVi: "Điều tra bug", command: "/ak:debugging checkout submit fails with 500",
+      commandVi: '/ak:debugging gửi checkout thất bại với lỗi 500', whenEn: "Use when behavior is broken and the cause is not proven.", whenVi: "Dùng khi hành vi bị lỗi và nguyên nhân chưa được chứng minh.", expectedEn: "A root-cause-first investigation and source fix path.", expectedVi: "Luồng điều tra nguyên nhân gốc trước rồi sửa tại nguồn.", recommended: true },
+    { labelEn: "Test failure", labelVi: "Test fail", command: "/ak:debugging failing auth middleware tests",
+      commandVi: '/ak:debugging các test middleware xác thực đang thất bại', whenEn: "Use when a test failure needs evidence before code changes.", whenVi: "Dùng khi test fail cần bằng chứng trước khi sửa code.", expectedEn: "Failure reading, pattern comparison, hypothesis testing, and fresh verification.", expectedVi: "Đọc lỗi, so sánh pattern, kiểm giả thuyết và xác minh mới." },
+    { labelEn: "Performance issue", labelVi: "Lỗi hiệu năng", command: "/ak:debugging dashboard loads slowly",
+      commandVi: '/ak:debugging dashboard tải chậm', whenEn: "Use when performance is unexpectedly poor.", whenVi: "Dùng khi hiệu năng kém bất thường.", expectedEn: "Evidence-based tracing to the real bottleneck before optimization.", expectedVi: "Truy vết dựa trên bằng chứng đến đúng bottleneck trước khi tối ưu." },
   ],
   guardrails: [
     { thoughtEn: "It is probably X; I can fix that now.", thoughtVi: "Chắc là X; sửa ngay được.", realityEn: "That is a red flag; return to systematic investigation.", realityVi: "Đó là dấu hiệu cảnh báo; quay lại điều tra có hệ thống.", accent: "red" },

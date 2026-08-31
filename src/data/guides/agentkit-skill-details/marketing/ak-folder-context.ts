@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:folder-context',
   kit: 'marketer',
   header: {
-    titleEn: 'Subfolder Agent Context',
-    titleVi: 'Ngữ cảnh agent cho thư mục con',
+    titleEn: '/ak:folder-context — Subfolder CLAUDE.md files',
+    titleVi: '/ak:folder-context — CLAUDE.md trong subfolder',
     taglineEn: 'Creates compact local CLAUDE.md and linked AGENTS.md files only when a subfolder has durable conventions future agents cannot infer.',
     taglineVi: 'Tạo CLAUDE.md cục bộ gọn và AGENTS.md liên kết chỉ khi thư mục con có quy ước bền vững mà agent sau không tự suy ra được.',
   },
@@ -40,8 +40,12 @@ const data: SkillInfographic = {
     'Hướng dẫn gốc repo và tài liệu dự án thuộc về skill khác.',
   ],
   promptExamples: [
-    { labelEn: 'Create folder context', labelVi: 'Tạo ngữ cảnh thư mục', command: '/ak:folder-context src/components/forms', whenEn: 'A subfolder has form-specific conventions future agents should preserve.', whenVi: 'Một thư mục con có quy ước riêng về form mà agent sau cần giữ.', expectedEn: 'Inspects the folder, proposes an outline, then writes compact local context after confirmation.', expectedVi: 'Kiểm tra thư mục, đề xuất dàn ý rồi ghi ngữ cảnh cục bộ gọn sau khi được xác nhận.', recommended: true },
-    { labelEn: 'Component area', labelVi: 'Khu vực component', command: '/ak:folder-context src/features/checkout', whenEn: 'A feature folder has local constraints, naming, and decisions not obvious from code.', whenVi: 'Thư mục feature có ràng buộc, cách đặt tên và quyết định cục bộ không rõ từ mã.', expectedEn: 'Creates CLAUDE.md and AGENTS.md only if the sanity gate passes for that folder scope.', expectedVi: 'Chỉ tạo CLAUDE.md và AGENTS.md nếu vượt qua cổng kiểm tra cần thiết.' },
+    { labelEn: 'Create folder context', labelVi: 'Tạo ngữ cảnh thư mục', command: '/ak:folder-context src/components/forms',
+      commandVi: '/ak:folder-context src/components/forms', whenEn: 'A subfolder has form-specific conventions future agents should preserve.', whenVi: 'Một thư mục con có quy ước riêng về form mà agent sau cần giữ.', expectedEn: 'Inspects the folder, proposes an outline, then writes compact local context after confirmation.', expectedVi: 'Kiểm tra thư mục, đề xuất dàn ý rồi ghi ngữ cảnh cục bộ gọn sau khi được xác nhận.', recommended: true },
+    { labelEn: 'Component area', labelVi: 'Khu vực component', command: '/ak:folder-context src/features/checkout',
+      commandVi: '/ak:folder-context src/features/checkout', whenEn: 'A feature folder has local constraints, naming, and decisions not obvious from code.', whenVi: 'Thư mục feature có ràng buộc, cách đặt tên và quyết định cục bộ không rõ từ mã.', expectedEn: 'Creates CLAUDE.md and AGENTS.md only if the sanity gate passes for that folder scope.', expectedVi: 'Chỉ tạo CLAUDE.md và AGENTS.md nếu vượt qua cổng kiểm tra cần thiết.' },
+    { labelEn: 'i18n conventions', labelVi: 'Quy ước i18n', command: '/ak:folder-context src/i18n',
+      commandVi: '/ak:folder-context src/i18n', whenEn: 'Locale files have local naming and translation rules agents should not invent.', whenVi: 'File locale có quy ước đặt tên và dịch mà agent không được tự bịa.', expectedEn: 'Writes compact subfolder CLAUDE.md/AGENTS.md only after the sanity gate for that folder.', expectedVi: 'Chỉ ghi CLAUDE.md/AGENTS.md gọn sau khi vượt cổng kiểm tra cho đúng thư mục.' }
   ],
   guardrails: [
     { thoughtEn: 'Every folder benefits from instructions.', thoughtVi: 'Thư mục nào cũng nên có hướng dẫn.', realityEn: 'Static or self-explanatory folders should not get new context files.', realityVi: 'Thư mục tĩnh hoặc tự giải thích được thì không nên có file ngữ cảnh mới.', accent: 'amber' },

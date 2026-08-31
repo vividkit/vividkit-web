@@ -31,6 +31,7 @@ const prompts = (rows: PromptSeed[]): PromptExample[] => rows.map(([
   labelEn,
   labelVi,
   command,
+  commandVi: command,
   whenEn,
   whenVi,
   expectedEn,

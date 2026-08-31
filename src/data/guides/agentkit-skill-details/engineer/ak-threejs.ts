@@ -14,6 +14,7 @@ const invocation: SkillInvocation = {
       required: true,
       exampleCommand:
         '/ak:threejs "Add an accessible GLTF product viewer with OrbitControls, loading and error states, WebGL fallback, keyboard alternatives, disposal on unmount, and a 60 fps target on mid-range mobile"',
+          exampleCommandVi: '/ak:threejs "Add trình xem sản phẩm GLTF dễ tiếp cận với OrbitControls, trạng thái loading và error, fallback WebGL, phương án thay thế bàn phím, disposal khi unmount, và mục tiêu 60 fps trên mobile tầm trung"',
     },
   ],
   options: [
@@ -26,6 +27,7 @@ const invocation: SkillInvocation = {
       descVi:
         'Giới hạn helper search đóng gói vào example, API summary, gợi ý use case hoặc category. Helper tìm trong CSV local và không tải source example live.',
       exampleCommand: '/ak:threejs "Search camera --domain api before adding a PerspectiveCamera walkthrough"',
+          exampleCommandVi: '/ak:threejs "Tìm camera --domain api trước khi thêm hướng dẫn PerspectiveCamera"',
     },
     {
       token: '--use-case',
@@ -36,6 +38,7 @@ const invocation: SkillInvocation = {
       descVi:
         'Resolve một dòng use case đóng gói thành example được đề xuất. Đây chỉ là khám phá reference, không triển khai hay tải source.',
       exampleCommand: '/ak:threejs "Find product configurator references --use-case before implementation"',
+          exampleCommandVi: '/ak:threejs "Tìm tài liệu tham khảo product configurator --use-case trước khi triển khai"',
     },
     {
       token: '--category <name>',
@@ -46,6 +49,7 @@ const invocation: SkillInvocation = {
       descVi:
         'Lọc example đóng gói theo category như webgpu, webxr, physics hoặc webgl postprocessing.',
       exampleCommand: '/ak:threejs "List WebGPU particle patterns --category webgpu -n 10"',
+          exampleCommandVi: '/ak:threejs "List các mẫu particle WebGPU --category webgpu -n 10"',
     },
     {
       token: '--complexity low|medium|high',
@@ -56,6 +60,7 @@ const invocation: SkillInvocation = {
       descVi:
         'Lọc example đóng gói theo nhãn độ phức tạp đi kèm. Nhãn này là hướng dẫn, không phải chi phí runtime đã đo.',
       exampleCommand: '/ak:threejs "Find high-complexity architectural visualization examples --complexity high"',
+          exampleCommandVi: '/ak:threejs "Tìm ví dụ trực quan hóa kiến trúc độ phức tạp cao --complexity high"',
     },
     {
       token: '-n <max_results>',
@@ -66,6 +71,7 @@ const invocation: SkillInvocation = {
       descVi:
         'Đổi số match search đóng gói mà helper local trả về.',
       exampleCommand: '/ak:threejs "Find webgl postprocessing depth of field examples -n 10"',
+          exampleCommandVi: '/ak:threejs "Tìm ví dụ webgl postprocessing depth of field -n 10"',
     },
   ],
 };

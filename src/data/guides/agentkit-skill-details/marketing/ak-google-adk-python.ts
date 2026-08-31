@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:google-adk-python',
   kit: 'marketer',
   header: {
-    titleEn: 'Google ADK Python Agents',
-    titleVi: 'Agent Google ADK bằng Python',
+    titleEn: '/ak:google-adk-python — Google ADK Python agents',
+    titleVi: '/ak:google-adk-python — Xây agent bằng Google ADK Python',
     taglineEn: 'Guides code-first Google ADK agents, multi-agent systems, A2A, MCP tools, workflow agents, state, memory, deployment, and evaluation.',
     taglineVi: 'Hướng dẫn xây agent Google ADK theo kiểu code-first, multi-agent, A2A, MCP tools, workflow agent, state, memory, deploy và evaluation.',
   },
@@ -42,9 +42,12 @@ const data: SkillInfographic = {
   expertiseAreasEn: ['Agent architecture', 'MCP integration', 'A2A protocol', 'Workflow agents', 'State and memory', 'Vertex deployment', 'Evaluation'],
   expertiseAreasVi: ['Kiến trúc agent', 'Tích hợp MCP', 'Giao thức A2A', 'Workflow agent', 'State và memory', 'Deploy lên Vertex', 'Evaluation'],
   promptExamples: [
-    { labelEn: 'Multi-agent system', labelVi: 'Hệ multi-agent', command: '/ak:google-adk-python multi-agent support bot with MCP tools', whenEn: 'You need ADK architecture for specialized sub-agents and tools.', whenVi: 'Cần kiến trúc ADK cho nhiều sub-agent chuyên trách và tool.', expectedEn: 'Chooses agent types, package convention, MCPToolset wiring, state handling, and evaluation path for the requested app.', expectedVi: 'Chọn loại agent, convention package, cách nối MCPToolset, state và đường evaluation.', recommended: true },
-    { labelEn: 'A2A integration', labelVi: 'Tích hợp A2A', command: '/ak:google-adk-python A2A remote agent integration', whenEn: 'Remote agents should communicate through A2A protocol.', whenVi: 'Các agent từ xa cần giao tiếp qua giao thức A2A.', expectedEn: 'Loads the multi-agent and A2A reference and outlines RemoteA2aAgent usage for cross-agent coordination.', expectedVi: 'Nạp tham chiếu multi-agent và A2A rồi phác thảo cách dùng RemoteA2aAgent.' },
-    { labelEn: 'Vertex deployment', labelVi: 'Deploy Vertex', command: '/ak:google-adk-python deploy agent to Vertex AI Agent Engine', whenEn: 'An ADK agent is ready for managed deployment.', whenVi: 'Agent ADK đã sẵn sàng triển khai dạng managed.', expectedEn: 'Uses the deployment reference and includes evaluation checkpoints before recommending rollout to production.', expectedVi: 'Dùng tài liệu deploy và đưa các checkpoint evaluation vào trước khi khuyến nghị rollout production.' },
+    { labelEn: 'Multi-agent system', labelVi: 'Hệ multi-agent', command: '/ak:google-adk-python multi-agent support bot with MCP tools',
+      commandVi: '/ak:google-adk-python bot hỗ trợ đa agent với công cụ MCP', whenEn: 'You need ADK architecture for specialized sub-agents and tools.', whenVi: 'Cần kiến trúc ADK cho nhiều sub-agent chuyên trách và tool.', expectedEn: 'Chooses agent types, package convention, MCPToolset wiring, state handling, and evaluation path for the requested app.', expectedVi: 'Chọn loại agent, convention package, cách nối MCPToolset, state và đường evaluation.', recommended: true },
+    { labelEn: 'A2A integration', labelVi: 'Tích hợp A2A', command: '/ak:google-adk-python A2A remote agent integration',
+      commandVi: '/ak:google-adk-python tích hợp agent từ xa A2A', whenEn: 'Remote agents should communicate through A2A protocol.', whenVi: 'Các agent từ xa cần giao tiếp qua giao thức A2A.', expectedEn: 'Loads the multi-agent and A2A reference and outlines RemoteA2aAgent usage for cross-agent coordination.', expectedVi: 'Nạp tham chiếu multi-agent và A2A rồi phác thảo cách dùng RemoteA2aAgent.' },
+    { labelEn: 'Vertex deployment', labelVi: 'Deploy Vertex', command: '/ak:google-adk-python deploy agent to Vertex AI Agent Engine',
+      commandVi: '/ak:google-adk-python triển khai agent lên Vertex AI Agent Engine', whenEn: 'An ADK agent is ready for managed deployment.', whenVi: 'Agent ADK đã sẵn sàng triển khai dạng managed.', expectedEn: 'Uses the deployment reference and includes evaluation checkpoints before recommending rollout to production.', expectedVi: 'Dùng tài liệu deploy và đưa các checkpoint evaluation vào trước khi khuyến nghị rollout production.' },
   ],
   skillStack: [
     { name: 'google.adk.Agent', type: 'tool' },

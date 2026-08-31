@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:content-hub",
   kit: 'marketer',
   header: {
-    titleEn: "Visual marketing asset gallery",
-    titleVi: "Thư viện asset marketing trực quan",
+    titleEn: '/ak:content-hub — Visual marketing asset gallery',
+    titleVi: '/ak:content-hub — Thư viện asset marketing trực quan',
     taglineEn: "Opens, scans, searches, and serves a browser-based asset gallery with filters, brand context, preview/edit actions, and an R2-ready manifest.",
     taglineVi: "Mở, quét, tìm kiếm và phục vụ thư viện asset trên browser với bộ lọc, ngữ cảnh brand, thao tác preview/edit và manifest sẵn sàng cho R2.",
   },
@@ -33,9 +33,12 @@ const data: SkillInfographic = {
   expertiseAreasEn: ["Asset gallery", "Filtering", "Brand sidebar", "Preview and edit", "Manifest scanning", "R2-ready metadata"],
   expertiseAreasVi: ["Gallery asset", "Bộ lọc", "Sidebar brand", "Preview và edit", "Quét manifest", "Metadata sẵn sàng cho R2"],
   promptExamples: [
-    { labelEn: "Open hub", labelVi: "Mở hub", command: "/ak:content-hub open", whenEn: "Use when you want the browser gallery.", whenVi: "Dùng khi muốn mở gallery trên trình duyệt.", expectedEn: "A local visual grid of assets with sidebar context.", expectedVi: "Lưới asset local kèm ngữ cảnh trong sidebar.", recommended: true },
-    { labelEn: "Browse assets", labelVi: "Duyệt asset", command: "/ak:content-hub browse", whenEn: "Use when exploring the asset library by type or category.", whenVi: "Dùng khi khám phá thư viện asset theo loại hoặc danh mục.", expectedEn: "Filtered browsing through local marketing assets.", expectedVi: "Duyệt asset marketing local qua bộ lọc." },
-    { labelEn: "Search library", labelVi: "Tìm trong thư viện", command: "/ak:content-hub search banners", whenEn: "Use when looking for matching assets by keyword.", whenVi: "Dùng khi cần tìm asset theo từ khóa.", expectedEn: "Matching assets and paths from the gallery index.", expectedVi: "Asset và đường dẫn phù hợp từ index của gallery." },
+    { labelEn: "Open hub", labelVi: "Mở hub", command: "/ak:content-hub open",
+      commandVi: '/ak:content-hub mở', whenEn: "Use when you want the browser gallery.", whenVi: "Dùng khi muốn mở gallery trên trình duyệt.", expectedEn: "A local visual grid of assets with sidebar context.", expectedVi: "Lưới asset local kèm ngữ cảnh trong sidebar.", recommended: true },
+    { labelEn: "Browse assets", labelVi: "Duyệt asset", command: "/ak:content-hub browse",
+      commandVi: '/ak:content-hub browse', whenEn: "Use when exploring the asset library by type or category.", whenVi: "Dùng khi khám phá thư viện asset theo loại hoặc danh mục.", expectedEn: "Filtered browsing through local marketing assets.", expectedVi: "Duyệt asset marketing local qua bộ lọc." },
+    { labelEn: "Search library", labelVi: "Tìm trong thư viện", command: "/ak:content-hub search banners",
+      commandVi: '/ak:content-hub tìm kiếm banner', whenEn: "Use when looking for matching assets by keyword.", whenVi: "Dùng khi cần tìm asset theo từ khóa.", expectedEn: "Matching assets and paths from the gallery index.", expectedVi: "Asset và đường dẫn phù hợp từ index của gallery." },
   ],
   skillStack: [
     { name: "content-creator", type: "agent" },

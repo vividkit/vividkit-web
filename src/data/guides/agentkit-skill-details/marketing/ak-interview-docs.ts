@@ -1,127 +1,151 @@
 import type { SkillInfographic } from '@/data/guides/how-ck-works';
 
 const data: SkillInfographic = {
-  "id": "ak-interview-docs",
-  "command": "/ak:interview-docs",
-  "kit": "marketer",
-  "header": {
-    "titleEn": "/ak:interview-docs",
-    "titleVi": "/ak:interview-docs",
-    "taglineEn": "Guided interview that turns the user's own vision, decisions, and taste into durable README, ADR, strategy, or principles documents.",
-    "taglineVi": "Phỏng vấn có dẫn dắt để biến chính tầm nhìn, quyết định và gu của user thành README, ADR, chiến lược hoặc tài liệu nguyên tắc bền vững."
+  id: "ak-interview-docs",
+  command: "/ak:interview-docs",
+  kit: 'marketer',
+  header: {
+    titleEn: '/ak:interview-docs — Interview-Driven Docs',
+    titleVi: '/ak:interview-docs — Viết tài liệu bằng phỏng vấn',
+    taglineEn: "Turn the user’s own vision, decisions, and wording into durable README, ADR, principles, strategy, review, or framework documents through a guided interview.",
+    taglineVi: "Biến vision, quyết định và ngôn từ của chính user thành README, ADR, principles, strategy, review hoặc framework bền vững qua phỏng vấn có hướng dẫn."
   },
-  "processFlow": [
+  processFlow: [
     {
-      "number": 1,
-      "titleEn": "Select mode",
-      "titleVi": "Chọn chế độ",
-      "descEn": "Pick vision mode, structured-doc mode, or ask one concise question if both fit.",
-      "descVi": "Chọn chế độ vision, structured-doc, hoặc hỏi một câu ngắn nếu yêu cầu phù hợp cả hai."
+      number: 1,
+      titleEn: "Select mode",
+      titleVi: "Chọn chế độ",
+      descEn: "Choose vision mode for project vision, README direction, and ADR decisions; choose structured-doc mode for one user-authored principles, strategy, review, or framework document.",
+      descVi: "Chọn vision mode cho vision dự án, hướng README và quyết định ADR; chọn structured-doc mode cho một tài liệu do user làm chủ như principles, strategy, review hoặc framework."
     },
     {
-      "number": 2,
-      "titleEn": "Read context",
-      "titleVi": "Đọc bối cảnh",
-      "descEn": "For vision work, read README.md and docs/adr before asking anything; for structured docs, read nearby documents.",
-      "descVi": "Với vision, đọc README.md và docs/adr trước khi hỏi; với tài liệu có cấu trúc, đọc các tài liệu lân cận."
+      number: 2,
+      titleEn: "Ask if ambiguous",
+      titleVi: "Hỏi khi mơ hồ",
+      descEn: "If both modes fit, ask one concise question before writing.",
+      descVi: "Nếu cả hai mode đều phù hợp, hỏi một câu ngắn trước khi viết."
     },
     {
-      "number": 3,
-      "titleEn": "Ask precisely",
-      "titleVi": "Hỏi đúng trọng tâm",
-      "descEn": "Vision mode asks a batch of five varied questions; structured-doc mode asks exactly one open, specific question.",
-      "descVi": "Vision mode hỏi một loạt năm câu đa dạng; structured-doc mode chỉ hỏi đúng một câu mở và cụ thể."
+      number: 3,
+      titleEn: "Read nearby docs",
+      titleVi: "Đọc tài liệu gần đó",
+      descEn: "In vision mode, read README.md and docs/adr first; in structured mode, read nearby documents and create only a minimal skeleton once.",
+      descVi: "Ở vision mode, đọc README.md và docs/adr trước; ở structured mode, đọc tài liệu gần đó và chỉ tạo skeleton tối thiểu một lần."
     },
     {
-      "number": 4,
-      "titleEn": "Patch after answer",
-      "titleVi": "Cập nhật sau mỗi câu trả lời",
-      "descEn": "After every answer, re-read the affected target and patch the user's words before continuing.",
-      "descVi": "Sau mỗi câu trả lời, đọc lại phần bị ảnh hưởng và vá chính lời của user vào tài liệu trước khi tiếp tục."
+      number: 4,
+      titleEn: "Interview from user",
+      titleVi: "Phỏng vấn từ user",
+      descEn: "Ask five high-variety questions in vision mode, or exactly one specific open question at a time in structured-doc mode.",
+      descVi: "Hỏi năm câu đa dạng ở vision mode, hoặc đúng một câu mở cụ thể mỗi lượt ở structured-doc mode."
     },
     {
-      "number": 5,
-      "titleEn": "Separate authority",
-      "titleVi": "Tách đúng thẩm quyền",
-      "descEn": "Keep README focused on vision; record explicit decisions in short ADRs with Status, Context, Decision, Consequences.",
-      "descVi": "Giữ README cho tầm nhìn; ghi quyết định đã được user chốt vào ADR ngắn gồm Status, Context, Decision, Consequences."
+      number: 5,
+      titleEn: "Patch after each answer",
+      titleVi: "Patch sau mỗi câu trả lời",
+      descEn: "After every answer, re-read the affected document or section and patch the user’s words before asking the next question.",
+      descVi: "Sau mỗi câu trả lời, đọc lại tài liệu hoặc section bị ảnh hưởng và patch lời của user trước khi hỏi tiếp."
     },
     {
-      "number": 6,
-      "titleEn": "Preserve wording",
-      "titleVi": "Giữ ngôn từ user",
-      "descEn": "Treat lists as unordered unless user approves rank; preserve edits and avoid speculative sections.",
-      "descVi": "Xem danh sách là chưa có thứ tự nếu user chưa duyệt xếp hạng; giữ chỉnh sửa và tránh thêm mục suy đoán."
+      number: 6,
+      titleEn: "Preserve decisions",
+      titleVi: "Giữ đúng quyết định",
+      descEn: "Keep README to vision and record explicit architectural decisions in short numbered ADRs with Status, Context, Decision, and Consequences.",
+      descVi: "Giữ README cho vision và ghi quyết định kiến trúc đã được duyệt vào ADR ngắn đánh số với Status, Context, Decision và Consequences."
     },
     {
-      "number": 7,
-      "titleEn": "Continue or close",
-      "titleVi": "Tiếp tục hoặc chốt",
-      "descEn": "Continue the interview until the user ends it; keep replies concise and plain English.",
-      "descVi": "Tiếp tục phỏng vấn đến khi user dừng; phản hồi ngắn gọn, tiếng Anh đơn giản."
+      number: 7,
+      titleEn: "Respect unordered lists",
+      titleVi: "Tôn trọng danh sách chưa xếp hạng",
+      descEn: "Treat a user-provided list as unordered until the user explicitly approves rank, sequence, or priority.",
+      descVi: "Xem danh sách user đưa là chưa có thứ tự cho đến khi user duyệt rõ rank, sequence hoặc priority."
+    },
+    {
+      number: 8,
+      titleEn: "Stop speculation",
+      titleVi: "Dừng suy đoán",
+      descEn: "Never invent content, overwrite existing docs, add speculative sections, or use ADRs to make unapproved architecture decisions.",
+      descVi: "Không bịa nội dung, ghi đè tài liệu có sẵn, thêm section suy đoán hoặc dùng ADR để ra quyết định kiến trúc chưa được duyệt."
     }
   ],
-  "hardGate": {
-    "type": "critical",
-    "titleEn": "Interview authority only",
-    "titleVi": "Chỉ ghi điều user cung cấp",
-    "contentEn": "Do not invent content, prioritize unordered lists, derive docs from source code, write secrets/personal data, or use ADRs to make unapproved architectural decisions.",
-    "contentVi": "Không tự bịa nội dung, không tự xếp ưu tiên danh sách chưa có thứ tự, không suy tài liệu từ source code, không ghi secrets/dữ liệu cá nhân, và không dùng ADR để quyết định kiến trúc chưa được duyệt."
+  hardGate: {
+    type: "critical",
+    titleEn: "User answers are the source of truth",
+    titleVi: "Câu trả lời của user là nguồn sự thật",
+    contentEn: "This skill does not invent content, prioritize unordered user lists, derive docs from source code, or record unapproved architectural decisions.",
+    contentVi: "Skill này không bịa nội dung, không tự xếp hạng danh sách chưa có thứ tự, không suy tài liệu từ source code và không ghi quyết định kiến trúc chưa được duyệt."
   },
-  "corePrinciplesEn": [
-    "User answers are the source of truth",
-    "Ask before ranking or sequencing user-provided lists",
-    "Patch incrementally after each answer",
-    "README carries vision; ADRs carry approved decisions"
+  corePrinciplesEn: [
+    "The document should preserve the user’s knowledge, taste, and decisions.",
+    "Ask before ranking, sequencing, or prioritizing user-provided material.",
+    "Use ak-brainstorm for AI proposals and ak-docs for code-derived documentation."
   ],
-  "corePrinciplesVi": [
-    "Câu trả lời của user là nguồn chân lý",
-    "Hỏi trước khi xếp hạng hoặc sắp thứ tự danh sách user đưa",
-    "Cập nhật từng bước sau mỗi câu trả lời",
-    "README giữ tầm nhìn; ADR giữ quyết định đã duyệt"
+  corePrinciplesVi: [
+    "Tài liệu phải giữ kiến thức, gu và quyết định của user.",
+    "Hỏi trước khi xếp hạng, sắp thứ tự hoặc ưu tiên nội dung user đưa.",
+    "Dùng ak-brainstorm khi cần AI đề xuất và ak-docs khi tài liệu phải suy từ code."
   ],
-  "expertiseAreasEn": [
-    "README vision direction",
-    "ADR decision capture",
+  expertiseAreasEn: [
+    "Guided documentation interviews",
+    "README vision updates",
+    "ADR capture",
     "Principles and strategy documents",
-    "Guided stakeholder interviews"
+    "User-wording preservation"
   ],
-  "expertiseAreasVi": [
-    "Định hướng tầm nhìn README",
-    "Ghi nhận quyết định ADR",
-    "Tài liệu nguyên tắc và chiến lược",
-    "Phỏng vấn stakeholder có dẫn dắt"
+  expertiseAreasVi: [
+    "Phỏng vấn để viết tài liệu",
+    "Cập nhật vision README",
+    "Ghi ADR",
+    "Tài liệu principles và strategy",
+    "Giữ wording của user"
   ],
-  "promptExamples": [
+  guardrails: [
     {
-      "labelEn": "Vision interview",
-      "labelVi": "Phỏng vấn vision",
-      "command": "/ak:interview-docs vision for our new analytics product",
-      "whenEn": "The durable document should come from the user's vision rather than AI proposing strategy.",
-      "whenVi": "Khi tài liệu bền vững phải xuất phát từ tầm nhìn của user, không phải AI tự đề xuất chiến lược.",
-      "expectedEn": "Reads existing docs, asks five varied questions, and patches README/ADRs after each answer.",
-      "expectedVi": "Đọc tài liệu hiện có, hỏi năm câu đa dạng và vá README/ADR sau từng câu trả lời.",
-      "recommended": true
+      thoughtEn: "The user listed five ideas; order them by importance.",
+      thoughtVi: "User đưa năm ý; tự xếp theo quan trọng.",
+      realityEn: "A user list is unordered unless they approve rank or priority.",
+      realityVi: "Danh sách của user là chưa có thứ tự nếu họ chưa duyệt rank hoặc priority.",
+      accent: "amber"
     },
     {
-      "labelEn": "Structured document",
-      "labelVi": "Tài liệu có cấu trúc",
-      "command": "/ak:interview-docs docs/principles.md",
-      "whenEn": "A specific principles, strategy, review, or framework document needs user-authored content.",
-      "whenVi": "Khi một tài liệu nguyên tắc, chiến lược, review hoặc framework cần nội dung do user cung cấp.",
-      "expectedEn": "Creates a minimal skeleton once, then asks one specific open question at a time.",
-      "expectedVi": "Tạo skeleton tối giản một lần, rồi hỏi từng câu mở và cụ thể."
+      thoughtEn: "The code reveals the architecture; write an ADR.",
+      thoughtVi: "Code cho thấy kiến trúc; viết ADR luôn.",
+      realityEn: "ADR records only decisions the user explicitly made.",
+      realityVi: "ADR chỉ ghi quyết định user đã đưa ra rõ ràng.",
+      accent: "red"
     }
   ],
-  "reportOutput": {
-    "titleEn": "Durable project document",
-    "titleVi": "Tài liệu dự án bền vững",
-    "patternEn": "README.md or short numbered ADR files",
-    "patternVi": "README.md hoặc các ADR đánh số ngắn",
-    "locationEn": "Project README/docs/adr or requested document path",
-    "locationVi": "README/docs/adr của dự án hoặc path tài liệu được yêu cầu",
-    "descEn": "User wording • approved decisions • context • consequences • no speculative authority",
-    "descVi": "Ngôn từ user • quyết định đã duyệt • bối cảnh • hệ quả • không thêm thẩm quyền suy đoán"
+  promptExamples: [{
+      labelEn: "Vision interview",
+      labelVi: "Phỏng vấn vision",
+      command: "/ak:interview-docs project vision for the README and first ADRs",
+      commandVi: '/ak:interview-docs tầm nhìn dự án cho README và các ADR đầu tiên',
+      whenEn: "The user’s vision and decisions should shape README/ADR content.",
+      whenVi: "Khi vision và quyết định của user cần định hình README/ADR.",
+      expectedEn: "Reads existing docs, asks high-variety questions, and patches user wording after each answer.",
+      expectedVi: "Đọc docs hiện có, hỏi câu đa dạng và patch wording của user sau mỗi câu trả lời.",
+      recommended: true
+    },
+    {
+      labelEn: "Structured document",
+      labelVi: "Tài liệu có cấu trúc",
+      command: "/ak:interview-docs docs/principles.md",
+      commandVi: '/ak:interview-docs docs/principles.md',
+      whenEn: "One durable document should be built through one-question-at-a-time interviewing.",
+      whenVi: "Khi cần xây một tài liệu bền vững bằng phỏng vấn từng câu.",
+      expectedEn: "Creates a minimal skeleton if needed, asks exactly one open question, and preserves edits.",
+      expectedVi: "Tạo skeleton tối thiểu nếu cần, hỏi đúng một câu mở và giữ edits."
+    },
+    { labelEn: 'Marketing principles doc', labelVi: 'Tài liệu nguyên tắc marketing', command: '/ak:interview-docs write a marketing principles doc from our decisions',
+      commandVi: '/ak:interview-docs viết tài liệu nguyên tắc marketing từ các quyết định của chúng tôi', whenEn: "The document must come from the user's answers, not invented strategy copy.", whenVi: 'Tài liệu phải đến từ câu trả lời của user, không phải copy chiến lược bịa.', expectedEn: "Interview questions then a principles doc in the user's wording.", expectedVi: 'Câu hỏi phỏng vấn rồi tài liệu nguyên tắc bằng ngôn từ của user.' }
+  ],
+  reportOutput: {
+    titleEn: "Interview-docs output",
+    titleVi: "Đầu ra interview-docs",
+    patternEn: "Updated README, ADR, or target document with user-sourced wording and explicit decisions only.",
+    patternVi: "README, ADR hoặc tài liệu đích được cập nhật bằng wording từ user và chỉ quyết định rõ ràng.",
+    descEn: "The process continues answer by answer until the user ends the interview.",
+    descVi: "Quy trình tiếp tục từng câu trả lời cho đến khi user kết thúc phỏng vấn."
   }
 };
 

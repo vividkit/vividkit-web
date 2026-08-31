@@ -15,6 +15,7 @@ const invocation: SkillInvocation = {
       required: true,
       exampleCommand:
         '/ak:ai-artist "16:9 launch banner for a developer CLI, dark steel-blue terminal geometry, no logos, no people, no text"',
+          exampleCommandVi: '/ak:ai-artist "banner ra mắt 16:9 cho CLI dành cho nhà phát triển, hình học terminal thép xanh đậm, không logo, không người, không chữ"',
     },
   ],
   options: [
@@ -27,6 +28,7 @@ const invocation: SkillInvocation = {
       descVi:
         'Chọn search để lấy prompt tuyển chọn gần nhất, creative để remix các kết quả khớp đầu, wild để tạo một biến đổi nghệ thuật ngẫu nhiên, hoặc all để tạo ba biến thể.',
       exampleCommand: '/ak:ai-artist "AI workshop hero image" --mode creative',
+          exampleCommandVi: '/ak:ai-artist "hình ảnh hero hội thảo AI" --mode creative',
     },
     {
       token: '--provider auto|google|openrouter',
@@ -37,6 +39,7 @@ const invocation: SkillInvocation = {
       descVi:
         'Chọn tự resolve provider, tạo ảnh Google trực tiếp, hoặc tạo ảnh Google qua OpenRouter. Không cung cấp credential hay phê duyệt chi phí.',
       exampleCommand: '/ak:ai-artist "tech conference banner" --provider openrouter',
+          exampleCommandVi: '/ak:ai-artist "banner hội nghị công nghệ" --provider openrouter',
     },
     {
       token: '-ar, --aspect-ratio',
@@ -47,6 +50,7 @@ const invocation: SkillInvocation = {
       descVi:
         'Truyền ratio được hỗ trợ như 1:1, 16:9 hoặc 9:16 cho renderer. Concept vẫn nên nêu nhu cầu bố cục.',
       exampleCommand: '/ak:ai-artist "product showcase" -ar 1:1',
+          exampleCommandVi: '/ak:ai-artist "trưng bày sản phẩm" -ar 1:1',
     },
     {
       token: '--size 1K|2K|4K',
@@ -57,6 +61,7 @@ const invocation: SkillInvocation = {
       descVi:
         'Chọn kích thước ảnh của provider. Mặc định được document là 2K, và vẫn phụ thuộc khả năng provider.',
       exampleCommand: '/ak:ai-artist "hero image" --size 2K',
+          exampleCommandVi: '/ak:ai-artist "hình ảnh hero" --size 2K',
     },
     {
       token: '--model',
@@ -67,6 +72,7 @@ const invocation: SkillInvocation = {
       descVi:
         'Chọn flash2, flash hoặc pro cho renderer. flash2 là mặc định của script; availability và chi phí của provider vẫn áp dụng.',
       exampleCommand: '/ak:ai-artist "premium product render" --model pro',
+          exampleCommandVi: '/ak:ai-artist "render sản phẩm cao cấp" --model pro',
     },
     {
       token: '-v, --verbose',
@@ -77,6 +83,7 @@ const invocation: SkillInvocation = {
       descVi:
         'Hiển thị chi tiết prompt khớp, provider và model. Không thay thế bước duyệt pixel đã tạo.',
       exampleCommand: '/ak:ai-artist "social launch graphic" --mode search -v',
+          exampleCommandVi: '/ak:ai-artist "đồ họa ra mắt social" --mode search -v',
     },
     {
       token: '--dry-run',
@@ -87,6 +94,7 @@ const invocation: SkillInvocation = {
       descVi:
         'Lắp ghép và in prompt cuối cùng mà không gọi provider tạo ảnh hay ghi tệp ảnh.',
       exampleCommand: '/ak:ai-artist "campaign banner" --dry-run',
+          exampleCommandVi: '/ak:ai-artist "banner chiến dịch" --dry-run',
     },
     {
       token: '--skip',
@@ -97,6 +105,7 @@ const invocation: SkillInvocation = {
       descVi:
         'Bỏ qua phỏng vấn bắt buộc về style, mood, màu sắc và ý định chỉ khi brief đã rõ hoặc người dùng chấp nhận bỏ qua.',
       exampleCommand: '/ak:ai-artist "minimal hardware wallet showcase" --mode wild --skip',
+          exampleCommandVi: '/ak:ai-artist "trưng bày ví phần cứng tối giản" --mode wild --skip',
     },
   ],
 };
@@ -150,10 +159,14 @@ const data: SkillInfographic = {
     { flag: '--mode all', modeEn: 'All variations', modeVi: 'Tất cả biến thể', research: 'Runs search, creative, and wild', redTeam: 'More cost and review surface', validation: 'Three comparison outputs' },
   ],
   promptExamples: [
-    { labelEn: 'Search-mode campaign banner', labelVi: 'Banner chiến dịch mode search', command: '/ak:ai-artist "16:9 launch banner for a developer CLI, dark steel-blue terminal geometry, no logos, no people, no text" --mode search', whenEn: 'Use when you want the safest curated-prompt match and are willing to answer the validation interview.', whenVi: 'Dùng khi muốn prompt tuyển chọn phù hợp nhất và sẵn sàng trả lời phần kiểm chứng.', expectedEn: 'Runs the validation interview, ranks the concept against the curated prompt bank, adapts the closest match, renders one PNG, and reports the selected prompt/provider evidence.', expectedVi: 'Chạy validation interview, xếp hạng concept trong kho prompt tuyển chọn, điều chỉnh prompt khớp nhất, render một PNG và báo bằng chứng prompt/provider đã chọn.', recommended: true },
-    { labelEn: 'Creative remix through OpenRouter', labelVi: 'Remix creative qua OpenRouter', command: '/ak:ai-artist "AI workshop hero image with collaborative agents, bright but professional, no readable text" --mode creative --provider openrouter', whenEn: 'Use when the visual should combine hints from the top prompt matches and generation should route through OpenRouter-backed Google models.', whenVi: 'Dùng khi visual cần kết hợp hint từ các prompt khớp hàng đầu và generation phải đi qua model Google qua OpenRouter.', expectedEn: 'Uses creative mode to remix elements from the top three matching prompts, keeps the Nano Banana prompt workflow, and routes rendering through the requested provider.', expectedVi: 'Dùng mode creative để remix yếu tố từ ba prompt khớp hàng đầu, giữ workflow prompt Nano Banana và render qua provider được yêu cầu.' },
-    { labelEn: 'Wild style exploration', labelVi: 'Khám phá style wild', command: '/ak:ai-artist "minimal product showcase for a privacy-first hardware wallet, dramatic shadows, premium materials" --mode wild --skip', whenEn: 'Use only when the brief is already precise or the user explicitly accepts bypassing the validation interview for a more random style transform.', whenVi: 'Chỉ dùng khi brief đã rõ hoặc người dùng chấp nhận bỏ validation interview để nhận biến đổi style ngẫu nhiên hơn.', expectedEn: 'Bypasses the interview, applies one random wild transformation such as Ukiyo-e, Bento grid, cyberpunk, cinematic poster, or vintage patent, then returns the generated file path.', expectedVi: 'Bỏ phỏng vấn, áp dụng một transformation wild ngẫu nhiên như Ukiyo-e, Bento grid, cyberpunk, cinematic poster hoặc vintage patent, rồi trả đường dẫn file đã tạo.' },
-    { labelEn: 'All-mode comparison set', labelVi: 'Bộ so sánh mode all', command: '/ak:ai-artist "futuristic city skyline for a product keynote, optimistic, clean, high contrast" --mode all --provider google', whenEn: 'Use when comparing the closest match, a creative remix, and a wild transform is worth three generated variations.', whenVi: 'Dùng khi đáng tạo ba biến thể để so sánh prompt khớp nhất, bản remix creative và biến đổi wild.', expectedEn: 'Runs search, creative, and wild modes for the same concept, producing three comparison outputs and reporting which mode produced each returned file path.', expectedVi: 'Chạy các mode search, creative và wild cho cùng concept, tạo ba output để so sánh và báo mode nào tạo từng đường dẫn file được trả.' },
+    { labelEn: 'Search-mode campaign banner', labelVi: 'Banner chiến dịch mode search', command: '/ak:ai-artist "16:9 launch banner for a developer CLI, dark steel-blue terminal geometry, no logos, no people, no text" --mode search',
+      commandVi: '/ak:ai-artist "Banner ra mắt 16:9 cho CLI dành cho nhà phát triển, hình học terminal thép-xanh đậm, không logo, không người, không chữ" --mode search', whenEn: 'Use when you want the safest curated-prompt match and are willing to answer the validation interview.', whenVi: 'Dùng khi muốn prompt tuyển chọn phù hợp nhất và sẵn sàng trả lời phần kiểm chứng.', expectedEn: 'Runs the validation interview, ranks the concept against the curated prompt bank, adapts the closest match, renders one PNG, and reports the selected prompt/provider evidence.', expectedVi: 'Chạy validation interview, xếp hạng concept trong kho prompt tuyển chọn, điều chỉnh prompt khớp nhất, render một PNG và báo bằng chứng prompt/provider đã chọn.', recommended: true },
+    { labelEn: 'Creative remix through OpenRouter', labelVi: 'Remix creative qua OpenRouter', command: '/ak:ai-artist "AI workshop hero image with collaborative agents, bright but professional, no readable text" --mode creative --provider openrouter',
+      commandVi: '/ak:ai-artist "Ảnh hero workshop AI với các agent cộng tác, sáng nhưng chuyên nghiệp, không có chữ đọc được" --mode creative --provider openrouter', whenEn: 'Use when the visual should combine hints from the top prompt matches and generation should route through OpenRouter-backed Google models.', whenVi: 'Dùng khi visual cần kết hợp hint từ các prompt khớp hàng đầu và generation phải đi qua model Google qua OpenRouter.', expectedEn: 'Uses creative mode to remix elements from the top three matching prompts, keeps the Nano Banana prompt workflow, and routes rendering through the requested provider.', expectedVi: 'Dùng mode creative để remix yếu tố từ ba prompt khớp hàng đầu, giữ workflow prompt Nano Banana và render qua provider được yêu cầu.' },
+    { labelEn: 'Wild style exploration', labelVi: 'Khám phá style wild', command: '/ak:ai-artist "minimal product showcase for a privacy-first hardware wallet, dramatic shadows, premium materials" --mode wild --skip',
+      commandVi: '/ak:ai-artist "Trưng bày sản phẩm tối giản cho ví phần cứng ưu tiên quyền riêng tư, bóng đổ ấn tượng, vật liệu cao cấp" --mode wild --skip', whenEn: 'Use only when the brief is already precise or the user explicitly accepts bypassing the validation interview for a more random style transform.', whenVi: 'Chỉ dùng khi brief đã rõ hoặc người dùng chấp nhận bỏ validation interview để nhận biến đổi style ngẫu nhiên hơn.', expectedEn: 'Bypasses the interview, applies one random wild transformation such as Ukiyo-e, Bento grid, cyberpunk, cinematic poster, or vintage patent, then returns the generated file path.', expectedVi: 'Bỏ phỏng vấn, áp dụng một transformation wild ngẫu nhiên như Ukiyo-e, Bento grid, cyberpunk, cinematic poster hoặc vintage patent, rồi trả đường dẫn file đã tạo.' },
+    { labelEn: 'All-mode comparison set', labelVi: 'Bộ so sánh mode all', command: '/ak:ai-artist "futuristic city skyline for a product keynote, optimistic, clean, high contrast" --mode all --provider google',
+      commandVi: '/ak:ai-artist "Đường chân trời thành phố tương lai cho keynote sản phẩm, lạc quan, sạch sẽ, độ tương phản cao" --mode all --provider google', whenEn: 'Use when comparing the closest match, a creative remix, and a wild transform is worth three generated variations.', whenVi: 'Dùng khi đáng tạo ba biến thể để so sánh prompt khớp nhất, bản remix creative và biến đổi wild.', expectedEn: 'Runs search, creative, and wild modes for the same concept, producing three comparison outputs and reporting which mode produced each returned file path.', expectedVi: 'Chạy các mode search, creative và wild cho cùng concept, tạo ba output để so sánh và báo mode nào tạo từng đường dẫn file được trả.' },
   ],
   specialOperations: [
     { id: 'prompt-bank', titleEn: '129 curated prompts', titleVi: '129 prompt tuyển chọn', descEn: 'The prompt bank covers commercial, social, infographic, avatar, artistic, and character styles.', descVi: 'Kho prompt bao phủ phong cách thương mại, social, infographic, avatar, nghệ thuật và nhân vật.', color: 'purple' },

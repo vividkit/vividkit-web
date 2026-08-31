@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:analytics",
   kit: 'marketer',
   header: {
-    titleEn: "Marketing Analytics",
-    titleVi: "Phân tích marketing",
+    titleEn: '/ak:analytics — Marketing Analytics',
+    titleVi: '/ak:analytics — Phân tích marketing',
     taglineEn: "Measure campaign performance, KPIs, attribution, ROI, A/B results, funnel health, and reporting dashboards so marketing decisions are driven by comparable evidence.",
     taglineVi: "Đo hiệu suất campaign, KPI, attribution, ROI, kết quả A/B, sức khỏe funnel và dashboard báo cáo để quyết định marketing dựa trên bằng chứng có thể so sánh.",
   },
@@ -34,9 +34,12 @@ const data: SkillInfographic = {
   ],
   expertiseAreasEn: ["KPI frameworks", "Reporting dashboards", "Attribution analysis", "ROI calculation", "A/B test analysis", "Funnel optimization", "GA4 reporting"],
   expertiseAreasVi: ["Khung KPI", "Dashboard báo cáo", "Phân tích attribution", "Tính ROI", "Phân tích A/B test", "Tối ưu funnel", "Báo cáo GA4"],
-  promptExamples: [
-    { labelEn: "Campaign report", labelVi: "Báo cáo campaign", command: "/ak:analytics campaign performance", whenEn: "A campaign needs KPI, ROI, and channel-performance analysis.", whenVi: "Khi campaign cần phân tích KPI, ROI và hiệu suất theo kênh.", expectedEn: "A structured performance readout with comparable metrics, insights, and prioritized actions.", expectedVi: "Báo cáo hiệu suất có cấu trúc với metric so sánh được, insight và hành động ưu tiên.", recommended: true },
-    { labelEn: "ROI analysis", labelVi: "Phân tích ROI", command: "/ak:analytics ROI report", whenEn: "Marketing spend needs to be tied to conversions, revenue, and attribution assumptions.", whenVi: "Khi cần nối spend marketing với conversion, doanh thu và giả định attribution.", expectedEn: "ROI calculations with attribution caveats, benchmarks, and recommended budget moves.", expectedVi: "Tính ROI kèm lưu ý attribution, benchmark và đề xuất chuyển ngân sách." },
+  promptExamples: [{ labelEn: "Campaign report", labelVi: "Báo cáo campaign", command: "/ak:analytics campaign performance",
+      commandVi: '/ak:analytics campaign performance', whenEn: "A campaign needs KPI, ROI, and channel-performance analysis.", whenVi: "Khi campaign cần phân tích KPI, ROI và hiệu suất theo kênh.", expectedEn: "A structured performance readout with comparable metrics, insights, and prioritized actions.", expectedVi: "Báo cáo hiệu suất có cấu trúc với metric so sánh được, insight và hành động ưu tiên.", recommended: true },
+    { labelEn: "ROI analysis", labelVi: "Phân tích ROI", command: "/ak:analytics ROI report",
+      commandVi: '/ak:analytics báo cáo ROI', whenEn: "Marketing spend needs to be tied to conversions, revenue, and attribution assumptions.", whenVi: "Khi cần nối spend marketing với conversion, doanh thu và giả định attribution.", expectedEn: "ROI calculations with attribution caveats, benchmarks, and recommended budget moves.", expectedVi: "Tính ROI kèm lưu ý attribution, benchmark và đề xuất chuyển ngân sách." },
+    { labelEn: 'CAC vs LTV', labelVi: 'CAC so với LTV', command: '/ak:analytics CAC vs LTV last 90 days',
+      commandVi: '/ak:analytics CAC vs LTV 90 ngày qua', whenEn: 'You need a KPI readout with comparable timeframe and a decision, not a vanity chart.', whenVi: 'Khi cần đọc KPI theo khung thời gian so sánh được và ra quyết định, không phải chart cho có.', expectedEn: 'Ratio calculations, fair comparison notes, and recommended next action.', expectedVi: 'Tính tỷ lệ, ghi chú so sánh công bằng và hành động tiếp theo.' }
   ],
   skillStack: [
     { name: "GA4", type: 'tool' },

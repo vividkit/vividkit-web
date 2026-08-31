@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:assets-organizing",
   kit: 'marketer',
   header: {
-    titleEn: "Assets Organizing",
-    titleVi: "Tổ chức asset",
+    titleEn: '/ak:assets-organizing — Assets Organizing',
+    titleVi: '/ak:assets-organizing — Tổ chức asset',
     taglineEn: "Standardize marketing output paths, naming, date formats, slug rules, report folders, campaign folders, and multi-file asset structures under assets/.",
     taglineVi: "Chuẩn hóa đường dẫn output marketing, naming, định dạng ngày, luật slug, thư mục báo cáo, thư mục campaign và cấu trúc asset nhiều file dưới assets/.",
   },
@@ -42,9 +42,12 @@ const data: SkillInfographic = {
   ],
   expertiseAreasEn: ["Asset paths", "Kebab-case naming", "Date prefixes", "Campaign folders", "Report locations", "Multi-file deliverables", "Platform subfolders"],
   expertiseAreasVi: ["Đường dẫn asset", "Tên kebab-case", "Prefix ngày", "Thư mục campaign", "Vị trí báo cáo", "Deliverable nhiều file", "Subfolder theo nền tảng"],
-  promptExamples: [
-    { labelEn: "Organize a campaign", labelVi: "Tổ chức campaign", command: "/ak:assets-organizing campaign assets", whenEn: "A campaign will produce briefs, creatives, reports, and source assets.", whenVi: "Khi campaign sẽ tạo brief, creative, report và source asset.", expectedEn: "A folder and naming plan under assets/campaigns with collision checks.", expectedVi: "Kế hoạch folder và tên file dưới assets/campaigns, có kiểm tra trùng.", recommended: true },
-    { labelEn: "Place a report", labelVi: "Đặt vị trí báo cáo", command: "/ak:assets-organizing analytics report", whenEn: "A report needs the correct durable path and filename pattern.", whenVi: "Khi báo cáo cần đúng path lưu bền vững và pattern tên file.", expectedEn: "The correct reports path, slug/date format, and pre-output checklist.", expectedVi: "Path báo cáo đúng, format slug/ngày và checklist trước khi xuất." },
+  promptExamples: [{ labelEn: "Organize a campaign", labelVi: "Tổ chức campaign", command: "/ak:assets-organizing campaign assets",
+      commandVi: '/ak:assets-organizing tài sản chiến dịch', whenEn: "A campaign will produce briefs, creatives, reports, and source assets.", whenVi: "Khi campaign sẽ tạo brief, creative, report và source asset.", expectedEn: "A folder and naming plan under assets/campaigns with collision checks.", expectedVi: "Kế hoạch folder và tên file dưới assets/campaigns, có kiểm tra trùng.", recommended: true },
+    { labelEn: "Place a report", labelVi: "Đặt vị trí báo cáo", command: "/ak:assets-organizing analytics report",
+      commandVi: '/ak:assets-organizing báo cáo phân tích', whenEn: "A report needs the correct durable path and filename pattern.", whenVi: "Khi báo cáo cần đúng path lưu bền vững và pattern tên file.", expectedEn: "The correct reports path, slug/date format, and pre-output checklist.", expectedVi: "Path báo cáo đúng, format slug/ngày và checklist trước khi xuất." },
+    { labelEn: 'Launch asset library', labelVi: 'Thư viện asset launch', command: '/ak:assets-organizing organize launch campaign assets',
+      commandVi: '/ak:assets-organizing tổ chức tài sản chiến dịch ra mắt', whenEn: 'Campaign files need a consistent folder, naming, and reuse map.', whenVi: 'File chiến dịch cần thư mục, naming và bản đồ tái sử dụng nhất quán.', expectedEn: 'Classification, destination paths, and naming for the launch asset set.', expectedVi: 'Phân loại, đường dẫn đích và naming cho bộ asset launch.' }
   ],
 };
 

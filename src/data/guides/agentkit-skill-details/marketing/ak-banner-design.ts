@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:banner-design",
   kit: 'marketer',
   header: {
-    titleEn: "Banner Design",
-    titleVi: "Thiết kế banner",
+    titleEn: '/ak:banner-design — Banner Design',
+    titleVi: '/ak:banner-design — Thiết kế banner',
     taglineEn: "Create multi-format banners for social, ads, website heroes, print, and campaign creative assets with platform dimensions, art direction options, AI visuals, HTML/CSS composition, and PNG export.",
     taglineVi: "Tạo banner đa định dạng cho social, ads, website hero, print và creative campaign với kích thước theo nền tảng, nhiều art direction, visual AI, bố cục HTML/CSS và xuất PNG.",
   },
@@ -42,9 +42,12 @@ const data: SkillInfographic = {
   ],
   expertiseAreasEn: ["Social banners", "Display ads", "Website heroes", "Print banners", "Art direction", "AI visuals", "HTML/CSS composition", "PNG export"],
   expertiseAreasVi: ["Banner social", "Display ads", "Website hero", "Banner in ấn", "Art direction", "Visual AI", "Dàn HTML/CSS", "Xuất PNG"],
-  promptExamples: [
-    { labelEn: "LinkedIn header", labelVi: "Header LinkedIn", command: "/ak:banner-design LinkedIn minimalist 1584x396", whenEn: "You need a social header with explicit platform, style, and dimensions.", whenVi: "Khi cần header social có nền tảng, style và kích thước rõ ràng.", expectedEn: "Requirements, art directions, generated visuals, HTML/CSS banners, exported PNGs, and paths.", expectedVi: "Nhận yêu cầu, art direction, visual tạo bằng AI, banner HTML/CSS, PNG đã xuất và đường dẫn.", recommended: true },
-    { labelEn: "Ad creative", labelVi: "Creative quảng cáo", command: "/ak:banner-design Google Display bold typography 300x250", whenEn: "A display ad needs platform-specific sizing and creative options.", whenVi: "Khi display ad cần đúng kích thước nền tảng và nhiều phương án creative.", expectedEn: "A banner set that follows display size, text-ratio, CTA, contrast, and naming rules.", expectedVi: "Bộ banner tuân thủ size display, tỷ lệ chữ, CTA, tương phản và luật đặt tên." },
+  promptExamples: [{ labelEn: "LinkedIn header", labelVi: "Header LinkedIn", command: "/ak:banner-design LinkedIn minimalist 1584x396",
+      commandVi: '/ak:banner-design LinkedIn tối giản 1584x396', whenEn: "You need a social header with explicit platform, style, and dimensions.", whenVi: "Khi cần header social có nền tảng, style và kích thước rõ ràng.", expectedEn: "Requirements, art directions, generated visuals, HTML/CSS banners, exported PNGs, and paths.", expectedVi: "Nhận yêu cầu, art direction, visual tạo bằng AI, banner HTML/CSS, PNG đã xuất và đường dẫn.", recommended: true },
+    { labelEn: "Ad creative", labelVi: "Creative quảng cáo", command: "/ak:banner-design Google Display bold typography 300x250",
+      commandVi: '/ak:banner-design Google Display typography đậm 300x250', whenEn: "A display ad needs platform-specific sizing and creative options.", whenVi: "Khi display ad cần đúng kích thước nền tảng và nhiều phương án creative.", expectedEn: "A banner set that follows display size, text-ratio, CTA, contrast, and naming rules.", expectedVi: "Bộ banner tuân thủ size display, tỷ lệ chữ, CTA, tương phản và luật đặt tên." },
+    { labelEn: 'Webinar LinkedIn banner', labelVi: 'Banner LinkedIn webinar', command: '/ak:banner-design LinkedIn 1200x627 banner for a founder webinar',
+      commandVi: '/ak:banner-design LinkedIn 1200x627 banner cho webinar founder', whenEn: 'You need a platform-sized banner with headline, proof, and CTA.', whenVi: 'Khi cần banner đúng size nền tảng với headline, proof và CTA.', expectedEn: 'Sized banner options matching brand, copy hierarchy, and export specs.', expectedVi: 'Các phương án banner đúng kích thước, khớp brand, phân cấp copy và spec xuất file.' }
   ],
   skillStack: [
     { name: "ui-ux-pro-max", type: 'skill' },

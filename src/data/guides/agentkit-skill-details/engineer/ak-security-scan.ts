@@ -10,6 +10,7 @@ const invocation: SkillInvocation = {
       descEn: 'Optional path, directory, or repository scope to scan. Omit to scan the current project from the active root.',
       descVi: 'Đường dẫn, thư mục hoặc phạm vi repository tùy chọn cần scan. Bỏ qua để scan project hiện tại từ root đang active.',
       exampleCommand: '/ak:security-scan src/api/',
+          exampleCommandVi: '/ak:security-scan src/api/',
     },
   ],
   options: [
@@ -20,6 +21,7 @@ const invocation: SkillInvocation = {
       descEn: 'Limit coverage to hardcoded credentials and private-key patterns with local context checks.',
       descVi: 'Giới hạn coverage vào credential hardcode và pattern private key với kiểm tra ngữ cảnh local.',
       exampleCommand: '/ak:security-scan --secrets-only',
+          exampleCommandVi: '/ak:security-scan --secrets-only',
     },
     {
       token: '--deps-only',
@@ -28,6 +30,7 @@ const invocation: SkillInvocation = {
       descEn: 'Run the supported package-audit path for the detected Node.js or Python project; unavailable tooling is reported, not treated as clean.',
       descVi: 'Chạy đường package audit được hỗ trợ cho project Node.js hoặc Python đã phát hiện; tool không khả dụng được báo rõ, không xem là sạch.',
       exampleCommand: '/ak:security-scan --deps-only',
+          exampleCommandVi: '/ak:security-scan --deps-only',
     },
     {
       token: '--full',
@@ -36,6 +39,7 @@ const invocation: SkillInvocation = {
       descEn: 'Declare the normal full workflow: secrets first, supported dependency audit, vulnerable code patterns, and .env exposure checks.',
       descVi: 'Chạy workflow đầy đủ thông thường: secret trước, audit dependency được hỗ trợ, pattern code dễ tổn thương và kiểm tra lộ .env.',
       exampleCommand: '/ak:security-scan src/api/ --full',
+          exampleCommandVi: '/ak:security-scan src/api/ --full',
     },
   ],
 };

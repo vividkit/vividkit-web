@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:codex-goal",
   kit: 'marketer',
   header: {
-    titleEn: "Codex durable goal contract",
-    titleVi: "Hợp đồng mục tiêu bền cho Codex",
+    titleEn: '/ak:codex-goal — Guide Codex /goal work',
+    titleVi: '/ak:codex-goal — Dẫn dắt công việc Codex /goal',
     taglineEn: "Shapes Codex /goal work into a clear objective with feature availability, validation checkpoints, boundaries, and a verifiable stop condition.",
     taglineVi: "Biến công việc Codex /goal thành mục tiêu rõ ràng có kiểm tra tính năng, checkpoint xác minh, ranh giới và điều kiện dừng đo được.",
   },
@@ -37,9 +37,12 @@ const data: SkillInfographic = {
     "Tài liệu /goal chính thức là nguồn chuẩn; không khẳng định hành vi lifecycle chưa được ghi." ,
   ],
   promptExamples: [
-    { labelEn: "Draft a goal", labelVi: "Soạn goal", command: "/ak:codex-goal Complete the pricing page refactor with tests passing after each checkpoint", whenEn: "Use when an autonomous Codex run needs a bounded objective and validation loop.", whenVi: "Dùng khi một phiên Codex tự chạy cần mục tiêu có ranh giới và vòng xác minh.", expectedEn: "A /goal contract with read-first files, constraints, validation, checkpoints, and stop condition.", expectedVi: "Một hợp đồng /goal có file đọc trước, ràng buộc, xác minh, checkpoint và điều kiện dừng.", recommended: true },
-    { labelEn: "Evaluate fit", labelVi: "Đánh giá độ phù hợp", command: "/ak:codex-goal migrate these mechanical lint fixes across the repo", whenEn: "Use to decide whether a proposed long-running task belongs in goal mode.", whenVi: "Dùng để quyết định một việc dài hơi có phù hợp với goal mode không.", expectedEn: "A fit assessment against mechanical scope, operational clarity, durable checkpoints, and verifiable stop conditions.", expectedVi: "Đánh giá độ phù hợp theo tính cơ học, độ rõ phạm vi và điều kiện dừng kiểm chứng được." },
-    { labelEn: "Refine draft", labelVi: "Tinh chỉnh bản nháp", command: "/ak:codex-goal goal draft for adding missing tests to checkout flow", whenEn: "Use when the user already has a rough goal but needs a safer contract.", whenVi: "Dùng khi người dùng đã có bản nháp goal nhưng cần hợp đồng an toàn hơn.", expectedEn: "A tightened goal with explicit boundaries, required validation, and no test-weakening escape hatch.", expectedVi: "Goal được siết lại với ranh giới rõ và không có đường né bằng cách làm yếu test." },
+    { labelEn: "Draft a goal", labelVi: "Soạn goal", command: "/ak:codex-goal Complete the pricing page refactor with tests passing after each checkpoint",
+      commandVi: '/ak:codex-goal Hoàn thành refactor trang pricing với tests pass sau mỗi checkpoint', whenEn: "Use when an autonomous Codex run needs a bounded objective and validation loop.", whenVi: "Dùng khi một phiên Codex tự chạy cần mục tiêu có ranh giới và vòng xác minh.", expectedEn: "A /goal contract with read-first files, constraints, validation, checkpoints, and stop condition.", expectedVi: "Một hợp đồng /goal có file đọc trước, ràng buộc, xác minh, checkpoint và điều kiện dừng.", recommended: true },
+    { labelEn: "Evaluate fit", labelVi: "Đánh giá độ phù hợp", command: "/ak:codex-goal migrate these mechanical lint fixes across the repo",
+      commandVi: '/ak:codex-goal migrate các sửa lint máy móc này trên toàn repo', whenEn: "Use to decide whether a proposed long-running task belongs in goal mode.", whenVi: "Dùng để quyết định một việc dài hơi có phù hợp với goal mode không.", expectedEn: "A fit assessment against mechanical scope, operational clarity, durable checkpoints, and verifiable stop conditions.", expectedVi: "Đánh giá độ phù hợp theo tính cơ học, độ rõ phạm vi và điều kiện dừng kiểm chứng được." },
+    { labelEn: "Refine draft", labelVi: "Tinh chỉnh bản nháp", command: "/ak:codex-goal goal draft for adding missing tests to checkout flow",
+      commandVi: '/ak:codex-goal goal draft để thêm các test còn thiếu cho luồng checkout', whenEn: "Use when the user already has a rough goal but needs a safer contract.", whenVi: "Dùng khi người dùng đã có bản nháp goal nhưng cần hợp đồng an toàn hơn.", expectedEn: "A tightened goal with explicit boundaries, required validation, and no test-weakening escape hatch.", expectedVi: "Goal được siết lại với ranh giới rõ và không có đường né bằng cách làm yếu test." },
   ],
   guardrails: [
     { thoughtEn: "Goal mode can just keep going until everything is better.", thoughtVi: "Goal mode có thể cứ chạy đến khi mọi thứ tốt hơn.", realityEn: "The skill requires a bounded objective and a stop condition.", realityVi: "Skill yêu cầu mục tiêu có ranh giới và điều kiện dừng.", accent: "red" },

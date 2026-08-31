@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:ckm-storage",
   kit: 'marketer',
   header: {
-    titleEn: "S3 storage router",
-    titleVi: "Bộ định tuyến lưu trữ S3",
+    titleEn: '/ak:ckm-storage — S3 storage router',
+    titleVi: '/ak:ckm-storage — Bộ định tuyến lưu trữ S3',
     taglineEn: "Routes S3 storage work to list, sync, upload, or URL retrieval references, then executes the remaining arguments.",
     taglineVi: "Định tuyến việc lưu trữ S3 sang list, sync, upload hoặc lấy URL, rồi thực thi phần tham số còn lại.",
   },
@@ -30,10 +30,14 @@ const data: SkillInfographic = {
     "Tải đúng tài liệu tham chiếu trước khi chạy hành vi riêng của từng action.",
   ],
   promptExamples: [
-    { labelEn: "List storage", labelVi: "Liệt kê lưu trữ", command: "/ak:ckm-storage list", whenEn: "Use when you need to inspect objects or bucket contents.", whenVi: "Dùng khi cần xem object hoặc nội dung bucket.", expectedEn: "The list reference is loaded and the storage listing action runs.", expectedVi: "Tài liệu list được tải và thao tác liệt kê lưu trữ được chạy.", recommended: true },
-    { labelEn: "Dry-run filtered sync", labelVi: "Dry-run sync có lọc", command: "/ak:ckm-storage sync assets/ --dry-run --extensions=.png,.jpg", whenEn: "Use when a local asset folder should be previewed and filtered before upload.", whenVi: "Dùng khi cần xem trước và lọc thư mục asset local trước khi upload.", expectedEn: "The sync workflow scans matching files and reports proposed object keys without uploading.", expectedVi: "Workflow sync quét file khớp bộ lọc và báo object key sẽ tạo, chưa upload." },
-    { labelEn: "Upload file", labelVi: "Tải file lên", command: "/ak:ckm-storage upload assets/banner.png", whenEn: "Use to publish a specific file to storage.", whenVi: "Dùng để đưa một file cụ thể lên storage.", expectedEn: "The upload reference guides the file upload.", expectedVi: "Tài liệu upload hướng dẫn thao tác tải file lên." },
-    { labelEn: "Get object URL", labelVi: "Lấy URL object", command: "/ak:ckm-storage url assets/banner.png", whenEn: "Use when a stored object needs a retrievable link.", whenVi: "Dùng khi object đã lưu cần link truy cập.", expectedEn: "The URL reference returns or builds the object link.", expectedVi: "Tài liệu URL trả về hoặc dựng link cho object." },
+    { labelEn: "List storage", labelVi: "Liệt kê lưu trữ", command: "/ak:ckm-storage list",
+      commandVi: '/ak:ckm-storage list', whenEn: "Use when you need to inspect objects or bucket contents.", whenVi: "Dùng khi cần xem object hoặc nội dung bucket.", expectedEn: "The list reference is loaded and the storage listing action runs.", expectedVi: "Tài liệu list được tải và thao tác liệt kê lưu trữ được chạy.", recommended: true },
+    { labelEn: "Dry-run filtered sync", labelVi: "Dry-run sync có lọc", command: "/ak:ckm-storage sync assets/ --dry-run --extensions=.png,.jpg",
+      commandVi: '/ak:ckm-storage sync assets/ --dry-run --extensions=.png,.jpg', whenEn: "Use when a local asset folder should be previewed and filtered before upload.", whenVi: "Dùng khi cần xem trước và lọc thư mục asset local trước khi upload.", expectedEn: "The sync workflow scans matching files and reports proposed object keys without uploading.", expectedVi: "Workflow sync quét file khớp bộ lọc và báo object key sẽ tạo, chưa upload." },
+    { labelEn: "Upload file", labelVi: "Tải file lên", command: "/ak:ckm-storage upload assets/banner.png",
+      commandVi: '/ak:ckm-storage upload assets/banner.png', whenEn: "Use to publish a specific file to storage.", whenVi: "Dùng để đưa một file cụ thể lên storage.", expectedEn: "The upload reference guides the file upload.", expectedVi: "Tài liệu upload hướng dẫn thao tác tải file lên." },
+    { labelEn: "Get object URL", labelVi: "Lấy URL object", command: "/ak:ckm-storage url assets/banner.png",
+      commandVi: '/ak:ckm-storage url assets/banner.png', whenEn: "Use when a stored object needs a retrievable link.", whenVi: "Dùng khi object đã lưu cần link truy cập.", expectedEn: "The URL reference returns or builds the object link.", expectedVi: "Tài liệu URL trả về hoặc dựng link cho object." },
   ],
 };
 

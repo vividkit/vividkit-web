@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:hub',
   kit: 'marketer',
   header: {
-    titleEn: 'Content Hub and Marketing Dashboard',
-    titleVi: 'Content Hub và Marketing Dashboard',
+    titleEn: '/ak:hub — Content Hub and Marketing Dashboard',
+    titleVi: '/ak:hub — Content Hub và Marketing Dashboard',
     taglineEn: 'Records the unresolved local Content Hub and Marketing Dashboard launcher boundary so marketers do not rely on stale paths or overstated features.',
     taglineVi: 'Ghi lại ranh giới launcher Content Hub và Marketing Dashboard cục bộ còn chưa được giải quyết để marketer không dựa vào path cũ hoặc tính năng bị phóng đại.',
   },
@@ -39,9 +39,12 @@ const data: SkillInfographic = {
     'Dừng theo cổng cần kiểm tra ownership của process trước khi terminate.',
   ],
   promptExamples: [
-    { labelEn: 'Review limitation', labelVi: 'Xem giới hạn', command: '/ak:hub', whenEn: 'You are considering the intended local Content Hub and Dashboard launcher.', whenVi: 'Bạn đang cân nhắc launcher Content Hub và Dashboard cục bộ dự kiến.', expectedEn: 'Explains the unresolved launcher boundary instead of starting services.', expectedVi: 'Giải thích ranh giới launcher chưa giải quyết thay vì khởi động dịch vụ.', recommended: true },
-    { labelEn: 'Scan boundary', labelVi: 'Ranh giới quét', command: '/ak:hub --scan', whenEn: 'You need to understand the intended asset rescan behavior.', whenVi: 'Cần hiểu hành vi quét lại asset theo dự kiến.', expectedEn: 'Warns not to run scan mode through ak:hub until the launcher contract is fixed.', expectedVi: 'Cảnh báo không chạy chế độ scan qua ak:hub cho tới khi hợp đồng launcher được sửa.' },
-    { labelEn: 'Stop boundary', labelVi: 'Ranh giới dừng', command: '/ak:hub --stop', whenEn: 'You need to understand the intended stop behavior.', whenVi: 'Cần hiểu hành vi dừng theo dự kiến.', expectedEn: 'Requires ownership checks and warns against legacy port-based termination.', expectedVi: 'Yêu cầu kiểm tra ownership và cảnh báo không dùng termination theo cổng kiểu legacy.' },
+    { labelEn: 'Review limitation', labelVi: 'Xem giới hạn', command: '/ak:hub',
+      commandVi: '/ak:hub', whenEn: 'You are considering the intended local Content Hub and Dashboard launcher.', whenVi: 'Bạn đang cân nhắc launcher Content Hub và Dashboard cục bộ dự kiến.', expectedEn: 'Explains the unresolved launcher boundary instead of starting services.', expectedVi: 'Giải thích ranh giới launcher chưa giải quyết thay vì khởi động dịch vụ.', recommended: true },
+    { labelEn: 'Scan boundary', labelVi: 'Ranh giới quét', command: '/ak:hub --scan',
+      commandVi: '/ak:hub --scan', whenEn: 'You need to understand the intended asset rescan behavior.', whenVi: 'Cần hiểu hành vi quét lại asset theo dự kiến.', expectedEn: 'Warns not to run scan mode through ak:hub until the launcher contract is fixed.', expectedVi: 'Cảnh báo không chạy chế độ scan qua ak:hub cho tới khi hợp đồng launcher được sửa.' },
+    { labelEn: 'Stop boundary', labelVi: 'Ranh giới dừng', command: '/ak:hub --stop',
+      commandVi: '/ak:hub --stop', whenEn: 'You need to understand the intended stop behavior.', whenVi: 'Cần hiểu hành vi dừng theo dự kiến.', expectedEn: 'Requires ownership checks and warns against legacy port-based termination.', expectedVi: 'Yêu cầu kiểm tra ownership và cảnh báo không dùng termination theo cổng kiểu legacy.' },
   ],
   skillStack: [
     { name: 'content-hub intended surface', type: 'skill' },

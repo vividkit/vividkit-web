@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:ak",
   kit: 'marketer',
   header: {
-    titleEn: "ak CLI Operation",
-    titleVi: "Vận hành ak CLI",
+    titleEn: '/ak:ak — Safe AgentKit CLI operation',
+    titleVi: '/ak:ak — Vận hành CLI AgentKit an toàn',
     taglineEn: "Operate the AgentKit control-plane CLI safely: inspect subcommands, classify mutation risk, confirm project vs global scope, preserve unknown files, and report exact command results.",
     taglineVi: "Vận hành CLI control-plane của AgentKit an toàn: kiểm tra subcommand, phân loại rủi ro mutate, xác nhận scope project/global, giữ file lạ và báo kết quả lệnh chính xác.",
   },
@@ -42,8 +42,12 @@ const data: SkillInfographic = {
   expertiseAreasEn: ["ak subcommands", "Mutation safety", "Project vs global scope", "Backups and recovery", "JSON output interpretation", "Runtime support checks"],
   expertiseAreasVi: ["Subcommand ak", "An toàn khi mutate", "Scope project và global", "Backup và recovery", "Diễn giải JSON output", "Kiểm tra runtime support"],
   promptExamples: [
-    { labelEn: "Diagnose install", labelVi: "Chẩn đoán install", command: "/ak:ak doctor", whenEn: "You need to run or interpret an AgentKit diagnostic command.", whenVi: "Khi cần chạy hoặc diễn giải lệnh chẩn đoán của AgentKit.", expectedEn: "Safe command triage, live help inspection, explicit scope naming, and plain result interpretation for the chosen kit command.", expectedVi: "Phân loại lệnh an toàn, xem help, nêu scope và diễn giải kết quả.", recommended: true },
-    { labelEn: "Validate a kit", labelVi: "Validate kit", command: "/ak:ak kit validate", whenEn: "A kit lifecycle action needs read-only validation before any mutation.", whenVi: "Khi một thao tác lifecycle của kit cần validate read-only trước mọi thay đổi.", expectedEn: "A preview-first CLI path with detected conflicts, lifecycle constraints, and next required confirmations reported plainly.", expectedVi: "Đường CLI ưu tiên xem trước, báo rõ conflict và ràng buộc." },
+    { labelEn: "Diagnose install", labelVi: "Chẩn đoán install", command: "/ak:ak doctor",
+      commandVi: '/ak:ak doctor', whenEn: "You need to run or interpret an AgentKit diagnostic command.", whenVi: "Khi cần chạy hoặc diễn giải lệnh chẩn đoán của AgentKit.", expectedEn: "Safe command triage, live help inspection, explicit scope naming, and plain result interpretation for the chosen kit command.", expectedVi: "Phân loại lệnh an toàn, xem help, nêu scope và diễn giải kết quả.", recommended: true },
+    { labelEn: "Validate a kit", labelVi: "Validate kit", command: "/ak:ak kit validate",
+      commandVi: '/ak:ak kit validate', whenEn: "A kit lifecycle action needs read-only validation before any mutation.", whenVi: "Khi một thao tác lifecycle của kit cần validate read-only trước mọi thay đổi.", expectedEn: "A preview-first CLI path with detected conflicts, lifecycle constraints, and next required confirmations reported plainly.", expectedVi: "Đường CLI ưu tiên xem trước, báo rõ conflict và ràng buộc." },
+    { labelEn: 'List installed skills', labelVi: 'Liệt kê skill đã cài', command: '/ak:ak skills',
+      commandVi: '/ak:ak skills', whenEn: 'You need a read-only view of installed kit skills before a lifecycle change.', whenVi: 'Khi cần xem skill kit đã cài (chỉ đọc) trước khi đổi lifecycle.', expectedEn: 'Inspects live CLI help and prints the installed skill inventory with scope made explicit.', expectedVi: 'Đọc help CLI live và in inventory skill đã cài, nêu rõ scope.' }
   ],
 };
 

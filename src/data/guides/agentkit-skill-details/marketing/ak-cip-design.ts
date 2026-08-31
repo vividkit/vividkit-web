@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:cip-design",
   kit: 'marketer',
   header: {
-    titleEn: "Corporate identity mockup system",
-    titleVi: "Hệ thống mockup nhận diện doanh nghiệp",
+    titleEn: '/ak:cip-design — Corporate identity mockup system',
+    titleVi: '/ak:cip-design — Hệ thống mockup nhận diện doanh nghiệp',
     taglineEn: "Creates Corporate Identity Program briefs and mockups across 50+ deliverables, 20 styles, and 20 industries using Gemini Nano Banana image generation.",
     taglineVi: "Tạo brief và mockup Corporate Identity Program cho hơn 50 hạng mục, 20 phong cách và 20 ngành bằng Gemini Nano Banana.",
   },
@@ -33,9 +33,12 @@ const data: SkillInfographic = {
   expertiseAreasEn: ["Business cards", "Letterheads", "Office signage", "Vehicle branding", "Apparel", "Packaging", "Digital templates", "Event booths"],
   expertiseAreasVi: ["Danh thiếp", "Letterhead", "Biển hiệu văn phòng", "Branding xe", "Đồng phục", "Bao bì", "Mẫu digital", "Gian hàng sự kiện"],
   promptExamples: [
-    { labelEn: "Recommended start", labelVi: "Cách bắt đầu khuyến nghị", command: "/ak:cip-design complete CIP for Grand Vista luxury hotel", whenEn: "Use when the brand needs a complete applied identity package.", whenVi: "Dùng khi brand cần một bộ nhận diện ứng dụng đầy đủ.", expectedEn: "Industry-fit brief, style direction, and prioritized CIP deliverables.", expectedVi: "Brief hợp ngành, hướng phong cách và danh sách hạng mục CIP ưu tiên.", recommended: true },
-    { labelEn: "Specific deliverable", labelVi: "Hạng mục cụ thể", command: "/ak:cip-design business card and letterhead for TopGroup consulting", whenEn: "Use when only selected identity touchpoints need mockups.", whenVi: "Dùng khi chỉ cần mockup cho vài điểm chạm nhận diện cụ thể.", expectedEn: "Mockup guidance for the requested deliverables and brand context.", expectedVi: "Hướng dẫn mockup cho các hạng mục đã yêu cầu và bối cảnh brand." },
-    { labelEn: "Brand application", labelVi: "Ứng dụng thương hiệu", command: "/ak:cip-design vehicle branding for GreenLeaf organic food", whenEn: "Use for applied identity on vehicles, signage, packaging, or apparel.", whenVi: "Dùng cho nhận diện ứng dụng trên xe, biển hiệu, bao bì hoặc đồng phục.", expectedEn: "CIP recommendations matched to the deliverable category and industry.", expectedVi: "Khuyến nghị CIP khớp với nhóm hạng mục và ngành." },
+    { labelEn: "Recommended start", labelVi: "Cách bắt đầu khuyến nghị", command: "/ak:cip-design complete CIP for Grand Vista luxury hotel",
+      commandVi: '/ak:cip-design hoàn thành CIP cho khách sạn sang trọng Grand Vista', whenEn: "Use when the brand needs a complete applied identity package.", whenVi: "Dùng khi brand cần một bộ nhận diện ứng dụng đầy đủ.", expectedEn: "Industry-fit brief, style direction, and prioritized CIP deliverables.", expectedVi: "Brief hợp ngành, hướng phong cách và danh sách hạng mục CIP ưu tiên.", recommended: true },
+    { labelEn: "Specific deliverable", labelVi: "Hạng mục cụ thể", command: "/ak:cip-design business card and letterhead for TopGroup consulting",
+      commandVi: '/ak:cip-design danh thiếp và tiêu đề thư cho TopGroup consulting', whenEn: "Use when only selected identity touchpoints need mockups.", whenVi: "Dùng khi chỉ cần mockup cho vài điểm chạm nhận diện cụ thể.", expectedEn: "Mockup guidance for the requested deliverables and brand context.", expectedVi: "Hướng dẫn mockup cho các hạng mục đã yêu cầu và bối cảnh brand." },
+    { labelEn: "Brand application", labelVi: "Ứng dụng thương hiệu", command: "/ak:cip-design vehicle branding for GreenLeaf organic food",
+      commandVi: '/ak:cip-design thương hiệu xe cho GreenLeaf thực phẩm hữu cơ', whenEn: "Use for applied identity on vehicles, signage, packaging, or apparel.", whenVi: "Dùng cho nhận diện ứng dụng trên xe, biển hiệu, bao bì hoặc đồng phục.", expectedEn: "CIP recommendations matched to the deliverable category and industry.", expectedVi: "Khuyến nghị CIP khớp với nhóm hạng mục và ngành." },
   ],
   skillStack: [
     { name: "ai-multimodal", type: "skill" },

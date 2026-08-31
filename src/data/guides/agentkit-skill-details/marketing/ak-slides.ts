@@ -45,9 +45,12 @@ const data: SkillInfographic = {
     { flag: 'create', modeEn: 'Create strategic presentation slides from a topic and slide count; create must be the first subcommand.', modeVi: 'Tạo slide presentation chiến lược từ topic và số slide; create phải là subcommand đầu tiên.', research: 'Brief', redTeam: 'Generic deck', validation: 'Preflight' },
   ],
   promptExamples: [
-    { labelEn: 'Create deck', labelVi: 'Tạo deck', command: '/ak:slides create Product launch narrative 12', whenEn: 'You need a strategic HTML deck around a launch story.', whenVi: 'Khi cần deck HTML chiến lược cho câu chuyện launch.', expectedEn: 'Deck direction, narrative, responsive HTML slides, and design preflight.', expectedVi: 'Định hướng deck, narrative, slide HTML responsive và design preflight.', recommended: true },
-    { labelEn: 'Topic + count', labelVi: 'Topic + số slide', command: '/ak:slides create Pricing strategy update 8', whenEn: 'You have a topic and target deck length.', whenVi: 'Khi có topic và độ dài deck mong muốn.', expectedEn: 'Strategic slide plan and HTML presentation.', expectedVi: 'Kế hoạch slide chiến lược và presentation HTML.' },
-    { labelEn: 'Data deck', labelVi: 'Deck có data', command: '/ak:slides create Q3 marketing performance 10', whenEn: 'You need charts, metrics, comparisons, or trends in a presentation.', whenVi: 'Khi cần chart, metric, so sánh hoặc trend trong presentation.', expectedEn: 'Data-driven HTML slides with Chart.js visualizations where useful.', expectedVi: 'Slide HTML dựa trên dữ liệu, dùng Chart.js khi hữu ích.' },
+    { labelEn: 'Create deck', labelVi: 'Tạo deck', command: '/ak:slides create Product launch narrative 12',
+      commandVi: '/ak:slides create câu chuyện ra mắt sản phẩm 12', whenEn: 'You need a strategic HTML deck around a launch story.', whenVi: 'Khi cần deck HTML chiến lược cho câu chuyện launch.', expectedEn: 'Deck direction, narrative, responsive HTML slides, and design preflight.', expectedVi: 'Định hướng deck, narrative, slide HTML responsive và design preflight.', recommended: true },
+    { labelEn: 'Topic + count', labelVi: 'Topic + số slide', command: '/ak:slides create Pricing strategy update 8',
+      commandVi: '/ak:slides create Cập nhật chiến lược giá 8', whenEn: 'You have a topic and target deck length.', whenVi: 'Khi có topic và độ dài deck mong muốn.', expectedEn: 'Strategic slide plan and HTML presentation.', expectedVi: 'Kế hoạch slide chiến lược và presentation HTML.' },
+    { labelEn: 'Data deck', labelVi: 'Deck có data', command: '/ak:slides create Q3 marketing performance 10',
+      commandVi: '/ak:slides create Hiệu suất marketing Q3 10', whenEn: 'You need charts, metrics, comparisons, or trends in a presentation.', whenVi: 'Khi cần chart, metric, so sánh hoặc trend trong presentation.', expectedEn: 'Data-driven HTML slides with Chart.js visualizations where useful.', expectedVi: 'Slide HTML dựa trên dữ liệu, dùng Chart.js khi hữu ích.' },
   ],
 };
 

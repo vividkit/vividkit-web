@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: "/ak:brainstorm",
   kit: 'marketer',
   header: {
-    titleEn: "Brainstorm",
-    titleVi: "Brainstorm có ràng buộc",
+    titleEn: '/ak:brainstorm — Bounded outcome and option design',
+    titleVi: '/ak:brainstorm — Chốt kết quả và thiết kế phương án',
     taglineEn: "Turn incomplete intent into a bounded delivery contract, inspect evidence, compare real options, choose the smallest sufficient direction, and hand off cleanly to plan, cook, or fix.",
     taglineVi: "Biến ý định chưa đủ rõ thành contract giao việc có ranh giới, kiểm tra bằng chứng, so sánh phương án thật, chọn hướng nhỏ nhất đủ dùng và handoff sạch sang plan, cook hoặc fix.",
   },
@@ -43,9 +43,12 @@ const data: SkillInfographic = {
   expertiseAreasEn: ["Outcome framing", "Constraints and non-goals", "Acceptance criteria", "Option comparison", "Bug diagnosis routing", "HTML or report briefs", "Verifier mode"],
   expertiseAreasVi: ["Đóng khung outcome", "Constraint và non-goal", "Acceptance criteria", "So sánh phương án", "Định tuyến chẩn đoán bug", "Brief HTML hoặc report", "Mode verifier"],
   promptExamples: [
-    { labelEn: "Bound a launch", labelVi: "Đóng khung launch", command: "/ak:brainstorm launch campaign for the new feature", whenEn: "The work is multi-step and needs outcome, constraints, non-goals, and acceptance before execution.", whenVi: "Khi việc nhiều bước cần chốt outcome, constraint, non-goal và acceptance trước khi làm.", expectedEn: "A bounded delivery contract plus the smallest recommended route that still satisfies the accepted outcome.", expectedVi: "Contract giao việc có ranh giới và route nhỏ nhất được khuyến nghị.", recommended: true },
-    { labelEn: "Preview as HTML", labelVi: "Xem trước bằng HTML", command: "/ak:brainstorm landing page redesign --html", whenEn: "The decision should be previewed as a self-contained HTML brief before delivery.", whenVi: "Khi cần xem quyết định dưới dạng brief HTML tự chứa trước khi giao triển khai.", expectedEn: "A self-contained HTML brief with contract fields, compared approaches, recommendation, risks, and implementation diagram.", expectedVi: "HTML gồm contract, phương án so sánh, khuyến nghị, rủi ro và sơ đồ triển khai." },
-    { labelEn: "Cut scope", labelVi: "Cắt scope", command: "/ak:brainstorm onboarding flow --yagni", whenEn: "The request may attract unnecessary abstractions or adjacent work.", whenVi: "Khi yêu cầu dễ kéo theo abstraction hoặc việc lân cận không cần thiết.", expectedEn: "A contract that challenges and removes scope not needed for the stated outcome.", expectedVi: "Contract chất vấn và loại bỏ scope không cần cho outcome đã nêu." },
+    { labelEn: "Bound a launch", labelVi: "Đóng khung launch", command: "/ak:brainstorm launch campaign for the new feature",
+      commandVi: '/ak:brainstorm chiến dịch ra mắt cho tính năng mới', whenEn: "The work is multi-step and needs outcome, constraints, non-goals, and acceptance before execution.", whenVi: "Khi việc nhiều bước cần chốt outcome, constraint, non-goal và acceptance trước khi làm.", expectedEn: "A bounded delivery contract plus the smallest recommended route that still satisfies the accepted outcome.", expectedVi: "Contract giao việc có ranh giới và route nhỏ nhất được khuyến nghị.", recommended: true },
+    { labelEn: "Preview as HTML", labelVi: "Xem trước bằng HTML", command: "/ak:brainstorm landing page redesign --html",
+      commandVi: '/ak:brainstorm thiết kế lại trang đích --html', whenEn: "The decision should be previewed as a self-contained HTML brief before delivery.", whenVi: "Khi cần xem quyết định dưới dạng brief HTML tự chứa trước khi giao triển khai.", expectedEn: "A self-contained HTML brief with contract fields, compared approaches, recommendation, risks, and implementation diagram.", expectedVi: "HTML gồm contract, phương án so sánh, khuyến nghị, rủi ro và sơ đồ triển khai." },
+    { labelEn: "Cut scope", labelVi: "Cắt scope", command: "/ak:brainstorm onboarding flow --yagni",
+      commandVi: '/ak:brainstorm luồng onboarding --yagni', whenEn: "The request may attract unnecessary abstractions or adjacent work.", whenVi: "Khi yêu cầu dễ kéo theo abstraction hoặc việc lân cận không cần thiết.", expectedEn: "A contract that challenges and removes scope not needed for the stated outcome.", expectedVi: "Contract chất vấn và loại bỏ scope không cần cho outcome đã nêu." },
   ],
   outputFlags: [
     { flag: "--advice", titleEn: "Advisory supervision", titleVi: "Giám sát tư vấn", descEn: "Run under kongming supervision at phase checkpoints, stuck points, high-stakes decisions, and downstream PR review handoff.", descVi: "Chạy dưới giám sát kongming ở checkpoint từng phase, khi bị kẹt, trước quyết định rủi ro cao và handoff review PR downstream." },

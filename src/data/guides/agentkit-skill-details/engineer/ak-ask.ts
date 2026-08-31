@@ -14,6 +14,7 @@ const invocation: SkillInvocation = {
       required: true,
       exampleCommand:
         '/ak:ask "Should this service publish domain events directly, or write an outbox record first?"',
+          exampleCommandVi: '/ak:ask "Service này nên publish domain events trực tiếp, hay ghi outbox record trước?"',
     },
   ],
   options: [
@@ -26,6 +27,7 @@ const invocation: SkillInvocation = {
       descVi:
         'Chất vấn và bỏ phần phạm vi không cần cho outcome đã nêu. Không bỏ phần cần thiết để trả lời câu hỏi.',
       exampleCommand: '/ak:ask "Do we need event sourcing for audit trails?" --yagni',
+          exampleCommandVi: '/ak:ask "Chúng ta có cần event sourcing cho audit trails không?" --yagni',
     },
   ],
 };
@@ -75,9 +77,12 @@ const data: SkillInfographic = {
   expertiseAreasVi: ['Ranh giới hệ thống', 'Chiến lược công nghệ', 'Mở rộng và độ tin cậy', 'Phân tích rủi ro', 'Đánh đổi quyết định'],
   invocation,
   promptExamples: [
-    { labelEn: 'Architecture decision', labelVi: 'Quyết định kiến trúc', command: '/ak:ask "Should this service stay REST or move to gRPC for internal calls?"', whenEn: 'Use when you need a strategic answer before planning or coding.', whenVi: 'Dùng khi cần câu trả lời chiến lược trước khi lập kế hoạch hoặc viết mã.', expectedEn: 'Gathers context, compares boundaries and trade-offs, and returns direct guidance.', expectedVi: 'Thu thập bối cảnh, so sánh ranh giới và đánh đổi, rồi trả hướng dẫn trực diện.', recommended: true },
-    { labelEn: 'YAGNI architecture challenge', labelVi: 'Phản biện kiến trúc bằng YAGNI', command: '/ak:ask "Do we need event sourcing for audit trails?" --yagni', whenEn: 'Use when you want unnecessary scope challenged and cut from the recommendation.', whenVi: 'Dùng khi muốn khuyến nghị phản biện và cắt phạm vi không cần thiết.', expectedEn: 'Evaluates the full question, then cuts only what is not needed for the stated outcome.', expectedVi: 'Đánh giá đủ câu hỏi, rồi chỉ cắt phần không cần cho kết quả đã nêu.' },
-    { labelEn: 'Best-practice review', labelVi: 'Đánh giá best practice', command: '/ak:ask "What auth boundary should our admin dashboard use?"', whenEn: 'Use for implementation strategy, proof-of-concept criteria, and validation points without edits.', whenVi: 'Dùng để có chiến lược triển khai, tiêu chí thử nghiệm và điểm kiểm chứng mà không sửa file.', expectedEn: 'Returns recommendations, alternatives, risks, and next actions rather than a code patch.', expectedVi: 'Trả khuyến nghị, phương án khác, rủi ro và bước tiếp theo thay vì patch mã.' },
+    { labelEn: 'Architecture decision', labelVi: 'Quyết định kiến trúc', command: '/ak:ask "Should this service stay REST or move to gRPC for internal calls?"',
+      commandVi: '/ak:ask "Dịch vụ này nên giữ REST hay chuyển sang gRPC cho các gọi nội bộ?"', whenEn: 'Use when you need a strategic answer before planning or coding.', whenVi: 'Dùng khi cần câu trả lời chiến lược trước khi lập kế hoạch hoặc viết mã.', expectedEn: 'Gathers context, compares boundaries and trade-offs, and returns direct guidance.', expectedVi: 'Thu thập bối cảnh, so sánh ranh giới và đánh đổi, rồi trả hướng dẫn trực diện.', recommended: true },
+    { labelEn: 'YAGNI architecture challenge', labelVi: 'Phản biện kiến trúc bằng YAGNI', command: '/ak:ask "Do we need event sourcing for audit trails?" --yagni',
+      commandVi: '/ak:ask "Chúng ta có cần event sourcing cho audit trails không?" --yagni', whenEn: 'Use when you want unnecessary scope challenged and cut from the recommendation.', whenVi: 'Dùng khi muốn khuyến nghị phản biện và cắt phạm vi không cần thiết.', expectedEn: 'Evaluates the full question, then cuts only what is not needed for the stated outcome.', expectedVi: 'Đánh giá đủ câu hỏi, rồi chỉ cắt phần không cần cho kết quả đã nêu.' },
+    { labelEn: 'Best-practice review', labelVi: 'Đánh giá best practice', command: '/ak:ask "What auth boundary should our admin dashboard use?"',
+      commandVi: '/ak:ask "Ranh giới xác thực nào dashboard admin của chúng ta nên dùng?"', whenEn: 'Use for implementation strategy, proof-of-concept criteria, and validation points without edits.', whenVi: 'Dùng để có chiến lược triển khai, tiêu chí thử nghiệm và điểm kiểm chứng mà không sửa file.', expectedEn: 'Returns recommendations, alternatives, risks, and next actions rather than a code patch.', expectedVi: 'Trả khuyến nghị, phương án khác, rủi ro và bước tiếp theo thay vì patch mã.' },
   ],
   skillStack: [
     { name: 'ak:scout', type: 'skill' },

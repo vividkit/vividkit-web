@@ -15,6 +15,7 @@ const invocation: SkillInvocation = {
       required: true,
       exampleCommand:
         '/ak:show-off "Create an English-only launch demo from release-notes.md. Local only, no screenshots, for this run only. Cite every external claim and open the final HTML for review."',
+          exampleCommandVi: '/ak:show-off "Tạo demo ra mắt chỉ bằng tiếng Anh từ release-notes.md. Chỉ local, không screenshots, chỉ cho lần chạy này. Trích dẫn mọi claim bên ngoài và mở HTML cuối để review."',
     },
   ],
   options: [
@@ -27,6 +28,7 @@ const invocation: SkillInvocation = {
       descVi:
         'Tắt chụp section cục bộ và fallback ReviewWeb từ xa, rồi đánh dấu capture là skipped. Nếu không có “for this run only”, preference này được lưu trước khi lập plan.',
       exampleCommand: '/ak:show-off "Turn this launch note into a showcase" --no-screenshots',
+          exampleCommandVi: '/ak:show-off "Biến launch note này thành showcase" --no-screenshots',
     },
     {
       token: '--no-publish',
@@ -37,6 +39,7 @@ const invocation: SkillInvocation = {
       descVi:
         'Bỏ publish document/static site qua agentwiki và giữ output cục bộ; điều này cũng làm fallback ReviewWeb không đủ điều kiện. Nếu không nói chỉ một lần, opt-out sẽ được lưu.',
       exampleCommand: '/ak:show-off "Make a product milestone story" --no-publish',
+          exampleCommandVi: '/ak:show-off "Tạo story cột mốc sản phẩm" --no-publish',
     },
     {
       token: '--languages en|vi|en,vi',
@@ -47,6 +50,7 @@ const invocation: SkillInvocation = {
       descVi:
         'Chọn nội dung chỉ tiếng Anh, chỉ tiếng Việt hoặc song ngữ Việt/Anh. Chế độ một ngôn ngữ không được thêm ngôn ngữ còn lại hoặc toggle song ngữ.',
       exampleCommand: '/ak:show-off "Create a customer-facing milestone story" --languages en',
+          exampleCommandVi: '/ak:show-off "Tạo story cột mốc hướng tới khách hàng" --languages en',
     },
     {
       token: '--no-antv',
@@ -57,6 +61,7 @@ const invocation: SkillInvocation = {
       descVi:
         'Tắt tile AntV Infographic cho panel KPI, ranked-list hoặc quadrant ngoài hero trong lần chạy này; hero do frontend-design vẫn bắt buộc.',
       exampleCommand: '/ak:show-off "Create a launch story" --no-antv',
+          exampleCommandVi: '/ak:show-off "Tạo story ra mắt" --no-antv',
     },
     {
       token: '--no-diagram-design',
@@ -67,6 +72,7 @@ const invocation: SkillInvocation = {
       descVi:
         'Tắt lớp tăng cường diagram-design cho visual kiến trúc, quy trình và data-flow trong các section.',
       exampleCommand: '/ak:show-off "Create an architecture recap showcase" --no-diagram-design',
+          exampleCommandVi: '/ak:show-off "Tạo showcase recap kiến trúc" --no-diagram-design',
     },
     {
       token: '--no-editorial-visuals',
@@ -77,6 +83,7 @@ const invocation: SkillInvocation = {
       descVi:
         'Tắt cả hai lớp visual biên tập bổ sung ngoài hero nhưng vẫn giữ phần dựng showcase tự chứa cốt lõi.',
       exampleCommand: '/ak:show-off "Create a project recap" --no-editorial-visuals',
+          exampleCommandVi: '/ak:show-off "Tạo recap dự án" --no-editorial-visuals',
     },
   ],
 };

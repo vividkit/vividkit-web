@@ -14,6 +14,7 @@ const invocation: SkillInvocation = {
       required: true,
       exampleCommand:
         '/ak:remotion "Create a 15-second 1080x1080 product update video at 30 fps using existing brand tokens and local assets; include captions, reduced-motion-safe transitions, deterministic tests at key frames, and stop before the final render"',
+          exampleCommandVi: '/ak:remotion "Create video product update 15 giây 1080x1080 ở 30 fps dùng brand tokens và local assets hiện có; bao gồm captions, transitions an toàn reduced-motion, deterministic tests tại key frames, và stop trước final render"',
     },
   ],
 };

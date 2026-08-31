@@ -11,6 +11,7 @@ const invocation: SkillInvocation = {
       descVi: 'Component, route, server function, vấn đề bundle, đường data fetching, triệu chứng render hoặc pattern tối ưu cần audit hay cải thiện. Nêu bằng chứng baseline, ràng buộc tương thích, ranh giới được sửa và ngưỡng measurement hoặc test định nghĩa thành công.',
       required: true,
       exampleCommand: '/ak:react-best-practices "Audit the existing Next.js product route for server waterfalls and client bundle cost; propose ranked changes first and implement only approved files."',
+          exampleCommandVi: '/ak:react-best-practices "Audit route sản phẩm Next.js hiện có về server waterfalls và chi phí bundle client; đề xuất các thay đổi xếp hạng trước và chỉ triển khai các file đã được duyệt."',
     },
   ],
 };

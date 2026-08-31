@@ -67,11 +67,13 @@ const data: SkillInfographic = {
   invocation: {
     syntax: "/ak:docs <init|update|summarize|agent-context|agents|llms> [request] [--advice]",
     arguments: [
-      { token: "<operation>", titleEn: "Docs operation", titleVi: "Thao tác docs", descEn: "Required first word: init, update, summarize, agent-context, agents, or llms. Empty or unclear input asks the user to choose instead of assuming init.", descVi: "Từ đầu tiên bắt buộc: init, update, summarize, agent-context, agents hoặc llms. Input trống hoặc không rõ sẽ hỏi người dùng chọn thay vì tự giả định init.", required: true, exampleCommand: "/ak:docs update \"Reconcile onboarding docs with the current authentication flow\"" },
+      { token: "<operation>", titleEn: "Docs operation", titleVi: "Thao tác docs", descEn: "Required first word: init, update, summarize, agent-context, agents, or llms. Empty or unclear input asks the user to choose instead of assuming init.", descVi: "Từ đầu tiên bắt buộc: init, update, summarize, agent-context, agents hoặc llms. Input trống hoặc không rõ sẽ hỏi người dùng chọn thay vì tự giả định init.", required: true, exampleCommand: "/ak:docs update \"Reconcile onboarding docs with the current authentication flow\"",
+          exampleCommandVi: '/ak:docs update "Reconcile onboarding docs with the current authentication flow"' },
       { token: "[request]", titleEn: "Docs request", titleVi: "Yêu cầu docs", descEn: "Optional natural-language scope, changed behavior, audience, evidence, or acceptance criteria for the selected operation.", descVi: "Phạm vi, hành vi đã đổi, audience, bằng chứng hoặc tiêu chí chấp nhận tùy chọn bằng ngôn ngữ tự nhiên cho thao tác đã chọn." },
     ],
     options: [
-      { token: "--advice", titleEn: "Advisory counsel", titleVi: "Cố vấn", descEn: "Ask kongming for counsel before proposed documentation or root-context writes. It advises only; ak:docs still owns edits and confirmations.", descVi: "Hỏi kongming tư vấn trước thay đổi tài liệu hoặc root context được đề xuất. Kongming chỉ cố vấn; ak:docs vẫn chịu trách nhiệm sửa và xác nhận.", exampleCommand: "/ak:docs update --advice \"Reconcile onboarding docs with the current authentication flow\"" },
+      { token: "--advice", titleEn: "Advisory counsel", titleVi: "Cố vấn", descEn: "Ask kongming for counsel before proposed documentation or root-context writes. It advises only; ak:docs still owns edits and confirmations.", descVi: "Hỏi kongming tư vấn trước thay đổi tài liệu hoặc root context được đề xuất. Kongming chỉ cố vấn; ak:docs vẫn chịu trách nhiệm sửa và xác nhận.", exampleCommand: "/ak:docs update --advice \"Reconcile onboarding docs with the current authentication flow\"",
+          exampleCommandVi: '/ak:docs update --advice "Reconcile onboarding docs with the current authentication flow"' },
     ],
     subcommands: [
       {
@@ -85,6 +87,7 @@ const data: SkillInfographic = {
         outcomeEn: "Creates, retains, replaces, or removes only the authority surfaces needed for working navigation and verified claims.",
         outcomeVi: "Chỉ tạo, giữ, thay thế hoặc xóa các bề mặt thẩm quyền cần cho navigation hoạt động và claim đã xác minh.",
         exampleCommand: "/ak:docs init",
+          exampleCommandVi: '/ak:docs init',
       },
       {
         name: "update",
@@ -97,6 +100,7 @@ const data: SkillInfographic = {
         outcomeEn: "Minimal documentation diff with changed claims mapped to evidence and stale duplication removed.",
         outcomeVi: "Diff tài liệu tối thiểu, claim đã đổi được ánh xạ tới bằng chứng và phần trùng lặp lỗi thời được xóa.",
         exampleCommand: "/ak:docs update \"Reconcile onboarding docs with the current authentication flow\"",
+          exampleCommandVi: '/ak:docs update "Reconcile onboarding docs with the current authentication flow"',
       },
       {
         name: "summarize",
@@ -109,6 +113,7 @@ const data: SkillInfographic = {
         outcomeEn: "Focused summary that separates current behavior, intended direction, and stateful evidence.",
         outcomeVi: "Bản tóm tắt tập trung, tách hành vi hiện tại, hướng dự kiến và bằng chứng có trạng thái.",
         exampleCommand: "/ak:docs summarize auth flow",
+          exampleCommandVi: '/ak:docs summarize auth flow',
       },
       {
         name: "agent-context",
@@ -118,11 +123,13 @@ const data: SkillInfographic = {
         descEn: "Author, audit, or optimize repository-root CLAUDE.md or AGENTS.md process memory. It is separate from general project docs.",
         descVi: "Soạn, audit hoặc tối ưu process memory CLAUDE.md hoặc AGENTS.md ở root repo. Nội dung này tách khỏi docs project thông thường.",
         options: [
-          { token: "--audit", titleEn: "Audit first", titleVi: "Audit trước", descEn: "Get a kongming audit, then ask one keep, cut, fix, or migrate decision at a time before applying confirmed changes.", descVi: "Lấy audit từ kongming, rồi hỏi từng quyết định keep, cut, fix hoặc migrate trước khi áp dụng thay đổi đã xác nhận.", exampleCommand: "/ak:docs agent-context --audit" },
+          { token: "--audit", titleEn: "Audit first", titleVi: "Audit trước", descEn: "Get a kongming audit, then ask one keep, cut, fix, or migrate decision at a time before applying confirmed changes.", descVi: "Lấy audit từ kongming, rồi hỏi từng quyết định keep, cut, fix hoặc migrate trước khi áp dụng thay đổi đã xác nhận.", exampleCommand: "/ak:docs agent-context --audit",
+          exampleCommandVi: '/ak:docs agent-context --audit' },
         ],
         outcomeEn: "Confirmed root-context changes only, with secrets excluded and automated settings or Hook configuration kept as recommendations only.",
         outcomeVi: "Chỉ thay đổi root context đã xác nhận, loại secret và giữ setting tự động hoặc cấu hình Hook ở mức khuyến nghị.",
         exampleCommand: "/ak:docs agent-context --advice",
+          exampleCommandVi: '/ak:docs agent-context --advice',
       },
       {
         name: "agents",
@@ -133,13 +140,16 @@ const data: SkillInfographic = {
         descVi: "Khai thác lịch sử git và CI có giới hạn để tìm lỗi lặp lại và gotcha nên trở thành quy tắc process ở root. Thao tác này mặc định có cố vấn.",
         arguments: [{ token: "[bound]", titleEn: "History bound", titleVi: "Giới hạn lịch sử", descEn: "Optional days such as 30d or commit count such as 500. Defaults to the smaller of 90 days or 300 commits plus 200 CI runs.", descVi: "Số ngày như 30d hoặc số commit như 500 tùy chọn. Mặc định lấy giá trị nhỏ hơn giữa 90 ngày hoặc 300 commit cùng 200 CI run." }],
         options: [
-          { token: "--source", titleEn: "Source markers", titleVi: "Dấu hiệu source", descEn: "Add read-only source-tree mining through ak:scout to corroborate git and CI signals.", descVi: "Bổ sung khai thác source tree chỉ đọc bằng ak:scout để củng cố signal từ git và CI.", exampleCommand: "/ak:docs agents 30d --source" },
-          { token: "--dry-run", titleEn: "Rank only", titleVi: "Chỉ xếp hạng", descEn: "Stop after ranking signals. No adviser is spawned and no file is written.", descVi: "Dừng sau khi xếp hạng signal. Không khởi chạy adviser và không ghi tệp.", exampleCommand: "/ak:docs agents --dry-run" },
+          { token: "--source", titleEn: "Source markers", titleVi: "Dấu hiệu source", descEn: "Add read-only source-tree mining through ak:scout to corroborate git and CI signals.", descVi: "Bổ sung khai thác source tree chỉ đọc bằng ak:scout để củng cố signal từ git và CI.", exampleCommand: "/ak:docs agents 30d --source",
+          exampleCommandVi: '/ak:docs agents 30d --source' },
+          { token: "--dry-run", titleEn: "Rank only", titleVi: "Chỉ xếp hạng", descEn: "Stop after ranking signals. No adviser is spawned and no file is written.", descVi: "Dừng sau khi xếp hạng signal. Không khởi chạy adviser và không ghi tệp.", exampleCommand: "/ak:docs agents --dry-run",
+          exampleCommandVi: '/ak:docs agents --dry-run' },
           { token: "--audit", titleEn: "Confirm one rule at a time", titleVi: "Xác nhận từng quy tắc", descEn: "Ask one keep, cut, fix, or migrate decision per proposed rule before writing.", descVi: "Hỏi từng quyết định keep, cut, fix hoặc migrate cho mỗi quy tắc được đề xuất trước khi ghi." },
         ],
         outcomeEn: "Ranked signals and confirmed DO/DON'T root-context rules only; dry-run reports without writing.",
         outcomeVi: "Signal đã xếp hạng và chỉ ghi quy tắc DO/DON'T root-context đã xác nhận; dry-run chỉ báo cáo và không ghi.",
         exampleCommand: "/ak:docs agents 30d --source",
+          exampleCommandVi: '/ak:docs agents 30d --source',
       },
       {
         name: "llms",
@@ -151,6 +161,7 @@ const data: SkillInfographic = {
         outcomeEn: "Valid indexes in the site's public/static directory or repository root, with links verified and full-content size reported.",
         outcomeVi: "Index hợp lệ trong thư mục public/static của site hoặc root repo, link đã xác minh và kích thước full-content được báo cáo.",
         exampleCommand: "/ak:docs llms",
+          exampleCommandVi: '/ak:docs llms',
       },
     ],
   },
@@ -166,12 +177,18 @@ const data: SkillInfographic = {
     { name: "CI runs", type: "tool" },
   ],
   promptExamples: [
-    { labelEn: "Initialize docs", labelVi: "Khởi tạo docs", command: "/ak:docs init", whenEn: "A project needs its first coherent documentation route without a fixed template tree.", whenVi: "Project cần tuyến tài liệu mạch lạc đầu tiên mà không áp đặt cây template cố định.", expectedEn: "Confirms the documentation contract, discovers existing authority surfaces, and creates only the smallest evidence-backed route needed for navigation and decisions.", expectedVi: "Xác nhận contract tài liệu, khám phá các bề mặt thẩm quyền hiện có và chỉ tạo tuyến nhỏ nhất dựa trên bằng chứng cho điều hướng cùng quyết định.", recommended: true },
-    { labelEn: "Refresh changed docs with advice", labelVi: "Làm mới docs với cố vấn", command: "/ak:docs update --advice \"Reconcile onboarding docs with the current authentication flow\"", whenEn: "Behavior, architecture, configuration, or operating guidance changed and impacted docs must be reconciled.", whenVi: "Hành vi, kiến trúc, cấu hình hoặc hướng dẫn vận hành đã đổi và docs bị ảnh hưởng cần được đối chiếu.", expectedEn: "Runs the bounded contract check, factors in kongming counsel before writing, maps changed claims to current evidence, and removes stale duplication.", expectedVi: "Chạy bước kiểm tra contract có phạm vi, tính đến cố vấn kongming trước khi ghi, ánh xạ claim đã đổi tới bằng chứng hiện tại và xóa phần trùng lặp lỗi thời." },
-    { labelEn: "Audit root agent context", labelVi: "Audit root agent context", command: "/ak:docs agent-context --audit", whenEn: "The root CLAUDE.md or AGENTS.md needs a keep, cut, fix, or migrate review before edits.", whenVi: "Root CLAUDE.md hoặc AGENTS.md cần review keep, cut, fix hoặc migrate trước khi sửa.", expectedEn: "Loads agent-context-rules, gets a kongming audit, asks one confirmed decision at a time, excludes secrets, and applies only accepted root-context changes.", expectedVi: "Nạp agent-context-rules, lấy audit từ kongming, hỏi từng quyết định đã xác nhận, loại secret và chỉ áp dụng thay đổi root-context được chấp nhận." },
-    { labelEn: "Mine source-backed agent rules", labelVi: "Khai thác quy tắc có source", command: "/ak:docs agents 30d --source", whenEn: "Recurring failures should become root process rules only when git, CI, and source markers corroborate them.", whenVi: "Lỗi lặp lại chỉ nên thành quy tắc process ở root khi git, CI và source marker cùng chứng minh.", expectedEn: "Mines bounded git and CI history, layers read-only ak:scout source-marker mining, applies corroboration gates, and writes only confirmed DO/DON'T rules.", expectedVi: "Khai thác lịch sử git và CI có giới hạn, bổ sung khai thác source marker chỉ đọc bằng ak:scout, áp dụng gate corroboration và chỉ ghi quy tắc DO/DON'T đã xác nhận." },
-    { labelEn: "Summarize evidence", labelVi: "Tóm tắt bằng chứng", command: "/ak:docs summarize", whenEn: "Existing docs and source evidence should be condensed without forcing a new file layout.", whenVi: "Khi docs và bằng chứng nguồn hiện có cần được cô đọng mà không ép layout file mới.", expectedEn: "Reads the current documentation contract, cites existing sources, and writes a summary only when the summarize workflow requires an artifact.", expectedVi: "Đọc contract tài liệu hiện tại, trích nguồn sẵn có và chỉ ghi summary khi workflow summarize yêu cầu artifact." },
-    { labelEn: "Generate llms.txt", labelVi: "Tạo llms.txt", command: "/ak:docs llms", whenEn: "The project needs an llmstxt.org index generated from current docs or code.", whenVi: "Khi project cần index llmstxt.org sinh từ docs hoặc code hiện tại.", expectedEn: "Scans docs or the codebase, writes llms.txt following llmstxt.org, and reports the output path without inventing extra doc trees.", expectedVi: "Quét docs hoặc codebase, ghi llms.txt theo llmstxt.org và báo path output mà không bịa thêm cây tài liệu." },
+    { labelEn: "Initialize docs", labelVi: "Khởi tạo docs", command: "/ak:docs init",
+      commandVi: '/ak:docs init', whenEn: "A project needs its first coherent documentation route without a fixed template tree.", whenVi: "Project cần tuyến tài liệu mạch lạc đầu tiên mà không áp đặt cây template cố định.", expectedEn: "Confirms the documentation contract, discovers existing authority surfaces, and creates only the smallest evidence-backed route needed for navigation and decisions.", expectedVi: "Xác nhận contract tài liệu, khám phá các bề mặt thẩm quyền hiện có và chỉ tạo tuyến nhỏ nhất dựa trên bằng chứng cho điều hướng cùng quyết định.", recommended: true },
+    { labelEn: "Refresh changed docs with advice", labelVi: "Làm mới docs với cố vấn", command: "/ak:docs update --advice \"Reconcile onboarding docs with the current authentication flow\"",
+      commandVi: '/ak:docs update --advice "Đối chiếu docs onboarding với luồng authentication hiện tại"', whenEn: "Behavior, architecture, configuration, or operating guidance changed and impacted docs must be reconciled.", whenVi: "Hành vi, kiến trúc, cấu hình hoặc hướng dẫn vận hành đã đổi và docs bị ảnh hưởng cần được đối chiếu.", expectedEn: "Runs the bounded contract check, factors in kongming counsel before writing, maps changed claims to current evidence, and removes stale duplication.", expectedVi: "Chạy bước kiểm tra contract có phạm vi, tính đến cố vấn kongming trước khi ghi, ánh xạ claim đã đổi tới bằng chứng hiện tại và xóa phần trùng lặp lỗi thời." },
+    { labelEn: "Audit root agent context", labelVi: "Audit root agent context", command: "/ak:docs agent-context --audit",
+      commandVi: '/ak:docs agent-context --audit', whenEn: "The root CLAUDE.md or AGENTS.md needs a keep, cut, fix, or migrate review before edits.", whenVi: "Root CLAUDE.md hoặc AGENTS.md cần review keep, cut, fix hoặc migrate trước khi sửa.", expectedEn: "Loads agent-context-rules, gets a kongming audit, asks one confirmed decision at a time, excludes secrets, and applies only accepted root-context changes.", expectedVi: "Nạp agent-context-rules, lấy audit từ kongming, hỏi từng quyết định đã xác nhận, loại secret và chỉ áp dụng thay đổi root-context được chấp nhận." },
+    { labelEn: "Mine source-backed agent rules", labelVi: "Khai thác quy tắc có source", command: "/ak:docs agents 30d --source",
+      commandVi: '/ak:docs agents 30d --source', whenEn: "Recurring failures should become root process rules only when git, CI, and source markers corroborate them.", whenVi: "Lỗi lặp lại chỉ nên thành quy tắc process ở root khi git, CI và source marker cùng chứng minh.", expectedEn: "Mines bounded git and CI history, layers read-only ak:scout source-marker mining, applies corroboration gates, and writes only confirmed DO/DON'T rules.", expectedVi: "Khai thác lịch sử git và CI có giới hạn, bổ sung khai thác source marker chỉ đọc bằng ak:scout, áp dụng gate corroboration và chỉ ghi quy tắc DO/DON'T đã xác nhận." },
+    { labelEn: "Summarize evidence", labelVi: "Tóm tắt bằng chứng", command: "/ak:docs summarize",
+      commandVi: '/ak:docs summarize', whenEn: "Existing docs and source evidence should be condensed without forcing a new file layout.", whenVi: "Khi docs và bằng chứng nguồn hiện có cần được cô đọng mà không ép layout file mới.", expectedEn: "Reads the current documentation contract, cites existing sources, and writes a summary only when the summarize workflow requires an artifact.", expectedVi: "Đọc contract tài liệu hiện tại, trích nguồn sẵn có và chỉ ghi summary khi workflow summarize yêu cầu artifact." },
+    { labelEn: "Generate llms.txt", labelVi: "Tạo llms.txt", command: "/ak:docs llms",
+      commandVi: '/ak:docs llms', whenEn: "The project needs an llmstxt.org index generated from current docs or code.", whenVi: "Khi project cần index llmstxt.org sinh từ docs hoặc code hiện tại.", expectedEn: "Scans docs or the codebase, writes llms.txt following llmstxt.org, and reports the output path without inventing extra doc trees.", expectedVi: "Quét docs hoặc codebase, ghi llms.txt theo llmstxt.org và báo path output mà không bịa thêm cây tài liệu." },
   ],
 };
 

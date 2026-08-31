@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   command: '/ak:init',
   kit: 'marketer',
   header: {
-    titleEn: 'Marketing Project Initialization',
-    titleVi: 'Khởi tạo dự án marketing',
+    titleEn: '/ak:init — Marketing Project Initialization',
+    titleVi: '/ak:init — Khởi tạo dự án marketing',
     taglineEn: 'Onboards a new or existing marketing project through git setup, parallel research, a structured brief interview, minimal documentation, and next actions.',
     taglineVi: 'Onboard dự án marketing mới hoặc hiện có qua kiểm tra git, nghiên cứu song song, brief có cấu trúc, tài liệu tối thiểu và hành động tiếp theo.',
   },
@@ -43,9 +43,12 @@ const data: SkillInfographic = {
   expertiseAreasEn: ['Marketing brief interview', 'Project context discovery', 'Brand constraints', 'Audience and competitors', 'Documentation routing', 'Next-action planning'],
   expertiseAreasVi: ['Phỏng vấn brief marketing', 'Khám phá bối cảnh dự án', 'Ràng buộc brand', 'Audience và đối thủ', 'Định tuyến tài liệu', 'Lập bước tiếp theo'],
   promptExamples: [
-    { labelEn: 'New project', labelVi: 'Dự án mới', command: '/ak:init new DTC skincare brand launch', whenEn: 'Starting a marketing project with little existing structure.', whenVi: 'Bắt đầu dự án marketing gần như chưa có cấu trúc.', expectedEn: 'Runs setup, research, interview, minimal docs generation, and next-action suggestions.', expectedVi: 'Chạy setup, nghiên cứu, phỏng vấn, tạo tài liệu tối thiểu và gợi ý bước tiếp theo.', recommended: true },
-    { labelEn: 'Existing project', labelVi: 'Dự án hiện có', command: '/ak:init onboard existing B2B SaaS marketing project', whenEn: 'An existing repository or client needs marketing context discovery and confirmation.', whenVi: 'Repo hoặc client hiện có cần khám phá và xác nhận bối cảnh marketing.', expectedEn: 'Researches current authorities, verifies accuracy with the user, and updates only needed surfaces.', expectedVi: 'Nghiên cứu nguồn thẩm quyền hiện có, xác nhận với người dùng và chỉ cập nhật phần cần thiết.' },
-    { labelEn: 'Website-based brief', labelVi: 'Brief dựa trên website', command: '/ak:init marketing brief from existing website and brand assets', whenEn: 'Brand and design inputs should be extracted from live or existing materials.', whenVi: 'Cần rút brand và thiết kế từ website hoặc tài liệu hiện có.', expectedEn: 'Includes website extraction, brand asset review, and structured interview follow-up.', expectedVi: 'Bao gồm trích xuất website, xem brand asset và phỏng vấn bổ sung có cấu trúc.' },
+    { labelEn: 'New project', labelVi: 'Dự án mới', command: '/ak:init new DTC skincare brand launch',
+      commandVi: '/ak:init ra mắt thương hiệu chăm sóc da DTC mới', whenEn: 'Starting a marketing project with little existing structure.', whenVi: 'Bắt đầu dự án marketing gần như chưa có cấu trúc.', expectedEn: 'Runs setup, research, interview, minimal docs generation, and next-action suggestions.', expectedVi: 'Chạy setup, nghiên cứu, phỏng vấn, tạo tài liệu tối thiểu và gợi ý bước tiếp theo.', recommended: true },
+    { labelEn: 'Existing project', labelVi: 'Dự án hiện có', command: '/ak:init onboard existing B2B SaaS marketing project',
+      commandVi: '/ak:init onboard dự án marketing SaaS B2B hiện có', whenEn: 'An existing repository or client needs marketing context discovery and confirmation.', whenVi: 'Repo hoặc client hiện có cần khám phá và xác nhận bối cảnh marketing.', expectedEn: 'Researches current authorities, verifies accuracy with the user, and updates only needed surfaces.', expectedVi: 'Nghiên cứu nguồn thẩm quyền hiện có, xác nhận với người dùng và chỉ cập nhật phần cần thiết.' },
+    { labelEn: 'Website-based brief', labelVi: 'Brief dựa trên website', command: '/ak:init marketing brief from existing website and brand assets',
+      commandVi: '/ak:init brief marketing từ website và tài sản thương hiệu hiện có', whenEn: 'Brand and design inputs should be extracted from live or existing materials.', whenVi: 'Cần rút brand và thiết kế từ website hoặc tài liệu hiện có.', expectedEn: 'Includes website extraction, brand asset review, and structured interview follow-up.', expectedVi: 'Bao gồm trích xuất website, xem brand asset và phỏng vấn bổ sung có cấu trúc.' },
   ],
   skillStack: [
     { name: 'researcher', type: 'agent' },
