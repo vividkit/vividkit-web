@@ -516,8 +516,10 @@ const antiPatterns = isVi
       { dont: 'Treat visual-check as human review', do: 'Screenshots are evidence. A person still checks main path, boundaries, labels.' },
       { dont: 'Set `meta.locale: "vi"`', do: 'Write authored copy in Vietnamese, keep identifiers in English, omit `meta.locale`. Viewer UI falls back to English.' },
     ];
----
 
+const heroCtaClass =
+  'inline-flex min-h-9 shrink-0 items-center whitespace-nowrap rounded-xl border border-slate-200 bg-white px-3 text-sm font-bold text-slate-800 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 dark:border-white/15 dark:bg-white/[0.08] dark:text-white dark:hover:border-white/30 dark:hover:bg-white/[0.14]';
+---
 <div class="mt-6 space-y-10">
   <section class="relative overflow-hidden rounded-[2rem] border border-cyan-200/80 bg-white p-5 shadow-2xl shadow-cyan-500/10 md:p-6 dark:border-cyan-400/20 dark:bg-slate-950 dark:shadow-cyan-950/30">
     <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_88%,rgba(6,182,212,0.14),transparent_30%),radial-gradient(circle_at_84%_18%,rgba(139,92,246,0.12),transparent_32%),linear-gradient(135deg,#ffffff,#f8fafc_48%,#ecfeff)] dark:bg-[radial-gradient(circle_at_12%_88%,rgba(6,182,212,0.22),transparent_30%),radial-gradient(circle_at_84%_18%,rgba(139,92,246,0.20),transparent_32%),linear-gradient(135deg,#020617,#0f172a_48%,#10233a)]"></div>
@@ -588,10 +590,10 @@ const antiPatterns = isVi
               </div>
             </div>
             <div class="flex flex-nowrap gap-2 overflow-x-auto">
-              <a href="#install" class="inline-flex min-h-9 shrink-0 items-center whitespace-nowrap rounded-xl border border-slate-200 bg-white px-3 text-sm font-bold text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:border-cyan-200 dark:border-white/15 dark:bg-white/8 dark:text-white dark:hover:border-cyan-200/40">{isVi ? 'Cài Skill' : 'Install Skill'}</a>
-              <a href="#recipes" class="inline-flex min-h-9 shrink-0 items-center whitespace-nowrap rounded-xl border border-slate-200 bg-white px-3 text-sm font-bold text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:border-cyan-200 dark:border-white/15 dark:bg-white/8 dark:text-white dark:hover:border-cyan-200/40">{isVi ? '11 recipe' : '11 recipes'}</a>
-              <a href="#sdlc" class="inline-flex min-h-9 shrink-0 items-center whitespace-nowrap rounded-xl border border-slate-200 bg-white px-3 text-sm font-bold text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:border-cyan-200 dark:border-white/15 dark:bg-white/8 dark:text-white dark:hover:border-cyan-200/40">SDLC</a>
-              <a href="#agentkit" class="inline-flex min-h-9 shrink-0 items-center whitespace-nowrap rounded-xl border border-slate-200 bg-white px-3 text-sm font-bold text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:border-cyan-200 dark:border-white/15 dark:bg-white/8 dark:text-white dark:hover:border-cyan-200/40">AgentKit</a>
+              <a href="#install" class={heroCtaClass}>{isVi ? 'Cài Skill' : 'Install Skill'}</a>
+              <a href="#recipes" class={heroCtaClass}>{isVi ? '11 recipe' : '11 recipes'}</a>
+              <a href="#sdlc" class={heroCtaClass}>SDLC</a>
+              <a href="#agentkit" class={heroCtaClass}>AgentKit</a>
             </div>
           </div>
         </div>
